@@ -87,6 +87,8 @@ private:
 
     void setHeaderState(QPushButton* header, HeaderState state);
 
+    QTimer timer;
+
 public slots:
     void on_pHeaderName_clicked();
     void on_pHeaderSize_clicked();
@@ -95,6 +97,9 @@ public slots:
     void onTransferAdded();
     void onShowCompleted(bool showCompleted);
     void onPauseStateChanged(bool pauseState);
+
+private slots:
+    void onTimerTransfers();
 
 protected:
     void changeEvent(QEvent *event);

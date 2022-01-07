@@ -67,9 +67,6 @@ QTransfersModel2::QTransfersModel2(QObject *parent) :
 
     mListener = new QTMegaTransferListener(mMegaApi, this);
     mMegaApi->addTransferListener(mListener);
-
-    connect(&timer, &QTimer::timeout, this, &QTransfersModel2::onTimerTransfers);
-    timer.start(500);
 }
 
 bool QTransfersModel2::hasChildren(const QModelIndex& parent) const
@@ -109,18 +106,18 @@ QVariant QTransfersModel2::data(const QModelIndex& index, int role) const
 {
     int row (index.row());
 
-    if (!mModelMutex->tryLockForRead())
-    {
-        mModelMutex->lockForWrite();
-    }
+//    if (!mModelMutex->tryLockForRead())
+//    {
+//        mModelMutex->lockForWrite();
+//    }
     if (role == Qt::DisplayRole && row >= 0 && row < mOrder.size())
     {
         auto tag (mOrder.at(row));
-        mModelMutex->unlock();
+        //mModelMutex->unlock();
         return mTransfers[tag];
     }
 
-    mModelMutex->unlock();
+    //mModelMutex->unlock();
     return QVariant();
 }
 
@@ -131,17 +128,17 @@ QModelIndex QTransfersModel2::parent(const QModelIndex&) const
 
 QModelIndex QTransfersModel2::index(int row, int column, const QModelIndex& parent) const
 {
-    if (!mModelMutex->tryLockForRead())
-    {
-        mModelMutex->lockForWrite();
-    }
+//    if (!mModelMutex->tryLockForRead())
+//    {
+//        mModelMutex->lockForWrite();
+//    }
     if (parent == DEFAULT_IDX && column == 0 && row >= 0 && row < mOrder.size())
     {
         auto tag (mOrder.at(row));
-        mModelMutex->unlock();
+        //mModelMutex->unlock();
         return createIndex(row, 0, static_cast<quintptr>(tag));
     }
-    mModelMutex->unlock();
+    //mModelMutex->unlock();
     return DEFAULT_IDX;
 }
 
@@ -253,7 +250,7 @@ void QTransfersModel2::onTransferStart(mega::MegaApi*, mega::MegaTransfer* trans
 void QTransfersModel2::onTransferFinish(mega::MegaApi* api, mega::MegaTransfer* transfer,
                                         mega::MegaError* error)
 {
-    finishTransfer(api, transfer, error);
+    mCacheFinishTransfers.append(transfer->copy());
 }
 
 void QTransfersModel2::onTransferUpdate(mega::MegaApi*, mega::MegaTransfer* transfer)
@@ -269,12 +266,10 @@ void QTransfersModel2::onTransferTemporaryError(mega::MegaApi *api, mega::MegaTr
     transferTemporaryError(api, transfer, error);
 }
 
-void QTransfersModel2::onTimerTransfers()
+bool QTransfersModel2::onTimerTransfers()
 {
     if(!mCacheStartTransfers.isEmpty())
     {
-        QElapsedTimer timer;
-        timer.start();
         addTransfers(mCacheStartTransfers.size());
         for(int index = mCacheStartTransfers.size() - 1; index >= 0; index--)
         {
@@ -282,7 +277,8 @@ void QTransfersModel2::onTimerTransfers()
            startTransfer(transfer);
            delete transfer;
         }
-        qDebug() << ((float)timer.nsecsElapsed())/1000000.0;
+
+        return true;
     }
 
     if(!mCacheUpdateTransfers.isEmpty())
@@ -294,6 +290,20 @@ void QTransfersModel2::onTimerTransfers()
         }
 
         mCacheUpdateTransfers.clear();
+
+        return true;
+    }
+
+    if(!mCacheFinishTransfers.isEmpty())
+    {
+        for(int index = mCacheFinishTransfers.size() - 1; index >= 0; index--)
+        {
+           auto transfer = mCacheFinishTransfers.takeAt(index);
+           finishTransfer(nullptr,transfer, nullptr);
+           delete transfer;
+        }
+
+        return true;
     }
 }
 
@@ -572,8 +582,8 @@ void QTransfersModel2::updateTransfer(mega::MegaTransfer *transfer)
             {
 //                Utilities::queueFunctionInAppThread([=]()
 //                {
-                    QModelIndex idx (index(row, 0, DEFAULT_IDX));
-                    emit dataChanged(idx, idx, DATA_ROLE);
+                    //QModelIndex idx (index(row, 0, DEFAULT_IDX));
+                    //emit dataChanged(idx, idx, DATA_ROLE);
 //                });
             }
         }
@@ -589,7 +599,7 @@ void QTransfersModel2::finishTransfer(MegaApi *api, mega::MegaTransfer *transfer
 {
     if (transfer->isStreamingTransfer()
             || transfer->isFolderTransfer()
-            || mNotificationNumber >= transfer->getNotificationNumber())
+            /*|| mNotificationNumber >= transfer->getNotificationNumber()*/)
     {
         return;
     }
@@ -597,7 +607,7 @@ void QTransfersModel2::finishTransfer(MegaApi *api, mega::MegaTransfer *transfer
 
     TransferTag tag (transfer->getTag());
 
-    mModelMutex->lockForWrite();
+    //mModelMutex->lockForWrite();
     mNotificationNumber = transfer->getNotificationNumber();
 
     auto rowIt (std::find(mOrder.cbegin(), mOrder.cend(), tag));
@@ -636,15 +646,6 @@ void QTransfersModel2::finishTransfer(MegaApi *api, mega::MegaTransfer *transfer
                                                     transfer->getPublicMegaNode());
         v = QVariant::fromValue(transferItem);
 
-
-
-//        Utilities::queueFunctionInAppThread([=]()
-//        {
-            QModelIndex idx (index(row, 0, DEFAULT_IDX));
-            emit dataChanged(idx, idx, DATA_ROLE);
-//        });
-
-
         if (state == TransferData::TRANSFER_FAILED)
         {
             mFailedTransfers[tag] = transfer->copy();
@@ -672,7 +673,7 @@ void QTransfersModel2::finishTransfer(MegaApi *api, mega::MegaTransfer *transfer
 //    {
 //        onTransferStart(api, transfer);
 //    }
-    mModelMutex->unlock();
+    //mModelMutex->unlock();
 }
 
 void QTransfersModel2::transferTemporaryError(mega::MegaApi *api, mega::MegaTransfer *transfer, mega::MegaError *error)
@@ -1024,8 +1025,11 @@ void QTransfersModel2::pauseResumeTransferByTag(TransferTag tag, bool pauseState
 
 void QTransfersModel2::cancelClearAllTransfers()
 {
-    mMegaApi->cancelTransfers(MegaTransfer::TYPE_UPLOAD);
-    mMegaApi->cancelTransfers(MegaTransfer::TYPE_DOWNLOAD);
+    mThreadPool->push([=]
+    {
+       mMegaApi->cancelTransfers(MegaTransfer::TYPE_UPLOAD);
+       mMegaApi->cancelTransfers(MegaTransfer::TYPE_DOWNLOAD);
+    });
 }
 
 void QTransfersModel2::lockModelMutex(bool lock)
@@ -1035,11 +1039,6 @@ void QTransfersModel2::lockModelMutex(bool lock)
     if (lock)
     {
         megaApiLock->lockOnce();
-        MegaSyncApp->processEvents();
-//        while (!mModelMutex->tryLockForRead())
-//        {
-//            MegaSyncApp->processEvents();
-//        }
         mModelMutex->lockForRead();
     }
     else
@@ -1389,7 +1388,7 @@ void QTransfersModel2::insertTransfer(mega::MegaApi* api, mega::MegaTransfer* tr
              }
          }
 
-         QModelIndex idx (index(row, 0, DEFAULT_IDX));
-         emit dataChanged(idx, idx, DATA_ROLE);
+         //QModelIndex idx (index(row, 0, DEFAULT_IDX));
+         //emit dataChanged(idx, idx, DATA_ROLE);
     }
 }

@@ -23,6 +23,9 @@ TransfersWidget::TransfersWidget(QWidget* parent) :
     mProxyActivityMessage (new QMessageBox(this))
 {
     ui->setupUi(this);
+
+    connect(&timer, &QTimer::timeout, this, &TransfersWidget::onTimerTransfers);
+    timer.start(500);
 }
 
 //void TransfersWidget::setupTransfers(std::shared_ptr<mega::MegaTransferData> transferData, QTransfersModel::ModelType type)
@@ -50,7 +53,7 @@ void TransfersWidget::setupTransfers()
 //    }));
 
     mProxyModel = new TransfersSortFilterProxyModel(this);
-    mProxyModel->setDynamicSortFilter(false);
+    //mProxyModel->setDynamicSortFilter(false);
 
 //    createModelFuture.waitForFinished();
 
@@ -319,6 +322,14 @@ void TransfersWidget::onPauseStateChanged(bool pauseState)
                                         tr("Resume visible transfers")
                                       : tr("Pause visible transfers"));
     mIsPaused = pauseState;
+}
+
+void TransfersWidget::onTimerTransfers()
+{
+    if(model2->onTimerTransfers())
+    {
+       mProxyModel->invalidate();
+    }
 }
 
 void TransfersWidget::textFilterChanged(const QString& pattern)

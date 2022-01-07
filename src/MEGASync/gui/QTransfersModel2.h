@@ -68,10 +68,10 @@ public slots:
     void onRetryTransfer(TransferTag tag);
     void pauseResumeAllTransfers();
     void cancelClearAllTransfers();
+    bool onTimerTransfers();
 
 private slots:
     void onPauseStateChanged();
-    void onTimerTransfers();
 
 private:
 
@@ -80,7 +80,7 @@ private:
     mega::MegaApi* mMegaApi;
     Preferences* mPreferences;
 
-    QMap<TransferTag, QVariant> mTransfers;
+    QHash<TransferTag, QVariant> mTransfers;
     QMap<TransferTag, mega::MegaTransfer*> mFailedTransfers;
     QMap<TransferTag, TransferRemainingTime*> mRemainingTimes;
    // std::deque<TransferTag> mOrder;
@@ -109,7 +109,7 @@ private:
 
     QList<mega::MegaTransfer*> mCacheStartTransfers;
     QMap<TransferTag,mega::MegaTransfer*> mCacheUpdateTransfers;
-    QMap<TransferTag,mega::MegaTransfer*> mCacheFinishTransfers;
+    QList<mega::MegaTransfer*> mCacheFinishTransfers;
     QTimer timer;
     int mCurrentTransfers;
 };
