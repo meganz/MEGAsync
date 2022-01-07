@@ -66,10 +66,10 @@ void TransfersSortFilterProxyModel::sort(int column, Qt::SortOrder order)
 {
     QtConcurrent::run([=]
     {
+        emit modelAboutToBeSorted();
         auto transferModel (static_cast<QTransfersModel2*> (sourceModel()));
         transferModel->lockModelMutex(true);
         QMutexLocker lockSortingMutex (mActivityMutex);
-        emit modelAboutToBeSorted();
         QSortFilterProxyModel::sort(column, order);
         transferModel->lockModelMutex(false);
         emit modelSorted();
@@ -80,10 +80,10 @@ void TransfersSortFilterProxyModel::setFilterFixedString(const QString& pattern)
 {
     QtConcurrent::run([=]
     {
+        emit modelAboutToBeFiltered();
         auto transferModel (static_cast<QTransfersModel2*> (sourceModel()));
         transferModel->lockModelMutex(true);
         QMutexLocker lockSortingMutex (mActivityMutex);
-        emit modelAboutToBeFiltered();
         QSortFilterProxyModel::setFilterFixedString(pattern);
         transferModel->lockModelMutex(false);
         emit modelFiltered();
@@ -189,19 +189,19 @@ void TransfersSortFilterProxyModel::applyFilters(bool invalidate)
 {
     QtConcurrent::run([=]
     {
+        emit modelAboutToBeFiltered();
+        auto transferModel (static_cast<QTransfersModel2*> (sourceModel()));
+        transferModel->lockModelMutex(true);
         QMutexLocker lockCallingThread (mActivityMutex);
         mTransferStates = mNextTransferStates;
         mTransferTypes = mNextTransferTypes;
         mFileTypes = mNextFileTypes;
         if (invalidate)
         {
-            auto transferModel (static_cast<QTransfersModel2*> (sourceModel()));
-            emit modelAboutToBeFiltered();
-            transferModel->lockModelMutex(true);
             invalidateFilter();
-            transferModel->lockModelMutex(false);
-            emit modelFiltered();
         }
+        transferModel->lockModelMutex(false);
+        emit modelFiltered();
     });
 }
 
