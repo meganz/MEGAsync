@@ -107,10 +107,11 @@ private:
 
     mega::QTMegaTransferListener* mListener;
 
-    QMap<TransferTag,mega::MegaTransfer*> mCacheStartTransfers;
+    QList<mega::MegaTransfer*> mCacheStartTransfers;
     QMap<TransferTag,mega::MegaTransfer*> mCacheUpdateTransfers;
     QMap<TransferTag,mega::MegaTransfer*> mCacheFinishTransfers;
     QTimer timer;
+    int mCurrentTransfers;
 };
 
 #endif // QTRANSFERSMODEL2_H

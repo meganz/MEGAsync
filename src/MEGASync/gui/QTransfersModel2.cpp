@@ -247,10 +247,7 @@ void QTransfersModel2::initModel()
 
 void QTransfersModel2::onTransferStart(mega::MegaApi*, mega::MegaTransfer* transfer)
 {
-   if(!mCacheStartTransfers.contains(transfer->getTag()))
-   {
-       mCacheStartTransfers.insert(transfer->getTag(), transfer->copy());
-   }
+   mCacheStartTransfers.append(transfer->copy());
 }
 
 void QTransfersModel2::onTransferFinish(mega::MegaApi* api, mega::MegaTransfer* transfer,
@@ -261,11 +258,6 @@ void QTransfersModel2::onTransferFinish(mega::MegaApi* api, mega::MegaTransfer* 
 
 void QTransfersModel2::onTransferUpdate(mega::MegaApi*, mega::MegaTransfer* transfer)
 {
-    if(mCacheStartTransfers.contains(transfer->getTag()))
-    {
-        mCacheStartTransfers[transfer->getTag()] = transfer->copy();
-    }
-
     if(!mCacheUpdateTransfers.contains(transfer->getTag()))
     {
         mCacheUpdateTransfers.insert(transfer->getTag(), transfer->copy());
@@ -281,18 +273,16 @@ void QTransfersModel2::onTimerTransfers()
 {
     if(!mCacheStartTransfers.isEmpty())
     {
+        QElapsedTimer timer;
+        timer.start();
         addTransfers(mCacheStartTransfers.size());
-
-        foreach(auto& transfer, mCacheStartTransfers)
+        for(int index = mCacheStartTransfers.size() - 1; index >= 0; index--)
         {
-            startTransfer(transfer);
-            delete transfer;
+           auto transfer = mCacheStartTransfers.takeAt(index);
+           startTransfer(transfer);
+           delete transfer;
         }
-
-        qDebug() << mCacheStartTransfers.size() << rowCount(DEFAULT_IDX);
-
-
-        mCacheStartTransfers.clear();
+        qDebug() << ((float)timer.nsecsElapsed())/1000000.0;
     }
 
     if(!mCacheUpdateTransfers.isEmpty())
@@ -311,7 +301,7 @@ void QTransfersModel2::startTransfer(mega::MegaTransfer *transfer)
 {
     if (transfer->isStreamingTransfer()
             || transfer->isFolderTransfer()
-            || mNotificationNumber >= transfer->getNotificationNumber())
+           /* || mNotificationNumber >= transfer->getNotificationNumber()*/)
     {
         return;
     }
