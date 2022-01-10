@@ -660,6 +660,9 @@ void MegaApplication::initialize()
         watcher->addPath(appShowInterfacePath);
         connect(watcher, SIGNAL(fileChanged(QString)), this, SLOT(showInterface(QString)));
     }
+
+    mModel2 = new QTransfersModel2(nullptr);
+    mModel2->initModel();
 }
 
 QString MegaApplication::applicationFilePath()
@@ -724,6 +727,8 @@ void MegaApplication::setTrayIconFromTheme(QString icon)
 
 void MegaApplication::updateTrayIcon()
 {
+    mThreadPool->push([this](){
+
     if (appfinished || !trayIcon)
     {
         return;
@@ -934,6 +939,7 @@ void MegaApplication::updateTrayIcon()
     {
         trayIcon->setToolTip(tooltip);
     }
+    });
 }
 
 void MegaApplication::start()
@@ -1330,6 +1336,8 @@ if (!preferences->lastExecutionTime())
     {
         setUploadLimit(preferences->uploadLimitKB());
     }
+
+    mThreadPool->push([=](){
     setMaxUploadSpeed(preferences->uploadLimitKB());
     setMaxDownloadSpeed(preferences->downloadLimitKB());
     setMaxConnections(MegaTransfer::TYPE_UPLOAD,   preferences->parallelUploadConnections());
@@ -1338,6 +1346,7 @@ if (!preferences->lastExecutionTime())
 
     megaApi->setDefaultFilePermissions(preferences->filePermissionsValue());
     megaApi->setDefaultFolderPermissions(preferences->folderPermissionsValue());
+    });
 
     // Process any pending download/upload queued during GuestMode
     processDownloads();
@@ -7717,15 +7726,10 @@ void MegaApplication::onTransferStart(MegaApi *api, MegaTransfer *transfer)
                                              QString::fromUtf8(transfer->getPath()));
     }
 
-//    if (transferManager)
-//    {
-//        transferManager->onTransferStart(megaApi, transfer);
-//    }
     if (infoDialog)
     {
         infoDialog->onTransferStart(megaApi, transfer);
     }
-
 
     onTransferUpdate(api, transfer);
     if (!numTransfers[MegaTransfer::TYPE_DOWNLOAD]
@@ -7831,11 +7835,6 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
         {
             ++nUnviewedTransfers;
         }
-
-        if (transferManager)
-        {
-//            transferManager->updateNumberOfCompletedTransfers(nUnviewedTransfers);
-        }
     }
 
     if (transfer->getType() == MegaTransfer::TYPE_DOWNLOAD)
@@ -7851,16 +7850,6 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
     if (blockState)
     {
         finishedBlockedTransfers.insert(transfer->getTag());
-    }
-
-//    if (transferManager)
-//    {
-//        transferManager->onTransferFinish(megaApi, transfer, e);
-//    }
-
-    if (infoDialog)
-    {
-        infoDialog->onTransferFinish(megaApi, transfer, e);
     }
 
     if (finishedTransferOrder.size() > (int)Preferences::MAX_COMPLETED_ITEMS)
@@ -7959,16 +7948,6 @@ void MegaApplication::onTransferUpdate(MegaApi *, MegaTransfer *transfer)
     }
 
     DeferPreferencesSyncForScope deferrer(this);
-
-//    if (transferManager)
-//    {
-//        transferManager->onTransferUpdate(megaApi, transfer);
-//    }
-
-    if (infoDialog)
-    {
-        infoDialog->onTransferUpdate(megaApi, transfer);
-    }
 
     int type = transfer->getType();
     if (type == MegaTransfer::TYPE_DOWNLOAD)
@@ -8333,7 +8312,7 @@ void MegaApplication::onGlobalSyncStateChangedImpl(MegaApi *, bool timeout)
 
             });
 
-        });
+       });
     }
 
     MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("Current state. Paused = %1 Indexing = %2 Waiting = %3 Syncing = %4")

@@ -126,13 +126,9 @@ void MegaTransferView::onCancelClearAllRows(bool cancel, bool clear)
             }
             indexes.push_back(index);
         }
-        //tConcurrent::run([=]
-        //{
-            mParentTransferWidget->getModel2()->blockSignals(true);
-            mParentTransferWidget->getModel2()->cancelClearTransfers(indexes, cancel, clear);
-            mParentTransferWidget->getModel2()->blockSignals(false);
-            proxy->invalidate();
-        //});
+
+        mParentTransferWidget->getModel2()->cancelClearTransfers(indexes, cancel, clear);
+        proxy->invalidate();
     }
 }
 

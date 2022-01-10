@@ -165,6 +165,8 @@ private slots:
 
     void setAvatar();
 
+    void onTransfersDataUpdated();
+
 signals:
     void openTransferManager(int tab);
     void dismissStorageOverquota(bool oq);
@@ -192,14 +194,8 @@ private:
     MenuItemAction *rubbishItem;
 
     int activeDownloadState, activeUploadState;
-    int remainingUploads, remainingDownloads;
     bool remainingUploadsTimerRunning = false;
     bool remainingDownloadsTimerRunning = false;
-    int totalUploads, totalDownloads;
-    long long leftUploadBytes, completedUploadBytes;
-    long long leftDownloadBytes, completedDownloadBytes;
-    long long currentUploadBytes, currentCompletedUploadBytes;
-    long long currentDownloadBytes, currentCompletedDownloadBytes;
     bool circlesShowAllActiveTransfersProgress;
     unsigned long long uploadActiveTransferPriority, downloadActiveTransferPriority;
     int uploadActiveTransferTag, downloadActiveTransferTag;

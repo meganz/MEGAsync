@@ -45,6 +45,8 @@
 #include "DesktopNotifications.h"
 #include "TransferQuota.h"
 
+class QTransfersModel2;
+
 #ifdef __APPLE__
     #include "gui/MegaSystemTrayIcon.h"
     #include <mach/mach.h>
@@ -204,6 +206,8 @@ public:
     MegaSyncLogger& getLogger() const;
     void pushToThreadPool(std::function<void()> functor);
     SetupWizard *getSetupWizard() const;
+
+    QTransfersModel2* getTransfersModel(){return mModel2;}
 
     /**
      * @brief migrates sync configuration and fetches nodes
@@ -554,6 +558,7 @@ protected:
     std::shared_ptr<DesktopNotifications> mOsNotifications;
     QMutex mMutexOpenUrls;
     QMap<QString, std::chrono::system_clock::time_point> mOpenUrlsClusterTs;
+    QTransfersModel2* mModel2;
 
 private:
 #ifdef _WIN32

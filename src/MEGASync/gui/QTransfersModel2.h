@@ -11,6 +11,39 @@
 #include <QLinkedList>
 #include <QtConcurrent/QtConcurrent>
 
+struct TransfersCount
+{
+    long long leftUploadBytes;
+    long long completedUploadBytes;
+    long long leftDownloadBytes;
+    long long completedDownloadBytes;
+
+    int activeDownloadState;
+    int activeUploadState;
+    int remainingUploads;
+    int remainingDownloads;
+
+    int totalUploads;
+    int totalDownloads;
+    int currentUpload;
+    int currentDownload;
+
+    TransfersCount::TransfersCount():
+        leftUploadBytes(0),
+        completedUploadBytes(0),
+        leftDownloadBytes(0),
+        completedDownloadBytes(0),
+        activeDownloadState(0),
+        activeUploadState(0),
+        remainingUploads(0),
+        remainingDownloads(0),
+        totalUploads(0),
+        totalDownloads(0),
+        currentUpload(0),
+        currentDownload(0)
+    {}
+};
+
 class QTransfersModel2 : public QAbstractItemModel, public mega::MegaTransferListener
 {
     Q_OBJECT
@@ -47,6 +80,9 @@ public:
     long long  getNumberOfTransfersForFileType(TransferData::FileType fileType) const;
     long long  getNumberOfFinishedForFileType(TransferData::FileType fileType) const;
 
+    const TransfersCount& getTransfersCount();
+    void resetTransfersCount();
+
     void initModel();
 
     void startTransfer(mega::MegaTransfer* transfer);
@@ -61,8 +97,8 @@ public:
     void onTransferTemporaryError(mega::MegaApi* api,mega::MegaTransfer* transfer,mega::MegaError* error);
 
 signals:
-    void transfersInModelChanged(bool weHaveTransfers);
     void pauseStateChanged(bool pauseState);
+    void transfersDataUpdated();
 
 public slots:
     void onRetryTransfer(TransferTag tag);
@@ -74,7 +110,11 @@ private slots:
     void onPauseStateChanged();
 
 private:
+    void insertTransfer(mega::MegaApi* api, mega::MegaTransfer* transfer, int row, bool signal = true);
+    void addTransfers(int rows);
+    const TransfersCount& updateTransfersCount();
 
+private:
     static constexpr int INIT_ROWS_PER_CHUNK = 1000;
 
     mega::MegaApi* mMegaApi;
@@ -83,16 +123,16 @@ private:
     QHash<TransferTag, QVariant> mTransfers;
     QMap<TransferTag, mega::MegaTransfer*> mFailedTransfers;
     QMap<TransferTag, TransferRemainingTime*> mRemainingTimes;
-   // std::deque<TransferTag> mOrder;
     QList<TransferTag> mOrder;
     ThreadPool* mThreadPool;
     QHash<QString, TransferData::FileType> mFileTypes;
-//    QMutex* mModelMutex;
     QReadWriteLock* mModelMutex;
 
     QFuture<void> mInitFuture;
 
     long long mNotificationNumber;
+
+    TransfersCount mTransfersCount;
 
     bool mAreAllPaused;
 
@@ -102,16 +142,11 @@ private:
     QMap<int, long long> mNbTransfersPerType;
     QMap<TransferData::TransferState, long long> mNbTransfersPerState;
 
-    void insertTransfer(mega::MegaApi* api, mega::MegaTransfer* transfer, int row, bool signal = true);
-    void addTransfers(int rows);
 
     mega::QTMegaTransferListener* mListener;
 
     QList<mega::MegaTransfer*> mCacheStartTransfers;
-    QMap<TransferTag,mega::MegaTransfer*> mCacheUpdateTransfers;
-    QList<mega::MegaTransfer*> mCacheFinishTransfers;
-    QTimer timer;
-    int mCurrentTransfers;
+    QList<mega::MegaTransfer*> mCacheUpdateTransfers;
 };
 
 #endif // QTRANSFERSMODEL2_H

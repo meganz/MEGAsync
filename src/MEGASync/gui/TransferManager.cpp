@@ -151,8 +151,8 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
     connect(mModel, &QTransfersModel2::pauseStateChanged,
             mUi->wTransfers, &TransfersWidget::onPauseStateChanged, Qt::QueuedConnection);
 
-    connect(mModel, &QTransfersModel2::transfersInModelChanged,
-            this, &TransferManager::onTransfersInModelChanged, Qt::QueuedConnection);
+    connect(mModel, &QTransfersModel2::transfersDataUpdated,
+            this, &TransferManager::onTransfersDataUpdated);
 
     connect(mModel, &QTransfersModel2::pauseStateChanged,
             this, &TransferManager::onUpdatePauseState, Qt::QueuedConnection);
@@ -171,9 +171,9 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
     connect(mSpeedRefreshTimer, &QTimer::timeout,
             this, &TransferManager::refreshSpeed);
 
-    mStatsRefreshTimer->setSingleShot(false);
-    connect(mStatsRefreshTimer, &QTimer::timeout,
-            this, &TransferManager::refreshStats);
+//    mStatsRefreshTimer->setSingleShot(false);
+//    connect(mStatsRefreshTimer, &QTimer::timeout,
+//            this, &TransferManager::refreshStats);
 
 
     // Connect to storage quota signals
@@ -182,11 +182,13 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
             Qt::QueuedConnection);
 
     // Init state
-    onTransfersInModelChanged(true);
+    //onTransfersInModelChanged(true);
     onUpdatePauseState(mModel->areAllPaused());
     onStorageStateChanged(qobject_cast<MegaApplication*>(qApp)->getAppliedStorageState());
     onTransferQuotaStateChanged(qobject_cast<MegaApplication*>(qApp)->getTransferQuotaState());
     setActiveTab(ALL_TRANSFERS_TAB);
+    //Update stats
+    onTransfersDataUpdated();
 
     // Refresh Style, QSS is glitchy on first start???
     auto tabFrame (mTabFramesToggleGroup[mCurrentTab]);
@@ -294,16 +296,19 @@ void TransferManager::onUpdatePauseState(bool isPaused)
 
 bool TransferManager::refreshStateStats()
 {
+    auto Stats = mModel->getTransfersCount();
+
     QLabel* label (nullptr);
     bool weHaveTransfers (true);
     long long processedNumber (0LL);
 
     // First check Finished states -----------------------------------------------------------------
     label = mUi->lCompleted;
-    for (auto state : FINISHED_STATES)
-    {
-        processedNumber += mModel->getNumberOfTransfersForState(state);
-    }
+//    for (auto state : FINISHED_STATES)
+//    {
+//        processedNumber += mModel->getNumberOfTransfersForState(state);
+//    }
+    processedNumber = (Stats.totalDownloads - Stats.remainingDownloads) + (Stats.totalUploads - Stats.remainingUploads);
     weHaveTransfers = processedNumber;
 
     // Update if the value changed
@@ -326,10 +331,11 @@ bool TransferManager::refreshStateStats()
     // Then Active states --------------------------------------------------------------------------
     processedNumber = 0LL;
     label = mUi->lAllTransfers;
-    for (auto state : ACTIVE_STATES)
-    {
-        processedNumber += mModel->getNumberOfTransfersForState(state);
-    }
+//    for (auto state : ACTIVE_STATES)
+//    {
+//        processedNumber += mModel->getNumberOfTransfersForState(state);
+//    }
+    processedNumber = Stats.remainingDownloads + Stats.remainingUploads;
     weHaveTransfers |= static_cast<bool>(processedNumber);
 
     if (processedNumber != mNumberOfTransfersPerTab[ALL_TRANSFERS_TAB])
@@ -353,8 +359,11 @@ bool TransferManager::refreshStateStats()
             if (mNumberOfTransfersPerTab[ALL_TRANSFERS_TAB] <= 0)
             {
                 leftFooterWidget = mUi->pSpeedAndClear;
-                mSpeedRefreshTimer->start(std::chrono::milliseconds(SPEED_REFRESH_PERIOD_MS));
                 label->show();
+                if(!mSpeedRefreshTimer->isActive())
+                {
+                   mSpeedRefreshTimer->start(std::chrono::milliseconds(SPEED_REFRESH_PERIOD_MS));
+                }
             }
 
             label->setText(QString::number(processedNumber));
@@ -417,29 +426,29 @@ void TransferManager::refreshFileTypesStats()
     }
 }
 
-void TransferManager::onTransfersInModelChanged(bool weHaveTransfers)
+void TransferManager::onTransfersDataUpdated()
 {
     // (De)activate stats refresh if we have transfers (or not)
-    if (weHaveTransfers)
-    {
-        mStatsRefreshTimer->start(std::chrono::milliseconds(STATS_REFRESH_PERIOD_MS));
-    }
-    else
-    {
-        mStatsRefreshTimer->stop();
-        mNumberOfTransfersPerTab[ALL_TRANSFERS_TAB] = NB_INIT_VALUE;
-        mNumberOfTransfersPerTab[DOWNLOADS_TAB]     = NB_INIT_VALUE;
-        mNumberOfTransfersPerTab[UPLOADS_TAB]       = NB_INIT_VALUE;
-        mNumberOfTransfersPerTab[COMPLETED_TAB]     = NB_INIT_VALUE;
-        mNumberOfTransfersPerTab[SEARCH_TAB]        = NB_INIT_VALUE;
-        mNumberOfTransfersPerTab[TYPE_OTHER_TAB]    = NB_INIT_VALUE;
-        mNumberOfTransfersPerTab[TYPE_AUDIO_TAB]    = NB_INIT_VALUE;
-        mNumberOfTransfersPerTab[TYPE_VIDEO_TAB]    = NB_INIT_VALUE;
-        mNumberOfTransfersPerTab[TYPE_ARCHIVE_TAB]  = NB_INIT_VALUE;
-        mNumberOfTransfersPerTab[TYPE_DOCUMENT_TAB] = NB_INIT_VALUE;
-        mNumberOfTransfersPerTab[TYPE_IMAGE_TAB]    = NB_INIT_VALUE;
-        mNumberOfTransfersPerTab[TYPE_TEXT_TAB]     = NB_INIT_VALUE;
-    }
+    //if (weHaveTransfers)
+    //{
+    //    mStatsRefreshTimer->start(std::chrono::milliseconds(STATS_REFRESH_PERIOD_MS));
+    //}
+    //else
+    //{
+        //mStatsRefreshTimer->stop();
+    mNumberOfTransfersPerTab[ALL_TRANSFERS_TAB] = NB_INIT_VALUE;
+    mNumberOfTransfersPerTab[DOWNLOADS_TAB]     = NB_INIT_VALUE;
+    mNumberOfTransfersPerTab[UPLOADS_TAB]       = NB_INIT_VALUE;
+    mNumberOfTransfersPerTab[COMPLETED_TAB]     = NB_INIT_VALUE;
+    mNumberOfTransfersPerTab[SEARCH_TAB]        = NB_INIT_VALUE;
+    mNumberOfTransfersPerTab[TYPE_OTHER_TAB]    = NB_INIT_VALUE;
+    mNumberOfTransfersPerTab[TYPE_AUDIO_TAB]    = NB_INIT_VALUE;
+    mNumberOfTransfersPerTab[TYPE_VIDEO_TAB]    = NB_INIT_VALUE;
+    mNumberOfTransfersPerTab[TYPE_ARCHIVE_TAB]  = NB_INIT_VALUE;
+    mNumberOfTransfersPerTab[TYPE_DOCUMENT_TAB] = NB_INIT_VALUE;
+    mNumberOfTransfersPerTab[TYPE_IMAGE_TAB]    = NB_INIT_VALUE;
+    mNumberOfTransfersPerTab[TYPE_TEXT_TAB]     = NB_INIT_VALUE;
+    //}
 
     // Refresh stats
     refreshTypeStats();
@@ -509,10 +518,7 @@ void TransferManager::refreshStats()
     refreshTypeStats();
     refreshFileTypesStats();
     refreshSearchStats();
-    if (!refreshStateStats())
-    {
-        onTransfersInModelChanged(false);
-    }
+    onTransfersDataUpdated();
     refreshView();
 }
 
@@ -833,7 +839,7 @@ void TransferManager::toggleTab(TM_TAB newTab)
 
         mCurrentTab = newTab;
 
-        refreshStats();
+        refreshView();
 
         // Reload QSS because it is glitchy
         mUi->wLeftPane->setStyleSheet(mUi->wLeftPane->styleSheet());

@@ -11,7 +11,6 @@ TransfersWidget::TransfersWidget(QWidget* parent) :
     QWidget (parent),
     ui (new Ui::TransfersWidget),
 //    model (nullptr),
-    model2 (nullptr),
 //    tDelegate (nullptr),
     tDelegate2 (nullptr),
     mIsPaused (false),
@@ -23,6 +22,8 @@ TransfersWidget::TransfersWidget(QWidget* parent) :
     mProxyActivityMessage (new QMessageBox(this))
 {
     ui->setupUi(this);
+
+    model2 = app->getTransfersModel();
 
     connect(&timer, &QTimer::timeout, this, &TransfersWidget::onTimerTransfers);
     timer.start(500);
@@ -47,22 +48,11 @@ TransfersWidget::TransfersWidget(QWidget* parent) :
 
 void TransfersWidget::setupTransfers()
 {
-//    auto createModelFuture (QtConcurrent::run([=]
-//    {
-        model2 = new QTransfersModel2(nullptr);
-//    }));
-
     mProxyModel = new TransfersSortFilterProxyModel(this);
-    //mProxyModel->setDynamicSortFilter(false);
-
-//    createModelFuture.waitForFinished();
-
-    mProxyModel->setSourceModel(model2);
+    mProxyModel->setSourceModel(app->getTransfersModel());
+    ui->tvTransfers->setModel(mProxyModel);
 
     configureTransferView();
-    model2->initModel();
-
-//    onTransferAdded();
 }
 
 //void TransfersWidget::setupFinishedTransfers(QList<mega::MegaTransfer*> transferData,
@@ -95,7 +85,7 @@ TransfersWidget::~TransfersWidget()
 //    if (tDelegate) delete tDelegate;
     if (tDelegate2) delete tDelegate2;
 //    if (model) delete model;
-    if (model2) delete model2;
+    //if (model2) delete model2;
     if (mProxyModel) delete mProxyModel;
 }
 
@@ -196,7 +186,7 @@ void TransfersWidget::disableGetLink(bool disable)
 
 QTransfersModel2* TransfersWidget::getModel2()
 {
-    return model2;
+    return app->getTransfersModel();
 }
 
 void TransfersWidget::on_pHeaderName_clicked()

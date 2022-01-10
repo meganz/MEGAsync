@@ -207,6 +207,8 @@ void TransfersSortFilterProxyModel::applyFilters(bool invalidate)
 
 bool TransfersSortFilterProxyModel::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const
 {
+    //return true;
+
     QMutexLocker lock (mActivityMutex);
     bool accept (false);
 

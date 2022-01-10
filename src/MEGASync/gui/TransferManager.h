@@ -119,7 +119,7 @@ private slots:
     void on_bText_clicked();
 
     void onUpdatePauseState(bool isPaused);
-    void onTransfersInModelChanged(bool weHaveTransfers);
+    void onTransfersDataUpdated();
 
     void onStorageStateChanged(int storageState);
 
