@@ -257,6 +257,7 @@ const char *ExtServer::GetAnswerToRequest(const char *buf)
         case 'E':
         {
             clearQueues();
+            break;
         }
         case L'V': //View on MEGA
         {

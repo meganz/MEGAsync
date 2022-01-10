@@ -57,7 +57,6 @@ void BugReportDialog::onTransferStart(MegaApi*, MegaTransfer* transfer)
     connect(sendProgress.get(), SIGNAL(canceled()), this, SLOT(cancelSendReport()));
 
     sendProgress->setWindowModality(Qt::WindowModal);
-    sendProgress->setLabelText(tr("Bug report is uploading, it may take a few minutes"));
     sendProgress->setMinimumDuration(0);
     sendProgress->setMinimum(0);
     sendProgress->setMaximum(1010);
@@ -65,6 +64,13 @@ void BugReportDialog::onTransferStart(MegaApi*, MegaTransfer* transfer)
     sendProgress->setAutoClose(false);
     sendProgress->setAutoReset(false);
     lastpermil = 0;
+
+    auto labelWidget = new QLabel(tr("Bug report is uploading, it may take a few minutes"));
+    labelWidget->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Maximum);
+    labelWidget->setWordWrap(true);
+    labelWidget->setAlignment(Qt::AlignHCenter);
+    sendProgress->setLabel(labelWidget);
+
     sendProgress->show();
 }
 
