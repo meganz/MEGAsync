@@ -115,7 +115,7 @@ private:
     const TransfersCount& updateTransfersCount();
 
 private:
-    static constexpr int INIT_ROWS_PER_CHUNK = 1000;
+    static constexpr int INIT_ROWS_PER_CHUNK = 5000;
 
     mega::MegaApi* mMegaApi;
     Preferences* mPreferences;
@@ -130,7 +130,7 @@ private:
 
     QFuture<void> mInitFuture;
 
-    long long mNotificationNumber;
+//    long long mNotificationNumber;
 
     TransfersCount mTransfersCount;
 
@@ -145,8 +145,10 @@ private:
 
     mega::QTMegaTransferListener* mListener;
 
-    QList<mega::MegaTransfer*> mCacheStartTransfers;
-    QList<mega::MegaTransfer*> mCacheUpdateTransfers;
+    QVector<mega::MegaTransfer*> mCacheStartTransfers;
+    QLinkedList<std::tuple<mega::MegaTransfer*, mega::MegaError*>> mCacheFinishedTransfers;
+//    QList<mega::MegaTransfer*> mCacheUpdateTransfers;
+    QMap<TransferTag, std::shared_ptr<mega::MegaTransfer>> mCacheUpdateTransfers;
 };
 
 #endif // QTRANSFERSMODEL2_H

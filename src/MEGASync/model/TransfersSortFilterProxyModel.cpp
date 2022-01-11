@@ -12,6 +12,7 @@ TransfersSortFilterProxyModel::TransfersSortFilterProxyModel(QObject* parent)
       mNextTransferTypes (mTransferTypes),
       mNextFileTypes (mFileTypes),
       mSortCriterion (SortCriterion::PRIORITY),
+      mNextSortCriterion (SortCriterion::PRIORITY),
       mDlNumber (new int(0)),
       mUlNumber (new int(0)),
       mFilterMutex (new QMutex(QMutex::Recursive)),
@@ -84,6 +85,7 @@ void TransfersSortFilterProxyModel::setFilterFixedString(const QString& pattern)
         auto transferModel (static_cast<QTransfersModel2*> (sourceModel()));
         transferModel->lockModelMutex(true);
         QMutexLocker lockSortingMutex (mActivityMutex);
+        mSortCriterion = mNextSortCriterion;
         QSortFilterProxyModel::setFilterFixedString(pattern);
         transferModel->lockModelMutex(false);
         emit modelFiltered();
@@ -115,7 +117,7 @@ void TransfersSortFilterProxyModel::resetAllFilters(bool invalidate)
 
 void TransfersSortFilterProxyModel::setSortBy(SortCriterion sortBy)
 {
-    mSortCriterion = sortBy;
+    mNextSortCriterion = sortBy;
 }
 
 int  TransfersSortFilterProxyModel::getNumberOfItems(TransferData::TransferType transferType)

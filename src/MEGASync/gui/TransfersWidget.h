@@ -62,6 +62,7 @@ private:
     {
         HS_SORT_DESCENDING = 0,
         HS_SORT_ASCENDING,
+        HS_SORT_PRIORITY,
         HS_SORT_NOSORT,
         HS_NB_STATES,
     };

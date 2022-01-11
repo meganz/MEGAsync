@@ -50,6 +50,8 @@ void TransfersWidget::setupTransfers()
 {
     mProxyModel = new TransfersSortFilterProxyModel(this);
     mProxyModel->setSourceModel(app->getTransfersModel());
+    mProxyModel->setSortBy(TransfersSortFilterProxyModel::SortCriterion::PRIORITY);
+    mProxyModel->sort(0, Qt::AscendingOrder);
     ui->tvTransfers->setModel(mProxyModel);
 
     configureTransferView();
@@ -192,20 +194,26 @@ QTransfersModel2* TransfersWidget::getModel2()
 void TransfersWidget::on_pHeaderName_clicked()
 {
     Qt::SortOrder order (Qt::AscendingOrder);
-    int column (-1);
+    TransfersSortFilterProxyModel::SortCriterion sortBy (
+                TransfersSortFilterProxyModel::SortCriterion::NAME);
+    int column (0);
 
     switch (mHeaderNameState)
     {
         case HS_SORT_DESCENDING:
         {
             order = Qt::DescendingOrder;
-            column = 0;
             break;
         }
         case HS_SORT_ASCENDING:
         {
             order = Qt::AscendingOrder;
-            column = 0;
+            break;
+        }
+        case HS_SORT_PRIORITY:
+        {
+            order = Qt::AscendingOrder;
+            sortBy = TransfersSortFilterProxyModel::SortCriterion::PRIORITY;
             break;
         }
         case HS_SORT_NOSORT:
@@ -222,7 +230,7 @@ void TransfersWidget::on_pHeaderName_clicked()
         mProxyModel->sort(-1, order);
     }
 
-    mProxyModel->setSortBy(TransfersSortFilterProxyModel::SortCriterion::NAME);
+    mProxyModel->setSortBy(sortBy);
     mProxyModel->sort(column, order);
 
     setHeaderState(ui->pHeaderName, mHeaderNameState);
@@ -232,20 +240,27 @@ void TransfersWidget::on_pHeaderName_clicked()
 void TransfersWidget::on_pHeaderSize_clicked()
 {
     Qt::SortOrder order (Qt::AscendingOrder);
-    int column (-1);
+    TransfersSortFilterProxyModel::SortCriterion sortBy (
+                TransfersSortFilterProxyModel::SortCriterion::TOTAL_SIZE);
+
+    int column (0);
 
     switch (mHeaderSizeState)
     {
         case HS_SORT_DESCENDING:
         {
             order = Qt::DescendingOrder;
-            column = 0;
             break;
         }
         case HS_SORT_ASCENDING:
         {
             order = Qt::AscendingOrder;
-            column = 0;
+            break;
+        }
+        case HS_SORT_PRIORITY:
+        {
+            order = Qt::AscendingOrder;
+            sortBy = TransfersSortFilterProxyModel::SortCriterion::PRIORITY;
             break;
         }
         case HS_SORT_NOSORT:
@@ -261,7 +276,7 @@ void TransfersWidget::on_pHeaderSize_clicked()
         mHeaderNameState = HS_SORT_DESCENDING;
         mProxyModel->sort(-1, order);
     }
-    mProxyModel->setSortBy(TransfersSortFilterProxyModel::SortCriterion::TOTAL_SIZE);
+    mProxyModel->setSortBy(sortBy);
     mProxyModel->sort(column, order);
 
     setHeaderState(ui->pHeaderSize, mHeaderSizeState);
@@ -318,7 +333,7 @@ void TransfersWidget::onTimerTransfers()
 {
     if(model2->onTimerTransfers())
     {
-       mProxyModel->invalidate();
+//       mProxyModel->invalidate();
     }
 }
 
