@@ -32,7 +32,8 @@
    <string/>
   </property>
   <property name="styleSheet">
-   <string notr="true">#wHeader
+   <string notr="true">
+#wHeader
 {
  background-color:  #FAFAFA;
  border-top-left-radius: 16px;
@@ -207,7 +208,7 @@ QPushButton#bSettings:hover
        <number>1</number>
       </property>
       <item>
-       <widget class="QWidget" name="guestWidgetInHeader" native="true">
+       <widget class="QWidget" name="wHeader" native="true">
         <property name="minimumSize">
          <size>
           <width>0</width>
@@ -2113,7 +2114,7 @@ image: none;</string>
          </property>
          <layout class="QVBoxLayout" name="login2faLayout">
           <item>
-           <widget class="QWidget" name="login2faHeader" native="true">
+           <widget class="QWidget" name="wHeader" native="true">
             <property name="styleSheet">
              <string notr="true">background: transparent;</string>
             </property>

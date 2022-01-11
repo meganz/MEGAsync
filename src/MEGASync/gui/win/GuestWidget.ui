@@ -210,7 +210,7 @@ QPushButton
        <number>1</number>
       </property>
       <item>
-       <widget class="QWidget" name="guestWidgetInHeader" native="true">
+       <widget class="QWidget" name="wHeader" native="true">
         <property name="minimumSize">
          <size>
           <width>0</width>
@@ -2173,7 +2173,7 @@ background-color: #F0373A;
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_16">
           <item>
-           <widget class="QWidget" name="login2FAHeader" native="true">
+           <widget class="QWidget" name="wHeader" native="true">
             <property name="styleSheet">
              <string notr="true">background: transparent;</string>
             </property>
