@@ -44,19 +44,23 @@ void msgHandler(QtMsgType type, const char *msg)
 {
     switch (type)
     {
+        case QtInfoMsg:
+            MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("Qt Info: %1").arg(QString::fromUtf8(msg)).toUtf8().constData());
+            break;
         case QtDebugMsg:
-            MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("QT Debug: %1").arg(QString::fromUtf8(msg)).toUtf8().constData());
+            MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Qt Debug: %1").arg(QString::fromUtf8(msg)).toUtf8().constData());
             break;
         case QtWarningMsg:
-            MegaApi::log(MegaApi::LOG_LEVEL_WARNING, QString::fromUtf8("QT Warning: %1").arg(QString::fromUtf8(msg)).toUtf8().constData());
+            MegaApi::log(MegaApi::LOG_LEVEL_WARNING, QString::fromUtf8("Qt Warning: %1").arg(QString::fromUtf8(msg)).toUtf8().constData());
             break;
         case QtCriticalMsg:
-            MegaApi::log(MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("QT Critical: %1").arg(QString::fromUtf8(msg)).toUtf8().constData());
+            MegaApi::log(MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Qt Critical: %1").arg(QString::fromUtf8(msg)).toUtf8().constData());
             break;
         case QtFatalMsg:
-            MegaApi::log(MegaApi::LOG_LEVEL_FATAL, QString::fromUtf8("QT FATAL ERROR: %1").arg(QString::fromUtf8(msg)).toUtf8().constData());
+            MegaApi::log(MegaApi::LOG_LEVEL_FATAL, QString::fromUtf8("Qt FATAL: %1").arg(QString::fromUtf8(msg)).toUtf8().constData());
             break;
         default:
+            MegaApi::log(MegaApi::LOG_LEVEL_MAX, QString::fromUtf8("Qt MSG: %1").arg(QString::fromUtf8(msg)).toUtf8().constData());
             break;
     }
 }
@@ -98,9 +102,13 @@ void LinuxSignalHandler(int signum)
     {       
         switch (type)
         {
+            case QtInfoMsg:
+                MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("Qt Info: %1").arg(msg).toUtf8().constData());
+                // deliberately not showing context for Info level
+                break;
             case QtDebugMsg:
-                MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("QT Debug: %1").arg(msg).toUtf8().constData());
-                MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("QT Context: %1 %2 %3 %4 %5")
+                MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Qt Debug: %1").arg(msg).toUtf8().constData());
+                MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Qt Context: %1 %2 %3 %4 %5")
                              .arg(QString::fromUtf8(context.category))
                              .arg(QString::fromUtf8(context.file))
                              .arg(QString::fromUtf8(context.function))
@@ -108,8 +116,8 @@ void LinuxSignalHandler(int signum)
                              .arg(context.version).toUtf8().constData());
                 break;
             case QtWarningMsg:
-                MegaApi::log(MegaApi::LOG_LEVEL_WARNING, QString::fromUtf8("QT Warning: %1").arg(msg).toUtf8().constData());
-                MegaApi::log(MegaApi::LOG_LEVEL_WARNING, QString::fromUtf8("QT Context: %1 %2 %3 %4 %5")
+                MegaApi::log(MegaApi::LOG_LEVEL_WARNING, QString::fromUtf8("Qt Warning: %1").arg(msg).toUtf8().constData());
+                MegaApi::log(MegaApi::LOG_LEVEL_WARNING, QString::fromUtf8("Qt Context: %1 %2 %3 %4 %5")
                              .arg(QString::fromUtf8(context.category))
                              .arg(QString::fromUtf8(context.file))
                              .arg(QString::fromUtf8(context.function))
@@ -117,8 +125,8 @@ void LinuxSignalHandler(int signum)
                              .arg(context.version).toUtf8().constData());
                 break;
             case QtCriticalMsg:
-                MegaApi::log(MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("QT Critical: %1").arg(msg).toUtf8().constData());
-                MegaApi::log(MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("QT Context: %1 %2 %3 %4 %5")
+                MegaApi::log(MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Qt Critical: %1").arg(msg).toUtf8().constData());
+                MegaApi::log(MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Qt Context: %1 %2 %3 %4 %5")
                              .arg(QString::fromUtf8(context.category))
                              .arg(QString::fromUtf8(context.file))
                              .arg(QString::fromUtf8(context.function))
@@ -126,14 +134,21 @@ void LinuxSignalHandler(int signum)
                              .arg(context.version).toUtf8().constData());
                 break;
             case QtFatalMsg:
-                MegaApi::log(MegaApi::LOG_LEVEL_FATAL, QString::fromUtf8("QT FATAL ERROR: %1").arg(msg).toUtf8().constData());
-                MegaApi::log(MegaApi::LOG_LEVEL_FATAL, QString::fromUtf8("QT Context: %1 %2 %3 %4 %5")
+                MegaApi::log(MegaApi::LOG_LEVEL_FATAL, QString::fromUtf8("Qt FATAL: %1").arg(msg).toUtf8().constData());
+                MegaApi::log(MegaApi::LOG_LEVEL_FATAL, QString::fromUtf8("Qt Context: %1 %2 %3 %4 %5")
                              .arg(QString::fromUtf8(context.category))
                              .arg(QString::fromUtf8(context.file))
                              .arg(QString::fromUtf8(context.function))
                              .arg(QString::fromUtf8(context.file))
                              .arg(context.version).toUtf8().constData());
            default:
+                MegaApi::log(MegaApi::LOG_LEVEL_MAX, QString::fromUtf8("Qt MSG: %1").arg(msg).toUtf8().constData());
+                MegaApi::log(MegaApi::LOG_LEVEL_MAX, QString::fromUtf8("Qt Context: %1 %2 %3 %4 %5")
+                             .arg(QString::fromUtf8(context.category))
+                             .arg(QString::fromUtf8(context.file))
+                             .arg(QString::fromUtf8(context.function))
+                             .arg(QString::fromUtf8(context.file))
+                             .arg(context.version).toUtf8().constData());
                 break;
         }
     }
