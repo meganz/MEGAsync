@@ -208,9 +208,6 @@
         <file>images/ico_about_MEGA@3x.png</file>
         <file>images/ico_about_MEGA_out@3x.png</file>
         <file>images/ico_about_MEGA_over@3x.png</file>
-        <file>images/ico_add_sync.png</file>
-        <file>images/ico_add_sync@2x.png</file>
-        <file>images/ico_add_sync@3x.png</file>
         <file>images/ico_add_sync_folder.png</file>
         <file>images/ico_add_sync_folder@2x.png</file>
         <file>images/ico_add_sync_folder@3x.png</file>
@@ -693,9 +690,6 @@
         <file>images/Folder@3x.png</file>
         <file>images/File_download_succeed@3x.png</file>
         <file>images/Failed_to_download@3x.png</file>
-        <file>images/ic_sync_warning.png</file>
-        <file>images/ic_sync_warning@2x.png</file>
-        <file>images/ic_sync_warning@3x.png</file>
         <file>images/ic_sync_warning.png</file>
         <file>images/ic_sync_warning@2x.png</file>
         <file>images/ic_sync_warning@3x.png</file>
