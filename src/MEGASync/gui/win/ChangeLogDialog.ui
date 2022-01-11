@@ -121,7 +121,7 @@ background-color: #FFFFFF;
          <string/>
         </property>
         <property name="icon">
-         <iconset resource="../Resources_macx.qrc">
+         <iconset resource="../Resources_win.qrc">
           <normaloff>:/images/app_64.png</normaloff>:/images/app_64.png</iconset>
         </property>
         <property name="iconSize">
@@ -365,8 +365,8 @@ border-bottom: 1px solid #EFEFEC;
         </property>
         <property name="minimumSize">
          <size>
-          <width>0</width>
-          <height>0</height>
+          <width>16777215</width>
+          <height>16777215</height>
          </size>
         </property>
         <property name="text">
@@ -531,7 +531,7 @@ border-bottom: 1px solid #EFEFEC;
   <tabstop>bPolicy</tabstop>
  </tabstops>
  <resources>
-  <include location="../Resources_macx.qrc"/>
+  <include location="../Resources_win.qrc"/>
  </resources>
  <connections/>
 </ui>

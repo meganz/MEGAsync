@@ -1237,7 +1237,7 @@ void SetupWizard::onPasswordTextChanged(QString text)
 }
 
 PreConfiguredSync::PreConfiguredSync(QString localFolder, MegaHandle megaFolderHandle, QString syncName):
-    mMegaFolderHandle{megaFolderHandle}, mLocalFolder(localFolder), mSyncName(syncName)
+    mMegaFolderHandle(megaFolderHandle), mLocalFolder(localFolder), mSyncName(syncName)
 {
 
 }
