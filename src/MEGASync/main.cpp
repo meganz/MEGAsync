@@ -141,6 +141,7 @@ void LinuxSignalHandler(int signum)
                              .arg(QString::fromUtf8(context.function))
                              .arg(QString::fromUtf8(context.file))
                              .arg(context.version).toUtf8().constData());
+                break;
            default:
                 MegaApi::log(MegaApi::LOG_LEVEL_MAX, QString::fromUtf8("Qt MSG: %1").arg(msg).toUtf8().constData());
                 MegaApi::log(MegaApi::LOG_LEVEL_MAX, QString::fromUtf8("Qt Context: %1 %2 %3 %4 %5")

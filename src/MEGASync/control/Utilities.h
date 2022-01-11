@@ -221,7 +221,7 @@ public:
     MegaListenerFuncExecuter(bool autoremove = false,
                              std::function<void(mega::MegaApi* api, mega::MegaRequest *request, mega::MegaError *e)> func = nullptr
                             )
-        : onRequestFinishCallback(std::move(func)), mAutoremove(autoremove)
+        : mAutoremove(autoremove), onRequestFinishCallback(std::move(func))
     {
     }
 

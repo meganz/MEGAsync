@@ -71,7 +71,7 @@ public:
     ProgressFuncExecuterListener(ActionProgress *progressHepler, bool autoremove = false,
                                  std::function<void(mega::MegaApi* api, mega::MegaRequest *request, mega::MegaError *e)> func = nullptr
                                  )
-        : mProgressHelper(progressHepler), onRequestFinishCallback(std::move(func)), mAutoremove(autoremove)
+        : mProgressHelper(progressHepler), mAutoremove(autoremove), onRequestFinishCallback(std::move(func))
     {
     }
 
