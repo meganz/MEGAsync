@@ -11,17 +11,12 @@ MegaDownloader::MegaDownloader(MegaApi *megaApi) : QObject()
     this->megaApi = megaApi;
 }
 
-MegaDownloader::~MegaDownloader()
+MegaCancelToken* MegaDownloader::download(WrappedNode *parent, QString path, QString appData)
 {
-
+    download(parent, QFileInfo(path), appData);
 }
 
-void MegaDownloader::download(WrappedNode *parent, QString path, QString appData)
-{
-    return download(parent, QFileInfo(path), appData);
-}
-
-bool MegaDownloader::processDownloadQueue(QQueue<WrappedNode *> *downloadQueue, QString path, unsigned long long appDataId)
+bool MegaDownloader::processDownloadQueue(QQueue<WrappedNode*>* downloadQueue, std::vector<WrappedNode*>* ongoingDownloads, QString path, unsigned long long appDataId)
 {
     // If the destination path doesn't exist and we can't create it,
     // empty queue and abort transfer.
@@ -93,9 +88,7 @@ bool MegaDownloader::processDownloadQueue(QQueue<WrappedNode *> *downloadQueue, 
 
         // We now have all the necessary info to effectively download.
         download(wNode, currentPath, appData);
-
-        // Delete the node object once the transfer has been passed over to the SDK.
-        delete wNode;
+        ongoingDownloads->push_back(wNode);
     }
     pathMap.clear();
     return true;
@@ -120,72 +113,65 @@ void MegaDownloader::download(WrappedNode *parent, QFileInfo info, QString appDa
     // Extract MEGA node from wrapped node for more readable code
     // Both parent and node should be not null at this point.
     mega::MegaNode *node {parent->getMegaNode()};
-
-    // If the node is a file (foreign or not), or a not foreign dir:
-    if (node->getType() == MegaNode::TYPE_FILE || !node->isForeign())
+    bool isForeignDir = node->getType() == MegaNode::TYPE_FILE || !node->isForeign();
+    if (!isForeignDir)
     {
-        const bool startFirst = hasTransferPriority(parent->getTransferOrigin());
-        const char* localPath = currentPathWithSep.toUtf8().constData();
-        const char* name = nullptr;
-        MegaCancelToken* cancelToken = nullptr; // No cancellation possible
-        MegaTransferListener* listener = nullptr;
-        megaApi->startDownload(node, localPath, name, appData.toUtf8().constData(), startFirst, cancelToken, listener);
-
+        startDownload(parent, currentPathWithSep, appData);
     }
-    // Else, the node is a foreign dir (neither a file nor a not foreign node).
-    // Downloading amounts to creating the dir if it doesn't exist.
     else
     {
-        // Get a c-string with the escaped name. This string will have to be deleted because
-        // megaApi->escapeFsIncompatible allocates it.
-        char *escapedName = megaApi->escapeFsIncompatible(node->getName(),
-                                                          currentPathWithSep.toStdString().c_str());
-        QString nodeName = QString::fromUtf8(escapedName);
-        delete [] escapedName;
-
-        // Build destination path and create it if it does not exist. If the creation fails, exit.
-        QString destPath = currentPathWithSep + nodeName;
-        QDir dir(destPath);
-        if (!dir.exists())
-        {
-#ifndef WIN32
-            if (!megaApi->createLocalFolder(dir.toNativeSeparators(destPath).toUtf8().constData()))
-#else
-            if (!dir.mkpath(QString::fromAscii(".")))
-#endif
-            {
-                return;
-            }
-        }
-
-        // Once the folder has been checked for existence/created with success:
-        // - check if this was A "root folder" for the transfer (if yes, update
-        //     transfer metadata)
-        // - check if this was the last pending transfer. If yes, emit notification.
-        QByteArray appDataArray = appData.toUtf8();
-        char *endptr;
-        unsigned long long notificationId = strtoull(appDataArray.constData(), &endptr, 10);
-        TransferMetaData *data = ((MegaApplication*)qApp)->getTransferAppData(notificationId);
-        if (data)
-        {
-            // Thus, if there is a '*', this was a "root folder", and we successfully transfered it.
-            if (*endptr == '*')
-            {
-                data->transfersFolderOK++;
-            }
-
-            // Update pending transfers in metadata, and notify if this was the last.
-            data->pendingTransfers--;
-            if (data->pendingTransfers == 0)
-            {
-                //Transfers finished, show notification
-                emit finishedTransfers(notificationId);
-            }
-        }
-
-        // Add path to pathMap
-        pathMap[node->getHandle()] = destPath;
+        downloadForeignDir(node, currentPathWithSep, appData);
     }
+}
+
+void MegaDownloader::startDownload(WrappedNode *parent, QString appData, QString currentPathWithSep)
+{
+    bool startFirst = hasTransferPriority(parent->getTransferOrigin());
+    const char* localPath = currentPathWithSep.toUtf8().constData();
+    const char* name = nullptr;
+    MegaCancelToken* cancelToken = MegaCancelToken::createInstance();
+    MegaTransferListener* listener = nullptr;
+    megaApi->startDownload(parent->getMegaNode(), localPath, name, appData.toUtf8().constData(), startFirst, cancelToken, listener);
+    parent->setCancelToken(cancelToken);
+}
+
+void MegaDownloader::downloadForeignDir(MegaNode *node, QString appData, QString currentPathWithSep)
+{
+    // Downloading amounts to creating the dir if it doesn't exist.
+
+    QString destPath = buildEscapedPath(node->getName(), currentPathWithSep);
+    if (!createDirIfNotPresent(destPath))
+    {
+        return;
+    }
+
+    // Once the folder has been checked for existence/created with success:
+    // - check if this was A "root folder" for the transfer (if yes, update
+    //     transfer metadata)
+    // - check if this was the last pending transfer. If yes, emit notification.
+    QByteArray appDataArray = appData.toUtf8();
+    char *endptr;
+    unsigned long long notificationId = strtoull(appDataArray.constData(), &endptr, 10);
+    TransferMetaData *data = ((MegaApplication*)qApp)->getTransferAppData(notificationId);
+    if (data)
+    {
+        // Thus, if there is a '*', this was a "root folder", and we successfully transfered it.
+        if (*endptr == '*')
+        {
+            data->transfersFolderOK++;
+        }
+
+        // Update pending transfers in metadata, and notify if this was the last.
+        data->pendingTransfers--;
+        if (data->pendingTransfers == 0)
+        {
+            //Transfers finished, show notification
+            emit finishedTransfers(notificationId);
+        }
+    }
+
+    // Add path to pathMap
+    pathMap[node->getHandle()] = destPath;
 }
 
 bool MegaDownloader::hasTransferPriority(const WrappedNode::TransferOrigin &origin)
@@ -205,4 +191,31 @@ bool MegaDownloader::hasTransferPriority(const WrappedNode::TransferOrigin &orig
             return false;
         }
     }
+}
+
+QString MegaDownloader::buildEscapedPath(const char *nodeName, QString currentPathWithSep)
+{
+    // Get a c-string with the escaped name. This string will have to be deleted because
+    // megaApi->escapeFsIncompatible allocates it.
+    char *escapedName = megaApi->escapeFsIncompatible(nodeName, currentPathWithSep.toStdString().c_str());
+    QString escapedNameStr = QString::fromUtf8(escapedName);
+    delete [] escapedName;
+    return currentPathWithSep + escapedNameStr;
+}
+
+bool MegaDownloader::createDirIfNotPresent(QString path)
+{
+    QDir dir(path);
+    if (!dir.exists())
+    {
+#ifndef WIN32
+        if (!megaApi->createLocalFolder(dir.toNativeSeparators(path).toUtf8().constData()))
+#else
+        if (!dir.mkpath(QString::fromAscii(".")))
+#endif
+        {
+            return false;
+        }
+    }
+    return true;
 }

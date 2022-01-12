@@ -401,7 +401,6 @@ void TransferManager::refreshTypeStats()
 
     countLabel->setVisible(!countLabelText.isEmpty());
 
-
     auto uploadTransfers = mTransfersCount.pendingUploads;
 
     countLabel = mNumberLabelsGroup[UPLOADS_TAB];

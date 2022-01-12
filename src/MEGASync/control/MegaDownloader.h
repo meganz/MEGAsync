@@ -18,9 +18,9 @@ public:
     // If you want to manage public transfers in a different MegaApi object,
     // provide megaApiGuest
     MegaDownloader(mega::MegaApi *megaApi);
-    virtual ~MegaDownloader();
-    bool processDownloadQueue(QQueue<WrappedNode *> *downloadQueue, QString path, unsigned long long appDataId);
-    void download(WrappedNode *parent, QString path, QString appData);
+    virtual ~MegaDownloader() = default;
+    bool processDownloadQueue(QQueue<WrappedNode*>* downloadQueue, std::vector<WrappedNode*>* ongoingDownloads, QString path, unsigned long long appDataId);
+    mega::MegaCancelToken* download(WrappedNode *parent, QString path, QString appData);
 
 protected:
     void download(WrappedNode *parent, QFileInfo info, QString appData);
@@ -32,6 +32,10 @@ signals:
     void finishedTransfers(unsigned long long appDataId);
 
 private:
+    void startDownload(WrappedNode* parent, QString appData, QString currentPathWithSep);
+    void downloadForeignDir(mega::MegaNode *node, QString appData, QString currentPathWithSep);
+    QString buildEscapedPath(const char* nodeName, QString currentPathWithSep);
+    bool createDirIfNotPresent(QString path);
     static bool hasTransferPriority(const WrappedNode::TransferOrigin& origin);
 };
 

@@ -460,6 +460,8 @@ protected:
     MultiQFileDialog *multiUploadFileDialog;
     QQueue<QString> uploadQueue;
     QQueue<WrappedNode *> downloadQueue;
+    std::vector<WrappedNode*> ongoingDownloads;
+
     ThreadPool* mThreadPool;
     std::shared_ptr<mega::MegaNode> mRootNode;
     std::shared_ptr<mega::MegaNode> mInboxNode;
@@ -587,6 +589,10 @@ private:
     bool isIdleForTooLong() const;
 
     void startUpload(const QString& rawLocalPath, mega::MegaNode* target);
+
+    bool isTransferInBlockingStage(mega::MegaTransfer* transfer);
+    void cleanupFinishedOngoingDownload(mega::MegaTransfer* transfer);
+    std::vector<WrappedNode*>::iterator findOngoingDownload(mega::MegaHandle nodeHandle);
 };
 
 class DeferPreferencesSyncForScope
