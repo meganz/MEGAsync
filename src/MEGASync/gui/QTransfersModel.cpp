@@ -57,7 +57,10 @@ void QTransfersModel::refreshTransfers()
 {
     if (transferOrder.size())
     {
-        emit dataChanged(index(0, 0, QModelIndex()), index(int(transferOrder.size()) - 1, 0, QModelIndex()));
+        // We can safely cast transferOrder.size() to int, because an int should enough
+        // to represent that value.
+        emit dataChanged(index(0, 0, QModelIndex()),
+                         index(static_cast<int>(transferOrder.size()) - 1, 0, QModelIndex()));
     }
 }
 
@@ -67,7 +70,7 @@ int QTransfersModel::rowCount(const QModelIndex &parent) const
     {
         return 0;
     }
-    return int(transferOrder.size());
+    return transferOrder.size();
 }
 
 int QTransfersModel::getModelType()

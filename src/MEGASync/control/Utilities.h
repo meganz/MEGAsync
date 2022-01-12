@@ -295,11 +295,12 @@ public:
     static void animatePartialFadeout(QWidget *object, int msecs = 2000);
     static void animatePartialFadein(QWidget *object, int msecs = 2000);
     static void animateProperty(QWidget *object, int msecs, const char *property, QVariant startValue, QVariant endValue, QEasingCurve curve = QEasingCurve::InOutQuad);
-    // Returns remaining days until unix timestamp (floored)
-    static void getDaysToTimestamp(int64_t msecsTimestamps, int64_t &remaininDays);
-    // Returns remaining days or remainig hours until unix timestamp. Note hours are not in addition to remaininDays
+    // Returns remaining days until given Unix timestamp in seconds.
+    static void getDaysToTimestamp(int64_t secsTimestamps, int64_t &remaininDays);
+    // Returns remaining days / hours until given Unix timestamp in seconds.
+    // Note: remainingHours and remaininDays represent the same value.
     // i.e. for 1 day & 3 hours remaining, remainingHours will be 27, not 3.
-    static void getDaysAndHoursToTimestamp(int64_t msecsTimestamps, int64_t &remaininDays, int64_t &remainingHours);
+    static void getDaysAndHoursToTimestamp(int64_t secsTimestamps, int64_t &remaininDays, int64_t &remainingHours);
 
     // shows a ProgressDialog while some progress goes on. it returns a copy of the object,
     // but the object will be deleted when the progress closes
@@ -332,7 +333,7 @@ public:
 
     static long long getSystemsAvailableMemory();
 
-    static void sleepMilliseconds(long long milliseconds);
+    static void sleepMilliseconds(unsigned int milliseconds);
 
     // Compute the part per <ref> of <part> from <total>. Defaults to %
     static int partPer(long long  part, long long total, uint ref = 100);
