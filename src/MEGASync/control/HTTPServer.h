@@ -11,6 +11,8 @@
 
 #include <megaapi.h>
 
+#include "Utilities.h"
+
 class RequestData
 {
 public:
@@ -55,6 +57,22 @@ class HTTPServer: public QTcpServer
 {
     Q_OBJECT
 
+    enum RequestType
+    {
+        VERSION_COMMAND = 0,
+        OPEN_LINK_REQUEST_START,
+        EXTERNAL_DOWNLOAD_REQUEST_START,
+        EXTERNAL_FILE_UPLOAD_REQUEST_START,
+        EXTERNAL_FOLDER_UPLOAD_REQUEST_START,
+        EXTERNAL_FOLDER_SYNC_REQUEST_START,
+        EXTERNAL_FOLDER_SYNC_CHECK_START,
+        EXTERNAL_OPEN_TRANSFER_MANAGER_START,
+        EXTERNAL_UPLOAD_SELECTION_STATUS_START,
+        EXTERNAL_TRANSFER_QUERY_PROGRESS_START,
+        EXTERNAL_SHOW_IN_FOLDER,
+        UNKNOWN_REQUEST,
+    };
+
     public:
         static const unsigned int MAX_REQUEST_TIME_SECS;
 
@@ -71,11 +89,12 @@ class HTTPServer: public QTcpServer
         static void checkAndPurgeRequests();
         static void onUploadSelectionAccepted(int files, int folders);
         static void onUploadSelectionDiscarded();
-        static void onTransferDataUpdate(mega::MegaHandle handle, int state, long long progress, long long size, long long speed, QString localPath);
+        static void onTransferDataUpdate(mega::MegaHandle handle, int state, long long progress,
+                                         long long size, long long speed, QString localPath);
 
     signals:
         void onLinkReceived(QString link, QString auth);
-        void onExternalDownloadRequested(QQueue<mega::MegaNode*> files);
+        void onExternalDownloadRequested(QQueue<WrappedNode *> files);
         void onExternalDownloadRequestFinished();
         void onExternalFileUploadRequested(qlonglong targetHandle);
         void onExternalFolderUploadRequested(qlonglong targetHandle);
@@ -94,6 +113,19 @@ class HTTPServer: public QTcpServer
         void peerVerifyError(const QSslError & error);
 
     private:
+        void versionCommand(QString& response);
+        void openLinkRequest(QString& response, const HTTPRequest& request);
+        void externalDownloadRequest(QString& response, const HTTPRequest& request, QAbstractSocket* socket);
+        void externalFileUploadRequest(QString& response, const HTTPRequest& request);
+        void externalFolderUploadRequest(QString& response, const HTTPRequest& request);
+        void externalFolderSyncRequest(QString& response, const HTTPRequest& request);
+        void externalFolderSyncCheck(QString& response, const HTTPRequest& request);
+        void externalOpenTransferManager(QString& response, const HTTPRequest& request);
+        void externalUploadSelectionStatus(QString& response, const HTTPRequest& request);
+        void externalTransferQueryProgress(QString& response, const HTTPRequest& request);
+        void externalShowInFolder(QString& response, const HTTPRequest& request);
+
+        RequestType GetRequestType(const HTTPRequest& request);
         bool disabled;
         bool sslEnabled;
         mega::MegaApi *megaApi;

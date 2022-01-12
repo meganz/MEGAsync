@@ -1,6 +1,10 @@
 #include "QActiveTransfersModel.h"
 #include "MegaApplication.h"
+
+#include "control/AppStatsEvents.h"
+
 #include <assert.h>
+
 
 using namespace mega;
 
@@ -99,7 +103,8 @@ QActiveTransfersModel::QActiveTransfersModel(int type, std::shared_ptr<MegaTrans
     if (transferOrder.size() != transfers.size())
     {
         assert(false);
-        megaApi->sendEvent(99513, QString::fromUtf8("Duplicated active transfer during initialization").toUtf8().constData());
+        megaApi->sendEvent(AppStatsEvents::EVENT_DUP_ACTIVE_TRSF_DURING_INIT,
+                           "Duplicated active transfer during initialization");
     }
 }
 
@@ -232,7 +237,9 @@ void QActiveTransfersModel::onTransferStart(MegaApi *, MegaTransfer *transfer)
         if (transfers.count(item->data.tag))
         {
             assert(false);
-            megaApi->sendEvent(99514, QString::fromUtf8("Duplicated active transfer during insertion: %1").arg(QString::number(item->data.tag)).toUtf8().constData());
+            megaApi->sendEvent(AppStatsEvents::EVENT_DUP_ACTIVE_TRSF_DURING_INSERT,
+                               QString::fromUtf8("Duplicated active transfer during insertion: %1")
+                               .arg(QString::number(item->data.tag)).toUtf8().constData());
             delete item;
             return;
         }
@@ -292,7 +299,18 @@ void QActiveTransfersModel::updateTransferInfo(MegaTransfer *transfer)
             item->setTotalSize(transfer->getTotalBytes());
         }
 
-        item->setSpeed(transfer->getSpeed(), transfer->getMeanSpeed());
+        // Get http speed, which reports speed changes faster than the transfer.
+        long long httpSpeed;
+        if (item->getType() == MegaTransfer::TYPE_DOWNLOAD)
+        {
+            httpSpeed = static_cast<MegaApplication*>(qApp)->getMegaApi()->getCurrentDownloadSpeed();
+        }
+        else
+        {
+            httpSpeed = static_cast<MegaApplication*>(qApp)->getMegaApi()->getCurrentUploadSpeed();
+        }
+
+        item->setSpeed(std::min(transfer->getSpeed(), httpSpeed), transfer->getMeanSpeed());
         item->setTransferredBytes(transfer->getTransferredBytes(), !transfer->isSyncTransfer());
         item->setTransferState(transfer->getState());
         item->setPriority(newPriority);

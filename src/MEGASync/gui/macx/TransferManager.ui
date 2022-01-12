@@ -281,7 +281,7 @@
                <string>Add...</string>
               </property>
               <property name="icon">
-               <iconset resource="../Resources_win.qrc">
+               <iconset resource="../Resources_macx.qrc">
                 <normaloff>:/images/ico_drop_add_sync.png</normaloff>
                 <normalon>:/images/ico_drop_add_sync.png</normalon>:/images/ico_drop_add_sync.png</iconset>
               </property>

@@ -1,110 +1,216 @@
 #!/bin/zsh -e
 
-if [ -z "$MEGAQTPATH" ]  || [ ! -d "$MEGAQTPATH" ]; then
-    echo "Please set MEGAQTPATH env variable to a valid QT installation path!"
-    exit 1;
-fi
-
 Usage () {
-    echo "Usage: installer_mac.sh [[--sign] | [--create-dmg] | [--notarize]]"
+    echo "Usage: installer_mac.sh [[--build | --build-cmake] | [--sign] | [--create-dmg] | [--notarize] | [--full-pkg | --full-pkg-cmake]]"
+    echo "    --build          : Builds the app and creates the bundle using qmake."
+    echo "    --build-cmake    : Idem but using cmake"
+    echo "    --sign           : Sign the app"
+    echo "    --create-dmg     : Create the dmg package"
+    echo "    --notarize       : Notarize package against Apple systems."
+    echo "    --full-pkg       : Implies and overrides all the above using qmake"
+    echo "    --full-pkg-cmake : Idem but using cmake"
+    echo ""
+    echo "Environment variables needed to build:"
+    echo "    MEGAQTPATH : Point it to a valid Qt installation path"
+    echo "    VCPKGPATH : Point it to a directory containing a valid vcpkg installation"
+    echo ""
+    echo "Note: --build and --build-cmake are mutually exclusive."
+    echo "      --full-pkg and --full-pkg-cmake are mutually exclusive."
+    echo ""
 }
+
+if [ $# -eq 0 ]; then
+   Usage
+   exit 1
+fi
 
 APP_NAME=MEGAsync
 ID_BUNDLE=mega.mac
 MOUNTDIR=tmp
 RESOURCES=installer/resourcesDMG
-MEGAQTPATH="$(cd "$MEGAQTPATH" && pwd -P)"
+MSYNC_PREFIX=MEGASync/
+MLOADER_PREFIX=MEGALoader/
+MUPDATER_PREFIX=MEGAUpdater/
 
-AVCODEC_VERSION=libavcodec.57.dylib
-AVFORMAT_VERSION=libavformat.57.dylib
-AVUTIL_VERSION=libavutil.55.dylib
-SWSCALE_VERSION=libswscale.4.dylib
-
-AVCODEC_PATH=src/MEGASync/mega/bindings/qt/3rdparty/libs/$AVCODEC_VERSION
-AVFORMAT_PATH=src/MEGASync/mega/bindings/qt/3rdparty/libs/$AVFORMAT_VERSION
-AVUTIL_PATH=src/MEGASync/mega/bindings/qt/3rdparty/libs/$AVUTIL_VERSION
-SWSCALE_PATH=src/MEGASync/mega/bindings/qt/3rdparty/libs/$SWSCALE_VERSION
-
-
+full_pkg=0
+full_pkg_cmake=0
+build=0
+build_cmake=0
 sign=0
 createdmg=0
 notarize=0
 
 while [ "$1" != "" ]; do
     case $1 in
-        --sign )		sign=1
-                                ;;
-        --create-dmg )		createdmg=1
-                                ;;
-        --notarize )		notarize=1
-                                ;;
-        -h | --help )           Usage
-                                exit
-                                ;;
-        * )                     Usage
-                                exit 1
+        --build )
+            build=1
+            if [ ${build_cmake} -eq 1 ]; then Usage; echo "Error: --build and --build-cmake are mutually exclusive."; exit 1; fi
+            ;;
+        --build-cmake )
+            build_cmake=1
+            if [ ${build} -eq 1 ]; then Usage; echo "Error: --build and --build-cmake are mutually exclusive."; exit 1; fi
+            ;;
+        --sign )
+            sign=1
+            ;;
+        --create-dmg )
+            createdmg=1
+            ;;
+        --notarize )
+            notarize=1
+            ;;
+        --full-pkg )
+            if [ ${full_pkg_cmake} -eq 1 ]; then Usage; echo "Error: --full-pkg and --full-pkg-cmake are mutually exclusive."; exit 1; fi
+            full_pkg=1
+            ;;
+        --full-pkg-cmake )
+            if [ ${full_pkg} -eq 1 ]; then Usage; echo "Error: --full-pkg and --full-pkg-cmake are mutually exclusive."; exit 1; fi
+            full_pkg_cmake=1
+            ;;
+        -h | --help )
+            Usage
+            exit
+            ;;
+        * )
+            Usage
+            exit 1
     esac
     shift
 done
 
-rm -rf Release_x64
-mkdir Release_x64
-cd Release_x64
-"$MEGAQTPATH"/bin/lrelease ../src/MEGASync/MEGASync.pro
-"$MEGAQTPATH"/bin/qmake "CONFIG += FULLREQUIREMENTS" -r ../src -spec macx-clang CONFIG+=release CONFIG+=x86_64 -nocache
-make -j`sysctl -n hw.ncpu`
-cp -R MEGASync/MEGAsync.app MEGASync/MEGAsync_orig.app
-"$MEGAQTPATH"/bin/macdeployqt MEGASync/MEGAsync.app -no-strip
-dsymutil MEGASync/MEGAsync.app/Contents/MacOS/MEGAsync -o MEGAsync.app.dSYM
-strip MEGASync/MEGAsync.app/Contents/MacOS/MEGAsync
-dsymutil MEGALoader/MEGAloader.app/Contents/MacOS/MEGAloader -o MEGAloader.dSYM
-strip MEGALoader/MEGAloader.app/Contents/MacOS/MEGAloader
-dsymutil MEGAUpdater/MEGAupdater.app/Contents/MacOS/MEGAupdater -o MEGAupdater.dSYM
-strip MEGAUpdater/MEGAupdater.app/Contents/MacOS/MEGAupdater
-
-mv MEGASync/MEGAsync.app/Contents/MacOS/MEGAsync MEGASync/MEGAsync.app/Contents/MacOS/MEGAclient
-mv MEGALoader/MEGAloader.app/Contents/MacOS/MEGAloader MEGASync/MEGAsync.app/Contents/MacOS/MEGAsync
-mv MEGAUpdater/MEGAupdater.app/Contents/MacOS/MEGAupdater MEGASync/MEGAsync.app/Contents/MacOS/MEGAupdater
-
-cp -L ../$AVCODEC_PATH MEGASync/MEGAsync.app/Contents/Frameworks/
-cp -L ../$AVFORMAT_PATH MEGASync/MEGAsync.app/Contents/Frameworks/
-cp -L ../$AVUTIL_PATH MEGASync/MEGAsync.app/Contents/Frameworks/
-cp -L ../$SWSCALE_PATH MEGASync/MEGAsync.app/Contents/Frameworks/
-
-if [ ! -f MEGASync/MEGAsync.app/Contents/Frameworks/$AVCODEC_VERSION ]  \
-	|| [ ! -f MEGASync/MEGAsync.app/Contents/Frameworks/$AVFORMAT_VERSION ]  \
-	|| [ ! -f MEGASync/MEGAsync.app/Contents/Frameworks/$AVUTIL_VERSION ]  \
-	|| [ ! -f MEGASync/MEGAsync.app/Contents/Frameworks/$SWSCALE_VERSION ];
-then
-	echo "Error copying FFmpeg libs to app bundle."
-	exit 1
+if [ ${full_pkg} -eq 1 ]; then
+    build=1
+    build_cmake=0
+    sign=1
+    createdmg=1
+    notarize=1
+fi
+if [ ${full_pkg_cmake} -eq 1 ]; then
+    build=0
+    build_cmake=1
+    sign=1
+    createdmg=1
+    notarize=1
 fi
 
-MEGASYNC_VERSION=`grep "const QString Preferences::VERSION_STRING" ../src/MEGASync/control/Preferences.cpp | awk -F '"' '{print $2}'`
-/usr/libexec/PlistBuddy -c "Set :CFBundleShortVersionString $MEGASYNC_VERSION" "$APP_NAME/$APP_NAME.app/Contents/Info.plist"
- 
-install_name_tool -change @loader_path/$AVCODEC_VERSION @executable_path/../Frameworks/$AVCODEC_VERSION MEGASync/MEGAsync.app/Contents/MacOS/MEGAclient
-install_name_tool -change @loader_path/$AVFORMAT_VERSION @executable_path/../Frameworks/$AVFORMAT_VERSION MEGASync/MEGAsync.app/Contents/MacOS/MEGAclient
-install_name_tool -change @loader_path/$AVUTIL_VERSION @executable_path/../Frameworks/$AVUTIL_VERSION MEGASync/MEGAsync.app/Contents/MacOS/MEGAclient
-install_name_tool -change @loader_path/$SWSCALE_VERSION @executable_path/../Frameworks/$SWSCALE_VERSION MEGASync/MEGAsync.app/Contents/MacOS/MEGAclient
+if [ ${build} -eq 1 -o ${build_cmake} -eq 1 ]; then
+    if [ -z "${MEGAQTPATH}" ] || [ ! -d "${MEGAQTPATH}/bin" ]; then
+        echo "Please set MEGAQTPATH env variable to a valid QT installation path!"
+        exit 1;
+    fi
+    if [ -z "${VCPKGPATH}" ] || [ ! -d "${VCPKGPATH}/vcpkg/installed" ]; then
+        echo "Please set VCPKGPATH env variable to a directory containing a valid vcpkg installation!"
+        exit 1;
+    fi
 
-otool -L MEGASync/MEGAsync.app/Contents/MacOS/MEGAclient
+    MEGAQTPATH="$(cd "$MEGAQTPATH" && pwd -P)"
+    echo "Building with:"
+    echo "  MEGAQTPATH : ${MEGAQTPATH}"
+    echo "  VCPKGPATH  : ${VCPKGPATH}"
 
-mv MEGASync/MEGAsync.app ./
+    if [ ${build_cmake} -ne 1 ]; then
+        AVCODEC_VERSION=libavcodec.58.dylib
+        AVFORMAT_VERSION=libavformat.58.dylib
+        AVUTIL_VERSION=libavutil.56.dylib
+        SWSCALE_VERSION=libswscale.5.dylib
+        CARES_VERSION=libcares.2.dylib
+        CURL_VERSION=libcurl.dylib
 
-#Attach shell extension
-xcodebuild clean build CODE_SIGN_IDENTITY="-" CODE_SIGNING_REQUIRED=NO -jobs "$(sysctl -n hw.ncpu)" -configuration Release -target MEGAShellExtFinder -project ../src/MEGAShellExtFinder/MEGAFinderSync.xcodeproj/
-cp -a ../src/MEGAShellExtFinder/build/Release/MEGAShellExtFinder.appex $APP_NAME.app/Contents/Plugins/
+        AVCODEC_PATH=${VCPKGPATH}/vcpkg/installed/x64-osx-mega/lib/$AVCODEC_VERSION
+        AVFORMAT_PATH=${VCPKGPATH}/vcpkg/installed/x64-osx-mega/lib/$AVFORMAT_VERSION
+        AVUTIL_PATH=${VCPKGPATH}/vcpkg/installed/x64-osx-mega/lib/$AVUTIL_VERSION
+        SWSCALE_PATH=${VCPKGPATH}/vcpkg/installed/x64-osx-mega/lib/$SWSCALE_VERSION
+        CARES_PATH=${VCPKGPATH}/vcpkg/installed/x64-osx-mega/lib/$CARES_VERSION
+        CURL_PATH=${VCPKGPATH}/vcpkg/installed/x64-osx-mega/lib/$CURL_VERSION
+    fi
+
+    # Clean previous build
+    rm -rf Release_x64
+    mkdir Release_x64
+    cd Release_x64
+
+    # Build binaries
+    if [ ${build_cmake} -eq 1 ]; then
+        cmake -DUSE_THIRDPARTY_FROM_VCPKG=1 -DUSE_PREBUILT_3RDPARTY=0 -DCMAKE_PREFIX_PATH=${MEGAQTPATH} -DVCPKG_TRIPLET=x64-osx-mega -DMega3rdPartyDir=${VCPKGPATH} -S ../contrib/cmake
+        cmake --build ./ --target MEGAsync -j`sysctl -n hw.ncpu`
+        cmake --build ./ --target MEGAloader -j`sysctl -n hw.ncpu`
+        cmake --build ./ --target MEGAupdater -j`sysctl -n hw.ncpu`
+        MSYNC_PREFIX=""
+        MLOADER_PREFIX=""
+        MUPDATER_PREFIX=""
+    else
+        [ ! -f src/MEGASync/mega/include/mega/config.h ] && cp ../src/MEGASync/mega/contrib/official_build_configs/macos/config.h ../src/MEGASync/mega/include/mega/config.h
+        ${MEGAQTPATH}/bin/lrelease ../src/MEGASync/MEGASync.pro
+        ${MEGAQTPATH}/bin/qmake "CONFIG += FULLREQUIREMENTS" "THIRDPARTY_VCPKG_BASE_PATH=${VCPKGPATH}" -r ../src -spec macx-clang CONFIG+=release CONFIG+=x86_64 -nocache
+        make -j`sysctl -n hw.ncpu`
+    fi
+
+    # Prepare bundle
+    cp -R ${MSYNC_PREFIX}MEGAsync.app ${MSYNC_PREFIX}MEGAsync_orig.app
+    ${MEGAQTPATH}/bin/macdeployqt ${MSYNC_PREFIX}MEGAsync.app -no-strip
+    dsymutil ${MSYNC_PREFIX}MEGAsync.app/Contents/MacOS/MEGAsync -o MEGAsync.app.dSYM
+    strip ${MSYNC_PREFIX}MEGAsync.app/Contents/MacOS/MEGAsync
+    dsymutil ${MLOADER_PREFIX}MEGAloader.app/Contents/MacOS/MEGAloader -o MEGAloader.dSYM
+    strip ${MLOADER_PREFIX}MEGAloader.app/Contents/MacOS/MEGAloader
+    dsymutil ${MUPDATER_PREFIX}MEGAupdater.app/Contents/MacOS/MEGAupdater -o MEGAupdater.dSYM
+    strip ${MUPDATER_PREFIX}MEGAupdater.app/Contents/MacOS/MEGAupdater
+
+    mv ${MSYNC_PREFIX}MEGAsync.app/Contents/MacOS/MEGAsync ${MSYNC_PREFIX}MEGAsync.app/Contents/MacOS/MEGAclient
+    mv ${MLOADER_PREFIX}MEGAloader.app/Contents/MacOS/MEGAloader ${MSYNC_PREFIX}MEGAsync.app/Contents/MacOS/MEGAsync
+    mv ${MUPDATER_PREFIX}MEGAupdater.app/Contents/MacOS/MEGAupdater ${MSYNC_PREFIX}MEGAsync.app/Contents/MacOS/MEGAupdater
+
+    if [ ${build_cmake} -ne 1 ]; then
+        [ ! -f MEGASync/MEGAsync.app/Contents/Frameworks/$AVCODEC_VERSION ] && cp -L $AVCODEC_PATH MEGASync/MEGAsync.app/Contents/Frameworks/
+        [ ! -f MEGASync/MEGAsync.app/Contents/Frameworks/$AVFORMAT_VERSION ] && cp -L $AVFORMAT_PATH MEGASync/MEGAsync.app/Contents/Frameworks/
+        [ ! -f MEGASync/MEGAsync.app/Contents/Frameworks/$AVUTIL_VERSION ] && cp -L $AVUTIL_PATH MEGASync/MEGAsync.app/Contents/Frameworks/
+        [ ! -f MEGASync/MEGAsync.app/Contents/Frameworks/$SWSCALE_VERSION ] && cp -L $SWSCALE_PATH MEGASync/MEGAsync.app/Contents/Frameworks/
+        [ ! -f MEGASync/MEGAsync.app/Contents/Frameworks/$CARES_VERSION ] && cp -L $CARES_PATH MEGASync/MEGAsync.app/Contents/Frameworks/
+        [ ! -f MEGASync/MEGAsync.app/Contents/Frameworks/$CURL_VERSION ] && cp -L $CURL_PATH MEGASync/MEGAsync.app/Contents/Frameworks/
+
+        if [ ! -f MEGASync/MEGAsync.app/Contents/Frameworks/$AVCODEC_VERSION ]  \
+            || [ ! -f MEGASync/MEGAsync.app/Contents/Frameworks/$AVFORMAT_VERSION ]  \
+            || [ ! -f MEGASync/MEGAsync.app/Contents/Frameworks/$AVUTIL_VERSION ]  \
+            || [ ! -f MEGASync/MEGAsync.app/Contents/Frameworks/$SWSCALE_VERSION ];
+        then
+            echo "Error copying FFmpeg libs to app bundle."
+            exit 1
+        fi
+    fi
+
+    MEGASYNC_VERSION=`grep "const QString Preferences::VERSION_STRING" ../src/MEGASync/control/Preferences.cpp | awk -F '"' '{print $2}'`
+    /usr/libexec/PlistBuddy -c "Set :CFBundleShortVersionString $MEGASYNC_VERSION" "${MSYNC_PREFIX}$APP_NAME.app/Contents/Info.plist"
+
+    if [ ${build_cmake} -ne 1 ]; then
+        install_name_tool -change @loader_path/$AVCODEC_VERSION @executable_path/../Frameworks/$AVCODEC_VERSION MEGASync/MEGAsync.app/Contents/MacOS/MEGAclient
+        install_name_tool -change @loader_path/$AVFORMAT_VERSION @executable_path/../Frameworks/$AVFORMAT_VERSION MEGASync/MEGAsync.app/Contents/MacOS/MEGAclient
+        install_name_tool -change @loader_path/$AVUTIL_VERSION @executable_path/../Frameworks/$AVUTIL_VERSION MEGASync/MEGAsync.app/Contents/MacOS/MEGAclient
+        install_name_tool -change @loader_path/$SWSCALE_VERSION @executable_path/../Frameworks/$SWSCALE_VERSION MEGASync/MEGAsync.app/Contents/MacOS/MEGAclient
+
+        rm -r $APP_NAME.app || :
+        mv $MSYNC_PREFIX/$APP_NAME.app ./
+    fi
+
+    otool -L MEGAsync.app/Contents/MacOS/MEGAclient
+
+    #Attach shell extension
+    xcodebuild clean build CODE_SIGN_IDENTITY="-" CODE_SIGNING_REQUIRED=NO -jobs "$(sysctl -n hw.ncpu)" -configuration Release -target MEGAShellExtFinder -project ../src/MEGAShellExtFinder/MEGAFinderSync.xcodeproj/
+    cp -a ../src/MEGAShellExtFinder/build/Release/MEGAShellExtFinder.appex $APP_NAME.app/Contents/Plugins/
+    cd ..
+fi
 
 if [ "$sign" = "1" ]; then
+	cd Release_x64
 	cp -R $APP_NAME.app ${APP_NAME}_unsigned.app
 	echo "Signing 'APPBUNDLE'"
 	codesign --force --verify --verbose --preserve-metadata=entitlements --options runtime --sign "Developer ID Application: Mega Limited" --deep $APP_NAME.app
 	echo "Checking signature"
 	spctl -vv -a $APP_NAME.app
+	cd ..
 fi
 
 if [ "$createdmg" = "1" ]; then
+	cd Release_x64
+	[ -f $APP_NAME.dmg ] && rm $APP_NAME.dmg
 	echo "DMG CREATION PROCESS..."
 	echo "Creating temporary Disk Image (1/7)"
 	#Create a temporary Disk Image
@@ -136,9 +242,18 @@ if [ "$createdmg" = "1" ]; then
 	#Delete the temporary image
 	rm $APP_NAME-tmp.dmg
 	rmdir $MOUNTDIR
+	cd ..
 fi
 
 if [ "$notarize" = "1" ]; then
+
+	cd Release_x64
+	if [ ! -f $APP_NAME.dmg ];then
+		echo ""
+		echo "There is no dmg to be notarized."
+		echo ""
+		exit 1
+	fi
 
 	rm querystatus.txt staple.txt || :
 
@@ -200,11 +315,7 @@ if [ "$notarize" = "1" ]; then
 			false
 		fi
 	fi
+	cd ..
 fi
-
-echo "Cleaning"
-rm -rf MEGAsync
-rm -rf MEGALoader
-rm -rf MEGAUpdater
 
 echo "DONE"

@@ -257,17 +257,20 @@ public:
     long long importFolder();
     void setImportFolder(long long value);
 
+    bool neverCreateLink();
+    void setNeverCreateLink(bool value);
+
     // sync related
     void writeSyncSetting(std::shared_ptr<SyncSetting> syncSettings); //write sync into cache
     void removeAllSyncSettings(); //remove all sync from cache
     void removeSyncSetting(std::shared_ptr<SyncSetting> syncSettings); //remove one sync from cache
-    QMap<int, std::shared_ptr<SyncSetting> > getLoadedSyncsMap() const; //return loaded syncs when loggedin/entered user
+    QMap<mega::MegaHandle, std::shared_ptr<SyncSetting> > getLoadedSyncsMap() const; //return loaded syncs when loggedin/entered user
     void removeAllFolders(); //remove all syncs from cache
     // old cache transition related:
-    void removeOldCachedSync(int position, QString email = {});
+    void removeOldCachedSync(int position, QString email = QString());
     //get a list of cached syncs (withouth loading them in memory): intended for transition to sdk caching them.
     QList<SyncData> readOldCachedSyncs(int *cachedBusinessState = nullptr, int *cachedBlockedState = nullptr,
-                                       int *cachedStorageState = nullptr, QString email = {});
+                                       int *cachedStorageState = nullptr, QString email = QString());
     void saveOldCachedSyncs(); //save the old cache (intended to clean them)
 
     QStringList getExcludedSyncNames();
@@ -284,8 +287,10 @@ public:
     void setLastReboot(long long value);
     long long getLastExit();
     void setLastExit(long long value);
-    QSet<int> getDisabledSyncTags();
-    void setDisabledSyncTags(QSet<int> disabledSyncs);
+    QSet<mega::MegaHandle> getDisabledSyncTags();
+    void setDisabledSyncTags(QSet<mega::MegaHandle> disabledSyncs);
+    bool getNotifyDisabledSyncsOnLogin();
+    void setNotifyDisabledSyncsOnLogin(bool notify);
 
     QString getHttpsKey();
     void setHttpsKey(QString key);
@@ -304,6 +309,9 @@ public:
     // enter user preferences and load syncs into loadedSyncsMap
     void enterUser(int i);
     bool enterUser(QString account);
+
+    // preloads excluded sync names and adds missing defaults ones in previous versions
+    void loadExcludedSyncNames();
 
     // leave user
     void leaveUser();
@@ -417,10 +425,8 @@ public:
     static std::chrono::milliseconds OVER_QUOTA_ACTION_DIALOGS_DISABLE_TIME;
 
     static int STATE_REFRESH_INTERVAL_MS;
+    static int NETWORK_REFRESH_INTERVAL_MS;
     static int FINISHED_TRANSFER_REFRESH_INTERVAL_MS;
-
-    static int MAX_FIRST_SYNC_DELAY_S;
-    static int MIN_FIRST_SYNC_DELAY_S;
 
     static long long MIN_UPDATE_NOTIFICATION_INTERVAL_MS;
     static unsigned int UPDATE_INITIAL_DELAY_SECS;
@@ -477,7 +483,6 @@ protected:
     void login(QString account);
     void logout();
 
-    void loadExcludedSyncNames();
 
     // sync related:
     void readFolders(); //read sync stored configuration
@@ -510,7 +515,7 @@ protected:
     // loaded syncs when loggedin/entered user. This is intended to be used to load values that are not stored in the sdk (like sync name/last known remote path)
     // the actual SyncSettings model is stored in Model::configuredSyncsMap. That one is the one that will be updated and persistent accordingly
     // These are only used for retrieving values or removing at uninstall
-    QMap<int, std::shared_ptr<SyncSetting>> loadedSyncsMap;
+    QMap<mega::MegaHandle, std::shared_ptr<SyncSetting>> loadedSyncsMap;
 
     QStringList excludedSyncNames;
     QStringList excludedSyncPaths;
@@ -665,6 +670,8 @@ protected:
     static const QString lastPublicHandleTimestampKey;
     static const QString lastPublicHandleTypeKey;
     static const QString disabledSyncsKey;
+    static const QString neverCreateLinkKey;
+    static const QString notifyDisabledSyncsKey;
 
     static const bool defaultShowNotifications;
     static const bool defaultStartOnStartup;
@@ -702,6 +709,7 @@ protected:
     static const long long defaultHttpsCertExpiration;
     static const int defaultAccountStatus;
     static const bool defaultNeedsFetchNodes;
+    static const bool defaultNeverCreateLink;
 };
 
 #endif // PREFERENCES_H

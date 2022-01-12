@@ -54,15 +54,39 @@ Download Qt online installer from [here](https://www.qt.io/download-open-source?
 2. Clone or download this repo
 3. Create a folder `Release_x32` inside the root of the code that you have just downloaded
 4. Download the required third party libraries from this link:
-https://mega.nz/#!8tZglCTR!cZ_B39i9YxLgt3_8x9LsOpFhFDHuAh4jdz78IuQTQT4
+https://mega.nz/file/FoxzRa6K#m4gnzSzALgnfGrXP_xi7z8o-8FaVMu65tiza9p-FOjU
 5. Uncompress that file into `src\MEGASync\mega\bindings\qt`
 6. Open the project `src/MEGA.pro` with Qt Creator
 7. Select the folder `Release_x32` as the target for Release and Debug builds
-8. Build the project
-9. Copy or move the .dll files from the folder `src\MEGASync\mega\bindings\qt\3rdparty\bin` to the folder `Release_x32\MEGASync`
-10.  Enjoy!
+8. From the `src` directory, run:
+```
+lrelease MEGASync/MEGASync.pro
+```
+to generate translation files. Alternatively, you can add it as a custom step in the build process, right afer `qmake` (`Command: lrelease`; `Arguments: MEGASync/MEGASync.pro`; `Working directory: %{sourceDir}`).
+ 
+9. Build the project
+10. Copy or move the .dll files from the folder `src\MEGASync\mega\bindings\qt\3rdparty\bin` to the folder `Release_x32\MEGASync`
+11. Enjoy!
 
 It's recommended to go to `Project -> Run` in Qt Creator and disable the option `Run in terminal`
+
+##### Preparation (Using `build-from-scratch.cmake`):
+
+Download and install latest CMake from https://cmake.org/download/. Mininimum required version is `3.15`  
+The following steps, if left unchanged, will attempt to build using VS 2019 Professional, for x64.  
+    To change the build, choose another Triplet, see ``<desktop (megasync)>\src\MEGASync\mega\contrib\cmake\vcpkg_extra_triplets\``.  
+    To change VS version, edit the Triplet file that you're going to pass to `-DTRIPLET`.
+
+1.  ``cd <desktop (megasync)>\contrib\cmake``
+2.  ``cmake -DTRIPLET=x64-windows-mega -P build_from_scratch.cmake``  
+Keep an eye on it because it will fail eventually.
+3.  Step 2 will fail after a while because it will not find `pdfium`. Download `pdfium` sources and copy them to  
+``cd .\..\..\..\3rdparty_desktop\vcpkg\``  
+so that in the end it will look something like ``<desktop (megasync)>\..\3rdparty_desktop\vcpkg\pdfium\pdfium\<many files>``.
+4.  ``cd <desktop (megasync)>\contrib\cmake``
+5.  ``cmake -DTRIPLET=x64-windows-mega -P build_from_scratch.cmake`` again
+6.  ``cd .\..\..\build-x64-windows-mega\``
+7.  Open `MEGAsync-desktop-64.sln` in VS 2019.
 
 ##### Preparation (Using CMake):
 
@@ -134,7 +158,7 @@ It's recommended to go to `Project -> Run` in Qt Creator and disable the option 
 1. Install Xcode in your system
 2. Clone or download this repo
 3. Download the required third party libraries and configuration file (`config.h`) from this link:
-https://mega.nz/#!T14B0Y4T!EXGg9dRtacgz9_vCUtVq5tj6C3PBpkOHgXG289EBxBM
+https://mega.nz/file/c1pRDaiA#VQ9yr09wQ_DAJLPFtBolS4AbbxItF21UVxXZ-WWTx0w
 4.Uncompress that file and move the folder `3rdparty` into `src/MEGASync/mega/bindings/qt`/ and the file `config.h` into `src/MEGASync/mega/include/mega/`
 5. Run the script `installer_mac.sh` to build the project and generate the application bundle for MEGAsync. If you want to generate an Apple disk image (DMG file), add the flag `--create-dmg`. Build directory is `Release_x64`
 6. Enjoy!
@@ -179,4 +203,4 @@ Note: when compiling for Fedora/RHEL/CentOS and alike, `qmake` and `lrelease` mi
 
 Known Issues
 ------------
-For Solus, c-ares might not compile do to a CFLAG defined by gcc: -D_FORTIFY_SOURCE=2. This issue and its possible solution is described here https://github.com/c-ares/c-ares/issues/58 and http://ma.tc/ehuboqatec.md.
+For Solus, c-ares might not compile due to a CFLAG defined by gcc: -D_FORTIFY_SOURCE=2. This issue and its possible solution is described here https://github.com/c-ares/c-ares/issues/58.

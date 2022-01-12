@@ -84,12 +84,11 @@ void ExtServer::onClientData()
         return;
     }
 
-    qint64 len;
     char buf[1024];
-    while ((len = client->readLine(buf, sizeof(buf))) > 0) {
+    while (client->readLine(buf, sizeof(buf)) > 0) {
         const char *out = GetAnswerToRequest(buf);
         if (out) {
-            qint64 len = client->write(out);
+            client->write(out);
             client->write("\n");
         }
     }
@@ -215,23 +214,12 @@ const char *ExtServer::GetAnswerToRequest(const char *buf)
         }
         case 'F':
         {
-            QString filePath = QString::fromUtf8(content);
-            QFileInfo file(filePath);
-            if (file.exists())
-            {
-                //LOG_debug << "Adding file to upload queue";
-                uploadQueue.enqueue(QDir::toNativeSeparators(file.absoluteFilePath()));
-            }
+            addToQueue(uploadQueue, content);
             break;
         }
         case 'L':
         {
-            QString filePath = QString::fromUtf8(content);
-            QFileInfo file(filePath);
-            if (file.exists())
-            {
-                exportQueue.enqueue(QDir::toNativeSeparators(file.absoluteFilePath()));
-            }
+            addToQueue(exportQueue, content);
             break;
         }
         // get the state of an object
@@ -268,38 +256,17 @@ const char *ExtServer::GetAnswerToRequest(const char *buf)
         }
         case 'E':
         {
-            if (!uploadQueue.isEmpty())
-            {
-                emit newUploadQueue(uploadQueue);
-                uploadQueue.clear();
-            }
-
-            if (!exportQueue.isEmpty())
-            {
-                emit newExportQueue(exportQueue);
-                exportQueue.clear();
-            }
+            clearQueues();
+            break;
         }
         case L'V': //View on MEGA
         {
-            QString filePath = QString::fromUtf8(content);
-            QFileInfo file(filePath);
-            if (file.exists())
-            {
-                emit viewOnMega(filePath.toUtf8(), false);
-
-            }
+            viewOnMega(content);
             break;
         }
         case L'R': //Open pRevious versions
         {
-            QString filePath = QString::fromUtf8(content);
-            QFileInfo file(filePath);
-            if (file.exists())
-            {
-                emit viewOnMega(filePath.toUtf8(), true);
-
-            }
+            viewOnMega(content);
             break;
         }
         case L'H': //Has previous versions? (still unsupported)
@@ -313,4 +280,39 @@ const char *ExtServer::GetAnswerToRequest(const char *buf)
     }
 
     return out;
+}
+
+void ExtServer::addToQueue(QQueue<QString> &queue, const char *content)
+{
+    const QString filePath = QString::fromUtf8(content);
+    const QFileInfo file(filePath);
+    if (file.exists())
+    {
+        queue.enqueue(QDir::toNativeSeparators(file.absoluteFilePath()));
+    }
+}
+
+void ExtServer::clearQueues()
+{
+    if (!uploadQueue.isEmpty())
+    {
+        emit newUploadQueue(uploadQueue);
+        uploadQueue.clear();
+    }
+
+    if (!exportQueue.isEmpty())
+    {
+        emit newExportQueue(exportQueue);
+        exportQueue.clear();
+    }
+}
+
+void ExtServer::viewOnMega(const char *content)
+{
+    const QString filePath = QString::fromUtf8(content);
+    const QFileInfo file(filePath);
+    if (file.exists())
+    {
+        emit viewOnMega(filePath.toUtf8(), false);
+    }
 }

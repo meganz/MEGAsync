@@ -102,12 +102,6 @@ void ChangeLogDialog::on_bAck_clicked()
     QtConcurrent::run(QDesktopServices::openUrl, QUrl(ackUrl));
 }
 
-void ChangeLogDialog::on_bGDPR_clicked()
-{
-    QString gdprUrl = Preferences::BASE_URL + QString::fromAscii("/gdpr");
-    QtConcurrent::run(QDesktopServices::openUrl, QUrl(gdprUrl));
-}
-
 void ChangeLogDialog::changeEvent(QEvent *event)
 {
     if (event->type() == QEvent::LanguageChange)

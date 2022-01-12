@@ -1,47 +1,355 @@
 #include "PlanWidget.h"
 #include "ui_PlanWidget.h"
 #include "Utilities.h"
-#include <QDesktopServices>
-#include <QUrl>
-#include <QtCore>
 #include "Preferences.h"
 #include "megaapi.h"
+#include "MegaApplication.h"
 
-#if QT_VERSION >= 0x050000
 #include <QtConcurrent/QtConcurrent>
-#endif
+#include <QUrl>
+#include <QDesktopServices>
+#include <QGraphicsOpacityEffect>
 
-#define TOBYTES 1024 * 1024 * 1024
+constexpr int NB_B_IN_1GB (1024 * 1024 * 1024);
+constexpr int NB_GB_IN_1TB (1024);
 
-PlanWidget::PlanWidget(PlanInfo data, QString userAgent, QWidget *parent) :
-    QWidget(parent),
-    ui(new Ui::PlanWidget)
+PlanWidget::PlanWidget(const PlanInfo& data, const QString& userAgent, QWidget* parent) :
+    QWidget (parent),
+    mUi (new Ui::PlanWidget),
+    mDetails (data),
+    mUserAgent (userAgent),
+    mTooltip (new BalloonToolTip(this)),
+    mDisabled (false),
+    mIsBillingCurrency (data.billingCurrencyName == data.localCurrencyName)
 {
-    details = data;
-    this->userAgent = userAgent;
+    mUi->setupUi(this);
+    setMouseTracking(true);    
 
-    ui->setupUi(this);
+    updatePlanInfo();
 
-    //Create the overlay widget with transparent background
-    //that will be shown over the Plans to manage clicked() events
-    overlay = new QPushButton(this);
-    overlay->setObjectName(QString::fromUtf8("bOverlay"));
-    overlay->setStyleSheet(QString::fromAscii(
-                               "QPushButton#bOverlay:hover {border-image: url(://images/account_type_over.png);} "
-                               "QPushButton#bOverlay {border-radius: 3px; border: 1px solid; border-color: rgba(0, 0, 0, 0.1); border: none;} "
-                               "QPushButton#bOverlay:pressed {border-image: url(://images/account_type_press.png);}"));
+    installEventFilter(this);
+    mUi->lHelp->installEventFilter(this);
+    mUi->lBusinessStorageIcon->installEventFilter(this);
+    mUi->lBusinessTransferIcon->installEventFilter(this);        
+}
 
-    overlay->setCursor(Qt::PointingHandCursor);
-    overlay->resize(this->size());
-    connect(overlay, SIGNAL(clicked()), this, SLOT(onOverlayClicked()));
+PlanWidget::~PlanWidget()
+{
+    delete mUi;
+}
 
+void PlanWidget::updatePlanInfo()
+{
+    auto accountType (mDetails.level);
+    mDisabled = false;
+    mIsBillingCurrency = mDetails.billingCurrencyName == mDetails.localCurrencyName;
+
+    // Set widget opacity for lower plans than the actual one
+    int currentAccType (Preferences::instance()->accountType());
+    if (currentAccType != FREE && currentAccType != PRO_LITE)
+    {
+        if (mDetails.level == PRO_LITE || mDetails.level < currentAccType)
+        {
+            setWidgetOpacity(0.5);
+            mDisabled = true;
+        }
+    }
+
+    // Set css props for different pro plans
+    setCursor(!mDisabled ? Qt::PointingHandCursor : Qt::ArrowCursor);
+    setProperty("disabled", mDisabled);
+    setProperty("currentPlan", mDetails.level == currentAccType);
+
+    // Draw colored border and tag if this is the current plan
+    if (mDetails.level == currentAccType)
+    {
+        QLabel* tag = new QLabel(tr("Current plan"), this);
+        tag->setObjectName(QString::fromLatin1("lCurrentPlanTag"));
+        tag->adjustSize();
+        tag->move((width() - tag->width()) / 2,
+                  mUi->wContainer->y()
+                  + mUi->wContainer->layout()->contentsMargins().top()
+                  - 2 // border size
+                  - tag->height() / 2);
+    }
+
+    // Display currency name only if the local currency is not the billing currency
+    mUi->lCurrency->setVisible(!mIsBillingCurrency);
+
+    // Set prices strings
+    double localPrice ((mDetails.pricePerUserLocal * mDetails.minUsers) / 100.);
+    QString localPriceString (toPrice(localPrice, mDetails.localCurrencySymbol));
+    mUi->lPrice->setText(localPriceString);
+    mUi->lCurrency->setText(mDetails.localCurrencyName);
+
+    // Reset lPrice StyleSheet
+    mUi->lPrice->setStyleSheet(QString());
+    // Force polish to update font Info with .ui StyleSheet
+    mUi->lPrice->style()->polish(mUi->lPrice);
+
+    // If text does not fit, use a smaller font size
+    QFont font (mUi->lPrice->font());
+    auto fontSize (font.pixelSize());
+    while (QFontMetrics(font).boundingRect(localPriceString).width() > mUi->lPrice->width()
+           && fontSize > 1)
+    {
+        fontSize -= 1;
+        font.setPixelSize(fontSize);
+    }
+    setPriceFontSizePx(fontSize);
+
+    QString smallPrice;
+    if (accountType == BUSINESS)
+    {
+        QString price (toPrice(mDetails.pricePerUserBilling / 100.,
+                               mDetails.billingCurrencySymbol));
+        smallPrice = tr("%1 per user").arg(price);
+        mUi->lMinimumUsersBusiness->setText(tr("minimum %1 users").arg(mDetails.minUsers));
+    }
+    else
+    {
+        double billingPrice ((mDetails.pricePerUserBilling * mDetails.minUsers) / 100.);
+        smallPrice = toPrice(billingPrice, mDetails.billingCurrencySymbol);
+    }
+    mUi->lPriceBusiness->setText(smallPrice);
+
+    // Set period
+    mUi->lPeriod->setText(QString::fromUtf8("/%1").arg(tr("month")));
+
+    switch (mDetails.level)
+    {
+        case PRO_LITE:
+            mUi->lProPlan->setText(QString::fromUtf8("Pro Lite"));
+            break;
+        case PRO_I:
+            mUi->lProPlan->setText(QString::fromUtf8("Pro I"));
+            break;
+        case PRO_II:
+            mUi->lProPlan->setText(QString::fromUtf8("Pro II"));
+            break;
+        case PRO_III:
+            mUi->lProPlan->setText(QString::fromUtf8("Pro III"));
+            break;
+        case BUSINESS:
+            mUi->lProPlan->setText(QString::fromUtf8("Business"));
+            break;
+        default:
+            mUi->lProPlan->setText(QString::fromUtf8("Pro"));
+            break;
+    }
+
+    // Show/hide widgets according to plans/currency
+    mUi->lGreatValue->setVisible(accountType == PRO_I);
+    mUi->lPriceBusiness->setVisible(accountType == BUSINESS || !mIsBillingCurrency);
+    mUi->lMinimumUsersBusiness->setVisible(accountType == BUSINESS);
+    mUi->lPeriod->setAlignment(Qt::AlignVCenter |
+                               ((accountType == BUSINESS)
+                                || !mIsBillingCurrency ?
+                                    Qt::AlignRight
+                                  : Qt::AlignLeft));
+
+    // Choose the right icon to show: check mark or ?
+    if (accountType == BUSINESS)
+    {
+        mUi->sIconsStorage->setCurrentWidget(mUi->pBusinessTierStorage);
+        mUi->sIconsTransfer->setCurrentWidget(mUi->pBusinessTierTransfer);
+    }
+    else
+    {
+        if (mDetails.level == currentAccType)
+        {
+            mUi->sIconsStorage->setCurrentWidget(mUi->pProTierStorageCurrentPlan);
+            mUi->sIconsTransfer->setCurrentWidget(mUi->pProTierTransferCurrentPlan);
+        }
+        else
+        {
+            mUi->sIconsStorage->setCurrentWidget(mUi->pProTierStorage);
+            mUi->sIconsTransfer->setCurrentWidget(mUi->pProTierTransfer);
+        }
+    }
+
+    //Set limits
+    mUi->lStorageInfo->setText(
+                formatRichString(Utilities::getSizeString(mDetails.gbStorage * NB_B_IN_1GB), STORAGE));
+    mUi->lBandWidthInfo->setText(
+                formatRichString(Utilities::getSizeString(mDetails.gbTransfer * NB_B_IN_1GB), BANDWIDTH));
+
+    style()->unpolish(this);
+    style()->polish(this);
+}
+
+void PlanWidget::setPlanInfo(const PlanInfo& data)
+{
+    mDetails = data;
     updatePlanInfo();
 }
 
-void PlanWidget::onOverlayClicked()
+bool PlanWidget::isBillingCurrency() const
+{
+    return mIsBillingCurrency;
+}
+
+int PlanWidget::getPriceFontSizePx() const
+{
+    // Force polish to update font Info
+    mUi->lPrice->style()->polish(mUi->lPrice);
+    return mUi->lPrice->fontInfo().pixelSize();
+}
+
+void PlanWidget::setPriceFontSizePx(int fontSizepx)
+{
+    // Force polish to update font Info
+    if (mUi->lPrice->font().pixelSize() != fontSizepx)
+    {
+        // Use StyleSheet because it overrides setFont()
+        mUi->lPrice->setStyleSheet(QString::fromLatin1("QLabel{font-size: %1px;}").arg(fontSizepx));
+    }
+}
+
+void PlanWidget::changeEvent(QEvent *event)
+{
+    if (event->type() == QEvent::LanguageChange)
+    {
+        mUi->retranslateUi(this);
+        updatePlanInfo();
+    }
+    QWidget::changeEvent(event);
+}
+
+bool PlanWidget::eventFilter(QObject* obj, QEvent* event)
+{
+    // If pro card is not disabled, custom management of events, otherwise do nothing
+    if (!mDisabled)
+    {
+        if (event->type() == QEvent::MouseButtonPress)
+        {
+            QString url = getProURL();
+            Utilities::getPROurlWithParameters(url);
+            QtConcurrent::run(QDesktopServices::openUrl, QUrl(url));
+            return true;
+        }
+        else if (event->type() == QEvent::ToolTip)
+        {
+            bool hoverHelpIcon {obj == mUi->lHelp};
+            bool hoverStorageInfo {obj == mUi->lBusinessStorageIcon};
+            bool hoverTransferInfo {obj == mUi->lBusinessTransferIcon};
+
+            if (hoverHelpIcon || hoverStorageInfo || hoverTransferInfo)
+            {
+                auto target (static_cast<QWidget*>(obj));
+
+                HelpButton ho (HELP);
+                if (hoverStorageInfo)
+                {
+                    ho = STORAGE;
+                }
+                else if (hoverTransferInfo)
+                {
+                    ho = BANDWIDTH;
+                }
+
+                mTooltip->setPopupText(getTooltipMsg(ho));
+
+                // Compute tooltip's attach point (in target coords ref)
+                QPoint attachPoint (target->width() / 2, 0);
+                mTooltip->attachAt(target->mapToGlobal(attachPoint));
+                mTooltip->show();
+            }
+            else
+            {
+                mTooltip.get()->hide();
+                event->ignore();
+            }
+
+            return true;
+        }
+    }
+
+    // standard event processing
+    return QObject::eventFilter(obj, event);
+}
+
+QString PlanWidget::formatRichString(QString str, int type)
+{
+    return QString::fromUtf8("%1 %2")
+            .arg(str, type == STORAGE ? tr("storage") : tr("transfer"));
+}
+
+QString PlanWidget::getTooltipMsg(HelpButton hoverOver)
+{
+    QString msg;
+    switch (hoverOver)
+    {
+        case HELP:
+        {
+            switch (mDetails.level)
+            {
+                case PRO_I:
+                {
+                    msg = tr("Great value for secure cloud storage, sharing and communication.");
+                    break;
+                }
+                case PRO_II:
+                {
+                    msg = tr("Rest easy knowing you have plenty of secure cloud storage.");
+                    break;
+                }
+                case PRO_III:
+                {
+                    msg = tr("Store even more with our premium secure cloud storage offering.");
+                    break;
+                }
+                case BUSINESS:
+                {
+                    msg = tr("With our end-to-end encryption, the way your team works has never been more secure and private.");
+                    break;
+                }
+                case PRO_LITE:
+                default:
+                {
+                    msg = tr("Get started with secure file storage.");
+                    break;
+                }
+            }
+            break;
+        }
+        case STORAGE:
+        {
+            int tbPerTransfer (mDetails.gbPerStorage / NB_GB_IN_1TB);
+            QString price (toPrice(mDetails.pricePerTransferLocal / 100.,
+                                   mDetails.localCurrencySymbol));
+            msg = tr("Additional storage charged at %1 per %2TB.")
+                  .arg(price, tbPerTransfer > 1 ?
+                           QLocale::system().toString(tbPerTransfer) + QChar(QChar::Nbsp)
+                         : QString());
+            break;
+        }
+        case BANDWIDTH:
+        {
+            int tbPerStorage (mDetails.gbPerTransfer / NB_GB_IN_1TB);
+            QString price (toPrice(mDetails.pricePerStorageLocal / 100.,
+                                   mDetails.localCurrencySymbol));
+            msg = tr("Additional transfer quota charged at %1 per %2TB.")
+                  .arg(price, tbPerStorage > 1 ?
+                           QLocale::system().toString(tbPerStorage) + QChar(QChar::Nbsp)
+                         : QString());
+            break;
+        }
+    }
+    return msg;
+}
+
+void PlanWidget::setWidgetOpacity(qreal opacity)
+{
+    QGraphicsOpacityEffect* effect = new QGraphicsOpacityEffect(this);
+    effect->setOpacity(opacity);
+    setGraphicsEffect(effect);
+}
+
+QString PlanWidget::getProURL()
 {
     QString url;
-    switch (details.level)
+    switch (mDetails.level)
     {
         case PRO_LITE:
             url = QString::fromUtf8("mega://#propay_4");
@@ -63,86 +371,20 @@ void PlanWidget::onOverlayClicked()
             break;
     }
 
-    Utilities::getPROurlWithParameters(url);
-    QtConcurrent::run(QDesktopServices::openUrl, QUrl(url));
+    return url;
 }
 
-PlanWidget::~PlanWidget()
+QString PlanWidget::toPrice(double value, const QString& currencySymbol)
 {
-    delete ui;
-}
+    // Build locale: it is necessary to build it like this because using QLocale::system()
+    // ignores the precision when using toCurrencyString.
+    static const QLocale locale (QLocale().language(), QLocale().country());
+    int precision (std::fmod(value, 1.) > 0. ? 2 : 0);
 
-void PlanWidget::updatePlanInfo()
-{
-    QString colorPrice;
-    ui->lPeriod->setText(QString::fromUtf8("/%1").arg(tr("month")));
-
-    switch (details.level)
+    QString price (locale.toCurrencyString(value, currencySymbol, precision));
+    if (!mIsBillingCurrency && currencySymbol != mDetails.billingCurrencySymbol)
     {
-        case PRO_LITE:
-            ui->lProPlan->setText(QString::fromUtf8("PRO LITE"));
-            colorPrice = QString::fromUtf8("color: #ffa500;");
-            break;
-        case PRO_I:
-            ui->lProPlan->setText(QString::fromUtf8("PRO I"));
-            colorPrice = QString::fromUtf8("color: #ff333a;");
-            break;
-        case PRO_II:
-            ui->lProPlan->setText(QString::fromUtf8("PRO II"));
-            colorPrice = QString::fromUtf8("color: #ff333a;");
-            break;
-        case PRO_III:
-            ui->lProPlan->setText(QString::fromUtf8("PRO III"));
-            colorPrice = QString::fromUtf8("color: #ff333a;");
-            break;
-        case BUSINESS:
-            ui->lProPlan->setText(QString::fromUtf8("BUSINESS"));
-            colorPrice = QString::fromUtf8("color: #2BA6DE;");
-            ui->lPeriod->setText(tr("per user %1").arg(ui->lPeriod->text()));
-            break;
-        default:
-            ui->lProPlan->setText(QString::fromUtf8("PRO"));
-            colorPrice = QString::fromUtf8("color: #2BA6DE;");
-            break;
+        price += QLatin1Char('*');
     }
-
-    ui->lPrice->setText(QString::fromUtf8("<span style='font-family:\"Lato\"; font-size:48px; %1'>%2</span><span style='font-family:\"Lato\"; font-size: 26px; %1'>%3</span>")
-                        .arg(colorPrice)
-                        .arg(details.amount / 100)
-                        .arg(details.amount % 100 ? QString::fromUtf8(".%3 %4").arg(details.amount % 100).arg(details.currency) : details.currency));
-
-    if (details.gbStorage == -1) //UNLIMITED
-    {
-        ui->lStorageInfo->setText(formatRichString(tr("SCALABLE"), STORAGE));
-        ui->lBandWidthInfo->setText(formatRichString(tr("UNLIMITED"), BANDWIDTH));
-    }
-    else
-    {
-        ui->lStorageInfo->setText(formatRichString(Utilities::getSizeString(details.gbStorage * TOBYTES), STORAGE));
-        ui->lBandWidthInfo->setText(formatRichString(Utilities::getSizeString(details.gbTransfer * TOBYTES), BANDWIDTH));
-    }
-}
-
-void PlanWidget::setPlanInfo(PlanInfo data)
-{
-    details = data;
-    updatePlanInfo();
-}
-
-QString PlanWidget::formatRichString(QString str, int type)
-{
-    return QString::fromUtf8("<span style='color:#333333; font-family: Lato; font-size: 15px; font-weight: 600; text-decoration:none;'>%1 </span>"
-                             "<span style='color:#666666; font-family: Lato; font-size: 13px; text-decoration:none;'>%2</span>")
-            .arg(str)
-            .arg(type == STORAGE ? tr("Storage") : tr("Transfer"));
-}
-
-void PlanWidget::changeEvent(QEvent *event)
-{
-    if (event->type() == QEvent::LanguageChange)
-    {
-        ui->retranslateUi(this);
-        updatePlanInfo();
-    }
-    QWidget::changeEvent(event);
+    return price;
 }

@@ -89,18 +89,24 @@ private:
 local int bail(const char *why1, const char *why2)
 {
     throw gzjoinex(std::string("gzjoin error: ") + why1 + " " + why2 + " output incomplete\n");
-    return 0;
+#ifndef WIN32
+    return 0; // warning C4702: unreachable code
+#endif
 }
 
 #ifdef _WIN32
 #include <locale>
 #include <codecvt>
+
+#pragma warning(push)
+#pragma warning(disable: 4996)  // warning C4996: 'std::codecvt_utf8<wchar_t,1114111,0>': warning STL4017: std::wbuffer_convert, std::wstring_convert, and the <codecvt> header (containing std::codecvt_mode, std::codecvt_utf8, std::codecvt_utf16, and std::codecvt_utf8_utf16) are deprecated in C++17. (The std::codecvt class template is NOT deprecated.) The C++ Standard doesn't provide equivalent non-deprecated functionality; consider using MultiByteToWideChar() and WideCharToMultiByte() from <Windows.h> instead. You can define _SILENCE_CXX17_CODECVT_HEADER_DEPRECATION_WARNING or _SILENCE_ALL_CXX17_DEPRECATION_WARNINGS to acknowledge that you have received this warning. 
+
 local int bail(const char *why1, GZJOIN_PATH_CHAR_T *why2)
 {
     throw gzjoinex(std::string("gzjoin error: ") + why1 + " "
                    + std::wstring_convert<std::codecvt_utf8<wchar_t>, wchar_t>().to_bytes(why2)
                    + " output incomplete\n");
-    return 0;
+    // return 0; // warning C4702: unreachable code
 }
 
 local int bail(GZJOIN_PATH_CHAR_T *why1, const char *why2)
@@ -109,8 +115,10 @@ local int bail(GZJOIN_PATH_CHAR_T *why1, const char *why2)
                    + std::wstring_convert<std::codecvt_utf8<wchar_t>, wchar_t>().to_bytes(why1) + " "
                    + why2
                    + " output incomplete\n");
-    return 0;
+    // return 0; //warning C4702: unreachable code
 }
+
+#pragma warning(pop)
 #endif
 
 /* -- simple buffered file input with access to the buffer -- */
@@ -129,6 +137,12 @@ typedef struct {
     unsigned char *buf;     /* allocated buffer of length CHUNK */
 } bin_gz;
 
+
+#ifdef WIN32
+#pragma warning(push)
+#pragma warning(disable: 4996)  // warning C4996: 'close': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _close. See online help for details.
+#endif
+
 /* close a buffered file and free allocated memory */
 local void bclose(bin_gz *in)
 {
@@ -142,7 +156,7 @@ local void bclose(bin_gz *in)
 #endif
         if (in->fd != -1)
         {
-            close(in->fd);
+            close(in->fd);  // warning C4996: 'close': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _close. See online help for details.
         }
         if (in->buf != NULL)
             free(in->buf);
@@ -168,7 +182,7 @@ local bin_gz *bopen(GZJOIN_PATH_CHAR_T *name)
         oss << "unexpected errno opening file(" << er << ")";
         bail(oss.str().c_str(), name);
     }
-    in->fd = fileno(in->file);
+    in->fd = fileno(in->file); // warning C4996: 'fileno': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _close. See online help for details.
 #else
     in->fd = open(name, O_RDONLY, 0);
 #endif
@@ -194,7 +208,7 @@ local int bload(bin_gz *in)
         return 0;
     in->next = in->buf;
     do {
-        len = (long)read(in->fd, in->buf + in->left, CHUNK - in->left);
+        len = (long)read(in->fd, in->buf + in->left, CHUNK - in->left); // warning C4996: 'read': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _close. See online help for details.
         if (len < 0)
             return -1;
         in->left += (unsigned)len;
@@ -245,14 +259,14 @@ local void bskip(bin_gz *in, unsigned skip)
         if (left == 0) {
             /* exact number of chunks: seek all the way minus one byte to check
                for end-of-file with a read */
-            lseek(in->fd, skip - 1, SEEK_CUR);
-            if (read(in->fd, in->buf, 1) != 1)
+            lseek(in->fd, skip - 1, SEEK_CUR);  //  warning C4996: 'lseek': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _lseek. See online help for details.
+            if (read(in->fd, in->buf, 1) != 1)  //  warning C4996: 'read': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _read. See online help for details.
                 bail("unexpected end of file on ", in->name);
             return;
         }
 
         /* skip the integral chunks, update skip with remainder */
-        lseek(in->fd, skip - left, SEEK_CUR);
+        lseek(in->fd, skip - left, SEEK_CUR);  //  warning C4996: 'lseek': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _lseek. See online help for details.
         skip = left;
     }
 
@@ -263,6 +277,11 @@ local void bskip(bin_gz *in, unsigned skip)
     in->left -= skip;
     in->next += skip;
 }
+
+#ifdef WIN32
+#pragma warning(pop)
+#endif
+
 
 /* -- end of buffered input functions -- */
 

@@ -205,6 +205,11 @@ void LinkProcessor::requestLinkInfo()
     if (link.startsWith(Preferences::BASE_URL + QString::fromUtf8("/#F!"))
             || link.startsWith(Preferences::BASE_URL + QString::fromUtf8("/folder/")))
     {
+        std::unique_ptr<char []> authToken(megaApi->getAccountAuth());
+        if (authToken)
+        {
+            megaApiFolders->setAccountAuth(authToken.get());
+        }
         megaApiFolders->loginToFolder(link.toUtf8().constData(), delegateListener);
     }
     else
@@ -254,7 +259,7 @@ void LinkProcessor::importLinks(MegaNode *node)
         if (linkNode[i] && linkSelected[i] && !linkError[i])
         {
             bool dupplicate = false;
-            long long dupplicateHandle;
+            MegaHandle duplicateHandle = INVALID_HANDLE;
             const char* name = linkNode[i]->getName();
             long long size = linkNode[i]->getSize();
 
@@ -264,7 +269,7 @@ void LinkProcessor::importLinks(MegaNode *node)
                 if (!strcmp(name, child->getName()) && (size == child->getSize()))
                 {
                     dupplicate = true;
-                    dupplicateHandle = child->getHandle();
+                    duplicateHandle = child->getHandle();
                 }
             }
 
@@ -275,7 +280,7 @@ void LinkProcessor::importLinks(MegaNode *node)
             }
             else
             {
-                emit onDupplicateLink(linkList[i], QString::fromUtf8(name), dupplicateHandle);
+                emit onDupplicateLink(linkList[i], QString::fromUtf8(name), duplicateHandle);
             }
         }
     }

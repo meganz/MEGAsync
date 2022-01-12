@@ -16,19 +16,20 @@ SyncSetting::~SyncSetting()
 }
 
 SyncSetting::SyncSetting(const SyncSetting& a) :
-    mSync(a.getSync()->copy()), mTag(a.tag()),
+    mSync(a.getSync()->copy()), mBackupId(a.backupId()),
     mSyncID(a.getSyncID()), mEnabled(a.isEnabled()),
-    mActive(a.isActive())
+    mActive(a.isActive()), mMegaFolder(a.mMegaFolder)
 {
 }
 
 SyncSetting& SyncSetting::operator=(const SyncSetting& a)
 {
     mSync.reset(a.getSync()->copy());
-    mTag = a.tag();
+    mBackupId = a.backupId();
     mSyncID = a.getSyncID();
     mEnabled = a.isEnabled();
     mActive = a.isActive();
+    mMegaFolder = a.mMegaFolder;
     return *this;
 }
 
@@ -42,6 +43,11 @@ void SyncSetting::setSyncID(const QString &syncID)
     mSyncID = syncID;
 }
 
+void SyncSetting::setMegaFolder(const QString &megaFolder)
+{
+    mMegaFolder = megaFolder;
+}
+
 SyncSetting::SyncSetting()
 {
     mSync.reset(new MegaSync()); // MegaSync getters return fair enough defaults
@@ -52,9 +58,11 @@ SyncSetting::SyncSetting(MegaSync *sync)
     setSync(sync);
 }
 
-QString SyncSetting::name() const
+QString SyncSetting::name(bool removeUnsupportedChars) const
 {
-    return QString::fromUtf8(mSync->getName());
+    //Provide name removing ':' to avoid possible issues during communications with shell extension
+    return removeUnsupportedChars ? QString::fromUtf8(mSync->getName()).remove(QChar::fromAscii(':'))
+                                  : QString::fromUtf8(mSync->getName());
 }
 
 void SyncSetting::setEnabled(bool value)
@@ -77,7 +85,7 @@ SyncSetting::SyncSetting(QString initializer)
         if (i<parts.size()) { cacheVersion = parts.at(i++).toInt(); }
         if (cacheVersion >= 1)
         {
-            if (i<parts.size()) { mTag = parts.at(i++).toInt(); }
+            if (i<parts.size()) { mBackupId = parts.at(i++).toULongLong(); }
             if (i<parts.size()) { mSyncID = parts.at(i++); }
         }
         else
@@ -111,7 +119,7 @@ QString SyncSetting::toString()
 {
     QStringList toret;
     toret.append(QString::number(CACHE_VERSION));
-    toret.append(QString::number(mTag));
+    toret.append(QString::number(mBackupId));
     toret.append(mSyncID);
 
     return toret.join(QString::fromUtf8("0x1E"));
@@ -123,8 +131,8 @@ void SyncSetting::setSync(MegaSync *sync)
     {
         mSync.reset(sync->copy());
 
-        assert(mTag == 0 || mTag == sync->getTag());
-        mTag = sync->getTag();
+        assert(mBackupId == INVALID_HANDLE || mBackupId == sync->getBackupId());
+        mBackupId = sync->getBackupId();
         mEnabled = sync->isEnabled();
 
         mActive = sync->isActive(); //override active with the actual value
@@ -138,7 +146,14 @@ void SyncSetting::setSync(MegaSync *sync)
 
 QString SyncSetting::getLocalFolder() const
 {
-    return QString::fromUtf8(mSync->getLocalFolder());
+    auto toret = QString::fromUtf8(mSync->getLocalFolder());
+#ifdef WIN32
+    if (toret.startsWith(QString::fromAscii("\\\\?\\")))
+    {
+        toret = toret.mid(4);
+    }
+#endif
+    return toret;
 }
 
 long long SyncSetting::getLocalFingerprint()  const
@@ -148,11 +163,16 @@ long long SyncSetting::getLocalFingerprint()  const
 
 QString SyncSetting::getMegaFolder()  const
 {
-    auto folder = mSync->getMegaFolder();
-    return folder ? QString::fromUtf8(folder) : QString();
+    if (mMegaFolder.isEmpty())
+    {
+        auto folder = mSync->getLastKnownMegaFolder();
+        return folder ? QString::fromUtf8(folder) : QString();
+    }
+
+    return mMegaFolder;
 }
 
-long long SyncSetting::getMegaHandle()  const
+MegaHandle SyncSetting::getMegaHandle()  const
 {
     return mSync->getMegaHandle();
 }
@@ -167,11 +187,6 @@ bool SyncSetting::isActive()  const
     return mActive;
 }
 
-int SyncSetting::getState() const
-{
-    return mSync->getState();
-}
-
 bool SyncSetting::isTemporaryDisabled()  const
 {
     return mSync->isTemporaryDisabled();
@@ -182,12 +197,12 @@ int SyncSetting::getError() const
     return mSync->getError();
 }
 
-int SyncSetting::tag() const
+MegaHandle SyncSetting::backupId() const
 {
-    return mTag;
+    return mBackupId;
 }
 
-void SyncSetting::setTag(int tag)
+void SyncSetting::setBackupId(MegaHandle backupId)
 {
-    mTag = tag;
+    mBackupId = backupId;
 }

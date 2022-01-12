@@ -59,7 +59,6 @@ public:
 
     PSA_info* getPSAdata();
     void setUsage();
-    void setAvatar();
     void setTransfer(mega::MegaTransfer *transfer);
     void refreshTransferItems();
     void transferFinished(int error);
@@ -164,11 +163,17 @@ private slots:
     void on_bDismissSyncSettings_clicked();
     void on_bOpenSyncSettings_clicked();
 
+    void setAvatar();
+
 signals:
     void openTransferManager(int tab);
     void dismissStorageOverquota(bool oq);
-    void dismissTransferOverquota();
-    void dismissTransferAlmostOverquota();
+    // signal emitted when showing or dismissing the overquota message.
+    // parameter messageShown is true when alert is enabled, false when dismissed
+    void transferOverquotaMsgVisibilityChange(bool messageShown);
+    // signal emitted when showing or dismissing the almost overquota message.
+    // parameter messageShown is true when alert is enabled, false when dismissed
+    void almostTransferOverquotaMsgVisibilityChange(bool messageShown);
     void userActivity();
 
 private:
@@ -210,7 +215,7 @@ private:
     bool transferOverquotaAlertEnabled;
     bool transferAlmostOverquotaAlertEnabled;
     int storageState;
-    QuotaState transferOverquotaState;
+    QuotaState transferQuotaState;
     int actualAccountType;
     int loggedInMode = STATE_NONE;
     bool notificationsReady = false;

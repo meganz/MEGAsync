@@ -63,6 +63,9 @@ color: #333333;
    <property name="spacing">
     <number>0</number>
    </property>
+   <property name="sizeConstraint">
+    <enum>QLayout::SetFixedSize</enum>
+   </property>
    <property name="leftMargin">
     <number>0</number>
    </property>
@@ -244,14 +247,14 @@ background-color: #F4F6F8;
                 <widget class="AvatarWidget" name="bAvatar" native="true">
                  <property name="minimumSize">
                   <size>
-                   <width>36</width>
-                   <height>36</height>
+                   <width>28</width>
+                   <height>28</height>
                   </size>
                  </property>
                  <property name="maximumSize">
                   <size>
-                   <width>36</width>
-                   <height>36</height>
+                   <width>28</width>
+                   <height>28</height>
                   </size>
                  </property>
                 </widget>
@@ -355,7 +358,7 @@ border: none;
                   <string/>
                  </property>
                  <property name="icon">
-                  <iconset resource="../Resources_linux.qrc">
+                  <iconset resource="../Resources_macx.qrc">
                    <normaloff>:/images/ico_add_sync_folder.png</normaloff>:/images/ico_add_sync_folder.png</iconset>
                  </property>
                  <property name="iconSize">
@@ -394,7 +397,7 @@ border: none;
                   <string/>
                  </property>
                  <property name="icon">
-                  <iconset resource="../Resources_linux.qrc">
+                  <iconset resource="../Resources_macx.qrc">
                    <normaloff>:/images/ico_upload.png</normaloff>:/images/ico_upload.png</iconset>
                  </property>
                  <property name="iconSize">
@@ -433,7 +436,7 @@ border: none;
                   <string/>
                  </property>
                  <property name="icon">
-                  <iconset resource="../Resources_linux.qrc">
+                  <iconset resource="../Resources_macx.qrc">
                    <normaloff>:/images/ico_download.png</normaloff>:/images/ico_download.png</iconset>
                  </property>
                  <property name="iconSize">
@@ -481,7 +484,7 @@ border: none;
                   <string/>
                  </property>
                  <property name="icon">
-                  <iconset resource="../Resources_linux.qrc">
+                  <iconset resource="../Resources_macx.qrc">
                    <normaloff>:/images/more_settings.png</normaloff>:/images/more_settings.png</iconset>
                  </property>
                  <property name="iconSize">
@@ -511,12 +514,6 @@ border: none;
                 <width>400</width>
                 <height>120</height>
                </size>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">#wPSA
-{
-background-color: #F4F6F8;
-}</string>
               </property>
              </widget>
             </item>
@@ -1472,7 +1469,7 @@ background-color: transparent;
                                <string/>
                               </property>
                               <property name="icon">
-                               <iconset resource="../Resources_linux.qrc">
+                               <iconset resource="../Resources_macx.qrc">
                                 <normaloff>:/images/upload_to_mega.png</normaloff>:/images/upload_to_mega.png</iconset>
                               </property>
                               <property name="iconSize">
@@ -1986,7 +1983,6 @@ background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
   color: #333333;
   font-family: Lato;
   font-size: 16px;
-  letter-spacing: 0;
   line-height: 24px;
 }</string>
                                </property>
@@ -2042,7 +2038,6 @@ background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
   color: #666666;
   font-family: Lato;
   font-size: 13px;
-  letter-spacing: 0;
 }</string>
                                </property>
                                <property name="text">
@@ -2417,7 +2412,7 @@ background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
                                </property>
                                <property name="icon">
                                 <iconset>
-                                 <normalon>:/images/settings-syncs.png</normalon>
+                                 <normalon>:/images/warning-disabled-syncs.png</normalon>
                                 </iconset>
                                </property>
                                <property name="iconSize">
@@ -2733,23 +2728,6 @@ background-color: #FFFFFF;
                           <height>16777215</height>
                          </size>
                         </property>
-                        <layout class="QHBoxLayout" name="horizontalLayout_15">
-                         <property name="spacing">
-                          <number>3</number>
-                         </property>
-                         <property name="leftMargin">
-                          <number>0</number>
-                         </property>
-                         <property name="topMargin">
-                          <number>0</number>
-                         </property>
-                         <property name="rightMargin">
-                          <number>0</number>
-                         </property>
-                         <property name="bottomMargin">
-                          <number>0</number>
-                         </property>
-                        </layout>
                        </widget>
                       </item>
                       <item>
@@ -3344,7 +3322,7 @@ background-color: #F4F6F8;
   <tabstop>bSettings</tabstop>
  </tabstops>
  <resources>
-  <include location="../Resources_linux.qrc"/>
+  <include location="../Resources_macx.qrc"/>
  </resources>
  <connections/>
 </ui>

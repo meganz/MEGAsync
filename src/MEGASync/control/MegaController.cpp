@@ -21,8 +21,8 @@ void Controller::addSync(const QString &localFolder, const MegaHandle &remoteHan
 
     MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromAscii("Adding sync %1").arg(localFolder).toUtf8().constData());
 
-    api->syncFolder(localFolder.toUtf8().constData(), syncName.toUtf8().constData(), remoteHandle,
-        new ProgressFuncExecuterListener(progress,  true, [](MegaApi *api, MegaRequest *request, MegaError *e){
+    api->syncFolder(MegaSync::TYPE_TWOWAY, localFolder.toUtf8().constData(), syncName.toUtf8().constData(), remoteHandle,
+        nullptr, new ProgressFuncExecuterListener(progress,  true, [](MegaApi *api, MegaRequest *request, MegaError *e){
                         ///// onRequestFinish Management: ////
     }));
 }
@@ -39,7 +39,7 @@ void Controller::removeSync(std::shared_ptr<SyncSetting> syncSetting, ActionProg
 
     MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromAscii("Removing sync").toUtf8().constData());
 
-    api->removeSync(syncSetting->tag(),
+    api->removeSync(syncSetting->backupId(),
         new ProgressFuncExecuterListener(progress,  true, [](MegaApi *api, MegaRequest *request, MegaError *e){
                         ///// onRequestFinish Management: ////
                     }));
@@ -58,7 +58,7 @@ void Controller::enableSync(std::shared_ptr<SyncSetting> syncSetting, ActionProg
     MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromAscii("Enabling sync %1 to %2")
                  .arg(syncSetting->getLocalFolder()).arg(syncSetting->getMegaFolder()).toUtf8().constData() );
 
-    api->enableSync(syncSetting->tag(),
+    api->enableSync(syncSetting->backupId(),
         new ProgressFuncExecuterListener(progress,  true, [](MegaApi *api, MegaRequest *request, MegaError *e){
                         ///// onRequestFinish Management: ////
                     }));
@@ -77,7 +77,7 @@ void Controller::disableSync(std::shared_ptr<SyncSetting> syncSetting, ActionPro
     MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromAscii("Disabling sync %1 to %2")
                  .arg(syncSetting->getLocalFolder()).arg(syncSetting->getMegaFolder()).toUtf8().constData() );
 
-    api->disableSync(syncSetting->tag(),
+    api->disableSync(syncSetting->backupId(),
         new ProgressFuncExecuterListener(progress,  true, [](MegaApi *api, MegaRequest *request, MegaError *e){
                         ///// onRequestFinish Management: ////
                     }));

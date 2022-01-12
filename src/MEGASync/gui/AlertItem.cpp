@@ -47,7 +47,7 @@ void AlertItem::setAlertData(MegaUserAlert *alert)
     MegaHandle handle = alertUser->getNodeHandle();
     getAlertNodeWatcher.setFuture(QtConcurrent::run([=]()
     {
-        return megaApi->getNodeByHandle(handle);
+        return megaApi ? megaApi->getNodeByHandle(handle) : nullptr;
     }));
 }
 
@@ -479,9 +479,23 @@ QSize AlertItem::minimumSizeHint() const
 {
     return QSize(400, 122);
 }
+
 QSize AlertItem::sizeHint() const
 {
     return QSize(400, 122);
+}
+
+void AlertItem::changeEvent(QEvent *event)
+{
+    if (event->type() == QEvent::LanguageChange)
+    {
+        ui->retranslateUi(this);
+        setAlertType(alertUser->getType());
+        setAlertHeading(alertUser.get());
+        setAlertContent(alertUser.get());
+        setAlertTimeStamp(alertUser->getTimestamp(0));
+    }
+    QWidget::changeEvent(event);
 }
 
 void AlertItem::setAvatar(MegaUserAlert *alert)

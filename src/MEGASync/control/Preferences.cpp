@@ -12,23 +12,27 @@ extern Q_CORE_EXPORT int qt_ntfs_permission_lookup;
 #endif
 
 const char Preferences::CLIENT_KEY[] = "FhMgXbqb";
-const char Preferences::USER_AGENT[] = "MEGAsync/4.3.8.0";
-const int Preferences::VERSION_CODE = 4308;
+const char Preferences::USER_AGENT[] = "MEGAsync/4.6.2.0";
+const int Preferences::VERSION_CODE = 4602;
 const int Preferences::BUILD_ID = 0;
 // Do not change the location of VERSION_STRING, create_tarball.sh parses this file
-const QString Preferences::VERSION_STRING = QString::fromAscii("4.3.8");
-QString Preferences::SDK_ID = QString::fromAscii("37b346c");
+const QString Preferences::VERSION_STRING = QString::fromAscii("4.6.2");
+QString Preferences::SDK_ID = QString::fromAscii("301933f");
 const QString Preferences::CHANGELOG = QString::fromUtf8(QT_TR_NOOP(
-    "- Fixed decryption errors for downloads during integrity verification."));
+    "- Full redesign of settings with a new look and feel.\n"
+    "- No longer supporting macOS versions below 10.12.\n"
+    "- Multi-currency support added for upgrade options.\n"
+    "- High DPI support for Windows platform improved.\n"
+    "- Crashes previously detected on Windows, Linux and macOS now fixed.\n"
+    "- Other performance improvements and adjustments.\n"
+    "- Other UI fixes and adjustments."));
 
 const QString Preferences::TRANSLATION_FOLDER = QString::fromAscii("://translations/");
 const QString Preferences::TRANSLATION_PREFIX = QString::fromAscii("MEGASyncStrings_");
 
 int Preferences::STATE_REFRESH_INTERVAL_MS        = 10000;
+int Preferences::NETWORK_REFRESH_INTERVAL_MS      = 30000;
 int Preferences::FINISHED_TRANSFER_REFRESH_INTERVAL_MS        = 10000;
-
-int Preferences::MAX_FIRST_SYNC_DELAY_S = 120; // Max delay time to wait for local paths before trying to restore syncs
-int Preferences::MIN_FIRST_SYNC_DELAY_S = 40; // Min delay time to wait for local paths before trying to restore syncs
 
 long long Preferences::OQ_DIALOG_INTERVAL_MS = 604800000; // 7 days
 long long Preferences::OQ_NOTIFICATION_INTERVAL_MS = 129600000; // 36 hours
@@ -371,6 +375,8 @@ const QString Preferences::lastPublicHandleKey      = QString::fromAscii("lastPu
 const QString Preferences::lastPublicHandleTimestampKey = QString::fromAscii("lastPublicHandleTimestamp");
 const QString Preferences::lastPublicHandleTypeKey = QString::fromAscii("lastPublicHandleType");
 const QString Preferences::disabledSyncsKey = QString::fromAscii("disabledSyncs");
+const QString Preferences::neverCreateLinkKey       = QString::fromUtf8("neverCreateLink");
+const QString Preferences::notifyDisabledSyncsKey = QString::fromAscii("notifyDisabledSyncs");
 
 const bool Preferences::defaultShowNotifications    = true;
 const bool Preferences::defaultStartOnStartup       = true;
@@ -411,6 +417,8 @@ const QString Preferences::defaultProxyPassword     = QString::fromAscii("");
 
 const int  Preferences::defaultAccountStatus      = STATE_NOT_INITIATED;
 const bool  Preferences::defaultNeedsFetchNodes   = false;
+
+const bool  Preferences::defaultNeverCreateLink   = false;
 
 Preferences *Preferences::preferences = NULL;
 
@@ -1939,6 +1947,16 @@ void Preferences::setImportFolder(long long value)
     setValueAndSyncConcurrent(importFolderKey, value);
 }
 
+bool Preferences::neverCreateLink()
+{
+    return getValueConcurrent<bool>(neverCreateLinkKey, defaultNeverCreateLink);
+}
+
+void Preferences::setNeverCreateLink(bool value)
+{
+    setValueAndSyncConcurrent(neverCreateLinkKey, value);
+}
+
 
 /////////   Sync related stuff /////////////////////
 
@@ -2191,7 +2209,7 @@ void Preferences::setLastExit(long long value)
     mutex.unlock();
 }
 
-QSet<int> Preferences::getDisabledSyncTags()
+QSet<MegaHandle> Preferences::getDisabledSyncTags()
 {
     QMutexLocker qm(&mutex);
     assert(logged());
@@ -2199,24 +2217,24 @@ QSet<int> Preferences::getDisabledSyncTags()
     QStringList stringTagList = getValueConcurrent<QString>(disabledSyncsKey).split(QString::fromUtf8("0x1E"), QString::SkipEmptyParts);
     if (!stringTagList.isEmpty())
     {
-        QList<int> tagList;
+        QList<mega::MegaHandle> tagList;
         for (auto &tag : stringTagList)
         {
-            tagList.append(tag.toInt());
+            tagList.append(tag.toULongLong());
         }
 
-        return QSet<int>::fromList(tagList);
+        return QSet<mega::MegaHandle>::fromList(tagList);
     }
 
-    return QSet<int>();
+    return QSet<mega::MegaHandle>();
 }
 
-void Preferences::setDisabledSyncTags(QSet<int> disabledSyncs)
+void Preferences::setDisabledSyncTags(QSet<mega::MegaHandle> disabledSyncs)
 {
     QMutexLocker qm(&mutex);
     assert(logged());
 
-    QList<int> disabledTags = disabledSyncs.toList();
+    QList<mega::MegaHandle> disabledTags = disabledSyncs.toList();
     QStringList tags;
 
     for(auto &tag : disabledTags)
@@ -2225,6 +2243,16 @@ void Preferences::setDisabledSyncTags(QSet<int> disabledSyncs)
     }
 
     setValueAndSyncConcurrent(disabledSyncsKey, tags.join(QString::fromUtf8("0x1E")));
+}
+
+bool Preferences::getNotifyDisabledSyncsOnLogin()
+{
+    return getValueConcurrent<bool>(notifyDisabledSyncsKey, false);
+}
+
+void Preferences::setNotifyDisabledSyncsOnLogin(bool notify)
+{
+    setValueAndSyncConcurrent(notifyDisabledSyncsKey, notify);
 }
 
 QString Preferences::getHttpsKey()
@@ -2768,7 +2796,8 @@ void Preferences::loadExcludedSyncNames()
     if (getValue<int>(lastVersionKey) < 3400)
     {
         excludedSyncNames.append(QString::fromUtf8("*~.*"));
-        excludedSyncNames.append(QString::fromUtf8("*.sb-????????-??????"));
+        // Avoid trigraph replacement by some pre-processors by splitting the string.("??-" --> "~").
+        excludedSyncNames.append(QString::fromUtf8("*.sb-????????""-??????"));
         excludedSyncNames.append(QString::fromUtf8("*.tmp"));
     }
 
@@ -2792,7 +2821,7 @@ void Preferences::loadExcludedSyncNames()
 }
 
 
-QMap<int, std::shared_ptr<SyncSetting> > Preferences::getLoadedSyncsMap() const
+QMap<mega::MegaHandle, std::shared_ptr<SyncSetting> > Preferences::getLoadedSyncsMap() const
 {
     return loadedSyncsMap;
 }
@@ -2811,9 +2840,9 @@ void Preferences::readFolders()
         settings->beginGroup(i);
 
         auto sc = std::make_shared<SyncSetting>(settings->value(configuredSyncsKey).value<QString>());
-        if (sc->tag())
+        if (sc->backupId())
         {
-            loadedSyncsMap[sc->tag()] = sc;
+            loadedSyncsMap[sc->backupId()] = sc;
         }
         else
         {
@@ -2902,18 +2931,31 @@ QList<SyncData> Preferences::readOldCachedSyncs(int *cachedBusinessState, int *c
     {
         settings->beginGroup(i);
 
+        bool enabled = settings->value(folderActiveKey, true).toBool();
+
+        MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromAscii("Reading old cache sync setting ... ").toUtf8().constData());
+
+        if (temporarilyLoggedPrefs) //coming from old session
+        {
+            MegaApi::log(MegaApi::LOG_LEVEL_WARNING, QString::fromAscii(" ... sync configuration rescued from old session. Set as disabled.")
+                         .toUtf8().constData());
+
+            enabled = false; // syncs coming from old sessions are now considered unsafe to continue automatically
+            // Note: in this particular case, we are not showing any error in the sync (since that information is not carried out
+            // to the SDK)
+        }
+
         oldSyncs.push_back(SyncData(settings->value(syncNameKey).toString(),
                                     settings->value(localFolderKey).toString(),
                                     settings->value(megaFolderHandleKey, static_cast<long long>(INVALID_HANDLE)).toLongLong(),
                                     settings->value(megaFolderKey).toString(),
                                     settings->value(localFingerprintKey, 0).toLongLong(),
-                                    settings->value(folderActiveKey, true).toBool(),
+                                    enabled,
                                     settings->value(temporaryInactiveKey, false).toBool(),
                                      i,
                                     settings->value(syncIdKey, true).toString()
                                     ));
 
-        MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromAscii("Reading old cache sync setting ... ").toUtf8().constData());
         settings->endGroup();
     }
     settings->endGroup();
@@ -2987,7 +3029,7 @@ void Preferences::removeSyncSetting(std::shared_ptr<SyncSetting> syncSettings)
 
     settings->beginGroup(syncsGroupByTagKey);
 
-    settings->beginGroup(QString::number(syncSettings->tag()));
+    settings->beginGroup(QString::number(syncSettings->backupId()));
 
     settings->remove(QString::fromAscii("")); //removes group and all its settings
 
@@ -3005,7 +3047,7 @@ void Preferences::writeSyncSetting(std::shared_ptr<SyncSetting> syncSettings)
 
         settings->beginGroup(syncsGroupByTagKey);
 
-        settings->beginGroup(QString::number(syncSettings->tag()));
+        settings->beginGroup(QString::number(syncSettings->backupId()));
 
         settings->setValue(configuredSyncsKey, syncSettings->toString());
 
@@ -3059,6 +3101,7 @@ void Preferences::overridePreferences(const QSettings &settings)
     overridePreference(settings, QString::fromUtf8("PAYWALL_NOTIFICATION_INTERVAL_MS"), Preferences::PAYWALL_NOTIFICATION_INTERVAL_MS);
     overridePreference(settings, QString::fromUtf8("USER_INACTIVITY_MS"), Preferences::USER_INACTIVITY_MS);
     overridePreference(settings, QString::fromUtf8("STATE_REFRESH_INTERVAL_MS"), Preferences::STATE_REFRESH_INTERVAL_MS);
+    overridePreference(settings, QString::fromUtf8("NETWORK_REFRESH_INTERVAL_MS"), Preferences::NETWORK_REFRESH_INTERVAL_MS);
 
     overridePreference(settings, QString::fromUtf8("TRANSFER_OVER_QUOTA_DIALOG_DISABLE_DURATION_MS"), Preferences::OVER_QUOTA_DIALOG_DISABLE_DURATION);
     overridePreference(settings, QString::fromUtf8("TRANSFER_OVER_QUOTA_OS_NOTIFICATION_DISABLE_DURATION_MS"), Preferences::OVER_QUOTA_OS_NOTIFICATION_DISABLE_DURATION);
@@ -3073,9 +3116,6 @@ void Preferences::overridePreferences(const QSettings &settings)
     overridePreference(settings, QString::fromUtf8("MIN_REBOOT_INTERVAL_MS"), Preferences::MIN_REBOOT_INTERVAL_MS);
     overridePreference(settings, QString::fromUtf8("MIN_EXTERNAL_NODES_WARNING_MS"), Preferences::MIN_EXTERNAL_NODES_WARNING_MS);
     overridePreference(settings, QString::fromUtf8("MIN_TRANSFER_NOTIFICATION_INTERVAL_MS"), Preferences::MIN_TRANSFER_NOTIFICATION_INTERVAL_MS);
-
-    overridePreference(settings, QString::fromUtf8("MAX_FIRST_SYNC_DELAY_S"), Preferences::MAX_FIRST_SYNC_DELAY_S);
-    overridePreference(settings, QString::fromUtf8("MIN_FIRST_SYNC_DELAY_S"), Preferences::MIN_FIRST_SYNC_DELAY_S);
 
     overridePreference(settings, QString::fromUtf8("UPDATE_INITIAL_DELAY_SECS"), Preferences::UPDATE_INITIAL_DELAY_SECS);
     overridePreference(settings, QString::fromUtf8("UPDATE_RETRY_INTERVAL_SECS"), Preferences::UPDATE_RETRY_INTERVAL_SECS);

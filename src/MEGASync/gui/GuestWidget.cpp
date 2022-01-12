@@ -2,10 +2,13 @@
 #include "ui_GuestWidget.h"
 #include "megaapi.h"
 #include "MegaApplication.h"
-#include <QDesktopServices>
-#include <QUrl>
+#include "QMegaMessageBox.h"
+
 #include "platform/Platform.h"
 #include "gui/Login2FA.h"
+
+#include <QDesktopServices>
+#include <QUrl>
 
 #if QT_VERSION >= 0x050000
 #include <QtConcurrent/QtConcurrent>
@@ -73,7 +76,7 @@ GuestWidget::~GuestWidget()
 
 void GuestWidget::setTexts(const QString& s1, const QString& s2)
 {
-    ui->lEmail->setText(s1); 
+    ui->lEmail->setText(s1);
     ui->lPassword->setText(s2);
 }
 
@@ -495,7 +498,7 @@ void GuestWidget::on_bCancel_clicked()
     if (megaApi->isLoggedIn())
     {
         closing = true;
-        megaApi->logout();
+        megaApi->logout(true, nullptr);
         page_logout();
     }
     else
@@ -619,7 +622,7 @@ void GuestWidget::page_login()
 }
 
 void GuestWidget::page_progress()
-{  
+{
     if (ui->sPages->currentWidget() == ui->pProgress)
     {
         return;

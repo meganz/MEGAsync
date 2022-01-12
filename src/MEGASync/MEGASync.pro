@@ -4,14 +4,15 @@
 #
 #-------------------------------------------------
 
-win32:THIRDPARTY_VCPKG_BASE_PATH = C:/Users/build/MEGA/build-MEGAsync/3rdParty_MSVC2017_20200529
-win32:contains(QMAKE_TARGET.arch, x86_64):VCPKG_TRIPLET = x64-windows-mega
-win32:!contains(QMAKE_TARGET.arch, x86_64):VCPKG_TRIPLET = x86-windows-mega
+isEmpty(THIRDPARTY_VCPKG_BASE_PATH){
+    THIRDPARTY_VCPKG_BASE_PATH = $$PWD/../../../3rdParty_desktop
+}
 
-macx:THIRDPARTY_VCPKG_BASE_PATH = $$PWD/../../../3rdParty
-macx:VCPKG_TRIPLET = x64-osx
-
-unix:!macx:THIRDPARTY_VCPKG_BASE_PATH = $$PWD/../../../3rdParty
+win32 {
+    contains(QMAKE_TARGET.arch, x86_64):VCPKG_TRIPLET = x64-windows-mega
+    !contains(QMAKE_TARGET.arch, x86_64):VCPKG_TRIPLET = x86-windows-mega
+}
+macx:VCPKG_TRIPLET = x64-osx-mega
 unix:!macx:VCPKG_TRIPLET = x64-linux
 
 message("THIRDPARTY_VCPKG_BASE_PATH: $$THIRDPARTY_VCPKG_BASE_PATH")
@@ -100,6 +101,9 @@ else {
     CONFIG += USE_FFMPEG
 }
 
+# Drive notifications (for SDK)
+CONFIG += USE_DRIVE_NOTIFICATIONS
+
 include(gui/gui.pri)
 include(mega/bindings/qt/sdk.pri)
 include(control/control.pri)
@@ -112,6 +116,7 @@ unix:!macx {
     GCC_VERSION = $$system("g++ -dumpversion")
     lessThan(GCC_VERSION, 5) {
         LIBS -= -lstdc++fs
+	QMAKE_CFLAGS += -std=c99
     }
 }
 
@@ -150,7 +155,6 @@ TRANSLATIONS = \
     gui/translations/MEGASyncStrings_ko.ts \
     gui/translations/MEGASyncStrings_nl.ts \
     gui/translations/MEGASyncStrings_pl.ts \
-    gui/translations/MEGASyncStrings_pt_BR.ts \
     gui/translations/MEGASyncStrings_pt.ts \
     gui/translations/MEGASyncStrings_ro.ts \
     gui/translations/MEGASyncStrings_ru.ts \
@@ -173,8 +177,8 @@ win32 {
     QMAKE_LFLAGS_WINDOWS += /SUBSYSTEM:WINDOWS,6.01
     QMAKE_LFLAGS_CONSOLE += /SUBSYSTEM:CONSOLE,6.01
     DEFINES += PSAPI_VERSION=1
+    DEFINES += _WINSOCKAPI_
 }
-
 
 macx {
     QMAKE_CXXFLAGS += -DCRYPTOPP_DISABLE_ASM -D_DARWIN_C_SOURCE
@@ -187,9 +191,10 @@ macx {
 
     QMAKE_INFO_PLIST = Info_MEGA.plist
 
-    QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.9
+    QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.12
     QMAKE_CXXFLAGS += -fvisibility=hidden -fvisibility-inlines-hidden
     QMAKE_LFLAGS += -F /System/Library/Frameworks/Security.framework/
+    QMAKE_LFLAGS += -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk
 }
 
 

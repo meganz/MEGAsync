@@ -92,6 +92,10 @@ QList<QAction*> MEGASyncPlugin::actions(const KFileItemListProperties & fileItem
     int syncedFiles, syncedFolders, unsyncedFiles, unsyncedFolders;
     syncedFiles = syncedFolders = unsyncedFiles = unsyncedFolders = 0;
 
+    // Make sure we only capture what the user has selected.
+    selectedFilePath.clear();
+    selectedFilePaths.clear();
+
     for( int i = 0; i < fileItemInfos.items().count(); i++)
     {
 

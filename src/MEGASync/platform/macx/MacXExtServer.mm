@@ -62,7 +62,7 @@ void MacXExtServer::acceptConnection()
             }
 
             QString message = QString::fromUtf8("A:") + syncPath
-                    + QChar::fromAscii(':') + syncSetting->name();
+                    + QChar::fromAscii(':') + syncSetting->name(true);
             client->writeData(message.toUtf8().constData(), message.length());
         }        
     }
@@ -343,11 +343,11 @@ void MacXExtServer::doSendToAll(QByteArray str)
     }
 }
 
-void MacXExtServer::notifyItemChange(string *localPath, int newState)
+void MacXExtServer::notifyItemChange(QString localPath, int newState)
 {
     QByteArray response;
     string command = "P:";
-    command += *localPath;
+    command += localPath.toStdString();
 
     if (newState == MegaApi::STATE_PENDING
             || newState == MegaApi::STATE_SYNCED
@@ -410,7 +410,7 @@ void MacXExtServer::notifyAllClients(int op)
             continue;
         }
 
-        QString message = command + syncPath + QChar::fromAscii(':') + syncSetting->name();
+        QString message = command + syncPath + QChar::fromAscii(':') + syncSetting->name(true);
 
         emit sendToAll(message.toUtf8());
     }

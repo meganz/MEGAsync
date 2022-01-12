@@ -12,11 +12,13 @@ class SyncSetting
 {
 private:
     std::unique_ptr<mega::MegaSync> mSync; //shall not need to be persisted
-    int mTag = 0;
-    QString mSyncID;
+    mega::MegaHandle mBackupId = ::mega::INVALID_HANDLE; //identifier given by the api
+    QString mSyncID; //some id for platform specific settings
 
     bool mEnabled = false;
     bool mActive = false;
+
+    QString mMegaFolder; //cached (in memory) value of the remote path
 
     static constexpr int CACHE_VERSION = 1;
 public:
@@ -30,9 +32,10 @@ public:
     SyncSetting& operator=(SyncSetting&& a) = default;
 
     SyncSetting(mega::MegaSync *sync);
-    int tag() const;
-    void setTag(int tag);
-    QString name() const;
+    mega::MegaHandle backupId() const;
+    void setBackupId(mega::MegaHandle backupId);
+    // returns sync name verbatim or removing problematic chars (if removeUnsupportedChars = true)
+    QString name(bool removeUnsupportedChars = false) const;
 
     void setEnabled(bool value);
 
@@ -41,10 +44,9 @@ public:
     QString getLocalFolder() const;
     long long getLocalFingerprint() const;
     QString getMegaFolder() const;
-    long long getMegaHandle() const;
+    mega::MegaHandle getMegaHandle() const;
     bool isEnabled() const; //enabled by user
     bool isActive() const; //not disabled by user nor failed (nor being removed)
-    int getState() const;
     bool isTemporaryDisabled() const;
     int getError() const;
 
@@ -54,6 +56,7 @@ public:
 
     QString getSyncID() const;
     void setSyncID(const QString &syncID);
+    void setMegaFolder(const QString &megaFolder);
 };
 
 Q_DECLARE_METATYPE(SyncSetting);

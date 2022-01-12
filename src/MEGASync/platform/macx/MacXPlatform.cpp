@@ -5,8 +5,7 @@ using namespace std;
 
 int MacXPlatform::fd = -1;
 MacXSystemServiceTask* MacXPlatform::systemServiceTask = NULL;
-MacXExtServer *MacXPlatform::extServer = NULL;
-std::unique_ptr<QThread> MacXPlatform::threadExtServer;
+QPointer<MacXExtServerService> MacXPlatform::extService;
 
 static const QString kFinderSyncBundleId = QString::fromUtf8("mega.mac.MEGAShellExtFinder");
 static const QString kFinderSyncPath = QString::fromUtf8("/Applications/MEGAsync.app/Contents/PlugIns/MEGAShellExtFinder.appex/");
@@ -67,14 +66,6 @@ QStringList MacXPlatform::multipleUpload(QString uploadTitle)
 bool MacXPlatform::enableTrayIcon(QString executable)
 {
     return false;
-}
-
-void MacXPlatform::notifyItemChange(string *localPath, int newState)
-{
-    if (extServer && localPath && localPath->size())
-    {
-        extServer->notifyItemChange(localPath, newState);
-    }
 }
 
 bool MacXPlatform::startOnStartup(bool value)
@@ -171,6 +162,10 @@ void MacXPlatform::enableFinderExtension(bool value)
 
 void MacXPlatform::showInFolder(QString pathIn)
 {
+
+    //Escape possible double quotes from osascript command to avoid syntax errors and stop parsing arguments
+    pathIn.replace(QString::fromLatin1("\""), QString::fromLatin1("\\\""));
+
     QStringList scriptArgs;
     scriptArgs << QString::fromUtf8("-e")
                << QString::fromUtf8("tell application \"Finder\" to reveal POSIX file \"%1\"").arg(pathIn);
@@ -188,12 +183,9 @@ void MacXPlatform::startShellDispatcher(MegaApplication *receiver)
         systemServiceTask = new MacXSystemServiceTask(receiver);
     }
 
-    if (!extServer)
+    if (!extService)
     {
-        threadExtServer.reset(new QThread());
-        extServer = new MacXExtServer(receiver);
-        extServer->moveToThread(threadExtServer.get());
-        threadExtServer->start();
+        extService = new MacXExtServerService(receiver);
     }
 }
 
@@ -205,11 +197,17 @@ void MacXPlatform::stopShellDispatcher()
         systemServiceTask = NULL;
     }
 
-    if (extServer)
+    if (extService)
     {
-        threadExtServer->quit();
-        delete extServer;
-        extServer = NULL;
+        delete extService;
+    }
+}
+
+void MacXPlatform::notifyItemChange(string *localPath, int newState)
+{
+    if (extService && localPath && localPath->size())
+    {
+        emit extService->itemChange(QString::fromStdString(*localPath), newState);
     }
 }
 
@@ -218,9 +216,9 @@ void MacXPlatform::syncFolderAdded(QString syncPath, QString syncName, QString s
     addPathToPlaces(syncPath,syncName);
     setFolderIcon(syncPath);
 
-    if (extServer)
+    if (extService)
     {
-        extServer->notifySyncAdd(syncPath, syncName);
+        emit extService->syncAdd(syncPath, syncName);
     }
 }
 
@@ -229,9 +227,9 @@ void MacXPlatform::syncFolderRemoved(QString syncPath, QString syncName, QString
     removePathFromPlaces(syncPath);
     unSetFolderIcon(syncPath);
 
-    if (extServer)
+    if (extService)
     {
-        extServer->notifySyncDel(syncPath, syncName);
+        emit extService->syncDel(syncPath, syncName);
     }
 }
 
@@ -243,17 +241,17 @@ void MacXPlatform::notifyRestartSyncFolders()
 
 void MacXPlatform::notifyAllSyncFoldersAdded()
 {
-    if (extServer)
+    if (extService)
     {
-        extServer->notifyAllClients(MacXExtServer::NOTIFY_ADD_SYNCS);
+        emit extService->allClients(MacXExtServer::NOTIFY_ADD_SYNCS);
     }
 }
 
 void MacXPlatform::notifyAllSyncFoldersRemoved()
 {
-    if (extServer)
+    if (extService)
     {
-        extServer->notifyAllClients(MacXExtServer::NOTIFY_DEL_SYNCS);
+        emit extService->allClients(MacXExtServer::NOTIFY_DEL_SYNCS);
     }
 }
 
@@ -343,3 +341,8 @@ void MacXPlatform::disableSignalHandler()
     signal(SIGFPE, SIG_DFL);
     signal(SIGABRT, SIG_DFL);
 }
+
+// Platform-specific strings
+const char* MacXPlatform::settingsString {QT_TRANSLATE_NOOP("Platform", "Preferences")};
+const char* MacXPlatform::exitString {QT_TRANSLATE_NOOP("Platform", "Quit")};
+const char* MacXPlatform::fileExplorerString {QT_TRANSLATE_NOOP("Platform","Show in Finder")};

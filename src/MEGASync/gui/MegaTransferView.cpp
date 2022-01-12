@@ -485,14 +485,14 @@ void MegaTransferView::onCustomContextMenu(const QPoint &point)
                             linkAvailable = false;
                         }
 
-                        const auto transferIsDownloadType{transfer->getType() == MegaTransfer::TYPE_DOWNLOAD};
-                        const auto unkownAccess{!item || item->getNodeAccess() == MegaShare::ACCESS_UNKNOWN};
+                        const bool transferIsDownloadType{transfer->getType() == MegaTransfer::TYPE_DOWNLOAD};
+                        const bool unkownAccess{!item || item->getNodeAccess() == MegaShare::ACCESS_UNKNOWN};
                         if (unkownAccess || transferIsDownloadType)
                         {
                             showInMega = false;
                         }
 
-                        const auto transferIsUploadType{transfer->getType() == MegaTransfer::TYPE_UPLOAD};
+                        const bool transferIsUploadType{transfer->getType() == MegaTransfer::TYPE_UPLOAD};
                         if(transferIsUploadType)
                         {
                             showInFolder = false;

@@ -365,10 +365,11 @@ void Notificator::notifySystray(MegaNotification *notification)
 
     notification->setId(WinToast::instance()->showToast(templ, std::shared_ptr<IWinToastHandler>(new WinToastNotification(notification))));
     return;
-#endif
+#else
 
     notifySystray((Notificator::Class)notification->getType(), notification->getText(),
                   notification->getSource(), notification->getImage(), notification->getExpirationTime());
+#endif
 }
 
 void Notificator::onModernNotificationFailed()
@@ -579,8 +580,8 @@ void MegaNotification::dBusNotificationCallback(QDBusMessage dbusMssage)
     {
         if(dbusMssage.arguments().size() > 1)
         {
-            const auto actionText{dbusMssage.arguments().at(1).toString()};
-            const auto actionIndex{getActions().indexOf(actionText)};
+            const QString actionText{dbusMssage.arguments().at(1).toString()};
+            const auto actionIndex = getActions().indexOf(actionText);
             if(actionIndex == 0)
             {
                 emit activated(Action::firstButton);

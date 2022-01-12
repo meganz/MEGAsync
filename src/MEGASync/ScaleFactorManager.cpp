@@ -4,6 +4,7 @@
 #include <QDebug>
 #include <QProcess>
 #include <QScreen>
+#include <stdexcept>
 
 double getDpiOnLinux()
 {
@@ -25,17 +26,17 @@ double getWindowScalingFactorOnXcfe()
 {
     // when zoom is set on Xcfe on Ubuntu 20 the only way to check the value is to query xfconf-query
     // querying xrdb would give 96.0 even when zoom is configured
-    auto windowScalingFactor{1.0};
+    auto windowScalingFactor = 1.0;
     QProcess p;
     p.start(QString::fromUtf8("bash -c \"xfconf-query -c xsettings -p /Gdk/WindowScalingFactor\""));
     p.waitForFinished(2000);
     QString output = QString::fromUtf8(p.readAllStandardOutput().constData()).trimmed();
     QString e = QString::fromUtf8(p.readAllStandardError().constData());
-    const auto outputCorrect{e.isEmpty() && output.size() == 1};
+    const bool outputCorrect{e.isEmpty() && output.size() == 1};
     if (outputCorrect)
     {
         bool conversionOk;
-        const auto scalingFactor{output.toDouble(&conversionOk)};
+        const auto scalingFactor = output.toDouble(&conversionOk);
         if(conversionOk)
         {
             windowScalingFactor = scalingFactor;
@@ -51,7 +52,7 @@ ScreensInfo createScreensInfo(OsType osType, const std::string& desktopName)
         return {};
     }
 
-    auto linuxDpi{0.};
+    auto linuxDpi = 0.;
     if(osType == OsType::LINUX)
     {
         linuxDpi = getDpiOnLinux();
@@ -64,7 +65,7 @@ ScreensInfo createScreensInfo(OsType osType, const std::string& desktopName)
 
     int argc = 0;
     QGuiApplication app{argc, nullptr};
-    const auto screens{app.screens()};
+    const auto screens = app.screens();
     ScreensInfo screensInfo;
     for (const auto& screen : screens)
     {
@@ -74,7 +75,7 @@ ScreensInfo createScreensInfo(OsType osType, const std::string& desktopName)
         screenInfo.availableHeightPixels = screen->availableGeometry().height();
         screenInfo.devicePixelRatio = screen->devicePixelRatio();
 
-        const auto isLinuxAndDpiCalculationIsCorrect{osType==OsType::LINUX && linuxDpi > 0};
+        const bool isLinuxAndDpiCalculationIsCorrect{osType==OsType::LINUX && linuxDpi > 0};
         screenInfo.dotsPerInch = isLinuxAndDpiCalculationIsCorrect ? linuxDpi : screen->logicalDotsPerInch();
 
         screensInfo.push_back(screenInfo);
@@ -85,7 +86,7 @@ ScreensInfo createScreensInfo(OsType osType, const std::string& desktopName)
 std::string getDesktopName()
 {
     std::string desktopName;
-    const auto xdgCurrentDesktop{getenv("XDG_CURRENT_DESKTOP")};
+    const auto xdgCurrentDesktop = getenv("XDG_CURRENT_DESKTOP");
     if (xdgCurrentDesktop)
     {
         desktopName = xdgCurrentDesktop;
@@ -141,33 +142,33 @@ void ScaleFactorManager::setScaleFactorEnvironmentVariable()
     {
         if(mOsName == "Deepin 20")
         {
-            const auto scale{getDpiOnLinux() / 96.0};
+            const auto scale = getDpiOnLinux() / 96.0;
             qputenv("QT_SCALE_FACTOR", QString::number(scale).toAscii());
             return;
         }
 
-        const auto needsRescaling{computeScales()};
+        const bool needsRescaling{computeScales()};
         if(needsRescaling)
         {
             if(mScreensInfo.size() > 1)
             {
                 if(mOsName == "Deepin 20")
                 {
-                    const auto minCalculatedScale{*std::min_element(mCalculatedScales.begin(), mCalculatedScales.end())};
-                    const auto minCalculatedScaleString{QString::number(minCalculatedScale).toAscii()};
+                    const auto minCalculatedScale = *std::min_element(mCalculatedScales.begin(), mCalculatedScales.end());
+                    const auto minCalculatedScaleString = QString::number(minCalculatedScale).toAscii();
                     qputenv("QT_SCALE_FACTOR", minCalculatedScaleString);
                     mLogMessages.emplace_back("QT_SCALE_FACTOR set to " + minCalculatedScaleString);
                 }
                 else
                 {
-                    const auto screenScaleFactorVariable{createScreenScaleFactorsVariable(mCalculatedScales)};
+                    const auto screenScaleFactorVariable = createScreenScaleFactorsVariable(mCalculatedScales);
                     qputenv("QT_SCREEN_SCALE_FACTORS", screenScaleFactorVariable.c_str());
                     mLogMessages.emplace_back("QT_SCREEN_SCALE_FACTORS set to " + screenScaleFactorVariable);
                 }
             }
             else
             {
-                const auto scaleString{QString::number(mCalculatedScales.front()).toAscii()};
+                const auto scaleString = QString::number(mCalculatedScales.front()).toAscii();
                 qputenv("QT_SCALE_FACTOR", scaleString);
                 mLogMessages.emplace_back("QT_SCALE_FACTOR set to " + scaleString);
             }
@@ -198,11 +199,11 @@ bool ScaleFactorManager::checkEnvironmentVariables() const
     {
         qDebug() << "Predefined QT_SCREEN_SCALE_FACTORS found:" << getenv("QT_SCREEN_SCALE_FACTORS");
 
-        const auto predefinedScreenScaleFactors{std::string(getenv("QT_SCREEN_SCALE_FACTORS"))};
-        auto screenScaleFactorsValid{true};
+        const auto predefinedScreenScaleFactors = std::string(getenv("QT_SCREEN_SCALE_FACTORS"));
+        bool screenScaleFactorsValid = true;
         for (const auto& screenInfo : mScreensInfo)
         {
-            const auto textFound{predefinedScreenScaleFactors.find(screenInfo.name) != std::string::npos};
+            const bool textFound{predefinedScreenScaleFactors.find(screenInfo.name) != std::string::npos};
             if (!textFound)
             {
                 screenScaleFactorsValid = false;
@@ -245,7 +246,7 @@ double calculateMaxScale(const ScreenInfo& screenInfo)
 
 bool ScaleFactorManager::computeScales()
 {
-    auto needsRescaling{false};
+    bool needsRescaling = false;
     for(auto& screenInfo : mScreensInfo)
     {
         auto scale = 1.;
@@ -253,12 +254,12 @@ bool ScaleFactorManager::computeScales()
         {
             scale = computeScaleLinux(screenInfo);
         }
-        const auto maxScale{calculateMaxScale(screenInfo)};
+        const auto maxScale = calculateMaxScale(screenInfo);
         scale = std::min(scale, maxScale);
         scale = adjustScaleValueToSuitableIncrement(scale, maxScale, screenInfo.devicePixelRatio);
 
-        const auto hdpiAutoEnabled{screenInfo.devicePixelRatio > 1.0};
-        const auto scaleNeedsToBeAdjusted{scale < 1.0 && !hdpiAutoEnabled};
+        const bool hdpiAutoEnabled{screenInfo.devicePixelRatio > 1.0};
+        const bool scaleNeedsToBeAdjusted{scale < 1.0 && !hdpiAutoEnabled};
         if(scaleNeedsToBeAdjusted)
         {
             scale = 1.0;
@@ -275,24 +276,24 @@ bool ScaleFactorManager::computeScales()
 
 double ScaleFactorManager::computeScaleLinux(const ScreenInfo &screenInfo) const
 {
-    const auto hdpiAutoEnabled{screenInfo.devicePixelRatio > 1.0};
+    const bool hdpiAutoEnabled{screenInfo.devicePixelRatio > 1.0};
     if(hdpiAutoEnabled)
     {
         return 1.0;
     }
 
-    constexpr auto baseDpi{96.};
+    constexpr auto baseDpi = 96.;
     auto scale = 1.;
-    const auto highDpi{screenInfo.dotsPerInch > baseDpi};
+    const bool highDpi{screenInfo.dotsPerInch > baseDpi};
     if (highDpi)
     {
         scale = screenInfo.dotsPerInch / baseDpi;
     }
     else
     {
-        constexpr auto baseWidthPixels{1920.};
-        constexpr auto baseHeightPixels{1080.};
-        constexpr auto correctionFactor{.75};
+        constexpr auto baseWidthPixels = 1920.;
+        constexpr auto baseHeightPixels = 1080.;
+        constexpr auto correctionFactor = .75;
         scale = std::min(screenInfo.availableWidthPixels / baseWidthPixels,
                          screenInfo.availableHeightPixels / baseHeightPixels) * correctionFactor;
         scale = std::max(scale, 1.0); // avoid problematic scales lower than 1.0 when no hdpi enabled

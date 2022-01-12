@@ -4,26 +4,26 @@
 #include "DesktopNotifications.h"
 #include <memory>
 #include "UpgradeDialog.h"
+#include "UpgradeOverStorage.h"
 #include <QObject>
 
-// Events
-constexpr int EVENT_ID_TRANSFER_OVER_QUOTA_DIALOG{98526};
+// Events messages strings
 constexpr char EVENT_MESSAGE_TRANSFER_OVER_QUOTA_DIALOG[]{"Transfer over quota dialog shown"};
-constexpr int EVENT_ID_TRANSFER_OVER_QUOTA_OS_NOTIFICATION{98527};
 constexpr char EVENT_MESSAGE_TRANSFER_OVER_QUOTA_OS_NOTIFICATION[]{"Transfer over quota os notification shown"};
-constexpr int EVENT_ID_TRANSFER_OVER_QUOTA_UI_ALERT{98528};
 constexpr char EVENT_MESSAGE_TRANSFER_OVER_QUOTA_UI_ALERTST_OVER_QUOTA_UI_ALERT[]{"Transfer over quota ui message shown"};
-constexpr int EVENT_ID_TRANSFER_ALMOST_QUOTA_UI_ALERT{98529};
 constexpr char EVENT_MESSAGE_TRANSFER_ALMOST_QUOTA_UI_ALERT[]{"Transfer almost over quota ui message shown"};
-constexpr int EVENT_ID_TRANSFER_ALMOST_OVER_QUOTA_OS_NOTIFICATION{98531};
 constexpr char EVENT_MESSAGE_TRANSFER_ALMOST_OVER_QUOTA_OS_NOTIFICATION[]{"Transfer almost over quota os notification shown"};
+
+// % for almost over quota
 constexpr int ALMOST_OVER_QUOTA_PER_CENT{90};
+constexpr int FULL_QUOTA_PER_CENT{100};
 
 enum class QuotaState
 {
-    OK = 0,
-    WARNING,
-    FULL
+    OK        = 0,
+    WARNING   = 1,
+    FULL      = 2, // Account could reach full usage of quota but not enter in overquota situation yet.
+    OVERQUOTA = 3,
 };
 
 class TransferQuota: public QObject
@@ -32,12 +32,12 @@ class TransferQuota: public QObject
 public:
     TransferQuota(mega::MegaApi* megaApi, Preferences *preferences, std::shared_ptr<DesktopNotifications> desktopNotifications);
     void setOverQuota(std::chrono::milliseconds waitTime);
-    void setQuotaOk();
+    void updateQuotaState();
     bool isOverQuota();
-    bool isQuotaWarning() const;
-    void setUserProUsages(long long usedBytes, long long totalBytes);
+    bool isQuotaWarning();
+    bool isQuotaFull();
     void refreshOverQuotaDialogDetails();
-    void setOverQuotaDialogPricing(mega::MegaPricing *mPricing);
+    void setOverQuotaDialogPricing(std::shared_ptr<mega::MegaPricing> pricing, std::shared_ptr<mega::MegaCurrency> currency);
     void closeDialogs();
     void checkQuotaAndAlerts();
     bool checkImportLinksAlertDismissed();
@@ -47,12 +47,15 @@ public:
 
 private:
     mega::MegaApi* mMegaApi;
-    mega::MegaPricing* mPricing;
+    std::shared_ptr<mega::MegaPricing> mPricing;
+    std::shared_ptr<mega::MegaCurrency> mCurrency;
     Preferences* mPreferences;
     std::shared_ptr<DesktopNotifications> mOsNotifications;
     UpgradeDialog* mUpgradeDialog;
     QuotaState mQuotaState;
     std::chrono::system_clock::time_point mWaitTimeUntil;
+    bool overQuotaAlertVisible;
+    bool almostQuotaAlertVisible;
 
     void sendQuotaWarningOsNotification();
     void sendOverQuotaOsNotification();
@@ -65,12 +68,16 @@ private:
 
 public slots:
     void upgradeDialogFinished(int result);
-    void onDismissOverQuotaUiAlert();
-    void onDismissAlmostOverQuotaUiMessage();
+    void onTransferOverquotaVisibilityChange(bool messageShown);
+    void onAlmostTransferOverquotaVisibilityChange(bool messageShown);
 
 signals:
-    void almostOverQuotaUiMessage();
-    void overQuotaUiMessage();
+    // emitted when checking almost OQ and the respective UI message
+    // needs to be present (hasn't been discarded by the user for a while)
+    void almostOverQuotaMessageNeedsToBeShown();
+    // emitted when checking OQ and the respective UI message
+    // needs to be present (hasn't been discarded by the user for a while)
+    void overQuotaMessageNeedsToBeShown();
     void sendState(QuotaState state);
     void waitTimeIsOver();
 };

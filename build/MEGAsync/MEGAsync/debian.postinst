@@ -10,7 +10,6 @@ if [ "x$ver" == "x" ]; then
 	ver=$(lsb_release -rs)
 fi
 
-
 if [[ $distro = "Raspbian GNU/Linux 10"* ]]; then
     str="Raspbian_10.0"
 elif [[ $distro = "Raspbian GNU/Linux 9"* ]]; then
@@ -18,6 +17,10 @@ elif [[ $distro = "Raspbian GNU/Linux 9"* ]]; then
 elif [[ $distro = "Raspbian GNU/Linux 8"* ]]; then
     str="Raspbian_8.0"
 # Ubuntu
+elif [[ $ver = "21.10" ]]; then
+    str="xUbuntu_21.10"
+elif [[ $ver = "21.04" ]]; then
+    str="xUbuntu_21.04"
 elif [[ $ver = "20.10" ]]; then
     str="xUbuntu_20.10"
 elif [[ $ver = "20.04" ]]; then
@@ -63,8 +66,10 @@ elif [[ $ver == 9.* ]]; then
     str="Debian_9.0"
 elif [[ $ver == 10* ]]; then
     str="Debian_10.0"
+elif [[ $ver == 11* ]]; then
+    str="Debian_11"
 elif [[ $ver = "testing" ]]; then
-    str="Debian_10.0"
+    str="Debian_testing"
 # Elementary OS Luna uses 12.04
 elif [[ $distro = "elementary OS Luna" ]]; then
     str="xUbuntu_12.04"
@@ -114,7 +119,7 @@ Jjiho4rUEW8c1EUPvK8v1jRGwjYED3ihJ6510eblYFPl+6k91OWlScnxuVVAmSn4
 -----END PGP PUBLIC KEY BLOCK-----
 KEY
 
-sysctl -p /etc/sysctl.d/100-megasync-inotify-limit.conf || true
+sysctl -p /etc/sysctl.d/99-megasync-inotify-limit.conf || true
 
 /bin/touch --no-create /usr/share/icons/hicolor &>/dev/null || true
 /bin/touch --no-create /usr/share/icons/ubuntu-mono-dark &>/dev/null || true

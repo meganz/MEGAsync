@@ -1,7 +1,9 @@
 #include "BindFolderDialog.h"
 #include "ui_BindFolderDialog.h"
 #include "MegaApplication.h"
+#include "QMegaMessageBox.h"
 #include "control/Utilities.h"
+
 #include <QInputDialog>
 
 using namespace mega;
@@ -48,7 +50,7 @@ BindFolderDialog::~BindFolderDialog()
     delete ui;
 }
 
-long long BindFolderDialog::getMegaFolder()
+MegaHandle BindFolderDialog::getMegaFolder()
 {
     return ui->wBinder->selectedMegaFolder();
 }
@@ -139,7 +141,7 @@ void BindFolderDialog::on_bOK_clicked()
    {
        syncName = QDir::toNativeSeparators(localFolderPath);
    }
-   syncName.remove(QChar::fromAscii(':')).remove(QDir::separator());
+   syncName.remove(QDir::separator());
 
    do
    {

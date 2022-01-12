@@ -58,10 +58,21 @@ void MegaTransferDelegate::paint(QPainter *painter, const QStyleOptionViewItem &
                     static_cast<MegaApplication*>(qApp)->removeFinishedBlockedTransfer(tData->data.tag);
                 }
 
+                // Get http speed, which reports speed changes faster than the transfer.
+                long long httpSpeed;
+                if (tData->data.type == MegaTransfer::TYPE_DOWNLOAD)
+                {
+                    httpSpeed = static_cast<MegaApplication*>(qApp)->getMegaApi()->getCurrentDownloadSpeed();
+                }
+                else
+                {
+                    httpSpeed = static_cast<MegaApplication*>(qApp)->getMegaApi()->getCurrentUploadSpeed();
+                }
+
                 ti->setType(tData->data.type, tData->data.isSyncTransfer);
                 ti->setFileName(tData->data.filename);
                 ti->setTotalSize(tData->data.totalSize);
-                ti->setSpeed(tData->data.speed, tData->data.meanSpeed);
+                ti->setSpeed(std::min(tData->data.speed, httpSpeed), tData->data.meanSpeed);
                 ti->setTransferredBytes(tData->data.transferredBytes, !tData->data.isSyncTransfer);
                 ti->setPriority(tData->data.priority);
 
@@ -84,6 +95,11 @@ void MegaTransferDelegate::paint(QPainter *painter, const QStyleOptionViewItem &
                     if (tData->data.publicNode)
                     {
                        ti->setIsLinkAvailable(true);
+                    }
+
+                    if (tData->data.nodeAccess != mega::MegaShare::ACCESS_UNKNOWN)
+                    {
+                        ti->setNodeAccess(tData->data.nodeAccess);
                     }
                 }
             }
