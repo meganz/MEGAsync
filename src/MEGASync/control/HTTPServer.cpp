@@ -373,7 +373,7 @@ void HTTPServer::processRequest(QAbstractSocket *socket, HTTPRequest request)
         openLinkRequest(response, request);
         break;
     case EXTERNAL_DOWNLOAD_REQUEST_START:
-        externalDownloadRequest(response, request, safeServer && safeSocket);
+        externalDownloadRequest(response, request, socket);
         break;
     case EXTERNAL_FILE_UPLOAD_REQUEST_START:
         externalFileUploadRequest(response, request);
@@ -515,8 +515,11 @@ void HTTPServer::openLinkRequest(QString &response, const HTTPRequest& request)
     }
 }
 
-void HTTPServer::externalDownloadRequest(QString &response, const HTTPRequest& request, bool safeServerAndSocket)
+void HTTPServer::externalDownloadRequest(QString &response, const HTTPRequest& request, QAbstractSocket* socket)
 {
+    QPointer<QAbstractSocket> safeSocket = socket;
+    QPointer<HTTPServer> safeServer = this;
+
     MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, "ExternalDownload command received from the webclient");
     int start = request.data.indexOf(QString::fromUtf8("\"f\":[")) + 5;
     if (start > 0)
@@ -598,7 +601,7 @@ void HTTPServer::externalDownloadRequest(QString &response, const HTTPRequest& r
                     QString parentHandle = Utilities::extractJSONString(file, QString::fromUtf8("p"));
                     p = megaApi->base64ToHandle(parentHandle.toUtf8().constData());
                     QApplication::processEvents();
-                    if (safeServerAndSocket)
+                    if (!safeServer || !safeSocket)
                     {
                         return;
                     }
