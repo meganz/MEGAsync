@@ -121,7 +121,7 @@ void TransferManagerItem2::updateUi(const QExplicitlySharedDataPointer<TransferD
                 }
                 default:
                 {
-                    statusString = tr("Synching");
+                    statusString = tr("Syncing");
                     break;
                 }
             }

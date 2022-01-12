@@ -130,8 +130,6 @@ private:
 
     QFuture<void> mInitFuture;
 
-//    long long mNotificationNumber;
-
     TransfersCount mTransfersCount;
 
     bool mAreAllPaused;
@@ -142,6 +140,7 @@ private:
     QMap<int, long long> mNbTransfersPerType;
     QMap<TransferData::TransferState, long long> mNbTransfersPerState;
 
+    QTimer timer;
 
     mega::QTMegaTransferListener* mListener;
 

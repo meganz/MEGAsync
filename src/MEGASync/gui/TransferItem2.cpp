@@ -1,6 +1,7 @@
 #include "TransferItem2.h"
 #include "megaapi.h"
 #include "Utilities.h"
+#include "MegaApplication.h"
 
 using namespace mega;
 
@@ -40,6 +41,15 @@ void TransferItem2::updateValuesTransferFinished(int64_t finishTime,
     d->mParentHandle = parentHandle;
     d->mNodeHandle = nodeHandle;
     d->mPublicNode = publicNode;
+
+    if (d->mPublicNode)
+    {
+       d->mNodeAccess = MegaSyncApp->getMegaApi()->getAccess(d->mPublicNode);
+       if (d->mNodeAccess == MegaShare::ACCESS_OWNER)
+       {
+           d->mIsPublicNode = true;
+       }
+    }
 }
 
 void TransferItem2::updateValuesTransferUpdated(int64_t remainingTime,
@@ -60,4 +70,13 @@ void TransferItem2::updateValuesTransferUpdated(int64_t remainingTime,
     d->mTransferredBytes = transferedBytes;
     d->mPriority = priority;
     d->mPublicNode = publicNode;
+
+    if (d->mPublicNode)
+    {
+       d->mNodeAccess = MegaSyncApp->getMegaApi()->getAccess(d->mPublicNode);
+       if (d->mNodeAccess == MegaShare::ACCESS_OWNER)
+       {
+           d->mIsPublicNode = true;
+       }
+    }
 }

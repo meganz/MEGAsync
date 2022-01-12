@@ -32,7 +32,6 @@ QTransfersModel2::QTransfersModel2(QObject *parent) :
     mOrder (),
     mThreadPool (ThreadPoolSingleton::getInstance()),
     mModelMutex (new QReadWriteLock(QReadWriteLock::Recursive)),
-//    mNotificationNumber (0),
     mModelHasTransfers (false),
     mNbTransfersPerFileType(),
     mNbFinishedPerFileType(),
@@ -69,6 +68,9 @@ QTransfersModel2::QTransfersModel2(QObject *parent) :
 
     //Update transfers state
     updateTransfersCount();
+
+    connect(&timer, &QTimer::timeout, this, &QTransfersModel2::onTimerTransfers);
+    timer.start(500);
 }
 
 bool QTransfersModel2::hasChildren(const QModelIndex& parent) const
@@ -179,7 +181,6 @@ void QTransfersModel2::initModel()
         std::unique_ptr<mega::MegaApiLock> megaApiLock (mMegaApi->getMegaApiLock(true));
         std::unique_ptr<mega::MegaTransferList> transfers (mMegaApi->getTransfers());
         std::unique_ptr<mega::MegaTransferData> transferData (mMegaApi->getTransferData());
-//        mNotificationNumber = transferData->getNotificationNumber();
 
         // First, list all the transfers to add
         QList<TransferTag> transfersToAdd;
@@ -224,7 +225,7 @@ void QTransfersModel2::initModel()
                     beginInsertRows(DEFAULT_IDX, nbRowsInModel,
                                     nbRowsInModel + nbRowsInChunk - 1);
                 });
-                //QApplication::processEvents();
+
                 // Insert transfers
                 for (auto row (first); row < first + nbRowsInChunk; ++row)
                 {
@@ -236,6 +237,7 @@ void QTransfersModel2::initModel()
                 {
                     endInsertRows();
                 });
+
                 QApplication::processEvents();
 
                 remainingRows -= INIT_ROWS_PER_CHUNK;
@@ -255,6 +257,11 @@ void QTransfersModel2::onTransferFinish(mega::MegaApi* api, mega::MegaTransfer* 
                                         mega::MegaError* error)
 {
     mCacheFinishedTransfers.append(std::make_tuple(transfer->copy(), error->copy()));
+    //finishTransfer(api, transfer, error);
+
+    //Update stats
+    //updateTransfersCount();
+    //emit transfersDataUpdated();
 }
 
 void QTransfersModel2::onTransferUpdate(mega::MegaApi*, mega::MegaTransfer* transfer)
@@ -270,6 +277,11 @@ void QTransfersModel2::onTransferUpdate(mega::MegaApi*, mega::MegaTransfer* tran
     {
         mCacheUpdateTransfers[transferTag] = std::shared_ptr<mega::MegaTransfer>(transfer->copy());
     }
+    //updateTransfer(transfer);
+
+    //Update stats
+    //updateTransfersCount();
+    //emit transfersDataUpdated();
 }
 
 void QTransfersModel2::onTransferTemporaryError(mega::MegaApi *api, mega::MegaTransfer *transfer, mega::MegaError *error)
@@ -292,6 +304,7 @@ bool QTransfersModel2::onTimerTransfers()
         {
             startTransfer(transfer);
         }
+        endInsertRows();
 
         endInsertRows();
         mModelMutex->unlock();
@@ -348,26 +361,18 @@ void QTransfersModel2::startTransfer(mega::MegaTransfer *transfer)
     mModelMutex->lockForWrite();
 
     auto nbRows (mOrder.size());
-    auto insertAt (nbRows);
 
-    insertTransfer(mMegaApi, transfer, insertAt);
+    insertTransfer(mMegaApi, transfer, nbRows);
 
     auto state (static_cast<TransferData::TransferState>(1 << transfer->getState()));
     if (mAreAllPaused && (state & PAUSABLE_STATES))
     {
         mMegaApi->pauseTransfer(transfer, true);
     }
-//    mNotificationNumber = transfer->getNotificationNumber();
     mModelMutex->unlock();
 
-//    if (transfer->getType() == MegaTransfer::TYPE_DOWNLOAD)
-//    {
-//        mTransfersCount.leftDownloadBytes += transfer->getTotalBytes();
-//    }
-//    else if (transfer->getType() == MegaTransfer::TYPE_UPLOAD)
-//    {
-//        mTransfersCount.leftUploadBytes += transfer->getTotalBytes();
-//    }
+    QModelIndex idx (index(nbRows, 0, DEFAULT_IDX));
+    emit dataChanged(idx, idx, DATA_ROLE);
 
     if(transfer->isFinished())
     {
@@ -380,17 +385,14 @@ void QTransfersModel2::startTransfer(mega::MegaTransfer *transfer)
 void QTransfersModel2::addTransfers(int rows)
 {
    auto totalRows = rowCount(DEFAULT_IDX);
-   blockSignals(true);
    beginInsertRows(DEFAULT_IDX, totalRows, totalRows + rows);
    endInsertRows();
-   blockSignals(false);
 }
 
 void QTransfersModel2::updateTransfer(mega::MegaTransfer *transfer)
 {
     if (transfer->isStreamingTransfer()
-            || transfer->isFolderTransfer()
-        )
+            || transfer->isFolderTransfer())
     {
         return;
     }
@@ -398,8 +400,6 @@ void QTransfersModel2::updateTransfer(mega::MegaTransfer *transfer)
     TransferTag tag (transfer->getTag());
 
     mModelMutex->lockForWrite();
-
-//    mNotificationNumber = transfer->getNotificationNumber();
 
     auto rowIt (std::find(mOrder.cbegin(), mOrder.cend(), tag));
 
@@ -452,6 +452,9 @@ void QTransfersModel2::updateTransfer(mega::MegaTransfer *transfer)
             QModelIndex idx (index(row, 0, DEFAULT_IDX));
             emit dataChanged(idx, idx, DATA_ROLE);
         }
+
+        QModelIndex idx (index(row, 0, DEFAULT_IDX));
+        emit dataChanged(idx, idx, DATA_ROLE);
     }
 
 //    if (transfer->getType() == MegaTransfer::TYPE_DOWNLOAD)
@@ -477,7 +480,6 @@ void QTransfersModel2::finishTransfer(MegaApi *api, mega::MegaTransfer *transfer
     TransferTag tag (transfer->getTag());
 
     mModelMutex->lockForWrite();
-//    mNotificationNumber = transfer->getNotificationNumber();
 
     auto rowIt (std::find(mOrder.cbegin(), mOrder.cend(), tag));
     if (rowIt != mOrder.cend())
@@ -541,46 +543,9 @@ void QTransfersModel2::finishTransfer(MegaApi *api, mega::MegaTransfer *transfer
         {
             delete rem;
         }
-    }
 
-    if (transfer)
-    {
-//        if (transfer->getType() == MegaTransfer::TYPE_DOWNLOAD)
-//        {
-//            if (error->getErrorCode() == MegaError::API_OK)
-//            {
-//                mTransfersCount.leftDownloadBytes -= transfer->getTotalBytes();
-//                mTransfersCount.completedDownloadBytes += transfer->getTransferredBytes();
-//            }
-
-//            if(mTransfersCount.leftDownloadBytes < 0)
-//            {
-//                mTransfersCount.leftDownloadBytes = 0;
-//            }
-
-//            if(mTransfersCount.completedDownloadBytes < 0)
-//            {
-//                mTransfersCount.completedDownloadBytes = 0;
-//            }
-//        }
-//        else if (transfer->getType() == MegaTransfer::TYPE_UPLOAD)
-//        {
-//            if (error->getErrorCode() == MegaError::API_OK)
-//            {
-//                mTransfersCount.leftUploadBytes -= transfer->getTotalBytes();
-//                mTransfersCount.completedUploadBytes += transfer->getTransferredBytes();
-//            }
-
-//            if(mTransfersCount.leftUploadBytes < 0)
-//            {
-//                mTransfersCount.leftUploadBytes = 0;
-//            }
-
-//            if(mTransfersCount.completedUploadBytes < 0)
-//            {
-//                mTransfersCount.completedUploadBytes = 0;
-//            }
-//        }
+        QModelIndex idx (index(row, 0, DEFAULT_IDX));
+        emit dataChanged(idx, idx, DATA_ROLE);
     }
     mModelMutex->unlock();
 }
@@ -591,7 +556,6 @@ void QTransfersModel2::transferTemporaryError(mega::MegaApi *api, mega::MegaTran
 
     if (transfer->isStreamingTransfer()
             || transfer->isFolderTransfer())
-//            || mNotificationNumber >= transfer->getNotificationNumber())
     {
         return;
     }
@@ -599,8 +563,6 @@ void QTransfersModel2::transferTemporaryError(mega::MegaApi *api, mega::MegaTran
     TransferTag tag (transfer->getTag());
 
     mModelMutex->lockForWrite();
-
-//    mNotificationNumber = transfer->getNotificationNumber();
 
     auto rowIt (std::find(mOrder.cbegin(), mOrder.cend(), tag));
     if (rowIt != mOrder.cend())
@@ -820,8 +782,7 @@ void QTransfersModel2::cancelClearTransfers(const QModelIndexList& indexes, bool
     }
 
     //Update stats
-    updateTransfersCount();
-    emit transfersDataUpdated();
+    resetTransfersCount();
 }
 
 void QTransfersModel2::pauseTransfers(const QModelIndexList& indexes, bool pauseState)
@@ -948,17 +909,6 @@ const TransfersCount& QTransfersModel2::updateTransfersCount()
     mTransfersCount.totalUploads = mMegaApi->getTotalUploads();
     mTransfersCount.totalDownloads = mMegaApi->getTotalDownloads();
 
-    if(mTransfersCount.remainingDownloads == 0)
-    {
-        mMegaApi->resetTotalDownloads();
-    }
-
-    if(mTransfersCount.remainingUploads == 0)
-    {
-        mMegaApi->resetTotalUploads();
-    }
-
-
     mTransfersCount.completedDownloadBytes = mMegaApi->getTotalDownloadedBytes();
     mTransfersCount.leftDownloadBytes = mMegaApi->getTotalDownloadBytes();
 
@@ -978,7 +928,21 @@ const TransfersCount &QTransfersModel2::getTransfersCount()
 
 void QTransfersModel2::resetTransfersCount()
 {
+    updateTransfersCount();
+
+    if(mTransfersCount.remainingDownloads == 0)
+    {
+        mMegaApi->resetTotalDownloads();
+    }
+
+    if(mTransfersCount.remainingUploads == 0)
+    {
+        mMegaApi->resetTotalUploads();
+    }
+
     mTransfersCount = TransfersCount();
+
+    emit transfersDataUpdated();
 }
 
 void QTransfersModel2::onPauseStateChanged()

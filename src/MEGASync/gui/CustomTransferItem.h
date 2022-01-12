@@ -31,6 +31,7 @@ public:
     void mouseHoverTransfer(bool isHover, const QPoint &pos);
     bool mouseHoverRetryingLabel(QPoint pos);
 
+    bool isTransferFinished() override;
     void finishTransfer();
     void updateTransfer();
     void updateFinishedTime();

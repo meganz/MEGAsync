@@ -24,9 +24,6 @@ TransfersWidget::TransfersWidget(QWidget* parent) :
     ui->setupUi(this);
 
     model2 = app->getTransfersModel();
-
-    connect(&timer, &QTimer::timeout, this, &TransfersWidget::onTimerTransfers);
-    timer.start(500);
 }
 
 //void TransfersWidget::setupTransfers(std::shared_ptr<mega::MegaTransferData> transferData, QTransfersModel::ModelType type)
@@ -153,7 +150,7 @@ void TransfersWidget::configureTransferView()
         });
 
 //        QObject::connect(this, &TransfersWidget::updateSearchFilter,
-////                         mProxyModel,static_cast<void (TransfersSortFilterProxyModel::*)(const QRegularExpression&)>(&TransfersSortFilterProxyModel::setFilterRegularExpression),
+//                         mProxyModel,static_cast<void (TransfersSortFilterProxyModel::*)(const QRegularExpression&)>(&TransfersSortFilterProxyModel::setFilterRegularExpression),
 //                         mProxyModel, &TransfersSortFilterProxyModel::setFilterFixedString,
 //                Qt::QueuedConnection);
 //    }
@@ -180,11 +177,6 @@ void TransfersWidget::disableGetLink(bool disable)
 {
     ui->tvTransfers->disableGetLink(disable);
 }
-
-//QTransfersModel *TransfersWidget::getModel()
-//{
-//    return model;
-//}
 
 QTransfersModel2* TransfersWidget::getModel2()
 {
@@ -327,14 +319,6 @@ void TransfersWidget::onPauseStateChanged(bool pauseState)
                                         tr("Resume visible transfers")
                                       : tr("Pause visible transfers"));
     mIsPaused = pauseState;
-}
-
-void TransfersWidget::onTimerTransfers()
-{
-    if(model2->onTimerTransfers())
-    {
-//       mProxyModel->invalidate();
-    }
 }
 
 void TransfersWidget::textFilterChanged(const QString& pattern)

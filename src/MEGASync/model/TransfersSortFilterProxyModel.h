@@ -42,10 +42,10 @@ class TransfersSortFilterProxyModel : public QSortFilterProxyModel
         void modelSorted();
 
     protected:
-        bool filterAcceptsRow(int sourceRow, const QModelIndex& sourceParent) const override;
-        bool lessThan(const QModelIndex& left, const QModelIndex& right) const override;
+        virtual bool filterAcceptsRow(int sourceRow, const QModelIndex& sourceParent) const override;
+        virtual bool lessThan(const QModelIndex& left, const QModelIndex& right) const override;
 
-    private:
+    protected:
         TransferData::TransferStates mTransferStates;
         TransferData::TransferTypes mTransferTypes;
         TransferData::FileTypes mFileTypes;

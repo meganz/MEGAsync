@@ -59,9 +59,6 @@ public:
 
     PSA_info* getPSAdata();
     void setUsage();
-    void setTransfer(mega::MegaTransfer *transfer);
-    void refreshTransferItems();
-    void transferFinished(int error);
     void setIndexing(bool indexing);
     void setWaiting(bool waiting);
     void setSyncing(bool value);
@@ -76,12 +73,6 @@ public:
     void updateNotificationsTreeView(QAbstractItemModel *model, QAbstractItemDelegate *delegate);
 
     void reset();
-
-    QCustomTransfersModel *stealModel();
-
-    void onTransferFinish(mega::MegaApi* api, mega::MegaTransfer *transfer, mega::MegaError* e) override;
-    void onTransferStart(mega::MegaApi *api, mega::MegaTransfer *transfer) override;
-    void onTransferUpdate(mega::MegaApi *api, mega::MegaTransfer *transfer) override;
 
 #ifdef __APPLE__
     void moveArrow(QPoint p);

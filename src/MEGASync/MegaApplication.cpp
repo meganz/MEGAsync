@@ -7540,7 +7540,6 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
 
         if (infoDialog)
         {
-            infoDialog->refreshTransferItems();
             infoDialog->updateDialogState();
         }
 
@@ -7724,11 +7723,6 @@ void MegaApplication::onTransferStart(MegaApi *api, MegaTransfer *transfer)
                                              transfer->getTotalBytes(),
                                              transfer->getSpeed(),
                                              QString::fromUtf8(transfer->getPath()));
-    }
-
-    if (infoDialog)
-    {
-        infoDialog->onTransferStart(megaApi, transfer);
     }
 
     onTransferUpdate(api, transfer);
@@ -7920,8 +7914,6 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
         //Send updated statics to the information dialog
         if (infoDialog)
         {
-            infoDialog->setTransfer(transfer);
-            infoDialog->transferFinished(e->getErrorCode());
             infoDialog->updateDialogState();
         }
 
@@ -7971,11 +7963,6 @@ void MegaApplication::onTransferUpdate(MegaApi *, MegaTransfer *transfer)
         activeTransferPriority[type] = priority;
         activeTransferState[type] = transfer->getState();
         activeTransferTag[type] = transfer->getTag();
-
-        if (infoDialog)
-        {
-            infoDialog->setTransfer(transfer);
-        }
     }
     else if (activeTransferTag[type] == transfer->getTag())
     {
@@ -8308,8 +8295,6 @@ void MegaApplication::onGlobalSyncStateChangedImpl(MegaApi *, bool timeout)
             infoDialog->setSyncing(syncing);
             infoDialog->setTransferring(transferring);
             infoDialog->updateDialogState();
-            infoDialog->transferFinished(MegaError::API_OK);
-
             });
 
        });

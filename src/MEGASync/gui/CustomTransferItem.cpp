@@ -3,6 +3,7 @@
 #include "MegaApplication.h"
 #include "control/Utilities.h"
 #include "platform/Platform.h"
+#include <TransferItem2.h>
 
 #include <QImageReader>
 #include <QtConcurrent/QtConcurrent>
@@ -65,12 +66,12 @@ void CustomTransferItem::setType(int type, bool isSyncTransfer)
 
     switch (type)
     {
-        case MegaTransfer::TYPE_UPLOAD:
+        case TransferData::TransferType::TRANSFER_UPLOAD:
             icon = Utilities::getCachedPixmap(QString::fromUtf8(":/images/upload_item_ico.png"));
             mUi->pbTransfer->setStyleSheet(QString::fromUtf8("QProgressBar#pbTransfer{background-color: transparent;}"
                                                             "QProgressBar#pbTransfer::chunk {background-color: #2ba6de;}"));
             break;
-        case MegaTransfer::TYPE_DOWNLOAD:
+        case TransferData::TransferType::TRANSFER_DOWNLOAD:
             icon = Utilities::getCachedPixmap(QString::fromUtf8(":/images/download_item_ico.png"));
             mUi->pbTransfer->setStyleSheet(QString::fromUtf8("QProgressBar#pbTransfer{background-color: transparent;}"
                                                             "QProgressBar#pbTransfer::chunk {background-color: #31b500;}"));
@@ -88,11 +89,11 @@ void CustomTransferItem::setTransferState(int value)
     TransferItem::setTransferState(value);
     switch (mTransferState)
     {
-    case MegaTransfer::STATE_COMPLETED:
-    case MegaTransfer::STATE_FAILED:
+    case TransferData::TransferState::TRANSFER_COMPLETED:
+    case TransferData::TransferState::TRANSFER_FAILED:
         finishTransfer();
         break;
-    case MegaTransfer::STATE_CANCELLED:
+    case TransferData::TransferState::TRANSFER_CANCELLED:
     default:
         updateTransfer();
         break;
@@ -113,8 +114,8 @@ bool CustomTransferItem::checkIsInsideButton(QPoint pos, int button)
 
     switch (mTransferState)
     {
-    case MegaTransfer::STATE_COMPLETED:
-    case MegaTransfer::STATE_FAILED:
+    case TransferData::TransferState::TRANSFER_COMPLETED:
+    case TransferData::TransferState::TRANSFER_FAILED:
     {
         if ((button == TransferItem::ACTION_BUTTON && mUi->lActionTransfer->rect().contains(mUi->lActionTransfer->mapFrom(this, pos)))
                 || (button == TransferItem::SHOW_IN_FOLDER_BUTTON && mUi->lShowInFolder->rect().contains(mUi->lShowInFolder->mapFrom(this, pos))))
@@ -160,11 +161,11 @@ void CustomTransferItem::updateFinishedIco(int transferType, bool transferErrors
 
     switch (transferType)
     {
-        case MegaTransfer::TYPE_UPLOAD:
+        case TransferData::TransferType::TRANSFER_UPLOAD:
             iconCompleted = Utilities::getCachedPixmap(transferErrors ? QString::fromUtf8(":/images/upload_fail_item_ico.png")
                                                                       : QString::fromUtf8(":/images/uploaded_item_ico.png"));
             break;
-        case MegaTransfer::TYPE_DOWNLOAD:
+        case TransferData::TransferType::TRANSFER_DOWNLOAD:
             iconCompleted = Utilities::getCachedPixmap(transferErrors ? QString::fromUtf8(":/images/download_fail_item_ico.png")
                                                                       : QString::fromUtf8(":/images/downloaded_item_ico.png"));
             break;
@@ -178,7 +179,6 @@ void CustomTransferItem::updateFinishedIco(int transferType, bool transferErrors
 
 void CustomTransferItem::mouseHoverTransfer(bool isHover, const QPoint &pos)
 {
-
     if (isHover)
     {
         mActionButtonsEnabled = true;
@@ -236,7 +236,7 @@ bool CustomTransferItem::mouseHoverRetryingLabel(QPoint pos)
 {
     switch (mTransferState)
     {
-        case MegaTransfer::STATE_RETRYING:
+        case TransferData::TransferState::TRANSFER_RETRYING:
             if (mUi->lSpeed->rect().contains(mUi->lSpeed->mapFrom(this, pos)))
             {
                 return true;
@@ -246,6 +246,12 @@ bool CustomTransferItem::mouseHoverRetryingLabel(QPoint pos)
             break;
     }
     return false;
+}
+
+bool CustomTransferItem::isTransferFinished()
+{
+    return mTransferState == TransferData::TransferState::TRANSFER_COMPLETED
+            || mTransferState == TransferData::TransferState::TRANSFER_FAILED;
 }
 
 void CustomTransferItem::finishTransfer()
@@ -272,7 +278,7 @@ void CustomTransferItem::finishTransfer()
 
 void CustomTransferItem::updateTransfer()
 {
-    if (mTransferState == MegaTransfer::STATE_COMPLETED || mTransferState == MegaTransfer::STATE_FAILED)
+    if (mTransferState == TransferData::TransferState::TRANSFER_COMPLETED || mTransferState == TransferData::TransferState::TRANSFER_FAILED)
     {
         mUi->sTransferState->setCurrentWidget(mUi->completedTransfer);
     }
@@ -283,7 +289,7 @@ void CustomTransferItem::updateTransfer()
 
     switch (mTransferState)
     {
-        case MegaTransfer::STATE_ACTIVE:
+        case TransferData::TransferState::TRANSFER_ACTIVE:
         {
             // Update remaining time
             long long remainingBytes = mTotalSize - mTotalTransferredBytes;
@@ -318,17 +324,17 @@ void CustomTransferItem::updateTransfer()
             mUi->lSpeed->setText(downloadString);
             break;
         }
-        case MegaTransfer::STATE_PAUSED:
+        case TransferData::TransferState::TRANSFER_PAUSED:
             mUi->lSpeed->setText(QString::fromUtf8("%1").arg(tr("PAUSED")));
             mUi->bClockDown->setVisible(false);
             mUi->lRemainingTime->setText(QString::fromUtf8(""));
             break;
-        case MegaTransfer::STATE_QUEUED:
+        case TransferData::TransferState::TRANSFER_QUEUED:
             mUi->lSpeed->setText(QString::fromUtf8("%1").arg(tr("queued")));
             mUi->bClockDown->setVisible(false);
             mUi->lRemainingTime->setText(QString::fromUtf8(""));
             break;
-        case MegaTransfer::STATE_RETRYING:
+        case TransferData::TransferState::TRANSFER_RETRYING:
             if (mTransferError == MegaError::API_EOVERQUOTA)
             {
                 if (mTransferErrorValue)
@@ -348,7 +354,7 @@ void CustomTransferItem::updateTransfer()
             mUi->bClockDown->setVisible(false);
             mUi->lRemainingTime->setText(QString::fromUtf8(""));
             break;
-        case MegaTransfer::STATE_COMPLETING:
+        case TransferData::TransferState::TRANSFER_COMPLETING:
             mUi->lSpeed->setText(QString::fromUtf8("%1").arg(tr("completing...")));
             mUi->bClockDown->setVisible(false);
             mUi->lRemainingTime->setText(QString::fromUtf8(""));

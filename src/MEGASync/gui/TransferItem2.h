@@ -67,6 +67,8 @@ class TransferData : public QSharedData
     unsigned long long mMeanSpeed;
     unsigned long long mTransferredBytes;
     mega::MegaNode* mPublicNode;
+    bool mIsPublicNode;
+    int mNodeAccess;
     FileType mFileType;
     mega::MegaHandle mParentHandle;
     mega::MegaHandle mNodeHandle;
@@ -85,7 +87,7 @@ class TransferData : public QSharedData
         mTransferredBytes(dr->mTransferredBytes),
         mPublicNode(dr->mPublicNode), mFileType(dr->mFileType),
         mParentHandle (dr->mParentHandle), mNodeHandle (dr->mNodeHandle), mMegaApi(dr->mMegaApi),
-        mFilename(dr->mFilename), mPath(dr->mPath){}
+        mFilename(dr->mFilename), mPath(dr->mPath), mNodeAccess(mega::MegaShare::ACCESS_UNKNOWN), mIsPublicNode(false){}
 
     TransferData(TransferTypes type, int errorCode, TransferState state, int tag, long long errorValue,
                  int64_t finishedTime, int64_t remainingTime, unsigned long long totalSize,
