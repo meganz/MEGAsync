@@ -343,14 +343,6 @@ int main(int argc, char *argv[])
             qputenv("QT_PLUGIN_PATH","/opt/mega/plugins");
         }
     }
-
-    if (!(getenv("DO_NOT_OVERRIDE_XDG_CURRENT_DESKTOP")))
-    {
-        if (getenv("XDG_CURRENT_DESKTOP") && !strcmp(getenv("XDG_CURRENT_DESKTOP"),"KDE") && (!getenv("XDG_SESSION_TYPE") || strcmp(getenv("XDG_SESSION_TYPE"),"wayland") ) )
-        {
-            qputenv("XDG_CURRENT_DESKTOP","GNOME");
-        }
-    }
 #endif
 
 #if defined(Q_OS_LINUX) && QT_VERSION >= 0x050C00
