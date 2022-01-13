@@ -177,12 +177,6 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
 
     updateAvailable = false;
     networkConnectivity = true;
-    activeTransferPriority[MegaTransfer::TYPE_DOWNLOAD] = 0xFFFFFFFFFFFFFFFFULL;
-    activeTransferPriority[MegaTransfer::TYPE_UPLOAD] = 0xFFFFFFFFFFFFFFFFULL;
-    activeTransferState[MegaTransfer::TYPE_DOWNLOAD] = MegaTransfer::STATE_NONE;
-    activeTransferState[MegaTransfer::TYPE_UPLOAD] = MegaTransfer::STATE_NONE;
-    activeTransferTag[MegaTransfer::TYPE_DOWNLOAD] = 0;
-    activeTransferTag[MegaTransfer::TYPE_UPLOAD] = 0;
     trayIcon = NULL;
     verifyEmail = nullptr;
     infoDialogMenu = NULL;
@@ -194,8 +188,6 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     delegateListener = NULL;
     httpServer = NULL;
     httpsServer = NULL;
-    numTransfers[MegaTransfer::TYPE_DOWNLOAD] = 0;
-    numTransfers[MegaTransfer::TYPE_UPLOAD] = 0;
     exportOps = 0;
     infoDialog = NULL;
     blockState = MegaApi::ACCOUNT_NOT_BLOCKED;
@@ -637,7 +629,7 @@ void MegaApplication::initialize()
     firstTransferTimer = new QTimer(this);
     firstTransferTimer->setSingleShot(true);
     firstTransferTimer->setInterval(200);
-    connect(firstTransferTimer, SIGNAL(timeout()), this, SLOT(checkFirstTransfer()));
+    connect(firstTransferTimer, &QTimer::timeout, this, &MegaApplication::checkFirstTransfer);
 
     connect(this, SIGNAL(aboutToQuit()), this, SLOT(cleanAll()));
 
@@ -3776,9 +3768,14 @@ void MegaApplication::checkFirstTransfer()
         return;
     }
 
-    if (numTransfers[MegaTransfer::TYPE_DOWNLOAD] && activeTransferPriority[MegaTransfer::TYPE_DOWNLOAD] == 0xFFFFFFFFFFFFFFFFULL)
-    {
+    //Its a single shot timer, delete it forever
+    firstTransferTimer->deleteLater();
+    firstTransferTimer = nullptr;
 
+    auto TransfersStats = mModel2->getTransfersCount();
+
+    if (TransfersStats.remainingDownloads)
+    {
         mThreadPool->push([=]()
         {//thread pool function
 
@@ -3797,7 +3794,7 @@ void MegaApplication::checkFirstTransfer()
         });// end of thread pool function
     }
 
-    if (numTransfers[MegaTransfer::TYPE_UPLOAD] && activeTransferPriority[MegaTransfer::TYPE_UPLOAD] == 0xFFFFFFFFFFFFFFFFULL)
+    if (TransfersStats.remainingUploads)
     {
         mThreadPool->push([=]()
         {//thread pool function
@@ -7725,18 +7722,14 @@ void MegaApplication::onTransferStart(MegaApi *api, MegaTransfer *transfer)
                                              QString::fromUtf8(transfer->getPath()));
     }
 
+    auto& TransfersStats = mModel2->getTransfersCount();
+
     onTransferUpdate(api, transfer);
-    if (!numTransfers[MegaTransfer::TYPE_DOWNLOAD]
-            && !numTransfers[MegaTransfer::TYPE_UPLOAD])
+    if (!TransfersStats.remainingDownloads
+            && !TransfersStats.remainingUploads)
     {
         onGlobalSyncStateChanged(megaApi);
     }
-    numTransfers[transfer->getType()]++;
-}
-
-//Called when there is a temporal problem in a request
-void MegaApplication::onRequestTemporaryError(MegaApi *, MegaRequest *, MegaError* )
-{
 }
 
 //Called when a transfer has finished
@@ -7895,37 +7888,21 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
         isFirstFileSynced = true;
     }
 
-    int type = transfer->getType();
-    numTransfers[type]--;
-
-    unsigned long long priority = transfer->getPriority();
-    if (!priority)
+    if (firstTransferTimer && !firstTransferTimer->isActive())
     {
-        priority = 0xFFFFFFFFFFFFFFFFULL;
-    }
-    if (priority <= activeTransferPriority[type]
-            || activeTransferState[type] == MegaTransfer::STATE_PAUSED
-            || transfer->getTag() == activeTransferTag[type])
-    {
-        activeTransferPriority[type] = 0xFFFFFFFFFFFFFFFFULL;
-        activeTransferState[type] = MegaTransfer::STATE_NONE;
-        activeTransferTag[type] = 0;
-
-        //Send updated statics to the information dialog
-        if (infoDialog)
-        {
-            infoDialog->updateDialogState();
-        }
-
-        if (!firstTransferTimer->isActive())
-        {
-            firstTransferTimer->start();
-        }
+        firstTransferTimer->start();
     }
 
+    //Send updated statics to the information dialog
+    if (infoDialog)
+    {
+        infoDialog->updateDialogState();
+    }
+
+    auto& TransfersStats = mModel2->getTransfersCount();
     //If there are no pending transfers, reset the statics and update the state of the tray icon
-    if (!numTransfers[MegaTransfer::TYPE_DOWNLOAD]
-            && !numTransfers[MegaTransfer::TYPE_UPLOAD])
+    if (!TransfersStats.remainingDownloads
+            && !TransfersStats.remainingUploads)
     {
         onGlobalSyncStateChanged(megaApi);
     }
@@ -7952,28 +7929,9 @@ void MegaApplication::onTransferUpdate(MegaApi *, MegaTransfer *transfer)
                                              QString::fromUtf8(transfer->getPath()));
     }
 
-    unsigned long long priority = transfer->getPriority();
-    if (!priority)
+    if (firstTransferTimer && !firstTransferTimer->isActive())
     {
-        priority = 0xFFFFFFFFFFFFFFFFULL;
-    }
-    if (priority <= activeTransferPriority[type]
-            || activeTransferState[type] == MegaTransfer::STATE_PAUSED)
-    {
-        activeTransferPriority[type] = priority;
-        activeTransferState[type] = transfer->getState();
-        activeTransferTag[type] = transfer->getTag();
-    }
-    else if (activeTransferTag[type] == transfer->getTag())
-    {
-        // First transfer moved to a lower priority
-        activeTransferPriority[type] = 0xFFFFFFFFFFFFFFFFULL;
-        activeTransferState[type] = MegaTransfer::STATE_NONE;
-        activeTransferTag[type] = 0;
-        if (!firstTransferTimer->isActive())
-        {
-            firstTransferTimer->start();
-        }
+        firstTransferTimer->start();
     }
 }
 

@@ -68,10 +68,8 @@ private:
     };
 
     Ui::TransfersWidget *ui;
-//    QTransfersModel *model;
     QTransfersModel2 *model2;
     TransfersSortFilterProxyModel *mProxyModel;
-//    MegaTransferDelegate *tDelegate;
     MegaTransferDelegate2 *tDelegate2;
     QTransfersModel::ModelType mType;
     bool mIsPaused;

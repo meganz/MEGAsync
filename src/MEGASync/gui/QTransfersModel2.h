@@ -112,7 +112,7 @@ private slots:
 private:
     void insertTransfer(mega::MegaApi* api, mega::MegaTransfer* transfer, int row, bool signal = true);
     void addTransfers(int rows);
-    const TransfersCount& updateTransfersCount();
+    void updateTransfersCount();
 
 private:
     static constexpr int INIT_ROWS_PER_CHUNK = 5000;

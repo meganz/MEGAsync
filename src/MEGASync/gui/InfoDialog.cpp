@@ -947,7 +947,7 @@ void InfoDialog::updateDialogState()
     {
         auto& transfersCount = app->getTransfersModel()->getTransfersCount();
 
-        if (transfersCount.remainingUploads || transfersCount.remainingDownloads
+        if (transfersCount.totalDownloads || transfersCount.totalUploads
                 || ui->wPSA->isPSAready())
         {
             overlay->setVisible(false);

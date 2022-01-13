@@ -22,7 +22,17 @@ bool InfoDialogCurrentTransfersProxyModel::lessThan(const QModelIndex &left, con
     const auto leftItem (qvariant_cast<TransferItem2>(left.data()).getTransferData());
     const auto rightItem (qvariant_cast<TransferItem2>(right.data()).getTransferData());
 
-    lessThan = leftItem->mPriority < rightItem->mPriority;
+    int leftItemState = leftItem->mState;
+    int rightItemState = rightItem->mState;
+
+    if(leftItemState != rightItemState)
+    {
+       lessThan = leftItemState < rightItemState;
+    }
+    else
+    {
+       lessThan = leftItem->mPriority < rightItem->mPriority;
+    }
 
     return lessThan;
 }
@@ -39,7 +49,8 @@ bool InfoDialogCurrentTransfersProxyModel::filterAcceptsRow(int sourceRow, const
        const auto d (qvariant_cast<TransferItem2>(index.data()).getTransferData());
 
        accept = (d->mState & TransferData::TransferState::TRANSFER_COMPLETED
-                 || d->mState & TransferData::TransferState::TRANSFER_COMPLETING);
+                 || d->mState & TransferData::TransferState::TRANSFER_COMPLETING
+                 || d->mState & TransferData::TransferState::TRANSFER_ACTIVE);
     }
 
     return accept;

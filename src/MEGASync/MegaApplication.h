@@ -125,7 +125,6 @@ public:
     void onEvent(mega::MegaApi *api, mega::MegaEvent *event) override;
     void onRequestStart(mega::MegaApi* api, mega::MegaRequest *request) override;
     void onRequestFinish(mega::MegaApi* api, mega::MegaRequest *request, mega::MegaError* e) override;
-    void onRequestTemporaryError(mega::MegaApi *api, mega::MegaRequest *request, mega::MegaError* e) override;
     void onTransferStart(mega::MegaApi *api, mega::MegaTransfer *transfer) override;
     void onTransferFinish(mega::MegaApi* api, mega::MegaTransfer *transfer, mega::MegaError* e) override;
     void onTransferUpdate(mega::MegaApi *api, mega::MegaTransfer *transfer) override;
@@ -464,10 +463,6 @@ protected:
     std::shared_ptr<mega::MegaNode> mRubbishNode;
     bool mFetchingNodes = false;
     bool mQueringWhyAmIBlocked = false;
-    int numTransfers[2];
-    int activeTransferTag[2];
-    unsigned long long activeTransferPriority[2];
-    unsigned int activeTransferState[2];
     bool queuedUserStats[3];
     int queuedStorageUserStatsReason;
     long long userStatsLastRequest[3];

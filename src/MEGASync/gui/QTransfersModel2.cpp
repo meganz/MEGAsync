@@ -66,7 +66,7 @@ QTransfersModel2::QTransfersModel2(QObject *parent) :
 
     mListener = new QTMegaTransferListener(mMegaApi, this);
 
-    //Update transfers state
+    //Update transfers state for the first time
     updateTransfersCount();
 
     connect(&timer, &QTimer::timeout, this, &QTransfersModel2::onTimerTransfers);
@@ -304,9 +304,9 @@ bool QTransfersModel2::onTimerTransfers()
         {
             startTransfer(transfer);
         }
-        endInsertRows();
 
         endInsertRows();
+
         mModelMutex->unlock();
         qDeleteAll(mCacheStartTransfers);
         mCacheStartTransfers.clear();
@@ -521,9 +521,6 @@ void QTransfersModel2::finishTransfer(MegaApi *api, mega::MegaTransfer *transfer
         {
             mFailedTransfers[tag] = transfer->copy();
         }
-
-        QModelIndex idx (index(row, 0, DEFAULT_IDX));
-        emit dataChanged(idx, idx, DATA_ROLE);
 
         // Keep statistics up to date
         if (prevState != state)
@@ -902,7 +899,7 @@ long long QTransfersModel2::getNumberOfFinishedForFileType(TransferData::FileTyp
     return mNbFinishedPerFileType[fileType];
 }
 
-const TransfersCount& QTransfersModel2::updateTransfersCount()
+void QTransfersModel2::updateTransfersCount()
 {
     mTransfersCount.remainingUploads = mMegaApi->getNumPendingUploads();
     mTransfersCount.remainingDownloads = mMegaApi->getNumPendingDownloads();
@@ -917,8 +914,6 @@ const TransfersCount& QTransfersModel2::updateTransfersCount()
 
     mTransfersCount.currentDownload = mTransfersCount.totalDownloads - mTransfersCount.remainingDownloads + 1;
     mTransfersCount.currentUpload = mTransfersCount.totalUploads - mTransfersCount.remainingUploads + 1;
-
-    return mTransfersCount;
 }
 
 const TransfersCount &QTransfersModel2::getTransfersCount()
