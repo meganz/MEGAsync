@@ -7,6 +7,7 @@
 #include "control/AppStatsEvents.h"
 #include "gui/MultiQFileDialog.h"
 #include "gui/Login2FA.h"
+#include "gui/GuiUtilities.h"
 #include "platform/Platform.h"
 
 #include <QKeyEvent>
@@ -342,14 +343,7 @@ void SetupWizard::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
 
 void SetupWizard::onRequestUpdate(MegaApi *, MegaRequest *request)
 {
-    if (request->getType() == MegaRequest::TYPE_FETCH_NODES)
-    {
-        if (request->getTotalBytes() > 0)
-        {
-            ui->progressBar->setMaximum(static_cast<int>(request->getTotalBytes()));
-            ui->progressBar->setValue(static_cast<int>(request->getTransferredBytes()));
-        }
-    }
+    GuiUtilities::updateDataRequestProgressBar(ui->progressBar, request);
 }
 
 void SetupWizard::goToStep(int page)

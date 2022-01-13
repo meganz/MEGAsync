@@ -97,7 +97,7 @@ void UpdateTask::tryUpdate()
     QString randomSequence = QString::fromUtf8("?");
     for (int i = 0; i < 10; i++)
     {
-        randomSequence += QChar::fromAscii(static_cast<char>('A'+ (rand() % 26)));
+        randomSequence += QChar::fromLatin1(static_cast<char>('A'+ (rand() % 26)));
     }
 
     QString updateURL = Preferences::UPDATE_CHECK_URL;

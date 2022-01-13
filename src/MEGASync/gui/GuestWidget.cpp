@@ -6,6 +6,7 @@
 
 #include "platform/Platform.h"
 #include "gui/Login2FA.h"
+#include "gui/GuiUtilities.h"
 
 #include <QDesktopServices>
 #include <QUrl>
@@ -263,16 +264,10 @@ void GuestWidget::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
     }
 }
 
+
 void GuestWidget::onRequestUpdate(MegaApi*, MegaRequest *request)
 {
-    if (request->getType() == MegaRequest::TYPE_FETCH_NODES)
-    {
-        if (request->getTotalBytes() > 0)
-        {
-            ui->progressBar->setMaximum(static_cast<int>(request->getTotalBytes()));
-            ui->progressBar->setValue(static_cast<int>(request->getTransferredBytes()));
-        }
-    }
+    GuiUtilities::updateDataRequestProgressBar(ui->progressBar, request);
 }
 
 void GuestWidget::resetFocus()
