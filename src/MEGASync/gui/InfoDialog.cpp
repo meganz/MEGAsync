@@ -1439,7 +1439,7 @@ void InfoDialog::onTransferFinish(MegaApi *api, MegaTransfer *transfer, MegaErro
                 completedDownloadBytes -= transfer->getTransferredBytes();
                 if (circlesShowAllActiveTransfersProgress)
                 {
-                    ui->bTransferManager->setPercentDownloads(computePercent(completedDownloadBytes, leftDownloadBytes));
+                    ui->bTransferManager->setPercentDownloads(computeRatio(completedDownloadBytes, leftDownloadBytes));
                 }
             }
 
@@ -1463,7 +1463,7 @@ void InfoDialog::onTransferFinish(MegaApi *api, MegaTransfer *transfer, MegaErro
                 completedUploadBytes -= transfer->getTransferredBytes();
                 if (circlesShowAllActiveTransfersProgress)
                 {
-                    ui->bTransferManager->setPercentUploads(computePercent(completedUploadBytes, leftUploadBytes));
+                    ui->bTransferManager->setPercentUploads(computeRatio(completedUploadBytes, leftUploadBytes));
                 }
             }
 
@@ -1504,7 +1504,7 @@ void InfoDialog::onTransferUpdate(MegaApi*, MegaTransfer* transfer)
             currentCompletedDownloadBytes = transfer->getTransferredBytes();
             if (circlesShowAllActiveTransfersProgress)
             {
-                ui->bTransferManager->setPercentDownloads(computePercent(completedDownloadBytes, leftDownloadBytes));
+                ui->bTransferManager->setPercentDownloads(computeRatio(completedDownloadBytes, leftDownloadBytes));
             }
             else
             {
@@ -1517,7 +1517,7 @@ void InfoDialog::onTransferUpdate(MegaApi*, MegaTransfer* transfer)
                 {
                     downloadActiveTransferPriority = transfer->getPriority();
                     downloadActiveTransferState = transfer->getState();
-                    ui->bTransferManager->setPercentDownloads(computePercent(currentCompletedDownloadBytes, currentDownloadBytes));
+                    ui->bTransferManager->setPercentDownloads(computeRatio(currentCompletedDownloadBytes, currentDownloadBytes));
                 }
             }
         }
@@ -1528,7 +1528,7 @@ void InfoDialog::onTransferUpdate(MegaApi*, MegaTransfer* transfer)
             currentCompletedUploadBytes = transfer->getTransferredBytes();
             if (circlesShowAllActiveTransfersProgress)
             {
-                ui->bTransferManager->setPercentUploads(computePercent(completedUploadBytes, leftUploadBytes));
+                ui->bTransferManager->setPercentUploads(computeRatio(completedUploadBytes, leftUploadBytes));
             }
             else
             {
@@ -1541,7 +1541,7 @@ void InfoDialog::onTransferUpdate(MegaApi*, MegaTransfer* transfer)
                 {
                     uploadActiveTransferPriority = transfer->getPriority();
                     uploadActiveTransferState = transfer->getState();
-                    ui->bTransferManager->setPercentUploads(computePercent(currentCompletedUploadBytes, currentUploadBytes));
+                    ui->bTransferManager->setPercentUploads(computeRatio(currentCompletedUploadBytes, currentUploadBytes));
                 }
             }
         }
@@ -2133,7 +2133,7 @@ void InfoDialog::paintEvent(QPaintEvent * e)
 #endif
 }
 
-double InfoDialog::computePercent(const long long completed, const long long remaining)
+double InfoDialog::computeRatio(long long completed, long long remaining)
 {
-    return static_cast<double>(static_cast<double>(completed) / static_cast<double>(remaining));
+    return static_cast<double>(completed) / static_cast<double>(remaining);
 }

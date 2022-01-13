@@ -264,7 +264,7 @@ protected:
     mega::MegaTransfer *activeUpload;
 
  private:
-    static double computePercent(const long long completed, const long long remaining);
+    static double computeRatio(long long completed, long long remaining);
 };
 
 #endif // INFODIALOG_H
