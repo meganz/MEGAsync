@@ -413,7 +413,6 @@ void TransferManager::refreshTypeStats()
     }
 
     countLabel->setVisible(!countLabelText.isEmpty());
-
 }
 
 void TransferManager::refreshFileTypesStats()

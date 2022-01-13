@@ -79,7 +79,8 @@ public:
     void onTransferStart(mega::MegaApi *api, mega::MegaTransfer *transfer) override;
     void onTransferUpdate(mega::MegaApi *api, mega::MegaTransfer *transfer) override;
 
-    void onUpdateBlockingState(bool value);
+    void enterBlockingState();
+    void leaveBlockingState();
 
 #ifdef __APPLE__
     void moveArrow(QPoint p);

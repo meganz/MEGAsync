@@ -11,7 +11,7 @@ MegaDownloader::MegaDownloader(MegaApi *megaApi) : QObject()
     this->megaApi = megaApi;
 }
 
-MegaCancelToken* MegaDownloader::download(WrappedNode *parent, QString path, QString appData)
+void MegaDownloader::download(WrappedNode *parent, QString path, QString appData)
 {
     download(parent, QFileInfo(path), appData);
 }
@@ -113,7 +113,7 @@ void MegaDownloader::download(WrappedNode *parent, QFileInfo info, QString appDa
     // Extract MEGA node from wrapped node for more readable code
     // Both parent and node should be not null at this point.
     mega::MegaNode *node {parent->getMegaNode()};
-    bool isForeignDir = node->getType() == MegaNode::TYPE_FILE || !node->isForeign();
+    bool isForeignDir = node->getType() != MegaNode::TYPE_FILE && node->isForeign();
     if (!isForeignDir)
     {
         startDownload(parent, currentPathWithSep, appData);
@@ -128,7 +128,7 @@ void MegaDownloader::startDownload(WrappedNode *parent, QString appData, QString
 {
     bool startFirst = hasTransferPriority(parent->getTransferOrigin());
     const char* localPath = currentPathWithSep.toUtf8().constData();
-    const char* name = nullptr;
+    const char* name = parent->getMegaNode()->getName();
     MegaCancelToken* cancelToken = MegaCancelToken::createInstance();
     MegaTransferListener* listener = nullptr;
     megaApi->startDownload(parent->getMegaNode(), localPath, name, appData.toUtf8().constData(), startFirst, cancelToken, listener);

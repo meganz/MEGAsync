@@ -106,7 +106,7 @@ bool MegaUploader::uploadRecursivelyIntoASyncedLocation(QFileInfo srcFileInfo, Q
     {
         //start upload to parent
         MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Recursive upload uploading non syncable path: %1").arg(srcPath).toUtf8().constData());
-        startUpload(srcPath, parent, appDataID);
+        startUpload(srcFileInfo.fileName(), srcPath, parent, appDataID);
         return true;
     }
 
@@ -232,19 +232,20 @@ void MegaUploader::upload(QFileInfo info, MegaNode *parent, unsigned long long a
     }
     else if (info.isFile() || info.isDir())
     {
-        startUpload(currentPath, parent, appDataID);
+        startUpload(info.fileName(), currentPath, parent, appDataID);
     }
 }
 
-void MegaUploader::startUpload(const QString& localPath, MegaNode* parent, const unsigned long long appDataID)
+void MegaUploader::startUpload(const QString& name, const QString& localPath, MegaNode* parent, const unsigned long long appDataID)
 {
     const bool startFirst = false;
     const char* localPathCstr = localPath.toUtf8().constData();
     const char* appData = (QString::number(appDataID) + QString::fromUtf8("*")).toUtf8().constData();
-    const char* filename = nullptr;
+    const char* filename = name.toUtf8().constData();
     const int64_t mtime = ::mega::MegaApi::INVALID_CUSTOM_MOD_TIME;
     const bool isSrcTemporary = false;
-    MegaCancelToken* cancelToken = nullptr; // No cancellation possible
+    MegaCancelToken* cancelToken = MegaCancelToken::createInstance();
     MegaTransferListener* listener = nullptr;
     megaApi->startUpload(localPathCstr, parent, mtime, filename, appData, isSrcTemporary, startFirst, cancelToken, listener);
+    //parent->setCancelToken(cancelToken);
 }

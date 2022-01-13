@@ -355,6 +355,8 @@ private slots:
     void onTransfersModelUpdate();
 
 protected:
+    using NodeVector = std::vector<WrappedNode*>;
+
     void createTrayIcon();
     void createGuestMenu();
     bool showTrayIconAlwaysNEW();
@@ -460,7 +462,9 @@ protected:
     MultiQFileDialog *multiUploadFileDialog;
     QQueue<QString> uploadQueue;
     QQueue<WrappedNode *> downloadQueue;
-    std::vector<WrappedNode*> ongoingDownloads;
+    NodeVector startedDownloading;
+    NodeVector reachedScanStage;
+    NodeVector reachedTransferStage;
 
     ThreadPool* mThreadPool;
     std::shared_ptr<mega::MegaNode> mRootNode;
@@ -590,9 +594,10 @@ private:
 
     void startUpload(const QString& rawLocalPath, mega::MegaNode* target);
 
-    bool isTransferInBlockingStage(mega::MegaTransfer* transfer);
-    void cleanupFinishedOngoingDownload(mega::MegaTransfer* transfer);
-    std::vector<WrappedNode*>::iterator findOngoingDownload(mega::MegaHandle nodeHandle);
+    bool isTransferEnteringBlockingStage(mega::MegaTransfer* transfer);
+    bool isTransferLeavingBlockingStage(mega::MegaTransfer* transfer);
+    void cleanupFinishedDownloads(mega::MegaTransfer* transfer);
+    NodeVector::iterator findTransferNode(mega::MegaHandle nodeHandle, NodeVector& nodeList);
 };
 
 class DeferPreferencesSyncForScope

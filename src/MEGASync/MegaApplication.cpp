@@ -1588,7 +1588,7 @@ void MegaApplication::processDownloadQueue(QString path)
                                                            downloadQueue.size(),
                                                            downloadQueue.size());
     transferAppData.insert(transferId, transferData);
-    if (!downloader->processDownloadQueue(&downloadQueue, &ongoingDownloads, path, transferId))
+    if (!downloader->processDownloadQueue(&downloadQueue, &startedDownloading, path, transferId))
     {
         transferAppData.remove(transferId);
         delete transferData;
@@ -3238,44 +3238,52 @@ void MegaApplication::startUpload(const QString& rawLocalPath, MegaNode* target)
     megaApi->startUpload(localPath, target, mtime, appData, fileName, isSrcTemporary, startFirst, cancelToken, listener);
 }
 
-bool MegaApplication::isTransferInBlockingStage(MegaTransfer* transfer)
+bool MegaApplication::isTransferEnteringBlockingStage(MegaTransfer* transfer)
 {
-    // TEMP : check implementation later with Javier's model. If really find needs to be done,
-    // do it outside of here to avoid multiple finds.
-    std::vector<WrappedNode*>::iterator correspondingNode = findOngoingDownload(transfer->getNodeHandle());
-    if (correspondingNode != ongoingDownloads.end())
+    if (transfer->getStage() == MegaTransfer::STAGE_SCAN)
     {
-        return (transfer->getStage() > MegaTransfer::STAGE_NONE && transfer->getStage() < MegaTransfer::STAGE_TRANSFERRING_FILES);
+        std::vector<WrappedNode*>::iterator correspondingNode = findTransferNode(transfer->getNodeHandle(), startedDownloading);
+        if (correspondingNode != startedDownloading.end())
+        {
+            bool firstToEnterScanStage = reachedScanStage.empty();
+            reachedScanStage.push_back(*correspondingNode);
+            startedDownloading.erase(correspondingNode);
+            return firstToEnterScanStage;
+        }
     }
     return false;
 }
 
-void MegaApplication::cleanupFinishedOngoingDownload(MegaTransfer* transfer)
+bool MegaApplication::isTransferLeavingBlockingStage(MegaTransfer* transfer)
 {
-    std::vector<WrappedNode*>::iterator correspondingNode = findOngoingDownload(transfer->getNodeHandle());
-    std::cout << "NODE " << transfer->getFileName() << " found ?";
-    if (correspondingNode != ongoingDownloads.end())
+    if (transfer->getStage() == MegaTransfer::STAGE_TRANSFERRING_FILES)
     {
-        std::cout << " YES! stage : " << transfer->getStage() << std::endl;
-        bool notStartedYet = (transfer->getStage() == MegaTransfer::STAGE_NONE);
-        bool blockingScan = (transfer->getStage() > MegaTransfer::STAGE_NONE && transfer->getStage() < MegaTransfer::STAGE_TRANSFERRING_FILES);
-        bool finishedScanning = (transfer->getStage() == MegaTransfer::STAGE_TRANSFERRING_FILES);
-        if (finishedScanning)
+        std::vector<WrappedNode*>::iterator correspondingNode = findTransferNode(transfer->getNodeHandle(), reachedScanStage);
+        if (correspondingNode != reachedScanStage.end())
         {
-            std::cout << "Finished. Erasing." << endl;
-            delete *correspondingNode;
-            ongoingDownloads.erase(correspondingNode);
+            reachedTransferStage.push_back(*correspondingNode);
+            reachedScanStage.erase(correspondingNode);
+            return reachedScanStage.empty();
         }
     }
-    else
-    {
-        std::cout << "No" << std::endl;
-    }
+    return false;
 }
 
-std::vector<WrappedNode*>::iterator MegaApplication::findOngoingDownload(MegaHandle nodeHandle)
+void MegaApplication::cleanupFinishedDownloads(MegaTransfer* transfer)
 {
-    return std::find_if(ongoingDownloads.begin(), ongoingDownloads.end(), [nodeHandle](WrappedNode* currentNode){
+    if (transfer->getStage() >= MegaTransfer::STAGE_TRANSFERRING_FILES)
+    {
+        std::vector<WrappedNode*>::iterator correspondingNode = findTransferNode(transfer->getNodeHandle(), reachedTransferStage);
+        if (correspondingNode != reachedTransferStage.end())
+        {
+            delete *correspondingNode;
+            reachedScanStage.erase(correspondingNode);
+        }
+    }
+}
+std::vector<WrappedNode*>::iterator MegaApplication::findTransferNode(MegaHandle nodeHandle, std::vector<WrappedNode*>& nodeList)
+{
+    return std::find_if(nodeList.begin(), nodeList.end(), [nodeHandle](WrappedNode* currentNode){
         return currentNode->getMegaNode()->getHandle() == nodeHandle;
     });
 }
@@ -7959,22 +7967,50 @@ void MegaApplication::onTransferUpdate(MegaApi*, MegaTransfer* transfer)
 {
     if (appfinished || transfer->isStreamingTransfer() || transfer->isFolderTransfer())
     {
+        if (transfer->isFolderTransfer())
+        {
+            bool isEnteringBlockingStage = isTransferEnteringBlockingStage(transfer);
+            if (isEnteringBlockingStage)
+            {
+                if (transferManager)
+                {
+                    transferManager->enterBlockingState();
+                }
+
+                if (infoDialog)
+                {
+                    infoDialog->enterBlockingState();
+                }
+            }
+
+            bool isLeavingBlockingStage = isTransferLeavingBlockingStage(transfer);
+            if (isLeavingBlockingStage)
+            {
+                if (transferManager)
+                {
+                    transferManager->leaveBlockingState();
+                }
+
+                if (infoDialog)
+                {
+                    infoDialog->leaveBlockingState();
+                }
+            }
+        }
         return;
     }
 
     DeferPreferencesSyncForScope deferrer(this);
-    bool guiInBlockingStage = isTransferInBlockingStage(transfer);
+
 
     if (transferManager)
     {
         transferManager->onTransferUpdate(megaApi, transfer);
-        transferManager->onUpdateBlockingState(guiInBlockingStage);
     }
 
     if (infoDialog)
     {
         infoDialog->onTransferUpdate(megaApi, transfer);
-        infoDialog->onUpdateBlockingState(guiInBlockingStage);
     }
 
     int type = transfer->getType();
@@ -7992,8 +8028,6 @@ void MegaApplication::onTransferUpdate(MegaApi*, MegaTransfer* transfer)
     {
         firstTransferTimer->start();
     }
-
-    cleanupFinishedOngoingDownload(transfer);
 }
 
 void MegaApplication::onCheckDeferredPreferencesSyncTimeout()

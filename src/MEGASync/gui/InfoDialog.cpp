@@ -1372,12 +1372,14 @@ void InfoDialog::onTransferUpdate(MegaApi *api, MegaTransfer *transfer)
     }
 }
 
-void InfoDialog::onUpdateBlockingState(bool value)
+void InfoDialog::enterBlockingState()
 {
-    if (value)
-    {
-        QMessageBox::information(this, QString::fromUtf8("DEBUG"), QString::fromUtf8("Entering blocking state"));
-    }
+
+}
+
+void InfoDialog::leaveBlockingState()
+{
+
 }
 
 void InfoDialog::changeEvent(QEvent *event)
