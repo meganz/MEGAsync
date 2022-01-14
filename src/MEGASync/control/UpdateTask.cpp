@@ -208,7 +208,7 @@ void UpdateTask::downloadFile(QString url)
 QString UpdateTask::readNextLine(QNetworkReply *reply)
 {
     char line[4096];
-    const int len = static_cast<int>(reply->readLine(line, sizeof(line)));
+    int len = static_cast<int>(reply->readLine(line, sizeof(line)));
     if ((len <= 0) || (static_cast<unsigned int>(len - 1) >= sizeof(line)))
     {
         return QString();
@@ -361,7 +361,7 @@ bool UpdateTask::processFile(QNetworkReply *reply)
     int position = 0;
     while (remainingSize)
     {
-        const int written = static_cast<int>(localFile.write(data.constData()+position, remainingSize));
+        int written = static_cast<int>(localFile.write(data.constData()+position, remainingSize));
         if (written == -1)
         {
             MegaApi::log(MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Error writting file: %1").arg(info.absoluteFilePath()).toUtf8().constData());
