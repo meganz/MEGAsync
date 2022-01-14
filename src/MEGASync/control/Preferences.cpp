@@ -17,7 +17,7 @@ const int Preferences::VERSION_CODE = 4603;
 const int Preferences::BUILD_ID = 0;
 // Do not change the location of VERSION_STRING, create_tarball.sh parses this file
 const QString Preferences::VERSION_STRING = QString::fromAscii("4.6.3");
-QString Preferences::SDK_ID = QString::fromAscii("301933f");
+QString Preferences::SDK_ID = QString::fromAscii("995b5c9");
 const QString Preferences::CHANGELOG = QString::fromUtf8(QT_TR_NOOP(
     "- Strengthen cryptographic security on linux repositories.\n"
     "- Fix memory issues with problematic pdf files.\n"));
