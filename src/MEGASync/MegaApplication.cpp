@@ -492,6 +492,7 @@ void MegaApplication::initialize()
     uploader = new MegaUploader(megaApi);
     downloader = new MegaDownloader(megaApi);
     connect(downloader, SIGNAL(finishedTransfers(unsigned long long)), this, SLOT(showNotificationFinishedTransfers(unsigned long long)), Qt::QueuedConnection);
+    connect(downloader, SIGNAL(startingTransfers()), this, SLOT(setTransferUiInBlockingState()));
 
 
     connectivityTimer = new QTimer(this);
@@ -3281,6 +3282,62 @@ void MegaApplication::cleanupFinishedDownloads(MegaTransfer* transfer)
         }
     }
 }
+
+MegaApplication::NodeVector MegaApplication::buildTransferList(int transferType)
+{
+    NodeVector transferring = buildTransferList(transferType, reachedTransferStage);
+
+    NodeVector transfers;
+    transfers.reserve(transferring.size());
+    transfers.insert(transfers.end(), transferring.begin(), transferring.end());
+    return transfers;
+}
+
+MegaApplication::NodeVector MegaApplication::buildTransferList(int transferType, const NodeVector &nodeList)
+{
+    NodeVector transfers;
+    std::copy_if(nodeList.begin(), nodeList.end(), std::back_inserter(transfers), [transferType](WrappedNode* node)
+    {
+        return (node->getMegaNode()->getType() == transferType);
+    });
+    return transfers;
+}
+
+void MegaApplication::cancelAllTransfers(int type)
+{
+    NodeVector transfers = buildTransferList(type);
+    for (const auto& transfer : transfers)
+    {
+        transfer->getCancelToken()->cancel();
+    }
+}
+
+void MegaApplication::setTransferUiInBlockingState()
+{
+    if (transferManager)
+    {
+        transferManager->enterBlockingState();
+    }
+
+    if (infoDialog)
+    {
+        infoDialog->enterBlockingState();
+    }
+}
+
+void MegaApplication::setTransferUiInUnblockedState()
+{
+    if (transferManager)
+    {
+        transferManager->leaveBlockingState();
+    }
+
+    if (infoDialog)
+    {
+        infoDialog->leaveBlockingState();
+    }
+}
+
 std::vector<WrappedNode*>::iterator MegaApplication::findTransferNode(MegaHandle nodeHandle, std::vector<WrappedNode*>& nodeList)
 {
     return std::find_if(nodeList.begin(), nodeList.end(), [nodeHandle](WrappedNode* currentNode){
@@ -4272,6 +4329,16 @@ void MegaApplication::onTransfersModelUpdate()
     }
 }
 
+void MegaApplication::cancelAllUploads()
+{
+    cancelAllTransfers(MegaTransfer::TYPE_UPLOAD);
+}
+
+void MegaApplication::cancelAllDownloads()
+{
+    cancelAllTransfers(MegaTransfer::TYPE_DOWNLOAD);
+}
+
 void MegaApplication::fetchNodes(QString email)
 {
     assert(!mFetchingNodes);
@@ -4975,6 +5042,15 @@ void MegaApplication::transferManagerActionClicked(int tab)
     }
 
     createTransferManagerDialog();
+
+    transferManager = new TransferManager(megaApi);
+    // Signal/slot to notify the tracking of unseen completed transfers of Transfer Manager. If Completed tab is
+    // active, tracking is disabled
+    connect(transferManager, SIGNAL(viewedCompletedTransfers()), this, SLOT(clearViewedTransfers()));
+    connect(transferManager, SIGNAL(completedTransfersTabActive(bool)), this, SLOT(onCompletedTransfersTabActive(bool)));
+    connect(transferManager, SIGNAL(userActivity()), this, SLOT(registerUserActivity()));
+    connect(transferManager, SIGNAL(cancelAllUploads()), this, SLOT(cancelAllUploads()));
+    connect(transferManager, SIGNAL(cancelAllDownloads()), this, SLOT(cancelAllDownloads()));
 
     transferManager->setActiveTab(tab);
     Platform::activateBackgroundWindow(transferManager);
@@ -7969,32 +8045,10 @@ void MegaApplication::onTransferUpdate(MegaApi*, MegaTransfer* transfer)
     {
         if (transfer->isFolderTransfer())
         {
-            bool isEnteringBlockingStage = isTransferEnteringBlockingStage(transfer);
-            if (isEnteringBlockingStage)
-            {
-                if (transferManager)
-                {
-                    transferManager->enterBlockingState();
-                }
-
-                if (infoDialog)
-                {
-                    infoDialog->enterBlockingState();
-                }
-            }
-
             bool isLeavingBlockingStage = isTransferLeavingBlockingStage(transfer);
             if (isLeavingBlockingStage)
             {
-                if (transferManager)
-                {
-                    transferManager->leaveBlockingState();
-                }
-
-                if (infoDialog)
-                {
-                    infoDialog->leaveBlockingState();
-                }
+                setTransferUiInUnblockedState();
             }
         }
         return;

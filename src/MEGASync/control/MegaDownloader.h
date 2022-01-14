@@ -30,6 +30,7 @@ protected:
 
 signals:
     void finishedTransfers(unsigned long long appDataId);
+    void startingTransfers();
 
 private:
     void startDownload(WrappedNode* parent, QString appData, QString currentPathWithSep);
@@ -37,6 +38,8 @@ private:
     QString buildEscapedPath(const char* nodeName, QString currentPathWithSep);
     bool createDirIfNotPresent(QString path);
     static bool hasTransferPriority(const WrappedNode::TransferOrigin& origin);
+
+    bool noTransferStarted = true;
 };
 
 #endif // MEGADOWNLOADER_H

@@ -706,6 +706,20 @@ void TransferManager::on_bImages_clicked()
         mUi->lCurrentContent->setText(tr("Images"));
         toggleTab(TYPE_IMAGE_TAB);
     }
+
+    if (w == ui->wActiveTransfers)
+    {
+        emit cancelAllUploads();
+        emit cancelAllDownloads();
+    }
+    else if(w == ui->wDownloads)
+    {
+        emit cancelAllUploads();
+    }
+    else if(w == ui->wUploads)
+    {
+        emit cancelAllDownloads();
+    }
 }
 
 void TransferManager::on_bMusic_clicked()

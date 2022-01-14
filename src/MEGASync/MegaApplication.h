@@ -354,6 +354,9 @@ private slots:
     void onUnblocked();
     void onTransfersModelUpdate();
 
+    void cancelAllUploads();
+    void cancelAllDownloads();
+
 protected:
     using NodeVector = std::vector<WrappedNode*>;
 
@@ -598,6 +601,12 @@ private:
     bool isTransferLeavingBlockingStage(mega::MegaTransfer* transfer);
     void cleanupFinishedDownloads(mega::MegaTransfer* transfer);
     NodeVector::iterator findTransferNode(mega::MegaHandle nodeHandle, NodeVector& nodeList);
+    NodeVector buildTransferList(int transferType);
+    NodeVector buildTransferList(int transferType, const NodeVector& nodeList);
+
+    void cancelAllTransfers(int type);
+    void setTransferUiInBlockingState();
+    void setTransferUiInUnblockedState();
 };
 
 class DeferPreferencesSyncForScope

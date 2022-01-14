@@ -18,6 +18,7 @@ void MegaDownloader::download(WrappedNode *parent, QString path, QString appData
 
 bool MegaDownloader::processDownloadQueue(QQueue<WrappedNode*>* downloadQueue, std::vector<WrappedNode*>* ongoingDownloads, QString path, unsigned long long appDataId)
 {
+    noTransferStarted = true;
     // If the destination path doesn't exist and we can't create it,
     // empty queue and abort transfer.
     QDir dir(path);
@@ -116,7 +117,12 @@ void MegaDownloader::download(WrappedNode *parent, QFileInfo info, QString appDa
     bool isForeignDir = node->getType() != MegaNode::TYPE_FILE && node->isForeign();
     if (!isForeignDir)
     {
-        startDownload(parent, currentPathWithSep, appData);
+        if (noTransferStarted)
+        {
+            emit startingTransfers();
+            noTransferStarted = false;
+        }
+        startDownload(parent, appData, currentPathWithSep);
     }
     else
     {
