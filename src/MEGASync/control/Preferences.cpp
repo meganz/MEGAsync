@@ -377,6 +377,8 @@ const QString Preferences::lastPublicHandleTypeKey = QString::fromAscii("lastPub
 const QString Preferences::disabledSyncsKey = QString::fromAscii("disabledSyncs");
 const QString Preferences::neverCreateLinkKey       = QString::fromUtf8("neverCreateLink");
 const QString Preferences::notifyDisabledSyncsKey = QString::fromAscii("notifyDisabledSyncs");
+const QString Preferences::importMegaLinksEnabledKey = QString::fromAscii("importMegaLinksEnabled");
+const QString Preferences::downloadMegaLinksEnabledKey = QString::fromAscii("downloadMegaLinksEnabled");
 
 const bool Preferences::defaultShowNotifications    = true;
 const bool Preferences::defaultStartOnStartup       = true;
@@ -419,6 +421,9 @@ const int  Preferences::defaultAccountStatus      = STATE_NOT_INITIATED;
 const bool  Preferences::defaultNeedsFetchNodes   = false;
 
 const bool  Preferences::defaultNeverCreateLink   = false;
+
+const bool  Preferences::defaultImportMegaLinksEnabled = true;
+const bool  Preferences::defaultDownloadMegaLinksEnabled = true;
 
 Preferences *Preferences::preferences = NULL;
 
@@ -1945,6 +1950,30 @@ void Preferences::setImportFolder(long long value)
 {
     assert(logged());
     setValueAndSyncConcurrent(importFolderKey, value);
+}
+
+bool Preferences::getImportMegaLinksEnabled()
+{
+    assert(logged());
+    return getValueConcurrent<bool>(importMegaLinksEnabledKey, defaultImportMegaLinksEnabled);
+}
+
+void Preferences::setImportMegaLinksEnabled(const bool value)
+{
+    assert(logged());
+    setValueAndSyncConcurrent(importMegaLinksEnabledKey, value);
+}
+
+bool Preferences::getDownloadMegaLinksEnabled()
+{
+    assert(logged());
+    return getValueConcurrent<bool>(downloadMegaLinksEnabledKey, defaultDownloadMegaLinksEnabled);
+}
+
+void Preferences::setDownloadMegaLinksEnabled(const bool value)
+{
+    assert(logged());
+    setValueAndSyncConcurrent(downloadMegaLinksEnabledKey, value);
 }
 
 bool Preferences::neverCreateLink()

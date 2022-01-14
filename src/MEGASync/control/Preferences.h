@@ -257,6 +257,12 @@ public:
     long long importFolder();
     void setImportFolder(long long value);
 
+    bool getImportMegaLinksEnabled();
+    void setImportMegaLinksEnabled(const bool value);
+
+    bool getDownloadMegaLinksEnabled();
+    void setDownloadMegaLinksEnabled(const bool value);
+
     bool neverCreateLink();
     void setNeverCreateLink(bool value);
 
@@ -672,6 +678,8 @@ protected:
     static const QString disabledSyncsKey;
     static const QString neverCreateLinkKey;
     static const QString notifyDisabledSyncsKey;
+    static const QString importMegaLinksEnabledKey;
+    static const QString downloadMegaLinksEnabledKey;
 
     static const bool defaultShowNotifications;
     static const bool defaultStartOnStartup;
@@ -710,6 +718,8 @@ protected:
     static const int defaultAccountStatus;
     static const bool defaultNeedsFetchNodes;
     static const bool defaultNeverCreateLink;
+    static const bool defaultImportMegaLinksEnabled;
+    static const bool defaultDownloadMegaLinksEnabled;
 };
 
 #endif // PREFERENCES_H
