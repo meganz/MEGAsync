@@ -19,7 +19,8 @@ const int Preferences::BUILD_ID = 0;
 const QString Preferences::VERSION_STRING = QString::fromAscii("4.6.3");
 QString Preferences::SDK_ID = QString::fromAscii("301933f");
 const QString Preferences::CHANGELOG = QString::fromUtf8(QT_TR_NOOP(
-    "- Strengthen cryptographic security on linux repositories.\n"));
+    "- Strengthen cryptographic security on linux repositories.\n"
+    "- Fix memory issues with problematic pdf files.\n"));
 
 const QString Preferences::TRANSLATION_FOLDER = QString::fromAscii("://translations/");
 const QString Preferences::TRANSLATION_PREFIX = QString::fromAscii("MEGASyncStrings_");
