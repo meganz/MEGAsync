@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>TransferManagerItem</class>
- <widget class="QWidget" name="TransferManagerItem">
+ <class>TransferManagerDelegateWidget</class>
+ <widget class="QWidget" name="TransferManagerDelegateWidget">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -40,7 +40,7 @@
   font-family: &quot;Lato&quot;;
 }
 
-TransferManagerItem2, TransferManagerItem
+TransferManagerDelegateWidget
 {
     background-color: transparent;
 }
@@ -766,7 +766,7 @@ QProgressBar::chunk
              </size>
             </property>
             <property name="icon">
-             <iconset resource="../Resources_linux.qrc">
+             <iconset resource="../Resources_win.qrc">
               <normaloff>:/images/lists_pause_ico.png</normaloff>:/images/lists_pause_ico.png</iconset>
             </property>
            </widget>
@@ -825,7 +825,7 @@ QProgressBar::chunk
              </size>
             </property>
             <property name="icon">
-             <iconset resource="../Resources_linux.qrc">
+             <iconset resource="../Resources_win.qrc">
               <normaloff>:/images/lists_cancel_ico.png</normaloff>:/images/lists_cancel_ico.png</iconset>
             </property>
            </widget>
@@ -1100,7 +1100,7 @@ QProgressBar::chunk
              <string/>
             </property>
             <property name="icon">
-             <iconset resource="../Resources_linux.qrc">
+             <iconset resource="../Resources_win.qrc">
               <normaloff>:/images/clear_item_ico.png</normaloff>:/images/clear_item_ico.png</iconset>
             </property>
             <property name="iconSize">
@@ -1121,7 +1121,7 @@ QProgressBar::chunk
   </layout>
  </widget>
  <resources>
-  <include location="../Resources_linux.qrc"/>
+  <include location="../Resources_win.qrc"/>
  </resources>
  <connections/>
 </ui>

@@ -1,8 +1,6 @@
 #ifndef MEGATRANSFERVIEW_H
 #define MEGATRANSFERVIEW_H
 
-#include "TransferItem.h"
-#include "QTransfersModel.h"
 #include "TransfersWidget.h"
 
 #include <QGraphicsEffect>
@@ -16,17 +14,15 @@ class MegaTransferView : public QTreeView
 
 public:
     MegaTransferView(QWidget* parent = 0);
-    void setup(int type);
+    void setup();
     void setup(TransfersWidget* tw);
     void disableGetLink(bool disable);
     void disableContextMenus(bool option);
-    int getType() const;
 
 private:
     int lastItemHoveredTag;
     QList<int> transferTagSelected;
     bool disableLink;
-    int type;
     bool disableMenus;
 
     TransfersWidget* mParentTransferWidget;

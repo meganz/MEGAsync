@@ -1,6 +1,8 @@
 #include "TransfersSortFilterProxyModel.h"
-#include "QTransfersModel2.h"
+#include "QTransfersModel.h"
+#include "TransferManagerDelegateWidget.h"
 #include <megaapi.h>
+#include <QElapsedTimer>
 
 
 TransfersSortFilterProxyModel::TransfersSortFilterProxyModel(QObject* parent)
@@ -69,10 +71,10 @@ void TransfersSortFilterProxyModel::sort(int, Qt::SortOrder order)
 
 void TransfersSortFilterProxyModel::sort(SortCriterion column, Qt::SortOrder order)
 {
-    QtConcurrent::run([=]
-    {
+    //QtConcurrent::run([=]
+    //{
         emit modelAboutToBeSorted();
-        auto transferModel (static_cast<QTransfersModel2*> (sourceModel()));
+        auto transferModel (static_cast<QTransfersModel*> (sourceModel()));
         transferModel->lockModelMutex(true);
         QMutexLocker lockSortingMutex (mActivityMutex);
         if (column != mSortCriterion)
@@ -83,7 +85,7 @@ void TransfersSortFilterProxyModel::sort(SortCriterion column, Qt::SortOrder ord
         QSortFilterProxyModel::sort(0, order);
         transferModel->lockModelMutex(false);
         emit modelSorted();
-    });
+    //});
 }
 
 void TransfersSortFilterProxyModel::setFilterFixedString(const QString& pattern)
@@ -91,7 +93,7 @@ void TransfersSortFilterProxyModel::setFilterFixedString(const QString& pattern)
     QtConcurrent::run([=]
     {
         emit modelAboutToBeFiltered();
-        auto transferModel (static_cast<QTransfersModel2*> (sourceModel()));
+        auto transferModel (static_cast<QTransfersModel*> (sourceModel()));
         transferModel->lockModelMutex(true);
         QMutexLocker lockSortingMutex (mActivityMutex);
         QSortFilterProxyModel::setFilterFixedString(pattern);
@@ -160,7 +162,7 @@ int  TransfersSortFilterProxyModel::getNumberOfItems(TransferData::TransferType 
                     for (int i = 0; i < nbRows; ++i)
                     {
                         QModelIndex idx (index(i, 0));
-                        const auto d (qvariant_cast<TransferItem2>(idx.data()).getTransferData());
+                        const auto d (qvariant_cast<TransferItem>(idx.data()).getTransferData());
                         if (d->mType & TransferData::TRANSFER_UPLOAD)
                         {
                             (*mUlNumber)++;
@@ -190,12 +192,27 @@ void TransfersSortFilterProxyModel::resetNumberOfItems()
     *mUlNumber = 0;
 }
 
+TransferBaseDelegateWidget *TransfersSortFilterProxyModel::createTransferManagerItem(QWidget* parent)
+{
+    auto item = new TransferManagerDelegateWidget(parent);
+
+    //All are UniqueConnection to avoid reconnecting if thw item already exists in cache and it is not a new item
+//    connect(item2, &TransferManagerDelegateWidget::cancelClearTransfer,
+//            this, &MegaTransferDelegate::onCancelClearTransfer, Qt::UniqueConnection);
+//    connect(item2, &TransferManagerDelegateWidget::pauseResumeTransfer,
+//            this, &MegaTransferDelegate::onPauseResumeTransfer, Qt::UniqueConnection);
+//    connect(item2, &TransferManagerDelegateWidget::retryTransfer,
+//             mSourceModel, &QTransfersModel::onRetryTransfer, Qt::UniqueConnection);
+
+    return item;
+}
+
 void TransfersSortFilterProxyModel::applyFilters(bool invalidate)
 {
     QtConcurrent::run([=]
     {
         emit modelAboutToBeFiltered();
-        auto transferModel (static_cast<QTransfersModel2*> (sourceModel()));
+        auto transferModel (static_cast<QTransfersModel*> (sourceModel()));
         transferModel->lockModelMutex(true);
         QMutexLocker lockCallingThread (mActivityMutex);
         mTransferStates = mNextTransferStates;
@@ -217,36 +234,40 @@ bool TransfersSortFilterProxyModel::filterAcceptsRow(int sourceRow, const QModel
 
     QModelIndex index = sourceModel()->index(sourceRow, 0, sourceParent);
 
-    const auto d (qvariant_cast<TransferItem2>(index.data()).getTransferData());
+    const auto d (qvariant_cast<TransferItem>(index.data()).getTransferData());
 
-    accept = (d->mState & mTransferStates)
-             && (d->mType & mTransferTypes)
-             && (d->mFileType & mFileTypes);
-
-    if (accept && !filterRegExp().isEmpty())
+    if(d->mTag >= 0)
     {
-        accept = d->mFilename.contains(filterRegExp());
+        accept = (d->mState & mTransferStates)
+                 && (d->mType & mTransferTypes)
+                 && (d->mFileType & mFileTypes);
 
-        if (accept)
+        if (accept && !filterRegExp().isEmpty())
         {
-            if (d->mType & TransferData::TRANSFER_UPLOAD)
+            accept = d->mFilename.contains(filterRegExp());
+
+            if (accept)
             {
-                (*mUlNumber)++;
-            }
-            else
-            {
-                (*mDlNumber)++;
+                if (d->mType & TransferData::TRANSFER_UPLOAD)
+                {
+                    (*mUlNumber)++;
+                }
+                else
+                {
+                    (*mDlNumber)++;
+                }
             }
         }
     }
+
     return accept;
 }
 
 bool TransfersSortFilterProxyModel::lessThan(const QModelIndex &left, const QModelIndex &right) const
 {
     QMutexLocker lock (mActivityMutex);
-    const auto leftItem (qvariant_cast<TransferItem2>(left.data()).getTransferData());
-    const auto rightItem (qvariant_cast<TransferItem2>(right.data()).getTransferData());
+    const auto leftItem (qvariant_cast<TransferItem>(left.data()).getTransferData());
+    const auto rightItem (qvariant_cast<TransferItem>(right.data()).getTransferData());
 
     switch (mSortCriterion)
     {

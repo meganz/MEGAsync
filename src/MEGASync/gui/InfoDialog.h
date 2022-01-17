@@ -12,7 +12,6 @@
 #include "control/Preferences.h"
 #include "control/MegaController.h"
 #include "model/Model.h"
-#include "QCustomTransfersModel.h"
 #include <QGraphicsOpacityEffect>
 #include "HighDpiResize.h"
 #include "Utilities.h"

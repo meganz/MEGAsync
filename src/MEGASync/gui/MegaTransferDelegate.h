@@ -1,32 +1,49 @@
 #ifndef MEGATRANSFERDELEGATE_H
 #define MEGATRANSFERDELEGATE_H
 
-#include <QStyledItemDelegate>
 #include "TransferItem.h"
-#include "TransferManagerItem.h"
-#include "CustomTransferItem.h"
 #include "QTransfersModel.h"
 
-class InfoDialogCurrentTransfersProxyModel;
+#include <QStyledItemDelegate>
+#include <QAbstractItemView>
+
+class TransfersSortFilterProxyModel;
+class TransferBaseDelegateWidget;
 
 class MegaTransferDelegate : public QStyledItemDelegate
 {
     Q_OBJECT
 
 public:
-    MegaTransferDelegate(InfoDialogCurrentTransfersProxyModel *model, QObject *parent = 0);
-    void paint(QPainter *painter, const QStyleOptionViewItem &option,const QModelIndex &index) const;
-    QSize sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const;
-    bool editorEvent(QEvent *event, QAbstractItemModel *model, const QStyleOptionViewItem &option, const QModelIndex &index);
-    bool helpEvent(QHelpEvent *event, QAbstractItemView *view, const QStyleOptionViewItem &option, const QModelIndex &index);
+    MegaTransferDelegate(TransfersSortFilterProxyModel* model,  QAbstractItemView* view);
+    QSize sizeHint(const QStyleOptionViewItem&, const QModelIndex&) const;
 
 protected:
-    InfoDialogCurrentTransfersProxyModel *mModel;
-    void processCancel(int tag);
-    void processShowInFolder(const QModelIndex& index);
+    void paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const override;
+    bool event(QEvent *event) override;
+    bool editorEvent(QEvent *event, QAbstractItemModel *model, const QStyleOptionViewItem &option, const QModelIndex &index) override;
+    bool helpEvent(QHelpEvent *event, QAbstractItemView *view, const QStyleOptionViewItem &option, const QModelIndex &index) override;
+
+protected slots:
+    void onHoverLeave(const QModelIndex& index, const QRect& rect);
+    void onHoverEnter(const QModelIndex& index, const QRect& rect);
+    void onHoverMove(const QModelIndex& index, const QRect& rect, const QPoint& point);
+
+signals:
+    void transferPaused(const TransferTag tag);
+    void transferCanceled(const TransferTag tag);
+
+private slots:
+    void onCancelClearTransfer(int row);
+    void onPauseResumeTransfer(int row, bool pauseState);
 
 private:
-    mutable QCache<int, TransferItem> mTransferItems;
+    TransferBaseDelegateWidget *getTransferItemWidget(const QModelIndex &index, const QSize &size) const;
+
+    TransfersSortFilterProxyModel* mProxyModel;
+    QTransfersModel* mSourceModel;
+    mutable QVector<TransferBaseDelegateWidget*> mTransferItems;
+    QAbstractItemView* mView;
 };
 
 #endif // MEGATRANSFERDELEGATE_H

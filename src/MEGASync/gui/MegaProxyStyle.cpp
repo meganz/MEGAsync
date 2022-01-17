@@ -1,6 +1,8 @@
 #include "MegaProxyStyle.h"
 #include "gui/MegaTransferView.h"
+#include "gui/TransferItem.h"
 #include <QStyleOption>
+#include <QStyleOptionViewItem>
 
 
 void MegaProxyStyle::drawComplexControl(QStyle::ComplexControl control, const QStyleOptionComplex *option, QPainter *painter, const QWidget *widget) const
@@ -33,37 +35,41 @@ void MegaProxyStyle::drawPrimitive(QStyle::PrimitiveElement element, const QStyl
 
     if (element == QStyle::PE_IndicatorItemViewItemDrop && !option->rect.isNull())
     {
-        QStyleOption opt(*option);
+        QStyleOption modOption(*option);
         const MegaTransferView *transferView = dynamic_cast<const MegaTransferView *>(widget);
-        if (transferView)
+        auto index = transferView->indexAt(option->rect.topLeft());
+        if (transferView && index.isValid())
         {
-            int type = transferView->getType();
-            if (type == mega::MegaTransfer::TYPE_DOWNLOAD || type == mega::MegaTransfer::TYPE_UPLOAD)
-            {
-                QColor c(type == mega::MegaTransfer::TYPE_DOWNLOAD ? "#31B500" : "#2BA6DE");
+            auto transferItem (qvariant_cast<TransferItem>(index.data(Qt::DisplayRole)));
+            auto data = transferItem.getTransferData();
+            QColor c(data->mType == TransferData::TransferType::TRANSFER_DOWNLOAD ? "#31B500" : "#2BA6DE");
 
-                QPen linepen(c);
-                linepen.setCapStyle(Qt::RoundCap);
-                linepen.setWidth(8);
-                painter->setPen(linepen);
-                painter->drawPoint(opt.rect.topLeft() + QPoint(30, 0));
-                painter->drawPoint(opt.rect.topRight() - QPoint(30, 0));
+            QPen linepen(c);
+            linepen.setCapStyle(Qt::RoundCap);
+            linepen.setWidth(8);
+            painter->setPen(linepen);
+            painter->drawPoint(modOption.rect.topLeft() + QPoint(30, 0));
+            painter->drawPoint(modOption.rect.topRight() - QPoint(30, 0));
 
-                QPen whitepen(Qt::white);
-                whitepen.setWidth(4);
-                whitepen.setCapStyle(Qt::RoundCap);
-                painter->setPen(whitepen);
-                painter->drawPoint(opt.rect.topLeft() + QPoint(30, 0));
-                painter->drawPoint(opt.rect.topRight() - QPoint(30, 0));
+            QPen whitepen(Qt::white);
+            whitepen.setWidth(4);
+            whitepen.setCapStyle(Qt::RoundCap);
+            painter->setPen(whitepen);
+            painter->drawPoint(modOption.rect.topLeft() + QPoint(30, 0));
+            painter->drawPoint(modOption.rect.topRight() - QPoint(30, 0));
 
-                opt.rect.setLeft(35);
-                opt.rect.setRight(widget->width() - 35);
-                linepen.setWidth(2);
-                painter->setPen(linepen);
-            }
+            modOption.rect.setLeft(35);
+            modOption.rect.setRight(widget->width() - 35);
+            linepen.setWidth(2);
+            painter->setPen(linepen);
+
+            QProxyStyle::drawPrimitive(element, &modOption, painter, widget);
+        }
+        else
+        {
+            QProxyStyle::drawPrimitive(element, option, painter, widget);
         }
 
-        QProxyStyle::drawPrimitive(element, &opt, painter, widget);
         return;
     }
 

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>TransferManagerItem</class>
- <widget class="QWidget" name="TransferManagerItem">
+ <class>TransferManagerDelegateWidget</class>
+ <widget class="QWidget" name="TransferManagerDelegateWidget">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -40,7 +40,7 @@
   font-family: &quot;Lato&quot;;
 }
 
-TransferManagerItem2, TransferManagerItem
+TransferManagerDelegateWidget
 {
     background-color: transparent;
 }

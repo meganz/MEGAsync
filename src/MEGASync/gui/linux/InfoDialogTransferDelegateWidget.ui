@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>CustomTransferItem</class>
- <widget class="QWidget" name="CustomTransferItem">
+ <class>InfoDialogTransferDelegateWidget</class>
+ <widget class="QWidget" name="InfoDialogTransferDelegateWidget">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -32,7 +32,7 @@
    <string/>
   </property>
   <property name="styleSheet">
-   <string notr="true">CustomTransferItem
+   <string notr="true">InfoDialogTransferDelegateWidget
 {
 	background-color: transparent;
 }
@@ -896,7 +896,7 @@ background-color: rgba(0, 0, 0, 8%);
   </layout>
  </widget>
  <resources>
-  <include location="../Resources_win.qrc"/>
+  <include location="../Resources_linux.qrc"/>
  </resources>
  <connections/>
 </ui>

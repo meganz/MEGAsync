@@ -46,7 +46,7 @@ void TransfersWidget::configureTransferView()
         return;
     }
 
-    tDelegate2 = new MegaTransferDelegate2(mProxyModel, ui->tvTransfers, this);
+    tDelegate2 = new MegaTransferDelegate(mProxyModel, ui->tvTransfers);
     ui->tvTransfers->setup(this);
     QtConcurrent::run([=]
     {
@@ -105,7 +105,7 @@ void TransfersWidget::disableGetLink(bool disable)
     ui->tvTransfers->disableGetLink(disable);
 }
 
-QTransfersModel2* TransfersWidget::getModel2()
+QTransfersModel* TransfersWidget::getModel2()
 {
     return app->getTransfersModel();
 }

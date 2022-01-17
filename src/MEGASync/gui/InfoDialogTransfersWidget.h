@@ -4,13 +4,16 @@
 #include <QWidget>
 #include <QSortFilterProxyModel>
 
-#include "QTransfersModel2.h"
+#include "QTransfersModel.h"
+#include "MegaTransferDelegate.h"
 #include "TransfersSortFilterProxyModel.h"
-#include "QCustomTransfersModel.h"
 
 namespace Ui {
 class InfoDialogTransfersWidget;
 }
+
+class TransferBaseDelegateWidget;
+class MegaDelegateHoverManager;
 
 class InfoDialogCurrentTransfersProxyModel : public TransfersSortFilterProxyModel
 {
@@ -20,6 +23,8 @@ public:
     InfoDialogCurrentTransfersProxyModel(QObject* parent);
     ~InfoDialogCurrentTransfersProxyModel();
 
+    TransferBaseDelegateWidget* createTransferManagerItem(QWidget *parent) override;
+
 protected:
     bool lessThan(const QModelIndex &left, const QModelIndex &right) const override;
     bool filterAcceptsRow(int sourceRow, const QModelIndex& sourceParent) const override;
@@ -27,7 +32,6 @@ protected:
 };
 
 class MegaApplication;
-class MegaTransferDelegate;
 
 class InfoDialogTransfersWidget : public QWidget
 {
@@ -38,10 +42,13 @@ public:
     void setupTransfers();
     ~InfoDialogTransfersWidget();
 
+protected:
+    void showEvent(QShowEvent *event) override;
+
 private:
     Ui::InfoDialogTransfersWidget *ui;
     InfoDialogCurrentTransfersProxyModel *model;
-    MegaTransferDelegate *tDelegate;
+    std::unique_ptr<MegaDelegateHoverManager> mViewHoverManager;
 
 private:
     void configureTransferView();

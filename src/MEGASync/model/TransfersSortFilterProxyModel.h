@@ -1,10 +1,12 @@
 #ifndef TRANSFERSSORTFILTERPROXYMODEL_H
 #define TRANSFERSSORTFILTERPROXYMODEL_H
 
-#include "TransferItem2.h"
+#include "TransferItem.h"
 
 #include <QSortFilterProxyModel>
 #include <QReadWriteLock>
+
+class TransferBaseDelegateWidget;
 
 class TransfersSortFilterProxyModel : public QSortFilterProxyModel
 {
@@ -34,6 +36,8 @@ class TransfersSortFilterProxyModel : public QSortFilterProxyModel
         void resetAllFilters(bool invalidate = false);
         int  getNumberOfItems(TransferData::TransferType transferType);
         void resetNumberOfItems();
+
+        virtual TransferBaseDelegateWidget* createTransferManagerItem(QWidget *parent);
 
     signals:
         void modelAboutToBeFiltered();

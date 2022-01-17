@@ -1,143 +1,84 @@
 #include "MegaTransferDelegate.h"
-#include <QPainter>
-#include <QEvent>
-#include <QMouseEvent>
-#include <QMessageBox>
-#include <QToolTip>
 #include "control/Utilities.h"
 #include "Preferences.h"
-#include <InfoDialogTransfersWidget.h>
-#include <TransferItem2.h>
-
 #include "gui/QMegaMessageBox.h"
 #include "megaapi.h"
 #include "QTransfersModel.h"
 #include "MegaApplication.h"
 #include "platform/Platform.h"
+#include "TransfersWidget.h"
+#include "TransferManagerDelegateWidget.h"
+#include "MegaDelegateHoverManager.h"
+
+#include <QPainter>
+#include <QEvent>
+#include <QMessageBox>
+#include <QToolTip>
+#include <QSortFilterProxyModel>
 
 using namespace mega;
 
-MegaTransferDelegate::MegaTransferDelegate(InfoDialogCurrentTransfersProxyModel *model, QObject *parent)
-    : QStyledItemDelegate(parent), mModel(model)
+MegaTransferDelegate::MegaTransferDelegate(TransfersSortFilterProxyModel* model,  QAbstractItemView* view)
+    : QStyledItemDelegate(view),
+      mProxyModel (model),
+      mSourceModel (qobject_cast<QTransfersModel*>(
+                        mProxyModel->sourceModel())),
+      mView (view)
 {
-    mTransferItems.setMaxCost(16);
 }
 
 void MegaTransferDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
-    if (index.isValid())
+    auto rowCount (index.model()->rowCount());
+    auto row (index.row());
+
+    if (index.isValid() && row < rowCount)
     {
-        if (option.state & QStyle::State_Selected)
-        {
-            painter->fillRect(option.rect, QColor(247, 247, 247));
-        }
+        auto pos (option.rect.topLeft());
+        auto width (option.rect.width());
+        auto height (option.rect.height());
+        auto transferItem (qvariant_cast<TransferItem>(index.data(Qt::DisplayRole)));
+        auto data = transferItem.getTransferData();
 
-        auto transferItem = (qvariant_cast<TransferItem2>(index.data(Qt::DisplayRole)));
-        auto tData = transferItem.getTransferData();
-
-        if(!tData)
+        TransferBaseDelegateWidget* w (getTransferItemWidget(index, option.rect.size()));
+        if(!w)
         {
             return;
         }
 
-        int tag = tData->mTag;
-        bool isSyncTransfer = tData->mType.setFlag(TransferData::TransferType::TRANSFER_SYNC);
-        TransferItem *ti = mTransferItems[tag];
-        if (!ti)
+        // Move if position changed
+        if (w->pos() != pos)
         {
-            ti = new CustomTransferItem();
-            ti->setTransferTag(tag);
-            mTransferItems.insert(tag, ti);
-
-            //Check if transfer finishes while the account was blocked, in order to provide the right context for failed error
-            bool blockedTransfer = static_cast<MegaApplication*>(qApp)->finishedTransfersWhileBlocked(tData->mTag);
-            if (blockedTransfer)
-            {
-                ti->setTransferFinishedWhileBlocked(blockedTransfer);
-                static_cast<MegaApplication*>(qApp)->removeFinishedBlockedTransfer(tData->mTag);
-            }
-
-            ti->setType(tData->mType, isSyncTransfer);
-            ti->setFileName(tData->mFilename);
-
+            w->move(pos);
         }
 
-        // Get http speed, which reports speed changes faster than the transfer.
-        auto httpSpeed (static_cast<unsigned long long>(MegaSyncApp->getMegaApi()->getCurrentSpeed((tData->mType & TransferData::TYPE_MASK) >> 1)));
-        ti->setSpeed(std::min(tData->mSpeed, httpSpeed), tData->mMeanSpeed);
-
-        ti->setTransferredBytes(tData->mTransferredBytes, !isSyncTransfer);
-        ti->setPriority(tData->mPriority);
-        ti->setTotalSize(tData->mTotalSize);
-        ti->setTransferState(tData->mState);
-
-        int tError = tData->mErrorCode;
-        if (tError != MegaError::API_OK)
+        // Resize if window resized
+        if (w->width() != width)
         {
-            ti->setTransferError(tError,  tData->mErrorValue);
+            w->resize(width, height);
         }
 
-        if (ti->isTransferFinished())
+        w->updateUi(data, row);
+
+        // Draw border if selected
+        if (option.state & QStyle::State_Selected)
         {
-            if (!ti->getFinishedTime())
-            {
-                ti->setFinishedTime(tData->mFinishedTime);
-                ti->updateFinishedTime(); // applies styles which can be slow - just do it when the finished time changes
-            }
-
-            if (tData->mPublicNode)
-            {
-               ti->setIsLinkAvailable(true);
-
-               if (tData->mNodeAccess != mega::MegaShare::ACCESS_UNKNOWN)
-               {
-                   ti->setNodeAccess(tData->mNodeAccess);
-               }
-            }
+            static const QPen pen (QColor::fromRgbF(0.84, 0.84, 0.84, 1), 1);
+            QPainterPath path;
+            path.addRoundedRect(QRectF(option.rect.x() + 16.,
+                                       option.rect.y() + 4.,
+                                       width - 17.,
+                                       height - 7.),
+                                10, 10);
+            painter->setPen(pen);
+            painter->fillPath(path, Qt::white);
+            painter->drawPath(path);
         }
-
-        else
-        {
-            if (!ti->isTransferFinished())
-            {
-                ti->updateTransfer();
-            }
-            else
-            {
-                ti->updateFinishedTime();
-            }
-        }
-
-        Preferences *preferences = Preferences::instance();
-        if (tData->mType.setFlag(TransferData::TransferType::TRANSFER_DOWNLOAD))
-        {
-            if (preferences->getDownloadsPaused())
-            {
-                ti->setStateLabel(tr("PAUSED"));
-            }
-            else
-            {
-                ti->updateAnimation();
-            }
-        }
-        else if (tData->mType.setFlag(TransferData::TransferType::TRANSFER_UPLOAD))
-        {
-            if (preferences->getUploadsPaused())
-            {
-                ti->setStateLabel(tr("PAUSED"));
-            }
-            else
-            {
-                ti->updateAnimation();
-            }
-        }
-
         painter->save();
-        painter->translate(option.rect.topLeft());
 
-        ti->resize(option.rect.width(), option.rect.height());
+        painter->translate(pos);
+        w->render(painter, QPoint(0, 0), QRegion(0, 0, width, height));
 
-        ti->render(painter, QPoint(0, 0), QRegion(0, 0, option.rect.width(), option.rect.height()));
         painter->restore();
     }
     else
@@ -146,182 +87,157 @@ void MegaTransferDelegate::paint(QPainter *painter, const QStyleOptionViewItem &
     }
 }
 
-QSize MegaTransferDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const
+bool MegaTransferDelegate::event(QEvent *event)
 {
-    if (index.isValid())
+    if(auto hoverEvent = dynamic_cast<MegaDelegateHoverEvent*>(event))
     {
-        return QSize(400, 60);
+        if(hoverEvent->type() == QEvent::Leave)
+        {
+            onHoverLeave(hoverEvent->index(),hoverEvent->rect());
+        }
+        else if(hoverEvent->type() == QEvent::Enter)
+        {
+            onHoverEnter(hoverEvent->index(), hoverEvent->rect());
+        }
+        else if(hoverEvent->type() == QEvent::MouseMove)
+        {
+            onHoverMove(hoverEvent->index(), hoverEvent->rect(), hoverEvent->mousePos());
+        }
+    }
+
+    return QStyledItemDelegate::event(event);
+}
+
+TransferBaseDelegateWidget *MegaTransferDelegate::getTransferItemWidget(const QModelIndex& index, const QSize& size) const
+{ 
+    auto nbRowsMaxInView(1);
+    if(size.height() > 0)
+    {
+        nbRowsMaxInView = mView->height() / size.height() + 1;
+    }
+    auto row (index.row() % nbRowsMaxInView);
+
+    TransferBaseDelegateWidget* item(nullptr);
+
+    if(row >= mTransferItems.size())
+    {
+       item = mProxyModel->createTransferManagerItem(mView);
+       mTransferItems.append(item);
     }
     else
     {
-        return QStyledItemDelegate::sizeHint(option, index);
+        item = mTransferItems.at(row);
     }
+
+    return item;
 }
 
-void MegaTransferDelegate::processCancel(int tag)
+bool MegaTransferDelegate::editorEvent(QEvent* event, QAbstractItemModel*,
+                                        const QStyleOptionViewItem& option,
+                                        const QModelIndex& index)
 {
-    QMessageBox warning;
-    HighDpiResize hDpiResizer(&warning);
-    warning.setWindowTitle(QString::fromUtf8("MEGAsync"));
-    warning.setText(tr("Are you sure you want to cancel this transfer?"));
-    warning.setIcon(QMessageBox::Warning);
-    warning.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
-    warning.setDefaultButton(QMessageBox::No);
-    int result = warning.exec();
-    if (result == QMessageBox::Yes)
+    if (index.isValid())
     {
-        static_cast<MegaApplication*>(qApp)->getMegaApi()->cancelTransferByTag(tag);
-    }
-}
-
-bool MegaTransferDelegate::editorEvent(QEvent *event, QAbstractItemModel *, const QStyleOptionViewItem &option, const QModelIndex &index)
-{
-    if (QEvent::MouseButtonPress ==  event->type())
-    {
-        auto transferItem = (qvariant_cast<TransferItem2>(index.data(Qt::DisplayRole)));
-        auto tData = transferItem.getTransferData();
-
-        if(tData)
+        switch (event->type())
         {
-            int tag = tData->mTag;
-            TransferItem *item = mTransferItems[tag];
-            if (!item)
+            case QEvent::MouseButtonPress:
             {
-                return true;
+                QMouseEvent* me = static_cast<QMouseEvent*>(event);
+                if( me->button() == Qt::LeftButton )
+                {
+                    TransferBaseDelegateWidget* currentRow (getTransferItemWidget(index, option.rect.size()));
+                    auto w (currentRow->childAt(me->pos() - currentRow->pos()));
+                    if (w)
+                    {
+                        auto t (qobject_cast<QPushButton*>(w));
+                        if (t)
+                        {
+                            t->click();
+                        }
+                    }
+                }
+                break;
             }
-
-            if (item->cancelButtonClicked(((QMouseEvent *)event)->pos() - option.rect.topLeft()))
-            {
-                processCancel(tag);
-                return true; // click consumed
-            }
-            else if (item && item->checkIsInsideButton(((QMouseEvent *)event)->pos() - option.rect.topLeft(), TransferItem::ACTION_BUTTON))
-            {
-                 mega::MegaApi* megaApi = MegaSyncApp->getMegaApi();
-                 const auto &ti = mTransferItems[tag];
-                 if (!ti->getIsLinkAvailable() && !ti->getTransferError())
-                 {
-                     processShowInFolder(index);
-                 }
-                 else if (MegaTransfer *transfer = megaApi->getTransferByTag(tag))
-                 {
-                     if (!transfer->getLastError().getErrorCode())
-                     {
-                         QList<MegaHandle> exportList;
-                         QStringList linkList;
-                         MegaNode *node = transfer->getPublicMegaNode();
-                         if (!node || !node->isPublic())
-                         {
-                             exportList.push_back(transfer->getNodeHandle());
-                         }
-                         else
-                         {
-                             char *handle = node->getBase64Handle();
-                             char *key = node->getBase64Key();
-                             if (handle && key)
-                             {
-                                 QString link = Preferences::BASE_URL + QString::fromUtf8("/#!%1!%2")
-                                         .arg(QString::fromUtf8(handle)).arg(QString::fromUtf8(key));
-                                 linkList.append(link);
-                             }
-                             delete [] handle;
-                             delete [] key;
-                         }
-                         delete node;
-                         if (exportList.size() || linkList.size())
-                         {
-                             ((MegaApplication*)qApp)->exportNodes(exportList, linkList);
-                         }
-                     }
-                     else
-                     {
-                         ((MegaApplication*)qApp)->getMegaApi()->retryTransfer(transfer);
-                     }
-
-                     delete transfer;
-                 }
-
-                 return true; // click consumed
-            }
-            else if (item && item->checkIsInsideButton(((QMouseEvent *)event)->pos() - option.rect.topLeft(), TransferItem::SHOW_IN_FOLDER_BUTTON))
-            {
-                 processShowInFolder(index);
-                 return true; // click consumed
-            }
+            default:
+                break;
         }
     }
-
-    return QAbstractItemDelegate::editorEvent(event, mModel, option, index);
+    return QStyledItemDelegate::editorEvent(event, mProxyModel, option, index);
 }
 
-bool MegaTransferDelegate::helpEvent(QHelpEvent *event, QAbstractItemView *view, const QStyleOptionViewItem &option, const QModelIndex &index)
+bool MegaTransferDelegate::helpEvent(QHelpEvent* event, QAbstractItemView* view,
+                                      const QStyleOptionViewItem& option, const QModelIndex& index)
 {
-    if (event->type() == QEvent::ToolTip)
+    if (event->type() == QEvent::ToolTip && index.isValid())
     {
-        auto transferItem = (qvariant_cast<TransferItem2>(index.data(Qt::DisplayRole)));
-        auto tData = transferItem.getTransferData();
-
-        if(!tData)
+        auto currentRow (getTransferItemWidget(index, option.rect.size()));
+        auto widget (currentRow->childAt(event->pos() - currentRow->pos()));
+        if (widget)
         {
-            return false;
-        }
-
-        int tag = index.internalId();
-        TransferItem *item = mTransferItems[tag];
-        if (item)
-        {
-            if (item->checkIsInsideButton(event->pos() - option.rect.topLeft(), TransferItem::ACTION_BUTTON))
-            {
-                const auto &ti = mTransferItems[tag];
-                if (!ti->getIsLinkAvailable() && !ti->getTransferError())
-                {
-                    QToolTip::showText(event->globalPos(), tr("Show in folder"));
-                }
-                else
-                {
-                    if (tData->mErrorCode == 0)
-                    {
-                        QToolTip::showText(event->globalPos(), tr("Get link"));
-                    }
-                    else
-                    {
-                        QToolTip::showText(event->globalPos(), tr("Retry"));
-                    }
-                    return true;
-                }
-
-            }
-            else if (item->checkIsInsideButton(event->pos() - option.rect.topLeft(), TransferItem::SHOW_IN_FOLDER_BUTTON))
-            {
-                QToolTip::showText(event->globalPos(), tr("Show in folder"));
-                return true;
-            }
-
-            QString fileName = item->getFileName();
-            if (fileName != item->getTransferName())
-            {
-                QToolTip::showText(event->globalPos(), fileName);
-                return true;
-            }
+            QToolTip::showText(event->globalPos(), widget->toolTip());
         }
     }
     return QStyledItemDelegate::helpEvent(event, view, option, index);
 }
 
-void MegaTransferDelegate::processShowInFolder(const QModelIndex &index)
+QSize MegaTransferDelegate::sizeHint(const QStyleOptionViewItem&,
+                                      const QModelIndex&) const
 {
-    auto transferItem = (qvariant_cast<TransferItem2>(index.data(Qt::DisplayRole)));
-    auto tData = transferItem.getTransferData();
-    if (tData && tData->mState == TransferData::TransferState::TRANSFER_COMPLETED
-                 && !tData->mPath.isEmpty())
+    return QSize(772, 64);
+}
+
+void MegaTransferDelegate::onHoverLeave(const QModelIndex& index, const QRect& rect)
+{
+    auto currentRow (getTransferItemWidget(index, rect.size()));
+    if(currentRow)
     {
-        QString localPath = tData->mPath;
-        #ifdef WIN32
-        if (localPath.startsWith(QString::fromAscii("\\\\?\\")))
-        {
-            localPath = localPath.mid(4);
-        }
-        #endif
-        Platform::showInFolder(localPath);
+        currentRow->mouseHoverTransfer(false, QPoint());
     }
+}
+
+void MegaTransferDelegate::onHoverEnter(const QModelIndex& index, const QRect& rect)
+{
+    auto currentRow (getTransferItemWidget(index, rect.size()));
+    if(currentRow)
+    {
+        currentRow->mouseHoverTransfer(true, QPoint());
+    }
+}
+
+void MegaTransferDelegate::onHoverMove(const QModelIndex &index, const QRect &rect, const QPoint& pos)
+{
+    auto currentRow (getTransferItemWidget(index, rect.size()));
+    if(currentRow)
+    {
+        if(currentRow->mouseHoverTransfer(true, pos))
+        {
+            mView->update(rect);
+        }
+    }
+}
+
+void MegaTransferDelegate::onCancelClearTransfer(int row)
+{
+    QModelIndexList indexes;
+    auto proxy(qobject_cast<QSortFilterProxyModel*>(mProxyModel));
+    auto index (mProxyModel->index(row, 0, QModelIndex()));
+    if (proxy)
+    {
+        index = proxy->mapToSource(index);
+    }
+    indexes.push_back(index);
+    mSourceModel->cancelClearTransfers(indexes);
+}
+
+void MegaTransferDelegate::onPauseResumeTransfer(int row, bool pauseState)
+{
+    QModelIndexList indexes;
+    auto proxy(qobject_cast<QSortFilterProxyModel*>(mProxyModel));
+    auto index (mProxyModel->index(row, 0, QModelIndex()));
+    if (proxy)
+    {
+        index = proxy->mapToSource(index);
+    }
+    indexes.push_back(index);
+    mSourceModel->pauseTransfers(indexes, pauseState);
 }

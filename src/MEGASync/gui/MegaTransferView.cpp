@@ -31,13 +31,11 @@ MegaTransferView::MegaTransferView(QWidget* parent) :
     lastItemHoveredTag = 0;
     disableLink = false;
     disableMenus = false;
-    type = 0;
 }
 
-void MegaTransferView::setup(int type)
+void MegaTransferView::setup()
 {
     setContextMenuPolicy(Qt::CustomContextMenu);
-    this->type = type;
 }
 
 void MegaTransferView::setup(TransfersWidget* tw)
@@ -63,11 +61,6 @@ void MegaTransferView::disableGetLink(bool disable)
 {
     disableLink = disable;
     mGetLinkAction->setEnabled(!disable);
-}
-
-int MegaTransferView::getType() const
-{
-    return type;
 }
 
 void MegaTransferView::onPauseResumeAllRows(bool pauseState)
@@ -334,7 +327,7 @@ void MegaTransferView::updateContextMenu(bool enablePause, bool enableResume, bo
 
     if (onlyOneAndClear)
     {
-        auto d (qvariant_cast<TransferItem2>(selectedIndexes().first().data()).getTransferData());
+        auto d (qvariant_cast<TransferItem>(selectedIndexes().first().data()).getTransferData());
 
         auto state (d->mState);
         auto type ((d->mType & TransferData::TRANSFER_UPLOAD) ?
@@ -418,7 +411,7 @@ void MegaTransferView::onCustomContextMenu(const QPoint& point)
 
     for (auto index : qAsConst(indexes))
     {
-        auto d (qvariant_cast<TransferItem2>(index.data()).getTransferData());
+        auto d (qvariant_cast<TransferItem>(index.data()).getTransferData());
         switch (d->mState)
         {
             case TransferData::TRANSFER_ACTIVE:
@@ -560,7 +553,7 @@ void MegaTransferView::openItemClicked()
         if (index.isValid())
         {
             const auto transferItem (
-                        qvariant_cast<TransferItem2>(index.data(Qt::DisplayRole)));
+                        qvariant_cast<TransferItem>(index.data(Qt::DisplayRole)));
             auto d (transferItem.getTransferData());
             if (!d->mPath.isEmpty())
             {
@@ -579,7 +572,7 @@ void MegaTransferView::showInFolderClicked()
         if (index.isValid())
         {
             const auto transferItem (
-                        qvariant_cast<TransferItem2>(index.data(Qt::DisplayRole)));
+                        qvariant_cast<TransferItem>(index.data(Qt::DisplayRole)));
             auto d (transferItem.getTransferData());
             if (!d->mPath.isEmpty())
             {
@@ -598,7 +591,7 @@ void MegaTransferView::showInMegaClicked()
         if (index.isValid())
         {
             const auto transferItem (
-                        qvariant_cast<TransferItem2>(index.data(Qt::DisplayRole)));
+                        qvariant_cast<TransferItem>(index.data(Qt::DisplayRole)));
             auto d (transferItem.getTransferData());
             if (d->mParentHandle != mega::INVALID_HANDLE)
             {

@@ -653,7 +653,7 @@ void MegaApplication::initialize()
         connect(watcher, SIGNAL(fileChanged(QString)), this, SLOT(showInterface(QString)));
     }
 
-    mModel2 = new QTransfersModel2(nullptr);
+    mModel2 = new QTransfersModel(nullptr);
     mModel2->initModel();
 }
 

@@ -3,15 +3,17 @@ QT       += network
 SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/BalloonToolTip.cpp \
     $$PWD/InfoDialog.cpp \
-    $$PWD/MegaTransferDelegate2.cpp \
+    $$PWD/MegaDelegateHoverManager.cpp \
+    $$PWD/MegaTransferDelegate.cpp \
+    $$PWD/TransferBaseDelegateWidget.cpp \
     $$PWD/OverQuotaDialog.cpp \
-    $$PWD/QTransfersModel2.cpp \
+    $$PWD/QTransfersModel.cpp \
     $$PWD/SetupWizard.cpp \
     $$PWD/NodeSelector.cpp \
     $$PWD/FolderBinder.cpp \
     $$PWD/BindFolderDialog.cpp \
-    $$PWD/TransferItem2.cpp \
-    $$PWD/TransferManagerItem2.cpp \
+    $$PWD/TransferItem.cpp \
+    $$PWD/TransferManagerDelegateWidget.cpp \
     $$PWD/UploadToMegaDialog.cpp \
     $$PWD/PasteMegaLinksDialog.cpp \
     $$PWD/ImportMegaLinksDialog.cpp \
@@ -33,10 +35,6 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/InfoWizard.cpp \
     $$PWD/TransferManager.cpp \
     $$PWD/TransfersWidget.cpp \
-    $$PWD/QTransfersModel.cpp \
-    $$PWD/QActiveTransfersModel.cpp \
-    $$PWD/QFinishedTransfersModel.cpp \
-    $$PWD/MegaTransferDelegate.cpp \
     $$PWD/MegaTransferView.cpp \
     $$PWD/QMegaMessageBox.cpp \
     $$PWD/TransfersStateInfoWidget.cpp \
@@ -44,13 +42,10 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/AvatarWidget.cpp \
     $$PWD/MenuItemAction.cpp \
     $$PWD/AddExclusionDialog.cpp \
-    $$PWD/TransferManagerItem.cpp \
-    $$PWD/TransferItem.cpp \
     $$PWD/InfoDialogTransfersWidget.cpp \
-    $$PWD/QCustomTransfersModel.cpp \
     $$PWD/StatusInfo.cpp \
     $$PWD/ChangePassword.cpp \
-    $$PWD/CustomTransferItem.cpp \
+    $$PWD/InfoDialogTransferDelegateWidget.cpp \
     $$PWD/PSAwidget.cpp \
     $$PWD/ElidedLabel.cpp \
     $$PWD/UpgradeOverStorage.cpp \
@@ -77,15 +72,17 @@ SOURCES += $$PWD/SettingsDialog.cpp \
 HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/BalloonToolTip.h \
     $$PWD/InfoDialog.h \
-    $$PWD/MegaTransferDelegate2.h \
+    $$PWD/MegaDelegateHoverManager.h \
+    $$PWD/MegaTransferDelegate.h \
+    $$PWD/TransferBaseDelegateWidget.h \
     $$PWD/OverQuotaDialog.h \
-    $$PWD/QTransfersModel2.h \
+    $$PWD/QTransfersModel.h \
     $$PWD/SetupWizard.h \
     $$PWD/NodeSelector.h \
     $$PWD/FolderBinder.h \
     $$PWD/BindFolderDialog.h \
-    $$PWD/TransferItem2.h \
-    $$PWD/TransferManagerItem2.h \
+    $$PWD/TransferItem.h \
+    $$PWD/TransferManagerDelegateWidget.h \
     $$PWD/UploadToMegaDialog.h \
     $$PWD/PasteMegaLinksDialog.h \
     $$PWD/ImportMegaLinksDialog.h \
@@ -107,10 +104,6 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/InfoWizard.h \
     $$PWD/TransferManager.h \
     $$PWD/TransfersWidget.h \
-    $$PWD/QTransfersModel.h \
-    $$PWD/QActiveTransfersModel.h \
-    $$PWD/QFinishedTransfersModel.h \
-    $$PWD/MegaTransferDelegate.h \
     $$PWD/MegaTransferView.h \
     $$PWD/QMegaMessageBox.h \
     $$PWD/TransfersStateInfoWidget.h \
@@ -118,12 +111,9 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/AvatarWidget.h \
     $$PWD/MenuItemAction.h \
     $$PWD/AddExclusionDialog.h \
-    $$PWD/TransferManagerItem.h \
-    $$PWD/TransferItem.h \
     $$PWD/InfoDialogTransfersWidget.h \
-    $$PWD/QCustomTransfersModel.h \
     $$PWD/StatusInfo.h \
-    $$PWD/CustomTransferItem.h \
+    $$PWD/InfoDialogTransferDelegateWidget.h \
     $$PWD/PSAwidget.h \
     $$PWD/ElidedLabel.h \
     $$PWD/UpgradeOverStorage.h \
@@ -158,7 +148,7 @@ win32 {
     RESOURCES += $$PWD/Resources_win.qrc
     INCLUDEPATH += $$PWD/win
     FORMS    += $$PWD/win/InfoDialog.ui \
-                $$PWD/win/CustomTransferItem.ui \
+                $$PWD/win/InfoDialogTransferDelegateWidget.ui \
                 $$PWD/win/NodeSelector.ui \
                 $$PWD/win/FolderBinder.ui \
                 $$PWD/win/BindFolderDialog.ui \
@@ -178,7 +168,7 @@ win32 {
                 $$PWD/win/PlanWidget.ui \
                 $$PWD/win/UpgradeDialog.ui \
                 $$PWD/win/InfoWizard.ui \
-                $$PWD/win/TransferManagerItem.ui \
+                $$PWD/win/TransferManagerDelegateWidget.ui \
                 $$PWD/win/TransferManager.ui \
                 $$PWD/win/TransfersWidget.ui \
                 $$PWD/win/TransfersStateInfoWidget.ui \
@@ -232,7 +222,7 @@ macx {
                 $$PWD/macx/PlanWidget.ui \
                 $$PWD/macx/UpgradeDialog.ui \
                 $$PWD/macx/InfoWizard.ui \
-                $$PWD/macx/TransferManagerItem.ui \
+                $$PWD/macx/TransferManagerDelegateWidget.ui \
                 $$PWD/macx/TransferManager.ui \
                 $$PWD/macx/TransfersWidget.ui \
                 $$PWD/macx/TransfersStateInfoWidget.ui \
@@ -241,7 +231,7 @@ macx {
                 $$PWD/macx/AddExclusionDialog.ui \
                 $$PWD/macx/InfoDialogTransfersWidget.ui \
                 $$PWD/macx/StatusInfo.ui \
-                $$PWD/macx/CustomTransferItem.ui \
+                $$PWD/macx/InfoDialogTransferDelegateWidget.ui \
                 $$PWD/macx/PSAwidget.ui \
                 $$PWD/macx/UpgradeOverStorage.ui \
                 $$PWD/macx/ChangePassword.ui \
@@ -288,7 +278,7 @@ unix:!macx {
     RESOURCES += $$PWD/Resources_linux.qrc
     INCLUDEPATH += $$PWD/linux
     FORMS    += $$PWD/linux/InfoDialog.ui \
-                $$PWD/linux/CustomTransferItem.ui \
+                $$PWD/linux/InfoDialogTransferDelegateWidget.ui \
                 $$PWD/linux/NodeSelector.ui \
                 $$PWD/linux/FolderBinder.ui \
                 $$PWD/linux/BindFolderDialog.ui \
@@ -310,7 +300,7 @@ unix:!macx {
                 $$PWD/linux/PlanWidget.ui \
                 $$PWD/linux/UpgradeDialog.ui \
                 $$PWD/linux/InfoWizard.ui \
-                $$PWD/linux/TransferManagerItem.ui \
+                $$PWD/linux/TransferManagerDelegateWidget.ui \
                 $$PWD/linux/TransferManager.ui \
                 $$PWD/linux/TransfersWidget.ui \
                 $$PWD/linux/TransfersStateInfoWidget.ui \

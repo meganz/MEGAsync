@@ -2,12 +2,7 @@
 #define TRANSFERSWIDGET_H
 
 #include <QWidget>
-#include "TransferItem.h"
-#include "QTransfersModel.h"
-#include "QActiveTransfersModel.h"
-#include "QFinishedTransfersModel.h"
 #include "MegaTransferDelegate.h"
-#include "MegaTransferDelegate2.h"
 #include "TransfersStateInfoWidget.h"
 #include "TransfersSortFilterProxyModel.h"
 
@@ -25,8 +20,7 @@ class TransfersWidget : public QWidget
 
 public:
     explicit TransfersWidget(QWidget *parent = 0);
-//    void setupFinishedTransfers(QList<mega::MegaTransfer* > transferData, QTransfersModel::ModelType modelType = QTransfersModel::TYPE_FINISHED);
-//    void setupTransfers(std::shared_ptr<mega::MegaTransferData> transferData, QTransfersModel::ModelType type);
+
     void setupTransfers();
     void refreshTransferItems();
     void pausedTransfers(bool paused);
@@ -41,8 +35,7 @@ public:
 
     int rowCount();
 
-    QTransfersModel *getModel();
-    QTransfersModel2* getModel2();
+    QTransfersModel* getModel2();
     TransfersSortFilterProxyModel* getProxyModel() {return mProxyModel;}
     ~TransfersWidget();
 
@@ -67,10 +60,9 @@ private:
     };
 
     Ui::TransfersWidget *ui;
-    QTransfersModel2 *model2;
+    QTransfersModel *model2;
     TransfersSortFilterProxyModel *mProxyModel;
-    MegaTransferDelegate2 *tDelegate2;
-    QTransfersModel::ModelType mType;
+    MegaTransferDelegate *tDelegate2;
     bool mIsPaused;
     MegaApplication *app;
     HeaderState mHeaderNameState;

@@ -3,7 +3,7 @@
 #include "ui_TransferManager.h"
 #include "MegaApplication.h"
 #include "platform/Platform.h"
-#include "MegaTransferDelegate2.h"
+#include "MegaTransferDelegate.h"
 #include "MegaTransferView.h"
 
 #include <QMouseEvent>
@@ -148,20 +148,20 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
     connect(this, &TransferManager::showCompleted,
             mUi->wTransfers, &TransfersWidget::onShowCompleted, Qt::QueuedConnection);
 
-    connect(mModel, &QTransfersModel2::pauseStateChanged,
+    connect(mModel, &QTransfersModel::pauseStateChanged,
             mUi->wTransfers, &TransfersWidget::onPauseStateChanged, Qt::QueuedConnection);
 
-    connect(mModel, &QTransfersModel2::transfersDataUpdated,
+    connect(mModel, &QTransfersModel::transfersDataUpdated,
             this, &TransferManager::onTransfersDataUpdated);
 
-    connect(mModel, &QTransfersModel2::pauseStateChanged,
+    connect(mModel, &QTransfersModel::pauseStateChanged,
             this, &TransferManager::onUpdatePauseState, Qt::QueuedConnection);
 
     connect(mUi->bPause, &QToolButton::clicked,
-            mModel, &QTransfersModel2::pauseResumeAllTransfers, Qt::QueuedConnection);
+            mModel, &QTransfersModel::pauseResumeAllTransfers, Qt::QueuedConnection);
 
     connect(this, &TransferManager::cancelClearAllTransfers,
-            mModel, &QTransfersModel2::cancelClearAllTransfers, Qt::QueuedConnection);
+            mModel, &QTransfersModel::cancelClearAllTransfers, Qt::QueuedConnection);
 
     connect(this, &TransferManager::cancelClearAllRows,
             findChild<MegaTransferView*>(), &MegaTransferView::onCancelClearAllRows,
