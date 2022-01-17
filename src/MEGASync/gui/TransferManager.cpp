@@ -687,7 +687,7 @@ void TransferManager::mousePressEvent(QMouseEvent *event)
     }
 }
 
-void TransferManager::mouseReleaseEvent(QMouseEvent *event)
+void TransferManager::mouseReleaseEvent(QMouseEvent*)
 {
     dragPosition = QPoint(-1, -1);
 }

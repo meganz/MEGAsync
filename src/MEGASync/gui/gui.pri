@@ -70,7 +70,8 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/MegaInfoMessage.cpp \
     $$PWD/WaitingSpinnerWidget.cpp \
     $$PWD/ProxySettings.cpp \
-    $$PWD/BandwidthSettings.cpp
+    $$PWD/BandwidthSettings.cpp \
+    $$PWD/GuiUtilities.cpp
 
 HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/BalloonToolTip.h \
@@ -142,7 +143,8 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/MegaInfoMessage.h \
     $$PWD/WaitingSpinnerWidget.h \
     $$PWD/ProxySettings.h \
-    $$PWD/BandwidthSettings.h
+    $$PWD/BandwidthSettings.h \
+    $$PWD/GuiUtilities.h
 
 INCLUDEPATH += $$PWD
 

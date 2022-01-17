@@ -1407,7 +1407,7 @@ void MegaApplication::startSyncs(QList<PreConfiguredSync> syncs)
                                                          .arg(localFolderPath));
 
         //Connect failing signals
-        connect(addSyncStep, &ActionProgress::failed, this, [this, localFolderPath](int errorCode)
+        connect(addSyncStep, &ActionProgress::failed, this, [localFolderPath](int errorCode)
         {
             static_cast<MegaApplication *>(qApp)->showAddSyncError(errorCode, localFolderPath);
         }, Qt::QueuedConnection);
@@ -1611,7 +1611,7 @@ void MegaApplication::unityFix()
     dummyMenu->exec();
 }
 
-void MegaApplication::closeDialogs(bool bwoverquota)
+void MegaApplication::closeDialogs(bool/* bwoverquota*/)
 {
     delete transferManager;
     transferManager = NULL;
@@ -1848,7 +1848,7 @@ void MegaApplication::checkMemoryUsage()
                  QString::fromUtf8("Memory usage: %1 MB / %2 Nodes / %3 LocalNodes / %4 B/N / %5 transfers")
                  .arg(procesUsage / (1024 * 1024))
                  .arg(numNodes).arg(numLocalNodes)
-                 .arg((float)procesUsage / totalNodes)
+                 .arg(static_cast<float>(procesUsage) / static_cast<float>(totalNodes))
                  .arg(totalTransfers).toUtf8().constData());
 
     if (procesUsage > maxMemoryUsage)
@@ -1975,7 +1975,7 @@ void MegaApplication::checkOverStorageStates()
             if ((!preferences->getPayWallNotificationExecution() || ((QDateTime::currentMSecsSinceEpoch() - preferences->getPayWallNotificationExecution()) > Preferences::PAYWALL_NOTIFICATION_INTERVAL_MS)))
             {
                 int64_t remainDaysOut(0);
-                Utilities::getDaysToTimestamp(megaApi->getOverquotaDeadlineTs() * 1000, remainDaysOut);
+                Utilities::getDaysToTimestamp(megaApi->getOverquotaDeadlineTs(), remainDaysOut);
                 if (remainDaysOut > 0) //Only show notification if at least there is one day left
                 {
                     preferences->setPayWallNotificationExecution(QDateTime::currentMSecsSinceEpoch());
@@ -2265,7 +2265,7 @@ void MegaApplication::repositionInfoDialog()
                              .toUtf8().constData());
                 infoDialog->move(posx, posy);
 
-                QTimer::singleShot(1, this, [this, initialDialogWidth, initialDialogHeight, posx, posy](){
+                QTimer::singleShot(1, this, [this, initialDialogWidth, initialDialogHeight](){
                     if (infoDialog->width() > initialDialogWidth || infoDialog->height() > initialDialogHeight) //miss scaling detected
                     {
                         MegaApi::log(MegaApi::LOG_LEVEL_ERROR,
@@ -2408,7 +2408,7 @@ void MegaApplication::calculateInfoDialogCoordinates(QDialog *dialog, int *posx,
 
     int xSign = 1;
     int ySign = 1;
-    QPoint position, positionTrayIcon;
+    QPoint position;
     QRect screenGeometry;
 
     #ifdef __APPLE__
@@ -2927,7 +2927,7 @@ void MegaApplication::loadSyncExclusionRules(QString email)
 
     if (preferences->lowerSizeLimit())
     {
-        megaApi->setExclusionLowerSizeLimit(preferences->lowerSizeLimitValue() * pow((float)1024, preferences->lowerSizeLimitUnit()));
+        megaApi->setExclusionLowerSizeLimit(computeExclusionSizeLimit(preferences->lowerSizeLimitValue()));
     }
     else
     {
@@ -2936,7 +2936,7 @@ void MegaApplication::loadSyncExclusionRules(QString email)
 
     if (preferences->upperSizeLimit())
     {
-        megaApi->setExclusionUpperSizeLimit(preferences->upperSizeLimitValue() * pow((float)1024, preferences->upperSizeLimitUnit()));
+        megaApi->setExclusionUpperSizeLimit(computeExclusionSizeLimit(preferences->upperSizeLimitValue()));
     }
     else
     {
@@ -2949,6 +2949,12 @@ void MegaApplication::loadSyncExclusionRules(QString email)
         preferences->leaveUser();
     }
 
+}
+
+long long MegaApplication::computeExclusionSizeLimit(const long long sizeLimitValue)
+{
+    const double sizeLimitPower = pow(static_cast<double>(1024), static_cast<double>(sizeLimitValue));
+    return sizeLimitValue * static_cast<long long>(sizeLimitPower);
 }
 
 QList<QNetworkInterface> MegaApplication::findNewNetworkInterfaces()
@@ -4085,12 +4091,12 @@ void MegaApplication::PSAseen(int id)
     }
 }
 
-void MegaApplication::onSyncStateChanged(std::shared_ptr<SyncSetting> syncSettings)
+void MegaApplication::onSyncStateChanged(std::shared_ptr<SyncSetting>)
 {
     createAppMenus();
 }
 
-void MegaApplication::onSyncDeleted(std::shared_ptr<SyncSetting> syncSettings)
+void MegaApplication::onSyncDeleted(std::shared_ptr<SyncSetting>)
 {
     createAppMenus();
 }
@@ -4133,7 +4139,7 @@ void MegaApplication::migrateSyncConfToSdk(QString email)
         megaApi->copySyncDataToCache(osd.mLocalFolder.toUtf8().constData(), osd.mName.toUtf8().constData(),
                                      osd.mMegaHandle, osd.mMegaFolder.toUtf8().constData(),
                                      osd.mLocalfp, osd.mEnabled, osd.mTemporarilyDisabled,
-                                     new MegaListenerFuncExecuter(true, [this, osd, oldCacheSyncsCount, needsMigratingFromOldSession, email](MegaApi* api,  MegaRequest *request, MegaError *e)
+                                     new MegaListenerFuncExecuter(true, [this, osd, oldCacheSyncsCount, needsMigratingFromOldSession, email](MegaApi*,  MegaRequest* request, MegaError* e)
         {
 
             if (e->getErrorCode() == MegaError::API_OK)
@@ -4208,7 +4214,7 @@ void MegaApplication::fetchNodes(QString email)
     }
     else // we will ask the SDK the email
     {
-        megaApi->getUserEmail(megaApi->getMyUserHandleBinary(),new MegaListenerFuncExecuter(true, [loadMigrateAndFetchNodes](MegaApi* api,  MegaRequest *request, MegaError *e) {
+        megaApi->getUserEmail(megaApi->getMyUserHandleBinary(),new MegaListenerFuncExecuter(true, [loadMigrateAndFetchNodes](MegaApi*,  MegaRequest* request, MegaError* e) {
               QString email;
 
               if (e->getErrorCode() == API_OK)
@@ -4324,7 +4330,7 @@ void MegaApplication::updateUserStats(bool storage, bool transfer, bool pro, boo
     }
 }
 
-void MegaApplication::addRecentFile(QString fileName, long long fileHandle, QString localPath, QString nodeKey)
+void MegaApplication::addRecentFile(QString/* fileName*/, long long/* fileHandle*/, QString/* localPath*/, QString/* nodeKey*/)
 {
     if (appfinished)
     {
@@ -4980,7 +4986,7 @@ void MegaApplication::changeState()
 }
 
 #ifdef _WIN32
-void MegaApplication::changeDisplay(QScreen *disp)
+void MegaApplication::changeDisplay(QScreen*)
 {
     MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("DISPLAY CHANGED").toUtf8().constData());
 
@@ -6780,16 +6786,17 @@ void MegaApplication::manageBusinessStatus(int64_t event)
             break;
     }
 
-    businessStatus = event;
+    businessStatus = static_cast<int>(event);
     if (preferences->logged())
     {
         preferences->setBusinessState(businessStatus);
     }
 }
 
-void MegaApplication::onEvent(MegaApi *api, MegaEvent *event)
+void MegaApplication::onEvent(MegaApi*, MegaEvent* event)
 {
     DeferPreferencesSyncForScope deferrer(this);
+    const int eventNumber = static_cast<int>(event->getNumber());
 
     if (event->getType() == MegaEvent::EVENT_CHANGE_TO_HTTPS)
     {
@@ -6803,7 +6810,7 @@ void MegaApplication::onEvent(MegaApi *api, MegaEvent *event)
     else if (event->getType() == MegaEvent::EVENT_SYNCS_DISABLED && event->getNumber() != MegaSync::Error::LOGGED_OUT)
     {
         showErrorMessage(tr("Your syncs have been disabled").append(QString::fromUtf8(": "))
-                         .append(QCoreApplication::translate("MegaSyncError", MegaSync::getMegaSyncErrorCode(event->getNumber()))));
+                         .append(QCoreApplication::translate("MegaSyncError", MegaSync::getMegaSyncErrorCode(eventNumber))));
     }
     else if (event->getType() == MegaEvent::EVENT_ACCOUNT_BLOCKED)
     {
@@ -6812,7 +6819,7 @@ void MegaApplication::onEvent(MegaApi *api, MegaEvent *event)
             case MegaApi::ACCOUNT_BLOCKED_VERIFICATION_EMAIL:
             case MegaApi::ACCOUNT_BLOCKED_VERIFICATION_SMS:
             {
-                blockState = event->getNumber();
+                blockState = eventNumber;
                 emit blocked();
                 blockStateSet = true;
                 if (preferences->logged())
@@ -6861,7 +6868,7 @@ void MegaApplication::onEvent(MegaApi *api, MegaEvent *event)
     {
         if (preferences->logged())
         {
-            applyStorageState(event->getNumber());
+            applyStorageState(eventNumber);
         }
         else //event arrived too soon, we will apply it later
         {
@@ -7384,7 +7391,8 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
                 {
                     preferences->setProExpirityTime(details->getProExpiration());
                     proExpirityTimer.stop();
-                    proExpirityTimer.setInterval(qMax(0LL, details->getProExpiration() * 1000 - QDateTime::currentMSecsSinceEpoch()));
+                    const long long interval = qMax(0LL, details->getProExpiration() * 1000 - QDateTime::currentMSecsSinceEpoch());
+                    proExpirityTimer.setInterval(static_cast<int>(interval));
                     proExpirityTimer.start();
                 }
             }
@@ -7620,7 +7628,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
         {
             if (infoDialog)
             {
-                infoDialog->setPSAannouncement(request->getNumber(),
+                infoDialog->setPSAannouncement(static_cast<int>(request->getNumber()),
                                                QString::fromUtf8(request->getName() ? request->getName() : ""),
                                                QString::fromUtf8(request->getText() ? request->getText() : ""),
                                                QString::fromUtf8(request->getFile() ? request->getFile() : ""),
@@ -8062,7 +8070,7 @@ void MegaApplication::showAddSyncError(MegaRequest *request, MegaError* e, QStri
     }
 }
 
-void MegaApplication::showAddSyncError(int errorCode, QString localpath, QString remotePath)
+void MegaApplication::showAddSyncError(int errorCode, QString localpath, QString /*remotePath*/)
 {
     if (errorCode != MegaError::API_OK)
     {
@@ -8455,7 +8463,7 @@ void MegaApplication::onSyncDisabled(std::shared_ptr<SyncSetting> syncSetting)
     }
 }
 
-void MegaApplication::onSyncDisabled(MegaApi *api, MegaSync *sync)
+void MegaApplication::onSyncDisabled(MegaApi*, MegaSync* sync)
 {
     if (appfinished || !sync)
     {
@@ -8488,7 +8496,7 @@ void MegaApplication::onSyncEnabled(std::shared_ptr<SyncSetting> syncSetting)
     model->removeUnattendedDisabledSync(syncSetting->backupId());
 }
 
-void MegaApplication::onSyncEnabled(MegaApi *api, MegaSync *sync)
+void MegaApplication::onSyncEnabled(MegaApi* , MegaSync* sync)
 {
     if (appfinished || !sync)
     {

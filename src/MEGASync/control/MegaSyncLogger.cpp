@@ -464,8 +464,8 @@ MegaSyncLogger::~MegaSyncLogger()
 
 inline void twodigit(char*& s, int n)
 {
-    *s++ = n / 10 + '0';
-    *s++ = n % 10 + '0';
+    *s++ = static_cast<char>(n / 10 + '0');
+    *s++ = static_cast<char>(n % 10 + '0');
 }
 
 char* filltime(char* s, struct tm*  gmt, int microsec)
@@ -482,12 +482,13 @@ char* filltime(char* s, struct tm*  gmt, int microsec)
     *s++ = ':';
     twodigit(s, gmt->tm_sec);
     *s++ = '.';
-    s[5] = microsec % 10 + '0';
-    s[4] = (microsec /= 10) % 10 + '0';
-    s[3] = (microsec /= 10) % 10 + '0';
-    s[2] = (microsec /= 10) % 10 + '0';
-    s[1] = (microsec /= 10) % 10 + '0';
-    s[0] = (microsec /= 10) % 10 + '0';
+
+    s[5] = static_cast<char>(microsec % 10 + '0');
+    s[4] = static_cast<char>((microsec /= 10) % 10 + '0');
+    s[3] = static_cast<char>((microsec /= 10) % 10 + '0');
+    s[2] = static_cast<char>((microsec /= 10) % 10 + '0');
+    s[1] = static_cast<char>((microsec /= 10) % 10 + '0');
+    s[0] = static_cast<char>((microsec /= 10) % 10 + '0');
     s += 6;
     *s++ = ' ';
     *s = 0;
@@ -739,7 +740,7 @@ void MegaSyncLogger::flushAndClose()
     }
     catch (const std::exception& e)
     {
-        std::cerr << "Unhandle exception on flushAndClose: "<< e.what() << endl;
+        std::cerr << "Unhandle exception on flushAndClose: "<< e.what() << std::endl;
     }
     g_loggingThread->flushLog = true;
     g_loggingThread->closeLog = true;

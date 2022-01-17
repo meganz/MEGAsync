@@ -36,7 +36,7 @@ public:
     void updateFinishedTime();
     void loadDefaultTransferIcon() {}
     void updateAnimation() {}
-    bool cancelButtonClicked(QPoint pos) { return false;}
+    bool cancelButtonClicked(QPoint/* pos*/) { return false;}
     void setStateLabel(QString labelState);
 
     bool eventFilter(QObject *, QEvent * ev);

@@ -7,6 +7,7 @@
 #include "control/AppStatsEvents.h"
 #include "gui/MultiQFileDialog.h"
 #include "gui/Login2FA.h"
+#include "gui/GuiUtilities.h"
 #include "platform/Platform.h"
 
 #include <QKeyEvent>
@@ -90,7 +91,7 @@ SetupWizard::~SetupWizard()
     delete ui;
 }
 
-void SetupWizard::onRequestStart(MegaApi *api, MegaRequest *request)
+void SetupWizard::onRequestStart(MegaApi*, MegaRequest* request)
 {
     if (request->getType() == MegaRequest::TYPE_LOGIN)
     {
@@ -342,14 +343,7 @@ void SetupWizard::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
 
 void SetupWizard::onRequestUpdate(MegaApi *, MegaRequest *request)
 {
-    if (request->getType() == MegaRequest::TYPE_FETCH_NODES)
-    {
-        if (request->getTotalBytes() > 0)
-        {
-            ui->progressBar->setMaximum(request->getTotalBytes());
-            ui->progressBar->setValue(request->getTransferredBytes());
-        }
-    }
+    GuiUtilities::updateDataRequestProgressBar(ui->progressBar, request);
 }
 
 void SetupWizard::goToStep(int page)
@@ -1182,7 +1176,7 @@ void SetupWizard::lTermsLink_clicked()
     ui->cAgreeWithTerms->toggle();
 }
 
-void SetupWizard::on_lTermsLink_linkActivated(const QString &link)
+void SetupWizard::on_lTermsLink_linkActivated(const QString& /*link*/)
 {
     QtConcurrent::run(QDesktopServices::openUrl, QUrl(Preferences::BASE_URL + QString::fromUtf8("/terms")));
 }
@@ -1237,7 +1231,7 @@ void SetupWizard::onPasswordTextChanged(QString text)
 }
 
 PreConfiguredSync::PreConfiguredSync(QString localFolder, MegaHandle megaFolderHandle, QString syncName):
-    mLocalFolder{localFolder}, mMegaFolderHandle{megaFolderHandle},mSyncName(syncName)
+    mMegaFolderHandle(megaFolderHandle), mLocalFolder(localFolder), mSyncName(syncName)
 {
 
 }

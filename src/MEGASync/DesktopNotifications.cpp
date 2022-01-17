@@ -251,7 +251,6 @@ void DesktopNotifications::addUserAlertList(mega::MegaUserAlertList *alertList)
                 {
                     const QString message{tr("New shared folder from [X]")
                                 .replace(QString::fromUtf8("[X]"), QString::fromUtf8(alert->getEmail()))};
-                    const bool isNewShare{true};
                     notifySharedUpdate(alert, message, NEW_SHARE);
                 }
                 break;
@@ -515,7 +514,7 @@ void DesktopNotifications::sendOverStorageNotification(int state) const
         notification->setTitle(tr("Your data is at risk"));
         const auto megaApi = static_cast<MegaApplication*>(qApp)->getMegaApi();
         int64_t remainDaysOut(0);
-        Utilities::getDaysToTimestamp(megaApi->getOverquotaDeadlineTs() * 1000, remainDaysOut);
+        Utilities::getDaysToTimestamp(megaApi->getOverquotaDeadlineTs(), remainDaysOut);
         notification->setText(tr("You have [A] days left to save your data").replace(QString::fromUtf8("[A]"), QString::number(remainDaysOut)));
         notification->setActions(QStringList() << tr("Get PRO"));
         notification->setImage(mAppIcon);
