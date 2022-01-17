@@ -7881,16 +7881,6 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
         return;
     }
 
-    if (transfer->isFolderTransfer())
-    {
-        bool isLeavingBlockingStage = isTransferLeavingBlockingStage(transfer);
-        if (isLeavingBlockingStage)
-        {
-            setTransferUiInUnblockedState();
-        }
-    }
-
-
     DeferPreferencesSyncForScope deferrer(this);
 
     // check if it's a top level transfer
