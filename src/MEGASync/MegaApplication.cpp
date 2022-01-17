@@ -3239,20 +3239,17 @@ void MegaApplication::startUpload(const QString& rawLocalPath, MegaNode* target)
     megaApi->startUpload(localPath, target, mtime, appData, fileName, isSrcTemporary, startFirst, cancelToken, listener);
 }
 
-bool MegaApplication::isTransferEnteringBlockingStage(MegaTransfer* transfer)
+void MegaApplication::updateTransferNodesStage(MegaTransfer* transfer)
 {
     if (transfer->getStage() == MegaTransfer::STAGE_SCAN)
     {
         std::vector<WrappedNode*>::iterator correspondingNode = findTransferNode(transfer->getNodeHandle(), startedDownloading);
         if (correspondingNode != startedDownloading.end())
         {
-            bool firstToEnterScanStage = reachedScanStage.empty();
             reachedScanStage.push_back(*correspondingNode);
             startedDownloading.erase(correspondingNode);
-            return firstToEnterScanStage;
         }
     }
-    return false;
 }
 
 bool MegaApplication::isTransferLeavingBlockingStage(MegaTransfer* transfer)
@@ -7884,6 +7881,16 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
         return;
     }
 
+    if (transfer->isFolderTransfer())
+    {
+        bool isLeavingBlockingStage = isTransferLeavingBlockingStage(transfer);
+        if (isLeavingBlockingStage)
+        {
+            setTransferUiInUnblockedState();
+        }
+    }
+
+
     DeferPreferencesSyncForScope deferrer(this);
 
     // check if it's a top level transfer
@@ -8045,6 +8052,8 @@ void MegaApplication::onTransferUpdate(MegaApi*, MegaTransfer* transfer)
     {
         if (transfer->isFolderTransfer())
         {
+            updateTransferNodesStage(transfer);
+
             bool isLeavingBlockingStage = isTransferLeavingBlockingStage(transfer);
             if (isLeavingBlockingStage)
             {

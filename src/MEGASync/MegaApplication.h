@@ -356,6 +356,8 @@ private slots:
 
     void cancelAllUploads();
     void cancelAllDownloads();
+    void setTransferUiInBlockingState();
+    void setTransferUiInUnblockedState();
 
 protected:
     using NodeVector = std::vector<WrappedNode*>;
@@ -463,7 +465,9 @@ protected:
     QFileDialog *folderUploadSelector;
     QPointer<StreamingFromMegaDialog> streamSelector;
     MultiQFileDialog *multiUploadFileDialog;
+
     QQueue<QString> uploadQueue;
+
     QQueue<WrappedNode *> downloadQueue;
     NodeVector startedDownloading;
     NodeVector reachedScanStage;
@@ -597,7 +601,8 @@ private:
 
     void startUpload(const QString& rawLocalPath, mega::MegaNode* target);
 
-    bool isTransferEnteringBlockingStage(mega::MegaTransfer* transfer);
+    void updateTransferNodesStage(mega::MegaTransfer* transfer);
+
     bool isTransferLeavingBlockingStage(mega::MegaTransfer* transfer);
     void cleanupFinishedDownloads(mega::MegaTransfer* transfer);
     NodeVector::iterator findTransferNode(mega::MegaHandle nodeHandle, NodeVector& nodeList);
@@ -605,8 +610,6 @@ private:
     NodeVector buildTransferList(int transferType, const NodeVector& nodeList);
 
     void cancelAllTransfers(int type);
-    void setTransferUiInBlockingState();
-    void setTransferUiInUnblockedState();
 };
 
 class DeferPreferencesSyncForScope
