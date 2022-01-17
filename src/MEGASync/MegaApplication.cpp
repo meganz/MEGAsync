@@ -3269,14 +3269,19 @@ bool MegaApplication::isTransferLeavingBlockingStage(MegaTransfer* transfer)
 
 void MegaApplication::cleanupFinishedDownloads(MegaTransfer* transfer)
 {
-    if (transfer->getStage() >= MegaTransfer::STAGE_TRANSFERRING_FILES)
+    cleanTransferList(transfer, reachedTransferStage);
+
+    // Skipped Downloads stay in this list
+    cleanTransferList(transfer, reachedScanStage);
+}
+
+void MegaApplication::cleanTransferList(MegaTransfer *transfer, MegaApplication::NodeVector &nodeList)
+{
+    std::vector<WrappedNode*>::iterator correspondingNode = findTransferNode(transfer->getNodeHandle(), nodeList);
+    if (correspondingNode != nodeList.end())
     {
-        std::vector<WrappedNode*>::iterator correspondingNode = findTransferNode(transfer->getNodeHandle(), reachedTransferStage);
-        if (correspondingNode != reachedTransferStage.end())
-        {
-            delete *correspondingNode;
-            reachedScanStage.erase(correspondingNode);
-        }
+        delete *correspondingNode;
+        nodeList.erase(correspondingNode);
     }
 }
 
@@ -7883,6 +7888,11 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
 
     DeferPreferencesSyncForScope deferrer(this);
 
+    if (transfer->isFolderTransfer())
+    {
+        cleanupFinishedDownloads(transfer);
+    }
+
     // check if it's a top level transfer
     int folderTransferTag = transfer->getFolderTransferTag();
     if (folderTransferTag == 0 // file transfer
@@ -8042,6 +8052,10 @@ void MegaApplication::onTransferUpdate(MegaApi*, MegaTransfer* transfer)
     {
         if (transfer->isFolderTransfer())
         {
+            MegaNode *node = megaApi->getNodeByHandle(transfer->getNodeHandle());
+            std::string nodeDesc = (node) ? node->getName() : "NULL";
+            std::cout << "onTransferUpdate Folder : " << transfer->getPath() << " - node : " << nodeDesc.c_str() << std::endl;
+
             updateTransferNodesStage(transfer);
 
             bool isLeavingBlockingStage = isTransferLeavingBlockingStage(transfer);

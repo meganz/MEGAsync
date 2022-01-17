@@ -467,6 +467,9 @@ protected:
     MultiQFileDialog *multiUploadFileDialog;
 
     QQueue<QString> uploadQueue;
+    NodeVector startedDownloadingUp;
+    NodeVector reachedScanStageUp;
+    NodeVector reachedTransferStageUp;
 
     QQueue<WrappedNode *> downloadQueue;
     NodeVector startedDownloading;
@@ -605,6 +608,7 @@ private:
 
     bool isTransferLeavingBlockingStage(mega::MegaTransfer* transfer);
     void cleanupFinishedDownloads(mega::MegaTransfer* transfer);
+    void cleanTransferList(mega::MegaTransfer* transfer, NodeVector& nodeList);
     NodeVector::iterator findTransferNode(mega::MegaHandle nodeHandle, NodeVector& nodeList);
     NodeVector buildTransferList(int transferType);
     NodeVector buildTransferList(int transferType, const NodeVector& nodeList);
