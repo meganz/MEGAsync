@@ -208,7 +208,7 @@ QPushButton#bSettings:hover
        <number>1</number>
       </property>
       <item>
-       <widget class="QWidget" name="wHeader" native="true">
+       <widget class="QWidget" name="wTop" native="true">
         <property name="minimumSize">
          <size>
           <width>0</width>
