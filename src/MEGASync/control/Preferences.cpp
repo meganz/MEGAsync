@@ -19,7 +19,7 @@ const int Preferences::BUILD_ID = 0;
 const QString Preferences::VERSION_STRING = QString::fromAscii("4.6.3");
 QString Preferences::SDK_ID = QString::fromAscii("995b5c9");
 const QString Preferences::CHANGELOG = QString::fromUtf8(QT_TR_NOOP(
-    "- Strengthen cryptographic security on linux repositories.\n"
+    "- Strengthen cryptographic security on Linux repositories.\n"
     "- Fix memory issues with problematic PDF files.\n"));
 
 const QString Preferences::TRANSLATION_FOLDER = QString::fromAscii("://translations/");

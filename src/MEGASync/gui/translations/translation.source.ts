@@ -3525,7 +3525,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Strengthen cryptographic security on linux repositories.
+        <source>- Strengthen cryptographic security on Linux repositories.
 - Fix memory issues with problematic PDF files.
 </source>
         <translatorcomment>Changelog v4.6.3 (linux only)</translatorcomment>
