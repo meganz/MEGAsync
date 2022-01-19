@@ -11,6 +11,8 @@
 #include <QLinkedList>
 #include <QtConcurrent/QtConcurrent>
 
+#include <set>
+
 struct TransfersCount
 {
     long long leftUploadBytes;
@@ -111,11 +113,11 @@ private slots:
 
 private:
     void insertTransfer(mega::MegaApi* api, mega::MegaTransfer* transfer, int row, bool signal = true);
-    void addTransfers(int rows);
     void updateTransfersCount();
 
 private:
     static constexpr int INIT_ROWS_PER_CHUNK = 5000;
+    static constexpr int MAX_TRANSFERS_INSTANT_UPDATE = 50000;
 
     mega::MegaApi* mMegaApi;
     Preferences* mPreferences;
@@ -144,10 +146,10 @@ private:
 
     mega::QTMegaTransferListener* mListener;
 
-    QVector<mega::MegaTransfer*> mCacheStartTransfers;
-    QLinkedList<std::tuple<mega::MegaTransfer*, mega::MegaError*>> mCacheFinishedTransfers;
-//    QList<mega::MegaTransfer*> mCacheUpdateTransfers;
-    QMap<TransferTag, std::shared_ptr<mega::MegaTransfer>> mCacheUpdateTransfers;
+    std::map<TransferTag, std::unique_ptr<mega::MegaTransfer>> mCacheStartTransfers;
+    std::list<std::pair<std::unique_ptr<mega::MegaTransfer>, std::unique_ptr<mega::MegaError>>> mCacheFinishedTransfers;
+    std::map<TransferTag, std::unique_ptr<mega::MegaTransfer>> mCacheUpdateTransfers;
+    std::set<TransferTag> mUpdatedTransfers;
 };
 
 #endif // QTRANSFERSMODEL2_H

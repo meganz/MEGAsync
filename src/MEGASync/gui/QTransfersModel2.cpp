@@ -2,9 +2,13 @@
 #include "MegaApplication.h"
 #include "Utilities.h"
 
+#include <algorithm>
+
 using namespace mega;
 
 const int QTransfersModel2::INIT_ROWS_PER_CHUNK;
+const int QTransfersModel2::MAX_TRANSFERS_INSTANT_UPDATE;
+
 
 static const QVector<int> DATA_ROLE = {Qt::DisplayRole};
 static const QModelIndex DEFAULT_IDX = QModelIndex();
@@ -178,71 +182,7 @@ void QTransfersModel2::initModel()
     emit pauseStateChanged(mAreAllPaused);
     mInitFuture = QtConcurrent::run([=]
     {
-        std::unique_ptr<mega::MegaApiLock> megaApiLock (mMegaApi->getMegaApiLock(true));
-        std::unique_ptr<mega::MegaTransferList> transfers (mMegaApi->getTransfers());
-        std::unique_ptr<mega::MegaTransferData> transferData (mMegaApi->getTransferData());
 
-        // First, list all the transfers to add
-        QList<TransferTag> transfersToAdd;
-
-        for (auto i (0); i < transfers->size(); ++i)
-        {
-            mega::MegaTransfer* mt (transfers->get(i));
-            auto priority (mt->getPriority());
-            if (!mt->isStreamingTransfer()
-                    && !mt->isFolderTransfer()
-                    && priority)
-            {
-                transfersToAdd.push_back(i);
-            }
-        }
-        // Then load them in the model by chunks
-        const auto nbRows (transfersToAdd.size());
-        if (nbRows > 0)
-        {
-            auto remainingRows (nbRows);
-
-            // Load in chunks for responsiveness
-            auto nbChunks (nbRows / INIT_ROWS_PER_CHUNK);
-
-            // Add 1 chunk more if needed
-            if ((nbChunks * INIT_ROWS_PER_CHUNK) < nbRows)
-            {
-                nbChunks++;
-            }
-
-            for (auto chunk (0); chunk < nbChunks; ++chunk)
-            {
-                auto first (nbRows - remainingRows);
-                auto nbRowsInChunk (std::min(remainingRows, INIT_ROWS_PER_CHUNK));
-
-                mModelMutex->lockForWrite();
-                // Use the actual number of items to update the rows
-                auto nbRowsInModel (mOrder.size());
-
-                Utilities::queueFunctionInAppThread([=]()
-                {
-                    beginInsertRows(DEFAULT_IDX, nbRowsInModel,
-                                    nbRowsInModel + nbRowsInChunk - 1);
-                });
-
-                // Insert transfers
-                for (auto row (first); row < first + nbRowsInChunk; ++row)
-                {
-                    insertTransfer(mMegaApi, transfers->get(transfersToAdd[row]), row);
-                }
-
-                mModelMutex->unlock();
-                Utilities::queueFunctionInAppThread([=]()
-                {
-                    endInsertRows();
-                });
-
-                QApplication::processEvents();
-
-                remainingRows -= INIT_ROWS_PER_CHUNK;
-            }
-        }
         onTimerTransfers();
         mMegaApi->addTransferListener(mListener);
     });
@@ -250,38 +190,63 @@ void QTransfersModel2::initModel()
 
 void QTransfersModel2::onTransferStart(mega::MegaApi*, mega::MegaTransfer* transfer)
 {
-   mCacheStartTransfers.append(transfer->copy());
+//   mCacheStartTransfers.push_back(std::move(std::unique_ptr<mega::MegaTransfer>(transfer->copy())));
+   mCacheStartTransfers[transfer->getTag()] =
+           std::move(std::unique_ptr<mega::MegaTransfer>(transfer->copy()));
 }
 
-void QTransfersModel2::onTransferFinish(mega::MegaApi* api, mega::MegaTransfer* transfer,
+void QTransfersModel2::onTransferFinish(mega::MegaApi*, mega::MegaTransfer* transfer,
                                         mega::MegaError* error)
 {
-    mCacheFinishedTransfers.append(std::make_tuple(transfer->copy(), error->copy()));
-    //finishTransfer(api, transfer, error);
-
-    //Update stats
-    //updateTransfersCount();
-    //emit transfersDataUpdated();
+    mCacheFinishedTransfers.push_back(std::move(
+                std::make_pair(std::move(std::unique_ptr<mega::MegaTransfer>(transfer->copy())),
+                               std::move(std::unique_ptr<mega::MegaError>(error->copy())))));
 }
 
 void QTransfersModel2::onTransferUpdate(mega::MegaApi*, mega::MegaTransfer* transfer)
 {
     auto transferTag (transfer->getTag());
-    auto transferIt (mCacheUpdateTransfers.find(transferTag));
+    auto existingTransfer (mCacheStartTransfers.find(transferTag));
 
-    if (transferIt != mCacheUpdateTransfers.end())
+    // If transfer start has not been taken into account yet, replace the transfer
+    // in the transfers to start list
+    if (existingTransfer != mCacheStartTransfers.end())
     {
-        transferIt->reset(transfer->copy());
+        // Only replace if the update is more recent
+        if (transfer->getNotificationNumber() > existingTransfer->second->getNotificationNumber())
+        {
+            existingTransfer->second.reset(transfer->copy());
+        }
     }
     else
     {
-        mCacheUpdateTransfers[transferTag] = std::shared_ptr<mega::MegaTransfer>(transfer->copy());
-    }
-    //updateTransfer(transfer);
+        if (mOrder.size() > MAX_TRANSFERS_INSTANT_UPDATE)
+        {
+            existingTransfer = mCacheUpdateTransfers.find(transferTag);
+            if (existingTransfer != mCacheUpdateTransfers.end())
+            {
+                // Only replace if the update is more recent
+                if (transfer->getNotificationNumber() > existingTransfer->second->getNotificationNumber())
+                {
+                    existingTransfer->second.reset(transfer->copy());
+                }
+            }
+            else
+            {
+                mCacheUpdateTransfers[transferTag] =
+                        std::move(std::unique_ptr<mega::MegaTransfer>(transfer->copy()));
+            }
+        }
+        else
+        {
+            updateTransfer(transfer);
 
-    //Update stats
-    //updateTransfersCount();
-    //emit transfersDataUpdated();
+            // Update stats
+            updateTransfersCount();
+            emit transfersDataUpdated();
+        }
+        mUpdatedTransfers.insert(transferTag);
+    }
 }
 
 void QTransfersModel2::onTransferTemporaryError(mega::MegaApi *api, mega::MegaTransfer *transfer, mega::MegaError *error)
@@ -292,50 +257,49 @@ void QTransfersModel2::onTransferTemporaryError(mega::MegaApi *api, mega::MegaTr
 bool QTransfersModel2::onTimerTransfers()
 {
     bool updateNeeded(false);
-    const auto updatedTransfers (mCacheUpdateTransfers.keys());
+    int nbTransfersToStart (static_cast<int>(mCacheStartTransfers.size()));
 
-    if(!mCacheStartTransfers.isEmpty())
+    if (nbTransfersToStart)
     {
         mModelMutex->lockForWrite();
         auto totalRows = rowCount(DEFAULT_IDX);
-        beginInsertRows(DEFAULT_IDX, totalRows, totalRows + mCacheStartTransfers.size());
+        beginInsertRows(DEFAULT_IDX, totalRows, totalRows + nbTransfersToStart);
 
-        for (auto transfer : mCacheStartTransfers)
+        for (const auto& transfer : mCacheStartTransfers)
         {
-            startTransfer(transfer);
+            startTransfer(transfer.second.get());
+            mUpdatedTransfers.insert(transfer.first);
         }
-
         endInsertRows();
-
         mModelMutex->unlock();
-        qDeleteAll(mCacheStartTransfers);
         mCacheStartTransfers.clear();
-
         updateNeeded = true;
     }
 
-    if(!mCacheUpdateTransfers.isEmpty())
+    if(!mCacheUpdateTransfers.empty())
     {
-        foreach (auto transfer, mCacheUpdateTransfers)
+        for (const auto& transfer : mCacheUpdateTransfers)
         {
-            updateTransfer(transfer.get());
+            updateTransfer(transfer.second.get());
         }
         mCacheUpdateTransfers.clear();
-
         updateNeeded = true;
     }
 
-    foreach (auto transferInfo, mCacheFinishedTransfers)
+    auto transferInfo (mCacheFinishedTransfers.begin());
+    while (transferInfo != mCacheFinishedTransfers.end())
     {
-        mega::MegaTransfer* transfer (std::get<0>(transferInfo));
-        if (!updatedTransfers.contains(transfer->getTag()))
+        auto& transfer (transferInfo->first);
+        if (mUpdatedTransfers.find(transfer->getTag()) == mUpdatedTransfers.end())
         {
-            mega::MegaError* error (std::get<1>(transferInfo));
-            finishTransfer(mMegaApi, transfer, error);
-            mCacheFinishedTransfers.removeOne(transferInfo);
-            delete transfer;
-            delete error;
+            auto& error (transferInfo->second);
+            finishTransfer(mMegaApi, transfer.get(), error.get());
+            transferInfo = mCacheFinishedTransfers.erase(transferInfo);
             updateNeeded = true;
+        }
+        else
+        {
+            ++transferInfo;
         }
     }
 
@@ -343,10 +307,10 @@ bool QTransfersModel2::onTimerTransfers()
     {
         //Update stats
         updateTransfersCount();
-
         emit transfersDataUpdated();
     }
 
+    mUpdatedTransfers.clear();
     return updateNeeded;
 }
 
@@ -374,19 +338,12 @@ void QTransfersModel2::startTransfer(mega::MegaTransfer *transfer)
     QModelIndex idx (index(nbRows, 0, DEFAULT_IDX));
     emit dataChanged(idx, idx, DATA_ROLE);
 
-    if(transfer->isFinished())
-    {
-        mega::MegaError* error(nullptr);
-        mega::MegaApi* api(nullptr);
-        finishTransfer(api, transfer, error);
-    }
-}
-
-void QTransfersModel2::addTransfers(int rows)
-{
-   auto totalRows = rowCount(DEFAULT_IDX);
-   beginInsertRows(DEFAULT_IDX, totalRows, totalRows + rows);
-   endInsertRows();
+//    if(transfer->isFinished())
+//    {
+//        mega::MegaError* error(nullptr);
+//        mega::MegaApi* api(nullptr);
+//        finishTransfer(api, transfer, error);
+//    }
 }
 
 void QTransfersModel2::updateTransfer(mega::MegaTransfer *transfer)
@@ -469,7 +426,7 @@ void QTransfersModel2::updateTransfer(mega::MegaTransfer *transfer)
     mModelMutex->unlock();
 }
 
-void QTransfersModel2::finishTransfer(MegaApi *api, mega::MegaTransfer *transfer, MegaError *error)
+void QTransfersModel2::finishTransfer(MegaApi*, mega::MegaTransfer* transfer, MegaError* error)
 {
     if (transfer->isStreamingTransfer()
             || transfer->isFolderTransfer())
@@ -1222,7 +1179,6 @@ void QTransfersModel2::insertTransfer(mega::MegaApi* api, mega::MegaTransfer* tr
             errorCode = megaError->getErrorCode();
             errorValue = megaError->getValue();
         }
-
 
         TransferData::TransferTypes typePlus (type);
         if (transfer->isSyncTransfer())
