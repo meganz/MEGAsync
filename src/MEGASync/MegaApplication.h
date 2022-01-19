@@ -43,6 +43,7 @@
 #include "gui/MegaAlertDelegate.h"
 #include "gui/VerifyLockMessage.h"
 #include "DesktopNotifications.h"
+#include "TransferMetadata.h"
 #include "TransferQuota.h"
 
 class TransfersModel;
@@ -55,28 +56,6 @@ class TransfersModel;
 #endif
 
 Q_DECLARE_METATYPE(QQueue<QString>)
-
-class TransferMetaData
-{
-public:
-    TransferMetaData(int direction, int total = 0, int pending = 0, QString path = QString())
-                    : totalTransfers(total), pendingTransfers(pending),
-                      totalFiles(0), totalFolders(0),
-                      transfersFileOK(0), transfersFolderOK(0),
-                      transfersFailed(0), transfersCancelled(0), transferDirection(direction),
-                      localPath(path) {}
-
-    int totalTransfers;
-    int pendingTransfers;
-    int totalFiles;
-    int totalFolders;
-    int transfersFileOK;
-    int transfersFolderOK;
-    int transfersFailed;
-    int transfersCancelled;
-    int transferDirection;
-    QString localPath;
-};
 
 class Notificator;
 class MEGASyncDelegateListener;
@@ -358,10 +337,9 @@ private slots:
     void cancelAllDownloads();
     void setTransferUiInBlockingState();
     void setTransferUiInUnblockedState();
+    void startingUpload();
 
 protected:
-    using NodeVector = std::vector<WrappedNode*>;
-
     void createTrayIcon();
     void createGuestMenu();
     bool showTrayIconAlwaysNEW();
@@ -467,14 +445,11 @@ protected:
     MultiQFileDialog *multiUploadFileDialog;
 
     QQueue<QString> uploadQueue;
-    NodeVector startedDownloadingUp;
-    NodeVector reachedScanStageUp;
-    NodeVector reachedTransferStageUp;
+
+    TransferBatches activeUploadBatches;
+    TransferBatches activeDownloadBatches;
 
     QQueue<WrappedNode *> downloadQueue;
-    NodeVector startedDownloading;
-    NodeVector reachedScanStage;
-    NodeVector reachedTransferStage;
 
     ThreadPool* mThreadPool;
     std::shared_ptr<mega::MegaNode> mRootNode;
@@ -608,12 +583,20 @@ private:
 
     bool isTransferLeavingBlockingStage(mega::MegaTransfer* transfer);
     void cleanupFinishedDownloads(mega::MegaTransfer* transfer);
-    void cleanTransferList(mega::MegaTransfer* transfer, NodeVector& nodeList);
-    NodeVector::iterator findTransferNode(mega::MegaHandle nodeHandle, NodeVector& nodeList);
-    NodeVector buildTransferList(int transferType);
-    NodeVector buildTransferList(int transferType, const NodeVector& nodeList);
 
     void cancelAllTransfers(int type);
+
+    void updateTransferBatchesAndUi(const QString& appId, TransferBatches& batches);
+
+    TransferBatches* getBatchCollection(int type);
+
+    void logTransferBatchChange(const char* tag, int type, QString id);
+    void logBatchCollectionStatus(const char* tag, TransferBatches* collection);
+
+    static QString createTransferId(mega::MegaTransfer *transfer);
+    static QString buildBatchLogMessage(const char* tag, QString tabs, TransferBatch* batch);
+
+    bool noUploadedStarted = true;
 };
 
 class DeferPreferencesSyncForScope

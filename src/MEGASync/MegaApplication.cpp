@@ -494,7 +494,6 @@ void MegaApplication::initialize()
     connect(downloader, SIGNAL(finishedTransfers(unsigned long long)), this, SLOT(showNotificationFinishedTransfers(unsigned long long)), Qt::QueuedConnection);
     connect(downloader, SIGNAL(startingTransfers()), this, SLOT(setTransferUiInBlockingState()));
 
-
     connectivityTimer = new QTimer(this);
     connectivityTimer->setSingleShot(true);
     connectivityTimer->setInterval(Preferences::MAX_LOGIN_TIME_MS);
@@ -1525,10 +1524,14 @@ void MegaApplication::processUploadQueue(MegaHandle nodeHandle)
         return;
     }
 
+    noUploadedStarted = true;
+
     unsigned long long transferId = preferences->transferIdentifier();
     TransferMetaData* data = new TransferMetaData(MegaTransfer::TYPE_UPLOAD, uploadQueue.size(), uploadQueue.size());
     transferAppData.insert(transferId, data);
     preferences->setOverStorageDismissExecution(0);
+
+    auto batch = new TransferBatch();
 
     //Process the upload queue using the MegaUploader object
     while (!uploadQueue.isEmpty())
@@ -1555,8 +1558,23 @@ void MegaApplication::processUploadQueue(MegaHandle nodeHandle)
             data->totalFiles++;
         }
 
-        uploader->upload(filePath, node, transferId);
+        bool startedTransfer = uploader->upload(filePath, node, transferId, batch->cancelToken.get());
+        if (startedTransfer)
+        {
+            startingUpload();
+            QFileInfo(filePath).fileName();
+            QString id = QString::number(transferId) + QString::fromLatin1("*_") + QFileInfo(filePath).fileName();
+            batch->add(id);
+        }
     }
+
+    if (!batch->isEmpty())
+    {
+        activeUploadBatches.add(batch);
+        QString logMessage = QString::fromUtf8("Added batch upload : %1").arg(batch->description());
+        MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, logMessage.toUtf8().constData());
+    }
+
     delete node;
 }
 
@@ -1589,7 +1607,7 @@ void MegaApplication::processDownloadQueue(QString path)
                                                            downloadQueue.size(),
                                                            downloadQueue.size());
     transferAppData.insert(transferId, transferData);
-    if (!downloader->processDownloadQueue(&downloadQueue, &startedDownloading, path, transferId))
+    if (!downloader->processDownloadQueue(&downloadQueue, activeDownloadBatches, path, transferId))
     {
         transferAppData.remove(transferId);
         delete transferData;
@@ -3239,83 +3257,95 @@ void MegaApplication::startUpload(const QString& rawLocalPath, MegaNode* target)
     megaApi->startUpload(localPath, target, mtime, appData, fileName, isSrcTemporary, startFirst, cancelToken, listener);
 }
 
-void MegaApplication::updateTransferNodesStage(MegaTransfer* transfer)
-{
-    if (transfer->getStage() == MegaTransfer::STAGE_SCAN)
-    {
-        std::vector<WrappedNode*>::iterator correspondingNode = findTransferNode(transfer->getNodeHandle(), startedDownloading);
-        if (correspondingNode != startedDownloading.end())
-        {
-            reachedScanStage.push_back(*correspondingNode);
-            startedDownloading.erase(correspondingNode);
-        }
-    }
-}
-
-bool MegaApplication::isTransferLeavingBlockingStage(MegaTransfer* transfer)
-{
-    if (transfer->getStage() == MegaTransfer::STAGE_TRANSFERRING_FILES)
-    {
-        std::vector<WrappedNode*>::iterator correspondingNode = findTransferNode(transfer->getNodeHandle(), reachedScanStage);
-        if (correspondingNode != reachedScanStage.end())
-        {
-            reachedTransferStage.push_back(*correspondingNode);
-            reachedScanStage.erase(correspondingNode);
-            return reachedScanStage.empty();
-        }
-    }
-    return false;
-}
-
-void MegaApplication::cleanupFinishedDownloads(MegaTransfer* transfer)
-{
-    cleanTransferList(transfer, reachedTransferStage);
-
-    // Skipped Downloads stay in this list
-    cleanTransferList(transfer, reachedScanStage);
-}
-
-void MegaApplication::cleanTransferList(MegaTransfer *transfer, MegaApplication::NodeVector &nodeList)
-{
-    std::vector<WrappedNode*>::iterator correspondingNode = findTransferNode(transfer->getNodeHandle(), nodeList);
-    if (correspondingNode != nodeList.end())
-    {
-        delete *correspondingNode;
-        nodeList.erase(correspondingNode);
-    }
-}
-
-MegaApplication::NodeVector MegaApplication::buildTransferList(int transferType)
-{
-    NodeVector transferring = buildTransferList(transferType, reachedTransferStage);
-
-    NodeVector transfers;
-    transfers.reserve(transferring.size());
-    transfers.insert(transfers.end(), transferring.begin(), transferring.end());
-    return transfers;
-}
-
-MegaApplication::NodeVector MegaApplication::buildTransferList(int transferType, const NodeVector &nodeList)
-{
-    NodeVector transfers;
-    std::copy_if(nodeList.begin(), nodeList.end(), std::back_inserter(transfers), [transferType](WrappedNode* node)
-    {
-        return (node->getMegaNode()->getType() == transferType);
-    });
-    return transfers;
-}
-
 void MegaApplication::cancelAllTransfers(int type)
 {
-    NodeVector transfers = buildTransferList(type);
-    for (const auto& transfer : transfers)
+    auto batchCollection = getBatchCollection(type);
+    batchCollection->blockingBatch->cancelToken->cancel();
+    //maybe cleanup blocking batch and its friend in batch list?
+}
+
+void MegaApplication::updateTransferBatchesAndUi(const QString &appId, TransferBatches &batches)
+{
+    QString message = QString::fromUtf8("updateTransferBatchesAndUi with %1").arg(appId);
+    MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, message.toUtf8().constData());
+
+    batches.onFolderScanCompleted(appId);
+    if (batches.isBlockingStageFinished())
     {
-        transfer->getCancelToken()->cancel();
+        setTransferUiInUnblockedState();
+        batches.setAsUnblocked();
     }
+}
+
+TransferBatches* MegaApplication::getBatchCollection(int type)
+{
+    switch (type)
+    {
+        case MegaTransfer::TYPE_UPLOAD : return &activeUploadBatches;
+        case MegaTransfer::TYPE_DOWNLOAD : return &activeDownloadBatches;
+        default : return nullptr;
+    };
+}
+
+void MegaApplication::logTransferBatchChange(const char *tag, int type, QString id)
+{
+#ifdef DEBUG
+    const char* typeStr = (type == MegaTransfer::TYPE_DOWNLOAD) ? "download" : "upload";
+    QString logMessage = QString::fromUtf8("%1 : updating %2 batches with %3").arg(QString::fromLatin1(tag))
+                                                                              .arg(QString::fromLatin1(typeStr))
+                                                                              .arg(id);
+    MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, logMessage.toUtf8().constData());
+#else
+    Q_UNUSED(tag)
+    Q_UNUSED(type)
+    Q_UNUSED(id)
+#endif
+}
+
+void MegaApplication::logBatchCollectionStatus(const char* tag, TransferBatches *collection)
+{
+#ifdef DEBUG
+    QString tab = QString::fromLatin1("\t");
+    QString eol = QString::fromLatin1("\n");
+
+    QString logMessage = QString::fromLatin1("%1 - %2 batches :").arg(QString::fromUtf8(tag)).arg(collection->batches.size()) + eol;
+    for (auto batch : collection->batches)
+    {
+        logMessage += buildBatchLogMessage("batch", tab, batch);
+    }
+
+    logMessage += buildBatchLogMessage("blocking", QString(), collection->blockingBatch);
+
+
+
+    MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, logMessage.toUtf8().constData());
+#else
+    Q_UNUSED(tag)
+    Q_UNUSED(collection)
+#endif
+}
+
+QString MegaApplication::createTransferId(MegaTransfer *transfer)
+{
+    return QString::fromLatin1(transfer->getAppData()) + QString::fromLatin1("_") + QString::fromUtf8(transfer->getFileName());
+}
+
+QString MegaApplication::buildBatchLogMessage(const char* tag, QString tabs, TransferBatch* batch)
+{
+    QString tab = QString::fromLatin1("\t");
+    QString eol = QString::fromLatin1("\n");
+
+    QString message = tabs + QString::fromLatin1("%1 - %2 items").arg(QString::fromUtf8(tag)).arg(batch->transferIds.size()) + eol;
+    for (auto id : batch->transferIds)
+    {
+        message += tab + tabs + id + eol;
+    }
+    return message;
 }
 
 void MegaApplication::setTransferUiInBlockingState()
 {
+    MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Transfer UI entering blocking state").toUtf8().constData());
     if (transferManager)
     {
         transferManager->enterBlockingState();
@@ -3329,6 +3359,7 @@ void MegaApplication::setTransferUiInBlockingState()
 
 void MegaApplication::setTransferUiInUnblockedState()
 {
+    MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Transfer UI leaving blocking state").toUtf8().constData());
     if (transferManager)
     {
         transferManager->leaveBlockingState();
@@ -3340,11 +3371,13 @@ void MegaApplication::setTransferUiInUnblockedState()
     }
 }
 
-std::vector<WrappedNode*>::iterator MegaApplication::findTransferNode(MegaHandle nodeHandle, std::vector<WrappedNode*>& nodeList)
+void MegaApplication::startingUpload()
 {
-    return std::find_if(nodeList.begin(), nodeList.end(), [nodeHandle](WrappedNode* currentNode){
-        return currentNode->getMegaNode()->getHandle() == nodeHandle;
-    });
+    if (noUploadedStarted)
+    {
+        noUploadedStarted = false;
+        setTransferUiInBlockingState();
+    }
 }
 
 void MegaApplication::setupWizardFinished(int result)
@@ -7862,6 +7895,17 @@ void MegaApplication::onTransferStart(MegaApi *api, MegaTransfer *transfer)
         return;
     }
 
+    {
+        auto batchCollection = getBatchCollection(transfer->getType());
+        if (batchCollection)
+        {
+            QString id = createTransferId(transfer);
+            logTransferBatchChange("onTransferStart", transfer->getType(), id);
+            updateTransferBatchesAndUi(id, *batchCollection);
+            logBatchCollectionStatus("afterTransferStart", batchCollection);
+        }
+    }
+
     DeferPreferencesSyncForScope deferrer(this);
 
     if (transfer->getType() == MegaTransfer::TYPE_DOWNLOAD)
@@ -7888,9 +7932,13 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
 
     DeferPreferencesSyncForScope deferrer(this);
 
-    if (transfer->isFolderTransfer())
+    auto batchCollection = getBatchCollection(transfer->getType());
+    if (batchCollection)
     {
-        cleanupFinishedDownloads(transfer);
+        QString appId = createTransferId(transfer);
+        logTransferBatchChange("onTransferFinish", transfer->getType(), appId);
+        batchCollection->onTransferFinished(appId);
+        logBatchCollectionStatus("afterTransferFinish", batchCollection);
     }
 
     // check if it's a top level transfer
@@ -8048,27 +8096,29 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
 //Called when a transfer has been updated
 void MegaApplication::onTransferUpdate(MegaApi*, MegaTransfer* transfer)
 {
-    if (appfinished || transfer->isStreamingTransfer() || transfer->isFolderTransfer())
+    if (appfinished)
     {
-        if (transfer->isFolderTransfer())
+        return;
+    }
+
+    if (transfer->getStage() >= MegaTransfer::STAGE_TRANSFERRING_FILES)
+    {
+        auto batchCollection = getBatchCollection(transfer->getType());
+        if (batchCollection)
         {
-            MegaNode *node = megaApi->getNodeByHandle(transfer->getNodeHandle());
-            std::string nodeDesc = (node) ? node->getName() : "NULL";
-            std::cout << "onTransferUpdate Folder : " << transfer->getPath() << " - node : " << nodeDesc.c_str() << std::endl;
-
-            updateTransferNodesStage(transfer);
-
-            bool isLeavingBlockingStage = isTransferLeavingBlockingStage(transfer);
-            if (isLeavingBlockingStage)
-            {
-                setTransferUiInUnblockedState();
-            }
+            QString appId = createTransferId(transfer);
+            logTransferBatchChange("onTransferUpdate", transfer->getType(), appId);
+            updateTransferBatchesAndUi(appId, *batchCollection);
+            logBatchCollectionStatus("afterTransferUpdate", batchCollection);
         }
+    }
+
+    if (transfer->isStreamingTransfer() || transfer->isFolderTransfer())
+    {
         return;
     }
 
     DeferPreferencesSyncForScope deferrer(this);
-
 
     if (transferManager)
     {
@@ -8157,6 +8207,11 @@ void MegaApplication::onTransferTemporaryError(MegaApi *api, MegaTransfer *trans
     if (appfinished)
     {
         return;
+    }
+
+    {
+        QString id = createTransferId(transfer);
+        logTransferBatchChange("onTransferTempError", transfer->getType(), id);
     }
 
     DeferPreferencesSyncForScope deferrer(this);

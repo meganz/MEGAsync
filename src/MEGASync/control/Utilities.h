@@ -400,24 +400,12 @@ public:
         return mNode;
     }
 
-    mega::MegaCancelToken* getCancelToken()
-    {
-        return mCancelToken;
-    }
-
-    void setCancelToken(mega::MegaCancelToken* cancelToken)
-    {
-        mCancelToken = cancelToken;
-    }
-
 private:
     // Keep track of transfer origin
     WrappedNode::TransferOrigin  mTransfersFrom;
 
     // Wrapped MEGA node
     mega::MegaNode* mNode;
-
-    mega::MegaCancelToken* mCancelToken = nullptr;
 };
 
 #endif // UTILITIES_H
