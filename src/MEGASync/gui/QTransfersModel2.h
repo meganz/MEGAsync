@@ -87,11 +87,11 @@ public:
 
     void initModel();
 
-    void startTransfer(mega::MegaTransfer* transfer);
+    void startTransfer(std::unique_ptr<mega::MegaTransfer> transfer);
     void updateTransfer(mega::MegaTransfer* transfer);
-    void finishTransfer(mega::MegaApi* api, mega::MegaTransfer* transfer,
-                        mega::MegaError* error);
-    void transferTemporaryError(mega::MegaApi *api, mega::MegaTransfer *transfer, mega::MegaError *error);
+    void finishTransfer(mega::MegaApi* api, std::unique_ptr<mega::MegaTransfer> transfer,
+                        std::unique_ptr<mega::MegaError> error);
+    void transferTemporaryError(mega::MegaTransfer *transfer, mega::MegaError *error);
 
     void onTransferStart(mega::MegaApi*, mega::MegaTransfer* transfer);
     void onTransferFinish(mega::MegaApi* api, mega::MegaTransfer* transfer, mega::MegaError* error);
@@ -117,20 +117,21 @@ private:
 
 private:
     static constexpr int INIT_ROWS_PER_CHUNK = 5000;
-    static constexpr int MAX_TRANSFERS_INSTANT_UPDATE = 50000;
+    static constexpr int MAX_TRANSFERS_INSTANT_UPDATE = 1000;
 
     mega::MegaApi* mMegaApi;
     Preferences* mPreferences;
 
     QHash<TransferTag, QVariant> mTransfers;
-    QMap<TransferTag, mega::MegaTransfer*> mFailedTransfers;
+    std::map<TransferTag, std::unique_ptr<mega::MegaTransfer>> mFailedTransfers;
     QMap<TransferTag, TransferRemainingTime*> mRemainingTimes;
     QList<TransferTag> mOrder;
     ThreadPool* mThreadPool;
     QHash<QString, TransferData::FileType> mFileTypes;
     QReadWriteLock* mModelMutex;
 
-    QFuture<void> mInitFuture;
+    long long mUpdateNotificationNumber;
+//    QFuture<void> mInitFuture;
 
     TransfersCount mTransfersCount;
 
@@ -148,7 +149,7 @@ private:
 
     std::map<TransferTag, std::unique_ptr<mega::MegaTransfer>> mCacheStartTransfers;
     std::list<std::pair<std::unique_ptr<mega::MegaTransfer>, std::unique_ptr<mega::MegaError>>> mCacheFinishedTransfers;
-    std::map<TransferTag, std::unique_ptr<mega::MegaTransfer>> mCacheUpdateTransfers;
+    std::map<TransferTag, std::pair<std::unique_ptr<mega::MegaTransfer>, std::unique_ptr<mega::MegaError>>> mCacheUpdateTransfers;
     std::set<TransferTag> mUpdatedTransfers;
 };
 

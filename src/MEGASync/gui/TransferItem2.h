@@ -114,8 +114,9 @@ class TransferItem2
 {
     public:
         TransferItem2() : d(new TransferData){}
-        TransferItem2(const TransferItem2& tdr) : d(new TransferData(tdr.d.constData())) {}
-        TransferItem2(const TransferData& dataRow) : d(new TransferData(dataRow)) {}
+//        TransferItem2(const TransferData& dataRow) : d(new TransferData(dataRow)) {}
+        TransferItem2(const TransferItem2& tdr) : d(tdr.d) {}
+        TransferItem2(const QExplicitlySharedDataPointer<TransferData>& tdr) : d(tdr) {}
 
         void updateValuesTransferFinished(int64_t finishTime,
                                           int errorCode, long long errorValue,

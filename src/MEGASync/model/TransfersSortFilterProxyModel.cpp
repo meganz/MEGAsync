@@ -12,7 +12,6 @@ TransfersSortFilterProxyModel::TransfersSortFilterProxyModel(QObject* parent)
       mNextTransferTypes (mTransferTypes),
       mNextFileTypes (mFileTypes),
       mSortCriterion (SortCriterion::PRIORITY),
-      mNextSortCriterion (SortCriterion::PRIORITY),
       mDlNumber (new int(0)),
       mUlNumber (new int(0)),
       mFilterMutex (new QMutex(QMutex::Recursive)),
@@ -63,7 +62,12 @@ TransfersSortFilterProxyModel::~TransfersSortFilterProxyModel()
     delete mActivityMutex;
 }
 
-void TransfersSortFilterProxyModel::sort(int column, Qt::SortOrder order)
+void TransfersSortFilterProxyModel::sort(int, Qt::SortOrder order)
+{
+    sort(mSortCriterion, order);
+}
+
+void TransfersSortFilterProxyModel::sort(SortCriterion column, Qt::SortOrder order)
 {
     QtConcurrent::run([=]
     {
@@ -71,7 +75,12 @@ void TransfersSortFilterProxyModel::sort(int column, Qt::SortOrder order)
         auto transferModel (static_cast<QTransfersModel2*> (sourceModel()));
         transferModel->lockModelMutex(true);
         QMutexLocker lockSortingMutex (mActivityMutex);
-        QSortFilterProxyModel::sort(column, order);
+        if (column != mSortCriterion)
+        {
+            QSortFilterProxyModel::sort(-1, order);
+            mSortCriterion = column;
+        }
+        QSortFilterProxyModel::sort(0, order);
         transferModel->lockModelMutex(false);
         emit modelSorted();
     });
@@ -85,7 +94,6 @@ void TransfersSortFilterProxyModel::setFilterFixedString(const QString& pattern)
         auto transferModel (static_cast<QTransfersModel2*> (sourceModel()));
         transferModel->lockModelMutex(true);
         QMutexLocker lockSortingMutex (mActivityMutex);
-        mSortCriterion = mNextSortCriterion;
         QSortFilterProxyModel::setFilterFixedString(pattern);
         transferModel->lockModelMutex(false);
         emit modelFiltered();
@@ -113,11 +121,6 @@ void TransfersSortFilterProxyModel::resetAllFilters(bool invalidate)
     resetNumberOfItems();
     setFilters({}, {}, {});
     applyFilters(invalidate);
-}
-
-void TransfersSortFilterProxyModel::setSortBy(SortCriterion sortBy)
-{
-    mNextSortCriterion = sortBy;
 }
 
 int  TransfersSortFilterProxyModel::getNumberOfItems(TransferData::TransferType transferType)
@@ -242,7 +245,6 @@ bool TransfersSortFilterProxyModel::filterAcceptsRow(int sourceRow, const QModel
 bool TransfersSortFilterProxyModel::lessThan(const QModelIndex &left, const QModelIndex &right) const
 {
     QMutexLocker lock (mActivityMutex);
-    bool lessThan (false);
     const auto leftItem (qvariant_cast<TransferItem2>(left.data()).getTransferData());
     const auto rightItem (qvariant_cast<TransferItem2>(right.data()).getTransferData());
 
@@ -250,24 +252,21 @@ bool TransfersSortFilterProxyModel::lessThan(const QModelIndex &left, const QMod
     {
         case SortCriterion::PRIORITY:
         {
-            lessThan = leftItem->mPriority < rightItem->mPriority;
+            return leftItem->mPriority > rightItem->mPriority;
             break;
         }
         case SortCriterion::TOTAL_SIZE:
         {
-            lessThan = leftItem->mTotalSize < rightItem->mTotalSize;
+            return leftItem->mTotalSize < rightItem->mTotalSize;
             break;
         }
         case SortCriterion::NAME:
         {
-            lessThan = leftItem->mFilename < rightItem->mFilename;
+            return QString::compare(leftItem->mFilename, rightItem->mFilename, Qt::CaseInsensitive) < 0;
             break;
         }
-        default:
-            break;
     }
-
-    return lessThan;
+    return false;
 }
 
 bool TransfersSortFilterProxyModel::moveRows(const QModelIndex &sourceParent, int sourceRow, int count,

@@ -25,13 +25,13 @@ class TransfersSortFilterProxyModel : public QSortFilterProxyModel
         bool moveRows(const QModelIndex& sourceParent, int sourceRow, int count,
                       const QModelIndex& destinationParent, int destinationChild) override;
         void sort(int column, Qt::SortOrder order = Qt::AscendingOrder) override;
+        void sort(SortCriterion column, Qt::SortOrder order = Qt::AscendingOrder);
         void setFilterFixedString(const QString &pattern);
         void setFilters(const TransferData::TransferTypes transferTypes,
                         const TransferData::TransferStates transferStates,
                         const TransferData::FileTypes fileTypes);
         void applyFilters(bool invalidate = true);
         void resetAllFilters(bool invalidate = false);
-        void setSortBy(SortCriterion sortBy);
         int  getNumberOfItems(TransferData::TransferType transferType);
         void resetNumberOfItems();
 
@@ -53,7 +53,6 @@ class TransfersSortFilterProxyModel : public QSortFilterProxyModel
         TransferData::TransferTypes mNextTransferTypes;
         TransferData::FileTypes mNextFileTypes;
         SortCriterion mSortCriterion;
-        SortCriterion mNextSortCriterion;
         int* mDlNumber;
         int* mUlNumber;
         QMutex* mFilterMutex;
