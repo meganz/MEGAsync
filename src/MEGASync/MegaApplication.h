@@ -586,7 +586,9 @@ private:
 
     void cancelAllTransfers(int type);
 
-    void updateTransferBatchesAndUi(const QString& appId, TransferBatches& batches);
+    void updateFileTransferBatchesAndUi(const QString& appId, TransferBatches& batches);
+    void updateFolderTransferBatchesAndUi(const QString& appId, TransferBatches& batches);
+    void updateIfBlockingStageFinished(TransferBatches &batches);
 
     TransferBatches* getBatchCollection(int type);
 

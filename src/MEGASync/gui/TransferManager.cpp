@@ -411,8 +411,13 @@ void TransferManager::refreshTypeStats()
     {
         countLabel->setText(countLabelText);
     }
-
     countLabel->setVisible(!countLabelText.isEmpty());
+}
+
+void TransferManager::enterBlockingState()
+{
+    ui->bClearAll->setText(QString::fromUtf8("Blocked"));
+    ui->bClearAll->setEnabled(true); // TEMP : to be able to cancel blocking stage (cancelTokens)
 }
 
 void TransferManager::refreshFileTypesStats()

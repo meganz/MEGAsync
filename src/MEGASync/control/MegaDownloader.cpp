@@ -57,7 +57,7 @@ bool MegaDownloader::processDownloadQueue(QQueue<WrappedNode*>* downloadQueue, T
         bool transferStarted = download(wNode, currentPath, appData, batch->cancelToken.get());
         if (transferStarted)
         {
-            batch->add(appData);
+            batch->add(appData, QFileInfo(currentPath).isDir());
         }
         delete wNode;
     }
@@ -71,7 +71,7 @@ bool MegaDownloader::processDownloadQueue(QQueue<WrappedNode*>* downloadQueue, T
     return true;
 }
 
-bool MegaDownloader::download(WrappedNode *parent, QFileInfo info, QString appData, MegaCancelToken* cancelToken)
+bool MegaDownloader::download(WrappedNode* parent, QFileInfo info, QString appData, MegaCancelToken* cancelToken)
 {
     QPointer<MegaDownloader> safePointer = this;
 

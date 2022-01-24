@@ -1537,6 +1537,7 @@ void MegaApplication::processUploadQueue(MegaHandle nodeHandle)
     while (!uploadQueue.isEmpty())
     {
         QString filePath = uploadQueue.dequeue();
+        QFileInfo filePathInfo(filePath);
 
         // Load parent folder to provide "Show in Folder" option
         if (data->localPath.isEmpty())
@@ -1549,7 +1550,7 @@ void MegaApplication::processUploadQueue(MegaHandle nodeHandle)
             data->localPath = uploadPath.path();
         }
 
-        if (QFileInfo (filePath).isDir())
+        if (filePathInfo.isDir())
         {
             data->totalFolders++;
         }
@@ -1562,9 +1563,8 @@ void MegaApplication::processUploadQueue(MegaHandle nodeHandle)
         if (startedTransfer)
         {
             startingUpload();
-            QFileInfo(filePath).fileName();
-            QString id = QString::number(transferId) + QString::fromLatin1("*_") + QFileInfo(filePath).fileName();
-            batch->add(id);
+            QString id = QString::number(transferId) + QString::fromLatin1("*_") + filePathInfo.fileName();
+            batch->add(id, filePathInfo.isDir());
         }
     }
 
@@ -3260,16 +3260,36 @@ void MegaApplication::startUpload(const QString& rawLocalPath, MegaNode* target)
 void MegaApplication::cancelAllTransfers(int type)
 {
     auto batchCollection = getBatchCollection(type);
-    batchCollection->blockingBatch->cancelToken->cancel();
-    //maybe cleanup blocking batch and its friend in batch list?
+    if (batchCollection->blockingBatch)
+    {
+        batchCollection->cancelTransfer();
+    }
+    else
+    {
+        megaApi->cancelTransfers(type);
+    }
 }
 
-void MegaApplication::updateTransferBatchesAndUi(const QString &appId, TransferBatches &batches)
+void MegaApplication::updateFileTransferBatchesAndUi(const QString &appId, TransferBatches &batches)
 {
-    QString message = QString::fromUtf8("updateTransferBatchesAndUi with %1").arg(appId);
+    QString message = QString::fromUtf8("updateFileTransferBatchesAndUi with %1").arg(appId);
+    MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, message.toUtf8().constData());
+
+    batches.onFileScanCompleted(appId);
+    updateIfBlockingStageFinished(batches);
+}
+
+void MegaApplication::updateFolderTransferBatchesAndUi(const QString &appId, TransferBatches &batches)
+{
+    QString message = QString::fromUtf8("updateFolderTransferBatchesAndUi with %1").arg(appId);
     MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, message.toUtf8().constData());
 
     batches.onFolderScanCompleted(appId);
+    updateIfBlockingStageFinished(batches);
+}
+
+void MegaApplication::updateIfBlockingStageFinished(TransferBatches &batches)
+{
     if (batches.isBlockingStageFinished())
     {
         setTransferUiInUnblockedState();
@@ -3335,12 +3355,17 @@ QString MegaApplication::buildBatchLogMessage(const char* tag, QString tabs, Tra
     QString tab = QString::fromLatin1("\t");
     QString eol = QString::fromLatin1("\n");
 
-    QString message = tabs + QString::fromLatin1("%1 - %2 items").arg(QString::fromUtf8(tag)).arg(batch->transferIds.size()) + eol;
-    for (auto id : batch->transferIds)
+    if (batch)
     {
-        message += tab + tabs + id + eol;
+        QString message = tabs + QString::fromLatin1("%1 - %2 items").arg(QString::fromUtf8(tag)).arg(batch->transferIds.size()) + eol;
+        for (auto id : batch->transferIds)
+        {
+            message += tab + tabs + id + eol;
+        }
+        return message;
     }
-    return message;
+    return QString::fromLatin1("null batch");
+
 }
 
 void MegaApplication::setTransferUiInBlockingState()
@@ -7901,7 +7926,7 @@ void MegaApplication::onTransferStart(MegaApi *api, MegaTransfer *transfer)
         {
             QString id = createTransferId(transfer);
             logTransferBatchChange("onTransferStart", transfer->getType(), id);
-            updateTransferBatchesAndUi(id, *batchCollection);
+            updateFileTransferBatchesAndUi(id, *batchCollection);
             logBatchCollectionStatus("afterTransferStart", batchCollection);
         }
     }
@@ -7932,20 +7957,25 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
 
     DeferPreferencesSyncForScope deferrer(this);
 
-    auto batchCollection = getBatchCollection(transfer->getType());
-    if (batchCollection)
-    {
-        QString appId = createTransferId(transfer);
-        logTransferBatchChange("onTransferFinish", transfer->getType(), appId);
-        batchCollection->onTransferFinished(appId);
-        logBatchCollectionStatus("afterTransferFinish", batchCollection);
-    }
-
     // check if it's a top level transfer
     int folderTransferTag = transfer->getFolderTransferTag();
-    if (folderTransferTag == 0 // file transfer
-            || folderTransferTag == -1) // folder transfer
+    bool isFileTransfer = (folderTransferTag == 0);
+    bool isFolderTransfer = (folderTransferTag == -1);
+    if (isFileTransfer || isFolderTransfer)
     {
+
+        auto batchCollection = getBatchCollection(transfer->getType());
+        if (batchCollection)
+        {
+            QString appId = createTransferId(transfer);
+            logTransferBatchChange("onTransferFinish", transfer->getType(), appId);
+            batchCollection->onTransferFinished(isFolderTransfer);
+            updateIfBlockingStageFinished(*batchCollection);
+            logBatchCollectionStatus("afterTransferFinish", batchCollection);
+
+            // TODO : check fill data structure (with transfersCancelled)
+        }
+
         const char *notificationKey = transfer->getAppData();
         if (notificationKey)
         {
@@ -7968,7 +7998,7 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
                     }
                     else
                     {
-                        !folderTransferTag ? data->transfersFileOK++ : data->transfersFolderOK++;
+                        isFileTransfer ? data->transfersFileOK++ : data->transfersFolderOK++;
                     }
                 }
 
@@ -8108,7 +8138,7 @@ void MegaApplication::onTransferUpdate(MegaApi*, MegaTransfer* transfer)
         {
             QString appId = createTransferId(transfer);
             logTransferBatchChange("onTransferUpdate", transfer->getType(), appId);
-            updateTransferBatchesAndUi(appId, *batchCollection);
+            updateFolderTransferBatchesAndUi(appId, *batchCollection);
             logBatchCollectionStatus("afterTransferUpdate", batchCollection);
         }
     }

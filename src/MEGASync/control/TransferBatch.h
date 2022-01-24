@@ -24,17 +24,20 @@ public:
         auto copy = new TransferBatch();
         copy->transferIds = transferIds;
         copy->cancelToken = cancelToken;
+        copy->files = files;
+        copy->folders = folders;
         return copy;
     }
 
     bool isEmpty()
     {
-        return transferIds.empty();
+        return (files == 0 && folders == 0);
     }
 
-    void add(const QString& appId)
+    void add(const QString& appId, bool isDir)
     {
         transferIds.push_back(appId);
+        isDir ? ++folders : ++files;
     }
 
     bool remove(const QString& appId)
@@ -60,6 +63,8 @@ public:
         return desc;
     }
 
+    int files = 0;
+    int folders = 0;
 
     QVector<QString> transferIds;
     std::shared_ptr<mega::MegaCancelToken> cancelToken;
@@ -89,22 +94,39 @@ public:
         blockingBatch = batch->createCollectionCopy();
     }
 
+    void cancelTransfer()
+    {
+        if (blockingBatch)
+        {
+            blockingBatch->cancelToken->cancel();
+        }
+    }
+
     void onFileScanCompleted(const QString& appId)
     {
-        onFolderScanCompleted(appId);
+        if (blockingBatch && blockingBatch->files > 0)
+        {
+            blockingBatch->remove(appId);
+            --blockingBatch->files;
+        }
     }
 
     void onFolderScanCompleted(const QString& appId)
     {
-        if (blockingBatch)
+        if (blockingBatch && blockingBatch->folders > 0)
         {
             blockingBatch->remove(appId);
+            --blockingBatch->folders;
         }
     }
 
     bool isBlockingStageFinished()
     {
-        return (blockingBatch) ? blockingBatch->isEmpty() : true;
+        if (blockingBatch)
+        {
+            return (blockingBatch->files == 0 && blockingBatch->folders == 0);
+        }
+        return true;
     }
 
     void setAsUnblocked()
@@ -113,15 +135,15 @@ public:
         blockingBatch = nullptr;
     }
 
-    void onTransferFinished(const QString& appId)
+    void onTransferFinished(bool isFolderTransfer)
     {
-        auto batchIt = findAndUpdateBatch(appId);
-        if (batchIt != batches.end())
+        if (blockingBatch)
         {
-            if ((*batchIt)->isEmpty())
+            isFolderTransfer ? --blockingBatch->folders : --blockingBatch->files;
+            if (blockingBatch->isEmpty())
             {
-                delete *batchIt;
-                batches.erase(batchIt);
+                delete blockingBatch;
+                blockingBatch = nullptr;
             }
         }
     }
