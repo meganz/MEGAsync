@@ -105,7 +105,7 @@ void TransfersWidget::disableGetLink(bool disable)
     ui->tvTransfers->disableGetLink(disable);
 }
 
-QTransfersModel* TransfersWidget::getModel2()
+QTransfersModel* TransfersWidget::getModel()
 {
     return app->getTransfersModel();
 }

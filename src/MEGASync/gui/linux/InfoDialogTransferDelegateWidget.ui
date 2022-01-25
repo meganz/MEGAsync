@@ -340,7 +340,7 @@
               <number>0</number>
              </property>
              <item>
-              <widget class="QPushButton" name="lShowInFolder">
+              <widget class="QToolButton" name="lShowInFolder">
                <property name="minimumSize">
                 <size>
                  <width>24</width>
@@ -368,7 +368,7 @@
               </widget>
              </item>
              <item>
-              <widget class="QPushButton" name="lActionTransfer">
+              <widget class="QToolButton" name="lActionTransfer">
                <property name="minimumSize">
                 <size>
                  <width>24</width>

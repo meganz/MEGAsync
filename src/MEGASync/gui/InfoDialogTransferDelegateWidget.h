@@ -45,9 +45,13 @@ public:
     QSize minimumSizeHint() const;
     QSize sizeHint() const;
 
-private slots:
-    void onShowFolderClicked();
-    void onActionClicked();
+signals:
+    void copyTransferLink();
+    void openTransferFolder();
+
+private slots: 
+    void on_lShowInFolder_clicked();
+    void on_lActionTransfer_clicked();
 
 private:
     Ui::InfoDialogTransferDelegateWidget *mUi;

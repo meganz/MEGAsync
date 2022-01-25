@@ -25,6 +25,10 @@ public:
 
     TransferBaseDelegateWidget* createTransferManagerItem(QWidget *parent) override;
 
+protected slots:
+    void onCopyTransferLinkRequested();
+    void onOpenTransferFolderRequested();
+
 protected:
     bool lessThan(const QModelIndex &left, const QModelIndex &right) const override;
     bool filterAcceptsRow(int sourceRow, const QModelIndex& sourceParent) const override;
@@ -43,7 +47,7 @@ public:
     ~InfoDialogTransfersWidget();
 
 protected:
-    void showEvent(QShowEvent *event) override;
+    void showEvent(QShowEvent *) override;
 
 private:
     Ui::InfoDialogTransfersWidget *ui;

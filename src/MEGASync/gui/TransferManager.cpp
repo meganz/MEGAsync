@@ -61,7 +61,7 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
 
     mUi->lTextSearch->installEventFilter(this);
 
-    mModel = mUi->wTransfers->getModel2();
+    mModel = mUi->wTransfers->getModel();
 
     setAttribute(Qt::WA_QuitOnClose, false);
     setAttribute(Qt::WA_DeleteOnClose, true);

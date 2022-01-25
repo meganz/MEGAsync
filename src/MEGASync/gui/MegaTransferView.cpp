@@ -79,7 +79,7 @@ void MegaTransferView::onPauseResumeAllRows(bool pauseState)
             }
             indexes.push_back(index);
         }
-        mParentTransferWidget->getModel2()->pauseTransfers(indexes, pauseState);
+        mParentTransferWidget->getModel()->pauseTransfers(indexes, pauseState);
     }
 }
 
@@ -99,7 +99,7 @@ void MegaTransferView::onPauseResumeSelection(bool pauseState)
         indexes = selection.indexes();
 
         clearSelection();
-        mParentTransferWidget->getModel2()->pauseTransfers(indexes, pauseState);
+        mParentTransferWidget->getModel()->pauseTransfers(indexes, pauseState);
     }
 }
 
@@ -120,7 +120,7 @@ void MegaTransferView::onCancelClearAllRows(bool cancel, bool clear)
             indexes.push_back(index);
         }
 
-        mParentTransferWidget->getModel2()->cancelClearTransfers(indexes, cancel, clear);
+        mParentTransferWidget->getModel()->cancelClearTransfers(indexes, cancel, clear);
         proxy->invalidate();
     }
 }
@@ -145,7 +145,7 @@ void MegaTransferView::onCancelClearSelection(bool cancel, bool clear)
         }
 
         clearSelection();
-        mParentTransferWidget->getModel2()->cancelClearTransfers(indexes, cancel, clear);
+        mParentTransferWidget->getModel()->cancelClearTransfers(indexes, cancel, clear);
     }
 }
 
@@ -539,7 +539,7 @@ void MegaTransferView::getLinkClicked()
 
     if (!rows.isEmpty())
     {
-        mParentTransferWidget->getModel2()->getLinks(rows);
+        mParentTransferWidget->getModel()->getLinks(rows);
     }
 
     clearSelection();
@@ -571,13 +571,7 @@ void MegaTransferView::showInFolderClicked()
     {
         if (index.isValid())
         {
-            const auto transferItem (
-                        qvariant_cast<TransferItem>(index.data(Qt::DisplayRole)));
-            auto d (transferItem.getTransferData());
-            if (!d->mPath.isEmpty())
-            {
-                Platform::showInFolder(d->mPath);
-            }
+            mParentTransferWidget->getModel()->openFolderByIndex(index);
         }
     }
     clearSelection();

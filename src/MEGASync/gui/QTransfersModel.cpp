@@ -1,6 +1,7 @@
 #include "QTransfersModel.h"
 #include "MegaApplication.h"
 #include "Utilities.h"
+#include "Platform.h"
 
 #include <QSharedData>
 
@@ -652,9 +653,9 @@ void QTransfersModel::getLinks(QList<int>& rows)
             {
                 node = mFailedTransfers[tag]->getPublicMegaNode();
             }
-            else
+            else if(d->mNodeHandle)
             {
-                node = ((MegaApplication*)qApp)->getMegaApi()->getNodeByHandle(d->mNodeAccess);
+                node = ((MegaApplication*)qApp)->getMegaApi()->getNodeByHandle(d->mNodeHandle);
             }
 
             if (!node || !node->isPublic())
@@ -681,6 +682,27 @@ void QTransfersModel::getLinks(QList<int>& rows)
             qobject_cast<MegaApplication*>(qApp)->exportNodes(exportList, linkList);
         }
     }
+}
+
+void QTransfersModel::openFolderByIndex(const QModelIndex& index)
+{
+    QtConcurrent::run([=]
+    {
+        const auto transferItem (
+                    qvariant_cast<TransferItem>(index.data(Qt::DisplayRole)));
+        auto d (transferItem.getTransferData());
+        if (d && !d->mPath.isEmpty())
+        {
+            QString localPath = d->mPath;
+            #ifdef WIN32
+            if (localPath.startsWith(QString::fromAscii("\\\\?\\")))
+            {
+                localPath = localPath.mid(4);
+            }
+            #endif
+            Platform::showInFolder(localPath);
+        }
+    });
 }
 
 void QTransfersModel::cancelClearTransfers(const QModelIndexList& indexes, bool cancel, bool clear)

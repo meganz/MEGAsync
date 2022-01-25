@@ -34,9 +34,6 @@ InfoDialogTransferDelegateWidget::InfoDialogTransferDelegateWidget(QWidget *pare
     mUi->bClockDown->setVisible(false);
 
     mUi->lShowInFolder->hide();
-
-    connect(mUi->lShowInFolder, &QPushButton::clicked, this, &InfoDialogTransferDelegateWidget::onShowFolderClicked);
-    connect(mUi->lActionTransfer, &QPushButton::clicked, this, &InfoDialogTransferDelegateWidget::onActionClicked);
 }
 
 InfoDialogTransferDelegateWidget::~InfoDialogTransferDelegateWidget()
@@ -418,52 +415,13 @@ QSize InfoDialogTransferDelegateWidget::sizeHint() const
     return fullRect.size();
 }
 
-void InfoDialogTransferDelegateWidget::onShowFolderClicked()
-{
-    if (getData() && getData()->mState == TransferData::TransferState::TRANSFER_COMPLETED
-                 && !getData()->mPath.isEmpty())
-    {
-        QString localPath = getData()->mPath;
-        #ifdef WIN32
-        if (localPath.startsWith(QString::fromAscii("\\\\?\\")))
-        {
-            localPath = localPath.mid(4);
-        }
-        #endif
-        Platform::showInFolder(localPath);
-    }
+void InfoDialogTransferDelegateWidget::on_lShowInFolder_clicked()
+{ 
+    emit openTransferFolder();
 }
 
-void InfoDialogTransferDelegateWidget::onActionClicked()
+void InfoDialogTransferDelegateWidget::on_lActionTransfer_clicked()
 {
-    QList<MegaHandle> exportList;
-    QStringList linkList;
-    auto transfer = mMegaApi->getTransferByTag(getData()->mTag);
-    if(transfer)
-    {
-        MegaNode *node = transfer->getPublicMegaNode();
-        if (!node || !node->isPublic())
-        {
-            exportList.push_back(transfer->getNodeHandle());
-        }
-        else
-        {
-            char *handle = node->getBase64Handle();
-            char *key = node->getBase64Key();
-            if (handle && key)
-            {
-                QString link = Preferences::BASE_URL + QString::fromUtf8("/#!%1!%2")
-                        .arg(QString::fromUtf8(handle)).arg(QString::fromUtf8(key));
-                linkList.append(link);
-            }
-            delete [] handle;
-            delete [] key;
-        }
-        delete node;
-        if (exportList.size() || linkList.size())
-        {
-            ((MegaApplication*)qApp)->exportNodes(exportList, linkList);
-        }
-    }
+    emit copyTransferLink();
 }
 

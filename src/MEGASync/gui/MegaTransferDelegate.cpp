@@ -151,7 +151,7 @@ bool MegaTransferDelegate::editorEvent(QEvent* event, QAbstractItemModel*,
                     auto w (currentRow->childAt(me->pos() - currentRow->pos()));
                     if (w)
                     {
-                        auto t (qobject_cast<QPushButton*>(w));
+                        auto t (qobject_cast<QToolButton*>(w));
                         if (t)
                         {
                             t->click();

@@ -35,7 +35,7 @@ public:
 
     int rowCount();
 
-    QTransfersModel* getModel2();
+    QTransfersModel* getModel();
     TransfersSortFilterProxyModel* getProxyModel() {return mProxyModel;}
     ~TransfersWidget();
 

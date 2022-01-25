@@ -19,7 +19,42 @@ InfoDialogCurrentTransfersProxyModel::~InfoDialogCurrentTransfersProxyModel()
 
 TransferBaseDelegateWidget* InfoDialogCurrentTransfersProxyModel::createTransferManagerItem(QWidget *parent)
 {
-    return new InfoDialogTransferDelegateWidget(parent);
+    auto item = new InfoDialogTransferDelegateWidget(parent);
+
+    connect(item, &InfoDialogTransferDelegateWidget::copyTransferLink,
+            this, &InfoDialogCurrentTransfersProxyModel::onCopyTransferLinkRequested);
+    connect(item, &InfoDialogTransferDelegateWidget::openTransferFolder,
+            this, &InfoDialogCurrentTransfersProxyModel::onOpenTransferFolderRequested);
+
+    return item;
+}
+
+void InfoDialogCurrentTransfersProxyModel::onCopyTransferLinkRequested()
+{
+    auto delegateWidget = dynamic_cast<InfoDialogTransferDelegateWidget*>(sender());
+    auto sourModel = dynamic_cast<QTransfersModel*>(sourceModel());
+
+    if(delegateWidget && sourModel)
+    {
+        QList<int> rows;
+        auto index = delegateWidget->getCurrentIndex();
+        index = mapToSource(index);
+        rows.append(index.row());
+        sourModel->getLinks(rows);
+    }
+}
+
+void InfoDialogCurrentTransfersProxyModel::onOpenTransferFolderRequested()
+{
+    auto delegateWidget = dynamic_cast<InfoDialogTransferDelegateWidget*>(sender());
+    auto sourModel = dynamic_cast<QTransfersModel*>(sourceModel());
+
+    if(delegateWidget && sourModel)
+    {
+        auto index = delegateWidget->getCurrentIndex();
+        index = mapToSource(index);
+        sourModel->openFolderByIndex(index);
+    }
 }
 
 bool InfoDialogCurrentTransfersProxyModel::lessThan(const QModelIndex &left, const QModelIndex &right) const
@@ -91,7 +126,7 @@ InfoDialogTransfersWidget::~InfoDialogTransfersWidget()
     delete model;
 }
 
-void InfoDialogTransfersWidget::showEvent(QShowEvent *event)
+void InfoDialogTransfersWidget::showEvent(QShowEvent*)
 {
     if(model)
     {
