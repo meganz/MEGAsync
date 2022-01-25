@@ -79,17 +79,10 @@ public:
 
     ~TransferBatches()
     {
-        for (auto b : batches)
-        {
-            delete b;
-        }
-        batches.clear();
     }
 
     void add(TransferBatch* batch)
     {
-        batches.push_back(batch);
-
         delete blockingBatch;
         blockingBatch = batch->createCollectionCopy();
     }
@@ -148,22 +141,7 @@ public:
         }
     }
 
-    std::vector<TransferBatch*> batches;
     TransferBatch* blockingBatch = nullptr;
-
-private:
-    std::vector<TransferBatch*>::iterator findAndUpdateBatch(const QString& appId)
-    {
-        auto batchIt = batches.begin();
-        for (; batchIt != batches.end(); ++batchIt)
-        {
-            if ((*batchIt)->remove(appId))
-            {
-                return batchIt;
-            }
-        }
-        return batches.end();
-    }
 };
 
 #endif // MEGADOWNLOADER_H

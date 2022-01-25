@@ -3328,15 +3328,8 @@ void MegaApplication::logBatchCollectionStatus(const char* tag, TransferBatches 
     QString tab = QString::fromLatin1("\t");
     QString eol = QString::fromLatin1("\n");
 
-    QString logMessage = QString::fromLatin1("%1 - %2 batches :").arg(QString::fromUtf8(tag)).arg(collection->batches.size()) + eol;
-    for (auto batch : collection->batches)
-    {
-        logMessage += buildBatchLogMessage("batch", tab, batch);
-    }
-
+    QString logMessage = QString::fromLatin1("%1 :").arg(QString::fromUtf8(tag)) + eol;
     logMessage += buildBatchLogMessage("blocking", QString(), collection->blockingBatch);
-
-
 
     MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, logMessage.toUtf8().constData());
 #else

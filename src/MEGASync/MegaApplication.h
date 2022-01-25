@@ -581,9 +581,6 @@ private:
 
     void updateTransferNodesStage(mega::MegaTransfer* transfer);
 
-    bool isTransferLeavingBlockingStage(mega::MegaTransfer* transfer);
-    void cleanupFinishedDownloads(mega::MegaTransfer* transfer);
-
     void cancelAllTransfers(int type);
 
     void updateFileTransferBatchesAndUi(const QString& appId, TransferBatches& batches);
