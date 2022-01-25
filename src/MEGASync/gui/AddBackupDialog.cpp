@@ -3,12 +3,22 @@
 
 #include <QFileDialog>
 
+#ifdef Q_OS_MACOS
+#include <QOperatingSystemVersion>
+#endif
+
 AddBackupDialog::AddBackupDialog(QWidget *parent) :
     QDialog(parent),
     mUi(new Ui::AddBackupDialog),
     mSelectedFolder(QDir::home())
 {
     mUi->setupUi(this);
+
+#ifdef Q_OS_MACOS
+    // Display our modal dialog embedded title label on macOS Big Sur and onwards
+    bool isMacOSBigSur = QOperatingSystemVersion::current() > QOperatingSystemVersion::MacOSCatalina;
+    mUi->macOSBigSurTitleLabel->setVisible(isMacOSBigSur);
+#endif
 
     connect(mUi->addButton, &QPushButton::clicked, this, &QDialog::accept);
     connect(mUi->cancelButton, &QPushButton::clicked, this, &QDialog::reject);
