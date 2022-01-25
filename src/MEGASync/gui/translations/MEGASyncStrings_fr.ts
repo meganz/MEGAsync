@@ -981,7 +981,7 @@ Dans certains cas, ils pourraient comprendre des détails sur vos données, tels
     <message>
         <source>Reject</source>
         <translatorcomment>Button label of system notification to reject the notification of incoming contact request.</translatorcomment>
-        <translation>Rejeter</translation>
+        <translation>Effacer</translation>
     </message>
     <message>
         <source>Cancelled Contact Request</source>
@@ -1461,7 +1461,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Logging out...</source>
         <translatorcomment>Label shown at main dialog to show the current operation. In this case logging out from the account.</translatorcomment>
-        <translation>Déconnexion en cours…</translation>
+        <translation>Déconnexion…</translation>
     </message>
     <message>
         <source>Locked Account</source>
@@ -1861,17 +1861,17 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>MEGA Desktop app</source>
         <translatorcomment>Title of MEGA Desktop app within initial information wizard.</translatorcomment>
-        <translation>Appli MEGA pour ordinateur</translation>
+        <translation>Appli MEGA pour ordinateur</translation>
     </message>
     <message>
         <source>Login or create an account to start using MEGA Desktop app.</source>
         <translatorcomment>Description label to inform the user about next step in order to use MEGA Desktop app. Users will need to login or create an account.</translatorcomment>
-        <translation>Connectez-vous ou créez un compte pour commencer à utiliser l’appli MEGA pour ordinateur.</translation>
+        <translation>Connectez-vous ou créez un compte pour commencer à utiliser l’Appli MEGA pour ordinateur.</translation>
     </message>
     <message>
         <source>You need to login MEGA account to run MEGA desktop app.</source>
         <translatorcomment>Description label to indicate the user needs to login in order to run and fully use MEGA desktop app.</translatorcomment>
-        <translation>Vous devez vous connecter à votre compte MEGA pour utiliser l’appli MEGA pour ordinateur.</translation>
+        <translation>Vous devez vous connecter à votre compte MEGA pour utiliser l’Appli MEGA pour ordinateur.</translation>
     </message>
     <message>
         <source>Create account</source>
@@ -1886,7 +1886,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Know more about MEGA desktop app. [A]Read more[/A]</source>
         <translatorcomment>Label with hyperlink to sync client webpage to know more about MEGA desktop app. Keep placeholders.</translatorcomment>
-        <translation>Apprenez-en davantage sur l’appli MEGA pour ordinateur. [A]Plus de précisions[/A]</translation>
+        <translation>Apprenez-en davantage sur l’Appli MEGA pour ordinateur. [A]Plus de précisions[/A]</translation>
     </message>
 </context>
 <context>
@@ -2583,7 +2583,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Open Settings</source>
         <translatorcomment>Button label to open MEGAsync preferences dialog (Linux and Windows).</translatorcomment>
-        <translation>Ouvrir les réglages</translation>
+        <translation>Ouvrir les paramètres</translation>
     </message>
     <message>
         <source>One or more syncs have been disabled. Go to settings to enable them again.</source>
@@ -3525,20 +3525,13 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Full redesign of settings with a new look and feel.
-- No longer supporting macOS versions below 10.12.
-- Multi-currency support added for upgrade options.
-- High DPI support for Windows platform improved.
-- Crashes previously detected on Windows, Linux and macOS now fixed.
-- Other performance improvements and adjustments.
-- Other UI fixes and adjustments.</source>
-        <translatorcomment>Changelog notes for v4.6.0 version</translatorcomment>
-        <translation>– Refonte complète des paramètres avec un nouvel aspect et une nouvelle convivialité.
-– Les versions de macOS antérieures à 10.12 ne sont plus prises en charge.
-– Les options de surclassement sont maintenant proposées en plusieurs monnaies.
-– La prise en charge pour les écrans à résolution points par pouce élevée a été améliorée pour la plateforme Windows.
-– Autres améliorations des performances et mises au point.
-– Autres correctifs de l’IU et mises au point.</translation>
+        <source>- Strengthen cryptographic security on Linux repositories.
+- Fix memory issues with problematic PDF files.
+</source>
+        <translatorcomment>Changelog v4.6.3 (linux only)</translatorcomment>
+        <translation>– Renforcement de la sécurité cryptographique des dépôts Linux.
+– Correctif de problèmes de mémoire avec les PDF problématiques.
+</translation>
     </message>
 </context>
 <context>
@@ -4154,7 +4147,7 @@ Voulez-vous le supprimer quand même ?</translation>
     <message>
         <source>Open at login</source>
         <translatorcomment>Label to let the user start MEGAsync on login with a checkbox.</translatorcomment>
-        <translation>Ouvrir à la connexion</translation>
+        <translation>Lancer à la connexion</translation>
     </message>
     <message>
         <source>MEGAsync will perform a full scan of your synced folders when it starts.
@@ -4461,7 +4454,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Restart MEGA Desktop Application to apply changes.</source>
         <translatorcomment>Informative text shown in Folders pane, letting the user know that an application restart is required to apply the changes he just made.</translatorcomment>
-        <translation>Redémarrez l’appli MEGA pour ordinateur pour appliquer les changements.</translation>
+        <translation>Redémarrez l’Appli MEGA pour ordinateur pour appliquer les changements.</translation>
     </message>
     <message>
         <source>Change Settings...</source>
@@ -4671,7 +4664,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Choose which files or folders you want to exclude from synchronisation.</source>
         <translatorcomment>Informative text message encouraging the user to choose files / folders for exclusion in Folders pane.</translatorcomment>
-        <translation>Choisissez quels fichiers ou dossiers vous voulez exclure de la synchronisation</translation>
+        <translation>Choisir quels fichiers ou dossiers vous voulez exclure de la synchronisation</translation>
     </message>
     <message>
         <source>Saving synchronised folders…</source>
@@ -4951,7 +4944,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Logging out...</source>
         <translatorcomment>Label shown when an user is logging out from his account.</translatorcomment>
-        <translation>Déconnexion en cours…</translation>
+        <translation>Déconnexion…</translation>
     </message>
     <message>
         <source>Very Weak</source>
@@ -5029,7 +5022,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Setup selective sync</source>
         <translatorcomment>Label shown when user is setting up the selective sync mode of MEGAsync</translatorcomment>
-        <translation>Configuration de la synchronisation sélective</translation>
+        <translation>Configurer la synchronisation sélective</translation>
     </message>
     <message>
         <source>Specific folders in your Cloud Drive will be synchronized with a local folder.</source>
@@ -5044,7 +5037,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Setup full sync</source>
         <translatorcomment>Label shown when user is setting up full sync mode of MEGAsync</translatorcomment>
-        <translation>Configuration de la synchronisation intégrale</translation>
+        <translation>Configurer la synchronisation intégrale</translation>
     </message>
     <message>
         <source>Full Sync</source>
@@ -5188,7 +5181,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Select media from...</source>
         <translatorcomment>Label just above of the buttons to select files for streaming</translatorcomment>
-        <translation>Sélectionner le fichier multimédia de…</translation>
+        <translation>D’où sélectionner le fichier multimédia…</translation>
     </message>
     <message>
         <source>Cloud Drive</source>

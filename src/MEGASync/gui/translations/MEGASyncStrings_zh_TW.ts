@@ -3525,21 +3525,13 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Full redesign of settings with a new look and feel.
-- No longer supporting macOS versions below 10.12.
-- Multi-currency support added for upgrade options.
-- High DPI support for Windows platform improved.
-- Crashes previously detected on Windows, Linux and macOS now fixed.
-- Other performance improvements and adjustments.
-- Other UI fixes and adjustments.</source>
-        <translatorcomment>Changelog notes for v4.6.0 version</translatorcomment>
-        <translation>- 全新設計的設定介面。
-- 不再支援macOS 10.12以前版本。
-- 升級選項加入多種貨幣支援。
-- 改善對Windows平台的高解析度支援。
-- 修復先前在Windows、Linux、及macOS檢測到當機問題。
-- 其他性能改進和調整。
-- 其他介面修復和調整。</translation>
+        <source>- Strengthen cryptographic security on Linux repositories.
+- Fix memory issues with problematic PDF files.
+</source>
+        <translatorcomment>Changelog v4.6.3 (linux only)</translatorcomment>
+        <translation>- 加強Linux儲存庫的加密安全性。
+- 修復有問題PDF檔案的記憶體問題。
+</translation>
     </message>
 </context>
 <context>

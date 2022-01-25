@@ -3529,7 +3529,9 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 - Fix memory issues with problematic PDF files.
 </source>
         <translatorcomment>Changelog v4.6.3 (linux only)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>- Strengthen cryptographic security on Linux repositories.
+- Fix memory issues with problematic PDF files.
+</translation>
     </message>
 </context>
 <context>
