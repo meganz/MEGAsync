@@ -22,7 +22,6 @@ public:
     TransferBatch* createCollectionCopy()
     {
         auto copy = new TransferBatch();
-        copy->transferIds = transferIds;
         copy->cancelToken = cancelToken;
         copy->files = files;
         copy->folders = folders;
@@ -36,37 +35,12 @@ public:
 
     void add(const QString& appId, bool isDir)
     {
-        transferIds.push_back(appId);
         isDir ? ++folders : ++files;
-    }
-
-    bool remove(const QString& appId)
-    {
-        return transferIds.removeOne(appId);
-    }
-
-    QString description()
-    {
-        QString itemCount = QString::fromLatin1("%1 items").arg(transferIds.size());
-        if (transferIds.size() > 4)
-        {
-            return itemCount;
-        }
-
-        QString desc = itemCount + QString::fromLatin1(" (");
-        for (const auto& id : transferIds)
-        {
-            desc += id + QString::fromLatin1(", ");
-        }
-        desc += QString::fromLatin1(")");
-
-        return desc;
     }
 
     int files = 0;
     int folders = 0;
 
-    QVector<QString> transferIds;
     std::shared_ptr<mega::MegaCancelToken> cancelToken;
 };
 
@@ -99,7 +73,6 @@ public:
     {
         if (blockingBatch && blockingBatch->files > 0)
         {
-            blockingBatch->remove(appId);
             --blockingBatch->files;
         }
     }
@@ -108,7 +81,6 @@ public:
     {
         if (blockingBatch && blockingBatch->folders > 0)
         {
-            blockingBatch->remove(appId);
             --blockingBatch->folders;
         }
     }

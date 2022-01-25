@@ -1571,7 +1571,7 @@ void MegaApplication::processUploadQueue(MegaHandle nodeHandle)
     if (!batch->isEmpty())
     {
         activeUploadBatches.add(batch);
-        QString logMessage = QString::fromUtf8("Added batch upload : %1").arg(batch->description());
+        QString logMessage = QString::fromUtf8("Added batch upload");
         MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, logMessage.toUtf8().constData());
     }
 
@@ -3350,12 +3350,7 @@ QString MegaApplication::buildBatchLogMessage(const char* tag, QString tabs, Tra
 
     if (batch)
     {
-        QString message = tabs + QString::fromLatin1("%1 - %2 items").arg(QString::fromUtf8(tag)).arg(batch->transferIds.size()) + eol;
-        for (auto id : batch->transferIds)
-        {
-            message += tab + tabs + id + eol;
-        }
-        return message;
+        return tabs + QString::fromLatin1("%1 - %2 files, 3 folders").arg(batch->files).arg(batch->folders);
     }
     return QString::fromLatin1("null batch");
 
