@@ -5,6 +5,7 @@
 #include "Preferences.h"
 #include "TransferItem.h"
 
+#include <QModelIndex>
 #include <QWidget>
 
 class TransferBaseDelegateWidget : public QWidget
@@ -22,6 +23,8 @@ public:
 
     QExplicitlySharedDataPointer<TransferData> getData();
 
+    QModelIndex getCurrentIndex() const;
+    void setCurrentIndex(const QModelIndex &currentIndex);
 
 protected:
     virtual void updateTransferState() = 0;
@@ -32,6 +35,7 @@ private:
     Preferences* mPreferences;
     QExplicitlySharedDataPointer<TransferData> mData;
     TransferData::TransferState mPreviousState;
+    QModelIndex mCurrentIndex;
 };
 
 #endif // TRANSFERBASEDELEGATEWIDGET

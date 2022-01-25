@@ -129,6 +129,8 @@ TransferBaseDelegateWidget *MegaTransferDelegate::getTransferItemWidget(const QM
         item = mTransferItems.at(row);
     }
 
+    item->setCurrentIndex(index);
+
     return item;
 }
 
@@ -214,30 +216,4 @@ void MegaTransferDelegate::onHoverMove(const QModelIndex &index, const QRect &re
             mView->update(rect);
         }
     }
-}
-
-void MegaTransferDelegate::onCancelClearTransfer(int row)
-{
-    QModelIndexList indexes;
-    auto proxy(qobject_cast<QSortFilterProxyModel*>(mProxyModel));
-    auto index (mProxyModel->index(row, 0, QModelIndex()));
-    if (proxy)
-    {
-        index = proxy->mapToSource(index);
-    }
-    indexes.push_back(index);
-    mSourceModel->cancelClearTransfers(indexes);
-}
-
-void MegaTransferDelegate::onPauseResumeTransfer(int row, bool pauseState)
-{
-    QModelIndexList indexes;
-    auto proxy(qobject_cast<QSortFilterProxyModel*>(mProxyModel));
-    auto index (mProxyModel->index(row, 0, QModelIndex()));
-    if (proxy)
-    {
-        index = proxy->mapToSource(index);
-    }
-    indexes.push_back(index);
-    mSourceModel->pauseTransfers(indexes, pauseState);
 }

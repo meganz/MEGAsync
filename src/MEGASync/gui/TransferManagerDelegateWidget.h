@@ -28,9 +28,9 @@ class TransferManagerDelegateWidget : public TransferBaseDelegateWidget
         void setFileType(const QString& fileName);
 
     signals:
-        void cancelClearTransfer(int row);
-        void pauseResumeTransfer(int row, bool pauseState);
-        void retryTransfer(TransferTag tag);
+        void cancelClearTransfer();
+        void pauseResumeTransfer();
+        void retryTransfer();
 
     private slots:
         void on_tPauseResumeTransfer_clicked();

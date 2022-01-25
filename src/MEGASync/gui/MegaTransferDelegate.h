@@ -33,10 +33,6 @@ signals:
     void transferPaused(const TransferTag tag);
     void transferCanceled(const TransferTag tag);
 
-private slots:
-    void onCancelClearTransfer(int row);
-    void onPauseResumeTransfer(int row, bool pauseState);
-
 private:
     TransferBaseDelegateWidget *getTransferItemWidget(const QModelIndex &index, const QSize &size) const;
 

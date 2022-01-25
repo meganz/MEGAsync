@@ -197,12 +197,12 @@ TransferBaseDelegateWidget *TransfersSortFilterProxyModel::createTransferManager
     auto item = new TransferManagerDelegateWidget(parent);
 
     //All are UniqueConnection to avoid reconnecting if thw item already exists in cache and it is not a new item
-//    connect(item2, &TransferManagerDelegateWidget::cancelClearTransfer,
-//            this, &MegaTransferDelegate::onCancelClearTransfer, Qt::UniqueConnection);
-//    connect(item2, &TransferManagerDelegateWidget::pauseResumeTransfer,
-//            this, &MegaTransferDelegate::onPauseResumeTransfer, Qt::UniqueConnection);
-//    connect(item2, &TransferManagerDelegateWidget::retryTransfer,
-//             mSourceModel, &QTransfersModel::onRetryTransfer, Qt::UniqueConnection);
+    connect(item, &TransferManagerDelegateWidget::cancelClearTransfer,
+            this, &TransfersSortFilterProxyModel::onCancelClearTransfer, Qt::UniqueConnection);
+    connect(item, &TransferManagerDelegateWidget::pauseResumeTransfer,
+            this, &TransfersSortFilterProxyModel::onPauseResumeTransfer, Qt::UniqueConnection);
+    connect(item, &TransferManagerDelegateWidget::retryTransfer,
+             this, &TransfersSortFilterProxyModel::onRetryTransfer, Qt::UniqueConnection);
 
     return item;
 }
@@ -313,4 +313,44 @@ bool TransfersSortFilterProxyModel::moveRows(const QModelIndex &sourceParent, in
         row++;
     }
     return moveOk;
+}
+
+void TransfersSortFilterProxyModel::onCancelClearTransfer()
+{
+    auto delegateWidget = dynamic_cast<TransferManagerDelegateWidget*>(sender());
+    auto sourModel = dynamic_cast<QTransfersModel*>(sourceModel());
+
+    if(delegateWidget && sourModel)
+    {
+        QModelIndexList indexes;
+        auto index = delegateWidget->getCurrentIndex();
+        index = mapToSource(index);
+        indexes.append(index);
+        sourModel->cancelClearTransfers(indexes);
+    }
+}
+
+void TransfersSortFilterProxyModel::onPauseResumeTransfer()
+{
+    auto delegateWidget = dynamic_cast<TransferManagerDelegateWidget*>(sender());
+    auto sourModel = dynamic_cast<QTransfersModel*>(sourceModel());
+
+    if(delegateWidget && sourModel)
+    {
+        auto tag = delegateWidget->getData()->mTag;
+        sourModel->pauseResumeTransferByTag(tag,
+                                            delegateWidget->getData()->mState != TransferData::TransferState::TRANSFER_PAUSED);
+    }
+}
+
+void TransfersSortFilterProxyModel::onRetryTransfer()
+{
+    auto delegateWidget = dynamic_cast<TransferManagerDelegateWidget*>(sender());
+    auto sourModel = dynamic_cast<QTransfersModel*>(sourceModel());
+
+    if(delegateWidget && sourModel)
+    {
+        auto tag = delegateWidget->getData()->mTag;
+        sourModel->onRetryTransfer(tag);
+    }
 }

@@ -7,6 +7,7 @@
 #include <QReadWriteLock>
 
 class TransferBaseDelegateWidget;
+class QTransfersModel;
 
 class TransfersSortFilterProxyModel : public QSortFilterProxyModel
 {
@@ -44,6 +45,11 @@ class TransfersSortFilterProxyModel : public QSortFilterProxyModel
         void modelFiltered();
         void modelAboutToBeSorted();
         void modelSorted();
+
+    protected slots:
+        void onCancelClearTransfer();
+        void onPauseResumeTransfer();
+        void onRetryTransfer();
 
     protected:
         virtual bool filterAcceptsRow(int sourceRow, const QModelIndex& sourceParent) const override;

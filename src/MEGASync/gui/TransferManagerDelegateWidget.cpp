@@ -279,15 +279,15 @@ void TransferManagerDelegateWidget::setType()
 
 void TransferManagerDelegateWidget::on_tPauseResumeTransfer_clicked()
 {
-    //emit pauseResumeTransfer(mRow, !mIsPaused);
+    emit pauseResumeTransfer();
 }
 
 void TransferManagerDelegateWidget::on_tCancelClearTransfer_clicked()
 {
-    //emit cancelClearTransfer(mRow);
+    emit cancelClearTransfer();
 }
 
 void TransferManagerDelegateWidget::on_tItemRetry_clicked()
 {
-    emit retryTransfer(getData()->mTag);
+    emit retryTransfer();
 }

@@ -40,3 +40,13 @@ QExplicitlySharedDataPointer<TransferData> TransferBaseDelegateWidget::getData()
 {
     return mData;
 }
+
+QModelIndex TransferBaseDelegateWidget::getCurrentIndex() const
+{
+    return mCurrentIndex;
+}
+
+void TransferBaseDelegateWidget::setCurrentIndex(const QModelIndex &currentIndex)
+{
+    mCurrentIndex = currentIndex;
+}
