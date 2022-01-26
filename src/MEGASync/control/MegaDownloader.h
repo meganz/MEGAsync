@@ -21,7 +21,7 @@ public:
     // provide megaApiGuest
     MegaDownloader(mega::MegaApi *megaApi);
     virtual ~MegaDownloader() = default;
-    bool processDownloadQueue(QQueue<WrappedNode*>* downloadQueue, TransferBatches& downloadBatches,
+    bool processDownloadQueue(QQueue<WrappedNode*>* downloadQueue, BlockingBatch& downloadBatches,
                               QString path, unsigned long long appDataId);
 
 protected:

@@ -11,7 +11,7 @@ MegaDownloader::MegaDownloader(MegaApi *megaApi) : QObject()
     this->megaApi = megaApi;
 }
 
-bool MegaDownloader::processDownloadQueue(QQueue<WrappedNode*>* downloadQueue, TransferBatches& downloadBatches, QString path, unsigned long long appDataId)
+bool MegaDownloader::processDownloadQueue(QQueue<WrappedNode*>* downloadQueue, BlockingBatch& downloadBatches, QString path, unsigned long long appDataId)
 {
     noTransferStarted = true;
     // If the destination path doesn't exist and we can't create it,
@@ -27,7 +27,7 @@ bool MegaDownloader::processDownloadQueue(QQueue<WrappedNode*>* downloadQueue, T
     // Get transfer's metadata
     TransferMetaData *data = ((MegaApplication*)qApp)->getTransferAppData(appDataId);
 
-    auto batch = new TransferBatch();
+    auto batch = new TransferBatch(); // TODO : resolve leak
 
     // Process all nodes in the download queue
     while (!downloadQueue->isEmpty())
@@ -57,7 +57,7 @@ bool MegaDownloader::processDownloadQueue(QQueue<WrappedNode*>* downloadQueue, T
         bool transferStarted = download(wNode, currentPath, appData, batch->cancelToken.get());
         if (transferStarted)
         {
-            batch->add(appData, QFileInfo(currentPath).isDir());
+            batch->add(QFileInfo(currentPath).isDir());
         }
         delete wNode;
     }

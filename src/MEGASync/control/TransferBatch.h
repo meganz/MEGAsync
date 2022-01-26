@@ -33,9 +33,14 @@ public:
         return (files == 0 && folders == 0);
     }
 
-    void add(const QString& appId, bool isDir)
+    void add(bool isDir)
     {
         isDir ? ++folders : ++files;
+    }
+
+    void cancel()
+    {
+        cancelToken->cancel();
     }
 
     int files = 0;
@@ -44,15 +49,16 @@ public:
     std::shared_ptr<mega::MegaCancelToken> cancelToken;
 };
 
-class TransferBatches
+class BlockingBatch
 {
 public:
-    TransferBatches()
+    BlockingBatch()
     {
     }
 
-    ~TransferBatches()
+    ~BlockingBatch()
     {
+        clearBlockingBatch();
     }
 
     void add(TransferBatch* batch)
@@ -65,7 +71,7 @@ public:
     {
         if (blockingBatch)
         {
-            blockingBatch->cancelToken->cancel();
+            blockingBatch->cancel();
         }
     }
 
@@ -89,15 +95,14 @@ public:
     {
         if (blockingBatch)
         {
-            return (blockingBatch->files == 0 && blockingBatch->folders == 0);
+            return blockingBatch->isEmpty();
         }
         return true;
     }
 
     void setAsUnblocked()
     {
-        delete blockingBatch;
-        blockingBatch = nullptr;
+        clearBlockingBatch();
     }
 
     void onTransferFinished(bool isFolderTransfer)
@@ -107,13 +112,20 @@ public:
             isFolderTransfer ? --blockingBatch->folders : --blockingBatch->files;
             if (blockingBatch->isEmpty())
             {
-                delete blockingBatch;
-                blockingBatch = nullptr;
+                clearBlockingBatch();
             }
         }
     }
 
     TransferBatch* blockingBatch = nullptr;
+
+private:
+
+   void clearBlockingBatch()
+   {
+       delete blockingBatch;
+       blockingBatch = nullptr;
+   }
 };
 
 #endif // MEGADOWNLOADER_H

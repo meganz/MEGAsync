@@ -445,11 +445,8 @@ protected:
     MultiQFileDialog *multiUploadFileDialog;
 
     QQueue<QString> uploadQueue;
-
-    TransferBatches activeUploadBatches;
-    TransferBatches activeDownloadBatches;
-
     QQueue<WrappedNode *> downloadQueue;
+    BlockingBatch blockingBatch;
 
     ThreadPool* mThreadPool;
     std::shared_ptr<mega::MegaNode> mRootNode;
@@ -583,13 +580,11 @@ private:
 
     void cancelAllTransfers(int type);
 
-    void updateFileTransferBatchesAndUi(TransferBatches& batches);
-    void updateFolderTransferBatchesAndUi(TransferBatches& batches);
-    void updateIfBlockingStageFinished(TransferBatches &batches);
+    void updateFileTransferBatchesAndUi(BlockingBatch& batches);
+    void updateFolderTransferBatchesAndUi(BlockingBatch& batches);
+    void updateIfBlockingStageFinished(BlockingBatch &batches);
 
-    TransferBatches* getBatchCollection(int type);
-
-    void logBatchCollectionStatus(const char* tag, TransferBatches* collection);
+    void logBatchCollectionStatus(const char* tag, BlockingBatch* collection);
 
     static QString createTransferId(mega::MegaTransfer *transfer);
     static QString buildBatchLogMessage(const char* tag, TransferBatch* batch);
