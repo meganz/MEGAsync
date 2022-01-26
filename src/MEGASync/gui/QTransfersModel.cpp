@@ -331,6 +331,9 @@ bool QTransfersModel::onTimerTransfers()
             startTransfer(std::move(transfer.second));
             mUpdatedTransfers.insert(transfer.first);
         }
+
+        updateTransfersCount();
+
         endInsertRows();
         mModelMutex->unlock();
         mCacheStartTransfers.clear();
@@ -359,6 +362,7 @@ bool QTransfersModel::onTimerTransfers()
     while (transferInfo != mCacheFinishedTransfers.end())
     {
         auto& transfer (transferInfo->first);
+
         if (mUpdatedTransfers.find(transfer->getTag()) == mUpdatedTransfers.end())
         {
             auto& error (transferInfo->second);

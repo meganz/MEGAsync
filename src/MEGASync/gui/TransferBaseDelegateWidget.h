@@ -7,6 +7,7 @@
 
 #include <QModelIndex>
 #include <QWidget>
+#include <QToolButton>
 
 class TransferBaseDelegateWidget : public QWidget
 {
@@ -27,6 +28,9 @@ public:
     void setCurrentIndex(const QModelIndex &currentIndex);
 
 protected:
+    bool setActionTransferIcon(QToolButton* button, const QString& iconName);
+    bool isMouseHoverInAction(QToolButton* button, const QPoint &mousePos);
+
     virtual void updateTransferState() = 0;
     virtual void setFileNameAndType() = 0;
     virtual void setType() = 0;
@@ -36,6 +40,7 @@ private:
     QExplicitlySharedDataPointer<TransferData> mData;
     TransferData::TransferState mPreviousState;
     QModelIndex mCurrentIndex;
+    QHash<QWidget*, QString> mLastActionTransferIconName;
 };
 
 #endif // TRANSFERBASEDELEGATEWIDGET

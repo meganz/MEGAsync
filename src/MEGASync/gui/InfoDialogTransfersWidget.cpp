@@ -3,7 +3,6 @@
 #include "MegaApplication.h"
 #include "MegaTransferDelegate.h"
 #include "InfoDialogTransferDelegateWidget.h"
-#include "MegaDelegateHoverManager.h"
 
 using namespace mega;
 
@@ -14,7 +13,6 @@ InfoDialogCurrentTransfersProxyModel::InfoDialogCurrentTransfersProxyModel(QObje
 
 InfoDialogCurrentTransfersProxyModel::~InfoDialogCurrentTransfersProxyModel()
 {
-
 }
 
 TransferBaseDelegateWidget* InfoDialogCurrentTransfersProxyModel::createTransferManagerItem(QWidget *parent)
@@ -107,7 +105,6 @@ InfoDialogTransfersWidget::InfoDialogTransfersWidget(QWidget *parent) :
     ui->setupUi(this);
     this->model = NULL;
     app = (MegaApplication *)qApp;
-    mViewHoverManager = std::make_unique<MegaDelegateHoverManager>();
 }
 
 void InfoDialogTransfersWidget::setupTransfers()
@@ -153,6 +150,5 @@ void InfoDialogTransfersWidget::configureTransferView()
     ui->tView->setFocusPolicy(Qt::NoFocus);
     ui->tView->disableContextMenus(true);
 
-
-    mViewHoverManager->setView(ui->tView);
+    mViewHoverManager.setView(ui->tView);
 }

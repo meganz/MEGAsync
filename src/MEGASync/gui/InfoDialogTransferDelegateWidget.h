@@ -59,11 +59,6 @@ private:
     bool mIsHover;
     TransferRemainingTime mTransferRemainingTime;
 
-    QString mLastActionTransferIconName;
-    QString mLastShowInFolderIconName;
-
-    bool setActionTransferIcon(const QString &name);
-    bool setShowInFolderIcon(const QString &name);
     void updateFinishedIco(int transferType, int errorCode);
     void updateTransferActive(const QExplicitlySharedDataPointer<TransferData> data);
     void updateTransferCompletedOrFailed(const QExplicitlySharedDataPointer<TransferData> data);

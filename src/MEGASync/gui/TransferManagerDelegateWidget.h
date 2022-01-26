@@ -13,32 +13,38 @@ class TransferManagerDelegateWidget;
 
 class TransferManagerDelegateWidget : public TransferBaseDelegateWidget
 {
-        Q_OBJECT
+    Q_OBJECT
 
-    public:
-        explicit TransferManagerDelegateWidget(QWidget* parent = 0);
-        ~TransferManagerDelegateWidget();
+public:
+    explicit TransferManagerDelegateWidget(QWidget* parent = 0);
+    ~TransferManagerDelegateWidget();
 
-        void finishTransfer(const QExplicitlySharedDataPointer<TransferData> data);
+    void finishTransfer(const QExplicitlySharedDataPointer<TransferData> data);
 
-        void updateTransferState() override;
-        void setFileNameAndType() override;
-        void setType() override;
+    void updateTransferState() override;
+    void setFileNameAndType() override;
+    void setType() override;
 
-        void setFileType(const QString& fileName);
+    void setFileType(const QString& fileName);
 
-    signals:
-        void cancelClearTransfer();
-        void pauseResumeTransfer();
-        void retryTransfer();
+    bool mouseHoverTransfer(bool isHover, const QPoint &pos) override;
 
-    private slots:
-        void on_tPauseResumeTransfer_clicked();
-        void on_tCancelClearTransfer_clicked();
-        void on_tItemRetry_clicked();
+signals:
+    void cancelClearTransfer();
+    void pauseResumeTransfer();
+    void retryTransfer();
 
-    private:
-        Ui::TransferManagerDelegateWidget *mUi;
+private slots:
+    void on_tPauseResumeTransfer_clicked();
+    void on_tCancelClearTransfer_clicked();
+    void on_tItemRetry_clicked();
+
+private:
+    bool setCancelClearTransferIcon(const QString &name);
+    bool setPauseResumeTransferIcon(const QString &name);
+
+    Ui::TransferManagerDelegateWidget *mUi;
+    QString mLastPauseResuemtTransferIconName;
 };
 
 #endif // TRANSFERMANAGERDELEGATEWIDGET_H

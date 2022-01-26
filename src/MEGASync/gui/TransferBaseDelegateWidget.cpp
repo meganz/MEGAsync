@@ -50,3 +50,29 @@ void TransferBaseDelegateWidget::setCurrentIndex(const QModelIndex &currentIndex
 {
     mCurrentIndex = currentIndex;
 }
+
+bool TransferBaseDelegateWidget::setActionTransferIcon(QToolButton *button, const QString &iconName)
+{
+    bool update(false);
+
+    auto oldIconName = mLastActionTransferIconName.value(button, QString());
+
+    if (oldIconName.isEmpty() || oldIconName != iconName)
+    {
+        button->setIcon(Utilities::getCachedPixmap(iconName));
+        button->setIconSize(QSize(24,24));
+        mLastActionTransferIconName.insert(button, iconName);
+
+        update = true;
+    }
+
+    return update;
+}
+
+bool TransferBaseDelegateWidget::isMouseHoverInAction(QToolButton *button, const QPoint& mousePos)
+{
+    auto actionGlobalPos = button->mapTo(this, QPoint(0,0));
+    QRect actionGeometry(actionGlobalPos, button->size());
+
+    return actionGeometry.contains(mousePos);
+}

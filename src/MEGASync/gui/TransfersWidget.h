@@ -5,6 +5,7 @@
 #include "MegaTransferDelegate.h"
 #include "TransfersStateInfoWidget.h"
 #include "TransfersSortFilterProxyModel.h"
+#include "MegaDelegateHoverManager.h"
 
 #include <QToolButton>
 #include <QMessageBox>
@@ -62,7 +63,8 @@ private:
     Ui::TransfersWidget *ui;
     QTransfersModel *model2;
     TransfersSortFilterProxyModel *mProxyModel;
-    MegaTransferDelegate *tDelegate2;
+    MegaTransferDelegate *tDelegate;
+    MegaDelegateHoverManager mDelegateHoverManager;
     bool mIsPaused;
     MegaApplication *app;
     HeaderState mHeaderNameState;

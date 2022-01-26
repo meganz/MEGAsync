@@ -10,7 +10,7 @@ const int TransfersWidget::PROXY_ACTIVITY_TIMEOUT_MS;
 TransfersWidget::TransfersWidget(QWidget* parent) :
     QWidget (parent),
     ui (new Ui::TransfersWidget),
-    tDelegate2 (nullptr),
+    tDelegate (nullptr),
     mIsPaused (false),
     app (qobject_cast<MegaApplication*>(qApp)),
     mHeaderNameState (HS_SORT_PRIORITY),
@@ -35,7 +35,7 @@ void TransfersWidget::setupTransfers()
 TransfersWidget::~TransfersWidget()
 {
     delete ui;
-    if (tDelegate2) delete tDelegate2;
+    if (tDelegate) delete tDelegate;
     if (mProxyModel) delete mProxyModel;
 }
 
@@ -46,13 +46,15 @@ void TransfersWidget::configureTransferView()
         return;
     }
 
-    tDelegate2 = new MegaTransferDelegate(mProxyModel, ui->tvTransfers);
+    tDelegate = new MegaTransferDelegate(mProxyModel, ui->tvTransfers);
     ui->tvTransfers->setup(this);
+    mDelegateHoverManager.setView(ui->tvTransfers);
+
     QtConcurrent::run([=]
     {
         ui->tvTransfers->setModel(mProxyModel);
     });
-    ui->tvTransfers->setItemDelegate(tDelegate2);
+    ui->tvTransfers->setItemDelegate(tDelegate);
     onPauseStateChanged(model2->areAllPaused());
 
     mProxyActivityTimer->setSingleShot(true);

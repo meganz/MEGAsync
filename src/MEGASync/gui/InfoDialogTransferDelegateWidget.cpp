@@ -212,39 +212,6 @@ QString InfoDialogTransferDelegateWidget::getTransferName()
     return mUi->lFileName->text();
 }
 
-bool InfoDialogTransferDelegateWidget::setActionTransferIcon(const QString &name)
-{
-    bool update(false);
-
-    if (name != mLastActionTransferIconName)
-    {
-        mUi->lActionTransfer->setIcon(Utilities::getCachedPixmap(name));
-        mUi->lActionTransfer->setIconSize(QSize(24,24));
-        mLastActionTransferIconName = name;
-
-        update = true;
-    }
-
-    return update;
-}
-
-bool InfoDialogTransferDelegateWidget::setShowInFolderIcon(const QString &name)
-{
-    bool update(false);
-
-    if (name != mLastShowInFolderIconName)
-    {
-        mUi->lShowInFolder->setIcon(Utilities::getCachedPixmap(name));
-        mUi->lShowInFolder->setIconSize(QSize(24,24));
-
-        mLastShowInFolderIconName = name;
-
-        update = true;
-    }
-
-    return update;
-}
-
 void InfoDialogTransferDelegateWidget::updateFinishedIco(int transferType, int errorCode)
 {
     QIcon iconCompleted;
@@ -285,15 +252,14 @@ bool InfoDialogTransferDelegateWidget::mouseHoverTransfer(bool isHover, const QP
         {
             if (!getData()->mIsSyncTransfer)
             {
-                auto actionGlobalPos = mUi->lActionTransfer->mapTo(this, QPoint(0,0));
-                QRect actionGeometry(actionGlobalPos, mUi->lActionTransfer->size());
-
-                bool in = actionGeometry.contains(/*mUi->lActionTransfer->mapFrom(this, pos)*/pos);
-                update = setActionTransferIcon(QString::fromAscii("://images/ico_item_retry%1.png").arg(QString::fromAscii(in?"":"_greyed")));
+                bool in = isMouseHoverInAction(mUi->lActionTransfer, pos);
+                update = setActionTransferIcon(mUi->lActionTransfer,
+                                               QString::fromAscii("://images/ico_item_retry%1.png").arg(QString::fromAscii(in?"":"_greyed")));
             }
             else
             {
-                update = setActionTransferIcon(QString::fromAscii("://images/error.png"));
+                update = setActionTransferIcon(mUi->lActionTransfer,
+                                               QString::fromAscii("://images/error.png"));
                 mActionButtonsEnabled = false;
             }
             mUi->lShowInFolder->hide();
@@ -301,28 +267,21 @@ bool InfoDialogTransferDelegateWidget::mouseHoverTransfer(bool isHover, const QP
         }
         else if (getData()->mIsPublicNode)
         {
-            auto actionGlobalPos = mUi->lActionTransfer->mapTo(this, QPoint(0,0));
-            QRect actionGeometry(actionGlobalPos, mUi->lActionTransfer->size());
+            bool inAction = isMouseHoverInAction(mUi->lActionTransfer, pos);
+            update = setActionTransferIcon(mUi->lActionTransfer,
+                                           QString::fromAscii("://images/ico_item_link%1.png").arg(QString::fromAscii(inAction?"":"_greyed")));
 
-            bool inAction = actionGeometry.contains(pos);
-
-            update = setActionTransferIcon(QString::fromAscii("://images/ico_item_link%1.png").arg(QString::fromAscii(inAction?"":"_greyed")));
-
-            auto showInFolderGlobalPos = mUi->lShowInFolder->mapTo(this, QPoint(0,0));
-            QRect showInFolderGeometry(showInFolderGlobalPos, mUi->lShowInFolder->size());
-            bool inShowFolder = showInFolderGeometry.contains(pos);
-
-            update |= setShowInFolderIcon(QString::fromAscii("://images/showinfolder%1.png").arg(QString::fromAscii(inShowFolder?"":"_greyed")));
+            bool inShowFolder = isMouseHoverInAction(mUi->lShowInFolder, pos);
+            update = setActionTransferIcon(mUi->lShowInFolder,
+                                           QString::fromAscii("://images/showinfolder%1.png").arg(QString::fromAscii(inShowFolder?"":"_greyed")));
 
             mUi->lShowInFolder->show();
         }
         else
         {
-            auto actionGlobalPos = mUi->lActionTransfer->mapTo(this, QPoint(0,0));
-            QRect actionGeometry(actionGlobalPos, mUi->lActionTransfer->size());
-
-            bool in = actionGeometry.contains(/*mUi->lActionTransfer->mapFrom(this, pos)*/pos);
-            update = setActionTransferIcon(QString::fromAscii("://images/showinfolder%1.png").arg(QString::fromAscii(in?"":"_greyed")));
+            bool inAction = isMouseHoverInAction(mUi->lActionTransfer, pos);
+            update = setActionTransferIcon(mUi->lActionTransfer,
+                                           QString::fromAscii("://images/showinfolder%1.png").arg(QString::fromAscii(inAction?"":"_greyed")));
         }
     }
     else
@@ -330,13 +289,15 @@ bool InfoDialogTransferDelegateWidget::mouseHoverTransfer(bool isHover, const QP
         mActionButtonsEnabled = false;
         if (getData()->mErrorCode < 0)
         {
-            update = setActionTransferIcon(QString::fromAscii("://images/error.png"));
+            update = setActionTransferIcon(mUi->lActionTransfer,
+                                           QString::fromAscii("://images/error.png"));
             mUi->lActionTransfer->setIconSize(QSize(24,24));
             mUi->lShowInFolder->hide();
         }
         else
         {
-            update = setActionTransferIcon(QString::fromAscii("://images/success.png"));
+            update = setActionTransferIcon(mUi->lActionTransfer,
+                                           QString::fromAscii("://images/success.png"));
             mUi->lActionTransfer->setIconSize(QSize(24,24));
             mUi->lShowInFolder->hide();
         }

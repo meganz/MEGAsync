@@ -71,8 +71,8 @@ void TransfersSortFilterProxyModel::sort(int, Qt::SortOrder order)
 
 void TransfersSortFilterProxyModel::sort(SortCriterion column, Qt::SortOrder order)
 {
-    //QtConcurrent::run([=]
-    //{
+    QtConcurrent::run([=]
+    {
         emit modelAboutToBeSorted();
         auto transferModel (static_cast<QTransfersModel*> (sourceModel()));
         transferModel->lockModelMutex(true);
@@ -85,7 +85,7 @@ void TransfersSortFilterProxyModel::sort(SortCriterion column, Qt::SortOrder ord
         QSortFilterProxyModel::sort(0, order);
         transferModel->lockModelMutex(false);
         emit modelSorted();
-    //});
+    });
 }
 
 void TransfersSortFilterProxyModel::setFilterFixedString(const QString& pattern)

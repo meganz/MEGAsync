@@ -7,6 +7,7 @@
 #include "QTransfersModel.h"
 #include "MegaTransferDelegate.h"
 #include "TransfersSortFilterProxyModel.h"
+#include "MegaDelegateHoverManager.h"
 
 namespace Ui {
 class InfoDialogTransfersWidget;
@@ -52,7 +53,7 @@ protected:
 private:
     Ui::InfoDialogTransfersWidget *ui;
     InfoDialogCurrentTransfersProxyModel *model;
-    std::unique_ptr<MegaDelegateHoverManager> mViewHoverManager;
+    MegaDelegateHoverManager mViewHoverManager;
 
 private:
     void configureTransferView();
