@@ -54,7 +54,7 @@ bool MegaDownloader::processDownloadQueue(QQueue<WrappedNode*>* downloadQueue, B
         }
 
         // We now have all the necessary info to effectively download.
-        bool transferStarted = download(wNode, currentPath, appData, batch->cancelToken.get());
+        bool transferStarted = download(wNode, currentPath, appData, batch->getCancelTokenPtr());
         if (transferStarted)
         {
             batch->add(QFileInfo(currentPath).isDir());

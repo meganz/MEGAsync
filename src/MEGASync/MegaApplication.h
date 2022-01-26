@@ -584,10 +584,7 @@ private:
     void updateFolderTransferBatchesAndUi(BlockingBatch& batches);
     void updateIfBlockingStageFinished(BlockingBatch &batches);
 
-    void logBatchCollectionStatus(const char* tag, BlockingBatch* collection);
-
-    static QString createTransferId(mega::MegaTransfer *transfer);
-    static QString buildBatchLogMessage(const char* tag, TransferBatch* batch);
+    void logBatchCollectionStatus(const char* tag);
 
     bool noUploadedStarted = true;
 };

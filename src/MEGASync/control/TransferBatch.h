@@ -10,122 +10,61 @@
 class TransferBatch
 {
 public:
-    TransferBatch()
-    {
-        cancelToken = std::shared_ptr<mega::MegaCancelToken>(mega::MegaCancelToken::createInstance());
-    }
+    TransferBatch();
+    ~TransferBatch() = default;
 
-    ~TransferBatch()
-    {
-    }
+    TransferBatch* createCollectionCopy();
 
-    TransferBatch* createCollectionCopy()
-    {
-        auto copy = new TransferBatch();
-        copy->cancelToken = cancelToken;
-        copy->files = files;
-        copy->folders = folders;
-        return copy;
-    }
+    bool isEmpty();
 
-    bool isEmpty()
-    {
-        return (files == 0 && folders == 0);
-    }
+    void add(bool isDir);
 
-    void add(bool isDir)
-    {
-        isDir ? ++folders : ++files;
-    }
+    void cancel();
 
-    void cancel()
-    {
-        cancelToken->cancel();
-    }
+    void onFileScanCompleted();
 
+    void onFolderScanCompleted();
+
+    void onTransferFinished(bool isDir);
+
+    QString description();
+
+    mega::MegaCancelToken* getCancelTokenPtr();
+
+private:
     int files = 0;
     int folders = 0;
-
     std::shared_ptr<mega::MegaCancelToken> cancelToken;
 };
 
 class BlockingBatch
 {
 public:
-    BlockingBatch()
-    {
-    }
+    BlockingBatch() = default;
 
-    ~BlockingBatch()
-    {
-        clearBlockingBatch();
-    }
+    ~BlockingBatch();
 
-    void add(TransferBatch* batch)
-    {
-        delete blockingBatch;
-        blockingBatch = batch->createCollectionCopy();
-    }
+    void add(TransferBatch* batch);
 
-    void cancelTransfer()
-    {
-        if (blockingBatch)
-        {
-            blockingBatch->cancel();
-        }
-    }
+    void cancelTransfer();
 
-    void onFileScanCompleted()
-    {
-        if (blockingBatch && blockingBatch->files > 0)
-        {
-            --blockingBatch->files;
-        }
-    }
+    void onFileScanCompleted();
 
-    void onFolderScanCompleted()
-    {
-        if (blockingBatch && blockingBatch->folders > 0)
-        {
-            --blockingBatch->folders;
-        }
-    }
+    void onFolderScanCompleted();
 
-    bool isBlockingStageFinished()
-    {
-        if (blockingBatch)
-        {
-            return blockingBatch->isEmpty();
-        }
-        return true;
-    }
+    bool isBlockingStageFinished();
 
-    void setAsUnblocked()
-    {
-        clearBlockingBatch();
-    }
+    void setAsUnblocked();
 
-    void onTransferFinished(bool isFolderTransfer)
-    {
-        if (blockingBatch)
-        {
-            isFolderTransfer ? --blockingBatch->folders : --blockingBatch->files;
-            if (blockingBatch->isEmpty())
-            {
-                clearBlockingBatch();
-            }
-        }
-    }
+    void onTransferFinished(bool isFolderTransfer);
 
-    TransferBatch* blockingBatch = nullptr;
+    QString description();
 
 private:
 
-   void clearBlockingBatch()
-   {
-       delete blockingBatch;
-       blockingBatch = nullptr;
-   }
+   void clearBlockingBatch();
+
+   TransferBatch* blockingBatch = nullptr;
 };
 
 #endif // MEGADOWNLOADER_H

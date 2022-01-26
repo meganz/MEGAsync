@@ -211,6 +211,7 @@ set (MOC_INPUT
     ${MEGAsyncDir}/control/UpdateTask.h
     ${MEGAsyncDir}/control/ThreadPool.h
     ${MEGAsyncDir}/control/MegaController.h
+    ${MEGAsyncDir}/control/TransferBatch.h    
     ${MEGAsyncDir}/model/SyncSettings.h
 	${MEGAsyncDir}/model/InfoDialogTransfersProxyModel.h
 	${MEGAsyncDir}/model/TransfersManagerSortFilterProxyModel.h
@@ -457,6 +458,7 @@ set (SRCS
     ${MEGAsyncDir}/control/ConnectivityChecker.cpp
     ${MEGAsyncDir}/control/TransferRemainingTime.cpp
     ${MEGAsyncDir}/control/MegaController.cpp
+    ${MEGAsyncDir}/control/TransferBatch.cpp    
 
     ${MEGAsyncDir}/model/SyncSettings.cpp
     ${MEGAsyncDir}/model/Model.cpp
