@@ -69,7 +69,7 @@ public:
         }
     }
 
-    void onFileScanCompleted(const QString& appId)
+    void onFileScanCompleted()
     {
         if (blockingBatch && blockingBatch->files > 0)
         {
@@ -77,7 +77,7 @@ public:
         }
     }
 
-    void onFolderScanCompleted(const QString& appId)
+    void onFolderScanCompleted()
     {
         if (blockingBatch && blockingBatch->folders > 0)
         {

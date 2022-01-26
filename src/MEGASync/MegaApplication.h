@@ -583,17 +583,16 @@ private:
 
     void cancelAllTransfers(int type);
 
-    void updateFileTransferBatchesAndUi(const QString& appId, TransferBatches& batches);
-    void updateFolderTransferBatchesAndUi(const QString& appId, TransferBatches& batches);
+    void updateFileTransferBatchesAndUi(TransferBatches& batches);
+    void updateFolderTransferBatchesAndUi(TransferBatches& batches);
     void updateIfBlockingStageFinished(TransferBatches &batches);
 
     TransferBatches* getBatchCollection(int type);
 
-    void logTransferBatchChange(const char* tag, int type, QString id);
     void logBatchCollectionStatus(const char* tag, TransferBatches* collection);
 
     static QString createTransferId(mega::MegaTransfer *transfer);
-    static QString buildBatchLogMessage(const char* tag, QString tabs, TransferBatch* batch);
+    static QString buildBatchLogMessage(const char* tag, TransferBatch* batch);
 
     bool noUploadedStarted = true;
 };
