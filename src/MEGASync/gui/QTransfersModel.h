@@ -30,7 +30,7 @@ struct TransfersCount
     int currentUpload;
     int currentDownload;
 
-    TransfersCount::TransfersCount():
+    TransfersCount():
         leftUploadBytes(0),
         completedUploadBytes(0),
         leftDownloadBytes(0),
