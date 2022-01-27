@@ -37,7 +37,7 @@ BackupsWizard::BackupsWizard(QWidget* parent) :
     mSuccessDialogUi (nullptr)
 {
     mUi->setupUi(this);
-    setWindowFlags(Qt::WindowCloseButtonHint);
+    setWindowFlags(windowFlags() | Qt::WindowCloseButtonHint);
 
     mHighDpiResize.init(this);
 
