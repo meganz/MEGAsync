@@ -279,13 +279,14 @@ void TransferManagerDelegateWidget::setType()
     mUi->bItemSpeed->setIcon(icon);
 }
 
-bool TransferManagerDelegateWidget::mouseHoverTransfer(bool isHover, const QPoint &pos)
+TransferBaseDelegateWidget::ActionHoverType TransferManagerDelegateWidget::mouseHoverTransfer(bool isHover, const QPoint &pos)
 {
     bool update(false);
+    ActionHoverType hoverType(ActionHoverType::NONE);
 
     if(!getData())
     {
-        return false;
+        return hoverType;
     }
 
     if (isHover)
@@ -303,14 +304,28 @@ bool TransferManagerDelegateWidget::mouseHoverTransfer(bool isHover, const QPoin
             update |= setActionTransferIcon(mUi->tPauseResumeTransfer, inPauseResume ? hoverPauseResume
                                                                 : mLastPauseResuemtTransferIconName);
         }
+
+        if(inCancelClear || inPauseResume)
+        {
+            hoverType = ActionHoverType::HOVER_ENTER;
+        }
+        else if(update)
+        {
+            hoverType = ActionHoverType::HOVER_LEAVE;
+        }
     }
     else
     {
         update = setActionTransferIcon(mUi->tCancelClearTransfer, QString::fromAscii("://images/lists_cancel_ico.png"));
         update |= setActionTransferIcon(mUi->tPauseResumeTransfer, mLastPauseResuemtTransferIconName);
+
+        if(update)
+        {
+            hoverType = ActionHoverType::HOVER_LEAVE;
+        }
     }
 
-    return update;
+    return hoverType;
 }
 
 void TransferManagerDelegateWidget::on_tPauseResumeTransfer_clicked()

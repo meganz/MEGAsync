@@ -14,11 +14,18 @@ class TransferBaseDelegateWidget : public QWidget
     Q_OBJECT
 
 public:
+    enum class ActionHoverType
+    {
+        NONE = 0,
+        HOVER_ENTER,
+        HOVER_LEAVE
+    };
+
     explicit TransferBaseDelegateWidget(QWidget* parent = nullptr);
     ~TransferBaseDelegateWidget(){}
 
     void updateUi(const QExplicitlySharedDataPointer<TransferData> data, int);
-    virtual bool mouseHoverTransfer(bool, const QPoint&){return false;}
+    virtual ActionHoverType mouseHoverTransfer(bool, const QPoint&){return ActionHoverType::NONE;}
 
     bool stateHasChanged();
 

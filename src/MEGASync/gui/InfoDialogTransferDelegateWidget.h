@@ -25,7 +25,7 @@ public:
 
     ~InfoDialogTransferDelegateWidget();
 
-    bool mouseHoverTransfer(bool isHover, const QPoint &pos) override;
+    ActionHoverType mouseHoverTransfer(bool isHover, const QPoint &pos) override;
 
     void finishTransfer();
 

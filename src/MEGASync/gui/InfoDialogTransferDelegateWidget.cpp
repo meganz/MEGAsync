@@ -234,13 +234,14 @@ void InfoDialogTransferDelegateWidget::updateFinishedIco(int transferType, int e
     mUi->lTransferTypeCompleted->setIconSize(QSize(mUi->lTransferTypeCompleted->width(), mUi->lTransferTypeCompleted->height()));
 }
 
-bool InfoDialogTransferDelegateWidget::mouseHoverTransfer(bool isHover, const QPoint &pos)
+TransferBaseDelegateWidget::ActionHoverType InfoDialogTransferDelegateWidget::mouseHoverTransfer(bool isHover, const QPoint &pos)
 {
     bool update(false);
+    ActionHoverType hoverType(ActionHoverType::NONE);
 
     if(!getData())
     {
-        return false;
+        return hoverType;
     }
 
     mIsHover = isHover;
@@ -255,12 +256,25 @@ bool InfoDialogTransferDelegateWidget::mouseHoverTransfer(bool isHover, const QP
                 bool in = isMouseHoverInAction(mUi->lActionTransfer, pos);
                 update = setActionTransferIcon(mUi->lActionTransfer,
                                                QString::fromAscii("://images/ico_item_retry%1.png").arg(QString::fromAscii(in?"":"_greyed")));
+                if(in)
+                {
+                    hoverType = ActionHoverType::HOVER_ENTER;
+                }
+                else if(update)
+                {
+                    hoverType = ActionHoverType::HOVER_LEAVE;
+                }
             }
             else
             {
                 update = setActionTransferIcon(mUi->lActionTransfer,
                                                QString::fromAscii("://images/error.png"));
                 mActionButtonsEnabled = false;
+
+                if(update)
+                {
+                    hoverType = ActionHoverType::HOVER_LEAVE;
+                }
             }
             mUi->lShowInFolder->hide();
             update = true;
@@ -272,16 +286,30 @@ bool InfoDialogTransferDelegateWidget::mouseHoverTransfer(bool isHover, const QP
                                            QString::fromAscii("://images/ico_item_link%1.png").arg(QString::fromAscii(inAction?"":"_greyed")));
 
             bool inShowFolder = isMouseHoverInAction(mUi->lShowInFolder, pos);
-            update = setActionTransferIcon(mUi->lShowInFolder,
+            update |= setActionTransferIcon(mUi->lShowInFolder,
                                            QString::fromAscii("://images/showinfolder%1.png").arg(QString::fromAscii(inShowFolder?"":"_greyed")));
 
             mUi->lShowInFolder->show();
+
+            if(inAction || inShowFolder)
+            {
+                hoverType = ActionHoverType::HOVER_ENTER;
+            }
+            else if(update)
+            {
+                hoverType = ActionHoverType::HOVER_LEAVE;
+            }
         }
         else
         {
             bool inAction = isMouseHoverInAction(mUi->lActionTransfer, pos);
             update = setActionTransferIcon(mUi->lActionTransfer,
                                            QString::fromAscii("://images/showinfolder%1.png").arg(QString::fromAscii(inAction?"":"_greyed")));
+
+            if(update)
+            {
+                hoverType = ActionHoverType::HOVER_LEAVE;
+            }
         }
     }
     else
@@ -301,9 +329,14 @@ bool InfoDialogTransferDelegateWidget::mouseHoverTransfer(bool isHover, const QP
             mUi->lActionTransfer->setIconSize(QSize(24,24));
             mUi->lShowInFolder->hide();
         }
+
+        if(update)
+        {
+            hoverType = ActionHoverType::HOVER_LEAVE;
+        }
     }
 
-    return update;
+    return hoverType;
 }
 
 bool InfoDialogTransferDelegateWidget::mouseHoverRetryingLabel(QPoint pos)

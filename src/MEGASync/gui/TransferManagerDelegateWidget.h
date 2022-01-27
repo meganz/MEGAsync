@@ -27,7 +27,7 @@ public:
 
     void setFileType(const QString& fileName);
 
-    bool mouseHoverTransfer(bool isHover, const QPoint &pos) override;
+    ActionHoverType mouseHoverTransfer(bool isHover, const QPoint &pos) override;
 
 signals:
     void cancelClearTransfer();

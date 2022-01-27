@@ -211,8 +211,22 @@ void MegaTransferDelegate::onHoverMove(const QModelIndex &index, const QRect &re
     auto currentRow (getTransferItemWidget(index, rect.size()));
     if(currentRow)
     {
-        if(currentRow->mouseHoverTransfer(true, pos))
+        auto hoverType = currentRow->mouseHoverTransfer(true, pos);
+
+        if(hoverType != TransferBaseDelegateWidget::ActionHoverType::NONE)
         {
+            if(hoverType == TransferBaseDelegateWidget::ActionHoverType::HOVER_ENTER)
+            {
+               mView->setCursor(Qt::PointingHandCursor);
+            }
+            else
+            {
+                if(mView->cursor() != Qt::ArrowCursor)
+                {
+                    mView->setCursor(Qt::ArrowCursor);
+                }
+            }
+
             mView->update(rect);
         }
     }

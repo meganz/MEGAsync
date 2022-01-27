@@ -385,6 +385,9 @@
                <height>24</height>
               </rect>
              </property>
+             <property name="cursor">
+              <cursorShape>PointingHandCursor</cursorShape>
+             </property>
              <property name="toolTip">
               <string>Pause or resume all selected transfers</string>
              </property>
@@ -397,6 +400,9 @@
           </item>
           <item>
            <widget class="QToolButton" name="tCancelAll">
+            <property name="cursor">
+             <cursorShape>PointingHandCursor</cursorShape>
+            </property>
             <property name="toolTip">
              <string>Cancel all selected transfers</string>
             </property>
