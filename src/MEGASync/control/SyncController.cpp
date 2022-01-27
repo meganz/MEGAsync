@@ -58,8 +58,11 @@ void SyncController::removeSync(std::shared_ptr<SyncSetting> syncSetting, bool r
                  .arg(syncSetting->name()).toUtf8().constData());
 
     std::shared_ptr<MegaNode> node(mApi->getNodeByHandle(syncSetting->getMegaHandle()));
-    mApi->removeSync(node.get(), mDelegateListener);
-    mRemoveRemote = removeRemote;
+    // does the remote node still exist?
+    if(node.get())
+        mRemoveRemote = removeRemote; // Remove remote node after backup removal
+    mApi->removeSync(syncSetting->backupId(), mDelegateListener);
+    // FIXME: There is a bug in SyncModel class handling that persists the saved Backup entry after SDK delete
 }
 
 void SyncController::enableSync(std::shared_ptr<SyncSetting> syncSetting)
