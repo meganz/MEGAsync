@@ -416,8 +416,10 @@ void TransferManager::refreshTypeStats()
 
 void TransferManager::enterBlockingState()
 {
-    ui->bClearAll->setText(QString::fromUtf8("Blocked"));
-    ui->bClearAll->setEnabled(true); // TEMP : to be able to cancel blocking stage (cancelTokens)
+    enableUserActions(false);
+    ui->wTabHeader->setVisible(false);
+    lastIndex = ui->wTransfers->currentIndex();
+    ui->wTransfers->setCurrentIndex(4);
 }
 
 void TransferManager::refreshFileTypesStats()

@@ -3290,8 +3290,9 @@ void MegaApplication::updateIfBlockingStageFinished(BlockingBatch &batches)
 {
     if (batches.isBlockingStageFinished())
     {
-        setTransferUiInUnblockedState();
-        batches.setAsUnblocked();
+        // TEMP : to check blocking state without hurry
+        //setTransferUiInUnblockedState();
+        //batches.setAsUnblocked();
     }
 }
 
@@ -3306,9 +3307,21 @@ void MegaApplication::logBatchCollectionStatus(const char* tag)
 #endif
 }
 
+void MegaApplication::enableTransferActions(bool enable)
+{
+    importLinksAction->setEnabled(enable);
+    uploadAction->setEnabled(enable);
+    downloadAction->setEnabled(enable);
+    streamAction->setEnabled(enable);
+    settingsAction->setEnabled(enable);
+}
+
 void MegaApplication::setTransferUiInBlockingState()
 {
     MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Transfer UI entering blocking state").toUtf8().constData());
+
+    enableTransferActions(false);
+
     if (transferManager)
     {
         transferManager->enterBlockingState();
@@ -3323,6 +3336,9 @@ void MegaApplication::setTransferUiInBlockingState()
 void MegaApplication::setTransferUiInUnblockedState()
 {
     MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Transfer UI leaving blocking state").toUtf8().constData());
+
+    enableTransferActions(true);
+
     if (transferManager)
     {
         transferManager->leaveBlockingState();

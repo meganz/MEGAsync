@@ -279,6 +279,9 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
     connect(&animationGroupBlockedError, SIGNAL(finished()), this, SLOT(onAnimationFinishedBlockedError()));
 
     adjustSize();
+
+    movie = new QMovie(this);
+    movie->setCacheMode(QMovie::CacheAll);
 }
 
 InfoDialog::~InfoDialog()
@@ -299,6 +302,8 @@ InfoDialog::~InfoDialog()
         syncsMenu->deleteLater();
         syncsMenu.release();
     }
+
+    delete movie;
 }
 
 PSA_info *InfoDialog::getPSAdata()
@@ -1374,12 +1379,28 @@ void InfoDialog::onTransferUpdate(MegaApi *api, MegaTransfer *transfer)
 
 void InfoDialog::enterBlockingState()
 {
+    lastTabIndex = ui->sTabs->currentIndex();
+    enableUserActions(false);
+    ui->sTabs->setCurrentIndex(2);
+    ui->wTabOptions->setVisible(false);
 
+    movie->setFileName(QString::fromLatin1("/home/mickael/Pictures/crazycat.gif"));
+    if (!movie->isValid())
+    {
+        megaApi->log(MegaApi::LOG_LEVEL_DEBUG, "GIF loading problem");
+    }
+    else
+        megaApi->log(MegaApi::LOG_LEVEL_DEBUG, "GIF OK :-)");
+    ui->lAnimation->setMovie(movie);
+    movie->start();
 }
 
 void InfoDialog::leaveBlockingState()
 {
-
+    enableUserActions(true);
+    ui->sTabs->setCurrentIndex(lastTabIndex);
+    ui->wTabOptions->setVisible(true);
+    movie->stop();
 }
 
 void InfoDialog::changeEvent(QEvent *event)
@@ -1969,4 +1990,17 @@ void InfoDialog::paintEvent(QPaintEvent * e)
 double InfoDialog::computeRatio(long long completed, long long remaining)
 {
     return static_cast<double>(completed) / static_cast<double>(remaining);
+}
+
+void InfoDialog::enableUserActions(bool value)
+{
+    ui->bUpgrade->setEnabled(value);
+    ui->bAddSync->setEnabled(value);
+    ui->bUpload->setEnabled(value);
+    ui->bDownload->setEnabled(value);
+
+    if (addSyncAction)
+    {
+        addSyncAction->setEnabled(value);
+    }
 }

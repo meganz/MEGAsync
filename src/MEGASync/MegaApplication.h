@@ -586,6 +586,8 @@ private:
 
     void logBatchCollectionStatus(const char* tag);
 
+    void enableTransferActions(bool enable);
+
     bool noUploadedStarted = true;
 };
 

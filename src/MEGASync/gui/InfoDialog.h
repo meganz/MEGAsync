@@ -260,6 +260,10 @@ protected:
 
  private:
     static double computeRatio(long long completed, long long remaining);
+
+    void enableUserActions(bool value);
+    int lastTabIndex = 0;
+    QMovie *movie = nullptr;
 };
 
 #endif // INFODIALOG_H
