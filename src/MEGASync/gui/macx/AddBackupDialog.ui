@@ -72,7 +72,7 @@ padding-left:3px;
     <number>16</number>
    </property>
    <item>
-    <widget class="QLabel" name="macOSBigSurTitleLabel">
+    <widget class="QLabel" name="embeddedTitleLabel">
      <property name="font">
       <font>
        <family>SF Pro Text</family>
