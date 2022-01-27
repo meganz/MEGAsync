@@ -48,7 +48,7 @@
    </property>
    <property name="icon">
     <iconset resource="../Resources_linux.qrc">
-     <normaloff>:/images/transfer_manager_greyed.png</normaloff>:/images/transfer_manager_greyed.png</iconset>
+     <normaloff>:/images/transfer_manager.png</normaloff>:/images/transfer_manager.png</iconset>
    </property>
    <property name="iconSize">
     <size>

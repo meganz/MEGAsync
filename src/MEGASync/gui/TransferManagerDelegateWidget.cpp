@@ -292,15 +292,15 @@ TransferBaseDelegateWidget::ActionHoverType TransferManagerDelegateWidget::mouse
     if (isHover)
     {
         bool inCancelClear = isMouseHoverInAction(mUi->tCancelClearTransfer, pos);
-        update = setActionTransferIcon(mUi->tCancelClearTransfer, inCancelClear ? QString::fromAscii("://images/lists_cancel_all_ico.png")
+        update = setActionTransferIcon(mUi->tCancelClearTransfer, inCancelClear ? QString::fromAscii("://images/lists_cancel_hover_ico.png")
                                                             : QString::fromAscii("://images/lists_cancel_ico.png"));
 
         bool inPauseResume = isMouseHoverInAction(mUi->tPauseResumeTransfer, pos);
 
         if(getData())
         {
-            auto hoverPauseResume = getData()->mState == TransferData::TransferState::TRANSFER_QUEUED ? QString::fromAscii("://images/lists_pause_all_ico.png") :
-                                                                                                    QString::fromAscii("://images/lists_resume_all_ico.png");
+            auto hoverPauseResume = getData()->mState == TransferData::TransferState::TRANSFER_PAUSED ? QString::fromAscii("://images/lists_resume_hover_ico.png") :
+                                                                                                    QString::fromAscii("://images/lists_pause_hover_ico.png");
             update |= setActionTransferIcon(mUi->tPauseResumeTransfer, inPauseResume ? hoverPauseResume
                                                                 : mLastPauseResuemtTransferIconName);
         }

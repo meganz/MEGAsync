@@ -84,11 +84,11 @@ bool TransfersStatusWidget::eventFilter(QObject *obj, QEvent *event)
 {
     if (event->type() == QEvent::Enter)
     {
-        ui->bTransferManager->setIcon(QIcon(QString::fromAscii(":/images/transfer_manager.png")));
+        ui->bTransferManager->setIcon(QIcon(QString::fromAscii(":/images/transfer_manager_hover_ico.png")));
     }
     else  if (event->type() == QEvent::Leave)
     {
-        ui->bTransferManager->setIcon(QIcon(QString::fromAscii(":/images/transfer_manager_greyed.png")));
+        ui->bTransferManager->setIcon(QIcon(QString::fromAscii(":/images/transfer_manager.png")));
     }
 
     return QWidget::eventFilter(obj,event);

@@ -255,7 +255,7 @@ TransferBaseDelegateWidget::ActionHoverType InfoDialogTransferDelegateWidget::mo
             {
                 bool in = isMouseHoverInAction(mUi->lActionTransfer, pos);
                 update = setActionTransferIcon(mUi->lActionTransfer,
-                                               QString::fromAscii("://images/ico_item_retry%1.png").arg(QString::fromAscii(in?"":"_greyed")));
+                                               QString::fromAscii("://images/ico_item_retry%1.png").arg(QString::fromAscii(in?"_hover_ico":"")));
                 if(in)
                 {
                     hoverType = ActionHoverType::HOVER_ENTER;
@@ -283,11 +283,11 @@ TransferBaseDelegateWidget::ActionHoverType InfoDialogTransferDelegateWidget::mo
         {
             bool inAction = isMouseHoverInAction(mUi->lActionTransfer, pos);
             update = setActionTransferIcon(mUi->lActionTransfer,
-                                           QString::fromAscii("://images/ico_item_link%1.png").arg(QString::fromAscii(inAction?"":"_greyed")));
+                                           QString::fromAscii("://images/ico_item_link%1.png").arg(QString::fromAscii(inAction?"_hover_ico":"")));
 
             bool inShowFolder = isMouseHoverInAction(mUi->lShowInFolder, pos);
             update |= setActionTransferIcon(mUi->lShowInFolder,
-                                           QString::fromAscii("://images/showinfolder%1.png").arg(QString::fromAscii(inShowFolder?"":"_greyed")));
+                                           QString::fromAscii("://images/showinfolder%1.png").arg(QString::fromAscii(inShowFolder?"_hover_ico":"")));
 
             mUi->lShowInFolder->show();
 
@@ -304,7 +304,7 @@ TransferBaseDelegateWidget::ActionHoverType InfoDialogTransferDelegateWidget::mo
         {
             bool inAction = isMouseHoverInAction(mUi->lActionTransfer, pos);
             update = setActionTransferIcon(mUi->lActionTransfer,
-                                           QString::fromAscii("://images/showinfolder%1.png").arg(QString::fromAscii(inAction?"":"_greyed")));
+                                           QString::fromAscii("://images/showinfolder%1.png").arg(QString::fromAscii(inAction?"_hover_ico":"")));
 
             if(update)
             {

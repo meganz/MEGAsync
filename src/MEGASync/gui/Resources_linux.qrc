@@ -268,18 +268,18 @@
         <file>images/ico_Import_links@3x.png</file>
         <file>images/ico_Import_links_out@3x.png</file>
         <file>images/ico_Import_links_over@3x.png</file>
+        <file>images/ico_item_link_hover_ico.png</file>
+        <file>images/ico_item_link_hover_ico@2x.png</file>
+        <file>images/ico_item_link_hover_ico@3x.png</file>
         <file>images/ico_item_link.png</file>
         <file>images/ico_item_link@2x.png</file>
         <file>images/ico_item_link@3x.png</file>
-        <file>images/ico_item_link_greyed.png</file>
-        <file>images/ico_item_link_greyed@2x.png</file>
-        <file>images/ico_item_link_greyed@3x.png</file>
+        <file>images/ico_item_retry_hover_ico.png</file>
+        <file>images/ico_item_retry_hover_ico@2x.png</file>
+        <file>images/ico_item_retry_hover_ico@3x.png</file>
         <file>images/ico_item_retry.png</file>
         <file>images/ico_item_retry@2x.png</file>
         <file>images/ico_item_retry@3x.png</file>
-        <file>images/ico_item_retry_greyed.png</file>
-        <file>images/ico_item_retry_greyed@2x.png</file>
-        <file>images/ico_item_retry_greyed@3x.png</file>
         <file>images/ico_MEGA_website.png</file>
         <file>images/ico_MEGA_website@2x.png</file>
         <file>images/ico_MEGA_website@3x.png</file>
@@ -534,12 +534,12 @@
         <file>images/Shield_big.png</file>
         <file>images/Shield_big@2x.png</file>
         <file>images/Shield_big@3x.png</file>
+        <file>images/showinfolder_hover_ico.png</file>
+        <file>images/showinfolder_hover_ico@2x.png</file>
+        <file>images/showinfolder_hover_ico@3x.png</file>
         <file>images/showinfolder.png</file>
         <file>images/showinfolder@2x.png</file>
         <file>images/showinfolder@3x.png</file>
-        <file>images/showinfolder_greyed.png</file>
-        <file>images/showinfolder_greyed@2x.png</file>
-        <file>images/showinfolder_greyed@3x.png</file>
         <file>images/small_3D.png</file>
         <file>images/small_3D@2x.png</file>
         <file>images/small_3D@3x.png</file>
@@ -712,12 +712,12 @@
         <file>images/transfer_for_business.png</file>
         <file>images/transfer_for_business@2x.png</file>
         <file>images/transfer_for_business@3x.png</file>
+        <file>images/transfer_manager_hover_ico.png</file>
+        <file>images/transfer_manager_hover_ico@2x.png</file>
+        <file>images/transfer_manager_hover_ico@3x.png</file>
         <file>images/transfer_manager.png</file>
         <file>images/transfer_manager@2x.png</file>
         <file>images/transfer_manager@3x.png</file>
-        <file>images/transfer_manager_greyed.png</file>
-        <file>images/transfer_manager_greyed@2x.png</file>
-        <file>images/transfer_manager_greyed@3x.png</file>
         <file>images/tray_preferences_ico.png</file>
         <file>images/tray_preferences_ico@2x.png</file>
         <file>images/tray_preferences_ico@3x.png</file>
@@ -1008,5 +1008,14 @@
         <file>images/synching_ico.png</file>
         <file>images/synching_ico@2x.png</file>
         <file>images/synching_ico@3x.png</file>
+        <file>images/lists_cancel_hover_ico.png</file>
+        <file>images/lists_cancel_hover_ico@2x.png</file>
+        <file>images/lists_cancel_hover_ico@3x.png</file>
+        <file>images/lists_pause_hover_ico.png</file>
+        <file>images/lists_pause_hover_ico@2x.png</file>
+        <file>images/lists_pause_hover_ico@3x.png</file>
+        <file>images/lists_resume_hover_ico.png</file>
+        <file>images/lists_resume_hover_ico@2x.png</file>
+        <file>images/lists_resume_hover_ico@3x.png</file>
     </qresource>
 </RCC>
