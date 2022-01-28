@@ -14,6 +14,8 @@
 #include <QDialog>
 #include <QMenu>
 
+#include "BlockingGui.h"
+
 namespace Ui {
 class TransferManager;
 }

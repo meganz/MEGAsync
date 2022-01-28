@@ -1,4 +1,4 @@
-#include "blockingui.h"
+#include "BlockingGui.h"
 
 BlockingUi::BlockingUi(QStackedWidget* _container)
     : container(_container)
@@ -11,6 +11,10 @@ BlockingUi::BlockingUi(QStackedWidget* _container)
     connect(blockingWidget, SIGNAL(cancel()), this, SLOT(onCancelClicked()));
     connect(confirmWidget, SIGNAL(proceed()), this, SLOT(onCancelConfirmed()));
     connect(confirmWidget, SIGNAL(dismiss()), this, SLOT(onCancelDismissed()));
+
+    QString styles = QString::fromLatin1(getControlStyles());
+    blockingWidget->setStyleSheet(styles);
+    confirmWidget->setStyleSheet(styles);
 }
 
 BlockingUi::~BlockingUi()
@@ -39,7 +43,6 @@ void BlockingUi::onCancelClicked()
 
 void BlockingUi::onCancelConfirmed()
 {
-    container->setCurrentWidget(lastSelectedWidget);
     emit cancelTransfers();
 }
 
@@ -47,4 +50,13 @@ void BlockingUi::onCancelDismissed()
 {
     container->setCurrentWidget(blockingWidget);
     blockingWidget->show();
+}
+
+const char* BlockingUi::getControlStyles()
+{
+    const char* styles = "*[role=\"title\"] {font-size: 18px; font:bold;}"
+                         "*[role=\"details\"] {font-size: 12px;}"
+                         "QPushButton {font-size: 12px; padding: 10px}"
+                         "QPushButton#pProceed {background-color: #00BFA5;}";
+    return styles;
 }

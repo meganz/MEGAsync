@@ -45,7 +45,10 @@
      <item>
       <widget class="QLabel" name="lWarningIcon">
        <property name="text">
-        <string>WarningIcon</string>
+        <string/>
+       </property>
+       <property name="pixmap">
+        <pixmap resource="../Resources_linux.qrc">:/images/icon_warning.png</pixmap>
        </property>
       </widget>
      </item>
@@ -69,10 +72,13 @@
      <property name="orientation">
       <enum>Qt::Vertical</enum>
      </property>
+     <property name="sizeType">
+      <enum>QSizePolicy::Fixed</enum>
+     </property>
      <property name="sizeHint" stdset="0">
       <size>
        <width>20</width>
-       <height>50</height>
+       <height>5</height>
       </size>
      </property>
     </spacer>
@@ -119,10 +125,13 @@
      <property name="orientation">
       <enum>Qt::Vertical</enum>
      </property>
+     <property name="sizeType">
+      <enum>QSizePolicy::Fixed</enum>
+     </property>
      <property name="sizeHint" stdset="0">
       <size>
        <width>20</width>
-       <height>51</height>
+       <height>5</height>
       </size>
      </property>
     </spacer>
@@ -172,10 +181,13 @@
      <property name="orientation">
       <enum>Qt::Vertical</enum>
      </property>
+     <property name="sizeType">
+      <enum>QSizePolicy::Fixed</enum>
+     </property>
      <property name="sizeHint" stdset="0">
       <size>
        <width>20</width>
-       <height>50</height>
+       <height>40</height>
       </size>
      </property>
     </spacer>
@@ -239,6 +251,8 @@
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="../Resources_linux.qrc"/>
+ </resources>
  <connections/>
 </ui>

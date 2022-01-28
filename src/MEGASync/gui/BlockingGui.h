@@ -30,6 +30,8 @@ private:
     ScanningWidget* blockingWidget = nullptr;
     CancelConfirmWidget* confirmWidget = nullptr;
     QWidget* lastSelectedWidget = nullptr;
+
+    static const char* getControlStyles();
 };
 
 #endif // BLOCKINGUI_H

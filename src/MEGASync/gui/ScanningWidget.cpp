@@ -11,6 +11,9 @@ ScanningWidget::ScanningWidget(QWidget *parent) :
 
     movie = new QMovie(this);
     movie->setCacheMode(QMovie::CacheAll);
+
+    ui->lScanning->setProperty("role", QString::fromLatin1("title"));
+    ui->lExplanation->setProperty("role", QString::fromLatin1("details"));
 }
 
 ScanningWidget::~ScanningWidget()
@@ -21,7 +24,7 @@ ScanningWidget::~ScanningWidget()
 
 void ScanningWidget::show()
 {
-    movie->setFileName(QString::fromLatin1("/home/mickael/Pictures/crazycat.gif"));
+    movie->setFileName(QString::fromLatin1(":/animations/cat128.gif"));
     if (movie->isValid())
     {
         ui->lAnimation->setMovie(movie);

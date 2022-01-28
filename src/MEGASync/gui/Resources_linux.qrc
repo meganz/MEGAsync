@@ -930,5 +930,6 @@
         <file>images/no_search_results.png</file>
         <file>images/no_search_results@2x.png</file>
         <file>images/no_search_results@3x.png</file>
+        <file>animations/cat128.gif</file>
     </qresource>
 </RCC>
