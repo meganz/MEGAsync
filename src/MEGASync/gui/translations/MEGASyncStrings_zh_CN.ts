@@ -21,7 +21,7 @@
     <message>
         <source>Loading...</source>
         <translatorcomment>Label to show when an account detail request is waiting for the server response.</translatorcomment>
-        <translation>正在加载……</translation>
+        <translation>正在加载…</translation>
     </message>
     <message>
         <source>Storage</source>
@@ -839,7 +839,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>MEGAsync has detected a problem. These are the details:</source>
         <translatorcomment>Label to indicate that a crash has occured and the detailed stacktrace of the problem.</translatorcomment>
-        <translation>MEGAsync检测到以下问题:</translation>
+        <translation>MEGAsync检测到问题。详细信息如下：</translation>
     </message>
     <message>
         <source>You can help us to improve MEGAsync by sending this error report. It doesn&apos;t contain any personal information. If you want to give us more details, please write them below:</source>
@@ -3297,7 +3297,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Dismiss</source>
         <translatorcomment>Button label to dismiss the warning about storage full.</translatorcomment>
-        <translation>解除</translation>
+        <translation>忽略</translation>
     </message>
     <message>
         <source>Upgrade</source>
@@ -3310,7 +3310,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Dismiss</source>
         <translatorcomment>Button label to dismiss and hide a PSA announcement</translatorcomment>
-        <translation>解除</translation>
+        <translation>忽略</translation>
     </message>
 </context>
 <context>
@@ -3525,21 +3525,13 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Full redesign of settings with a new look and feel.
-- No longer supporting macOS versions below 10.12.
-- Multi-currency support added for upgrade options.
-- High DPI support for Windows platform improved.
-- Crashes previously detected on Windows, Linux and macOS now fixed.
-- Other performance improvements and adjustments.
-- Other UI fixes and adjustments.</source>
-        <translatorcomment>Changelog notes for v4.6.0 version</translatorcomment>
-        <translation>- 全新设计设置外观。
-- 不再支持macOS 10.12以下版本。
-- 升级帐户选项已支持多货币付款。
-- 改善了对Windows平台的高DPI支持。
-- 修复了在Windows，Linux和macOS上检测到的崩溃问题。
-- 其他性能改进和调整。
-- 其他用户界面修复和调整。</translation>
+        <source>- Strengthen cryptographic security on Linux repositories.
+- Fix memory issues with problematic PDF files.
+</source>
+        <translatorcomment>Changelog v4.6.3 (linux only)</translatorcomment>
+        <translation>- 增强了Linux存储库的加密安全性。
+- 修复了有问题的PDF文件的内存问题。
+</translation>
     </message>
 </context>
 <context>
@@ -3645,7 +3637,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>&amp;No</source>
         <translatorcomment>Label for No button. Keep capital letter.</translatorcomment>
-        <translation>&amp;不</translation>
+        <translation>&amp;否</translation>
     </message>
     <message>
         <source>&amp;OK</source>
@@ -4085,7 +4077,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>Details</source>
         <translatorcomment>Button label to show the account usage details for the current user of the application. String as short as possible.</translatorcomment>
-        <translation>内容</translation>
+        <translation>详细信息</translation>
     </message>
     <message>
         <source>Logout</source>

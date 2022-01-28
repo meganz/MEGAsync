@@ -1560,7 +1560,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Import to my cloud drive</source>
         <translatorcomment>Label to indicate if the user wants to import the selected MEGA link(s) to his cloud drive.</translatorcomment>
-        <translation>Importieren</translation>
+        <translation>In mein Cloud Drive importieren</translation>
     </message>
     <message>
         <source>OK</source>
@@ -3525,21 +3525,13 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Full redesign of settings with a new look and feel.
-- No longer supporting macOS versions below 10.12.
-- Multi-currency support added for upgrade options.
-- High DPI support for Windows platform improved.
-- Crashes previously detected on Windows, Linux and macOS now fixed.
-- Other performance improvements and adjustments.
-- Other UI fixes and adjustments.</source>
-        <translatorcomment>Changelog notes for v4.6.0 version</translatorcomment>
-        <translation>- Vollständig überarbeitete Einstellungsseite mit neuem Design.
-- Ältere macOS-Versionen als 10.12 werden nicht mehr unterstützt.
-- Upgrade-Optionen unterstützen jetzt mehrere Währungen.
-- Verbesserte High-DPI-Unterstützung unter Windows.
-- Abstürze unter Windows, Linux und macOS behoben.
-- Weitere Leistungsverbesserungen und -anpassungen.
-- Weitere Korrekturen und Anpassungen an der Benutzeroberfläche.</translation>
+        <source>- Strengthen cryptographic security on Linux repositories.
+- Fix memory issues with problematic PDF files.
+</source>
+        <translatorcomment>Changelog v4.6.3 (linux only)</translatorcomment>
+        <translation>- Verschlüsselung in Linux-Repositorys verstärkt.
+- Speicherprobleme bei problematischen PDF-Dateien behoben.
+</translation>
     </message>
 </context>
 <context>
@@ -5035,7 +5027,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Specific folders in your Cloud Drive will be synchronized with a local folder.</source>
         <translatorcomment>Information label to explain the user the selective sync mode of MEGAsync</translatorcomment>
-        <translation>Spezifische Cloud-Ordner werden mit lokalen Ordnern synchronisiert.</translation>
+        <translation>Spezifische Ordner in Ihrem Cloud Drive werden mit lokalen Ordnern synchronisiert.</translation>
     </message>
     <message>
         <source>Select Local folder:</source>

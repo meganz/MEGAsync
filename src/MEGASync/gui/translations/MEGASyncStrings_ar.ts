@@ -3525,21 +3525,11 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Full redesign of settings with a new look and feel.
-- No longer supporting macOS versions below 10.12.
-- Multi-currency support added for upgrade options.
-- High DPI support for Windows platform improved.
-- Crashes previously detected on Windows, Linux and macOS now fixed.
-- Other performance improvements and adjustments.
-- Other UI fixes and adjustments.</source>
-        <translatorcomment>Changelog notes for v4.6.0 version</translatorcomment>
-        <translation>- إعادة تصميم كاملة للإعدادات بمظهر وأسلوب جديد.
-- لم تعد تدعم إصدارات macOS الأقل من 10.12.
-- تمت إضافة دعم عملات متعددة لخيارات الترقية.
-- تحسين دعم الدقة العالية DPI لمنصة Windows.
-- تم إصلاح الأعطال التي تم اكتشافها مسبقًا على أنظمة التشغيل ويندوز Windows و لينوكس Linux و ماك macOS.
-- تحسينات وتعديلات أخرى في الأداء.
-- إصلاحات وتعديلات أخرى في واجهة المستخدم.</translation>
+        <source>- Strengthen cryptographic security on Linux repositories.
+- Fix memory issues with problematic PDF files.
+</source>
+        <translatorcomment>Changelog v4.6.3 (linux only)</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
