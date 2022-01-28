@@ -2412,6 +2412,7 @@ void MegaApplication::calculateInfoDialogCoordinates(QDialog *dialog, int *posx,
     QRect screenGeometry;
 
     #ifdef __APPLE__
+        QPoint positionTrayIcon;
         positionTrayIcon = trayIcon->geometry().topLeft();
     #endif
 
