@@ -17,7 +17,6 @@
 #include "MenuItemAction.h"
 #include "platform/Platform.h"
 #include "assert.h"
-#include "ScanningWidget.h"
 
 #ifdef _WIN32    
 #include <chrono>
@@ -281,9 +280,8 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
 
     adjustSize();
 
-    scanningWidget = new ScanningWidget(this);
-    ui->sTabs->insertWidget(2, scanningWidget);
-    connect(scanningWidget, SIGNAL(cancel()), this, SIGNAL(cancel()));
+    blockingUi = new BlockingUi(ui->sTabs);
+    connect(blockingUi, SIGNAL(cancelTransfers()), this, SIGNAL(cancel()));
 }
 
 InfoDialog::~InfoDialog()
@@ -304,6 +302,7 @@ InfoDialog::~InfoDialog()
         syncsMenu->deleteLater();
         syncsMenu.release();
     }
+    delete blockingUi;
 }
 
 PSA_info *InfoDialog::getPSAdata()
@@ -1379,19 +1378,16 @@ void InfoDialog::onTransferUpdate(MegaApi *api, MegaTransfer *transfer)
 
 void InfoDialog::enterBlockingState()
 {
-    lastTabIndex = ui->sTabs->currentIndex();
     enableUserActions(false);
-    ui->sTabs->setCurrentIndex(2);
     ui->wTabOptions->setVisible(false);
-    scanningWidget->show();
+    blockingUi->show();
 }
 
 void InfoDialog::leaveBlockingState()
 {
     enableUserActions(true);
-    ui->sTabs->setCurrentIndex(lastTabIndex);
     ui->wTabOptions->setVisible(true);
-    scanningWidget->hide();
+    blockingUi->hide();
 }
 
 void InfoDialog::changeEvent(QEvent *event)

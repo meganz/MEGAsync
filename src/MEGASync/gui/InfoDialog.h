@@ -13,6 +13,7 @@
 #include "control/MegaController.h"
 #include "model/Model.h"
 #include <QGraphicsOpacityEffect>
+#include "BlockingGui.h"
 #include "HighDpiResize.h"
 #include "Utilities.h"
 #include "FilterAlertWidget.h"
@@ -22,7 +23,6 @@
 #include <chrono>
 #endif
 
-#include "ScanningWidget.h"
 
 namespace Ui {
 class InfoDialog;
@@ -265,8 +265,7 @@ protected:
     static double computeRatio(long long completed, long long remaining);
 
     void enableUserActions(bool value);
-    int lastTabIndex = 0;
-    ScanningWidget* scanningWidget = nullptr;
+    BlockingUi* blockingUi = nullptr;
 };
 
 #endif // INFODIALOG_H

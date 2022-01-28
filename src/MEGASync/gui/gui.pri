@@ -73,6 +73,8 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/BandwidthSettings.cpp \
     $$PWD/SwitchButton.cpp \
     $$PWD/GuiUtilities.cpp
+    $$PWD/BlockingGui.cpp \
+    $$PWD/CancelConfirmWidget.cpp
 
 HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/BalloonToolTip.h \
@@ -147,7 +149,9 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/ProxySettings.h \
     $$PWD/BandwidthSettings.h \
     $$PWD/SwitchButton.h \
-    $$PWD/GuiUtilities.h
+    $$PWD/GuiUtilities.h \
+    $$PWD/BlockingGui.h \
+    $$PWD/CancelConfirmWidget.h
 
 INCLUDEPATH += $$PWD
 
@@ -344,7 +348,8 @@ unix:!macx {
                 $$PWD/linux/ProxySettings.ui \
                 $$PWD/linux/BandwidthSettings.ui \
                 $$PWD/linux/NewFolderDialog.ui \
-                $$PWD/linux/NotificationsSettings.ui
+                $$PWD/linux/NotificationsSettings.ui \
+                $$PWD/linux/CancelConfirmWidget.ui \
                 $$PWD/linux/ScanningWidget.ui
 
     HEADERS += $$PWD/PermissionsDialog.h \

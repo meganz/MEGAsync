@@ -199,9 +199,8 @@ void TransferManager::onPauseStateChangedByTransferResume()
 {
     onUpdatePauseState(false);
 
-    scanningWidget = new ScanningWidget(this);
-    ui->wTransfers->insertWidget(4, scanningWidget);
-    connect(scanningWidget, SIGNAL(cancel()), this, SLOT(cancel()));
+    blockingUi = new BlockingUi(ui->wTransfers);
+    connect(blockingUi, SIGNAL(cancelTransfers()), this, SIGNAL(cancel()));
 }
 
 void TransferManager::setActiveTab(int t)
@@ -230,6 +229,7 @@ void TransferManager::setActiveTab(int t)
 TransferManager::~TransferManager()
 {
     delete mUi;
+    delete blockingUi;
 }
 
 void TransferManager::on_tCompleted_clicked()
@@ -422,9 +422,7 @@ void TransferManager::enterBlockingState()
 {
     enableUserActions(false);
     ui->wTabHeader->setVisible(false);
-    lastIndex = ui->wTransfers->currentIndex();
-    ui->wTransfers->setCurrentIndex(4);
-    scanningWidget->show();
+    blockingUi->show();
 }
 
 void TransferManager::refreshFileTypesStats()
