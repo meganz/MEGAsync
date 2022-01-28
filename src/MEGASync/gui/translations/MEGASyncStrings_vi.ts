@@ -112,7 +112,7 @@
     <message>
         <source>Enter a name, an absolute path (wildcards * and ? are allowed) or choose which file or folder you want to exclude from the synchronization</source>
         <translatorcomment>Label to describe the different options that the user have to set a exclusion for all synchronizations.</translatorcomment>
-        <translation>Nhập tên, dạng tên hay đường dẫn mẫu (được phép sử dụng các ky tự đặng biệt như * và ? để biểu hiện) hoặc chọn ra tệp tin và thư mục bạn muốn liệt vào danh sách ngoại lệ khỏi quá trình đồng bộ</translation>
+        <translation>Nhập tên, dạng tên hay đường dẫn mẫu (được phép sử dụng các ký tự như * và ? để đại diện) hoặc chọn ra tệp tin và thư mục bạn muốn liệt vào danh sách ngoại lệ khỏi quá trình đồng bộ</translation>
     </message>
     <message>
         <source>Choose File</source>
@@ -506,7 +506,7 @@
     <message>
         <source>Enable this option only if your transfers don&apos;t start. Under normal circumstances, HTTP is satisfactory as all transfers are already encrypted by MEGA.</source>
         <translatorcomment>Description label about the option &quot;Don&apos;t use HTTP&quot; checkbox.</translatorcomment>
-        <translation>hỉ nên bật tính năng này khi các phiên truyền tải không có hoạt động. Trong các trường hợp bình thường, giao thức HTTP là thích hợp nhất để truyền tải các nội dung mã hóa từ MEGA.</translation>
+        <translation>Nên bật tính năng này chỉ khi các phiên truyền tải không có hoạt động. Trong các trường hợp bình thường, giao thức HTTP là thích hợp nhất để truyền tải các nội dung mã hóa từ MEGA.</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -516,7 +516,7 @@
     <message>
         <source>Apply</source>
         <translatorcomment>Button label for apply and confirm the bandwidth changes (Windows and Linux)</translatorcomment>
-        <translation>Áp dụng</translation>
+        <translation>Áp Dụng</translation>
     </message>
     <message>
         <source>Upload rate limit:</source>
@@ -844,7 +844,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>You can help us to improve MEGAsync by sending this error report. It doesn&apos;t contain any personal information. If you want to give us more details, please write them below:</source>
         <translatorcomment>Label to indicate if the user wants to add some more details to attach to the crash report.</translatorcomment>
-        <translation>Quý khách có thể giúp được chúng tôi cải tiến MEGAsync bằng cách gửi cho chúng tôi các bản báo cáo lỗi. Đừng nên ghi thông tin cá nhân riêng. Nếu quý khách muốn gửi cho chúng tôi phản hồi, xin viết chúng dưới đây:</translation>
+        <translation>Bạn có thể giúp được chúng tôi cải tiến MEGAsync bằng cách gửi cho chúng tôi các bản báo cáo lỗi. Đừng nên ghi thông tin cá nhân riêng. Nếu bạn muốn gửi cho chúng tôi thêm chi tiết, xin viết ở dưới đây:</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -1312,7 +1312,7 @@ Trong một số trường hợp, log có thể chứa thông tin chi tiết v�
     <message>
         <source>MEGA folder:</source>
         <translatorcomment>Label to indicate the user the MEGA folder for a synchronization (String short as possible)</translatorcomment>
-        <translation>Thư mục MEGA:</translation>
+        <translation>Thư mục trên MEGA:</translation>
     </message>
     <message>
         <source>Select local folder</source>
@@ -2274,7 +2274,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Could not find a system tray to place MEGAsync tray icon. MEGAsync is intended to be used with a system tray icon but it can work fine without it. If you want to open the interface, just try to open MEGAsync again.</source>
         <translatorcomment>Message shown to the user to inform that MEGAsync is not able to find a systray to place tray icon</translatorcomment>
-        <translation>Không tìm thấy khay hệ thống (system tray) để hiên thị biểu tượng MEGAsync để chương trình làm chỗ giúp người sử dụng truy cập các tùy chọn tao thác, tuy nhiên nếu không có thì chương trình vẫn hoạt động. Nếu muốn mở lại giao diện chính, chỉ cần chạy lại MEGAsync.</translation>
+        <translation>Không tìm thấy khay hệ thống (system tray) để hiển thị biểu tượng MEGAsync để chương trình làm chỗ giúp người sử dụng truy cập các tùy chọn tao thác, tuy nhiên nếu không có thì chương trình vẫn hoạt động. Nếu muốn mở lại giao diện chính, chỉ cần chạy lại MEGAsync.</translation>
     </message>
     <message>
         <source>Error getting link:</source>
@@ -3037,7 +3037,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Clear</source>
         <translatorcomment>Label of context menu option to clear selected transfer item of completed view</translatorcomment>
-        <translation>Dọn sạch</translation>
+        <translation>Dọn</translation>
     </message>
     <message>
         <source>Clear All</source>
@@ -3525,21 +3525,13 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Full redesign of settings with a new look and feel.
-- No longer supporting macOS versions below 10.12.
-- Multi-currency support added for upgrade options.
-- High DPI support for Windows platform improved.
-- Crashes previously detected on Windows, Linux and macOS now fixed.
-- Other performance improvements and adjustments.
-- Other UI fixes and adjustments.</source>
-        <translatorcomment>Changelog notes for v4.6.0 version</translatorcomment>
-        <translation>- Thiết kế lại toàn bộ phần thiết đặt với dáng vẻ mới.
-- KHông còn hỗ trợ macOS phiên bản dưới 10.12.
-- Hỗ trợ nhiều loại tiền tệ cho nhu cầu nâng cấp tài khoản.
-- Hỗ trợ cải thiện cho màn hình DPI cao trên nền tảng Windows.
-- Các lỗi đã báo làm treo máy trên Windows, Linux và macOS đã được sửa.
-- Thêm vài điều chỉnh để cải thiện hiệu xuất.
-- Vài sửa đổi nhỏ về giao diện sử dụng.</translation>
+        <source>- Strengthen cryptographic security on Linux repositories.
+- Fix memory issues with problematic PDF files.
+</source>
+        <translatorcomment>Changelog v4.6.3 (linux only)</translatorcomment>
+        <translation>- Tăng cường sức mạnh an ninh mã hóa trên hạ tầng Linux.
+- Khắc phục vấn đề sử dụng bộ nhớ đối với các tệp PDF phức tạp.
+</translation>
     </message>
 </context>
 <context>
@@ -3577,7 +3569,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Username:</source>
         <translatorcomment>Label to indicate the username of the proxy that is being configured.</translatorcomment>
-        <translation>Username:</translation>
+        <translation>Tên đăng nhập:</translation>
     </message>
     <message>
         <source>Server:</source>
@@ -3612,7 +3604,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Apply</source>
         <translatorcomment>Button text for Apply option.(Linux and Windows)</translatorcomment>
-        <translation>Áp dụng</translation>
+        <translation>Áp Dụng</translation>
     </message>
     <message>
         <source>Auto-detect</source>
@@ -4050,7 +4042,7 @@ Bạn có muốn tiếp tục xóa không?</translation>
     <message>
         <source>Account</source>
         <translatorcomment>Tab label of Account dialog. Max 15 characters.</translatorcomment>
-        <translation>Tài khoản</translation>
+        <translation>Tài Khoản</translation>
     </message>
     <message>
         <source>Bandwidth</source>
@@ -4080,7 +4072,7 @@ Bạn có muốn tiếp tục xóa không?</translation>
     <message>
         <source>Language</source>
         <translatorcomment>Label to let the user select the desired language for the application using a dropdown menu.</translatorcomment>
-        <translation>Ngôn Ngữ</translation>
+        <translation>Ngôn ngữ</translation>
     </message>
     <message>
         <source>Details</source>
@@ -4110,7 +4102,7 @@ Bạn có muốn tiếp tục xóa không?</translation>
     <message>
         <source>Local Folder</source>
         <translatorcomment>Label to indicate the local folder column for sync table. String as short as possible.</translatorcomment>
-        <translation>Thư mục trên máy</translation>
+        <translation>Thư mục trong máy</translation>
     </message>
     <message>
         <source>MEGA folder</source>
@@ -4145,7 +4137,7 @@ Bạn có muốn tiếp tục xóa không?</translation>
     <message>
         <source>Clear</source>
         <translatorcomment>Label for button to let the user clear the debris or file versions cache. Keep capital letter.</translatorcomment>
-        <translation>Dọn sạch</translation>
+        <translation>Dọn</translation>
     </message>
     <message>
         <source>Full scan</source>
@@ -4322,7 +4314,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Sync</source>
         <translatorcomment>Title for the Settings -&gt; Sync pane tab button. Keep as short as possible.</translatorcomment>
-        <translation>Đồng bộ</translation>
+        <translation>Đồng Bộ</translation>
     </message>
     <message>
         <source>Security</source>
@@ -4332,7 +4324,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Folders</source>
         <translatorcomment>Title for the Settings -&gt; Folders pane tab button. Keep as short as possible.</translatorcomment>
-        <translation>Thư mục</translation>
+        <translation>Thư Mục</translation>
     </message>
     <message>
         <source>Network</source>
@@ -4387,7 +4379,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Report Issue</source>
         <translatorcomment>Button label used to submit bug reports to MEGA.</translatorcomment>
-        <translation>Báo cáo lỗi</translation>
+        <translation>Gửi Báo Cáo</translation>
     </message>
     <message>
         <source>My Account</source>
@@ -4432,7 +4424,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Password</source>
         <translatorcomment>Section title for Password change in Security pane.</translatorcomment>
-        <translation>Mật khẩu</translation>
+        <translation>Mật Khẩu</translation>
     </message>
     <message>
         <source>Change Password</source>
@@ -4512,7 +4504,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Issue report:</source>
         <translatorcomment>Label for Issue reporting in General pane.(macOS)</translatorcomment>
-        <translation>Khai báo lỗi:</translation>
+        <translation>Báo cáo lỗi:</translation>
     </message>
     <message>
         <source>Storage space:</source>
@@ -5224,7 +5216,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Choose application</source>
         <translatorcomment>Text of the button to open a streaming link with a custom application</translatorcomment>
-        <translation>Chọn chương trình</translation>
+        <translation>Chọn ứng dụng khác</translation>
     </message>
     <message>
         <source>Close</source>
@@ -5317,7 +5309,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Clear all</source>
         <translatorcomment>Button label to clear all items of completed transfers view</translatorcomment>
-        <translation>Dọn Danh Sách</translation>
+        <translation>Dọn danh sách</translation>
     </message>
     <message>
         <source>Close</source>

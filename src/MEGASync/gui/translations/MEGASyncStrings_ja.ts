@@ -3523,15 +3523,13 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Full redesign of settings with a new look and feel.
-- No longer supporting macOS versions below 10.12.
-- Multi-currency support added for upgrade options.
-- High DPI support for Windows platform improved.
-- Crashes previously detected on Windows, Linux and macOS now fixed.
-- Other performance improvements and adjustments.
-- Other UI fixes and adjustments.</source>
-        <translatorcomment>Changelog notes for v4.6.0 version</translatorcomment>
-        <translation>－設定を全面的に変更し、新しいルック＆フィールに。－10.12以前のmacOSバージョンのサポートを終了。－アップグレードオプションに多通貨対応を追加。－WindowsプラットフォームのHigh DPIサポートを改善。－Windows、Linux、macOSで過去に検出されたクラッシュを修正。－その他のパフォーマンスの改善と調整。－その他のUIの修正と調整。</translation>
+        <source>- Strengthen cryptographic security on Linux repositories.
+- Fix memory issues with problematic PDF files.
+</source>
+        <translatorcomment>Changelog v4.6.3 (linux only)</translatorcomment>
+        <translation>－Linuxリポジトリの暗号セキュリティの強化。
+－問題のあるPDFファイルのメモリ問題を修正。
+</translation>
     </message>
 </context>
 <context>
