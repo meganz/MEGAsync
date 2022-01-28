@@ -17,6 +17,7 @@
 #include "MenuItemAction.h"
 #include "platform/Platform.h"
 #include "assert.h"
+#include "ScanningWidget.h"
 
 #ifdef _WIN32    
 #include <chrono>
@@ -280,8 +281,9 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
 
     adjustSize();
 
-    movie = new QMovie(this);
-    movie->setCacheMode(QMovie::CacheAll);
+    scanningWidget = new ScanningWidget(this);
+    ui->sTabs->insertWidget(2, scanningWidget);
+    connect(scanningWidget, SIGNAL(cancel()), this, SIGNAL(cancel()));
 }
 
 InfoDialog::~InfoDialog()
@@ -302,8 +304,6 @@ InfoDialog::~InfoDialog()
         syncsMenu->deleteLater();
         syncsMenu.release();
     }
-
-    delete movie;
 }
 
 PSA_info *InfoDialog::getPSAdata()
@@ -1383,16 +1383,7 @@ void InfoDialog::enterBlockingState()
     enableUserActions(false);
     ui->sTabs->setCurrentIndex(2);
     ui->wTabOptions->setVisible(false);
-
-    movie->setFileName(QString::fromLatin1("/home/mickael/Pictures/crazycat.gif"));
-    if (!movie->isValid())
-    {
-        megaApi->log(MegaApi::LOG_LEVEL_DEBUG, "GIF loading problem");
-    }
-    else
-        megaApi->log(MegaApi::LOG_LEVEL_DEBUG, "GIF OK :-)");
-    ui->lAnimation->setMovie(movie);
-    movie->start();
+    scanningWidget->show();
 }
 
 void InfoDialog::leaveBlockingState()
@@ -1400,7 +1391,7 @@ void InfoDialog::leaveBlockingState()
     enableUserActions(true);
     ui->sTabs->setCurrentIndex(lastTabIndex);
     ui->wTabOptions->setVisible(true);
-    movie->stop();
+    scanningWidget->hide();
 }
 
 void InfoDialog::changeEvent(QEvent *event)

@@ -61,7 +61,6 @@ signals:
     void viewedCompletedTransfers();
     void completedTransfersTabActive(bool);
     void userActivity();
-<<<<<<< HEAD
     void showCompleted(bool showCompleted);
     void clearCompletedTransfers();
 
@@ -71,10 +70,8 @@ protected:
     void dragEnterEvent(QDragEnterEvent* event) override;
     void dragLeaveEvent(QDragLeaveEvent* event) override;
     void dropEvent(QDropEvent *event) override;
-=======
     void cancelAllUploads();
     void cancelAllDownloads();
->>>>>>> Fixed mistakes in api download calls
 
 private:
     static constexpr int SPEED_REFRESH_PERIOD_MS = 700;

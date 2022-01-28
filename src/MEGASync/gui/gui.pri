@@ -9,6 +9,7 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/TransferBaseDelegateWidget.cpp \
     $$PWD/NotificationsSettings.cpp \
     $$PWD/OverQuotaDialog.cpp \
+    $$PWD/ScanningWidget.cpp \
     $$PWD/SetupWizard.cpp \
     $$PWD/NodeSelector.cpp \
     $$PWD/FolderBinder.cpp \
@@ -82,6 +83,7 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/TransferBaseDelegateWidget.h \
     $$PWD/NotificationsSettings.h \
     $$PWD/OverQuotaDialog.h \
+    $$PWD/ScanningWidget.h \
     $$PWD/SetupWizard.h \
     $$PWD/NodeSelector.h \
     $$PWD/FolderBinder.h \
@@ -343,6 +345,7 @@ unix:!macx {
                 $$PWD/linux/BandwidthSettings.ui \
                 $$PWD/linux/NewFolderDialog.ui \
                 $$PWD/linux/NotificationsSettings.ui
+                $$PWD/linux/ScanningWidget.ui
 
     HEADERS += $$PWD/PermissionsDialog.h \
                $$PWD/PermissionsWidget.h

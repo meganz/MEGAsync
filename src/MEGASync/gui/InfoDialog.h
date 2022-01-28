@@ -22,6 +22,8 @@
 #include <chrono>
 #endif
 
+#include "ScanningWidget.h"
+
 namespace Ui {
 class InfoDialog;
 }
@@ -176,6 +178,7 @@ signals:
     // parameter messageShown is true when alert is enabled, false when dismissed
     void almostTransferOverquotaMsgVisibilityChange(bool messageShown);
     void userActivity();
+    void cancel();
 
 private:
     Ui::InfoDialog *ui;
@@ -263,7 +266,7 @@ protected:
 
     void enableUserActions(bool value);
     int lastTabIndex = 0;
-    QMovie *movie = nullptr;
+    ScanningWidget* scanningWidget = nullptr;
 };
 
 #endif // INFODIALOG_H

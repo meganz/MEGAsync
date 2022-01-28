@@ -198,6 +198,10 @@ void TransferManager::pauseModel(bool value)
 void TransferManager::onPauseStateChangedByTransferResume()
 {
     onUpdatePauseState(false);
+
+    scanningWidget = new ScanningWidget(this);
+    ui->wTransfers->insertWidget(4, scanningWidget);
+    connect(scanningWidget, SIGNAL(cancel()), this, SLOT(cancel()));
 }
 
 void TransferManager::setActiveTab(int t)
@@ -420,6 +424,7 @@ void TransferManager::enterBlockingState()
     ui->wTabHeader->setVisible(false);
     lastIndex = ui->wTransfers->currentIndex();
     ui->wTransfers->setCurrentIndex(4);
+    scanningWidget->show();
 }
 
 void TransferManager::refreshFileTypesStats()
@@ -716,8 +721,7 @@ void TransferManager::on_bImages_clicked()
 
     if (w == ui->wActiveTransfers)
     {
-        emit cancelAllUploads();
-        emit cancelAllDownloads();
+        cancel();
     }
     else if(w == ui->wDownloads)
     {
@@ -747,6 +751,12 @@ void TransferManager::on_bVideos_clicked()
         mUi->lCurrentContent->setText(tr("Videos"));
         toggleTab(TYPE_VIDEO_TAB);
     }
+}
+
+void TransferManager::cancel()
+{
+    emit cancelAllUploads();
+    emit cancelAllDownloads();
 }
 
 void TransferManager::on_bOther_clicked()
