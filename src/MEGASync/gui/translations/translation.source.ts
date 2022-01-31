@@ -1808,8 +1808,9 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation>You are not logged in</translation>
     </message>
     <message>
-        <source>Login</source>
-        <translation>Login</translation>
+        <source>Log in</source>
+        <translatorcomment>Title for explanation about log in</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Create Account</source>
@@ -1844,11 +1845,6 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <source>Know more about MEGA desktop app. [A]Read more[/A]</source>
         <translatorcomment>Label with hyperlink to sync client webpage to know more about MEGA desktop app. Keep placeholders.</translatorcomment>
         <translation>Learn more about the MEGA Desktop App. [A]Read more[/A]</translation>
-    </message>
-    <message>
-        <source>Log in</source>
-        <translatorcomment>Button label to offer the user the option to log in in his account</translatorcomment>
-        <translation></translation>
     </message>
 </context>
 <context>
@@ -4735,9 +4731,9 @@ Do you want to restart MEGAsync now?</source>
         <translation>I agree with the MEGA &lt;a href=&quot;https://mega.nz/terms&quot;&gt;Terms of Service&lt;/a&gt;</translation>
     </message>
     <message>
-        <source>Login to your MEGA account</source>
+        <source>Log in to your MEGA account</source>
         <translatorcomment>Label to let the user login with his credentials.</translatorcomment>
-        <translation>Login to your MEGA account</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Please verify your account using the confirmation link that we have sent to your email account</source>
@@ -5070,9 +5066,9 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>We are all done!</translation>
     </message>
     <message>
-        <source>Login</source>
+        <source>Log in</source>
         <translatorcomment>Button label to open Login form</translatorcomment>
-        <translation>Login</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

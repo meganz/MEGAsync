@@ -958,7 +958,7 @@ void SetupWizard::page_login()
     ui->eLoginEmail->setFocus();
     ui->bNext->setDefault(true);
 
-    ui->lHeader->setText(tr("Login to your MEGA account"));
+    ui->lHeader->setText(tr("Log in to your MEGA account"));
     ui->bCurrentStep->setIcon(QIcon(QString::fromAscii("://images/setup_step2.png")));
     ui->bCurrentStep->setIconSize(QSize(512, 44));
 
@@ -1086,7 +1086,7 @@ void SetupWizard::page_newaccount()
     ui->bBack->setEnabled(false);
     ui->bSkip->setVisible(true);
     ui->bSkip->setEnabled(true);
-    ui->bSkip->setText(tr("Login"));
+    ui->bSkip->setText(tr("Log in"));
     ui->eName->setFocus();
     ui->bNext->setDefault(true);
     ui->cAgreeWithTerms->setChecked(false);
