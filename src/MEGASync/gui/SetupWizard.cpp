@@ -475,7 +475,7 @@ void SetupWizard::on_bNext_clicked()
             defaultFolderPath.append(QString::fromUtf8("/MEGAsync"));
             ui->eMegaFolder->setText(QString::fromUtf8("/MEGAsync"));
             ui->lAdvancedSetup->setText(tr("Selective sync:"));
-            ui->lHeader->setText(tr("Setup selective sync"));
+            ui->lHeader->setText(tr("Set up selective sync"));
             ui->bSyncType->setIcon(QIcon(QString::fromAscii("://images/step_4_selective_sync.png")));
             ui->bSyncType->setIconSize(QSize(94, 94));
             ui->lSyncType->setText(tr("Selective sync"));
@@ -491,7 +491,7 @@ void SetupWizard::on_bNext_clicked()
             defaultFolderPath.append(QString::fromUtf8("/MEGA"));
             ui->eMegaFolder->setText(QString::fromUtf8("/"));
             ui->lAdvancedSetup->setText(tr("Select Local folder:"));
-            ui->lHeader->setText(tr("Setup full sync"));
+            ui->lHeader->setText(tr("Set up full sync"));
             ui->bSyncType->setIcon(QIcon(QString::fromAscii("://images/step_4_full_sync.png")));
             ui->bSyncType->setIconSize(QSize(94, 94));
             ui->lSyncType->setText(tr("Full Sync"));

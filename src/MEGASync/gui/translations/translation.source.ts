@@ -4442,9 +4442,9 @@ Do you want to restart MEGAsync now?</source>
         <translation>Default Folders</translation>
     </message>
     <message>
-        <source>Move...</source>
+        <source>Move…</source>
         <translatorcomment>Button label text allowing the user to change the default Uploads or Downloads folders for the app.</translatorcomment>
-        <translation>Move...</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Exclude files smaller than</source>
@@ -4457,14 +4457,14 @@ Do you want to restart MEGAsync now?</source>
         <translation>Exclude files bigger than</translation>
     </message>
     <message>
-        <source>Restart MEGA Desktop Application to apply changes.</source>
+        <source>Restart MEGA Desktop App to apply changes.</source>
         <translatorcomment>Informative text shown in Folders pane, letting the user know that an application restart is required to apply the changes he just made.</translatorcomment>
-        <translation>Restart MEGA Desktop Application to apply changes.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Change Settings...</source>
+        <source>Change Settings…</source>
         <translatorcomment>Button label text for Bandwidth and Proxy settings in Network pane.</translatorcomment>
-        <translation>Change Settings...</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Proxies</source>
@@ -4898,9 +4898,9 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>Unable to get the file system. Please try again. If the problem persists please contact us at bug@mega.nz</translation>
     </message>
     <message>
-        <source>Setup Assistant - MEGAsync</source>
+        <source>Set up Assistant - MEGAsync</source>
         <translatorcomment>Title of the setup assistant dialog. Keep capital letters.</translatorcomment>
-        <translation>Setup Assistant - MEGAsync</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Full sync</source>
@@ -5030,9 +5030,9 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>Please enter your last name</translation>
     </message>
     <message>
-        <source>Setup selective sync</source>
+        <source>Set up selective sync</source>
         <translatorcomment>Label shown when user is setting up the selective sync mode of MEGAsync</translatorcomment>
-        <translation>Setup selective sync</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Specific folders in your Cloud Drive will be synchronized with a local folder.</source>
@@ -5045,9 +5045,9 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>Select local folder</translation>
     </message>
     <message>
-        <source>Setup full sync</source>
+        <source>Set up full sync</source>
         <translatorcomment>Label shown when user is setting up full sync mode of MEGAsync</translatorcomment>
-        <translation>Setup full sync</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Full Sync</source>
