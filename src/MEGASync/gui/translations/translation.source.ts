@@ -797,39 +797,6 @@ Please enter a different name to identify this synced folder:</source>
     </message>
 </context>
 <context>
-    <name>ConfirmSSLexception</name>
-    <message>
-        <source>Warning</source>
-        <translatorcomment>Title of the dialog that allows to disable a security check to prevent atacks that could intercept the communications of MEGAsync</translatorcomment>
-        <translation>Warning</translation>
-    </message>
-    <message>
-        <source>Are you sure you want to continue?</source>
-        <translatorcomment>Question for the user in the dialog that allows to disable a security check of MEGAsync. The user have to reply yes or no</translatorcomment>
-        <translation>Are you sure you want to continue?</translation>
-    </message>
-    <message>
-        <source>Remember my decision and don&apos;t ask me again</source>
-        <translatorcomment>Text next to a checkbox that allows to remember the decision of the user. The translation should be as short as possible.</translatorcomment>
-        <translation>Remember my decision and don’t ask me again</translation>
-    </message>
-    <message>
-        <source>No</source>
-        <translatorcomment>Negative response to a question. The text will be inside a button.</translatorcomment>
-        <translation>No</translation>
-    </message>
-    <message>
-        <source>Yes</source>
-        <translatorcomment>Positive response to a question. The text will be inside a button.</translatorcomment>
-        <translation>Yes</translation>
-    </message>
-    <message>
-        <source>You are about to allow that your communications could be intercepted. Your data would be still inaccessible for attackers due to our end-to-end encryption, but they could blindly move your files and folders in MEGA, delete them or deny your access to your account.</source>
-        <translatorcomment>Information for the user about the consequences of disabling a security check of MEGAsync</translatorcomment>
-        <translation>You are about to allow a setting that could allow your communications to be intercepted. Your data would be still inaccessible for attackers due to our end-to-end encryption, but they could blindly move your files and folders in MEGA, delete them or deny you access to your account.</translation>
-    </message>
-</context>
-<context>
     <name>CrashReportDialog</name>
     <message>
         <source>Error report</source>
@@ -982,16 +949,6 @@ In some cases they may contain details about your data, such as file or folder n
         <source>Reject</source>
         <translatorcomment>Button label of system notification to reject the notification of incoming contact request.</translatorcomment>
         <translation>Reject</translation>
-    </message>
-    <message>
-        <source>Cancelled Contact Request</source>
-        <translatorcomment>Title of the notification about a cancellation of a contact request</translatorcomment>
-        <translation>Cancelled Contact Request</translation>
-    </message>
-    <message>
-        <source>[A] cancelled the contact request</source>
-        <translatorcomment>Label to indicate that usar [A] has cancelled the contact request. Placeholder will be replaced by email of the user that made the cancellation.</translatorcomment>
-        <translation>[A] cancelled their contact request</translation>
     </message>
     <message>
         <source>Reminder</source>
@@ -2207,11 +2164,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>Your sync “%1” has been disabled because the synchronization of VirtualBox shared folders is not supported due to deficiencies in that file system.</translation>
     </message>
     <message>
-        <source>Logout</source>
-        <translatorcomment>Label to indicate Logout action</translatorcomment>
-        <translation>Logout</translation>
-    </message>
-    <message>
         <source>Error getting link information</source>
         <translatorcomment>Notification  error message shown while getting information from a public link.</translatorcomment>
         <translation>Error getting link information</translation>
@@ -2244,16 +2196,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Fetching file list...</source>
         <translation>Fetching file list…</translation>
-    </message>
-    <message>
-        <source>I don&apos;t care</source>
-        <translatorcomment>Text for a button that, when clicked, will disable and important security check of MEGAsync. The text should be as short as possible. If it&apos;s not possible to provide a short translation, it can be translated as: Ignore</translatorcomment>
-        <translation>I don’t care</translation>
-    </message>
-    <message>
-        <source>Retry</source>
-        <translatorcomment>Text for a button that will cause a retry of a failed operation. The translation should be as short as possible.</translatorcomment>
-        <translation>Retry</translation>
     </message>
     <message>
         <source>Transfer canceled</source>
@@ -2436,11 +2378,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>Syncs</translation>
     </message>
     <message>
-        <source>MEGA is unable to connect securely through SSL. You might be on public WiFi with additional requirements.</source>
-        <translatorcomment>Message shown when SSL (connection secure with MEGA) errors are detected.</translatorcomment>
-        <translation>MEGA is unable to connect securely through SSL. You might be on public Wi-Fi with additional requirements.</translation>
-    </message>
-    <message>
         <source>Cloud drive</source>
         <translatorcomment>Label of context menu to reach Cloud drive section at webclient. It will open your webbrowser and redirects to your cloud drive.</translatorcomment>
         <translation>Cloud Drive</translation>
@@ -2534,11 +2471,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>One or more syncs have been disabled</source>
         <translatorcomment>Tooltip to indicate that some syncs have been disable due to some error.</translatorcomment>
         <translation>One or more syncs have been disabled</translation>
-    </message>
-    <message>
-        <source>Your syncs have been enabled</source>
-        <translatorcomment>Notification message shown when the syncs have been enabled.</translatorcomment>
-        <translation>Your syncs have been enabled</translation>
     </message>
     <message>
         <source>Error adding sync</source>
@@ -3189,6 +3121,84 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
 </context>
 <context>
+    <name>NotificationsSettings</name>
+    <message>
+        <source>Account notifications:</source>
+        <translatorcomment>Title for notifications setting pane</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Shares</source>
+        <translatorcomment>Notification category for shared folders and nodes</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>New shared folder from contact</source>
+        <translatorcomment>Title of a checkbox for disconnectig notifications</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Added or removed files</source>
+        <translatorcomment>Title of a checkbox for disconnectig notifications</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Access to a shared folder was removed</source>
+        <translatorcomment>Title of a checkbox for disconnectig notifications</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Contacts</source>
+        <translatorcomment>Notification category for contact notifications</translatorcomment>
+        <translation type="unfinished">Contacts</translation>
+    </message>
+    <message>
+        <source>New contact request</source>
+        <translatorcomment>Title of a checkbox for disconnectig notifications</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pending contact request reminder</source>
+        <translatorcomment>Title of a checkbox for disconnectig notifications</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Someone has accepted your contact request</source>
+        <translatorcomment>Title of a checkbox for disconnectig notifications</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Info</source>
+        <translatorcomment>Notification category for non-critical info notifications</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Desktop notifications</source>
+        <translatorcomment>Title of a checkbox for disconnectig notifications</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Someone accepted your contact request</source>
+        <translatorcomment>Title of a checkbox for disconnectig notifications</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Info:</source>
+        <translatorcomment>Notification category for non-critical info notifications (macx)</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Contacts:</source>
+        <translatorcomment>Notification category for non-critical info notifications (macx)</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Shares:</source>
+        <translatorcomment>Notification category for non-critical info notifications (macx)</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>Notificator</name>
     <message>
         <source>MEGAsync</source>
@@ -3348,7 +3358,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Open links</source>
         <translatorcomment>Window title for dialog to enter MEGA public links</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Open links</translation>
     </message>
 </context>
 <context>
@@ -4055,11 +4065,6 @@ Do you want to delete it anyway?</translation>
         <translation>Help</translation>
     </message>
     <message>
-        <source>Show notifications</source>
-        <translatorcomment>Label to let the user enable desktop notifications with a checkbox.</translatorcomment>
-        <translation>Show notifications</translation>
-    </message>
-    <message>
         <source>Start on startup</source>
         <translatorcomment>Label to let the user start MEGAsync on startup of the operating system with a checkbox.</translatorcomment>
         <translation>Start on startup</translation>
@@ -4691,6 +4696,11 @@ Do you want to restart MEGAsync now?</source>
         <translatorcomment>Button label text for export key saving to local machine in a file. Keep string as short as possible.</translatorcomment>
         <translation>Export Key</translation>
     </message>
+    <message>
+        <source>Notifications</source>
+        <translatorcomment>Title for the Settings -&gt; Notifications pane tab button. Keep as short as possible.</translatorcomment>
+        <translation type="unfinished">Notifications</translation>
+    </message>
 </context>
 <context>
     <name>SetupWizard</name>
@@ -5272,6 +5282,19 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Stream error: transfer overquota</source>
         <translatorcomment>Informative label to indicate the user that there is a stream error because of transfer overquota situation.</translatorcomment>
         <translation>Streaming error: transfer quota exceeded.</translation>
+    </message>
+</context>
+<context>
+    <name>SwitchButton</name>
+    <message>
+        <source>On</source>
+        <translatorcomment>Checked state of a swith button</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Off</source>
+        <translatorcomment>Unchecked state of a swith button</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

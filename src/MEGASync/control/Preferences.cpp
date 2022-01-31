@@ -278,9 +278,13 @@ const QString Preferences::transferOverQuotaStreamDialogLastExecutionKey = QStri
 const QString Preferences::storageOverQuotaUploadsDialogLastExecutionKey = QString::fromAscii("storageOverQuotaUploadsDialogLastExecution");
 const QString Preferences::storageOverQuotaSyncsDialogLastExecutionKey = QString::fromAscii("storageOverQuotaSyncsDialogLastExecution");
 
+const bool Preferences::defaultShowNotifications = true;
+
+const bool Preferences::defaultDeprecatedNotifications      = true;
+const QString Preferences::showDeprecatedNotificationsKey   = QString::fromAscii("showNotifications");
+
 const QString Preferences::accountTypeKey           = QString::fromAscii("accountType");
 const QString Preferences::proExpirityTimeKey       = QString::fromAscii("proExpirityTime");
-const QString Preferences::showNotificationsKey     = QString::fromAscii("showNotifications");
 const QString Preferences::startOnStartupKey        = QString::fromAscii("startOnStartup");
 const QString Preferences::languageKey              = QString::fromAscii("language");
 const QString Preferences::updateAutomaticallyKey   = QString::fromAscii("updateAutomatically");
@@ -375,7 +379,6 @@ const QString Preferences::notifyDisabledSyncsKey = QString::fromAscii("notifyDi
 const QString Preferences::importMegaLinksEnabledKey = QString::fromAscii("importMegaLinksEnabled");
 const QString Preferences::downloadMegaLinksEnabledKey = QString::fromAscii("downloadMegaLinksEnabled");
 
-const bool Preferences::defaultShowNotifications    = true;
 const bool Preferences::defaultStartOnStartup       = true;
 const bool Preferences::defaultUpdateAutomatically  = true;
 const bool Preferences::defaultUpperSizeLimit       = false;
@@ -509,6 +512,10 @@ void Preferences::initialize(QString dataPath)
     {
         MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Cleaning settings after error encountered.").toUtf8().constData());
         clearAll();
+    }
+    else
+    {
+        recoverDeprecatedNotificationsSettings();
     }
 }
 
@@ -1257,17 +1264,102 @@ void Preferences::setProExpirityTime(long long value)
     assert(logged());
     setValueConcurrent(proExpirityTimeKey, value);
 }
+/************ NOTIFICATIONS GETTERS/SETTERS ************/
 
-bool Preferences::showNotifications()
+bool Preferences::isNotificationEnabled(NotificationsTypes type, bool includingGeneralSwitch)
 {
-    return getValueConcurrent<bool>(showNotificationsKey, defaultShowNotifications);
+    bool value(false);
+
+    if(!includingGeneralSwitch || isGeneralSwitchNotificationsOn())
+    {
+        auto key = notificationsTypeToString(type);
+
+        if(!key.isEmpty())
+        {
+            value = getValueConcurrent<bool>(key, defaultShowNotifications);
+        }
+    }
+
+    return value;
 }
 
-void Preferences::setShowNotifications(bool value)
+bool Preferences::isAnyNotificationEnabled(bool includingGeneralSwitch)
+{
+    bool result(false);
+
+    if(!includingGeneralSwitch || isGeneralSwitchNotificationsOn())
+    {
+        for(int index = notificationsTypeUT(NotificationsTypes::GENERAL_SWITCH_NOTIFICATIONS) + 1;
+            index < notificationsTypeUT(NotificationsTypes::LAST); ++index)
+        {
+           if(isNotificationEnabled((NotificationsTypes)index,includingGeneralSwitch))
+           {
+               result = true;
+               break;
+           }
+        }
+    }
+
+    return result;
+}
+
+bool Preferences::isGeneralSwitchNotificationsOn()
+{
+    bool generalSwitchNotificationsValue(false);
+
+    auto generalSwitchNotificationsKey = notificationsTypeToString(NotificationsTypes::GENERAL_SWITCH_NOTIFICATIONS);
+
+    if(!generalSwitchNotificationsKey.isEmpty())
+    {
+        generalSwitchNotificationsValue = getValueConcurrent<bool>(generalSwitchNotificationsKey, defaultShowNotifications);
+    }
+
+    return generalSwitchNotificationsValue;
+}
+
+void Preferences::enableNotifications(NotificationsTypes type, bool value)
 {
     assert(logged());
-    setValueAndSyncConcurrent(showNotificationsKey, value);
+
+    auto key = notificationsTypeToString(type);
+
+    if(!key.isEmpty())
+    {
+        setValueAndSyncConcurrent(key, value);
+    }
 }
+
+void Preferences::recoverDeprecatedNotificationsSettings()
+{
+    QVariant deprecatedGlobalNotifications = getValueConcurrent<QVariant>(showDeprecatedNotificationsKey);
+    if(!deprecatedGlobalNotifications.isNull())
+    {
+        assert(logged());
+        for(int index = notificationsTypeUT(NotificationsTypes::GENERAL_SWITCH_NOTIFICATIONS) + 1;
+            index < notificationsTypeUT(NotificationsTypes::LAST); ++index)
+        {
+            auto key = notificationsTypeToString((NotificationsTypes)index);
+
+            if(!key.isEmpty())
+            {
+               setValueAndSyncConcurrent(key,deprecatedGlobalNotifications);
+            }
+        }
+
+        QMutexLocker locker(&mutex);
+        settings->remove(showDeprecatedNotificationsKey);
+        removeFromCache(showDeprecatedNotificationsKey);
+        settings->sync();
+    }
+}
+
+QString Preferences::notificationsTypeToString(NotificationsTypes type)
+{
+    QMetaEnum metaEnum = QMetaEnum::fromType<NotificationsTypes>();
+    return QString::fromUtf8(metaEnum.valueToKey(notificationsTypeUT(type)));
+}
+
+/************ END OF NOTIFICATIONS GETTERS/SETTERS ************/
 
 bool Preferences::startOnStartup()
 {

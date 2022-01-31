@@ -14,6 +14,7 @@
 #include <memory>
 #include "megaapi.h"
 #include <chrono>
+#include <type_traits>
 
 Q_DECLARE_METATYPE(QList<long long>)
 
@@ -142,6 +143,35 @@ public:
     int getBlockedState();
     void setBlockedState(int value);
 
+    //**** Notifications ****/
+    enum class NotificationsTypes
+    {
+        GENERAL_SWITCH_NOTIFICATIONS = 0,
+        NEW_FOLDERS_SHARED_WITH_ME,
+        NODES_SHARED_WITH_ME_CREATED_OR_REMOVED,
+        FOLDERS_SHARED_WITH_ME_DELETED,
+        NEW_CONTACT_REQUESTS,
+        CONTACT_ESTABLISHED,
+        PENDING_CONTACT_REQUEST_REMINDER,
+        INFO_MESSAGES,
+        LAST
+    };
+    Q_ENUM(NotificationsTypes)
+
+    static constexpr std::underlying_type<NotificationsTypes>::type
+        notificationsTypeUT(NotificationsTypes type) noexcept{
+        return static_cast<std::underlying_type<NotificationsTypes>::type>(type);
+    }
+
+    bool isNotificationEnabled(NotificationsTypes type, bool includingGeneralSwitch = true);
+    bool isAnyNotificationEnabled(bool includingGeneralSwitch = true);
+    bool isGeneralSwitchNotificationsOn();
+    void enableNotifications(NotificationsTypes type, bool value);
+    void recoverDeprecatedNotificationsSettings();
+
+    static QString notificationsTypeToString(NotificationsTypes type);
+    //**** END OF Notifications ****/
+
     void setTemporalBandwidthValid(bool value);
     long long temporalBandwidth();
     void setTemporalBandwidth(long long value);
@@ -153,8 +183,6 @@ public:
     void setAccountType(int value);
     long long proExpirityTime();
     void setProExpirityTime(long long value);
-    bool showNotifications();
-    void setShowNotifications(bool value);
     bool startOnStartup();
     void setStartOnStartup(bool value);
     bool usingHttpsOnly();
@@ -593,7 +621,6 @@ protected:
     static const QString blockedStateQKey;
     static const QString accountTypeKey;
     static const QString proExpirityTimeKey;
-    static const QString showNotificationsKey;
     static const QString startOnStartupKey;
     static const QString languageKey;
     static const QString updateAutomaticallyKey;
@@ -681,7 +708,13 @@ protected:
     static const QString importMegaLinksEnabledKey;
     static const QString downloadMegaLinksEnabledKey;
 
+    //Notifications Default value
     static const bool defaultShowNotifications;
+
+    //Only for retrocompatibility purposes
+    static const QString showDeprecatedNotificationsKey;
+    static const bool defaultDeprecatedNotifications;
+
     static const bool defaultStartOnStartup;
     static const bool defaultUpdateAutomatically;
     static const int  defaultUploadLimitKB;
