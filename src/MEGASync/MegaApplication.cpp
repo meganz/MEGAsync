@@ -4872,7 +4872,7 @@ void MegaApplication::streamActionClicked()
         return;
     }
 
-    streamSelector = new StreamingFromMegaDialog(megaApi);
+    streamSelector = new StreamingFromMegaDialog(megaApi, megaApiFolders);
     connect(transferQuota.get(), &TransferQuota::waitTimeIsOver, streamSelector.data(), &StreamingFromMegaDialog::updateStreamingState);
     streamSelector->show();
 }
