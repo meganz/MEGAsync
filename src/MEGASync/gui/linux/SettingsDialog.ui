@@ -2239,7 +2239,7 @@ min-height: 72px;
              <item>
               <widget class="QPushButton" name="bUploadFolder">
                <property name="text">
-                <string>Move...</string>
+                <string>Move…</string>
                </property>
                <property name="autoDefault">
                 <bool>false</bool>
@@ -2301,7 +2301,7 @@ min-height: 72px;
              <item>
               <widget class="QPushButton" name="bDownloadFolder">
                <property name="text">
-                <string>Move...</string>
+                <string>Move…</string>
                </property>
                <property name="autoDefault">
                 <bool>false</bool>
@@ -2567,7 +2567,7 @@ min-height: 72px;
              </sizepolicy>
             </property>
             <property name="text">
-             <string>Restart MEGA Desktop Application to apply changes.</string>
+             <string>Restart MEGA Desktop App to apply changes.</string>
             </property>
             <property name="wordWrap">
              <bool>true</bool>
@@ -2701,7 +2701,7 @@ min-height: 72px;
           <item>
            <widget class="QPushButton" name="bOpenBandwidthSettings">
             <property name="text">
-             <string>Change Settings...</string>
+             <string>Change Settings…</string>
             </property>
             <property name="autoDefault">
              <bool>false</bool>
@@ -2784,7 +2784,7 @@ min-height: 72px;
           <item>
            <widget class="QPushButton" name="bOpenProxySettings">
             <property name="text">
-             <string>Change Settings...</string>
+             <string>Change Settings…</string>
             </property>
             <property name="autoDefault">
              <bool>false</bool>
