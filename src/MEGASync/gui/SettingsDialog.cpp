@@ -1320,7 +1320,7 @@ void SettingsDialog::on_bStorageDetails_clicked()
 void SettingsDialog::on_bLogout_clicked()
 {
     QPointer<SettingsDialog> currentDialog = this;
-    if (QMegaMessageBox::question(nullptr, tr("Logout"),
+    if (QMegaMessageBox::question(nullptr, tr("Log out"),
                                   tr("Synchronization will stop working. Are you sure?"),
                                   QMessageBox::Yes|QMessageBox::No)
             == QMessageBox::Yes)
