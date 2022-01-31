@@ -496,6 +496,47 @@ font-weight: bold;
        </widget>
       </item>
       <item>
+       <widget class="QToolButton" name="bNotifications">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>70</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>70</height>
+         </size>
+        </property>
+        <property name="focusPolicy">
+         <enum>Qt::StrongFocus</enum>
+        </property>
+        <property name="text">
+         <string>Notifications</string>
+        </property>
+        <property name="icon">
+         <iconset resource="../Resources_win.qrc">
+          <normaloff>:/images/Icon_Win_Notifications.png</normaloff>:/images/Icon_Win_Notifications.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>25</width>
+          <height>25</height>
+         </size>
+        </property>
+        <property name="checkable">
+         <bool>true</bool>
+        </property>
+        <property name="autoExclusive">
+         <bool>true</bool>
+        </property>
+        <property name="toolButtonStyle">
+         <enum>Qt::ToolButtonTextUnderIcon</enum>
+        </property>
+       </widget>
+      </item>
+      <item>
        <spacer name="horizontalSpacer_19">
         <property name="orientation">
          <enum>Qt::Horizontal</enum>
@@ -551,31 +592,6 @@ font-weight: bold;
           <property name="bottomMargin">
            <number>10</number>
           </property>
-          <item>
-           <widget class="QCheckBox" name="cShowNotifications">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="minimumSize">
-             <size>
-              <width>0</width>
-              <height>24</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>16777215</width>
-              <height>24</height>
-             </size>
-            </property>
-            <property name="text">
-             <string>Show notifications</string>
-            </property>
-           </widget>
-          </item>
           <item>
            <widget class="QCheckBox" name="cStartOnStartup">
             <property name="enabled">
@@ -1595,7 +1611,7 @@ font-weight: bold;
            </widget>
           </item>
           <item>
-           <widget class="QWidget" name="wSyncsButtons" native="true">            
+           <widget class="QWidget" name="wSyncsButtons" native="true">
             <property name="layoutDirection">
              <enum>Qt::RightToLeft</enum>
             </property>
@@ -2837,6 +2853,7 @@ min-height: 72px;
        </item>
       </layout>
      </widget>
+     <widget class="NotificationsSettings" name="pNotifications"/>
     </widget>
    </item>
    <item alignment="Qt::AlignBottom">
@@ -3040,6 +3057,7 @@ color: #0078D7;
          </layout>
         </widget>
         <widget class="QWidget" name="wNetworkFooter"/>
+        <widget class="QWidget" name="wNotificationsFooter"/>
        </widget>
       </item>
      </layout>
@@ -3059,6 +3077,12 @@ color: #0078D7;
    <class>AvatarWidget</class>
    <extends>QWidget</extends>
    <header>AvatarWidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>NotificationsSettings</class>
+   <extends>QWidget</extends>
+   <header location="global">NotificationsSettings.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
