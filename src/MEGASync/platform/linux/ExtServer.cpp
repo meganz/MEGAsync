@@ -37,7 +37,11 @@ ExtServer::ExtServer(MegaApplication *app): QObject(),
 
 ExtServer::~ExtServer()
 {
-    qDeleteAll(m_clients);
+    for (auto client : m_clients)
+    {
+        client->deleteLater();
+    }
+
     QLocalServer::removeServer(sockPath);
     m_localServer->close();
     delete m_localServer;
