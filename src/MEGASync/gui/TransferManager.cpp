@@ -200,7 +200,7 @@ void TransferManager::onPauseStateChangedByTransferResume()
     onUpdatePauseState(false);
 
     blockingUi = new BlockingUi(ui->wTransfers);
-    connect(blockingUi, SIGNAL(cancelTransfers()), this, SIGNAL(cancel()));
+    connect(blockingUi, SIGNAL(cancelTransfers()), this, SLOT(cancel()));
 }
 
 void TransferManager::setActiveTab(int t)
