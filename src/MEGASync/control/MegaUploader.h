@@ -19,14 +19,13 @@ public:
 
     bool upload(QString path, mega::MegaNode *parent, unsigned long long appDataID, mega::MegaCancelToken *cancelToken);
     bool filesdiffer(QFileInfo &source, QFileInfo &destination);
-    bool uploadRecursivelyIntoASyncedLocation(QFileInfo srcPath, QString destPath, mega::MegaNode *parent, unsigned long long appDataID);
+    bool uploadRecursivelyIntoASyncedLocation(QFileInfo srcPath, QString destPath, mega::MegaNode *parent, unsigned long long appDataID, mega::MegaCancelToken *cancelToken);
 
 protected:
     bool upload(QFileInfo info, mega::MegaNode *parent, unsigned long long appDataID, mega::MegaCancelToken *cancelToken);
 
 private:
-    void startUpload(const QString& name, const QString& localPath, mega::MegaNode* parent,
-                     unsigned long long appDataID, mega::MegaCancelToken *cancelToken);
+    void startUpload(const QString& localPath, mega::MegaNode* parent, mega::MegaCancelToken *cancelToken);
 
     mega::MegaApi *megaApi;
 };

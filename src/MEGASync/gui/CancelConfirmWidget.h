@@ -15,6 +15,8 @@ public:
     explicit CancelConfirmWidget(QWidget *parent = nullptr);
     ~CancelConfirmWidget();
 
+    void show();
+
 signals:
     void proceed();
     void dismiss();
@@ -24,6 +26,8 @@ private slots:
     void on_pProceed_clicked();
 
 private:
+    void enableButtons(bool value);
+
     Ui::CancelConfirmWidget *ui;
 };
 

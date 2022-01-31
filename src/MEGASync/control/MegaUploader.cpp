@@ -72,7 +72,7 @@ bool MegaUploader::filesdiffer(QFileInfo &source, QFileInfo &destination)
  * @param appDataID
  * @return false if something failed
  */
-bool MegaUploader::uploadRecursivelyIntoASyncedLocation(QFileInfo srcFileInfo, QString destPath, MegaNode *parent, unsigned long long appDataID)
+bool MegaUploader::uploadRecursivelyIntoASyncedLocation(QFileInfo srcFileInfo, QString destPath, MegaNode *parent, unsigned long long appDataID, MegaCancelToken* cancelToken)
 {
     bool toret = true;
     if (!srcFileInfo.exists())
@@ -89,11 +89,6 @@ bool MegaUploader::uploadRecursivelyIntoASyncedLocation(QFileInfo srcFileInfo, Q
         return false;
     }
 
-//    if (srcPath == destPath) // returning here would discard uploading excluded files. e.g: I want to force a remote folder to have the same as in local (regardless of exclusions), by uploading into it's remote parent
-//    {
-//        return;
-//    }
-
     if (srcFileInfo.isSymLink() || (!srcFileInfo.isFile() && !srcFileInfo.isDir()) ) //review if ever symlinks are supported
     {
         MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Recursive upload skipping non file/folder: %1").arg(srcPath).toUtf8().constData());
@@ -104,7 +99,7 @@ bool MegaUploader::uploadRecursivelyIntoASyncedLocation(QFileInfo srcFileInfo, Q
     {
         //start upload to parent
         MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Recursive upload uploading non syncable path: %1").arg(srcPath).toUtf8().constData());
-        startUpload(srcFileInfo.fileName(), srcPath, parent, appDataID, nullptr); // TODO : check if this whole method is still used. If so, check if nullptr is acceptable.
+        startUpload(srcPath, parent, cancelToken);
         return true;
     }
 
@@ -171,7 +166,7 @@ bool MegaUploader::uploadRecursivelyIntoASyncedLocation(QFileInfo srcFileInfo, Q
             {
                 if (newParent)
                 {
-                    bool r = uploadRecursivelyIntoASyncedLocation(di.fileInfo(), QDir::toNativeSeparators(destPath + QDir::separator() + di.fileName()), newParent.get(), appDataID);
+                    bool r = uploadRecursivelyIntoASyncedLocation(di.fileInfo(), QDir::toNativeSeparators(destPath + QDir::separator() + di.fileName()), newParent.get(), appDataID, cancelToken);
                     toret = r && toret;
                 }
             }
@@ -219,7 +214,7 @@ bool MegaUploader::upload(QFileInfo info, MegaNode *parent, unsigned long long a
     {
         if (!destPath.startsWith(QFileInfo(currentPath).canonicalFilePath()))//to avoid recurses //note: destPath should have been cannonicalized already
         {
-            QtConcurrent::run(this, &MegaUploader::uploadRecursivelyIntoASyncedLocation, QFileInfo(currentPath), destPath, parent->copy(), appDataID);
+            QtConcurrent::run(this, &MegaUploader::uploadRecursivelyIntoASyncedLocation, QFileInfo(currentPath), destPath, parent->copy(), appDataID, cancelToken);
         }
         else
         {
@@ -233,14 +228,13 @@ bool MegaUploader::upload(QFileInfo info, MegaNode *parent, unsigned long long a
         QString msg = QString::fromLatin1("Starting upload : '%1' - '%2' - '%3'").arg(info.fileName())
                                                                                  .arg(currentPath).arg(appDataID);
         megaApi->log(MegaApi::LOG_LEVEL_DEBUG, msg.toUtf8().constData());
-        startUpload(info.fileName(), currentPath, parent, appDataID, cancelToken);
+        startUpload(currentPath, parent, cancelToken);
         return true;
     }
     return false;
 }
 
-void MegaUploader::startUpload(const QString& name, const QString& localPath, MegaNode* parent,
-                               unsigned long long appDataID, MegaCancelToken* cancelToken)
+void MegaUploader::startUpload(const QString& localPath, MegaNode* parent, MegaCancelToken* cancelToken)
 {
     const bool startFirst = false;
     const char* localPathCstr = localPath.toUtf8().constData();

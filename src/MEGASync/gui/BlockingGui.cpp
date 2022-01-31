@@ -38,6 +38,7 @@ void BlockingUi::hide()
 void BlockingUi::onCancelClicked()
 {
     container->setCurrentWidget(confirmWidget);
+    confirmWidget->show();
     blockingWidget->hide();
 }
 
