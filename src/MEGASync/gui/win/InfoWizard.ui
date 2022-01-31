@@ -1061,7 +1061,7 @@ background: transparent;</string>
 </string>
               </property>
               <property name="text">
-               <string>Login</string>
+               <string>Log in</string>
               </property>
              </widget>
             </item>

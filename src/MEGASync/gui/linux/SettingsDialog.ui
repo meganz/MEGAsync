@@ -2913,7 +2913,7 @@ color: #0078D7;
           <item>
            <widget class="QPushButton" name="bLogout">
             <property name="text">
-             <string>Logout</string>
+             <string>Log out</string>
             </property>
             <property name="autoDefault">
              <bool>false</bool>

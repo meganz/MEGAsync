@@ -1431,9 +1431,9 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation>Your account has been temporarily locked for your safety. Please verify your email and follow its steps to unlock your account.</translation>
     </message>
     <message>
-        <source>Logout</source>
-        <translatorcomment>Button label to logout the current account.</translatorcomment>
-        <translation>Logout</translation>
+        <source>Log out</source>
+        <translatorcomment>Button label to log out the current account.</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Your account has been suspended temporarily due to potential abuse. Please verify your phone number to unlock your account.</source>
@@ -1844,6 +1844,11 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <source>Know more about MEGA desktop app. [A]Read more[/A]</source>
         <translatorcomment>Label with hyperlink to sync client webpage to know more about MEGA desktop app. Keep placeholders.</translatorcomment>
         <translation>Learn more about the MEGA Desktop App. [A]Read more[/A]</translation>
+    </message>
+    <message>
+        <source>Log in</source>
+        <translatorcomment>Button label to offer the user the option to log in in his account</translatorcomment>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -4085,9 +4090,9 @@ Do you want to delete it anyway?</translation>
         <translation>Details</translation>
     </message>
     <message>
-        <source>Logout</source>
-        <translatorcomment>Button label to logout of the application. String as short as possible.</translatorcomment>
-        <translation>Logout</translation>
+        <source>Log out</source>
+        <translatorcomment>Button label to log out of the application. String as short as possible.</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Upgrade</source>
@@ -5708,9 +5713,9 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>Why am I seeing this?</translation>
     </message>
     <message>
-        <source>Logout</source>
-        <translatorcomment>Button label to logout the current account</translatorcomment>
-        <translation>Logout</translation>
+        <source>Log out</source>
+        <translatorcomment>Button label to log out the current account</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Verify your email</source>
