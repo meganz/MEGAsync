@@ -5283,6 +5283,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translatorcomment>Informative label to indicate the user that there is a stream error because of transfer overquota situation.</translatorcomment>
         <translation>Streaming error: transfer quota exceeded.</translation>
     </message>
+    <message>
+        <source>Please wait...</source>
+        <translatorcomment>Message shown while waiting for the server request with the file info to stream</translatorcomment>
+        <translation>Please wait…</translation>
+    </message>
 </context>
 <context>
     <name>SwitchButton</name>

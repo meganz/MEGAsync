@@ -206,7 +206,7 @@ void ImportMegaLinksDialog::on_bMegaFolder_clicked()
 void ImportMegaLinksDialog::onLinkInfoAvailable(int id)
 {
     ImportListWidgetItem *item = (ImportListWidgetItem *)ui->linkList->itemWidget(ui->linkList->item(id));
-    MegaNode *node = linkProcessor->getNode(id);
+    std::shared_ptr<MegaNode> node = linkProcessor->getNode(id);
 
     int e = linkProcessor->getError(id);
     if (node && (e == MegaError::API_OK))
@@ -214,11 +214,11 @@ void ImportMegaLinksDialog::onLinkInfoAvailable(int id)
         QString name = QString::fromUtf8(node->getName());
         if (!name.compare(QString::fromAscii("NO_KEY")) || !name.compare(QString::fromAscii("CRYPTO_ERROR")))
         {
-            item->setData(tr("Decryption error"), ImportListWidgetItem::WARNING, megaApi->getSize(node), !(node->getType() == MegaNode::TYPE_FILE));
+            item->setData(tr("Decryption error"), ImportListWidgetItem::WARNING, megaApi->getSize(node.get()), !(node->getType() == MegaNode::TYPE_FILE));
         }
         else
         {
-            item->setData(name, ImportListWidgetItem::CORRECT, megaApi->getSize(node), !(node->getType() == MegaNode::TYPE_FILE));
+            item->setData(name, ImportListWidgetItem::CORRECT, megaApi->getSize(node.get()), !(node->getType() == MegaNode::TYPE_FILE));
         }
     }
     else
