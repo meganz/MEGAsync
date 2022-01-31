@@ -3290,9 +3290,8 @@ void MegaApplication::updateIfBlockingStageFinished(BlockingBatch &batches)
 {
     if (batches.isBlockingStageFinished())
     {
-        // TEMP : to check blocking state without hurry
-        //setTransferUiInUnblockedState();
-        //batches.setAsUnblocked();
+        setTransferUiInUnblockedState();
+        batches.setAsUnblocked();
     }
 }
 
