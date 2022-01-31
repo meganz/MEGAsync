@@ -1,6 +1,7 @@
 #include "TransfersWidget.h"
 #include "ui_TransfersWidget.h"
 #include "MegaApplication.h"
+#include "QMegaMessageBox.h"
 
 #include <QTimer>
 #include <QtConcurrent/QtConcurrent>
@@ -12,6 +13,7 @@ TransfersWidget::TransfersWidget(QWidget* parent) :
     ui (new Ui::TransfersWidget),
     tDelegate (nullptr),
     mIsPaused (false),
+    mClearMode(false),
     app (qobject_cast<MegaApplication*>(qApp)),
     mHeaderNameState (HS_SORT_PRIORITY),
     mHeaderSizeState (HS_SORT_PRIORITY),
@@ -202,9 +204,20 @@ void TransfersWidget::on_tPauseResumeAll_clicked()
     emit pauseResumeAllRows(mIsPaused);
 }
 
-void TransfersWidget::on_tCancelAll_clicked()
+void TransfersWidget::on_tCancelClearAll_clicked()
 {
-    emit cancelClearAllRows(true, true);
+    QPointer<TransfersWidget> dialog = QPointer<TransfersWidget>(this);
+
+    if (QMegaMessageBox::warning(nullptr, QString::fromUtf8("MEGAsync"),
+                             tr("Are you sure you want to %1 all transfers?").arg(mClearMode ? tr("clear") : tr("cancel")),
+                             QMessageBox::Yes | QMessageBox::No, QMessageBox::No)
+            != QMessageBox::Yes
+            || !dialog)
+    {
+        return;
+    }
+
+    emit cancelClearAllRows();
 }
 
 void TransfersWidget::onTransferAdded()
@@ -218,16 +231,17 @@ void TransfersWidget::onShowCompleted(bool showCompleted)
     if (showCompleted)
     {
         ui->lHeaderTime->setText(tr("Time"));
-        ui->tCancelAll->setToolTip(tr("Clear All"));
+        ui->tCancelClearAll->setToolTip(tr("Clear All"));
         ui->lHeaderSpeed->setText(tr("Avg. speed"));
     }
     else
     {
         ui->lHeaderTime->setText(tr("Time left"));
-        ui->tCancelAll->setToolTip(tr("Cancel or Clear All"));
+        ui->tCancelClearAll->setToolTip(tr("Cancel All"));
         ui->lHeaderSpeed->setText(tr("Speed"));
     }
 
+    mClearMode = showCompleted;
     ui->tPauseResumeAll->setVisible(!showCompleted);
 }
 

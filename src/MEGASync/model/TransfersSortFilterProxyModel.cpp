@@ -14,8 +14,8 @@ TransfersSortFilterProxyModel::TransfersSortFilterProxyModel(QObject* parent)
       mNextTransferTypes (mTransferTypes),
       mNextFileTypes (mFileTypes),
       mSortCriterion (SortCriterion::PRIORITY),
-      mDlNumber (new int(0)),
-      mUlNumber (new int(0)),
+      mDlNumber (0),
+      mUlNumber (0),
       mFilterMutex (new QMutex(QMutex::Recursive)),
       mActivityMutex (new QMutex(QMutex::Recursive))
 {
@@ -58,8 +58,6 @@ TransfersSortFilterProxyModel::TransfersSortFilterProxyModel(QObject* parent)
 
 TransfersSortFilterProxyModel::~TransfersSortFilterProxyModel()
 {
-    delete mUlNumber;
-    delete mDlNumber;
     delete mFilterMutex;
     delete mActivityMutex;
 }
@@ -134,52 +132,52 @@ int  TransfersSortFilterProxyModel::getNumberOfItems(TransferData::TransferType 
         auto nbRows (rowCount());
         if (mTransferTypes == (TransferData::TRANSFER_DOWNLOAD | TransferData::TRANSFER_LTCPDOWNLOAD))
         {
-            *mDlNumber = nbRows;
-            *mUlNumber = 0;
+            mDlNumber = nbRows;
+            mUlNumber = 0;
         }
         else if (mTransferTypes == TransferData::TRANSFER_UPLOAD)
         {
-            *mDlNumber = 0;
-            *mUlNumber = nbRows;
+            mDlNumber = 0;
+            mUlNumber = nbRows;
         }
         else
         {
-            if (*mDlNumber + *mUlNumber != nbRows)
+            if (mDlNumber + mUlNumber != nbRows)
             {
                 // Case where only one type: easy!
-                if (*mDlNumber == 0)
+                if (mDlNumber == 0)
                 {
-                    *mUlNumber = nbRows;
+                    mUlNumber = nbRows;
                 }
-                else if (*mUlNumber == 0)
+                else if (mUlNumber == 0)
                 {
-                    *mDlNumber = nbRows;
+                    mDlNumber = nbRows;
                 }
                 // Mixed... we have to count :(
                 else
                 {
-                    *mUlNumber = 0;
+                    mUlNumber = 0;
                     for (int i = 0; i < nbRows; ++i)
                     {
                         QModelIndex idx (index(i, 0));
                         const auto d (qvariant_cast<TransferItem>(idx.data()).getTransferData());
                         if (d->mType & TransferData::TRANSFER_UPLOAD)
                         {
-                            (*mUlNumber)++;
+                            mUlNumber++;
                         }
                     }
-                    *mDlNumber = nbRows - *mUlNumber;
+                    mDlNumber = nbRows - mUlNumber;
                 }
             }
         }
 
         if (transferType & (TransferData::TRANSFER_DOWNLOAD | TransferData::TRANSFER_LTCPDOWNLOAD))
         {
-            nb = *mDlNumber;
+            nb = mDlNumber;
         }
         else
         {
-            nb = *mUlNumber;
+            nb = mUlNumber;
         }
         mActivityMutex->unlock();
     }
@@ -188,8 +186,8 @@ int  TransfersSortFilterProxyModel::getNumberOfItems(TransferData::TransferType 
 
 void TransfersSortFilterProxyModel::resetNumberOfItems()
 {
-    *mDlNumber = 0;
-    *mUlNumber = 0;
+    mDlNumber = 0;
+    mUlNumber = 0;
 }
 
 TransferBaseDelegateWidget *TransfersSortFilterProxyModel::createTransferManagerItem(QWidget* parent)
@@ -197,12 +195,12 @@ TransferBaseDelegateWidget *TransfersSortFilterProxyModel::createTransferManager
     auto item = new TransferManagerDelegateWidget(parent);
 
     //All are UniqueConnection to avoid reconnecting if thw item already exists in cache and it is not a new item
-    connect(item, &TransferManagerDelegateWidget::cancelClearTransfer,
-            this, &TransfersSortFilterProxyModel::onCancelClearTransfer, Qt::UniqueConnection);
+    connect(item, &TransferManagerDelegateWidget::cancelTransfer,
+            this, &TransfersSortFilterProxyModel::onCancelClearTransfer);
     connect(item, &TransferManagerDelegateWidget::pauseResumeTransfer,
-            this, &TransfersSortFilterProxyModel::onPauseResumeTransfer, Qt::UniqueConnection);
+            this, &TransfersSortFilterProxyModel::onPauseResumeTransfer);
     connect(item, &TransferManagerDelegateWidget::retryTransfer,
-             this, &TransfersSortFilterProxyModel::onRetryTransfer, Qt::UniqueConnection);
+             this, &TransfersSortFilterProxyModel::onRetryTransfer);
 
     return item;
 }
@@ -250,11 +248,11 @@ bool TransfersSortFilterProxyModel::filterAcceptsRow(int sourceRow, const QModel
             {
                 if (d->mType & TransferData::TRANSFER_UPLOAD)
                 {
-                    (*mUlNumber)++;
+                    mUlNumber++;
                 }
                 else
                 {
-                    (*mDlNumber)++;
+                    mDlNumber++;
                 }
             }
         }

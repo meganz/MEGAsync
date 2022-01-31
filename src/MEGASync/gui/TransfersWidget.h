@@ -47,7 +47,7 @@ signals:
     void updateSearchFilter(const QString& pattern);
     void applyFilter();
     void pauseResumeAllRows(bool pauseState);
-    void cancelClearAllRows(bool cancel, bool clear);
+    void cancelClearAllRows();
 
 private:
     static constexpr int PROXY_ACTIVITY_TIMEOUT_MS = 100;
@@ -66,6 +66,7 @@ private:
     MegaTransferDelegate *tDelegate;
     MegaDelegateHoverManager mDelegateHoverManager;
     bool mIsPaused;
+    bool mClearMode;
     MegaApplication *app;
     HeaderState mHeaderNameState;
     HeaderState mHeaderSizeState;
@@ -83,7 +84,7 @@ public slots:
     void on_pHeaderName_clicked();
     void on_pHeaderSize_clicked();
     void on_tPauseResumeAll_clicked();
-    void on_tCancelAll_clicked();
+    void on_tCancelClearAll_clicked();
     void onTransferAdded();
     void onShowCompleted(bool showCompleted);
     void onPauseStateChanged(bool pauseState);

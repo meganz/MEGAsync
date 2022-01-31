@@ -28,7 +28,6 @@ MegaTransferView::MegaTransferView(QWidget* parent) :
     mClearAction(nullptr)
 {
     setMouseTracking(true);
-    lastItemHoveredTag = 0;
     disableLink = false;
     disableMenus = false;
 }
@@ -49,10 +48,10 @@ void MegaTransferView::setup(TransfersWidget* tw)
             this, &MegaTransferView::onCustomContextMenu);
 
     connect(tw, &TransfersWidget::pauseResumeAllRows,
-            this, &MegaTransferView::onPauseResumeAllRows, Qt::QueuedConnection);
+            this, &MegaTransferView::onPauseResumeAllRows);
 
     connect(tw, &TransfersWidget::cancelClearAllRows,
-            this, &MegaTransferView::onCancelClearAllRows, Qt::QueuedConnection);
+            this, &MegaTransferView::onCancelClearAllTransfers);
 
     createContextMenu();
 }
@@ -103,7 +102,7 @@ void MegaTransferView::onPauseResumeSelection(bool pauseState)
     }
 }
 
-void MegaTransferView::onCancelClearAllRows(bool cancel, bool clear)
+void MegaTransferView::onCancelClearAllTransfers()
 {
     QModelIndexList indexes;
     auto rowCount (model()->rowCount());
@@ -120,12 +119,13 @@ void MegaTransferView::onCancelClearAllRows(bool cancel, bool clear)
             indexes.push_back(index);
         }
 
-        mParentTransferWidget->getModel()->cancelClearTransfers(indexes, cancel, clear);
+        mParentTransferWidget->getModel()->cancelClearTransfers(indexes);
+        mParentTransferWidget->getModel()->resetTransfersCount();
         proxy->invalidate();
     }
 }
 
-void MegaTransferView::onCancelClearSelection(bool cancel, bool clear)
+void MegaTransferView::onCancelClearSelection()
 {
     auto proxy (qobject_cast<QSortFilterProxyModel*>(model()));
 
@@ -145,7 +145,7 @@ void MegaTransferView::onCancelClearSelection(bool cancel, bool clear)
         }
 
         clearSelection();
-        mParentTransferWidget->getModel()->cancelClearTransfers(indexes, cancel, clear);
+        mParentTransferWidget->getModel()->cancelClearTransfers(indexes);
     }
 }
 
@@ -598,12 +598,12 @@ void MegaTransferView::showInMegaClicked()
 
 void MegaTransferView::cancelSelectedClicked()
 {
-    onCancelClearSelection(true, false);
+    onCancelClearSelection();
 }
 
 void MegaTransferView::clearSelectedClicked()
 {
-    onCancelClearSelection(false, true);
+    onCancelClearSelection();
 }
 
 void MegaTransferView::pauseSelectedClicked()

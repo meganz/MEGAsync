@@ -51,7 +51,7 @@ signals:
     void completedTransfersTabActive(bool);
     void userActivity();
     void showCompleted(bool showCompleted);
-    void cancelClearAllRows(bool cancel, bool clear);
+    void cancelAllTransfers(bool cancel, bool clear);
     void cancelClearAllTransfers();
 
 private:
@@ -93,11 +93,11 @@ private slots:
     void on_tDownloads_clicked();
     void on_tUploads_clicked();
     void on_tAllTransfers_clicked();
-    void on_bClearAll_clicked();
     void on_tClearCompleted_clicked();
     void on_tSeePlans_clicked();
     void on_bSearch_clicked();
     void on_tSearchIcon_clicked();
+    void on_bSearchString_clicked();
     void on_tSearchCancel_clicked();
     void on_tClearSearchResult_clicked();
     void on_tAllResults_clicked();

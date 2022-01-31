@@ -1542,6 +1542,9 @@ QToolButton
       </item>
       <item>
        <widget class="QGroupBox" name="wSearch">
+        <property name="focusPolicy">
+         <enum>Qt::StrongFocus</enum>
+        </property>
         <property name="title">
          <string>SEARCH</string>
         </property>
@@ -1587,6 +1590,9 @@ QToolButton
             </property>
             <item>
              <widget class="QPushButton" name="bSearchString">
+              <property name="cursor">
+               <cursorShape>PointingHandCursor</cursorShape>
+              </property>
               <property name="text">
                <string notr="true"/>
               </property>

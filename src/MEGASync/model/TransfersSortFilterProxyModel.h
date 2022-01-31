@@ -63,8 +63,8 @@ class TransfersSortFilterProxyModel : public QSortFilterProxyModel
         TransferData::TransferTypes mNextTransferTypes;
         TransferData::FileTypes mNextFileTypes;
         SortCriterion mSortCriterion;
-        int* mDlNumber;
-        int* mUlNumber;
+        mutable int mDlNumber;
+        mutable int mUlNumber;
         QMutex* mFilterMutex;
         QMutex* mActivityMutex;
 };

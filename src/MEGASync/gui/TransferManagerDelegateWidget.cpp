@@ -4,6 +4,7 @@
 #include "control/Utilities.h"
 #include "Preferences.h"
 #include "MegaApplication.h"
+#include "QMegaMessageBox.h"
 
 #include <QMouseEvent>
 
@@ -335,7 +336,18 @@ void TransferManagerDelegateWidget::on_tPauseResumeTransfer_clicked()
 
 void TransferManagerDelegateWidget::on_tCancelClearTransfer_clicked()
 {
-    emit cancelClearTransfer();
+    QPointer<TransferManagerDelegateWidget> dialog = QPointer<TransferManagerDelegateWidget>(this);
+
+    if (QMegaMessageBox::warning(nullptr, QString::fromUtf8("MEGAsync"),
+                             tr("Are you sure you want to cancel this transfer?"),
+                             QMessageBox::Yes | QMessageBox::No, QMessageBox::No)
+            != QMessageBox::Yes
+            || !dialog)
+    {
+        return;
+    }
+
+    emit cancelTransfer();
 }
 
 void TransferManagerDelegateWidget::on_tItemRetry_clicked()

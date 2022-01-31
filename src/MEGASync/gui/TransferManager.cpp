@@ -146,25 +146,25 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
     }
 
     connect(this, &TransferManager::showCompleted,
-            mUi->wTransfers, &TransfersWidget::onShowCompleted, Qt::QueuedConnection);
+            mUi->wTransfers, &TransfersWidget::onShowCompleted);
 
     connect(mModel, &QTransfersModel::pauseStateChanged,
-            mUi->wTransfers, &TransfersWidget::onPauseStateChanged, Qt::QueuedConnection);
+            mUi->wTransfers, &TransfersWidget::onPauseStateChanged);
 
     connect(mModel, &QTransfersModel::transfersDataUpdated,
             this, &TransferManager::onTransfersDataUpdated);
 
     connect(mModel, &QTransfersModel::pauseStateChanged,
-            this, &TransferManager::onUpdatePauseState, Qt::QueuedConnection);
+            this, &TransferManager::onUpdatePauseState);
 
     connect(mUi->bPause, &QToolButton::clicked,
-            mModel, &QTransfersModel::pauseResumeAllTransfers, Qt::QueuedConnection);
+            mModel, &QTransfersModel::pauseResumeAllTransfers);
 
     connect(this, &TransferManager::cancelClearAllTransfers,
             mModel, &QTransfersModel::cancelClearAllTransfers, Qt::QueuedConnection);
 
-    connect(this, &TransferManager::cancelClearAllRows,
-            findChild<MegaTransferView*>(), &MegaTransferView::onCancelClearAllRows,
+    connect(this, &TransferManager::cancelAllTransfers,
+            findChild<MegaTransferView*>(), &MegaTransferView::onCancelClearAllTransfers,
             Qt::QueuedConnection);
 
     mSpeedRefreshTimer->setSingleShot(false);
@@ -453,7 +453,10 @@ void TransferManager::onTransfersDataUpdated()
     // Refresh stats
     refreshTypeStats();
     refreshFileTypesStats();
-    refreshSearchStats();
+    if(mCurrentTab == SEARCH_TAB)
+    {
+        refreshSearchStats();
+    }
     refreshStateStats();
     refreshView();
 }
@@ -517,7 +520,10 @@ void TransferManager::refreshStats()
 {
     refreshTypeStats();
     refreshFileTypesStats();
-    refreshSearchStats();
+    if(mCurrentTab == SEARCH_TAB)
+    {
+        refreshSearchStats();
+    }
     onTransfersDataUpdated();
     refreshView();
 }
@@ -525,69 +531,67 @@ void TransferManager::refreshStats()
 void TransferManager::refreshSearchStats()
 {
     // Update search results number
-    if (mCurrentTab == SEARCH_TAB)
+    auto proxy (mUi->wTransfers->getProxyModel());
+    long long nbDl (proxy->getNumberOfItems(TransferData::TRANSFER_DOWNLOAD));
+    long long nbUl (proxy->getNumberOfItems(TransferData::TRANSFER_UPLOAD));
+    long long nbAll (mNumberOfTransfersPerTab[SEARCH_TAB]);
+
+    auto rowCount (mUi->wTransfers->rowCount());
+
+    if (mUi->tAllResults->isChecked())
     {
-        auto proxy (mUi->wTransfers->getProxyModel());
-        long long nbDl (proxy->getNumberOfItems(TransferData::TRANSFER_DOWNLOAD));
-        long long nbUl (proxy->getNumberOfItems(TransferData::TRANSFER_UPLOAD));
-        long long nbAll (mNumberOfTransfersPerTab[SEARCH_TAB]);
-
-        auto rowCount (mUi->wTransfers->rowCount());
-
-        if (mUi->tAllResults->isChecked())
-        {
-            nbAll = rowCount;
-        }
-        else if (mUi->tDlResults->isChecked())
-        {
-            if (nbDl != mNumberOfSearchResultsPerTypes[TransferData::TRANSFER_DOWNLOAD])
-            {
-                nbAll += nbDl - mNumberOfSearchResultsPerTypes[TransferData::TRANSFER_DOWNLOAD];
-            }
-            nbUl = nbAll - nbDl;
-        }
-        else
-        {
-            if (nbUl != mNumberOfSearchResultsPerTypes[TransferData::TRANSFER_UPLOAD])
-            {
-                nbAll += nbUl - mNumberOfSearchResultsPerTypes[TransferData::TRANSFER_UPLOAD];
-            }
-            nbDl = nbAll - nbUl;
-        }
-
+        nbAll = rowCount;
+    }
+    else if (mUi->tDlResults->isChecked())
+    {
         if (nbDl != mNumberOfSearchResultsPerTypes[TransferData::TRANSFER_DOWNLOAD])
         {
-            mUi->tDlResults->setText(QString(tr("Downloads\t\t\t\t%1")).arg(nbDl));
-            mNumberOfSearchResultsPerTypes[TransferData::TRANSFER_DOWNLOAD] = nbDl;
+            nbAll += nbDl - mNumberOfSearchResultsPerTypes[TransferData::TRANSFER_DOWNLOAD];
         }
-
+        nbUl = nbAll - nbDl;
+    }
+    else
+    {
         if (nbUl != mNumberOfSearchResultsPerTypes[TransferData::TRANSFER_UPLOAD])
         {
-            mUi->tUlResults->setText(QString(tr("Uploads\t\t\t\t%1")).arg(nbUl));
-            mNumberOfSearchResultsPerTypes[TransferData::TRANSFER_UPLOAD] = nbUl;
+            nbAll += nbUl - mNumberOfSearchResultsPerTypes[TransferData::TRANSFER_UPLOAD];
         }
-
-        if (nbAll != mNumberOfTransfersPerTab[SEARCH_TAB])
-        {
-            mUi->lNbResults->setText(QString(tr("%1 results found")).arg(nbAll));
-            mNumberOfTransfersPerTab[SEARCH_TAB] = nbAll;
-            mUi->lNbResults->setProperty("results", bool(nbAll));
-            mUi->lNbResults->style()->unpolish(mUi->lNbResults);
-            mUi->lNbResults->style()->polish(mUi->lNbResults);
-            mUi->tAllResults->setText(QString(tr("All\t\t\t\t%1")).arg(nbAll));
-        }
-
-        bool showTypeFilters (nbDl && nbUl);
-        mUi->tDlResults->setVisible(showTypeFilters);
-        mUi->tUlResults->setVisible(showTypeFilters);
-        mUi->tAllResults->setVisible(showTypeFilters);
-
-        if ((mUi->tDlResults->isChecked() && nbDl == 0)
-                || (mUi->tUlResults->isChecked() && nbUl == 0))
-        {
-            on_tAllResults_clicked();
-        }
+        nbDl = nbAll - nbUl;
     }
+
+    if (nbDl != mNumberOfSearchResultsPerTypes[TransferData::TRANSFER_DOWNLOAD])
+    {
+        mUi->tDlResults->setText(QString(tr("Downloads\t\t\t\t%1")).arg(nbDl));
+        mNumberOfSearchResultsPerTypes[TransferData::TRANSFER_DOWNLOAD] = nbDl;
+    }
+
+    if (nbUl != mNumberOfSearchResultsPerTypes[TransferData::TRANSFER_UPLOAD])
+    {
+        mUi->tUlResults->setText(QString(tr("Uploads\t\t\t\t%1")).arg(nbUl));
+        mNumberOfSearchResultsPerTypes[TransferData::TRANSFER_UPLOAD] = nbUl;
+    }
+
+    if (nbAll != mNumberOfTransfersPerTab[SEARCH_TAB])
+    {
+        mUi->lNbResults->setText(QString(tr("%1 results found")).arg(nbAll));
+        mNumberOfTransfersPerTab[SEARCH_TAB] = nbAll;
+        mUi->lNbResults->setProperty("results", bool(nbAll));
+        mUi->lNbResults->style()->unpolish(mUi->lNbResults);
+        mUi->lNbResults->style()->polish(mUi->lNbResults);
+        mUi->tAllResults->setText(QString(tr("All\t\t\t\t%1")).arg(nbAll));
+    }
+
+    bool showTypeFilters (nbDl && nbUl);
+    mUi->tDlResults->setVisible(showTypeFilters);
+    mUi->tUlResults->setVisible(showTypeFilters);
+    mUi->tAllResults->setVisible(showTypeFilters);
+
+    if ((mUi->tDlResults->isChecked() && nbDl == 0)
+            || (mUi->tUlResults->isChecked() && nbUl == 0))
+    {
+        on_tAllResults_clicked();
+    }
+
 }
 
 void TransferManager::disableGetLink(bool disable)
@@ -595,25 +599,9 @@ void TransferManager::disableGetLink(bool disable)
     mUi->wTransfers->disableGetLink(disable);
 }
 
-void TransferManager::on_bClearAll_clicked()
-{
-    QPointer<TransferManager> dialog = QPointer<TransferManager>(this);
-
-    if (QMegaMessageBox::warning(nullptr, QString::fromUtf8("MEGAsync"),
-                             tr("Are you sure you want to cancel all transfers?"),
-                             QMessageBox::Yes | QMessageBox::No, QMessageBox::No)
-            != QMessageBox::Yes
-            || !dialog)
-    {
-        return;
-    }
-
-    emit cancelClearAllTransfers();
-}
-
 void TransferManager::on_tClearCompleted_clicked()
 {
-    emit cancelClearAllRows(false, true);
+    emit cancelAllTransfers(false, true);
     mUi->tClearCompleted->hide();
 }
 
@@ -653,11 +641,17 @@ void TransferManager::on_tSearchIcon_clicked()
         mUi->tUlResults->hide();
         mUi->wSearch->show();
 
-        toggleTab(SEARCH_TAB);
-
         mUi->wTransfers->transferFilterReset();
         mUi->wTransfers->textFilterChanged(pattern);
+
+        refreshSearchStats();
+        toggleTab(SEARCH_TAB);
     }
+}
+
+void TransferManager::on_bSearchString_clicked()
+{
+    toggleTab(SEARCH_TAB);
 }
 
 void TransferManager::on_tSearchCancel_clicked()

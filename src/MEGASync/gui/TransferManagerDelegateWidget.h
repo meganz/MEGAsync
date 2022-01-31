@@ -30,7 +30,7 @@ public:
     ActionHoverType mouseHoverTransfer(bool isHover, const QPoint &pos) override;
 
 signals:
-    void cancelClearTransfer();
+    void cancelTransfer();
     void pauseResumeTransfer();
     void retryTransfer();
 

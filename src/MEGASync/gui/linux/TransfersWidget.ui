@@ -399,7 +399,7 @@
            </widget>
           </item>
           <item>
-           <widget class="QToolButton" name="tCancelAll">
+           <widget class="QToolButton" name="tCancelClearAll">
             <property name="cursor">
              <cursorShape>PointingHandCursor</cursorShape>
             </property>

@@ -709,12 +709,11 @@ void QTransfersModel::openFolderByIndex(const QModelIndex& index)
     });
 }
 
-void QTransfersModel::cancelClearTransfers(const QModelIndexList& indexes, bool cancel, bool clear)
+void QTransfersModel::cancelClearTransfers(const QModelIndexList& indexes)
 {
     QMap<int, TransferTag> tags;
-    QVector<int> rows;
-    QVector<int> toCancel;
-    QVector<int>& rowsToCancel (clear? toCancel : rows);
+    QVector<TransferTag> rows;
+    QVector<TransferTag> toCancel;
 
     mModelMutex->lockForWrite();
 
@@ -726,94 +725,65 @@ void QTransfersModel::cancelClearTransfers(const QModelIndexList& indexes, bool 
         tags[row] = static_cast<TransferTag>(index.internalId());
     }
 
-    if (clear)
+    // Reverse sort to keep indexes valid after deletion
+    std::sort(rows.rbegin(), rows.rend());
+
+    // First clear finished transfers (remove rows), then cancel the others.
+    // This way, there is no risk of messing up the rows order with cancel requests.
+    int count (0);
+    int row (mOrder.size() - 1);
+    for (auto item : rows)
     {
-        // Reverse sort to keep indexes valid after deletion
-        std::sort(rows.rbegin(), rows.rend());
+        auto tag (tags[item]);
+        const auto d (static_cast<const TransferItem*>(mTransfers[tag]
+                                                        .constData())->getTransferData());
 
-        // First clear finished transfers (remove rows), then cancel the others.
-        // This way, there is no risk of messing up the rows order with cancel requests.
-        int count (0);
-        int row (mOrder.size() - 1);
-        for (auto item : rows)
+        // Clear (remove rows of) finished transfers
+        if (d /*&& d->mState & FINISHED_STATES*/)
         {
-            auto tag (tags[item]);
-            const auto d (static_cast<const TransferItem*>(mTransfers[tag]
-                                                            .constData())->getTransferData());
-
-            // Clear (remove rows of) finished transfers
-            if (d && d->mState & FINISHED_STATES)
+            if (d->mState & CANCELABLE_STATES)
             {
-                // Init row with row of first tag
-                if (count == 0)
-                {
-                    row = item;
-                }
-
-                // If rows are non-contiguous, flush and start from item
-                if (row != item)
-                {
-                    removeRows(row + 1, count, DEFAULT_IDX);
-                    count = 0;
-                    row = item;
-                }
-
-                // We have at least one row
-                count++;
-                row--;
+                toCancel.push_back(d->mTag);
             }
-            else
+
+            // Init row with row of first tag
+            if (count == 0)
             {
-                // Flush pooled rows (start at row+1)
-                // Not strictly necessary, but allows to process rows sooner
-                if (count > 0)
-                {
-                    removeRows(row + 1, count, DEFAULT_IDX);
-                    count = 0;
-                }
-                // Queue transfer to be canceled (if needed)
-                if (cancel && d->mState & CANCELABLE_STATES)
-                {
-                    toCancel.push_back(item);
-                }
+                row = item;
             }
-        }
-        // Flush pooled rows (start at row + 1).
-        // This happens when the last item processed is in a finished state.
-        if (count > 0)
-        {
-            removeRows(row + 1, count, DEFAULT_IDX);
+
+            // If rows are non-contiguous, flush and start from item
+            if (row != item)
+            {
+                removeRows(row + 1, count, DEFAULT_IDX);
+                count = 0;
+                row = item;
+            }
+
+            // We have at least one row
+            count++;
+            row--;
         }
     }
+    // Flush pooled rows (start at row + 1).
+    // This happens when the last item processed is in a finished state.
+    if (count > 0)
+    {
+        removeRows(row + 1, count, DEFAULT_IDX);
+    }
+
     mModelMutex->unlock();
 
     // Now cancel transfers.
-    if (cancel)
+    QReadLocker lock (mModelMutex);
+    for (auto item : toCancel)
     {
-        QReadLocker lock (mModelMutex);
-        for (auto item : rowsToCancel)
-        {
-            // If we cleared before, all transfers are cancelable
-            if (clear)
-            {
-                mMegaApi->cancelTransferByTag(tags[item]);
-            }
-            // If not, check before canceling
-            else
-            {
-                auto tag (tags[item]);
-                const auto d (static_cast<const TransferItem*>(mTransfers[tag]
-                                                                .constData())->getTransferData());
-                if (d->mState & CANCELABLE_STATES)
-                {
-                    d->mMegaApi->cancelTransferByTag(tag);
-                }
-            }
-        }
+        mMegaApi->cancelTransferByTag(item);
     }
 
     //Update stats
-    resetTransfersCount();
+    updateTransfersCount();
+    emit transfersDataUpdated();
 }
 
 void QTransfersModel::pauseTransfers(const QModelIndexList& indexes, bool pauseState)

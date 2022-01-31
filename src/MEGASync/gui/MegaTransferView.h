@@ -20,8 +20,6 @@ public:
     void disableContextMenus(bool option);
 
 private:
-    int lastItemHoveredTag;
-    QList<int> transferTagSelected;
     bool disableLink;
     bool disableMenus;
 
@@ -52,8 +50,8 @@ protected:
 public slots:
     void onPauseResumeAllRows(bool pauseState);
     void onPauseResumeSelection(bool pauseState);
-    void onCancelClearAllRows(bool cancel, bool clear);
-    void onCancelClearSelection(bool cancel, bool clear);
+    void onCancelClearAllTransfers();
+    void onCancelClearSelection();
 
 private slots:
     void onCustomContextMenu(const QPoint& point);
