@@ -15,9 +15,8 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
     ui->setupUi(this);
     setAttribute(Qt::WA_QuitOnClose, false);
     setAttribute(Qt::WA_DeleteOnClose, true);
-#ifndef __APPLE__
-    Qt::WindowFlags flags =  Qt::Window | Qt::FramelessWindowHint;
-    this->setWindowFlags(flags);
+#ifndef Q_OS_MACOS
+    setWindowFlags(windowFlags() | Qt::Window | Qt::FramelessWindowHint);
 #endif
     preferences = Preferences::instance();
 
