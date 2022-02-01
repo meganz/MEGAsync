@@ -23,7 +23,6 @@ SetupWizard::SetupWizard(MegaApplication *app, QWidget *parent) :
     ui(new Ui::SetupWizard)
 {
     ui->setupUi(this);
-    setAttribute(Qt::WA_QuitOnClose, false);
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
     setWindowModality(Qt::WindowModal);
 

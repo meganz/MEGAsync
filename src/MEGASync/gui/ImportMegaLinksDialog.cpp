@@ -20,7 +20,6 @@ ImportMegaLinksDialog::ImportMegaLinksDialog(MegaApi *megaApi, Preferences *pref
     ui(new Ui::ImportMegaLinksDialog)
 {
     ui->setupUi(this);
-    setAttribute(Qt::WA_QuitOnClose, false);
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
 
     const int SLOT_HEIGHT = 35;

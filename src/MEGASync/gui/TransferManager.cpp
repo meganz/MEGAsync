@@ -13,7 +13,6 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
     ui(new Ui::TransferManager)
 {
     ui->setupUi(this);
-    setAttribute(Qt::WA_QuitOnClose, false);
     setAttribute(Qt::WA_DeleteOnClose, true);
 #ifndef Q_OS_MACOS
     setWindowFlags(windowFlags() | Qt::Window | Qt::FramelessWindowHint);
