@@ -668,7 +668,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Bug report can&apos;t be submitted due to some error. Please try again or contact our support team via [A]support@mega.co.nz[/A]</source>
         <translatorcomment>Warning message shown when some error occurs during uploading a bug report.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Votre problème ne peut pas être téléversé à cause d’une erreur. Veuillez réessayer ultérieurement ou contacter notre équipe d’assistance par courriel [A]support@mega.nz[/A] si le problème persiste.</translation>
     </message>
     <message>
         <source>Ok</source>
@@ -981,7 +981,7 @@ Dans certains cas, ils pourraient comprendre des détails sur vos données, tels
     <message>
         <source>Reject</source>
         <translatorcomment>Button label of system notification to reject the notification of incoming contact request.</translatorcomment>
-        <translation>Rejeter</translation>
+        <translation>Effacer</translation>
     </message>
     <message>
         <source>Cancelled Contact Request</source>
@@ -1111,7 +1111,7 @@ Dans certains cas, ils pourraient comprendre des détails sur vos données, tels
     <message>
         <source>Your account is almost full.</source>
         <translatorcomment>Title of the system notification when the account is almost full.</translatorcomment>
-        <translation>Votre compte est presque plein.</translation>
+        <translation>Votre compte est presque saturé.</translation>
     </message>
     <message>
         <source>Upgrade now to a PRO account.</source>
@@ -1126,7 +1126,7 @@ Dans certains cas, ils pourraient comprendre des détails sur vos données, tels
     <message>
         <source>Your account is full.</source>
         <translatorcomment>Title of the system notification when the account is full.</translatorcomment>
-        <translation>Votre compte est plein.</translation>
+        <translation>Votre compte est saturé.</translation>
     </message>
     <message>
         <source>Your data is at risk</source>
@@ -1166,7 +1166,7 @@ Dans certains cas, ils pourraient comprendre des détails sur vos données, tels
     <message>
         <source>Your account is suspended as read only until you proceed with the needed payments.</source>
         <translatorcomment>Notification message to indicate that current business account is suspended until needed payments are made</translatorcomment>
-        <translation>Votre compte est expiré, en lecture seulement, jusqu’à ce que vous versiez les paiements requis.</translation>
+        <translation>Votre compte est expiré, en lecture seule, jusqu’à ce que vous versiez les paiements requis.</translation>
     </message>
     <message>
         <source>Account Suspended</source>
@@ -1461,7 +1461,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Logging out...</source>
         <translatorcomment>Label shown at main dialog to show the current operation. In this case logging out from the account.</translatorcomment>
-        <translation>Déconnexion en cours…</translation>
+        <translation>Déconnexion…</translation>
     </message>
     <message>
         <source>Locked Account</source>
@@ -1676,12 +1676,12 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Upgrade to PRO now before your account runs full and your uploads to MEGA stop.</source>
         <translatorcomment>Label to encourage the user to upgrade his account before uploads stop</translatorcomment>
-        <translation>Surclassez votre compte maintenant avant que votre espace de stockage ne soit plein et que vos téléversements vers MEGA s’arrêtent.</translation>
+        <translation>Surclassez votre compte maintenant avant que votre espace de stockage ne soit saturé et que vos téléversements vers MEGA s’arrêtent.</translation>
     </message>
     <message>
         <source>Your MEGA account is full.</source>
         <translatorcomment>Label shown to inform the user that the actual account is over storage.</translatorcomment>
-        <translation>L’espace de stockage de votre compte MEGA est plein.</translation>
+        <translation>L’espace de stockage de votre compte MEGA est saturé.</translation>
     </message>
     <message>
         <source>All file uploads are currently disabled.</source>
@@ -1861,17 +1861,17 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>MEGA Desktop app</source>
         <translatorcomment>Title of MEGA Desktop app within initial information wizard.</translatorcomment>
-        <translation>Appli MEGA pour ordinateur</translation>
+        <translation>Appli MEGA pour ordinateur</translation>
     </message>
     <message>
         <source>Login or create an account to start using MEGA Desktop app.</source>
         <translatorcomment>Description label to inform the user about next step in order to use MEGA Desktop app. Users will need to login or create an account.</translatorcomment>
-        <translation>Connectez-vous ou créez un compte pour commencer à utiliser l’appli MEGA pour ordinateur.</translation>
+        <translation>Connectez-vous ou créez un compte pour commencer à utiliser l’Appli MEGA pour ordinateur.</translation>
     </message>
     <message>
         <source>You need to login MEGA account to run MEGA desktop app.</source>
         <translatorcomment>Description label to indicate the user needs to login in order to run and fully use MEGA desktop app.</translatorcomment>
-        <translation>Vous devez vous connecter à votre compte MEGA pour utiliser l’appli MEGA pour ordinateur.</translation>
+        <translation>Vous devez vous connecter à votre compte MEGA pour utiliser l’Appli MEGA pour ordinateur.</translation>
     </message>
     <message>
         <source>Create account</source>
@@ -1886,7 +1886,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Know more about MEGA desktop app. [A]Read more[/A]</source>
         <translatorcomment>Label with hyperlink to sync client webpage to know more about MEGA desktop app. Keep placeholders.</translatorcomment>
-        <translation>Apprenez-en davantage sur l’appli MEGA pour ordinateur. [A]Plus de précisions[/A]</translation>
+        <translation>Apprenez-en davantage sur l’Appli MEGA pour ordinateur. [A]Plus de précisions[/A]</translation>
     </message>
 </context>
 <context>
@@ -2498,7 +2498,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your upload(s) cannot proceed because %1&apos;s account is full</source>
         <translatorcomment>Informative message shown when a user is trying to upload data to a inshare that is in overquota state. %1 will be replaced with sharer account to inform the user.</translatorcomment>
-        <translation>Vos téléversements ne peuvent pas se poursuivre, car le compte de %1 est plein.</translation>
+        <translation>Vos téléversements ne peuvent pas se poursuivre, car le compte de %1 est saturé.</translation>
     </message>
     <message>
         <source>contact</source>
@@ -2573,7 +2573,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>One or more syncs have been disabled. Go to preferences to enable them again.</source>
         <translatorcomment>Warning message shown when logging into MEGAsync to inform the user that some syncs have been disabled and need to go to settings to enable them again (macOS)</translatorcomment>
-        <translation>Une ou plusieurs synchronisations ont été désactivées. Allez dans les préférences pour les réactiver.</translation>
+        <translation>Une ou plusieurs synchronisations ont été désactivées. Accédez aux Préférences pour les réactiver.</translation>
     </message>
     <message>
         <source>Open Preferences</source>
@@ -2583,7 +2583,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Open Settings</source>
         <translatorcomment>Button label to open MEGAsync preferences dialog (Linux and Windows).</translatorcomment>
-        <translation>Ouvrir les réglages</translation>
+        <translation>Ouvrir les paramètres</translation>
     </message>
     <message>
         <source>One or more syncs have been disabled. Go to settings to enable them again.</source>
@@ -2641,7 +2641,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Expired</source>
         <translatorcomment>Label to show that an error related with expiration occurs during a SDK operation.</translatorcomment>
-        <translation>Expiré</translation>
+        <translation>Expirée</translation>
     </message>
     <message>
         <source>Not found</source>
@@ -3214,7 +3214,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Storage full</source>
         <translatorcomment>Label to indicate the full storage for the current account is full.</translatorcomment>
-        <translation>L’espace de stockage est plein</translation>
+        <translation>L’espace de stockage est saturé</translation>
     </message>
     <message>
         <source>You have exceeded the available storage space for your account. You can add syncs but they will remain disabled until there is enough space on your account.</source>
@@ -3292,7 +3292,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Storage full</source>
         <translatorcomment>Label to indicate that current account has reached storage limit.</translatorcomment>
-        <translation>L’espace de stockage est plein</translation>
+        <translation>L’espace de stockage est saturé</translation>
     </message>
     <message>
         <source>Dismiss</source>
@@ -3489,7 +3489,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Preferences</source>
         <translatorcomment>Label to indicate the Preferences option for the application (MacOS)</translatorcomment>
-        <translation>Réglages</translation>
+        <translation>Préférences</translation>
     </message>
     <message>
         <source>Quit</source>
@@ -3525,19 +3525,13 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Full redesign of settings with a new look and feel.
-- No longer supporting macOS versions below 10.12.
-- Multi-currency support added for upgrade options.
-- High DPI support for Windows platform improved.
-- Crashes previously detected on Windows, Linux and macOS now fixed.
-- Other performance improvements and adjustments.
-- Other UI fixes and adjustments.</source>
-        <translatorcomment>Changelog notes for v4.6.0 version</translatorcomment>
-        <translation>– Refonte complète des paramètres avec un nouvel aspect et une nouvelle convivialité.
-– Les versions de macOS antérieures à 10.12 ne sont plus prises en charge.
-– Les options de surclassement sont maintenant proposées en plusieurs devises.
-– La prise en charge pour les écrans à résolution points par pouce élevée a été améliorée pour la plateforme Windows.
-– Autres améliorations des performances et mises au point. – Autres correctifs de l’IU et mises au point.</translation>
+        <source>- Strengthen cryptographic security on Linux repositories.
+- Fix memory issues with problematic PDF files.
+</source>
+        <translatorcomment>Changelog v4.6.3 (linux only)</translatorcomment>
+        <translation>– Renforcement de la sécurité cryptographique des dépôts Linux.
+– Correctif de problèmes de mémoire avec les PDF problématiques.
+</translation>
     </message>
 </context>
 <context>
@@ -3681,7 +3675,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Forward</source>
         <translatorcomment>Button for going forward in the navigating in the filesystem</translatorcomment>
-        <translation>Transférer</translation>
+        <translation>Avancer</translation>
     </message>
     <message>
         <source>Go forward</source>
@@ -3846,7 +3840,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>File Folder</source>
         <translatorcomment>Label to desing a folder matching Windows Explorer case</translatorcomment>
-        <translation>Dossier de fichiers</translation>
+        <translation>Dossier</translation>
     </message>
     <message>
         <source>Folder</source>
@@ -4153,7 +4147,7 @@ Voulez-vous le supprimer quand même ?</translation>
     <message>
         <source>Open at login</source>
         <translatorcomment>Label to let the user start MEGAsync on login with a checkbox.</translatorcomment>
-        <translation>Ouvrir à la connexion</translation>
+        <translation>Lancer à la connexion</translation>
     </message>
     <message>
         <source>MEGAsync will perform a full scan of your synced folders when it starts.
@@ -4266,11 +4260,6 @@ Do you want to restart MEGAsync now?</source>
         <source>Restart</source>
         <translatorcomment>Label for restart button.to relaunch MEGAsync app.</translatorcomment>
         <translation>Redémarrer</translation>
-    </message>
-    <message>
-        <source>Disable file versioning</source>
-        <translatorcomment>Checkbox label to enable/disable file versioning feature.</translatorcomment>
-        <translation>Désactiver le versionnage des fichiers</translation>
     </message>
     <message>
         <source>Local folder with a backup of files deleted in MEGA</source>
@@ -4465,7 +4454,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Restart MEGA Desktop Application to apply changes.</source>
         <translatorcomment>Informative text shown in Folders pane, letting the user know that an application restart is required to apply the changes he just made.</translatorcomment>
-        <translation>Redémarrez l’appli MEGA pour ordinateur pour appliquer les changements.</translation>
+        <translation>Redémarrez l’Appli MEGA pour ordinateur pour appliquer les changements.</translation>
     </message>
     <message>
         <source>Change Settings...</source>
@@ -4490,7 +4479,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Preferences</source>
         <translatorcomment>Dialog window title for Settings on macOS. Keep as short as possible.</translatorcomment>
-        <translation>Réglages</translation>
+        <translation>Préférences</translation>
     </message>
     <message>
         <source>Language:</source>
@@ -4530,7 +4519,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Your MEGA account is full. Uploads are disabled and folder synchronisation is paused.</source>
         <translatorcomment>Warning text message shown in Sync pane when account storage is full.</translatorcomment>
-        <translation>Votre compte MEGA est plein. Les téléversements sont désactivés et la synchronisation des dossiers a été mise en pause.</translation>
+        <translation>Votre compte MEGA est saturé. Les téléversements sont désactivés et la synchronisation des dossiers a été mise en pause.</translation>
     </message>
     <message>
         <source>Your account security depends on the strength of your password. Passwords should be unique and impossible to guess. We recommend using a password manager.</source>
@@ -4675,7 +4664,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Choose which files or folders you want to exclude from synchronisation.</source>
         <translatorcomment>Informative text message encouraging the user to choose files / folders for exclusion in Folders pane.</translatorcomment>
-        <translation>Choisissez quels fichiers ou dossiers vous voulez exclure de la synchronisation</translation>
+        <translation>Choisir quels fichiers ou dossiers vous voulez exclure de la synchronisation</translation>
     </message>
     <message>
         <source>Saving synchronised folders…</source>
@@ -4955,7 +4944,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Logging out...</source>
         <translatorcomment>Label shown when an user is logging out from his account.</translatorcomment>
-        <translation>Déconnexion en cours…</translation>
+        <translation>Déconnexion…</translation>
     </message>
     <message>
         <source>Very Weak</source>
@@ -5033,7 +5022,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Setup selective sync</source>
         <translatorcomment>Label shown when user is setting up the selective sync mode of MEGAsync</translatorcomment>
-        <translation>Configuration de la synchronisation sélective</translation>
+        <translation>Configurer la synchronisation sélective</translation>
     </message>
     <message>
         <source>Specific folders in your Cloud Drive will be synchronized with a local folder.</source>
@@ -5048,7 +5037,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Setup full sync</source>
         <translatorcomment>Label shown when user is setting up full sync mode of MEGAsync</translatorcomment>
-        <translation>Configuration de la synchronisation intégrale</translation>
+        <translation>Configurer la synchronisation intégrale</translation>
     </message>
     <message>
         <source>Full Sync</source>
@@ -5159,7 +5148,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Account full</source>
         <translatorcomment>Information label in the main dialog to show that the current account is full.</translatorcomment>
-        <translation>L’espace de stockage est plein</translation>
+        <translation>Le compte est saturé</translation>
     </message>
     <message>
         <source>Up to date</source>
@@ -5192,7 +5181,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Select media from...</source>
         <translatorcomment>Label just above of the buttons to select files for streaming</translatorcomment>
-        <translation>Sélectionner le fichier multimédia de…</translation>
+        <translation>D’où sélectionner le fichier multimédia…</translation>
     </message>
     <message>
         <source>Cloud Drive</source>
@@ -5442,11 +5431,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>Le quota de transfert est épuisé</translation>
     </message>
     <message>
-        <source>Transfer Quota exhausted</source>
-        <translatorcomment>Label shown to inform the user about over transfer quota situation.</translatorcomment>
-        <translation>Le quota de transfert est épuisé</translation>
-    </message>
-    <message>
         <source>This limit is dynamic and depends on the amount of unused bandwidth we have available.</source>
         <translatorcomment>Informative label about how the transfer quota limit works when user reaches over transfer situation.</translatorcomment>
         <translation>Cette limite est dynamique et dépend de la quantité de bande passante inutilisée dont nous disposons.</translation>
@@ -5468,8 +5452,13 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Choose annual billing and get 12 months for the price of 10</source>
-        <translatorcomment>Informative label to inform the user about offer purchasing one-year Pro plan within upgrade dialog.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Informative label to inform the user about offer purchasing one-year Pro plan within upgrade dialog when user reaches over quota state.</translatorcomment>
+        <translation>Choisissez la facturation annuelle et obtenez 12 mois pour le prix de 10</translation>
+    </message>
+    <message>
+        <source>Transfer quota exceeded</source>
+        <translatorcomment>Label shown to inform the user about over transfer quota situation.</translatorcomment>
+        <translation>Le quota de transfert a été dépassé</translation>
     </message>
 </context>
 <context>
@@ -5477,7 +5466,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Storage full</source>
         <translatorcomment>Title of the over storage dialog</translatorcomment>
-        <translation>L’espace de stockage est plein</translation>
+        <translation>L’espace de stockage est saturé</translation>
     </message>
     <message>
         <source>Please upgrade to PRO to enjoy more storage space (your uploads will automatically resume).</source>
@@ -5487,7 +5476,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your MEGA account is full</source>
         <translatorcomment>Label shown to inform the user that the actual account is over storage.</translatorcomment>
-        <translation>L’espace de stockage de votre compte MEGA est plein.</translation>
+        <translation>Votre compte MEGA est saturé.</translation>
     </message>
     <message>
         <source>To increase this limit, you can upgrade your account, which will give you ample extra storage space.</source>
@@ -5506,8 +5495,8 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Choose annual billing and get 12 months for the price of 10</source>
-        <translatorcomment>Informative label to inform the user about offer purchasing one-year Pro plan within upgrade dialog.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Informative label to inform the user about offer purchasing one-year Pro plan within upgrade dialog when user reaches over storage state.</translatorcomment>
+        <translation>Choisissez la facturation annuelle et obtenez 12 mois pour le prix de 10</translation>
     </message>
 </context>
 <context>

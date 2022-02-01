@@ -31,7 +31,7 @@ MegaTransfer *QCustomTransfersModel::getTransferByTag(int tag)
     return megaApi->getTransferByTag(tag);
 }
 
-void QCustomTransfersModel::onTransferStart(MegaApi *api, MegaTransfer *transfer)
+void QCustomTransfersModel::onTransferStart(MegaApi*, MegaTransfer* transfer)
 {
     TransferItemData *ti =  transfers.value(transfer->getTag());
     if (ti)
@@ -42,7 +42,7 @@ void QCustomTransfersModel::onTransferStart(MegaApi *api, MegaTransfer *transfer
     TransferItemData *item = new TransferItemData(transfer);
 
     transfer_it it = getInsertPosition(transfer);
-    int row = it - transferOrder.begin();
+    const int row = static_cast<int>(it - transferOrder.begin());
     beginInsertRows(QModelIndex(), row, row);
     transfers.insert(item->data.tag, item);
     transferOrder.insert(it, item);
@@ -66,7 +66,7 @@ void QCustomTransfersModel::onTransferStart(MegaApi *api, MegaTransfer *transfer
     }
 }
 
-void QCustomTransfersModel::onTransferFinish(MegaApi *api, MegaTransfer *t, MegaError *e)
+void QCustomTransfersModel::onTransferFinish(MegaApi*, MegaTransfer* t, MegaError*)
 {
     QPointer<QCustomTransfersModel> model = this;
     MegaTransfer *transfer = t->copy();
@@ -118,7 +118,7 @@ void QCustomTransfersModel::onTransferFinish(MegaApi *api, MegaTransfer *t, Mega
                     }
 
                     transfer_it it = getInsertPosition(transfer);
-                    int row = it - transferOrder.begin();
+                    const int row = static_cast<int>(it - transferOrder.begin());
                     beginInsertRows(QModelIndex(), row, row);
                     transfers.insert(item->data.tag, item);
                     transferOrder.insert(it, item);
@@ -145,12 +145,12 @@ void QCustomTransfersModel::onTransferFinish(MegaApi *api, MegaTransfer *t, Mega
     }
 }
 
-void QCustomTransfersModel::onTransferUpdate(MegaApi *api, MegaTransfer *transfer)
+void QCustomTransfersModel::onTransferUpdate(MegaApi*, MegaTransfer* transfer)
 {
     updateTransferInfo(transfer);
 }
 
-void QCustomTransfersModel::onTransferTemporaryError(MegaApi *api, MegaTransfer *transfer, MegaError *e)
+void QCustomTransfersModel::onTransferTemporaryError(MegaApi*, MegaTransfer* transfer, MegaError*)
 {
     updateTransferInfo(transfer);
 }
@@ -163,8 +163,9 @@ void QCustomTransfersModel::refreshTransferItem(int tag)
         ++row;
     }
 
-    assert(row < transferOrder.size());
-    if (row >= transferOrder.size())
+    const int transferOrderSize = static_cast<int>(transferOrder.size());
+    assert(row < transferOrderSize);
+    if (row >= transferOrderSize)
     {
         return;
     }
@@ -242,7 +243,7 @@ void QCustomTransfersModel::replaceWithTransfer(MegaTransfer *transfer)
     }
 
     TransferItemData *item =  transfers.value(transferToReplaced);
-    assert(item && row < transferOrder.size());
+    assert(item && row < static_cast<int>(transferOrder.size()));
 
     //Generate new element and place it
     TransferItemData *newItem = new TransferItemData(transfer);
@@ -319,17 +320,17 @@ void QCustomTransfersModel::removeTransferByTag(int transferTag)
     {
         ++row;
     }
-    assert(row < transferOrder.size());
+    assert(row < static_cast<int>(transferOrder.size()));
 
     beginRemoveRows(QModelIndex(), row, row);
     if (activeDownloadTag == transferTag)
     {
-        modelState &= ~DOWNLOAD;
+        modelState &= static_cast<unsigned char>(~DOWNLOAD);
         activeDownloadTag = -1;
     }
     else if (activeUploadTag == transferTag)
     {
-        modelState &= ~UPLOAD;
+        modelState &= static_cast<unsigned char>(~UPLOAD);
         activeUploadTag = -1;
     }
 

@@ -668,7 +668,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Bug report can&apos;t be submitted due to some error. Please try again or contact our support team via [A]support@mega.co.nz[/A]</source>
         <translatorcomment>Warning message shown when some error occurs during uploading a bug report.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>لا يمكن ترفيع مشكلتك بسبب خطأ. يرجى المحاولة مرة أخرى أو الاتصال بفريق الدعم عبر [A]support@mega.nz[/A] إذا استمرت المشكلة.</translation>
     </message>
     <message>
         <source>Ok</source>
@@ -3514,7 +3514,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Show in Explorer</source>
         <translatorcomment>Label to indicate the &quot;Show in Explorer&quot; option to open local folder of a sync (Windows). Keep Explorer name as it is the app name of file explorer on Windows.</translatorcomment>
-        <translation>عرض في المتصفح</translation>
+        <translation>عرض في المستكشف</translation>
     </message>
     <message>
         <source>Show in Finder</source>
@@ -3525,21 +3525,11 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Full redesign of settings with a new look and feel.
-- No longer supporting macOS versions below 10.12.
-- Multi-currency support added for upgrade options.
-- High DPI support for Windows platform improved.
-- Crashes previously detected on Windows, Linux and macOS now fixed.
-- Other performance improvements and adjustments.
-- Other UI fixes and adjustments.</source>
-        <translatorcomment>Changelog notes for v4.6.0 version</translatorcomment>
-        <translation>- إعادة تصميم كاملة للإعدادات بمظهر وأسلوب جديد.
-- لم تعد تدعم إصدارات macOS الأقل من 10.12.
-- تمت إضافة دعم عملات متعددة لخيارات الترقية.
-- تحسين دعم الدقة العالية DPI لمنصة Windows.
-- تم إصلاح الأعطال التي تم اكتشافها مسبقًا على أنظمة التشغيل ويندوز Windows و لينوكس Linux و ماك macOS.
-- تحسينات وتعديلات أخرى في الأداء.
-- إصلاحات وتعديلات أخرى في واجهة المستخدم.</translation>
+        <source>- Strengthen cryptographic security on Linux repositories.
+- Fix memory issues with problematic PDF files.
+</source>
+        <translatorcomment>Changelog v4.6.3 (linux only)</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3582,7 +3572,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Server:</source>
         <translatorcomment>Label to indicate the server name/ip of the proxy that is being configured.</translatorcomment>
-        <translation>المخادم:</translation>
+        <translation>المخدم:</translation>
     </message>
     <message>
         <source>Password:</source>
@@ -3683,7 +3673,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Forward</source>
         <translatorcomment>Button for going forward in the navigating in the filesystem</translatorcomment>
-        <translation>إعادة توجيه</translation>
+        <translation>إلى الأمام</translation>
     </message>
     <message>
         <source>Go forward</source>
@@ -4268,11 +4258,6 @@ Do you want to restart MEGAsync now?</source>
         <source>Restart</source>
         <translatorcomment>Label for restart button.to relaunch MEGAsync app.</translatorcomment>
         <translation>إعادة تشغيل</translation>
-    </message>
-    <message>
-        <source>Disable file versioning</source>
-        <translatorcomment>Checkbox label to enable/disable file versioning feature.</translatorcomment>
-        <translation>تعطيل إصدار نسخ للملف</translation>
     </message>
     <message>
         <source>Local folder with a backup of files deleted in MEGA</source>
@@ -5444,11 +5429,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>حجم التراسل المستنفد</translation>
     </message>
     <message>
-        <source>Transfer Quota exhausted</source>
-        <translatorcomment>Label shown to inform the user about over transfer quota situation.</translatorcomment>
-        <translation>تم تجاوز حجم التراسل المتاح</translation>
-    </message>
-    <message>
         <source>This limit is dynamic and depends on the amount of unused bandwidth we have available.</source>
         <translatorcomment>Informative label about how the transfer quota limit works when user reaches over transfer situation.</translatorcomment>
         <translation>هذا الحد متغير ويعتمد على مقدار النطاق الترددي غير المستخدم والمتوفر لدينا.</translation>
@@ -5470,8 +5450,13 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Choose annual billing and get 12 months for the price of 10</source>
-        <translatorcomment>Informative label to inform the user about offer purchasing one-year Pro plan within upgrade dialog.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Informative label to inform the user about offer purchasing one-year Pro plan within upgrade dialog when user reaches over quota state.</translatorcomment>
+        <translation>اختر الفوترة السنوية واحصل على 12 شهرًا بسعر 10 </translation>
+    </message>
+    <message>
+        <source>Transfer quota exceeded</source>
+        <translatorcomment>Label shown to inform the user about over transfer quota situation.</translatorcomment>
+        <translation>تم تجاوز حجم التراسل المتاح</translation>
     </message>
 </context>
 <context>
@@ -5508,8 +5493,8 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Choose annual billing and get 12 months for the price of 10</source>
-        <translatorcomment>Informative label to inform the user about offer purchasing one-year Pro plan within upgrade dialog.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Informative label to inform the user about offer purchasing one-year Pro plan within upgrade dialog when user reaches over storage state.</translatorcomment>
+        <translation>اختر الفوترة السنوية واحصل على 12 شهرًا بسعر 10 </translation>
     </message>
 </context>
 <context>

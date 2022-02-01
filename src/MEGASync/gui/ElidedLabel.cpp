@@ -27,7 +27,7 @@ void ElidedLabel::paintEvent(QPaintEvent *event)
     if (singleline)
     {
         QRect r = contentsRect();
-        r.setY( height() / 2.0 - font().pixelSize() / 2.0 );
+        r.setY( static_cast<int>(height() / 2.0 - font().pixelSize() / 2.0) );
         QString elidedText = fontMetrics.elidedText(text(), Qt::ElideRight, r.width());
         didElide = (elidedText != text());
         painter.drawText(r, elidedText);

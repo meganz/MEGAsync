@@ -668,7 +668,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Bug report can&apos;t be submitted due to some error. Please try again or contact our support team via [A]support@mega.co.nz[/A]</source>
         <translatorcomment>Warning message shown when some error occurs during uploading a bug report.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>오류로 인해 문제를 업로드할 수 없습니다. 나중에 다시 시도하거나 문제가 지속될 경우 [A]support@mega.nz[/A]를 통해 지원 팀에 연락하세요.</translation>
     </message>
     <message>
         <source>Ok</source>
@@ -3526,21 +3526,13 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Full redesign of settings with a new look and feel.
-- No longer supporting macOS versions below 10.12.
-- Multi-currency support added for upgrade options.
-- High DPI support for Windows platform improved.
-- Crashes previously detected on Windows, Linux and macOS now fixed.
-- Other performance improvements and adjustments.
-- Other UI fixes and adjustments.</source>
-        <translatorcomment>Changelog notes for v4.6.0 version</translatorcomment>
-        <translation>- 설정을 새 룩 앤 필로 완전 재설계.
-- 더 이상 10.12 이하의 macOS 버전을 지원하지 않습니다.
-- 업그레이드 옵션에서 여러 화폐 지원.
-- Windows 플랫폼을 위한 고 DPI 지원 향상.
-- Windows, Linux 그리고 macOS에서 이전에 감지된 충돌 수정.
-- 기타 성능 향상과 조정.
-- 기타 UI 수정과 조정.</translation>
+        <source>- Strengthen cryptographic security on Linux repositories.
+- Fix memory issues with problematic PDF files.
+</source>
+        <translatorcomment>Changelog v4.6.3 (linux only)</translatorcomment>
+        <translation>- Linux 저장소에서 암호 보안 강화
+- 문제 있는 PDF 파일에서의 메모리 문제 수정
+</translation>
     </message>
 </context>
 <context>
@@ -3684,7 +3676,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Forward</source>
         <translatorcomment>Button for going forward in the navigating in the filesystem</translatorcomment>
-        <translation>전달</translation>
+        <translation>앞으로</translation>
     </message>
     <message>
         <source>Go forward</source>
@@ -4269,11 +4261,6 @@ Do you want to restart MEGAsync now?</source>
         <source>Restart</source>
         <translatorcomment>Label for restart button.to relaunch MEGAsync app.</translatorcomment>
         <translation>재시작</translation>
-    </message>
-    <message>
-        <source>Disable file versioning</source>
-        <translatorcomment>Checkbox label to enable/disable file versioning feature.</translatorcomment>
-        <translation>파일 버전 관리 해제</translation>
     </message>
     <message>
         <source>Local folder with a backup of files deleted in MEGA</source>
@@ -5446,11 +5433,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>전송 할당량 고갈</translation>
     </message>
     <message>
-        <source>Transfer Quota exhausted</source>
-        <translatorcomment>Label shown to inform the user about over transfer quota situation.</translatorcomment>
-        <translation>전송 할당량 고갈됨</translation>
-    </message>
-    <message>
         <source>This limit is dynamic and depends on the amount of unused bandwidth we have available.</source>
         <translatorcomment>Informative label about how the transfer quota limit works when user reaches over transfer situation.</translatorcomment>
         <translation>이 제한은 가변적이고 우리에게 이용 가능한 사용되지 않은 대역폭의 양에 따라 다릅니다.</translation>
@@ -5472,8 +5454,13 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Choose annual billing and get 12 months for the price of 10</source>
-        <translatorcomment>Informative label to inform the user about offer purchasing one-year Pro plan within upgrade dialog.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Informative label to inform the user about offer purchasing one-year Pro plan within upgrade dialog when user reaches over quota state.</translatorcomment>
+        <translation>연간 결제를 선택하고 10개월 가격으로 12개월을 이용하세요</translation>
+    </message>
+    <message>
+        <source>Transfer quota exceeded</source>
+        <translatorcomment>Label shown to inform the user about over transfer quota situation.</translatorcomment>
+        <translation>전송 할당량 초과</translation>
     </message>
 </context>
 <context>
@@ -5510,8 +5497,8 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Choose annual billing and get 12 months for the price of 10</source>
-        <translatorcomment>Informative label to inform the user about offer purchasing one-year Pro plan within upgrade dialog.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Informative label to inform the user about offer purchasing one-year Pro plan within upgrade dialog when user reaches over storage state.</translatorcomment>
+        <translation>연간 결제를 선택하고 10개월 가격으로 12개월을 이용하세요</translation>
     </message>
 </context>
 <context>

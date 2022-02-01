@@ -41,7 +41,7 @@
     <message>
         <source>Of that, size taken up by file versions:</source>
         <translatorcomment>Label to indicate the amount of size occupied by file versions.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Объём, занимаемый версиями файлов</translation>
     </message>
 </context>
 <context>
@@ -54,7 +54,7 @@
     <message>
         <source>Remaining Downloads</source>
         <translatorcomment>Label to indicate the number of remaining downloads</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Оставшиеся скачивания</translation>
     </message>
     <message>
         <source>download speed</source>
@@ -69,7 +69,7 @@
     <message>
         <source>Remaining Uploads</source>
         <translatorcomment>Label to indicate the number of remaining uploads</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Оставшиеся загрузки в облако</translation>
     </message>
     <message>
         <source>upload speed</source>
@@ -94,12 +94,12 @@
     <message>
         <source>Remaining Download</source>
         <translatorcomment>Label when there is only one remaining download (singular)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Оставшееся скачивание</translation>
     </message>
     <message>
         <source>Remaining Upload</source>
         <translatorcomment>Label when there is only one remaining upload (singular)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Оставшаяся загрузка в облако</translation>
     </message>
 </context>
 <context>
@@ -208,7 +208,7 @@
     <message>
         <source>Payment</source>
         <translatorcomment>Label title for Payment category of a notification</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Платежи</translation>
     </message>
     <message>
         <source>Takedown notice</source>
@@ -668,7 +668,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Bug report can&apos;t be submitted due to some error. Please try again or contact our support team via [A]support@mega.co.nz[/A]</source>
         <translatorcomment>Warning message shown when some error occurs during uploading a bug report.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Ваше сообщение не удаётся отправить из-за ошибки. Пожалуйста, попробуйте ещё раз позже или свяжитесь с нашей службой поддержки по адресу [A]support@mega.nz[/A], если проблема не устранена.</translation>
     </message>
     <message>
         <source>Ok</source>
@@ -859,7 +859,8 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Attach diagnostic log files to assist with debugging[Br](in some cases it may contain details about your data, such as file or folder names)</source>
         <translatorcomment>Checkbox to let the user attach diagnostic log files for analysis when an application crash occurs. Keep [Br] place holder.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Прикрепите файлы журнала диагностики, чтобы помочь с отладкой.
+В некоторых случаях они могут содержать подробную информацию о ваших данных, например имена файлов или папок.</translation>
     </message>
 </context>
 <context>
@@ -1150,7 +1151,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Please resolve your payment issue to avoid suspension of your account.</source>
         <translatorcomment>Notification text to inform the user that there is a payment issue with the business accounts that needs to be solved to continue and avoid suspension.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Пожалуйста, решите проблему с оплатой, чтобы избежать блокировки вашего бизнес-аккаунта</translation>
     </message>
     <message>
         <source>Pay Now</source>
@@ -1815,7 +1816,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Your queued transfers exceed the current quota available for your IP address and can therefore be interrupted.</source>
         <translatorcomment>Informative label to indicate that your queued transfers may be interrupted because the current account is above 90 percent of the transfer quota of the current account.</translatorcomment>
-        <translation>Ваши передачи в очереди превышают текущую квоту, доступную для вашего IP-адреса, и поэтому могут быть прерваны.</translation>
+        <translation>Передачи в очереди превышают текущую квоту, доступную для вашего IP-адреса, и поэтому могут быть прерваны.</translation>
     </message>
     <message>
         <source>You have [A][B] hours[/A] left to upgrade. After that, your data is subject to deletion.</source>
@@ -1926,7 +1927,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>[A]Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account.[/A]</source>
         <translatorcomment>Description label to indicate the user that his password may be leaked and needs to perform email verification to continue.</translatorcomment>
-        <translation>[A]Ваш пароль утёк и теперь используется плохими игроками для входа в ваши аккаунты, включая, но не ограничиваясь аккаунтом MEGA.[/A]</translation>
+        <translation>[A]Ваш пароль утёк и теперь используется мошенниками для входа в ваши аккаунты, включая, но не ограничиваясь аккаунтом MEGA.[/A]</translation>
     </message>
     <message>
         <source>Locked Accounts</source>
@@ -2148,22 +2149,22 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>MEGAsync is unable to connect. Please check your Internet connectivity and local firewall configuration. Note that most antivirus software includes a firewall.</source>
         <translatorcomment>Notification message launched when a connectivity problem occurs.</translatorcomment>
-        <translation>MEGAsync не может подключиться. Пожалуйста, проверьте подключение к Интернету и локальную конфигурацию брандмауэра. Обратите внимание, что большинство антивирусного программного обеспечения включает в себя межсетевой экран (файервол).</translation>
+        <translation>MEGAsync не может подключиться. Пожалуйста, проверьте подключение к Интернету и локальную конфигурацию файервола. Обратите внимание, что многие антивирусы включают в себя межсетевой экран (файервол).</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the remote folder doesn&apos;t exist</source>
         <translatorcomment>Notification message launched checking  remote synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.</translatorcomment>
-        <translation>Синхронизация &quot;%1&quot; была отключена, так как удалённая папка не существует</translation>
+        <translation>Синхронизация «%1» была отключена, так как удалённая папка не существует</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</source>
         <translatorcomment>Notification message launched checking  local synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.</translatorcomment>
-        <translation>Синхронизация &quot;%1&quot; была отключена, так как локальная папка не существует.</translation>
+        <translation>Синхронизация «%1» была отключена, так как локальная папка не существует</translation>
     </message>
     <message>
         <source>Your account has been blocked. Please contact support@mega.co.nz</source>
         <translatorcomment>Message displayed when an error occurs (BLOCK ACCOUNT) during a login operation.</translatorcomment>
-        <translation>Ваша учётная запись была заблокирована. Пожалуйста, свяжитесь с support@mega.nz</translation>
+        <translation>Ваш аккаунт был заблокирован. Пожалуйста, свяжитесь с support@mega.nz</translation>
     </message>
     <message>
         <source>Login error: %1</source>
@@ -3430,22 +3431,22 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>%1 per user</source>
         <translatorcomment>Label to indicate the price per user of business plan. %1 will be replaced with specific price.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>%1 за пользователя</translation>
     </message>
     <message>
         <source>minimum %1 users</source>
         <translatorcomment>Label to inform about the minimun number of users for a business plan. %1 will be replaced with the minimum number of users.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>минимум %1 польз.</translation>
     </message>
     <message>
         <source>storage</source>
         <translatorcomment>Label to indicate the specific storage of a pro plan.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>в хранилище</translation>
     </message>
     <message>
         <source>transfer</source>
         <translatorcomment>Label to indicate the specific transfer quota of a pro plan.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>передач</translation>
     </message>
     <message>
         <source>Great value for secure cloud storage, sharing and communication.</source>
@@ -3460,7 +3461,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Store even more with our premium secure cloud storage offering.</source>
         <translatorcomment>Balloon tooltip to inform users when hovering ? button about the benefits of Pro III plan.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Храните ещё больше с нашим безопасным облачным хранилищем премиум-класса.</translation>
     </message>
     <message>
         <source>With our end-to-end encryption, the way your team works has never been more secure and private.</source>
@@ -3480,7 +3481,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Additional transfer quota charged at %1 per %2TB.</source>
         <translatorcomment>Balloon tooltip to inform users that additional transfer quota for business plan will be charged at %1 price per %2 TB. %1 reflect price and %2 storage unit.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Дополнительные передачи по %1 за %2 ТБ.</translation>
     </message>
 </context>
 <context>
@@ -3524,15 +3525,13 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Full redesign of settings with a new look and feel.
-- No longer supporting macOS versions below 10.12.
-- Multi-currency support added for upgrade options.
-- High DPI support for Windows platform improved.
-- Crashes previously detected on Windows, Linux and macOS now fixed.
-- Other performance improvements and adjustments.
-- Other UI fixes and adjustments.</source>
-        <translatorcomment>Changelog notes for v4.6.0 version</translatorcomment>
-        <translation type="unfinished"></translation>
+        <source>- Strengthen cryptographic security on Linux repositories.
+- Fix memory issues with problematic PDF files.
+</source>
+        <translatorcomment>Changelog v4.6.3 (linux only)</translatorcomment>
+        <translation>- Усилена криптографическая защита Linux-репозиториев.
+- Устранены ошибки памяти при работе с проблематичными PDF-файлами.
+</translation>
     </message>
 </context>
 <context>
@@ -4148,7 +4147,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>Open at login</source>
         <translatorcomment>Label to let the user start MEGAsync on login with a checkbox.</translatorcomment>
-        <translation>Открывать при входе</translation>
+        <translation>Запускать при включении компьютера</translation>
     </message>
     <message>
         <source>MEGAsync will perform a full scan of your synced folders when it starts.
@@ -4263,11 +4262,6 @@ Do you want to restart MEGAsync now?</source>
         <translation>Перезапуск</translation>
     </message>
     <message>
-        <source>Disable file versioning</source>
-        <translatorcomment>Checkbox label to enable/disable file versioning feature.</translatorcomment>
-        <translation>Отключить версии файлов</translation>
-    </message>
-    <message>
         <source>Local folder with a backup of files deleted in MEGA</source>
         <translatorcomment>Tooltip shown when hovering local debris label.</translatorcomment>
         <translation>Локальная папка с резервной копией удалённых в MEGA файлов</translation>
@@ -4315,7 +4309,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>General</source>
         <translatorcomment>Title for the Settings -&gt; General pane tab button. Keep as short as possible.</translatorcomment>
-        <translation>Общее</translation>
+        <translation>Общие</translation>
     </message>
     <message>
         <source>Sync</source>
@@ -4670,7 +4664,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Choose which files or folders you want to exclude from synchronisation.</source>
         <translatorcomment>Informative text message encouraging the user to choose files / folders for exclusion in Folders pane.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Выберите, какие папки или файлы вы хотите исключить из синхронизации</translation>
     </message>
     <message>
         <source>Saving synchronised folders…</source>
@@ -4695,7 +4689,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Export Key</source>
         <translatorcomment>Button label text for export key saving to local machine in a file. Keep string as short as possible.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Экспортировать ключ</translation>
     </message>
 </context>
 <context>
@@ -5437,11 +5431,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>Исчерпана квота передач.</translation>
     </message>
     <message>
-        <source>Transfer Quota exhausted</source>
-        <translatorcomment>Label shown to inform the user about over transfer quota situation.</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>This limit is dynamic and depends on the amount of unused bandwidth we have available.</source>
         <translatorcomment>Informative label about how the transfer quota limit works when user reaches over transfer situation.</translatorcomment>
         <translation>Это ограничение носит динамический характер и зависит от размера оставшейся неиспользованной пропускной способности.</translation>
@@ -5449,22 +5438,27 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Please upgrade to Pro to continue immediately, or wait %1 to continue for free</source>
         <translatorcomment>Warning label shown when user reaches over transfer quota situation. The user can upgrade Plan or wait %1 time until new free quota is allowed.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Пожалуйста, улучшите аккаунт до Pro, чтобы продолжить немедленно, или подождите %1, чтобы продолжить бесплатно.</translation>
     </message>
     <message>
         <source>* The local currency price is an estimate only. All transactions shown charged in Euros.</source>
         <translatorcomment>Informative label to inform users about billing currency used for non Euro payments.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>* Цена в местной валюте является ориентировочной. Все транзакции оплачиваются в евро.</translation>
     </message>
     <message>
         <source>Your download could not proceed because it exceeds your free transfer allowance.</source>
         <translatorcomment>Informative message to inform users that downloads could not continue because user has reached over transfer situation.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Невозможно продолжить скачивание, потому что оно превышает допустимую квоту бесплатной передачи.</translation>
     </message>
     <message>
         <source>Choose annual billing and get 12 months for the price of 10</source>
-        <translatorcomment>Informative label to inform the user about offer purchasing one-year Pro plan within upgrade dialog.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Informative label to inform the user about offer purchasing one-year Pro plan within upgrade dialog when user reaches over quota state.</translatorcomment>
+        <translation>Выберите ежегодную оплату и получите 12 месяцев по цене 10</translation>
+    </message>
+    <message>
+        <source>Transfer quota exceeded</source>
+        <translatorcomment>Label shown to inform the user about over transfer quota situation.</translatorcomment>
+        <translation>Квота на передачу превышена</translation>
     </message>
 </context>
 <context>
@@ -5487,22 +5481,22 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>To increase this limit, you can upgrade your account, which will give you ample extra storage space.</source>
         <translatorcomment>Informative message shown when user reaches over storage situation, encouraging to upgrade and get more extra storage space.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Чтобы увеличить этот лимит, вы можете улучшить аккаунт, что даст вам достаточно места для хранения.</translation>
     </message>
     <message>
         <source>* The local currency price is an estimate only. All transactions shown charged in Euros.</source>
         <translatorcomment>Informative label to inform users about billing currency used for non Euro payments.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>* Цена в местной валюте является ориентировочной. Все транзакции оплачиваются в евро.</translation>
     </message>
     <message>
         <source>100% of the %1 available used on your account.</source>
         <translatorcomment>Informative message for the user when it is in over storage situation, letting know about the %1 space used and reaching the 100% limit of his current storage amount.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Использовано 100% из доступных вам %1.</translation>
     </message>
     <message>
         <source>Choose annual billing and get 12 months for the price of 10</source>
-        <translatorcomment>Informative label to inform the user about offer purchasing one-year Pro plan within upgrade dialog.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Informative label to inform the user about offer purchasing one-year Pro plan within upgrade dialog when user reaches over storage state.</translatorcomment>
+        <translation>Выберите ежегодную оплату и получите 12 месяцев по цене 10</translation>
     </message>
 </context>
 <context>

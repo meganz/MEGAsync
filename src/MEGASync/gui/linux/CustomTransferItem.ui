@@ -306,7 +306,7 @@
            </widget>
           </item>
           <item>
-           <spacer name="horizontalSpacer">
+           <spacer name="completedDataSpacer">
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
             </property>
@@ -398,7 +398,6 @@
          </layout>
          <zorder>wTransferInfo</zorder>
          <zorder>lFileTypeCompleted</zorder>
-         <zorder>horizontalSpacer</zorder>
          <zorder>wOptions</zorder>
         </widget>
        </item>
@@ -718,7 +717,7 @@ background-color: rgba(0, 0, 0, 8%);
                  </widget>
                 </item>
                 <item>
-                 <spacer name="horizontalSpacer_2">
+                 <spacer name="visualDataSpacer">
                   <property name="orientation">
                    <enum>Qt::Horizontal</enum>
                   </property>

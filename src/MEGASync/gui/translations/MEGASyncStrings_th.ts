@@ -668,7 +668,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Bug report can&apos;t be submitted due to some error. Please try again or contact our support team via [A]support@mega.co.nz[/A]</source>
         <translatorcomment>Warning message shown when some error occurs during uploading a bug report.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ไม่สามารถอัปโหลดปัญหาของคุณได้เนื่องจากข้อผิดพลาด กรุณาลองอีกครั้งในภายหลังหรือติดต่อทีมสนับสนุนของเราหากยังพบปัญหาอยู่ผ่านทาง [A]support@mega.nz[/A] </translation>
     </message>
     <message>
         <source>Ok</source>
@@ -3525,21 +3525,11 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Full redesign of settings with a new look and feel.
-- No longer supporting macOS versions below 10.12.
-- Multi-currency support added for upgrade options.
-- High DPI support for Windows platform improved.
-- Crashes previously detected on Windows, Linux and macOS now fixed.
-- Other performance improvements and adjustments.
-- Other UI fixes and adjustments.</source>
-        <translatorcomment>Changelog notes for v4.6.0 version</translatorcomment>
-        <translation>- ออกแบบการตั้งค่าด้วยรูปลักษณ์และความรู้สึกโฉมใหม่ทั้งหมด
-- ไม่รองรับ macOS เวอร์ชันต่ำกว่า 10.12 อีกต่อไป
-- เพิ่มการรองรับสกุลเงินในตัวเลือกการอัปเกรดหลากหลายมากยิ่งขึ้นแล้ว
-- ปรับปรุงการสนับสนุนการแสดงผล DPI สูงสำหรับแพลตฟอร์ม Windows แล้ว
-- แก้ไขปัญหาที่ตรวจพบก่อนหน้านี้ใน Windows, Linux และ macOS แล้ว
-- ปรับปรุงประสิทธิภาพและการปรับปรุงอื่น ๆ
-- แก้ไขและปรับแต่ง UI อื่น ๆ</translation>
+        <source>- Strengthen cryptographic security on Linux repositories.
+- Fix memory issues with problematic PDF files.
+</source>
+        <translatorcomment>Changelog v4.6.3 (linux only)</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4268,11 +4258,6 @@ Do you want to restart MEGAsync now?</source>
         <source>Restart</source>
         <translatorcomment>Label for restart button.to relaunch MEGAsync app.</translatorcomment>
         <translation>รีสตาร์ท</translation>
-    </message>
-    <message>
-        <source>Disable file versioning</source>
-        <translatorcomment>Checkbox label to enable/disable file versioning feature.</translatorcomment>
-        <translation>ปิดใช้งานการจัดเตรียมไฟล์</translation>
     </message>
     <message>
         <source>Local folder with a backup of files deleted in MEGA</source>
@@ -5444,11 +5429,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>โควต้าการถ่ายโอนมีไม่เพียงพอ</translation>
     </message>
     <message>
-        <source>Transfer Quota exhausted</source>
-        <translatorcomment>Label shown to inform the user about over transfer quota situation.</translatorcomment>
-        <translation>โควต้าการถ่ายโอนหมดแล้ว</translation>
-    </message>
-    <message>
         <source>This limit is dynamic and depends on the amount of unused bandwidth we have available.</source>
         <translatorcomment>Informative label about how the transfer quota limit works when user reaches over transfer situation.</translatorcomment>
         <translation>ข้อจำกัดนี้เป็นแบบไดนามิกและขึ้นอยู่กับจำนวนแบนด์วิดธ์ที่ไม่ได้ใช้ที่เรามีให้</translation>
@@ -5461,7 +5441,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>* The local currency price is an estimate only. All transactions shown charged in Euros.</source>
         <translatorcomment>Informative label to inform users about billing currency used for non Euro payments.</translatorcomment>
-        <translation>* ราคาในสกุลเงินท้องถิ่นเป็นเพียงการประมาณการเท่านั้น ประวัติการทำธุรกรรมทั้งหมดจะแสดงเป็นสกุลเงินยูโร</translation>
+        <translation>* ราคาที่แสดงเป็นสกุลเงินบาทเป็นเพียงการประมาณการเท่านั้น ประวัติการทำธุรกรรมทั้งหมดจะแสดงเป็นสกุลเงินยูโร</translation>
     </message>
     <message>
         <source>Your download could not proceed because it exceeds your free transfer allowance.</source>
@@ -5470,8 +5450,13 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Choose annual billing and get 12 months for the price of 10</source>
-        <translatorcomment>Informative label to inform the user about offer purchasing one-year Pro plan within upgrade dialog.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Informative label to inform the user about offer purchasing one-year Pro plan within upgrade dialog when user reaches over quota state.</translatorcomment>
+        <translation>เลือกการเรียกเก็บเงินรายปีและรับ 12 เดือนในราคา 10</translation>
+    </message>
+    <message>
+        <source>Transfer quota exceeded</source>
+        <translatorcomment>Label shown to inform the user about over transfer quota situation.</translatorcomment>
+        <translation>เกินโควต้าการถ่ายโอนแล้ว</translation>
     </message>
 </context>
 <context>
@@ -5508,8 +5493,8 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Choose annual billing and get 12 months for the price of 10</source>
-        <translatorcomment>Informative label to inform the user about offer purchasing one-year Pro plan within upgrade dialog.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Informative label to inform the user about offer purchasing one-year Pro plan within upgrade dialog when user reaches over storage state.</translatorcomment>
+        <translation>เลือกการเรียกเก็บเงินรายปีและรับ 12 เดือนในราคา 10</translation>
     </message>
 </context>
 <context>

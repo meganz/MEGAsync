@@ -3523,15 +3523,13 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Full redesign of settings with a new look and feel.
-- No longer supporting macOS versions below 10.12.
-- Multi-currency support added for upgrade options.
-- High DPI support for Windows platform improved.
-- Crashes previously detected on Windows, Linux and macOS now fixed.
-- Other performance improvements and adjustments.
-- Other UI fixes and adjustments.</source>
-        <translatorcomment>Changelog notes for v4.6.0 version</translatorcomment>
-        <translation>－設定を全面的に変更し、新しいルック＆フィールに。－10.12以前のmacOSバージョンのサポートを終了。－アップグレードオプションに多通貨対応を追加。－WindowsプラットフォームのHigh DPIサポートを改善。－Windows、Linux、macOSで過去に検出されたクラッシュを修正。－その他のパフォーマンスの改善と調整。－その他のUIの修正と調整。</translation>
+        <source>- Strengthen cryptographic security on Linux repositories.
+- Fix memory issues with problematic PDF files.
+</source>
+        <translatorcomment>Changelog v4.6.3 (linux only)</translatorcomment>
+        <translation>－Linuxリポジトリの暗号セキュリティの強化。
+－問題のあるPDFファイルのメモリ問題を修正。
+</translation>
     </message>
 </context>
 <context>
@@ -3675,7 +3673,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Forward</source>
         <translatorcomment>Button for going forward in the navigating in the filesystem</translatorcomment>
-        <translation>転送</translation>
+        <translation>進む</translation>
     </message>
     <message>
         <source>Go forward</source>
@@ -4260,11 +4258,6 @@ Do you want to restart MEGAsync now?</source>
         <source>Restart</source>
         <translatorcomment>Label for restart button.to relaunch MEGAsync app.</translatorcomment>
         <translation>再起動</translation>
-    </message>
-    <message>
-        <source>Disable file versioning</source>
-        <translatorcomment>Checkbox label to enable/disable file versioning feature.</translatorcomment>
-        <translation>ファイルのバージョン管理を無効にする</translation>
     </message>
     <message>
         <source>Local folder with a backup of files deleted in MEGA</source>
@@ -5436,11 +5429,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>転送容量が枯渇しました</translation>
     </message>
     <message>
-        <source>Transfer Quota exhausted</source>
-        <translatorcomment>Label shown to inform the user about over transfer quota situation.</translatorcomment>
-        <translation>転送容量が枯渇しました</translation>
-    </message>
-    <message>
         <source>This limit is dynamic and depends on the amount of unused bandwidth we have available.</source>
         <translatorcomment>Informative label about how the transfer quota limit works when user reaches over transfer situation.</translatorcomment>
         <translation>この制限は動的なもので、ご利用可能な未使用の帯域幅の量に依存します。</translation>
@@ -5462,8 +5450,13 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Choose annual billing and get 12 months for the price of 10</source>
-        <translatorcomment>Informative label to inform the user about offer purchasing one-year Pro plan within upgrade dialog.</translatorcomment>
+        <translatorcomment>Informative label to inform the user about offer purchasing one-year Pro plan within upgrade dialog when user reaches over quota state.</translatorcomment>
         <translation>年額課金をご選択いただくと、10か月分の料金で12か月分をご購入いただけます</translation>
+    </message>
+    <message>
+        <source>Transfer quota exceeded</source>
+        <translatorcomment>Label shown to inform the user about over transfer quota situation.</translatorcomment>
+        <translation>転送容量を超えました</translation>
     </message>
 </context>
 <context>
@@ -5500,7 +5493,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Choose annual billing and get 12 months for the price of 10</source>
-        <translatorcomment>Informative label to inform the user about offer purchasing one-year Pro plan within upgrade dialog.</translatorcomment>
+        <translatorcomment>Informative label to inform the user about offer purchasing one-year Pro plan within upgrade dialog when user reaches over storage state.</translatorcomment>
         <translation>年額課金をご選択いただくと、10か月分の料金で12か月分をご購入いただけます</translation>
     </message>
 </context>

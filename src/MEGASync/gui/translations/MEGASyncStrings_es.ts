@@ -11,7 +11,7 @@
     <message>
         <source>Cloud Drive</source>
         <translatorcomment>Label for Cloud Drive space used. Maintain capital letters in each word.(Max 18 characters)</translatorcomment>
-        <translation>Mi nube</translation>
+        <translation>Nube</translation>
     </message>
     <message>
         <source>Inbox</source>
@@ -668,7 +668,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Bug report can&apos;t be submitted due to some error. Please try again or contact our support team via [A]support@mega.co.nz[/A]</source>
         <translatorcomment>Warning message shown when some error occurs during uploading a bug report.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Ha habido un error al subir el reporte. Vuelve a intentarlo más tarde o ponte en contacto con [A]support@mega.nz[/A] si el problema persiste.</translation>
     </message>
     <message>
         <source>Ok</source>
@@ -1561,7 +1561,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Import to my cloud drive</source>
         <translatorcomment>Label to indicate if the user wants to import the selected MEGA link(s) to his cloud drive.</translatorcomment>
-        <translation>Importar a Mi nube</translation>
+        <translation>Importar a la Nube</translation>
     </message>
     <message>
         <source>OK</source>
@@ -2444,7 +2444,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Cloud drive</source>
         <translatorcomment>Label of context menu to reach Cloud drive section at webclient. It will open your webbrowser and redirects to your cloud drive.</translatorcomment>
-        <translation>Mi nube</translation>
+        <translation>Nube</translation>
     </message>
     <message>
         <source>Error transferring folder: </source>
@@ -2791,7 +2791,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Cloud Drive</source>
         <translatorcomment>Title of the Cloud Drive section</translatorcomment>
-        <translation>Mi nube</translation>
+        <translation>Nube</translation>
     </message>
 </context>
 <context>
@@ -3526,21 +3526,13 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Full redesign of settings with a new look and feel.
-- No longer supporting macOS versions below 10.12.
-- Multi-currency support added for upgrade options.
-- High DPI support for Windows platform improved.
-- Crashes previously detected on Windows, Linux and macOS now fixed.
-- Other performance improvements and adjustments.
-- Other UI fixes and adjustments.</source>
-        <translatorcomment>Changelog notes for v4.6.0 version</translatorcomment>
-        <translation>- Interfaz de los ajustes totalmente nueva.
-- Ya no es compatible con las versiones de macOS anteriores a la 10.12.
-- Soporte multidivisa en las opciones de pago .
-- Soporte para la configuración elevada de PPP en Windows.
-- Algunos fallos detectados en Windows, Linux y macOS han sido solucionados.
-- Otras mejoras y ajustes de rendimiento.
-- Otras correcciones de la interfaz de usuario.</translation>
+        <source>- Strengthen cryptographic security on Linux repositories.
+- Fix memory issues with problematic PDF files.
+</source>
+        <translatorcomment>Changelog v4.6.3 (linux only)</translatorcomment>
+        <translation>- Se ha aumentado la seguridad del cifrado en los repositorios de Linux.
+- Se han solucionados problemas de memoria en archivos PDF.
+</translation>
     </message>
 </context>
 <context>
@@ -4271,11 +4263,6 @@ Do you want to restart MEGAsync now?</source>
         <translation>Reiniciar</translation>
     </message>
     <message>
-        <source>Disable file versioning</source>
-        <translatorcomment>Checkbox label to enable/disable file versioning feature.</translatorcomment>
-        <translation>Desactivar versionado de archivos</translation>
-    </message>
-    <message>
         <source>Local folder with a backup of files deleted in MEGA</source>
         <translatorcomment>Tooltip shown when hovering local debris label.</translatorcomment>
         <translation>Carpeta local con una copia de seguridad de los archivos eliminados en MEGA</translation>
@@ -4756,7 +4743,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source> Sync your entire cloud drive</source>
         <translatorcomment>Label displayed to inform the user about the Full sync (Sync the entire cloud drive)</translatorcomment>
-        <translation>Sincroniza toda tu cuenta de MEGA</translation>
+        <translation>Sincroniza toda tu Nube</translation>
     </message>
     <message>
         <source>Selective sync</source>
@@ -4914,7 +4901,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your local folder and your MEGA Cloud Drive will be automatically synchronized.</source>
         <translatorcomment>Label to inform the user that the synchronization stablished will be automatically synchronized.</translatorcomment>
-        <translation>Tu carpeta local y tu nube de MEGA se sincronizarán automaticamente.</translation>
+        <translation>Tu carpeta local y tu Nube de MEGA se sincronizarán automaticamente.</translation>
     </message>
     <message>
         <source>You don&apos;t have write permissions in this local folder.</source>
@@ -5017,7 +5004,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Sync specific folders in your cloud drive</source>
         <translatorcomment>Label to inform the user about the selective sync mode of MEGAsync</translatorcomment>
-        <translation>Sincroniza carpetas específicas</translation>
+        <translation>Sincroniza carpetas específicas de tu Nube</translation>
     </message>
     <message>
         <source>Selective sync:</source>
@@ -5062,7 +5049,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your entire Cloud Drive will be synchronized with a local folder.</source>
         <translatorcomment>Label with information about the full sync mode of MEGAsync</translatorcomment>
-        <translation>Tu nube será sincronizada con una carpeta local.</translation>
+        <translation>Toda tu Nube será sincronizada con una carpeta local.</translation>
     </message>
     <message>
         <source>We are all done!</source>
@@ -5201,7 +5188,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Cloud Drive</source>
         <translatorcomment>Text of the button to select a file from the Cloud Drive for streaming</translatorcomment>
-        <translation>Mi nube</translation>
+        <translation>Nube</translation>
     </message>
     <message>
         <source>Public link</source>
@@ -5446,11 +5433,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>Cuota de transferencia agotada</translation>
     </message>
     <message>
-        <source>Transfer Quota exhausted</source>
-        <translatorcomment>Label shown to inform the user about over transfer quota situation.</translatorcomment>
-        <translation>Cuota de transferencia agotada</translation>
-    </message>
-    <message>
         <source>This limit is dynamic and depends on the amount of unused bandwidth we have available.</source>
         <translatorcomment>Informative label about how the transfer quota limit works when user reaches over transfer situation.</translatorcomment>
         <translation>Este límite puede variar y depende de la cantidad de ancho de banda no utilizado que tengamos disponible.</translation>
@@ -5463,17 +5445,22 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>* The local currency price is an estimate only. All transactions shown charged in Euros.</source>
         <translatorcomment>Informative label to inform users about billing currency used for non Euro payments.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>* El precio indicado en moneda local es solo una estimación. Todas las transacciones se cobrarán en Euros.</translation>
     </message>
     <message>
         <source>Your download could not proceed because it exceeds your free transfer allowance.</source>
         <translatorcomment>Informative message to inform users that downloads could not continue because user has reached over transfer situation.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>La descarga no puede continuar porque estás por encima del límite de transferencia gratuito. </translation>
     </message>
     <message>
         <source>Choose annual billing and get 12 months for the price of 10</source>
-        <translatorcomment>Informative label to inform the user about offer purchasing one-year Pro plan within upgrade dialog.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Informative label to inform the user about offer purchasing one-year Pro plan within upgrade dialog when user reaches over quota state.</translatorcomment>
+        <translation>Elige el pago anual para obtener 12 meses al precio de 10</translation>
+    </message>
+    <message>
+        <source>Transfer quota exceeded</source>
+        <translatorcomment>Label shown to inform the user about over transfer quota situation.</translatorcomment>
+        <translation>Cuota de transferencia agotada</translation>
     </message>
 </context>
 <context>
@@ -5496,22 +5483,22 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>To increase this limit, you can upgrade your account, which will give you ample extra storage space.</source>
         <translatorcomment>Informative message shown when user reaches over storage situation, encouraging to upgrade and get more extra storage space.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Para aumentar este límite, puedes ampliar tu cuenta y así obtener almacenamiento adicional.</translation>
     </message>
     <message>
         <source>* The local currency price is an estimate only. All transactions shown charged in Euros.</source>
         <translatorcomment>Informative label to inform users about billing currency used for non Euro payments.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>* El precio indicado en moneda local es solo una estimación. Todas las transacciones se cobrarán en Euros.</translation>
     </message>
     <message>
         <source>100% of the %1 available used on your account.</source>
         <translatorcomment>Informative message for the user when it is in over storage situation, letting know about the %1 space used and reaching the 100% limit of his current storage amount.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>100% de los %1 disponibles en tu cuenta.</translation>
     </message>
     <message>
         <source>Choose annual billing and get 12 months for the price of 10</source>
-        <translatorcomment>Informative label to inform the user about offer purchasing one-year Pro plan within upgrade dialog.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Informative label to inform the user about offer purchasing one-year Pro plan within upgrade dialog when user reaches over storage state.</translatorcomment>
+        <translation>Elige el pago anual para obtener 12 meses al precio de 10</translation>
     </message>
 </context>
 <context>
@@ -5556,7 +5543,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <name>UsageWidget</name>
     <message>
         <source>Cloud Drive</source>
-        <translation>Mi nube</translation>
+        <translation>Nube</translation>
     </message>
     <message>
         <source>Rubbish Bin</source>

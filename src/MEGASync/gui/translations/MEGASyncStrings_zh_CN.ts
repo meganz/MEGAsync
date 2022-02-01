@@ -21,7 +21,7 @@
     <message>
         <source>Loading...</source>
         <translatorcomment>Label to show when an account detail request is waiting for the server response.</translatorcomment>
-        <translation>正在加载……</translation>
+        <translation>正在加载…</translation>
     </message>
     <message>
         <source>Storage</source>
@@ -446,7 +446,7 @@
     <message>
         <source>Bandwidth</source>
         <translatorcomment>Title of the dialog to manage Bandwidth settings/preferences.</translatorcomment>
-        <translation>频宽</translation>
+        <translation>带宽</translation>
     </message>
     <message>
         <source>Upload rate limit</source>
@@ -544,22 +544,22 @@
     <message>
         <source>Please select a local folder and a MEGA folder</source>
         <translatorcomment>Message displayed when an user is adding a synchronized folder an either local or remote folder are empty.</translatorcomment>
-        <translation>请选择一个本机文件夹与一个MEGA文件夹以便同步</translation>
+        <translation>请选择一个本地文件夹与一个MEGA文件夹</translation>
     </message>
     <message>
         <source>The selected local folder is already synced</source>
         <translatorcomment>Message displayed when an user is adding a local folder wich is already synced.</translatorcomment>
-        <translation>选取的本机文件夹已经同步</translation>
+        <translation>已选的本地文件夹已同步</translation>
     </message>
     <message>
         <source>A synced folder cannot be inside another synced folder</source>
         <translatorcomment>Message displayed when an user is adding nested local folders for synchronization.</translatorcomment>
-        <translation>同步文件夹不能属于另一同步文件夹内</translation>
+        <translation>同步文件夹不能位于另一个同步文件夹中</translation>
     </message>
     <message>
         <source>The selected MEGA folder is already synced</source>
         <translatorcomment>Message displayed when an user is adding an already synchronized remote folder.</translatorcomment>
-        <translation>选取的MEGA文件夹已经同步</translation>
+        <translation>已选的MEGA文件夹已同步</translation>
     </message>
     <message>
         <source>Sync name</source>
@@ -570,7 +570,7 @@
         <source>The name &quot;%1&quot; is already in use for another sync
 Please enter a different name to identify this synced folder:</source>
         <translatorcomment>Detailed message displayed when a user is using a name for a local folder that is already used. Preserve &quot;%1&quot; code because is used to indicate the local folder at runtime.</translatorcomment>
-        <translation>名称“%1”已用于其他同步。请输入一个不同的名称来标识这个已同步的文件夹：</translation>
+        <translation>该名称“%1”已用于其他同步。请输入不同的名称以区别此同步文件夹：</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -595,7 +595,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Add</source>
         <translatorcomment>Button label to confirm and add the selected folders for a sync</translatorcomment>
-        <translation>新增</translation>
+        <translation>添加</translation>
     </message>
     <message>
         <source>Add synchronised folder:</source>
@@ -608,7 +608,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Bug report</source>
         <translatorcomment>Title of the dialog used to send bug reports to support team.</translatorcomment>
-        <translation>通报问题</translation>
+        <translation>报告问题</translation>
     </message>
     <message>
         <source>Please clearly describe the issue you encountered. The more details, the easier for us to resolve. Your submission will be reviewed by our development team.</source>
@@ -643,32 +643,32 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Optional</source>
         <translatorcomment>Label to indicate that title field of bug report form is not mandatory.</translatorcomment>
-        <translation>选择性</translation>
+        <translation>选填</translation>
     </message>
     <message>
         <source>Bug report is uploading, it may take a few minutes</source>
         <translatorcomment>Label to indicate that the bug report is being uploaded to our support team.</translatorcomment>
-        <translation>您的通报问题正在上传中，这可能需要几分钟时间。</translation>
+        <translation>您报告的问题正在上传中，这可能需要几分钟时间。</translation>
     </message>
     <message>
         <source>Bug report success!</source>
         <translatorcomment>Confirmation message shown when a bug report is successfully uploaded.</translatorcomment>
-        <translation>您的问题已被成功通报。</translation>
+        <translation>您的问题已成功提交。</translation>
     </message>
     <message>
         <source>Your bug report has been submitted, a confirmation email will sent to you accordingly.</source>
         <translatorcomment>Label to inform the user that he will receive a confirmation email </translatorcomment>
-        <translation>您的问题已上传，确认邮件将发送至您的邮箱。</translation>
+        <translation>您报告的问题已上传，确认邮件将发送至您的邮箱。</translation>
     </message>
     <message>
         <source>Error on submitting bug report</source>
         <translatorcomment>Error message shown when some error occurs during uploading a bug report.</translatorcomment>
-        <translation>上传通报问题时发生错误</translation>
+        <translation>上传问题报告时发生错误。</translation>
     </message>
     <message>
         <source>Bug report can&apos;t be submitted due to some error. Please try again or contact our support team via [A]support@mega.co.nz[/A]</source>
         <translatorcomment>Warning message shown when some error occurs during uploading a bug report.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>由于发生错误，您的问题无法上传。如果问题仍然存在，请稍后再试或联系我们的支持团队[A]support@mega.nz[/A]获取帮助。</translation>
     </message>
     <message>
         <source>Ok</source>
@@ -678,12 +678,12 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Are you sure you want to exit uploading?</source>
         <translatorcomment>Confirmation message shown when the user is trying to cancel the ongoing upload report.</translatorcomment>
-        <translation>您确定要取消上传您的通报问题？</translation>
+        <translation>您确定要取消上传您报告的问题吗？</translation>
     </message>
     <message>
         <source>The bug report will not be submitted if you exit uploading.</source>
         <translatorcomment>Informative message shown to the user to inform that if he exits the dialog the bug report upload will not be submitted.</translatorcomment>
-        <translation>如果您取消上传，此问题不会被通报。</translation>
+        <translation>如果您取消上传，问题将不会被提交。</translation>
     </message>
     <message>
         <source>Continue</source>
@@ -698,7 +698,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>There is an ongoing report being uploaded.</source>
         <translatorcomment>Informative message shown when user is trying to upload a bug report while there is an ongoing upload.</translatorcomment>
-        <translation>当前有另一个通报问题正在上传。</translation>
+        <translation>当前有另一个问题正在上传。</translation>
     </message>
     <message>
         <source>Please wait until the current upload is completed.</source>
@@ -721,7 +721,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>New in this version:</source>
         <translatorcomment>Label for indicate new features/fixes of current MEGAsync version. Keep colon.</translatorcomment>
-        <translation>此版本中的更新：</translation>
+        <translation>新版本更新内容：</translation>
     </message>
     <message>
         <source>Credits</source>
@@ -771,7 +771,7 @@ Please enter a different name to identify this synced folder:</source>
     </message>
     <message>
         <source>The entered passwords don&apos;t match</source>
-        <translation>输入的密码不符</translation>
+        <translation>输入的密码不匹配</translation>
     </message>
     <message>
         <source>Please, enter a stronger password</source>
@@ -780,7 +780,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Too many requests. Please wait.</source>
         <translatorcomment>Message shown when the SDK is waiting for the server to complete a request due to a rate limit (API error -4) - (String as short as possible).</translatorcomment>
-        <translation>请求太多。请稍候。</translation>
+        <translation>请求过多。请稍候。</translation>
     </message>
     <message>
         <source>You have entered your current password, please enter a new password.</source>
@@ -839,7 +839,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>MEGAsync has detected a problem. These are the details:</source>
         <translatorcomment>Label to indicate that a crash has occured and the detailed stacktrace of the problem.</translatorcomment>
-        <translation>MEGAsync侦测到问题。详细内容如下:</translation>
+        <translation>MEGAsync检测到问题。详细信息如下：</translation>
     </message>
     <message>
         <source>You can help us to improve MEGAsync by sending this error report. It doesn&apos;t contain any personal information. If you want to give us more details, please write them below:</source>
@@ -878,7 +878,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>PAUSED</source>
         <translatorcomment>Label to indicate that a transfer is paused. Keep uppercase.</translatorcomment>
-        <translation>暂停</translation>
+        <translation>已暂停</translation>
     </message>
     <message>
         <source>queued</source>
@@ -888,17 +888,17 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>retrying...</source>
         <translatorcomment>Label to indicate that a transfer is being retried.</translatorcomment>
-        <translation>正在重试传输……</translation>
+        <translation>正在重试…</translation>
     </message>
     <message>
         <source>completing...</source>
         <translatorcomment>Label to indicate that a transfer is being completed.</translatorcomment>
-        <translation>正在完成传输……</translation>
+        <translation>正在完成传输…</translation>
     </message>
     <message>
         <source>Added [A]</source>
         <translatorcomment>Label to indicate that a transfer finished (added to the list of recently finished transfers) [A] time ago. [A] will be updated with the time since the transfer finished.</translatorcomment>
-        <translation>已添加[A]</translation>
+        <translation>[A]已添加</translation>
     </message>
     <message>
         <source>Out of storage space</source>
@@ -908,7 +908,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Transfer quota exceeded</source>
         <translatorcomment>Label to indicate that a transfer is halted due to the account is out of transfer quota</translatorcomment>
-        <translation>传输配额超标</translation>
+        <translation>超出传输流量限制</translation>
     </message>
 </context>
 <context>
@@ -1046,7 +1046,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Payment Info</source>
         <translatorcomment>Notification label related to a payment.</translatorcomment>
-        <translation>付款资讯</translation>
+        <translation>付款信息</translation>
     </message>
     <message>
         <source>Upgrade</source>
@@ -1194,7 +1194,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Local folder:</source>
         <translatorcomment>Label to indicate the user the local folder in which the selected files/folders will be downloaded (String short as possible)</translatorcomment>
-        <translation>本机文件夹:</translation>
+        <translation>本地文件夹:</translation>
     </message>
     <message>
         <source>Always download to this destination</source>
@@ -1219,7 +1219,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Select local folder</source>
         <translatorcomment>Title of the dialog in which the user select the download folder.</translatorcomment>
-        <translation>选择本机文件夹</translation>
+        <translation>选择本地文件夹</translation>
     </message>
     <message>
         <source>Error</source>
@@ -1229,7 +1229,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>You don&apos;t have write permissions in this local folder.</source>
         <translatorcomment>Label to indicate that a user don&apos;t have write permissions in the selected local folder to download files/folders from MEGA.</translatorcomment>
-        <translation>您没有这个本地文件夹的编写权限。</translation>
+        <translation>您没有此本地文件夹的写入权限。</translation>
     </message>
 </context>
 <context>
@@ -1270,7 +1270,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>No options available</source>
         <translatorcomment>Finder context menu label when no option is available for selected items</translatorcomment>
-        <translation>没有可用的选项</translation>
+        <translation>无可用选项</translation>
     </message>
     <message>
         <source>Click the toolbar item for a menu.</source>
@@ -1280,7 +1280,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>1 file</source>
         <translatorcomment>Context menu option label to indicate the user has selected a file</translatorcomment>
-        <translation>一个文件</translation>
+        <translation>1个文件</translation>
     </message>
     <message>
         <source>%i files</source>
@@ -1299,7 +1299,7 @@ Please enter a different name to identify this synced folder:</source>
     </message>
     <message>
         <source>View previous versions</source>
-        <translation>查看历史版本</translation>
+        <translation>查看以前的版本</translation>
     </message>
 </context>
 <context>
@@ -1307,7 +1307,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Local folder:</source>
         <translatorcomment>Label to indicate the user the local folder for a synchronization (String short as possible)</translatorcomment>
-        <translation>本机文件夹:</translation>
+        <translation>本地文件夹:</translation>
     </message>
     <message>
         <source>MEGA folder:</source>
@@ -1317,7 +1317,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Select local folder</source>
         <translatorcomment>Title of the dialog in which the user select the local default folder.for a synchronization.</translatorcomment>
-        <translation>选择本机文件夹</translation>
+        <translation>选择本地文件夹</translation>
     </message>
     <message>
         <source>Choose</source>
@@ -1332,17 +1332,17 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>MEGAsync won&apos;t be able to download anything here.</source>
         <translatorcomment>Label to indicate that MEGAsync won&apos;t be able to download anything due to the user doesn&apos;t have writhe permissions on the local selected folder.</translatorcomment>
-        <translation>MEGAsync 无法从这里下载任何资料</translation>
+        <translation>MEGAsync无法在此处下载任何内容。</translation>
     </message>
     <message>
         <source>Do you want to continue?</source>
         <translatorcomment>Label to indicate if the user wants to continue in spite of the problem occured.</translatorcomment>
-        <translation>您要继续吗？</translation>
+        <translation>您想要继续吗？</translation>
     </message>
     <message>
         <source>You don&apos;t have write permissions in this local folder.</source>
         <translatorcomment>Label to indicate that a user don&apos;t have write permissions in the selected local folder for a synchronization.</translatorcomment>
-        <translation>您没有这个本地文件夹的编写权限。</translation>
+        <translation>您没有此本地文件夹的写入权限。</translation>
     </message>
     <message>
         <source>You are trying to sync an extremely large folder.
@@ -1358,7 +1358,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>You can not sync a shared folder without Full Access permissions</source>
         <translatorcomment>Label to inform a user about the incompatibility of sync a shared folder without Full Access permissions</translatorcomment>
-        <translation>您需完整存取权才可同步分享的文件夹</translation>
+        <translation>您需要拥有完全访问权限才能同步共享文件夹</translation>
     </message>
     <message>
         <source>Select</source>
@@ -1376,7 +1376,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Create account</source>
         <translatorcomment>Button label to start the creation of an account process. (String as short as possible)</translatorcomment>
-        <translation>创建账号</translation>
+        <translation>创建帐户</translation>
     </message>
     <message>
         <source>Login to MEGA</source>
@@ -1386,7 +1386,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Email address</source>
         <translatorcomment>Tip shown in email line edit before typing the user email address.</translatorcomment>
-        <translation>邮箱</translation>
+        <translation>电子邮件地址</translation>
     </message>
     <message>
         <source>Password</source>
@@ -1411,12 +1411,12 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Logging in...</source>
         <translatorcomment>Label shown at main dialog to show the current operation. In this case logging in.</translatorcomment>
-        <translation>登入中...</translation>
+        <translation>正在登录...</translation>
     </message>
     <message>
         <source>Fetching file list...</source>
         <translatorcomment>Label shown at main dialog to show the current operation. In this case fetching file information from servers.</translatorcomment>
-        <translation>获取文件列表...</translation>
+        <translation>正在获取文件列表...</translation>
     </message>
     <message>
         <source>Error</source>
@@ -1426,7 +1426,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Incorrect email and/or password.</source>
         <translatorcomment>Message box shown when user enters incorrect email and/or password at login</translatorcomment>
-        <translation>不正确的电子邮件与/或密码。</translation>
+        <translation>电子邮件地址或密码错误。</translation>
     </message>
     <message>
         <source>Please check your e-mail and click the link to confirm your account.</source>
@@ -1436,7 +1436,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>You have attempted to log in too many times.[BR]Please wait until %1 and try again.</source>
         <translatorcomment>Label shown at main dialog to inform the user that he has failed to log in several times and has to wait before trying again.</translatorcomment>
-        <translation>您于短时间内尝试登入的次数过多。 [BR] 请等待至%1 后再重试。</translation>
+        <translation>由于短时间内您尝试登录的次数过多。 [BR]请等待%1后再重试。</translation>
     </message>
     <message>
         <source>Your account has been blocked. Please contact support@mega.co.nz</source>
@@ -2022,7 +2022,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Up to date</source>
         <translatorcomment>Label of tray icon to indicate that MEGAsync is up to date and there isn&apos;t any available update.</translatorcomment>
-        <translation>最新的</translation>
+        <translation>已是最新</translation>
     </message>
     <message>
         <source>Paused</source>
@@ -3297,7 +3297,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Dismiss</source>
         <translatorcomment>Button label to dismiss the warning about storage full.</translatorcomment>
-        <translation>解除</translation>
+        <translation>忽略</translation>
     </message>
     <message>
         <source>Upgrade</source>
@@ -3310,7 +3310,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Dismiss</source>
         <translatorcomment>Button label to dismiss and hide a PSA announcement</translatorcomment>
-        <translation>解除</translation>
+        <translation>忽略</translation>
     </message>
 </context>
 <context>
@@ -3525,21 +3525,13 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Full redesign of settings with a new look and feel.
-- No longer supporting macOS versions below 10.12.
-- Multi-currency support added for upgrade options.
-- High DPI support for Windows platform improved.
-- Crashes previously detected on Windows, Linux and macOS now fixed.
-- Other performance improvements and adjustments.
-- Other UI fixes and adjustments.</source>
-        <translatorcomment>Changelog notes for v4.6.0 version</translatorcomment>
-        <translation>- 全新设计设置外观。
-- 不再支持macOS 10.12以下版本。
-- 升级帐户选项已支持多货币付款。
-- 改善了对Windows平台的高DPI支持。
-- 修复了在Windows，Linux和macOS上检测到的崩溃问题。
-- 其他性能改进和调整。
-- 其他用户界面修复和调整。</translation>
+        <source>- Strengthen cryptographic security on Linux repositories.
+- Fix memory issues with problematic PDF files.
+</source>
+        <translatorcomment>Changelog v4.6.3 (linux only)</translatorcomment>
+        <translation>- 增强了Linux存储库的加密安全性。
+- 修复了有问题的PDF文件的内存问题。
+</translation>
     </message>
 </context>
 <context>
@@ -3645,7 +3637,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>&amp;No</source>
         <translatorcomment>Label for No button. Keep capital letter.</translatorcomment>
-        <translation>&amp;不</translation>
+        <translation>&amp;否</translation>
     </message>
     <message>
         <source>&amp;OK</source>
@@ -3683,7 +3675,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Forward</source>
         <translatorcomment>Button for going forward in the navigating in the filesystem</translatorcomment>
-        <translation>转发</translation>
+        <translation>向前</translation>
     </message>
     <message>
         <source>Go forward</source>
@@ -4085,7 +4077,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>Details</source>
         <translatorcomment>Button label to show the account usage details for the current user of the application. String as short as possible.</translatorcomment>
-        <translation>内容</translation>
+        <translation>详细信息</translation>
     </message>
     <message>
         <source>Logout</source>
@@ -4268,11 +4260,6 @@ Do you want to restart MEGAsync now?</source>
         <source>Restart</source>
         <translatorcomment>Label for restart button.to relaunch MEGAsync app.</translatorcomment>
         <translation>重启</translation>
-    </message>
-    <message>
-        <source>Disable file versioning</source>
-        <translatorcomment>Checkbox label to enable/disable file versioning feature.</translatorcomment>
-        <translation>禁用文件版本控制</translation>
     </message>
     <message>
         <source>Local folder with a backup of files deleted in MEGA</source>
@@ -5166,7 +5153,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Up to date</source>
         <translatorcomment>Information label in the main dialog to show that MEGAsync is up to date</translatorcomment>
-        <translation>最新的</translation>
+        <translation>已是最新</translation>
     </message>
     <message>
         <source>Scanning</source>
@@ -5423,12 +5410,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>No Downloads</source>
         <translatorcomment>Label to indicate that there are no active downloads</translatorcomment>
-        <translation>无下载/不下载</translation>
+        <translation>无下载</translation>
     </message>
     <message>
         <source>No Uploads</source>
         <translatorcomment>Label to indicate that there are no active uploads</translatorcomment>
-        <translation>无上传/不上传</translation>
+        <translation>无上传</translation>
     </message>
     <message>
         <source>Paused Transfers</source>
@@ -5442,11 +5429,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Depleted transfer quota</source>
         <translatorcomment>Label to indicate that transfer quota has been depleted.</translatorcomment>
         <translation>传输流量已用尽</translation>
-    </message>
-    <message>
-        <source>Transfer Quota exhausted</source>
-        <translatorcomment>Label shown to inform the user about over transfer quota situation.</translatorcomment>
-        <translation>传输流量已用完</translation>
     </message>
     <message>
         <source>This limit is dynamic and depends on the amount of unused bandwidth we have available.</source>
@@ -5470,8 +5452,13 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Choose annual billing and get 12 months for the price of 10</source>
-        <translatorcomment>Informative label to inform the user about offer purchasing one-year Pro plan within upgrade dialog.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Informative label to inform the user about offer purchasing one-year Pro plan within upgrade dialog when user reaches over quota state.</translatorcomment>
+        <translation>选择年度会员方案，即以10个月的会员价格享受12个月的会员服务</translation>
+    </message>
+    <message>
+        <source>Transfer quota exceeded</source>
+        <translatorcomment>Label shown to inform the user about over transfer quota situation.</translatorcomment>
+        <translation>传输配额超标</translation>
     </message>
 </context>
 <context>
@@ -5508,8 +5495,8 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Choose annual billing and get 12 months for the price of 10</source>
-        <translatorcomment>Informative label to inform the user about offer purchasing one-year Pro plan within upgrade dialog.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Informative label to inform the user about offer purchasing one-year Pro plan within upgrade dialog when user reaches over storage state.</translatorcomment>
+        <translation>选择年度会员方案，即以10个月的会员价格享受12个月的会员服务</translation>
     </message>
 </context>
 <context>
@@ -5582,7 +5569,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>just now</source>
         <translatorcomment>Label to indicate that a transfer has finished right now</translatorcomment>
-        <translation>正是现在</translation>
+        <translation>刚刚</translation>
     </message>
     <message>
         <source>%1 seconds ago</source>
@@ -5607,7 +5594,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>%1 hours ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %1 hours ago</translatorcomment>
-        <translation>%1小时以前</translation>
+        <translation>%1小时前</translation>
     </message>
     <message>
         <source>1 day ago</source>

@@ -536,7 +536,7 @@
     <message>
         <source>Update</source>
         <translatorcomment>Button label for apply and confirm the bandwidth changes (macOS)</translatorcomment>
-        <translation>Memperbarui</translation>
+        <translation>Perbarui</translation>
     </message>
 </context>
 <context>
@@ -668,7 +668,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Bug report can&apos;t be submitted due to some error. Please try again or contact our support team via [A]support@mega.co.nz[/A]</source>
         <translatorcomment>Warning message shown when some error occurs during uploading a bug report.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Masalah Anda tidak dapat diunggah karena terjadi kesalahan. Silakan coba lagi nanti atau hubungi tim dukungan kami melalui [A]support@mega.nz[/A] jika masalah terus berlanjut .</translation>
     </message>
     <message>
         <source>Ok</source>
@@ -3466,7 +3466,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>With our end-to-end encryption, the way your team works has never been more secure and private.</source>
         <translatorcomment>Balloon tooltip to inform users when hovering ? button about the benefits of business plan.</translatorcomment>
-        <translation>Dengan enkripsi ujung-ke-ujung kami, cara kerja tim anda tidak pernah seaman dan sepribadi ini.</translation>
+        <translation>Dengan enkripsi menyeluruh kami, cara kerja tim anda tidak pernah seaman dan sepribadi ini.</translation>
     </message>
     <message>
         <source>Get started with secure file storage.</source>
@@ -3525,21 +3525,11 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Full redesign of settings with a new look and feel.
-- No longer supporting macOS versions below 10.12.
-- Multi-currency support added for upgrade options.
-- High DPI support for Windows platform improved.
-- Crashes previously detected on Windows, Linux and macOS now fixed.
-- Other performance improvements and adjustments.
-- Other UI fixes and adjustments.</source>
-        <translatorcomment>Changelog notes for v4.6.0 version</translatorcomment>
-        <translation>- Desain ulang penuh pengaturan dengan tampilan dan nuansa baru.
-- Tidak lagi mendukung versi macOS di bawah 10.12.
-- Dukungan multi-mata uang ditambahkan untuk opsi peningkatan.
-- Dukungan DPI tinggi untuk platform Windows ditingkatkan.
-- Kerusakan yang sebelumnya terdeteksi di Windows, Linux, dan macOS sekarang diperbaiki.
-- Peningkatan dan penyesuaian kinerja lainnya.
-- Perbaikan dan penyesuaian UI lainnya.</translation>
+        <source>- Strengthen cryptographic security on Linux repositories.
+- Fix memory issues with problematic PDF files.
+</source>
+        <translatorcomment>Changelog v4.6.3 (linux only)</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3622,7 +3612,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Update</source>
         <translatorcomment>Button text for Update option. (macOS)</translatorcomment>
-        <translation>Memperbarui</translation>
+        <translation>Perbarui</translation>
     </message>
     <message>
         <source>Error</source>
@@ -4270,11 +4260,6 @@ Do you want to restart MEGAsync now?</source>
         <translation>Restart</translation>
     </message>
     <message>
-        <source>Disable file versioning</source>
-        <translatorcomment>Checkbox label to enable/disable file versioning feature.</translatorcomment>
-        <translation>Nonaktifkan versi file</translation>
-    </message>
-    <message>
         <source>Local folder with a backup of files deleted in MEGA</source>
         <translatorcomment>Tooltip shown when hovering local debris label.</translatorcomment>
         <translation>Folder lokal dengan cadangan file dihapus di MEGA</translation>
@@ -4427,7 +4412,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Recovery Key</source>
         <translatorcomment>Section title for MEGA recovery key download in Security pane.</translatorcomment>
-        <translation>Recovery Key</translation>
+        <translation>Kunci Pemulihan</translation>
     </message>
     <message>
         <source>Your password is not stored by MEGA and we cannot recover it for you. To avoid losing access to your account, save your Recovery Key in a safe place.</source>
@@ -4442,7 +4427,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Change Password</source>
         <translatorcomment>Button label text allowing the user to change his account password. Keep as short as possible.</translatorcomment>
-        <translation>Ganti kata sandi</translation>
+        <translation>Ganti Kata Sandi</translation>
     </message>
     <message>
         <source>Default Folders</source>
@@ -5444,11 +5429,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>Kuota transfer habis</translation>
     </message>
     <message>
-        <source>Transfer Quota exhausted</source>
-        <translatorcomment>Label shown to inform the user about over transfer quota situation.</translatorcomment>
-        <translation>Kuota Transfer habis</translation>
-    </message>
-    <message>
         <source>This limit is dynamic and depends on the amount of unused bandwidth we have available.</source>
         <translatorcomment>Informative label about how the transfer quota limit works when user reaches over transfer situation.</translatorcomment>
         <translation>Pembatasan ini dinamis dan tergantung dari jumlah bandwidth tak terpakai yang kami punya.</translation>
@@ -5470,8 +5450,13 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Choose annual billing and get 12 months for the price of 10</source>
-        <translatorcomment>Informative label to inform the user about offer purchasing one-year Pro plan within upgrade dialog.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Informative label to inform the user about offer purchasing one-year Pro plan within upgrade dialog when user reaches over quota state.</translatorcomment>
+        <translation>Pilih tagihan tahunan dan dapatkan 12 bulan dengan harga 10</translation>
+    </message>
+    <message>
+        <source>Transfer quota exceeded</source>
+        <translatorcomment>Label shown to inform the user about over transfer quota situation.</translatorcomment>
+        <translation>Kuota transfer telah terlewati</translation>
     </message>
 </context>
 <context>
@@ -5508,8 +5493,8 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Choose annual billing and get 12 months for the price of 10</source>
-        <translatorcomment>Informative label to inform the user about offer purchasing one-year Pro plan within upgrade dialog.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Informative label to inform the user about offer purchasing one-year Pro plan within upgrade dialog when user reaches over storage state.</translatorcomment>
+        <translation>Pilih tagihan tahunan dan dapatkan 12 bulan dengan harga 10</translation>
     </message>
 </context>
 <context>

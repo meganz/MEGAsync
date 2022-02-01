@@ -990,7 +990,7 @@ background: transparent;</string>
                <item>
                 <widget class="QLabel" name="lLoginTitle">
                  <property name="text">
-                  <string>Login</string>
+                  <string>Log in</string>
                  </property>
                 </widget>
                </item>
@@ -1061,7 +1061,7 @@ background: transparent;</string>
 </string>
               </property>
               <property name="text">
-               <string>Login</string>
+               <string>Log in</string>
               </property>
              </widget>
             </item>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="38px" height="22px" viewBox="0 0 38 22" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>mac_switch_off_rest</title>
+    <defs>
+        <linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="linearGradient-1">
+            <stop stop-color="#D4D4D4" offset="0%"></stop>
+            <stop stop-color="#D9D9D9" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="Notifications" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="G02-Notifications---Mac----disabled" transform="translate(-424.000000, -290.000000)" fill-rule="nonzero">
+            <g id="mac_switch_off_rest" transform="translate(424.000000, 290.000000)">
+                <rect id="Rectangle" fill="url(#linearGradient-1)" x="0" y="0" width="38" height="22" rx="11"></rect>
+                <path d="M11,22 C4.92486775,22 0,17.0751322 0,11 C0,4.92486775 4.92486775,0 11,0 L27,0 C33.0751322,0 38,4.92486775 38,11 C38,16.9787016 33.2302364,21.8433652 27.2884075,21.9962926 L27,22 L27,22 L11,22 Z M22.4094567,1.00072305 L11,1 C5.4771525,1 1,5.4771525 1,11 C1,16.4292399 5.32667079,20.8479317 10.7200952,20.9961582 L11,21 L22.4124408,21.0006487 C18.6279055,19.2617298 16,15.437755 16,11 C16,6.56341149 18.6265242,2.74028056 22.4094567,1.00072305 Z" id="Combined-Shape-Copy-2" fill-opacity="0.05" fill="#000000" transform="translate(19.000000, 11.000000) scale(-1, 1) translate(-19.000000, -11.000000) "></path>
+                <circle id="Oval" fill="#FFFFFF" cx="11" cy="11" r="10"></circle>
+            </g>
+        </g>
+    </g>
+</svg>

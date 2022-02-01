@@ -521,12 +521,12 @@
     <message>
         <source>Upload rate limit:</source>
         <translatorcomment>Label to indicate the limit of upload rate on macOS.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Limita ratei de încărcare:</translation>
     </message>
     <message>
         <source>Download rate limit:</source>
         <translatorcomment>Label to indicate the limit of download rate on macOS.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Limita ratei de descărcare:</translation>
     </message>
     <message>
         <source>Number of connections per transfer:</source>
@@ -668,7 +668,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Bug report can&apos;t be submitted due to some error. Please try again or contact our support team via [A]support@mega.co.nz[/A]</source>
         <translatorcomment>Warning message shown when some error occurs during uploading a bug report.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Problema ta nu poate fi încărcată din cauza unei erori. Te rugăm să încerci din nou mai târziu sau să contactezi echipa noastră de asistență via [A]support@mega.nz[/A] dacă problema persistă.</translation>
     </message>
     <message>
         <source>Ok</source>
@@ -2056,7 +2056,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>An update will be applied during the next application restart</source>
         <translatorcomment>Notification message launched when an update is already downloaded but not applied yet. It will be applied during the next application restart.</translatorcomment>
-        <translation>Se va aplica o actualizare în timpul următoarei reporniri a aplicației.</translation>
+        <translation>Se va aplica o actualizare în timpul următoarei reporniri a aplicației</translation>
     </message>
     <message>
         <source>Installing update...</source>
@@ -2138,7 +2138,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your config is corrupt, please start over</source>
         <translatorcomment>Message displayed when an error occurs loading configurations from Settings file.</translatorcomment>
-        <translation>Fișierul config este corupt, te rugăm să o iei de la început</translation>
+        <translation>Config-ul tău este corupt, te rugăm să o iei de la început</translation>
     </message>
     <message>
         <source>Error getting link: </source>
@@ -2148,7 +2148,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>MEGAsync is unable to connect. Please check your Internet connectivity and local firewall configuration. Note that most antivirus software includes a firewall.</source>
         <translatorcomment>Notification message launched when a connectivity problem occurs.</translatorcomment>
-        <translation>MEGAsync nu se poate conecta. Te rugăm să verifici conectivitatea la internet și configurația firewall-ului local. Ține minte că majoritatea software-urilor antivirus includ un firewall.</translation>
+        <translation>MEGAsync nu se poate conecta. Te rugăm să verifici conectivitatea la internet și configurația firewallului local. Reține că majoritatea software-urilor antivirus includ un firewall.</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the remote folder doesn&apos;t exist</source>
@@ -3523,21 +3523,11 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Full redesign of settings with a new look and feel.
-- No longer supporting macOS versions below 10.12.
-- Multi-currency support added for upgrade options.
-- High DPI support for Windows platform improved.
-- Crashes previously detected on Windows, Linux and macOS now fixed.
-- Other performance improvements and adjustments.
-- Other UI fixes and adjustments.</source>
-        <translatorcomment>Changelog notes for v4.6.0 version</translatorcomment>
-        <translation>- Reproiectare completă a setărilor cu un aspect și stil noi.
-- Nu mai există suport pentru versiunile macOS mai mici de 10.12.
-- A fost adăugat suport la mai multe valute pentru opțiunile de upgrade.
-- A fost îmbunătățit suportul în cazul DPI-urilor mari pentru platforma Windows.
-- Defecțiunile detectate anterior pe Windows, Linux și macOS sunt acum remediate.
-- Alte îmbunătățiri de performanță și ajustări.
-- Alte remedieri ale interfeței utilizatorului și ajustări.</translation>
+        <source>- Strengthen cryptographic security on Linux repositories.
+- Fix memory issues with problematic PDF files.
+</source>
+        <translatorcomment>Changelog v4.6.3 (linux only)</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4268,11 +4258,6 @@ Do you want to restart MEGAsync now?</source>
         <translation>Repornește</translation>
     </message>
     <message>
-        <source>Disable file versioning</source>
-        <translatorcomment>Checkbox label to enable/disable file versioning feature.</translatorcomment>
-        <translation>Dezactivează versionarea fișierelor</translation>
-    </message>
-    <message>
         <source>Local folder with a backup of files deleted in MEGA</source>
         <translatorcomment>Tooltip shown when hovering local debris label.</translatorcomment>
         <translation>Un folder local cu un backup al fișierelor șterse în MEGA</translation>
@@ -4550,12 +4535,12 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Download rate limit:</source>
         <translatorcomment>Form label text indicating the active download rate limit.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Limita ratei de descărcare:</translation>
     </message>
     <message>
         <source>Upload rate limit:</source>
         <translatorcomment>Form label text indicating the active upload rate limit.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Limita ratei de încărcare:</translation>
     </message>
     <message>
         <source>Proxy settings:</source>
@@ -5442,11 +5427,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>Cotă de transfer epuizată</translation>
     </message>
     <message>
-        <source>Transfer Quota exhausted</source>
-        <translatorcomment>Label shown to inform the user about over transfer quota situation.</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>This limit is dynamic and depends on the amount of unused bandwidth we have available.</source>
         <translatorcomment>Informative label about how the transfer quota limit works when user reaches over transfer situation.</translatorcomment>
         <translation>Această limită este dinamică și depinde de cantitatea de lățime de bandă neutilizată pe care o avem la dispoziție.</translation>
@@ -5468,8 +5448,13 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Choose annual billing and get 12 months for the price of 10</source>
-        <translatorcomment>Informative label to inform the user about offer purchasing one-year Pro plan within upgrade dialog.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Informative label to inform the user about offer purchasing one-year Pro plan within upgrade dialog when user reaches over quota state.</translatorcomment>
+        <translation>Alege facturarea anuală și obține 12 luni la preț de 10</translation>
+    </message>
+    <message>
+        <source>Transfer quota exceeded</source>
+        <translatorcomment>Label shown to inform the user about over transfer quota situation.</translatorcomment>
+        <translation>Cotă de transfer depășită</translation>
     </message>
 </context>
 <context>
@@ -5506,8 +5491,8 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Choose annual billing and get 12 months for the price of 10</source>
-        <translatorcomment>Informative label to inform the user about offer purchasing one-year Pro plan within upgrade dialog.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Informative label to inform the user about offer purchasing one-year Pro plan within upgrade dialog when user reaches over storage state.</translatorcomment>
+        <translation>Alege facturarea anuală și obține 12 luni la preț de 10</translation>
     </message>
 </context>
 <context>

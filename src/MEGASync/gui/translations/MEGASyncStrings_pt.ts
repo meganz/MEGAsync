@@ -471,7 +471,7 @@
     <message>
         <source>Auto</source>
         <translatorcomment>Radio button text to indicate automatic rate limit.</translatorcomment>
-        <translation>Auto</translation>
+        <translation>Automático</translation>
     </message>
     <message>
         <source>(Max. 90% of available bandwidth)</source>
@@ -668,7 +668,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Bug report can&apos;t be submitted due to some error. Please try again or contact our support team via [A]support@mega.co.nz[/A]</source>
         <translatorcomment>Warning message shown when some error occurs during uploading a bug report.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Não foi possível notificar o problema - tente novamente mais tarde. Se o problema persistir, entre em contato com a nossa equipe de suporte em [A]support@mega.nz[/A].</translation>
     </message>
     <message>
         <source>Ok</source>
@@ -2294,7 +2294,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Upload</source>
         <translatorcomment>Label for the menu item that opens the dialog to upload files to MEGA</translatorcomment>
-        <translation>Upload</translation>
+        <translation>Fazer upload</translation>
     </message>
     <message>
         <source>Download</source>
@@ -3525,21 +3525,13 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Full redesign of settings with a new look and feel.
-- No longer supporting macOS versions below 10.12.
-- Multi-currency support added for upgrade options.
-- High DPI support for Windows platform improved.
-- Crashes previously detected on Windows, Linux and macOS now fixed.
-- Other performance improvements and adjustments.
-- Other UI fixes and adjustments.</source>
-        <translatorcomment>Changelog notes for v4.6.0 version</translatorcomment>
-        <translation>- Novo design das Configurações, com uma nova aparência.
-- Fim da compatibilidade com versões de macOS inferiores a 10.12.
-- Visualização do valor em outras moedas nas opções de upgrade.
-- Melhor suporte de DPI para dispositivos com Windows.
-- Correção de falhas detectadas anteriormente em Windows, Linux e macOS.
-- Outras melhorias e ajustes de desempenho.
-- Correções e ajustes na interface do usuário.</translation>
+        <source>- Strengthen cryptographic security on Linux repositories.
+- Fix memory issues with problematic PDF files.
+</source>
+        <translatorcomment>Changelog v4.6.3 (linux only)</translatorcomment>
+        <translation>- Melhoria da segurança criptográfica em repositórios Linux.
+- Correção de erros de memória com arquivos PDF problemáticos.
+</translation>
     </message>
 </context>
 <context>
@@ -3683,7 +3675,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Forward</source>
         <translatorcomment>Button for going forward in the navigating in the filesystem</translatorcomment>
-        <translation>Encaminhar</translation>
+        <translation>Continuar</translation>
     </message>
     <message>
         <source>Go forward</source>
@@ -4120,7 +4112,7 @@ Você quer deletá-lo mesmo assim?</translation>
     <message>
         <source>Auto</source>
         <translatorcomment>Label to indicate that management of rate upload limit is automatic.</translatorcomment>
-        <translation>Auto</translation>
+        <translation>Automático</translation>
     </message>
     <message>
         <source>Data temporarily unavailable</source>
@@ -4270,11 +4262,6 @@ Do you want to restart MEGAsync now?</source>
         <translation>Reiniciar</translation>
     </message>
     <message>
-        <source>Disable file versioning</source>
-        <translatorcomment>Checkbox label to enable/disable file versioning feature.</translatorcomment>
-        <translation>Desativar o controle das versões de arquivos</translation>
-    </message>
-    <message>
         <source>Local folder with a backup of files deleted in MEGA</source>
         <translatorcomment>Tooltip shown when hovering local debris label.</translatorcomment>
         <translation>Pasta local com um backup dos arquivos deletados da pasta sincronizada remota (no MEGA)</translation>
@@ -4327,7 +4314,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Sync</source>
         <translatorcomment>Title for the Settings -&gt; Sync pane tab button. Keep as short as possible.</translatorcomment>
-        <translation>Sincronizar</translation>
+        <translation>Sincronização</translation>
     </message>
     <message>
         <source>Security</source>
@@ -5444,11 +5431,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>Cota de transferência excedida</translation>
     </message>
     <message>
-        <source>Transfer Quota exhausted</source>
-        <translatorcomment>Label shown to inform the user about over transfer quota situation.</translatorcomment>
-        <translation>Cota de transferência excedida</translation>
-    </message>
-    <message>
         <source>This limit is dynamic and depends on the amount of unused bandwidth we have available.</source>
         <translatorcomment>Informative label about how the transfer quota limit works when user reaches over transfer situation.</translatorcomment>
         <translation>Este limite é dinâmico e depende da quantidade de largura de banda não utilizada que temos disponíveis.</translation>
@@ -5470,8 +5452,13 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Choose annual billing and get 12 months for the price of 10</source>
-        <translatorcomment>Informative label to inform the user about offer purchasing one-year Pro plan within upgrade dialog.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Informative label to inform the user about offer purchasing one-year Pro plan within upgrade dialog when user reaches over quota state.</translatorcomment>
+        <translation>Escolha um plano anual e obtenha 12 meses pelo preço de 10</translation>
+    </message>
+    <message>
+        <source>Transfer quota exceeded</source>
+        <translatorcomment>Label shown to inform the user about over transfer quota situation.</translatorcomment>
+        <translation>Cota de transferência excedida</translation>
     </message>
 </context>
 <context>
@@ -5508,8 +5495,8 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Choose annual billing and get 12 months for the price of 10</source>
-        <translatorcomment>Informative label to inform the user about offer purchasing one-year Pro plan within upgrade dialog.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Informative label to inform the user about offer purchasing one-year Pro plan within upgrade dialog when user reaches over storage state.</translatorcomment>
+        <translation>Escolha um plano anual e obtenha 12 meses pelo preço de 10</translation>
     </message>
 </context>
 <context>

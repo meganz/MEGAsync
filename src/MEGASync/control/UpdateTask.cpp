@@ -97,7 +97,7 @@ void UpdateTask::tryUpdate()
     QString randomSequence = QString::fromUtf8("?");
     for (int i = 0; i < 10; i++)
     {
-        randomSequence += QChar::fromAscii('A'+(rand() % 26));
+        randomSequence += QChar::fromLatin1(static_cast<char>('A'+ (rand() % 26)));
     }
 
     QString updateURL = Preferences::UPDATE_CHECK_URL;
@@ -208,8 +208,8 @@ void UpdateTask::downloadFile(QString url)
 QString UpdateTask::readNextLine(QNetworkReply *reply)
 {
     char line[4096];
-    int len = reply->readLine(line, sizeof(line));
-    if ((len <= 0) || ((unsigned int)(len - 1) >= sizeof(line)))
+    int len = static_cast<int>(reply->readLine(line, sizeof(line)));
+    if ((len <= 0) || (static_cast<unsigned int>(len - 1) >= sizeof(line)))
     {
         return QString();
     }
@@ -361,7 +361,7 @@ bool UpdateTask::processFile(QNetworkReply *reply)
     int position = 0;
     while (remainingSize)
     {
-        int written = localFile.write(data.constData()+position, remainingSize);
+        int written = static_cast<int>(localFile.write(data.constData()+position, remainingSize));
         if (written == -1)
         {
             MegaApi::log(MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Error writting file: %1").arg(info.absoluteFilePath()).toUtf8().constData());

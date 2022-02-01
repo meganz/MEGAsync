@@ -506,7 +506,7 @@
     <message>
         <source>Enable this option only if your transfers don&apos;t start. Under normal circumstances, HTTP is satisfactory as all transfers are already encrypted by MEGA.</source>
         <translatorcomment>Description label about the option &quot;Don&apos;t use HTTP&quot; checkbox.</translatorcomment>
-        <translation>Schakel deze optie alleen in als uw overboekingen niet starten. Onder normale omstandigheden voldoet HTTP omdat alle overdrachten al zijn versleuteld door MEGA.</translation>
+        <translation>Schakel deze optie alleen in als uw overboekingen niet starten. Onder normale omstandigheden voldoet HTTP omdat alle overdrachten al zijn gecodeerd door MEGA.</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -668,7 +668,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Bug report can&apos;t be submitted due to some error. Please try again or contact our support team via [A]support@mega.co.nz[/A]</source>
         <translatorcomment>Warning message shown when some error occurs during uploading a bug report.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Uw probleem kan niet worden geüpload vanwege een fout. Probeer het later opnieuw of neem contact op met ons ondersteuningsteam via [A]support@mega.nz[/A] als het probleem aanhoudt.</translation>
     </message>
     <message>
         <source>Ok</source>
@@ -726,7 +726,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Credits</source>
         <translatorcomment>Label for a link that redirects to an credits section in the web that shows information, licenses, etc. about all third-party libraries used by MEGAsync</translatorcomment>
-        <translation>Credits</translation>
+        <translation>Colofon</translation>
     </message>
     <message>
         <source>All rights reserved.</source>
@@ -2225,7 +2225,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>DEBUG mode enabled. A log is being created in your desktop (MEGAsync.log)</source>
         <translatorcomment>Notification message shown when the DEBUG mode is enabled.</translatorcomment>
-        <translation>Debug modus is ingeschakeld. Een log wordt gemaakt op uw bureaublad (MEGAsync.log).</translation>
+        <translation>Debug modus is ingeschakeld. Een log wordt gemaakt op uw desktop (MEGAsync.log).</translation>
     </message>
     <message>
         <source>Error: Invalid destination folder. The download has been cancelled</source>
@@ -2244,7 +2244,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Fetching file list...</source>
-        <translation>Bestandslijst ophalen</translation>
+        <translation>Bestandslijst ophalen...</translation>
     </message>
     <message>
         <source>I don&apos;t care</source>
@@ -3452,12 +3452,12 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Great value for secure cloud storage, sharing and communication.</source>
         <translatorcomment>Balloon tooltip to inform users when hovering ? button about the benefits of Pro I plan.</translatorcomment>
-        <translation>Grote waarde voor veilige cloudopslag, delen en communicatie.</translation>
+        <translation>Grote waarde voor veilige cloud opslag, delen en communicatie.</translation>
     </message>
     <message>
         <source>Rest easy knowing you have plenty of secure cloud storage.</source>
         <translatorcomment>Balloon tooltip to inform users when hovering ? button about the benefits of Pro II plan.</translatorcomment>
-        <translation>Wees gerust, wetende dat u voldoende veilige cloudopslag heeft.</translation>
+        <translation>Wees gerust, wetende dat u voldoende veilige cloud opslag heeft.</translation>
     </message>
     <message>
         <source>Store even more with our premium secure cloud storage offering.</source>
@@ -3515,7 +3515,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Show in Explorer</source>
         <translatorcomment>Label to indicate the &quot;Show in Explorer&quot; option to open local folder of a sync (Windows). Keep Explorer name as it is the app name of file explorer on Windows.</translatorcomment>
-        <translation>Weergeven in Explorer</translation>
+        <translation>Weergeven in Verkenner</translation>
     </message>
     <message>
         <source>Show in Finder</source>
@@ -3526,21 +3526,13 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Full redesign of settings with a new look and feel.
-- No longer supporting macOS versions below 10.12.
-- Multi-currency support added for upgrade options.
-- High DPI support for Windows platform improved.
-- Crashes previously detected on Windows, Linux and macOS now fixed.
-- Other performance improvements and adjustments.
-- Other UI fixes and adjustments.</source>
-        <translatorcomment>Changelog notes for v4.6.0 version</translatorcomment>
-        <translation>- Volledig herontwerp van instellingen met een nieuw uiterlijk en gevoel.
-- Geen ondersteuning meer voor macOS-versies lager dan 10.12.
-- Ondersteuning voor meerdere valuta&apos;s toegevoegd voor upgrade-opties.
-- Hoge DPI-ondersteuning voor Windows-platform verbeterd.
-- Eerder gedetecteerde crashes op Windows, Linux en macOS zijn nu verholpen.
-- Andere prestatieverbeteringen en aanpassingen.
-- Andere UI-fixes en aanpassingen.</translation>
+        <source>- Strengthen cryptographic security on Linux repositories.
+- Fix memory issues with problematic PDF files.
+</source>
+        <translatorcomment>Changelog v4.6.3 (linux only)</translatorcomment>
+        <translation>- Versterkt de cryptografische beveiliging op Linux&apos;s opslagplaatsen.
+- Los geheugenproblemen op met problematische PDF-bestanden.
+</translation>
     </message>
 </context>
 <context>
@@ -3684,7 +3676,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Forward</source>
         <translatorcomment>Button for going forward in the navigating in the filesystem</translatorcomment>
-        <translation>Doorversturen</translation>
+        <translation>Doorgaan</translation>
     </message>
     <message>
         <source>Go forward</source>
@@ -4271,11 +4263,6 @@ Do you want to restart MEGAsync now?</source>
         <translation>Herstarten</translation>
     </message>
     <message>
-        <source>Disable file versioning</source>
-        <translatorcomment>Checkbox label to enable/disable file versioning feature.</translatorcomment>
-        <translation>Bestandsversies uitschakelen</translation>
-    </message>
-    <message>
         <source>Local folder with a backup of files deleted in MEGA</source>
         <translatorcomment>Tooltip shown when hovering local debris label.</translatorcomment>
         <translation>Een lokale map met een backup van bestanden die verwijderd zijn in MEGA.</translation>
@@ -4333,7 +4320,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Security</source>
         <translatorcomment>Title for the Settings -&gt; Security pane tab button. Keep as short as possible.</translatorcomment>
-        <translation>Veiligheid</translation>
+        <translation>Beveiliging</translation>
     </message>
     <message>
         <source>Folders</source>
@@ -5446,11 +5433,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>Uitgeput overdrachtstegoed</translation>
     </message>
     <message>
-        <source>Transfer Quota exhausted</source>
-        <translatorcomment>Label shown to inform the user about over transfer quota situation.</translatorcomment>
-        <translation>Overdrachtstegoed uitgeput</translation>
-    </message>
-    <message>
         <source>This limit is dynamic and depends on the amount of unused bandwidth we have available.</source>
         <translatorcomment>Informative label about how the transfer quota limit works when user reaches over transfer situation.</translatorcomment>
         <translation>Dit limiet is variabel en afhankelijk van de ongebruikte bandbreedte die we beschikbaar hebben.</translation>
@@ -5472,8 +5454,13 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Choose annual billing and get 12 months for the price of 10</source>
-        <translatorcomment>Informative label to inform the user about offer purchasing one-year Pro plan within upgrade dialog.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Informative label to inform the user about offer purchasing one-year Pro plan within upgrade dialog when user reaches over quota state.</translatorcomment>
+        <translation>Kies voor jaarlijkse facturering en krijg 12 maanden voor de prijs van 10</translation>
+    </message>
+    <message>
+        <source>Transfer quota exceeded</source>
+        <translatorcomment>Label shown to inform the user about over transfer quota situation.</translatorcomment>
+        <translation>Overdracht tegoed overschreden</translation>
     </message>
 </context>
 <context>
@@ -5510,8 +5497,8 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Choose annual billing and get 12 months for the price of 10</source>
-        <translatorcomment>Informative label to inform the user about offer purchasing one-year Pro plan within upgrade dialog.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Informative label to inform the user about offer purchasing one-year Pro plan within upgrade dialog when user reaches over storage state.</translatorcomment>
+        <translation>Kies voor jaarlijkse facturering en krijg 12 maanden voor de prijs van 10</translation>
     </message>
 </context>
 <context>

@@ -668,7 +668,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Bug report can&apos;t be submitted due to some error. Please try again or contact our support team via [A]support@mega.co.nz[/A]</source>
         <translatorcomment>Warning message shown when some error occurs during uploading a bug report.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Twoja sprawa nie może zostać załadowana z powodu błędu. Spróbuj ponownie później lub skontaktuj się z naszym zespołem pomocy technicznej poprzez [A]support@mega.nz[/A], jeśli problem nadal występuje.</translation>
     </message>
     <message>
         <source>Ok</source>
@@ -3525,21 +3525,13 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Full redesign of settings with a new look and feel.
-- No longer supporting macOS versions below 10.12.
-- Multi-currency support added for upgrade options.
-- High DPI support for Windows platform improved.
-- Crashes previously detected on Windows, Linux and macOS now fixed.
-- Other performance improvements and adjustments.
-- Other UI fixes and adjustments.</source>
-        <translatorcomment>Changelog notes for v4.6.0 version</translatorcomment>
-        <translation>- Całkowite przeprojektowanie ustawień z nowym wyglądem i działaniem.
-- Nie obsługuje już wersji macOS poniżej 10.12.
-- Dodano obsługę wielu walut dla opcji aktualizacji.
-- Poprawiono obsługę High DPI dla platformy Windows.
-- Usunięto awarie wykryte wcześniej w systemach Windows, Linux i macOS.
-- Inne poprawki i ulepszenia wydajności.
-- Pozostałe poprawki i dostosowania UI.</translation>
+        <source>- Strengthen cryptographic security on Linux repositories.
+- Fix memory issues with problematic PDF files.
+</source>
+        <translatorcomment>Changelog v4.6.3 (linux only)</translatorcomment>
+        <translation>- Wzmocnienie bezpieczeństwa kryptograficznego w repozytoriach systemu Linux.
+- Naprawić problemy z pamięcią w problematycznych plikach PDF.
+</translation>
     </message>
 </context>
 <context>
@@ -4268,11 +4260,6 @@ Do you want to restart MEGAsync now?</source>
         <source>Restart</source>
         <translatorcomment>Label for restart button.to relaunch MEGAsync app.</translatorcomment>
         <translation>Zrestartuj</translation>
-    </message>
-    <message>
-        <source>Disable file versioning</source>
-        <translatorcomment>Checkbox label to enable/disable file versioning feature.</translatorcomment>
-        <translation>Wyłącz wersjonowanie</translation>
     </message>
     <message>
         <source>Local folder with a backup of files deleted in MEGA</source>
@@ -5444,11 +5431,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>Wyczerpany limit transferu</translation>
     </message>
     <message>
-        <source>Transfer Quota exhausted</source>
-        <translatorcomment>Label shown to inform the user about over transfer quota situation.</translatorcomment>
-        <translation>Limit transferu wyczerpany</translation>
-    </message>
-    <message>
         <source>This limit is dynamic and depends on the amount of unused bandwidth we have available.</source>
         <translatorcomment>Informative label about how the transfer quota limit works when user reaches over transfer situation.</translatorcomment>
         <translation>Limit transferu jest dynamiczny i uzależniony od dostępnych przepustowości.</translation>
@@ -5470,8 +5452,13 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Choose annual billing and get 12 months for the price of 10</source>
-        <translatorcomment>Informative label to inform the user about offer purchasing one-year Pro plan within upgrade dialog.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Informative label to inform the user about offer purchasing one-year Pro plan within upgrade dialog when user reaches over quota state.</translatorcomment>
+        <translation>Wybierz rozliczenie roczne, a otrzymasz 12 miesięcy w cenie 10</translation>
+    </message>
+    <message>
+        <source>Transfer quota exceeded</source>
+        <translatorcomment>Label shown to inform the user about over transfer quota situation.</translatorcomment>
+        <translation>Transfer przekroczony</translation>
     </message>
 </context>
 <context>
@@ -5508,8 +5495,8 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Choose annual billing and get 12 months for the price of 10</source>
-        <translatorcomment>Informative label to inform the user about offer purchasing one-year Pro plan within upgrade dialog.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Informative label to inform the user about offer purchasing one-year Pro plan within upgrade dialog when user reaches over storage state.</translatorcomment>
+        <translation>Wybierz rozliczenie roczne, a otrzymasz 12 miesięcy w cenie 10</translation>
     </message>
 </context>
 <context>

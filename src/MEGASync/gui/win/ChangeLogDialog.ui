@@ -397,7 +397,7 @@ border-bottom: 1px solid #EFEFEC;
        <height>1651561</height>
       </size>
      </property>
-     <layout class="QHBoxLayout" name="horizontalLayout_5">
+     <layout class="QHBoxLayout" name="lgplLayout">
       <property name="spacing">
        <number>0</number>
       </property>
@@ -440,7 +440,7 @@ border-bottom: 1px solid #EFEFEC;
     </widget>
    </item>
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout_5">
+    <layout class="QHBoxLayout" name="footerLayout">
      <property name="spacing">
       <number>0</number>
      </property>
