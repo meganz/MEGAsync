@@ -51,6 +51,7 @@ public slots:
     void onPauseResumeAllRows(bool pauseState);
     void onPauseResumeSelection(bool pauseState);
     void onCancelClearAllTransfers();
+    void onClearCompletedTransfers();
     void onCancelClearSelection();
 
 private slots:

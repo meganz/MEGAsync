@@ -338,8 +338,11 @@ void TransferManagerDelegateWidget::on_tCancelClearTransfer_clicked()
 {
     QPointer<TransferManagerDelegateWidget> dialog = QPointer<TransferManagerDelegateWidget>(this);
 
+    auto message = tr("Are you sure you want to %1 this transfer?")
+            .arg(getData()->mState & TransferData::FINISHED_STATES_MASK ? tr("clear") : tr("cancel"));
+
     if (QMegaMessageBox::warning(nullptr, QString::fromUtf8("MEGAsync"),
-                             tr("Are you sure you want to cancel this transfer?"),
+                             message,
                              QMessageBox::Yes | QMessageBox::No, QMessageBox::No)
             != QMessageBox::Yes
             || !dialog)

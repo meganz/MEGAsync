@@ -12,23 +12,8 @@ using namespace mega;
 const int QTransfersModel::INIT_ROWS_PER_CHUNK;
 const int QTransfersModel::MAX_TRANSFERS_INSTANT_UPDATE;
 
-
 static const QVector<int> DATA_ROLE = {Qt::DisplayRole};
 static const QModelIndex DEFAULT_IDX = QModelIndex();
-
-static const TransferData::TransferStates FINISHED_STATES (
-        TransferData::TRANSFER_COMPLETED
-        | TransferData::TRANSFER_CANCELLED
-        | TransferData::TRANSFER_FAILED);
-static const TransferData::TransferStates PAUSABLE_STATES (
-        TransferData::TRANSFER_QUEUED
-        | TransferData::TRANSFER_ACTIVE
-        | TransferData::TRANSFER_RETRYING);
-static const TransferData::TransferStates CANCELABLE_STATES (
-        TransferData::TRANSFER_QUEUED
-        | TransferData::TRANSFER_ACTIVE
-        | TransferData::TRANSFER_PAUSED
-        | TransferData::TRANSFER_RETRYING);
 
 QTransfersModel::QTransfersModel(QObject *parent) :
     QAbstractItemModel (parent),
@@ -40,11 +25,8 @@ QTransfersModel::QTransfersModel(QObject *parent) :
     mThreadPool (ThreadPoolSingleton::getInstance()),
     mModelMutex (new QReadWriteLock(QReadWriteLock::Recursive)),
     mUpdateNotificationNumber (0),
-    mModelHasTransfers (false),
     mNbTransfersPerFileType(),
-    mNbFinishedPerFileType(),
-    mNbTransfersPerType(),
-    mNbTransfersPerState()
+    mNbFinishedPerFileType()
 {
     // Init File Types
     mFileTypes[Utilities::getExtensionPixmapName(QLatin1Literal("a.txt"), QString())]
@@ -86,7 +68,7 @@ bool QTransfersModel::hasChildren(const QModelIndex& parent) const
 {
     if (parent == DEFAULT_IDX)
     {
-        return mModelHasTransfers;
+        return !mOrder.empty();
     }
     return false;
 }
@@ -253,7 +235,6 @@ void QTransfersModel::onTransferUpdate(mega::MegaApi*, mega::MegaTransfer* trans
 
             // Update stats
             updateTransfersCount();
-            emit transfersDataUpdated();
         }
         mUpdatedTransfers.insert(transferTag);
     }
@@ -308,7 +289,6 @@ void QTransfersModel::onTransferTemporaryError(mega::MegaApi*, mega::MegaTransfe
 
             // Update stats
             updateTransfersCount();
-            emit transfersDataUpdated();
         }
         mUpdatedTransfers.insert(transferTag);
     }
@@ -331,8 +311,6 @@ bool QTransfersModel::onTimerTransfers()
             startTransfer(std::move(transfer.second));
             mUpdatedTransfers.insert(transfer.first);
         }
-
-        updateTransfersCount();
 
         endInsertRows();
         mModelMutex->unlock();
@@ -380,7 +358,6 @@ bool QTransfersModel::onTimerTransfers()
     {
         //Update stats
         updateTransfersCount();
-        emit transfersDataUpdated();
     }
 
     mUpdatedTransfers.clear();
@@ -404,7 +381,7 @@ void QTransfersModel::startTransfer(std::unique_ptr<mega::MegaTransfer> transfer
     insertTransfer(mMegaApi, transfer.get(), nbRows);
 
     auto state (static_cast<TransferData::TransferState>(1 << transfer->getState()));
-    if (mAreAllPaused && (state & PAUSABLE_STATES))
+    if (mAreAllPaused && (state & TransferData::PAUSABLE_STATES_MASK))
     {
         mMegaApi->pauseTransfer(transfer.get(), true);
     }
@@ -470,13 +447,6 @@ void QTransfersModel::updateTransfer(mega::MegaTransfer* transfer)
             }
 
             v = QVariant::fromValue(transferItem);
-
-            // Keep statistics up to date
-            if (prevState != state)
-            {
-                mNbTransfersPerState[prevState]--;
-                mNbTransfersPerState[state]++;
-            }
 
             QModelIndex idx (index(row, 0, DEFAULT_IDX));
             emit dataChanged(idx, idx, DATA_ROLE);
@@ -547,13 +517,6 @@ void QTransfersModel::finishTransfer(MegaApi*, std::unique_ptr<mega::MegaTransfe
         // Keep statistics up to date
         if (prevState != state)
         {
-            mNbTransfersPerState[prevState]--;
-            mNbTransfersPerState[state]++;
-
-            auto type ((d->mType & TransferData::TRANSFER_UPLOAD) ?
-                           TransferData::TRANSFER_UPLOAD
-                         : TransferData::TRANSFER_DOWNLOAD);
-            mNbTransfersPerType[type]--;
             mNbFinishedPerFileType[d->mFileType]++;
         }
 
@@ -615,13 +578,6 @@ void QTransfersModel::transferTemporaryError(mega::MegaTransfer *transfer, mega:
 
         QModelIndex idx (index(row, 0, DEFAULT_IDX));
         emit dataChanged(idx, idx, DATA_ROLE);
-
-        // Keep statistics up to date
-        if (prevState != state)
-        {
-            mNbTransfersPerState[prevState]--;
-            mNbTransfersPerState[state]++;
-        }
     }
     mModelMutex->unlock();
 }
@@ -739,9 +695,9 @@ void QTransfersModel::cancelClearTransfers(const QModelIndexList& indexes)
                                                         .constData())->getTransferData());
 
         // Clear (remove rows of) finished transfers
-        if (d /*&& d->mState & FINISHED_STATES*/)
+        if (d)
         {
-            if (d->mState & CANCELABLE_STATES)
+            if (d->mState & TransferData::CANCELABLE_STATES_MASK)
             {
                 toCancel.push_back(d->mTag);
             }
@@ -783,7 +739,6 @@ void QTransfersModel::cancelClearTransfers(const QModelIndexList& indexes)
 
     //Update stats
     updateTransfersCount();
-    emit transfersDataUpdated();
 }
 
 void QTransfersModel::pauseTransfers(const QModelIndexList& indexes, bool pauseState)
@@ -851,7 +806,7 @@ void QTransfersModel::pauseResumeTransferByTag(TransferTag tag, bool pauseState)
     auto state (d->mState);
 
     if ((!pauseState && (state == TransferData::TRANSFER_PAUSED))
-            || (pauseState && (state & PAUSABLE_STATES)))
+            || (pauseState && (state & TransferData::PAUSABLE_STATES_MASK)))
     {
         d->mMegaApi->pauseTransferByTag(d->mTag, pauseState);
     }
@@ -868,28 +823,14 @@ void QTransfersModel::cancelClearAllTransfers()
 
 void QTransfersModel::lockModelMutex(bool lock)
 {
-//    static std::unique_ptr<mega::MegaApiLock> megaApiLock (mMegaApi->getMegaApiLock(false));
-
     if (lock)
     {
-//        megaApiLock->lockOnce();
         mModelMutex->lockForRead();
     }
     else
     {
         mModelMutex->unlock();
-//        megaApiLock->unlockOnce();
     }
-}
-
-long long QTransfersModel::getNumberOfTransfersForState(TransferData::TransferState state) const
-{
-    return mNbTransfersPerState[state];
-}
-
-long long QTransfersModel::getNumberOfTransfersForType(TransferData::TransferType type) const
-{
-    return mNbTransfersPerType[type];
 }
 
 long long QTransfersModel::getNumberOfTransfersForFileType(TransferData::FileType fileType) const
@@ -906,8 +847,12 @@ void QTransfersModel::updateTransfersCount()
 {
     mTransfersCount.remainingUploads = mMegaApi->getNumPendingUploads();
     mTransfersCount.remainingDownloads = mMegaApi->getNumPendingDownloads();
-    mTransfersCount.totalUploads = mMegaApi->getTotalUploads();
-    mTransfersCount.totalDownloads = mMegaApi->getTotalDownloads();
+
+    mTransfersCount.totalUploads = mMegaApi->getTotalUploads();;
+    mTransfersCount.totalDownloads = mMegaApi->getTotalDownloads();;
+
+    mTransfersCount.completedDownloads = mTransfersCount.totalDownloads - mTransfersCount.remainingDownloads;
+    mTransfersCount.completedUploads = mTransfersCount.totalUploads - mTransfersCount.remainingUploads;
 
     mTransfersCount.completedDownloadBytes = mMegaApi->getTotalDownloadedBytes();
     mTransfersCount.leftDownloadBytes = mMegaApi->getTotalDownloadBytes();
@@ -917,6 +862,9 @@ void QTransfersModel::updateTransfersCount()
 
     mTransfersCount.currentDownload = mTransfersCount.totalDownloads - mTransfersCount.remainingDownloads + 1;
     mTransfersCount.currentUpload = mTransfersCount.totalUploads - mTransfersCount.remainingUploads + 1;
+
+
+    emit transfersDataUpdated();
 }
 
 const TransfersCount &QTransfersModel::getTransfersCount()
@@ -924,23 +872,12 @@ const TransfersCount &QTransfersModel::getTransfersCount()
     return mTransfersCount;
 }
 
-void QTransfersModel::resetTransfersCount()
+void QTransfersModel::resetCompletedTransfersCount()
 {
+    mMegaApi->resetCompletedDownloads();
+    mMegaApi->resetCompletedUploads();
+
     updateTransfersCount();
-
-    if(mTransfersCount.remainingDownloads == 0)
-    {
-        mMegaApi->resetTotalDownloads();
-    }
-
-    if(mTransfersCount.remainingUploads == 0)
-    {
-        mMegaApi->resetTotalUploads();
-    }
-
-    mTransfersCount = TransfersCount();
-
-    emit transfersDataUpdated();
 }
 
 void QTransfersModel::onPauseStateChanged()
@@ -988,17 +925,8 @@ bool QTransfersModel::removeRows(int row, int count, const QModelIndex& parent)
             auto state(d->mState);
             auto fileType(d->mFileType);
 
-            mNbTransfersPerState[state]--;
             mNbTransfersPerFileType[fileType]--;
             mNbFinishedPerFileType[fileType]--;
-
-            if (!(state & FINISHED_STATES))
-            {
-                auto type ((d->mType & TransferData::TRANSFER_UPLOAD) ?
-                               TransferData::TRANSFER_UPLOAD
-                             : TransferData::TRANSFER_DOWNLOAD);
-                mNbTransfersPerType[type]--;
-            }
 
             if (state == TransferData::TRANSFER_FAILED)
             {
@@ -1015,10 +943,6 @@ bool QTransfersModel::removeRows(int row, int count, const QModelIndex& parent)
         }
         endRemoveRows();
 
-        if (mOrder.empty())
-        {
-            mModelHasTransfers = false;
-        }
         mModelMutex->unlock();
         return true;
     }
@@ -1238,20 +1162,9 @@ void QTransfersModel::insertTransfer(mega::MegaApi* api, mega::MegaTransfer* tra
         mTransfers[tag] = QVariant::fromValue(TransferItem(d));
         mRemainingTimes[tag] = rem;
 
-        if(fileName.isEmpty())
-        {
-            auto a = 10;
-        }
-
         mOrder.insert(mOrder.begin() + row, tag);
 
         // Update statistics
-        mNbTransfersPerState[state]++;
         mNbTransfersPerFileType[fileType]++;
-        mNbTransfersPerType[type]++;
-        if (mOrder.size() == 1)
-        {
-            mModelHasTransfers = true;
-        }
 //    }
 }

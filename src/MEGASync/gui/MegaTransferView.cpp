@@ -120,9 +120,14 @@ void MegaTransferView::onCancelClearAllTransfers()
         }
 
         mParentTransferWidget->getModel()->cancelClearTransfers(indexes);
-        mParentTransferWidget->getModel()->resetTransfersCount();
         proxy->invalidate();
     }
+}
+
+void MegaTransferView::onClearCompletedTransfers()
+{
+    onCancelClearAllTransfers();
+    mParentTransferWidget->getModel()->resetCompletedTransfersCount();
 }
 
 void MegaTransferView::onCancelClearSelection()

@@ -29,6 +29,8 @@ class TransfersSortFilterProxyModel : public QSortFilterProxyModel
                       const QModelIndex& destinationParent, int destinationChild) override;
         void sort(int column, Qt::SortOrder order = Qt::AscendingOrder) override;
         void sort(SortCriterion column, Qt::SortOrder order = Qt::AscendingOrder);
+        void invalidate();
+        void setSourceModel(QAbstractItemModel *sourceModel) override;
         void setFilterFixedString(const QString &pattern);
         void setFilters(const TransferData::TransferTypes transferTypes,
                         const TransferData::TransferStates transferStates,
@@ -36,13 +38,14 @@ class TransfersSortFilterProxyModel : public QSortFilterProxyModel
         void applyFilters(bool invalidate = true);
         void resetAllFilters(bool invalidate = false);
         int  getNumberOfItems(TransferData::TransferType transferType);
+        //void refreshNumberOfItems();
         void resetNumberOfItems();
 
         virtual TransferBaseDelegateWidget* createTransferManagerItem(QWidget *parent);
 
     signals:
         void modelAboutToBeFiltered();
-        void modelFiltered();
+        void searchNumbersChanged();
         void modelAboutToBeSorted();
         void modelSorted();
 
@@ -63,10 +66,13 @@ class TransfersSortFilterProxyModel : public QSortFilterProxyModel
         TransferData::TransferTypes mNextTransferTypes;
         TransferData::FileTypes mNextFileTypes;
         SortCriterion mSortCriterion;
-        mutable int mDlNumber;
-        mutable int mUlNumber;
+        mutable QList<int> mDlNumber;
+        mutable QList<int> mUlNumber;
         QMutex* mFilterMutex;
         QMutex* mActivityMutex;
+
+    private slots:
+        void onRowsRemoved(const QModelIndex& parent, int first, int last);
 };
 
 #endif // TRANSFERSSORTFILTERPROXYMODEL_H

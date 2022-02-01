@@ -24,6 +24,8 @@ struct TransfersCount
     int activeUploadState;
     int remainingUploads;
     int remainingDownloads;
+    int completedUploads;
+    int completedDownloads;
 
     int totalUploads;
     int totalDownloads;
@@ -39,6 +41,8 @@ struct TransfersCount
         activeUploadState(0),
         remainingUploads(0),
         remainingDownloads(0),
+        completedDownloads(0),
+        completedUploads(0),
         totalUploads(0),
         totalDownloads(0),
         currentUpload(0),
@@ -78,13 +82,11 @@ public:
 
     void lockModelMutex(bool lock);
 
-    long long  getNumberOfTransfersForState(TransferData::TransferState state) const;
-    long long  getNumberOfTransfersForType(TransferData::TransferType type) const;
     long long  getNumberOfTransfersForFileType(TransferData::FileType fileType) const;
     long long  getNumberOfFinishedForFileType(TransferData::FileType fileType) const;
 
     const TransfersCount& getTransfersCount();
-    void resetTransfersCount();
+    void resetCompletedTransfersCount();
 
     void initModel();
 
@@ -138,11 +140,8 @@ private:
 
     bool mAreAllPaused;
 
-    bool mModelHasTransfers;
     QMap<TransferData::FileType, long long> mNbTransfersPerFileType;
     QMap<TransferData::FileType, long long> mNbFinishedPerFileType;
-    QMap<int, long long> mNbTransfersPerType;
-    QMap<TransferData::TransferState, long long> mNbTransfersPerState;
 
     QTimer timer;
 

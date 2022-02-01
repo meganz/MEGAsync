@@ -13,35 +13,6 @@ using namespace mega;
 const int TransferManager::SPEED_REFRESH_PERIOD_MS;
 const int TransferManager::STATS_REFRESH_PERIOD_MS;
 
-static const QSet<TransferData::TransferState> ACTIVE_STATES =
-{
-    TransferData::TransferState::TRANSFER_ACTIVE,
-    TransferData::TransferState::TRANSFER_PAUSED,
-    TransferData::TransferState::TRANSFER_COMPLETING,
-    TransferData::TransferState::TRANSFER_QUEUED,
-    TransferData::TransferState::TRANSFER_RETRYING
-};
-static const TransferData::TransferStates ACTIVE_STATES_MASK =
-{
-    TransferData::TransferState::TRANSFER_ACTIVE |
-    TransferData::TransferState::TRANSFER_PAUSED |
-    TransferData::TransferState::TRANSFER_COMPLETING |
-    TransferData::TransferState::TRANSFER_QUEUED |
-    TransferData::TransferState::TRANSFER_RETRYING
-};
-static const QSet<TransferData::TransferState> FINISHED_STATES =
-{
-    TransferData::TransferState::TRANSFER_COMPLETED,
-    TransferData::TransferState::TRANSFER_FAILED,
-    TransferData::TransferState::TRANSFER_CANCELLED
-};
-static const TransferData::TransferStates FINISHED_STATES_MASK =
-{
-    TransferData::TransferState::TRANSFER_COMPLETED |
-    TransferData::TransferState::TRANSFER_FAILED |
-    TransferData::TransferState::TRANSFER_CANCELLED
-};
-
 constexpr long long NB_INIT_VALUE = -1LL;
 
 TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
@@ -160,21 +131,17 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
     connect(mUi->bPause, &QToolButton::clicked,
             mModel, &QTransfersModel::pauseResumeAllTransfers);
 
-    connect(this, &TransferManager::cancelClearAllTransfers,
-            mModel, &QTransfersModel::cancelClearAllTransfers, Qt::QueuedConnection);
-
-    connect(this, &TransferManager::cancelAllTransfers,
-            findChild<MegaTransferView*>(), &MegaTransferView::onCancelClearAllTransfers,
+    connect(this, &TransferManager::clearCompletedTransfers,
+            findChild<MegaTransferView*>(), &MegaTransferView::onClearCompletedTransfers,
             Qt::QueuedConnection);
+
+    connect(mUi->wTransfers->getProxyModel(),
+            &TransfersSortFilterProxyModel::searchNumbersChanged,
+            this, &TransferManager::refreshSearchStats);
 
     mSpeedRefreshTimer->setSingleShot(false);
     connect(mSpeedRefreshTimer, &QTimer::timeout,
             this, &TransferManager::refreshSpeed);
-
-//    mStatsRefreshTimer->setSingleShot(false);
-//    connect(mStatsRefreshTimer, &QTimer::timeout,
-//            this, &TransferManager::refreshStats);
-
 
     // Connect to storage quota signals
     connect(qobject_cast<MegaApplication*>(qApp), &MegaApplication::storageStateChanged,
@@ -235,7 +202,7 @@ void TransferManager::on_tCompleted_clicked()
     if (mCurrentTab != COMPLETED_TAB)
     {
         emit userActivity();
-        mUi->wTransfers->filtersChanged({}, FINISHED_STATES_MASK, {});
+        mUi->wTransfers->filtersChanged({}, TransferData::FINISHED_STATES_MASK, {});
         mUi->lCurrentContent->setText(tr("Finished"));
         toggleTab(COMPLETED_TAB);
     }
@@ -248,7 +215,7 @@ void TransferManager::on_tDownloads_clicked()
         emit userActivity();
         mUi->wTransfers->filtersChanged((TransferData::TRANSFER_DOWNLOAD
                                          | TransferData::TRANSFER_LTCPDOWNLOAD),
-                                        ACTIVE_STATES_MASK, {});
+                                        TransferData::ACTIVE_STATES_MASK, {});
         mUi->lCurrentContent->setText(tr("Downloads"));
         toggleTab(DOWNLOADS_TAB);
     }
@@ -259,7 +226,7 @@ void TransferManager::on_tUploads_clicked()
     if (mCurrentTab != UPLOADS_TAB)
     {
         emit userActivity();
-        mUi->wTransfers->filtersChanged(TransferData::TRANSFER_UPLOAD, ACTIVE_STATES_MASK, {});
+        mUi->wTransfers->filtersChanged(TransferData::TRANSFER_UPLOAD, TransferData::ACTIVE_STATES_MASK, {});
         mUi->lCurrentContent->setText(tr("Uploads"));
         toggleTab(UPLOADS_TAB);
     }
@@ -270,7 +237,7 @@ void TransferManager::on_tAllTransfers_clicked()
     if (mCurrentTab != ALL_TRANSFERS_TAB)
     {
         emit userActivity();
-        mUi->wTransfers->filtersChanged({}, ACTIVE_STATES_MASK, {});
+        mUi->wTransfers->filtersChanged({}, TransferData::ACTIVE_STATES_MASK, {});
         mUi->lCurrentContent->setText(tr("All Transfers"));
         toggleTab(ALL_TRANSFERS_TAB);
     }
@@ -304,11 +271,8 @@ bool TransferManager::refreshStateStats()
 
     // First check Finished states -----------------------------------------------------------------
     label = mUi->lCompleted;
-//    for (auto state : FINISHED_STATES)
-//    {
-//        processedNumber += mModel->getNumberOfTransfersForState(state);
-//    }
-    processedNumber = (Stats.totalDownloads - Stats.remainingDownloads) + (Stats.totalUploads - Stats.remainingUploads);
+
+    processedNumber = Stats.completedDownloads + Stats.completedUploads;
     weHaveTransfers = processedNumber;
 
     // Update if the value changed
@@ -324,6 +288,7 @@ bool TransferManager::refreshStateStats()
             label->parentWidget()->show();
             label->setVisible(weHaveTransfers);
             label->setText(QString::number(processedNumber));
+
             mNumberOfTransfersPerTab[COMPLETED_TAB] = weHaveTransfers ? processedNumber : NB_INIT_VALUE;
         }
     }
@@ -331,10 +296,7 @@ bool TransferManager::refreshStateStats()
     // Then Active states --------------------------------------------------------------------------
     processedNumber = 0LL;
     label = mUi->lAllTransfers;
-//    for (auto state : ACTIVE_STATES)
-//    {
-//        processedNumber += mModel->getNumberOfTransfersForState(state);
-//    }
+
     processedNumber = Stats.remainingDownloads + Stats.remainingUploads;
     weHaveTransfers |= static_cast<bool>(processedNumber);
 
@@ -380,22 +342,24 @@ bool TransferManager::refreshStateStats()
 
 void TransferManager::refreshTypeStats()
 {
+    auto Stats = mModel->getTransfersCount();
+    auto DownloadTransfers = Stats.remainingDownloads;
+    auto UploadTransfers = Stats.remainingUploads;
+
     // First check Downloads -----------------------------------------------------------------------
-    auto number (mModel->getNumberOfTransfersForType(TransferData::TransferType::TRANSFER_DOWNLOAD));
-    if (number != mNumberOfTransfersPerTab[DOWNLOADS_TAB])
+    if (DownloadTransfers != mNumberOfTransfersPerTab[DOWNLOADS_TAB])
     {
-        mUi->lDownloads->setVisible(number);
-        mUi->lDownloads->setText(QString::number(number));
-        mNumberOfTransfersPerTab[DOWNLOADS_TAB] = number;
+        mUi->lDownloads->setVisible(DownloadTransfers);
+        mUi->lDownloads->setText(QString::number(DownloadTransfers));
+        mNumberOfTransfersPerTab[DOWNLOADS_TAB] = DownloadTransfers;
     }
 
     // Then Uploads --------------------------------------------------------------------------------
-    number = mModel->getNumberOfTransfersForType(TransferData::TransferType::TRANSFER_UPLOAD);
-    if (number != mNumberOfTransfersPerTab[UPLOADS_TAB])
+    if (UploadTransfers != mNumberOfTransfersPerTab[UPLOADS_TAB])
     {
-        mUi->lUploads->setVisible(number);
-        mUi->lUploads->setText(QString::number(number));
-        mNumberOfTransfersPerTab[UPLOADS_TAB] = number;
+        mUi->lUploads->setVisible(UploadTransfers);
+        mUi->lUploads->setText(QString::number(UploadTransfers));
+        mNumberOfTransfersPerTab[UPLOADS_TAB] = UploadTransfers;
     }
 }
 
@@ -428,14 +392,6 @@ void TransferManager::refreshFileTypesStats()
 
 void TransferManager::onTransfersDataUpdated()
 {
-    // (De)activate stats refresh if we have transfers (or not)
-    //if (weHaveTransfers)
-    //{
-    //    mStatsRefreshTimer->start(std::chrono::milliseconds(STATS_REFRESH_PERIOD_MS));
-    //}
-    //else
-    //{
-        //mStatsRefreshTimer->stop();
     mNumberOfTransfersPerTab[ALL_TRANSFERS_TAB] = NB_INIT_VALUE;
     mNumberOfTransfersPerTab[DOWNLOADS_TAB]     = NB_INIT_VALUE;
     mNumberOfTransfersPerTab[UPLOADS_TAB]       = NB_INIT_VALUE;
@@ -448,7 +404,6 @@ void TransferManager::onTransfersDataUpdated()
     mNumberOfTransfersPerTab[TYPE_DOCUMENT_TAB] = NB_INIT_VALUE;
     mNumberOfTransfersPerTab[TYPE_IMAGE_TAB]    = NB_INIT_VALUE;
     mNumberOfTransfersPerTab[TYPE_TEXT_TAB]     = NB_INIT_VALUE;
-    //}
 
     // Refresh stats
     refreshTypeStats();
@@ -534,30 +489,30 @@ void TransferManager::refreshSearchStats()
     auto proxy (mUi->wTransfers->getProxyModel());
     long long nbDl (proxy->getNumberOfItems(TransferData::TRANSFER_DOWNLOAD));
     long long nbUl (proxy->getNumberOfItems(TransferData::TRANSFER_UPLOAD));
-    long long nbAll (mNumberOfTransfersPerTab[SEARCH_TAB]);
+    long long nbAll (nbDl + nbUl);
 
-    auto rowCount (mUi->wTransfers->rowCount());
+//    auto rowCount (mUi->wTransfers->rowCount());
 
-    if (mUi->tAllResults->isChecked())
-    {
-        nbAll = rowCount;
-    }
-    else if (mUi->tDlResults->isChecked())
-    {
-        if (nbDl != mNumberOfSearchResultsPerTypes[TransferData::TRANSFER_DOWNLOAD])
-        {
-            nbAll += nbDl - mNumberOfSearchResultsPerTypes[TransferData::TRANSFER_DOWNLOAD];
-        }
-        nbUl = nbAll - nbDl;
-    }
-    else
-    {
-        if (nbUl != mNumberOfSearchResultsPerTypes[TransferData::TRANSFER_UPLOAD])
-        {
-            nbAll += nbUl - mNumberOfSearchResultsPerTypes[TransferData::TRANSFER_UPLOAD];
-        }
-        nbDl = nbAll - nbUl;
-    }
+//    if (mUi->tAllResults->isChecked())
+//    {
+//        nbAll = rowCount;
+//    }
+//    else if (mUi->tDlResults->isChecked())
+//    {
+//        if (nbDl != mNumberOfSearchResultsPerTypes[TransferData::TRANSFER_DOWNLOAD])
+//        {
+//            nbAll += nbDl - mNumberOfSearchResultsPerTypes[TransferData::TRANSFER_DOWNLOAD];
+//        }
+//        nbUl = nbAll - nbDl;
+//    }
+//    else
+//    {
+//        if (nbUl != mNumberOfSearchResultsPerTypes[TransferData::TRANSFER_UPLOAD])
+//        {
+//            nbAll += nbUl - mNumberOfSearchResultsPerTypes[TransferData::TRANSFER_UPLOAD];
+//        }
+//        nbDl = nbAll - nbUl;
+//    }
 
     if (nbDl != mNumberOfSearchResultsPerTypes[TransferData::TRANSFER_DOWNLOAD])
     {
@@ -592,6 +547,7 @@ void TransferManager::refreshSearchStats()
         on_tAllResults_clicked();
     }
 
+    refreshView();
 }
 
 void TransferManager::disableGetLink(bool disable)
@@ -601,7 +557,7 @@ void TransferManager::disableGetLink(bool disable)
 
 void TransferManager::on_tClearCompleted_clicked()
 {
-    emit cancelAllTransfers(false, true);
+    emit clearCompletedTransfers();
     mUi->tClearCompleted->hide();
 }
 
@@ -628,30 +584,35 @@ void TransferManager::on_tSearchIcon_clicked()
                                     .elidedText(pattern,
                                                 Qt::ElideMiddle,
                                                 mUi->bSearchString->width() - 24));
-        mUi->lTextSearch->setText(mUi->lTextSearch->fontMetrics()
-                                  .elidedText(pattern,
-                                              Qt::ElideMiddle,
-                                              mUi->lTextSearch->width() - 24));
-        // Add number of found results
-        mNumberOfSearchResultsPerTypes[TransferData::TRANSFER_DOWNLOAD] = NB_INIT_VALUE;
-        mNumberOfSearchResultsPerTypes[TransferData::TRANSFER_UPLOAD] = NB_INIT_VALUE;
-        mUi->tAllResults->setChecked(true);
-        mUi->tAllResults->hide();
-        mUi->tDlResults->hide();
-        mUi->tUlResults->hide();
-        mUi->wSearch->show();
-
-        mUi->wTransfers->transferFilterReset();
-        mUi->wTransfers->textFilterChanged(pattern);
-
-        refreshSearchStats();
-        toggleTab(SEARCH_TAB);
+        applyTextSearch(pattern);
     }
+}
+
+void TransferManager::applyTextSearch(const QString& text)
+{
+    mUi->lTextSearch->setText(mUi->lTextSearch->fontMetrics()
+                              .elidedText(text,
+                                          Qt::ElideMiddle,
+                                          mUi->lTextSearch->width() - 24));
+    // Add number of found results
+    mNumberOfSearchResultsPerTypes[TransferData::TRANSFER_DOWNLOAD] = NB_INIT_VALUE;
+    mNumberOfSearchResultsPerTypes[TransferData::TRANSFER_UPLOAD] = NB_INIT_VALUE;
+    mUi->tAllResults->setChecked(true);
+    mUi->tAllResults->hide();
+    mUi->tDlResults->hide();
+    mUi->tUlResults->hide();
+    mUi->wSearch->show();
+
+    mUi->wTransfers->transferFilterReset();
+    mUi->wTransfers->textFilterChanged(text);
+
+    //refreshSearchStats();
+    toggleTab(SEARCH_TAB);
 }
 
 void TransferManager::on_bSearchString_clicked()
 {
-    toggleTab(SEARCH_TAB);
+    applyTextSearch(mUi->lTextSearch->text());
 }
 
 void TransferManager::on_tSearchCancel_clicked()
@@ -778,6 +739,11 @@ void TransferManager::on_bDownload_clicked()
 void TransferManager::on_bUpload_clicked()
 {
     qobject_cast<MegaApplication*>(qApp)->uploadActionClicked();
+}
+
+void TransferManager::on_bCancelClearAll_clicked()
+{
+    mUi->wTransfers->on_tCancelClearAll_clicked();
 }
 
 void TransferManager::on_leSearchField_returnPressed()

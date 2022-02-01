@@ -49,7 +49,12 @@ class TransferData : public QSharedData
     };
     Q_DECLARE_FLAGS(TransferTypes, TransferType)
 
+    static const TransferStates FINISHED_STATES_MASK;
+    static const TransferStates PAUSABLE_STATES_MASK;
+    static const TransferStates CANCELABLE_STATES_MASK;
+    static const TransferStates ACTIVE_STATES_MASK;
     static const TransferStates STATE_MASK;
+
     static const TransferTypes TYPE_MASK;
 
     TransferTypes mType;

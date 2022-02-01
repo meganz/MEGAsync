@@ -51,8 +51,7 @@ signals:
     void completedTransfersTabActive(bool);
     void userActivity();
     void showCompleted(bool showCompleted);
-    void cancelAllTransfers(bool cancel, bool clear);
-    void cancelClearAllTransfers();
+    void clearCompletedTransfers();
 
 private:
     static constexpr int SPEED_REFRESH_PERIOD_MS = 700;
@@ -83,7 +82,7 @@ private:
     bool refreshStateStats();
     void refreshTypeStats();
     void refreshFileTypesStats();
-    void refreshSearchStats();
+    void applyTextSearch(const QString& text);
 
 public slots:
     void onTransferQuotaStateChanged(QuotaState transferQuotaState);
@@ -108,6 +107,7 @@ private slots:
     void on_tCogWheel_clicked();
     void on_bDownload_clicked();
     void on_bUpload_clicked();
+    void on_bCancelClearAll_clicked();
     void on_leSearchField_returnPressed();
 
     void on_bArchives_clicked();
@@ -120,6 +120,7 @@ private slots:
 
     void onUpdatePauseState(bool isPaused);
     void onTransfersDataUpdated();
+    void refreshSearchStats();
 
     void onStorageStateChanged(int storageState);
 

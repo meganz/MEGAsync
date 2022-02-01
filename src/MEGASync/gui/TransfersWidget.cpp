@@ -85,7 +85,7 @@ void TransfersWidget::configureTransferView()
         mProxyActivityTimer->start(std::chrono::milliseconds(PROXY_ACTIVITY_TIMEOUT_MS));
     });
 
-    connect(mProxyModel, &TransfersSortFilterProxyModel::modelFiltered,
+    connect(mProxyModel, &TransfersSortFilterProxyModel::searchNumbersChanged,
             this, [this]
     {
         mProxyActivityTimer->stop();

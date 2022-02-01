@@ -21,6 +21,30 @@ const TransferData::TransferTypes TransferData::TYPE_MASK = TransferData::Transf
         TransferData::TransferType::TRANSFER_UPLOAD |
         TransferData::TransferType::TRANSFER_DOWNLOAD);
 
+const TransferData::TransferStates TransferData::FINISHED_STATES_MASK = TransferData::TransferStates (
+        TransferData::TransferState::TRANSFER_COMPLETED
+        | TransferData::TransferState::TRANSFER_CANCELLED
+        | TransferData::TransferState::TRANSFER_FAILED);
+
+const TransferData::TransferStates TransferData::PAUSABLE_STATES_MASK = TransferData::TransferStates (
+        TransferData::TransferState::TRANSFER_QUEUED
+        | TransferData::TransferState::TRANSFER_ACTIVE
+        | TransferData::TransferState::TRANSFER_RETRYING);
+
+const TransferData::TransferStates TransferData::CANCELABLE_STATES_MASK = TransferData::TransferStates (
+        TransferData::TransferState::TRANSFER_QUEUED
+        | TransferData::TransferState::TRANSFER_ACTIVE
+        | TransferData::TransferState::TRANSFER_PAUSED
+        | TransferData::TransferState::TRANSFER_RETRYING);
+
+const TransferData::TransferStates TransferData::ACTIVE_STATES_MASK = TransferData::TransferStates (
+    TransferData::TransferState::TRANSFER_ACTIVE |
+    TransferData::TransferState::TRANSFER_PAUSED |
+    TransferData::TransferState::TRANSFER_COMPLETING |
+    TransferData::TransferState::TRANSFER_QUEUED |
+    TransferData::TransferState::TRANSFER_RETRYING
+);
+
 void TransferItem::updateValuesTransferFinished(int64_t finishTime,
                                                  int errorCode, long long errorValue,
                                                  unsigned long long meanSpeed,

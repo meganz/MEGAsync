@@ -14,8 +14,6 @@ TransfersSortFilterProxyModel::TransfersSortFilterProxyModel(QObject* parent)
       mNextTransferTypes (mTransferTypes),
       mNextFileTypes (mFileTypes),
       mSortCriterion (SortCriterion::PRIORITY),
-      mDlNumber (0),
-      mUlNumber (0),
       mFilterMutex (new QMutex(QMutex::Recursive)),
       mActivityMutex (new QMutex(QMutex::Recursive))
 {
@@ -86,6 +84,20 @@ void TransfersSortFilterProxyModel::sort(SortCriterion column, Qt::SortOrder ord
     });
 }
 
+void TransfersSortFilterProxyModel::invalidate()
+{
+    resetNumberOfItems();
+    QSortFilterProxyModel::invalidate();
+}
+
+void TransfersSortFilterProxyModel::setSourceModel(QAbstractItemModel *sourceModel)
+{
+    connect(sourceModel, &QAbstractItemModel::rowsAboutToBeRemoved,
+            this, &TransfersSortFilterProxyModel::onRowsRemoved);
+
+    QSortFilterProxyModel::setSourceModel(sourceModel);
+}
+
 void TransfersSortFilterProxyModel::setFilterFixedString(const QString& pattern)
 {
     QtConcurrent::run([=]
@@ -96,7 +108,7 @@ void TransfersSortFilterProxyModel::setFilterFixedString(const QString& pattern)
         QMutexLocker lockSortingMutex (mActivityMutex);
         QSortFilterProxyModel::setFilterFixedString(pattern);
         transferModel->lockModelMutex(false);
-        emit modelFiltered();
+        emit searchNumbersChanged();
     });
 }
 
@@ -118,76 +130,30 @@ void TransfersSortFilterProxyModel::setFilters(const TransferData::TransferTypes
 
 void TransfersSortFilterProxyModel::resetAllFilters(bool invalidate)
 {
-    resetNumberOfItems();
     setFilters({}, {}, {});
     applyFilters(invalidate);
 }
 
 int  TransfersSortFilterProxyModel::getNumberOfItems(TransferData::TransferType transferType)
 {
-    int nb (0);
-    // Do not count if sort or filtering in course
-    if (mActivityMutex->tryLock())
-    {
-        auto nbRows (rowCount());
-        if (mTransferTypes == (TransferData::TRANSFER_DOWNLOAD | TransferData::TRANSFER_LTCPDOWNLOAD))
-        {
-            mDlNumber = nbRows;
-            mUlNumber = 0;
-        }
-        else if (mTransferTypes == TransferData::TRANSFER_UPLOAD)
-        {
-            mDlNumber = 0;
-            mUlNumber = nbRows;
-        }
-        else
-        {
-            if (mDlNumber + mUlNumber != nbRows)
-            {
-                // Case where only one type: easy!
-                if (mDlNumber == 0)
-                {
-                    mUlNumber = nbRows;
-                }
-                else if (mUlNumber == 0)
-                {
-                    mDlNumber = nbRows;
-                }
-                // Mixed... we have to count :(
-                else
-                {
-                    mUlNumber = 0;
-                    for (int i = 0; i < nbRows; ++i)
-                    {
-                        QModelIndex idx (index(i, 0));
-                        const auto d (qvariant_cast<TransferItem>(idx.data()).getTransferData());
-                        if (d->mType & TransferData::TRANSFER_UPLOAD)
-                        {
-                            mUlNumber++;
-                        }
-                    }
-                    mDlNumber = nbRows - mUlNumber;
-                }
-            }
-        }
+    int nb(0);
 
-        if (transferType & (TransferData::TRANSFER_DOWNLOAD | TransferData::TRANSFER_LTCPDOWNLOAD))
-        {
-            nb = mDlNumber;
-        }
-        else
-        {
-            nb = mUlNumber;
-        }
-        mActivityMutex->unlock();
+    if(transferType == TransferData::TransferType::TRANSFER_UPLOAD)
+    {
+        nb = mUlNumber.size();
     }
+    else if(transferType == TransferData::TransferType::TRANSFER_DOWNLOAD)
+    {
+        nb = mDlNumber.size();
+    }
+
     return nb;
 }
 
 void TransfersSortFilterProxyModel::resetNumberOfItems()
 {
-    mDlNumber = 0;
-    mUlNumber = 0;
+    mDlNumber.clear();
+    mUlNumber.clear();
 }
 
 TransferBaseDelegateWidget *TransfersSortFilterProxyModel::createTransferManagerItem(QWidget* parent)
@@ -207,6 +173,8 @@ TransferBaseDelegateWidget *TransfersSortFilterProxyModel::createTransferManager
 
 void TransfersSortFilterProxyModel::applyFilters(bool invalidate)
 {
+    resetNumberOfItems();
+
     QtConcurrent::run([=]
     {
         emit modelAboutToBeFiltered();
@@ -221,7 +189,7 @@ void TransfersSortFilterProxyModel::applyFilters(bool invalidate)
             invalidateFilter();
         }
         transferModel->lockModelMutex(false);
-        emit modelFiltered();
+        emit searchNumbersChanged();
     });
 }
 
@@ -248,17 +216,53 @@ bool TransfersSortFilterProxyModel::filterAcceptsRow(int sourceRow, const QModel
             {
                 if (d->mType & TransferData::TRANSFER_UPLOAD)
                 {
-                    mUlNumber++;
+                    mUlNumber.append(d->mTag);
                 }
                 else
                 {
-                    mDlNumber++;
+                    mDlNumber.append(d->mTag);
                 }
             }
         }
     }
 
     return accept;
+}
+
+void TransfersSortFilterProxyModel::onRowsRemoved(const QModelIndex &parent, int first, int last)
+{
+   if(filterRegExp().isEmpty())
+   {
+       return;
+   }
+
+   bool RowsRemoved(false);
+
+   for(int row = first; row <= last; ++row)
+   {
+       QModelIndex index = sourceModel()->index(row, 0, parent);
+
+       const auto d (qvariant_cast<TransferItem>(index.data()).getTransferData());
+
+       if(d->mTag >= 0)
+       {
+           if (d->mType & TransferData::TRANSFER_UPLOAD)
+           {
+               mUlNumber.removeOne(d->mTag);
+           }
+           else
+           {
+               mDlNumber.removeOne(d->mTag);
+           }
+
+           RowsRemoved = true;
+       }
+   }
+
+   if(RowsRemoved)
+   {
+       searchNumbersChanged();
+   }
 }
 
 bool TransfersSortFilterProxyModel::lessThan(const QModelIndex &left, const QModelIndex &right) const
@@ -287,6 +291,7 @@ bool TransfersSortFilterProxyModel::lessThan(const QModelIndex &left, const QMod
     }
     return false;
 }
+
 
 bool TransfersSortFilterProxyModel::moveRows(const QModelIndex &sourceParent, int sourceRow, int count,
               const QModelIndex &destinationParent, int destinationChild)
