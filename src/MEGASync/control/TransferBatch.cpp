@@ -63,76 +63,76 @@ mega::MegaCancelToken* TransferBatch::getCancelTokenPtr()
 
 BlockingBatch::~BlockingBatch()
 {
-    clearBlockingBatch();
+    clearBatch();
 }
 
 void BlockingBatch::add(TransferBatch* batch)
 {
-    delete blockingBatch;
-    blockingBatch = batch->createCollectionCopy();
+    delete batch;
+    batch = batch->createCollectionCopy();
 }
 
 void BlockingBatch::cancelTransfer()
 {
-    if (blockingBatch)
+    if (batch)
     {
-        blockingBatch->cancel();
+        batch->cancel();
     }
 }
 
 void BlockingBatch::onFileScanCompleted()
 {
-    if (blockingBatch)
+    if (batch)
     {
-        blockingBatch->onFileScanCompleted();
+        batch->onFileScanCompleted();
     }
 }
 
 void BlockingBatch::onFolderScanCompleted()
 {
-    if (blockingBatch)
+    if (batch)
     {
-        blockingBatch->onFolderScanCompleted();
+        batch->onFolderScanCompleted();
     }
 }
 
 bool BlockingBatch::isBlockingStageFinished()
 {
-    if (blockingBatch)
+    if (batch)
     {
-        return blockingBatch->isEmpty();
+        return batch->isEmpty();
     }
     return true;
 }
 
 void BlockingBatch::setAsUnblocked()
 {
-    clearBlockingBatch();
+    clearBatch();
 }
 
 void BlockingBatch::onTransferFinished(bool isFolderTransfer)
 {
-    if (blockingBatch)
+    if (batch)
     {
-        blockingBatch->onTransferFinished(isFolderTransfer);
-        if (blockingBatch->isEmpty())
+        batch->onTransferFinished(isFolderTransfer);
+        if (batch->isEmpty())
         {
-            clearBlockingBatch();
+            clearBatch();
         }
     }
 }
 
 QString BlockingBatch::description()
 {
-    if (blockingBatch)
+    if (batch)
     {
-        return blockingBatch->description();
+        return batch->description();
     }
     return QString::fromLatin1("nullptr");
 }
 
-void BlockingBatch::clearBlockingBatch()
+void BlockingBatch::clearBatch()
 {
-   delete blockingBatch;
-   blockingBatch = nullptr;
+   delete batch;
+   batch = nullptr;
 }

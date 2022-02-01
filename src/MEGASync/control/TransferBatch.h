@@ -62,9 +62,9 @@ public:
 
 private:
 
-   void clearBlockingBatch();
+   void clearBatch();
 
-   TransferBatch* blockingBatch = nullptr;
+   TransferBatch* batch = nullptr;
 };
 
 #endif // MEGADOWNLOADER_H

@@ -238,8 +238,8 @@ void MegaUploader::startUpload(const QString& localPath, MegaNode* parent, MegaC
 {
     const bool startFirst = false;
     const char* localPathCstr = localPath.toUtf8().constData();
-    const char* appData = nullptr;//(QString::number(appDataID) + QString::fromUtf8("*")).toUtf8().constData();
-    const char* filename = nullptr;//name.toUtf8().constData();
+    const char* appData = nullptr;
+    const char* filename = nullptr;
     const int64_t mtime = ::mega::MegaApi::INVALID_CUSTOM_MOD_TIME;
     const bool isSrcTemporary = false;
     MegaTransferListener* listener = nullptr;
