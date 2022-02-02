@@ -657,10 +657,6 @@ margin: 0px;
           </item>
           <item>
            <widget class="QCheckBox" name="cOverlayIcons">
-            </property>
-            <property name="text">
-             <string>Open at login</string>
-            </property>
             <property name="text">
              <string>Enable overlay icons</string>
             </property>
