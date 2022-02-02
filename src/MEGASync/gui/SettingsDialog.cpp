@@ -170,7 +170,7 @@ SettingsDialog::SettingsDialog(MegaApplication* app, bool proxyOnly, QWidget* pa
 #ifdef Q_OS_MACOS
     this->setWindowTitle(tr("Preferences"));
     mUi->tSyncs->horizontalHeader()->setDefaultAlignment(Qt::AlignLeft);
-    mUi->cStartOnStartup->setText(tr("Open at login"));
+    mUi->cStartOnStartup->setText(tr("Launch at login"));
     mUi->lLocalDebris->setText(mUi->lLocalDebris->text().arg(QString::fromUtf8(MEGA_DEBRIS_FOLDER)));
 
 
@@ -782,7 +782,7 @@ void SettingsDialog::changeEvent(QEvent* event)
 #ifdef Q_OS_MACOS
         reloadToolBarItemNames();
         //review and check
-        mUi->cStartOnStartup->setText(tr("Open at login"));
+        mUi->cStartOnStartup->setText(tr("Launch at login"));
 
         mUi->lLocalDebris->setText(mUi->lLocalDebris->text().arg(QString::fromUtf8(MEGA_DEBRIS_FOLDER)));
 #else

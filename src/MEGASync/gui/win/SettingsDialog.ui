@@ -603,7 +603,7 @@ font-weight: bold;
                </sizepolicy>
               </property>
               <property name="text">
-               <string>Open at login</string>
+               <string>Launch at login</string>
               </property>
              </widget>
             </item>
