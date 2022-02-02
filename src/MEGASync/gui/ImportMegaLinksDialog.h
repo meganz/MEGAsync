@@ -35,6 +35,7 @@ public slots:
     void onLinkInfoAvailable(int id);
     void onLinkInfoRequestFinish();
     void onLinkStateChanged(int id, int state);
+    void accept() override;
 
 protected:
     void changeEvent(QEvent * event);
@@ -42,9 +43,15 @@ protected:
 private:
     Ui::ImportMegaLinksDialog *ui;
     mega::MegaApi *megaApi;
+    Preferences *preferences;
     LinkProcessor *linkProcessor;
     bool finished;
     HighDpiResize highDpiResize;
+
+    void initUiAsLogged(Preferences* preferences);
+    void initUiAsUnlogged();
+    void initImportFolderControl(Preferences* preferences);
+    void setInvalidImportFolder(Preferences* preferences);
 
     void enableOkButton() const;
     void enableLocalFolder(bool enable);

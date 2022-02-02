@@ -10,10 +10,10 @@ void TransfersStatusWidget::updateSizes()
     {
         int minwidthheight = qMin(this->width(), this->height());
         wpen = qFloor(minwidthheight/48.0*5);
-        spacing = minwidthheight/48.0*2;
+        spacing = static_cast<int>(minwidthheight/48.0*2);
         marginoutside = qRound(wpen/2.0);
         diamoutside = minwidthheight-marginoutside*2;
-        diaminside = diamoutside-wpen*2.0-spacing*2;
+        diaminside = static_cast<int>(diamoutside-wpen*2.0-spacing*2);
         margininside = qRound((diamoutside-diaminside)/2.0);
 
         residualin = 0;
@@ -60,7 +60,7 @@ TransfersStatusWidget::~TransfersStatusWidget()
     delete ui;
 }
 
-void TransfersStatusWidget::paintEvent(QPaintEvent *event)
+void TransfersStatusWidget::paintEvent(QPaintEvent*)
 {
     updateSizes();
     QPainter painter(this);
@@ -102,7 +102,7 @@ qreal TransfersStatusWidget::getPercentInnerCircle() const
 void TransfersStatusWidget::setPercentInnerCircle(const qreal &value)
 {
     percentInnerCircle = value;
-    inpoint=360*16*percentInnerCircle>residualin?360*16*percentInnerCircle-residualin:360*16*percentInnerCircle;
+    inpoint = computePercentCircle(percentInnerCircle, residualin);
     update();
 }
 
@@ -114,6 +114,13 @@ qreal TransfersStatusWidget::getPercentOuterCircle() const
 void TransfersStatusWidget::setPercentOuterCircle(const qreal &value)
 {
     percentOuterCircle = value;
-    outpoint=360*16*percentOuterCircle>residualout?360*16*percentOuterCircle-residualout:360*16*percentOuterCircle;
+    outpoint = computePercentCircle(percentOuterCircle, residualout);
     update();
+}
+
+int TransfersStatusWidget::computePercentCircle(const qreal percentCircle, const int residual)
+{
+    const qreal tempPoint = 360 * 16 * percentCircle;
+    const qreal point = (tempPoint > residual) ? tempPoint - residual : tempPoint;
+    return static_cast<int>(point);
 }

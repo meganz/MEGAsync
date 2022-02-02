@@ -115,7 +115,7 @@ class HTTPServer: public QTcpServer
     private:
         void versionCommand(QString& response);
         void openLinkRequest(QString& response, const HTTPRequest& request);
-        void externalDownloadRequest(QString& response, const HTTPRequest& request, bool isSafe);
+        void externalDownloadRequest(QString& response, const HTTPRequest& request, QAbstractSocket* socket);
         void externalFileUploadRequest(QString& response, const HTTPRequest& request);
         void externalFolderUploadRequest(QString& response, const HTTPRequest& request);
         void externalFolderSyncRequest(QString& response, const HTTPRequest& request);

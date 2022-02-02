@@ -169,7 +169,7 @@ QPushButton
 	padding-left: 12px;
 }</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout_2">
+  <layout class="QVBoxLayout" name="guestWidgetLayout">
    <property name="spacing">
     <number>0</number>
    </property>
@@ -193,7 +193,7 @@ QPushButton
        <height>394</height>
       </size>
      </property>
-     <layout class="QVBoxLayout" name="verticalLayout_11">
+     <layout class="QVBoxLayout" name="guestWidgetInLayout">
       <property name="spacing">
        <number>0</number>
       </property>
@@ -226,7 +226,7 @@ QPushButton
         <property name="styleSheet">
          <string notr="true"/>
         </property>
-        <layout class="QHBoxLayout" name="horizontalLayout_2">
+        <layout class="QHBoxLayout" name="guestWidgetInHeaderLayout">
          <property name="spacing">
           <number>0</number>
          </property>
@@ -243,7 +243,7 @@ QPushButton
           <number>0</number>
          </property>
          <item>
-          <spacer name="horizontalSpacer_3">
+          <spacer name="guestWidgetInSpacer">
            <property name="orientation">
             <enum>Qt::Horizontal</enum>
            </property>
@@ -351,7 +351,7 @@ margin-top: -1px;</string>
            <number>0</number>
           </property>
           <item>
-           <widget class="QWidget" name="wDesc" native="true">
+           <widget class="QWidget" name="wLoginDesc" native="true">
             <property name="minimumSize">
              <size>
               <width>400</width>
@@ -367,7 +367,7 @@ margin-top: -1px;</string>
             <property name="styleSheet">
              <string notr="true"/>
             </property>
-            <layout class="QVBoxLayout" name="verticalLayout_4">
+            <layout class="QVBoxLayout" name="loginDescLayout">
              <property name="spacing">
               <number>6</number>
              </property>
@@ -401,7 +401,7 @@ margin-top: -1px;</string>
                 <string notr="true">background: transparent;
 image: none;</string>
                </property>
-               <layout class="QHBoxLayout" name="horizontalLayout_5">
+               <layout class="QHBoxLayout" name="logoLoginLayout">
                 <property name="spacing">
                  <number>0</number>
                 </property>
@@ -457,7 +457,7 @@ image: none;</string>
                <property name="styleSheet">
                 <string notr="true">image: none;</string>
                </property>
-               <layout class="QVBoxLayout" name="verticalLayout">
+               <layout class="QVBoxLayout" name="formContainerLayout">
                 <property name="spacing">
                  <number>0</number>
                 </property>
@@ -697,7 +697,7 @@ image: none;
                      <property name="styleSheet">
                       <string notr="true">image: none;</string>
                      </property>
-                     <layout class="QHBoxLayout" name="horizontalLayout_4">
+                     <layout class="QHBoxLayout" name="loginButtonLayout">
                       <property name="leftMargin">
                        <number>0</number>
                       </property>
@@ -711,7 +711,7 @@ image: none;
                        <number>12</number>
                       </property>
                       <item>
-                       <spacer name="horizontalSpacer_4">
+                       <spacer name="loginButtonSpacer">
                         <property name="orientation">
                          <enum>Qt::Horizontal</enum>
                         </property>
@@ -780,7 +780,7 @@ image: none;
                        </widget>
                       </item>
                       <item>
-                       <spacer name="horizontalSpacer_5">
+                       <spacer name="createAccountSpacer">
                         <property name="orientation">
                          <enum>Qt::Horizontal</enum>
                         </property>
@@ -847,7 +847,7 @@ image: none;
              <string notr="true">background: transparent;
 image: none;</string>
             </property>
-            <layout class="QHBoxLayout" name="horizontalLayout_3">
+            <layout class="QHBoxLayout" name="logoLoggingLayout">
              <property name="spacing">
               <number>0</number>
              </property>
@@ -985,7 +985,7 @@ image: none;</string>
                     <number>0</number>
                    </property>
                    <item>
-                    <spacer name="horizontalSpacer_7">
+                    <spacer name="widget2Spacer">
                      <property name="orientation">
                       <enum>Qt::Horizontal</enum>
                      </property>
@@ -1060,7 +1060,7 @@ image: none;</string>
                     <number>0</number>
                    </property>
                    <item>
-                    <spacer name="horizontalSpacer_2">
+                    <spacer name="cancelSpacer">
                      <property name="orientation">
                       <enum>Qt::Horizontal</enum>
                      </property>
@@ -1092,7 +1092,7 @@ image: none;</string>
                     </widget>
                    </item>
                    <item>
-                    <spacer name="horizontalSpacer_6">
+                    <spacer name="cancelSpacer2">
                      <property name="orientation">
                       <enum>Qt::Horizontal</enum>
                      </property>
@@ -1255,7 +1255,7 @@ image: none;</string>
          </layout>
         </widget>
         <widget class="QWidget" name="pVerifyEmailAccount">
-         <layout class="QVBoxLayout" name="verticalLayout_11">
+         <layout class="QVBoxLayout" name="verifyEmailLayout">
           <property name="spacing">
            <number>0</number>
           </property>
@@ -1277,7 +1277,7 @@ image: none;</string>
              <string notr="true">background: transparent;
 image: none;</string>
             </property>
-            <layout class="QVBoxLayout" name="verticalLayout_13">
+            <layout class="QVBoxLayout" name="containerVerifyEmailLayout2">
              <property name="spacing">
               <number>0</number>
              </property>
@@ -1313,7 +1313,7 @@ image: none;</string>
                  <height>70</height>
                 </size>
                </property>
-               <layout class="QHBoxLayout" name="horizontalLayout_10">
+               <layout class="QHBoxLayout" name="lockedIconLayout">
                 <property name="spacing">
                  <number>0</number>
                 </property>
@@ -1399,7 +1399,7 @@ image: none;</string>
                  <verstretch>0</verstretch>
                 </sizepolicy>
                </property>
-               <layout class="QVBoxLayout" name="verticalLayout_12">
+               <layout class="QVBoxLayout" name="containerVerifyEmailLayout">
                 <property name="spacing">
                  <number>0</number>
                 </property>
@@ -1592,7 +1592,7 @@ image: none;</string>
                  <height>16777215</height>
                 </size>
                </property>
-               <layout class="QHBoxLayout" name="horizontalLayout_9">
+               <layout class="QHBoxLayout" name="verifyEmailButtonsLayout">
                 <property name="spacing">
                  <number>12</number>
                 </property>
@@ -1603,7 +1603,7 @@ image: none;</string>
                  <number>5</number>
                 </property>
                 <item>
-                 <spacer name="horizontalSpacer_11">
+                 <spacer name="verifyEmailButtonsSpacer">
                   <property name="orientation">
                    <enum>Qt::Horizontal</enum>
                   </property>
@@ -1647,7 +1647,7 @@ image: none;</string>
 }</string>
                   </property>
                   <property name="text">
-                   <string>Logout</string>
+                   <string>Log out</string>
                   </property>
                  </widget>
                 </item>
@@ -1690,7 +1690,7 @@ background-color:rgba(240, 55, 58, 0.3);
                  </widget>
                 </item>
                 <item>
-                 <spacer name="horizontalSpacer_12">
+                 <spacer name="verifyEmailSpacer">
                   <property name="orientation">
                    <enum>Qt::Horizontal</enum>
                   </property>
@@ -1785,7 +1785,7 @@ background-color:rgba(240, 55, 58, 0.3);
          </layout>
         </widget>
         <widget class="QWidget" name="pVerifySMSAccount">
-         <layout class="QVBoxLayout" name="verticalLayout_11">
+         <layout class="QVBoxLayout" name="verifySmsLayout">
           <property name="spacing">
            <number>0</number>
           </property>
@@ -1807,7 +1807,7 @@ background-color:rgba(240, 55, 58, 0.3);
              <string notr="true">background: transparent;
 image: none;</string>
             </property>
-            <layout class="QVBoxLayout" name="verticalLayout_13">
+            <layout class="QVBoxLayout" name="containerVerifySmsLayout2">
              <property name="spacing">
               <number>0</number>
              </property>
@@ -1843,7 +1843,7 @@ image: none;</string>
                  <height>70</height>
                 </size>
                </property>
-               <layout class="QHBoxLayout" name="horizontalLayout_10">
+               <layout class="QHBoxLayout" name="verifyIconLayout">
                 <property name="spacing">
                  <number>0</number>
                 </property>
@@ -1929,7 +1929,7 @@ image: none;</string>
                  <verstretch>0</verstretch>
                 </sizepolicy>
                </property>
-               <layout class="QVBoxLayout" name="verticalLayout_12">
+               <layout class="QVBoxLayout" name="containerVerifySmsLayout">
                 <property name="spacing">
                  <number>0</number>
                 </property>
@@ -2054,7 +2054,7 @@ image: none;</string>
                  <height>16777215</height>
                 </size>
                </property>
-               <layout class="QHBoxLayout" name="horizontalLayout_9">
+               <layout class="QHBoxLayout" name="verifySmsButtonsLayout">
                 <property name="spacing">
                  <number>12</number>
                 </property>
@@ -2062,7 +2062,7 @@ image: none;</string>
                  <number>0</number>
                 </property>
                 <item>
-                 <spacer name="horizontalSpacer_11">
+                 <spacer name="verifySmsButtonsSpacer">
                   <property name="orientation">
                    <enum>Qt::Horizontal</enum>
                   </property>
@@ -2106,7 +2106,7 @@ image: none;</string>
 }</string>
                   </property>
                   <property name="text">
-                   <string>Logout</string>
+                   <string>Log out</string>
                   </property>
                  </widget>
                 </item>
@@ -2146,7 +2146,7 @@ background-color: #F0373A;
                  </widget>
                 </item>
                 <item>
-                 <spacer name="horizontalSpacer_12">
+                 <spacer name="verifySmsSpacer">
                   <property name="orientation">
                    <enum>Qt::Horizontal</enum>
                   </property>
@@ -2191,7 +2191,7 @@ background-color: #F0373A;
               <number>0</number>
              </property>
              <item>
-              <spacer name="horizontalSpacer_2">
+              <spacer name="login2FASpacer">
                <property name="orientation">
                 <enum>Qt::Horizontal</enum>
                </property>
@@ -2237,7 +2237,7 @@ background-color: #F0373A;
               </widget>
              </item>
              <item>
-              <spacer name="horizontalSpacer_3">
+              <spacer name="shieldSpacer">
                <property name="orientation">
                 <enum>Qt::Horizontal</enum>
                </property>
@@ -2266,8 +2266,8 @@ background-color: #F0373A;
            </spacer>
           </item>
           <item>
-           <widget class="QWidget" name="wDesc" native="true">
-            <layout class="QHBoxLayout" name="horizontalLayout_3">
+           <widget class="QWidget" name="wDesc2FA" native="true">
+            <layout class="QHBoxLayout" name="desc2faLayout">
              <property name="spacing">
               <number>0</number>
              </property>
@@ -2344,7 +2344,7 @@ background-color: #F0373A;
                  <height>22</height>
                 </size>
                </property>
-               <layout class="QHBoxLayout" name="horizontalLayout_4">
+               <layout class="QHBoxLayout" name="codeLayout">
                 <property name="spacing">
                  <number>23</number>
                 </property>
@@ -2418,7 +2418,7 @@ background-color: #F0373A;
                  </widget>
                 </item>
                 <item>
-                 <spacer name="horizontalSpacer_7">
+                 <spacer name="codeSpacer">
                   <property name="orientation">
                    <enum>Qt::Horizontal</enum>
                   </property>
@@ -2447,7 +2447,7 @@ background-color: #F0373A;
                  <height>26</height>
                 </size>
                </property>
-               <layout class="QHBoxLayout" name="horizontalLayout_5">
+               <layout class="QHBoxLayout" name="errorLayout">
                 <property name="spacing">
                  <number>0</number>
                 </property>
@@ -2464,7 +2464,7 @@ background-color: #F0373A;
                  <number>0</number>
                 </property>
                 <item>
-                 <spacer name="horizontalSpacer_4">
+                 <spacer name="errorSpacer">
                   <property name="orientation">
                    <enum>Qt::Horizontal</enum>
                   </property>
@@ -2499,7 +2499,7 @@ background-color: #F0373A;
                  </widget>
                 </item>
                 <item>
-                 <spacer name="horizontalSpacer_5">
+                 <spacer name="errorSpacer2">
                   <property name="orientation">
                    <enum>Qt::Horizontal</enum>
                   </property>

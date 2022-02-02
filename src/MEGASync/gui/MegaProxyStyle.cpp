@@ -1,9 +1,12 @@
 #include "MegaProxyStyle.h"
 #include "gui/MegaTransferView.h"
 #include "gui/TransferItem.h"
+
 #include <QStyleOption>
 #include <QStyleOptionViewItem>
-
+#include <QSpinBox>
+#include <QComboBox>
+#include <EventHelper.h>
 
 void MegaProxyStyle::drawComplexControl(QStyle::ComplexControl control, const QStyleOptionComplex *option, QPainter *painter, const QWidget *widget) const
 {
@@ -99,4 +102,16 @@ QIcon MegaProxyStyle::standardIcon(QStyle::StandardPixmap standardIcon, const QS
             break;
     }
     return QProxyStyle::standardIcon(standardIcon, option, widget);
+}
+
+void MegaProxyStyle::polish(QWidget *widget)
+{
+    if(auto spinBox = qobject_cast<QSpinBox*>(widget))
+    {
+        EventManager::addEvent(spinBox, QEvent::Wheel, EventHelper::BLOCK);
+    }
+    else if(auto comboBox = qobject_cast<QComboBox*>(widget))
+    {
+        EventManager::addEvent(comboBox, QEvent::Wheel, EventHelper::BLOCK);
+    }
 }

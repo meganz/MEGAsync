@@ -506,7 +506,7 @@
     <message>
         <source>Enable this option only if your transfers don&apos;t start. Under normal circumstances, HTTP is satisfactory as all transfers are already encrypted by MEGA.</source>
         <translatorcomment>Description label about the option &quot;Don&apos;t use HTTP&quot; checkbox.</translatorcomment>
-        <translation>Schakel deze optie alleen in als uw overboekingen niet starten. Onder normale omstandigheden voldoet HTTP omdat alle overdrachten al zijn versleuteld door MEGA.</translation>
+        <translation>Schakel deze optie alleen in als uw overboekingen niet starten. Onder normale omstandigheden voldoet HTTP omdat alle overdrachten al zijn gecodeerd door MEGA.</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -726,7 +726,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Credits</source>
         <translatorcomment>Label for a link that redirects to an credits section in the web that shows information, licenses, etc. about all third-party libraries used by MEGAsync</translatorcomment>
-        <translation>Credits</translation>
+        <translation>Colofon</translation>
     </message>
     <message>
         <source>All rights reserved.</source>
@@ -2225,7 +2225,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>DEBUG mode enabled. A log is being created in your desktop (MEGAsync.log)</source>
         <translatorcomment>Notification message shown when the DEBUG mode is enabled.</translatorcomment>
-        <translation>Debug modus is ingeschakeld. Een log wordt gemaakt op uw bureaublad (MEGAsync.log).</translation>
+        <translation>Debug modus is ingeschakeld. Een log wordt gemaakt op uw desktop (MEGAsync.log).</translation>
     </message>
     <message>
         <source>Error: Invalid destination folder. The download has been cancelled</source>
@@ -2244,7 +2244,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Fetching file list...</source>
-        <translation>Bestandslijst ophalen</translation>
+        <translation>Bestandslijst ophalen...</translation>
     </message>
     <message>
         <source>I don&apos;t care</source>
@@ -3452,12 +3452,12 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Great value for secure cloud storage, sharing and communication.</source>
         <translatorcomment>Balloon tooltip to inform users when hovering ? button about the benefits of Pro I plan.</translatorcomment>
-        <translation>Grote waarde voor veilige cloudopslag, delen en communicatie.</translation>
+        <translation>Grote waarde voor veilige cloud opslag, delen en communicatie.</translation>
     </message>
     <message>
         <source>Rest easy knowing you have plenty of secure cloud storage.</source>
         <translatorcomment>Balloon tooltip to inform users when hovering ? button about the benefits of Pro II plan.</translatorcomment>
-        <translation>Wees gerust, wetende dat u voldoende veilige cloudopslag heeft.</translation>
+        <translation>Wees gerust, wetende dat u voldoende veilige cloud opslag heeft.</translation>
     </message>
     <message>
         <source>Store even more with our premium secure cloud storage offering.</source>
@@ -3526,21 +3526,13 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Full redesign of settings with a new look and feel.
-- No longer supporting macOS versions below 10.12.
-- Multi-currency support added for upgrade options.
-- High DPI support for Windows platform improved.
-- Crashes previously detected on Windows, Linux and macOS now fixed.
-- Other performance improvements and adjustments.
-- Other UI fixes and adjustments.</source>
-        <translatorcomment>Changelog notes for v4.6.0 version</translatorcomment>
-        <translation>- Volledig herontwerp van instellingen met een nieuw uiterlijk en gevoel.
-- Geen ondersteuning meer voor macOS-versies lager dan 10.12.
-- Ondersteuning voor meerdere valuta&apos;s toegevoegd voor upgrade-opties.
-- Hoge DPI-ondersteuning voor Windows-platform verbeterd.
-- Eerder gedetecteerde crashes op Windows, Linux en macOS zijn nu verholpen.
-- Andere prestatieverbeteringen en aanpassingen.
-- Andere UI-fixes en aanpassingen.</translation>
+        <source>- Strengthen cryptographic security on Linux repositories.
+- Fix memory issues with problematic PDF files.
+</source>
+        <translatorcomment>Changelog v4.6.3 (linux only)</translatorcomment>
+        <translation>- Versterkt de cryptografische beveiliging op Linux&apos;s opslagplaatsen.
+- Los geheugenproblemen op met problematische PDF-bestanden.
+</translation>
     </message>
 </context>
 <context>
@@ -4328,7 +4320,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Security</source>
         <translatorcomment>Title for the Settings -&gt; Security pane tab button. Keep as short as possible.</translatorcomment>
-        <translation>Veiligheid</translation>
+        <translation>Beveiliging</translation>
     </message>
     <message>
         <source>Folders</source>

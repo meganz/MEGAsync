@@ -29,7 +29,11 @@ MacXExtServer::MacXExtServer(MegaApplication *app)
 
 MacXExtServer::~MacXExtServer()
 {
-    qDeleteAll(m_clients);
+    for (auto client : m_clients)
+    {
+        client->deleteLater();
+    }
+
     m_clients.clear();
     delete m_localServer;
 }

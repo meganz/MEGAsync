@@ -3525,21 +3525,13 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Full redesign of settings with a new look and feel.
-- No longer supporting macOS versions below 10.12.
-- Multi-currency support added for upgrade options.
-- High DPI support for Windows platform improved.
-- Crashes previously detected on Windows, Linux and macOS now fixed.
-- Other performance improvements and adjustments.
-- Other UI fixes and adjustments.</source>
-        <translatorcomment>Changelog notes for v4.6.0 version</translatorcomment>
-        <translation>- Novo design das Configurações, com uma nova aparência.
-- Fim da compatibilidade com versões de macOS inferiores a 10.12.
-- Visualização do valor em outras moedas nas opções de upgrade.
-- Melhor suporte de DPI para dispositivos com Windows.
-- Correção de falhas detectadas anteriormente em Windows, Linux e macOS.
-- Outras melhorias e ajustes de desempenho.
-- Correções e ajustes na interface do usuário.</translation>
+        <source>- Strengthen cryptographic security on Linux repositories.
+- Fix memory issues with problematic PDF files.
+</source>
+        <translatorcomment>Changelog v4.6.3 (linux only)</translatorcomment>
+        <translation>- Melhoria da segurança criptográfica em repositórios Linux.
+- Correção de erros de memória com arquivos PDF problemáticos.
+</translation>
     </message>
 </context>
 <context>

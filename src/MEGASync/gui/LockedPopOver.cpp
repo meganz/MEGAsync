@@ -10,7 +10,7 @@
 
 using namespace mega;
 
-LockedPopOver::LockedPopOver(QDialog *parent) :
+LockedPopOver::LockedPopOver(QDialog *) :
     ui(new Ui::LockedPopOver)
 {
     ui->setupUi(this);

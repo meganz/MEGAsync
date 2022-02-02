@@ -60,10 +60,11 @@ class TransferMetaData
 {
 public:
     TransferMetaData(int direction, int total = 0, int pending = 0, QString path = QString())
-                    : transferDirection(direction), totalTransfers(total), pendingTransfers(pending),
-                      localPath(path), totalFiles(0), totalFolders(0),
+                    : totalTransfers(total), pendingTransfers(pending),
+                      totalFiles(0), totalFolders(0),
                       transfersFileOK(0), transfersFolderOK(0),
-                      transfersFailed(0), transfersCancelled(0){}
+                      transfersFailed(0), transfersCancelled(0), transferDirection(direction),
+                      localPath(path) {}
 
     int totalTransfers;
     int pendingTransfers;
@@ -383,10 +384,10 @@ protected:
 
     QAction *guestSettingsAction;
     QAction *initialExitAction;
-    std::unique_ptr<QMenu> initialTrayMenu;
+    QPointer<QMenu> initialTrayMenu;
 
 #ifdef _WIN32
-    std::unique_ptr<QMenu> windowsMenu;
+    QPointer<QMenu> windowsMenu;
     QAction *windowsExitAction;
     QAction *windowsUpdateAction;
     QAction *windowsImportLinksAction;
@@ -398,10 +399,10 @@ protected:
 #endif
 
     std::unique_ptr<VerifyLockMessage> verifyEmail;
-    std::unique_ptr<QMenu> infoDialogMenu;
-    std::unique_ptr<QMenu> guestMenu;
+    QPointer<QMenu> infoDialogMenu;
+    QPointer<QMenu> guestMenu;
     QMenu emptyMenu;
-    std::unique_ptr<QMenu> syncsMenu;
+    QPointer<QMenu> syncsMenu;
     QSignalMapper *menuSignalMapper;
 
     MenuItemAction *exitAction;
@@ -560,6 +561,8 @@ private:
     std::shared_ptr<ShellNotifier> mShellNotifier;
 #endif
     void loadSyncExclusionRules(QString email = QString());
+
+    static long long computeExclusionSizeLimit(const long long sizeLimitValue);
 
     QList<QNetworkInterface> findNewNetworkInterfaces();
     bool checkNetworkInterfaces(const QList<QNetworkInterface>& newNetworkInterfaces) const;

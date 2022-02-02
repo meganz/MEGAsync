@@ -85,7 +85,7 @@ public:
 #endif
 
     void setUnseenNotifications(long long value);
-    void setUnseenTypeNotifications(int all, int contacts, int shares, int payment);
+    void setUnseenTypeNotifications(long long all, long long contacts, long long shares, long long payment);
     long long getUnseenNotifications() const;
     void closeSyncsMenu();
     int getLoggedInMode() const;
@@ -248,6 +248,9 @@ protected:
     mega::MegaApi *megaApi;
     mega::MegaTransfer *activeDownload;
     mega::MegaTransfer *activeUpload;
+
+ private:
+    static double computeRatio(long long completed, long long remaining);
 };
 
 #endif // INFODIALOG_H

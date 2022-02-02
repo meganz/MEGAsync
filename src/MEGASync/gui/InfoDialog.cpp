@@ -1061,7 +1061,7 @@ void InfoDialog::addSync(MegaHandle h)
                                                     .arg(localFolderPath));
 
    //Connect failing signals
-   connect(addSyncStep, &ActionProgress::failed, this, [this, localFolderPath](int errorCode)
+   connect(addSyncStep, &ActionProgress::failed, this, [localFolderPath](int errorCode)
    {
        static_cast<MegaApplication *>(qApp)->showAddSyncError(errorCode, localFolderPath);
    }, Qt::QueuedConnection);
@@ -1874,7 +1874,7 @@ void InfoDialog::setUnseenNotifications(long long value)
     ui->bNumberUnseenNotifications->show();
 }
 
-void InfoDialog::setUnseenTypeNotifications(int all, int contacts, int shares, int payment)
+void InfoDialog::setUnseenTypeNotifications(long long all, long long contacts, long long shares, long long payment)
 {
     filterMenu->setUnseenNotifications(all, contacts, shares, payment);
 }
@@ -1890,4 +1890,9 @@ void InfoDialog::paintEvent(QPaintEvent * e)
     p.setCompositionMode(QPainter::CompositionMode_Clear);
     p.fillRect(ui->wArrow->rect(), Qt::transparent);
 #endif
+}
+
+double InfoDialog::computeRatio(long long completed, long long remaining)
+{
+    return static_cast<double>(completed) / static_cast<double>(remaining);
 }

@@ -3523,21 +3523,11 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Full redesign of settings with a new look and feel.
-- No longer supporting macOS versions below 10.12.
-- Multi-currency support added for upgrade options.
-- High DPI support for Windows platform improved.
-- Crashes previously detected on Windows, Linux and macOS now fixed.
-- Other performance improvements and adjustments.
-- Other UI fixes and adjustments.</source>
-        <translatorcomment>Changelog notes for v4.6.0 version</translatorcomment>
-        <translation>- Reproiectare completă a setărilor cu un aspect și stil noi.
-- Nu mai există suport pentru versiunile macOS mai mici de 10.12.
-- A fost adăugat suport la mai multe valute pentru opțiunile de upgrade.
-- A fost îmbunătățit suportul în cazul DPI-urilor mari pentru platforma Windows.
-- Defecțiunile detectate anterior pe Windows, Linux și macOS sunt acum remediate.
-- Alte îmbunătățiri de performanță și ajustări.
-- Alte remedieri ale interfeței utilizatorului și ajustări.</translation>
+        <source>- Strengthen cryptographic security on Linux repositories.
+- Fix memory issues with problematic PDF files.
+</source>
+        <translatorcomment>Changelog v4.6.3 (linux only)</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

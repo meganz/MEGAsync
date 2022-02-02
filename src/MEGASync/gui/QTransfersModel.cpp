@@ -502,11 +502,6 @@ void QTransfersModel::finishTransfer(MegaApi*, std::unique_ptr<mega::MegaTransfe
                                                     meanSpead, state, transferredBytes,
                                                     transfer->getParentHandle(),
                                                     transfer->getNodeHandle());
-        if(transferItem.getTransferData()->mFilename.isEmpty())
-        {
-            auto a = 10;
-        }
-
         v = QVariant::fromValue(transferItem);
 
         if (state == TransferData::TRANSFER_FAILED)
@@ -529,6 +524,7 @@ void QTransfersModel::finishTransfer(MegaApi*, std::unique_ptr<mega::MegaTransfe
         QModelIndex idx (index(row, 0, DEFAULT_IDX));
         emit dataChanged(idx, idx, DATA_ROLE);
     }
+
     mModelMutex->unlock();
 }
 
@@ -759,12 +755,12 @@ void QTransfersModel::cancelClearTransfers(const QModelIndexList& indexes, bool 
     {
         for (auto item : uploadToClear)
         {
-            mMegaApi->clearCompletedUpload(item);
+            mMegaApi->removeCompletedUpload(item);
         }
 
         for (auto item : downloadToClear)
         {
-            mMegaApi->clearCompletedDownload(item);
+            mMegaApi->removeCompletedDownload(item);
         }
     }
 

@@ -74,7 +74,7 @@ void ActiveTransfersWidget::onTransferStart(mega::MegaApi *api, mega::MegaTransf
     updateTransferInfo(transfer);
 }
 
-void ActiveTransfersWidget::onTransferFinish(mega::MegaApi *api, mega::MegaTransfer *transfer, mega::MegaError *e)
+void ActiveTransfersWidget::onTransferFinish(mega::MegaApi* api, mega::MegaTransfer* transfer, mega::MegaError*)
 {
     if (transfer->isStreamingTransfer() || transfer->isFolderTransfer())
     {
@@ -105,7 +105,7 @@ void ActiveTransfersWidget::onTransferUpdate(mega::MegaApi *api, mega::MegaTrans
     updateTransferInfo(transfer);
 }
 
-void ActiveTransfersWidget::onTransferTemporaryError(mega::MegaApi *api, mega::MegaTransfer *transfer, mega::MegaError *e)
+void ActiveTransfersWidget::onTransferTemporaryError(mega::MegaApi*, mega::MegaTransfer*, mega::MegaError*)
 {
 
 }
@@ -550,7 +550,7 @@ void ActiveTransfersWidget::updateTransferState(TransferData *td)
     }
 
     // Update progress bar
-    unsigned int permil = (td->totalSize > 0) ? ((1000 * td->totalTransferredBytes) / td->totalSize) : 0;
+    unsigned int permil = (td->totalSize > 0) ? static_cast<unsigned int>((1000 * td->totalTransferredBytes) / td->totalSize) : 0;
     if (td->type == MegaTransfer::TYPE_DOWNLOAD)
     {
         ui->sDownloads->setCurrentWidget(ui->wActiveDownloads);
