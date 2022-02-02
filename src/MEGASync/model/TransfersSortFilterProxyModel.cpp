@@ -329,7 +329,7 @@ void TransfersSortFilterProxyModel::onCancelClearTransfer()
         auto index = delegateWidget->getCurrentIndex();
         index = mapToSource(index);
         indexes.append(index);
-        sourModel->cancelClearTransfers(indexes);
+        sourModel->cancelClearTransfers(indexes, false);
     }
 }
 

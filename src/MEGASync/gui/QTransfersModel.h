@@ -76,7 +76,7 @@ public:
 
     void getLinks(QList<int>& rows);
     void openFolderByIndex(const QModelIndex& index);
-    void cancelClearTransfers(const QModelIndexList& indexes);
+    void cancelClearTransfers(const QModelIndexList& indexes, bool clearAll);
     void pauseTransfers(const QModelIndexList& indexes, bool pauseState);
     void pauseResumeTransferByTag(TransferTag tag, bool pauseState);
 

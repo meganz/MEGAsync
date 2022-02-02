@@ -665,11 +665,13 @@ void QTransfersModel::openFolderByIndex(const QModelIndex& index)
     });
 }
 
-void QTransfersModel::cancelClearTransfers(const QModelIndexList& indexes)
+void QTransfersModel::cancelClearTransfers(const QModelIndexList& indexes, bool clearAll)
 {
     QMap<int, TransferTag> tags;
     QVector<TransferTag> rows;
     QVector<TransferTag> toCancel;
+    QVector<TransferTag> uploadToClear;
+    QVector<TransferTag> downloadToClear;
 
     mModelMutex->lockForWrite();
 
@@ -700,6 +702,17 @@ void QTransfersModel::cancelClearTransfers(const QModelIndexList& indexes)
             if (d->mState & TransferData::CANCELABLE_STATES_MASK)
             {
                 toCancel.push_back(d->mTag);
+            }
+            else if(!clearAll && d->mState & TransferData::FINISHED_STATES_MASK)
+            {
+                if(d->mType & TransferData::TransferType::TRANSFER_UPLOAD)
+                {
+                    uploadToClear.push_back(d->mTag);
+                }
+                else
+                {
+                    downloadToClear.push_back(d->mTag);
+                }
             }
 
             // Init row with row of first tag
@@ -735,6 +748,24 @@ void QTransfersModel::cancelClearTransfers(const QModelIndexList& indexes)
     for (auto item : toCancel)
     {
         mMegaApi->cancelTransferByTag(item);
+    }
+
+    if(clearAll)
+    {
+        mMegaApi->resetCompletedDownloads();
+        mMegaApi->resetCompletedUploads();
+    }
+    else
+    {
+        for (auto item : uploadToClear)
+        {
+            mMegaApi->clearCompletedUpload(item);
+        }
+
+        for (auto item : downloadToClear)
+        {
+            mMegaApi->clearCompletedDownload(item);
+        }
     }
 
     //Update stats
@@ -848,11 +879,11 @@ void QTransfersModel::updateTransfersCount()
     mTransfersCount.remainingUploads = mMegaApi->getNumPendingUploads();
     mTransfersCount.remainingDownloads = mMegaApi->getNumPendingDownloads();
 
-    mTransfersCount.totalUploads = mMegaApi->getTotalUploads();;
-    mTransfersCount.totalDownloads = mMegaApi->getTotalDownloads();;
+    mTransfersCount.totalUploads = mMegaApi->getTotalUploads();
+    mTransfersCount.totalDownloads = mMegaApi->getTotalDownloads();
 
-    mTransfersCount.completedDownloads = mTransfersCount.totalDownloads - mTransfersCount.remainingDownloads;
-    mTransfersCount.completedUploads = mTransfersCount.totalUploads - mTransfersCount.remainingUploads;
+    mTransfersCount.completedDownloads = mMegaApi->getCompletedDownloads();
+    mTransfersCount.completedUploads = mMegaApi->getCompletedUploads();
 
     mTransfersCount.completedDownloadBytes = mMegaApi->getTotalDownloadedBytes();
     mTransfersCount.leftDownloadBytes = mMegaApi->getTotalDownloadBytes();

@@ -119,7 +119,7 @@ void MegaTransferView::onCancelClearAllTransfers()
             indexes.push_back(index);
         }
 
-        mParentTransferWidget->getModel()->cancelClearTransfers(indexes);
+        mParentTransferWidget->getModel()->cancelClearTransfers(indexes, true);
         proxy->invalidate();
     }
 }
@@ -150,7 +150,7 @@ void MegaTransferView::onCancelClearSelection()
         }
 
         clearSelection();
-        mParentTransferWidget->getModel()->cancelClearTransfers(indexes);
+        mParentTransferWidget->getModel()->cancelClearTransfers(indexes, false);
     }
 }
 
