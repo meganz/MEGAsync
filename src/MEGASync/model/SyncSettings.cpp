@@ -103,7 +103,7 @@ SyncSetting::SyncSetting(QString initializer)
     mSync.reset(new MegaSync()); // MegaSync getters return fair enough defaults
 }
 
-SyncSetting::SyncSetting(const SyncData &osd, bool loadedFromPreviousSessions)
+SyncSetting::SyncSetting(const SyncData &osd, bool/* loadedFromPreviousSessions*/)
 {
     mSyncID = osd.mSyncID;
     mEnabled = osd.mEnabled;

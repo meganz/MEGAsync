@@ -100,7 +100,7 @@ public:
 #endif
 
     void setUnseenNotifications(long long value);
-    void setUnseenTypeNotifications(int all, int contacts, int shares, int payment);
+    void setUnseenTypeNotifications(long long all, long long contacts, long long shares, long long payment);
     long long getUnseenNotifications() const;
     int getLoggedInMode() const;
     void showNotifications();
@@ -272,6 +272,8 @@ protected:
     QPointer<AddBackupDialog> mAddBackupDialog;
     mega::MegaHandle mBackupRootHandle;
 
+ private:
+    static double computeRatio(long long completed, long long remaining);
 };
 
 #endif // INFODIALOG_H

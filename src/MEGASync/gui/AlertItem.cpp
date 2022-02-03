@@ -354,7 +354,7 @@ void AlertItem::setAlertContent(MegaUserAlert *alert)
                 expiredDate.setMSecsSinceEpoch(alert->getTimestamp(1) * 1000);
                 QDateTime currentDate(QDateTime::currentDateTime());
 
-                int daysExpired = currentDate.daysTo(expiredDate);
+                const int daysExpired = static_cast<int>(currentDate.daysTo(expiredDate));
                 if (daysExpired == 1)
                 {
                     notificationContent = tr("Your PRO membership plan will expire in 1 day");

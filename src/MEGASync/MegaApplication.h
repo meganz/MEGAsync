@@ -59,10 +59,11 @@ class TransferMetaData
 {
 public:
     TransferMetaData(int direction, int total = 0, int pending = 0, QString path = QString())
-                    : transferDirection(direction), totalTransfers(total), pendingTransfers(pending),
-                      localPath(path), totalFiles(0), totalFolders(0),
+                    : totalTransfers(total), pendingTransfers(pending),
+                      totalFiles(0), totalFolders(0),
                       transfersFileOK(0), transfersFolderOK(0),
-                      transfersFailed(0), transfersCancelled(0){}
+                      transfersFailed(0), transfersCancelled(0), transferDirection(direction),
+                      localPath(path) {}
 
     int totalTransfers;
     int pendingTransfers;
@@ -381,10 +382,10 @@ protected:
 
     QAction *guestSettingsAction;
     QAction *initialExitAction;
-    std::unique_ptr<QMenu> initialTrayMenu;
+    QPointer<QMenu> initialTrayMenu;
 
 #ifdef _WIN32
-    std::unique_ptr<QMenu> windowsMenu;
+    QPointer<QMenu> windowsMenu;
     QAction *windowsExitAction;
     QAction *windowsUpdateAction;
     QAction *windowsImportLinksAction;
@@ -396,8 +397,8 @@ protected:
 #endif
 
     std::unique_ptr<VerifyLockMessage> verifyEmail;
-    std::unique_ptr<QMenu> infoDialogMenu;
-    std::unique_ptr<QMenu> guestMenu;
+    QPointer<QMenu> infoDialogMenu;
+    QPointer<QMenu> guestMenu;
     QMenu emptyMenu;
 
     MenuItemAction *exitAction;
@@ -484,6 +485,7 @@ protected:
     MegaUploader *uploader;
     MegaDownloader *downloader;
     QTimer *periodicTasksTimer;
+    QTimer *networkCheckTimer;
     QTimer *infoDialogTimer;
     QTimer *firstTransferTimer;
     std::unique_ptr<std::thread> mMutexStealerThread;
@@ -493,7 +495,6 @@ protected:
     ChangeLogDialog *changeLogDialog;
     ImportMegaLinksDialog *importDialog;
     QMessageBox *exitDialog;
-    QMessageBox *sslKeyPinningError;
     NodeSelector *downloadNodeSelector;
     QString lastTrayMessage;
     QStringList extraLinks;
@@ -557,6 +558,28 @@ private:
     std::shared_ptr<ShellNotifier> mShellNotifier;
 #endif
     void loadSyncExclusionRules(QString email = QString());
+
+    static long long computeExclusionSizeLimit(const long long sizeLimitValue);
+
+    QList<QNetworkInterface> findNewNetworkInterfaces();
+    bool checkNetworkInterfaces(const QList<QNetworkInterface>& newNetworkInterfaces) const;
+    bool checkNetworkInterface(const QNetworkInterface& newNetworkInterface) const;
+    bool checkNetworkAddresses(const QNetworkInterface& oldNetworkInterface, const QNetworkInterface &newNetworkInterface) const;
+    bool checkIpAddress(const QHostAddress& ip, const QList<QNetworkAddressEntry>& oldAddresses, const QString& newNetworkInterfaceName) const;
+    static bool isActiveNetworkInterface(const QString& interfaceName, const QNetworkInterface::InterfaceFlags flags);
+    int countActiveIps(const QList<QNetworkAddressEntry>& addresses) const;
+    static bool isLocalIpv4(const QString& address);
+    static bool isLocalIpv6(const QString& address);
+    void logIpAddress(const char *message, const QHostAddress &ipAddress) const;
+
+    QString obfuscateIfNecessary(const QHostAddress& ipAddress) const;
+    static QString obfuscateAddress(const QHostAddress& ipAddress);
+    static QString obfuscateIpv4Address(const QHostAddress& ipAddress);
+    static QString obfuscateIpv6Address(const QHostAddress& ipAddress);
+    static QStringList explodeIpv6(const QHostAddress &ipAddress);
+
+    void reconnectIfNecessary(const bool disconnected, const QList<QNetworkInterface>& newNetworkInterfaces);
+    bool isIdleForTooLong() const;
 };
 
 class DeferPreferencesSyncForScope

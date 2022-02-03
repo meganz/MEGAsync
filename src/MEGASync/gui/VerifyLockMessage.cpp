@@ -13,8 +13,8 @@
 using namespace mega;
 
 VerifyLockMessage::VerifyLockMessage(int lockStatus, bool isMainDialogAvailable, QWidget *parent) :
-    QDialog(parent), m_haveMainDialog(isMainDialogAvailable),
-    m_ui(new Ui::VerifyLockMessage)
+    QDialog(parent), m_ui(new Ui::VerifyLockMessage),
+    m_haveMainDialog(isMainDialogAvailable)
 {
     m_ui->setupUi(this);
     setAttribute(Qt::WA_QuitOnClose, false);
@@ -126,7 +126,7 @@ void VerifyLockMessage::regenerateUI(int currentStatus, bool force)
     }
 }
 
-void VerifyLockMessage::onRequestFinish(MegaApi *api, MegaRequest *request, MegaError *e)
+void VerifyLockMessage::onRequestFinish(MegaApi*, MegaRequest* request, MegaError* e)
 {
     int error = e->getErrorCode();
 

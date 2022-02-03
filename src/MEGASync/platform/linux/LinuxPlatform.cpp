@@ -28,7 +28,7 @@ QString LinuxPlatform::set_icon = QString::fromUtf8("gvfs-set-attribute -t strin
 QString LinuxPlatform::remove_icon = QString::fromUtf8("gvfs-set-attribute -t unset \"%1\" metadata::custom-icon");
 QString LinuxPlatform::custom_icon = QString::fromUtf8("/usr/share/icons/hicolor/256x256/apps/mega.png");
 
-void LinuxPlatform::initialize(int argc, char *argv[])
+void LinuxPlatform::initialize(int /*argc*/, char** /*argv*/)
 {
 }
 
@@ -37,7 +37,7 @@ void LinuxPlatform::prepareForSync()
 
 }
 
-bool LinuxPlatform::enableTrayIcon(QString executable)
+bool LinuxPlatform::enableTrayIcon(QString /*executable*/)
 {
     return false;
 }
@@ -150,7 +150,7 @@ void LinuxPlatform::stopShellDispatcher()
     }
 }
 
-void LinuxPlatform::syncFolderAdded(QString syncPath, QString syncName, QString syncID)
+void LinuxPlatform::syncFolderAdded(QString syncPath, QString /*syncName*/, QString /*syncID*/)
 {
     if (QFile(custom_icon).exists())
     {
@@ -169,7 +169,7 @@ void LinuxPlatform::syncFolderAdded(QString syncPath, QString syncName, QString 
     }
 }
 
-void LinuxPlatform::syncFolderRemoved(QString syncPath, QString syncName, QString syncID)
+void LinuxPlatform::syncFolderRemoved(QString syncPath, QString /*syncName*/, QString /*syncID*/)
 {
     QFile *folder = new QFile(syncPath);
     if (folder->exists())
@@ -199,12 +199,12 @@ void LinuxPlatform::notifyAllSyncFoldersRemoved()
 
 }
 
-QByteArray LinuxPlatform::encrypt(QByteArray data, QByteArray key)
+QByteArray LinuxPlatform::encrypt(QByteArray data, QByteArray /*key*/)
 {
     return data;
 }
 
-QByteArray LinuxPlatform::decrypt(QByteArray data, QByteArray key)
+QByteArray LinuxPlatform::decrypt(QByteArray data, QByteArray /*key*/)
 {
     return data;
 }
@@ -314,9 +314,10 @@ QString LinuxPlatform::getWindowManagerName()
 
     if (!cached)
     {
+        const auto appRootWindow = static_cast<xcb_window_t>(QX11Info::appRootWindow());
         window_manager_name =
           getProperty(QX11Info::connection(),
-                      QX11Info::appRootWindow(),
+                      appRootWindow,
                       "_NET_WM_NAME");
 
         cached = true;
@@ -325,17 +326,17 @@ QString LinuxPlatform::getWindowManagerName()
     return QString::fromStdString(window_manager_name);
 }
 
-void LinuxPlatform::enableDialogBlur(QDialog *dialog)
+void LinuxPlatform::enableDialogBlur(QDialog*)
 {
 
 }
 
-void LinuxPlatform::activateBackgroundWindow(QDialog *)
+void LinuxPlatform::activateBackgroundWindow(QDialog*)
 {
 
 }
 
-void LinuxPlatform::execBackgroundWindow(QDialog *window)
+void LinuxPlatform::execBackgroundWindow(QDialog* window)
 {
     window->exec();
 }
@@ -444,7 +445,7 @@ bool LinuxPlatform::isUserActive()
 xcb_atom_t getAtom(xcb_connection_t * const connection, const char *name)
 {
     xcb_intern_atom_cookie_t cookie =
-      xcb_intern_atom(connection, 0, strlen(name), name);
+      xcb_intern_atom(connection, 0, static_cast<uint16_t>(strlen(name)), name);
     xcb_intern_atom_reply_t *reply =
       xcb_intern_atom_reply(connection, cookie, nullptr);
 

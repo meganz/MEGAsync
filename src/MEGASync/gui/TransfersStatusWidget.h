@@ -53,6 +53,9 @@ private:
 protected:
     bool eventFilter(QObject *obj, QEvent *event);
 
+private:
+    static int computePercentCircle(const qreal percentCircle, const int residual);
+
 };
 
 #endif // TransfersStatusWidget_H

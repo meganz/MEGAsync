@@ -6,7 +6,9 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/BackupTableWidget.cpp \
     $$PWD/BackupsWizard.cpp \
     $$PWD/BalloonToolTip.cpp \
+    $$PWD/EventHelper.cpp \
     $$PWD/InfoDialog.cpp \
+    $$PWD/NotificationsSettings.cpp \
     $$PWD/OverQuotaDialog.cpp \
     $$PWD/RenameTargetFolderDialog.cpp \
     $$PWD/SetupWizard.cpp \
@@ -31,7 +33,6 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/GuestWidget.cpp \
     $$PWD/StreamingFromMegaDialog.cpp \
     $$PWD/MegaProgressCustomDialog.cpp \
-    $$PWD/ConfirmSSLexception.cpp \
     $$PWD/UpgradeDialog.cpp \
     $$PWD/PlanWidget.cpp \
     $$PWD/InfoWizard.cpp \
@@ -78,7 +79,9 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/WaitingSpinnerWidget.cpp \
     $$PWD/ProxySettings.cpp \
     $$PWD/BandwidthSettings.cpp \
-    $$PWD/RemoveBackupDialog.cpp
+    $$PWD/RemoveBackupDialog.cpp \
+    $$PWD/SwitchButton.cpp \
+    $$PWD/GuiUtilities.cpp
 
 HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/AddBackupDialog.h \
@@ -86,7 +89,9 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/BackupTableWidget.h \
     $$PWD/BackupsWizard.h \
     $$PWD/BalloonToolTip.h \
+    $$PWD/EventHelper.h \
     $$PWD/InfoDialog.h \
+    $$PWD/NotificationsSettings.h \
     $$PWD/OverQuotaDialog.h \
     $$PWD/RenameTargetFolderDialog.h \
     $$PWD/SetupWizard.h \
@@ -111,7 +116,6 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/GuestWidget.h \
     $$PWD/StreamingFromMegaDialog.h \
     $$PWD/MegaProgressCustomDialog.h \
-    $$PWD/ConfirmSSLexception.h \
     $$PWD/UpgradeDialog.h \
     $$PWD/PlanWidget.h \
     $$PWD/InfoWizard.h \
@@ -158,7 +162,9 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/WaitingSpinnerWidget.h \
     $$PWD/ProxySettings.h \
     $$PWD/BandwidthSettings.h \
-    $$PWD/RemoveBackupDialog.h
+    $$PWD/RemoveBackupDialog.h \
+    $$PWD/SwitchButton.h \
+    $$PWD/GuiUtilities.h
 
 INCLUDEPATH += $$PWD
 
@@ -186,7 +192,6 @@ win32 {
                 $$PWD/win/ChangeLogDialog.ui \
                 $$PWD/win/GuestWidget.ui \
                 $$PWD/win/StreamingFromMegaDialog.ui \
-                $$PWD/win/ConfirmSSLexception.ui \
                 $$PWD/win/MegaProgressCustomDialog.ui \
                 $$PWD/win/PlanWidget.ui \
                 $$PWD/win/UpgradeDialog.ui \
@@ -222,7 +227,8 @@ win32 {
                 $$PWD/win/BackupSetupSuccessDialog.ui \
                 $$PWD/win/NewFolderDialog.ui \
                 $$PWD/win/AddBackupDialog.ui \
-                $$PWD/win/RemoveBackupDialog.ui
+                $$PWD/win/RemoveBackupDialog.ui \
+                $$PWD/win/NotificationsSettings.ui
 }
 
 macx {
@@ -247,7 +253,6 @@ macx {
                 $$PWD/macx/PermissionsDialog.ui \
                 $$PWD/macx/PermissionsWidget.ui \
                 $$PWD/macx/MegaProgressCustomDialog.ui \
-                $$PWD/macx/ConfirmSSLexception.ui \
                 $$PWD/macx/PlanWidget.ui \
                 $$PWD/macx/UpgradeDialog.ui \
                 $$PWD/macx/InfoWizard.ui \
@@ -283,7 +288,8 @@ macx {
                 $$PWD/macx/BackupSetupSuccessDialog.ui \
                 $$PWD/macx/NewFolderDialog.ui \
                 $$PWD/macx/AddBackupDialog.ui \
-                $$PWD/macx/RemoveBackupDialog.ui
+                $$PWD/macx/RemoveBackupDialog.ui \
+                $$PWD/macx/NotificationsSettings.ui
 
     #Asset catalog need to load SF symbol images of toolbar items for custom NSToolbar
     QMAKE_ASSET_CATALOGS += $$PWD/images/Images.xcassets
@@ -291,11 +297,12 @@ macx {
     QT += macextras
 
     OBJECTIVE_SOURCES +=    $$PWD/CocoaHelpButton.mm \
+                            $$PWD/CocoaSwitchButton.mm \
                             $$PWD/MegaSystemTrayIcon.mm \
                             $$PWD/QMacSpinningProgressIndicator.mm \
                             $$PWD/QSegmentedControl.mm
 
-    HEADERS += $$PWD/CocoaHelpButton.h $$PWD/MegaSystemTrayIcon.h $$PWD/QSegmentedControl.h
+    HEADERS += $$PWD/CocoaHelpButton.h $$PWD/CocoaSwitchButton.h $$PWD/MegaSystemTrayIcon.h $$PWD/QSegmentedControl.h
 
     HEADERS += $$PWD/PermissionsDialog.h \
                $$PWD/PermissionsWidget.h \
@@ -332,7 +339,6 @@ unix:!macx {
                 $$PWD/linux/PermissionsDialog.ui \
                 $$PWD/linux/PermissionsWidget.ui \
                 $$PWD/linux/MegaProgressCustomDialog.ui \
-                $$PWD/linux/ConfirmSSLexception.ui \
                 $$PWD/linux/PlanWidget.ui \
                 $$PWD/linux/UpgradeDialog.ui \
                 $$PWD/linux/InfoWizard.ui \
@@ -366,7 +372,8 @@ unix:!macx {
                 $$PWD/linux/BackupSetupSuccessDialog.ui \
                 $$PWD/linux/NewFolderDialog.ui \
                 $$PWD/linux/AddBackupDialog.ui \
-                $$PWD/linux/RemoveBackupDialog.ui
+                $$PWD/linux/RemoveBackupDialog.ui \
+                $$PWD/linux/NotificationsSettings.ui
 
     HEADERS += $$PWD/PermissionsDialog.h \
                $$PWD/PermissionsWidget.h

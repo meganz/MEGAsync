@@ -12,25 +12,21 @@ extern Q_CORE_EXPORT int qt_ntfs_permission_lookup;
 #endif
 
 const char Preferences::CLIENT_KEY[] = "FhMgXbqb";
-const char Preferences::USER_AGENT[] = "MEGAsync/4.6.2.0";
-const int Preferences::VERSION_CODE = 4602;
+const char Preferences::USER_AGENT[] = "MEGAsync/4.6.3.0";
+const int Preferences::VERSION_CODE = 4603;
 const int Preferences::BUILD_ID = 0;
 // Do not change the location of VERSION_STRING, create_tarball.sh parses this file
-const QString Preferences::VERSION_STRING = QString::fromAscii("4.6.2");
-QString Preferences::SDK_ID = QString::fromAscii("301933f");
+const QString Preferences::VERSION_STRING = QString::fromAscii("4.6.3");
+QString Preferences::SDK_ID = QString::fromAscii("995b5c9");
 const QString Preferences::CHANGELOG = QString::fromUtf8(QT_TR_NOOP(
-    "- Full redesign of settings with a new look and feel.\n"
-    "- No longer supporting macOS versions below 10.12.\n"
-    "- Multi-currency support added for upgrade options.\n"
-    "- High DPI support for Windows platform improved.\n"
-    "- Crashes previously detected on Windows, Linux and macOS now fixed.\n"
-    "- Other performance improvements and adjustments.\n"
-    "- Other UI fixes and adjustments."));
+    "- Strengthen cryptographic security on Linux repositories.\n"
+    "- Fix memory issues with problematic PDF files.\n"));
 
 const QString Preferences::TRANSLATION_FOLDER = QString::fromAscii("://translations/");
 const QString Preferences::TRANSLATION_PREFIX = QString::fromAscii("MEGASyncStrings_");
 
 int Preferences::STATE_REFRESH_INTERVAL_MS        = 10000;
+int Preferences::NETWORK_REFRESH_INTERVAL_MS      = 30000;
 int Preferences::FINISHED_TRANSFER_REFRESH_INTERVAL_MS        = 10000;
 
 long long Preferences::OQ_DIALOG_INTERVAL_MS = 604800000; // 7 days
@@ -282,9 +278,13 @@ const QString Preferences::transferOverQuotaStreamDialogLastExecutionKey = QStri
 const QString Preferences::storageOverQuotaUploadsDialogLastExecutionKey = QString::fromAscii("storageOverQuotaUploadsDialogLastExecution");
 const QString Preferences::storageOverQuotaSyncsDialogLastExecutionKey = QString::fromAscii("storageOverQuotaSyncsDialogLastExecution");
 
+const bool Preferences::defaultShowNotifications = true;
+
+const bool Preferences::defaultDeprecatedNotifications      = true;
+const QString Preferences::showDeprecatedNotificationsKey   = QString::fromAscii("showNotifications");
+
 const QString Preferences::accountTypeKey           = QString::fromAscii("accountType");
 const QString Preferences::proExpirityTimeKey       = QString::fromAscii("proExpirityTime");
-const QString Preferences::showNotificationsKey     = QString::fromAscii("showNotifications");
 const QString Preferences::startOnStartupKey        = QString::fromAscii("startOnStartup");
 const QString Preferences::languageKey              = QString::fromAscii("language");
 const QString Preferences::updateAutomaticallyKey   = QString::fromAscii("updateAutomatically");
@@ -376,8 +376,9 @@ const QString Preferences::lastPublicHandleTypeKey = QString::fromAscii("lastPub
 const QString Preferences::disabledSyncsKey = QString::fromAscii("disabledSyncs");
 const QString Preferences::neverCreateLinkKey       = QString::fromUtf8("neverCreateLink");
 const QString Preferences::notifyDisabledSyncsKey = QString::fromAscii("notifyDisabledSyncs");
+const QString Preferences::importMegaLinksEnabledKey = QString::fromAscii("importMegaLinksEnabled");
+const QString Preferences::downloadMegaLinksEnabledKey = QString::fromAscii("downloadMegaLinksEnabled");
 
-const bool Preferences::defaultShowNotifications    = true;
 const bool Preferences::defaultStartOnStartup       = true;
 const bool Preferences::defaultUpdateAutomatically  = true;
 const bool Preferences::defaultUpperSizeLimit       = false;
@@ -418,6 +419,9 @@ const int  Preferences::defaultAccountStatus      = STATE_NOT_INITIATED;
 const bool  Preferences::defaultNeedsFetchNodes   = false;
 
 const bool  Preferences::defaultNeverCreateLink   = false;
+
+const bool  Preferences::defaultImportMegaLinksEnabled = true;
+const bool  Preferences::defaultDownloadMegaLinksEnabled = true;
 
 Preferences *Preferences::preferences = NULL;
 
@@ -508,6 +512,10 @@ void Preferences::initialize(QString dataPath)
     {
         MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Cleaning settings after error encountered.").toUtf8().constData());
         clearAll();
+    }
+    else
+    {
+        recoverDeprecatedNotificationsSettings();
     }
 }
 
@@ -1256,17 +1264,102 @@ void Preferences::setProExpirityTime(long long value)
     assert(logged());
     setValueConcurrent(proExpirityTimeKey, value);
 }
+/************ NOTIFICATIONS GETTERS/SETTERS ************/
 
-bool Preferences::showNotifications()
+bool Preferences::isNotificationEnabled(NotificationsTypes type, bool includingGeneralSwitch)
 {
-    return getValueConcurrent<bool>(showNotificationsKey, defaultShowNotifications);
+    bool value(false);
+
+    if(!includingGeneralSwitch || isGeneralSwitchNotificationsOn())
+    {
+        auto key = notificationsTypeToString(type);
+
+        if(!key.isEmpty())
+        {
+            value = getValueConcurrent<bool>(key, defaultShowNotifications);
+        }
+    }
+
+    return value;
 }
 
-void Preferences::setShowNotifications(bool value)
+bool Preferences::isAnyNotificationEnabled(bool includingGeneralSwitch)
+{
+    bool result(false);
+
+    if(!includingGeneralSwitch || isGeneralSwitchNotificationsOn())
+    {
+        for(int index = notificationsTypeUT(NotificationsTypes::GENERAL_SWITCH_NOTIFICATIONS) + 1;
+            index < notificationsTypeUT(NotificationsTypes::LAST); ++index)
+        {
+           if(isNotificationEnabled((NotificationsTypes)index,includingGeneralSwitch))
+           {
+               result = true;
+               break;
+           }
+        }
+    }
+
+    return result;
+}
+
+bool Preferences::isGeneralSwitchNotificationsOn()
+{
+    bool generalSwitchNotificationsValue(false);
+
+    auto generalSwitchNotificationsKey = notificationsTypeToString(NotificationsTypes::GENERAL_SWITCH_NOTIFICATIONS);
+
+    if(!generalSwitchNotificationsKey.isEmpty())
+    {
+        generalSwitchNotificationsValue = getValueConcurrent<bool>(generalSwitchNotificationsKey, defaultShowNotifications);
+    }
+
+    return generalSwitchNotificationsValue;
+}
+
+void Preferences::enableNotifications(NotificationsTypes type, bool value)
 {
     assert(logged());
-    setValueAndSyncConcurrent(showNotificationsKey, value);
+
+    auto key = notificationsTypeToString(type);
+
+    if(!key.isEmpty())
+    {
+        setValueAndSyncConcurrent(key, value);
+    }
 }
+
+void Preferences::recoverDeprecatedNotificationsSettings()
+{
+    QVariant deprecatedGlobalNotifications = getValueConcurrent<QVariant>(showDeprecatedNotificationsKey);
+    if(!deprecatedGlobalNotifications.isNull())
+    {
+        assert(logged());
+        for(int index = notificationsTypeUT(NotificationsTypes::GENERAL_SWITCH_NOTIFICATIONS) + 1;
+            index < notificationsTypeUT(NotificationsTypes::LAST); ++index)
+        {
+            auto key = notificationsTypeToString((NotificationsTypes)index);
+
+            if(!key.isEmpty())
+            {
+               setValueAndSyncConcurrent(key,deprecatedGlobalNotifications);
+            }
+        }
+
+        QMutexLocker locker(&mutex);
+        settings->remove(showDeprecatedNotificationsKey);
+        removeFromCache(showDeprecatedNotificationsKey);
+        settings->sync();
+    }
+}
+
+QString Preferences::notificationsTypeToString(NotificationsTypes type)
+{
+    QMetaEnum metaEnum = QMetaEnum::fromType<NotificationsTypes>();
+    return QString::fromUtf8(metaEnum.valueToKey(notificationsTypeUT(type)));
+}
+
+/************ END OF NOTIFICATIONS GETTERS/SETTERS ************/
 
 bool Preferences::startOnStartup()
 {
@@ -1944,6 +2037,30 @@ void Preferences::setImportFolder(long long value)
 {
     assert(logged());
     setValueAndSyncConcurrent(importFolderKey, value);
+}
+
+bool Preferences::getImportMegaLinksEnabled()
+{
+    assert(logged());
+    return getValueConcurrent<bool>(importMegaLinksEnabledKey, defaultImportMegaLinksEnabled);
+}
+
+void Preferences::setImportMegaLinksEnabled(const bool value)
+{
+    assert(logged());
+    setValueAndSyncConcurrent(importMegaLinksEnabledKey, value);
+}
+
+bool Preferences::getDownloadMegaLinksEnabled()
+{
+    assert(logged());
+    return getValueConcurrent<bool>(downloadMegaLinksEnabledKey, defaultDownloadMegaLinksEnabled);
+}
+
+void Preferences::setDownloadMegaLinksEnabled(const bool value)
+{
+    assert(logged());
+    setValueAndSyncConcurrent(downloadMegaLinksEnabledKey, value);
 }
 
 bool Preferences::neverCreateLink()
@@ -3100,6 +3217,7 @@ void Preferences::overridePreferences(const QSettings &settings)
     overridePreference(settings, QString::fromUtf8("PAYWALL_NOTIFICATION_INTERVAL_MS"), Preferences::PAYWALL_NOTIFICATION_INTERVAL_MS);
     overridePreference(settings, QString::fromUtf8("USER_INACTIVITY_MS"), Preferences::USER_INACTIVITY_MS);
     overridePreference(settings, QString::fromUtf8("STATE_REFRESH_INTERVAL_MS"), Preferences::STATE_REFRESH_INTERVAL_MS);
+    overridePreference(settings, QString::fromUtf8("NETWORK_REFRESH_INTERVAL_MS"), Preferences::NETWORK_REFRESH_INTERVAL_MS);
 
     overridePreference(settings, QString::fromUtf8("TRANSFER_OVER_QUOTA_DIALOG_DISABLE_DURATION_MS"), Preferences::OVER_QUOTA_DIALOG_DISABLE_DURATION);
     overridePreference(settings, QString::fromUtf8("TRANSFER_OVER_QUOTA_OS_NOTIFICATION_DISABLE_DURATION_MS"), Preferences::OVER_QUOTA_OS_NOTIFICATION_DISABLE_DURATION);

@@ -365,7 +365,7 @@ void HTTPServer::processRequest(QAbstractSocket *socket, HTTPRequest request)
         openLinkRequest(response, request);
         break;
     case EXTERNAL_DOWNLOAD_REQUEST_START:
-        externalDownloadRequest(response, request, safeServer && safeSocket);
+        externalDownloadRequest(response, request, socket);
         break;
     case EXTERNAL_FILE_UPLOAD_REQUEST_START:
         externalFileUploadRequest(response, request);
@@ -507,8 +507,11 @@ void HTTPServer::openLinkRequest(QString &response, const HTTPRequest& request)
     }
 }
 
-void HTTPServer::externalDownloadRequest(QString &response, const HTTPRequest& request, bool safeServerAndSocket)
+void HTTPServer::externalDownloadRequest(QString &response, const HTTPRequest& request, QAbstractSocket* socket)
 {
+    QPointer<QAbstractSocket> safeSocket = socket;
+    QPointer<HTTPServer> safeServer = this;
+
     MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, "ExternalDownload command received from the webclient");
     int start = request.data.indexOf(QString::fromUtf8("\"f\":[")) + 5;
     if (start > 0)
@@ -552,7 +555,7 @@ void HTTPServer::externalDownloadRequest(QString &response, const HTTPRequest& r
                 QString file = request.data.mid(start, end - start);
                 start = end + 1;
 
-                int type = Utilities::extractJSONNumber(file, QString::fromUtf8("t"));
+                long long type = Utilities::extractJSONNumber(file, QString::fromUtf8("t"));
                 if (type < 0)
                 {
                     MegaApi::log(MegaApi::LOG_LEVEL_ERROR, "Node without type in webclient request");
@@ -590,7 +593,7 @@ void HTTPServer::externalDownloadRequest(QString &response, const HTTPRequest& r
                     QString parentHandle = Utilities::extractJSONString(file, QString::fromUtf8("p"));
                     p = megaApi->base64ToHandle(parentHandle.toUtf8().constData());
                     QApplication::processEvents();
-                    if (safeServerAndSocket)
+                    if (!safeServer || !safeSocket)
                     {
                         return;
                     }
@@ -769,7 +772,7 @@ void HTTPServer::externalFolderSyncCheck(QString &response, const HTTPRequest& r
 void HTTPServer::externalOpenTransferManager(QString &response, const HTTPRequest& request)
 {
     MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, "Open Transfer Manager command received from the webclient");
-    int tab = Utilities::extractJSONNumber(request.data, QString::fromUtf8("t"));
+    int tab = static_cast<int>(Utilities::extractJSONNumber(request.data, QString::fromUtf8("t")));
     if (tab < 0 || tab > 3) //Not valid number tab (all, downloads, uploads, completed)
     {
         response = QString::number(MegaError::API_EARGS);

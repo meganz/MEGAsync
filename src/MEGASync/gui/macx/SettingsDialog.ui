@@ -397,19 +397,6 @@ margin-right: 5px;
                  <number>8</number>
                 </property>
                 <item>
-                 <widget class="QCheckBox" name="cShowNotifications">
-                  <property name="sizePolicy">
-                   <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
-                    <horstretch>0</horstretch>
-                    <verstretch>0</verstretch>
-                   </sizepolicy>
-                  </property>
-                  <property name="text">
-                   <string>Show notifications</string>
-                  </property>
-                 </widget>
-                </item>
-                <item>
                  <widget class="QCheckBox" name="cStartOnStartup">
                   <property name="enabled">
                    <bool>true</bool>
@@ -4337,7 +4324,7 @@ border-radius: 8px;
                    </size>
                   </property>
                   <property name="text">
-                   <string>Restart MEGA Desktop Application to apply changes.</string>
+                   <string>Restart MEGA Desktop App to apply changes.</string>
                   </property>
                   <property name="wordWrap">
                    <bool>true</bool>
@@ -4483,7 +4470,7 @@ border-radius: 8px;
                  </sizepolicy>
                 </property>
                 <property name="text">
-                 <string>Change Settings...</string>
+                 <string>Change Settings…</string>
                 </property>
                 <property name="autoDefault">
                  <bool>false</bool>
@@ -4626,7 +4613,7 @@ margin-right: 8px;
                  </sizepolicy>
                 </property>
                 <property name="text">
-                 <string>Change Settings...</string>
+                 <string>Change Settings…</string>
                 </property>
                 <property name="autoDefault">
                  <bool>false</bool>
@@ -4655,6 +4642,7 @@ margin-right: 8px;
        </item>
       </layout>
      </widget>
+     <widget class="NotificationsSettings" name="pNotifications"/>
     </widget>
    </item>
    <item>
@@ -4827,7 +4815,7 @@ margin-right: 32px;</string>
                </sizepolicy>
               </property>
               <property name="text">
-               <string>Logout</string>
+               <string>Log out</string>
               </property>
               <property name="autoDefault">
                <bool>false</bool>
@@ -4946,6 +4934,7 @@ margin-right: 32px;</string>
            </layout>
           </widget>
           <widget class="QWidget" name="wNetworkFooter"/>
+          <widget class="QWidget" name="wNotificationsFooter"/>
          </widget>
         </item>
        </layout>
@@ -4961,6 +4950,12 @@ margin-right: 32px;</string>
    <class>AvatarWidget</class>
    <extends>QWidget</extends>
    <header>AvatarWidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>NotificationsSettings</class>
+   <extends>QWidget</extends>
+   <header location="global">NotificationsSettings.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
@@ -4982,7 +4977,6 @@ margin-right: 32px;</string>
   </customwidget>
  </customwidgets>
  <tabstops>
-  <tabstop>cShowNotifications</tabstop>
   <tabstop>cStartOnStartup</tabstop>
   <tabstop>cOverlayIcons</tabstop>
   <tabstop>cAutoUpdate</tabstop>

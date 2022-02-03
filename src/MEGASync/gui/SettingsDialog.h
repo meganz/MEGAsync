@@ -45,6 +45,7 @@ public:
         SECURITY_TAB = 4,
         FOLDERS_TAB  = 5,
         NETWORK_TAB  = 6,
+        NOTIFICATIONS_TAB = 7
         };
 
     explicit SettingsDialog(MegaApplication* app, bool proxyOnly = false, QWidget* parent = nullptr);
@@ -112,7 +113,6 @@ private slots:
     void on_bClearFileVersions_clicked();
     void on_cCacheSchedulerEnabled_toggled();
     void on_sCacheSchedulerDays_valueChanged(int i);
-    void on_cShowNotifications_toggled(bool checked);
     void on_cAutoUpdate_toggled(bool checked);
     void on_cStartOnStartup_toggled(bool checked);
     void on_cLanguage_currentIndexChanged(int index);
@@ -184,6 +184,9 @@ private slots:
     void on_bOpenProxySettings_clicked();
     void on_bOpenBandwidthSettings_clicked();
 
+    //Notifications
+    void on_bNotifications_clicked();
+
 protected:
     void changeEvent(QEvent* event) override;
 #ifdef Q_OS_MACOS
@@ -235,6 +238,7 @@ private:
     std::unique_ptr<QMacToolBarItem> bSecurity;
     std::unique_ptr<QMacToolBarItem> bFolders;
     std::unique_ptr<QMacToolBarItem> bNetwork;
+    std::unique_ptr<QMacToolBarItem> bNotifications;
 #endif
 
     Ui::SettingsDialog* mUi;

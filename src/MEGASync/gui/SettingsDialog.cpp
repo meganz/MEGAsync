@@ -43,7 +43,7 @@ using namespace mega;
 #ifdef Q_OS_MACOS
 //Const values used for macOS Settings dialog resize animation
 constexpr auto SETTING_ANIMATION_PAGE_TIMEOUT{150};//ms
-constexpr auto SETTING_ANIMATION_GENERAL_TAB_HEIGHT{583};
+constexpr auto SETTING_ANIMATION_GENERAL_TAB_HEIGHT{555};
 constexpr auto SETTING_ANIMATION_ACCOUNT_TAB_HEIGHT{295};//px height
 constexpr auto SETTING_ANIMATION_SYNCS_TAB_HEIGHT{529};
 // FIXME: Re-evaluate size for Backup tab
@@ -51,6 +51,7 @@ constexpr auto SETTING_ANIMATION_BACKUP_TAB_HEIGHT{400};
 constexpr auto SETTING_ANIMATION_SECURITY_TAB_HEIGHT{372};
 constexpr auto SETTING_ANIMATION_FOLDERS_TAB_HEIGHT{513};
 constexpr auto SETTING_ANIMATION_NETWORK_TAB_HEIGHT{196};
+constexpr auto SETTING_ANIMATION_NOTIFICATIONS_TAB_HEIGHT{372};
 #endif
 
 const QString SYNCS_TAB_MENU_LABEL_QSS = QString::fromUtf8("QLabel{ border-image: url(%1); }");
@@ -103,10 +104,11 @@ SettingsDialog::SettingsDialog(MegaApplication* app, bool proxyOnly, QWidget* pa
     mBackupRootHandle(mega::INVALID_HANDLE),
     mBackupRootDirName(tr("My Backups"))
 {
-    mUi->setupUi(this);
-    setAttribute(Qt::WA_QuitOnClose, false);
+
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
 
+    mUi->setupUi(this);
+    setAttribute(Qt::WA_QuitOnClose, false);
     // override whatever indexes might be set in .ui files (frequently checked in by mistake)
     mUi->wStack->setCurrentWidget(mUi->pGeneral);
     mUi->wStackFooter->setCurrentWidget(mUi->wGeneralFooter);
@@ -176,7 +178,7 @@ SettingsDialog::SettingsDialog(MegaApplication* app, bool proxyOnly, QWidget* pa
 #ifdef Q_OS_MACOS
     this->setWindowTitle(tr("Preferences"));
     mUi->tSyncs->horizontalHeader()->setDefaultAlignment(Qt::AlignLeft);
-    mUi->cStartOnStartup->setText(tr("Open at login"));
+    mUi->cStartOnStartup->setText(tr("Launch at login"));
     mUi->lLocalDebris->setText(mUi->lLocalDebris->text().arg(QString::fromUtf8(MEGA_DEBRIS_FOLDER)));
 
 
@@ -318,6 +320,15 @@ void SettingsDialog::openSettingsTab(int tab)
 #endif
         break;
 
+    case NOTIFICATIONS_TAB:
+#ifndef Q_OS_MACOS
+        mUi->bNotifications->click();
+#else
+        mToolBar->setSelectedItem(bNotifications.get());
+        emit bNotifications.get()->activated();
+#endif
+        break;
+
     default:
         break;
     }
@@ -334,6 +345,7 @@ void SettingsDialog::setProxyOnly(bool proxyOnly)
     mUi->bBackup->setEnabled(!proxyOnly);
     mUi->bSecurity->setEnabled(!proxyOnly);
     mUi->bFolders->setEnabled(!proxyOnly);
+    mUi->bNotifications->setEnabled(!proxyOnly);
 #endif
 
     if (proxyOnly)
@@ -395,6 +407,7 @@ void SettingsDialog::initializeNativeUIComponents()
     QString security(QString::fromUtf8("settings-security"));
     QString folders(QString::fromUtf8("settings-folders"));
     QString network(QString::fromUtf8("settings-network"));
+    QString notifications(QString::fromUtf8("settings-notifications"));
 
     // add Items
     bGeneral.reset(mToolBar->addItem(QIcon(), tr("General")));
@@ -431,6 +444,11 @@ void SettingsDialog::initializeNativeUIComponents()
     mToolBar->customizeIconToolBarItem(bNetwork.get(), network);
     connect(bNetwork.get(), &QMacToolBarItem::activated,
             this, &SettingsDialog::on_bNetwork_clicked);
+
+    bNotifications.reset(mToolBar->addItem(QIcon(), tr("Notifications")));
+    mToolBar->customizeIconToolBarItem(bNotifications.get(), notifications);
+    connect(bNotifications.get(), &QMacToolBarItem::activated,
+            this, &SettingsDialog::on_bNotifications_clicked);
 
     mToolBar->setSelectableItems(true);
     mToolBar->setAllowsUserCustomization(false);
@@ -485,8 +503,6 @@ void SettingsDialog::loadSettings()
     mUi->cCacheSchedulerEnabled->setChecked(mPreferences->cleanerDaysLimit());
     mUi->sCacheSchedulerDays->setEnabled(mPreferences->cleanerDaysLimit());
     mUi->sCacheSchedulerDays->setValue(mPreferences->cleanerDaysLimitValue());
-
-    mUi->cShowNotifications->setChecked(mPreferences->showNotifications());
 
     if (!mPreferences->canUpdate(MegaApplication::applicationFilePath()))
     {
@@ -742,6 +758,10 @@ void SettingsDialog::onAnimationFinished()
     {
         mUi->pNetwork->show();
     }
+    else if (mUi->wStack->currentWidget() == mUi->pNotifications)
+    {
+        mUi->pNotifications->show();
+    }
 }
 
 void SettingsDialog::animateSettingPage(int endValue, int duration)
@@ -788,6 +808,7 @@ void SettingsDialog::reloadToolBarItemNames()
     bSecurity.get()->setText(tr("Security"));
     bFolders.get()->setText(tr("Folders"));
     bNetwork.get()->setText(tr("Network"));
+    bNotifications.get()->setText(tr("Notifications"));
 }
 #endif
 
@@ -800,7 +821,7 @@ void SettingsDialog::changeEvent(QEvent* event)
 #ifdef Q_OS_MACOS
         reloadToolBarItemNames();
         //review and check
-        mUi->cStartOnStartup->setText(tr("Open at login"));
+        mUi->cStartOnStartup->setText(tr("Launch at login"));
 
         mUi->lLocalDebris->setText(mUi->lLocalDebris->text().arg(QString::fromUtf8(MEGA_DEBRIS_FOLDER)));
 #else
@@ -968,12 +989,6 @@ void SettingsDialog::on_sCacheSchedulerDays_valueChanged(int i)
         mPreferences->setCleanerDaysLimitValue(i);
         mApp->cleanLocalCaches();
     }
-}
-
-void SettingsDialog::on_cShowNotifications_toggled(bool checked)
-{
-    if (mLoadingSettings) return;
-    mPreferences->setShowNotifications(checked);
 }
 
 void SettingsDialog::on_cAutoUpdate_toggled(bool checked)
@@ -1345,7 +1360,7 @@ void SettingsDialog::on_bStorageDetails_clicked()
 void SettingsDialog::on_bLogout_clicked()
 {
     QPointer<SettingsDialog> currentDialog = this;
-    if (QMegaMessageBox::question(nullptr, tr("Logout"),
+    if (QMegaMessageBox::question(nullptr, tr("Log out"),
                                   tr("Synchronization will stop working. Are you sure?"),
                                   QMessageBox::Yes|QMessageBox::No)
             == QMessageBox::Yes)
@@ -1969,6 +1984,7 @@ void SettingsDialog::savingSyncs(bool completed, QObject* item)
     mUi->bSecurity->setEnabled(completed);
     mUi->bFolders->setEnabled(completed);
     mUi->bNetwork->setEnabled(completed);
+    mUi->bNotifications->setEnabled(completed);
 #else
     mToolBar->setEnableToolbarItems(completed);
 #endif
@@ -2732,6 +2748,24 @@ void SettingsDialog::on_bOpenBandwidthSettings_clicked()
     mApp->setUseHttpsOnly(mPreferences->usingHttpsOnly());
 
     updateNetworkTab();
+}
+
+void SettingsDialog::on_bNotifications_clicked()
+{
+    emit userActivity();
+
+    if (mUi->wStack->currentWidget() == mUi->pNotifications)
+    {
+        return;
+    }
+
+    mUi->wStack->setCurrentWidget(mUi->pNotifications);
+
+#ifdef Q_OS_MACOS
+    emit closeMenus();
+    mUi->pNotifications->hide();
+    animateSettingPage(SETTING_ANIMATION_NOTIFICATIONS_TAB_HEIGHT, SETTING_ANIMATION_PAGE_TIMEOUT);
+#endif
 }
 
 void SettingsDialog::updateNetworkTab()

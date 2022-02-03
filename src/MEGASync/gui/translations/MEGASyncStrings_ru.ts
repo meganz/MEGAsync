@@ -1816,7 +1816,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Your queued transfers exceed the current quota available for your IP address and can therefore be interrupted.</source>
         <translatorcomment>Informative label to indicate that your queued transfers may be interrupted because the current account is above 90 percent of the transfer quota of the current account.</translatorcomment>
-        <translation>Ваши передачи в очереди превышают текущую квоту, доступную для вашего IP-адреса, и поэтому могут быть прерваны.</translation>
+        <translation>Передачи в очереди превышают текущую квоту, доступную для вашего IP-адреса, и поэтому могут быть прерваны.</translation>
     </message>
     <message>
         <source>You have [A][B] hours[/A] left to upgrade. After that, your data is subject to deletion.</source>
@@ -1927,7 +1927,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>[A]Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account.[/A]</source>
         <translatorcomment>Description label to indicate the user that his password may be leaked and needs to perform email verification to continue.</translatorcomment>
-        <translation>[A]Ваш пароль утёк и теперь используется плохими игроками для входа в ваши аккаунты, включая, но не ограничиваясь аккаунтом MEGA.[/A]</translation>
+        <translation>[A]Ваш пароль утёк и теперь используется мошенниками для входа в ваши аккаунты, включая, но не ограничиваясь аккаунтом MEGA.[/A]</translation>
     </message>
     <message>
         <source>Locked Accounts</source>
@@ -2149,22 +2149,22 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>MEGAsync is unable to connect. Please check your Internet connectivity and local firewall configuration. Note that most antivirus software includes a firewall.</source>
         <translatorcomment>Notification message launched when a connectivity problem occurs.</translatorcomment>
-        <translation>MEGAsync не может подключиться. Пожалуйста, проверьте подключение к Интернету и локальную конфигурацию брандмауэра. Обратите внимание, что большинство антивирусного программного обеспечения включает в себя межсетевой экран (файервол).</translation>
+        <translation>MEGAsync не может подключиться. Пожалуйста, проверьте подключение к Интернету и локальную конфигурацию файервола. Обратите внимание, что многие антивирусы включают в себя межсетевой экран (файервол).</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the remote folder doesn&apos;t exist</source>
         <translatorcomment>Notification message launched checking  remote synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.</translatorcomment>
-        <translation>Синхронизация &quot;%1&quot; была отключена, так как удалённая папка не существует</translation>
+        <translation>Синхронизация «%1» была отключена, так как удалённая папка не существует</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</source>
         <translatorcomment>Notification message launched checking  local synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.</translatorcomment>
-        <translation>Синхронизация &quot;%1&quot; была отключена, так как локальная папка не существует.</translation>
+        <translation>Синхронизация «%1» была отключена, так как локальная папка не существует</translation>
     </message>
     <message>
         <source>Your account has been blocked. Please contact support@mega.co.nz</source>
         <translatorcomment>Message displayed when an error occurs (BLOCK ACCOUNT) during a login operation.</translatorcomment>
-        <translation>Ваша учётная запись была заблокирована. Пожалуйста, свяжитесь с support@mega.nz</translation>
+        <translation>Ваш аккаунт был заблокирован. Пожалуйста, свяжитесь с support@mega.nz</translation>
     </message>
     <message>
         <source>Login error: %1</source>
@@ -3525,21 +3525,13 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Full redesign of settings with a new look and feel.
-- No longer supporting macOS versions below 10.12.
-- Multi-currency support added for upgrade options.
-- High DPI support for Windows platform improved.
-- Crashes previously detected on Windows, Linux and macOS now fixed.
-- Other performance improvements and adjustments.
-- Other UI fixes and adjustments.</source>
-        <translatorcomment>Changelog notes for v4.6.0 version</translatorcomment>
-        <translation>- Полностью переработан внешний вид настроек.
-- Больше не поддерживаются версии macOS ниже 10.12.
-- Мультивалютная поддержка для вариантов улучшения аккаунта.
-- Улучшена поддержка высокого разрешения экрана в Windows.
-- Исправлены сбои, обнаруженные ранее в Windows, Linux и macOS.
-- Прочие улучшения и корректировки производительности.
-- Прочие корректировки пользовательского интерфейса.</translation>
+        <source>- Strengthen cryptographic security on Linux repositories.
+- Fix memory issues with problematic PDF files.
+</source>
+        <translatorcomment>Changelog v4.6.3 (linux only)</translatorcomment>
+        <translation>- Усилена криптографическая защита Linux-репозиториев.
+- Устранены ошибки памяти при работе с проблематичными PDF-файлами.
+</translation>
     </message>
 </context>
 <context>

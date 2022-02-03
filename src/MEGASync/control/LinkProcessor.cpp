@@ -16,7 +16,7 @@ LinkProcessor::LinkProcessor(QStringList linkList, MegaApi *megaApi, MegaApi *me
     for (int i = 0; i < linkList.size(); i++)
     {
         linkSelected.append(false);
-        linkNode.append(NULL);
+        linkNode.append(nullptr);
         linkError.append(MegaError::API_ENOENT);
     }
 
@@ -32,10 +32,6 @@ LinkProcessor::LinkProcessor(QStringList linkList, MegaApi *megaApi, MegaApi *me
 LinkProcessor::~LinkProcessor()
 {
     delete delegateListener;
-    for (int i = 0; i < linkNode.size(); i++)
-    {
-        delete linkNode[i];
-    }
 }
 
 QString LinkProcessor::getLink(int id)
@@ -53,7 +49,7 @@ int LinkProcessor::getError(int id)
     return linkError[id];
 }
 
-MegaNode *LinkProcessor::getNode(int id)
+std::shared_ptr<MegaNode> LinkProcessor::getNode(int id)
 {
     return linkNode[id];
 }
@@ -63,17 +59,17 @@ int LinkProcessor::size() const
     return linkList.size();
 }
 
-void LinkProcessor::onRequestFinish(MegaApi *api, MegaRequest *request, MegaError *e)
+void LinkProcessor::onRequestFinish(MegaApi*, MegaRequest* request, MegaError* e)
 {
     if (request->getType() == MegaRequest::TYPE_GET_PUBLIC_NODE)
     {
         if (e->getErrorCode() != MegaError::API_OK)
         {
-            linkNode[currentIndex] = NULL;
+            linkNode[currentIndex].reset();
         }
         else
         {
-            linkNode[currentIndex] = request->getPublicMegaNode();
+            linkNode[currentIndex] = std::shared_ptr<mega::MegaNode>(request->getPublicMegaNode());
         }
 
         linkError[currentIndex] = e->getErrorCode();
@@ -119,7 +115,7 @@ void LinkProcessor::onRequestFinish(MegaApi *api, MegaRequest *request, MegaErro
         }
         else
         {
-            linkNode[currentIndex] = NULL;
+            linkNode[currentIndex].reset();
             linkError[currentIndex] = e->getErrorCode();
             currentIndex++;
             emit onLinkInfoAvailable(currentIndex - 1);
@@ -172,12 +168,12 @@ void LinkProcessor::onRequestFinish(MegaApi *api, MegaRequest *request, MegaErro
             }
 
             Preferences::instance()->setLastPublicHandle(request->getNodeHandle(), MegaApi::AFFILIATE_TYPE_FILE_FOLDER);
-            linkNode[currentIndex] = megaApiFolders->authorizeNode(rootNode);
+            linkNode[currentIndex] = std::shared_ptr<mega::MegaNode>(megaApiFolders->authorizeNode(rootNode));
             delete rootNode;
         }
         else
         {
-            linkNode[currentIndex] = NULL;
+            linkNode[currentIndex].reset();
         }
 
         linkError[currentIndex] = e->getErrorCode();
@@ -276,7 +272,7 @@ void LinkProcessor::importLinks(MegaNode *node)
             if (!dupplicate)
             {
                 remainingNodes++;
-                megaApi->copyNode(linkNode[i], node, delegateListener);
+                megaApi->copyNode(linkNode[i].get(), node, delegateListener);
             }
             else
             {
@@ -298,7 +294,7 @@ void LinkProcessor::downloadLinks(QString localPath)
     {
         if (linkNode[i] && linkSelected[i])
         {
-            megaApi->startDownload(linkNode[i], (localPath + QDir::separator()).toUtf8().constData());
+            megaApi->startDownload(linkNode[i].get(), (localPath + QDir::separator()).toUtf8().constData());
         }
     }
 }
@@ -327,9 +323,8 @@ bool LinkProcessor::atLeastOneLinkValidAndSelected() const
 {
     for (int iLink = 0; iLink < size(); iLink++)
     {
-        const MegaNode* isValid{linkNode.at(iLink)};
         const bool isSelected{linkSelected.at(iLink)};
-        if(isValid && isSelected)
+        if(linkNode.at(iLink) && isSelected)
         {
             return true;
         }
