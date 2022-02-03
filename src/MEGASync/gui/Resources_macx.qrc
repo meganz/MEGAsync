@@ -565,7 +565,7 @@
         <file>animations/full-storage@2x.gif</file>
         <file>animations/full-transfer@2x.gif</file>
         <file>animations/full-transfer.gif</file>
-		<file>images/sidebar_search_ico.png</file>
+        <file>images/sidebar_search_ico.png</file>
         <file>images/sidebar_search_ico@2x.png</file>
         <file>images/import_toolbar_ico.png</file>
         <file>images/import_toolbar_ico@2x.png</file>
@@ -615,5 +615,8 @@
         <file>images/Switches/switch_unchecked_down-macx.svg</file>
         <file>images/Switches/switch_checked_rest-macx.svg</file>
         <file>images/Switches/switch_checked_down-macx.svg</file>
+        <file>images/delete_search_ico.png</file>
+        <file>images/delete_search_ico@2x.png</file>
+        <file>images/delete_search_ico@3x.png</file>
     </qresource>
 </RCC>

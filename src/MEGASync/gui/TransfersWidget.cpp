@@ -284,7 +284,6 @@ void TransfersWidget::transferFilterApply(bool invalidate)
     }
     else
     {
-        mProxyModel->resetNumberOfItems();
         mProxyModel->applyFilters(invalidate);
     }
     ui->tvTransfers->scrollToTop();

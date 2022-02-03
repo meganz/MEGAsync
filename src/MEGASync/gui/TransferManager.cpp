@@ -491,29 +491,6 @@ void TransferManager::refreshSearchStats()
     long long nbUl (proxy->getNumberOfItems(TransferData::TRANSFER_UPLOAD));
     long long nbAll (nbDl + nbUl);
 
-//    auto rowCount (mUi->wTransfers->rowCount());
-
-//    if (mUi->tAllResults->isChecked())
-//    {
-//        nbAll = rowCount;
-//    }
-//    else if (mUi->tDlResults->isChecked())
-//    {
-//        if (nbDl != mNumberOfSearchResultsPerTypes[TransferData::TRANSFER_DOWNLOAD])
-//        {
-//            nbAll += nbDl - mNumberOfSearchResultsPerTypes[TransferData::TRANSFER_DOWNLOAD];
-//        }
-//        nbUl = nbAll - nbDl;
-//    }
-//    else
-//    {
-//        if (nbUl != mNumberOfSearchResultsPerTypes[TransferData::TRANSFER_UPLOAD])
-//        {
-//            nbAll += nbUl - mNumberOfSearchResultsPerTypes[TransferData::TRANSFER_UPLOAD];
-//        }
-//        nbDl = nbAll - nbUl;
-//    }
-
     if (nbDl != mNumberOfSearchResultsPerTypes[TransferData::TRANSFER_DOWNLOAD])
     {
         mUi->tDlResults->setText(QString(tr("Downloads\t\t\t\t%1")).arg(nbDl));
@@ -536,16 +513,10 @@ void TransferManager::refreshSearchStats()
         mUi->tAllResults->setText(QString(tr("All\t\t\t\t%1")).arg(nbAll));
     }
 
-    bool showTypeFilters (nbDl && nbUl);
+    bool showTypeFilters (mCurrentTab == SEARCH_TAB);
     mUi->tDlResults->setVisible(showTypeFilters);
     mUi->tUlResults->setVisible(showTypeFilters);
     mUi->tAllResults->setVisible(showTypeFilters);
-
-    if ((mUi->tDlResults->isChecked() && nbDl == 0)
-            || (mUi->tUlResults->isChecked() && nbUl == 0))
-    {
-        on_tAllResults_clicked();
-    }
 
     refreshView();
 }

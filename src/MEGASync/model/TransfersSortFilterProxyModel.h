@@ -70,9 +70,12 @@ class TransfersSortFilterProxyModel : public QSortFilterProxyModel
         mutable QList<int> mUlNumber;
         QMutex* mFilterMutex;
         QMutex* mActivityMutex;
+        bool mSearchCountersOn;
 
     private slots:
         void onRowsRemoved(const QModelIndex& parent, int first, int last);
+        void onRowsAboutToBeInserted(const QModelIndex& parent, int first, int last);
+        void onRowsInserted(const QModelIndex& parent, int first, int last);
 };
 
 #endif // TRANSFERSSORTFILTERPROXYMODEL_H
