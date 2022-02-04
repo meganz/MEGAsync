@@ -68,7 +68,6 @@ BlockingBatch::~BlockingBatch()
 
 void BlockingBatch::add(TransferBatch* batch)
 {
-    delete batch;
     batch = batch->createCollectionCopy();
 }
 
@@ -133,6 +132,5 @@ QString BlockingBatch::description()
 
 void BlockingBatch::clearBatch()
 {
-   delete batch;
    batch = nullptr;
 }

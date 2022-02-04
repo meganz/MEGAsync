@@ -2,6 +2,7 @@
 #include "ui_ScanningWidget.h"
 
 #include <QMovie>
+#include "Utilities.h"
 
 ScanningWidget::ScanningWidget(QWidget *parent) :
     QWidget(parent),
@@ -24,7 +25,11 @@ ScanningWidget::~ScanningWidget()
 
 void ScanningWidget::show()
 {
-    movie->setFileName(QString::fromLatin1(":/animations/cat128.gif"));
+    qreal ratio = Utilities::getDevicePixelRatio();
+    QString gifFile = (ratio < 2) ? QString::fromUtf8(":/animations/scanning.gif")
+                                  : QString::fromUtf8(":/animations/scanning@2x.gif");
+
+    movie->setFileName(gifFile);
     if (movie->isValid())
     {
         ui->lAnimation->setMovie(movie);
