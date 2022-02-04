@@ -3242,7 +3242,7 @@ bool MegaApplication::isIdleForTooLong() const
     return (QDateTime::currentMSecsSinceEpoch() - lastActiveTime) > Preferences::MAX_IDLE_TIME_MS;
 }
 
-void MegaApplication::startUpload(const QString& rawLocalPath, MegaNode* target)
+void MegaApplication::startUpload(const QString& rawLocalPath, MegaNode* target, MegaCancelToken* cancelToken)
 {
     const char* localPath = QDir::toNativeSeparators(rawLocalPath).toUtf8().constData();
     const char* appData = nullptr;
@@ -3250,7 +3250,6 @@ void MegaApplication::startUpload(const QString& rawLocalPath, MegaNode* target)
     const bool startFirst = false;
     const bool isSrcTemporary = false;
     int64_t mtime = ::mega::MegaApi::INVALID_CUSTOM_MOD_TIME;
-    MegaCancelToken* cancelToken = nullptr; // No cancellation possible
     MegaTransferListener* listener = nullptr;
 
     megaApi->startUpload(localPath, target, mtime, appData, fileName, isSrcTemporary, startFirst, cancelToken, listener);
@@ -3268,30 +3267,30 @@ void MegaApplication::cancelAllTransfers(int type)
     }
 }
 
-void MegaApplication::updateFileTransferBatchesAndUi(BlockingBatch &batches)
+void MegaApplication::updateFileTransferBatchesAndUi(BlockingBatch &batch)
 {
     QString message = QString::fromUtf8("updateFileTransferBatchesAndUi");
     MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, message.toUtf8().constData());
 
-    batches.onFileScanCompleted();
-    updateIfBlockingStageFinished(batches);
+    batch.onFileScanCompleted();
+    updateIfBlockingStageFinished(batch);
 }
 
-void MegaApplication::updateFolderTransferBatchesAndUi(BlockingBatch &batches)
+void MegaApplication::updateFolderTransferBatchesAndUi(BlockingBatch &batch)
 {
     QString message = QString::fromUtf8("updateFolderTransferBatchesAndUi");
     MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, message.toUtf8().constData());
 
-    batches.onFolderScanCompleted();
-    updateIfBlockingStageFinished(batches);
+    batch.onFolderScanCompleted();
+    updateIfBlockingStageFinished(batch);
 }
 
-void MegaApplication::updateIfBlockingStageFinished(BlockingBatch &batches)
+void MegaApplication::updateIfBlockingStageFinished(BlockingBatch &batch)
 {
-    if (batches.isBlockingStageFinished())
+    if (batch.isBlockingStageFinished())
     {
         setTransferUiInUnblockedState();
-        batches.setAsUnblocked();
+        batch.setAsUnblocked();
     }
 }
 
@@ -5708,7 +5707,7 @@ void MegaApplication::externalFileUpload(qlonglong targetFolder)
         for (const auto& path : paths)
         {
             files++;
-            startUpload(path, target);
+            startUpload(path, target, nullptr);
         }
         delete target;
 
@@ -5796,7 +5795,7 @@ void MegaApplication::externalFolderUpload(qlonglong targetFolder)
                     files++;
                 }
             }
-            startUpload(path, target);
+            startUpload(path, target, nullptr);
         }
         delete target;
 

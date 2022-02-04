@@ -574,15 +574,15 @@ private:
     void reconnectIfNecessary(const bool disconnected, const QList<QNetworkInterface>& newNetworkInterfaces);
     bool isIdleForTooLong() const;
 
-    void startUpload(const QString& rawLocalPath, mega::MegaNode* target);
+    void startUpload(const QString& rawLocalPath, mega::MegaNode* target, mega::MegaCancelToken *cancelToken);
 
     void updateTransferNodesStage(mega::MegaTransfer* transfer);
 
     void cancelAllTransfers(int type);
 
-    void updateFileTransferBatchesAndUi(BlockingBatch& batches);
-    void updateFolderTransferBatchesAndUi(BlockingBatch& batches);
-    void updateIfBlockingStageFinished(BlockingBatch &batches);
+    void updateFileTransferBatchesAndUi(BlockingBatch& batch);
+    void updateFolderTransferBatchesAndUi(BlockingBatch& batch);
+    void updateIfBlockingStageFinished(BlockingBatch &batch);
 
     void logBatchCollectionStatus(const char* tag);
 
