@@ -1,5 +1,5 @@
 #include "CancelConfirmWidget.h"
-#include "ui_cancelconfirmwidget.h"
+#include "ui_CancelConfirmWidget.h"
 
 CancelConfirmWidget::CancelConfirmWidget(QWidget *parent) :
     QWidget(parent),
