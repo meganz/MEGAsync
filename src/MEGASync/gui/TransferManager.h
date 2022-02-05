@@ -46,6 +46,8 @@ public:
     void disableGetLink(bool disable);
     ~TransferManager();
 
+    void pauseModel(bool state);
+
 signals:
     void viewedCompletedTransfers();
     void completedTransfersTabActive(bool);

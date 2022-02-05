@@ -69,7 +69,7 @@ void TransferManagerDelegateWidget::updateTransferState()
             }
 
             // Override speed if http speed is lower
-            auto httpSpeed (static_cast<unsigned long long>(getData()->mMegaApi->getCurrentSpeed((getData()->mType & TransferData::TYPE_MASK) >> 1)));
+            auto httpSpeed (static_cast<unsigned long long>(MegaSyncApp->getMegaApi()->getCurrentSpeed((getData()->mType & TransferData::TYPE_MASK) >> 1)));
             timeString = (httpSpeed == 0 || getData()->mSpeed == 0) ?
                              timeString
                            : Utilities::getTimeString(getData()->mRemainingTime);
@@ -297,6 +297,7 @@ TransferBaseDelegateWidget::ActionHoverType TransferManagerDelegateWidget::mouse
                                                             : QString::fromAscii("://images/lists_cancel_ico.png"));
 
         bool inPauseResume = isMouseHoverInAction(mUi->tPauseResumeTransfer, pos);
+        bool inRetry = isMouseHoverInAction(mUi->tItemRetry, pos);
 
         if(getData())
         {
@@ -306,7 +307,7 @@ TransferBaseDelegateWidget::ActionHoverType TransferManagerDelegateWidget::mouse
                                                                 : mLastPauseResuemtTransferIconName);
         }
 
-        if(inCancelClear || inPauseResume)
+        if(inCancelClear || inPauseResume || inRetry)
         {
             hoverType = ActionHoverType::HOVER_ENTER;
         }
@@ -355,5 +356,18 @@ void TransferManagerDelegateWidget::on_tCancelClearTransfer_clicked()
 
 void TransferManagerDelegateWidget::on_tItemRetry_clicked()
 {
+    QPointer<TransferManagerDelegateWidget> dialog = QPointer<TransferManagerDelegateWidget>(this);
+
+    auto message = tr("Are you sure you want to retry this transfer?");
+
+    if (QMegaMessageBox::warning(nullptr, QString::fromUtf8("MEGAsync"),
+                             message,
+                             QMessageBox::Yes | QMessageBox::No, QMessageBox::No)
+            != QMessageBox::Yes
+            || !dialog)
+    {
+        return;
+    }
+
     emit retryTransfer();
 }

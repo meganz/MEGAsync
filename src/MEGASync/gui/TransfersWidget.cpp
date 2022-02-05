@@ -6,8 +6,6 @@
 #include <QTimer>
 #include <QtConcurrent/QtConcurrent>
 
-const int TransfersWidget::PROXY_ACTIVITY_TIMEOUT_MS;
-
 TransfersWidget::TransfersWidget(QWidget* parent) :
     QWidget (parent),
     ui (new Ui::TransfersWidget),
@@ -59,38 +57,32 @@ void TransfersWidget::configureTransferView()
     ui->tvTransfers->setItemDelegate(tDelegate);
     onPauseStateChanged(model2->areAllPaused());
 
-    mProxyActivityTimer->setSingleShot(true);
-    connect(mProxyActivityTimer, &QTimer::timeout,
-            mProxyActivityMessage, &QMessageBox::exec);
+//    mProxyActivityTimer->setSingleShot(true);
+//    connect(mProxyActivityTimer, &QTimer::timeout,
+//            mProxyActivityMessage, &QMessageBox::hide);
 
-    connect(mProxyModel, &TransfersSortFilterProxyModel::modelAboutToBeSorted,
-            this, [this]
-    {
-        mProxyActivityMessage->setText(tr("Sorting..."));
-        mProxyActivityTimer->start(std::chrono::milliseconds(PROXY_ACTIVITY_TIMEOUT_MS));
-    });
+//    connect(mProxyModel, &TransfersSortFilterProxyModel::modelAboutToBeChanged,
+//            this, [this]
+//    {
+//        mProxyActivityMessage->setText(tr("Please, wait..."));
+//        mProxyActivityTimer->start(std::chrono::milliseconds(PROXY_ACTIVITY_TIMEOUT_MS));
+//        mProxyActivityMessage->exec();
+//    });
 
-    connect(mProxyModel, &TransfersSortFilterProxyModel::modelSorted,
-            this, [this]
-    {
-        mProxyActivityTimer->stop();
-        mProxyActivityMessage->hide();
-        ui->tvTransfers->update();
-    });
+//    connect(mProxyModel, &TransfersSortFilterProxyModel::modelChanged,
+//            this, [this]
+//    {
+//        //mProxyActivityTimer->stop();
+//        //mProxyActivityMessage->hide();
+//        //ui->tvTransfers->update();
+//    });
 
-    connect(mProxyModel, &TransfersSortFilterProxyModel::modelAboutToBeFiltered,
-            this, [this]
-    {
-        mProxyActivityMessage->setText(tr("Filtering..."));
-        mProxyActivityTimer->start(std::chrono::milliseconds(PROXY_ACTIVITY_TIMEOUT_MS));
-    });
-
-    connect(mProxyModel, &TransfersSortFilterProxyModel::searchNumbersChanged,
-            this, [this]
-    {
-        mProxyActivityTimer->stop();
-        mProxyActivityMessage->hide();
-    });
+//    connect(mProxyModel, &TransfersSortFilterProxyModel::searchNumbersChanged,
+//            this, [this]
+//    {
+//        mProxyActivityTimer->stop();
+//        mProxyActivityMessage->hide();
+//    });
 
     ui->tvTransfers->setDragEnabled(true);
     ui->tvTransfers->viewport()->setAcceptDrops(true);

@@ -28,7 +28,7 @@ MegaTransferDelegate::MegaTransferDelegate(TransfersSortFilterProxyModel* model,
 }
 
 void MegaTransferDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
-{
+{   
     auto rowCount (index.model()->rowCount());
     auto row (index.row());
 
@@ -39,6 +39,7 @@ void MegaTransferDelegate::paint(QPainter *painter, const QStyleOptionViewItem &
         auto height (option.rect.height());
         auto transferItem (qvariant_cast<TransferItem>(index.data(Qt::DisplayRole)));
         auto data = transferItem.getTransferData();
+        //data->update();
 
         TransferBaseDelegateWidget* w (getTransferItemWidget(index, option.rect.size()));
         if(!w)

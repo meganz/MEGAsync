@@ -87,7 +87,7 @@ bool InfoDialogCurrentTransfersProxyModel::filterAcceptsRow(int sourceRow, const
 
        accept = (d->mState & TransferData::TransferState::TRANSFER_COMPLETED
                  || d->mState & TransferData::TransferState::TRANSFER_COMPLETING
-                 || d->mState & TransferData::TransferState::TRANSFER_ACTIVE);
+                 || d->mState & TransferData::TransferState::TRANSFER_ACTIVE || d->mState & TransferData::TransferState::TRANSFER_FAILED);
     }
 
     return accept;

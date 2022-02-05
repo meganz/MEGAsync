@@ -50,7 +50,7 @@ signals:
     void cancelClearAllRows();
 
 private:
-    static constexpr int PROXY_ACTIVITY_TIMEOUT_MS = 100;
+    static constexpr int PROXY_ACTIVITY_TIMEOUT_MS = 500;
 
     enum HeaderState
     {

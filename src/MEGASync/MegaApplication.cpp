@@ -655,6 +655,15 @@ void MegaApplication::initialize()
 
     mModel2 = new QTransfersModel(nullptr);
     mModel2->initModel();
+
+    transferManager = new TransferManager(megaApi);
+    transferManager->hide();
+
+    // Signal/slot to notify the tracking of unseen completed transfers of Transfer Manager. If Completed tab is
+    // active, tracking is disabled
+    connect(transferManager, SIGNAL(userActivity()), this, SLOT(registerUserActivity()));
+    connect(transferQuota.get(), &TransferQuota::sendState,
+            transferManager, &TransferManager::onTransferQuotaStateChanged);
 }
 
 QString MegaApplication::applicationFilePath()
@@ -4893,22 +4902,12 @@ void MegaApplication::transferManagerActionClicked(int tab)
     if (transferManager)
     {
         transferManager->setActiveTab(tab);
-        transferManager->showNormal();
+        Platform::activateBackgroundWindow(transferManager);
         transferManager->activateWindow();
         transferManager->raise();
+
         return;
     }
-
-    transferManager = new TransferManager(megaApi);
-    // Signal/slot to notify the tracking of unseen completed transfers of Transfer Manager. If Completed tab is
-    // active, tracking is disabled
-    connect(transferManager, SIGNAL(userActivity()), this, SLOT(registerUserActivity()));
-    connect(transferQuota.get(), &TransferQuota::sendState,
-            transferManager, &TransferManager::onTransferQuotaStateChanged);
-    transferManager->setActiveTab(tab);
-
-    Platform::activateBackgroundWindow(transferManager);
-    transferManager->show();
 }
 
 void MegaApplication::loginActionClicked()

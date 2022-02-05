@@ -10,6 +10,8 @@
 #include <QAbstractItemModel>
 #include <QLinkedList>
 #include <QtConcurrent/QtConcurrent>
+#include <QDebug>
+
 
 #include <set>
 
@@ -50,7 +52,28 @@ struct TransfersCount
     {}
 };
 
-class QTransfersModel : public QAbstractItemModel, public mega::MegaTransferListener
+class TransferThread :  public QObject,public mega::MegaTransferListener
+{
+    Q_OBJECT
+public:
+    TransferThread();
+    ~TransferThread(){}
+public slots:
+    void onTransferStart(mega::MegaApi*, mega::MegaTransfer* transfer);
+    void onTransferFinish(mega::MegaApi* api, mega::MegaTransfer* transfer, mega::MegaError*);
+    void onTransferUpdate(mega::MegaApi*, mega::MegaTransfer* transfer);
+    void onTransferTemporaryError(mega::MegaApi*,mega::MegaTransfer* transfer,mega::MegaError*);
+
+    std::list<mega::MegaTransfer*> processUpdates();
+
+private:
+    std::list<mega::MegaTransfer*> mCacheUpdateTransfers;
+    void onTransferEvent(mega::MegaTransfer* transfer);
+
+    QReadWriteLock* mCacheMutex;
+};
+
+class QTransfersModel : public QAbstractItemModel
 {
     Q_OBJECT
 
@@ -90,67 +113,57 @@ public:
 
     void initModel();
 
-    void startTransfer(std::unique_ptr<mega::MegaTransfer> transfer);
-    void updateTransfer(mega::MegaTransfer* transfer);
-    void finishTransfer(mega::MegaApi* api, std::unique_ptr<mega::MegaTransfer> transfer,
-                        std::unique_ptr<mega::MegaError> error);
-    void transferTemporaryError(mega::MegaTransfer *transfer, mega::MegaError *error);
+    void startTransfer(mega::MegaTransfer *transfer);
+    int updateTransfer(mega::MegaTransfer* transfer);
 
-    void onTransferStart(mega::MegaApi*, mega::MegaTransfer* transfer);
-    void onTransferFinish(mega::MegaApi* api, mega::MegaTransfer* transfer, mega::MegaError* error);
-    void onTransferUpdate(mega::MegaApi*, mega::MegaTransfer* transfer);
-    void onTransferTemporaryError(mega::MegaApi* api,mega::MegaTransfer* transfer,mega::MegaError* error);
+    void pauseModelProcessing(bool value);
+
+    static QHash<QString, TransferData::FileType> mFileTypes;
 
 signals:
     void pauseStateChanged(bool pauseState);
     void transfersDataUpdated();
+    void processTransferInThread();
 
 public slots:
     void onRetryTransfer(TransferTag tag);
     void pauseResumeAllTransfers();
     void cancelClearAllTransfers();
-    bool onTimerTransfers();
 
 private slots:
     void onPauseStateChanged();
+    void processStartTransfers(std::list<mega::MegaTransfer*> transferList);
+    void processUpdateTransfers(std::list<mega::MegaTransfer*> transferList);
+
+    void onProcessTransfers();
 
 private:
-    void insertTransfer(mega::MegaApi* api, mega::MegaTransfer* transfer, int row, bool signal = true);
+    void insertTransfer(mega::MegaTransfer* transfer);
     void updateTransfersCount();
 
 private:
-    static constexpr int INIT_ROWS_PER_CHUNK = 5000;
-    static constexpr int MAX_TRANSFERS_INSTANT_UPDATE = 1000;
-
     mega::MegaApi* mMegaApi;
     Preferences* mPreferences;
+    QThread* mTransferEventThread;
+    TransferThread* mTransferEventWorker;
+    QTimer mTimer;
 
-    QHash<TransferTag, QVariant> mTransfers;
-    std::map<TransferTag, std::unique_ptr<mega::MegaTransfer>> mFailedTransfers;
-    QMap<TransferTag, TransferRemainingTime*> mRemainingTimes;
+    QHash<TransferTag, QExplicitlySharedDataPointer<TransferData>> mTransfers;
     QList<TransferTag> mOrder;
+    QHash<TransferTag, int> mTagByOrder;
+    QList<int> mRowsToUpdate;
     ThreadPool* mThreadPool;
-    QHash<QString, TransferData::FileType> mFileTypes;
     QReadWriteLock* mModelMutex;
 
     long long mUpdateNotificationNumber;
-//    QFuture<void> mInitFuture;
 
     TransfersCount mTransfersCount;
 
     bool mAreAllPaused;
+    bool stopModelProcessing;
 
     QMap<TransferData::FileType, long long> mNbTransfersPerFileType;
     QMap<TransferData::FileType, long long> mNbFinishedPerFileType;
-
-    QTimer timer;
-
-    mega::QTMegaTransferListener* mListener;
-
-    std::map<TransferTag, std::unique_ptr<mega::MegaTransfer>> mCacheStartTransfers;
-    std::list<std::pair<std::unique_ptr<mega::MegaTransfer>, std::unique_ptr<mega::MegaError>>> mCacheFinishedTransfers;
-    std::map<TransferTag, std::pair<std::unique_ptr<mega::MegaTransfer>, std::unique_ptr<mega::MegaError>>> mCacheUpdateTransfers;
-    std::set<TransferTag> mUpdatedTransfers;
 };
 
 #endif // QTRANSFERSMODEL_H

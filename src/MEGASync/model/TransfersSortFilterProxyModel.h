@@ -13,8 +13,7 @@ class TransfersSortFilterProxyModel : public QSortFilterProxyModel
 {
         Q_OBJECT
 
-    public:
-
+public:
         enum SortCriterion
         {
             PRIORITY   = 0,
@@ -43,22 +42,23 @@ class TransfersSortFilterProxyModel : public QSortFilterProxyModel
 
         virtual TransferBaseDelegateWidget* createTransferManagerItem(QWidget *parent);
 
-    signals:
-        void modelAboutToBeFiltered();
+signals:
+        void modelAboutToBeChanged();
+        void modelChanged();
         void searchNumbersChanged();
         void modelAboutToBeSorted();
         void modelSorted();
 
-    protected slots:
+protected slots:
         void onCancelClearTransfer();
         void onPauseResumeTransfer();
         void onRetryTransfer();
 
-    protected:
+protected:
         virtual bool filterAcceptsRow(int sourceRow, const QModelIndex& sourceParent) const override;
         virtual bool lessThan(const QModelIndex& left, const QModelIndex& right) const override;
 
-    protected:
+protected:
         TransferData::TransferStates mTransferStates;
         TransferData::TransferTypes mTransferTypes;
         TransferData::FileTypes mFileTypes;
@@ -72,10 +72,13 @@ class TransfersSortFilterProxyModel : public QSortFilterProxyModel
         QMutex* mActivityMutex;
         bool mSearchCountersOn;
 
-    private slots:
+private slots:
         void onRowsRemoved(const QModelIndex& parent, int first, int last);
         void onRowsAboutToBeInserted(const QModelIndex& parent, int first, int last);
         void onRowsInserted(const QModelIndex& parent, int first, int last);
+
+private:
+        ThreadPool* mThreadPool;
 };
 
 #endif // TRANSFERSSORTFILTERPROXYMODEL_H

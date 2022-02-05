@@ -1,7 +1,7 @@
 #include "TransferItem.h"
-#include "megaapi.h"
 #include "Utilities.h"
 #include "MegaApplication.h"
+#include "QTransfersModel.h"
 
 using namespace mega;
 
@@ -45,51 +45,79 @@ const TransferData::TransferStates TransferData::ACTIVE_STATES_MASK = TransferDa
     TransferData::TransferState::TRANSFER_RETRYING
 );
 
-void TransferItem::updateValuesTransferFinished(int64_t finishTime,
-                                                 int errorCode, long long errorValue,
-                                                 unsigned long long meanSpeed,
-                                                 TransferData::TransferState state,
-                                                 unsigned long long transferedBytes,
-                                                 MegaHandle parentHandle,
-                                                 MegaHandle nodeHandle)
+void TransferData::update()
 {
-    d->mFinishedTime = finishTime;
-    d->mErrorCode = errorCode;
-    d->mState = state;
-    d->mErrorValue = errorValue;
-    d->mRemainingTime = 0LL;
-    d->mSpeed = 0;
-    d->mMeanSpeed = meanSpeed;
-    d->mTransferredBytes = transferedBytes;
-    d->mParentHandle = parentHandle;
-    d->mNodeHandle = nodeHandle;
-
-    MegaNode *ownNode = ((MegaApplication*)qApp)->getMegaApi()->getNodeByHandle(nodeHandle);
-    if (ownNode)
+    if(!isUpdated())
     {
-       auto access = ((MegaApplication*)qApp)->getMegaApi()->getAccess(ownNode);
-       if (access == MegaShare::ACCESS_OWNER)
-       {
-           d->mIsPublicNode = true;
-       }
-       delete ownNode;
+        auto transfer = MegaSyncApp->getMegaApi()->getTransferByTag(mTag);
+
+        if(transfer)
+        {
+            update(transfer);
+        }
     }
 }
 
-void TransferItem::updateValuesTransferUpdated(int64_t remainingTime,
-                                                int errorCode, long long errorValue,
-                                                unsigned long long meanSpeed,
-                                                unsigned long long speed,
-                                                unsigned long long priority,
-                                                TransferData::TransferState state,
-                                                unsigned long long transferedBytes)
+void TransferData::update(mega::MegaTransfer* transfer)
 {
-    d->mState = state;
-    d->mRemainingTime = remainingTime;
-    d->mErrorCode = errorCode;
-    d->mErrorValue = errorValue;
-    d->mSpeed = speed;
-    d->mMeanSpeed = meanSpeed;
-    d->mTransferredBytes = transferedBytes;
-    d->mPriority = priority;
+    if(transfer)
+    {
+        updateBasicInfo(transfer);
+
+        mPath = QString::fromUtf8(transfer->getPath());
+        mSpeed = static_cast<unsigned long long>(MegaSyncApp->getMegaApi()->getCurrentSpeed(transfer->getType()));
+        mTotalSize = static_cast<unsigned long long>(transfer->getTotalBytes());
+        mTransferredBytes = static_cast<unsigned long long>(transfer->getTransferredBytes());
+        auto remBytes = mTotalSize - mTransferredBytes;
+        TransferRemainingTime rem(mSpeed, remBytes);
+        mRemainingTime = rem.calculateRemainingTimeSeconds(mSpeed, remBytes).count();
+        mMeanSpeed = static_cast<unsigned long long>(transfer->getMeanSpeed());
+        mErrorCode = MegaError::API_OK;
+        mErrorValue = 0LL;
+        auto megaError (transfer->getLastErrorExtended());
+        if (megaError)
+        {
+            mErrorCode = megaError->getErrorCode();
+            mErrorValue = megaError->getValue();
+        }
+
+        mParentHandle = transfer->getParentHandle();
+        mNodeHandle = transfer->getNodeHandle();
+        if(mNodeHandle)
+        {
+            MegaNode *ownNode = ((MegaApplication*)qApp)->getMegaApi()->getNodeByHandle(mNodeHandle);
+            if (ownNode)
+            {
+               auto access = ((MegaApplication*)qApp)->getMegaApi()->getAccess(ownNode);
+               if (access == MegaShare::ACCESS_OWNER)
+               {
+                   mIsPublicNode = true;
+               }
+               delete ownNode;
+            }
+        }
+
+        setUpdated(true);
+    }
+}
+
+void TransferData::updateBasicInfo(MegaTransfer *transfer)
+{
+    mTag = transfer->getTag();
+
+    mState = static_cast<TransferData::TransferState>(1 << transfer->getState());
+    mPriority = transfer->getPriority();
+
+    mFilename = QString::fromUtf8(transfer->getFileName());
+    mType = static_cast<TransferData::TransferType>(1 << transfer->getType());
+    if (transfer->isSyncTransfer())
+    {
+        mType |= TransferData::TRANSFER_SYNC;
+    }
+
+    auto pixmapName (Utilities::getExtensionPixmapName(mFilename, QString()));
+
+    mFileType = QTransfersModel::mFileTypes.contains(pixmapName) ?
+                       QTransfersModel::mFileTypes[pixmapName]
+                       : TransferData::FileType::TYPE_OTHER;
 }

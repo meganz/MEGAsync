@@ -33,11 +33,8 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
     mUi->lTextSearch->installEventFilter(this);
 
     mModel = mUi->wTransfers->getModel();
+    //pauseModel(true);
 
-    setAttribute(Qt::WA_QuitOnClose, false);
-    setAttribute(Qt::WA_DeleteOnClose, true);
-    setAttribute(Qt::WA_QuitOnClose, false);
-    setAttribute(Qt::WA_DeleteOnClose, true);
     Platform::enableDialogBlur(this);
     Qt::WindowFlags flags =  Qt::Window;
     this->setWindowFlags(flags);
@@ -149,7 +146,6 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
             Qt::QueuedConnection);
 
     // Init state
-    //onTransfersInModelChanged(true);
     onUpdatePauseState(mModel->areAllPaused());
     onStorageStateChanged(qobject_cast<MegaApplication*>(qApp)->getAppliedStorageState());
     onTransferQuotaStateChanged(qobject_cast<MegaApplication*>(qApp)->getTransferQuotaState());
@@ -167,6 +163,11 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
         w->style()->unpolish(w);
         w->style()->polish(w);
     }
+}
+
+void TransferManager::pauseModel(bool value)
+{
+    mModel->pauseModelProcessing(value);
 }
 
 void TransferManager::setActiveTab(int t)
@@ -239,6 +240,7 @@ void TransferManager::on_tAllTransfers_clicked()
         emit userActivity();
         mUi->wTransfers->filtersChanged({}, TransferData::ACTIVE_STATES_MASK, {});
         mUi->lCurrentContent->setText(tr("All Transfers"));
+
         toggleTab(ALL_TRANSFERS_TAB);
     }
 }

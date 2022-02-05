@@ -6,14 +6,13 @@
 
 #include <QSharedData>
 #include <QMimeDatabase>
+#include <QDebug>
 
 typedef int TransferTag;
 
-
 class TransferData : public QSharedData
 {
-    public:
-
+public:
     enum FileType
     {
         TYPE_OTHER    = 0x01,
@@ -25,6 +24,8 @@ class TransferData : public QSharedData
         TYPE_TEXT     = 0x40,
     };
     Q_DECLARE_FLAGS(FileTypes, FileType)
+
+    //static const QHash<QString, TransferData::FileType> ExtensionFileTypes;
 
     enum TransferState
     {
@@ -57,16 +58,20 @@ class TransferData : public QSharedData
 
     static const TransferTypes TYPE_MASK;
 
-    TransferTypes mType;
-    int       mErrorCode;
+    //Initialise with these values
     TransferState mState;
-    bool mIsSyncTransfer;
     int       mTag;
+    unsigned long long mPriority;
+    QString   mFilename;
+    TransferTypes mType;
+
+    //Updated only when paint needed
+    int       mErrorCode;
+    bool mIsSyncTransfer;
     long long mErrorValue;
     int64_t   mFinishedTime;
     int64_t   mRemainingTime;
     unsigned long long mTotalSize;
-    unsigned long long mPriority;
     unsigned long long mSpeed;
     unsigned long long mMeanSpeed;
     unsigned long long mTransferredBytes;
@@ -75,9 +80,10 @@ class TransferData : public QSharedData
     FileType mFileType;
     mega::MegaHandle mParentHandle;
     mega::MegaHandle mNodeHandle;
-    mega::MegaApi* mMegaApi;
-    QString   mFilename;
     QString   mPath;
+
+    //Is it Updated?
+    bool mUpdated;
 
     TransferData(){}
 
@@ -89,37 +95,37 @@ class TransferData : public QSharedData
         mMeanSpeed(dr->mMeanSpeed),
         mTransferredBytes(dr->mTransferredBytes),
         mFileType(dr->mFileType),
-        mParentHandle (dr->mParentHandle), mNodeHandle (dr->mNodeHandle), mMegaApi(dr->mMegaApi),
-        mFilename(dr->mFilename), mPath(dr->mPath), mNodeAccess(mega::MegaShare::ACCESS_UNKNOWN), mIsPublicNode(dr->mIsPublicNode)
+        mParentHandle (dr->mParentHandle), mNodeHandle (dr->mNodeHandle),
+        mFilename(dr->mFilename), mPath(dr->mPath), mNodeAccess(mega::MegaShare::ACCESS_UNKNOWN), mIsPublicNode(dr->mIsPublicNode), mUpdated(false)
     {
         mIsSyncTransfer = mType.testFlag(TransferData::TransferType::TRANSFER_SYNC);
     }
 
-    TransferData(TransferTypes type, int errorCode, TransferState state, int tag, long long errorValue,
-                 int64_t finishedTime, int64_t remainingTime, unsigned long long totalSize,
-                 unsigned long long priority,
-                 unsigned long long speed, unsigned long long meanSpeed, unsigned long long transferredBytes,
-                 FileType fileType,
-                 mega::MegaHandle parentHandle, mega::MegaHandle nodeHandle,
-                 mega::MegaApi* megaApi, QString fileName, QString path) :
-        mType(type), mErrorCode(errorCode),  mState(state), mTag(tag),
-        mErrorValue(errorValue), mFinishedTime(finishedTime), mRemainingTime(remainingTime),
-        mTotalSize(totalSize), mPriority(priority), mSpeed(speed), mMeanSpeed(meanSpeed),
-        mTransferredBytes(transferredBytes),
-        mFileType(fileType), mIsPublicNode(false),
-        mParentHandle(parentHandle), mNodeHandle(nodeHandle),mMegaApi(megaApi),
-        mFilename(fileName), mPath(path)
-    {
-        mIsSyncTransfer = mType.testFlag(TransferData::TransferType::TRANSFER_SYNC);
-    }
+    TransferData(mega::MegaTransfer*) : mUpdated(false)
+    {}
+
+    void update();
+    void update(mega::MegaTransfer* transfer);
+    void updateBasicInfo(mega::MegaTransfer* transfer);
 
     bool isFinished()
     {
         return mState == mega::MegaTransfer::STATE_COMPLETED
                 || mState == mega::MegaTransfer::STATE_FAILED;
     }
+
+    bool isUpdated()
+    {
+        return mUpdated;
+    }
+
+    void setUpdated(bool state)
+    {
+        mUpdated = state;
+    }
 };
 Q_DECLARE_TYPEINFO(TransferData, Q_MOVABLE_TYPE);
+Q_DECLARE_METATYPE(TransferData)
 Q_DECLARE_OPERATORS_FOR_FLAGS(TransferData::FileTypes)
 Q_DECLARE_OPERATORS_FOR_FLAGS(TransferData::TransferStates)
 Q_DECLARE_OPERATORS_FOR_FLAGS(TransferData::TransferTypes)
@@ -129,25 +135,8 @@ class TransferItem
 {
     public:
         TransferItem() : d(new TransferData){}
-//        TransferItem(const TransferData& dataRow) : d(new TransferData(dataRow)) {}
         TransferItem(const TransferItem& tdr) : d(tdr.d) {}
         TransferItem(const QExplicitlySharedDataPointer<TransferData>& tdr) : d(tdr) {}
-
-        void updateValuesTransferFinished(int64_t finishTime,
-                                          int errorCode, long long errorValue,
-                                          unsigned long long meanSpeed,
-                                          TransferData::TransferState state,
-                                          unsigned long long transferedBytes,
-                                          mega::MegaHandle parentHandle,
-                                          mega::MegaHandle nodeHandle);
-
-        void updateValuesTransferUpdated(int64_t remainingTime,
-                                         int errorCode, long long errorValue,
-                                         unsigned long long meanSpeed,
-                                         unsigned long long speed,
-                                         unsigned long long priority,
-                                         TransferData::TransferState state,
-                                         unsigned long long transferedBytes);
 
         QExplicitlySharedDataPointer<TransferData> getTransferData() const
         {

@@ -71,6 +71,11 @@ bool TransferBaseDelegateWidget::setActionTransferIcon(QToolButton *button, cons
 
 bool TransferBaseDelegateWidget::isMouseHoverInAction(QToolButton *button, const QPoint& mousePos)
 {
+    if(!button->isVisible())
+    {
+        return false;
+    }
+
     auto actionGlobalPos = button->mapTo(this, QPoint(0,0));
     QRect actionGeometry(actionGlobalPos, button->size());
 
