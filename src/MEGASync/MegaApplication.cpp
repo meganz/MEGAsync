@@ -3312,6 +3312,11 @@ void MegaApplication::enableTransferActions(bool enable)
     downloadAction->setEnabled(enable);
     streamAction->setEnabled(enable);
     settingsAction->setEnabled(enable);
+
+    if (syncsMenu)
+    {
+        syncsMenu->setEnabled(enable);
+    }
 }
 
 void MegaApplication::setTransferUiInBlockingState()

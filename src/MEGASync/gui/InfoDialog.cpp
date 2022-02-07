@@ -1985,9 +1985,4 @@ void InfoDialog::enableUserActions(bool value)
     ui->bAddSync->setEnabled(value);
     ui->bUpload->setEnabled(value);
     ui->bDownload->setEnabled(value);
-
-    if (addSyncAction)
-    {
-        addSyncAction->setEnabled(value);
-    }
 }
