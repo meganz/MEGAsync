@@ -66,9 +66,9 @@ BlockingBatch::~BlockingBatch()
     clearBatch();
 }
 
-void BlockingBatch::add(TransferBatch* batch)
+void BlockingBatch::add(TransferBatch* _batch)
 {
-    batch = batch->createCollectionCopy();
+    batch = std::shared_ptr<TransferBatch>(_batch->createCollectionCopy());
 }
 
 void BlockingBatch::cancelTransfer()

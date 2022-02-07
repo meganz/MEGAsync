@@ -1531,7 +1531,7 @@ void MegaApplication::processUploadQueue(MegaHandle nodeHandle)
     transferAppData.insert(transferId, data);
     preferences->setOverStorageDismissExecution(0);
 
-    auto batch = new TransferBatch(); // TODO : resolve leak
+    auto batch = std::make_unique<TransferBatch>();
 
     //Process the upload queue using the MegaUploader object
     while (!uploadQueue.isEmpty())
@@ -1569,10 +1569,11 @@ void MegaApplication::processUploadQueue(MegaHandle nodeHandle)
 
     if (!batch->isEmpty())
     {
-        blockingBatch.add(batch);
+        blockingBatch.add(batch.get());
         QString logMessage = QString::fromUtf8("Added batch upload");
         MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, logMessage.toUtf8().constData());
     }
+
 
     delete node;
 }
@@ -3301,7 +3302,6 @@ void MegaApplication::logBatchCollectionStatus(const char* tag)
     MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, logMessage.toUtf8().constData());
 #else
     Q_UNUSED(tag)
-    Q_UNUSED(collection)
 #endif
 }
 

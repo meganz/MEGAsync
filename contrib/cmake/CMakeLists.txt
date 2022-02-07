@@ -173,6 +173,8 @@ set (FORMS
     ${MEGAsyncDir}/gui/${UiDir}/ProxySettings.ui
     ${MEGAsyncDir}/gui/${UiDir}/BandwidthSettings.ui
     ${MEGAsyncDir}/gui/${UiDir}/NewFolderDialog.ui
+	${MEGAsyncDir}/gui/${UiDir}/ScanningWidget.ui
+	${MEGAsyncDir}/gui/${UiDir}/CancelConfirmWidget.ui
     )
 
 
@@ -264,6 +266,8 @@ set (MOC_INPUT
     ${MEGAsyncDir}/gui/QSyncItemWidget.h
     ${MEGAsyncDir}/gui/SettingsDialog.h
     ${MEGAsyncDir}/gui/NotificationsSettings.h
+    ${MEGAsyncDir}/gui/BlockingGui.h
+    ${MEGAsyncDir}/gui/CancelConfirmWidget.h	
     ${MEGAsyncDir}/gui/SetupWizard.h
     ${MEGAsyncDir}/gui/StatusInfo.h
     ${MEGAsyncDir}/gui/StreamingFromMegaDialog.h
@@ -285,6 +289,9 @@ set (MOC_INPUT
     ${MEGAsyncDir}/gui/GuiUtilities.h
     ${MEGAsyncDir}/gui/EventHelper.h
     ${MEGAsyncDir}/gui/ViewLoadingScene.h
+    ${MEGAsyncDir}/gui/BlockingGui.h
+    ${MEGAsyncDir}/gui/ScanningWidget.h
+    ${MEGAsyncDir}/gui/CancelConfirmWidget.h
     ${MEGAsyncDir}/platform/notificator.h
     ${MEGAsyncDir}/mega/bindings/qt/QTMegaGlobalListener.h
     ${MEGAsyncDir}/mega/bindings/qt/QTMegaListener.h
@@ -434,9 +441,12 @@ set (SRCS
     ${MEGAsyncDir}/gui/ProxySettings.cpp
     ${MEGAsyncDir}/gui/BandwidthSettings.cpp
     ${MEGAsyncDir}/gui/SwitchButton.cpp
-    ${MEGAsyncDir}/gui/GuiUtilities.cpp
-
     ${MEGAsyncDir}/gui/EventHelper.cpp
+	${MEGAsyncDir}/gui/GuiUtilities.cpp
+	${MEGAsyncDir}/gui/BlockingGui.cpp
+	${MEGAsyncDir}/gui/ScanningWidget.cpp
+	${MEGAsyncDir}/gui/CancelConfirmWidget.cpp
+	
     ${MEGAsyncDir}/mega/bindings/qt/QTMegaRequestListener.cpp
     ${MEGAsyncDir}/mega/bindings/qt/QTMegaTransferListener.cpp
     ${MEGAsyncDir}/mega/bindings/qt/QTMegaGlobalListener.cpp

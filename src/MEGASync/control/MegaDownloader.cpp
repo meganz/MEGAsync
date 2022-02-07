@@ -27,7 +27,7 @@ bool MegaDownloader::processDownloadQueue(QQueue<WrappedNode*>* downloadQueue, B
     // Get transfer's metadata
     TransferMetaData *data = ((MegaApplication*)qApp)->getTransferAppData(appDataId);
 
-    auto batch = new TransferBatch(); // TODO : resolve leak
+    auto batch = std::make_unique<TransferBatch>(); // TODO : resolve leak
 
     // Process all nodes in the download queue
     while (!downloadQueue->isEmpty())
@@ -64,7 +64,7 @@ bool MegaDownloader::processDownloadQueue(QQueue<WrappedNode*>* downloadQueue, B
 
     if (!batch->isEmpty())
     {
-        downloadBatches.add(batch);
+        downloadBatches.add(batch.get());
     }
 
     pathMap.clear();

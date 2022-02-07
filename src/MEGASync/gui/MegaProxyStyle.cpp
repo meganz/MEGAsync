@@ -116,3 +116,28 @@ void MegaProxyStyle::polish(QWidget *widget)
     }
     QProxyStyle::polish(widget);
 }
+
+void MegaProxyStyle::polish(QPalette &pal)
+{
+    QProxyStyle::polish(pal);
+}
+
+void MegaProxyStyle::polish(QApplication *app)
+{
+    QProxyStyle::polish(app);
+}
+
+void MegaProxyStyle::unpolish(QWidget *widget)
+{
+    QProxyStyle::unpolish(widget);
+}
+
+void MegaProxyStyle::unpolish(QApplication *app)
+{
+    QProxyStyle::unpolish(app);
+}
+
+bool MegaProxyStyle::event(QEvent *e)
+{
+    return QProxyStyle::event(e);
+}

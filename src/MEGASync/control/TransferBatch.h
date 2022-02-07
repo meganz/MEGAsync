@@ -44,7 +44,7 @@ public:
 
     ~BlockingBatch();
 
-    void add(TransferBatch* batch);
+    void add(TransferBatch* _batch);
 
     void cancelTransfer();
 
@@ -64,7 +64,7 @@ private:
 
    void clearBatch();
 
-   TransferBatch* batch = nullptr;
+   std::shared_ptr<TransferBatch> batch;
 };
 
 #endif // MEGADOWNLOADER_H
