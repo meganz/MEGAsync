@@ -99,6 +99,7 @@ private:
 
     Ui::TransferManagerDragBackDrop* mUiDragBackDrop;
     QWidget* mDragBackDrop;
+    BlockingUi* blockingUi = nullptr;
 
     void toggleTab(TM_TAB newTab);
     void refreshStateStats();
