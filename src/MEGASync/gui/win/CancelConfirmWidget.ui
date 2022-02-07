@@ -48,7 +48,7 @@
         <string/>
        </property>
        <property name="pixmap">
-        <pixmap resource="../Resources_macx.qrc">:/images/icon_warning.png</pixmap>
+        <pixmap resource="../Resources_win.qrc">:/images/icon_warning.png</pixmap>
        </property>
       </widget>
      </item>
@@ -252,7 +252,7 @@
   </layout>
  </widget>
  <resources>
-  <include location="../Resources_macx.qrc"/>
+  <include location="../Resources_win.qrc"/>
  </resources>
  <connections/>
 </ui>
