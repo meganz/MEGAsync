@@ -178,7 +178,7 @@ bool MegaUploader::uploadRecursivelyIntoASyncedLocation(QFileInfo srcFileInfo, Q
 bool MegaUploader::upload(QFileInfo info, MegaNode *parent, unsigned long long appDataID, MegaCancelToken* cancelToken)
 {
     QPointer<MegaUploader> safePointer = this;
-    //QApplication::processEvents(); // TODO : check if this breaks something (prevents normal operation for batch operations)
+
     if (!safePointer)
     {
         return false;
