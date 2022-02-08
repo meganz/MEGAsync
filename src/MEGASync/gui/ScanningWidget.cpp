@@ -40,6 +40,7 @@ void ScanningWidget::show()
 void ScanningWidget::hide()
 {
     movie->stop();
+    ui->lAnimation->setMovie(nullptr);
 }
 
 void ScanningWidget::on_pBlockingStageCancel_clicked()

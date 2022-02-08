@@ -57,7 +57,7 @@ bool MegaDownloader::processDownloadQueue(QQueue<WrappedNode*>* downloadQueue, B
         bool transferStarted = download(wNode, currentPath, appData, batch->getCancelTokenPtr());
         if (transferStarted)
         {
-            batch->add(QFileInfo(currentPath).isDir());
+            batch->add(node->getType() != MegaNode::TYPE_FILE);
         }
         delete wNode;
     }
