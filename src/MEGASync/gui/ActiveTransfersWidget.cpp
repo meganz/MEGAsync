@@ -347,14 +347,14 @@ void ActiveTransfersWidget::updateUpSpeed(long long speed)
         }
         else
         {
-            ui->lCurrentUpSpeed->setText(QString::fromUtf8("%1 %2")
-                                         .arg(QString::fromUtf8("<span style=\"color:#666666; font-size: 28px; text-decoration:none;\">%1</span>")
-                                         .arg(Utilities::getSizeString(speed).split(QString::fromUtf8(" ")).at(0)))
-                                         .arg(Utilities::getSizeString(speed).split(QString::fromUtf8(" ")).at(1) + QString::fromUtf8("/s")));
+            QStringList speedStringParts = Utilities::getSizeString(speed).split(QString::fromUtf8(" "));
+            QString speedValue = speedStringParts.at(0);
+            QString speedUnit = speedStringParts.at(1) + QString::fromUtf8("/s");
+            QString styledSpeedValue = QString::fromUtf8("<span style=\"color:#666666; font-size: 28px; text-decoration:none;\">%1</span>").arg(speedValue);
 
+            ui->lCurrentUpSpeed->setText(QString::fromUtf8("%1 %2").arg(styledSpeedValue, speedUnit));
             megaApi->log(MegaApi::LOG_LEVEL_INFO, (QString::fromUtf8("UPLOAD SPEED %1 %2")
-                .arg(Utilities::getSizeString(speed).split(QString::fromUtf8(" ")).at(0))
-                .arg(Utilities::getSizeString(speed).split(QString::fromUtf8(" ")).at(1) + QString::fromUtf8("/s"))).toUtf8().constData());
+                .arg(speedValue, speedUnit)).toUtf8().constData());
         }
     }
 }
