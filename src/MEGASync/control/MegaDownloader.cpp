@@ -111,10 +111,10 @@ bool MegaDownloader::download(WrappedNode* parent, QFileInfo info, QString appDa
 void MegaDownloader::startDownload(WrappedNode *parent, QString appData, QString currentPathWithSep, MegaCancelToken* cancelToken)
 {
     bool startFirst = hasTransferPriority(parent->getTransferOrigin());
-    const char* localPath = currentPathWithSep.toUtf8().constData();
+    QByteArray localPath = currentPathWithSep.toUtf8();
     const char* name = parent->getMegaNode()->getName();
     MegaTransferListener* listener = nullptr;
-    megaApi->startDownload(parent->getMegaNode(), localPath, name, appData.toUtf8().constData(), startFirst, cancelToken, listener);
+    megaApi->startDownload(parent->getMegaNode(), localPath.constData(), name, appData.toUtf8().constData(), startFirst, cancelToken, listener);
 }
 
 void MegaDownloader::downloadForeignDir(MegaNode *node, QString appData, QString currentPathWithSep)

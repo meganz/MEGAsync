@@ -179,6 +179,8 @@ bool MegaUploader::upload(QFileInfo info, MegaNode *parent, unsigned long long a
 {
     QPointer<MegaUploader> safePointer = this;
 
+    QApplication::processEvents(); // Necessary for proper transfer graph updates
+
     if (!safePointer)
     {
         return false;
@@ -218,15 +220,14 @@ bool MegaUploader::upload(QFileInfo info, MegaNode *parent, unsigned long long a
         }
         else
         {
-            MegaApi::log(MegaApi::LOG_LEVEL_WARNING, QString::fromUtf8("Skiping local recursive copy to self contained path %1 to %2").arg(currentPath).arg(destPath).toUtf8().constData());
+            MegaApi::log(MegaApi::LOG_LEVEL_WARNING, QString::fromUtf8("Skiping local recursive copy to self contained path %1 to %2").arg(currentPath, destPath).toUtf8().constData());
             ((MegaApplication*)qApp)->showErrorMessage(tr("Upload failed") + QString::fromUtf8(": ") + QString::fromUtf8("Cannot upload to location synced with a descendant") );
         }
 
     }
     else if (info.isFile() || info.isDir())
     {
-        QString msg = QString::fromLatin1("Starting upload : '%1' - '%2' - '%3'").arg(info.fileName())
-                                                                                 .arg(currentPath).arg(appDataID);
+        QString msg = QString::fromLatin1("Starting upload : '%1' - '%2' - '%3'").arg(info.fileName(), currentPath).arg(appDataID);
         megaApi->log(MegaApi::LOG_LEVEL_DEBUG, msg.toUtf8().constData());
         startUpload(currentPath, parent, cancelToken);
         return true;
@@ -237,11 +238,11 @@ bool MegaUploader::upload(QFileInfo info, MegaNode *parent, unsigned long long a
 void MegaUploader::startUpload(const QString& localPath, MegaNode* parent, MegaCancelToken* cancelToken)
 {
     const bool startFirst = false;
-    const char* localPathCstr = localPath.toUtf8().constData();
+    QByteArray localPathArray = localPath.toUtf8();
     const char* appData = nullptr;
     const char* filename = nullptr;
     const int64_t mtime = ::mega::MegaApi::INVALID_CUSTOM_MOD_TIME;
     const bool isSrcTemporary = false;
     MegaTransferListener* listener = nullptr;
-    megaApi->startUpload(localPathCstr, parent, mtime, filename, appData, isSrcTemporary, startFirst, cancelToken, listener);
+    megaApi->startUpload(localPathArray.constData(), parent, mtime, filename, appData, isSrcTemporary, startFirst, cancelToken, listener);
 }
