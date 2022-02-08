@@ -611,6 +611,9 @@
         <file>images/lists_resume_hover_ico@2x.png</file>
         <file>images/lists_resume_ico.png</file>
         <file>images/lists_resume_ico@2x.png</file>
+        <file>animations/scanning.gif</file>
+        <file>animations/scanning@2x.gif</file>
+        <file>animations/scanning@3x.gif</file>
         <file>images/Switches/switch_unchecked_rest-macx.svg</file>
         <file>images/Switches/switch_unchecked_down-macx.svg</file>
         <file>images/Switches/switch_checked_rest-macx.svg</file>

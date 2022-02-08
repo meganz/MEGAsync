@@ -825,6 +825,9 @@
         <file>animations/downloading@3x.gif</file>
         <file>animations/downloading@2x.gif</file>
         <file>animations/downloading.gif</file>
+        <file>animations/scanning.gif</file>
+        <file>animations/scanning@2x.gif</file>
+        <file>animations/scanning@3x.gif</file>
         <file>images/Icon_Win_Notifications.png</file>
         <file>images/Icon_Win_Notifications@2x.png</file>
         <file>images/Icon_Win_Notifications@3x.png</file>
