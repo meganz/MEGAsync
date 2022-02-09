@@ -1437,7 +1437,7 @@ margin-top: -1px;</string>
                    <cursorShape>PointingHandCursor</cursorShape>
                   </property>
                   <property name="text">
-                   <string>Logout</string>
+                   <string>Log out</string>
                   </property>
                  </widget>
                 </item>
@@ -1816,7 +1816,7 @@ margin-top: -1px;</string>
                    <cursorShape>PointingHandCursor</cursorShape>
                   </property>
                   <property name="text">
-                   <string>Logout</string>
+                   <string>Log out</string>
                   </property>
                  </widget>
                 </item>

@@ -93,18 +93,6 @@
       </property>
       <item row="1" column="0">
        <widget class="QRadioButton" name="rUploadNoLimit">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="minimumSize">
-         <size>
-          <width>0</width>
-          <height>24</height>
-         </size>
-        </property>
         <property name="maximumSize">
          <size>
           <width>16777215</width>
@@ -148,18 +136,6 @@
          </property>
          <item>
           <widget class="QRadioButton" name="rUploadLimit">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="minimumSize">
-            <size>
-             <width>0</width>
-             <height>24</height>
-            </size>
-           </property>
            <property name="text">
             <string>Limit to:</string>
            </property>
@@ -179,13 +155,13 @@
            <property name="minimumSize">
             <size>
              <width>40</width>
-             <height>24</height>
+             <height>0</height>
             </size>
            </property>
            <property name="maximumSize">
             <size>
              <width>50</width>
-             <height>24</height>
+             <height>16777215</height>
             </size>
            </property>
            <property name="layoutDirection">
@@ -223,24 +199,6 @@
       </item>
       <item row="0" column="0">
        <widget class="QRadioButton" name="rUploadAutoLimit">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="minimumSize">
-         <size>
-          <width>0</width>
-          <height>0</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>16777215</width>
-          <height>16777215</height>
-         </size>
-        </property>
         <property name="styleSheet">
          <string notr="true"/>
         </property>
@@ -300,24 +258,6 @@
       </property>
       <item row="0" column="0">
        <widget class="QRadioButton" name="rDownloadNoLimit">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="minimumSize">
-         <size>
-          <width>0</width>
-          <height>0</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>16777215</width>
-          <height>16777215</height>
-         </size>
-        </property>
         <property name="text">
          <string>No limit</string>
         </property>
@@ -368,13 +308,13 @@
            <property name="minimumSize">
             <size>
              <width>40</width>
-             <height>24</height>
+             <height>0</height>
             </size>
            </property>
            <property name="maximumSize">
             <size>
              <width>50</width>
-             <height>24</height>
+             <height>16777215</height>
             </size>
            </property>
            <property name="layoutDirection">
@@ -451,18 +391,6 @@
         </item>
         <item>
          <widget class="QSpinBox" name="eMaxDownloadConnections">
-          <property name="minimumSize">
-           <size>
-            <width>45</width>
-            <height>24</height>
-           </size>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>16777215</width>
-            <height>24</height>
-           </size>
-          </property>
           <property name="alignment">
            <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
           </property>
@@ -493,18 +421,6 @@
         </item>
         <item>
          <widget class="QSpinBox" name="eMaxUploadConnections">
-          <property name="minimumSize">
-           <size>
-            <width>45</width>
-            <height>24</height>
-           </size>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>16777215</width>
-            <height>24</height>
-           </size>
-          </property>
           <property name="alignment">
            <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
           </property>

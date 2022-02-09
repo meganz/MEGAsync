@@ -807,5 +807,14 @@
         <file>animations/downloading@3x.gif</file>
         <file>animations/downloading@2x.gif</file>
         <file>animations/downloading.gif</file>
+        <file>images/Icon_Win_Notifications.png</file>
+        <file>images/Icon_Win_Notifications@2x.png</file>
+        <file>images/Icon_Win_Notifications@3x.png</file>
+        <file>images/Switches/switch_checked_down.svg</file>
+        <file>images/Switches/switch_checked_hover.svg</file>
+        <file>images/Switches/switch_checked_rest.svg</file>
+        <file>images/Switches/switch_unchecked_down.svg</file>
+        <file>images/Switches/switch_unchecked_hover.svg</file>
+        <file>images/Switches/switch_unchecked_rest.svg</file>
     </qresource>
 </RCC>

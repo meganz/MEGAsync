@@ -3415,11 +3415,6 @@ void MegaApplication::showWarningMessage(QString message, QString title)
 
     MegaApi::log(MegaApi::LOG_LEVEL_WARNING, message.toUtf8().constData());
 
-    if (!preferences->showNotifications())
-    {
-        return;
-    }
-
     if (mOsNotifications)
     {
         lastTrayMessage = message;
@@ -3471,11 +3466,6 @@ void MegaApplication::showNotificationMessage(QString message, QString title)
     }
 
     MegaApi::log(MegaApi::LOG_LEVEL_INFO, message.toUtf8().constData());
-
-    if (!preferences->showNotifications())
-    {
-        return;
-    }
 
     if (mOsNotifications)
     {
@@ -3908,7 +3898,7 @@ void MegaApplication::showNotificationFinishedTransfers(unsigned long long appDa
     }
 
     TransferMetaData *data = it.value();
-    if (!preferences->showNotifications())
+    if (!preferences->isNotificationEnabled(Preferences::NotificationsTypes::INFO_MESSAGES))
     {
         if (data->pendingTransfers == 0)
         {
@@ -4883,7 +4873,7 @@ void MegaApplication::streamActionClicked()
         return;
     }
 
-    streamSelector = new StreamingFromMegaDialog(megaApi);
+    streamSelector = new StreamingFromMegaDialog(megaApi, megaApiFolders);
     connect(transferQuota.get(), &TransferQuota::waitTimeIsOver, streamSelector.data(), &StreamingFromMegaDialog::updateStreamingState);
     streamSelector->show();
 }
@@ -6807,7 +6797,6 @@ void MegaApplication::onEvent(MegaApi*, MegaEvent* event)
     else if (event->getType() == MegaEvent::EVENT_SYNCS_RESTORED)
     {
         Platform::notifyAllSyncFoldersAdded();
-        showNotificationMessage(tr("Your syncs have been enabled"));
     }
     else if (event->getType() == MegaEvent::EVENT_SYNCS_DISABLED && event->getNumber() != MegaSync::Error::LOGGED_OUT)
     {

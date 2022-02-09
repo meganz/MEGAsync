@@ -1647,7 +1647,7 @@ image: none;</string>
 }</string>
                   </property>
                   <property name="text">
-                   <string>Logout</string>
+                   <string>Log out</string>
                   </property>
                  </widget>
                 </item>
@@ -2106,7 +2106,7 @@ image: none;</string>
 }</string>
                   </property>
                   <property name="text">
-                   <string>Logout</string>
+                   <string>Log out</string>
                   </property>
                  </widget>
                 </item>
