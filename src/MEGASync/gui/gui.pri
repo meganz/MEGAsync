@@ -211,7 +211,9 @@ win32 {
                 $$PWD/win/ProxySettings.ui \
                 $$PWD/win/BandwidthSettings.ui \
                 $$PWD/win/NewFolderDialog.ui \
-                $$PWD/win/NotificationsSettings.ui
+                $$PWD/win/NotificationsSettings.ui \
+                $$PWD/win/ScanningWidget.ui \
+                $$PWD/win/CancelConfirmWidget.ui
 }
 
 macx {
