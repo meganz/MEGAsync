@@ -60,15 +60,20 @@ mega::MegaCancelToken* TransferBatch::getCancelTokenPtr()
     return cancelToken.get();
 }
 
+std::shared_ptr<mega::MegaCancelToken> TransferBatch::getCancelToken()
+{
+    return cancelToken;
+}
+
 
 BlockingBatch::~BlockingBatch()
 {
     clearBatch();
 }
 
-void BlockingBatch::add(TransferBatch* _batch)
+void BlockingBatch::add(std::shared_ptr<TransferBatch> _batch)
 {
-    batch = std::shared_ptr<TransferBatch>(_batch->createCollectionCopy());
+    batch = _batch;
 }
 
 void BlockingBatch::cancelTransfer()
@@ -119,6 +124,20 @@ void BlockingBatch::onTransferFinished(bool isFolderTransfer)
             clearBatch();
         }
     }
+}
+
+bool BlockingBatch::hasCancelToken()
+{
+    return batch && batch->getCancelTokenPtr();
+}
+
+std::shared_ptr<mega::MegaCancelToken> BlockingBatch::getCancelToken()
+{
+    if (batch)
+    {
+        return batch->getCancelToken();
+    }
+    return std::shared_ptr<mega::MegaCancelToken>();
 }
 
 QString BlockingBatch::description()

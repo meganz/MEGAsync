@@ -31,6 +31,8 @@ public:
 
     mega::MegaCancelToken* getCancelTokenPtr();
 
+    std::shared_ptr<mega::MegaCancelToken> getCancelToken();
+
 private:
     int files = 0;
     int folders = 0;
@@ -44,7 +46,7 @@ public:
 
     ~BlockingBatch();
 
-    void add(TransferBatch* _batch);
+    void add(std::shared_ptr<TransferBatch> _batch);
 
     void cancelTransfer();
 
@@ -57,6 +59,10 @@ public:
     void setAsUnblocked();
 
     void onTransferFinished(bool isFolderTransfer);
+
+    bool hasCancelToken();
+
+    std::shared_ptr<mega::MegaCancelToken> getCancelToken();
 
     QString description();
 

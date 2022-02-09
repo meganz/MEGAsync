@@ -1,6 +1,8 @@
 #include "MegaDownloader.h"
 #include "Utilities.h"
 #include "MegaApplication.h"
+#include "TransferBatch.h"
+#include <memory>
 #include <QDateTime>
 #include <QPointer>
 
@@ -27,7 +29,7 @@ bool MegaDownloader::processDownloadQueue(QQueue<WrappedNode*>* downloadQueue, B
     // Get transfer's metadata
     TransferMetaData *data = ((MegaApplication*)qApp)->getTransferAppData(appDataId);
 
-    auto batch = std::make_unique<TransferBatch>(); // TODO : resolve leak
+    auto batch = std::shared_ptr<TransferBatch>(new TransferBatch());
 
     // Process all nodes in the download queue
     while (!downloadQueue->isEmpty())
@@ -64,7 +66,7 @@ bool MegaDownloader::processDownloadQueue(QQueue<WrappedNode*>* downloadQueue, B
 
     if (!batch->isEmpty())
     {
-        downloadBatches.add(batch.get());
+        downloadBatches.add(batch);
     }
 
     pathMap.clear();

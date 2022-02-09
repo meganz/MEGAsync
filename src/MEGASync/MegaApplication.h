@@ -447,6 +447,7 @@ protected:
     QQueue<QString> uploadQueue;
     QQueue<WrappedNode *> downloadQueue;
     BlockingBatch blockingBatch;
+    std::vector<std::shared_ptr<mega::MegaCancelToken>> unblockedCancelTokens;
 
     ThreadPool* mThreadPool;
     std::shared_ptr<mega::MegaNode> mRootNode;
@@ -583,10 +584,13 @@ private:
     void updateFileTransferBatchesAndUi(BlockingBatch& batch);
     void updateFolderTransferBatchesAndUi(BlockingBatch& batch);
     void updateIfBlockingStageFinished(BlockingBatch &batch);
+    void unblockBatch(BlockingBatch &batch);
 
-    void logBatchCollectionStatus(const char* tag);
+    void logBatchStatus(const char* tag);
 
     void enableTransferActions(bool enable);
+
+    void updateFreedCancelToken(mega::MegaTransfer* transfer);
 
     bool noUploadedStarted = true;
 };

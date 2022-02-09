@@ -1531,7 +1531,7 @@ void MegaApplication::processUploadQueue(MegaHandle nodeHandle)
     transferAppData.insert(transferId, data);
     preferences->setOverStorageDismissExecution(0);
 
-    auto batch = std::make_unique<TransferBatch>();
+    auto batch = std::shared_ptr<TransferBatch>(new TransferBatch());
 
     //Process the upload queue using the MegaUploader object
     while (!uploadQueue.isEmpty())
@@ -1569,7 +1569,7 @@ void MegaApplication::processUploadQueue(MegaHandle nodeHandle)
 
     if (!batch->isEmpty())
     {
-        blockingBatch.add(batch.get());
+        blockingBatch.add(batch);
         QString logMessage = QString::fromUtf8("Added batch upload");
         MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, logMessage.toUtf8().constData());
     }
@@ -3291,11 +3291,20 @@ void MegaApplication::updateIfBlockingStageFinished(BlockingBatch &batch)
     if (batch.isBlockingStageFinished())
     {
         setTransferUiInUnblockedState();
-        batch.setAsUnblocked();
+        unblockBatch(batch);
     }
 }
 
-void MegaApplication::logBatchCollectionStatus(const char* tag)
+void MegaApplication::unblockBatch(BlockingBatch &batch)
+{
+    if (batch.hasCancelToken())
+    {
+        unblockedCancelTokens.push_back(batch.getCancelToken());
+    }
+    batch.setAsUnblocked();
+}
+
+void MegaApplication::logBatchStatus(const char* tag)
 {
 #ifdef DEBUG
     QString logMessage = QString::fromLatin1("%1 : %2").arg(QString::fromUtf8(tag)).arg(blockingBatch.description());
@@ -3316,6 +3325,21 @@ void MegaApplication::enableTransferActions(bool enable)
     if (syncsMenu)
     {
         syncsMenu->setEnabled(enable);
+    }
+}
+
+void MegaApplication::updateFreedCancelToken(MegaTransfer* transfer)
+{
+    MegaCancelToken* targetToken = transfer->getCancelToken();
+
+    auto finder = [targetToken](std::shared_ptr<MegaCancelToken> currentToken)
+    {
+        return currentToken.get() == targetToken;
+    };
+    auto itToken = std::find_if(unblockedCancelTokens.begin(), unblockedCancelTokens.end(), finder);
+    if (itToken != unblockedCancelTokens.end())
+    {
+        unblockedCancelTokens.erase(itToken);
     }
 }
 
@@ -7877,10 +7901,8 @@ void MegaApplication::onTransferStart(MegaApi *api, MegaTransfer *transfer)
         return;
     }
 
-    {
-        updateFileTransferBatchesAndUi(blockingBatch);
-        logBatchCollectionStatus("onTransferStart");
-    }
+    updateFileTransferBatchesAndUi(blockingBatch);
+    logBatchStatus("onTransferStart");
 
     DeferPreferencesSyncForScope deferrer(this);
 
@@ -7915,11 +7937,10 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
     if (isFileTransfer || isFolderTransfer)
     {
 
-        {
-            blockingBatch.onTransferFinished(isFolderTransfer);
-            updateIfBlockingStageFinished(blockingBatch);
-            logBatchCollectionStatus("onTransferFinish");
-        }
+        blockingBatch.onTransferFinished(isFolderTransfer);
+        updateIfBlockingStageFinished(blockingBatch);
+        updateFreedCancelToken(transfer);
+        logBatchStatus("onTransferFinish");
 
         const char *notificationKey = transfer->getAppData();
         if (notificationKey)
@@ -8079,7 +8100,7 @@ void MegaApplication::onTransferUpdate(MegaApi*, MegaTransfer* transfer)
     if (transfer->getStage() >= MegaTransfer::STAGE_TRANSFERRING_FILES)
     {
         updateFolderTransferBatchesAndUi(blockingBatch);
-        logBatchCollectionStatus("onTransferUpdate");
+        logBatchStatus("onTransferUpdate");
     }
 
     if (transfer->isStreamingTransfer() || transfer->isFolderTransfer())
