@@ -96,17 +96,14 @@ SettingsDialog::SettingsDialog(MegaApplication* app, bool proxyOnly, QWidget* pa
     mIsSavingSyncsOnGoing (false),
     mSelectedSyncRow(-1)
 {
-
+    mUi->setupUi(this);
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
 
-    mUi->setupUi(this);
-    setAttribute(Qt::WA_QuitOnClose, false);
     // override whatever indexes might be set in .ui files (frequently checked in by mistake)
     mUi->wStack->setCurrentWidget(mUi->pGeneral);
     mUi->wStackFooter->setCurrentWidget(mUi->wGeneralFooter);
     // Add Ctrl+index keyboard shortcut for Settings tabs
     setShortCutsForToolBarItems();
-
 
     connect(mUi->wStack, &QStackedWidget::currentChanged, [=](const int &newValue){
           mUi->wStackFooter->setCurrentIndex(newValue);

@@ -8,7 +8,7 @@ FilterAlertWidget::FilterAlertWidget(QWidget *parent) :
     ui->setupUi(this);
     setUnseenNotifications(0, 0, 0, 0);
 
-    setWindowFlags(Qt::FramelessWindowHint | Qt::Popup);
+    setWindowFlags(windowFlags() | Qt::FramelessWindowHint | Qt::Popup);
     setAttribute(Qt::WA_TranslucentBackground);
 }
 

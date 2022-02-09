@@ -9,7 +9,7 @@ static constexpr int TAIL_SIZE_PX (8);
 BalloonToolTip::BalloonToolTip(QWidget *parent) :
     QWidget(parent)
 {
-    setWindowFlags(Qt::FramelessWindowHint | Qt::Popup);
+    setWindowFlags(windowFlags() | Qt::FramelessWindowHint | Qt::Popup);
     setAttribute(Qt::WA_TranslucentBackground);
     setAttribute(Qt::WA_ShowWithoutActivating);
 

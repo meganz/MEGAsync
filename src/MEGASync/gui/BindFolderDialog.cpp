@@ -13,7 +13,6 @@ BindFolderDialog::BindFolderDialog(MegaApplication *app, QWidget *parent) :
     ui(new Ui::BindFolderDialog)
 {
     ui->setupUi(this);
-    setAttribute(Qt::WA_QuitOnClose, false);
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
 
     this->app = app;
@@ -34,7 +33,6 @@ BindFolderDialog::BindFolderDialog(MegaApplication *app, QStringList syncNames,
     ui(new Ui::BindFolderDialog)
 {
     ui->setupUi(this);
-    setAttribute(Qt::WA_QuitOnClose, false);
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
 
     this->app = app;
