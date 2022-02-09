@@ -31,8 +31,8 @@ public:
     QIcon standardIcon(QStyle::StandardPixmap standardIcon, const QStyleOption *option,
                        const QWidget *widget) const override;
 
+    using QProxyStyle::polish;
     void polish(QWidget *widget) override;
-
 };
 
 #endif // MEGAPROXYSTYLE_H
