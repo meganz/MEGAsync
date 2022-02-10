@@ -583,6 +583,8 @@ private:
     void reconnectIfNecessary(const bool disconnected, const QList<QNetworkInterface>& newNetworkInterfaces);
     bool isIdleForTooLong() const;
 
+    void ConnectServerSignals(HTTPServer* server);
+
     static QString RectToString(const QRect& rect);
 
     static void logInfoDialogCoordinates(const char* message, const QRect& screenGeometry, const QString& otherInformation);
