@@ -38,7 +38,7 @@ public slots:
     void accept() override;
 
 protected:
-    void changeEvent(QEvent * event);
+    void changeEvent(QEvent * event) override;
 
 private:
     Ui::ImportMegaLinksDialog *ui;
