@@ -16,6 +16,7 @@
 #include <QDesktopWidget>
 #include <QFontDatabase>
 #include <QNetworkProxy>
+#include <QScreen>
 #include <QSettings>
 #include <QToolTip>
 
@@ -2418,25 +2419,18 @@ void MegaApplication::calculateInfoDialogCoordinates(QDialog *dialog, int *posx,
     #endif
 
     position = QCursor::pos();
-    QDesktopWidget *desktop = QApplication::desktop();
-    int screenIndex = desktop->screenNumber(position);
-    screenGeometry = desktop->availableGeometry(screenIndex);
+    QScreen* currentScreen = QGuiApplication::screenAt(position);
+    screenGeometry = currentScreen->availableGeometry();
 
-    MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Calculating Info Dialog coordinates. availableGeometry: valid = %1, geom = %2, pos = %3, index = %4")
-                 .arg(screenGeometry.isValid())
-                 .arg(QString::fromUtf8("[%1,%2,%3,%4]").arg(screenGeometry.x()).arg(screenGeometry.y()).arg(screenGeometry.width()).arg(screenGeometry.height()))
-                 .arg(QString::fromUtf8("[%1,%2]").arg(position.x()).arg(position.y()))
-                 .arg(screenIndex)
-                 .toUtf8().constData());
+    QString otherInfo = QString::fromUtf8("pos = [%1,%2], name = %3").arg(position.x()).arg(position.y()).arg(currentScreen->name());
+    logInfoDialogCoordinates("availableGeometry", screenGeometry, otherInfo);
 
     if (!screenGeometry.isValid())
     {
-        screenGeometry = desktop->screenGeometry(screenIndex);
-        MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Calculating Info Dialog coordinates. screenGeometry: valid = %1, geom = %2, dialog rect = %3")
-                     .arg(screenGeometry.isValid())
-                     .arg(QString::fromUtf8("[%1,%2,%3,%4]").arg(screenGeometry.x()).arg(screenGeometry.y()).arg(screenGeometry.width()).arg(screenGeometry.height()))
-                     .arg(QString::fromUtf8("[%1,%2,%3,%4]").arg(dialog->rect().x()).arg(dialog->rect().y()).arg(dialog->rect().width()).arg(dialog->rect().height()))
-                     .toUtf8().constData());
+        screenGeometry = currentScreen->geometry();
+        otherInfo = QString::fromUtf8("dialog rect = %1").arg(RectToString(dialog->rect()));
+        logInfoDialogCoordinates("screenGeometry", screenGeometry, otherInfo);
+
         if (screenGeometry.isValid())
         {
             screenGeometry.setTop(28);
@@ -2447,11 +2441,8 @@ void MegaApplication::calculateInfoDialogCoordinates(QDialog *dialog, int *posx,
             screenGeometry.setBottom(screenGeometry.bottom() + 4);
             screenGeometry.setRight(screenGeometry.right() + 4);
         }
-        MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Calculating Info Dialog coordinates. screenGeometry 2: valid = %1, geom = %2, dialog rect = %3")
-                     .arg(screenGeometry.isValid())
-                     .arg(QString::fromUtf8("[%1,%2,%3,%4]").arg(screenGeometry.x()).arg(screenGeometry.y()).arg(screenGeometry.width()).arg(screenGeometry.height()))
-                     .arg(QString::fromUtf8("[%1,%2,%3,%4]").arg(dialog->rect().x()).arg(dialog->rect().y()).arg(dialog->rect().width()).arg(dialog->rect().height()))
-                     .toUtf8().constData());
+
+        logInfoDialogCoordinates("screenGeometry 2", screenGeometry, otherInfo);
     }
     else
     {
@@ -2572,14 +2563,8 @@ void MegaApplication::calculateInfoDialogCoordinates(QDialog *dialog, int *posx,
         }
     #endif
 
-        MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Calculating Info Dialog coordinates. Final: valid = %1, geom = %2, dialog rect = %3, posx = %4, posy = %5")
-                     .arg(screenGeometry.isValid())
-                     .arg(QString::fromUtf8("[%1,%2,%3,%4]").arg(screenGeometry.x()).arg(screenGeometry.y()).arg(screenGeometry.width()).arg(screenGeometry.height()))
-                     .arg(QString::fromUtf8("[%1,%2,%3,%4]").arg(dialog->rect().x()).arg(dialog->rect().y()).arg(dialog->rect().width()).arg(dialog->rect().height()))
-                     .arg(*posx)
-                     .arg(*posy)
-                     .toUtf8().constData());
-
+        otherInfo = QString::fromUtf8("dialog rect = %1, posx = %2, posy = %3").arg(RectToString(dialog->rect())).arg(*posx).arg(*posy);
+        logInfoDialogCoordinates("Final", screenGeometry, otherInfo);
 }
 
 void MegaApplication::deleteMenu(QMenu *menu)
@@ -3201,6 +3186,21 @@ void MegaApplication::reconnectIfNecessary(const bool disconnected, const QList<
 bool MegaApplication::isIdleForTooLong() const
 {
     return (QDateTime::currentMSecsSinceEpoch() - lastActiveTime) > Preferences::MAX_IDLE_TIME_MS;
+}
+
+QString MegaApplication::RectToString(const QRect &rect)
+{
+    return QString::fromUtf8("[%1,%2,%3,%4]").arg(rect.x()).arg(rect.y()).arg(rect.width()).arg(rect.height());
+}
+
+void MegaApplication::logInfoDialogCoordinates(const char *message, const QRect &screenGeometry, const QString &otherInformation)
+{
+    MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Calculating Info Dialog coordinates. %1: valid = %2, geom = %3, %4")
+                 .arg(QString::fromUtf8(message))
+                 .arg(screenGeometry.isValid())
+                 .arg(RectToString(screenGeometry))
+                 .arg(otherInformation)
+                 .toUtf8().constData());
 }
 
 void MegaApplication::setupWizardFinished(int result)
