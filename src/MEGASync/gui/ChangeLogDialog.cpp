@@ -35,7 +35,7 @@ ChangeLogDialog::ChangeLogDialog(QString version, QString SDKversion, QString ch
 {
     ui->setupUi(this);
 #ifdef Q_OS_LINUX
-    setWindowFlags(Qt::Window | Qt::WindowCloseButtonHint);
+    setWindowFlags(windowFlags() | Qt::WindowCloseButtonHint);
 #endif
 
     ui->tChangelog->verticalScrollBar()->setStyleSheet(

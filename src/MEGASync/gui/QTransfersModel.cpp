@@ -70,7 +70,7 @@ int QTransfersModel::rowCount(const QModelIndex &parent) const
     {
         return 0;
     }
-    return transferOrder.size();
+    return static_cast<int>(transferOrder.size());
 }
 
 int QTransfersModel::getModelType()

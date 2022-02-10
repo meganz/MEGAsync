@@ -301,6 +301,7 @@ set (MOC_INPUT
     ${MEGAsyncDir}/gui/AddBackupDialog.h
     ${MEGAsyncDir}/gui/RemoveBackupDialog.h
     ${MEGAsyncDir}/gui/SwitchButton.h
+    ${MEGAsyncDir}/gui/GuiUtilities.h
     ${MEGAsyncDir}/gui/EventHelper.h
 
     ${MEGAsyncDir}/platform/notificator.h
@@ -452,6 +453,7 @@ set (SRCS
     ${MEGAsyncDir}/gui/AddBackupDialog.cpp
     ${MEGAsyncDir}/gui/RemoveBackupDialog.cpp
     ${MEGAsyncDir}/gui/SwitchButton.cpp
+    ${MEGAsyncDir}/gui/GuiUtilities.cpp
     ${MEGAsyncDir}/gui/EventHelper.cpp
 
     ${MEGAsyncDir}/mega/bindings/qt/QTMegaRequestListener.cpp

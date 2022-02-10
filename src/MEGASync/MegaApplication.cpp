@@ -113,6 +113,8 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     connect(this, SIGNAL(screenRemoved(QScreen *)), this, SLOT(changeDisplay(QScreen *)));
 #endif
 
+    setQuitOnLastWindowClosed(false);
+
     //Set QApplication fields
     setOrganizationName(QString::fromUtf8("Mega Limited"));
     setOrganizationDomain(QString::fromUtf8("mega.co.nz"));
@@ -383,7 +385,6 @@ void MegaApplication::initialize()
 
     paused = false;
     indexing = false;
-    setQuitOnLastWindowClosed(false);
 
 #ifdef Q_OS_LINUX
     isLinux = true;
