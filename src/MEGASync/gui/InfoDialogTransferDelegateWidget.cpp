@@ -285,11 +285,12 @@ TransferBaseDelegateWidget::ActionHoverType InfoDialogTransferDelegateWidget::mo
             update = setActionTransferIcon(mUi->lActionTransfer,
                                            QString::fromAscii("://images/ico_item_link%1.png").arg(QString::fromAscii(inAction?"_hover_ico":"")));
 
+            mUi->lShowInFolder->show();
+
             bool inShowFolder = isMouseHoverInAction(mUi->lShowInFolder, pos);
             update |= setActionTransferIcon(mUi->lShowInFolder,
                                            QString::fromAscii("://images/showinfolder%1.png").arg(QString::fromAscii(inShowFolder?"_hover_ico":"")));
 
-            mUi->lShowInFolder->show();
 
             if(inAction || inShowFolder)
             {

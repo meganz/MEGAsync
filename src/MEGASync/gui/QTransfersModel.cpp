@@ -145,6 +145,19 @@ QTransfersModel::QTransfersModel(QObject *parent) :
 
 }
 
+
+QTransfersModel::~QTransfersModel()
+{
+    // Cleanup
+    mTransfers.clear();
+
+    // Disconect listener
+    mMegaApi->removeTransferListener(mTransferEventWorker);
+    mTransferEventThread->quit();
+    mTransferEventThread->deleteLater();
+    mTransferEventWorker->deleteLater();
+}
+
 void QTransfersModel::pauseModelProcessing(bool value)
 {
     if(value)
@@ -190,7 +203,6 @@ QVariant QTransfersModel::data(const QModelIndex& index, int role) const
     int row (index.row());
     QVariant value;
 
-
     if (role == Qt::DisplayRole && row >= 0 && row < mOrder.size())
     {
         auto tag (mOrder.at(row));
@@ -215,18 +227,6 @@ QModelIndex QTransfersModel::index(int row, int column, const QModelIndex& paren
     return DEFAULT_IDX;
 }
 
-QTransfersModel::~QTransfersModel()
-{
-    // Cleanup
-    mTransfers.clear();
-
-    // Disconect listener
-    mMegaApi->removeTransferListener(mTransferEventWorker);
-    mTransferEventThread->quit();
-    mTransferEventThread->deleteLater();
-    mTransferEventWorker->deleteLater();
-}
-
 void QTransfersModel::initModel()
 {
     emit pauseStateChanged(mAreAllPaused);
@@ -234,9 +234,6 @@ void QTransfersModel::initModel()
 
 void QTransfersModel::onProcessTransfers()
 {
-    QElapsedTimer timer;
-    timer.start();
-
     mRowsToUpdate.clear();
 
     auto updateList = mTransferEventWorker->processUpdates();
@@ -247,21 +244,33 @@ void QTransfersModel::onProcessTransfers()
     for (auto it = updateList.begin(); it != updateList.end(); ++it)
     {
         auto state (static_cast<TransferData::TransferState>(1 << (*it)->getState()));
+        auto row = mTagByOrder.value((*it)->getTag(),-1);
 
-        if(state == TransferData::TransferState::TRANSFER_CANCELLED)
+        if(row >= 0)
         {
-            continue;
-        }
-        else if(mTagByOrder.value((*it)->getTag(),-1) < 0)
-        {
-            newTransferList.push_back((*it));
+            if(state == TransferData::TransferState::TRANSFER_CANCELLED)
+            {
+                transferToCancelList.push_back((*it));
+            }
+            else
+            {
+                transferToUpdateList.push_back((*it));
+            }
         }
         else
         {
-            transferToUpdateList.push_back((*it));
+            if(state == TransferData::TransferState::TRANSFER_CANCELLED)
+            {
+                continue;
+            }
+            else
+            {
+                newTransferList.push_back((*it));
+            }
         }
     }
 
+    processCancelTransfers(transferToCancelList);
     processStartTransfers(newTransferList);
     processUpdateTransfers(transferToUpdateList);
 
@@ -357,6 +366,27 @@ void QTransfersModel::processUpdateTransfers(std::list<MegaTransfer *> transferL
       delete (*it);
       it++;
   }
+}
+
+void QTransfersModel::processCancelTransfers(std::list<MegaTransfer *> transferList)
+{
+    if(transferList.size() > 0)
+    {
+        QModelIndexList indexesToCancel;
+
+        for (auto it = transferList.begin(); it != transferList.end();)
+        {
+            auto row = mTagByOrder.value((*it)->getTag());
+            indexesToCancel.append(index(row,0, DEFAULT_IDX));
+
+            delete (*it);
+            it++;
+        }
+
+        qSort(indexesToCancel.begin(), indexesToCancel.end(), qGreater<QModelIndex>());
+
+        cancelClearTransfers(indexesToCancel, false);
+    }
 }
 
 int QTransfersModel::updateTransfer(mega::MegaTransfer* transfer)
@@ -752,6 +782,9 @@ bool QTransfersModel::removeRows(int row, int count, const QModelIndex& parent)
 
             mNbTransfersPerFileType[fileType]--;
             mNbFinishedPerFileType[fileType]--;
+
+            mOrder.removeAt(row);
+            mTransfers.remove(tag);
         }
         endRemoveRows();
 
@@ -760,7 +793,7 @@ bool QTransfersModel::removeRows(int row, int count, const QModelIndex& parent)
         for(int row = 0; row < rowCount(DEFAULT_IDX); ++row)
         {
             auto idx = index(row,0, DEFAULT_IDX);
-            auto tag = (quintptr)idx.internalPointer();
+            auto tag = quintptr(idx.internalPointer());
             mTagByOrder.insert(tag, row);
         }
         return true;

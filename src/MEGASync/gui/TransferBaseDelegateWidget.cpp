@@ -70,8 +70,8 @@ bool TransferBaseDelegateWidget::setActionTransferIcon(QToolButton *button, cons
 }
 
 bool TransferBaseDelegateWidget::isMouseHoverInAction(QToolButton *button, const QPoint& mousePos)
-{
-    if(!button->isVisible())
+{   
+    if(button->testAttribute(Qt::WA_WState_Hidden))
     {
         return false;
     }

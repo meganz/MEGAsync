@@ -257,26 +257,21 @@ void TransferManagerDelegateWidget::setType()
 {
     QIcon icon;
 
-    // Transfer type icon
-    switch (getData()->mType)
+    auto transferType = getData()->mType;
+
+    if(transferType & TransferData::TRANSFER_SYNC)
     {
-        case TransferData::TRANSFER_DOWNLOAD:
-        case TransferData::TRANSFER_LTCPDOWNLOAD:
-        {
-            icon = Utilities::getCachedPixmap(QLatin1Literal(":/images/arrow_download_ico.png"));
-            break;
-        }
-        case TransferData::TRANSFER_UPLOAD:
-        {
-            icon = Utilities::getCachedPixmap(QLatin1Literal(":/images/arrow_upload_ico.png"));
-            break;
-        }
-        default:
-        {
-            icon = Utilities::getCachedPixmap(QLatin1Literal(":/images/synching_ico.png"));
-            break;
-        }
+        icon = Utilities::getCachedPixmap(QLatin1Literal(":/images/synching_ico.png"));
     }
+    else if(transferType & TransferData::TRANSFER_DOWNLOAD || transferType & TransferData::TRANSFER_LTCPDOWNLOAD)
+    {
+        icon = Utilities::getCachedPixmap(QLatin1Literal(":/images/arrow_download_ico.png"));
+    }
+    else if(transferType & TransferData::TRANSFER_UPLOAD)
+    {
+        icon = Utilities::getCachedPixmap(QLatin1Literal(":/images/arrow_upload_ico.png"));
+    }
+
     mUi->bItemSpeed->setIcon(icon);
 }
 

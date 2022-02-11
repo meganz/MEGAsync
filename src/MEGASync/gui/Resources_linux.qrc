@@ -888,5 +888,32 @@
         <file>images/delete_search_ico.png</file>
         <file>images/delete_search_ico@2x.png</file>
         <file>images/delete_search_ico@3x.png</file>
+        <file>images/sidebar_up_to_date_ico.png</file>
+        <file>images/sidebar_up_to_date_ico@2x.png</file>
+        <file>images/sidebar_up_to_date_ico@3x.png</file>
+        <file>images/move_bottom_ico.png</file>
+        <file>images/move_bottom_ico@2x.png</file>
+        <file>images/move_bottom_ico@3x.png</file>
+        <file>images/move_down_ico.png</file>
+        <file>images/move_down_ico@2x.png</file>
+        <file>images/move_down_ico@3x.png</file>
+        <file>images/move_top_ico.png</file>
+        <file>images/move_top_ico@2x.png</file>
+        <file>images/move_top_ico@3x.png</file>
+        <file>images/move_up_ico.png</file>
+        <file>images/move_up_ico@2x.png</file>
+        <file>images/move_up_ico@3x.png</file>
+        <file>images/open_file_ico.png</file>
+        <file>images/open_file_ico@2x.png</file>
+        <file>images/open_file_ico@3x.png</file>
+        <file>images/ico_clear.png</file>
+        <file>images/ico_clear@2x.png</file>
+        <file>images/ico_clear@3x.png</file>
+        <file>images/synching_ico.png</file>
+        <file>images/synching_ico@2x.png</file>
+        <file>images/synching_ico@3x.png</file>
+        <file>images/preferences_toolbar_ico.png</file>
+        <file>images/preferences_toolbar_ico@2x.png</file>
+        <file>images/preferences_toolbar_ico@3x.png</file>
     </qresource>
 </RCC>

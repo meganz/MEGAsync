@@ -134,6 +134,7 @@ private slots:
     void onPauseStateChanged();
     void processStartTransfers(std::list<mega::MegaTransfer*> transferList);
     void processUpdateTransfers(std::list<mega::MegaTransfer*> transferList);
+    void processCancelTransfers(std::list<mega::MegaTransfer*> transferList);
 
     void onProcessTransfers();
 
