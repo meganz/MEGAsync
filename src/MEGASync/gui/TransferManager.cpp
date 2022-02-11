@@ -382,7 +382,10 @@ void TransferManager::refreshFileTypesStats()
             QLabel* label (mMediaNumberLabelsGroup[fileType]);
             if (mCurrentTab != tab && number == 0)
             {
-                label->parentWidget()->hide();
+                if(label->parentWidget()->isVisible())
+                {
+                    label->parentWidget()->hide();
+                }
                 mNumberOfTransfersPerTab[tab] = 0;
             }
             else
@@ -763,7 +766,8 @@ void TransferManager::toggleTab(TM_TAB newTab)
         {
             mUi->sCurrentContent->setCurrentWidget(mUi->pSearchHeader);
         }
-        else if (mCurrentTab == SEARCH_TAB)
+        else if (mCurrentTab == SEARCH_TAB
+                 || mUi->sCurrentContent->currentWidget() != mUi->pStatusHeader)
         {
             mUi->sCurrentContent->setCurrentWidget(mUi->pStatusHeader);
             mUi->wTransfers->transferFilterApply(false);

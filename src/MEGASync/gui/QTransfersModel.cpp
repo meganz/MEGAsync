@@ -270,27 +270,32 @@ void QTransfersModel::onProcessTransfers()
         }
     }
 
-    processCancelTransfers(transferToCancelList);
-    processStartTransfers(newTransferList);
-    processUpdateTransfers(transferToUpdateList);
-
-    if(!mRowsToUpdate.isEmpty())
+    if(transferToCancelList.size() != 0
+            || newTransferList.size() != 0
+            || transferToUpdateList.size() != 0)
     {
-        foreach(auto& row, mRowsToUpdate)
+        processCancelTransfers(transferToCancelList);
+        processStartTransfers(newTransferList);
+        processUpdateTransfers(transferToUpdateList);
+
+        if(!mRowsToUpdate.isEmpty())
         {
-            QModelIndex topLeft (index(row, 0, DEFAULT_IDX));
-            emit dataChanged(topLeft, topLeft);
+            foreach(auto& row, mRowsToUpdate)
+            {
+                QModelIndex topLeft (index(row, 0, DEFAULT_IDX));
+                emit dataChanged(topLeft, topLeft);
+            }
+
         }
 
+        updateTransfersCount();
+
+
+        newTransferList.clear();
+        transferToUpdateList.clear();
+        transferToCancelList.clear();
+        updateList.clear();
     }
-
-    updateTransfersCount();
-
-
-    newTransferList.clear();
-    transferToUpdateList.clear();
-    transferToCancelList.clear();
-    updateList.clear();
 }
 
 void QTransfersModel::processStartTransfers(std::list<MegaTransfer *> transferList)
@@ -490,16 +495,10 @@ void QTransfersModel::openFolderByIndex(const QModelIndex& index)
         const auto transferItem (
                     qvariant_cast<TransferItem>(index.data(Qt::DisplayRole)));
         auto d (transferItem.getTransferData());
-        if (d && !d->mPath.isEmpty())
+        auto path = d->path();
+        if (d && !path.isEmpty())
         {
-            QString localPath = d->mPath;
-            #ifdef WIN32
-            if (localPath.startsWith(QString::fromAscii("\\\\?\\")))
-            {
-                localPath = localPath.mid(4);
-            }
-            #endif
-            Platform::showInFolder(localPath);
+            Platform::showInFolder(path);
         }
     });
 }

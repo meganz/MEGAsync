@@ -936,5 +936,14 @@
         <file>images/preferences_toolbar_ico.png</file>
         <file>images/preferences_toolbar_ico@2x.png</file>
         <file>images/preferences_toolbar_ico@3x.png</file>
+        <file>images/sidebar_cancel_all_ico.png</file>
+        <file>images/sidebar_cancel_all_ico@2x.png</file>
+        <file>images/sidebar_cancel_all_ico@3x.png</file>
+        <file>images/cancel_transfer_ico.png</file>
+        <file>images/cancel_transfer_ico@2x.png</file>
+        <file>images/cancel_transfer_ico@3x.png</file>
+        <file>images/resume_ico.png</file>
+        <file>images/resume_ico@2x.png</file>
+        <file>images/resume_ico@3x.png</file>
     </qresource>
 </RCC>

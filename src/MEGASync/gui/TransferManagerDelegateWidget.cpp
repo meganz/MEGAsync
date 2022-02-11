@@ -247,7 +247,8 @@ void TransferManagerDelegateWidget::setFileNameAndType()
     mUi->pbTransfer->setValue(permil);
 
     // File name
-    mUi->lTransferName->setToolTip(getData()->mFilename);
+    QString localPath = getData()->path();
+    mUi->lTransferName->setToolTip(localPath.isEmpty() ? getData()->mFilename : localPath);
     mUi->lTransferName->setText(mUi->lTransferName->fontMetrics()
                                 .elidedText(getData()->mFilename, Qt::ElideMiddle,
                                             mUi->wName->contentsRect().width() - 12));

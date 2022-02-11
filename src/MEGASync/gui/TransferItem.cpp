@@ -121,3 +121,15 @@ void TransferData::updateBasicInfo(MegaTransfer *transfer)
                        QTransfersModel::mFileTypes[pixmapName]
                        : TransferData::FileType::TYPE_OTHER;
 }
+
+QString TransferData::path() const
+{
+    QString localPath = mPath;
+    #ifdef WIN32
+    if (localPath.startsWith(QString::fromAscii("\\\\?\\")))
+    {
+        localPath = localPath.mid(4);
+    }
+    #endif
+    return localPath;
+}

@@ -1860,7 +1860,7 @@ QToolButton
             </property>
             <layout class="QVBoxLayout" name="searchHeaderLayout">
              <property name="spacing">
-              <number>0</number>
+              <number>5</number>
              </property>
              <property name="leftMargin">
               <number>0</number>
@@ -1895,6 +1895,9 @@ QToolButton
                  </property>
                  <property name="text">
                   <string>Search:</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
                  </property>
                 </widget>
                </item>

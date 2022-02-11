@@ -560,9 +560,10 @@ void MegaTransferView::openItemClicked()
             const auto transferItem (
                         qvariant_cast<TransferItem>(index.data(Qt::DisplayRole)));
             auto d (transferItem.getTransferData());
-            if (!d->mPath.isEmpty())
+            auto path = d->path();
+            if (!path.isEmpty())
             {
-                QtConcurrent::run(QDesktopServices::openUrl, QUrl::fromLocalFile(d->mPath));
+                QtConcurrent::run(QDesktopServices::openUrl, QUrl::fromLocalFile(path));
             }
         }
     }

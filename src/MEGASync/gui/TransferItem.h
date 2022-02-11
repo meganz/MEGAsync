@@ -58,33 +58,6 @@ public:
 
     static const TransferTypes TYPE_MASK;
 
-    //Initialise with these values
-    TransferState mState;
-    int       mTag;
-    unsigned long long mPriority;
-    QString   mFilename;
-    TransferTypes mType;
-
-    //Updated only when paint needed
-    int       mErrorCode;
-    bool mIsSyncTransfer;
-    long long mErrorValue;
-    int64_t   mFinishedTime;
-    int64_t   mRemainingTime;
-    unsigned long long mTotalSize;
-    unsigned long long mSpeed;
-    unsigned long long mMeanSpeed;
-    unsigned long long mTransferredBytes;
-    bool mIsPublicNode;
-    int mNodeAccess;
-    FileType mFileType;
-    mega::MegaHandle mParentHandle;
-    mega::MegaHandle mNodeHandle;
-    QString   mPath;
-
-    //Is it Updated?
-    bool mUpdated;
-
     TransferData(){}
 
     TransferData(TransferData const* dr) :
@@ -123,6 +96,38 @@ public:
     {
         mUpdated = state;
     }
+
+    //Initialise with these values
+    TransferState mState;
+    int       mTag;
+    unsigned long long mPriority;
+    QString   mFilename;
+    TransferTypes mType;
+
+    //Updated only when paint needed
+    int       mErrorCode;
+    bool mIsSyncTransfer;
+    long long mErrorValue;
+    int64_t   mFinishedTime;
+    int64_t   mRemainingTime;
+    unsigned long long mTotalSize;
+    unsigned long long mSpeed;
+    unsigned long long mMeanSpeed;
+    unsigned long long mTransferredBytes;
+    bool mIsPublicNode;
+    int mNodeAccess;
+    FileType mFileType;
+    mega::MegaHandle mParentHandle;
+    mega::MegaHandle mNodeHandle;
+
+    //Is it Updated?
+    bool mUpdated;
+
+    QString path() const;
+
+private:
+    QString   mPath;
+
 };
 Q_DECLARE_TYPEINFO(TransferData, Q_MOVABLE_TYPE);
 Q_DECLARE_METATYPE(TransferData)
