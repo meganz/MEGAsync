@@ -651,7 +651,7 @@ margin: 0px;
              <bool>true</bool>
             </property>
             <property name="text">
-             <string>Open at login</string>
+             <string>Launch at login</string>
             </property>
            </widget>
           </item>

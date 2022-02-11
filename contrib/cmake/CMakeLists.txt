@@ -285,6 +285,7 @@ set (MOC_INPUT
     ${MEGAsyncDir}/gui/ProxySettings.h
     ${MEGAsyncDir}/gui/BandwidthSettings.h
     ${MEGAsyncDir}/gui/SwitchButton.h
+    ${MEGAsyncDir}/gui/GuiUtilities.h
     ${MEGAsyncDir}/gui/EventHelper.h
     ${MEGAsyncDir}/platform/notificator.h
     ${MEGAsyncDir}/mega/bindings/qt/QTMegaGlobalListener.h
@@ -430,6 +431,7 @@ set (SRCS
     ${MEGAsyncDir}/gui/ProxySettings.cpp
     ${MEGAsyncDir}/gui/BandwidthSettings.cpp
     ${MEGAsyncDir}/gui/SwitchButton.cpp
+    ${MEGAsyncDir}/gui/GuiUtilities.cpp
 
     ${MEGAsyncDir}/gui/EventHelper.cpp
     ${MEGAsyncDir}/mega/bindings/qt/QTMegaRequestListener.cpp

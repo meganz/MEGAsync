@@ -27,8 +27,12 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
     mSpeedRefreshTimer(new QTimer(this)),
     mStatsRefreshTimer(new QTimer(this))
 {
-    mUi->setupUi(this);
-    mUi->wTransfers->setupTransfers();
+    ui->setupUi(this);
+    setAttribute(Qt::WA_DeleteOnClose, true);
+#ifndef Q_OS_MACOS
+    setWindowFlags(windowFlags() | Qt::Window | Qt::FramelessWindowHint);
+#endif
+    preferences = Preferences::instance();
 
     mUi->lTextSearch->installEventFilter(this);
 
