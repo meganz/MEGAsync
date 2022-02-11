@@ -797,39 +797,6 @@ Please enter a different name to identify this synced folder:</source>
     </message>
 </context>
 <context>
-    <name>ConfirmSSLexception</name>
-    <message>
-        <source>Warning</source>
-        <translatorcomment>Title of the dialog that allows to disable a security check to prevent atacks that could intercept the communications of MEGAsync</translatorcomment>
-        <translation>警告</translation>
-    </message>
-    <message>
-        <source>Are you sure you want to continue?</source>
-        <translatorcomment>Question for the user in the dialog that allows to disable a security check of MEGAsync. The user have to reply yes or no</translatorcomment>
-        <translation>您確定要繼續嗎？</translation>
-    </message>
-    <message>
-        <source>Remember my decision and don&apos;t ask me again</source>
-        <translatorcomment>Text next to a checkbox that allows to remember the decision of the user. The translation should be as short as possible.</translatorcomment>
-        <translation>記住我的決定，不要再詢問我</translation>
-    </message>
-    <message>
-        <source>No</source>
-        <translatorcomment>Negative response to a question. The text will be inside a button.</translatorcomment>
-        <translation>否</translation>
-    </message>
-    <message>
-        <source>Yes</source>
-        <translatorcomment>Positive response to a question. The text will be inside a button.</translatorcomment>
-        <translation>是</translation>
-    </message>
-    <message>
-        <source>You are about to allow that your communications could be intercepted. Your data would be still inaccessible for attackers due to our end-to-end encryption, but they could blindly move your files and folders in MEGA, delete them or deny your access to your account.</source>
-        <translatorcomment>Information for the user about the consequences of disabling a security check of MEGAsync</translatorcomment>
-        <translation>您即將進行一個讓您的通訊內容可以被攔截的設定。 因我們的點對點加密技術，攻擊者仍無法存取您的資料的，但他們可能會盲目的在MEGA中移動您的檔案和資料夾、刪除檔案或使您無法登入您的帳戶。</translation>
-    </message>
-</context>
-<context>
     <name>CrashReportDialog</name>
     <message>
         <source>Error report</source>
@@ -982,16 +949,6 @@ Please enter a different name to identify this synced folder:</source>
         <source>Reject</source>
         <translatorcomment>Button label of system notification to reject the notification of incoming contact request.</translatorcomment>
         <translation>拒絕</translation>
-    </message>
-    <message>
-        <source>Cancelled Contact Request</source>
-        <translatorcomment>Title of the notification about a cancellation of a contact request</translatorcomment>
-        <translation>取消聯絡人邀請</translation>
-    </message>
-    <message>
-        <source>[A] cancelled the contact request</source>
-        <translatorcomment>Label to indicate that usar [A] has cancelled the contact request. Placeholder will be replaced by email of the user that made the cancellation.</translatorcomment>
-        <translation>[A]已取消聯絡人邀請</translation>
     </message>
     <message>
         <source>Reminder</source>
@@ -1474,8 +1431,8 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation>為了安全起見，您的帳戶已被暫時封鎖。請驗證您的email並按照步驟解鎖您的帳戶。</translation>
     </message>
     <message>
-        <source>Logout</source>
-        <translatorcomment>Button label to logout the current account.</translatorcomment>
+        <source>Log out</source>
+        <translatorcomment>Button label to log out the current account.</translatorcomment>
         <translation>登出</translation>
     </message>
     <message>
@@ -1851,7 +1808,8 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation>您未登入</translation>
     </message>
     <message>
-        <source>Login</source>
+        <source>Log in</source>
+        <translatorcomment>Title for explanation about log in</translatorcomment>
         <translation>登入</translation>
     </message>
     <message>
@@ -2207,11 +2165,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>因為檔案系統比較不具效率，所以不支援VirtualBox共享資料夾同步，因此您的同步 “%1” 已被停用。</translation>
     </message>
     <message>
-        <source>Logout</source>
-        <translatorcomment>Label to indicate Logout action</translatorcomment>
-        <translation>登出</translation>
-    </message>
-    <message>
         <source>Error getting link information</source>
         <translatorcomment>Notification  error message shown while getting information from a public link.</translatorcomment>
         <translation>取得連結資訊發生錯誤</translation>
@@ -2244,16 +2197,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Fetching file list...</source>
         <translation>取得檔案列表…</translation>
-    </message>
-    <message>
-        <source>I don&apos;t care</source>
-        <translatorcomment>Text for a button that, when clicked, will disable and important security check of MEGAsync. The text should be as short as possible. If it&apos;s not possible to provide a short translation, it can be translated as: Ignore</translatorcomment>
-        <translation>忽略</translation>
-    </message>
-    <message>
-        <source>Retry</source>
-        <translatorcomment>Text for a button that will cause a retry of a failed operation. The translation should be as short as possible.</translatorcomment>
-        <translation>重試</translation>
     </message>
     <message>
         <source>Transfer canceled</source>
@@ -2436,11 +2379,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>同步</translation>
     </message>
     <message>
-        <source>MEGA is unable to connect securely through SSL. You might be on public WiFi with additional requirements.</source>
-        <translatorcomment>Message shown when SSL (connection secure with MEGA) errors are detected.</translatorcomment>
-        <translation>MEGA無法透過SSL安全的連線，您可能使用有額外要求的公共Wi-Fi。</translation>
-    </message>
-    <message>
         <source>Cloud drive</source>
         <translatorcomment>Label of context menu to reach Cloud drive section at webclient. It will open your webbrowser and redirects to your cloud drive.</translatorcomment>
         <translation>雲端硬碟</translation>
@@ -2534,11 +2472,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>One or more syncs have been disabled</source>
         <translatorcomment>Tooltip to indicate that some syncs have been disable due to some error.</translatorcomment>
         <translation>一個或多個同步已停用</translation>
-    </message>
-    <message>
-        <source>Your syncs have been enabled</source>
-        <translatorcomment>Notification message shown when the syncs have been enabled.</translatorcomment>
-        <translation>您的同步已啟用</translation>
     </message>
     <message>
         <source>Error adding sync</source>
@@ -3189,6 +3122,84 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
 </context>
 <context>
+    <name>NotificationsSettings</name>
+    <message>
+        <source>Account notifications:</source>
+        <translatorcomment>Title for notifications setting pane</translatorcomment>
+        <translation>帳戶通知：</translation>
+    </message>
+    <message>
+        <source>Shares</source>
+        <translatorcomment>Notification category for shared folders and nodes</translatorcomment>
+        <translation>共享</translation>
+    </message>
+    <message>
+        <source>New shared folder from contact</source>
+        <translatorcomment>Title of a checkbox for disconnectig notifications</translatorcomment>
+        <translation>來自聯絡人新的資料夾共享</translation>
+    </message>
+    <message>
+        <source>Added or removed files</source>
+        <translatorcomment>Title of a checkbox for disconnectig notifications</translatorcomment>
+        <translation>新增或移除檔案時</translation>
+    </message>
+    <message>
+        <source>Access to a shared folder was removed</source>
+        <translatorcomment>Title of a checkbox for disconnectig notifications</translatorcomment>
+        <translation>共享資料夾存取權限被移除時</translation>
+    </message>
+    <message>
+        <source>Contacts</source>
+        <translatorcomment>Notification category for contact notifications</translatorcomment>
+        <translation>聯絡人</translation>
+    </message>
+    <message>
+        <source>New contact request</source>
+        <translatorcomment>Title of a checkbox for disconnectig notifications</translatorcomment>
+        <translation>新的聯絡人邀請</translation>
+    </message>
+    <message>
+        <source>Pending contact request reminder</source>
+        <translatorcomment>Title of a checkbox for disconnectig notifications</translatorcomment>
+        <translation>待處理的聯絡人請求提醒</translation>
+    </message>
+    <message>
+        <source>Someone has accepted your contact request</source>
+        <translatorcomment>Title of a checkbox for disconnectig notifications</translatorcomment>
+        <translation>有人接受您的聯絡人邀請時</translation>
+    </message>
+    <message>
+        <source>Info</source>
+        <translatorcomment>Notification category for non-critical info notifications</translatorcomment>
+        <translation>資訊</translation>
+    </message>
+    <message>
+        <source>Desktop notifications</source>
+        <translatorcomment>Title of a checkbox for disconnectig notifications</translatorcomment>
+        <translation>桌面提醒通知</translation>
+    </message>
+    <message>
+        <source>Someone accepted your contact request</source>
+        <translatorcomment>Title of a checkbox for disconnectig notifications</translatorcomment>
+        <translation>有人接受您的聯絡人邀請時</translation>
+    </message>
+    <message>
+        <source>Info:</source>
+        <translatorcomment>Notification category for non-critical info notifications (macx)</translatorcomment>
+        <translation>資訊：</translation>
+    </message>
+    <message>
+        <source>Contacts:</source>
+        <translatorcomment>Notification category for non-critical info notifications (macx)</translatorcomment>
+        <translation>聯絡人：</translation>
+    </message>
+    <message>
+        <source>Shares:</source>
+        <translatorcomment>Notification category for non-critical info notifications (macx)</translatorcomment>
+        <translation>共享：</translation>
+    </message>
+</context>
+<context>
     <name>Notificator</name>
     <message>
         <source>MEGAsync</source>
@@ -3346,9 +3357,9 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translation>無效的MEGA連結</translation>
     </message>
     <message>
-        <source>Enter links</source>
+        <source>Open links</source>
         <translatorcomment>Window title for dialog to enter MEGA public links</translatorcomment>
-        <translation>輸入連結</translation>
+        <translation>開啟連結</translation>
     </message>
 </context>
 <context>
@@ -4055,11 +4066,6 @@ Do you want to delete it anyway?</source>
         <translation>支援</translation>
     </message>
     <message>
-        <source>Show notifications</source>
-        <translatorcomment>Label to let the user enable desktop notifications with a checkbox.</translatorcomment>
-        <translation>顯示通知</translation>
-    </message>
-    <message>
         <source>Start on startup</source>
         <translatorcomment>Label to let the user start MEGAsync on startup of the operating system with a checkbox.</translatorcomment>
         <translation>自動開啟</translation>
@@ -4080,8 +4086,8 @@ Do you want to delete it anyway?</source>
         <translation>細節</translation>
     </message>
     <message>
-        <source>Logout</source>
-        <translatorcomment>Button label to logout of the application. String as short as possible.</translatorcomment>
+        <source>Log out</source>
+        <translatorcomment>Button label to log out of the application. String as short as possible.</translatorcomment>
         <translation>登出</translation>
     </message>
     <message>
@@ -4437,9 +4443,9 @@ Do you want to restart MEGAsync now?</source>
         <translation>預設資料夾</translation>
     </message>
     <message>
-        <source>Move...</source>
+        <source>Move…</source>
         <translatorcomment>Button label text allowing the user to change the default Uploads or Downloads folders for the app.</translatorcomment>
-        <translation>變更</translation>
+        <translation>移動…</translation>
     </message>
     <message>
         <source>Exclude files smaller than</source>
@@ -4452,14 +4458,14 @@ Do you want to restart MEGAsync now?</source>
         <translation>排除檔案大於</translation>
     </message>
     <message>
-        <source>Restart MEGA Desktop Application to apply changes.</source>
+        <source>Restart MEGA Desktop App to apply changes.</source>
         <translatorcomment>Informative text shown in Folders pane, letting the user know that an application restart is required to apply the changes he just made.</translatorcomment>
-        <translation>重新啟動MEGA桌面應用程式以套用變更。</translation>
+        <translation>重新啟動MEGA桌面應用程式以套用更新。</translation>
     </message>
     <message>
-        <source>Change Settings...</source>
+        <source>Change Settings…</source>
         <translatorcomment>Button label text for Bandwidth and Proxy settings in Network pane.</translatorcomment>
-        <translation>變更設定</translation>
+        <translation>變更設定…</translation>
     </message>
     <message>
         <source>Proxies</source>
@@ -4691,6 +4697,11 @@ Do you want to restart MEGAsync now?</source>
         <translatorcomment>Button label text for export key saving to local machine in a file. Keep string as short as possible.</translatorcomment>
         <translation>匯出金鑰</translation>
     </message>
+    <message>
+        <source>Notifications</source>
+        <translatorcomment>Title for the Settings -&gt; Notifications pane tab button. Keep as short as possible.</translatorcomment>
+        <translation>通知</translation>
+    </message>
 </context>
 <context>
     <name>SetupWizard</name>
@@ -4720,7 +4731,7 @@ Do you want to restart MEGAsync now?</source>
         <translation>我同意MEGA &lt;a href=&quot;https://mega.nz/terms&quot;&gt;服務條款&lt;/a&gt;</translation>
     </message>
     <message>
-        <source>Login to your MEGA account</source>
+        <source>Log in to your MEGA account</source>
         <translatorcomment>Label to let the user login with his credentials.</translatorcomment>
         <translation>登入您的MEGA帳戶</translation>
     </message>
@@ -4888,9 +4899,9 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>無法取得檔案配置系統。請再試一次。如果問題還是一樣，請寄信至 bug@mega.nz 與我們聯繫。</translation>
     </message>
     <message>
-        <source>Setup Assistant - MEGAsync</source>
+        <source>Set up Assistant - MEGAsync</source>
         <translatorcomment>Title of the setup assistant dialog. Keep capital letters.</translatorcomment>
-        <translation>設定小幫手 - MEGAsync同步</translation>
+        <translation>設定小幫手 - MEGAsync</translation>
     </message>
     <message>
         <source>Full sync</source>
@@ -5020,7 +5031,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>請輸入您的姓氏</translation>
     </message>
     <message>
-        <source>Setup selective sync</source>
+        <source>Set up selective sync</source>
         <translatorcomment>Label shown when user is setting up the selective sync mode of MEGAsync</translatorcomment>
         <translation>設定部份同步</translation>
     </message>
@@ -5035,7 +5046,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>選擇本機資料夾</translation>
     </message>
     <message>
-        <source>Setup full sync</source>
+        <source>Set up full sync</source>
         <translatorcomment>Label shown when user is setting up full sync mode of MEGAsync</translatorcomment>
         <translation>設定完全同步</translation>
     </message>
@@ -5055,7 +5066,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>完成設定了！</translation>
     </message>
     <message>
-        <source>Login</source>
+        <source>Log in</source>
         <translatorcomment>Button label to open Login form</translatorcomment>
         <translation>登入</translation>
     </message>
@@ -5272,6 +5283,24 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Stream error: transfer overquota</source>
         <translatorcomment>Informative label to indicate the user that there is a stream error because of transfer overquota situation.</translatorcomment>
         <translation>串流錯誤：超過傳輸配額。</translation>
+    </message>
+    <message>
+        <source>Please wait...</source>
+        <translatorcomment>Message shown while waiting for the server request with the file info to stream</translatorcomment>
+        <translation>請等待…</translation>
+    </message>
+</context>
+<context>
+    <name>SwitchButton</name>
+    <message>
+        <source>On</source>
+        <translatorcomment>Checked state of a swith button</translatorcomment>
+        <translation>開啟</translation>
+    </message>
+    <message>
+        <source>Off</source>
+        <translatorcomment>Unchecked state of a swith button</translatorcomment>
+        <translation>關閉</translation>
     </message>
 </context>
 <context>
@@ -5680,8 +5709,8 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>為什麼我會看到這個？</translation>
     </message>
     <message>
-        <source>Logout</source>
-        <translatorcomment>Button label to logout the current account</translatorcomment>
+        <source>Log out</source>
+        <translatorcomment>Button label to log out the current account</translatorcomment>
         <translation>登出</translation>
     </message>
     <message>

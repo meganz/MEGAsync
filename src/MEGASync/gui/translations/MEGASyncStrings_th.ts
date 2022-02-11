@@ -21,7 +21,7 @@
     <message>
         <source>Loading...</source>
         <translatorcomment>Label to show when an account detail request is waiting for the server response.</translatorcomment>
-        <translation>กำลังโหลด...</translation>
+        <translation>กำลังโหลด…</translation>
     </message>
     <message>
         <source>Storage</source>
@@ -797,39 +797,6 @@ Please enter a different name to identify this synced folder:</source>
     </message>
 </context>
 <context>
-    <name>ConfirmSSLexception</name>
-    <message>
-        <source>Warning</source>
-        <translatorcomment>Title of the dialog that allows to disable a security check to prevent atacks that could intercept the communications of MEGAsync</translatorcomment>
-        <translation>คำเตือน</translation>
-    </message>
-    <message>
-        <source>Are you sure you want to continue?</source>
-        <translatorcomment>Question for the user in the dialog that allows to disable a security check of MEGAsync. The user have to reply yes or no</translatorcomment>
-        <translation>คุณแน่ใจหรือว่าต้องการดำเนินการต่อ</translation>
-    </message>
-    <message>
-        <source>Remember my decision and don&apos;t ask me again</source>
-        <translatorcomment>Text next to a checkbox that allows to remember the decision of the user. The translation should be as short as possible.</translatorcomment>
-        <translation>จำค่าการตัดสินใจของฉันไว้และไม่ต้องถามอีก</translation>
-    </message>
-    <message>
-        <source>No</source>
-        <translatorcomment>Negative response to a question. The text will be inside a button.</translatorcomment>
-        <translation>ไม่ใช่</translation>
-    </message>
-    <message>
-        <source>Yes</source>
-        <translatorcomment>Positive response to a question. The text will be inside a button.</translatorcomment>
-        <translation>ใช่</translation>
-    </message>
-    <message>
-        <source>You are about to allow that your communications could be intercepted. Your data would be still inaccessible for attackers due to our end-to-end encryption, but they could blindly move your files and folders in MEGA, delete them or deny your access to your account.</source>
-        <translatorcomment>Information for the user about the consequences of disabling a security check of MEGAsync</translatorcomment>
-        <translation>คุณกำลังจะอนุญาตการตั้งค่า ที่อาจทำให้การสื่อสารถูกดักฟังได้ ข้อมูลของคุณจะยังไม่สามารถเข้าถึงเมื่อถูกโจมตี เนื่องจากมีการเข้ารหัสลับแบบต้นทางถึงปลายทาง แต่พวกเขาสามารถสุ่มการย้ายไฟล์และโฟลเดอร์ของคุณใน MEGA ได้ ให้คุณลบหรือปฏิเสธการเข้าถึงบัญชีของคุณ</translation>
-    </message>
-</context>
-<context>
     <name>CrashReportDialog</name>
     <message>
         <source>Error report</source>
@@ -873,7 +840,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>starting...</source>
         <translatorcomment>Label to indicate that a transfer is starting.</translatorcomment>
-        <translation>กำลังเริ่ม...</translation>
+        <translation>กำลังเริ่ม…</translation>
     </message>
     <message>
         <source>PAUSED</source>
@@ -888,12 +855,12 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>retrying...</source>
         <translatorcomment>Label to indicate that a transfer is being retried.</translatorcomment>
-        <translation>กำลองใหม่...</translation>
+        <translation>กำลองใหม่…</translation>
     </message>
     <message>
         <source>completing...</source>
         <translatorcomment>Label to indicate that a transfer is being completed.</translatorcomment>
-        <translation>กำลังเสร็จสิ้น...</translation>
+        <translation>กำลังเสร็จสิ้น…</translation>
     </message>
     <message>
         <source>Added [A]</source>
@@ -982,16 +949,6 @@ Please enter a different name to identify this synced folder:</source>
         <source>Reject</source>
         <translatorcomment>Button label of system notification to reject the notification of incoming contact request.</translatorcomment>
         <translation>ปฏิเสธ</translation>
-    </message>
-    <message>
-        <source>Cancelled Contact Request</source>
-        <translatorcomment>Title of the notification about a cancellation of a contact request</translatorcomment>
-        <translation>คำขอการติดต่อถูกยกเลิก</translation>
-    </message>
-    <message>
-        <source>[A] cancelled the contact request</source>
-        <translatorcomment>Label to indicate that usar [A] has cancelled the contact request. Placeholder will be replaced by email of the user that made the cancellation.</translatorcomment>
-        <translation>[A] ยกเลิกคำขอติดต่อ</translation>
     </message>
     <message>
         <source>Reminder</source>
@@ -1406,17 +1363,17 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Setting up your account...</source>
         <translatorcomment>Label shown at main dialog during the initial setup of synced folders.</translatorcomment>
-        <translation>กำลังตั้งค่าบัญชีของคุณ...</translation>
+        <translation>กำลังตั้งค่าบัญชีของคุณ…</translation>
     </message>
     <message>
         <source>Logging in...</source>
         <translatorcomment>Label shown at main dialog to show the current operation. In this case logging in.</translatorcomment>
-        <translation>กำลังเข้าสู่ระบบ...</translation>
+        <translation>กำลังเข้าสู่ระบบ…</translation>
     </message>
     <message>
         <source>Fetching file list...</source>
         <translatorcomment>Label shown at main dialog to show the current operation. In this case fetching file information from servers.</translatorcomment>
-        <translation>กำลังดึงรายการแฟ้ม...</translation>
+        <translation>กำลังดึงรายการแฟ้ม…</translation>
     </message>
     <message>
         <source>Error</source>
@@ -1461,7 +1418,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Logging out...</source>
         <translatorcomment>Label shown at main dialog to show the current operation. In this case logging out from the account.</translatorcomment>
-        <translation>กำลังออกจากระบบ...</translation>
+        <translation>กำลังออกจากระบบ…</translation>
     </message>
     <message>
         <source>Locked Account</source>
@@ -1474,9 +1431,9 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation>บัญชีของคุณถูกล็อกชั่วคราวเพื่อความปลอดภัยของคุณ กรุณาตรวจสอบอีเมลและทำตามขั้นตอนเพื่อปลดล็อกบัญชีของคุณ</translation>
     </message>
     <message>
-        <source>Logout</source>
-        <translatorcomment>Button label to logout the current account.</translatorcomment>
-        <translation>ออกจากระบบ</translation>
+        <source>Log out</source>
+        <translatorcomment>Button label to log out the current account.</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Your account has been suspended temporarily due to potential abuse. Please verify your phone number to unlock your account.</source>
@@ -1491,7 +1448,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Creating account...</source>
         <translatorcomment>Informative label during creation of an account using MEGAsync</translatorcomment>
-        <translation>กำลังสร้างบัญชี...</translation>
+        <translation>กำลังสร้างบัญชี…</translation>
     </message>
     <message>
         <source>Why am I seeing this?</source>
@@ -1547,7 +1504,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Please wait...</source>
         <translatorcomment>Label to indicate the user that needs to wait until MEGAsync fetches link information from the server</translatorcomment>
-        <translation>กรุณารอสักครู่...</translation>
+        <translation>กรุณารอสักครู่…</translation>
     </message>
 </context>
 <context>
@@ -1851,7 +1808,8 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation>คุณยังไม่ได้เข้าสู่ระบบ</translation>
     </message>
     <message>
-        <source>Login</source>
+        <source>Log in</source>
+        <translatorcomment>Title for explanation about log in</translatorcomment>
         <translation>เข้าสู่ระบบ</translation>
     </message>
     <message>
@@ -2012,7 +1970,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Logging in...</source>
         <translatorcomment>Notification message showing a Logging in state. Keep capital letters.</translatorcomment>
-        <translation>กำลังเข้าสู่ระบบ...</translation>
+        <translation>กำลังเข้าสู่ระบบ…</translation>
     </message>
     <message>
         <source>About</source>
@@ -2062,12 +2020,12 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Installing update...</source>
         <translatorcomment>Notification message launched when an update is being installed.</translatorcomment>
-        <translation>กำลังติดตั้งการอัปเดต...</translation>
+        <translation>กำลังติดตั้งการอัปเดต…</translation>
     </message>
     <message>
         <source>Checking for updates...</source>
         <translatorcomment>Notification message launched when the user wants to check if there are any available update at the moment.</translatorcomment>
-        <translation>กำลังตรวจสอบการอัปเดต...</translation>
+        <translation>กำลังตรวจสอบการอัปเดต…</translation>
     </message>
     <message>
         <source>Install update</source>
@@ -2093,7 +2051,7 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>Update available. Downloading...</source>
         <translatorcomment>Notification message launched when an update for MEGAsync is being downloaded.</translatorcomment>
-        <translation>การอัปเดตพร้อมใช้งานแล้ว กำลังดาวน์โหลด...</translation>
+        <translation>การอัปเดตพร้อมใช้งานแล้ว กำลังดาวน์โหลด…</translation>
     </message>
     <message>
         <source>No update available at this time</source>
@@ -2207,11 +2165,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>การซิงค์ “%1” ของคุณถูกปิดใช้งาน เนื่องจากไม่สนับสนุนการซิงโครไนซ์โฟลเดอร์ที่แชร์กับ VirtualBox เพราะมีข้อบกพร่องในระบบไฟล์นั้น</translation>
     </message>
     <message>
-        <source>Logout</source>
-        <translatorcomment>Label to indicate Logout action</translatorcomment>
-        <translation>ออกจากระบบ</translation>
-    </message>
-    <message>
         <source>Error getting link information</source>
         <translatorcomment>Notification  error message shown while getting information from a public link.</translatorcomment>
         <translation>มีข้อผิดพลาดในการรับลิงก์ข้อมูลทั่วไป</translation>
@@ -2243,17 +2196,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Fetching file list...</source>
-        <translation>กำลังดึงรายการแฟ้ม...</translation>
-    </message>
-    <message>
-        <source>I don&apos;t care</source>
-        <translatorcomment>Text for a button that, when clicked, will disable and important security check of MEGAsync. The text should be as short as possible. If it&apos;s not possible to provide a short translation, it can be translated as: Ignore</translatorcomment>
-        <translation>ฉันไม่สนใจ</translation>
-    </message>
-    <message>
-        <source>Retry</source>
-        <translatorcomment>Text for a button that will cause a retry of a failed operation. The translation should be as short as possible.</translatorcomment>
-        <translation>ลองใหม่</translation>
+        <translation>กำลังดึงรายการแฟ้ม…</translation>
     </message>
     <message>
         <source>Transfer canceled</source>
@@ -2436,11 +2379,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>ซิงค์</translation>
     </message>
     <message>
-        <source>MEGA is unable to connect securely through SSL. You might be on public WiFi with additional requirements.</source>
-        <translatorcomment>Message shown when SSL (connection secure with MEGA) errors are detected.</translatorcomment>
-        <translation>MEGA ไม่สามารถเชื่อมต่ออย่างปลอดภัยผ่าน SSL ได้ คุณอาจใช้ Wi-Fi สาธารณะที่มาพร้อมกับข้อกำหนดเพิ่มเติม</translation>
-    </message>
-    <message>
         <source>Cloud drive</source>
         <translatorcomment>Label of context menu to reach Cloud drive section at webclient. It will open your webbrowser and redirects to your cloud drive.</translatorcomment>
         <translation>คลาวด์ไดรฟ์</translation>
@@ -2534,11 +2472,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>One or more syncs have been disabled</source>
         <translatorcomment>Tooltip to indicate that some syncs have been disable due to some error.</translatorcomment>
         <translation>รายการซิงค์บางรายการถูกปิดใช้งาน</translation>
-    </message>
-    <message>
-        <source>Your syncs have been enabled</source>
-        <translatorcomment>Notification message shown when the syncs have been enabled.</translatorcomment>
-        <translation>เปิดใช้งานการซิงค์ของคุณแล้ว</translation>
     </message>
     <message>
         <source>Error adding sync</source>
@@ -2803,7 +2736,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Please wait...</source>
         <translatorcomment>Message shown when a proxy task is being processed</translatorcomment>
-        <translation>กรุณารอสักครู่...</translation>
+        <translation>กรุณารอสักครู่…</translation>
     </message>
 </context>
 <context>
@@ -3189,6 +3122,84 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
 </context>
 <context>
+    <name>NotificationsSettings</name>
+    <message>
+        <source>Account notifications:</source>
+        <translatorcomment>Title for notifications setting pane</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Shares</source>
+        <translatorcomment>Notification category for shared folders and nodes</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>New shared folder from contact</source>
+        <translatorcomment>Title of a checkbox for disconnectig notifications</translatorcomment>
+        <translation>โฟลเดอร์แชร์ใหม่จากผู้ติดต่อ</translation>
+    </message>
+    <message>
+        <source>Added or removed files</source>
+        <translatorcomment>Title of a checkbox for disconnectig notifications</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Access to a shared folder was removed</source>
+        <translatorcomment>Title of a checkbox for disconnectig notifications</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Contacts</source>
+        <translatorcomment>Notification category for contact notifications</translatorcomment>
+        <translation>ผู้ติดต่อ</translation>
+    </message>
+    <message>
+        <source>New contact request</source>
+        <translatorcomment>Title of a checkbox for disconnectig notifications</translatorcomment>
+        <translation>คำขอติดต่อใหม่</translation>
+    </message>
+    <message>
+        <source>Pending contact request reminder</source>
+        <translatorcomment>Title of a checkbox for disconnectig notifications</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Someone has accepted your contact request</source>
+        <translatorcomment>Title of a checkbox for disconnectig notifications</translatorcomment>
+        <translation>มีผู้คนยอมรับคำขอการติดต่อของคุณแล้ว</translation>
+    </message>
+    <message>
+        <source>Info</source>
+        <translatorcomment>Notification category for non-critical info notifications</translatorcomment>
+        <translation>ข้อมูล</translation>
+    </message>
+    <message>
+        <source>Desktop notifications</source>
+        <translatorcomment>Title of a checkbox for disconnectig notifications</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Someone accepted your contact request</source>
+        <translatorcomment>Title of a checkbox for disconnectig notifications</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Info:</source>
+        <translatorcomment>Notification category for non-critical info notifications (macx)</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Contacts:</source>
+        <translatorcomment>Notification category for non-critical info notifications (macx)</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Shares:</source>
+        <translatorcomment>Notification category for non-critical info notifications (macx)</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>Notificator</name>
     <message>
         <source>MEGAsync</source>
@@ -3346,9 +3357,9 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translation>ลิงก์ MEGA ไม่ถูกต้อง</translation>
     </message>
     <message>
-        <source>Enter links</source>
+        <source>Open links</source>
         <translatorcomment>Window title for dialog to enter MEGA public links</translatorcomment>
-        <translation>กรอกลิงก์</translation>
+        <translation>เปิดลิงก์</translation>
     </message>
 </context>
 <context>
@@ -3529,7 +3540,9 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 - Fix memory issues with problematic PDF files.
 </source>
         <translatorcomment>Changelog v4.6.3 (linux only)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>- เสริมสร้างการเข้ารหัสคลังเก็บซอร์สโค้ดบน Linux ให้มีความปลอดภัย
+- แก้ไขปัญหาเกี่ยวกับหน่วยความจำเมื่อเปิดไฟล์ PDF
+</translation>
     </message>
 </context>
 <context>
@@ -4053,11 +4066,6 @@ Do you want to delete it anyway?</source>
         <translation>ช่วยเหลือ</translation>
     </message>
     <message>
-        <source>Show notifications</source>
-        <translatorcomment>Label to let the user enable desktop notifications with a checkbox.</translatorcomment>
-        <translation>แสดงการแจ้งเตือน</translation>
-    </message>
-    <message>
         <source>Start on startup</source>
         <translatorcomment>Label to let the user start MEGAsync on startup of the operating system with a checkbox.</translatorcomment>
         <translation>ทำงานทันทีเมื่อเริ่มต้นระบบ</translation>
@@ -4078,9 +4086,9 @@ Do you want to delete it anyway?</source>
         <translation>รายละเอียด</translation>
     </message>
     <message>
-        <source>Logout</source>
-        <translatorcomment>Button label to logout of the application. String as short as possible.</translatorcomment>
-        <translation>ออกจากระบบ</translation>
+        <source>Log out</source>
+        <translatorcomment>Button label to log out of the application. String as short as possible.</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Upgrade</source>
@@ -4435,9 +4443,9 @@ Do you want to restart MEGAsync now?</source>
         <translation>โฟลเดอร์เริ่มต้น</translation>
     </message>
     <message>
-        <source>Move...</source>
+        <source>Move…</source>
         <translatorcomment>Button label text allowing the user to change the default Uploads or Downloads folders for the app.</translatorcomment>
-        <translation>ย้าย...</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Exclude files smaller than</source>
@@ -4450,14 +4458,14 @@ Do you want to restart MEGAsync now?</source>
         <translation>ยกเว้นไฟล์มีขนาดใหญ่กว่า</translation>
     </message>
     <message>
-        <source>Restart MEGA Desktop Application to apply changes.</source>
+        <source>Restart MEGA Desktop App to apply changes.</source>
         <translatorcomment>Informative text shown in Folders pane, letting the user know that an application restart is required to apply the changes he just made.</translatorcomment>
-        <translation>รีสตาร์ทแอป MEGA บนเดสก์ทอป เพื่อนำการเปลี่ยนแปลงไปใช้งาน</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Change Settings...</source>
+        <source>Change Settings…</source>
         <translatorcomment>Button label text for Bandwidth and Proxy settings in Network pane.</translatorcomment>
-        <translation>เปลี่ยนการตั้งค่า...</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Proxies</source>
@@ -4689,6 +4697,11 @@ Do you want to restart MEGAsync now?</source>
         <translatorcomment>Button label text for export key saving to local machine in a file. Keep string as short as possible.</translatorcomment>
         <translation>ส่งออกคีย์</translation>
     </message>
+    <message>
+        <source>Notifications</source>
+        <translatorcomment>Title for the Settings -&gt; Notifications pane tab button. Keep as short as possible.</translatorcomment>
+        <translation>การแจ้งเตือน</translation>
+    </message>
 </context>
 <context>
     <name>SetupWizard</name>
@@ -4718,9 +4731,9 @@ Do you want to restart MEGAsync now?</source>
         <translation>ฉันยอมรับ&lt;a href=&quot;https://mega.nz/terms&quot;&gt;เงื่อนไขการให้บริการ&lt;/a&gt;ของ MEGA</translation>
     </message>
     <message>
-        <source>Login to your MEGA account</source>
+        <source>Log in to your MEGA account</source>
         <translatorcomment>Label to let the user login with his credentials.</translatorcomment>
-        <translation>เข้าสู่ระบบด้วยบัญชี MEGA ของคุณ</translation>
+        <translation>เข้าสู่ระบบบัญชี MEGA ของคุณ</translation>
     </message>
     <message>
         <source>Please verify your account using the confirmation link that we have sent to your email account</source>
@@ -4730,7 +4743,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Logging in ...</source>
         <translatorcomment>Label displayed while logging process.</translatorcomment>
-        <translation>กำลังเข้าสู่ระบบ ...</translation>
+        <translation>กำลังเข้าสู่ระบบ …</translation>
     </message>
     <message>
         <source>Choose install type</source>
@@ -4790,7 +4803,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Fetching file list...</source>
         <translatorcomment>Label displayed while the application is retrieving all file list from the server.</translatorcomment>
-        <translation>กำลังดึงรายการแฟ้ม...</translation>
+        <translation>กำลังดึงรายการแฟ้ม…</translation>
     </message>
     <message>
         <source>Incorrect email and/or password.</source>
@@ -4845,7 +4858,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Creating account...</source>
         <translatorcomment>Label displayed when the account is being created.</translatorcomment>
-        <translation>กำลังสร้างบัญชี...</translation>
+        <translation>กำลังสร้างบัญชี…</translation>
     </message>
     <message>
         <source>Warning</source>
@@ -4870,7 +4883,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Logging in...</source>
         <translatorcomment>Label displayed when the user is logging in.</translatorcomment>
-        <translation>กำลังเข้าสู่ระบบ...</translation>
+        <translation>กำลังเข้าสู่ระบบ…</translation>
     </message>
     <message>
         <source>You are trying to sync an extremely large folder.
@@ -4886,9 +4899,9 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>ไม่สามารถรับระบบไฟล์ได้ กรุณาลองอีกครั้ง หากปัญหายังคงมีอยู่ กรุณาติดต่อเราที่ bug@mega.nz</translation>
     </message>
     <message>
-        <source>Setup Assistant - MEGAsync</source>
+        <source>Set up Assistant - MEGAsync</source>
         <translatorcomment>Title of the setup assistant dialog. Keep capital letters.</translatorcomment>
-        <translation>ตัวช่วยการติดตั้ง - MEGAsync</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Full sync</source>
@@ -4937,12 +4950,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Creating folder...</source>
         <translatorcomment>Label shown when an user is creating a remote folder.</translatorcomment>
-        <translation>กำลังสร้างโฟลเดอร์...</translation>
+        <translation>กำลังสร้างโฟลเดอร์…</translation>
     </message>
     <message>
         <source>Logging out...</source>
         <translatorcomment>Label shown when an user is logging out from his account.</translatorcomment>
-        <translation>กำลังออกจากระบบ...</translation>
+        <translation>กำลังออกจากระบบ…</translation>
     </message>
     <message>
         <source>Very Weak</source>
@@ -5018,9 +5031,9 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>กรุณากรอกนามสกุลของคุณ</translation>
     </message>
     <message>
-        <source>Setup selective sync</source>
+        <source>Set up selective sync</source>
         <translatorcomment>Label shown when user is setting up the selective sync mode of MEGAsync</translatorcomment>
-        <translation>ตั้งค่าการซิงค์แบบเลือก</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Specific folders in your Cloud Drive will be synchronized with a local folder.</source>
@@ -5033,9 +5046,9 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>เลือกโฟลเดอร์บนเครื่อง</translation>
     </message>
     <message>
-        <source>Setup full sync</source>
+        <source>Set up full sync</source>
         <translatorcomment>Label shown when user is setting up full sync mode of MEGAsync</translatorcomment>
-        <translation>ตั้งค่าการซิงค์แบบเต็ม</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Full Sync</source>
@@ -5053,7 +5066,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>เสร็จแล้วจ้า!</translation>
     </message>
     <message>
-        <source>Login</source>
+        <source>Log in</source>
         <translatorcomment>Button label to open Login form</translatorcomment>
         <translation>เข้าสู่ระบบ</translation>
     </message>
@@ -5179,7 +5192,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Select media from...</source>
         <translatorcomment>Label just above of the buttons to select files for streaming</translatorcomment>
-        <translation>เลือกสื่อจาก...</translation>
+        <translation>เลือกสื่อจาก…</translation>
     </message>
     <message>
         <source>Cloud Drive</source>
@@ -5271,6 +5284,24 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translatorcomment>Informative label to indicate the user that there is a stream error because of transfer overquota situation.</translatorcomment>
         <translation>ข้อผิดพลาดในการสตรีม: เกินโควต้าการถ่ายโอนแล้ว</translation>
     </message>
+    <message>
+        <source>Please wait...</source>
+        <translatorcomment>Message shown while waiting for the server request with the file info to stream</translatorcomment>
+        <translation>กรุณารอสักครู่…</translation>
+    </message>
+</context>
+<context>
+    <name>SwitchButton</name>
+    <message>
+        <source>On</source>
+        <translatorcomment>Checked state of a swith button</translatorcomment>
+        <translation>เปิด</translation>
+    </message>
+    <message>
+        <source>Off</source>
+        <translatorcomment>Unchecked state of a swith button</translatorcomment>
+        <translation>ปิด</translation>
+    </message>
 </context>
 <context>
     <name>TransferManager</name>
@@ -5282,7 +5313,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Add...</source>
         <translatorcomment>Button label to add transfers items (uploads/downloads/public links) to the dialog (String as short as possible)</translatorcomment>
-        <translation>เพิ่ม...</translation>
+        <translation>เพิ่ม…</translation>
     </message>
     <message>
         <source>Downloads</source>
@@ -5678,9 +5709,9 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>ทำไมฉันเห็นสิ่งนี้</translation>
     </message>
     <message>
-        <source>Logout</source>
-        <translatorcomment>Button label to logout the current account</translatorcomment>
-        <translation>ออกจากระบบ</translation>
+        <source>Log out</source>
+        <translatorcomment>Button label to log out the current account</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Verify your email</source>
