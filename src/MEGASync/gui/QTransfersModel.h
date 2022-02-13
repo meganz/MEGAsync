@@ -26,8 +26,8 @@ struct TransfersCount
     int activeUploadState;
     int remainingUploads;
     int remainingDownloads;
-    int completedUploads;
-    int completedDownloads;
+    size_t completedUploads;
+    size_t completedDownloads;
 
     int totalUploads;
     int totalDownloads;
@@ -64,10 +64,13 @@ public slots:
     void onTransferUpdate(mega::MegaApi*, mega::MegaTransfer* transfer);
     void onTransferTemporaryError(mega::MegaApi*,mega::MegaTransfer* transfer,mega::MegaError*);
 
-    std::list<mega::MegaTransfer*> processUpdates();
+    std::list<QExplicitlySharedDataPointer<TransferData>> processUpdates();
 
 private:
-    std::list<mega::MegaTransfer*> mCacheUpdateTransfers;
+
+    QExplicitlySharedDataPointer<TransferData> createData(mega::MegaTransfer* transfer);
+
+    std::list<QExplicitlySharedDataPointer<TransferData>> mCacheUpdateTransfers;
     void onTransferEvent(mega::MegaTransfer* transfer);
 
     QReadWriteLock* mCacheMutex;
@@ -113,8 +116,8 @@ public:
 
     void initModel();
 
-    void startTransfer(mega::MegaTransfer *transfer);
-    int updateTransfer(mega::MegaTransfer* transfer);
+    void startTransfer(QExplicitlySharedDataPointer<TransferData> transfer);
+    int updateTransfer(QExplicitlySharedDataPointer<TransferData> transfer);
 
     void pauseModelProcessing(bool value);
 
@@ -132,14 +135,13 @@ public slots:
 
 private slots:
     void onPauseStateChanged();
-    void processStartTransfers(std::list<mega::MegaTransfer*> transferList);
-    void processUpdateTransfers(std::list<mega::MegaTransfer*> transferList);
-    void processCancelTransfers(std::list<mega::MegaTransfer*> transferList);
+    void processStartTransfers(const std::list<QExplicitlySharedDataPointer<TransferData>>& transferList);
+    void processUpdateTransfers(const std::list<QExplicitlySharedDataPointer<TransferData>>& transferList);
+    void processCancelTransfers(const std::list<QExplicitlySharedDataPointer<TransferData>>& transferList);
 
     void onProcessTransfers();
 
 private:
-    void insertTransfer(mega::MegaTransfer* transfer);
     void updateTransfersCount();
 
 private:
@@ -149,12 +151,12 @@ private:
     TransferThread* mTransferEventWorker;
     QTimer mTimer;
 
-    QHash<TransferTag, QExplicitlySharedDataPointer<TransferData>> mTransfers;
-    QList<TransferTag> mOrder;
+    QList<QExplicitlySharedDataPointer<TransferData>> mTransfers;
     QHash<TransferTag, int> mTagByOrder;
     QList<int> mRowsToUpdate;
     ThreadPool* mThreadPool;
     QReadWriteLock* mModelMutex;
+    mega::QTMegaTransferListener *delegateListener;
 
     long long mUpdateNotificationNumber;
 

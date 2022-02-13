@@ -49,13 +49,10 @@ void TransfersWidget::configureTransferView()
     tDelegate = new MegaTransferDelegate(mProxyModel, ui->tvTransfers);
     ui->tvTransfers->setup(this);
     mDelegateHoverManager.setView(ui->tvTransfers);
-
-    QtConcurrent::run([=]
-    {
-        ui->tvTransfers->setModel(mProxyModel);
-    });
     ui->tvTransfers->setItemDelegate(tDelegate);
     onPauseStateChanged(model2->areAllPaused());
+
+    ui->tvTransfers->setModel(mProxyModel);
 
 //    mProxyActivityTimer->setSingleShot(true);
 //    connect(mProxyActivityTimer, &QTimer::timeout,

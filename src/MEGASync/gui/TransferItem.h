@@ -114,6 +114,7 @@ public:
     unsigned long long mSpeed;
     unsigned long long mMeanSpeed;
     unsigned long long mTransferredBytes;
+    long long mNotificationNumber;
     bool mIsPublicNode;
     int mNodeAccess;
     FileType mFileType;

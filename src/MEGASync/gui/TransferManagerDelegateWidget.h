@@ -19,8 +19,6 @@ public:
     explicit TransferManagerDelegateWidget(QWidget* parent = 0);
     ~TransferManagerDelegateWidget();
 
-    void finishTransfer(const QExplicitlySharedDataPointer<TransferData> data);
-
     void updateTransferState() override;
     void setFileNameAndType() override;
     void setType() override;

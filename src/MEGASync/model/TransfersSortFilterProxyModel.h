@@ -74,8 +74,8 @@ protected:
 
 private slots:
         void onRowsRemoved(const QModelIndex& parent, int first, int last);
-        void onRowsAboutToBeInserted(const QModelIndex& parent, int first, int last);
-        void onRowsInserted(const QModelIndex& parent, int first, int last);
+        void onRowsAboutToBeInserted(const QModelIndex&, int, int);
+        void onRowsInserted(const QModelIndex&, int, int);
 
 private:
         ThreadPool* mThreadPool;

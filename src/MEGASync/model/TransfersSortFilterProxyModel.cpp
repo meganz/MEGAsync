@@ -51,17 +51,12 @@ void TransfersSortFilterProxyModel::sort(SortCriterion column, Qt::SortOrder ord
 
     //mThreadPool->push([=]
     //{
-        auto transferModel (static_cast<QTransfersModel*> (sourceModel()));
-        //transferModel->lockModelMutex(true);
-
         if (column != mSortCriterion)
         {
             QSortFilterProxyModel::sort(-1, order);
             mSortCriterion = column;
         }
         QSortFilterProxyModel::sort(0, order);
-
-        //transferModel->lockModelMutex(false);
 
         emit modelChanged();
     //});
@@ -96,14 +91,9 @@ void TransfersSortFilterProxyModel::setFilterFixedString(const QString& pattern)
     emit modelAboutToBeChanged();
     //mThreadPool->push([=]
     //{
-        auto transferModel (static_cast<QTransfersModel*> (sourceModel()));
-        //transferModel->lockModelMutex(true);
-
         mSearchCountersOn = true;
         QSortFilterProxyModel::setFilterFixedString(pattern);
         mSearchCountersOn = false;
-
-        //transferModel->lockModelMutex(false);
 
         emit modelChanged();
         emit searchNumbersChanged();
@@ -195,17 +185,13 @@ void TransfersSortFilterProxyModel::applyFilters(bool invalidate)
 
 bool TransfersSortFilterProxyModel::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const
 {
-    QMutexLocker lock (mActivityMutex);
-    bool accept (false);
-
     QModelIndex index = sourceModel()->index(sourceRow, 0, sourceParent);
 
     const auto d (qvariant_cast<TransferItem>(index.data()).getTransferData());
 
-
     if(d->mTag >= 0)
     {
-        accept = (d->mState & mTransferStates)
+        auto accept = (d->mState & mTransferStates)
                  && (d->mType & mTransferTypes)
                  && (d->mFileType & mFileTypes);
 
@@ -231,9 +217,10 @@ bool TransfersSortFilterProxyModel::filterAcceptsRow(int sourceRow, const QModel
                 }
             }
         }
+        return accept;
     }
 
-    return accept;
+    return false;
 }
 
 void TransfersSortFilterProxyModel::onRowsRemoved(const QModelIndex &parent, int first, int last)
@@ -272,7 +259,7 @@ void TransfersSortFilterProxyModel::onRowsRemoved(const QModelIndex &parent, int
    }
 }
 
-void TransfersSortFilterProxyModel::onRowsAboutToBeInserted(const QModelIndex &parent, int first, int last)
+void TransfersSortFilterProxyModel::onRowsAboutToBeInserted(const QModelIndex &, int , int )
 {
     if(!mSearchCountersOn && !filterRegExp().isEmpty())
     {
@@ -280,7 +267,7 @@ void TransfersSortFilterProxyModel::onRowsAboutToBeInserted(const QModelIndex &p
     }
 }
 
-void TransfersSortFilterProxyModel::onRowsInserted(const QModelIndex &parent, int first, int last)
+void TransfersSortFilterProxyModel::onRowsInserted(const QModelIndex &, int , int )
 {
     if(mSearchCountersOn && !filterRegExp().isEmpty())
     {
@@ -290,33 +277,26 @@ void TransfersSortFilterProxyModel::onRowsInserted(const QModelIndex &parent, in
 
 bool TransfersSortFilterProxyModel::lessThan(const QModelIndex &left, const QModelIndex &right) const
 {
-    QMutexLocker lock (mActivityMutex);
     const auto leftItem (qvariant_cast<TransferItem>(left.data()).getTransferData());
     const auto rightItem (qvariant_cast<TransferItem>(right.data()).getTransferData());
-
-    auto result(false);
-
 
     switch (mSortCriterion)
     {
         case SortCriterion::PRIORITY:
         {
-            result = leftItem->mPriority > rightItem->mPriority;
-            break;
+            return leftItem->mPriority > rightItem->mPriority;
         }
         case SortCriterion::TOTAL_SIZE:
         {
-            result = leftItem->mTotalSize < rightItem->mTotalSize;
-            break;
+            return leftItem->mTotalSize < rightItem->mTotalSize;
         }
         case SortCriterion::NAME:
         {
-            result = QString::compare(leftItem->mFilename, rightItem->mFilename, Qt::CaseInsensitive) < 0;
-            break;
+            return QString::compare(leftItem->mFilename, rightItem->mFilename, Qt::CaseInsensitive) < 0;
         }
     }
 
-    return result;
+    return false;
 }
 
 bool TransfersSortFilterProxyModel::moveRows(const QModelIndex &sourceParent, int sourceRow, int count,

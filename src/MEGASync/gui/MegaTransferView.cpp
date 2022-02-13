@@ -105,23 +105,10 @@ void MegaTransferView::onPauseResumeSelection(bool pauseState)
 void MegaTransferView::onCancelClearAllTransfers()
 {
     QModelIndexList indexes;
-    auto rowCount (model()->rowCount());
-    if (rowCount > 0)
-    {
-        auto proxy(qobject_cast<QSortFilterProxyModel*>(model()));
-        for (auto row (0); row < rowCount; ++row)
-        {
-            auto index (model()->index(row, 0, QModelIndex()));
-            if (proxy)
-            {
-                index = proxy->mapToSource(index);
-            }
-            indexes.push_back(index);
-        }
-
-        mParentTransferWidget->getModel()->cancelClearTransfers(indexes, true);
-        proxy->invalidate();
-    }
+    auto proxy(qobject_cast<QSortFilterProxyModel*>(model()));
+    auto sourceModel(qobject_cast<QTransfersModel*>(proxy->sourceModel()));
+    sourceModel->cancelClearTransfers(QModelIndexList(), true);
+        //proxy->invalidate();
 }
 
 void MegaTransferView::onClearCompletedTransfers()

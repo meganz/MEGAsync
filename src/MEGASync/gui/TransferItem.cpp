@@ -68,6 +68,7 @@ void TransferData::update(mega::MegaTransfer* transfer)
         mSpeed = static_cast<unsigned long long>(MegaSyncApp->getMegaApi()->getCurrentSpeed(transfer->getType()));
         mTotalSize = static_cast<unsigned long long>(transfer->getTotalBytes());
         mTransferredBytes = static_cast<unsigned long long>(transfer->getTransferredBytes());
+        mNotificationNumber = transfer->getNotificationNumber();
         auto remBytes = mTotalSize - mTransferredBytes;
         TransferRemainingTime rem(mSpeed, remBytes);
         mRemainingTime = rem.calculateRemainingTimeSeconds(mSpeed, remBytes).count();
@@ -83,19 +84,21 @@ void TransferData::update(mega::MegaTransfer* transfer)
 
         mParentHandle = transfer->getParentHandle();
         mNodeHandle = transfer->getNodeHandle();
-        if(mNodeHandle)
-        {
-            MegaNode *ownNode = ((MegaApplication*)qApp)->getMegaApi()->getNodeByHandle(mNodeHandle);
-            if (ownNode)
-            {
-               auto access = ((MegaApplication*)qApp)->getMegaApi()->getAccess(ownNode);
-               if (access == MegaShare::ACCESS_OWNER)
-               {
-                   mIsPublicNode = true;
-               }
-               delete ownNode;
-            }
-        }
+
+        //TODO publicNode
+//        if(mNodeHandle)
+//        {
+//            MegaNode *ownNode = ((MegaApplication*)qApp)->getMegaApi()->getNodeByHandle(mNodeHandle);
+//            if (ownNode)
+//            {
+//               auto access = ((MegaApplication*)qApp)->getMegaApi()->getAccess(ownNode);
+//               if (access == MegaShare::ACCESS_OWNER)
+//               {
+//                   mIsPublicNode = true;
+//               }
+//               delete ownNode;
+//            }
+//        }
 
         setUpdated(true);
     }
