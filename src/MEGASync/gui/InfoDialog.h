@@ -101,6 +101,8 @@ public:
     int getLoggedInMode() const;
     void showNotifications();
 
+    void move(int x, int y);
+
 private:
     InfoDialog() = default;
     void drawAvatar(QString email);
@@ -108,6 +110,7 @@ private:
     void updateTransfersCount();
     void hideEvent(QHideEvent *event) override;
     void showEvent(QShowEvent *event) override;
+    void moveEvent(QMoveEvent *event) override;
 
 public slots:
 

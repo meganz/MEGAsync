@@ -339,6 +339,14 @@ void InfoDialog::showEvent(QShowEvent *event)
     QDialog::showEvent(event);
 }
 
+void InfoDialog::moveEvent(QMoveEvent *event)
+{
+    QTimer::singleShot(100, this, [this](){
+        this->setWindowFlags(Qt::FramelessWindowHint);
+        this->show();
+    });
+}
+
 void InfoDialog::setBandwidthOverquotaState(QuotaState state)
 {
     transferQuotaState = state;
@@ -2081,6 +2089,14 @@ int InfoDialog::getLoggedInMode() const
 void InfoDialog::showNotifications()
 {
     on_tNotifications_clicked();
+}
+
+void InfoDialog::move(int x, int y)
+{
+   hide();
+   Qt::WindowFlags originalFlags = windowFlags();
+   setWindowFlags(Qt::Window);
+   QDialog::move(x, y);
 }
 
 void InfoDialog::setBlockedStateLabel(QString state)
