@@ -2245,42 +2245,7 @@ void MegaApplication::repositionInfoDialog()
     // An issue occurred with certain multiscreen setup that caused Qt to missplace the info dialog.
     // This works around that by ensuring infoDialog does not get incorrectly resized. in which case,
     // it is reverted to the correct size.
-    infoDialog->ensurePolished();
-    auto initialDialogWidth  = infoDialog->width();
-    auto initialDialogHeight = infoDialog->height();
-    QTimer::singleShot(1, infoDialog, [this, initialDialogWidth, initialDialogHeight, posx, posy](){
-        if (infoDialog->width() > initialDialogWidth || infoDialog->height() > initialDialogHeight) //miss scaling detected
-        {
-            MegaApi::log(MegaApi::LOG_LEVEL_ERROR,
-                         QString::fromUtf8("A dialog. New size = %1,%2. should be %3,%4 ")
-                         .arg(infoDialog->width()).arg(infoDialog->height()).arg(initialDialogWidth).arg(initialDialogHeight)
-                         .toUtf8().constData());
-
-            infoDialog->resize(initialDialogWidth,initialDialogHeight);
-
-            auto iDPos = infoDialog->pos();
-            if (iDPos.x() != posx || iDPos.y() != posy )
-            {
-                MegaApi::log(MegaApi::LOG_LEVEL_ERROR,
-                             QString::fromUtf8("Missplaced info dialog. New pos = %1,%2. should be %3,%4 ")
-                             .arg(iDPos.x()).arg(iDPos.y()).arg(posx).arg(posy)
-                             .toUtf8().constData());
-                infoDialog->move(posx, posy);
-
-                QTimer::singleShot(1, this, [this, initialDialogWidth, initialDialogHeight](){
-                    if (infoDialog->width() > initialDialogWidth || infoDialog->height() > initialDialogHeight) //miss scaling detected
-                    {
-                        MegaApi::log(MegaApi::LOG_LEVEL_ERROR,
-                                     QString::fromUtf8("Missscaled info dialog after second move. New size = %1,%2. should be %3,%4 ")
-                                     .arg(infoDialog->width()).arg(infoDialog->height()).arg(initialDialogWidth).arg(initialDialogHeight)
-                                     .toUtf8().constData());
-
-                        infoDialog->resize(initialDialogWidth,initialDialogHeight);
-                    }
-                });
-            }
-        }
-    });
+    fixMultiscreenResizeBug(posx, posy);
 
     if (isLinux)
     {
@@ -3185,6 +3150,46 @@ void MegaApplication::ConnectServerSignals(HTTPServer* server)
 QString MegaApplication::RectToString(const QRect &rect)
 {
     return QString::fromUtf8("[%1,%2,%3,%4]").arg(rect.x()).arg(rect.y()).arg(rect.width()).arg(rect.height());
+}
+
+void MegaApplication::fixMultiscreenResizeBug(int &posX, int &posY)
+{
+    infoDialog->ensurePolished();
+    auto initialDialogWidth  = infoDialog->width();
+    auto initialDialogHeight = infoDialog->height();
+    QTimer::singleShot(1, infoDialog, [this, initialDialogWidth, initialDialogHeight, posX, posY](){
+        if (infoDialog->width() > initialDialogWidth || infoDialog->height() > initialDialogHeight) //miss scaling detected
+        {
+            MegaApi::log(MegaApi::LOG_LEVEL_ERROR,
+                         QString::fromUtf8("A dialog. New size = %1,%2. should be %3,%4 ")
+                         .arg(infoDialog->width()).arg(infoDialog->height()).arg(initialDialogWidth).arg(initialDialogHeight)
+                         .toUtf8().constData());
+
+            infoDialog->resize(initialDialogWidth,initialDialogHeight);
+
+            auto iDPos = infoDialog->pos();
+            if (iDPos.x() != posX || iDPos.y() != posY )
+            {
+                MegaApi::log(MegaApi::LOG_LEVEL_ERROR,
+                             QString::fromUtf8("Missplaced info dialog. New pos = %1,%2. should be %3,%4 ")
+                             .arg(iDPos.x()).arg(iDPos.y()).arg(posX).arg(posY)
+                             .toUtf8().constData());
+                infoDialog->move(posX, posY);
+
+                QTimer::singleShot(1, this, [this, initialDialogWidth, initialDialogHeight](){
+                    if (infoDialog->width() > initialDialogWidth || infoDialog->height() > initialDialogHeight) //miss scaling detected
+                    {
+                        MegaApi::log(MegaApi::LOG_LEVEL_ERROR,
+                                     QString::fromUtf8("Missscaled info dialog after second move. New size = %1,%2. should be %3,%4 ")
+                                     .arg(infoDialog->width()).arg(infoDialog->height()).arg(initialDialogWidth).arg(initialDialogHeight)
+                                     .toUtf8().constData());
+
+                        infoDialog->resize(initialDialogWidth,initialDialogHeight);
+                    }
+                });
+            }
+        }
+    });
 }
 
 void MegaApplication::logInfoDialogCoordinates(const char *message, const QRect &screenGeometry, const QString &otherInformation)
