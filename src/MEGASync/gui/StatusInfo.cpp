@@ -124,6 +124,11 @@ void StatusInfo::setState(int state)
     }
 }
 
+int StatusInfo::getState()
+{
+    return state;
+}
+
 void StatusInfo::setOverQuotaState(bool oq)
 {
     isOverQuota = oq;

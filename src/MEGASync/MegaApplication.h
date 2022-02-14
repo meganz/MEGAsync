@@ -366,6 +366,7 @@ protected:
     void disableSyncs();
     void restoreSyncs();
     void closeDialogs(bool bwoverquota = false);
+    void createTransferManagerDialog();
     void calculateInfoDialogCoordinates(QDialog *dialog, int *posx, int *posy);
     void deleteMenu(QMenu *menu);
     void startHttpServer();

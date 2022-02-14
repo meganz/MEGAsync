@@ -769,8 +769,11 @@ void InfoDialog::updateState()
         }
     }
 
-    ui->wStatus->setState(state);
-    ui->bTransferManager->setPaused(preferences->getGlobalPaused());
+    if(ui->wStatus->getState() != state)
+    {
+        ui->wStatus->setState(state);
+        ui->bTransferManager->setPaused(preferences->getGlobalPaused());
+    }
 }
 
 void InfoDialog::addSync()

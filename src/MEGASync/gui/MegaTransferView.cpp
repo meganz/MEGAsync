@@ -65,10 +65,10 @@ void MegaTransferView::disableGetLink(bool disable)
 void MegaTransferView::onPauseResumeAllRows(bool pauseState)
 {
     QModelIndexList indexes;
-    auto rowCount (model()->rowCount());
+    auto proxy(qobject_cast<QSortFilterProxyModel*>(model()));
+    auto rowCount (proxy->rowCount());
     if (rowCount > 0)
     {
-        auto proxy(qobject_cast<QSortFilterProxyModel*>(model()));
         for (auto row (0); row < rowCount; ++row)
         {
             auto index (model()->index(row, 0, QModelIndex()));
@@ -78,7 +78,8 @@ void MegaTransferView::onPauseResumeAllRows(bool pauseState)
             }
             indexes.push_back(index);
         }
-        mParentTransferWidget->getModel()->pauseTransfers(indexes, pauseState);
+        auto sourceModel(qobject_cast<QTransfersModel*>(proxy->sourceModel()));
+        sourceModel->pauseTransfers(indexes, pauseState);
     }
 }
 

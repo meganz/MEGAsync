@@ -657,14 +657,7 @@ void MegaApplication::initialize()
     mModel2 = new QTransfersModel(nullptr);
     mModel2->initModel();
 
-    transferManager = new TransferManager(megaApi);
-    transferManager->hide();
-
-    // Signal/slot to notify the tracking of unseen completed transfers of Transfer Manager. If Completed tab is
-    // active, tracking is disabled
-    connect(transferManager, SIGNAL(userActivity()), this, SLOT(registerUserActivity()));
-    connect(transferQuota.get(), &TransferQuota::sendState,
-            transferManager, &TransferManager::onTransferQuotaStateChanged);
+    //createTransferManagerDialog();
 }
 
 QString MegaApplication::applicationFilePath()
@@ -1672,6 +1665,21 @@ void MegaApplication::closeDialogs(bool/* bwoverquota*/)
     storageOverquotaDialog = NULL;
 
     verifyEmail.reset(nullptr);
+}
+
+void MegaApplication::createTransferManagerDialog()
+{
+    if(!transferManager)
+    {
+        transferManager = new TransferManager(megaApi);
+        transferManager->hide();
+
+        // Signal/slot to notify the tracking of unseen completed transfers of Transfer Manager. If Completed tab is
+        // active, tracking is disabled
+        connect(transferManager, SIGNAL(userActivity()), this, SLOT(registerUserActivity()));
+        connect(transferQuota.get(), &TransferQuota::sendState,
+                transferManager, &TransferManager::onTransferQuotaStateChanged);
+    }
 }
 
 void MegaApplication::rebootApplication(bool update)
@@ -3757,10 +3765,6 @@ void MegaApplication::clearUserAttributes()
 void MegaApplication::clearViewedTransfers()
 {
     nUnviewedTransfers = 0;
-    if (transferManager)
-    {
-//        transferManager->updateNumberOfCompletedTransfers(nUnviewedTransfers);
-    }
 }
 
 void MegaApplication::onCompletedTransfersTabActive(bool active)
@@ -4900,15 +4904,12 @@ void MegaApplication::transferManagerActionClicked(int tab)
         return;
     }
 
-    if (transferManager)
-    {
-        transferManager->setActiveTab(tab);
-        Platform::activateBackgroundWindow(transferManager);
-        transferManager->activateWindow();
-        transferManager->raise();
+    createTransferManagerDialog();
 
-        return;
-    }
+    transferManager->setActiveTab(tab);
+    Platform::activateBackgroundWindow(transferManager);
+    transferManager->activateWindow();
+    transferManager->raise();
 }
 
 void MegaApplication::loginActionClicked()

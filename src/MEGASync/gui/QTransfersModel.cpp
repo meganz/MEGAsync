@@ -15,7 +15,7 @@ static const QModelIndex DEFAULT_IDX = QModelIndex();
 
 QHash<QString, TransferData::FileType> QTransfersModel::mFileTypes;
 
-const int MAX_UPDATE_TRANSFERS = 5000;
+const int MAX_UPDATE_TRANSFERS = 20000;
 
 //LISTENER THREAD
 TransferThread::TransferThread() :mCacheMutex (new QReadWriteLock(QReadWriteLock::Recursive))
@@ -242,6 +242,7 @@ void QTransfersModel::onProcessTransfers()
     std::list<QExplicitlySharedDataPointer<TransferData>> newTransferList;
     std::list<QExplicitlySharedDataPointer<TransferData>> transferToUpdateList;
     std::list<QExplicitlySharedDataPointer<TransferData>> transferToCancelList;
+    bool transfersCountNeedsUpdate(false);
 
     for (auto it = updateList.begin(); it != updateList.end(); ++it)
     {
@@ -261,14 +262,7 @@ void QTransfersModel::onProcessTransfers()
         }
         else
         {
-            if(state == TransferData::TransferState::TRANSFER_CANCELLED)
-            {
-                continue;
-            }
-            else
-            {
-                newTransferList.push_back((*it));
-            }
+            newTransferList.push_back((*it));
         }
     }
 
@@ -289,12 +283,17 @@ void QTransfersModel::onProcessTransfers()
             }
         }
 
-        updateTransfersCount();
-
         newTransferList.clear();
         transferToUpdateList.clear();
         transferToCancelList.clear();
         updateList.clear();
+
+        transfersCountNeedsUpdate = true;
+    }
+
+    if(transfersCountNeedsUpdate)
+    {
+        updateTransfersCount();
     }
 }
 
@@ -372,7 +371,36 @@ void QTransfersModel::processCancelTransfers(const std::list<QExplicitlySharedDa
 
         qSort(indexesToCancel.begin(), indexesToCancel.end(), qGreater<QModelIndex>());
 
-        cancelClearTransfers(indexesToCancel, false);
+        // First clear finished transfers (remove rows), then cancel the others.
+        // This way, there is no risk of messing up the rows order with cancel requests.
+        int count (0);
+        int row (indexesToCancel.last().row());
+        for (auto index : indexesToCancel)
+        {
+            // Init row with row of first tag
+            if (count == 0)
+            {
+                row = index.row();
+            }
+
+            // If rows are non-contiguous, flush and start from item
+            if (row != index.row())
+            {
+                removeRows(row + 1, count, DEFAULT_IDX);
+                count = 0;
+                row = index.row();
+            }
+
+            // We have at least one row
+            count++;
+            row--;
+        }
+        // Flush pooled rows (start at row + 1).
+        // This happens when the last item processed is in a finished state.
+        if (count > 0)
+        {
+            removeRows(row + 1, count, DEFAULT_IDX);
+        }
     }
 }
 
@@ -472,6 +500,15 @@ void QTransfersModel::openFolderByIndex(const QModelIndex& index)
     });
 }
 
+void QTransfersModel::cancelClearAllTransfers()
+{
+    mThreadPool->push([=]
+    {
+       mMegaApi->cancelTransfers(MegaTransfer::TYPE_UPLOAD);
+       mMegaApi->cancelTransfers(MegaTransfer::TYPE_DOWNLOAD);
+    });
+}
+
 void QTransfersModel::cancelClearTransfers(const QModelIndexList& indexes, bool clearAll)
 {
     QModelIndexList indexesToRemove(indexes);
@@ -497,8 +534,6 @@ void QTransfersModel::cancelClearTransfers(const QModelIndexList& indexes, bool 
 
     // First clear finished transfers (remove rows), then cancel the others.
     // This way, there is no risk of messing up the rows order with cancel requests.
-    int count (0);
-    int row (indexesToRemove.last().row());
     for (auto index : indexesToRemove)
     {
         auto d (mTransfers.at(index.row()));
@@ -521,41 +556,22 @@ void QTransfersModel::cancelClearTransfers(const QModelIndexList& indexes, bool 
                     downloadToClear.push_back(d->mTag);
                 }
             }
-
-            // Init row with row of first tag
-            if (count == 0)
-            {
-                row = index.row();
-            }
-
-            // If rows are non-contiguous, flush and start from item
-            if (row != index.row())
-            {
-                removeRows(row + 1, count, DEFAULT_IDX);
-                count = 0;
-                row = index.row();
-            }
-
-            // We have at least one row
-            count++;
-            row--;
         }
     }
-    // Flush pooled rows (start at row + 1).
-    // This happens when the last item processed is in a finished state.
-    if (count > 0)
-    {
-        removeRows(row + 1, count, DEFAULT_IDX);
-    }
 
-    mThreadPool->push([=]
+    auto counter(0);
+    // Now cancel transfers.
+    for (auto item : toCancel)
     {
-        // Now cancel transfers.
-        for (auto item : toCancel)
+        mMegaApi->cancelTransferByTag(item);
+
+        //This is done to avoid
+        if(++counter == 100)
         {
-            mMegaApi->cancelTransferByTag(item);
+            counter = 0;
+            MegaSyncApp->processEvents();
         }
-    });
+    }
 
     if(clearAll)
     {
@@ -574,18 +590,18 @@ void QTransfersModel::cancelClearTransfers(const QModelIndexList& indexes, bool 
             mMegaApi->removeCompletedDownload(item);
         }
     }
-
-    //Update stats
-    updateTransfersCount();
 }
 
 void QTransfersModel::pauseTransfers(const QModelIndexList& indexes, bool pauseState)
 {
-    for (auto index : indexes)
+    mThreadPool->push([=]
     {
-        TransferTag tag (static_cast<TransferTag>(index.internalId()));
-        pauseResumeTransferByTag(tag, pauseState);
-    }
+        for (auto index : indexes)
+        {
+            TransferTag tag (mTransfers.at(index.row())->mTag);
+            pauseResumeTransferByTag(tag, pauseState);
+        }
+    });
 
     if (!pauseState && mAreAllPaused)
     {
@@ -633,25 +649,13 @@ void QTransfersModel::pauseResumeTransferByTag(TransferTag tag, bool pauseState)
 {
     auto row = mTagByOrder.value(tag);
     auto d  = mTransfers.at(row);
-    mThreadPool->push([=]
-    {
-        auto state (d->mState);
+    auto state (d->mState);
 
-        if ((!pauseState && (state == TransferData::TRANSFER_PAUSED))
-                || (pauseState && (state & TransferData::PAUSABLE_STATES_MASK)))
-        {
-           mMegaApi->pauseTransferByTag(d->mTag, pauseState);
-        }
-    });
-}
-
-void QTransfersModel::cancelClearAllTransfers()
-{
-    mThreadPool->push([=]
+    if ((!pauseState && (state == TransferData::TRANSFER_PAUSED))
+            || (pauseState && (state & TransferData::PAUSABLE_STATES_MASK)))
     {
-       mMegaApi->cancelTransfers(MegaTransfer::TYPE_UPLOAD);
-       mMegaApi->cancelTransfers(MegaTransfer::TYPE_DOWNLOAD);
-    });
+       mMegaApi->pauseTransferByTag(d->mTag, pauseState);
+    }
 }
 
 void QTransfersModel::lockModelMutex(bool lock)
@@ -678,31 +682,25 @@ long long QTransfersModel::getNumberOfFinishedForFileType(TransferData::FileType
 
 void QTransfersModel::updateTransfersCount()
 {
-    QElapsedTimer timer;
-    timer.start();
-    QList<double> times;
+    mTransfersCount.remainingUploads = mMegaApi->getNumPendingUploads();
+    mTransfersCount.remainingDownloads = mMegaApi->getNumPendingDownloads();
 
-    {
-        mTransfersCount.remainingUploads = mMegaApi->getNumPendingUploads();
-        mTransfersCount.remainingDownloads = mMegaApi->getNumPendingDownloads();
+    mTransfersCount.totalUploads = mMegaApi->getTotalUploads();
+    mTransfersCount.totalDownloads = mMegaApi->getTotalDownloads();
 
-        mTransfersCount.totalUploads = mMegaApi->getTotalUploads();
-        mTransfersCount.totalDownloads = mMegaApi->getTotalDownloads();
+    mTransfersCount.completedDownloads = mMegaApi->getCompletedDownloads();
+    mTransfersCount.completedUploads = mMegaApi->getCompletedUploads();
 
-        mTransfersCount.completedDownloads = mMegaApi->getCompletedDownloads();
-        mTransfersCount.completedUploads = mMegaApi->getCompletedUploads();
+    mTransfersCount.completedDownloadBytes = mMegaApi->getTotalDownloadedBytes();
+    mTransfersCount.leftDownloadBytes = mMegaApi->getTotalDownloadBytes();
 
-        mTransfersCount.completedDownloadBytes = mMegaApi->getTotalDownloadedBytes();
-        mTransfersCount.leftDownloadBytes = mMegaApi->getTotalDownloadBytes();
+    mTransfersCount.completedUploadBytes = mMegaApi->getTotalUploadedBytes();
+    mTransfersCount.leftUploadBytes = mMegaApi->getTotalUploadBytes();
 
-        mTransfersCount.completedUploadBytes = mMegaApi->getTotalUploadedBytes();
-        mTransfersCount.leftUploadBytes = mMegaApi->getTotalUploadBytes();
+    mTransfersCount.currentDownload = mTransfersCount.totalDownloads - mTransfersCount.remainingDownloads + 1;
+    mTransfersCount.currentUpload = mTransfersCount.totalUploads - mTransfersCount.remainingUploads + 1;
 
-        mTransfersCount.currentDownload = mTransfersCount.totalDownloads - mTransfersCount.remainingDownloads + 1;
-        mTransfersCount.currentUpload = mTransfersCount.totalUploads - mTransfersCount.remainingUploads + 1;
-
-        emit transfersDataUpdated();
-    }
+    emit transfersDataUpdated();
 }
 
 const TransfersCount &QTransfersModel::getTransfersCount()

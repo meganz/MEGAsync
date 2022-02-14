@@ -27,6 +27,7 @@ public:
     ~StatusInfo();
 
     void setState(int state);
+    int getState();
     void setOverQuotaState(bool oq);
 
 protected:
