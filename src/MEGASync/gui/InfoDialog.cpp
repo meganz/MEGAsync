@@ -72,7 +72,8 @@ void InfoDialog::upAreaHovered(QMouseEvent *event)
 
 InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddialog) :
     QDialog(parent),
-    ui(new Ui::InfoDialog)
+    ui(new Ui::InfoDialog),
+    qtBugFixer(this)
 {
     ui->setupUi(this);
 
@@ -339,12 +340,9 @@ void InfoDialog::showEvent(QShowEvent *event)
     QDialog::showEvent(event);
 }
 
-void InfoDialog::moveEvent(QMoveEvent *event)
+void InfoDialog::moveEvent(QMoveEvent*)
 {
-    QTimer::singleShot(100, this, [this](){
-        this->setWindowFlags(Qt::FramelessWindowHint);
-        this->show();
-    });
+    qtBugFixer.onEndMove();
 }
 
 void InfoDialog::setBandwidthOverquotaState(QuotaState state)
@@ -2093,9 +2091,7 @@ void InfoDialog::showNotifications()
 
 void InfoDialog::move(int x, int y)
 {
-   hide();
-   Qt::WindowFlags originalFlags = windowFlags();
-   setWindowFlags(Qt::Window);
+   qtBugFixer.onStartMove();
    QDialog::move(x, y);
 }
 
