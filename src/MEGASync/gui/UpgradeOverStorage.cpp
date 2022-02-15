@@ -14,13 +14,8 @@ UpgradeOverStorage::UpgradeOverStorage(MegaApi* megaApi, std::shared_ptr<mega::M
     mPricing (pricing),
     mCurrency (currency)
 {
+    setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
     mUi->setupUi(this);
-    setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);  
-
-    delete mUi->wPlans->layout();
-    mPlansLayout = new QHBoxLayout(mUi->wPlans);
-    mPlansLayout->setContentsMargins(0, 0, 0, 0);
-    mPlansLayout->setSpacing(8);
 
     updatePlans();  
     configureAnimation();
@@ -134,7 +129,7 @@ void UpgradeOverStorage::updatePlans()
                 }
 
                 PlanWidget* card (new PlanWidget(data, userAgent, this));
-                mPlansLayout->addWidget(card);
+                mUi->wPlansLayout->addWidget(card);
                 mUi->lPriceEstimation->setVisible(!isBillingCurrency);
                 cards.append(card);
                 minPriceFontSize = std::min(minPriceFontSize, card->getPriceFontSizePx());
@@ -146,15 +141,13 @@ void UpgradeOverStorage::updatePlans()
         {
             card->setPriceFontSizePx(minPriceFontSize);
         }
-
-        mUi->wPlans->adjustSize();
-        adjustSize();
+        show();
     }
 }
 
 void UpgradeOverStorage::clearPlans()
 {
-    while (QLayoutItem* item = mPlansLayout->takeAt(0))
+    while (QLayoutItem* item = mUi->wPlansLayout->takeAt(0))
     {
         if (QWidget* widget = item->widget())
         {

@@ -28,6 +28,7 @@ public:
     void refreshStorageDetails();
     void setPricing(std::shared_ptr<mega::MegaPricing> pricing,
                     std::shared_ptr<mega::MegaCurrency> currency);
+
 protected:
     void changeEvent(QEvent* event) override;
 
@@ -37,7 +38,6 @@ private:
     void configureAnimation();
 
     Ui::UpgradeOverStorage* mUi;
-    QHBoxLayout* mPlansLayout;
     std::unique_ptr<QMovie> mAnimation;
     HighDpiResize mHighDpiResize;
     mega::MegaApi* mMegaApi;

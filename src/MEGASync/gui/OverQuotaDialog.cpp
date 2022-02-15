@@ -37,7 +37,6 @@ std::unique_ptr<OverQuotaDialog> OverQuotaDialog::createDialog(OverQuotaDialogTy
 bool OverQuotaDialog::showDialog(OverQuotaDialogType type, QWidget *parent)
 {
     bool showDialog(false);
-    bool dismissed(false);
     std::unique_ptr<OverQuotaDialog> dialog;
     switch(type)
     {
@@ -111,12 +110,9 @@ bool OverQuotaDialog::showDialog(OverQuotaDialogType type, QWidget *parent)
 
     if(showDialog)
     {
-        if(createDialog(type, parent)->exec() == QDialog::Rejected)
-        {
-            dismissed = true;
-        }
+        return createDialog(type, parent)->exec();
     }
-    return dismissed;
+    return QDialog::Rejected;
 }
 
 void OverQuotaDialog::configureDialog(OverQuotaDialogType type)
