@@ -12,6 +12,8 @@ ScanningWidget::ScanningWidget(QWidget *parent) :
 
     movie = new QMovie(this);
     movie->setCacheMode(QMovie::CacheAll);
+    movie->moveToThread(&gifThread);
+    gifThread.start();
 
     ui->lScanning->setProperty("role", QString::fromLatin1("title"));
     ui->lExplanation->setProperty("role", QString::fromLatin1("details"));
@@ -19,6 +21,8 @@ ScanningWidget::ScanningWidget(QWidget *parent) :
 
 ScanningWidget::~ScanningWidget()
 {
+    gifThread.quit();
+    gifThread.wait();
     delete ui;
     delete movie;
 }
