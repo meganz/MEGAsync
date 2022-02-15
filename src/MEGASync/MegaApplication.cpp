@@ -3332,7 +3332,7 @@ void MegaApplication::updateFreedCancelToken(MegaTransfer* transfer)
 {
     auto finder = [transfer](std::shared_ptr<MegaCancelToken> currentToken)
     {
-        return transfer->hasToken(currentToken.get());
+        return (transfer->getCancelToken() == currentToken.get());
     };
     auto itToken = std::find_if(unblockedCancelTokens.begin(), unblockedCancelTokens.end(), finder);
     if (itToken != unblockedCancelTokens.end())
