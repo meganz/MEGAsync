@@ -5,6 +5,7 @@
 #include "platform/Platform.h"
 #include "MegaTransferDelegate.h"
 #include "MegaTransferView.h"
+#include "OverQuotaDialog.h"
 
 #include <QMouseEvent>
 
@@ -425,6 +426,7 @@ void TransferManager::onStorageStateChanged(int storageState)
         case MegaApi::STORAGE_STATE_PAYWALL:
         case MegaApi::STORAGE_STATE_RED:
         {
+            OverQuotaDialog::showDialog(OverQuotaDialogType::STORAGE_UPLOAD, this);
             mUi->tSeePlans->show();
             mUi->lStorageOverQuota->show();
             break;
@@ -448,6 +450,7 @@ void TransferManager::onTransferQuotaStateChanged(QuotaState transferQuotaState)
     {
         case QuotaState::FULL:
         {
+            OverQuotaDialog::showDialog(OverQuotaDialogType::BANDWIDTH_DOWNLOAD, this);
             mUi->tSeePlans->show();
             mUi->lTransferOverQuota->show();
             break;
