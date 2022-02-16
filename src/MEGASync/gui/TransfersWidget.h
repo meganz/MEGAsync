@@ -32,7 +32,8 @@ public:
                         const TransferData::TransferStates transferStates,
                         const TransferData::FileTypes fileTypes);
     void transferFilterReset(bool invalidate = false);
-    void transferFilterApply(bool invalidate = true);
+
+    void cancelClearAll();
 
     int rowCount();
 
@@ -40,17 +41,30 @@ public:
     TransfersSortFilterProxyModel* getProxyModel() {return mProxyModel;}
     ~TransfersWidget();
 
-    bool areTransfersActive();
+    void globalPauseToggled(bool pause);
 
-signals:
-    void clearTransfers(int firstRow, int amount);
-    void updateSearchFilter(const QString& pattern);
-    void applyFilter();
-    void pauseResumeAllRows(bool pauseState);
-    void cancelClearAllRows();
+public slots:
+    void on_pHeaderName_clicked();
+    void on_pHeaderSize_clicked();
+    void on_tPauseResumeVisible_toggled(bool state);
+    void on_tCancelClearVisible_clicked();
+    void onTransferAdded();
+    void onShowCompleted(bool showCompleted);
+    void onPauseStateChanged(bool pauseState);
+
+protected:
+    void changeEvent(QEvent *event);
+
+private slots:
+    void onModelChanged();
+    void onModelAboutToBeChanged();
+    void onProxyActivityLaunchTimeout();
+    void onProxyActivityCloseTimeout();
+    void onPauseResumeButtonCheckedOnDelegate(bool state);
 
 private:
-    static constexpr int PROXY_ACTIVITY_TIMEOUT_MS = 500;
+    static constexpr int PROXY_ACTIVITY_CLOSE_TIMEOUT_MS = 1000;
+    static constexpr int PROXY_ACTIVITY_LAUNCH_TIMEOUT_MS = 300;
 
     enum HeaderState
     {
@@ -65,14 +79,16 @@ private:
     TransfersSortFilterProxyModel *mProxyModel;
     MegaTransferDelegate *tDelegate;
     MegaDelegateHoverManager mDelegateHoverManager;
-    bool mIsPaused;
     bool mClearMode;
     MegaApplication *app;
     HeaderState mHeaderNameState;
     HeaderState mHeaderSizeState;
     ThreadPool* mThreadPool;
+    bool mModelIsChanging;
+    bool mGlobalPaused;
 
-    QTimer* mProxyActivityTimer;
+    QTimer* mProxyActivityLaunchTimer;
+    QTimer* mProxyActivityCloseTimer;
     QMessageBox* mProxyActivityMessage;
 
     void configureTransferView();
@@ -80,17 +96,15 @@ private:
 
     void setHeaderState(QPushButton* header, HeaderState state);
 
-public slots:
-    void on_pHeaderName_clicked();
-    void on_pHeaderSize_clicked();
-    void on_tPauseResumeAll_clicked();
-    void on_tCancelClearAll_clicked();
-    void onTransferAdded();
-    void onShowCompleted(bool showCompleted);
-    void onPauseStateChanged(bool pauseState);
+signals:
+    void clearTransfers(int firstRow, int amount);
+    void updateSearchFilter(const QString& pattern);
+    void applyFilter();
+    void pauseResumeVisibleRows(bool state);
+    void cancelClearVisibleRows();
+    void pauseResumeAllRows(bool pauseState);
+    void cancelClearAllRows();
 
-protected:
-    void changeEvent(QEvent *event);
 };
 
 #endif // TRANSFERSWIDGET_H

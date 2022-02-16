@@ -42,12 +42,16 @@ public:
 
         virtual TransferBaseDelegateWidget* createTransferManagerItem(QWidget *parent);
 
+        int areAllPaused() const;
+        bool isAnyPaused() const;
+
 signals:
         void modelAboutToBeChanged();
         void modelChanged();
         void searchNumbersChanged();
         void modelAboutToBeSorted();
         void modelSorted();
+        void transferPauseResume(bool);
 
 protected slots:
         void onCancelClearTransfer();

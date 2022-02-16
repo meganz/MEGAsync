@@ -279,7 +279,7 @@ TransferBaseDelegateWidget::ActionHoverType InfoDialogTransferDelegateWidget::mo
             mUi->lShowInFolder->hide();
             update = true;
         }
-        else if (getData()->mIsPublicNode)
+        else if (getData()->isPublicNode())
         {
             bool inAction = isMouseHoverInAction(mUi->lActionTransfer, pos);
             update = setActionTransferIcon(mUi->lActionTransfer,
@@ -388,17 +388,15 @@ void InfoDialogTransferDelegateWidget::finishTransfer()
 
 void InfoDialogTransferDelegateWidget::updateFinishedTime()
 {
-    if (!getData()->mFinishedTime || getData()->mErrorCode < 0)
+    auto finishedTime = getData()->getFinishedTime();
+
+    if (!finishedTime || getData()->mErrorCode < 0)
     {
         return;
     }
 
-    //Preferences *preferences = Preferences::instance();
-    QDateTime now = QDateTime::currentDateTime();
-    qint64 secs= ((/*preferences->getMsDiffTimeWithSDK() +*/  now.toMSecsSinceEpoch() - (getData()->mFinishedTime*1000)))/1000;
-
     mUi->lElapsedTime->setStyleSheet(QString::fromUtf8("color: #999999"));
-    mUi->lElapsedTime->setText(tr("Added [A]").replace(QString::fromUtf8("[A]"), Utilities::getFinishedTimeString(secs)));
+    mUi->lElapsedTime->setText(tr("Added [A]").replace(QString::fromUtf8("[A]"), Utilities::getFinishedTimeString(finishedTime)));
 }
 
 QSize InfoDialogTransferDelegateWidget::minimumSizeHint() const

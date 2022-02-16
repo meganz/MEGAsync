@@ -69,7 +69,7 @@ public:
         mTransferredBytes(dr->mTransferredBytes),
         mFileType(dr->mFileType),
         mParentHandle (dr->mParentHandle), mNodeHandle (dr->mNodeHandle),
-        mFilename(dr->mFilename), mPath(dr->mPath), mNodeAccess(mega::MegaShare::ACCESS_UNKNOWN), mIsPublicNode(dr->mIsPublicNode), mUpdated(false)
+        mFilename(dr->mFilename), mPath(dr->mPath), mNodeAccess(mega::MegaShare::ACCESS_UNKNOWN), mUpdated(false)
     {
         mIsSyncTransfer = mType.testFlag(TransferData::TransferType::TRANSFER_SYNC);
     }
@@ -77,9 +77,7 @@ public:
     TransferData(mega::MegaTransfer*) : mUpdated(false)
     {}
 
-    void update();
     void update(mega::MegaTransfer* transfer);
-    void updateBasicInfo(mega::MegaTransfer* transfer);
 
     bool isFinished()
     {
@@ -108,14 +106,12 @@ public:
     int       mErrorCode;
     bool mIsSyncTransfer;
     long long mErrorValue;
-    int64_t   mFinishedTime;
     int64_t   mRemainingTime;
     unsigned long long mTotalSize;
     unsigned long long mSpeed;
     unsigned long long mMeanSpeed;
     unsigned long long mTransferredBytes;
     long long mNotificationNumber;
-    bool mIsPublicNode;
     int mNodeAccess;
     FileType mFileType;
     mega::MegaHandle mParentHandle;
@@ -125,9 +121,12 @@ public:
     bool mUpdated;
 
     QString path() const;
+    bool isPublicNode();
+    uint64_t getFinishedTime();
 
 private:
     QString   mPath;
+    int64_t   mFinishedTime;
 
 };
 Q_DECLARE_TYPEINFO(TransferData, Q_MOVABLE_TYPE);

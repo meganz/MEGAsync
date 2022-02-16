@@ -7536,8 +7536,6 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
             this->paused = false;
         }
 
-        emit pauseStateChanged();
-
         if (infoDialog)
         {
             infoDialog->updateDialogState();

@@ -98,7 +98,6 @@ public:
     bool removeRows(int row, int count, const QModelIndex& parent = QModelIndex());
     bool moveRows(const QModelIndex& sourceParent, int sourceRow, int count,
                   const QModelIndex& destinationParent, int destinationChild);
-    bool areAllPaused();
 
     void getLinks(QList<int>& rows);
     void openFolderByIndex(const QModelIndex& index);
@@ -121,10 +120,13 @@ public:
 
     void pauseModelProcessing(bool value);
 
+    bool areAllPaused();
+
     static QHash<QString, TransferData::FileType> mFileTypes;
 
 signals:
     void pauseStateChanged(bool pauseState);
+    void transferPauseStateChanged();
     void transfersDataUpdated();
     void processTransferInThread();
 
@@ -143,6 +145,7 @@ private slots:
 
 private:
     void updateTransfersCount();
+    void removeRows(QModelIndexList &indexesToRemove);
 
 private:
     mega::MegaApi* mMegaApi;

@@ -47,6 +47,12 @@ void MegaTransferView::setup(TransfersWidget* tw)
     connect(this, &MegaTransferView::showContextMenu,
             this, &MegaTransferView::onCustomContextMenu);
 
+    connect(tw, &TransfersWidget::pauseResumeVisibleRows,
+            this, &MegaTransferView::onPauseResumeVisibleRows);
+
+    connect(tw, &TransfersWidget::cancelClearVisibleRows,
+            this, &MegaTransferView::onCancelClearVisibleTransfers);
+
     connect(tw, &TransfersWidget::pauseResumeAllRows,
             this, &MegaTransferView::onPauseResumeAllRows);
 
@@ -62,7 +68,7 @@ void MegaTransferView::disableGetLink(bool disable)
     mGetLinkAction->setEnabled(!disable);
 }
 
-void MegaTransferView::onPauseResumeAllRows(bool pauseState)
+void MegaTransferView::onPauseResumeVisibleRows(bool pauseState)
 {
     QModelIndexList indexes;
     auto proxy(qobject_cast<QSortFilterProxyModel*>(model()));
@@ -79,6 +85,23 @@ void MegaTransferView::onPauseResumeAllRows(bool pauseState)
             indexes.push_back(index);
         }
         auto sourceModel(qobject_cast<QTransfersModel*>(proxy->sourceModel()));
+        sourceModel->pauseTransfers(indexes, pauseState);
+    }
+}
+
+void MegaTransferView::onPauseResumeAllRows(bool pauseState)
+{
+    QModelIndexList indexes;
+    auto proxy(qobject_cast<QSortFilterProxyModel*>(model()));
+    auto sourceModel(qobject_cast<QTransfersModel*>(proxy->sourceModel()));
+    auto rowCount (sourceModel->rowCount(QModelIndex()));
+    if (rowCount > 0)
+    {
+        for (auto row (0); row < rowCount; ++row)
+        {
+            auto index (sourceModel->index(row, 0, QModelIndex()));
+            indexes.push_back(index);
+        }
         sourceModel->pauseTransfers(indexes, pauseState);
     }
 }
@@ -103,18 +126,38 @@ void MegaTransferView::onPauseResumeSelection(bool pauseState)
     }
 }
 
+void MegaTransferView::onCancelClearVisibleTransfers()
+{
+    QModelIndexList indexes;
+    auto proxy(qobject_cast<QSortFilterProxyModel*>(model()));
+    auto rowCount (proxy->rowCount());
+    if (rowCount > 0)
+    {
+        for (auto row (0); row < rowCount; ++row)
+        {
+            auto index (model()->index(row, 0, QModelIndex()));
+            if (proxy)
+            {
+                index = proxy->mapToSource(index);
+            }
+            indexes.push_back(index);
+        }
+        auto sourceModel(qobject_cast<QTransfersModel*>(proxy->sourceModel()));
+        sourceModel->cancelClearTransfers(indexes, false);
+    }
+}
+
 void MegaTransferView::onCancelClearAllTransfers()
 {
     QModelIndexList indexes;
     auto proxy(qobject_cast<QSortFilterProxyModel*>(model()));
     auto sourceModel(qobject_cast<QTransfersModel*>(proxy->sourceModel()));
     sourceModel->cancelClearTransfers(QModelIndexList(), true);
-        //proxy->invalidate();
 }
 
 void MegaTransferView::onClearCompletedTransfers()
 {
-    onCancelClearAllTransfers();
+    onCancelClearVisibleTransfers();
     mParentTransferWidget->getModel()->resetCompletedTransfersCount();
 }
 

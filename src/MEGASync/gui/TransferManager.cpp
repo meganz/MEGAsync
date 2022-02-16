@@ -37,7 +37,6 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
     mUi->lTextSearch->installEventFilter(this);
 
     mModel = mUi->wTransfers->getModel();
-    //pauseModel(true);
 
     Platform::enableDialogBlur(this);
     Qt::WindowFlags flags =  Qt::Window;
@@ -125,12 +124,6 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
 
     connect(mModel, &QTransfersModel::transfersDataUpdated,
             this, &TransferManager::onTransfersDataUpdated);
-
-    connect(mModel, &QTransfersModel::pauseStateChanged,
-            this, &TransferManager::onUpdatePauseState);
-
-    connect(mUi->bPause, &QToolButton::clicked,
-            mModel, &QTransfersModel::pauseResumeAllTransfers);
 
     connect(this, &TransferManager::clearCompletedTransfers,
             findChild<MegaTransferView*>(), &MegaTransferView::onClearCompletedTransfers,
@@ -548,6 +541,13 @@ void TransferManager::on_tSeePlans_clicked()
     QtConcurrent::run(QDesktopServices::openUrl, QUrl(url));
 }
 
+void TransferManager::on_bPause_clicked()
+{
+    mModel->pauseResumeAllTransfers();
+    mUi->wTransfers->globalPauseToggled(mModel->areAllPaused());
+    onUpdatePauseState(mModel->areAllPaused());
+}
+
 void TransferManager::on_bSearch_clicked()
 {
     mUi->wTitleAndSearch->setCurrentWidget(mUi->pSearch);
@@ -615,20 +615,17 @@ void TransferManager::on_tClearSearchResult_clicked()
 void TransferManager::on_tAllResults_clicked()
 {
     mUi->wTransfers->filtersChanged({}, {}, {});
-    mUi->wTransfers->transferFilterApply();
 }
 
 void TransferManager::on_tDlResults_clicked()
 {
     mUi->wTransfers->filtersChanged(TransferData::TRANSFER_DOWNLOAD
                                     | TransferData::TRANSFER_LTCPDOWNLOAD, {}, {});
-    mUi->wTransfers->transferFilterApply();
 }
 
 void TransferManager::on_tUlResults_clicked()
 {
     mUi->wTransfers->filtersChanged(TransferData::TRANSFER_UPLOAD, {}, {});
-    mUi->wTransfers->transferFilterApply();
 }
 
 void TransferManager::on_bArchives_clicked()
@@ -723,7 +720,7 @@ void TransferManager::on_bUpload_clicked()
 
 void TransferManager::on_bCancelClearAll_clicked()
 {
-    mUi->wTransfers->on_tCancelClearAll_clicked();
+    mUi->wTransfers->cancelClearAll();
 }
 
 void TransferManager::on_leSearchField_returnPressed()
@@ -770,12 +767,7 @@ void TransferManager::toggleTab(TM_TAB newTab)
                  || mUi->sCurrentContent->currentWidget() != mUi->pStatusHeader)
         {
             mUi->sCurrentContent->setCurrentWidget(mUi->pStatusHeader);
-            mUi->wTransfers->transferFilterApply(false);
             mUi->wTransfers->textFilterChanged(QString());
-        }
-        else
-        {
-            mUi->wTransfers->transferFilterApply();
         }
 
         mCurrentTab = newTab;
@@ -851,7 +843,7 @@ void TransferManager::changeEvent(QEvent *event)
     {
         mUi->retranslateUi(this);
         setActiveTab(mCurrentTab);
-        onUpdatePauseState(mModel->areAllPaused());
+        onUpdatePauseState(mUi->wTransfers->getProxyModel()->areAllPaused());
     }
     QDialog::changeEvent(event);
 }

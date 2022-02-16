@@ -104,6 +104,7 @@ private slots:
     void on_tAllResults_clicked();
     void on_tDlResults_clicked();
     void on_tUlResults_clicked();
+    void on_bPause_clicked();
 
     void on_bImportLinks_clicked();
     void on_tCogWheel_clicked();

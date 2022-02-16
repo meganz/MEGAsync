@@ -181,7 +181,6 @@ win32 {
                 $$PWD/win/TransfersWidget.ui \
                 $$PWD/win/TransfersStateInfoWidget.ui \
                 $$PWD/win/MegaSpeedGraph.ui \
-                $$PWD/win/ActiveTransfersWidget.ui \
                 $$PWD/win/AddExclusionDialog.ui \
                 $$PWD/win/InfoDialogTransfersWidget.ui \
                 $$PWD/win/StatusInfo.ui \
@@ -236,7 +235,6 @@ macx {
                 $$PWD/macx/TransfersWidget.ui \
                 $$PWD/macx/TransfersStateInfoWidget.ui \
                 $$PWD/macx/MegaSpeedGraph.ui \
-                $$PWD/macx/ActiveTransfersWidget.ui \
                 $$PWD/macx/AddExclusionDialog.ui \
                 $$PWD/macx/InfoDialogTransfersWidget.ui \
                 $$PWD/macx/StatusInfo.ui \
@@ -316,7 +314,6 @@ unix:!macx {
                 $$PWD/linux/TransfersWidget.ui \
                 $$PWD/linux/TransfersStateInfoWidget.ui \
                 $$PWD/linux/MegaSpeedGraph.ui \
-                $$PWD/linux/ActiveTransfersWidget.ui \
                 $$PWD/linux/AddExclusionDialog.ui \
                 $$PWD/linux/InfoDialogTransfersWidget.ui \
                 $$PWD/linux/StatusInfo.ui \

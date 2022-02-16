@@ -14,6 +14,7 @@ using namespace mega;
 
 TransferManagerDelegateWidget::TransferManagerDelegateWidget(QWidget *parent) :
     TransferBaseDelegateWidget (parent),
+    mGlobalPause(false),
     mUi (new Ui::TransferManagerDelegateWidget)
 {
     mUi->setupUi(this);
@@ -118,7 +119,7 @@ void TransferManagerDelegateWidget::updateTransferState()
                 showTPauseResume = false;
                 mLastPauseResuemtTransferIconName.clear();
             }
-            timeString = QDateTime::fromSecsSinceEpoch(getData()->mFinishedTime)
+            timeString = QDateTime::fromSecsSinceEpoch(getData()->getFinishedTime())
                          .toString(QLatin1Literal("hh:mm"));
             speedString = Utilities::getSizeString(getData()->mMeanSpeed) + QLatin1Literal("/s");
             break;
@@ -140,7 +141,7 @@ void TransferManagerDelegateWidget::updateTransferState()
         {
             if(stateHasChanged())
             {
-                timeString = QDateTime::fromSecsSinceEpoch(getData()->mFinishedTime)
+                timeString = QDateTime::fromSecsSinceEpoch(getData()->getFinishedTime())
                              .toString(QLatin1Literal("hh:mm"));
                 speedString = Utilities::getSizeString(getData()->mMeanSpeed) + QLatin1Literal("/s");
                 mLastPauseResuemtTransferIconName.clear();
@@ -185,7 +186,7 @@ void TransferManagerDelegateWidget::updateTransferState()
                 mUi->sStatus->setCurrentWidget(mUi->pActive);
             }
             speedString = Utilities::getSizeString(getData()->mMeanSpeed) + QLatin1Literal("/s");
-            timeString = QDateTime::fromSecsSinceEpoch(getData()->mFinishedTime)
+            timeString = QDateTime::fromSecsSinceEpoch(getData()->getFinishedTime())
                          .toString(QLatin1String("hh:mm"));
             break;
         }
@@ -204,7 +205,7 @@ void TransferManagerDelegateWidget::updateTransferState()
             mUi->tPauseResumeTransfer->setIcon(icon);
             mUi->tPauseResumeTransfer->setToolTip(pauseResumeTooltip);
         }
-        mUi->tPauseResumeTransfer->setVisible(showTPauseResume);
+        mUi->tPauseResumeTransfer->setVisible(showTPauseResume && !mGlobalPause);
 
         // Cancel/Clear Button
         if ((getData()->mType & TransferData::TRANSFER_SYNC)
@@ -274,6 +275,11 @@ void TransferManagerDelegateWidget::setType()
     }
 
     mUi->bItemSpeed->setIcon(icon);
+}
+
+void TransferManagerDelegateWidget::globalPauseToggled(bool pause)
+{
+    mGlobalPause = pause;
 }
 
 TransferBaseDelegateWidget::ActionHoverType TransferManagerDelegateWidget::mouseHoverTransfer(bool isHover, const QPoint &pos)

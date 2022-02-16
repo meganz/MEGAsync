@@ -6,7 +6,6 @@
 using namespace mega;
 
 const TransferData::TransferStates TransferData::STATE_MASK = TransferData::TransferStates (
-//        TransferData::TransferState::TRANSFER_NONE |
         TransferData::TransferState::TRANSFER_QUEUED |
         TransferData::TransferState::TRANSFER_ACTIVE |
         TransferData::TransferState::TRANSFER_PAUSED |
@@ -45,36 +44,49 @@ const TransferData::TransferStates TransferData::ACTIVE_STATES_MASK = TransferDa
     TransferData::TransferState::TRANSFER_RETRYING
 );
 
-void TransferData::update()
-{
-    if(!isUpdated())
-    {
-        auto transfer = MegaSyncApp->getMegaApi()->getTransferByTag(mTag);
-
-        if(transfer)
-        {
-            update(transfer);
-        }
-    }
-}
-
 void TransferData::update(mega::MegaTransfer* transfer)
 {
     if(transfer)
-    {
-        updateBasicInfo(transfer);
+    {   
+        mTag = transfer->getTag();
 
         mPath = QString::fromUtf8(transfer->getPath());
+
+        mFilename = QString::fromUtf8(transfer->getFileName());
+        mType = static_cast<TransferData::TransferType>(1 << transfer->getType());
+        if (transfer->isSyncTransfer())
+        {
+            mType |= TransferData::TRANSFER_SYNC;
+        }
+
+        auto pixmapName (Utilities::getExtensionPixmapName(mFilename, QString()));
+
+        mFileType = QTransfersModel::mFileTypes.contains(pixmapName) ?
+                           QTransfersModel::mFileTypes[pixmapName]
+                    : TransferData::FileType::TYPE_OTHER;
+
+        mState = static_cast<TransferData::TransferState>(1 << transfer->getState());
+
+        if(mState & TransferData::FINISHED_STATES_MASK)
+        {
+            mFinishedTime = QDateTime::currentSecsSinceEpoch();
+            mFinishedTime += (transfer->getUpdateTime() - transfer->getStartTime()) / 10;
+        }
+
+        mPriority = transfer->getPriority();
+
+        auto remBytes = mTotalSize - mTransferredBytes;
+        TransferRemainingTime rem(mSpeed, remBytes);
+        mRemainingTime = rem.calculateRemainingTimeSeconds(mSpeed, remBytes).count();
+
         mSpeed = static_cast<unsigned long long>(MegaSyncApp->getMegaApi()->getCurrentSpeed(transfer->getType()));
         mTotalSize = static_cast<unsigned long long>(transfer->getTotalBytes());
         mTransferredBytes = static_cast<unsigned long long>(transfer->getTransferredBytes());
         mNotificationNumber = transfer->getNotificationNumber();
-        auto remBytes = mTotalSize - mTransferredBytes;
-        TransferRemainingTime rem(mSpeed, remBytes);
-        mRemainingTime = rem.calculateRemainingTimeSeconds(mSpeed, remBytes).count();
         mMeanSpeed = static_cast<unsigned long long>(transfer->getMeanSpeed());
         mErrorCode = MegaError::API_OK;
         mErrorValue = 0LL;
+
         auto megaError (transfer->getLastErrorExtended());
         if (megaError)
         {
@@ -85,44 +97,15 @@ void TransferData::update(mega::MegaTransfer* transfer)
         mParentHandle = transfer->getParentHandle();
         mNodeHandle = transfer->getNodeHandle();
 
-        //TODO publicNode
-//        if(mNodeHandle)
-//        {
-//            MegaNode *ownNode = ((MegaApplication*)qApp)->getMegaApi()->getNodeByHandle(mNodeHandle);
-//            if (ownNode)
-//            {
-//               auto access = ((MegaApplication*)qApp)->getMegaApi()->getAccess(ownNode);
-//               if (access == MegaShare::ACCESS_OWNER)
-//               {
-//                   mIsPublicNode = true;
-//               }
-//               delete ownNode;
-//            }
-//        }
-
         setUpdated(true);
     }
 }
 
-void TransferData::updateBasicInfo(MegaTransfer *transfer)
+uint64_t TransferData::getFinishedTime()
 {
-    mTag = transfer->getTag();
-
-    mState = static_cast<TransferData::TransferState>(1 << transfer->getState());
-    mPriority = transfer->getPriority();
-
-    mFilename = QString::fromUtf8(transfer->getFileName());
-    mType = static_cast<TransferData::TransferType>(1 << transfer->getType());
-    if (transfer->isSyncTransfer())
-    {
-        mType |= TransferData::TRANSFER_SYNC;
-    }
-
-    auto pixmapName (Utilities::getExtensionPixmapName(mFilename, QString()));
-
-    mFileType = QTransfersModel::mFileTypes.contains(pixmapName) ?
-                       QTransfersModel::mFileTypes[pixmapName]
-                       : TransferData::FileType::TYPE_OTHER;
+    QDateTime now = QDateTime::currentDateTime();
+    auto result = (now.toMSecsSinceEpoch() - (mFinishedTime*1000))/1000;
+    return result;
 }
 
 QString TransferData::path() const
@@ -135,4 +118,26 @@ QString TransferData::path() const
     }
     #endif
     return localPath;
+}
+
+bool TransferData::isPublicNode()
+{
+    auto result(false);
+
+    //TODO publicNode
+    if(mNodeHandle)
+    {
+        MegaNode *ownNode = ((MegaApplication*)qApp)->getMegaApi()->getNodeByHandle(mNodeHandle);
+        if (ownNode)
+        {
+           auto access = ((MegaApplication*)qApp)->getMegaApi()->getAccess(ownNode);
+           if (access == MegaShare::ACCESS_OWNER)
+           {
+               result = true;
+           }
+           delete ownNode;
+        }
+    }
+
+    return result;
 }

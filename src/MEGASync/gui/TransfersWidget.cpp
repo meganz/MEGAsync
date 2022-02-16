@@ -10,24 +10,39 @@ TransfersWidget::TransfersWidget(QWidget* parent) :
     QWidget (parent),
     ui (new Ui::TransfersWidget),
     tDelegate (nullptr),
-    mIsPaused (false),
     mClearMode(false),
     app (qobject_cast<MegaApplication*>(qApp)),
     mHeaderNameState (HS_SORT_PRIORITY),
     mHeaderSizeState (HS_SORT_PRIORITY),
     mThreadPool(ThreadPoolSingleton::getInstance()),
-    mProxyActivityTimer (new QTimer(this)),
-    mProxyActivityMessage (new QMessageBox(this))
+    mProxyActivityCloseTimer (new QTimer(this)),
+    mProxyActivityLaunchTimer (new QTimer(this)),
+    mProxyActivityMessage (new QMessageBox(this)),
+    mModelIsChanging(false),
+    mGlobalPaused(false)
 {
     ui->setupUi(this);
 
     model2 = app->getTransfersModel();
+
+    mProxyActivityMessage->setAttribute(Qt::WA_DeleteOnClose, false);
+
+    mProxyActivityLaunchTimer->setSingleShot(true);
+    connect(mProxyActivityLaunchTimer, &QTimer::timeout, this, &TransfersWidget::onProxyActivityLaunchTimeout);
+
+    mProxyActivityCloseTimer->setSingleShot(true);
+    connect(mProxyActivityCloseTimer, &QTimer::timeout, this, &TransfersWidget::onProxyActivityCloseTimeout);
+
 }
 void TransfersWidget::setupTransfers()
 {
     mProxyModel = new TransfersSortFilterProxyModel(this);
     mProxyModel->setSourceModel(app->getTransfersModel());
     mProxyModel->sort(TransfersSortFilterProxyModel::SortCriterion::PRIORITY, Qt::DescendingOrder);
+
+    connect(mProxyModel, &TransfersSortFilterProxyModel::modelAboutToBeChanged, this, &TransfersWidget::onModelAboutToBeChanged);
+    connect(mProxyModel, &TransfersSortFilterProxyModel::modelChanged, this, &TransfersWidget::onModelChanged);
+    connect(mProxyModel, &TransfersSortFilterProxyModel::transferPauseResume, this, &TransfersWidget::onPauseResumeButtonCheckedOnDelegate);
 
     configureTransferView();
 }
@@ -37,6 +52,14 @@ TransfersWidget::~TransfersWidget()
     delete ui;
     if (tDelegate) delete tDelegate;
     if (mProxyModel) delete mProxyModel;
+}
+
+void TransfersWidget::globalPauseToggled(bool pause)
+{
+    tDelegate->globalPauseToggled(pause);
+    ui->tPauseResumeVisible->setVisible(!pause);
+
+    mGlobalPaused = pause;
 }
 
 void TransfersWidget::configureTransferView()
@@ -50,36 +73,11 @@ void TransfersWidget::configureTransferView()
     ui->tvTransfers->setup(this);
     mDelegateHoverManager.setView(ui->tvTransfers);
     ui->tvTransfers->setItemDelegate(tDelegate);
-    onPauseStateChanged(model2->areAllPaused());
+    globalPauseToggled(app->getTransfersModel()->areAllPaused());
+
+    onPauseStateChanged(mProxyModel->isAnyPaused());
 
     ui->tvTransfers->setModel(mProxyModel);
-
-//    mProxyActivityTimer->setSingleShot(true);
-//    connect(mProxyActivityTimer, &QTimer::timeout,
-//            mProxyActivityMessage, &QMessageBox::hide);
-
-//    connect(mProxyModel, &TransfersSortFilterProxyModel::modelAboutToBeChanged,
-//            this, [this]
-//    {
-//        mProxyActivityMessage->setText(tr("Please, wait..."));
-//        mProxyActivityTimer->start(std::chrono::milliseconds(PROXY_ACTIVITY_TIMEOUT_MS));
-//        mProxyActivityMessage->exec();
-//    });
-
-//    connect(mProxyModel, &TransfersSortFilterProxyModel::modelChanged,
-//            this, [this]
-//    {
-//        //mProxyActivityTimer->stop();
-//        //mProxyActivityMessage->hide();
-//        //ui->tvTransfers->update();
-//    });
-
-//    connect(mProxyModel, &TransfersSortFilterProxyModel::searchNumbersChanged,
-//            this, [this]
-//    {
-//        mProxyActivityTimer->stop();
-//        mProxyActivityMessage->hide();
-//    });
 
     ui->tvTransfers->setDragEnabled(true);
     ui->tvTransfers->viewport()->setAcceptDrops(true);
@@ -89,7 +87,7 @@ void TransfersWidget::configureTransferView()
 
 void TransfersWidget::pausedTransfers(bool paused)
 {
-    mIsPaused = paused;
+    ui->tPauseResumeVisible->setChecked(paused);
     ui->sWidget->setCurrentWidget(ui->pTransfers);
 }
 
@@ -187,13 +185,23 @@ void TransfersWidget::on_pHeaderSize_clicked()
     setHeaderState(ui->pHeaderSize, mHeaderSizeState);
 }
 
-void TransfersWidget::on_tPauseResumeAll_clicked()
+void TransfersWidget::on_tCancelClearVisible_clicked()
 {
-    onPauseStateChanged(!mIsPaused);
-    emit pauseResumeAllRows(mIsPaused);
+    QPointer<TransfersWidget> dialog = QPointer<TransfersWidget>(this);
+
+    if (QMegaMessageBox::warning(nullptr, QString::fromUtf8("MEGAsync"),
+                             tr("Are you sure you want to %1 the following transfers?").arg(mClearMode ? tr("clear") : tr("cancel")),
+                             QMessageBox::Yes | QMessageBox::No, QMessageBox::No)
+            != QMessageBox::Yes
+            || !dialog)
+    {
+        return;
+    }
+
+    emit cancelClearVisibleRows();
 }
 
-void TransfersWidget::on_tCancelClearAll_clicked()
+void TransfersWidget::cancelClearAll()
 {
     QPointer<TransfersWidget> dialog = QPointer<TransfersWidget>(this);
 
@@ -220,29 +228,31 @@ void TransfersWidget::onShowCompleted(bool showCompleted)
     if (showCompleted)
     {
         ui->lHeaderTime->setText(tr("Time"));
-        ui->tCancelClearAll->setToolTip(tr("Clear All"));
+        ui->tCancelClearVisible->setToolTip(tr("Clear All Visible"));
         ui->lHeaderSpeed->setText(tr("Avg. speed"));
     }
     else
     {
         ui->lHeaderTime->setText(tr("Time left"));
-        ui->tCancelClearAll->setToolTip(tr("Cancel All"));
+        ui->tCancelClearVisible->setToolTip(tr("Cancel/Clear All Visible"));
         ui->lHeaderSpeed->setText(tr("Speed"));
     }
 
     mClearMode = showCompleted;
-    ui->tPauseResumeAll->setVisible(!showCompleted);
+    ui->tPauseResumeVisible->setVisible(!showCompleted && !mGlobalPaused);
 }
 
 void TransfersWidget::onPauseStateChanged(bool pauseState)
 {
-    ui->tPauseResumeAll->setIcon(pauseState ?
-                                     QIcon(QString::fromUtf8(":/images/lists_resume_all_ico.png"))
-                                   : QIcon(QString::fromUtf8(":/images/lists_pause_all_ico.png")));
-    ui->tPauseResumeAll->setToolTip(pauseState ?
+//    ui->tPauseResumeVisible->setIcon(pauseState ?
+//                                     QIcon(QString::fromUtf8(":/images/lists_resume_all_ico.png"))
+//                                   : QIcon(QString::fromUtf8(":/images/lists_pause_all_ico.png")));
+    ui->tPauseResumeVisible->setToolTip(pauseState ?
                                         tr("Resume visible transfers")
                                       : tr("Pause visible transfers"));
-    mIsPaused = pauseState;
+    ui->tPauseResumeVisible->blockSignals(true);
+    ui->tPauseResumeVisible->setChecked(pauseState);
+    ui->tPauseResumeVisible->blockSignals(false);
 }
 
 void TransfersWidget::textFilterChanged(const QString& pattern)
@@ -263,21 +273,6 @@ void TransfersWidget::transferFilterReset(bool invalidate)
     mProxyModel->resetAllFilters(invalidate);
 }
 
-void TransfersWidget::transferFilterApply(bool invalidate)
-{
-    if (!mProxyModel->dynamicSortFilter())
-    {
-        mProxyModel->applyFilters(false);
-        mProxyModel->setFilterCaseSensitivity(Qt::CaseInsensitive);
-        mProxyModel->setDynamicSortFilter(true);
-    }
-    else
-    {
-        mProxyModel->applyFilters(invalidate);
-    }
-    ui->tvTransfers->scrollToTop();
-}
-
 int TransfersWidget::rowCount()
 {
     return ui->tvTransfers->model()->rowCount();
@@ -290,6 +285,60 @@ void TransfersWidget::changeEvent(QEvent *event)
         ui->retranslateUi(this);
     }
     QWidget::changeEvent(event);
+}
+
+void TransfersWidget::onModelChanged()
+{
+    mModelIsChanging = false;
+
+    auto allPaused = mProxyModel->isAnyPaused();
+    onPauseStateChanged(allPaused);
+
+    if(!mProxyActivityCloseTimer->isActive())
+    {
+        mProxyActivityMessage->close();
+    }
+}
+
+void TransfersWidget::onModelAboutToBeChanged()
+{
+    mModelIsChanging = true;
+    mProxyActivityLaunchTimer->start(std::chrono::milliseconds(PROXY_ACTIVITY_LAUNCH_TIMEOUT_MS));
+}
+
+void TransfersWidget::onProxyActivityCloseTimeout()
+{
+    if(!mModelIsChanging)
+    {
+        mProxyActivityMessage->close();
+    }
+}
+
+void TransfersWidget::onProxyActivityLaunchTimeout()
+{
+    if(mModelIsChanging)
+    {
+        mProxyActivityCloseTimer->start(std::chrono::milliseconds(PROXY_ACTIVITY_CLOSE_TIMEOUT_MS));
+
+        mProxyActivityMessage->setText(tr("Please, wait..."));
+        mProxyActivityMessage->exec();
+    }
+}
+
+void TransfersWidget::onPauseResumeButtonCheckedOnDelegate(bool state)
+{
+    auto pauseDifference = mProxyModel->areAllPaused();
+    state ? pauseDifference-- : pauseDifference++;
+    auto allPaused(pauseDifference <= 0);
+
+    onPauseStateChanged(allPaused);
+}
+
+void TransfersWidget::on_tPauseResumeVisible_toggled(bool state)
+{
+    onPauseStateChanged(state);
+
+    emit pauseResumeVisibleRows(state);
 }
 
 void TransfersWidget::setHeaderState(QPushButton* header, HeaderState state)

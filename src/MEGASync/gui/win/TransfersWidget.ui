@@ -55,7 +55,7 @@
     border: none;
 }
 
-#wPauseResumeAll
+#wPauseResumeVisible
 {
     width: 24px;
     min-width: 24px;
@@ -375,8 +375,8 @@
            </widget>
           </item>
           <item>
-           <widget class="QWidget" name="wPauseResumeAll" native="true">
-            <widget class="QToolButton" name="tPauseResumeAll">
+           <widget class="QWidget" name="wPauseResumeVisible" native="true">
+            <widget class="QToolButton" name="tPauseResumeVisible">
              <property name="geometry">
               <rect>
                <x>0</x>
@@ -393,13 +393,17 @@
              </property>
              <property name="icon">
               <iconset resource="../Resources_win.qrc">
-               <normaloff>:/images/lists_pause_all_ico.png</normaloff>:/images/lists_pause_all_ico.png</iconset>
+               <normaloff>:/images/lists_pause_all_ico.png</normaloff>
+               <normalon>:/images/lists_resume_all_ico.png</normalon>:/images/lists_pause_all_ico.png</iconset>
+             </property>
+             <property name="checkable">
+              <bool>true</bool>
              </property>
             </widget>
            </widget>
           </item>
           <item>
-           <widget class="QToolButton" name="tCancelClearAll">
+           <widget class="QToolButton" name="tCancelClearVisible">
             <property name="cursor">
              <cursorShape>PointingHandCursor</cursorShape>
             </property>

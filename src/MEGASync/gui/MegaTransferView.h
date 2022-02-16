@@ -48,11 +48,13 @@ protected:
     void dropEvent(QDropEvent* event);
 
 public slots:
+    void onPauseResumeVisibleRows(bool pauseState);
     void onPauseResumeAllRows(bool pauseState);
     void onPauseResumeSelection(bool pauseState);
+    void onCancelClearVisibleTransfers();
     void onCancelClearAllTransfers();
-    void onClearCompletedTransfers();
     void onCancelClearSelection();
+    void onClearCompletedTransfers();
 
 private slots:
     void onCustomContextMenu(const QPoint& point);

@@ -39,7 +39,6 @@ void MegaTransferDelegate::paint(QPainter *painter, const QStyleOptionViewItem &
         auto height (option.rect.height());
         auto transferItem (qvariant_cast<TransferItem>(index.data(Qt::DisplayRole)));
         auto data = transferItem.getTransferData();
-        //data->update();
 
         TransferBaseDelegateWidget* w (getTransferItemWidget(index, option.rect.size()));
         if(!w)
@@ -123,6 +122,11 @@ TransferBaseDelegateWidget *MegaTransferDelegate::getTransferItemWidget(const QM
     if(row >= mTransferItems.size())
     {
        item = mProxyModel->createTransferManagerItem(mView);
+       auto sourceModel = qobject_cast<QTransfersModel*>(mProxyModel->sourceModel());
+       if(sourceModel)
+       {
+           item->globalPauseToggled(sourceModel->areAllPaused());
+       }
        mTransferItems.append(item);
     }
     else
@@ -187,6 +191,16 @@ QSize MegaTransferDelegate::sizeHint(const QStyleOptionViewItem&,
                                       const QModelIndex&) const
 {
     return QSize(772, 64);
+}
+
+void MegaTransferDelegate::globalPauseToggled(bool pause)
+{
+    for(int item = 0; item < mTransferItems.size(); ++item)
+    {
+        mTransferItems.at(item)->globalPauseToggled(pause);
+    }
+
+    mView->update();
 }
 
 void MegaTransferDelegate::onHoverLeave(const QModelIndex& index, const QRect& rect)
