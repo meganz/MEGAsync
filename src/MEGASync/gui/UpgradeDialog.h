@@ -39,7 +39,6 @@ private:
     void configureAnimation();
 
     Ui::UpgradeDialog* mUi;
-    QHBoxLayout* mPlansLayout;
     std::unique_ptr<QMovie> mAnimation;
     HighDpiResize mHighDpiResize;
     mega::MegaApi* mMegaApi;

@@ -112,7 +112,6 @@ void TransferQuota::checkExecuteDialog()
             mUpgradeDialog = new UpgradeDialog(mMegaApi, mPricing, mCurrency);
             QObject::connect(mUpgradeDialog, &UpgradeDialog::finished, this, &TransferQuota::upgradeDialogFinished);
             Platform::activateBackgroundWindow(mUpgradeDialog);
-            mUpgradeDialog->show();
         }
         else if (!mUpgradeDialog->isVisible())
         {
@@ -244,7 +243,7 @@ bool TransferQuota::checkImportLinksAlertDismissed()
     bool dismissed(true);
     if(isOverQuota())
     {
-        dismissed = OverQuotaDialog::showDialog(OverQuotaDialogType::BANDWIDTH_IMPORT_LINK, static_cast<MegaApplication*>(qApp)->activeWindow());
+        dismissed = OverQuotaDialog::showDialog(OverQuotaDialogType::BANDWIDTH_IMPORT_LINK);
     }
     return dismissed;
 }
@@ -254,7 +253,7 @@ bool TransferQuota::checkDownloadAlertDismissed()
     bool dismissed(true);
     if(isOverQuota())
     {
-        dismissed = OverQuotaDialog::showDialog(OverQuotaDialogType::BANDWIDTH_DOWNLOAD, static_cast<MegaApplication*>(qApp)->activeWindow());
+        dismissed = OverQuotaDialog::showDialog(OverQuotaDialogType::BANDWIDTH_DOWNLOAD);
     }
     return dismissed;
 }
@@ -264,7 +263,7 @@ bool TransferQuota::checkStreamingAlertDismissed()
     bool dismissed(true);
     if(isOverQuota())
     {
-        dismissed = OverQuotaDialog::showDialog(OverQuotaDialogType::BANDWIDTH_STREAM, static_cast<MegaApplication*>(qApp)->activeWindow());
+        dismissed = OverQuotaDialog::showDialog(OverQuotaDialogType::BANDWIDTH_STREAM);
     }
     return dismissed;
 }
