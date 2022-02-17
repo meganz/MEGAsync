@@ -342,7 +342,9 @@ void InfoDialog::showEvent(QShowEvent *event)
 
 void InfoDialog::moveEvent(QMoveEvent*)
 {
+#ifdef __linux__
     qtBugFixer.onEndMove();
+#endif
 }
 
 void InfoDialog::setBandwidthOverquotaState(QuotaState state)
@@ -2091,7 +2093,9 @@ void InfoDialog::showNotifications()
 
 void InfoDialog::move(int x, int y)
 {
+#ifdef __linux__
    qtBugFixer.onStartMove();
+#endif
    QDialog::move(x, y);
 }
 
