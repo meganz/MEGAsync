@@ -5,6 +5,7 @@
 #include "platform/Platform.h"
 #include "MegaTransferDelegate.h"
 #include "MegaTransferView.h"
+#include "OverQuotaDialog.h"
 
 #include <QMouseEvent>
 
