@@ -483,37 +483,73 @@ void MegaTransferView::onCustomContextMenu(const QPoint& point)
 
 void MegaTransferView::moveToTopClicked()
 {
-    auto selection = selectionModel()->selection();
-    auto m (model());
-    auto proxy (qobject_cast<QSortFilterProxyModel*>(m));
-    if (proxy)
+    auto indexes = selectionModel()->selectedRows();
+    if(!indexes.isEmpty())
     {
-        selection = proxy->mapSelectionToSource(selection);
-        m = proxy->sourceModel();
+        // Sort to keep items in the same order
+        std::sort(indexes.begin(), indexes.end(),[](QModelIndex check1, QModelIndex check2){
+           return check1.row() < check2.row();
+        });
+
+        auto firstToMove = indexes.first();
+
+        if(firstToMove.row() == 0)
+        {
+            return;
+        }
+
+        auto rowTarget = -1;
+
+        for (int item = 0; item < indexes.size(); ++item)
+        {
+            auto index = indexes.at(item);
+
+            if(item == 1)
+            {
+                rowTarget = indexes.at(item-1).row();
+            }
+
+            model()->moveRows(QModelIndex(), index.row(), 1, QModelIndex(), rowTarget);
+        }
     }
 
-    auto indexes = selection.indexes();
-
-    // Reverse sort to keep items in the same order
-    std::sort(indexes.rbegin(), indexes.rend());
-
-    for (auto index : qAsConst(indexes))
-    {
-        m->moveRows(QModelIndex(), index.row(), 1, QModelIndex(), 0);
-    }
     clearSelection();
 }
 
 void MegaTransferView::moveUpClicked()
 {
     auto indexes = selectionModel()->selectedRows();
-    // Sort to keep items in the same order
-    std::sort(indexes.begin(), indexes.end());
-
-    for (auto index : qAsConst(indexes))
+    if(!indexes.isEmpty())
     {
-        int row(index.row());
-        model()->moveRows(QModelIndex(), row, 1, QModelIndex(), row - 1);
+        // Sort to keep items in the same order
+        std::sort(indexes.begin(), indexes.end(),[](QModelIndex check1, QModelIndex check2){
+           return check1.row() < check2.row();
+        });
+
+        auto firstToMove = indexes.first();
+
+        if(firstToMove.row() == 0)
+        {
+            return;
+        }
+
+        auto rowTarget = indexes.first().row() - 1;
+
+        for (int item = 0; item < indexes.size(); ++item)
+        {
+            auto index = indexes.at(item);
+            if(item != 0)
+            {
+                auto previousIndex = indexes.at(item-1);
+
+                if(index.row() - previousIndex.row() != 1)
+                {
+                    rowTarget = index.row() - 1;
+                }
+            }
+
+            model()->moveRows(QModelIndex(), index.row(), 1, QModelIndex(), rowTarget);
+        }
     }
     clearSelection();
 }
@@ -521,37 +557,74 @@ void MegaTransferView::moveUpClicked()
 void MegaTransferView::moveDownClicked()
 {
     auto indexes = selectionModel()->selectedRows();
-    // Reverse sort to keep items in the same order
-    std::sort(indexes.rbegin(), indexes.rend());
-
-    for (auto index : qAsConst(indexes))
+    if(!indexes.isEmpty())
     {
-            int row(index.row());
-            model()->moveRows(QModelIndex(), row, 1, QModelIndex(),
-                              std::min(row + 2, model()->rowCount()));
+        // Sort to keep items in the same order
+        std::sort(indexes.begin(), indexes.end(),[](QModelIndex check1, QModelIndex check2){
+           return check1.row() > check2.row();
+        });
+
+        auto firstToMove = indexes.first();
+
+        if(firstToMove.row() == model()->rowCount())
+        {
+            return;
+        }
+
+        auto rowTarget = indexes.first().row() + 1;
+
+        for (int item = 0; item < indexes.size(); ++item)
+        {
+            auto index = indexes.at(item);
+            if(item != 0)
+            {
+                auto previousIndex = indexes.at(item-1);
+
+                if(previousIndex.row() - index.row() != 1)
+                {
+                    rowTarget = index.row() + 1;
+                }
+            }
+
+            model()->moveRows(QModelIndex(), rowTarget, 1, QModelIndex(), index.row());
+        }
     }
+
     clearSelection();
 }
 
 void MegaTransferView::moveToBottomClicked()
 {
-    auto selection = selectionModel()->selection();
-    auto m (model());
-    auto proxy (qobject_cast<QSortFilterProxyModel*>(m));
-    if (proxy)
+    auto indexes = selectionModel()->selectedRows();
+    if(!indexes.isEmpty())
     {
-        selection = proxy->mapSelectionToSource(selection);
-        m = proxy->sourceModel();
+        // Sort to keep items in the same order
+        std::sort(indexes.begin(), indexes.end(),[](QModelIndex check1, QModelIndex check2){
+           return check1.row() < check2.row();
+        });
+
+        auto firstToMove = indexes.last();
+
+        if(firstToMove.row() == model()->rowCount())
+        {
+            return;
+        }
+
+        auto rowTarget = model()->rowCount();
+
+        for (int item = 0; item < indexes.size(); ++item)
+        {
+            auto index = indexes.at(item);
+
+            if(item == 1)
+            {
+                rowTarget = indexes.at(item-1).row();
+            }
+
+            model()->moveRows(QModelIndex(), index.row(), 1, QModelIndex(), rowTarget);
+        }
     }
 
-    auto indexes = selection.indexes();
-    // Sort to keep items in the same order
-    std::sort(indexes.begin(), indexes.end());
-
-    for (auto index : qAsConst(indexes))
-    {
-            m->moveRows(QModelIndex(), index.row(), 1, QModelIndex(), m->rowCount());
-    }
     clearSelection();
 }
 

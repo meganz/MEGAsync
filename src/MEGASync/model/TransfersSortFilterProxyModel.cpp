@@ -343,15 +343,20 @@ bool TransfersSortFilterProxyModel::isAnyPaused() const
     return paused;
 }
 
-bool TransfersSortFilterProxyModel::moveRows(const QModelIndex &sourceParent, int sourceRow, int count,
+bool TransfersSortFilterProxyModel::moveRows(const QModelIndex &proxyParent, int proxyRow, int count,
               const QModelIndex &destinationParent, int destinationChild)
 {
     bool moveOk(true);
-    int row(sourceRow);
-    QMutexLocker lock (mActivityMutex);
-    while (moveOk && row < (sourceRow+count))
+    int row(proxyRow);
+
+    for(int row = 0; row < rowCount(); ++row)
     {
-        auto sourceIndex(mapToSource(index(sourceRow, 0, sourceParent)));
+        auto sourceIndex(mapToSource(index(row, 0)));
+    }
+
+    while (moveOk && row < (proxyRow+count))
+    {
+        auto sourceIndex(mapToSource(index(proxyRow, 0, proxyParent)));
         int destRow;
         if (destinationChild == rowCount())
         {

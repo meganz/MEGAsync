@@ -112,13 +112,13 @@ QProgressBar::chunk
 #lDone
 {
   color: #999999;
-  qProperty-alignment: 'AlignLeft | AlignBottom';
+  qProperty-alignment: 'AlignLeft';
 }
 
 #lTotal
 {
   color: #333333;
- qProperty-alignment: 'AlignLeft | AlignTop';
+ qProperty-alignment: 'AlignLeft';
 }
 
 #bItemSpeed
@@ -468,17 +468,17 @@ QProgressBar::chunk
          </property>
          <property name="minimumSize">
           <size>
-           <width>96</width>
+           <width>140</width>
            <height>63</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>96</width>
+           <width>140</width>
            <height>63</height>
           </size>
          </property>
-         <layout class="QVBoxLayout" name="wSizeLayout">
+         <layout class="QHBoxLayout" name="horizontalLayout_2">
           <property name="spacing">
            <number>0</number>
           </property>
@@ -498,13 +498,13 @@ QProgressBar::chunk
            <widget class="QLabel" name="lDone">
             <property name="minimumSize">
              <size>
-              <width>96</width>
+              <width>0</width>
               <height>0</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
-              <width>96</width>
+              <width>16777215</width>
               <height>16777215</height>
              </size>
             </property>
@@ -517,13 +517,13 @@ QProgressBar::chunk
            <widget class="QLabel" name="lTotal">
             <property name="minimumSize">
              <size>
-              <width>96</width>
+              <width>0</width>
               <height>0</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
-              <width>96</width>
+              <width>0</width>
               <height>16777215</height>
              </size>
             </property>
@@ -531,6 +531,19 @@ QProgressBar::chunk
              <string/>
             </property>
            </widget>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>0</width>
+              <height>0</height>
+             </size>
+            </property>
+           </spacer>
           </item>
          </layout>
         </widget>

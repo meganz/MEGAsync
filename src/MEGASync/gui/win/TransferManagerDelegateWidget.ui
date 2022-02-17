@@ -112,13 +112,13 @@ QProgressBar::chunk
 #lDone
 {
   color: #999999;
-  qProperty-alignment: 'AlignLeft | AlignBottom';
+  qProperty-alignment: 'AlignLeft';
 }
 
 #lTotal
 {
   color: #333333;
- qProperty-alignment: 'AlignLeft | AlignTop';
+ qProperty-alignment: 'AlignLeft';
 }
 
 #bItemSpeed
@@ -378,7 +378,7 @@ QProgressBar::chunk
              <string/>
             </property>
             <property name="alignment">
-             <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+             <set>Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft</set>
             </property>
            </widget>
           </item>
@@ -461,7 +461,7 @@ QProgressBar::chunk
          </layout>
         </widget>
        </item>
-       <item>
+       <item alignment="Qt::AlignHCenter">
         <widget class="QWidget" name="wSize" native="true">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
@@ -471,19 +471,19 @@ QProgressBar::chunk
          </property>
          <property name="minimumSize">
           <size>
-           <width>96</width>
+           <width>140</width>
            <height>63</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>96</width>
+           <width>140</width>
            <height>63</height>
           </size>
          </property>
-         <layout class="QVBoxLayout" name="wSizeLayout">
+         <layout class="QHBoxLayout" name="horizontalLayout_2">
           <property name="spacing">
-           <number>0</number>
+           <number>3</number>
           </property>
           <property name="leftMargin">
            <number>0</number>
@@ -497,17 +497,36 @@ QProgressBar::chunk
           <property name="bottomMargin">
            <number>12</number>
           </property>
-          <item>
+          <item alignment="Qt::AlignRight|Qt::AlignVCenter">
            <widget class="QLabel" name="lDone">
             <property name="minimumSize">
              <size>
-              <width>96</width>
+              <width>0</width>
               <height>0</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
-              <width>96</width>
+              <width>16777215</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+           </widget>
+          </item>
+          <item alignment="Qt::AlignLeft|Qt::AlignVCenter">
+           <widget class="QLabel" name="lTotal">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
               <height>16777215</height>
              </size>
             </property>
@@ -517,23 +536,17 @@ QProgressBar::chunk
            </widget>
           </item>
           <item>
-           <widget class="QLabel" name="lTotal">
-            <property name="minimumSize">
+           <spacer name="horizontalSpacer">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
              <size>
-              <width>96</width>
+              <width>0</width>
               <height>0</height>
              </size>
             </property>
-            <property name="maximumSize">
-             <size>
-              <width>96</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="text">
-             <string/>
-            </property>
-           </widget>
+           </spacer>
           </item>
          </layout>
         </widget>

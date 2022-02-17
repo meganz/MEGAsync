@@ -24,7 +24,7 @@ public:
         TransfersSortFilterProxyModel(QObject *parent = 0);
         ~TransfersSortFilterProxyModel();
 
-        bool moveRows(const QModelIndex& sourceParent, int sourceRow, int count,
+        bool moveRows(const QModelIndex& proxyParent, int proxyRow, int count,
                       const QModelIndex& destinationParent, int destinationChild) override;
         void sort(int column, Qt::SortOrder order = Qt::AscendingOrder) override;
         void sort(SortCriterion column, Qt::SortOrder order = Qt::AscendingOrder);

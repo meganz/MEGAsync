@@ -488,7 +488,9 @@ void QTransfersModel::cancelClearTransfers(const QModelIndexList& indexes, bool 
         QMap<TransferTag, QModelIndex> downloadToClear;
 
         // Reverse sort to keep indexes valid after deletion
-        qSort(indexesToRemove.begin(), indexesToRemove.end(), qGreater<QModelIndex>());
+        std::sort(indexesToRemove.begin(), indexesToRemove.end(),[](QModelIndex check1, QModelIndex check2){
+           return check1.row() > check2.row();
+        });
 
         // First clear finished transfers (remove rows), then cancel the others.
         // This way, there is no risk of messing up the rows order with cancel requests.
@@ -666,7 +668,9 @@ void QTransfersModel::updateTransfersCount()
 
 void QTransfersModel::removeRows(QModelIndexList& indexesToRemove)
 {
-    qSort(indexesToRemove.begin(), indexesToRemove.end(), qGreater<QModelIndex>());
+    std::sort(indexesToRemove.begin(), indexesToRemove.end(),[](QModelIndex check1, QModelIndex check2){
+       return check1.row() > check2.row();
+    });
 
     // First clear finished transfers (remove rows), then cancel the others.
     // This way, there is no risk of messing up the rows order with cancel requests.
@@ -799,13 +803,13 @@ bool QTransfersModel::moveRows(const QModelIndex &sourceParent, int sourceRow, i
             {
                 tagsToMove.push_front(mTransfers.at(row)->mTag);
             }
-        }       
+        }
 
         for (auto tag : tagsToMove)
         {
             auto row = mTagByOrder.value(tag);
             auto d  = mTransfers.at(row);
-            if (destinationChild == 0)
+            if(destinationChild < 0)
             {
                 mMegaApi->moveTransferToFirstByTag(d->mTag);
             }
@@ -816,9 +820,9 @@ bool QTransfersModel::moveRows(const QModelIndex &sourceParent, int sourceRow, i
             else
             {
                 // Get target
-                auto target (mTransfers.at(destinationChild)->mTag);
+                auto target (mTransfers.at(destinationChild));
 
-                mMegaApi->moveTransferBeforeByTag(d->mTag, target);
+                mMegaApi->moveTransferBeforeByTag(d->mTag, target->mTag);
             }
         }
 
