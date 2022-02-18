@@ -1811,7 +1811,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Log in</source>
         <translatorcomment>Title for explanation about log in</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>로그인</translation>
     </message>
     <message>
         <source>Create Account</source>
@@ -3127,77 +3127,77 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Account notifications:</source>
         <translatorcomment>Title for notifications setting pane</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>계정 알림:</translation>
     </message>
     <message>
         <source>Shares</source>
         <translatorcomment>Notification category for shared folders and nodes</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>공유</translation>
     </message>
     <message>
         <source>New shared folder from contact</source>
         <translatorcomment>Title of a checkbox for disconnectig notifications</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>연락처로부터 새로 공유된 폴더</translation>
     </message>
     <message>
         <source>Added or removed files</source>
         <translatorcomment>Title of a checkbox for disconnectig notifications</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>추가 또는 제거된 파일</translation>
     </message>
     <message>
         <source>Access to a shared folder was removed</source>
         <translatorcomment>Title of a checkbox for disconnectig notifications</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>공유된 폴더의 접근 권한 삭제</translation>
     </message>
     <message>
         <source>Contacts</source>
         <translatorcomment>Notification category for contact notifications</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>연락처</translation>
     </message>
     <message>
         <source>New contact request</source>
         <translatorcomment>Title of a checkbox for disconnectig notifications</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>새 연락처 요청</translation>
     </message>
     <message>
         <source>Pending contact request reminder</source>
         <translatorcomment>Title of a checkbox for disconnectig notifications</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>보류 중인 연락처 요청 알림</translation>
     </message>
     <message>
         <source>Someone has accepted your contact request</source>
         <translatorcomment>Title of a checkbox for disconnectig notifications</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>누군가 당신의 연락처 요청을 승인</translation>
     </message>
     <message>
         <source>Info</source>
         <translatorcomment>Notification category for non-critical info notifications</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>정보</translation>
     </message>
     <message>
         <source>Desktop notifications</source>
         <translatorcomment>Title of a checkbox for disconnectig notifications</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>데스크톱 알림</translation>
     </message>
     <message>
         <source>Someone accepted your contact request</source>
         <translatorcomment>Title of a checkbox for disconnectig notifications</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>누군가 당신의 연락처 요청을 승인</translation>
     </message>
     <message>
         <source>Info:</source>
         <translatorcomment>Notification category for non-critical info notifications (macx)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>정보:</translation>
     </message>
     <message>
         <source>Contacts:</source>
         <translatorcomment>Notification category for non-critical info notifications (macx)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>연락처:</translation>
     </message>
     <message>
         <source>Shares:</source>
         <translatorcomment>Notification category for non-critical info notifications (macx)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>공유:</translation>
     </message>
 </context>
 <context>
@@ -3360,7 +3360,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Open links</source>
         <translatorcomment>Window title for dialog to enter MEGA public links</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>링크 열기</translation>
     </message>
 </context>
 <context>
@@ -4446,7 +4446,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Move…</source>
         <translatorcomment>Button label text allowing the user to change the default Uploads or Downloads folders for the app.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>이동…</translation>
     </message>
     <message>
         <source>Exclude files smaller than</source>
@@ -4461,12 +4461,12 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Restart MEGA Desktop App to apply changes.</source>
         <translatorcomment>Informative text shown in Folders pane, letting the user know that an application restart is required to apply the changes he just made.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>변경 사항을 적용하려면 MEGA 데스크톱 앱을 재시작하세요.</translation>
     </message>
     <message>
         <source>Change Settings…</source>
         <translatorcomment>Button label text for Bandwidth and Proxy settings in Network pane.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>설정 변경…</translation>
     </message>
     <message>
         <source>Proxies</source>
@@ -4701,7 +4701,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Notifications</source>
         <translatorcomment>Title for the Settings -&gt; Notifications pane tab button. Keep as short as possible.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>알림</translation>
     </message>
 </context>
 <context>
@@ -4734,7 +4734,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Log in to your MEGA account</source>
         <translatorcomment>Label to let the user login with his credentials.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>MEGA 계정에 로그인</translation>
     </message>
     <message>
         <source>Please verify your account using the confirmation link that we have sent to your email account</source>
@@ -4902,7 +4902,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Set up Assistant - MEGAsync</source>
         <translatorcomment>Title of the setup assistant dialog. Keep capital letters.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>설치 도우미 - MEGAsync</translation>
     </message>
     <message>
         <source>Full sync</source>
@@ -5035,7 +5035,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Set up selective sync</source>
         <translatorcomment>Label shown when user is setting up the selective sync mode of MEGAsync</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>선택적 동기화 설정</translation>
     </message>
     <message>
         <source>Specific folders in your Cloud Drive will be synchronized with a local folder.</source>
@@ -5050,7 +5050,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Set up full sync</source>
         <translatorcomment>Label shown when user is setting up full sync mode of MEGAsync</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>전체 동기화 설정</translation>
     </message>
     <message>
         <source>Full Sync</source>
@@ -5070,7 +5070,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Log in</source>
         <translatorcomment>Button label to open Login form</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>로그인</translation>
     </message>
 </context>
 <context>
@@ -5297,12 +5297,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>On</source>
         <translatorcomment>Checked state of a swith button</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>켬</translation>
     </message>
     <message>
         <source>Off</source>
         <translatorcomment>Unchecked state of a swith button</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>끔</translation>
     </message>
 </context>
 <context>

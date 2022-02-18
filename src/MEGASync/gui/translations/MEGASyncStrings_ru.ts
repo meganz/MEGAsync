@@ -3141,12 +3141,12 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Added or removed files</source>
         <translatorcomment>Title of a checkbox for disconnectig notifications</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Добавлены или удалены файлы</translation>
     </message>
     <message>
         <source>Access to a shared folder was removed</source>
         <translatorcomment>Title of a checkbox for disconnectig notifications</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Доступ к общей папке был закрыт</translation>
     </message>
     <message>
         <source>Contacts</source>
@@ -3161,7 +3161,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Pending contact request reminder</source>
         <translatorcomment>Title of a checkbox for disconnectig notifications</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Напоминание об ожидающем запросе контакта</translation>
     </message>
     <message>
         <source>Someone has accepted your contact request</source>
@@ -3176,27 +3176,27 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Desktop notifications</source>
         <translatorcomment>Title of a checkbox for disconnectig notifications</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Уведомления на рабочем столе</translation>
     </message>
     <message>
         <source>Someone accepted your contact request</source>
         <translatorcomment>Title of a checkbox for disconnectig notifications</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Кто-то принял ваш запрос на добавление в контакты</translation>
     </message>
     <message>
         <source>Info:</source>
         <translatorcomment>Notification category for non-critical info notifications (macx)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Информация:</translation>
     </message>
     <message>
         <source>Contacts:</source>
         <translatorcomment>Notification category for non-critical info notifications (macx)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Контакты:</translation>
     </message>
     <message>
         <source>Shares:</source>
         <translatorcomment>Notification category for non-critical info notifications (macx)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Общие элементы:</translation>
     </message>
 </context>
 <context>
@@ -4460,7 +4460,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Restart MEGA Desktop App to apply changes.</source>
         <translatorcomment>Informative text shown in Folders pane, letting the user know that an application restart is required to apply the changes he just made.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Перезапустите настольное приложение MEGA, чтобы применить изменения.</translation>
     </message>
     <message>
         <source>Change Settings…</source>
@@ -4901,7 +4901,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Set up Assistant - MEGAsync</source>
         <translatorcomment>Title of the setup assistant dialog. Keep capital letters.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Ассистент настройки — MEGAsync</translation>
     </message>
     <message>
         <source>Full sync</source>
@@ -5033,7 +5033,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Set up selective sync</source>
         <translatorcomment>Label shown when user is setting up the selective sync mode of MEGAsync</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Настройка выборочной синхронизации</translation>
     </message>
     <message>
         <source>Specific folders in your Cloud Drive will be synchronized with a local folder.</source>
@@ -5048,7 +5048,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Set up full sync</source>
         <translatorcomment>Label shown when user is setting up full sync mode of MEGAsync</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Настройка полной синхронизации</translation>
     </message>
     <message>
         <source>Full Sync</source>

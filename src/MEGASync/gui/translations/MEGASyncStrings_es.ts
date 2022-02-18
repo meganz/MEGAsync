@@ -1489,7 +1489,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>[A]Lost your authenticator device?[/A]</source>
         <translatorcomment>Label with hyperlink to recovery website when user is entering incorrect 2FA code during login stage</translatorcomment>
-        <translation>[A]Has perdido tu dispositivo autenticador?[/A]</translation>
+        <translation>[A]¿Has perdido tu dispositivo de autenticación?[/A]</translation>
     </message>
 </context>
 <context>
@@ -1929,7 +1929,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>[A]Lost your authenticator device?[/A]</source>
         <translatorcomment>Label with hyperlink to recovery website when user is entering incorrect 2FA code during login stage</translatorcomment>
-        <translation>[A]Has perdido tu dispositivo autenticador?[/A]</translation>
+        <translation>[A]¿Has perdido tu dispositivo de autenticación?[/A]</translation>
     </message>
 </context>
 <context>

@@ -1433,7 +1433,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Log out</source>
         <translatorcomment>Button label to log out the current account.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Effettua il logout</translation>
     </message>
     <message>
         <source>Your account has been suspended temporarily due to potential abuse. Please verify your phone number to unlock your account.</source>
@@ -3126,12 +3126,12 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Account notifications:</source>
         <translatorcomment>Title for notifications setting pane</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Notifiche dell&apos;account:</translation>
     </message>
     <message>
         <source>Shares</source>
         <translatorcomment>Notification category for shared folders and nodes</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Condivisioni</translation>
     </message>
     <message>
         <source>New shared folder from contact</source>
@@ -3141,12 +3141,12 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Added or removed files</source>
         <translatorcomment>Title of a checkbox for disconnectig notifications</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>File aggiunti o rimossi</translation>
     </message>
     <message>
         <source>Access to a shared folder was removed</source>
         <translatorcomment>Title of a checkbox for disconnectig notifications</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>L&apos;accesso ad una cartella condivisa è stato rimosso</translation>
     </message>
     <message>
         <source>Contacts</source>
@@ -3161,7 +3161,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Pending contact request reminder</source>
         <translatorcomment>Title of a checkbox for disconnectig notifications</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Promemoria delle richieste di contatto in attesa</translation>
     </message>
     <message>
         <source>Someone has accepted your contact request</source>
@@ -3176,27 +3176,27 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Desktop notifications</source>
         <translatorcomment>Title of a checkbox for disconnectig notifications</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Notifiche desktop</translation>
     </message>
     <message>
         <source>Someone accepted your contact request</source>
         <translatorcomment>Title of a checkbox for disconnectig notifications</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Richiesta di contatto accettata</translation>
     </message>
     <message>
         <source>Info:</source>
         <translatorcomment>Notification category for non-critical info notifications (macx)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Info:</translation>
     </message>
     <message>
         <source>Contacts:</source>
         <translatorcomment>Notification category for non-critical info notifications (macx)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Contatti:</translation>
     </message>
     <message>
         <source>Shares:</source>
         <translatorcomment>Notification category for non-critical info notifications (macx)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Condivisioni:</translation>
     </message>
 </context>
 <context>
@@ -4088,7 +4088,7 @@ Sei sicuro di volerlo eliminare lo stesso?</translation>
     <message>
         <source>Log out</source>
         <translatorcomment>Button label to log out of the application. String as short as possible.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Effettua il logout</translation>
     </message>
     <message>
         <source>Upgrade</source>
@@ -4445,7 +4445,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Move…</source>
         <translatorcomment>Button label text allowing the user to change the default Uploads or Downloads folders for the app.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Sposta…</translation>
     </message>
     <message>
         <source>Exclude files smaller than</source>
@@ -4460,12 +4460,12 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Restart MEGA Desktop App to apply changes.</source>
         <translatorcomment>Informative text shown in Folders pane, letting the user know that an application restart is required to apply the changes he just made.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Riavvia l&apos;app per desktop di MEGA per applicare le modifiche.</translation>
     </message>
     <message>
         <source>Change Settings…</source>
         <translatorcomment>Button label text for Bandwidth and Proxy settings in Network pane.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Cambia le impostazioni…</translation>
     </message>
     <message>
         <source>Proxies</source>
@@ -4901,7 +4901,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Set up Assistant - MEGAsync</source>
         <translatorcomment>Title of the setup assistant dialog. Keep capital letters.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Imposta l&apos;assistente - MEGAsync</translation>
     </message>
     <message>
         <source>Full sync</source>
@@ -5033,7 +5033,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Set up selective sync</source>
         <translatorcomment>Label shown when user is setting up the selective sync mode of MEGAsync</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Imposta una sincronizzazione selettiva</translation>
     </message>
     <message>
         <source>Specific folders in your Cloud Drive will be synchronized with a local folder.</source>
@@ -5048,7 +5048,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Set up full sync</source>
         <translatorcomment>Label shown when user is setting up full sync mode of MEGAsync</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Imposta una sincronizzazione completa</translation>
     </message>
     <message>
         <source>Full Sync</source>
@@ -5711,7 +5711,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Log out</source>
         <translatorcomment>Button label to log out the current account</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Effettua il logout</translation>
     </message>
     <message>
         <source>Verify your email</source>

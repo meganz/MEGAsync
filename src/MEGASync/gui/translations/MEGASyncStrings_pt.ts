@@ -1653,7 +1653,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Upload</source>
         <translatorcomment>Label to indicate an upload.</translatorcomment>
-        <translation>Upload</translation>
+        <translation>Fazer upload</translation>
     </message>
     <message>
         <source>Download</source>

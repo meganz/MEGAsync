@@ -1433,7 +1433,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Log out</source>
         <translatorcomment>Button label to log out the current account.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ออกจากระบบ</translation>
     </message>
     <message>
         <source>Your account has been suspended temporarily due to potential abuse. Please verify your phone number to unlock your account.</source>
@@ -3126,7 +3126,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Account notifications:</source>
         <translatorcomment>Title for notifications setting pane</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>การแจ้งเตือนบัญชี:</translation>
     </message>
     <message>
         <source>Shares</source>
@@ -3146,7 +3146,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Access to a shared folder was removed</source>
         <translatorcomment>Title of a checkbox for disconnectig notifications</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>การเข้าถึงโฟลเดอร์ที่แชร์ถูกนำออกแล้ว</translation>
     </message>
     <message>
         <source>Contacts</source>
@@ -3176,22 +3176,22 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Desktop notifications</source>
         <translatorcomment>Title of a checkbox for disconnectig notifications</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>การแจ้งเตือนบนเดสก์ท็อป</translation>
     </message>
     <message>
         <source>Someone accepted your contact request</source>
         <translatorcomment>Title of a checkbox for disconnectig notifications</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>มีผู้คนยอมรับคำขอการติดต่อของคุณแล้ว</translation>
     </message>
     <message>
         <source>Info:</source>
         <translatorcomment>Notification category for non-critical info notifications (macx)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ข้อมูล:</translation>
     </message>
     <message>
         <source>Contacts:</source>
         <translatorcomment>Notification category for non-critical info notifications (macx)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ผู้ติดต่อ:</translation>
     </message>
     <message>
         <source>Shares:</source>
@@ -4088,7 +4088,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>Log out</source>
         <translatorcomment>Button label to log out of the application. String as short as possible.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ออกจากระบบ</translation>
     </message>
     <message>
         <source>Upgrade</source>
@@ -4445,7 +4445,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Move…</source>
         <translatorcomment>Button label text allowing the user to change the default Uploads or Downloads folders for the app.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ย้าย…</translation>
     </message>
     <message>
         <source>Exclude files smaller than</source>
@@ -4465,7 +4465,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Change Settings…</source>
         <translatorcomment>Button label text for Bandwidth and Proxy settings in Network pane.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>เปลี่ยนการตั้งค่า…</translation>
     </message>
     <message>
         <source>Proxies</source>
@@ -4901,7 +4901,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Set up Assistant - MEGAsync</source>
         <translatorcomment>Title of the setup assistant dialog. Keep capital letters.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ตัวช่วยการติดตั้ง - MEGAsync</translation>
     </message>
     <message>
         <source>Full sync</source>
@@ -5033,7 +5033,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Set up selective sync</source>
         <translatorcomment>Label shown when user is setting up the selective sync mode of MEGAsync</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ตั้งค่าการซิงค์แบบเลือก</translation>
     </message>
     <message>
         <source>Specific folders in your Cloud Drive will be synchronized with a local folder.</source>
@@ -5048,7 +5048,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Set up full sync</source>
         <translatorcomment>Label shown when user is setting up full sync mode of MEGAsync</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ตั้งค่าการซิงค์แบบเต็ม</translation>
     </message>
     <message>
         <source>Full Sync</source>
@@ -5711,7 +5711,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Log out</source>
         <translatorcomment>Button label to log out the current account</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ออกจากระบบ</translation>
     </message>
     <message>
         <source>Verify your email</source>

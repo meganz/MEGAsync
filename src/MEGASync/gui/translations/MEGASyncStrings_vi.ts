@@ -1433,7 +1433,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Log out</source>
         <translatorcomment>Button label to log out the current account.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Đăng xuất</translation>
     </message>
     <message>
         <source>Your account has been suspended temporarily due to potential abuse. Please verify your phone number to unlock your account.</source>
@@ -1517,7 +1517,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Import to my cloud drive</source>
         <translatorcomment>Label to indicate if the user wants to import the selected MEGA link(s) to his cloud drive.</translatorcomment>
-        <translation>Chuyển nhập vào ổ mây của tôi</translation>
+        <translation>Chuyển nhập vào Ổ Mây của tôi</translation>
     </message>
     <message>
         <source>OK</source>
@@ -3126,47 +3126,47 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Account notifications:</source>
         <translatorcomment>Title for notifications setting pane</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Các thông báo về tài khoản:</translation>
     </message>
     <message>
         <source>Shares</source>
         <translatorcomment>Notification category for shared folders and nodes</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Chia sẻ</translation>
     </message>
     <message>
         <source>New shared folder from contact</source>
         <translatorcomment>Title of a checkbox for disconnectig notifications</translatorcomment>
-        <translation>Khi có người từ trong sổ liên lạc gửi chia sẻ thư mục mới</translation>
+        <translation>Khi có người trong sổ liên lạc gửi chia sẻ thư mục</translation>
     </message>
     <message>
         <source>Added or removed files</source>
         <translatorcomment>Title of a checkbox for disconnectig notifications</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Thêm vào hoặc xóa bỏ tệp tin</translation>
     </message>
     <message>
         <source>Access to a shared folder was removed</source>
         <translatorcomment>Title of a checkbox for disconnectig notifications</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Quyền truy cập vào một thư mục chia sẻ bị tước bỏ</translation>
     </message>
     <message>
         <source>Contacts</source>
         <translatorcomment>Notification category for contact notifications</translatorcomment>
-        <translation>Sổ Liên Lạc</translation>
+        <translation>Liên lạc</translation>
     </message>
     <message>
         <source>New contact request</source>
         <translatorcomment>Title of a checkbox for disconnectig notifications</translatorcomment>
-        <translation>Lời mời thêm liên lạc mới</translation>
+        <translation>Có lời mời thêm liên lạc mới</translation>
     </message>
     <message>
         <source>Pending contact request reminder</source>
         <translatorcomment>Title of a checkbox for disconnectig notifications</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Nhắc nhở các lời yêu cầu thêm liên lạc còn chờ hồi âm</translation>
     </message>
     <message>
         <source>Someone has accepted your contact request</source>
         <translatorcomment>Title of a checkbox for disconnectig notifications</translatorcomment>
-        <translation>Khi có người chấp nhận lời mời thêm tên liên lạc của tôi</translation>
+        <translation>Có người chấp nhận lời yêu cầu thêm liên lạc của bạn</translation>
     </message>
     <message>
         <source>Info</source>
@@ -3176,27 +3176,27 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Desktop notifications</source>
         <translatorcomment>Title of a checkbox for disconnectig notifications</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Hiện chung với khu thông báo của hệ điều hành</translation>
     </message>
     <message>
         <source>Someone accepted your contact request</source>
         <translatorcomment>Title of a checkbox for disconnectig notifications</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Có người chấp nhận lời yêu cầu thêm liên lạc của bạn</translation>
     </message>
     <message>
         <source>Info:</source>
         <translatorcomment>Notification category for non-critical info notifications (macx)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Thông tin:</translation>
     </message>
     <message>
         <source>Contacts:</source>
         <translatorcomment>Notification category for non-critical info notifications (macx)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Liên lạc:</translation>
     </message>
     <message>
         <source>Shares:</source>
         <translatorcomment>Notification category for non-critical info notifications (macx)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Chia sẻ:</translation>
     </message>
 </context>
 <context>
@@ -3372,7 +3372,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Folders</source>
         <translatorcomment>Header for the section that allows to set the default permissions for new folders created by MEGAsync. Please keep the first capital letter</translatorcomment>
-        <translation>Thư mục</translation>
+        <translation>Thư Mục</translation>
     </message>
     <message>
         <source>Numeric value:</source>
@@ -4088,7 +4088,7 @@ Bạn có muốn tiếp tục xóa không?</translation>
     <message>
         <source>Log out</source>
         <translatorcomment>Button label to log out of the application. String as short as possible.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Đăng xuất</translation>
     </message>
     <message>
         <source>Upgrade</source>
@@ -4445,7 +4445,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Move…</source>
         <translatorcomment>Button label text allowing the user to change the default Uploads or Downloads folders for the app.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Đổi…</translation>
     </message>
     <message>
         <source>Exclude files smaller than</source>
@@ -4460,12 +4460,12 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Restart MEGA Desktop App to apply changes.</source>
         <translatorcomment>Informative text shown in Folders pane, letting the user know that an application restart is required to apply the changes he just made.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Khởi động lại App MEGA cho Máy Tính để áp dụng các thay đổi.</translation>
     </message>
     <message>
         <source>Change Settings…</source>
         <translatorcomment>Button label text for Bandwidth and Proxy settings in Network pane.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Thay Đổi Thiết Đặt…</translation>
     </message>
     <message>
         <source>Proxies</source>
@@ -4753,7 +4753,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source> Sync your entire cloud drive</source>
         <translatorcomment>Label displayed to inform the user about the Full sync (Sync the entire cloud drive)</translatorcomment>
-        <translation>Đồng bộ mọi thứ từ ổ mây</translation>
+        <translation>Đồng bộ mọi thứ từ Ổ Mây</translation>
     </message>
     <message>
         <source>Selective sync</source>
@@ -4901,7 +4901,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Set up Assistant - MEGAsync</source>
         <translatorcomment>Title of the setup assistant dialog. Keep capital letters.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Hỗ Trợ Cài Đặt - MEGAsync</translation>
     </message>
     <message>
         <source>Full sync</source>
@@ -5013,7 +5013,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Sync specific folders in your cloud drive</source>
         <translatorcomment>Label to inform the user about the selective sync mode of MEGAsync</translatorcomment>
-        <translation>Chọn đồng bộ thư mục riêng biệt từ ổ mây</translation>
+        <translation>Chọn đồng bộ thư mục riêng biệt từ Ổ Mây</translation>
     </message>
     <message>
         <source>Selective sync:</source>
@@ -5033,7 +5033,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Set up selective sync</source>
         <translatorcomment>Label shown when user is setting up the selective sync mode of MEGAsync</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Cài đặt đồng bộ thư mục chọn lọc</translation>
     </message>
     <message>
         <source>Specific folders in your Cloud Drive will be synchronized with a local folder.</source>
@@ -5048,7 +5048,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Set up full sync</source>
         <translatorcomment>Label shown when user is setting up full sync mode of MEGAsync</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Cài đặt đồng bộ toàn bộ</translation>
     </message>
     <message>
         <source>Full Sync</source>
@@ -5058,7 +5058,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your entire Cloud Drive will be synchronized with a local folder.</source>
         <translatorcomment>Label with information about the full sync mode of MEGAsync</translatorcomment>
-        <translation>Toàn bộ Ổ mây của bạn sẽ được đồng bộ hóa vào một thư mục nội bộ trong máy tính.</translation>
+        <translation>Toàn bộ Ổ Mây của bạn sẽ được đồng bộ hóa vào một thư mục nội bộ trong máy tính.</translation>
     </message>
     <message>
         <source>We are all done!</source>
@@ -5192,7 +5192,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Select media from...</source>
         <translatorcomment>Label just above of the buttons to select files for streaming</translatorcomment>
-        <translation>Chọn dữ liệu từ…</translation>
+        <translation>Chọn phương tiện từ…</translation>
     </message>
     <message>
         <source>Cloud Drive</source>
@@ -5287,7 +5287,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Please wait...</source>
         <translatorcomment>Message shown while waiting for the server request with the file info to stream</translatorcomment>
-        <translation>Vui lòng chờ…</translation>
+        <translation>Xin chờ…</translation>
     </message>
 </context>
 <context>
@@ -5711,7 +5711,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Log out</source>
         <translatorcomment>Button label to log out the current account</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Đăng xuất</translation>
     </message>
     <message>
         <source>Verify your email</source>

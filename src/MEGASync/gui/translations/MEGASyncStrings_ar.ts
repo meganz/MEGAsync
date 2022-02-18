@@ -461,7 +461,7 @@
     <message>
         <source>Limit to:</source>
         <translatorcomment>Radio button text to indicate the limit for transfer rate.</translatorcomment>
-        <translation>الحد الأقصى</translation>
+        <translation>الحد الأقصى:</translation>
     </message>
     <message>
         <source>KB/s</source>
@@ -526,7 +526,7 @@
     <message>
         <source>Download rate limit:</source>
         <translatorcomment>Label to indicate the limit of download rate on macOS.</translatorcomment>
-        <translation>حد معدل التنزيل</translation>
+        <translation>حد معدل التنزيل:</translation>
     </message>
     <message>
         <source>Number of connections per transfer:</source>
@@ -721,7 +721,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>New in this version:</source>
         <translatorcomment>Label for indicate new features/fixes of current MEGAsync version. Keep colon.</translatorcomment>
-        <translation>الجديد في هذه النسخة</translation>
+        <translation>الجديد في هذه النسخة:</translation>
     </message>
     <message>
         <source>Credits</source>
@@ -4590,7 +4590,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Used quota for the last %1 hours:</source>
         <translatorcomment>Informative text shown in Account pane for Free account type. Indicates the used quota in the last %1 specified number of hours. Keep the %1 subsitution argument.</translatorcomment>
-        <translation>الحصة المستخدمة في %1ساعة الأخيرة</translation>
+        <translation>الحصة المستخدمة في %1ساعة الأخيرة:</translation>
     </message>
     <message>
         <source>Free</source>

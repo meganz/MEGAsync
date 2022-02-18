@@ -461,7 +461,7 @@
     <message>
         <source>Limit to:</source>
         <translatorcomment>Radio button text to indicate the limit for transfer rate.</translatorcomment>
-        <translation>限于:</translation>
+        <translation>限于：</translation>
     </message>
     <message>
         <source>KB/s</source>
@@ -811,7 +811,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>You can help us to improve MEGAsync by sending this error report. It doesn&apos;t contain any personal information. If you want to give us more details, please write them below:</source>
         <translatorcomment>Label to indicate if the user wants to add some more details to attach to the crash report.</translatorcomment>
-        <translation>您可藉由发送错误报告来协助我们改善MEGAsync。这将不会包含任何个人资料。如果您愿意提供更多细节给我们，请列于下方:</translation>
+        <translation>您可藉由发送错误报告来协助我们改善MEGAsync。这将不会包含任何个人资料。如果您愿意提供更多细节给我们，请列于下方：</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -1151,7 +1151,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Local folder:</source>
         <translatorcomment>Label to indicate the user the local folder in which the selected files/folders will be downloaded (String short as possible)</translatorcomment>
-        <translation>本地文件夹:</translation>
+        <translation>本地文件夹：</translation>
     </message>
     <message>
         <source>Always download to this destination</source>
@@ -1264,12 +1264,12 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Local folder:</source>
         <translatorcomment>Label to indicate the user the local folder for a synchronization (String short as possible)</translatorcomment>
-        <translation>本地文件夹:</translation>
+        <translation>本地文件夹：</translation>
     </message>
     <message>
         <source>MEGA folder:</source>
         <translatorcomment>Label to indicate the user the MEGA folder for a synchronization (String short as possible)</translatorcomment>
-        <translation>MEGA文件夹:</translation>
+        <translation>MEGA文件夹：</translation>
     </message>
     <message>
         <source>Select local folder</source>
@@ -1950,7 +1950,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Error: Invalid destination folder. The upload has been cancelled</source>
         <translatorcomment>Notification message launched when a problem occurs uploading files to a destination folder in MEGA.</translatorcomment>
-        <translation>错误:目的地文件夹无效。上传已被取消。</translation>
+        <translation>错误：目的地文件夹无效。上传已被取消。</translation>
     </message>
     <message>
         <source>About MEGAsync</source>
@@ -2041,7 +2041,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <source>There was a problem installing the update. Please try again later or download the last version from:
 https://mega.co.nz/#sync</source>
         <translatorcomment>Notification message launched when a problem occurs during the installation of an update. Keep &quot;\n&quot; codes.</translatorcomment>
-        <translation>安装更新时出现问题。请稍后再试，或者在这里 https://mega.nz/sync 下载最新版本</translation>
+        <translation>安装更新时出现问题。请稍后再试，或者在这里 https：//mega.nz/sync 下载最新版本</translation>
     </message>
     <message>
         <source>Thank you for your collaboration!</source>
@@ -2127,7 +2127,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Login error: %1</source>
         <translatorcomment>Message displayed during a login operation. Keep &quot;%1&quot; code because it will be fill with the error message.</translatorcomment>
-        <translation>登入错误: %1</translation>
+        <translation>登入错误： %1</translation>
     </message>
     <message>
         <source>You have been logged out on this computer from another location</source>
@@ -2137,7 +2137,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>You have been logged out because of this error: %1</source>
         <translatorcomment>Message displayed when the current account has been logged due to an error. Keep &quot;%1&quot; code because it will be filled with the error message.</translatorcomment>
-        <translation>您已被登出因为这个错误: %1</translation>
+        <translation>您已被登出因为这个错误： %1</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the remote folder is in the rubbish bin</source>
@@ -3027,7 +3027,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Enter the new folder name:</source>
         <translatorcomment>Label to inform the user about entering a new folder name because the name provided does contain forbidden characters.</translatorcomment>
-        <translation>输入新文件夹名称:</translation>
+        <translation>输入新文件夹名称：</translation>
     </message>
     <message>
         <source>The following characters are not allowed:
@@ -3047,7 +3047,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Select a MEGA folder:</source>
         <translatorcomment>Label to indicate the user to select a MEGA folder for a synchronization (String short as possible). Keep capital letters.</translatorcomment>
-        <translation>选择MEGA文件夹:</translation>
+        <translation>选择MEGA文件夹：</translation>
     </message>
     <message>
         <source>New folder</source>
@@ -3078,7 +3078,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Invalid folder for synchronization.
 Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apos; or &apos;:&apos; in your folder names.</source>
         <translatorcomment>Message displayed when a user is trying to create a synchronization using not allowed characthers. Keep  &apos;\\&apos; &apos;/&apos; and &apos;:&apos; codes.</translatorcomment>
-        <translation>无法同步文件夹。请确认您的文件夹名称中没有使用例如‘\’， ‘/’或‘:’等字符。</translation>
+        <translation>无法同步文件夹。请确认您的文件夹名称中没有使用例如‘\’， ‘/’或‘：’等字符。</translation>
     </message>
     <message>
         <source>Always upload to this destination</source>
@@ -3580,17 +3580,17 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Username:</source>
         <translatorcomment>Label to indicate the username of the proxy that is being configured.</translatorcomment>
-        <translation>使用者名称:</translation>
+        <translation>使用者名称：</translation>
     </message>
     <message>
         <source>Server:</source>
         <translatorcomment>Label to indicate the server name/ip of the proxy that is being configured.</translatorcomment>
-        <translation>服务器:</translation>
+        <translation>服务器：</translation>
     </message>
     <message>
         <source>Password:</source>
         <translatorcomment>Label to indicate the password of the proxy that is being configured.</translatorcomment>
-        <translation>密码:</translation>
+        <translation>密码：</translation>
     </message>
     <message>
         <source>Proxy type:</source>
@@ -4713,22 +4713,22 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Email:</source>
         <translatorcomment>Label for field email at create account. String as short as possible.</translatorcomment>
-        <translation>电子邮件:</translation>
+        <translation>电子邮件：</translation>
     </message>
     <message>
         <source>Password:</source>
         <translatorcomment>Label for field password at create account. String as short as possible.</translatorcomment>
-        <translation>密码:</translation>
+        <translation>密码：</translation>
     </message>
     <message>
         <source>Repeat password:</source>
         <translatorcomment>Label for field repeat password at create account. String as short as possible.</translatorcomment>
-        <translation>重复一次密码:</translation>
+        <translation>重复一次密码：</translation>
     </message>
     <message>
         <source>I agree with the MEGA &lt;a href=&quot;https://mega.co.nz/#terms&quot;&gt;Terms of Service&lt;/a&gt;</source>
         <translatorcomment>Label to aggre with the Terms of use.  Keep code &lt;a href=&quot;https://mega.co.nz/#terms&quot;&gt;Terms of Service&lt;/a&gt; .String as short as possible.</translatorcomment>
-        <translation>我同意MEGA &lt;a href=&quot;https://mega.nz/terms&quot;&gt;服务条款&lt;/a&gt;</translation>
+        <translation>我同意MEGA &lt;a href=&quot;https：//mega.nz/terms&quot;&gt;服务条款&lt;/a&gt;</translation>
     </message>
     <message>
         <source>Log in to your MEGA account</source>
@@ -4763,12 +4763,12 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Local folder:</source>
         <translatorcomment>Label displayed to show the local folder synchronized.</translatorcomment>
-        <translation>本机文件夹:</translation>
+        <translation>本机文件夹：</translation>
     </message>
     <message>
         <source>MEGA folder:</source>
         <translatorcomment>Label displayed to show the MEGA folder synchronized.</translatorcomment>
-        <translation>MEGA文件夹:</translation>
+        <translation>MEGA文件夹：</translation>
     </message>
     <message>
         <source>Change</source>
@@ -5543,7 +5543,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>MEGA folder:</source>
         <translatorcomment>Label to indicate the user the MEGA folder in which the selected files/folders will be uploaded (String short as possible)</translatorcomment>
-        <translation>MEGA文件夹:</translation>
+        <translation>MEGA文件夹：</translation>
     </message>
     <message>
         <source>Always upload to this destination</source>

@@ -1653,12 +1653,12 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Upload</source>
         <translatorcomment>Label to indicate an upload.</translatorcomment>
-        <translation>Wgrywane</translation>
+        <translation>Wgrywanie</translation>
     </message>
     <message>
         <source>Download</source>
         <translatorcomment>Label to indicate a download.</translatorcomment>
-        <translation>Pobierz</translation>
+        <translation>Pobieranie</translation>
     </message>
     <message>
         <source>Transfers</source>
