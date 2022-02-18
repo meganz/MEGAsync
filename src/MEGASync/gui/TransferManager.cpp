@@ -126,6 +126,9 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
     connect(mModel, &QTransfersModel::transfersDataUpdated,
             this, &TransferManager::onTransfersDataUpdated);
 
+    connect(mModel, &QTransfersModel::pauseStateChangedByTransferResume,
+            this, &TransferManager::onPauseStateChangedByTransferResume);
+
     connect(this, &TransferManager::clearCompletedTransfers,
             findChild<MegaTransferView*>(), &MegaTransferView::onClearCompletedTransfers,
             Qt::QueuedConnection);
@@ -166,6 +169,11 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
 void TransferManager::pauseModel(bool value)
 {
     mModel->pauseModelProcessing(value);
+}
+
+void TransferManager::onPauseStateChangedByTransferResume()
+{
+    onUpdatePauseState(false);
 }
 
 void TransferManager::setActiveTab(int t)
@@ -545,7 +553,6 @@ void TransferManager::on_tSeePlans_clicked()
 void TransferManager::on_bPause_clicked()
 {
     mModel->pauseResumeAllTransfers();
-    mUi->wTransfers->globalPauseToggled(mModel->areAllPaused());
     onUpdatePauseState(mModel->areAllPaused());
 }
 
@@ -585,6 +592,8 @@ void TransferManager::applyTextSearch(const QString& text)
     mUi->wSearch->show();
 
     mUi->wTransfers->transferFilterReset();
+    //It is important to call it after resetting the filter, as the reset removes the text
+    //search
     mUi->wTransfers->textFilterChanged(text);
 
     //refreshSearchStats();
@@ -844,7 +853,7 @@ void TransferManager::changeEvent(QEvent *event)
     {
         mUi->retranslateUi(this);
         setActiveTab(mCurrentTab);
-        onUpdatePauseState(mUi->wTransfers->getProxyModel()->areAllPaused());
+        onUpdatePauseState(mUi->wTransfers->getProxyModel()->getPausedTransfers());
     }
     QDialog::changeEvent(event);
 }

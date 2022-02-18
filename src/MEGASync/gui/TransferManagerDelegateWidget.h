@@ -24,8 +24,6 @@ public:
     void setType() override;
     void setFileType(const QString& fileName);
 
-    void globalPauseToggled(bool pause) override;
-
     ActionHoverType mouseHoverTransfer(bool isHover, const QPoint &pos) override;
 
 signals:
@@ -41,8 +39,6 @@ private slots:
 private:
     bool setCancelClearTransferIcon(const QString &name);
     bool setPauseResumeTransferIcon(const QString &name);
-
-    bool mGlobalPause;
 
     Ui::TransferManagerDelegateWidget *mUi;
     QString mLastPauseResuemtTransferIconName;

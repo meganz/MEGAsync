@@ -31,7 +31,7 @@ public:
     void filtersChanged(const TransferData::TransferTypes transferTypes,
                         const TransferData::TransferStates transferStates,
                         const TransferData::FileTypes fileTypes);
-    void transferFilterReset(bool invalidate = false);
+    void transferFilterReset();
 
     void cancelClearAll();
 
@@ -40,8 +40,6 @@ public:
     QTransfersModel* getModel();
     TransfersSortFilterProxyModel* getProxyModel() {return mProxyModel;}
     ~TransfersWidget();
-
-    void globalPauseToggled(bool pause);
 
 public slots:
     void on_pHeaderName_clicked();
@@ -60,7 +58,7 @@ private slots:
     void onModelAboutToBeChanged();
     void onProxyActivityLaunchTimeout();
     void onProxyActivityCloseTimeout();
-    void onPauseResumeButtonCheckedOnDelegate(bool state);
+    void onPauseResumeButtonCheckedOnDelegate(bool pause);
 
 private:
     static constexpr int PROXY_ACTIVITY_CLOSE_TIMEOUT_MS = 1000;
@@ -85,7 +83,6 @@ private:
     HeaderState mHeaderSizeState;
     ThreadPool* mThreadPool;
     bool mModelIsChanging;
-    bool mGlobalPaused;
 
     QTimer* mProxyActivityLaunchTimer;
     QTimer* mProxyActivityCloseTimer;

@@ -34,7 +34,7 @@ public:
         void setFilters(const TransferData::TransferTypes transferTypes,
                         const TransferData::TransferStates transferStates,
                         const TransferData::FileTypes fileTypes);
-        void applyFilters(bool invalidate = true);
+        void applyFilters();
         void resetAllFilters(bool invalidate = false);
         int  getNumberOfItems(TransferData::TransferType transferType);
         //void refreshNumberOfItems();
@@ -42,7 +42,7 @@ public:
 
         virtual TransferBaseDelegateWidget* createTransferManagerItem(QWidget *parent);
 
-        int areAllPaused() const;
+        int getPausedTransfers() const;
         bool isAnyPaused() const;
 
 signals:

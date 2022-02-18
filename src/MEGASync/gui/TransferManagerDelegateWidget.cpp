@@ -14,7 +14,6 @@ using namespace mega;
 
 TransferManagerDelegateWidget::TransferManagerDelegateWidget(QWidget *parent) :
     TransferBaseDelegateWidget (parent),
-    mGlobalPause(false),
     mUi (new Ui::TransferManagerDelegateWidget)
 {
     mUi->setupUi(this);
@@ -205,7 +204,7 @@ void TransferManagerDelegateWidget::updateTransferState()
             mUi->tPauseResumeTransfer->setIcon(icon);
             mUi->tPauseResumeTransfer->setToolTip(pauseResumeTooltip);
         }
-        mUi->tPauseResumeTransfer->setVisible(showTPauseResume && !mGlobalPause);
+        mUi->tPauseResumeTransfer->setVisible(showTPauseResume);
 
         // Cancel/Clear Button
         if ((getData()->mType & TransferData::TRANSFER_SYNC)
@@ -275,11 +274,6 @@ void TransferManagerDelegateWidget::setType()
     }
 
     mUi->bItemSpeed->setIcon(icon);
-}
-
-void TransferManagerDelegateWidget::globalPauseToggled(bool pause)
-{
-    mGlobalPause = pause;
 }
 
 TransferBaseDelegateWidget::ActionHoverType TransferManagerDelegateWidget::mouseHoverTransfer(bool isHover, const QPoint &pos)

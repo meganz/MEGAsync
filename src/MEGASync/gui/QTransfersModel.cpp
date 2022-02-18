@@ -484,8 +484,8 @@ void QTransfersModel::cancelClearTransfers(const QModelIndexList& indexes, bool 
     else if(!indexesToRemove.isEmpty())
     {
         QList<TransferTag> toCancel;
-        QMap<TransferTag, QModelIndex> uploadToClear;
-        QMap<TransferTag, QModelIndex> downloadToClear;
+        QMap<long long, QModelIndex> uploadToClear;
+        QMap<long long, QModelIndex> downloadToClear;
 
         // Reverse sort to keep indexes valid after deletion
         std::sort(indexesToRemove.begin(), indexesToRemove.end(),[](QModelIndex check1, QModelIndex check2){
@@ -509,11 +509,11 @@ void QTransfersModel::cancelClearTransfers(const QModelIndexList& indexes, bool 
                 {
                     if(d->mType & TransferData::TransferType::TRANSFER_UPLOAD)
                     {
-                        uploadToClear.insert(d->mTag, index);
+                        uploadToClear.insert(d->mTransferredBytes, index);
                     }
                     else
                     {
-                        downloadToClear.insert(d->mTag, index);
+                        downloadToClear.insert(d->mTransferredBytes, index);
                     }
                 }
             }
@@ -540,9 +540,9 @@ void QTransfersModel::cancelClearTransfers(const QModelIndexList& indexes, bool 
         {
             if(!uploadToClear.isEmpty())
             {
-                for (auto item : uploadToClear.keys())
+                for (auto transfBytes : uploadToClear.keys())
                 {
-                    mMegaApi->removeCompletedUpload(item);
+                    mMegaApi->removeCompletedUpload(transfBytes);
                 }
 
                 QModelIndexList itemList = uploadToClear.values();
@@ -551,9 +551,9 @@ void QTransfersModel::cancelClearTransfers(const QModelIndexList& indexes, bool 
 
             if(!downloadToClear.isEmpty())
             {
-                for (auto item : downloadToClear.keys())
+                for (auto transfBytes : downloadToClear.keys())
                 {
-                    mMegaApi->removeCompletedDownload(item);
+                    mMegaApi->removeCompletedDownload(transfBytes);
                 }
 
                 QModelIndexList itemList = downloadToClear.values();
@@ -572,12 +572,6 @@ void QTransfersModel::pauseTransfers(const QModelIndexList& indexes, bool pauseS
         TransferTag tag (mTransfers.at(index.row())->mTag);
         pauseResumeTransferByTag(tag, pauseState);
     }
-
-//    if (!pauseState)
-//    {
-//        mMegaApi->pauseTransfers(false);
-//        emit pauseStateChanged(false);
-//    }
 }
 
 void QTransfersModel::pauseResumeAllTransfers()
@@ -612,13 +606,15 @@ void QTransfersModel::pauseResumeTransferByTag(TransferTag tag, bool pauseState)
 {
     auto row = mTagByOrder.value(tag);
     auto d  = mTransfers.at(row);
-    //auto state (d->mState);
 
-//    if ((!pauseState && (state == TransferData::TRANSFER_PAUSED))
-//            || (pauseState && (state & TransferData::PAUSABLE_STATES_MASK)))
-    //{
-       mMegaApi->pauseTransferByTag(d->mTag, pauseState);
-    //}
+    if(!pauseState && mAreAllPaused)
+    {
+        mMegaApi->pauseTransfers(pauseState);
+        mAreAllPaused = false;
+        emit pauseStateChangedByTransferResume();
+    }
+
+    mMegaApi->pauseTransferByTag(d->mTag, pauseState);
 }
 
 void QTransfersModel::lockModelMutex(bool lock)

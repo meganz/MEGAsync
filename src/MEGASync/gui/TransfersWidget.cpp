@@ -18,8 +18,7 @@ TransfersWidget::TransfersWidget(QWidget* parent) :
     mProxyActivityCloseTimer (new QTimer(this)),
     mProxyActivityLaunchTimer (new QTimer(this)),
     mProxyActivityMessage (new QMessageBox(this)),
-    mModelIsChanging(false),
-    mGlobalPaused(false)
+    mModelIsChanging(false)
 {
     ui->setupUi(this);
 
@@ -54,14 +53,6 @@ TransfersWidget::~TransfersWidget()
     if (mProxyModel) delete mProxyModel;
 }
 
-void TransfersWidget::globalPauseToggled(bool pause)
-{
-    tDelegate->globalPauseToggled(pause);
-    ui->tPauseResumeVisible->setVisible(!pause);
-
-    mGlobalPaused = pause;
-}
-
 void TransfersWidget::configureTransferView()
 {
     if (!model2)
@@ -73,7 +64,6 @@ void TransfersWidget::configureTransferView()
     ui->tvTransfers->setup(this);
     mDelegateHoverManager.setView(ui->tvTransfers);
     ui->tvTransfers->setItemDelegate(tDelegate);
-    globalPauseToggled(app->getTransfersModel()->areAllPaused());
 
     onPauseStateChanged(mProxyModel->isAnyPaused());
 
@@ -239,14 +229,11 @@ void TransfersWidget::onShowCompleted(bool showCompleted)
     }
 
     mClearMode = showCompleted;
-    ui->tPauseResumeVisible->setVisible(!showCompleted && !mGlobalPaused);
+    ui->tPauseResumeVisible->setVisible(!showCompleted);
 }
 
 void TransfersWidget::onPauseStateChanged(bool pauseState)
 {
-//    ui->tPauseResumeVisible->setIcon(pauseState ?
-//                                     QIcon(QString::fromUtf8(":/images/lists_resume_all_ico.png"))
-//                                   : QIcon(QString::fromUtf8(":/images/lists_pause_all_ico.png")));
     ui->tPauseResumeVisible->setToolTip(pauseState ?
                                         tr("Resume visible transfers")
                                       : tr("Pause visible transfers"));
@@ -265,12 +252,13 @@ void TransfersWidget::filtersChanged(const TransferData::TransferTypes transferT
                                      const TransferData::TransferStates transferStates,
                                      const TransferData::FileTypes fileTypes)
 {
+    textFilterChanged(QString());
     mProxyModel->setFilters(transferTypes, transferStates, fileTypes);
 }
 
-void TransfersWidget::transferFilterReset(bool invalidate)
+void TransfersWidget::transferFilterReset()
 {
-    mProxyModel->resetAllFilters(invalidate);
+    mProxyModel->resetAllFilters();
 }
 
 int TransfersWidget::rowCount()
@@ -325,13 +313,27 @@ void TransfersWidget::onProxyActivityLaunchTimeout()
     }
 }
 
-void TransfersWidget::onPauseResumeButtonCheckedOnDelegate(bool state)
+void TransfersWidget::onPauseResumeButtonCheckedOnDelegate(bool pause)
 {
-    auto pauseDifference = mProxyModel->areAllPaused();
-    state ? pauseDifference-- : pauseDifference++;
-    auto allPaused(pauseDifference <= 0);
+    auto rows = mProxyModel->rowCount();
 
-    onPauseStateChanged(allPaused);
+    if(rows == 1)
+    {
+        onPauseStateChanged(pause);
+    }
+    else
+    {
+        if(pause)
+        {
+            onPauseStateChanged(true);
+        }
+        else
+        {
+            //Reduce by one as the resume transfer is still unpaused
+            auto pausedTransfers = mProxyModel->getPausedTransfers() -1;
+            onPauseStateChanged(pausedTransfers > 0);
+        }
+    }
 }
 
 void TransfersWidget::on_tPauseResumeVisible_toggled(bool state)

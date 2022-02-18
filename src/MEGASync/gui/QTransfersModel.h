@@ -124,11 +124,13 @@ public:
 
     static QHash<QString, TransferData::FileType> mFileTypes;
 
+
 signals:
     void pauseStateChanged(bool pauseState);
     void transferPauseStateChanged();
     void transfersDataUpdated();
     void processTransferInThread();
+    void pauseStateChangedByTransferResume();
 
 public slots:
     void onRetryTransfer(TransferTag tag);

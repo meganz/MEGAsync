@@ -118,7 +118,7 @@ void TransfersSortFilterProxyModel::setFilters(const TransferData::TransferTypes
         mNextFileTypes = ~TransferData::FileTypes({});
     }
 
-    applyFilters(true);
+    applyFilters();
 }
 
 void TransfersSortFilterProxyModel::resetAllFilters(bool invalidate)
@@ -164,7 +164,7 @@ TransferBaseDelegateWidget *TransfersSortFilterProxyModel::createTransferManager
     return item;
 }
 
-void TransfersSortFilterProxyModel::applyFilters(bool invalidate)
+void TransfersSortFilterProxyModel::applyFilters()
 {
     emit modelAboutToBeChanged();
 
@@ -172,10 +172,7 @@ void TransfersSortFilterProxyModel::applyFilters(bool invalidate)
     mTransferTypes = mNextTransferTypes;
     mFileTypes = mNextFileTypes;
 
-    if (invalidate)
-    {
-        invalidateFilter();
-    }
+    invalidateFilter();
 
     emit modelChanged();
     emit searchNumbersChanged();
@@ -302,12 +299,11 @@ bool TransfersSortFilterProxyModel::lessThan(const QModelIndex &left, const QMod
     return false;
 }
 
-int TransfersSortFilterProxyModel::areAllPaused() const
+int TransfersSortFilterProxyModel::getPausedTransfers() const
 {
     auto paused(0);
-    auto last = rowCount();
 
-    for(int row = 0; row < last; ++row)
+    for(int row = 0; row < rowCount(); ++row)
     {
         QModelIndex proxyIndex = index(row, 0);
 
@@ -319,7 +315,7 @@ int TransfersSortFilterProxyModel::areAllPaused() const
         }
     }
 
-    return (last - paused);
+    return paused;
 }
 
 bool TransfersSortFilterProxyModel::isAnyPaused() const

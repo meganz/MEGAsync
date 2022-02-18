@@ -34,8 +34,6 @@ public:
     QModelIndex getCurrentIndex() const;
     void setCurrentIndex(const QModelIndex &currentIndex);
 
-    virtual void globalPauseToggled(bool pause){}
-
 protected:
     bool setActionTransferIcon(QToolButton* button, const QString& iconName);
     bool isMouseHoverInAction(QToolButton* button, const QPoint &mousePos);

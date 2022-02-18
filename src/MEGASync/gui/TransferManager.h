@@ -122,6 +122,8 @@ private slots:
     void on_bText_clicked();
 
     void onUpdatePauseState(bool isPaused);
+    void onPauseStateChangedByTransferResume();
+
     void onTransfersDataUpdated();
     void refreshSearchStats();
 
