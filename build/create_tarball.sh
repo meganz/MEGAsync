@@ -127,7 +127,7 @@ ln -s ../../src/configure $MEGASYNC_NAME/configure
 ln -s ../../src/MEGA.pro $MEGASYNC_NAME/MEGA.pro
 ln -s ../../src/MEGASync $MEGASYNC_NAME/MEGASync
 ln -s $archives $MEGASYNC_NAME/archives
-tar czfh $MEGASYNC_NAME.tar.gz $MEGASYNC_NAME
+tar czfh $MEGASYNC_NAME.tar.gz --exclude-vcs $MEGASYNC_NAME
 rm -rf $MEGASYNC_NAME
 
 mv $cwd/config.h_bktarball $cwd/../src/MEGASync/mega/include/mega/config.h || true
