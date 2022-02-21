@@ -131,7 +131,7 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
             this, &TransferManager::onPauseStateChangedByTransferResume);
 
     connect(this, &TransferManager::clearCompletedTransfers,
-            findChild<MegaTransferView*>(), &MegaTransferView::onClearCompletedTransfers);
+            findChild<MegaTransferView*>(), &MegaTransferView::onClearCompletedVisibleTransfers);
 
     connect(mUi->wTransfers->getProxyModel(),
             &TransfersSortFilterProxyModel::searchNumbersChanged,

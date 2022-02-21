@@ -15,8 +15,7 @@ TransfersWidget::TransfersWidget(QWidget* parent) :
     mHeaderNameState (HS_SORT_PRIORITY),
     mHeaderSizeState (HS_SORT_PRIORITY),
     mThreadPool(ThreadPoolSingleton::getInstance()),
-    mModelIsChanging(false),
-    mLoadingModel(nullptr)
+    mModelIsChanging(false)
 {
     ui->setupUi(this);
 
@@ -65,6 +64,8 @@ void TransfersWidget::configureTransferView()
     ui->tvTransfers->viewport()->setAcceptDrops(true);
     ui->tvTransfers->setDropIndicatorShown(true);
     ui->tvTransfers->setDragDropMode(QAbstractItemView::InternalMove);
+
+    mLoadingScene.setView(ui->tvTransfers);
 }
 
 void TransfersWidget::pausedTransfers(bool paused)
@@ -269,7 +270,7 @@ void TransfersWidget::changeEvent(QEvent *event)
 void TransfersWidget::onModelAboutToBeChanged()
 {
     mModelIsChanging = true;
-    setLoadingView(true);
+    mLoadingScene.setLoadingScene(true);
 
     emit disableTransferManager(true);
 }
@@ -280,7 +281,7 @@ void TransfersWidget::onModelChanged()
 
     auto allPaused = mProxyModel->isAnyPaused();
     onPauseStateChanged(allPaused);
-    setLoadingView(false);
+    mLoadingScene.setLoadingScene(false);
 
     emit disableTransferManager(false);
 }
@@ -339,34 +340,4 @@ void TransfersWidget::setHeaderState(QPushButton* header, HeaderState state)
         }
     }
     header->setIcon(icon);
-}
-
-void TransfersWidget::setLoadingView(bool state)
-{
-    if(!mLoadingModel)
-    {
-        mLoadingModel = new QStandardItemModel(ui->tvTransfers);
-        mLoadingModel->setRowCount(20);
-        for(int row = 0; row < 20; ++row)
-        {
-            mLoadingModel->appendRow(new QStandardItem());
-        }
-
-        tLoadingDelegate = new TransferLoadingDelegate(ui->tvTransfers);
-    }
-
-    tLoadingDelegate->setLoading(state);
-
-    if(state)
-    {
-        ui->tvTransfers->setModel(mLoadingModel);
-        ui->tvTransfers->setItemDelegate(tLoadingDelegate);
-        ui->tvTransfers->update();
-    }
-    else
-    {
-        ui->tvTransfers->setModel(mProxyModel);
-        ui->tvTransfers->setItemDelegate(tDelegate);
-        //unset new model
-    }
 }

@@ -149,8 +149,6 @@ QTransfersModel::QTransfersModel(QObject *parent) :
     mTimer.start();
 
     mTransferEventThread->start();
-
-    connect(&mCancelWatcher, &QFutureWatcher<bool>::finished, this, &QTransfersModel::onCancelTransferFinished);
 }
 
 QTransfersModel::~QTransfersModel()
@@ -290,32 +288,28 @@ void QTransfersModel::onProcessTransfers()
             || mTransfersToUpdate.size() != 0
             || mTransfersToStart.size() != 0)
     {
-        bool transfersCountNeedsUpdate(false);
-
         if(mTransfersToCancel.size() != 0)
         {
-            auto cancelFuture = QtConcurrent::run([this]()->bool{
-
+            QtConcurrent::run([this](){
                 if(!mTransfersCancelling)
                 {
                     emit transfersAboutToBeCanceled();
                     mTransfersCancelling = true;
                 }
 
-                auto result(false);
                 if(mModelMutex->tryLockForWrite())
                 {
                     processCancelTransfers();
                     sendDataChanged();
 
-                    mModelMutex->unlock();
+                    updateTransfersCount();
 
-                    result = true;
+                    mModelMutex->unlock();
                 }
-                return result;
             });
-            mCancelWatcher.setFuture(cancelFuture);
         }
+
+        bool transfersCountNeedsUpdate(false);
 
         //Do not add new transfers while items are being cancelled
         if(mModelMutex->tryLockForWrite())
@@ -419,14 +413,6 @@ void QTransfersModel::processCancelTransfers()
     }
 }
 
-void QTransfersModel::onCancelTransferFinished()
-{
-    if(mCancelWatcher.result())
-    {
-        updateTransfersCount();
-    }
-}
-
 int QTransfersModel::updateTransfer(QExplicitlySharedDataPointer<TransferData> transfer)
 {
     TransferTag tag (transfer->mTag);
@@ -438,10 +424,10 @@ int QTransfersModel::updateTransfer(QExplicitlySharedDataPointer<TransferData> t
         auto prevState (d->mState);
         mTransfers[row] = transfer;
 
-        if(d->mState & TransferData::FINISHED_STATES_MASK)
+        if(transfer->mState & TransferData::FINISHED_STATES_MASK)
         {
             // Keep statistics up to date
-            if (prevState != d->mState)
+            if (prevState != transfer->mState)
             {
                 mNbFinishedPerFileType[d->mFileType]++;
             }
@@ -538,8 +524,8 @@ void QTransfersModel::cancelClearTransfers(const QModelIndexList& indexes, bool 
     else if(!indexesToRemove.isEmpty())
     {
         QList<TransferTag> toCancel;
-        QMap<long long, QModelIndex> uploadToClear;
-        QMap<long long, QModelIndex> downloadToClear;
+        QMap<QModelIndex, long long> uploadToClear;
+        QMap<QModelIndex, long long> downloadToClear;
 
         // Reverse sort to keep indexes valid after deletion
         std::sort(indexesToRemove.begin(), indexesToRemove.end(),[](QModelIndex check1, QModelIndex check2){
@@ -563,11 +549,11 @@ void QTransfersModel::cancelClearTransfers(const QModelIndexList& indexes, bool 
                 {
                     if(d->mType & TransferData::TransferType::TRANSFER_UPLOAD)
                     {
-                        uploadToClear.insert(d->mTransferredBytes, index);
+                        uploadToClear.insert(index, d->mTransferredBytes);
                     }
                     else
                     {
-                        downloadToClear.insert(d->mTransferredBytes, index);
+                        downloadToClear.insert(index, d->mTransferredBytes);
                     }
                 }
             }
@@ -594,23 +580,23 @@ void QTransfersModel::cancelClearTransfers(const QModelIndexList& indexes, bool 
         {
             if(!uploadToClear.isEmpty())
             {
-                for (auto transfBytes : uploadToClear.keys())
+                for (auto transfBytes : uploadToClear.values())
                 {
                     mMegaApi->removeCompletedUpload(transfBytes);
                 }
 
-                QModelIndexList itemList = uploadToClear.values();
+                QModelIndexList itemList = uploadToClear.keys();
                 removeRows(itemList);
             }
 
             if(!downloadToClear.isEmpty())
             {
-                for (auto transfBytes : downloadToClear.keys())
+                for (auto transfBytes : downloadToClear.values())
                 {
                     mMegaApi->removeCompletedDownload(transfBytes);
                 }
 
-                QModelIndexList itemList = downloadToClear.values();
+                QModelIndexList itemList = downloadToClear.keys();
                 removeRows(itemList);
             }
 
@@ -695,6 +681,8 @@ long long QTransfersModel::getNumberOfFinishedForFileType(TransferData::FileType
 
 void QTransfersModel::updateTransfersCount()
 {
+    mModelMutex->lockForWrite();
+
     mTransfersCount.remainingUploads = mMegaApi->getNumPendingUploads();
     mTransfersCount.remainingDownloads = mMegaApi->getNumPendingDownloads();
 
@@ -712,6 +700,8 @@ void QTransfersModel::updateTransfersCount()
 
     mTransfersCount.currentDownload = mTransfersCount.totalDownloads - mTransfersCount.remainingDownloads + 1;
     mTransfersCount.currentUpload = mTransfersCount.totalUploads - mTransfersCount.remainingUploads + 1;
+
+    mModelMutex->unlock();
 
     emit transfersDataUpdated();
 }

@@ -10,28 +10,6 @@
 class TransfersSortFilterProxyModel;
 class TransferBaseDelegateWidget;
 
-class TransferLoadingDelegate : public QStyledItemDelegate
-{
-    Q_OBJECT
-
-public:
-    explicit TransferLoadingDelegate(QAbstractItemView* view);
-    QSize sizeHint(const QStyleOptionViewItem&, const QModelIndex&) const;
-
-    void setLoading(bool state);
-
-protected:
-    void paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const override;
-
-private slots:
-    void onLoadingTimerTimeout();
-
-private:
-    QAbstractItemView* mView;
-    QTimer mTimer;
-
-};
-
 class MegaTransferDelegate : public QStyledItemDelegate
 {
     Q_OBJECT

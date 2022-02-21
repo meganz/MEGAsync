@@ -52,10 +52,10 @@ public slots:
     void onPauseResumeVisibleRows(bool pauseState);
     void onPauseResumeAllRows(bool pauseState);
     void onPauseResumeSelection(bool pauseState);
-    void onCancelClearVisibleTransfers();
+    void onCancelClearAllVisibleTransfers();
+    void onClearCompletedVisibleTransfers();
     void onCancelClearAllTransfers();
     void onCancelClearSelection();
-    void onClearCompletedTransfers();
 
 private slots:
     void onCustomContextMenu(const QPoint& point);

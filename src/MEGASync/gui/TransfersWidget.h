@@ -6,6 +6,8 @@
 #include "TransfersStateInfoWidget.h"
 #include "TransfersSortFilterProxyModel.h"
 #include "MegaDelegateHoverManager.h"
+#include "TransferManagerLoadingItem.h"
+#include "ViewLoadingScene.h"
 
 #include <QToolButton>
 #include <QStandardItemModel>
@@ -72,8 +74,7 @@ private:
     QTransfersModel *model2;
     TransfersSortFilterProxyModel *mProxyModel;
     MegaTransferDelegate *tDelegate;
-    TransferLoadingDelegate* tLoadingDelegate;
-    QStandardItemModel* mLoadingModel;
+    ViewLoadingScene<TransferManagerLoadingItem> mLoadingScene;
     MegaDelegateHoverManager mDelegateHoverManager;
     bool mClearMode;
     MegaApplication *app;
@@ -86,7 +87,6 @@ private:
     void clearOrCancel(const QList<QExplicitlySharedDataPointer<TransferData>>& pool, int state, int firstRow);
 
     void setHeaderState(QPushButton* header, HeaderState state);
-    void setLoadingView(bool state);
 
 signals:
     void clearTransfers(int firstRow, int amount);

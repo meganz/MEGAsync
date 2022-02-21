@@ -16,6 +16,7 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/BindFolderDialog.cpp \
     $$PWD/TransferItem.cpp \
     $$PWD/TransferManagerDelegateWidget.cpp \
+    $$PWD/TransferManagerLoadingItem.cpp \
     $$PWD/UploadToMegaDialog.cpp \
     $$PWD/PasteMegaLinksDialog.cpp \
     $$PWD/ImportMegaLinksDialog.cpp \
@@ -89,6 +90,7 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/BindFolderDialog.h \
     $$PWD/TransferItem.h \
     $$PWD/TransferManagerDelegateWidget.h \
+    $$PWD/TransferManagerLoadingItem.h \
     $$PWD/UploadToMegaDialog.h \
     $$PWD/PasteMegaLinksDialog.h \
     $$PWD/ImportMegaLinksDialog.h \
@@ -139,6 +141,7 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/AlertFilterType.h \
     $$PWD/BugReportDialog.h \
     $$PWD/VerifyLockMessage.h \
+    $$PWD/ViewLoadingScene.h \
     $$PWD/MegaInfoMessage.h \
     $$PWD/WaitingSpinnerWidget.h \
     $$PWD/ProxySettings.h \
@@ -202,7 +205,8 @@ win32 {
                 $$PWD/win/ProxySettings.ui \
                 $$PWD/win/BandwidthSettings.ui \
                 $$PWD/win/NewFolderDialog.ui \
-                $$PWD/win/NotificationsSettings.ui
+                $$PWD/win/NotificationsSettings.ui \
+                $$PWD/win/TransferManagerLoadingItem.ui
 }
 
 macx {
@@ -257,7 +261,8 @@ macx {
                 $$PWD/macx/ProxySettings.ui \
                 $$PWD/macx/BandwidthSettings.ui \
                 $$PWD/macx/NewFolderDialog.ui \
-                $$PWD/macx/NotificationsSettings.ui
+                $$PWD/macx/NotificationsSettings.ui \
+                $$PWD/macx/TransferManagerLoadingItem.ui
 
     #Asset catalog need to load SF symbol images of toolbar items for custom NSToolbar
     QMAKE_ASSET_CATALOGS += $$PWD/images/Images.xcassets
@@ -335,7 +340,8 @@ unix:!macx {
                 $$PWD/linux/ProxySettings.ui \
                 $$PWD/linux/BandwidthSettings.ui \
                 $$PWD/linux/NewFolderDialog.ui \
-                $$PWD/linux/NotificationsSettings.ui
+                $$PWD/linux/NotificationsSettings.ui \
+                $$PWD/linux/TransferManagerLoadingItem.ui
 
     HEADERS += $$PWD/PermissionsDialog.h \
                $$PWD/PermissionsWidget.h

@@ -145,7 +145,6 @@ private slots:
     void processStartTransfers();
     void processUpdateTransfers();
     void processCancelTransfers();
-    void onCancelTransferFinished();
 
     void onProcessTransfers();
 
@@ -173,7 +172,6 @@ private:
     QList<int> mRowsToUpdate;
     ThreadPool* mThreadPool;
     QReadWriteLock* mModelMutex;
-    QFutureWatcher<bool> mCancelWatcher;
     mega::QTMegaTransferListener *delegateListener;
 
     long long mUpdateNotificationNumber;
