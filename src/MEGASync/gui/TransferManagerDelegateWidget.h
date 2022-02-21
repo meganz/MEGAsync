@@ -26,6 +26,8 @@ public:
 
     ActionHoverType mouseHoverTransfer(bool isHover, const QPoint &pos) override;
 
+    void render(QPainter *painter, const QRegion &sourceRegion) override;
+
 signals:
     void cancelTransfer();
     void pauseResumeTransfer();

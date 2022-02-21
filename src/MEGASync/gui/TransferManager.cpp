@@ -120,6 +120,7 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
     connect(this, &TransferManager::showCompleted,
             mUi->wTransfers, &TransfersWidget::onShowCompleted);
 
+
     connect(mModel, &QTransfersModel::pauseStateChanged,
             mUi->wTransfers, &TransfersWidget::onPauseStateChanged);
 
@@ -130,8 +131,16 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
             this, &TransferManager::onPauseStateChangedByTransferResume);
 
     connect(this, &TransferManager::clearCompletedTransfers,
-            findChild<MegaTransferView*>(), &MegaTransferView::onClearCompletedTransfers,
-            Qt::QueuedConnection);
+            findChild<MegaTransferView*>(), &MegaTransferView::onClearCompletedTransfers);
+
+    connect(mUi->wTransfers->getProxyModel(),
+            &TransfersSortFilterProxyModel::searchNumbersChanged,
+            this, &TransferManager::refreshSearchStats);
+
+    connect(mUi->wTransfers,
+            &TransfersWidget::disableTransferManager,[this](bool state){
+        setDisabled(state);
+    });
 
     connect(mUi->wTransfers->getProxyModel(),
             &TransfersSortFilterProxyModel::searchNumbersChanged,
@@ -773,8 +782,7 @@ void TransferManager::toggleTab(TM_TAB newTab)
         {
             mUi->sCurrentContent->setCurrentWidget(mUi->pSearchHeader);
         }
-        else if (mCurrentTab == SEARCH_TAB
-                 || mUi->sCurrentContent->currentWidget() != mUi->pStatusHeader)
+        else
         {
             mUi->sCurrentContent->setCurrentWidget(mUi->pStatusHeader);
             mUi->wTransfers->textFilterChanged(QString());

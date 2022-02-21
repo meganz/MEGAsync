@@ -51,6 +51,11 @@ void TransferBaseDelegateWidget::setCurrentIndex(const QModelIndex &currentIndex
     mCurrentIndex = currentIndex;
 }
 
+void TransferBaseDelegateWidget::render(QPainter *painter, const QRegion &sourceRegion)
+{
+    QWidget::render(painter,QPoint(0,0),sourceRegion);
+}
+
 bool TransferBaseDelegateWidget::setActionTransferIcon(QToolButton *button, const QString &iconName)
 {
     bool update(false);

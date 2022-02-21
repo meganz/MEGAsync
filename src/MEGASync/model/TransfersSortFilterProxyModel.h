@@ -5,6 +5,7 @@
 
 #include <QSortFilterProxyModel>
 #include <QReadWriteLock>
+#include <QFutureWatcher>
 
 class TransferBaseDelegateWidget;
 class QTransfersModel;
@@ -14,27 +15,19 @@ class TransfersSortFilterProxyModel : public QSortFilterProxyModel
         Q_OBJECT
 
 public:
-        enum SortCriterion
-        {
-            PRIORITY   = 0,
-            TOTAL_SIZE = 1,
-            NAME       = 2,
-        };
-
         TransfersSortFilterProxyModel(QObject *parent = 0);
         ~TransfersSortFilterProxyModel();
 
         bool moveRows(const QModelIndex& proxyParent, int proxyRow, int count,
                       const QModelIndex& destinationParent, int destinationChild) override;
         void sort(int column, Qt::SortOrder order = Qt::AscendingOrder) override;
-        void sort(SortCriterion column, Qt::SortOrder order = Qt::AscendingOrder);
         void invalidate();
         void setSourceModel(QAbstractItemModel *sourceModel) override;
         void setFilterFixedString(const QString &pattern);
         void setFilters(const TransferData::TransferTypes transferTypes,
                         const TransferData::TransferStates transferStates,
                         const TransferData::FileTypes fileTypes);
-        void applyFilters();
+        void updateFilters();
         void resetAllFilters(bool invalidate = false);
         int  getNumberOfItems(TransferData::TransferType transferType);
         //void refreshNumberOfItems();
@@ -61,6 +54,7 @@ protected slots:
 protected:
         virtual bool filterAcceptsRow(int sourceRow, const QModelIndex& sourceParent) const override;
         virtual bool lessThan(const QModelIndex& left, const QModelIndex& right) const override;
+        int columnCount(const QModelIndex &parent) const override;
 
 protected:
         TransferData::TransferStates mTransferStates;
@@ -80,9 +74,14 @@ private slots:
         void onRowsRemoved(const QModelIndex& parent, int first, int last);
         void onRowsAboutToBeInserted(const QModelIndex&, int, int);
         void onRowsInserted(const QModelIndex&, int, int);
+        void onModelSortedFiltered();
 
 private:
         ThreadPool* mThreadPool;
+        QFutureWatcher<void> mFilterWatcher;
+        QString mFilterText;
 };
+
+Q_DECLARE_METATYPE(QAbstractItemModel::LayoutChangeHint)
 
 #endif // TRANSFERSSORTFILTERPROXYMODEL_H

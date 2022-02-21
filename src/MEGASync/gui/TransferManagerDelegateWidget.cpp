@@ -326,6 +326,11 @@ TransferBaseDelegateWidget::ActionHoverType TransferManagerDelegateWidget::mouse
     return hoverType;
 }
 
+void TransferManagerDelegateWidget::render(QPainter *painter, const QRegion &sourceRegion)
+{
+    TransferBaseDelegateWidget::render(painter, sourceRegion);
+}
+
 void TransferManagerDelegateWidget::on_tPauseResumeTransfer_clicked()
 {
     emit pauseResumeTransfer();

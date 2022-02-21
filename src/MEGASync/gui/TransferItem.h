@@ -8,6 +8,15 @@
 #include <QMimeDatabase>
 #include <QDebug>
 
+//Place here as they represent the number of real columns
+enum class SortCriterion
+{
+    PRIORITY   = 0,
+    TOTAL_SIZE = 1,
+    NAME       = 2,
+    LAST       = 3
+};
+
 typedef int TransferTag;
 
 class TransferData : public QSharedData

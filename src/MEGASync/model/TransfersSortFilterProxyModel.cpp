@@ -19,17 +19,10 @@ TransfersSortFilterProxyModel::TransfersSortFilterProxyModel(QObject* parent)
       mSearchCountersOn(false),
       mThreadPool (ThreadPoolSingleton::getInstance())
 {
-    // Allow only one thread to sort/filter at a time
-    connect(this, &TransfersSortFilterProxyModel::modelAboutToBeChanged,
-            this, [this]
-    {
-    });
-    connect(this, &TransfersSortFilterProxyModel::modelChanged,
-            this, [this]
-    {
-        //auto transferModel (static_cast<QTransfersModel*> (sourceModel()));
-        //transferModel->pauseModelProcessing(false);
-    });
+    qRegisterMetaType<QAbstractItemModel::LayoutChangeHint>("QAbstractItemModel::LayoutChangeHint");
+
+    connect(&mFilterWatcher, &QFutureWatcher<void>::finished,
+            this, &TransfersSortFilterProxyModel::onModelSortedFiltered);
 
     setFilterCaseSensitivity(Qt::CaseInsensitive);
 }
@@ -40,29 +33,32 @@ TransfersSortFilterProxyModel::~TransfersSortFilterProxyModel()
     delete mActivityMutex;
 }
 
-void TransfersSortFilterProxyModel::sort(int column, Qt::SortOrder order)
+void TransfersSortFilterProxyModel::sort(int sortCriterion, Qt::SortOrder order)
 {
-    sort(mSortCriterion, order);
-
-    if(column == 0 && !dynamicSortFilter())
+    if(!dynamicSortFilter())
     {
         setDynamicSortFilter(true);
     }
 
-}
-
-void TransfersSortFilterProxyModel::sort(SortCriterion column, Qt::SortOrder order)
-{
-    emit modelAboutToBeChanged();
-
-    if (column != mSortCriterion)
+    auto sourceM = qobject_cast<QTransfersModel*>(sourceModel());
+    if(sourceM)
     {
-        QSortFilterProxyModel::sort(-1, order);
-        mSortCriterion = column;
+        sourceM->pauseModelProcessing(false);
     }
-    QSortFilterProxyModel::sort(0, order);
 
-    emit modelChanged();
+    emit modelAboutToBeChanged();
+    if (sortCriterion != static_cast<int>(mSortCriterion))
+    {
+        mSortCriterion = static_cast<SortCriterion>(sortCriterion);
+    }
+
+    QFuture<void> filtered = QtConcurrent::run([this, order, sortCriterion](){
+        auto sourceM = qobject_cast<QTransfersModel*>(sourceModel());
+        sourceM->lockModelMutex(true);
+        QSortFilterProxyModel::sort(sortCriterion, order);
+        sourceM->lockModelMutex(false);
+    });
+    mFilterWatcher.setFuture(filtered);
 }
 
 void TransfersSortFilterProxyModel::invalidate()
@@ -97,10 +93,32 @@ void TransfersSortFilterProxyModel::setSourceModel(QAbstractItemModel *sourceMod
 void TransfersSortFilterProxyModel::setFilterFixedString(const QString& pattern)
 {
     mSearchCountersOn = true;
-    QSortFilterProxyModel::setFilterFixedString(pattern);
-    mSearchCountersOn = false;
+    mFilterText = pattern;
+    updateFilters();
 
+    emit modelAboutToBeChanged();
+
+    QFuture<void> filtered = QtConcurrent::run([this, &pattern](){
+        auto sourceM = qobject_cast<QTransfersModel*>(sourceModel());
+        sourceM->lockModelMutex(true);
+        invalidateFilter();
+        sourceM->lockModelMutex(false);
+    });
+    mFilterWatcher.setFuture(filtered);
+}
+
+void TransfersSortFilterProxyModel::onModelSortedFiltered()
+{
+    auto sourceM = qobject_cast<QTransfersModel*>(sourceModel());
+    if(sourceM)
+    {
+        sourceM->pauseModelProcessing(false);
+    }
+
+    emit modelChanged();
     emit searchNumbersChanged();
+
+    mSearchCountersOn = false;
 }
 
 void TransfersSortFilterProxyModel::setFilters(const TransferData::TransferTypes transferTypes,
@@ -118,7 +136,7 @@ void TransfersSortFilterProxyModel::setFilters(const TransferData::TransferTypes
         mNextFileTypes = ~TransferData::FileTypes({});
     }
 
-    applyFilters();
+    //applyFilters();
 }
 
 void TransfersSortFilterProxyModel::resetAllFilters(bool invalidate)
@@ -164,18 +182,17 @@ TransferBaseDelegateWidget *TransfersSortFilterProxyModel::createTransferManager
     return item;
 }
 
-void TransfersSortFilterProxyModel::applyFilters()
+void TransfersSortFilterProxyModel::updateFilters()
 {
-    emit modelAboutToBeChanged();
+    auto sourceM = qobject_cast<QTransfersModel*>(sourceModel());
+    if(sourceM)
+    {
+        sourceM->pauseModelProcessing(false);
+    }
 
     mTransferStates = mNextTransferStates;
     mTransferTypes = mNextTransferTypes;
     mFileTypes = mNextFileTypes;
-
-    invalidateFilter();
-
-    emit modelChanged();
-    emit searchNumbersChanged();
 }
 
 bool TransfersSortFilterProxyModel::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const
@@ -192,9 +209,9 @@ bool TransfersSortFilterProxyModel::filterAcceptsRow(int sourceRow, const QModel
 
         if (accept)
         {
-            if(!filterRegExp().isEmpty())
+            if(!mFilterText.isEmpty())
             {
-                accept = d->mFilename.contains(filterRegExp());
+                accept = d->mFilename.contains(mFilterText);
 
                 if (accept && mSearchCountersOn)
                 {
@@ -297,6 +314,11 @@ bool TransfersSortFilterProxyModel::lessThan(const QModelIndex &left, const QMod
     }
 
     return false;
+}
+
+int TransfersSortFilterProxyModel::columnCount(const QModelIndex &parent) const
+{
+    return 1;
 }
 
 int TransfersSortFilterProxyModel::getPausedTransfers() const

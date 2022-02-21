@@ -8,6 +8,7 @@
 #include "MegaDelegateHoverManager.h"
 
 #include <QToolButton>
+#include <QStandardItemModel>
 #include <QMessageBox>
 
 namespace Ui {
@@ -56,14 +57,9 @@ protected:
 private slots:
     void onModelChanged();
     void onModelAboutToBeChanged();
-    void onProxyActivityLaunchTimeout();
-    void onProxyActivityCloseTimeout();
     void onPauseResumeButtonCheckedOnDelegate(bool pause);
 
 private:
-    static constexpr int PROXY_ACTIVITY_CLOSE_TIMEOUT_MS = 1000;
-    static constexpr int PROXY_ACTIVITY_LAUNCH_TIMEOUT_MS = 300;
-
     enum HeaderState
     {
         HS_SORT_ASCENDING = 0,
@@ -76,6 +72,8 @@ private:
     QTransfersModel *model2;
     TransfersSortFilterProxyModel *mProxyModel;
     MegaTransferDelegate *tDelegate;
+    TransferLoadingDelegate* tLoadingDelegate;
+    QStandardItemModel* mLoadingModel;
     MegaDelegateHoverManager mDelegateHoverManager;
     bool mClearMode;
     MegaApplication *app;
@@ -84,14 +82,11 @@ private:
     ThreadPool* mThreadPool;
     bool mModelIsChanging;
 
-    QTimer* mProxyActivityLaunchTimer;
-    QTimer* mProxyActivityCloseTimer;
-    QMessageBox* mProxyActivityMessage;
-
     void configureTransferView();
     void clearOrCancel(const QList<QExplicitlySharedDataPointer<TransferData>>& pool, int state, int firstRow);
 
     void setHeaderState(QPushButton* header, HeaderState state);
+    void setLoadingView(bool state);
 
 signals:
     void clearTransfers(int firstRow, int amount);
@@ -101,6 +96,8 @@ signals:
     void cancelClearVisibleRows();
     void pauseResumeAllRows(bool pauseState);
     void cancelClearAllRows();
+
+    void disableTransferManager(bool);
 
 };
 

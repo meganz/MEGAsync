@@ -11,6 +11,7 @@
 #include <QLinkedList>
 #include <QtConcurrent/QtConcurrent>
 #include <QDebug>
+#include <QFutureWatcher>
 
 
 #include <set>
@@ -131,6 +132,8 @@ signals:
     void transfersDataUpdated();
     void processTransferInThread();
     void pauseStateChangedByTransferResume();
+    void transfersAboutToBeCanceled();
+    void transfersCanceled();
 
 public slots:
     void onRetryTransfer(TransferTag tag);
@@ -139,15 +142,20 @@ public slots:
 
 private slots:
     void onPauseStateChanged();
-    void processStartTransfers(const std::list<QExplicitlySharedDataPointer<TransferData>>& transferList);
-    void processUpdateTransfers(const std::list<QExplicitlySharedDataPointer<TransferData>>& transferList);
-    void processCancelTransfers(const std::list<QExplicitlySharedDataPointer<TransferData>>& transferList);
+    void processStartTransfers();
+    void processUpdateTransfers();
+    void processCancelTransfers();
+    void onCancelTransferFinished();
 
     void onProcessTransfers();
+
 
 private:
     void updateTransfersCount();
     void removeRows(QModelIndexList &indexesToRemove);
+    QExplicitlySharedDataPointer<TransferData> getTransfer(int row) const;
+    void removeTransfer(int row);
+    void sendDataChanged();
 
 private:
     mega::MegaApi* mMegaApi;
@@ -157,10 +165,15 @@ private:
     QTimer mTimer;
 
     QList<QExplicitlySharedDataPointer<TransferData>> mTransfers;
+    std::list<QExplicitlySharedDataPointer<TransferData>> mTransfersToUpdate;
+    std::list<QExplicitlySharedDataPointer<TransferData>> mTransfersToCancel;
+    std::list<QExplicitlySharedDataPointer<TransferData>> mTransfersToStart;
+    bool mTransfersCancelling;
     QHash<TransferTag, int> mTagByOrder;
     QList<int> mRowsToUpdate;
     ThreadPool* mThreadPool;
     QReadWriteLock* mModelMutex;
+    QFutureWatcher<bool> mCancelWatcher;
     mega::QTMegaTransferListener *delegateListener;
 
     long long mUpdateNotificationNumber;

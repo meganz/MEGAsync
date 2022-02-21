@@ -18,6 +18,43 @@
 
 using namespace mega;
 
+TransferLoadingDelegate::TransferLoadingDelegate(QAbstractItemView *view) : QStyledItemDelegate(view), mView(view)
+{
+    connect(&mTimer, &QTimer::timeout, this, &TransferLoadingDelegate::onLoadingTimerTimeout);
+}
+
+void TransferLoadingDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
+{
+    QColor color(qrand()%255, qrand()%255, qrand()%255);
+    painter->fillRect(option.rect, color);
+}
+
+QSize TransferLoadingDelegate::sizeHint(const QStyleOptionViewItem &, const QModelIndex &) const
+{
+    return QSize(772, 64);
+}
+
+void TransferLoadingDelegate::setLoading(bool state)
+{
+    if(state)
+    {
+        mTimer.start(50);
+    }
+    else
+    {
+        mTimer.stop();
+    }
+
+    mView->update();
+}
+
+void TransferLoadingDelegate::onLoadingTimerTimeout()
+{
+    mView->update();
+}
+
+//////
+
 MegaTransferDelegate::MegaTransferDelegate(TransfersSortFilterProxyModel* model,  QAbstractItemView* view)
     : QStyledItemDelegate(view),
       mProxyModel (model),
@@ -77,7 +114,7 @@ void MegaTransferDelegate::paint(QPainter *painter, const QStyleOptionViewItem &
         painter->save();
 
         painter->translate(pos);
-        w->render(painter, QPoint(0, 0), QRegion(0, 0, width, height));
+        w->render(painter, QRegion(0, 0, width, height));
 
         painter->restore();
     }

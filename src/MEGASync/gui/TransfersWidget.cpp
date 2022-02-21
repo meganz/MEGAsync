@@ -15,32 +15,24 @@ TransfersWidget::TransfersWidget(QWidget* parent) :
     mHeaderNameState (HS_SORT_PRIORITY),
     mHeaderSizeState (HS_SORT_PRIORITY),
     mThreadPool(ThreadPoolSingleton::getInstance()),
-    mProxyActivityCloseTimer (new QTimer(this)),
-    mProxyActivityLaunchTimer (new QTimer(this)),
-    mProxyActivityMessage (new QMessageBox(this)),
-    mModelIsChanging(false)
+    mModelIsChanging(false),
+    mLoadingModel(nullptr)
 {
     ui->setupUi(this);
 
     model2 = app->getTransfersModel();
-
-    mProxyActivityMessage->setAttribute(Qt::WA_DeleteOnClose, false);
-
-    mProxyActivityLaunchTimer->setSingleShot(true);
-    connect(mProxyActivityLaunchTimer, &QTimer::timeout, this, &TransfersWidget::onProxyActivityLaunchTimeout);
-
-    mProxyActivityCloseTimer->setSingleShot(true);
-    connect(mProxyActivityCloseTimer, &QTimer::timeout, this, &TransfersWidget::onProxyActivityCloseTimeout);
 
 }
 void TransfersWidget::setupTransfers()
 {
     mProxyModel = new TransfersSortFilterProxyModel(this);
     mProxyModel->setSourceModel(app->getTransfersModel());
-    mProxyModel->sort(TransfersSortFilterProxyModel::SortCriterion::PRIORITY, Qt::DescendingOrder);
+    mProxyModel->sort(static_cast<int>(SortCriterion::PRIORITY), Qt::DescendingOrder);
 
     connect(mProxyModel, &TransfersSortFilterProxyModel::modelAboutToBeChanged, this, &TransfersWidget::onModelAboutToBeChanged);
     connect(mProxyModel, &TransfersSortFilterProxyModel::modelChanged, this, &TransfersWidget::onModelChanged);
+    connect(app->getTransfersModel(), &QTransfersModel::transfersAboutToBeCanceled, this, &TransfersWidget::onModelAboutToBeChanged);
+    connect(app->getTransfersModel(), &QTransfersModel::transfersCanceled, this, &TransfersWidget::onModelChanged);
     connect(mProxyModel, &TransfersSortFilterProxyModel::transferPauseResume, this, &TransfersWidget::onPauseResumeButtonCheckedOnDelegate);
 
     configureTransferView();
@@ -94,8 +86,8 @@ QTransfersModel* TransfersWidget::getModel()
 void TransfersWidget::on_pHeaderName_clicked()
 {
     Qt::SortOrder order (Qt::AscendingOrder);
-    TransfersSortFilterProxyModel::SortCriterion sortBy (
-                TransfersSortFilterProxyModel::SortCriterion::NAME);
+    SortCriterion sortBy (
+               SortCriterion::NAME);
 
     mHeaderNameState = static_cast<HeaderState>((mHeaderNameState + 1) % HS_NB_STATES);
 
@@ -114,7 +106,7 @@ void TransfersWidget::on_pHeaderName_clicked()
         case HS_SORT_PRIORITY:
         {
             order = Qt::DescendingOrder;
-            sortBy = TransfersSortFilterProxyModel::SortCriterion::PRIORITY;
+            sortBy = SortCriterion::PRIORITY;
             break;
         }
         case HS_NB_STATES: //this never should happen
@@ -129,15 +121,15 @@ void TransfersWidget::on_pHeaderName_clicked()
         mHeaderSizeState = HS_SORT_PRIORITY;
     }
 
-    mProxyModel->sort(sortBy, order);
+    mProxyModel->sort(static_cast<int>(sortBy), order);
     setHeaderState(ui->pHeaderName, mHeaderNameState);
 }
 
 void TransfersWidget::on_pHeaderSize_clicked()
 {
     Qt::SortOrder order (Qt::AscendingOrder);
-    TransfersSortFilterProxyModel::SortCriterion sortBy (
-                TransfersSortFilterProxyModel::SortCriterion::TOTAL_SIZE);
+    SortCriterion sortBy (
+                SortCriterion::TOTAL_SIZE);
 
     mHeaderSizeState = static_cast<HeaderState>((mHeaderSizeState + 1) % HS_NB_STATES);
 
@@ -156,7 +148,7 @@ void TransfersWidget::on_pHeaderSize_clicked()
         case HS_SORT_PRIORITY:
         {
             order = Qt::DescendingOrder;
-            sortBy = TransfersSortFilterProxyModel::SortCriterion::PRIORITY;
+            sortBy = SortCriterion::PRIORITY;
             break;
         }
         case HS_NB_STATES: //this never should happen
@@ -171,7 +163,7 @@ void TransfersWidget::on_pHeaderSize_clicked()
         mHeaderNameState = HS_SORT_PRIORITY;
     }
 
-    mProxyModel->sort(sortBy, order);
+    mProxyModel->sort(static_cast<int>(sortBy), order);
     setHeaderState(ui->pHeaderSize, mHeaderSizeState);
 }
 
@@ -252,7 +244,6 @@ void TransfersWidget::filtersChanged(const TransferData::TransferTypes transferT
                                      const TransferData::TransferStates transferStates,
                                      const TransferData::FileTypes fileTypes)
 {
-    textFilterChanged(QString());
     mProxyModel->setFilters(transferTypes, transferStates, fileTypes);
 }
 
@@ -275,43 +266,25 @@ void TransfersWidget::changeEvent(QEvent *event)
     QWidget::changeEvent(event);
 }
 
+void TransfersWidget::onModelAboutToBeChanged()
+{
+    mModelIsChanging = true;
+    setLoadingView(true);
+
+    emit disableTransferManager(true);
+}
+
 void TransfersWidget::onModelChanged()
 {
     mModelIsChanging = false;
 
     auto allPaused = mProxyModel->isAnyPaused();
     onPauseStateChanged(allPaused);
+    setLoadingView(false);
 
-    if(!mProxyActivityCloseTimer->isActive())
-    {
-        mProxyActivityMessage->close();
-    }
+    emit disableTransferManager(false);
 }
 
-void TransfersWidget::onModelAboutToBeChanged()
-{
-    mModelIsChanging = true;
-    mProxyActivityLaunchTimer->start(std::chrono::milliseconds(PROXY_ACTIVITY_LAUNCH_TIMEOUT_MS));
-}
-
-void TransfersWidget::onProxyActivityCloseTimeout()
-{
-    if(!mModelIsChanging)
-    {
-        mProxyActivityMessage->close();
-    }
-}
-
-void TransfersWidget::onProxyActivityLaunchTimeout()
-{
-    if(mModelIsChanging)
-    {
-        mProxyActivityCloseTimer->start(std::chrono::milliseconds(PROXY_ACTIVITY_CLOSE_TIMEOUT_MS));
-
-        mProxyActivityMessage->setText(tr("Please, wait..."));
-        mProxyActivityMessage->exec();
-    }
-}
 
 void TransfersWidget::onPauseResumeButtonCheckedOnDelegate(bool pause)
 {
@@ -366,4 +339,34 @@ void TransfersWidget::setHeaderState(QPushButton* header, HeaderState state)
         }
     }
     header->setIcon(icon);
+}
+
+void TransfersWidget::setLoadingView(bool state)
+{
+    if(!mLoadingModel)
+    {
+        mLoadingModel = new QStandardItemModel(ui->tvTransfers);
+        mLoadingModel->setRowCount(20);
+        for(int row = 0; row < 20; ++row)
+        {
+            mLoadingModel->appendRow(new QStandardItem());
+        }
+
+        tLoadingDelegate = new TransferLoadingDelegate(ui->tvTransfers);
+    }
+
+    tLoadingDelegate->setLoading(state);
+
+    if(state)
+    {
+        ui->tvTransfers->setModel(mLoadingModel);
+        ui->tvTransfers->setItemDelegate(tLoadingDelegate);
+        ui->tvTransfers->update();
+    }
+    else
+    {
+        ui->tvTransfers->setModel(mProxyModel);
+        ui->tvTransfers->setItemDelegate(tDelegate);
+        //unset new model
+    }
 }

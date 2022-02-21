@@ -24,6 +24,7 @@ private:
     bool disableMenus;
 
     TransfersWidget* mParentTransferWidget;
+    TransfersSortFilterProxyModel* mLoadingModel;
 
     QMenu* mContextMenu;
     QAction* mPauseAction;
