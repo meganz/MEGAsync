@@ -18,13 +18,13 @@ const int Preferences::BUILD_ID = 0;
 // Do not change the location of VERSION_STRING, create_tarball.sh parses this file
 const QString Preferences::VERSION_STRING = QString::fromAscii("4.6.4");
 QString Preferences::SDK_ID = QString::fromAscii("1c6a3f0");
-const QString Preferences::CHANGELOG = QString::fromUtf8(QT_TR_NOOP(
-    "- Support to stream file links from a folder link.\n"
-    "- Fixed translation issues.\n"
-    "- Improved user experience.\n"
-    "- New notifications panel at settings dialog.\n"
-    "- Other UI fixes and adjustments.\n"
-    "- Fixed detected crashes on Windows, Linux and macOS.\n"));
+const QString Preferences::CHANGELOG = QString::fromUtf8(QT_TR_NOOP(                                                             
+"- Added support to stream file links from a folder link.\n"
+"- Fixed translation issues.\n"
+"- Improved the user experience.\n"
+"- Added a new notifications panel in the settings dialog.\n"
+"- Other minor UI fixes and adjustments.\n"
+"- Fixed detected crashes on Windows, Linux and macOS.\n"));
 
 const QString Preferences::TRANSLATION_FOLDER = QString::fromAscii("://translations/");
 const QString Preferences::TRANSLATION_PREFIX = QString::fromAscii("MEGASyncStrings_");

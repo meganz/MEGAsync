@@ -3536,13 +3536,14 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Strengthen cryptographic security on Linux repositories.
-- Fix memory issues with problematic PDF files.
+        <source>- Added support to stream file links from a folder link.
+- Fixed translation issues.
+- Improved the user experience.
+- Added a new notifications panel in the settings dialog.
+- Other minor UI fixes and adjustments.
+- Fixed detected crashes on Windows, Linux and macOS.
 </source>
-        <translatorcomment>Changelog v4.6.3 (linux only)</translatorcomment>
-        <translation>- Strengthen cryptographic security on Linux repositories.
-- Fix memory issues with problematic PDF files.
-</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
