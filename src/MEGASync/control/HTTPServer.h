@@ -96,6 +96,8 @@ class HTTPServer: public QTcpServer
         void peerVerifyError(const QSslError & error);
 
     private:
+        QString findCorrespondingAllowedOrigin(const QStringList& headers);
+
         bool disabled;
         bool sslEnabled;
         mega::MegaApi *megaApi;

@@ -231,7 +231,8 @@ void HTTPServer::readClient()
         return;
     }
 
-    request->data.append(QString::fromUtf8(socket->readAll().data()));
+    QByteArray socketData = socket->readAll();
+    request->data.append(QString::fromUtf8(socketData.data()));
     if (request->data.contains(QString::fromUtf8("\r\n\r\n")))
     {
         QStringList tokens = request->data.split(QString::fromUtf8("\r\n\r\n"));
@@ -245,28 +246,12 @@ void HTTPServer::readClient()
 
         if (Preferences::HTTPS_ORIGIN_CHECK_ENABLED && !Preferences::HTTPS_ALLOWED_ORIGINS.isEmpty())
         {
-            bool found = false;
-            for (int i = 0; i < Preferences::HTTPS_ALLOWED_ORIGINS.size(); i++)
-            {                
-                QRegExp check = QRegExp(QString::fromUtf8("Origin: %1").arg(Preferences::HTTPS_ALLOWED_ORIGINS.at(i)),
-                                        Qt::CaseSensitive, QRegExp::Wildcard);
-                for (int j = 0; j < headers.size(); j++)
-                {
-                    if (check.exactMatch(headers[j]))
-                    {
-                       request->origin = headers[j].mid(8);
-                       found = true;
-                       break;
-                    }
-                }
-
-                if (found)
-                {
-                    break;
-                }
+            QString foundOrigin = findCorrespondingAllowedOrigin(headers);
+            if (!foundOrigin.isEmpty())
+            {
+                request->origin = foundOrigin;
             }
-
-            if (!found)
+            else
             {
                 MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, "Missing or invalid Origin header");
                 rejectRequest(socket);
@@ -867,4 +852,21 @@ void HTTPServer::sslErrors(const QList<QSslError> &)
 
 void HTTPServer::peerVerifyError(const QSslError &)
 {
+}
+
+QString HTTPServer::findCorrespondingAllowedOrigin(const QStringList& headers)
+{
+    for (const QString& allowedOrigin : qAsConst(Preferences::HTTPS_ALLOWED_ORIGINS))
+    {
+        QRegExp check = QRegExp(QString::fromUtf8("Origin: %1").arg(allowedOrigin),
+                                Qt::CaseSensitive, QRegExp::Wildcard);
+        for (const QString& header : headers)
+        {
+            if (check.exactMatch(header))
+            {
+               return header.mid(8);
+            }
+        }
+    }
+    return QString();
 }
