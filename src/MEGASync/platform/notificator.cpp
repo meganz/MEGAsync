@@ -251,11 +251,12 @@ void Notificator::notifyDBus(Class cls, const QString &title, const QString &tex
     // Timeout (in msec)
     args.append(millisTimeout);
 
-    if(dbussSupportsActions)
+    if(dbussSupportsActions && notification)
     {
         // fire with callback to gather ID
         interface->callWithCallback(QString::fromUtf8("Notify"), args, notification,
-                                    SLOT(dBusNotificationSentCallback(QDBusMessage)), SLOT(dbusNotificationSentErrorCallback()));
+                                    SLOT(dBusNotificationSentCallback(QDBusMessage)),  // FIXME: this never gets connected
+                                    SLOT(dBusNotificationSentErrorCallback(QDBusError))); // FIXME: this never gets connected
     }
     else
     {
@@ -298,7 +299,6 @@ void Notificator::notifySystray(Class cls, const QString &title, const QString &
         currentNotification = NULL;
     }
 
-    Q_UNUSED(icon);
     QSystemTrayIcon::MessageIcon sicon = QSystemTrayIcon::NoIcon;
     switch(cls) // Set icon based on class
     {
@@ -558,9 +558,12 @@ void MegaNotification::dBusNotificationSentCallback(QDBusMessage dbusMssage)
     }
 }
 
-void MegaNotification::dbusNotificationSentErrorCallback()
+void MegaNotification::dBusNotificationSentErrorCallback(QDBusError error)
 {
-    MegaApi::log(MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Notification to DBUS failed").toUtf8().constData());
+    if(error.isValid())
+    {
+        MegaApi::log(MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Notification to DBUS failed %1:\n%2").arg(error.name()).arg(error.message()).toUtf8().constData());
+    }
     deleteLater();
 }
 

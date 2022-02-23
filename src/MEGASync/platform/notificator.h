@@ -91,7 +91,7 @@ signals:
 #ifdef USE_DBUS
 public slots:
     void dBusNotificationSentCallback(QDBusMessage dbusMssage);
-    void dbusNotificationSentErrorCallback();
+    void dBusNotificationSentErrorCallback(QDBusError error);
     void dBusNotificationCallback(QDBusMessage dbusMssage);
 #endif
 };
