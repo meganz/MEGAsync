@@ -70,6 +70,7 @@ class HTTPServer: public QTcpServer
         EXTERNAL_UPLOAD_SELECTION_STATUS_START,
         EXTERNAL_TRANSFER_QUERY_PROGRESS_START,
         EXTERNAL_SHOW_IN_FOLDER,
+        EXTERNAL_ADD_BACKUP,
         UNKNOWN_REQUEST,
     };
 
@@ -122,6 +123,7 @@ class HTTPServer: public QTcpServer
         void externalUploadSelectionStatus(QString& response, const HTTPRequest& request);
         void externalTransferQueryProgress(QString& response, const HTTPRequest& request);
         void externalShowInFolder(QString& response, const HTTPRequest& request);
+        void externalAddBackup(QString& response, const HTTPRequest& request);
 
         RequestType GetRequestType(const HTTPRequest& request);
         bool disabled;
