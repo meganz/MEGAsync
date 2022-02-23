@@ -219,6 +219,11 @@ void HTTPServer::onTransferDataUpdate(MegaHandle handle, int state, long long pr
     }
 }
 
+bool isRequestOfType(const QStringList& headers, const char* typeName)
+{
+    return headers[0].startsWith(QString::fromAscii(typeName));
+}
+
 void HTTPServer::readClient()
 {
     MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Processing webclient request via %1").arg(QString::fromUtf8(sslEnabled ? "HTTPS" : "HTTP")).toUtf8().constData());
@@ -237,7 +242,29 @@ void HTTPServer::readClient()
     {
         QStringList tokens = request->data.split(QString::fromUtf8("\r\n\r\n"));
         QStringList headers = tokens[0].split(QString::fromUtf8("\r\n"));
-        if (!headers.size() || !headers[0].startsWith(QString::fromAscii("POST")))
+        bool requestIsPost = isRequestOfType(headers, "POST");
+        bool requestIsOption = isRequestOfType(headers, "OPTION");
+
+/**** test ******
+        if (headers.size())
+        {
+            if (isRequestOfType(headers, "POST"))
+            {
+                processPostRequest();
+                return;
+            }
+            else if (isRequestOfType(headers, "OPTION"))
+            {
+                processOptionRequest();
+                return;
+            }
+        }
+
+        MegaApi::log(MegaApi::LOG_LEVEL_WARNING, "Method not allowed for webclient request");
+        rejectRequest(socket, QString::fromUtf8("405 Method Not Allowed"));
+
+/*****/
+        if (!headers.size() || (!requestIsPost && !requestIsOption))
         {
             MegaApi::log(MegaApi::LOG_LEVEL_WARNING, "Method not allowed for webclient request");
             rejectRequest(socket, QString::fromUtf8("405 Method Not Allowed"));
@@ -259,54 +286,13 @@ void HTTPServer::readClient()
             }
         }
 
-        QString contentLengthId = QString::fromUtf8("Content-length: ");
-        QStringList contentLengthHeader = headers.filter(QRegExp(contentLengthId, Qt::CaseInsensitive));
-        if (!contentLengthHeader.size())
+        if (requestIsPost)
         {
-            MegaApi::log(MegaApi::LOG_LEVEL_WARNING, "Missing Content-length header");
-            rejectRequest(socket);
-            return;
+            processPostRequest(socket, request, headers, tokens[1]);
         }
-
-        bool ok;
-        request->contentLength = contentLengthHeader[0].mid(contentLengthId.size(), contentLengthHeader[0].size() - contentLengthId.size()).toInt(&ok);
-        if (!ok || request->contentLength < tokens[1].size())
+        else if (requestIsOption)
         {
-            if (!ok)
-            {
-                MegaApi::log(MegaApi::LOG_LEVEL_WARNING, QString::fromUtf8("Unable to parse Content-length header: %1")
-                             .arg(contentLengthHeader[0]).toUtf8().constData());
-            }
-            else
-            {
-                MegaApi::log(MegaApi::LOG_LEVEL_WARNING, QString::fromUtf8("Invalid Content-length header. Header: %1 - Data: %2")
-                             .arg(request->contentLength).arg(tokens[1].size()).toUtf8().constData());
-            }
-            rejectRequest(socket);
-            return;
-        }
-
-        if (request->contentLength > tokens[1].size())
-        {
-            return;
-        }
-
-        request->data = tokens[1];
-
-
-        QPointer<QAbstractSocket> safeSocket = socket;
-        QPointer<HTTPServer> safeServer = this;
-        processRequest(socket, *request);
-        if (!safeServer || !safeSocket)
-        {
-            return;
-        }
-
-        HTTPRequest *req = requests.value(socket, NULL);
-        if (request == req)
-        {
-            requests.remove(socket);
-            delete request;
+            processOptionRequest(socket, request, headers);
         }
     }
 }
@@ -339,7 +325,7 @@ void HTTPServer::rejectRequest(QAbstractSocket *socket, QString response)
     }
 }
 
-void HTTPServer::processRequest(QAbstractSocket *socket, HTTPRequest request)
+void HTTPServer::processPostRequest(QAbstractSocket *socket, HTTPRequest request)
 {
     QString response;
     QString openLinkRequestStart(QString::fromUtf8("{\"a\":\"l\","));
@@ -869,4 +855,140 @@ QString HTTPServer::findCorrespondingAllowedOrigin(const QStringList& headers)
         }
     }
     return QString();
+}
+
+void HTTPServer::processPostRequest(QAbstractSocket *socket, HTTPRequest* request,
+                                    const QStringList& headers, const QString& content)
+{
+    QString contentLengthId = QString::fromUtf8("Content-length: ");
+    QStringList contentLengthHeader = headers.filter(QRegExp(contentLengthId, Qt::CaseInsensitive));
+    if (!contentLengthHeader.size())
+    {
+        MegaApi::log(MegaApi::LOG_LEVEL_WARNING, "Missing Content-length header");
+        rejectRequest(socket);
+        return;
+    }
+
+    bool ok;
+    request->contentLength = contentLengthHeader[0].mid(contentLengthId.size(), contentLengthHeader[0].size() - contentLengthId.size()).toInt(&ok);
+    if (!ok || request->contentLength < content.size())
+    {
+        if (!ok)
+        {
+            MegaApi::log(MegaApi::LOG_LEVEL_WARNING, QString::fromUtf8("Unable to parse Content-length header: %1")
+                         .arg(contentLengthHeader[0]).toUtf8().constData());
+        }
+        else
+        {
+            MegaApi::log(MegaApi::LOG_LEVEL_WARNING, QString::fromUtf8("Invalid Content-length header. Header: %1 - Data: %2")
+                         .arg(request->contentLength).arg(content.size()).toUtf8().constData());
+        }
+        rejectRequest(socket);
+        return;
+    }
+
+    if (request->contentLength > content.size())
+    {
+        return;
+    }
+
+    request->data = content;
+
+
+    QPointer<QAbstractSocket> safeSocket = socket;
+    QPointer<HTTPServer> safeServer = this;
+    processPostRequest(socket, *request);
+    if (!safeServer || !safeSocket)
+    {
+        return;
+    }
+
+    HTTPRequest *req = requests.value(socket, NULL);
+    if (request == req)
+    {
+        requests.remove(socket);
+        delete request;
+    }
+}
+
+bool hasFieldWithValue(const QStringList& headers, const char* fieldName, const char* value)
+{
+    bool isFieldAsExpected = false;
+    QString fieldNameStr = QString::fromUtf8(fieldName);
+    QString keyString = QString::fromUtf8("%1: ").arg(fieldNameStr);
+    QStringList foundValues = headers.filter(QRegExp(keyString, Qt::CaseInsensitive));
+    if (foundValues.size() == 1)
+    {
+        QString foundValue = foundValues.front().mid(keyString.length());
+        isFieldAsExpected = (foundValue == QString::fromUtf8(value));
+    }
+    else
+    {
+        const char* logString = (foundValues.size() > 1) ? "Several instances of field %1 in header"
+                                                         : "field %1 not found in header";
+        MegaApi::log(MegaApi::LOG_LEVEL_WARNING, QString::fromUtf8(logString).arg(fieldNameStr).toUtf8().constData());
+    }
+
+    return isFieldAsExpected;
+}
+
+bool isPreFlightCorsRequest(const QStringList& headers)
+{
+    bool isOk = hasFieldWithValue(headers, "Access-Control-Request-Method", "POST");
+    if (isOk)
+        isOk = hasFieldWithValue(headers, "Access-Control-Request-Private-Network", "true");
+    if (isOk)
+        isOk = hasFieldWithValue(headers, "Sec-Fetch-Mode", "cors");
+    if (isOk)
+        isOk = hasFieldWithValue(headers, "Sec-Fetch-Site", "cross-site");
+    return isOk;
+}
+
+void sendPreFlightResponse(QAbstractSocket* socket, HTTPRequest* request)
+{
+    QPointer<QAbstractSocket> safeSocket = socket;
+    QPointer<HTTPServer> safeServer = this;
+
+    QString fullResponse = QString::fromUtf8("HTTP/1.1 204 No Content\r\n"
+                                             "Date: %1\r\n"
+                                             "Server: MegaSync HTTP Server"
+                                             "Access-Control-Allow-Origin: https://foo.example\r\n"
+                                             "Access-Control-Allow-Methods: POST\r\n"
+                                             "Vary: Accept-Encoding, Origin\r\n"
+                                             "Keep-Alive: timeout=2, max=100\r\n"
+                                             "Connection: Keep-Alive\r\n"
+                                             "\r\n"
+                                             ).arg(date).arg(origin);
+    if (safeServer && safeSocket)
+    {
+        safeSocket->write(fullResponse.toUtf8());
+        safeSocket->flush();
+        safeSocket->disconnectFromHost();
+        safeSocket->deleteLater();
+    }
+
+}
+
+void HTTPServer::processOptionRequest(QAbstractSocket* socket, HTTPRequest* request, const QStringList& headers)
+{
+    bool isCors = isPreFlightCorsRequest(headers);
+    if (!isCors)
+        return;
+
+    sendPreFlightResponse(socket, request);
+
+/*    QPointer<QAbstractSocket> safeSocket = socket;
+    QPointer<HTTPServer> safeServer = this;
+    //processRequest(socket, *request);
+    if (!safeServer || !safeSocket)
+    {
+        return;
+    }
+
+    HTTPRequest *req = requests.value(socket, NULL);
+    if (request == req)
+    {
+        requests.remove(socket);
+        delete request;
+    }*/
 }

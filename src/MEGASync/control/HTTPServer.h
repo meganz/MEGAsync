@@ -90,13 +90,17 @@ class HTTPServer: public QTcpServer
         void readClient();
         void discardClient();
         void rejectRequest(QAbstractSocket *socket, QString response = QString::fromUtf8("403 Forbidden"));
-        void processRequest(QAbstractSocket *socket, HTTPRequest request);
+        void processPostRequest(QAbstractSocket *socket, HTTPRequest request);
         void error(QAbstractSocket::SocketError);
         void sslErrors(const QList<QSslError> & errors);
         void peerVerifyError(const QSslError & error);
 
     private:
         QString findCorrespondingAllowedOrigin(const QStringList& headers);
+
+        void processPostRequest(QAbstractSocket* socket, HTTPRequest* request,
+                                const QStringList& headers, const QString& content);
+        void processOptionRequest(QAbstractSocket* socket, HTTPRequest* request, const QStringList& headers);
 
         bool disabled;
         bool sslEnabled;
