@@ -586,7 +586,7 @@ void TransferManager::on_bClearAll_clicked()
         QMessageBox msgBox(QMessageBox::Warning,QString::fromUtf8("MegaSync"), warningMessage,
                            QMessageBox::Yes | QMessageBox::No);
         HighDpiResize hDpiResizer(&msgBox);
-        msgBox.setButtonText(QMessageBox::No, tr("Cancell all transfers"));
+        msgBox.setButtonText(QMessageBox::No, tr("Cancel all transfers"));
         msgBox.setButtonText(QMessageBox::Yes, tr("Continue transfers"));
         msgBox.setDefaultButton(QMessageBox::No);
 
