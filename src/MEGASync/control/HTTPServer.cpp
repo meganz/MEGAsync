@@ -937,10 +937,10 @@ bool isPreFlightCorsRequest(const QStringList& headers)
     bool isOk = hasFieldWithValue(headers, "Access-Control-Request-Method", "POST");
     if (isOk)
         isOk = hasFieldWithValue(headers, "Access-Control-Request-Private-Network", "true");
-    if (isOk)
+    /*if (isOk)
         isOk = hasFieldWithValue(headers, "Sec-Fetch-Mode", "cors");
     if (isOk)
-        isOk = hasFieldWithValue(headers, "Sec-Fetch-Site", "cross-site");
+        isOk = hasFieldWithValue(headers, "Sec-Fetch-Site", "cross-site");*/
     return isOk;
 }
 
@@ -950,15 +950,13 @@ void sendPreFlightResponse(QAbstractSocket* socket, HTTPRequest* request)
     QPointer<HTTPServer> safeServer = this;
 
     QString fullResponse = QString::fromUtf8("HTTP/1.1 204 No Content\r\n"
-                                             "Date: %1\r\n"
                                              "Server: MegaSync HTTP Server"
-                                             "Access-Control-Allow-Origin: https://foo.example\r\n"
+                                             "Access-Control-Allow-Origin: %1\r\n"
                                              "Access-Control-Allow-Methods: POST\r\n"
-                                             "Vary: Accept-Encoding, Origin\r\n"
-                                             "Keep-Alive: timeout=2, max=100\r\n"
+                                             "Access-Control-Max-Age: 86400\r\n"
                                              "Connection: Keep-Alive\r\n"
                                              "\r\n"
-                                             ).arg(date).arg(origin);
+                                             ).arg(origin);
     if (safeServer && safeSocket)
     {
         safeSocket->write(fullResponse.toUtf8());
