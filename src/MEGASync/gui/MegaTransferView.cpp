@@ -179,8 +179,6 @@ void MegaTransferView::onClearCompletedVisibleTransfers()
         auto sourceModel(qobject_cast<QTransfersModel*>(proxy->sourceModel()));
         sourceModel->cancelClearTransfers(indexes, false);
     }
-
-    mParentTransferWidget->getModel()->resetCompletedTransfersCount();
 }
 
 void MegaTransferView::onCancelClearSelection()

@@ -102,8 +102,7 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
     connect(ui->wSortNotifications, SIGNAL(clicked()), this, SLOT(on_bActualFilter_clicked()));
     connect(app, &MegaApplication::avatarReady, this, &InfoDialog::setAvatar);
 
-    connect(app->getTransfersModel(), &QTransfersModel::transfersDataUpdated, this, &InfoDialog::onTransfersDataUpdated);
-
+    connect(app->getTransfersModel(), &QTransfersModel::transfersCountUpdated, this, &InfoDialog::onTransfersDataUpdated);
 
     //Set window properties
 #ifdef Q_OS_LINUX
@@ -552,7 +551,7 @@ void InfoDialog::setUsage()
 
 void InfoDialog::updateTransfersCount()
 {
-    auto& TransfersCountUpdated = app->getTransfersModel()->getTransfersCount();
+    auto TransfersCountUpdated = app->getTransfersModel()->getTransfersCount();
 
     ui->bTransferManager->setCompletedDownloads(qMax(0,qMin(TransfersCountUpdated.totalDownloads, TransfersCountUpdated.currentDownload)));
     ui->bTransferManager->setCompletedUploads(qMax(0,qMin(TransfersCountUpdated.totalUploads,TransfersCountUpdated.currentUpload)));
@@ -560,22 +559,22 @@ void InfoDialog::updateTransfersCount()
     ui->bTransferManager->setTotalUploads(TransfersCountUpdated.totalUploads);
 
     double percentUploads(0.0);
-    if(TransfersCountUpdated.leftUploadBytes != 0)
+    if(TransfersCountUpdated.totalUploadBytes != 0)
     {
-        percentUploads = (TransfersCountUpdated.completedUploadBytes*1.0)/ TransfersCountUpdated.leftUploadBytes;
+        percentUploads = (TransfersCountUpdated.completedUploadBytes*1.0)/ TransfersCountUpdated.totalUploadBytes;
     }
 
     double percentDownloads(0.0);
-    if(TransfersCountUpdated.leftDownloadBytes != 0)
+    if(TransfersCountUpdated.totalDownloadBytes != 0)
     {
-        percentDownloads = (TransfersCountUpdated.completedDownloadBytes*1.0)/ TransfersCountUpdated.leftDownloadBytes;
+        percentDownloads = (TransfersCountUpdated.completedDownloadBytes*1.0)/ TransfersCountUpdated.totalDownloadBytes;
     }
 
     ui->bTransferManager->setPercentUploads(percentUploads);
     ui->bTransferManager->setPercentDownloads(percentDownloads);
 
-    if (!TransfersCountUpdated.remainingDownloads && !TransfersCountUpdated.remainingUploads
-            && TransfersCountUpdated.leftUploadBytes == 0 && TransfersCountUpdated.leftDownloadBytes == 0
+    if (!TransfersCountUpdated.pendingDownloads && !TransfersCountUpdated.pendingUploads
+            && TransfersCountUpdated.totalUploadBytes == 0 && TransfersCountUpdated.totalDownloadBytes == 0
             && TransfersCountUpdated.totalUploads != 0 && TransfersCountUpdated.totalDownloads != 0)
     {
         if (!overQuotaState && (ui->sActiveTransfers->currentWidget() != ui->pUpdated))
@@ -788,36 +787,29 @@ void InfoDialog::addSync()
 
 void InfoDialog::onAllUploadsFinished()
 {
-//    remainingUploads = megaApi->getNumPendingUploads();
-//    if (!remainingUploads)
-//    {
-//        megaApi->resetTotalUploads();
-//    }
 }
 
 void InfoDialog::onAllDownloadsFinished()
 {
-//    remainingDownloads = megaApi->getNumPendingDownloads();
-//    if (!remainingDownloads)
-//    {
-//        megaApi->resetTotalDownloads();
-//    }
+
 }
 
 void InfoDialog::onAllTransfersFinished()
 {
-//    if (!remainingDownloads && !remainingUploads)
-//    {
-//        if (!overQuotaState && (ui->sActiveTransfers->currentWidget() != ui->pUpdated))
-//        {
-//            updateDialogState();
-//        }
+    auto transfersCount = app->getTransfersModel()->getTransfersCount();
 
-//        if ((QDateTime::currentMSecsSinceEpoch() - preferences->lastTransferNotificationTimestamp()) > Preferences::MIN_TRANSFER_NOTIFICATION_INTERVAL_MS)
-//        {
-//            app->showNotificationMessage(tr("All transfers have been completed"));
-//        }
-//    }
+    if (!transfersCount.pendingDownloads && !transfersCount.pendingUploads)
+    {
+        if (!overQuotaState && (ui->sActiveTransfers->currentWidget() != ui->pUpdated))
+        {
+            updateDialogState();
+        }
+
+        if ((QDateTime::currentMSecsSinceEpoch() - preferences->lastTransferNotificationTimestamp()) > Preferences::MIN_TRANSFER_NOTIFICATION_INTERVAL_MS)
+        {
+            app->showNotificationMessage(tr("All transfers have been completed"));
+        }
+    }
 }
 
 void InfoDialog::updateDialogState()
@@ -948,7 +940,7 @@ void InfoDialog::updateDialogState()
     }
     else
     {
-        auto& transfersCount = app->getTransfersModel()->getTransfersCount();
+        auto transfersCount = app->getTransfersModel()->getTransfersCount();
 
         if (transfersCount.totalDownloads || transfersCount.totalUploads
                 || ui->wPSA->isPSAready())

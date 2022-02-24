@@ -6,7 +6,7 @@
 
 
 TransfersSortFilterProxyModel::TransfersSortFilterProxyModel(QObject* parent)
-    : QSortFilterProxyModel(parent),
+    : TransfersSortFilterProxyModelBase(parent),
       mTransferStates (TransferData::STATE_MASK),
       mTransferTypes (TransferData::TYPE_MASK),
       mFileTypes (~TransferData::FileTypes()),
@@ -14,8 +14,6 @@ TransfersSortFilterProxyModel::TransfersSortFilterProxyModel(QObject* parent)
       mNextTransferTypes (mTransferTypes),
       mNextFileTypes (mFileTypes),
       mSortCriterion (SortCriterion::PRIORITY),
-      mFilterMutex (new QMutex(QMutex::Recursive)),
-      mActivityMutex (new QMutex(QMutex::Recursive)),
       mSearchCountersOn(false),
       mThreadPool (ThreadPoolSingleton::getInstance())
 {
@@ -29,8 +27,6 @@ TransfersSortFilterProxyModel::TransfersSortFilterProxyModel(QObject* parent)
 
 TransfersSortFilterProxyModel::~TransfersSortFilterProxyModel()
 {
-    delete mFilterMutex;
-    delete mActivityMutex;
 }
 
 void TransfersSortFilterProxyModel::sort(int sortCriterion, Qt::SortOrder order)
@@ -76,13 +72,10 @@ void TransfersSortFilterProxyModel::invalidate()
 void TransfersSortFilterProxyModel::setSourceModel(QAbstractItemModel *sourceModel)
 {
     connect(sourceModel, &QAbstractItemModel::rowsAboutToBeRemoved,
-            this, &TransfersSortFilterProxyModel::onRowsRemoved);
+            this, &TransfersSortFilterProxyModel::onRowsAboutToBeRemoved, Qt::DirectConnection);
 
     connect(sourceModel, &QAbstractItemModel::rowsAboutToBeInserted,
             this, &TransfersSortFilterProxyModel::onRowsAboutToBeInserted);
-
-    connect(sourceModel, &QAbstractItemModel::rowsInserted,
-            this, &TransfersSortFilterProxyModel::onRowsInserted);
 
     connect(sourceModel, &QAbstractItemModel::rowsInserted,
             this, &TransfersSortFilterProxyModel::onRowsInserted);
@@ -139,7 +132,7 @@ void TransfersSortFilterProxyModel::setFilters(const TransferData::TransferTypes
     //applyFilters();
 }
 
-void TransfersSortFilterProxyModel::resetAllFilters(bool invalidate)
+void TransfersSortFilterProxyModel::resetAllFilters()
 {
     resetNumberOfItems();
     setFilters({}, {}, {});
@@ -151,11 +144,11 @@ int  TransfersSortFilterProxyModel::getNumberOfItems(TransferData::TransferType 
 
     if(transferType == TransferData::TransferType::TRANSFER_UPLOAD)
     {
-        nb = mUlNumber.size();
+        nb = mUlNumber;
     }
     else if(transferType == TransferData::TransferType::TRANSFER_DOWNLOAD)
     {
-        nb = mDlNumber.size();
+        nb = mDlNumber;
     }
 
     return nb;
@@ -163,8 +156,8 @@ int  TransfersSortFilterProxyModel::getNumberOfItems(TransferData::TransferType 
 
 void TransfersSortFilterProxyModel::resetNumberOfItems()
 {
-    mDlNumber.clear();
-    mUlNumber.clear();
+    mDlNumber = 0;
+    mUlNumber = 0;
 }
 
 TransferBaseDelegateWidget *TransfersSortFilterProxyModel::createTransferManagerItem(QWidget* parent)
@@ -217,17 +210,11 @@ bool TransfersSortFilterProxyModel::filterAcceptsRow(int sourceRow, const QModel
                 {
                     if (d->mType & TransferData::TRANSFER_UPLOAD)
                     {
-                        if(!mUlNumber.contains(d->mTag))
-                        {
-                            mUlNumber.append(d->mTag);
-                        }
+                        mUlNumber++;
                     }
                     else if (d->mType & TransferData::TRANSFER_DOWNLOAD)
                     {
-                        if(!mDlNumber.contains(d->mTag))
-                        {
-                            mDlNumber.append(d->mTag);
-                        }
+                        mDlNumber++;
                     }
                 }
             }
@@ -240,9 +227,10 @@ bool TransfersSortFilterProxyModel::filterAcceptsRow(int sourceRow, const QModel
     return false;
 }
 
-void TransfersSortFilterProxyModel::onRowsRemoved(const QModelIndex &parent, int first, int last)
+//It is called in the main thread, from a QtConcurrent thread
+void TransfersSortFilterProxyModel::onRowsAboutToBeRemoved(const QModelIndex &parent, int first, int last)
 {
-   if(filterRegExp().isEmpty())
+   if(mFilterText.isEmpty())
    {
        return;
    }
@@ -259,11 +247,11 @@ void TransfersSortFilterProxyModel::onRowsRemoved(const QModelIndex &parent, int
        {
            if (d->mType & TransferData::TRANSFER_UPLOAD)
            {
-               mUlNumber.removeOne(d->mTag);
+               mUlNumber--;
            }
            else
            {
-               mDlNumber.removeOne(d->mTag);
+               mDlNumber--;
            }
 
            RowsRemoved = true;
@@ -278,7 +266,7 @@ void TransfersSortFilterProxyModel::onRowsRemoved(const QModelIndex &parent, int
 
 void TransfersSortFilterProxyModel::onRowsAboutToBeInserted(const QModelIndex &, int , int )
 {
-    if(!mSearchCountersOn && !filterRegExp().isEmpty())
+    if(!mSearchCountersOn && !mFilterText.isEmpty())
     {
         mSearchCountersOn = true;
     }
@@ -286,7 +274,7 @@ void TransfersSortFilterProxyModel::onRowsAboutToBeInserted(const QModelIndex &,
 
 void TransfersSortFilterProxyModel::onRowsInserted(const QModelIndex &, int , int )
 {
-    if(mSearchCountersOn && !filterRegExp().isEmpty())
+    if(mSearchCountersOn && !mFilterText.isEmpty())
     {
         mSearchCountersOn = false;
     }
@@ -314,11 +302,6 @@ bool TransfersSortFilterProxyModel::lessThan(const QModelIndex &left, const QMod
     }
 
     return false;
-}
-
-int TransfersSortFilterProxyModel::columnCount(const QModelIndex &parent) const
-{
-    return 1;
 }
 
 int TransfersSortFilterProxyModel::getPausedTransfers() const

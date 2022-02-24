@@ -10,12 +10,27 @@
 class TransferBaseDelegateWidget;
 class QTransfersModel;
 
-class TransfersSortFilterProxyModel : public QSortFilterProxyModel
+class TransfersSortFilterProxyModelBase : public QSortFilterProxyModel
+{
+    Q_OBJECT
+
+public:
+    TransfersSortFilterProxyModelBase(QObject* parent = nullptr) : QSortFilterProxyModel(parent)
+    {}
+    ~TransfersSortFilterProxyModelBase(){}
+
+    virtual TransferBaseDelegateWidget* createTransferManagerItem(QWidget *parent) = 0;
+
+protected:
+    int columnCount(const QModelIndex &parent) const override {return 1;}
+};
+
+class TransfersSortFilterProxyModel : public TransfersSortFilterProxyModelBase
 {
         Q_OBJECT
 
 public:
-        TransfersSortFilterProxyModel(QObject *parent = 0);
+        TransfersSortFilterProxyModel(QObject *parent = nullptr);
         ~TransfersSortFilterProxyModel();
 
         bool moveRows(const QModelIndex& proxyParent, int proxyRow, int count,
@@ -28,12 +43,11 @@ public:
                         const TransferData::TransferStates transferStates,
                         const TransferData::FileTypes fileTypes);
         void updateFilters();
-        void resetAllFilters(bool invalidate = false);
+        void resetAllFilters();
         int  getNumberOfItems(TransferData::TransferType transferType);
-        //void refreshNumberOfItems();
         void resetNumberOfItems();
 
-        virtual TransferBaseDelegateWidget* createTransferManagerItem(QWidget *parent);
+        TransferBaseDelegateWidget* createTransferManagerItem(QWidget *parent) override;
 
         int getPausedTransfers() const;
         bool isAnyPaused() const;
@@ -52,9 +66,8 @@ protected slots:
         void onRetryTransfer();
 
 protected:
-        virtual bool filterAcceptsRow(int sourceRow, const QModelIndex& sourceParent) const override;
-        virtual bool lessThan(const QModelIndex& left, const QModelIndex& right) const override;
-        int columnCount(const QModelIndex &parent) const override;
+        bool filterAcceptsRow(int sourceRow, const QModelIndex& sourceParent) const override;
+        bool lessThan(const QModelIndex& left, const QModelIndex& right) const override;
 
 protected:
         TransferData::TransferStates mTransferStates;
@@ -64,14 +77,12 @@ protected:
         TransferData::TransferTypes mNextTransferTypes;
         TransferData::FileTypes mNextFileTypes;
         SortCriterion mSortCriterion;
-        mutable QList<int> mDlNumber;
-        mutable QList<int> mUlNumber;
-        QMutex* mFilterMutex;
-        QMutex* mActivityMutex;
+        mutable int mDlNumber;
+        mutable int mUlNumber;
         bool mSearchCountersOn;
 
 private slots:
-        void onRowsRemoved(const QModelIndex& parent, int first, int last);
+        void onRowsAboutToBeRemoved(const QModelIndex& parent, int first, int last);
         void onRowsAboutToBeInserted(const QModelIndex&, int, int);
         void onRowsInserted(const QModelIndex&, int, int);
         void onModelSortedFiltered();

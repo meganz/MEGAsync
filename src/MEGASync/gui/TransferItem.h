@@ -104,6 +104,8 @@ public:
         mUpdated = state;
     }
 
+    static FileType getFileType(const QString& fileName);
+
     //Initialise with these values
     TransferState mState;
     int       mTag;

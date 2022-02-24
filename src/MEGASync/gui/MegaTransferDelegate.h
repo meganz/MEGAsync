@@ -7,7 +7,7 @@
 #include <QStyledItemDelegate>
 #include <QAbstractItemView>
 
-class TransfersSortFilterProxyModel;
+class TransfersSortFilterProxyModelBase;
 class TransferBaseDelegateWidget;
 
 class MegaTransferDelegate : public QStyledItemDelegate
@@ -15,7 +15,7 @@ class MegaTransferDelegate : public QStyledItemDelegate
     Q_OBJECT
 
 public:
-    MegaTransferDelegate(TransfersSortFilterProxyModel* model,  QAbstractItemView* view);
+    MegaTransferDelegate(TransfersSortFilterProxyModelBase* model,  QAbstractItemView* view);
     QSize sizeHint(const QStyleOptionViewItem&, const QModelIndex&) const;
 
 protected:
@@ -36,7 +36,7 @@ signals:
 private:
     TransferBaseDelegateWidget *getTransferItemWidget(const QModelIndex &index, const QSize &size) const;
 
-    TransfersSortFilterProxyModel* mProxyModel;
+    TransfersSortFilterProxyModelBase* mProxyModel;
     QTransfersModel* mSourceModel;
     mutable QVector<TransferBaseDelegateWidget*> mTransferItems;
     QAbstractItemView* mView;

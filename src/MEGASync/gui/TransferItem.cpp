@@ -59,11 +59,7 @@ void TransferData::update(mega::MegaTransfer* transfer)
             mType |= TransferData::TRANSFER_SYNC;
         }
 
-        auto pixmapName (Utilities::getExtensionPixmapName(mFilename, QString()));
-
-        mFileType = QTransfersModel::mFileTypes.contains(pixmapName) ?
-                           QTransfersModel::mFileTypes[pixmapName]
-                    : TransferData::FileType::TYPE_OTHER;
+        mFileType = getFileType(mFilename);
 
         mState = static_cast<TransferData::TransferState>(1 << transfer->getState());
 
@@ -99,6 +95,18 @@ void TransferData::update(mega::MegaTransfer* transfer)
 
         setUpdated(true);
     }
+}
+
+TransferData::FileType TransferData::getFileType(const QString &fileName)
+{
+    auto pixmapName (Utilities::getExtensionPixmapName(fileName, QString()));
+
+    auto fileType = QTransfersModel::mFileTypes.contains(pixmapName) ?
+                QTransfersModel::mFileTypes[pixmapName]
+                : TransferData::FileType::TYPE_OTHER;
+
+    return fileType;
+
 }
 
 uint64_t TransferData::getFinishedTime()

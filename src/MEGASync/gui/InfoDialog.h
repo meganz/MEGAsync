@@ -184,8 +184,8 @@ private:
     MenuItemAction *rubbishItem;
 
     int activeDownloadState, activeUploadState;
-    bool remainingUploadsTimerRunning = false;
-    bool remainingDownloadsTimerRunning = false;
+    bool pendingUploadsTimerRunning = false;
+    bool pendingDownloadsTimerRunning = false;
     bool circlesShowAllActiveTransfersProgress;
     unsigned long long uploadActiveTransferPriority, downloadActiveTransferPriority;
     int uploadActiveTransferTag, downloadActiveTransferTag;

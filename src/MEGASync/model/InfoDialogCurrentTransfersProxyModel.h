@@ -6,7 +6,7 @@
 class TransferBaseDelegateWidget;
 class MegaDelegateHoverManager;
 
-class InfoDialogCurrentTransfersProxyModel : public TransfersSortFilterProxyModel
+class InfoDialogCurrentTransfersProxyModel : public TransfersSortFilterProxyModelBase
 {
     Q_OBJECT
 

@@ -18,39 +18,40 @@
 
 struct TransfersCount
 {
-    long long leftUploadBytes;
-    long long completedUploadBytes;
-    long long leftDownloadBytes;
-    long long completedDownloadBytes;
-
-    int activeDownloadState;
-    int activeUploadState;
-    int remainingUploads;
-    int remainingDownloads;
-    size_t completedUploads;
-    size_t completedDownloads;
-
     int totalUploads;
     int totalDownloads;
+
+    int pendingUploads;
+    int pendingDownloads;
+
     int currentUpload;
     int currentDownload;
 
+    long long completedUploadBytes;
+    long long completedDownloadBytes;
+
+    long long totalUploadBytes;
+    long long totalDownloadBytes;
+
+    QMap<TransferData::FileType, long long> transfersByType;
+    QMap<TransferData::FileType, long long> transfersFinishedByType;
+
     TransfersCount():
-        leftUploadBytes(0),
+        totalUploadBytes(0),
         completedUploadBytes(0),
-        leftDownloadBytes(0),
+        totalDownloadBytes(0),
         completedDownloadBytes(0),
-        activeDownloadState(0),
-        activeUploadState(0),
-        remainingUploads(0),
-        remainingDownloads(0),
-        completedDownloads(0),
-        completedUploads(0),
+        pendingUploads(0),
+        pendingDownloads(0),
         totalUploads(0),
         totalDownloads(0),
         currentUpload(0),
         currentDownload(0)
     {}
+
+    int completedDownloads(){return totalDownloads - pendingDownloads;}
+    int completedUploads(){return totalUploads - pendingUploads;}
+
 };
 
 class TransferThread :  public QObject,public mega::MegaTransferListener
@@ -59,6 +60,12 @@ class TransferThread :  public QObject,public mega::MegaTransferListener
 public:
     TransferThread();
     ~TransferThread(){}
+
+    TransfersCount getTransfersCount();
+    void resetCompletedUploads(QList<QExplicitlySharedDataPointer<TransferData> > transfersToReset);
+    void resetCompletedDownloads(QList<QExplicitlySharedDataPointer<TransferData>> transfersToReset);
+    void resetCompletedTransfers();
+
 public slots:
     void onTransferStart(mega::MegaApi*, mega::MegaTransfer* transfer);
     void onTransferFinish(mega::MegaApi* api, mega::MegaTransfer* transfer, mega::MegaError*);
@@ -68,13 +75,13 @@ public slots:
     std::list<QExplicitlySharedDataPointer<TransferData>> processUpdates();
 
 private:
-
     QExplicitlySharedDataPointer<TransferData> createData(mega::MegaTransfer* transfer);
 
     std::list<QExplicitlySharedDataPointer<TransferData>> mCacheUpdateTransfers;
     void onTransferEvent(mega::MegaTransfer* transfer);
 
     QReadWriteLock* mCacheMutex;
+    TransfersCount mTransfersCount;
 };
 
 class QTransfersModel : public QAbstractItemModel
@@ -110,9 +117,10 @@ public:
 
     long long  getNumberOfTransfersForFileType(TransferData::FileType fileType) const;
     long long  getNumberOfFinishedForFileType(TransferData::FileType fileType) const;
-
-    const TransfersCount& getTransfersCount();
+    TransfersCount getTransfersCount();
     void resetCompletedTransfersCount();
+    void resetCompletedUpload(long long transferBytes);
+    void resetCompletedDownload(long long transferBytes);
 
     void initModel();
 
@@ -129,7 +137,7 @@ public:
 signals:
     void pauseStateChanged(bool pauseState);
     void transferPauseStateChanged();
-    void transfersDataUpdated();
+    void transfersCountUpdated();
     void processTransferInThread();
     void pauseStateChangedByTransferResume();
     void transfersAboutToBeCanceled();
@@ -174,15 +182,8 @@ private:
     QReadWriteLock* mModelMutex;
     mega::QTMegaTransferListener *delegateListener;
 
-    long long mUpdateNotificationNumber;
-
-    TransfersCount mTransfersCount;
-
     bool mAreAllPaused;
     bool stopModelProcessing;
-
-    QMap<TransferData::FileType, long long> mNbTransfersPerFileType;
-    QMap<TransferData::FileType, long long> mNbFinishedPerFileType;
 };
 
 #endif // QTRANSFERSMODEL_H

@@ -20,7 +20,7 @@ using namespace mega;
 
 //////
 
-MegaTransferDelegate::MegaTransferDelegate(TransfersSortFilterProxyModel* model,  QAbstractItemView* view)
+MegaTransferDelegate::MegaTransferDelegate(TransfersSortFilterProxyModelBase* model,  QAbstractItemView* view)
     : QStyledItemDelegate(view),
       mProxyModel (model),
       mSourceModel (qobject_cast<QTransfersModel*>(

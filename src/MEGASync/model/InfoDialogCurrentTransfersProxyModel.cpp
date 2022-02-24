@@ -4,7 +4,7 @@
 #include "QTransfersModel.h"
 
 //SORT FILTER PROXY MODEL
-InfoDialogCurrentTransfersProxyModel::InfoDialogCurrentTransfersProxyModel(QObject *parent) : TransfersSortFilterProxyModel(parent)
+InfoDialogCurrentTransfersProxyModel::InfoDialogCurrentTransfersProxyModel(QObject *parent) : TransfersSortFilterProxyModelBase(parent)
 {
 }
 
@@ -54,7 +54,6 @@ void InfoDialogCurrentTransfersProxyModel::onOpenTransferFolderRequested()
 
 bool InfoDialogCurrentTransfersProxyModel::lessThan(const QModelIndex &left, const QModelIndex &right) const
 {
-    QMutexLocker lock (mActivityMutex);
     bool lessThan (false);
     const auto leftItem (qvariant_cast<TransferItem>(left.data()).getTransferData());
     const auto rightItem (qvariant_cast<TransferItem>(right.data()).getTransferData());
@@ -76,7 +75,6 @@ bool InfoDialogCurrentTransfersProxyModel::lessThan(const QModelIndex &left, con
 
 bool InfoDialogCurrentTransfersProxyModel::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const
 {
-    QMutexLocker lock (mActivityMutex);
     bool accept (false);
 
     QModelIndex index = sourceModel()->index(sourceRow, 0, sourceParent);

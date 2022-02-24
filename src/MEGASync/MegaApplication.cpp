@@ -3784,7 +3784,7 @@ void MegaApplication::checkFirstTransfer()
 
     auto TransfersStats = mModel2->getTransfersCount();
 
-    if (TransfersStats.remainingDownloads)
+    if (TransfersStats.pendingDownloads)
     {
         mThreadPool->push([=]()
         {//thread pool function
@@ -3804,7 +3804,7 @@ void MegaApplication::checkFirstTransfer()
         });// end of thread pool function
     }
 
-    if (TransfersStats.remainingUploads)
+    if (TransfersStats.pendingUploads)
     {
         mThreadPool->push([=]()
         {//thread pool function
@@ -7708,11 +7708,11 @@ void MegaApplication::onTransferStart(MegaApi *api, MegaTransfer *transfer)
                                              QString::fromUtf8(transfer->getPath()));
     }
 
-    auto& TransfersStats = mModel2->getTransfersCount();
+    auto TransfersStats = mModel2->getTransfersCount();
 
     onTransferUpdate(api, transfer);
-    if (!TransfersStats.remainingDownloads
-            && !TransfersStats.remainingUploads)
+    if (!TransfersStats.pendingDownloads
+            && !TransfersStats.pendingUploads)
     {
         onGlobalSyncStateChanged(megaApi);
     }
@@ -7885,10 +7885,10 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
         infoDialog->updateDialogState();
     }
 
-    auto& TransfersStats = mModel2->getTransfersCount();
+    auto TransfersStats = mModel2->getTransfersCount();
     //If there are no pending transfers, reset the statics and update the state of the tray icon
-    if (!TransfersStats.remainingDownloads
-            && !TransfersStats.remainingUploads)
+    if (!TransfersStats.pendingDownloads
+            && !TransfersStats.pendingUploads)
     {
         onGlobalSyncStateChanged(megaApi);
     }

@@ -124,7 +124,7 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
     connect(mModel, &QTransfersModel::pauseStateChanged,
             mUi->wTransfers, &TransfersWidget::onPauseStateChanged);
 
-    connect(mModel, &QTransfersModel::transfersDataUpdated,
+    connect(mModel, &QTransfersModel::transfersCountUpdated,
             this, &TransferManager::onTransfersDataUpdated);
 
     connect(mModel, &QTransfersModel::pauseStateChangedByTransferResume,
@@ -141,10 +141,6 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
             &TransfersWidget::disableTransferManager,[this](bool state){
         setDisabled(state);
     });
-
-    connect(mUi->wTransfers->getProxyModel(),
-            &TransfersSortFilterProxyModel::searchNumbersChanged,
-            this, &TransferManager::refreshSearchStats);
 
     mSpeedRefreshTimer->setSingleShot(false);
     connect(mSpeedRefreshTimer, &QTimer::timeout,
@@ -289,7 +285,7 @@ bool TransferManager::refreshStateStats()
     // First check Finished states -----------------------------------------------------------------
     label = mUi->lCompleted;
 
-    processedNumber = Stats.completedDownloads + Stats.completedUploads;
+    processedNumber = Stats.completedDownloads() + Stats.completedUploads();
     weHaveTransfers = processedNumber;
 
     // Update if the value changed
@@ -314,7 +310,7 @@ bool TransferManager::refreshStateStats()
     processedNumber = 0LL;
     label = mUi->lAllTransfers;
 
-    processedNumber = Stats.remainingDownloads + Stats.remainingUploads;
+    processedNumber = Stats.pendingDownloads + Stats.pendingUploads;
     weHaveTransfers |= static_cast<bool>(processedNumber);
 
     if (processedNumber != mNumberOfTransfersPerTab[ALL_TRANSFERS_TAB])
@@ -360,8 +356,8 @@ bool TransferManager::refreshStateStats()
 void TransferManager::refreshTypeStats()
 {
     auto Stats = mModel->getTransfersCount();
-    auto DownloadTransfers = Stats.remainingDownloads;
-    auto UploadTransfers = Stats.remainingUploads;
+    auto DownloadTransfers = Stats.pendingDownloads;
+    auto UploadTransfers = Stats.pendingUploads;
 
     // First check Downloads -----------------------------------------------------------------------
     if (DownloadTransfers != mNumberOfTransfersPerTab[DOWNLOADS_TAB])
