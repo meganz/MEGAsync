@@ -901,7 +901,6 @@ void HTTPServer::sendPreFlightResponse(QAbstractSocket* socket, HTTPRequest* req
         fullResponse += QString::fromUtf8("Access-Control-Allow-Private-Network: true\r\n");
 
     fullResponse += QString::fromUtf8(   "Access-Control-Max-Age: 86400\r\n"
-                                         "Connection: Keep-Alive\r\n"
                                          "\r\n");
 
     if (safeServer && safeSocket)
