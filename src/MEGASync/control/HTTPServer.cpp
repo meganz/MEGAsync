@@ -245,25 +245,6 @@ void HTTPServer::readClient()
         bool requestIsPost = isRequestOfType(headers, "POST");
         bool requestIsOption = isRequestOfType(headers, "OPTION");
 
-/**** test ******
-        if (headers.size())
-        {
-            if (isRequestOfType(headers, "POST"))
-            {
-                processPostRequest();
-                return;
-            }
-            else if (isRequestOfType(headers, "OPTION"))
-            {
-                processOptionRequest();
-                return;
-            }
-        }
-
-        MegaApi::log(MegaApi::LOG_LEVEL_WARNING, "Method not allowed for webclient request");
-        rejectRequest(socket, QString::fromUtf8("405 Method Not Allowed"));
-
-/*****/
         if (!headers.size() || (!requestIsPost && !requestIsOption))
         {
             MegaApi::log(MegaApi::LOG_LEVEL_WARNING, "Method not allowed for webclient request");
@@ -911,7 +892,62 @@ void HTTPServer::processPostRequest(QAbstractSocket *socket, HTTPRequest* reques
     }
 }
 
-bool hasFieldWithValue(const QStringList& headers, const char* fieldName, const char* value)
+void HTTPServer::sendPreFlightResponse(QAbstractSocket* socket, HTTPRequest* request,
+                                       const QString& origin, bool sendPrivateNetworkField)
+{
+    QPointer<QAbstractSocket> safeSocket = socket;
+    QPointer<HTTPServer> safeServer = this;
+
+    QString fullResponse = QString::fromUtf8("HTTP/1.1 204 No Content\r\n"
+                                             "Server: MegaSync HTTP Server\r\n"
+                                             "Access-Control-Allow-Origin: %1\r\n"
+                                             "Access-Control-Allow-Methods: POST\r\n"
+                                             ).arg(origin);
+    if (sendPrivateNetworkField)
+        fullResponse += QString::fromUtf8("Access-Control-Allow-Private-Network: true\r\n");
+
+    fullResponse += QString::fromUtf8(   "Access-Control-Max-Age: 86400\r\n"
+                                         "Connection: Keep-Alive\r\n"
+                                         "\r\n");
+
+
+    if (safeServer && safeSocket)
+    {
+        safeSocket->write(fullResponse.toUtf8());
+        safeSocket->flush();
+        safeSocket->disconnectFromHost();
+        safeSocket->deleteLater();
+    }
+
+}
+
+void HTTPServer::processOptionRequest(QAbstractSocket* socket, HTTPRequest* request, const QStringList& headers)
+{
+    bool isCors = isPreFlightCorsRequest(headers);
+    if (!isCors)
+        return;
+
+    bool hasPrivateNetworkField = hasFieldWithValue(headers, "Access-Control-Request-Private-Network", "true");
+
+    sendPreFlightResponse(socket, request, findCorrespondingAllowedOrigin(headers), hasPrivateNetworkField);
+
+/*    QPointer<QAbstractSocket> safeSocket = socket;
+    QPointer<HTTPServer> safeServer = this;
+    //processRequest(socket, *request);
+    if (!safeServer || !safeSocket)
+    {
+        return;
+    }
+
+    HTTPRequest *req = requests.value(socket, NULL);
+    if (request == req)
+    {
+        requests.remove(socket);
+        delete request;
+    }*/
+}
+
+bool HTTPServer::hasFieldWithValue(const QStringList& headers, const char* fieldName, const char* value)
 {
     bool isFieldAsExpected = false;
     QString fieldNameStr = QString::fromUtf8(fieldName);
@@ -932,61 +968,7 @@ bool hasFieldWithValue(const QStringList& headers, const char* fieldName, const 
     return isFieldAsExpected;
 }
 
-bool isPreFlightCorsRequest(const QStringList& headers)
+bool HTTPServer::isPreFlightCorsRequest(const QStringList& headers)
 {
-    bool isOk = hasFieldWithValue(headers, "Access-Control-Request-Method", "POST");
-    if (isOk)
-        isOk = hasFieldWithValue(headers, "Access-Control-Request-Private-Network", "true");
-    /*if (isOk)
-        isOk = hasFieldWithValue(headers, "Sec-Fetch-Mode", "cors");
-    if (isOk)
-        isOk = hasFieldWithValue(headers, "Sec-Fetch-Site", "cross-site");*/
-    return isOk;
-}
-
-void sendPreFlightResponse(QAbstractSocket* socket, HTTPRequest* request)
-{
-    QPointer<QAbstractSocket> safeSocket = socket;
-    QPointer<HTTPServer> safeServer = this;
-
-    QString fullResponse = QString::fromUtf8("HTTP/1.1 204 No Content\r\n"
-                                             "Server: MegaSync HTTP Server"
-                                             "Access-Control-Allow-Origin: %1\r\n"
-                                             "Access-Control-Allow-Methods: POST\r\n"
-                                             "Access-Control-Max-Age: 86400\r\n"
-                                             "Connection: Keep-Alive\r\n"
-                                             "\r\n"
-                                             ).arg(origin);
-    if (safeServer && safeSocket)
-    {
-        safeSocket->write(fullResponse.toUtf8());
-        safeSocket->flush();
-        safeSocket->disconnectFromHost();
-        safeSocket->deleteLater();
-    }
-
-}
-
-void HTTPServer::processOptionRequest(QAbstractSocket* socket, HTTPRequest* request, const QStringList& headers)
-{
-    bool isCors = isPreFlightCorsRequest(headers);
-    if (!isCors)
-        return;
-
-    sendPreFlightResponse(socket, request);
-
-/*    QPointer<QAbstractSocket> safeSocket = socket;
-    QPointer<HTTPServer> safeServer = this;
-    //processRequest(socket, *request);
-    if (!safeServer || !safeSocket)
-    {
-        return;
-    }
-
-    HTTPRequest *req = requests.value(socket, NULL);
-    if (request == req)
-    {
-        requests.remove(socket);
-        delete request;
-    }*/
+    return hasFieldWithValue(headers, "Access-Control-Request-Method", "POST");
 }
