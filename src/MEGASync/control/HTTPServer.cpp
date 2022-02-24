@@ -892,8 +892,7 @@ void HTTPServer::processPostRequest(QAbstractSocket *socket, HTTPRequest* reques
     }
 }
 
-void HTTPServer::sendPreFlightResponse(QAbstractSocket* socket, HTTPRequest* request,
-                                       const QString& origin, bool sendPrivateNetworkField)
+void HTTPServer::sendPreFlightResponse(QAbstractSocket* socket, HTTPRequest* request, bool sendPrivateNetworkField)
 {
     QPointer<QAbstractSocket> safeSocket = socket;
     QPointer<HTTPServer> safeServer = this;
@@ -902,14 +901,13 @@ void HTTPServer::sendPreFlightResponse(QAbstractSocket* socket, HTTPRequest* req
                                              "Server: MegaSync HTTP Server\r\n"
                                              "Access-Control-Allow-Origin: %1\r\n"
                                              "Access-Control-Allow-Methods: POST\r\n"
-                                             ).arg(origin);
+                                             ).arg(request->origin);
     if (sendPrivateNetworkField)
         fullResponse += QString::fromUtf8("Access-Control-Allow-Private-Network: true\r\n");
 
     fullResponse += QString::fromUtf8(   "Access-Control-Max-Age: 86400\r\n"
                                          "Connection: Keep-Alive\r\n"
                                          "\r\n");
-
 
     if (safeServer && safeSocket)
     {
@@ -918,7 +916,6 @@ void HTTPServer::sendPreFlightResponse(QAbstractSocket* socket, HTTPRequest* req
         safeSocket->disconnectFromHost();
         safeSocket->deleteLater();
     }
-
 }
 
 void HTTPServer::processOptionRequest(QAbstractSocket* socket, HTTPRequest* request, const QStringList& headers)
@@ -929,11 +926,11 @@ void HTTPServer::processOptionRequest(QAbstractSocket* socket, HTTPRequest* requ
 
     bool hasPrivateNetworkField = hasFieldWithValue(headers, "Access-Control-Request-Private-Network", "true");
 
-    sendPreFlightResponse(socket, request, findCorrespondingAllowedOrigin(headers), hasPrivateNetworkField);
-
-/*    QPointer<QAbstractSocket> safeSocket = socket;
+    QPointer<QAbstractSocket> safeSocket = socket;
     QPointer<HTTPServer> safeServer = this;
-    //processRequest(socket, *request);
+
+    sendPreFlightResponse(socket, request, hasPrivateNetworkField);
+
     if (!safeServer || !safeSocket)
     {
         return;
@@ -944,7 +941,7 @@ void HTTPServer::processOptionRequest(QAbstractSocket* socket, HTTPRequest* requ
     {
         requests.remove(socket);
         delete request;
-    }*/
+    }
 }
 
 bool HTTPServer::hasFieldWithValue(const QStringList& headers, const char* fieldName, const char* value)

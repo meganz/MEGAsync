@@ -102,8 +102,7 @@ class HTTPServer: public QTcpServer
                                 const QStringList& headers, const QString& content);
         void processOptionRequest(QAbstractSocket* socket, HTTPRequest* request, const QStringList& headers);
 
-        void sendPreFlightResponse(QAbstractSocket* socket, HTTPRequest* request,
-                                   const QString &origin, bool sendPrivateNetworkField);
+        void sendPreFlightResponse(QAbstractSocket* socket, HTTPRequest* request, bool sendPrivateNetworkField);
 
         bool hasFieldWithValue(const QStringList& headers, const char* fieldName, const char* value);
 
