@@ -5384,13 +5384,13 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancell all transfers</source>
-        <translatorcomment>Button label that indicates that all active transfers will be cancelled (Accept button on dialog)</translatorcomment>
+        <source>Continue transfers</source>
+        <translatorcomment>Button label that indicates that no one of active transfers will be cancelled (Cancel button on dialog)</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Continue transfers</source>
-        <translatorcomment>Button label that indicates that no one of active transfers will be cancelled (Cancel button on dialog)</translatorcomment>
+        <source>Cancel all transfers</source>
+        <translatorcomment>Button label that indicates that all active transfers will be cancelled (Accept button on dialog)</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
 </context>
