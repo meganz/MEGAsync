@@ -108,6 +108,8 @@ class HTTPServer: public QTcpServer
 
         bool isPreFlightCorsRequest(const QStringList& headers);
 
+        bool isRequestOfType(const QStringList& headers, const char* typeName);
+
         bool disabled;
         bool sslEnabled;
         mega::MegaApi *megaApi;

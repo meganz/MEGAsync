@@ -219,11 +219,6 @@ void HTTPServer::onTransferDataUpdate(MegaHandle handle, int state, long long pr
     }
 }
 
-bool isRequestOfType(const QStringList& headers, const char* typeName)
-{
-    return headers[0].startsWith(QString::fromAscii(typeName));
-}
-
 void HTTPServer::readClient()
 {
     MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Processing webclient request via %1").arg(QString::fromUtf8(sslEnabled ? "HTTPS" : "HTTP")).toUtf8().constData());
@@ -968,4 +963,9 @@ bool HTTPServer::hasFieldWithValue(const QStringList& headers, const char* field
 bool HTTPServer::isPreFlightCorsRequest(const QStringList& headers)
 {
     return hasFieldWithValue(headers, "Access-Control-Request-Method", "POST");
+}
+
+bool HTTPServer::isRequestOfType(const QStringList& headers, const char* typeName)
+{
+    return headers[0].startsWith(QString::fromAscii(typeName));
 }
