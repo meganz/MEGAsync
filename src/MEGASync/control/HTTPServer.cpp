@@ -266,7 +266,7 @@ void HTTPServer::readClient()
         {
             processPostRequest(socket, request, headers, tokens[1]);
         }
-        else if (requestIsOption)
+        else // requestIsOption
         {
             processOptionRequest(socket, request, headers);
         }
@@ -928,13 +928,6 @@ void HTTPServer::processOptionRequest(QAbstractSocket* socket, HTTPRequest* requ
     if (!safeServer || !safeSocket)
     {
         return;
-    }
-
-    HTTPRequest *req = requests.value(socket, NULL);
-    if (request == req)
-    {
-        requests.remove(socket);
-        delete request;
     }
 }
 
