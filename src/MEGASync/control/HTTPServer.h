@@ -90,7 +90,7 @@ class HTTPServer: public QTcpServer
         void readClient();
         void discardClient();
         void rejectRequest(QAbstractSocket *socket, QString response = QString::fromUtf8("403 Forbidden"));
-        void processPostRequest(QAbstractSocket *socket, HTTPRequest request);
+        void processRequest(QAbstractSocket *socket, HTTPRequest request);
         void error(QAbstractSocket::SocketError);
         void sslErrors(const QList<QSslError> & errors);
         void peerVerifyError(const QSslError & error);

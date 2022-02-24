@@ -301,7 +301,7 @@ void HTTPServer::rejectRequest(QAbstractSocket *socket, QString response)
     }
 }
 
-void HTTPServer::processPostRequest(QAbstractSocket *socket, HTTPRequest request)
+void HTTPServer::processRequest(QAbstractSocket *socket, HTTPRequest request)
 {
     QString response;
     QString openLinkRequestStart(QString::fromUtf8("{\"a\":\"l\","));
@@ -873,7 +873,7 @@ void HTTPServer::processPostRequest(QAbstractSocket *socket, HTTPRequest* reques
 
     QPointer<QAbstractSocket> safeSocket = socket;
     QPointer<HTTPServer> safeServer = this;
-    processPostRequest(socket, *request);
+    processRequest(socket, *request);
     if (!safeServer || !safeSocket)
     {
         return;
