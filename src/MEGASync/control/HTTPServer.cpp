@@ -270,14 +270,6 @@ void HTTPServer::readClient()
         {
             processOptionRequest(socket, request, headers);
         }
-
-
-        HTTPRequest *req = requests.value(socket, NULL);
-        if (request == req)
-        {
-            requests.remove(socket);
-            delete request;
-        }
     }
 }
 void HTTPServer::discardClient()
