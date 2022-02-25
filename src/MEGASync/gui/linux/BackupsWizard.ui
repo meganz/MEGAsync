@@ -118,7 +118,7 @@ margin-left: 13px;
 background: solid #FAFAFA;
 }
 
-#lDeviceNameS1, #lDeviceNameS2
+#lDeviceNameStep1, #lDeviceNameStep2
 {
 text-align: left;
 font-size: 14px;
@@ -132,7 +132,7 @@ font-size: 14px;
 padding-right: 16px;
 }
 
-#lvFoldersS1::item
+#lvFoldersStep1::item
 {
 height: 40 px;
 min-height: 40 px;
@@ -140,7 +140,7 @@ max-height: 40 px;
 border: none;
 }
 
-#lvFoldersS1, #lvFoldersS2
+#lvFoldersStep1, #lvFoldersStep2
 {
 background: solid white;
 border-bottom-right-radius: 6px;
@@ -148,28 +148,28 @@ border-bottom-left-radius: 6px;
 outline: none;
 }
 
-#lvFoldersS1
+#lvFoldersStep1
 {
 padding-left: 22px;
 }
 
-#lvFoldersS2
+#lvFoldersStep2
 {
 padding-left: 11px;
 }
 
-#lvFoldersS1::icon
+#lvFoldersStep1::icon
 {
 left: 22px;
 }
 
-#lvFoldersS1::text
+#lvFoldersStep1::text
 {
 left: 22px;
 font-size: 13px;
 }
 
-#lvFoldersS2::item
+#lvFoldersStep2::item
 {
 height: 32 px;
 min-height: 32 px;
@@ -177,7 +177,7 @@ max-height: 32 px;
 border: none;
 }
 
-#lvFoldersS2::text
+#lvFoldersStep2::text
 {
 left: 3px;
 font-size: 13px;
@@ -395,7 +395,7 @@ margin: 4px;
               </widget>
              </item>
              <item alignment="Qt::AlignVCenter">
-              <widget class="QLabel" name="lDeviceNameS1">
+              <widget class="QLabel" name="lDeviceNameStep1">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                  <horstretch>0</horstretch>
@@ -445,7 +445,7 @@ margin: 4px;
                <number>0</number>
               </property>
               <item>
-               <widget class="QListView" name="lvFoldersS1">
+               <widget class="QListView" name="lvFoldersStep1">
                 <property name="sizePolicy">
                  <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
                   <horstretch>0</horstretch>
@@ -761,7 +761,7 @@ margin: 4px;
               </widget>
              </item>
              <item alignment="Qt::AlignVCenter">
-              <widget class="QLabel" name="lDeviceNameS2">
+              <widget class="QLabel" name="lDeviceNameStep2">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                  <horstretch>0</horstretch>
@@ -793,7 +793,7 @@ margin: 4px;
            </widget>
           </item>
           <item>
-           <widget class="QListWidget" name="lvFoldersS2">
+           <widget class="QListWidget" name="lvFoldersStep2">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
               <horstretch>0</horstretch>

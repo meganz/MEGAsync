@@ -26,15 +26,15 @@ class BackupsWizard : public QDialog
     public:
         enum Steps
         {
-            STEP_1_INIT     = 0,
-            STEP_1          = 1,
-            STEP_2_INIT     = 2,
-            STEP_2          = 3,
-            FINALIZE        = 4,
-            SETUP_MYBACKUPS = 5,
-            SETUP_BACKUPS   = 6,
-            DONE            = 7,
-            EXIT            = 8,
+            STEP_1_INIT = 0,
+            STEP_1,
+            STEP_2_INIT,
+            STEP_2,
+            FINALIZE,
+            SETUP_MYBACKUPS_DIR,
+            SETUP_BACKUPS,
+            DONE,
+            EXIT,
         };
         explicit BackupsWizard(QWidget* parent = nullptr);
         ~BackupsWizard();
@@ -48,11 +48,10 @@ class BackupsWizard : public QDialog
         void setupComplete();
         QString getCurrentState();
         void updateOriginalState(int index);
-        bool promptAndEnsureUniqueRemoteName(QString& displayName);
+        void promptAndEnsureUniqueRemoteName(QString& displayName);
         bool isFolderAlreadySynced(const QString& path, bool displayWarning = false);
         QString remoteFolderExistsDialog(const QString& backupName);
         void refreshNextButtonState();
-        void displayError(const QString& message);
 
         Ui::BackupsWizard* mUi;
         HighDpiResize mHighDpiResize;
@@ -69,7 +68,7 @@ class BackupsWizard : public QDialog
         bool mError;
         bool mUserCancelled;
         QStandardItemModel* mStep1FoldersModel;
-        int mCurrentSyncIdx;
+        int mCurrentSyncRow;
         std::unique_ptr<QDialog> mSuccessDialog;
         std::unique_ptr<Ui::BackupSetupSuccessDialog> mSuccessDialogUi;
 
