@@ -48,12 +48,21 @@ public:
 
     void pauseModel(bool state);
 
+public slots:
+    void onTransferQuotaStateChanged(QuotaState transferQuotaState);
+
 signals:
     void viewedCompletedTransfers();
     void completedTransfersTabActive(bool);
     void userActivity();
     void showCompleted(bool showCompleted);
     void clearCompletedTransfers();
+
+protected:
+    bool eventFilter(QObject *obj, QEvent *event) override;
+    void changeEvent(QEvent *event) override;
+    void dragEnterEvent(QDragEnterEvent* event) override;
+    void dropEvent(QDropEvent *event) override;
 
 private:
     static constexpr int SPEED_REFRESH_PERIOD_MS = 700;
@@ -85,9 +94,6 @@ private:
     void refreshTypeStats();
     void refreshFileTypesStats();
     void applyTextSearch(const QString& text);
-
-public slots:
-    void onTransferQuotaStateChanged(QuotaState transferQuotaState);
 
 private slots:
     void on_tCompleted_clicked();
@@ -133,10 +139,6 @@ private slots:
     void refreshStats();
 
     void refreshView();
-
-protected:
-    bool eventFilter(QObject *obj, QEvent *event);
-    void changeEvent(QEvent *event);
 };
 
 #endif // TRANSFERMANAGER_H

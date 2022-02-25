@@ -352,6 +352,7 @@ private slots:
     void onSyncEnabled(std::shared_ptr<SyncSetting> syncSetting);
     void onBlocked();
     void onUnblocked();
+    void onTransfersModelUpdate();
 
 protected:
     void createTrayIcon();

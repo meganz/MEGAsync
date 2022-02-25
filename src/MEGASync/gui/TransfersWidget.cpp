@@ -13,13 +13,11 @@ TransfersWidget::TransfersWidget(QWidget* parent) :
     mClearMode(false),
     app (qobject_cast<MegaApplication*>(qApp)),
     mHeaderNameState (HS_SORT_PRIORITY),
-    mHeaderSizeState (HS_SORT_PRIORITY),
-    mThreadPool(ThreadPoolSingleton::getInstance()),
-    mModelIsChanging(false)
+    mHeaderSizeState (HS_SORT_PRIORITY)
 {
     ui->setupUi(this);
 
-    model2 = app->getTransfersModel();
+    model = app->getTransfersModel();
 
 }
 void TransfersWidget::setupTransfers()
@@ -46,7 +44,7 @@ TransfersWidget::~TransfersWidget()
 
 void TransfersWidget::configureTransferView()
 {
-    if (!model2)
+    if (!model)
     {
         return;
     }
@@ -56,7 +54,7 @@ void TransfersWidget::configureTransferView()
     mDelegateHoverManager.setView(ui->tvTransfers);
     ui->tvTransfers->setItemDelegate(tDelegate);
 
-    onPauseStateChanged(mProxyModel->isAnyPaused());
+    onPauseStateChanged(model->areAllPaused());
 
     ui->tvTransfers->setModel(mProxyModel);
 
@@ -269,7 +267,6 @@ void TransfersWidget::changeEvent(QEvent *event)
 
 void TransfersWidget::onModelAboutToBeChanged()
 {
-    mModelIsChanging = true;
     mLoadingScene.setLoadingScene(true);
 
     emit disableTransferManager(true);
@@ -277,8 +274,6 @@ void TransfersWidget::onModelAboutToBeChanged()
 
 void TransfersWidget::onModelChanged()
 {
-    mModelIsChanging = false;
-
     auto allPaused = mProxyModel->isAnyPaused();
     onPauseStateChanged(allPaused);
     mLoadingScene.setLoadingScene(false);

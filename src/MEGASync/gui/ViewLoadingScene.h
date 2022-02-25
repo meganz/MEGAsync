@@ -17,7 +17,7 @@ class LoadingSceneDelegateBase : public QStyledItemDelegate
     const double MAX_OPACITY = 1.0;
 
 public:
-    explicit LoadingSceneDelegateBase(QAbstractItemView* view) : mView(view)
+    explicit LoadingSceneDelegateBase(QAbstractItemView* view) : mView(view), mOpacitySteps(OPACITY_STEPS)
     {
         connect(&mTimer, &QTimer::timeout, this, &LoadingSceneDelegateBase::onLoadingTimerTimeout);
     }
@@ -53,13 +53,19 @@ protected:
 private slots:
     void onLoadingTimerTimeout()
     {
-        if(mOpacity < 0.5)
+        if(mOpacity < MIN_OPACITY)
         {
+            mOpacitySteps = OPACITY_STEPS;
+            mOpacity = MIN_OPACITY;
+        }
+        else if(mOpacity > MAX_OPACITY)
+        {
+            mOpacitySteps = -OPACITY_STEPS;
             mOpacity = MAX_OPACITY;
         }
         else
         {
-            mOpacity -= OPACITY_STEPS;
+            mOpacity += mOpacitySteps;
         }
 
         mView->update();
@@ -68,6 +74,7 @@ private slots:
 private:
     QTimer mTimer;
     double mOpacity;
+    double mOpacitySteps;
     QAbstractItemView* mView;
 };
 

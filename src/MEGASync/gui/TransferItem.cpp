@@ -71,17 +71,19 @@ void TransferData::update(mega::MegaTransfer* transfer)
 
         mPriority = transfer->getPriority();
 
+        mTransferredBytes = static_cast<unsigned long long>(transfer->getTransferredBytes());
+        mTotalSize = static_cast<unsigned long long>(transfer->getTotalBytes());
         auto remBytes = mTotalSize - mTransferredBytes;
+        mSpeed = static_cast<unsigned long long>(MegaSyncApp->getMegaApi()->getCurrentSpeed(transfer->getType()));
+
         TransferRemainingTime rem(mSpeed, remBytes);
         mRemainingTime = rem.calculateRemainingTimeSeconds(mSpeed, remBytes).count();
 
-        mSpeed = static_cast<unsigned long long>(MegaSyncApp->getMegaApi()->getCurrentSpeed(transfer->getType()));
-        mTotalSize = static_cast<unsigned long long>(transfer->getTotalBytes());
-        mTransferredBytes = static_cast<unsigned long long>(transfer->getTransferredBytes());
         mNotificationNumber = transfer->getNotificationNumber();
         mMeanSpeed = static_cast<unsigned long long>(transfer->getMeanSpeed());
         mErrorCode = MegaError::API_OK;
         mErrorValue = 0LL;
+
 
         auto megaError (transfer->getLastErrorExtended());
         if (megaError)

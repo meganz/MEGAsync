@@ -151,6 +151,8 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
             this, &TransferManager::onStorageStateChanged,
             Qt::QueuedConnection);
 
+    setAcceptDrops(true);
+
     // Init state
     onUpdatePauseState(mModel->areAllPaused());
     onStorageStateChanged(qobject_cast<MegaApplication*>(qApp)->getAppliedStorageState());
@@ -860,4 +862,29 @@ void TransferManager::changeEvent(QEvent *event)
         onUpdatePauseState(mUi->wTransfers->getProxyModel()->getPausedTransfers());
     }
     QDialog::changeEvent(event);
+}
+
+void TransferManager::dropEvent(QDropEvent* event)
+{
+    QDialog::dropEvent(event);
+
+    QQueue<QString> pathsToAdd;
+    QList<QUrl> urlsToAdd = event->mimeData()->urls();
+    foreach(auto& urlToAdd, urlsToAdd)
+    {
+        pathsToAdd.append(urlToAdd.toLocalFile());
+    }
+
+    MegaSyncApp->shellUpload(pathsToAdd);
+}
+
+void TransferManager::dragEnterEvent(QDragEnterEvent *event)
+{
+    if((mCurrentTab == UPLOADS_TAB || mCurrentTab == ALL_TRANSFERS_TAB)
+            && event->mimeData()->hasUrls())
+    {
+        event->accept();
+    }
+
+    QDialog::dragEnterEvent(event);
 }

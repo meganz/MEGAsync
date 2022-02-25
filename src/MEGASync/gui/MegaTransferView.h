@@ -44,9 +44,9 @@ private:
                            bool enableCancel);
 
 protected:
-    virtual void mouseReleaseEvent(QMouseEvent* event );
-    void changeEvent(QEvent* event);
-    void dropEvent(QDropEvent* event);
+    virtual void mouseReleaseEvent(QMouseEvent* event) override;
+    void changeEvent(QEvent* event) override;
+    void dropEvent(QDropEvent* event) override;
 
 public slots:
     void onPauseResumeVisibleRows(bool pauseState);

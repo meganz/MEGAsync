@@ -71,7 +71,7 @@ private:
     };
 
     Ui::TransfersWidget *ui;
-    QTransfersModel *model2;
+    QTransfersModel *model;
     TransfersSortFilterProxyModel *mProxyModel;
     MegaTransferDelegate *tDelegate;
     ViewLoadingScene<TransferManagerLoadingItem> mLoadingScene;
@@ -80,8 +80,6 @@ private:
     MegaApplication *app;
     HeaderState mHeaderNameState;
     HeaderState mHeaderSizeState;
-    ThreadPool* mThreadPool;
-    bool mModelIsChanging;
 
     void configureTransferView();
     void clearOrCancel(const QList<QExplicitlySharedDataPointer<TransferData>>& pool, int state, int firstRow);

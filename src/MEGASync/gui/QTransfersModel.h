@@ -45,8 +45,8 @@ struct TransfersCount
         pendingDownloads(0),
         totalUploads(0),
         totalDownloads(0),
-        currentUpload(0),
-        currentDownload(0)
+        currentUpload(1),
+        currentDownload(1)
     {}
 
     int completedDownloads(){return totalDownloads - pendingDownloads;}
@@ -81,6 +81,7 @@ private:
     void onTransferEvent(mega::MegaTransfer* transfer);
 
     QReadWriteLock* mCacheMutex;
+    QReadWriteLock* mCountersMutex;
     TransfersCount mTransfersCount;
 };
 

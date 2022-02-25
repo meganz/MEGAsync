@@ -185,8 +185,7 @@ void TransferManagerDelegateWidget::updateTransferState()
                 mUi->sStatus->setCurrentWidget(mUi->pActive);
             }
             speedString = Utilities::getSizeString(getData()->mMeanSpeed) + QLatin1Literal("/s");
-            timeString = QDateTime::fromSecsSinceEpoch(getData()->getFinishedTime())
-                         .toString(QLatin1String("hh:mm"));
+            timeString = Utilities::getFinishedTimeString(getData()->getFinishedTime());
             break;
         }
     }

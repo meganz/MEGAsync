@@ -653,7 +653,7 @@ void MegaApplication::initialize()
     mModel2 = new QTransfersModel(nullptr);
     mModel2->initModel();
 
-    //createTransferManagerDialog();
+    connect(mModel2, &QTransfersModel::transfersCountUpdated, this, &MegaApplication::onTransfersModelUpdate);
 }
 
 QString MegaApplication::applicationFilePath()
@@ -4183,6 +4183,23 @@ void MegaApplication::onUnblocked()
     updateTrayIconMenu();
 }
 
+void MegaApplication::onTransfersModelUpdate()
+{
+    //Send updated statics to the information dialog
+    if (infoDialog)
+    {
+        infoDialog->updateDialogState();
+    }
+
+    auto TransfersStats = mModel2->getTransfersCount();
+    //If there are no pending transfers, reset the statics and update the state of the tray icon
+    if (!TransfersStats.pendingDownloads
+            && !TransfersStats.pendingUploads)
+    {
+        onGlobalSyncStateChanged(megaApi);
+    }
+}
+
 void MegaApplication::fetchNodes(QString email)
 {
     assert(!mFetchingNodes);
@@ -7704,14 +7721,8 @@ void MegaApplication::onTransferStart(MegaApi *api, MegaTransfer *transfer)
                                              QString::fromUtf8(transfer->getPath()));
     }
 
-    auto TransfersStats = mModel2->getTransfersCount();
 
     onTransferUpdate(api, transfer);
-    if (!TransfersStats.pendingDownloads
-            && !TransfersStats.pendingUploads)
-    {
-        onGlobalSyncStateChanged(megaApi);
-    }
 }
 
 //Called when a transfer has finished
@@ -7873,20 +7884,6 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
     if (firstTransferTimer && !firstTransferTimer->isActive())
     {
         firstTransferTimer->start();
-    }
-
-    //Send updated statics to the information dialog
-    if (infoDialog)
-    {
-        infoDialog->updateDialogState();
-    }
-
-    auto TransfersStats = mModel2->getTransfersCount();
-    //If there are no pending transfers, reset the statics and update the state of the tray icon
-    if (!TransfersStats.pendingDownloads
-            && !TransfersStats.pendingUploads)
-    {
-        onGlobalSyncStateChanged(megaApi);
     }
 }
 
