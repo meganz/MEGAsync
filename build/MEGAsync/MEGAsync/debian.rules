@@ -7,8 +7,8 @@ FULLREQS := $(shell cat /etc/issue | grep "Ubuntu 12.04" >/dev/null && echo "" |
 INSTALL3RD := $(shell dpkg --print-architecture | grep -i "i386\|arm" >/dev/null && echo "" || echo 'install3rd')
 EXTRAQMAKEFREEIMAGE := $(shell dpkg --print-architecture | grep -i "i386\|arm" >/dev/null && echo "" || echo 'QMAKE_RPATHDIR="/opt/mega/lib"')
 export PATH := /opt/mega/bin:$(PATH)
-QMAKESPEC := $(shell cat /etc/issue | grep "Ubuntu 14.04\|Ubuntu 16.04\|Debian.* 8\|Ubuntu 18.04" >/dev/null && echo "QMAKESPEC" || echo "NONQMAKESPEC")
-QTINSTALL := $(shell cat /etc/issue | grep "Ubuntu 14.04\|Ubuntu 16.04\|Debian.* 8\|Ubuntu 18.04" >/dev/null && echo "installqt" || echo "")
+QMAKESPEC := $(shell cat /etc/issue | grep "Ubuntu 14.04\|Ubuntu 16.04\|Debian.* 8\|Ubuntu 18.04\|Debian.* 9" >/dev/null && echo "QMAKESPEC" || echo "NONQMAKESPEC")
+QTINSTALL := $(shell cat /etc/issue | grep "Ubuntu 14.04\|Ubuntu 16.04\|Debian.* 8\|Ubuntu 18.04\|Debian.* 9" >/dev/null && echo "installqt" || echo "")
 DEB_TESTING := $(shell cat /etc/issue | grep "Debian" > /dev/null && cat /etc/apt/sources.list | grep -v "^\#" | grep testing > /dev/null && echo "testing")
 export $(QMAKESPEC) := /opt/mega/mkspecs/linux-g++
 
