@@ -2326,7 +2326,7 @@ background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
                               <height>96</height>
                              </size>
                             </property>
-                            <layout class="QHBoxLayout" name="horizontalLayout_23">
+                            <layout class="QHBoxLayout" name="horizontalLayout_232">
                              <property name="spacing">
                               <number>0</number>
                              </property>
@@ -2389,7 +2389,7 @@ background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
                               <height>16777215</height>
                              </size>
                             </property>
-                            <layout class="QVBoxLayout" name="verticalLayout_28">
+                            <layout class="QVBoxLayout" name="verticalLayout_282">
                              <property name="spacing">
                               <number>10</number>
                              </property>
@@ -2465,7 +2465,7 @@ background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
                           </item>
                           <item>
                            <widget class="QWidget" name="wAllSyncsDisabledButtons" native="true">
-                            <layout class="QHBoxLayout" name="horizontalLayout_22">
+                            <layout class="QHBoxLayout" name="horizontalLayout_222">
                              <property name="spacing">
                               <number>10</number>
                              </property>
@@ -2482,7 +2482,7 @@ background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
                               <number>0</number>
                              </property>
                              <item>
-                              <spacer name="horizontalSpacer_20">
+                              <spacer name="horizontalSpacer_201">
                                <property name="orientation">
                                 <enum>Qt::Horizontal</enum>
                                </property>
@@ -2570,7 +2570,7 @@ background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
                               </widget>
                              </item>
                              <item>
-                              <spacer name="horizontalSpacer_21">
+                              <spacer name="horizontalSpacer_212">
                                <property name="orientation">
                                 <enum>Qt::Horizontal</enum>
                                </property>
@@ -2591,7 +2591,7 @@ background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
                          <property name="styleSheet">
                           <string notr="true">background-color: #F4F6F8;</string>
                          </property>
-                         <layout class="QVBoxLayout" name="verticalLayout_29">
+                         <layout class="QVBoxLayout" name="verticalLayout_292">
                           <property name="spacing">
                            <number>18</number>
                           </property>
@@ -2683,7 +2683,7 @@ background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
                               <height>16777215</height>
                              </size>
                             </property>
-                            <layout class="QVBoxLayout" name="verticalLayout_28">
+                            <layout class="QVBoxLayout" name="verticalLayout_281">
                              <property name="spacing">
                               <number>10</number>
                              </property>
@@ -2864,7 +2864,7 @@ background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
                               </widget>
                              </item>
                              <item>
-                              <spacer name="horizontalSpacer_21">
+                              <spacer name="horizontalSpacer_211">
                                <property name="orientation">
                                 <enum>Qt::Horizontal</enum>
                                </property>
@@ -2885,7 +2885,7 @@ background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
                          <property name="styleSheet">
                           <string notr="true">background-color: #F4F6F8;</string>
                          </property>
-                         <layout class="QVBoxLayout" name="verticalLayout_29">
+                         <layout class="QVBoxLayout" name="verticalLayout_291">
                           <property name="spacing">
                            <number>18</number>
                           </property>
@@ -2918,7 +2918,7 @@ background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
                             <property name="styleSheet">
                              <string notr="true"/>
                             </property>
-                            <layout class="QHBoxLayout" name="horizontalLayout_23">
+                            <layout class="QHBoxLayout" name="horizontalLayout_231">
                              <property name="spacing">
                               <number>0</number>
                              </property>
@@ -3057,7 +3057,7 @@ background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
                           </item>
                           <item>
                            <widget class="QWidget" name="wSyncsDisabledButtons" native="true">
-                            <layout class="QHBoxLayout" name="horizontalLayout_22">
+                            <layout class="QHBoxLayout" name="horizontalLayout_221">
                              <property name="spacing">
                               <number>10</number>
                              </property>
@@ -3074,7 +3074,7 @@ background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
                               <number>0</number>
                              </property>
                              <item>
-                              <spacer name="horizontalSpacer_20">
+                              <spacer name="horizontalSpacer_202">
                                <property name="orientation">
                                 <enum>Qt::Horizontal</enum>
                                </property>

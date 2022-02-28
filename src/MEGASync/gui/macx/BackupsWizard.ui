@@ -501,7 +501,7 @@ margin: 4px;
                <verstretch>0</verstretch>
               </sizepolicy>
              </property>
-             <layout class="QVBoxLayout" name="pFoldersLayout">
+             <layout class="QVBoxLayout" name="pFoldersLayout1">
               <property name="spacing">
                <number>0</number>
               </property>
@@ -584,7 +584,7 @@ margin: 4px;
           </layout>
          </widget>
          <widget class="QWidget" name="pMoreFolders">
-          <layout class="QHBoxLayout" name="wButtonsLayout">
+          <layout class="QHBoxLayout" name="wButtonsLayout1">
            <property name="leftMargin">
             <number>20</number>
            </property>
@@ -906,7 +906,7 @@ margin: 4px;
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
-     <layout class="QHBoxLayout" name="wButtonsLayout">
+     <layout class="QHBoxLayout" name="wButtonsLayout2">
       <property name="leftMargin">
        <number>0</number>
       </property>

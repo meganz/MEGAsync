@@ -10,8 +10,9 @@
 #include <QDebug>
 
 constexpr int HEIGHT_ROW_STEP_1 (40);
+constexpr int HEADER_HEIGHT_STEP_1 (50);
 constexpr int MAX_ROWS_STEP_1 (3);
-constexpr int HEIGHT_MAX_STEP_1 (412);
+constexpr int HEIGHT_MAX_STEP_1 (413);
 constexpr int HEIGHT_MIN_STEP_1 (HEIGHT_MAX_STEP_1 - HEIGHT_ROW_STEP_1 * MAX_ROWS_STEP_1);
 constexpr int HEIGHT_ROW_STEP_2 (32);
 constexpr int MAX_ROWS_STEP_2 (5);
@@ -21,34 +22,20 @@ constexpr int HEIGHT_MAX_STEP_2 (HEIGHT_MIN_STEP_2 + HEIGHT_ROW_STEP_2 * MAX_ROW
 BackupsWizard::BackupsWizard(QWidget* parent) :
     QDialog(parent),
     mUi (new Ui::BackupsWizard),
-    mCurrentStep (Steps::STEP_1_INIT),
-    mSyncsModel (SyncModel::instance()),
     mSyncController(),
     mCreateBackupsDir (false),
     mDeviceDirHandle (mega::INVALID_HANDLE),
     mBackupsDirName (),
     mHaveBackupsDir (false),
-    mDeviceName (),
-    mHaveDeviceName (false),
     mError (false),
     mUserCancelled (false),
-    mStep1FoldersModel (new QStandardItemModel()),
-    mCurrentSyncRow (0),
-    mSuccessDialog (nullptr),
-    mSuccessDialogUi (nullptr)
+    mFoldersModel (new QStandardItemModel(this)),
+    mFoldersProxyModel(new ProxyModel(this))
 {
+    setWindowFlags((windowFlags() | Qt::WindowCloseButtonHint) & ~Qt::WindowContextHelpButtonHint);
     mUi->setupUi(this);
-    setWindowFlags(windowFlags() | Qt::WindowCloseButtonHint);
 
     mHighDpiResize.init(this);
-
-    mUi->lvFoldersStep1->setModel(mStep1FoldersModel);
-
-    // Empty state
-    mOriginalState = getCurrentState();
-
-    connect(this, &BackupsWizard::nextStep,
-            this, &BackupsWizard::onNextStep, Qt::QueuedConnection);
 
     connect(&mSyncController, &SyncController::deviceName,
             this, &BackupsWizard::onDeviceNameSet);
@@ -57,7 +44,7 @@ BackupsWizard::BackupsWizard(QWidget* parent) :
             this, &BackupsWizard::onBackupsDirSet);
 
     // React on item check/uncheck
-    connect(mStep1FoldersModel, &QStandardItemModel::itemChanged,
+    connect(mFoldersModel, &QStandardItemModel::itemChanged,
             this, &BackupsWizard::onListItemChanged);
 
     connect(&mSyncController, &SyncController::setMyBackupsDirStatus,
@@ -66,7 +53,10 @@ BackupsWizard::BackupsWizard(QWidget* parent) :
     connect(&mSyncController, &SyncController::syncAddStatus,
             this, &BackupsWizard::onSyncAddRequestStatus);
 
-    // Go to Step 1
+    mFoldersProxyModel->setSourceModel(mFoldersModel);
+    mUi->lvFoldersStep1->setModel(mFoldersProxyModel);
+    mUi->lvFoldersStep2->setModel(mFoldersProxyModel);
+
     setupStep1();
 }
 
@@ -78,29 +68,19 @@ BackupsWizard::~BackupsWizard()
 void BackupsWizard::refreshNextButtonState()
 {
     bool enable (false);
-    switch (mCurrentStep)
-    {
-        case STEP_1:
-        {
-            enable = (getCurrentState() != mOriginalState) && mHaveDeviceName;
-            break;
-        }
-        case STEP_2:
-        {
-            enable = mHaveBackupsDir;
-            break;
-        }
-        default:
-        {
-            enable = false;
-            break;
-        }
-    }
+    //step1
+    if(mUi->sSteps->currentWidget() == mUi->pStep1)
+        enable = (isSomethingChecked() && !mUi->lDeviceNameStep1->text().isEmpty());
+    else //step2
+        enable = mHaveBackupsDir;
+
     mUi->bNext->setEnabled(enable);
 }
 
 void BackupsWizard::setupStep1()
 {
+    mFoldersProxyModel->showOnlyChecked(false);
+
     qDebug("Backups Wizard: step 1 Init");
     refreshNextButtonState();
     mUi->sSteps->setCurrentWidget(mUi->pStep1);
@@ -110,10 +90,9 @@ void BackupsWizard::setupStep1()
     int dialogHeight (HEIGHT_MAX_STEP_1);
 
     // Get device name
-    mHaveDeviceName = false;
     mSyncController.getDeviceName();
 
-    if (mSyncsModel->isRemoteRootSynced())
+    if (SyncModel::instance()->isRemoteRootSynced())
     {
         mUi->sMoreFolders->setCurrentWidget(mUi->pAllFoldersSynced);
         mUi->sFolders->setCurrentWidget(mUi->pNoFolders);
@@ -126,7 +105,7 @@ void BackupsWizard::setupStep1()
         mUi->sFolders->setCurrentWidget(mUi->pFolders);
 
         // Check if we need to refresh the lists
-        if (mStep1FoldersModel->rowCount() == 0)
+        if (mFoldersModel->rowCount() == 0)
         {
             QIcon folderIcon (QIcon(QLatin1String("://images/icons/folder/folder-mono_24.png")));
 
@@ -149,31 +128,26 @@ void BackupsWizard::setupStep1()
                     item->setData(folderIcon, Qt::DecorationRole);
                     item->setData(Qt::Unchecked, Qt::CheckStateRole);
 
-                    mStep1FoldersModel->appendRow(item);
+                    mFoldersModel->appendRow(item);
                 }
             }
-            // Snapshot original state
-            mOriginalState = getCurrentState();
         }
 
-        int listHeight (std::max(HEIGHT_ROW_STEP_1,
+        int listHeight = (std::max(HEIGHT_ROW_STEP_1,
                                  std::min(HEIGHT_ROW_STEP_1 * MAX_ROWS_STEP_1,
-                                          mStep1FoldersModel->rowCount() * HEIGHT_ROW_STEP_1)));
+                                          mFoldersModel->rowCount() * HEIGHT_ROW_STEP_1))) + HEADER_HEIGHT_STEP_1;
+
         dialogHeight = std::min(HEIGHT_MAX_STEP_1, HEIGHT_MIN_STEP_1 + listHeight);
-        mUi->lvFoldersStep1->setFixedHeight(listHeight);
+        mUi->fFoldersStep1->setMinimumHeight(listHeight);
+        setMinimumHeight(dialogHeight);
+        resize(width(), dialogHeight);
     }
-
-    // Prevent flickering when the dialog is dragged (height of lvFoldersStep2 seems to be taken
-    // into account when repainting the dialog)
-    mUi->lvFoldersStep2->setFixedHeight(0);
-    setFixedHeight(dialogHeight);
-
-    mCurrentStep = Steps::STEP_1;
     qDebug("Backups Wizard: step 1");
 }
 
 void BackupsWizard::setupStep2()
 {
+    mFoldersProxyModel->showOnlyChecked(true);
     qDebug("Backups Wizard: step 2 Init");
     refreshNextButtonState();
     mUi->sSteps->setCurrentWidget(mUi->pStep2);
@@ -185,31 +159,7 @@ void BackupsWizard::setupStep2()
     mSyncController.getBackupsRootDirHandle();
 
     // Get number of items
-    int nbFolders (mStep1FoldersModel->rowCount());
-    int nbSelectedFolders (0);
-    mUi->lvFoldersStep2->clear();
-    // Populate lvFoldersStep2 from lvFoldersStep1
-    for (int i = 0; i < nbFolders; ++i)
-    {
-        auto itemStep1 (mStep1FoldersModel->itemData(mStep1FoldersModel->index(i, 0)));
-        QListWidgetItem* itemStep2 (new QListWidgetItem());
-
-        itemStep2->setData(Qt::DisplayRole, itemStep1[Qt::DisplayRole]);
-        itemStep2->setData(Qt::ToolTipRole, itemStep1[Qt::ToolTipRole]);
-        itemStep2->setData(Qt::UserRole, itemStep1[Qt::UserRole]);
-        itemStep2->setData(Qt::DecorationRole, itemStep1[Qt::DecorationRole]);
-        mUi->lvFoldersStep2->addItem(itemStep2);
-
-        // Hide unchecked items and count selected ones
-        if (itemStep1[Qt::CheckStateRole] == Qt::Checked)
-        {
-            nbSelectedFolders++;
-        }
-        else
-        {
-            itemStep2->setHidden(true);
-        }
-    }
+    int nbSelectedFolders = mFoldersProxyModel->rowCount();
 
     // Set folders number
     if (nbSelectedFolders == 1)
@@ -226,10 +176,10 @@ void BackupsWizard::setupStep2()
                                       nbSelectedFolders * HEIGHT_ROW_STEP_2)));
     int dialogHeight (std::min(HEIGHT_MAX_STEP_2,
                                HEIGHT_MIN_STEP_2 + listHeight));
-    mUi->lvFoldersStep2->setFixedHeight(listHeight);
-    setFixedHeight(dialogHeight);
 
-    mCurrentStep = Steps::STEP_2;
+    setMinimumHeight(dialogHeight);
+    resize(width(), dialogHeight);
+
     qDebug("Backups Wizard: step 2");
 }
 
@@ -240,18 +190,23 @@ void BackupsWizard::setupFinalize()
     mUi->bCancel->setEnabled(false);
     mUi->bBack->hide();
 
-    mCurrentSyncRow = 0;
     mError = false;
 
-    mCurrentStep = Steps::SETUP_MYBACKUPS_DIR;
-    emit nextStep();
+    nextStep(SETUP_MYBACKUPS_DIR);
 }
 
 void BackupsWizard::setupMyBackupsDir(bool nameCollision)
 {
     qDebug("Backups Wizard: setup MyBackups");
-
-    if (!mBackupsDirName.isEmpty())
+    // If the user cancels, exit wizard
+    if (mBackupsDirName.isEmpty())
+    {
+        // If the user cancels, exit wizard (this condition can be met only when executing this
+        // code for the second time, as mBackupsDirName is initialized to a non-empty value.)
+        mUserCancelled = true;
+        nextStep(EXIT);
+    }
+    else
     {
         // Create MyBackups folder if necessary
         if (mCreateBackupsDir || nameCollision)
@@ -261,95 +216,52 @@ void BackupsWizard::setupMyBackupsDir(bool nameCollision)
         else
         {
             // If not, proceed to setting-up backups
-            mCurrentStep = Steps::SETUP_BACKUPS;
-            emit nextStep();
+            nextStep(SETUP_BACKUPS);
         }
-    }
-    else
-    {
-        // If the user cancels, exit wizard (this condition can be met only when executing this
-        // code for the second time, as mBackupsDirName is initiqlized to a non-empty value.)
-        mUserCancelled = true;
-        mCurrentStep = Steps::EXIT;
-        emit nextStep();
     }
 }
 
 void BackupsWizard::setupBackups()
 {
-    if (mCurrentSyncRow < mUi->lvFoldersStep2->count())
+    for(int i=0; i < mFoldersProxyModel->rowCount(); ++i)
     {
-        auto item (mUi->lvFoldersStep2->item(mCurrentSyncRow));
+        BackupInfo backupInfo;
+        backupInfo.folderPath = mFoldersProxyModel->index(i, 0).data(Qt::UserRole).toString();
+        backupInfo.status = QUEUED;
+        mBackupsStatus.insert(mFoldersProxyModel->index(i, 0).data(Qt::DisplayRole).toString(), backupInfo);
+    }
+    processNextBackupSetup();
+}
 
-        // Only process non-hidden items (those who were checked in STEP_1)
-        if (!item->isHidden())
+// Indicates if something is checked
+bool BackupsWizard::isSomethingChecked()
+{
+    for (int i = 0; i < mFoldersModel->rowCount(); ++i)
+    {
+        if(mFoldersModel->data(mFoldersModel->index(i, 0), Qt::CheckStateRole) == Qt::Checked)
+            return true;
+    }
+    return false;
+}
+
+void BackupsWizard::processNextBackupSetup()
+{
+    for(auto it = mBackupsStatus.begin(); it != mBackupsStatus.end(); ++it)
+    {
+        if(it.value().status == QUEUED)
         {
-            // Get local folder path
-            QString localFolderPath (item->data(Qt::UserRole).toString());
-
-            // Get Sync Name
-            QString currentBackupName (item->data(Qt::DisplayRole).toString());
-
             // Create backup
             mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_INFO,
                                QString::fromUtf8("Backups Wizard: setup backup \"%1\" to \"%2\"")
-                               .arg(localFolderPath,
+                               .arg(it.key(),
                                     mBackupsDirName +  QLatin1Char('/')
-                                    + mDeviceName + QLatin1Char('/')
-                                    + currentBackupName).toUtf8().constData());
+                                    + mUi->lDeviceNameStep1->text() + QLatin1Char('/')
+                                    + it.value().folderPath).toUtf8().constData());
 
-            mSyncController.addSync(localFolderPath, mega::INVALID_HANDLE,
-                                               currentBackupName, mega::MegaSync::TYPE_BACKUP);
+            mSyncController.addSync(it.value().folderPath, mega::INVALID_HANDLE,
+                                               it.key(), mega::MegaSync::TYPE_BACKUP);
+            return;
         }
-        else
-        {
-            mCurrentSyncRow++;
-            emit nextStep();
-        }
-    }
-    else
-    {
-        // If we've reached the end of the list, we're done.
-        mCurrentStep = Steps::DONE;
-        emit nextStep();
-    }
-}
-
-// Create folder check map: "-X XX   X". 'X' == checked, ' ' == unchecked.
-// Pre-requities:
-// 1. The order of existing items in the list do not change
-// 2. New items are inserted at the beginning of the list
-QString BackupsWizard::getCurrentState()
-{
-    QString currentState (QLatin1Char('-'));
-    int nbFolders (mStep1FoldersModel->rowCount());
-    for (int i = nbFolders - 1; i >= 0; --i)
-    {
-        currentState += mStep1FoldersModel->data(mStep1FoldersModel->index(i, 0),
-                                                 Qt::CheckStateRole) == Qt::Unchecked ?
-                         QLatin1Char(' ')
-                       : QLatin1Char('X');
-    }
-    return currentState.trimmed();
-}
-
-// Toggle the backup's state in the original state map.
-// To be used after an action succeed.
-void BackupsWizard::updateOriginalState(int index)
-{
-    int nbBackups (mStep1FoldersModel->rowCount());
-    int nbMeaningfulRows (mOriginalState.size() - 1);
-    int pos (nbBackups - index);
-
-    if (nbMeaningfulRows < pos)
-    {
-        mOriginalState.resize(pos + 1, QLatin1Char(' '));
-        mOriginalState[pos] = 'X';
-    }
-    else
-    {
-        mOriginalState[pos] = mOriginalState[pos] == QLatin1Char(' ') ? 'X' : ' ';
-        mOriginalState = mOriginalState.trimmed();
     }
 }
 
@@ -393,7 +305,7 @@ bool BackupsWizard::isFolderAlreadySynced(const QString& path, bool displayWarni
     for (auto type : {mega::MegaSync::SyncType::TYPE_TWOWAY,
          mega::MegaSync::SyncType::TYPE_BACKUP})
     {
-        localFolders += mSyncsModel->getLocalFolders(type);
+        localFolders += SyncModel::instance()->getLocalFolders(type);
     }
 
     // First check existing syncs
@@ -421,16 +333,16 @@ bool BackupsWizard::isFolderAlreadySynced(const QString& path, bool displayWarni
     if (message.isEmpty())
     {
         // Check for path and name collision.
-        int nbBackups (mStep1FoldersModel->rowCount());
+        int nbBackups (mFoldersModel->rowCount());
         int row (0);
 
         while (message.isEmpty() && row < nbBackups)
         {
-            QString c (QDir::cleanPath(mStep1FoldersModel->item(row)->data(Qt::UserRole).toString()));
+            QString c (QDir::cleanPath(mFoldersModel->item(row)->data(Qt::UserRole).toString()));
             bool sameSize (cleanInputPath.size() == c.size());
 
             // Do not consider unchecked items
-            if (mStep1FoldersModel->item(row)->checkState() == Qt::Checked)
+            if (mFoldersModel->item(row)->checkState() == Qt::Checked)
             {
                 // Handle same path another way later: by selecting the row in the view.
                 if (cleanInputPath.startsWith(c) && !sameSize
@@ -472,11 +384,11 @@ QString BackupsWizard::remoteFolderExistsDialog(const QString& backupName)
 }
 
 // State machine orchestrator
-void BackupsWizard::onNextStep()
+void BackupsWizard::nextStep(const Steps &step)
 {
     qDebug("Backups Wizard: next step");
     refreshNextButtonState();
-    switch (mCurrentStep)
+    switch (step)
     {
         case Steps::STEP_1_INIT:
         {
@@ -523,44 +435,31 @@ void BackupsWizard::onNextStep()
 void BackupsWizard::on_bNext_clicked()
 {
     qDebug("Backups Wizard: next clicked");
-    switch (mCurrentStep)
-    {
-        case Steps::STEP_1:
-        {
-            mCurrentStep = Steps::STEP_2_INIT;
-            break;
-        }
-        case Steps::STEP_2:
-        {
-            mCurrentStep = Steps::FINALIZE;
-            break;
-        }
-        default:
-            break;
-    }
-    emit nextStep();
+    if(mUi->sSteps->currentWidget() == mUi->pStep1)
+        nextStep(STEP_2_INIT);
+    else
+        nextStep(FINALIZE);
 }
 
 void BackupsWizard::on_bCancel_clicked()
 {
-    int userWantsToCancel (QMessageBox::Ok);
+    int userWantsToCancel (QMessageBox::Yes);
 
     // If the user has made any modification, warn them before exiting.
-    if (getCurrentState() != mOriginalState)
+    if (isSomethingChecked())
     {
         QString title (tr("Warning"));
-        QString content (tr("If you cancel, all changes will be lost."));
+        QString content (tr("Are you sure you want to cancel? All changes will be lost."));
         userWantsToCancel = QMessageBox::warning(this, title, content,
-                                                 QMessageBox::Ok | QMessageBox::Abort,
-                                                 QMessageBox::Abort);
+                                                 QMessageBox::Yes,
+                                                 QMessageBox::No);
     }
 
-    if (userWantsToCancel == QMessageBox::Ok)
+    if (userWantsToCancel == QMessageBox::Yes)
     {
         qDebug("Backups Wizard: user cancel");
         mUserCancelled = true;
-        mCurrentStep = Steps::EXIT;
-        emit nextStep();
+        nextStep(EXIT);
     }
 }
 
@@ -580,17 +479,17 @@ void BackupsWizard::on_bMoreFolders_clicked()
         QString displayName (dir.dirName());
 
         // Check for path and name collision.
-        int nbBackups (mStep1FoldersModel->rowCount());
+        int nbBackups (mFoldersModel->rowCount());
         int row (0);
 
         while (existingBackup == nullptr && row < nbBackups)
         {
-            auto currItem = mStep1FoldersModel->itemData(mStep1FoldersModel->index(row, 0));
+            auto currItem = mFoldersModel->itemData(mFoldersModel->index(row, 0));
             QString name (currItem[Qt::DisplayRole].toString());
             if (path == currItem[Qt::UserRole].toString())
             {
                 // If folder is already backed up, set pointer and take existing name
-                existingBackup = mStep1FoldersModel->item(row);
+                existingBackup = mFoldersModel->item(row);
                 displayName = name;
             }
             row++;
@@ -610,24 +509,24 @@ void BackupsWizard::on_bMoreFolders_clicked()
             item->setData(path, Qt::ToolTipRole);
             item->setData(path, Qt::UserRole);
             item->setData(icon, Qt::DecorationRole);
-            mStep1FoldersModel->insertRow(0, item);
+            mFoldersModel->insertRow(0, item);
         }
         item->setData(Qt::Checked, Qt::CheckStateRole);
 
         int listHeight (std::max(HEIGHT_ROW_STEP_1,
                                  std::min(HEIGHT_ROW_STEP_1 * MAX_ROWS_STEP_1,
-                                          mStep1FoldersModel->rowCount() * HEIGHT_ROW_STEP_1)));
+                                          mFoldersModel->rowCount() * HEIGHT_ROW_STEP_1)));
         int dialogHeight (std::min(HEIGHT_MAX_STEP_1,
                                    HEIGHT_MIN_STEP_1 + listHeight));
-        mUi->lvFoldersStep1->setFixedHeight(listHeight);
-        setFixedHeight(dialogHeight);
+        mUi->lvFoldersStep1->setMinimumHeight(listHeight);
+        resize(width(), dialogHeight);
 
         // Jump to item in list
-        mUi->lvFoldersStep1->scrollTo(mStep1FoldersModel->indexFromItem(item));
+        auto idx = mFoldersModel->indexFromItem(item);
+        mUi->lvFoldersStep1->scrollTo(idx,QAbstractItemView::PositionAtCenter);
 
         refreshNextButtonState();
-        qDebug(QString::fromUtf8("Backups Wizard: add folder \"%1\"")
-                           .arg(path).toUtf8().constData());
+        qDebug() << QString::fromUtf8("Backups Wizard: add folder \"%1\"").arg(path);
     }
 }
 
@@ -635,8 +534,7 @@ void BackupsWizard::on_bBack_clicked()
 {    
     qDebug("Backups Wizard: back");
     // The "Back" button only appears at STEP_2. Go back to STEP_1_INIT.
-    mCurrentStep = Steps::STEP_1_INIT;
-    emit nextStep();
+    nextStep(STEP_1_INIT);
 }
 
 void BackupsWizard::onListItemChanged(QStandardItem* item)
@@ -666,34 +564,38 @@ void BackupsWizard::setupComplete()
     {
         qDebug("Backups Wizard: setup completed successfully");
         // We are now done, exit
-        mCurrentStep = Steps::EXIT;
-
         // No error: show success message!
-        mSuccessDialog.reset(new QDialog(this));
-        mSuccessDialogUi.reset(new Ui::BackupSetupSuccessDialog);
+        QDialog* successDialog = new QDialog(this);
+        successDialog->setWindowFlags(successDialog->windowFlags()  & ~Qt::WindowContextHelpButtonHint);
+        Ui::BackupSetupSuccessDialog* successUi = new Ui::BackupSetupSuccessDialog;
+        successUi->setupUi(successDialog);
 
-        mSuccessDialogUi->setupUi(mSuccessDialog.get());
+        if(successDialog->exec() == QDialog::Accepted)
+        {
+            mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_INFO, "Backups Wizard: show Backup Center");
+        // FIXME: Revert to live url when feature is merged
+        //  QtConcurrent::run(QDesktopServices::openUrl, QUrl(QString::fromUtf8("mega://#fm/backups")));
+            QtConcurrent::run(QDesktopServices::openUrl, QUrl(QString::fromUtf8("https://13755-backup-center.developers.mega.co.nz/dont-deploy/sandbox3.html?apipath=prod&jj=2")));
+        }
+        nextStep(EXIT);
 
-        connect(mSuccessDialog.get(), &QDialog::rejected, this, &BackupsWizard::onNextStep);
-        connect(mSuccessDialog.get(), &QDialog::accepted, this, &BackupsWizard::onSuccessDialogAccepted);
-
-        mSuccessDialog->exec();
+        delete successUi;
+        successUi = nullptr;
+        delete successDialog;
+        successDialog = nullptr;
     }
     else
     {
         qDebug("Backups Wizard: setup completed with error, go back to step 1");
         // Error: go back to Step 1 :(
-        mCurrentStep = Steps::STEP_1_INIT;
-        emit nextStep();
+        nextStep(STEP_1_INIT);
     }
 }
 
 void BackupsWizard::onDeviceNameSet(QString deviceName)
 {
-    mDeviceName = deviceName;
-    mUi->lDeviceNameStep1->setText(mDeviceName);
-    mUi->lDeviceNameStep2->setText(mDeviceName);
-    mHaveDeviceName = true;
+    mUi->lDeviceNameStep1->setText(deviceName);
+    mUi->lDeviceNameStep2->setText(deviceName);
     refreshNextButtonState();
 }
 
@@ -738,8 +640,7 @@ void BackupsWizard::onBackupsDirSet(mega::MegaHandle backupsDirHandle)
                     mHaveBackupsDir = false;
                     mCreateBackupsDir = false;
                     mUserCancelled = true;
-                    mCurrentStep = Steps::EXIT;
-                    emit nextStep();
+                    nextStep(EXIT);
                 }
             }
         }
@@ -752,19 +653,18 @@ void BackupsWizard::onBackupsDirSet(mega::MegaHandle backupsDirHandle)
         mBackupsDirName = tr("My Backups");
         backupsDirPath = QLatin1Char('/') + mBackupsDirName;
         mCreateBackupsDir = true;
-        qDebug(QString::fromLatin1("Backups Wizard: MyBackups dir: \"%1\"")
-                           .arg(backupsDirPath).toUtf8().constData());
+        qDebug() << QString::fromLatin1("Backups Wizard: MyBackups dir: \"%1\"").arg(backupsDirPath);
     }
 
     // Build device backup path
     std::shared_ptr<mega::MegaNode> rootNode (MegaSyncApp->getRootNode());
     mUi->leBackupTo->setText(QString::fromUtf8(rootNode->getName())
                              + backupsDirPath + QLatin1Char('/')
-                             + mDeviceName);
+                             + mUi->lDeviceNameStep1->text());
     refreshNextButtonState();
 }
 
-void BackupsWizard::onSetMyBackupsDirRequestStatus(int errorCode, QString errorMsg)
+void BackupsWizard::onSetMyBackupsDirRequestStatus(int errorCode, const QString& errorMsg)
 {
     bool nameCollision (false);
 
@@ -785,50 +685,132 @@ void BackupsWizard::onSetMyBackupsDirRequestStatus(int errorCode, QString errorM
     setupMyBackupsDir(nameCollision);
 }
 
-void BackupsWizard::onSyncAddRequestStatus(int errorCode, QString errorMsg)
+void BackupsWizard::onSyncAddRequestStatus(int errorCode, const QString& errorMsg, const QString& name)
 {
-    if (mCurrentSyncRow < mUi->lvFoldersStep2->count())
+    QModelIndex index = mFoldersProxyModel->getIndexByName(name);
+    QStandardItem* item = mFoldersModel->itemFromIndex(index);
+    if(!item)
     {
-        auto itemStep1 (mStep1FoldersModel->item(mCurrentSyncRow));
-        auto itemStep2 (mUi->lvFoldersStep2->item(mCurrentSyncRow));
+        return;
+    }
 
-        // Update tooltip and icon according to result
-        if (errorCode == mega::MegaError::API_OK)
+    // Update tooltip and icon according to result
+    if (errorCode == mega::MegaError::API_OK)
+    {
+        QIcon folderIcon (QIcon(QLatin1String("://images/icons/folder/folder-mono_24.png")));
+        QString tooltipMsg (item->data(Qt::UserRole).toString());
+        item->setData(folderIcon, Qt::DecorationRole);
+        item->setData(tooltipMsg, Qt::ToolTipRole);
+        BackupInfo info = mBackupsStatus.value(name);
+        info.status = OK;
+        mBackupsStatus.insert(name, info);
+    }
+    else
+    {
+        mError = true;
+        QIcon   warnIcon (QIcon(QLatin1String("://images/icons/folder/folder-mono-with-warning_24.png")));
+        QString tooltipMsg (item->data(Qt::UserRole).toString()
+                            + QLatin1String("\nError: ") + errorMsg);
+        item->setData(warnIcon, Qt::DecorationRole);
+        item->setData(tooltipMsg, Qt::ToolTipRole);
+        BackupInfo info = mBackupsStatus.value(name);
+        info.status = ERR;
+        mBackupsStatus.insert(name, info);
+    }
+
+    item->setData(Qt::Unchecked, Qt::CheckStateRole);
+
+    //Ch
+    bool finished(true);
+    bool errorsExists(false);
+    for(auto it = mBackupsStatus.begin(); it != mBackupsStatus.end(); ++it)
+    {
+        if(it.value().status == QUEUED)
+          finished = false;
+        else if(it.value().status == ERR)
+          errorsExists = true;
+
+        if(!finished && errorsExists)
+            break;
+    }
+
+    if(finished)
+    {
+        if(!errorsExists)
         {
-            QIcon folderIcon (QIcon(QLatin1String("://images/icons/folder/folder-mono_24.png")));
-            QString tooltipMsg (itemStep2->data(Qt::UserRole).toString());
-            itemStep2->setData(Qt::DecorationRole, folderIcon);
-            itemStep2->setData(Qt::ToolTipRole, tooltipMsg);
-            itemStep1->setData(folderIcon, Qt::DecorationRole);
-            itemStep1->setData(tooltipMsg, Qt::ToolTipRole);
+            nextStep(DONE);
         }
         else
         {
-            mError = true;
-            QIcon   warnIcon (QIcon(QLatin1String("://images/icons/folder/folder-mono-with-warning_24.png")));
-            QString tooltipMsg (itemStep2->data(Qt::UserRole).toString()
-                                + QLatin1String("\nError: ") + errorMsg);
-            itemStep2->setData(Qt::DecorationRole, warnIcon);
-            itemStep2->setData(Qt::ToolTipRole, tooltipMsg);
-            itemStep1->setData(warnIcon, Qt::DecorationRole);
-            itemStep1->setData(tooltipMsg, Qt::ToolTipRole);
-
-            QMegaMessageBox::critical(nullptr, tr("Error"), errorMsg);
+            QString err;
+            for(auto it = mBackupsStatus.begin(); it != mBackupsStatus.end(); ++it)
+            {
+                if(it.value().status == ERR)
+                {
+                    err.append(it.key());
+                    err.append(QString::fromUtf8("-"));
+                }
+            }
+            QMegaMessageBox::critical(nullptr, tr("Error"), err);
         }
-        itemStep1->setData(Qt::Unchecked, Qt::CheckStateRole);
-
-        // Process next item
-        mCurrentSyncRow++;
-        setupBackups();
+    }
+    else
+    {
+        processNextBackupSetup();
     }
 }
 
-void BackupsWizard::onSuccessDialogAccepted()
+ProxyModel::ProxyModel(QObject *parent) :
+    QSortFilterProxyModel(parent),
+    mShowOnlyChecked(false)
 {
-    qDebug("Backups Wizard: show Backup Center");
-// FIXME: Revert to live url when feature is merged
-//  QtConcurrent::run(QDesktopServices::openUrl, QUrl(QString::fromUtf8("mega://#fm/backups")));
-    QtConcurrent::run(QDesktopServices::openUrl, QUrl(QString::fromUtf8("https://13755-backup-center.developers.mega.co.nz/dont-deploy/sandbox3.html?apipath=prod&jj=2")));
 
-    emit nextStep();
 }
+
+void ProxyModel::showOnlyChecked(bool val)
+{
+    if(val != mShowOnlyChecked)
+    {
+        mShowOnlyChecked = val;
+        invalidateFilter();
+    }
+}
+
+QModelIndex ProxyModel::getIndexByName(const QString& name)
+{
+    for(int i = 0; i < sourceModel()->rowCount(); ++i)
+    {
+        QModelIndex index = sourceModel()->index(i, 0);
+        if(index.data(Qt::DisplayRole).toString() == name)
+        {
+            return index;
+        }
+    }
+    return QModelIndex();
+}
+
+bool ProxyModel::filterAcceptsRow(int source_row, const QModelIndex &source_parent) const
+{
+    Q_UNUSED(source_parent);
+    if(!mShowOnlyChecked)
+    {
+        return true;
+    }
+    QModelIndex idx = sourceModel()->index(source_row, 0);
+    return idx.data(Qt::CheckStateRole).toBool();
+}
+
+QVariant ProxyModel::data(const QModelIndex &index, int role) const
+{
+    if(mShowOnlyChecked && role == Qt::CheckStateRole)
+    {
+        return QVariant();
+    }
+    return QSortFilterProxyModel::data(index, role);
+}
+
+Qt::ItemFlags ProxyModel::flags(const QModelIndex &index) const
+{
+    return QSortFilterProxyModel::flags(index)  & ~Qt::ItemIsSelectable;
+}
+

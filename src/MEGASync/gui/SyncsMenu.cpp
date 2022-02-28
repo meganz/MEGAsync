@@ -10,9 +10,11 @@ const QLatin1String MENU_STYLESHEET ("QMenu {"
                                      "border: 1px solid #B8B8B8;"
                                      "border-radius: 5px;"
                                      "background: #ffffff;"
-                                     "padding-top: 8px;"
-                                     "padding-bottom: 8px;}"
+                                     "padding-top: 4px;"
+                                     "padding-bottom: 4px;}"
                                      "QMenu::separator{"
+                                     "margin-top: 4px;"
+                                     "margin-bottom: 4px;"
                                      "height: 1px;"
                                      "background: rgba(0,0,0,0.1);}");
 

@@ -398,7 +398,6 @@
          </layout>
          <zorder>wTransferInfo</zorder>
          <zorder>lFileTypeCompleted</zorder>
-         <zorder>horizontalSpacer</zorder>
          <zorder>wOptions</zorder>
         </widget>
        </item>
@@ -613,7 +612,6 @@ background-color: rgba(0, 0, 0, 8%);
                      </property>
                      <property name="font">
                       <font>
-                       <family>Lato</family>
                        <pointsize>-1</pointsize>
                       </font>
                      </property>
@@ -895,8 +893,6 @@ background-color: rgba(0, 0, 0, 8%);
    </item>
   </layout>
  </widget>
- <resources>
-  <include location="../Resources_win.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>

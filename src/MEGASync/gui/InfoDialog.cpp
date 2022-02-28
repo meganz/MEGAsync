@@ -1253,7 +1253,7 @@ void InfoDialog::addBackup()
                     }
                 }
             });
-            connect(mSyncController.get(), &SyncController::syncAddStatus, this, [this](const int errorCode, const QString errorMsg)
+            connect(mSyncController.get(), &SyncController::syncAddStatus, this, [](const int errorCode, const QString errorMsg)
             {
                 if (errorCode != MegaError::API_OK)
                 {
