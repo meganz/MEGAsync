@@ -43,7 +43,7 @@ signals:
     void syncRemoveError(std::shared_ptr<SyncSetting> sync);
     void syncEnableError(std::shared_ptr<SyncSetting> sync);
     void syncDisableError(std::shared_ptr<SyncSetting> sync);
-    void syncAddStatus(int errorCode, QString errorMsg);
+    void syncAddStatus(int errorCode, QString errorMsg, QString name);
 
     void setMyBackupsDirStatus(int errorCode, QString errorMsg);
     void backupsRootDirHandle(mega::MegaHandle handle);
@@ -53,7 +53,7 @@ signals:
 
 protected:
     // override from MegaRequestListener
-    virtual void onRequestFinish(mega::MegaApi* api, mega::MegaRequest* req, mega::MegaError* e) override;
+    void onRequestFinish(mega::MegaApi* api, mega::MegaRequest* req, mega::MegaError* e) override;
 
 private:
     void ensureDeviceNameIsSetOnRemote();

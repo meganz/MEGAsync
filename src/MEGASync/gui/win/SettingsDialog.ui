@@ -1095,7 +1095,7 @@ font-weight: bold;
         </widget>
        </item>
        <item>
-        <spacer name="verticalSpacer_2">
+        <spacer name="verticalSpacer_21">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
          </property>
@@ -1863,7 +1863,7 @@ font-weight: bold;
            </property>
            <item>
             <widget class="QGroupBox" name="groupBox">
-             <layout class="QVBoxLayout" name="verticalLayout_9">
+             <layout class="QVBoxLayout" name="verticalLayout_91">
               <property name="spacing">
                <number>0</number>
               </property>
@@ -2051,7 +2051,7 @@ border-radius: 8px;
            </widget>
           </item>
           <item>
-           <layout class="QHBoxLayout" name="horizontalLayout">
+           <layout class="QHBoxLayout" name="horizontalLayout2">
             <item>
              <spacer name="horizontalSpacer_11">
               <property name="orientation">
@@ -3236,7 +3236,7 @@ color: #0078D7;
          </layout>
         </widget>
         <widget class="QWidget" name="wBackupFooter">
-         <layout class="QHBoxLayout" name="horizontalLayout">
+         <layout class="QHBoxLayout" name="horizontalLayout1">
           <property name="leftMargin">
            <number>0</number>
           </property>

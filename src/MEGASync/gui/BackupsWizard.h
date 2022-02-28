@@ -13,11 +13,27 @@
 #include <QListWidgetItem>
 #include <QSemaphore>
 #include <QStandardItemModel>
+#include <QSortFilterProxyModel>
 
 namespace Ui {
 class BackupsWizard;
 class BackupSetupSuccessDialog;
 }
+
+class ProxyModel : public QSortFilterProxyModel
+{
+public:
+    explicit ProxyModel(QObject *parent = nullptr);
+    void showOnlyChecked(bool val);
+    bool filterAcceptsRow(int source_row, const QModelIndex &source_parent) const override;
+    QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
+    Qt::ItemFlags flags(const QModelIndex &index) const override;
+
+    QModelIndex getIndexByName(const QString& name);
+
+private:
+    bool mShowOnlyChecked;
+};
 
 class BackupsWizard : public QDialog
 {
@@ -36,6 +52,20 @@ class BackupsWizard : public QDialog
             DONE,
             EXIT,
         };
+
+        enum Status
+        {
+           QUEUED = 0,
+           ERR,
+           OK,
+        };
+
+        struct BackupInfo
+        {
+           QString folderPath;
+           Status status;
+        };
+
         explicit BackupsWizard(QWidget* parent = nullptr);
         ~BackupsWizard();
 
@@ -46,37 +76,29 @@ class BackupsWizard : public QDialog
         void setupMyBackupsDir(bool nameCollision = false);
         void setupBackups();
         void setupComplete();
-        QString getCurrentState();
-        void updateOriginalState(int index);
+        bool isSomethingChecked();
+        void processNextBackupSetup();
         void promptAndEnsureUniqueRemoteName(QString& displayName);
         bool isFolderAlreadySynced(const QString& path, bool displayWarning = false);
         QString remoteFolderExistsDialog(const QString& backupName);
         void refreshNextButtonState();
+        void nextStep(const Steps& step);
 
         Ui::BackupsWizard* mUi;
         HighDpiResize mHighDpiResize;
-        Steps mCurrentStep;
-        SyncModel* mSyncsModel;
         SyncController mSyncController;
         bool mCreateBackupsDir;
         mega::MegaHandle mDeviceDirHandle;
         QString mBackupsDirName;
         bool mHaveBackupsDir;
-        QString mDeviceName;
-        bool mHaveDeviceName;
-        QString mOriginalState;
         bool mError;
         bool mUserCancelled;
-        QStandardItemModel* mStep1FoldersModel;
-        int mCurrentSyncRow;
-        std::unique_ptr<QDialog> mSuccessDialog;
-        std::unique_ptr<Ui::BackupSetupSuccessDialog> mSuccessDialogUi;
-
-    signals:
-        void nextStep();
+        QStandardItemModel* mFoldersModel;
+        ProxyModel* mFoldersProxyModel;
+        //QStringList mQeuedSyncNames;
+        QMap<QString, BackupInfo> mBackupsStatus;
 
     private slots:
-        void onNextStep();
         void on_bNext_clicked();
         void on_bCancel_clicked();
         void on_bMoreFolders_clicked();
@@ -84,9 +106,8 @@ class BackupsWizard : public QDialog
         void onListItemChanged(QStandardItem* item);
         void onDeviceNameSet(QString deviceName);
         void onBackupsDirSet(mega::MegaHandle backupsDirHandle);
-        void onSetMyBackupsDirRequestStatus(int errorCode, QString errorMsg);
-        void onSyncAddRequestStatus(int errorCode, QString errorMsg);
-        void onSuccessDialogAccepted();
+        void onSetMyBackupsDirRequestStatus(int errorCode, const QString& errorMsg);
+        void onSyncAddRequestStatus(int errorCode, const QString &errorMsg, const QString &name);
 };
 
 #endif // BACKUPSWIZARD_H

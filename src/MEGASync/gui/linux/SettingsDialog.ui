@@ -2717,7 +2717,7 @@ min-height: 72px;
            <widget class="QComboBox" name="cbExcludeUpperUnit"/>
           </item>
           <item row="0" column="3">
-           <spacer name="horizontalSpacer_11">
+           <spacer name="horizontalSpacer_111">
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
             </property>
