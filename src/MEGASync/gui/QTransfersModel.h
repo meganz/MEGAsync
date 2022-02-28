@@ -72,12 +72,13 @@ public slots:
     void onTransferUpdate(mega::MegaApi*, mega::MegaTransfer* transfer);
     void onTransferTemporaryError(mega::MegaApi*,mega::MegaTransfer* transfer,mega::MegaError*);
 
-    std::list<QExplicitlySharedDataPointer<TransferData>> processUpdates();
+    QList<QExplicitlySharedDataPointer<TransferData> > processUpdates();
 
 private:
     QExplicitlySharedDataPointer<TransferData> createData(mega::MegaTransfer* transfer);
 
-    std::list<QExplicitlySharedDataPointer<TransferData>> mCacheUpdateTransfers;
+    //std::list<QExplicitlySharedDataPointer<TransferData>> mCacheUpdateTransfers;
+    QMap<int, QExplicitlySharedDataPointer<TransferData>> mCacheUpdateTransfersByTag;
     void onTransferEvent(mega::MegaTransfer* transfer);
 
     QReadWriteLock* mCacheMutex;
@@ -146,7 +147,7 @@ signals:
 
 public slots:
     void onRetryTransfer(TransferTag tag);
-    void pauseResumeAllTransfers();
+    void pauseResumeAllTransfers(bool state);
     void cancelClearAllTransfers();
 
 private slots:
@@ -156,7 +157,6 @@ private slots:
     void processCancelTransfers();
 
     void onProcessTransfers();
-
 
 private:
     void updateTransfersCount();

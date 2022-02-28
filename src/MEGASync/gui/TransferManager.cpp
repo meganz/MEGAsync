@@ -123,6 +123,8 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
 
     connect(mModel, &QTransfersModel::pauseStateChanged,
             mUi->wTransfers, &TransfersWidget::onPauseStateChanged);
+    connect(mModel, &QTransfersModel::pauseStateChanged,
+            this, &TransferManager::onUpdatePauseState);
 
     connect(mModel, &QTransfersModel::transfersCountUpdated,
             this, &TransferManager::onTransfersDataUpdated);
@@ -531,6 +533,8 @@ void TransferManager::refreshSearchStats()
         mUi->tAllResults->setText(QString(tr("All\t\t\t\t%1")).arg(nbAll));
     }
 
+    mUi->searchByTextTypeSelector->setVisible(nbDl != 0 && nbUl != 0);
+
     bool showTypeFilters (mCurrentTab == SEARCH_TAB);
     mUi->tDlResults->setVisible(showTypeFilters);
     mUi->tUlResults->setVisible(showTypeFilters);
@@ -559,8 +563,9 @@ void TransferManager::on_tSeePlans_clicked()
 
 void TransferManager::on_bPause_clicked()
 {
-    mModel->pauseResumeAllTransfers();
-    onUpdatePauseState(mModel->areAllPaused());
+    auto newState = !mModel->areAllPaused();
+    mModel->pauseResumeAllTransfers(newState);
+    onUpdatePauseState(newState);
 }
 
 void TransferManager::on_bSearch_clicked()
@@ -631,18 +636,18 @@ void TransferManager::on_tClearSearchResult_clicked()
 
 void TransferManager::on_tAllResults_clicked()
 {
-    mUi->wTransfers->filtersChanged({}, {}, {});
+    mUi->wTransfers->textFilterTypeChanged({});
 }
 
 void TransferManager::on_tDlResults_clicked()
 {
-    mUi->wTransfers->filtersChanged(TransferData::TRANSFER_DOWNLOAD
-                                    | TransferData::TRANSFER_LTCPDOWNLOAD, {}, {});
+    mUi->wTransfers->textFilterTypeChanged(TransferData::TRANSFER_DOWNLOAD
+                                    | TransferData::TRANSFER_LTCPDOWNLOAD);
 }
 
 void TransferManager::on_tUlResults_clicked()
 {
-    mUi->wTransfers->filtersChanged(TransferData::TRANSFER_UPLOAD, {}, {});
+    mUi->wTransfers->textFilterTypeChanged(TransferData::TRANSFER_UPLOAD);
 }
 
 void TransferManager::on_bArchives_clicked()
@@ -880,8 +885,7 @@ void TransferManager::dropEvent(QDropEvent* event)
 
 void TransferManager::dragEnterEvent(QDragEnterEvent *event)
 {
-    if((mCurrentTab == UPLOADS_TAB || mCurrentTab == ALL_TRANSFERS_TAB)
-            && event->mimeData()->hasUrls())
+    if(event->mimeData()->hasUrls())
     {
         event->accept();
     }

@@ -68,12 +68,10 @@ void TransferManagerDelegateWidget::updateTransferState()
                 mUi->sStatus->setCurrentWidget(mUi->pActive);
             }
 
-            // Override speed if http speed is lower
-            auto httpSpeed (static_cast<unsigned long long>(MegaSyncApp->getMegaApi()->getCurrentSpeed((getData()->mType & TransferData::TYPE_MASK) >> 1)));
-            timeString = (httpSpeed == 0 || getData()->mSpeed == 0) ?
+            timeString = getData()->mSpeed == 0 ?
                              timeString
                            : Utilities::getTimeString(getData()->mRemainingTime);
-            speedString = Utilities::getSizeString(std::min(getData()->mSpeed, httpSpeed))
+            speedString = Utilities::getSizeString(getData()->mSpeed)
                           + QLatin1Literal("/s");
             break;
         }
@@ -146,10 +144,11 @@ void TransferManagerDelegateWidget::updateTransferState()
                 mLastPauseResuemtTransferIconName.clear();
             }
 
+            mUi->lItemFailed->setToolTip(tr(MegaError::getErrorString(getData()->mErrorCode)));
             mUi->sStatus->setCurrentWidget(mUi->pFailed);
             cancelClearTooltip = tr("Clear transfer");
             showTPauseResume = false;
-            mUi->tItemRetry->setToolTip(tr(MegaError::getErrorString(getData()->mErrorCode)));
+            mUi->tItemRetry->hide();
             break;
         }
         case TransferData::TRANSFER_RETRYING:

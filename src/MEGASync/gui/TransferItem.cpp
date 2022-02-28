@@ -73,8 +73,10 @@ void TransferData::update(mega::MegaTransfer* transfer)
 
         mTransferredBytes = static_cast<unsigned long long>(transfer->getTransferredBytes());
         mTotalSize = static_cast<unsigned long long>(transfer->getTotalBytes());
-        auto remBytes = mTotalSize - mTransferredBytes;
-        mSpeed = static_cast<unsigned long long>(MegaSyncApp->getMegaApi()->getCurrentSpeed(transfer->getType()));
+        unsigned long long remBytes = mTotalSize - mTransferredBytes;
+
+        long long httpSpeed = static_cast<unsigned long long>(MegaSyncApp->getMegaApi()->getCurrentSpeed(transfer->getType()));
+        mSpeed = std::min(transfer->getSpeed(), httpSpeed);
 
         TransferRemainingTime rem(mSpeed, remBytes);
         mRemainingTime = rem.calculateRemainingTimeSeconds(mSpeed, remBytes).count();

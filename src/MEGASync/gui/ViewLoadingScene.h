@@ -12,7 +12,7 @@ class LoadingSceneDelegateBase : public QStyledItemDelegate
 {
     Q_OBJECT
 
-    const double MIN_OPACITY = 0.5;
+    const double MIN_OPACITY = 0.3;
     const double OPACITY_STEPS = 0.05;
     const double MAX_OPACITY = 1.0;
 
@@ -22,14 +22,10 @@ public:
         connect(&mTimer, &QTimer::timeout, this, &LoadingSceneDelegateBase::onLoadingTimerTimeout);
     }
 
-    inline QSize sizeHint(const QStyleOptionViewItem&, const QModelIndex&) const
-    {
-        return QSize(772, 64);
-    }
-
     inline void setLoading(bool state)
     {
         updateTimer(state);
+        mOpacity = MAX_OPACITY;
 
         mView->update();
     }
@@ -84,6 +80,11 @@ class LoadingSceneDelegate : public LoadingSceneDelegateBase
 public:
     explicit LoadingSceneDelegate(QAbstractItemView* view) : LoadingSceneDelegateBase(view)
     {}
+
+    inline QSize sizeHint(const QStyleOptionViewItem&, const QModelIndex&) const
+    {
+        return DelegateWidget::sizeHint();
+    }
 
 protected:
     inline void paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const override

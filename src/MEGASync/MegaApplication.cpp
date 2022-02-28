@@ -205,6 +205,7 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     prevVersion = 0;
     updatingSSLcert = false;
     lastSSLcertUpdate = 0;
+    mModel = nullptr;
 
     notificationsModel = NULL;
     notificationsProxyModel = NULL;
@@ -650,10 +651,10 @@ void MegaApplication::initialize()
         connect(watcher, SIGNAL(fileChanged(QString)), this, SLOT(showInterface(QString)));
     }
 
-    mModel2 = new QTransfersModel(nullptr);
-    mModel2->initModel();
+    mModel = new QTransfersModel(nullptr);
+    mModel->initModel();
 
-    connect(mModel2, &QTransfersModel::transfersCountUpdated, this, &MegaApplication::onTransfersModelUpdate);
+    connect(mModel, &QTransfersModel::transfersCountUpdated, this, &MegaApplication::onTransfersModelUpdate);
 }
 
 QString MegaApplication::applicationFilePath()
@@ -1782,6 +1783,10 @@ void MegaApplication::pauseTransfers(bool pause)
     }
 
     megaApi->pauseTransfers(pause);
+    if(getTransfersModel())
+    {
+        getTransfersModel()->pauseResumeAllTransfers(pause);
+    }
 }
 
 void MegaApplication::checkNetworkInterfaces()
@@ -3778,7 +3783,7 @@ void MegaApplication::checkFirstTransfer()
     firstTransferTimer->deleteLater();
     firstTransferTimer = nullptr;
 
-    auto TransfersStats = mModel2->getTransfersCount();
+    auto TransfersStats = mModel->getTransfersCount();
 
     if (TransfersStats.pendingDownloads)
     {
@@ -4191,7 +4196,7 @@ void MegaApplication::onTransfersModelUpdate()
         infoDialog->updateDialogState();
     }
 
-    auto TransfersStats = mModel2->getTransfersCount();
+    auto TransfersStats = mModel->getTransfersCount();
     //If there are no pending transfers, reset the statics and update the state of the tray icon
     if (!TransfersStats.pendingDownloads
             && !TransfersStats.pendingUploads)

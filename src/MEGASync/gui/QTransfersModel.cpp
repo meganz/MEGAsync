@@ -23,38 +23,43 @@ TransferThread::TransferThread() :mCacheMutex (new QReadWriteLock(QReadWriteLock
 {
 }
 
-std::list<QExplicitlySharedDataPointer<TransferData>> TransferThread::processUpdates()
+QList<QExplicitlySharedDataPointer<TransferData>> TransferThread::processUpdates()
 {
-    if(mCacheUpdateTransfers.size()!= 0)
+    if(mCacheUpdateTransfersByTag.size()!= 0)
     {
         QWriteLocker lock(mCacheMutex);
 
-        if(mCacheUpdateTransfers.size() > MAX_UPDATE_TRANSFERS)
+        if(mCacheUpdateTransfersByTag.size() > MAX_UPDATE_TRANSFERS)
         {
-            std::list<QExplicitlySharedDataPointer<TransferData>> auxList;
-            auto lastIt = mCacheUpdateTransfers.begin();
-            std::advance(lastIt, MAX_UPDATE_TRANSFERS);
-            auxList.splice(auxList.begin(), mCacheUpdateTransfers, mCacheUpdateTransfers.begin(), lastIt);
+            QList<QExplicitlySharedDataPointer<TransferData>> auxList;
+            for(auto index = 0; index < MAX_UPDATE_TRANSFERS
+                && !mCacheUpdateTransfersByTag.isEmpty(); ++index)
+            {
+                auto& firstItem = mCacheUpdateTransfersByTag.first();
+                if(firstItem)
+                {
+                    auxList.append(firstItem);
+                    mCacheUpdateTransfersByTag.take(firstItem->mTag);
+                }
+            }
 
             return auxList;
         }
         else
         {
-            auto auxList = mCacheUpdateTransfers;
-            mCacheUpdateTransfers.clear();
+            auto auxList = mCacheUpdateTransfersByTag.values();
+            mCacheUpdateTransfersByTag.clear();
 
             return auxList;
         }
     }
 
-    return std::list<QExplicitlySharedDataPointer<TransferData>>();
+    return QList<QExplicitlySharedDataPointer<TransferData>>();
 }
 
 QExplicitlySharedDataPointer<TransferData> TransferThread::createData(MegaTransfer *transfer)
 {
-    QExplicitlySharedDataPointer<TransferData> d (new TransferData(
-                                                      transfer));
-    d->update(transfer);
+    QExplicitlySharedDataPointer<TransferData> d (new TransferData(transfer));
     return d;
 }
 
@@ -62,30 +67,26 @@ void TransferThread::onTransferEvent(MegaTransfer *transfer)
 {
     QWriteLocker lock(mCacheMutex);
 
-    auto found = std::find_if(mCacheUpdateTransfers.begin(), mCacheUpdateTransfers.end(),[&transfer]
-                              (QExplicitlySharedDataPointer<TransferData> transferToCheck)
-    {
-            return transfer->getTag() == transferToCheck->mTag;
-});
+    auto found = mCacheUpdateTransfersByTag.value(transfer->getTag());
 
-    if(found != mCacheUpdateTransfers.end())
+    if(found)
     {
-        if((*found)->mNotificationNumber < transfer->getNotificationNumber())
+        if(found->mNotificationNumber < transfer->getNotificationNumber())
         {
-            mCacheUpdateTransfers.remove((*found));
-            mCacheUpdateTransfers.push_back(createData(transfer));
+            mCacheUpdateTransfersByTag.remove(transfer->getTag());
+            mCacheUpdateTransfersByTag.insert(transfer->getTag(), createData(transfer));
         }
     }
     else
     {
-        mCacheUpdateTransfers.push_back(createData(transfer));
+        mCacheUpdateTransfersByTag.insert(transfer->getTag(),createData(transfer));
     }
 
 }
 
 TransfersCount TransferThread::getTransfersCount()
 {
-    QWriteLocker lock(mCountersMutex);
+    QReadLocker lock(mCountersMutex);
     return mTransfersCount;
 }
 
@@ -192,11 +193,11 @@ void TransferThread::onTransferUpdate(MegaApi *, MegaTransfer *transfer)
         QWriteLocker countersLock(mCountersMutex);
         if(transfer->getType() == MegaTransfer::TYPE_UPLOAD)
         {
-            mTransfersCount.completedUploadBytes += transfer->getTransferredBytes();
+            mTransfersCount.completedUploadBytes += transfer->getDeltaSize();
         }
         else
         {
-            mTransfersCount.completedDownloadBytes += transfer->getTransferredBytes();
+            mTransfersCount.completedDownloadBytes += transfer->getDeltaSize();
         }
     }
 }
@@ -217,7 +218,7 @@ void TransferThread::onTransferFinish(MegaApi*, MegaTransfer *transfer, MegaErro
             if(transfer->getType() == MegaTransfer::TYPE_UPLOAD)
             {
                 mTransfersCount.completedUploadBytes -= transfer->getTransferredBytes();
-                mTransfersCount.totalUploadBytes -= transfer->getTransferredBytes();
+                mTransfersCount.totalUploadBytes -= transfer->getDeltaSize();
                 mTransfersCount.pendingUploads--;
                 mTransfersCount.totalUploads--;
                 mTransfersCount.currentUpload = mTransfersCount.totalUploads - mTransfersCount.pendingUploads + 1;
@@ -225,7 +226,7 @@ void TransferThread::onTransferFinish(MegaApi*, MegaTransfer *transfer, MegaErro
             else
             {
                 mTransfersCount.completedDownloadBytes -= transfer->getTransferredBytes();
-                mTransfersCount.totalDownloadBytes -= transfer->getTransferredBytes();
+                mTransfersCount.totalDownloadBytes -= transfer->getDeltaSize();
                 mTransfersCount.pendingDownloads--;
                 mTransfersCount.totalDownloads--;
                 mTransfersCount.currentDownload = mTransfersCount.totalDownloads - mTransfersCount.pendingDownloads + 1;
@@ -237,13 +238,13 @@ void TransferThread::onTransferFinish(MegaApi*, MegaTransfer *transfer, MegaErro
 
             if(transfer->getType() == MegaTransfer::TYPE_UPLOAD)
             {
-                mTransfersCount.completedUploadBytes += transfer->getTransferredBytes();
+                mTransfersCount.completedUploadBytes += transfer->getDeltaSize();
                 mTransfersCount.pendingUploads--;
                 mTransfersCount.currentUpload = mTransfersCount.totalUploads - mTransfersCount.pendingUploads + 1;
             }
             else
             {
-                mTransfersCount.completedDownloadBytes += transfer->getTransferredBytes();
+                mTransfersCount.completedDownloadBytes += transfer->getDeltaSize();
                 mTransfersCount.pendingDownloads--;
                 mTransfersCount.currentDownload = mTransfersCount.totalDownloads - mTransfersCount.pendingDownloads + 1;
             }
@@ -261,11 +262,11 @@ void TransferThread::onTransferTemporaryError(MegaApi*, MegaTransfer *transfer, 
         QWriteLocker countersLock(mCountersMutex);
         if(transfer->getType() == MegaTransfer::TYPE_UPLOAD)
         {
-            mTransfersCount.completedUploadBytes += transfer->getTransferredBytes();
+            mTransfersCount.completedUploadBytes += transfer->getDeltaSize();
         }
         else
         {
-            mTransfersCount.completedDownloadBytes += transfer->getTransferredBytes();
+            mTransfersCount.completedDownloadBytes += transfer->getDeltaSize();
         }
     }
 }
@@ -275,7 +276,7 @@ QTransfersModel::QTransfersModel(QObject *parent) :
     mMegaApi (MegaSyncApp->getMegaApi()),
     mPreferences (Preferences::instance()),
     mThreadPool (ThreadPoolSingleton::getInstance()),
-    mModelMutex (new QReadWriteLock(QReadWriteLock::Recursive)),
+    mModelMutex (new QReadWriteLock(QReadWriteLock::NonRecursive)),
     mTransfersCancelling(false)
 {
     mFileTypes[Utilities::getExtensionPixmapName(QLatin1Literal("a.txt"), QString())]
@@ -400,8 +401,6 @@ void QTransfersModel::initModel()
 
 void QTransfersModel::onProcessTransfers()
 {
-    mRowsToUpdate.clear();
-
     if(mTransfersToStart.size() == 0
             && mTransfersToCancel.size() == 0
             && mTransfersToUpdate.size() == 0)
@@ -446,7 +445,6 @@ void QTransfersModel::onProcessTransfers()
         }
     }
 
-
     if(mTransfersToCancel.size() != 0
             || mTransfersToUpdate.size() != 0
             || mTransfersToStart.size() != 0)
@@ -478,7 +476,6 @@ void QTransfersModel::onProcessTransfers()
         if(mModelMutex->tryLockForWrite())
         {
             processStartTransfers();
-            sendDataChanged();
             transfersCountNeedsUpdate = true;
 
             mModelMutex->unlock();
@@ -507,18 +504,11 @@ void QTransfersModel::processStartTransfers()
         auto totalRows = rowCount(DEFAULT_IDX);
         auto rowsToBeInserted(static_cast<int>(mTransfersToStart.size()));
 
-        beginInsertRows(DEFAULT_IDX, totalRows, totalRows + rowsToBeInserted);
+        beginInsertRows(DEFAULT_IDX, totalRows, totalRows + rowsToBeInserted - 1);
 
-        auto counter(totalRows);
         for (auto it = mTransfersToStart.begin(); it != mTransfersToStart.end();)
         {
             startTransfer((*it));
-
-            if(mRowsToUpdate.contains(counter))
-            {
-                mRowsToUpdate.append(counter);
-            }
-            counter++;
             mTransfersToStart.erase(it++);
         }
 
@@ -708,7 +698,7 @@ void QTransfersModel::cancelClearTransfers(const QModelIndexList& indexes, bool 
                 {
                     toCancel.append(d->mTag);
                 }
-                else if(!clearAll && d->mState & TransferData::FINISHED_STATES_MASK)
+                else if(d->mState & TransferData::FINISHED_STATES_MASK)
                 {
                     if(d->mType & TransferData::TransferType::TRANSFER_UPLOAD)
                     {
@@ -741,21 +731,23 @@ void QTransfersModel::cancelClearTransfers(const QModelIndexList& indexes, bool 
 
         if(!uploadToClear.isEmpty() || !downloadToClear.isEmpty())
         {
+            QModelIndexList itemsToRemove;
+
             if(!uploadToClear.isEmpty())
             {
                 mTransferEventWorker->resetCompletedUploads(uploadToClear.values());
 
-                QModelIndexList itemList = uploadToClear.keys();
-                removeRows(itemList);
+                itemsToRemove.append(uploadToClear.keys());
             }
 
             if(!downloadToClear.isEmpty())
             {
                 mTransferEventWorker->resetCompletedDownloads(downloadToClear.values());
 
-                QModelIndexList itemList = downloadToClear.keys();
-                removeRows(itemList);
+                itemsToRemove.append(downloadToClear.keys());
             }
+
+            removeRows(itemsToRemove);
 
         }
     }
@@ -772,29 +764,44 @@ void QTransfersModel::pauseTransfers(const QModelIndexList& indexes, bool pauseS
     }
 }
 
-void QTransfersModel::pauseResumeAllTransfers()
+void QTransfersModel::pauseResumeAllTransfers(bool state)
 {
-    bool newPauseState (!mAreAllPaused);
-    mAreAllPaused = newPauseState;
+    mAreAllPaused = state;
 
     QList<QExplicitlySharedDataPointer<TransferData>> orderCopy;
     orderCopy = mTransfers;
 
-    if (newPauseState)
+    int counterToRefreshUI(0);
+
+    if (mAreAllPaused)
     {
-        mMegaApi->pauseTransfers(newPauseState);
-        std::for_each(orderCopy.crbegin(), orderCopy.crend(), [this, newPauseState](QExplicitlySharedDataPointer<TransferData> item)
-        {
-            pauseResumeTransferByTag(item->mTag, newPauseState);
+        mMegaApi->pauseTransfers(mAreAllPaused);
+        std::for_each(orderCopy.crbegin(), orderCopy.crend(), [this, counterToRefreshUI](QExplicitlySharedDataPointer<TransferData> item)
+        mutable {
+            pauseResumeTransferByTag(item->mTag, mAreAllPaused);
+
+            if(counterToRefreshUI % 10000 == 0)
+            {
+                qApp->processEvents();
+            }
+
+            counterToRefreshUI++;
         });
     }
     else
     {
-        std::for_each(orderCopy.cbegin(), orderCopy.cend(), [this, newPauseState](QExplicitlySharedDataPointer<TransferData> item)
-        {
-            pauseResumeTransferByTag(item->mTag, newPauseState);
+        std::for_each(orderCopy.cbegin(), orderCopy.cend(), [this, counterToRefreshUI](QExplicitlySharedDataPointer<TransferData> item)
+        mutable {
+            pauseResumeTransferByTag(item->mTag, mAreAllPaused);
+
+            if(counterToRefreshUI % 10000 == 0)
+            {
+                qApp->processEvents();
+            }
+
+            counterToRefreshUI++;
         });
-        mMegaApi->pauseTransfers(newPauseState);
+        mMegaApi->pauseTransfers(mAreAllPaused);
     }
 
     emit pauseStateChanged(mAreAllPaused);
@@ -905,7 +912,7 @@ void QTransfersModel::onPauseStateChanged()
     bool newPauseState (mPreferences->getGlobalPaused());
     if (newPauseState != mAreAllPaused)
     {
-        pauseResumeAllTransfers();
+        pauseResumeAllTransfers(!mAreAllPaused);
     }
 }
 

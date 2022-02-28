@@ -39,6 +39,7 @@ public:
         void invalidate();
         void setSourceModel(QAbstractItemModel *sourceModel) override;
         void setFilterFixedString(const QString &pattern);
+        void textSearchTypeChanged();
         void setFilters(const TransferData::TransferTypes transferTypes,
                         const TransferData::TransferStates transferStates,
                         const TransferData::FileTypes fileTypes);
@@ -77,14 +78,11 @@ protected:
         TransferData::TransferTypes mNextTransferTypes;
         TransferData::FileTypes mNextFileTypes;
         SortCriterion mSortCriterion;
-        mutable int mDlNumber;
-        mutable int mUlNumber;
-        bool mSearchCountersOn;
+        mutable QSet<int> mDlNumber;
+        mutable QSet<int> mUlNumber;
 
 private slots:
         void onRowsAboutToBeRemoved(const QModelIndex& parent, int first, int last);
-        void onRowsAboutToBeInserted(const QModelIndex&, int, int);
-        void onRowsInserted(const QModelIndex&, int, int);
         void onModelSortedFiltered();
 
 private:

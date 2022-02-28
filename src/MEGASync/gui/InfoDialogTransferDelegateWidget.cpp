@@ -71,7 +71,9 @@ void InfoDialogTransferDelegateWidget::updateTransferState()
         {
             // Update remaining time
             long long remainingBytes = getData()->mTotalSize - getData()->mTransferredBytes;
-            const auto totalRemainingSeconds = mTransferRemainingTime.calculateRemainingTimeSeconds(getData()->mSpeed, remainingBytes);
+            TransferRemainingTime remainingTimeCalculator;
+            const auto totalRemainingSeconds = remainingTimeCalculator.calculateRemainingTimeSeconds(getData()->mSpeed, remainingBytes);
+
 
             QString remainingTime;
             const bool printableValue{totalRemainingSeconds.count() && totalRemainingSeconds < std::chrono::seconds::max()};

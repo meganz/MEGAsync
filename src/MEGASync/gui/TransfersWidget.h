@@ -31,6 +31,7 @@ public:
     void disableGetLink(bool disable);
 
     void textFilterChanged(const QString& pattern);
+    void textFilterTypeChanged(const TransferData::TransferTypes transferTypes);
     void filtersChanged(const TransferData::TransferTypes transferTypes,
                         const TransferData::TransferStates transferStates,
                         const TransferData::FileTypes fileTypes);

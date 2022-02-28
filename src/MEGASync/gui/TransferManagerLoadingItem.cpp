@@ -13,3 +13,8 @@ TransferManagerLoadingItem::~TransferManagerLoadingItem()
 {
     delete ui;
 }
+
+QSize TransferManagerLoadingItem::sizeHint()
+{
+    return QSize(772, 64);
+}

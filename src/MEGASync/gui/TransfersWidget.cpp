@@ -239,6 +239,12 @@ void TransfersWidget::textFilterChanged(const QString& pattern)
     ui->tvTransfers->scrollToTop();
 }
 
+void TransfersWidget::textFilterTypeChanged(const TransferData::TransferTypes transferTypes)
+{
+    mProxyModel->setFilters(transferTypes,{},{});
+    mProxyModel->textSearchTypeChanged();
+}
+
 void TransfersWidget::filtersChanged(const TransferData::TransferTypes transferTypes,
                                      const TransferData::TransferStates transferStates,
                                      const TransferData::FileTypes fileTypes)

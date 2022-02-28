@@ -67,7 +67,7 @@ public:
 
     static const TransferTypes TYPE_MASK;
 
-    TransferData(){}
+    TransferData(mega::MegaTransfer* transfer = nullptr){update(transfer);}
 
     TransferData(TransferData const* dr) :
         mType(dr->mType), mErrorCode(dr->mErrorCode),  mState(dr->mState), mTag(dr->mTag),
@@ -82,9 +82,6 @@ public:
     {
         mIsSyncTransfer = mType.testFlag(TransferData::TransferType::TRANSFER_SYNC);
     }
-
-    TransferData(mega::MegaTransfer*) : mUpdated(false)
-    {}
 
     void update(mega::MegaTransfer* transfer);
 
@@ -150,7 +147,7 @@ Q_DECLARE_METATYPE(TransferData::FileType)
 class TransferItem
 {
     public:
-        TransferItem() : d(new TransferData){}
+        TransferItem() : d(new TransferData()){}
         TransferItem(const TransferItem& tdr) : d(tdr.d) {}
         TransferItem(const QExplicitlySharedDataPointer<TransferData>& tdr) : d(tdr) {}
 

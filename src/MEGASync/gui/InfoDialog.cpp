@@ -553,8 +553,8 @@ void InfoDialog::updateTransfersCount()
 {
     auto TransfersCountUpdated = app->getTransfersModel()->getTransfersCount();
 
-    ui->bTransferManager->setCompletedDownloads(qMax(0,qMin(TransfersCountUpdated.totalDownloads, TransfersCountUpdated.currentDownload)));
-    ui->bTransferManager->setCompletedUploads(qMax(0,qMin(TransfersCountUpdated.totalUploads,TransfersCountUpdated.currentUpload)));
+    ui->bTransferManager->setCompletedDownloads(TransfersCountUpdated.completedDownloads());
+    ui->bTransferManager->setCompletedUploads(TransfersCountUpdated.completedUploads());
     ui->bTransferManager->setTotalDownloads(TransfersCountUpdated.totalDownloads);
     ui->bTransferManager->setTotalUploads(TransfersCountUpdated.totalUploads);
 
