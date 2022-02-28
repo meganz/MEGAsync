@@ -935,10 +935,10 @@ bool QTransfersModel::removeRows(int row, int count, const QModelIndex& parent)
 
         mTagByOrder.clear();
         //Recalculate rest of items
-        for(int row = 0; row < rowCount(DEFAULT_IDX); ++row)
+        for(int r = 0; r < rowCount(DEFAULT_IDX); ++r)
         {
-            auto item = getTransfer(row);
-            mTagByOrder.insert(item->mTag, row);
+            auto item = getTransfer(r);
+            mTagByOrder.insert(item->mTag, r);
         }
         return true;
     }
