@@ -56,7 +56,9 @@ void MegaApplication::loadDataPath()
 {
 #ifdef Q_OS_LINUX
     dataPath = QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation)
-               + QString::fromUtf8("/data/Mega Limited/MEGAsync");
+               + QString::fromUtf8("/data/") // appending "data" is non-standard behavior according to XDG Base Directory specification
+               + organizationName() + QString::fromLatin1("/")
+               + applicationName();
 #else
     QStringList dataPaths = QStandardPaths::standardLocations(QStandardPaths::DataLocation);
     if (dataPaths.size())
@@ -114,12 +116,6 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
 #endif
 
     setQuitOnLastWindowClosed(false);
-
-    //Set QApplication fields
-    setOrganizationName(QString::fromUtf8("Mega Limited"));
-    setOrganizationDomain(QString::fromUtf8("mega.co.nz"));
-    setApplicationName(QString::fromUtf8("MEGAsync"));
-    setApplicationVersion(QString::number(Preferences::VERSION_CODE));
 
 #ifdef _WIN32
     setStyleSheet(QString::fromUtf8("QCheckBox::indicator {width: 13px;height: 13px;}"
