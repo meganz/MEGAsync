@@ -139,9 +139,7 @@ public:
     void onSyncStateChanged(mega::MegaApi *api,  mega::MegaSync *sync) override;
     void onSyncFileStateChanged(mega::MegaApi *api, mega::MegaSync *sync, std::string *localPath, int newState) override;
 
-    void onSyncAdded(mega::MegaApi *api, mega::MegaSync *sync, int additionState) override;
-    void onSyncDisabled(mega::MegaApi *api, mega::MegaSync *sync) override;
-    void onSyncEnabled(mega::MegaApi *api, mega::MegaSync *sync) override;
+    void onSyncAdded(mega::MegaApi *api, mega::MegaSync *sync) override;
     void onSyncDeleted(mega::MegaApi *api, mega::MegaSync *sync) override;
 
     virtual void onCheckDeferredPreferencesSync(bool timeout);
@@ -348,8 +346,6 @@ private slots:
     void PSAseen(int id);
     void onSyncStateChanged(std::shared_ptr<SyncSetting> syncSettings);
     void onSyncDeleted(std::shared_ptr<SyncSetting> syncSettings);
-    void onSyncDisabled(std::shared_ptr<SyncSetting> syncSetting);
-    void onSyncEnabled(std::shared_ptr<SyncSetting> syncSetting);
     void onBlocked();
     void onUnblocked();
     void onTransfersModelUpdate();

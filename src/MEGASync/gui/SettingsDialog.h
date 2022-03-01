@@ -189,7 +189,7 @@ private:
     void savingSyncs(bool completed, QObject* item);
     void syncsStateInformation(int state);
     void addSyncRow(int row, const QString& name, const QString& lPath,
-                    const QString& rPath, bool isActive, int error, mega::MegaHandle megaHandle,
+                    const QString& rPath, bool boxTicked, QString runStateString, int error, mega::MegaHandle megaHandle,
                     mega::MegaHandle tag, std::shared_ptr<SyncSetting> syncSetting = nullptr);
     void saveExcludeSyncNames();
     void updateNetworkTab();

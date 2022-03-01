@@ -17,8 +17,7 @@ SyncSetting::~SyncSetting()
 
 SyncSetting::SyncSetting(const SyncSetting& a) :
     mSync(a.getSync()->copy()), mBackupId(a.backupId()),
-    mSyncID(a.getSyncID()), mEnabled(a.isEnabled()),
-    mActive(a.isActive()), mMegaFolder(a.mMegaFolder)
+    mSyncID(a.getSyncID()), mMegaFolder(a.mMegaFolder)
 {
 }
 
@@ -27,8 +26,6 @@ SyncSetting& SyncSetting::operator=(const SyncSetting& a)
     mSync.reset(a.getSync()->copy());
     mBackupId = a.backupId();
     mSyncID = a.getSyncID();
-    mEnabled = a.isEnabled();
-    mActive = a.isActive();
     mMegaFolder = a.mMegaFolder;
     return *this;
 }
@@ -133,9 +130,6 @@ void SyncSetting::setSync(MegaSync *sync)
 
         assert(mBackupId == INVALID_HANDLE || mBackupId == sync->getBackupId());
         mBackupId = sync->getBackupId();
-        mEnabled = sync->isEnabled();
-
-        mActive = sync->isActive(); //override active with the actual value
     }
     else
     {
@@ -177,24 +171,23 @@ MegaHandle SyncSetting::getMegaHandle()  const
     return mSync->getMegaHandle();
 }
 
-bool SyncSetting::isEnabled()  const
-{
-    return mEnabled;
-}
-
-bool SyncSetting::isActive()  const
-{
-    return mActive;
-}
-
-bool SyncSetting::isTemporaryDisabled()  const
-{
-    return mSync->isTemporaryDisabled();
-}
-
 int SyncSetting::getError() const
 {
     return mSync->getError();
+}
+
+QString SyncSetting::getRunStateAsString() const
+{
+    switch (mSync->getRunState())
+    {
+    case MegaSync::RUNSTATE_PENDING: return QString::fromUtf8("Pending");
+    case MegaSync::RUNSTATE_LOADING: return QString::fromUtf8("Loading");
+    case MegaSync::RUNSTATE_RUNNING: return QString::fromUtf8("Running");
+    case MegaSync::RUNSTATE_PAUSED: return QString::fromUtf8("Paused");
+    case MegaSync::RUNSTATE_SUSPENDED: return QString::fromUtf8("Suspended");
+    case MegaSync::RUNSTATE_DISABLED: return QString::fromUtf8("Disabled");
+    }
+    return QString::fromUtf8("<unknown state>");
 }
 
 MegaHandle SyncSetting::backupId() const

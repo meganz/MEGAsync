@@ -27,7 +27,7 @@ class InfoDialog;
 }
 
 class MegaApplication;
-class InfoDialog : public QDialog, public mega::MegaTransferListener
+class InfoDialog : public QDialog, public mega::MegaTransferListener, ::mega::MegaRequestListener
 {
     Q_OBJECT
 
@@ -41,6 +41,7 @@ class InfoDialog : public QDialog, public mega::MegaTransferListener
         STATE_TRANSFERRING,
     };
 
+    void onRequestFinish(::mega::MegaApi* api, ::mega::MegaRequest *request, ::mega::MegaError* e) override;
 
 
 public:
@@ -100,6 +101,7 @@ private:
     void showEvent(QShowEvent *event) override;
 
 public slots:
+    void showSyncProblems(QString s);
 
     void pauseResumeClicked();
     void generalAreaClicked();
@@ -157,7 +159,12 @@ private slots:
 
     void onTransfersDataUpdated();
 
+    void mousePressEvent(QMouseEvent* event);
+
+
 signals:
+    void triggerShowSyncProblems(QString s);
+
     void openTransferManager(int tab);
     void dismissStorageOverquota(bool oq);
     // signal emitted when showing or dismissing the overquota message.

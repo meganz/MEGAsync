@@ -58,8 +58,8 @@ void Controller::enableSync(std::shared_ptr<SyncSetting> syncSetting, ActionProg
     MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromAscii("Enabling sync %1 to %2")
                  .arg(syncSetting->getLocalFolder()).arg(syncSetting->getMegaFolder()).toUtf8().constData() );
 
-    api->enableSync(syncSetting->backupId(),
-        new ProgressFuncExecuterListener(progress,  true, [](MegaApi*, MegaRequest*, MegaError*){
+    api->setSyncRunState(syncSetting->backupId(), MegaSync::RUNSTATE_RUNNING,
+        new ProgressFuncExecuterListener(progress,  true, [](MegaApi *, MegaRequest *, MegaError *){
                         ///// onRequestFinish Management: ////
                     }));
 }
@@ -77,8 +77,8 @@ void Controller::disableSync(std::shared_ptr<SyncSetting> syncSetting, ActionPro
     MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromAscii("Disabling sync %1 to %2")
                  .arg(syncSetting->getLocalFolder()).arg(syncSetting->getMegaFolder()).toUtf8().constData() );
 
-    api->disableSync(syncSetting->backupId(),
-        new ProgressFuncExecuterListener(progress,  true, [](MegaApi*, MegaRequest*, MegaError*){
+    api->setSyncRunState(syncSetting->backupId(), MegaSync::RUNSTATE_SUSPENDED,
+        new ProgressFuncExecuterListener(progress,  true, [](MegaApi *, MegaRequest *, MegaError *){
                         ///// onRequestFinish Management: ////
                     }));
 }

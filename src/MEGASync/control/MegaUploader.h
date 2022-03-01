@@ -18,7 +18,6 @@ public:
     virtual ~MegaUploader();
     void upload(QString path, mega::MegaNode *parent, unsigned long long appDataID);
     bool filesdiffer(QFileInfo &source, QFileInfo &destination);
-    bool uploadRecursivelyIntoASyncedLocation(QFileInfo srcPath, QString destPath, mega::MegaNode *parent, unsigned long long appDataID);
 
 protected:
     void upload(QFileInfo info, mega::MegaNode *parent, unsigned long long appDataID);

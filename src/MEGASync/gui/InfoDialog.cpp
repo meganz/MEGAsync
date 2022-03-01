@@ -70,6 +70,119 @@ void InfoDialog::upAreaHovered(QMouseEvent *event)
     QToolTip::showText(event->globalPos(), tr("Open Uploads"));
 }
 
+void InfoDialog::mousePressEvent(QMouseEvent* event)
+{
+    event = event;
+
+    // todo: there must be a better way to detect a click on a label, or turn it to a button, etc.
+    // todo: at least check the click is withing the "blocked file" widget bounds
+    if (waiting && megaApi->isSyncStalled())
+    {
+        megaApi->getSyncProblems(this, true);
+    }
+}
+
+void InfoDialog::onRequestFinish(::mega::MegaApi* api, ::mega::MegaRequest *request, ::mega::MegaError* e)
+{
+    if (auto ptr = request->getMegaSyncProblems())
+    {
+
+        std::string problemText;
+
+        if (MegaSyncNameConflictList* cl = ptr->nameConflicts())
+        {
+            for (int i = 0; i < cl->size(); ++i)
+            {
+                MegaSyncNameConflict* c = cl->get(i);
+
+                problemText += "Conflicting names.\n";
+                if (MegaStringList* cn = c->cloudNames())
+                {
+                    for (int j = 0; j < cn->size(); ++j)
+                    {
+                        problemText += "  " + std::string(cn->get(j)) + "\n";
+                    }
+                }
+                if (auto cp = c->cloudPath())
+                {
+                    if (cp && *cp)
+                    {
+                        problemText += "  at cloud path: " + std::string(cp) + "\n";
+                    }
+                }
+                if (MegaStringList* ln = c->localNames())
+                {
+                    for (int j = 0; j < ln->size(); ++j)
+                    {
+                        problemText += "  " + std::string(ln->get(j)) + "\n";
+                    }
+                }
+                if (auto lp = c->localPath())
+                {
+                    if (lp && *lp)
+                    {
+                        problemText += "  at local path: " + std::string(lp) + "\n";
+                    }
+                }
+
+                problemText += "\n";
+            }
+        }
+
+        if (MegaSyncStallList* sl = ptr->stalls())
+        {
+            for (int i = 0; i < sl->size(); ++i)
+            {
+                auto stall = sl->get(i);
+
+                if (stall->isCloud())
+                {
+                    problemText += "Cloud side issue: " + std::string(stall->reasonString()) + "\n";
+                    problemText += "  " + std::string(stall->indexPath()) + "\n";
+                    if (stall->cloudPath() && strlen(stall->cloudPath()))
+                    {
+                        problemText += "  " + std::string(stall->cloudPath()) + "\n";
+                    }
+                    if (stall->localPath() && strlen(stall->localPath()))
+                    {
+                        problemText += "  Corresponding local path: " + std::string(stall->localPath()) + "\n";
+                    }
+                }
+                else
+                {
+                    problemText += "Local side issue: " + std::string(stall->reasonString()) + "\n";
+                    problemText += "  " + std::string(stall->indexPath()) + "\n";
+                    if (stall->localPath() && strlen(stall->localPath()))
+                    {
+                        problemText += "  " + std::string(stall->localPath()) + "\n";
+                    }
+                    if (stall->cloudPath() && strlen(stall->cloudPath()))
+                    {
+                        problemText += "  Corresponding cloud path: " + std::string(stall->cloudPath()) + "\n";
+                    }
+                }
+
+                problemText += "\n";
+            }
+        }
+
+        triggerShowSyncProblems(QString::fromUtf8(problemText.c_str()));
+    }
+}
+
+void InfoDialog::showSyncProblems(QString problemText)
+{
+    QMessageBox qmb;
+    qmb.setText(QString::fromUtf8("One or more syncs have encountered issues that need user intervention to resolve.  Please see the details for each one, and adjust either the local or cloud files/folders, or add ignore rules, to resolve these."));
+    qmb.setDetailedText(problemText);
+    qmb.setMaximumHeight(3000);
+    qmb.setMaximumWidth(3000);
+    qmb.setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    qmb.setSizeGripEnabled(true);
+    qmb.exec();
+}
+
+
 InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddialog) :
     QDialog(parent),
     ui(new Ui::InfoDialog)
@@ -78,6 +191,8 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
 
     filterMenu = new FilterAlertWidget(this);
     connect(filterMenu, SIGNAL(onFilterClicked(int)), this, SLOT(applyFilterOption(int)));
+
+    connect(this, SIGNAL(triggerShowSyncProblems(QString)),this, SLOT(showSyncProblems(QString)), Qt::QueuedConnection);
 
     setUnseenNotifications(0);
 
@@ -319,8 +434,6 @@ void InfoDialog::showEvent(QShowEvent *event)
     {
         ui->bTransferManager->showAnimated();
     }
-
-    //updateTransfersCount();
 
     isShown = true;
     QDialog::showEvent(event);
@@ -654,16 +767,13 @@ void InfoDialog::updateBlockedState()
     }
     else
     {
-        const char *blockedPath = megaApi->getBlockedPath();
-        if (blockedPath)
+        if (megaApi->isSyncStalled())
         {
-            QFileInfo fileBlocked (QString::fromUtf8(blockedPath));
+            QString fileBlocked = QString::fromUtf8("Syncs have stalled");
 
             if (ui->sActiveTransfers->currentWidget() != ui->pUpdated)
             {
-                setBlockedStateLabel(tr("Blocked file: %1").arg(QString::fromUtf8("<a href=\"local://#%1\">%2</a>")
-                                                                .arg(fileBlocked.absoluteFilePath())
-                                                                .arg(fileBlocked.fileName())));
+                setBlockedStateLabel(tr("Blocked file: %1").arg(fileBlocked));
             }
             else
             {
@@ -671,12 +781,9 @@ void InfoDialog::updateBlockedState()
             }
 
             ui->lUploadToMegaDesc->setStyleSheet(QString::fromUtf8("font-size: 14px;"));
-            ui->lUploadToMegaDesc->setText(tr("Blocked file: %1").arg(QString::fromUtf8("<a href=\"local://#%1\">%2</a>")
-                                                           .arg(fileBlocked.absoluteFilePath())
-                                                           .arg(fileBlocked.fileName())));
-            delete [] blockedPath;
+            ui->lUploadToMegaDesc->setText(tr("Blocked file: %1").arg(fileBlocked));
         }
-        else if (megaApi->areServersBusy())
+        else if (megaApi->isWaiting())
         {
 
             if (ui->sActiveTransfers->currentWidget() != ui->pUpdated)
@@ -1168,11 +1275,6 @@ void InfoDialog::on_bAddSync_clicked()
         for (int i = 0; i < num; i++)
         {
             auto syncSetting = model->getSyncSetting(i);
-
-            if (!syncSetting->isActive())
-            {
-                continue;
-            }
 
             activeFolders++;
             MenuItemAction *action = new MenuItemAction(syncSetting->name(), QIcon(QString::fromAscii("://images/ico_drop_synched_folder.png")), true);

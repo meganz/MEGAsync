@@ -38,10 +38,7 @@ void Model::removeSyncedFolder(int num)
     assert(num <= configuredSyncs.size() && configuredSyncsMap.contains(configuredSyncs.at(num)));
     QMutexLocker qm(&syncMutex);
     auto cs = configuredSyncsMap[configuredSyncs.at(num)];
-    if (cs->isActive())
-    {
-        deactivateSync(cs);
-    }
+    deactivateSync(cs);
 
     auto backupId = cs->backupId();
 
@@ -66,10 +63,7 @@ void Model::removeSyncedFolderByBackupId(MegaHandle backupId)
 
     auto cs = configuredSyncsMap[backupId];
 
-    if (cs->isActive())
-    {
-        deactivateSync(cs);
-    }
+    deactivateSync(cs);
     assert(preferences->logged());
 
     preferences->removeSyncSetting(cs);
@@ -103,10 +97,7 @@ void Model::removeAllFolders()
 
     for (auto it = configuredSyncsMap.begin(); it != configuredSyncsMap.end(); it++)
     {
-        if (it.value()->isActive())
-        {
-            deactivateSync(it.value());
-        }
+        deactivateSync(it.value());
     }
     configuredSyncs.clear();
     configuredSyncsMap.clear();
@@ -144,20 +135,24 @@ void Model::activateSync(std::shared_ptr<SyncSetting> syncSetting)
     }
     isFirstSyncDone = true;
 
-    if ( !preferences->isFatWarningShown() && syncSetting->getError() == MegaSync::Warning::LOCAL_IS_FAT)
-    {
-        QMegaMessageBox::warning(nullptr, tr("MEGAsync"),
-         tr("You are syncing a local folder formatted with a FAT filesystem. That filesystem has deficiencies managing big files and modification times that can cause synchronization problems (e.g. when daylight saving changes), so it's strongly recommended that you only sync folders formatted with more reliable filesystems like NTFS (more information [A]here[/A]).")
-         .replace(QString::fromUtf8("[A]"), QString::fromUtf8("<a href=\"https://help.mega.nz/megasync/syncing.html#can-i-sync-fat-fat32-partitions-under-windows\">"))
-         .replace(QString::fromUtf8("[/A]"), QString::fromUtf8("</a>")));
-        preferences->setFatWarningShown();
-    }
-    else if (!preferences->isOneTimeActionDone(Preferences::ONE_TIME_ACTION_HGFS_WARNING) && syncSetting->getError() == MegaSync::Warning::LOCAL_IS_HGFS)
-    {
-        QMegaMessageBox::warning(nullptr, tr("MEGAsync"),
-            tr("You are syncing a local folder shared with VMWare. Those folders do not support filesystem notifications so MEGAsync will have to be continuously scanning to detect changes in your files and folders. Please use a different folder if possible to reduce the CPU usage."));
-        preferences->setOneTimeActionDone(Preferences::ONE_TIME_ACTION_HGFS_WARNING, true);
-    }
+
+    // TODO: this never would have worked, comparing an error code to a warning code.
+    // maybe implement properly, not as warning but specifically is-on-fat or not, etc.
+
+    //if ( !preferences->isFatWarningShown() && syncSetting->getError() == MegaSync::Warning::LOCAL_IS_FAT)
+    //{
+    //    QMegaMessageBox::warning(nullptr, tr("MEGAsync"),
+    //     tr("You are syncing a local folder formatted with a FAT filesystem. That filesystem has deficiencies managing big files and modification times that can cause synchronization problems (e.g. when daylight saving changes), so it's strongly recommended that you only sync folders formatted with more reliable filesystems like NTFS (more information [A]here[/A]).")
+    //     .replace(QString::fromUtf8("[A]"), QString::fromUtf8("<a href=\"https://help.mega.nz/megasync/syncing.html#can-i-sync-fat-fat32-partitions-under-windows\">"))
+    //     .replace(QString::fromUtf8("[/A]"), QString::fromUtf8("</a>")));
+    //    preferences->setFatWarningShown();
+    //}
+    //else if (!preferences->isOneTimeActionDone(Preferences::ONE_TIME_ACTION_HGFS_WARNING) && syncSetting->getError() == MegaSync::Warning::LOCAL_IS_HGFS)
+    //{
+    //    QMegaMessageBox::warning(nullptr, tr("MEGAsync"),
+    //        tr("You are syncing a local folder shared with VMWare. Those folders do not support filesystem notifications so MEGAsync will have to be continuously scanning to detect changes in your files and folders. Please use a different folder if possible to reduce the CPU usage."));
+    //    preferences->setOneTimeActionDone(Preferences::ONE_TIME_ACTION_HGFS_WARNING, true);
+    //}
 
     Platform::syncFolderAdded(syncSetting->getLocalFolder(), syncSetting->name(true), syncSetting->getSyncID());
 }
@@ -182,7 +177,7 @@ void Model::updateMegaFolder(QString newRemotePath, std::shared_ptr<SyncSetting>
     }
 }
 
-std::shared_ptr<SyncSetting> Model::updateSyncSettings(MegaSync *sync, int addingState)
+std::shared_ptr<SyncSetting> Model::updateSyncSettings(MegaSync *sync)
 {
     if (!sync)
     {
@@ -192,8 +187,6 @@ std::shared_ptr<SyncSetting> Model::updateSyncSettings(MegaSync *sync, int addin
     QMutexLocker qm(&syncMutex);
 
     std::shared_ptr<SyncSetting> cs;
-    bool wasActive = false;
-    bool wasInactive = false;
 
     auto oldcsitr = syncsSettingPickedFromOldConfig.find(sync->getBackupId());
 
@@ -215,15 +208,10 @@ std::shared_ptr<SyncSetting> Model::updateSyncSettings(MegaSync *sync, int addin
 
     if (cs)
     {
-        wasActive = cs->isActive();
-        wasInactive = !cs->isActive();
-
         cs->setSync(sync);
     }
     else //new configuration (new or resumed)
     {
-        assert(addingState && "!addingState and didn't find previously configured sync");
-
         auto loaded = preferences->getLoadedSyncsMap();
         if (loaded.contains(sync->getBackupId())) //existing configuration from previous executions (we get the data that the sdk might not be providing from our cache)
         {
@@ -248,38 +236,16 @@ std::shared_ptr<SyncSetting> Model::updateSyncSettings(MegaSync *sync, int addin
     });// end of thread pool function
 
 
-    if (addingState) //new or resumed
-    {
-        wasActive = (addingState == MegaSync::SyncAdded::FROM_CACHE && cs->isActive() )
-                || addingState == MegaSync::SyncAdded::FROM_CACHE_FAILED_TO_RESUME;
-
-        wasInactive =  (addingState == MegaSync::SyncAdded::FROM_CACHE && !cs->isActive() )
-                || addingState == MegaSync::SyncAdded::NEW || addingState == MegaSync::SyncAdded::FROM_CACHE_REENABLED
-                || addingState == MegaSync::SyncAdded::REENABLED_FAILED;
-    }
-
-    if (cs->isActive() && wasInactive)
+    if (cs->getSync()->getRunState() == MegaSync::RUNSTATE_RUNNING)
     {
         activateSync(cs);
     }
-
-    if (!cs->isActive() && wasActive )
+    else
     {
         deactivateSync(cs);
     }
 
     preferences->writeSyncSetting(cs); // we store MEGAsync specific fields into cache
-
-#ifdef WIN32
-    // handle transition from MEGAsync <= 3.0.1.
-    // if resumed from cache and the previous version did not have left pane icons, add them
-    if (MegaSyncApp->getPrevVersion() && MegaSyncApp->getPrevVersion() <= 3001
-            && !preferences->leftPaneIconsDisabled()
-            && addingState == MegaSync::SyncAdded::FROM_CACHE && cs->isActive())
-    {
-        Platform::addSyncToLeftPane(cs->getLocalFolder(), cs->name(), cs->getSyncID());
-    }
-#endif
 
     emit syncStateChanged(cs);
     return cs;
