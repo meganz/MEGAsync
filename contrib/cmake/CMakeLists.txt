@@ -705,12 +705,7 @@ if (CMAKE_HOST_APPLE)
         OUTPUT_STRIP_TRAILING_WHITESPACE)
 
     message("MEGAsync version = ${MEGASYNC_VERSION}")
-    add_custom_command(
-            TARGET MEGAsync
-            POST_BUILD
-            COMMAND /usr/libexec/PlistBuddy -c \"Set :CFBundleShortVersionString ${MEGASYNC_VERSION}\" \"$<TARGET_FILE_DIR:MEGAsync>/../Info.plist\"
-            COMMENT "Setting version to Info.plist..."
-            )
+    set_target_properties(MEGAsync PROPERTIES MACOSX_BUNDLE_SHORT_VERSION_STRING "${MEGASYNC_VERSION}")
 endif()
 
 set(FULLREQUIREMENTS TRUE CACHE BOOL "Verbose output")
