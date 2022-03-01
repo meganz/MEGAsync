@@ -17,7 +17,8 @@ class LoadingSceneDelegateBase : public QStyledItemDelegate
     const double MAX_OPACITY = 1.0;
 
 public:
-    explicit LoadingSceneDelegateBase(QAbstractItemView* view) : mView(view), mOpacitySteps(OPACITY_STEPS)
+    explicit LoadingSceneDelegateBase(QAbstractItemView* view) : mView(view),
+        mOpacitySteps(OPACITY_STEPS), mOpacity(MAX_OPACITY)
     {
         connect(&mTimer, &QTimer::timeout, this, &LoadingSceneDelegateBase::onLoadingTimerTimeout);
     }
@@ -69,9 +70,9 @@ private slots:
 
 private:
     QTimer mTimer;
-    double mOpacity;
-    double mOpacitySteps;
     QAbstractItemView* mView;
+    double mOpacitySteps;
+    double mOpacity;
 };
 
 template <class DelegateWidget>
@@ -83,7 +84,7 @@ public:
 
     inline QSize sizeHint(const QStyleOptionViewItem&, const QModelIndex&) const
     {
-        return DelegateWidget::sizeHint();
+        return DelegateWidget::widgetSize();
     }
 
 protected:
@@ -212,8 +213,8 @@ public:
     }
 
 private:
-    LoadingSceneDelegate<DelegateWidget>* mLoadingDelegate;
     QStandardItemModel* mLoadingModel;
+    LoadingSceneDelegate<DelegateWidget>* mLoadingDelegate;
     QAbstractItemDelegate* mViewDelegate;
     QAbstractItemView* mView;
     QAbstractItemModel* mViewModel;

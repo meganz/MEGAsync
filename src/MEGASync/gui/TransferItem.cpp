@@ -96,8 +96,6 @@ void TransferData::update(mega::MegaTransfer* transfer)
 
         mParentHandle = transfer->getParentHandle();
         mNodeHandle = transfer->getNodeHandle();
-
-        setUpdated(true);
     }
 }
 

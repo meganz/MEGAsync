@@ -176,6 +176,8 @@ TransferBaseDelegateWidget *TransfersSortFilterProxyModel::createTransferManager
             this, &TransfersSortFilterProxyModel::onPauseResumeTransfer);
     connect(item, &TransferManagerDelegateWidget::retryTransfer,
              this, &TransfersSortFilterProxyModel::onRetryTransfer);
+    connect(item, &TransferManagerDelegateWidget::openTransfer,
+             this, &TransfersSortFilterProxyModel::onOpenTransfer);
 
     return item;
 }
@@ -402,5 +404,27 @@ void TransfersSortFilterProxyModel::onRetryTransfer()
     {
         auto tag = delegateWidget->getData()->mTag;
         sourModel->onRetryTransfer(tag);
+    }
+}
+
+void TransfersSortFilterProxyModel::onOpenTransfer()
+{
+    auto delegateWidget = dynamic_cast<TransferManagerDelegateWidget*>(sender());
+    auto sourModel = dynamic_cast<QTransfersModel*>(sourceModel());
+
+    if(delegateWidget && sourModel)
+    {
+        auto data = delegateWidget->getData();
+        if(data)
+        {
+            auto tag = data->mTag;
+            //If the transfer is an upload (already on the local drive)
+            //Or if it is an download but already finished
+            if(data->mType & TransferData::TRANSFER_UPLOAD
+                    || data->mState & TransferData::FINISHED_STATES_MASK)
+            {
+                sourModel->openFolderByTag(tag);
+            }
+        }
     }
 }

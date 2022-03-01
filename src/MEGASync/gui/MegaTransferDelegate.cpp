@@ -162,6 +162,19 @@ bool MegaTransferDelegate::editorEvent(QEvent* event, QAbstractItemModel*,
                 }
                 break;
             }
+            case QEvent::MouseButtonDblClick:
+            {
+                QMouseEvent* me = static_cast<QMouseEvent*>(event);
+                if( me->button() == Qt::LeftButton )
+                {
+                    TransferBaseDelegateWidget* currentRow (getTransferItemWidget(index, option.rect.size()));
+                    if (currentRow)
+                    {
+                        QApplication::postEvent(currentRow, new QEvent(QEvent::MouseButtonDblClick));
+                    }
+                }
+                break;
+            }
             default:
                 break;
         }

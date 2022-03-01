@@ -65,6 +65,7 @@ protected slots:
         void onCancelClearTransfer();
         void onPauseResumeTransfer();
         void onRetryTransfer();
+        void onOpenTransfer();
 
 protected:
         bool filterAcceptsRow(int sourceRow, const QModelIndex& sourceParent) const override;

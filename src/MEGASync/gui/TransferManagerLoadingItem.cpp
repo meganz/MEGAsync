@@ -14,7 +14,7 @@ TransferManagerLoadingItem::~TransferManagerLoadingItem()
     delete ui;
 }
 
-QSize TransferManagerLoadingItem::sizeHint()
+QSize TransferManagerLoadingItem::widgetSize()
 {
     return QSize(772, 64);
 }

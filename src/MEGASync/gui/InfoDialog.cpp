@@ -320,8 +320,6 @@ void InfoDialog::showEvent(QShowEvent *event)
         ui->bTransferManager->showAnimated();
     }
 
-    //updateTransfersCount();
-
     isShown = true;
     QDialog::showEvent(event);
 }

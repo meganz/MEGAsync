@@ -280,7 +280,7 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     storageOverquotaDialog = NULL;
     infoWizard = NULL;
     isFirstFileSynced = false;
-    transferManager = NULL;
+    transferManager = nullptr;
     cleaningSchedulerExecution = 0;
     lastUserActivityExecution = 0;
     lastTsBusinessWarning = 0;
@@ -4911,6 +4911,8 @@ void MegaApplication::transferManagerActionClicked(int tab)
 
     transferManager->setActiveTab(tab);
     Platform::activateBackgroundWindow(transferManager);
+    transferManager->showMinimized();
+    transferManager->showNormal();
     transferManager->activateWindow();
     transferManager->raise();
 }

@@ -71,62 +71,41 @@ public:
 
     TransferData(TransferData const* dr) :
         mType(dr->mType), mErrorCode(dr->mErrorCode),  mState(dr->mState), mTag(dr->mTag),
-        mErrorValue(dr->mErrorValue), mFinishedTime(dr->mFinishedTime),
+        mErrorValue(dr->mErrorValue),
         mRemainingTime(dr->mRemainingTime),
         mTotalSize(dr->mTotalSize), mPriority(dr->mPriority), mSpeed(dr->mSpeed),
         mMeanSpeed(dr->mMeanSpeed),
         mTransferredBytes(dr->mTransferredBytes),
+        mNotificationNumber(dr->mNotificationNumber),
+        mIsSyncTransfer(dr->mIsSyncTransfer),
         mFileType(dr->mFileType),
         mParentHandle (dr->mParentHandle), mNodeHandle (dr->mNodeHandle),
-        mFilename(dr->mFilename), mPath(dr->mPath), mNodeAccess(mega::MegaShare::ACCESS_UNKNOWN), mUpdated(false)
-    {
-        mIsSyncTransfer = mType.testFlag(TransferData::TransferType::TRANSFER_SYNC);
-    }
+        mFilename(dr->mFilename), mNodeAccess(mega::MegaShare::ACCESS_UNKNOWN),
+        mPath(dr->mPath), mFinishedTime(dr->mFinishedTime)
+    {}
 
     void update(mega::MegaTransfer* transfer);
 
-    bool isFinished()
-    {
-        return mState == mega::MegaTransfer::STATE_COMPLETED
-                || mState == mega::MegaTransfer::STATE_FAILED;
-    }
-
-    bool isUpdated()
-    {
-        return mUpdated;
-    }
-
-    void setUpdated(bool state)
-    {
-        mUpdated = state;
-    }
-
     static FileType getFileType(const QString& fileName);
 
-    //Initialise with these values
+    TransferTypes mType;
+    int       mErrorCode;
     TransferState mState;
     int       mTag;
-    unsigned long long mPriority;
-    QString   mFilename;
-    TransferTypes mType;
-
-    //Updated only when paint needed
-    int       mErrorCode;
-    bool mIsSyncTransfer;
     long long mErrorValue;
     int64_t   mRemainingTime;
     unsigned long long mTotalSize;
+    unsigned long long mPriority;
     unsigned long long mSpeed;
     unsigned long long mMeanSpeed;
     unsigned long long mTransferredBytes;
     long long mNotificationNumber;
-    int mNodeAccess;
+    bool mIsSyncTransfer;
     FileType mFileType;
     mega::MegaHandle mParentHandle;
     mega::MegaHandle mNodeHandle;
-
-    //Is it Updated?
-    bool mUpdated;
+    QString   mFilename;
+    int mNodeAccess;
 
     QString path() const;
     bool isPublicNode();
@@ -135,7 +114,6 @@ public:
 private:
     QString   mPath;
     int64_t   mFinishedTime;
-
 };
 Q_DECLARE_TYPEINFO(TransferData, Q_MOVABLE_TYPE);
 Q_DECLARE_METATYPE(TransferData)

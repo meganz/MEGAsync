@@ -28,10 +28,14 @@ public:
 
     void render(QPainter *painter, const QRegion &sourceRegion) override;
 
+protected:
+    void mouseDoubleClickEvent(QMouseEvent *event) override;
+
 signals:
     void cancelTransfer();
     void pauseResumeTransfer();
     void retryTransfer();
+    void openTransfer();
 
 private slots:
     void on_tPauseResumeTransfer_clicked();

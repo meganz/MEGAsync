@@ -37,16 +37,16 @@ struct TransfersCount
     QMap<TransferData::FileType, long long> transfersFinishedByType;
 
     TransfersCount():
-        totalUploadBytes(0),
-        completedUploadBytes(0),
-        totalDownloadBytes(0),
-        completedDownloadBytes(0),
-        pendingUploads(0),
-        pendingDownloads(0),
         totalUploads(0),
         totalDownloads(0),
+        pendingUploads(0),
+        pendingDownloads(0),
         currentUpload(1),
-        currentDownload(1)
+        currentDownload(1),
+        completedUploadBytes(0),
+        completedDownloadBytes(0),
+        totalUploadBytes(0),
+        totalDownloadBytes(0)
     {}
 
     int completedDownloads(){return totalDownloads - pendingDownloads;}
@@ -81,8 +81,8 @@ private:
     QMap<int, QExplicitlySharedDataPointer<TransferData>> mCacheUpdateTransfersByTag;
     void onTransferEvent(mega::MegaTransfer* transfer);
 
-    QReadWriteLock* mCacheMutex;
-    QReadWriteLock* mCountersMutex;
+    QMutex mCacheMutex;
+    QMutex mCountersMutex;
     TransfersCount mTransfersCount;
 };
 
@@ -111,6 +111,7 @@ public:
 
     void getLinks(QList<int>& rows);
     void openFolderByIndex(const QModelIndex& index);
+    void openFolderByTag(TransferTag tag);
     void cancelClearTransfers(const QModelIndexList& indexes, bool clearAll);
     void pauseTransfers(const QModelIndexList& indexes, bool pauseState);
     void pauseResumeTransferByTag(TransferTag tag, bool pauseState);
@@ -179,8 +180,7 @@ private:
     bool mTransfersCancelling;
     QHash<TransferTag, int> mTagByOrder;
     QList<int> mRowsToUpdate;
-    ThreadPool* mThreadPool;
-    QReadWriteLock* mModelMutex;
+    QMutex mModelMutex;
     mega::QTMegaTransferListener *delegateListener;
 
     bool mAreAllPaused;

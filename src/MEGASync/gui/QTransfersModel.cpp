@@ -10,7 +10,6 @@
 
 using namespace mega;
 
-static const QVector<int> DATA_ROLE = {Qt::DisplayRole};
 static const QModelIndex DEFAULT_IDX = QModelIndex();
 
 QHash<QString, TransferData::FileType> QTransfersModel::mFileTypes;
@@ -18,8 +17,7 @@ QHash<QString, TransferData::FileType> QTransfersModel::mFileTypes;
 const int MAX_UPDATE_TRANSFERS = 2000;
 
 //LISTENER THREAD
-TransferThread::TransferThread() :mCacheMutex (new QReadWriteLock(QReadWriteLock::NonRecursive)),
-    mCountersMutex(new QReadWriteLock(QReadWriteLock::NonRecursive))
+TransferThread::TransferThread()
 {
 }
 
@@ -27,7 +25,7 @@ QList<QExplicitlySharedDataPointer<TransferData>> TransferThread::processUpdates
 {
     if(mCacheUpdateTransfersByTag.size()!= 0)
     {
-        QWriteLocker lock(mCacheMutex);
+        QMutexLocker lock(&mCacheMutex);
 
         if(mCacheUpdateTransfersByTag.size() > MAX_UPDATE_TRANSFERS)
         {
@@ -65,7 +63,7 @@ QExplicitlySharedDataPointer<TransferData> TransferThread::createData(MegaTransf
 
 void TransferThread::onTransferEvent(MegaTransfer *transfer)
 {
-    QWriteLocker lock(mCacheMutex);
+    QMutexLocker lock(&mCacheMutex);
 
     auto found = mCacheUpdateTransfersByTag.value(transfer->getTag());
 
@@ -86,18 +84,18 @@ void TransferThread::onTransferEvent(MegaTransfer *transfer)
 
 TransfersCount TransferThread::getTransfersCount()
 {
-    QReadLocker lock(mCountersMutex);
+    QMutexLocker lock(&mCountersMutex);
     return mTransfersCount;
 }
 
 void TransferThread::resetCompletedUploads(QList<QExplicitlySharedDataPointer<TransferData>> transfersToReset)
 {
-    QWriteLocker lock(mCountersMutex);
+    QMutexLocker lock(&mCountersMutex);
 
-    auto totalTransferredBytes(0);
+    unsigned long long totalTransferredBytes(0);
     foreach(auto& transfer, transfersToReset)
     {
-        totalTransferredBytes += transfer->mTransferredBytes;
+        totalTransferredBytes += transfer->mTransferredBytes != 0 ? transfer->mTransferredBytes : transfer->mTotalSize;
         mTransfersCount.transfersByType[transfer->mFileType]--;
         mTransfersCount.transfersFinishedByType[transfer->mFileType]--;
     }
@@ -111,12 +109,12 @@ void TransferThread::resetCompletedUploads(QList<QExplicitlySharedDataPointer<Tr
 
 void TransferThread::resetCompletedDownloads(QList<QExplicitlySharedDataPointer<TransferData>> transfersToReset)
 {
-    QWriteLocker lock(mCountersMutex);
+    QMutexLocker lock(&mCountersMutex);
 
-    auto totalTransferredBytes(0);
+    unsigned long long totalTransferredBytes(0);
     foreach(auto& transfer, transfersToReset)
     {
-        totalTransferredBytes += transfer->mTransferredBytes;
+        totalTransferredBytes += transfer->mTransferredBytes != 0 ? transfer->mTransferredBytes : transfer->mTotalSize;
         mTransfersCount.transfersByType[transfer->mFileType]--;
         mTransfersCount.transfersFinishedByType[transfer->mFileType]--;
     }
@@ -130,7 +128,7 @@ void TransferThread::resetCompletedDownloads(QList<QExplicitlySharedDataPointer<
 
 void TransferThread::resetCompletedTransfers()
 {
-    QWriteLocker lock(mCountersMutex);
+    QMutexLocker lock(&mCountersMutex);
 
     //Downloads
     mTransfersCount.totalDownloads = mTransfersCount.pendingDownloads;
@@ -162,7 +160,7 @@ void TransferThread::onTransferStart(MegaApi *, MegaTransfer *transfer)
     {
         onTransferEvent(transfer);
 
-        QWriteLocker countersLock(mCountersMutex);
+        QMutexLocker lock(&mCountersMutex);
         auto fileType = TransferData::getFileType(QString::fromStdString(transfer->getFileName()));
         mTransfersCount.transfersByType[fileType]++;
 
@@ -190,7 +188,7 @@ void TransferThread::onTransferUpdate(MegaApi *, MegaTransfer *transfer)
     {
         onTransferEvent(transfer);
 
-        QWriteLocker countersLock(mCountersMutex);
+        QMutexLocker lock(&mCountersMutex);
         if(transfer->getType() == MegaTransfer::TYPE_UPLOAD)
         {
             mTransfersCount.completedUploadBytes += transfer->getDeltaSize();
@@ -209,7 +207,7 @@ void TransferThread::onTransferFinish(MegaApi*, MegaTransfer *transfer, MegaErro
     {
         onTransferEvent(transfer);
 
-        QWriteLocker countersLock(mCountersMutex);
+        QMutexLocker lock(&mCountersMutex);
         auto fileType = TransferData::getFileType(QString::fromStdString(transfer->getFileName()));
         if(transfer->getState() == MegaTransfer::STATE_CANCELLED)
         {
@@ -259,7 +257,7 @@ void TransferThread::onTransferTemporaryError(MegaApi*, MegaTransfer *transfer, 
     {
         onTransferEvent(transfer);
 
-        QWriteLocker countersLock(mCountersMutex);
+        QMutexLocker lock(&mCountersMutex);
         if(transfer->getType() == MegaTransfer::TYPE_UPLOAD)
         {
             mTransfersCount.completedUploadBytes += transfer->getDeltaSize();
@@ -275,8 +273,6 @@ QTransfersModel::QTransfersModel(QObject *parent) :
     QAbstractItemModel (parent),
     mMegaApi (MegaSyncApp->getMegaApi()),
     mPreferences (Preferences::instance()),
-    mThreadPool (ThreadPoolSingleton::getInstance()),
-    mModelMutex (new QReadWriteLock(QReadWriteLock::NonRecursive)),
     mTransfersCancelling(false)
 {
     mFileTypes[Utilities::getExtensionPixmapName(QLatin1Literal("a.txt"), QString())]
@@ -405,7 +401,7 @@ void QTransfersModel::onProcessTransfers()
             && mTransfersToCancel.size() == 0
             && mTransfersToUpdate.size() == 0)
     {
-        if(mModelMutex->tryLockForWrite())
+        if(mModelMutex.tryLock())
         {
             auto transfersToProcess = mTransferEventWorker->processUpdates();
 
@@ -434,7 +430,7 @@ void QTransfersModel::onProcessTransfers()
                 it++;
             }
 
-            mModelMutex->unlock();
+            mModelMutex.unlock();
 
             //It is done before processing the transfers as the process itself clears the list of canceled transfers
             if(mTransfersCancelling && mTransfersToCancel.size() == 0)
@@ -458,14 +454,14 @@ void QTransfersModel::onProcessTransfers()
                     mTransfersCancelling = true;
                 }
 
-                if(mModelMutex->tryLockForWrite())
+                if(mModelMutex.tryLock())
                 {
                     processCancelTransfers();
                     sendDataChanged();
 
                     updateTransfersCount();
 
-                    mModelMutex->unlock();
+                    mModelMutex.unlock();
                 }
             });
         }
@@ -473,21 +469,21 @@ void QTransfersModel::onProcessTransfers()
         bool transfersCountNeedsUpdate(false);
 
         //Do not add new transfers while items are being cancelled
-        if(mModelMutex->tryLockForWrite())
+        if(mModelMutex.tryLock())
         {
             processStartTransfers();
             transfersCountNeedsUpdate = true;
 
-            mModelMutex->unlock();
+            mModelMutex.unlock();
         }
 
-        if(mModelMutex->tryLockForWrite())
+        if(mModelMutex.tryLock())
         {
             processUpdateTransfers();
             sendDataChanged();
             transfersCountNeedsUpdate = true;
 
-            mModelMutex->unlock();
+            mModelMutex.unlock();
         }
 
         if(transfersCountNeedsUpdate)
@@ -524,13 +520,10 @@ void QTransfersModel::startTransfer(QExplicitlySharedDataPointer<TransferData> t
     auto state (transfer->mState);
     auto tag = transfer->mTag;
 
-    mThreadPool->push([=]
+    if (mAreAllPaused && (state & TransferData::PAUSABLE_STATES_MASK))
     {
-        if (mAreAllPaused && (state & TransferData::PAUSABLE_STATES_MASK))
-        {
-            mMegaApi->pauseTransferByTag(tag, true);
-        }
-    });
+        mMegaApi->pauseTransferByTag(tag, true);
+    }
 }
 
 void QTransfersModel::processUpdateTransfers()
@@ -545,6 +538,20 @@ void QTransfersModel::processUpdateTransfers()
 
         mTransfersToUpdate.erase(it++);
     }
+}
+
+int QTransfersModel::updateTransfer(QExplicitlySharedDataPointer<TransferData> transfer)
+{
+    TransferTag tag (transfer->mTag);
+
+    auto row = mTagByOrder.value(tag);
+    auto d  = getTransfer(row);
+    if(d)
+    {
+        mTransfers[row] = transfer;
+    }
+
+    return row;
 }
 
 void QTransfersModel::processCancelTransfers()
@@ -565,19 +572,6 @@ void QTransfersModel::processCancelTransfers()
     }
 }
 
-int QTransfersModel::updateTransfer(QExplicitlySharedDataPointer<TransferData> transfer)
-{
-    TransferTag tag (transfer->mTag);
-
-    auto row = mTagByOrder.value(tag);
-    auto d  = getTransfer(row);
-    if(d)
-    {
-        mTransfers[row] = transfer;
-    }
-
-    return row;
-}
 
 void QTransfersModel::getLinks(QList<int>& rows)
 {
@@ -644,6 +638,16 @@ void QTransfersModel::openFolderByIndex(const QModelIndex& index)
             Platform::showInFolder(path);
         }
     });
+}
+
+void QTransfersModel::openFolderByTag(TransferTag tag)
+{
+    auto row = mTagByOrder.value(tag);
+    auto indexToOpen = index(row, 0);
+    if(indexToOpen.isValid())
+    {
+        openFolderByIndex(indexToOpen);
+    }
 }
 
 void QTransfersModel::cancelClearAllTransfers()
@@ -778,6 +782,12 @@ void QTransfersModel::pauseResumeAllTransfers(bool state)
         mMegaApi->pauseTransfers(mAreAllPaused);
         std::for_each(orderCopy.crbegin(), orderCopy.crend(), [this, counterToRefreshUI](QExplicitlySharedDataPointer<TransferData> item)
         mutable {
+
+            if(item->mState & TransferData::PAUSABLE_STATES_MASK)
+            {
+                item->mState = TransferData::TRANSFER_PAUSED;
+            }
+
             pauseResumeTransferByTag(item->mTag, mAreAllPaused);
 
             if(counterToRefreshUI % 10000 == 0)
@@ -792,6 +802,12 @@ void QTransfersModel::pauseResumeAllTransfers(bool state)
     {
         std::for_each(orderCopy.cbegin(), orderCopy.cend(), [this, counterToRefreshUI](QExplicitlySharedDataPointer<TransferData> item)
         mutable {
+
+            if(item->mState & TransferData::TRANSFER_PAUSED)
+            {
+                item->mState = TransferData::TRANSFER_QUEUED;
+            }
+
             pauseResumeTransferByTag(item->mTag, mAreAllPaused);
 
             if(counterToRefreshUI % 10000 == 0)
@@ -826,11 +842,11 @@ void QTransfersModel::lockModelMutex(bool lock)
 {
     if (lock)
     {
-        mModelMutex->lockForWrite();
+        mModelMutex.lock();
     }
     else
     {
-        mModelMutex->unlock();
+        mModelMutex.unlock();
     }
 }
 

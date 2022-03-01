@@ -494,7 +494,7 @@ QProgressBar::chunk
           <property name="bottomMargin">
            <number>12</number>
           </property>
-          <item>
+          <item alignment="Qt::AlignLeft|Qt::AlignVCenter">
            <widget class="QLabel" name="lDone">
             <property name="minimumSize">
              <size>
@@ -513,7 +513,7 @@ QProgressBar::chunk
             </property>
            </widget>
           </item>
-          <item>
+          <item alignment="Qt::AlignVCenter">
            <widget class="QLabel" name="lTotal">
             <property name="minimumSize">
              <size>
@@ -523,7 +523,7 @@ QProgressBar::chunk
             </property>
             <property name="maximumSize">
              <size>
-              <width>0</width>
+              <width>16777215</width>
               <height>16777215</height>
              </size>
             </property>

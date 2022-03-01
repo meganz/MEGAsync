@@ -329,6 +329,13 @@ void TransferManagerDelegateWidget::render(QPainter *painter, const QRegion &sou
     TransferBaseDelegateWidget::render(painter, sourceRegion);
 }
 
+void TransferManagerDelegateWidget::mouseDoubleClickEvent(QMouseEvent *event)
+{
+    emit openTransfer();
+
+    TransferBaseDelegateWidget::mouseDoubleClickEvent(event);
+}
+
 void TransferManagerDelegateWidget::on_tPauseResumeTransfer_clicked()
 {
     emit pauseResumeTransfer();
