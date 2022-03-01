@@ -9,7 +9,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1103</width>
+    <width>1156</width>
     <height>720</height>
    </rect>
   </property>
@@ -1542,9 +1542,6 @@ QToolButton
       </item>
       <item>
        <widget class="QGroupBox" name="wSearch">
-        <property name="focusPolicy">
-         <enum>Qt::StrongFocus</enum>
-        </property>
         <property name="title">
          <string>SEARCH</string>
         </property>
@@ -1566,6 +1563,9 @@ QToolButton
          </property>
          <item>
           <widget class="QFrame" name="fSearchString">
+           <property name="focusPolicy">
+            <enum>Qt::StrongFocus</enum>
+           </property>
            <property name="frameShape">
             <enum>QFrame::NoFrame</enum>
            </property>
@@ -1665,6 +1665,12 @@ QToolButton
           </property>
           <item>
            <widget class="QPushButton" name="bDownSpeed">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
             <property name="minimumSize">
              <size>
               <width>0</width>
@@ -1688,6 +1694,12 @@ QToolButton
           </item>
           <item>
            <widget class="QPushButton" name="bUpSpeed">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
             <property name="minimumSize">
              <size>
               <width>0</width>
@@ -1723,7 +1735,7 @@ QToolButton
            </spacer>
           </item>
           <item>
-           <widget class="QToolButton" name="bClearAll">
+           <widget class="QToolButton" name="bCancelClearAll">
             <property name="enabled">
              <bool>true</bool>
             </property>
@@ -1860,7 +1872,7 @@ QToolButton
             </property>
             <layout class="QVBoxLayout" name="searchHeaderLayout">
              <property name="spacing">
-              <number>0</number>
+              <number>5</number>
              </property>
              <property name="leftMargin">
               <number>0</number>
@@ -1895,6 +1907,9 @@ QToolButton
                  </property>
                  <property name="text">
                   <string>Search:</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
                  </property>
                 </widget>
                </item>
@@ -2078,7 +2093,7 @@ QToolButton
               </widget>
              </item>
              <item row="0" column="1">
-              <widget class="QToolButton" name="tCancelClearCompleted">
+              <widget class="QToolButton" name="tClearCompleted">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
                  <horstretch>0</horstretch>
