@@ -31,6 +31,8 @@ public:
 
     QString getMegaPath() const;
 
+    mega::MegaHandle megaPathHandle = 0;
+
 private slots:
     void on_bOK_clicked();
 

@@ -89,7 +89,6 @@ public slots:
     void storageStateChanged(int state);
 
     // Syncs
-    void syncStateChanged(int state);
     void onSyncStateChanged(std::shared_ptr<SyncSetting>);
     void onEnableSyncFailed(int, std::shared_ptr<SyncSetting> syncSetting);
     void onDisableSyncFailed(std::shared_ptr<SyncSetting> syncSetting);
@@ -132,8 +131,6 @@ private slots:
     void setAvatar();
 
     // Syncs
-    void onSavingSyncsProgress(double progress);
-    void onSavingSyncsCompleted();
     void on_bSyncs_clicked();
     void on_bAdd_clicked();
     void on_bDelete_clicked();
@@ -142,6 +139,12 @@ private slots:
     void showInFolderClicked();
     void showInMegaClicked();
     void onDeleteSync();
+
+    void setSyncToRun();
+    void setSyncToPause();
+    void setSyncToSuspend();
+    void setSyncToDisabled();
+
 #ifndef WIN32
     void on_bPermissions_clicked();
 #endif
@@ -185,8 +188,6 @@ protected:
 private:
     void loadSettings();
     void onCacheSizeAvailable();
-    void saveSyncSettings();
-    void savingSyncs(bool completed, QObject* item);
     void syncsStateInformation(int state);
     void addSyncRow(int row, const QString& name, const QString& lPath,
                     const QString& rPath, bool boxTicked, QString runStateString, int error, mega::MegaHandle megaHandle,

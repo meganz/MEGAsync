@@ -85,6 +85,7 @@ void BindFolderDialog::on_bOK_clicked()
     if (cPath)
     {
         megaPath = QString::fromUtf8(cPath.get());
+        megaPathHandle = handle;
     }
 
     localFolderPath = QDir::toNativeSeparators(QDir(localFolderPath).canonicalPath());

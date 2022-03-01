@@ -8,7 +8,7 @@ using namespace mega;
 
 Controller *Controller::controller = NULL;
 
-void Controller::addSync(const QString &localFolder, const MegaHandle &remoteHandle, QString syncName, ActionProgress *progress)
+void Controller::addSync(const QString &localFolder, MegaHandle remoteHandle, QString syncName, ActionProgress *progress)
 {
     assert(api);
 
@@ -45,39 +45,20 @@ void Controller::removeSync(std::shared_ptr<SyncSetting> syncSetting, ActionProg
                     }));
 }
 
-void Controller::enableSync(std::shared_ptr<SyncSetting> syncSetting, ActionProgress *progress)
+void Controller::setSyncRunState(mega::MegaSync::SyncRunningState newState, std::shared_ptr<SyncSetting> syncSetting, ActionProgress *progress)
 {
     assert(api);
     if (!syncSetting)
     {
-        MegaApi::log(MegaApi::LOG_LEVEL_ERROR, QString::fromAscii("Enabling invalid sync").toUtf8().constData());
+        MegaApi::log(MegaApi::LOG_LEVEL_ERROR, QString::fromAscii("Set state of invalid sync").toUtf8().constData());
         if (progress) progress->setFailed(MegaError::API_EARGS);
         return;
     }
 
-    MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromAscii("Enabling sync %1 to %2")
+    MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromAscii("Set state of sync %1 to %2")
                  .arg(syncSetting->getLocalFolder()).arg(syncSetting->getMegaFolder()).toUtf8().constData() );
 
-    api->setSyncRunState(syncSetting->backupId(), MegaSync::RUNSTATE_RUNNING,
-        new ProgressFuncExecuterListener(progress,  true, [](MegaApi *, MegaRequest *, MegaError *){
-                        ///// onRequestFinish Management: ////
-                    }));
-}
-
-void Controller::disableSync(std::shared_ptr<SyncSetting> syncSetting, ActionProgress *progress)
-{
-    assert(api);
-    if (!syncSetting)
-    {
-        MegaApi::log(MegaApi::LOG_LEVEL_ERROR, QString::fromAscii("disabling invalid sync").toUtf8().constData());
-        if (progress) progress->setFailed(MegaError::API_EARGS);
-        return;
-    }
-
-    MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromAscii("Disabling sync %1 to %2")
-                 .arg(syncSetting->getLocalFolder()).arg(syncSetting->getMegaFolder()).toUtf8().constData() );
-
-    api->setSyncRunState(syncSetting->backupId(), MegaSync::RUNSTATE_SUSPENDED,
+    api->setSyncRunState(syncSetting->backupId(), newState,
         new ProgressFuncExecuterListener(progress,  true, [](MegaApi *, MegaRequest *, MegaError *){
                         ///// onRequestFinish Management: ////
                     }));
