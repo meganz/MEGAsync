@@ -819,3 +819,5 @@ target_link_libraries(MEGASync_unit_tests
     )
 
 target_include_directories(MEGASync_unit_tests PRIVATE ${MEGAsyncDir} ${MEGAsyncDir}/google_breakpad )
+target_compile_features(MEGASync_unit_tests PRIVATE cxx_std_14)
+
