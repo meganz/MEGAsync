@@ -10,7 +10,7 @@ TransfersSortFilterProxyModel::TransfersSortFilterProxyModel(QObject* parent)
     : TransfersSortFilterProxyModelBase(parent),
       mTransferStates (TransferData::STATE_MASK),
       mTransferTypes (TransferData::TYPE_MASK),
-      mFileTypes (~TransferData::FileTypes()),
+      mFileTypes (~Utilities::FileTypes()),
       mNextTransferStates (mTransferStates),
       mNextTransferTypes (mTransferTypes),
       mNextFileTypes (mFileTypes),
@@ -123,7 +123,7 @@ void TransfersSortFilterProxyModel::onModelSortedFiltered()
 
 void TransfersSortFilterProxyModel::setFilters(const TransferData::TransferTypes transferTypes,
                                                const TransferData::TransferStates transferStates,
-                                               const TransferData::FileTypes fileTypes)
+                                               const Utilities::FileTypes fileTypes)
 {
     mNextTransferTypes = transferTypes ? transferTypes : TransferData::TYPE_MASK;
     mNextTransferStates = transferStates ? transferStates : TransferData::STATE_MASK;
@@ -133,7 +133,7 @@ void TransfersSortFilterProxyModel::setFilters(const TransferData::TransferTypes
     }
     else
     {
-        mNextFileTypes = ~TransferData::FileTypes({});
+        mNextFileTypes = ~Utilities::FileTypes({});
     }
 }
 
@@ -205,7 +205,7 @@ bool TransfersSortFilterProxyModel::filterAcceptsRow(int sourceRow, const QModel
     {
         auto accept = (d->mState & mTransferStates)
                  && (d->mType & mTransferTypes)
-                 && (d->mFileType & mFileTypes);
+                 && (toInt(d->mFileType) & mFileTypes);
 
         if (accept)
         {
@@ -280,7 +280,15 @@ bool TransfersSortFilterProxyModel::lessThan(const QModelIndex &left, const QMod
     {
         case SortCriterion::PRIORITY:
         {
-            return leftItem->mPriority > rightItem->mPriority;
+            if(leftItem->mState != rightItem->mState)
+            {
+                return leftItem->mState > rightItem->mState;
+            }
+            else
+            {
+
+                return leftItem->mPriority > rightItem->mPriority;
+            }
         }
         case SortCriterion::TOTAL_SIZE:
         {
@@ -402,8 +410,19 @@ void TransfersSortFilterProxyModel::onRetryTransfer()
 
     if(delegateWidget && sourModel)
     {
-        auto tag = delegateWidget->getData()->mTag;
-        sourModel->onRetryTransfer(tag);
+        auto data = delegateWidget->getData();
+
+        if(data->mFailedTransfer)
+        {
+            QModelIndexList indexToRemove;
+            auto index = delegateWidget->getCurrentIndex();
+            index = mapToSource(index);
+            indexToRemove.append(index);
+            sourModel->cancelClearTransfers(indexToRemove,false);
+
+            MegaSyncApp->getMegaApi()->retryTransfer(data->mFailedTransfer.get());
+            data->removeFailedTransfer();
+        }
     }
 }
 

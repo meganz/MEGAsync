@@ -176,7 +176,7 @@ QGroupBox::title
     qProperty-iconSize: 24px;
 }
 
-#pTransfers QToolButton
+#bPause, #bSearch
 {
     height: 36px;
     width: 36px;

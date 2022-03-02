@@ -12,8 +12,6 @@ using namespace mega;
 
 static const QModelIndex DEFAULT_IDX = QModelIndex();
 
-QHash<QString, TransferData::FileType> QTransfersModel::mFileTypes;
-
 const int MAX_UPDATE_TRANSFERS = 2000;
 
 //LISTENER THREAD
@@ -61,9 +59,11 @@ QExplicitlySharedDataPointer<TransferData> TransferThread::createData(MegaTransf
     return d;
 }
 
-void TransferThread::onTransferEvent(MegaTransfer *transfer)
+QExplicitlySharedDataPointer<TransferData> TransferThread::onTransferEvent(MegaTransfer *transfer)
 {
     QMutexLocker lock(&mCacheMutex);
+
+    QExplicitlySharedDataPointer<TransferData> data;
 
     auto found = mCacheUpdateTransfersByTag.value(transfer->getTag());
 
@@ -72,14 +72,18 @@ void TransferThread::onTransferEvent(MegaTransfer *transfer)
         if(found->mNotificationNumber < transfer->getNotificationNumber())
         {
             mCacheUpdateTransfersByTag.remove(transfer->getTag());
-            mCacheUpdateTransfersByTag.insert(transfer->getTag(), createData(transfer));
+
+            data = createData(transfer);
+            mCacheUpdateTransfersByTag.insert(transfer->getTag(), data);
         }
     }
     else
     {
-        mCacheUpdateTransfersByTag.insert(transfer->getTag(),createData(transfer));
+        data = createData(transfer);
+        mCacheUpdateTransfersByTag.insert(transfer->getTag(), data);
     }
 
+    return data;
 }
 
 TransfersCount TransferThread::getTransfersCount()
@@ -161,7 +165,7 @@ void TransferThread::onTransferStart(MegaApi *, MegaTransfer *transfer)
         onTransferEvent(transfer);
 
         QMutexLocker lock(&mCountersMutex);
-        auto fileType = TransferData::getFileType(QString::fromStdString(transfer->getFileName()));
+        auto fileType = Utilities::getFileType(QString::fromStdString(transfer->getFileName()), QString());
         mTransfersCount.transfersByType[fileType]++;
 
         if(transfer->getType() == MegaTransfer::TYPE_UPLOAD)
@@ -200,15 +204,15 @@ void TransferThread::onTransferUpdate(MegaApi *, MegaTransfer *transfer)
     }
 }
 
-void TransferThread::onTransferFinish(MegaApi*, MegaTransfer *transfer, MegaError *)
+void TransferThread::onTransferFinish(MegaApi*, MegaTransfer *transfer, MegaError* error)
 {
     if (!transfer->isStreamingTransfer()
             && !transfer->isFolderTransfer())
     {
-        onTransferEvent(transfer);
+        auto data = onTransferEvent(transfer);
 
         QMutexLocker lock(&mCountersMutex);
-        auto fileType = TransferData::getFileType(QString::fromStdString(transfer->getFileName()));
+        auto fileType = Utilities::getFileType(QString::fromStdString(transfer->getFileName()), QString());
         if(transfer->getState() == MegaTransfer::STATE_CANCELLED)
         {
             mTransfersCount.transfersByType[fileType]--;
@@ -247,6 +251,11 @@ void TransferThread::onTransferFinish(MegaApi*, MegaTransfer *transfer, MegaErro
                 mTransfersCount.currentDownload = mTransfersCount.totalDownloads - mTransfersCount.pendingDownloads + 1;
             }
         }
+
+        if(error)
+        {
+            data->mFailedTransfer = std::shared_ptr<mega::MegaTransfer>(transfer->copy());
+        }
     }
 }
 
@@ -255,7 +264,8 @@ void TransferThread::onTransferTemporaryError(MegaApi*, MegaTransfer *transfer, 
     if (!transfer->isStreamingTransfer()
             && !transfer->isFolderTransfer())
     {
-        onTransferEvent(transfer);
+        auto data = onTransferEvent(transfer);
+        data->mTemporaryError = true;
 
         QMutexLocker lock(&mCountersMutex);
         if(transfer->getType() == MegaTransfer::TYPE_UPLOAD)
@@ -269,27 +279,14 @@ void TransferThread::onTransferTemporaryError(MegaApi*, MegaTransfer *transfer, 
     }
 }
 
+const int PROCESS_TIMER = 100;
+
 QTransfersModel::QTransfersModel(QObject *parent) :
     QAbstractItemModel (parent),
     mMegaApi (MegaSyncApp->getMegaApi()),
     mPreferences (Preferences::instance()),
     mTransfersCancelling(false)
 {
-    mFileTypes[Utilities::getExtensionPixmapName(QLatin1Literal("a.txt"), QString())]
-            = TransferData::TYPE_TEXT;
-    mFileTypes[Utilities::getExtensionPixmapName(QLatin1Literal("a.wav"), QString())]
-            = TransferData::TYPE_AUDIO;
-    mFileTypes[Utilities::getExtensionPixmapName(QLatin1Literal("a.mkv"), QString())]
-            = TransferData::TYPE_VIDEO;
-    mFileTypes[Utilities::getExtensionPixmapName(QLatin1Literal("a.tar"), QString())]
-            = TransferData::TYPE_ARCHIVE;
-    mFileTypes[Utilities::getExtensionPixmapName(QLatin1Literal("a.odt"), QString())]
-            = TransferData::TYPE_DOCUMENT;
-    mFileTypes[Utilities::getExtensionPixmapName(QLatin1Literal("a.png"), QString())]
-            = TransferData::TYPE_IMAGE;
-    mFileTypes[Utilities::getExtensionPixmapName(QLatin1Literal("a.bin"), QString())]
-            = TransferData::TYPE_OTHER;
-
     qRegisterMetaType<QList<QPersistentModelIndex>>("QList<QPersistentModelIndex>");
 
     mAreAllPaused = mPreferences->getGlobalPaused();
@@ -304,7 +301,7 @@ QTransfersModel::QTransfersModel(QObject *parent) :
     //Update transfers state for the first time
     updateTransfersCount();
 
-    mTimer.setInterval(100);
+    mTimer.setInterval(PROCESS_TIMER);
     QObject::connect(&mTimer, &QTimer::timeout, this, &QTransfersModel::onProcessTransfers);
     mTimer.start();
 
@@ -331,7 +328,7 @@ void QTransfersModel::pauseModelProcessing(bool value)
     }
     else
     {
-        mTimer.start(100);
+        mTimer.start(PROCESS_TIMER);
     }
 }
 
@@ -684,11 +681,6 @@ void QTransfersModel::cancelClearTransfers(const QModelIndexList& indexes, bool 
         QMap<QModelIndex, QExplicitlySharedDataPointer<TransferData>> uploadToClear;
         QMap<QModelIndex, QExplicitlySharedDataPointer<TransferData>> downloadToClear;
 
-        // Reverse sort to keep indexes valid after deletion
-        std::sort(indexesToRemove.begin(), indexesToRemove.end(),[](QModelIndex check1, QModelIndex check2){
-            return check1.row() > check2.row();
-        });
-
         // First clear finished transfers (remove rows), then cancel the others.
         // This way, there is no risk of messing up the rows order with cancel requests.
         for (auto index : indexesToRemove)
@@ -850,12 +842,12 @@ void QTransfersModel::lockModelMutex(bool lock)
     }
 }
 
-long long QTransfersModel::getNumberOfTransfersForFileType(TransferData::FileType fileType) const
+long long QTransfersModel::getNumberOfTransfersForFileType(Utilities::FileType fileType) const
 {
     return mTransferEventWorker->getTransfersCount().transfersByType.value(fileType);
 }
 
-long long QTransfersModel::getNumberOfFinishedForFileType(TransferData::FileType fileType) const
+long long QTransfersModel::getNumberOfFinishedForFileType(Utilities::FileType fileType) const
 {
     return mTransferEventWorker->getTransfersCount().transfersFinishedByType.value(fileType);
 }

@@ -24,6 +24,7 @@ using namespace std;
 using namespace mega;
 
 QHash<QString, QString> Utilities::extensionIcons;
+QHash<QString, Utilities::FileType> Utilities::fileTypes;
 QHash<QString, QString> Utilities::languageNames;
 
 std::unique_ptr<ThreadPool> ThreadPoolSingleton::instance = nullptr;
@@ -146,6 +147,24 @@ void Utilities::initializeExtensions()
      extensionIcons[QString::fromAscii("key")] = QString::fromAscii("keynote.png");
 }
 
+void Utilities::initializeFileTypes()
+{
+    fileTypes[getExtensionPixmapName(QLatin1Literal("a.txt"), QString())]
+            = FileType::TYPE_TEXT;
+    fileTypes[getExtensionPixmapName(QLatin1Literal("a.wav"), QString())]
+            = FileType::TYPE_AUDIO;
+    fileTypes[getExtensionPixmapName(QLatin1Literal("a.mkv"), QString())]
+            = FileType::TYPE_VIDEO;
+    fileTypes[getExtensionPixmapName(QLatin1Literal("a.tar"), QString())]
+            = FileType::TYPE_ARCHIVE;
+    fileTypes[getExtensionPixmapName(QLatin1Literal("a.odt"), QString())]
+            = FileType::TYPE_DOCUMENT;
+    fileTypes[getExtensionPixmapName(QLatin1Literal("a.png"), QString())]
+            = FileType::TYPE_IMAGE;
+    fileTypes[getExtensionPixmapName(QLatin1Literal("a.bin"), QString())]
+            = FileType::TYPE_OTHER;
+}
+
 
 void Utilities::queueFunctionInAppThread(std::function<void()> fun) {
    QObject temporary;
@@ -189,6 +208,7 @@ QString Utilities::getExtensionPixmapName(QString fileName, QString prefix)
     if (extensionIcons.isEmpty())
     {
         initializeExtensions();
+        initializeFileTypes();
     }
 
     QFileInfo f(fileName);
@@ -200,6 +220,12 @@ QString Utilities::getExtensionPixmapName(QString fileName, QString prefix)
     {
         return prefix + QString::fromAscii("generic.png");
     }
+}
+
+Utilities::FileType Utilities::getFileType(QString fileName, QString prefix)
+{
+    auto extensionPixmapName = getExtensionPixmapName(fileName, prefix);
+    return fileTypes.value(extensionPixmapName,FileType::TYPE_OTHER);
 }
 
 QString Utilities::languageCodeToString(QString code)

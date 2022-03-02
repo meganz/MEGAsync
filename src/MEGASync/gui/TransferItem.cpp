@@ -59,7 +59,7 @@ void TransferData::update(mega::MegaTransfer* transfer)
             mType |= TransferData::TRANSFER_SYNC;
         }
 
-        mFileType = getFileType(mFilename);
+        mFileType = Utilities::getFileType(mFilename, QString());
 
         mState = static_cast<TransferData::TransferState>(1 << transfer->getState());
 
@@ -85,6 +85,8 @@ void TransferData::update(mega::MegaTransfer* transfer)
         mMeanSpeed = static_cast<unsigned long long>(transfer->getMeanSpeed());
         mErrorCode = MegaError::API_OK;
         mErrorValue = 0LL;
+        mTemporaryError = false;
+        mFailedTransfer = nullptr;
 
 
         auto megaError (transfer->getLastErrorExtended());
@@ -99,16 +101,9 @@ void TransferData::update(mega::MegaTransfer* transfer)
     }
 }
 
-TransferData::FileType TransferData::getFileType(const QString &fileName)
+void TransferData::removeFailedTransfer()
 {
-    auto pixmapName (Utilities::getExtensionPixmapName(fileName, QString()));
-
-    auto fileType = QTransfersModel::mFileTypes.contains(pixmapName) ?
-                QTransfersModel::mFileTypes[pixmapName]
-                : TransferData::FileType::TYPE_OTHER;
-
-    return fileType;
-
+    mFailedTransfer.reset();
 }
 
 uint64_t TransferData::getFinishedTime()

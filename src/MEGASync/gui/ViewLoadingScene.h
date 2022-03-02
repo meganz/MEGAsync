@@ -23,6 +23,8 @@ public:
         connect(&mTimer, &QTimer::timeout, this, &LoadingSceneDelegateBase::onLoadingTimerTimeout);
     }
 
+    ~LoadingSceneDelegateBase(){}
+
     inline void setLoading(bool state)
     {
         updateTimer(state);

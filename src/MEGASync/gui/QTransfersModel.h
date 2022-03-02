@@ -33,8 +33,8 @@ struct TransfersCount
     long long totalUploadBytes;
     long long totalDownloadBytes;
 
-    QMap<TransferData::FileType, long long> transfersByType;
-    QMap<TransferData::FileType, long long> transfersFinishedByType;
+    QMap<Utilities::FileType, long long> transfersByType;
+    QMap<Utilities::FileType, long long> transfersFinishedByType;
 
     TransfersCount():
         totalUploads(0),
@@ -77,9 +77,8 @@ public slots:
 private:
     QExplicitlySharedDataPointer<TransferData> createData(mega::MegaTransfer* transfer);
 
-    //std::list<QExplicitlySharedDataPointer<TransferData>> mCacheUpdateTransfers;
     QMap<int, QExplicitlySharedDataPointer<TransferData>> mCacheUpdateTransfersByTag;
-    void onTransferEvent(mega::MegaTransfer* transfer);
+    QExplicitlySharedDataPointer<TransferData> onTransferEvent(mega::MegaTransfer* transfer);
 
     QMutex mCacheMutex;
     QMutex mCountersMutex;
@@ -118,12 +117,10 @@ public:
 
     void lockModelMutex(bool lock);
 
-    long long  getNumberOfTransfersForFileType(TransferData::FileType fileType) const;
-    long long  getNumberOfFinishedForFileType(TransferData::FileType fileType) const;
+    long long  getNumberOfTransfersForFileType(Utilities::FileType fileType) const;
+    long long  getNumberOfFinishedForFileType(Utilities::FileType fileType) const;
     TransfersCount getTransfersCount();
     void resetCompletedTransfersCount();
-    void resetCompletedUpload(long long transferBytes);
-    void resetCompletedDownload(long long transferBytes);
 
     void initModel();
 
@@ -133,9 +130,6 @@ public:
     void pauseModelProcessing(bool value);
 
     bool areAllPaused();
-
-    static QHash<QString, TransferData::FileType> mFileTypes;
-
 
 signals:
     void pauseStateChanged(bool pauseState);

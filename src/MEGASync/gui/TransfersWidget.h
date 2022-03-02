@@ -34,7 +34,7 @@ public:
     void textFilterTypeChanged(const TransferData::TransferTypes transferTypes);
     void filtersChanged(const TransferData::TransferTypes transferTypes,
                         const TransferData::TransferStates transferStates,
-                        const TransferData::FileTypes fileTypes);
+                        const Utilities::FileTypes fileTypes);
     void transferFilterReset();
 
     void cancelClearAll();

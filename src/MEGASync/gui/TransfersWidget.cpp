@@ -247,7 +247,7 @@ void TransfersWidget::textFilterTypeChanged(const TransferData::TransferTypes tr
 
 void TransfersWidget::filtersChanged(const TransferData::TransferTypes transferTypes,
                                      const TransferData::TransferStates transferStates,
-                                     const TransferData::FileTypes fileTypes)
+                                     const Utilities::FileTypes fileTypes)
 {
     mProxyModel->setFilters(transferTypes, transferStates, fileTypes);
 }

@@ -22,7 +22,7 @@ public:
     virtual TransferBaseDelegateWidget* createTransferManagerItem(QWidget *parent) = 0;
 
 protected:
-    int columnCount(const QModelIndex &parent) const override {return 1;}
+    int columnCount(const QModelIndex &) const override {return 1;}
 };
 
 class TransfersSortFilterProxyModel : public TransfersSortFilterProxyModelBase
@@ -42,7 +42,7 @@ public:
         void textSearchTypeChanged();
         void setFilters(const TransferData::TransferTypes transferTypes,
                         const TransferData::TransferStates transferStates,
-                        const TransferData::FileTypes fileTypes);
+                        const Utilities::FileTypes fileTypes);
         void updateFilters();
         void resetAllFilters();
         int  getNumberOfItems(TransferData::TransferType transferType);
@@ -74,10 +74,10 @@ protected:
 protected:
         TransferData::TransferStates mTransferStates;
         TransferData::TransferTypes mTransferTypes;
-        TransferData::FileTypes mFileTypes;
+        Utilities::FileTypes mFileTypes;
         TransferData::TransferStates mNextTransferStates;
         TransferData::TransferTypes mNextTransferTypes;
-        TransferData::FileTypes mNextFileTypes;
+        Utilities::FileTypes mNextFileTypes;
         SortCriterion mSortCriterion;
         mutable QSet<int> mDlNumber;
         mutable QSet<int> mUlNumber;

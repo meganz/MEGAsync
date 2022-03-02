@@ -27,6 +27,11 @@
 
 #define MegaSyncApp (static_cast<MegaApplication *>(QCoreApplication::instance()))
 
+template <typename E>
+constexpr typename std::underlying_type<E>::type toInt(E e) {
+    return static_cast<typename std::underlying_type<E>::type>(e);
+}
+
 struct PlanInfo
 {
     long long gbStorage;
@@ -274,6 +279,18 @@ protected:
 class Utilities
 {
 public:
+    enum class FileType
+    {
+        TYPE_OTHER    = 0x01,
+        TYPE_AUDIO    = 0x02,
+        TYPE_VIDEO    = 0x04,
+        TYPE_ARCHIVE  = 0x08,
+        TYPE_DOCUMENT = 0x10,
+        TYPE_IMAGE    = 0x20,
+        TYPE_TEXT     = 0x40,
+    };
+    Q_DECLARE_FLAGS(FileTypes, FileType)
+
     static QString getSizeString(unsigned long long bytes);
     static QString getSizeString(long long bytes);
     static QString getTimeString(long long secs, bool secondPrecision = true, bool color = true);
@@ -309,8 +326,10 @@ public:
 private:
     Utilities() {}
     static QHash<QString, QString> extensionIcons;
+    static QHash<QString, FileType> fileTypes;
     static QHash<QString, QString> languageNames;
     static void initializeExtensions();
+    static void initializeFileTypes();
     static QString getExtensionPixmapNameSmall(QString fileName);
     static QString getExtensionPixmapNameMedium(QString fileName);
 
@@ -330,6 +349,7 @@ public:
     static QIcon getExtensionPixmapSmall(QString fileName);
     static QIcon getExtensionPixmapMedium(QString fileName);
     static QString getExtensionPixmapName(QString fileName, QString prefix);
+    static FileType getFileType(QString fileName, QString prefix);
 
     static long long getSystemsAvailableMemory();
 
@@ -338,6 +358,9 @@ public:
     // Compute the part per <ref> of <part> from <total>. Defaults to %
     static int partPer(unsigned long long part, unsigned long long total, uint ref = 100);
 };
+
+Q_DECLARE_METATYPE(Utilities::FileType)
+Q_DECLARE_OPERATORS_FOR_FLAGS(Utilities::FileTypes)
 
 
 
