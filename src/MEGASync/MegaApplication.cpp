@@ -4904,6 +4904,7 @@ void MegaApplication::transferManagerActionClicked(int tab)
     Platform::activateBackgroundWindow(transferManager);
     transferManager->activateWindow();
     transferManager->raise();
+    transferManager->show();
 }
 
 void MegaApplication::loginActionClicked()
