@@ -190,6 +190,13 @@ QString SyncSetting::getRunStateAsString() const
     return QString::fromUtf8("<unknown state>");
 }
 
+int SyncSetting::getRunState() const
+{
+    assert(mSync);
+
+    return mSync->getRunState();
+}
+
 MegaHandle SyncSetting::backupId() const
 {
     return mBackupId;

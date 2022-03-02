@@ -49,6 +49,8 @@ public:
 
     QString getRunStateAsString() const;
 
+    int getRunState() const;
+
     mega::MegaSync* getSync() const;
 
     QString toString();

@@ -60,7 +60,7 @@ void MacXExtServer::acceptConnection()
             auto syncSetting = model->getSyncSetting(i);
 
             QString syncPath = QDir::toNativeSeparators(QDir(syncSetting->getLocalFolder()).canonicalPath());
-            if (!syncPath.size() || !syncSetting->isActive())
+            if (!syncPath.size() || syncSetting->getRunState() != MegaSync::RUNSTATE_RUNNING)
             {
                 continue;
             }
@@ -409,7 +409,7 @@ void MacXExtServer::notifyAllClients(int op)
         auto syncSetting = model->getSyncSetting(i);
 
         QString syncPath = QDir::toNativeSeparators(QDir(syncSetting->getLocalFolder()).canonicalPath());
-        if (!syncPath.size() || !syncSetting->isActive())
+        if (!syncPath.size() || syncSetting->getRunState() != MegaSync::RUNSTATE_RUNNING)
         {
             continue;
         }
