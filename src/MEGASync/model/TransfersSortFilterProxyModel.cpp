@@ -1,5 +1,5 @@
 #include "TransfersSortFilterProxyModel.h"
-#include "QTransfersModel.h"
+#include "TransfersModel.h"
 #include "MegaApplication.h"
 #include "TransferManagerDelegateWidget.h"
 #include <megaapi.h>
@@ -36,7 +36,7 @@ void TransfersSortFilterProxyModel::sort(int sortCriterion, Qt::SortOrder order)
         setDynamicSortFilter(true);
     }
 
-    auto sourceM = qobject_cast<QTransfersModel*>(sourceModel());
+    auto sourceM = qobject_cast<TransfersModel*>(sourceModel());
     if(sourceM)
     {
         sourceM->pauseModelProcessing(false);
@@ -49,7 +49,7 @@ void TransfersSortFilterProxyModel::sort(int sortCriterion, Qt::SortOrder order)
     }
 
     QFuture<void> filtered = QtConcurrent::run([this, order, sortCriterion](){
-        auto sourceM = qobject_cast<QTransfersModel*>(sourceModel());
+        auto sourceM = qobject_cast<TransfersModel*>(sourceModel());
         sourceM->lockModelMutex(true);
         QSortFilterProxyModel::sort(sortCriterion, order);
         QSortFilterProxyModel::invalidate();
@@ -86,7 +86,7 @@ void TransfersSortFilterProxyModel::setFilterFixedString(const QString& pattern)
     emit modelAboutToBeChanged();
 
     QFuture<void> filtered = QtConcurrent::run([this](){
-        auto sourceM = qobject_cast<QTransfersModel*>(sourceModel());
+        auto sourceM = qobject_cast<TransfersModel*>(sourceModel());
         sourceM->lockModelMutex(true);
         invalidateFilter();
         sourceM->lockModelMutex(false);
@@ -101,7 +101,7 @@ void TransfersSortFilterProxyModel::textSearchTypeChanged()
     emit modelAboutToBeChanged();
 
     QFuture<void> filtered = QtConcurrent::run([this](){
-        auto sourceM = qobject_cast<QTransfersModel*>(sourceModel());
+        auto sourceM = qobject_cast<TransfersModel*>(sourceModel());
         sourceM->lockModelMutex(true);
         invalidateFilter();
         sourceM->lockModelMutex(false);
@@ -111,7 +111,7 @@ void TransfersSortFilterProxyModel::textSearchTypeChanged()
 
 void TransfersSortFilterProxyModel::onModelSortedFiltered()
 {
-    auto sourceM = qobject_cast<QTransfersModel*>(sourceModel());
+    auto sourceM = qobject_cast<TransfersModel*>(sourceModel());
     if(sourceM)
     {
         sourceM->pauseModelProcessing(false);
@@ -184,7 +184,7 @@ TransferBaseDelegateWidget *TransfersSortFilterProxyModel::createTransferManager
 
 void TransfersSortFilterProxyModel::updateFilters()
 {
-    auto sourceM = qobject_cast<QTransfersModel*>(sourceModel());
+    auto sourceM = qobject_cast<TransfersModel*>(sourceModel());
     if(sourceM)
     {
         sourceM->pauseModelProcessing(false);
@@ -376,7 +376,7 @@ bool TransfersSortFilterProxyModel::moveRows(const QModelIndex &proxyParent, int
 void TransfersSortFilterProxyModel::onCancelClearTransfer()
 {
     auto delegateWidget = dynamic_cast<TransferManagerDelegateWidget*>(sender());
-    auto sourModel = dynamic_cast<QTransfersModel*>(sourceModel());
+    auto sourModel = dynamic_cast<TransfersModel*>(sourceModel());
 
     if(delegateWidget && sourModel)
     {
@@ -391,7 +391,7 @@ void TransfersSortFilterProxyModel::onCancelClearTransfer()
 void TransfersSortFilterProxyModel::onPauseResumeTransfer()
 {
     auto delegateWidget = dynamic_cast<TransferManagerDelegateWidget*>(sender());
-    auto sourModel = dynamic_cast<QTransfersModel*>(sourceModel());
+    auto sourModel = dynamic_cast<TransfersModel*>(sourceModel());
 
     if(delegateWidget && sourModel)
     {
@@ -406,7 +406,7 @@ void TransfersSortFilterProxyModel::onPauseResumeTransfer()
 void TransfersSortFilterProxyModel::onRetryTransfer()
 {
     auto delegateWidget = dynamic_cast<TransferManagerDelegateWidget*>(sender());
-    auto sourModel = dynamic_cast<QTransfersModel*>(sourceModel());
+    auto sourModel = dynamic_cast<TransfersModel*>(sourceModel());
 
     if(delegateWidget && sourModel)
     {
@@ -429,7 +429,7 @@ void TransfersSortFilterProxyModel::onRetryTransfer()
 void TransfersSortFilterProxyModel::onOpenTransfer()
 {
     auto delegateWidget = dynamic_cast<TransferManagerDelegateWidget*>(sender());
-    auto sourModel = dynamic_cast<QTransfersModel*>(sourceModel());
+    auto sourModel = dynamic_cast<TransfersModel*>(sourceModel());
 
     if(delegateWidget && sourModel)
     {

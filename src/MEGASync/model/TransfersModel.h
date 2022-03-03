@@ -1,5 +1,5 @@
-#ifndef QTRANSFERSMODEL_H
-#define QTRANSFERSMODEL_H
+#ifndef TRANSFERSMODEL_H
+#define TRANSFERSMODEL_H
 
 #include "QTMegaTransferListener.h"
 #include "TransferItem.h"
@@ -85,13 +85,13 @@ private:
     TransfersCount mTransfersCount;
 };
 
-class QTransfersModel : public QAbstractItemModel
+class TransfersModel : public QAbstractItemModel
 {
     Q_OBJECT
 
 public:
-    explicit QTransfersModel(QObject* parent = 0);
-    ~QTransfersModel();
+    explicit TransfersModel(QObject* parent = 0);
+    ~TransfersModel();
 
     virtual Qt::ItemFlags flags(const QModelIndex& index) const;
     virtual Qt::DropActions supportedDropActions() const;
@@ -181,4 +181,4 @@ private:
     bool stopModelProcessing;
 };
 
-#endif // QTRANSFERSMODEL_H
+#endif // TRANSFERSMODEL_H

@@ -8,7 +8,7 @@
 #include <QFutureWatcher>
 
 class TransferBaseDelegateWidget;
-class QTransfersModel;
+class TransfersModel;
 
 class TransfersSortFilterProxyModelBase : public QSortFilterProxyModel
 {

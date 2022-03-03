@@ -9,7 +9,6 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/TransferBaseDelegateWidget.cpp \
     $$PWD/NotificationsSettings.cpp \
     $$PWD/OverQuotaDialog.cpp \
-    $$PWD/QTransfersModel.cpp \
     $$PWD/SetupWizard.cpp \
     $$PWD/NodeSelector.cpp \
     $$PWD/FolderBinder.cpp \
@@ -83,7 +82,6 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/TransferBaseDelegateWidget.h \
     $$PWD/NotificationsSettings.h \
     $$PWD/OverQuotaDialog.h \
-    $$PWD/QTransfersModel.h \
     $$PWD/SetupWizard.h \
     $$PWD/NodeSelector.h \
     $$PWD/FolderBinder.h \

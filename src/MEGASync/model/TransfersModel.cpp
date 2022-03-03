@@ -1,4 +1,4 @@
-#include "QTransfersModel.h"
+#include "TransfersModel.h"
 #include "MegaApplication.h"
 #include "Utilities.h"
 #include "Platform.h"
@@ -281,7 +281,7 @@ void TransferThread::onTransferTemporaryError(MegaApi*, MegaTransfer *transfer, 
 
 const int PROCESS_TIMER = 100;
 
-QTransfersModel::QTransfersModel(QObject *parent) :
+TransfersModel::TransfersModel(QObject *parent) :
     QAbstractItemModel (parent),
     mMegaApi (MegaSyncApp->getMegaApi()),
     mPreferences (Preferences::instance()),
@@ -302,13 +302,13 @@ QTransfersModel::QTransfersModel(QObject *parent) :
     updateTransfersCount();
 
     mTimer.setInterval(PROCESS_TIMER);
-    QObject::connect(&mTimer, &QTimer::timeout, this, &QTransfersModel::onProcessTransfers);
+    QObject::connect(&mTimer, &QTimer::timeout, this, &TransfersModel::onProcessTransfers);
     mTimer.start();
 
     mTransferEventThread->start();
 }
 
-QTransfersModel::~QTransfersModel()
+TransfersModel::~TransfersModel()
 {
     // Cleanup
     mTransfers.clear();
@@ -320,7 +320,7 @@ QTransfersModel::~QTransfersModel()
     mTransferEventWorker->deleteLater();
 }
 
-void QTransfersModel::pauseModelProcessing(bool value)
+void TransfersModel::pauseModelProcessing(bool value)
 {
     if(value)
     {
@@ -332,12 +332,12 @@ void QTransfersModel::pauseModelProcessing(bool value)
     }
 }
 
-bool QTransfersModel::areAllPaused()
+bool TransfersModel::areAllPaused()
 {
     return mAreAllPaused;
 }
 
-bool QTransfersModel::hasChildren(const QModelIndex& parent) const
+bool TransfersModel::hasChildren(const QModelIndex& parent) const
 {
     if (parent == DEFAULT_IDX)
     {
@@ -346,7 +346,7 @@ bool QTransfersModel::hasChildren(const QModelIndex& parent) const
     return false;
 }
 
-int QTransfersModel::rowCount(const QModelIndex& parent) const
+int TransfersModel::rowCount(const QModelIndex& parent) const
 {
     int rowCount (0);
     if (parent == DEFAULT_IDX)
@@ -356,7 +356,7 @@ int QTransfersModel::rowCount(const QModelIndex& parent) const
     return rowCount;
 }
 
-int QTransfersModel::columnCount(const QModelIndex& parent) const
+int TransfersModel::columnCount(const QModelIndex& parent) const
 {
     //The same number of columns as sort criterions are needed
     //However in the sort filter the column count WILL BE ALWAYS 1 (check columnCount on sort filter class)
@@ -367,7 +367,7 @@ int QTransfersModel::columnCount(const QModelIndex& parent) const
     return 0;
 }
 
-QVariant QTransfersModel::data(const QModelIndex& index, int role) const
+QVariant TransfersModel::data(const QModelIndex& index, int role) const
 {
     if (role == Qt::DisplayRole)
     {
@@ -377,22 +377,22 @@ QVariant QTransfersModel::data(const QModelIndex& index, int role) const
     return QVariant();
 }
 
-QModelIndex QTransfersModel::parent(const QModelIndex&) const
+QModelIndex TransfersModel::parent(const QModelIndex&) const
 {
     return DEFAULT_IDX;
 }
 
-QModelIndex QTransfersModel::index(int row, int, const QModelIndex&) const
+QModelIndex TransfersModel::index(int row, int, const QModelIndex&) const
 {
     return (row < rowCount(DEFAULT_IDX)) ?  createIndex(row, 0) : DEFAULT_IDX;
 }
 
-void QTransfersModel::initModel()
+void TransfersModel::initModel()
 {
     emit pauseStateChanged(mAreAllPaused);
 }
 
-void QTransfersModel::onProcessTransfers()
+void TransfersModel::onProcessTransfers()
 {
     if(mTransfersToStart.size() == 0
             && mTransfersToCancel.size() == 0
@@ -490,7 +490,7 @@ void QTransfersModel::onProcessTransfers()
     }
 }
 
-void QTransfersModel::processStartTransfers()
+void TransfersModel::processStartTransfers()
 {
     if (mTransfersToStart.size() != 0)
     {
@@ -509,7 +509,7 @@ void QTransfersModel::processStartTransfers()
     }
 }
 
-void QTransfersModel::startTransfer(QExplicitlySharedDataPointer<TransferData> transfer)
+void TransfersModel::startTransfer(QExplicitlySharedDataPointer<TransferData> transfer)
 {
     mTransfers.append(transfer);
     mTagByOrder.insert(transfer->mTag, rowCount(DEFAULT_IDX) - 1);
@@ -523,7 +523,7 @@ void QTransfersModel::startTransfer(QExplicitlySharedDataPointer<TransferData> t
     }
 }
 
-void QTransfersModel::processUpdateTransfers()
+void TransfersModel::processUpdateTransfers()
 {
     for (auto it = mTransfersToUpdate.begin(); it != mTransfersToUpdate.end();)
     {
@@ -537,7 +537,7 @@ void QTransfersModel::processUpdateTransfers()
     }
 }
 
-int QTransfersModel::updateTransfer(QExplicitlySharedDataPointer<TransferData> transfer)
+int TransfersModel::updateTransfer(QExplicitlySharedDataPointer<TransferData> transfer)
 {
     TransferTag tag (transfer->mTag);
 
@@ -551,7 +551,7 @@ int QTransfersModel::updateTransfer(QExplicitlySharedDataPointer<TransferData> t
     return row;
 }
 
-void QTransfersModel::processCancelTransfers()
+void TransfersModel::processCancelTransfers()
 {
     if(mTransfersToCancel.size() > 0)
     {
@@ -570,7 +570,7 @@ void QTransfersModel::processCancelTransfers()
 }
 
 
-void QTransfersModel::getLinks(QList<int>& rows)
+void TransfersModel::getLinks(QList<int>& rows)
 {
     if (!rows.isEmpty())
     {
@@ -622,7 +622,7 @@ void QTransfersModel::getLinks(QList<int>& rows)
     }
 }
 
-void QTransfersModel::openFolderByIndex(const QModelIndex& index)
+void TransfersModel::openFolderByIndex(const QModelIndex& index)
 {
     QtConcurrent::run([=]
     {
@@ -637,7 +637,7 @@ void QTransfersModel::openFolderByIndex(const QModelIndex& index)
     });
 }
 
-void QTransfersModel::openFolderByTag(TransferTag tag)
+void TransfersModel::openFolderByTag(TransferTag tag)
 {
     auto row = mTagByOrder.value(tag);
     auto indexToOpen = index(row, 0);
@@ -647,25 +647,25 @@ void QTransfersModel::openFolderByTag(TransferTag tag)
     }
 }
 
-void QTransfersModel::cancelClearAllTransfers()
+void TransfersModel::cancelClearAllTransfers()
 {
     mMegaApi->cancelTransfers(MegaTransfer::TYPE_UPLOAD);
     mMegaApi->cancelTransfers(MegaTransfer::TYPE_DOWNLOAD);
 }
 
-TransfersCount QTransfersModel::getTransfersCount()
+TransfersCount TransfersModel::getTransfersCount()
 {
     return mTransferEventWorker->getTransfersCount();
 }
 
-void QTransfersModel::resetCompletedTransfersCount()
+void TransfersModel::resetCompletedTransfersCount()
 {
     mTransferEventWorker->resetCompletedTransfers();
 
     updateTransfersCount();
 }
 
-void QTransfersModel::cancelClearTransfers(const QModelIndexList& indexes, bool clearAll)
+void TransfersModel::cancelClearTransfers(const QModelIndexList& indexes, bool clearAll)
 {
     QModelIndexList indexesToRemove(indexes);
 
@@ -751,7 +751,7 @@ void QTransfersModel::cancelClearTransfers(const QModelIndexList& indexes, bool 
     updateTransfersCount();
 }
 
-void QTransfersModel::pauseTransfers(const QModelIndexList& indexes, bool pauseState)
+void TransfersModel::pauseTransfers(const QModelIndexList& indexes, bool pauseState)
 {
     for (auto index : indexes)
     {
@@ -760,7 +760,7 @@ void QTransfersModel::pauseTransfers(const QModelIndexList& indexes, bool pauseS
     }
 }
 
-void QTransfersModel::pauseResumeAllTransfers(bool state)
+void TransfersModel::pauseResumeAllTransfers(bool state)
 {
     mAreAllPaused = state;
 
@@ -815,7 +815,7 @@ void QTransfersModel::pauseResumeAllTransfers(bool state)
     emit pauseStateChanged(mAreAllPaused);
 }
 
-void QTransfersModel::pauseResumeTransferByTag(TransferTag tag, bool pauseState)
+void TransfersModel::pauseResumeTransferByTag(TransferTag tag, bool pauseState)
 {
     auto row = mTagByOrder.value(tag);
     auto d  = getTransfer(row);
@@ -830,7 +830,7 @@ void QTransfersModel::pauseResumeTransferByTag(TransferTag tag, bool pauseState)
     mMegaApi->pauseTransferByTag(d->mTag, pauseState);
 }
 
-void QTransfersModel::lockModelMutex(bool lock)
+void TransfersModel::lockModelMutex(bool lock)
 {
     if (lock)
     {
@@ -842,22 +842,22 @@ void QTransfersModel::lockModelMutex(bool lock)
     }
 }
 
-long long QTransfersModel::getNumberOfTransfersForFileType(Utilities::FileType fileType) const
+long long TransfersModel::getNumberOfTransfersForFileType(Utilities::FileType fileType) const
 {
     return mTransferEventWorker->getTransfersCount().transfersByType.value(fileType);
 }
 
-long long QTransfersModel::getNumberOfFinishedForFileType(Utilities::FileType fileType) const
+long long TransfersModel::getNumberOfFinishedForFileType(Utilities::FileType fileType) const
 {
     return mTransferEventWorker->getTransfersCount().transfersFinishedByType.value(fileType);
 }
 
-void QTransfersModel::updateTransfersCount()
+void TransfersModel::updateTransfersCount()
 {
     emit transfersCountUpdated();
 }
 
-void QTransfersModel::removeRows(QModelIndexList& indexesToRemove)
+void TransfersModel::removeRows(QModelIndexList& indexesToRemove)
 {
     std::sort(indexesToRemove.begin(), indexesToRemove.end(),[](QModelIndex check1, QModelIndex check2){
         return check1.row() > check2.row();
@@ -895,17 +895,17 @@ void QTransfersModel::removeRows(QModelIndexList& indexesToRemove)
     }
 }
 
-QExplicitlySharedDataPointer<TransferData> QTransfersModel::getTransfer(int row) const
+QExplicitlySharedDataPointer<TransferData> TransfersModel::getTransfer(int row) const
 {
     return mTransfers.at(row);
 }
 
-void QTransfersModel::removeTransfer(int row)
+void TransfersModel::removeTransfer(int row)
 {
     mTransfers.removeAt(row);
 }
 
-void QTransfersModel::sendDataChanged()
+void TransfersModel::sendDataChanged()
 {
     foreach(auto& row, mRowsToUpdate)
     {
@@ -915,7 +915,7 @@ void QTransfersModel::sendDataChanged()
     mRowsToUpdate.clear();
 }
 
-void QTransfersModel::onPauseStateChanged()
+void TransfersModel::onPauseStateChanged()
 {
     bool newPauseState (mPreferences->getGlobalPaused());
     if (newPauseState != mAreAllPaused)
@@ -924,7 +924,7 @@ void QTransfersModel::onPauseStateChanged()
     }
 }
 
-void QTransfersModel::onRetryTransfer(TransferTag tag)
+void TransfersModel::onRetryTransfer(TransferTag tag)
 {
     QtConcurrent::run([this, tag](){
         auto transfer = mMegaApi->getTransferByTag(tag);
@@ -936,7 +936,7 @@ void QTransfersModel::onRetryTransfer(TransferTag tag)
     });
 }
 
-bool QTransfersModel::removeRows(int row, int count, const QModelIndex& parent)
+bool TransfersModel::removeRows(int row, int count, const QModelIndex& parent)
 {
     if (parent == DEFAULT_IDX && count > 0 && row >= 0)
     {
@@ -963,7 +963,7 @@ bool QTransfersModel::removeRows(int row, int count, const QModelIndex& parent)
     }
 }
 
-bool QTransfersModel::moveRows(const QModelIndex &sourceParent, int sourceRow, int count,
+bool TransfersModel::moveRows(const QModelIndex &sourceParent, int sourceRow, int count,
                                const QModelIndex &destinationParent, int destinationChild)
 {
     //TODO MOVE TO TOP THE SECOND ITEM
@@ -1018,7 +1018,7 @@ bool QTransfersModel::moveRows(const QModelIndex &sourceParent, int sourceRow, i
     return false;
 }
 
-Qt::ItemFlags QTransfersModel::flags(const QModelIndex& index) const
+Qt::ItemFlags TransfersModel::flags(const QModelIndex& index) const
 {
     if (index.isValid())
     {
@@ -1027,12 +1027,12 @@ Qt::ItemFlags QTransfersModel::flags(const QModelIndex& index) const
     return QAbstractItemModel::flags(index) | Qt::ItemIsDropEnabled;
 }
 
-Qt::DropActions QTransfersModel::supportedDropActions() const
+Qt::DropActions TransfersModel::supportedDropActions() const
 {
     return Qt::MoveAction;
 }
 
-QMimeData* QTransfersModel::mimeData(const QModelIndexList& indexes) const
+QMimeData* TransfersModel::mimeData(const QModelIndexList& indexes) const
 {
     QByteArray byteArray;
     QDataStream stream (&byteArray, QIODevice::WriteOnly);
@@ -1052,7 +1052,7 @@ QMimeData* QTransfersModel::mimeData(const QModelIndexList& indexes) const
     return data;
 }
 
-bool QTransfersModel::dropMimeData(const QMimeData* data, Qt::DropAction action, int destRow,
+bool TransfersModel::dropMimeData(const QMimeData* data, Qt::DropAction action, int destRow,
                                    int column, const QModelIndex& parent)
 {
     Q_UNUSED(column)

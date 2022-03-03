@@ -28,8 +28,8 @@ void TransfersWidget::setupTransfers()
 
     connect(mProxyModel, &TransfersSortFilterProxyModel::modelAboutToBeChanged, this, &TransfersWidget::onModelAboutToBeChanged);
     connect(mProxyModel, &TransfersSortFilterProxyModel::modelChanged, this, &TransfersWidget::onModelChanged);
-    connect(app->getTransfersModel(), &QTransfersModel::transfersAboutToBeCanceled, this, &TransfersWidget::onModelAboutToBeChanged);
-    connect(app->getTransfersModel(), &QTransfersModel::transfersCanceled, this, &TransfersWidget::onModelChanged);
+    connect(app->getTransfersModel(), &TransfersModel::transfersAboutToBeCanceled, this, &TransfersWidget::onModelAboutToBeChanged);
+    connect(app->getTransfersModel(), &TransfersModel::transfersCanceled, this, &TransfersWidget::onModelChanged);
     connect(mProxyModel, &TransfersSortFilterProxyModel::transferPauseResume, this, &TransfersWidget::onPauseResumeButtonCheckedOnDelegate);
 
     configureTransferView();
@@ -77,7 +77,7 @@ void TransfersWidget::disableGetLink(bool disable)
     ui->tvTransfers->disableGetLink(disable);
 }
 
-QTransfersModel* TransfersWidget::getModel()
+TransfersModel* TransfersWidget::getModel()
 {
     return app->getTransfersModel();
 }

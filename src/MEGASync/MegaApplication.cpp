@@ -647,10 +647,10 @@ void MegaApplication::initialize()
         connect(watcher, SIGNAL(fileChanged(QString)), this, SLOT(showInterface(QString)));
     }
 
-    mModel = new QTransfersModel(nullptr);
+    mModel = new TransfersModel(nullptr);
     mModel->initModel();
 
-    connect(mModel, &QTransfersModel::transfersCountUpdated, this, &MegaApplication::onTransfersModelUpdate);
+    connect(mModel, &TransfersModel::transfersCountUpdated, this, &MegaApplication::onTransfersModelUpdate);
 }
 
 QString MegaApplication::applicationFilePath()

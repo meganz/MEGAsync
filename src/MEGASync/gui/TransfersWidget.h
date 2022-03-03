@@ -41,7 +41,7 @@ public:
 
     int rowCount();
 
-    QTransfersModel* getModel();
+    TransfersModel* getModel();
     TransfersSortFilterProxyModel* getProxyModel() {return mProxyModel;}
     ~TransfersWidget();
 
@@ -72,7 +72,7 @@ private:
     };
 
     Ui::TransfersWidget *ui;
-    QTransfersModel *model;
+    TransfersModel *model;
     TransfersSortFilterProxyModel *mProxyModel;
     MegaTransferDelegate *tDelegate;
     ViewLoadingScene<TransferManagerLoadingItem> mLoadingScene;

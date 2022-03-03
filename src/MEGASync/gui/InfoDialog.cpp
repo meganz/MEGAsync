@@ -102,7 +102,7 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
     connect(ui->wSortNotifications, SIGNAL(clicked()), this, SLOT(on_bActualFilter_clicked()));
     connect(app, &MegaApplication::avatarReady, this, &InfoDialog::setAvatar);
 
-    connect(app->getTransfersModel(), &QTransfersModel::transfersCountUpdated, this, &InfoDialog::onTransfersDataUpdated);
+    connect(app->getTransfersModel(), &TransfersModel::transfersCountUpdated, this, &InfoDialog::onTransfersDataUpdated);
 
     //Set window properties
 #ifdef Q_OS_LINUX

@@ -6,7 +6,7 @@
 #include "MenuItemAction.h"
 #include "Utilities.h"
 #include "TransferItem.h"
-#include "QTransfersModel.h"
+#include "TransfersModel.h"
 #include "TransferQuota.h"
 
 #include <QGraphicsEffect>
@@ -84,7 +84,7 @@ private:
     QMap<Utilities::FileType, QLabel*> mMediaNumberLabelsGroup;
     QMap<TM_TAB, QWidget*> mTabNoItem;
 
-    QTransfersModel* mModel;
+    TransfersModel* mModel;
 
     TM_TAB mCurrentTab;
     QGraphicsDropShadowEffect* mShadowTab;

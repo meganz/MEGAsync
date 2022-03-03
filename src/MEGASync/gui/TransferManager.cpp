@@ -127,15 +127,15 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
             mUi->wTransfers, &TransfersWidget::onShowCompleted);
 
 
-    connect(mModel, &QTransfersModel::pauseStateChanged,
+    connect(mModel, &TransfersModel::pauseStateChanged,
             mUi->wTransfers, &TransfersWidget::onPauseStateChanged);
-    connect(mModel, &QTransfersModel::pauseStateChanged,
+    connect(mModel, &TransfersModel::pauseStateChanged,
             this, &TransferManager::onUpdatePauseState);
 
-    connect(mModel, &QTransfersModel::transfersCountUpdated,
+    connect(mModel, &TransfersModel::transfersCountUpdated,
             this, &TransferManager::onTransfersDataUpdated);
 
-    connect(mModel, &QTransfersModel::pauseStateChangedByTransferResume,
+    connect(mModel, &TransfersModel::pauseStateChangedByTransferResume,
             this, &TransferManager::onPauseStateChangedByTransferResume);
 
     connect(this, &TransferManager::clearCompletedTransfers,

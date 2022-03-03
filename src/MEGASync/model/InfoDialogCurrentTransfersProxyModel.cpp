@@ -1,7 +1,7 @@
 #include "InfoDialogCurrentTransfersProxyModel.h"
 
 #include "InfoDialogTransferDelegateWidget.h"
-#include "QTransfersModel.h"
+#include "TransfersModel.h"
 
 //SORT FILTER PROXY MODEL
 InfoDialogCurrentTransfersProxyModel::InfoDialogCurrentTransfersProxyModel(QObject *parent) : TransfersSortFilterProxyModelBase(parent)
@@ -27,7 +27,7 @@ TransferBaseDelegateWidget* InfoDialogCurrentTransfersProxyModel::createTransfer
 void InfoDialogCurrentTransfersProxyModel::onCopyTransferLinkRequested()
 {
     auto delegateWidget = dynamic_cast<InfoDialogTransferDelegateWidget*>(sender());
-    auto sourModel = dynamic_cast<QTransfersModel*>(sourceModel());
+    auto sourModel = dynamic_cast<TransfersModel*>(sourceModel());
 
     if(delegateWidget && sourModel)
     {
@@ -42,7 +42,7 @@ void InfoDialogCurrentTransfersProxyModel::onCopyTransferLinkRequested()
 void InfoDialogCurrentTransfersProxyModel::onOpenTransferFolderRequested()
 {
     auto delegateWidget = dynamic_cast<InfoDialogTransferDelegateWidget*>(sender());
-    auto sourModel = dynamic_cast<QTransfersModel*>(sourceModel());
+    auto sourModel = dynamic_cast<TransfersModel*>(sourceModel());
 
     if(delegateWidget && sourModel)
     {

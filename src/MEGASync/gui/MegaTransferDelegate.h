@@ -2,7 +2,7 @@
 #define MEGATRANSFERDELEGATE_H
 
 #include "TransferItem.h"
-#include "QTransfersModel.h"
+#include "TransfersModel.h"
 
 #include <QStyledItemDelegate>
 #include <QAbstractItemView>
@@ -37,7 +37,7 @@ private:
     TransferBaseDelegateWidget *getTransferItemWidget(const QModelIndex &index, const QSize &size) const;
 
     TransfersSortFilterProxyModelBase* mProxyModel;
-    QTransfersModel* mSourceModel;
+    TransfersModel* mSourceModel;
     mutable QVector<TransferBaseDelegateWidget*> mTransferItems;
     QAbstractItemView* mView;
 };

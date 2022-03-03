@@ -3,7 +3,7 @@
 #include "Preferences.h"
 #include "gui/QMegaMessageBox.h"
 #include "megaapi.h"
-#include "QTransfersModel.h"
+#include "TransfersModel.h"
 #include "MegaApplication.h"
 #include "platform/Platform.h"
 #include "TransfersWidget.h"
@@ -23,7 +23,7 @@ using namespace mega;
 MegaTransferDelegate::MegaTransferDelegate(TransfersSortFilterProxyModelBase* model,  QAbstractItemView* view)
     : QStyledItemDelegate(view),
       mProxyModel (model),
-      mSourceModel (qobject_cast<QTransfersModel*>(
+      mSourceModel (qobject_cast<TransfersModel*>(
                         mProxyModel->sourceModel())),
       mView (view)
 {
