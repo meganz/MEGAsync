@@ -15,7 +15,7 @@ using namespace mega;
 const int TransferManager::SPEED_REFRESH_PERIOD_MS;
 const int TransferManager::STATS_REFRESH_PERIOD_MS;
 
-constexpr long long NB_INIT_VALUE = -1LL;
+constexpr long long NB_INIT_VALUE = 0LL;
 
 TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
     QDialog(parent),
@@ -343,9 +343,6 @@ bool TransferManager::refreshStateStats()
             leftFooterWidget = mUi->pUpToDate;
             mSpeedRefreshTimer->stop();
             label->hide();
-
-            // Force number to -1 to re-init timer when a transfer comes
-            mNumberOfTransfersPerTab[ALL_TRANSFERS_TAB] = NB_INIT_VALUE;
         }
         else
         {
@@ -361,8 +358,9 @@ bool TransferManager::refreshStateStats()
             }
 
             label->setText(QString::number(processedNumber));
-            mNumberOfTransfersPerTab[ALL_TRANSFERS_TAB] = processedNumber;
         }
+
+        mNumberOfTransfersPerTab[ALL_TRANSFERS_TAB] = processedNumber;
 
         if(leftFooterWidget)
         {
