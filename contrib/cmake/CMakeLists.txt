@@ -689,12 +689,7 @@ if (CMAKE_HOST_APPLE)
         OUTPUT_STRIP_TRAILING_WHITESPACE)
 
     message("MEGAsync version = ${MEGASYNC_VERSION}")
-    add_custom_command(
-            TARGET MEGAsync
-            POST_BUILD
-            COMMAND /usr/libexec/PlistBuddy -c \"Set :CFBundleShortVersionString ${MEGASYNC_VERSION}\" \"$<TARGET_FILE_DIR:MEGAsync>/../Info.plist\"
-            COMMENT "Setting version to Info.plist..."
-            )
+    set_target_properties(MEGAsync PROPERTIES MACOSX_BUNDLE_SHORT_VERSION_STRING "${MEGASYNC_VERSION}")
 endif()
 
 set(FULLREQUIREMENTS TRUE CACHE BOOL "Verbose output")
@@ -808,3 +803,5 @@ target_link_libraries(MEGASync_unit_tests
     )
 
 target_include_directories(MEGASync_unit_tests PRIVATE ${MEGAsyncDir} ${MEGAsyncDir}/google_breakpad )
+target_compile_features(MEGASync_unit_tests PRIVATE cxx_std_14)
+

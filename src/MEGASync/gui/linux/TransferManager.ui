@@ -219,8 +219,6 @@ QGroupBox::title
     qProperty-iconSize: 24px;
     text-align: left;
 	padding-right: 8px;
-   margin: 0;
-    padding. 0;
 }
 
 #bClearAll
@@ -1542,9 +1540,6 @@ QToolButton
       </item>
       <item>
        <widget class="QGroupBox" name="wSearch">
-        <property name="focusPolicy">
-         <enum>Qt::StrongFocus</enum>
-        </property>
         <property name="title">
          <string>SEARCH</string>
         </property>
@@ -1566,6 +1561,9 @@ QToolButton
          </property>
          <item>
           <widget class="QFrame" name="fSearchString">
+           <property name="focusPolicy">
+            <enum>Qt::StrongFocus</enum>
+           </property>
            <property name="frameShape">
             <enum>QFrame::NoFrame</enum>
            </property>
@@ -1735,7 +1733,7 @@ QToolButton
            </spacer>
           </item>
           <item>
-           <widget class="QToolButton" name="bClearAll">
+           <widget class="QToolButton" name="bCancelClearAll">
             <property name="enabled">
              <bool>true</bool>
             </property>
@@ -1872,7 +1870,7 @@ QToolButton
             </property>
             <layout class="QVBoxLayout" name="searchHeaderLayout">
              <property name="spacing">
-              <number>0</number>
+              <number>5</number>
              </property>
              <property name="leftMargin">
               <number>0</number>
@@ -1907,6 +1905,9 @@ QToolButton
                  </property>
                  <property name="text">
                   <string>Search:</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
                  </property>
                 </widget>
                </item>
