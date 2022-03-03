@@ -129,7 +129,7 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     "QMessageBox QLabel {font-size: 13px;}"
     "QMessageBox QPushButton {font-size: 13px;padding-right: 12px;padding-left: 12px;}"
     "QMenu {font-size: 13px;}"
-    "QToolTip {font-size: 13px; color: #FAFAFA; background-color: #333333; border: 0px;}"
+    "QToolTip {font-size: 13px; color: #FAFAFA; background-color: #333333; border: 0px; margin-bottom: 2px; min-height: 22px;}"
     "QFileDialog QPushButton {font-size: 13px;padding-right: 12px;padding-left: 12px;}"
     "QFileDialog QWidget {font-size: 13px;}"
     "QRadioButton::indicator {width: 13px; height: 13px;}"
