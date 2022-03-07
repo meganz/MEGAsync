@@ -138,7 +138,7 @@ void BackupsWizard::setupStep1()
                                           mFoldersModel->rowCount() * HEIGHT_ROW_STEP_1))) + HEADER_HEIGHT_STEP_1;
 
         dialogHeight = std::min(HEIGHT_MAX_STEP_1, HEIGHT_MIN_STEP_1 + listHeight);
-        mUi->fFoldersStep1->setMinimumHeight(listHeight);
+        mUi->lvFoldersStep1->setMinimumHeight(listHeight);
         setMinimumHeight(dialogHeight);
         resize(width(), dialogHeight);
     }
