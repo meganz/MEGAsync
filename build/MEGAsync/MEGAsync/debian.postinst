@@ -92,11 +92,12 @@ fi
 
 if [ -d /etc/apt/sources.list.d ]; then
 cat >/etc/apt/sources.list.d/megasync.list <<EOF
-deb https://mega.nz/linux/repo/$str/ ./
+deb [signed-by=/usr/share/keyrings/meganz.gpg] https://mega.nz/linux/repo/$str/ ./
 EOF
 fi
 
-apt-key add - >/dev/null 2>&1 <<KEY
+apt-key del support@mega.co.nz
+cat <<KEY | gpg --dearmor > /usr/share/keyrings/meganz.gpg
 -----BEGIN PGP PUBLIC KEY BLOCK-----
 
 mQINBGHe0SkBEADd5u7XBExxSg6stILhfNTNfhtTQ3ZSTLW0JZrni1inMS+P8aEM
