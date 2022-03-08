@@ -3253,7 +3253,7 @@ void MegaApplication::startUpload(const QString& rawLocalPath, MegaNode* target,
     int64_t mtime = ::mega::MegaApi::INVALID_CUSTOM_MOD_TIME;
     MegaTransferListener* listener = nullptr;
 
-    megaApi->startUpload(localPath, target, mtime, appData, fileName, isSrcTemporary, startFirst, cancelToken, listener);
+    megaApi->startUpload(localPath, target, fileName, mtime, appData, isSrcTemporary, startFirst, cancelToken, listener);
 }
 
 void MegaApplication::cancelAllTransfers(int type)

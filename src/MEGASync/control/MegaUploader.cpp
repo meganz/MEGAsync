@@ -244,5 +244,5 @@ void MegaUploader::startUpload(const QString& localPath, MegaNode* parent, MegaC
     const int64_t mtime = ::mega::MegaApi::INVALID_CUSTOM_MOD_TIME;
     const bool isSrcTemporary = false;
     MegaTransferListener* listener = nullptr;
-    megaApi->startUpload(localPathArray.constData(), parent, mtime, filename, appData, isSrcTemporary, startFirst, cancelToken, listener);
+    megaApi->startUpload(localPathArray.constData(), parent, filename, mtime, appData, isSrcTemporary, startFirst, cancelToken, listener);
 }
