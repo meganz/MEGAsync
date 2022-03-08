@@ -24,9 +24,6 @@ struct TransfersCount
     int pendingUploads;
     int pendingDownloads;
 
-    int currentUpload;
-    int currentDownload;
-
     long long completedUploadBytes;
     long long completedDownloadBytes;
 
@@ -41,8 +38,6 @@ struct TransfersCount
         totalDownloads(0),
         pendingUploads(0),
         pendingDownloads(0),
-        currentUpload(1),
-        currentDownload(1),
         completedUploadBytes(0),
         completedDownloadBytes(0),
         totalUploadBytes(0),

@@ -23,7 +23,6 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
     mUiDragBackDrop(new Ui::TransferManagerDragBackDrop),
     mMegaApi(megaApi),
     mPreferences(Preferences::instance()),
-    mThreadPool(ThreadPoolSingleton::getInstance()),
     mModel(nullptr),
     mCurrentTab(NO_TAB),
     mShadowTab (new QGraphicsDropShadowEffect(nullptr)),
@@ -142,7 +141,7 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
             findChild<MegaTransferView*>(), &MegaTransferView::onClearCompletedVisibleTransfers);
 
     connect(mUi->wTransfers->getProxyModel(),
-            &TransfersSortFilterProxyModel::searchNumbersChanged,
+            &TransfersManagerSortFilterProxyModel::searchNumbersChanged,
             this, &TransferManager::refreshSearchStats);
 
     connect(mUi->wTransfers,
@@ -384,6 +383,8 @@ void TransferManager::refreshTypeStats()
         mNumberOfTransfersPerTab[DOWNLOADS_TAB] = DownloadTransfers;
     }
 
+    mUi->lDownloads->setVisible(DownloadTransfers != 0);
+
     // Then Uploads --------------------------------------------------------------------------------
     if (UploadTransfers != mNumberOfTransfersPerTab[UPLOADS_TAB])
     {
@@ -391,6 +392,8 @@ void TransferManager::refreshTypeStats()
         mUi->lUploads->setText(QString::number(UploadTransfers));
         mNumberOfTransfersPerTab[UPLOADS_TAB] = UploadTransfers;
     }
+
+    mUi->lUploads->setVisible(UploadTransfers != 0);
 }
 
 void TransferManager::refreshFileTypesStats()

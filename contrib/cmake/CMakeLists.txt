@@ -212,6 +212,10 @@ set (MOC_INPUT
     ${MEGAsyncDir}/control/ThreadPool.h
     ${MEGAsyncDir}/control/MegaController.h
     ${MEGAsyncDir}/model/SyncSettings.h
+	${MEGAsyncDir}/model/InfoDialogTransfersProxyModel.h
+	${MEGAsyncDir}/model/TransfersManagerSortFilterProxyModel.h
+	${MEGAsyncDir}/model/TransfersSortFilterProxyBaseModel.h
+	${MEGAsyncDir}/model/TransfersModel.h
     ${MEGAsyncDir}/model/Model.h
     ${MEGAsyncDir}/gui/AlertItem.h
     ${MEGAsyncDir}/gui/AlertFilterType.h
@@ -256,7 +260,6 @@ set (MOC_INPUT
     ${MEGAsyncDir}/gui/PSAwidget.h
     ${MEGAsyncDir}/gui/QAlertsModel.h
     ${MEGAsyncDir}/gui/QMegaModel.h
-    ${MEGAsyncDir}/gui/QTransfersModel.h
     ${MEGAsyncDir}/gui/QSyncItemWidget.h
     ${MEGAsyncDir}/gui/SettingsDialog.h
     ${MEGAsyncDir}/gui/NotificationsSettings.h
@@ -349,10 +352,12 @@ set (SRCS
     ${MEGAsyncDir}/UserAlertTimedClustering.cpp
     ${MEGAsyncDir}/ScaleFactorManager.cpp
 
-    ${MEGAsyncDir}/model/InfoDialogCurrentTransfersProxyModel.cpp
+    ${MEGAsyncDir}/model/InfoDialogTransfersProxyModel.cpp
     ${MEGAsyncDir}/model/Model.cpp
     ${MEGAsyncDir}/model/SyncSettings.cpp
-    ${MEGAsyncDir}/model/TransfersSortFilterProxyModel.cpp
+    ${MEGAsyncDir}/model/TransfersManagerSortFilterProxyModel.cpp
+    ${MEGAsyncDir}/model/TransfersSortFilterProxyBaseModel.cpp
+    ${MEGAsyncDir}/model/TransfersModel.cpp
     ${MEGAsyncDir}/gui/TransferBaseDelegateWidget.cpp
     ${MEGAsyncDir}/gui/InfoDialogTransferDelegateWidget.cpp
     ${MEGAsyncDir}/gui/TransferManagerDelegateWidget.cpp
@@ -403,7 +408,6 @@ set (SRCS
     ${MEGAsyncDir}/gui/InfoWizard.cpp
     ${MEGAsyncDir}/gui/TransferManager.cpp
     ${MEGAsyncDir}/gui/TransfersWidget.cpp
-    ${MEGAsyncDir}/gui/QTransfersModel.cpp
     ${MEGAsyncDir}/gui/QSyncItemWidget.cpp
     ${MEGAsyncDir}/gui/MegaTransferDelegate.cpp
     ${MEGAsyncDir}/gui/MegaTransferView.cpp

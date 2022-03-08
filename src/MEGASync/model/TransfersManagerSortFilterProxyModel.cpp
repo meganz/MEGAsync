@@ -1,4 +1,4 @@
-#include "TransfersSortFilterProxyModel.h"
+#include "TransfersManagerSortFilterProxyModel.h"
 #include "TransfersModel.h"
 #include "MegaApplication.h"
 #include "TransferManagerDelegateWidget.h"
@@ -6,8 +6,8 @@
 #include <QElapsedTimer>
 
 
-TransfersSortFilterProxyModel::TransfersSortFilterProxyModel(QObject* parent)
-    : TransfersSortFilterProxyModelBase(parent),
+TransfersManagerSortFilterProxyModel::TransfersManagerSortFilterProxyModel(QObject* parent)
+    : TransfersSortFilterProxyBaseModel(parent),
       mTransferStates (TransferData::STATE_MASK),
       mTransferTypes (TransferData::TYPE_MASK),
       mFileTypes (~Utilities::FileTypes()),
@@ -20,16 +20,16 @@ TransfersSortFilterProxyModel::TransfersSortFilterProxyModel(QObject* parent)
     qRegisterMetaType<QAbstractItemModel::LayoutChangeHint>("QAbstractItemModel::LayoutChangeHint");
 
     connect(&mFilterWatcher, &QFutureWatcher<void>::finished,
-            this, &TransfersSortFilterProxyModel::onModelSortedFiltered);
+            this, &TransfersManagerSortFilterProxyModel::onModelSortedFiltered);
 
     setFilterCaseSensitivity(Qt::CaseInsensitive);
 }
 
-TransfersSortFilterProxyModel::~TransfersSortFilterProxyModel()
+TransfersManagerSortFilterProxyModel::~TransfersManagerSortFilterProxyModel()
 {
 }
 
-void TransfersSortFilterProxyModel::sort(int sortCriterion, Qt::SortOrder order)
+void TransfersManagerSortFilterProxyModel::sort(int sortCriterion, Qt::SortOrder order)
 {
     if(!dynamicSortFilter())
     {
@@ -58,7 +58,7 @@ void TransfersSortFilterProxyModel::sort(int sortCriterion, Qt::SortOrder order)
     mFilterWatcher.setFuture(filtered);
 }
 
-void TransfersSortFilterProxyModel::invalidate()
+void TransfersManagerSortFilterProxyModel::invalidate()
 {
     resetNumberOfItems();
     emit modelAboutToBeChanged();
@@ -69,15 +69,15 @@ void TransfersSortFilterProxyModel::invalidate()
     emit searchNumbersChanged();
 }
 
-void TransfersSortFilterProxyModel::setSourceModel(QAbstractItemModel *sourceModel)
+void TransfersManagerSortFilterProxyModel::setSourceModel(QAbstractItemModel *sourceModel)
 {
     connect(sourceModel, &QAbstractItemModel::rowsAboutToBeRemoved,
-            this, &TransfersSortFilterProxyModel::onRowsAboutToBeRemoved, Qt::DirectConnection);
+            this, &TransfersManagerSortFilterProxyModel::onRowsAboutToBeRemoved, Qt::DirectConnection);
 
     QSortFilterProxyModel::setSourceModel(sourceModel);
 }
 
-void TransfersSortFilterProxyModel::setFilterFixedString(const QString& pattern)
+void TransfersManagerSortFilterProxyModel::setFilterFixedString(const QString& pattern)
 {
     mFilterText = pattern;
     updateFilters();
@@ -94,7 +94,7 @@ void TransfersSortFilterProxyModel::setFilterFixedString(const QString& pattern)
     mFilterWatcher.setFuture(filtered);
 }
 
-void TransfersSortFilterProxyModel::textSearchTypeChanged()
+void TransfersManagerSortFilterProxyModel::textSearchTypeChanged()
 {
     updateFilters();
 
@@ -109,7 +109,7 @@ void TransfersSortFilterProxyModel::textSearchTypeChanged()
     mFilterWatcher.setFuture(filtered);
 }
 
-void TransfersSortFilterProxyModel::onModelSortedFiltered()
+void TransfersManagerSortFilterProxyModel::onModelSortedFiltered()
 {
     auto sourceM = qobject_cast<TransfersModel*>(sourceModel());
     if(sourceM)
@@ -121,7 +121,7 @@ void TransfersSortFilterProxyModel::onModelSortedFiltered()
     emit searchNumbersChanged();
 }
 
-void TransfersSortFilterProxyModel::setFilters(const TransferData::TransferTypes transferTypes,
+void TransfersManagerSortFilterProxyModel::setFilters(const TransferData::TransferTypes transferTypes,
                                                const TransferData::TransferStates transferStates,
                                                const Utilities::FileTypes fileTypes)
 {
@@ -137,13 +137,13 @@ void TransfersSortFilterProxyModel::setFilters(const TransferData::TransferTypes
     }
 }
 
-void TransfersSortFilterProxyModel::resetAllFilters()
+void TransfersManagerSortFilterProxyModel::resetAllFilters()
 {
     resetNumberOfItems();
     setFilters({}, {}, {});
 }
 
-int  TransfersSortFilterProxyModel::getNumberOfItems(TransferData::TransferType transferType)
+int  TransfersManagerSortFilterProxyModel::getNumberOfItems(TransferData::TransferType transferType)
 {
     int nb(0);
 
@@ -159,30 +159,30 @@ int  TransfersSortFilterProxyModel::getNumberOfItems(TransferData::TransferType 
     return nb;
 }
 
-void TransfersSortFilterProxyModel::resetNumberOfItems()
+void TransfersManagerSortFilterProxyModel::resetNumberOfItems()
 {
     mDlNumber.clear();
     mUlNumber.clear();
 }
 
-TransferBaseDelegateWidget *TransfersSortFilterProxyModel::createTransferManagerItem(QWidget* parent)
+TransferBaseDelegateWidget *TransfersManagerSortFilterProxyModel::createTransferManagerItem(QWidget* parent)
 {
     auto item = new TransferManagerDelegateWidget(parent);
 
     //All are UniqueConnection to avoid reconnecting if thw item already exists in cache and it is not a new item
     connect(item, &TransferManagerDelegateWidget::cancelTransfer,
-            this, &TransfersSortFilterProxyModel::onCancelClearTransfer);
+            this, &TransfersManagerSortFilterProxyModel::onCancelClearTransfer);
     connect(item, &TransferManagerDelegateWidget::pauseResumeTransfer,
-            this, &TransfersSortFilterProxyModel::onPauseResumeTransfer);
+            this, &TransfersManagerSortFilterProxyModel::onPauseResumeTransfer);
     connect(item, &TransferManagerDelegateWidget::retryTransfer,
-             this, &TransfersSortFilterProxyModel::onRetryTransfer);
+             this, &TransfersManagerSortFilterProxyModel::onRetryTransfer);
     connect(item, &TransferManagerDelegateWidget::openTransfer,
-             this, &TransfersSortFilterProxyModel::onOpenTransfer);
+             this, &TransfersManagerSortFilterProxyModel::onOpenTransfer);
 
     return item;
 }
 
-void TransfersSortFilterProxyModel::updateFilters()
+void TransfersManagerSortFilterProxyModel::updateFilters()
 {
     auto sourceM = qobject_cast<TransfersModel*>(sourceModel());
     if(sourceM)
@@ -195,7 +195,7 @@ void TransfersSortFilterProxyModel::updateFilters()
     mFileTypes = mNextFileTypes;
 }
 
-bool TransfersSortFilterProxyModel::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const
+bool TransfersManagerSortFilterProxyModel::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const
 {
     QModelIndex index = sourceModel()->index(sourceRow, 0, sourceParent);
 
@@ -235,7 +235,7 @@ bool TransfersSortFilterProxyModel::filterAcceptsRow(int sourceRow, const QModel
 }
 
 //It is called in the main thread, from a QtConcurrent thread
-void TransfersSortFilterProxyModel::onRowsAboutToBeRemoved(const QModelIndex &parent, int first, int last)
+void TransfersManagerSortFilterProxyModel::onRowsAboutToBeRemoved(const QModelIndex &parent, int first, int last)
 {
    if(mFilterText.isEmpty())
    {
@@ -271,7 +271,7 @@ void TransfersSortFilterProxyModel::onRowsAboutToBeRemoved(const QModelIndex &pa
    }
 }
 
-bool TransfersSortFilterProxyModel::lessThan(const QModelIndex &left, const QModelIndex &right) const
+bool TransfersManagerSortFilterProxyModel::lessThan(const QModelIndex &left, const QModelIndex &right) const
 {
     const auto leftItem (qvariant_cast<TransferItem>(left.data()).getTransferData());
     const auto rightItem (qvariant_cast<TransferItem>(right.data()).getTransferData());
@@ -303,7 +303,7 @@ bool TransfersSortFilterProxyModel::lessThan(const QModelIndex &left, const QMod
     return false;
 }
 
-int TransfersSortFilterProxyModel::getPausedTransfers() const
+int TransfersManagerSortFilterProxyModel::getPausedTransfers() const
 {
     auto paused(0);
 
@@ -322,7 +322,7 @@ int TransfersSortFilterProxyModel::getPausedTransfers() const
     return paused;
 }
 
-bool TransfersSortFilterProxyModel::isAnyPaused() const
+bool TransfersManagerSortFilterProxyModel::isAnyPaused() const
 {
     auto paused(false);
     auto last = rowCount();
@@ -343,7 +343,7 @@ bool TransfersSortFilterProxyModel::isAnyPaused() const
     return paused;
 }
 
-bool TransfersSortFilterProxyModel::moveRows(const QModelIndex &proxyParent, int proxyRow, int count,
+bool TransfersManagerSortFilterProxyModel::moveRows(const QModelIndex &proxyParent, int proxyRow, int count,
               const QModelIndex &destinationParent, int destinationChild)
 {
     bool moveOk(true);
@@ -373,7 +373,7 @@ bool TransfersSortFilterProxyModel::moveRows(const QModelIndex &proxyParent, int
     return moveOk;
 }
 
-void TransfersSortFilterProxyModel::onCancelClearTransfer()
+void TransfersManagerSortFilterProxyModel::onCancelClearTransfer()
 {
     auto delegateWidget = dynamic_cast<TransferManagerDelegateWidget*>(sender());
     auto sourModel = dynamic_cast<TransfersModel*>(sourceModel());
@@ -388,7 +388,7 @@ void TransfersSortFilterProxyModel::onCancelClearTransfer()
     }
 }
 
-void TransfersSortFilterProxyModel::onPauseResumeTransfer()
+void TransfersManagerSortFilterProxyModel::onPauseResumeTransfer()
 {
     auto delegateWidget = dynamic_cast<TransferManagerDelegateWidget*>(sender());
     auto sourModel = dynamic_cast<TransfersModel*>(sourceModel());
@@ -403,7 +403,7 @@ void TransfersSortFilterProxyModel::onPauseResumeTransfer()
     }
 }
 
-void TransfersSortFilterProxyModel::onRetryTransfer()
+void TransfersManagerSortFilterProxyModel::onRetryTransfer()
 {
     auto delegateWidget = dynamic_cast<TransferManagerDelegateWidget*>(sender());
     auto sourModel = dynamic_cast<TransfersModel*>(sourceModel());
@@ -426,7 +426,7 @@ void TransfersSortFilterProxyModel::onRetryTransfer()
     }
 }
 
-void TransfersSortFilterProxyModel::onOpenTransfer()
+void TransfersManagerSortFilterProxyModel::onOpenTransfer()
 {
     auto delegateWidget = dynamic_cast<TransferManagerDelegateWidget*>(sender());
     auto sourModel = dynamic_cast<TransfersModel*>(sourceModel());

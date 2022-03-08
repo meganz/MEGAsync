@@ -1,18 +1,18 @@
 #ifndef INFODIALOGCURRENTTRANSFERSPROXYMODEL_H
 #define INFODIALOGCURRENTTRANSFERSPROXYMODEL_H
 
-#include "TransfersSortFilterProxyModel.h"
+#include "TransfersManagerSortFilterProxyModel.h"
 
 class TransferBaseDelegateWidget;
 class MegaDelegateHoverManager;
 
-class InfoDialogCurrentTransfersProxyModel : public TransfersSortFilterProxyModelBase
+class InfoDialogTransfersProxyModel : public TransfersSortFilterProxyBaseModel
 {
     Q_OBJECT
 
 public:
-    InfoDialogCurrentTransfersProxyModel(QObject* parent);
-    ~InfoDialogCurrentTransfersProxyModel();
+    InfoDialogTransfersProxyModel(QObject* parent);
+    ~InfoDialogTransfersProxyModel();
 
     TransferBaseDelegateWidget* createTransferManagerItem(QWidget *parent) override;
 

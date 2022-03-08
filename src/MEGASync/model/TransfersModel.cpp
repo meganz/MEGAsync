@@ -107,8 +107,6 @@ void TransferThread::resetCompletedUploads(QList<QExplicitlySharedDataPointer<Tr
     mTransfersCount.totalUploads -= transfersToReset.size();
     mTransfersCount.completedUploadBytes -= totalTransferredBytes;
     mTransfersCount.totalUploadBytes -= totalTransferredBytes;
-
-    mTransfersCount.currentUpload = mTransfersCount.totalUploads - mTransfersCount.pendingUploads + 1;
 }
 
 void TransferThread::resetCompletedDownloads(QList<QExplicitlySharedDataPointer<TransferData>> transfersToReset)
@@ -126,8 +124,6 @@ void TransferThread::resetCompletedDownloads(QList<QExplicitlySharedDataPointer<
     mTransfersCount.totalDownloads -= transfersToReset.size();
     mTransfersCount.completedDownloadBytes -= totalTransferredBytes;
     mTransfersCount.totalDownloadBytes -= totalTransferredBytes;
-
-    mTransfersCount.currentDownload = mTransfersCount.totalDownloads - mTransfersCount.pendingDownloads + 1;
 }
 
 void TransferThread::resetCompletedTransfers()
@@ -143,10 +139,6 @@ void TransferThread::resetCompletedTransfers()
     mTransfersCount.totalUploads = mTransfersCount.pendingUploads;
     mTransfersCount.completedUploadBytes = mTransfersCount.totalUploadBytes - mTransfersCount.completedUploadBytes;
     mTransfersCount.completedUploadBytes = 0;
-
-
-    mTransfersCount.currentUpload = 1;
-    mTransfersCount.currentDownload = 1;
 
     //Transfers by type
     foreach(auto& fileType, mTransfersCount.transfersByType.keys())
@@ -223,7 +215,6 @@ void TransferThread::onTransferFinish(MegaApi*, MegaTransfer *transfer, MegaErro
                 mTransfersCount.totalUploadBytes -= transfer->getDeltaSize();
                 mTransfersCount.pendingUploads--;
                 mTransfersCount.totalUploads--;
-                mTransfersCount.currentUpload = mTransfersCount.totalUploads - mTransfersCount.pendingUploads + 1;
             }
             else
             {
@@ -231,7 +222,6 @@ void TransferThread::onTransferFinish(MegaApi*, MegaTransfer *transfer, MegaErro
                 mTransfersCount.totalDownloadBytes -= transfer->getDeltaSize();
                 mTransfersCount.pendingDownloads--;
                 mTransfersCount.totalDownloads--;
-                mTransfersCount.currentDownload = mTransfersCount.totalDownloads - mTransfersCount.pendingDownloads + 1;
             }
         }
         else
@@ -242,13 +232,11 @@ void TransferThread::onTransferFinish(MegaApi*, MegaTransfer *transfer, MegaErro
             {
                 mTransfersCount.completedUploadBytes += transfer->getDeltaSize();
                 mTransfersCount.pendingUploads--;
-                mTransfersCount.currentUpload = mTransfersCount.totalUploads - mTransfersCount.pendingUploads + 1;
             }
             else
             {
                 mTransfersCount.completedDownloadBytes += transfer->getDeltaSize();
                 mTransfersCount.pendingDownloads--;
-                mTransfersCount.currentDownload = mTransfersCount.totalDownloads - mTransfersCount.pendingDownloads + 1;
             }
         }
 

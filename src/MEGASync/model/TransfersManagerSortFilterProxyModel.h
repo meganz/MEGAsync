@@ -2,6 +2,7 @@
 #define TRANSFERSSORTFILTERPROXYMODEL_H
 
 #include "TransferItem.h"
+#include "TransfersSortFilterProxyBaseModel.h"
 
 #include <QSortFilterProxyModel>
 #include <QReadWriteLock>
@@ -10,28 +11,13 @@
 class TransferBaseDelegateWidget;
 class TransfersModel;
 
-class TransfersSortFilterProxyModelBase : public QSortFilterProxyModel
-{
-    Q_OBJECT
-
-public:
-    TransfersSortFilterProxyModelBase(QObject* parent = nullptr) : QSortFilterProxyModel(parent)
-    {}
-    ~TransfersSortFilterProxyModelBase(){}
-
-    virtual TransferBaseDelegateWidget* createTransferManagerItem(QWidget *parent) = 0;
-
-protected:
-    int columnCount(const QModelIndex &) const override {return 1;}
-};
-
-class TransfersSortFilterProxyModel : public TransfersSortFilterProxyModelBase
+class TransfersManagerSortFilterProxyModel : public TransfersSortFilterProxyBaseModel
 {
         Q_OBJECT
 
 public:
-        TransfersSortFilterProxyModel(QObject *parent = nullptr);
-        ~TransfersSortFilterProxyModel();
+        TransfersManagerSortFilterProxyModel(QObject *parent = nullptr);
+        ~TransfersManagerSortFilterProxyModel();
 
         bool moveRows(const QModelIndex& proxyParent, int proxyRow, int count,
                       const QModelIndex& destinationParent, int destinationChild) override;

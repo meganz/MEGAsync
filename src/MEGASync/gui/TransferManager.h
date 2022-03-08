@@ -74,12 +74,10 @@ private:
     static constexpr int STATS_REFRESH_PERIOD_MS = 1000;
 
     Ui::TransferManager* mUi;
-    Ui::TransferManagerDragBackDrop* mUiDragBackDrop;
     mega::MegaApi* mMegaApi;
 
     Preferences* mPreferences;
     QPoint mDragPosition;
-    ThreadPool* mThreadPool;
     QMap<TM_TAB, QFrame*> mTabFramesToggleGroup;
     QMap<Utilities::FileType, QLabel*> mMediaNumberLabelsGroup;
     QMap<TM_TAB, QWidget*> mTabNoItem;
@@ -95,6 +93,7 @@ private:
     QMap<TM_TAB, long long> mNumberOfTransfersPerTab;
     QMap<TransferData::TransferTypes, long long> mNumberOfSearchResultsPerTypes;
 
+    Ui::TransferManagerDragBackDrop* mUiDragBackDrop;
     QWidget* mDragBackDrop;
 
     void toggleTab(TM_TAB newTab);

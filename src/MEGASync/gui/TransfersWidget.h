@@ -4,7 +4,7 @@
 #include <QWidget>
 #include "MegaTransferDelegate.h"
 #include "TransfersStateInfoWidget.h"
-#include "TransfersSortFilterProxyModel.h"
+#include "TransfersManagerSortFilterProxyModel.h"
 #include "MegaDelegateHoverManager.h"
 #include "TransferManagerLoadingItem.h"
 #include "ViewLoadingScene.h"
@@ -42,7 +42,7 @@ public:
     int rowCount();
 
     TransfersModel* getModel();
-    TransfersSortFilterProxyModel* getProxyModel() {return mProxyModel;}
+    TransfersManagerSortFilterProxyModel* getProxyModel() {return mProxyModel;}
     ~TransfersWidget();
 
 public slots:
@@ -73,7 +73,7 @@ private:
 
     Ui::TransfersWidget *ui;
     TransfersModel *model;
-    TransfersSortFilterProxyModel *mProxyModel;
+    TransfersManagerSortFilterProxyModel *mProxyModel;
     MegaTransferDelegate *tDelegate;
     ViewLoadingScene<TransferManagerLoadingItem> mLoadingScene;
     MegaDelegateHoverManager mDelegateHoverManager;

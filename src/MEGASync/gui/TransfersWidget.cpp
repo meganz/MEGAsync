@@ -22,15 +22,15 @@ TransfersWidget::TransfersWidget(QWidget* parent) :
 }
 void TransfersWidget::setupTransfers()
 {
-    mProxyModel = new TransfersSortFilterProxyModel(this);
+    mProxyModel = new TransfersManagerSortFilterProxyModel(this);
     mProxyModel->setSourceModel(app->getTransfersModel());
     mProxyModel->sort(static_cast<int>(SortCriterion::PRIORITY), Qt::DescendingOrder);
 
-    connect(mProxyModel, &TransfersSortFilterProxyModel::modelAboutToBeChanged, this, &TransfersWidget::onModelAboutToBeChanged);
-    connect(mProxyModel, &TransfersSortFilterProxyModel::modelChanged, this, &TransfersWidget::onModelChanged);
+    connect(mProxyModel, &TransfersManagerSortFilterProxyModel::modelAboutToBeChanged, this, &TransfersWidget::onModelAboutToBeChanged);
+    connect(mProxyModel, &TransfersManagerSortFilterProxyModel::modelChanged, this, &TransfersWidget::onModelChanged);
     connect(app->getTransfersModel(), &TransfersModel::transfersAboutToBeCanceled, this, &TransfersWidget::onModelAboutToBeChanged);
     connect(app->getTransfersModel(), &TransfersModel::transfersCanceled, this, &TransfersWidget::onModelChanged);
-    connect(mProxyModel, &TransfersSortFilterProxyModel::transferPauseResume, this, &TransfersWidget::onPauseResumeButtonCheckedOnDelegate);
+    connect(mProxyModel, &TransfersManagerSortFilterProxyModel::transferPauseResume, this, &TransfersWidget::onPauseResumeButtonCheckedOnDelegate);
 
     configureTransferView();
 }
