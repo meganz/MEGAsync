@@ -13,11 +13,9 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
     ui(new Ui::TransferManager)
 {
     ui->setupUi(this);
-    setAttribute(Qt::WA_QuitOnClose, false);
     setAttribute(Qt::WA_DeleteOnClose, true);
-#ifndef __APPLE__
-    Qt::WindowFlags flags =  Qt::Window | Qt::FramelessWindowHint;
-    this->setWindowFlags(flags);
+#ifndef Q_OS_MACOS
+    setWindowFlags(windowFlags() | Qt::Window | Qt::FramelessWindowHint);
 #endif
     preferences = Preferences::instance();
 
@@ -577,16 +575,26 @@ void TransferManager::on_bClearAll_clicked()
 
     if (w != ui->wCompleted)
     {
-        if (QMegaMessageBox::warning(nullptr,
-                                 QString::fromUtf8("MEGAsync"),
-                                 tr("Are you sure you want to cancel all transfers?"),
-                                 QMessageBox::Yes | QMessageBox::No, QMessageBox::No) != QMessageBox::Yes
-                || !dialog)
+        QString warningMessage(tr("Do you want to cancel all transfers?"));
+
+        if(megaApi->isSyncing())
+        {
+            warningMessage.append(QString::fromUtf8("\n"));
+            warningMessage.append(tr("Syncs aren't affected by this action."));
+        }
+
+        QMessageBox msgBox(QMessageBox::Warning,QString::fromUtf8("MegaSync"), warningMessage,
+                           QMessageBox::Yes | QMessageBox::No);
+        HighDpiResize hDpiResizer(&msgBox);
+        msgBox.setButtonText(QMessageBox::No, tr("Cancell all transfers"));
+        msgBox.setButtonText(QMessageBox::Yes, tr("Continue transfers"));
+        msgBox.setDefaultButton(QMessageBox::No);
+
+        if (msgBox.exec() == QMessageBox::Yes || !dialog)
         {
             return;
         }
     }
-
     if (w == ui->wActiveTransfers)
     {
         megaApi->cancelTransfers(MegaTransfer::TYPE_UPLOAD);
@@ -687,7 +695,7 @@ void TransferManager::mousePressEvent(QMouseEvent *event)
     }
 }
 
-void TransferManager::mouseReleaseEvent(QMouseEvent *event)
+void TransferManager::mouseReleaseEvent(QMouseEvent*)
 {
     dragPosition = QPoint(-1, -1);
 }

@@ -61,25 +61,17 @@ void TransfersSummaryWidget::setPaused(bool value)
     if (value != paused)
     {
         paused = value;
-        if (paused)
-        {
-            QIcon icon;
-            icon.addFile(QString::fromUtf8(":/images/resume.png"), QSize(), QIcon::Normal, QIcon::Off);
-            ui->bpause->setIcon(icon);
-            ui->bpause->setIconSize(QSize(minwidth / 28.0 * 20, minwidth / 28.0 * 20));
-        }
-        else
-        {
-            QIcon icon;
-            icon.addFile(QString::fromUtf8(":/images/pause.png"), QSize(), QIcon::Normal, QIcon::Off);
-            ui->bpause->setIcon(icon);
-            ui->bpause->setIconSize(QSize(minwidth / 28.0 * 20, minwidth / 28.0 * 20));
+        const char* iconFile = (paused) ? ":/images/resume.png" : ":/images/pause.png";
+        const int iconSize = static_cast<int>(minwidth / 28.0 * 20);
 
-        }
+        QIcon icon;
+        icon.addFile(QString::fromUtf8(iconFile), QSize(), QIcon::Normal, QIcon::Off);
+        ui->bpause->setIcon(icon);
+        ui->bpause->setIconSize(QSize(iconSize, iconSize));
     }
 }
 
-void TransfersSummaryWidget::paintEvent(QPaintEvent *event)
+void TransfersSummaryWidget::paintEvent(QPaintEvent*)
 {
     updateSizes();
     QPainter painter(this);
@@ -211,58 +203,28 @@ void TransfersSummaryWidget::resizeAnimation()
 
     if (status == Status::SHRINKING)
     {
-        int prevwidth = this->width();
-        qreal e = qe.elapsed();
-        qreal step = pow(e/1000.0,acceleration)*speed;
+        const int previousWidth = width();
+        const qreal step = computeAnimationStep();
+        const int newWidth = qMax(minwidth, qRound(originalwidth - step));
 
-        int newwidth = qMax(minwidth, qRound(originalwidth - step));
-        this->setMaximumSize(newwidth, this->height());
-        this->setMinimumSize(newwidth, this->height());
-        if (newwidth == minwidth)
-        {
-            status = Status::SHRUNK;
-        }
-        else if (newwidth == prevwidth)
-        {
-            QTimer::singleShot(16, this, SLOT(resizeAnimation())); // +60 fps
-        }
+        updateAnimation(previousWidth, newWidth, Status::SHRUNK);
     }
     else if (status == Status::EXPANDING)
     {
-        int prevwidth = this->width();
-        qreal e = qe.elapsed();
-        qreal step = pow(e/1000.0,acceleration)*speed;
+        const int previousWidth = width();
+        const qreal step = computeAnimationStep();
+        const int newWidth = qMin(originalwidth, qRound(minwidth + step));
 
-        int newwidth = qMin(originalwidth, qRound(minwidth + step));
-        this->setMaximumSize(newwidth, this->height());
-        this->setMinimumSize(newwidth, this->height());
-        if (newwidth == originalwidth)
-        {
-            status = Status::EXPANDED;
-        }
-        else if (newwidth == prevwidth)
-        {
-            QTimer::singleShot(16, this, SLOT(resizeAnimation())); // +60 fps
-        }
+        updateAnimation(previousWidth, newWidth, Status::EXPANDED);
     }
     else if (status == Status::RESIZING)
     {
-        int prevwidth = this->width();
-        qreal e = qe.elapsed();
+        const int previousWidth = width();
+        const qreal step = computeAnimationStep();
+        const int newWidth = (initialwidth < goalwidth) ? qMin(goalwidth, qRound(initialwidth + step))
+                                                        : qMax(goalwidth, qRound(initialwidth - step));
 
-        qreal step = pow(e/1000.0,acceleration)*speed;
-
-        int newwidth = (initialwidth < goalwidth) ? qMin(goalwidth, qRound(initialwidth + step)) : qMax(goalwidth, qRound(initialwidth - step));
-        this->setMaximumSize(newwidth, this->height());
-        this->setMinimumSize(newwidth, this->height());
-        if (newwidth == goalwidth)
-        {
-            status = Status::RESIZED;
-        }
-        else if (newwidth == prevwidth)
-        {
-            QTimer::singleShot(16, this, SLOT(resizeAnimation())); // +60 fps
-        }
+        updateAnimation(previousWidth, newWidth, Status::RESIZED);
     }
 }
 
@@ -303,6 +265,27 @@ bool TransfersSummaryWidget::isWithinPseudoEllipse(QPoint pos, int x, int y, int
     }
 
     return false;
+}
+
+qreal TransfersSummaryWidget::computeAnimationStep() const
+{
+    const qreal elapsed = static_cast<qreal>(qe.elapsed());
+    return pow(elapsed /1000.0, acceleration) * speed;
+}
+
+void TransfersSummaryWidget::updateAnimation(const int previousWidth, const int newWidth,
+                                             const TransfersSummaryWidget::Status newStatus)
+{
+    setMaximumSize(newWidth, height());
+    setMinimumSize(newWidth, height());
+    if (newWidth == minwidth)
+    {
+        status = newStatus;
+    }
+    else if (newWidth == previousWidth)
+    {
+        QTimer::singleShot(16, this, SLOT(resizeAnimation())); // +60 fps
+    }
 }
 
 void TransfersSummaryWidget::mouseMoveEvent(QMouseEvent *event)
@@ -350,7 +333,7 @@ void TransfersSummaryWidget::mouseMoveEvent(QMouseEvent *event)
     }
 }
 
-void TransfersSummaryWidget::mouseReleaseEvent(QMouseEvent *event)
+void TransfersSummaryWidget::mouseReleaseEvent(QMouseEvent*)
 {
     QPoint pos = this->mapFromGlobal(QCursor::pos());
 
@@ -651,7 +634,7 @@ void TransfersSummaryWidget::expand(bool noAnimate)
     return doResize(goalwidth, noAnimate);
 }
 
-void TransfersSummaryWidget::showEvent(QShowEvent *event)
+void TransfersSummaryWidget::showEvent(QShowEvent*)
 {
     expand(); //This will trigger an animation if size has changed
 }
@@ -677,25 +660,26 @@ void TransfersSummaryWidget::updateSizes()
     if (qMin(lastwidth, lastheigth) != minwidthheight)
     {
         wpen = qFloor(minwidthheight/28.0*1);
-        spacing = minwidthheight/28.0*2;
+        spacing = static_cast<int>(minwidthheight/28.0*2);
         marginoutside = qRound(wpen/2.0);
 
         diamoutside = minwidthheight-marginoutside*2;
-        diaminside = minwidthheight/28.0*20;
+        diaminside = static_cast<int>(minwidthheight/28.0*20);
 
-        firstellipseX = minwidthheight / 28.0*34;
-        ellipsesMargin = minwidthheight / 28.0*4;
-        afterEllipsesMargin = minwidthheight / 28.0*31;
+        firstellipseX = static_cast<int>(minwidthheight / 28.0*34);
+        ellipsesMargin = static_cast<int>(minwidthheight / 28.0*4);
+        afterEllipsesMargin = static_cast<int>(minwidthheight / 28.0*31);
 
-        pixmapArrowMarginX = minwidthheight / 28.0 * 8;
-        pixmapArrowY = this->height() / 2.0 - minwidthheight / 28.0 * 12.0 /2.0;
-        pixmapWidth = minwidthheight / 28.0 * 12.0;
+        pixmapArrowMarginX = static_cast<int>(minwidthheight / 28.0 * 8);
+        pixmapArrowY = static_cast<int>(height() / 2.0 - minwidthheight / 28.0 * 12.0 /2.0);
+        pixmapWidth = static_cast<int>(minwidthheight / 28.0 * 12.0);
 #if QT_VERSION >= 0x050000
         if (minwidthheight != 28.0 )
         {
-            upArrowPixmap = upArrowPixmapOrig.scaled(pixmapWidth*qApp->devicePixelRatio(), pixmapWidth*qApp->devicePixelRatio());
+            const int scaledDimension = static_cast<int>(pixmapWidth*qApp->devicePixelRatio());
+            upArrowPixmap = upArrowPixmapOrig.scaled(scaledDimension, scaledDimension);
             upArrowPixmap.setDevicePixelRatio(QCoreApplication::testAttribute(Qt::AA_UseHighDpiPixmaps) ? qApp->devicePixelRatio() : 1.0);
-            dlArrowPixmap = dlArrowPixmapOrig.scaled(pixmapWidth*qApp->devicePixelRatio(), pixmapWidth*qApp->devicePixelRatio());
+            dlArrowPixmap = dlArrowPixmapOrig.scaled(scaledDimension, scaledDimension);
             dlArrowPixmap.setDevicePixelRatio(QCoreApplication::testAttribute(Qt::AA_UseHighDpiPixmaps) ? qApp->devicePixelRatio() : 1.0);
         }
         else
@@ -705,10 +689,12 @@ void TransfersSummaryWidget::updateSizes()
             dlArrowPixmap = dlArrowPixmapOrig;
         }
 
-        upEllipseWidthMin = minwidthheight/28.0*56;
-        dlEllipseWidthMin = minwidthheight/28.0*56;
-        upEllipseWidthMax = minwidthheight/28.0*100;
-        dlEllipseWidthMax = minwidthheight/28.0*100;
+        const int ellipseMin = static_cast<int>(minwidthheight/28.0*56);
+        const int ellipseMax = static_cast<int>(minwidthheight/28.0*100);
+        upEllipseWidthMin = ellipseMin;
+        dlEllipseWidthMin = ellipseMin;
+        upEllipseWidthMax = ellipseMax;
+        dlEllipseWidthMax = ellipseMax;
 
         margininside = (minwidthheight-diaminside)/2;
 
@@ -717,11 +703,11 @@ void TransfersSummaryWidget::updateSizes()
         pengrey = QPen(QBrush(QColor(QString::fromUtf8("#E5E5E5"))),wpen);
         pengrey.setCapStyle(Qt::FlatCap);
 
-        maxFontSize = minwidthheight /28.0* 12;
-        fontMarginXLeft = minwidthheight / 28.0 * 22;
-        fontMarginXRight = minwidthheight / 28.0 * 8;
-        fontHeight = maxFontSize * 4.0 / 3.0;
-        fontY = this->height() / 2.0 - fontHeight /2.0;
+        maxFontSize = static_cast<int>(minwidthheight /28.0* 12);
+        fontMarginXLeft = static_cast<int>(minwidthheight / 28.0 * 22);
+        fontMarginXRight = static_cast<int>(minwidthheight / 28.0 * 8);
+        fontHeight = static_cast<int>(maxFontSize * 4.0 / 3.0);
+        fontY = static_cast<int>(height() / 2.0 - fontHeight /2.0);
 
 
         updateUploadsText(true);
@@ -729,19 +715,22 @@ void TransfersSummaryWidget::updateSizes()
 
         if (minwidthheight != 28 || qMin(lastwidth, lastheigth) == 28)
         {
-            ui->bTransfersStatus->setMaximumHeight(minwidthheight /28.0*24);
-            ui->bTransfersStatus->setMinimumHeight(minwidthheight /28.0*24);
-            ui->bTransfersStatus->setMaximumWidth(minwidthheight /28.0*24);
-            ui->bTransfersStatus->setMinimumWidth(minwidthheight /28.0*24);
+            const int minimumDimension = static_cast<int>(minwidthheight/28.0 * 24);
+            ui->bTransfersStatus->setMaximumHeight(minimumDimension);
+            ui->bTransfersStatus->setMinimumHeight(minimumDimension);
+            ui->bTransfersStatus->setMaximumWidth(minimumDimension);
+            ui->bTransfersStatus->setMinimumWidth(minimumDimension);
 
-            ui->bpause->setMaximumHeight(minwidthheight /28.0*24);
-            ui->bpause->setMinimumHeight(minwidthheight /28.0*24);
-            ui->bpause->setMaximumWidth(minwidthheight /28.0*24);
-            ui->bpause->setMinimumWidth(minwidthheight /28.0*24);
+            ui->bpause->setMaximumHeight(minimumDimension);
+            ui->bpause->setMinimumHeight(minimumDimension);
+            ui->bpause->setMaximumWidth(minimumDimension);
+            ui->bpause->setMinimumWidth(minimumDimension);
 
-            this->layout()->setContentsMargins(minwidthheight /28.0*2, 0, minwidthheight /28.0*2, 0);
+            const int minimumLayoutDimension = static_cast<int>(minwidthheight/28.0 * 2);
+            layout()->setContentsMargins(minimumLayoutDimension, 0, minimumLayoutDimension, 0);
         }
-        ui->bpause->setIconSize(QSize(minwidth / 28.0 * 20, minwidth / 28.0 * 20));
+        const int iconSize = static_cast<int>(minwidth / 28.0 * 20);
+        ui->bpause->setIconSize(QSize(iconSize, iconSize));
 
     }
 

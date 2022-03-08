@@ -10,12 +10,12 @@
 
 using namespace mega;
 
-LockedPopOver::LockedPopOver(QDialog *parent) :
+LockedPopOver::LockedPopOver(QDialog *) :
     ui(new Ui::LockedPopOver)
 {
     ui->setupUi(this);
     tweakStrings();
-    setWindowFlags(Qt::FramelessWindowHint | Qt::Popup);
+    setWindowFlags(windowFlags() | Qt::FramelessWindowHint | Qt::Popup);
 }
 
 

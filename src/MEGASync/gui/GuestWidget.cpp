@@ -6,6 +6,7 @@
 
 #include "platform/Platform.h"
 #include "gui/Login2FA.h"
+#include "gui/GuiUtilities.h"
 
 #include <QDesktopServices>
 #include <QUrl>
@@ -85,7 +86,7 @@ std::pair<QString, QString> GuestWidget::getTexts()
     return std::make_pair(ui->lEmail->text(), ui->lPassword->text());
 }
 
-void GuestWidget::onRequestStart(MegaApi *api, MegaRequest *request)
+void GuestWidget::onRequestStart(MegaApi*, MegaRequest* request)
 {
     if (request->getType() == MegaRequest::TYPE_LOGIN)
     {
@@ -263,16 +264,10 @@ void GuestWidget::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
     }
 }
 
+
 void GuestWidget::onRequestUpdate(MegaApi*, MegaRequest *request)
 {
-    if (request->getType() == MegaRequest::TYPE_FETCH_NODES)
-    {
-        if (request->getTotalBytes() > 0)
-        {
-            ui->progressBar->setMaximum(request->getTotalBytes());
-            ui->progressBar->setValue(request->getTransferredBytes());
-        }
-    }
+    GuiUtilities::updateDataRequestProgressBar(ui->progressBar, request);
 }
 
 void GuestWidget::resetFocus()

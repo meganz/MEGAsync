@@ -175,6 +175,9 @@ private:
 
     bool isWithinPseudoEllipse(QPoint pos, int x, int margin, int w, int diam);
 
+    qreal computeAnimationStep() const;
+    void updateAnimation(const int previousWidth, const int newWidth, const Status newStatus);
+
     void showEvent(QShowEvent *event) override;
 protected:
     void mouseMoveEvent(QMouseEvent *event) override;

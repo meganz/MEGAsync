@@ -510,17 +510,21 @@ QString Utilities::getQuantityString(unsigned long long quantity)
 
 QString Utilities::getFinishedTimeString(long long secs)
 {
+    // <2 seconds: just now!
     if (secs < 2)
     {
         return QCoreApplication::translate("Utilities", "just now");
     }
+    // < 1 minute
     else if (secs < 60)
     {
         return QCoreApplication::translate("Utilities", "%1 seconds ago").arg(secs);
     }
+    // < 1 hour
     else if (secs < 3600)
     {
-        int minutes = secs/60;
+        // Compute minutes. We can safely cast because secs < 3600, thus minutes < 60
+        int minutes = static_cast<int>(secs/60);
         if (minutes == 1)
         {
             return QCoreApplication::translate("Utilities", "1 minute ago");
@@ -530,9 +534,11 @@ QString Utilities::getFinishedTimeString(long long secs)
             return QCoreApplication::translate("Utilities", "%1 minutes ago").arg(minutes);
         }
     }
+    // < 1 day
     else if (secs < 86400)
     {
-        int hours = secs/3600;
+        // Compute hours. We can safely cast because secs < 86400, thus hours < 24
+        int hours = static_cast<int>(secs/3600);
         if (hours == 1)
         {
             return QCoreApplication::translate("Utilities", "1 hour ago");
@@ -542,9 +548,11 @@ QString Utilities::getFinishedTimeString(long long secs)
             return QCoreApplication::translate("Utilities", "%1 hours ago").arg(hours);
         }
     }
-    else if (secs < 2592000)
+    // < 1 month
+    else if (secs < 2628000)
     {
-        int days = secs/86400;
+        // Compute days. We can safely cast because secs < 2628000, thus days < 31
+        int days = static_cast<int>(secs/86400);
         if (days == 1)
         {
             return QCoreApplication::translate("Utilities", "1 day ago");
@@ -554,9 +562,11 @@ QString Utilities::getFinishedTimeString(long long secs)
             return QCoreApplication::translate("Utilities", "%1 days ago").arg(days);
         }
     }
+    // < 1 year
     else if (secs < 31536000)
     {
-        int months = secs/2592000;
+        // Compute months. We can safely cast because secs < 31536000, thus days < 12
+        int months = static_cast<int>(secs/2628000);
         if (months == 1)
         {
             return QCoreApplication::translate("Utilities", "1 month ago");
@@ -566,9 +576,11 @@ QString Utilities::getFinishedTimeString(long long secs)
             return QCoreApplication::translate("Utilities", "%1 months ago").arg(months);
         }
     }
+    // We might not need century precision... give years.
     else
     {
-        int years = secs/31536000;
+        // Compute years. We need at least 64 bits to avoid any overflow.
+        long long years = secs/31536000;
         if (years == 1)
         {
             return QCoreApplication::translate("Utilities", "1 year ago");
@@ -946,10 +958,10 @@ QString Utilities::getReadableStringFromTs(MegaIntegerList *list)
     }
 
     QString readableTimes;
-    for (int it = qMax(0, list->size() - 3); it < list->size() ; it++)//Display only the most recet 3 times
+    for (int it = qMax(0, list->size() - 3); it < list->size(); it++)//Display only the most recent 3 times
     {
         int64_t ts = list->get(it);
-        QDateTime date = QDateTime::fromTime_t(ts);
+        QDateTime date = QDateTime::fromSecsSinceEpoch(ts);
         readableTimes.append(QLocale().toString(date.date(), QLocale::LongFormat));
 
         if (it != list->size() - 1)
@@ -1014,27 +1026,36 @@ void Utilities::animateProperty(QWidget *object, int msecs, const char * propert
     animation->start(QAbstractAnimation::DeleteWhenStopped);
 }
 
-void Utilities::getDaysToTimestamp(int64_t msecsTimestamps, int64_t &remainDays)
+// Returns remaining days until given Unix timestamp in seconds.
+void Utilities::getDaysToTimestamp(int64_t secsTimestamps, int64_t &remainDays)
 {
-    if (!msecsTimestamps)
+    // Reference timestamp shouldn't be 0
+    if (!secsTimestamps)
     {
         return;
     }
 
     int64_t hours = 0;
-    getDaysAndHoursToTimestamp(msecsTimestamps, remainDays, hours);
+    getDaysAndHoursToTimestamp(secsTimestamps, remainDays, hours);
 }
 
-void Utilities::getDaysAndHoursToTimestamp(int64_t msecsTimestamps, int64_t &remainDays, int64_t &remainHours)
+// Returns remaining days / hours until given Unix timestamp in seconds.
+// Note: remainingHours and remaininDays represent the same value.
+// i.e. for 1 day & 3 hours remaining, remainingHours will be 27, not 3.
+void Utilities::getDaysAndHoursToTimestamp(int64_t secsTimestamps, int64_t &remainDays, int64_t &remainHours)
 {
-    if (!msecsTimestamps)
+    // Reference timestamp shouldn't be 0
+    if (!secsTimestamps)
     {
         return;
     }
 
-    int64_t currDate = QDateTime::currentDateTimeUtc().toMSecsSinceEpoch();
-    remainDays  = floor((msecsTimestamps - currDate) / 864e5); //ms difference to days
-    remainHours = floor((msecsTimestamps - currDate) / 36e5); //ms difference to hours
+    // Get seconcs diff between now and secsTimestamps
+    int64_t tDiff = secsTimestamps - QDateTime::currentDateTimeUtc().toSecsSinceEpoch();
+
+    // Compute in hours, then in days
+    remainHours = tDiff / 3600;
+    remainDays  = remainHours / 24;
 }
 
 QProgressDialog *Utilities::showProgressDialog(ProgressHelper *progressHelper, QWidget *parent)
@@ -1089,12 +1110,23 @@ long long Utilities::getSystemsAvailableMemory()
     return availMemory;
 }
 
-void Utilities::sleepMilliseconds(long long milliseconds)
+void Utilities::sleepMilliseconds(unsigned int milliseconds)
 {
 #ifdef WIN32
     Sleep(milliseconds);
 #else
-    usleep(milliseconds * 1000);
+    // usleep accepts unsigned int argument.
+    //Init to max allowed value, will be changed only if no overflow
+    unsigned int usecs(std::numeric_limits<unsigned int>::max());
+
+    // Avoid overflow. If no overflow, use passed value.
+    if (milliseconds < (usecs/1000))
+    {
+        usecs = milliseconds * 1000;
+    }
+
+    // Call safely
+    usleep(usecs);
 #endif
 }
 

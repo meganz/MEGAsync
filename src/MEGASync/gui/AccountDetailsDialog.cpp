@@ -19,7 +19,6 @@ AccountDetailsDialog::AccountDetailsDialog(QWidget *parent) :
 {
     // Setup UI
     mUi->setupUi(this);
-    setAttribute(Qt::WA_QuitOnClose, false);
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
 
     // Set progressbars precision

@@ -20,11 +20,11 @@ ImportMegaLinksDialog::ImportMegaLinksDialog(MegaApi *megaApi, Preferences *pref
     ui(new Ui::ImportMegaLinksDialog)
 {
     ui->setupUi(this);
-    setAttribute(Qt::WA_QuitOnClose, false);
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
 
     const int SLOT_HEIGHT = 35;
     this->megaApi = megaApi;
+    this->preferences = preferences;
     this->linkProcessor = processor;
 
     for (int i = 0; i < linkProcessor->size(); i++)
@@ -67,45 +67,11 @@ ImportMegaLinksDialog::ImportMegaLinksDialog(MegaApi *megaApi, Preferences *pref
 
     if (preferences->logged())
     {
-        MegaNode *testNode = megaApi->getNodeByHandle(preferences->importFolder());
-        if (testNode)
-        {
-            const char *tPath = megaApi->getNodePath(testNode);
-            if (tPath && strncmp(tPath, "//bin/", 6))
-            {   
-                ui->eMegaFolder->setText(QString::fromUtf8(tPath));
-                delete [] tPath;
-            }
-            else
-            {       
-                delete testNode;
-                ui->eMegaFolder->setText(QString::fromUtf8("/MEGAsync Imports"));
-                testNode = megaApi->getNodeByPath(QString::fromUtf8("/MEGAsync Imports").toUtf8().constData());
-                preferences->setImportFolder(mega::INVALID_HANDLE);
-            }
-        }
-        else
-        {
-            ui->eMegaFolder->setText(QString::fromUtf8("/MEGAsync Imports"));
-            testNode = megaApi->getNodeByPath(QString::fromUtf8("/MEGAsync Imports").toUtf8().constData());
-            preferences->setImportFolder(mega::INVALID_HANDLE);
-        }
-
-        if (!testNode)
-        {
-            auto rootNode = ((MegaApplication*)qApp)->getRootNode();
-            if (rootNode)
-            {
-                testNode = rootNode->copy();
-            }
-        }
+        initUiAsLogged(preferences);
     }
     else
     {
-        ui->cImport->setChecked(false);
-        ui->cImport->setVisible(false);
-        ui->wImport->setVisible(false);
-        ui->cDownload->setVisible(false);
+        initUiAsUnlogged();
     }
 
     connect(linkProcessor, SIGNAL(onLinkInfoAvailable(int)), this, SLOT(onLinkInfoAvailable(int)));
@@ -239,7 +205,7 @@ void ImportMegaLinksDialog::on_bMegaFolder_clicked()
 void ImportMegaLinksDialog::onLinkInfoAvailable(int id)
 {
     ImportListWidgetItem *item = (ImportListWidgetItem *)ui->linkList->itemWidget(ui->linkList->item(id));
-    MegaNode *node = linkProcessor->getNode(id);
+    std::shared_ptr<MegaNode> node = linkProcessor->getNode(id);
 
     int e = linkProcessor->getError(id);
     if (node && (e == MegaError::API_OK))
@@ -247,11 +213,11 @@ void ImportMegaLinksDialog::onLinkInfoAvailable(int id)
         QString name = QString::fromUtf8(node->getName());
         if (!name.compare(QString::fromAscii("NO_KEY")) || !name.compare(QString::fromAscii("CRYPTO_ERROR")))
         {
-            item->setData(tr("Decryption error"), ImportListWidgetItem::WARNING, megaApi->getSize(node), !(node->getType() == MegaNode::TYPE_FILE));
+            item->setData(tr("Decryption error"), ImportListWidgetItem::WARNING, megaApi->getSize(node.get()), !(node->getType() == MegaNode::TYPE_FILE));
         }
         else
         {
-            item->setData(name, ImportListWidgetItem::CORRECT, megaApi->getSize(node), !(node->getType() == MegaNode::TYPE_FILE));
+            item->setData(name, ImportListWidgetItem::CORRECT, megaApi->getSize(node.get()), !(node->getType() == MegaNode::TYPE_FILE));
         }
     }
     else
@@ -286,6 +252,13 @@ void ImportMegaLinksDialog::onLinkStateChanged(int id, int state)
     checkLinkValidAndSelected();
 }
 
+void ImportMegaLinksDialog::accept()
+{
+    preferences->setImportMegaLinksEnabled(ui->cImport->isChecked());
+    preferences->setDownloadMegaLinksEnabled(ui->cDownload->isChecked());
+    QDialog::accept();
+}
+
 void ImportMegaLinksDialog::changeEvent(QEvent *event)
 {
     if (event->type() == QEvent::LanguageChange)
@@ -296,6 +269,49 @@ void ImportMegaLinksDialog::changeEvent(QEvent *event)
             this->onLinkInfoAvailable(i);
     }
     QDialog::changeEvent(event);
+}
+
+void ImportMegaLinksDialog::initUiAsLogged(Preferences* preferences)
+{
+    initImportFolderControl(preferences);
+    ui->cImport->setChecked(preferences->getImportMegaLinksEnabled());
+    ui->cDownload->setChecked(preferences->getDownloadMegaLinksEnabled());
+}
+
+void ImportMegaLinksDialog::initUiAsUnlogged()
+{
+    ui->cImport->setChecked(false);
+    ui->cImport->setVisible(false);
+    ui->wImport->setVisible(false);
+    ui->cDownload->setVisible(false);
+}
+
+void ImportMegaLinksDialog::initImportFolderControl(Preferences* preferences)
+{
+    std::unique_ptr<MegaNode> importFolderNode(megaApi->getNodeByHandle(preferences->importFolder()));
+    if (importFolderNode)
+    {
+        const char *importFolderPath = megaApi->getNodePath(importFolderNode.get());
+        if (importFolderPath && strncmp(importFolderPath, "//bin/", 6))
+        {
+            ui->eMegaFolder->setText(QString::fromUtf8(importFolderPath));
+            delete [] importFolderPath;
+        }
+        else
+        {
+            setInvalidImportFolder(preferences);
+        }
+    }
+    else
+    {
+        setInvalidImportFolder(preferences);
+    }
+}
+
+void ImportMegaLinksDialog::setInvalidImportFolder(Preferences *preferences)
+{
+    ui->eMegaFolder->setText(QString::fromUtf8("/MEGAsync Imports"));
+    preferences->setImportFolder(mega::INVALID_HANDLE);
 }
 
 void ImportMegaLinksDialog::enableOkButton() const

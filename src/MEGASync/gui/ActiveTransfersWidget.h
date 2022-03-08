@@ -41,10 +41,10 @@ public:
     void init(mega::MegaApi *megaApi, mega::MegaTransfer *activeUpload = NULL, mega::MegaTransfer *activeDownload = NULL);
     ~ActiveTransfersWidget();
 
-    virtual void onTransferStart(mega::MegaApi *api, mega::MegaTransfer *transfer);
-    virtual void onTransferFinish(mega::MegaApi* api, mega::MegaTransfer *transfer, mega::MegaError* e);
+    virtual void onTransferStart(mega::MegaApi *api, mega::MegaTransfer* transfer);
+    virtual void onTransferFinish(mega::MegaApi* api, mega::MegaTransfer* transfer, mega::MegaError*);
     virtual void onTransferUpdate(mega::MegaApi *api, mega::MegaTransfer *transfer);
-    virtual void onTransferTemporaryError(mega::MegaApi *api, mega::MegaTransfer *transfer, mega::MegaError* e);
+    virtual void onTransferTemporaryError(mega::MegaApi*, mega::MegaTransfer*, mega::MegaError*);
 
     void updateTransferInfo(mega::MegaTransfer *transfer);
     void pausedUpTransfers(bool paused);

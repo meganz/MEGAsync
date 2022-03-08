@@ -147,7 +147,7 @@ int DesktopNotifications::countUnseenAlerts(mega::MegaUserAlertList *alertList)
 
 void DesktopNotifications::addUserAlertList(mega::MegaUserAlertList *alertList)
 {
-    if(mPreferences->showNotifications())
+    if(mPreferences->isAnyNotificationEnabled())
     {
         const auto unseenAlertsCount = countUnseenAlerts(alertList);
         const bool tooManyAlertsUnseen{unseenAlertsCount > maxNumberOfUnseenNotifications};
@@ -170,7 +170,7 @@ void DesktopNotifications::addUserAlertList(mega::MegaUserAlertList *alertList)
             {
             case mega::MegaUserAlert::TYPE_INCOMINGPENDINGCONTACT_REQUEST:
             {
-                if(mPreferences->showNotifications())
+                if(mPreferences->isNotificationEnabled(Preferences::NotificationsTypes::NEW_CONTACT_REQUESTS))
                 {
                     auto notification = new MegaNotification();
                     notification->setTitle(tr("New Contact Request"));
@@ -192,21 +192,17 @@ void DesktopNotifications::addUserAlertList(mega::MegaUserAlertList *alertList)
             }
             case mega::MegaUserAlert::TYPE_INCOMINGPENDINGCONTACT_CANCELLED:
             {
-                if(mPreferences->showNotifications())
-                {
-                    auto notification = new MegaNotification();
-                    notification->setTitle(tr("Cancelled Contact Request"));
-                    notification->setText(tr("[A] cancelled the contact request")
-                                          .replace(QString::fromUtf8("[A]"), QString::fromUtf8(alert->getEmail())));
-                    notification->setImage(mAppIcon);
-                    notification->setImagePath(mNewContactIconPath);
-                    mNotificator->notify(notification);   
-                }
+                //Kept to remind decision about this notification
+                //This notification is sent when the user cancels a incoming pending notification
+                //The current implementation on the SDK filters this kind of notifications, and
+                //all "own-caused-user" notifications are blocked.
+                //However, as in MEGA Desktop App this notification has been developed,
+                //only the last step (notification sending) has been removed just in case it needs to be used again.
                 break;
             }
             case mega::MegaUserAlert::TYPE_INCOMINGPENDINGCONTACT_REMINDER:
             {
-                if(mPreferences->showNotifications())
+                if(mPreferences->isNotificationEnabled(Preferences::NotificationsTypes::PENDING_CONTACT_REQUEST_REMINDER))
                 {
                     auto notification = new MegaNotification();
                     notification->setTitle(tr("New Contact Request"));
@@ -225,7 +221,7 @@ void DesktopNotifications::addUserAlertList(mega::MegaUserAlertList *alertList)
             }
             case mega::MegaUserAlert::TYPE_CONTACTCHANGE_CONTACTESTABLISHED:
             {
-                if(mPreferences->showNotifications())
+                if(mPreferences->isNotificationEnabled(Preferences::NotificationsTypes::CONTACT_ESTABLISHED))
                 {
                     auto notification = new MegaNotification();
                     notification->setTitle(tr("New Contact Established"));
@@ -247,18 +243,17 @@ void DesktopNotifications::addUserAlertList(mega::MegaUserAlertList *alertList)
             }
             case mega::MegaUserAlert::TYPE_NEWSHARE:
             {
-                if(mPreferences->showNotifications())
+                if(mPreferences->isNotificationEnabled(Preferences::NotificationsTypes::NEW_FOLDERS_SHARED_WITH_ME))
                 {
                     const QString message{tr("New shared folder from [X]")
                                 .replace(QString::fromUtf8("[X]"), QString::fromUtf8(alert->getEmail()))};
-                    const bool isNewShare{true};
                     notifySharedUpdate(alert, message, NEW_SHARE);
                 }
                 break;
             }
             case mega::MegaUserAlert::TYPE_DELETEDSHARE:
             {
-                if(mPreferences->showNotifications())
+                if(mPreferences->isNotificationEnabled(Preferences::NotificationsTypes::FOLDERS_SHARED_WITH_ME_DELETED))
                 {
                     notifySharedUpdate(alert, createDeletedShareMessage(alert), DELETE_SHARE);
                 }
@@ -266,7 +261,7 @@ void DesktopNotifications::addUserAlertList(mega::MegaUserAlertList *alertList)
             }
             case mega::MegaUserAlert::TYPE_NEWSHAREDNODES:
             {
-                if(mPreferences->showNotifications())
+                if(mPreferences->isNotificationEnabled(Preferences::NotificationsTypes::NODES_SHARED_WITH_ME_CREATED_OR_REMOVED))
                 {
                     notifySharedUpdate(alert, getItemsAddedText(alert), NEW_SHARED_NODES);
                 }
@@ -274,7 +269,7 @@ void DesktopNotifications::addUserAlertList(mega::MegaUserAlertList *alertList)
             }
             case mega::MegaUserAlert::TYPE_REMOVEDSHAREDNODES:
             {
-                if(mPreferences->showNotifications())
+                if(mPreferences->isNotificationEnabled(Preferences::NotificationsTypes::NODES_SHARED_WITH_ME_CREATED_OR_REMOVED))
                 {
                     mRemovedSharedNotificator.addUserAlert(alert);
                 }
@@ -515,7 +510,7 @@ void DesktopNotifications::sendOverStorageNotification(int state) const
         notification->setTitle(tr("Your data is at risk"));
         const auto megaApi = static_cast<MegaApplication*>(qApp)->getMegaApi();
         int64_t remainDaysOut(0);
-        Utilities::getDaysToTimestamp(megaApi->getOverquotaDeadlineTs() * 1000, remainDaysOut);
+        Utilities::getDaysToTimestamp(megaApi->getOverquotaDeadlineTs(), remainDaysOut);
         notification->setText(tr("You have [A] days left to save your data").replace(QString::fromUtf8("[A]"), QString::number(remainDaysOut)));
         notification->setActions(QStringList() << tr("Get PRO"));
         notification->setImage(mAppIcon);
@@ -541,7 +536,7 @@ void DesktopNotifications::sendOverTransferNotification(const QString &title) co
 
 void DesktopNotifications::sendFinishedTransferNotification(const QString &title, const QString &message, const QString &extraData) const
 {
-    if(mPreferences->showNotifications())
+    if(mPreferences->isNotificationEnabled(Preferences::NotificationsTypes::INFO_MESSAGES))
     {
         auto notification = new MegaNotification();
         notification->setTitle(title);
@@ -612,20 +607,21 @@ void DesktopNotifications::sendBusinessWarningNotification(int businessStatus) c
 
 void DesktopNotifications::sendInfoNotification(const QString &title, const QString &message) const
 {
-    if(mPreferences->showNotifications())
+    if(mPreferences->isNotificationEnabled(Preferences::NotificationsTypes::INFO_MESSAGES))
     {
         mNotificator->notify(Notificator::Information, title, message, mAppIcon);
     }
 }
 
+//Warning notifications are not in used. If in a future they are used, keep in mind whether they should
+//be included in notifications settings or sent always
 void DesktopNotifications::sendWarningNotification(const QString &title, const QString &message) const
 {
-    if(mPreferences->showNotifications())
-    {
-        mNotificator->notify(Notificator::Warning, title, message, mAppIcon);
-    }
+     mNotificator->notify(Notificator::Warning, title, message, mAppIcon);
 }
 
+//Error notifications are not in used. If in a future they are used, keep in mind whether they should
+//be included in notifications settings or sent always
 void DesktopNotifications::sendErrorNotification(const QString &title, const QString &message) const
 {
     mNotificator->notify(Notificator::Warning, title, message, mAppIcon);

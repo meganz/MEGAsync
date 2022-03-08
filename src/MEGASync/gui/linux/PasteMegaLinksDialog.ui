@@ -23,7 +23,7 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>Enter links</string>
+   <string>Open links</string>
   </property>
   <property name="styleSheet">
    <string notr="true">QWidget

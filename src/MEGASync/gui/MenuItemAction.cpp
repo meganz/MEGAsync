@@ -1,14 +1,17 @@
 #include "MenuItemAction.h"
 #include <QKeyEvent>
+#include <QStyle>
 
 const QString MenuItemAction::Colors::Normal = QLatin1String("#777777");
 const QString MenuItemAction::Colors::Highlight = QLatin1String("#000000");
 const QString MenuItemAction::Colors::Accent = QLatin1String("#F46265");
+static constexpr int ENTRY_MAX_WIDTH_PX = 240;
 
 MenuItemAction::MenuItemAction(const QString title, const QIcon icon, bool manageHoverStates, QSize iconSize, bool accent)
     : QWidgetAction(NULL), mAccent(accent)
 {
-    this->title = new QLabel(title);
+    this->title = new QLabel();
+    setLabelText(title);
     this->icon = new QIcon(icon);
     this->hoverIcon = NULL;
     this->value = NULL;
@@ -28,7 +31,8 @@ MenuItemAction::MenuItemAction(const QString title, const QIcon icon, bool manag
 MenuItemAction::MenuItemAction(const QString title, const QString value, const QIcon icon, bool manageHoverStates, QSize iconSize, bool accent)
     : QWidgetAction(NULL), mAccent(accent)
 {
-    this->title = new QLabel(title);
+    this->title = new QLabel();
+    setLabelText(title);
     this->value = new QLabel(value);
     this->icon = new QIcon(icon);
     this->hoverIcon = NULL;
@@ -48,7 +52,8 @@ MenuItemAction::MenuItemAction(const QString title, const QString value, const Q
 MenuItemAction::MenuItemAction(const QString title, const QIcon icon, const QIcon hoverIcon, bool manageHoverStates, QSize iconSize, bool accent)
     : QWidgetAction(NULL), mAccent(accent)
 {
-    this->title = new QLabel(title);
+    this->title = new QLabel();
+    setLabelText(title);
     this->icon = new QIcon(icon);
     this->hoverIcon = new QIcon(hoverIcon);
     this->value = NULL;
@@ -79,7 +84,15 @@ MenuItemAction::~MenuItemAction()
 
 void MenuItemAction::setLabelText(QString title)
 {
-    this->title->setText(title);
+    // Force polish to update font Info with .ui StyleSheet
+    this->title->ensurePolished();
+    auto f (this->title->fontMetrics());
+    QString elidedTitle (f.elidedText(title, Qt::ElideMiddle, ENTRY_MAX_WIDTH_PX));
+    this->title->setText(elidedTitle);
+    if (title != elidedTitle)
+    {
+        this->setToolTip(title);
+    }
 }
 
 void MenuItemAction::setIcon(const QIcon icon)

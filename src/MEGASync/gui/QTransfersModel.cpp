@@ -13,7 +13,7 @@ QTransfersModel::QTransfersModel(int type, QObject *parent) :
     mThreadPool = ThreadPoolSingleton::getInstance();
 }
 
-int QTransfersModel::columnCount(const QModelIndex &parent) const
+int QTransfersModel::columnCount(const QModelIndex&) const
 {
     return 1;
 }
@@ -31,7 +31,8 @@ QVariant QTransfersModel::data(const QModelIndex &index, int role) const
     }
     else if (role == Qt::UserRole)
     {
-        return QVariant::fromValue(transfers.value(index.internalId()));
+        const int id = static_cast<int>(index.internalId());
+        return QVariant::fromValue(transfers.value(id));
     }
 
     return QVariant();
@@ -56,7 +57,10 @@ void QTransfersModel::refreshTransfers()
 {
     if (transferOrder.size())
     {
-        emit dataChanged(index(0, 0, QModelIndex()), index(int(transferOrder.size()) - 1, 0, QModelIndex()));
+        // We can safely cast transferOrder.size() to int, because an int should enough
+        // to represent that value.
+        emit dataChanged(index(0, 0, QModelIndex()),
+                         index(static_cast<int>(transferOrder.size()) - 1, 0, QModelIndex()));
     }
 }
 
@@ -66,7 +70,7 @@ int QTransfersModel::rowCount(const QModelIndex &parent) const
     {
         return 0;
     }
-    return int(transferOrder.size());
+    return static_cast<int>(transferOrder.size());
 }
 
 int QTransfersModel::getModelType()

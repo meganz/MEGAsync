@@ -16,15 +16,17 @@
 
 #define MAX_STREAMING_BUFFER_SIZE 8242880 // 8 MB
 
+//Streaming always first NODE = 0
+const uint8_t StreamingFromMegaDialog::NODE_ID = 0;
+
 using namespace mega;
 
-StreamingFromMegaDialog::StreamingFromMegaDialog(mega::MegaApi *megaApi, QWidget *parent) :
+StreamingFromMegaDialog::StreamingFromMegaDialog(mega::MegaApi *megaApi, mega::MegaApi* megaApiFolders, QWidget *parent) :
     QDialog(parent),
     ui(::mega::make_unique<Ui::StreamingFromMegaDialog>()),
     lastStreamSelection{LastStreamingSelection::NOT_SELECTED}
 {
     ui->setupUi(this);
-    setAttribute(Qt::WA_QuitOnClose, false);
     setAttribute(Qt::WA_DeleteOnClose, true);
     Qt::WindowFlags flags =  Qt::Window | Qt::WindowSystemMenuHint
                                 | Qt::WindowMinimizeButtonHint
@@ -32,7 +34,7 @@ StreamingFromMegaDialog::StreamingFromMegaDialog(mega::MegaApi *megaApi, QWidget
     this->setWindowFlags(flags);
 
     this->megaApi = megaApi;
-    this->selectedMegaNode = NULL;
+    this->mMegaApiFolders = megaApiFolders;
     this->megaApi->httpServerSetMaxBufferSize(MAX_STREAMING_BUFFER_SIZE);
 
     int port = 4443;
@@ -44,7 +46,6 @@ StreamingFromMegaDialog::StreamingFromMegaDialog(mega::MegaApi *megaApi, QWidget
     setWindowTitle(tr("Stream from MEGA"));
     ui->bCopyLink->setEnabled(false);
     ui->sFileInfo->setCurrentWidget(ui->pNothingSelected);
-    delegateListener = ::mega::make_unique<QTMegaRequestListener>(this->megaApi, this);
     delegateTransferListener = ::mega::make_unique<QTMegaTransferListener>(this->megaApi, this);
     megaApi->addTransferListener(delegateTransferListener.get());
     highDpiResize.init(this);
@@ -68,7 +69,7 @@ void StreamingFromMegaDialog::changeEvent(QEvent *event)
 
 void StreamingFromMegaDialog::closeEvent(QCloseEvent *event)
 {
-    if (!event->spontaneous() || !selectedMegaNode)
+    if (!event->spontaneous() || !mSelectedMegaNode)
     {
         event->accept();
         return;
@@ -118,8 +119,57 @@ void StreamingFromMegaDialog::on_bFromPublicLink_clicked()
         return;
     }
     mPublicLink = inputDialog->textValue();
-    lastStreamSelection = LastStreamingSelection::FROM_PUBLIC_NODE;
-    requestPublicNodeInfo();
+
+    requestNodeToLinkProcessor();
+}
+
+void StreamingFromMegaDialog::requestNodeToLinkProcessor()
+{
+    QString url{mPublicLink.trimmed()};
+    if (url.isEmpty())
+    {
+        return;
+    }
+
+    mLinkProcessor.reset(new LinkProcessor(QStringList() << mPublicLink, megaApi, mMegaApiFolders));
+    connect(mLinkProcessor.get(), &LinkProcessor::onLinkInfoRequestFinish, this, &StreamingFromMegaDialog::onLinkInfoAvailable);
+
+    updateFileInfo(QString(),LinkStatus::LOADING);
+
+    mLinkProcessor->requestLinkInfo();
+}
+
+//Connected only to onLinkImportFinish as only one link makes sense on streaming and it is always the first one
+//As the LinkProcessor is removed, it should be done when the LinkProcessor finishes the LinkInfo available and not before (with
+//the linkInfoAvailable, for example)
+void StreamingFromMegaDialog::onLinkInfoAvailable()
+{
+    mLinkProcessor->setSelected(NODE_ID, true);
+    this->mSelectedMegaNode = std::shared_ptr<MegaNode>(mLinkProcessor->getNode(NODE_ID));
+
+    if (mSelectedMegaNode)
+    {
+        QString name = QString::fromUtf8(mSelectedMegaNode->getName());
+        if (!name.compare(QString::fromAscii("NO_KEY")) || !name.compare(QString::fromAscii("CRYPTO_ERROR")))
+        {
+            updateFileInfo(tr("Decryption error"), LinkStatus::WARNING);
+            streamURL.clear();
+        }
+        else
+        {
+            updateFileInfo(name, LinkStatus::CORRECT);
+            generateStreamURL();
+
+        }
+    }
+    else
+    {
+        QMegaMessageBox::warning(nullptr, tr("Error"), tr("Error getting link information"), QMessageBox::Ok);
+        ui->sFileInfo->setCurrentWidget(ui->pNothingSelected);
+    }
+
+    //This deletes the LinkProcess
+    mLinkProcessor.reset(nullptr);
 }
 
 void StreamingFromMegaDialog::on_bCopyLink_clicked()
@@ -133,7 +183,7 @@ void StreamingFromMegaDialog::on_bCopyLink_clicked()
 
 void StreamingFromMegaDialog::on_bClose_clicked()
 {
-    if (!selectedMegaNode)
+    if (!mSelectedMegaNode)
     {
         close();
         return;
@@ -226,19 +276,19 @@ void StreamingFromMegaDialog::updateStreamingState()
     }
     else if(lastStreamSelection == LastStreamingSelection::FROM_LOCAL_NODE)
     {
-        MegaNode *node = megaApi->getNodeByHandle(selectedMegaNode->getHandle());
+        MegaNode *node = megaApi->getNodeByHandle(mSelectedMegaNode->getHandle());
         updateFileInfoFromNode(node);
     }
 }
 
 bool StreamingFromMegaDialog::generateStreamURL()
 {
-    if (!selectedMegaNode)
+    if (!mSelectedMegaNode)
     {
         return false;
     }
 
-    char *link = megaApi->httpServerGetLocalLink(selectedMegaNode.get());
+    char *link = megaApi->httpServerGetLocalLink(mSelectedMegaNode.get());
     if (!link)
     {
         QMegaMessageBox::warning(nullptr, tr("Error"), tr("Error generating streaming link"), QMessageBox::Ok);
@@ -247,25 +297,6 @@ bool StreamingFromMegaDialog::generateStreamURL()
     streamURL = QString::fromUtf8(link);
     delete [] link;
     return true;
-}
-
-void StreamingFromMegaDialog::onLinkInfoAvailable()
-{
-    if (selectedMegaNode)
-    {
-        QString name = QString::fromUtf8(selectedMegaNode->getName());
-        if (!name.compare(QString::fromAscii("NO_KEY")) || !name.compare(QString::fromAscii("CRYPTO_ERROR")))
-        {
-            updateFileInfo(tr("Decryption error"), LinkStatus::WARNING);
-            selectedMegaNode.reset();
-            streamURL.clear();
-        }
-        else
-        {
-            updateFileInfo(name, LinkStatus::CORRECT);
-            generateStreamURL();
-        }
-    }
 }
 
 void StreamingFromMegaDialog::openStreamWithApp(QString app)
@@ -311,83 +342,67 @@ void StreamingFromMegaDialog::updateFileInfoFromNode(MegaNode *node)
         return;
     }
     lastStreamSelection = LastStreamingSelection::FROM_LOCAL_NODE;
-    selectedMegaNode = std::unique_ptr<MegaNode>(node);
-    updateFileInfo(QString::fromUtf8(selectedMegaNode->getName()), LinkStatus::CORRECT);
+    mSelectedMegaNode = std::shared_ptr<MegaNode>(node);
+    updateFileInfo(QString::fromUtf8(mSelectedMegaNode->getName()), LinkStatus::CORRECT);
     generateStreamURL();
     hideStreamingError();
 }
 
 void StreamingFromMegaDialog::requestPublicNodeInfo()
 {
-    QString url{mPublicLink.trimmed()};
-    if (url.isEmpty())
-    {
-        return;
-    }
-    megaApi->getPublicNode(url.toUtf8().constData(), delegateListener.get());
+    requestNodeToLinkProcessor();
     hideStreamingError();
 }
 
 void StreamingFromMegaDialog::updateFileInfo(QString fileName, LinkStatus status)
 {
-    ui->lFileName->ensurePolished();
-    ui->lFileName->setText(ui->lFileName->fontMetrics().elidedText(fileName,Qt::ElideMiddle,ui->lFileName->maximumWidth()));
-    ui->lFileSize->setText(Utilities::getSizeString(static_cast<unsigned long long>(selectedMegaNode->getSize())));
-
-    QIcon typeIcon = Utilities::getExtensionPixmapMedium(fileName);
-
-    ui->lFileType->setIcon(typeIcon);
-    ui->lFileType->setIconSize(QSize(48, 48));
-
-    QIcon statusIcon;
-    switch (status)
+    if(LinkStatus::LOADING == status)
     {
-    case LinkStatus::LOADING:
-        break;
-    case LinkStatus::CORRECT:
-        statusIcon.addFile(QString::fromUtf8(":/images/streaming_on_icon.png"), QSize(), QIcon::Normal, QIcon::Off);
-        ui->bOpenDefault->setEnabled(true);
-        ui->bOpenOther->setEnabled(true);
-        ui->bCopyLink->setEnabled(true);
-        ui->bCopyLink->setStyleSheet(QString::fromUtf8("background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,"
-                                                       "stop: 0 rgba(246,247,250), stop: 1 rgba(232,233,235));"));
-        break;
-    case LinkStatus::TRANSFER_OVER_QUOTA:
-        statusIcon.addFile(QString::fromUtf8(":/images/streaming_error_icon.png"), QSize(), QIcon::Normal, QIcon::Off);
-        ui->bOpenDefault->setEnabled(true);
-        ui->bOpenOther->setEnabled(true);
-        ui->bCopyLink->setEnabled(true);
-        ui->bCopyLink->setStyleSheet(QString::fromUtf8("background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,"
-                                                       "stop: 0 rgba(246,247,250), stop: 1 rgba(232,233,235));"));
-        break;
-    default:
-        statusIcon.addFile(QString::fromUtf8(":/images/streaming_off_icon.png"), QSize(), QIcon::Normal, QIcon::Off);
-        ui->bOpenDefault->setEnabled(false);
-        ui->bOpenOther->setEnabled(false);
-        ui->bCopyLink->setEnabled(false);
-        ui->bCopyLink->setStyleSheet(QString());
-        break;
+        ui->sFileInfo->setCurrentWidget(ui->pWaitingForFileInfo);
     }
-
-    ui->lState->setIcon(statusIcon);
-    ui->lState->setIconSize(QSize(8, 8));
-    ui->sFileInfo->setCurrentWidget(ui->pFileInfo);
-}
-
-void StreamingFromMegaDialog::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *e)
-{
-    const bool isPublicNode{request->getType() == MegaRequest::TYPE_GET_PUBLIC_NODE};
-    if(isPublicNode)
+    else
     {
-        if (e->getErrorCode() == MegaError::API_OK)
+        ui->lFileName->ensurePolished();
+        ui->lFileName->setText(ui->lFileName->fontMetrics().elidedText(fileName,Qt::ElideMiddle,ui->lFileName->maximumWidth()));
+        ui->lFileSize->setText(Utilities::getSizeString(static_cast<unsigned long long>(mSelectedMegaNode->getSize())));
+
+        QIcon typeIcon = Utilities::getExtensionPixmapMedium(fileName);
+
+        ui->lFileType->setIcon(typeIcon);
+        ui->lFileType->setIconSize(QSize(48, 48));
+
+        QIcon statusIcon;
+
+        if(LinkStatus::CORRECT == status)
         {
-            selectedMegaNode = std::unique_ptr<MegaNode>(request->getPublicMegaNode());
-            onLinkInfoAvailable();
+            statusIcon.addFile(QString::fromUtf8(":/images/streaming_on_icon.png"), QSize(), QIcon::Normal, QIcon::Off);
+            ui->bOpenDefault->setEnabled(true);
+            ui->bOpenOther->setEnabled(true);
+            ui->bCopyLink->setEnabled(true);
+            ui->bCopyLink->setStyleSheet(QString::fromUtf8("background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,"
+                                                           "stop: 0 rgba(246,247,250), stop: 1 rgba(232,233,235));"));
+        }
+        else if(LinkStatus::TRANSFER_OVER_QUOTA == status)
+        {
+           statusIcon.addFile(QString::fromUtf8(":/images/streaming_error_icon.png"), QSize(), QIcon::Normal, QIcon::Off);
+            ui->bOpenDefault->setEnabled(true);
+            ui->bOpenOther->setEnabled(true);
+            ui->bCopyLink->setEnabled(true);
+            ui->bCopyLink->setStyleSheet(QString::fromUtf8("background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,"
+                                                           "stop: 0 rgba(246,247,250), stop: 1 rgba(232,233,235));"));
         }
         else
         {
-            QMegaMessageBox::warning(nullptr, tr("Error"), tr("Error getting link information"), QMessageBox::Ok);
+            statusIcon.addFile(QString::fromUtf8(":/images/streaming_off_icon.png"), QSize(), QIcon::Normal, QIcon::Off);
+            ui->bOpenDefault->setEnabled(false);
+            ui->bOpenOther->setEnabled(false);
+            ui->bCopyLink->setEnabled(false);
+            ui->bCopyLink->setStyleSheet(QString());
         }
+
+        ui->lState->setIcon(statusIcon);
+        ui->lState->setIconSize(QSize(8, 8));
+        ui->sFileInfo->setCurrentWidget(ui->pFileInfo);
     }
 }
 
@@ -396,7 +411,7 @@ void StreamingFromMegaDialog::onTransferTemporaryError(mega::MegaApi*, mega::Meg
     const bool errorIsOverQuota{e->getErrorCode() == MegaError::API_EOVERQUOTA};
     if(transfer->isStreamingTransfer() && errorIsOverQuota)
     {
-        updateFileInfo(QString::fromUtf8(selectedMegaNode->getName()), LinkStatus::TRANSFER_OVER_QUOTA);
+        updateFileInfo(QString::fromUtf8(mSelectedMegaNode->getName()), LinkStatus::TRANSFER_OVER_QUOTA);
         showStreamingError();
 
         show();

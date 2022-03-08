@@ -42,7 +42,7 @@ BugReportDialog::~BugReportDialog()
     delete delegateRequestListener;
 }
 
-void BugReportDialog::onTransferStart(MegaApi *api, MegaTransfer *transfer)
+void BugReportDialog::onTransferStart(MegaApi*, MegaTransfer* transfer)
 {
     if (!currentTransfer)
     {
@@ -57,7 +57,6 @@ void BugReportDialog::onTransferStart(MegaApi *api, MegaTransfer *transfer)
     connect(sendProgress.get(), SIGNAL(canceled()), this, SLOT(cancelSendReport()));
 
     sendProgress->setWindowModality(Qt::WindowModal);
-    sendProgress->setLabelText(tr("Bug report is uploading, it may take a few minutes"));
     sendProgress->setMinimumDuration(0);
     sendProgress->setMinimum(0);
     sendProgress->setMaximum(1010);
@@ -65,13 +64,20 @@ void BugReportDialog::onTransferStart(MegaApi *api, MegaTransfer *transfer)
     sendProgress->setAutoClose(false);
     sendProgress->setAutoReset(false);
     lastpermil = 0;
+
+    auto labelWidget = new QLabel(tr("Bug report is uploading, it may take a few minutes"));
+    labelWidget->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Maximum);
+    labelWidget->setWordWrap(true);
+    labelWidget->setAlignment(Qt::AlignHCenter);
+    sendProgress->setLabel(labelWidget);
+
     sendProgress->show();
 }
 
-void BugReportDialog::onTransferUpdate(MegaApi *api, MegaTransfer *transfer)
+void BugReportDialog::onTransferUpdate(MegaApi*, MegaTransfer* transfer)
 {
     transferredBytes = transfer->getTransferredBytes();
-    int permil = (totalBytes > 0) ? ((1000 * transferredBytes) / totalBytes) : 0;
+    int permil = (totalBytes > 0) ? static_cast<int>((1000 * transferredBytes) / totalBytes) : 0;
     if (!warningShown)
     {
         if (permil != lastpermil)
@@ -82,7 +88,7 @@ void BugReportDialog::onTransferUpdate(MegaApi *api, MegaTransfer *transfer)
     }
 }
 
-void BugReportDialog::onTransferFinish(MegaApi *api, MegaTransfer *transfer, MegaError *error)
+void BugReportDialog::onTransferFinish(MegaApi*, MegaTransfer*, MegaError* error)
 {
     sendProgress->reset();
     totalBytes = 0;
@@ -123,13 +129,13 @@ void BugReportDialog::onTransferFinish(MegaApi *api, MegaTransfer *transfer, Meg
     logger.resumeAfterReporting();
 }
 
-void BugReportDialog::onTransferTemporaryError(MegaApi *api, MegaTransfer *transfer, MegaError *e)
+void BugReportDialog::onTransferTemporaryError(MegaApi*, MegaTransfer*, MegaError *e)
 {
     MegaApi::log(MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Temporary error at report dialog: %1")
                  .arg(QString::fromUtf8(e->getErrorString())).toUtf8().constData());
 }
 
-void BugReportDialog::onRequestFinish(MegaApi *api, MegaRequest *request, MegaError *e)
+void BugReportDialog::onRequestFinish(MegaApi*, MegaRequest* request, MegaError* e)
 {
     switch(request->getType())
     {

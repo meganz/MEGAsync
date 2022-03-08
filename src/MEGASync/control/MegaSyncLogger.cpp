@@ -34,7 +34,7 @@
 #define LOG_TIME_CHARS 22
 #define LOG_LEVEL_CHARS 5
 
-#define MAX_FILESIZE_MB 10    // 10MB of log usually compresses to about 850KB (was 450 before duplicate line detection) 
+#define MAX_FILESIZE_MB 10    // 10MB of log usually compresses to about 850KB (was 450 before duplicate line detection)
 #define MAX_ROTATE_LOGS 50   // So we expect to keep 42MB or so in compressed logs
 #define MAX_ROTATE_LOGS_TODELETE 50   // If ever reducing the number of logs, we should remove the older ones anyway. This number should be the historical maximum of that value
 
@@ -105,7 +105,7 @@ struct LogLinkedList
     static LogLinkedList* create(LogLinkedList* prev, size_t size)
     {
         LogLinkedList* entry = (LogLinkedList*)malloc(size);
-        if (entry) 
+        if (entry)
         {
             entry->next = nullptr;
             entry->allocated = unsigned(size - sizeof(LogLinkedList));
@@ -279,7 +279,7 @@ private:
 
                 std::thread t([=]() {
                     std::lock_guard<std::mutex> g(logRotationMutex); // prevent another rotation while we work on this file (in case of unfortunate timing with bug report etc)
-                    gzipCompressOnRotate(newNameZipping, newNameDone); 
+                    gzipCompressOnRotate(newNameZipping, newNameDone);
                     if (report && g_megaSyncLogger)
                     {
                         emit g_megaSyncLogger->logReadyForReporting();
@@ -299,7 +299,7 @@ private:
             bool topLevelMemoryGap = false;
             {
                 std::unique_lock<std::mutex> lock(logMutex);
-                logConditionVariable.wait_for(lock, std::chrono::milliseconds(500), [this, &newMessages, &topLevelMemoryGap]() { 
+                logConditionVariable.wait_for(lock, std::chrono::milliseconds(500), [this, &newMessages, &topLevelMemoryGap]() {
                         if (forceRenew || logListFirst.next || logExit || forceRotationForReporting || logToDesktopChanged || flushLog || closeLog)
                         {
                             newMessages = logListFirst.next;
@@ -444,12 +444,13 @@ MegaSyncLogger::MegaSyncLogger(QObject *parent, const QString& dataPath, const Q
     g_loggingThread->startLoggingThread(logPath, desktopLogPath);
 
     mega::MegaApi::setLogLevel(mega::MegaApi::LOG_LEVEL_MAX);
-    mega::MegaApi::addLoggerObject(this);
+    mega::MegaApi::addLoggerObject(this, true);
 }
 
 MegaSyncLogger::~MegaSyncLogger()
 {
-    mega::MegaApi::removeLoggerObject(this); // after this no more calls to MegaSyncLogger::log
+    // any other threads that might be logging have to be shut down before we call this
+    mega::MegaApi::removeLoggerObject(this, true);
 
     {
         std::lock_guard<std::mutex> g(g_loggingThread->logMutex);
@@ -464,8 +465,8 @@ MegaSyncLogger::~MegaSyncLogger()
 
 inline void twodigit(char*& s, int n)
 {
-    *s++ = n / 10 + '0';
-    *s++ = n % 10 + '0';
+    *s++ = static_cast<char>(n / 10 + '0');
+    *s++ = static_cast<char>(n % 10 + '0');
 }
 
 char* filltime(char* s, struct tm*  gmt, int microsec)
@@ -482,12 +483,13 @@ char* filltime(char* s, struct tm*  gmt, int microsec)
     *s++ = ':';
     twodigit(s, gmt->tm_sec);
     *s++ = '.';
-    s[5] = microsec % 10 + '0';
-    s[4] = (microsec /= 10) % 10 + '0';
-    s[3] = (microsec /= 10) % 10 + '0';
-    s[2] = (microsec /= 10) % 10 + '0';
-    s[1] = (microsec /= 10) % 10 + '0';
-    s[0] = (microsec /= 10) % 10 + '0';
+
+    s[5] = static_cast<char>(microsec % 10 + '0');
+    s[4] = static_cast<char>((microsec /= 10) % 10 + '0');
+    s[3] = static_cast<char>((microsec /= 10) % 10 + '0');
+    s[2] = static_cast<char>((microsec /= 10) % 10 + '0');
+    s[1] = static_cast<char>((microsec /= 10) % 10 + '0');
+    s[0] = static_cast<char>((microsec /= 10) % 10 + '0');
     s += 6;
     *s++ = ' ';
     *s = 0;
@@ -589,7 +591,7 @@ void LoggingThread::log(int loglevel, const char *message, const char **directMe
     case mega::MegaApi::LOG_LEVEL_DEBUG: loglevelstring = "DBG  "; break;
     case mega::MegaApi::LOG_LEVEL_MAX: loglevelstring = "DTL  "; break;
     }
-    
+
     auto messageLen = strlen(message);
     auto threadnameLen = strlen(threadname);
     auto lineLen = LOG_TIME_CHARS + threadnameLen + LOG_LEVEL_CHARS + messageLen;
@@ -599,7 +601,7 @@ void LoggingThread::log(int loglevel, const char *message, const char **directMe
         std::unique_ptr<std::lock_guard<std::mutex>> g(new std::lock_guard<std::mutex>(logMutex));
 
         bool isRepeat = !direct && logListLast != &logListFirst &&
-                        logListLast->lastmessage >= 0 && 
+                        logListLast->lastmessage >= 0 &&
                         !strncmp(message, logListLast->message + logListLast->lastmessage, messageLen);
 
         if (isRepeat)
@@ -687,10 +689,10 @@ void LoggingThread::log(int loglevel, const char *message, const char **directMe
             flushLog = true;
         }
     }
-    
+
     if (notify)
     {
-        // notify outside the mutex lock is better (and correct) for much less chance the other 
+        // notify outside the mutex lock is better (and correct) for much less chance the other
         // thread wakes up just to find the mutex locked. (saw lower cpu on the other thread like this)
         // Still, this notify call was taking 1% when notifying on every log line, so let the other thead
         // wake up by itself every 500ms without notify for the common case.
@@ -739,7 +741,7 @@ void MegaSyncLogger::flushAndClose()
     }
     catch (const std::exception& e)
     {
-        std::cerr << "Unhandle exception on flushAndClose: "<< e.what() << endl;
+        std::cerr << "Unhandle exception on flushAndClose: "<< e.what() << std::endl;
     }
     g_loggingThread->flushLog = true;
     g_loggingThread->closeLog = true;

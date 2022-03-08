@@ -1161,7 +1161,7 @@ void InfoDialog::addSync(MegaHandle h)
                                                     .arg(localFolderPath));
 
    //Connect failing signals
-   connect(addSyncStep, &ActionProgress::failed, this, [this, localFolderPath](int errorCode)
+   connect(addSyncStep, &ActionProgress::failed, this, [localFolderPath](int errorCode)
    {
        static_cast<MegaApplication *>(qApp)->showAddSyncError(errorCode, localFolderPath);
    }, Qt::QueuedConnection);
@@ -1242,12 +1242,22 @@ void InfoDialog::on_bAddSync_clicked()
         }
 
         syncsMenu.reset(new QMenu());
+        syncsMenu->setToolTipsVisible(true);
 
 #ifdef __APPLE__
         syncsMenu->setStyleSheet(QString::fromAscii("QMenu {background: #ffffff; padding-top: 8px; padding-bottom: 8px;}"));
 #else
         syncsMenu->setStyleSheet(QString::fromAscii("QMenu { border: 1px solid #B8B8B8; border-radius: 5px; background: #ffffff; padding-top: 8px; padding-bottom: 8px;}"
                                                     "QMenu::separator {height: 1px; margin: 6px 0px 6px 0px; background-color: rgba(0, 0, 0, 0.1);}"));
+#endif
+
+#if defined(Q_OS_WINDOWS) || defined(Q_OS_LINUX)
+        // Make widget transparent (otherwise it shows a white background in its corners)
+        syncsMenu->setAttribute(Qt::WA_TranslucentBackground);
+        // Disable drop shadow (does not take into account curved corners)
+        syncsMenu->setWindowFlags(syncsMenu->windowFlags()
+                                  | Qt::FramelessWindowHint
+                                  | Qt::NoDropShadowWindowHint);
 #endif
 
         //Highlight menu entry on mouse over
@@ -1429,7 +1439,7 @@ void InfoDialog::onTransferFinish(MegaApi *api, MegaTransfer *transfer, MegaErro
                 completedDownloadBytes -= transfer->getTransferredBytes();
                 if (circlesShowAllActiveTransfersProgress)
                 {
-                    ui->bTransferManager->setPercentDownloads( completedDownloadBytes *1.0 / leftDownloadBytes);
+                    ui->bTransferManager->setPercentDownloads(computeRatio(completedDownloadBytes, leftDownloadBytes));
                 }
             }
 
@@ -1453,7 +1463,7 @@ void InfoDialog::onTransferFinish(MegaApi *api, MegaTransfer *transfer, MegaErro
                 completedUploadBytes -= transfer->getTransferredBytes();
                 if (circlesShowAllActiveTransfersProgress)
                 {
-                    ui->bTransferManager->setPercentUploads( completedUploadBytes *1.0 / leftUploadBytes);
+                    ui->bTransferManager->setPercentUploads(computeRatio(completedUploadBytes, leftUploadBytes));
                 }
             }
 
@@ -1467,7 +1477,7 @@ void InfoDialog::onTransferFinish(MegaApi *api, MegaTransfer *transfer, MegaErro
     }
 }
 
-void InfoDialog::onTransferStart(MegaApi *api, MegaTransfer *transfer)
+void InfoDialog::onTransferStart(MegaApi*, MegaTransfer* transfer)
 {
     updateTransfersCount();
     if (transfer)
@@ -1483,7 +1493,7 @@ void InfoDialog::onTransferStart(MegaApi *api, MegaTransfer *transfer)
     }
 }
 
-void InfoDialog::onTransferUpdate(MegaApi *api, MegaTransfer *transfer)
+void InfoDialog::onTransferUpdate(MegaApi*, MegaTransfer* transfer)
 {
     if (transfer)
     {
@@ -1494,7 +1504,7 @@ void InfoDialog::onTransferUpdate(MegaApi *api, MegaTransfer *transfer)
             currentCompletedDownloadBytes = transfer->getTransferredBytes();
             if (circlesShowAllActiveTransfersProgress)
             {
-                ui->bTransferManager->setPercentDownloads( completedDownloadBytes *1.0 / leftDownloadBytes);
+                ui->bTransferManager->setPercentDownloads(computeRatio(completedDownloadBytes, leftDownloadBytes));
             }
             else
             {
@@ -1507,7 +1517,7 @@ void InfoDialog::onTransferUpdate(MegaApi *api, MegaTransfer *transfer)
                 {
                     downloadActiveTransferPriority = transfer->getPriority();
                     downloadActiveTransferState = transfer->getState();
-                    ui->bTransferManager->setPercentDownloads(currentCompletedDownloadBytes *1.0 /currentDownloadBytes);
+                    ui->bTransferManager->setPercentDownloads(computeRatio(currentCompletedDownloadBytes, currentDownloadBytes));
                 }
             }
         }
@@ -1518,7 +1528,7 @@ void InfoDialog::onTransferUpdate(MegaApi *api, MegaTransfer *transfer)
             currentCompletedUploadBytes = transfer->getTransferredBytes();
             if (circlesShowAllActiveTransfersProgress)
             {
-                ui->bTransferManager->setPercentUploads( completedUploadBytes *1.0 / leftUploadBytes);
+                ui->bTransferManager->setPercentUploads(computeRatio(completedUploadBytes, leftUploadBytes));
             }
             else
             {
@@ -1531,7 +1541,7 @@ void InfoDialog::onTransferUpdate(MegaApi *api, MegaTransfer *transfer)
                 {
                     uploadActiveTransferPriority = transfer->getPriority();
                     uploadActiveTransferState = transfer->getState();
-                    ui->bTransferManager->setPercentUploads(currentCompletedUploadBytes *1.0 /currentUploadBytes);
+                    ui->bTransferManager->setPercentUploads(computeRatio(currentCompletedUploadBytes, currentUploadBytes));
                 }
             }
         }
@@ -2105,7 +2115,7 @@ void InfoDialog::setUnseenNotifications(long long value)
     ui->bNumberUnseenNotifications->show();
 }
 
-void InfoDialog::setUnseenTypeNotifications(int all, int contacts, int shares, int payment)
+void InfoDialog::setUnseenTypeNotifications(long long all, long long contacts, long long shares, long long payment)
 {
     filterMenu->setUnseenNotifications(all, contacts, shares, payment);
 }
@@ -2121,4 +2131,9 @@ void InfoDialog::paintEvent(QPaintEvent * e)
     p.setCompositionMode(QPainter::CompositionMode_Clear);
     p.fillRect(ui->wArrow->rect(), Qt::transparent);
 #endif
+}
+
+double InfoDialog::computeRatio(long long completed, long long remaining)
+{
+    return static_cast<double>(completed) / static_cast<double>(remaining);
 }

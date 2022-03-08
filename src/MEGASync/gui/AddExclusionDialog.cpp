@@ -10,7 +10,6 @@ AddExclusionDialog::AddExclusionDialog(QWidget *parent) :
 {
     ui->setupUi(this);
     ui->bOk->setDefault(true);
-    setAttribute(Qt::WA_QuitOnClose, false);
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
     highDpiResize.init(this);
 }

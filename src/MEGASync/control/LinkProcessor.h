@@ -3,6 +3,8 @@
 
 #include <QObject>
 #include <QStringList>
+#include <memory>
+
 #include "megaapi.h"
 #include "QTMegaRequestListener.h"
 
@@ -17,7 +19,7 @@ public:
     QString getLink(int id);
     bool isSelected(int id);
     int getError(int id);
-    mega::MegaNode *getNode(int id);
+    std::shared_ptr<mega::MegaNode> getNode(int id);
     int size() const;
 
     void requestLinkInfo();
@@ -39,7 +41,7 @@ protected:
     mega::MegaApi *megaApiFolders;
     QStringList linkList;
     QList<bool> linkSelected;
-    QList<mega::MegaNode *> linkNode;
+    QList<std::shared_ptr<mega::MegaNode>> linkNode;
     QList<int> linkError;
     int currentIndex;
     int remainingNodes;
