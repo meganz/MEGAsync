@@ -1,33 +1,33 @@
-#include "InfoDialogCurrentTransfersProxyModel.h"
+#include "InfoDialogTransfersProxyModel.h"
 
 #include "InfoDialogTransferDelegateWidget.h"
-#include "QTransfersModel.h"
+#include "TransfersModel.h"
 
 //SORT FILTER PROXY MODEL
-InfoDialogCurrentTransfersProxyModel::InfoDialogCurrentTransfersProxyModel(QObject *parent) : TransfersSortFilterProxyModelBase(parent)
+InfoDialogTransfersProxyModel::InfoDialogTransfersProxyModel(QObject *parent) : TransfersSortFilterProxyBaseModel(parent)
 {
 }
 
-InfoDialogCurrentTransfersProxyModel::~InfoDialogCurrentTransfersProxyModel()
+InfoDialogTransfersProxyModel::~InfoDialogTransfersProxyModel()
 {
 }
 
-TransferBaseDelegateWidget* InfoDialogCurrentTransfersProxyModel::createTransferManagerItem(QWidget *parent)
+TransferBaseDelegateWidget* InfoDialogTransfersProxyModel::createTransferManagerItem(QWidget *parent)
 {
     auto item = new InfoDialogTransferDelegateWidget(parent);
 
     connect(item, &InfoDialogTransferDelegateWidget::copyTransferLink,
-            this, &InfoDialogCurrentTransfersProxyModel::onCopyTransferLinkRequested);
+            this, &InfoDialogTransfersProxyModel::onCopyTransferLinkRequested);
     connect(item, &InfoDialogTransferDelegateWidget::openTransferFolder,
-            this, &InfoDialogCurrentTransfersProxyModel::onOpenTransferFolderRequested);
+            this, &InfoDialogTransfersProxyModel::onOpenTransferFolderRequested);
 
     return item;
 }
 
-void InfoDialogCurrentTransfersProxyModel::onCopyTransferLinkRequested()
+void InfoDialogTransfersProxyModel::onCopyTransferLinkRequested()
 {
     auto delegateWidget = dynamic_cast<InfoDialogTransferDelegateWidget*>(sender());
-    auto sourModel = dynamic_cast<QTransfersModel*>(sourceModel());
+    auto sourModel = dynamic_cast<TransfersModel*>(sourceModel());
 
     if(delegateWidget && sourModel)
     {
@@ -39,10 +39,10 @@ void InfoDialogCurrentTransfersProxyModel::onCopyTransferLinkRequested()
     }
 }
 
-void InfoDialogCurrentTransfersProxyModel::onOpenTransferFolderRequested()
+void InfoDialogTransfersProxyModel::onOpenTransferFolderRequested()
 {
     auto delegateWidget = dynamic_cast<InfoDialogTransferDelegateWidget*>(sender());
-    auto sourModel = dynamic_cast<QTransfersModel*>(sourceModel());
+    auto sourModel = dynamic_cast<TransfersModel*>(sourceModel());
 
     if(delegateWidget && sourModel)
     {
@@ -52,7 +52,7 @@ void InfoDialogCurrentTransfersProxyModel::onOpenTransferFolderRequested()
     }
 }
 
-bool InfoDialogCurrentTransfersProxyModel::lessThan(const QModelIndex &left, const QModelIndex &right) const
+bool InfoDialogTransfersProxyModel::lessThan(const QModelIndex &left, const QModelIndex &right) const
 {
     bool lessThan (false);
     const auto leftItem (qvariant_cast<TransferItem>(left.data()).getTransferData());
@@ -73,7 +73,7 @@ bool InfoDialogCurrentTransfersProxyModel::lessThan(const QModelIndex &left, con
     return lessThan;
 }
 
-bool InfoDialogCurrentTransfersProxyModel::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const
+bool InfoDialogTransfersProxyModel::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const
 {
     bool accept (false);
 

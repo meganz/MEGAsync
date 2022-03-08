@@ -349,7 +349,7 @@ QProgressBar::chunk
            <number>16</number>
           </property>
           <property name="rightMargin">
-           <number>0</number>
+           <number>10</number>
           </property>
           <property name="bottomMargin">
            <number>8</number>
@@ -364,7 +364,7 @@ QProgressBar::chunk
             </property>
             <property name="minimumSize">
              <size>
-              <width>160</width>
+              <width>155</width>
               <height>20</height>
              </size>
             </property>
@@ -410,7 +410,7 @@ QProgressBar::chunk
               <number>0</number>
              </property>
              <property name="rightMargin">
-              <number>48</number>
+              <number>38</number>
              </property>
              <property name="bottomMargin">
               <number>0</number>
@@ -494,7 +494,7 @@ QProgressBar::chunk
           <property name="bottomMargin">
            <number>12</number>
           </property>
-          <item>
+          <item alignment="Qt::AlignLeft|Qt::AlignVCenter">
            <widget class="QLabel" name="lDone">
             <property name="minimumSize">
              <size>
@@ -513,7 +513,7 @@ QProgressBar::chunk
             </property>
            </widget>
           </item>
-          <item>
+          <item alignment="Qt::AlignVCenter">
            <widget class="QLabel" name="lTotal">
             <property name="minimumSize">
              <size>
@@ -523,7 +523,7 @@ QProgressBar::chunk
             </property>
             <property name="maximumSize">
              <size>
-              <width>0</width>
+              <width>16777215</width>
               <height>16777215</height>
              </size>
             </property>
@@ -642,9 +642,9 @@ QProgressBar::chunk
           </widget>
          </widget>
          <widget class="QWidget" name="pFailed">
-          <layout class="QHBoxLayout" name="pFailedLayout">
+          <layout class="QHBoxLayout" name="pFailedLayout" stretch="0,1,0">
            <property name="spacing">
-            <number>0</number>
+            <number>10</number>
            </property>
            <property name="leftMargin">
             <number>0</number>
@@ -653,7 +653,7 @@ QProgressBar::chunk
             <number>0</number>
            </property>
            <property name="rightMargin">
-            <number>32</number>
+            <number>0</number>
            </property>
            <property name="bottomMargin">
             <number>0</number>
@@ -680,20 +680,20 @@ QProgressBar::chunk
            <item>
             <widget class="QToolButton" name="tItemRetry">
              <property name="sizePolicy">
-              <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                <horstretch>0</horstretch>
                <verstretch>0</verstretch>
               </sizepolicy>
              </property>
              <property name="minimumSize">
               <size>
-               <width>0</width>
+               <width>50</width>
                <height>24</height>
               </size>
              </property>
              <property name="maximumSize">
               <size>
-               <width>16777215</width>
+               <width>50</width>
                <height>24</height>
               </size>
              </property>
@@ -701,6 +701,19 @@ QProgressBar::chunk
               <string>Retry</string>
              </property>
             </widget>
+           </item>
+		   <item>
+            <spacer name="horizontalSpacer_2">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>0</width>
+               <height>0</height>
+              </size>
+             </property>
+            </spacer>
            </item>
           </layout>
          </widget>

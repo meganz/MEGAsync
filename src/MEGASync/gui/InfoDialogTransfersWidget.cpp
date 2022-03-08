@@ -2,7 +2,7 @@
 #include "ui_InfoDialogTransfersWidget.h"
 #include "MegaApplication.h"
 #include "MegaTransferDelegate.h"
-#include "model/InfoDialogCurrentTransfersProxyModel.h"
+#include "model/InfoDialogTransfersProxyModel.h"
 
 using namespace mega;
 
@@ -19,7 +19,7 @@ InfoDialogTransfersWidget::InfoDialogTransfersWidget(QWidget *parent) :
 
 void InfoDialogTransfersWidget::setupTransfers()
 {
-    model = new InfoDialogCurrentTransfersProxyModel(this);
+    model = new InfoDialogTransfersProxyModel(ui->tView);
     model->setSourceModel(app->getTransfersModel());
     model->sort(0);
     model->setDynamicSortFilter(true);

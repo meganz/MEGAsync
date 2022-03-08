@@ -9,7 +9,6 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/TransferBaseDelegateWidget.cpp \
     $$PWD/NotificationsSettings.cpp \
     $$PWD/OverQuotaDialog.cpp \
-    $$PWD/QTransfersModel.cpp \
     $$PWD/SetupWizard.cpp \
     $$PWD/NodeSelector.cpp \
     $$PWD/FolderBinder.cpp \
@@ -83,7 +82,6 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/TransferBaseDelegateWidget.h \
     $$PWD/NotificationsSettings.h \
     $$PWD/OverQuotaDialog.h \
-    $$PWD/QTransfersModel.h \
     $$PWD/SetupWizard.h \
     $$PWD/NodeSelector.h \
     $$PWD/FolderBinder.h \
@@ -159,7 +157,6 @@ win32 {
     RESOURCES += $$PWD/Resources_win.qrc
     INCLUDEPATH += $$PWD/win
     FORMS    += $$PWD/win/InfoDialog.ui \
-                $$PWD/win/InfoDialogTransferDelegateWidget.ui \
                 $$PWD/win/NodeSelector.ui \
                 $$PWD/win/FolderBinder.ui \
                 $$PWD/win/BindFolderDialog.ui \
@@ -183,18 +180,21 @@ win32 {
                 $$PWD/win/TransferManager.ui \
                 $$PWD/win/TransfersWidget.ui \
                 $$PWD/win/TransfersStateInfoWidget.ui \
+                $$PWD/win/TransferManagerLoadingItem.ui \
+                $$PWD/win/TransferManagerDragBackDrop.ui \
+                $$PWD/win/InfoDialogTransfersWidget.ui \
+                $$PWD/win/InfoDialogTransferDelegateWidget.ui \
+                $$PWD/win/TransfersStatusWidget.ui \
+                $$PWD/win/TransfersSummaryWidget.ui \
                 $$PWD/win/MegaSpeedGraph.ui \
                 $$PWD/win/AddExclusionDialog.ui \
-                $$PWD/win/InfoDialogTransfersWidget.ui \
                 $$PWD/win/StatusInfo.ui \
                 $$PWD/win/PSAwidget.ui \
                 $$PWD/win/UpgradeOverStorage.ui \
                 $$PWD/win/ChangePassword.ui \
                 $$PWD/win/Login2FA.ui \
                 $$PWD/win/QSyncItemWidget.ui \
-                $$PWD/win/TransfersStatusWidget.ui \
                 $$PWD/win/AlertItem.ui \
-                $$PWD/win/TransfersSummaryWidget.ui \
                 $$PWD/win/FilterAlertWidget.ui \
                 $$PWD/win/AlertFilterType.ui \
                 $$PWD/win/BugReportDialog.ui \
@@ -205,8 +205,7 @@ win32 {
                 $$PWD/win/ProxySettings.ui \
                 $$PWD/win/BandwidthSettings.ui \
                 $$PWD/win/NewFolderDialog.ui \
-                $$PWD/win/NotificationsSettings.ui \
-                $$PWD/win/TransferManagerLoadingItem.ui
+                $$PWD/win/NotificationsSettings.ui
 }
 
 macx {
@@ -241,16 +240,18 @@ macx {
                 $$PWD/macx/MegaSpeedGraph.ui \
                 $$PWD/macx/AddExclusionDialog.ui \
                 $$PWD/macx/InfoDialogTransfersWidget.ui \
-                $$PWD/macx/StatusInfo.ui \
                 $$PWD/macx/InfoDialogTransferDelegateWidget.ui \
+                $$PWD/macx/TransfersStatusWidget.ui \
+                $$PWD/macx/TransfersSummaryWidget.ui \
+                $$PWD/macx/TransferManagerLoadingItem.ui \
+                $$PWD/macx/TransferManagerDragBackDrop.ui \
+                $$PWD/macx/StatusInfo.ui \
                 $$PWD/macx/PSAwidget.ui \
                 $$PWD/macx/UpgradeOverStorage.ui \
                 $$PWD/macx/ChangePassword.ui \
                 $$PWD/macx/Login2FA.ui \
                 $$PWD/macx/QSyncItemWidget.ui \
-                $$PWD/macx/TransfersStatusWidget.ui \
                 $$PWD/macx/AlertItem.ui \
-                $$PWD/macx/TransfersSummaryWidget.ui \
                 $$PWD/macx/FilterAlertWidget.ui \
                 $$PWD/macx/AlertFilterType.ui \
                 $$PWD/macx/BugReportDialog.ui \
@@ -261,8 +262,7 @@ macx {
                 $$PWD/macx/ProxySettings.ui \
                 $$PWD/macx/BandwidthSettings.ui \
                 $$PWD/macx/NewFolderDialog.ui \
-                $$PWD/macx/NotificationsSettings.ui \
-                $$PWD/macx/TransferManagerLoadingItem.ui
+                $$PWD/macx/NotificationsSettings.ui
 
     #Asset catalog need to load SF symbol images of toolbar items for custom NSToolbar
     QMAKE_ASSET_CATALOGS += $$PWD/images/Images.xcassets
@@ -292,7 +292,6 @@ unix:!macx {
     RESOURCES += $$PWD/Resources_linux.qrc
     INCLUDEPATH += $$PWD/linux
     FORMS    += $$PWD/linux/InfoDialog.ui \
-                $$PWD/linux/InfoDialogTransferDelegateWidget.ui \
                 $$PWD/linux/NodeSelector.ui \
                 $$PWD/linux/FolderBinder.ui \
                 $$PWD/linux/BindFolderDialog.ui \
@@ -318,18 +317,21 @@ unix:!macx {
                 $$PWD/linux/TransferManager.ui \
                 $$PWD/linux/TransfersWidget.ui \
                 $$PWD/linux/TransfersStateInfoWidget.ui \
+                $$PWD/linux/TransferManagerLoadingItem.ui \
+                $$PWD/linux/TransferManagerDragBackDrop.ui \
+                $$PWD/linux/TransfersSummaryWidget.ui \
+                $$PWD/linux/TransfersStatusWidget.ui \
+                $$PWD/linux/InfoDialogTransfersWidget.ui \
+                $$PWD/linux/InfoDialogTransferDelegateWidget.ui \
                 $$PWD/linux/MegaSpeedGraph.ui \
                 $$PWD/linux/AddExclusionDialog.ui \
-                $$PWD/linux/InfoDialogTransfersWidget.ui \
                 $$PWD/linux/StatusInfo.ui \
                 $$PWD/linux/PSAwidget.ui \
                 $$PWD/linux/UpgradeOverStorage.ui \
                 $$PWD/linux/ChangePassword.ui \
                 $$PWD/linux/Login2FA.ui \
                 $$PWD/linux/QSyncItemWidget.ui \
-                $$PWD/linux/TransfersStatusWidget.ui \
                 $$PWD/linux/AlertItem.ui \
-                $$PWD/linux/TransfersSummaryWidget.ui \
                 $$PWD/linux/FilterAlertWidget.ui \
                 $$PWD/linux/AlertFilterType.ui \
                 $$PWD/linux/BugReportDialog.ui \
@@ -340,8 +342,7 @@ unix:!macx {
                 $$PWD/linux/ProxySettings.ui \
                 $$PWD/linux/BandwidthSettings.ui \
                 $$PWD/linux/NewFolderDialog.ui \
-                $$PWD/linux/NotificationsSettings.ui \
-                $$PWD/linux/TransferManagerLoadingItem.ui
+                $$PWD/linux/NotificationsSettings.ui
 
     HEADERS += $$PWD/PermissionsDialog.h \
                $$PWD/PermissionsWidget.h

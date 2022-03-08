@@ -1,6 +1,7 @@
 #include "TransferManager.h"
 #include "QMegaMessageBox.h"
 #include "ui_TransferManager.h"
+#include "ui_TransferManagerDragBackDrop.h"
 #include "MegaApplication.h"
 #include "platform/Platform.h"
 #include "MegaTransferDelegate.h"
@@ -14,14 +15,14 @@ using namespace mega;
 const int TransferManager::SPEED_REFRESH_PERIOD_MS;
 const int TransferManager::STATS_REFRESH_PERIOD_MS;
 
-constexpr long long NB_INIT_VALUE = -1LL;
+constexpr long long NB_INIT_VALUE = 0LL;
 
 TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
     QDialog(parent),
     mUi(new Ui::TransferManager),
+    mUiDragBackDrop(new Ui::TransferManagerDragBackDrop),
     mMegaApi(megaApi),
     mPreferences(Preferences::instance()),
-    mThreadPool(ThreadPoolSingleton::getInstance()),
     mModel(nullptr),
     mCurrentTab(NO_TAB),
     mShadowTab (new QGraphicsDropShadowEffect(nullptr)),
@@ -29,8 +30,12 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
     mStatsRefreshTimer(new QTimer(this))
 {
     mUi->setupUi(this);
+
+    mDragBackDrop = new QWidget(this);
+    mUiDragBackDrop->setupUi(mDragBackDrop);
+    mDragBackDrop->hide();
+
     mUi->wTransfers->setupTransfers();
-    setAttribute(Qt::WA_DeleteOnClose, true);
 #ifndef Q_OS_MACOS
     setWindowFlags(windowFlags() | Qt::Window | Qt::FramelessWindowHint);
 #endif
@@ -104,13 +109,13 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
     mTabNoItem[TYPE_IMAGE_TAB]    = mUi->wNoTransfers;
     mTabNoItem[TYPE_TEXT_TAB]     = mUi->wNoTransfers;
 
-    mMediaNumberLabelsGroup[TransferData::TYPE_OTHER]    = mUi->lOtherNb;
-    mMediaNumberLabelsGroup[TransferData::TYPE_AUDIO]    = mUi->lMusicNb;
-    mMediaNumberLabelsGroup[TransferData::TYPE_VIDEO]    = mUi->lVideosNb;
-    mMediaNumberLabelsGroup[TransferData::TYPE_ARCHIVE]  = mUi->lArchivesNb;
-    mMediaNumberLabelsGroup[TransferData::TYPE_DOCUMENT] = mUi->lDocumentsNb;
-    mMediaNumberLabelsGroup[TransferData::TYPE_IMAGE]    = mUi->lImagesNb;
-    mMediaNumberLabelsGroup[TransferData::TYPE_TEXT]     = mUi->lTextNb;
+    mMediaNumberLabelsGroup[Utilities::FileType::TYPE_OTHER]    = mUi->lOtherNb;
+    mMediaNumberLabelsGroup[Utilities::FileType::TYPE_AUDIO]    = mUi->lMusicNb;
+    mMediaNumberLabelsGroup[Utilities::FileType::TYPE_VIDEO]    = mUi->lVideosNb;
+    mMediaNumberLabelsGroup[Utilities::FileType::TYPE_ARCHIVE]  = mUi->lArchivesNb;
+    mMediaNumberLabelsGroup[Utilities::FileType::TYPE_DOCUMENT] = mUi->lDocumentsNb;
+    mMediaNumberLabelsGroup[Utilities::FileType::TYPE_IMAGE]    = mUi->lImagesNb;
+    mMediaNumberLabelsGroup[Utilities::FileType::TYPE_TEXT]     = mUi->lTextNb;
 
     for (auto mediaLabel : qAsConst(mMediaNumberLabelsGroup))
     {
@@ -121,20 +126,22 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
             mUi->wTransfers, &TransfersWidget::onShowCompleted);
 
 
-    connect(mModel, &QTransfersModel::pauseStateChanged,
+    connect(mModel, &TransfersModel::pauseStateChanged,
             mUi->wTransfers, &TransfersWidget::onPauseStateChanged);
+    connect(mModel, &TransfersModel::pauseStateChanged,
+            this, &TransferManager::onUpdatePauseState);
 
-    connect(mModel, &QTransfersModel::transfersCountUpdated,
+    connect(mModel, &TransfersModel::transfersCountUpdated,
             this, &TransferManager::onTransfersDataUpdated);
 
-    connect(mModel, &QTransfersModel::pauseStateChangedByTransferResume,
+    connect(mModel, &TransfersModel::pauseStateChangedByTransferResume,
             this, &TransferManager::onPauseStateChangedByTransferResume);
 
     connect(this, &TransferManager::clearCompletedTransfers,
             findChild<MegaTransferView*>(), &MegaTransferView::onClearCompletedVisibleTransfers);
 
     connect(mUi->wTransfers->getProxyModel(),
-            &TransfersSortFilterProxyModel::searchNumbersChanged,
+            &TransfersManagerSortFilterProxyModel::searchNumbersChanged,
             this, &TransferManager::refreshSearchStats);
 
     connect(mUi->wTransfers,
@@ -155,8 +162,17 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
 
     // Init state
     onUpdatePauseState(mModel->areAllPaused());
-    onStorageStateChanged(qobject_cast<MegaApplication*>(qApp)->getAppliedStorageState());
-    onTransferQuotaStateChanged(qobject_cast<MegaApplication*>(qApp)->getTransferQuotaState());
+    auto storageState = MegaSyncApp->getAppliedStorageState();
+    auto transferQuotaState = MegaSyncApp->getTransferQuotaState();
+    onStorageStateChanged(storageState);
+    onTransferQuotaStateChanged(transferQuotaState);
+
+    if(storageState == MegaApi::STORAGE_STATE_PAYWALL || storageState ==
+             MegaApi::STORAGE_STATE_RED || transferQuotaState == QuotaState::FULL)
+    {
+        mUi->lPaused->hide();
+    }
+
     setActiveTab(ALL_TRANSFERS_TAB);
     //Update stats
     onTransfersDataUpdated();
@@ -326,9 +342,6 @@ bool TransferManager::refreshStateStats()
             leftFooterWidget = mUi->pUpToDate;
             mSpeedRefreshTimer->stop();
             label->hide();
-
-            // Force number to -1 to re-init timer when a transfer comes
-            mNumberOfTransfersPerTab[ALL_TRANSFERS_TAB] = NB_INIT_VALUE;
         }
         else
         {
@@ -344,8 +357,9 @@ bool TransferManager::refreshStateStats()
             }
 
             label->setText(QString::number(processedNumber));
-            mNumberOfTransfersPerTab[ALL_TRANSFERS_TAB] = processedNumber;
         }
+
+        mNumberOfTransfersPerTab[ALL_TRANSFERS_TAB] = processedNumber;
 
         if(leftFooterWidget)
         {
@@ -369,6 +383,8 @@ void TransferManager::refreshTypeStats()
         mNumberOfTransfersPerTab[DOWNLOADS_TAB] = DownloadTransfers;
     }
 
+    mUi->lDownloads->setVisible(DownloadTransfers != 0);
+
     // Then Uploads --------------------------------------------------------------------------------
     if (UploadTransfers != mNumberOfTransfersPerTab[UPLOADS_TAB])
     {
@@ -376,6 +392,8 @@ void TransferManager::refreshTypeStats()
         mUi->lUploads->setText(QString::number(UploadTransfers));
         mNumberOfTransfersPerTab[UPLOADS_TAB] = UploadTransfers;
     }
+
+    mUi->lUploads->setVisible(UploadTransfers != 0);
 }
 
 void TransferManager::refreshFileTypesStats()
@@ -443,6 +461,7 @@ void TransferManager::onStorageStateChanged(int storageState)
         {
             mUi->tSeePlans->show();
             mUi->lStorageOverQuota->show();
+            mUi->lPaused->setVisible(false);
             break;
         }
         case MegaApi::STORAGE_STATE_GREEN:
@@ -451,6 +470,7 @@ void TransferManager::onStorageStateChanged(int storageState)
         default:
         {
             mUi->lStorageOverQuota->hide();
+            mUi->lPaused->setVisible(mModel->areAllPaused());
             QuotaState tQuotaState (qobject_cast<MegaApplication*>(qApp)->getTransferQuotaState());
             mUi->tSeePlans->setVisible(tQuotaState == QuotaState::FULL);
             break;
@@ -466,6 +486,7 @@ void TransferManager::onTransferQuotaStateChanged(QuotaState transferQuotaState)
         {
             mUi->tSeePlans->show();
             mUi->lTransferOverQuota->show();
+            mUi->lPaused->setVisible(false);
             break;
         }
         case QuotaState::OK:
@@ -473,6 +494,7 @@ void TransferManager::onTransferQuotaStateChanged(QuotaState transferQuotaState)
         default:
         {
             mUi->lTransferOverQuota->hide();
+            mUi->lPaused->setVisible(mModel->areAllPaused());
             int storageState (qobject_cast<MegaApplication*>(qApp)->getAppliedStorageState());
             mUi->tSeePlans->setVisible(storageState == MegaApi::STORAGE_STATE_PAYWALL
                                        || storageState == MegaApi::STORAGE_STATE_RED);
@@ -531,6 +553,8 @@ void TransferManager::refreshSearchStats()
         mUi->tAllResults->setText(QString(tr("All\t\t\t\t%1")).arg(nbAll));
     }
 
+    mUi->searchByTextTypeSelector->setVisible(nbDl != 0 && nbUl != 0);
+
     bool showTypeFilters (mCurrentTab == SEARCH_TAB);
     mUi->tDlResults->setVisible(showTypeFilters);
     mUi->tUlResults->setVisible(showTypeFilters);
@@ -559,8 +583,9 @@ void TransferManager::on_tSeePlans_clicked()
 
 void TransferManager::on_bPause_clicked()
 {
-    mModel->pauseResumeAllTransfers();
-    onUpdatePauseState(mModel->areAllPaused());
+    auto newState = !mModel->areAllPaused();
+    mModel->pauseResumeAllTransfers(newState);
+    onUpdatePauseState(newState);
 }
 
 void TransferManager::on_bSearch_clicked()
@@ -631,25 +656,25 @@ void TransferManager::on_tClearSearchResult_clicked()
 
 void TransferManager::on_tAllResults_clicked()
 {
-    mUi->wTransfers->filtersChanged({}, {}, {});
+    mUi->wTransfers->textFilterTypeChanged({});
 }
 
 void TransferManager::on_tDlResults_clicked()
 {
-    mUi->wTransfers->filtersChanged(TransferData::TRANSFER_DOWNLOAD
-                                    | TransferData::TRANSFER_LTCPDOWNLOAD, {}, {});
+    mUi->wTransfers->textFilterTypeChanged(TransferData::TRANSFER_DOWNLOAD
+                                    | TransferData::TRANSFER_LTCPDOWNLOAD);
 }
 
 void TransferManager::on_tUlResults_clicked()
 {
-    mUi->wTransfers->filtersChanged(TransferData::TRANSFER_UPLOAD, {}, {});
+    mUi->wTransfers->textFilterTypeChanged(TransferData::TRANSFER_UPLOAD);
 }
 
 void TransferManager::on_bArchives_clicked()
 {
     if (mCurrentTab != TYPE_ARCHIVE_TAB)
     {
-        mUi->wTransfers->filtersChanged({}, {}, {TransferData::TYPE_ARCHIVE});
+        mUi->wTransfers->filtersChanged({}, {}, {Utilities::FileType::TYPE_ARCHIVE});
         mUi->lCurrentContent->setText(tr("Archives"));
         toggleTab(TYPE_ARCHIVE_TAB);
     }
@@ -659,7 +684,7 @@ void TransferManager::on_bDocuments_clicked()
 {
     if (mCurrentTab != TYPE_DOCUMENT_TAB)
     {
-        mUi->wTransfers->filtersChanged({}, {}, {TransferData::TYPE_DOCUMENT});
+        mUi->wTransfers->filtersChanged({}, {}, {Utilities::FileType::TYPE_DOCUMENT});
         mUi->lCurrentContent->setText(tr("Documents"));
         toggleTab(TYPE_DOCUMENT_TAB);
     }
@@ -669,7 +694,7 @@ void TransferManager::on_bImages_clicked()
 {
     if (mCurrentTab != TYPE_IMAGE_TAB)
     {
-        mUi->wTransfers->filtersChanged({}, {}, {TransferData::TYPE_IMAGE});
+        mUi->wTransfers->filtersChanged({}, {}, {Utilities::FileType::TYPE_IMAGE});
         mUi->lCurrentContent->setText(tr("Images"));
         toggleTab(TYPE_IMAGE_TAB);
     }
@@ -679,7 +704,7 @@ void TransferManager::on_bMusic_clicked()
 {
     if (mCurrentTab != TYPE_AUDIO_TAB)
     {
-        mUi->wTransfers->filtersChanged({}, {}, {TransferData::TYPE_AUDIO});
+        mUi->wTransfers->filtersChanged({}, {}, {Utilities::FileType::TYPE_AUDIO});
         mUi->lCurrentContent->setText(tr("Music"));
         toggleTab(TYPE_AUDIO_TAB);
     }
@@ -689,7 +714,7 @@ void TransferManager::on_bVideos_clicked()
 {
     if (mCurrentTab != TYPE_VIDEO_TAB)
     {
-        mUi->wTransfers->filtersChanged({}, {}, {TransferData::TYPE_VIDEO});
+        mUi->wTransfers->filtersChanged({}, {}, {Utilities::FileType::TYPE_VIDEO});
         mUi->lCurrentContent->setText(tr("Videos"));
         toggleTab(TYPE_VIDEO_TAB);
     }
@@ -699,7 +724,7 @@ void TransferManager::on_bOther_clicked()
 {
     if (mCurrentTab != TYPE_OTHER_TAB)
     {
-        mUi->wTransfers->filtersChanged({}, {}, {TransferData::TYPE_OTHER});
+        mUi->wTransfers->filtersChanged({}, {}, {Utilities::FileType::TYPE_OTHER});
         mUi->lCurrentContent->setText(tr("Other"));
         toggleTab(TYPE_OTHER_TAB);
     }
@@ -709,7 +734,7 @@ void TransferManager::on_bText_clicked()
 {
     if (mCurrentTab != TYPE_TEXT_TAB)
     {
-        mUi->wTransfers->filtersChanged({}, {}, {TransferData::TYPE_TEXT});
+        mUi->wTransfers->filtersChanged({}, {}, {Utilities::FileType::TYPE_TEXT});
         mUi->lCurrentContent->setText(tr("Text"));
         toggleTab(TYPE_TEXT_TAB);
     }
@@ -815,7 +840,7 @@ void TransferManager::refreshView()
         // (only for completed tab and individual media tabs)
         if ((mCurrentTab == COMPLETED_TAB && mNumberOfTransfersPerTab[COMPLETED_TAB] > 0)
                 || (mCurrentTab >= TYPES_TAB_BASE && mModel->getNumberOfFinishedForFileType(
-                        static_cast<TransferData::FileType>(mCurrentTab - TYPES_TAB_BASE))))
+                        static_cast<Utilities::FileType>(mCurrentTab - TYPES_TAB_BASE))))
         {
             mUi->tClearCompleted->show();
         }
@@ -866,6 +891,7 @@ void TransferManager::changeEvent(QEvent *event)
 
 void TransferManager::dropEvent(QDropEvent* event)
 {
+    mDragBackDrop->hide();
     QDialog::dropEvent(event);
 
     QQueue<QString> pathsToAdd;
@@ -880,11 +906,19 @@ void TransferManager::dropEvent(QDropEvent* event)
 
 void TransferManager::dragEnterEvent(QDragEnterEvent *event)
 {
-    if((mCurrentTab == UPLOADS_TAB || mCurrentTab == ALL_TRANSFERS_TAB)
-            && event->mimeData()->hasUrls())
+    if(event->mimeData()->hasUrls())
     {
         event->accept();
+        mDragBackDrop->show();
+        mDragBackDrop->resize(size());
     }
 
     QDialog::dragEnterEvent(event);
+}
+
+void TransferManager::dragLeaveEvent(QDragLeaveEvent *event)
+{
+    mDragBackDrop->hide();
+
+    QDialog::dragLeaveEvent(event);
 }

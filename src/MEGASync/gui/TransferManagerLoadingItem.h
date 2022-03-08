@@ -15,6 +15,8 @@ public:
     explicit TransferManagerLoadingItem(QWidget *parent = nullptr);
     ~TransferManagerLoadingItem();
 
+    static QSize widgetSize();
+
 private:
     Ui::TransferManagerLoadingItem *ui;
 };

@@ -2,11 +2,14 @@ DEPENDPATH += $$PWD
 INCLUDEPATH += $$PWD
 
 SOURCES += $$PWD/Model.cpp \
-           $$PWD/InfoDialogCurrentTransfersProxyModel.cpp \
+           $$PWD/InfoDialogTransfersProxyModel.cpp \
            $$PWD/SyncSettings.cpp \
-           $$PWD/TransfersSortFilterProxyModel.cpp
+           $$PWD/TransfersManagerSortFilterProxyModel.cpp \
+           $$PWD/TransfersModel.cpp
 
 HEADERS  +=  $$PWD/Model.h \
-           $$PWD/InfoDialogCurrentTransfersProxyModel.h \
+           $$PWD/InfoDialogTransfersProxyModel.h \
            $$PWD/SyncSettings.h \
-           $$PWD/TransfersSortFilterProxyModel.h
+           $$PWD/TransfersManagerSortFilterProxyModel.h \
+           $$PWD/TransfersSortFilterProxyBaseModel.h \
+           $$PWD/TransfersModel.h

@@ -4,7 +4,7 @@
 #include <QWidget>
 #include "MegaTransferDelegate.h"
 #include "TransfersStateInfoWidget.h"
-#include "TransfersSortFilterProxyModel.h"
+#include "TransfersManagerSortFilterProxyModel.h"
 #include "MegaDelegateHoverManager.h"
 #include "TransferManagerLoadingItem.h"
 #include "ViewLoadingScene.h"
@@ -31,17 +31,18 @@ public:
     void disableGetLink(bool disable);
 
     void textFilterChanged(const QString& pattern);
+    void textFilterTypeChanged(const TransferData::TransferTypes transferTypes);
     void filtersChanged(const TransferData::TransferTypes transferTypes,
                         const TransferData::TransferStates transferStates,
-                        const TransferData::FileTypes fileTypes);
+                        const Utilities::FileTypes fileTypes);
     void transferFilterReset();
 
     void cancelClearAll();
 
     int rowCount();
 
-    QTransfersModel* getModel();
-    TransfersSortFilterProxyModel* getProxyModel() {return mProxyModel;}
+    TransfersModel* getModel();
+    TransfersManagerSortFilterProxyModel* getProxyModel() {return mProxyModel;}
     ~TransfersWidget();
 
 public slots:
@@ -71,8 +72,8 @@ private:
     };
 
     Ui::TransfersWidget *ui;
-    QTransfersModel *model;
-    TransfersSortFilterProxyModel *mProxyModel;
+    TransfersModel *model;
+    TransfersManagerSortFilterProxyModel *mProxyModel;
     MegaTransferDelegate *tDelegate;
     ViewLoadingScene<TransferManagerLoadingItem> mLoadingScene;
     MegaDelegateHoverManager mDelegateHoverManager;

@@ -6,7 +6,7 @@
 #include "MenuItemAction.h"
 #include "Utilities.h"
 #include "TransferItem.h"
-#include "QTransfersModel.h"
+#include "TransfersModel.h"
 #include "TransferQuota.h"
 
 #include <QGraphicsEffect>
@@ -16,6 +16,10 @@
 
 namespace Ui {
 class TransferManager;
+}
+
+namespace Ui {
+class TransferManagerDragBackDrop;
 }
 
 class TransferManager : public QDialog
@@ -32,13 +36,13 @@ public:
         COMPLETED_TAB     = 3,
         SEARCH_TAB        = 4,
         TYPES_TAB_BASE    = 5,
-        TYPE_OTHER_TAB    = TYPES_TAB_BASE + TransferData::FileType::TYPE_OTHER,
-        TYPE_AUDIO_TAB    = TYPES_TAB_BASE + TransferData::FileType::TYPE_AUDIO,
-        TYPE_VIDEO_TAB    = TYPES_TAB_BASE + TransferData::FileType::TYPE_VIDEO,
-        TYPE_ARCHIVE_TAB  = TYPES_TAB_BASE + TransferData::FileType::TYPE_ARCHIVE,
-        TYPE_DOCUMENT_TAB = TYPES_TAB_BASE + TransferData::FileType::TYPE_DOCUMENT,
-        TYPE_IMAGE_TAB    = TYPES_TAB_BASE + TransferData::FileType::TYPE_IMAGE,
-        TYPE_TEXT_TAB     = TYPES_TAB_BASE + TransferData::FileType::TYPE_TEXT,
+        TYPE_OTHER_TAB    = TYPES_TAB_BASE + toInt(Utilities::FileType::TYPE_OTHER),
+        TYPE_AUDIO_TAB    = TYPES_TAB_BASE + toInt(Utilities::FileType::TYPE_AUDIO),
+        TYPE_VIDEO_TAB    = TYPES_TAB_BASE + toInt(Utilities::FileType::TYPE_VIDEO),
+        TYPE_ARCHIVE_TAB  = TYPES_TAB_BASE + toInt(Utilities::FileType::TYPE_ARCHIVE),
+        TYPE_DOCUMENT_TAB = TYPES_TAB_BASE + toInt(Utilities::FileType::TYPE_DOCUMENT),
+        TYPE_IMAGE_TAB    = TYPES_TAB_BASE + toInt(Utilities::FileType::TYPE_IMAGE),
+        TYPE_TEXT_TAB     = TYPES_TAB_BASE + toInt(Utilities::FileType::TYPE_TEXT),
     };
 
     explicit TransferManager(mega::MegaApi *megaApi, QWidget *parent = 0);
@@ -62,6 +66,7 @@ protected:
     bool eventFilter(QObject *obj, QEvent *event) override;
     void changeEvent(QEvent *event) override;
     void dragEnterEvent(QDragEnterEvent* event) override;
+    void dragLeaveEvent(QDragLeaveEvent* event) override;
     void dropEvent(QDropEvent *event) override;
 
 private:
@@ -73,21 +78,23 @@ private:
 
     Preferences* mPreferences;
     QPoint mDragPosition;
-    ThreadPool* mThreadPool;
     QMap<TM_TAB, QFrame*> mTabFramesToggleGroup;
-    QMap<TransferData::FileType, QLabel*> mMediaNumberLabelsGroup;
+    QMap<Utilities::FileType, QLabel*> mMediaNumberLabelsGroup;
     QMap<TM_TAB, QWidget*> mTabNoItem;
 
-    QTransfersModel* mModel;
+    TransfersModel* mModel;
 
     TM_TAB mCurrentTab;
     QGraphicsDropShadowEffect* mShadowTab;
-    QSet<TransferData::FileType> mFileTypesFilter;
+    QSet<Utilities::FileType> mFileTypesFilter;
     QTimer* mSpeedRefreshTimer;
     QTimer* mStatsRefreshTimer;
 
     QMap<TM_TAB, long long> mNumberOfTransfersPerTab;
     QMap<TransferData::TransferTypes, long long> mNumberOfSearchResultsPerTypes;
+
+    Ui::TransferManagerDragBackDrop* mUiDragBackDrop;
+    QWidget* mDragBackDrop;
 
     void toggleTab(TM_TAB newTab);
     bool refreshStateStats();

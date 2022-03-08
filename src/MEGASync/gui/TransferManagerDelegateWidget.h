@@ -19,19 +19,19 @@ public:
     explicit TransferManagerDelegateWidget(QWidget* parent = 0);
     ~TransferManagerDelegateWidget();
 
-    void updateTransferState() override;
-    void setFileNameAndType() override;
-    void setType() override;
-    void setFileType(const QString& fileName);
 
     ActionHoverType mouseHoverTransfer(bool isHover, const QPoint &pos) override;
 
     void render(QPainter *painter, const QRegion &sourceRegion) override;
 
+protected:
+    void mouseDoubleClickEvent(QMouseEvent *event) override;
+
 signals:
     void cancelTransfer();
     void pauseResumeTransfer();
     void retryTransfer();
+    void openTransfer();
 
 private slots:
     void on_tPauseResumeTransfer_clicked();
@@ -39,6 +39,11 @@ private slots:
     void on_tItemRetry_clicked();
 
 private:
+    void updateTransferState() override;
+    void setFileNameAndType() override;
+    void setType() override;
+    void setFileType(const QString& fileName);
+
     bool setCancelClearTransferIcon(const QString &name);
     bool setPauseResumeTransferIcon(const QString &name);
 

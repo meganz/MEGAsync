@@ -3,7 +3,7 @@
 #include "Preferences.h"
 #include "gui/QMegaMessageBox.h"
 #include "megaapi.h"
-#include "QTransfersModel.h"
+#include "TransfersModel.h"
 #include "MegaApplication.h"
 #include "platform/Platform.h"
 #include "TransfersWidget.h"
@@ -20,10 +20,10 @@ using namespace mega;
 
 //////
 
-MegaTransferDelegate::MegaTransferDelegate(TransfersSortFilterProxyModelBase* model,  QAbstractItemView* view)
+MegaTransferDelegate::MegaTransferDelegate(TransfersSortFilterProxyBaseModel* model,  QAbstractItemView* view)
     : QStyledItemDelegate(view),
       mProxyModel (model),
-      mSourceModel (qobject_cast<QTransfersModel*>(
+      mSourceModel (qobject_cast<TransfersModel*>(
                         mProxyModel->sourceModel())),
       mView (view)
 {
@@ -158,6 +158,19 @@ bool MegaTransferDelegate::editorEvent(QEvent* event, QAbstractItemModel*,
                         {
                             t->click();
                         }
+                    }
+                }
+                break;
+            }
+            case QEvent::MouseButtonDblClick:
+            {
+                QMouseEvent* me = static_cast<QMouseEvent*>(event);
+                if( me->button() == Qt::LeftButton )
+                {
+                    TransferBaseDelegateWidget* currentRow (getTransferItemWidget(index, option.rect.size()));
+                    if (currentRow)
+                    {
+                        QApplication::postEvent(currentRow, new QEvent(QEvent::MouseButtonDblClick));
                     }
                 }
                 break;

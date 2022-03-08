@@ -1,7 +1,7 @@
 #include "TransferItem.h"
 #include "Utilities.h"
 #include "MegaApplication.h"
-#include "QTransfersModel.h"
+#include "TransfersModel.h"
 
 using namespace mega;
 
@@ -59,7 +59,7 @@ void TransferData::update(mega::MegaTransfer* transfer)
             mType |= TransferData::TRANSFER_SYNC;
         }
 
-        mFileType = getFileType(mFilename);
+        mFileType = Utilities::getFileType(mFilename, QString());
 
         mState = static_cast<TransferData::TransferState>(1 << transfer->getState());
 
@@ -73,8 +73,10 @@ void TransferData::update(mega::MegaTransfer* transfer)
 
         mTransferredBytes = static_cast<unsigned long long>(transfer->getTransferredBytes());
         mTotalSize = static_cast<unsigned long long>(transfer->getTotalBytes());
-        auto remBytes = mTotalSize - mTransferredBytes;
-        mSpeed = static_cast<unsigned long long>(MegaSyncApp->getMegaApi()->getCurrentSpeed(transfer->getType()));
+        unsigned long long remBytes = mTotalSize - mTransferredBytes;
+
+        long long httpSpeed = static_cast<unsigned long long>(MegaSyncApp->getMegaApi()->getCurrentSpeed(transfer->getType()));
+        mSpeed = std::min(transfer->getSpeed(), httpSpeed);
 
         TransferRemainingTime rem(mSpeed, remBytes);
         mRemainingTime = rem.calculateRemainingTimeSeconds(mSpeed, remBytes).count();
@@ -83,6 +85,8 @@ void TransferData::update(mega::MegaTransfer* transfer)
         mMeanSpeed = static_cast<unsigned long long>(transfer->getMeanSpeed());
         mErrorCode = MegaError::API_OK;
         mErrorValue = 0LL;
+        mTemporaryError = false;
+        mFailedTransfer = nullptr;
 
 
         auto megaError (transfer->getLastErrorExtended());
@@ -94,21 +98,12 @@ void TransferData::update(mega::MegaTransfer* transfer)
 
         mParentHandle = transfer->getParentHandle();
         mNodeHandle = transfer->getNodeHandle();
-
-        setUpdated(true);
     }
 }
 
-TransferData::FileType TransferData::getFileType(const QString &fileName)
+void TransferData::removeFailedTransfer()
 {
-    auto pixmapName (Utilities::getExtensionPixmapName(fileName, QString()));
-
-    auto fileType = QTransfersModel::mFileTypes.contains(pixmapName) ?
-                QTransfersModel::mFileTypes[pixmapName]
-                : TransferData::FileType::TYPE_OTHER;
-
-    return fileType;
-
+    mFailedTransfer.reset();
 }
 
 uint64_t TransferData::getFinishedTime()

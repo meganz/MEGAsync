@@ -22,20 +22,6 @@ typedef int TransferTag;
 class TransferData : public QSharedData
 {
 public:
-    enum FileType
-    {
-        TYPE_OTHER    = 0x01,
-        TYPE_AUDIO    = 0x02,
-        TYPE_VIDEO    = 0x04,
-        TYPE_ARCHIVE  = 0x08,
-        TYPE_DOCUMENT = 0x10,
-        TYPE_IMAGE    = 0x20,
-        TYPE_TEXT     = 0x40,
-    };
-    Q_DECLARE_FLAGS(FileTypes, FileType)
-
-    //static const QHash<QString, TransferData::FileType> ExtensionFileTypes;
-
     enum TransferState
     {
         TRANSFER_NONE         = 1 << mega::MegaTransfer::STATE_NONE,
@@ -67,69 +53,47 @@ public:
 
     static const TransferTypes TYPE_MASK;
 
-    TransferData(){}
+    TransferData(mega::MegaTransfer* transfer = nullptr){update(transfer);}
+    ~TransferData(){}
 
     TransferData(TransferData const* dr) :
         mType(dr->mType), mErrorCode(dr->mErrorCode),  mState(dr->mState), mTag(dr->mTag),
-        mErrorValue(dr->mErrorValue), mFinishedTime(dr->mFinishedTime),
+        mErrorValue(dr->mErrorValue), mTemporaryError(dr->mTemporaryError),
         mRemainingTime(dr->mRemainingTime),
         mTotalSize(dr->mTotalSize), mPriority(dr->mPriority), mSpeed(dr->mSpeed),
         mMeanSpeed(dr->mMeanSpeed),
         mTransferredBytes(dr->mTransferredBytes),
+        mNotificationNumber(dr->mNotificationNumber),
+        mIsSyncTransfer(dr->mIsSyncTransfer),
         mFileType(dr->mFileType),
-        mParentHandle (dr->mParentHandle), mNodeHandle (dr->mNodeHandle),
-        mFilename(dr->mFilename), mPath(dr->mPath), mNodeAccess(mega::MegaShare::ACCESS_UNKNOWN), mUpdated(false)
-    {
-        mIsSyncTransfer = mType.testFlag(TransferData::TransferType::TRANSFER_SYNC);
-    }
-
-    TransferData(mega::MegaTransfer*) : mUpdated(false)
+        mParentHandle (dr->mParentHandle), mNodeHandle (dr->mNodeHandle), mFailedTransfer(dr->mFailedTransfer),
+        mFilename(dr->mFilename), mNodeAccess(mega::MegaShare::ACCESS_UNKNOWN),
+        mPath(dr->mPath), mFinishedTime(dr->mFinishedTime)
     {}
 
     void update(mega::MegaTransfer* transfer);
+    void removeFailedTransfer();
 
-    bool isFinished()
-    {
-        return mState == mega::MegaTransfer::STATE_COMPLETED
-                || mState == mega::MegaTransfer::STATE_FAILED;
-    }
-
-    bool isUpdated()
-    {
-        return mUpdated;
-    }
-
-    void setUpdated(bool state)
-    {
-        mUpdated = state;
-    }
-
-    static FileType getFileType(const QString& fileName);
-
-    //Initialise with these values
-    TransferState mState;
-    int       mTag;
-    unsigned long long mPriority;
-    QString   mFilename;
-    TransferTypes mType;
-
-    //Updated only when paint needed
-    int       mErrorCode;
-    bool mIsSyncTransfer;
-    long long mErrorValue;
-    int64_t   mRemainingTime;
-    unsigned long long mTotalSize;
-    unsigned long long mSpeed;
-    unsigned long long mMeanSpeed;
-    unsigned long long mTransferredBytes;
-    long long mNotificationNumber;
-    int mNodeAccess;
-    FileType mFileType;
-    mega::MegaHandle mParentHandle;
-    mega::MegaHandle mNodeHandle;
-
-    //Is it Updated?
-    bool mUpdated;
+    TransferTypes                       mType;
+    int                                 mErrorCode;
+    TransferState                       mState;
+    int                                 mTag;
+    long long                           mErrorValue;
+    bool                                mTemporaryError;
+    int64_t                             mRemainingTime;
+    unsigned long long                  mTotalSize;
+    unsigned long long                  mPriority;
+    unsigned long long                  mSpeed;
+    unsigned long long                  mMeanSpeed;
+    unsigned long long                  mTransferredBytes;
+    long long                           mNotificationNumber;
+    bool                                mIsSyncTransfer;
+    Utilities::FileType                 mFileType;
+    mega::MegaHandle                    mParentHandle;
+    mega::MegaHandle                    mNodeHandle;
+    std::shared_ptr<mega::MegaTransfer> mFailedTransfer;
+    QString                             mFilename;
+    int                                 mNodeAccess;
 
     QString path() const;
     bool isPublicNode();
@@ -138,19 +102,16 @@ public:
 private:
     QString   mPath;
     int64_t   mFinishedTime;
-
 };
 Q_DECLARE_TYPEINFO(TransferData, Q_MOVABLE_TYPE);
 Q_DECLARE_METATYPE(TransferData)
-Q_DECLARE_OPERATORS_FOR_FLAGS(TransferData::FileTypes)
 Q_DECLARE_OPERATORS_FOR_FLAGS(TransferData::TransferStates)
 Q_DECLARE_OPERATORS_FOR_FLAGS(TransferData::TransferTypes)
-Q_DECLARE_METATYPE(TransferData::FileType)
 
 class TransferItem
 {
     public:
-        TransferItem() : d(new TransferData){}
+        TransferItem() : d(new TransferData()){}
         TransferItem(const TransferItem& tdr) : d(tdr.d) {}
         TransferItem(const QExplicitlySharedDataPointer<TransferData>& tdr) : d(tdr) {}
 

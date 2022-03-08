@@ -2,36 +2,22 @@
 #define TRANSFERSSORTFILTERPROXYMODEL_H
 
 #include "TransferItem.h"
+#include "TransfersSortFilterProxyBaseModel.h"
 
 #include <QSortFilterProxyModel>
 #include <QReadWriteLock>
 #include <QFutureWatcher>
 
 class TransferBaseDelegateWidget;
-class QTransfersModel;
+class TransfersModel;
 
-class TransfersSortFilterProxyModelBase : public QSortFilterProxyModel
-{
-    Q_OBJECT
-
-public:
-    TransfersSortFilterProxyModelBase(QObject* parent = nullptr) : QSortFilterProxyModel(parent)
-    {}
-    ~TransfersSortFilterProxyModelBase(){}
-
-    virtual TransferBaseDelegateWidget* createTransferManagerItem(QWidget *parent) = 0;
-
-protected:
-    int columnCount(const QModelIndex &parent) const override {return 1;}
-};
-
-class TransfersSortFilterProxyModel : public TransfersSortFilterProxyModelBase
+class TransfersManagerSortFilterProxyModel : public TransfersSortFilterProxyBaseModel
 {
         Q_OBJECT
 
 public:
-        TransfersSortFilterProxyModel(QObject *parent = nullptr);
-        ~TransfersSortFilterProxyModel();
+        TransfersManagerSortFilterProxyModel(QObject *parent = nullptr);
+        ~TransfersManagerSortFilterProxyModel();
 
         bool moveRows(const QModelIndex& proxyParent, int proxyRow, int count,
                       const QModelIndex& destinationParent, int destinationChild) override;
@@ -39,9 +25,10 @@ public:
         void invalidate();
         void setSourceModel(QAbstractItemModel *sourceModel) override;
         void setFilterFixedString(const QString &pattern);
+        void textSearchTypeChanged();
         void setFilters(const TransferData::TransferTypes transferTypes,
                         const TransferData::TransferStates transferStates,
-                        const TransferData::FileTypes fileTypes);
+                        const Utilities::FileTypes fileTypes);
         void updateFilters();
         void resetAllFilters();
         int  getNumberOfItems(TransferData::TransferType transferType);
@@ -64,6 +51,7 @@ protected slots:
         void onCancelClearTransfer();
         void onPauseResumeTransfer();
         void onRetryTransfer();
+        void onOpenTransfer();
 
 protected:
         bool filterAcceptsRow(int sourceRow, const QModelIndex& sourceParent) const override;
@@ -72,19 +60,16 @@ protected:
 protected:
         TransferData::TransferStates mTransferStates;
         TransferData::TransferTypes mTransferTypes;
-        TransferData::FileTypes mFileTypes;
+        Utilities::FileTypes mFileTypes;
         TransferData::TransferStates mNextTransferStates;
         TransferData::TransferTypes mNextTransferTypes;
-        TransferData::FileTypes mNextFileTypes;
+        Utilities::FileTypes mNextFileTypes;
         SortCriterion mSortCriterion;
-        mutable int mDlNumber;
-        mutable int mUlNumber;
-        bool mSearchCountersOn;
+        mutable QSet<int> mDlNumber;
+        mutable QSet<int> mUlNumber;
 
 private slots:
         void onRowsAboutToBeRemoved(const QModelIndex& parent, int first, int last);
-        void onRowsAboutToBeInserted(const QModelIndex&, int, int);
-        void onRowsInserted(const QModelIndex&, int, int);
         void onModelSortedFiltered();
 
 private:

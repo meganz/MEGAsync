@@ -13,7 +13,7 @@ class InfoDialogTransfersWidget;
 
 class MegaDelegateHoverManager;
 class MegaApplication;
-class InfoDialogCurrentTransfersProxyModel;
+class InfoDialogTransfersProxyModel;
 
 class InfoDialogTransfersWidget : public QWidget
 {
@@ -29,7 +29,7 @@ protected:
 
 private:
     Ui::InfoDialogTransfersWidget *ui;
-    InfoDialogCurrentTransfersProxyModel *model;
+    InfoDialogTransfersProxyModel *model;
     MegaDelegateHoverManager mViewHoverManager;
 
 private:

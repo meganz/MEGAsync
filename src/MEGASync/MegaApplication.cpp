@@ -129,7 +129,7 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     "QMessageBox QLabel {font-size: 13px;}"
     "QMessageBox QPushButton {font-size: 13px;padding-right: 12px;padding-left: 12px;}"
     "QMenu {font-size: 13px;}"
-    "QToolTip {font-size: 13px; color: #FAFAFA; background-color: #333333; border: 0px;}"
+    "QToolTip {font-size: 13px; color: #FAFAFA; background-color: #333333; border: 0px; margin-bottom: 2px; min-height: 22px;}"
     "QFileDialog QPushButton {font-size: 13px;padding-right: 12px;padding-left: 12px;}"
     "QFileDialog QWidget {font-size: 13px;}"
     "QRadioButton::indicator {width: 13px; height: 13px;}"
@@ -205,6 +205,7 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     prevVersion = 0;
     updatingSSLcert = false;
     lastSSLcertUpdate = 0;
+    mModel = nullptr;
 
     notificationsModel = NULL;
     notificationsProxyModel = NULL;
@@ -279,7 +280,7 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     storageOverquotaDialog = NULL;
     infoWizard = NULL;
     isFirstFileSynced = false;
-    transferManager = NULL;
+    transferManager = nullptr;
     cleaningSchedulerExecution = 0;
     lastUserActivityExecution = 0;
     lastTsBusinessWarning = 0;
@@ -646,10 +647,10 @@ void MegaApplication::initialize()
         connect(watcher, SIGNAL(fileChanged(QString)), this, SLOT(showInterface(QString)));
     }
 
-    mModel2 = new QTransfersModel(nullptr);
-    mModel2->initModel();
+    mModel = new TransfersModel(nullptr);
+    mModel->initModel();
 
-    connect(mModel2, &QTransfersModel::transfersCountUpdated, this, &MegaApplication::onTransfersModelUpdate);
+    connect(mModel, &TransfersModel::transfersCountUpdated, this, &MegaApplication::onTransfersModelUpdate);
 }
 
 QString MegaApplication::applicationFilePath()
@@ -1778,6 +1779,10 @@ void MegaApplication::pauseTransfers(bool pause)
     }
 
     megaApi->pauseTransfers(pause);
+    if(getTransfersModel())
+    {
+        getTransfersModel()->pauseResumeAllTransfers(pause);
+    }
 }
 
 void MegaApplication::checkNetworkInterfaces()
@@ -3774,7 +3779,7 @@ void MegaApplication::checkFirstTransfer()
     firstTransferTimer->deleteLater();
     firstTransferTimer = nullptr;
 
-    auto TransfersStats = mModel2->getTransfersCount();
+    auto TransfersStats = mModel->getTransfersCount();
 
     if (TransfersStats.pendingDownloads)
     {
@@ -4187,7 +4192,7 @@ void MegaApplication::onTransfersModelUpdate()
         infoDialog->updateDialogState();
     }
 
-    auto TransfersStats = mModel2->getTransfersCount();
+    auto TransfersStats = mModel->getTransfersCount();
     //If there are no pending transfers, reset the statics and update the state of the tray icon
     if (!TransfersStats.pendingDownloads
             && !TransfersStats.pendingUploads)
@@ -4902,6 +4907,8 @@ void MegaApplication::transferManagerActionClicked(int tab)
 
     transferManager->setActiveTab(tab);
     Platform::activateBackgroundWindow(transferManager);
+    transferManager->showMinimized();
+    transferManager->showNormal();
     transferManager->activateWindow();
     transferManager->raise();
     transferManager->show();

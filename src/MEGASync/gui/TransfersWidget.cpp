@@ -22,15 +22,15 @@ TransfersWidget::TransfersWidget(QWidget* parent) :
 }
 void TransfersWidget::setupTransfers()
 {
-    mProxyModel = new TransfersSortFilterProxyModel(this);
+    mProxyModel = new TransfersManagerSortFilterProxyModel(this);
     mProxyModel->setSourceModel(app->getTransfersModel());
     mProxyModel->sort(static_cast<int>(SortCriterion::PRIORITY), Qt::DescendingOrder);
 
-    connect(mProxyModel, &TransfersSortFilterProxyModel::modelAboutToBeChanged, this, &TransfersWidget::onModelAboutToBeChanged);
-    connect(mProxyModel, &TransfersSortFilterProxyModel::modelChanged, this, &TransfersWidget::onModelChanged);
-    connect(app->getTransfersModel(), &QTransfersModel::transfersAboutToBeCanceled, this, &TransfersWidget::onModelAboutToBeChanged);
-    connect(app->getTransfersModel(), &QTransfersModel::transfersCanceled, this, &TransfersWidget::onModelChanged);
-    connect(mProxyModel, &TransfersSortFilterProxyModel::transferPauseResume, this, &TransfersWidget::onPauseResumeButtonCheckedOnDelegate);
+    connect(mProxyModel, &TransfersManagerSortFilterProxyModel::modelAboutToBeChanged, this, &TransfersWidget::onModelAboutToBeChanged);
+    connect(mProxyModel, &TransfersManagerSortFilterProxyModel::modelChanged, this, &TransfersWidget::onModelChanged);
+    connect(app->getTransfersModel(), &TransfersModel::transfersAboutToBeCanceled, this, &TransfersWidget::onModelAboutToBeChanged);
+    connect(app->getTransfersModel(), &TransfersModel::transfersCanceled, this, &TransfersWidget::onModelChanged);
+    connect(mProxyModel, &TransfersManagerSortFilterProxyModel::transferPauseResume, this, &TransfersWidget::onPauseResumeButtonCheckedOnDelegate);
 
     configureTransferView();
 }
@@ -77,7 +77,7 @@ void TransfersWidget::disableGetLink(bool disable)
     ui->tvTransfers->disableGetLink(disable);
 }
 
-QTransfersModel* TransfersWidget::getModel()
+TransfersModel* TransfersWidget::getModel()
 {
     return app->getTransfersModel();
 }
@@ -239,9 +239,15 @@ void TransfersWidget::textFilterChanged(const QString& pattern)
     ui->tvTransfers->scrollToTop();
 }
 
+void TransfersWidget::textFilterTypeChanged(const TransferData::TransferTypes transferTypes)
+{
+    mProxyModel->setFilters(transferTypes,{},{});
+    mProxyModel->textSearchTypeChanged();
+}
+
 void TransfersWidget::filtersChanged(const TransferData::TransferTypes transferTypes,
                                      const TransferData::TransferStates transferStates,
-                                     const TransferData::FileTypes fileTypes)
+                                     const Utilities::FileTypes fileTypes)
 {
     mProxyModel->setFilters(transferTypes, transferStates, fileTypes);
 }

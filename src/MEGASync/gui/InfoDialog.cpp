@@ -217,7 +217,7 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
     connect(ui->wSortNotifications, SIGNAL(clicked()), this, SLOT(on_bActualFilter_clicked()));
     connect(app, &MegaApplication::avatarReady, this, &InfoDialog::setAvatar);
 
-    connect(app->getTransfersModel(), &QTransfersModel::transfersCountUpdated, this, &InfoDialog::onTransfersDataUpdated);
+    connect(app->getTransfersModel(), &TransfersModel::transfersCountUpdated, this, &InfoDialog::onTransfersDataUpdated);
 
     //Set window properties
 #ifdef Q_OS_LINUX
@@ -666,8 +666,8 @@ void InfoDialog::updateTransfersCount()
 {
     auto TransfersCountUpdated = app->getTransfersModel()->getTransfersCount();
 
-    ui->bTransferManager->setCompletedDownloads(qMax(0,qMin(TransfersCountUpdated.totalDownloads, TransfersCountUpdated.currentDownload)));
-    ui->bTransferManager->setCompletedUploads(qMax(0,qMin(TransfersCountUpdated.totalUploads,TransfersCountUpdated.currentUpload)));
+    ui->bTransferManager->setCompletedDownloads(TransfersCountUpdated.completedDownloads());
+    ui->bTransferManager->setCompletedUploads(TransfersCountUpdated.completedUploads());
     ui->bTransferManager->setTotalDownloads(TransfersCountUpdated.totalDownloads);
     ui->bTransferManager->setTotalUploads(TransfersCountUpdated.totalUploads);
 

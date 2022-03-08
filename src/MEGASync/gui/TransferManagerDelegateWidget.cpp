@@ -68,13 +68,20 @@ void TransferManagerDelegateWidget::updateTransferState()
                 mUi->sStatus->setCurrentWidget(mUi->pActive);
             }
 
-            // Override speed if http speed is lower
-            auto httpSpeed (static_cast<unsigned long long>(MegaSyncApp->getMegaApi()->getCurrentSpeed((getData()->mType & TransferData::TYPE_MASK) >> 1)));
-            timeString = (httpSpeed == 0 || getData()->mSpeed == 0) ?
+            timeString = getData()->mSpeed == 0 ?
                              timeString
                            : Utilities::getTimeString(getData()->mRemainingTime);
-            speedString = Utilities::getSizeString(std::min(getData()->mSpeed, httpSpeed))
-                          + QLatin1Literal("/s");
+
+            if(getData()->mTotalSize == getData()->mTransferredBytes
+                    ||getData()->mTransferredBytes == 0 && getData()->mSpeed == 0)
+            {
+                speedString = QLatin1Literal("...");
+            }
+            else
+            {
+                speedString = Utilities::getSizeString(getData()->mSpeed)
+                        + QLatin1Literal("/s");
+            }
             break;
         }
         case TransferData::TRANSFER_PAUSED:
@@ -96,15 +103,16 @@ void TransferManagerDelegateWidget::updateTransferState()
                 pauseResumeTooltip = tr("Pause transfer");
                 cancelClearTooltip = tr("Cancel transfer");
                 mUi->sStatus->setCurrentWidget(mUi->pQueued);
+
+                if(getData()->mErrorCode == MegaError::API_EOVERQUOTA)
+                {
+                    QString retryMsg (getData()->mErrorValue ? tr("Out of transfer quota")
+                                                        : tr("Out of storage space"));
+                    mUi->lRetryMsg->setText(retryMsg);
+                    mUi->sStatus->setCurrentWidget(mUi->pRetry);
+                }
             }
 
-            if(getData()->mErrorCode == MegaError::API_EOVERQUOTA)
-            {
-                QString retryMsg (getData()->mErrorValue ? tr("Out of transfer quota")
-                                                    : tr("Out of storage space"));
-                mUi->lRetryMsg->setText(retryMsg);
-                mUi->sStatus->setCurrentWidget(mUi->pRetry);
-            }
 
             break;
         }
@@ -128,28 +136,29 @@ void TransferManagerDelegateWidget::updateTransferState()
             if(stateHasChanged())
             {
                 statusString = tr("Completing");
+                speedString = QLatin1Literal("...");
                 showTPauseResume = false;
                 showTCancelClear = false;
                 mUi->sStatus->setCurrentWidget(mUi->pActive);
                 mLastPauseResuemtTransferIconName.clear();
             }
-            speedString = Utilities::getSizeString(getData()->mMeanSpeed) + QLatin1Literal("/s");
             break;
         }
         case TransferData::TRANSFER_FAILED:
         {
             if(stateHasChanged())
             {
-                timeString = QDateTime::fromSecsSinceEpoch(getData()->getFinishedTime())
-                             .toString(QLatin1Literal("hh:mm"));
-                speedString = Utilities::getSizeString(getData()->mMeanSpeed) + QLatin1Literal("/s");
                 mLastPauseResuemtTransferIconName.clear();
+                mUi->sStatus->setCurrentWidget(mUi->pFailed);
+                mUi->tItemRetry->setVisible(!getData()->mTemporaryError);
+                cancelClearTooltip = tr("Clear transfer");
+                mUi->lItemFailed->setToolTip(tr(MegaError::getErrorString(getData()->mErrorCode)));
+                showTPauseResume = false;
             }
 
-            mUi->sStatus->setCurrentWidget(mUi->pFailed);
-            cancelClearTooltip = tr("Clear transfer");
-            showTPauseResume = false;
-            mUi->tItemRetry->setToolTip(tr(MegaError::getErrorString(getData()->mErrorCode)));
+
+            speedString = QLatin1Literal("...");
+
             break;
         }
         case TransferData::TRANSFER_RETRYING:
@@ -184,7 +193,8 @@ void TransferManagerDelegateWidget::updateTransferState()
 
                 mUi->sStatus->setCurrentWidget(mUi->pActive);
             }
-            speedString = Utilities::getSizeString(getData()->mMeanSpeed) + QLatin1Literal("/s");
+            speedString = Utilities::getSizeString(getData()->mMeanSpeed == 0
+                                                   ? getData()->mTotalSize : getData()->mMeanSpeed) + QLatin1Literal("/s");
             timeString = Utilities::getFinishedTimeString(getData()->getFinishedTime());
             break;
         }
@@ -216,7 +226,22 @@ void TransferManagerDelegateWidget::updateTransferState()
             mUi->tCancelClearTransfer->setToolTip(cancelClearTooltip);
         }
         mUi->tCancelClearTransfer->setVisible(showTCancelClear);
+
+        mUi->lDone->setVisible(!(getData()->mState & TransferData::FINISHED_STATES_MASK));
     }
+
+    // Total size
+    mUi->lTotal->setText(Utilities::getSizeString(getData()->mTotalSize));
+    // File name
+    auto transferedB (getData()->mTransferredBytes);
+    auto totalB (getData()->mTotalSize);
+    mUi->lDone->setText(Utilities::getSizeString(transferedB) + QLatin1Literal(" / "));
+    // Progress bar
+    int permil = getData()->mState & (TransferData::TRANSFER_COMPLETED | TransferData::TRANSFER_COMPLETING) ?
+                     PB_PRECISION
+                   : totalB > 0 ? Utilities::partPer(transferedB, totalB, PB_PRECISION)
+                                : 0;
+    mUi->pbTransfer->setValue(permil);
 
     // Speed
     mUi->bItemSpeed->setText(speedString);
@@ -232,18 +257,6 @@ void TransferManagerDelegateWidget::setFileNameAndType()
     icon = Utilities::getCachedPixmap(Utilities::getExtensionPixmapName(
                                           getData()->mFilename, QLatin1Literal(":/images/drag_")));
     mUi->tFileType->setIcon(icon);
-    // Total size
-    mUi->lTotal->setText(QLatin1Literal("/ ") + Utilities::getSizeString(getData()->mTotalSize));
-    // File name
-    auto transferedB (getData()->mTransferredBytes);
-    auto totalB (getData()->mTotalSize);
-    mUi->lDone->setText(Utilities::getSizeString(transferedB));
-    // Progress bar
-    int permil = getData()->mState & (TransferData::TRANSFER_COMPLETED | TransferData::TRANSFER_COMPLETING) ?
-                     PB_PRECISION
-                   : totalB > 0 ? Utilities::partPer(transferedB, totalB, PB_PRECISION)
-                                : 0;
-    mUi->pbTransfer->setValue(permil);
 
     // File name
     QString localPath = getData()->path();
@@ -328,6 +341,13 @@ TransferBaseDelegateWidget::ActionHoverType TransferManagerDelegateWidget::mouse
 void TransferManagerDelegateWidget::render(QPainter *painter, const QRegion &sourceRegion)
 {
     TransferBaseDelegateWidget::render(painter, sourceRegion);
+}
+
+void TransferManagerDelegateWidget::mouseDoubleClickEvent(QMouseEvent *event)
+{
+    emit openTransfer();
+
+    TransferBaseDelegateWidget::mouseDoubleClickEvent(event);
 }
 
 void TransferManagerDelegateWidget::on_tPauseResumeTransfer_clicked()

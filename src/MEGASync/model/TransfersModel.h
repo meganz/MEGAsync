@@ -1,5 +1,5 @@
-#ifndef QTRANSFERSMODEL_H
-#define QTRANSFERSMODEL_H
+#ifndef TRANSFERSMODEL_H
+#define TRANSFERSMODEL_H
 
 #include "QTMegaTransferListener.h"
 #include "TransferItem.h"
@@ -24,29 +24,24 @@ struct TransfersCount
     int pendingUploads;
     int pendingDownloads;
 
-    int currentUpload;
-    int currentDownload;
-
     long long completedUploadBytes;
     long long completedDownloadBytes;
 
     long long totalUploadBytes;
     long long totalDownloadBytes;
 
-    QMap<TransferData::FileType, long long> transfersByType;
-    QMap<TransferData::FileType, long long> transfersFinishedByType;
+    QMap<Utilities::FileType, long long> transfersByType;
+    QMap<Utilities::FileType, long long> transfersFinishedByType;
 
     TransfersCount():
-        totalUploadBytes(0),
-        completedUploadBytes(0),
-        totalDownloadBytes(0),
-        completedDownloadBytes(0),
-        pendingUploads(0),
-        pendingDownloads(0),
         totalUploads(0),
         totalDownloads(0),
-        currentUpload(1),
-        currentDownload(1)
+        pendingUploads(0),
+        pendingDownloads(0),
+        completedUploadBytes(0),
+        completedDownloadBytes(0),
+        totalUploadBytes(0),
+        totalDownloadBytes(0)
     {}
 
     int completedDownloads(){return totalDownloads - pendingDownloads;}
@@ -72,26 +67,26 @@ public slots:
     void onTransferUpdate(mega::MegaApi*, mega::MegaTransfer* transfer);
     void onTransferTemporaryError(mega::MegaApi*,mega::MegaTransfer* transfer,mega::MegaError*);
 
-    std::list<QExplicitlySharedDataPointer<TransferData>> processUpdates();
+    QList<QExplicitlySharedDataPointer<TransferData> > processUpdates();
 
 private:
     QExplicitlySharedDataPointer<TransferData> createData(mega::MegaTransfer* transfer);
 
-    std::list<QExplicitlySharedDataPointer<TransferData>> mCacheUpdateTransfers;
-    void onTransferEvent(mega::MegaTransfer* transfer);
+    QMap<int, QExplicitlySharedDataPointer<TransferData>> mCacheUpdateTransfersByTag;
+    QExplicitlySharedDataPointer<TransferData> onTransferEvent(mega::MegaTransfer* transfer);
 
-    QReadWriteLock* mCacheMutex;
-    QReadWriteLock* mCountersMutex;
+    QMutex mCacheMutex;
+    QMutex mCountersMutex;
     TransfersCount mTransfersCount;
 };
 
-class QTransfersModel : public QAbstractItemModel
+class TransfersModel : public QAbstractItemModel
 {
     Q_OBJECT
 
 public:
-    explicit QTransfersModel(QObject* parent = 0);
-    ~QTransfersModel();
+    explicit TransfersModel(QObject* parent = 0);
+    ~TransfersModel();
 
     virtual Qt::ItemFlags flags(const QModelIndex& index) const;
     virtual Qt::DropActions supportedDropActions() const;
@@ -110,18 +105,17 @@ public:
 
     void getLinks(QList<int>& rows);
     void openFolderByIndex(const QModelIndex& index);
+    void openFolderByTag(TransferTag tag);
     void cancelClearTransfers(const QModelIndexList& indexes, bool clearAll);
     void pauseTransfers(const QModelIndexList& indexes, bool pauseState);
     void pauseResumeTransferByTag(TransferTag tag, bool pauseState);
 
     void lockModelMutex(bool lock);
 
-    long long  getNumberOfTransfersForFileType(TransferData::FileType fileType) const;
-    long long  getNumberOfFinishedForFileType(TransferData::FileType fileType) const;
+    long long  getNumberOfTransfersForFileType(Utilities::FileType fileType) const;
+    long long  getNumberOfFinishedForFileType(Utilities::FileType fileType) const;
     TransfersCount getTransfersCount();
     void resetCompletedTransfersCount();
-    void resetCompletedUpload(long long transferBytes);
-    void resetCompletedDownload(long long transferBytes);
 
     void initModel();
 
@@ -131,9 +125,6 @@ public:
     void pauseModelProcessing(bool value);
 
     bool areAllPaused();
-
-    static QHash<QString, TransferData::FileType> mFileTypes;
-
 
 signals:
     void pauseStateChanged(bool pauseState);
@@ -146,7 +137,7 @@ signals:
 
 public slots:
     void onRetryTransfer(TransferTag tag);
-    void pauseResumeAllTransfers();
+    void pauseResumeAllTransfers(bool state);
     void cancelClearAllTransfers();
 
 private slots:
@@ -156,7 +147,6 @@ private slots:
     void processCancelTransfers();
 
     void onProcessTransfers();
-
 
 private:
     void updateTransfersCount();
@@ -179,12 +169,11 @@ private:
     bool mTransfersCancelling;
     QHash<TransferTag, int> mTagByOrder;
     QList<int> mRowsToUpdate;
-    ThreadPool* mThreadPool;
-    QReadWriteLock* mModelMutex;
+    QMutex mModelMutex;
     mega::QTMegaTransferListener *delegateListener;
 
     bool mAreAllPaused;
     bool stopModelProcessing;
 };
 
-#endif // QTRANSFERSMODEL_H
+#endif // TRANSFERSMODEL_H
