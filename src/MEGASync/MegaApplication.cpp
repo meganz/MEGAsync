@@ -6954,7 +6954,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
     case MegaRequest::TYPE_GET_PRICING:
     {
         if (e->getErrorCode() == MegaError::API_OK)
-        {       
+        {
             MegaPricing* pricing (request->getPricing());
             MegaCurrency* currency (request->getCurrency());
 
@@ -7477,7 +7477,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
             transferQuota->updateQuotaState();
         }
 
-        preferences->sync();        
+        preferences->sync();
 
         if (infoDialog)
         {
