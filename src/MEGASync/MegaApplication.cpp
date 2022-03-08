@@ -2655,7 +2655,7 @@ void MegaApplication::initLocalServer()
 
 bool MegaApplication::eventFilter(QObject *obj, QEvent *e)
 {
-    if (obj == infoDialogMenu)
+    if (!appfinished && obj == infoDialogMenu)
     {
         if (e->type() == QEvent::Leave)
         {
