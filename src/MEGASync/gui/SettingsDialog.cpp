@@ -1418,7 +1418,6 @@ void SettingsDialog::addSyncFolder(MegaHandle megaFolderHandle)
                 }
         }, Qt::DirectConnection);
 
-    auto syncSetting = Model::instance()->getSyncSetting(mSelectedSyncRow);
     mController->addSync(localFolderPath, dialog->megaPathHandle, dialog->getSyncName(), action);
 
     delete dialog;
