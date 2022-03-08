@@ -954,7 +954,6 @@ void MegaApplication::start()
     indexing = false;
     paused = false;
     nodescurrent = false;
-    appliedStorageState = MegaApi::STORAGE_STATE_UNKNOWN;
     getUserDataRequestReady = false;
     mFetchingNodes = false;
     mQueringWhyAmIBlocked = false;
