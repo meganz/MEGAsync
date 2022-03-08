@@ -1531,12 +1531,8 @@ void SettingsDialog::on_bAdd_clicked()
 
 void SettingsDialog::on_bDelete_clicked()
 {
-    if (mSelectedSyncRow == -1)
-    {
-        return;
-    }
-
-    onDeleteSync();
+    if (mSelectedSyncRow >= 0 && mSelectedSyncRow < mUi->tSyncs->rowCount())
+        onDeleteSync();
 }
 
 void SettingsDialog::on_tSyncs_doubleClicked(const QModelIndex& index)
