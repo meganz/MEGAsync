@@ -1331,8 +1331,8 @@ void SettingsDialog::loadSyncSettings()
     mUi->tSyncs->setColumnHidden(SYNC_COL_NAME, true);   //hidden name
     mUi->tSyncs->horizontalHeader()->setSectionResizeMode(SYNC_COL_ENABLE_CB, QHeaderView::Fixed);
     mUi->tSyncs->horizontalHeader()->setSectionResizeMode(SYNC_COL_MENU, QHeaderView::Fixed);
-    mUi->tSyncs->horizontalHeader()->setSectionResizeMode(SYNC_COL_LFOLDER,QHeaderView::Stretch);
-    mUi->tSyncs->horizontalHeader()->setSectionResizeMode(SYNC_COL_RFOLDER,QHeaderView::Stretch);
+    mUi->tSyncs->horizontalHeader()->setSectionResizeMode(SYNC_COL_DISPLAY_NAME,QHeaderView::Stretch);
+    mUi->tSyncs->horizontalHeader()->setSectionResizeMode(SYNC_COL_RUN_STATE,QHeaderView::Stretch);
     int miniMumSectionSize (mUi->tSyncs->horizontalHeader()->minimumSectionSize());
     mUi->tSyncs->horizontalHeader()->resizeSection(SYNC_COL_ENABLE_CB, miniMumSectionSize);
     mUi->tSyncs->horizontalHeader()->resizeSection(SYNC_COL_MENU, miniMumSectionSize);
@@ -1376,10 +1376,9 @@ void SettingsDialog::addSyncFolder(MegaHandle megaFolderHandle)
     for (int i = 0; i < mUi->tSyncs->rowCount(); i++)
     {
         //notice: this also takes into account !active ones
-        QWidget* w (mUi->tSyncs->cellWidget(i, SYNC_COL_LFOLDER));
-        currentLocalFolders.append(static_cast<QSyncItemWidget*>(w)->fullPath());
-        w = mUi->tSyncs->cellWidget(i, SYNC_COL_RFOLDER);
-        currentMegaFoldersPaths.append(static_cast<QSyncItemWidget*>(w)->fullPath());
+        QWidget* w = mUi->tSyncs->cellWidget(i, SYNC_COL_DISPLAY_NAME);
+        currentLocalFolders.append(static_cast<QSyncItemWidget*>(w)->getLocalPath());
+        currentMegaFoldersPaths.append(static_cast<QSyncItemWidget*>(w)->getRemotePath());
     }
 
     QPointer<BindFolderDialog> dialog = new BindFolderDialog(mApp, mSyncNames, currentLocalFolders,
@@ -1490,12 +1489,12 @@ void SettingsDialog::onSyncSelected(const QItemSelection& selected, const QItemS
         }
 
         // Paths
-        auto w (qobject_cast<QSyncItemWidget*>(mUi->tSyncs->cellWidget(i, SYNC_COL_LFOLDER)));
+        auto w (qobject_cast<QSyncItemWidget*>(mUi->tSyncs->cellWidget(i, SYNC_COL_DISPLAY_NAME)));
         // Check if the row has not been deleted
         if (w)
         {
             w->setSelected(select);
-            w = qobject_cast<QSyncItemWidget*>(mUi->tSyncs->cellWidget(i, SYNC_COL_RFOLDER));
+            w = qobject_cast<QSyncItemWidget*>(mUi->tSyncs->cellWidget(i, SYNC_COL_RUN_STATE));
             w->setSelected(select);
 
             // Menu
@@ -1538,27 +1537,27 @@ void SettingsDialog::on_bDelete_clicked()
 void SettingsDialog::on_tSyncs_doubleClicked(const QModelIndex& index)
 {
     //FIXME: When using custom widget for row items, remove double check or use cellwidget to fix it.
+    auto widget = static_cast<QSyncItemWidget*>(mUi->tSyncs->cellWidget(index.row(), SYNC_COL_DISPLAY_NAME));
+
     if (!index.column())
     {
-        auto w (static_cast<QSyncItemWidget*>(mUi->tSyncs->cellWidget(index.row(),
-                                                                     SYNC_COL_LFOLDER)));
-        QtConcurrent::run(QDesktopServices::openUrl, QUrl::fromLocalFile(w->fullPath()));
+        QtConcurrent::run(QDesktopServices::openUrl, QUrl::fromLocalFile(widget->getLocalPath()));
+        return;
     }
-    else
-    {
-        auto w (static_cast<QSyncItemWidget*>(mUi->tSyncs->cellWidget(index.row(),
-                                                                     SYNC_COL_RFOLDER)));
-        QString megaFolderPath = w->fullPath();
-        MegaNode* node = mMegaApi->getNodeByPath(megaFolderPath.toUtf8().constData());
-        if (node)
-        {
-            const char *handle = node->getBase64Handle();
-            QString url = QString::fromUtf8("mega://#fm/") + QString::fromUtf8(handle);
-            QtConcurrent::run(QDesktopServices::openUrl, QUrl(url));
-            delete [] handle;
-            delete node;
-        }
-    }
+
+    auto remotePath = widget->getRemotePath();
+    auto node = mMegaApi->getNodeByPath(remotePath.toUtf8().constData());
+
+    if (!node)
+        return;
+
+    auto handle = node->getBase64Handle();
+    auto url = QString::fromUtf8("mega://#fm/") + QString::fromUtf8(handle);
+
+    QtConcurrent::run(QDesktopServices::openUrl, QUrl(url));
+
+    delete[] handle;
+    delete node;
 }
 
 void SettingsDialog::onCellClicked(int row, int column)
@@ -1714,8 +1713,8 @@ void SettingsDialog::setSyncToDisabled()
 
 void SettingsDialog::showInFolderClicked()
 {
-    QWidget* w (mUi->tSyncs->cellWidget(mSelectedSyncRow, SYNC_COL_LFOLDER));
-    QString localFolderPath (qobject_cast<QSyncItemWidget*>(w)->fullPath());
+    QWidget* w (mUi->tSyncs->cellWidget(mSelectedSyncRow, SYNC_COL_DISPLAY_NAME));
+    QString localFolderPath (qobject_cast<QSyncItemWidget*>(w)->getLocalPath());
     QtConcurrent::run(QDesktopServices::openUrl, QUrl::fromLocalFile(localFolderPath));
 }
 
@@ -1870,30 +1869,44 @@ void SettingsDialog::addSyncRow(int row, const QString& name, const QString& lPa
 
     mUi->tSyncs->setCellWidget(row, SYNC_COL_ENABLE_CB, w);
 
-    // Col 1: Local folder
-    QSyncItemWidget* localFolder = new QSyncItemWidget(QSyncItemWidget::LOCAL_FOLDER);
-    QString localFolderQString = lPath;
-#ifdef Q_OS_WINDOWS
-    if (localFolderQString.startsWith(QString::fromUtf8("\\\\?\\")))
+    // Col 1: Name (and paths.)
     {
-        localFolderQString = localFolderQString.mid(4);
+        assert(!rPath.isEmpty() && "remote folder lacks path");
+
+        auto widget = new QSyncItemWidget(QSyncItemWidget::NAME);
+
+        // Remove namespace prefix if presnet.
+        auto localPath = lPath;
+
+#ifdef Q_OS_WINDOWS
+        if (lPath.startsWith(QString::fromUtf8("\\\\?\\")))
+            localPath.remove(0, 4);
+#endif // Q_OS_WINDOWS
+
+        widget->mSyncRootHandle = megaHandle;
+        widget->setError(error);
+        widget->setLocalPath(localPath);
+        widget->setName(name);
+        widget->setRemotePath(rPath);
+        widget->setSyncSetting(syncSetting);
+        widget->setToolTip(
+            QString::fromUtf8("Local Path: ")
+            + localPath
+            + QString::fromUtf8("\r\nRemote Path: ")
+            + rPath);
+
+        mUi->tSyncs->setCellWidget(row, SYNC_COL_DISPLAY_NAME, widget);
     }
-#endif
-    localFolder->setPath(localFolderQString, name);
-    localFolder->setToolTip(localFolderQString + QString::fromUtf8("\n") + rPath);
-    localFolder->setError(error);
-    mUi->tSyncs->setCellWidget(row, SYNC_COL_LFOLDER, localFolder);
 
-    // Col 2: Mega Folder
-    QSyncItemWidget* megaFolder = new QSyncItemWidget(QSyncItemWidget::REMOTE_FOLDER);
-    assert(rPath.size() && "remote folder lacks path");
+    // Col 2: Run State.
+    {
+        auto widget = new QSyncItemWidget(QSyncItemWidget::RUN_STATE);
 
-    megaFolder->setPath(runStateString);
+        widget->setRunState(runStateString);
+        widget->setSyncSetting(syncSetting);
 
-    localFolder->setToolTip(localFolderQString + QString::fromUtf8("\n") + rPath);
-    megaFolder->setSyncSetting(syncSetting);
-    megaFolder->mSyncRootHandle = megaHandle;
-    mUi->tSyncs->setCellWidget(row, SYNC_COL_RFOLDER, megaFolder);
+        mUi->tSyncs->setCellWidget(row, SYNC_COL_RUN_STATE, widget);
+    }
 
     // Col 3: menu
     QLabel* lMenu (new QLabel);

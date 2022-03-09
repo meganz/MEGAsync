@@ -1542,12 +1542,12 @@ font-weight: bold;
                </column>
                <column>
                 <property name="text">
-                 <string>Local Folder</string>
+                 <string>Name</string>
                 </property>
                </column>
                <column>
                 <property name="text">
-                 <string>MEGA Folder</string>
+                 <string>Run State</string>
                 </property>
                </column>
                <column>

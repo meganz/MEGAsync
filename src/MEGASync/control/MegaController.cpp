@@ -55,8 +55,12 @@ void Controller::setSyncRunState(mega::MegaSync::SyncRunningState newState, std:
         return;
     }
 
-    MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromAscii("Set state of sync %1 to %2")
-                 .arg(syncSetting->getLocalFolder()).arg(syncSetting->getMegaFolder()).toUtf8().constData() );
+    MegaApi::log(MegaApi::LOG_LEVEL_INFO,
+                 QString::fromAscii("Set state of sync %1 to %2")
+                 .arg(syncSetting->getLocalFolder())
+                 .arg(newState)
+                 .toUtf8()
+                 .constData());
 
     api->setSyncRunState(syncSetting->backupId(), newState,
         new ProgressFuncExecuterListener(progress,  true, [](MegaApi *, MegaRequest *, MegaError *){

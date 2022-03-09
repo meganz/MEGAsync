@@ -20,18 +20,22 @@ class QSyncItemWidget : public QWidget
 
 public:
     enum {
-      LOCAL_FOLDER  = 0,
-      REMOTE_FOLDER = 1,
+      NAME,
+      RUN_STATE
     };
     explicit QSyncItemWidget(int itemType, QWidget* parent = nullptr);
 
-    void setPath(const QString& path, const QString &name);
-    void setPath(const QString& path);
+    QString getLocalPath() const;
+    QString getName() const;
+    QString getRemotePath() const;
+    QString getRunState() const;
 
-    void setToolTip(const QString& tooltip);
-    QString text();
-    QString fullPath();
     void setError(int error);
+    void setLocalPath(const QString& path);
+    void setName(const QString& name);
+    void setRemotePath(const QString& path);
+    void setRunState(const QString& runState);
+    void setToolTip(const QString& tooltip);
 
     ~QSyncItemWidget();
 
@@ -61,18 +65,22 @@ private:
 
     bool mIsCacheAvailable;
     int mItemType;
-    QString mFullPath;
     int mError;
     bool mSelected;
 
-    QString mDisplayName;
+    // Meaningful only for NAME.
+    QString mLocalPath;
+    QString mName;
+    QString mRemotePath;
+
+    // Meaningful only for RUN_STATE.
+    QString mRunState;
 
     int64_t mLastRemotePathCheck;
     bool mNodesUpToDate;
     std::shared_ptr<SyncSetting> mSyncSetting;
 
-    void elidePathLabel();
-    void configureSyncTypeUI(int type) const;
+    void elideLabel();
 };
 
 #endif // QSYNCITEMWIDGET_H

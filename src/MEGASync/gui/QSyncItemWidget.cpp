@@ -19,7 +19,8 @@ QSyncItemWidget::QSyncItemWidget(int itemType, QWidget* parent) :
 {
     mUi->setupUi(this);
     installEventFilter(this);
-    configureSyncTypeUI(itemType);
+
+    mUi->lSyncState->setVisible(mItemType == NAME);
 
     connect(Model::instance(), &Model::syncStateChanged,
             this, &QSyncItemWidget::onSyncStateChanged);
@@ -35,50 +36,75 @@ QSyncItemWidget::QSyncItemWidget(int itemType, QWidget* parent) :
     setSelected(false);
 }
 
-void QSyncItemWidget::setPath(const QString &path, const QString &syncName)
+QString QSyncItemWidget::getLocalPath() const
 {
-    mFullPath = path;
-    mDisplayName = syncName;
-    elidePathLabel();
+    assert(mItemType == NAME);
+
+    return mLocalPath;
 }
 
-void QSyncItemWidget::setPath(const QString &path)
+QString QSyncItemWidget::getName() const
 {
-    mFullPath = path;
+    assert(mItemType == NAME);
 
-    mDisplayName = QFileInfo(mFullPath).fileName();
-    if (mDisplayName.isEmpty())
-    {
-        mDisplayName = QDir::toNativeSeparators(mFullPath);
-    }
+    return mName;
+}
 
-    mDisplayName.remove(QDir::separator());
+QString QSyncItemWidget::getRemotePath() const
+{
+    assert(mItemType == NAME);
 
-    //If full sync mode ("/"), avoid empty display name
-    if (mDisplayName.isEmpty())
-    {
-        mDisplayName.append(QLatin1Char('/'));
-    }
+    return mRemotePath;
+}
 
-    elidePathLabel();
+QString QSyncItemWidget::getRunState() const
+{
+    assert(mItemType == RUN_STATE);
+
+    return mRunState;
+}
+
+void QSyncItemWidget::setLocalPath(const QString& path)
+{
+    assert(mItemType == NAME);
+
+    mLocalPath = path;
+}
+
+void QSyncItemWidget::setName(const QString& name)
+{
+    assert(mItemType == NAME);
+
+    mName = name;
+    elideLabel();
+}
+
+void QSyncItemWidget::setRemotePath(const QString& path)
+{
+    assert(mItemType == NAME);
+
+    mRemotePath = path;
+    elideLabel();
+}
+
+void QSyncItemWidget::setRunState(const QString& runState)
+{
+    assert(mItemType == RUN_STATE);
+
+    mRunState = runState;
+    elideLabel();
 }
 
 void QSyncItemWidget::setToolTip(const QString &tooltip)
 {
-    if (mSyncRootHandle == mega::INVALID_HANDLE)
-    {
-        mUi->lSyncName->setToolTip(tooltip);
-    }
+    assert(mItemType == NAME);
+    
+    mUi->lSyncName->setToolTip(tooltip);
 }
 
 QSyncItemWidget::~QSyncItemWidget()
 {
     delete mUi;
-}
-
-void QSyncItemWidget::configureSyncTypeUI(int type) const
-{
-    mUi->lSyncState->setVisible(type == LOCAL_FOLDER);
 }
 
 void QSyncItemWidget::setError(int error)
@@ -98,24 +124,24 @@ void QSyncItemWidget::setError(int error)
         setSelected(mSelected);
     }
 
-    elidePathLabel();
+    elideLabel();
 }
 
-QString QSyncItemWidget::fullPath()
-{
-    return mFullPath;
-}
-
-void QSyncItemWidget::elidePathLabel()
+void QSyncItemWidget::elideLabel()
 {
     QFontMetrics metrics(mUi->lSyncName->fontMetrics());
-    mUi->lSyncName->setText(metrics.elidedText(mDisplayName, Qt::ElideMiddle,
-                                               mUi->lSyncName->width()));
+
+    auto elidedText =
+      metrics.elidedText(mItemType == NAME ? mName : mRunState,
+                         Qt::ElideMiddle,
+                         mUi->lSyncName->width());
+
+    mUi->lSyncName->setText(std::move(elidedText));
 }
 
 void  QSyncItemWidget::resizeEvent(QResizeEvent *event)
 {
-    elidePathLabel();
+    elideLabel();
     QWidget::resizeEvent(event);
 }
 

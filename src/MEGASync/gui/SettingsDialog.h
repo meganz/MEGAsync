@@ -197,13 +197,14 @@ private:
 
     enum
     {
-        SYNC_COL_ENABLE_CB = 0,
-        SYNC_COL_LFOLDER   = 1,
-        SYNC_COL_RFOLDER   = 2,
-        SYNC_COL_MENU      = 3,
-        SYNC_COL_TAG       = 4,
-        SYNC_COL_HANDLE    = 5,
-        SYNC_COL_NAME      = 6,
+        SYNC_COL_ENABLE_CB    = 0,
+        SYNC_COL_DISPLAY_NAME = 1,
+        SYNC_COL_RUN_STATE    = 2,
+        SYNC_COL_MENU         = 3,
+        // Seemingly unused, left in place as possible debugging aid.
+        SYNC_COL_TAG          = 4,
+        SYNC_COL_HANDLE       = 5,
+        SYNC_COL_NAME         = 6,
         SYNC_COL_NB
     };
 

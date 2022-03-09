@@ -2509,12 +2509,12 @@ margin-right: 7px;
                </column>
                <column>
                 <property name="text">
-                 <string>Local Folder</string>
+                 <string>Name</string>
                 </property>
                </column>
                <column>
                 <property name="text">
-                 <string>MEGA folder</string>
+                 <string>Run State</string>
                 </property>
                </column>
                <column>
