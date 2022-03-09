@@ -333,6 +333,7 @@ void TransferManager::refreshStateStats()
         if (mCurrentTab != COMPLETED_TAB && processedNumber == 0)
         {
             countLabel->parentWidget()->hide();
+            countLabel->clear();
         }
         else
         {
@@ -359,6 +360,7 @@ void TransferManager::refreshStateStats()
             leftFooterWidget = mUi->pUpToDate;
             mSpeedRefreshTimer->stop();
             countLabel->hide();
+            countLabel->clear();
         }
         else
         {
@@ -393,11 +395,11 @@ void TransferManager::refreshTypeStats()
     // First check Downloads -----------------------------------------------------------------------
     if (countLabel->text().isEmpty() || countLabelText != countLabel->text())
     {
-        countLabel->setVisible(downloadTransfers);
         countLabel->setText(countLabelText);
     }
 
-    countLabel->setVisible(downloadTransfers != 0);
+    countLabel->setVisible(!countLabelText.isEmpty());
+
 
     auto uploadTransfers = mTransfersCount.pendingUploads;
 
@@ -407,11 +409,11 @@ void TransferManager::refreshTypeStats()
     // Then Uploads --------------------------------------------------------------------------------
     if (countLabel->text().isEmpty() || countLabelText != countLabel->text())
     {
-        countLabel->setVisible(uploadTransfers);
         countLabel->setText(countLabelText);
     }
 
-    countLabel->setVisible(uploadTransfers != 0);
+    countLabel->setVisible(!countLabelText.isEmpty());
+
 }
 
 void TransferManager::refreshFileTypesStats()
@@ -436,6 +438,7 @@ void TransferManager::refreshFileTypesStats()
                 if(label->parentWidget()->isVisible())
                 {
                     label->parentWidget()->hide();
+                    label->clear();
                 }
             }
             else
