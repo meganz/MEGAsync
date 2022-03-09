@@ -4474,6 +4474,7 @@ void MegaApplication::toggleLogging()
         Preferences::HTTPS_ORIGIN_CHECK_ENABLED = true;
         logger->setDebug(false);
         showInfoMessage(tr("DEBUG mode disabled"));
+        if (megaApi) megaApi->setLogExtraForModules(false, false);
     }
     else
     {
@@ -4482,6 +4483,8 @@ void MegaApplication::toggleLogging()
         showInfoMessage(tr("DEBUG mode enabled. A log is being created in your desktop (MEGAsync.log)"));
         if (megaApi)
         {
+            megaApi->setLogExtraForModules(true, true);
+
             MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("Version string: %1   Version code: %2.%3   User-Agent: %4").arg(Preferences::VERSION_STRING)
                      .arg(Preferences::VERSION_CODE).arg(Preferences::BUILD_ID).arg(QString::fromUtf8(megaApi->getUserAgent())).toUtf8().constData());
         }
