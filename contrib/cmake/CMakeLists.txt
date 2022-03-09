@@ -356,7 +356,7 @@ set (SRCS
     ${MEGAsyncDir}/model/Model.cpp
     ${MEGAsyncDir}/model/SyncSettings.cpp
     ${MEGAsyncDir}/model/TransfersManagerSortFilterProxyModel.cpp
-    ${MEGAsyncDir}/model/TransfersSortFilterProxyBaseModel.cpp
+    #${MEGAsyncDir}/model/TransfersSortFilterProxyBaseModel.cpp
     ${MEGAsyncDir}/model/TransfersModel.cpp
     ${MEGAsyncDir}/gui/TransferBaseDelegateWidget.cpp
     ${MEGAsyncDir}/gui/InfoDialogTransferDelegateWidget.cpp
