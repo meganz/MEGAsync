@@ -6970,7 +6970,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
     case MegaRequest::TYPE_GET_PRICING:
     {
         if (e->getErrorCode() == MegaError::API_OK)
-        {       
+        {
             MegaPricing* pricing (request->getPricing());
             MegaCurrency* currency (request->getCurrency());
 
@@ -7493,7 +7493,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
             transferQuota->updateQuotaState();
         }
 
-        preferences->sync();        
+        preferences->sync();
 
         if (infoDialog)
         {
@@ -8337,7 +8337,7 @@ void MegaApplication::onSyncDisabled(std::shared_ptr<SyncSetting> syncSetting)
             showErrorMessage(tr("Your sync \"%1\" has been disabled. The remote folder (or part of it) doesn't have full access")
                              .arg(syncSetting->name()));
             break;
-        case MegaSync::Error::LOCAL_FINGERPRINT_MISMATCH:
+        case MegaSync::Error::LOCAL_FILESYSTEM_MISMATCH:
             showErrorMessage(tr("Your sync \"%1\" has been disabled because the local folder has changed")
                             .arg(syncSetting->name()));
             break;
