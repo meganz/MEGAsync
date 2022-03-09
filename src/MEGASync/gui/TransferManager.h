@@ -97,10 +97,11 @@ private:
     QWidget* mDragBackDrop;
 
     void toggleTab(TM_TAB newTab);
-    bool refreshStateStats();
+    void refreshStateStats();
     void refreshTypeStats();
     void refreshFileTypesStats();
     void applyTextSearch(const QString& text);
+    void checkCancelAllButtonVisibility();
 
 private slots:
     void on_tCompleted_clicked();

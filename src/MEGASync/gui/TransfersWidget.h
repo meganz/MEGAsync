@@ -61,6 +61,7 @@ private slots:
     void onModelChanged();
     void onModelAboutToBeChanged();
     void onPauseResumeButtonCheckedOnDelegate(bool pause);
+    void onCheckCancelButtonVisibility();
 
 private:
     enum HeaderState
@@ -92,9 +93,9 @@ signals:
     void updateSearchFilter(const QString& pattern);
     void applyFilter();
     void pauseResumeVisibleRows(bool state);
-    void cancelClearVisibleRows();
+    void cancelClearVisibleRows(bool isClear);
     void pauseResumeAllRows(bool pauseState);
-    void cancelClearAllRows();
+    void cancelAndClearAllRows();
 
     void disableTransferManager(bool);
 

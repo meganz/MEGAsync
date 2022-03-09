@@ -1683,7 +1683,8 @@ void MegaApplication::rebootApplication(bool update)
     }
 
     reboot = true;
-    if (update && (megaApi->getNumPendingDownloads() || megaApi->getNumPendingUploads() || megaApi->isWaiting()))
+    auto transferCount = getTransfersModel()->getTransfersCount();
+    if (update && (transferCount.pendingDownloads || transferCount.pendingUploads || megaApi->isWaiting()))
     {
         if (!updateBlocked)
         {
@@ -1827,7 +1828,8 @@ void MegaApplication::checkMemoryUsage()
     long long numNodes = megaApi->getNumNodes();
     long long numLocalNodes = megaApi->getNumLocalNodes();
     long long totalNodes = numNodes + numLocalNodes;
-    long long totalTransfers =  megaApi->getNumPendingUploads() + megaApi->getNumPendingDownloads();
+    auto transferCount = getTransfersModel()->getTransfersCount();
+    long long totalTransfers =  transferCount.pendingUploads + transferCount.pendingDownloads;
     long long procesUsage = 0;
 
     if (!totalNodes)
@@ -1961,7 +1963,9 @@ void MegaApplication::checkOverStorageStates()
             }
         }
 
-        bool pendingTransfers = megaApi->getNumPendingDownloads() || megaApi->getNumPendingUploads();
+        auto transferCount = getTransfersModel()->getTransfersCount();
+        long long pendingTransfers =  transferCount.pendingUploads || transferCount.pendingDownloads;
+
         if (!pendingTransfers && ((QDateTime::currentMSecsSinceEpoch() - preferences->getOverStorageNotificationExecution()) > Preferences::ALMOST_OQ_UI_MESSAGE_INTERVAL_MS)
                               && ((QDateTime::currentMSecsSinceEpoch() - preferences->getOverStorageDialogExecution()) > Preferences::ALMOST_OQ_UI_MESSAGE_INTERVAL_MS)
                               && (!preferences->getAlmostOverStorageNotificationExecution() || (QDateTime::currentMSecsSinceEpoch() - preferences->getAlmostOverStorageNotificationExecution()) > Preferences::ALMOST_OQ_UI_MESSAGE_INTERVAL_MS))
@@ -8209,7 +8213,8 @@ void MegaApplication::onGlobalSyncStateChangedImpl(MegaApi *, bool timeout)
         indexing = megaApi->isScanning();
         waiting = megaApi->isWaiting();
         syncing = megaApi->isSyncing();
-        transferring = megaApi->getNumPendingUploads() || megaApi->getNumPendingDownloads();
+        auto transferCount = getTransfersModel()->getTransfersCount();
+        transferring = transferCount.pendingUploads || transferCount.pendingDownloads;
 
         Utilities::queueFunctionInAppThread([=](){
 
@@ -8218,8 +8223,8 @@ void MegaApplication::onGlobalSyncStateChangedImpl(MegaApi *, bool timeout)
                 return;
             }
 
-            int pendingUploads = megaApi->getNumPendingUploads();
-            int pendingDownloads = megaApi->getNumPendingDownloads();
+            int pendingUploads = transferCount.pendingUploads;
+            int pendingDownloads = transferCount.pendingDownloads;
 
             if (pendingUploads)
             {

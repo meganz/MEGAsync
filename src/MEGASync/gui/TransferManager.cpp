@@ -292,24 +292,44 @@ void TransferManager::onUpdatePauseState(bool isPaused)
     }
 }
 
-bool TransferManager::refreshStateStats()
+void TransferManager::checkCancelAllButtonVisibility()
+{
+    auto stats = mModel->getTransfersCount();
+    auto proxy (mUi->wTransfers->getProxyModel());
+
+    auto sizePolicy = mUi->bCancelClearAll->sizePolicy();
+    if(!sizePolicy.retainSizeWhenHidden())
+    {
+        sizePolicy.setRetainSizeWhenHidden(true);
+        mUi->bCancelClearAll->setSizePolicy(sizePolicy);
+    }
+
+    if((stats.completedDownloads() + stats.completedUploadBytes) == 0 && !proxy->isAnyCancelable())
+    {
+        mUi->bCancelClearAll->setVisible(false);
+    }
+    else
+    {
+        mUi->bCancelClearAll->setVisible(true);
+    }
+}
+
+void TransferManager::refreshStateStats()
 {
     auto Stats = mModel->getTransfersCount();
 
     QLabel* label (nullptr);
-    bool weHaveTransfers (true);
     long long processedNumber (0LL);
 
     // First check Finished states -----------------------------------------------------------------
     label = mUi->lCompleted;
 
     processedNumber = Stats.completedDownloads() + Stats.completedUploads();
-    weHaveTransfers = processedNumber;
 
     // Update if the value changed
     if (processedNumber != mNumberOfTransfersPerTab[COMPLETED_TAB])
     {
-        if (mCurrentTab != COMPLETED_TAB && !weHaveTransfers)
+        if (mCurrentTab != COMPLETED_TAB && processedNumber == 0)
         {
             label->parentWidget()->hide();
             mNumberOfTransfersPerTab[COMPLETED_TAB] = 0;
@@ -317,10 +337,10 @@ bool TransferManager::refreshStateStats()
         else
         {
             label->parentWidget()->show();
-            label->setVisible(weHaveTransfers);
+            label->setVisible(processedNumber > 0);
             label->setText(QString::number(processedNumber));
 
-            mNumberOfTransfersPerTab[COMPLETED_TAB] = weHaveTransfers ? processedNumber : NB_INIT_VALUE;
+            mNumberOfTransfersPerTab[COMPLETED_TAB] = processedNumber > 0 ? processedNumber : NB_INIT_VALUE;
         }
     }
 
@@ -329,7 +349,6 @@ bool TransferManager::refreshStateStats()
     label = mUi->lAllTransfers;
 
     processedNumber = Stats.pendingDownloads + Stats.pendingUploads;
-    weHaveTransfers |= static_cast<bool>(processedNumber);
 
     if (processedNumber != mNumberOfTransfersPerTab[ALL_TRANSFERS_TAB])
     {
@@ -366,7 +385,6 @@ bool TransferManager::refreshStateStats()
             mUi->sStatus->setCurrentWidget(leftFooterWidget);
         }
     }
-    return weHaveTransfers;
 }
 
 void TransferManager::refreshTypeStats()
@@ -376,22 +394,16 @@ void TransferManager::refreshTypeStats()
     auto UploadTransfers = Stats.pendingUploads;
 
     // First check Downloads -----------------------------------------------------------------------
-    if (DownloadTransfers != mNumberOfTransfersPerTab[DOWNLOADS_TAB])
-    {
-        mUi->lDownloads->setVisible(DownloadTransfers);
-        mUi->lDownloads->setText(QString::number(DownloadTransfers));
-        mNumberOfTransfersPerTab[DOWNLOADS_TAB] = DownloadTransfers;
-    }
+    mUi->lDownloads->setVisible(DownloadTransfers);
+    mUi->lDownloads->setText(QString::number(DownloadTransfers));
+    mNumberOfTransfersPerTab[DOWNLOADS_TAB] = DownloadTransfers;
 
     mUi->lDownloads->setVisible(DownloadTransfers != 0);
 
     // Then Uploads --------------------------------------------------------------------------------
-    if (UploadTransfers != mNumberOfTransfersPerTab[UPLOADS_TAB])
-    {
-        mUi->lUploads->setVisible(UploadTransfers);
-        mUi->lUploads->setText(QString::number(UploadTransfers));
-        mNumberOfTransfersPerTab[UPLOADS_TAB] = UploadTransfers;
-    }
+    mUi->lUploads->setVisible(UploadTransfers);
+    mUi->lUploads->setText(QString::number(UploadTransfers));
+    mNumberOfTransfersPerTab[UPLOADS_TAB] = UploadTransfers;
 
     mUi->lUploads->setVisible(UploadTransfers != 0);
 }
@@ -404,43 +416,28 @@ void TransferManager::refreshFileTypesStats()
     {
         TM_TAB tab (static_cast<TM_TAB>(int(TYPES_TAB_BASE) + int(fileType)));
         long long number (mModel->getNumberOfTransfersForFileType(fileType));
-        if (number != mNumberOfTransfersPerTab[tab])
+
+        QLabel* label (mMediaNumberLabelsGroup[fileType]);
+        if (mCurrentTab != tab && number == 0)
         {
-            QLabel* label (mMediaNumberLabelsGroup[fileType]);
-            if (mCurrentTab != tab && number == 0)
+            if(label->parentWidget()->isVisible())
             {
-                if(label->parentWidget()->isVisible())
-                {
-                    label->parentWidget()->hide();
-                }
-                mNumberOfTransfersPerTab[tab] = 0;
+                label->parentWidget()->hide();
             }
-            else
-            {
-                label->parentWidget()->show();
-                label->setVisible(number);
-                label->setText(QString::number(number));
-                mNumberOfTransfersPerTab[tab] = number ? number : NB_INIT_VALUE;
-            }
+            mNumberOfTransfersPerTab[tab] = 0;
+        }
+        else
+        {
+            label->parentWidget()->show();
+            label->setVisible(number);
+            label->setText(QString::number(number));
+            mNumberOfTransfersPerTab[tab] = number ? number : NB_INIT_VALUE;
         }
     }
 }
 
 void TransferManager::onTransfersDataUpdated()
 {
-    mNumberOfTransfersPerTab[ALL_TRANSFERS_TAB] = NB_INIT_VALUE;
-    mNumberOfTransfersPerTab[DOWNLOADS_TAB]     = NB_INIT_VALUE;
-    mNumberOfTransfersPerTab[UPLOADS_TAB]       = NB_INIT_VALUE;
-    mNumberOfTransfersPerTab[COMPLETED_TAB]     = NB_INIT_VALUE;
-    mNumberOfTransfersPerTab[SEARCH_TAB]        = NB_INIT_VALUE;
-    mNumberOfTransfersPerTab[TYPE_OTHER_TAB]    = NB_INIT_VALUE;
-    mNumberOfTransfersPerTab[TYPE_AUDIO_TAB]    = NB_INIT_VALUE;
-    mNumberOfTransfersPerTab[TYPE_VIDEO_TAB]    = NB_INIT_VALUE;
-    mNumberOfTransfersPerTab[TYPE_ARCHIVE_TAB]  = NB_INIT_VALUE;
-    mNumberOfTransfersPerTab[TYPE_DOCUMENT_TAB] = NB_INIT_VALUE;
-    mNumberOfTransfersPerTab[TYPE_IMAGE_TAB]    = NB_INIT_VALUE;
-    mNumberOfTransfersPerTab[TYPE_TEXT_TAB]     = NB_INIT_VALUE;
-
     // Refresh stats
     refreshTypeStats();
     refreshFileTypesStats();
@@ -450,6 +447,7 @@ void TransferManager::onTransfersDataUpdated()
     }
     refreshStateStats();
     refreshView();
+    checkCancelAllButtonVisibility();
 }
 
 void TransferManager::onStorageStateChanged(int storageState)
@@ -531,27 +529,18 @@ void TransferManager::refreshSearchStats()
     long long nbUl (proxy->getNumberOfItems(TransferData::TRANSFER_UPLOAD));
     long long nbAll (nbDl + nbUl);
 
-    if (nbDl != mNumberOfSearchResultsPerTypes[TransferData::TRANSFER_DOWNLOAD])
-    {
-        mUi->tDlResults->setText(QString(tr("Downloads\t\t\t\t%1")).arg(nbDl));
-        mNumberOfSearchResultsPerTypes[TransferData::TRANSFER_DOWNLOAD] = nbDl;
-    }
+    mUi->tDlResults->setText(QString(tr("Downloads\t\t\t\t%1")).arg(nbDl));
+    mNumberOfSearchResultsPerTypes[TransferData::TRANSFER_DOWNLOAD] = nbDl;
 
-    if (nbUl != mNumberOfSearchResultsPerTypes[TransferData::TRANSFER_UPLOAD])
-    {
-        mUi->tUlResults->setText(QString(tr("Uploads\t\t\t\t%1")).arg(nbUl));
-        mNumberOfSearchResultsPerTypes[TransferData::TRANSFER_UPLOAD] = nbUl;
-    }
+    mUi->tUlResults->setText(QString(tr("Uploads\t\t\t\t%1")).arg(nbUl));
+    mNumberOfSearchResultsPerTypes[TransferData::TRANSFER_UPLOAD] = nbUl;
 
-    if (nbAll != mNumberOfTransfersPerTab[SEARCH_TAB])
-    {
-        mUi->lNbResults->setText(QString(tr("%1 results found")).arg(nbAll));
-        mNumberOfTransfersPerTab[SEARCH_TAB] = nbAll;
-        mUi->lNbResults->setProperty("results", bool(nbAll));
-        mUi->lNbResults->style()->unpolish(mUi->lNbResults);
-        mUi->lNbResults->style()->polish(mUi->lNbResults);
-        mUi->tAllResults->setText(QString(tr("All\t\t\t\t%1")).arg(nbAll));
-    }
+    mUi->lNbResults->setText(QString(tr("%1 results found")).arg(nbAll));
+    mNumberOfTransfersPerTab[SEARCH_TAB] = nbAll;
+    mUi->lNbResults->setProperty("results", bool(nbAll));
+    mUi->lNbResults->style()->unpolish(mUi->lNbResults);
+    mUi->lNbResults->style()->polish(mUi->lNbResults);
+    mUi->tAllResults->setText(QString(tr("All\t\t\t\t%1")).arg(nbAll));
 
     mUi->searchByTextTypeSelector->setVisible(nbDl != 0 && nbUl != 0);
 

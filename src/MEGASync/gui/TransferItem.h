@@ -6,7 +6,6 @@
 
 #include <QSharedData>
 #include <QMimeDatabase>
-#include <QDebug>
 
 //Place here as they represent the number of real columns
 enum class SortCriterion
@@ -64,7 +63,6 @@ public:
         mMeanSpeed(dr->mMeanSpeed),
         mTransferredBytes(dr->mTransferredBytes),
         mNotificationNumber(dr->mNotificationNumber),
-        mIsSyncTransfer(dr->mIsSyncTransfer),
         mFileType(dr->mFileType),
         mParentHandle (dr->mParentHandle), mNodeHandle (dr->mNodeHandle), mFailedTransfer(dr->mFailedTransfer),
         mFilename(dr->mFilename), mNodeAccess(mega::MegaShare::ACCESS_UNKNOWN),
@@ -87,7 +85,6 @@ public:
     unsigned long long                  mMeanSpeed;
     unsigned long long                  mTransferredBytes;
     long long                           mNotificationNumber;
-    bool                                mIsSyncTransfer;
     Utilities::FileType                 mFileType;
     mega::MegaHandle                    mParentHandle;
     mega::MegaHandle                    mNodeHandle;
@@ -96,8 +93,13 @@ public:
     int                                 mNodeAccess;
 
     QString path() const;
-    bool isPublicNode();
-    uint64_t getFinishedTime();
+    bool isPublicNode() const;
+    bool isCancelable() const;
+    bool isFinished() const;
+    bool isDownload() const;
+    bool isUpload() const;
+    bool isSyncTransfer() const;
+    uint64_t getFinishedTime() const;
 
 private:
     QString   mPath;

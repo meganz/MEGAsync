@@ -28,7 +28,7 @@ protected:
     void mouseDoubleClickEvent(QMouseEvent *event) override;
 
 signals:
-    void cancelTransfer();
+    void cancelClearTransfer(bool isClear);
     void pauseResumeTransfer();
     void retryTransfer();
     void openTransfer();

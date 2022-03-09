@@ -10,7 +10,6 @@
 #include <QAbstractItemModel>
 #include <QLinkedList>
 #include <QtConcurrent/QtConcurrent>
-#include <QDebug>
 #include <QFutureWatcher>
 
 
@@ -106,7 +105,10 @@ public:
     void getLinks(QList<int>& rows);
     void openFolderByIndex(const QModelIndex& index);
     void openFolderByTag(TransferTag tag);
-    void cancelClearTransfers(const QModelIndexList& indexes, bool clearAll);
+    void cancelTransfers(const QModelIndexList& indexes);
+    void clearTransfers(const QModelIndexList& indexes);
+    void clearTransfers(const QMap<QModelIndex,QExplicitlySharedDataPointer<TransferData>> uploads,
+                        const QMap<QModelIndex,QExplicitlySharedDataPointer<TransferData>> downloads);
     void pauseTransfers(const QModelIndexList& indexes, bool pauseState);
     void pauseResumeTransferByTag(TransferTag tag, bool pauseState);
 
@@ -138,7 +140,6 @@ signals:
 public slots:
     void onRetryTransfer(TransferTag tag);
     void pauseResumeAllTransfers(bool state);
-    void cancelClearAllTransfers();
 
 private slots:
     void onPauseStateChanged();

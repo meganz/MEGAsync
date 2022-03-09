@@ -253,7 +253,7 @@ TransferBaseDelegateWidget::ActionHoverType InfoDialogTransferDelegateWidget::mo
         mActionButtonsEnabled = true;
         if (getData()->mErrorCode < 0)
         {
-            if (!getData()->mIsSyncTransfer)
+            if (!getData()->isSyncTransfer())
             {
                 bool in = isMouseHoverInAction(mUi->lActionTransfer, pos);
                 update = setActionTransferIcon(mUi->lActionTransfer,
