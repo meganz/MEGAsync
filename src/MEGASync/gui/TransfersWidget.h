@@ -93,7 +93,7 @@ signals:
     void updateSearchFilter(const QString& pattern);
     void applyFilter();
     void pauseResumeVisibleRows(bool state);
-    void cancelClearVisibleRows(bool isClear);
+    void cancelClearVisibleRows();
     void pauseResumeAllRows(bool pauseState);
     void cancelAndClearAllRows();
 

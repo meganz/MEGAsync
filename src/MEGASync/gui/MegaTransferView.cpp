@@ -126,7 +126,7 @@ void MegaTransferView::onPauseResumeSelection(bool pauseState)
     }
 }
 
-void MegaTransferView::onCancelClearAllVisibleTransfers(bool isClear)
+void MegaTransferView::onCancelClearAllVisibleTransfers()
 {
     QModelIndexList indexes;
     auto proxy(qobject_cast<QSortFilterProxyModel*>(model()));
@@ -144,7 +144,7 @@ void MegaTransferView::onCancelClearAllVisibleTransfers(bool isClear)
             indexes.push_back(index);
         }
         auto sourceModel(qobject_cast<TransfersModel*>(proxy->sourceModel()));
-        isClear ? sourceModel->clearTransfers(indexes) : sourceModel->cancelTransfers(indexes);
+        sourceModel->cancelTransfers(indexes);
     }
 }
 

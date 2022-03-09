@@ -43,7 +43,9 @@ public:
         TYPE_DOCUMENT_TAB = TYPES_TAB_BASE + toInt(Utilities::FileType::TYPE_DOCUMENT),
         TYPE_IMAGE_TAB    = TYPES_TAB_BASE + toInt(Utilities::FileType::TYPE_IMAGE),
         TYPE_TEXT_TAB     = TYPES_TAB_BASE + toInt(Utilities::FileType::TYPE_TEXT),
+        TYPES_LAST
     };
+    Q_ENUM(TM_TAB)
 
     explicit TransferManager(mega::MegaApi *megaApi, QWidget *parent = 0);
     void setActiveTab(int t);
@@ -79,19 +81,17 @@ private:
     Preferences* mPreferences;
     QPoint mDragPosition;
     QMap<TM_TAB, QFrame*> mTabFramesToggleGroup;
-    QMap<Utilities::FileType, QLabel*> mMediaNumberLabelsGroup;
+    QMap<TM_TAB, QLabel*> mNumberLabelsGroup;
     QMap<TM_TAB, QWidget*> mTabNoItem;
 
     TransfersModel* mModel;
+    TransfersCount mTransfersCount;
 
     TM_TAB mCurrentTab;
     QGraphicsDropShadowEffect* mShadowTab;
     QSet<Utilities::FileType> mFileTypesFilter;
     QTimer* mSpeedRefreshTimer;
     QTimer* mStatsRefreshTimer;
-
-    QMap<TM_TAB, long long> mNumberOfTransfersPerTab;
-    QMap<TransferData::TransferTypes, long long> mNumberOfSearchResultsPerTypes;
 
     Ui::TransferManagerDragBackDrop* mUiDragBackDrop;
     QWidget* mDragBackDrop;
@@ -101,7 +101,6 @@ private:
     void refreshTypeStats();
     void refreshFileTypesStats();
     void applyTextSearch(const QString& text);
-    void checkCancelAllButtonVisibility();
 
 private slots:
     void on_tCompleted_clicked();
@@ -137,6 +136,7 @@ private slots:
 
     void onUpdatePauseState(bool isPaused);
     void onPauseStateChangedByTransferResume();
+    void checkCancelAllButtonVisibility();
 
     void onTransfersDataUpdated();
     void refreshSearchStats();
@@ -144,8 +144,6 @@ private slots:
     void onStorageStateChanged(int storageState);
 
     void refreshSpeed();
-    void refreshStats();
-
     void refreshView();
 };
 

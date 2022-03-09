@@ -180,7 +180,7 @@ void TransfersWidget::on_tCancelClearVisible_clicked()
     QPointer<TransfersWidget> dialog = QPointer<TransfersWidget>(this);
 
     if (QMegaMessageBox::warning(nullptr, QString::fromUtf8("MEGAsync"),
-                             tr("Are you sure you want to %1 the following transfers?").arg(mClearMode ? tr("clear") : tr("cancel")),
+                             tr("Are you sure you want to cancel or clear the following transfers?"),
                              QMessageBox::Yes | QMessageBox::No, QMessageBox::No)
             != QMessageBox::Yes
             || !dialog)
@@ -188,7 +188,7 @@ void TransfersWidget::on_tCancelClearVisible_clicked()
         return;
     }
 
-    emit cancelClearVisibleRows(mClearMode);
+    emit cancelClearVisibleRows();
 }
 
 void TransfersWidget::cancelClearAll()

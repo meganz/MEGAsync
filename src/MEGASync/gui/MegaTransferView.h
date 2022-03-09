@@ -51,7 +51,7 @@ public slots:
     void onPauseResumeVisibleRows(bool pauseState);
     void onPauseResumeAllRows(bool pauseState);
     void onPauseResumeSelection(bool pauseState);
-    void onCancelClearAllVisibleTransfers(bool isClear);
+    void onCancelClearAllVisibleTransfers();
     void onClearCompletedVisibleTransfers();
     void onCancelAndClearAllTransfers();
     void onCancelClearSelection(bool isClear);

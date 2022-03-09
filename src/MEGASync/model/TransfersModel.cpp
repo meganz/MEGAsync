@@ -659,6 +659,9 @@ void TransfersModel::cancelTransfers(const QModelIndexList& indexes)
     }
     else
     {
+        QMap<QModelIndex, QExplicitlySharedDataPointer<TransferData>> uploadToClear;
+        QMap<QModelIndex, QExplicitlySharedDataPointer<TransferData>> downloadToClear;
+
         QList<TransferTag> toCancel;
 
         // First clear finished transfers (remove rows), then cancel the others.
@@ -674,7 +677,16 @@ void TransfersModel::cancelTransfers(const QModelIndexList& indexes)
                 {
                     toCancel.append(d->mTag);
                 }
+                else if(d->isFinished())
+                {
+                    classifyUploadOrDownloadTransfers(uploadToClear, downloadToClear,index);
+                }
             }
+        }
+
+        if(!uploadToClear.isEmpty() || !downloadToClear.isEmpty())
+        {
+            clearTransfers(uploadToClear, downloadToClear);
         }
 
         if(!toCancel.isEmpty())
@@ -693,10 +705,11 @@ void TransfersModel::cancelTransfers(const QModelIndexList& indexes)
                 }
             }
         }
-        else
+
+        if(!uploadToClear.isEmpty() && !downloadToClear.isEmpty() && !toCancel.isEmpty())
         {
             QMegaMessageBox::warning(nullptr, QString::fromUtf8("MEGAsync"),
-                                         tr("Transfers cannot be cancelled"),
+                                         tr("Transfers cannot be cancelled or cleared"),
                                          QMessageBox::Ok);
         }
     }
@@ -704,45 +717,47 @@ void TransfersModel::cancelTransfers(const QModelIndexList& indexes)
     updateTransfersCount();
 }
 
+void TransfersModel::classifyUploadOrDownloadTransfers(QMap<QModelIndex, QExplicitlySharedDataPointer<TransferData>>& uploads,
+                                                       QMap<QModelIndex, QExplicitlySharedDataPointer<TransferData>>& downloads,
+                                                       const QModelIndex& index)
+{
+    auto d (getTransfer(index.row()));
+
+    // Clear (remove rows of) finished transfers
+    if (d)
+    {
+        if(d->isFinished())
+        {
+            if(d->isUpload())
+            {
+                uploads.insert(index, d);
+            }
+            else
+            {
+                downloads.insert(index, d);
+            }
+        }
+    }
+}
+
 void TransfersModel::clearTransfers(const QModelIndexList& indexes)
 {
     QMap<QModelIndex, QExplicitlySharedDataPointer<TransferData>> uploadToClear;
     QMap<QModelIndex, QExplicitlySharedDataPointer<TransferData>> downloadToClear;
-
-    auto classifyFunction = [&uploadToClear, &downloadToClear, this](const QModelIndex& index)
-    {
-        auto d (getTransfer(index.row()));
-
-        // Clear (remove rows of) finished transfers
-        if (d)
-        {
-            if(d->isFinished())
-            {
-                if(d->isUpload())
-                {
-                    uploadToClear.insert(index, d);
-                }
-                else
-                {
-                    downloadToClear.insert(index, d);
-                }
-            }
-        }
-    };
 
     if(indexes.isEmpty())
     {
         for (auto row = 0; row < rowCount(DEFAULT_IDX); ++row)
         {
             auto indexToCheck = index(row, 0);
-            classifyFunction(indexToCheck);
+            classifyUploadOrDownloadTransfers(uploadToClear, downloadToClear,indexToCheck);
         }
     }
     else
     {
-        for (auto index : indexes)
+        for (auto indexToCheck : indexes)
         {
-            classifyFunction(index);
+            classifyUploadOrDownloadTransfers(uploadToClear, downloadToClear,indexToCheck);
         }
     }
 

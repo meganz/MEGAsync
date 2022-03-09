@@ -109,6 +109,9 @@ public:
     void clearTransfers(const QModelIndexList& indexes);
     void clearTransfers(const QMap<QModelIndex,QExplicitlySharedDataPointer<TransferData>> uploads,
                         const QMap<QModelIndex,QExplicitlySharedDataPointer<TransferData>> downloads);
+    void classifyUploadOrDownloadTransfers(QMap<QModelIndex, QExplicitlySharedDataPointer<TransferData> > &uploads,
+                        QMap<QModelIndex, QExplicitlySharedDataPointer<TransferData> > &downloads,
+                                           const QModelIndex &index);
     void pauseTransfers(const QModelIndexList& indexes, bool pauseState);
     void pauseResumeTransferByTag(TransferTag tag, bool pauseState);
 
