@@ -8381,7 +8381,7 @@ void MegaApplication::onSyncDisabled(std::shared_ptr<SyncSetting> syncSetting)
                                      .arg(syncName));
                     break;
                 }
-                case MegaSync::Error::LOCAL_FINGERPRINT_MISMATCH:
+                case MegaSync::Error::LOCAL_FILESYSTEM_MISMATCH:
                 {
                     showErrorMessage(tr("Your sync \"%1\" has been disabled because the local folder has changed")
                                      .arg(syncName));
@@ -8446,7 +8446,7 @@ void MegaApplication::onSyncDisabled(std::shared_ptr<SyncSetting> syncSetting)
                                      .arg(syncName));
                     break;
                 }
-                case MegaSync::Error::LOCAL_FINGERPRINT_MISMATCH:
+                case MegaSync::Error::LOCAL_FILESYSTEM_MISMATCH:
                 {
                     showErrorMessage(tr("Your backup \"%1\" has been disabled because the local folder has changed")
                                      .arg(syncName));
