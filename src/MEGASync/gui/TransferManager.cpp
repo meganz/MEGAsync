@@ -325,7 +325,7 @@ void TransferManager::refreshStateStats()
     countLabel = mNumberLabelsGroup[COMPLETED_TAB];
 
     processedNumber = mTransfersCount.completedDownloads() + mTransfersCount.completedUploads();
-    countLabelText = QString::number(processedNumber);
+    countLabelText = processedNumber > 0 ? QString::number(processedNumber) : QString();
 
     // Update if the value changed
     if (countLabel->text().isEmpty() || countLabelText != countLabel->text())
@@ -346,7 +346,7 @@ void TransferManager::refreshStateStats()
     countLabel = mNumberLabelsGroup[ALL_TRANSFERS_TAB];
 
     processedNumber = mTransfersCount.pendingDownloads + mTransfersCount.pendingUploads;
-    countLabelText = QString::number(processedNumber);
+    countLabelText = processedNumber > 0 ? QString::number(processedNumber) : QString();
 
     if (countLabel->text().isEmpty() || countLabelText != countLabel->text())
     {
@@ -388,7 +388,7 @@ void TransferManager::refreshTypeStats()
     auto downloadTransfers = mTransfersCount.pendingDownloads;
 
     auto countLabel = mNumberLabelsGroup[DOWNLOADS_TAB];
-    QString countLabelText(QString::number(downloadTransfers));
+    QString countLabelText(downloadTransfers > 0 ? QString::number(downloadTransfers) : QString());
 
     // First check Downloads -----------------------------------------------------------------------
     if (countLabel->text().isEmpty() || countLabelText != countLabel->text())
@@ -402,13 +402,13 @@ void TransferManager::refreshTypeStats()
     auto uploadTransfers = mTransfersCount.pendingUploads;
 
     countLabel = mNumberLabelsGroup[UPLOADS_TAB];
-    countLabelText = QString::number(uploadTransfers);
+    countLabelText = uploadTransfers > 0 ? QString::number(uploadTransfers) : QString();
 
     // Then Uploads --------------------------------------------------------------------------------
     if (countLabel->text().isEmpty() || countLabelText != countLabel->text())
     {
         countLabel->setVisible(uploadTransfers);
-        countLabel->setText(QString::number(uploadTransfers));
+        countLabel->setText(countLabelText);
     }
 
     countLabel->setVisible(uploadTransfers != 0);
@@ -427,6 +427,8 @@ void TransferManager::refreshFileTypesStats()
             Utilities::FileType fileType = static_cast<Utilities::FileType>(value - TYPES_TAB_BASE);
             long long number (mModel->getNumberOfTransfersForFileType(fileType));
 
+            QString countLabelText(number > 0 ? QString::number(number) : QString());
+
             TM_TAB tab = static_cast<TM_TAB>(value);
             QLabel* label (mNumberLabelsGroup[tab]);
             if (mCurrentTab != tab && number == 0)
@@ -440,7 +442,7 @@ void TransferManager::refreshFileTypesStats()
             {
                 label->parentWidget()->show();
                 label->setVisible(number);
-                label->setText(QString::number(number));
+                label->setText(countLabelText);
             }
         }
     }
