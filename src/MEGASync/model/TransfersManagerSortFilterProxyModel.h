@@ -38,6 +38,7 @@ public:
 
         int getPausedTransfers() const;
         bool isAnyPaused() const;
+        bool isAnyCancelable() const;
 
 signals:
         void modelAboutToBeChanged();
@@ -46,9 +47,10 @@ signals:
         void modelAboutToBeSorted();
         void modelSorted();
         void transferPauseResume(bool);
+        void cancelableTransfersChanged() const;
 
 protected slots:
-        void onCancelClearTransfer();
+        void onCancelClearTransfer(bool isClear);
         void onPauseResumeTransfer();
         void onRetryTransfer();
         void onOpenTransfer();
@@ -67,6 +69,7 @@ protected:
         SortCriterion mSortCriterion;
         mutable QSet<int> mDlNumber;
         mutable QSet<int> mUlNumber;
+        mutable QSet<int> mNoSyncTransfers;
 
 private slots:
         void onRowsAboutToBeRemoved(const QModelIndex& parent, int first, int last);

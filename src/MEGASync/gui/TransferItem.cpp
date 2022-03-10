@@ -88,7 +88,6 @@ void TransferData::update(mega::MegaTransfer* transfer)
         mTemporaryError = false;
         mFailedTransfer = nullptr;
 
-
         auto megaError (transfer->getLastErrorExtended());
         if (megaError)
         {
@@ -106,7 +105,7 @@ void TransferData::removeFailedTransfer()
     mFailedTransfer.reset();
 }
 
-uint64_t TransferData::getFinishedTime()
+uint64_t TransferData::getFinishedTime() const
 {
     QDateTime now = QDateTime::currentDateTime();
     auto result = (now.toMSecsSinceEpoch() - (mFinishedTime*1000))/1000;
@@ -125,7 +124,7 @@ QString TransferData::path() const
     return localPath;
 }
 
-bool TransferData::isPublicNode()
+bool TransferData::isPublicNode() const
 {
     auto result(false);
 
@@ -145,4 +144,29 @@ bool TransferData::isPublicNode()
     }
 
     return result;
+}
+
+bool TransferData::isCancelable() const
+{
+    return (mState & CANCELABLE_STATES_MASK) && !isSyncTransfer();
+}
+
+bool TransferData::isUpload() const
+{
+    return mType & TRANSFER_UPLOAD;
+}
+
+bool TransferData::isSyncTransfer() const
+{
+    return mType & TRANSFER_SYNC;
+}
+
+bool TransferData::isDownload() const
+{
+    return mType > TRANSFER_UPLOAD;
+}
+
+bool TransferData::isFinished() const
+{
+    return mState & FINISHED_STATES_MASK;
 }

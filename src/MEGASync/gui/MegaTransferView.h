@@ -53,8 +53,8 @@ public slots:
     void onPauseResumeSelection(bool pauseState);
     void onCancelClearAllVisibleTransfers();
     void onClearCompletedVisibleTransfers();
-    void onCancelClearAllTransfers();
-    void onCancelClearSelection();
+    void onCancelAndClearAllTransfers();
+    void onCancelClearSelection(bool isClear);
 
 private slots:
     void onCustomContextMenu(const QPoint& point);

@@ -17,6 +17,14 @@ TransfersWidget::TransfersWidget(QWidget* parent) :
 {
     ui->setupUi(this);
 
+    //Keep size when hidden
+    auto sizePolicy = ui->tCancelClearVisible->sizePolicy();
+    if(!sizePolicy.retainSizeWhenHidden())
+    {
+        sizePolicy.setRetainSizeWhenHidden(true);
+        ui->tCancelClearVisible->setSizePolicy(sizePolicy);
+    }
+
     model = app->getTransfersModel();
 
 }
@@ -28,9 +36,10 @@ void TransfersWidget::setupTransfers()
 
     connect(mProxyModel, &TransfersManagerSortFilterProxyModel::modelAboutToBeChanged, this, &TransfersWidget::onModelAboutToBeChanged);
     connect(mProxyModel, &TransfersManagerSortFilterProxyModel::modelChanged, this, &TransfersWidget::onModelChanged);
+    connect(mProxyModel, &TransfersManagerSortFilterProxyModel::cancelableTransfersChanged, this, &TransfersWidget::onCheckCancelButtonVisibility);
+    connect(mProxyModel, &TransfersManagerSortFilterProxyModel::transferPauseResume, this, &TransfersWidget::onPauseResumeButtonCheckedOnDelegate);
     connect(app->getTransfersModel(), &TransfersModel::transfersAboutToBeCanceled, this, &TransfersWidget::onModelAboutToBeChanged);
     connect(app->getTransfersModel(), &TransfersModel::transfersCanceled, this, &TransfersWidget::onModelChanged);
-    connect(mProxyModel, &TransfersManagerSortFilterProxyModel::transferPauseResume, this, &TransfersWidget::onPauseResumeButtonCheckedOnDelegate);
 
     configureTransferView();
 }
@@ -171,7 +180,7 @@ void TransfersWidget::on_tCancelClearVisible_clicked()
     QPointer<TransfersWidget> dialog = QPointer<TransfersWidget>(this);
 
     if (QMegaMessageBox::warning(nullptr, QString::fromUtf8("MEGAsync"),
-                             tr("Are you sure you want to %1 the following transfers?").arg(mClearMode ? tr("clear") : tr("cancel")),
+                             tr("Are you sure you want to cancel or clear the following transfers?"),
                              QMessageBox::Yes | QMessageBox::No, QMessageBox::No)
             != QMessageBox::Yes
             || !dialog)
@@ -187,7 +196,7 @@ void TransfersWidget::cancelClearAll()
     QPointer<TransfersWidget> dialog = QPointer<TransfersWidget>(this);
 
     if (QMegaMessageBox::warning(nullptr, QString::fromUtf8("MEGAsync"),
-                             tr("Are you sure you want to %1 all transfers?").arg(mClearMode ? tr("clear") : tr("cancel")),
+                             tr("Are you sure you want to cancel and clear all transfers?"),
                              QMessageBox::Yes | QMessageBox::No, QMessageBox::No)
             != QMessageBox::Yes
             || !dialog)
@@ -195,7 +204,7 @@ void TransfersWidget::cancelClearAll()
         return;
     }
 
-    emit cancelClearAllRows();
+    emit cancelAndClearAllRows();
 }
 
 void TransfersWidget::onTransferAdded()
@@ -309,6 +318,12 @@ void TransfersWidget::onPauseResumeButtonCheckedOnDelegate(bool pause)
             onPauseStateChanged(pausedTransfers > 0);
         }
     }
+}
+
+void TransfersWidget::onCheckCancelButtonVisibility()
+{
+    auto anyCancelable = mProxyModel->isAnyCancelable();
+    ui->tCancelClearVisible->setVisible(anyCancelable);
 }
 
 void TransfersWidget::on_tPauseResumeVisible_toggled(bool state)

@@ -3,6 +3,7 @@
 #include "Utilities.h"
 #include "Platform.h"
 #include "TransferItem.h"
+#include "QMegaMessageBox.h"
 
 #include <QSharedData>
 
@@ -635,12 +636,6 @@ void TransfersModel::openFolderByTag(TransferTag tag)
     }
 }
 
-void TransfersModel::cancelClearAllTransfers()
-{
-    mMegaApi->cancelTransfers(MegaTransfer::TYPE_UPLOAD);
-    mMegaApi->cancelTransfers(MegaTransfer::TYPE_DOWNLOAD);
-}
-
 TransfersCount TransfersModel::getTransfersCount()
 {
     return mTransferEventWorker->getTransfersCount();
@@ -653,58 +648,56 @@ void TransfersModel::resetCompletedTransfersCount()
     updateTransfersCount();
 }
 
-void TransfersModel::cancelClearTransfers(const QModelIndexList& indexes, bool clearAll)
+void TransfersModel::cancelTransfers(const QModelIndexList& indexes)
 {
-    QModelIndexList indexesToRemove(indexes);
-
-    if(clearAll)
+    if(indexes.isEmpty())
     {
-        cancelClearAllTransfers();
+        clearTransfers(QModelIndexList());
 
-        resetCompletedTransfersCount();
+        mMegaApi->cancelTransfers(MegaTransfer::TYPE_UPLOAD);
+        mMegaApi->cancelTransfers(MegaTransfer::TYPE_DOWNLOAD);
     }
-    else if(!indexesToRemove.isEmpty())
+    else
     {
-        QList<TransferTag> toCancel;
         QMap<QModelIndex, QExplicitlySharedDataPointer<TransferData>> uploadToClear;
         QMap<QModelIndex, QExplicitlySharedDataPointer<TransferData>> downloadToClear;
 
+        QList<TransferTag> toCancel;
+
         // First clear finished transfers (remove rows), then cancel the others.
         // This way, there is no risk of messing up the rows order with cancel requests.
-        for (auto index : indexesToRemove)
+        for (auto index : indexes)
         {
             auto d (getTransfer(index.row()));
 
             // Clear (remove rows of) finished transfers
             if (d)
             {
-                if (d->mState & TransferData::CANCELABLE_STATES_MASK)
+                if (d->isCancelable())
                 {
                     toCancel.append(d->mTag);
                 }
-                else if(d->mState & TransferData::FINISHED_STATES_MASK)
+                else if(d->isFinished())
                 {
-                    if(d->mType & TransferData::TransferType::TRANSFER_UPLOAD)
-                    {
-                        uploadToClear.insert(index, d);
-                    }
-                    else
-                    {
-                        downloadToClear.insert(index, d);
-                    }
+                    classifyUploadOrDownloadTransfers(uploadToClear, downloadToClear,index);
                 }
             }
+        }
+
+        if(!uploadToClear.isEmpty() || !downloadToClear.isEmpty())
+        {
+            clearTransfers(uploadToClear, downloadToClear);
         }
 
         if(!toCancel.isEmpty())
         {
             auto counter(0);
-            // Now cancel transfers.
+            // Now cancel transfers
             for (auto item : toCancel)
             {
                 mMegaApi->cancelTransferByTag(item);
 
-                //This is done to avoid
+                //This is done to avoid GUI freezes
                 if(++counter == 100)
                 {
                     counter = 0;
@@ -713,30 +706,89 @@ void TransfersModel::cancelClearTransfers(const QModelIndexList& indexes, bool c
             }
         }
 
-        if(!uploadToClear.isEmpty() || !downloadToClear.isEmpty())
+        if(!uploadToClear.isEmpty() && !downloadToClear.isEmpty() && !toCancel.isEmpty())
         {
-            QModelIndexList itemsToRemove;
-
-            if(!uploadToClear.isEmpty())
-            {
-                mTransferEventWorker->resetCompletedUploads(uploadToClear.values());
-
-                itemsToRemove.append(uploadToClear.keys());
-            }
-
-            if(!downloadToClear.isEmpty())
-            {
-                mTransferEventWorker->resetCompletedDownloads(downloadToClear.values());
-
-                itemsToRemove.append(downloadToClear.keys());
-            }
-
-            removeRows(itemsToRemove);
-
+            QMegaMessageBox::warning(nullptr, QString::fromUtf8("MEGAsync"),
+                                         tr("Transfers cannot be cancelled or cleared"),
+                                         QMessageBox::Ok);
         }
     }
 
     updateTransfersCount();
+}
+
+void TransfersModel::classifyUploadOrDownloadTransfers(QMap<QModelIndex, QExplicitlySharedDataPointer<TransferData>>& uploads,
+                                                       QMap<QModelIndex, QExplicitlySharedDataPointer<TransferData>>& downloads,
+                                                       const QModelIndex& index)
+{
+    auto d (getTransfer(index.row()));
+
+    // Clear (remove rows of) finished transfers
+    if (d)
+    {
+        if(d->isFinished())
+        {
+            if(d->isUpload())
+            {
+                uploads.insert(index, d);
+            }
+            else
+            {
+                downloads.insert(index, d);
+            }
+        }
+    }
+}
+
+void TransfersModel::clearTransfers(const QModelIndexList& indexes)
+{
+    QMap<QModelIndex, QExplicitlySharedDataPointer<TransferData>> uploadToClear;
+    QMap<QModelIndex, QExplicitlySharedDataPointer<TransferData>> downloadToClear;
+
+    if(indexes.isEmpty())
+    {
+        for (auto row = 0; row < rowCount(DEFAULT_IDX); ++row)
+        {
+            auto indexToCheck = index(row, 0);
+            classifyUploadOrDownloadTransfers(uploadToClear, downloadToClear,indexToCheck);
+        }
+    }
+    else
+    {
+        for (auto indexToCheck : indexes)
+        {
+            classifyUploadOrDownloadTransfers(uploadToClear, downloadToClear,indexToCheck);
+        }
+    }
+
+    clearTransfers(uploadToClear, downloadToClear);
+
+    updateTransfersCount();
+}
+
+void TransfersModel::clearTransfers(const QMap<QModelIndex, QExplicitlySharedDataPointer<TransferData> > uploads,
+                                    const QMap<QModelIndex, QExplicitlySharedDataPointer<TransferData> > downloads)
+{
+    if(!uploads.isEmpty() || !downloads.isEmpty())
+    {
+        QModelIndexList itemsToRemove;
+
+        if(!uploads.isEmpty())
+        {
+            mTransferEventWorker->resetCompletedUploads(uploads.values());
+
+            itemsToRemove.append(uploads.keys());
+        }
+
+        if(!downloads.isEmpty())
+        {
+            mTransferEventWorker->resetCompletedDownloads(downloads.values());
+
+            itemsToRemove.append(downloads.keys());
+        }
+
+        removeRows(itemsToRemove);
+    }
 }
 
 void TransfersModel::pauseTransfers(const QModelIndexList& indexes, bool pauseState)

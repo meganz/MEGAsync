@@ -61,6 +61,7 @@ private slots:
     void onModelChanged();
     void onModelAboutToBeChanged();
     void onPauseResumeButtonCheckedOnDelegate(bool pause);
+    void onCheckCancelButtonVisibility();
 
 private:
     enum HeaderState
@@ -94,7 +95,7 @@ signals:
     void pauseResumeVisibleRows(bool state);
     void cancelClearVisibleRows();
     void pauseResumeAllRows(bool pauseState);
-    void cancelClearAllRows();
+    void cancelAndClearAllRows();
 
     void disableTransferManager(bool);
 
