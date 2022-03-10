@@ -2177,7 +2177,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>DEBUG mode enabled. A log is being created in your desktop (MEGAsync.log)</source>
         <translatorcomment>Notification message shown when the DEBUG mode is enabled.</translatorcomment>
-        <translation>DEBUG调试模式已激活，已在您的桌面保存一个名为MEGAsync.log的文档</translation>
+        <translation>调试模式已启用，已在您的桌面上创建日志（MEGAsync.log）。</translation>
     </message>
     <message>
         <source>Error: Invalid destination folder. The download has been cancelled</source>
@@ -3387,7 +3387,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Public permissions:</source>
         <translatorcomment>Label just before the new public permissions that will be applied to new files and folders</translatorcomment>
-        <translation>公共权限</translation>
+        <translation>公共权限：</translation>
     </message>
     <message>
         <source>Files</source>
@@ -3536,12 +3536,19 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Strengthen cryptographic security on Linux repositories.
-- Fix memory issues with problematic PDF files.
+        <source>- Added support to stream file links from a folder link.
+- Fixed translation issues.
+- Improved the user experience.
+- Added a new notifications panel in the settings dialog.
+- Other minor UI fixes and adjustments.
+- Fixed detected crashes on Windows, Linux and macOS.
 </source>
-        <translatorcomment>Changelog v4.6.3 (linux only)</translatorcomment>
-        <translation>- 增强了Linux存储库的加密安全性。
-- 修复了有问题的PDF文件的内存问题。
+        <translation>- 添加了对从文件夹链接接流式传输文件链接的支持。
+- 修复了翻译问题。
+- 改进了用户体验。
+- 在设置对话框中添加了新的通知面板。
+- 对用户界面进行了修复和微调。
+- 修复了在Windows、Linux和macOS上检测到的崩溃问题。
 </translation>
     </message>
 </context>
@@ -3666,7 +3673,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Look in:</source>
         <translatorcomment>Label to indicate the current filesystem path containing the files and folders that are being listed</translatorcomment>
-        <translation>查看</translation>
+        <translation>查看：</translation>
     </message>
     <message>
         <source>Back</source>
@@ -4149,11 +4156,6 @@ Do you want to delete it anyway?</source>
         <source>Full scan</source>
         <translatorcomment>Title of the message dialog for Full scan operation.</translatorcomment>
         <translation>完整扫描</translation>
-    </message>
-    <message>
-        <source>Open at login</source>
-        <translatorcomment>Label to let the user start MEGAsync on login with a checkbox.</translatorcomment>
-        <translation>自动登入</translation>
     </message>
     <message>
         <source>MEGAsync will perform a full scan of your synced folders when it starts.
@@ -4702,6 +4704,11 @@ Do you want to restart MEGAsync now?</source>
         <translatorcomment>Title for the Settings -&gt; Notifications pane tab button. Keep as short as possible.</translatorcomment>
         <translation>通知</translation>
     </message>
+    <message>
+        <source>Launch at login</source>
+        <translatorcomment>Label to let the user start MEGAsync on login with a checkbox.</translatorcomment>
+        <translation>登录时启动</translation>
+    </message>
 </context>
 <context>
     <name>SetupWizard</name>
@@ -5207,7 +5214,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>File info:</source>
         <translatorcomment>Text just before of the information of the file selected for streaming</translatorcomment>
-        <translation>文件详情</translation>
+        <translation>文件详情：</translation>
     </message>
     <message>
         <source>Nothing selected</source>
@@ -5351,11 +5358,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>全部取消</translation>
     </message>
     <message>
-        <source>Are you sure you want to cancel all transfers?</source>
-        <translatorcomment>Description label for warning dialog before a transfer cancellation</translatorcomment>
-        <translation>您确定要取消全部传输吗？</translation>
-    </message>
-    <message>
         <source>Resume</source>
         <translation>恢复</translation>
     </message>
@@ -5376,6 +5378,26 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Open links</source>
         <translatorcomment>Menu action item to open MEGA public links. It will let you to import and/or download.</translatorcomment>
         <translation>打开链接</translation>
+    </message>
+    <message>
+        <source>Do you want to cancel all transfers?</source>
+        <translatorcomment>Description label for warning dialog before a transfer cancellation</translatorcomment>
+        <translation>您确定要取消所有传输吗？</translation>
+    </message>
+    <message>
+        <source>Syncs aren&apos;t affected by this action.</source>
+        <translatorcomment>Description label for warning dialog indicating that syncs are not going to be affected by accepting this dialog</translatorcomment>
+        <translation>您的同步不受此操作的影响。</translation>
+    </message>
+    <message>
+        <source>Continue transfers</source>
+        <translatorcomment>Button label that indicates that no one of active transfers will be cancelled (Cancel button on dialog)</translatorcomment>
+        <translation>继续传输</translation>
+    </message>
+    <message>
+        <source>Cancel all transfers</source>
+        <translatorcomment>Button label that indicates that all active transfers will be cancelled (Accept button on dialog)</translatorcomment>
+        <translation>取消所有传输</translation>
     </message>
 </context>
 <context>

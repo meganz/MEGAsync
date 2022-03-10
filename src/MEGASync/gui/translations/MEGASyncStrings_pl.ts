@@ -1073,7 +1073,7 @@ W niektórych przypadkach mogą one zawierać szczegóły dotyczące Twoich dany
     <message>
         <source>Upgrade now to a PRO account.</source>
         <translatorcomment>Notification message shown to encourage the user to upgrade his account</translatorcomment>
-        <translation>Przejdź teraz na konto PRO.</translation>
+        <translation>Przejdź teraz na konto Pro.</translation>
     </message>
     <message>
         <source>Get PRO</source>
@@ -3536,12 +3536,19 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Strengthen cryptographic security on Linux repositories.
-- Fix memory issues with problematic PDF files.
+        <source>- Added support to stream file links from a folder link.
+- Fixed translation issues.
+- Improved the user experience.
+- Added a new notifications panel in the settings dialog.
+- Other minor UI fixes and adjustments.
+- Fixed detected crashes on Windows, Linux and macOS.
 </source>
-        <translatorcomment>Changelog v4.6.3 (linux only)</translatorcomment>
-        <translation>- Wzmocnienie bezpieczeństwa kryptograficznego w repozytoriach systemu Linux.
-- Naprawić problemy z pamięcią w problematycznych plikach PDF.
+        <translation>- Dodano obsługę przesyłania strumieniowego łączy do plików z łącza do folderu.
+- Poprawiono problemy z tłumaczeniami.
+- Poprawiono komfort użytkowania.
+- Dodano nowy panel powiadomień w oknie dialogowym ustawień.
+- Inne drobne poprawki i dostosowania interfejsu użytkownika.
+- Poprawiono wykryte awarie w systemach Windows, Linux i macOS.
 </translation>
     </message>
 </context>
@@ -4151,11 +4158,6 @@ Czy mimo to chcesz je usunąć?</translation>
         <translation>Pełne skanowanie</translation>
     </message>
     <message>
-        <source>Open at login</source>
-        <translatorcomment>Label to let the user start MEGAsync on login with a checkbox.</translatorcomment>
-        <translation>Otwórz przy logowaniu</translation>
-    </message>
-    <message>
         <source>MEGAsync will perform a full scan of your synced folders when it starts.
 
 Do you want to restart MEGAsync now?</source>
@@ -4495,7 +4497,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>%1 (local cache):</source>
         <translatorcomment>Section label name for local cache summary and actions. Keep %1 placeholder, which is used to fill in the platform specific name for local sync cache (debris) (macOS)</translatorcomment>
-        <translation>%1 (lokalny cache)</translation>
+        <translation>%1 (lokalny cache):</translation>
     </message>
     <message>
         <source>SyncDebris (remote cache):</source>
@@ -4680,17 +4682,17 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Pro I</source>
         <translatorcomment>Text label indicating the Pro I tier of account type in Account pane, next to the shield icon indicating also the type of account.</translatorcomment>
-        <translation>PRO I</translation>
+        <translation>Pro I</translation>
     </message>
     <message>
         <source>Pro II</source>
         <translatorcomment>Text label indicating the Pro II tier of account type in Account pane, next to the shield icon indicating also the type of account.</translatorcomment>
-        <translation>PRO II</translation>
+        <translation>Pro II</translation>
     </message>
     <message>
         <source>Pro III</source>
         <translatorcomment>Text label indicating the Pro III tier of account type in Account pane, next to the shield icon indicating also the type of account.</translatorcomment>
-        <translation>PRO III</translation>
+        <translation>Pro III</translation>
     </message>
     <message>
         <source>Export Key</source>
@@ -4701,6 +4703,11 @@ Do you want to restart MEGAsync now?</source>
         <source>Notifications</source>
         <translatorcomment>Title for the Settings -&gt; Notifications pane tab button. Keep as short as possible.</translatorcomment>
         <translation>Powiadomienia</translation>
+    </message>
+    <message>
+        <source>Launch at login</source>
+        <translatorcomment>Label to let the user start MEGAsync on login with a checkbox.</translatorcomment>
+        <translation>Uruchom przy logowaniu</translation>
     </message>
 </context>
 <context>
@@ -5351,11 +5358,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>Anuluj wszystko</translation>
     </message>
     <message>
-        <source>Are you sure you want to cancel all transfers?</source>
-        <translatorcomment>Description label for warning dialog before a transfer cancellation</translatorcomment>
-        <translation>Czy na pewno chcesz anulować wszystkie transfery plików?</translation>
-    </message>
-    <message>
         <source>Resume</source>
         <translation>Wznów</translation>
     </message>
@@ -5376,6 +5378,26 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Open links</source>
         <translatorcomment>Menu action item to open MEGA public links. It will let you to import and/or download.</translatorcomment>
         <translation>Otwórz linki</translation>
+    </message>
+    <message>
+        <source>Do you want to cancel all transfers?</source>
+        <translatorcomment>Description label for warning dialog before a transfer cancellation</translatorcomment>
+        <translation>Czy chcesz anulować wszystkie przelewy?</translation>
+    </message>
+    <message>
+        <source>Syncs aren&apos;t affected by this action.</source>
+        <translatorcomment>Description label for warning dialog indicating that syncs are not going to be affected by accepting this dialog</translatorcomment>
+        <translation>To działanie nie ma wpływu na synchronizację.</translation>
+    </message>
+    <message>
+        <source>Continue transfers</source>
+        <translatorcomment>Button label that indicates that no one of active transfers will be cancelled (Cancel button on dialog)</translatorcomment>
+        <translation>Kontynuuj transfery</translation>
+    </message>
+    <message>
+        <source>Cancel all transfers</source>
+        <translatorcomment>Button label that indicates that all active transfers will be cancelled (Accept button on dialog)</translatorcomment>
+        <translation>Usuń wszystkie transfery</translation>
     </message>
 </context>
 <context>
@@ -5688,17 +5710,17 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Pro I</source>
         <translatorcomment>Label to refer Pro I tier</translatorcomment>
-        <translation>PRO I</translation>
+        <translation>Pro I</translation>
     </message>
     <message>
         <source>Pro II</source>
         <translatorcomment>Label to refer Pro II tier</translatorcomment>
-        <translation>PRO II</translation>
+        <translation>Pro II</translation>
     </message>
     <message>
         <source>Pro III</source>
         <translatorcomment>Label to refer Pro III tier</translatorcomment>
-        <translation>PRO III</translation>
+        <translation>Pro III</translation>
     </message>
 </context>
 <context>

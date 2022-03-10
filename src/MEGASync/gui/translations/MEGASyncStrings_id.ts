@@ -1073,7 +1073,7 @@ Dalam beberapa kasus, mereka mungkin berisi detail tentang data anda, seperti na
     <message>
         <source>Upgrade now to a PRO account.</source>
         <translatorcomment>Notification message shown to encourage the user to upgrade his account</translatorcomment>
-        <translation>Tingkatkan sekarang ke akun PRO.</translation>
+        <translation>Tingkatkan sekarang ke akun Pro.</translation>
     </message>
     <message>
         <source>Get PRO</source>
@@ -1633,7 +1633,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Upgrade to PRO now before your account runs full and your uploads to MEGA stop.</source>
         <translatorcomment>Label to encourage the user to upgrade his account before uploads stop</translatorcomment>
-        <translation>Tingkatkan ke PRO sekarang sebelum akun anda penuh dan unggahan anda ke MEGA berhenti.</translation>
+        <translation>Tingkatkan ke Pro sekarang sebelum akun anda penuh dan unggahan anda ke MEGA berhenti.</translation>
     </message>
     <message>
         <source>Your MEGA account is full.</source>
@@ -1648,7 +1648,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Please upgrade to PRO.</source>
         <translatorcomment>Label to encourage the user to upgrade to PRO</translatorcomment>
-        <translation>Harap tingkatkan ke PRO.</translation>
+        <translation>Harap tingkatkan ke Pro.</translation>
     </message>
     <message>
         <source>Upload</source>
@@ -3536,12 +3536,19 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Strengthen cryptographic security on Linux repositories.
-- Fix memory issues with problematic PDF files.
+        <source>- Added support to stream file links from a folder link.
+- Fixed translation issues.
+- Improved the user experience.
+- Added a new notifications panel in the settings dialog.
+- Other minor UI fixes and adjustments.
+- Fixed detected crashes on Windows, Linux and macOS.
 </source>
-        <translatorcomment>Changelog v4.6.3 (linux only)</translatorcomment>
-        <translation>- Perkuat keamanan kriptografi di repositori Linux.
-- Perbaiki masalah memori dengan file PDF yang bermasalah.
+        <translation>- Menambahkan dukungan untuk mengalirkan tautan file dari tautan folder.
+- Memperbaiki masalah terjemahan.
+- Meningkatkan pengalaman pengguna.
+- Menambahkan panel notifikasi baru di dialog pengaturan.
+- Perbaikan dan penyesuaian UI kecil lainnya.
+- Memperbaiki kerusakan yang terdeteksi di Windows, Linux, dan macOS.
 </translation>
     </message>
 </context>
@@ -4151,11 +4158,6 @@ Apakah anda tetap ingin menghapusnya?</translation>
         <translation>Scan menyeluruh</translation>
     </message>
     <message>
-        <source>Open at login</source>
-        <translatorcomment>Label to let the user start MEGAsync on login with a checkbox.</translatorcomment>
-        <translation>Buka saat login</translation>
-    </message>
-    <message>
         <source>MEGAsync will perform a full scan of your synced folders when it starts.
 
 Do you want to restart MEGAsync now?</source>
@@ -4225,7 +4227,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Backups of the previous versions of your synced files in your computer will be permanently deleted. Please, check your backup folders to see if you need to rescue something before continuing:</source>
         <translatorcomment>Message shown to inform the user about the deletion of the local cache and its consequences</translatorcomment>
-        <translation>Versi cadangan file sebelumnya pada komputer anda akan dihapus secara permanen. Harap cek folder cadangan anda untuk melihat jika anda ingin menyelamatkan sesuatu sebelum melanjutkan.</translation>
+        <translation>Versi cadangan file sebelumnya pada komputer anda akan dihapus secara permanen. Harap cek folder cadangan anda untuk melihat jika anda ingin menyelamatkan sesuatu sebelum melanjutkan:</translation>
     </message>
     <message>
         <source>Backups of the previous versions of your synced files in MEGA will be permanently deleted. Please, check your [A] folder in the Rubbish Bin of your MEGA account to see if you need to rescue something before continuing.</source>
@@ -4701,6 +4703,11 @@ Do you want to restart MEGAsync now?</source>
         <source>Notifications</source>
         <translatorcomment>Title for the Settings -&gt; Notifications pane tab button. Keep as short as possible.</translatorcomment>
         <translation>Notifikasi</translation>
+    </message>
+    <message>
+        <source>Launch at login</source>
+        <translatorcomment>Label to let the user start MEGAsync on login with a checkbox.</translatorcomment>
+        <translation>Luncurkan saat masuk</translation>
     </message>
 </context>
 <context>
@@ -5351,11 +5358,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>Batalkan semua</translation>
     </message>
     <message>
-        <source>Are you sure you want to cancel all transfers?</source>
-        <translatorcomment>Description label for warning dialog before a transfer cancellation</translatorcomment>
-        <translation>Anda yakin ingin membatalkan seluruh transfer?</translation>
-    </message>
-    <message>
         <source>Resume</source>
         <translation>Lanjutkan</translation>
     </message>
@@ -5376,6 +5378,26 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Open links</source>
         <translatorcomment>Menu action item to open MEGA public links. It will let you to import and/or download.</translatorcomment>
         <translation>Buka tautan</translation>
+    </message>
+    <message>
+        <source>Do you want to cancel all transfers?</source>
+        <translatorcomment>Description label for warning dialog before a transfer cancellation</translatorcomment>
+        <translation>Apakah anda ingin membatalkan semua transfer?</translation>
+    </message>
+    <message>
+        <source>Syncs aren&apos;t affected by this action.</source>
+        <translatorcomment>Description label for warning dialog indicating that syncs are not going to be affected by accepting this dialog</translatorcomment>
+        <translation>Sinkronisasi tidak terpengaruh oleh tindakan ini.</translation>
+    </message>
+    <message>
+        <source>Continue transfers</source>
+        <translatorcomment>Button label that indicates that no one of active transfers will be cancelled (Cancel button on dialog)</translatorcomment>
+        <translation>Lanjutkan transfer</translation>
+    </message>
+    <message>
+        <source>Cancel all transfers</source>
+        <translatorcomment>Button label that indicates that all active transfers will be cancelled (Accept button on dialog)</translatorcomment>
+        <translation>Batalkan semua transfer</translation>
     </message>
 </context>
 <context>
@@ -5500,7 +5522,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Please upgrade to PRO to enjoy more storage space (your uploads will automatically resume).</source>
         <translatorcomment>Label to encourage the user to upgrade his account</translatorcomment>
-        <translation>Tingkatkan ke PRO untuk menikmati lebih banyak ruang penyimpanan (unggahan anda akan dilanjutkan secara otomatis).</translation>
+        <translation>Tingkatkan ke Pro untuk menikmati lebih banyak ruang penyimpanan (unggahan anda akan dilanjutkan secara otomatis).</translation>
     </message>
     <message>
         <source>Your MEGA account is full</source>

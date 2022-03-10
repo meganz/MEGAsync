@@ -3536,12 +3536,19 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Strengthen cryptographic security on Linux repositories.
-- Fix memory issues with problematic PDF files.
+        <source>- Added support to stream file links from a folder link.
+- Fixed translation issues.
+- Improved the user experience.
+- Added a new notifications panel in the settings dialog.
+- Other minor UI fixes and adjustments.
+- Fixed detected crashes on Windows, Linux and macOS.
 </source>
-        <translatorcomment>Changelog v4.6.3 (linux only)</translatorcomment>
-        <translation>تعزيز أمان التشفير على مستودعات لينيكس Linux.
-- إصلاح مشاكل الذاكرة مع ملفات PDF التي بها مشاكل.
+        <translation>- تمت إضافة دعم لبث روابط الملفات من رابط مجلد.
+- تم إصلاح مشاكل الترجمة.
+- تحسين تجربة المستخدم.
+- تمت إضافة لوحة إشعارات جديدة في مربع حوار الإعدادات.
+- إصلاحات وتعديلات طفيفة أخرى في واجهة المستخدم.
+- إصلاح الأعطال المكتشفة على أنظمة التشغيل ويندوز Windows و لينكس Linux و ماك macOS.
 </translation>
     </message>
 </context>
@@ -4151,11 +4158,6 @@ Do you want to delete it anyway?</source>
         <translation>فحص كامل</translation>
     </message>
     <message>
-        <source>Open at login</source>
-        <translatorcomment>Label to let the user start MEGAsync on login with a checkbox.</translatorcomment>
-        <translation>فتح عند تسجيل الدخول</translation>
-    </message>
-    <message>
         <source>MEGAsync will perform a full scan of your synced folders when it starts.
 
 Do you want to restart MEGAsync now?</source>
@@ -4590,7 +4592,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Used quota for the last %1 hours:</source>
         <translatorcomment>Informative text shown in Account pane for Free account type. Indicates the used quota in the last %1 specified number of hours. Keep the %1 subsitution argument.</translatorcomment>
-        <translation>الحصة المستخدمة في %1ساعة الأخيرة:</translation>
+        <translation>الحصة المستخدمة في %1 ساعة الأخيرة:</translation>
     </message>
     <message>
         <source>Free</source>
@@ -4701,6 +4703,11 @@ Do you want to restart MEGAsync now?</source>
         <source>Notifications</source>
         <translatorcomment>Title for the Settings -&gt; Notifications pane tab button. Keep as short as possible.</translatorcomment>
         <translation>الإشعارات</translation>
+    </message>
+    <message>
+        <source>Launch at login</source>
+        <translatorcomment>Label to let the user start MEGAsync on login with a checkbox.</translatorcomment>
+        <translation>إطلاق عند تسجيل الدخول</translation>
     </message>
 </context>
 <context>
@@ -5351,11 +5358,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>إلغاء الكل</translation>
     </message>
     <message>
-        <source>Are you sure you want to cancel all transfers?</source>
-        <translatorcomment>Description label for warning dialog before a transfer cancellation</translatorcomment>
-        <translation>هل أنت متأكد أنك تريد إلغاء كل عمليات التراسل؟</translation>
-    </message>
-    <message>
         <source>Resume</source>
         <translation>استئناف</translation>
     </message>
@@ -5376,6 +5378,26 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Open links</source>
         <translatorcomment>Menu action item to open MEGA public links. It will let you to import and/or download.</translatorcomment>
         <translation>افتح الروابط</translation>
+    </message>
+    <message>
+        <source>Do you want to cancel all transfers?</source>
+        <translatorcomment>Description label for warning dialog before a transfer cancellation</translatorcomment>
+        <translation>هل تريد إلغاء كل عمليات التراسل؟</translation>
+    </message>
+    <message>
+        <source>Syncs aren&apos;t affected by this action.</source>
+        <translatorcomment>Description label for warning dialog indicating that syncs are not going to be affected by accepting this dialog</translatorcomment>
+        <translation>لا تتأثر عمليات المزامنة بهذا الإجراء.</translation>
+    </message>
+    <message>
+        <source>Continue transfers</source>
+        <translatorcomment>Button label that indicates that no one of active transfers will be cancelled (Cancel button on dialog)</translatorcomment>
+        <translation>مواصلة عمليات تراسل</translation>
+    </message>
+    <message>
+        <source>Cancel all transfers</source>
+        <translatorcomment>Button label that indicates that all active transfers will be cancelled (Accept button on dialog)</translatorcomment>
+        <translation>إلغاء كل عمليات التراسل</translation>
     </message>
 </context>
 <context>

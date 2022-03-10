@@ -1073,7 +1073,7 @@ Trong một số trường hợp, log có thể chứa thông tin chi tiết v�
     <message>
         <source>Upgrade now to a PRO account.</source>
         <translatorcomment>Notification message shown to encourage the user to upgrade his account</translatorcomment>
-        <translation>Nâng cấp ngay lên tài khoản PRO.</translation>
+        <translation>Nâng cấp ngay lên tài khoản Pro.</translation>
     </message>
     <message>
         <source>Get PRO</source>
@@ -3536,12 +3536,19 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Strengthen cryptographic security on Linux repositories.
-- Fix memory issues with problematic PDF files.
+        <source>- Added support to stream file links from a folder link.
+- Fixed translation issues.
+- Improved the user experience.
+- Added a new notifications panel in the settings dialog.
+- Other minor UI fixes and adjustments.
+- Fixed detected crashes on Windows, Linux and macOS.
 </source>
-        <translatorcomment>Changelog v4.6.3 (linux only)</translatorcomment>
-        <translation>- Tăng cường sức mạnh an ninh mã hóa trên hạ tầng Linux.
-- Khắc phục vấn đề sử dụng bộ nhớ đối với các tệp PDF phức tạp.
+        <translation>- Thêm hỗ trợ để phát trực tuyến các liên kết tệp tin từ một liên kết thư mục.
+- Khắc phục dịch thuật sai.
+- Cải thiện trải nghiệm người dùng.
+- Đã thêm bảng thông báo mới trong cài đặt hộp thoại.
+- Sửa lỗi nhỏ và điều chỉnh giao diện người dùng.
+- Khắc phục lỗi treo máy được phát hiện trên Windows, Linux và macOS.
 </translation>
     </message>
 </context>
@@ -3560,7 +3567,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Proxy settings:</source>
         <translatorcomment>Label to indicate the proxy current setting. It could be no proxy or custom manual proxy.</translatorcomment>
-        <translation>Các thiết đặt proxy</translation>
+        <translation>Các thiết đặt proxy:</translation>
     </message>
     <message>
         <source>HTTP</source>
@@ -4151,11 +4158,6 @@ Bạn có muốn tiếp tục xóa không?</translation>
         <translation>Quét toàn bộ</translation>
     </message>
     <message>
-        <source>Open at login</source>
-        <translatorcomment>Label to let the user start MEGAsync on login with a checkbox.</translatorcomment>
-        <translation>Chạy sau khi đăng nhập</translation>
-    </message>
-    <message>
         <source>MEGAsync will perform a full scan of your synced folders when it starts.
 
 Do you want to restart MEGAsync now?</source>
@@ -4500,7 +4502,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>SyncDebris (remote cache):</source>
         <translatorcomment>Section label name for remote cache summary and clear action.(macOS)</translatorcomment>
-        <translation>Rác thải đồng bộ (nhớ tạm trên mạng)</translation>
+        <translation>Rác thải đồng bộ (nhớ tạm trên mạng):</translation>
     </message>
     <message>
         <source>File versions:</source>
@@ -4701,6 +4703,11 @@ Do you want to restart MEGAsync now?</source>
         <source>Notifications</source>
         <translatorcomment>Title for the Settings -&gt; Notifications pane tab button. Keep as short as possible.</translatorcomment>
         <translation>Thông Báo</translation>
+    </message>
+    <message>
+        <source>Launch at login</source>
+        <translatorcomment>Label to let the user start MEGAsync on login with a checkbox.</translatorcomment>
+        <translation>Khởi chạy khi đăng nhập vào máy tính</translation>
     </message>
 </context>
 <context>
@@ -5351,11 +5358,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>Hủy hết</translation>
     </message>
     <message>
-        <source>Are you sure you want to cancel all transfers?</source>
-        <translatorcomment>Description label for warning dialog before a transfer cancellation</translatorcomment>
-        <translation>Bạn có chắc muốn hủy bỏ tất cả các mục truyền tải?</translation>
-    </message>
-    <message>
         <source>Resume</source>
         <translation>Tiếp tục truyền</translation>
     </message>
@@ -5376,6 +5378,26 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Open links</source>
         <translatorcomment>Menu action item to open MEGA public links. It will let you to import and/or download.</translatorcomment>
         <translation>Mở đường liên kết</translation>
+    </message>
+    <message>
+        <source>Do you want to cancel all transfers?</source>
+        <translatorcomment>Description label for warning dialog before a transfer cancellation</translatorcomment>
+        <translation>Bạn có muốn hủy tất cả các phiên truyền tải không?</translation>
+    </message>
+    <message>
+        <source>Syncs aren&apos;t affected by this action.</source>
+        <translatorcomment>Description label for warning dialog indicating that syncs are not going to be affected by accepting this dialog</translatorcomment>
+        <translation>Các phiên đồng bộ sẽ không bị ảnh hưởng bởi hành động này.</translation>
+    </message>
+    <message>
+        <source>Continue transfers</source>
+        <translatorcomment>Button label that indicates that no one of active transfers will be cancelled (Cancel button on dialog)</translatorcomment>
+        <translation>Tiếp tục các truyền tải</translation>
+    </message>
+    <message>
+        <source>Cancel all transfers</source>
+        <translatorcomment>Button label that indicates that all active transfers will be cancelled (Accept button on dialog)</translatorcomment>
+        <translation>Hủy tất cả các truyền tải</translation>
     </message>
 </context>
 <context>

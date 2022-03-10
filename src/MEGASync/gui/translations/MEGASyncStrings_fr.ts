@@ -3536,13 +3536,18 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Strengthen cryptographic security on Linux repositories.
-- Fix memory issues with problematic PDF files.
+        <source>- Added support to stream file links from a folder link.
+- Fixed translation issues.
+- Improved the user experience.
+- Added a new notifications panel in the settings dialog.
+- Other minor UI fixes and adjustments.
+- Fixed detected crashes on Windows, Linux and macOS.
 </source>
-        <translatorcomment>Changelog v4.6.3 (linux only)</translatorcomment>
-        <translation>– Renforcement de la sécurité cryptographique des dépôts Linux.
-– Correctif de problèmes de mémoire avec les PDF problématiques.
-</translation>
+        <translation>– Ajout de la diffusion en continu de liens de fichiers à partir d’un lien de dossier.
+– Correctif de certains problèmes de traduction.
+– Amélioration de l’expérience utilisateur.
+– Autres correctifs et peaufinages mineurs de l’IU.
+– Correctif de plantages détectés sous Windows, Linux et macOS.</translation>
     </message>
 </context>
 <context>
@@ -4151,11 +4156,6 @@ Voulez-vous le supprimer quand même ?</translation>
         <translation>Analyse complète</translation>
     </message>
     <message>
-        <source>Open at login</source>
-        <translatorcomment>Label to let the user start MEGAsync on login with a checkbox.</translatorcomment>
-        <translation>Lancer à la connexion</translation>
-    </message>
-    <message>
         <source>MEGAsync will perform a full scan of your synced folders when it starts.
 
 Do you want to restart MEGAsync now?</source>
@@ -4701,6 +4701,11 @@ Do you want to restart MEGAsync now?</source>
         <source>Notifications</source>
         <translatorcomment>Title for the Settings -&gt; Notifications pane tab button. Keep as short as possible.</translatorcomment>
         <translation>Notifications </translation>
+    </message>
+    <message>
+        <source>Launch at login</source>
+        <translatorcomment>Label to let the user start MEGAsync on login with a checkbox.</translatorcomment>
+        <translation>Lancer à la connexion</translation>
     </message>
 </context>
 <context>
@@ -5351,11 +5356,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>Tout annuler</translation>
     </message>
     <message>
-        <source>Are you sure you want to cancel all transfers?</source>
-        <translatorcomment>Description label for warning dialog before a transfer cancellation</translatorcomment>
-        <translation>Voulez-vous vraiment annuler tous les transferts ?</translation>
-    </message>
-    <message>
         <source>Resume</source>
         <translation>Reprendre</translation>
     </message>
@@ -5376,6 +5376,26 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Open links</source>
         <translatorcomment>Menu action item to open MEGA public links. It will let you to import and/or download.</translatorcomment>
         <translation>Ouvrir des liens</translation>
+    </message>
+    <message>
+        <source>Do you want to cancel all transfers?</source>
+        <translatorcomment>Description label for warning dialog before a transfer cancellation</translatorcomment>
+        <translation>Voulez-vous annuler tous les transferts ?</translation>
+    </message>
+    <message>
+        <source>Syncs aren&apos;t affected by this action.</source>
+        <translatorcomment>Description label for warning dialog indicating that syncs are not going to be affected by accepting this dialog</translatorcomment>
+        <translation>Les synchronisations ne sont pas affectées par cette action.</translation>
+    </message>
+    <message>
+        <source>Continue transfers</source>
+        <translatorcomment>Button label that indicates that no one of active transfers will be cancelled (Cancel button on dialog)</translatorcomment>
+        <translation>Poursuivre les transferts</translation>
+    </message>
+    <message>
+        <source>Cancel all transfers</source>
+        <translatorcomment>Button label that indicates that all active transfers will be cancelled (Accept button on dialog)</translatorcomment>
+        <translation>Annuler tous les transferts</translation>
     </message>
 </context>
 <context>

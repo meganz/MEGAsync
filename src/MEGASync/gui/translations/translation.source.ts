@@ -3543,7 +3543,13 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 - Other minor UI fixes and adjustments.
 - Fixed detected crashes on Windows, Linux and macOS.
 </source>
-        <translation type="unfinished"></translation>
+        <translation>- Added support to stream file links from a folder link.
+- Fixed translation issues.
+- Improved the user experience.
+- Added a new notifications panel in the settings dialog.
+- Other minor UI fixes and adjustments.
+- Fixed detected crashes on Windows, Linux and macOS.
+</translation>
     </message>
 </context>
 <context>
@@ -4701,7 +4707,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Launch at login</source>
         <translatorcomment>Label to let the user start MEGAsync on login with a checkbox.</translatorcomment>
-        <translation></translation>
+        <translation>Launch at login</translation>
     </message>
 </context>
 <context>
@@ -5376,22 +5382,22 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Do you want to cancel all transfers?</source>
         <translatorcomment>Description label for warning dialog before a transfer cancellation</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Do you want to cancel all transfers?</translation>
     </message>
     <message>
         <source>Syncs aren&apos;t affected by this action.</source>
         <translatorcomment>Description label for warning dialog indicating that syncs are not going to be affected by accepting this dialog</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Syncs aren&apos;t affected by this action.</translation>
     </message>
     <message>
         <source>Continue transfers</source>
         <translatorcomment>Button label that indicates that no one of active transfers will be cancelled (Cancel button on dialog)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Continue transfers</translation>
     </message>
     <message>
         <source>Cancel all transfers</source>
         <translatorcomment>Button label that indicates that all active transfers will be cancelled (Accept button on dialog)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Cancel all transfers</translation>
     </message>
 </context>
 <context>

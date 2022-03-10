@@ -363,12 +363,12 @@
     <message>
         <source>Your PRO membership plan will expire in 1 day</source>
         <translatorcomment>Label to indicate that the PRO membership will expire in 1 day.</translatorcomment>
-        <translation>Uw PRO abonnement verloopt na 1 dag</translation>
+        <translation>Uw Pro abonnement verloopt na 1 dag</translation>
     </message>
     <message>
         <source>Your PRO membership plan will expire in [A] days</source>
         <translatorcomment>Label to indicate that the PRO membership will expire in [A] days. Placeholder will be replaced by the remaining days until plan will expire.</translatorcomment>
-        <translation>Uw PRO abonnement verloopt na [A] dagen</translation>
+        <translation>Uw Pro abonnement verloopt na [A] dagen</translation>
     </message>
     <message>
         <source>PRO membership plan expiring soon</source>
@@ -378,12 +378,12 @@
     <message>
         <source>Your PRO membership plan expired 1 day ago</source>
         <translatorcomment>Label to indicate that the PRO membership expired 1 day ago.</translatorcomment>
-        <translation>Uw PRO lidmaatschap is 1 dag geleden verlopen</translation>
+        <translation>Uw Pro lidmaatschap is 1 dag geleden verlopen</translation>
     </message>
     <message>
         <source>Your PRO membership plan expired [A] days ago</source>
         <translatorcomment>Label to indicate that the PRO membership expired [A] days ago. Placeholder will be replaced by the days from the expiration of the PRO membership.</translatorcomment>
-        <translation>Uw PRO lidmaatschap is [A] dagen geleden verlopen</translation>
+        <translation>Uw Pro lidmaatschap is [A] dagen geleden verlopen</translation>
     </message>
     <message>
         <source>Your publicly shared has been taken down</source>
@@ -893,12 +893,12 @@ In sommige gevallen kunnen ze details over uw gegevens bevatten, zoals bestands-
     <message>
         <source>Your PRO membership plan will expire in 1 day</source>
         <translatorcomment>Label to indicate that the PRO membership will expire in 1 day.</translatorcomment>
-        <translation>Uw PRO abonnement verloopt na 1 dag</translation>
+        <translation>Uw Pro abonnement verloopt na 1 dag</translation>
     </message>
     <message>
         <source>Your PRO membership plan will expire in [A] days</source>
         <translatorcomment>Label to indicate that the PRO membership will expire in [A] days. Placeholder will be replaced by the remaining days until plan will expire.</translatorcomment>
-        <translation>Uw PRO abonnement verloopt na [A] dagen</translation>
+        <translation>Uw Pro abonnement verloopt na [A] dagen</translation>
     </message>
     <message>
         <source>PRO membership plan expiring soon</source>
@@ -908,12 +908,12 @@ In sommige gevallen kunnen ze details over uw gegevens bevatten, zoals bestands-
     <message>
         <source>Your PRO membership plan expired 1 day ago</source>
         <translatorcomment>Label to indicate that the PRO membership expired 1 day ago.</translatorcomment>
-        <translation>Uw PRO abonnement is 1 dag geleden verlopen</translation>
+        <translation>Uw Pro abonnement is 1 dag geleden verlopen</translation>
     </message>
     <message>
         <source>Your PRO membership plan expired [A] days ago</source>
         <translatorcomment>Label to indicate that the PRO membership expired [A] days ago. Placeholder will be replaced by the days from the expiration of the PRO membership.</translatorcomment>
-        <translation>Uw PRO abonnement is [A] dagen geleden verlopen</translation>
+        <translation>Uw Pro abonnement is [A] dagen geleden verlopen</translation>
     </message>
     <message>
         <source>[A] has left the shared folder</source>
@@ -1073,12 +1073,12 @@ In sommige gevallen kunnen ze details over uw gegevens bevatten, zoals bestands-
     <message>
         <source>Upgrade now to a PRO account.</source>
         <translatorcomment>Notification message shown to encourage the user to upgrade his account</translatorcomment>
-        <translation>Upgrade nu naar een PRO account.</translation>
+        <translation>Upgrade nu naar een Pro-account.</translation>
     </message>
     <message>
         <source>Get PRO</source>
         <translatorcomment>Notification button to redirect the user to upgrade account.</translatorcomment>
-        <translation>Neem PRO</translation>
+        <translation>Neem Pro</translation>
     </message>
     <message>
         <source>Your account is full.</source>
@@ -1639,7 +1639,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Your MEGA account is full.</source>
         <translatorcomment>Label shown to inform the user that the actual account is over storage.</translatorcomment>
-        <translation>Uw MEGA account is vol.</translation>
+        <translation>Uw MEGA-account is vol.</translation>
     </message>
     <message>
         <source>All file uploads are currently disabled.</source>
@@ -1734,7 +1734,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>We have contacted you by email to [A] on [B] but you still have [C] files taking up [D] in your MEGA account, which requires you to have [E].</source>
         <translatorcomment>Informative label about account status regarding over quota storage. Placeholders will be replaced: [A] - user email, [B] - localized date list of emails sent to inform the user about the situation,  [C] - amount of files in the current account, [D] - amount of storage used and [E] - min PRO plan needed to fix the situation.</translatorcomment>
-        <translation>We hebben contact met u opgenomen via email naar [A] op [B], maar u heeft nog steeds [C] bestanden [D] die ruimte in uw MEGA account opnemen waarvoor u [E] nodig heeft.</translation>
+        <translation>We hebben contact met u opgenomen via email naar [A] op [B], maar u heeft nog steeds [C] bestanden [D] die ruimte in uw MEGA-account opnemen waarvoor u [E] nodig heeft.</translation>
     </message>
     <message>
         <source>You have [A][B] days[/A] left to upgrade. After that, your data is subject to deletion.</source>
@@ -1830,7 +1830,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>You need to login MEGA account to run MEGA desktop app.</source>
         <translatorcomment>Description label to indicate the user needs to login in order to run and fully use MEGA desktop app.</translatorcomment>
-        <translation>U moet inloggen in uw MEGA account om de MEGA Desktop Applicatie te gebruiken.</translation>
+        <translation>U moet inloggen in uw MEGA-account om de MEGA Desktop Applicatie te gebruiken.</translation>
     </message>
     <message>
         <source>Create account</source>
@@ -3537,12 +3537,20 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Strengthen cryptographic security on Linux repositories.
-- Fix memory issues with problematic PDF files.
+        <source>- Added support to stream file links from a folder link.
+- Fixed translation issues.
+- Improved the user experience.
+- Added a new notifications panel in the settings dialog.
+- Other minor UI fixes and adjustments.
+- Fixed detected crashes on Windows, Linux and macOS.
 </source>
-        <translatorcomment>Changelog v4.6.3 (linux only)</translatorcomment>
-        <translation>- Versterkt de cryptografische beveiliging op Linux&apos;s opslagplaatsen.
-- Los geheugenproblemen op met problematische PDF-bestanden.
+        <translation>- Ondersteuning toegevoegd voor het streamen van bestandskoppelingen
+ vanuit een mapkoppeling.
+- Vertaalproblemen opgelost.
+- Verbeterde gebruikerservaring.
+- Een nieuw meldingenpaneel toegevoegd in het instellingenvenster.
+- Andere kleine UI-fixes en aanpassingen.
+- Vaste gedetecteerde crashes op Windows, Linux en macOS opgelost.
 </translation>
     </message>
 </context>
@@ -4152,11 +4160,6 @@ Do you want to delete it anyway?</source>
         <translation>Volledige scan</translation>
     </message>
     <message>
-        <source>Open at login</source>
-        <translatorcomment>Label to let the user start MEGAsync on login with a checkbox.</translatorcomment>
-        <translation>Open bij het inloggen</translation>
-    </message>
-    <message>
         <source>MEGAsync will perform a full scan of your synced folders when it starts.
 
 Do you want to restart MEGAsync now?</source>
@@ -4703,13 +4706,18 @@ Do you want to restart MEGAsync now?</source>
         <translatorcomment>Title for the Settings -&gt; Notifications pane tab button. Keep as short as possible.</translatorcomment>
         <translation>Meldingen</translation>
     </message>
+    <message>
+        <source>Launch at login</source>
+        <translatorcomment>Label to let the user start MEGAsync on login with a checkbox.</translatorcomment>
+        <translation>Start bij inloggen</translation>
+    </message>
 </context>
 <context>
     <name>SetupWizard</name>
     <message>
         <source>Create a new MEGA account</source>
         <translatorcomment>Label displayed when a user is creating a new MEGA account.</translatorcomment>
-        <translation>Maak een nieuw MEGA account aan</translation>
+        <translation>Maak een nieuw MEGA-account aan</translation>
     </message>
     <message>
         <source>Email:</source>
@@ -5353,11 +5361,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>Alles annuleren</translation>
     </message>
     <message>
-        <source>Are you sure you want to cancel all transfers?</source>
-        <translatorcomment>Description label for warning dialog before a transfer cancellation</translatorcomment>
-        <translation>Weet u zeker dat u alle overdrachten wilt annuleren?</translation>
-    </message>
-    <message>
         <source>Resume</source>
         <translation>Doorgaan</translation>
     </message>
@@ -5378,6 +5381,26 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Open links</source>
         <translatorcomment>Menu action item to open MEGA public links. It will let you to import and/or download.</translatorcomment>
         <translation>Links openen</translation>
+    </message>
+    <message>
+        <source>Do you want to cancel all transfers?</source>
+        <translatorcomment>Description label for warning dialog before a transfer cancellation</translatorcomment>
+        <translation>Wilt u alle overdrachten annuleren?</translation>
+    </message>
+    <message>
+        <source>Syncs aren&apos;t affected by this action.</source>
+        <translatorcomment>Description label for warning dialog indicating that syncs are not going to be affected by accepting this dialog</translatorcomment>
+        <translation>Synchronisaties waren niet beïnvloedt door deze actie.</translation>
+    </message>
+    <message>
+        <source>Continue transfers</source>
+        <translatorcomment>Button label that indicates that no one of active transfers will be cancelled (Cancel button on dialog)</translatorcomment>
+        <translation>Overdrachten laten doorgaan</translation>
+    </message>
+    <message>
+        <source>Cancel all transfers</source>
+        <translatorcomment>Button label that indicates that all active transfers will be cancelled (Accept button on dialog)</translatorcomment>
+        <translation>Annuleer alle overdrachten</translation>
     </message>
 </context>
 <context>
@@ -5507,7 +5530,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your MEGA account is full</source>
         <translatorcomment>Label shown to inform the user that the actual account is over storage.</translatorcomment>
-        <translation>Uw MEGA account is vol.</translation>
+        <translation>Uw MEGA-account is vol.</translation>
     </message>
     <message>
         <source>To increase this limit, you can upgrade your account, which will give you ample extra storage space.</source>

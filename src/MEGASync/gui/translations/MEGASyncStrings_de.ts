@@ -2182,7 +2182,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Error: Invalid destination folder. The download has been cancelled</source>
         <translatorcomment>Notification message shown when an error occurs while downloading a file to a invalid destination folder.</translatorcomment>
-        <translation>Fehler - Zielordner ungültig. Der Download wurde abgebrochen.</translation>
+        <translation>Fehler: Zielordner ungültig. Der Download wurde abgebrochen.</translation>
     </message>
     <message>
         <source>Our SSL key can&apos;t be verified. You could be affected by a man-in-the-middle attack or your antivirus software could be intercepting your communications and causing this problem. Please disable it and try again.</source>
@@ -3536,12 +3536,19 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Strengthen cryptographic security on Linux repositories.
-- Fix memory issues with problematic PDF files.
+        <source>- Added support to stream file links from a folder link.
+- Fixed translation issues.
+- Improved the user experience.
+- Added a new notifications panel in the settings dialog.
+- Other minor UI fixes and adjustments.
+- Fixed detected crashes on Windows, Linux and macOS.
 </source>
-        <translatorcomment>Changelog v4.6.3 (linux only)</translatorcomment>
-        <translation>- Verschlüsselung in Linux-Repositorys verstärkt.
-- Speicherprobleme bei problematischen PDF-Dateien behoben.
+        <translation>- Unterstützung für das Streamen von Dateilinks aus einem Ordnerlink eingeführt.
+- Übersetzungsprobleme behoben.
+- Benutzererfahrung verbessert.
+- Neues Benachrichtigungsfeld im Einstellungsdialog hinzugefügt.
+- Kleinere Korrekturen und Anpassungen an der Benutzeroberfläche.
+- Erkannte Abstürze unter Windows, Linux und macOS behoben.
 </translation>
     </message>
 </context>
@@ -4151,11 +4158,6 @@ Trotzdem löschen?</translation>
         <translation>Komplettscan</translation>
     </message>
     <message>
-        <source>Open at login</source>
-        <translatorcomment>Label to let the user start MEGAsync on login with a checkbox.</translatorcomment>
-        <translation>Nach Login öffnen</translation>
-    </message>
-    <message>
         <source>MEGAsync will perform a full scan of your synced folders when it starts.
 
 Do you want to restart MEGAsync now?</source>
@@ -4225,7 +4227,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Backups of the previous versions of your synced files in your computer will be permanently deleted. Please, check your backup folders to see if you need to rescue something before continuing:</source>
         <translatorcomment>Message shown to inform the user about the deletion of the local cache and its consequences</translatorcomment>
-        <translation>Backups vorherig synchronisierter Dateien auf Ihrem Computer werden unwiderruflich gelöscht. Bitte prüfen Sie Ihre Backupordner und stellen Sie sicher, dass sich in ihnen keine wichtigen Dateien mehr befinden.</translation>
+        <translation>Backups vorherig synchronisierter Dateien auf Ihrem Computer werden unwiderruflich gelöscht. Bitte prüfen Sie Ihre Backupordner und stellen Sie sicher, dass sich in ihnen keine wichtigen Dateien mehr befinden:</translation>
     </message>
     <message>
         <source>Backups of the previous versions of your synced files in MEGA will be permanently deleted. Please, check your [A] folder in the Rubbish Bin of your MEGA account to see if you need to rescue something before continuing.</source>
@@ -4701,6 +4703,11 @@ Do you want to restart MEGAsync now?</source>
         <source>Notifications</source>
         <translatorcomment>Title for the Settings -&gt; Notifications pane tab button. Keep as short as possible.</translatorcomment>
         <translation>Benachrichtigungen</translation>
+    </message>
+    <message>
+        <source>Launch at login</source>
+        <translatorcomment>Label to let the user start MEGAsync on login with a checkbox.</translatorcomment>
+        <translation>Bei Anmeldung starten</translation>
     </message>
 </context>
 <context>
@@ -5351,11 +5358,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>Alle stornieren</translation>
     </message>
     <message>
-        <source>Are you sure you want to cancel all transfers?</source>
-        <translatorcomment>Description label for warning dialog before a transfer cancellation</translatorcomment>
-        <translation>Alle Transfers stornieren?</translation>
-    </message>
-    <message>
         <source>Resume</source>
         <translation>Fortsetzen</translation>
     </message>
@@ -5376,6 +5378,26 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Open links</source>
         <translatorcomment>Menu action item to open MEGA public links. It will let you to import and/or download.</translatorcomment>
         <translation>Links öffnen</translation>
+    </message>
+    <message>
+        <source>Do you want to cancel all transfers?</source>
+        <translatorcomment>Description label for warning dialog before a transfer cancellation</translatorcomment>
+        <translation>Alle Transfers stornieren?</translation>
+    </message>
+    <message>
+        <source>Syncs aren&apos;t affected by this action.</source>
+        <translatorcomment>Description label for warning dialog indicating that syncs are not going to be affected by accepting this dialog</translatorcomment>
+        <translation>Synchronisierungen sind von dieser Aktion nicht betroffen.</translation>
+    </message>
+    <message>
+        <source>Continue transfers</source>
+        <translatorcomment>Button label that indicates that no one of active transfers will be cancelled (Cancel button on dialog)</translatorcomment>
+        <translation>Transfers fortsetzen</translation>
+    </message>
+    <message>
+        <source>Cancel all transfers</source>
+        <translatorcomment>Button label that indicates that all active transfers will be cancelled (Accept button on dialog)</translatorcomment>
+        <translation>Alle Transfers löschen</translation>
     </message>
 </context>
 <context>

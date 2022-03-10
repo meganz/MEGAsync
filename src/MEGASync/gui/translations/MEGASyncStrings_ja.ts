@@ -491,12 +491,12 @@
     <message>
         <source>Downloads:</source>
         <translatorcomment>Label to indicate the limit of download connections per transfer.</translatorcomment>
-        <translation>ダウンロード</translation>
+        <translation>ダウンロード：</translation>
     </message>
     <message>
         <source>Uploads:</source>
         <translatorcomment>Label to indicate the limit of upload connections per transfer.</translatorcomment>
-        <translation>アップロード</translation>
+        <translation>アップロード：</translation>
     </message>
     <message>
         <source>Don&apos;t use HTTP</source>
@@ -1072,7 +1072,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Upgrade now to a PRO account.</source>
         <translatorcomment>Notification message shown to encourage the user to upgrade his account</translatorcomment>
-        <translation>今すぐPROアカウントにアップグレードしてください。</translation>
+        <translation>今すぐProアカウントにアップグレードしてください。</translation>
     </message>
     <message>
         <source>Get PRO</source>
@@ -1637,7 +1637,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Your MEGA account is full.</source>
         <translatorcomment>Label shown to inform the user that the actual account is over storage.</translatorcomment>
-        <translation>お客様のMEGA PROアカウントはいっぱいです。</translation>
+        <translation>お客様のMEGA Proアカウントはいっぱいです。</translation>
     </message>
     <message>
         <source>All file uploads are currently disabled.</source>
@@ -3534,12 +3534,19 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Strengthen cryptographic security on Linux repositories.
-- Fix memory issues with problematic PDF files.
+        <source>- Added support to stream file links from a folder link.
+- Fixed translation issues.
+- Improved the user experience.
+- Added a new notifications panel in the settings dialog.
+- Other minor UI fixes and adjustments.
+- Fixed detected crashes on Windows, Linux and macOS.
 </source>
-        <translatorcomment>Changelog v4.6.3 (linux only)</translatorcomment>
-        <translation>－Linuxリポジトリの暗号セキュリティの強化。
-－問題のあるPDFファイルのメモリ問題を修正。
+        <translation>－フォルダリンクからファイルリンクのストリームサポートを追加。
+－翻訳の不具合を修正。
+－ユーザーエクスペリエンスを向上。
+－設定ダイアログに新しい通知パネルを追加。
+－その他、細かなUIの修正と調整。
+－Windows、Linux、macOSで検出されたクラッシュを修正。
 </translation>
     </message>
 </context>
@@ -3583,7 +3590,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Server:</source>
         <translatorcomment>Label to indicate the server name/ip of the proxy that is being configured.</translatorcomment>
-        <translation>サーバー</translation>
+        <translation>サーバー：</translation>
     </message>
     <message>
         <source>Password:</source>
@@ -3779,7 +3786,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Directory:</source>
         <translatorcomment>Selected directory text box label when choosing a directory</translatorcomment>
-        <translation>ディレクトリ</translation>
+        <translation>ディレクトリ：</translation>
     </message>
     <message>
         <source>All Files (*)</source>
@@ -3914,7 +3921,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>File &amp;name:</source>
         <translatorcomment>Selected file text box label when opening a file. The ampersand means that the key after can be used for triggers the action instead of using the mouse to click it. The shortcut key chosen cannot be the same as the one chosen on the next strings (&amp;Open, &amp;Choose, &amp;Save).</translatorcomment>
-        <translation>ファイル名(&amp;n):</translation>
+        <translation>ファイル名(&amp;n):：</translation>
     </message>
     <message>
         <source>%1
@@ -4149,11 +4156,6 @@ Do you want to delete it anyway?</source>
         <translation>フルスキャン</translation>
     </message>
     <message>
-        <source>Open at login</source>
-        <translatorcomment>Label to let the user start MEGAsync on login with a checkbox.</translatorcomment>
-        <translation>ログイン時に開く</translation>
-    </message>
-    <message>
         <source>MEGAsync will perform a full scan of your synced folders when it starts.
 
 Do you want to restart MEGAsync now?</source>
@@ -4173,12 +4175,12 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Uploads:</source>
         <translatorcomment>Label to indicate the default folder for uploads.</translatorcomment>
-        <translation>アップロード</translation>
+        <translation>アップロード：</translation>
     </message>
     <message>
         <source>Downloads:</source>
         <translatorcomment>Label to indicate the default folder for downloads.</translatorcomment>
-        <translation>ダウンロード</translation>
+        <translation>ダウンロード：</translation>
     </message>
     <message>
         <source>Enable / disable</source>
@@ -4700,6 +4702,11 @@ Do you want to restart MEGAsync now?</source>
         <translatorcomment>Title for the Settings -&gt; Notifications pane tab button. Keep as short as possible.</translatorcomment>
         <translation>通知</translation>
     </message>
+    <message>
+        <source>Launch at login</source>
+        <translatorcomment>Label to let the user start MEGAsync on login with a checkbox.</translatorcomment>
+        <translation>ログイン時に起動</translation>
+    </message>
 </context>
 <context>
     <name>SetupWizard</name>
@@ -4761,12 +4768,12 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Local folder:</source>
         <translatorcomment>Label displayed to show the local folder synchronized.</translatorcomment>
-        <translation>ローカルフォルダ</translation>
+        <translation>ローカルフォルダ：</translation>
     </message>
     <message>
         <source>MEGA folder:</source>
         <translatorcomment>Label displayed to show the MEGA folder synchronized.</translatorcomment>
-        <translation>MEGAフォルダ</translation>
+        <translation>MEGAフォルダ：</translation>
     </message>
     <message>
         <source>Change</source>
@@ -5349,11 +5356,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>すべてキャンセル</translation>
     </message>
     <message>
-        <source>Are you sure you want to cancel all transfers?</source>
-        <translatorcomment>Description label for warning dialog before a transfer cancellation</translatorcomment>
-        <translation>すべての転送をキャンセルしてもよろしいですか？</translation>
-    </message>
-    <message>
         <source>Resume</source>
         <translation>再開</translation>
     </message>
@@ -5374,6 +5376,26 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Open links</source>
         <translatorcomment>Menu action item to open MEGA public links. It will let you to import and/or download.</translatorcomment>
         <translation>リンクを開く</translation>
+    </message>
+    <message>
+        <source>Do you want to cancel all transfers?</source>
+        <translatorcomment>Description label for warning dialog before a transfer cancellation</translatorcomment>
+        <translation>転送をすべてキャンセルしますか？</translation>
+    </message>
+    <message>
+        <source>Syncs aren&apos;t affected by this action.</source>
+        <translatorcomment>Description label for warning dialog indicating that syncs are not going to be affected by accepting this dialog</translatorcomment>
+        <translation>同期はこの操作の影響を受けません。</translation>
+    </message>
+    <message>
+        <source>Continue transfers</source>
+        <translatorcomment>Button label that indicates that no one of active transfers will be cancelled (Cancel button on dialog)</translatorcomment>
+        <translation>転送を続行</translation>
+    </message>
+    <message>
+        <source>Cancel all transfers</source>
+        <translatorcomment>Button label that indicates that all active transfers will be cancelled (Accept button on dialog)</translatorcomment>
+        <translation>すべての転送をキャンセル</translation>
     </message>
 </context>
 <context>
@@ -5465,7 +5487,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Please upgrade to Pro to continue immediately, or wait %1 to continue for free</source>
         <translatorcomment>Warning label shown when user reaches over transfer quota situation. The user can upgrade Plan or wait %1 time until new free quota is allowed.</translatorcomment>
-        <translation>PROにアップグレードして直ちに続行するか、%1待ってから無料で続行してください</translation>
+        <translation>Proにアップグレードして直ちに続行するか、%1待ってから無料で続行してください</translation>
     </message>
     <message>
         <source>* The local currency price is an estimate only. All transactions shown charged in Euros.</source>
@@ -5503,7 +5525,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your MEGA account is full</source>
         <translatorcomment>Label shown to inform the user that the actual account is over storage.</translatorcomment>
-        <translation>お客様のMEGA PROアカウントはいっぱいです。</translation>
+        <translation>お客様のMEGA Proアカウントはいっぱいです。</translation>
     </message>
     <message>
         <source>To increase this limit, you can upgrade your account, which will give you ample extra storage space.</source>

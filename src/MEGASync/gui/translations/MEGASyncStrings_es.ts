@@ -1434,7 +1434,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Log out</source>
         <translatorcomment>Button label to log out the current account.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Cerrar sesión</translation>
     </message>
     <message>
         <source>Your account has been suspended temporarily due to potential abuse. Please verify your phone number to unlock your account.</source>
@@ -3028,7 +3028,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Enter the new folder name:</source>
         <translatorcomment>Label to inform the user about entering a new folder name because the name provided does contain forbidden characters.</translatorcomment>
-        <translation>Escribe el nombre de la nueva carpeta</translation>
+        <translation>Escribe el nombre de la nueva carpeta:</translation>
     </message>
     <message>
         <source>The following characters are not allowed:
@@ -3048,7 +3048,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Select a MEGA folder:</source>
         <translatorcomment>Label to indicate the user to select a MEGA folder for a synchronization (String short as possible). Keep capital letters.</translatorcomment>
-        <translation>Selecciona una carpeta en MEGA</translation>
+        <translation>Selecciona una carpeta en MEGA:</translation>
     </message>
     <message>
         <source>New folder</source>
@@ -3127,12 +3127,12 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Account notifications:</source>
         <translatorcomment>Title for notifications setting pane</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Notificaciones:</translation>
     </message>
     <message>
         <source>Shares</source>
         <translatorcomment>Notification category for shared folders and nodes</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Comparticiones </translation>
     </message>
     <message>
         <source>New shared folder from contact</source>
@@ -3142,12 +3142,12 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Added or removed files</source>
         <translatorcomment>Title of a checkbox for disconnectig notifications</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Archivos añadidos o eliminados</translation>
     </message>
     <message>
         <source>Access to a shared folder was removed</source>
         <translatorcomment>Title of a checkbox for disconnectig notifications</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Acceso a una carpeta compartida eliminado </translation>
     </message>
     <message>
         <source>Contacts</source>
@@ -3162,7 +3162,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Pending contact request reminder</source>
         <translatorcomment>Title of a checkbox for disconnectig notifications</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Recordatorio de solicitud de contacto pendiente</translation>
     </message>
     <message>
         <source>Someone has accepted your contact request</source>
@@ -3177,27 +3177,27 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Desktop notifications</source>
         <translatorcomment>Title of a checkbox for disconnectig notifications</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Notificaciones de escritorio</translation>
     </message>
     <message>
         <source>Someone accepted your contact request</source>
         <translatorcomment>Title of a checkbox for disconnectig notifications</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Alguien ha aceptado tu solicitud de contacto</translation>
     </message>
     <message>
         <source>Info:</source>
         <translatorcomment>Notification category for non-critical info notifications (macx)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Información:</translation>
     </message>
     <message>
         <source>Contacts:</source>
         <translatorcomment>Notification category for non-critical info notifications (macx)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Contactos:</translation>
     </message>
     <message>
         <source>Shares:</source>
         <translatorcomment>Notification category for non-critical info notifications (macx)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Comparticiones:</translation>
     </message>
 </context>
 <context>
@@ -3537,12 +3537,19 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Strengthen cryptographic security on Linux repositories.
-- Fix memory issues with problematic PDF files.
+        <source>- Added support to stream file links from a folder link.
+- Fixed translation issues.
+- Improved the user experience.
+- Added a new notifications panel in the settings dialog.
+- Other minor UI fixes and adjustments.
+- Fixed detected crashes on Windows, Linux and macOS.
 </source>
-        <translatorcomment>Changelog v4.6.3 (linux only)</translatorcomment>
-        <translation>- Se ha aumentado la seguridad del cifrado en los repositorios de Linux.
-- Se han solucionados problemas de memoria en archivos PDF.
+        <translation>- Ya es posible hacer streaming de archivos a partir de enlaces de carpeta
+- Se han solucionado algunos problemas de traducción.
+- Se ha mejorado la experiencia del usuario.
+- Hay un nuevo panel de notificaciones en los ajustes.
+- Otras correcciones y ajustes menores de la interfaz de usuario.
+- Se han solucionado los crashes detectados en Windows, Linux y macOS.
 </translation>
     </message>
 </context>
@@ -3561,7 +3568,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Proxy settings:</source>
         <translatorcomment>Label to indicate the proxy current setting. It could be no proxy or custom manual proxy.</translatorcomment>
-        <translation>Ajustes del proxy</translation>
+        <translation>Ajustes del proxy:</translation>
     </message>
     <message>
         <source>HTTP</source>
@@ -4089,7 +4096,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>Log out</source>
         <translatorcomment>Button label to log out of the application. String as short as possible.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Cerrar sesión</translation>
     </message>
     <message>
         <source>Upgrade</source>
@@ -4150,11 +4157,6 @@ Do you want to delete it anyway?</source>
         <source>Full scan</source>
         <translatorcomment>Title of the message dialog for Full scan operation.</translatorcomment>
         <translation>Escaneo completo</translation>
-    </message>
-    <message>
-        <source>Open at login</source>
-        <translatorcomment>Label to let the user start MEGAsync on login with a checkbox.</translatorcomment>
-        <translation>Ejecutar al inicio</translation>
     </message>
     <message>
         <source>MEGAsync will perform a full scan of your synced folders when it starts.
@@ -4446,7 +4448,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Move…</source>
         <translatorcomment>Button label text allowing the user to change the default Uploads or Downloads folders for the app.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Mover…</translation>
     </message>
     <message>
         <source>Exclude files smaller than</source>
@@ -4461,12 +4463,12 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Restart MEGA Desktop App to apply changes.</source>
         <translatorcomment>Informative text shown in Folders pane, letting the user know that an application restart is required to apply the changes he just made.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Reinicia el programa para aplicar los cambios.</translation>
     </message>
     <message>
         <source>Change Settings…</source>
         <translatorcomment>Button label text for Bandwidth and Proxy settings in Network pane.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Cambiar los ajustes…</translation>
     </message>
     <message>
         <source>Proxies</source>
@@ -4703,6 +4705,11 @@ Do you want to restart MEGAsync now?</source>
         <translatorcomment>Title for the Settings -&gt; Notifications pane tab button. Keep as short as possible.</translatorcomment>
         <translation>Notificaciones</translation>
     </message>
+    <message>
+        <source>Launch at login</source>
+        <translatorcomment>Label to let the user start MEGAsync on login with a checkbox.</translatorcomment>
+        <translation>Ejecutar al iniciar sesión </translation>
+    </message>
 </context>
 <context>
     <name>SetupWizard</name>
@@ -4902,7 +4909,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Set up Assistant - MEGAsync</source>
         <translatorcomment>Title of the setup assistant dialog. Keep capital letters.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>MEGAsync - Asistente de configuración</translation>
     </message>
     <message>
         <source>Full sync</source>
@@ -5025,7 +5032,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Enjoy MEGAsync!</source>
         <translatorcomment>Label displayed when user completes the setup wizard</translatorcomment>
-        <translation>Disfruta MEGAsync!</translation>
+        <translation>¡Disfruta MEGAsync!</translation>
     </message>
     <message>
         <source>Please, enter your last name</source>
@@ -5035,7 +5042,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Set up selective sync</source>
         <translatorcomment>Label shown when user is setting up the selective sync mode of MEGAsync</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Configurar la sincronización selectiva</translation>
     </message>
     <message>
         <source>Specific folders in your Cloud Drive will be synchronized with a local folder.</source>
@@ -5050,7 +5057,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Set up full sync</source>
         <translatorcomment>Label shown when user is setting up full sync mode of MEGAsync</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Configurar la sincronización completa</translation>
     </message>
     <message>
         <source>Full Sync</source>
@@ -5353,11 +5360,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>Cancelar todo</translation>
     </message>
     <message>
-        <source>Are you sure you want to cancel all transfers?</source>
-        <translatorcomment>Description label for warning dialog before a transfer cancellation</translatorcomment>
-        <translation>¿Seguro que quieres cancelar todas las transferencias?</translation>
-    </message>
-    <message>
         <source>Resume</source>
         <translation>Reanudar</translation>
     </message>
@@ -5378,6 +5380,26 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Open links</source>
         <translatorcomment>Menu action item to open MEGA public links. It will let you to import and/or download.</translatorcomment>
         <translation>Abrir enlaces</translation>
+    </message>
+    <message>
+        <source>Do you want to cancel all transfers?</source>
+        <translatorcomment>Description label for warning dialog before a transfer cancellation</translatorcomment>
+        <translation>¿Quieres cancelar todas las transferencias?</translation>
+    </message>
+    <message>
+        <source>Syncs aren&apos;t affected by this action.</source>
+        <translatorcomment>Description label for warning dialog indicating that syncs are not going to be affected by accepting this dialog</translatorcomment>
+        <translation>Las sincronizaciones no se detendrán al realizar esta acción. </translation>
+    </message>
+    <message>
+        <source>Continue transfers</source>
+        <translatorcomment>Button label that indicates that no one of active transfers will be cancelled (Cancel button on dialog)</translatorcomment>
+        <translation>Seguir con las transferencias</translation>
+    </message>
+    <message>
+        <source>Cancel all transfers</source>
+        <translatorcomment>Button label that indicates that all active transfers will be cancelled (Accept button on dialog)</translatorcomment>
+        <translation>Cancelar todas las transferencias</translation>
     </message>
 </context>
 <context>
@@ -5713,7 +5735,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Log out</source>
         <translatorcomment>Button label to log out the current account</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Cerrar sesión</translation>
     </message>
     <message>
         <source>Verify your email</source>

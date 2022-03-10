@@ -806,12 +806,12 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>MEGAsync has detected a problem. These are the details:</source>
         <translatorcomment>Label to indicate that a crash has occured and the detailed stacktrace of the problem.</translatorcomment>
-        <translation>MEGAsync偵測到問題。詳細內容如下:</translation>
+        <translation>MEGAsync偵測到問題。詳細內容如下：</translation>
     </message>
     <message>
         <source>You can help us to improve MEGAsync by sending this error report. It doesn&apos;t contain any personal information. If you want to give us more details, please write them below:</source>
         <translatorcomment>Label to indicate if the user wants to add some more details to attach to the crash report.</translatorcomment>
-        <translation>您可藉由傳送錯誤報告來協助我們改善MEGAsync。這將不會包含任何個人資料。如果您願意提供更多細節給我們，請詳述於下方:</translation>
+        <translation>您可藉由傳送錯誤報告來協助我們改善MEGAsync。這將不會包含任何個人資料。如果您願意提供更多細節給我們，請詳述於下方：</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -1151,7 +1151,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Local folder:</source>
         <translatorcomment>Label to indicate the user the local folder in which the selected files/folders will be downloaded (String short as possible)</translatorcomment>
-        <translation>本機資料夾:</translation>
+        <translation>本機資料夾：</translation>
     </message>
     <message>
         <source>Always download to this destination</source>
@@ -1264,12 +1264,12 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Local folder:</source>
         <translatorcomment>Label to indicate the user the local folder for a synchronization (String short as possible)</translatorcomment>
-        <translation>本機資料夾:</translation>
+        <translation>本機資料夾：</translation>
     </message>
     <message>
         <source>MEGA folder:</source>
         <translatorcomment>Label to indicate the user the MEGA folder for a synchronization (String short as possible)</translatorcomment>
-        <translation>MEGA資料夾:</translation>
+        <translation>MEGA資料夾：</translation>
     </message>
     <message>
         <source>Select local folder</source>
@@ -3078,7 +3078,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Invalid folder for synchronization.
 Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apos; or &apos;:&apos; in your folder names.</source>
         <translatorcomment>Message displayed when a user is trying to create a synchronization using not allowed characthers. Keep  &apos;\\&apos; &apos;/&apos; and &apos;:&apos; codes.</translatorcomment>
-        <translation>資料夾無法同步。請確定您的資料夾名稱中沒有 “\”、“/” 或 “:” 等字元。</translation>
+        <translation>資料夾無法同步。請確定您的資料夾名稱中沒有 “\”、“/” 或 “：” 等字元。</translation>
     </message>
     <message>
         <source>Always upload to this destination</source>
@@ -3536,12 +3536,19 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Strengthen cryptographic security on Linux repositories.
-- Fix memory issues with problematic PDF files.
+        <source>- Added support to stream file links from a folder link.
+- Fixed translation issues.
+- Improved the user experience.
+- Added a new notifications panel in the settings dialog.
+- Other minor UI fixes and adjustments.
+- Fixed detected crashes on Windows, Linux and macOS.
 </source>
-        <translatorcomment>Changelog v4.6.3 (linux only)</translatorcomment>
-        <translation>- 加強Linux儲存庫的加密安全性。
-- 修復有問題PDF檔案的記憶體問題。
+        <translation>- 加入可從資料夾連結裡串流檔案連結的支援。
+- 修正翻譯問題。
+- 改善用戶體驗。
+- 在設定對話框中加入新的通知面板。
+- 使用者介面其它細微的修正與調整。
+- 修復在Windows、Linux及macOS上檢測到的崩潰問題。
 </translation>
     </message>
 </context>
@@ -3560,7 +3567,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Proxy settings:</source>
         <translatorcomment>Label to indicate the proxy current setting. It could be no proxy or custom manual proxy.</translatorcomment>
-        <translation>Proxy設定</translation>
+        <translation>代理設定：</translation>
     </message>
     <message>
         <source>HTTP</source>
@@ -4151,11 +4158,6 @@ Do you want to delete it anyway?</source>
         <translation>完整掃描</translation>
     </message>
     <message>
-        <source>Open at login</source>
-        <translatorcomment>Label to let the user start MEGAsync on login with a checkbox.</translatorcomment>
-        <translation>登入時開啟</translation>
-    </message>
-    <message>
         <source>MEGAsync will perform a full scan of your synced folders when it starts.
 
 Do you want to restart MEGAsync now?</source>
@@ -4495,7 +4497,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>%1 (local cache):</source>
         <translatorcomment>Section label name for local cache summary and actions. Keep %1 placeholder, which is used to fill in the platform specific name for local sync cache (debris) (macOS)</translatorcomment>
-        <translation>%1（本地緩存）</translation>
+        <translation>%1（本地緩存）：</translation>
     </message>
     <message>
         <source>SyncDebris (remote cache):</source>
@@ -4555,7 +4557,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Proxy settings:</source>
         <translatorcomment>Form label text indicating the active Proxy settings.</translatorcomment>
-        <translation>代理設定</translation>
+        <translation>代理設定：</translation>
     </message>
     <message>
         <source>Enable Windows Explorer integration</source>
@@ -4702,6 +4704,11 @@ Do you want to restart MEGAsync now?</source>
         <translatorcomment>Title for the Settings -&gt; Notifications pane tab button. Keep as short as possible.</translatorcomment>
         <translation>通知</translation>
     </message>
+    <message>
+        <source>Launch at login</source>
+        <translatorcomment>Label to let the user start MEGAsync on login with a checkbox.</translatorcomment>
+        <translation>登入時啟動</translation>
+    </message>
 </context>
 <context>
     <name>SetupWizard</name>
@@ -4728,7 +4735,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>I agree with the MEGA &lt;a href=&quot;https://mega.co.nz/#terms&quot;&gt;Terms of Service&lt;/a&gt;</source>
         <translatorcomment>Label to aggre with the Terms of use.  Keep code &lt;a href=&quot;https://mega.co.nz/#terms&quot;&gt;Terms of Service&lt;/a&gt; .String as short as possible.</translatorcomment>
-        <translation>我同意MEGA &lt;a href=&quot;https://mega.nz/terms&quot;&gt;服務條款&lt;/a&gt;</translation>
+        <translation>我同意MEGA &lt;a href=&quot;https：//mega.nz/terms&quot;&gt;服務條款&lt;/a&gt;</translation>
     </message>
     <message>
         <source>Log in to your MEGA account</source>
@@ -5351,11 +5358,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>全部取消</translation>
     </message>
     <message>
-        <source>Are you sure you want to cancel all transfers?</source>
-        <translatorcomment>Description label for warning dialog before a transfer cancellation</translatorcomment>
-        <translation>您確定要取消全部傳輸嗎？</translation>
-    </message>
-    <message>
         <source>Resume</source>
         <translation>恢復</translation>
     </message>
@@ -5376,6 +5378,26 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Open links</source>
         <translatorcomment>Menu action item to open MEGA public links. It will let you to import and/or download.</translatorcomment>
         <translation>開啟連結</translation>
+    </message>
+    <message>
+        <source>Do you want to cancel all transfers?</source>
+        <translatorcomment>Description label for warning dialog before a transfer cancellation</translatorcomment>
+        <translation>您要取消所有傳輸嗎？</translation>
+    </message>
+    <message>
+        <source>Syncs aren&apos;t affected by this action.</source>
+        <translatorcomment>Description label for warning dialog indicating that syncs are not going to be affected by accepting this dialog</translatorcomment>
+        <translation>同步不會受此操作的影響。</translation>
+    </message>
+    <message>
+        <source>Continue transfers</source>
+        <translatorcomment>Button label that indicates that no one of active transfers will be cancelled (Cancel button on dialog)</translatorcomment>
+        <translation>繼續傳輸</translation>
+    </message>
+    <message>
+        <source>Cancel all transfers</source>
+        <translatorcomment>Button label that indicates that all active transfers will be cancelled (Accept button on dialog)</translatorcomment>
+        <translation>取消所有傳輸</translation>
     </message>
 </context>
 <context>

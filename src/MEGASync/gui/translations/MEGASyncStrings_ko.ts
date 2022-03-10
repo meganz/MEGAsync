@@ -1073,7 +1073,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Upgrade now to a PRO account.</source>
         <translatorcomment>Notification message shown to encourage the user to upgrade his account</translatorcomment>
-        <translation>지금 PRO 계정으로 업그레이드 하세요.</translation>
+        <translation>지금 Pro 계정으로 업그레이드 하세요.</translation>
     </message>
     <message>
         <source>Get PRO</source>
@@ -3537,12 +3537,19 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Strengthen cryptographic security on Linux repositories.
-- Fix memory issues with problematic PDF files.
+        <source>- Added support to stream file links from a folder link.
+- Fixed translation issues.
+- Improved the user experience.
+- Added a new notifications panel in the settings dialog.
+- Other minor UI fixes and adjustments.
+- Fixed detected crashes on Windows, Linux and macOS.
 </source>
-        <translatorcomment>Changelog v4.6.3 (linux only)</translatorcomment>
-        <translation>- Linux 저장소에서 암호 보안 강화
-- 문제 있는 PDF 파일에서의 메모리 문제 수정
+        <translation>- 폴더 링크에서 파일 링크 스트림 지원 추가.
+- 번역 문제 해결.
+- 이용자 경험 향상.
+- 설정 대화창에서 새 알림 패널 추가.
+- 기타 UI 수정 및 조정.
+- Windows, Linux 그리고 macOS에서 탐지된 충돌 수정.
 </translation>
     </message>
 </context>
@@ -4152,11 +4159,6 @@ Do you want to delete it anyway?</source>
         <translation>전체 검색</translation>
     </message>
     <message>
-        <source>Open at login</source>
-        <translatorcomment>Label to let the user start MEGAsync on login with a checkbox.</translatorcomment>
-        <translation>로그인할 때 열기</translation>
-    </message>
-    <message>
         <source>MEGAsync will perform a full scan of your synced folders when it starts.
 
 Do you want to restart MEGAsync now?</source>
@@ -4702,6 +4704,11 @@ Do you want to restart MEGAsync now?</source>
         <source>Notifications</source>
         <translatorcomment>Title for the Settings -&gt; Notifications pane tab button. Keep as short as possible.</translatorcomment>
         <translation>알림</translation>
+    </message>
+    <message>
+        <source>Launch at login</source>
+        <translatorcomment>Label to let the user start MEGAsync on login with a checkbox.</translatorcomment>
+        <translation>로그인할 때 실행</translation>
     </message>
 </context>
 <context>
@@ -5353,11 +5360,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>모두 취소</translation>
     </message>
     <message>
-        <source>Are you sure you want to cancel all transfers?</source>
-        <translatorcomment>Description label for warning dialog before a transfer cancellation</translatorcomment>
-        <translation>모든 전송을 취소하시겠습니까?</translation>
-    </message>
-    <message>
         <source>Resume</source>
         <translation>재개</translation>
     </message>
@@ -5378,6 +5380,26 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Open links</source>
         <translatorcomment>Menu action item to open MEGA public links. It will let you to import and/or download.</translatorcomment>
         <translation>링크 열기</translation>
+    </message>
+    <message>
+        <source>Do you want to cancel all transfers?</source>
+        <translatorcomment>Description label for warning dialog before a transfer cancellation</translatorcomment>
+        <translation>모든 전송을 취소하시겠습니까?</translation>
+    </message>
+    <message>
+        <source>Syncs aren&apos;t affected by this action.</source>
+        <translatorcomment>Description label for warning dialog indicating that syncs are not going to be affected by accepting this dialog</translatorcomment>
+        <translation>동기화는 이 행동에 영향을 받지 않습니다.</translation>
+    </message>
+    <message>
+        <source>Continue transfers</source>
+        <translatorcomment>Button label that indicates that no one of active transfers will be cancelled (Cancel button on dialog)</translatorcomment>
+        <translation>전송 재개</translation>
+    </message>
+    <message>
+        <source>Cancel all transfers</source>
+        <translatorcomment>Button label that indicates that all active transfers will be cancelled (Accept button on dialog)</translatorcomment>
+        <translation>모든 전송 취소</translation>
     </message>
 </context>
 <context>
