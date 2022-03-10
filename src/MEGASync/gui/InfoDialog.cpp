@@ -112,7 +112,7 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
         // To avoid issues with text input we implement a popup ourselves
         // instead of using Qt::Popup by listening to the WindowDeactivate
         // event.
-        Qt::WindowFlags flags = Qt::FramelessWindowHint;
+        Qt::WindowFlags flags = Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint;
 
         if (Platform::isTilingWindowManager())
         {

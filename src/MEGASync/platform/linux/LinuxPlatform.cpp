@@ -104,7 +104,8 @@ bool LinuxPlatform::isStartOnStartupActive()
 bool LinuxPlatform::isTilingWindowManager()
 {
     static const QSet<QString> tiling_wms = {
-        QString::fromUtf8("i3")
+        QString::fromUtf8("i3"),
+        QString::fromUtf8("sway")
     };
 
     return getValue("MEGASYNC_ASSUME_TILING_WM", false)
@@ -314,13 +315,24 @@ QString LinuxPlatform::getWindowManagerName()
 
     if (!cached)
     {
-        window_manager_name =
-          getProperty(QX11Info::connection(),
-                      QX11Info::appRootWindow(),
-                      "_NET_WM_NAME");
+    	if (qgetenv("XDG_SESSION_TYPE") == "wayland") {
+    		window_manager_name = qgetenv("XDG_CURRENT_DESKTOP").toStdString();
+    	} else {
+		    xcb_connection_t* conn = QX11Info::connection();
+		    if (conn != nullptr) {
+			    window_manager_name =
+					    getProperty(conn,
+					                QX11Info::appRootWindow(),
+					                "_NET_WM_NAME");
+		    } else {
+			    window_manager_name = "";
+		    }
+    	}
+
 
         cached = true;
     }
+    NO_X11:
 
     return QString::fromStdString(window_manager_name);
 }
