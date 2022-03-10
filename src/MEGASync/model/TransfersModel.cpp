@@ -418,13 +418,15 @@ void TransfersModel::onProcessTransfers()
 
             mModelMutex.unlock();
 
-            //It is done before processing the transfers as the process itself clears the list of canceled transfers
-            if(mTransfersCancelling && mTransfersToCancel.size() == 0)
-            {
-                mTransfersCancelling = false;
-                emit transfersCanceled();
-            }
+
         }
+    }
+
+    //It is done before processing the transfers as the process itself clears the list of canceled transfers
+    if(mTransfersCancelling && mTransfersToCancel.size() == 0)
+    {
+        mTransfersCancelling = false;
+        emit transfersCanceled();
     }
 
     if(mTransfersToCancel.size() != 0
@@ -466,7 +468,10 @@ void TransfersModel::onProcessTransfers()
         if(mModelMutex.tryLock())
         {
             processUpdateTransfers();
+
+            auto rowsToUpdate(mRowsToUpdate.size());
             sendDataChanged();
+
             transfersCountNeedsUpdate = true;
 
             mModelMutex.unlock();
@@ -804,15 +809,12 @@ void TransfersModel::pauseResumeAllTransfers(bool state)
 {
     mAreAllPaused = state;
 
-    QList<QExplicitlySharedDataPointer<TransferData>> orderCopy;
-    orderCopy = mTransfers;
-
     int counterToRefreshUI(0);
 
     if (mAreAllPaused)
     {
         mMegaApi->pauseTransfers(mAreAllPaused);
-        std::for_each(orderCopy.crbegin(), orderCopy.crend(), [this, counterToRefreshUI](QExplicitlySharedDataPointer<TransferData> item)
+        std::for_each(mTransfers.crbegin(), mTransfers.crend(), [this, counterToRefreshUI](QExplicitlySharedDataPointer<TransferData> item)
         mutable {
 
             if(item->mState & TransferData::PAUSABLE_STATES_MASK)
@@ -822,17 +824,19 @@ void TransfersModel::pauseResumeAllTransfers(bool state)
 
             pauseResumeTransferByTag(item->mTag, mAreAllPaused);
 
-            if(counterToRefreshUI % 10000 == 0)
+            if(counterToRefreshUI % 1000 == 0)
             {
                 qApp->processEvents();
             }
 
             counterToRefreshUI++;
+
+            mRowsToUpdate.append(mTagByOrder.value(item->mTag));
         });
     }
     else
     {
-        std::for_each(orderCopy.cbegin(), orderCopy.cend(), [this, counterToRefreshUI](QExplicitlySharedDataPointer<TransferData> item)
+        std::for_each(mTransfers.cbegin(), mTransfers.cend(), [this, counterToRefreshUI](QExplicitlySharedDataPointer<TransferData> item)
         mutable {
 
             if(item->mState & TransferData::TRANSFER_PAUSED)
@@ -842,12 +846,14 @@ void TransfersModel::pauseResumeAllTransfers(bool state)
 
             pauseResumeTransferByTag(item->mTag, mAreAllPaused);
 
-            if(counterToRefreshUI % 10000 == 0)
+            if(counterToRefreshUI % 1000 == 0)
             {
                 qApp->processEvents();
             }
 
             counterToRefreshUI++;
+
+            mRowsToUpdate.append(mTagByOrder.value(item->mTag));
         });
         mMegaApi->pauseTransfers(mAreAllPaused);
     }

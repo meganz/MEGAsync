@@ -2180,6 +2180,9 @@ void MegaApplication::cleanAll()
     // their deletion
     QApplication::processEvents();
 
+    delete mModel;
+    mModel = nullptr;
+
     delete megaApi;
     megaApi = NULL;
 

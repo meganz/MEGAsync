@@ -7,6 +7,7 @@
 #include <QSortFilterProxyModel>
 #include <QReadWriteLock>
 #include <QFutureWatcher>
+#include <QMutex>
 
 class TransferBaseDelegateWidget;
 class TransfersModel;
@@ -39,6 +40,7 @@ public:
         int getPausedTransfers() const;
         bool isAnyPaused() const;
         bool isAnyCancelable() const;
+        bool isAnyActive() const;
 
 signals:
         void modelAboutToBeChanged();
@@ -47,7 +49,9 @@ signals:
         void modelAboutToBeSorted();
         void modelSorted();
         void transferPauseResume(bool);
-        void cancelableTransfersChanged() const;
+        void cancelableTransfersChanged(bool) const;
+        void activeTransfersChanged(bool) const;
+        void pausedTransfersChanged(bool) const;
 
 protected slots:
         void onCancelClearTransfer(bool isClear);
@@ -67,9 +71,12 @@ protected:
         TransferData::TransferTypes mNextTransferTypes;
         Utilities::FileTypes mNextFileTypes;
         SortCriterion mSortCriterion;
+
         mutable QSet<int> mDlNumber;
         mutable QSet<int> mUlNumber;
         mutable QSet<int> mNoSyncTransfers;
+        mutable QSet<int> mActiveTransfers;
+        mutable QSet<int> mPausedTransfers;
 
 private slots:
         void onRowsAboutToBeRemoved(const QModelIndex& parent, int first, int last);
@@ -77,8 +84,13 @@ private slots:
 
 private:
         ThreadPool* mThreadPool;
+        mutable QMutex mMutex;
         QFutureWatcher<void> mFilterWatcher;
         QString mFilterText;
+
+        void removeActiveTransferFromCounter(TransferTag tag) const;
+        void removePausedTransferFromCounter(TransferTag tag) const;
+        void removeNonSyncedTransferFromCounter(TransferTag tag) const;
 };
 
 Q_DECLARE_METATYPE(QAbstractItemModel::LayoutChangeHint)

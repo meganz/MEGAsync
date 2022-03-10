@@ -99,6 +99,8 @@ public:
     bool isDownload() const;
     bool isUpload() const;
     bool isSyncTransfer() const;
+    bool isActive() const;
+    bool isPaused() const;
     uint64_t getFinishedTime() const;
 
 private:
