@@ -4623,7 +4623,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Remove synced folder</source>
         <translatorcomment>Text label for action menu item to remove the synchronization for the selected folder. Keep string as short as possible, as this shows up in menu similar to a context menu.</translatorcomment>
-        <translation>Dejar de sincronizar la carpeta</translation>
+        <translation>Remover carpeta sincronizada</translation>
     </message>
     <message>
         <source>Saving Sync settings</source>
