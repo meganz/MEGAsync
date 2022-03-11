@@ -41,7 +41,7 @@ void TransfersManagerSortFilterProxyModel::sort(int sortCriterion, Qt::SortOrder
     auto sourceM = qobject_cast<TransfersModel*>(sourceModel());
     if(sourceM)
     {
-        sourceM->pauseModelProcessing(false);
+        sourceM->pauseModelProcessing(true);
     }
 
     emit modelAboutToBeChanged();
@@ -192,7 +192,7 @@ void TransfersManagerSortFilterProxyModel::updateFilters()
     auto sourceM = qobject_cast<TransfersModel*>(sourceModel());
     if(sourceM)
     {
-        sourceM->pauseModelProcessing(false);
+        sourceM->pauseModelProcessing(true);
     }
 
     mTransferStates = mNextTransferStates;
