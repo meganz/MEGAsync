@@ -12,12 +12,12 @@ extern Q_CORE_EXPORT int qt_ntfs_permission_lookup;
 #endif
 
 const char Preferences::CLIENT_KEY[] = "FhMgXbqb";
-const char Preferences::USER_AGENT[] = "MEGAsync/4.6.4.0";
-const int Preferences::VERSION_CODE = 4604;
+const char Preferences::USER_AGENT[] = "MEGAsync/4.6.6.0";
+const int Preferences::VERSION_CODE = 4606;
 const int Preferences::BUILD_ID = 0;
 // Do not change the location of VERSION_STRING, create_tarball.sh parses this file
-const QString Preferences::VERSION_STRING = QString::fromAscii("4.6.4");
-QString Preferences::SDK_ID = QString::fromAscii("1c6a3f0");
+const QString Preferences::VERSION_STRING = QString::fromAscii("4.6.6");
+QString Preferences::SDK_ID = QString::fromAscii("4b40fcb");
 const QString Preferences::CHANGELOG = QString::fromUtf8(QT_TR_NOOP(                                                             
 "- Added support to stream file links from a folder link.\n"
 "- Fixed translation issues.\n"
