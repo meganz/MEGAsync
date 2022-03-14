@@ -19,6 +19,7 @@ public:
 protected slots:
     void onCopyTransferLinkRequested();
     void onOpenTransferFolderRequested();
+    void onRetryTransferRequested();
 
 protected:
     bool lessThan(const QModelIndex &left, const QModelIndex &right) const override;

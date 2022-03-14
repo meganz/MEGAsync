@@ -244,5 +244,12 @@ void MegaTransferDelegate::onHoverMove(const QModelIndex &index, const QRect &re
 
             mView->update(rect);
         }
+        else
+        {
+            if(mView->cursor() != Qt::ArrowCursor)
+            {
+                mView->setCursor(Qt::ArrowCursor);
+            }
+        }
     }
 }

@@ -385,18 +385,6 @@ void TransferManagerDelegateWidget::on_tCancelClearTransfer_clicked()
 
 void TransferManagerDelegateWidget::on_tItemRetry_clicked()
 {
-    QPointer<TransferManagerDelegateWidget> dialog = QPointer<TransferManagerDelegateWidget>(this);
-
-    auto message = tr("Are you sure you want to retry this transfer?");
-
-    if (QMegaMessageBox::warning(nullptr, QString::fromUtf8("MEGAsync"),
-                             message,
-                             QMessageBox::Yes | QMessageBox::No, QMessageBox::No)
-            != QMessageBox::Yes
-            || !dialog)
-    {
-        return;
-    }
-
-    emit retryTransfer();
+    //Base implementation
+    onRetryTransfer();
 }

@@ -172,6 +172,11 @@ bool TransferData::isPaused() const
     return mState & TRANSFER_PAUSED;
 }
 
+bool TransferData::isCompleted() const
+{
+    return mState & TRANSFER_COMPLETED;
+}
+
 bool TransferData::isDownload() const
 {
     return mType > TRANSFER_UPLOAD;

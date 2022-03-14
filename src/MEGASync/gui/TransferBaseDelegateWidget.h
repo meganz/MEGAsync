@@ -36,10 +36,13 @@ public:
 
     virtual void render(QPainter *painter, const QRegion &sourceRegion);
 
+signals:
+    void retryTransfer();
 
 protected:
     bool setActionTransferIcon(QToolButton* button, const QString& iconName);
     bool isMouseHoverInAction(QToolButton* button, const QPoint &mousePos);
+    void onRetryTransfer();
 
     virtual void updateTransferState() = 0;
     virtual void setFileNameAndType() = 0;

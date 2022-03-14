@@ -1268,7 +1268,6 @@ void InfoDialog::updateNotificationsTreeView(QAbstractItemModel *model, QAbstrac
 void InfoDialog::reset()
 {
     activeDownloadState = activeUploadState = MegaTransfer::STATE_NONE;
-    app->getTransfersModel()->resetCompletedTransfersCount();
     uploadActiveTransferPriority = downloadActiveTransferPriority = 0xFFFFFFFFFFFFFFFFULL;
     uploadActiveTransferTag = downloadActiveTransferTag = -1;
     notificationsReady = false;

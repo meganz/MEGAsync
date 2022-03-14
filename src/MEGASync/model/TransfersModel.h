@@ -105,6 +105,7 @@ public:
     void getLinks(QList<int>& rows);
     void openFolderByIndex(const QModelIndex& index);
     void openFolderByTag(TransferTag tag);
+    void retryTransferByIndex(const QModelIndex& index);
     void cancelTransfers(const QModelIndexList& indexes);
     void clearTransfers(const QModelIndexList& indexes);
     void clearTransfers(const QMap<QModelIndex,QExplicitlySharedDataPointer<TransferData>> uploads,
@@ -120,7 +121,6 @@ public:
     long long  getNumberOfTransfersForFileType(Utilities::FileType fileType) const;
     long long  getNumberOfFinishedForFileType(Utilities::FileType fileType) const;
     TransfersCount getTransfersCount();
-    void resetCompletedTransfersCount();
 
     void initModel();
 
@@ -141,7 +141,6 @@ signals:
     void transfersCanceled();
 
 public slots:
-    void onRetryTransfer(TransferTag tag);
     void pauseResumeAllTransfers(bool state);
 
 private slots:

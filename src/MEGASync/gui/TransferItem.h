@@ -101,6 +101,7 @@ public:
     bool isSyncTransfer() const;
     bool isActive() const;
     bool isPaused() const;
+    bool isCompleted() const;
     uint64_t getFinishedTime() const;
 
 private:

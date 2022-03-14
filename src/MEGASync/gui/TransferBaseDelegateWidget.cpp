@@ -1,6 +1,8 @@
 #include "TransferBaseDelegateWidget.h"
+#include "QMegaMessageBox.h"
 
 #include <QDebug>
+#include <QPointer>
 
 TransferBaseDelegateWidget::TransferBaseDelegateWidget(QWidget *parent)
     : QWidget(parent),
@@ -85,4 +87,22 @@ bool TransferBaseDelegateWidget::isMouseHoverInAction(QToolButton *button, const
     QRect actionGeometry(actionGlobalPos, button->size());
 
     return actionGeometry.contains(mousePos);
+}
+
+void TransferBaseDelegateWidget::onRetryTransfer()
+{
+    QPointer<TransferBaseDelegateWidget> dialog = QPointer<TransferBaseDelegateWidget>(this);
+
+    auto message = tr("Are you sure you want to retry this transfer?");
+
+    if (QMegaMessageBox::warning(nullptr, QString::fromUtf8("MEGAsync"),
+                             message,
+                             QMessageBox::Yes | QMessageBox::No, QMessageBox::No)
+            != QMessageBox::Yes
+            || !dialog)
+    {
+        return;
+    }
+
+    emit retryTransfer();
 }
