@@ -39,8 +39,6 @@ public:
 
     void cancelClearAll();
 
-    int rowCount();
-
     TransfersModel* getModel();
     TransfersManagerSortFilterProxyModel* getProxyModel() {return mProxyModel;}
     ~TransfersWidget();
@@ -61,7 +59,9 @@ private slots:
     void onModelChanged();
     void onModelAboutToBeChanged();
     void onPauseResumeButtonCheckedOnDelegate(bool pause);
-    void onCheckCancelButtonVisibility();
+    void onCheckCancelButtonVisibility(bool state);
+    void onActiveTransferCounterChanged(bool state);
+    void onPausedTransferCounterChanged(bool state);
 
 private:
     enum HeaderState

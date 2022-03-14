@@ -3,6 +3,8 @@
 #include "MegaApplication.h"
 #include "TransferManagerDelegateWidget.h"
 #include <megaapi.h>
+
+#include <QMutexLocker>
 #include <QElapsedTimer>
 
 
@@ -39,7 +41,7 @@ void TransfersManagerSortFilterProxyModel::sort(int sortCriterion, Qt::SortOrder
     auto sourceM = qobject_cast<TransfersModel*>(sourceModel());
     if(sourceM)
     {
-        sourceM->pauseModelProcessing(false);
+        sourceM->pauseModelProcessing(true);
     }
 
     emit modelAboutToBeChanged();
@@ -164,6 +166,8 @@ void TransfersManagerSortFilterProxyModel::resetNumberOfItems()
     mDlNumber.clear();
     mUlNumber.clear();
     mNoSyncTransfers.clear();
+    mActiveTransfers.clear();
+    mPausedTransfers.clear();
 }
 
 TransferBaseDelegateWidget *TransfersManagerSortFilterProxyModel::createTransferManagerItem(QWidget* parent)
@@ -188,7 +192,7 @@ void TransfersManagerSortFilterProxyModel::updateFilters()
     auto sourceM = qobject_cast<TransfersModel*>(sourceModel());
     if(sourceM)
     {
-        sourceM->pauseModelProcessing(false);
+        sourceM->pauseModelProcessing(true);
     }
 
     mTransferStates = mNextTransferStates;
@@ -210,6 +214,8 @@ bool TransfersManagerSortFilterProxyModel::filterAcceptsRow(int sourceRow, const
 
         if (accept)
         {
+            QMutexLocker lock(&mMutex);
+
             if(!mFilterText.isEmpty())
             {
                 accept = d->mFilename.contains(mFilterText,Qt::CaseInsensitive);
@@ -227,6 +233,7 @@ bool TransfersManagerSortFilterProxyModel::filterAcceptsRow(int sourceRow, const
                 }
             }
 
+            //Not needed to add the logic when the d is a sync transfer, as the sync state is permanent
             if(!d->isSyncTransfer() && !mNoSyncTransfers.contains(d->mTag))
             {
                 auto wasEmpty(mNoSyncTransfers.isEmpty());
@@ -235,8 +242,47 @@ bool TransfersManagerSortFilterProxyModel::filterAcceptsRow(int sourceRow, const
 
                 if(wasEmpty)
                 {
-                    emit cancelableTransfersChanged();
+                    emit cancelableTransfersChanged(true);
                 }
+            }
+
+            //As the active state can change in time, add both logics to add or remove
+            if(d->isActive())
+            {
+                if(!mActiveTransfers.contains(d->mTag))
+                {
+                    auto wasEmpty(mActiveTransfers.isEmpty());
+
+                    mActiveTransfers.insert(d->mTag);
+
+                    if(wasEmpty)
+                    {
+                        emit activeTransfersChanged(true);
+                    }
+                }
+            }
+            else
+            {
+                removeActiveTransferFromCounter(d->mTag);
+            }
+
+            if(d->isPaused())
+            {
+                if(!mPausedTransfers.contains(d->mTag))
+                {
+                    bool wasEmpty(mPausedTransfers.isEmpty());
+
+                    mPausedTransfers.insert(d->mTag);
+
+                    if(wasEmpty)
+                    {
+                        emit pausedTransfersChanged(true);
+                    }
+                }
+            }
+            else
+            {
+                removePausedTransferFromCounter(d->mTag);
             }
         }
 
@@ -246,7 +292,7 @@ bool TransfersManagerSortFilterProxyModel::filterAcceptsRow(int sourceRow, const
     return false;
 }
 
-//It is called in the main thread, from a QtConcurrent thread
+//It is called from a QtConcurrent thread
 void TransfersManagerSortFilterProxyModel::onRowsAboutToBeRemoved(const QModelIndex &parent, int first, int last)
 {
    bool searchRowsRemoved(false);
@@ -275,13 +321,11 @@ void TransfersManagerSortFilterProxyModel::onRowsAboutToBeRemoved(const QModelIn
 
            if(!d->isSyncTransfer())
            {
-               mNoSyncTransfers.remove(d->mTag);
-
-               if(mNoSyncTransfers.isEmpty())
-               {
-                   emit cancelableTransfersChanged();
-               }
+              removeNonSyncedTransferFromCounter(d->mTag);
            }
+
+           removeActiveTransferFromCounter(d->mTag);
+           removePausedTransferFromCounter(d->mTag);
 
        }
    }
@@ -292,8 +336,54 @@ void TransfersManagerSortFilterProxyModel::onRowsAboutToBeRemoved(const QModelIn
    }
 }
 
+void TransfersManagerSortFilterProxyModel::removeActiveTransferFromCounter(TransferTag tag) const
+{
+    if(mActiveTransfers.contains(tag))
+    {
+        auto wasEmpty(mActiveTransfers.isEmpty());
+
+        mActiveTransfers.remove(tag);
+
+        if(!wasEmpty && mActiveTransfers.isEmpty())
+        {
+            emit activeTransfersChanged(false);
+        }
+    }
+}
+
+void TransfersManagerSortFilterProxyModel::removePausedTransferFromCounter(TransferTag tag) const
+{
+    if(mPausedTransfers.contains(tag))
+    {
+        auto wasEmpty(mPausedTransfers.isEmpty());
+
+        mPausedTransfers.remove(tag);
+
+        if(!wasEmpty && mPausedTransfers.isEmpty())
+        {
+            emit pausedTransfersChanged(false);
+        }
+    }
+}
+
+void TransfersManagerSortFilterProxyModel::removeNonSyncedTransferFromCounter(TransferTag tag) const
+{
+    if(mNoSyncTransfers.contains(tag))
+    {
+        auto wasEmpty(mNoSyncTransfers.isEmpty());
+
+        mNoSyncTransfers.remove(tag);
+
+        if(!wasEmpty && mNoSyncTransfers.isEmpty())
+        {
+            emit cancelableTransfersChanged(false);
+        }
+    }
+}
+
 bool TransfersManagerSortFilterProxyModel::lessThan(const QModelIndex &left, const QModelIndex &right) const
 {
+
     const auto leftItem (qvariant_cast<TransferItem>(left.data()).getTransferData());
     const auto rightItem (qvariant_cast<TransferItem>(right.data()).getTransferData());
 
@@ -301,15 +391,7 @@ bool TransfersManagerSortFilterProxyModel::lessThan(const QModelIndex &left, con
     {
         case SortCriterion::PRIORITY:
         {
-            if(leftItem->mState != rightItem->mState)
-            {
-                return leftItem->mState > rightItem->mState;
-            }
-            else
-            {
-
-                return leftItem->mPriority > rightItem->mPriority;
-            }
+            return leftItem->mPriority > rightItem->mPriority;
         }
         case SortCriterion::TOTAL_SIZE:
         {
@@ -326,47 +408,22 @@ bool TransfersManagerSortFilterProxyModel::lessThan(const QModelIndex &left, con
 
 int TransfersManagerSortFilterProxyModel::getPausedTransfers() const
 {
-    auto paused(0);
-
-    for(int row = 0; row < rowCount(); ++row)
-    {
-        QModelIndex proxyIndex = index(row, 0);
-
-        const auto d (qvariant_cast<TransferItem>(proxyIndex.data()).getTransferData());
-
-        if(d->mState & TransferData::TransferState::TRANSFER_PAUSED)
-        {
-            paused++;
-        }
-    }
-
-    return paused;
+    return mPausedTransfers.size();
 }
 
 bool TransfersManagerSortFilterProxyModel::isAnyPaused() const
 {
-    auto paused(false);
-    auto last = rowCount();
-
-    for(int row = 0; row < last; ++row)
-    {
-        QModelIndex proxyIndex = index(row, 0);
-
-        const auto d (qvariant_cast<TransferItem>(proxyIndex.data()).getTransferData());
-
-        if(d->mState & TransferData::TransferState::TRANSFER_PAUSED)
-        {
-            paused = true;
-            break;
-        }
-    }
-
-    return paused;
+    return !mPausedTransfers.isEmpty();
 }
 
 bool TransfersManagerSortFilterProxyModel::isAnyCancelable() const
 {
     return !mNoSyncTransfers.isEmpty();
+}
+
+bool TransfersManagerSortFilterProxyModel::isAnyActive() const
+{
+    return !mActiveTransfers.isEmpty();
 }
 
 bool TransfersManagerSortFilterProxyModel::moveRows(const QModelIndex &proxyParent, int proxyRow, int count,
@@ -436,19 +493,7 @@ void TransfersManagerSortFilterProxyModel::onRetryTransfer()
 
     if(delegateWidget && sourModel)
     {
-        auto data = delegateWidget->getData();
-
-        if(data->mFailedTransfer)
-        {
-            QModelIndexList indexToRemove;
-            auto index = delegateWidget->getCurrentIndex();
-            index = mapToSource(index);
-            indexToRemove.append(index);
-            sourModel->clearTransfers(indexToRemove);
-
-            MegaSyncApp->getMegaApi()->retryTransfer(data->mFailedTransfer.get());
-            data->removeFailedTransfer();
-        }
+        sourModel->retryTransferByIndex(mapToSource(delegateWidget->getCurrentIndex()));
     }
 }
 

@@ -46,7 +46,8 @@ const TransferData::TransferStates TransferData::ACTIVE_STATES_MASK = TransferDa
 
 void TransferData::update(mega::MegaTransfer* transfer)
 {
-    if(transfer)
+    auto megaApi = MegaSyncApp->getMegaApi();
+    if(transfer && megaApi)
     {   
         mTag = transfer->getTag();
 
@@ -75,7 +76,7 @@ void TransferData::update(mega::MegaTransfer* transfer)
         mTotalSize = static_cast<unsigned long long>(transfer->getTotalBytes());
         unsigned long long remBytes = mTotalSize - mTransferredBytes;
 
-        long long httpSpeed = static_cast<unsigned long long>(MegaSyncApp->getMegaApi()->getCurrentSpeed(transfer->getType()));
+        long long httpSpeed = static_cast<unsigned long long>(megaApi->getCurrentSpeed(transfer->getType()));
         mSpeed = std::min(transfer->getSpeed(), httpSpeed);
 
         TransferRemainingTime rem(mSpeed, remBytes);
@@ -159,6 +160,21 @@ bool TransferData::isUpload() const
 bool TransferData::isSyncTransfer() const
 {
     return mType & TRANSFER_SYNC;
+}
+
+bool TransferData::isActive() const
+{
+    return mState & ACTIVE_STATES_MASK;
+}
+
+bool TransferData::isPaused() const
+{
+    return mState & TRANSFER_PAUSED;
+}
+
+bool TransferData::isCompleted() const
+{
+    return mState & TRANSFER_COMPLETED;
 }
 
 bool TransferData::isDownload() const

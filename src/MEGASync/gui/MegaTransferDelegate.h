@@ -29,10 +29,6 @@ protected slots:
     void onHoverEnter(const QModelIndex& index, const QRect& rect);
     void onHoverMove(const QModelIndex& index, const QRect& rect, const QPoint& point);
 
-signals:
-    void transferPaused(const TransferTag tag);
-    void transferCanceled(const TransferTag tag);
-
 private:
     TransferBaseDelegateWidget *getTransferItemWidget(const QModelIndex &index, const QSize &size) const;
 

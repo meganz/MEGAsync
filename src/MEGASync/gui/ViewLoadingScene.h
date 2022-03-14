@@ -169,6 +169,12 @@ public:
         mViewModel(nullptr)
     {}
 
+    ~ViewLoadingScene()
+    {
+        mLoadingDelegate->deleteLater();
+        mLoadingModel->deleteLater();
+    }
+
     inline void setView(QAbstractItemView* view)
     {
         mView = view;

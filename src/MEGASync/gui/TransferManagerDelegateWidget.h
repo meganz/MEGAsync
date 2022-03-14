@@ -30,7 +30,6 @@ protected:
 signals:
     void cancelClearTransfer(bool isClear);
     void pauseResumeTransfer();
-    void retryTransfer();
     void openTransfer();
 
 private slots:

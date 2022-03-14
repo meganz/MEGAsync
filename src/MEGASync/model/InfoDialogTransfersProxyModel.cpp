@@ -20,6 +20,8 @@ TransferBaseDelegateWidget* InfoDialogTransfersProxyModel::createTransferManager
             this, &InfoDialogTransfersProxyModel::onCopyTransferLinkRequested);
     connect(item, &InfoDialogTransferDelegateWidget::openTransferFolder,
             this, &InfoDialogTransfersProxyModel::onOpenTransferFolderRequested);
+    connect(item, &InfoDialogTransferDelegateWidget::retryTransfer,
+            this, &InfoDialogTransfersProxyModel::onRetryTransferRequested);
 
     return item;
 }
@@ -49,6 +51,17 @@ void InfoDialogTransfersProxyModel::onOpenTransferFolderRequested()
         auto index = delegateWidget->getCurrentIndex();
         index = mapToSource(index);
         sourModel->openFolderByIndex(index);
+    }
+}
+
+void InfoDialogTransfersProxyModel::onRetryTransferRequested()
+{
+    auto delegateWidget = dynamic_cast<InfoDialogTransferDelegateWidget*>(sender());
+    auto sourModel = dynamic_cast<TransfersModel*>(sourceModel());
+
+    if(delegateWidget && sourModel)
+    {
+        sourModel->retryTransferByIndex(mapToSource(delegateWidget->getCurrentIndex()));
     }
 }
 

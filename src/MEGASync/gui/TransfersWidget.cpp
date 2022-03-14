@@ -37,6 +37,8 @@ void TransfersWidget::setupTransfers()
     connect(mProxyModel, &TransfersManagerSortFilterProxyModel::modelAboutToBeChanged, this, &TransfersWidget::onModelAboutToBeChanged);
     connect(mProxyModel, &TransfersManagerSortFilterProxyModel::modelChanged, this, &TransfersWidget::onModelChanged);
     connect(mProxyModel, &TransfersManagerSortFilterProxyModel::cancelableTransfersChanged, this, &TransfersWidget::onCheckCancelButtonVisibility);
+    connect(mProxyModel, &TransfersManagerSortFilterProxyModel::activeTransfersChanged, this, &TransfersWidget::onActiveTransferCounterChanged);
+    connect(mProxyModel, &TransfersManagerSortFilterProxyModel::pausedTransfersChanged, this, &TransfersWidget::onPausedTransferCounterChanged);
     connect(mProxyModel, &TransfersManagerSortFilterProxyModel::transferPauseResume, this, &TransfersWidget::onPauseResumeButtonCheckedOnDelegate);
     connect(app->getTransfersModel(), &TransfersModel::transfersAboutToBeCanceled, this, &TransfersWidget::onModelAboutToBeChanged);
     connect(app->getTransfersModel(), &TransfersModel::transfersCanceled, this, &TransfersWidget::onModelChanged);
@@ -229,7 +231,6 @@ void TransfersWidget::onShowCompleted(bool showCompleted)
     }
 
     mClearMode = showCompleted;
-    ui->tPauseResumeVisible->setVisible(!showCompleted);
 }
 
 void TransfersWidget::onPauseStateChanged(bool pauseState)
@@ -266,11 +267,6 @@ void TransfersWidget::transferFilterReset()
     mProxyModel->resetAllFilters();
 }
 
-int TransfersWidget::rowCount()
-{
-    return ui->tvTransfers->model()->rowCount();
-}
-
 void TransfersWidget::changeEvent(QEvent *event)
 {
     if (event->type() == QEvent::LanguageChange)
@@ -289,11 +285,14 @@ void TransfersWidget::onModelAboutToBeChanged()
 
 void TransfersWidget::onModelChanged()
 {
-    auto allPaused = mProxyModel->isAnyPaused();
-    onPauseStateChanged(allPaused);
+    auto isAnyPaused = mProxyModel->isAnyPaused();
+    onPauseStateChanged(isAnyPaused);
     mLoadingScene.setLoadingScene(false);
 
     emit disableTransferManager(false);
+
+    auto isAnyActive = mProxyModel->isAnyActive();
+    onActiveTransferCounterChanged(isAnyActive);
 }
 
 
@@ -320,10 +319,19 @@ void TransfersWidget::onPauseResumeButtonCheckedOnDelegate(bool pause)
     }
 }
 
-void TransfersWidget::onCheckCancelButtonVisibility()
+void TransfersWidget::onCheckCancelButtonVisibility(bool state)
 {
-    auto anyCancelable = mProxyModel->isAnyCancelable();
-    ui->tCancelClearVisible->setVisible(anyCancelable);
+    ui->tCancelClearVisible->setVisible(state);
+}
+
+void TransfersWidget::onActiveTransferCounterChanged(bool state)
+{
+    ui->tPauseResumeVisible->setVisible(state);
+}
+
+void TransfersWidget::onPausedTransferCounterChanged(bool state)
+{
+    onPauseStateChanged(state);
 }
 
 void TransfersWidget::on_tPauseResumeVisible_toggled(bool state)

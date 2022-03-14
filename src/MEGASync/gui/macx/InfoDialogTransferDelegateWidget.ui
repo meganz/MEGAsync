@@ -353,6 +353,9 @@
                  <height>24</height>
                 </size>
                </property>
+               <property name="toolTip">
+                <string>Show in folder</string>
+               </property>
                <property name="styleSheet">
                 <string notr="true"/>
                </property>

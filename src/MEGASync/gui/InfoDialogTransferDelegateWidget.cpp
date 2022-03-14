@@ -23,10 +23,6 @@ InfoDialogTransferDelegateWidget::InfoDialogTransferDelegateWidget(QWidget *pare
 {
     mUi->setupUi(this);
 
-    QSizePolicy retainGetLink = mUi->lActionTransfer->sizePolicy();
-    retainGetLink.setRetainSizeWhenHidden(true);
-    mUi->lActionTransfer->setSizePolicy(retainGetLink);
-
     QSizePolicy retainShowInFolder = mUi->lShowInFolder->sizePolicy();
     retainShowInFolder.setRetainSizeWhenHidden(true);
     mUi->lShowInFolder->setSizePolicy(retainShowInFolder);
@@ -69,24 +65,8 @@ void InfoDialogTransferDelegateWidget::updateTransferState()
             break;
         case TransferData::TransferState::TRANSFER_ACTIVE:
         {
-            // Update remaining time
-            long long remainingBytes = getData()->mTotalSize - getData()->mTransferredBytes;
-            TransferRemainingTime remainingTimeCalculator;
-            const auto totalRemainingSeconds = remainingTimeCalculator.calculateRemainingTimeSeconds(getData()->mSpeed, remainingBytes);
-
-
-            QString remainingTime;
-            const bool printableValue{totalRemainingSeconds.count() && totalRemainingSeconds < std::chrono::seconds::max()};
-            if (printableValue)
-            {
-                remainingTime = Utilities::getTimeString(totalRemainingSeconds.count());
-                mUi->bClockDown->setVisible(true);
-            }
-            else
-            {
-                mUi->bClockDown->setVisible(false);
-            }
-            mUi->lRemainingTime->setText(remainingTime);
+            mUi->bClockDown->setVisible(getData()->mRemainingTime > 0);
+            mUi->lRemainingTime->setText(Utilities::getTimeString(getData()->mRemainingTime));
 
             // Update current transfer speed
             QString downloadString;
@@ -105,58 +85,33 @@ void InfoDialogTransferDelegateWidget::updateTransferState()
             break;
         }
         case TransferData::TransferState::TRANSFER_PAUSED:
-            if(stateHasChanged())
-            {
-                mUi->lSpeed->setText(QString::fromUtf8("%1").arg(tr("PAUSED")));
-                mUi->bClockDown->setVisible(false);
-                mUi->lRemainingTime->setText(QString::fromUtf8(""));
-            }
+            updateTransferControlsOnHold(tr("PAUSED"));
             break;
         case TransferData::TransferState::TRANSFER_QUEUED:
-            if(stateHasChanged())
-            {
-                mUi->lSpeed->setText(QString::fromUtf8("%1").arg(tr("queued")));
-                mUi->bClockDown->setVisible(false);
-                mUi->lRemainingTime->setText(QString::fromUtf8(""));
-            }
+            updateTransferControlsOnHold(tr("queued"));
             break;
         case TransferData::TransferState::TRANSFER_RETRYING:
-
             if (getData()->mErrorCode == MegaError::API_EOVERQUOTA)
             {
                 if (getData()->mErrorValue)
                 {
-                    mUi->lSpeed->setText(QString::fromUtf8("%1").arg(tr("Transfer quota exceeded")));
+                    updateTransferControlsOnHold(tr("Transfer quota exceeded"));
                 }
                 else
                 {
-                    mUi->lSpeed->setText(QString::fromUtf8("%1").arg(tr("Out of storage space")));
+                    updateTransferControlsOnHold(tr("Out of storage space"));
                 }
             }
             else
             {
-                mUi->lSpeed->setText(QString::fromUtf8("%1").arg(tr("retrying...")));
+                updateTransferControlsOnHold(tr("retrying..."));
             }
-
-            mUi->bClockDown->setVisible(false);
-            mUi->lRemainingTime->setText(QString::fromUtf8(""));
-
             break;
         case TransferData::TransferState::TRANSFER_COMPLETING:
-            if(stateHasChanged())
-            {
-                mUi->lSpeed->setText(QString::fromUtf8("%1").arg(tr("completing...")));
-                mUi->bClockDown->setVisible(false);
-                mUi->lRemainingTime->setText(QString::fromUtf8(""));
-            }
+            updateTransferControlsOnHold(tr("completing..."));
             break;
         default:
-            if(stateHasChanged())
-            {
-                mUi->lSpeed->setText(QString::fromUtf8(""));
-                mUi->lRemainingTime->setText(QString::fromUtf8(""));
-                mUi->bClockDown->setVisible(false);
-            }
+            updateTransferControlsOnHold(QString());
             break;
     }
 
@@ -164,6 +119,17 @@ void InfoDialogTransferDelegateWidget::updateTransferState()
     unsigned int permil = (getData()->mTotalSize > 0) ? ((1000 * getData()->mTransferredBytes) / getData()->mTotalSize) : 0;
     mUi->pbTransfer->setValue(permil);
 }
+
+void InfoDialogTransferDelegateWidget::updateTransferControlsOnHold(const QString& speedText)
+{
+    if (stateHasChanged())
+    {
+        mUi->lSpeed->setText(speedText);
+        mUi->bClockDown->setVisible(false);
+        mUi->lRemainingTime->setText(QString::fromStdString(""));
+    }
+}
+
 
 void InfoDialogTransferDelegateWidget::setFileNameAndType()
 {
@@ -248,17 +214,73 @@ TransferBaseDelegateWidget::ActionHoverType InfoDialogTransferDelegateWidget::mo
 
     mIsHover = isHover;
 
-    if (mIsHover)
+    // Assume the action widget is shown.
+    mUi->lActionTransfer->show();
+    mUi->lActionTransfer->setToolTip(QString());
+
+    // Assume the show in folder is hidden
+    mUi->lShowInFolder->hide();
+
+    if(getData()->isFinished())
     {
-        mActionButtonsEnabled = true;
-        if (getData()->mErrorCode < 0)
+        if (mIsHover)
         {
-            if (!getData()->isSyncTransfer())
+            mActionButtonsEnabled = true;
+            if (getData()->mErrorCode < 0)
             {
-                bool in = isMouseHoverInAction(mUi->lActionTransfer, pos);
-                update = setActionTransferIcon(mUi->lActionTransfer,
-                                               QString::fromAscii("://images/ico_item_retry%1.png").arg(QString::fromAscii(in?"_hover_ico":"")));
-                if(in)
+                if (!getData()->isSyncTransfer())
+                {
+                    bool in = isMouseHoverInAction(mUi->lActionTransfer, pos);
+                    mUi->lActionTransfer->setToolTip(tr("Retry"));
+                    update = setActionTransferIcon(mUi->lActionTransfer,
+                                                   QString::fromAscii("://images/ico_item_retry%1.png").arg(QString::fromAscii(in?"_hover_ico":"")));
+                    if(in)
+                    {
+                        hoverType = ActionHoverType::HOVER_ENTER;
+                    }
+                    else if(update)
+                    {
+                        hoverType = ActionHoverType::HOVER_LEAVE;
+                    }
+                }
+                else
+                {
+                    update = setActionTransferIcon(mUi->lActionTransfer,
+                                                   QString::fromAscii("://images/error.png"));
+                    mUi->lActionTransfer->setToolTip(tr("Failed: %1").arg(QString::fromStdString(getData()->mFailedTransfer->getLastError().getErrorString())));
+                    mActionButtonsEnabled = false;
+
+                    if(update)
+                    {
+                        hoverType = ActionHoverType::HOVER_LEAVE;
+                    }
+                }
+
+                update = true;
+            }
+            else
+            {
+                bool inAction(false);
+
+                if (getData()->isPublicNode())
+                {
+                    inAction = isMouseHoverInAction(mUi->lActionTransfer, pos);
+                    update = setActionTransferIcon(mUi->lActionTransfer,
+                                                   QString::fromAscii("://images/ico_item_link%1.png").arg(QString::fromAscii(inAction?"_hover_ico":"")));
+                    mUi->lActionTransfer->setToolTip(tr("Copy link to file"));
+                }
+                else
+                {
+                    mUi->lActionTransfer->hide();
+                }
+
+                mUi->lShowInFolder->show();
+
+                bool inShowFolder = isMouseHoverInAction(mUi->lShowInFolder, pos);
+                update |= setActionTransferIcon(mUi->lShowInFolder,
+                                                QString::fromAscii("://images/showinfolder%1.png").arg(QString::fromAscii(inShowFolder?"_hover_ico":"")));
+
+                if(inAction || inShowFolder)
                 {
                     hoverType = ActionHoverType::HOVER_ENTER;
                 }
@@ -267,75 +289,27 @@ TransferBaseDelegateWidget::ActionHoverType InfoDialogTransferDelegateWidget::mo
                     hoverType = ActionHoverType::HOVER_LEAVE;
                 }
             }
-            else
-            {
-                update = setActionTransferIcon(mUi->lActionTransfer,
-                                               QString::fromAscii("://images/error.png"));
-                mActionButtonsEnabled = false;
-
-                if(update)
-                {
-                    hoverType = ActionHoverType::HOVER_LEAVE;
-                }
-            }
-            mUi->lShowInFolder->hide();
-            update = true;
-        }
-        else if (getData()->isPublicNode())
-        {
-            bool inAction = isMouseHoverInAction(mUi->lActionTransfer, pos);
-            update = setActionTransferIcon(mUi->lActionTransfer,
-                                           QString::fromAscii("://images/ico_item_link%1.png").arg(QString::fromAscii(inAction?"_hover_ico":"")));
-
-            mUi->lShowInFolder->show();
-
-            bool inShowFolder = isMouseHoverInAction(mUi->lShowInFolder, pos);
-            update |= setActionTransferIcon(mUi->lShowInFolder,
-                                           QString::fromAscii("://images/showinfolder%1.png").arg(QString::fromAscii(inShowFolder?"_hover_ico":"")));
-
-
-            if(inAction || inShowFolder)
-            {
-                hoverType = ActionHoverType::HOVER_ENTER;
-            }
-            else if(update)
-            {
-                hoverType = ActionHoverType::HOVER_LEAVE;
-            }
         }
         else
         {
-            bool inAction = isMouseHoverInAction(mUi->lActionTransfer, pos);
-            update = setActionTransferIcon(mUi->lActionTransfer,
-                                           QString::fromAscii("://images/showinfolder%1.png").arg(QString::fromAscii(inAction?"_hover_ico":"")));
+            mActionButtonsEnabled = false;
+            if (getData()->mErrorCode < 0)
+            {
+                update = setActionTransferIcon(mUi->lActionTransfer,
+                                               QString::fromAscii("://images/error.png"));
+                mUi->lActionTransfer->setIconSize(QSize(24,24));
+            }
+            else
+            {
+                update = setActionTransferIcon(mUi->lActionTransfer,
+                                               QString::fromAscii("://images/success.png"));
+                mUi->lActionTransfer->setIconSize(QSize(24,24));
+            }
 
             if(update)
             {
                 hoverType = ActionHoverType::HOVER_LEAVE;
             }
-        }
-    }
-    else
-    {
-        mActionButtonsEnabled = false;
-        if (getData()->mErrorCode < 0)
-        {
-            update = setActionTransferIcon(mUi->lActionTransfer,
-                                           QString::fromAscii("://images/error.png"));
-            mUi->lActionTransfer->setIconSize(QSize(24,24));
-            mUi->lShowInFolder->hide();
-        }
-        else
-        {
-            update = setActionTransferIcon(mUi->lActionTransfer,
-                                           QString::fromAscii("://images/success.png"));
-            mUi->lActionTransfer->setIconSize(QSize(24,24));
-            mUi->lShowInFolder->hide();
-        }
-
-        if(update)
-        {
-            hoverType = ActionHoverType::HOVER_LEAVE;
         }
     }
 
@@ -417,6 +391,17 @@ void InfoDialogTransferDelegateWidget::on_lShowInFolder_clicked()
 
 void InfoDialogTransferDelegateWidget::on_lActionTransfer_clicked()
 {
-    emit copyTransferLink();
+    if (getData()->mErrorCode < 0)
+    {
+        if (!getData()->isSyncTransfer())
+        {
+            //Base implementation
+            onRetryTransfer();
+        }
+    }
+    else
+    {
+        emit copyTransferLink();
+    }
 }
 

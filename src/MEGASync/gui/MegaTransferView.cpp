@@ -30,6 +30,8 @@ MegaTransferView::MegaTransferView(QWidget* parent) :
     setMouseTracking(true);
     disableLink = false;
     disableMenus = false;
+
+    setAutoScroll(false);
 }
 
 void MegaTransferView::setup()

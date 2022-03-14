@@ -72,8 +72,12 @@ void TransferManagerDelegateWidget::updateTransferState()
                              timeString
                            : Utilities::getTimeString(getData()->mRemainingTime);
 
-            if(getData()->mTotalSize == getData()->mTransferredBytes
-                    ||getData()->mTransferredBytes == 0 && getData()->mSpeed == 0)
+            if(getData()->mTransferredBytes == 0 && getData()->mSpeed == 0)
+            {
+                speedString = Utilities::getSizeString(getData()->mTotalSize)
+                        + QLatin1Literal("/s");
+            }
+            else if(getData()->mTotalSize == getData()->mTransferredBytes)
             {
                 speedString = QLatin1Literal("...");
             }
@@ -82,6 +86,7 @@ void TransferManagerDelegateWidget::updateTransferState()
                 speedString = Utilities::getSizeString(getData()->mSpeed)
                         + QLatin1Literal("/s");
             }
+
             break;
         }
         case TransferData::TRANSFER_PAUSED:
@@ -113,7 +118,6 @@ void TransferManagerDelegateWidget::updateTransferState()
                 }
             }
 
-
             break;
         }
         case TransferData::TRANSFER_CANCELLED:
@@ -136,12 +140,14 @@ void TransferManagerDelegateWidget::updateTransferState()
             if(stateHasChanged())
             {
                 statusString = tr("Completing");
-                speedString = QLatin1Literal("...");
                 showTPauseResume = false;
                 showTCancelClear = false;
                 mUi->sStatus->setCurrentWidget(mUi->pActive);
                 mLastPauseResuemtTransferIconName.clear();
             }
+
+            speedString = QLatin1Literal("...");
+
             break;
         }
         case TransferData::TRANSFER_FAILED:
@@ -232,10 +238,12 @@ void TransferManagerDelegateWidget::updateTransferState()
 
     // Total size
     mUi->lTotal->setText(Utilities::getSizeString(getData()->mTotalSize));
-    // File name
+
+    // Done label
     auto transferedB (getData()->mTransferredBytes);
     auto totalB (getData()->mTotalSize);
     mUi->lDone->setText(Utilities::getSizeString(transferedB) + QLatin1Literal(" / "));
+
     // Progress bar
     int permil = getData()->mState & (TransferData::TRANSFER_COMPLETED | TransferData::TRANSFER_COMPLETING) ?
                      PB_PRECISION
@@ -377,18 +385,6 @@ void TransferManagerDelegateWidget::on_tCancelClearTransfer_clicked()
 
 void TransferManagerDelegateWidget::on_tItemRetry_clicked()
 {
-    QPointer<TransferManagerDelegateWidget> dialog = QPointer<TransferManagerDelegateWidget>(this);
-
-    auto message = tr("Are you sure you want to retry this transfer?");
-
-    if (QMegaMessageBox::warning(nullptr, QString::fromUtf8("MEGAsync"),
-                             message,
-                             QMessageBox::Yes | QMessageBox::No, QMessageBox::No)
-            != QMessageBox::Yes
-            || !dialog)
-    {
-        return;
-    }
-
-    emit retryTransfer();
+    //Base implementation
+    onRetryTransfer();
 }

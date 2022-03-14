@@ -39,6 +39,7 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
 #ifndef Q_OS_MACOS
     setWindowFlags(windowFlags() | Qt::Window | Qt::FramelessWindowHint);
 #endif
+    setAttribute(Qt::WA_DeleteOnClose, true);
 
     mUi->lTextSearch->installEventFilter(this);
 

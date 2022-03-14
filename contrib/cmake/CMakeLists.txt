@@ -212,10 +212,10 @@ set (MOC_INPUT
     ${MEGAsyncDir}/control/ThreadPool.h
     ${MEGAsyncDir}/control/MegaController.h
     ${MEGAsyncDir}/model/SyncSettings.h
-	${MEGAsyncDir}/model/InfoDialogTransfersProxyModel.h
-	${MEGAsyncDir}/model/TransfersManagerSortFilterProxyModel.h
-	${MEGAsyncDir}/model/TransfersSortFilterProxyBaseModel.h
-	${MEGAsyncDir}/model/TransfersModel.h
+    ${MEGAsyncDir}/model/InfoDialogTransfersProxyModel.h
+    ${MEGAsyncDir}/model/TransfersManagerSortFilterProxyModel.h
+    ${MEGAsyncDir}/model/TransfersSortFilterProxyBaseModel.h
+    ${MEGAsyncDir}/model/TransfersModel.h
     ${MEGAsyncDir}/model/Model.h
     ${MEGAsyncDir}/gui/AlertItem.h
     ${MEGAsyncDir}/gui/AlertFilterType.h
