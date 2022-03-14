@@ -1873,9 +1873,7 @@ void InfoDialog::setUnseenTypeNotifications(long long all, long long contacts, l
 
 void InfoDialog::paintEvent(QPaintEvent * e)
 {
-//    app->megaApiLock.reset(app->getMegaApi()->getMegaApiLock(false));
     QDialog::paintEvent(e);
-//    app->megaApiLock.reset();
 
 #ifdef __APPLE__
     QPainter p(this);

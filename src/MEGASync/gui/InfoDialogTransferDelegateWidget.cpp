@@ -65,14 +65,7 @@ void InfoDialogTransferDelegateWidget::updateTransferState()
             break;
         case TransferData::TransferState::TRANSFER_ACTIVE:
         {
-            if (getData()->mRemainingTime > 0)
-            {
-                mUi->bClockDown->setVisible(true);
-            }
-            else
-            {
-                mUi->bClockDown->setVisible(false);
-            }
+            mUi->bClockDown->setVisible(getData()->mRemainingTime > 0);
             mUi->lRemainingTime->setText(Utilities::getTimeString(getData()->mRemainingTime));
 
             // Update current transfer speed
@@ -92,58 +85,33 @@ void InfoDialogTransferDelegateWidget::updateTransferState()
             break;
         }
         case TransferData::TransferState::TRANSFER_PAUSED:
-            if(stateHasChanged())
-            {
-                mUi->lSpeed->setText(QString::fromUtf8("%1").arg(tr("PAUSED")));
-                mUi->bClockDown->setVisible(false);
-                mUi->lRemainingTime->setText(QString::fromUtf8(""));
-            }
+            updateTransferControlsOnHold(tr("PAUSED"));
             break;
         case TransferData::TransferState::TRANSFER_QUEUED:
-            if(stateHasChanged())
-            {
-                mUi->lSpeed->setText(QString::fromUtf8("%1").arg(tr("queued")));
-                mUi->bClockDown->setVisible(false);
-                mUi->lRemainingTime->setText(QString::fromUtf8(""));
-            }
+            updateTransferControlsOnHold(tr("queued"));
             break;
         case TransferData::TransferState::TRANSFER_RETRYING:
-
             if (getData()->mErrorCode == MegaError::API_EOVERQUOTA)
             {
                 if (getData()->mErrorValue)
                 {
-                    mUi->lSpeed->setText(QString::fromUtf8("%1").arg(tr("Transfer quota exceeded")));
+                    updateTransferControlsOnHold(tr("Transfer quota exceeded"));
                 }
                 else
                 {
-                    mUi->lSpeed->setText(QString::fromUtf8("%1").arg(tr("Out of storage space")));
+                    updateTransferControlsOnHold(tr("Out of storage space"));
                 }
             }
             else
             {
-                mUi->lSpeed->setText(QString::fromUtf8("%1").arg(tr("retrying...")));
+                updateTransferControlsOnHold(tr("retrying..."));
             }
-
-            mUi->bClockDown->setVisible(false);
-            mUi->lRemainingTime->setText(QString::fromUtf8(""));
-
             break;
         case TransferData::TransferState::TRANSFER_COMPLETING:
-            if(stateHasChanged())
-            {
-                mUi->lSpeed->setText(QString::fromUtf8("%1").arg(tr("completing...")));
-                mUi->bClockDown->setVisible(false);
-                mUi->lRemainingTime->setText(QString::fromUtf8(""));
-            }
+            updateTransferControlsOnHold(tr("completing..."));
             break;
         default:
-            if(stateHasChanged())
-            {
-                mUi->lSpeed->setText(QString::fromUtf8(""));
-                mUi->lRemainingTime->setText(QString::fromUtf8(""));
-                mUi->bClockDown->setVisible(false);
-            }
+            updateTransferControlsOnHold(QString());
             break;
     }
 
@@ -151,6 +119,17 @@ void InfoDialogTransferDelegateWidget::updateTransferState()
     unsigned int permil = (getData()->mTotalSize > 0) ? ((1000 * getData()->mTransferredBytes) / getData()->mTotalSize) : 0;
     mUi->pbTransfer->setValue(permil);
 }
+
+void InfoDialogTransferDelegateWidget::updateTransferControlsOnHold(const QString& speedText)
+{
+    if (stateHasChanged())
+    {
+        mUi->lSpeed->setText(speedText);
+        mUi->bClockDown->setVisible(false);
+        mUi->lRemainingTime->setText(QString::fromStdString(""));
+    }
+}
+
 
 void InfoDialogTransferDelegateWidget::setFileNameAndType()
 {
