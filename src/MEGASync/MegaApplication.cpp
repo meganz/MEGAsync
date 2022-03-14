@@ -6889,7 +6889,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
     case MegaRequest::TYPE_GET_PRICING:
     {
         if (e->getErrorCode() == MegaError::API_OK)
-        {       
+        {
             MegaPricing* pricing (request->getPricing());
             MegaCurrency* currency (request->getCurrency());
 
@@ -6984,7 +6984,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
                 // API_ENOENT is expected when the user has never disabled versioning
                 preferences->disableFileVersioning(request->getFlag());
             }
-        }       
+        }
         break;
     }
     case MegaRequest::TYPE_LOGIN:
@@ -7411,7 +7411,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
             transferQuota->updateQuotaState();
         }
 
-        preferences->sync();        
+        preferences->sync();
 
         if (infoDialog)
         {
@@ -8351,7 +8351,12 @@ void MegaApplication::onSyncDisabled(std::shared_ptr<SyncSetting> syncSetting)
         {
             switch(errorCode)
             {
-                case MegaSync::Error::LOCAL_PATH_UNAVAILABLE:
+		case MegaSync::Error::NO_SYNC_ERROR:
+		{
+		    assert(false && "unexpected no error after onSyncAdded failed");
+		    return;
+		}	                
+		case MegaSync::Error::LOCAL_PATH_UNAVAILABLE:
                 {
                     showErrorMessage(tr("Your sync \"%1\" has been disabled because the local folder doesn't exist")
                                      .arg(syncName));
@@ -8416,6 +8421,11 @@ void MegaApplication::onSyncDisabled(std::shared_ptr<SyncSetting> syncSetting)
         {
             switch(errorCode)
             {
+		case MegaSync::Error::NO_SYNC_ERROR:
+		{
+		    assert(false && "unexpected no error after onSyncAdded failed");
+		    return;
+		}
                 case MegaSync::Error::LOCAL_PATH_UNAVAILABLE:
                 {
                     showErrorMessage(tr("Your backup \"%1\" has been disabled because the local folder doesn't exist")
