@@ -61,7 +61,7 @@ void NotifyServer::acceptConnection()
             auto syncSetting = model->getSyncSetting(i);
 
             QString c = QDir::toNativeSeparators(QDir(syncSetting->getLocalFolder()).canonicalPath());
-            if (!c.size() || !syncSetting->isActive())
+            if (!c.size() || syncSetting->getRunState() != MegaSync::RUNSTATE_RUNNING)
             {
                 continue;
             }

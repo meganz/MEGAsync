@@ -13,6 +13,7 @@
 #include <QPainter>
 #include <QEvent>
 #include <QMessageBox>
+#include <QPainterPath>
 #include <QToolTip>
 #include <QSortFilterProxyModel>
 
