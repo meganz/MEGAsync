@@ -1397,6 +1397,8 @@ void MegaApplication::startSyncs(QList<PreConfiguredSync> syncs)
         return;
     }
 
+    loadSyncExclusionRules(QString::fromUtf8(megaApi->getMyEmail()));
+
     // add syncs from setupWizard
     for (auto & ps : syncs)
     {
