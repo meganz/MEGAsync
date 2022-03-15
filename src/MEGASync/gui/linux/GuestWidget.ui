@@ -513,7 +513,7 @@ margin-top: -1px;</string>
                           <enum>Qt::NoFocus</enum>
                          </property>
                          <property name="text">
-                          <string>Login to MEGA</string>
+                          <string>Log into MEGA</string>
                          </property>
                          <property name="alignment">
                           <set>Qt::AlignCenter</set>
