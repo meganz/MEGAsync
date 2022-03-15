@@ -363,27 +363,27 @@
     <message>
         <source>Your PRO membership plan will expire in 1 day</source>
         <translatorcomment>Label to indicate that the PRO membership will expire in 1 day.</translatorcomment>
-        <translation>Uw Pro abonnement verloopt na 1 dag</translation>
+        <translation>Uw Pro-lidmaatschap abonnement verloopt na 1 dag</translation>
     </message>
     <message>
         <source>Your PRO membership plan will expire in [A] days</source>
         <translatorcomment>Label to indicate that the PRO membership will expire in [A] days. Placeholder will be replaced by the remaining days until plan will expire.</translatorcomment>
-        <translation>Uw Pro abonnement verloopt na [A] dagen</translation>
+        <translation>Uw Pro-lidmaatschap abonnement verloopt na [A] dagen</translation>
     </message>
     <message>
         <source>PRO membership plan expiring soon</source>
         <translatorcomment>Label to indicate that the PRO membership will expire soon.</translatorcomment>
-        <translation>Pro abonnement verloopt binnenkort</translation>
+        <translation>Pro-lidmaatschap abonnement verloopt binnenkort</translation>
     </message>
     <message>
         <source>Your PRO membership plan expired 1 day ago</source>
         <translatorcomment>Label to indicate that the PRO membership expired 1 day ago.</translatorcomment>
-        <translation>Uw Pro lidmaatschap is 1 dag geleden verlopen</translation>
+        <translation>Uw Pro-lidmaatschap abonnement is 1 dag geleden verlopen</translation>
     </message>
     <message>
         <source>Your PRO membership plan expired [A] days ago</source>
         <translatorcomment>Label to indicate that the PRO membership expired [A] days ago. Placeholder will be replaced by the days from the expiration of the PRO membership.</translatorcomment>
-        <translation>Uw Pro lidmaatschap is [A] dagen geleden verlopen</translation>
+        <translation>Uw Pro-lidmaatschap abonnement is [A] dagen geleden verlopen</translation>
     </message>
     <message>
         <source>Your publicly shared has been taken down</source>
@@ -893,27 +893,27 @@ In sommige gevallen kunnen ze details over uw gegevens bevatten, zoals bestands-
     <message>
         <source>Your PRO membership plan will expire in 1 day</source>
         <translatorcomment>Label to indicate that the PRO membership will expire in 1 day.</translatorcomment>
-        <translation>Uw Pro abonnement verloopt na 1 dag</translation>
+        <translation>Uw Pro-lidmaatschap abonnement verloopt na 1 dag</translation>
     </message>
     <message>
         <source>Your PRO membership plan will expire in [A] days</source>
         <translatorcomment>Label to indicate that the PRO membership will expire in [A] days. Placeholder will be replaced by the remaining days until plan will expire.</translatorcomment>
-        <translation>Uw Pro abonnement verloopt na [A] dagen</translation>
+        <translation>Uw Pro-lidmaatschap abonnement verloopt na [A] dagen</translation>
     </message>
     <message>
         <source>PRO membership plan expiring soon</source>
         <translatorcomment>Label to indicate that the PRO membership will expire soon.</translatorcomment>
-        <translation>Pro abonnement verloopt binnenkort</translation>
+        <translation>Pro-lidmaatschap abonnement verloopt binnenkort</translation>
     </message>
     <message>
         <source>Your PRO membership plan expired 1 day ago</source>
         <translatorcomment>Label to indicate that the PRO membership expired 1 day ago.</translatorcomment>
-        <translation>Uw Pro abonnement is 1 dag geleden verlopen</translation>
+        <translation>Uw Pro-lidmaatschap abonnement is 1 dag geleden verlopen</translation>
     </message>
     <message>
         <source>Your PRO membership plan expired [A] days ago</source>
         <translatorcomment>Label to indicate that the PRO membership expired [A] days ago. Placeholder will be replaced by the days from the expiration of the PRO membership.</translatorcomment>
-        <translation>Uw Pro abonnement is [A] dagen geleden verlopen</translation>
+        <translation>Uw Pro-lidmaatschap abonnement is [A] dagen geleden verlopen</translation>
     </message>
     <message>
         <source>[A] has left the shared folder</source>
@@ -1774,7 +1774,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Your queued transfers exceed the current quota available for your IP address and can therefore be interrupted.</source>
         <translatorcomment>Informative label to indicate that your queued transfers may be interrupted because the current account is above 90 percent of the transfer quota of the current account.</translatorcomment>
-        <translation>Uw wachtende overdrachten overschrijden het huidige tegoed beschikbaar voor uw IP adres en kan daarom onderbroken worden.</translation>
+        <translation>Uw wachtende overdrachten overschrijden het huidige tegoed beschikbaar voor uw IP-adres en kan daarom onderbroken worden.</translation>
     </message>
     <message>
         <source>You have [A][B] hours[/A] left to upgrade. After that, your data is subject to deletion.</source>
@@ -3256,7 +3256,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>You have exceeded the available transfer quota for your account. You can add syncs but they will remain disable until there is enough bandwidth on your account.</source>
         <translatorcomment>Informative label to indicate the user has exceeded the available transfer quota limit, letting to add new syncs that will be disabled until the situation is fixed.</translatorcomment>
-        <translation>U heeft de beschikbare overdracht tegoed overschreden voor uw account. U kunt synchronisaties toevoegen maar ze blijven uitgeschakeld totdat uw account meer overdracht tegoed beschikbaar heeft.</translation>
+        <translation>U heeft de beschikbare overdrachtstegoed overschreden voor uw account. U kunt synchronisaties toevoegen maar ze blijven uitgeschakeld totdat uw account meer overdracht tegoed beschikbaar heeft.</translation>
     </message>
     <message>
         <source>Upgrade Account</source>
@@ -3271,7 +3271,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>You have exceeded the available transfer quota for your account. You can import links but transfers will remain queued until there is enough bandwidth on your account.</source>
         <translatorcomment>Informative label to indicate the user has exceeded the available transfer quota limit, letting to import links but not download until there is enough bandwidth for the account.</translatorcomment>
-        <translation>U heeft uw beschikbare overdracht tegoed overschreden voor uw account. U kunt links importeren maar overdrachten blijven in de wachtrij totdat uw account meer overdracht tegoed beschikbaar heeft.</translation>
+        <translation>U heeft uw beschikbare overdrachtstegoed overschreden voor uw account. U kunt links importeren maar overdrachten blijven in de wachtrij totdat uw account meer overdracht tegoed beschikbaar heeft.</translation>
     </message>
     <message>
         <source>Downloads are temporarily disabled.</source>
@@ -3281,7 +3281,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>You have exceeded the available transfer quota for your account. You can add downloads but transfers will remain queued until there is enough bandwidth on your account.</source>
         <translatorcomment>Informative label to indicate the user has exceeded the available transfer quota limit, letting to add new downloads that will remain queued until there is enough bandwidth for the current account.</translatorcomment>
-        <translation>U heeft de beschikbare overdracht tegoed van uw account overschreden. U kunt downloads toevoegen maar overdrachten blijven in de wachtrij totdat uw account meer overdracht tegoed beschikbaar heeft.</translation>
+        <translation>U heeft de beschikbare overdrachtstegoed van uw account overschreden. U kunt downloads toevoegen maar overdrachten blijven in de wachtrij totdat uw account meer overdracht tegoed beschikbaar heeft.</translation>
     </message>
     <message>
         <source>Streams are temporarily disabled.</source>
@@ -3291,7 +3291,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>You have exceeded the available transfer quota for your account. You can add streams but transfers will remain queued until there is enough bandwidth on your account.</source>
         <translatorcomment>Informative label to indicate the user has exceeded the available transfer quota limit, letting to start stream transfer but will remain stuck until there is enough bandwidth on the current account.</translatorcomment>
-        <translation>U heeft de beschikbare overdracht tegoed overschreden voor uw account. U kunt streams toevoegen maar overdrachten blijven in de wachtrij totdat uw account meer overdracht tegoed beschikbaar heeft.</translation>
+        <translation>U heeft de beschikbare overdrachtstegoed overschreden voor uw account. U kunt streams toevoegen maar overdrachten blijven in de wachtrij totdat uw account meer overdracht tegoed beschikbaar heeft.</translation>
     </message>
     <message>
         <source>Depleted transfer quota</source>
@@ -3438,7 +3438,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Current plan</source>
         <translatorcomment>Label that indicates the current pro plan of the user account.</translatorcomment>
-        <translation>Huidige abonnement</translation>
+        <translation>Huidig abonnement</translation>
     </message>
     <message>
         <source>%1 per user</source>
@@ -4214,7 +4214,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Always keep physical control of your master key (e.g. on a client device, external storage, or print).</source>
         <translatorcomment>Label to inform the user to keep physical control of the master key.</translatorcomment>
-        <translation>Houd altijd fysieke controle over uw Herstelsleutel (bijv. op een cliënt-apparaat, externe opslag, of door af te drukken).</translation>
+        <translation>Houd altijd fysieke controle over uw Herstelsleutel (bijv. op een programma-apparaat, externe opslag, of door af te drukken).</translation>
     </message>
     <message>
         <source>Exclude by size</source>
@@ -4604,7 +4604,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Pro Lite</source>
         <translatorcomment>Text label indicating the Pro Lite tier of account type in Account pane, next to the shield icon indicating also the type of account.</translatorcomment>
-        <translation>Pro Lite</translation>
+        <translation>Pro-Lite</translation>
     </message>
     <message>
         <source>Business</source>
@@ -4684,17 +4684,17 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Pro I</source>
         <translatorcomment>Text label indicating the Pro I tier of account type in Account pane, next to the shield icon indicating also the type of account.</translatorcomment>
-        <translation>Pro I</translation>
+        <translation>Pro-I</translation>
     </message>
     <message>
         <source>Pro II</source>
         <translatorcomment>Text label indicating the Pro II tier of account type in Account pane, next to the shield icon indicating also the type of account.</translatorcomment>
-        <translation>Pro II</translation>
+        <translation>Pro-II</translation>
     </message>
     <message>
         <source>Pro III</source>
         <translatorcomment>Text label indicating the Pro III tier of account type in Account pane, next to the shield icon indicating also the type of account.</translatorcomment>
-        <translation>Pro III</translation>
+        <translation>Pro-III</translation>
     </message>
     <message>
         <source>Export Key</source>
@@ -5708,22 +5708,22 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Pro Lite</source>
         <translatorcomment>Label to refer Pro Lite tier</translatorcomment>
-        <translation>Pro Lite</translation>
+        <translation>Pro-Lite</translation>
     </message>
     <message>
         <source>Pro I</source>
         <translatorcomment>Label to refer Pro I tier</translatorcomment>
-        <translation>Pro I</translation>
+        <translation>Pro-I</translation>
     </message>
     <message>
         <source>Pro II</source>
         <translatorcomment>Label to refer Pro II tier</translatorcomment>
-        <translation>Pro II</translation>
+        <translation>Pro-II</translation>
     </message>
     <message>
         <source>Pro III</source>
         <translatorcomment>Label to refer Pro III tier</translatorcomment>
-        <translation>Pro III</translation>
+        <translation>Pro-III</translation>
     </message>
 </context>
 <context>
