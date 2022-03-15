@@ -1,6 +1,7 @@
 #ifndef TRANSFERMANAGER_H
 #define TRANSFERMANAGER_H
 
+#include "BlockingGui.h"
 #include "megaapi.h"
 #include "Preferences.h"
 #include "MenuItemAction.h"
@@ -13,8 +14,6 @@
 #include <QTimer>
 #include <QDialog>
 #include <QMenu>
-
-#include "BlockingGui.h"
 
 namespace Ui {
 class TransferManager;

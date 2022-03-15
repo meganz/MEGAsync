@@ -3349,7 +3349,7 @@ void MegaApplication::setTransferUiInBlockingState()
 
     if (transferManager)
     {
-        transferManager->enterBlockingState();
+        //transferManager->enterBlockingState();
     }
 
     if (infoDialog)
@@ -3366,7 +3366,7 @@ void MegaApplication::setTransferUiInUnblockedState()
 
     if (transferManager)
     {
-        transferManager->leaveBlockingState();
+        //transferManager->leaveBlockingState();
     }
 
     if (infoDialog)
@@ -8110,7 +8110,7 @@ void MegaApplication::onTransferUpdate(MegaApi*, MegaTransfer* transfer)
 
     if (transferManager)
     {
-        transferManager->onTransferUpdate(megaApi, transfer);
+        //transferManager->onTransferUpdate(megaApi, transfer);
     }
 
     if (infoDialog)

@@ -75,12 +75,6 @@ public:
 
     void reset();
 
-    QCustomTransfersModel *stealModel();
-
-    void onTransferFinish(mega::MegaApi* api, mega::MegaTransfer *transfer, mega::MegaError* e) override;
-    void onTransferStart(mega::MegaApi *api, mega::MegaTransfer *transfer) override;
-    void onTransferUpdate(mega::MegaApi *api, mega::MegaTransfer *transfer) override;
-
     void enterBlockingState();
     void leaveBlockingState();
 

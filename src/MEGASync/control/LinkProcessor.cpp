@@ -294,7 +294,7 @@ void LinkProcessor::downloadLinks(const QString& localPath)
     {
         if (linkNode[i] && linkSelected[i])
         {
-            startDownload(linkNode[i], localPath);
+            startDownload(linkNode[i].get(), localPath);
         }
     }
 }

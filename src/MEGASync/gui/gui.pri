@@ -72,7 +72,7 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/ProxySettings.cpp \
     $$PWD/BandwidthSettings.cpp \
     $$PWD/SwitchButton.cpp \
-    $$PWD/GuiUtilities.cpp
+    $$PWD/GuiUtilities.cpp \
     $$PWD/BlockingGui.cpp \
     $$PWD/CancelConfirmWidget.cpp
 

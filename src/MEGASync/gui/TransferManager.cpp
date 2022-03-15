@@ -199,7 +199,7 @@ void TransferManager::onPauseStateChangedByTransferResume()
 {
     onUpdatePauseState(false);
 
-    blockingUi = new BlockingUi(ui->wTransfers);
+    //blockingUi = new BlockingUi(mUi->wTransfers);
     connect(blockingUi, SIGNAL(cancelTransfers()), this, SLOT(cancel()));
 }
 
@@ -418,12 +418,12 @@ void TransferManager::refreshTypeStats()
     countLabel->setVisible(!countLabelText.isEmpty());
 }
 
-void TransferManager::enterBlockingState()
+/*void TransferManager::enterBlockingState()
 {
     enableUserActions(false);
-    ui->wTabHeader->setVisible(false);
+    mUi->wTabHeader->setVisible(false);
     blockingUi->show();
-}
+}*/
 
 void TransferManager::refreshFileTypesStats()
 {
@@ -717,7 +717,7 @@ void TransferManager::on_bImages_clicked()
         toggleTab(TYPE_IMAGE_TAB);
     }
 
-    if (w == ui->wActiveTransfers)
+/*    if (w == ui->wActiveTransfers)
     {
         cancel();
     }
@@ -728,7 +728,7 @@ void TransferManager::on_bImages_clicked()
     else if(w == ui->wUploads)
     {
         emit cancelAllDownloads();
-    }
+    }*/
 }
 
 void TransferManager::on_bMusic_clicked()
@@ -751,11 +751,11 @@ void TransferManager::on_bVideos_clicked()
     }
 }
 
-void TransferManager::cancel()
+/*void TransferManager::cancel()
 {
     emit cancelAllUploads();
     emit cancelAllDownloads();
-}
+}*/
 
 void TransferManager::on_bOther_clicked()
 {
