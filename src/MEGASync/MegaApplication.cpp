@@ -1397,6 +1397,9 @@ void MegaApplication::startSyncs(QList<PreConfiguredSync> syncs)
         return;
     }
 
+    // Load default exclusion rules before adding the new syncs from setup wizard.
+    // We could not load them before fetch nodes, because default exclusion rules
+    // are only created once the local preferences are logged.
     loadSyncExclusionRules(QString::fromUtf8(megaApi->getMyEmail()));
 
     // add syncs from setupWizard
