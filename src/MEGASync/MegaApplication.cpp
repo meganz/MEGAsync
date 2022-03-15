@@ -363,8 +363,7 @@ void MegaApplication::showInterface(QString)
         //If the dialog is active and visible -> show it
         if (settingsDialog && settingsDialog->isVisible())
         {
-            settingsDialog->activateWindow();
-            settingsDialog->raise();
+            settingsDialog->show();
             return;
         }
     }
@@ -6117,8 +6116,7 @@ void MegaApplication::openSettings(int tab)
             }
 
             //and visible -> show it
-            settingsDialog->activateWindow();
-            settingsDialog->raise();
+            settingsDialog->show();
             return;
         }
 
@@ -6132,17 +6130,11 @@ void MegaApplication::openSettings(int tab)
     settingsDialog->setUpdateAvailable(updateAvailable);
     settingsDialog->setModal(false);
     connect(settingsDialog, SIGNAL(userActivity()), this, SLOT(registerUserActivity()));
-
-    settingsDialog->show();
     if (proxyOnly)
-    {
         settingsDialog->showGuestMode();
-    }
     else
-    {
         settingsDialog->openSettingsTab(tab);
-    }
-
+    settingsDialog->show();
 }
 
 void MegaApplication::openSettingsAddSync(MegaHandle megaFolderHandle)

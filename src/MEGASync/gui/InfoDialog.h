@@ -269,7 +269,6 @@ protected:
     mega::MegaTransfer *activeDownload;
     mega::MegaTransfer *activeUpload;
     std::shared_ptr<SyncController> mSyncController;
-    QPointer<AddBackupDialog> mAddBackupDialog;
     mega::MegaHandle mBackupRootHandle;
 
  private:

@@ -89,7 +89,6 @@ SettingsDialog::SettingsDialog(MegaApplication* app, bool proxyOnly, QWidget* pa
     mApp (app),
     mPreferences (Preferences::instance()),
     mController (Controller::instance()),
-    mSyncController (),
     mModel (SyncModel::instance()),
     mMegaApi (app->getMegaApi()),
     mLoadingSettings (0),
@@ -2175,15 +2174,15 @@ void SettingsDialog::connectBackupHandlers()
         }
     }, Qt::QueuedConnection);
 
-    connect(&mSyncController, &SyncController::syncAddStatus, this, [](const int errorCode, const QString errorMsg)
+    connect(&mSyncController, &SyncController::syncAddStatus, this, [](const int errorCode, const QString errorMsg, QString name)
     {
         if (errorCode != MegaError::API_OK)
-            QMegaMessageBox::critical(nullptr, tr("Error adding backup"), errorMsg);
+            QMegaMessageBox::warning(nullptr, tr("Error adding backup %1").arg(name), errorMsg);
     });
 
     connect(&mSyncController, &SyncController::syncRemoveError, this, [](std::shared_ptr<SyncSetting> sync)
     {
-        QMegaMessageBox::critical(nullptr, tr("Error removing backup"),
+        QMegaMessageBox::warning(nullptr, tr("Error removing backup"),
                                   tr("Your backup \"%1\" can't be removed. Reason: %2")
                                   .arg(sync->name())
                                   .arg(tr(MegaSync::getMegaSyncErrorCode(sync->getError()))));
@@ -2191,7 +2190,7 @@ void SettingsDialog::connectBackupHandlers()
 
     connect(&mSyncController, &SyncController::syncEnableError, this, [](std::shared_ptr<SyncSetting> sync)
     {
-        QMegaMessageBox::critical(nullptr, tr("Error enabling backup"),
+        QMegaMessageBox::warning(nullptr, tr("Error enabling backup"),
                                   tr("Your backup \"%1\" can't be enabled. Reason: %2")
                                   .arg(sync->name())
                                   .arg(tr(MegaSync::getMegaSyncErrorCode(sync->getError()))));
@@ -2199,7 +2198,7 @@ void SettingsDialog::connectBackupHandlers()
 
     connect(&mSyncController, &SyncController::syncDisableError, this, [](std::shared_ptr<SyncSetting> sync)
     {
-        QMegaMessageBox::critical(nullptr, tr("Error disabling backup"),
+        QMegaMessageBox::warning(nullptr, tr("Error disabling backup"),
                                   tr("Your sync \"%1\" can't be disabled. Reason: %2")
                                   .arg(sync->name())
                                   .arg(tr(MegaSync::getMegaSyncErrorCode(sync->getError()))));
@@ -2209,7 +2208,16 @@ void SettingsDialog::connectBackupHandlers()
 
 void SettingsDialog::loadBackupSettings()
 {
-    mUi->backupTableWidget->setModel(new BackupItemModel(mUi->backupTableWidget));
+    BackupItemModel *model(new BackupItemModel(mUi->backupTableWidget));
+    connect(model, &BackupItemModel::enableSync, this, [this](std::shared_ptr<SyncSetting> sync)
+    {
+        mSyncController.enableSync(sync);
+    });
+    connect(model, &BackupItemModel::disableSync, this, [this](std::shared_ptr<SyncSetting> sync)
+    {
+        mSyncController.disableSync(sync);
+    });
+    mUi->backupTableWidget->setModel(model);
     mUi->backupTableWidget->customize();
     mSyncController.getBackupsRootDirHandle();
 }
@@ -2235,7 +2243,7 @@ void SettingsDialog::on_bAddBackup_clicked()
 {
     AddBackupDialog *addBackup = new AddBackupDialog(this);
     addBackup->setAttribute(Qt::WA_DeleteOnClose);
-    addBackup->setWindowModality(Qt::NonModal);
+    addBackup->setWindowModality(Qt::WindowModal);
     addBackup->setMyBackupsFolder(mUi->lBackupFolder->text());
     addBackup->open();
 

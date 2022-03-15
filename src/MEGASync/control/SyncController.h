@@ -40,10 +40,10 @@ public:
     void getBackupsRootDirHandle();
 
 signals:
+    void syncAddStatus(int errorCode, QString errorMsg, QString name);
     void syncRemoveError(std::shared_ptr<SyncSetting> sync);
     void syncEnableError(std::shared_ptr<SyncSetting> sync);
     void syncDisableError(std::shared_ptr<SyncSetting> sync);
-    void syncAddStatus(int errorCode, QString errorMsg, QString name);
 
     void setMyBackupsDirStatus(int errorCode, QString errorMsg);
     void backupsRootDirHandle(mega::MegaHandle handle);
@@ -57,6 +57,7 @@ protected:
 
 private:
     void ensureDeviceNameIsSetOnRemote();
+    QString getSyncAPIErrorMsg(int megaError);
 
     mega::MegaApi* mApi;
     mega::QTMegaRequestListener* mDelegateListener;

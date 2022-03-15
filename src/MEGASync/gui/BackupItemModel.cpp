@@ -9,7 +9,6 @@
 BackupItemModel::BackupItemModel(QObject *parent)
     : QAbstractItemModel(parent),
     mSyncModel (SyncModel::instance()),
-    mSyncController(),
     mSortColumn(-1),
     mSortOrder(Qt::AscendingOrder)
 {
@@ -192,9 +191,9 @@ bool BackupItemModel::setData(const QModelIndex &index, const QVariant &value, i
     if ((role == Qt::CheckStateRole) || (role == Qt::EditRole))
     {
         if (value.toInt() == Qt::Checked)
-            mSyncController.enableSync(mOrderedList.at(index.row()));
+            emit enableSync(mOrderedList.at(index.row()));
         else if (value.toInt() == Qt::Unchecked)
-            mSyncController.disableSync(mOrderedList.at(index.row()));
+            emit disableSync(mOrderedList.at(index.row()));
         emit dataChanged(index, index, {role});
         return true;
     }

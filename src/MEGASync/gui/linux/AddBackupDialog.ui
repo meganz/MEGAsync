@@ -16,14 +16,19 @@
   <property name="styleSheet">
    <string notr="true">QWidget
 {
-font-size: 11px;
+font-size: 12px;
 }
 
 QPushButton
 {
 padding-left: 10px;
 padding-right: 10px;
-min-height: 22px;
+height: 22px;
+}
+
+QLineEdit
+{
+height: 20px;
 }
 </string>
   </property>
