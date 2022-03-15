@@ -194,6 +194,7 @@ private:
                     mega::MegaHandle tag, std::shared_ptr<SyncSetting> syncSetting = nullptr);
     void saveExcludeSyncNames();
     void updateNetworkTab();
+    void showUnexpectedSyncError(const QString& message);
 
     enum
     {

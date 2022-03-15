@@ -1410,11 +1410,8 @@ void SettingsDialog::addSyncFolder(MegaHandle megaFolderHandle)
         this, [this](MegaRequest* request, MegaError* error)
         {
             Q_UNUSED(request)
-                if (error->getErrorCode())
-                {
-                    QMegaMessageBox::critical(nullptr, tr("Error"),
-                        tr("Unexpected error adding sync"));
-                }
+            if (error->getErrorCode())
+                showUnexpectedSyncError(tr("Unexpected error adding sync"));
         }, Qt::DirectConnection);
 
     mController->addSync(localFolderPath, dialog->megaPathHandle, dialog->getSyncName(), action);
@@ -1638,12 +1635,10 @@ void SettingsDialog::setSyncToRun()
         this, [this](MegaRequest* request, MegaError* error)
         {
             Q_UNUSED(request)
-                if (error->getErrorCode())
-                {
-                    QMegaMessageBox::critical(nullptr, tr("Error"),
-                        tr("Unexpected error running sync"));
-                }
-        }, Qt::DirectConnection);
+            if (error->getErrorCode())
+                showUnexpectedSyncError(tr("Unexpected error running sync"));
+        },
+        Qt::DirectConnection);
 
     auto syncSetting = Model::instance()->getSyncSetting(mSelectedSyncRow);
     mController->setSyncRunState(mega::MegaSync::RUNSTATE_RUNNING, syncSetting, action);
@@ -1658,11 +1653,8 @@ void SettingsDialog::setSyncToPause()
         this, [this](MegaRequest* request, MegaError* error)
         {
             Q_UNUSED(request)
-                if (error->getErrorCode())
-                {
-                    QMegaMessageBox::critical(nullptr, tr("Error"),
-                        tr("Unexpected error pausing sync"));
-                }
+            if (error->getErrorCode())
+                showUnexpectedSyncError(tr("Unexpected error pausing sync"));
         }, Qt::DirectConnection);
 
     auto syncSetting = Model::instance()->getSyncSetting(mSelectedSyncRow);
@@ -1679,11 +1671,8 @@ void SettingsDialog::setSyncToSuspend()
         this, [this](MegaRequest* request, MegaError* error)
         {
             Q_UNUSED(request)
-                if (error->getErrorCode())
-                {
-                    QMegaMessageBox::critical(nullptr, tr("Error"),
-                        tr("Unexpected error suspending sync"));
-                }
+            if (error->getErrorCode())
+                showUnexpectedSyncError(tr("Unexpected error suspending sync"));
         }, Qt::DirectConnection);
 
     auto syncSetting = Model::instance()->getSyncSetting(mSelectedSyncRow);
@@ -1701,10 +1690,7 @@ void SettingsDialog::setSyncToDisabled()
     {
         Q_UNUSED(request)
         if (error->getErrorCode())
-        {
-            QMegaMessageBox::critical(nullptr, tr("Error"),
-                tr("Unexpected error disabling sync"));
-        }
+            showUnexpectedSyncError(tr("Unexpected error disabling sync"));
     }, Qt::DirectConnection);
 
     auto syncSetting = Model::instance()->getSyncSetting(mSelectedSyncRow);
@@ -1750,11 +1736,8 @@ void SettingsDialog::onDeleteSync()
         this, [this](MegaRequest* request, MegaError* error)
         {
             Q_UNUSED(request)
-                if (error->getErrorCode())
-                {
-                    QMegaMessageBox::critical(nullptr, tr("Error"),
-                        tr("Unexpected error removing sync"));
-                }
+            if (error->getErrorCode())
+                showUnexpectedSyncError(tr("Unexpected error removing sync"));
         }, Qt::DirectConnection);
 
     auto syncSetting = Model::instance()->getSyncSetting(mSelectedSyncRow);
@@ -2431,6 +2414,21 @@ void SettingsDialog::updateNetworkTab()
             mUi->lProxySettings->setText(tr("Manual"));
             break;
     }
+}
+
+void SettingsDialog::showUnexpectedSyncError(const QString& message)
+{
+    QObject temporary;
+
+    auto completion = [message]() {
+        QMegaMessageBox::critical(nullptr, tr("Error"), message);
+    };
+
+    QObject::connect(&temporary,
+                     &QObject::destroyed,
+                     this,
+                     std::move(completion),
+                     Qt::QueuedConnection);
 }
 
 void SettingsDialog::setShortCutsForToolBarItems()
