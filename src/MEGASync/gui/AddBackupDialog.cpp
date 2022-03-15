@@ -11,8 +11,8 @@ AddBackupDialog::AddBackupDialog(QWidget *parent) :
     mUi->setupUi(this);
 
 #ifdef Q_OS_MACOS
-    // Display our modal dialog embedded title label when no parent is set
-    mUi->embeddedTitleLabel->setVisible(parent() == nullptr);
+    // Display our modal dialog embedded title label when parent is set
+    mUi->embeddedTitleLabel->setVisible(this->parent() != nullptr);
 #endif
 
     connect(mUi->addButton, &QPushButton::clicked, this, &QDialog::accept);

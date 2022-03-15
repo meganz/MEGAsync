@@ -78,8 +78,7 @@ void InfoDialog::upAreaHovered(QMouseEvent *event)
 InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddialog) :
     QDialog(parent),
     ui(new Ui::InfoDialog),
-    mSyncController (nullptr),
-    mAddBackupDialog (nullptr),
+    mSyncController (new SyncController()),
     mBackupRootHandle (mega::INVALID_HANDLE)
 {
     ui->setupUi(this);
@@ -1233,81 +1232,57 @@ void InfoDialog::addSync(MegaHandle h)
 
 void InfoDialog::addBackup()
 {
-    // If no backups configured: show wizard, else show single backup add
-    int nbBackups (SyncModel::instance()->getNumSyncedFolders(mega::MegaSync::TYPE_BACKUP));
+    // If no backups configured: show wizard, else show single add backup dialog
+    int nbBackups(SyncModel::instance()->getNumSyncedFolders(mega::MegaSync::TYPE_BACKUP));
 
     if (nbBackups > 0)
     {
-        if (!mSyncController)
-        {
-            mSyncController.reset(new SyncController());
-            connect(mSyncController.get(), &SyncController::backupsRootDirHandle, this, [this](mega::MegaHandle h)
-            {
-                if (h != mega::INVALID_HANDLE)
-                {
-                    mBackupRootHandle = h;
-                    if (mAddBackupDialog)
-                    {
-                        mAddBackupDialog->setMyBackupsFolder(
-                                    QString::fromUtf8(megaApi->getNodePathByNodeHandle(mBackupRootHandle)));
-                    }
-                }
-            });
-            connect(mSyncController.get(), &SyncController::syncAddStatus, this, [](const int errorCode, const QString errorMsg)
-            {
-                if (errorCode != MegaError::API_OK)
-                {
-                    QMegaMessageBox::critical(nullptr, tr("Error adding backup"), errorMsg);
-                }
-            });
-        }
+        QPointer<AddBackupDialog> addBackup = new AddBackupDialog();
+        addBackup->setAttribute(Qt::WA_DeleteOnClose);
+        addBackup->setWindowModality(Qt::ApplicationModal);
 
-        if (mAddBackupDialog)
+        connect(mSyncController.get(), &SyncController::backupsRootDirHandle, this, [this, addBackup](mega::MegaHandle h)
         {
-            mAddBackupDialog->activateWindow();
-            mAddBackupDialog->raise();
-            mAddBackupDialog->setFocus();
-            return;
-        }
+            if (h == mega::INVALID_HANDLE)
+                return;
 
-        mAddBackupDialog = new AddBackupDialog();
+            mBackupRootHandle = h;
+            if (addBackup)
+                addBackup->setMyBackupsFolder(QString::fromUtf8(megaApi->getNodePathByNodeHandle(mBackupRootHandle)));
+        });
 
-        connect(mAddBackupDialog, &AddBackupDialog::accepted, this, [this]()
-        {
-            QDir dirToBackup (mAddBackupDialog->getSelectedFolder());
-            if (mBackupRootHandle != mega::INVALID_HANDLE)
-            {
-                mSyncController->addSync(QDir::toNativeSeparators(dirToBackup.canonicalPath()),
-                                        mBackupRootHandle, dirToBackup.dirName(),
-                                        MegaSync::TYPE_BACKUP);
-            }
-        }, Qt::DirectConnection); // Use direct connection, because mAddBackupDialog gets deleted on close
         mSyncController->getBackupsRootDirHandle();
 
-        mAddBackupDialog->setAttribute(Qt::WA_DeleteOnClose);
-        mAddBackupDialog->setWindowModality(Qt::NonModal);
-        mAddBackupDialog->open();
+        connect(mSyncController.get(), &SyncController::syncAddStatus, this, [](const int errorCode, const QString errorMsg, QString name)
+        {
+            if (errorCode != MegaError::API_OK)
+            {
+                QMegaMessageBox::warning(nullptr, tr("Error adding backup %1").arg(name), errorMsg);
+            }
+        });
+
+        connect(addBackup, &AddBackupDialog::accepted, this, [this, addBackup]()
+        {
+            if (mBackupRootHandle == mega::INVALID_HANDLE)
+                return;
+
+            if(addBackup)
+            {
+                QDir dirToBackup (addBackup->getSelectedFolder());
+                mSyncController->addSync(QDir::toNativeSeparators(dirToBackup.canonicalPath()),
+                                         mBackupRootHandle, dirToBackup.dirName(),
+                                         MegaSync::TYPE_BACKUP);
+            }
+        });
+
+        addBackup->show();
     }
     else
     {
-        static QPointer<BackupsWizard> dialog = nullptr;
-        if (dialog)
-        {
-            dialog->activateWindow();
-            dialog->raise();
-            dialog->setFocus();
-            return;
-        }
-
-        dialog = new BackupsWizard();
-
-        Platform::execBackgroundWindow(dialog);
-        if (!dialog)
-        {
-            return;
-        }
-
-        delete dialog;
+        BackupsWizard *wizard = new BackupsWizard();
+        wizard->setAttribute(Qt::WA_DeleteOnClose);
+        wizard->setWindowModality(Qt::ApplicationModal);
+        wizard->show();
     }
 }
 

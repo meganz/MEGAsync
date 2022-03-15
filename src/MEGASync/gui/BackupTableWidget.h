@@ -1,9 +1,10 @@
 #ifndef BACKUPTABLEWIDGET_H
 #define BACKUPTABLEWIDGET_H
 
+#include "SyncSettings.h"
+
 #include <QObject>
 #include <QTableView>
-#include "SyncController.h"
 
 class BackupTableWidget : public QTableView
 {
@@ -27,8 +28,6 @@ private slots:
 
 private:
     void showContextMenu(const QPoint &pos, const QModelIndex index);
-
-    SyncController mSyncController;
 };
 
 #endif // BACKUPTABLEWIDGET_H

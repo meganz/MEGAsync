@@ -49,8 +49,7 @@ void SyncController::removeSync(std::shared_ptr<SyncSetting> syncSetting, bool r
 {
     if (!syncSetting)
     {
-        MegaApi::log(MegaApi::LOG_LEVEL_ERROR,
-                     QString::fromUtf8("Removing invalid sync").toUtf8().constData());
+        MegaApi::log(MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Removing invalid sync").toUtf8().constData());
         return;
     }
 
@@ -69,8 +68,7 @@ void SyncController::enableSync(std::shared_ptr<SyncSetting> syncSetting)
 {
     if (!syncSetting)
     {
-        MegaApi::log(MegaApi::LOG_LEVEL_ERROR,
-                     QString::fromUtf8("Trying to enable null sync").toUtf8().constData());
+        MegaApi::log(MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Trying to enable null sync").toUtf8().constData());
         return;
     }
 
@@ -85,8 +83,7 @@ void SyncController::disableSync(std::shared_ptr<SyncSetting> syncSetting)
 {
     if (!syncSetting)
     {
-        MegaApi::log(MegaApi::LOG_LEVEL_ERROR,
-                     QString::fromUtf8("Trying to disable invalid sync").toUtf8().constData());
+        MegaApi::log(MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Trying to disable invalid sync").toUtf8().constData());
         return;
     }
 
@@ -176,6 +173,26 @@ void SyncController::ensureDeviceNameIsSetOnRemote()
     }
 }
 
+QString SyncController::getSyncAPIErrorMsg(int megaError)
+{
+    switch (megaError)
+    {
+        // FIXME: The following 5 strings need to be validated/reworded
+        case MegaError::API_EARGS:
+            return tr("Local folder not set");
+        case MegaError::API_EACCESS:
+            return tr("Error with the folder set as root for the backups");
+        case MegaError::API_EINTERNAL:
+            return tr("The user attribute for the backup root folder does not have a record containing the handle");
+        case MegaError::API_ENOENT:
+            return tr("The handle of the backup root folder stored in the user attribute was invalid, or the node could not be found.");
+        case MegaError::API_EINCOMPLETE:
+            return tr("Device id not set or invalid device name");
+        default:
+            return QString();
+    }
+}
+
 void SyncController::setBackupsRootDirHandle(mega::MegaHandle handle)
 {
     emit backupsRootDirHandle(handle);
@@ -193,67 +210,37 @@ void SyncController::onRequestFinish(MegaApi *api, MegaRequest *req, MegaError *
 
     static MegaHandle tempMyBackupsHandle = mega::INVALID_HANDLE;
 
+    int errorCode (e->getErrorCode());
+
     switch(req->getType())
     {
     case MegaRequest::TYPE_ADD_SYNC:
     {
-        int errorCode (e->getErrorCode());
         int syncErrorCode (req->getNumDetails());
-
         QString errorMsg;
+        bool error = false;
 
-        if (errorCode != MegaError::API_OK || syncErrorCode != MegaSync::NO_SYNC_ERROR)
+        if (syncErrorCode != MegaSync::NO_SYNC_ERROR)
         {
-            if (syncErrorCode != MegaSync::NO_SYNC_ERROR)
+            errorMsg = QCoreApplication::translate("MegaSyncError", MegaSync::getMegaSyncErrorCode(syncErrorCode));
+            error = true;
+        }
+        else if (errorCode != MegaError::API_OK)
+        {
+            errorMsg = getSyncAPIErrorMsg(errorCode);
+            if(errorMsg.isEmpty())
+                errorMsg = QCoreApplication::translate("MegaError", e->getErrorString());
+            error = true;
+        }
 
-            {
-                errorMsg = QCoreApplication::translate("MegaError", MegaSync::getMegaSyncErrorCode(syncErrorCode));
-            }
-            else
-            {
-                switch (errorCode)
-                {
-                    // FIXME: The following 5 strings need to be validated/reworded
-                    case MegaError::API_EARGS:
-                    {
-                        errorMsg = tr("Local folder not set");
-                        break;
-                    }
-                    case MegaError::API_EACCESS:
-                    {
-                        errorMsg = tr("Error with the folder set as root for the backups");
-                        break;
-                    }
-                    case MegaError::API_EINTERNAL:
-                    {
-                        errorMsg = tr("The user attribute for the backup root folder does not have a record containing the handle");
-                        break;
-                    }
-                    case MegaError::API_ENOENT:
-                    {
-                        errorMsg = tr("The handle of the backup root folder stored in the user attribute was invalid, or the node could not be found.");
-                        break;
-                    }
-                    case MegaError::API_EINCOMPLETE:
-                    {
-                        errorMsg = tr("Device id not set or invalid device name");
-                        break;
-                    }
-                    default:
-                    {
-                        errorMsg = QCoreApplication::translate("MegaError", e->getErrorString());
-                        break;
-                    }
-                }
-            }
-
+        if(error)
+        {
             std::shared_ptr<MegaNode> remoteNode(api->getNodeByHandle(req->getNodeHandle()));
-            QString name (QString::fromUtf8(req->getName()));
-            QString logMsg = QString::fromUtf8("Error adding sync \"%1\" for \"%2\" to \"%3\" (request error): %4")
-                    .arg(name,
-                         QString::fromUtf8(req->getFile()),
-                         QString::fromUtf8(api->getNodePath(remoteNode.get())),
-                         errorMsg);
+            QString logMsg = QString::fromUtf8("Error adding sync \"%1\" for \"%2\" to \"%3\" (request error): %4").arg(
+                             QString::fromUtf8(req->getName()),
+                             QString::fromUtf8(req->getFile()),
+                             QString::fromUtf8(api->getNodePath(remoteNode.get())),
+                             errorMsg);
             MegaApi::log(MegaApi::LOG_LEVEL_ERROR, logMsg.toUtf8().constData());
         }
 
@@ -262,13 +249,19 @@ void SyncController::onRequestFinish(MegaApi *api, MegaRequest *req, MegaError *
     }
     case MegaRequest::TYPE_REMOVE_SYNC:
     {
-        if (e->getErrorCode() != MegaError::API_OK)
+        if (errorCode != MegaError::API_OK)
         {
+            QString errorMsg = getSyncAPIErrorMsg(errorCode);
+            if(errorMsg.isEmpty())
+                errorMsg = QCoreApplication::translate("MegaError", e->getErrorString());
+
             MegaApi::log(MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Error removing sync (request error): %1")
-                         .arg(QCoreApplication::translate("MegaError", e->getErrorString()))
-                         .toUtf8().constData());
+                         .arg(errorMsg).toUtf8().constData());
+            std::shared_ptr<SyncSetting> sync = mSyncModel->getSyncSettingByTag(req->getParentHandle());
+            if(sync)
+                emit syncRemoveError(sync);
         }
-        else if(mRemoveRemote)
+        else if(mRemoveRemote) // remove remote node after succesful sync point removal?
         {
             std::shared_ptr<MegaNode> remoteNode(mApi->getNodeByHandle(req->getNodeHandle()));
             mApi->moveNode(remoteNode.get(), mApi->getRubbishNode(), mDelegateListener);
@@ -278,47 +271,62 @@ void SyncController::onRequestFinish(MegaApi *api, MegaRequest *req, MegaError *
     }
     case MegaRequest::TYPE_DISABLE_SYNC:
     {
+        if (errorCode == MegaError::API_OK)
+            break;
+
+        int syncErrorCode (req->getNumDetails());
         std::shared_ptr<SyncSetting> sync = mSyncModel->getSyncSettingByTag(req->getParentHandle());
-        if (req->getNumDetails() && sync)
+
+        if (sync && (syncErrorCode != MegaSync::NO_SYNC_ERROR))
         {
             QString errorMsg = QString::fromUtf8("Error disabling sync \"%1\" for \"%2\" to \"%3\": %4").arg(
                         sync->name(),
                         sync->getLocalFolder(),
                         sync->getMegaFolder(),
-                        QCoreApplication::translate("MegaError", MegaSync::getMegaSyncErrorCode(req->getNumDetails())));
+                        QCoreApplication::translate("MegaSyncError", MegaSync::getMegaSyncErrorCode(syncErrorCode)));
 
             MegaApi::log(MegaApi::LOG_LEVEL_ERROR, errorMsg.toUtf8().constData());
             emit syncDisableError(sync);
         }
         else
         {
+            QString errorMsg = getSyncAPIErrorMsg(errorCode);
+            if(errorMsg.isEmpty())
+                errorMsg = QCoreApplication::translate("MegaError", e->getErrorString());
             MegaApi::log(MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Error disabling sync (request error): %1")
-                         .arg(QCoreApplication::translate("MegaError", e->getErrorString()))
-                         .toUtf8().constData());
+                         .arg(errorMsg).toUtf8().constData());
         }
         break;
     }
     case MegaRequest::TYPE_ENABLE_SYNC:
     {
+        if (errorCode == MegaError::API_OK)
+            break;
+
+        int syncErrorCode (req->getNumDetails());
         std::shared_ptr<SyncSetting> sync = mSyncModel->getSyncSettingByTag(req->getParentHandle());
-        if (req->getNumDetails() && sync)
+
+        if (sync && (syncErrorCode != MegaSync::NO_SYNC_ERROR))
         {
             QString errorMsg = QString::fromUtf8("Error enabling sync \"%1\" for \"%2\" to \"%3\": %4").arg(
                         sync->name(),
                         sync->getLocalFolder(),
                         sync->getMegaFolder(),
-                        QCoreApplication::translate("MegaError", MegaSync::getMegaSyncErrorCode(req->getNumDetails())));
+                        QCoreApplication::translate("MegaSyncError", MegaSync::getMegaSyncErrorCode(syncErrorCode)));
 
             MegaApi::log(MegaApi::LOG_LEVEL_ERROR, errorMsg.toUtf8().constData());
             emit syncEnableError(sync);
         }
         else
         {
+            QString errorMsg = getSyncAPIErrorMsg(errorCode);
+            if(errorMsg.isEmpty())
+                errorMsg = QCoreApplication::translate("MegaError", e->getErrorString());
             MegaApi::log(MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Error enabling sync (request reason): %1")
-                         .arg(QCoreApplication::translate("MegaError", e->getErrorString()))
-                         .toUtf8().constData());
+                         .arg(errorMsg).toUtf8().constData());
         }
 
+        // TODO: Evaluate if I'm needed
         if (!req->getNumDetails() && sync)
         {
             mSyncModel->removeUnattendedDisabledSync(sync->backupId(), sync->getType());
@@ -329,8 +337,11 @@ void SyncController::onRequestFinish(MegaApi *api, MegaRequest *req, MegaError *
     {
         if (e->getErrorCode() != MegaError::API_OK)
         {
+            QString errorMsg = getSyncAPIErrorMsg(errorCode);
+            if(errorMsg.isEmpty())
+                errorMsg = QCoreApplication::translate("MegaError", e->getErrorString());
             MegaApi::log(MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Error trashing MEGA folder (request error): %1")
-                         .arg(QCoreApplication::translate("MegaError", e->getErrorString())).toUtf8().constData());
+                         .arg(errorMsg).toUtf8().constData());
         }
         break;
     }

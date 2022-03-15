@@ -4,7 +4,6 @@
 #include <QAbstractItemModel>
 
 #include "../model/SyncModel.h"
-#include "SyncController.h"
 
 Q_DECLARE_SMART_POINTER_METATYPE(std::shared_ptr)
 Q_DECLARE_METATYPE(std::shared_ptr<SyncSetting>)
@@ -48,12 +47,15 @@ public:
     bool removeRows(int row, int count, const QModelIndex &parent = QModelIndex()) override;
     bool removeColumns(int column, int count, const QModelIndex &parent = QModelIndex()) override;
 
+signals:
+    void enableSync(std::shared_ptr<SyncSetting> syncSetting);
+    void disableSync(std::shared_ptr<SyncSetting> syncSetting);
+
 private slots:
     void resetModel();
 
 private:
     SyncModel* mSyncModel;
-    SyncController mSyncController;
 
     QList<std::shared_ptr<SyncSetting>> mList;
     QList<std::shared_ptr<SyncSetting>> mOrderedList;
