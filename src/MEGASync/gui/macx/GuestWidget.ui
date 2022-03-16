@@ -485,7 +485,7 @@ image: none;</string>
                        <string notr="true">image: none;</string>
                       </property>
                       <property name="text">
-                       <string>Login to MEGA</string>
+                       <string>Log into MEGA</string>
                       </property>
                       <property name="alignment">
                        <set>Qt::AlignCenter</set>
