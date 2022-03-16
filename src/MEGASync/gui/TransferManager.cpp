@@ -190,7 +190,7 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
     }
 
     blockingUi = new BlockingUi(mUi->sTransfers);
-    connect(blockingUi, SIGNAL(cancelTransfers()), this, SLOT(cancel()));
+    connect(blockingUi, SIGNAL(cancelTransfers()), this, SLOT(cancelScanning()));
 }
 
 void TransferManager::pauseModel(bool value)
@@ -734,19 +734,6 @@ void TransferManager::on_bImages_clicked()
         mUi->lCurrentContent->setText(tr("Images"));
         toggleTab(TYPE_IMAGE_TAB);
     }
-
-/*    if (w == ui->wActiveTransfers)
-    {
-        cancel();
-    }
-    else if(w == ui->wDownloads)
-    {
-        emit cancelAllUploads();
-    }
-    else if(w == ui->wUploads)
-    {
-        emit cancelAllDownloads();
-    }*/
 }
 
 void TransferManager::on_bMusic_clicked()
@@ -768,12 +755,6 @@ void TransferManager::on_bVideos_clicked()
         toggleTab(TYPE_VIDEO_TAB);
     }
 }
-
-/*void TransferManager::cancel()
-{
-    emit cancelAllUploads();
-    emit cancelAllDownloads();
-}*/
 
 void TransferManager::on_bOther_clicked()
 {
@@ -948,6 +929,12 @@ void TransferManager::refreshView()
             mUi->wMediaType->hide();
         }
     }
+}
+
+void TransferManager::cancelScanning()
+{
+    // TODO write canceling code
+    // Go through proper layers
 }
 
 bool TransferManager::eventFilter(QObject *obj, QEvent *event)

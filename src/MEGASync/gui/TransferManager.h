@@ -73,8 +73,6 @@ protected:
     void dragEnterEvent(QDragEnterEvent* event) override;
     void dragLeaveEvent(QDragLeaveEvent* event) override;
     void dropEvent(QDropEvent *event) override;
-    void cancelAllUploads();
-    void cancelAllDownloads();
 
 private:
     static constexpr int SPEED_REFRESH_PERIOD_MS = 700;
@@ -152,6 +150,8 @@ private slots:
 
     void refreshSpeed();
     void refreshView();
+
+    void cancelScanning();
 };
 
 #endif // TRANSFERMANAGER_H
