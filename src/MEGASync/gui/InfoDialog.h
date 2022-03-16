@@ -172,7 +172,7 @@ signals:
     // parameter messageShown is true when alert is enabled, false when dismissed
     void almostTransferOverquotaMsgVisibilityChange(bool messageShown);
     void userActivity();
-    void cancel();
+    void cancelScanning();
 
 private:
     Ui::InfoDialog *ui;

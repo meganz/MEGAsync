@@ -281,7 +281,7 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
     adjustSize();
 
     blockingUi = new BlockingUi(ui->sTabs);
-    connect(blockingUi, SIGNAL(cancelTransfers()), this, SIGNAL(cancel()));
+    connect(blockingUi, SIGNAL(cancelTransfers()), this, SIGNAL(cancelScanning()));
 }
 
 InfoDialog::~InfoDialog()

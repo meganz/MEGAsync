@@ -2720,6 +2720,7 @@ void MegaApplication::createInfoDialog()
     connect(transferQuota.get(), &TransferQuota::sendState, infoDialog, &InfoDialog::setBandwidthOverquotaState);
     connect(transferQuota.get(), &TransferQuota::overQuotaMessageNeedsToBeShown, infoDialog, &InfoDialog::enableTransferOverquotaAlert);
     connect(transferQuota.get(), &TransferQuota::almostOverQuotaMessageNeedsToBeShown, infoDialog, &InfoDialog::enableTransferAlmostOverquotaAlert);
+    connect(infoDialog, SIGNAL(cancelScanning()), this, SLOT(cancelScanningStage()));
 }
 
 QuotaState MegaApplication::getTransferQuotaState() const
