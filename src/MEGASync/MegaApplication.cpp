@@ -3349,7 +3349,7 @@ void MegaApplication::setTransferUiInBlockingState()
 
     if (transferManager)
     {
-        //transferManager->enterBlockingState();
+        transferManager->enterBlockingState();
     }
 
     if (infoDialog)
@@ -3366,7 +3366,7 @@ void MegaApplication::setTransferUiInUnblockedState()
 
     if (transferManager)
     {
-        //transferManager->leaveBlockingState();
+        transferManager->leaveBlockingState();
     }
 
     if (infoDialog)
@@ -8108,16 +8108,6 @@ void MegaApplication::onTransferUpdate(MegaApi*, MegaTransfer* transfer)
 
     DeferPreferencesSyncForScope deferrer(this);
 
-    if (transferManager)
-    {
-        //transferManager->onTransferUpdate(megaApi, transfer);
-    }
-
-    if (infoDialog)
-    {
-        infoDialog->onTransferUpdate(megaApi, transfer);
-    }
-
     int type = transfer->getType();
     if (type == MegaTransfer::TYPE_DOWNLOAD)
     {
@@ -8198,11 +8188,6 @@ void MegaApplication::onTransferTemporaryError(MegaApi *api, MegaTransfer *trans
     }
 
     DeferPreferencesSyncForScope deferrer(this);
-
-//    if (transferManager)
-//    {
-//        transferManager->onTransferTemporaryError(megaApi, transfer, e);
-//    }
 
     onTransferUpdate(api, transfer);
     preferences->setTransferDownloadMethod(api->getDownloadMethod());

@@ -54,6 +54,8 @@ public:
     ~TransferManager();
 
     void pauseModel(bool state);
+    void enterBlockingState();
+    void leaveBlockingState();
 
 public slots:
     void onTransferQuotaStateChanged(QuotaState transferQuotaState);
@@ -105,6 +107,7 @@ private:
     void refreshTypeStats();
     void refreshFileTypesStats();
     void applyTextSearch(const QString& text);
+    void enableUserActions(bool enabled);
 
 private slots:
     void on_tCompleted_clicked();

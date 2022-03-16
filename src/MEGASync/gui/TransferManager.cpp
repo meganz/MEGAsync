@@ -188,6 +188,9 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
         w->style()->unpolish(w);
         w->style()->polish(w);
     }
+
+    blockingUi = new BlockingUi(mUi->sTransfers);
+    connect(blockingUi, SIGNAL(cancelTransfers()), this, SLOT(cancel()));
 }
 
 void TransferManager::pauseModel(bool value)
@@ -195,12 +198,21 @@ void TransferManager::pauseModel(bool value)
     mModel->pauseModelProcessing(value);
 }
 
+void TransferManager::enterBlockingState()
+{
+    enableUserActions(false);
+    blockingUi->show();
+}
+
+void TransferManager::leaveBlockingState()
+{
+    enableUserActions(true);
+    blockingUi->hide();
+}
+
 void TransferManager::onPauseStateChangedByTransferResume()
 {
     onUpdatePauseState(false);
-
-    //blockingUi = new BlockingUi(mUi->wTransfers);
-    connect(blockingUi, SIGNAL(cancelTransfers()), this, SLOT(cancel()));
 }
 
 void TransferManager::setActiveTab(int t)
@@ -417,13 +429,6 @@ void TransferManager::refreshTypeStats()
     }
     countLabel->setVisible(!countLabelText.isEmpty());
 }
-
-/*void TransferManager::enterBlockingState()
-{
-    enableUserActions(false);
-    mUi->wTabHeader->setVisible(false);
-    blockingUi->show();
-}*/
 
 void TransferManager::refreshFileTypesStats()
 {
@@ -648,6 +653,19 @@ void TransferManager::applyTextSearch(const QString& text)
     mUi->wTransfers->textFilterChanged(text);
 
     toggleTab(SEARCH_TAB);
+}
+
+void TransferManager::enableUserActions(bool enabled)
+{
+    mUi->bUpload->setEnabled(enabled);
+    mUi->bDownload->setEnabled(enabled);
+    mUi->bSearch->setEnabled(enabled);
+    mUi->bPause->setEnabled(enabled);
+    mUi->bImportLinks->setEnabled(enabled);
+    mUi->tCogWheel->setEnabled(enabled);
+    mUi->tUploads->setEnabled(enabled);
+    mUi->tDownloads->setEnabled(enabled);
+    mUi->tAllTransfers->setEnabled(enabled);
 }
 
 void TransferManager::on_bSearchString_clicked()
