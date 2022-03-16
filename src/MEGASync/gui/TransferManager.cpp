@@ -190,7 +190,8 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
     }
 
     blockingUi = new BlockingUi(mUi->sTransfers);
-    connect(blockingUi, SIGNAL(cancelTransfers()), this, SLOT(cancelScanning()));
+    connect(blockingUi, SIGNAL(cancelTransfers()), mModel, SLOT(cancelScanning()));
+    connect(mModel, SIGNAL(scanningCancelled), this, SLOT(onScanningCancelled));
 }
 
 void TransferManager::pauseModel(bool value)
@@ -931,10 +932,9 @@ void TransferManager::refreshView()
     }
 }
 
-void TransferManager::cancelScanning()
+void TransferManager::onScanningCancelled()
 {
-    // TODO write canceling code
-    // Go through proper layers
+    leaveBlockingState();
 }
 
 bool TransferManager::eventFilter(QObject *obj, QEvent *event)

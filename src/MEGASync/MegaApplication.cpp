@@ -3256,16 +3256,9 @@ void MegaApplication::startUpload(const QString& rawLocalPath, MegaNode* target,
     megaApi->startUpload(localPath, target, fileName, mtime, appData, isSrcTemporary, startFirst, cancelToken, listener);
 }
 
-void MegaApplication::cancelAllTransfers(int type)
+void MegaApplication::cancelScanningStage()
 {
-    if (blockingBatch.isBlockingStageFinished())
-    {
-        megaApi->cancelTransfers(type);
-    }
-    else
-    {
-        blockingBatch.cancelTransfer();
-    }
+    blockingBatch.cancelTransfer();
 }
 
 void MegaApplication::updateFileTransferBatchesAndUi(BlockingBatch &batch)
@@ -4366,16 +4359,6 @@ void MegaApplication::onTransfersModelUpdate()
     {
         onGlobalSyncStateChanged(megaApi);
     }
-}
-
-void MegaApplication::cancelAllUploads()
-{
-    cancelAllTransfers(MegaTransfer::TYPE_UPLOAD);
-}
-
-void MegaApplication::cancelAllDownloads()
-{
-    cancelAllTransfers(MegaTransfer::TYPE_DOWNLOAD);
 }
 
 void MegaApplication::fetchNodes(QString email)

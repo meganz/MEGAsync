@@ -151,7 +151,7 @@ private slots:
     void refreshSpeed();
     void refreshView();
 
-    void cancelScanning();
+    void onScanningCancelled();
 };
 
 #endif // TRANSFERMANAGER_H

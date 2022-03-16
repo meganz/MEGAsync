@@ -333,8 +333,6 @@ private slots:
     void onUnblocked();
     void onTransfersModelUpdate();
 
-    void cancelAllUploads();
-    void cancelAllDownloads();
     void setTransferUiInBlockingState();
     void setTransferUiInUnblockedState();
     void startingUpload();
@@ -579,7 +577,7 @@ private:
 
     void updateTransferNodesStage(mega::MegaTransfer* transfer);
 
-    void cancelAllTransfers(int type);
+    void cancelScanningStage();
 
     void updateFileTransferBatchesAndUi(BlockingBatch& batch);
     void updateFolderTransferBatchesAndUi(BlockingBatch& batch);
