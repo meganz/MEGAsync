@@ -66,6 +66,7 @@ signals:
     void userActivity();
     void showCompleted(bool showCompleted);
     void clearCompletedTransfers();
+    void cancelScanning();
 
 protected:
     bool eventFilter(QObject *obj, QEvent *event) override;
@@ -150,8 +151,6 @@ private slots:
 
     void refreshSpeed();
     void refreshView();
-
-    void onScanningCancelled();
 };
 
 #endif // TRANSFERMANAGER_H

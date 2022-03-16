@@ -190,8 +190,7 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
     }
 
     blockingUi = new BlockingUi(mUi->sTransfers);
-    connect(blockingUi, SIGNAL(cancelTransfers()), mModel, SLOT(cancelScanning()));
-    connect(mModel, SIGNAL(scanningCancelled), this, SLOT(onScanningCancelled));
+    connect(blockingUi, SIGNAL(cancelTransfers()), this, SIGNAL(cancelScanning()));
 }
 
 void TransferManager::pauseModel(bool value)
@@ -930,11 +929,6 @@ void TransferManager::refreshView()
             mUi->wMediaType->hide();
         }
     }
-}
-
-void TransferManager::onScanningCancelled()
-{
-    leaveBlockingState();
 }
 
 bool TransferManager::eventFilter(QObject *obj, QEvent *event)

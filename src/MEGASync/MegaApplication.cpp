@@ -5071,8 +5071,7 @@ void MegaApplication::transferManagerActionClicked(int tab)
     connect(transferManager, SIGNAL(viewedCompletedTransfers()), this, SLOT(clearViewedTransfers()));
     connect(transferManager, SIGNAL(completedTransfersTabActive(bool)), this, SLOT(onCompletedTransfersTabActive(bool)));
     connect(transferManager, SIGNAL(userActivity()), this, SLOT(registerUserActivity()));
-    connect(transferManager, SIGNAL(cancelAllUploads()), this, SLOT(cancelAllUploads()));
-    connect(transferManager, SIGNAL(cancelAllDownloads()), this, SLOT(cancelAllDownloads()));
+    connect(transferManager, SIGNAL(cancelScanning()), this, SLOT(cancelScanningStage()));
 
     transferManager->setActiveTab(tab);
     Platform::activateBackgroundWindow(transferManager);

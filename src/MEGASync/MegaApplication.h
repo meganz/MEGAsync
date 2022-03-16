@@ -336,6 +336,7 @@ private slots:
     void setTransferUiInBlockingState();
     void setTransferUiInUnblockedState();
     void startingUpload();
+    void cancelScanningStage();
 
 protected:
     void createTrayIcon();
@@ -576,8 +577,6 @@ private:
     void startUpload(const QString& rawLocalPath, mega::MegaNode* target, mega::MegaCancelToken *cancelToken);
 
     void updateTransferNodesStage(mega::MegaTransfer* transfer);
-
-    void cancelScanningStage();
 
     void updateFileTransferBatchesAndUi(BlockingBatch& batch);
     void updateFolderTransferBatchesAndUi(BlockingBatch& batch);
