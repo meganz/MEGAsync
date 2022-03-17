@@ -1,6 +1,8 @@
 #ifndef ADDBACKUPDIALOG_H
 #define ADDBACKUPDIALOG_H
 
+#include "control/SyncController.h"
+
 #include <QDialog>
 #include <QDir>
 
@@ -16,15 +18,19 @@ public:
     explicit AddBackupDialog(QWidget *parent = nullptr);
     ~AddBackupDialog();
 
-    void setMyBackupsFolder(QString folder);
+    void setMyBackupsFolder(const QString& folder);
     QDir getSelectedFolder();
 
 public slots:
     void on_changeButton_clicked();
+    void onDeviceNameSet(const QString& devName);
 
 private:
     Ui::AddBackupDialog *mUi;
     QDir mSelectedFolder;
+    QString mMyBackupsFolder;
+    SyncController mSyncController;
+    QString mDeviceName;
 };
 
 #endif // ADDBACKUPDIALOG_H
