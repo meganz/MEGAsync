@@ -569,7 +569,7 @@ image: none;</string>
                     </widget>
                    </item>
                    <item>
-                    <widget class="QLineEdit" name="lPassword">
+                    <widget class="PasswordLineEdit" name="lPassword">
                      <property name="minimumSize">
                       <size>
                        <width>305</width>
@@ -2695,6 +2695,11 @@ color: #ffffff;
   </layout>
  </widget>
  <customwidgets>
+  <customwidget>
+   <class>PasswordLineEdit</class>
+   <extends>QLineEdit</extends>
+   <header>PasswordLineEdit.h</header>
+  </customwidget>
   <customwidget>
    <class>CocoaHelpButton</class>
    <extends>QWidget</extends>
