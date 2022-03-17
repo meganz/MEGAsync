@@ -8,7 +8,7 @@
 #include <QStringList>
 #include <QDateTime>
 #include <QQueue>
-#include <QFutureWatcher>5
+#include <QFutureWatcher>
 
 #include <megaapi.h>
 

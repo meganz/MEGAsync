@@ -104,6 +104,7 @@ private:
     void refreshFileTypesStats();
     void applyTextSearch(const QString& text);
     void checkActionAndMediaVisibility();
+    void onFileTypeButtonClicked(TM_TAB tab, Utilities::FileType fileType, const QString& tabLabel);
 
 private slots:
     void on_tCompleted_clicked();

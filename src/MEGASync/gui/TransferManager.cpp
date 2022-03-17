@@ -728,73 +728,49 @@ void TransferManager::on_tUlResults_clicked()
 
 void TransferManager::on_bArchives_clicked()
 {
-    if (mCurrentTab != TYPE_ARCHIVE_TAB)
-    {
-        mUi->wTransfers->filtersChanged({}, {}, {Utilities::FileType::TYPE_ARCHIVE});
-        mUi->lCurrentContent->setText(tr("Archives"));
-        toggleTab(TYPE_ARCHIVE_TAB);
-    }
+    onFileTypeButtonClicked(TYPE_ARCHIVE_TAB, Utilities::FileType::TYPE_ARCHIVE, tr("Archives"));
 }
 
 void TransferManager::on_bDocuments_clicked()
 {
-    if (mCurrentTab != TYPE_DOCUMENT_TAB)
-    {
-        mUi->wTransfers->filtersChanged({}, {}, {Utilities::FileType::TYPE_DOCUMENT});
-        mUi->lCurrentContent->setText(tr("Documents"));
-        toggleTab(TYPE_DOCUMENT_TAB);
-    }
+    onFileTypeButtonClicked(TYPE_DOCUMENT_TAB, Utilities::FileType::TYPE_DOCUMENT, tr("Documents"));
 }
 
 void TransferManager::on_bImages_clicked()
 {
-    if (mCurrentTab != TYPE_IMAGE_TAB)
-    {
-        mUi->wTransfers->filtersChanged({}, {}, {Utilities::FileType::TYPE_IMAGE});
-        mUi->lCurrentContent->setText(tr("Images"));
-        toggleTab(TYPE_IMAGE_TAB);
-    }
+    onFileTypeButtonClicked(TYPE_IMAGE_TAB, Utilities::FileType::TYPE_IMAGE, tr("Images"));
 }
 
 void TransferManager::on_bMusic_clicked()
 {
-    if (mCurrentTab != TYPE_AUDIO_TAB)
-    {
-        mUi->wTransfers->filtersChanged({}, {}, {Utilities::FileType::TYPE_AUDIO});
-        mUi->lCurrentContent->setText(tr("Music"));
-        toggleTab(TYPE_AUDIO_TAB);
-    }
+    onFileTypeButtonClicked(TYPE_AUDIO_TAB, Utilities::FileType::TYPE_AUDIO, tr("Music"));
 }
 
 void TransferManager::on_bVideos_clicked()
 {
-    if (mCurrentTab != TYPE_VIDEO_TAB)
-    {
-        mUi->wTransfers->filtersChanged({}, {}, {Utilities::FileType::TYPE_VIDEO});
-        mUi->lCurrentContent->setText(tr("Videos"));
-        toggleTab(TYPE_VIDEO_TAB);
-    }
+    onFileTypeButtonClicked(TYPE_VIDEO_TAB, Utilities::FileType::TYPE_VIDEO, tr("Videos"));
 }
 
 void TransferManager::on_bOther_clicked()
 {
-    if (mCurrentTab != TYPE_OTHER_TAB)
-    {
-        mUi->wTransfers->filtersChanged({}, {}, {Utilities::FileType::TYPE_OTHER});
-        mUi->lCurrentContent->setText(tr("Other"));
-        toggleTab(TYPE_OTHER_TAB);
-    }
+    onFileTypeButtonClicked(TYPE_OTHER_TAB, Utilities::FileType::TYPE_OTHER, tr("Other"));
 }
 
 void TransferManager::on_bText_clicked()
 {
-    if (mCurrentTab != TYPE_TEXT_TAB)
-    {
-        mUi->wTransfers->filtersChanged({}, {}, {Utilities::FileType::TYPE_TEXT});
-        mUi->lCurrentContent->setText(tr("Text"));
-        toggleTab(TYPE_TEXT_TAB);
-    }
+    onFileTypeButtonClicked(TYPE_TEXT_TAB, Utilities::FileType::TYPE_TEXT, tr("Text"));
 }
+
+void TransferManager::onFileTypeButtonClicked(TM_TAB tab, Utilities::FileType fileType, const QString& tabLabel)
+{
+  if (mCurrentTab != tab)
+  {
+        mUi->wTransfers->filtersChanged({}, {}, {fileType});
+        mUi->lCurrentContent->setText(tabLabel);
+        toggleTab(tab);
+  }
+}
+
 
 void TransferManager::on_bImportLinks_clicked()
 {
