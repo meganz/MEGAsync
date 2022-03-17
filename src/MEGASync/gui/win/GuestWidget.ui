@@ -625,7 +625,7 @@ image: none;</string>
                        </widget>
                       </item>
                       <item alignment="Qt::AlignHCenter">
-                       <widget class="QLineEdit" name="lPassword">
+                       <widget class="PasswordLineEdit" name="lPassword">
                         <property name="sizePolicy">
                          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                           <horstretch>0</horstretch>
@@ -2763,6 +2763,13 @@ background-color: #F0373A;
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>PasswordLineEdit</class>
+   <extends>QLineEdit</extends>
+   <header>PasswordLineEdit.h</header>
+  </customwidget>
+ </customwidgets>
  <tabstops>
   <tabstop>lEmail</tabstop>
   <tabstop>lPassword</tabstop>
