@@ -14,6 +14,8 @@ using namespace mega;
 static const QModelIndex DEFAULT_IDX = QModelIndex();
 
 const int MAX_UPDATE_TRANSFERS = 2000;
+const int MAX_FAILED_TRANSFERS = 1000;
+const int MAX_CANCELED_TRANSFERS = 2000;
 
 //LISTENER THREAD
 TransferThread::TransfersToProcess TransferThread::processTransfers()
@@ -21,45 +23,36 @@ TransferThread::TransfersToProcess TransferThread::processTransfers()
    TransfersToProcess transfers;
    if(mCacheMutex.tryLock(20))
    {
-       int spaceForTransfers(MAX_UPDATE_TRANSFERS);
+       int spaceForTransfers(MAX_CANCELED_TRANSFERS);
 
-       if(spaceForTransfers > 0)
-       {
-           transfers.canceledTransfersByTag = extractFromCache(mTransfersToProcess.canceledTransfersByTag, spaceForTransfers);
-           spaceForTransfers -= transfers.canceledTransfersByTag.size();
-       }
-       else
+       transfers.canceledTransfersByTag = extractFromCache(mTransfersToProcess.canceledTransfersByTag, spaceForTransfers);
+       spaceForTransfers -= transfers.canceledTransfersByTag.size();
+
+       if(spaceForTransfers != MAX_CANCELED_TRANSFERS)
        {
            mCacheMutex.unlock();
            return transfers;
        }
 
-       if(spaceForTransfers > 0)
-       {
-           transfers.failedTransfersByTag = extractFromCache(mTransfersToProcess.failedTransfersByTag, spaceForTransfers);
-           spaceForTransfers -= transfers.failedTransfersByTag.size();
-       }
-       else
+       spaceForTransfers = MAX_FAILED_TRANSFERS;
+
+       transfers.failedTransfersByTag = extractFromCache(mTransfersToProcess.failedTransfersByTag, spaceForTransfers);
+       spaceForTransfers -= transfers.failedTransfersByTag.size();
+
+       if(spaceForTransfers != MAX_FAILED_TRANSFERS)
        {
            mCacheMutex.unlock();
            return transfers;
        }
 
-       if(spaceForTransfers > 0)
-       {
-           transfers.startTransfersByTag = extractFromCache(mTransfersToProcess.startTransfersByTag, spaceForTransfers);
-           spaceForTransfers -= transfers.startTransfersByTag.size();
-       }
-       else
-       {
-           mCacheMutex.unlock();
-           return transfers;
-       }
+       spaceForTransfers = MAX_UPDATE_TRANSFERS;
+
+       transfers.startTransfersByTag = extractFromCache(mTransfersToProcess.startTransfersByTag, spaceForTransfers);
+       spaceForTransfers -= transfers.startTransfersByTag.size();
 
        if(spaceForTransfers > 0)
        {
            transfers.updateTransfersByTag = extractFromCache(mTransfersToProcess.updateTransfersByTag, spaceForTransfers);
-           spaceForTransfers -= transfers.updateTransfersByTag.size();
        }
        else
        {
