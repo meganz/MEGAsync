@@ -16,6 +16,7 @@ public:
 
     void show();
     void hide();
+    bool isActive();
 
 signals:
     void cancelTransfers();

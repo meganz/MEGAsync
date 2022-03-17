@@ -151,6 +151,7 @@ private slots:
 
     void refreshSpeed();
     void refreshView();
+    void updateTransferWidget(QWidget* widgetToShow);
 };
 
 #endif // TRANSFERMANAGER_H

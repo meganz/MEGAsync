@@ -35,6 +35,12 @@ void BlockingUi::hide()
     container->setCurrentWidget(lastSelectedWidget);
 }
 
+bool BlockingUi::isActive()
+{
+    return (container->currentWidget() == blockingWidget) ||
+           (container->currentWidget() == confirmWidget);
+}
+
 void BlockingUi::onCancelClicked()
 {
     container->setCurrentWidget(confirmWidget);

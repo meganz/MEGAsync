@@ -582,10 +582,7 @@ void TransferManager::refreshSearchStats()
             widgetToShow = mTabNoItem[mCurrentTab];
         }
 
-        if (mUi->sTransfers->currentWidget() != widgetToShow)
-        {
-            mUi->sTransfers->setCurrentWidget(widgetToShow);
-        }
+        updateTransferWidget(widgetToShow);
     }
 }
 
@@ -896,10 +893,7 @@ void TransferManager::refreshView()
             }
         }
 
-        if (mUi->sTransfers->currentWidget() != widgetToShow)
-        {
-            mUi->sTransfers->setCurrentWidget(widgetToShow);
-        }
+        updateTransferWidget(widgetToShow);
 
         auto completedTransfers = mTransfersCount.completedDownloads() + mTransfersCount.completedUploads();
         auto allTransfers = mTransfersCount.pendingDownloads + mTransfersCount.pendingUploads;
@@ -989,4 +983,15 @@ void TransferManager::dragLeaveEvent(QDragLeaveEvent *event)
     mDragBackDrop->hide();
 
     QDialog::dragLeaveEvent(event);
+}
+
+void TransferManager::updateTransferWidget(QWidget* widgetToShow)
+{
+    if (!blockingUi || !blockingUi->isActive())
+    {
+        if (mUi->sTransfers->currentWidget() != widgetToShow)
+        {
+            mUi->sTransfers->setCurrentWidget(widgetToShow);
+        }
+    }
 }
