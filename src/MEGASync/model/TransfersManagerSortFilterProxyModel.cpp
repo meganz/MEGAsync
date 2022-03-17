@@ -6,6 +6,7 @@
 
 #include <QMutexLocker>
 #include <QElapsedTimer>
+#include <QRunnable>
 
 
 TransfersManagerSortFilterProxyModel::TransfersManagerSortFilterProxyModel(QObject* parent)
@@ -20,6 +21,7 @@ TransfersManagerSortFilterProxyModel::TransfersManagerSortFilterProxyModel(QObje
       mThreadPool (ThreadPoolSingleton::getInstance())
 {
     qRegisterMetaType<QAbstractItemModel::LayoutChangeHint>("QAbstractItemModel::LayoutChangeHint");
+    qRegisterMetaType<QVector<int>>("QVector<int>");
 
     connect(&mFilterWatcher, &QFutureWatcher<void>::finished,
             this, &TransfersManagerSortFilterProxyModel::onModelSortedFiltered);
@@ -93,13 +95,14 @@ void TransfersManagerSortFilterProxyModel::setFilterFixedString(const QString& p
         invalidateFilter();
         sourceM->lockModelMutex(false);
     });
+
     mFilterWatcher.setFuture(filtered);
+
 }
 
 void TransfersManagerSortFilterProxyModel::textSearchTypeChanged()
 {
     updateFilters();
-
     emit modelAboutToBeChanged();
 
     QFuture<void> filtered = QtConcurrent::run([this](){
@@ -109,6 +112,7 @@ void TransfersManagerSortFilterProxyModel::textSearchTypeChanged()
         sourceM->lockModelMutex(false);
     });
     mFilterWatcher.setFuture(filtered);
+
 }
 
 void TransfersManagerSortFilterProxyModel::onModelSortedFiltered()
@@ -383,7 +387,6 @@ void TransfersManagerSortFilterProxyModel::removeNonSyncedTransferFromCounter(Tr
 
 bool TransfersManagerSortFilterProxyModel::lessThan(const QModelIndex &left, const QModelIndex &right) const
 {
-
     const auto leftItem (qvariant_cast<TransferItem>(left.data()).getTransferData());
     const auto rightItem (qvariant_cast<TransferItem>(right.data()).getTransferData());
 

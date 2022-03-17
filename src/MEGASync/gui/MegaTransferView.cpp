@@ -70,53 +70,42 @@ void MegaTransferView::disableGetLink(bool disable)
     mGetLinkAction->setEnabled(!disable);
 }
 
-void MegaTransferView::onPauseResumeVisibleRows(bool pauseState)
+QModelIndexList MegaTransferView::getTransfers(bool onlyVisible, TransferData::TransferStates state)
 {
     QModelIndexList indexes;
     auto proxy(qobject_cast<QSortFilterProxyModel*>(model()));
-    auto rowCount (proxy->rowCount());
+    auto sourceModel(qobject_cast<TransfersModel*>(proxy->sourceModel()));
+
+    auto rowCount = onlyVisible ? proxy->rowCount(QModelIndex()) : sourceModel->rowCount(QModelIndex());
+
     if (rowCount > 0)
     {
         for (auto row (0); row < rowCount; ++row)
         {
             auto index (model()->index(row, 0, QModelIndex()));
-            if (proxy)
+            auto d (qvariant_cast<TransferItem>(index.data()).getTransferData());
+            if(state == TransferData::TRANSFER_NONE || (d && d->mState & state))
             {
-                index = proxy->mapToSource(index);
+                if (proxy)
+                {
+                    index = proxy->mapToSource(index);
+                }
+                indexes.push_back(index);
             }
-            indexes.push_back(index);
         }
-        auto sourceModel(qobject_cast<TransfersModel*>(proxy->sourceModel()));
-        sourceModel->pauseTransfers(indexes, pauseState);
     }
+
+    return indexes;
 }
 
-void MegaTransferView::onPauseResumeAllRows(bool pauseState)
-{
-    QModelIndexList indexes;
-    auto proxy(qobject_cast<QSortFilterProxyModel*>(model()));
-    auto sourceModel(qobject_cast<TransfersModel*>(proxy->sourceModel()));
-    auto rowCount (sourceModel->rowCount(QModelIndex()));
-    if (rowCount > 0)
-    {
-        for (auto row (0); row < rowCount; ++row)
-        {
-            auto index (sourceModel->index(row, 0, QModelIndex()));
-            indexes.push_back(index);
-        }
-        sourceModel->pauseTransfers(indexes, pauseState);
-    }
-}
-
-void MegaTransferView::onPauseResumeSelection(bool pauseState)
+QModelIndexList MegaTransferView::getSelectedTransfers()
 {
     auto proxy(qobject_cast<QSortFilterProxyModel*>(model()));
     auto selection = selectionModel()->selection();
+    QModelIndexList indexes;
 
     if (selection.size() > 0)
     {
-        QModelIndexList indexes;
-
         if (proxy)
         {
             selection = proxy->mapSelectionToSource(selection);
@@ -124,34 +113,72 @@ void MegaTransferView::onPauseResumeSelection(bool pauseState)
         indexes = selection.indexes();
 
         clearSelection();
-        mParentTransferWidget->getModel()->pauseTransfers(indexes, pauseState);
     }
+
+    return indexes;
+}
+
+void MegaTransferView::onPauseResumeVisibleRows(bool pauseState)
+{
+    QModelIndexList indexes = getTransfers(true);
+
+    auto proxy (qobject_cast<QSortFilterProxyModel*>(model()));
+    auto sourceModel(qobject_cast<TransfersModel*>(proxy->sourceModel()));
+    sourceModel->pauseTransfers(indexes, pauseState);
+}
+
+void MegaTransferView::onPauseResumeAllRows(bool pauseState)
+{
+    QModelIndexList indexes = getTransfers(false);
+
+    auto proxy (qobject_cast<QSortFilterProxyModel*>(model()));
+    auto sourceModel(qobject_cast<TransfersModel*>(proxy->sourceModel()));
+
+    sourceModel->pauseTransfers(indexes, pauseState);
+}
+
+void MegaTransferView::onPauseResumeSelection(bool pauseState)
+{
+    QModelIndexList indexes = getSelectedTransfers();
+    auto proxy (qobject_cast<QSortFilterProxyModel*>(model()));
+    auto sourceModel(qobject_cast<TransfersModel*>(proxy->sourceModel()));
+
+    sourceModel->pauseTransfers(indexes, pauseState);
 }
 
 void MegaTransferView::onCancelClearAllVisibleTransfers()
 {
-    QModelIndexList indexes;
-    auto proxy(qobject_cast<QSortFilterProxyModel*>(model()));
-    auto rowCount (proxy->rowCount());
-    if (rowCount > 0)
-    {
-        for (auto row (0); row < rowCount; ++row)
-        {
-            auto index (model()->index(row, 0, QModelIndex()));
-            if (proxy)
-            {
-                index = proxy->mapToSource(index);
-            }
+    QModelIndexList indexes = getTransfers(true);
 
-            indexes.push_back(index);
-        }
-        auto sourceModel(qobject_cast<TransfersModel*>(proxy->sourceModel()));
-        sourceModel->cancelTransfers(indexes);
+    QPointer<MegaTransferView> dialog = QPointer<MegaTransferView>(this);
+
+    if (QMegaMessageBox::warning(nullptr, QString::fromUtf8("MEGAsync"),
+                             tr("Are you sure you want to cancel or clear the following transfer(s)?", "", indexes.size()),
+                             QMessageBox::Yes | QMessageBox::No, QMessageBox::No)
+            != QMessageBox::Yes
+            || !dialog)
+    {
+        return;
     }
+
+    auto proxy (qobject_cast<QSortFilterProxyModel*>(model()));
+    auto sourceModel(qobject_cast<TransfersModel*>(proxy->sourceModel()));
+    sourceModel->cancelTransfers(indexes);
 }
 
 void MegaTransferView::onCancelAndClearAllTransfers()
 {
+    QPointer<MegaTransferView> dialog = QPointer<MegaTransferView>(this);
+
+    if (QMegaMessageBox::warning(nullptr, QString::fromUtf8("MEGAsync"),
+                             tr("Are you sure you want to cancel and clear all transfers?"),
+                             QMessageBox::Yes | QMessageBox::No, QMessageBox::No)
+            != QMessageBox::Yes
+            || !dialog)
+    {
+        return;
+    }
+
     auto proxy(qobject_cast<QSortFilterProxyModel*>(model()));
     auto sourceModel(qobject_cast<TransfersModel*>(proxy->sourceModel()));
     sourceModel->cancelTransfers(QModelIndexList());
@@ -159,54 +186,50 @@ void MegaTransferView::onCancelAndClearAllTransfers()
 
 void MegaTransferView::onClearCompletedVisibleTransfers()
 {
-    QModelIndexList indexes;
-    auto proxy(qobject_cast<QSortFilterProxyModel*>(model()));
-    auto rowCount (proxy->rowCount());
-    if (rowCount > 0)
-    {
-        for (auto row (0); row < rowCount; ++row)
-        {
-            auto index (model()->index(row, 0, QModelIndex()));
-            if (proxy)
-            {
-                index = proxy->mapToSource(index);
-            }
+    QModelIndexList indexes = getTransfers(true, TransferData::FINISHED_STATES_MASK);
 
-            auto d (qvariant_cast<TransferItem>(index.data()).getTransferData());
-            if(d && d->mState & TransferData::FINISHED_STATES_MASK)
-            {
-                indexes.push_back(index);
-            }
-        }
-        auto sourceModel(qobject_cast<TransfersModel*>(proxy->sourceModel()));
-        sourceModel->clearTransfers(indexes);
+    QPointer<MegaTransferView> dialog = QPointer<MegaTransferView>(this);
+
+    if (QMegaMessageBox::warning(nullptr, QString::fromUtf8("MEGAsync"),
+                                 tr("Are you sure you want to clear the following transfer(s)?", "", indexes.size()),
+                                 QMessageBox::Yes | QMessageBox::No, QMessageBox::No)
+            != QMessageBox::Yes
+            || !dialog)
+    {
+        return;
     }
+
+    auto proxy (qobject_cast<QSortFilterProxyModel*>(model()));
+    auto sourceModel(qobject_cast<TransfersModel*>(proxy->sourceModel()));
+    sourceModel->clearTransfers(indexes);
+}
+
+void MegaTransferView::onRetryVisibleTransfers()
+{
+    QModelIndexList indexes = getTransfers(true, TransferData::TRANSFER_FAILED);
+
+    QPointer<MegaTransferView> dialog = QPointer<MegaTransferView>(this);
+
+    if (QMegaMessageBox::warning(nullptr, QString::fromUtf8("MEGAsync"),
+                                 tr("Are you sure you want to retry the following transfer(s)?", "", indexes.size()),
+                                 QMessageBox::Yes | QMessageBox::No, QMessageBox::No)
+            != QMessageBox::Yes
+            || !dialog)
+    {
+        return;
+    }
+
+    auto proxy (qobject_cast<QSortFilterProxyModel*>(model()));
+    auto sourceModel(qobject_cast<TransfersModel*>(proxy->sourceModel()));
+    sourceModel->retryTransfers(indexes);
 }
 
 void MegaTransferView::onCancelClearSelection(bool isClear)
 {
+    QModelIndexList indexes = getSelectedTransfers();
     auto proxy (qobject_cast<QSortFilterProxyModel*>(model()));
-
-    auto selection (selectionModel()->selection());
-
-    if (selection.size() > 0)
-    {
-        QModelIndexList indexes;
-
-        if (proxy)
-        {
-            indexes = proxy->mapSelectionToSource(selection).indexes();
-        }
-        else
-        {
-            indexes = selection.indexes();
-        }
-
-        clearSelection();
-
-        auto sourceModel(qobject_cast<TransfersModel*>(proxy->sourceModel()));
-        isClear ? sourceModel->clearTransfers(indexes) : sourceModel->cancelTransfers(indexes);
-    }
+    auto sourceModel(qobject_cast<TransfersModel*>(proxy->sourceModel()));
+    isClear ? sourceModel->clearTransfers(indexes) : sourceModel->cancelTransfers(indexes);
 }
 
 void MegaTransferView::disableContextMenus(bool option)

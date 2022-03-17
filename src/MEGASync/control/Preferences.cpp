@@ -296,8 +296,6 @@ const QString Preferences::upperSizeLimitKey        = QString::fromAscii("upperS
 const QString Preferences::lowerSizeLimitKey        = QString::fromAscii("lowerSizeLimit");
 
 const QString Preferences::lastCustomStreamingAppKey    = QString::fromAscii("lastCustomStreamingApp");
-const QString Preferences::transferDownloadMethodKey    = QString::fromAscii("transferDownloadMethod");
-const QString Preferences::transferUploadMethodKey      = QString::fromAscii("transferUploadMethod");
 
 const QString Preferences::upperSizeLimitValueKey       = QString::fromAscii("upperSizeLimitValue");
 const QString Preferences::lowerSizeLimitValueKey       = QString::fromAscii("lowerSizeLimitValue");
@@ -393,8 +391,6 @@ const long long Preferences::defaultTimeStamp       = 0;
 const unsigned long long  Preferences::defaultTransferIdentifier   = 0;
 const int  Preferences::defaultParallelUploadConnections      = 3;
 const int  Preferences::defaultParallelDownloadConnections    = 4;
-const int Preferences::defaultTransferDownloadMethod      = MegaApi::TRANSFER_METHOD_AUTO;
-const int Preferences::defaultTransferUploadMethod        = MegaApi::TRANSFER_METHOD_AUTO;
 const long long  Preferences::defaultUpperSizeLimitValue              = 0;
 const long long  Preferences::defaultLowerSizeLimitValue              = 0;
 const int  Preferences::defaultCleanerDaysLimitValue            = 30;
@@ -1415,26 +1411,6 @@ void Preferences::setSSLcertificateException(bool value)
     }
     settings->sync();
     mutex.unlock();
-}
-
-int Preferences::transferDownloadMethod()
-{
-    return getValueConcurrent<int>(transferDownloadMethodKey, defaultTransferDownloadMethod);
-}
-
-void Preferences::setTransferDownloadMethod(int value)
-{
-    setValueAndSyncConcurrent(transferDownloadMethodKey, value);
-}
-
-int Preferences::transferUploadMethod()
-{
-    return getValueConcurrent<int>(transferUploadMethodKey, defaultTransferUploadMethod);
-}
-
-void Preferences::setTransferUploadMethod(int value)
-{
-    setValueAndSyncConcurrent(transferUploadMethodKey, value);
 }
 
 QString Preferences::language()

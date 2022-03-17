@@ -23,6 +23,9 @@ struct TransfersCount
     int pendingUploads;
     int pendingDownloads;
 
+    int failedUploads;
+    int failedDownloads;
+
     long long completedUploadBytes;
     long long completedDownloadBytes;
 
@@ -37,14 +40,16 @@ struct TransfersCount
         totalDownloads(0),
         pendingUploads(0),
         pendingDownloads(0),
+        failedUploads(0),
+        failedDownloads(0),
         completedUploadBytes(0),
         completedDownloadBytes(0),
         totalUploadBytes(0),
         totalDownloadBytes(0)
     {}
 
-    int completedDownloads(){return totalDownloads - pendingDownloads;}
-    int completedUploads(){return totalUploads - pendingUploads;}
+    int completedDownloads(){return totalDownloads - pendingDownloads - failedDownloads;}
+    int completedUploads(){return totalUploads - pendingUploads - failedUploads;}
 
 };
 
@@ -52,7 +57,21 @@ class TransferThread :  public QObject,public mega::MegaTransferListener
 {
     Q_OBJECT
 public:
-    TransferThread();
+
+    struct TransfersToProcess
+    {
+        QList<QExplicitlySharedDataPointer<TransferData>> updateTransfersByTag;
+        QList<QExplicitlySharedDataPointer<TransferData>> startTransfersByTag;
+        QList<QExplicitlySharedDataPointer<TransferData>> canceledTransfersByTag;
+        QList<QExplicitlySharedDataPointer<TransferData>> failedTransfersByTag;
+
+        bool isEmpty(){return updateTransfersByTag.isEmpty()
+                              && startTransfersByTag.isEmpty()
+                              && canceledTransfersByTag.isEmpty()
+                              && failedTransfersByTag.isEmpty();}
+    };
+
+    TransferThread(){auxCounter = 0;}
     ~TransferThread(){}
 
     TransfersCount getTransfersCount();
@@ -66,17 +85,29 @@ public slots:
     void onTransferUpdate(mega::MegaApi*, mega::MegaTransfer* transfer);
     void onTransferTemporaryError(mega::MegaApi*,mega::MegaTransfer* transfer,mega::MegaError*);
 
-    QList<QExplicitlySharedDataPointer<TransferData> > processUpdates();
+    TransfersToProcess processTransfers();
 
 private:
     QExplicitlySharedDataPointer<TransferData> createData(mega::MegaTransfer* transfer);
-
-    QMap<int, QExplicitlySharedDataPointer<TransferData>> mCacheUpdateTransfersByTag;
     QExplicitlySharedDataPointer<TransferData> onTransferEvent(mega::MegaTransfer* transfer);
+    QList<QExplicitlySharedDataPointer<TransferData>> extractFromCache(QMap<int, QExplicitlySharedDataPointer<TransferData>>& data, int spaceForTransfers);
+    bool checkIfRepeatedAndRemove(QMap<int, QExplicitlySharedDataPointer<TransferData>>& dataMap, mega::MegaTransfer *transfer);
+    bool checkIfRepeatedAndSubstitute(QMap<int, QExplicitlySharedDataPointer<TransferData>>& dataMap, mega::MegaTransfer *transfer);
 
+    struct cacheTransfers
+    {
+        QMap<TransferTag, QExplicitlySharedDataPointer<TransferData>> updateTransfersByTag;
+        QMap<TransferTag, QExplicitlySharedDataPointer<TransferData>> startTransfersByTag;
+        QMap<TransferTag, QExplicitlySharedDataPointer<TransferData>> canceledTransfersByTag;
+        QMap<TransferTag, QExplicitlySharedDataPointer<TransferData>> failedTransfersByTag;
+    };
+
+    cacheTransfers mTransfersToProcess;
     QMutex mCacheMutex;
     QMutex mCountersMutex;
     TransfersCount mTransfersCount;
+    int auxCounter;
+
 };
 
 class TransfersModel : public QAbstractItemModel
@@ -106,6 +137,7 @@ public:
     void openFolderByIndex(const QModelIndex& index);
     void openFolderByTag(TransferTag tag);
     void retryTransferByIndex(const QModelIndex& index);
+    void retryTransfers(QModelIndexList indexes);
     void cancelTransfers(const QModelIndexList& indexes);
     void clearTransfers(const QModelIndexList& indexes);
     void clearTransfers(const QMap<QModelIndex,QExplicitlySharedDataPointer<TransferData>> uploads,
@@ -122,8 +154,6 @@ public:
     long long  getNumberOfFinishedForFileType(Utilities::FileType fileType) const;
     TransfersCount getTransfersCount();
 
-    void initModel();
-
     void startTransfer(QExplicitlySharedDataPointer<TransferData> transfer);
     int updateTransfer(QExplicitlySharedDataPointer<TransferData> transfer);
 
@@ -137,8 +167,8 @@ signals:
     void transfersCountUpdated();
     void processTransferInThread();
     void pauseStateChangedByTransferResume();
-    void transfersAboutToBeCanceled();
-    void transfersCanceled();
+    void uiBlocked();
+    void uiUnblocked();
 
 public slots:
     void pauseResumeAllTransfers(bool state);
@@ -148,6 +178,7 @@ private slots:
     void processStartTransfers();
     void processUpdateTransfers();
     void processCancelTransfers();
+    void processFailedTransfers();
 
     void onProcessTransfers();
 
@@ -166,10 +197,11 @@ private:
     QTimer mTimer;
 
     QList<QExplicitlySharedDataPointer<TransferData>> mTransfers;
-    std::list<QExplicitlySharedDataPointer<TransferData>> mTransfersToUpdate;
-    std::list<QExplicitlySharedDataPointer<TransferData>> mTransfersToCancel;
-    std::list<QExplicitlySharedDataPointer<TransferData>> mTransfersToStart;
+
+    TransferThread::TransfersToProcess mTransfersToProcess;
     bool mTransfersCancelling;
+    bool mTransfersFailing;
+
     QHash<TransferTag, int> mTagByOrder;
     QList<int> mRowsToUpdate;
     QMutex mModelMutex;

@@ -8,6 +8,7 @@
 #include <QStringList>
 #include <QDateTime>
 #include <QQueue>
+#include <QFutureWatcher>5
 
 #include <megaapi.h>
 
@@ -103,6 +104,9 @@ class HTTPServer: public QTcpServer
         void onExternalShowInFolderRequested(QString path);
         void onConnectionError();
 
+    private slots:
+        void onVersionCommandFinished();
+
     public slots:
         void readClient();
         void discardClient();
@@ -127,7 +131,14 @@ class HTTPServer: public QTcpServer
 
         bool isRequestOfType(const QStringList& headers, const char* typeName);
 
-        void versionCommand(QString& response);
+        struct VersionCommandAnswer
+        {
+            QAbstractSocket* socket;
+            HTTPRequest request;
+            QString response;
+        };
+
+        void versionCommand(HTTPRequest request, QAbstractSocket* socket);
         void openLinkRequest(QString& response, const HTTPRequest& request);
         void externalDownloadRequest(QString& response, const HTTPRequest& request, QAbstractSocket* socket);
         void externalFileUploadRequest(QString& response, const HTTPRequest& request);
@@ -139,6 +150,8 @@ class HTTPServer: public QTcpServer
         void externalTransferQueryProgress(QString& response, const HTTPRequest& request);
         void externalShowInFolder(QString& response, const HTTPRequest& request);
 
+        void endProcessRequest(QAbstractSocket *socket, HTTPRequest request, QString response);
+
         RequestType GetRequestType(const HTTPRequest& request);
         bool disabled;
         bool sslEnabled;
@@ -147,6 +160,7 @@ class HTTPServer: public QTcpServer
         static bool isFirstWebDownloadDone;
         static QMultiMap<QString, RequestData*> webDataRequests;
         static QMap<mega::MegaHandle, RequestTransferData*> webTransferStateRequests;
+        QFutureWatcher<VersionCommandAnswer> mVersionCommandWatcher;
 };
 
 #endif // HTTPSERVER_H

@@ -53,6 +53,7 @@ public slots:
     void onPauseResumeSelection(bool pauseState);
     void onCancelClearAllVisibleTransfers();
     void onClearCompletedVisibleTransfers();
+    void onRetryVisibleTransfers();
     void onCancelAndClearAllTransfers();
     void onCancelClearSelection(bool isClear);
 
@@ -70,6 +71,10 @@ private slots:
     void clearSelectedClicked();
     void pauseSelectedClicked();
     void resumeSelectedClicked();
+
+private:
+    QModelIndexList getTransfers(bool onlyVisible, TransferData::TransferStates state = TransferData::TRANSFER_NONE);
+    QModelIndexList getSelectedTransfers();
 
 signals:
     void showContextMenu(QPoint pos);

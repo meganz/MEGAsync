@@ -10,7 +10,6 @@ TransfersWidget::TransfersWidget(QWidget* parent) :
     QWidget (parent),
     ui (new Ui::TransfersWidget),
     tDelegate (nullptr),
-    mClearMode(false),
     app (qobject_cast<MegaApplication*>(qApp)),
     mHeaderNameState (HS_SORT_PRIORITY),
     mHeaderSizeState (HS_SORT_PRIORITY)
@@ -40,8 +39,8 @@ void TransfersWidget::setupTransfers()
     connect(mProxyModel, &TransfersManagerSortFilterProxyModel::activeTransfersChanged, this, &TransfersWidget::onActiveTransferCounterChanged);
     connect(mProxyModel, &TransfersManagerSortFilterProxyModel::pausedTransfersChanged, this, &TransfersWidget::onPausedTransferCounterChanged);
     connect(mProxyModel, &TransfersManagerSortFilterProxyModel::transferPauseResume, this, &TransfersWidget::onPauseResumeButtonCheckedOnDelegate);
-    connect(app->getTransfersModel(), &TransfersModel::transfersAboutToBeCanceled, this, &TransfersWidget::onModelAboutToBeChanged);
-    connect(app->getTransfersModel(), &TransfersModel::transfersCanceled, this, &TransfersWidget::onModelChanged);
+    connect(app->getTransfersModel(), &TransfersModel::uiBlocked, this, &TransfersWidget::onModelAboutToBeChanged);
+    connect(app->getTransfersModel(), &TransfersModel::uiUnblocked, this, &TransfersWidget::onModelChanged);
 
     configureTransferView();
 }
@@ -179,33 +178,11 @@ void TransfersWidget::on_pHeaderSize_clicked()
 
 void TransfersWidget::on_tCancelClearVisible_clicked()
 {
-    QPointer<TransfersWidget> dialog = QPointer<TransfersWidget>(this);
-
-    if (QMegaMessageBox::warning(nullptr, QString::fromUtf8("MEGAsync"),
-                             tr("Are you sure you want to cancel or clear the following transfers?"),
-                             QMessageBox::Yes | QMessageBox::No, QMessageBox::No)
-            != QMessageBox::Yes
-            || !dialog)
-    {
-        return;
-    }
-
     emit cancelClearVisibleRows();
 }
 
 void TransfersWidget::cancelClearAll()
 {
-    QPointer<TransfersWidget> dialog = QPointer<TransfersWidget>(this);
-
-    if (QMegaMessageBox::warning(nullptr, QString::fromUtf8("MEGAsync"),
-                             tr("Are you sure you want to cancel and clear all transfers?"),
-                             QMessageBox::Yes | QMessageBox::No, QMessageBox::No)
-            != QMessageBox::Yes
-            || !dialog)
-    {
-        return;
-    }
-
     emit cancelAndClearAllRows();
 }
 
@@ -213,24 +190,6 @@ void TransfersWidget::onTransferAdded()
 {
     ui->sWidget->setCurrentWidget(ui->pTransfers);
     ui->tvTransfers->scrollToTop();
-}
-
-void TransfersWidget::onShowCompleted(bool showCompleted)
-{
-    if (showCompleted)
-    {
-        ui->lHeaderTime->setText(tr("Time"));
-        ui->tCancelClearVisible->setToolTip(tr("Clear All Visible"));
-        ui->lHeaderSpeed->setText(tr("Avg. speed"));
-    }
-    else
-    {
-        ui->lHeaderTime->setText(tr("Time left"));
-        ui->tCancelClearVisible->setToolTip(tr("Cancel/Clear All Visible"));
-        ui->lHeaderSpeed->setText(tr("Speed"));
-    }
-
-    mClearMode = showCompleted;
 }
 
 void TransfersWidget::onPauseStateChanged(bool pauseState)
@@ -267,6 +226,13 @@ void TransfersWidget::transferFilterReset()
     mProxyModel->resetAllFilters();
 }
 
+void TransfersWidget::updateHeaderItems(const QString &headerTime, const QString &cancelClearTooltip, const QString &headerSpeed)
+{
+    ui->lHeaderTime->setText(headerTime);
+    ui->tCancelClearVisible->setToolTip(cancelClearTooltip);
+    ui->lHeaderSpeed->setText(headerSpeed);
+}
+
 void TransfersWidget::changeEvent(QEvent *event)
 {
     if (event->type() == QEvent::LanguageChange)
@@ -294,7 +260,6 @@ void TransfersWidget::onModelChanged()
     auto isAnyActive = mProxyModel->isAnyActive();
     onActiveTransferCounterChanged(isAnyActive);
 }
-
 
 void TransfersWidget::onPauseResumeButtonCheckedOnDelegate(bool pause)
 {

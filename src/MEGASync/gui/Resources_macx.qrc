@@ -646,5 +646,7 @@
         <file>images/resume_ico@2x.png</file>
         <file>images/no_search_results.png</file>
         <file>images/no_search_results@2x.png</file>
+        <file>images/sidebar_failed_ico.png</file>
+        <file>images/sidebar_failed_ico@2x.png</file>
     </qresource>
 </RCC>

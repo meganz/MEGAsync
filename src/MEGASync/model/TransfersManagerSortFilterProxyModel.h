@@ -94,5 +94,6 @@ private:
 };
 
 Q_DECLARE_METATYPE(QAbstractItemModel::LayoutChangeHint)
+Q_DECLARE_METATYPE(QVector<int>)
 
 #endif // TRANSFERSSORTFILTERPROXYMODEL_H
