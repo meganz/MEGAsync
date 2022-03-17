@@ -6,7 +6,10 @@
 AddBackupDialog::AddBackupDialog(QWidget *parent) :
     QDialog(parent),
     mUi(new Ui::AddBackupDialog),
-    mSelectedFolder(QDir::home())
+    mSelectedFolder(QDir::home()),
+    mMyBackupsFolder(),
+    mSyncController(),
+    mDeviceName()
 {
     mUi->setupUi(this);
 
@@ -14,6 +17,11 @@ AddBackupDialog::AddBackupDialog(QWidget *parent) :
     // Display our modal dialog embedded title label when no parent is set
     mUi->embeddedTitleLabel->setVisible(parent() == nullptr);
 #endif
+
+    connect(&mSyncController, &SyncController::deviceName,
+            this, &AddBackupDialog::onDeviceNameSet);
+
+    mSyncController.getDeviceName();
 
     connect(mUi->addButton, &QPushButton::clicked, this, &QDialog::accept);
     connect(mUi->cancelButton, &QPushButton::clicked, this, &QDialog::reject);
@@ -24,9 +32,10 @@ AddBackupDialog::~AddBackupDialog()
     delete mUi;
 }
 
-void AddBackupDialog::setMyBackupsFolder(QString folder)
+void AddBackupDialog::setMyBackupsFolder(const QString& folder)
 {
-    mUi->backupToLabel->setText(folder);
+    mMyBackupsFolder = folder;
+    mUi->backupToLabel->setText(mMyBackupsFolder + QLatin1Char('/') + mDeviceName);
 }
 
 QDir AddBackupDialog::getSelectedFolder()
@@ -46,3 +55,10 @@ void AddBackupDialog::on_changeButton_clicked()
     mUi->folderLineEdit->setText(mSelectedFolder.path());
     mUi->addButton->setEnabled(true);
 }
+
+void AddBackupDialog::onDeviceNameSet(const QString& devName)
+{
+    mDeviceName = devName;
+    mUi->backupToLabel->setText(mMyBackupsFolder + QLatin1Char('/') + mDeviceName);
+}
+

@@ -18,9 +18,6 @@ SyncController::SyncController(QObject* parent)
     // The controller shouldn't ever be instantiated before we have an API and a SyncModel available
     assert(mApi);
     assert(mSyncModel);
-
-    // Make sure the device name is set, and set it if not
-    ensureDeviceNameIsSetOnRemote();
 }
 
 SyncController::~SyncController()
@@ -164,7 +161,7 @@ void SyncController::setDeviceName(const QString& name)
 void SyncController::getDeviceName()
 {
     MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Request device name");
-    mApi->getDeviceName(mDelegateListener);
+    ensureDeviceNameIsSetOnRemote();
 }
 
 void SyncController::ensureDeviceNameIsSetOnRemote()
@@ -172,7 +169,7 @@ void SyncController::ensureDeviceNameIsSetOnRemote()
     if (!mIsDeviceNameSetOnRemote && !mForceSetDeviceName)
     {
         mForceSetDeviceName = true;
-        getDeviceName();
+        mApi->getDeviceName(mDelegateListener);
     }
 }
 
@@ -189,8 +186,6 @@ void SyncController::getBackupsRootDirHandle()
 
 void SyncController::onRequestFinish(MegaApi *api, MegaRequest *req, MegaError *e)
 {
-    Q_UNUSED (api)
-
     static MegaHandle tempMyBackupsHandle = mega::INVALID_HANDLE;
 
     switch(req->getType())
@@ -429,6 +424,7 @@ void SyncController::onRequestFinish(MegaApi *api, MegaRequest *req, MegaError *
                 MegaApi::log(MegaApi::LOG_LEVEL_INFO,
                              QString::fromUtf8("Got device name from remote: \"%1\"").arg(devName)
                              .toUtf8().constData());
+                emit deviceName(devName);
             }
             else //if (errorCode == MegaError::API_ENOENT)
             {
@@ -450,16 +446,13 @@ void SyncController::onRequestFinish(MegaApi *api, MegaRequest *req, MegaError *
                                  QString::fromUtf8("Using dummy device name: \"%1\"").arg(devName)
                                  .toUtf8().constData());
                 }
-            }
-            if (mForceSetDeviceName)
-            {
-                MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, "Force setting device name on remote");
-                mForceSetDeviceName = false;
-                setDeviceName(devName);
-            }
-            else
-            {
-                emit deviceName(devName);
+
+                if (mForceSetDeviceName)
+                {
+                    MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, "Force setting device name on remote");
+                    mForceSetDeviceName = false;
+                    setDeviceName(devName);
+                }
             }
         }
         break;

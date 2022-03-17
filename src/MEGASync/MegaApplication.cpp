@@ -309,7 +309,6 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
         queuedUserStats[i] = false;
     }
     queuedStorageUserStatsReason = 0;
-
 #ifdef __APPLE__
     scanningTimer = NULL;
 #endif
@@ -970,6 +969,7 @@ void MegaApplication::start()
     eventsPendingLoggedIn.clear();
     receivedStorageSum = 0;
     finishedBlockedTransfers.clear();
+    mSyncController.reset();
 
     for (unsigned i = 3; i--; )
     {
@@ -1224,6 +1224,10 @@ void MegaApplication::loggedIn(bool fromWizard)
                                        false);
         crashReportFilePath.clear();
     }
+
+    // Ensure device name is set
+    mSyncController.reset(new SyncController());
+    mSyncController->getDeviceName();
 
     //Check business status in case we need to alert the user
     if (megaApi->isBusinessAccount())
@@ -2123,6 +2127,8 @@ void MegaApplication::cleanAll()
         auto syncSetting = model->getSyncSetting(i);
         notifyItemChange(syncSetting->getLocalFolder(), MegaApi::STATE_NONE);
     }
+
+    mSyncController.reset();
 
     closeDialogs();
     removeAllFinishedTransfers();
