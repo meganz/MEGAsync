@@ -980,6 +980,25 @@ bool TransferManager::eventFilter(QObject *obj, QEvent *event)
     return false;
 }
 
+void TransferManager::closeEvent(QCloseEvent *event)
+{
+    if(event->type() == QEvent::Close)
+    {
+        auto proxy (mUi->wTransfers->getProxyModel());
+        if(proxy->isModelProcessing())
+        {
+            connect(proxy, &TransfersManagerSortFilterProxyModel::modelChanged, this, [this](){
+                close();
+            });
+            event->ignore();
+        }
+        else
+        {
+            event->accept();
+        }
+    }
+}
+
 void TransferManager::changeEvent(QEvent *event)
 {
     if (event->type() == QEvent::LanguageChange)

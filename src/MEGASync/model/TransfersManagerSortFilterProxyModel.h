@@ -42,6 +42,8 @@ public:
         bool isAnyCancelable() const;
         bool isAnyActive() const;
 
+        bool isModelProcessing() const;
+
 signals:
         void modelAboutToBeChanged();
         void modelChanged();

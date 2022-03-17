@@ -429,6 +429,11 @@ bool TransfersManagerSortFilterProxyModel::isAnyActive() const
     return !mActiveTransfers.isEmpty();
 }
 
+bool TransfersManagerSortFilterProxyModel::isModelProcessing() const
+{
+    return mFilterWatcher.isRunning();
+}
+
 bool TransfersManagerSortFilterProxyModel::moveRows(const QModelIndex &proxyParent, int proxyRow, int count,
               const QModelIndex &destinationParent, int destinationChild)
 {
