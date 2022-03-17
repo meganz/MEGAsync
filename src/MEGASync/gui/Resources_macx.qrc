@@ -648,5 +648,17 @@
         <file>images/no_search_results@2x.png</file>
         <file>images/sidebar_failed_ico.png</file>
         <file>images/sidebar_failed_ico@2x.png</file>
+        <file>images/password/ico_eye_hide.png</file>
+        <file>images/password/ico_eye_hide@2x.png</file>
+        <file>images/password/ico_eye_hide@3x.png</file>
+        <file>images/password/ico_eye_hide_disabled.png</file>
+        <file>images/password/ico_eye_hide_disabled@2x.png</file>
+        <file>images/password/ico_eye_hide_disabled@3x.png</file>
+        <file>images/password/ico_eye_reveal.png</file>
+        <file>images/password/ico_eye_reveal@2x.png</file>
+        <file>images/password/ico_eye_reveal@3x.png</file>
+        <file>images/password/ico_eye_reveal_disabled.png</file>
+        <file>images/password/ico_eye_reveal_disabled@2x.png</file>
+        <file>images/password/ico_eye_reveal_disabled@3x.png</file>
     </qresource>
 </RCC>
