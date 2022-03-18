@@ -2238,9 +2238,6 @@ void MegaApplication::repositionInfoDialog()
     int posx, posy;
     calculateInfoDialogCoordinates(infoDialog, &posx, &posy);
 
-    // An issue occurred with certain multiscreen setup that caused Qt to missplace the info dialog.
-    // This works around that by ensuring infoDialog does not get incorrectly resized. in which case,
-    // it is reverted to the correct size.
     fixMultiscreenResizeBug(posx, posy);
 
     if (isLinux)
@@ -2381,40 +2378,43 @@ void MegaApplication::calculateInfoDialogCoordinates(QDialog *dialog, int *posx,
 
     position = QCursor::pos();
     QScreen* currentScreen = QGuiApplication::screenAt(position);
-    screenGeometry = currentScreen->availableGeometry();
-
-    QString otherInfo = QString::fromUtf8("pos = [%1,%2], name = %3").arg(position.x()).arg(position.y()).arg(currentScreen->name());
-    logInfoDialogCoordinates("availableGeometry", screenGeometry, otherInfo);
-
-    if (!screenGeometry.isValid())
+    if (currentScreen)
     {
-        screenGeometry = currentScreen->geometry();
-        otherInfo = QString::fromUtf8("dialog rect = %1").arg(RectToString(dialog->rect()));
-        logInfoDialogCoordinates("screenGeometry", screenGeometry, otherInfo);
+        screenGeometry = currentScreen->availableGeometry();
 
-        if (screenGeometry.isValid())
+        QString otherInfo = QString::fromUtf8("pos = [%1,%2], name = %3").arg(position.x()).arg(position.y()).arg(currentScreen->name());
+        logInfoDialogCoordinates("availableGeometry", screenGeometry, otherInfo);
+
+        if (!screenGeometry.isValid())
         {
-            screenGeometry.setTop(28);
+            screenGeometry = currentScreen->geometry();
+            otherInfo = QString::fromUtf8("dialog rect = %1").arg(RectToString(dialog->rect()));
+            logInfoDialogCoordinates("screenGeometry", screenGeometry, otherInfo);
+
+            if (screenGeometry.isValid())
+            {
+                screenGeometry.setTop(28);
+            }
+            else
+            {
+                screenGeometry = dialog->rect();
+                screenGeometry.setBottom(screenGeometry.bottom() + 4);
+                screenGeometry.setRight(screenGeometry.right() + 4);
+            }
+
+            logInfoDialogCoordinates("screenGeometry 2", screenGeometry, otherInfo);
         }
         else
         {
-            screenGeometry = dialog->rect();
-            screenGeometry.setBottom(screenGeometry.bottom() + 4);
-            screenGeometry.setRight(screenGeometry.right() + 4);
-        }
+            if (screenGeometry.y() < 0)
+            {
+                ySign = -1;
+            }
 
-        logInfoDialogCoordinates("screenGeometry 2", screenGeometry, otherInfo);
-    }
-    else
-    {
-        if (screenGeometry.y() < 0)
-        {
-            ySign = -1;
-        }
-
-        if (screenGeometry.x() < 0)
-        {
-            xSign = -1;
+            if (screenGeometry.x() < 0)
+            {
+                xSign = -1;
+            }
         }
     }
 
@@ -2524,8 +2524,8 @@ void MegaApplication::calculateInfoDialogCoordinates(QDialog *dialog, int *posx,
         }
     #endif
 
-        otherInfo = QString::fromUtf8("dialog rect = %1, posx = %2, posy = %3").arg(RectToString(dialog->rect())).arg(*posx).arg(*posy);
-        logInfoDialogCoordinates("Final", screenGeometry, otherInfo);
+    QString otherInfo = QString::fromUtf8("dialog rect = %1, posx = %2, posy = %3").arg(RectToString(dialog->rect())).arg(*posx).arg(*posy);
+    logInfoDialogCoordinates("Final", screenGeometry, otherInfo);
 }
 
 void MegaApplication::deleteMenu(QMenu *menu)
@@ -3150,6 +3150,10 @@ QString MegaApplication::RectToString(const QRect &rect)
 
 void MegaApplication::fixMultiscreenResizeBug(int &posX, int &posY)
 {
+    // An issue occurred with certain multiscreen setup that caused Qt to missplace the info dialog.
+    // This works around that by ensuring infoDialog does not get incorrectly resized. in which case,
+    // it is reverted to the correct size.
+
     infoDialog->ensurePolished();
     auto initialDialogWidth  = infoDialog->width();
     auto initialDialogHeight = infoDialog->height();
