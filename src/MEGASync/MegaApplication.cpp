@@ -2416,7 +2416,6 @@ void MegaApplication::calculateInfoDialogCoordinates(QDialog *dialog, int *posx,
                 xSign = -1;
             }
         }
-    }
 
     #ifdef __APPLE__
         MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Calculating Info Dialog coordinates. posTrayIcon = %1")
@@ -2523,6 +2522,7 @@ void MegaApplication::calculateInfoDialogCoordinates(QDialog *dialog, int *posx,
             *posy = screenGeometry.top() + 2;
         }
     #endif
+    }
 
     QString otherInfo = QString::fromUtf8("dialog rect = %1, posx = %2, posy = %3").arg(RectToString(dialog->rect())).arg(*posx).arg(*posy);
     logInfoDialogCoordinates("Final", screenGeometry, otherInfo);
