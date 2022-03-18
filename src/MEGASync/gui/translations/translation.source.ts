@@ -5361,10 +5361,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Upload</source>
+        <translatorcomment>Menu entry label to indicate action of starting upload of a resource</translatorcomment>
         <translation>Upload</translation>
     </message>
     <message>
         <source>Download</source>
+        <translatorcomment>Menu entry label to indicate action of starting download of a resource</translatorcomment>
         <translation>Download</translation>
     </message>
     <message>
