@@ -10,6 +10,7 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/InfoDialog.cpp \
     $$PWD/NotificationsSettings.cpp \
     $$PWD/OverQuotaDialog.cpp \
+    $$PWD/PasswordLineEdit.cpp \
     $$PWD/RenameTargetFolderDialog.cpp \
     $$PWD/SetupWizard.cpp \
     $$PWD/NodeSelector.cpp \
@@ -93,6 +94,7 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/InfoDialog.h \
     $$PWD/NotificationsSettings.h \
     $$PWD/OverQuotaDialog.h \
+    $$PWD/PasswordLineEdit.h \
     $$PWD/RenameTargetFolderDialog.h \
     $$PWD/SetupWizard.h \
     $$PWD/NodeSelector.h \
@@ -380,4 +382,3 @@ unix:!macx {
     SOURCES += $$PWD/PermissionsDialog.cpp \
                $$PWD/PermissionsWidget.cpp
 }
-
