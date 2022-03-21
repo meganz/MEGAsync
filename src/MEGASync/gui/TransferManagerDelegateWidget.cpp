@@ -122,17 +122,7 @@ void TransferManagerDelegateWidget::updateTransferState()
         }
         case TransferData::TRANSFER_CANCELLED:
         {
-            if(stateHasChanged())
-            {
-                mUi->sStatus->setCurrentWidget(mUi->pActive);
-                statusString = tr("Canceled");
-                cancelClearTooltip = tr("Clear transfer");
-                showTPauseResume = false;
-                mLastPauseResuemtTransferIconName.clear();
-            }
-            timeString = QDateTime::fromSecsSinceEpoch(getData()->getFinishedTime())
-                         .toString(QLatin1Literal("hh:mm"));
-            speedString = Utilities::getSizeString(getData()->mMeanSpeed) + QLatin1Literal("/s");
+            //Cancelled transfers are immediately removed from the model
             break;
         }
         case TransferData::TRANSFER_COMPLETING:
@@ -157,12 +147,13 @@ void TransferManagerDelegateWidget::updateTransferState()
                 mLastPauseResuemtTransferIconName.clear();
                 mUi->sStatus->setCurrentWidget(mUi->pFailed);
                 mUi->tItemRetry->setVisible(!getData()->mTemporaryError);
+                mUi->wProgressBar->setVisible(false);
                 cancelClearTooltip = tr("Clear transfer");
                 mUi->lItemFailed->setToolTip(tr(MegaError::getErrorString(getData()->mErrorCode)));
                 showTPauseResume = false;
             }
 
-
+            timeString = getData()->getFormattedFinishedTime();
             speedString = QLatin1Literal("...");
 
             break;
@@ -195,13 +186,14 @@ void TransferManagerDelegateWidget::updateTransferState()
                 statusString = tr("Completed");
                 cancelClearTooltip = tr("Clear transfer");
                 showTPauseResume = false;
+                mUi->wProgressBar->setVisible(false);
                 mLastPauseResuemtTransferIconName.clear();
 
                 mUi->sStatus->setCurrentWidget(mUi->pActive);
             }
             speedString = Utilities::getSizeString(getData()->mMeanSpeed == 0
                                                    ? getData()->mTotalSize : getData()->mMeanSpeed) + QLatin1Literal("/s");
-            timeString = Utilities::getFinishedTimeString(getData()->getFinishedTime());
+            timeString = getData()->getFormattedFinishedTime();
             break;
         }
     }
@@ -385,18 +377,6 @@ void TransferManagerDelegateWidget::on_tCancelClearTransfer_clicked()
 
 void TransferManagerDelegateWidget::on_tItemRetry_clicked()
 {
-    QPointer<TransferManagerDelegateWidget> dialog = QPointer<TransferManagerDelegateWidget>(this);
-
-    auto message = tr("Are you sure you want to retry this transfer?");
-
-    if (QMegaMessageBox::warning(nullptr, QString::fromUtf8("MEGAsync"),
-                             message,
-                             QMessageBox::Yes | QMessageBox::No, QMessageBox::No)
-            != QMessageBox::Yes
-            || !dialog)
-    {
-        return;
-    }
-
-    emit retryTransfer();
+    //Base implementation
+    onRetryTransfer();
 }

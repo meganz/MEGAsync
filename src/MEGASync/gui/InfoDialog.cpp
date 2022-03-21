@@ -1272,7 +1272,6 @@ void InfoDialog::updateNotificationsTreeView(QAbstractItemModel *model, QAbstrac
 void InfoDialog::reset()
 {
     activeDownloadState = activeUploadState = MegaTransfer::STATE_NONE;
-    app->getTransfersModel()->resetCompletedTransfersCount();
     uploadActiveTransferPriority = downloadActiveTransferPriority = 0xFFFFFFFFFFFFFFFFULL;
     uploadActiveTransferTag = downloadActiveTransferTag = -1;
     notificationsReady = false;
@@ -1892,9 +1891,7 @@ void InfoDialog::setUnseenTypeNotifications(long long all, long long contacts, l
 
 void InfoDialog::paintEvent(QPaintEvent * e)
 {
-//    app->megaApiLock.reset(app->getMegaApi()->getMegaApiLock(false));
     QDialog::paintEvent(e);
-//    app->megaApiLock.reset();
 
 #ifdef __APPLE__
     QPainter p(this);

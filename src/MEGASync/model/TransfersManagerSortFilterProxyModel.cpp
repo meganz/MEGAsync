@@ -6,6 +6,7 @@
 
 #include <QMutexLocker>
 #include <QElapsedTimer>
+#include <QRunnable>
 
 
 TransfersManagerSortFilterProxyModel::TransfersManagerSortFilterProxyModel(QObject* parent)
@@ -20,6 +21,7 @@ TransfersManagerSortFilterProxyModel::TransfersManagerSortFilterProxyModel(QObje
       mThreadPool (ThreadPoolSingleton::getInstance())
 {
     qRegisterMetaType<QAbstractItemModel::LayoutChangeHint>("QAbstractItemModel::LayoutChangeHint");
+    qRegisterMetaType<QVector<int>>("QVector<int>");
 
     connect(&mFilterWatcher, &QFutureWatcher<void>::finished,
             this, &TransfersManagerSortFilterProxyModel::onModelSortedFiltered);
@@ -93,13 +95,14 @@ void TransfersManagerSortFilterProxyModel::setFilterFixedString(const QString& p
         invalidateFilter();
         sourceM->lockModelMutex(false);
     });
+
     mFilterWatcher.setFuture(filtered);
+
 }
 
 void TransfersManagerSortFilterProxyModel::textSearchTypeChanged()
 {
     updateFilters();
-
     emit modelAboutToBeChanged();
 
     QFuture<void> filtered = QtConcurrent::run([this](){
@@ -109,6 +112,7 @@ void TransfersManagerSortFilterProxyModel::textSearchTypeChanged()
         sourceM->lockModelMutex(false);
     });
     mFilterWatcher.setFuture(filtered);
+
 }
 
 void TransfersManagerSortFilterProxyModel::onModelSortedFiltered()
@@ -247,15 +251,18 @@ bool TransfersManagerSortFilterProxyModel::filterAcceptsRow(int sourceRow, const
             }
 
             //As the active state can change in time, add both logics to add or remove
-            if(d->isActive() && !mActiveTransfers.contains(d->mTag))
+            if(d->isActive())
             {
-                auto wasEmpty(mActiveTransfers.isEmpty());
-
-                mActiveTransfers.insert(d->mTag);
-
-                if(wasEmpty)
+                if(!mActiveTransfers.contains(d->mTag))
                 {
-                    emit activeTransfersChanged(true);
+                    auto wasEmpty(mActiveTransfers.isEmpty());
+
+                    mActiveTransfers.insert(d->mTag);
+
+                    if(wasEmpty)
+                    {
+                        emit activeTransfersChanged(true);
+                    }
                 }
             }
             else
@@ -263,15 +270,18 @@ bool TransfersManagerSortFilterProxyModel::filterAcceptsRow(int sourceRow, const
                 removeActiveTransferFromCounter(d->mTag);
             }
 
-            if(d->isPaused() && !mPausedTransfers.contains(d->mTag))
+            if(d->isPaused())
             {
-                bool wasEmpty(mPausedTransfers.isEmpty());
-
-                mPausedTransfers.insert(d->mTag);
-
-                if(wasEmpty)
+                if(!mPausedTransfers.contains(d->mTag))
                 {
-                    emit pausedTransfersChanged(true);
+                    bool wasEmpty(mPausedTransfers.isEmpty());
+
+                    mPausedTransfers.insert(d->mTag);
+
+                    if(wasEmpty)
+                    {
+                        emit pausedTransfersChanged(true);
+                    }
                 }
             }
             else
@@ -377,7 +387,6 @@ void TransfersManagerSortFilterProxyModel::removeNonSyncedTransferFromCounter(Tr
 
 bool TransfersManagerSortFilterProxyModel::lessThan(const QModelIndex &left, const QModelIndex &right) const
 {
-
     const auto leftItem (qvariant_cast<TransferItem>(left.data()).getTransferData());
     const auto rightItem (qvariant_cast<TransferItem>(right.data()).getTransferData());
 
@@ -418,6 +427,11 @@ bool TransfersManagerSortFilterProxyModel::isAnyCancelable() const
 bool TransfersManagerSortFilterProxyModel::isAnyActive() const
 {
     return !mActiveTransfers.isEmpty();
+}
+
+bool TransfersManagerSortFilterProxyModel::isModelProcessing() const
+{
+    return mFilterWatcher.isRunning();
 }
 
 bool TransfersManagerSortFilterProxyModel::moveRows(const QModelIndex &proxyParent, int proxyRow, int count,
@@ -487,19 +501,7 @@ void TransfersManagerSortFilterProxyModel::onRetryTransfer()
 
     if(delegateWidget && sourModel)
     {
-        auto data = delegateWidget->getData();
-
-        if(data->mFailedTransfer)
-        {
-            QModelIndexList indexToRemove;
-            auto index = delegateWidget->getCurrentIndex();
-            index = mapToSource(index);
-            indexToRemove.append(index);
-            sourModel->clearTransfers(indexToRemove);
-
-            MegaSyncApp->getMegaApi()->retryTransfer(data->mFailedTransfer.get());
-            data->removeFailedTransfer();
-        }
+        sourModel->retryTransferByIndex(mapToSource(delegateWidget->getCurrentIndex()));
     }
 }
 

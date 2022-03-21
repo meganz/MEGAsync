@@ -476,8 +476,6 @@ void MegaApplication::initialize()
 
     megaApi->setLanguage(currentLanguageCode.toUtf8().constData());
     megaApiFolders->setLanguage(currentLanguageCode.toUtf8().constData());
-    megaApi->setDownloadMethod(preferences->transferDownloadMethod());
-    megaApi->setUploadMethod(preferences->transferUploadMethod());
     setMaxConnections(MegaTransfer::TYPE_UPLOAD,   preferences->parallelUploadConnections());
     setMaxConnections(MegaTransfer::TYPE_DOWNLOAD, preferences->parallelDownloadConnections());
     setUseHttpsOnly(preferences->usingHttpsOnly());
@@ -648,7 +646,6 @@ void MegaApplication::initialize()
     }
 
     mModel = new TransfersModel(nullptr);
-    mModel->initModel();
 
     connect(mModel, &TransfersModel::transfersCountUpdated, this, &MegaApplication::onTransfersModelUpdate);
 }
@@ -2240,8 +2237,6 @@ void MegaApplication::cleanAll()
         sleep(2);
 #endif
     }
-
-    //QFontDatabase::removeAllApplicationFonts();
 }
 
 void MegaApplication::onDupplicateLink(QString, QString name, MegaHandle handle)
@@ -8101,6 +8096,38 @@ void MegaApplication::onTransferUpdate(MegaApi*, MegaTransfer* transfer)
     }
 }
 
+//Called when there is a temporal problem in a transfer
+void MegaApplication::onTransferTemporaryError(MegaApi *api, MegaTransfer *transfer, MegaError* e)
+{
+    if (appfinished)
+    {
+        return;
+    }
+
+    DeferPreferencesSyncForScope deferrer(this);
+
+    onTransferUpdate(api, transfer);
+
+    if (e->getErrorCode() == MegaError::API_EOVERQUOTA)
+    {
+        if (transfer->isForeignOverquota())
+        {
+            MegaUser *contact =  megaApi->getUserFromInShare(megaApi->getNodeByHandle(transfer->getParentHandle()), true);
+            showErrorMessage(tr("Your upload(s) cannot proceed because %1's account is full")
+                             .arg(contact?QString::fromUtf8(contact->getEmail()):tr("contact")));
+
+        }
+        else if (e->getValue() && !transferQuota->isOverQuota())
+        {
+            const auto waitTime = std::chrono::seconds(e->getValue());
+            preferences->clearTemporalBandwidth();
+            megaApi->getPricing();
+            updateUserStats(false, true, true, true, USERSTATS_TRANSFERTEMPERROR);  // get udpated transfer quota (also pro status in case out of quota is due to account paid period expiry)
+            transferQuota->setOverQuota(waitTime);
+        }
+    }
+}
+
 void MegaApplication::onCheckDeferredPreferencesSyncTimeout()
 {
     onCheckDeferredPreferencesSync(true);
@@ -8152,40 +8179,6 @@ void MegaApplication::showAddSyncError(int errorCode, QString localpath, QString
                                   tr("This sync can't be added: %1. Reason: %2").arg(localpath)
                                   .arg( errorCode > 0 ? QCoreApplication::translate("MegaSyncError", MegaSync::getMegaSyncErrorCode(errorCode))
                                                       : QCoreApplication::translate("MegaError", MegaError::getErrorString(errorCode))));
-    }
-}
-
-//Called when there is a temporal problem in a transfer
-void MegaApplication::onTransferTemporaryError(MegaApi *api, MegaTransfer *transfer, MegaError* e)
-{
-    if (appfinished)
-    {
-        return;
-    }
-
-    DeferPreferencesSyncForScope deferrer(this);
-
-    onTransferUpdate(api, transfer);
-    preferences->setTransferDownloadMethod(api->getDownloadMethod());
-    preferences->setTransferUploadMethod(api->getUploadMethod());
-
-    if (e->getErrorCode() == MegaError::API_EOVERQUOTA)
-    {
-        if (transfer->isForeignOverquota())
-        {
-            MegaUser *contact =  megaApi->getUserFromInShare(megaApi->getNodeByHandle(transfer->getParentHandle()), true);
-            showErrorMessage(tr("Your upload(s) cannot proceed because %1's account is full")
-                             .arg(contact?QString::fromUtf8(contact->getEmail()):tr("contact")));
-
-        }
-        else if (e->getValue() && !transferQuota->isOverQuota())
-        {
-            const auto waitTime = std::chrono::seconds(e->getValue());
-            preferences->clearTemporalBandwidth();
-            megaApi->getPricing();
-            updateUserStats(false, true, true, true, USERSTATS_TRANSFERTEMPERROR);  // get udpated transfer quota (also pro status in case out of quota is due to account paid period expiry)
-            transferQuota->setOverQuota(waitTime);
-        }
     }
 }
 

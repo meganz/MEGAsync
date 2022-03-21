@@ -182,8 +182,6 @@ void TransfersSummaryWidget::initialize()
 
     updateSizes();
     update();
-
-
 }
 
 void TransfersSummaryWidget::reset()

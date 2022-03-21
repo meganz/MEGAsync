@@ -353,6 +353,9 @@
                  <height>24</height>
                 </size>
                </property>
+               <property name="toolTip">
+                <string>Show in folder</string>
+               </property>
                <property name="styleSheet">
                 <string notr="true"/>
                </property>
@@ -613,6 +616,7 @@ background-color: rgba(0, 0, 0, 8%);
                      </property>
                      <property name="font">
                       <font>
+                       <family>Lato</family>
                        <pointsize>-1</pointsize>
                       </font>
                      </property>

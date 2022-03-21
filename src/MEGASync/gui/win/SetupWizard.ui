@@ -609,7 +609,7 @@ QPushButton
            </widget>
           </item>
           <item row="3" column="1">
-           <widget class="QLineEdit" name="ePassword">
+           <widget class="PasswordLineEdit" name="ePassword">
             <property name="minimumSize">
              <size>
               <width>289</width>
@@ -769,7 +769,7 @@ QPushButton
            </widget>
           </item>
           <item row="5" column="1">
-           <widget class="QLineEdit" name="eRepeatPassword">
+           <widget class="PasswordLineEdit" name="eRepeatPassword">
             <property name="minimumSize">
              <size>
               <width>289</width>
@@ -2361,6 +2361,13 @@ image: url(://images/desktop_app_TM.png);
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>PasswordLineEdit</class>
+   <extends>QLineEdit</extends>
+   <header>PasswordLineEdit.h</header>
+  </customwidget>
+ </customwidgets>
  <tabstops>
   <tabstop>eName</tabstop>
   <tabstop>eLastName</tabstop>
