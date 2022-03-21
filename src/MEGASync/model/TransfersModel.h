@@ -143,7 +143,6 @@ signals:
 public slots:
     void onRetryTransfer(TransferTag tag);
     void pauseResumeAllTransfers(bool state);
-    void cancelScanning();
 
 private slots:
     void onPauseStateChanged();
