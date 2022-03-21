@@ -861,11 +861,6 @@ void TransfersModel::pauseResumeAllTransfers(bool state)
     emit pauseStateChanged(mAreAllPaused);
 }
 
-void TransfersModel::cancelScanning()
-{
-
-}
-
 void TransfersModel::pauseResumeTransferByTag(TransferTag tag, bool pauseState)
 {
     auto row = mTagByOrder.value(tag);

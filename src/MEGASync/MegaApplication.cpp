@@ -1691,6 +1691,7 @@ void MegaApplication::createTransferManagerDialog()
         connect(transferManager, SIGNAL(userActivity()), this, SLOT(registerUserActivity()));
         connect(transferQuota.get(), &TransferQuota::sendState,
                 transferManager, &TransferManager::onTransferQuotaStateChanged);
+        connect(transferManager, SIGNAL(cancelScanning()), this, SLOT(cancelScanningStage()));
     }
 }
 
@@ -5065,14 +5066,6 @@ void MegaApplication::transferManagerActionClicked(int tab)
     }
 
     createTransferManagerDialog();
-
-    transferManager = new TransferManager(megaApi);
-    // Signal/slot to notify the tracking of unseen completed transfers of Transfer Manager. If Completed tab is
-    // active, tracking is disabled
-    connect(transferManager, SIGNAL(viewedCompletedTransfers()), this, SLOT(clearViewedTransfers()));
-    connect(transferManager, SIGNAL(completedTransfersTabActive(bool)), this, SLOT(onCompletedTransfersTabActive(bool)));
-    connect(transferManager, SIGNAL(userActivity()), this, SLOT(registerUserActivity()));
-    connect(transferManager, SIGNAL(cancelScanning()), this, SLOT(cancelScanningStage()));
 
     transferManager->setActiveTab(tab);
     Platform::activateBackgroundWindow(transferManager);
