@@ -285,7 +285,7 @@ margin-left: 20px;
        </widget>
       </item>
       <item row="14" column="1">
-       <widget class="QLineEdit" name="eProxyPassword">
+       <widget class="PasswordLineEdit" name="eProxyPassword">
         <property name="enabled">
          <bool>false</bool>
         </property>
@@ -568,6 +568,13 @@ margin-left: 20px;
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>PasswordLineEdit</class>
+   <extends>QLineEdit</extends>
+   <header>PasswordLineEdit.h</header>
+  </customwidget>
+ </customwidgets>
  <tabstops>
   <tabstop>rNoProxy</tabstop>
   <tabstop>rProxyAuto</tabstop>
