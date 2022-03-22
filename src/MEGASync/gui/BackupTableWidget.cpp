@@ -26,6 +26,7 @@ void BackupTableWidget::customize()
     horizontalHeader()->setSectionResizeMode(BackupItemColumn::ENABLED, QHeaderView::Fixed);
     horizontalHeader()->setSectionResizeMode(BackupItemColumn::LNAME,QHeaderView::Stretch);
     horizontalHeader()->setSectionResizeMode(BackupItemColumn::MENU, QHeaderView::Fixed);
+    setFont(QFont().defaultFamily());
 
     // Hijack the sorting on the dots MENU column and hide the sort indicator,
     // instead of showing a bogus sort on that column;

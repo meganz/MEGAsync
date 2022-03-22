@@ -10,6 +10,12 @@
     <height>128</height>
    </rect>
   </property>
+  <property name="minimumSize">
+   <size>
+    <width>450</width>
+    <height>150</height>
+   </size>
+  </property>
   <property name="windowTitle">
    <string>Add backup folder</string>
   </property>
@@ -40,13 +46,13 @@ height: 20px;
     <number>16</number>
    </property>
    <property name="topMargin">
-    <number>16</number>
+    <number>20</number>
    </property>
    <property name="rightMargin">
     <number>16</number>
    </property>
    <property name="bottomMargin">
-    <number>16</number>
+    <number>15</number>
    </property>
    <item>
     <layout class="QGridLayout" name="gridLayout">

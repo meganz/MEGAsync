@@ -18,7 +18,6 @@ QSyncItemWidget::QSyncItemWidget(int itemType, QWidget* parent) :
     mNodesUpToDate (true)
 {
     mUi->setupUi(this);
-    installEventFilter(this);
     configureSyncTypeUI(itemType);
 
     connect(SyncModel::instance(), &SyncModel::syncStateChanged,

@@ -319,7 +319,7 @@ margin: 4px;
         </widget>
        </item>
        <item>
-        <widget class="QFrame" name="fFoldersS1">
+        <widget class="QFrame" name="fFoldersStep1">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
            <horstretch>0</horstretch>

@@ -2063,7 +2063,7 @@ void SettingsDialog::addSyncRow(int row, const QString& name, const QString& lPa
     mUi->tSyncs->setCellWidget(row, SYNC_COL_ENABLE_CB, w);
 
     // Col 1: Local folder
-    QSyncItemWidget* localFolder = new QSyncItemWidget(QSyncItemWidget::LOCAL_FOLDER);
+    QSyncItemWidget* localFolder = new QSyncItemWidget(QSyncItemWidget::LOCAL_FOLDER, this);
     QString localFolderQString = lPath;
 #ifdef Q_OS_WINDOWS
     if (localFolderQString.startsWith(QString::fromUtf8("\\\\?\\")))
@@ -2077,7 +2077,7 @@ void SettingsDialog::addSyncRow(int row, const QString& name, const QString& lPa
     mUi->tSyncs->setCellWidget(row, SYNC_COL_LFOLDER, localFolder);
 
     // Col 2: Mega Folder
-    QSyncItemWidget* megaFolder = new QSyncItemWidget(QSyncItemWidget::REMOTE_FOLDER);
+    QSyncItemWidget* megaFolder = new QSyncItemWidget(QSyncItemWidget::REMOTE_FOLDER, this);
     assert(rPath.size() && "remote folder lacks path");
     megaFolder->setPath(rPath.size() ?
                             rPath

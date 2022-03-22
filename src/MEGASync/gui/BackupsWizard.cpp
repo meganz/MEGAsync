@@ -19,6 +19,8 @@ constexpr int MAX_ROWS_STEP_2 (5);
 constexpr int HEIGHT_MIN_STEP_2 (296);
 constexpr int HEIGHT_MAX_STEP_2 (HEIGHT_MIN_STEP_2 + HEIGHT_ROW_STEP_2 * MAX_ROWS_STEP_2);
 
+
+
 BackupsWizard::BackupsWizard(QWidget* parent) :
     QDialog(parent),
     mUi (new Ui::BackupsWizard),
