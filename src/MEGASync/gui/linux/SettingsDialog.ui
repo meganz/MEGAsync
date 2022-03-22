@@ -1979,17 +1979,19 @@ margin: 0px;
 {
 background: white;
 outline: 0;
+border: 1px solid #D8D8D8;
 }
 
 QTableView::item
 {
 border: none;
+padding-left:1px;
 }
 
 QTableView::indicator
 {
-min-height: 14px;
-min-width: 14px;
+width: 16px;
+height: 16px;
 }
 
 QHeaderView::section:horizontal
@@ -1997,7 +1999,8 @@ QHeaderView::section:horizontal
 color: #4A607A;
 background: white;
 border:none;
-padding-left: 8px;
+padding-left: 10px;
+padding-top:4px;
 }
 
 QMenu
@@ -2021,6 +2024,12 @@ QMenu::item
 background-color: transparent;
 border-radius: 8px;
 }</string>
+            </property>
+            <property name="frameShape">
+             <enum>QFrame::NoFrame</enum>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Sunken</enum>
             </property>
             <property name="alternatingRowColors">
              <bool>true</bool>
@@ -2052,8 +2061,11 @@ border-radius: 8px;
             <attribute name="verticalHeaderVisible">
              <bool>false</bool>
             </attribute>
+            <attribute name="verticalHeaderMinimumSectionSize">
+             <number>24</number>
+            </attribute>
             <attribute name="verticalHeaderDefaultSectionSize">
-             <number>30</number>
+             <number>24</number>
             </attribute>
            </widget>
           </item>
@@ -2112,13 +2124,6 @@ border-radius: 8px;
           <property name="bottomMargin">
            <number>10</number>
           </property>
-          <item>
-           <widget class="QLabel" name="label">
-            <property name="text">
-             <string>Uploads:</string>
-            </property>
-           </widget>
-          </item>
           <item>
            <layout class="QHBoxLayout" name="horizontalLayout_3">
             <item>

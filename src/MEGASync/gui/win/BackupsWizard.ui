@@ -499,6 +499,9 @@ margin: 4px;
                 <property name="resizeMode">
                  <enum>QListView::Adjust</enum>
                 </property>
+                <property name="resizeMode">
+                 <enum>QListView::Adjust</enum>
+                </property>
                 <property name="spacing">
                  <number>0</number>
                 </property>

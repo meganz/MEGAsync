@@ -170,12 +170,14 @@ QVariant BackupItemModel::data(const QModelIndex &index, int role) const
         }
         break;
     case BackupItemColumn::MENU:
-        QIcon dotsMenu;
-        dotsMenu.addFile(QLatin1String("://images/icons/options_dots/options-rest.png"), QSize(ICON_SIZE, ICON_SIZE), QIcon::Normal);
-        dotsMenu.addFile(QLatin1String("://images/icons/options_dots/options-press.png"), QSize(ICON_SIZE, ICON_SIZE), QIcon::Selected);
-        dotsMenu.addFile(QLatin1String("://images/icons/options_dots/options-hover.png"), QSize(ICON_SIZE, ICON_SIZE), QIcon::Active);
         if(role == Qt::DecorationRole)
+        {
+            QIcon dotsMenu;
+            dotsMenu.addFile(QLatin1String("://images/icons/options_dots/options-rest.png"), QSize(ICON_SIZE, ICON_SIZE), QIcon::Normal);
+            dotsMenu.addFile(QLatin1String("://images/icons/options_dots/options-press.png"), QSize(ICON_SIZE, ICON_SIZE), QIcon::Selected);
+            dotsMenu.addFile(QLatin1String("://images/icons/options_dots/options-hover.png"), QSize(ICON_SIZE, ICON_SIZE), QIcon::Active);
             return dotsMenu;
+        }
         else if(role == Qt::ToolTipRole)
             return tr("Click menu for more Backup actions");
         break;
