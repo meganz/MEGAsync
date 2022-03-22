@@ -2301,14 +2301,14 @@ void SettingsDialog::openMEGAHandleInExplorer(MegaHandle handle)
     MegaNode* node = mMegaApi->getNodeByHandle(handle);
     if (node)
     {
-        const char *handle = node->getBase64Handle();
-        if(handle)
+        const char *h = node->getBase64Handle();
+        if(h)
         {
             // FIXME: Revert to live url when feature is merged
             // QString url = QString::fromUtf8("mega://#fm/") + QString::fromUtf8(handle);
-            QString url = QString::fromUtf8("https://13755-backup-center.developers.mega.co.nz/#fm/") + QString::fromUtf8(handle);
+            QString url = QString::fromUtf8("https://13755-backup-center.developers.mega.co.nz/#fm/") + QString::fromUtf8(h);
             QtConcurrent::run(QDesktopServices::openUrl, QUrl(url));
-            delete [] handle;
+            delete [] h;
         }
         delete node;
     }

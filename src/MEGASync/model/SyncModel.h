@@ -8,7 +8,7 @@
 #include <QMutex>
 
 #include "control/Preferences.h"
-#include "SyncSettings.h"
+#include "model/SyncSettings.h"
 
 #include "megaapi.h"
 

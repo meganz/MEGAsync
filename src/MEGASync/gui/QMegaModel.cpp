@@ -161,12 +161,7 @@ static const QIcon thisDeviceIcon (QIcon(QLatin1String("://images/icons/pc/pc-li
             }
             return true;
         }
-        default:
-        {
-            return QVariant();
-        }
     }
-    Q_UNREACHABLE();
     return QVariant();
 }
 

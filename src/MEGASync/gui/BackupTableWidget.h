@@ -1,7 +1,7 @@
 #ifndef BACKUPTABLEWIDGET_H
 #define BACKUPTABLEWIDGET_H
 
-#include "SyncSettings.h"
+#include "model/SyncSettings.h"
 
 #include <QObject>
 #include <QTableView>
