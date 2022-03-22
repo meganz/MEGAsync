@@ -2498,7 +2498,6 @@ void MegaApplication::calculateInfoDialogCoordinates(QDialog *dialog, int *posx,
                 MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Calculating Info Dialog coordinates. pabd.uEdge = %1, pabd.rc = %2")
                              .arg(pabd.uEdge)
                              .arg(QString::fromUtf8("[%1,%2,%3,%4]").arg(pabd.rc.left).arg(pabd.rc.top).arg(pabd.rc.right).arg(pabd.rc.bottom))
-                             .arg(screenIndex)
                              .toUtf8().constData());
 
             }
