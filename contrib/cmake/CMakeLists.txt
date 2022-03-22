@@ -304,6 +304,8 @@ set (MOC_INPUT
     ${MEGAsyncDir}/gui/SwitchButton.h
     ${MEGAsyncDir}/gui/GuiUtilities.h
     ${MEGAsyncDir}/gui/EventHelper.h
+    ${MEGAsyncDir}/gui/BackupTableWidget.h
+    ${MEGAsyncDir}/gui/BackupItemModel.h
 
     ${MEGAsyncDir}/platform/notificator.h
     ${MEGAsyncDir}/mega/bindings/qt/QTMegaGlobalListener.h
@@ -457,6 +459,9 @@ set (SRCS
     ${MEGAsyncDir}/gui/SwitchButton.cpp
     ${MEGAsyncDir}/gui/GuiUtilities.cpp
     ${MEGAsyncDir}/gui/EventHelper.cpp
+	${MEGAsyncDir}/gui/BackupTableWidget.cpp
+	${MEGAsyncDir}/gui/BackupItemModel.cpp
+
 
     ${MEGAsyncDir}/mega/bindings/qt/QTMegaRequestListener.cpp
     ${MEGAsyncDir}/mega/bindings/qt/QTMegaTransferListener.cpp

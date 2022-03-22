@@ -3,7 +3,7 @@
 
 #include <QDialog>
 
-#include "SyncSettings.h"
+#include "model/SyncSettings.h"
 
 namespace Ui {
 class RemoveBackupDialog;
