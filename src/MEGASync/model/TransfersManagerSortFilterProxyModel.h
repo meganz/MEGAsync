@@ -42,6 +42,8 @@ public:
         bool isAnyCancelable() const;
         bool isAnyActive() const;
 
+        bool isModelProcessing() const;
+
 signals:
         void modelAboutToBeChanged();
         void modelChanged();
@@ -94,5 +96,6 @@ private:
 };
 
 Q_DECLARE_METATYPE(QAbstractItemModel::LayoutChangeHint)
+Q_DECLARE_METATYPE(QVector<int>)
 
 #endif // TRANSFERSSORTFILTERPROXYMODEL_H

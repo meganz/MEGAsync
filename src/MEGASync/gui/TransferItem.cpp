@@ -113,6 +113,11 @@ uint64_t TransferData::getFinishedTime() const
     return result;
 }
 
+QString TransferData::getFormattedFinishedTime() const
+{
+    return QDateTime::fromTime_t(mFinishedTime).toLocalTime().toString(QString::fromStdString("hh:mm"));
+}
+
 QString TransferData::path() const
 {
     QString localPath = mPath;
@@ -175,6 +180,11 @@ bool TransferData::isPaused() const
 bool TransferData::isCompleted() const
 {
     return mState & TRANSFER_COMPLETED;
+}
+
+bool TransferData::hasFailed() const
+{
+    return mState & TRANSFER_FAILED;
 }
 
 bool TransferData::isDownload() const

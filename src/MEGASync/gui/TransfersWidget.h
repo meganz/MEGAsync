@@ -36,6 +36,9 @@ public:
                         const TransferData::TransferStates transferStates,
                         const Utilities::FileTypes fileTypes);
     void transferFilterReset();
+    void updateHeaderItems(const QString& headerTime,
+                           const QString& cancelClearTooltip,
+                           const QString& headerSpeed);
 
     void cancelClearAll();
 
@@ -49,7 +52,6 @@ public slots:
     void on_tPauseResumeVisible_toggled(bool state);
     void on_tCancelClearVisible_clicked();
     void onTransferAdded();
-    void onShowCompleted(bool showCompleted);
     void onPauseStateChanged(bool pauseState);
 
 protected:

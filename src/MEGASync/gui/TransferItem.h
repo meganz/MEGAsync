@@ -102,7 +102,9 @@ public:
     bool isActive() const;
     bool isPaused() const;
     bool isCompleted() const;
+    bool hasFailed() const;
     uint64_t getFinishedTime() const;
+    QString getFormattedFinishedTime() const;
 
 private:
     QString   mPath;

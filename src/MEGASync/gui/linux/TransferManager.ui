@@ -287,7 +287,7 @@ QToolButton
   font-weight: 600;
 }
 
-#tClearCompleted
+#tActionButton
 {
 	 height: 32px;
     min-height: 32px;
@@ -933,6 +933,94 @@ QToolButton
            </layout>
           </widget>
          </item>
+		 <item>
+          <widget class="QFrame" name="fFailed">
+           <layout class="QHBoxLayout" name="horizontalLayout_failed">
+            <property name="spacing">
+             <number>0</number>
+            </property>
+            <property name="leftMargin">
+             <number>0</number>
+            </property>
+            <property name="topMargin">
+             <number>0</number>
+            </property>
+            <property name="rightMargin">
+             <number>0</number>
+            </property>
+            <property name="bottomMargin">
+             <number>0</number>
+            </property>
+            <item>
+             <widget class="QPushButton" name="tFailed">
+              <property name="enabled">
+               <bool>true</bool>
+              </property>
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="cursor">
+               <cursorShape>PointingHandCursor</cursorShape>
+              </property>
+              <property name="text">
+               <string>Failed</string>
+              </property>
+              <property name="icon">
+               <iconset resource="../Resources_win.qrc">
+                <normaloff>:/images/sidebar_failed_ico.png</normaloff>:/images/sidebar_failed_ico.png</iconset>
+              </property>
+              <property name="autoDefault">
+               <bool>false</bool>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="horizontalSpacer_failed_2">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item>
+             <widget class="QLabel" name="lFailed">
+              <property name="enabled">
+               <bool>true</bool>
+              </property>
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>24</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>24</height>
+               </size>
+              </property>
+              <property name="text">
+               <string notr="true"/>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </item> 
         </layout>
        </widget>
       </item>
@@ -2075,6 +2163,18 @@ QToolButton
              </size>
             </property>
             <layout class="QGridLayout" name="currentContentLayout">
+             <property name="leftMargin">
+              <number>0</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
+              <number>0</number>
+             </property>
              <property name="horizontalSpacing">
               <number>2</number>
              </property>
@@ -2103,8 +2203,61 @@ QToolButton
                </property>
               </widget>
              </item>
+             <item row="2" column="0">
+              <widget class="QLabel" name="lTransferOverQuota">
+               <property name="text">
+                <string>Depleted transfer quota</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="3">
+              <spacer name="horizontalSpacer_13">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>40</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item row="0" column="0">
+              <widget class="QLabel" name="lCurrentContent">
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>32</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>16777215</width>
+                 <height>32</height>
+                </size>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+              </widget>
+             </item>
+             <item row="7" column="0">
+              <widget class="QLabel" name="lStorageOverQuota">
+               <property name="text">
+                <string>Account is full</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="0">
+              <widget class="QLabel" name="lPaused">
+               <property name="text">
+                <string>Paused</string>
+               </property>
+              </widget>
+             </item>
              <item row="0" column="1">
-              <widget class="QToolButton" name="tClearCompleted">
+              <widget class="QToolButton" name="tActionButton">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
                  <horstretch>0</horstretch>
@@ -2131,58 +2284,18 @@ QToolButton
                </property>
               </widget>
              </item>
-             <item row="0" column="0">
-              <widget class="QLabel" name="lCurrentContent">
-               <property name="minimumSize">
-                <size>
-                 <width>0</width>
-                 <height>32</height>
-                </size>
-               </property>
-               <property name="maximumSize">
-                <size>
-                 <width>16777215</width>
-                 <height>32</height>
-                </size>
-               </property>
-               <property name="text">
-                <string/>
-               </property>
-              </widget>
-             </item>
-             <item row="2" column="0">
-              <widget class="QLabel" name="lTransferOverQuota">
-               <property name="text">
-                <string>Depleted transfer quota</string>
-               </property>
-              </widget>
-             </item>
-             <item row="1" column="0">
-              <widget class="QLabel" name="lPaused">
-               <property name="text">
-                <string>Paused</string>
-               </property>
-              </widget>
-             </item>
-             <item row="0" column="3">
-              <spacer name="horizontalSpacer_13">
+             <item row="8" column="0">
+              <spacer name="verticalSpacer_2">
                <property name="orientation">
-                <enum>Qt::Horizontal</enum>
+                <enum>Qt::Vertical</enum>
                </property>
                <property name="sizeHint" stdset="0">
                 <size>
-                 <width>40</width>
-                 <height>20</height>
+                 <width>0</width>
+                 <height>0</height>
                 </size>
                </property>
               </spacer>
-             </item>
-             <item row="7" column="0">
-              <widget class="QLabel" name="lStorageOverQuota">
-               <property name="text">
-                <string>Account is full</string>
-               </property>
-              </widget>
              </item>
             </layout>
            </widget>

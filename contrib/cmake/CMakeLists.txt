@@ -233,6 +233,7 @@ set (MOC_INPUT
     ${MEGAsyncDir}/gui/BindFolderDialog.h
     ${MEGAsyncDir}/gui/ChangeLogDialog.h
     ${MEGAsyncDir}/gui/ChangePassword.h
+    ${MEGAsyncDir}/gui/PasswordLineEdit.h
     ${MEGAsyncDir}/gui/MegaProgressCustomDialog.h
     ${MEGAsyncDir}/gui/CrashReportDialog.h
     ${MEGAsyncDir}/gui/DownloadFromMegaDialog.h
@@ -421,6 +422,8 @@ set (SRCS
     ${MEGAsyncDir}/gui/InfoDialogTransfersWidget.cpp
     ${MEGAsyncDir}/gui/StatusInfo.cpp
     ${MEGAsyncDir}/gui/ChangePassword.cpp
+    ${MEGAsyncDir}/gui/PasswordLineEdit.cpp
+    ${MEGAsyncDir}/gui/CustomTransferItem.cpp
     ${MEGAsyncDir}/gui/PSAwidget.cpp
     ${MEGAsyncDir}/gui/ElidedLabel.cpp
     ${MEGAsyncDir}/gui/UpgradeOverStorage.cpp

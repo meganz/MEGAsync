@@ -268,11 +268,6 @@ public:
     long long getMaxMemoryReportTime();
     void setMaxMemoryReportTime(long long timestamp);
 
-    int transferDownloadMethod();
-    void setTransferDownloadMethod(int value);
-    int transferUploadMethod();
-    void setTransferUploadMethod(int value);
-
     long long lastUpdateTime();
     void setLastUpdateTime(long long time);
     int lastUpdateVersion();

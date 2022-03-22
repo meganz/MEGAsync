@@ -34,8 +34,9 @@ public:
         DOWNLOADS_TAB     = 1,
         UPLOADS_TAB       = 2,
         COMPLETED_TAB     = 3,
-        SEARCH_TAB        = 4,
-        TYPES_TAB_BASE    = 5,
+        FAILED_TAB        = 4,
+        SEARCH_TAB        = 5,
+        TYPES_TAB_BASE    = 6,
         TYPE_OTHER_TAB    = TYPES_TAB_BASE + toInt(Utilities::FileType::TYPE_OTHER),
         TYPE_AUDIO_TAB    = TYPES_TAB_BASE + toInt(Utilities::FileType::TYPE_AUDIO),
         TYPE_VIDEO_TAB    = TYPES_TAB_BASE + toInt(Utilities::FileType::TYPE_VIDEO),
@@ -63,9 +64,11 @@ signals:
     void userActivity();
     void showCompleted(bool showCompleted);
     void clearCompletedTransfers();
+    void retryAllTransfers();
 
 protected:
     bool eventFilter(QObject *obj, QEvent *event) override;
+    void closeEvent(QCloseEvent* event) override;
     void changeEvent(QEvent *event) override;
     void dragEnterEvent(QDragEnterEvent* event) override;
     void dragLeaveEvent(QDragLeaveEvent* event) override;
@@ -101,13 +104,16 @@ private:
     void refreshTypeStats();
     void refreshFileTypesStats();
     void applyTextSearch(const QString& text);
+    void checkActionAndMediaVisibility();
+    void onFileTypeButtonClicked(TM_TAB tab, Utilities::FileType fileType, const QString& tabLabel);
 
 private slots:
     void on_tCompleted_clicked();
     void on_tDownloads_clicked();
     void on_tUploads_clicked();
     void on_tAllTransfers_clicked();
-    void on_tClearCompleted_clicked();
+    void on_tFailed_clicked();
+    void on_tActionButton_clicked();
     void on_tSeePlans_clicked();
     void on_bSearch_clicked();
     void on_tSearchIcon_clicked();
