@@ -33,11 +33,11 @@ public:
         void updateFilters();
         void resetAllFilters();
         int  getNumberOfItems(TransferData::TransferType transferType);
-        void resetNumberOfItems();
 
         TransferBaseDelegateWidget* createTransferManagerItem(QWidget *parent) override;
 
-        int getPausedTransfers() const;
+        int  getPausedTransfers() const;
+        bool areAllPaused() const;
         bool isAnyPaused() const;
         bool isAnyCancelable() const;
         bool isAnyActive() const;
@@ -51,6 +51,8 @@ signals:
         void modelAboutToBeSorted();
         void modelSorted();
         void transferPauseResume(bool);
+        void transferRetry();
+        void transferCancelClear();
         void cancelableTransfersChanged(bool) const;
         void activeTransfersChanged(bool) const;
         void pausedTransfersChanged(bool) const;
@@ -93,6 +95,9 @@ private:
         void removeActiveTransferFromCounter(TransferTag tag) const;
         void removePausedTransferFromCounter(TransferTag tag) const;
         void removeNonSyncedTransferFromCounter(TransferTag tag) const;
+
+        void resetAllCounters();
+        void resetTransfersStateCounters();
 };
 
 Q_DECLARE_METATYPE(QAbstractItemModel::LayoutChangeHint)

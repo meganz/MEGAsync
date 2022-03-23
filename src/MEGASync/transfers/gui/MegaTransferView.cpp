@@ -49,17 +49,8 @@ void MegaTransferView::setup(TransfersWidget* tw)
     connect(this, &MegaTransferView::showContextMenu,
             this, &MegaTransferView::onCustomContextMenu);
 
-    connect(tw, &TransfersWidget::pauseResumeVisibleRows,
-            this, &MegaTransferView::onPauseResumeVisibleRows);
-
     connect(tw, &TransfersWidget::cancelClearVisibleRows,
-            this, &MegaTransferView::onCancelClearAllVisibleTransfers);
-
-    connect(tw, &TransfersWidget::pauseResumeAllRows,
-            this, &MegaTransferView::onPauseResumeAllRows);
-
-    connect(tw, &TransfersWidget::cancelAndClearAllRows,
-            this, &MegaTransferView::onCancelAndClearAllTransfers);
+            this, &MegaTransferView::onCancelClearVisibleTransfers);
 
     createContextMenu();
 }
@@ -111,8 +102,6 @@ QModelIndexList MegaTransferView::getSelectedTransfers()
             selection = proxy->mapSelectionToSource(selection);
         }
         indexes = selection.indexes();
-
-        clearSelection();
     }
 
     return indexes;
@@ -125,16 +114,9 @@ void MegaTransferView::onPauseResumeVisibleRows(bool pauseState)
     auto proxy (qobject_cast<QSortFilterProxyModel*>(model()));
     auto sourceModel(qobject_cast<TransfersModel*>(proxy->sourceModel()));
     sourceModel->pauseTransfers(indexes, pauseState);
-}
 
-void MegaTransferView::onPauseResumeAllRows(bool pauseState)
-{
-    QModelIndexList indexes = getTransfers(false);
-
-    auto proxy (qobject_cast<QSortFilterProxyModel*>(model()));
-    auto sourceModel(qobject_cast<TransfersModel*>(proxy->sourceModel()));
-
-    sourceModel->pauseTransfers(indexes, pauseState);
+    //Use to repaint and update the transfers state
+    update();
 }
 
 void MegaTransferView::onPauseResumeSelection(bool pauseState)
@@ -144,11 +126,34 @@ void MegaTransferView::onPauseResumeSelection(bool pauseState)
     auto sourceModel(qobject_cast<TransfersModel*>(proxy->sourceModel()));
 
     sourceModel->pauseTransfers(indexes, pauseState);
+
+    //Use to repaint and update the transfers state
+    update();
 }
 
-void MegaTransferView::onCancelClearAllVisibleTransfers()
+void MegaTransferView::onCancelClearVisibleTransfers()
 {
     QModelIndexList indexes = getTransfers(true);
+
+    QPointer<MegaTransferView> dialog = QPointer<MegaTransferView>(this);
+
+    if (QMegaMessageBox::warning(nullptr, QString::fromUtf8("MEGAsync"),
+                             tr("Are you sure you want to cancel or clear the following transfer(s)?", "", indexes.size()),
+                             QMessageBox::Yes | QMessageBox::No, QMessageBox::No)
+            != QMessageBox::Yes
+            || !dialog)
+    {
+        return;
+    }
+
+    auto proxy (qobject_cast<QSortFilterProxyModel*>(model()));
+    auto sourceModel(qobject_cast<TransfersModel*>(proxy->sourceModel()));
+    sourceModel->cancelTransfers(indexes);
+}
+
+void MegaTransferView::onCancelClearSelectedTransfers()
+{
+    QModelIndexList indexes = getSelectedTransfers();
 
     QPointer<MegaTransferView> dialog = QPointer<MegaTransferView>(this);
 
@@ -480,6 +485,33 @@ void MegaTransferView::dropEvent(QDropEvent* event)
 {
     QAbstractItemView::dropEvent(event);
     clearSelection();
+}
+
+void MegaTransferView::keyPressEvent(QKeyEvent *event)
+{
+    if(event->key() == Qt::Key_Delete)
+    {
+        onCancelClearSelectedTransfers();
+    }
+
+    QTreeView::keyPressEvent(event);
+}
+
+void MegaTransferView::selectionChanged(const QItemSelection &selected, const QItemSelection &deselected)
+{
+    auto selectedIndexes = selected.indexes();
+    auto deselectedIndexes = deselected.indexes();
+
+    if(!selectedIndexes.isEmpty())
+    {
+        scrollTo(selectedIndexes.last(), QAbstractItemView::PositionAtCenter);
+    }
+    else if(!deselectedIndexes.isEmpty())
+    {
+        scrollTo(deselectedIndexes.last(), QAbstractItemView::PositionAtCenter);
+    }
+
+    QTreeView::selectionChanged(selected, deselected);
 }
 
 void MegaTransferView::onCustomContextMenu(const QPoint& point)

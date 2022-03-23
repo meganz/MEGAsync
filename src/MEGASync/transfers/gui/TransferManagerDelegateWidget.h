@@ -31,6 +31,7 @@ signals:
     void cancelClearTransfer(bool isClear);
     void pauseResumeTransfer();
     void openTransfer();
+    void retryTransfer();
 
 private slots:
     void on_tPauseResumeTransfer_clicked();

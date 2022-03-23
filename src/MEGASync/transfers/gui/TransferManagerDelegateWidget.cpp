@@ -65,6 +65,7 @@ void TransferManagerDelegateWidget::updateTransferState()
                 mLastPauseResuemtTransferIconName = QLatin1Literal(":images/lists_pause_ico.png");
                 pauseResumeTooltip = tr("Pause transfer");
                 cancelClearTooltip = tr("Cancel transfer");
+                mUi->wProgressBar->setVisible(true);
                 mUi->sStatus->setCurrentWidget(mUi->pActive);
             }
 
@@ -96,6 +97,7 @@ void TransferManagerDelegateWidget::updateTransferState()
                 mLastPauseResuemtTransferIconName = QLatin1Literal(":images/lists_resume_ico.png");
                 pauseResumeTooltip = tr("Resume transfer");
                 cancelClearTooltip = tr("Cancel transfer");
+                mUi->wProgressBar->setVisible(true);
                 mUi->sStatus->setCurrentWidget(mUi->pPaused);
             }
             break;
@@ -107,6 +109,7 @@ void TransferManagerDelegateWidget::updateTransferState()
                 mLastPauseResuemtTransferIconName = QLatin1Literal(":images/lists_pause_ico.png");
                 pauseResumeTooltip = tr("Pause transfer");
                 cancelClearTooltip = tr("Cancel transfer");
+                mUi->wProgressBar->setVisible(true);
                 mUi->sStatus->setCurrentWidget(mUi->pQueued);
 
                 if(getData()->mErrorCode == MegaError::API_EOVERQUOTA)
@@ -357,26 +360,10 @@ void TransferManagerDelegateWidget::on_tPauseResumeTransfer_clicked()
 
 void TransferManagerDelegateWidget::on_tCancelClearTransfer_clicked()
 {
-    QPointer<TransferManagerDelegateWidget> dialog = QPointer<TransferManagerDelegateWidget>(this);
-
-    bool isClear = getData()->isFinished();
-    auto message = tr("Are you sure you want to %1 this transfer?")
-            .arg(isClear ? tr("clear") : tr("cancel"));
-
-    if (QMegaMessageBox::warning(nullptr, QString::fromUtf8("MEGAsync"),
-                             message,
-                             QMessageBox::Yes | QMessageBox::No, QMessageBox::No)
-            != QMessageBox::Yes
-            || !dialog)
-    {
-        return;
-    }
-
-    emit cancelClearTransfer(isClear);
+    emit cancelClearTransfer(getData()->isFinished());
 }
 
 void TransferManagerDelegateWidget::on_tItemRetry_clicked()
 {
-    //Base implementation
-    onRetryTransfer();
+    emit retryTransfer();
 }
