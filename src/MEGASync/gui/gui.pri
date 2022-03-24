@@ -5,8 +5,6 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/EventHelper.cpp \
     $$PWD/InfoDialog.cpp \
     $$PWD/MegaDelegateHoverManager.cpp \
-    $$PWD/MegaTransferDelegate.cpp \
-    $$PWD/TransferBaseDelegateWidget.cpp \
     $$PWD/NotificationsSettings.cpp \
     $$PWD/OverQuotaDialog.cpp \
     $$PWD/PasswordLineEdit.cpp \
@@ -14,9 +12,6 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/NodeSelector.cpp \
     $$PWD/FolderBinder.cpp \
     $$PWD/BindFolderDialog.cpp \
-    $$PWD/TransferItem.cpp \
-    $$PWD/TransferManagerDelegateWidget.cpp \
-    $$PWD/TransferManagerLoadingItem.cpp \
     $$PWD/UploadToMegaDialog.cpp \
     $$PWD/PasteMegaLinksDialog.cpp \
     $$PWD/ImportMegaLinksDialog.cpp \
@@ -36,27 +31,19 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/UpgradeDialog.cpp \
     $$PWD/PlanWidget.cpp \
     $$PWD/InfoWizard.cpp \
-    $$PWD/TransferManager.cpp \
-    $$PWD/TransfersWidget.cpp \
-    $$PWD/MegaTransferView.cpp \
     $$PWD/QMegaMessageBox.cpp \
-    $$PWD/TransfersStateInfoWidget.cpp \
     $$PWD/MegaSpeedGraph.cpp \
     $$PWD/AvatarWidget.cpp \
     $$PWD/MenuItemAction.cpp \
     $$PWD/AddExclusionDialog.cpp \
-    $$PWD/InfoDialogTransfersWidget.cpp \
     $$PWD/StatusInfo.cpp \
     $$PWD/ChangePassword.cpp \
-    $$PWD/InfoDialogTransferDelegateWidget.cpp \
     $$PWD/PSAwidget.cpp \
     $$PWD/ElidedLabel.cpp \
     $$PWD/UpgradeOverStorage.cpp \
     $$PWD/Login2FA.cpp \
     $$PWD/QRWidget.cpp \
     $$PWD/QSyncItemWidget.cpp \
-    $$PWD/TransfersStatusWidget.cpp \
-    $$PWD/TransfersSummaryWidget.cpp \
     $$PWD/CircularUsageProgressBar.cpp \
     $$PWD/HighDpiResize.cpp \
     $$PWD/AlertItem.cpp \
@@ -79,8 +66,6 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/EventHelper.h \
     $$PWD/InfoDialog.h \
     $$PWD/MegaDelegateHoverManager.h \
-    $$PWD/MegaTransferDelegate.h \
-    $$PWD/TransferBaseDelegateWidget.h \
     $$PWD/NotificationsSettings.h \
     $$PWD/OverQuotaDialog.h \
     $$PWD/PasswordLineEdit.h \
@@ -88,9 +73,6 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/NodeSelector.h \
     $$PWD/FolderBinder.h \
     $$PWD/BindFolderDialog.h \
-    $$PWD/TransferItem.h \
-    $$PWD/TransferManagerDelegateWidget.h \
-    $$PWD/TransferManagerLoadingItem.h \
     $$PWD/UploadToMegaDialog.h \
     $$PWD/PasteMegaLinksDialog.h \
     $$PWD/ImportMegaLinksDialog.h \
@@ -110,18 +92,12 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/UpgradeDialog.h \
     $$PWD/PlanWidget.h \
     $$PWD/InfoWizard.h \
-    $$PWD/TransferManager.h \
-    $$PWD/TransfersWidget.h \
-    $$PWD/MegaTransferView.h \
     $$PWD/QMegaMessageBox.h \
-    $$PWD/TransfersStateInfoWidget.h \
     $$PWD/MegaSpeedGraph.h \
     $$PWD/AvatarWidget.h \
     $$PWD/MenuItemAction.h \
     $$PWD/AddExclusionDialog.h \
-    $$PWD/InfoDialogTransfersWidget.h \
     $$PWD/StatusInfo.h \
-    $$PWD/InfoDialogTransferDelegateWidget.h \
     $$PWD/PSAwidget.h \
     $$PWD/ElidedLabel.h \
     $$PWD/UpgradeOverStorage.h \
@@ -129,8 +105,6 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/Login2FA.h \
     $$PWD/QRWidget.h \
     $$PWD/QSyncItemWidget.h \
-    $$PWD/TransfersStatusWidget.h \
-    $$PWD/TransfersSummaryWidget.h \
     $$PWD/CircularUsageProgressBar.h \
     $$PWD/HighDpiResize.h \
     $$PWD/AlertItem.h \

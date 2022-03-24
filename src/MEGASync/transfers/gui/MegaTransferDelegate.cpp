@@ -141,11 +141,15 @@ bool MegaTransferDelegate::editorEvent(QEvent* event, QAbstractItemModel*,
                                         const QStyleOptionViewItem& option,
                                         const QModelIndex& index)
 {
+
+    //Process the event first to allow the view to select the item in case of mouseButtonRelease
+    auto result = QStyledItemDelegate::editorEvent(event, mProxyModel, option, index);
+
     if (index.isValid())
     {
         switch (event->type())
         {
-            case QEvent::MouseButtonPress:
+            case QEvent::MouseButtonRelease:
             {
                 QMouseEvent* me = static_cast<QMouseEvent*>(event);
                 if( me->button() == Qt::LeftButton )
@@ -180,7 +184,8 @@ bool MegaTransferDelegate::editorEvent(QEvent* event, QAbstractItemModel*,
                 break;
         }
     }
-    return QStyledItemDelegate::editorEvent(event, mProxyModel, option, index);
+
+    return result;
 }
 
 bool MegaTransferDelegate::helpEvent(QHelpEvent* event, QAbstractItemView* view,

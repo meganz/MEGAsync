@@ -16,6 +16,8 @@ public:
 
     TransferBaseDelegateWidget* createTransferManagerItem(QWidget *parent) override;
 
+    void setSourceModel(QAbstractItemModel* sourceModel) override;
+
 protected slots:
     void onCopyTransferLinkRequested();
     void onOpenTransferFolderRequested();
@@ -24,6 +26,12 @@ protected slots:
 protected:
     bool lessThan(const QModelIndex &left, const QModelIndex &right) const override;
     bool filterAcceptsRow(int sourceRow, const QModelIndex& sourceParent) const override;
+
+private slots:
+        void onRowsAboutToBeRemoved(const QModelIndex& parent, int first, int last);
+
+private:
+    mutable int mNextTransferTag;
 
 };
 

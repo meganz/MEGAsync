@@ -40,8 +40,6 @@ public:
                            const QString& cancelClearTooltip,
                            const QString& headerSpeed);
 
-    void cancelClearAll();
-
     TransfersModel* getModel();
     TransfersManagerSortFilterProxyModel* getProxyModel() {return mProxyModel;}
     ~TransfersWidget();
@@ -51,16 +49,19 @@ public slots:
     void on_pHeaderSize_clicked();
     void on_tPauseResumeVisible_toggled(bool state);
     void on_tCancelClearVisible_clicked();
-    void onTransferAdded();
     void onPauseStateChanged(bool pauseState);
 
 protected:
     void changeEvent(QEvent *event);
 
 private slots:
+    void onUiBlocked();
+    void onUiUnblocked();
     void onModelChanged();
     void onModelAboutToBeChanged();
     void onPauseResumeButtonCheckedOnDelegate(bool pause);
+    void onCancelClearButtonPressedOnDelegate();
+    void onRetryButtonPressedOnDelegate();
     void onCheckCancelButtonVisibility(bool state);
     void onActiveTransferCounterChanged(bool state);
     void onPausedTransferCounterChanged(bool state);
@@ -96,8 +97,6 @@ signals:
     void applyFilter();
     void pauseResumeVisibleRows(bool state);
     void cancelClearVisibleRows();
-    void pauseResumeAllRows(bool pauseState);
-    void cancelAndClearAllRows();
 
     void disableTransferManager(bool);
 

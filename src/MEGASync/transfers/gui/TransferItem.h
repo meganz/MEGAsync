@@ -101,14 +101,16 @@ public:
     bool isSyncTransfer() const;
     bool isActive() const;
     bool isPaused() const;
+    bool isProcessing() const;
     bool isCompleted() const;
     bool hasFailed() const;
-    uint64_t getFinishedTime() const;
+    int64_t getFinishedTime() const;
     QString getFormattedFinishedTime() const;
 
 private:
     QString   mPath;
     int64_t   mFinishedTime;
+
 };
 Q_DECLARE_TYPEINFO(TransferData, Q_MOVABLE_TYPE);
 Q_DECLARE_METATYPE(TransferData)

@@ -35,11 +35,6 @@ TransfersManagerSortFilterProxyModel::~TransfersManagerSortFilterProxyModel()
 
 void TransfersManagerSortFilterProxyModel::sort(int sortCriterion, Qt::SortOrder order)
 {
-    if(!dynamicSortFilter())
-    {
-        setDynamicSortFilter(true);
-    }
-
     auto sourceM = qobject_cast<TransfersModel*>(sourceModel());
     if(sourceM)
     {
@@ -56,7 +51,7 @@ void TransfersManagerSortFilterProxyModel::sort(int sortCriterion, Qt::SortOrder
         auto sourceM = qobject_cast<TransfersModel*>(sourceModel());
         sourceM->lockModelMutex(true);
         QSortFilterProxyModel::sort(sortCriterion, order);
-        QSortFilterProxyModel::invalidate();
+        //QSortFilterProxyModel::invalidate();
         sourceM->lockModelMutex(false);
     });
     mFilterWatcher.setFuture(filtered);
@@ -64,7 +59,7 @@ void TransfersManagerSortFilterProxyModel::sort(int sortCriterion, Qt::SortOrder
 
 void TransfersManagerSortFilterProxyModel::invalidate()
 {
-    resetNumberOfItems();
+    resetAllCounters();
     emit modelAboutToBeChanged();
 
     QSortFilterProxyModel::invalidate();
@@ -86,29 +81,32 @@ void TransfersManagerSortFilterProxyModel::setFilterFixedString(const QString& p
     mFilterText = pattern;
     updateFilters();
 
-    resetNumberOfItems();
+    resetAllCounters();
     emit modelAboutToBeChanged();
 
     QFuture<void> filtered = QtConcurrent::run([this](){
         auto sourceM = qobject_cast<TransfersModel*>(sourceModel());
         sourceM->lockModelMutex(true);
         invalidateFilter();
+        QSortFilterProxyModel::sort(static_cast<int>(mSortCriterion),  sortOrder());
         sourceM->lockModelMutex(false);
     });
 
     mFilterWatcher.setFuture(filtered);
-
 }
 
 void TransfersManagerSortFilterProxyModel::textSearchTypeChanged()
 {
     updateFilters();
+
+    resetTransfersStateCounters();
     emit modelAboutToBeChanged();
 
     QFuture<void> filtered = QtConcurrent::run([this](){
         auto sourceM = qobject_cast<TransfersModel*>(sourceModel());
         sourceM->lockModelMutex(true);
         invalidateFilter();
+        QSortFilterProxyModel::sort(static_cast<int>(mSortCriterion), sortOrder());
         sourceM->lockModelMutex(false);
     });
     mFilterWatcher.setFuture(filtered);
@@ -145,7 +143,7 @@ void TransfersManagerSortFilterProxyModel::setFilters(const TransferData::Transf
 
 void TransfersManagerSortFilterProxyModel::resetAllFilters()
 {
-    resetNumberOfItems();
+    resetAllCounters();
     setFilters({}, {}, {});
 }
 
@@ -165,10 +163,15 @@ int  TransfersManagerSortFilterProxyModel::getNumberOfItems(TransferData::Transf
     return nb;
 }
 
-void TransfersManagerSortFilterProxyModel::resetNumberOfItems()
+void TransfersManagerSortFilterProxyModel::resetAllCounters()
 {
     mDlNumber.clear();
     mUlNumber.clear();
+    resetTransfersStateCounters();
+}
+
+void TransfersManagerSortFilterProxyModel::resetTransfersStateCounters()
+{
     mNoSyncTransfers.clear();
     mActiveTransfers.clear();
     mPausedTransfers.clear();
@@ -210,7 +213,7 @@ bool TransfersManagerSortFilterProxyModel::filterAcceptsRow(int sourceRow, const
 
     const auto d (qvariant_cast<TransferItem>(index.data()).getTransferData());
 
-    if(d->mTag >= 0)
+    if(d && d->mTag >= 0)
     {
         auto accept = (d->mState & mTransferStates)
                  && (d->mType & mTransferTypes)
@@ -238,7 +241,7 @@ bool TransfersManagerSortFilterProxyModel::filterAcceptsRow(int sourceRow, const
             }
 
             //Not needed to add the logic when the d is a sync transfer, as the sync state is permanent
-            if(!d->isSyncTransfer() && !mNoSyncTransfers.contains(d->mTag))
+            if(accept && !d->isSyncTransfer() && !mNoSyncTransfers.contains(d->mTag))
             {
                 auto wasEmpty(mNoSyncTransfers.isEmpty());
 
@@ -251,7 +254,7 @@ bool TransfersManagerSortFilterProxyModel::filterAcceptsRow(int sourceRow, const
             }
 
             //As the active state can change in time, add both logics to add or remove
-            if(d->isActive())
+            if(accept && d->isActive())
             {
                 if(!mActiveTransfers.contains(d->mTag))
                 {
@@ -270,7 +273,7 @@ bool TransfersManagerSortFilterProxyModel::filterAcceptsRow(int sourceRow, const
                 removeActiveTransferFromCounter(d->mTag);
             }
 
-            if(d->isPaused())
+            if(accept && d->isPaused())
             {
                 if(!mPausedTransfers.contains(d->mTag))
                 {
@@ -307,7 +310,7 @@ void TransfersManagerSortFilterProxyModel::onRowsAboutToBeRemoved(const QModelIn
 
        const auto d (qvariant_cast<TransferItem>(index.data()).getTransferData());
 
-       if(d->mTag >= 0)
+       if(d && d->mTag >= 0)
        {
            if(!mFilterText.isEmpty())
            {
@@ -390,28 +393,36 @@ bool TransfersManagerSortFilterProxyModel::lessThan(const QModelIndex &left, con
     const auto leftItem (qvariant_cast<TransferItem>(left.data()).getTransferData());
     const auto rightItem (qvariant_cast<TransferItem>(right.data()).getTransferData());
 
-    switch (mSortCriterion)
+    if(leftItem && rightItem)
     {
+        switch (mSortCriterion)
+        {
         case SortCriterion::PRIORITY:
         {
             return leftItem->mPriority > rightItem->mPriority;
         }
         case SortCriterion::TOTAL_SIZE:
         {
-            return leftItem->mTotalSize < rightItem->mTotalSize;
+            return leftItem->mTotalSize > rightItem->mTotalSize;
         }
         case SortCriterion::NAME:
         {
             return QString::compare(leftItem->mFilename, rightItem->mFilename, Qt::CaseInsensitive) < 0;
         }
+        }
     }
 
-    return false;
+    return QSortFilterProxyModel::lessThan(left, right);
 }
 
 int TransfersManagerSortFilterProxyModel::getPausedTransfers() const
 {
     return mPausedTransfers.size();
+}
+
+bool TransfersManagerSortFilterProxyModel::areAllPaused() const
+{
+    return mPausedTransfers.size() == rowCount();
 }
 
 bool TransfersManagerSortFilterProxyModel::isAnyPaused() const
@@ -471,11 +482,7 @@ void TransfersManagerSortFilterProxyModel::onCancelClearTransfer(bool isClear)
 
     if(delegateWidget && sourModel)
     {
-        QModelIndexList indexes;
-        auto index = delegateWidget->getCurrentIndex();
-        index = mapToSource(index);
-        indexes.append(index);
-        isClear ? sourModel->clearTransfers(indexes) : sourModel->cancelTransfers(indexes);
+        emit transferCancelClear();
     }
 }
 
@@ -486,10 +493,7 @@ void TransfersManagerSortFilterProxyModel::onPauseResumeTransfer()
 
     if(delegateWidget && sourModel)
     {
-        auto tag = delegateWidget->getData()->mTag;
         auto pause = delegateWidget->getData()->mState != TransferData::TransferState::TRANSFER_PAUSED;
-        sourModel->pauseResumeTransferByTag(tag,
-                                            pause);
         emit transferPauseResume(pause);
     }
 }
@@ -501,7 +505,7 @@ void TransfersManagerSortFilterProxyModel::onRetryTransfer()
 
     if(delegateWidget && sourModel)
     {
-        sourModel->retryTransferByIndex(mapToSource(delegateWidget->getCurrentIndex()));
+        emit transferRetry();
     }
 }
 
