@@ -1,5 +1,9 @@
 #include "TransferBatch.h"
 
+/*************************/
+/*** TransferBatch *******/
+/*************************/
+
 TransferBatch::TransferBatch()
 {
     mCancelToken = std::shared_ptr<mega::MegaCancelToken>(mega::MegaCancelToken::createInstance());
@@ -56,6 +60,9 @@ std::shared_ptr<mega::MegaCancelToken> TransferBatch::getCancelToken()
     return mCancelToken;
 }
 
+/*************************/
+/*** BlockingBatch *******/
+/*************************/
 
 BlockingBatch::~BlockingBatch()
 {

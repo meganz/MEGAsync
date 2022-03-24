@@ -1,18 +1,18 @@
-#ifndef BLOCKINGUI_H
-#define BLOCKINGUI_H
+#ifndef TransferScanCancelUi_H
+#define TransferScanCancelUi_H
 
 #include <QStackedWidget>
 
 #include "CancelConfirmWidget.h"
 #include "ScanningWidget.h"
 
-class BlockingUi : public QObject
+class TransferScanCancelUi : public QObject
 {
     Q_OBJECT
 
 public:
-    BlockingUi(QStackedWidget* _container);
-    ~BlockingUi();
+    TransferScanCancelUi(QStackedWidget* _container);
+    ~TransferScanCancelUi() = default;
 
     void show();
     void hide();
@@ -23,7 +23,6 @@ signals:
 
 private slots:
     void onCancelClicked();
-    void onCancelConfirmed();
     void onCancelDismissed();
 
 private:

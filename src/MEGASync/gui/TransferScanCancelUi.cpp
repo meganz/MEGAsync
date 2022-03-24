@@ -1,65 +1,54 @@
-#include "BlockingGui.h"
+#include "TransferScanCancelUi.h"
 
-BlockingUi::BlockingUi(QStackedWidget* _container)
+TransferScanCancelUi::TransferScanCancelUi(QStackedWidget* _container)
     : mContainer(_container)
 {
-    mBlockingWidget = new ScanningWidget();
-    mConfirmWidget = new CancelConfirmWidget();
+    mBlockingWidget = new ScanningWidget(mContainer);
+    mConfirmWidget = new CancelConfirmWidget(mContainer);
     mContainer->addWidget(mBlockingWidget);
     mContainer->addWidget(mConfirmWidget);
 
-    connect(mBlockingWidget, &ScanningWidget::cancel, this, &BlockingUi::onCancelClicked);
-    connect(mConfirmWidget, &CancelConfirmWidget::proceed, this, &BlockingUi::onCancelConfirmed);
-    connect(mConfirmWidget, &CancelConfirmWidget::dismiss, this, &BlockingUi::onCancelDismissed);
+    connect(mBlockingWidget, &ScanningWidget::cancel, this, &TransferScanCancelUi::onCancelClicked);
+    connect(mConfirmWidget, &CancelConfirmWidget::proceed, this, &TransferScanCancelUi::cancelTransfers);
+    connect(mConfirmWidget, &CancelConfirmWidget::dismiss, this, &TransferScanCancelUi::onCancelDismissed);
 
     QString styles = QString::fromLatin1(getControlStyles());
     mBlockingWidget->setStyleSheet(styles);
     mConfirmWidget->setStyleSheet(styles);
 }
 
-BlockingUi::~BlockingUi()
-{
-    delete mBlockingWidget;
-    delete mConfirmWidget;
-}
-
-void BlockingUi::show()
+void TransferScanCancelUi::show()
 {
     mLastSelectedWidget = mContainer->currentWidget();
     mContainer->setCurrentWidget(mBlockingWidget);
     mBlockingWidget->show();
 }
 
-void BlockingUi::hide()
+void TransferScanCancelUi::hide()
 {
     mContainer->setCurrentWidget(mLastSelectedWidget);
 }
 
-bool BlockingUi::isActive()
+bool TransferScanCancelUi::isActive()
 {
     return (mContainer->currentWidget() == mBlockingWidget) ||
            (mContainer->currentWidget() == mConfirmWidget);
 }
 
-void BlockingUi::onCancelClicked()
+void TransferScanCancelUi::onCancelClicked()
 {
     mContainer->setCurrentWidget(mConfirmWidget);
     mConfirmWidget->show();
     mBlockingWidget->hide();
 }
 
-void BlockingUi::onCancelConfirmed()
-{
-    emit cancelTransfers();
-}
-
-void BlockingUi::onCancelDismissed()
+void TransferScanCancelUi::onCancelDismissed()
 {
     mContainer->setCurrentWidget(mBlockingWidget);
     mBlockingWidget->show();
 }
 
-const char* BlockingUi::getControlStyles()
+const char* TransferScanCancelUi::getControlStyles()
 {
     const char* styles = "*[role=\"title\"] {font-size: 18px; font:bold;}"
                          "*[role=\"details\"] {font-size: 12px;}"

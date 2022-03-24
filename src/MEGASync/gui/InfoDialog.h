@@ -13,7 +13,7 @@
 #include "control/MegaController.h"
 #include "model/Model.h"
 #include <QGraphicsOpacityEffect>
-#include "BlockingGui.h"
+#include "TransferScanCancelUi.h"
 #include "HighDpiResize.h"
 #include "Utilities.h"
 #include "FilterAlertWidget.h"
@@ -259,7 +259,7 @@ protected:
     static double computeRatio(long long completed, long long remaining);
 
     void enableUserActions(bool value);
-    BlockingUi* mBlockingUi = nullptr;
+    TransferScanCancelUi* mTransferScanCancelUi = nullptr;
 };
 
 #endif // INFODIALOG_H

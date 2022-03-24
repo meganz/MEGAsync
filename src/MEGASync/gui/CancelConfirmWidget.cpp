@@ -6,9 +6,6 @@ CancelConfirmWidget::CancelConfirmWidget(QWidget *parent) :
     ui(new Ui::CancelConfirmWidget)
 {
     ui->setupUi(this);
-
-    ui->lWarningIcon->setPixmap(QPixmap(QString::fromLatin1(":/images/icon_warning.png")));
-
     ui->lCancelTransfers->setProperty("role", QString::fromLatin1("title"));
     ui->lExplanation->setProperty("role", QString::fromLatin1("details"));
 }

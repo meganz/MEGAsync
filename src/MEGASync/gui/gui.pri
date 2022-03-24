@@ -18,6 +18,7 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/TransferItem.cpp \
     $$PWD/TransferManagerDelegateWidget.cpp \
     $$PWD/TransferManagerLoadingItem.cpp \
+    $$PWD/TransferScanCancelUi.cpp \
     $$PWD/UploadToMegaDialog.cpp \
     $$PWD/PasteMegaLinksDialog.cpp \
     $$PWD/ImportMegaLinksDialog.cpp \
@@ -74,7 +75,6 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/BandwidthSettings.cpp \
     $$PWD/SwitchButton.cpp \
     $$PWD/GuiUtilities.cpp \
-    $$PWD/BlockingGui.cpp \
     $$PWD/CancelConfirmWidget.cpp
 
 HEADERS  += $$PWD/SettingsDialog.h \
@@ -95,6 +95,7 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/TransferItem.h \
     $$PWD/TransferManagerDelegateWidget.h \
     $$PWD/TransferManagerLoadingItem.h \
+    $$PWD/TransferScanCancelUi.h \
     $$PWD/UploadToMegaDialog.h \
     $$PWD/PasteMegaLinksDialog.h \
     $$PWD/ImportMegaLinksDialog.h \
@@ -152,7 +153,6 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/BandwidthSettings.h \
     $$PWD/SwitchButton.h \
     $$PWD/GuiUtilities.h \
-    $$PWD/BlockingGui.h \
     $$PWD/CancelConfirmWidget.h
 
 INCLUDEPATH += $$PWD

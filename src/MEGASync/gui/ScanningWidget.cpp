@@ -12,8 +12,6 @@ ScanningWidget::ScanningWidget(QWidget *parent) :
 
     mMovie = new QMovie(this);
     mMovie->setCacheMode(QMovie::CacheAll);
-    mMovie->moveToThread(&mGifThread);
-    mGifThread.start();
 
     mUi->lScanning->setProperty("role", QString::fromLatin1("title"));
     mUi->lExplanation->setProperty("role", QString::fromLatin1("details"));

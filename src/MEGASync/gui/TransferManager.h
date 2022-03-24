@@ -1,7 +1,7 @@
 #ifndef TRANSFERMANAGER_H
 #define TRANSFERMANAGER_H
 
-#include "BlockingGui.h"
+#include "TransferScanCancelUi.h"
 #include "megaapi.h"
 #include "Preferences.h"
 #include "MenuItemAction.h"
@@ -102,7 +102,7 @@ private:
 
     Ui::TransferManagerDragBackDrop* mUiDragBackDrop;
     QWidget* mDragBackDrop;
-    BlockingUi* mBlockingUi = nullptr;
+    TransferScanCancelUi* mTransferScanCancelUi = nullptr;
 
     void toggleTab(TM_TAB newTab);
     void refreshStateStats();
