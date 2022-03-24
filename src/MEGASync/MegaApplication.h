@@ -43,7 +43,6 @@
 #include "gui/MegaAlertDelegate.h"
 #include "gui/VerifyLockMessage.h"
 #include "DesktopNotifications.h"
-#include "TransferMetadata.h"
 #include "TransferQuota.h"
 
 class TransfersModel;
@@ -60,6 +59,7 @@ Q_DECLARE_METATYPE(QQueue<QString>)
 class Notificator;
 class MEGASyncDelegateListener;
 class ShellNotifier;
+class TransferMetadata;
 
 enum GetUserStatsReason {
     USERSTATS_LOGGEDIN,
@@ -445,8 +445,8 @@ protected:
 
     QQueue<QString> uploadQueue;
     QQueue<WrappedNode *> downloadQueue;
-    BlockingBatch blockingBatch;
-    std::vector<std::shared_ptr<mega::MegaCancelToken>> unblockedCancelTokens;
+    BlockingBatch mBlockingBatch;
+    std::vector<std::shared_ptr<mega::MegaCancelToken>> mUnblockedCancelTokens;
 
     ThreadPool* mThreadPool;
     std::shared_ptr<mega::MegaNode> mRootNode;

@@ -13,8 +13,6 @@ public:
     TransferBatch();
     ~TransferBatch() = default;
 
-    TransferBatch* createCollectionCopy();
-
     bool isEmpty();
 
     void add(bool isDir);
@@ -34,9 +32,9 @@ public:
     std::shared_ptr<mega::MegaCancelToken> getCancelToken();
 
 private:
-    int files = 0;
-    int folders = 0;
-    std::shared_ptr<mega::MegaCancelToken> cancelToken;
+    int mFiles = 0;
+    int mFolders = 0;
+    std::shared_ptr<mega::MegaCancelToken> mCancelToken;
 };
 
 class BlockingBatch
@@ -70,7 +68,7 @@ private:
 
    void clearBatch();
 
-   std::shared_ptr<TransferBatch> batch;
+   std::shared_ptr<TransferBatch> mBatch;
 };
 
 #endif // MEGADOWNLOADER_H

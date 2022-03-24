@@ -3,9 +3,8 @@
 
 #include <QString>
 
-class TransferMetaData
+struct TransferMetaData
 {
-public:
     TransferMetaData(int direction, int total = 0, int pending = 0, QString path = QString())
                     : totalTransfers(total), pendingTransfers(pending),
                       totalFiles(0), totalFolders(0),

@@ -27,9 +27,9 @@ private slots:
     void on_pBlockingStageCancel_clicked();
 
 private:
-    Ui::ScanningWidget *ui;
-    QMovie *movie = nullptr;
-    QThread gifThread;
+    Ui::ScanningWidget *mUi;
+    QMovie *mMovie = nullptr;
+    QThread mGifThread;
 };
 
 #endif // SCANNINGWIDGET_H

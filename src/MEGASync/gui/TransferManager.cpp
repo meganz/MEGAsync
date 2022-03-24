@@ -193,8 +193,8 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
         w->style()->polish(w);
     }
 
-    blockingUi = new BlockingUi(mUi->sTransfers);
-    connect(blockingUi, SIGNAL(cancelTransfers()), this, SIGNAL(cancelScanning()));
+    mBlockingUi = new BlockingUi(mUi->sTransfers);
+    connect(mBlockingUi, SIGNAL(cancelTransfers()), this, SIGNAL(cancelScanning()));
 }
 
 void TransferManager::pauseModel(bool value)
@@ -205,13 +205,13 @@ void TransferManager::pauseModel(bool value)
 void TransferManager::enterBlockingState()
 {
     enableUserActions(false);
-    blockingUi->show();
+    mBlockingUi->show();
 }
 
 void TransferManager::leaveBlockingState()
 {
     enableUserActions(true);
-    blockingUi->hide();
+    mBlockingUi->hide();
 }
 
 void TransferManager::onPauseStateChangedByTransferResume()
@@ -245,7 +245,7 @@ void TransferManager::setActiveTab(int t)
 TransferManager::~TransferManager()
 {
     delete mUi;
-    delete blockingUi;
+    delete mBlockingUi;
 }
 
 void TransferManager::on_tCompleted_clicked()
@@ -1066,7 +1066,7 @@ void TransferManager::dragLeaveEvent(QDragLeaveEvent *event)
 
 void TransferManager::updateTransferWidget(QWidget* widgetToShow)
 {
-    if (!blockingUi || !blockingUi->isActive())
+    if (!mBlockingUi || !mBlockingUi->isActive())
     {
         if (mUi->sTransfers->currentWidget() != widgetToShow)
         {

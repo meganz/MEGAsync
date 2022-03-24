@@ -27,10 +27,10 @@ private slots:
     void onCancelDismissed();
 
 private:
-    QStackedWidget *container = nullptr;
-    ScanningWidget* blockingWidget = nullptr;
-    CancelConfirmWidget* confirmWidget = nullptr;
-    QWidget* lastSelectedWidget = nullptr;
+    QStackedWidget *mContainer = nullptr;
+    ScanningWidget* mBlockingWidget = nullptr;
+    CancelConfirmWidget* mConfirmWidget = nullptr;
+    QWidget* mLastSelectedWidget = nullptr;
 
     static const char* getControlStyles();
 };

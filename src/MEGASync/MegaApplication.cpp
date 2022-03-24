@@ -10,6 +10,7 @@
 #include "platform/Platform.h"
 #include "OverQuotaDialog.h"
 #include "ConnectivityChecker.h"
+#include "TransferMetadata.h"
 
 #include <QTranslator>
 #include <QClipboard>
@@ -1566,7 +1567,7 @@ void MegaApplication::processUploadQueue(MegaHandle nodeHandle)
 
     if (!batch->isEmpty())
     {
-        blockingBatch.add(batch);
+        mBlockingBatch.add(batch);
         QString logMessage = QString::fromUtf8("Added batch upload");
         MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, logMessage.toUtf8().constData());
     }
@@ -1604,7 +1605,7 @@ void MegaApplication::processDownloadQueue(QString path)
                                                            downloadQueue.size(),
                                                            downloadQueue.size());
     transferAppData.insert(transferId, transferData);
-    if (!downloader->processDownloadQueue(&downloadQueue, blockingBatch, path, transferId))
+    if (!downloader->processDownloadQueue(&downloadQueue, mBlockingBatch, path, transferId))
     {
         transferAppData.remove(transferId);
         delete transferData;
@@ -3255,7 +3256,7 @@ void MegaApplication::startUpload(const QString& rawLocalPath, MegaNode* target,
 
 void MegaApplication::cancelScanningStage()
 {
-    blockingBatch.cancelTransfer();
+    mBlockingBatch.cancelTransfer();
 }
 
 void MegaApplication::updateFileTransferBatchesAndUi(BlockingBatch &batch)
@@ -3289,7 +3290,7 @@ void MegaApplication::unblockBatch(BlockingBatch &batch)
 {
     if (batch.hasCancelToken())
     {
-        unblockedCancelTokens.push_back(batch.getCancelToken());
+        mUnblockedCancelTokens.push_back(batch.getCancelToken());
     }
     batch.setAsUnblocked();
 }
@@ -3297,7 +3298,7 @@ void MegaApplication::unblockBatch(BlockingBatch &batch)
 void MegaApplication::logBatchStatus(const char* tag)
 {
 #ifdef DEBUG
-    QString logMessage = QString::fromLatin1("%1 : %2").arg(QString::fromUtf8(tag)).arg(blockingBatch.description());
+    QString logMessage = QString::fromLatin1("%1 : %2").arg(QString::fromUtf8(tag)).arg(mBlockingBatch.description());
     MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, logMessage.toUtf8().constData());
 #else
     Q_UNUSED(tag)
@@ -3324,10 +3325,10 @@ void MegaApplication::updateFreedCancelToken(MegaTransfer* transfer)
     {
         return (transfer->getCancelToken() == currentToken.get());
     };
-    auto itToken = std::find_if(unblockedCancelTokens.begin(), unblockedCancelTokens.end(), finder);
-    if (itToken != unblockedCancelTokens.end())
+    auto itToken = std::find_if(mUnblockedCancelTokens.begin(), mUnblockedCancelTokens.end(), finder);
+    if (itToken != mUnblockedCancelTokens.end())
     {
-        unblockedCancelTokens.erase(itToken);
+        mUnblockedCancelTokens.erase(itToken);
     }
 }
 
@@ -7870,7 +7871,7 @@ void MegaApplication::onTransferStart(MegaApi *api, MegaTransfer *transfer)
         return;
     }
 
-    updateFileTransferBatchesAndUi(blockingBatch);
+    updateFileTransferBatchesAndUi(mBlockingBatch);
     logBatchStatus("onTransferStart");
 
     DeferPreferencesSyncForScope deferrer(this);
@@ -7906,8 +7907,8 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
     if (isFileTransfer || isFolderTransfer)
     {
 
-        blockingBatch.onTransferFinished(isFolderTransfer);
-        updateIfBlockingStageFinished(blockingBatch);
+        mBlockingBatch.onTransferFinished(isFolderTransfer);
+        updateIfBlockingStageFinished(mBlockingBatch);
         updateFreedCancelToken(transfer);
         logBatchStatus("onTransferFinish");
 
@@ -8068,7 +8069,7 @@ void MegaApplication::onTransferUpdate(MegaApi*, MegaTransfer* transfer)
 
     if (transfer->getStage() >= MegaTransfer::STAGE_TRANSFERRING_FILES)
     {
-        updateFolderTransferBatchesAndUi(blockingBatch);
+        updateFolderTransferBatchesAndUi(mBlockingBatch);
         logBatchStatus("onTransferUpdate");
     }
 

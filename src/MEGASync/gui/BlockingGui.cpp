@@ -1,51 +1,51 @@
 #include "BlockingGui.h"
 
 BlockingUi::BlockingUi(QStackedWidget* _container)
-    : container(_container)
+    : mContainer(_container)
 {
-    blockingWidget = new ScanningWidget();
-    confirmWidget = new CancelConfirmWidget();
-    container->addWidget(blockingWidget);
-    container->addWidget(confirmWidget);
+    mBlockingWidget = new ScanningWidget();
+    mConfirmWidget = new CancelConfirmWidget();
+    mContainer->addWidget(mBlockingWidget);
+    mContainer->addWidget(mConfirmWidget);
 
-    connect(blockingWidget, SIGNAL(cancel()), this, SLOT(onCancelClicked()));
-    connect(confirmWidget, SIGNAL(proceed()), this, SLOT(onCancelConfirmed()));
-    connect(confirmWidget, SIGNAL(dismiss()), this, SLOT(onCancelDismissed()));
+    connect(mBlockingWidget, SIGNAL(cancel()), this, SLOT(onCancelClicked()));
+    connect(mConfirmWidget, SIGNAL(proceed()), this, SLOT(onCancelConfirmed()));
+    connect(mConfirmWidget, SIGNAL(dismiss()), this, SLOT(onCancelDismissed()));
 
     QString styles = QString::fromLatin1(getControlStyles());
-    blockingWidget->setStyleSheet(styles);
-    confirmWidget->setStyleSheet(styles);
+    mBlockingWidget->setStyleSheet(styles);
+    mConfirmWidget->setStyleSheet(styles);
 }
 
 BlockingUi::~BlockingUi()
 {
-    delete blockingWidget;
-    delete confirmWidget;
+    delete mBlockingWidget;
+    delete mConfirmWidget;
 }
 
 void BlockingUi::show()
 {
-    lastSelectedWidget = container->currentWidget();
-    container->setCurrentWidget(blockingWidget);
-    blockingWidget->show();
+    mLastSelectedWidget = mContainer->currentWidget();
+    mContainer->setCurrentWidget(mBlockingWidget);
+    mBlockingWidget->show();
 }
 
 void BlockingUi::hide()
 {
-    container->setCurrentWidget(lastSelectedWidget);
+    mContainer->setCurrentWidget(mLastSelectedWidget);
 }
 
 bool BlockingUi::isActive()
 {
-    return (container->currentWidget() == blockingWidget) ||
-           (container->currentWidget() == confirmWidget);
+    return (mContainer->currentWidget() == mBlockingWidget) ||
+           (mContainer->currentWidget() == mConfirmWidget);
 }
 
 void BlockingUi::onCancelClicked()
 {
-    container->setCurrentWidget(confirmWidget);
-    confirmWidget->show();
-    blockingWidget->hide();
+    mContainer->setCurrentWidget(mConfirmWidget);
+    mConfirmWidget->show();
+    mBlockingWidget->hide();
 }
 
 void BlockingUi::onCancelConfirmed()
@@ -55,8 +55,8 @@ void BlockingUi::onCancelConfirmed()
 
 void BlockingUi::onCancelDismissed()
 {
-    container->setCurrentWidget(blockingWidget);
-    blockingWidget->show();
+    mContainer->setCurrentWidget(mBlockingWidget);
+    mBlockingWidget->show();
 }
 
 const char* BlockingUi::getControlStyles()

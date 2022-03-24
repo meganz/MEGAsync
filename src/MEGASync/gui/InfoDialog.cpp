@@ -280,8 +280,8 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
 
     adjustSize();
 
-    blockingUi = new BlockingUi(ui->sTabs);
-    connect(blockingUi, SIGNAL(cancelTransfers()), this, SIGNAL(cancelScanning()));
+    mBlockingUi = new BlockingUi(ui->sTabs);
+    connect(mBlockingUi, SIGNAL(cancelTransfers()), this, SIGNAL(cancelScanning()));
 }
 
 InfoDialog::~InfoDialog()
@@ -302,7 +302,7 @@ InfoDialog::~InfoDialog()
         syncsMenu->deleteLater();
         syncsMenu.release();
     }
-    delete blockingUi;
+    delete mBlockingUi;
 }
 
 PSA_info *InfoDialog::getPSAdata()
@@ -1303,14 +1303,14 @@ void InfoDialog::enterBlockingState()
 {
     enableUserActions(false);
     ui->wTabOptions->setVisible(false);
-    blockingUi->show();
+    mBlockingUi->show();
 }
 
 void InfoDialog::leaveBlockingState()
 {
     enableUserActions(true);
     ui->wTabOptions->setVisible(true);
-    blockingUi->hide();
+    mBlockingUi->hide();
 }
 
 void InfoDialog::onTransfersDataUpdated()

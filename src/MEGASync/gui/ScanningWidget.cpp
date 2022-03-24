@@ -6,25 +6,25 @@
 
 ScanningWidget::ScanningWidget(QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::ScanningWidget)
+    mUi(new Ui::ScanningWidget)
 {
-    ui->setupUi(this);
+    mUi->setupUi(this);
 
-    movie = new QMovie(this);
-    movie->setCacheMode(QMovie::CacheAll);
-    movie->moveToThread(&gifThread);
-    gifThread.start();
+    mMovie = new QMovie(this);
+    mMovie->setCacheMode(QMovie::CacheAll);
+    mMovie->moveToThread(&mGifThread);
+    mGifThread.start();
 
-    ui->lScanning->setProperty("role", QString::fromLatin1("title"));
-    ui->lExplanation->setProperty("role", QString::fromLatin1("details"));
+    mUi->lScanning->setProperty("role", QString::fromLatin1("title"));
+    mUi->lExplanation->setProperty("role", QString::fromLatin1("details"));
 }
 
 ScanningWidget::~ScanningWidget()
 {
-    gifThread.quit();
-    gifThread.wait();
-    delete ui;
-    delete movie;
+    mGifThread.quit();
+    mGifThread.wait();
+    delete mUi;
+    delete mMovie;
 }
 
 void ScanningWidget::show()
@@ -33,18 +33,18 @@ void ScanningWidget::show()
     QString gifFile = (ratio < 2) ? QString::fromUtf8(":/animations/scanning.gif")
                                   : QString::fromUtf8(":/animations/scanning@2x.gif");
 
-    movie->setFileName(gifFile);
-    if (movie->isValid())
+    mMovie->setFileName(gifFile);
+    if (mMovie->isValid())
     {
-        ui->lAnimation->setMovie(movie);
-        movie->start();
+        mUi->lAnimation->setMovie(mMovie);
+        mMovie->start();
     }
 }
 
 void ScanningWidget::hide()
 {
-    movie->stop();
-    ui->lAnimation->setMovie(nullptr);
+    mMovie->stop();
+    mUi->lAnimation->setMovie(nullptr);
 }
 
 void ScanningWidget::on_pBlockingStageCancel_clicked()

@@ -259,7 +259,7 @@ protected:
     static double computeRatio(long long completed, long long remaining);
 
     void enableUserActions(bool value);
-    BlockingUi* blockingUi = nullptr;
+    BlockingUi* mBlockingUi = nullptr;
 };
 
 #endif // INFODIALOG_H
