@@ -8,9 +8,9 @@ BlockingUi::BlockingUi(QStackedWidget* _container)
     mContainer->addWidget(mBlockingWidget);
     mContainer->addWidget(mConfirmWidget);
 
-    connect(mBlockingWidget, SIGNAL(cancel()), this, SLOT(onCancelClicked()));
-    connect(mConfirmWidget, SIGNAL(proceed()), this, SLOT(onCancelConfirmed()));
-    connect(mConfirmWidget, SIGNAL(dismiss()), this, SLOT(onCancelDismissed()));
+    connect(mBlockingWidget, &ScanningWidget::cancel, this, &BlockingUi::onCancelClicked);
+    connect(mConfirmWidget, &CancelConfirmWidget::proceed, this, &BlockingUi::onCancelConfirmed);
+    connect(mConfirmWidget, &CancelConfirmWidget::dismiss, this, &BlockingUi::onCancelDismissed);
 
     QString styles = QString::fromLatin1(getControlStyles());
     mBlockingWidget->setStyleSheet(styles);

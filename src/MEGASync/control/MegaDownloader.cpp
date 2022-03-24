@@ -181,14 +181,7 @@ bool MegaDownloader::hasTransferPriority(const WrappedNode::TransferOrigin &orig
 void MegaDownloader::update(TransferMetaData *dataToUpdate, QString& appData, MegaNode *node, const QString &path)
 {
     // Update transfer metadata according to node type.
-    if (node->isFolder())
-    {
-        dataToUpdate->totalFolders++;
-    }
-    else
-    {
-        dataToUpdate->totalFiles++;
-    }
+    node->isFolder() ? dataToUpdate->totalFolders++ : dataToUpdate->totalFiles++;
 
     // Report that there is still a "root folder" to download/create
     appData.append(QString::fromUtf8("*"));

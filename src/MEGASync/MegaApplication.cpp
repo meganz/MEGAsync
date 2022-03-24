@@ -490,8 +490,8 @@ void MegaApplication::initialize()
     megaApi->addListener(delegateListener);
     uploader = new MegaUploader(megaApi);
     downloader = new MegaDownloader(megaApi);
-    connect(downloader, SIGNAL(finishedTransfers(unsigned long long)), this, SLOT(showNotificationFinishedTransfers(unsigned long long)), Qt::QueuedConnection);
-    connect(downloader, SIGNAL(startingTransfers()), this, SLOT(setTransferUiInBlockingState()));
+    connect(downloader, &MegaDownloader::finishedTransfers, this, &MegaApplication::showNotificationFinishedTransfers, Qt::QueuedConnection);
+    connect(downloader, &MegaDownloader::startingTransfers, this, &MegaApplication::setTransferUiInBlockingState);
 
     connectivityTimer = new QTimer(this);
     connectivityTimer->setSingleShot(true);
