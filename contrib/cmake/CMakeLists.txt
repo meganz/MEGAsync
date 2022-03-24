@@ -173,8 +173,8 @@ set (FORMS
     ${MEGAsyncDir}/gui/${UiDir}/ProxySettings.ui
     ${MEGAsyncDir}/gui/${UiDir}/BandwidthSettings.ui
     ${MEGAsyncDir}/gui/${UiDir}/NewFolderDialog.ui
-	${MEGAsyncDir}/gui/${UiDir}/ScanningWidget.ui
-	${MEGAsyncDir}/gui/${UiDir}/CancelConfirmWidget.ui
+    ${MEGAsyncDir}/gui/${UiDir}/ScanningWidget.ui
+    ${MEGAsyncDir}/gui/${UiDir}/CancelConfirmWidget.ui
     )
 
 
@@ -445,11 +445,11 @@ set (SRCS
     ${MEGAsyncDir}/gui/BandwidthSettings.cpp
     ${MEGAsyncDir}/gui/SwitchButton.cpp
     ${MEGAsyncDir}/gui/EventHelper.cpp
-	${MEGAsyncDir}/gui/GuiUtilities.cpp
-	${MEGAsyncDir}/gui/BlockingGui.cpp
-	${MEGAsyncDir}/gui/ScanningWidget.cpp
-	${MEGAsyncDir}/gui/CancelConfirmWidget.cpp
-	
+    ${MEGAsyncDir}/gui/GuiUtilities.cpp
+    ${MEGAsyncDir}/gui/BlockingGui.cpp
+    ${MEGAsyncDir}/gui/ScanningWidget.cpp
+    ${MEGAsyncDir}/gui/CancelConfirmWidget.cpp
+
     ${MEGAsyncDir}/mega/bindings/qt/QTMegaRequestListener.cpp
     ${MEGAsyncDir}/mega/bindings/qt/QTMegaTransferListener.cpp
     ${MEGAsyncDir}/mega/bindings/qt/QTMegaGlobalListener.cpp

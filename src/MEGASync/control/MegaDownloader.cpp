@@ -15,7 +15,7 @@ MegaDownloader::MegaDownloader(MegaApi *megaApi) : QObject()
 
 bool MegaDownloader::processDownloadQueue(QQueue<WrappedNode*>* downloadQueue, BlockingBatch& downloadBatches, QString path, unsigned long long appDataId)
 {
-    noTransferStarted = true;
+    mNoTransferStarted = true;
     // If the destination path doesn't exist and we can't create it,
     // empty queue and abort transfer.
     QDir dir(path);
@@ -95,10 +95,10 @@ bool MegaDownloader::download(WrappedNode* parent, QFileInfo info, QString appDa
     bool isForeignDir = node->getType() != MegaNode::TYPE_FILE && node->isForeign();
     if (!isForeignDir)
     {
-        if (noTransferStarted)
+        if (mNoTransferStarted)
         {
             emit startingTransfers();
-            noTransferStarted = false;
+            mNoTransferStarted = false;
         }
         startDownload(parent, appData, currentPathWithSep, cancelToken);
         return true;
@@ -110,7 +110,8 @@ bool MegaDownloader::download(WrappedNode* parent, QFileInfo info, QString appDa
     }
 }
 
-void MegaDownloader::startDownload(WrappedNode *parent, QString appData, QString currentPathWithSep, MegaCancelToken* cancelToken)
+void MegaDownloader::startDownload(WrappedNode *parent, const QString& appData,
+                                   const QString& currentPathWithSep, MegaCancelToken* cancelToken)
 {
     bool startFirst = hasTransferPriority(parent->getTransferOrigin());
     QByteArray localPath = currentPathWithSep.toUtf8();
@@ -119,7 +120,7 @@ void MegaDownloader::startDownload(WrappedNode *parent, QString appData, QString
     megaApi->startDownload(parent->getMegaNode(), localPath.constData(), name, appData.toUtf8().constData(), startFirst, cancelToken, listener);
 }
 
-void MegaDownloader::downloadForeignDir(MegaNode *node, QString appData, QString currentPathWithSep)
+void MegaDownloader::downloadForeignDir(MegaNode *node, const QString& appData, const QString& currentPathWithSep)
 {
     // Downloading amounts to creating the dir if it doesn't exist.
 

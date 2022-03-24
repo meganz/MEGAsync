@@ -35,15 +35,16 @@ signals:
     void startingTransfers();
 
 private:
-    void startDownload(WrappedNode* parent, QString appData, QString currentPathWithSep, mega::MegaCancelToken* cancelToken);
-    void downloadForeignDir(mega::MegaNode *node, QString appData, QString currentPathWithSep);
+    void startDownload(WrappedNode* parent, const QString &appData,
+                       const QString &currentPathWithSep, mega::MegaCancelToken* cancelToken);
+    void downloadForeignDir(mega::MegaNode *node, const QString &appData, const QString &currentPathWithSep);
     QString buildEscapedPath(const char* nodeName, QString currentPathWithSep);
     bool createDirIfNotPresent(QString path);
     static bool hasTransferPriority(const WrappedNode::TransferOrigin& origin);
 
     void update(TransferMetaData* dataToUpdate, QString& appData, mega::MegaNode* node, const QString& path);
 
-    bool noTransferStarted = true;
+    bool mNoTransferStarted = true;
 };
 
 #endif // MEGADOWNLOADER_H
