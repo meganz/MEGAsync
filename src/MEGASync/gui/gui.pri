@@ -13,9 +13,6 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/NodeSelector.cpp \
     $$PWD/FolderBinder.cpp \
     $$PWD/BindFolderDialog.cpp \
-    $$PWD/TransferItem.cpp \
-    $$PWD/TransferManagerDelegateWidget.cpp \
-    $$PWD/TransferManagerLoadingItem.cpp \
     $$PWD/TransferScanCancelUi.cpp \
     $$PWD/UploadToMegaDialog.cpp \
     $$PWD/PasteMegaLinksDialog.cpp \
@@ -80,9 +77,6 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/NodeSelector.h \
     $$PWD/FolderBinder.h \
     $$PWD/BindFolderDialog.h \
-    $$PWD/TransferItem.h \
-    $$PWD/TransferManagerDelegateWidget.h \
-    $$PWD/TransferManagerLoadingItem.h \
     $$PWD/TransferScanCancelUi.h \
     $$PWD/UploadToMegaDialog.h \
     $$PWD/PasteMegaLinksDialog.h \
