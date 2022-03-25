@@ -2933,7 +2933,7 @@ void MegaApplication::loadSyncExclusionRules(QString email)
 
     if (preferences->lowerSizeLimit())
     {
-        megaApi->setExclusionLowerSizeLimit(computeExclusionSizeLimit(preferences->lowerSizeLimitValue()));
+        megaApi->setExclusionLowerSizeLimit(computeExclusionSizeLimit(preferences->lowerSizeLimitValue(), preferences->lowerSizeLimitUnit()));
     }
     else
     {
@@ -2942,7 +2942,7 @@ void MegaApplication::loadSyncExclusionRules(QString email)
 
     if (preferences->upperSizeLimit())
     {
-        megaApi->setExclusionUpperSizeLimit(computeExclusionSizeLimit(preferences->upperSizeLimitValue()));
+        megaApi->setExclusionUpperSizeLimit(computeExclusionSizeLimit(preferences->upperSizeLimitValue(), preferences->upperSizeLimitUnit()));
     }
     else
     {
@@ -2957,9 +2957,9 @@ void MegaApplication::loadSyncExclusionRules(QString email)
 
 }
 
-long long MegaApplication::computeExclusionSizeLimit(const long long sizeLimitValue)
+long long MegaApplication::computeExclusionSizeLimit(const long long sizeLimitValue, const int unit)
 {
-    const double sizeLimitPower = pow(static_cast<double>(1024), static_cast<double>(sizeLimitValue));
+    const double sizeLimitPower = pow(static_cast<double>(1024), static_cast<double>(unit));
     return sizeLimitValue * static_cast<long long>(sizeLimitPower);
 }
 
