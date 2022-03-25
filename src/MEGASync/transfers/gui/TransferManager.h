@@ -149,6 +149,7 @@ private slots:
     void onUpdatePauseState(bool isPaused);
     void onPauseStateChangedByTransferResume();
     void checkCancelAllButtonVisibility();
+    void onPauseResumeVisibleRows(bool isPaused);
 
     void onTransfersDataUpdated();
     void refreshSearchStats();

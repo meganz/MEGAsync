@@ -19,6 +19,9 @@ public:
     void disableGetLink(bool disable);
     void disableContextMenus(bool option);
 
+    void onPauseResumeVisibleRows(bool isPaused);
+    void onCancelAndClearAllTransfers();
+
 private:
     bool disableLink;
     bool disableMenus;
@@ -46,15 +49,15 @@ protected:
     virtual void mouseReleaseEvent(QMouseEvent* event) override;
     void changeEvent(QEvent* event) override;
     void dropEvent(QDropEvent* event) override;
+    void keyPressEvent(QKeyEvent *event) override;
+    void selectionChanged(const QItemSelection &selected, const QItemSelection &deselected) override;
 
 public slots:
-    void onPauseResumeVisibleRows(bool pauseState);
-    void onPauseResumeAllRows(bool pauseState);
     void onPauseResumeSelection(bool pauseState);
-    void onCancelClearAllVisibleTransfers();
+    void onCancelClearVisibleTransfers();
+    void onCancelClearSelectedTransfers();
     void onClearCompletedVisibleTransfers();
     void onRetryVisibleTransfers();
-    void onCancelAndClearAllTransfers();
     void onCancelClearSelection(bool isClear);
 
 private slots:

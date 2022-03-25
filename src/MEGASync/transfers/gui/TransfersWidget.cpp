@@ -33,14 +33,18 @@ void TransfersWidget::setupTransfers()
     mProxyModel->setSourceModel(app->getTransfersModel());
     mProxyModel->sort(static_cast<int>(SortCriterion::PRIORITY), Qt::DescendingOrder);
 
+    mProxyModel->setDynamicSortFilter(true);
+
     connect(mProxyModel, &TransfersManagerSortFilterProxyModel::modelAboutToBeChanged, this, &TransfersWidget::onModelAboutToBeChanged);
     connect(mProxyModel, &TransfersManagerSortFilterProxyModel::modelChanged, this, &TransfersWidget::onModelChanged);
     connect(mProxyModel, &TransfersManagerSortFilterProxyModel::cancelableTransfersChanged, this, &TransfersWidget::onCheckCancelButtonVisibility);
     connect(mProxyModel, &TransfersManagerSortFilterProxyModel::activeTransfersChanged, this, &TransfersWidget::onActiveTransferCounterChanged);
     connect(mProxyModel, &TransfersManagerSortFilterProxyModel::pausedTransfersChanged, this, &TransfersWidget::onPausedTransferCounterChanged);
     connect(mProxyModel, &TransfersManagerSortFilterProxyModel::transferPauseResume, this, &TransfersWidget::onPauseResumeButtonCheckedOnDelegate);
-    connect(app->getTransfersModel(), &TransfersModel::uiBlocked, this, &TransfersWidget::onModelAboutToBeChanged);
-    connect(app->getTransfersModel(), &TransfersModel::uiUnblocked, this, &TransfersWidget::onModelChanged);
+    connect(mProxyModel, &TransfersManagerSortFilterProxyModel::transferCancelClear, this, &TransfersWidget::onCancelClearButtonPressedOnDelegate);
+    connect(mProxyModel, &TransfersManagerSortFilterProxyModel::transferRetry, this, &TransfersWidget::onRetryButtonPressedOnDelegate);
+    connect(app->getTransfersModel(), &TransfersModel::blockUi, this, &TransfersWidget::onUiBlocked);
+    connect(app->getTransfersModel(), &TransfersModel::unblockUi, this, &TransfersWidget::onUiUnblocked);
 
     configureTransferView();
 }
@@ -64,7 +68,7 @@ void TransfersWidget::configureTransferView()
     mDelegateHoverManager.setView(ui->tvTransfers);
     ui->tvTransfers->setItemDelegate(tDelegate);
 
-    onPauseStateChanged(model->areAllPaused());
+    onPauseStateChanged(mProxyModel->isAnyPaused());
 
     ui->tvTransfers->setModel(mProxyModel);
 
@@ -181,17 +185,6 @@ void TransfersWidget::on_tCancelClearVisible_clicked()
     emit cancelClearVisibleRows();
 }
 
-void TransfersWidget::cancelClearAll()
-{
-    emit cancelAndClearAllRows();
-}
-
-void TransfersWidget::onTransferAdded()
-{
-    ui->sWidget->setCurrentWidget(ui->pTransfers);
-    ui->tvTransfers->scrollToTop();
-}
-
 void TransfersWidget::onPauseStateChanged(bool pauseState)
 {
     ui->tPauseResumeVisible->setToolTip(pauseState ?
@@ -200,6 +193,9 @@ void TransfersWidget::onPauseStateChanged(bool pauseState)
     ui->tPauseResumeVisible->blockSignals(true);
     ui->tPauseResumeVisible->setChecked(pauseState);
     ui->tPauseResumeVisible->blockSignals(false);
+
+    //Use to repaint and update the transfers state
+    ui->tvTransfers->update();
 }
 
 void TransfersWidget::textFilterChanged(const QString& pattern)
@@ -242,27 +238,48 @@ void TransfersWidget::changeEvent(QEvent *event)
     QWidget::changeEvent(event);
 }
 
-void TransfersWidget::onModelAboutToBeChanged()
+void TransfersWidget::onUiBlocked()
 {
     mLoadingScene.setLoadingScene(true);
 
     emit disableTransferManager(true);
 }
 
+void TransfersWidget::onUiUnblocked()
+{
+    mLoadingScene.setLoadingScene(false);
+
+    emit disableTransferManager(false);
+}
+
+void TransfersWidget::onModelAboutToBeChanged()
+{
+    onUiBlocked();
+}
+
 void TransfersWidget::onModelChanged()
 {
     auto isAnyPaused = mProxyModel->isAnyPaused();
     onPauseStateChanged(isAnyPaused);
-    mLoadingScene.setLoadingScene(false);
-
-    emit disableTransferManager(false);
 
     auto isAnyActive = mProxyModel->isAnyActive();
     onActiveTransferCounterChanged(isAnyActive);
+
+    onUiUnblocked();
 }
 
 void TransfersWidget::onPauseResumeButtonCheckedOnDelegate(bool pause)
 {
+    auto selection = ui->tvTransfers->selectionModel()->selection();
+    auto sourceSelection= mProxyModel->mapSelectionToSource(selection);
+    auto sourceSelectionIndexes = sourceSelection.indexes();
+
+    foreach(auto& selectedSourceIndex, sourceSelectionIndexes)
+    {
+        getModel()->pauseResumeTransferByIndex(selectedSourceIndex,
+                                               pause);
+    }
+
     auto rows = mProxyModel->rowCount();
 
     if(rows == 1)
@@ -278,10 +295,50 @@ void TransfersWidget::onPauseResumeButtonCheckedOnDelegate(bool pause)
         else
         {
             //Reduce by one as the resume transfer is still unpaused
-            auto pausedTransfers = mProxyModel->getPausedTransfers() -1;
-            onPauseStateChanged(pausedTransfers > 0);
+            //auto pausedTransfers = mProxyModel->getPausedTransfers() -1;
+            onPauseStateChanged(mProxyModel->isAnyPaused());
         }
     }
+}
+
+void TransfersWidget::onCancelClearButtonPressedOnDelegate()
+{
+    auto selection = ui->tvTransfers->selectionModel()->selection();
+    auto sourceSelection= mProxyModel->mapSelectionToSource(selection);
+    auto sourceSelectionIndexes = sourceSelection.indexes();
+
+    QPointer<TransfersWidget> dialog = QPointer<TransfersWidget>(this);
+
+    if (QMegaMessageBox::warning(nullptr, QString::fromUtf8("MEGAsync"),
+                             tr("Are you sure you want to cancel or clear the following transfer(s)?", "", sourceSelectionIndexes.size()),
+                             QMessageBox::Yes | QMessageBox::No, QMessageBox::No)
+            != QMessageBox::Yes
+            || !dialog)
+    {
+        return;
+    }
+
+    getModel()->cancelTransfers(sourceSelectionIndexes);
+}
+
+void TransfersWidget::onRetryButtonPressedOnDelegate()
+{
+    auto selection = ui->tvTransfers->selectionModel()->selection();
+    auto sourceSelection= mProxyModel->mapSelectionToSource(selection);
+    auto sourceSelectionIndexes = sourceSelection.indexes();
+
+    QPointer<TransfersWidget> dialog = QPointer<TransfersWidget>(this);
+
+    if (QMegaMessageBox::warning(nullptr, QString::fromUtf8("MEGAsync"),
+                             tr("Are you sure you want to retry the following transfer(s)?", "", sourceSelectionIndexes.size()),
+                             QMessageBox::Yes | QMessageBox::No, QMessageBox::No)
+            != QMessageBox::Yes
+            || !dialog)
+    {
+        return;
+    }
+
+    getModel()->retryTransfers(sourceSelectionIndexes);
 }
 
 void TransfersWidget::onCheckCancelButtonVisibility(bool state)

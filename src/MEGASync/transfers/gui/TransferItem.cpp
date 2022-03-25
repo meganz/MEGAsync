@@ -67,7 +67,11 @@ void TransferData::update(mega::MegaTransfer* transfer)
         if(mState & TransferData::FINISHED_STATES_MASK)
         {
             mFinishedTime = QDateTime::currentSecsSinceEpoch();
-            mFinishedTime += (transfer->getUpdateTime() - transfer->getStartTime()) / 10;
+            mFinishedTime += (transfer->getUpdateTime() - transfer->getStartTime());
+        }
+        else
+        {
+            mFinishedTime = 0;
         }
 
         mPriority = transfer->getPriority();
@@ -106,10 +110,10 @@ void TransferData::removeFailedTransfer()
     mFailedTransfer.reset();
 }
 
-uint64_t TransferData::getFinishedTime() const
+int64_t TransferData::getFinishedTime() const
 {
     QDateTime now = QDateTime::currentDateTime();
-    auto result = (now.toMSecsSinceEpoch() - (mFinishedTime*1000))/1000;
+    int64_t  result(now.toSecsSinceEpoch() - mFinishedTime);
     return result;
 }
 
@@ -175,6 +179,11 @@ bool TransferData::isActive() const
 bool TransferData::isPaused() const
 {
     return mState & TRANSFER_PAUSED;
+}
+
+bool TransferData::isProcessing() const
+{
+    return mState & TRANSFER_ACTIVE || mState & TRANSFER_COMPLETING;
 }
 
 bool TransferData::isCompleted() const

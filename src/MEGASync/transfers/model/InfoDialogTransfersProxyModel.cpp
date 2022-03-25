@@ -4,7 +4,7 @@
 #include "TransfersModel.h"
 
 //SORT FILTER PROXY MODEL
-InfoDialogTransfersProxyModel::InfoDialogTransfersProxyModel(QObject *parent) : TransfersSortFilterProxyBaseModel(parent)
+InfoDialogTransfersProxyModel::InfoDialogTransfersProxyModel(QObject *parent) : mNextTransferTag(-1), TransfersSortFilterProxyBaseModel(parent)
 {
 }
 
@@ -24,6 +24,14 @@ TransferBaseDelegateWidget* InfoDialogTransfersProxyModel::createTransferManager
             this, &InfoDialogTransfersProxyModel::onRetryTransferRequested);
 
     return item;
+}
+
+void InfoDialogTransfersProxyModel::setSourceModel(QAbstractItemModel *sourceModel)
+{
+    connect(sourceModel, &QAbstractItemModel::rowsAboutToBeRemoved,
+            this, &InfoDialogTransfersProxyModel::onRowsAboutToBeRemoved, Qt::DirectConnection);
+
+    QSortFilterProxyModel::setSourceModel(sourceModel);
 }
 
 void InfoDialogTransfersProxyModel::onCopyTransferLinkRequested()
@@ -67,23 +75,32 @@ void InfoDialogTransfersProxyModel::onRetryTransferRequested()
 
 bool InfoDialogTransfersProxyModel::lessThan(const QModelIndex &left, const QModelIndex &right) const
 {
-    bool lessThan (false);
     const auto leftItem (qvariant_cast<TransferItem>(left.data()).getTransferData());
     const auto rightItem (qvariant_cast<TransferItem>(right.data()).getTransferData());
 
-    int leftItemState = leftItem->mState;
-    int rightItemState = rightItem->mState;
-
-    if(leftItemState != rightItemState)
+    if(leftItem && rightItem)
     {
-       lessThan = leftItemState < rightItemState;
+        if(leftItem->isActive() && !rightItem->isActive())
+        {
+            return true;
+        }
+        else if(rightItem->isActive() && !leftItem->isActive())
+        {
+            return false;
+        }
+        else if(leftItem->isActive() && rightItem->isActive())
+        {
+            return leftItem->mPriority < rightItem->mPriority;
+        }
+        else
+        {
+            return leftItem->getFinishedTime() < rightItem->getFinishedTime();
+        }
     }
     else
     {
-       lessThan = leftItem->mPriority < rightItem->mPriority;
+        return QSortFilterProxyModel::lessThan(left, right);
     }
-
-    return lessThan;
 }
 
 bool InfoDialogTransfersProxyModel::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const
@@ -95,11 +112,44 @@ bool InfoDialogTransfersProxyModel::filterAcceptsRow(int sourceRow, const QModel
     if(index.isValid())
     {
        const auto d (qvariant_cast<TransferItem>(index.data()).getTransferData());
+       if(d)
+       {
+           accept = (d->mState & TransferData::TransferState::TRANSFER_COMPLETED
+                     || d->mState & TransferData::TransferState::TRANSFER_COMPLETING
+                     || d->mState & TransferData::TransferState::TRANSFER_ACTIVE || d->mState & TransferData::TransferState::TRANSFER_FAILED);
 
-       accept = (d->mState & TransferData::TransferState::TRANSFER_COMPLETED
-                 || d->mState & TransferData::TransferState::TRANSFER_COMPLETING
-                 || d->mState & TransferData::TransferState::TRANSFER_ACTIVE || d->mState & TransferData::TransferState::TRANSFER_FAILED);
+
+           //Show next transfer to process
+           if(accept && d->mTag == mNextTransferTag)
+           {
+               mNextTransferTag = -1;
+           }
+           else if(!accept && (mNextTransferTag < 0 || mNextTransferTag == d->mTag || mNextTransferTag > d->mTag))
+           {
+               accept = true;
+               mNextTransferTag = d->mTag;
+           }
+       }
     }
 
     return accept;
+}
+
+void InfoDialogTransfersProxyModel::onRowsAboutToBeRemoved(const QModelIndex &parent, int first, int last)
+{
+    //Update next transfer to process
+    for(int row = first; row <= last; ++row)
+    {
+        QModelIndex index = sourceModel()->index(row, 0, parent);
+
+        if(index.isValid())
+        {
+            const auto d (qvariant_cast<TransferItem>(index.data()).getTransferData());
+            if(d && mNextTransferTag == d->mTag)
+            {
+                mNextTransferTag = -1;
+                break;
+            }
+        }
+    }
 }

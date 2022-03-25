@@ -149,6 +149,9 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
             &TransfersManagerSortFilterProxyModel::cancelableTransfersChanged,
             this, &TransferManager::checkCancelAllButtonVisibility);
 
+    connect(mUi->wTransfers, &TransfersWidget::pauseResumeVisibleRows,
+                this, &TransferManager::onPauseResumeVisibleRows);
+
     connect(mUi->wTransfers,
             &TransfersWidget::disableTransferManager,[this](bool state){
         setDisabled(state);
@@ -346,6 +349,27 @@ void TransferManager::checkCancelAllButtonVisibility()
     {
         mUi->bCancelClearAll->setVisible(true);
     }
+}
+
+void TransferManager::onPauseResumeVisibleRows(bool isPaused)
+{
+    auto transfersView = findChild<MegaTransferView*>();
+
+    if(mCurrentTab == ALL_TRANSFERS_TAB)
+    {
+        mModel->pauseResumeAllTransfers(isPaused);
+        onUpdatePauseState(isPaused);
+    }
+    else
+    {
+        if(transfersView)
+        {
+            transfersView->onPauseResumeVisibleRows(isPaused);
+        }
+    }
+
+    //Use to repaint and update the transfers state
+    transfersView->update();
 }
 
 void TransferManager::refreshStateStats()
@@ -593,7 +617,7 @@ void TransferManager::refreshSearchStats()
         if(mUi->tUlResults->property(LABEL_NUMBER).toLongLong() != nbUl)
         {
             mUi->tUlResults->setText(QString(tr("Uploads\t\t\t\t%1")).arg(nbUl));
-            mUi->tDlResults->setProperty(LABEL_NUMBER, nbUl);
+            mUi->tUlResults->setProperty(LABEL_NUMBER, nbUl);
         }
 
         if(mUi->tAllResults->property(LABEL_NUMBER).toLongLong() != nbAll)
@@ -655,6 +679,14 @@ void TransferManager::on_bPause_clicked()
     auto newState = !mModel->areAllPaused();
     mModel->pauseResumeAllTransfers(newState);
     onUpdatePauseState(newState);
+
+    //Use to repaint and update the transfers state
+    auto transfersView = findChild<MegaTransferView*>();
+    if(transfersView)
+    {
+        transfersView->update();
+    }
+
 }
 
 void TransferManager::on_bSearch_clicked()
@@ -817,7 +849,11 @@ void TransferManager::on_bUpload_clicked()
 
 void TransferManager::on_bCancelClearAll_clicked()
 {
-    mUi->wTransfers->cancelClearAll();
+    auto transfersView = findChild<MegaTransferView*>();
+    if(transfersView)
+    {
+        transfersView->onCancelAndClearAllTransfers();
+    }
 }
 
 void TransferManager::on_leSearchField_returnPressed()
@@ -945,9 +981,14 @@ void TransferManager::refreshView()
             {
                 widgetToShow = mTabNoItem[mCurrentTab];
             }
+
+           if (mUi->sTransfers->currentWidget() != widgetToShow)
+            {
+                mUi->sTransfers->setCurrentWidget(widgetToShow);
+            }
         }
 
-        updateTransferWidget(widgetToShow);
+	updateTransferWidget(widgetToShow);
 
         checkActionAndMediaVisibility();
     }
@@ -1005,6 +1046,7 @@ void TransferManager::closeEvent(QCloseEvent *event)
     if(event->type() == QEvent::Close)
     {
         auto proxy (mUi->wTransfers->getProxyModel());
+
         if(proxy->isModelProcessing())
         {
             connect(proxy, &TransfersManagerSortFilterProxyModel::modelChanged, this, [this](){

@@ -106,6 +106,7 @@ CONFIG += USE_DRIVE_NOTIFICATIONS
 include(gui/gui.pri)
 include(mega/bindings/qt/sdk.pri)
 include(control/control.pri)
+include(transfers/transfers.pri)
 include(model/model.pri)
 include(platform/platform.pri)
 include(google_breakpad/google_breakpad.pri)

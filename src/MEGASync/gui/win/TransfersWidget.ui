@@ -248,6 +248,9 @@
               <height>28</height>
              </size>
             </property>
+            <property name="cursor">
+             <cursorShape>PointingHandCursor</cursorShape>
+            </property>
             <property name="layoutDirection">
              <enum>Qt::RightToLeft</enum>
             </property>
@@ -278,6 +281,9 @@
               <width>140</width>
               <height>28</height>
              </size>
+            </property>
+            <property name="cursor">
+             <cursorShape>PointingHandCursor</cursorShape>
             </property>
             <property name="layoutDirection">
              <enum>Qt::RightToLeft</enum>
@@ -440,7 +446,7 @@
           </size>
          </property>
          <property name="focusPolicy">
-          <enum>Qt::NoFocus</enum>
+          <enum>Qt::StrongFocus</enum>
          </property>
          <property name="styleSheet">
           <string notr="true">QScrollBar:vertical
