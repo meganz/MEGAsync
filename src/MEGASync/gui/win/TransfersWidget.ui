@@ -435,7 +435,7 @@ TransferWidgetHeaderItem  QLabel
              <string>Pause or resume all selected transfers</string>
             </property>
             <property name="icon">
-             <iconset resource="../Resources_macx.qrc">
+             <iconset resource="../Resources_win.qrc">
               <normaloff>:/images/lists_pause_all_ico.png</normaloff>
               <normalon>:/images/lists_resume_all_ico.png</normalon>:/images/lists_pause_all_ico.png</iconset>
             </property>
@@ -474,7 +474,7 @@ TransferWidgetHeaderItem  QLabel
              <string>Cancel all selected transfers</string>
             </property>
             <property name="icon">
-             <iconset resource="../Resources_macx.qrc">
+             <iconset resource="../Resources_win.qrc">
               <normaloff>:/images/lists_cancel_all_ico.png</normaloff>:/images/lists_cancel_all_ico.png</iconset>
             </property>
             <property name="iconSize">

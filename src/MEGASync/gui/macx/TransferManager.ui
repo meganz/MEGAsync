@@ -9,9 +9,15 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1103</width>
+    <width>1161</width>
     <height>720</height>
    </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>1000</width>
+    <height>0</height>
+   </size>
   </property>
   <property name="windowTitle">
    <string>Transfer Manager</string>
@@ -933,7 +939,7 @@ QToolButton
            </layout>
           </widget>
          </item>
-		 <item>
+         <item>
           <widget class="QFrame" name="fFailed">
            <layout class="QHBoxLayout" name="horizontalLayout_failed">
             <property name="spacing">
@@ -969,7 +975,7 @@ QToolButton
                <string>Failed</string>
               </property>
               <property name="icon">
-               <iconset resource="../Resources_win.qrc">
+               <iconset resource="../Resources_macx.qrc">
                 <normaloff>:/images/sidebar_failed_ico.png</normaloff>:/images/sidebar_failed_ico.png</iconset>
               </property>
               <property name="autoDefault">
