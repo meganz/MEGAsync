@@ -79,7 +79,8 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
     QDialog(parent),
     ui(new Ui::InfoDialog),
     mSyncController (new SyncController()),
-    mBackupRootHandle (mega::INVALID_HANDLE)
+    mBackupRootHandle (mega::INVALID_HANDLE),
+    qtBugFixer(this)
 {
     ui->setupUi(this);
 
@@ -330,6 +331,13 @@ void InfoDialog::showEvent(QShowEvent *event)
 
     isShown = true;
     QDialog::showEvent(event);
+}
+
+void InfoDialog::moveEvent(QMoveEvent*)
+{
+#ifdef __linux__
+    qtBugFixer.onEndMove();
+#endif
 }
 
 void InfoDialog::setBandwidthOverquotaState(QuotaState state)
@@ -2064,6 +2072,14 @@ int InfoDialog::getLoggedInMode() const
 void InfoDialog::showNotifications()
 {
     on_tNotifications_clicked();
+}
+
+void InfoDialog::move(int x, int y)
+{
+#ifdef __linux__
+   qtBugFixer.onStartMove();
+#endif
+   QDialog::move(x, y);
 }
 
 void InfoDialog::setBlockedStateLabel(QString state)
