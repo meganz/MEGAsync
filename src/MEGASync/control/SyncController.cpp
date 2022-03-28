@@ -238,8 +238,7 @@ void SyncController::onRequestFinish(MegaApi *api, MegaRequest *req, MegaError *
                              errorMsg);
             MegaApi::log(MegaApi::LOG_LEVEL_ERROR, logMsg.toUtf8().constData());
         }
-
-        emit syncAddStatus(errorCode, errorMsg, QString::fromUtf8(req->getName()));
+        emit syncAddStatus(errorCode, errorMsg, QString::fromUtf8(req->getFile()));
         break;
     }
     case MegaRequest::TYPE_REMOVE_SYNC:

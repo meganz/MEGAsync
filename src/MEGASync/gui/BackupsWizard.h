@@ -29,7 +29,7 @@ public:
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
     Qt::ItemFlags flags(const QModelIndex &index) const override;
 
-    QModelIndex getIndexByName(const QString& name);
+    QModelIndex getIndexByPath(const QString& path);
 
 private:
     bool mShowOnlyChecked;
@@ -50,6 +50,7 @@ class BackupsWizard : public QDialog
             SETUP_MYBACKUPS_DIR,
             SETUP_BACKUPS,
             DONE,
+            ERROR_FOUND,
             EXIT,
         };
 
@@ -62,7 +63,7 @@ class BackupsWizard : public QDialog
 
         struct BackupInfo
         {
-           QString folderPath;
+           QString folderName;
            Status status;
         };
 
@@ -70,8 +71,11 @@ class BackupsWizard : public QDialog
         ~BackupsWizard();
 
     private:
+        void showLess();
+        void showMore();
         void setupStep1();
         void setupStep2();
+        void setupError();
         void setupFinalize();
         void setupMyBackupsDir(bool nameCollision = false);
         void setupBackups();
@@ -95,14 +99,22 @@ class BackupsWizard : public QDialog
         bool mUserCancelled;
         QStandardItemModel* mFoldersModel;
         ProxyModel* mFoldersProxyModel;
-        //QStringList mQeuedSyncNames;
         QMap<QString, BackupInfo> mBackupsStatus;
+        QStringList mErrList;
+        QWidget* mLoadingWindow;
 
     private slots:
         void on_bNext_clicked();
         void on_bCancel_clicked();
         void on_bMoreFolders_clicked();
         void on_bBack_clicked();
+        void on_bViewInBackupCentre_clicked();
+        void on_bDismiss_clicked();
+        void on_bTryAgain_clicked();
+        void on_bCancelErr_clicked();
+        void on_bShowMore_clicked();
+
+
         void onListItemChanged(QStandardItem* item);
         void onDeviceNameSet(QString deviceName);
         void onBackupsDirSet(mega::MegaHandle backupsDirHandle);

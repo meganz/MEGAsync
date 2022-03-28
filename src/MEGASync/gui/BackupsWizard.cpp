@@ -4,20 +4,28 @@
 #include "MegaApplication.h"
 #include "megaapi.h"
 #include "QMegaMessageBox.h"
+#include "EventHelper.h"
 
 #include <QStandardPaths>
 #include <QtConcurrent/QtConcurrent>
 #include <QDebug>
+#include <QTimer>
 
 constexpr int HEIGHT_ROW_STEP_1 (40);
-constexpr int HEADER_HEIGHT_STEP_1 (50);
+constexpr int MARGIN_LV_STEP_1 (50);
 constexpr int MAX_ROWS_STEP_1 (3);
 constexpr int HEIGHT_MAX_STEP_1 (413);
 constexpr int HEIGHT_MIN_STEP_1 (HEIGHT_MAX_STEP_1 - HEIGHT_ROW_STEP_1 * MAX_ROWS_STEP_1);
 constexpr int HEIGHT_ROW_STEP_2 (32);
+constexpr int MARGIN_LV_STEP_2 (36);
 constexpr int MAX_ROWS_STEP_2 (5);
-constexpr int HEIGHT_MIN_STEP_2 (296);
-constexpr int HEIGHT_MAX_STEP_2 (HEIGHT_MIN_STEP_2 + HEIGHT_ROW_STEP_2 * MAX_ROWS_STEP_2);
+constexpr int HEIGHT_MIN_STEP_2 (260);
+constexpr int HEIGHT_MAX_STEP_2 (HEIGHT_MIN_STEP_2 + HEIGHT_ROW_STEP_2 * MAX_ROWS_STEP_2 + 47); //+47 is the height of the wBackupTo widget in step 2.
+constexpr QSize FINAL_STEP_MIN_SIZE (QSize(520, 215));
+constexpr QSize SIZE_STEP_1 (QSize(600, 370));
+constexpr int SHOW_MORE_VISIBILITY (2);
+
+
 
 
 
@@ -32,7 +40,7 @@ BackupsWizard::BackupsWizard(QWidget* parent) :
     mError (false),
     mUserCancelled (false),
     mFoldersModel (new QStandardItemModel(this)),
-    mFoldersProxyModel(new ProxyModel(this))
+    mFoldersProxyModel (new ProxyModel(this))
 {
     setWindowFlags((windowFlags() | Qt::WindowCloseButtonHint) & ~Qt::WindowContextHelpButtonHint);
     mUi->setupUi(this);
@@ -59,12 +67,72 @@ BackupsWizard::BackupsWizard(QWidget* parent) :
     mUi->lvFoldersStep1->setModel(mFoldersProxyModel);
     mUi->lvFoldersStep2->setModel(mFoldersProxyModel);
 
+    // Go to Step 1
     setupStep1();
+
+    mLoadingWindow  = new QWidget(this);
+    mLoadingWindow->hide();
+
+    //Setting up the spining window.
+    mLoadingWindow->setAutoFillBackground(true);
+    QColor color(Qt::white);
+    color.setAlpha(180);
+    QPalette bgPalette = mLoadingWindow->palette();
+    bgPalette.setColor(QPalette::Window, color);
+    mLoadingWindow->setPalette(bgPalette);
+    QHBoxLayout* ly = new QHBoxLayout(mLoadingWindow);
+    ly->setAlignment(Qt::AlignCenter);
+    QLabel* lbl = new QLabel(mLoadingWindow);
+    lbl->setAlignment(Qt::AlignCenter);
+    QMovie* mv = new QMovie(QString::fromUtf8(":/animations/loading.gif"), QByteArray(), this);
+    mv->setScaledSize(QSize(525, 350));
+    mv->start();
+    lbl->setMovie(mv);
+    ly->addWidget(lbl);
+    mLoadingWindow->setLayout(ly);
 }
 
 BackupsWizard::~BackupsWizard()
 {
     delete mUi;
+}
+
+void BackupsWizard::showLess()
+{
+    QFontMetrics fm (mUi->tTextEdit->font());
+    QMargins margins = mUi->tTextEdit->contentsMargins ();
+    int nHeight = (fm.lineSpacing () * SHOW_MORE_VISIBILITY) +
+        (mUi->tTextEdit->frameWidth () * 2) +
+        margins.top () + margins.bottom ();
+    mUi->tTextEdit->setMinimumHeight(nHeight);
+    mUi->tTextEdit->setMaximumHeight(nHeight);
+    mUi->bShowMore->setText(tr("Show more…"));
+    EventManager::addEvent(mUi->tTextEdit->viewport(), QEvent::Wheel, EventHelper::BLOCK);
+    mUi->tTextEdit->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    mUi->line1->hide();
+    mUi->line2->hide();
+    setMinimumHeight(FINAL_STEP_MIN_SIZE.height());
+    resize(width(), FINAL_STEP_MIN_SIZE.height());
+
+}
+
+void BackupsWizard::showMore()
+{
+    mUi->line1->show();
+    mUi->line2->show();
+    mUi->bShowMore->setText(tr("Collapse"));
+    mUi->tTextEdit->setMaximumHeight(QWIDGETSIZE_MAX);
+    EventManager::addEvent(mUi->tTextEdit->viewport(), QEvent::Wheel, EventHelper::ACCEPT);
+    mUi->tTextEdit->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
+
+    QFontMetrics fm (mUi->tTextEdit->font());
+    QMargins margins = mUi->tTextEdit->contentsMargins ();
+    int nHeight = fm.lineSpacing () * ((mErrList.size() > 5? 6 : mErrList.size()) -1) +
+        (mUi->tTextEdit->frameWidth ()) * 2 +
+        margins.top () + margins.bottom ();
+
+    setMinimumHeight(FINAL_STEP_MIN_SIZE.height() + nHeight);
+    resize(width(), FINAL_STEP_MIN_SIZE.height() + nHeight);
 }
 
 void BackupsWizard::refreshNextButtonState()
@@ -81,11 +149,13 @@ void BackupsWizard::refreshNextButtonState()
 
 void BackupsWizard::setupStep1()
 {
+    mBackupsStatus.clear();
     mFoldersProxyModel->showOnlyChecked(false);
 
     qDebug("Backups Wizard: step 1 Init");
     refreshNextButtonState();
     mUi->sSteps->setCurrentWidget(mUi->pStep1);
+    mUi->sButtons->setCurrentWidget(mUi->pStepButtons);
     mUi->bCancel->setEnabled(true);
     mUi->bNext->setText(tr("Next"));
     mUi->bBack->hide();
@@ -137,12 +207,13 @@ void BackupsWizard::setupStep1()
 
         int listHeight = (std::max(HEIGHT_ROW_STEP_1,
                                  std::min(HEIGHT_ROW_STEP_1 * MAX_ROWS_STEP_1,
-                                          mFoldersModel->rowCount() * HEIGHT_ROW_STEP_1))) + HEADER_HEIGHT_STEP_1;
+                                          mFoldersModel->rowCount() * HEIGHT_ROW_STEP_1))) + MARGIN_LV_STEP_1;
 
         dialogHeight = std::min(HEIGHT_MAX_STEP_1, HEIGHT_MIN_STEP_1 + listHeight);
-        mUi->lvFoldersStep1->setMinimumHeight(listHeight);
+        mUi->fFoldersStep1->setMinimumHeight(listHeight);
         setMinimumHeight(dialogHeight);
-        resize(width(), dialogHeight);
+
+        resize(SIZE_STEP_1.width(), dialogHeight);
     }
     qDebug("Backups Wizard: step 1");
 }
@@ -173,16 +244,45 @@ void BackupsWizard::setupStep2()
         mUi->lFoldersNumber->setText(tr("%1 folders").arg(nbSelectedFolders));
     }
 
-    int listHeight (std::max(HEIGHT_ROW_STEP_2,
+    int listHeight = (std::max(HEIGHT_ROW_STEP_2,
                              std::min(HEIGHT_ROW_STEP_2 * MAX_ROWS_STEP_2,
-                                      nbSelectedFolders * HEIGHT_ROW_STEP_2)));
+                                      nbSelectedFolders * HEIGHT_ROW_STEP_2))) + MARGIN_LV_STEP_2;
     int dialogHeight (std::min(HEIGHT_MAX_STEP_2,
                                HEIGHT_MIN_STEP_2 + listHeight));
-
+    mUi->fFoldersStep2->setMinimumHeight(listHeight);
     setMinimumHeight(dialogHeight);
     resize(width(), dialogHeight);
 
     qDebug("Backups Wizard: step 2");
+}
+
+void BackupsWizard::setupError()
+{
+
+    mUi->bShowMore->setVisible(mErrList.size() > SHOW_MORE_VISIBILITY);
+
+    bool show_singular = mErrList.size() < 2;
+
+    mUi->lErrorTextSingular->setVisible(show_singular);
+    mUi->lErrorTitleSingular->setVisible(show_singular);
+
+    mUi->lErrorTextPlural->setVisible(!show_singular);
+    mUi->lErrorTitlePlural->setVisible(!show_singular);
+
+    QTextDocument* doc = mUi->tTextEdit->document();
+    doc->setDocumentMargin(0);
+    QString txt = mErrList.join(QString::fromUtf8("\n"));
+    mUi->tTextEdit->setText(txt);
+
+    mUi->tTextEdit->viewport()->setCursor(Qt::ArrowCursor);
+    mUi->tTextEdit->setTextInteractionFlags(Qt::NoTextInteraction);
+    mUi->line1->hide();
+    mUi->line2->hide();
+    mUi->bTryAgain->setFocus();
+    mUi->sSteps->setCurrentWidget(mUi->pError);
+
+    mUi->sButtons->setCurrentWidget(mUi->pErrorButtons);
+    showLess();
 }
 
 void BackupsWizard::setupFinalize()
@@ -228,9 +328,9 @@ void BackupsWizard::setupBackups()
     for(int i=0; i < mFoldersProxyModel->rowCount(); ++i)
     {
         BackupInfo backupInfo;
-        backupInfo.folderPath = mFoldersProxyModel->index(i, 0).data(Qt::UserRole).toString();
+        backupInfo.folderName = mFoldersProxyModel->index(i, 0).data(Qt::DisplayRole).toString();
         backupInfo.status = QUEUED;
-        mBackupsStatus.insert(mFoldersProxyModel->index(i, 0).data(Qt::DisplayRole).toString(), backupInfo);
+        mBackupsStatus.insert(mFoldersProxyModel->index(i, 0).data(Qt::UserRole).toString(), backupInfo);
     }
     processNextBackupSetup();
 }
@@ -248,6 +348,8 @@ bool BackupsWizard::isSomethingChecked()
 
 void BackupsWizard::processNextBackupSetup()
 {
+    mLoadingWindow->resize(this->size());
+    mLoadingWindow->show();
     for(auto it = mBackupsStatus.begin(); it != mBackupsStatus.end(); ++it)
     {
         if(it.value().status == QUEUED)
@@ -255,13 +357,13 @@ void BackupsWizard::processNextBackupSetup()
             // Create backup
             mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_INFO,
                                QString::fromUtf8("Backups Wizard: setup backup \"%1\" to \"%2\"")
-                               .arg(it.key(),
+                               .arg(it.value().folderName,
                                     mBackupsDirName +  QLatin1Char('/')
                                     + mUi->lDeviceNameStep1->text() + QLatin1Char('/')
-                                    + it.value().folderPath).toUtf8().constData());
+                                    + it.key()).toUtf8().constData());
 
-            mSyncController.addSync(it.value().folderPath, mega::INVALID_HANDLE,
-                                               it.key(), mega::MegaSync::TYPE_BACKUP);
+            mSyncController.addSync(it.key(), mega::INVALID_HANDLE,
+                                               it.value().folderName, mega::MegaSync::TYPE_BACKUP);
             return;
         }
     }
@@ -353,7 +455,7 @@ bool BackupsWizard::isFolderAlreadySynced(const QString& path, bool displayWarni
                 {
                     message = tr("The selected local folder is already backed up");
                 }
-                else if (c.startsWith(cleanInputPath) && !sameSize
+                else if (lf != localFolders.cend() && c.startsWith(cleanInputPath) && !sameSize
                          && (c[cleanInputPath.size()] == QDir::separator()
                              || cleanInputPath == QDir(*lf).rootPath()))
                 {
@@ -390,6 +492,9 @@ void BackupsWizard::nextStep(const Steps &step)
 {
     qDebug("Backups Wizard: next step");
     refreshNextButtonState();
+    mUi->fFoldersStep1->setMinimumHeight(0);
+    mUi->fFoldersStep2->setMinimumHeight(0);
+
     switch (step)
     {
         case Steps::STEP_1_INIT:
@@ -426,6 +531,11 @@ void BackupsWizard::nextStep(const Steps &step)
         {
             qDebug("Backups Wizard: exit");
             mUserCancelled ? reject() : accept();
+            break;
+        }
+        case Steps::ERROR_FOUND:
+        {
+            setupError();
             break;
         }
         default:
@@ -515,14 +625,6 @@ void BackupsWizard::on_bMoreFolders_clicked()
         }
         item->setData(Qt::Checked, Qt::CheckStateRole);
 
-        int listHeight (std::max(HEIGHT_ROW_STEP_1,
-                                 std::min(HEIGHT_ROW_STEP_1 * MAX_ROWS_STEP_1,
-                                          mFoldersModel->rowCount() * HEIGHT_ROW_STEP_1)));
-        int dialogHeight (std::min(HEIGHT_MAX_STEP_1,
-                                   HEIGHT_MIN_STEP_1 + listHeight));
-        mUi->lvFoldersStep1->setMinimumHeight(listHeight);
-        resize(width(), dialogHeight);
-
         // Jump to item in list
         auto idx = mFoldersModel->indexFromItem(item);
         mUi->lvFoldersStep1->scrollTo(idx,QAbstractItemView::PositionAtCenter);
@@ -539,12 +641,50 @@ void BackupsWizard::on_bBack_clicked()
     nextStep(STEP_1_INIT);
 }
 
+void BackupsWizard::on_bViewInBackupCentre_clicked()
+{
+    mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_INFO, "Backups Wizard: show Backup Center");
+// FIXME: Revert to live url when feature is merged
+//  QtConcurrent::run(QDesktopServices::openUrl, QUrl(QString::fromUtf8("mega://#fm/backups")));
+    QtConcurrent::run(QDesktopServices::openUrl, QUrl(QString::fromUtf8("https://13755-backup-center.developers.mega.co.nz/dont-deploy/sandbox3.html?apipath=prod&jj=2")));
+    nextStep(EXIT);
+}
+
+void BackupsWizard::on_bDismiss_clicked()
+{
+    nextStep(EXIT);
+}
+
+void BackupsWizard::on_bTryAgain_clicked()
+{
+    nextStep(STEP_1_INIT);
+}
+
+void BackupsWizard::on_bCancelErr_clicked()
+{
+    nextStep(EXIT);
+}
+
+void BackupsWizard::on_bShowMore_clicked()
+{
+    if(mUi->tTextEdit->maximumHeight() == QWIDGETSIZE_MAX)
+    {
+        showLess();
+    }
+    else
+    {
+        showMore();
+    }
+    qDebug() << mUi->tTextEdit->minimumHeight() << mUi->tTextEdit->sizeHint();
+
+}
+
 void BackupsWizard::onListItemChanged(QStandardItem* item)
 {
     QString displayName (item->data(Qt::DisplayRole).toString());
 
     if (item->checkState() == Qt::Checked)
-    {
+    {  
         promptAndEnsureUniqueRemoteName(displayName);
 
         // Add backup if the user didn't cancel
@@ -567,24 +707,18 @@ void BackupsWizard::setupComplete()
         qDebug("Backups Wizard: setup completed successfully");
         // We are now done, exit
         // No error: show success message!
-        QDialog* successDialog = new QDialog(this);
-        successDialog->setWindowFlags(successDialog->windowFlags()  & ~Qt::WindowContextHelpButtonHint);
-        Ui::BackupSetupSuccessDialog* successUi = new Ui::BackupSetupSuccessDialog;
-        successUi->setupUi(successDialog);
+        bool show_singular = mBackupsStatus.size() < 2;
 
-        if(successDialog->exec() == QDialog::Accepted)
-        {
-            mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_INFO, "Backups Wizard: show Backup Center");
-        // FIXME: Revert to live url when feature is merged
-        //  QtConcurrent::run(QDesktopServices::openUrl, QUrl(QString::fromUtf8("mega://#fm/backups")));
-            QtConcurrent::run(QDesktopServices::openUrl, QUrl(QString::fromUtf8("https://13755-backup-center.developers.mega.co.nz/dont-deploy/sandbox3.html?apipath=prod&jj=2")));
-        }
-        nextStep(EXIT);
+        mUi->lSuccessTextSingular->setVisible(show_singular);
+        mUi->lSuccessTextPlural->setVisible(!show_singular);
 
-        delete successUi;
-        successUi = nullptr;
-        delete successDialog;
-        successDialog = nullptr;
+        mUi->sSteps->setCurrentWidget(mUi->pSuccessfull);
+
+        mUi->sButtons->setCurrentWidget(mUi->pSuccessButtons);
+        mUi->bViewInBackupCentre->setFocus();
+        setMinimumHeight(FINAL_STEP_MIN_SIZE.height());
+        setMinimumSize(FINAL_STEP_MIN_SIZE);
+        resize(FINAL_STEP_MIN_SIZE);
     }
     else
     {
@@ -689,20 +823,10 @@ void BackupsWizard::onSetMyBackupsDirRequestStatus(int errorCode, const QString&
 
 void BackupsWizard::onSyncAddRequestStatus(int errorCode, const QString& errorMsg, const QString& name)
 {
-    QModelIndex index = mFoldersProxyModel->getIndexByName(name);
-    QStandardItem* item = mFoldersModel->itemFromIndex(index);
-    if(!item)
-    {
-        return;
-    }
 
     // Update tooltip and icon according to result
     if (errorCode == mega::MegaError::API_OK)
     {
-        QIcon folderIcon (QIcon(QLatin1String("://images/icons/folder/folder-mono_24.png")));
-        QString tooltipMsg (item->data(Qt::UserRole).toString());
-        item->setData(folderIcon, Qt::DecorationRole);
-        item->setData(tooltipMsg, Qt::ToolTipRole);
         BackupInfo info = mBackupsStatus.value(name);
         info.status = OK;
         mBackupsStatus.insert(name, info);
@@ -710,27 +834,26 @@ void BackupsWizard::onSyncAddRequestStatus(int errorCode, const QString& errorMs
     else
     {
         mError = true;
-        QIcon   warnIcon (QIcon(QLatin1String("://images/icons/folder/folder-mono-with-warning_24.png")));
-        QString tooltipMsg (item->data(Qt::UserRole).toString()
-                            + QLatin1String("\nError: ") + errorMsg);
-        item->setData(warnIcon, Qt::DecorationRole);
-        item->setData(tooltipMsg, Qt::ToolTipRole);
         BackupInfo info = mBackupsStatus.value(name);
         info.status = ERR;
         mBackupsStatus.insert(name, info);
     }
 
-    item->setData(Qt::Unchecked, Qt::CheckStateRole);
 
-    //Ch
+    //Check if the process is completed or there are still pending requests
     bool finished(true);
     bool errorsExists(false);
     for(auto it = mBackupsStatus.begin(); it != mBackupsStatus.end(); ++it)
     {
         if(it.value().status == QUEUED)
+        {
           finished = false;
+          break;
+        }
         else if(it.value().status == ERR)
+        {
           errorsExists = true;
+        }
 
         if(!finished && errorsExists)
             break;
@@ -744,17 +867,39 @@ void BackupsWizard::onSyncAddRequestStatus(int errorCode, const QString& errorMs
         }
         else
         {
-            QString err;
+            mErrList.clear();
             for(auto it = mBackupsStatus.begin(); it != mBackupsStatus.end(); ++it)
             {
+                QModelIndex index = mFoldersProxyModel->getIndexByPath(it.key());
+                QStandardItem* item = mFoldersModel->itemFromIndex(index);
+                if(!item)
+                {
+                    return;
+                }
                 if(it.value().status == ERR)
                 {
-                    err.append(it.key());
-                    err.append(QString::fromUtf8("-"));
+                    mErrList.append(it.value().folderName);
+                    QIcon   warnIcon (QIcon(QLatin1String("://images/icons/folder/folder-mono-with-warning_24.png")));
+                    QString tooltipMsg (item->data(Qt::UserRole).toString()
+                                        + QLatin1String("\nError: ") + errorMsg);
+                    item->setData(warnIcon, Qt::DecorationRole);
+                    item->setData(tooltipMsg, Qt::ToolTipRole);
+                    item->setData(Qt::Unchecked, Qt::CheckStateRole);
+                }
+                else if(it.value().status == OK)
+                {
+                    QIcon folderIcon (QIcon(QLatin1String("://images/icons/folder/folder-mono_24.png")));
+                    QString tooltipMsg (item->data(Qt::UserRole).toString());
+                    item->setData(folderIcon, Qt::DecorationRole);
+                    item->setData(tooltipMsg, Qt::ToolTipRole);
+                    mFoldersModel->removeRow(index.row());
                 }
             }
-            QMegaMessageBox::critical(nullptr, tr("Error"), err);
+            nextStep(ERROR_FOUND);
         }
+
+
+        mLoadingWindow->hide();
     }
     else
     {
@@ -778,12 +923,12 @@ void ProxyModel::showOnlyChecked(bool val)
     }
 }
 
-QModelIndex ProxyModel::getIndexByName(const QString& name)
+QModelIndex ProxyModel::getIndexByPath(const QString& path)
 {
     for(int i = 0; i < sourceModel()->rowCount(); ++i)
     {
         QModelIndex index = sourceModel()->index(i, 0);
-        if(index.data(Qt::DisplayRole).toString() == name)
+        if(index.data(Qt::UserRole).toString() == path)
         {
             return index;
         }

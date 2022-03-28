@@ -10,11 +10,11 @@
     <x>0</x>
     <y>0</y>
     <width>600</width>
-    <height>425</height>
+    <height>368</height>
    </rect>
   </property>
   <property name="sizePolicy">
-   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+   <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
     <horstretch>0</horstretch>
     <verstretch>0</verstretch>
    </sizepolicy>
@@ -36,13 +36,21 @@
    <string notr="true">*
 {
 font-family: Lato;
-font-size: 13px;
+font-size:12px;
+}
+
+QPushButton
+{
+padding-left: 10px;
+padding-right: 10px;
+min-height: 22px;
 }
 
 #BackupsWizard, #sSteps &gt; QWidget
 {
 background: solid white;
 }
+
 
 #lBackupFolders, #lBackupTo
 {
@@ -61,12 +69,12 @@ border: 1px solid #e5e5e5;
 padding-left: 7px;
 }
 
-#lSubtitleS1
+#lSubtitleStep1
 {
 margin-left: 20px;
 margin-right: 20px;
-margin-top: 11px;
-margin-bottom: 32px;
+margin-top: 7px;
+margin-bottom: 31px;
 color: #666666;
 }
 
@@ -76,7 +84,7 @@ margin-left: 18px;
 margin-right: 18px;
 }
 
-#fFoldersS1, #fFoldersS2
+#fFoldersStep1, #fFoldersStep2
 {
 margin-left: 20px;
 border: 1px solid #e5e5e5;
@@ -84,37 +92,37 @@ border-radius: 6px;
 background: solid white;
 }
 
-#fFoldersS1
+#fFoldersStep1
 {
 margin-right: 20px;
 }
 
-#fFoldersS2
+#fFoldersStep2
 {
 margin-right: 24px;
 }
 
-#lTitleS2
+#lTitleStep2
 {
-margin-bottom: 28px;
+margin-bottom: 26px;
 }
 
-#wDeviceNameS1, #wDeviceNameAndNbFolders
+#wDeviceNameStep1, #wDeviceNameAndNbFolders
 {
 border-top-right-radius: 6px;
 border-top-left-radius: 6px;
 background: solid #FAFAFA;
 }
 
-#lDeviceIconS1
+#lDeviceIconStep1
 {
 border: none;
 }
 
-#lDeviceIconS2
+#lDeviceIconStep2
 {
 border: none;
-margin-left: 13px;
+margin-left: 12px;
 background: solid #FAFAFA;
 }
 
@@ -150,22 +158,22 @@ outline: none;
 
 #lvFoldersStep1
 {
-padding-left: 22px;
+padding-left: 19px;
 }
 
 #lvFoldersStep2
 {
-padding-left: 11px;
+padding-left: 9px;
 }
 
 #lvFoldersStep1::icon
 {
-left: 22px;
+left: 25px;
 }
 
 #lvFoldersStep1::text
 {
-left: 22px;
+left: 25px;
 font-size: 13px;
 }
 
@@ -179,7 +187,7 @@ border: none;
 
 #lvFoldersStep2::text
 {
-left: 3px;
+left: 4px;
 font-size: 13px;
 }
 
@@ -258,7 +266,7 @@ margin: 4px;
       <string notr="true"/>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>2</number>
      </property>
      <widget class="QWidget" name="pStep1">
       <property name="sizePolicy">
@@ -281,10 +289,10 @@ margin: 4px;
         <number>19</number>
        </property>
        <property name="bottomMargin">
-        <number>0</number>
+        <number>20</number>
        </property>
        <item>
-        <widget class="QLabel" name="lTitleS1">
+        <widget class="QLabel" name="lTitleStep1">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
            <horstretch>0</horstretch>
@@ -299,8 +307,8 @@ margin: 4px;
          </property>
         </widget>
        </item>
-       <item>
-        <widget class="QLabel" name="lSubtitleS1">
+       <item alignment="Qt::AlignTop">
+        <widget class="QLabel" name="lSubtitleStep1">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
            <horstretch>0</horstretch>
@@ -349,7 +357,7 @@ margin: 4px;
            <number>0</number>
           </property>
           <item>
-           <widget class="QWidget" name="wDeviceNameS1" native="true">
+           <widget class="QWidget" name="wDeviceNameStep1" native="true">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
               <horstretch>0</horstretch>
@@ -373,7 +381,7 @@ margin: 4px;
               <number>0</number>
              </property>
              <item>
-              <widget class="QLabel" name="lDeviceIconS1">
+              <widget class="QLabel" name="lDeviceIconStep1">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
                  <horstretch>0</horstretch>
@@ -495,7 +503,7 @@ margin: 4px;
                  <enum>Qt::ElideMiddle</enum>
                 </property>
                 <property name="verticalScrollMode">
-                 <enum>QAbstractItemView::ScrollPerPixel</enum>
+                 <enum>QAbstractItemView::ScrollPerItem</enum>
                 </property>
                 <property name="resizeMode">
                  <enum>QListView::Adjust</enum>
@@ -556,10 +564,10 @@ margin: 4px;
          </layout>
         </widget>
        </item>
-       <item>
+       <item alignment="Qt::AlignBottom">
         <widget class="QStackedWidget" name="sMoreFolders">
          <property name="sizePolicy">
-          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
@@ -572,13 +580,19 @@ margin: 4px;
            <property name="leftMargin">
             <number>66</number>
            </property>
+           <property name="topMargin">
+            <number>0</number>
+           </property>
            <property name="rightMargin">
             <number>66</number>
+           </property>
+           <property name="bottomMargin">
+            <number>0</number>
            </property>
            <item alignment="Qt::AlignTop">
             <widget class="QLabel" name="lAllFoldersSynced">
              <property name="sizePolicy">
-              <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+              <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
                <horstretch>0</horstretch>
                <verstretch>0</verstretch>
               </sizepolicy>
@@ -604,6 +618,9 @@ margin: 4px;
          </widget>
          <widget class="QWidget" name="pMoreFolders">
           <layout class="QHBoxLayout" name="wButtonsLayout2">
+           <property name="spacing">
+            <number>0</number>
+           </property>
            <property name="leftMargin">
             <number>20</number>
            </property>
@@ -614,12 +631,12 @@ margin: 4px;
             <number>20</number>
            </property>
            <property name="bottomMargin">
-            <number>7</number>
+            <number>0</number>
            </property>
            <item alignment="Qt::AlignRight|Qt::AlignTop">
             <widget class="QPushButton" name="bMoreFolders">
              <property name="sizePolicy">
-              <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+              <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
                <horstretch>0</horstretch>
                <verstretch>0</verstretch>
               </sizepolicy>
@@ -627,7 +644,7 @@ margin: 4px;
              <property name="minimumSize">
               <size>
                <width>104</width>
-               <height>20</height>
+               <height>24</height>
               </size>
              </property>
              <property name="text">
@@ -668,7 +685,7 @@ margin: 4px;
         <number>0</number>
        </property>
        <item>
-        <widget class="QLabel" name="lTitleS2">
+        <widget class="QLabel" name="lTitleStep2">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
            <horstretch>0</horstretch>
@@ -697,7 +714,7 @@ margin: 4px;
         </widget>
        </item>
        <item>
-        <widget class="QFrame" name="fFoldersS2">
+        <widget class="QFrame" name="fFoldersStep2">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Preferred" vsizetype="MinimumExpanding">
            <horstretch>0</horstretch>
@@ -746,7 +763,7 @@ margin: 4px;
               <height>36</height>
              </size>
             </property>
-            <layout class="QHBoxLayout" name="deviceNameS2Layout">
+            <layout class="QHBoxLayout" name="deviceNameStep2Layout">
              <property name="spacing">
               <number>10</number>
              </property>
@@ -766,7 +783,7 @@ margin: 4px;
               <number>0</number>
              </property>
              <item>
-              <widget class="QLabel" name="lDeviceIconS2">
+              <widget class="QLabel" name="lDeviceIconStep2">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
                  <horstretch>0</horstretch>
@@ -830,12 +847,6 @@ margin: 4px;
             <property name="sizeAdjustPolicy">
              <enum>QAbstractScrollArea::AdjustToContents</enum>
             </property>
-            <property name="iconSize">
-             <size>
-              <width>24</width>
-              <height>24</height>
-             </size>
-            </property>
             <property name="resizeMode">
              <enum>QListView::Adjust</enum>
             </property>
@@ -893,85 +904,498 @@ margin: 4px;
        </item>
       </layout>
      </widget>
+     <widget class="QWidget" name="pSuccessfull">
+      <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="0,1">
+       <property name="spacing">
+        <number>20</number>
+       </property>
+       <property name="topMargin">
+        <number>15</number>
+       </property>
+       <item alignment="Qt::AlignTop">
+        <widget class="QLabel" name="label">
+         <property name="text">
+          <string/>
+         </property>
+         <property name="pixmap">
+          <pixmap resource="../Resources_linux.qrc">:/images/bug_report_success.png</pixmap>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <layout class="QVBoxLayout" name="verticalLayout_3" stretch="0,1">
+         <property name="spacing">
+          <number>10</number>
+         </property>
+         <item alignment="Qt::AlignTop">
+          <widget class="QLabel" name="lTitle">
+           <property name="font">
+            <font>
+             <family>Lato</family>
+             <pointsize>-1</pointsize>
+            </font>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">*{
+font-size:16px;
+color:#333333;
+}</string>
+           </property>
+           <property name="text">
+            <string>Backup Created</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <layout class="QVBoxLayout" name="verticalLayout_5">
+           <property name="spacing">
+            <number>0</number>
+           </property>
+           <item>
+            <widget class="QLabel" name="lSuccessTextPlural">
+             <property name="styleSheet">
+              <string notr="true">*{
+color: #666666;
+}</string>
+             </property>
+             <property name="text">
+              <string>We're backing up your folders. The time this takes depends on the files 
+in these folders.</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="lSuccessTextSingular">
+             <property name="styleSheet">
+              <string notr="true">*{
+color: #666666;
+}</string>
+             </property>
+             <property name="text">
+              <string>We're backing up your folder. The time this takes depends on the files 
+in this folder.</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="label_2">
+             <property name="minimumSize">
+              <size>
+               <width>100</width>
+               <height>50</height>
+              </size>
+             </property>
+             <property name="font">
+              <font>
+               <family>Lato</family>
+               <pointsize>-1</pointsize>
+              </font>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">*{
+color: #666666;
+}</string>
+             </property>
+             <property name="text">
+              <string>Folders will be stored in the Vault and you can check the status of your 
+backups in Backup Centre.</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="pError">
+      <layout class="QHBoxLayout" name="horizontalLayout_5" stretch="0,1">
+       <property name="spacing">
+        <number>20</number>
+       </property>
+       <item alignment="Qt::AlignTop">
+        <widget class="QLabel" name="lErrorIcon">
+         <property name="text">
+          <string/>
+         </property>
+         <property name="pixmap">
+          <pixmap resource="../Resources_linux.qrc">:/images/icon_error.png</pixmap>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <layout class="QVBoxLayout" name="verticalLayout_4" stretch="0,0,0,0,0,0,0,0">
+         <property name="spacing">
+          <number>4</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
+         <item alignment="Qt::AlignLeft|Qt::AlignTop">
+          <widget class="QLabel" name="lErrorTitlePlural">
+           <property name="font">
+            <font>
+             <family>Lato</family>
+             <pointsize>-1</pointsize>
+            </font>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">*{
+font-size:16px;
+color:#333333;
+}</string>
+           </property>
+           <property name="text">
+            <string>Problem backing up folders</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="lErrorTitleSingular">
+           <property name="styleSheet">
+            <string notr="true">*{
+font-size:16px;
+color:#333333;
+}</string>
+           </property>
+           <property name="text">
+            <string>Problem backing up folder</string>
+           </property>
+          </widget>
+         </item>
+         <item alignment="Qt::AlignLeft|Qt::AlignTop">
+          <widget class="QLabel" name="lErrorTextPlural">
+           <property name="font">
+            <font>
+             <family>Lato</family>
+             <pointsize>-1</pointsize>
+            </font>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">*{
+color:#666666;
+}</string>
+           </property>
+           <property name="text">
+            <string>These folders were not backed up. Would you like to try again?</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="lErrorTextSingular">
+           <property name="styleSheet">
+            <string notr="true">*{
+color:#666666;
+}</string>
+           </property>
+           <property name="text">
+            <string>This folder was not backed up. Would you like to try again?</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="Line" name="line2">
+           <property name="styleSheet">
+            <string notr="true">*{
+color:rgba(0,0,0,0.1);
+}</string>
+           </property>
+           <property name="frameShadow">
+            <enum>QFrame::Plain</enum>
+           </property>
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QTextEdit" name="tTextEdit">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>16777215</width>
+             <height>16777215</height>
+            </size>
+           </property>
+           <property name="font">
+            <font>
+             <family>Lato</family>
+             <pointsize>-1</pointsize>
+            </font>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">*{
+color:#666666;
+}</string>
+           </property>
+           <property name="frameShape">
+            <enum>QFrame::NoFrame</enum>
+           </property>
+           <property name="frameShadow">
+            <enum>QFrame::Plain</enum>
+           </property>
+           <property name="verticalScrollBarPolicy">
+            <enum>Qt::ScrollBarAlwaysOff</enum>
+           </property>
+           <property name="sizeAdjustPolicy">
+            <enum>QAbstractScrollArea::AdjustToContents</enum>
+           </property>
+           <property name="undoRedoEnabled">
+            <bool>false</bool>
+           </property>
+           <property name="readOnly">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="Line" name="line1">
+           <property name="styleSheet">
+            <string notr="true">*
+{
+color:rgba(0,0,0,0.1);
+}</string>
+           </property>
+           <property name="frameShadow">
+            <enum>QFrame::Plain</enum>
+           </property>
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+          </widget>
+         </item>
+         <item alignment="Qt::AlignLeft">
+          <widget class="QPushButton" name="bShowMore">
+           <property name="font">
+            <font>
+             <family>Lato</family>
+             <pointsize>-1</pointsize>
+             <underline>true</underline>
+            </font>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QPushButton
+{
+border:none;
+background: white;
+padding-left: 0px;
+color:#666666;
+}</string>
+           </property>
+           <property name="text">
+            <string>Show more…</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </widget>
     </widget>
    </item>
-   <item>
-    <widget class="QWidget" name="wButtons" native="true">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
+   <item alignment="Qt::AlignBottom">
+    <widget class="QStackedWidget" name="sButtons">
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>0</height>
+      </size>
      </property>
-     <layout class="QHBoxLayout" name="wButtonsLayout">
-      <property name="leftMargin">
-       <number>0</number>
-      </property>
-      <property name="topMargin">
-       <number>0</number>
-      </property>
-      <property name="rightMargin">
-       <number>0</number>
-      </property>
-      <property name="bottomMargin">
-       <number>0</number>
-      </property>
-      <item>
-       <widget class="QPushButton" name="bBack">
-        <property name="minimumSize">
-         <size>
-          <width>80</width>
-          <height>20</height>
-         </size>
-        </property>
-        <property name="text">
-         <string>Back</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <spacer name="horizontalSpacer">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>40</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-      <item>
-       <widget class="QPushButton" name="bCancel">
-        <property name="minimumSize">
-         <size>
-          <width>80</width>
-          <height>20</height>
-         </size>
-        </property>
-        <property name="text">
-         <string>Cancel</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="bNext">
-        <property name="minimumSize">
-         <size>
-          <width>80</width>
-          <height>20</height>
-         </size>
-        </property>
-        <property name="text">
-         <string>Next</string>
-        </property>
-        <property name="default">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
-     </layout>
+     <property name="currentIndex">
+      <number>2</number>
+     </property>
+     <widget class="QWidget" name="pStepButtons">
+      <layout class="QHBoxLayout" name="horizontalLayout_4">
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
+       <item>
+        <widget class="QPushButton" name="bBack">
+         <property name="minimumSize">
+          <size>
+           <width>80</width>
+           <height>24</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>Back</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QPushButton" name="bCancel">
+         <property name="minimumSize">
+          <size>
+           <width>80</width>
+           <height>24</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>Cancel</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="bNext">
+         <property name="minimumSize">
+          <size>
+           <width>80</width>
+           <height>24</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>Next</string>
+         </property>
+         <property name="default">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="pErrorButtons">
+      <layout class="QHBoxLayout" name="horizontalLayout_7">
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
+       <item>
+        <spacer name="horizontalSpacer_3">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QPushButton" name="bCancelErr">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>24</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>Cancel</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="bTryAgain">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>24</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>Try again</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="pSuccessButtons">
+      <layout class="QHBoxLayout" name="horizontalLayout_3">
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
+       <item>
+        <spacer name="horizontalSpacer_2">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QPushButton" name="bDismiss">
+         <property name="minimumSize">
+          <size>
+           <width>86</width>
+           <height>24</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>Dismiss</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="bViewInBackupCentre">
+         <property name="minimumSize">
+          <size>
+           <width>165</width>
+           <height>24</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>View in Backup Centre</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
     </widget>
    </item>
   </layout>
