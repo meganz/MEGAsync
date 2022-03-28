@@ -16,6 +16,7 @@
 #include "HighDpiResize.h"
 #include "Utilities.h"
 #include "FilterAlertWidget.h"
+#include "QtPositioningBugFixer.h"
 #include "TransferQuota.h"
 #include <memory>
 #ifdef _WIN32
@@ -91,6 +92,8 @@ public:
     int getLoggedInMode() const;
     void showNotifications();
 
+    void move(int x, int y);
+
 private:
     InfoDialog() = default;
     void drawAvatar(QString email);
@@ -98,6 +101,7 @@ private:
     void updateTransfersCount();
     void hideEvent(QHideEvent *event) override;
     void showEvent(QShowEvent *event) override;
+    void moveEvent(QMoveEvent *) override;
 
 public slots:
 
@@ -251,6 +255,8 @@ protected:
 
  private:
     static double computeRatio(long long completed, long long remaining);
+
+    QtPositioningBugFixer qtBugFixer;
 };
 
 #endif // INFODIALOG_H
