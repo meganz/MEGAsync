@@ -41,9 +41,7 @@ private:
     QStyledItemDelegate* mDelegate;
     QModelIndex mCurrentIndex;
 
-    void sendEnterEvent();
-    void sendLeaveEvent();
-    void sendMoveEvent(const QPoint& point);
+    void sendEvent(QEvent::Type eventType, const QPoint& point = QPoint());
 };
 
 

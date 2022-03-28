@@ -10,10 +10,12 @@
 //Place here as they represent the number of real columns
 enum class SortCriterion
 {
-    PRIORITY   = 0,
+    NAME       = 0,
     TOTAL_SIZE = 1,
-    NAME       = 2,
-    LAST       = 3
+    SPEED      = 2,
+    PRIORITY   = 3,
+    TIME       = 4,
+    LAST       = 5
 };
 
 typedef int TransferTag;
@@ -70,6 +72,7 @@ public:
     {}
 
     void update(mega::MegaTransfer* transfer);
+    bool hasChanged(QExplicitlySharedDataPointer<TransferData> data);
     void removeFailedTransfer();
 
     TransferTypes                       mType;
@@ -104,6 +107,7 @@ public:
     bool isProcessing() const;
     bool isCompleted() const;
     bool hasFailed() const;
+    int64_t getRawFinishedTime() const;
     int64_t getFinishedTime() const;
     QString getFormattedFinishedTime() const;
 

@@ -80,7 +80,7 @@ void TransferManagerDelegateWidget::updateTransferState()
             }
             else if(getData()->mTotalSize == getData()->mTransferredBytes)
             {
-                speedString = QLatin1Literal("...");
+                speedString = QString::fromUtf8("…");
             }
             else
             {
@@ -139,7 +139,7 @@ void TransferManagerDelegateWidget::updateTransferState()
                 mLastPauseResuemtTransferIconName.clear();
             }
 
-            speedString = QLatin1Literal("...");
+            speedString = QString::fromUtf8("…");
 
             break;
         }
@@ -157,7 +157,7 @@ void TransferManagerDelegateWidget::updateTransferState()
             }
 
             timeString = getData()->getFormattedFinishedTime();
-            speedString = QLatin1Literal("...");
+            speedString = QString::fromUtf8("…");
 
             break;
         }
@@ -194,8 +194,7 @@ void TransferManagerDelegateWidget::updateTransferState()
 
                 mUi->sStatus->setCurrentWidget(mUi->pActive);
             }
-            speedString = Utilities::getSizeString(getData()->mMeanSpeed == 0
-                                                   ? getData()->mTotalSize : getData()->mMeanSpeed) + QLatin1Literal("/s");
+            speedString = Utilities::getSizeString(getData()->mSpeed) + QLatin1Literal("/s");
             timeString = getData()->getFormattedFinishedTime();
             break;
         }
@@ -237,7 +236,7 @@ void TransferManagerDelegateWidget::updateTransferState()
     // Done label
     auto transferedB (getData()->mTransferredBytes);
     auto totalB (getData()->mTotalSize);
-    mUi->lDone->setText(Utilities::getSizeString(transferedB) + QLatin1Literal(" / "));
+    mUi->lDone->setText(Utilities::getSizeStringWithoutUnits(transferedB) + QLatin1Literal("/"));
 
     // Progress bar
     int permil = getData()->mState & (TransferData::TRANSFER_COMPLETED | TransferData::TRANSFER_COMPLETING) ?

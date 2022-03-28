@@ -50,8 +50,8 @@ void TransfersManagerSortFilterProxyModel::sort(int sortCriterion, Qt::SortOrder
     QFuture<void> filtered = QtConcurrent::run([this, order, sortCriterion](){
         auto sourceM = qobject_cast<TransfersModel*>(sourceModel());
         sourceM->lockModelMutex(true);
-        QSortFilterProxyModel::sort(sortCriterion, order);
-        //QSortFilterProxyModel::invalidate();
+        QSortFilterProxyModel::invalidate();
+        QSortFilterProxyModel::sort(0, order);
         sourceM->lockModelMutex(false);
     });
     mFilterWatcher.setFuture(filtered);
@@ -87,8 +87,8 @@ void TransfersManagerSortFilterProxyModel::setFilterFixedString(const QString& p
     QFuture<void> filtered = QtConcurrent::run([this](){
         auto sourceM = qobject_cast<TransfersModel*>(sourceModel());
         sourceM->lockModelMutex(true);
-        invalidateFilter();
-        QSortFilterProxyModel::sort(static_cast<int>(mSortCriterion),  sortOrder());
+        QSortFilterProxyModel::invalidate();
+        QSortFilterProxyModel::sort(0,  sortOrder());
         sourceM->lockModelMutex(false);
     });
 
@@ -105,8 +105,8 @@ void TransfersManagerSortFilterProxyModel::textSearchTypeChanged()
     QFuture<void> filtered = QtConcurrent::run([this](){
         auto sourceM = qobject_cast<TransfersModel*>(sourceModel());
         sourceM->lockModelMutex(true);
-        invalidateFilter();
-        QSortFilterProxyModel::sort(static_cast<int>(mSortCriterion), sortOrder());
+        QSortFilterProxyModel::invalidate();
+        QSortFilterProxyModel::sort(0, sortOrder());
         sourceM->lockModelMutex(false);
     });
     mFilterWatcher.setFuture(filtered);
@@ -390,6 +390,7 @@ void TransfersManagerSortFilterProxyModel::removeNonSyncedTransferFromCounter(Tr
 
 bool TransfersManagerSortFilterProxyModel::lessThan(const QModelIndex &left, const QModelIndex &right) const
 {
+
     const auto leftItem (qvariant_cast<TransferItem>(left.data()).getTransferData());
     const auto rightItem (qvariant_cast<TransferItem>(right.data()).getTransferData());
 
@@ -403,11 +404,26 @@ bool TransfersManagerSortFilterProxyModel::lessThan(const QModelIndex &left, con
         }
         case SortCriterion::TOTAL_SIZE:
         {
-            return leftItem->mTotalSize > rightItem->mTotalSize;
+            return leftItem->mTotalSize < rightItem->mTotalSize;
         }
         case SortCriterion::NAME:
         {
             return QString::compare(leftItem->mFilename, rightItem->mFilename, Qt::CaseInsensitive) < 0;
+        }
+        case SortCriterion::SPEED:
+        {
+            return leftItem->mSpeed < rightItem->mSpeed;
+        }
+        case SortCriterion::TIME:
+        {
+            if(leftItem->isProcessing() || rightItem->isProcessing())
+            {
+                return leftItem->mRemainingTime < rightItem->mRemainingTime;
+            }
+            else if(leftItem->isFinished() && rightItem->isFinished())
+            {
+                return leftItem->getRawFinishedTime() < rightItem->getRawFinishedTime();
+            }
         }
         }
     }

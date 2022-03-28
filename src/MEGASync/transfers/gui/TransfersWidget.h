@@ -45,14 +45,14 @@ public:
     ~TransfersWidget();
 
 public slots:
-    void on_pHeaderName_clicked();
     void on_pHeaderSize_clicked();
+    void onHeaderItemClicked(int sortBy, Qt::SortOrder order);
     void on_tPauseResumeVisible_toggled(bool state);
     void on_tCancelClearVisible_clicked();
     void onPauseStateChanged(bool pauseState);
 
 protected:
-    void changeEvent(QEvent *event);
+    void changeEvent(QEvent *event) override;
 
 private slots:
     void onUiBlocked();
@@ -67,14 +67,6 @@ private slots:
     void onPausedTransferCounterChanged(bool state);
 
 private:
-    enum HeaderState
-    {
-        HS_SORT_ASCENDING = 0,
-        HS_SORT_DESCENDING,
-        HS_SORT_PRIORITY,
-        HS_NB_STATES,
-    };
-
     Ui::TransfersWidget *ui;
     TransfersModel *model;
     TransfersManagerSortFilterProxyModel *mProxyModel;
@@ -83,13 +75,9 @@ private:
     MegaDelegateHoverManager mDelegateHoverManager;
     bool mClearMode;
     MegaApplication *app;
-    HeaderState mHeaderNameState;
-    HeaderState mHeaderSizeState;
 
     void configureTransferView();
     void clearOrCancel(const QList<QExplicitlySharedDataPointer<TransferData>>& pool, int state, int firstRow);
-
-    void setHeaderState(QPushButton* header, HeaderState state);
 
 signals:
     void clearTransfers(int firstRow, int amount);

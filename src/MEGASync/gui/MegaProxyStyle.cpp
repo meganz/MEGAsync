@@ -45,7 +45,7 @@ void MegaProxyStyle::drawPrimitive(QStyle::PrimitiveElement element, const QStyl
         {
             auto transferItem (qvariant_cast<TransferItem>(index.data(Qt::DisplayRole)));
             auto data = transferItem.getTransferData();
-            QColor c(data->mType == TransferData::TransferType::TRANSFER_DOWNLOAD ? "#31B500" : "#2BA6DE");
+            QColor c(data->mType == TransferData::TransferType::TRANSFER_DOWNLOAD ? MegaTransferView::DOWNLOAD_DRAG_COLOR : MegaTransferView::UPLOAD_DRAG_COLOR);
 
             QPen linepen(c);
             linepen.setCapStyle(Qt::RoundCap);

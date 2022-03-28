@@ -26,36 +26,31 @@ bool MegaDelegateHoverManager::eventFilter(QObject *watched, QEvent *event)
 
         if(mCurrentIndex.row() != index.row())
         {
-            sendLeaveEvent();
+            sendEvent(QEvent::Leave);
             mCurrentIndex = index;
-            sendEnterEvent();
+            sendEvent(QEvent::Enter);
         }
 
-        sendMoveEvent(mouseEvent->pos());
+        sendEvent(QEvent::MouseMove, mouseEvent->pos());
     }
     else if(event->type() == QEvent::Enter)
     {
         if(auto enterEvent = dynamic_cast<QEnterEvent*>(event))
         {
             mCurrentIndex = mView->indexAt(enterEvent->pos());
-            sendEnterEvent();
+            sendEvent(QEvent::Enter);
         }
     }
-    else if(event->type() == QEvent::Leave)
+    else if(event->type() == QEvent::Leave || event->type() == QEvent::Wheel)
     {
-        sendLeaveEvent();
-        mCurrentIndex = QModelIndex();
-    }
-    else if(event->type() == QEvent::Wheel)
-    {
-        sendLeaveEvent();
+        sendEvent(QEvent::Leave);
         mCurrentIndex = QModelIndex();
     }
 
     return QObject::eventFilter(watched, event);
 }
 
-void MegaDelegateHoverManager::sendEnterEvent()
+void MegaDelegateHoverManager::sendEvent(QEvent::Type eventType, const QPoint &point)
 {
     if(mCurrentIndex.isValid())
     {
@@ -66,49 +61,14 @@ void MegaDelegateHoverManager::sendEnterEvent()
         }
         if(delegate)
         {
-            auto enterEvent = new MegaDelegateHoverEvent(QEvent::Enter);
-            enterEvent->setIndex(mCurrentIndex);
-            enterEvent->setRect(mView->visualRect(mCurrentIndex));
-            QApplication::postEvent(delegate, enterEvent);
-        }
-    }
-}
-
-void MegaDelegateHoverManager::sendLeaveEvent()
-{
-    if(mCurrentIndex.isValid())
-    {
-        auto delegate = mView->itemDelegateForColumn(mCurrentIndex.column());
-        if(!delegate)
-        {
-            delegate = mView->itemDelegate();
-        }
-        if(delegate)
-        {
-            auto leaveEvent = new MegaDelegateHoverEvent(QEvent::Leave);
-            leaveEvent->setIndex(mCurrentIndex);
-            leaveEvent->setRect(mView->visualRect(mCurrentIndex));
-            QApplication::postEvent(delegate, leaveEvent);
-        }
-    }
-}
-
-void MegaDelegateHoverManager::sendMoveEvent(const QPoint& point)
-{
-    if(mCurrentIndex.isValid())
-    {
-        auto delegate = mView->itemDelegateForColumn(mCurrentIndex.column());
-        if(!delegate)
-        {
-            delegate = mView->itemDelegate();
-        }
-        if(delegate)
-        {
-            auto mouseMoveEvent = new MegaDelegateHoverEvent(QEvent::MouseMove);
-            mouseMoveEvent->setIndex(mCurrentIndex);
-            mouseMoveEvent->setRect(mView->visualRect(mCurrentIndex));
-            mouseMoveEvent->setMousePos(point - mouseMoveEvent->rect().topLeft());
-            QApplication::postEvent(delegate, mouseMoveEvent);
+            auto hoverEvent = new MegaDelegateHoverEvent(eventType);
+            hoverEvent->setIndex(mCurrentIndex);
+            hoverEvent->setRect(mView->visualRect(mCurrentIndex));
+            if(!point.isNull())
+            {
+                hoverEvent->setMousePos(point - hoverEvent->rect().topLeft());
+            }
+            QApplication::postEvent(delegate, hoverEvent);
         }
     }
 }

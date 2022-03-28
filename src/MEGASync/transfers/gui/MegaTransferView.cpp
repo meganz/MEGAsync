@@ -11,6 +11,9 @@
 
 using namespace mega;
 
+const QColor MegaTransferView::UPLOAD_DRAG_COLOR = QColor("#2BA6DE");
+const QColor MegaTransferView::DOWNLOAD_DRAG_COLOR = QColor("#31B500");
+
 MegaTransferView::MegaTransferView(QWidget* parent) :
     QTreeView(parent),
     mParentTransferWidget(nullptr),
@@ -25,12 +28,13 @@ MegaTransferView::MegaTransferView(QWidget* parent) :
     mGetLinkAction(nullptr),
     mOpenItemAction(nullptr),
     mShowInFolderAction(nullptr),
-    mClearAction(nullptr)
+    mClearAction(nullptr),
+    mKeyNavigation(false),
+    mDisableLink(false),
+    mDisableMenus(false)
+
 {
     setMouseTracking(true);
-    disableLink = false;
-    disableMenus = false;
-
     setAutoScroll(false);
 }
 
@@ -57,7 +61,7 @@ void MegaTransferView::setup(TransfersWidget* tw)
 
 void MegaTransferView::disableGetLink(bool disable)
 {
-    disableLink = disable;
+    mDisableLink = disable;
     mGetLinkAction->setEnabled(!disable);
 }
 
@@ -239,7 +243,7 @@ void MegaTransferView::onCancelClearSelection(bool isClear)
 
 void MegaTransferView::disableContextMenus(bool option)
 {
-    disableMenus = option;
+    mDisableMenus = option;
 }
 
 void MegaTransferView::createContextMenu()
@@ -465,7 +469,7 @@ void MegaTransferView::mouseReleaseEvent(QMouseEvent* event)
         return;
     }
 
-    if (!disableMenus)
+    if (!mDisableMenus)
     {
         emit showContextMenu(QPoint(event->x(), event->y()));
     }
@@ -493,22 +497,34 @@ void MegaTransferView::keyPressEvent(QKeyEvent *event)
     {
         onCancelClearSelectedTransfers();
     }
+    else if(event->key() == Qt::Key_Down || event->key() == Qt::Key_Up)
+    {
+        mKeyNavigation = true;
+    }
 
     QTreeView::keyPressEvent(event);
+
+    if(mKeyNavigation)
+    {
+        mKeyNavigation = false;
+    }
 }
 
 void MegaTransferView::selectionChanged(const QItemSelection &selected, const QItemSelection &deselected)
 {
-    auto selectedIndexes = selected.indexes();
-    auto deselectedIndexes = deselected.indexes();
+    if(mKeyNavigation)
+    {
+        auto selectedIndexes = selected.indexes();
+        auto deselectedIndexes = deselected.indexes();
 
-    if(!selectedIndexes.isEmpty())
-    {
-        scrollTo(selectedIndexes.last(), QAbstractItemView::PositionAtCenter);
-    }
-    else if(!deselectedIndexes.isEmpty())
-    {
-        scrollTo(deselectedIndexes.last(), QAbstractItemView::PositionAtCenter);
+        if(!selectedIndexes.isEmpty())
+        {
+            scrollTo(selectedIndexes.last(), QAbstractItemView::PositionAtCenter);
+        }
+        else if(!deselectedIndexes.isEmpty())
+        {
+            scrollTo(deselectedIndexes.last(), QAbstractItemView::PositionAtCenter);
+        }
     }
 
     QTreeView::selectionChanged(selected, deselected);
@@ -709,7 +725,7 @@ void MegaTransferView::moveToBottomClicked()
 
 void MegaTransferView::getLinkClicked()
 {
-    if (disableLink)
+    if (mDisableLink)
     {
         return;
     }

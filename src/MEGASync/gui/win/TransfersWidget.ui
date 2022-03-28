@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>768</width>
-    <height>642</height>
+    <width>802</width>
+    <height>100</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -41,18 +41,6 @@
 #sWidget, #wTableHeader
 {
     background-color: white;
-}
-
-#wTableHeader QToolButton
-{
-    width: 24px;
-    min-width: 24px;
-    max-width: 24px;
-    height: 24px;
-    min-height: 24px;
-    max-height: 24px;
-    qProperty-iconSize: 24px;
-    border: none;
 }
 
 #wPauseResumeVisible
@@ -94,7 +82,18 @@
 	padding-left: 4px;
 	margin-left 0;
 	border: none;
-}</string>
+}
+
+TransferWidgetHeaderItem  QLabel
+{
+   color: #666666;
+   font-size: 12px;
+   text-align: left;
+   border: none;
+   margin-left: 0;
+   padding: 0;
+}
+</string>
   </property>
   <layout class="QGridLayout" name="TransfersWidgetLayout">
    <property name="sizeConstraint">
@@ -212,24 +211,71 @@
        </property>
        <item>
         <widget class="QWidget" name="wTableHeader" native="true">
-         <layout class="QHBoxLayout" name="wTableHeaderLayout">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>28</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>28</height>
+          </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true"/>
+         </property>
+         <layout class="QHBoxLayout" name="wTableHeaderLayout" stretch="0,0,1,0,0,0,0,0,0,0">
           <property name="spacing">
            <number>0</number>
           </property>
           <property name="leftMargin">
-           <number>70</number>
+           <number>24</number>
           </property>
           <property name="topMargin">
            <number>0</number>
           </property>
           <property name="rightMargin">
-           <number>36</number>
+           <number>20</number>
           </property>
           <property name="bottomMargin">
            <number>0</number>
           </property>
           <item>
-           <widget class="QPushButton" name="pHeaderName">
+           <spacer name="horizontalSpacer">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeType">
+             <enum>QSizePolicy::Fixed</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>48</width>
+              <height>0</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer_2">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeType">
+             <enum>QSizePolicy::Fixed</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>8</width>
+              <height>0</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="TransferWidgetHeaderItem" name="nameColumn" native="true">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
               <horstretch>0</horstretch>
@@ -238,7 +284,7 @@
             </property>
             <property name="minimumSize">
              <size>
-              <width>160</width>
+              <width>110</width>
               <height>28</height>
              </size>
             </property>
@@ -248,22 +294,16 @@
               <height>28</height>
              </size>
             </property>
-            <property name="cursor">
-             <cursorShape>PointingHandCursor</cursorShape>
-            </property>
-            <property name="layoutDirection">
-             <enum>Qt::RightToLeft</enum>
-            </property>
-            <property name="text">
+            <property name="title" stdset="0">
              <string>Name</string>
             </property>
-            <property name="flat">
-             <bool>true</bool>
+            <property name="sortCriterion" stdset="0">
+             <number>0</number>
             </property>
            </widget>
           </item>
-          <item>
-           <widget class="QPushButton" name="pHeaderSize">
+          <item alignment="Qt::AlignLeft">
+           <widget class="TransferWidgetHeaderItem" name="sizeColumn" native="true">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
               <horstretch>0</horstretch>
@@ -272,144 +312,161 @@
             </property>
             <property name="minimumSize">
              <size>
-              <width>140</width>
+              <width>110</width>
               <height>28</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
-              <width>140</width>
+              <width>110</width>
               <height>28</height>
+             </size>
+            </property>
+            <property name="title" stdset="0">
+             <string>Size</string>
+            </property>
+            <property name="sortCriterion" stdset="0">
+             <number>1</number>
+            </property>
+           </widget>
+          </item>
+          <item alignment="Qt::AlignLeft">
+           <widget class="TransferWidgetHeaderItem" name="speedColumn" native="true">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>100</width>
+              <height>28</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>100</width>
+              <height>28</height>
+             </size>
+            </property>
+            <property name="sortCriterion" stdset="0">
+             <number>2</number>
+            </property>
+            <property name="title" stdset="0">
+             <string>Speed</string>
+            </property>
+           </widget>
+          </item>
+          <item alignment="Qt::AlignLeft">
+           <widget class="TransferWidgetHeaderItem" name="statusColumn" native="true">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>110</width>
+              <height>28</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>110</width>
+              <height>28</height>
+             </size>
+            </property>
+            <property name="sortCriterion" stdset="0">
+             <number>3</number>
+            </property>
+            <property name="title" stdset="0">
+             <string>Status</string>
+            </property>
+           </widget>
+          </item>
+          <item alignment="Qt::AlignLeft">
+           <widget class="TransferWidgetHeaderItem" name="timeColumn" native="true">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>120</width>
+              <height>28</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>120</width>
+              <height>28</height>
+             </size>
+            </property>
+            <property name="sortCriterion" stdset="0">
+             <number>4</number>
+            </property>
+            <property name="title" stdset="0">
+             <string>Time Left</string>
+            </property>
+           </widget>
+          </item>
+          <item alignment="Qt::AlignLeft|Qt::AlignVCenter">
+           <widget class="QPushButton" name="tPauseResumeVisible">
+            <property name="minimumSize">
+             <size>
+              <width>24</width>
+              <height>24</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>24</width>
+              <height>24</height>
              </size>
             </property>
             <property name="cursor">
              <cursorShape>PointingHandCursor</cursorShape>
             </property>
-            <property name="layoutDirection">
-             <enum>Qt::RightToLeft</enum>
+            <property name="toolTip">
+             <string>Pause or resume all selected transfers</string>
             </property>
-            <property name="text">
-             <string>Size</string>
+            <property name="icon">
+             <iconset resource="../Resources_macx.qrc">
+              <normaloff>:/images/lists_pause_all_ico.png</normaloff>
+              <normalon>:/images/lists_resume_all_ico.png</normalon>:/images/lists_pause_all_ico.png</iconset>
             </property>
-            <property name="flat">
+            <property name="iconSize">
+             <size>
+              <width>24</width>
+              <height>24</height>
+             </size>
+            </property>
+            <property name="checkable">
              <bool>true</bool>
             </property>
+            <property name="autoRaise" stdset="0">
+             <bool>false</bool>
+            </property>
            </widget>
           </item>
-          <item>
-           <widget class="QLabel" name="lHeaderSpeed">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
+          <item alignment="Qt::AlignLeft|Qt::AlignVCenter">
+           <widget class="QPushButton" name="tCancelClearVisible">
             <property name="minimumSize">
              <size>
-              <width>104</width>
-              <height>28</height>
+              <width>24</width>
+              <height>24</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
-              <width>104</width>
-              <height>28</height>
+              <width>24</width>
+              <height>24</height>
              </size>
             </property>
-            <property name="text">
-             <string>Speed</string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLabel" name="lHeaderStatus">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="minimumSize">
-             <size>
-              <width>120</width>
-              <height>28</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>120</width>
-              <height>28</height>
-             </size>
-            </property>
-            <property name="text">
-             <string>Status</string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLabel" name="lHeaderTime">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="minimumSize">
-             <size>
-              <width>92</width>
-              <height>28</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>92</width>
-              <height>28</height>
-             </size>
-            </property>
-            <property name="text">
-             <string>Time</string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QWidget" name="wPauseResumeVisible" native="true">
-            <widget class="QToolButton" name="tPauseResumeVisible">
-             <property name="geometry">
-              <rect>
-               <x>0</x>
-               <y>0</y>
-               <width>24</width>
-               <height>24</height>
-              </rect>
-             </property>
-             <property name="cursor">
-              <cursorShape>PointingHandCursor</cursorShape>
-             </property>
-             <property name="toolTip">
-              <string>Pause or resume all selected transfers</string>
-             </property>
-             <property name="icon">
-              <iconset resource="../Resources_win.qrc">
-               <normaloff>:/images/lists_pause_all_ico.png</normaloff>
-               <normalon>:/images/lists_resume_all_ico.png</normalon>:/images/lists_pause_all_ico.png</iconset>
-             </property>
-             <property name="checkable">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </widget>
-          </item>
-          <item>
-           <widget class="QToolButton" name="tCancelClearVisible">
             <property name="cursor">
              <cursorShape>PointingHandCursor</cursorShape>
             </property>
@@ -417,10 +474,29 @@
              <string>Cancel all selected transfers</string>
             </property>
             <property name="icon">
-             <iconset resource="../Resources_win.qrc">
+             <iconset resource="../Resources_macx.qrc">
               <normaloff>:/images/lists_cancel_all_ico.png</normaloff>:/images/lists_cancel_all_ico.png</iconset>
             </property>
+            <property name="iconSize">
+             <size>
+              <width>24</width>
+              <height>24</height>
+             </size>
+            </property>
            </widget>
+          </item>
+          <item>
+           <spacer name="rightMargin">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>0</width>
+              <height>0</height>
+             </size>
+            </property>
+           </spacer>
           </item>
          </layout>
         </widget>
@@ -592,9 +668,15 @@ QMenu::item:default
    <header>TransfersStateInfoWidget.h</header>
    <container>1</container>
   </customwidget>
+  <customwidget>
+   <class>TransferWidgetHeaderItem</class>
+   <extends>QWidget</extends>
+   <header>TransferWidgetHeaderItem.h</header>
+   <container>1</container>
+  </customwidget>
  </customwidgets>
  <resources>
-  <include location="../Resources_win.qrc"/>
+  <include location="../Resources_macx.qrc"/>
  </resources>
  <connections/>
 </ui>

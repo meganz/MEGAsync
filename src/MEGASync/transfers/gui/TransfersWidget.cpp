@@ -5,16 +5,24 @@
 
 #include <QTimer>
 #include <QtConcurrent/QtConcurrent>
+#include <QScrollBar>
 
 TransfersWidget::TransfersWidget(QWidget* parent) :
     QWidget (parent),
     ui (new Ui::TransfersWidget),
     tDelegate (nullptr),
-    app (qobject_cast<MegaApplication*>(qApp)),
-    mHeaderNameState (HS_SORT_PRIORITY),
-    mHeaderSizeState (HS_SORT_PRIORITY)
+    app (qobject_cast<MegaApplication*>(qApp))
 {
     ui->setupUi(this);
+
+    ui->statusColumn->setSortOrder(Qt::DescendingOrder);
+
+    connect(ui->nameColumn, &TransferWidgetHeaderItem::toggled, this, &TransfersWidget::onHeaderItemClicked);
+    connect(ui->sizeColumn, &TransferWidgetHeaderItem::toggled, this, &TransfersWidget::onHeaderItemClicked);
+    connect(ui->speedColumn, &TransferWidgetHeaderItem::toggled, this, &TransfersWidget::onHeaderItemClicked);
+    connect(ui->statusColumn, &TransferWidgetHeaderItem::toggled, this, &TransfersWidget::onHeaderItemClicked);
+    connect(ui->timeColumn, &TransferWidgetHeaderItem::toggled, this, &TransfersWidget::onHeaderItemClicked);
+
 
     //Keep size when hidden
     auto sizePolicy = ui->tCancelClearVisible->sizePolicy();
@@ -22,10 +30,14 @@ TransfersWidget::TransfersWidget(QWidget* parent) :
     {
         sizePolicy.setRetainSizeWhenHidden(true);
         ui->tCancelClearVisible->setSizePolicy(sizePolicy);
+        ui->tPauseResumeVisible->setSizePolicy(sizePolicy);
     }
 
     model = app->getTransfersModel();
 
+    //Align header pause/cancel buttons to view pause/cancel buttons
+    int sliderWidth = ui->tvTransfers->verticalScrollBar()->width();
+    ui->rightMargin->changeSize(sliderWidth,0,QSizePolicy::Fixed, QSizePolicy::Preferred);
 }
 void TransfersWidget::setupTransfers()
 {
@@ -96,46 +108,9 @@ TransfersModel* TransfersWidget::getModel()
     return app->getTransfersModel();
 }
 
-void TransfersWidget::on_pHeaderName_clicked()
+void TransfersWidget::onHeaderItemClicked(int sortBy, Qt::SortOrder order)
 {
-    Qt::SortOrder order (Qt::AscendingOrder);
-    SortCriterion sortBy (
-               SortCriterion::NAME);
-
-    mHeaderNameState = static_cast<HeaderState>((mHeaderNameState + 1) % HS_NB_STATES);
-
-    switch (mHeaderNameState)
-    {
-        case HS_SORT_ASCENDING:
-        {
-            order = Qt::AscendingOrder;
-            break;
-        }
-        case HS_SORT_DESCENDING:
-        {
-            order = Qt::DescendingOrder;
-            break;
-        }
-        case HS_SORT_PRIORITY:
-        {
-            order = Qt::DescendingOrder;
-            sortBy = SortCriterion::PRIORITY;
-            break;
-        }
-        case HS_NB_STATES: //this never should happen
-        {
-            break;
-        }
-    }
-
-    if (mHeaderSizeState != HS_SORT_PRIORITY)
-    {
-        setHeaderState(ui->pHeaderSize, HS_SORT_PRIORITY);
-        mHeaderSizeState = HS_SORT_PRIORITY;
-    }
-
-    mProxyModel->sort(static_cast<int>(sortBy), order);
-    setHeaderState(ui->pHeaderName, mHeaderNameState);
+    mProxyModel->sort(sortBy, order);
 }
 
 void TransfersWidget::on_pHeaderSize_clicked()
@@ -144,40 +119,7 @@ void TransfersWidget::on_pHeaderSize_clicked()
     SortCriterion sortBy (
                 SortCriterion::TOTAL_SIZE);
 
-    mHeaderSizeState = static_cast<HeaderState>((mHeaderSizeState + 1) % HS_NB_STATES);
-
-    switch (mHeaderSizeState)
-    {
-        case HS_SORT_ASCENDING:
-        {
-            order = Qt::AscendingOrder;
-            break;
-        }
-        case HS_SORT_DESCENDING:
-        {
-            order = Qt::DescendingOrder;
-            break;
-        }
-        case HS_SORT_PRIORITY:
-        {
-            order = Qt::DescendingOrder;
-            sortBy = SortCriterion::PRIORITY;
-            break;
-        }
-        case HS_NB_STATES: //this never should happen
-        {
-            break;
-        }
-    }
-
-    if (mHeaderNameState != HS_SORT_PRIORITY)
-    {
-        setHeaderState(ui->pHeaderName, HS_SORT_PRIORITY);
-        mHeaderNameState = HS_SORT_PRIORITY;
-    }
-
     mProxyModel->sort(static_cast<int>(sortBy), order);
-    setHeaderState(ui->pHeaderSize, mHeaderSizeState);
 }
 
 void TransfersWidget::on_tCancelClearVisible_clicked()
@@ -224,9 +166,9 @@ void TransfersWidget::transferFilterReset()
 
 void TransfersWidget::updateHeaderItems(const QString &headerTime, const QString &cancelClearTooltip, const QString &headerSpeed)
 {
-    ui->lHeaderTime->setText(headerTime);
+    ui->timeColumn->setTitle(headerTime);
     ui->tCancelClearVisible->setToolTip(cancelClearTooltip);
-    ui->lHeaderSpeed->setText(headerSpeed);
+    ui->speedColumn->setTitle(headerSpeed);
 }
 
 void TransfersWidget::changeEvent(QEvent *event)
@@ -361,29 +303,4 @@ void TransfersWidget::on_tPauseResumeVisible_toggled(bool state)
     onPauseStateChanged(state);
 
     emit pauseResumeVisibleRows(state);
-}
-
-void TransfersWidget::setHeaderState(QPushButton* header, HeaderState state)
-{
-    QIcon icon;
-    switch (state)
-    {
-        case HS_SORT_DESCENDING:
-        {
-            icon = Utilities::getCachedPixmap(QLatin1Literal(":/images/sort_descending.png"));
-            break;
-        }
-        case HS_SORT_ASCENDING:
-        {
-            icon = Utilities::getCachedPixmap(QLatin1Literal(":/images/sort_ascending.png"));
-            break;
-        }
-        case HS_SORT_PRIORITY:
-        default:
-        {
-            icon = QIcon();
-            break;
-        }
-    }
-    header->setIcon(icon);
 }

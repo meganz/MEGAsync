@@ -41,8 +41,8 @@ void InfoDialogTransferDelegateWidget::updateTransferState()
 {
     if(stateHasChanged())
     {
-        if (getData()->mState == TransferData::TransferState::TRANSFER_COMPLETED
-                || getData()->mState == TransferData::TransferState::TRANSFER_FAILED)
+        if (getData()->mState & (TransferData::TransferState::TRANSFER_COMPLETED
+                                  | TransferData::TransferState::TRANSFER_FAILED))
         {
             mUi->sTransferState->setCurrentWidget(mUi->completedTransfer);
         }
@@ -73,7 +73,7 @@ void InfoDialogTransferDelegateWidget::updateTransferState()
 
             if (!getData()->mTransferredBytes)
             {
-                downloadString = QString::fromUtf8("%1").arg(tr("starting..."));
+                downloadString = QString::fromUtf8("%1").arg(tr("starting"), QString::fromUtf8("…"));
             }
             else
             {
@@ -126,7 +126,7 @@ void InfoDialogTransferDelegateWidget::updateTransferControlsOnHold(const QStrin
     {
         mUi->lSpeed->setText(speedText);
         mUi->bClockDown->setVisible(false);
-        mUi->lRemainingTime->setText(QString::fromStdString(""));
+        mUi->lRemainingTime->clear();
     }
 }
 
@@ -158,12 +158,12 @@ void InfoDialogTransferDelegateWidget::setType()
     switch (getData()->mType)
     {
         case TransferData::TransferType::TRANSFER_UPLOAD:
-            icon = Utilities::getCachedPixmap(QString::fromUtf8(":/images/upload_item_ico.png"));
+            icon = Utilities::getCachedPixmap(QString::fromLatin1(":/images/upload_item_ico.png"));
             mUi->pbTransfer->setStyleSheet(QString::fromUtf8("QProgressBar#pbTransfer{background-color: transparent;}"
                                                             "QProgressBar#pbTransfer::chunk {background-color: #2ba6de;}"));
             break;
         case TransferData::TransferType::TRANSFER_DOWNLOAD:
-            icon = Utilities::getCachedPixmap(QString::fromUtf8(":/images/download_item_ico.png"));
+            icon = Utilities::getCachedPixmap(QString::fromLatin1(":/images/download_item_ico.png"));
             mUi->pbTransfer->setStyleSheet(QString::fromUtf8("QProgressBar#pbTransfer{background-color: transparent;}"
                                                             "QProgressBar#pbTransfer::chunk {background-color: #31b500;}"));
             break;
@@ -187,19 +187,19 @@ void InfoDialogTransferDelegateWidget::updateFinishedIco(int transferType, int e
     switch (transferType)
     {
         case TransferData::TransferType::TRANSFER_UPLOAD:
-            iconCompleted = Utilities::getCachedPixmap(errorCode < 0 ? QString::fromUtf8(":/images/upload_fail_item_ico.png")
-                                                                      : QString::fromUtf8(":/images/uploaded_item_ico.png"));
+            iconCompleted = Utilities::getCachedPixmap(errorCode < 0 ? QString::fromLatin1(":/images/upload_fail_item_ico.png")
+                                                                      : QString::fromLatin1(":/images/uploaded_item_ico.png"));
             break;
         case TransferData::TransferType::TRANSFER_DOWNLOAD:
-            iconCompleted = Utilities::getCachedPixmap(errorCode < 0 ? QString::fromUtf8(":/images/download_fail_item_ico.png")
-                                                                      : QString::fromUtf8(":/images/downloaded_item_ico.png"));
+            iconCompleted = Utilities::getCachedPixmap(errorCode < 0 ? QString::fromLatin1(":/images/download_fail_item_ico.png")
+                                                                      : QString::fromLatin1(":/images/downloaded_item_ico.png"));
             break;
         default:
             break;
     }
 
     mUi->lTransferTypeCompleted->setIcon(iconCompleted);
-    mUi->lTransferTypeCompleted->setIconSize(QSize(mUi->lTransferTypeCompleted->width(), mUi->lTransferTypeCompleted->height()));
+    mUi->lTransferTypeCompleted->setIconSize(mUi->lTransferTypeCompleted->size());
 }
 
 TransferBaseDelegateWidget::ActionHoverType InfoDialogTransferDelegateWidget::mouseHoverTransfer(bool isHover, const QPoint &pos)
@@ -233,7 +233,7 @@ TransferBaseDelegateWidget::ActionHoverType InfoDialogTransferDelegateWidget::mo
                     bool in = isMouseHoverInAction(mUi->lActionTransfer, pos);
                     mUi->lActionTransfer->setToolTip(tr("Retry"));
                     update = setActionTransferIcon(mUi->lActionTransfer,
-                                                   QString::fromAscii("://images/ico_item_retry%1.png").arg(QString::fromAscii(in?"_hover_ico":"")));
+                                                   QString::fromLatin1("://images/ico_item_retry%1.png").arg(QString::fromLatin1(in?"_hover_ico":"")));
                     if(in)
                     {
                         hoverType = ActionHoverType::HOVER_ENTER;
@@ -318,18 +318,9 @@ TransferBaseDelegateWidget::ActionHoverType InfoDialogTransferDelegateWidget::mo
 
 bool InfoDialogTransferDelegateWidget::mouseHoverRetryingLabel(QPoint pos)
 {
-    switch (getData()->mState)
-    {
-        case TransferData::TransferState::TRANSFER_RETRYING:
-            if (mUi->lSpeed->rect().contains(mUi->lSpeed->mapFrom(this, pos)))
-            {
-                return true;
-            }
-            break;
-        default:
-            break;
-    }
-    return false;
+    return (getData()->mState == TransferData::TransferState::TRANSFER_RETRYING
+                && mUi->lSpeed->rect().contains(mUi->lSpeed->mapFrom(this, pos)));
+
 }
 
 void InfoDialogTransferDelegateWidget::finishTransfer()
