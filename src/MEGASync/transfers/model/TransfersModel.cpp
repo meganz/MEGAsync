@@ -900,7 +900,7 @@ TransfersCount TransfersModel::getTransfersCount()
     return mTransferEventWorker->getTransfersCount();
 }
 
-void TransfersModel::cancelTransfers(const QModelIndexList& indexes)
+void TransfersModel::cancelTransfers(const QModelIndexList& indexes, QWidget* canceledFrom)
 {
     if(indexes.isEmpty())
     {
@@ -960,7 +960,7 @@ void TransfersModel::cancelTransfers(const QModelIndexList& indexes)
 
         if(!uploadToClear.isEmpty() && !downloadToClear.isEmpty() && !toCancel.isEmpty())
         {
-            QMegaMessageBox::warning(nullptr, QString::fromUtf8("MEGAsync"),
+            QMegaMessageBox::warning(canceledFrom, QString::fromUtf8("MEGAsync"),
                                      tr("Transfer(s) cannot be cancelled or cleared", "", uploadToClear.size() + downloadToClear.size() + toCancel.size()),
                                      QMessageBox::Ok);
         }

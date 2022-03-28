@@ -241,7 +241,8 @@ macx {
                 $$PWD/macx/ProxySettings.ui \
                 $$PWD/macx/BandwidthSettings.ui \
                 $$PWD/macx/NewFolderDialog.ui \
-                $$PWD/macx/NotificationsSettings.ui
+                $$PWD/macx/NotificationsSettings.ui \
+                $$PWD/macx/TransferWidgetHeaderItem.ui
 
     #Asset catalog need to load SF symbol images of toolbar items for custom NSToolbar
     QMAKE_ASSET_CATALOGS += $$PWD/images/Images.xcassets
@@ -321,7 +322,8 @@ unix:!macx {
                 $$PWD/linux/ProxySettings.ui \
                 $$PWD/linux/BandwidthSettings.ui \
                 $$PWD/linux/NewFolderDialog.ui \
-                $$PWD/linux/NotificationsSettings.ui
+                $$PWD/linux/NotificationsSettings.ui \
+                $$PWD/linux/TransferWidgetHeaderItem.ui
 
     HEADERS += $$PWD/PermissionsDialog.h \
                $$PWD/PermissionsWidget.h

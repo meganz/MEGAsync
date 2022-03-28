@@ -201,7 +201,7 @@ TransferWidgetHeaderItem  QLabel
            <height>28</height>
           </size>
          </property>
-         <layout class="QHBoxLayout" name="wTableHeaderLayout" stretch="0,0,0,0,0,0,0,0,0">
+         <layout class="QHBoxLayout" name="wTableHeaderLayout" stretch="0,0,0,0,0,0,0,0,0,0">
           <property name="spacing">
            <number>0</number>
           </property>
@@ -419,7 +419,7 @@ TransferWidgetHeaderItem  QLabel
               <string>Pause or resume all selected transfers</string>
              </property>
              <property name="icon">
-              <iconset resource="../Resources_linux.qrc">
+              <iconset resource="../Resources_win.qrc">
                <normaloff>:/images/lists_pause_all_ico.png</normaloff>
                <normalon>:/images/lists_resume_all_ico.png</normalon>:/images/lists_pause_all_ico.png</iconset>
              </property>
@@ -462,7 +462,7 @@ TransferWidgetHeaderItem  QLabel
              <string>Cancel all selected transfers</string>
             </property>
             <property name="icon">
-             <iconset resource="../Resources_linux.qrc">
+             <iconset resource="../Resources_win.qrc">
               <normaloff>:/images/lists_cancel_all_ico.png</normaloff>:/images/lists_cancel_all_ico.png</iconset>
             </property>
             <property name="iconSize">
@@ -475,6 +475,22 @@ TransferWidgetHeaderItem  QLabel
              <bool>false</bool>
             </property>
            </widget>
+          </item>
+          <item>
+           <spacer name="rightMargin">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeType">
+             <enum>QSizePolicy::Fixed</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>15</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
           </item>
          </layout>
         </widget>
@@ -654,7 +670,7 @@ QMenu::item:default
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="../Resources_linux.qrc"/>
+  <include location="../Resources_win.qrc"/>
  </resources>
  <connections/>
 </ui>

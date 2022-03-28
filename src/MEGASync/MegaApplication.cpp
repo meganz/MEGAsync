@@ -4714,7 +4714,7 @@ void MegaApplication::showChangeLog()
     changeLogDialog->show();
 }
 
-void MegaApplication::uploadActionClicked()
+void MegaApplication::uploadActionClicked(QWidget* openFrom)
 {
     if (appfinished)
     {
@@ -4724,7 +4724,7 @@ void MegaApplication::uploadActionClicked()
     const bool storageIsOverQuota(storageState == MegaApi::STORAGE_STATE_RED || storageState == MegaApi::STORAGE_STATE_PAYWALL);
     if(storageIsOverQuota)
     {
-        if(OverQuotaDialog::showDialog(OverQuotaDialogType::STORAGE_UPLOAD))
+        if(OverQuotaDialog::showDialog(OverQuotaDialogType::STORAGE_UPLOAD,openFrom))
         {
             return;
         }
@@ -4766,7 +4766,7 @@ void MegaApplication::uploadActionClicked()
         defaultFolderPath = paths.at(0);
     }
 
-    multiUploadFileDialog = new MultiQFileDialog(nullptr,
+    multiUploadFileDialog = new MultiQFileDialog(openFrom,
            QCoreApplication::translate("ShellExtension", "Upload to MEGA"),
            defaultFolderPath, true);
 

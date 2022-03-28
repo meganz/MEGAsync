@@ -251,7 +251,7 @@ void TransfersWidget::onCancelClearButtonPressedOnDelegate()
 
     QPointer<TransfersWidget> dialog = QPointer<TransfersWidget>(this);
 
-    if (QMegaMessageBox::warning(nullptr, QString::fromUtf8("MEGAsync"),
+    if (QMegaMessageBox::warning(this, QString::fromUtf8("MEGAsync"),
                              tr("Are you sure you want to cancel or clear the following transfer(s)?", "", sourceSelectionIndexes.size()),
                              QMessageBox::Yes | QMessageBox::No, QMessageBox::No)
             != QMessageBox::Yes
@@ -260,7 +260,7 @@ void TransfersWidget::onCancelClearButtonPressedOnDelegate()
         return;
     }
 
-    getModel()->cancelTransfers(sourceSelectionIndexes);
+    getModel()->cancelTransfers(sourceSelectionIndexes, this);
 }
 
 void TransfersWidget::onRetryButtonPressedOnDelegate()
@@ -271,7 +271,7 @@ void TransfersWidget::onRetryButtonPressedOnDelegate()
 
     QPointer<TransfersWidget> dialog = QPointer<TransfersWidget>(this);
 
-    if (QMegaMessageBox::warning(nullptr, QString::fromUtf8("MEGAsync"),
+    if (QMegaMessageBox::warning(this, QString::fromUtf8("MEGAsync"),
                              tr("Are you sure you want to retry the following transfer(s)?", "", sourceSelectionIndexes.size()),
                              QMessageBox::Yes | QMessageBox::No, QMessageBox::No)
             != QMessageBox::Yes

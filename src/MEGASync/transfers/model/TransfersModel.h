@@ -140,7 +140,7 @@ public:
     void openFolderByTag(TransferTag tag);
     void retryTransferByIndex(const QModelIndex& index);
     void retryTransfers(QModelIndexList indexes);
-    void cancelTransfers(const QModelIndexList& indexes);
+    void cancelTransfers(const QModelIndexList& indexes, QWidget *canceledFrom);
     void clearTransfers(const QModelIndexList& indexes);
     void clearTransfers(const QMap<QModelIndex,QExplicitlySharedDataPointer<TransferData>> uploads,
                         const QMap<QModelIndex,QExplicitlySharedDataPointer<TransferData>> downloads);

@@ -821,7 +821,7 @@ void TransferManager::on_bDownload_clicked()
 
 void TransferManager::on_bUpload_clicked()
 {
-    qobject_cast<MegaApplication*>(qApp)->uploadActionClicked();
+    qobject_cast<MegaApplication*>(qApp)->uploadActionClicked(this);
 }
 
 void TransferManager::on_bCancelClearAll_clicked()

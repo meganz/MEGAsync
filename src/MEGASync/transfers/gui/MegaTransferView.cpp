@@ -141,7 +141,7 @@ void MegaTransferView::onCancelClearVisibleTransfers()
 
     QPointer<MegaTransferView> dialog = QPointer<MegaTransferView>(this);
 
-    if (QMegaMessageBox::warning(nullptr, QString::fromUtf8("MEGAsync"),
+    if (QMegaMessageBox::warning(this, QString::fromUtf8("MEGAsync"),
                              tr("Are you sure you want to cancel or clear the following transfer(s)?", "", indexes.size()),
                              QMessageBox::Yes | QMessageBox::No, QMessageBox::No)
             != QMessageBox::Yes
@@ -152,7 +152,7 @@ void MegaTransferView::onCancelClearVisibleTransfers()
 
     auto proxy (qobject_cast<QSortFilterProxyModel*>(model()));
     auto sourceModel(qobject_cast<TransfersModel*>(proxy->sourceModel()));
-    sourceModel->cancelTransfers(indexes);
+    sourceModel->cancelTransfers(indexes, this);
 }
 
 void MegaTransferView::onCancelClearSelectedTransfers()
@@ -161,7 +161,7 @@ void MegaTransferView::onCancelClearSelectedTransfers()
 
     QPointer<MegaTransferView> dialog = QPointer<MegaTransferView>(this);
 
-    if (QMegaMessageBox::warning(nullptr, QString::fromUtf8("MEGAsync"),
+    if (QMegaMessageBox::warning(this, QString::fromUtf8("MEGAsync"),
                              tr("Are you sure you want to cancel or clear the following transfer(s)?", "", indexes.size()),
                              QMessageBox::Yes | QMessageBox::No, QMessageBox::No)
             != QMessageBox::Yes
@@ -172,14 +172,14 @@ void MegaTransferView::onCancelClearSelectedTransfers()
 
     auto proxy (qobject_cast<QSortFilterProxyModel*>(model()));
     auto sourceModel(qobject_cast<TransfersModel*>(proxy->sourceModel()));
-    sourceModel->cancelTransfers(indexes);
+    sourceModel->cancelTransfers(indexes, this);
 }
 
 void MegaTransferView::onCancelAndClearAllTransfers()
 {
     QPointer<MegaTransferView> dialog = QPointer<MegaTransferView>(this);
 
-    if (QMegaMessageBox::warning(nullptr, QString::fromUtf8("MEGAsync"),
+    if (QMegaMessageBox::warning(this, QString::fromUtf8("MEGAsync"),
                              tr("Are you sure you want to cancel and clear all transfers?"),
                              QMessageBox::Yes | QMessageBox::No, QMessageBox::No)
             != QMessageBox::Yes
@@ -190,7 +190,7 @@ void MegaTransferView::onCancelAndClearAllTransfers()
 
     auto proxy(qobject_cast<QSortFilterProxyModel*>(model()));
     auto sourceModel(qobject_cast<TransfersModel*>(proxy->sourceModel()));
-    sourceModel->cancelTransfers(QModelIndexList());
+    sourceModel->cancelTransfers(QModelIndexList(), this);
 }
 
 void MegaTransferView::onClearCompletedVisibleTransfers()
@@ -199,7 +199,7 @@ void MegaTransferView::onClearCompletedVisibleTransfers()
 
     QPointer<MegaTransferView> dialog = QPointer<MegaTransferView>(this);
 
-    if (QMegaMessageBox::warning(nullptr, QString::fromUtf8("MEGAsync"),
+    if (QMegaMessageBox::warning(this, QString::fromUtf8("MEGAsync"),
                                  tr("Are you sure you want to clear the following transfer(s)?", "", indexes.size()),
                                  QMessageBox::Yes | QMessageBox::No, QMessageBox::No)
             != QMessageBox::Yes
@@ -219,7 +219,7 @@ void MegaTransferView::onRetryVisibleTransfers()
 
     QPointer<MegaTransferView> dialog = QPointer<MegaTransferView>(this);
 
-    if (QMegaMessageBox::warning(nullptr, QString::fromUtf8("MEGAsync"),
+    if (QMegaMessageBox::warning(this, QString::fromUtf8("MEGAsync"),
                                  tr("Are you sure you want to retry the following transfer(s)?", "", indexes.size()),
                                  QMessageBox::Yes | QMessageBox::No, QMessageBox::No)
             != QMessageBox::Yes
@@ -238,7 +238,7 @@ void MegaTransferView::onCancelClearSelection(bool isClear)
     QModelIndexList indexes = getSelectedTransfers();
     auto proxy (qobject_cast<QSortFilterProxyModel*>(model()));
     auto sourceModel(qobject_cast<TransfersModel*>(proxy->sourceModel()));
-    isClear ? sourceModel->clearTransfers(indexes) : sourceModel->cancelTransfers(indexes);
+    isClear ? sourceModel->clearTransfers(indexes) : sourceModel->cancelTransfers(indexes, this);
 }
 
 void MegaTransferView::disableContextMenus(bool option)
