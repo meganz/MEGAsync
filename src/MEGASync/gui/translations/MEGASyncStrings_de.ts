@@ -1819,7 +1819,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>MEGA Desktop app</source>
         <translatorcomment>Title of MEGA Desktop app within initial information wizard.</translatorcomment>
-        <translation>MEGA Desktop-App</translation>
+        <translation>MEGA-Desktop-App</translation>
     </message>
     <message>
         <source>Login or create an account to start using MEGA Desktop app.</source>
@@ -1844,7 +1844,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Know more about MEGA desktop app. [A]Read more[/A]</source>
         <translatorcomment>Label with hyperlink to sync client webpage to know more about MEGA desktop app. Keep placeholders.</translatorcomment>
-        <translation>[A]Weitere Informationen[/A] über die MEGA Desktop-App.</translation>
+        <translation>[A]Weitere Informationen[/A] über die MEGA-Desktop-App.</translation>
     </message>
 </context>
 <context>
@@ -4462,7 +4462,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Restart MEGA Desktop App to apply changes.</source>
         <translatorcomment>Informative text shown in Folders pane, letting the user know that an application restart is required to apply the changes he just made.</translatorcomment>
-        <translation>Starten Sie die MEGA Desktop-App neu, um die Änderungen zu übernehmen.</translation>
+        <translation>Starten Sie die MEGA-Desktop-App neu, um die Änderungen zu übernehmen.</translation>
     </message>
     <message>
         <source>Change Settings…</source>

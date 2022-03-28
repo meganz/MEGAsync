@@ -653,7 +653,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Bug report success!</source>
         <translatorcomment>Confirmation message shown when a bug report is successfully uploaded.</translatorcomment>
-        <translation>Сообщение о проблеме успешно отправлено.</translation>
+        <translation>Сообщение об ошибке успешно отправлено.</translation>
     </message>
     <message>
         <source>Your bug report has been submitted, a confirmation email will sent to you accordingly.</source>
@@ -663,7 +663,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Error on submitting bug report</source>
         <translatorcomment>Error message shown when some error occurs during uploading a bug report.</translatorcomment>
-        <translation>Произошла ошибка при отправке сообщения о проблеме.</translation>
+        <translation>Произошла ошибка при отправке сообщения об ошибке.</translation>
     </message>
     <message>
         <source>Bug report can&apos;t be submitted due to some error. Please try again or contact our support team via [A]support@mega.co.nz[/A]</source>
@@ -678,12 +678,12 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Are you sure you want to exit uploading?</source>
         <translatorcomment>Confirmation message shown when the user is trying to cancel the ongoing upload report.</translatorcomment>
-        <translation>Вы уверены, что хотите отменить загрузку сообщения о проблеме?</translation>
+        <translation>Вы уверены, что хотите отменить загрузку сообщения об ошибке?</translation>
     </message>
     <message>
         <source>The bug report will not be submitted if you exit uploading.</source>
         <translatorcomment>Informative message shown to the user to inform that if he exits the dialog the bug report upload will not be submitted.</translatorcomment>
-        <translation>О проблеме не будет сообщено, если вы отмените загрузку.</translation>
+        <translation>Об ошибке не будет сообщено, если вы отмените загрузку.</translation>
     </message>
     <message>
         <source>Continue</source>
@@ -698,7 +698,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>There is an ongoing report being uploaded.</source>
         <translatorcomment>Informative message shown when user is trying to upload a bug report while there is an ongoing upload.</translatorcomment>
-        <translation>Ещё одно сообщение о проблеме загружается в настоящее время.</translation>
+        <translation>Ещё одно сообщение об ошибке загружается в настоящее время.</translation>
     </message>
     <message>
         <source>Please wait until the current upload is completed.</source>

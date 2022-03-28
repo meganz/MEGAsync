@@ -4388,7 +4388,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Report Issue</source>
         <translatorcomment>Button label used to submit bug reports to MEGA.</translatorcomment>
-        <translation>Reportar</translation>
+        <translation>Informe de error</translation>
     </message>
     <message>
         <source>My Account</source>

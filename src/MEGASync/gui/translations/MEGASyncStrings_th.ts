@@ -3131,7 +3131,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Shares</source>
         <translatorcomment>Notification category for shared folders and nodes</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>การแชร์</translation>
     </message>
     <message>
         <source>New shared folder from contact</source>
@@ -3141,7 +3141,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Added or removed files</source>
         <translatorcomment>Title of a checkbox for disconnectig notifications</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ไฟล์ที่เพิ่มหรือลบออก</translation>
     </message>
     <message>
         <source>Access to a shared folder was removed</source>
@@ -3161,7 +3161,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Pending contact request reminder</source>
         <translatorcomment>Title of a checkbox for disconnectig notifications</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>แจ้งเตือนคำขอติดต่อที่รอดำเนินการ</translation>
     </message>
     <message>
         <source>Someone has accepted your contact request</source>
@@ -3196,7 +3196,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Shares:</source>
         <translatorcomment>Notification category for non-critical info notifications (macx)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>การแชร์:</translation>
     </message>
 </context>
 <context>
@@ -3543,7 +3543,13 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 - Other minor UI fixes and adjustments.
 - Fixed detected crashes on Windows, Linux and macOS.
 </source>
-        <translation type="unfinished"></translation>
+        <translation>- เพิ่มการสนับสนุนการสตรีมลิงก์ไฟล์จากลิงก์โฟลเดอร์แล้ว
+- แก้ไขปัญหาการแปลภาษาที่ไม่ถูกต้องแล้ว
+- ปรับปรุงประสบการณ์การใช้งานของผู้ใช้
+- เพิ่มแผงการแจ้งเตือนใหม่ในกล่องโต้ตอบการตั้งค่า
+- แก้ไขและปรับแต่ง UI เล็กน้อยประปราย
+- แก้ไขข้อขัดข้องที่ตรวจพบใน Windows Linux และ macOS
+</translation>
     </message>
 </context>
 <context>
@@ -4456,7 +4462,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Restart MEGA Desktop App to apply changes.</source>
         <translatorcomment>Informative text shown in Folders pane, letting the user know that an application restart is required to apply the changes he just made.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>รีสตาร์ทแอป MEGA เดสก์ทอป เพื่อนำการเปลี่ยนแปลงไปใช้งาน</translation>
     </message>
     <message>
         <source>Change Settings…</source>
@@ -4701,7 +4707,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Launch at login</source>
         <translatorcomment>Label to let the user start MEGAsync on login with a checkbox.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>แสดงหน้าให้เข้าสู่ระบบ</translation>
     </message>
 </context>
 <context>
@@ -5376,17 +5382,17 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Do you want to cancel all transfers?</source>
         <translatorcomment>Description label for warning dialog before a transfer cancellation</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>คุณต้องการยกเลิกถ่ายโอนทั้งหมดหรือไม่</translation>
     </message>
     <message>
         <source>Syncs aren&apos;t affected by this action.</source>
         <translatorcomment>Description label for warning dialog indicating that syncs are not going to be affected by accepting this dialog</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>รายการซิงค์ที่คงค้างอยู่จะไม่ได้รับผลกระทบจากการดำเนินการนี้</translation>
     </message>
     <message>
         <source>Continue transfers</source>
         <translatorcomment>Button label that indicates that no one of active transfers will be cancelled (Cancel button on dialog)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ดำเนินการถ่ายโอนต่อ</translation>
     </message>
     <message>
         <source>Cancel all transfers</source>
