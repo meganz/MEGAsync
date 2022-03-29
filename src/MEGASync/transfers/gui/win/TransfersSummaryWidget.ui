@@ -129,7 +129,7 @@ background: rgba(0,0,0,0.01);
       <string/>
      </property>
      <property name="icon">
-      <iconset resource="../Resources_win.qrc">
+      <iconset resource="../../../gui/Resources_win.qrc">
        <normaloff>:/images/pause.png</normaloff>:/images/pause.png</iconset>
      </property>
     </widget>

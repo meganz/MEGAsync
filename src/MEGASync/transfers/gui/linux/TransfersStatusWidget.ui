@@ -47,7 +47,7 @@
     <string/>
    </property>
    <property name="icon">
-    <iconset resource="../Resources_macx.qrc">
+    <iconset resource="../../../gui/Resources_linux.qrc">
      <normaloff>:/images/transfer_manager.png</normaloff>:/images/transfer_manager.png</iconset>
    </property>
    <property name="iconSize">
@@ -68,7 +68,7 @@
   </widget>
  </widget>
  <resources>
-  <include location="../Resources_macx.qrc"/>
+  <include location="../Resources_linux.qrc"/>
  </resources>
  <connections/>
 </ui>

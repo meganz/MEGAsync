@@ -129,7 +129,7 @@ background: rgba(0,0,0,0.01);
       <string/>
      </property>
      <property name="icon">
-      <iconset resource="../Resources_macx.qrc">
+      <iconset resource="../../../gui/Resources_linux.qrc">
        <normaloff>:/images/pause.png</normaloff>:/images/pause.png</iconset>
      </property>
     </widget>
@@ -145,7 +145,7 @@ background: rgba(0,0,0,0.01);
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="../Resources_macx.qrc"/>
+  <include location="../Resources_linux.qrc"/>
  </resources>
  <connections/>
 </ui>

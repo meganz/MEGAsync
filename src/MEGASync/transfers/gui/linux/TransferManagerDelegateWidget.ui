@@ -112,13 +112,13 @@ QProgressBar::chunk
 #lDone
 {
   color: #999999;
-  qProperty-alignment: 'AlignLeft | AlignBottom';
+  qProperty-alignment: 'AlignLeft';
 }
 
 #lTotal
 {
   color: #333333;
- qProperty-alignment: 'AlignLeft | AlignTop';
+ qProperty-alignment: 'AlignLeft';
 }
 
 #bItemSpeed
@@ -386,7 +386,7 @@ QProgressBar::chunk
             </property>
             <property name="maximumSize">
              <size>
-              <width>155</width>
+              <width>16777215</width>
               <height>20</height>
              </size>
             </property>
@@ -510,7 +510,7 @@ QProgressBar::chunk
           <property name="bottomMargin">
            <number>12</number>
           </property>
-          <item>
+          <item alignment="Qt::AlignLeft|Qt::AlignVCenter">
            <widget class="QLabel" name="lDone">
             <property name="minimumSize">
              <size>
@@ -529,7 +529,7 @@ QProgressBar::chunk
             </property>
            </widget>
           </item>
-          <item>
+          <item alignment="Qt::AlignVCenter">
            <widget class="QLabel" name="lTotal">
             <property name="minimumSize">
              <size>
@@ -808,7 +808,7 @@ QProgressBar::chunk
              </size>
             </property>
             <property name="icon">
-             <iconset resource="../Resources_macx.qrc">
+             <iconset resource="../../../gui/Resources_linux.qrc">
               <normaloff>:/images/lists_pause_ico.png</normaloff>:/images/lists_pause_ico.png</iconset>
             </property>
            </widget>
@@ -867,7 +867,7 @@ QProgressBar::chunk
              </size>
             </property>
             <property name="icon">
-             <iconset resource="../Resources_macx.qrc">
+             <iconset resource="../../../gui/Resources_linux.qrc">
               <normaloff>:/images/lists_cancel_ico.png</normaloff>:/images/lists_cancel_ico.png</iconset>
             </property>
            </widget>
@@ -882,7 +882,7 @@ QProgressBar::chunk
   </layout>
  </widget>
  <resources>
-  <include location="../Resources_macx.qrc"/>
+  <include location="../Resources_linux.qrc"/>
  </resources>
  <connections/>
 </ui>

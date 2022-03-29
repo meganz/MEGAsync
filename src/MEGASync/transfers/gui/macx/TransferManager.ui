@@ -474,7 +474,7 @@ QToolButton
              <cursorShape>PointingHandCursor</cursorShape>
             </property>
             <property name="icon">
-             <iconset resource="../Resources_macx.qrc">
+             <iconset resource="../../../gui/Resources_win.qrc">
               <normaloff>:/images/sidebar_pause_ico.png</normaloff>:/images/sidebar_pause_ico.png</iconset>
             </property>
            </widget>
@@ -485,7 +485,7 @@ QToolButton
              <cursorShape>PointingHandCursor</cursorShape>
             </property>
             <property name="icon">
-             <iconset resource="../Resources_macx.qrc">
+             <iconset resource="../../../gui/Resources_win.qrc">
               <normaloff>:/images/sidebar_search_ico.png</normaloff>:/images/sidebar_search_ico.png</iconset>
             </property>
            </widget>
@@ -518,7 +518,7 @@ QToolButton
              </sizepolicy>
             </property>
             <property name="icon">
-             <iconset resource="../Resources_macx.qrc">
+             <iconset resource="../../../gui/Resources_win.qrc">
               <normaloff>:/images/search_ico.png</normaloff>:/images/search_ico.png</iconset>
             </property>
            </widget>
@@ -548,7 +548,7 @@ QToolButton
              <cursorShape>PointingHandCursor</cursorShape>
             </property>
             <property name="icon">
-             <iconset resource="../Resources_macx.qrc">
+             <iconset resource="../../../gui/Resources_win.qrc">
               <normaloff>:/images/delete_search_ico.png</normaloff>:/images/delete_search_ico.png</iconset>
             </property>
            </widget>
@@ -623,10 +623,10 @@ QToolButton
                <cursorShape>PointingHandCursor</cursorShape>
               </property>
               <property name="text">
-               <string>All Transfers</string>
+               <string>All transfers</string>
               </property>
               <property name="icon">
-              <iconset resource="../Resources_macx.qrc">
+               <iconset resource="../../../gui/Resources_win.qrc">
                 <normaloff>:/images/all_transfers_ico.png</normaloff>:/images/all_transfers_ico.png</iconset>
               </property>
               <property name="autoDefault">
@@ -714,7 +714,7 @@ QToolButton
                <string>Downloads</string>
               </property>
               <property name="icon">
-              <iconset resource="../Resources_macx.qrc">
+               <iconset resource="../../../gui/Resources_win.qrc">
                 <normaloff>:/images/sidebar_downloads_ico.png</normaloff>:/images/sidebar_downloads_ico.png</iconset>
               </property>
               <property name="autoDefault">
@@ -799,7 +799,7 @@ QToolButton
                <string>Uploads</string>
               </property>
               <property name="icon">
-              <iconset resource="../Resources_macx.qrc">
+               <iconset resource="../../../gui/Resources_win.qrc">
                 <normaloff>:/images/uploads_ico.png</normaloff>:/images/uploads_ico.png</iconset>
               </property>
               <property name="autoDefault">
@@ -887,7 +887,7 @@ QToolButton
                <string>Finished</string>
               </property>
               <property name="icon">
-              <iconset resource="../Resources_macx.qrc">
+               <iconset resource="../../../gui/Resources_win.qrc">
                 <normaloff>:/images/sidebar_finished_ico.png</normaloff>:/images/sidebar_finished_ico.png</iconset>
               </property>
               <property name="autoDefault">
@@ -975,7 +975,7 @@ QToolButton
                <string>Failed</string>
               </property>
               <property name="icon">
-               <iconset resource="../Resources_macx.qrc">
+               <iconset resource="../../../gui/Resources_win.qrc">
                 <normaloff>:/images/sidebar_failed_ico.png</normaloff>:/images/sidebar_failed_ico.png</iconset>
               </property>
               <property name="autoDefault">
@@ -1084,7 +1084,7 @@ QToolButton
                <string>Text</string>
               </property>
               <property name="icon">
-              <iconset resource="../Resources_macx.qrc">
+               <iconset resource="../../../gui/Resources_win.qrc">
                 <normaloff>:/images/drag_text.png</normaloff>:/images/drag_text.png</iconset>
               </property>
               <property name="autoDefault">
@@ -1169,7 +1169,7 @@ QToolButton
                <string>Archives</string>
               </property>
               <property name="icon">
-              <iconset resource="../Resources_macx.qrc">
+               <iconset resource="../../../gui/Resources_win.qrc">
                 <normaloff>:/images/drag_compressed.png</normaloff>:/images/drag_compressed.png</iconset>
               </property>
               <property name="autoDefault">
@@ -1254,7 +1254,7 @@ QToolButton
                <string>Documents</string>
               </property>
               <property name="icon">
-              <iconset resource="../Resources_macx.qrc">
+               <iconset resource="../../../gui/Resources_win.qrc">
                 <normaloff>:/images/drag_text.png</normaloff>:/images/drag_text.png</iconset>
               </property>
               <property name="autoDefault">
@@ -1336,7 +1336,7 @@ QToolButton
                <string>Images</string>
               </property>
               <property name="icon">
-              <iconset resource="../Resources_macx.qrc">
+               <iconset resource="../../../gui/Resources_win.qrc">
                 <normaloff>:/images/drag_image.png</normaloff>:/images/drag_image.png</iconset>
               </property>
               <property name="autoDefault">
@@ -1418,7 +1418,7 @@ QToolButton
                <string>Videos</string>
               </property>
               <property name="icon">
-              <iconset resource="../Resources_macx.qrc">
+               <iconset resource="../../../gui/Resources_win.qrc">
                 <normaloff>:/images/drag_video.png</normaloff>:/images/drag_video.png</iconset>
               </property>
               <property name="autoDefault">
@@ -1500,7 +1500,7 @@ QToolButton
                <string>Music</string>
               </property>
               <property name="icon">
-              <iconset resource="../Resources_macx.qrc">
+               <iconset resource="../../../gui/Resources_win.qrc">
                 <normaloff>:/images/drag_audio.png</normaloff>:/images/drag_audio.png</iconset>
               </property>
               <property name="autoDefault">
@@ -1582,7 +1582,7 @@ QToolButton
                <string>Other</string>
               </property>
               <property name="icon">
-              <iconset resource="../Resources_macx.qrc">
+               <iconset resource="../../../gui/Resources_win.qrc">
                 <normaloff>:/images/drag_generic.png</normaloff>:/images/drag_generic.png</iconset>
               </property>
               <property name="autoDefault">
@@ -1691,7 +1691,7 @@ QToolButton
                <string notr="true"/>
               </property>
               <property name="icon">
-              <iconset resource="../Resources_macx.qrc">
+               <iconset resource="../../../gui/Resources_win.qrc">
                 <normaloff>:/images/search_result_ico.png</normaloff>:/images/search_result_ico.png</iconset>
               </property>
               <property name="autoDefault">
@@ -1708,7 +1708,7 @@ QToolButton
                <string/>
               </property>
               <property name="icon">
-              <iconset resource="../Resources_macx.qrc">
+               <iconset resource="../../../gui/Resources_win.qrc">
                 <normaloff>:/images/lists_cancel_ico.png</normaloff>:/images/lists_cancel_ico.png</iconset>
               </property>
              </widget>
@@ -1738,7 +1738,7 @@ QToolButton
          <string notr="true"/>
         </property>
         <property name="currentIndex">
-         <number>1</number>
+         <number>0</number>
         </property>
         <widget class="QWidget" name="pSpeedAndClear">
          <layout class="QHBoxLayout" name="pSpeedAndClearLayout" stretch="1,1,0,0">
@@ -1781,8 +1781,14 @@ QToolButton
              <string notr="true"/>
             </property>
             <property name="icon">
-              <iconset resource="../Resources_macx.qrc">
+             <iconset resource="../../../gui/Resources_win.qrc">
               <normaloff>:/images/arrow_download_ico.png</normaloff>:/images/arrow_download_ico.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>24</width>
+              <height>24</height>
+             </size>
             </property>
            </widget>
           </item>
@@ -1810,8 +1816,14 @@ QToolButton
              <string notr="true"/>
             </property>
             <property name="icon">
-              <iconset resource="../Resources_macx.qrc">
+             <iconset resource="../../../gui/Resources_win.qrc">
               <normaloff>:/images/arrow_upload_ico.png</normaloff>:/images/arrow_upload_ico.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>24</width>
+              <height>24</height>
+             </size>
             </property>
            </widget>
           </item>
@@ -1837,7 +1849,7 @@ QToolButton
              <cursorShape>PointingHandCursor</cursorShape>
             </property>
             <property name="icon">
-              <iconset resource="../Resources_macx.qrc">
+             <iconset resource="../../../gui/Resources_win.qrc">
               <normaloff>:/images/sidebar_cancel_all_ico.png</normaloff>:/images/sidebar_cancel_all_ico.png</iconset>
             </property>
             <property name="iconSize">
@@ -1870,7 +1882,7 @@ QToolButton
            <string>Up to date</string>
           </property>
           <property name="icon">
-              <iconset resource="../Resources_macx.qrc">
+           <iconset resource="../../../gui/Resources_win.qrc">
             <normaloff>:/images/sidebar_up_to_date_ico.png</normaloff>:/images/sidebar_up_to_date_ico.png</iconset>
           </property>
          </widget>
@@ -2003,7 +2015,7 @@ QToolButton
                   <string>Search:</string>
                  </property>
                  <property name="alignment">
-                  <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                  <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
                  </property>
                 </widget>
                </item>
@@ -2316,7 +2328,7 @@ QToolButton
             <string>Import links</string>
            </property>
            <property name="icon">
-              <iconset resource="../Resources_macx.qrc">
+            <iconset resource="../../../gui/Resources_win.qrc">
              <normaloff>:/images/import_toolbar_ico.png</normaloff>:/images/import_toolbar_ico.png</iconset>
            </property>
           </widget>
@@ -2330,7 +2342,7 @@ QToolButton
             <string>Upload</string>
            </property>
            <property name="icon">
-              <iconset resource="../Resources_macx.qrc">
+            <iconset resource="../../../gui/Resources_win.qrc">
              <normaloff>:/images/upload_toolbar_ico.png</normaloff>:/images/upload_toolbar_ico.png</iconset>
            </property>
           </widget>
@@ -2344,7 +2356,7 @@ QToolButton
             <string>Download</string>
            </property>
            <property name="icon">
-              <iconset resource="../Resources_macx.qrc">
+            <iconset resource="../../../gui/Resources_win.qrc">
              <normaloff>:/images/download_toolbar_ico.png</normaloff>:/images/download_toolbar_ico.png</iconset>
            </property>
           </widget>
@@ -2355,7 +2367,7 @@ QToolButton
             <cursorShape>PointingHandCursor</cursorShape>
            </property>
            <property name="icon">
-              <iconset resource="../Resources_macx.qrc">
+            <iconset resource="../../../gui/Resources_win.qrc">
              <normaloff>:/images/preferences_toolbar_ico.png</normaloff>:/images/preferences_toolbar_ico.png</iconset>
            </property>
           </widget>
@@ -2384,7 +2396,7 @@ QToolButton
              <string/>
             </property>
             <property name="icon">
-              <iconset resource="../Resources_macx.qrc">
+             <iconset resource="../../../gui/Resources_win.qrc">
               <normaloff>:/images/no_uploads.png</normaloff>:/images/no_uploads.png</iconset>
             </property>
            </widget>
@@ -2399,7 +2411,7 @@ QToolButton
              <string/>
             </property>
             <property name="icon">
-              <iconset resource="../Resources_macx.qrc">
+             <iconset resource="../../../gui/Resources_win.qrc">
               <normaloff>:/images/no_downloads.png</normaloff>:/images/no_downloads.png</iconset>
             </property>
            </widget>
@@ -2414,7 +2426,7 @@ QToolButton
              <string/>
             </property>
             <property name="icon">
-              <iconset resource="../Resources_macx.qrc">
+             <iconset resource="../../../gui/Resources_win.qrc">
               <normaloff>:/images/no_transfers.png</normaloff>:/images/no_transfers.png</iconset>
             </property>
            </widget>
@@ -2429,7 +2441,7 @@ QToolButton
              <string/>
             </property>
             <property name="icon">
-              <iconset resource="../Resources_macx.qrc">
+             <iconset resource="../../../gui/Resources_win.qrc">
               <normaloff>:/images/no_search_results.png</normaloff>:/images/no_search_results.png</iconset>
             </property>
            </widget>
@@ -2444,7 +2456,7 @@ QToolButton
              <string/>
             </property>
             <property name="icon">
-              <iconset resource="../Resources_macx.qrc">
+             <iconset resource="../../../gui/Resources_win.qrc">
               <normaloff>:/images/Completed_transfers.png</normaloff>:/images/Completed_transfers.png</iconset>
             </property>
            </widget>
@@ -2467,7 +2479,7 @@ QToolButton
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="../Resources_macx.qrc"/>
+  <include location="../../../gui/Resources_win.qrc"/>
  </resources>
  <connections>
   <connection>
