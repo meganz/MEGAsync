@@ -129,8 +129,6 @@ set (FORMS
     ${MEGAsyncDir}/gui/${UiDir}/AlertFilterType.ui
     ${MEGAsyncDir}/gui/${UiDir}/BugReportDialog.ui
     ${MEGAsyncDir}/gui/${UiDir}/FilterAlertWidget.ui
-    ${MEGAsyncDir}/gui/${UiDir}/TransfersStatusWidget.ui
-    ${MEGAsyncDir}/gui/${UiDir}/TransfersSummaryWidget.ui
     ${MEGAsyncDir}/gui/${UiDir}/InfoDialog.ui
     ${MEGAsyncDir}/gui/${UiDir}/NodeSelector.ui
     ${MEGAsyncDir}/gui/${UiDir}/FolderBinder.ui
@@ -152,21 +150,14 @@ set (FORMS
     ${MEGAsyncDir}/gui/${UiDir}/PlanWidget.ui
     ${MEGAsyncDir}/gui/${UiDir}/UpgradeDialog.ui
     ${MEGAsyncDir}/gui/${UiDir}/InfoWizard.ui
-    ${MEGAsyncDir}/gui/${UiDir}/TransferManager.ui
-    ${MEGAsyncDir}/gui/${UiDir}/TransferManagerDragBackDrop.ui
-    ${MEGAsyncDir}/gui/${UiDir}/TransfersWidget.ui
-    ${MEGAsyncDir}/gui/${UiDir}/TransfersStateInfoWidget.ui
     ${MEGAsyncDir}/gui/${UiDir}/MegaSpeedGraph.ui
     ${MEGAsyncDir}/gui/${UiDir}/AddExclusionDialog.ui
-    ${MEGAsyncDir}/gui/${UiDir}/InfoDialogTransfersWidget.ui
-    ${MEGAsyncDir}/gui/${UiDir}/TransferWidgetHeaderItem.ui
     ${MEGAsyncDir}/gui/${UiDir}/StatusInfo.ui
     ${MEGAsyncDir}/gui/${UiDir}/PSAwidget.ui
     ${MEGAsyncDir}/gui/${UiDir}/QSyncItemWidget.ui
     ${MEGAsyncDir}/gui/${UiDir}/UpgradeOverStorage.ui
     ${MEGAsyncDir}/gui/${UiDir}/ChangePassword.ui
     ${MEGAsyncDir}/gui/${UiDir}/Login2FA.ui
-    ${MEGAsyncDir}/gui/${UiDir}/TransfersStatusWidget.ui
 # added per platform    ${MEGAsyncDir}/gui/${UiDir}/LockedPopOver.ui
     ${MEGAsyncDir}/gui/${UiDir}/VerifyLockMessage.ui
     ${MEGAsyncDir}/gui/${UiDir}/MegaInfoMessage.ui
@@ -174,6 +165,18 @@ set (FORMS
     ${MEGAsyncDir}/gui/${UiDir}/ProxySettings.ui
     ${MEGAsyncDir}/gui/${UiDir}/BandwidthSettings.ui
     ${MEGAsyncDir}/gui/${UiDir}/NewFolderDialog.ui
+	${MEGAsyncDir}/transfers/gui/${UiDir}/InfoDialogTransfersWidget.ui
+	${MEGAsyncDir}/transfers/gui/${UiDir}/InfoDialogTransferDelegateWidget.ui
+    ${MEGAsyncDir}/transfers/gui/${UiDir}/TransferWidgetHeaderItem.ui
+    ${MEGAsyncDir}/transfers/gui/${UiDir}/TransferManager.ui
+    ${MEGAsyncDir}/transfers/gui/${UiDir}/TransferManagerDragBackDrop.ui
+    ${MEGAsyncDir}/transfers/gui/${UiDir}/TransfersWidget.ui
+    ${MEGAsyncDir}/transfers/gui/${UiDir}/TransfersStateInfoWidget.ui
+	${MEGAsyncDir}/transfers/gui/${UiDir}/TransfersStatusWidget.ui
+    ${MEGAsyncDir}/transfers/gui/${UiDir}/TransfersSummaryWidget.ui
+    ${MEGAsyncDir}/transfers/gui/${UiDir}/TransferManagerDelegateWidget.ui
+	${MEGAsyncDir}/transfers/gui/${UiDir}/TransferManagerLoadingItem.ui
+	
     )
 
 

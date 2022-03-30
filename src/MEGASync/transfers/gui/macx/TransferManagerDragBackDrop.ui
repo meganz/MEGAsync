@@ -161,7 +161,7 @@ font-size: 16px;
   </layout>
  </widget>
  <resources>
-  <include location="../Resources_macx.qrc"/>
+  <include location="../../../gui/Resources_macx.qrc"/>
  </resources>
  <connections/>
 </ui>

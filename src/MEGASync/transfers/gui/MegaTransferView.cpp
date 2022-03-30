@@ -36,6 +36,8 @@ MegaTransferView::MegaTransferView(QWidget* parent) :
 {
     setMouseTracking(true);
     setAutoScroll(false);
+
+    verticalScrollBar()->installEventFilter(this);
 }
 
 void MegaTransferView::setup()
@@ -48,9 +50,7 @@ void MegaTransferView::setup(TransfersWidget* tw)
     mParentTransferWidget = tw;
     setContextMenuPolicy(Qt::CustomContextMenu);
 
-    // Disable and find out alternative way to position context menu,
-    // since main parent widget is flagged as popup (InfoDialog), and coordinates does not work properly
-    connect(this, &MegaTransferView::showContextMenu,
+    connect(this, &MegaTransferView::customContextMenuRequested,
             this, &MegaTransferView::onCustomContextMenu);
 
     connect(tw, &TransfersWidget::cancelClearVisibleRows,
@@ -193,6 +193,11 @@ void MegaTransferView::onCancelAndClearAllTransfers()
     sourceModel->cancelTransfers(QModelIndexList(), this);
 }
 
+int MegaTransferView::getVerticalScrollBarWidth() const
+{
+    return verticalScrollBar()->width();
+}
+
 void MegaTransferView::onClearCompletedVisibleTransfers()
 {
     QModelIndexList indexes = getTransfers(true, TransferData::FINISHED_STATES_MASK);
@@ -251,6 +256,7 @@ void MegaTransferView::createContextMenu()
     if (!mContextMenu)
     {
         mContextMenu = new QMenu(this);
+        mContextMenu->setWindowFlags(mContextMenu->windowFlags() | Qt::NoDropShadowWindowHint);
     }
     else
     {        
@@ -463,17 +469,17 @@ void MegaTransferView::updateContextMenu(bool enablePause, bool enableResume, bo
 
 void MegaTransferView::mouseReleaseEvent(QMouseEvent* event)
 {
-    if (!(event->button() == Qt::RightButton))
+    QTreeView::mouseReleaseEvent(event);
+}
+
+void MegaTransferView::mouseMoveEvent(QMouseEvent *event)
+{
+    if (event->button() == Qt::RightButton)
     {
-        QTreeView::mouseReleaseEvent(event);
         return;
     }
 
-    if (!mDisableMenus)
-    {
-        emit showContextMenu(QPoint(event->x(), event->y()));
-    }
-    QTreeView::mouseReleaseEvent(event);
+    QTreeView::mouseMoveEvent(event);
 }
 
 void MegaTransferView::changeEvent(QEvent* event)
@@ -528,6 +534,23 @@ void MegaTransferView::selectionChanged(const QItemSelection &selected, const QI
     }
 
     QTreeView::selectionChanged(selected, deselected);
+}
+
+bool MegaTransferView::eventFilter(QObject *object, QEvent *event)
+{
+    if(object == verticalScrollBar())
+    {
+        if(event->type() == QEvent::Show)
+        {
+            emit verticalScrollBarVisibilityChanged(true);
+        }
+        else if(event->type() == QEvent::Hide)
+        {
+            emit verticalScrollBarVisibilityChanged(false);
+        }
+    }
+
+    return QTreeView::eventFilter(object, event);
 }
 
 void MegaTransferView::onCustomContextMenu(const QPoint& point)

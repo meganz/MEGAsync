@@ -61,25 +61,9 @@ void MegaTransferDelegate::paint(QPainter *painter, const QStyleOptionViewItem &
         }
 
         w->updateUi(data, row);
-
-        // Draw border if selected
-        if (option.state & QStyle::State_Selected)
-        {
-            static const QPen pen (QColor::fromRgbF(0.84, 0.84, 0.84, 1), 1);
-            QPainterPath path;
-            path.addRoundedRect(QRectF(option.rect.x() + 16.,
-                                       option.rect.y() + 4.,
-                                       width - 17.,
-                                       height - 7.),
-                                10, 10);
-            painter->setPen(pen);
-            painter->fillPath(path, Qt::white);
-            painter->drawPath(path);
-        }
         painter->save();
-
         painter->translate(pos);
-        w->render(painter, QRegion(0, 0, width, height));
+        w->render(option, painter, QRegion(0, 0, width, height));
 
         painter->restore();
     }

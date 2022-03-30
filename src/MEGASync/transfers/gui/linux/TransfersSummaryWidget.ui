@@ -145,7 +145,7 @@ background: rgba(0,0,0,0.01);
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="../Resources_linux.qrc"/>
+  <include location="../../../gui/Resources_linux.qrc"/>
  </resources>
  <connections/>
 </ui>

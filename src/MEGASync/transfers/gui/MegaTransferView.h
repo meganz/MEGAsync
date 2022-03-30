@@ -26,6 +26,8 @@ public:
     void onPauseResumeVisibleRows(bool isPaused);
     void onCancelAndClearAllTransfers();
 
+    int getVerticalScrollBarWidth() const;
+
 public slots:
     void onPauseResumeSelection(bool pauseState);
     void onCancelClearVisibleTransfers();
@@ -35,14 +37,16 @@ public slots:
     void onCancelClearSelection(bool isClear);
 
 signals:
-    void showContextMenu(QPoint pos);
+    void verticalScrollBarVisibilityChanged(bool status);
 
 protected:
     virtual void mouseReleaseEvent(QMouseEvent* event) override;
+    virtual void mouseMoveEvent(QMouseEvent* event) override;
     void changeEvent(QEvent* event) override;
     void dropEvent(QDropEvent* event) override;
     void keyPressEvent(QKeyEvent *event) override;
     void selectionChanged(const QItemSelection &selected, const QItemSelection &deselected) override;
+    bool eventFilter(QObject *object, QEvent *event) override;
 
 private slots:
     void onCustomContextMenu(const QPoint& point);
@@ -60,6 +64,9 @@ private slots:
     void resumeSelectedClicked();
 
 private:
+    friend class TransferManagerDelegateWidget;
+
+
     bool mDisableLink;
     bool mDisableMenus;
     bool mKeyNavigation;

@@ -65,6 +65,7 @@ private slots:
     void onCheckCancelButtonVisibility(bool state);
     void onActiveTransferCounterChanged(bool state);
     void onPausedTransferCounterChanged(bool state);
+    void onVerticalScrollBarVisibilityChanged(bool state);
 
 private:
     Ui::TransfersWidget *ui;

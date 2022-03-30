@@ -35,9 +35,8 @@ TransfersWidget::TransfersWidget(QWidget* parent) :
 
     model = app->getTransfersModel();
 
-    //Align header pause/cancel buttons to view pause/cancel buttons
-    int sliderWidth = ui->tvTransfers->verticalScrollBar()->width();
-    ui->rightMargin->changeSize(sliderWidth,0,QSizePolicy::Fixed, QSizePolicy::Preferred);
+    //Align header pause/cancel buttons to view pause/cancel button
+    connect(ui->tvTransfers, &MegaTransferView::verticalScrollBarVisibilityChanged, this, &TransfersWidget::onVerticalScrollBarVisibilityChanged);
 }
 void TransfersWidget::setupTransfers()
 {
@@ -296,6 +295,24 @@ void TransfersWidget::onActiveTransferCounterChanged(bool state)
 void TransfersWidget::onPausedTransferCounterChanged(bool state)
 {
     onPauseStateChanged(state);
+}
+
+void TransfersWidget::onVerticalScrollBarVisibilityChanged(bool state)
+{
+    if(state)
+    {
+        int sliderWidth = ui->tvTransfers->verticalScrollBar()->width();
+        ui->rightMargin->changeSize(sliderWidth,0,QSizePolicy::Fixed, QSizePolicy::Preferred);
+    }
+    else
+    {
+        ui->rightMargin->changeSize(0,0,QSizePolicy::Fixed, QSizePolicy::Preferred);
+    }
+
+    if(ui->wTableHeaderLayout)
+    {
+        ui->wTableHeaderLayout->invalidate();
+    }
 }
 
 void TransfersWidget::on_tPauseResumeVisible_toggled(bool state)

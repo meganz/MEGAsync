@@ -164,12 +164,12 @@ QProgressBar::chunk
   color: #00D26D;
 }
 
-#lItemQueued
+#lItemQueued, #lItemPausedQueued_2
 {
   color: #666666;
 }
 
-#lItemPaused
+#lItemPaused, #lItemPausedQueued_1
 {
   color: #FFA053;
 }
@@ -690,6 +690,64 @@ QProgressBar::chunk
            </property>
           </widget>
          </widget>
+         <widget class="QWidget" name="pPausedQueued">
+          <layout class="QHBoxLayout" name="horizontalLayout_3">
+           <property name="spacing">
+            <number>5</number>
+           </property>
+           <property name="leftMargin">
+            <number>0</number>
+           </property>
+           <property name="topMargin">
+            <number>0</number>
+           </property>
+           <property name="rightMargin">
+            <number>0</number>
+           </property>
+           <property name="bottomMargin">
+            <number>0</number>
+           </property>
+           <item alignment="Qt::AlignLeft">
+            <widget class="QLabel" name="lItemPausedQueued_1">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>16777215</width>
+               <height>16777215</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>Paused</string>
+             </property>
+            </widget>
+           </item>
+           <item alignment="Qt::AlignLeft">
+            <widget class="QLabel" name="lItemPausedQueued_2">
+             <property name="text">
+              <string>(queued)</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer name="horizontalSpacer_4">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>40</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+          </layout>
+         </widget>
          <widget class="QWidget" name="pFailed">
           <layout class="QHBoxLayout" name="pFailedLayout" stretch="0,1,0">
            <property name="spacing">
@@ -921,7 +979,7 @@ QProgressBar::chunk
   </layout>
  </widget>
  <resources>
-  <include location="../Resources_macx.qrc"/>
+  <include location="../../../gui/Resources_win.qrc"/>
  </resources>
  <connections/>
 </ui>

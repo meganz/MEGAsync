@@ -57,6 +57,7 @@ public:
 
 public slots:
     void onTransferQuotaStateChanged(QuotaState transferQuotaState);
+    void onStorageStateChanged(int storageState);
 
 signals:
     void viewedCompletedTransfers();
@@ -99,6 +100,9 @@ private:
     Ui::TransferManagerDragBackDrop* mUiDragBackDrop;
     QWidget* mDragBackDrop;
 
+    int mStorageQuotaState;
+    QuotaState mTransferQuotaState;
+
     void toggleTab(TM_TAB newTab);
     void refreshStateStats();
     void refreshTypeStats();
@@ -106,6 +110,7 @@ private:
     void applyTextSearch(const QString& text);
     void checkActionAndMediaVisibility();
     void onFileTypeButtonClicked(TM_TAB tab, Utilities::FileType fileType, const QString& tabLabel);
+    void checkPauseButtonVisibilityIfPossible();
 
 private slots:
     void on_tCompleted_clicked();
@@ -148,7 +153,7 @@ private slots:
     void onTransfersDataUpdated();
     void refreshSearchStats();
 
-    void onStorageStateChanged(int storageState);
+    void onVerticalScrollBarVisibilityChanged(bool state);
 
     void refreshSpeed();
     void refreshView();

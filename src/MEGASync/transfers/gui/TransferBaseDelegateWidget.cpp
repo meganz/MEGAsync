@@ -53,7 +53,7 @@ void TransferBaseDelegateWidget::setCurrentIndex(const QModelIndex &currentIndex
     mCurrentIndex = currentIndex;
 }
 
-void TransferBaseDelegateWidget::render(QPainter *painter, const QRegion &sourceRegion)
+void TransferBaseDelegateWidget::render(const QStyleOptionViewItem&, QPainter *painter, const QRegion &sourceRegion)
 {
     QWidget::render(painter,QPoint(0,0),sourceRegion);
 }

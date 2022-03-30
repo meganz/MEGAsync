@@ -899,7 +899,7 @@ background-color: rgba(0, 0, 0, 8%);
   </layout>
  </widget>
  <resources>
-  <include location="../Resources_macx.qrc"/>
+  <include location="../../../gui/Resources_macx.qrc"/>
  </resources>
  <connections/>
 </ui>
