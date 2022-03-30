@@ -231,17 +231,6 @@ void ProgressFuncExecuterListener::onRequestStart(MegaApi*, MegaRequest*)
 
 void ProgressFuncExecuterListener::onRequestFinish(MegaApi *api, MegaRequest *request, MegaError *e)
 {
-    // progress the helper accordingly
-    if (mProgressHelper)
-    {
-        mProgressHelper->setPercentage(1);
-        if (e->getErrorCode())
-        {
-            mProgressHelper->setFailed(e->getErrorCode(), request, e);
-        }
-        mProgressHelper->setComplete();
-    }
-
     // launch callback
     if (executeInAppThread)
     {
@@ -250,6 +239,19 @@ void ProgressFuncExecuterListener::onRequestFinish(MegaApi *api, MegaRequest *re
         MegaRequest *requestCopy = request->copy();
         MegaError *errorCopy = e->copy();
         QObject::connect(&temporary, &QObject::destroyed, qApp, [this, api, requestCopy, errorCopy](){
+
+
+            // progress the helper accordingly
+            if (mProgressHelper)
+            {
+                mProgressHelper->setPercentage(1);
+                if (errorCopy->getErrorCode())
+                {
+                    mProgressHelper->setFailed(errorCopy->getErrorCode(), requestCopy, errorCopy);
+                }
+                mProgressHelper->setComplete();
+            }
+
 
             if (onRequestFinishCallback)
             {

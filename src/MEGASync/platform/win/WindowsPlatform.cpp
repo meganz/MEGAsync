@@ -402,7 +402,7 @@ bool CheckLeftPaneIcon(wchar_t *path, bool remove)
             }
 
             if (path)
-            {                
+            {
                 bool found = false;
 
                 swprintf_s(subKeyPath, MAX_PATH, L"Software\\Classes\\CLSID\\%s\\Instance\\InitPropertyBag", uuid);
@@ -1016,7 +1016,7 @@ QString WindowsPlatform::getDefaultOpenApp(QString extension)
     ret = AssocQueryString(0, type, (LPCWSTR)extensionWithDot.utf16(),
                                  NULL, NULL, &length);
     if (ret == S_FALSE)
-    { 
+    {
         WCHAR *buffer = new WCHAR[length];
         ret = AssocQueryString(0, type, (LPCWSTR)extensionWithDot.utf16(),
                                NULL, buffer, &length);
@@ -1504,7 +1504,7 @@ void ShellNotifier::enqueueItemChange(std::string&& localPath)
 
 void ShellNotifier::doInThread()
 {
-    for (;;)
+    while (!mExit) // no need to send the last million if the app is exiting anyway
     {
         std::string path;
 
