@@ -199,7 +199,7 @@ public:
     bool hasNotifications();
     bool hasNotificationsOfType(int type);
     std::shared_ptr<mega::MegaNode> getRootNode(bool forceReset = false);
-    std::shared_ptr<mega::MegaNode> getInboxNode(bool forceReset = false);
+    std::shared_ptr<mega::MegaNode> getVaultNode(bool forceReset = false);
     std::shared_ptr<mega::MegaNode> getRubbishNode(bool forceReset = false);
 
     MegaSyncLogger& getLogger() const;
@@ -454,7 +454,7 @@ protected:
     QQueue<WrappedNode *> downloadQueue;
     ThreadPool* mThreadPool;
     std::shared_ptr<mega::MegaNode> mRootNode;
-    std::shared_ptr<mega::MegaNode> mInboxNode;
+    std::shared_ptr<mega::MegaNode> mVaultNode;
     std::shared_ptr<mega::MegaNode> mRubbishNode;
     bool mFetchingNodes = false;
     bool mQueringWhyAmIBlocked = false;
