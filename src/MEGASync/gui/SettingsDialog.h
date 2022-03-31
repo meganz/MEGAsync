@@ -193,6 +193,7 @@ private:
                     mega::MegaHandle tag, std::shared_ptr<SyncSetting> syncSetting = nullptr);
     void saveExcludeSyncNames();
     void updateNetworkTab();
+    void setShortCutsForToolBarItems();
 
     enum
     {
@@ -248,6 +249,5 @@ private:
     bool mHasDefaultUploadOption;
     bool mHasDefaultDownloadOption;
     QPointer<ProxySettings> mProxySettingsDialog;
-    void setShortCutsForToolBarItems();
 };
 #endif // SETTINGSDIALOG_H
