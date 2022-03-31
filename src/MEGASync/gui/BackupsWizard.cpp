@@ -55,7 +55,7 @@ BackupsWizard::BackupsWizard(QWidget* parent) :
 
     // React on item check/uncheck
     connect(mFoldersModel, &QStandardItemModel::itemChanged,
-            this, &BackupsWizard::onListItemChanged);
+            this, &BackupsWizard::refreshNextButtonState);
 
     connect(&mSyncController, &SyncController::setMyBackupsStatus,
             this, &BackupsWizard::onSetMyBackupsDirRequestStatus);
@@ -370,31 +370,6 @@ void BackupsWizard::processNextBackupSetup()
     }
 }
 
-// Checks if the name is already used (remote)
-// <displayName> is set to "" if the user cancels
-void BackupsWizard::promptAndEnsureUniqueRemoteName(QString& displayName)
-{    
-    auto api (MegaSyncApp->getMegaApi());
-    std::unique_ptr<mega::MegaNode> deviceDirNode (nullptr);
-
-    if (mDeviceDirHandle != mega::INVALID_HANDLE)
-    {
-        deviceDirNode.reset(api->getNodeByHandle(mDeviceDirHandle));
-    }
-
-    std::shared_ptr<mega::MegaNode> dirNode (nullptr);
-    // Check for name collision
-    if (deviceDirNode)
-    {
-        dirNode.reset(api->getChildNode(deviceDirNode.get(),
-                                        displayName.toUtf8().constData()));
-        if (dirNode)
-        {
-            displayName = remoteFolderExistsDialog(displayName);
-        }
-    }
-}
-
 // Checks if a path belongs is in an existing sync or backup tree; and if the selected
 // folder has a sync or backup in its tree.
 // Special case for backups: if the exact path is already backed up, handle it later.
@@ -476,10 +451,10 @@ bool BackupsWizard::isFolderAlreadySynced(const QString& path, bool displayWarni
 }
 
 // Returns new name if new name set; empty string if backup canceled.
-QString BackupsWizard::remoteFolderExistsDialog(const QString& backupName)
+QString BackupsWizard::remoteFolderExistsDialog()
 {
     QString newName(QLatin1String(""));
-    RenameTargetFolderDialog renameDialog (backupName);
+    RenameTargetFolderDialog renameDialog;
 
     if (renameDialog.exec() == QDialog::Accepted)
     {
@@ -680,27 +655,6 @@ void BackupsWizard::on_bShowMore_clicked()
 
 }
 
-void BackupsWizard::onListItemChanged(QStandardItem* item)
-{
-    QString displayName (item->data(Qt::DisplayRole).toString());
-
-    if (item->checkState() == Qt::Checked)
-    {  
-        promptAndEnsureUniqueRemoteName(displayName);
-
-        // Add backup if the user didn't cancel
-        if (!displayName.isEmpty())
-        {
-            item->setData(displayName, Qt::DisplayRole);
-        }
-        else
-        {
-            item->setData(Qt::Unchecked, Qt::CheckStateRole);
-        }
-    }
-    refreshNextButtonState();
-}
-
 void BackupsWizard::setupComplete()
 {
     if (!mError)
@@ -740,64 +694,42 @@ void BackupsWizard::onBackupsDirSet(mega::MegaHandle backupsDirHandle)
 {
     mHaveBackupsDir = true;
     QString backupsDirPath;
+    auto api (MegaSyncApp->getMegaApi());
 
     if (backupsDirHandle != mega::INVALID_HANDLE)
     {
         // We still have to check if the folder exists... try to get its path
-        auto api (MegaSyncApp->getMegaApi());
         std::unique_ptr<mega::MegaNode> backupsDirNode (api->getNodeByHandle(backupsDirHandle));
         if (backupsDirNode)
         {
             backupsDirPath = QString::fromUtf8(api->getNodePath(backupsDirNode.get()));
-
             if (!backupsDirPath.isEmpty())
             {
                 // If the folder exists, take note
                 mBackupsDirName = QDir(backupsDirPath).dirName();
                 mCreateBackupsDir = false;
             }
-
-            // FIXME: Do we still need to check for this with the INBOX switch?
-            // Check that the folder has not been sent to rubbish
-            if (api->isInRubbish(backupsDirNode.get()))
-            {
-                qDebug("Backups Wizard: MyBackups dir in rubbish bin");
-                QString message (tr("The folder to store backups has been moved to the Rubbish bin. "
-                                    "Do you want to create a new one?"));
-                // Show dialog asking for user action: cancel, or create new?
-                auto choice (QMegaMessageBox::critical(nullptr, tr("Error"), message,
-                                          QMessageBox::Yes | QMessageBox::No));
-                if (choice == QMessageBox::Yes)
-                {
-                    // Reset path to force creation later on
-                    backupsDirPath.clear();
-                }
-                else
-                {
-                    // User cancelled. Exit wizard
-                    mHaveBackupsDir = false;
-                    mCreateBackupsDir = false;
-                    mUserCancelled = true;
-                    nextStep(EXIT);
-                }
-            }
         }
     }
+
+    auto vaultNode (MegaSyncApp->getVaultNode());
+    auto vaultName (tr(vaultNode->getName()));
+    auto vaultPath (QString::fromUtf8(api->getNodePath(vaultNode.get())));
 
     // If backupsDirPath is empty, the remote folder does not exist and we have to create it.
     if (backupsDirPath.isEmpty())
     {
         // If remote dir does not exist, use default name and program its creation
         mBackupsDirName = tr("My Backups");
-        backupsDirPath = QLatin1Char('/') + mBackupsDirName;
+        backupsDirPath = vaultPath + QLatin1Char('/') + mBackupsDirName;
         mCreateBackupsDir = true;
         qDebug() << QString::fromLatin1("Backups Wizard: MyBackups dir: \"%1\"").arg(backupsDirPath);
     }
 
     // Build device backup path
-    std::shared_ptr<mega::MegaNode> rootNode (MegaSyncApp->getRootNode());
-    mUi->leBackupTo->setText(QString::fromUtf8(rootNode->getName())
-                             + backupsDirPath + QLatin1Char('/')
+    mUi->leBackupTo->setText(backupsDirPath.replace(backupsDirPath.indexOf(vaultPath),
+                                                    vaultPath.size(), vaultName)
+                             + QLatin1Char('/')
                              + mUi->lDeviceNameStep1->text());
     refreshNextButtonState();
 }
@@ -805,14 +737,12 @@ void BackupsWizard::onBackupsDirSet(mega::MegaHandle backupsDirHandle)
 void BackupsWizard::onSetMyBackupsDirRequestStatus(int errorCode, const QString& errorMsg)
 {
     bool nameCollision (false);
-
-    // FIXME: Do we still need to check for this with the INBOX switch?
-    if (errorCode == mega::MegaError::API_EEXIST)
+    if (errorCode == mega::MegaError::API_EACCESS)
     {
         // If dir already exists, prompt for new name
         mHaveBackupsDir = false;
         nameCollision = true;
-        mBackupsDirName = remoteFolderExistsDialog(mBackupsDirName);
+        mBackupsDirName = remoteFolderExistsDialog();
     }
     else if (errorCode != mega::MegaError::API_OK)
     {
@@ -820,7 +750,6 @@ void BackupsWizard::onSetMyBackupsDirRequestStatus(int errorCode, const QString&
                                   tr("Creating or setting folder \"%1\" as backups root failed.\nReason: %2")
                                   .arg(mBackupsDirName, errorMsg));
     }
-
     setupMyBackupsDir(nameCollision);
 }
 

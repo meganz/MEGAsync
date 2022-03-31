@@ -16,15 +16,13 @@ class RenameTargetFolderDialog : public QDialog
         Q_OBJECT
 
     public:
-        explicit RenameTargetFolderDialog(const QString& folderName,
-                                          QWidget* parent = nullptr);
+        explicit RenameTargetFolderDialog(QWidget* parent = nullptr);
         ~RenameTargetFolderDialog();
 
         QString getNewFolderName() const;
 
     private:
         Ui::RenameTargetFolderDialog* mUi;
-        QString mOriginalText;
 
     private slots:
         void onFolderNameFieldChanged(const QString& text);

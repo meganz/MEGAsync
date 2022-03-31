@@ -3340,7 +3340,7 @@ void MegaApplication::unlink(bool keepLogs)
     downloadQueue.clear();
     mRootNode.reset();
     mRubbishNode.reset();
-    mInboxNode.reset();
+    mVaultNode.reset();
     mFetchingNodes = false;
     mQueringWhyAmIBlocked = false;
     whyamiblockedPeriodicPetition = false;
@@ -4267,13 +4267,13 @@ std::shared_ptr<MegaNode> MegaApplication::getRootNode(bool forceReset)
     return mRootNode;
 }
 
-std::shared_ptr<MegaNode> MegaApplication::getInboxNode(bool forceReset)
+std::shared_ptr<MegaNode> MegaApplication::getVaultNode(bool forceReset)
 {
-    if (forceReset || !mInboxNode)
+    if (forceReset || !mVaultNode)
     {
-        mInboxNode.reset(megaApi->getInboxNode());
+        mVaultNode.reset(megaApi->getVaultNode());
     }
-    return mInboxNode;
+    return mVaultNode;
 }
 
 std::shared_ptr<MegaNode> MegaApplication::getRubbishNode(bool forceReset)
@@ -7197,7 +7197,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
         {
             //Update/set root node
             getRootNode(true); //TODO: move this to thread pool, notice that mRootNode is used below
-            getInboxNode(true);
+            getVaultNode(true);
             getRubbishNode(true);
 
             preferences->setAccountStateInGeneral(Preferences::STATE_FETCHNODES_OK);
@@ -7284,10 +7284,10 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
 
 
         auto root = getRootNode();
-        auto inbox = getInboxNode();
+        auto vault = getVaultNode();
         auto rubbish = getRubbishNode();
 
-        if (!root || !inbox || !rubbish)
+        if (!root || !vault || !rubbish)
         {
             preferences->setCrashed(true);
             break;
@@ -7348,22 +7348,22 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
             }
 
             MegaHandle rootHandle = root->getHandle();
-            MegaHandle inboxHandle = inbox->getHandle();
+            MegaHandle vaultHandle = vault->getHandle();
             MegaHandle rubbishHandle = rubbish->getHandle();
 
             // For versions, match the webclient by only counting the user's own nodes.  Versions in inshares are not cleared by 'clear versions'
             // Also the no-parameter getVersionStorageUsed() double counts the versions in outshares.  Inshare storage count should include versions.
             preferences->setVersionsStorage(details->getVersionStorageUsed(rootHandle)
-                                          + details->getVersionStorageUsed(inboxHandle)
+                                          + details->getVersionStorageUsed(vaultHandle)
                                           + details->getVersionStorageUsed(rubbishHandle));
 
             preferences->setCloudDriveStorage(details->getStorageUsed(rootHandle));
             preferences->setCloudDriveFiles(details->getNumFiles(rootHandle));
             preferences->setCloudDriveFolders(details->getNumFolders(rootHandle));
 
-            preferences->setInboxStorage(details->getStorageUsed(inboxHandle));
-            preferences->setInboxFiles(details->getNumFiles(inboxHandle));
-            preferences->setInboxFolders(details->getNumFolders(inboxHandle));
+            preferences->setInboxStorage(details->getStorageUsed(vaultHandle));
+            preferences->setInboxFiles(details->getNumFiles(vaultHandle));
+            preferences->setInboxFolders(details->getNumFolders(vaultHandle));
 
             preferences->setRubbishStorage(details->getStorageUsed(rubbishHandle));
             preferences->setRubbishFiles(details->getNumFiles(rubbishHandle));

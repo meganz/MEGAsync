@@ -19,16 +19,10 @@ AddBackupDialog::AddBackupDialog(QWidget *parent) :
 
     mSyncController.getDeviceName();
 
-
 #ifdef Q_OS_MACOS
     // Display our modal dialog embedded title label when parent is set
     mUi->embeddedTitleLabel->setVisible(this->parent() != nullptr);
 #endif
-
-    connect(&mSyncController, &SyncController::deviceName,
-            this, &AddBackupDialog::onDeviceNameSet);
-
-    mSyncController.getDeviceName();
 
     connect(mUi->addButton, &QPushButton::clicked, this, &QDialog::accept);
     connect(mUi->cancelButton, &QPushButton::clicked, this, &QDialog::reject);

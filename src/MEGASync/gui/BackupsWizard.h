@@ -82,9 +82,8 @@ class BackupsWizard : public QDialog
         void setupComplete();
         bool isSomethingChecked();
         void processNextBackupSetup();
-        void promptAndEnsureUniqueRemoteName(QString& displayName);
         bool isFolderAlreadySynced(const QString& path, bool displayWarning = false);
-        QString remoteFolderExistsDialog(const QString& backupName);
+        QString remoteFolderExistsDialog();
         void refreshNextButtonState();
         void nextStep(const Steps& step);
 
@@ -114,8 +113,6 @@ class BackupsWizard : public QDialog
         void on_bCancelErr_clicked();
         void on_bShowMore_clicked();
 
-
-        void onListItemChanged(QStandardItem* item);
         void onDeviceNameSet(QString deviceName);
         void onBackupsDirSet(mega::MegaHandle backupsDirHandle);
         void onSetMyBackupsDirRequestStatus(int errorCode, const QString& errorMsg);
