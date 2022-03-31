@@ -76,8 +76,13 @@ private:
 
     void notify(const std::string& path) const; // called from secondary thread context
 
+    void checkReportQueueSize();
+
     std::thread mThread;
     std::queue<std::string> mPendingNotifications;
+
+    size_t lastReportedQueueSize = 0;
+
     std::mutex mQueueAccessMutex;
     std::condition_variable mWaitCondition;
     bool mExit = false;

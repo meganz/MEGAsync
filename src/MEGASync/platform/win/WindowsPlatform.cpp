@@ -1499,7 +1499,32 @@ void ShellNotifier::enqueueItemChange(std::string&& localPath)
     std::unique_lock<std::mutex> lock(mQueueAccessMutex);
 
     mPendingNotifications.emplace(localPath);
+
+    checkReportQueueSize();
+
     mWaitCondition.notify_one();
+}
+
+void ShellNotifier::checkReportQueueSize()
+{
+    // mutex already locked
+
+    auto now = mPendingNotifications.size();
+    auto last = lastReportedQueueSize;
+
+    // report if climbs above 1000, or gets back to 0
+    if ((now > 1000 && last > 1000) ||
+        (now == 0 && last > 1000) ||
+        (now > 1000 && last == 0))
+    {
+        if (now * 10 > last * 12 ||
+            last * 10 > now * 12)
+        {
+            // increased or decreased by factor 1.2 since last report
+            lastReportedQueueSize = now;
+            MegaApi::log(MegaApi::LOG_LEVEL_INFO, ("Queue to nofity shell size is now:" + std::to_string(now)).c_str());
+        }
+    }
 }
 
 void ShellNotifier::doInThread()
@@ -1526,6 +1551,8 @@ void ShellNotifier::doInThread()
                 // pop next pending notification
                 path.swap(mPendingNotifications.front());
                 mPendingNotifications.pop();
+
+                checkReportQueueSize();
             }
         } // end of lock scope
 
@@ -1540,6 +1567,8 @@ void ShellNotifier::notify(const std::string& path) const
 {
     // same as in WindowsPlatform::notifyItemChange()
     SHChangeNotify(SHCNE_UPDATEITEM, SHCNF_PATH, path.data(), NULL);
+    //OutputDebugString((wchar_t*)path.data());
+    //OutputDebugString(L"\n");
 }
 
 // Platform-specific strings
