@@ -11,6 +11,7 @@ SyncController::SyncController(QObject* parent)
       mApi(MegaSyncApp->getMegaApi()),
       mDelegateListener (new QTMegaRequestListener(mApi, this)),
       mSyncModel(SyncModel::instance()),
+      mMyBackupsHandle(INVALID_HANDLE),
       mIsDeviceNameSetOnRemote(false),
       mForceSetDeviceName(false),
       mRemoveRemote(false)
@@ -54,10 +55,13 @@ void SyncController::removeSync(std::shared_ptr<SyncSetting> syncSetting, bool r
                  .arg(syncSetting->name()).toUtf8().constData());
 
     std::shared_ptr<MegaNode> node(mApi->getNodeByHandle(syncSetting->getMegaHandle()));
+
     // does the remote node still exist?
     if(node.get())
         mRemoveRemote = removeRemote; // Remove remote node after backup removal
-    mApi->removeSync(syncSetting->backupId(), mDelegateListener);
+
+    // FIXME: Change above check and corresponding INVALID_HANDLE when we implement the new remove mechanism
+    mApi->removeSync(syncSetting->backupId(), INVALID_HANDLE, mDelegateListener);
     // FIXME: There is a bug in SyncModel class handling that persists the saved Backup entry after SDK delete
 }
 
@@ -89,52 +93,6 @@ void SyncController::disableSync(std::shared_ptr<SyncSetting> syncSetting)
                  .toUtf8().constData());
 
     mApi->disableSync(syncSetting->backupId(), mDelegateListener);
-}
-
-void SyncController::createMyBackupsDir(const QString& name)
-{
-    // Check that name is not empty
-    if (name.isEmpty())
-    {
-        int errorCode (MegaError::API_EARGS);
-        QString errorMsg (QCoreApplication::translate("MegaError", MegaError::getErrorString(errorCode)));
-        MegaApi::log(MegaApi::LOG_LEVEL_ERROR,
-                     QString::fromUtf8("Error creating MyBackups folder: empty name")
-                     .toUtf8().constData());
-        // Name empty, report error
-        emit setMyBackupsDirStatus(errorCode, errorMsg);
-    }
-    else
-    {
-        auto  rootNode (MegaSyncApp->getRootNode());
-        std::unique_ptr<mega::MegaNode> backupsDirNode (mApi->getChildNode(rootNode.get(), name.toUtf8().constData()));
-
-        if (backupsDirNode)
-        {
-            int errorCode (MegaError::API_EEXIST);
-            QString errorMsg (QCoreApplication::translate("MegaError", MegaError::getErrorString(errorCode)));
-            MegaApi::log(MegaApi::LOG_LEVEL_ERROR,
-                         QString::fromUtf8("Error creating MyBackups folder: \"%1\" exists")
-                         .arg(name).toUtf8().constData());
-            // Folder exists, report error
-            emit setMyBackupsDirStatus(errorCode, errorMsg);
-        }
-        else
-        {
-            // Create folder
-            MegaApi::log(MegaApi::LOG_LEVEL_INFO,
-                         QString::fromUtf8("Creating MyBackups folder: \"%1\"")
-                         .arg(name).toUtf8().constData());
-            mApi->createFolder(name.toUtf8().constData(), rootNode.get(), mDelegateListener);
-        }
-    }
-}
-
-void SyncController::setMyBackupsDir(mega::MegaHandle handle)
-{
-    MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("Setting MyBackups dir to handle %1")
-                 .arg(handle).toUtf8().constData());
-    mApi->setMyBackupsFolder(handle, mDelegateListener);
 }
 
 void SyncController::setDeviceName(const QString& name)
@@ -190,21 +148,29 @@ QString SyncController::getSyncAPIErrorMsg(int megaError)
     }
 }
 
-void SyncController::setBackupsRootDirHandle(mega::MegaHandle handle)
+void SyncController::setMyBackupsDirName(const QString& name)
 {
-    emit backupsRootDirHandle(handle);
+    assert(!name.isEmpty()); // This should not be called with an empty name, restrict at the UI level
+
+    mApi->setMyBackupsFolder(name.toUtf8().constData(), mDelegateListener);
 }
 
-void SyncController::getBackupsRootDirHandle()
+void SyncController::getMyBackupsHandle()
 {
-    MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Request MyBackups folder");
-    mApi->getMyBackupsFolder(mDelegateListener);
+    if(mMyBackupsHandle == INVALID_HANDLE)
+        mApi->getUserAttribute(MegaApi::USER_ATTR_MY_BACKUPS_FOLDER, mDelegateListener);
+    else
+        emit myBackupsHandle(mMyBackupsHandle);
+}
+
+void SyncController::setMyBackupsHandle(mega::MegaHandle handle)
+{
+    mMyBackupsHandle = handle;
+    emit myBackupsHandle(mMyBackupsHandle);
 }
 
 void SyncController::onRequestFinish(MegaApi *api, MegaRequest *req, MegaError *e)
 {
-    static MegaHandle tempMyBackupsHandle = mega::INVALID_HANDLE;
-
     int errorCode (e->getErrorCode());
 
     switch(req->getType())
@@ -339,31 +305,32 @@ void SyncController::onRequestFinish(MegaApi *api, MegaRequest *req, MegaError *
         }
         break;
     }
+    case MegaRequest::TYPE_SET_MY_BACKUPS:
+    {
+        int errorCode (e->getErrorCode());
+        QString errorMsg;
+        if (errorCode == MegaError::API_OK)
+        {
+            setMyBackupsHandle(req->getNodeHandle());
+            MegaApi::log(MegaApi::LOG_LEVEL_INFO, "MyBackups folder set successfully");
+        }
+        else
+        {
+            errorMsg = QString::fromUtf8(e->getErrorString());
+            QString logMsg (QString::fromUtf8("Error setting MyBackups folder: \"%1\"").arg(errorMsg));
+            MegaApi::log(MegaApi::LOG_LEVEL_ERROR, logMsg.toUtf8().constData());
+            errorMsg = QCoreApplication::translate("MegaError", errorMsg.toUtf8().constData());
+        }
+        emit setMyBackupsStatus(errorCode, errorMsg);
+        break;
+    }
     case MegaRequest::TYPE_SET_ATTR_USER:
     {
-        int subCommand (req->getParamType());
         int errorCode (e->getErrorCode());
         QString errorMsg;
 
-        if (subCommand == MegaApi::USER_ATTR_MY_BACKUPS_FOLDER)
-        {
-            if (errorCode == MegaError::API_OK)
-            {
-                // We get the node handle,
-                setBackupsRootDirHandle(tempMyBackupsHandle);
-                tempMyBackupsHandle = mega::INVALID_HANDLE;
-                MegaApi::log(MegaApi::LOG_LEVEL_INFO, "MyBackups folder set successfully");
-            }
-            else
-            {
-                errorMsg = QString::fromUtf8(e->getErrorString());
-                QString logMsg (QString::fromUtf8("Error setting MyBackups folder: \"%1\"").arg(errorMsg));
-                MegaApi::log(MegaApi::LOG_LEVEL_ERROR, logMsg.toUtf8().constData());
-                errorMsg = QCoreApplication::translate("MegaError", errorMsg.toUtf8().constData());
-            }
-            emit setMyBackupsDirStatus(errorCode, errorMsg);
-        }
-        else if (subCommand == MegaApi::USER_ATTR_DEVICE_NAMES)
+        int subCommand (req->getParamType());
+        if (subCommand == MegaApi::USER_ATTR_DEVICE_NAMES)
         {
             if (errorCode == MegaError::API_OK)
             {
@@ -382,38 +349,17 @@ void SyncController::onRequestFinish(MegaApi *api, MegaRequest *req, MegaError *
         }
         break;
     }
-    case MegaRequest::TYPE_CREATE_FOLDER:
-    {
-        int errorCode (e->getErrorCode());
-        QString errorMsg;
-
-        if (errorCode == MegaError::API_OK)
-        {
-            tempMyBackupsHandle = req->getNodeHandle();
-            setMyBackupsDir(tempMyBackupsHandle);
-        }
-        else
-        {
-            errorMsg = QString::fromUtf8(e->getErrorString());
-            QString logMsg (QString::fromUtf8("Error creating MyBackups folder: \"%1\"").arg(errorMsg));
-            MegaApi::log(MegaApi::LOG_LEVEL_ERROR, logMsg.toUtf8().constData());
-            emit setMyBackupsDirStatus(errorCode, errorMsg);
-            errorMsg = QCoreApplication::translate("MegaError", errorMsg.toUtf8().constData());
-        }
-        break;
-    }
     case MegaRequest::TYPE_GET_ATTR_USER:
     {
-        int subCommand (req->getParamType());
         int errorCode (e->getErrorCode());
 
+        int subCommand (req->getParamType());
         if (subCommand == MegaApi::USER_ATTR_MY_BACKUPS_FOLDER)
         {
             if (errorCode == MegaError::API_OK)
             {
-                MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Got MyBackups dir from remote");
-                // Set the node handle
-                setBackupsRootDirHandle(req->getNodeHandle());
+                MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Got MyBackups folder from remote");
+                setMyBackupsHandle(req->getNodeHandle());
             }
             else
             {
@@ -421,7 +367,7 @@ void SyncController::onRequestFinish(MegaApi *api, MegaRequest *req, MegaError *
                              QString::fromUtf8("Error getting MyBackups folder: \"%1\"")
                              .arg(QString::fromUtf8(e->getErrorString()))
                              .toUtf8().constData());
-                setBackupsRootDirHandle(mega::INVALID_HANDLE);
+                setMyBackupsHandle(mega::INVALID_HANDLE);
             }
         }
         else if (subCommand == MegaApi::USER_ATTR_DEVICE_NAMES)

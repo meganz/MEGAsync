@@ -56,9 +56,9 @@ NodeSelector::NodeSelector(mega::MegaApi*megaApi, SelectMode selectMode, QWidget
     connect(mNodeSelectorUi->tMegaFolders, &QTreeView::customContextMenuRequested,
             this, &NodeSelector::onCustomContextMenu);
 
-    connect(&mSyncController, &SyncController::backupsRootDirHandle,
+    connect(&mSyncController, &SyncController::myBackupsHandle,
             this, &NodeSelector::onMyBackupsRootDir);
-    mSyncController.getBackupsRootDirHandle();
+    mSyncController.getMyBackupsHandle();
 
     setupNewFolderDialog();
 }

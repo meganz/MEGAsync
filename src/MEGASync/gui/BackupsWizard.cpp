@@ -50,14 +50,14 @@ BackupsWizard::BackupsWizard(QWidget* parent) :
     connect(&mSyncController, &SyncController::deviceName,
             this, &BackupsWizard::onDeviceNameSet);
 
-    connect(&mSyncController, &SyncController::backupsRootDirHandle,
+    connect(&mSyncController, &SyncController::myBackupsHandle,
             this, &BackupsWizard::onBackupsDirSet);
 
     // React on item check/uncheck
     connect(mFoldersModel, &QStandardItemModel::itemChanged,
             this, &BackupsWizard::onListItemChanged);
 
-    connect(&mSyncController, &SyncController::setMyBackupsDirStatus,
+    connect(&mSyncController, &SyncController::setMyBackupsStatus,
             this, &BackupsWizard::onSetMyBackupsDirRequestStatus);
 
     connect(&mSyncController, &SyncController::syncAddStatus,
@@ -229,7 +229,7 @@ void BackupsWizard::setupStep2()
 
     // Request MyBackups root folder
     mHaveBackupsDir = false;
-    mSyncController.getBackupsRootDirHandle();
+    mSyncController.getMyBackupsHandle();
 
     // Get number of items
     int nbSelectedFolders = mFoldersProxyModel->rowCount();
@@ -310,10 +310,11 @@ void BackupsWizard::setupMyBackupsDir(bool nameCollision)
     }
     else
     {
+        // FIXME: Do we still need to check for this with the INBOX switch?
         // Create MyBackups folder if necessary
         if (mCreateBackupsDir || nameCollision)
         {
-            mSyncController.createMyBackupsDir(mBackupsDirName);
+            mSyncController.setMyBackupsDirName(mBackupsDirName);
         }
         else
         {
@@ -756,6 +757,7 @@ void BackupsWizard::onBackupsDirSet(mega::MegaHandle backupsDirHandle)
                 mCreateBackupsDir = false;
             }
 
+            // FIXME: Do we still need to check for this with the INBOX switch?
             // Check that the folder has not been sent to rubbish
             if (api->isInRubbish(backupsDirNode.get()))
             {
@@ -804,6 +806,7 @@ void BackupsWizard::onSetMyBackupsDirRequestStatus(int errorCode, const QString&
 {
     bool nameCollision (false);
 
+    // FIXME: Do we still need to check for this with the INBOX switch?
     if (errorCode == mega::MegaError::API_EEXIST)
     {
         // If dir already exists, prompt for new name
