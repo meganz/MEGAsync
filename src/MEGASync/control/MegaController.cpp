@@ -39,7 +39,7 @@ void Controller::removeSync(std::shared_ptr<SyncSetting> syncSetting, ActionProg
 
     MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromAscii("Removing sync").toUtf8().constData());
 
-    api->removeSync(syncSetting->backupId(),
+    api->removeSync(syncSetting->backupId(), INVALID_HANDLE,
         new ProgressFuncExecuterListener(progress,  true, [](MegaApi*, MegaRequest*, MegaError*){
                         ///// onRequestFinish Management: ////
                     }));

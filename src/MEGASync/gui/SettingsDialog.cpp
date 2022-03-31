@@ -2126,53 +2126,32 @@ void SettingsDialog::connectBackupHandlers()
     connect(mUi->backupTableWidget, &BackupTableWidget::removeBackup, this, &SettingsDialog::removeBackup);
     connect(mUi->backupTableWidget, &BackupTableWidget::openInMEGA, this, &SettingsDialog::openMEGAHandleInExplorer);
 
-    connect(&mSyncController, &SyncController::backupsRootDirHandle, this, [this](mega::MegaHandle backupRootHandle)
+    connect(&mSyncController, &SyncController::myBackupsHandle, this, [this](mega::MegaHandle backupRootHandle)
     {
-        QString backupRootPath = QString();
-        if(backupRootHandle != mega::INVALID_HANDLE)
+        if(backupRootHandle == mega::INVALID_HANDLE)
         {
-            mBackupRootHandle = backupRootHandle;
-            backupRootPath = QString::fromUtf8(mMegaApi->getNodePathByNodeHandle(mBackupRootHandle));
-            mUi->bOpenBackupFolder->setEnabled(!backupRootPath.isEmpty());
-        }
-        if (backupRootPath.isEmpty())
-        {
+            mSyncController.setMyBackupsDirName(mBackupRootDirName);
             mUi->bOpenBackupFolder->setEnabled(false);
-            MegaApi::log(MegaApi::LOG_LEVEL_INFO, "My Backups directory invalid or not set, using default");
-            mBackupRootHandle = mega::INVALID_HANDLE;
-            backupRootPath = QLatin1Char('/') + mBackupRootDirName;
-        }
-        mUi->lBackupFolder->setText(backupRootPath);
-    });
-
-    connect(&mSyncController, &SyncController::setMyBackupsDirStatus, this, [this](int errorCode, QString errorMsg)
-    {
-        if (errorCode == mega::MegaError::API_EEXIST)
-        {
-            // If dir already exists, prompt for new name
-            RenameTargetFolderDialog dialog (mBackupRootDirName);
-            auto res (dialog.exec());
-            if (res == QDialog::Accepted)
-            {
-                MegaApi::log(mega::MegaApi::LOG_LEVEL_INFO, "Settings Dialog: setup MyBackups");
-                mBackupRootDirName = dialog.getNewFolderName();
-                mSyncController.createMyBackupsDir(dialog.getNewFolderName());
-            }
-        }
-        else if (errorCode != mega::MegaError::API_OK)
-        {
-            QMegaMessageBox::critical(nullptr, tr("Error"),
-                                      tr("Creating or setting the backups root folder failed.\n"
-                                         "Reason: %2")
-                                      .arg(errorMsg));
         }
         else
         {
-            mSyncController.addSync(QDir::toNativeSeparators(mDirToBackup.canonicalPath()),
-                                    mBackupRootHandle, mDirToBackup.dirName(),
-                                    MegaSync::TYPE_BACKUP);
+            mBackupRootHandle = backupRootHandle;
+            mUi->lBackupFolder->setText(QString::fromUtf8(mMegaApi->getNodePathByNodeHandle(mBackupRootHandle)));
+            mUi->bOpenBackupFolder->setEnabled(true);
         }
-    }, Qt::QueuedConnection);
+    });
+
+    connect(&mSyncController, &SyncController::setMyBackupsStatus, this, [this](int errorCode, QString errorMsg)
+    {
+        if (errorCode == mega::MegaError::API_OK)
+        {
+            mSyncController.getMyBackupsHandle(); // get handle after successful setMyBackups
+        }
+        else
+        {
+            QMegaMessageBox::critical(nullptr, tr("Backup Error"), tr("Error creating My Backups folder: %2") .arg(errorMsg));
+        }
+    });
 
     connect(&mSyncController, &SyncController::syncAddStatus, this, [](const int errorCode, const QString errorMsg, QString name)
     {
@@ -2205,7 +2184,6 @@ void SettingsDialog::connectBackupHandlers()
     });
 }
 
-
 void SettingsDialog::loadBackupSettings()
 {
     BackupItemModel *model(new BackupItemModel(mUi->backupTableWidget));
@@ -2219,7 +2197,7 @@ void SettingsDialog::loadBackupSettings()
     });
     mUi->backupTableWidget->setModel(model);
     mUi->backupTableWidget->customize();
-    mSyncController.getBackupsRootDirHandle();
+    mSyncController.getMyBackupsHandle();
 }
 
 void SettingsDialog::on_bBackup_clicked()
@@ -2241,6 +2219,12 @@ void SettingsDialog::on_bBackup_clicked()
 
 void SettingsDialog::on_bAddBackup_clicked()
 {
+    if(mBackupRootHandle == mega::INVALID_HANDLE)
+    {
+        mSyncController.setMyBackupsDirName(mBackupRootDirName);
+        return;
+    }
+
     AddBackupDialog *addBackup = new AddBackupDialog(this);
     addBackup->setAttribute(Qt::WA_DeleteOnClose);
     addBackup->setWindowModality(Qt::WindowModal);
@@ -2249,19 +2233,10 @@ void SettingsDialog::on_bAddBackup_clicked()
 
     connect(addBackup, &AddBackupDialog::accepted, this, [this, addBackup]()
     {
-        mDirToBackup = addBackup->getSelectedFolder();
-
-        if (mBackupRootHandle == mega::INVALID_HANDLE)
-        {
-            MegaApi::log(mega::MegaApi::LOG_LEVEL_INFO, "Settings Dialog: setup MyBackups");
-            mSyncController.createMyBackupsDir(mBackupRootDirName);
-        }
-        else
-        {
-            mSyncController.addSync(QDir::toNativeSeparators(mDirToBackup.canonicalPath()),
-                                    mBackupRootHandle, mDirToBackup.dirName(),
-                                    MegaSync::TYPE_BACKUP);
-        }
+        QDir dirToBackup = addBackup->getSelectedFolder();
+        mSyncController.addSync(QDir::toNativeSeparators(dirToBackup.canonicalPath()),
+                                mBackupRootHandle, dirToBackup.dirName(),
+                                MegaSync::TYPE_BACKUP);
     });
 }
 

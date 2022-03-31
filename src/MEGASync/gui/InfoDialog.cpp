@@ -1249,7 +1249,7 @@ void InfoDialog::addBackup()
         addBackup->setAttribute(Qt::WA_DeleteOnClose);
         addBackup->setWindowModality(Qt::ApplicationModal);
 
-        connect(mSyncController.get(), &SyncController::backupsRootDirHandle, this, [this, addBackup](mega::MegaHandle h)
+        connect(mSyncController.get(), &SyncController::myBackupsHandle, this, [this, addBackup](mega::MegaHandle h)
         {
             if (h == mega::INVALID_HANDLE)
                 return;
@@ -1259,7 +1259,7 @@ void InfoDialog::addBackup()
                 addBackup->setMyBackupsFolder(QString::fromUtf8(megaApi->getNodePathByNodeHandle(mBackupRootHandle)));
         });
 
-        mSyncController->getBackupsRootDirHandle();
+        mSyncController->getMyBackupsHandle();
 
         connect(mSyncController.get(), &SyncController::syncAddStatus, this, [](const int errorCode, const QString errorMsg, QString name)
         {
@@ -1282,7 +1282,7 @@ void InfoDialog::addBackup()
                                          MegaSync::TYPE_BACKUP);
             }
         });
-
+        mSyncController->getMyBackupsHandle();
         addBackup->show();
     }
     else
