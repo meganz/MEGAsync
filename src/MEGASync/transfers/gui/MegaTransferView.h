@@ -88,7 +88,7 @@ private:
 
     void createContextMenu();
     void updateContextMenu(bool enablePause, bool enableResume, bool enableMove, bool enableClear,
-                           bool enableCancel);
+                           bool enableCancel, bool isTopIndex, bool isBottomIndex);
 
     QModelIndexList getTransfers(bool onlyVisible, TransferData::TransferStates state = TransferData::TRANSFER_NONE);
     QModelIndexList getSelectedTransfers();

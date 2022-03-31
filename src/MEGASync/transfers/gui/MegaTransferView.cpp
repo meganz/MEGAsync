@@ -16,6 +16,9 @@ const QColor MegaTransferView::DOWNLOAD_DRAG_COLOR = QColor("#31B500");
 
 MegaTransferView::MegaTransferView(QWidget* parent) :
     QTreeView(parent),
+    mDisableLink(false),
+    mDisableMenus(false),
+    mKeyNavigation(false),
     mParentTransferWidget(nullptr),
     mContextMenu(nullptr),
     mPauseAction(nullptr),
@@ -28,10 +31,7 @@ MegaTransferView::MegaTransferView(QWidget* parent) :
     mGetLinkAction(nullptr),
     mOpenItemAction(nullptr),
     mShowInFolderAction(nullptr),
-    mClearAction(nullptr),
-    mKeyNavigation(false),
-    mDisableLink(false),
-    mDisableMenus(false)
+    mClearAction(nullptr)
 
 {
     setMouseTracking(true);
@@ -390,6 +390,7 @@ void MegaTransferView::createContextMenu()
 
     mContextMenu->addAction(mGetLinkAction);
 
+
     mContextMenu->addAction(mMoveToTopAction);
     mContextMenu->addAction(mMoveUpAction);
     mContextMenu->addAction(mMoveDownAction);
@@ -405,7 +406,7 @@ void MegaTransferView::createContextMenu()
 }
 
 void MegaTransferView::updateContextMenu(bool enablePause, bool enableResume, bool enableMove,
-                                         bool enableClear, bool enableCancel)
+                                         bool enableClear, bool enableCancel, bool isTopIndex, bool isBottomIndex)
 {
     mPauseAction->setVisible(enablePause);
     mResumeAction->setVisible(enableResume);
@@ -416,7 +417,9 @@ void MegaTransferView::updateContextMenu(bool enablePause, bool enableResume, bo
     mCancelAction->setVisible(enableCancel);
     mClearAction->setVisible(enableClear);
 
-    bool onlyOneSelected ((selectedIndexes().size() == 1));
+    auto indexes = selectedIndexes();
+
+    bool onlyOneSelected ((indexes.size() == 1));
     bool onlyOneAndClear(enableClear && onlyOneSelected);
 
     bool showLink (false);
@@ -425,7 +428,7 @@ void MegaTransferView::updateContextMenu(bool enablePause, bool enableResume, bo
 
     if (onlyOneAndClear)
     {
-        auto d (qvariant_cast<TransferItem>(selectedIndexes().first().data()).getTransferData());
+        auto d (qvariant_cast<TransferItem>(indexes.first().data()).getTransferData());
 
         auto state (d->mState);
         auto type ((d->mType & TransferData::TRANSFER_UPLOAD) ?
@@ -465,6 +468,12 @@ void MegaTransferView::updateContextMenu(bool enablePause, bool enableResume, bo
         mResumeAction->setText(tr("Resume Transfers"));
         mCancelAction->setText(tr("Cancel Transfers"));
     }
+
+    mMoveToTopAction->setVisible(!isTopIndex);
+    mMoveUpAction->setVisible(!isTopIndex);
+
+    mMoveToBottomAction->setVisible(!isBottomIndex);
+    mMoveDownAction->setVisible(!isBottomIndex);
 }
 
 void MegaTransferView::mouseReleaseEvent(QMouseEvent* event)
@@ -560,11 +569,22 @@ void MegaTransferView::onCustomContextMenu(const QPoint& point)
     bool enableCancel = false;
     bool enableClear = false;
     bool enableMove = false;
+    bool isTopIndex(false);
+    bool isBottomIndex(false);
 
     QModelIndexList indexes = selectedIndexes();
 
     for (auto index : qAsConst(indexes))
     {
+        if(index.row() == 0)
+        {
+            isTopIndex = true;
+        }
+        else if(index.row() == (model()->rowCount() -1))
+        {
+            isBottomIndex = true;
+        }
+
         auto d (qvariant_cast<TransferItem>(index.data()).getTransferData());
         switch (d->mState)
         {
@@ -595,7 +615,7 @@ void MegaTransferView::onCustomContextMenu(const QPoint& point)
                 break;
         }
     }
-    updateContextMenu(enablePause, enableResume, enableMove, enableClear, enableCancel);
+    updateContextMenu(enablePause, enableResume, enableMove, enableClear, enableCancel, isTopIndex, isBottomIndex);
     mContextMenu->exec(mapToGlobal(point));
 }
 

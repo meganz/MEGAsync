@@ -124,7 +124,7 @@ QGroupBox::title
     color: #333333;
     border: none;
     text-align: left;
-    padding-left: 0px;
+    padding-left: -1px;
     qProperty-iconSize: 24px;
 }
 
@@ -271,14 +271,6 @@ QToolButton
 #lNbResults[results=true]
 {
   color: #2BA6DE;
-  font-size: 12px;
-  font-weight: bold;
-  padding-left: 14px;
-}
-
-#lStorageOverQuota
-{
-   color: #F46265;
   font-size: 12px;
   font-weight: bold;
   padding-left: 14px;

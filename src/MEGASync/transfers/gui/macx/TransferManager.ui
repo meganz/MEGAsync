@@ -282,21 +282,18 @@ QToolButton
   padding-left: 14px;
 }
 
-
-
 #lTransferOverQuota
 {
    color: #F46265;
   font-size: 12px;
   font-weight: bold;
-  padding-left: 14px;
+  padding-left: 2px;
 }
 
-#lTransferOverQuota
+#lTransferOverQuotaInfo
 {
-   color: #F46265;
+   color: #777777;
   font-size: 12px;
-  font-weight: bold;
   padding-left: 2px;
 }
 
