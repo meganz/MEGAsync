@@ -27,6 +27,11 @@
 
 #define MegaSyncApp (static_cast<MegaApplication *>(QCoreApplication::instance()))
 
+template <typename E>
+constexpr typename std::underlying_type<E>::type toInt(E e) {
+    return static_cast<typename std::underlying_type<E>::type>(e);
+}
+
 struct PlanInfo
 {
     long long gbStorage;
