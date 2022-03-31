@@ -8,6 +8,7 @@
 #include <QModelIndex>
 #include <QWidget>
 #include <QToolButton>
+#include <QStyleOptionViewItem>
 
 class TransferBaseDelegateWidget : public QWidget
 {
@@ -34,7 +35,7 @@ public:
     QModelIndex getCurrentIndex() const;
     void setCurrentIndex(const QModelIndex &currentIndex);
 
-    virtual void render(QPainter *painter, const QRegion &sourceRegion);
+    virtual void render(const QStyleOptionViewItem &, QPainter *painter, const QRegion &sourceRegion);
 
 signals:
     void retryTransfer();

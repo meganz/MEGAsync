@@ -58,7 +58,7 @@ signals:
         void pausedTransfersChanged(bool) const;
 
 protected slots:
-        void onCancelClearTransfer(bool isClear);
+        void onCancelClearTransfer();
         void onPauseResumeTransfer();
         void onRetryTransfer();
         void onOpenTransfer();

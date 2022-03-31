@@ -22,7 +22,7 @@ public:
 
     ActionHoverType mouseHoverTransfer(bool isHover, const QPoint &pos) override;
 
-    void render(QPainter *painter, const QRegion &sourceRegion) override;
+    void render(const QStyleOptionViewItem &option, QPainter *painter, const QRegion &sourceRegion) override;
 
 protected:
     void mouseDoubleClickEvent(QMouseEvent *event) override;

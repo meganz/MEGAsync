@@ -14,7 +14,6 @@ using namespace mega;
 static const QModelIndex DEFAULT_IDX = QModelIndex();
 
 const int MAX_TRANSFERS = 2000;
-const int MAX_UPDATE_TRANSFERS = 2000;
 
 //LISTENER THREAD
 TransferThread::TransfersToProcess TransferThread::processTransfers()
@@ -33,16 +32,7 @@ TransferThread::TransfersToProcess TransferThread::processTransfers()
        transfers.startTransfersByTag = extractFromCache(mTransfersToProcess.startTransfersByTag, spaceForTransfers);
        spaceForTransfers -= transfers.startTransfersByTag.size();
 
-
-       if(spaceForTransfers > 0)
-       {
-           transfers.updateTransfersByTag = extractFromCache(mTransfersToProcess.updateTransfersByTag, MAX_UPDATE_TRANSFERS);
-       }
-       else
-       {
-           mCacheMutex.unlock();
-           return transfers;
-       }
+       transfers.updateTransfersByTag = extractFromCache(mTransfersToProcess.updateTransfersByTag, spaceForTransfers);
 
        mCacheMutex.unlock();
    }
@@ -50,21 +40,21 @@ TransferThread::TransfersToProcess TransferThread::processTransfers()
    return transfers;
 }
 
-QList<QExplicitlySharedDataPointer<TransferData>> TransferThread::extractFromCache(QMap<int, QExplicitlySharedDataPointer<TransferData>>& data, int spaceForTransfers)
+QList<QExplicitlySharedDataPointer<TransferData>> TransferThread::extractFromCache(QMap<int, QExplicitlySharedDataPointer<TransferData>>& dataMap, int spaceForTransfers)
 {
-    if(!data.isEmpty())
+    if(!dataMap.isEmpty() && spaceForTransfers > 0)
     {
-        if(data.size() > spaceForTransfers)
+        if(dataMap.size() > spaceForTransfers)
         {
             QList<QExplicitlySharedDataPointer<TransferData>> auxList;
             for(auto index = 0; index < spaceForTransfers
-                && !data.isEmpty(); ++index)
+                && !dataMap.isEmpty(); ++index)
             {
-                auto& firstItem = data.first();
+                auto& firstItem = dataMap.first();
                 if(firstItem)
                 {
                     auxList.append(firstItem);
-                    data.take(firstItem->mTag);
+                    dataMap.take(firstItem->mTag);
                 }
             }
 
@@ -72,8 +62,8 @@ QList<QExplicitlySharedDataPointer<TransferData>> TransferThread::extractFromCac
         }
         else
         {
-            auto auxList = data.values();
-            data.clear();
+            auto auxList = dataMap.values();
+            dataMap.clear();
 
             return auxList;
         }
@@ -194,12 +184,6 @@ void TransferThread::onTransferUpdate(MegaApi *, MegaTransfer *transfer)
     if (!transfer->isStreamingTransfer()
             && !transfer->isFolderTransfer())
     {
-        if(transfer->getDeltaSize() == 0 &&
-                transfer->getState() != mega::MegaTransfer::STATE_COMPLETING)
-        {
-            return;
-        }
-
         QMutexLocker counterLock(&mCountersMutex);
         if(transfer->getType() == MegaTransfer::TYPE_UPLOAD)
         {
@@ -660,18 +644,16 @@ void TransfersModel::processUpdateTransfers()
     QList<QExplicitlySharedDataPointer<TransferData>> transfersActive;
     QModelIndexList rowsToRemove;
 
-    auto workingOnOtherThread(isFailingModeActive() || isCancelingModeActive());
-
     for (auto it = mTransfersToProcess.updateTransfersByTag.begin(); it != mTransfersToProcess.updateTransfersByTag.end();)
-    {
+    {   
         TransferTag tag ((*it)->mTag);
 
         auto row = mTagByOrder.value(tag);
         auto d  = getTransfer(row);
 
-        if(d)
+        if(d && d->hasChanged(*it))
         {
-            if(!workingOnOtherThread && ((*it)->isFinished()|| (*it)->isProcessing()))
+            if(((*it)->isFinished()) || (*it)->isProcessing())
             {
                 if(d->mState != (*it)->mState)
                 {
@@ -918,7 +900,7 @@ TransfersCount TransfersModel::getTransfersCount()
     return mTransferEventWorker->getTransfersCount();
 }
 
-void TransfersModel::cancelTransfers(const QModelIndexList& indexes)
+void TransfersModel::cancelTransfers(const QModelIndexList& indexes, QWidget* canceledFrom)
 {
     if(indexes.isEmpty())
     {
@@ -978,7 +960,7 @@ void TransfersModel::cancelTransfers(const QModelIndexList& indexes)
 
         if(!uploadToClear.isEmpty() && !downloadToClear.isEmpty() && !toCancel.isEmpty())
         {
-            QMegaMessageBox::warning(nullptr, QString::fromUtf8("MEGAsync"),
+            QMegaMessageBox::warning(canceledFrom, QString::fromUtf8("MEGAsync"),
                                      tr("Transfer(s) cannot be cancelled or cleared", "", uploadToClear.size() + downloadToClear.size() + toCancel.size()),
                                      QMessageBox::Ok);
         }

@@ -7,6 +7,7 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/MegaDelegateHoverManager.cpp \
     $$PWD/NotificationsSettings.cpp \
     $$PWD/OverQuotaDialog.cpp \
+    $$PWD/QtPositioningBugFixer.cpp \
     $$PWD/PasswordLineEdit.cpp \
     $$PWD/SetupWizard.cpp \
     $$PWD/NodeSelector.cpp \
@@ -68,6 +69,7 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/MegaDelegateHoverManager.h \
     $$PWD/NotificationsSettings.h \
     $$PWD/OverQuotaDialog.h \
+    $$PWD/QtPositioningBugFixer.h \
     $$PWD/PasswordLineEdit.h \
     $$PWD/SetupWizard.h \
     $$PWD/NodeSelector.h \
@@ -152,16 +154,6 @@ win32 {
                 $$PWD/win/PlanWidget.ui \
                 $$PWD/win/UpgradeDialog.ui \
                 $$PWD/win/InfoWizard.ui \
-                $$PWD/win/TransferManagerDelegateWidget.ui \
-                $$PWD/win/TransferManager.ui \
-                $$PWD/win/TransfersWidget.ui \
-                $$PWD/win/TransfersStateInfoWidget.ui \
-                $$PWD/win/TransferManagerLoadingItem.ui \
-                $$PWD/win/TransferManagerDragBackDrop.ui \
-                $$PWD/win/InfoDialogTransfersWidget.ui \
-                $$PWD/win/InfoDialogTransferDelegateWidget.ui \
-                $$PWD/win/TransfersStatusWidget.ui \
-                $$PWD/win/TransfersSummaryWidget.ui \
                 $$PWD/win/MegaSpeedGraph.ui \
                 $$PWD/win/AddExclusionDialog.ui \
                 $$PWD/win/StatusInfo.ui \
@@ -181,7 +173,7 @@ win32 {
                 $$PWD/win/ProxySettings.ui \
                 $$PWD/win/BandwidthSettings.ui \
                 $$PWD/win/NewFolderDialog.ui \
-                $$PWD/win/NotificationsSettings.ui
+                $$PWD/win/NotificationsSettings.ui\
 }
 
 macx {
@@ -209,18 +201,8 @@ macx {
                 $$PWD/macx/PlanWidget.ui \
                 $$PWD/macx/UpgradeDialog.ui \
                 $$PWD/macx/InfoWizard.ui \
-                $$PWD/macx/TransferManagerDelegateWidget.ui \
-                $$PWD/macx/TransferManager.ui \
-                $$PWD/macx/TransfersWidget.ui \
-                $$PWD/macx/TransfersStateInfoWidget.ui \
                 $$PWD/macx/MegaSpeedGraph.ui \
                 $$PWD/macx/AddExclusionDialog.ui \
-                $$PWD/macx/InfoDialogTransfersWidget.ui \
-                $$PWD/macx/InfoDialogTransferDelegateWidget.ui \
-                $$PWD/macx/TransfersStatusWidget.ui \
-                $$PWD/macx/TransfersSummaryWidget.ui \
-                $$PWD/macx/TransferManagerLoadingItem.ui \
-                $$PWD/macx/TransferManagerDragBackDrop.ui \
                 $$PWD/macx/StatusInfo.ui \
                 $$PWD/macx/PSAwidget.ui \
                 $$PWD/macx/UpgradeOverStorage.ui \
@@ -289,16 +271,6 @@ unix:!macx {
                 $$PWD/linux/PlanWidget.ui \
                 $$PWD/linux/UpgradeDialog.ui \
                 $$PWD/linux/InfoWizard.ui \
-                $$PWD/linux/TransferManagerDelegateWidget.ui \
-                $$PWD/linux/TransferManager.ui \
-                $$PWD/linux/TransfersWidget.ui \
-                $$PWD/linux/TransfersStateInfoWidget.ui \
-                $$PWD/linux/TransferManagerLoadingItem.ui \
-                $$PWD/linux/TransferManagerDragBackDrop.ui \
-                $$PWD/linux/TransfersSummaryWidget.ui \
-                $$PWD/linux/TransfersStatusWidget.ui \
-                $$PWD/linux/InfoDialogTransfersWidget.ui \
-                $$PWD/linux/InfoDialogTransferDelegateWidget.ui \
                 $$PWD/linux/MegaSpeedGraph.ui \
                 $$PWD/linux/AddExclusionDialog.ui \
                 $$PWD/linux/StatusInfo.ui \
