@@ -491,7 +491,7 @@ bool TransfersManagerSortFilterProxyModel::moveRows(const QModelIndex &proxyPare
     return moveOk;
 }
 
-void TransfersManagerSortFilterProxyModel::onCancelClearTransfer(bool isClear)
+void TransfersManagerSortFilterProxyModel::onCancelClearTransfer()
 {
     auto delegateWidget = dynamic_cast<TransferManagerDelegateWidget*>(sender());
     auto sourModel = dynamic_cast<TransfersModel*>(sourceModel());
