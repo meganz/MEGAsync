@@ -41,7 +41,7 @@ HEADERS += $$PWD/model/InfoDialogTransfersProxyModel.h \
            $$PWD/gui/TransfersWidget.h
 
 win32 {
-    RESOURCES += $$PWD/../../gui/Resources_win.qrc
+    RESOURCES += $$PWD/../gui/Resources_win.qrc
     INCLUDEPATH += $$PWD/win
     FORMS    += $$PWD/gui/win/TransferWidgetHeaderItem.ui \
                 $$PWD/gui/win/TransferManagerDelegateWidget.ui \
@@ -57,7 +57,7 @@ win32 {
 }
 
 macx {
-    RESOURCES += $$PWD/../../gui/Resources_macx.qrc
+    RESOURCES += $$PWD/../gui/Resources_macx.qrc
     INCLUDEPATH += $$PWD/macx
     FORMS    += $$PWD/gui/macx/TransferWidgetHeaderItem.ui \
                 $$PWD/gui/macx/TransferManagerDelegateWidget.ui \
@@ -73,7 +73,7 @@ macx {
 }
 
 unix:!macx {
-    RESOURCES += $$PWD/../../gui/Resources_linux.qrc
+    RESOURCES += $$PWD/../gui/Resources_linux.qrc
     INCLUDEPATH += $$PWD/linux
     FORMS    += $$PWD/gui/linux/TransferWidgetHeaderItem.ui \
                 $$PWD/gui/linux/TransferManagerDelegateWidget.ui \

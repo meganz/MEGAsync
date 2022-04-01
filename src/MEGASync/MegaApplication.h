@@ -46,6 +46,7 @@
 #include "TransferQuota.h"
 
 class TransfersModel;
+class StalledIssuesModel;
 
 #ifdef __APPLE__
     #include "gui/MegaSystemTrayIcon.h"
@@ -205,7 +206,8 @@ public:
     void pushToThreadPool(std::function<void()> functor);
     SetupWizard *getSetupWizard() const;
 
-    TransfersModel* getTransfersModel(){return mModel;}
+    TransfersModel* getTransfersModel(){return mTransfersModel;}
+    StalledIssuesModel* getStalledIssuesModel(){return mStalledIssuesModel;}
 
     /**
      * @brief migrates sync configuration and fetches nodes
@@ -552,7 +554,8 @@ protected:
     std::shared_ptr<DesktopNotifications> mOsNotifications;
     QMutex mMutexOpenUrls;
     QMap<QString, std::chrono::system_clock::time_point> mOpenUrlsClusterTs;
-    TransfersModel* mModel;
+    TransfersModel* mTransfersModel;
+    StalledIssuesModel* mStalledIssuesModel;
 
 private:
 #ifdef _WIN32

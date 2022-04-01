@@ -10,6 +10,7 @@
 #include "platform/Platform.h"
 #include "OverQuotaDialog.h"
 #include "ConnectivityChecker.h"
+#include "StalledIssuesModel.h"
 
 #include <QTranslator>
 #include <QClipboard>
@@ -206,7 +207,8 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     prevVersion = 0;
     updatingSSLcert = false;
     lastSSLcertUpdate = 0;
-    mModel = nullptr;
+    mTransfersModel = nullptr;
+    mStalledIssuesModel = nullptr;
 
     notificationsModel = NULL;
     notificationsProxyModel = NULL;
@@ -646,9 +648,11 @@ void MegaApplication::initialize()
         connect(watcher, SIGNAL(fileChanged(QString)), this, SLOT(showInterface(QString)));
     }
 
-    mModel = new TransfersModel(nullptr);
+    mTransfersModel = new TransfersModel(nullptr);
+    connect(mTransfersModel, &TransfersModel::transfersCountUpdated, this, &MegaApplication::onTransfersModelUpdate);
 
-    connect(mModel, &TransfersModel::transfersCountUpdated, this, &MegaApplication::onTransfersModelUpdate);
+
+    mStalledIssuesModel = new StalledIssuesModel(this);
 }
 
 QString MegaApplication::applicationFilePath()
@@ -2178,8 +2182,11 @@ void MegaApplication::cleanAll()
     // their deletion
     QApplication::processEvents();
 
-    delete mModel;
-    mModel = nullptr;
+    delete mTransfersModel;
+    mTransfersModel = nullptr;
+
+    delete mStalledIssuesModel;
+    mStalledIssuesModel = nullptr;
 
     delete megaApi;
     megaApi = NULL;
@@ -3783,7 +3790,7 @@ void MegaApplication::checkFirstTransfer()
     firstTransferTimer->deleteLater();
     firstTransferTimer = nullptr;
 
-    auto TransfersStats = mModel->getTransfersCount();
+    auto TransfersStats = mTransfersModel->getTransfersCount();
 
     if (TransfersStats.pendingDownloads)
     {
@@ -4196,7 +4203,7 @@ void MegaApplication::onTransfersModelUpdate()
         infoDialog->updateDialogState();
     }
 
-    auto TransfersStats = mModel->getTransfersCount();
+    auto TransfersStats = mTransfersModel->getTransfersCount();
     //If there are no pending transfers, reset the statics and update the state of the tray icon
     if (!TransfersStats.pendingDownloads
             && !TransfersStats.pendingUploads)

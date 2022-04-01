@@ -407,10 +407,12 @@ TransfersModel::~TransfersModel()
     mTransfers.clear();
 
     // Disconect listener
-    mMegaApi->removeTransferListener(mTransferEventWorker);
+    mMegaApi->removeTransferListener(delegateListener);
     mTransferEventThread->quit();
     mTransferEventThread->deleteLater();
     mTransferEventWorker->deleteLater();
+
+    delegateListener->deleteLater();
 }
 
 void TransfersModel::pauseModelProcessing(bool value)
