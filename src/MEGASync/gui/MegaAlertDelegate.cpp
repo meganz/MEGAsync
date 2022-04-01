@@ -2,7 +2,6 @@
 #include <QPainter>
 #include "megaapi.h"
 #include <QEvent>
-#include <QDebug>
 #include <QSortFilterProxyModel>
 #include <QDesktopServices>
 #include <QUrl>
