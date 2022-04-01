@@ -702,6 +702,13 @@ if (CMAKE_HOST_APPLE)
             COMMAND echo "APPL????" > \"$<TARGET_FILE_DIR:MEGAsync>/../PkgInfo\"
             COMMENT "Adding PkgInfo file to app bundle..."
             )
+			
+	 add_custom_command(
+            TARGET MEGAsync
+            POST_BUILD
+            COMMAND /usr/libexec/PlistBuddy -c \"Set :CFBundleShortVersionString ${MEGASYNC_VERSION}\" \"$<TARGET_FILE_DIR:MEGAsync>/../Info.plist\"
+            COMMENT "Setting version to Info.plist..."
+            )
 
     execute_process(
         COMMAND bash "-c" "grep \"const QString Preferences::VERSION_STRING\" ${MEGAsyncDir}/control/Preferences.cpp | awk -F '\"' '{print $2}'"
@@ -709,7 +716,7 @@ if (CMAKE_HOST_APPLE)
         OUTPUT_STRIP_TRAILING_WHITESPACE)
 
     message("MEGAsync version = ${MEGASYNC_VERSION}")
-    set_target_properties(MEGAsync PROPERTIES MACOSX_BUNDLE_SHORT_VERSION_STRING "${MEGASYNC_VERSION}")
+    #set_target_properties(MEGAsync PROPERTIES MACOSX_BUNDLE_SHORT_VERSION_STRING "${MEGASYNC_VERSION}")
 endif()
 
 set(FULLREQUIREMENTS TRUE CACHE BOOL "Verbose output")
@@ -829,4 +836,4 @@ target_include_directories(MEGASync_unit_tests PRIVATE
                                                ${MEGAsyncDir}/transfers/model
                                                ${MEGAsyncDir}/google_breakpad
                                                )
-target_compile_features(MEGASync_unit_tests PRIVATE cxx_std_14)
+#target_compile_features(MEGASync_unit_tests PRIVATE cxx_std_14)
