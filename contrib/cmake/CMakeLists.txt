@@ -231,6 +231,7 @@ set (MOC_INPUT
     ${MEGAsyncDir}/gui/BindFolderDialog.h
     ${MEGAsyncDir}/gui/ChangeLogDialog.h
     ${MEGAsyncDir}/gui/ChangePassword.h
+    ${MEGAsyncDir}/gui/PasswordLineEdit.h
     ${MEGAsyncDir}/gui/MegaProgressCustomDialog.h
     ${MEGAsyncDir}/gui/CrashReportDialog.h
     ${MEGAsyncDir}/gui/CustomTransferItem.h
@@ -243,6 +244,7 @@ set (MOC_INPUT
     ${MEGAsyncDir}/gui/ImportMegaLinksDialog.h
     ${MEGAsyncDir}/gui/BalloonToolTip.h
     ${MEGAsyncDir}/gui/InfoDialog.h
+    ${MEGAsyncDir}/gui/QtPositioningBugFixer.h
     ${MEGAsyncDir}/gui/InfoDialogTransfersWidget.h
     ${MEGAsyncDir}/gui/InfoWizard.h
     ${MEGAsyncDir}/gui/TransfersStatusWidget.h
@@ -261,13 +263,15 @@ set (MOC_INPUT
     ${MEGAsyncDir}/gui/QCustomTransfersModel.h
     ${MEGAsyncDir}/gui/QFinishedTransfersModel.h
     ${MEGAsyncDir}/gui/QAlertsModel.h
-    ${MEGAsyncDir}/gui/QMegaModel.h
+    ${MEGAsyncDir}/gui/MegaItemModel.h
     ${MEGAsyncDir}/gui/QTransfersModel.h
     ${MEGAsyncDir}/gui/QSyncItemWidget.h
     ${MEGAsyncDir}/gui/SettingsDialog.h
-    ${MEGAsyncDir}/gui/NotificationsSettings.h
     ${MEGAsyncDir}/gui/SetupWizard.h
+    ${MEGAsyncDir}/gui/NotificationsSettings.h
     ${MEGAsyncDir}/gui/StatusInfo.h
+    ${MEGAsyncDir}/gui/MegaItemProxyModel.h
+    ${MEGAsyncDir}/gui/MegaItemTreeView.h
     ${MEGAsyncDir}/gui/StreamingFromMegaDialog.h
     ${MEGAsyncDir}/gui/TransferItem.h
     ${MEGAsyncDir}/gui/TransferManager.h
@@ -283,8 +287,9 @@ set (MOC_INPUT
     ${MEGAsyncDir}/gui/WaitingSpinnerWidget.h
     ${MEGAsyncDir}/gui/OverQuotaDialog.h
     ${MEGAsyncDir}/gui/ProxySettings.h
-    ${MEGAsyncDir}/gui/BandwidthSettings.h
     ${MEGAsyncDir}/gui/SwitchButton.h
+    ${MEGAsyncDir}/gui/BandwidthSettings.h
+    ${MEGAsyncDir}/gui/MegaItemDelegates.h
     ${MEGAsyncDir}/gui/GuiUtilities.h
     ${MEGAsyncDir}/gui/EventHelper.h
     ${MEGAsyncDir}/platform/notificator.h
@@ -297,7 +302,7 @@ set (MOC_INPUT
 if (NOT CMAKE_HOST_APPLE)
     set (MOC_INPUT ${MOC_INPUT}
         ${MEGAsyncDir}/gui/LockedPopOver.h
-		${MEGAsyncDir}/gui/SwitchButton.h
+        ${MEGAsyncDir}/gui/SwitchButton.h
         )
 endif (NOT CMAKE_HOST_APPLE)
 
@@ -319,7 +324,7 @@ else()
     set (MOC_INPUT ${MOC_INPUT}
 
         ${MEGAsyncDir}/gui/CocoaHelpButton.h
-	${MEGAsyncDir}/gui/CocoaSwitchButton.h
+        ${MEGAsyncDir}/gui/CocoaSwitchButton.h
         ${MEGAsyncDir}/gui/MegaSystemTrayIcon.h
 
         ${MEGAsyncDir}/gui/PermissionsDialog.h
@@ -365,14 +370,15 @@ set (SRCS
     ${MEGAsyncDir}/gui/CircularUsageProgressBar.cpp
     ${MEGAsyncDir}/gui/FilterAlertWidget.cpp
     ${MEGAsyncDir}/gui/MegaAlertDelegate.cpp
+    ${MEGAsyncDir}/gui/NotificationsSettings.cpp
     ${MEGAsyncDir}/gui/QAlertsModel.cpp
     ${MEGAsyncDir}/gui/QFilterAlertsModel.cpp
     ${MEGAsyncDir}/gui/TransfersStatusWidget.cpp
     ${MEGAsyncDir}/gui/TransfersSummaryWidget.cpp
     ${MEGAsyncDir}/gui/SettingsDialog.cpp
-    ${MEGAsyncDir}/gui/NotificationsSettings.cpp
     ${MEGAsyncDir}/gui/BalloonToolTip.cpp
     ${MEGAsyncDir}/gui/InfoDialog.cpp
+    ${MEGAsyncDir}/gui/QtPositioningBugFixer.cpp
     ${MEGAsyncDir}/gui/SetupWizard.cpp
     ${MEGAsyncDir}/gui/NodeSelector.cpp
     ${MEGAsyncDir}/gui/FolderBinder.cpp
@@ -387,7 +393,7 @@ set (SRCS
     ${MEGAsyncDir}/gui/AccountDetailsDialog.cpp
     ${MEGAsyncDir}/gui/DownloadFromMegaDialog.cpp
     ${MEGAsyncDir}/gui/UsageWidget.cpp
-    ${MEGAsyncDir}/gui/QMegaModel.cpp
+    ${MEGAsyncDir}/gui/MegaItemModel.cpp
     ${MEGAsyncDir}/gui/MegaItem.cpp
     ${MEGAsyncDir}/gui/ChangeLogDialog.cpp
     ${MEGAsyncDir}/gui/GuestWidget.cpp
@@ -418,6 +424,7 @@ set (SRCS
     ${MEGAsyncDir}/gui/QCustomTransfersModel.cpp
     ${MEGAsyncDir}/gui/StatusInfo.cpp
     ${MEGAsyncDir}/gui/ChangePassword.cpp
+    ${MEGAsyncDir}/gui/PasswordLineEdit.cpp
     ${MEGAsyncDir}/gui/CustomTransferItem.cpp
     ${MEGAsyncDir}/gui/PSAwidget.cpp
     ${MEGAsyncDir}/gui/ElidedLabel.cpp
@@ -431,6 +438,9 @@ set (SRCS
     ${MEGAsyncDir}/gui/ProxySettings.cpp
     ${MEGAsyncDir}/gui/BandwidthSettings.cpp
     ${MEGAsyncDir}/gui/SwitchButton.cpp
+    ${MEGAsyncDir}/gui/MegaItemDelegates.cpp
+    ${MEGAsyncDir}/gui/MegaItemProxyModel.cpp
+    ${MEGAsyncDir}/gui/MegaItemTreeView.cpp
     ${MEGAsyncDir}/gui/GuiUtilities.cpp
 
     ${MEGAsyncDir}/gui/EventHelper.cpp

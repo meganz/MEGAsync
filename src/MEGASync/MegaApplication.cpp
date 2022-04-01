@@ -16,6 +16,7 @@
 #include <QDesktopWidget>
 #include <QFontDatabase>
 #include <QNetworkProxy>
+#include <QScreen>
 #include <QSettings>
 #include <QToolTip>
 
@@ -55,7 +56,9 @@ void MegaApplication::loadDataPath()
 {
 #ifdef Q_OS_LINUX
     dataPath = QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation)
-               + QString::fromUtf8("/data/Mega Limited/MEGAsync");
+               + QString::fromUtf8("/data/") // appending "data" is non-standard behavior according to XDG Base Directory specification
+               + organizationName() + QString::fromLatin1("/")
+               + applicationName();
 #else
     QStringList dataPaths = QStandardPaths::standardLocations(QStandardPaths::DataLocation);
     if (dataPaths.size())
@@ -113,12 +116,6 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
 #endif
 
     setQuitOnLastWindowClosed(false);
-
-    //Set QApplication fields
-    setOrganizationName(QString::fromUtf8("Mega Limited"));
-    setOrganizationDomain(QString::fromUtf8("mega.co.nz"));
-    setApplicationName(QString::fromUtf8("MEGAsync"));
-    setApplicationVersion(QString::number(Preferences::VERSION_CODE));
 
 #ifdef _WIN32
     setStyleSheet(QString::fromUtf8("QCheckBox::indicator {width: 13px;height: 13px;}"
@@ -2245,45 +2242,7 @@ void MegaApplication::repositionInfoDialog()
     int posx, posy;
     calculateInfoDialogCoordinates(infoDialog, &posx, &posy);
 
-    // An issue occurred with certain multiscreen setup that caused Qt to missplace the info dialog.
-    // This works around that by ensuring infoDialog does not get incorrectly resized. in which case,
-    // it is reverted to the correct size.
-    infoDialog->ensurePolished();
-    auto initialDialogWidth  = infoDialog->width();
-    auto initialDialogHeight = infoDialog->height();
-    QTimer::singleShot(1, infoDialog, [this, initialDialogWidth, initialDialogHeight, posx, posy](){
-        if (infoDialog->width() > initialDialogWidth || infoDialog->height() > initialDialogHeight) //miss scaling detected
-        {
-            MegaApi::log(MegaApi::LOG_LEVEL_ERROR,
-                         QString::fromUtf8("A dialog. New size = %1,%2. should be %3,%4 ")
-                         .arg(infoDialog->width()).arg(infoDialog->height()).arg(initialDialogWidth).arg(initialDialogHeight)
-                         .toUtf8().constData());
-
-            infoDialog->resize(initialDialogWidth,initialDialogHeight);
-
-            auto iDPos = infoDialog->pos();
-            if (iDPos.x() != posx || iDPos.y() != posy )
-            {
-                MegaApi::log(MegaApi::LOG_LEVEL_ERROR,
-                             QString::fromUtf8("Missplaced info dialog. New pos = %1,%2. should be %3,%4 ")
-                             .arg(iDPos.x()).arg(iDPos.y()).arg(posx).arg(posy)
-                             .toUtf8().constData());
-                infoDialog->move(posx, posy);
-
-                QTimer::singleShot(1, this, [this, initialDialogWidth, initialDialogHeight](){
-                    if (infoDialog->width() > initialDialogWidth || infoDialog->height() > initialDialogHeight) //miss scaling detected
-                    {
-                        MegaApi::log(MegaApi::LOG_LEVEL_ERROR,
-                                     QString::fromUtf8("Missscaled info dialog after second move. New size = %1,%2. should be %3,%4 ")
-                                     .arg(infoDialog->width()).arg(infoDialog->height()).arg(initialDialogWidth).arg(initialDialogHeight)
-                                     .toUtf8().constData());
-
-                        infoDialog->resize(initialDialogWidth,initialDialogHeight);
-                    }
-                });
-            }
-        }
-    });
+    fixMultiscreenResizeBug(posx, posy);
 
     if (isLinux)
     {
@@ -2422,53 +2381,45 @@ void MegaApplication::calculateInfoDialogCoordinates(QDialog *dialog, int *posx,
     #endif
 
     position = QCursor::pos();
-    QDesktopWidget *desktop = QApplication::desktop();
-    int screenIndex = desktop->screenNumber(position);
-    screenGeometry = desktop->availableGeometry(screenIndex);
-
-    MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Calculating Info Dialog coordinates. availableGeometry: valid = %1, geom = %2, pos = %3, index = %4")
-                 .arg(screenGeometry.isValid())
-                 .arg(QString::fromUtf8("[%1,%2,%3,%4]").arg(screenGeometry.x()).arg(screenGeometry.y()).arg(screenGeometry.width()).arg(screenGeometry.height()))
-                 .arg(QString::fromUtf8("[%1,%2]").arg(position.x()).arg(position.y()))
-                 .arg(screenIndex)
-                 .toUtf8().constData());
-
-    if (!screenGeometry.isValid())
+    QScreen* currentScreen = QGuiApplication::screenAt(position);
+    if (currentScreen)
     {
-        screenGeometry = desktop->screenGeometry(screenIndex);
-        MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Calculating Info Dialog coordinates. screenGeometry: valid = %1, geom = %2, dialog rect = %3")
-                     .arg(screenGeometry.isValid())
-                     .arg(QString::fromUtf8("[%1,%2,%3,%4]").arg(screenGeometry.x()).arg(screenGeometry.y()).arg(screenGeometry.width()).arg(screenGeometry.height()))
-                     .arg(QString::fromUtf8("[%1,%2,%3,%4]").arg(dialog->rect().x()).arg(dialog->rect().y()).arg(dialog->rect().width()).arg(dialog->rect().height()))
-                     .toUtf8().constData());
-        if (screenGeometry.isValid())
+        screenGeometry = currentScreen->availableGeometry();
+
+        QString otherInfo = QString::fromUtf8("pos = [%1,%2], name = %3").arg(position.x()).arg(position.y()).arg(currentScreen->name());
+        logInfoDialogCoordinates("availableGeometry", screenGeometry, otherInfo);
+
+        if (!screenGeometry.isValid())
         {
-            screenGeometry.setTop(28);
+            screenGeometry = currentScreen->geometry();
+            otherInfo = QString::fromUtf8("dialog rect = %1").arg(RectToString(dialog->rect()));
+            logInfoDialogCoordinates("screenGeometry", screenGeometry, otherInfo);
+
+            if (screenGeometry.isValid())
+            {
+                screenGeometry.setTop(28);
+            }
+            else
+            {
+                screenGeometry = dialog->rect();
+                screenGeometry.setBottom(screenGeometry.bottom() + 4);
+                screenGeometry.setRight(screenGeometry.right() + 4);
+            }
+
+            logInfoDialogCoordinates("screenGeometry 2", screenGeometry, otherInfo);
         }
         else
         {
-            screenGeometry = dialog->rect();
-            screenGeometry.setBottom(screenGeometry.bottom() + 4);
-            screenGeometry.setRight(screenGeometry.right() + 4);
-        }
-        MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Calculating Info Dialog coordinates. screenGeometry 2: valid = %1, geom = %2, dialog rect = %3")
-                     .arg(screenGeometry.isValid())
-                     .arg(QString::fromUtf8("[%1,%2,%3,%4]").arg(screenGeometry.x()).arg(screenGeometry.y()).arg(screenGeometry.width()).arg(screenGeometry.height()))
-                     .arg(QString::fromUtf8("[%1,%2,%3,%4]").arg(dialog->rect().x()).arg(dialog->rect().y()).arg(dialog->rect().width()).arg(dialog->rect().height()))
-                     .toUtf8().constData());
-    }
-    else
-    {
-        if (screenGeometry.y() < 0)
-        {
-            ySign = -1;
-        }
+            if (screenGeometry.y() < 0)
+            {
+                ySign = -1;
+            }
 
-        if (screenGeometry.x() < 0)
-        {
-            xSign = -1;
+            if (screenGeometry.x() < 0)
+            {
+                xSign = -1;
+            }
         }
-    }
 
     #ifdef __APPLE__
         MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Calculating Info Dialog coordinates. posTrayIcon = %1")
@@ -2551,7 +2502,6 @@ void MegaApplication::calculateInfoDialogCoordinates(QDialog *dialog, int *posx,
                 MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Calculating Info Dialog coordinates. pabd.uEdge = %1, pabd.rc = %2")
                              .arg(pabd.uEdge)
                              .arg(QString::fromUtf8("[%1,%2,%3,%4]").arg(pabd.rc.left).arg(pabd.rc.top).arg(pabd.rc.right).arg(pabd.rc.bottom))
-                             .arg(screenIndex)
                              .toUtf8().constData());
 
             }
@@ -2575,15 +2525,10 @@ void MegaApplication::calculateInfoDialogCoordinates(QDialog *dialog, int *posx,
             *posy = screenGeometry.top() + 2;
         }
     #endif
+    }
 
-        MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Calculating Info Dialog coordinates. Final: valid = %1, geom = %2, dialog rect = %3, posx = %4, posy = %5")
-                     .arg(screenGeometry.isValid())
-                     .arg(QString::fromUtf8("[%1,%2,%3,%4]").arg(screenGeometry.x()).arg(screenGeometry.y()).arg(screenGeometry.width()).arg(screenGeometry.height()))
-                     .arg(QString::fromUtf8("[%1,%2,%3,%4]").arg(dialog->rect().x()).arg(dialog->rect().y()).arg(dialog->rect().width()).arg(dialog->rect().height()))
-                     .arg(*posx)
-                     .arg(*posy)
-                     .toUtf8().constData());
-
+    QString otherInfo = QString::fromUtf8("dialog rect = %1, posx = %2, posy = %3").arg(RectToString(dialog->rect())).arg(*posx).arg(*posy);
+    logInfoDialogCoordinates("Final", screenGeometry, otherInfo);
 }
 
 void MegaApplication::deleteMenu(QMenu *menu)
@@ -2604,17 +2549,8 @@ void MegaApplication::startHttpServer()
 {
     if (!httpServer)
     {
-        //Start the HTTP server
         httpServer = new HTTPServer(megaApi, Preferences::HTTP_PORT, false);
-        connect(httpServer, SIGNAL(onLinkReceived(QString, QString)), this, SLOT(externalDownload(QString, QString)), Qt::QueuedConnection);
-        connect(httpServer, SIGNAL(onExternalDownloadRequested(QQueue<WrappedNode *>)), this, SLOT(externalDownload(QQueue<WrappedNode *>)));
-        connect(httpServer, SIGNAL(onExternalDownloadRequestFinished()), this, SLOT(processDownloads()), Qt::QueuedConnection);
-        connect(httpServer, SIGNAL(onExternalFileUploadRequested(qlonglong)), this, SLOT(externalFileUpload(qlonglong)), Qt::QueuedConnection);
-        connect(httpServer, SIGNAL(onExternalFolderUploadRequested(qlonglong)), this, SLOT(externalFolderUpload(qlonglong)), Qt::QueuedConnection);
-        connect(httpServer, SIGNAL(onExternalFolderSyncRequested(qlonglong)), this, SLOT(externalFolderSync(qlonglong)), Qt::QueuedConnection);
-        connect(httpServer, SIGNAL(onExternalOpenTransferManagerRequested(int)), this, SLOT(externalOpenTransferManager(int)), Qt::QueuedConnection);
-        connect(httpServer, SIGNAL(onExternalShowInFolderRequested(QString)), this, SLOT(openFolderPath(QString)), Qt::QueuedConnection);
-
+        ConnectServerSignals(httpServer);
         MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Local HTTP server started");
     }
 }
@@ -2623,18 +2559,9 @@ void MegaApplication::startHttpsServer()
 {
     if (!httpsServer)
     {
-        //Start the HTTPS server
         httpsServer = new HTTPServer(megaApi, Preferences::HTTPS_PORT, true);
-        connect(httpsServer, SIGNAL(onLinkReceived(QString, QString)), this, SLOT(externalDownload(QString, QString)), Qt::QueuedConnection);
-        connect(httpsServer, SIGNAL(onExternalDownloadRequested(QQueue<WrappedNode *>)), this, SLOT(externalDownload(QQueue<WrappedNode *>)));
-        connect(httpsServer, SIGNAL(onExternalDownloadRequestFinished()), this, SLOT(processDownloads()), Qt::QueuedConnection);
-        connect(httpsServer, SIGNAL(onExternalFileUploadRequested(qlonglong)), this, SLOT(externalFileUpload(qlonglong)), Qt::QueuedConnection);
-        connect(httpsServer, SIGNAL(onExternalFolderUploadRequested(qlonglong)), this, SLOT(externalFolderUpload(qlonglong)), Qt::QueuedConnection);
-        connect(httpsServer, SIGNAL(onExternalFolderSyncRequested(qlonglong)), this, SLOT(externalFolderSync(qlonglong)), Qt::QueuedConnection);
-        connect(httpsServer, SIGNAL(onExternalOpenTransferManagerRequested(int)), this, SLOT(externalOpenTransferManager(int)), Qt::QueuedConnection);
-        connect(httpsServer, SIGNAL(onExternalShowInFolderRequested(QString)), this, SLOT(openFolderPath(QString)), Qt::QueuedConnection);
+        ConnectServerSignals(httpsServer);
         connect(httpsServer, SIGNAL(onConnectionError()), this, SLOT(onHttpServerConnectionError()), Qt::QueuedConnection);
-
         MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Local HTTPS server started");
     }
 }
@@ -3205,6 +3132,77 @@ void MegaApplication::reconnectIfNecessary(const bool disconnected, const QList<
 bool MegaApplication::isIdleForTooLong() const
 {
     return (QDateTime::currentMSecsSinceEpoch() - lastActiveTime) > Preferences::MAX_IDLE_TIME_MS;
+}
+
+void MegaApplication::ConnectServerSignals(HTTPServer* server)
+{
+    connect(server, SIGNAL(onLinkReceived(QString, QString)), this, SLOT(externalDownload(QString, QString)), Qt::QueuedConnection);
+    connect(server, SIGNAL(onExternalDownloadRequested(QQueue<WrappedNode *>)), this, SLOT(externalDownload(QQueue<WrappedNode *>)));
+    connect(server, SIGNAL(onExternalDownloadRequestFinished()), this, SLOT(processDownloads()), Qt::QueuedConnection);
+    connect(server, SIGNAL(onExternalFileUploadRequested(qlonglong)), this, SLOT(externalFileUpload(qlonglong)), Qt::QueuedConnection);
+    connect(server, SIGNAL(onExternalFolderUploadRequested(qlonglong)), this, SLOT(externalFolderUpload(qlonglong)), Qt::QueuedConnection);
+    connect(server, SIGNAL(onExternalFolderSyncRequested(qlonglong)), this, SLOT(externalFolderSync(qlonglong)), Qt::QueuedConnection);
+    connect(server, SIGNAL(onExternalOpenTransferManagerRequested(int)), this, SLOT(externalOpenTransferManager(int)), Qt::QueuedConnection);
+    connect(server, SIGNAL(onExternalShowInFolderRequested(QString)), this, SLOT(openFolderPath(QString)), Qt::QueuedConnection);
+}
+
+QString MegaApplication::RectToString(const QRect &rect)
+{
+    return QString::fromUtf8("[%1,%2,%3,%4]").arg(rect.x()).arg(rect.y()).arg(rect.width()).arg(rect.height());
+}
+
+void MegaApplication::fixMultiscreenResizeBug(int &posX, int &posY)
+{
+    // An issue occurred with certain multiscreen setup that caused Qt to missplace the info dialog.
+    // This works around that by ensuring infoDialog does not get incorrectly resized. in which case,
+    // it is reverted to the correct size.
+
+    infoDialog->ensurePolished();
+    auto initialDialogWidth  = infoDialog->width();
+    auto initialDialogHeight = infoDialog->height();
+    QTimer::singleShot(1, infoDialog, [this, initialDialogWidth, initialDialogHeight, posX, posY](){
+        if (infoDialog->width() > initialDialogWidth || infoDialog->height() > initialDialogHeight) //miss scaling detected
+        {
+            MegaApi::log(MegaApi::LOG_LEVEL_ERROR,
+                         QString::fromUtf8("A dialog. New size = %1,%2. should be %3,%4 ")
+                         .arg(infoDialog->width()).arg(infoDialog->height()).arg(initialDialogWidth).arg(initialDialogHeight)
+                         .toUtf8().constData());
+
+            infoDialog->resize(initialDialogWidth,initialDialogHeight);
+
+            auto iDPos = infoDialog->pos();
+            if (iDPos.x() != posX || iDPos.y() != posY )
+            {
+                MegaApi::log(MegaApi::LOG_LEVEL_ERROR,
+                             QString::fromUtf8("Missplaced info dialog. New pos = %1,%2. should be %3,%4 ")
+                             .arg(iDPos.x()).arg(iDPos.y()).arg(posX).arg(posY)
+                             .toUtf8().constData());
+                infoDialog->move(posX, posY);
+
+                QTimer::singleShot(1, this, [this, initialDialogWidth, initialDialogHeight](){
+                    if (infoDialog->width() > initialDialogWidth || infoDialog->height() > initialDialogHeight) //miss scaling detected
+                    {
+                        MegaApi::log(MegaApi::LOG_LEVEL_ERROR,
+                                     QString::fromUtf8("Missscaled info dialog after second move. New size = %1,%2. should be %3,%4 ")
+                                     .arg(infoDialog->width()).arg(infoDialog->height()).arg(initialDialogWidth).arg(initialDialogHeight)
+                                     .toUtf8().constData());
+
+                        infoDialog->resize(initialDialogWidth,initialDialogHeight);
+                    }
+                });
+            }
+        }
+    });
+}
+
+void MegaApplication::logInfoDialogCoordinates(const char *message, const QRect &screenGeometry, const QString &otherInformation)
+{
+    MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Calculating Info Dialog coordinates. %1: valid = %2, geom = %3, %4")
+                 .arg(QString::fromUtf8(message))
+                 .arg(screenGeometry.isValid())
+                 .arg(RectToString(screenGeometry))
+                 .arg(otherInformation)
+                 .toUtf8().constData());
 }
 
 void MegaApplication::setupWizardFinished(int result)
@@ -4826,7 +4824,7 @@ void MegaApplication::downloadActionClicked()
         return;
     }
 
-    downloadNodeSelector = new NodeSelector(megaApi, NodeSelector::DOWNLOAD_SELECT, NULL);
+    downloadNodeSelector = new NodeSelector(NodeSelector::DOWNLOAD_SELECT, NULL);
     int result = downloadNodeSelector->exec();
     if (!downloadNodeSelector)
     {
@@ -4840,21 +4838,18 @@ void MegaApplication::downloadActionClicked()
         return;
     }
 
-    long long selectedMegaFolderHandle = downloadNodeSelector->getSelectedFolderHandle();
-    MegaNode *selectedNode = megaApi->getNodeByHandle(selectedMegaFolderHandle);
+    QList<MegaHandle> selectedMegaFolderHandles = downloadNodeSelector->getMultiSelectionNodeHandle();
     delete downloadNodeSelector;
-    downloadNodeSelector = NULL;
-    if (!selectedNode)
+    downloadNodeSelector = nullptr;
+    foreach(auto& selectedMegaFolderHandle, selectedMegaFolderHandles)
     {
-        selectedMegaFolderHandle = INVALID_HANDLE;
-        return;
+        MegaNode *selectedNode = megaApi->getNodeByHandle(selectedMegaFolderHandle);
+        if (selectedNode)
+        {
+            downloadQueue.append(new WrappedNode(WrappedNode::TransferOrigin::FROM_APP, selectedNode));
+        }
     }
-
-    if (selectedNode)
-    {
-        downloadQueue.append(new WrappedNode(WrappedNode::TransferOrigin::FROM_APP, selectedNode));
-        processDownloads();
-    }
+    processDownloads();
 }
 
 void MegaApplication::streamActionClicked()
@@ -6383,7 +6378,7 @@ void MegaApplication::createInfoDialogMenus()
         myCloudAction = NULL;
     }
 
-    myCloudAction = new MenuItemAction(tr("Cloud drive"), QIcon(QString::fromUtf8("://images/ico_cloud_drive.png")), true);
+    myCloudAction = new MenuItemAction(tr("Cloud drive"), QIcon(QString::fromUtf8("://images/ico-cloud-drive.png")), true);
     connect(myCloudAction, SIGNAL(triggered()), this, SLOT(goToMyCloud()), Qt::QueuedConnection);
 
     if (addSyncAction)
@@ -6963,7 +6958,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
     case MegaRequest::TYPE_GET_PRICING:
     {
         if (e->getErrorCode() == MegaError::API_OK)
-        {       
+        {
             MegaPricing* pricing (request->getPricing());
             MegaCurrency* currency (request->getCurrency());
 
@@ -7007,7 +7002,9 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
     }
     case MegaRequest::TYPE_GET_ATTR_USER:
     {
-        if (!preferences->logged())
+        QString request_email = QString::fromUtf8(request->getEmail());
+        if (!preferences->logged()
+            || (!request_email.isEmpty() && request_email != preferences->email()))
         {
             break;
         }
@@ -7047,7 +7044,6 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
                     delete [] email;
                 }
             }
-
             emit avatarReady();
         }
         else if (request->getParamType() == MegaApi::USER_ATTR_DISABLE_VERSIONS)
@@ -7486,7 +7482,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
             transferQuota->updateQuotaState();
         }
 
-        preferences->sync();        
+        preferences->sync();
 
         if (infoDialog)
         {
@@ -8443,7 +8439,7 @@ void MegaApplication::onSyncDisabled(std::shared_ptr<SyncSetting> syncSetting)
             showErrorMessage(tr("Your sync \"%1\" has been disabled. The remote folder (or part of it) doesn't have full access")
                              .arg(syncSetting->name()));
             break;
-        case MegaSync::Error::LOCAL_FINGERPRINT_MISMATCH:
+        case MegaSync::Error::LOCAL_FILESYSTEM_MISMATCH:
             showErrorMessage(tr("Your sync \"%1\" has been disabled because the local folder has changed")
                             .arg(syncSetting->name()));
             break;
