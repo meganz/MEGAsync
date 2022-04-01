@@ -276,12 +276,14 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
 
     animationGroupBlockedError.addAnimation(minHeightAnimationBlockedError);
     animationGroupBlockedError.addAnimation(maxHeightAnimationBlockedError);
-    connect(&animationGroupBlockedError, SIGNAL(finished()), this, SLOT(onAnimationFinishedBlockedError()));
+    connect(&animationGroupBlockedError, &QParallelAnimationGroup::finished,
+            this, &InfoDialog::onAnimationFinishedBlockedError);
 
     adjustSize();
 
     mTransferScanCancelUi = new TransferScanCancelUi(ui->sTabs);
-    connect(mTransferScanCancelUi, SIGNAL(cancelTransfers()), this, SIGNAL(cancelScanning()));
+    connect(mTransferScanCancelUi, &TransferScanCancelUi::cancelTransfers,
+            this, &InfoDialog::cancelScanning);
 }
 
 InfoDialog::~InfoDialog()

@@ -9,7 +9,6 @@ ScanningWidget::ScanningWidget(QWidget *parent) :
     mUi(new Ui::ScanningWidget)
 {
     mUi->setupUi(this);
-
     mMovie = new QMovie(this);
     mMovie->setCacheMode(QMovie::CacheAll);
 
@@ -19,8 +18,6 @@ ScanningWidget::ScanningWidget(QWidget *parent) :
 
 ScanningWidget::~ScanningWidget()
 {
-    mGifThread.quit();
-    mGifThread.wait();
     delete mUi;
     delete mMovie;
 }

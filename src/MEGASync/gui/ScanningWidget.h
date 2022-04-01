@@ -3,8 +3,6 @@
 
 #include <QWidget>
 
-#include <QThread>
-
 namespace Ui {
 class ScanningWidget;
 }
@@ -29,7 +27,6 @@ private slots:
 private:
     Ui::ScanningWidget *mUi;
     QMovie *mMovie = nullptr;
-    QThread mGifThread;
 };
 
 #endif // SCANNINGWIDGET_H
