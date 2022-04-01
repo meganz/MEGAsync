@@ -948,5 +948,11 @@
         <file>images/password/ico_eye_reveal_disabled.png</file>
         <file>images/password/ico_eye_reveal_disabled@2x.png</file>
         <file>images/password/ico_eye_reveal_disabled@3x.png</file>
+        <file>images/chevron-down-ico.png</file>
+        <file>images/chevron-down-ico@2x.png</file>
+        <file>images/chevron-down-ico@3x.png</file>
+        <file>images/chevron-up-ico.png</file>
+        <file>images/chevron-up-ico@2x.png</file>
+        <file>images/chevron-up-ico@3x.png</file>
     </qresource>
 </RCC>

@@ -9,6 +9,7 @@
 #include "OverQuotaDialog.h"
 
 #include <QMouseEvent>
+#include <QScrollBar>
 
 using namespace mega;
 
@@ -29,7 +30,9 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
     mCurrentTab(NO_TAB),
     mShadowTab (new QGraphicsDropShadowEffect(nullptr)),
     mSpeedRefreshTimer(new QTimer(this)),
-    mStatsRefreshTimer(new QTimer(this))
+    mStatsRefreshTimer(new QTimer(this)),
+    mStorageQuotaState(MegaApi::STORAGE_STATE_UNKNOWN),
+    mTransferQuotaState(QuotaState::OK)
 {
     mUi->setupUi(this);
 
@@ -141,6 +144,9 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
     connect(this, &TransferManager::retryAllTransfers,
             findChild<MegaTransferView*>(), &MegaTransferView::onRetryVisibleTransfers);
 
+    connect(findChild<MegaTransferView*>(), &MegaTransferView::verticalScrollBarVisibilityChanged,
+            this, &TransferManager::onVerticalScrollBarVisibilityChanged);
+
     connect(mUi->wTransfers->getProxyModel(),
             &TransfersManagerSortFilterProxyModel::searchNumbersChanged,
             this, &TransferManager::refreshSearchStats);
@@ -174,12 +180,6 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
     auto transferQuotaState = MegaSyncApp->getTransferQuotaState();
     onStorageStateChanged(storageState);
     onTransferQuotaStateChanged(transferQuotaState);
-
-    if(storageState == MegaApi::STORAGE_STATE_PAYWALL || storageState ==
-             MegaApi::STORAGE_STATE_RED || transferQuotaState == QuotaState::FULL)
-    {
-        mUi->lPaused->hide();
-    }
 
     setActiveTab(ALL_TRANSFERS_TAB);
     //Update stats
@@ -317,15 +317,17 @@ void TransferManager::onUpdatePauseState(bool isPaused)
         static const QIcon icon(QLatin1String(":/images/sidebar_resume_ico.png"));
         mUi->bPause->setIcon(icon);
         mUi->bPause->setToolTip(tr("Resume All"));
-        mUi->lPaused->setText(tr("Paused"));
+        mUi->lPaused->setText(tr("All Paused"));
     }
     else
     {
         static const QIcon icon(QLatin1String(":/images/sidebar_pause_ico.png"));
         mUi->bPause->setIcon(icon);
         mUi->bPause->setToolTip(tr("Pause All"));
-        mUi->lPaused->setText(QString());
+        mUi->lPaused->clear();
     }
+
+    mUi->lPaused->setVisible(isPaused);
 }
 
 void TransferManager::checkCancelAllButtonVisibility()
@@ -541,14 +543,15 @@ void TransferManager::onTransfersDataUpdated()
 
 void TransferManager::onStorageStateChanged(int storageState)
 {
-    switch (storageState)
+    mStorageQuotaState = storageState;
+
+    switch (mStorageQuotaState)
     {
         case MegaApi::STORAGE_STATE_PAYWALL:
         case MegaApi::STORAGE_STATE_RED:
         {
             mUi->tSeePlans->show();
             mUi->lStorageOverQuota->show();
-            mUi->lPaused->setVisible(false);
             break;
         }
         case MegaApi::STORAGE_STATE_GREEN:
@@ -557,36 +560,75 @@ void TransferManager::onStorageStateChanged(int storageState)
         default:
         {
             mUi->lStorageOverQuota->hide();
-            mUi->lPaused->setVisible(mModel->areAllPaused());
             QuotaState tQuotaState (qobject_cast<MegaApplication*>(qApp)->getTransferQuotaState());
             mUi->tSeePlans->setVisible(tQuotaState == QuotaState::FULL);
             break;
+        }
+    }
+
+    checkPauseButtonVisibilityIfPossible();
+}
+
+void TransferManager::onVerticalScrollBarVisibilityChanged(bool state)
+{
+    auto transfersView = dynamic_cast<MegaTransferView*>(sender());
+    if(transfersView)
+    {
+        if(state)
+        {
+            int sliderWidth = transfersView->getVerticalScrollBarWidth();
+            mUi->wRightPanelScrollMargin->changeSize(sliderWidth,0,QSizePolicy::Fixed, QSizePolicy::Preferred);
+        }
+        else
+        {
+            mUi->wRightPanelScrollMargin->changeSize(0,0,QSizePolicy::Fixed, QSizePolicy::Preferred);
+        }
+
+        if(mUi->wRightPaneHeaderLayout)
+        {
+            mUi->wRightPaneHeaderLayout->invalidate();
         }
     }
 }
 
 void TransferManager::onTransferQuotaStateChanged(QuotaState transferQuotaState)
 {
-    switch (transferQuotaState)
+    mTransferQuotaState = transferQuotaState;
+
+    switch (mTransferQuotaState)
     {
         case QuotaState::FULL:
         {
             mUi->tSeePlans->show();
-            mUi->lTransferOverQuota->show();
-            mUi->lPaused->setVisible(false);
+            mUi->pTransferOverQuota->show();
             break;
         }
         case QuotaState::OK:
         case QuotaState::WARNING:
         default:
         {
-            mUi->lTransferOverQuota->hide();
-            mUi->lPaused->setVisible(mModel->areAllPaused());
-            int storageState (qobject_cast<MegaApplication*>(qApp)->getAppliedStorageState());
-            mUi->tSeePlans->setVisible(storageState == MegaApi::STORAGE_STATE_PAYWALL
-                                       || storageState == MegaApi::STORAGE_STATE_RED);
+            mUi->pTransferOverQuota->hide();
+            mUi->tSeePlans->setVisible(mStorageQuotaState == MegaApi::STORAGE_STATE_PAYWALL
+                                       || mStorageQuotaState == MegaApi::STORAGE_STATE_RED);
             break;
         }
+    }
+
+    checkPauseButtonVisibilityIfPossible();
+}
+
+void TransferManager::checkPauseButtonVisibilityIfPossible()
+{
+    if(mTransferQuotaState == QuotaState::FULL || (mStorageQuotaState == MegaApi::STORAGE_STATE_PAYWALL
+                                                   || mStorageQuotaState == MegaApi::STORAGE_STATE_RED))
+    {
+        mUi->bPause->setVisible(false);
+        mUi->lPaused->setVisible(false);
+    }
+    else
+    {
+        mUi->lPaused->setVisible(mModel->areAllPaused());
+        mUi->bPause->setVisible(true);
     }
 }
 
@@ -620,15 +662,11 @@ void TransferManager::refreshSearchStats()
             mUi->tUlResults->setProperty(LABEL_NUMBER, nbUl);
         }
 
-        if(mUi->tAllResults->property(LABEL_NUMBER).toLongLong() != nbAll)
-        {
-            mUi->lNbResults->setText(QString(tr("%1 results found")).arg(nbAll));
-            mUi->lNbResults->setProperty("results", bool(nbAll));
-            mUi->lNbResults->style()->unpolish(mUi->lNbResults);
-            mUi->lNbResults->style()->polish(mUi->lNbResults);
-            mUi->tAllResults->setText(QString(tr("All\t\t\t\t%1")).arg(nbAll));
-            mUi->tAllResults->setProperty(LABEL_NUMBER, nbAll);
-        }
+        mUi->lNbResults->setText(QString(tr("%1 result(s) found","",nbAll)).arg(nbAll));
+        mUi->lNbResults->setProperty("results", bool(nbAll));
+        mUi->lNbResults->style()->unpolish(mUi->lNbResults);
+        mUi->lNbResults->style()->polish(mUi->lNbResults);
+        mUi->tAllResults->setText(QString(tr("All\t\t\t\t%1")).arg(nbAll));
 
         mUi->searchByTextTypeSelector->setVisible(nbDl != 0 && nbUl != 0);
 
@@ -704,7 +742,7 @@ void TransferManager::on_tSearchIcon_clicked()
         mUi->bSearchString->setText(mUi->bSearchString->fontMetrics()
                                     .elidedText(pattern,
                                                 Qt::ElideMiddle,
-                                                mUi->bSearchString->width() - 24));
+                                                mUi->bSearchString->width()));
         applyTextSearch(pattern);
     }
 }
@@ -714,7 +752,7 @@ void TransferManager::applyTextSearch(const QString& text)
     mUi->lTextSearch->setText(mUi->lTextSearch->fontMetrics()
                               .elidedText(text,
                                           Qt::ElideMiddle,
-                                          mUi->lTextSearch->width() - 24));
+                                          mUi->lTextSearch->width()));
     // Add number of found results
     mUi->tAllResults->setChecked(true);
     mUi->tAllResults->hide();
@@ -761,6 +799,7 @@ void TransferManager::on_tClearSearchResult_clicked()
     if (mCurrentTab == SEARCH_TAB)
     {
         mUi->sCurrentContent->setCurrentWidget(mUi->pStatusHeader);
+        mUi->sCurrentContentInfo->setCurrentWidget(mUi->pStatusHeaderInfo);
         on_tAllTransfers_clicked();
     }
 }
@@ -844,7 +883,7 @@ void TransferManager::on_bDownload_clicked()
 
 void TransferManager::on_bUpload_clicked()
 {
-    qobject_cast<MegaApplication*>(qApp)->uploadActionClicked();
+    qobject_cast<MegaApplication*>(qApp)->uploadActionClicked(this);
 }
 
 void TransferManager::on_bCancelClearAll_clicked()
@@ -881,8 +920,6 @@ void TransferManager::toggleTab(TM_TAB newTab)
         if (newTab == COMPLETED_TAB)
         {
             mUi->tActionButton->setText(tr("Clear All"));
-            mUi->bPause->hide();
-
             mUi->wTransfers->updateHeaderItems(tr("Time Completed"),
                               tr("Clear All Visible"),
                               tr("Avg. speed"));
@@ -891,8 +928,6 @@ void TransferManager::toggleTab(TM_TAB newTab)
         else if (newTab == FAILED_TAB)
         {
             mUi->tActionButton->setText(tr("Retry All"));
-            mUi->bPause->hide();
-
             mUi->wTransfers->updateHeaderItems(tr("Time Completed"),
                               tr("Cancel All Visible"),
                               tr("Avg. speed"));
@@ -904,7 +939,6 @@ void TransferManager::toggleTab(TM_TAB newTab)
                               tr("Speed"));
 
             mUi->tActionButton->setText(tr("Clear Completed"));
-            mUi->bPause->show();
         }
         //UPLOAD // DOWNLOAD // ALL TRANSFERS
         else
@@ -912,8 +946,6 @@ void TransferManager::toggleTab(TM_TAB newTab)
             mUi->wTransfers->updateHeaderItems(tr("Time left"),
                               tr("Cancel All Visible"),
                               tr("Speed"));
-
-            mUi->bPause->show();
         }
 
         //The rest of cases
@@ -951,10 +983,12 @@ void TransferManager::toggleTab(TM_TAB newTab)
         if (newTab == SEARCH_TAB)
         {
             mUi->sCurrentContent->setCurrentWidget(mUi->pSearchHeader);
+            mUi->sCurrentContentInfo->setCurrentWidget(mUi->pSearchHeaderInfo);
         }
         else
         {
             mUi->sCurrentContent->setCurrentWidget(mUi->pStatusHeader);
+            mUi->sCurrentContentInfo->setCurrentWidget(mUi->pStatusHeaderInfo);
             mUi->wTransfers->textFilterChanged(QString());
         }
 

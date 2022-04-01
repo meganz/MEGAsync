@@ -293,6 +293,8 @@ public:
 
     static QString getSizeString(unsigned long long bytes);
     static QString getSizeString(long long bytes);
+    static QString getSizeStringWithoutUnits(unsigned long long bytes);
+    static QString getSizeStringWithoutUnits(long long bytes);
     static QString getTimeString(long long secs, bool secondPrecision = true, bool color = true);
     static QString getQuantityString(unsigned long long quantity);
     static QString getFinishedTimeString(long long secs);

@@ -199,21 +199,19 @@ public:
         {
             auto modelRowCount = mViewModel->rowCount();
             auto rows = modelRowCount < MAX_LOADING_ROWS && modelRowCount > 0 ? modelRowCount : MAX_LOADING_ROWS;
+
             for(int row = 0; row < rows; ++row)
             {
                 mLoadingModel->appendRow(new QStandardItem());
             }
-
             mView->setModel(mLoadingModel);
             mView->setItemDelegate(mLoadingDelegate);
-            mView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
         }
         else
         {
             mLoadingModel->setRowCount(0);
             mView->setModel(mViewModel);
             mView->setItemDelegate(mViewDelegate);
-            mView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
         }
 
         mLoadingDelegate->setLoading(state);

@@ -63,35 +63,44 @@ void TransferData::update(mega::MegaTransfer* transfer)
         mFileType = Utilities::getFileType(mFilename, QString());
 
         mState = static_cast<TransferData::TransferState>(1 << transfer->getState());
+        mNotificationNumber = transfer->getNotificationNumber();
+        mErrorCode = MegaError::API_OK;
+        mErrorValue = 0LL;
+        mTemporaryError = false;
+        mFailedTransfer = nullptr;
+        mPriority = transfer->getPriority();
+        mTransferredBytes = static_cast<unsigned long long>(transfer->getTransferredBytes());
+        mTotalSize = static_cast<unsigned long long>(transfer->getTotalBytes());
+        unsigned long long remBytes = mTotalSize - mTransferredBytes;
 
         if(mState & TransferData::FINISHED_STATES_MASK)
         {
             mFinishedTime = QDateTime::currentSecsSinceEpoch();
             mFinishedTime += (transfer->getUpdateTime() - transfer->getStartTime());
+
+            mSpeed = transfer->getMeanSpeed() != 0 ?  static_cast<unsigned long long>(transfer->getMeanSpeed()) : mTotalSize;
         }
         else
         {
+            if(mState & TransferData::TRANSFER_COMPLETING)
+            {
+                mSpeed = 0;
+            }
+            else
+            {
+                long long httpSpeed = static_cast<unsigned long long>(megaApi->getCurrentSpeed(transfer->getType()));
+                mSpeed = std::min(transfer->getSpeed(), httpSpeed);
+            }
+
+            mMeanSpeed = 0;
             mFinishedTime = 0;
         }
 
-        mPriority = transfer->getPriority();
 
-        mTransferredBytes = static_cast<unsigned long long>(transfer->getTransferredBytes());
-        mTotalSize = static_cast<unsigned long long>(transfer->getTotalBytes());
-        unsigned long long remBytes = mTotalSize - mTransferredBytes;
-
-        long long httpSpeed = static_cast<unsigned long long>(megaApi->getCurrentSpeed(transfer->getType()));
-        mSpeed = std::min(transfer->getSpeed(), httpSpeed);
 
         TransferRemainingTime rem(mSpeed, remBytes);
         mRemainingTime = rem.calculateRemainingTimeSeconds(mSpeed, remBytes).count();
 
-        mNotificationNumber = transfer->getNotificationNumber();
-        mMeanSpeed = static_cast<unsigned long long>(transfer->getMeanSpeed());
-        mErrorCode = MegaError::API_OK;
-        mErrorValue = 0LL;
-        mTemporaryError = false;
-        mFailedTransfer = nullptr;
 
         auto megaError (transfer->getLastErrorExtended());
         if (megaError)
@@ -105,9 +114,30 @@ void TransferData::update(mega::MegaTransfer* transfer)
     }
 }
 
+bool TransferData::hasChanged(QExplicitlySharedDataPointer<TransferData> data)
+{
+    bool result = true;
+
+    if(mState == data->mState && mPriority == data->mPriority)
+    {
+        if(mTransferredBytes == data->mTransferredBytes &&
+                data->mState != mega::MegaTransfer::STATE_COMPLETING)
+        {
+            result = false;
+        }
+    }
+
+    return result;
+}
+
 void TransferData::removeFailedTransfer()
 {
     mFailedTransfer.reset();
+}
+
+int64_t TransferData::getRawFinishedTime() const
+{
+    return mFinishedTime;
 }
 
 int64_t TransferData::getFinishedTime() const

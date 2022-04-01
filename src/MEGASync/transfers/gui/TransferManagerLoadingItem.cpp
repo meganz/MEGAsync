@@ -1,8 +1,12 @@
 #include "TransferManagerLoadingItem.h"
 #include "ui_TransferManagerLoadingItem.h"
 
+#include <MegaTransferView.h>
+
+#include <QScrollBar>
+
 ///LOADING ITEM -> TO RENDER ON DELEGATE
-TransferManagerLoadingItem::TransferManagerLoadingItem(QWidget *parent) :
+TransferManagerLoadingItem::TransferManagerLoadingItem(QAbstractItemView *parent) :
     QWidget(parent),
     ui(new Ui::TransferManagerLoadingItem)
 {

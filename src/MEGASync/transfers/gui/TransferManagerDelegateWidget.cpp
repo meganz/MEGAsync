@@ -1,5 +1,7 @@
 #include "TransferManagerDelegateWidget.h"
 #include "ui_TransferManagerDelegateWidget.h"
+
+#include "MegaTransferView.h"
 #include "megaapi.h"
 #include "control/Utilities.h"
 #include "Preferences.h"
@@ -9,6 +11,8 @@
 #include <QMouseEvent>
 
 constexpr uint PB_PRECISION = 1000;
+const QColor HOVER_COLOR = QColor("#FAFAFA");
+const QColor SELECTED_BORDER_COLOR = QColor("#E9E9E9");
 
 using namespace mega;
 
@@ -36,8 +40,11 @@ void TransferManagerDelegateWidget::updateTransferState()
     QString timeString;
     QString statusString;
 
+    auto state = getData()->mState;
+    //state = TransferData::TRANSFER_QUEUED;
+
     // Set values according to transfer state
-    switch (getData()->mState)
+    switch (state)
     {
         case TransferData::TRANSFER_ACTIVE:
         {
@@ -80,7 +87,7 @@ void TransferManagerDelegateWidget::updateTransferState()
             }
             else if(getData()->mTotalSize == getData()->mTransferredBytes)
             {
-                speedString = QLatin1Literal("...");
+                speedString = QString::fromUtf8("…");
             }
             else
             {
@@ -98,8 +105,19 @@ void TransferManagerDelegateWidget::updateTransferState()
                 pauseResumeTooltip = tr("Resume transfer");
                 cancelClearTooltip = tr("Cancel transfer");
                 mUi->wProgressBar->setVisible(true);
-                mUi->sStatus->setCurrentWidget(mUi->pPaused);
+
+                if(getData()->mTransferredBytes != 0)
+                {
+                    mUi->sStatus->setCurrentWidget(mUi->pPausedQueued);
+                }
+                else
+                {
+                    mUi->sStatus->setCurrentWidget(mUi->pPaused);
+                }
             }
+
+            speedString = QString::fromUtf8("…");
+
             break;
         }
         case TransferData::TRANSFER_QUEUED:
@@ -139,7 +157,7 @@ void TransferManagerDelegateWidget::updateTransferState()
                 mLastPauseResuemtTransferIconName.clear();
             }
 
-            speedString = QLatin1Literal("...");
+            speedString = QString::fromUtf8("…");
 
             break;
         }
@@ -157,7 +175,7 @@ void TransferManagerDelegateWidget::updateTransferState()
             }
 
             timeString = getData()->getFormattedFinishedTime();
-            speedString = QLatin1Literal("...");
+            speedString = QString::fromUtf8("…");
 
             break;
         }
@@ -194,8 +212,7 @@ void TransferManagerDelegateWidget::updateTransferState()
 
                 mUi->sStatus->setCurrentWidget(mUi->pActive);
             }
-            speedString = Utilities::getSizeString(getData()->mMeanSpeed == 0
-                                                   ? getData()->mTotalSize : getData()->mMeanSpeed) + QLatin1Literal("/s");
+            speedString = Utilities::getSizeString(getData()->mSpeed) + QLatin1Literal("/s");
             timeString = getData()->getFormattedFinishedTime();
             break;
         }
@@ -237,7 +254,7 @@ void TransferManagerDelegateWidget::updateTransferState()
     // Done label
     auto transferedB (getData()->mTransferredBytes);
     auto totalB (getData()->mTotalSize);
-    mUi->lDone->setText(Utilities::getSizeString(transferedB) + QLatin1Literal(" / "));
+    mUi->lDone->setText(Utilities::getSizeStringWithoutUnits(transferedB) + QLatin1Literal("/"));
 
     // Progress bar
     int permil = getData()->mState & (TransferData::TRANSFER_COMPLETED | TransferData::TRANSFER_COMPLETING) ?
@@ -341,9 +358,65 @@ TransferBaseDelegateWidget::ActionHoverType TransferManagerDelegateWidget::mouse
     return hoverType;
 }
 
-void TransferManagerDelegateWidget::render(QPainter *painter, const QRegion &sourceRegion)
+void TransferManagerDelegateWidget::render(const QStyleOptionViewItem &option, QPainter *painter, const QRegion &sourceRegion)
 {
-    TransferBaseDelegateWidget::render(painter, sourceRegion);
+    bool isDragging(false);
+
+    auto view = dynamic_cast<MegaTransferView*>(parent());
+    if(view)
+    {
+        isDragging = view->state() == MegaTransferView::DraggingState;
+    }
+
+    if(option.state & (QStyle::State_MouseOver | QStyle::State_Selected))
+    {
+        QPainterPath path;
+        path.addRoundedRect(QRectF(12.0,
+                                   4.0,
+                                   option.rect.width() - 20.0,
+                                   option.rect.height() - 7.0),
+                            10, 10);
+
+        QPen pen;
+
+        if(option.state & QStyle::State_MouseOver && option.state & QStyle::State_Selected)
+        {
+            pen.setColor(SELECTED_BORDER_COLOR);
+            pen.setWidth(2);
+            painter->fillPath(path, HOVER_COLOR);
+        }
+        else
+        {
+            if(option.state & QStyle::State_MouseOver)
+            {
+                pen.setColor(HOVER_COLOR);
+                painter->fillPath(path, HOVER_COLOR);
+            }
+            else if (option.state & QStyle::State_Selected)
+            {
+                auto painterWidget = dynamic_cast<QWidget*>(painter->device());
+
+                if(isDragging && painterWidget)
+                {
+                    painter->setOpacity(0.25);
+                }
+                else
+                {
+                    pen.setColor(SELECTED_BORDER_COLOR);
+                    pen.setWidth(2);
+                    painter->fillPath(path, Qt::white);
+                }
+            }
+        }
+
+        if(pen != QPen())
+        {
+            painter->setPen(pen);
+            painter->drawPath(path);
+        }
+    }
+
+    TransferBaseDelegateWidget::render(option, painter, sourceRegion);
 }
 
 void TransferManagerDelegateWidget::mouseDoubleClickEvent(QMouseEvent *event)

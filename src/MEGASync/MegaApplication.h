@@ -244,7 +244,7 @@ public slots:
     void goToMyCloud();
     void pauseTransfers();
     void showChangeLog();
-    void uploadActionClicked();
+    void uploadActionClicked(QWidget *openFrom = nullptr);
     void loginActionClicked();
     void copyFileLink(mega::MegaHandle fileHandle, QString nodeKey = QString());
     void downloadActionClicked();
@@ -590,6 +590,14 @@ private:
     void updateFreedCancelToken(mega::MegaTransfer* transfer);
 
     bool noUploadedStarted = true;
+
+    void ConnectServerSignals(HTTPServer* server);
+
+    static QString RectToString(const QRect& rect);
+
+    void fixMultiscreenResizeBug(int& posX, int& posY);
+
+    static void logInfoDialogCoordinates(const char* message, const QRect& screenGeometry, const QString& otherInformation);
 };
 
 class DeferPreferencesSyncForScope

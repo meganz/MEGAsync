@@ -53,7 +53,7 @@ void TransferBaseDelegateWidget::setCurrentIndex(const QModelIndex &currentIndex
     mCurrentIndex = currentIndex;
 }
 
-void TransferBaseDelegateWidget::render(QPainter *painter, const QRegion &sourceRegion)
+void TransferBaseDelegateWidget::render(const QStyleOptionViewItem&, QPainter *painter, const QRegion &sourceRegion)
 {
     QWidget::render(painter,QPoint(0,0),sourceRegion);
 }
@@ -95,7 +95,7 @@ void TransferBaseDelegateWidget::onRetryTransfer()
 
     auto message = tr("Are you sure you want to retry this transfer?");
 
-    if (QMegaMessageBox::warning(nullptr, QString::fromUtf8("MEGAsync"),
+    if (QMegaMessageBox::warning(this, QString::fromUtf8("MEGAsync"),
                              message,
                              QMessageBox::Yes | QMessageBox::No, QMessageBox::No)
             != QMessageBox::Yes
