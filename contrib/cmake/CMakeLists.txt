@@ -81,7 +81,8 @@ set(3RDPARTY_RUNTIME_PATH "PATH=%PATH%" "${Mega3rdPartyDir}/vcpkg/installed/${VC
 
 set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
-set(CMAKE_AUTOUIC_SEARCH_PATHS "${MEGAsyncDir}/gui/${UiDir}")
+set(CMAKE_AUTOUIC_SEARCH_PATHS ${CMAKE_AUTOUIC_SEARCH_PATHS} "${MEGAsyncDir}/gui/${UiDir}")
+set(CMAKE_AUTOUIC_SEARCH_PATHS ${CMAKE_AUTOUIC_SEARCH_PATHS} "${MEGAsyncDir}/transfers/gui/${UiDir}")
 
 #AUTOMOC
 set(CMAKE_AUTOMOC ON)
@@ -99,6 +100,8 @@ include_directories( "${MEGAsyncDir}/model" )
 include_directories( "${MEGAsyncDir}/gui" )
 include_directories( "${MEGAsyncDir}/platform" )
 include_directories( "${MEGAsyncDir}/gui/${UiDir}" )
+include_directories( "${MEGAsyncDir}/transfers/gui" )
+include_directories( "${MEGAsyncDir}/transfers/gui/${UiDir}" )
 
 
 set (TS_FILES
@@ -176,7 +179,7 @@ set (FORMS
     ${MEGAsyncDir}/transfers/gui/${UiDir}/TransfersSummaryWidget.ui
     ${MEGAsyncDir}/transfers/gui/${UiDir}/TransferManagerDelegateWidget.ui
 	${MEGAsyncDir}/transfers/gui/${UiDir}/TransferManagerLoadingItem.ui
-	
+
     )
 
 
