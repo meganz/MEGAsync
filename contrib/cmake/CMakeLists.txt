@@ -142,13 +142,13 @@ set (FORMS
     ${MEGAsyncDir}/gui/${UiDir}/CrashReportDialog.ui
     ${MEGAsyncDir}/gui/${UiDir}/SetupWizard.ui
     ${MEGAsyncDir}/gui/${UiDir}/SettingsDialog.ui
+    ${MEGAsyncDir}/gui/${UiDir}/NotificationsSettings.ui
     ${MEGAsyncDir}/gui/${UiDir}/AccountDetailsDialog.ui
     ${MEGAsyncDir}/gui/${UiDir}/DownloadFromMegaDialog.ui
     ${MEGAsyncDir}/gui/${UiDir}/ChangeLogDialog.ui
     ${MEGAsyncDir}/gui/${UiDir}/GuestWidget.ui
     ${MEGAsyncDir}/gui/${UiDir}/StreamingFromMegaDialog.ui
     ${MEGAsyncDir}/gui/${UiDir}/MegaProgressCustomDialog.ui
-    ${MEGAsyncDir}/gui/${UiDir}/ConfirmSSLexception.ui
     ${MEGAsyncDir}/gui/${UiDir}/PlanWidget.ui
     ${MEGAsyncDir}/gui/${UiDir}/UpgradeDialog.ui
     ${MEGAsyncDir}/gui/${UiDir}/InfoWizard.ui
@@ -232,7 +232,6 @@ set (MOC_INPUT
     ${MEGAsyncDir}/gui/ChangeLogDialog.h
     ${MEGAsyncDir}/gui/ChangePassword.h
     ${MEGAsyncDir}/gui/MegaProgressCustomDialog.h
-    ${MEGAsyncDir}/gui/ConfirmSSLexception.h
     ${MEGAsyncDir}/gui/CrashReportDialog.h
     ${MEGAsyncDir}/gui/CustomTransferItem.h
     ${MEGAsyncDir}/gui/DownloadFromMegaDialog.h
@@ -266,6 +265,7 @@ set (MOC_INPUT
     ${MEGAsyncDir}/gui/QTransfersModel.h
     ${MEGAsyncDir}/gui/QSyncItemWidget.h
     ${MEGAsyncDir}/gui/SettingsDialog.h
+    ${MEGAsyncDir}/gui/NotificationsSettings.h
     ${MEGAsyncDir}/gui/SetupWizard.h
     ${MEGAsyncDir}/gui/StatusInfo.h
     ${MEGAsyncDir}/gui/StreamingFromMegaDialog.h
@@ -284,6 +284,9 @@ set (MOC_INPUT
     ${MEGAsyncDir}/gui/OverQuotaDialog.h
     ${MEGAsyncDir}/gui/ProxySettings.h
     ${MEGAsyncDir}/gui/BandwidthSettings.h
+    ${MEGAsyncDir}/gui/SwitchButton.h
+    ${MEGAsyncDir}/gui/GuiUtilities.h
+    ${MEGAsyncDir}/gui/EventHelper.h
     ${MEGAsyncDir}/platform/notificator.h
     ${MEGAsyncDir}/mega/bindings/qt/QTMegaGlobalListener.h
     ${MEGAsyncDir}/mega/bindings/qt/QTMegaListener.h
@@ -294,6 +297,7 @@ set (MOC_INPUT
 if (NOT CMAKE_HOST_APPLE)
     set (MOC_INPUT ${MOC_INPUT}
         ${MEGAsyncDir}/gui/LockedPopOver.h
+		${MEGAsyncDir}/gui/SwitchButton.h
         )
 endif (NOT CMAKE_HOST_APPLE)
 
@@ -315,6 +319,7 @@ else()
     set (MOC_INPUT ${MOC_INPUT}
 
         ${MEGAsyncDir}/gui/CocoaHelpButton.h
+	${MEGAsyncDir}/gui/CocoaSwitchButton.h
         ${MEGAsyncDir}/gui/MegaSystemTrayIcon.h
 
         ${MEGAsyncDir}/gui/PermissionsDialog.h
@@ -365,6 +370,7 @@ set (SRCS
     ${MEGAsyncDir}/gui/TransfersStatusWidget.cpp
     ${MEGAsyncDir}/gui/TransfersSummaryWidget.cpp
     ${MEGAsyncDir}/gui/SettingsDialog.cpp
+    ${MEGAsyncDir}/gui/NotificationsSettings.cpp
     ${MEGAsyncDir}/gui/BalloonToolTip.cpp
     ${MEGAsyncDir}/gui/InfoDialog.cpp
     ${MEGAsyncDir}/gui/SetupWizard.cpp
@@ -388,7 +394,6 @@ set (SRCS
     ${MEGAsyncDir}/gui/HighDpiResize.cpp
     ${MEGAsyncDir}/gui/StreamingFromMegaDialog.cpp
     ${MEGAsyncDir}/gui/MegaProgressCustomDialog.cpp
-    ${MEGAsyncDir}/gui/ConfirmSSLexception.cpp
     ${MEGAsyncDir}/gui/UpgradeDialog.cpp
     ${MEGAsyncDir}/gui/PlanWidget.cpp
     ${MEGAsyncDir}/gui/InfoWizard.cpp
@@ -425,7 +430,10 @@ set (SRCS
     ${MEGAsyncDir}/gui/OverQuotaDialog.cpp
     ${MEGAsyncDir}/gui/ProxySettings.cpp
     ${MEGAsyncDir}/gui/BandwidthSettings.cpp
+    ${MEGAsyncDir}/gui/SwitchButton.cpp
+    ${MEGAsyncDir}/gui/GuiUtilities.cpp
 
+    ${MEGAsyncDir}/gui/EventHelper.cpp
     ${MEGAsyncDir}/mega/bindings/qt/QTMegaRequestListener.cpp
     ${MEGAsyncDir}/mega/bindings/qt/QTMegaTransferListener.cpp
     ${MEGAsyncDir}/mega/bindings/qt/QTMegaGlobalListener.cpp
@@ -521,6 +529,7 @@ else()
         ${MEGAsyncDir}/gui/PermissionsWidget.cpp
 
         ${MEGAsyncDir}/gui/CocoaHelpButton.mm
+        ${MEGAsyncDir}/gui/CocoaSwitchButton.mm
         ${MEGAsyncDir}/gui/MegaSystemTrayIcon.mm
 
         ${MEGAsyncDir}/gui/QMacSpinningProgressIndicator.mm

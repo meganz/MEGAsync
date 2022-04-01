@@ -36,6 +36,10 @@ class ExtServer: public QObject
     QList<QLocalSocket *> m_clients;
     const char *GetAnswerToRequest(const char *buf);
 
+    void addToQueue(QQueue<QString>& queue, const char* content);
+    void clearQueues();
+    void viewOnMega(const char* content);
+
  signals:
     void newUploadQueue(QQueue<QString> uploadQueue);
     void newExportQueue(QQueue<QString> exportQueue);

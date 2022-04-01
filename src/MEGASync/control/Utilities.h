@@ -207,9 +207,9 @@ class ThreadPoolSingleton
 class MegaListenerFuncExecuter : public mega::MegaRequestListener
 {
 private:
-    std::function<void(mega::MegaApi* api, mega::MegaRequest *request, mega::MegaError *e)> onRequestFinishCallback;
     bool mAutoremove = true;
     bool mExecuteInAppThread = true;
+    std::function<void(mega::MegaApi* api, mega::MegaRequest *request, mega::MegaError *e)> onRequestFinishCallback;
 
 public:
 
@@ -225,10 +225,10 @@ public:
     {
     }
 
-    void onRequestFinish(mega::MegaApi *api, mega::MegaRequest *request, mega::MegaError *e);
-    virtual void onRequestStart(mega::MegaApi* api, mega::MegaRequest *request) {}
-    virtual void onRequestUpdate(mega::MegaApi* api, mega::MegaRequest *request) {}
-    virtual void onRequestTemporaryError(mega::MegaApi *api, mega::MegaRequest *request, mega::MegaError* e) {}
+    virtual void onRequestFinish(mega::MegaApi *api, mega::MegaRequest *request, mega::MegaError *e);
+    virtual void onRequestStart(mega::MegaApi*, mega::MegaRequest*) {}
+    virtual void onRequestUpdate(mega::MegaApi*, mega::MegaRequest*) {}
+    virtual void onRequestTemporaryError(mega::MegaApi*, mega::MegaRequest*, mega::MegaError*) {}
 
     void setExecuteInAppThread(bool executeInAppThread);
 };
@@ -241,6 +241,7 @@ public:
     explicit ClickableLabel(QWidget* parent = Q_NULLPTR, Qt::WindowFlags f = Qt::WindowFlags())
         : QLabel(parent)
     {
+        Q_UNUSED(f)
 #ifndef __APPLE__
         setMouseTracking(true);
 #endif
@@ -252,17 +253,17 @@ signals:
     void clicked();
 
 protected:
-    void mousePressEvent(QMouseEvent* event)
+    void mousePressEvent(QMouseEvent*)
     {
         emit clicked();
     }
 #ifndef __APPLE__
-    void enterEvent(QEvent *event)
+    void enterEvent(QEvent*)
     {
         setCursor(Qt::PointingHandCursor);
     }
 
-    void leaveEvent(QEvent *event)
+    void leaveEvent(QEvent*)
     {
         setCursor(Qt::ArrowCursor);
     }
@@ -294,11 +295,12 @@ public:
     static void animatePartialFadeout(QWidget *object, int msecs = 2000);
     static void animatePartialFadein(QWidget *object, int msecs = 2000);
     static void animateProperty(QWidget *object, int msecs, const char *property, QVariant startValue, QVariant endValue, QEasingCurve curve = QEasingCurve::InOutQuad);
-    // Returns remaining days until unix timestamp (floored)
-    static void getDaysToTimestamp(int64_t msecsTimestamps, int64_t &remaininDays);
-    // Returns remaining days or remainig hours until unix timestamp. Note hours are not in addition to remaininDays
+    // Returns remaining days until given Unix timestamp in seconds.
+    static void getDaysToTimestamp(int64_t secsTimestamps, int64_t &remaininDays);
+    // Returns remaining days / hours until given Unix timestamp in seconds.
+    // Note: remainingHours and remaininDays represent the same value.
     // i.e. for 1 day & 3 hours remaining, remainingHours will be 27, not 3.
-    static void getDaysAndHoursToTimestamp(int64_t msecsTimestamps, int64_t &remaininDays, int64_t &remainingHours);
+    static void getDaysAndHoursToTimestamp(int64_t secsTimestamps, int64_t &remaininDays, int64_t &remainingHours);
 
     // shows a ProgressDialog while some progress goes on. it returns a copy of the object,
     // but the object will be deleted when the progress closes
@@ -331,7 +333,7 @@ public:
 
     static long long getSystemsAvailableMemory();
 
-    static void sleepMilliseconds(long long milliseconds);
+    static void sleepMilliseconds(unsigned int milliseconds);
 
     // Compute the part per <ref> of <part> from <total>. Defaults to %
     static int partPer(long long  part, long long total, uint ref = 100);

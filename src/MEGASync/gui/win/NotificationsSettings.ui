@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>NotificationsSettings</class>
+ <widget class="QWidget" name="NotificationsSettings">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>289</width>
+    <height>432</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string notr="true"/>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <property name="leftMargin">
+    <number>20</number>
+   </property>
+   <property name="topMargin">
+    <number>20</number>
+   </property>
+   <property name="rightMargin">
+    <number>20</number>
+   </property>
+   <property name="bottomMargin">
+    <number>0</number>
+   </property>
+   <item>
+    <widget class="QGroupBox" name="GeneralGroupBox">
+     <property name="title">
+      <string/>
+     </property>
+     <layout class="QVBoxLayout" name="GeneralSwitchLayout">
+      <item>
+       <widget class="QLabel" name="GeneralSwithState">
+        <property name="text">
+         <string>Account notifications:</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="SwitchButton" name="GeneralSwitch" native="true">
+        <property name="NotificationType" stdset="0">
+         <UInt>0</UInt>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QWidget" name="NotificationSettingCheckboxes" native="true">
+     <layout class="QVBoxLayout" name="verticalLayout_6">
+      <property name="leftMargin">
+       <number>0</number>
+      </property>
+      <property name="topMargin">
+       <number>0</number>
+      </property>
+      <property name="rightMargin">
+       <number>0</number>
+      </property>
+      <property name="bottomMargin">
+       <number>0</number>
+      </property>
+      <item>
+       <widget class="QGroupBox" name="SharesGroupBox">
+        <property name="title">
+         <string>Shares</string>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout_2">
+         <item>
+          <widget class="QCheckBox" name="NewSharedCheck">
+           <property name="text">
+            <string>New shared folder from contact</string>
+           </property>
+           <property name="NotificationType" stdset="0">
+            <UInt>1</UInt>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QCheckBox" name="AddOrRemovedFilesCheck">
+           <property name="text">
+            <string>Added or removed files</string>
+           </property>
+           <property name="NotificationType" stdset="0">
+            <UInt>2</UInt>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QCheckBox" name="RemovedAccessCheck">
+           <property name="text">
+            <string>Access to a shared folder was removed</string>
+           </property>
+           <property name="NotificationType" stdset="0">
+            <UInt>3</UInt>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item>
+       <widget class="QGroupBox" name="ContactsGroupBox">
+        <property name="title">
+         <string>Contacts</string>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout_4">
+         <item>
+          <widget class="QCheckBox" name="NewContactCheck">
+           <property name="text">
+            <string>New contact request</string>
+           </property>
+           <property name="NotificationType" stdset="0">
+            <UInt>4</UInt>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QCheckBox" name="ContactReminderCheck">
+           <property name="text">
+            <string>Pending contact request reminder</string>
+           </property>
+           <property name="NotificationType" stdset="0">
+            <UInt>5</UInt>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QCheckBox" name="ContactAcceptedCheck">
+           <property name="text">
+            <string>Someone has accepted your contact request</string>
+           </property>
+           <property name="NotificationType" stdset="0">
+            <UInt>6</UInt>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item>
+       <widget class="QGroupBox" name="InfoGroupBox">
+        <property name="title">
+         <string>Info</string>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout_5">
+         <item>
+          <widget class="QCheckBox" name="DesktopCheck">
+           <property name="text">
+            <string>Desktop notifications</string>
+           </property>
+           <property name="NotificationType" stdset="0">
+            <UInt>7</UInt>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <spacer name="verticalSpacer_2">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>40</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>SwitchButton</class>
+   <extends>QWidget</extends>
+   <header location="global">SwitchButton.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>

@@ -99,7 +99,7 @@ void QFinishedTransfersModel::removeTransferByTag(int transferTag)
     {
         ++row;
     }
-    assert(row < transferOrder.size());
+    assert(static_cast<size_t>(row) < transferOrder.size());
 
     beginRemoveRows(QModelIndex(), row, row);
     transfers.remove(transferTag);
@@ -158,8 +158,9 @@ void QFinishedTransfersModel::refreshTransferItem(int tag)
         ++row;
     }
 
-    assert(row < transferOrder.size());
-    if (row >= transferOrder.size())
+    auto rowAsSizeT = static_cast<size_t>(row);
+    assert(rowAsSizeT < transferOrder.size());
+    if (rowAsSizeT >= transferOrder.size())
     {
         return;
     }

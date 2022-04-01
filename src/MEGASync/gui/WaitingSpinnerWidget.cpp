@@ -245,7 +245,7 @@ void WaitingSpinnerWidget::updateSize() {
 }
 
 void WaitingSpinnerWidget::updateTimer() {
-    _timer->setInterval(1000 / (_numberOfLines * _revolutionsPerSecond));
+    _timer->setInterval(static_cast<int>(1000 / (_numberOfLines * _revolutionsPerSecond)));
 }
 
 void WaitingSpinnerWidget::updatePosition() {

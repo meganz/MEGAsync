@@ -27,10 +27,10 @@ VIAddVersionKey "LegalCopyright" "MEGA Limited 2022"
 VIAddVersionKey "ProductName" "MEGAsync"
 
 ; Version info
-VIProductVersion "4.6.5.0"
-VIAddVersionKey "FileVersion" "4.6.5.0"
-VIAddVersionKey "ProductVersion" "4.6.5.0"
-!define PRODUCT_VERSION "4.6.5"
+VIProductVersion "4.6.6.0"
+VIAddVersionKey "FileVersion" "4.6.6.0"
+VIAddVersionKey "ProductVersion" "4.6.6.0"
+!define PRODUCT_VERSION "4.6.6"
 
 !define PRODUCT_PUBLISHER "Mega Limited"
 !define PRODUCT_WEB_SITE "http://www.mega.nz"
@@ -112,6 +112,8 @@ var ICONS_GROUP
 var USERNAME
 var CURRENT_USER_INSTDIR
 var ALL_USERS_INSTDIR
+var SILENT_USER_INSTDIR
+var SILENT_MULTIUSER
 
 ; Installer pages
 !insertmacro MUI_PAGE_WELCOME
@@ -119,6 +121,7 @@ var ALL_USERS_INSTDIR
 !insertmacro MULTIUSER_PAGE_INSTALLMODE
 !insertmacro MUI_PAGE_STARTMENU Application $ICONS_GROUP
 !insertmacro MUI_PAGE_INSTFILES
+;Page Custom RebootPage
 !insertmacro MUI_PAGE_FINISH
 
 ; Uninstaller pages
@@ -233,28 +236,60 @@ Function RunMegaSync
   Sleep 2000
 FunctionEnd
 
-Function RunExplorer
-  ExecDos::exec /ASYNC /DETAILED /DISABLEFSR "explorer.exe"
+#CUSTOM PAGE FOR SELECT USER OR ALL USERS
+Var Dialog
+var SelectedCheckBox
+Var Checkbox1
+Var Checkbox2
+Var SenderValue
+
+Function RebootPage
+  ${If} ${Silent}
+    Goto done
+  ${EndIf}
+  !insertmacro MUI_HEADER_TEXT  $(MUI_TEXT_FINISH_INFO_TITLE) $(MUI_TEXT_FINISH_INFO_TEXT)
+  nsDialogs::Create 1018
+  Pop $Dialog
+  ${NSD_CreateLabel} 0 0 100% 24u $(MUI_TEXT_FINISH_INFO_REBOOT)
+  ${NSD_CreateRadioButton} 15u 50u 100% 10u $(MUI_TEXT_FINISH_REBOOTNOW)
+  Pop $checkbox1
+  ${NSD_AddStyle} $checkbox1 ${WS_GROUP}
+  ${NSD_OnClick} $checkbox1 onRadioClick
+  ${NSD_SetState} $checkbox1 ${BST_CHECKED}
+  ${NSD_CreateRadioButton} 15u 70u 100% 10u $(MUI_TEXT_FINISH_REBOOTLATER)
+  Pop $checkbox2
+  ${NSD_OnClick} $checkbox2 onRadioClick
+  nsDialogs::Show
+  strCmp $SelectedCheckBox "True" reboot
+  strCmp $SelectedCheckBox "False" done
+reboot:
+  reboot
+done:
 FunctionEnd
 
-Function .onInit
-  !insertmacro MULTIUSER_INIT
-  StrCpy $APP_NAME "${PRODUCT_NAME} ${PRODUCT_VERSION}"
+Function onRadioClick
+  Pop $SenderValue
+  ${If} $SenderValue == $checkbox1
+    strcpy $SelectedCheckBox "True"
+  ${ElseIf} $SenderValue == $checkbox2
+    strcpy $SelectedCheckBox "False"
+  ${EndIf}
+FunctionEnd
 
-  !ifdef BUILD_UNINSTALLER
-         WriteUninstaller "$EXEDIR\${UNINSTALLER_NAME}"
-         Quit
-  !endif
+!macro CheckUserToRunElevated
+  UserInfo::GetOriginalAccountType
+  IfErrors PluginFail
+  Pop $1
+  StrCmp $1 "Admin" RunElevated
+  StrCmp $1 "Power" RunElevated
+  StrCmp $1 "User" done
+  StrCmp $1 "Guest" done
+  MessageBox MB_OK "Unknown error checking account type"
+  Goto done
 
-  ;${GetTime} "" "L" $0 $1 $2 $3 $4 $5 $6
-  ;strCpy $INSTALLDAY "$2$1$0"
-  ;strCpy $EXPIRATIONDAY "20140121"
-
-  ;${if} $INSTALLDAY >= $EXPIRATIONDAY
-  ;    MessageBox mb_IconInformation|mb_TopMost|mb_SetForeground "Thank you for testing MEGAsync.$\r$\nThis beta version is no longer current and has expired.$\r$\nPlease follow @MEGAprivacy on Twitter for updates."
-  ;    abort
-  ;${EndIf}
-
+PluginFail:
+  MessageBox MB_OK "Error! Unable to call UserInfo plug-in!"
+RunElevated:
   UAC::RunElevated
   ${Switch} $0
   ${Case} 0
@@ -271,14 +306,75 @@ Function .onInit
     MessageBox mb_IconStop|mb_TopMost|mb_SetForeground "This installer requires Administrator privileges. Error $0"
     Quit
   ${EndSwitch}
+done:
+!macroend
 
+Function RunExplorer
+  ExecDos::exec /ASYNC /DETAILED /DISABLEFSR "explorer.exe"
+FunctionEnd
+
+Function .onInit
+  setRebootFlag false
+
+  #Get params when silent installation is launched
+  ${If} ${Silent}
+     ${GetParameters} $R0
+     ClearErrors
+     #Init SILENT vars value (by default, not multiuser installation)
+     #Silent DIR var has no default value, as it depends on multiuser o current user
+     #and it is set later on
+     ${GetOptions} $R0 /MULTIUSER= $SILENT_MULTIUSER
+     ;strCmp $SILENT_MULTIUSER "true" continue
+     ;strCpy $SILENT_USER_INSTDIR ""
+     ;${GetOptions} $R0 /DIR= $SILENT_USER_INSTDIR
+     ;IfFileExists "$SILENT_USER_INSTDIR\*.*" continue
+     #Abort if file does not exist
+     ;MessageBox MB_OK "Directory $SILENT_USER_INSTDIR not exists"
+     ;Abort
+     ;continue:
+  ${EndIf}
+  
+  !insertmacro MULTIUSER_INIT
+  StrCpy $APP_NAME "${PRODUCT_NAME} ${PRODUCT_VERSION}"
+
+  !ifdef BUILD_UNINSTALLER
+         WriteUninstaller "$EXEDIR\${UNINSTALLER_NAME}"
+         Quit
+  !endif
+  
+  !ifdef BUILD_X64_VERSION
+  ${If} ${RunningX64}
+  ${Else}
+    MessageBox MB_OK "This is an installer for 64-bit MEGA Desktop App, but you are using a 32-bit Windows. Please, download the 32-bit MEGA Desktop App version from https://mega.nz/desktop."
+    Quit
+  ${EndIf}
+  !endif
+
+  ${IfNot} ${AtLeastWin7}
+    MessageBox MB_OK "This MEGA Desktop App installer is for Windows 7 or above"
+    Quit
+  ${EndIf}
+
+  ;${GetTime} "" "L" $0 $1 $2 $3 $4 $5 $6
+  ;strCpy $INSTALLDAY "$2$1$0"
+  ;strCpy $EXPIRATIONDAY "20140121"
+
+  ;${if} $INSTALLDAY >= $EXPIRATIONDAY
+  ;    MessageBox mb_IconInformation|mb_TopMost|mb_SetForeground "Thank you for testing MEGAsync.$\r$\nThis beta version is no longer current and has expired.$\r$\nPlease follow @MEGAprivacy on Twitter for updates."
+  ;    abort
+  ;${EndIf}
+  ${IfNot} ${Silent}
+    !insertmacro CheckUserToRunElevated
+  ${EndIf}
+  
   ;MessageBox mb_IconInformation|mb_TopMost|mb_SetForeground "CAUTION: This is a private BETA version and will expire on Jan 20, 2014, 23:59. If you encounter a bug, malfunction or design flaw, please let us know by sending an e-mail to beta@mega.co.nz.$\r$\n$\r$\nIn this version, the scope of the sync engine is limited. Please bear in mind that:$\r$\n$\r$\n1. Deletions are only executed on the other side if they occur while the sync is live. Do not delete items from synced folders while this app is not running!$\r$\n2. Windows filenames are case insensitive. Do not place items a MEGA folder whose names would clash on the client. Loss of data would occur.$\r$\n3. Local filesystem items must not be exposed to the sync subsystem more than once. Any dupes, whether by nesting syncs or through filesystem links, will lead to unexpected results and loss of data.$\r$\n$\r$\nLimitiations in the current version that will be rectified in the future:$\r$\n$\r$\n1. No locking: Concurrent creation of identically named files and folders on different clients can result in server-side dupes and unexpected results.$\r$\n2. No in-place versioning: Deleted remote files can be found in the MEGA rubbish bin (SyncDebris folder), deleted local files in your computer's recycle bin.$\r$\n3. No delta writes: Changed files are always overwritten as a whole, which means that it is not a good idea to sync e.g. live database files.$\r$\n4. No direct peer-to-peer syncing: Even two machines in the same local subnet will still sync via the remote MEGA infrastructure.$\r$\n$\r$\nThank you for betatesting MEGAsync. We appreciate your pioneering spirit!"
   ;!insertmacro MUI_UNGETLANGUAGE
   !insertmacro MUI_LANGDLL_DISPLAY
-
 FunctionEnd
 
 Function GetPaths
+  
+  #Get DEFAULT VALUES
   System::Call 'shell32::SHGetSpecialFolderPath(i $HWNDPARENT, t .r1, i ${CSIDL_COMMON_APPDATA}, i0)i.r0'
   strCpy $ALL_USERS_INSTDIR $1
 
@@ -286,6 +382,14 @@ Function GetPaths
   strCpy $USERNAME $0
   System::Call 'shell32::SHGetSpecialFolderPath(i $HWNDPARENT, t .r1, i ${CSIDL_LOCALAPPDATA}, i0)i.r0'
   strCpy $CURRENT_USER_INSTDIR $1
+  
+  #If Silent, ALL_USERS and INSTDIR are the value selected by the user
+  ;${If} ${Silent}
+     ;${IfNot} $SILENT_USER_INSTDIR == ""
+       ;strCpy $ALL_USERS_INSTDIR $SILENT_USER_INSTDIR
+       ;strCpy $CURRENT_USER_INSTDIR $SILENT_USER_INSTDIR
+     ;${EndIf}
+  ;${EndIf}
 
   ClearErrors
   FileOpen $0 "$ALL_USERS_INSTDIR\megatmp.M1.txt" w
@@ -307,26 +411,14 @@ FunctionEnd
 
 
 Section "Principal" SEC01
-
-!ifdef BUILD_X64_VERSION
-  ${If} ${RunningX64}
-  ${Else}
-    MessageBox MB_OK "This is an installer for 64-bit MEGAsync, but you are using a 32-bit Windows. Please, download the 32-bit MEGAsync version from https://mega.nz/sync."
-    Quit
-  ${EndIf}
-!endif
-
-${IfNot} ${AtLeastWin7}
-  MessageBox MB_OK "This MEGAsync installer is for Windows 7 or above"
-  Quit
-${EndIf}
-
   !insertmacro DEBUG_MSG "Getting needed information"
-  System::Call 'shell32::SHGetSpecialFolderPath(i $HWNDPARENT, t .r1, i ${CSIDL_COMMON_APPDATA}, i0)i.r0'
-  strCpy $ALL_USERS_INSTDIR $1
+  #Not sure why, if these lines does  not exist, the installation is blocked, even when they are repeated in GetPaths
+  ${IfNot} ${Silent}
+     System::Call 'shell32::SHGetSpecialFolderPath(i $HWNDPARENT, t .r1, i ${CSIDL_COMMON_APPDATA}, i0)i.r0'
+     strCpy $ALL_USERS_INSTDIR $1
+  ${EndIf}
 
   ${UAC.CallFunctionAsUser} GetPaths
-
 readpaths:
   Sleep 1000
 
@@ -347,7 +439,20 @@ done:
   !insertmacro DEBUG_MSG "Checking install mode"
   Delete "$ALL_USERS_INSTDIR\megatmp.M1.txt"
   Delete "$ALL_USERS_INSTDIR\megatmp.M2.txt"
-  StrCmp "CurrentUser" $MultiUser.InstallMode currentuser
+  ${If} ${Silent}
+     ${If} $SILENT_MULTIUSER == "true"
+        Goto alluser
+     ${ElseIf} $SILENT_MULTIUSER == "false"
+     ${OrIf} $SILENT_MULTIUSER == ""
+        Goto currentuser
+     ${Else}
+        MessageBox MB_OK "Incorrect multiuser argument: true or false. Aborting"
+        Abort
+     ${EndIf}
+  ${Else}
+     StrCmp "CurrentUser" $MultiUser.InstallMode currentuser
+  ${EndIf}
+alluser:
   !insertmacro DEBUG_MSG "Install for all"
   SetShellVarContext all
   StrCpy $INSTDIR "$ALL_USERS_INSTDIR\MEGAsync"
@@ -475,7 +580,6 @@ modeselected:
   !endif
 
 !ifndef BUILD_UNINSTALLER  ; if building uninstaller, skip files below
-
   ;x86_32 files
   File "${QT_PATH}\bin\Qt5Core.dll"
   AccessControl::SetFileOwner "$INSTDIR\Qt5Core.dll" "$USERNAME"
@@ -564,6 +668,7 @@ modeselected:
   AccessControl::GrantOnFile "$INSTDIR\styles" "$USERNAME" "GenericRead + GenericWrite"
   AccessControl::SetFileOwner "$INSTDIR\styles\qwindowsvistastyle.dll" "$USERNAME"
   AccessControl::GrantOnFile "$INSTDIR\styles\qwindowsvistastyle.dll" "$USERNAME" "GenericRead + GenericWrite"
+!endif
 
   ;Disable bearer plugin if it's a reinstallation
   RMDir /r "$INSTDIR\bearer"
@@ -629,14 +734,12 @@ modeselected:
   Delete "$INSTDIR\libsodium.dll"
   Delete "$INSTDIR\pdfium.dll"
 
-;!ifndef BUILD_UNINSTALLER  ; if building uninstaller, skip this check
+!ifndef BUILD_UNINSTALLER  ; if building uninstaller, skip this check
   File "${SRCDIR_MEGASYNC}\${UNINSTALLER_NAME}"
   AccessControl::SetFileOwner "$INSTDIR\${UNINSTALLER_NAME}" "$USERNAME"
   AccessControl::GrantOnFile "$INSTDIR\${UNINSTALLER_NAME}" "$USERNAME" "GenericRead + GenericWrite"
 !endif
   ExecDos::exec /DETAILED /DISABLEFSR "taskkill /f /IM explorer.exe"
-
-
   IfFileExists "$INSTDIR\ShellExtX32.dll" 0 new_installation_x32
         GetTempFileName $0
         Delete $0
@@ -678,9 +781,8 @@ modeselected:
         AccessControl::SetFileOwner "$INSTDIR\ShellExtX64.dll" "$USERNAME"
         AccessControl::GrantOnFile "$INSTDIR\ShellExtX64.dll" "$USERNAME" "GenericRead + GenericWrite"
   ${EndIf}
-
   ${UAC.CallFunctionAsUser} RunExplorer
-
+  
 #  !insertmacro DEBUG_MSG "Adding firewall rule"
 #  liteFirewall::RemoveRule "$INSTDIR\MEGAsync.exe" "MEGAsync"
 #  Pop $0
@@ -688,7 +790,6 @@ modeselected:
 #  Pop $0
 
   !insertmacro DEBUG_MSG "Creating shortcuts"
-  SetRebootFlag false
   StrCmp "CurrentUser" $MultiUser.InstallMode currentuser2
   SetShellVarContext all
   !insertmacro MUI_STARTMENU_WRITE_BEGIN Application
@@ -752,23 +853,7 @@ ${IF} $0 <> 1
 	SetErrorLevel $0
 	Quit
 ${EndIf}
-
-UAC::RunElevated
-  ${Switch} $0
-  ${Case} 0
-    ${IfThen} $1 = 1 ${|} Quit ${|} ;User process. The installer has finished. Quit.
-    ${IfThen} $3 <> 0 ${|} ${Break} ${|} ;Admin process, continue the installation
-    ${If} $1 = 3 ;RunAs completed successfully, but with a non-admin user
-      ;MessageBox mb_YesNo|mb_IconExclamation|mb_TopMost|mb_SetForeground "This requires admin privileges, try again" /SD IDNO IDYES uac_tryagain IDNO 0
-      Quit
-    ${EndIf}
-  ${Case} 1223
-    ;MessageBox mb_IconStop|mb_TopMost|mb_SetForeground "This requires admin privileges, aborting!"
-    Quit
-  ${Default}
-    MessageBox mb_IconStop|mb_TopMost|mb_SetForeground "This installer requires Administrator privileges. Error $0"
-    Quit
-  ${EndSwitch}
+!insertmacro CheckUserToRunElevated
 
 !insertmacro MUI_UNGETLANGUAGE
 FunctionEnd
@@ -979,5 +1064,4 @@ Section Uninstall
   DeleteRegKey ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}"
   DeleteRegKey HKLM "${PRODUCT_DIR_REGKEY}"
   SetAutoClose true
-  SetRebootFlag false
 SectionEnd

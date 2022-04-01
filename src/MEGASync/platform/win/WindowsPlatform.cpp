@@ -1042,7 +1042,7 @@ QString WindowsPlatform::getDefaultOpenApp(QString extension)
     return QString();
 }
 
-void WindowsPlatform::enableDialogBlur(QDialog *dialog)
+void WindowsPlatform::enableDialogBlur(QDialog*)
 {
     // this feature doesn't work well yet
     return;

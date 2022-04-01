@@ -21,7 +21,7 @@
     <message>
         <source>Loading...</source>
         <translatorcomment>Label to show when an account detail request is waiting for the server response.</translatorcomment>
-        <translation>Se încarcă...</translation>
+        <translation>Se încarcă…</translation>
     </message>
     <message>
         <source>Storage</source>
@@ -797,39 +797,6 @@ Please enter a different name to identify this synced folder:</source>
     </message>
 </context>
 <context>
-    <name>ConfirmSSLexception</name>
-    <message>
-        <source>Warning</source>
-        <translatorcomment>Title of the dialog that allows to disable a security check to prevent atacks that could intercept the communications of MEGAsync</translatorcomment>
-        <translation>Avertisment</translation>
-    </message>
-    <message>
-        <source>Are you sure you want to continue?</source>
-        <translatorcomment>Question for the user in the dialog that allows to disable a security check of MEGAsync. The user have to reply yes or no</translatorcomment>
-        <translation>Sigur vrei să continui?</translation>
-    </message>
-    <message>
-        <source>Remember my decision and don&apos;t ask me again</source>
-        <translatorcomment>Text next to a checkbox that allows to remember the decision of the user. The translation should be as short as possible.</translatorcomment>
-        <translation>Ține minte decizia mea și nu mă întreba din nou</translation>
-    </message>
-    <message>
-        <source>No</source>
-        <translatorcomment>Negative response to a question. The text will be inside a button.</translatorcomment>
-        <translation>Nu</translation>
-    </message>
-    <message>
-        <source>Yes</source>
-        <translatorcomment>Positive response to a question. The text will be inside a button.</translatorcomment>
-        <translation>Da</translation>
-    </message>
-    <message>
-        <source>You are about to allow that your communications could be intercepted. Your data would be still inaccessible for attackers due to our end-to-end encryption, but they could blindly move your files and folders in MEGA, delete them or deny your access to your account.</source>
-        <translatorcomment>Information for the user about the consequences of disabling a security check of MEGAsync</translatorcomment>
-        <translation>Ești pe cale de a permite o setare care să permită interceptarea comunicărilor tale. Datele tale ar fi în continuare inaccesibile atacatorilor datorită criptării noastre capăt-la-capăt, însă aceștia ar putea să mute orbește fișierele și folderele tale în MEGA, să le șteargă sau să îți refuze accesul la contul tău.</translation>
-    </message>
-</context>
-<context>
     <name>CrashReportDialog</name>
     <message>
         <source>Error report</source>
@@ -983,16 +950,6 @@ Please enter a different name to identify this synced folder:</source>
         <translation>Respinge</translation>
     </message>
     <message>
-        <source>Cancelled Contact Request</source>
-        <translatorcomment>Title of the notification about a cancellation of a contact request</translatorcomment>
-        <translation>Cerere de contact anulată</translation>
-    </message>
-    <message>
-        <source>[A] cancelled the contact request</source>
-        <translatorcomment>Label to indicate that usar [A] has cancelled the contact request. Placeholder will be replaced by email of the user that made the cancellation.</translatorcomment>
-        <translation>[A] și-a anulat cererea de contact</translation>
-    </message>
-    <message>
         <source>Reminder</source>
         <translatorcomment>Label to indicate a reminder about a contact request.</translatorcomment>
         <translation>Memento</translation>
@@ -1115,7 +1072,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Upgrade now to a PRO account.</source>
         <translatorcomment>Notification message shown to encourage the user to upgrade his account</translatorcomment>
-        <translation>Upgradează acum la un cont PRO.</translation>
+        <translation>Upgradează acum la un cont Pro.</translation>
     </message>
     <message>
         <source>Get PRO</source>
@@ -1415,7 +1372,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Fetching file list...</source>
         <translatorcomment>Label shown at main dialog to show the current operation. In this case fetching file information from servers.</translatorcomment>
-        <translation>Se preia lista de fișiere...</translation>
+        <translation>Se preia lista de fișiere…</translation>
     </message>
     <message>
         <source>Error</source>
@@ -1473,9 +1430,9 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation>Contul tău a fost blocat temporar pentru siguranța ta. Te rugăm să-ți verifici e-mailul și urmează pașii pentru a debloca contul.</translation>
     </message>
     <message>
-        <source>Logout</source>
-        <translatorcomment>Button label to logout the current account.</translatorcomment>
-        <translation>Deconectează-te</translation>
+        <source>Log out</source>
+        <translatorcomment>Button label to log out the current account.</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Your account has been suspended temporarily due to potential abuse. Please verify your phone number to unlock your account.</source>
@@ -1546,7 +1503,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Please wait...</source>
         <translatorcomment>Label to indicate the user that needs to wait until MEGAsync fetches link information from the server</translatorcomment>
-        <translation>Te rugăm să astepți...</translation>
+        <translation>Te rugăm să astepți…</translation>
     </message>
 </context>
 <context>
@@ -1650,7 +1607,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>The process is taking longer than expected. Please wait...</source>
-        <translation>Procesul durează mai mult decât era de așteptat. Te rugăm să aștepți...</translation>
+        <translation>Procesul durează mai mult decât era de așteptat. Te rugăm să aștepți…</translation>
     </message>
     <message>
         <source>Upload to MEGA now</source>
@@ -1850,7 +1807,8 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation>Nu ești autentificat(ă)</translation>
     </message>
     <message>
-        <source>Login</source>
+        <source>Log in</source>
+        <translatorcomment>Title for explanation about log in</translatorcomment>
         <translation>Autentifică-te</translation>
     </message>
     <message>
@@ -2061,12 +2019,12 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Installing update...</source>
         <translatorcomment>Notification message launched when an update is being installed.</translatorcomment>
-        <translation>Se instalează actualizarea...</translation>
+        <translation>Se instalează actualizarea…</translation>
     </message>
     <message>
         <source>Checking for updates...</source>
         <translatorcomment>Notification message launched when the user wants to check if there are any available update at the moment.</translatorcomment>
-        <translation>Se caută actualizări...</translation>
+        <translation>Se caută actualizări…</translation>
     </message>
     <message>
         <source>Install update</source>
@@ -2092,7 +2050,7 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>Update available. Downloading...</source>
         <translatorcomment>Notification message launched when an update for MEGAsync is being downloaded.</translatorcomment>
-        <translation>Actualizare disponibilă. Se descarcă...</translation>
+        <translation>Actualizare disponibilă. Se descarcă…</translation>
     </message>
     <message>
         <source>No update available at this time</source>
@@ -2206,11 +2164,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>Sincronizarea ta „%1” a fost dezactivată deoarece sincronizarea folderelor partajate ale VirtualBox nu sunt suportate din cauza deficiențelor din acel sistem de fișiere.</translation>
     </message>
     <message>
-        <source>Logout</source>
-        <translatorcomment>Label to indicate Logout action</translatorcomment>
-        <translation>Deconectează-te</translation>
-    </message>
-    <message>
         <source>Error getting link information</source>
         <translatorcomment>Notification  error message shown while getting information from a public link.</translatorcomment>
         <translation>Eroare la obținerea informațiilor despre link</translation>
@@ -2242,17 +2195,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Fetching file list...</source>
-        <translation>Se preia lista de fișiere...</translation>
-    </message>
-    <message>
-        <source>I don&apos;t care</source>
-        <translatorcomment>Text for a button that, when clicked, will disable and important security check of MEGAsync. The text should be as short as possible. If it&apos;s not possible to provide a short translation, it can be translated as: Ignore</translatorcomment>
-        <translation>Nu-mi pasă</translation>
-    </message>
-    <message>
-        <source>Retry</source>
-        <translatorcomment>Text for a button that will cause a retry of a failed operation. The translation should be as short as possible.</translatorcomment>
-        <translation>Reîncearcă</translation>
+        <translation>Se preia lista de fișiere…</translation>
     </message>
     <message>
         <source>Transfer canceled</source>
@@ -2435,11 +2378,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>Sincronizări</translation>
     </message>
     <message>
-        <source>MEGA is unable to connect securely through SSL. You might be on public WiFi with additional requirements.</source>
-        <translatorcomment>Message shown when SSL (connection secure with MEGA) errors are detected.</translatorcomment>
-        <translation>MEGA nu se poate conecta securizat prin SSL. S-ar putea să fii pe o rețea Wi-Fi publică cu cerințe suplimentare.</translation>
-    </message>
-    <message>
         <source>Cloud drive</source>
         <translatorcomment>Label of context menu to reach Cloud drive section at webclient. It will open your webbrowser and redirects to your cloud drive.</translatorcomment>
         <translation>Unitate cloud</translation>
@@ -2533,11 +2471,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>One or more syncs have been disabled</source>
         <translatorcomment>Tooltip to indicate that some syncs have been disable due to some error.</translatorcomment>
         <translation>Unul sau mai multe sincronizări au fost dezactivate</translation>
-    </message>
-    <message>
-        <source>Your syncs have been enabled</source>
-        <translatorcomment>Notification message shown when the syncs have been enabled.</translatorcomment>
-        <translation>Sincronizările tale au fost activate</translation>
     </message>
     <message>
         <source>Error adding sync</source>
@@ -2802,7 +2735,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Please wait...</source>
         <translatorcomment>Message shown when a proxy task is being processed</translatorcomment>
-        <translation>Te rugăm să astepți...</translation>
+        <translation>Te rugăm să astepți…</translation>
     </message>
 </context>
 <context>
@@ -3187,6 +3120,84 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
 </context>
 <context>
+    <name>NotificationsSettings</name>
+    <message>
+        <source>Account notifications:</source>
+        <translatorcomment>Title for notifications setting pane</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Shares</source>
+        <translatorcomment>Notification category for shared folders and nodes</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>New shared folder from contact</source>
+        <translatorcomment>Title of a checkbox for disconnectig notifications</translatorcomment>
+        <translation>Folder nou partajat de la un contact</translation>
+    </message>
+    <message>
+        <source>Added or removed files</source>
+        <translatorcomment>Title of a checkbox for disconnectig notifications</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Access to a shared folder was removed</source>
+        <translatorcomment>Title of a checkbox for disconnectig notifications</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Contacts</source>
+        <translatorcomment>Notification category for contact notifications</translatorcomment>
+        <translation>Contacte</translation>
+    </message>
+    <message>
+        <source>New contact request</source>
+        <translatorcomment>Title of a checkbox for disconnectig notifications</translatorcomment>
+        <translation>Cerere de contact nouă</translation>
+    </message>
+    <message>
+        <source>Pending contact request reminder</source>
+        <translatorcomment>Title of a checkbox for disconnectig notifications</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Someone has accepted your contact request</source>
+        <translatorcomment>Title of a checkbox for disconnectig notifications</translatorcomment>
+        <translation>Cineva ți-a acceptat cererea de contact</translation>
+    </message>
+    <message>
+        <source>Info</source>
+        <translatorcomment>Notification category for non-critical info notifications</translatorcomment>
+        <translation>Informații</translation>
+    </message>
+    <message>
+        <source>Desktop notifications</source>
+        <translatorcomment>Title of a checkbox for disconnectig notifications</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Someone accepted your contact request</source>
+        <translatorcomment>Title of a checkbox for disconnectig notifications</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Info:</source>
+        <translatorcomment>Notification category for non-critical info notifications (macx)</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Contacts:</source>
+        <translatorcomment>Notification category for non-critical info notifications (macx)</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Shares:</source>
+        <translatorcomment>Notification category for non-critical info notifications (macx)</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>Notificator</name>
     <message>
         <source>MEGAsync</source>
@@ -3344,9 +3355,9 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translation>Link MEGA nevalid</translation>
     </message>
     <message>
-        <source>Enter links</source>
+        <source>Open links</source>
         <translatorcomment>Window title for dialog to enter MEGA public links</translatorcomment>
-        <translation>Introdu linkuri</translation>
+        <translation>Deschide linkuri</translation>
     </message>
 </context>
 <context>
@@ -3523,10 +3534,13 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Strengthen cryptographic security on Linux repositories.
-- Fix memory issues with problematic PDF files.
+        <source>- Added support to stream file links from a folder link.
+- Fixed translation issues.
+- Improved the user experience.
+- Added a new notifications panel in the settings dialog.
+- Other minor UI fixes and adjustments.
+- Fixed detected crashes on Windows, Linux and macOS.
 </source>
-        <translatorcomment>Changelog v4.6.3 (linux only)</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3545,7 +3559,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Proxy settings:</source>
         <translatorcomment>Label to indicate the proxy current setting. It could be no proxy or custom manual proxy.</translatorcomment>
-        <translation>Setări pentru proxy</translation>
+        <translation>Setări pentru proxy:</translation>
     </message>
     <message>
         <source>HTTP</source>
@@ -4051,11 +4065,6 @@ Vrei să îl ștergi oricum?</translation>
         <translation>Ajutor</translation>
     </message>
     <message>
-        <source>Show notifications</source>
-        <translatorcomment>Label to let the user enable desktop notifications with a checkbox.</translatorcomment>
-        <translation>Afișează notificări</translation>
-    </message>
-    <message>
         <source>Start on startup</source>
         <translatorcomment>Label to let the user start MEGAsync on startup of the operating system with a checkbox.</translatorcomment>
         <translation>Pornește aplicația la pornirea sistemului de operare</translation>
@@ -4076,9 +4085,9 @@ Vrei să îl ștergi oricum?</translation>
         <translation>Detalii</translation>
     </message>
     <message>
-        <source>Logout</source>
-        <translatorcomment>Button label to logout of the application. String as short as possible.</translatorcomment>
-        <translation>Deconectează-te</translation>
+        <source>Log out</source>
+        <translatorcomment>Button label to log out of the application. String as short as possible.</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Upgrade</source>
@@ -4139,11 +4148,6 @@ Vrei să îl ștergi oricum?</translation>
         <source>Full scan</source>
         <translatorcomment>Title of the message dialog for Full scan operation.</translatorcomment>
         <translation>Scanare completă</translation>
-    </message>
-    <message>
-        <source>Open at login</source>
-        <translatorcomment>Label to let the user start MEGAsync on login with a checkbox.</translatorcomment>
-        <translation>Deschide la autentificare</translation>
     </message>
     <message>
         <source>MEGAsync will perform a full scan of your synced folders when it starts.
@@ -4433,7 +4437,7 @@ Do you want to restart MEGAsync now?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Move...</source>
+        <source>Move…</source>
         <translatorcomment>Button label text allowing the user to change the default Uploads or Downloads folders for the app.</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
@@ -4448,12 +4452,12 @@ Do you want to restart MEGAsync now?</source>
         <translation>Exclude fișiere mai mari de</translation>
     </message>
     <message>
-        <source>Restart MEGA Desktop Application to apply changes.</source>
+        <source>Restart MEGA Desktop App to apply changes.</source>
         <translatorcomment>Informative text shown in Folders pane, letting the user know that an application restart is required to apply the changes he just made.</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Change Settings...</source>
+        <source>Change Settings…</source>
         <translatorcomment>Button label text for Bandwidth and Proxy settings in Network pane.</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
@@ -4545,7 +4549,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Proxy settings:</source>
         <translatorcomment>Form label text indicating the active Proxy settings.</translatorcomment>
-        <translation>Setări pentru proxy</translation>
+        <translation>Setări pentru proxy:</translation>
     </message>
     <message>
         <source>Enable Windows Explorer integration</source>
@@ -4687,6 +4691,16 @@ Do you want to restart MEGAsync now?</source>
         <translatorcomment>Button label text for export key saving to local machine in a file. Keep string as short as possible.</translatorcomment>
         <translation>Exportă cheia</translation>
     </message>
+    <message>
+        <source>Notifications</source>
+        <translatorcomment>Title for the Settings -&gt; Notifications pane tab button. Keep as short as possible.</translatorcomment>
+        <translation>Notificări</translation>
+    </message>
+    <message>
+        <source>Launch at login</source>
+        <translatorcomment>Label to let the user start MEGAsync on login with a checkbox.</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SetupWizard</name>
@@ -4716,7 +4730,7 @@ Do you want to restart MEGAsync now?</source>
         <translation>Sunt de acord cu &lt;a href=&quot;https://mega.nz/terms&quot;&gt;Termenii de utilizare a serviciului&lt;/a&gt; MEGA</translation>
     </message>
     <message>
-        <source>Login to your MEGA account</source>
+        <source>Log in to your MEGA account</source>
         <translatorcomment>Label to let the user login with his credentials.</translatorcomment>
         <translation>Autentifică-te în contul MEGA</translation>
     </message>
@@ -4728,7 +4742,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Logging in ...</source>
         <translatorcomment>Label displayed while logging process.</translatorcomment>
-        <translation>Se autentifică ...</translation>
+        <translation>Se autentifică …</translation>
     </message>
     <message>
         <source>Choose install type</source>
@@ -4788,7 +4802,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Fetching file list...</source>
         <translatorcomment>Label displayed while the application is retrieving all file list from the server.</translatorcomment>
-        <translation>Se preia lista de fișiere...</translation>
+        <translation>Se preia lista de fișiere…</translation>
     </message>
     <message>
         <source>Incorrect email and/or password.</source>
@@ -4884,9 +4898,9 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>Nu se poate obține sistemul de fișiere. Te rugăm să încerci din nou. Dacă problema persistă, te rugăm să ne contactezi la adresa bug@mega.nz</translation>
     </message>
     <message>
-        <source>Setup Assistant - MEGAsync</source>
+        <source>Set up Assistant - MEGAsync</source>
         <translatorcomment>Title of the setup assistant dialog. Keep capital letters.</translatorcomment>
-        <translation>Asistent de configurare - MEGAsync</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Full sync</source>
@@ -5016,9 +5030,9 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>Te rugăm să-ți introduci numele</translation>
     </message>
     <message>
-        <source>Setup selective sync</source>
+        <source>Set up selective sync</source>
         <translatorcomment>Label shown when user is setting up the selective sync mode of MEGAsync</translatorcomment>
-        <translation>Configurează sincronizarea selectivă</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Specific folders in your Cloud Drive will be synchronized with a local folder.</source>
@@ -5031,9 +5045,9 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>Selectează un folder local</translation>
     </message>
     <message>
-        <source>Setup full sync</source>
+        <source>Set up full sync</source>
         <translatorcomment>Label shown when user is setting up full sync mode of MEGAsync</translatorcomment>
-        <translation>Configurează sincronizarea completă</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Full Sync</source>
@@ -5051,7 +5065,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>Am terminat!</translation>
     </message>
     <message>
-        <source>Login</source>
+        <source>Log in</source>
         <translatorcomment>Button label to open Login form</translatorcomment>
         <translation>Autentifică-te</translation>
     </message>
@@ -5177,7 +5191,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Select media from...</source>
         <translatorcomment>Label just above of the buttons to select files for streaming</translatorcomment>
-        <translation>Selectează conținut media din...</translation>
+        <translation>Selectează conținut media din…</translation>
     </message>
     <message>
         <source>Cloud Drive</source>
@@ -5269,6 +5283,24 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translatorcomment>Informative label to indicate the user that there is a stream error because of transfer overquota situation.</translatorcomment>
         <translation>Eroare privind redarea în flux: cotă de transfer depășită.</translation>
     </message>
+    <message>
+        <source>Please wait...</source>
+        <translatorcomment>Message shown while waiting for the server request with the file info to stream</translatorcomment>
+        <translation>Te rugăm să astepți…</translation>
+    </message>
+</context>
+<context>
+    <name>SwitchButton</name>
+    <message>
+        <source>On</source>
+        <translatorcomment>Checked state of a swith button</translatorcomment>
+        <translation>Activat</translation>
+    </message>
+    <message>
+        <source>Off</source>
+        <translatorcomment>Unchecked state of a swith button</translatorcomment>
+        <translation>Dezactivat</translation>
+    </message>
 </context>
 <context>
     <name>TransferManager</name>
@@ -5280,7 +5312,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Add...</source>
         <translatorcomment>Button label to add transfers items (uploads/downloads/public links) to the dialog (String as short as possible)</translatorcomment>
-        <translation>Adaugă...</translation>
+        <translation>Adaugă…</translation>
     </message>
     <message>
         <source>Downloads</source>
@@ -5318,11 +5350,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>Anulează toate</translation>
     </message>
     <message>
-        <source>Are you sure you want to cancel all transfers?</source>
-        <translatorcomment>Description label for warning dialog before a transfer cancellation</translatorcomment>
-        <translation>Sigur vrei să anulezi toate transferurile?</translation>
-    </message>
-    <message>
         <source>Resume</source>
         <translation>Reia</translation>
     </message>
@@ -5343,6 +5370,26 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Open links</source>
         <translatorcomment>Menu action item to open MEGA public links. It will let you to import and/or download.</translatorcomment>
         <translation>Deschide linkuri</translation>
+    </message>
+    <message>
+        <source>Do you want to cancel all transfers?</source>
+        <translatorcomment>Description label for warning dialog before a transfer cancellation</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Syncs aren&apos;t affected by this action.</source>
+        <translatorcomment>Description label for warning dialog indicating that syncs are not going to be affected by accepting this dialog</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Continue transfers</source>
+        <translatorcomment>Button label that indicates that no one of active transfers will be cancelled (Cancel button on dialog)</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel all transfers</source>
+        <translatorcomment>Button label that indicates that all active transfers will be cancelled (Accept button on dialog)</translatorcomment>
+        <translation>Anulează toate transferurile</translation>
     </message>
 </context>
 <context>
@@ -5676,9 +5723,9 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>De ce văd asta?</translation>
     </message>
     <message>
-        <source>Logout</source>
-        <translatorcomment>Button label to logout the current account</translatorcomment>
-        <translation>Deconectează-te</translation>
+        <source>Log out</source>
+        <translatorcomment>Button label to log out the current account</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Verify your email</source>

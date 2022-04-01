@@ -81,12 +81,14 @@ private:
     Ui::GuestWidget *ui;
     MegaApplication *app;
     QString email, password;
+    bool mSSLSecureConnectionFailed;
     bool incorrectCredentialsMessageReceived = false;
 
     GuestWidgetState state = GuestWidgetState::NONE;
     void resetPageAfterBlock();
     void showLoginError(const QString& errorMessage) const;
     void showLogin2FaError() const;
+    void showSSLSecureConnectionErrorMessage(mega::MegaRequest* request) const;
 
 
 protected:

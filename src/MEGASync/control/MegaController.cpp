@@ -22,9 +22,9 @@ void Controller::addSync(const QString &localFolder, const MegaHandle &remoteHan
     MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromAscii("Adding sync %1").arg(localFolder).toUtf8().constData());
 
     api->syncFolder(MegaSync::TYPE_TWOWAY, localFolder.toUtf8().constData(), syncName.toUtf8().constData(), remoteHandle,
-        nullptr, new ProgressFuncExecuterListener(progress,  true, [](MegaApi *api, MegaRequest *request, MegaError *e){
+        nullptr, new ProgressFuncExecuterListener(progress,  true, [](MegaApi*, MegaRequest*, MegaError*){
                         ///// onRequestFinish Management: ////
-    }));
+                    }));
 }
 
 void Controller::removeSync(std::shared_ptr<SyncSetting> syncSetting, ActionProgress *progress)
@@ -40,7 +40,7 @@ void Controller::removeSync(std::shared_ptr<SyncSetting> syncSetting, ActionProg
     MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromAscii("Removing sync").toUtf8().constData());
 
     api->removeSync(syncSetting->backupId(),
-        new ProgressFuncExecuterListener(progress,  true, [](MegaApi *api, MegaRequest *request, MegaError *e){
+        new ProgressFuncExecuterListener(progress,  true, [](MegaApi*, MegaRequest*, MegaError*){
                         ///// onRequestFinish Management: ////
                     }));
 }
@@ -59,7 +59,7 @@ void Controller::enableSync(std::shared_ptr<SyncSetting> syncSetting, ActionProg
                  .arg(syncSetting->getLocalFolder()).arg(syncSetting->getMegaFolder()).toUtf8().constData() );
 
     api->enableSync(syncSetting->backupId(),
-        new ProgressFuncExecuterListener(progress,  true, [](MegaApi *api, MegaRequest *request, MegaError *e){
+        new ProgressFuncExecuterListener(progress,  true, [](MegaApi*, MegaRequest*, MegaError*){
                         ///// onRequestFinish Management: ////
                     }));
 }
@@ -78,7 +78,7 @@ void Controller::disableSync(std::shared_ptr<SyncSetting> syncSetting, ActionPro
                  .arg(syncSetting->getLocalFolder()).arg(syncSetting->getMegaFolder()).toUtf8().constData() );
 
     api->disableSync(syncSetting->backupId(),
-        new ProgressFuncExecuterListener(progress,  true, [](MegaApi *api, MegaRequest *request, MegaError *e){
+        new ProgressFuncExecuterListener(progress,  true, [](MegaApi*, MegaRequest*, MegaError*){
                         ///// onRequestFinish Management: ////
                     }));
 }
@@ -167,7 +167,7 @@ void ProgressHelper::addStep(ProgressHelper *task, double weight)
     steps.append(ProgressStep(task, weight));
 }
 
-void ProgressHelper::onStepProgress(double percentage, int position)
+void ProgressHelper::onStepProgress(double/* percentage*/, int/* position*/)
 {
     double weightsSum = 0;
     double newCompleted = 0.0;
@@ -181,7 +181,7 @@ void ProgressHelper::onStepProgress(double percentage, int position)
     setPercentage(newPercentage);
 }
 
-void ProgressHelper::onStepCompleted(int position)
+void ProgressHelper::onStepCompleted(int/* position*/)
 {
     completedtasks++;
     checkCompletion();
@@ -236,7 +236,7 @@ void ActionProgress::setFailed(int errorCode, MegaRequest *request, MegaError *e
     setComplete();
 }
 
-void ProgressFuncExecuterListener::onRequestStart(MegaApi *api, MegaRequest *request)
+void ProgressFuncExecuterListener::onRequestStart(MegaApi*, MegaRequest*)
 {
     if (mProgressHelper)
     {

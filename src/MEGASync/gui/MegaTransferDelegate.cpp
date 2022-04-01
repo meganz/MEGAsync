@@ -29,7 +29,7 @@ void MegaTransferDelegate::paint(QPainter *painter, const QStyleOptionViewItem &
             painter->fillRect(option.rect, QColor(247, 247, 247));
         }
 
-        int tag = index.internalId();
+        const int tag = static_cast<int>(index.internalId());
         int modelType = model->getModelType();
         TransferItem *ti = model->transferItems[tag];
         if (!ti)
@@ -220,7 +220,7 @@ bool MegaTransferDelegate::editorEvent(QEvent *event, QAbstractItemModel *, cons
 {
     if (QEvent::MouseButtonPress ==  event->type())
     {
-        int tag = index.internalId();
+        const int tag = static_cast<int>(index.internalId());
         TransferItem *item = model->transferItems[tag];
         if (!item)
         {
@@ -297,7 +297,7 @@ bool MegaTransferDelegate::editorEvent(QEvent *event, QAbstractItemModel *, cons
     }
     else if (QEvent::MouseButtonDblClick == event->type() && model->getModelType() == QTransfersModel::TYPE_FINISHED)
     {
-        int tag = index.internalId();
+        const int tag = static_cast<int>(index.internalId());
         processShowInFolder(tag);
         return true; // double-click consumed
     }
@@ -309,7 +309,7 @@ bool MegaTransferDelegate::helpEvent(QHelpEvent *event, QAbstractItemView *view,
 {
     if (event->type() == QEvent::ToolTip)
     {
-        int tag = index.internalId();
+        const int tag = static_cast<int>(index.internalId());
         TransferItem *item = model->transferItems[tag];
         if (item)
         {

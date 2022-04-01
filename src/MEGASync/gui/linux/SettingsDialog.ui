@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>543</width>
-    <height>695</height>
+    <width>612</width>
+    <height>788</height>
    </rect>
   </property>
   <property name="contextMenuPolicy">
@@ -49,8 +49,8 @@ height: 20px;
 
 QCheckBox::indicator
 {
-height: 14px;
-width: 14px;
+height: 16px;
+width: 16px;
 }
 
 #wTabHeader
@@ -259,7 +259,7 @@ margin: 0px;
        <number>9</number>
       </property>
       <property name="rightMargin">
-       <number>0</number>
+       <number>12</number>
       </property>
       <property name="bottomMargin">
        <number>0</number>
@@ -544,6 +544,55 @@ margin: 0px;
        </widget>
       </item>
       <item>
+       <widget class="QToolButton" name="bNotifications">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>70</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>70</height>
+         </size>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>-1</pointsize>
+         </font>
+        </property>
+        <property name="focusPolicy">
+         <enum>Qt::StrongFocus</enum>
+        </property>
+        <property name="text">
+         <string>Notifications</string>
+        </property>
+        <property name="icon">
+         <iconset resource="../Resources_linux.qrc">
+          <normaloff>:/images/Icon_Win_Notifications.png</normaloff>:/images/Icon_Win_Notifications.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>25</width>
+          <height>25</height>
+         </size>
+        </property>
+        <property name="checkable">
+         <bool>true</bool>
+        </property>
+        <property name="checked">
+         <bool>false</bool>
+        </property>
+        <property name="autoExclusive">
+         <bool>true</bool>
+        </property>
+        <property name="toolButtonStyle">
+         <enum>Qt::ToolButtonTextUnderIcon</enum>
+        </property>
+       </widget>
+      </item>
+      <item>
        <spacer name="horizontalSpacer_19">
         <property name="orientation">
          <enum>Qt::Horizontal</enum>
@@ -597,78 +646,17 @@ margin: 0px;
            <number>10</number>
           </property>
           <item>
-           <widget class="QCheckBox" name="cShowNotifications">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="minimumSize">
-             <size>
-              <width>0</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>16777215</width>
-              <height>24</height>
-             </size>
-            </property>
-            <property name="text">
-             <string>Show notifications</string>
-            </property>
-           </widget>
-          </item>
-          <item>
            <widget class="QCheckBox" name="cStartOnStartup">
             <property name="enabled">
              <bool>true</bool>
             </property>
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="minimumSize">
-             <size>
-              <width>0</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>16777215</width>
-              <height>24</height>
-             </size>
-            </property>
             <property name="text">
-             <string>Open at login</string>
+             <string>Launch at login</string>
             </property>
            </widget>
           </item>
           <item>
            <widget class="QCheckBox" name="cOverlayIcons">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="minimumSize">
-             <size>
-              <width>0</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>16777215</width>
-              <height>24</height>
-             </size>
-            </property>
             <property name="text">
              <string>Enable overlay icons</string>
             </property>
@@ -696,18 +684,6 @@ margin: 0px;
               <widget class="QCheckBox" name="cAutoUpdate">
                <property name="enabled">
                 <bool>true</bool>
-               </property>
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
-                 <horstretch>0</horstretch>
-                 <verstretch>24</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="maximumSize">
-                <size>
-                 <width>16777215</width>
-                 <height>24</height>
-                </size>
                </property>
                <property name="text">
                 <string>Update automatically</string>
@@ -2215,7 +2191,7 @@ min-height: 72px;
              <item>
               <widget class="QPushButton" name="bUploadFolder">
                <property name="text">
-                <string>Move...</string>
+                <string>Move…</string>
                </property>
                <property name="autoDefault">
                 <bool>false</bool>
@@ -2277,7 +2253,7 @@ min-height: 72px;
              <item>
               <widget class="QPushButton" name="bDownloadFolder">
                <property name="text">
-                <string>Move...</string>
+                <string>Move…</string>
                </property>
                <property name="autoDefault">
                 <bool>false</bool>
@@ -2543,7 +2519,7 @@ min-height: 72px;
              </sizepolicy>
             </property>
             <property name="text">
-             <string>Restart MEGA Desktop Application to apply changes.</string>
+             <string>Restart MEGA Desktop App to apply changes.</string>
             </property>
             <property name="wordWrap">
              <bool>true</bool>
@@ -2677,7 +2653,7 @@ min-height: 72px;
           <item>
            <widget class="QPushButton" name="bOpenBandwidthSettings">
             <property name="text">
-             <string>Change Settings...</string>
+             <string>Change Settings…</string>
             </property>
             <property name="autoDefault">
              <bool>false</bool>
@@ -2760,7 +2736,7 @@ min-height: 72px;
           <item>
            <widget class="QPushButton" name="bOpenProxySettings">
             <property name="text">
-             <string>Change Settings...</string>
+             <string>Change Settings…</string>
             </property>
             <property name="autoDefault">
              <bool>false</bool>
@@ -2785,6 +2761,7 @@ min-height: 72px;
        </item>
       </layout>
      </widget>
+     <widget class="NotificationsSettings" name="pNotifications"/>
     </widget>
    </item>
    <item alignment="Qt::AlignBottom">
@@ -2888,7 +2865,7 @@ color: #0078D7;
           <item>
            <widget class="QPushButton" name="bLogout">
             <property name="text">
-             <string>Logout</string>
+             <string>Log out</string>
             </property>
             <property name="autoDefault">
              <bool>false</bool>
@@ -2972,6 +2949,7 @@ color: #0078D7;
          </layout>
         </widget>
         <widget class="QWidget" name="wNetworkFooter"/>
+        <widget class="QWidget" name="wNotificationsFooter"/>
        </widget>
       </item>
      </layout>
@@ -2991,6 +2969,12 @@ color: #0078D7;
    <class>AvatarWidget</class>
    <extends>QWidget</extends>
    <header>AvatarWidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>NotificationsSettings</class>
+   <extends>QWidget</extends>
+   <header location="global">NotificationsSettings.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

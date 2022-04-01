@@ -203,4 +203,4 @@ Note: when compiling for Fedora/RHEL/CentOS and alike, `qmake` and `lrelease` mi
 
 Known Issues
 ------------
-For Solus, c-ares might not compile do to a CFLAG defined by gcc: -D_FORTIFY_SOURCE=2. This issue and its possible solution is described here https://github.com/c-ares/c-ares/issues/58.
+For Solus, c-ares might not compile due to a CFLAG defined by gcc: -D_FORTIFY_SOURCE=2. This issue and its possible solution is described here https://github.com/c-ares/c-ares/issues/58.

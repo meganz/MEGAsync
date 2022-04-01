@@ -52,7 +52,7 @@ void AlertFilterType::setActualFilter(ALERT_TYPE type)
     mType = type;
 }
 
-void AlertFilterType::mousePressEvent(QMouseEvent *event)
+void AlertFilterType::mousePressEvent(QMouseEvent*)
 {
     emit clicked();
 }

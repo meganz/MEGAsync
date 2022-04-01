@@ -7,7 +7,6 @@ InfoWizard::InfoWizard(QWidget *parent) :
     ui(new Ui::InfoWizard)
 {
     ui->setupUi(this);
-    setAttribute(Qt::WA_QuitOnClose, false);
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
     tweakStrings();
     goToPage(FIRST_PAGE);

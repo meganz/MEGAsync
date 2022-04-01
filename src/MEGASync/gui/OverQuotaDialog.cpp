@@ -12,7 +12,6 @@ OverQuotaDialog::OverQuotaDialog(OverQuotaDialogType type, QWidget *parent) :
     ui->setupUi(this);
     ui->labelTitle->setWordWrap(false);
 
-    setAttribute(Qt::WA_QuitOnClose, false);
 #ifndef __APPLE__
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
 #endif

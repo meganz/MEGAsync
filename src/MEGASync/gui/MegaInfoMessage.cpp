@@ -3,11 +3,10 @@
 
 MegaInfoMessage::MegaInfoMessage(const QString &windowTitle, const QString &title, const QString &firstParagraph,
                                  const QString &secondParagraph, const QIcon &icon, QWidget *parent) :
-    QDialog(parent), m_windowTitle(windowTitle), m_title(title), m_firstParagraph(firstParagraph), m_secondParagraph(secondParagraph),
-    ui(new Ui::MegaInfoMessage)
+    QDialog(parent), ui(new Ui::MegaInfoMessage), m_windowTitle(windowTitle), m_title(title),
+    m_firstParagraph(firstParagraph), m_secondParagraph(secondParagraph)
 {
     ui->setupUi(this);
-    setAttribute(Qt::WA_QuitOnClose, false);
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
 
     setTexts();

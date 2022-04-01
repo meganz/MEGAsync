@@ -21,7 +21,7 @@
     <message>
         <source>Loading...</source>
         <translatorcomment>Label to show when an account detail request is waiting for the server response.</translatorcomment>
-        <translation>Memuat...</translation>
+        <translation>Memuat…</translation>
     </message>
     <message>
         <source>Storage</source>
@@ -797,39 +797,6 @@ Please enter a different name to identify this synced folder:</source>
     </message>
 </context>
 <context>
-    <name>ConfirmSSLexception</name>
-    <message>
-        <source>Warning</source>
-        <translatorcomment>Title of the dialog that allows to disable a security check to prevent atacks that could intercept the communications of MEGAsync</translatorcomment>
-        <translation>Peringatan</translation>
-    </message>
-    <message>
-        <source>Are you sure you want to continue?</source>
-        <translatorcomment>Question for the user in the dialog that allows to disable a security check of MEGAsync. The user have to reply yes or no</translatorcomment>
-        <translation>Anda yakin ingin melanjutkan?</translation>
-    </message>
-    <message>
-        <source>Remember my decision and don&apos;t ask me again</source>
-        <translatorcomment>Text next to a checkbox that allows to remember the decision of the user. The translation should be as short as possible.</translatorcomment>
-        <translation>Ingat keputusan saya dan jangan tanya lagi</translation>
-    </message>
-    <message>
-        <source>No</source>
-        <translatorcomment>Negative response to a question. The text will be inside a button.</translatorcomment>
-        <translation>Tidak</translation>
-    </message>
-    <message>
-        <source>Yes</source>
-        <translatorcomment>Positive response to a question. The text will be inside a button.</translatorcomment>
-        <translation>Ya</translation>
-    </message>
-    <message>
-        <source>You are about to allow that your communications could be intercepted. Your data would be still inaccessible for attackers due to our end-to-end encryption, but they could blindly move your files and folders in MEGA, delete them or deny your access to your account.</source>
-        <translatorcomment>Information for the user about the consequences of disabling a security check of MEGAsync</translatorcomment>
-        <translation>Anda akan mengizinkan sebuah setting yang memungkinkan komunikasi anda dicegat. Data anda akan tetap tidak dapat diakses oleh penyerang karena enkripsi end-to-end kami, namun mereka dapat secara membabi buta memindahkan file dan folder anda di MEGA, menghapusnya atau menolak akses ke akun anda.</translation>
-    </message>
-</context>
-<context>
     <name>CrashReportDialog</name>
     <message>
         <source>Error report</source>
@@ -873,7 +840,7 @@ Dalam beberapa kasus, mereka mungkin berisi detail tentang data anda, seperti na
     <message>
         <source>starting...</source>
         <translatorcomment>Label to indicate that a transfer is starting.</translatorcomment>
-        <translation>memulai...</translation>
+        <translation>memulai…</translation>
     </message>
     <message>
         <source>PAUSED</source>
@@ -888,12 +855,12 @@ Dalam beberapa kasus, mereka mungkin berisi detail tentang data anda, seperti na
     <message>
         <source>retrying...</source>
         <translatorcomment>Label to indicate that a transfer is being retried.</translatorcomment>
-        <translation>mencoba lagi...</translation>
+        <translation>mencoba lagi…</translation>
     </message>
     <message>
         <source>completing...</source>
         <translatorcomment>Label to indicate that a transfer is being completed.</translatorcomment>
-        <translation>menyelesaikan...</translation>
+        <translation>menyelesaikan…</translation>
     </message>
     <message>
         <source>Added [A]</source>
@@ -982,16 +949,6 @@ Dalam beberapa kasus, mereka mungkin berisi detail tentang data anda, seperti na
         <source>Reject</source>
         <translatorcomment>Button label of system notification to reject the notification of incoming contact request.</translatorcomment>
         <translation>Tolak</translation>
-    </message>
-    <message>
-        <source>Cancelled Contact Request</source>
-        <translatorcomment>Title of the notification about a cancellation of a contact request</translatorcomment>
-        <translation>Permintaan Kontak Dibatalkan</translation>
-    </message>
-    <message>
-        <source>[A] cancelled the contact request</source>
-        <translatorcomment>Label to indicate that usar [A] has cancelled the contact request. Placeholder will be replaced by email of the user that made the cancellation.</translatorcomment>
-        <translation>[A] membatalkan permintaan kontak mereka</translation>
     </message>
     <message>
         <source>Reminder</source>
@@ -1116,7 +1073,7 @@ Dalam beberapa kasus, mereka mungkin berisi detail tentang data anda, seperti na
     <message>
         <source>Upgrade now to a PRO account.</source>
         <translatorcomment>Notification message shown to encourage the user to upgrade his account</translatorcomment>
-        <translation>Tingkatkan sekarang ke akun PRO.</translation>
+        <translation>Tingkatkan sekarang ke akun Pro.</translation>
     </message>
     <message>
         <source>Get PRO</source>
@@ -1406,17 +1363,17 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Setting up your account...</source>
         <translatorcomment>Label shown at main dialog during the initial setup of synced folders.</translatorcomment>
-        <translation>Menyiapkan akun anda...</translation>
+        <translation>Menyiapkan akun anda…</translation>
     </message>
     <message>
         <source>Logging in...</source>
         <translatorcomment>Label shown at main dialog to show the current operation. In this case logging in.</translatorcomment>
-        <translation>Masuk...</translation>
+        <translation>Masuk…</translation>
     </message>
     <message>
         <source>Fetching file list...</source>
         <translatorcomment>Label shown at main dialog to show the current operation. In this case fetching file information from servers.</translatorcomment>
-        <translation>Mengambil list file...</translation>
+        <translation>Mengambil list file…</translation>
     </message>
     <message>
         <source>Error</source>
@@ -1474,8 +1431,8 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation>Akun anda telah dikunci sementara untuk keselamatan anda. Harap verifikasi email anda dan ikuti langkah-langkahnya untuk membuka akun anda kembali.</translation>
     </message>
     <message>
-        <source>Logout</source>
-        <translatorcomment>Button label to logout the current account.</translatorcomment>
+        <source>Log out</source>
+        <translatorcomment>Button label to log out the current account.</translatorcomment>
         <translation>Keluar</translation>
     </message>
     <message>
@@ -1547,7 +1504,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Please wait...</source>
         <translatorcomment>Label to indicate the user that needs to wait until MEGAsync fetches link information from the server</translatorcomment>
-        <translation>Mohon tunggu...</translation>
+        <translation>Mohon tunggu…</translation>
     </message>
 </context>
 <context>
@@ -1676,7 +1633,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Upgrade to PRO now before your account runs full and your uploads to MEGA stop.</source>
         <translatorcomment>Label to encourage the user to upgrade his account before uploads stop</translatorcomment>
-        <translation>Tingkatkan ke PRO sekarang sebelum akun anda penuh dan unggahan anda ke MEGA berhenti.</translation>
+        <translation>Tingkatkan ke Pro sekarang sebelum akun anda penuh dan unggahan anda ke MEGA berhenti.</translation>
     </message>
     <message>
         <source>Your MEGA account is full.</source>
@@ -1691,7 +1648,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Please upgrade to PRO.</source>
         <translatorcomment>Label to encourage the user to upgrade to PRO</translatorcomment>
-        <translation>Harap tingkatkan ke PRO.</translation>
+        <translation>Harap tingkatkan ke Pro.</translation>
     </message>
     <message>
         <source>Upload</source>
@@ -1851,7 +1808,8 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation>Anda belum login</translation>
     </message>
     <message>
-        <source>Login</source>
+        <source>Log in</source>
+        <translatorcomment>Title for explanation about log in</translatorcomment>
         <translation>Masuk</translation>
     </message>
     <message>
@@ -2012,7 +1970,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Logging in...</source>
         <translatorcomment>Notification message showing a Logging in state. Keep capital letters.</translatorcomment>
-        <translation>Masuk ...</translation>
+        <translation>Masuk …</translation>
     </message>
     <message>
         <source>About</source>
@@ -2062,12 +2020,12 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Installing update...</source>
         <translatorcomment>Notification message launched when an update is being installed.</translatorcomment>
-        <translation>Menginstall update...</translation>
+        <translation>Menginstall update…</translation>
     </message>
     <message>
         <source>Checking for updates...</source>
         <translatorcomment>Notification message launched when the user wants to check if there are any available update at the moment.</translatorcomment>
-        <translation>Memeriksa update...</translation>
+        <translation>Memeriksa update…</translation>
     </message>
     <message>
         <source>Install update</source>
@@ -2093,7 +2051,7 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>Update available. Downloading...</source>
         <translatorcomment>Notification message launched when an update for MEGAsync is being downloaded.</translatorcomment>
-        <translation>Update tersedia. Sedang mendownload...</translation>
+        <translation>Update tersedia. Sedang mendownload…</translation>
     </message>
     <message>
         <source>No update available at this time</source>
@@ -2207,11 +2165,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>Sync anda &quot;%1&quot; telah dibatalkan karena sinkronisasi folder berbagi VirtualBox tidak didukung karena defisiensi pada filesystem tersebut.</translation>
     </message>
     <message>
-        <source>Logout</source>
-        <translatorcomment>Label to indicate Logout action</translatorcomment>
-        <translation>Keluar</translation>
-    </message>
-    <message>
         <source>Error getting link information</source>
         <translatorcomment>Notification  error message shown while getting information from a public link.</translatorcomment>
         <translation>Error mendapatkan informasi link</translation>
@@ -2243,17 +2196,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Fetching file list...</source>
-        <translation>Mengambil list file...</translation>
-    </message>
-    <message>
-        <source>I don&apos;t care</source>
-        <translatorcomment>Text for a button that, when clicked, will disable and important security check of MEGAsync. The text should be as short as possible. If it&apos;s not possible to provide a short translation, it can be translated as: Ignore</translatorcomment>
-        <translation>Abaikan</translation>
-    </message>
-    <message>
-        <source>Retry</source>
-        <translatorcomment>Text for a button that will cause a retry of a failed operation. The translation should be as short as possible.</translatorcomment>
-        <translation>Ulangi</translation>
+        <translation>Mengambil list file…</translation>
     </message>
     <message>
         <source>Transfer canceled</source>
@@ -2436,11 +2379,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>Syncs</translation>
     </message>
     <message>
-        <source>MEGA is unable to connect securely through SSL. You might be on public WiFi with additional requirements.</source>
-        <translatorcomment>Message shown when SSL (connection secure with MEGA) errors are detected.</translatorcomment>
-        <translation>MEGA tidak dapat terhubung dengan aman melalui SSL. Anda mungkin menggunakan Wi-Fi publik dengan persyaratan tambahan.</translation>
-    </message>
-    <message>
         <source>Cloud drive</source>
         <translatorcomment>Label of context menu to reach Cloud drive section at webclient. It will open your webbrowser and redirects to your cloud drive.</translatorcomment>
         <translation>Penyimpanan Cloud</translation>
@@ -2534,11 +2472,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>One or more syncs have been disabled</source>
         <translatorcomment>Tooltip to indicate that some syncs have been disable due to some error.</translatorcomment>
         <translation>Satu atau lebih sinkronisasi telah dinonaktifkan</translation>
-    </message>
-    <message>
-        <source>Your syncs have been enabled</source>
-        <translatorcomment>Notification message shown when the syncs have been enabled.</translatorcomment>
-        <translation>Sinkronisasi anda telah diaktifkan</translation>
     </message>
     <message>
         <source>Error adding sync</source>
@@ -2803,7 +2736,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Please wait...</source>
         <translatorcomment>Message shown when a proxy task is being processed</translatorcomment>
-        <translation>Mohon tunggu...</translation>
+        <translation>Mohon tunggu…</translation>
     </message>
 </context>
 <context>
@@ -3189,6 +3122,84 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
 </context>
 <context>
+    <name>NotificationsSettings</name>
+    <message>
+        <source>Account notifications:</source>
+        <translatorcomment>Title for notifications setting pane</translatorcomment>
+        <translation>Notifikasi akun:</translation>
+    </message>
+    <message>
+        <source>Shares</source>
+        <translatorcomment>Notification category for shared folders and nodes</translatorcomment>
+        <translation>Berbagi</translation>
+    </message>
+    <message>
+        <source>New shared folder from contact</source>
+        <translatorcomment>Title of a checkbox for disconnectig notifications</translatorcomment>
+        <translation>Folder berbagi baru dari kontak</translation>
+    </message>
+    <message>
+        <source>Added or removed files</source>
+        <translatorcomment>Title of a checkbox for disconnectig notifications</translatorcomment>
+        <translation>File ditambahkan atau dihapus</translation>
+    </message>
+    <message>
+        <source>Access to a shared folder was removed</source>
+        <translatorcomment>Title of a checkbox for disconnectig notifications</translatorcomment>
+        <translation>Akses ke folder bersama telah dihapus</translation>
+    </message>
+    <message>
+        <source>Contacts</source>
+        <translatorcomment>Notification category for contact notifications</translatorcomment>
+        <translation>Kontak</translation>
+    </message>
+    <message>
+        <source>New contact request</source>
+        <translatorcomment>Title of a checkbox for disconnectig notifications</translatorcomment>
+        <translation>Permintaan kontak baru</translation>
+    </message>
+    <message>
+        <source>Pending contact request reminder</source>
+        <translatorcomment>Title of a checkbox for disconnectig notifications</translatorcomment>
+        <translation>Pengingat permintaan kontak yang tertunda</translation>
+    </message>
+    <message>
+        <source>Someone has accepted your contact request</source>
+        <translatorcomment>Title of a checkbox for disconnectig notifications</translatorcomment>
+        <translation>Seseorang telah menerima permintaan kontak anda</translation>
+    </message>
+    <message>
+        <source>Info</source>
+        <translatorcomment>Notification category for non-critical info notifications</translatorcomment>
+        <translation>Info</translation>
+    </message>
+    <message>
+        <source>Desktop notifications</source>
+        <translatorcomment>Title of a checkbox for disconnectig notifications</translatorcomment>
+        <translation>Pemberitahuan desktop</translation>
+    </message>
+    <message>
+        <source>Someone accepted your contact request</source>
+        <translatorcomment>Title of a checkbox for disconnectig notifications</translatorcomment>
+        <translation>Seseorang menerima permintaan kontak anda</translation>
+    </message>
+    <message>
+        <source>Info:</source>
+        <translatorcomment>Notification category for non-critical info notifications (macx)</translatorcomment>
+        <translation>Info:</translation>
+    </message>
+    <message>
+        <source>Contacts:</source>
+        <translatorcomment>Notification category for non-critical info notifications (macx)</translatorcomment>
+        <translation>Kontak:</translation>
+    </message>
+    <message>
+        <source>Shares:</source>
+        <translatorcomment>Notification category for non-critical info notifications (macx)</translatorcomment>
+        <translation>Berbagi:</translation>
+    </message>
+</context>
+<context>
     <name>Notificator</name>
     <message>
         <source>MEGAsync</source>
@@ -3346,9 +3357,9 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translation>Link MEGA salah</translation>
     </message>
     <message>
-        <source>Enter links</source>
+        <source>Open links</source>
         <translatorcomment>Window title for dialog to enter MEGA public links</translatorcomment>
-        <translation>Masukkan tautan</translation>
+        <translation>Buka tautan</translation>
     </message>
 </context>
 <context>
@@ -3525,11 +3536,20 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Strengthen cryptographic security on Linux repositories.
-- Fix memory issues with problematic PDF files.
+        <source>- Added support to stream file links from a folder link.
+- Fixed translation issues.
+- Improved the user experience.
+- Added a new notifications panel in the settings dialog.
+- Other minor UI fixes and adjustments.
+- Fixed detected crashes on Windows, Linux and macOS.
 </source>
-        <translatorcomment>Changelog v4.6.3 (linux only)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>- Menambahkan dukungan untuk mengalirkan tautan file dari tautan folder.
+- Memperbaiki masalah terjemahan.
+- Meningkatkan pengalaman pengguna.
+- Menambahkan panel notifikasi baru di dialog pengaturan.
+- Perbaikan dan penyesuaian UI kecil lainnya.
+- Memperbaiki kerusakan yang terdeteksi di Windows, Linux, dan macOS.
+</translation>
     </message>
 </context>
 <context>
@@ -4053,11 +4073,6 @@ Apakah anda tetap ingin menghapusnya?</translation>
         <translation>Bantuan</translation>
     </message>
     <message>
-        <source>Show notifications</source>
-        <translatorcomment>Label to let the user enable desktop notifications with a checkbox.</translatorcomment>
-        <translation>Tampilkan pemberitahuan</translation>
-    </message>
-    <message>
         <source>Start on startup</source>
         <translatorcomment>Label to let the user start MEGAsync on startup of the operating system with a checkbox.</translatorcomment>
         <translation>Aktifkan pada saat memulai</translation>
@@ -4078,8 +4093,8 @@ Apakah anda tetap ingin menghapusnya?</translation>
         <translation>Detil</translation>
     </message>
     <message>
-        <source>Logout</source>
-        <translatorcomment>Button label to logout of the application. String as short as possible.</translatorcomment>
+        <source>Log out</source>
+        <translatorcomment>Button label to log out of the application. String as short as possible.</translatorcomment>
         <translation>Keluar</translation>
     </message>
     <message>
@@ -4141,11 +4156,6 @@ Apakah anda tetap ingin menghapusnya?</translation>
         <source>Full scan</source>
         <translatorcomment>Title of the message dialog for Full scan operation.</translatorcomment>
         <translation>Scan menyeluruh</translation>
-    </message>
-    <message>
-        <source>Open at login</source>
-        <translatorcomment>Label to let the user start MEGAsync on login with a checkbox.</translatorcomment>
-        <translation>Buka saat login</translation>
     </message>
     <message>
         <source>MEGAsync will perform a full scan of your synced folders when it starts.
@@ -4217,7 +4227,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Backups of the previous versions of your synced files in your computer will be permanently deleted. Please, check your backup folders to see if you need to rescue something before continuing:</source>
         <translatorcomment>Message shown to inform the user about the deletion of the local cache and its consequences</translatorcomment>
-        <translation>Versi cadangan file sebelumnya pada komputer anda akan dihapus secara permanen. Harap cek folder cadangan anda untuk melihat jika anda ingin menyelamatkan sesuatu sebelum melanjutkan.</translation>
+        <translation>Versi cadangan file sebelumnya pada komputer anda akan dihapus secara permanen. Harap cek folder cadangan anda untuk melihat jika anda ingin menyelamatkan sesuatu sebelum melanjutkan:</translation>
     </message>
     <message>
         <source>Backups of the previous versions of your synced files in MEGA will be permanently deleted. Please, check your [A] folder in the Rubbish Bin of your MEGA account to see if you need to rescue something before continuing.</source>
@@ -4435,9 +4445,9 @@ Do you want to restart MEGAsync now?</source>
         <translation>Folder Bawaan</translation>
     </message>
     <message>
-        <source>Move...</source>
+        <source>Move…</source>
         <translatorcomment>Button label text allowing the user to change the default Uploads or Downloads folders for the app.</translatorcomment>
-        <translation>Pindahkan...</translation>
+        <translation>Pindah...</translation>
     </message>
     <message>
         <source>Exclude files smaller than</source>
@@ -4450,14 +4460,14 @@ Do you want to restart MEGAsync now?</source>
         <translation>Jangan masukan file lebih besar dari</translation>
     </message>
     <message>
-        <source>Restart MEGA Desktop Application to apply changes.</source>
+        <source>Restart MEGA Desktop App to apply changes.</source>
         <translatorcomment>Informative text shown in Folders pane, letting the user know that an application restart is required to apply the changes he just made.</translatorcomment>
         <translation>Mulai ulang Aplikasi Desktop MEGA untuk menerapkan perubahan.</translation>
     </message>
     <message>
-        <source>Change Settings...</source>
+        <source>Change Settings…</source>
         <translatorcomment>Button label text for Bandwidth and Proxy settings in Network pane.</translatorcomment>
-        <translation>Ubah Pengaturan...</translation>
+        <translation>Ubah Pengaturan…</translation>
     </message>
     <message>
         <source>Proxies</source>
@@ -4689,6 +4699,16 @@ Do you want to restart MEGAsync now?</source>
         <translatorcomment>Button label text for export key saving to local machine in a file. Keep string as short as possible.</translatorcomment>
         <translation>Ekspor Kunci</translation>
     </message>
+    <message>
+        <source>Notifications</source>
+        <translatorcomment>Title for the Settings -&gt; Notifications pane tab button. Keep as short as possible.</translatorcomment>
+        <translation>Notifikasi</translation>
+    </message>
+    <message>
+        <source>Launch at login</source>
+        <translatorcomment>Label to let the user start MEGAsync on login with a checkbox.</translatorcomment>
+        <translation>Luncurkan saat masuk</translation>
+    </message>
 </context>
 <context>
     <name>SetupWizard</name>
@@ -4718,7 +4738,7 @@ Do you want to restart MEGAsync now?</source>
         <translation>Saya setuju dengan &lt;a href=&quot;https://mega.nz/terms&quot;&gt;Kebijakan Pelayanan&lt;/a&gt; MEGA</translation>
     </message>
     <message>
-        <source>Login to your MEGA account</source>
+        <source>Log in to your MEGA account</source>
         <translatorcomment>Label to let the user login with his credentials.</translatorcomment>
         <translation>Masuk ke akun MEGA anda</translation>
     </message>
@@ -4730,7 +4750,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Logging in ...</source>
         <translatorcomment>Label displayed while logging process.</translatorcomment>
-        <translation>Masuk...</translation>
+        <translation>Masuk…</translation>
     </message>
     <message>
         <source>Choose install type</source>
@@ -4790,7 +4810,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Fetching file list...</source>
         <translatorcomment>Label displayed while the application is retrieving all file list from the server.</translatorcomment>
-        <translation>Mengambil list file...</translation>
+        <translation>Mengambil list file…</translation>
     </message>
     <message>
         <source>Incorrect email and/or password.</source>
@@ -4870,7 +4890,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Logging in...</source>
         <translatorcomment>Label displayed when the user is logging in.</translatorcomment>
-        <translation>Masuk ...</translation>
+        <translation>Masuk …</translation>
     </message>
     <message>
         <source>You are trying to sync an extremely large folder.
@@ -4886,9 +4906,9 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>Tidak bisa mendapatkan filesystem. Tolong coba lagi. Jika masalah berlanjut, harap hubungi kami di bug@mega.nz</translation>
     </message>
     <message>
-        <source>Setup Assistant - MEGAsync</source>
+        <source>Set up Assistant - MEGAsync</source>
         <translatorcomment>Title of the setup assistant dialog. Keep capital letters.</translatorcomment>
-        <translation>Setup Assistant - MEGAsync</translation>
+        <translation>Siapkan Asisten - MEGAsync</translation>
     </message>
     <message>
         <source>Full sync</source>
@@ -4937,7 +4957,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Creating folder...</source>
         <translatorcomment>Label shown when an user is creating a remote folder.</translatorcomment>
-        <translation>Membuat folder ...</translation>
+        <translation>Membuat folder …</translation>
     </message>
     <message>
         <source>Logging out...</source>
@@ -5018,7 +5038,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>Silakan masukkan nama belakang anda</translation>
     </message>
     <message>
-        <source>Setup selective sync</source>
+        <source>Set up selective sync</source>
         <translatorcomment>Label shown when user is setting up the selective sync mode of MEGAsync</translatorcomment>
         <translation>Siapkan sinkronisasi selektif</translation>
     </message>
@@ -5033,7 +5053,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>Pilih folder lokal</translation>
     </message>
     <message>
-        <source>Setup full sync</source>
+        <source>Set up full sync</source>
         <translatorcomment>Label shown when user is setting up full sync mode of MEGAsync</translatorcomment>
         <translation>Siapkan sinkronisasi penuh</translation>
     </message>
@@ -5053,7 +5073,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>Kita semua selesai!</translation>
     </message>
     <message>
-        <source>Login</source>
+        <source>Log in</source>
         <translatorcomment>Button label to open Login form</translatorcomment>
         <translation>Masuk</translation>
     </message>
@@ -5179,7 +5199,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Select media from...</source>
         <translatorcomment>Label just above of the buttons to select files for streaming</translatorcomment>
-        <translation>Pilih media dari...</translation>
+        <translation>Pilih media dari…</translation>
     </message>
     <message>
         <source>Cloud Drive</source>
@@ -5271,6 +5291,24 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translatorcomment>Informative label to indicate the user that there is a stream error because of transfer overquota situation.</translatorcomment>
         <translation>Kesalahan aliran: transfer kuota berlebihan</translation>
     </message>
+    <message>
+        <source>Please wait...</source>
+        <translatorcomment>Message shown while waiting for the server request with the file info to stream</translatorcomment>
+        <translation>Mohon tunggu…</translation>
+    </message>
+</context>
+<context>
+    <name>SwitchButton</name>
+    <message>
+        <source>On</source>
+        <translatorcomment>Checked state of a swith button</translatorcomment>
+        <translation>Nyala</translation>
+    </message>
+    <message>
+        <source>Off</source>
+        <translatorcomment>Unchecked state of a swith button</translatorcomment>
+        <translation>Mati</translation>
+    </message>
 </context>
 <context>
     <name>TransferManager</name>
@@ -5282,7 +5320,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Add...</source>
         <translatorcomment>Button label to add transfers items (uploads/downloads/public links) to the dialog (String as short as possible)</translatorcomment>
-        <translation>Tambah...</translation>
+        <translation>Tambah…</translation>
     </message>
     <message>
         <source>Downloads</source>
@@ -5320,11 +5358,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>Batalkan semua</translation>
     </message>
     <message>
-        <source>Are you sure you want to cancel all transfers?</source>
-        <translatorcomment>Description label for warning dialog before a transfer cancellation</translatorcomment>
-        <translation>Anda yakin ingin membatalkan seluruh transfer?</translation>
-    </message>
-    <message>
         <source>Resume</source>
         <translation>Lanjutkan</translation>
     </message>
@@ -5345,6 +5378,26 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Open links</source>
         <translatorcomment>Menu action item to open MEGA public links. It will let you to import and/or download.</translatorcomment>
         <translation>Buka tautan</translation>
+    </message>
+    <message>
+        <source>Do you want to cancel all transfers?</source>
+        <translatorcomment>Description label for warning dialog before a transfer cancellation</translatorcomment>
+        <translation>Apakah anda ingin membatalkan semua transfer?</translation>
+    </message>
+    <message>
+        <source>Syncs aren&apos;t affected by this action.</source>
+        <translatorcomment>Description label for warning dialog indicating that syncs are not going to be affected by accepting this dialog</translatorcomment>
+        <translation>Sinkronisasi tidak terpengaruh oleh tindakan ini.</translation>
+    </message>
+    <message>
+        <source>Continue transfers</source>
+        <translatorcomment>Button label that indicates that no one of active transfers will be cancelled (Cancel button on dialog)</translatorcomment>
+        <translation>Lanjutkan transfer</translation>
+    </message>
+    <message>
+        <source>Cancel all transfers</source>
+        <translatorcomment>Button label that indicates that all active transfers will be cancelled (Accept button on dialog)</translatorcomment>
+        <translation>Batalkan semua transfer</translation>
     </message>
 </context>
 <context>
@@ -5469,7 +5522,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Please upgrade to PRO to enjoy more storage space (your uploads will automatically resume).</source>
         <translatorcomment>Label to encourage the user to upgrade his account</translatorcomment>
-        <translation>Tingkatkan ke PRO untuk menikmati lebih banyak ruang penyimpanan (unggahan anda akan dilanjutkan secara otomatis).</translation>
+        <translation>Tingkatkan ke Pro untuk menikmati lebih banyak ruang penyimpanan (unggahan anda akan dilanjutkan secara otomatis).</translation>
     </message>
     <message>
         <source>Your MEGA account is full</source>
@@ -5678,8 +5731,8 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>Mengapa saya melihat ini?</translation>
     </message>
     <message>
-        <source>Logout</source>
-        <translatorcomment>Button label to logout the current account</translatorcomment>
+        <source>Log out</source>
+        <translatorcomment>Button label to log out the current account</translatorcomment>
         <translation>Keluar</translation>
     </message>
     <message>

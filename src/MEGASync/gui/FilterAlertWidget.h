@@ -16,7 +16,7 @@ public:
     explicit FilterAlertWidget(QWidget *parent = 0);
     ~FilterAlertWidget();
 
-    void setUnseenNotifications(int all = 0, int contacts = 0, int shares = 0, int payment = 0);
+    void setUnseenNotifications(long long all = 0, long long contacts = 0, long long shares = 0, long long payment = 0);
     void reset();
 
 private slots:
