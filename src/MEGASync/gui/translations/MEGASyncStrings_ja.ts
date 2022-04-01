@@ -491,12 +491,12 @@
     <message>
         <source>Downloads:</source>
         <translatorcomment>Label to indicate the limit of download connections per transfer.</translatorcomment>
-        <translation>ダウンロード</translation>
+        <translation>ダウンロード：</translation>
     </message>
     <message>
         <source>Uploads:</source>
         <translatorcomment>Label to indicate the limit of upload connections per transfer.</translatorcomment>
-        <translation>アップロード</translation>
+        <translation>アップロード：</translation>
     </message>
     <message>
         <source>Don&apos;t use HTTP</source>
@@ -797,39 +797,6 @@ Please enter a different name to identify this synced folder:</source>
     </message>
 </context>
 <context>
-    <name>ConfirmSSLexception</name>
-    <message>
-        <source>Warning</source>
-        <translatorcomment>Title of the dialog that allows to disable a security check to prevent atacks that could intercept the communications of MEGAsync</translatorcomment>
-        <translation>警告</translation>
-    </message>
-    <message>
-        <source>Are you sure you want to continue?</source>
-        <translatorcomment>Question for the user in the dialog that allows to disable a security check of MEGAsync. The user have to reply yes or no</translatorcomment>
-        <translation>このまま続けますか？</translation>
-    </message>
-    <message>
-        <source>Remember my decision and don&apos;t ask me again</source>
-        <translatorcomment>Text next to a checkbox that allows to remember the decision of the user. The translation should be as short as possible.</translatorcomment>
-        <translation>私の決断を覚えておき、もう一度私に尋ねないでください。</translation>
-    </message>
-    <message>
-        <source>No</source>
-        <translatorcomment>Negative response to a question. The text will be inside a button.</translatorcomment>
-        <translation>いいえ</translation>
-    </message>
-    <message>
-        <source>Yes</source>
-        <translatorcomment>Positive response to a question. The text will be inside a button.</translatorcomment>
-        <translation>はい</translation>
-    </message>
-    <message>
-        <source>You are about to allow that your communications could be intercepted. Your data would be still inaccessible for attackers due to our end-to-end encryption, but they could blindly move your files and folders in MEGA, delete them or deny your access to your account.</source>
-        <translatorcomment>Information for the user about the consequences of disabling a security check of MEGAsync</translatorcomment>
-        <translation>あなたは、あなたの通信が傍受される可能性のある設定を許可しようとしています。それでも当社のエンドツーエンドの暗号化により、攻撃者はあなたのデータにアクセスできないでしょうが、MEGAのあなたのファイルやフォルダを無分別に移動したり、削除したり、あなたのアカウントへのあなたのアクセスを拒否したりする可能性があります。</translation>
-    </message>
-</context>
-<context>
     <name>CrashReportDialog</name>
     <message>
         <source>Error report</source>
@@ -887,12 +854,12 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>retrying...</source>
         <translatorcomment>Label to indicate that a transfer is being retried.</translatorcomment>
-        <translation>再試行中...</translation>
+        <translation>再試行中…</translation>
     </message>
     <message>
         <source>completing...</source>
         <translatorcomment>Label to indicate that a transfer is being completed.</translatorcomment>
-        <translation>完了中...</translation>
+        <translation>完了中…</translation>
     </message>
     <message>
         <source>Added [A]</source>
@@ -981,16 +948,6 @@ Please enter a different name to identify this synced folder:</source>
         <source>Reject</source>
         <translatorcomment>Button label of system notification to reject the notification of incoming contact request.</translatorcomment>
         <translation>拒否</translation>
-    </message>
-    <message>
-        <source>Cancelled Contact Request</source>
-        <translatorcomment>Title of the notification about a cancellation of a contact request</translatorcomment>
-        <translation>連絡先要求を取り消しました</translation>
-    </message>
-    <message>
-        <source>[A] cancelled the contact request</source>
-        <translatorcomment>Label to indicate that usar [A] has cancelled the contact request. Placeholder will be replaced by email of the user that made the cancellation.</translatorcomment>
-        <translation>[A]さんが連絡先要求を取り消しました</translation>
     </message>
     <message>
         <source>Reminder</source>
@@ -1115,7 +1072,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Upgrade now to a PRO account.</source>
         <translatorcomment>Notification message shown to encourage the user to upgrade his account</translatorcomment>
-        <translation>今すぐPROアカウントにアップグレードしてください。</translation>
+        <translation>今すぐProアカウントにアップグレードしてください。</translation>
     </message>
     <message>
         <source>Get PRO</source>
@@ -1405,12 +1362,12 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Setting up your account...</source>
         <translatorcomment>Label shown at main dialog during the initial setup of synced folders.</translatorcomment>
-        <translation>あなたのアカウントを設定しています...</translation>
+        <translation>あなたのアカウントを設定しています…</translation>
     </message>
     <message>
         <source>Logging in...</source>
         <translatorcomment>Label shown at main dialog to show the current operation. In this case logging in.</translatorcomment>
-        <translation>ログイン中...</translation>
+        <translation>ログイン中…</translation>
     </message>
     <message>
         <source>Fetching file list...</source>
@@ -1473,8 +1430,8 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation>あなたのアカウントは一時的に安全を確保するためにロックされました。メールアドレスを検証し、その手順に従ってアカウントのロックを解除してください。</translation>
     </message>
     <message>
-        <source>Logout</source>
-        <translatorcomment>Button label to logout the current account.</translatorcomment>
+        <source>Log out</source>
+        <translatorcomment>Button label to log out the current account.</translatorcomment>
         <translation>ログアウト</translation>
     </message>
     <message>
@@ -1490,7 +1447,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Creating account...</source>
         <translatorcomment>Informative label during creation of an account using MEGAsync</translatorcomment>
-        <translation>アカウントを作成中...</translation>
+        <translation>アカウントを作成中…</translation>
     </message>
     <message>
         <source>Why am I seeing this?</source>
@@ -1680,7 +1637,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Your MEGA account is full.</source>
         <translatorcomment>Label shown to inform the user that the actual account is over storage.</translatorcomment>
-        <translation>お客様のMEGA PROアカウントはいっぱいです。</translation>
+        <translation>お客様のMEGA Proアカウントはいっぱいです。</translation>
     </message>
     <message>
         <source>All file uploads are currently disabled.</source>
@@ -1850,7 +1807,8 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation>ログインしていません。</translation>
     </message>
     <message>
-        <source>Login</source>
+        <source>Log in</source>
+        <translatorcomment>Title for explanation about log in</translatorcomment>
         <translation>ログイン</translation>
     </message>
     <message>
@@ -2011,7 +1969,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Logging in...</source>
         <translatorcomment>Notification message showing a Logging in state. Keep capital letters.</translatorcomment>
-        <translation>ログイン中...</translation>
+        <translation>ログイン中…</translation>
     </message>
     <message>
         <source>About</source>
@@ -2206,11 +2164,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>VirtualBox共有フォルダの同期は、そのファイルシステムの欠陥によりサポートされていないため、同期「%1」が無効になっています。</translation>
     </message>
     <message>
-        <source>Logout</source>
-        <translatorcomment>Label to indicate Logout action</translatorcomment>
-        <translation>ログアウト</translation>
-    </message>
-    <message>
         <source>Error getting link information</source>
         <translatorcomment>Notification  error message shown while getting information from a public link.</translatorcomment>
         <translation>リンク情報の取得中にエラーが発生しました</translation>
@@ -2243,16 +2196,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Fetching file list...</source>
         <translation>ファイルリストを取得中…</translation>
-    </message>
-    <message>
-        <source>I don&apos;t care</source>
-        <translatorcomment>Text for a button that, when clicked, will disable and important security check of MEGAsync. The text should be as short as possible. If it&apos;s not possible to provide a short translation, it can be translated as: Ignore</translatorcomment>
-        <translation>かまいません</translation>
-    </message>
-    <message>
-        <source>Retry</source>
-        <translatorcomment>Text for a button that will cause a retry of a failed operation. The translation should be as short as possible.</translatorcomment>
-        <translation>再試行</translation>
     </message>
     <message>
         <source>Transfer canceled</source>
@@ -2435,11 +2378,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>同期</translation>
     </message>
     <message>
-        <source>MEGA is unable to connect securely through SSL. You might be on public WiFi with additional requirements.</source>
-        <translatorcomment>Message shown when SSL (connection secure with MEGA) errors are detected.</translatorcomment>
-        <translation>MEGAはSSL経由では安全に接続できません。あなたは追加要件を伴うWi-Fiを使っているかもしれません。</translation>
-    </message>
-    <message>
         <source>Cloud drive</source>
         <translatorcomment>Label of context menu to reach Cloud drive section at webclient. It will open your webbrowser and redirects to your cloud drive.</translatorcomment>
         <translation>クラウドドライブ</translation>
@@ -2533,11 +2471,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>One or more syncs have been disabled</source>
         <translatorcomment>Tooltip to indicate that some syncs have been disable due to some error.</translatorcomment>
         <translation>1つ以上の同期が無効になっています</translation>
-    </message>
-    <message>
-        <source>Your syncs have been enabled</source>
-        <translatorcomment>Notification message shown when the syncs have been enabled.</translatorcomment>
-        <translation>同期が有効になりました</translation>
     </message>
     <message>
         <source>Error adding sync</source>
@@ -3187,6 +3120,84 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
 </context>
 <context>
+    <name>NotificationsSettings</name>
+    <message>
+        <source>Account notifications:</source>
+        <translatorcomment>Title for notifications setting pane</translatorcomment>
+        <translation>アカウント通知：</translation>
+    </message>
+    <message>
+        <source>Shares</source>
+        <translatorcomment>Notification category for shared folders and nodes</translatorcomment>
+        <translation>共有</translation>
+    </message>
+    <message>
+        <source>New shared folder from contact</source>
+        <translatorcomment>Title of a checkbox for disconnectig notifications</translatorcomment>
+        <translation>連絡先からの新規共有フォルダ</translation>
+    </message>
+    <message>
+        <source>Added or removed files</source>
+        <translatorcomment>Title of a checkbox for disconnectig notifications</translatorcomment>
+        <translation>追加または削除されたファイル</translation>
+    </message>
+    <message>
+        <source>Access to a shared folder was removed</source>
+        <translatorcomment>Title of a checkbox for disconnectig notifications</translatorcomment>
+        <translation>共有フォルダへのアクセスは削除されました</translation>
+    </message>
+    <message>
+        <source>Contacts</source>
+        <translatorcomment>Notification category for contact notifications</translatorcomment>
+        <translation>連絡先</translation>
+    </message>
+    <message>
+        <source>New contact request</source>
+        <translatorcomment>Title of a checkbox for disconnectig notifications</translatorcomment>
+        <translation>新しいコンタクト要求</translation>
+    </message>
+    <message>
+        <source>Pending contact request reminder</source>
+        <translatorcomment>Title of a checkbox for disconnectig notifications</translatorcomment>
+        <translation>保留中のコンタクト要求リマインダ</translation>
+    </message>
+    <message>
+        <source>Someone has accepted your contact request</source>
+        <translatorcomment>Title of a checkbox for disconnectig notifications</translatorcomment>
+        <translation>誰かがあなたの連絡先要求を受け入れました。</translation>
+    </message>
+    <message>
+        <source>Info</source>
+        <translatorcomment>Notification category for non-critical info notifications</translatorcomment>
+        <translation>情報</translation>
+    </message>
+    <message>
+        <source>Desktop notifications</source>
+        <translatorcomment>Title of a checkbox for disconnectig notifications</translatorcomment>
+        <translation>デスクトップ通知</translation>
+    </message>
+    <message>
+        <source>Someone accepted your contact request</source>
+        <translatorcomment>Title of a checkbox for disconnectig notifications</translatorcomment>
+        <translation>誰かがあなたのコンタクト要求を受け入れました</translation>
+    </message>
+    <message>
+        <source>Info:</source>
+        <translatorcomment>Notification category for non-critical info notifications (macx)</translatorcomment>
+        <translation>情報：</translation>
+    </message>
+    <message>
+        <source>Contacts:</source>
+        <translatorcomment>Notification category for non-critical info notifications (macx)</translatorcomment>
+        <translation>連絡先：</translation>
+    </message>
+    <message>
+        <source>Shares:</source>
+        <translatorcomment>Notification category for non-critical info notifications (macx)</translatorcomment>
+        <translation>共有：</translation>
+    </message>
+</context>
+<context>
     <name>Notificator</name>
     <message>
         <source>MEGAsync</source>
@@ -3344,9 +3355,9 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translation>MEGAリンクが無効です</translation>
     </message>
     <message>
-        <source>Enter links</source>
+        <source>Open links</source>
         <translatorcomment>Window title for dialog to enter MEGA public links</translatorcomment>
-        <translation>リンクを入力</translation>
+        <translation>リンクを開く</translation>
     </message>
 </context>
 <context>
@@ -3523,12 +3534,19 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Strengthen cryptographic security on Linux repositories.
-- Fix memory issues with problematic PDF files.
+        <source>- Added support to stream file links from a folder link.
+- Fixed translation issues.
+- Improved the user experience.
+- Added a new notifications panel in the settings dialog.
+- Other minor UI fixes and adjustments.
+- Fixed detected crashes on Windows, Linux and macOS.
 </source>
-        <translatorcomment>Changelog v4.6.3 (linux only)</translatorcomment>
-        <translation>－Linuxリポジトリの暗号セキュリティの強化。
-－問題のあるPDFファイルのメモリ問題を修正。
+        <translation>－フォルダリンクからファイルリンクのストリームサポートを追加。
+－翻訳の不具合を修正。
+－ユーザーエクスペリエンスを向上。
+－設定ダイアログに新しい通知パネルを追加。
+－その他、細かなUIの修正と調整。
+－Windows、Linux、macOSで検出されたクラッシュを修正。
 </translation>
     </message>
 </context>
@@ -3572,7 +3590,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Server:</source>
         <translatorcomment>Label to indicate the server name/ip of the proxy that is being configured.</translatorcomment>
-        <translation>サーバー</translation>
+        <translation>サーバー：</translation>
     </message>
     <message>
         <source>Password:</source>
@@ -3768,7 +3786,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Directory:</source>
         <translatorcomment>Selected directory text box label when choosing a directory</translatorcomment>
-        <translation>ディレクトリ</translation>
+        <translation>ディレクトリ：</translation>
     </message>
     <message>
         <source>All Files (*)</source>
@@ -3903,7 +3921,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>File &amp;name:</source>
         <translatorcomment>Selected file text box label when opening a file. The ampersand means that the key after can be used for triggers the action instead of using the mouse to click it. The shortcut key chosen cannot be the same as the one chosen on the next strings (&amp;Open, &amp;Choose, &amp;Save).</translatorcomment>
-        <translation>ファイル名(&amp;n):</translation>
+        <translation>ファイル名(&amp;n):：</translation>
     </message>
     <message>
         <source>%1
@@ -4053,11 +4071,6 @@ Do you want to delete it anyway?</source>
         <translation>ヘルプ</translation>
     </message>
     <message>
-        <source>Show notifications</source>
-        <translatorcomment>Label to let the user enable desktop notifications with a checkbox.</translatorcomment>
-        <translation>通知を表示</translation>
-    </message>
-    <message>
         <source>Start on startup</source>
         <translatorcomment>Label to let the user start MEGAsync on startup of the operating system with a checkbox.</translatorcomment>
         <translation>起動時に開始</translation>
@@ -4078,8 +4091,8 @@ Do you want to delete it anyway?</source>
         <translation>詳細</translation>
     </message>
     <message>
-        <source>Logout</source>
-        <translatorcomment>Button label to logout of the application. String as short as possible.</translatorcomment>
+        <source>Log out</source>
+        <translatorcomment>Button label to log out of the application. String as short as possible.</translatorcomment>
         <translation>ログアウト</translation>
     </message>
     <message>
@@ -4143,11 +4156,6 @@ Do you want to delete it anyway?</source>
         <translation>フルスキャン</translation>
     </message>
     <message>
-        <source>Open at login</source>
-        <translatorcomment>Label to let the user start MEGAsync on login with a checkbox.</translatorcomment>
-        <translation>ログイン時に開く</translation>
-    </message>
-    <message>
         <source>MEGAsync will perform a full scan of your synced folders when it starts.
 
 Do you want to restart MEGAsync now?</source>
@@ -4167,12 +4175,12 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Uploads:</source>
         <translatorcomment>Label to indicate the default folder for uploads.</translatorcomment>
-        <translation>アップロード</translation>
+        <translation>アップロード：</translation>
     </message>
     <message>
         <source>Downloads:</source>
         <translatorcomment>Label to indicate the default folder for downloads.</translatorcomment>
-        <translation>ダウンロード</translation>
+        <translation>ダウンロード：</translation>
     </message>
     <message>
         <source>Enable / disable</source>
@@ -4435,7 +4443,7 @@ Do you want to restart MEGAsync now?</source>
         <translation>デフォルトフォルダ</translation>
     </message>
     <message>
-        <source>Move...</source>
+        <source>Move…</source>
         <translatorcomment>Button label text allowing the user to change the default Uploads or Downloads folders for the app.</translatorcomment>
         <translation>移動…</translation>
     </message>
@@ -4450,12 +4458,12 @@ Do you want to restart MEGAsync now?</source>
         <translation>次の値よりも大きいファイルを除外：</translation>
     </message>
     <message>
-        <source>Restart MEGA Desktop Application to apply changes.</source>
+        <source>Restart MEGA Desktop App to apply changes.</source>
         <translatorcomment>Informative text shown in Folders pane, letting the user know that an application restart is required to apply the changes he just made.</translatorcomment>
-        <translation>変更を適用するにはMEGAデスクアプリケーションを再起動します。</translation>
+        <translation>MEGAデスクトップアプリを再起動すると変更が適用されます。</translation>
     </message>
     <message>
-        <source>Change Settings...</source>
+        <source>Change Settings…</source>
         <translatorcomment>Button label text for Bandwidth and Proxy settings in Network pane.</translatorcomment>
         <translation>設定の変更…</translation>
     </message>
@@ -4667,7 +4675,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Saving synchronised folders…</source>
         <translatorcomment>Temporary text label shown while saving changes to Synchronized folders on Windows\Linux. Keep the 3 suspense periods, indicating to the user that the action is in in progress.</translatorcomment>
-        <translation>同期したフォルダの保存中...</translation>
+        <translation>同期したフォルダの保存中…</translation>
     </message>
     <message>
         <source>Pro I</source>
@@ -4688,6 +4696,16 @@ Do you want to restart MEGAsync now?</source>
         <source>Export Key</source>
         <translatorcomment>Button label text for export key saving to local machine in a file. Keep string as short as possible.</translatorcomment>
         <translation>キーをエクスポート</translation>
+    </message>
+    <message>
+        <source>Notifications</source>
+        <translatorcomment>Title for the Settings -&gt; Notifications pane tab button. Keep as short as possible.</translatorcomment>
+        <translation>通知</translation>
+    </message>
+    <message>
+        <source>Launch at login</source>
+        <translatorcomment>Label to let the user start MEGAsync on login with a checkbox.</translatorcomment>
+        <translation>ログイン時に起動</translation>
     </message>
 </context>
 <context>
@@ -4718,9 +4736,9 @@ Do you want to restart MEGAsync now?</source>
         <translation>私はMEGAの&lt;a href=&quot;https://mega.nz/terms&quot;&gt;ご利用規約&lt;/a&gt;に同意します</translation>
     </message>
     <message>
-        <source>Login to your MEGA account</source>
+        <source>Log in to your MEGA account</source>
         <translatorcomment>Label to let the user login with his credentials.</translatorcomment>
-        <translation>あなたのMEGAアカウントにログイン</translation>
+        <translation>MEGAアカウントにログインしてください</translation>
     </message>
     <message>
         <source>Please verify your account using the confirmation link that we have sent to your email account</source>
@@ -4750,12 +4768,12 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Local folder:</source>
         <translatorcomment>Label displayed to show the local folder synchronized.</translatorcomment>
-        <translation>ローカルフォルダ</translation>
+        <translation>ローカルフォルダ：</translation>
     </message>
     <message>
         <source>MEGA folder:</source>
         <translatorcomment>Label displayed to show the MEGA folder synchronized.</translatorcomment>
-        <translation>MEGAフォルダ</translation>
+        <translation>MEGAフォルダ：</translation>
     </message>
     <message>
         <source>Change</source>
@@ -4845,7 +4863,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Creating account...</source>
         <translatorcomment>Label displayed when the account is being created.</translatorcomment>
-        <translation>アカウントを作成中...</translation>
+        <translation>アカウントを作成中…</translation>
     </message>
     <message>
         <source>Warning</source>
@@ -4870,7 +4888,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Logging in...</source>
         <translatorcomment>Label displayed when the user is logging in.</translatorcomment>
-        <translation>ログイン中...</translation>
+        <translation>ログイン中…</translation>
     </message>
     <message>
         <source>You are trying to sync an extremely large folder.
@@ -4886,9 +4904,9 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>ファイルシステムを取得できません。もう一度やり直してください。問題が解決しない場合は、bug@mega.nzまでご連絡ください。</translation>
     </message>
     <message>
-        <source>Setup Assistant - MEGAsync</source>
+        <source>Set up Assistant - MEGAsync</source>
         <translatorcomment>Title of the setup assistant dialog. Keep capital letters.</translatorcomment>
-        <translation>設定アシスタント - MEGAsync</translation>
+        <translation>セットアップアシスタント－MEGAsync</translation>
     </message>
     <message>
         <source>Full sync</source>
@@ -4937,7 +4955,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Creating folder...</source>
         <translatorcomment>Label shown when an user is creating a remote folder.</translatorcomment>
-        <translation>フォルダを作成中...</translation>
+        <translation>フォルダを作成中…</translation>
     </message>
     <message>
         <source>Logging out...</source>
@@ -5018,9 +5036,9 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>お名前を入力してください</translation>
     </message>
     <message>
-        <source>Setup selective sync</source>
+        <source>Set up selective sync</source>
         <translatorcomment>Label shown when user is setting up the selective sync mode of MEGAsync</translatorcomment>
-        <translation>選択同期の設定</translation>
+        <translation>選択的同期を設定</translation>
     </message>
     <message>
         <source>Specific folders in your Cloud Drive will be synchronized with a local folder.</source>
@@ -5033,9 +5051,9 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>ローカルフォルダを選択</translation>
     </message>
     <message>
-        <source>Setup full sync</source>
+        <source>Set up full sync</source>
         <translatorcomment>Label shown when user is setting up full sync mode of MEGAsync</translatorcomment>
-        <translation>完全同期の設定</translation>
+        <translation>完全同期を設定</translation>
     </message>
     <message>
         <source>Full Sync</source>
@@ -5053,7 +5071,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>すべて完了しました！　</translation>
     </message>
     <message>
-        <source>Login</source>
+        <source>Log in</source>
         <translatorcomment>Button label to open Login form</translatorcomment>
         <translation>ログイン</translation>
     </message>
@@ -5271,6 +5289,24 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translatorcomment>Informative label to indicate the user that there is a stream error because of transfer overquota situation.</translatorcomment>
         <translation>ストリーミングエラー：転送容量を超過しました。</translation>
     </message>
+    <message>
+        <source>Please wait...</source>
+        <translatorcomment>Message shown while waiting for the server request with the file info to stream</translatorcomment>
+        <translation>お待ちください…</translation>
+    </message>
+</context>
+<context>
+    <name>SwitchButton</name>
+    <message>
+        <source>On</source>
+        <translatorcomment>Checked state of a swith button</translatorcomment>
+        <translation>オン</translation>
+    </message>
+    <message>
+        <source>Off</source>
+        <translatorcomment>Unchecked state of a swith button</translatorcomment>
+        <translation>オフ</translation>
+    </message>
 </context>
 <context>
     <name>TransferManager</name>
@@ -5320,11 +5356,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>すべてキャンセル</translation>
     </message>
     <message>
-        <source>Are you sure you want to cancel all transfers?</source>
-        <translatorcomment>Description label for warning dialog before a transfer cancellation</translatorcomment>
-        <translation>すべての転送をキャンセルしてもよろしいですか？</translation>
-    </message>
-    <message>
         <source>Resume</source>
         <translation>再開</translation>
     </message>
@@ -5345,6 +5376,26 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Open links</source>
         <translatorcomment>Menu action item to open MEGA public links. It will let you to import and/or download.</translatorcomment>
         <translation>リンクを開く</translation>
+    </message>
+    <message>
+        <source>Do you want to cancel all transfers?</source>
+        <translatorcomment>Description label for warning dialog before a transfer cancellation</translatorcomment>
+        <translation>転送をすべてキャンセルしますか？</translation>
+    </message>
+    <message>
+        <source>Syncs aren&apos;t affected by this action.</source>
+        <translatorcomment>Description label for warning dialog indicating that syncs are not going to be affected by accepting this dialog</translatorcomment>
+        <translation>同期はこの操作の影響を受けません。</translation>
+    </message>
+    <message>
+        <source>Continue transfers</source>
+        <translatorcomment>Button label that indicates that no one of active transfers will be cancelled (Cancel button on dialog)</translatorcomment>
+        <translation>転送を続行</translation>
+    </message>
+    <message>
+        <source>Cancel all transfers</source>
+        <translatorcomment>Button label that indicates that all active transfers will be cancelled (Accept button on dialog)</translatorcomment>
+        <translation>すべての転送をキャンセル</translation>
     </message>
 </context>
 <context>
@@ -5436,7 +5487,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Please upgrade to Pro to continue immediately, or wait %1 to continue for free</source>
         <translatorcomment>Warning label shown when user reaches over transfer quota situation. The user can upgrade Plan or wait %1 time until new free quota is allowed.</translatorcomment>
-        <translation>PROにアップグレードして直ちに続行するか、%1待ってから無料で続行してください</translation>
+        <translation>Proにアップグレードして直ちに続行するか、%1待ってから無料で続行してください</translation>
     </message>
     <message>
         <source>* The local currency price is an estimate only. All transactions shown charged in Euros.</source>
@@ -5474,7 +5525,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your MEGA account is full</source>
         <translatorcomment>Label shown to inform the user that the actual account is over storage.</translatorcomment>
-        <translation>お客様のMEGA PROアカウントはいっぱいです。</translation>
+        <translation>お客様のMEGA Proアカウントはいっぱいです。</translation>
     </message>
     <message>
         <source>To increase this limit, you can upgrade your account, which will give you ample extra storage space.</source>
@@ -5678,8 +5729,8 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>これが表示されている理由は？</translation>
     </message>
     <message>
-        <source>Logout</source>
-        <translatorcomment>Button label to logout the current account</translatorcomment>
+        <source>Log out</source>
+        <translatorcomment>Button label to log out the current account</translatorcomment>
         <translation>ログアウト</translation>
     </message>
     <message>

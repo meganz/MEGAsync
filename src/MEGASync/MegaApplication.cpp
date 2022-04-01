@@ -951,7 +951,6 @@ void MegaApplication::start()
     indexing = false;
     paused = false;
     nodescurrent = false;
-    appliedStorageState = MegaApi::STORAGE_STATE_UNKNOWN;
     getUserDataRequestReady = false;
     mFetchingNodes = false;
     mQueringWhyAmIBlocked = false;
@@ -1394,6 +1393,11 @@ void MegaApplication::startSyncs(QList<PreConfiguredSync> syncs)
     {
         return;
     }
+
+    // Load default exclusion rules before adding the new syncs from setup wizard.
+    // We could not load them before fetch nodes, because default exclusion rules
+    // are only created once the local preferences are logged.
+    loadSyncExclusionRules(QString::fromUtf8(megaApi->getMyEmail()));
 
     // add syncs from setupWizard
     for (auto & ps : syncs)
@@ -2582,7 +2586,7 @@ void MegaApplication::initLocalServer()
 
 bool MegaApplication::eventFilter(QObject *obj, QEvent *e)
 {
-    if (obj == infoDialogMenu)
+    if (!appfinished && obj == infoDialogMenu)
     {
         if (e->type() == QEvent::Leave)
         {
@@ -2856,7 +2860,7 @@ void MegaApplication::loadSyncExclusionRules(QString email)
 
     if (preferences->lowerSizeLimit())
     {
-        megaApi->setExclusionLowerSizeLimit(computeExclusionSizeLimit(preferences->lowerSizeLimitValue()));
+        megaApi->setExclusionLowerSizeLimit(computeExclusionSizeLimit(preferences->lowerSizeLimitValue(), preferences->lowerSizeLimitUnit()));
     }
     else
     {
@@ -2865,7 +2869,7 @@ void MegaApplication::loadSyncExclusionRules(QString email)
 
     if (preferences->upperSizeLimit())
     {
-        megaApi->setExclusionUpperSizeLimit(computeExclusionSizeLimit(preferences->upperSizeLimitValue()));
+        megaApi->setExclusionUpperSizeLimit(computeExclusionSizeLimit(preferences->upperSizeLimitValue(), preferences->upperSizeLimitUnit()));
     }
     else
     {
@@ -2880,9 +2884,9 @@ void MegaApplication::loadSyncExclusionRules(QString email)
 
 }
 
-long long MegaApplication::computeExclusionSizeLimit(const long long sizeLimitValue)
+long long MegaApplication::computeExclusionSizeLimit(const long long sizeLimitValue, const int unit)
 {
-    const double sizeLimitPower = pow(static_cast<double>(1024), static_cast<double>(sizeLimitValue));
+    const double sizeLimitPower = pow(static_cast<double>(1024), static_cast<double>(unit));
     return sizeLimitValue * static_cast<long long>(sizeLimitPower);
 }
 
