@@ -28,14 +28,7 @@ void TransferBaseDelegateWidget::updateUi(const QExplicitlySharedDataPointer<Tra
 
 bool TransferBaseDelegateWidget::stateHasChanged()
 {
-    if(mData && mData->mState != mPreviousState)
-    {
-        return true;
-    }
-    else
-    {
-        return false;
-    }
+    return (mData && mData->mState != mPreviousState);
 }
 
 QExplicitlySharedDataPointer<TransferData> TransferBaseDelegateWidget::getData()

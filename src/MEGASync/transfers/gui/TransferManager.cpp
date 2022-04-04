@@ -158,6 +158,9 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
     connect(mUi->wTransfers, &TransfersWidget::pauseResumeVisibleRows,
                 this, &TransferManager::onPauseResumeVisibleRows);
 
+    connect(mUi->wTransfers, &TransfersWidget::cancelClearVisibleRows,
+                this, &TransferManager::onCancelVisibleRows);
+
     connect(mUi->wTransfers,
             &TransfersWidget::disableTransferManager,[this](bool state){
         setDisabled(state);
@@ -356,6 +359,27 @@ void TransferManager::onPauseResumeVisibleRows(bool isPaused)
 
     //Use to repaint and update the transfers state
     transfersView->update();
+}
+
+void TransferManager::onCancelVisibleRows()
+{
+    auto transfersView = findChild<MegaTransferView*>();
+
+    if(transfersView)
+    {
+        if(mCurrentTab == ALL_TRANSFERS_TAB)
+        {
+            transfersView->onCancelAllTransfers();
+        }
+        else
+        {
+            transfersView->onCancelVisibleTransfers();
+        }
+
+        //Use to repaint and update the transfers state
+        transfersView->update();
+    }
+
 }
 
 void TransferManager::refreshStateStats()
@@ -869,6 +893,9 @@ void TransferManager::on_bCancelClearAll_clicked()
     if(transfersView)
     {
         transfersView->onCancelAndClearAllTransfers();
+
+        //Use to repaint and update the transfers state
+        transfersView->update();
     }
 }
 

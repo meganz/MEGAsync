@@ -10,17 +10,16 @@ using namespace mega;
 
 InfoDialogTransfersWidget::InfoDialogTransfersWidget(QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::InfoDialogTransfersWidget)
+    mUi(new Ui::InfoDialogTransfersWidget),
+    mModel(nullptr)
 {
-    ui->setupUi(this);
-    this->mModel = NULL;
-    app = (MegaApplication *)qApp;
+    mUi->setupUi(this);
 }
 
 void InfoDialogTransfersWidget::setupTransfers()
 {
-    mModel = new InfoDialogTransfersProxyModel(ui->tView);
-    mModel->setSourceModel(app->getTransfersModel());
+    mModel = new InfoDialogTransfersProxyModel(mUi->tView);
+    mModel->setSourceModel(MegaSyncApp->getTransfersModel());
     mModel->sort(0);
     mModel->setDynamicSortFilter(true);
 
@@ -29,7 +28,7 @@ void InfoDialogTransfersWidget::setupTransfers()
 
 InfoDialogTransfersWidget::~InfoDialogTransfersWidget()
 {
-    delete ui;
+    delete mUi;
     delete mModel;
 }
 
@@ -48,17 +47,17 @@ void InfoDialogTransfersWidget::configureTransferView()
         return;
     }
 
-    auto tDelegate = new MegaTransferDelegate(mModel, ui->tView);
-    ui->tView->setItemDelegate((QAbstractItemDelegate *)tDelegate);
-    ui->tView->header()->close();
-    ui->tView->setSelectionMode(QAbstractItemView::NoSelection);
-    ui->tView->setDragEnabled(false);
-    ui->tView->viewport()->setAcceptDrops(false);
-    ui->tView->setDropIndicatorShown(false);
-    ui->tView->setDragDropMode(QAbstractItemView::InternalMove);
-    ui->tView->setModel(mModel);
-    ui->tView->setFocusPolicy(Qt::NoFocus);
-    ui->tView->disableContextMenus(true);
+    auto tDelegate = new MegaTransferDelegate(mModel, mUi->tView);
+    mUi->tView->setItemDelegate((QAbstractItemDelegate *)tDelegate);
+    mUi->tView->header()->close();
+    mUi->tView->setSelectionMode(QAbstractItemView::NoSelection);
+    mUi->tView->setDragEnabled(false);
+    mUi->tView->viewport()->setAcceptDrops(false);
+    mUi->tView->setDropIndicatorShown(false);
+    mUi->tView->setDragDropMode(QAbstractItemView::InternalMove);
+    mUi->tView->setModel(mModel);
+    mUi->tView->setFocusPolicy(Qt::NoFocus);
+    mUi->tView->disableContextMenus(true);
 
-    mViewHoverManager.setView(ui->tView);
+    mViewHoverManager.setView(mUi->tView);
 }

@@ -367,7 +367,7 @@ void TransferThread::resetCompletedDownloads(QList<QExplicitlySharedDataPointer<
 
 const int PROCESS_TIMER = 100;
 const int UPDATE_NUMBER_LIMIT = 100;
-const int RESET_AFTER_EMPTY_RECEIVES = 5;
+const int RESET_AFTER_EMPTY_RECEIVES = 10;
 const unsigned long long ACTIVE_PRIORITY_OFFSET = 100000000000000;
 const unsigned long long COMPLETED_PRIORITY_OFFSET = 200000000000000;
 const char* TransfersModel::SORTED_BY_STATE = "SORTED_BY_STATE";
@@ -904,8 +904,6 @@ void TransfersModel::cancelTransfers(const QModelIndexList& indexes, QWidget* ca
 {
     if(indexes.isEmpty())
     {
-        clearTransfers(QModelIndexList());
-
         mMegaApi->cancelTransfers(MegaTransfer::TYPE_UPLOAD);
         mMegaApi->cancelTransfers(MegaTransfer::TYPE_DOWNLOAD);
     }
@@ -1074,8 +1072,6 @@ void TransfersModel::pauseResumeAllTransfers(bool state)
 
     mAreAllPaused = state;
 
-    if(!mTransfers.isEmpty())
-    {
         auto tagsUpdated(0);
 
         if (mAreAllPaused)
@@ -1133,7 +1129,7 @@ void TransfersModel::pauseResumeAllTransfers(bool state)
             });
             mMegaApi->pauseTransfers(mAreAllPaused);
         }
-    }
+
 
     emit pauseStateChanged(mAreAllPaused);
 }
@@ -1289,7 +1285,7 @@ void TransfersModel::setFailingMode(bool state)
     {
         mFailingMode--;
 
-        if(mFailingMode == 0)
+        if(mFailingMode == 0 && !isCancelingModeActive())
         {
             emit unblockUi();
         }
@@ -1303,16 +1299,20 @@ bool TransfersModel::isCancelingModeActive() const
 
 void TransfersModel::setCancelingMode(bool state)
 {
-    if(state && mCancelingMode == 0)
+    if(state)
     {
-        mCancelingMode = RESET_AFTER_EMPTY_RECEIVES;
+        if(mCancelingMode == 0)
+    {
         emit blockUi();
+    }
+
+        mCancelingMode = RESET_AFTER_EMPTY_RECEIVES;
     }
     else if(!state && mCancelingMode != 0)
     {
         mCancelingMode--;
 
-        if(mCancelingMode == 0)
+        if(mCancelingMode == 0 && !isFailingModeActive())
         {
             emit unblockUi();
         }

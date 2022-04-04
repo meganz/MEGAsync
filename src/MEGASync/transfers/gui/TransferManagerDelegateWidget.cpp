@@ -80,12 +80,7 @@ void TransferManagerDelegateWidget::updateTransferState()
                              timeString
                            : Utilities::getTimeString(getData()->mRemainingTime);
 
-            if(getData()->mTransferredBytes == 0 && getData()->mSpeed == 0)
-            {
-                speedString = Utilities::getSizeString(getData()->mTotalSize)
-                        + QLatin1Literal("/s");
-            }
-            else if(getData()->mTotalSize == getData()->mTransferredBytes)
+            if(getData()->mTotalSize == getData()->mTransferredBytes)
             {
                 speedString = QString::fromUtf8("…");
             }

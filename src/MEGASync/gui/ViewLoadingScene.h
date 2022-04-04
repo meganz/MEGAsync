@@ -15,6 +15,7 @@ class LoadingSceneDelegateBase : public QStyledItemDelegate
     const double MIN_OPACITY = 0.3;
     const double OPACITY_STEPS = 0.05;
     const double MAX_OPACITY = 1.0;
+    const int    UPDATE_TIMER = 100;
 
 public:
     explicit LoadingSceneDelegateBase(QAbstractItemView* view) : mView(view),
@@ -36,7 +37,7 @@ public:
 protected:
     inline void updateTimer(bool state)
     {
-        state ? mTimer.start(100) : mTimer.stop();
+        state ? mTimer.start(UPDATE_TIMER) : mTimer.stop();
     }
 
     inline double getOpacity() const

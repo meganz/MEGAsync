@@ -19,7 +19,7 @@ InfoDialogTransferDelegateWidget::InfoDialogTransferDelegateWidget(QWidget *pare
     TransferBaseDelegateWidget(parent),
     mUi(new Ui::InfoDialogTransferDelegateWidget),
     mActionButtonsEnabled(false),
-    mMegaApi(((MegaApplication *)qApp)->getMegaApi())
+    mMegaApi(MegaSyncApp->getMegaApi())
 {
     mUi->setupUi(this);
 
@@ -129,7 +129,6 @@ void InfoDialogTransferDelegateWidget::updateTransferControlsOnHold(const QStrin
         mUi->lRemainingTime->clear();
     }
 }
-
 
 void InfoDialogTransferDelegateWidget::setFileNameAndType()
 {
@@ -320,7 +319,6 @@ bool InfoDialogTransferDelegateWidget::mouseHoverRetryingLabel(QPoint pos)
 {
     return (getData()->mState == TransferData::TransferState::TRANSFER_RETRYING
                 && mUi->lSpeed->rect().contains(mUi->lSpeed->mapFrom(this, pos)));
-
 }
 
 void InfoDialogTransferDelegateWidget::finishTransfer()
@@ -333,13 +331,13 @@ void InfoDialogTransferDelegateWidget::finishTransfer()
         mUi->lElapsedTime->setStyleSheet(QString::fromUtf8("color: #F0373A"));
 
         //Check if transfer finishes while the account was blocked, in order to provide the right context for failed error
-        bool blockedTransfer = static_cast<MegaApplication*>(qApp)->finishedTransfersWhileBlocked(getData()->mTag);
+        bool blockedTransfer = MegaSyncApp->finishedTransfersWhileBlocked(getData()->mTag);
         if (blockedTransfer)
         {
-            static_cast<MegaApplication*>(qApp)->removeFinishedBlockedTransfer(getData()->mTag);
+            MegaSyncApp->removeFinishedBlockedTransfer(getData()->mTag);
         }
 
-        mUi->lElapsedTime->setText(tr("failed:") + QString::fromUtf8(" ") + QCoreApplication::translate("MegaError",
+        mUi->lElapsedTime->setText(tr("failed:") + QStringLiteral(" ") + QCoreApplication::translate("MegaError",
                                                                                                        MegaError::getErrorString(getData()->mErrorCode,
                                                                                                                                  getData()->mType == TransferData::TransferType::TRANSFER_DOWNLOAD && !blockedTransfer
                                                                                                                                  ? MegaError::API_EC_DOWNLOAD : MegaError::API_EC_DEFAULT)));
@@ -362,8 +360,8 @@ void InfoDialogTransferDelegateWidget::updateFinishedTime()
         return;
     }
 
-    mUi->lElapsedTime->setStyleSheet(QString::fromUtf8("color: #999999"));
-    mUi->lElapsedTime->setText(tr("Added [A]").replace(QString::fromUtf8("[A]"), Utilities::getFinishedTimeString(finishedTime)));
+    mUi->lElapsedTime->setStyleSheet(QLatin1String("color: #999999"));
+    mUi->lElapsedTime->setText(tr("Added [A]").replace(QLatin1String("[A]"), Utilities::getFinishedTimeString(finishedTime)));
 }
 
 QSize InfoDialogTransferDelegateWidget::minimumSizeHint() const
