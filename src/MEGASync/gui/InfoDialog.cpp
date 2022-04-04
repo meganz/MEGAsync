@@ -580,8 +580,9 @@ void InfoDialog::updateTransfersCount()
     ui->bTransferManager->setPercentDownloads(percentDownloads);
 
     if (!TransfersCountUpdated.pendingDownloads && !TransfersCountUpdated.pendingUploads
-            && TransfersCountUpdated.totalUploadBytes == 0 && TransfersCountUpdated.totalDownloadBytes == 0
-            && TransfersCountUpdated.totalUploads != 0 && TransfersCountUpdated.totalDownloads != 0)
+            && TransfersCountUpdated.totalUploadBytes == TransfersCountUpdated.completedUploadBytes
+            && TransfersCountUpdated.totalDownloadBytes == TransfersCountUpdated.completedDownloadBytes
+            && (TransfersCountUpdated.totalUploads != 0 || TransfersCountUpdated.totalDownloads != 0))
     {
         if (!overQuotaState && (ui->sActiveTransfers->currentWidget() != ui->pUpdated))
         {
@@ -592,6 +593,10 @@ void InfoDialog::updateTransfersCount()
         {
             app->showNotificationMessage(tr("All transfers have been completed"));
         }
+
+        QTimer::singleShot(2000, [this](){
+            ui->bTransferManager->reset();
+        });
     }
 }
 
@@ -788,33 +793,6 @@ void InfoDialog::addSync()
     {
         addSync(INVALID_HANDLE);
         app->createAppMenus();
-    }
-}
-
-void InfoDialog::onAllUploadsFinished()
-{
-}
-
-void InfoDialog::onAllDownloadsFinished()
-{
-
-}
-
-void InfoDialog::onAllTransfersFinished()
-{
-    auto transfersCount = app->getTransfersModel()->getTransfersCount();
-
-    if (!transfersCount.pendingDownloads && !transfersCount.pendingUploads)
-    {
-        if (!overQuotaState && (ui->sActiveTransfers->currentWidget() != ui->pUpdated))
-        {
-            updateDialogState();
-        }
-
-        if ((QDateTime::currentMSecsSinceEpoch() - preferences->lastTransferNotificationTimestamp()) > Preferences::MIN_TRANSFER_NOTIFICATION_INTERVAL_MS)
-        {
-            app->showNotificationMessage(tr("All transfers have been completed"));
-        }
     }
 }
 
@@ -1275,9 +1253,6 @@ void InfoDialog::updateNotificationsTreeView(QAbstractItemModel *model, QAbstrac
 
 void InfoDialog::reset()
 {
-    activeDownloadState = activeUploadState = MegaTransfer::STATE_NONE;
-    uploadActiveTransferPriority = downloadActiveTransferPriority = 0xFFFFFFFFFFFFFFFFULL;
-    uploadActiveTransferTag = downloadActiveTransferTag = -1;
     notificationsReady = false;
     ui->sNotifications->setCurrentWidget(ui->pNoNotifications);
     ui->wSortNotifications->setActualFilter(AlertFilterType::ALL_TYPES);

@@ -198,13 +198,15 @@ public:
 
         if(state)
         {
-            auto modelRowCount = mViewModel->rowCount();
-            auto rows = modelRowCount < MAX_LOADING_ROWS && modelRowCount > 0 ? modelRowCount : MAX_LOADING_ROWS;
+            auto firstVisibleIndex = mView->indexAt(mView->rect().topLeft());
+            auto lastVisibleIndex = mView->indexAt(mView->rect().bottomLeft());
+            int visibleRows = lastVisibleIndex.row() - firstVisibleIndex.row() + 1;
 
-            for(int row = 0; row < rows; ++row)
+            for(int row = 0; row < visibleRows; ++row)
             {
                 mLoadingModel->appendRow(new QStandardItem());
             }
+
             mView->setModel(mLoadingModel);
             mView->setItemDelegate(mLoadingDelegate);
         }

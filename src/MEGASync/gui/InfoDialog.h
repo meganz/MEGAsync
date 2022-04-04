@@ -115,9 +115,6 @@ public slots:
     void upAreaHovered(QMouseEvent *event);
 
    void addSync();
-   void onAllUploadsFinished();
-   void onAllDownloadsFinished();
-   void onAllTransfersFinished();
    void updateDialogState();
 
    void enableTransferOverquotaAlert();
@@ -190,9 +187,6 @@ private:
     bool pendingUploadsTimerRunning = false;
     bool pendingDownloadsTimerRunning = false;
     bool circlesShowAllActiveTransfersProgress;
-    unsigned long long uploadActiveTransferPriority, downloadActiveTransferPriority;
-    int uploadActiveTransferTag, downloadActiveTransferTag;
-    int uploadActiveTransferState, downloadActiveTransferState;
 
     bool indexing; //scanning
     bool waiting;

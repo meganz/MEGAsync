@@ -897,7 +897,7 @@ void TransfersModel::openFolderByTag(TransferTag tag)
 
 TransfersCount TransfersModel::getTransfersCount()
 {
-    return mTransferEventWorker->getTransfersCount();
+    return mTransfersCount;
 }
 
 void TransfersModel::cancelTransfers(const QModelIndexList& indexes, QWidget* canceledFrom)
@@ -1072,63 +1072,63 @@ void TransfersModel::pauseResumeAllTransfers(bool state)
 
     mAreAllPaused = state;
 
-        auto tagsUpdated(0);
+    auto tagsUpdated(0);
 
-        if (mAreAllPaused)
-        {
-            mMegaApi->pauseTransfers(mAreAllPaused);
-            TransferTag followingTag(0);
-            unsigned long long followingTagPriority(0);
+    if (mAreAllPaused)
+    {
+        mMegaApi->pauseTransfers(mAreAllPaused);
+        TransferTag followingTag(0);
+        unsigned long long followingTagPriority(0);
 
-            std::for_each(mTransfers.crbegin(), mTransfers.crend(), [this, &tagsUpdated, &followingTag, &followingTagPriority](QExplicitlySharedDataPointer<TransferData> item)
-                          mutable {
+        std::for_each(mTransfers.crbegin(), mTransfers.crend(), [this, &tagsUpdated, &followingTag, &followingTagPriority](QExplicitlySharedDataPointer<TransferData> item)
+                      mutable {
 
-                if(item->mState & TransferData::PAUSABLE_STATES_MASK)
-                {
-                    pauseResumeTransferByTag(item->mTag, mAreAllPaused);
-                    if(followingTag == 0 || followingTagPriority > item->mPriority)
-                    {
-                        followingTag = item->mTag;
-                        followingTagPriority = item->mPriority;
-                    }
-                    tagsUpdated++;
-
-                    if(tagsUpdated % 1000 == 0)
-                    {
-                        tagsUpdated = 0;
-
-                        qApp->processEvents();
-                    }
-                }
-            });
-
-            if(followingTag > 0)
+            if(item->mState & TransferData::PAUSABLE_STATES_MASK)
             {
-                sendDataChanged(mTagByOrder.value(followingTag));
-            }
-        }
-        else
-        {
-            std::for_each(mTransfers.cbegin(), mTransfers.cend(), [this, &tagsUpdated](QExplicitlySharedDataPointer<TransferData> item)
-                          mutable {
-
-                if(item->mState & TransferData::TRANSFER_PAUSED)
+                pauseResumeTransferByTag(item->mTag, mAreAllPaused);
+                if(followingTag == 0 || followingTagPriority > item->mPriority)
                 {
-                    pauseResumeTransferByTag(item->mTag, mAreAllPaused);
-
-                    tagsUpdated++;
-
-                    if(tagsUpdated % 1000 == 0)
-                    {
-                        tagsUpdated = 0;
-
-                        qApp->processEvents();
-                    }
-
+                    followingTag = item->mTag;
+                    followingTagPriority = item->mPriority;
                 }
-            });
-            mMegaApi->pauseTransfers(mAreAllPaused);
+                tagsUpdated++;
+
+                if(tagsUpdated % 1000 == 0)
+                {
+                    tagsUpdated = 0;
+
+                    qApp->processEvents();
+                }
+            }
+        });
+
+        if(followingTag > 0)
+        {
+            sendDataChanged(mTagByOrder.value(followingTag));
         }
+    }
+    else
+    {
+        std::for_each(mTransfers.cbegin(), mTransfers.cend(), [this, &tagsUpdated](QExplicitlySharedDataPointer<TransferData> item)
+                      mutable {
+
+            if(item->mState & TransferData::TRANSFER_PAUSED)
+            {
+                pauseResumeTransferByTag(item->mTag, mAreAllPaused);
+
+                tagsUpdated++;
+
+                if(tagsUpdated % 1000 == 0)
+                {
+                    tagsUpdated = 0;
+
+                    qApp->processEvents();
+                }
+
+            }
+        });
+        mMegaApi->pauseTransfers(mAreAllPaused);
+    }
 
 
     emit pauseStateChanged(mAreAllPaused);
@@ -1199,6 +1199,20 @@ long long TransfersModel::getNumberOfFinishedForFileType(Utilities::FileType fil
 
 void TransfersModel::updateTransfersCount()
 {
+    auto count = mTransferEventWorker->getTransfersCount();
+
+    if(isCancelingModeActive())
+    {
+        if(mTransfersCount.totalUploads < count.totalUploads
+                || mTransfersCount.totalDownloads < count.totalDownloads)
+        {
+            return;
+        }
+
+    }
+
+    mTransfersCount = count;
+
     emit transfersCountUpdated();
 }
 
@@ -1234,7 +1248,7 @@ void TransfersModel::removeRows(QModelIndexList& indexesToRemove)
     }
     // Flush pooled rows (start at row + 1).
     // This happens when the last item processed is in a finished state.
-    if (count > 0)
+    if (count > 0 && row >= 0)
     {
         removeRows(row + 1, count, DEFAULT_IDX);
     }
@@ -1302,9 +1316,9 @@ void TransfersModel::setCancelingMode(bool state)
     if(state)
     {
         if(mCancelingMode == 0)
-    {
-        emit blockUi();
-    }
+        {
+            emit blockUi();
+        }
 
         mCancelingMode = RESET_AFTER_EMPTY_RECEIVES;
     }
