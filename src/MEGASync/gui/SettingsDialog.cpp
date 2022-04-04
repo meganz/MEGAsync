@@ -2261,7 +2261,7 @@ void SettingsDialog::removeBackup(std::shared_ptr<SyncSetting> backup)
     dialog->setAttribute(Qt::WA_DeleteOnClose);
     dialog->open();
 
-    connect(dialog, &AddBackupDialog::accepted, this, [this, dialog]()
+    connect(dialog, &RemoveBackupDialog::accepted, this, [this, dialog]()
     {
         mSyncController.removeSync(dialog->backupToRemove(), dialog->alsoRemoveMEGAFolder());
     });
