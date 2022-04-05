@@ -1,17 +1,29 @@
 #include "RemoveBackupDialog.h"
 #include "ui_RemoveBackupDialog.h"
+#include "MegaApplication.h"
 
 RemoveBackupDialog::RemoveBackupDialog(std::shared_ptr<SyncSetting> backup, QWidget *parent) :
     QDialog(parent),
+    mMegaApi(MegaSyncApp->getMegaApi()),
     mUi(new Ui::RemoveBackupDialog),
-    mBackup(backup)
+    mBackup(backup),
+    mTargetFolder(MegaSyncApp->getRootNode()->getHandle()),
+    mNodeSelector(nullptr)
 {
+    setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
     mUi->setupUi(this);
 
-    connect(mUi->confirmButton, &QPushButton::clicked, this, &QDialog::accept);
-    connect(mUi->cancelButton, &QPushButton::clicked, this, &QDialog::reject);
+    connect(mUi->bConfirm, &QPushButton::clicked, this, &QDialog::accept);
+    connect(mUi->bCancel, &QPushButton::clicked, this, &QDialog::reject);
+    connect(mUi->rMoveFolder, &QRadioButton::toggled, this, &RemoveBackupDialog::OnMoveSelected);
+    connect(mUi->rDeleteFolder, &QRadioButton::toggled, this, &RemoveBackupDialog::OnDeleteSelected);
+    connect(mUi->bChange, &QPushButton::clicked, this, &RemoveBackupDialog::OnChangeButtonClicked);
 
-    mUi->textLabel->setText(mUi->textLabel->text().arg(backup->name()));
+    mUi->bConfirm->setEnabled(false);
+    mUi->moveToContainer->setEnabled(false);
+    mUi->lTarget->setText(QCoreApplication::translate("MegaNodeNames",
+                                                      MegaSyncApp->getRootNode()->getName())
+                          .append(QLatin1Char('/')));
 }
 
 RemoveBackupDialog::~RemoveBackupDialog()
@@ -24,7 +36,40 @@ std::shared_ptr<SyncSetting> RemoveBackupDialog::backupToRemove()
     return mBackup;
 }
 
-bool RemoveBackupDialog::alsoRemoveMEGAFolder()
+//returns INVALID_HANDLE if user wants to delete the folder,
+//otherwise return selected folder, cloud drive if nothing is selected
+mega::MegaHandle RemoveBackupDialog::targetFolder()
 {
-    return mUi->removeRemoteCheckBox->isChecked();
+    return mUi->rMoveFolder->isChecked() ? mTargetFolder : mega::INVALID_HANDLE;
+}
+
+void RemoveBackupDialog::OnDeleteSelected()
+{
+    mUi->bConfirm->setEnabled(true);
+    mUi->moveToContainer->setEnabled(false);
+}
+
+void RemoveBackupDialog::OnMoveSelected()
+{
+    mUi->bConfirm->setEnabled(true);
+    mUi->moveToContainer->setEnabled(true);
+}
+
+void RemoveBackupDialog::OnChangeButtonClicked()
+{
+    if (!mNodeSelector)
+    {
+        mNodeSelector = new NodeSelector(mMegaApi, NodeSelector::SelectMode::UPLOAD_SELECT, this);
+    }
+    int result = mNodeSelector->exec();
+    if (!mNodeSelector || result != QDialog::Accepted)
+    {
+        return;
+    }
+    mTargetFolder = mNodeSelector->getSelectedFolderHandle();
+    auto targetNode = std::unique_ptr<mega::MegaNode>(mMegaApi->getNodeByHandle(mTargetFolder));
+    auto targetRoot = std::unique_ptr<mega::MegaNode>(mMegaApi->getRootNode(targetNode.get()));
+
+    mUi->lTarget->setText(QCoreApplication::translate("MegaNodeNames", targetRoot->getName())
+                          + QString::fromUtf8(mMegaApi->getNodePath(targetNode.get())));
 }

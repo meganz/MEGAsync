@@ -2263,7 +2263,7 @@ void SettingsDialog::removeBackup(std::shared_ptr<SyncSetting> backup)
 
     connect(dialog, &RemoveBackupDialog::accepted, this, [this, dialog]()
     {
-        mSyncController.removeSync(dialog->backupToRemove(), dialog->alsoRemoveMEGAFolder());
+        mSyncController.removeSync(dialog->backupToRemove(), dialog->targetFolder());
     });
 }
 

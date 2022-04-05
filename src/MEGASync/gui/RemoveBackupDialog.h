@@ -1,9 +1,11 @@
 #ifndef REMOVEBACKUPDIALOG_H
 #define REMOVEBACKUPDIALOG_H
 
-#include <QDialog>
-
 #include "model/SyncSettings.h"
+#include "NodeSelector.h"
+
+#include <QDialog>
+#include <QPointer>
 
 namespace Ui {
 class RemoveBackupDialog;
@@ -18,11 +20,19 @@ public:
     ~RemoveBackupDialog();
 
     std::shared_ptr<SyncSetting> backupToRemove();
-    bool alsoRemoveMEGAFolder();
+    mega::MegaHandle targetFolder();
+
+private slots:
+    void OnDeleteSelected();
+    void OnMoveSelected();
+    void OnChangeButtonClicked();
 
 private:
+    mega::MegaApi* mMegaApi;
     Ui::RemoveBackupDialog *mUi;
     std::shared_ptr<SyncSetting> mBackup;
+    mega::MegaHandle mTargetFolder;
+    QPointer<NodeSelector> mNodeSelector;
 };
 
 #endif // REMOVEBACKUPDIALOG_H

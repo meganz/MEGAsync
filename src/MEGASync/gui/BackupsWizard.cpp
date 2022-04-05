@@ -27,8 +27,6 @@ constexpr int SHOW_MORE_VISIBILITY (2);
 
 
 
-
-
 BackupsWizard::BackupsWizard(QWidget* parent) :
     QDialog(parent),
     mUi (new Ui::BackupsWizard),
@@ -310,7 +308,6 @@ void BackupsWizard::setupMyBackupsDir(bool nameCollision)
     }
     else
     {
-        // FIXME: Do we still need to check for this with the INBOX switch?
         // Create MyBackups folder if necessary
         if (mCreateBackupsDir || nameCollision)
         {
@@ -713,7 +710,7 @@ void BackupsWizard::onBackupsDirSet(mega::MegaHandle backupsDirHandle)
     }
 
     auto vaultNode (MegaSyncApp->getVaultNode());
-    auto vaultName (tr(vaultNode->getName()));
+    auto vaultName (QCoreApplication::translate("MegaNodeNames", vaultNode->getName()));
     auto vaultPath (QString::fromUtf8(api->getNodePath(vaultNode.get())));
 
     // If backupsDirPath is empty, the remote folder does not exist and we have to create it.

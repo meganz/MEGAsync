@@ -13,8 +13,7 @@ SyncController::SyncController(QObject* parent)
       mSyncModel(SyncModel::instance()),
       mMyBackupsHandle(INVALID_HANDLE),
       mIsDeviceNameSetOnRemote(false),
-      mForceSetDeviceName(false),
-      mRemoveRemote(false)
+      mForceSetDeviceName(false)
 {
     // The controller shouldn't ever be instantiated before we have an API and a SyncModel available
     assert(mApi);
@@ -43,7 +42,7 @@ void SyncController::addSync(const QString &localFolder, const MegaHandle &remot
                      syncName.toUtf8().constData(), remoteHandle, nullptr, mDelegateListener);
 }
 
-void SyncController::removeSync(std::shared_ptr<SyncSetting> syncSetting, bool removeRemote)
+void SyncController::removeSync(std::shared_ptr<SyncSetting> syncSetting, const mega::MegaHandle& remoteHandle)
 {
     if (!syncSetting)
     {
@@ -56,12 +55,7 @@ void SyncController::removeSync(std::shared_ptr<SyncSetting> syncSetting, bool r
 
     std::shared_ptr<MegaNode> node(mApi->getNodeByHandle(syncSetting->getMegaHandle()));
 
-    // does the remote node still exist?
-    if(node.get())
-        mRemoveRemote = removeRemote; // Remove remote node after backup removal
-
-    // FIXME: Change above check and corresponding INVALID_HANDLE when we implement the new remove mechanism
-    mApi->removeSync(syncSetting->backupId(), INVALID_HANDLE, mDelegateListener);
+    mApi->removeSync(syncSetting->backupId(), remoteHandle, mDelegateListener);
     // FIXME: There is a bug in SyncModel class handling that persists the saved Backup entry after SDK delete
 }
 
@@ -221,12 +215,6 @@ void SyncController::onRequestFinish(MegaApi *api, MegaRequest *req, MegaError *
             if(sync)
                 emit syncRemoveError(sync);
         }
-        else if(mRemoveRemote) // remove remote node after succesful sync point removal?
-        {
-            std::shared_ptr<MegaNode> remoteNode(mApi->getNodeByHandle(req->getNodeHandle()));
-            mApi->moveNode(remoteNode.get(), mApi->getRubbishNode(), mDelegateListener);
-            mRemoveRemote = false;
-        }
         break;
     }
     case MegaRequest::TYPE_DISABLE_SYNC:
@@ -356,10 +344,11 @@ void SyncController::onRequestFinish(MegaApi *api, MegaRequest *req, MegaError *
         int subCommand (req->getParamType());
         if (subCommand == MegaApi::USER_ATTR_MY_BACKUPS_FOLDER)
         {
+            mega::MegaHandle handle = INVALID_HANDLE;
             if (errorCode == MegaError::API_OK)
             {
+                handle = req->getNodeHandle();
                 MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Got MyBackups folder from remote");
-                setMyBackupsHandle(req->getNodeHandle());
             }
             else
             {
@@ -367,8 +356,8 @@ void SyncController::onRequestFinish(MegaApi *api, MegaRequest *req, MegaError *
                              QString::fromUtf8("Error getting MyBackups folder: \"%1\"")
                              .arg(QString::fromUtf8(e->getErrorString()))
                              .toUtf8().constData());
-                setMyBackupsHandle(mega::INVALID_HANDLE);
             }
+            setMyBackupsHandle(handle);
         }
         else if (subCommand == MegaApi::USER_ATTR_DEVICE_NAMES)
         {
