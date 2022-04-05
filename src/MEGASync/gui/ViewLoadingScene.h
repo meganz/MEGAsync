@@ -15,6 +15,7 @@ class LoadingSceneDelegateBase : public QStyledItemDelegate
     const double MIN_OPACITY = 0.3;
     const double OPACITY_STEPS = 0.05;
     const double MAX_OPACITY = 1.0;
+    const int    UPDATE_TIMER = 100;
 
 public:
     explicit LoadingSceneDelegateBase(QAbstractItemView* view) : mView(view),
@@ -36,7 +37,7 @@ public:
 protected:
     inline void updateTimer(bool state)
     {
-        state ? mTimer.start(100) : mTimer.stop();
+        state ? mTimer.start(UPDATE_TIMER) : mTimer.stop();
     }
 
     inline double getOpacity() const
@@ -197,13 +198,15 @@ public:
 
         if(state)
         {
-            auto modelRowCount = mViewModel->rowCount();
-            auto rows = modelRowCount < MAX_LOADING_ROWS && modelRowCount > 0 ? modelRowCount : MAX_LOADING_ROWS;
+            auto firstVisibleIndex = mView->indexAt(mView->rect().topLeft());
+            auto lastVisibleIndex = mView->indexAt(mView->rect().bottomLeft());
+            int visibleRows = lastVisibleIndex.row() - firstVisibleIndex.row() + 1;
 
-            for(int row = 0; row < rows; ++row)
+            for(int row = 0; row < visibleRows; ++row)
             {
                 mLoadingModel->appendRow(new QStandardItem());
             }
+
             mView->setModel(mLoadingModel);
             mView->setItemDelegate(mLoadingDelegate);
         }

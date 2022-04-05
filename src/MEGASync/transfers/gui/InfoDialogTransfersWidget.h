@@ -28,15 +28,12 @@ protected:
     void showEvent(QShowEvent *) override;
 
 private:
-    Ui::InfoDialogTransfersWidget *ui;
+    Ui::InfoDialogTransfersWidget *mUi;
     InfoDialogTransfersProxyModel *mModel;
     MegaDelegateHoverManager mViewHoverManager;
 
 private:
     void configureTransferView();
-
-private:
-    MegaApplication *app;
 };
 
 #endif // INFODIALOGTRANSFERSWIDGET_H

@@ -210,6 +210,7 @@ private:
     QThread* mTransferEventThread;
     TransferThread* mTransferEventWorker;
     QTimer mTimer;
+    TransfersCount mTransfersCount;
 
     QList<QExplicitlySharedDataPointer<TransferData>> mTransfers;
 

@@ -50,8 +50,14 @@ void TransferManagerDelegateWidget::updateTransferState()
         {
             if(stateHasChanged())
             {
-                switch (getData()->mType)
+                if (!getData()->mTransferredBytes)
                 {
+                    statusString = QString::fromUtf8("%1%2").arg(tr("starting"), QString::fromUtf8("…"));
+                }
+                else
+                {
+                    switch (getData()->mType)
+                    {
                     case TransferData::TRANSFER_DOWNLOAD:
                     case TransferData::TRANSFER_LTCPDOWNLOAD:
                     {
@@ -68,6 +74,7 @@ void TransferManagerDelegateWidget::updateTransferState()
                         statusString = tr("Syncing");
                         break;
                     }
+                    }
                 }
                 mLastPauseResuemtTransferIconName = QLatin1Literal(":images/lists_pause_ico.png");
                 pauseResumeTooltip = tr("Pause transfer");
@@ -80,12 +87,7 @@ void TransferManagerDelegateWidget::updateTransferState()
                              timeString
                            : Utilities::getTimeString(getData()->mRemainingTime);
 
-            if(getData()->mTransferredBytes == 0 && getData()->mSpeed == 0)
-            {
-                speedString = Utilities::getSizeString(getData()->mTotalSize)
-                        + QLatin1Literal("/s");
-            }
-            else if(getData()->mTotalSize == getData()->mTransferredBytes)
+            if(getData()->mTotalSize == getData()->mTransferredBytes)
             {
                 speedString = QString::fromUtf8("…");
             }

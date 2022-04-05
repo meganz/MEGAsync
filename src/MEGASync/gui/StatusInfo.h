@@ -38,10 +38,10 @@ private slots:
 
 private:
     Ui::StatusInfo *ui;
-    int state;
-    bool isOverQuota;
-    QTimer scanningTimer;
-    int scanningAnimationIndex;
+    int mState;
+    bool mIsOverQuota;
+    QTimer mScanningTimer;
+    int mScanningAnimationIndex;
 };
 
 #endif // STATUSINFO_H

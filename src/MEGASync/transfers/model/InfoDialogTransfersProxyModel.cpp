@@ -4,7 +4,9 @@
 #include "TransfersModel.h"
 
 //SORT FILTER PROXY MODEL
-InfoDialogTransfersProxyModel::InfoDialogTransfersProxyModel(QObject *parent) : mNextTransferTag(-1), TransfersSortFilterProxyBaseModel(parent)
+InfoDialogTransfersProxyModel::InfoDialogTransfersProxyModel(QObject *parent) :
+    TransfersSortFilterProxyBaseModel(parent),
+    mNextTransferTag(-1)
 {
 }
 
@@ -116,7 +118,8 @@ bool InfoDialogTransfersProxyModel::filterAcceptsRow(int sourceRow, const QModel
        {
            accept = (d->mState & TransferData::TransferState::TRANSFER_COMPLETED
                      || d->mState & TransferData::TransferState::TRANSFER_COMPLETING
-                     || d->mState & TransferData::TransferState::TRANSFER_ACTIVE || d->mState & TransferData::TransferState::TRANSFER_FAILED);
+                     || d->mState & TransferData::TransferState::TRANSFER_ACTIVE
+                     || d->mState & TransferData::TransferState::TRANSFER_FAILED);
 
 
            //Show next transfer to process

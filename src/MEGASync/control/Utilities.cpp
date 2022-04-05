@@ -620,9 +620,6 @@ QString Utilities::getFinishedTimeString(long long secs)
 
 QString Utilities::getSizeString(unsigned long long bytes)
 {
-    QString language = ((MegaApplication*)qApp)->getCurrentLanguageCode();
-    QLocale locale(language);
-
     auto size = getSizeStringWithoutUnits(bytes);
 
     if (bytes >= TB)
@@ -689,7 +686,7 @@ QString Utilities::getSizeStringWithoutUnits(unsigned long long bytes)
         return locale.toString( ((int)((10 * bytes) / KB))/10.0);
     }
 
-    return locale.toString(bytes) + QStringLiteral(" ");
+    return locale.toString(bytes);
 }
 
 QString Utilities::getSizeStringWithoutUnits(long long bytes)

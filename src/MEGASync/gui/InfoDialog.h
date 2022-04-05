@@ -103,7 +103,6 @@ private:
     InfoDialog() = default;
     void drawAvatar(QString email);
     void animateStates(bool opt);
-    void updateTransfersCount();
     void hideEvent(QHideEvent *event) override;
     void showEvent(QShowEvent *event) override;
     void moveEvent(QMoveEvent *) override;
@@ -121,9 +120,6 @@ public slots:
     void upAreaHovered(QMouseEvent *event);
 
    void addSync();
-   void onAllUploadsFinished();
-   void onAllDownloadsFinished();
-   void onAllTransfersFinished();
    void updateDialogState();
 
    void enableTransferOverquotaAlert();
@@ -164,7 +160,7 @@ private slots:
 
     void setAvatar();
 
-    void onTransfersDataUpdated();
+    void updateTransfersCount();
 
 signals:
     void openTransferManager(int tab);
@@ -197,9 +193,6 @@ private:
     bool pendingUploadsTimerRunning = false;
     bool pendingDownloadsTimerRunning = false;
     bool circlesShowAllActiveTransfersProgress;
-    unsigned long long uploadActiveTransferPriority, downloadActiveTransferPriority;
-    int uploadActiveTransferTag, downloadActiveTransferTag;
-    int uploadActiveTransferState, downloadActiveTransferState;
 
     bool indexing; //scanning
     bool waiting;
