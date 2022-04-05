@@ -11,9 +11,7 @@
 
 using namespace mega;
 
-const QRect InfoDialogTransferDelegateWidget::fullRect = QRect(0,0,400,60);
-const QRect InfoDialogTransferDelegateWidget::innerRect = QRect(60,10,InfoDialogTransferDelegateWidget::fullRect.width()-120,
-                                                  InfoDialogTransferDelegateWidget::fullRect.height()-20);
+const QRect InfoDialogTransferDelegateWidget::FullRect = QRect(0,0,400,60);
 
 InfoDialogTransferDelegateWidget::InfoDialogTransferDelegateWidget(QWidget *parent) :
     TransferBaseDelegateWidget(parent),
@@ -73,7 +71,7 @@ void InfoDialogTransferDelegateWidget::updateTransferState()
 
             if (!getData()->mTransferredBytes)
             {
-                downloadString = QString::fromUtf8("%1").arg(tr("starting"), QString::fromUtf8("…"));
+                downloadString = QString::fromUtf8("%1%2").arg(tr("starting"), QString::fromUtf8("…"));
             }
             else
             {
@@ -366,11 +364,11 @@ void InfoDialogTransferDelegateWidget::updateFinishedTime()
 
 QSize InfoDialogTransferDelegateWidget::minimumSizeHint() const
 {
-    return fullRect.size();
+    return FullRect.size();
 }
 QSize InfoDialogTransferDelegateWidget::sizeHint() const
 {
-    return fullRect.size();
+    return FullRect.size();
 }
 
 void InfoDialogTransferDelegateWidget::on_lShowInFolder_clicked()

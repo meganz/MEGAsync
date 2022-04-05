@@ -17,8 +17,7 @@ class InfoDialogTransferDelegateWidget : public TransferBaseDelegateWidget
 {
     Q_OBJECT
 
-    static const QRect fullRect;
-    static const QRect innerRect;
+    static const QRect FullRect;
 
 public:
     explicit InfoDialogTransferDelegateWidget(QWidget *parent = 0);
