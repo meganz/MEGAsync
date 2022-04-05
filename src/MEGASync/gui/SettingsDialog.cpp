@@ -127,6 +127,24 @@ SettingsDialog::SettingsDialog(MegaApplication* app, bool proxyOnly, QWidget* pa
 
     mUi->gExcludedFilesInfo->hide();
 
+    // No more viewing/editing of the old set of exclusions.  .megaingore is taking over
+    mUi->gExcludeByName->hide();
+    mUi->lExcludedNames->hide();
+    mUi->excludeButtonsContainer->hide();
+    mUi->bAddName->hide();
+    mUi->bDeleteName->hide();
+    mUi->gExcludeBySize->hide();
+    mUi->cbExcludeUpperUnit->hide();
+    mUi->eLowerThan->hide();
+    mUi->cbExcludeLowerUnit->hide();
+    mUi->cExcludeUpperThan->hide();
+    mUi->eUpperThan->hide();
+    mUi->cExcludeLowerThan->hide();
+    mUi->gExcludedFilesInfo->hide();
+    mUi->pWarningRestart->hide();
+    mUi->lExcludedFilesInfo->hide();
+
+
 #ifdef Q_OS_WINDOWS
     mUi->cFinderIcons->hide();
 
@@ -2143,141 +2161,141 @@ void SettingsDialog::on_bDownloadFolder_clicked()
     delete dialog;
 }
 
-void SettingsDialog::on_bAddName_clicked()
-{
-    QPointer<AddExclusionDialog> add = new AddExclusionDialog(this);
-    int result = add->exec();
-    if (!add || (result != QDialog::Accepted))
-    {
-        delete add;
-        return;
-    }
+//void SettingsDialog::on_bAddName_clicked()
+//{
+//    QPointer<AddExclusionDialog> add = new AddExclusionDialog(this);
+//    int result = add->exec();
+//    if (!add || (result != QDialog::Accepted))
+//    {
+//        delete add;
+//        return;
+//    }
+//
+//    QString text = add->textValue();
+//    delete add;
+//
+//    if (text.isEmpty())
+//    {
+//        return;
+//    }
+//
+//    for (int i = 0; i < mUi->lExcludedNames->count(); i++)
+//    {
+//        if (mUi->lExcludedNames->item(i)->text() == text)
+//        {
+//            return;
+//        }
+//        else if (mUi->lExcludedNames->item(i)->text().compare(text, Qt::CaseInsensitive) > 0)
+//        {
+//            mUi->lExcludedNames->insertItem(i, text);
+//            saveExcludeSyncNames();
+//            return;
+//        }
+//    }
+//
+//    mUi->lExcludedNames->addItem(text);
+//    saveExcludeSyncNames();
+//}
+//
+//void SettingsDialog::on_bDeleteName_clicked()
+//{
+//    QList<QListWidgetItem*> selected = mUi->lExcludedNames->selectedItems();
+//    if (selected.size() == 0)
+//    {
+//        return;
+//    }
+//
+//    for (int i = 0; i < selected.size(); i++)
+//    {
+//        delete selected[i];
+//    }
+//
+//    saveExcludeSyncNames();
+//}
+//
+//void SettingsDialog::on_cExcludeUpperThan_clicked()
+//{
+//    if (mLoadingSettings) return;
+//    bool enable (mUi->cExcludeUpperThan->isChecked());
+//    mPreferences->setUpperSizeLimit(enable);
+//    mPreferences->setCrashed(true);
+//    mUi->eUpperThan->setEnabled(enable);
+//    mUi->cbExcludeUpperUnit->setEnabled(enable);
+//    mUi->gExcludedFilesInfo->show();
+//    mUi->bRestart->show();
+//}
+//
+//void SettingsDialog::on_cExcludeLowerThan_clicked()
+//{
+//    if (mLoadingSettings) return;
+//    bool enable (mUi->cExcludeLowerThan->isChecked());
+//    mPreferences->setLowerSizeLimit(enable);
+//    mPreferences->setCrashed(true);
+//    mUi->eLowerThan->setEnabled(enable);
+//    mUi->cbExcludeLowerUnit->setEnabled(enable);
+//    mUi->gExcludedFilesInfo->show();
+//    mUi->bRestart->show();
+//}
+//
+//void SettingsDialog::on_eUpperThan_valueChanged(int i)
+//{
+//    if (mLoadingSettings) return;
+//    mPreferences->setUpperSizeLimitValue(i);
+//    mPreferences->setCrashed(true);
+//    mUi->gExcludedFilesInfo->show();
+//    mUi->bRestart->show();
+//}
+//
+//void SettingsDialog::on_eLowerThan_valueChanged(int i)
+//{
+//    if (mLoadingSettings) return;
+//    mPreferences->setLowerSizeLimitValue(i);
+//    mPreferences->setCrashed(true);
+//    mUi->gExcludedFilesInfo->show();
+//    mUi->bRestart->show();
+//}
+//
+//void SettingsDialog::on_cbExcludeUpperUnit_currentIndexChanged(int index)
+//{
+//    if (mLoadingSettings) return;
+//    mPreferences->setUpperSizeLimitUnit(index);
+//    mPreferences->setCrashed(true);
+//    mUi->gExcludedFilesInfo->show();
+//    mUi->bRestart->show();
+//}
+//
+//void SettingsDialog::on_cbExcludeLowerUnit_currentIndexChanged(int index)
+//{
+//    if (mLoadingSettings) return;
+//    mPreferences->setLowerSizeLimitUnit(index);
+//    mPreferences->setCrashed(true);
+//    mUi->gExcludedFilesInfo->show();
+//    mUi->bRestart->show();
+//}
 
-    QString text = add->textValue();
-    delete add;
-
-    if (text.isEmpty())
-    {
-        return;
-    }
-
-    for (int i = 0; i < mUi->lExcludedNames->count(); i++)
-    {
-        if (mUi->lExcludedNames->item(i)->text() == text)
-        {
-            return;
-        }
-        else if (mUi->lExcludedNames->item(i)->text().compare(text, Qt::CaseInsensitive) > 0)
-        {
-            mUi->lExcludedNames->insertItem(i, text);
-            saveExcludeSyncNames();
-            return;
-        }
-    }
-
-    mUi->lExcludedNames->addItem(text);
-    saveExcludeSyncNames();
-}
-
-void SettingsDialog::on_bDeleteName_clicked()
-{
-    QList<QListWidgetItem*> selected = mUi->lExcludedNames->selectedItems();
-    if (selected.size() == 0)
-    {
-        return;
-    }
-
-    for (int i = 0; i < selected.size(); i++)
-    {
-        delete selected[i];
-    }
-
-    saveExcludeSyncNames();
-}
-
-void SettingsDialog::on_cExcludeUpperThan_clicked()
-{
-    if (mLoadingSettings) return;
-    bool enable (mUi->cExcludeUpperThan->isChecked());
-    mPreferences->setUpperSizeLimit(enable);
-    mPreferences->setCrashed(true);
-    mUi->eUpperThan->setEnabled(enable);
-    mUi->cbExcludeUpperUnit->setEnabled(enable);
-    mUi->gExcludedFilesInfo->show();
-    mUi->bRestart->show();
-}
-
-void SettingsDialog::on_cExcludeLowerThan_clicked()
-{
-    if (mLoadingSettings) return;
-    bool enable (mUi->cExcludeLowerThan->isChecked());
-    mPreferences->setLowerSizeLimit(enable);
-    mPreferences->setCrashed(true);
-    mUi->eLowerThan->setEnabled(enable);
-    mUi->cbExcludeLowerUnit->setEnabled(enable);
-    mUi->gExcludedFilesInfo->show();
-    mUi->bRestart->show();
-}
-
-void SettingsDialog::on_eUpperThan_valueChanged(int i)
-{
-    if (mLoadingSettings) return;
-    mPreferences->setUpperSizeLimitValue(i);
-    mPreferences->setCrashed(true);
-    mUi->gExcludedFilesInfo->show();
-    mUi->bRestart->show();
-}
-
-void SettingsDialog::on_eLowerThan_valueChanged(int i)
-{
-    if (mLoadingSettings) return;
-    mPreferences->setLowerSizeLimitValue(i);
-    mPreferences->setCrashed(true);
-    mUi->gExcludedFilesInfo->show();
-    mUi->bRestart->show();
-}
-
-void SettingsDialog::on_cbExcludeUpperUnit_currentIndexChanged(int index)
-{
-    if (mLoadingSettings) return;
-    mPreferences->setUpperSizeLimitUnit(index);
-    mPreferences->setCrashed(true);
-    mUi->gExcludedFilesInfo->show();
-    mUi->bRestart->show();
-}
-
-void SettingsDialog::on_cbExcludeLowerUnit_currentIndexChanged(int index)
-{
-    if (mLoadingSettings) return;
-    mPreferences->setLowerSizeLimitUnit(index);
-    mPreferences->setCrashed(true);
-    mUi->gExcludedFilesInfo->show();
-    mUi->bRestart->show();
-}
-
-void SettingsDialog::saveExcludeSyncNames()
-{
-    QStringList excludedNames;
-    QStringList excludedPaths;
-    for (int i = 0; i < mUi->lExcludedNames->count(); i++)
-    {
-        if (mUi->lExcludedNames->item(i)->text().contains(QDir::separator())) // Path exclusion
-        {
-            excludedPaths.append(mUi->lExcludedNames->item(i)->text());
-        }
-        else // File name exclusion
-        {
-            excludedNames.append(mUi->lExcludedNames->item(i)->text());
-        }
-    }
-
-    mPreferences->setExcludedSyncNames(excludedNames);
-    mPreferences->setExcludedSyncPaths(excludedPaths);
-    mPreferences->setCrashed(true);
-
-    mUi->gExcludedFilesInfo->show();
-    mUi->bRestart->show();
-}
+//void SettingsDialog::saveExcludeSyncNames()
+//{
+//    QStringList excludedNames;
+//    QStringList excludedPaths;
+//    for (int i = 0; i < mUi->lExcludedNames->count(); i++)
+//    {
+//        if (mUi->lExcludedNames->item(i)->text().contains(QDir::separator())) // Path exclusion
+//        {
+//            excludedPaths.append(mUi->lExcludedNames->item(i)->text());
+//        }
+//        else // File name exclusion
+//        {
+//            excludedNames.append(mUi->lExcludedNames->item(i)->text());
+//        }
+//    }
+//
+//    mPreferences->setExcludedSyncNames(excludedNames);
+//    mPreferences->setExcludedSyncPaths(excludedPaths);
+//    mPreferences->setCrashed(true);
+//
+//    mUi->gExcludedFilesInfo->show();
+//    mUi->bRestart->show();
+//}
 
 void SettingsDialog::restartApp()
 {
@@ -2291,20 +2309,20 @@ void SettingsDialog::restartApp()
 #endif
 }
 
-void SettingsDialog::on_bRestart_clicked()
-{
-    QPointer<SettingsDialog> currentDialog = this;
-    if (QMegaMessageBox::warning(nullptr, tr("Restart MEGAsync"),
-                                 tr("Do you want to restart MEGAsync now?"),
-                                 QMessageBox::Yes | QMessageBox::No, QMessageBox::No)
-            == QMessageBox::Yes)
-    {
-        if (currentDialog)
-        {
-            restartApp();
-        }
-    }
-}
+//void SettingsDialog::on_bRestart_clicked()
+//{
+//    QPointer<SettingsDialog> currentDialog = this;
+//    if (QMegaMessageBox::warning(nullptr, tr("Restart MEGAsync"),
+//                                 tr("Do you want to restart MEGAsync now?"),
+//                                 QMessageBox::Yes | QMessageBox::No, QMessageBox::No)
+//            == QMessageBox::Yes)
+//    {
+//        if (currentDialog)
+//        {
+//            restartApp();
+//        }
+//    }
+//}
 
 // Network -----------------------------------------------------------------------------------------
 void SettingsDialog::on_bNetwork_clicked()

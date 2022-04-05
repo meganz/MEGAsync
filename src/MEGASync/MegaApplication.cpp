@@ -2864,7 +2864,7 @@ void MegaApplication::loadSyncExclusionRules(QString email)
     {
         vExclusions.push_back(exclusions[i].toUtf8().constData());
     }
-    megaApi->setDefaultExcludedNames(&vExclusions);
+    megaApi->setLegacyExcludedNames(&vExclusions);
 
     QStringList exclusionPaths = preferences->getExcludedSyncPaths();
     vector<string> vExclusionPaths;
@@ -2872,24 +2872,24 @@ void MegaApplication::loadSyncExclusionRules(QString email)
     {
         vExclusionPaths.push_back(exclusionPaths[i].toUtf8().constData());
     }
-    megaApi->setDefaultExcludedPaths(&vExclusionPaths);
+    megaApi->setLegacyExcludedPaths(&vExclusionPaths);
 
     if (preferences->lowerSizeLimit())
     {
-        megaApi->setDefaultExclusionLowerSizeLimit(computeExclusionSizeLimit(preferences->lowerSizeLimitValue()));
+        megaApi->setLegacyExclusionLowerSizeLimit(computeExclusionSizeLimit(preferences->lowerSizeLimitValue()));
     }
     else
     {
-        megaApi->setDefaultExclusionLowerSizeLimit(0);
+        megaApi->setLegacyExclusionLowerSizeLimit(0);
     }
 
     if (preferences->upperSizeLimit())
     {
-        megaApi->setDefaultExclusionUpperSizeLimit(computeExclusionSizeLimit(preferences->upperSizeLimitValue()));
+        megaApi->setLegacyExclusionUpperSizeLimit(computeExclusionSizeLimit(preferences->upperSizeLimitValue()));
     }
     else
     {
-        megaApi->setDefaultExclusionUpperSizeLimit(0);
+        megaApi->setLegacyExclusionUpperSizeLimit(0);
     }
 
 
