@@ -23,7 +23,8 @@ GuestWidget::GuestWidget(QWidget *parent) :
 }
 
 GuestWidget::GuestWidget(MegaApi *megaApi, QWidget *parent)
-    :QWidget(parent), ui(new Ui::GuestWidget)
+    :mSSLSecureConnectionFailed(false),
+    QWidget(parent), ui(new Ui::GuestWidget)
 {
     ui->setupUi(this);
 
@@ -116,11 +117,24 @@ void GuestWidget::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
 {
     if (request->getType() == MegaRequest::TYPE_LOGOUT)
     {
+        if(loggingStarted)
+        {
+            loggingStarted = false;
+
+            //This message is shown every time the user tries to login and the SSL fails
+            if(request->getParamType() == MegaError::API_ESSL)
+            {
+                mSSLSecureConnectionFailed = true;
+                showSSLSecureConnectionErrorMessage(request);
+                megaApi->localLogout();
+            }
+        }
+
         whyAmISeeingThisDialog.reset(nullptr);
         reset_UI_props();
         closing = false;
-        loggingStarted = false;
         page_login();
+
         return;
     }
     if (closing)
@@ -151,6 +165,9 @@ void GuestWidget::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
                         preferences->setHasLoggedIn(QDateTime::currentDateTime().toMSecsSinceEpoch() / 1000);
                     }
                 }
+
+                //Login successful -> unset the SSL fail flag
+                mSSLSecureConnectionFailed = false;
 
                 page_fetchnodes();
                 break;
@@ -190,7 +207,8 @@ void GuestWidget::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
                     page_login2FA();
                     return;
                 }
-                else if (error->getErrorCode() != MegaError::API_ESSL)
+                //Do not show this error if the SSL Secure connection has failed
+                else if (error->getErrorCode() != MegaError::API_ESSL && !mSSLSecureConnectionFailed)
                 {
                     QMegaMessageBox::warning(nullptr, tr("Error"), QCoreApplication::translate("MegaError", error->getErrorString()), QMessageBox::Ok);
                 }
@@ -366,6 +384,13 @@ void GuestWidget::showLogin2FaError() const
     Utilities::animatePartialFadein(ui->lLogin2FAError, animationTimeMillis);
     ui->lLogin2FAError->setText(ui->lLogin2FAError->text().toUpper());
     ui->lLogin2FAError->show();
+}
+
+void GuestWidget::showSSLSecureConnectionErrorMessage(MegaRequest *request) const
+{
+    QMegaMessageBox::critical(nullptr, QString::fromUtf8("MEGAsync"),
+                          tr("Our SSL key can't be verified. You could be affected by a man-in-the-middle attack or your antivirus software could be intercepting your communications and causing this problem. Please disable it and try again.")
+                           + QString::fromUtf8(" (Issuer: %1)").arg(QString::fromUtf8(request->getText() ? request->getText() : "Unknown")));
 }
 
 void GuestWidget::hideLoginError()

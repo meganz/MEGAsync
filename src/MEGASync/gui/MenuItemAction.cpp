@@ -43,24 +43,22 @@ MenuItemAction::MenuItemAction(const QString& title, const QString& value, const
                                bool manageHoverStates, int treeDepth, const QSize& iconSize, QObject* parent)
     : MenuItemAction (title, value, icon,  QIcon(), manageHoverStates, treeDepth, iconSize, parent)
 {
-}
+    this->title = new QLabel();
+    setLabelText(title);
+    this->icon = new QIcon(icon);
+    this->hoverIcon = new QIcon(hoverIcon);
+    this->value = NULL;
+    container = new QWidget (NULL);
+    container->setObjectName(QString::fromUtf8("wContainer"));
+    container->installEventFilter(this);
 
-MenuItemAction::MenuItemAction(const QString& title, const QIcon& icon, const QIcon& hoverIcon,
-                               bool manageHoverStates, int treeDepth, const QSize& iconSize, QObject* parent)
-    : MenuItemAction (title, QString(), icon, hoverIcon, manageHoverStates, treeDepth, iconSize, parent)
-{
-}
-
-void MenuItemAction::setLabelText(const QString& title)
-{
-    // Force polish to update font Info with .ui StyleSheet
-    mTitle->ensurePolished();
-    auto f (mTitle->fontMetrics());
-    QString elidedTitle (f.elidedText(title, Qt::ElideMiddle, ENTRY_MAX_WIDTH_PX));
-    mTitle->setText(elidedTitle);
-    if (title != elidedTitle)
+    if (manageHoverStates)
     {
-        setToolTip(title);
+        container->setAttribute(Qt::WA_TransparentForMouseEvents);
+    }
+
+    setupActionWidget(iconSize, title);
+    setDefaultWidget(container);
     }
 }
 

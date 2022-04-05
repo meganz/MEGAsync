@@ -10,6 +10,10 @@ namespace Ui {
 class AlertItem;
 }
 
+namespace UserAttributes{
+class FullNameAttributeRequest;
+}
+
 class AlertItem : public QWidget
 {
     Q_OBJECT
@@ -35,6 +39,9 @@ signals:
 protected:
     void changeEvent(QEvent *event);
 
+private slots:
+    void OnAttributesReady();
+
 private:
     void setAvatar(mega::MegaUserAlert *alert);
     QString formatRichString(QString str);
@@ -45,6 +52,7 @@ private:
     QString notificationHeading;
     std::unique_ptr<mega::MegaNode> alertNode;
     std::unique_ptr<mega::MegaUserAlert> alertUser;
+    std::shared_ptr<UserAttributes::FullNameAttributeRequest> mUserAttributes;
     QFutureWatcher<mega::MegaNode*> getAlertNodeWatcher;
 };
 

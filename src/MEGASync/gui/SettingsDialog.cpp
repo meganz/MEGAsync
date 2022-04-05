@@ -2437,13 +2437,12 @@ void SettingsDialog::on_bFolders_clicked()
 
 void SettingsDialog::on_bUploadFolder_clicked()
 {
-    QPointer<NodeSelector> nodeSelector = new NodeSelector(mMegaApi,
-                                                           NodeSelector::UPLOAD_SELECT, this);
+    QPointer<NodeSelector> nodeSelector = new NodeSelector(NodeSelector::UPLOAD_SELECT, this);
     MegaNode* defaultNode = mMegaApi->getNodeByPath(mUi->eUploadFolder->text()
                                                     .toUtf8().constData());
     if (defaultNode)
     {
-        nodeSelector->setSelectedFolderHandle(defaultNode->getHandle());
+        nodeSelector->setSelectedNodeHandle(defaultNode->getHandle());
         delete defaultNode;
     }
 
@@ -2456,7 +2455,7 @@ void SettingsDialog::on_bUploadFolder_clicked()
         return;
     }
 
-    MegaHandle selectedMegaFolderHandle = nodeSelector->getSelectedFolderHandle();
+    MegaHandle selectedMegaFolderHandle = nodeSelector->getSelectedNodeHandle();
     MegaNode* node = mMegaApi->getNodeByHandle(selectedMegaFolderHandle);
     if (!node)
     {
@@ -2792,7 +2791,7 @@ void SettingsDialog::updateNetworkTab()
 void SettingsDialog::setShortCutsForToolBarItems()
 {
     // Provide quick access shortcuts for Settings panes via Ctrl+1,2,3..
-    // Ctrl is automagically translated to CMD key by Qt on macOS
+    // Ctrl is auto-magically translated to CMD key by Qt on macOS
     for (int i = 0; i < mUi->wStack->count(); ++i)
     {
         QShortcut *scGeneral = new QShortcut(QKeySequence(QString::fromLatin1("Ctrl+%1").arg(i+1)), this);

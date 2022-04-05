@@ -224,7 +224,7 @@ set (MOC_INPUT
     ${MEGAsyncDir}/control/MegaController.h
     ${MEGAsyncDir}/control/SyncController.h
     ${MEGAsyncDir}/model/SyncSettings.h
-    ${MEGAsyncDir}/model/SyncModel.h
+    ${MEGAsyncDir}/model/Model.h
     ${MEGAsyncDir}/gui/AlertItem.h
     ${MEGAsyncDir}/gui/AlertFilterType.h
     ${MEGAsyncDir}/gui/BugReportDialog.h
@@ -274,13 +274,15 @@ set (MOC_INPUT
     ${MEGAsyncDir}/gui/QCustomTransfersModel.h
     ${MEGAsyncDir}/gui/QFinishedTransfersModel.h
     ${MEGAsyncDir}/gui/QAlertsModel.h
-    ${MEGAsyncDir}/gui/QMegaModel.h
+    ${MEGAsyncDir}/gui/MegaItemModel.h
     ${MEGAsyncDir}/gui/QTransfersModel.h
     ${MEGAsyncDir}/gui/QSyncItemWidget.h
     ${MEGAsyncDir}/gui/SettingsDialog.h
     ${MEGAsyncDir}/gui/NotificationsSettings.h
     ${MEGAsyncDir}/gui/SetupWizard.h
     ${MEGAsyncDir}/gui/StatusInfo.h
+    ${MEGAsyncDir}/gui/MegaItemProxyModel.h
+    ${MEGAsyncDir}/gui/MegaItemTreeView.h
     ${MEGAsyncDir}/gui/StreamingFromMegaDialog.h
     ${MEGAsyncDir}/gui/TransferItem.h
     ${MEGAsyncDir}/gui/TransferManager.h
@@ -296,7 +298,9 @@ set (MOC_INPUT
     ${MEGAsyncDir}/gui/WaitingSpinnerWidget.h
     ${MEGAsyncDir}/gui/OverQuotaDialog.h
     ${MEGAsyncDir}/gui/ProxySettings.h
+    ${MEGAsyncDir}/gui/SwitchButton.h
     ${MEGAsyncDir}/gui/BandwidthSettings.h
+    ${MEGAsyncDir}/gui/MegaItemDelegates.h
     ${MEGAsyncDir}/gui/BackupsWizard.h
     ${MEGAsyncDir}/gui/RenameTargetFolderDialog.h
     ${MEGAsyncDir}/gui/SyncsMenu.h
@@ -409,7 +413,7 @@ set (SRCS
     ${MEGAsyncDir}/gui/AccountDetailsDialog.cpp
     ${MEGAsyncDir}/gui/DownloadFromMegaDialog.cpp
     ${MEGAsyncDir}/gui/UsageWidget.cpp
-    ${MEGAsyncDir}/gui/QMegaModel.cpp
+    ${MEGAsyncDir}/gui/MegaItemModel.cpp
     ${MEGAsyncDir}/gui/MegaItem.cpp
     ${MEGAsyncDir}/gui/ChangeLogDialog.cpp
     ${MEGAsyncDir}/gui/GuestWidget.cpp
@@ -459,6 +463,9 @@ set (SRCS
     ${MEGAsyncDir}/gui/AddBackupDialog.cpp
     ${MEGAsyncDir}/gui/RemoveBackupDialog.cpp
     ${MEGAsyncDir}/gui/SwitchButton.cpp
+    ${MEGAsyncDir}/gui/MegaItemDelegates.cpp
+    ${MEGAsyncDir}/gui/MegaItemProxyModel.cpp
+    ${MEGAsyncDir}/gui/MegaItemTreeView.cpp
     ${MEGAsyncDir}/gui/GuiUtilities.cpp
     ${MEGAsyncDir}/gui/EventHelper.cpp
 	${MEGAsyncDir}/gui/BackupTableWidget.cpp
@@ -489,7 +496,7 @@ set (SRCS
     ${MEGAsyncDir}/control/SyncController.cpp
 
     ${MEGAsyncDir}/model/SyncSettings.cpp
-    ${MEGAsyncDir}/model/SyncModel.cpp
+    ${MEGAsyncDir}/model/Model.cpp
 
     ${MEGAsyncDir}/platform/notificator.cpp
 

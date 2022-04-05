@@ -2,6 +2,7 @@
 #include "ui_AlertItem.h"
 #include <QDateTime>
 #include "MegaApplication.h"
+#include "UserAttributesRequests.h"
 #include <QFutureWatcher>
 #include <QFuture>
 
@@ -44,12 +45,30 @@ AlertItem::~AlertItem()
 void AlertItem::setAlertData(MegaUserAlert *alert)
 {
     alertUser.reset(alert->copy());
+
+    mUserAttributes = UserAttributes::FullNameAttributeRequest::requestFullName(alert->getEmail());
+
+    //If the name is empty, the request is pending, otherwise, the name is ready
+    if(mUserAttributes->getFullName().isEmpty())
+    {
+        connect(mUserAttributes.get(), &UserAttributes::FullNameAttributeRequest::attributeReady, this, &AlertItem::OnAttributesReady);
+    }
+    else
+    {
+        OnAttributesReady();
+    }
+}
+
+void AlertItem::OnAttributesReady()
+{
     MegaHandle handle = alertUser->getNodeHandle();
+
     getAlertNodeWatcher.setFuture(QtConcurrent::run([=]()
     {
         return megaApi ? megaApi->getNodeByHandle(handle) : nullptr;
     }));
 }
+
 
 void AlertItem::setAlertType(int type)
 {
@@ -245,30 +264,30 @@ void AlertItem::setAlertContent(MegaUserAlert *alert)
             // Contact notifications
             case MegaUserAlert::TYPE_INCOMINGPENDINGCONTACT_REQUEST:
                 notificationContent = tr("[A] sent you a contact request")
-                        .replace(QString::fromUtf8("[A]"), formatRichString(QString::fromUtf8(alert->getEmail())));
+                        .replace(QString::fromUtf8("[A]"), formatRichString(mUserAttributes->getFullName()));
                 break;
             case MegaUserAlert::TYPE_INCOMINGPENDINGCONTACT_CANCELLED:
                 notificationContent = tr("[A] cancelled their contact request")
-                        .replace(QString::fromUtf8("[A]"), formatRichString(QString::fromUtf8(alert->getEmail())));
+                        .replace(QString::fromUtf8("[A]"), formatRichString(mUserAttributes->getFullName()));
                 break;
             case MegaUserAlert::TYPE_INCOMINGPENDINGCONTACT_REMINDER:
                 notificationContent = tr("Reminder") + QString::fromUtf8(": ") + tr("You have a contact request");
                 break;
             case MegaUserAlert::TYPE_CONTACTCHANGE_DELETEDYOU:
                 notificationContent = tr("[A] deleted you as a contact")
-                        .replace(QString::fromUtf8("[A]"), formatRichString(QString::fromUtf8(alert->getEmail())));
+                        .replace(QString::fromUtf8("[A]"), formatRichString(mUserAttributes->getFullName()));
                 break;
             case MegaUserAlert::TYPE_CONTACTCHANGE_ACCOUNTDELETED:
                 notificationContent = tr("[A] has been deleted/deactivated")
-                        .replace(QString::fromUtf8("[A]"), formatRichString(QString::fromUtf8(alert->getEmail())));
+                        .replace(QString::fromUtf8("[A]"), formatRichString(mUserAttributes->getFullName()));
                 break;
             case MegaUserAlert::TYPE_CONTACTCHANGE_CONTACTESTABLISHED:
                 notificationContent = tr("[A] established you as a contact")
-                        .replace(QString::fromUtf8("[A]"), formatRichString(QString::fromUtf8(alert->getEmail())));
+                        .replace(QString::fromUtf8("[A]"), formatRichString(mUserAttributes->getFullName()));
                 break;
             case MegaUserAlert::TYPE_CONTACTCHANGE_BLOCKEDYOU:
                 notificationContent = tr("[A] blocked you as contact")
-                        .replace(QString::fromUtf8("[A]"), formatRichString(QString::fromUtf8(alert->getEmail())));
+                        .replace(QString::fromUtf8("[A]"), formatRichString(mUserAttributes->getFullName()));
                 break;
             case MegaUserAlert::TYPE_UPDATEDPENDINGCONTACTINCOMING_IGNORED:
                 notificationContent = tr("You ignored a contact request");
@@ -281,27 +300,27 @@ void AlertItem::setAlertContent(MegaUserAlert *alert)
                 break;
             case MegaUserAlert::TYPE_UPDATEDPENDINGCONTACTOUTGOING_ACCEPTED:
                 notificationContent = tr("[A] accepted your contact request")
-                        .replace(QString::fromUtf8("[A]"), formatRichString(QString::fromUtf8(alert->getEmail())));
+                        .replace(QString::fromUtf8("[A]"), formatRichString(mUserAttributes->getFullName()));
                 break;
             case MegaUserAlert::TYPE_UPDATEDPENDINGCONTACTOUTGOING_DENIED:
                 notificationContent = tr("[A] denied your contact request")
-                        .replace(QString::fromUtf8("[A]"), formatRichString(QString::fromUtf8(alert->getEmail())));
+                        .replace(QString::fromUtf8("[A]"), formatRichString(mUserAttributes->getFullName()));
                 break;
             // Share notifications
             case MegaUserAlert::TYPE_NEWSHARE:
                 notificationContent = tr("New Shared folder from [X]")
-                        .replace(QString::fromUtf8("[X]"), formatRichString(QString::fromUtf8(alert->getEmail())));
+                        .replace(QString::fromUtf8("[X]"), formatRichString(mUserAttributes->getFullName()));
                 break;
             case MegaUserAlert::TYPE_DELETEDSHARE:
             {
                 if (alert->getNumber(0) == 0) //Someone left the folder
                 {
                     notificationContent = tr("[A] has left the shared folder")
-                            .replace(QString::fromUtf8("[A]"), formatRichString(QString::fromUtf8(alert->getEmail())));
+                            .replace(QString::fromUtf8("[A]"), formatRichString(mUserAttributes->getFullName()));
                 }
                 else //Access for the user was removed by share owner
                 {
-                    notificationContent = alert->getEmail() ? tr("Access to shared folder was removed by [A]").replace(QString::fromUtf8("[A]"), formatRichString(QString::fromUtf8(alert->getEmail())))
+                    notificationContent = alert->getEmail() ? tr("Access to shared folder was removed by [A]").replace(QString::fromUtf8("[A]"), formatRichString(mUserAttributes->getFullName()))
                                                             : tr("Access to shared folder was removed");
                 }
                 break;
@@ -313,12 +332,12 @@ void AlertItem::setAlertContent(MegaUserAlert *alert)
                 if (updatedItems == 1)
                 {
                     notificationContent = tr("[A] added 1 item")
-                            .replace(QString::fromUtf8("[A]"), formatRichString(QString::fromUtf8(alert->getEmail())));
+                            .replace(QString::fromUtf8("[A]"), formatRichString(mUserAttributes->getFullName()));
                 }
                 else
                 {
                     notificationContent = tr("[A] added [B] items")
-                            .replace(QString::fromUtf8("[A]"), formatRichString(QString::fromUtf8(alert->getEmail())))
+                            .replace(QString::fromUtf8("[A]"), formatRichString(mUserAttributes->getFullName()))
                             .replace(QString::fromUtf8("[B]"), QString::number(updatedItems));
                 }
                 break;
@@ -329,12 +348,12 @@ void AlertItem::setAlertContent(MegaUserAlert *alert)
                 if (updatedItems == 1)
                 {
                     notificationContent = tr("[A] removed 1 item")
-                            .replace(QString::fromUtf8("[A]"), formatRichString(QString::fromUtf8(alert->getEmail())));
+                            .replace(QString::fromUtf8("[A]"), formatRichString(mUserAttributes->getFullName()));
                 }
                 else
                 {
                     notificationContent = tr("[A] removed [B] items")
-                            .replace(QString::fromUtf8("[A]"), formatRichString(QString::fromUtf8(alert->getEmail())))
+                            .replace(QString::fromUtf8("[A]"), formatRichString(mUserAttributes->getFullName()))
                             .replace(QString::fromUtf8("[B]"), QString::number(updatedItems));
                 }
                 break;

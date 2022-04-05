@@ -1,40 +1,81 @@
 #ifndef MEGAITEM_H
 #define MEGAITEM_H
 
+#include "QTMegaRequestListener.h"
+
 #include <QList>
-#include <megaapi.h>
+#include <QIcon>
 
 #include <memory>
 
-class MegaItem
+class MegaItem : public QObject, public mega::MegaRequestListener
 {
+    Q_OBJECT
+    static const int ICON_SIZE;
 public:
-    MegaItem(std::shared_ptr<mega::MegaNode> node, MegaItem* parentItem = nullptr,
-             bool showFiles = false);
+
+    enum STATUS{
+        SYNC,
+        SYNC_PARENT,
+        SYNC_CHILD,
+        BACKUP,
+        NONE,
+    };
+
+    explicit MegaItem(std::unique_ptr<mega::MegaNode> node, MegaItem *parentItem = 0, bool showFiles = false);
 
     std::shared_ptr<mega::MegaNode> getNode();
-    void setChildren(std::shared_ptr<mega::MegaNodeList> children);
+    void setChildren(mega::MegaNodeList *children);
 
     bool areChildrenSet();
     MegaItem *getParent();
     MegaItem *getChild(int i);
     int getNumChildren();
     int indexOf(MegaItem *item);
-
-    int insertPosition(std::shared_ptr<mega::MegaNode> node);
-    void insertNode(std::shared_ptr<mega::MegaNode> node, int index);
+    QString getOwnerName();
+    QString getOwnerEmail();
+    void setOwner(std::unique_ptr<mega::MegaUser> user);
+    QPixmap getOwnerIcon();
+    QIcon getStatusIcons();
+    QIcon getFolderIcon();
+    int getStatus();
+    bool isSyncable();
+    bool isRoot();
+    int insertPosition(const std::unique_ptr<mega::MegaNode> &node);
+    void insertNode(std::unique_ptr<mega::MegaNode> node, int index);
     void removeNode(std::shared_ptr<mega::MegaNode> node);
     void displayFiles(bool enable);
+    void setCameraFolder();
+    void setChatFilesFolder();
+    int row();
 
     ~MegaItem();
 
+public slots:
+    void onRequestFinish(mega::MegaApi* api, mega::MegaRequest *request, mega::MegaError* e) override;
+
+signals:
+    void infoUpdated(int role);
+
 protected:
     bool mShowFiles;
-    MegaItem* mParentItem;
+    QString mOwnerFirstName;
+    QString mOwnerLastName;
+    QString mOwnerEmail;
+    QPixmap mOwnerIcon;
+    int mStatus;
+    bool mCameraFolder;
+    bool mChatFilesFolder;
+    bool mChildrenSetted;
+
     std::shared_ptr<mega::MegaNode> mNode;
-    bool mAreChildrenSet;
     QList<MegaItem*> mChildItems;
-    QList<std::shared_ptr<mega::MegaNode>> mInsertedNodes;
+    std::unique_ptr<mega::MegaUser> mOwner;
+
+private:
+    void calculateSyncStatus(const QStringList& folders);
+    std::unique_ptr<mega::QTMegaRequestListener> mDelegateListener;
+
 };
 
 #endif // MEGAITEM_H

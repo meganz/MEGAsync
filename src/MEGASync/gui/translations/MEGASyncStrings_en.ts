@@ -797,39 +797,6 @@ Please enter a different name to identify this synced folder:</source>
     </message>
 </context>
 <context>
-    <name>ConfirmSSLexception</name>
-    <message>
-        <source>Warning</source>
-        <translatorcomment>Title of the dialog that allows to disable a security check to prevent atacks that could intercept the communications of MEGAsync</translatorcomment>
-        <translation>Warning</translation>
-    </message>
-    <message>
-        <source>Are you sure you want to continue?</source>
-        <translatorcomment>Question for the user in the dialog that allows to disable a security check of MEGAsync. The user have to reply yes or no</translatorcomment>
-        <translation>Are you sure you want to continue?</translation>
-    </message>
-    <message>
-        <source>Remember my decision and don&apos;t ask me again</source>
-        <translatorcomment>Text next to a checkbox that allows to remember the decision of the user. The translation should be as short as possible.</translatorcomment>
-        <translation>Remember my decision and don’t ask me again</translation>
-    </message>
-    <message>
-        <source>No</source>
-        <translatorcomment>Negative response to a question. The text will be inside a button.</translatorcomment>
-        <translation>No</translation>
-    </message>
-    <message>
-        <source>Yes</source>
-        <translatorcomment>Positive response to a question. The text will be inside a button.</translatorcomment>
-        <translation>Yes</translation>
-    </message>
-    <message>
-        <source>You are about to allow that your communications could be intercepted. Your data would be still inaccessible for attackers due to our end-to-end encryption, but they could blindly move your files and folders in MEGA, delete them or deny your access to your account.</source>
-        <translatorcomment>Information for the user about the consequences of disabling a security check of MEGAsync</translatorcomment>
-        <translation>You are about to allow a setting that could allow your communications to be intercepted. Your data would be still inaccessible for attackers due to our end-to-end encryption, but they could blindly move your files and folders in MEGA, delete them or deny you access to your account.</translation>
-    </message>
-</context>
-<context>
     <name>CrashReportDialog</name>
     <message>
         <source>Error report</source>
@@ -982,16 +949,6 @@ In some cases they may contain details about your data, such as file or folder n
         <source>Reject</source>
         <translatorcomment>Button label of system notification to reject the notification of incoming contact request.</translatorcomment>
         <translation>Reject</translation>
-    </message>
-    <message>
-        <source>Cancelled Contact Request</source>
-        <translatorcomment>Title of the notification about a cancellation of a contact request</translatorcomment>
-        <translation>Cancelled Contact Request</translation>
-    </message>
-    <message>
-        <source>[A] cancelled the contact request</source>
-        <translatorcomment>Label to indicate that usar [A] has cancelled the contact request. Placeholder will be replaced by email of the user that made the cancellation.</translatorcomment>
-        <translation>[A] cancelled their contact request</translation>
     </message>
     <message>
         <source>Reminder</source>
@@ -1474,9 +1431,9 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation>Your account has been temporarily locked for your safety. Please verify your email and follow its steps to unlock your account.</translation>
     </message>
     <message>
-        <source>Logout</source>
-        <translatorcomment>Button label to logout the current account.</translatorcomment>
-        <translation>Logout</translation>
+        <source>Log out</source>
+        <translatorcomment>Button label to log out the current account.</translatorcomment>
+        <translation>Log out</translation>
     </message>
     <message>
         <source>Your account has been suspended temporarily due to potential abuse. Please verify your phone number to unlock your account.</source>
@@ -1851,8 +1808,9 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation>You are not logged in</translation>
     </message>
     <message>
-        <source>Login</source>
-        <translation>Login</translation>
+        <source>Log in</source>
+        <translatorcomment>Title for explanation about log in</translatorcomment>
+        <translation>Log in</translation>
     </message>
     <message>
         <source>Create Account</source>
@@ -2207,11 +2165,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>Your sync “%1” has been disabled because the synchronization of VirtualBox shared folders is not supported due to deficiencies in that file system.</translation>
     </message>
     <message>
-        <source>Logout</source>
-        <translatorcomment>Label to indicate Logout action</translatorcomment>
-        <translation>Logout</translation>
-    </message>
-    <message>
         <source>Error getting link information</source>
         <translatorcomment>Notification  error message shown while getting information from a public link.</translatorcomment>
         <translation>Error getting link information</translation>
@@ -2244,16 +2197,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Fetching file list...</source>
         <translation>Fetching file list…</translation>
-    </message>
-    <message>
-        <source>I don&apos;t care</source>
-        <translatorcomment>Text for a button that, when clicked, will disable and important security check of MEGAsync. The text should be as short as possible. If it&apos;s not possible to provide a short translation, it can be translated as: Ignore</translatorcomment>
-        <translation>I don’t care</translation>
-    </message>
-    <message>
-        <source>Retry</source>
-        <translatorcomment>Text for a button that will cause a retry of a failed operation. The translation should be as short as possible.</translatorcomment>
-        <translation>Retry</translation>
     </message>
     <message>
         <source>Transfer canceled</source>
@@ -2436,11 +2379,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>Syncs</translation>
     </message>
     <message>
-        <source>MEGA is unable to connect securely through SSL. You might be on public WiFi with additional requirements.</source>
-        <translatorcomment>Message shown when SSL (connection secure with MEGA) errors are detected.</translatorcomment>
-        <translation>MEGA is unable to connect securely through SSL. You might be on public Wi-Fi with additional requirements.</translation>
-    </message>
-    <message>
         <source>Cloud drive</source>
         <translatorcomment>Label of context menu to reach Cloud drive section at webclient. It will open your webbrowser and redirects to your cloud drive.</translatorcomment>
         <translation>Cloud Drive</translation>
@@ -2534,11 +2472,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>One or more syncs have been disabled</source>
         <translatorcomment>Tooltip to indicate that some syncs have been disable due to some error.</translatorcomment>
         <translation>One or more syncs have been disabled</translation>
-    </message>
-    <message>
-        <source>Your syncs have been enabled</source>
-        <translatorcomment>Notification message shown when the syncs have been enabled.</translatorcomment>
-        <translation>Your syncs have been enabled</translation>
     </message>
     <message>
         <source>Error adding sync</source>
@@ -3189,6 +3122,84 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
 </context>
 <context>
+    <name>NotificationsSettings</name>
+    <message>
+        <source>Account notifications:</source>
+        <translatorcomment>Title for notifications setting pane</translatorcomment>
+        <translation>Account notifications:</translation>
+    </message>
+    <message>
+        <source>Shares</source>
+        <translatorcomment>Notification category for shared folders and nodes</translatorcomment>
+        <translation>Shares</translation>
+    </message>
+    <message>
+        <source>New shared folder from contact</source>
+        <translatorcomment>Title of a checkbox for disconnectig notifications</translatorcomment>
+        <translation>New shared folder from contact</translation>
+    </message>
+    <message>
+        <source>Added or removed files</source>
+        <translatorcomment>Title of a checkbox for disconnectig notifications</translatorcomment>
+        <translation>Added or removed files</translation>
+    </message>
+    <message>
+        <source>Access to a shared folder was removed</source>
+        <translatorcomment>Title of a checkbox for disconnectig notifications</translatorcomment>
+        <translation>Access to a shared folder was removed</translation>
+    </message>
+    <message>
+        <source>Contacts</source>
+        <translatorcomment>Notification category for contact notifications</translatorcomment>
+        <translation>Contacts</translation>
+    </message>
+    <message>
+        <source>New contact request</source>
+        <translatorcomment>Title of a checkbox for disconnectig notifications</translatorcomment>
+        <translation>New contact request</translation>
+    </message>
+    <message>
+        <source>Pending contact request reminder</source>
+        <translatorcomment>Title of a checkbox for disconnectig notifications</translatorcomment>
+        <translation>Pending contact request reminder</translation>
+    </message>
+    <message>
+        <source>Someone has accepted your contact request</source>
+        <translatorcomment>Title of a checkbox for disconnectig notifications</translatorcomment>
+        <translation>Someone has accepted your contact request</translation>
+    </message>
+    <message>
+        <source>Info</source>
+        <translatorcomment>Notification category for non-critical info notifications</translatorcomment>
+        <translation>Info</translation>
+    </message>
+    <message>
+        <source>Desktop notifications</source>
+        <translatorcomment>Title of a checkbox for disconnectig notifications</translatorcomment>
+        <translation>Desktop notifications</translation>
+    </message>
+    <message>
+        <source>Someone accepted your contact request</source>
+        <translatorcomment>Title of a checkbox for disconnectig notifications</translatorcomment>
+        <translation>Someone accepted your contact request</translation>
+    </message>
+    <message>
+        <source>Info:</source>
+        <translatorcomment>Notification category for non-critical info notifications (macx)</translatorcomment>
+        <translation>Info:</translation>
+    </message>
+    <message>
+        <source>Contacts:</source>
+        <translatorcomment>Notification category for non-critical info notifications (macx)</translatorcomment>
+        <translation>Contacts:</translation>
+    </message>
+    <message>
+        <source>Shares:</source>
+        <translatorcomment>Notification category for non-critical info notifications (macx)</translatorcomment>
+        <translation>Shares:</translation>
+    </message>
+</context>
+<context>
     <name>Notificator</name>
     <message>
         <source>MEGAsync</source>
@@ -3346,9 +3357,9 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translation>Invalid MEGA Link</translation>
     </message>
     <message>
-        <source>Enter links</source>
+        <source>Open links</source>
         <translatorcomment>Window title for dialog to enter MEGA public links</translatorcomment>
-        <translation>Enter links</translation>
+        <translation>Open links</translation>
     </message>
 </context>
 <context>
@@ -3525,12 +3536,19 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Strengthen cryptographic security on Linux repositories.
-- Fix memory issues with problematic PDF files.
+        <source>- Added support to stream file links from a folder link.
+- Fixed translation issues.
+- Improved the user experience.
+- Added a new notifications panel in the settings dialog.
+- Other minor UI fixes and adjustments.
+- Fixed detected crashes on Windows, Linux and macOS.
 </source>
-        <translatorcomment>Changelog v4.6.3 (linux only)</translatorcomment>
-        <translation>- Strengthen cryptographic security on Linux repositories.
-- Fix memory issues with problematic PDF files.
+        <translation>- Added support to stream file links from a folder link.
+- Fixed translation issues.
+- Improved the user experience.
+- Added a new notifications panel in the settings dialog.
+- Other minor UI fixes and adjustments.
+- Fixed detected crashes on Windows, Linux and macOS.
 </translation>
     </message>
 </context>
@@ -4055,11 +4073,6 @@ Do you want to delete it anyway?</translation>
         <translation>Help</translation>
     </message>
     <message>
-        <source>Show notifications</source>
-        <translatorcomment>Label to let the user enable desktop notifications with a checkbox.</translatorcomment>
-        <translation>Show notifications</translation>
-    </message>
-    <message>
         <source>Start on startup</source>
         <translatorcomment>Label to let the user start MEGAsync on startup of the operating system with a checkbox.</translatorcomment>
         <translation>Start on startup</translation>
@@ -4080,9 +4093,9 @@ Do you want to delete it anyway?</translation>
         <translation>Details</translation>
     </message>
     <message>
-        <source>Logout</source>
-        <translatorcomment>Button label to logout of the application. String as short as possible.</translatorcomment>
-        <translation>Logout</translation>
+        <source>Log out</source>
+        <translatorcomment>Button label to log out of the application. String as short as possible.</translatorcomment>
+        <translation>Log out</translation>
     </message>
     <message>
         <source>Upgrade</source>
@@ -4143,11 +4156,6 @@ Do you want to delete it anyway?</translation>
         <source>Full scan</source>
         <translatorcomment>Title of the message dialog for Full scan operation.</translatorcomment>
         <translation>Full scan</translation>
-    </message>
-    <message>
-        <source>Open at login</source>
-        <translatorcomment>Label to let the user start MEGAsync on login with a checkbox.</translatorcomment>
-        <translation>Open at login</translation>
     </message>
     <message>
         <source>MEGAsync will perform a full scan of your synced folders when it starts.
@@ -4437,9 +4445,9 @@ Do you want to restart MEGAsync now?</source>
         <translation>Default Folders</translation>
     </message>
     <message>
-        <source>Move...</source>
+        <source>Move…</source>
         <translatorcomment>Button label text allowing the user to change the default Uploads or Downloads folders for the app.</translatorcomment>
-        <translation>Move...</translation>
+        <translation>Move…</translation>
     </message>
     <message>
         <source>Exclude files smaller than</source>
@@ -4452,14 +4460,14 @@ Do you want to restart MEGAsync now?</source>
         <translation>Exclude files bigger than</translation>
     </message>
     <message>
-        <source>Restart MEGA Desktop Application to apply changes.</source>
+        <source>Restart MEGA Desktop App to apply changes.</source>
         <translatorcomment>Informative text shown in Folders pane, letting the user know that an application restart is required to apply the changes he just made.</translatorcomment>
-        <translation>Restart MEGA Desktop Application to apply changes.</translation>
+        <translation>Restart MEGA Desktop App to apply changes.</translation>
     </message>
     <message>
-        <source>Change Settings...</source>
+        <source>Change Settings…</source>
         <translatorcomment>Button label text for Bandwidth and Proxy settings in Network pane.</translatorcomment>
-        <translation>Change Settings...</translation>
+        <translation>Change Settings…</translation>
     </message>
     <message>
         <source>Proxies</source>
@@ -4691,6 +4699,16 @@ Do you want to restart MEGAsync now?</source>
         <translatorcomment>Button label text for export key saving to local machine in a file. Keep string as short as possible.</translatorcomment>
         <translation>Export Key</translation>
     </message>
+    <message>
+        <source>Notifications</source>
+        <translatorcomment>Title for the Settings -&gt; Notifications pane tab button. Keep as short as possible.</translatorcomment>
+        <translation>Notifications</translation>
+    </message>
+    <message>
+        <source>Launch at login</source>
+        <translatorcomment>Label to let the user start MEGAsync on login with a checkbox.</translatorcomment>
+        <translation>Launch at login</translation>
+    </message>
 </context>
 <context>
     <name>SetupWizard</name>
@@ -4720,9 +4738,9 @@ Do you want to restart MEGAsync now?</source>
         <translation>I agree with the MEGA &lt;a href=&quot;https://mega.nz/terms&quot;&gt;Terms of Service&lt;/a&gt;</translation>
     </message>
     <message>
-        <source>Login to your MEGA account</source>
+        <source>Log in to your MEGA account</source>
         <translatorcomment>Label to let the user login with his credentials.</translatorcomment>
-        <translation>Login to your MEGA account</translation>
+        <translation>Log in to your MEGA account</translation>
     </message>
     <message>
         <source>Please verify your account using the confirmation link that we have sent to your email account</source>
@@ -4888,9 +4906,9 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>Unable to get the file system. Please try again. If the problem persists please contact us at bug@mega.nz</translation>
     </message>
     <message>
-        <source>Setup Assistant - MEGAsync</source>
+        <source>Set up Assistant - MEGAsync</source>
         <translatorcomment>Title of the setup assistant dialog. Keep capital letters.</translatorcomment>
-        <translation>Setup Assistant - MEGAsync</translation>
+        <translation>Set up Assistant - MEGAsync</translation>
     </message>
     <message>
         <source>Full sync</source>
@@ -5020,9 +5038,9 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>Please enter your last name</translation>
     </message>
     <message>
-        <source>Setup selective sync</source>
+        <source>Set up selective sync</source>
         <translatorcomment>Label shown when user is setting up the selective sync mode of MEGAsync</translatorcomment>
-        <translation>Setup selective sync</translation>
+        <translation>Set up selective sync</translation>
     </message>
     <message>
         <source>Specific folders in your Cloud Drive will be synchronized with a local folder.</source>
@@ -5035,9 +5053,9 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>Select local folder</translation>
     </message>
     <message>
-        <source>Setup full sync</source>
+        <source>Set up full sync</source>
         <translatorcomment>Label shown when user is setting up full sync mode of MEGAsync</translatorcomment>
-        <translation>Setup full sync</translation>
+        <translation>Set up full sync</translation>
     </message>
     <message>
         <source>Full Sync</source>
@@ -5055,9 +5073,9 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>We are all done!</translation>
     </message>
     <message>
-        <source>Login</source>
+        <source>Log in</source>
         <translatorcomment>Button label to open Login form</translatorcomment>
-        <translation>Login</translation>
+        <translation>Log in</translation>
     </message>
 </context>
 <context>
@@ -5273,6 +5291,24 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translatorcomment>Informative label to indicate the user that there is a stream error because of transfer overquota situation.</translatorcomment>
         <translation>Streaming error: transfer quota exceeded.</translation>
     </message>
+    <message>
+        <source>Please wait...</source>
+        <translatorcomment>Message shown while waiting for the server request with the file info to stream</translatorcomment>
+        <translation>Please wait…</translation>
+    </message>
+</context>
+<context>
+    <name>SwitchButton</name>
+    <message>
+        <source>On</source>
+        <translatorcomment>Checked state of a swith button</translatorcomment>
+        <translation>On</translation>
+    </message>
+    <message>
+        <source>Off</source>
+        <translatorcomment>Unchecked state of a swith button</translatorcomment>
+        <translation>Off</translation>
+    </message>
 </context>
 <context>
     <name>TransferManager</name>
@@ -5322,11 +5358,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>Cancel all</translation>
     </message>
     <message>
-        <source>Are you sure you want to cancel all transfers?</source>
-        <translatorcomment>Description label for warning dialog before a transfer cancellation</translatorcomment>
-        <translation>Are you sure you want to cancel all transfers?</translation>
-    </message>
-    <message>
         <source>Resume</source>
         <translation>Resume</translation>
     </message>
@@ -5347,6 +5378,26 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Open links</source>
         <translatorcomment>Menu action item to open MEGA public links. It will let you to import and/or download.</translatorcomment>
         <translation>Open links</translation>
+    </message>
+    <message>
+        <source>Do you want to cancel all transfers?</source>
+        <translatorcomment>Description label for warning dialog before a transfer cancellation</translatorcomment>
+        <translation>Do you want to cancel all transfers?</translation>
+    </message>
+    <message>
+        <source>Syncs aren&apos;t affected by this action.</source>
+        <translatorcomment>Description label for warning dialog indicating that syncs are not going to be affected by accepting this dialog</translatorcomment>
+        <translation>Syncs aren&apos;t affected by this action.</translation>
+    </message>
+    <message>
+        <source>Continue transfers</source>
+        <translatorcomment>Button label that indicates that no one of active transfers will be cancelled (Cancel button on dialog)</translatorcomment>
+        <translation>Continue transfers</translation>
+    </message>
+    <message>
+        <source>Cancel all transfers</source>
+        <translatorcomment>Button label that indicates that all active transfers will be cancelled (Accept button on dialog)</translatorcomment>
+        <translation>Cancel all transfers</translation>
     </message>
 </context>
 <context>
@@ -5680,9 +5731,9 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>Why am I seeing this?</translation>
     </message>
     <message>
-        <source>Logout</source>
-        <translatorcomment>Button label to logout the current account</translatorcomment>
-        <translation>Logout</translation>
+        <source>Log out</source>
+        <translatorcomment>Button label to log out the current account</translatorcomment>
+        <translation>Log out</translation>
     </message>
     <message>
         <source>Verify your email</source>

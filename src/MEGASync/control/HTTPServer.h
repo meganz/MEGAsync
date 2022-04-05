@@ -117,13 +117,9 @@ class HTTPServer: public QTcpServer
         void processPostRequest(QAbstractSocket* socket, HTTPRequest* request,
                                 const QStringList& headers, const QString& content);
         void processOptionRequest(QAbstractSocket* socket, HTTPRequest* request, const QStringList& headers);
-
         void sendPreFlightResponse(QAbstractSocket* socket, HTTPRequest* request, bool sendPrivateNetworkField);
-
         bool hasFieldWithValue(const QStringList& headers, const char* fieldName, const char* value);
-
         bool isPreFlightCorsRequest(const QStringList& headers);
-
         bool isRequestOfType(const QStringList& headers, const char* typeName);
 
         void versionCommand(QString& response);

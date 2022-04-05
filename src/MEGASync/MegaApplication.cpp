@@ -968,7 +968,6 @@ void MegaApplication::start()
     indexing = false;
     paused = false;
     nodescurrent = false;
-    appliedStorageState = MegaApi::STORAGE_STATE_UNKNOWN;
     getUserDataRequestReady = false;
     mFetchingNodes = false;
     mQueringWhyAmIBlocked = false;
@@ -1416,6 +1415,11 @@ void MegaApplication::startSyncs(QList<PreConfiguredSync> syncs)
     {
         return;
     }
+
+    // Load default exclusion rules before adding the new syncs from setup wizard.
+    // We could not load them before fetch nodes, because default exclusion rules
+    // are only created once the local preferences are logged.
+    loadSyncExclusionRules(QString::fromUtf8(megaApi->getMyEmail()));
 
     // add syncs from setupWizard
     for (auto & ps : syncs)
@@ -2605,7 +2609,7 @@ void MegaApplication::initLocalServer()
 
 bool MegaApplication::eventFilter(QObject *obj, QEvent *e)
 {
-    if (obj == infoDialogMenu)
+    if (!appfinished && obj == infoDialogMenu)
     {
         if (e->type() == QEvent::Leave)
         {
@@ -2880,7 +2884,7 @@ void MegaApplication::loadSyncExclusionRules(QString email)
 
     if (preferences->lowerSizeLimit())
     {
-        megaApi->setExclusionLowerSizeLimit(computeExclusionSizeLimit(preferences->lowerSizeLimitValue()));
+        megaApi->setExclusionLowerSizeLimit(computeExclusionSizeLimit(preferences->lowerSizeLimitValue(), preferences->lowerSizeLimitUnit()));
     }
     else
     {
@@ -2889,7 +2893,7 @@ void MegaApplication::loadSyncExclusionRules(QString email)
 
     if (preferences->upperSizeLimit())
     {
-        megaApi->setExclusionUpperSizeLimit(computeExclusionSizeLimit(preferences->upperSizeLimitValue()));
+        megaApi->setExclusionUpperSizeLimit(computeExclusionSizeLimit(preferences->upperSizeLimitValue(), preferences->upperSizeLimitUnit()));
     }
     else
     {
@@ -2904,9 +2908,9 @@ void MegaApplication::loadSyncExclusionRules(QString email)
 
 }
 
-long long MegaApplication::computeExclusionSizeLimit(const long long sizeLimitValue)
+long long MegaApplication::computeExclusionSizeLimit(const long long sizeLimitValue, const int unit)
 {
-    const double sizeLimitPower = pow(static_cast<double>(1024), static_cast<double>(sizeLimitValue));
+    const double sizeLimitPower = pow(static_cast<double>(1024), static_cast<double>(unit));
     return sizeLimitValue * static_cast<long long>(sizeLimitPower);
 }
 
@@ -4844,7 +4848,7 @@ void MegaApplication::downloadActionClicked()
         return;
     }
 
-    downloadNodeSelector = new NodeSelector(megaApi, NodeSelector::DOWNLOAD_SELECT, NULL);
+    downloadNodeSelector = new NodeSelector(NodeSelector::DOWNLOAD_SELECT, NULL);
     int result = downloadNodeSelector->exec();
     if (!downloadNodeSelector)
     {
@@ -4858,21 +4862,18 @@ void MegaApplication::downloadActionClicked()
         return;
     }
 
-    long long selectedMegaFolderHandle = downloadNodeSelector->getSelectedFolderHandle();
-    MegaNode *selectedNode = megaApi->getNodeByHandle(selectedMegaFolderHandle);
+    QList<MegaHandle> selectedMegaFolderHandles = downloadNodeSelector->getMultiSelectionNodeHandle();
     delete downloadNodeSelector;
-    downloadNodeSelector = NULL;
-    if (!selectedNode)
+    downloadNodeSelector = nullptr;
+    foreach(auto& selectedMegaFolderHandle, selectedMegaFolderHandles)
     {
-        selectedMegaFolderHandle = INVALID_HANDLE;
-        return;
+        MegaNode *selectedNode = megaApi->getNodeByHandle(selectedMegaFolderHandle);
+        if (selectedNode)
+        {
+            downloadQueue.append(new WrappedNode(WrappedNode::TransferOrigin::FROM_APP, selectedNode));
+        }
     }
-
-    if (selectedNode)
-    {
-        downloadQueue.append(new WrappedNode(WrappedNode::TransferOrigin::FROM_APP, selectedNode));
-        processDownloads();
-    }
+    processDownloads();
 }
 
 void MegaApplication::streamActionClicked()
@@ -6410,7 +6411,7 @@ void MegaApplication::createInfoDialogMenus()
         myCloudAction = NULL;
     }
 
-    myCloudAction = new MenuItemAction(tr("Cloud drive"), QIcon(QString::fromUtf8("://images/ico_cloud_drive.png")), true);
+    myCloudAction = new MenuItemAction(tr("Cloud drive"), QIcon(QString::fromUtf8("://images/ico-cloud-drive.png")), true);
     connect(myCloudAction, SIGNAL(triggered()), this, SLOT(goToMyCloud()), Qt::QueuedConnection);
 
     static SyncsMenu* syncs2waysMenu (nullptr);
@@ -6940,7 +6941,9 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
     }
     case MegaRequest::TYPE_GET_ATTR_USER:
     {
-        if (!preferences->logged())
+        QString request_email = QString::fromUtf8(request->getEmail());
+        if (!preferences->logged()
+            || (!request_email.isEmpty() && request_email != preferences->email()))
         {
             break;
         }
@@ -6980,7 +6983,6 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
                     delete [] email;
                 }
             }
-
             emit avatarReady();
         }
         else if (request->getParamType() == MegaApi::USER_ATTR_DISABLE_VERSIONS)

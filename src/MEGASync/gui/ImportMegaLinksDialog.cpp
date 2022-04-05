@@ -172,7 +172,7 @@ void ImportMegaLinksDialog::on_bLocalFolder_clicked()
 
 void ImportMegaLinksDialog::on_bMegaFolder_clicked()
 {
-    QPointer<NodeSelector> nodeSelector = new NodeSelector(megaApi, NodeSelector::UPLOAD_SELECT, this);
+    QPointer<NodeSelector> nodeSelector = new NodeSelector(NodeSelector::UPLOAD_SELECT, this);
     int result = nodeSelector->exec();
     if (!nodeSelector || result != QDialog::Accepted)
     {
@@ -180,7 +180,7 @@ void ImportMegaLinksDialog::on_bMegaFolder_clicked()
         return;
     }
 
-    MegaHandle selectedMegaFolderHandle = nodeSelector->getSelectedFolderHandle();
+    MegaHandle selectedMegaFolderHandle = nodeSelector->getSelectedNodeHandle();
     MegaNode *selectedFolder = megaApi->getNodeByHandle(selectedMegaFolderHandle);
     if (!selectedFolder)
     {

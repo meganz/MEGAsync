@@ -68,7 +68,7 @@ void BugReportDialog::onTransferStart(MegaApi*, MegaTransfer* transfer)
     auto labelWidget = new QLabel(tr("Bug report is uploading, it may take a few minutes"));
     labelWidget->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Maximum);
     labelWidget->setWordWrap(true);
-    labelWidget->setAlignment(Qt::AlignHCenter);
+    labelWidget->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
     sendProgress->setLabel(labelWidget);
 
     sendProgress->show();

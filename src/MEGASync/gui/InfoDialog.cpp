@@ -343,6 +343,7 @@ void InfoDialog::moveEvent(QMoveEvent*)
 void InfoDialog::setBandwidthOverquotaState(QuotaState state)
 {
     transferQuotaState = state;
+    setUsage();
 }
 
 void InfoDialog::enableTransferOverquotaAlert()
