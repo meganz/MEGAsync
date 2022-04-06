@@ -702,7 +702,7 @@ QString Utilities::getSizeStringWithoutUnits(long long bytes)
 Utilities::ProgressSize Utilities::getProgressSizes(unsigned long long transferredBytes, unsigned long long totalBytes)
 {
     ProgressSize sizes;
-    Q_ASSERT(transferredBytes > totalBytes);
+    Q_ASSERT(totalBytes >= transferredBytes);
 
     if (transferredBytes >= 0 && totalBytes >= 0)
     {    

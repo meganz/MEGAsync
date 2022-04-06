@@ -663,13 +663,15 @@ void TransferManager::refreshSearchStats()
 
         if(mUi->tDlResults->property(LABEL_NUMBER).toLongLong() != nbDl)
         {
-            mUi->tDlResults->setText(QString(tr("Downloads\t\t\t\t%1")).arg(nbDl));
+            QString downloadText(tr("Downloads"));
+            mUi->tDlResults->setText(QString(downloadText + QString::fromUtf8("\t\t\t\t") + QString::number(nbDl)));
             mUi->tDlResults->setProperty(LABEL_NUMBER, nbDl);
         }
 
         if(mUi->tUlResults->property(LABEL_NUMBER).toLongLong() != nbUl)
         {
-            mUi->tUlResults->setText(QString(tr("Uploads\t\t\t\t%1")).arg(nbUl));
+            QString uploadText(tr("Uploads"));
+            mUi->tUlResults->setText(QString(uploadText + QString::fromUtf8("\t\t\t\t") + QString::number(nbUl)));
             mUi->tUlResults->setProperty(LABEL_NUMBER, nbUl);
         }
 
@@ -677,7 +679,9 @@ void TransferManager::refreshSearchStats()
         mUi->lNbResults->setProperty("results", bool(nbAll));
         mUi->lNbResults->style()->unpolish(mUi->lNbResults);
         mUi->lNbResults->style()->polish(mUi->lNbResults);
-        mUi->tAllResults->setText(QString(tr("All\t\t\t\t%1")).arg(nbAll));
+
+        QString allText(tr("All"));
+        mUi->tAllResults->setText(allText + QString::fromUtf8("\t\t\t\t") + QString::number(nbAll));
 
         mUi->searchByTextTypeSelector->setVisible(nbDl != 0 && nbUl != 0);
 
