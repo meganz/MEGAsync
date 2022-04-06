@@ -908,6 +908,9 @@ void TransferManager::toggleTab(TM_TAB newTab)
 {
     if (mCurrentTab != newTab)
     {
+        //First, update the data
+        onTransfersDataUpdated();
+
         // De-activate old tab frame
         if (mCurrentTab != NO_TAB)
         {

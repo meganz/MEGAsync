@@ -366,11 +366,9 @@ void TransferThread::resetCompletedDownloads(QList<QExplicitlySharedDataPointer<
 ///////////////// TRANSFERS MODEL //////////////////////////////////////////////
 
 const int PROCESS_TIMER = 100;
-const int UPDATE_NUMBER_LIMIT = 100;
 const int RESET_AFTER_EMPTY_RECEIVES = 10;
 const unsigned long long ACTIVE_PRIORITY_OFFSET = 100000000000000;
 const unsigned long long COMPLETED_PRIORITY_OFFSET = 200000000000000;
-const char* TransfersModel::SORTED_BY_STATE = "SORTED_BY_STATE";
 
 TransfersModel::TransfersModel(QObject *parent) :
     QAbstractItemModel (parent),
@@ -885,6 +883,19 @@ void TransfersModel::retryTransfers(QModelIndexList indexes)
     clearTransfers(indexes);
 }
 
+void TransfersModel::reset()
+{
+    beginResetModel();
+
+    mTagByOrder.clear();
+    mTransfersCount = TransfersCount();
+    mTransfers.clear();
+    mCancelingMode = 0;
+    mFailingMode = 0;
+
+    endResetModel();
+}
+
 void TransfersModel::openFolderByTag(TransferTag tag)
 {
     auto row = mTagByOrder.value(tag);
@@ -1218,6 +1229,11 @@ void TransfersModel::updateTransfersCount()
 
 void TransfersModel::removeRows(QModelIndexList& indexesToRemove)
 {
+    if(indexesToRemove.isEmpty())
+    {
+        return;
+    }
+
     std::sort(indexesToRemove.begin(), indexesToRemove.end(),[](QModelIndex check1, QModelIndex check2){
         return check1.row() > check2.row();
     });
@@ -1225,9 +1241,12 @@ void TransfersModel::removeRows(QModelIndexList& indexesToRemove)
     // First clear finished transfers (remove rows), then cancel the others.
     // This way, there is no risk of messing up the rows order with cancel requests.
     int count (0);
-    int row (indexesToRemove.last().row());
+    //We add 1 to row, as the row will be reduced by one as soon as the loop starts
+    int row (indexesToRemove.last().row() + 1);
     for (auto index : indexesToRemove)
     {
+        row--;
+
         // Init row with row of first tag
         if (count == 0)
         {
@@ -1244,13 +1263,12 @@ void TransfersModel::removeRows(QModelIndexList& indexesToRemove)
 
         // We have at least one row
         count++;
-        row--;
     }
-    // Flush pooled rows (start at row + 1).
+    // Flush pooled rows (start at row).
     // This happens when the last item processed is in a finished state.
     if (count > 0 && row >= 0)
     {
-        removeRows(row + 1, count, DEFAULT_IDX);
+        removeRows(row, count, DEFAULT_IDX);
     }
 
     updateTagsByOrder();

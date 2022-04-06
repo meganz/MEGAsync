@@ -215,6 +215,11 @@ void MegaTransferView::cancelAndClearAllTransfers(bool cancel, bool clear)
         {
             sourceModel->clearTransfers(QModelIndexList());
         }
+
+        if(cancel && clear)
+        {
+            sourceModel->reset();
+        }
     }
 }
 

@@ -251,12 +251,15 @@ void TransferManagerDelegateWidget::updateTransferState()
     }
 
     // Total size
-    mUi->lTotal->setText(Utilities::getSizeString(getData()->mTotalSize));
 
     // Done label
     auto transferedB (getData()->mTransferredBytes);
     auto totalB (getData()->mTotalSize);
-    mUi->lDone->setText(Utilities::getSizeStringWithoutUnits(transferedB) + QLatin1Literal("/"));
+
+    auto sizes = Utilities::getProgressSizes(transferedB, totalB);
+
+    mUi->lDone->setText(sizes.transferredBytes + QLatin1Literal("/"));
+    mUi->lTotal->setText(sizes.totalBytes + QLatin1Literal(" ") + sizes.units);
 
     // Progress bar
     int permil = getData()->mState & (TransferData::TRANSFER_COMPLETED | TransferData::TRANSFER_COMPLETING) ?
