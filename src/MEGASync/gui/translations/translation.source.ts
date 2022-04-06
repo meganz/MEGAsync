@@ -1702,11 +1702,6 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
 <context>
     <name>InfoDialogTransferDelegateWidget</name>
     <message>
-        <source>starting...</source>
-        <translatorcomment>A new transfer is starting</translatorcomment>
-        <translation type="unfinished">starting…</translation>
-    </message>
-    <message>
         <source>PAUSED</source>
         <translatorcomment>Transfers are paused</translatorcomment>
         <translation type="unfinished">PAUSED</translation>
@@ -1745,6 +1740,31 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <source>Added [A]</source>
         <translatorcomment>Message shown when the transfer has finished</translatorcomment>
         <translation type="unfinished">Added [A]</translation>
+    </message>
+    <message>
+        <source>Show in folder</source>
+        <translatorcomment>Tooltip for show transfer in folder</translatorcomment>
+        <translation type="unfinished">Show in folder</translation>
+    </message>
+    <message>
+        <source>starting</source>
+        <translatorcomment>Show the state "starting" in the transfer</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Retry</source>
+        <translatorcomment>Tooltip for retry failed transfer</translatorcomment>
+        <translation type="unfinished">Retry</translation>
+    </message>
+    <message>
+        <source>Failed: %1</source>
+        <translatorcomment>Tooltip for show transfer failed reason</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copy link to file</source>
+        <translatorcomment>Tooltip for copy linr</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3003,6 +3023,48 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Cancel Transfers</source>
         <translatorcomment>Context menu action to cancel some transfers</translatorcomment>
         <translation type="unfinished"></translation>
+    </message>
+    <message numerus="yes">
+        <source>Are you sure you want to cancel the following transfer(s)?</source> 
+        <translatorcomment>message box to ask the user about canceling the selected transfers</translatorcomment>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>Are you sure you want to cancel or clear the following transfer(s)?</source>
+        <translatorcomment>message box to ask the user about canceling or cleaning transfers</translatorcomment>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>Are you sure you want to cancel all transfers?</source>
+        <translatorcomment>message box to ask the user about canceling all transfers</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Are you sure you want to cancel and clear all transfers?</source>
+        <translatorcomment>message box to ask the user about canceling and cleaning all transfers</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message numerus="yes">
+        <source>Are you sure you want to clear the following transfer(s)?</source>
+        <translatorcomment>message box to ask the user about cleaning the selected transfers</translatorcomment>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>Are you sure you want to retry the following transfer(s)?</source>
+        <translatorcomment>message box to ask the user about retrying the selected transfers</translatorcomment>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
     </message>
 </context>
 <context>
@@ -5341,6 +5403,14 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
 </context>
 <context>
+    <name>TransferBaseDelegateWidget</name>
+    <message>
+        <source>Are you sure you want to retry this transfer?</source>
+        <translatorcomment>message box to ask the user about retrying this transfer</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>TransferManager</name>
     <message>
         <source>Transfer Manager</source>
@@ -5463,16 +5533,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Depleted transfer quota</source>
-        <translatorcomment>Message when the user exceeds the transfer quota</translatorcomment>
-        <translation type="unfinished">Depleted transfer quota</translation>
-    </message>
-    <message>
-        <source>Paused</source>
-        <translatorcomment>Shows the user if the transfers are paused</translatorcomment>
-        <translation type="unfinished">Paused</translation>
-    </message>
-    <message>
         <source>Account is full</source>
         <translatorcomment>Message when the user exceeds the account storage space</translatorcomment>
         <translation type="unfinished"></translation>
@@ -5493,29 +5553,92 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Downloads				%1</source>
-        <translatorcomment>Shows the number of download transfers found </translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Uploads				%1</source>
-        <translatorcomment>Shows the number of upload transfers found </translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>%1 results found</source>
-        <translatorcomment>Shows the number of transfers found </translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>All				%1</source>
-        <translatorcomment>Shows the number of download+upload transfers found </translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Clear All</source>
         <translatorcomment>Button to cancel and remove all transfers</translatorcomment>
         <translation type="unfinished">Clear All</translation>
+    </message>
+    <message>
+        <source>All transfers</source>
+        <translatorcomment>Title for All transfers category</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Failed</source>
+        <translatorcomment>Title for Failed transfers category</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel and clear all</source>
+        <translatorcomment>Tooltip for button to cancel and clear all transfers</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>All Paused</source>
+        <translatorcomment>Subtitle for Paused state</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Depleted Transfer Quota</source>
+        <translatorcomment>Subtitle Depleted Transfer Quota state</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Your queued downloads exceeds the current quota available for your IP address.
+</source>
+        <translatorcomment>Extra info for exceed transfer quota</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>See Plans</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message numerus="yes">
+        <source>%1 result(s) found</source>
+        <translatorcomment>Result text for search category</translatorcomment>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>Time Completed</source>
+        <translatorcomment>Text for table header</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Clear All Visible</source>
+        <translatorcomment>Tooltip for table clear button</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Avg. speed</source>
+        <translatorcomment>Text for table header</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Retry All</source>
+        <translatorcomment>In Failed category, button to retry all failed transfers</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel All Visible</source>
+        <translatorcomment>Tooltip for table clear button</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Time</source>
+        <translatorcomment>Text for table header, when there are complete and pending transfers</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Speed</source>
+        <translatorcomment>Text for table header</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Time left</source>
+        <translatorcomment>Text for table header, when there are only completed transfers</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5581,11 +5704,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation type="unfinished">Out of storage space</translation>
     </message>
     <message>
-        <source>Canceled</source>
-        <translatorcomment>Transfer is canceled</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Clear transfer</source>
         <translatorcomment>Tooltip for the clear button</translatorcomment>
         <translation type="unfinished"></translation>
@@ -5606,23 +5724,13 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation type="unfinished">Completed</translation>
     </message>
     <message>
-        <source>Are you sure you want to %1 this transfer?</source>
-        <translatorcomment>YES/NO Dialog to cancel/clear a transfer</translatorcomment>
+        <source>(queued)</source>
+        <translatorcomment>Transfer paused but already started</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>clear</source>
-        <translatorcomment>Used in the YES/NO dialog to clear a transfer</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>cancel</source>
-        <translatorcomment>Used in the YES/NO dialog to cancel a transfer</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Are you sure you want to retry this transfer?</source>
-        <translatorcomment>YES/NO Dialog to retry starting a transfer</translatorcomment>
+        <source>starting</source>
+        <translatorcomment>Transfer is about to start</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -5649,6 +5757,17 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Depleted transfer quota.</source>
         <translatorcomment>System notification title to inform the user about depleted transfer quota situation.</translatorcomment>
         <translation>Depleted transfer quota.</translation>
+    </message>
+</context>
+<context>
+    <name>TransfersModel</name>
+    <message numerus="yes">
+        <source>Transfer(s) cannot be cancelled or cleared</source>
+        <translatorcomment>Messagebox to show the user that the transfer cannot be canceled</translatorcomment>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
     </message>
 </context>
 <context>
@@ -5692,11 +5811,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Time</source>
-        <translatorcomment>Time when the transfer has been completed</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Pause or resume all selected transfers</source>
         <translatorcomment>Tooltip for the pause/resume all selected transfers button</translatorcomment>
         <translation type="unfinished"></translation>
@@ -5704,46 +5818,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Cancel all selected transfers</source>
         <translatorcomment>Tooltip for the cancel all selected transfers button</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Are you sure you want to %1 the following transfers?</source>
-        <translatorcomment>YES/NO Dialog to cancel/clear transfers</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>clear</source>
-        <translatorcomment>Used in the YES/NO Dialog to clear transfers</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>cancel</source>
-        <translatorcomment>Used in the YES/NO Dialog to cancel transfers</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Are you sure you want to %1 all transfers?</source>
-        <translatorcomment>YES/NO Dialog to cancel/clear all transfers</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Clear All Visible</source>
-        <translatorcomment>Used in the YES/NO Dialog to clear all visible transfers</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Avg. speed</source>
-        <translatorcomment>AVg speed of the file to transfer</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Time left</source>
-        <translatorcomment>Time to finish the transfer</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel/Clear All Visible</source>
-        <translatorcomment>Button to cancel/clear all pending/completed transfers</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -5755,6 +5829,27 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Pause visible transfers</source>
         <translatorcomment>Pause filtered transfers</translatorcomment>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Time Left</source>
+        <translatorcomment>Table header text</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message numerus="yes">
+        <source>Are you sure you want to cancel or clear the following transfer(s)?</source>
+        <translatorcomment>Messagebox to ask the user about canceling or clearing transfers</translatorcomment>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>Are you sure you want to retry the following transfer(s)?</source>
+        <translatorcomment>Messagebox to ask the user about retrying transfers</translatorcomment>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
     </message>
 </context>
 <context>
