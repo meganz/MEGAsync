@@ -127,8 +127,6 @@ SettingsDialog::SettingsDialog(MegaApplication* app, bool proxyOnly, QWidget* pa
     mUi->gCache->setTitle(mUi->gCache->title().arg(QString::fromUtf8(MEGA_DEBRIS_FOLDER)));
 #endif
 
-    setProxyOnly(proxyOnly);
-
 #ifdef Q_OS_LINUX
     mUi->wUpdateSection->hide();
 #endif
@@ -2142,16 +2140,10 @@ void SettingsDialog::connectBackupHandlers()
         }
     });
 
-    connect(&mSyncController, &SyncController::setMyBackupsStatus, this, [this](int errorCode, QString errorMsg)
+    connect(&mSyncController, &SyncController::setMyBackupsStatus, this, [](int errorCode, QString errorMsg)
     {
-        if (errorCode == mega::MegaError::API_OK)
-        {
-            mSyncController.getMyBackupsHandle(); // get handle after successful setMyBackups
-        }
-        else
-        {
+        if (errorCode != mega::MegaError::API_OK)
             QMegaMessageBox::critical(nullptr, tr("Backup Error"), tr("Error creating My Backups folder: %2") .arg(errorMsg));
-        }
     });
 
     connect(&mSyncController, &SyncController::syncAddStatus, this, [](const int errorCode, const QString errorMsg, QString name)

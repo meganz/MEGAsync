@@ -6117,8 +6117,6 @@ void MegaApplication::openSettings(int tab)
 
     if (settingsDialog)
     {
-        settingsDialog->setProxyOnly(proxyOnly);
-
         //If the dialog is active
         if (settingsDialog->isVisible())
         {
@@ -6130,7 +6128,7 @@ void MegaApplication::openSettings(int tab)
             {
                 settingsDialog->openSettingsTab(tab);
             }
-
+            settingsDialog->setProxyOnly(proxyOnly);
             //and visible -> show it
             settingsDialog->show();
             return;
