@@ -21,7 +21,7 @@ void RemovedSharesNotificator::removeObsoleteAlertClusters()
     }
 }
 
-void RemovedSharesNotificator::addUserAlert(mega::MegaUserAlert *userAlert)
+void RemovedSharesNotificator::addUserAlert(mega::MegaUserAlert *userAlert, const QString& userName)
 {
     removeObsoleteAlertClusters();
 
@@ -35,6 +35,6 @@ void RemovedSharesNotificator::addUserAlert(mega::MegaUserAlert *userAlert)
                          this, &RemovedSharesNotificator::sendClusteredAlert);
         mAlertClusters[userAlert->getId()] = std::move(userAlertTimedClustering);
     }
-    mAlertClusters[userAlertId]->addUserAlert(userAlert);
+    mAlertClusters[userAlertId]->addUserAlert(userAlert, userName);
     mClusterTimestamps[userAlertId] = std::chrono::system_clock::now();
 }

@@ -21,7 +21,7 @@
     <message>
         <source>Loading...</source>
         <translatorcomment>Label to show when an account detail request is waiting for the server response.</translatorcomment>
-        <translation>جاري التحميل...</translation>
+        <translation>جاري التحميل…</translation>
     </message>
     <message>
         <source>Storage</source>
@@ -461,7 +461,7 @@
     <message>
         <source>Limit to:</source>
         <translatorcomment>Radio button text to indicate the limit for transfer rate.</translatorcomment>
-        <translation>الحد الأقصى</translation>
+        <translation>الحد الأقصى:</translation>
     </message>
     <message>
         <source>KB/s</source>
@@ -526,7 +526,7 @@
     <message>
         <source>Download rate limit:</source>
         <translatorcomment>Label to indicate the limit of download rate on macOS.</translatorcomment>
-        <translation>حد معدل التنزيل</translation>
+        <translation>حد معدل التنزيل:</translation>
     </message>
     <message>
         <source>Number of connections per transfer:</source>
@@ -721,7 +721,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>New in this version:</source>
         <translatorcomment>Label for indicate new features/fixes of current MEGAsync version. Keep colon.</translatorcomment>
-        <translation>الجديد في هذه النسخة</translation>
+        <translation>الجديد في هذه النسخة:</translation>
     </message>
     <message>
         <source>Credits</source>
@@ -797,39 +797,6 @@ Please enter a different name to identify this synced folder:</source>
     </message>
 </context>
 <context>
-    <name>ConfirmSSLexception</name>
-    <message>
-        <source>Warning</source>
-        <translatorcomment>Title of the dialog that allows to disable a security check to prevent atacks that could intercept the communications of MEGAsync</translatorcomment>
-        <translation>تحذير</translation>
-    </message>
-    <message>
-        <source>Are you sure you want to continue?</source>
-        <translatorcomment>Question for the user in the dialog that allows to disable a security check of MEGAsync. The user have to reply yes or no</translatorcomment>
-        <translation>هل أنت متأكد أنك تريد المتابعة؟</translation>
-    </message>
-    <message>
-        <source>Remember my decision and don&apos;t ask me again</source>
-        <translatorcomment>Text next to a checkbox that allows to remember the decision of the user. The translation should be as short as possible.</translatorcomment>
-        <translation>تذكر قراري ولا تسألني مرة أخرى</translation>
-    </message>
-    <message>
-        <source>No</source>
-        <translatorcomment>Negative response to a question. The text will be inside a button.</translatorcomment>
-        <translation>لا</translation>
-    </message>
-    <message>
-        <source>Yes</source>
-        <translatorcomment>Positive response to a question. The text will be inside a button.</translatorcomment>
-        <translation>نعم</translation>
-    </message>
-    <message>
-        <source>You are about to allow that your communications could be intercepted. Your data would be still inaccessible for attackers due to our end-to-end encryption, but they could blindly move your files and folders in MEGA, delete them or deny your access to your account.</source>
-        <translatorcomment>Information for the user about the consequences of disabling a security check of MEGAsync</translatorcomment>
-        <translation>أنت على وشك السماح بإعداد قد يسمح باعتراض اتصالاتك. سيظل الوصول إلى بياناتك غير ممكن للمهاجمين بسبب التشفير من طرف إلى طرف لدينا ، لكن يمكنهم نقل ملفاتك ومجلداتك بشكل أعمى في ميغا MEGA أو حذفها أو منعك من الوصول إلى حسابك.</translation>
-    </message>
-</context>
-<context>
     <name>CrashReportDialog</name>
     <message>
         <source>Error report</source>
@@ -873,7 +840,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>starting...</source>
         <translatorcomment>Label to indicate that a transfer is starting.</translatorcomment>
-        <translation>البدء...</translation>
+        <translation>البدء…</translation>
     </message>
     <message>
         <source>PAUSED</source>
@@ -888,12 +855,12 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>retrying...</source>
         <translatorcomment>Label to indicate that a transfer is being retried.</translatorcomment>
-        <translation>إعادة المحاولة...</translation>
+        <translation>إعادة المحاولة…</translation>
     </message>
     <message>
         <source>completing...</source>
         <translatorcomment>Label to indicate that a transfer is being completed.</translatorcomment>
-        <translation>إتمام...</translation>
+        <translation>إتمام…</translation>
     </message>
     <message>
         <source>Added [A]</source>
@@ -982,16 +949,6 @@ Please enter a different name to identify this synced folder:</source>
         <source>Reject</source>
         <translatorcomment>Button label of system notification to reject the notification of incoming contact request.</translatorcomment>
         <translation>رفض</translation>
-    </message>
-    <message>
-        <source>Cancelled Contact Request</source>
-        <translatorcomment>Title of the notification about a cancellation of a contact request</translatorcomment>
-        <translation>إلغاء طلب التواصل</translation>
-    </message>
-    <message>
-        <source>[A] cancelled the contact request</source>
-        <translatorcomment>Label to indicate that usar [A] has cancelled the contact request. Placeholder will be replaced by email of the user that made the cancellation.</translatorcomment>
-        <translation>قام [A] بإلغاء طلب التواصل الخاص به</translation>
     </message>
     <message>
         <source>Reminder</source>
@@ -1406,17 +1363,17 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Setting up your account...</source>
         <translatorcomment>Label shown at main dialog during the initial setup of synced folders.</translatorcomment>
-        <translation>جاري اعداد حسابك...</translation>
+        <translation>جاري اعداد حسابك…</translation>
     </message>
     <message>
         <source>Logging in...</source>
         <translatorcomment>Label shown at main dialog to show the current operation. In this case logging in.</translatorcomment>
-        <translation>جاري تسجيل الدخول...</translation>
+        <translation>جاري تسجيل الدخول…</translation>
     </message>
     <message>
         <source>Fetching file list...</source>
         <translatorcomment>Label shown at main dialog to show the current operation. In this case fetching file information from servers.</translatorcomment>
-        <translation>جاري إحضار قائمة الملف...</translation>
+        <translation>جاري إحضار قائمة الملف…</translation>
     </message>
     <message>
         <source>Error</source>
@@ -1461,7 +1418,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Logging out...</source>
         <translatorcomment>Label shown at main dialog to show the current operation. In this case logging out from the account.</translatorcomment>
-        <translation>جاري تسجيل الخروج...</translation>
+        <translation>جاري تسجيل الخروج…</translation>
     </message>
     <message>
         <source>Locked Account</source>
@@ -1474,9 +1431,9 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation>تم قفل حسابك مؤقتاً حفاظاً على سلامتك. يرجى التحقق من بريدك الإلكتروني واتباع خطواته لفتح حسابك.</translation>
     </message>
     <message>
-        <source>Logout</source>
-        <translatorcomment>Button label to logout the current account.</translatorcomment>
-        <translation>تسجيل خروج</translation>
+        <source>Log out</source>
+        <translatorcomment>Button label to log out the current account.</translatorcomment>
+        <translation>تسجيل خروج</translation>
     </message>
     <message>
         <source>Your account has been suspended temporarily due to potential abuse. Please verify your phone number to unlock your account.</source>
@@ -1491,7 +1448,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Creating account...</source>
         <translatorcomment>Informative label during creation of an account using MEGAsync</translatorcomment>
-        <translation>جاري إنشاء الحساب...</translation>
+        <translation>جاري إنشاء الحساب…</translation>
     </message>
     <message>
         <source>Why am I seeing this?</source>
@@ -1547,7 +1504,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Please wait...</source>
         <translatorcomment>Label to indicate the user that needs to wait until MEGAsync fetches link information from the server</translatorcomment>
-        <translation>يُرجى الانتظار...</translation>
+        <translation>يُرجى الانتظار…</translation>
     </message>
 </context>
 <context>
@@ -1851,7 +1808,8 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation>لم تقم بتسجيل الدخول</translation>
     </message>
     <message>
-        <source>Login</source>
+        <source>Log in</source>
+        <translatorcomment>Title for explanation about log in</translatorcomment>
         <translation>تسجيل الدخول</translation>
     </message>
     <message>
@@ -2012,7 +1970,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Logging in...</source>
         <translatorcomment>Notification message showing a Logging in state. Keep capital letters.</translatorcomment>
-        <translation>جاري تسجيل الدخول...</translation>
+        <translation>جاري تسجيل الدخول…</translation>
     </message>
     <message>
         <source>About</source>
@@ -2062,12 +2020,12 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Installing update...</source>
         <translatorcomment>Notification message launched when an update is being installed.</translatorcomment>
-        <translation>جاري تثبيت التحديث...</translation>
+        <translation>جاري تثبيت التحديث…</translation>
     </message>
     <message>
         <source>Checking for updates...</source>
         <translatorcomment>Notification message launched when the user wants to check if there are any available update at the moment.</translatorcomment>
-        <translation>جاري التحقق من وجود تحديث...</translation>
+        <translation>جاري التحقق من وجود تحديث…</translation>
     </message>
     <message>
         <source>Install update</source>
@@ -2207,11 +2165,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>تم تعطيل المزامنة “%1” لأن مزامنة المجلدات المشتركة في VirtualBox غير مدعومة بسبب أوجه القصور في نظام الملفات هذا.</translation>
     </message>
     <message>
-        <source>Logout</source>
-        <translatorcomment>Label to indicate Logout action</translatorcomment>
-        <translation>تسجيل خروج</translation>
-    </message>
-    <message>
         <source>Error getting link information</source>
         <translatorcomment>Notification  error message shown while getting information from a public link.</translatorcomment>
         <translation>خطأ في الحصول على معلومات الرابط</translation>
@@ -2243,17 +2196,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Fetching file list...</source>
-        <translation>جاري إحضار قائمة الملف...</translation>
-    </message>
-    <message>
-        <source>I don&apos;t care</source>
-        <translatorcomment>Text for a button that, when clicked, will disable and important security check of MEGAsync. The text should be as short as possible. If it&apos;s not possible to provide a short translation, it can be translated as: Ignore</translatorcomment>
-        <translation>لا أهتم</translation>
-    </message>
-    <message>
-        <source>Retry</source>
-        <translatorcomment>Text for a button that will cause a retry of a failed operation. The translation should be as short as possible.</translatorcomment>
-        <translation>اعادة المحاولة</translation>
+        <translation>جاري إحضار قائمة الملف…</translation>
     </message>
     <message>
         <source>Transfer canceled</source>
@@ -2436,11 +2379,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>مزامنات</translation>
     </message>
     <message>
-        <source>MEGA is unable to connect securely through SSL. You might be on public WiFi with additional requirements.</source>
-        <translatorcomment>Message shown when SSL (connection secure with MEGA) errors are detected.</translatorcomment>
-        <translation>ميغا MEGA غير قادر على الاتصال بأمان عبر SSL. قد تكون على شبكة Wi-Fi عامة بمتطلبات إضافية.</translation>
-    </message>
-    <message>
         <source>Cloud drive</source>
         <translatorcomment>Label of context menu to reach Cloud drive section at webclient. It will open your webbrowser and redirects to your cloud drive.</translatorcomment>
         <translation>سحابة التخزين</translation>
@@ -2534,11 +2472,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>One or more syncs have been disabled</source>
         <translatorcomment>Tooltip to indicate that some syncs have been disable due to some error.</translatorcomment>
         <translation>تم تعطيل مزامنة واحدة أو أكثر</translation>
-    </message>
-    <message>
-        <source>Your syncs have been enabled</source>
-        <translatorcomment>Notification message shown when the syncs have been enabled.</translatorcomment>
-        <translation>تم تمكين المزامنات الخاصة بك</translation>
     </message>
     <message>
         <source>Error adding sync</source>
@@ -2803,7 +2736,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Please wait...</source>
         <translatorcomment>Message shown when a proxy task is being processed</translatorcomment>
-        <translation>يُرجى الانتظار...</translation>
+        <translation>يُرجى الانتظار…</translation>
     </message>
 </context>
 <context>
@@ -3189,6 +3122,84 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
 </context>
 <context>
+    <name>NotificationsSettings</name>
+    <message>
+        <source>Account notifications:</source>
+        <translatorcomment>Title for notifications setting pane</translatorcomment>
+        <translation>إشعارات الحساب:</translation>
+    </message>
+    <message>
+        <source>Shares</source>
+        <translatorcomment>Notification category for shared folders and nodes</translatorcomment>
+        <translation>مشاركات</translation>
+    </message>
+    <message>
+        <source>New shared folder from contact</source>
+        <translatorcomment>Title of a checkbox for disconnectig notifications</translatorcomment>
+        <translation>مجلد مشاركة جديد من جهة الإتصال</translation>
+    </message>
+    <message>
+        <source>Added or removed files</source>
+        <translatorcomment>Title of a checkbox for disconnectig notifications</translatorcomment>
+        <translation>الملفات المضافة أو المحذوفة</translation>
+    </message>
+    <message>
+        <source>Access to a shared folder was removed</source>
+        <translatorcomment>Title of a checkbox for disconnectig notifications</translatorcomment>
+        <translation>تمت إزالة إمكانية الوصول إلى مجلد مشارك</translation>
+    </message>
+    <message>
+        <source>Contacts</source>
+        <translatorcomment>Notification category for contact notifications</translatorcomment>
+        <translation>جهات الاتصال</translation>
+    </message>
+    <message>
+        <source>New contact request</source>
+        <translatorcomment>Title of a checkbox for disconnectig notifications</translatorcomment>
+        <translation>طلب تواصل جديد</translation>
+    </message>
+    <message>
+        <source>Pending contact request reminder</source>
+        <translatorcomment>Title of a checkbox for disconnectig notifications</translatorcomment>
+        <translation>تذكير طلب تواصل بالانتظار</translation>
+    </message>
+    <message>
+        <source>Someone has accepted your contact request</source>
+        <translatorcomment>Title of a checkbox for disconnectig notifications</translatorcomment>
+        <translation>شخص ما قبل طلب التواصل الخاص بك</translation>
+    </message>
+    <message>
+        <source>Info</source>
+        <translatorcomment>Notification category for non-critical info notifications</translatorcomment>
+        <translation>معلومات</translation>
+    </message>
+    <message>
+        <source>Desktop notifications</source>
+        <translatorcomment>Title of a checkbox for disconnectig notifications</translatorcomment>
+        <translation>إشعارات الحاسوب المكتبي.</translation>
+    </message>
+    <message>
+        <source>Someone accepted your contact request</source>
+        <translatorcomment>Title of a checkbox for disconnectig notifications</translatorcomment>
+        <translation>شخص ما قبل طلب التواصل الخاص بك</translation>
+    </message>
+    <message>
+        <source>Info:</source>
+        <translatorcomment>Notification category for non-critical info notifications (macx)</translatorcomment>
+        <translation>معلومات:</translation>
+    </message>
+    <message>
+        <source>Contacts:</source>
+        <translatorcomment>Notification category for non-critical info notifications (macx)</translatorcomment>
+        <translation>جهات الاتصال:</translation>
+    </message>
+    <message>
+        <source>Shares:</source>
+        <translatorcomment>Notification category for non-critical info notifications (macx)</translatorcomment>
+        <translation>مشاركات:</translation>
+    </message>
+</context>
+<context>
     <name>Notificator</name>
     <message>
         <source>MEGAsync</source>
@@ -3346,9 +3357,9 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translation>رابط ميغا MEGA غير صالح</translation>
     </message>
     <message>
-        <source>Enter links</source>
+        <source>Open links</source>
         <translatorcomment>Window title for dialog to enter MEGA public links</translatorcomment>
-        <translation>أدخل الروابط</translation>
+        <translation>افتح الروابط</translation>
     </message>
 </context>
 <context>
@@ -3525,11 +3536,20 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Strengthen cryptographic security on Linux repositories.
-- Fix memory issues with problematic PDF files.
+        <source>- Added support to stream file links from a folder link.
+- Fixed translation issues.
+- Improved the user experience.
+- Added a new notifications panel in the settings dialog.
+- Other minor UI fixes and adjustments.
+- Fixed detected crashes on Windows, Linux and macOS.
 </source>
-        <translatorcomment>Changelog v4.6.3 (linux only)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>- تمت إضافة دعم لبث روابط الملفات من رابط مجلد.
+- تم إصلاح مشاكل الترجمة.
+- تحسين تجربة المستخدم.
+- تمت إضافة لوحة إشعارات جديدة في مربع حوار الإعدادات.
+- إصلاحات وتعديلات طفيفة أخرى في واجهة المستخدم.
+- إصلاح الأعطال المكتشفة على أنظمة التشغيل ويندوز Windows و لينكس Linux و ماك macOS.
+</translation>
     </message>
 </context>
 <context>
@@ -4053,11 +4073,6 @@ Do you want to delete it anyway?</source>
         <translation>المساعدة</translation>
     </message>
     <message>
-        <source>Show notifications</source>
-        <translatorcomment>Label to let the user enable desktop notifications with a checkbox.</translatorcomment>
-        <translation>عرض الإشعارات</translation>
-    </message>
-    <message>
         <source>Start on startup</source>
         <translatorcomment>Label to let the user start MEGAsync on startup of the operating system with a checkbox.</translatorcomment>
         <translation>تبدأ عند بدء التشغيل</translation>
@@ -4078,9 +4093,9 @@ Do you want to delete it anyway?</source>
         <translation>تفاصيل</translation>
     </message>
     <message>
-        <source>Logout</source>
-        <translatorcomment>Button label to logout of the application. String as short as possible.</translatorcomment>
-        <translation>تسجيل خروج</translation>
+        <source>Log out</source>
+        <translatorcomment>Button label to log out of the application. String as short as possible.</translatorcomment>
+        <translation>تسجيل خروج</translation>
     </message>
     <message>
         <source>Upgrade</source>
@@ -4141,11 +4156,6 @@ Do you want to delete it anyway?</source>
         <source>Full scan</source>
         <translatorcomment>Title of the message dialog for Full scan operation.</translatorcomment>
         <translation>فحص كامل</translation>
-    </message>
-    <message>
-        <source>Open at login</source>
-        <translatorcomment>Label to let the user start MEGAsync on login with a checkbox.</translatorcomment>
-        <translation>فتح عند تسجيل الدخول</translation>
     </message>
     <message>
         <source>MEGAsync will perform a full scan of your synced folders when it starts.
@@ -4435,9 +4445,9 @@ Do you want to restart MEGAsync now?</source>
         <translation>مجلدات افتراضية</translation>
     </message>
     <message>
-        <source>Move...</source>
+        <source>Move…</source>
         <translatorcomment>Button label text allowing the user to change the default Uploads or Downloads folders for the app.</translatorcomment>
-        <translation>نقل...</translation>
+        <translation>نقل…</translation>
     </message>
     <message>
         <source>Exclude files smaller than</source>
@@ -4450,14 +4460,14 @@ Do you want to restart MEGAsync now?</source>
         <translation>استبعاد الملفات الأكبر من</translation>
     </message>
     <message>
-        <source>Restart MEGA Desktop Application to apply changes.</source>
+        <source>Restart MEGA Desktop App to apply changes.</source>
         <translatorcomment>Informative text shown in Folders pane, letting the user know that an application restart is required to apply the changes he just made.</translatorcomment>
-        <translation>أعد تشغيل تطبيق ميغا  للحاسوب المكتبي  MEGA Desktop لتثبيت التغييرات.</translation>
+        <translation>أعد تشغيل تطبيق ميغا للحاسوب المكتبي MEGA Desktop لتثبيت التغييرات.</translation>
     </message>
     <message>
-        <source>Change Settings...</source>
+        <source>Change Settings…</source>
         <translatorcomment>Button label text for Bandwidth and Proxy settings in Network pane.</translatorcomment>
-        <translation>تغيير الإعدادات...</translation>
+        <translation>تغيير الإعدادات…</translation>
     </message>
     <message>
         <source>Proxies</source>
@@ -4582,7 +4592,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Used quota for the last %1 hours:</source>
         <translatorcomment>Informative text shown in Account pane for Free account type. Indicates the used quota in the last %1 specified number of hours. Keep the %1 subsitution argument.</translatorcomment>
-        <translation>الحصة المستخدمة في %1ساعة الأخيرة</translation>
+        <translation>الحصة المستخدمة في %1 ساعة الأخيرة:</translation>
     </message>
     <message>
         <source>Free</source>
@@ -4667,7 +4677,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Saving synchronised folders…</source>
         <translatorcomment>Temporary text label shown while saving changes to Synchronized folders on Windows\Linux. Keep the 3 suspense periods, indicating to the user that the action is in in progress.</translatorcomment>
-        <translation>جاري حفظ المجلدات المتزامنة...</translation>
+        <translation>جاري حفظ المجلدات المتزامنة…</translation>
     </message>
     <message>
         <source>Pro I</source>
@@ -4688,6 +4698,16 @@ Do you want to restart MEGAsync now?</source>
         <source>Export Key</source>
         <translatorcomment>Button label text for export key saving to local machine in a file. Keep string as short as possible.</translatorcomment>
         <translation>تصدير المفتاح</translation>
+    </message>
+    <message>
+        <source>Notifications</source>
+        <translatorcomment>Title for the Settings -&gt; Notifications pane tab button. Keep as short as possible.</translatorcomment>
+        <translation>الإشعارات</translation>
+    </message>
+    <message>
+        <source>Launch at login</source>
+        <translatorcomment>Label to let the user start MEGAsync on login with a checkbox.</translatorcomment>
+        <translation>إطلاق عند تسجيل الدخول</translation>
     </message>
 </context>
 <context>
@@ -4718,7 +4738,7 @@ Do you want to restart MEGAsync now?</source>
         <translation>أنا أوافق على &lt;a href=&quot;https://mega.nz/terms&quot;&gt;شروط استخدام خدمة&lt;/a&gt; ميغا MEGA</translation>
     </message>
     <message>
-        <source>Login to your MEGA account</source>
+        <source>Log in to your MEGA account</source>
         <translatorcomment>Label to let the user login with his credentials.</translatorcomment>
         <translation>تسجيل الدخول حساب ميغا MEGA الخاص بك</translation>
     </message>
@@ -4730,7 +4750,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Logging in ...</source>
         <translatorcomment>Label displayed while logging process.</translatorcomment>
-        <translation>تسجيل الدخول ...</translation>
+        <translation>تسجيل الدخول …</translation>
     </message>
     <message>
         <source>Choose install type</source>
@@ -4790,7 +4810,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Fetching file list...</source>
         <translatorcomment>Label displayed while the application is retrieving all file list from the server.</translatorcomment>
-        <translation>جلب قائمة الملف...</translation>
+        <translation>جلب قائمة الملف…</translation>
     </message>
     <message>
         <source>Incorrect email and/or password.</source>
@@ -4845,7 +4865,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Creating account...</source>
         <translatorcomment>Label displayed when the account is being created.</translatorcomment>
-        <translation>جاري إنشاء الحساب...</translation>
+        <translation>جاري إنشاء الحساب…</translation>
     </message>
     <message>
         <source>Warning</source>
@@ -4870,7 +4890,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Logging in...</source>
         <translatorcomment>Label displayed when the user is logging in.</translatorcomment>
-        <translation>تسجيل الدخول...</translation>
+        <translation>تسجيل الدخول…</translation>
     </message>
     <message>
         <source>You are trying to sync an extremely large folder.
@@ -4886,7 +4906,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>غير قادر على الحصول على نظام الملفات. حاول مرة أخرى. إذا استمرت المشكلة ، فيرجى التواصل معنا على bug@mega.nz</translation>
     </message>
     <message>
-        <source>Setup Assistant - MEGAsync</source>
+        <source>Set up Assistant - MEGAsync</source>
         <translatorcomment>Title of the setup assistant dialog. Keep capital letters.</translatorcomment>
         <translation>مساعد الإعداد - MEGAsync</translation>
     </message>
@@ -4937,12 +4957,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Creating folder...</source>
         <translatorcomment>Label shown when an user is creating a remote folder.</translatorcomment>
-        <translation>انشاء المجلد...</translation>
+        <translation>انشاء المجلد…</translation>
     </message>
     <message>
         <source>Logging out...</source>
         <translatorcomment>Label shown when an user is logging out from his account.</translatorcomment>
-        <translation>تسجيل الخروج...</translation>
+        <translation>تسجيل الخروج…</translation>
     </message>
     <message>
         <source>Very Weak</source>
@@ -5018,7 +5038,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>الرجاء إدخال اسم العائلة</translation>
     </message>
     <message>
-        <source>Setup selective sync</source>
+        <source>Set up selective sync</source>
         <translatorcomment>Label shown when user is setting up the selective sync mode of MEGAsync</translatorcomment>
         <translation>اعداد المزامنة الانتقائية</translation>
     </message>
@@ -5033,7 +5053,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>اختر مجلد محلي</translation>
     </message>
     <message>
-        <source>Setup full sync</source>
+        <source>Set up full sync</source>
         <translatorcomment>Label shown when user is setting up full sync mode of MEGAsync</translatorcomment>
         <translation>اعداد مزامنة كاملة</translation>
     </message>
@@ -5053,7 +5073,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>لقد انتهينا!</translation>
     </message>
     <message>
-        <source>Login</source>
+        <source>Log in</source>
         <translatorcomment>Button label to open Login form</translatorcomment>
         <translation>تسجيل الدخول</translation>
     </message>
@@ -5179,7 +5199,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Select media from...</source>
         <translatorcomment>Label just above of the buttons to select files for streaming</translatorcomment>
-        <translation>اختيار الوسائط من...</translation>
+        <translation>اختيار الوسائط من…</translation>
     </message>
     <message>
         <source>Cloud Drive</source>
@@ -5271,6 +5291,24 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translatorcomment>Informative label to indicate the user that there is a stream error because of transfer overquota situation.</translatorcomment>
         <translation>خطأ في البث: تجاوز حجم تراسل معطيات المتاح</translation>
     </message>
+    <message>
+        <source>Please wait...</source>
+        <translatorcomment>Message shown while waiting for the server request with the file info to stream</translatorcomment>
+        <translation>يُرجى الانتظار…</translation>
+    </message>
+</context>
+<context>
+    <name>SwitchButton</name>
+    <message>
+        <source>On</source>
+        <translatorcomment>Checked state of a swith button</translatorcomment>
+        <translation>تشغيل</translation>
+    </message>
+    <message>
+        <source>Off</source>
+        <translatorcomment>Unchecked state of a swith button</translatorcomment>
+        <translation>ايقاف</translation>
+    </message>
 </context>
 <context>
     <name>TransferManager</name>
@@ -5282,7 +5320,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Add...</source>
         <translatorcomment>Button label to add transfers items (uploads/downloads/public links) to the dialog (String as short as possible)</translatorcomment>
-        <translation>إضافة...</translation>
+        <translation>إضافة…</translation>
     </message>
     <message>
         <source>Downloads</source>
@@ -5320,11 +5358,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>إلغاء الكل</translation>
     </message>
     <message>
-        <source>Are you sure you want to cancel all transfers?</source>
-        <translatorcomment>Description label for warning dialog before a transfer cancellation</translatorcomment>
-        <translation>هل أنت متأكد أنك تريد إلغاء كل عمليات التراسل؟</translation>
-    </message>
-    <message>
         <source>Resume</source>
         <translation>استئناف</translation>
     </message>
@@ -5345,6 +5378,26 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Open links</source>
         <translatorcomment>Menu action item to open MEGA public links. It will let you to import and/or download.</translatorcomment>
         <translation>افتح الروابط</translation>
+    </message>
+    <message>
+        <source>Do you want to cancel all transfers?</source>
+        <translatorcomment>Description label for warning dialog before a transfer cancellation</translatorcomment>
+        <translation>هل تريد إلغاء كل عمليات التراسل؟</translation>
+    </message>
+    <message>
+        <source>Syncs aren&apos;t affected by this action.</source>
+        <translatorcomment>Description label for warning dialog indicating that syncs are not going to be affected by accepting this dialog</translatorcomment>
+        <translation>لا تتأثر عمليات المزامنة بهذا الإجراء.</translation>
+    </message>
+    <message>
+        <source>Continue transfers</source>
+        <translatorcomment>Button label that indicates that no one of active transfers will be cancelled (Cancel button on dialog)</translatorcomment>
+        <translation>مواصلة عمليات تراسل</translation>
+    </message>
+    <message>
+        <source>Cancel all transfers</source>
+        <translatorcomment>Button label that indicates that all active transfers will be cancelled (Accept button on dialog)</translatorcomment>
+        <translation>إلغاء كل عمليات التراسل</translation>
     </message>
 </context>
 <context>
@@ -5678,8 +5731,8 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>لماذا أرى هذا؟</translation>
     </message>
     <message>
-        <source>Logout</source>
-        <translatorcomment>Button label to logout the current account</translatorcomment>
+        <source>Log out</source>
+        <translatorcomment>Button label to log out the current account</translatorcomment>
         <translation>تسجيل خروج</translation>
     </message>
     <message>

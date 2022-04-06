@@ -21,7 +21,7 @@
     <message>
         <source>Loading...</source>
         <translatorcomment>Label to show when an account detail request is waiting for the server response.</translatorcomment>
-        <translation>Laden...</translation>
+        <translation>Laden…</translation>
     </message>
     <message>
         <source>Storage</source>
@@ -363,27 +363,27 @@
     <message>
         <source>Your PRO membership plan will expire in 1 day</source>
         <translatorcomment>Label to indicate that the PRO membership will expire in 1 day.</translatorcomment>
-        <translation>Uw PRO abonnement verloopt na 1 dag</translation>
+        <translation>Uw Pro-lidmaatschap abonnement verloopt na 1 dag</translation>
     </message>
     <message>
         <source>Your PRO membership plan will expire in [A] days</source>
         <translatorcomment>Label to indicate that the PRO membership will expire in [A] days. Placeholder will be replaced by the remaining days until plan will expire.</translatorcomment>
-        <translation>Uw PRO abonnement verloopt na [A] dagen</translation>
+        <translation>Uw Pro-lidmaatschap abonnement verloopt na [A] dagen</translation>
     </message>
     <message>
         <source>PRO membership plan expiring soon</source>
         <translatorcomment>Label to indicate that the PRO membership will expire soon.</translatorcomment>
-        <translation>Pro abonnement verloopt binnenkort</translation>
+        <translation>Pro-lidmaatschap abonnement verloopt binnenkort</translation>
     </message>
     <message>
         <source>Your PRO membership plan expired 1 day ago</source>
         <translatorcomment>Label to indicate that the PRO membership expired 1 day ago.</translatorcomment>
-        <translation>Uw PRO lidmaatschap is 1 dag geleden verlopen</translation>
+        <translation>Uw Pro-lidmaatschap abonnement is 1 dag geleden verlopen</translation>
     </message>
     <message>
         <source>Your PRO membership plan expired [A] days ago</source>
         <translatorcomment>Label to indicate that the PRO membership expired [A] days ago. Placeholder will be replaced by the days from the expiration of the PRO membership.</translatorcomment>
-        <translation>Uw PRO lidmaatschap is [A] dagen geleden verlopen</translation>
+        <translation>Uw Pro-lidmaatschap abonnement is [A] dagen geleden verlopen</translation>
     </message>
     <message>
         <source>Your publicly shared has been taken down</source>
@@ -797,39 +797,6 @@ Please enter a different name to identify this synced folder:</source>
     </message>
 </context>
 <context>
-    <name>ConfirmSSLexception</name>
-    <message>
-        <source>Warning</source>
-        <translatorcomment>Title of the dialog that allows to disable a security check to prevent atacks that could intercept the communications of MEGAsync</translatorcomment>
-        <translation>Waarschuwing</translation>
-    </message>
-    <message>
-        <source>Are you sure you want to continue?</source>
-        <translatorcomment>Question for the user in the dialog that allows to disable a security check of MEGAsync. The user have to reply yes or no</translatorcomment>
-        <translation>Weet u zeker dat u wilt doorgaan?</translation>
-    </message>
-    <message>
-        <source>Remember my decision and don&apos;t ask me again</source>
-        <translatorcomment>Text next to a checkbox that allows to remember the decision of the user. The translation should be as short as possible.</translatorcomment>
-        <translation>Onthoud mijn besluit en vraag me niet opnieuw</translation>
-    </message>
-    <message>
-        <source>No</source>
-        <translatorcomment>Negative response to a question. The text will be inside a button.</translatorcomment>
-        <translation>Nee</translation>
-    </message>
-    <message>
-        <source>Yes</source>
-        <translatorcomment>Positive response to a question. The text will be inside a button.</translatorcomment>
-        <translation>Ja</translation>
-    </message>
-    <message>
-        <source>You are about to allow that your communications could be intercepted. Your data would be still inaccessible for attackers due to our end-to-end encryption, but they could blindly move your files and folders in MEGA, delete them or deny your access to your account.</source>
-        <translatorcomment>Information for the user about the consequences of disabling a security check of MEGAsync</translatorcomment>
-        <translation>U staat op het punt een instelling toe te staan die ervoor kan zorgen dat uw communicatie wordt onderbroken. Uw gegevens zijn nog steeds ontoegankelijk voor aanvallers door onze end-to-end encryptie, maar ze kunnen blindelings uw bestanden en mappen verplaatsen in MEGA, verwijder ze of ontzeg de toegang tot uw account.</translation>
-    </message>
-</context>
-<context>
     <name>CrashReportDialog</name>
     <message>
         <source>Error report</source>
@@ -873,7 +840,7 @@ In sommige gevallen kunnen ze details over uw gegevens bevatten, zoals bestands-
     <message>
         <source>starting...</source>
         <translatorcomment>Label to indicate that a transfer is starting.</translatorcomment>
-        <translation>starten...</translation>
+        <translation>starten…</translation>
     </message>
     <message>
         <source>PAUSED</source>
@@ -888,12 +855,12 @@ In sommige gevallen kunnen ze details over uw gegevens bevatten, zoals bestands-
     <message>
         <source>retrying...</source>
         <translatorcomment>Label to indicate that a transfer is being retried.</translatorcomment>
-        <translation>herproberen...</translation>
+        <translation>herproberen…</translation>
     </message>
     <message>
         <source>completing...</source>
         <translatorcomment>Label to indicate that a transfer is being completed.</translatorcomment>
-        <translation>voltooien...</translation>
+        <translation>voltooien…</translation>
     </message>
     <message>
         <source>Added [A]</source>
@@ -926,27 +893,27 @@ In sommige gevallen kunnen ze details over uw gegevens bevatten, zoals bestands-
     <message>
         <source>Your PRO membership plan will expire in 1 day</source>
         <translatorcomment>Label to indicate that the PRO membership will expire in 1 day.</translatorcomment>
-        <translation>Uw PRO abonnement verloopt na 1 dag</translation>
+        <translation>Uw Pro-lidmaatschap abonnement verloopt na 1 dag</translation>
     </message>
     <message>
         <source>Your PRO membership plan will expire in [A] days</source>
         <translatorcomment>Label to indicate that the PRO membership will expire in [A] days. Placeholder will be replaced by the remaining days until plan will expire.</translatorcomment>
-        <translation>Uw PRO abonnement verloopt na [A] dagen</translation>
+        <translation>Uw Pro-lidmaatschap abonnement verloopt na [A] dagen</translation>
     </message>
     <message>
         <source>PRO membership plan expiring soon</source>
         <translatorcomment>Label to indicate that the PRO membership will expire soon.</translatorcomment>
-        <translation>Pro abonnement verloopt binnenkort</translation>
+        <translation>Pro-lidmaatschap abonnement verloopt binnenkort</translation>
     </message>
     <message>
         <source>Your PRO membership plan expired 1 day ago</source>
         <translatorcomment>Label to indicate that the PRO membership expired 1 day ago.</translatorcomment>
-        <translation>Uw PRO abonnement is 1 dag geleden verlopen</translation>
+        <translation>Uw Pro-lidmaatschap abonnement is 1 dag geleden verlopen</translation>
     </message>
     <message>
         <source>Your PRO membership plan expired [A] days ago</source>
         <translatorcomment>Label to indicate that the PRO membership expired [A] days ago. Placeholder will be replaced by the days from the expiration of the PRO membership.</translatorcomment>
-        <translation>Uw PRO abonnement is [A] dagen geleden verlopen</translation>
+        <translation>Uw Pro-lidmaatschap abonnement is [A] dagen geleden verlopen</translation>
     </message>
     <message>
         <source>[A] has left the shared folder</source>
@@ -982,16 +949,6 @@ In sommige gevallen kunnen ze details over uw gegevens bevatten, zoals bestands-
         <source>Reject</source>
         <translatorcomment>Button label of system notification to reject the notification of incoming contact request.</translatorcomment>
         <translation>Weigeren</translation>
-    </message>
-    <message>
-        <source>Cancelled Contact Request</source>
-        <translatorcomment>Title of the notification about a cancellation of a contact request</translatorcomment>
-        <translation>Contactverzoek Geannuleerd</translation>
-    </message>
-    <message>
-        <source>[A] cancelled the contact request</source>
-        <translatorcomment>Label to indicate that usar [A] has cancelled the contact request. Placeholder will be replaced by email of the user that made the cancellation.</translatorcomment>
-        <translation>[A] heeft hun contactverzoek geannuleerd</translation>
     </message>
     <message>
         <source>Reminder</source>
@@ -1116,12 +1073,12 @@ In sommige gevallen kunnen ze details over uw gegevens bevatten, zoals bestands-
     <message>
         <source>Upgrade now to a PRO account.</source>
         <translatorcomment>Notification message shown to encourage the user to upgrade his account</translatorcomment>
-        <translation>Upgrade nu naar een PRO account.</translation>
+        <translation>Upgrade nu naar een Pro-account.</translation>
     </message>
     <message>
         <source>Get PRO</source>
         <translatorcomment>Notification button to redirect the user to upgrade account.</translatorcomment>
-        <translation>Neem PRO</translation>
+        <translation>Neem Pro</translation>
     </message>
     <message>
         <source>Your account is full.</source>
@@ -1406,17 +1363,17 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Setting up your account...</source>
         <translatorcomment>Label shown at main dialog during the initial setup of synced folders.</translatorcomment>
-        <translation>Uw account opzetten...</translation>
+        <translation>Uw account opzetten…</translation>
     </message>
     <message>
         <source>Logging in...</source>
         <translatorcomment>Label shown at main dialog to show the current operation. In this case logging in.</translatorcomment>
-        <translation>Inloggen...</translation>
+        <translation>Inloggen…</translation>
     </message>
     <message>
         <source>Fetching file list...</source>
         <translatorcomment>Label shown at main dialog to show the current operation. In this case fetching file information from servers.</translatorcomment>
-        <translation>Bestandslijst ophalen...</translation>
+        <translation>Bestandslijst ophalen…</translation>
     </message>
     <message>
         <source>Error</source>
@@ -1462,7 +1419,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Logging out...</source>
         <translatorcomment>Label shown at main dialog to show the current operation. In this case logging out from the account.</translatorcomment>
-        <translation>Uitloggen...</translation>
+        <translation>Uitloggen…</translation>
     </message>
     <message>
         <source>Locked Account</source>
@@ -1475,8 +1432,8 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation>Uw account is voor uw veiligheid tijdelijk vergrendeld. Verifieer uw e-mailadres en volg de stappen om uw account te ontgrendelen.</translation>
     </message>
     <message>
-        <source>Logout</source>
-        <translatorcomment>Button label to logout the current account.</translatorcomment>
+        <source>Log out</source>
+        <translatorcomment>Button label to log out the current account.</translatorcomment>
         <translation>Uitloggen</translation>
     </message>
     <message>
@@ -1492,7 +1449,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Creating account...</source>
         <translatorcomment>Informative label during creation of an account using MEGAsync</translatorcomment>
-        <translation>Account creëren...</translation>
+        <translation>Account creëren…</translation>
     </message>
     <message>
         <source>Why am I seeing this?</source>
@@ -1548,7 +1505,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Please wait...</source>
         <translatorcomment>Label to indicate the user that needs to wait until MEGAsync fetches link information from the server</translatorcomment>
-        <translation>Een ogenblik geduld a.u.b...</translation>
+        <translation>Een ogenblik geduld a.u.b…</translation>
     </message>
 </context>
 <context>
@@ -1682,7 +1639,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Your MEGA account is full.</source>
         <translatorcomment>Label shown to inform the user that the actual account is over storage.</translatorcomment>
-        <translation>Uw MEGA account is vol.</translation>
+        <translation>Uw MEGA-account is vol.</translation>
     </message>
     <message>
         <source>All file uploads are currently disabled.</source>
@@ -1777,7 +1734,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>We have contacted you by email to [A] on [B] but you still have [C] files taking up [D] in your MEGA account, which requires you to have [E].</source>
         <translatorcomment>Informative label about account status regarding over quota storage. Placeholders will be replaced: [A] - user email, [B] - localized date list of emails sent to inform the user about the situation,  [C] - amount of files in the current account, [D] - amount of storage used and [E] - min PRO plan needed to fix the situation.</translatorcomment>
-        <translation>We hebben contact met u opgenomen via email naar [A] op [B], maar u heeft nog steeds [C] bestanden [D] die ruimte in uw MEGA account opnemen waarvoor u [E] nodig heeft.</translation>
+        <translation>We hebben contact met u opgenomen via email naar [A] op [B], maar u heeft nog steeds [C] bestanden [D] die ruimte in uw MEGA-account opnemen waarvoor u [E] nodig heeft.</translation>
     </message>
     <message>
         <source>You have [A][B] days[/A] left to upgrade. After that, your data is subject to deletion.</source>
@@ -1817,7 +1774,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Your queued transfers exceed the current quota available for your IP address and can therefore be interrupted.</source>
         <translatorcomment>Informative label to indicate that your queued transfers may be interrupted because the current account is above 90 percent of the transfer quota of the current account.</translatorcomment>
-        <translation>Uw wachtende overdrachten overschrijden het huidige tegoed beschikbaar voor uw IP adres en kan daarom onderbroken worden.</translation>
+        <translation>Uw wachtende overdrachten overschrijden het huidige tegoed beschikbaar voor uw IP-adres en kan daarom onderbroken worden.</translation>
     </message>
     <message>
         <source>You have [A][B] hours[/A] left to upgrade. After that, your data is subject to deletion.</source>
@@ -1852,7 +1809,8 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation>U bent niet ingelogd.</translation>
     </message>
     <message>
-        <source>Login</source>
+        <source>Log in</source>
+        <translatorcomment>Title for explanation about log in</translatorcomment>
         <translation>Inloggen</translation>
     </message>
     <message>
@@ -1872,7 +1830,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>You need to login MEGA account to run MEGA desktop app.</source>
         <translatorcomment>Description label to indicate the user needs to login in order to run and fully use MEGA desktop app.</translatorcomment>
-        <translation>U moet inloggen in uw MEGA account om de MEGA Desktop Applicatie te gebruiken.</translation>
+        <translation>U moet inloggen in uw MEGA-account om de MEGA Desktop Applicatie te gebruiken.</translation>
     </message>
     <message>
         <source>Create account</source>
@@ -2013,7 +1971,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Logging in...</source>
         <translatorcomment>Notification message showing a Logging in state. Keep capital letters.</translatorcomment>
-        <translation>Inloggen...</translation>
+        <translation>Inloggen…</translation>
     </message>
     <message>
         <source>About</source>
@@ -2063,12 +2021,12 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Installing update...</source>
         <translatorcomment>Notification message launched when an update is being installed.</translatorcomment>
-        <translation>Update installeren...</translation>
+        <translation>Update installeren…</translation>
     </message>
     <message>
         <source>Checking for updates...</source>
         <translatorcomment>Notification message launched when the user wants to check if there are any available update at the moment.</translatorcomment>
-        <translation>Controleren voor updates...</translation>
+        <translation>Controleren voor updates…</translation>
     </message>
     <message>
         <source>Install update</source>
@@ -2094,7 +2052,7 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>Update available. Downloading...</source>
         <translatorcomment>Notification message launched when an update for MEGAsync is being downloaded.</translatorcomment>
-        <translation>Update beschikbaar. Aan het downloaden...</translation>
+        <translation>Update beschikbaar. Aan het downloaden…</translation>
     </message>
     <message>
         <source>No update available at this time</source>
@@ -2208,11 +2166,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>Uw synchronisatie ”%1″ is uitgeschakeld omdat de synchronisatie van VirtualBox gedeelde mappen niet wordt ondersteund vanwege gebreken in dat bestandssysteem.</translation>
     </message>
     <message>
-        <source>Logout</source>
-        <translatorcomment>Label to indicate Logout action</translatorcomment>
-        <translation>Uitloggen</translation>
-    </message>
-    <message>
         <source>Error getting link information</source>
         <translatorcomment>Notification  error message shown while getting information from a public link.</translatorcomment>
         <translation>Fout bij het verkrijgen van link informatie</translation>
@@ -2244,17 +2197,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Fetching file list...</source>
-        <translation>Bestandslijst ophalen...</translation>
-    </message>
-    <message>
-        <source>I don&apos;t care</source>
-        <translatorcomment>Text for a button that, when clicked, will disable and important security check of MEGAsync. The text should be as short as possible. If it&apos;s not possible to provide a short translation, it can be translated as: Ignore</translatorcomment>
-        <translation>Kan me niet schelen</translation>
-    </message>
-    <message>
-        <source>Retry</source>
-        <translatorcomment>Text for a button that will cause a retry of a failed operation. The translation should be as short as possible.</translatorcomment>
-        <translation>Opnieuw proberen</translation>
+        <translation>Bestandslijst ophalen…</translation>
     </message>
     <message>
         <source>Transfer canceled</source>
@@ -2437,11 +2380,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>Synchronisaties</translation>
     </message>
     <message>
-        <source>MEGA is unable to connect securely through SSL. You might be on public WiFi with additional requirements.</source>
-        <translatorcomment>Message shown when SSL (connection secure with MEGA) errors are detected.</translatorcomment>
-        <translation>MEGA kan geen veilige verbinding maken via SSL. Mogelijk gebruikt u openbare wifi met aanvullende vereisten.</translation>
-    </message>
-    <message>
         <source>Cloud drive</source>
         <translatorcomment>Label of context menu to reach Cloud drive section at webclient. It will open your webbrowser and redirects to your cloud drive.</translatorcomment>
         <translation>Cloud Schijf</translation>
@@ -2535,11 +2473,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>One or more syncs have been disabled</source>
         <translatorcomment>Tooltip to indicate that some syncs have been disable due to some error.</translatorcomment>
         <translation>Een of meer synchronisaties zijn uitgeschakeld</translation>
-    </message>
-    <message>
-        <source>Your syncs have been enabled</source>
-        <translatorcomment>Notification message shown when the syncs have been enabled.</translatorcomment>
-        <translation>Uw synchronisaties zijn ingeschakeld</translation>
     </message>
     <message>
         <source>Error adding sync</source>
@@ -2804,7 +2737,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Please wait...</source>
         <translatorcomment>Message shown when a proxy task is being processed</translatorcomment>
-        <translation>Een ogenblik geduld a.u.b...</translation>
+        <translation>Een ogenblik geduld a.u.b…</translation>
     </message>
 </context>
 <context>
@@ -3190,6 +3123,84 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
 </context>
 <context>
+    <name>NotificationsSettings</name>
+    <message>
+        <source>Account notifications:</source>
+        <translatorcomment>Title for notifications setting pane</translatorcomment>
+        <translation>Account meldingen:</translation>
+    </message>
+    <message>
+        <source>Shares</source>
+        <translatorcomment>Notification category for shared folders and nodes</translatorcomment>
+        <translation>Gedeeld</translation>
+    </message>
+    <message>
+        <source>New shared folder from contact</source>
+        <translatorcomment>Title of a checkbox for disconnectig notifications</translatorcomment>
+        <translation>Nieuwe gedeelde map van contact</translation>
+    </message>
+    <message>
+        <source>Added or removed files</source>
+        <translatorcomment>Title of a checkbox for disconnectig notifications</translatorcomment>
+        <translation>Toegevoegde of verwijderde bestanden</translation>
+    </message>
+    <message>
+        <source>Access to a shared folder was removed</source>
+        <translatorcomment>Title of a checkbox for disconnectig notifications</translatorcomment>
+        <translation>Toegang tot een gedeelde map was verwijderd</translation>
+    </message>
+    <message>
+        <source>Contacts</source>
+        <translatorcomment>Notification category for contact notifications</translatorcomment>
+        <translation>Contacten</translation>
+    </message>
+    <message>
+        <source>New contact request</source>
+        <translatorcomment>Title of a checkbox for disconnectig notifications</translatorcomment>
+        <translation>Nieuw contact verzoek</translation>
+    </message>
+    <message>
+        <source>Pending contact request reminder</source>
+        <translatorcomment>Title of a checkbox for disconnectig notifications</translatorcomment>
+        <translation>Afwachtende contactverzoek herinnering</translation>
+    </message>
+    <message>
+        <source>Someone has accepted your contact request</source>
+        <translatorcomment>Title of a checkbox for disconnectig notifications</translatorcomment>
+        <translation>Iemand heeft uw contactverzoek geaccepteerd</translation>
+    </message>
+    <message>
+        <source>Info</source>
+        <translatorcomment>Notification category for non-critical info notifications</translatorcomment>
+        <translation>Informatie</translation>
+    </message>
+    <message>
+        <source>Desktop notifications</source>
+        <translatorcomment>Title of a checkbox for disconnectig notifications</translatorcomment>
+        <translation>Desktop meldingen</translation>
+    </message>
+    <message>
+        <source>Someone accepted your contact request</source>
+        <translatorcomment>Title of a checkbox for disconnectig notifications</translatorcomment>
+        <translation>Iemand heeft uw contactverzoek geaccepteerd</translation>
+    </message>
+    <message>
+        <source>Info:</source>
+        <translatorcomment>Notification category for non-critical info notifications (macx)</translatorcomment>
+        <translation>Informatie:</translation>
+    </message>
+    <message>
+        <source>Contacts:</source>
+        <translatorcomment>Notification category for non-critical info notifications (macx)</translatorcomment>
+        <translation>Contacten:</translation>
+    </message>
+    <message>
+        <source>Shares:</source>
+        <translatorcomment>Notification category for non-critical info notifications (macx)</translatorcomment>
+        <translation>Gedeeld:</translation>
+    </message>
+</context>
+<context>
     <name>Notificator</name>
     <message>
         <source>MEGAsync</source>
@@ -3245,7 +3256,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>You have exceeded the available transfer quota for your account. You can add syncs but they will remain disable until there is enough bandwidth on your account.</source>
         <translatorcomment>Informative label to indicate the user has exceeded the available transfer quota limit, letting to add new syncs that will be disabled until the situation is fixed.</translatorcomment>
-        <translation>U heeft de beschikbare overdracht tegoed overschreden voor uw account. U kunt synchronisaties toevoegen maar ze blijven uitgeschakeld totdat uw account meer overdracht tegoed beschikbaar heeft.</translation>
+        <translation>U heeft de beschikbare overdrachtstegoed overschreden voor uw account. U kunt synchronisaties toevoegen maar ze blijven uitgeschakeld totdat uw account meer overdracht tegoed beschikbaar heeft.</translation>
     </message>
     <message>
         <source>Upgrade Account</source>
@@ -3260,7 +3271,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>You have exceeded the available transfer quota for your account. You can import links but transfers will remain queued until there is enough bandwidth on your account.</source>
         <translatorcomment>Informative label to indicate the user has exceeded the available transfer quota limit, letting to import links but not download until there is enough bandwidth for the account.</translatorcomment>
-        <translation>U heeft uw beschikbare overdracht tegoed overschreden voor uw account. U kunt links importeren maar overdrachten blijven in de wachtrij totdat uw account meer overdracht tegoed beschikbaar heeft.</translation>
+        <translation>U heeft uw beschikbare overdrachtstegoed overschreden voor uw account. U kunt links importeren maar overdrachten blijven in de wachtrij totdat uw account meer overdracht tegoed beschikbaar heeft.</translation>
     </message>
     <message>
         <source>Downloads are temporarily disabled.</source>
@@ -3270,7 +3281,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>You have exceeded the available transfer quota for your account. You can add downloads but transfers will remain queued until there is enough bandwidth on your account.</source>
         <translatorcomment>Informative label to indicate the user has exceeded the available transfer quota limit, letting to add new downloads that will remain queued until there is enough bandwidth for the current account.</translatorcomment>
-        <translation>U heeft de beschikbare overdracht tegoed van uw account overschreden. U kunt downloads toevoegen maar overdrachten blijven in de wachtrij totdat uw account meer overdracht tegoed beschikbaar heeft.</translation>
+        <translation>U heeft de beschikbare overdrachtstegoed van uw account overschreden. U kunt downloads toevoegen maar overdrachten blijven in de wachtrij totdat uw account meer overdracht tegoed beschikbaar heeft.</translation>
     </message>
     <message>
         <source>Streams are temporarily disabled.</source>
@@ -3280,7 +3291,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>You have exceeded the available transfer quota for your account. You can add streams but transfers will remain queued until there is enough bandwidth on your account.</source>
         <translatorcomment>Informative label to indicate the user has exceeded the available transfer quota limit, letting to start stream transfer but will remain stuck until there is enough bandwidth on the current account.</translatorcomment>
-        <translation>U heeft de beschikbare overdracht tegoed overschreden voor uw account. U kunt streams toevoegen maar overdrachten blijven in de wachtrij totdat uw account meer overdracht tegoed beschikbaar heeft.</translation>
+        <translation>U heeft de beschikbare overdrachtstegoed overschreden voor uw account. U kunt streams toevoegen maar overdrachten blijven in de wachtrij totdat uw account meer overdracht tegoed beschikbaar heeft.</translation>
     </message>
     <message>
         <source>Depleted transfer quota</source>
@@ -3347,9 +3358,9 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translation>Ongeldige MEGA Link</translation>
     </message>
     <message>
-        <source>Enter links</source>
+        <source>Open links</source>
         <translatorcomment>Window title for dialog to enter MEGA public links</translatorcomment>
-        <translation>Voer links in</translation>
+        <translation>Links openen</translation>
     </message>
 </context>
 <context>
@@ -3427,7 +3438,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Current plan</source>
         <translatorcomment>Label that indicates the current pro plan of the user account.</translatorcomment>
-        <translation>Huidige abonnement</translation>
+        <translation>Huidig abonnement</translation>
     </message>
     <message>
         <source>%1 per user</source>
@@ -3526,12 +3537,20 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Strengthen cryptographic security on Linux repositories.
-- Fix memory issues with problematic PDF files.
+        <source>- Added support to stream file links from a folder link.
+- Fixed translation issues.
+- Improved the user experience.
+- Added a new notifications panel in the settings dialog.
+- Other minor UI fixes and adjustments.
+- Fixed detected crashes on Windows, Linux and macOS.
 </source>
-        <translatorcomment>Changelog v4.6.3 (linux only)</translatorcomment>
-        <translation>- Versterkt de cryptografische beveiliging op Linux&apos;s opslagplaatsen.
-- Los geheugenproblemen op met problematische PDF-bestanden.
+        <translation>- Ondersteuning toegevoegd voor het streamen van bestandskoppelingen
+ vanuit een mapkoppeling.
+- Vertaalproblemen opgelost.
+- Verbeterde gebruikerservaring.
+- Een nieuw meldingenpaneel toegevoegd in het instellingenvenster.
+- Andere kleine UI-fixes en aanpassingen.
+- Vaste gedetecteerde crashes op Windows, Linux en macOS opgelost.
 </translation>
     </message>
 </context>
@@ -4056,11 +4075,6 @@ Do you want to delete it anyway?</source>
         <translation>Help</translation>
     </message>
     <message>
-        <source>Show notifications</source>
-        <translatorcomment>Label to let the user enable desktop notifications with a checkbox.</translatorcomment>
-        <translation>Meldingen weergeven</translation>
-    </message>
-    <message>
         <source>Start on startup</source>
         <translatorcomment>Label to let the user start MEGAsync on startup of the operating system with a checkbox.</translatorcomment>
         <translation>Open bij opstarten</translation>
@@ -4081,8 +4095,8 @@ Do you want to delete it anyway?</source>
         <translation>Details</translation>
     </message>
     <message>
-        <source>Logout</source>
-        <translatorcomment>Button label to logout of the application. String as short as possible.</translatorcomment>
+        <source>Log out</source>
+        <translatorcomment>Button label to log out of the application. String as short as possible.</translatorcomment>
         <translation>Uitloggen</translation>
     </message>
     <message>
@@ -4146,11 +4160,6 @@ Do you want to delete it anyway?</source>
         <translation>Volledige scan</translation>
     </message>
     <message>
-        <source>Open at login</source>
-        <translatorcomment>Label to let the user start MEGAsync on login with a checkbox.</translatorcomment>
-        <translation>Open bij het inloggen</translation>
-    </message>
-    <message>
         <source>MEGAsync will perform a full scan of your synced folders when it starts.
 
 Do you want to restart MEGAsync now?</source>
@@ -4205,7 +4214,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Always keep physical control of your master key (e.g. on a client device, external storage, or print).</source>
         <translatorcomment>Label to inform the user to keep physical control of the master key.</translatorcomment>
-        <translation>Houd altijd fysieke controle over uw Herstelsleutel (bijv. op een cliënt-apparaat, externe opslag, of door af te drukken).</translation>
+        <translation>Houd altijd fysieke controle over uw Herstelsleutel (bijv. op een programma-apparaat, externe opslag, of door af te drukken).</translation>
     </message>
     <message>
         <source>Exclude by size</source>
@@ -4438,9 +4447,9 @@ Do you want to restart MEGAsync now?</source>
         <translation>Standaardmappen</translation>
     </message>
     <message>
-        <source>Move...</source>
+        <source>Move…</source>
         <translatorcomment>Button label text allowing the user to change the default Uploads or Downloads folders for the app.</translatorcomment>
-        <translation>Verplaatsen...</translation>
+        <translation>Verplaatsen…</translation>
     </message>
     <message>
         <source>Exclude files smaller than</source>
@@ -4453,14 +4462,14 @@ Do you want to restart MEGAsync now?</source>
         <translation>Uitsluiten bestanden groter dan</translation>
     </message>
     <message>
-        <source>Restart MEGA Desktop Application to apply changes.</source>
+        <source>Restart MEGA Desktop App to apply changes.</source>
         <translatorcomment>Informative text shown in Folders pane, letting the user know that an application restart is required to apply the changes he just made.</translatorcomment>
-        <translation>Herstart MEGA Desktop Applicatie om de wijzigingen toe te passen.</translation>
+        <translation>Herstart de MEGA Desktop App om de wijzigingen toe te passen.</translation>
     </message>
     <message>
-        <source>Change Settings...</source>
+        <source>Change Settings…</source>
         <translatorcomment>Button label text for Bandwidth and Proxy settings in Network pane.</translatorcomment>
-        <translation>Instellingen Wijzigen...</translation>
+        <translation>Instellingen Wijzigen…</translation>
     </message>
     <message>
         <source>Proxies</source>
@@ -4595,7 +4604,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Pro Lite</source>
         <translatorcomment>Text label indicating the Pro Lite tier of account type in Account pane, next to the shield icon indicating also the type of account.</translatorcomment>
-        <translation>Pro Lite</translation>
+        <translation>Pro-Lite</translation>
     </message>
     <message>
         <source>Business</source>
@@ -4670,27 +4679,37 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Saving synchronised folders…</source>
         <translatorcomment>Temporary text label shown while saving changes to Synchronized folders on Windows\Linux. Keep the 3 suspense periods, indicating to the user that the action is in in progress.</translatorcomment>
-        <translation>Gesynchroniseerde mappen opslaan...</translation>
+        <translation>Gesynchroniseerde mappen opslaan…</translation>
     </message>
     <message>
         <source>Pro I</source>
         <translatorcomment>Text label indicating the Pro I tier of account type in Account pane, next to the shield icon indicating also the type of account.</translatorcomment>
-        <translation>Pro I</translation>
+        <translation>Pro-I</translation>
     </message>
     <message>
         <source>Pro II</source>
         <translatorcomment>Text label indicating the Pro II tier of account type in Account pane, next to the shield icon indicating also the type of account.</translatorcomment>
-        <translation>Pro II</translation>
+        <translation>Pro-II</translation>
     </message>
     <message>
         <source>Pro III</source>
         <translatorcomment>Text label indicating the Pro III tier of account type in Account pane, next to the shield icon indicating also the type of account.</translatorcomment>
-        <translation>Pro III</translation>
+        <translation>Pro-III</translation>
     </message>
     <message>
         <source>Export Key</source>
         <translatorcomment>Button label text for export key saving to local machine in a file. Keep string as short as possible.</translatorcomment>
         <translation>Exporteer Sleutel</translation>
+    </message>
+    <message>
+        <source>Notifications</source>
+        <translatorcomment>Title for the Settings -&gt; Notifications pane tab button. Keep as short as possible.</translatorcomment>
+        <translation>Meldingen</translation>
+    </message>
+    <message>
+        <source>Launch at login</source>
+        <translatorcomment>Label to let the user start MEGAsync on login with a checkbox.</translatorcomment>
+        <translation>Start bij inloggen</translation>
     </message>
 </context>
 <context>
@@ -4698,7 +4717,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Create a new MEGA account</source>
         <translatorcomment>Label displayed when a user is creating a new MEGA account.</translatorcomment>
-        <translation>Maak een nieuw MEGA account aan</translation>
+        <translation>Maak een nieuw MEGA-account aan</translation>
     </message>
     <message>
         <source>Email:</source>
@@ -4721,9 +4740,9 @@ Do you want to restart MEGAsync now?</source>
         <translation>Ik ga akkoord met de MEGA &lt;a href=&quot;https://mega.nz/terms&quot;&gt;Algemene Voorwaarden&lt;/a&gt;</translation>
     </message>
     <message>
-        <source>Login to your MEGA account</source>
+        <source>Log in to your MEGA account</source>
         <translatorcomment>Label to let the user login with his credentials.</translatorcomment>
-        <translation>Inloggen op uw MEGA account</translation>
+        <translation>Log in op uw MEGA-account</translation>
     </message>
     <message>
         <source>Please verify your account using the confirmation link that we have sent to your email account</source>
@@ -4733,7 +4752,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Logging in ...</source>
         <translatorcomment>Label displayed while logging process.</translatorcomment>
-        <translation>Inloggen...</translation>
+        <translation>Inloggen…</translation>
     </message>
     <message>
         <source>Choose install type</source>
@@ -4793,7 +4812,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Fetching file list...</source>
         <translatorcomment>Label displayed while the application is retrieving all file list from the server.</translatorcomment>
-        <translation>Bestandslijst ophalen...</translation>
+        <translation>Bestandslijst ophalen…</translation>
     </message>
     <message>
         <source>Incorrect email and/or password.</source>
@@ -4848,7 +4867,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Creating account...</source>
         <translatorcomment>Label displayed when the account is being created.</translatorcomment>
-        <translation>Account creëren...</translation>
+        <translation>Account creëren…</translation>
     </message>
     <message>
         <source>Warning</source>
@@ -4873,7 +4892,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Logging in...</source>
         <translatorcomment>Label displayed when the user is logging in.</translatorcomment>
-        <translation>Inloggen...</translation>
+        <translation>Inloggen…</translation>
     </message>
     <message>
         <source>You are trying to sync an extremely large folder.
@@ -4889,9 +4908,9 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>Kan het bestandssysteem niet ophalen. Probeer het opnieuw. Als het probleem aanhoudt, neem dan contact met ons op via bug@mega.nz</translation>
     </message>
     <message>
-        <source>Setup Assistant - MEGAsync</source>
+        <source>Set up Assistant - MEGAsync</source>
         <translatorcomment>Title of the setup assistant dialog. Keep capital letters.</translatorcomment>
-        <translation>Configuratie-Assistent- MEGAsync</translation>
+        <translation>Assistent Instellen - MEGAsyc</translation>
     </message>
     <message>
         <source>Full sync</source>
@@ -4940,12 +4959,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Creating folder...</source>
         <translatorcomment>Label shown when an user is creating a remote folder.</translatorcomment>
-        <translation>Map creëren...</translation>
+        <translation>Map creëren…</translation>
     </message>
     <message>
         <source>Logging out...</source>
         <translatorcomment>Label shown when an user is logging out from his account.</translatorcomment>
-        <translation>Uitloggen...</translation>
+        <translation>Uitloggen…</translation>
     </message>
     <message>
         <source>Very Weak</source>
@@ -5022,7 +5041,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>Voer uw achternaam in</translation>
     </message>
     <message>
-        <source>Setup selective sync</source>
+        <source>Set up selective sync</source>
         <translatorcomment>Label shown when user is setting up the selective sync mode of MEGAsync</translatorcomment>
         <translation>Selectieve synchronisatie instellen</translation>
     </message>
@@ -5037,7 +5056,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>Selecteer lokale map</translation>
     </message>
     <message>
-        <source>Setup full sync</source>
+        <source>Set up full sync</source>
         <translatorcomment>Label shown when user is setting up full sync mode of MEGAsync</translatorcomment>
         <translation>Volledige synchronisatie instellen</translation>
     </message>
@@ -5057,7 +5076,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>We zijn klaar!</translation>
     </message>
     <message>
-        <source>Login</source>
+        <source>Log in</source>
         <translatorcomment>Button label to open Login form</translatorcomment>
         <translation>Inloggen</translation>
     </message>
@@ -5183,7 +5202,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Select media from...</source>
         <translatorcomment>Label just above of the buttons to select files for streaming</translatorcomment>
-        <translation>Selecteer media van...</translation>
+        <translation>Selecteer media van…</translation>
     </message>
     <message>
         <source>Cloud Drive</source>
@@ -5275,6 +5294,24 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translatorcomment>Informative label to indicate the user that there is a stream error because of transfer overquota situation.</translatorcomment>
         <translation>Streaming fout: overdracht tegoed overschreden.</translation>
     </message>
+    <message>
+        <source>Please wait...</source>
+        <translatorcomment>Message shown while waiting for the server request with the file info to stream</translatorcomment>
+        <translation>Een ogenblik geduld a.u.b…</translation>
+    </message>
+</context>
+<context>
+    <name>SwitchButton</name>
+    <message>
+        <source>On</source>
+        <translatorcomment>Checked state of a swith button</translatorcomment>
+        <translation>Aan</translation>
+    </message>
+    <message>
+        <source>Off</source>
+        <translatorcomment>Unchecked state of a swith button</translatorcomment>
+        <translation>Uit</translation>
+    </message>
 </context>
 <context>
     <name>TransferManager</name>
@@ -5286,7 +5323,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Add...</source>
         <translatorcomment>Button label to add transfers items (uploads/downloads/public links) to the dialog (String as short as possible)</translatorcomment>
-        <translation>Toevoegen...</translation>
+        <translation>Toevoegen…</translation>
     </message>
     <message>
         <source>Downloads</source>
@@ -5324,11 +5361,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>Alles annuleren</translation>
     </message>
     <message>
-        <source>Are you sure you want to cancel all transfers?</source>
-        <translatorcomment>Description label for warning dialog before a transfer cancellation</translatorcomment>
-        <translation>Weet u zeker dat u alle overdrachten wilt annuleren?</translation>
-    </message>
-    <message>
         <source>Resume</source>
         <translation>Doorgaan</translation>
     </message>
@@ -5349,6 +5381,26 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Open links</source>
         <translatorcomment>Menu action item to open MEGA public links. It will let you to import and/or download.</translatorcomment>
         <translation>Links openen</translation>
+    </message>
+    <message>
+        <source>Do you want to cancel all transfers?</source>
+        <translatorcomment>Description label for warning dialog before a transfer cancellation</translatorcomment>
+        <translation>Wilt u alle overdrachten annuleren?</translation>
+    </message>
+    <message>
+        <source>Syncs aren&apos;t affected by this action.</source>
+        <translatorcomment>Description label for warning dialog indicating that syncs are not going to be affected by accepting this dialog</translatorcomment>
+        <translation>Synchronisaties waren niet beïnvloedt door deze actie.</translation>
+    </message>
+    <message>
+        <source>Continue transfers</source>
+        <translatorcomment>Button label that indicates that no one of active transfers will be cancelled (Cancel button on dialog)</translatorcomment>
+        <translation>Overdrachten laten doorgaan</translation>
+    </message>
+    <message>
+        <source>Cancel all transfers</source>
+        <translatorcomment>Button label that indicates that all active transfers will be cancelled (Accept button on dialog)</translatorcomment>
+        <translation>Annuleer alle overdrachten</translation>
     </message>
 </context>
 <context>
@@ -5478,7 +5530,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your MEGA account is full</source>
         <translatorcomment>Label shown to inform the user that the actual account is over storage.</translatorcomment>
-        <translation>Uw MEGA account is vol.</translation>
+        <translation>Uw MEGA-account is vol.</translation>
     </message>
     <message>
         <source>To increase this limit, you can upgrade your account, which will give you ample extra storage space.</source>
@@ -5656,22 +5708,22 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Pro Lite</source>
         <translatorcomment>Label to refer Pro Lite tier</translatorcomment>
-        <translation>Pro Lite</translation>
+        <translation>Pro-Lite</translation>
     </message>
     <message>
         <source>Pro I</source>
         <translatorcomment>Label to refer Pro I tier</translatorcomment>
-        <translation>Pro I</translation>
+        <translation>Pro-I</translation>
     </message>
     <message>
         <source>Pro II</source>
         <translatorcomment>Label to refer Pro II tier</translatorcomment>
-        <translation>Pro II</translation>
+        <translation>Pro-II</translation>
     </message>
     <message>
         <source>Pro III</source>
         <translatorcomment>Label to refer Pro III tier</translatorcomment>
-        <translation>Pro III</translation>
+        <translation>Pro-III</translation>
     </message>
 </context>
 <context>
@@ -5682,8 +5734,8 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>Waarom zie ik dit?</translation>
     </message>
     <message>
-        <source>Logout</source>
-        <translatorcomment>Button label to logout the current account</translatorcomment>
+        <source>Log out</source>
+        <translatorcomment>Button label to log out the current account</translatorcomment>
         <translation>Uitloggen</translation>
     </message>
     <message>

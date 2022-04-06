@@ -12,14 +12,19 @@ extern Q_CORE_EXPORT int qt_ntfs_permission_lookup;
 #endif
 
 const char Preferences::CLIENT_KEY[] = "FhMgXbqb";
-const char Preferences::USER_AGENT[] = "MEGAsync/4.6.5.0";
-const int Preferences::VERSION_CODE = 4605;
-const int Preferences::BUILD_ID = 0;
+const char Preferences::USER_AGENT[] = "MEGAsync/4.6.6.0";
+const int Preferences::VERSION_CODE = 4606;
+const int Preferences::BUILD_ID = 2;
 // Do not change the location of VERSION_STRING, create_tarball.sh parses this file
-const QString Preferences::VERSION_STRING = QString::fromAscii("4.6.5");
-QString Preferences::SDK_ID = QString::fromAscii("995b5c9");
-const QString Preferences::CHANGELOG = QString::fromUtf8(QT_TR_NOOP(
-    "- Addressed MEGA Desktop App compatibility issues with newer web browser.\n"));
+const QString Preferences::VERSION_STRING = QString::fromAscii("4.6.6");
+QString Preferences::SDK_ID = QString::fromAscii("4b40fcb");
+const QString Preferences::CHANGELOG = QString::fromUtf8(QT_TR_NOOP(                                                             
+"- Added support to stream file links from a folder link.\n"
+"- Fixed translation issues.\n"
+"- Improved the user experience.\n"
+"- Added a new notifications panel in the settings dialog.\n"
+"- Other minor UI fixes and adjustments.\n"
+"- Fixed detected crashes on Windows, Linux and macOS.\n"));
 
 const QString Preferences::TRANSLATION_FOLDER = QString::fromAscii("://translations/");
 const QString Preferences::TRANSLATION_PREFIX = QString::fromAscii("MEGASyncStrings_");
@@ -391,8 +396,8 @@ const long long Preferences::defaultTimeStamp       = 0;
 const unsigned long long  Preferences::defaultTransferIdentifier   = 0;
 const int  Preferences::defaultParallelUploadConnections      = 3;
 const int  Preferences::defaultParallelDownloadConnections    = 4;
-const long long  Preferences::defaultUpperSizeLimitValue              = 0;
-const long long  Preferences::defaultLowerSizeLimitValue              = 0;
+const long long  Preferences::defaultUpperSizeLimitValue              = 1; //Input UI range 1-9999. Use 1 as default value
+const long long  Preferences::defaultLowerSizeLimitValue              = 1; //Input UI range 1-9999. Use 1 as default value
 const int  Preferences::defaultCleanerDaysLimitValue            = 30;
 const int Preferences::defaultLowerSizeLimitUnit =  Preferences::MEGA_BYTE_UNIT;
 const int Preferences::defaultUpperSizeLimitUnit =  Preferences::MEGA_BYTE_UNIT;

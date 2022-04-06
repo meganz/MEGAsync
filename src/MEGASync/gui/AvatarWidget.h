@@ -24,13 +24,18 @@ protected:
     void paintEvent(QPaintEvent* event);
     void mousePressEvent(QMouseEvent* event);
 
-    QPixmap mask_image(const QString& pathToFile, int size);
 
 private:
+    QString mLetter;
     QString mPathToFile;
     QLinearGradient mGradient;
-    QLabel mLetter;
-    QGraphicsDropShadowEffect* mLetterShadow;
+};
+
+class AvatarPixmap
+{
+public:
+    static QPixmap maskFromImagePath(const QString& pathToFile, int size);
+    static QPixmap createFromLetter(const QString& letter, QLinearGradient gradient, int size);
 };
 
 #endif // AVATARWIDGET_H

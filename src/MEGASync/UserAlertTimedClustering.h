@@ -12,10 +12,11 @@ class UserAlertTimedClustering: public QObject
 public:
     UserAlertTimedClustering();
     ~UserAlertTimedClustering();
-    void addUserAlert(mega::MegaUserAlert* alert);
+    void addUserAlert(mega::MegaUserAlert* alert, const QString &userName);
 
 private:
     mega::MegaUserAlert* mUserAlert;
+    QString mUserName;
     std::mutex mUserAlertMutex;
     QTimer mClusteringTimer;
     using TotalRemovedItems = int64_t;

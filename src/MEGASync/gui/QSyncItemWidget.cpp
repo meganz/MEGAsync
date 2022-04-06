@@ -175,13 +175,13 @@ void QSyncItemWidget::setSelected(bool selected)
     {
         mUi->lSyncName->setStyleSheet(QString::fromLatin1("#lSyncName {color: white;}"));
         if(!mError)
-            mUi->lSyncState->setStyleSheet(QString::fromLatin1("#lSyncState {border-image: url(\"://images/Item_sync_press.png\")}"));
+            mUi->lSyncState->setStyleSheet(QString::fromLatin1("#lSyncState {border-image: url(\"://images/Item-sync-press.png\")}"));
     }
     else
     {
         mUi->lSyncName->setStyleSheet(QString::fromLatin1("#lSyncName {color: black;}"));
         if(!mError)
-            mUi->lSyncState->setStyleSheet(QString::fromLatin1("#lSyncState {border-image: url(\"://images/Item_sync_rest.png\")}"));
+            mUi->lSyncState->setStyleSheet(QString::fromLatin1("#lSyncState {border-image: url(\"://images/Item-sync-rest.png\")}"));
     }
 }
 

@@ -12,7 +12,7 @@ class RemovedSharesNotificator: public QObject
 {
     Q_OBJECT
 public:
-    void addUserAlert(mega::MegaUserAlert* userAlert);
+    void addUserAlert(mega::MegaUserAlert* userAlert, const QString &userName);
 
 signals:
     void sendClusteredAlert(mega::MegaUserAlert* alert, const QString& message);
