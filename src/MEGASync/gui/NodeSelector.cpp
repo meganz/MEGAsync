@@ -139,7 +139,7 @@ void NodeSelector::nodesReady()
 
 //Disable animation for OS X due to problems showing the tree icons
 #ifdef __APPLE__
-    mNodeSelectorUi->tMegaFolders->setAnimated(false);
+    ui->tMegaFolders->setAnimated(false);
 #endif
 }
 
