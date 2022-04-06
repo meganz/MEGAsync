@@ -29,7 +29,7 @@
    <string>Setup backups</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="../Resources_win.qrc">
+   <iconset resource="../Resources_macx.qrc">
     <normaloff>:/images/icons/ico_backup.png</normaloff>:/images/icons/ico_backup.png</iconset>
   </property>
   <property name="styleSheet">
@@ -903,7 +903,7 @@ margin: 4px;
           <string/>
          </property>
          <property name="pixmap">
-          <pixmap resource="../Resources_win.qrc">:/images/bug_report_success.png</pixmap>
+          <pixmap resource="../Resources_macx.qrc">:/images/bug_report_success.png</pixmap>
          </property>
         </widget>
        </item>
@@ -1009,7 +1009,7 @@ color: #666666;
           <string/>
          </property>
          <property name="pixmap">
-          <pixmap resource="../Resources_win.qrc">:/images/icon_error.png</pixmap>
+          <pixmap resource="../Resources_macx.qrc">:/images/icon_error.png</pixmap>
          </property>
         </widget>
        </item>
@@ -1379,7 +1379,7 @@ color:#666666;
   </layout>
  </widget>
  <resources>
-  <include location="../Resources_win.qrc"/>
+  <include location="../Resources_macx.qrc"/>
  </resources>
  <connections/>
 </ui>
