@@ -10,7 +10,7 @@
     <x>0</x>
     <y>0</y>
     <width>600</width>
-    <height>368</height>
+    <height>387</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -29,24 +29,11 @@
    <string>Setup backups</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="../Resources_macx.qrc">
+   <iconset resource="../Resources_win.qrc">
     <normaloff>:/images/icons/ico_backup.png</normaloff>:/images/icons/ico_backup.png</iconset>
   </property>
   <property name="styleSheet">
-   <string notr="true">*
-{
-font-family: Lato;
-font-size:12px;
-}
-
-QPushButton
-{
-padding-left: 10px;
-padding-right: 10px;
-min-height: 22px;
-}
-
-#BackupsWizard, #sSteps &gt; QWidget
+   <string notr="true">#BackupsWizard, #sSteps &gt; QWidget
 {
 background: solid white;
 }
@@ -69,12 +56,12 @@ border: 1px solid #e5e5e5;
 padding-left: 7px;
 }
 
+
 #lSubtitleStep1
 {
 margin-left: 20px;
 margin-right: 20px;
 margin-top: 7px;
-margin-bottom: 31px;
 color: #666666;
 }
 
@@ -116,14 +103,12 @@ background: solid #FAFAFA;
 
 #lDeviceIconStep1
 {
-border: none;
+border-image: url(&quot;:/images/icons/pc/pc-mac_48.png&quot;);
 }
 
 #lDeviceIconStep2
 {
-border: none;
-margin-left: 12px;
-background: solid #FAFAFA;
+border-image: url(&quot;:/images/icons/pc/pc-mac_24.png&quot;);
 }
 
 #lDeviceNameStep1, #lDeviceNameStep2
@@ -266,7 +251,7 @@ margin: 4px;
       <string notr="true"/>
      </property>
      <property name="currentIndex">
-      <number>1</number>
+      <number>2</number>
      </property>
      <widget class="QWidget" name="pStep1">
       <property name="sizePolicy">
@@ -277,7 +262,7 @@ margin: 4px;
       </property>
       <layout class="QVBoxLayout" name="pStep1Layout">
        <property name="spacing">
-        <number>0</number>
+        <number>-1</number>
        </property>
        <property name="leftMargin">
         <number>19</number>
@@ -289,7 +274,7 @@ margin: 4px;
         <number>19</number>
        </property>
        <property name="bottomMargin">
-        <number>20</number>
+        <number>0</number>
        </property>
        <item>
         <widget class="QLabel" name="lTitleStep1">
@@ -396,15 +381,12 @@ margin: 4px;
                </property>
                <property name="maximumSize">
                 <size>
-                 <width>16777215</width>
+                 <width>48</width>
                  <height>48</height>
                 </size>
                </property>
                <property name="text">
                 <string notr="true"/>
-               </property>
-               <property name="pixmap">
-                <pixmap resource="../Resources_macx.qrc">:/images/icons/pc/pc-mac_48.png</pixmap>
                </property>
                <property name="scaledContents">
                 <bool>false</bool>
@@ -625,7 +607,7 @@ margin: 4px;
             <number>20</number>
            </property>
            <property name="topMargin">
-            <number>10</number>
+            <number>0</number>
            </property>
            <property name="rightMargin">
             <number>20</number>
@@ -640,12 +622,6 @@ margin: 4px;
                <horstretch>0</horstretch>
                <verstretch>0</verstretch>
               </sizepolicy>
-             </property>
-             <property name="minimumSize">
-              <size>
-               <width>104</width>
-               <height>24</height>
-              </size>
              </property>
              <property name="text">
               <string>More folders</string>
@@ -771,7 +747,7 @@ margin: 4px;
               <enum>QLayout::SetDefaultConstraint</enum>
              </property>
              <property name="leftMargin">
-              <number>0</number>
+              <number>14</number>
              </property>
              <property name="topMargin">
               <number>0</number>
@@ -790,11 +766,20 @@ margin: 4px;
                  <verstretch>0</verstretch>
                 </sizepolicy>
                </property>
+               <property name="minimumSize">
+                <size>
+                 <width>24</width>
+                 <height>24</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>24</width>
+                 <height>24</height>
+                </size>
+               </property>
                <property name="text">
                 <string/>
-               </property>
-               <property name="pixmap">
-                <pixmap resource="../Resources_macx.qrc">:/images/icons/pc/pc-mac_24.png</pixmap>
                </property>
                <property name="alignment">
                 <set>Qt::AlignCenter</set>
@@ -918,7 +903,7 @@ margin: 4px;
           <string/>
          </property>
          <property name="pixmap">
-          <pixmap resource="../Resources_macx.qrc">:/images/bug_report_success.png</pixmap>
+          <pixmap resource="../Resources_win.qrc">:/images/bug_report_success.png</pixmap>
          </property>
         </widget>
        </item>
@@ -959,8 +944,10 @@ color: #666666;
 }</string>
              </property>
              <property name="text">
-              <string>We're backing up your folders. The time this takes depends on the files 
-in these folders.</string>
+              <string>We're backing up your folders. The time this takes depends on the files in these folders.</string>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
              </property>
             </widget>
            </item>
@@ -972,8 +959,10 @@ color: #666666;
 }</string>
              </property>
              <property name="text">
-              <string>We're backing up your folder. The time this takes depends on the files 
-in this folder.</string>
+              <string>We're backing up your folder. The time this takes depends on the files in this folder.</string>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
              </property>
             </widget>
            </item>
@@ -988,7 +977,6 @@ in this folder.</string>
              <property name="font">
               <font>
                <family>Lato</family>
-               <pointsize>-1</pointsize>
               </font>
              </property>
              <property name="styleSheet">
@@ -997,8 +985,10 @@ color: #666666;
 }</string>
              </property>
              <property name="text">
-              <string>Folders will be stored in the Vault and you can check the status of your 
-backups in Backup Centre.</string>
+              <string>Folders will be stored in the Vault and you can check the status of your backups in Backup Centre.</string>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
              </property>
             </widget>
            </item>
@@ -1019,7 +1009,7 @@ backups in Backup Centre.</string>
           <string/>
          </property>
          <property name="pixmap">
-          <pixmap resource="../Resources_macx.qrc">:/images/icon_error.png</pixmap>
+          <pixmap resource="../Resources_win.qrc">:/images/icon_error.png</pixmap>
          </property>
         </widget>
        </item>
@@ -1068,7 +1058,6 @@ color:#333333;
            <property name="font">
             <font>
              <family>Lato</family>
-             <pointsize>-1</pointsize>
             </font>
            </property>
            <property name="styleSheet">
@@ -1131,7 +1120,6 @@ color:rgba(0,0,0,0.1);
            <property name="font">
             <font>
              <family>Lato</family>
-             <pointsize>-1</pointsize>
             </font>
            </property>
            <property name="styleSheet">
@@ -1180,7 +1168,6 @@ color:rgba(0,0,0,0.1);
            <property name="font">
             <font>
              <family>Lato</family>
-             <pointsize>-1</pointsize>
              <underline>true</underline>
             </font>
            </property>
@@ -1213,10 +1200,13 @@ color:#666666;
       </size>
      </property>
      <property name="currentIndex">
-      <number>2</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="pStepButtons">
       <layout class="QHBoxLayout" name="horizontalLayout_4">
+       <property name="spacing">
+        <number>5</number>
+       </property>
        <property name="leftMargin">
         <number>0</number>
        </property>
@@ -1234,7 +1224,7 @@ color:#666666;
          <property name="minimumSize">
           <size>
            <width>80</width>
-           <height>24</height>
+           <height>0</height>
           </size>
          </property>
          <property name="text">
@@ -1260,7 +1250,7 @@ color:#666666;
          <property name="minimumSize">
           <size>
            <width>80</width>
-           <height>24</height>
+           <height>0</height>
           </size>
          </property>
          <property name="text">
@@ -1273,7 +1263,7 @@ color:#666666;
          <property name="minimumSize">
           <size>
            <width>80</width>
-           <height>24</height>
+           <height>0</height>
           </size>
          </property>
          <property name="text">
@@ -1318,7 +1308,7 @@ color:#666666;
          <property name="minimumSize">
           <size>
            <width>0</width>
-           <height>24</height>
+           <height>0</height>
           </size>
          </property>
          <property name="text">
@@ -1331,7 +1321,7 @@ color:#666666;
          <property name="minimumSize">
           <size>
            <width>0</width>
-           <height>24</height>
+           <height>0</height>
           </size>
          </property>
          <property name="text">
@@ -1370,12 +1360,6 @@ color:#666666;
        </item>
        <item>
         <widget class="QPushButton" name="bDismiss">
-         <property name="minimumSize">
-          <size>
-           <width>86</width>
-           <height>24</height>
-          </size>
-         </property>
          <property name="text">
           <string>Dismiss</string>
          </property>
@@ -1383,12 +1367,6 @@ color:#666666;
        </item>
        <item>
         <widget class="QPushButton" name="bViewInBackupCentre">
-         <property name="minimumSize">
-          <size>
-           <width>165</width>
-           <height>24</height>
-          </size>
-         </property>
          <property name="text">
           <string>View in Backup Centre</string>
          </property>
@@ -1401,7 +1379,7 @@ color:#666666;
   </layout>
  </widget>
  <resources>
-  <include location="../Resources_macx.qrc"/>
+  <include location="../Resources_win.qrc"/>
  </resources>
  <connections/>
 </ui>
