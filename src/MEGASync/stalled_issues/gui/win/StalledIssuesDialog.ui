@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
  <class>StalledIssuesDialog</class>
- <widget class="QWidget" name="StalledIssuesDialog">
+ <widget class="QDialog" name="StalledIssuesDialog">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -25,7 +25,7 @@
 }
 
 
-#titleLabel
+#title QLabel
 {
   font-family: &quot;Lato&quot;;
   font-size: 20px;
@@ -37,8 +37,8 @@
 #stalledIssuesList
 {
    border:none;
+   background-color: transparent;
 }
-
 </string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
@@ -118,7 +118,65 @@
     </widget>
    </item>
    <item>
-    <widget class="QTreeView" name="stalledIssuesList"/>
+    <widget class="QWidget" name="TreeViewContainer" native="true">
+     <layout class="QVBoxLayout" name="verticalLayout_2">
+      <property name="spacing">
+       <number>0</number>
+      </property>
+      <property name="leftMargin">
+       <number>7</number>
+      </property>
+      <property name="topMargin">
+       <number>0</number>
+      </property>
+      <property name="rightMargin">
+       <number>7</number>
+      </property>
+      <property name="bottomMargin">
+       <number>0</number>
+      </property>
+      <item>
+       <widget class="StalledIssuesView" name="stalledIssuesTree">
+        <property name="autoFillBackground">
+         <bool>false</bool>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: rgba(255, 255, 255, 0);</string>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::NoFrame</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Plain</enum>
+        </property>
+        <property name="lineWidth">
+         <number>0</number>
+        </property>
+        <property name="editTriggers">
+         <set>QAbstractItemView::NoEditTriggers</set>
+        </property>
+        <property name="alternatingRowColors">
+         <bool>true</bool>
+        </property>
+        <property name="indentation">
+         <number>0</number>
+        </property>
+        <property name="rootIsDecorated">
+         <bool>true</bool>
+        </property>
+        <property name="sortingEnabled">
+         <bool>true</bool>
+        </property>
+        <property name="expandsOnDoubleClick">
+         <bool>false</bool>
+        </property>
+        <attribute name="headerVisible">
+         <bool>false</bool>
+        </attribute>
+       </widget>
+      </item>
+     </layout>
+    </widget>
    </item>
    <item>
     <widget class="Line" name="footerLLine">
@@ -167,6 +225,13 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>StalledIssuesView</class>
+   <extends>QTreeView</extends>
+   <header>StalledIssuesView.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

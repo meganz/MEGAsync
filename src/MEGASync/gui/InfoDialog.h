@@ -42,9 +42,6 @@ class InfoDialog : public QDialog, public mega::MegaTransferListener, ::mega::Me
         STATE_TRANSFERRING,
     };
 
-    void onRequestFinish(::mega::MegaApi* api, ::mega::MegaRequest *request, ::mega::MegaError* e) override;
-
-
 public:
 
     enum {
@@ -162,9 +159,6 @@ private slots:
     void setAvatar();
 
     void onTransfersDataUpdated();
-
-    void mousePressEvent(QMouseEvent* event);
-
 
 signals:
     void triggerShowSyncProblems(QString s);

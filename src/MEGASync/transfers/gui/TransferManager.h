@@ -22,6 +22,8 @@ namespace Ui {
 class TransferManagerDragBackDrop;
 }
 
+class StalledIssuesDialog;
+
 class TransferManager : public QDialog
 {
     Q_OBJECT
@@ -103,6 +105,9 @@ private:
     int mStorageQuotaState;
     QuotaState mTransferQuotaState;
 
+    StalledIssuesDialog* mStalledIssuesDialog;
+    bool mFoundStalledIssues;
+
     void toggleTab(TM_TAB newTab);
     void refreshStateStats();
     void refreshTypeStats();
@@ -129,6 +134,10 @@ private slots:
     void on_tDlResults_clicked();
     void on_tUlResults_clicked();
     void on_bPause_clicked();
+
+    void onStalledIssuesStateChanged(bool state);
+    void on_viewStalledIssuesButton_clicked();
+    void showStalledIssuesInfo();
 
     void on_bImportLinks_clicked();
     void on_tCogWheel_clicked();

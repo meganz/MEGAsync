@@ -15,10 +15,11 @@ public:
     void render(const QStyleOptionViewItem &option,
                 QPainter *painter,
                 const QRegion &sourceRegion);
-    void updateUi(const QExplicitlySharedDataPointer<StalledIssueData> data, int);
+    virtual void updateUi(const QModelIndex &index, const QExplicitlySharedDataPointer<StalledIssueData> data);
 
     QModelIndex getCurrentIndex() const;
-    void setCurrentIndex(const QModelIndex &currentIndex);
+
+    QExplicitlySharedDataPointer<StalledIssueData> getData() const;
 
 protected:
     virtual void refreshUi() = 0;

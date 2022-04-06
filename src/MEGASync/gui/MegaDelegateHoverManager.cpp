@@ -24,7 +24,8 @@ bool MegaDelegateHoverManager::eventFilter(QObject *watched, QEvent *event)
     {
         auto index = mView->indexAt(mouseEvent->pos());
 
-        if(mCurrentIndex.row() != index.row())
+        if(mCurrentIndex.row() != index.row()
+                || mCurrentIndex.parent() != index.parent())
         {
             sendEvent(QEvent::Leave);
             mCurrentIndex = index;

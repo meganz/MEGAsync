@@ -25,6 +25,8 @@ protected:
 
 private:
     Ui::StalledIssueHeader *ui;
+
+    void refreshUiByStalledReason();
 };
 
 #endif // STALLEDISSUEHEADER_H

@@ -11,8 +11,10 @@ void StalledIssueBaseDelegateWidget::render(const QStyleOptionViewItem &option,
 {
     QWidget::render(painter,QPoint(0,0),sourceRegion);
 }
-void StalledIssueBaseDelegateWidget::updateUi(const QExplicitlySharedDataPointer<StalledIssueData> data, int)
+void StalledIssueBaseDelegateWidget::updateUi(const QModelIndex& index, const QExplicitlySharedDataPointer<StalledIssueData> data)
 {
+    mCurrentIndex = index;
+
     if(mData != data)
     {
         mData = data;
@@ -26,7 +28,7 @@ QModelIndex StalledIssueBaseDelegateWidget::getCurrentIndex() const
     return mCurrentIndex;
 }
 
-void StalledIssueBaseDelegateWidget::setCurrentIndex(const QModelIndex &currentIndex)
+QExplicitlySharedDataPointer<StalledIssueData> StalledIssueBaseDelegateWidget::getData() const
 {
-    mCurrentIndex = currentIndex;
+    return mData;
 }

@@ -1,18 +1,16 @@
 #include "StalledIssuesProxyModel.h"
 
 #include "StalledIssueHeader.h"
+#include "StalledIssueChooseWidget.h"
+
+#include <QDebug>
 
 StalledIssuesProxyModel::StalledIssuesProxyModel(QObject *parent) :QSortFilterProxyModel(parent)
 {
 
 }
 
-StalledIssueBaseDelegateWidget *StalledIssuesProxyModel::createTransferManagerItem(const QModelIndex& index,
-                                                                                   QWidget *parent)
+bool StalledIssuesProxyModel::canFetchMore(const QModelIndex &parent) const
 {
-    if(!index.parent().isValid())
-    {
-        auto item = new StalledIssueHeader(parent);
-        return item;
-    }
+    return QSortFilterProxyModel::canFetchMore(parent);
 }

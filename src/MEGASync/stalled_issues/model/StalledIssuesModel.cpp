@@ -2,54 +2,60 @@
 
 #include "MegaApplication.h"
 
-StalledIssuesReceiver::StalledIssuesReceiver(QObject *parent) : QObject(parent), mega::MegaTransferListener()
+StalledIssuesReceiver::StalledIssuesReceiver(QObject *parent) : QObject(parent), mega::MegaRequestListener()
 {
 
 }
 
-void StalledIssuesReceiver::onRequestFinish(mega::MegaApi *api, mega::MegaRequest *request, mega::MegaError *e)
+QList<QExplicitlySharedDataPointer<StalledIssueData>> StalledIssuesReceiver::processStalledIssues()
+{
+    if(mCacheMutex.tryLock())
+    {
+        if(mCacheStalledIssues.size() > 2000)
+        {
+            StalledIssuesDataList auxList;
+            for(auto index = 0; index < 2000
+                && !mCacheStalledIssues.isEmpty(); ++index)
+            {
+                auto& firstItem = mCacheStalledIssues.first();
+                if(firstItem)
+                {
+                    auxList.append(firstItem);
+                    mCacheStalledIssues.removeOne(firstItem);
+                }
+            }
+
+            mCacheMutex.unlock();
+            return auxList;
+        }
+        else
+        {
+            auto auxList = mCacheStalledIssues;
+            mCacheStalledIssues.clear();
+
+            mCacheMutex.unlock();
+            return auxList;
+        }
+    }
+
+    return StalledIssuesDataList();
+}
+
+void StalledIssuesReceiver::onRequestFinish(mega::MegaApi*, mega::MegaRequest *request, mega::MegaError*)
 {
     if (auto ptr = request->getMegaSyncProblems())
     {
-        std::string problemText;
+        QMutexLocker lock(&mCacheMutex);
 
         if (mega::MegaSyncNameConflictList* cl = ptr->nameConflicts())
         {
             for (int i = 0; i < cl->size(); ++i)
             {
-                mega::MegaSyncNameConflict* c = cl->get(i);
+                auto nameConflictStall = cl->get(i);
 
-                problemText += "Conflicting names.\n";
-                if (mega::MegaStringList* cn = c->cloudNames())
-                {
-                    for (int j = 0; j < cn->size(); ++j)
-                    {
-                        problemText += "  " + std::string(cn->get(j)) + "\n";
-                    }
-                }
-                if (auto cp = c->cloudPath())
-                {
-                    if (cp && *cp)
-                    {
-                        problemText += "  at cloud path: " + std::string(cp) + "\n";
-                    }
-                }
-                if (mega::MegaStringList* ln = c->localNames())
-                {
-                    for (int j = 0; j < ln->size(); ++j)
-                    {
-                        problemText += "  " + std::string(ln->get(j)) + "\n";
-                    }
-                }
-                if (auto lp = c->localPath())
-                {
-                    if (lp && *lp)
-                    {
-                        problemText += "  at local path: " + std::string(lp) + "\n";
-                    }
-                }
-
-                problemText += "\n";
+                auto conflictNameItem = new ConflictedNamesStalledIssueData(nameConflictStall);
+                StalledIssueDataPtr d (conflictNameItem);
+                mCacheStalledIssues.append(d);
             }
         }
 
@@ -59,34 +65,8 @@ void StalledIssuesReceiver::onRequestFinish(mega::MegaApi *api, mega::MegaReques
             {
                 auto stall = sl->get(i);
 
-                if (stall->isCloud())
-                {
-                    problemText += "Cloud side issue: " + std::string(stall->reasonString()) + "\n";
-                    problemText += "  " + std::string(stall->indexPath()) + "\n";
-                    if (stall->cloudPath() && strlen(stall->cloudPath()))
-                    {
-                        problemText += "  " + std::string(stall->cloudPath()) + "\n";
-                    }
-                    if (stall->localPath() && strlen(stall->localPath()))
-                    {
-                        problemText += "  Corresponding local path: " + std::string(stall->localPath()) + "\n";
-                    }
-                }
-                else
-                {
-                    problemText += "Local side issue: " + std::string(stall->reasonString()) + "\n";
-                    problemText += "  " + std::string(stall->indexPath()) + "\n";
-                    if (stall->localPath() && strlen(stall->localPath()))
-                    {
-                        problemText += "  " + std::string(stall->localPath()) + "\n";
-                    }
-                    if (stall->cloudPath() && strlen(stall->cloudPath()))
-                    {
-                        problemText += "  Corresponding cloud path: " + std::string(stall->cloudPath()) + "\n";
-                    }
-                }
-
-                problemText += "\n";
+                StalledIssueDataPtr d (new StalledIssueData(stall));
+                mCacheStalledIssues.append(d);
             }
         }
     }
@@ -97,22 +77,70 @@ StalledIssuesModel::StalledIssuesModel(QObject *parent) : QAbstractItemModel(par
 {
     mStalledIssuesThread = new QThread();
     mStalledIssuedReceiver = new StalledIssuesReceiver();
-    mDelegateListener = new mega::QTMegaTransferListener(mMegaApi, mStalledIssuedReceiver);
+    mDelegateListener = new mega::QTMegaRequestListener(mMegaApi, mStalledIssuedReceiver);
     mStalledIssuedReceiver->moveToThread(mStalledIssuesThread);
     mDelegateListener->moveToThread(mStalledIssuesThread);
-    mMegaApi->addTransferListener(mDelegateListener);
+    mMegaApi->addRequestListener(mDelegateListener);
+
+    mStalledIssuesTimer.setInterval(100);
+    QObject::connect(&mStalledIssuesTimer, &QTimer::timeout, this, &StalledIssuesModel::onProcessStalledIssues);
+    mStalledIssuesTimer.start();
 
     mStalledIssuesThread->start();
 }
 
 StalledIssuesModel::~StalledIssuesModel()
 {
-    mMegaApi->removeTransferListener(mDelegateListener);
+    mMegaApi->removeRequestListener(mDelegateListener);
     mStalledIssuesThread->quit();
     mStalledIssuesThread->deleteLater();
     mStalledIssuedReceiver->deleteLater();
 
     mDelegateListener->deleteLater();
+}
+
+void StalledIssuesModel::onProcessStalledIssues()
+{
+    auto stalledIssues = mStalledIssuedReceiver->processStalledIssues();
+    if(!stalledIssues.isEmpty())
+    {
+        foreach(auto issue, stalledIssues)
+        {
+            if(mAddedStalledIssues.contains(issue->mFileName))
+            {
+                stalledIssues.removeOne(issue);
+            }
+        }
+
+        if(!stalledIssues.isEmpty())
+        {
+            auto totalRows = rowCount(QModelIndex());
+            auto rowsToBeInserted(static_cast<int>(stalledIssues.size()));
+
+            beginInsertRows(QModelIndex(), totalRows, totalRows + rowsToBeInserted - 1);
+
+            for (auto it = stalledIssues.begin(); it != stalledIssues.end();)
+            {
+                mStalledIssues.append((*it));
+                mStalledIssuesByOrder.insert((*it), rowCount(QModelIndex()) - 1);
+                mAddedStalledIssues.append((*it)->mFileName);
+
+                stalledIssues.removeOne((*it));
+                it++;
+            }
+
+            endInsertRows();
+
+            emit stalledIssuesReceived(true);
+        }
+    }
+    else
+    {
+        if (mMegaApi->isSyncStalled())
+        {
+            mMegaApi->getSyncProblems(nullptr, true);
+        }
+    }
 }
 
 Qt::DropActions StalledIssuesModel::supportedDropActions() const
@@ -122,9 +150,9 @@ Qt::DropActions StalledIssuesModel::supportedDropActions() const
 
 bool StalledIssuesModel::hasChildren(const QModelIndex &parent) const
 {
-    if (!parent.isValid())
+    if (!parent.parent().isValid())
     {
-        return !mStalledIssues.empty();
+        return true;
     }
 
     return false;
@@ -135,6 +163,10 @@ int StalledIssuesModel::rowCount(const QModelIndex &parent) const
    if(!parent.isValid())
    {
        return mStalledIssues.size();
+   }
+   else
+   {
+       return 1;
    }
 
    return 0;
@@ -169,16 +201,16 @@ QModelIndex StalledIssuesModel::parent(const QModelIndex &index) const
         return QModelIndex();
     }
 
-    auto stalledIssueItem = static_cast<const QExplicitlySharedDataPointer<StalledIssueData>*>(index.internalPointer());
+    auto stalledIssueItem = static_cast<QExplicitlySharedDataPointer<StalledIssueData>*>(index.internalPointer());
     if (!stalledIssueItem)
     {
         return QModelIndex();
     }
 
-    //auto row = mStalledIssuesByOrder.value(stalledIssueItem,-1);
-    //if(row >= 0)
+    auto row = mStalledIssuesByOrder.value((*stalledIssueItem),-1);
+    if(row >= 0)
     {
-        //return createIndex(row, 0);
+        return createIndex(row, 0);
     }
 
     return QModelIndex();
@@ -188,10 +220,74 @@ QModelIndex StalledIssuesModel::index(int row, int column, const QModelIndex &pa
 {
     if(parent.isValid())
     {
-        return createIndex(0, 0, mStalledIssues.value(parent.row()));
+        auto stalledIssue = mStalledIssues.value(parent.row());
+        return createIndex(0, 0, &stalledIssue);
     }
     else
     {
         return (row < rowCount(QModelIndex())) ?  createIndex(row, column) : QModelIndex();
+    }
+}
+
+Qt::ItemFlags StalledIssuesModel::flags(const QModelIndex &index) const
+{
+    return QAbstractItemModel::flags(index) | Qt::ItemIsEnabled | Qt::ItemIsEditable;
+}
+
+void StalledIssuesModel::finishStalledIssues(const QModelIndexList &indexes)
+{
+    auto indexesToFinish(indexes);
+    removeRows(indexesToFinish);
+}
+
+void StalledIssuesModel::removeRows(QModelIndexList &indexesToRemove)
+{
+    std::sort(indexesToRemove.begin(), indexesToRemove.end(),[](QModelIndex check1, QModelIndex check2){
+        return check1.row() > check2.row();
+    });
+
+    // First clear finished transfers (remove rows), then cancel the others.
+    // This way, there is no risk of messing up the rows order with cancel requests.
+    int count (0);
+    int row (indexesToRemove.last().row());
+    for (auto index : indexesToRemove)
+    {
+        // Init row with row of first tag
+        if (count == 0)
+        {
+            row = index.row();
+        }
+
+        // If rows are non-contiguous, flush and start from item
+        if (row != index.row())
+        {
+            QAbstractItemModel::removeRows(row + 1, count, QModelIndex());
+            count = 0;
+            row = index.row();
+        }
+
+        // We have at least one row
+        count++;
+        row--;
+    }
+    // Flush pooled rows (start at row + 1).
+    // This happens when the last item processed is in a finished state.
+    if (count > 0)
+    {
+        QAbstractItemModel::removeRows(row + 1, count, QModelIndex());
+    }
+
+    updateStalledIssuedByOrder();
+}
+
+void StalledIssuesModel::updateStalledIssuedByOrder()
+{
+    mStalledIssuesByOrder.clear();
+
+    //Recalculate rest of items
+    for(int row = 0; row < rowCount(QModelIndex()); ++row)
+    {
+        auto item = mStalledIssues.at(row);
+        mStalledIssuesByOrder.insert(item, row);
     }
 }

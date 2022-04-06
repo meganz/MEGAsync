@@ -7,6 +7,9 @@
 #include "MegaTransferDelegate.h"
 #include "MegaTransferView.h"
 #include "OverQuotaDialog.h"
+#include "StalledIssuesDialog.h"
+#include "StalledIssuesModel.h"
+#include "Platform.h"
 
 #include <QMouseEvent>
 #include <QScrollBar>
@@ -27,12 +30,14 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
     mMegaApi(megaApi),
     mPreferences(Preferences::instance()),
     mModel(nullptr),
+    mStalledIssuesDialog(nullptr),
     mCurrentTab(NO_TAB),
     mShadowTab (new QGraphicsDropShadowEffect(nullptr)),
     mSpeedRefreshTimer(new QTimer(this)),
     mStatsRefreshTimer(new QTimer(this)),
     mStorageQuotaState(MegaApi::STORAGE_STATE_UNKNOWN),
-    mTransferQuotaState(QuotaState::OK)
+    mTransferQuotaState(QuotaState::OK),
+    mFoundStalledIssues(false)
 {
     mUi->setupUi(this);
 
@@ -163,6 +168,13 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
         setDisabled(state);
     });
 
+    mFoundStalledIssues = MegaSyncApp->getStalledIssuesModel()->rowCount(QModelIndex()) != 0;
+    showStalledIssuesInfo();
+
+    connect(MegaSyncApp->getStalledIssuesModel(),
+            &StalledIssuesModel::stalledIssuesReceived,
+            this, &TransferManager::onStalledIssuesStateChanged);
+
     mSpeedRefreshTimer->setSingleShot(false);
     connect(mSpeedRefreshTimer, &QTimer::timeout,
             this, &TransferManager::refreshSpeed);
@@ -205,6 +217,25 @@ void TransferManager::pauseModel(bool value)
 void TransferManager::onPauseStateChangedByTransferResume()
 {
     onUpdatePauseState(false);
+}
+
+void TransferManager::on_viewStalledIssuesButton_clicked()
+{
+    if(!mStalledIssuesDialog)
+    {
+        mStalledIssuesDialog = new StalledIssuesDialog(this);
+        connect(mStalledIssuesDialog, &QObject::destroyed, [this](){
+            mStalledIssuesDialog = nullptr;
+        });
+    }
+
+    Platform::activateBackgroundWindow(mStalledIssuesDialog);
+    mStalledIssuesDialog->showMinimized();
+    mStalledIssuesDialog->showNormal();
+    mStalledIssuesDialog->setGeometry(geometry());
+    mStalledIssuesDialog->activateWindow();
+    mStalledIssuesDialog->raise();
+    mStalledIssuesDialog->show();
 }
 
 void TransferManager::setActiveTab(int t)
@@ -289,6 +320,8 @@ void TransferManager::on_tFailed_clicked()
         emit userActivity();
         mUi->wTransfers->filtersChanged({}, TransferData::TRANSFER_FAILED, {});
         mUi->lCurrentContent->setText(tr("Failed"));
+
+        showStalledIssuesInfo();
 
         toggleTab(FAILED_TAB);
     }
@@ -717,6 +750,25 @@ void TransferManager::on_bPause_clicked()
 
 }
 
+void TransferManager::onStalledIssuesStateChanged(bool state)
+{
+    mFoundStalledIssues = state;
+    showStalledIssuesInfo();
+
+}
+
+void TransferManager::showStalledIssuesInfo()
+{
+    if(mFoundStalledIssues && (mCurrentTab != SEARCH_TAB && mCurrentTab != COMPLETED_TAB))
+    {
+        mUi->sCurrentContentInfo->setCurrentWidget(mUi->stalledIssuesHeaderInfo);
+    }
+    else
+    {
+         mUi->sCurrentContentInfo->setCurrentWidget(mUi->pStatusHeaderInfo);
+    }
+}
+
 void TransferManager::on_bSearch_clicked()
 {
     mUi->wTitleAndSearch->setCurrentWidget(mUi->pSearch);
@@ -776,7 +828,7 @@ void TransferManager::on_tClearSearchResult_clicked()
     if (mCurrentTab == SEARCH_TAB)
     {
         mUi->sCurrentContent->setCurrentWidget(mUi->pStatusHeader);
-        mUi->sCurrentContentInfo->setCurrentWidget(mUi->pStatusHeaderInfo);
+        showStalledIssuesInfo();
         on_tAllTransfers_clicked();
     }
 }
@@ -965,7 +1017,7 @@ void TransferManager::toggleTab(TM_TAB newTab)
         else
         {
             mUi->sCurrentContent->setCurrentWidget(mUi->pStatusHeader);
-            mUi->sCurrentContentInfo->setCurrentWidget(mUi->pStatusHeaderInfo);
+            showStalledIssuesInfo();
             mUi->wTransfers->textFilterChanged(QString());
         }
 

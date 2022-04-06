@@ -10,8 +10,8 @@ class StalledIssuesProxyModel : public QSortFilterProxyModel
 public:
     StalledIssuesProxyModel(QObject *parent = nullptr);
 
-    StalledIssueBaseDelegateWidget *createTransferManagerItem(const QModelIndex& index,
-                                                              QWidget *parent);
+protected:
+    bool canFetchMore(const QModelIndex &parent) const override;
 
 };
 
