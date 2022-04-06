@@ -102,17 +102,6 @@ void MegaProxyStyle::drawPrimitive(QStyle::PrimitiveElement element, const QStyl
 
         QProxyStyle::drawPrimitive(element, &modOption, painter, widget);
 
-<<<<<<< HEAD
-
-=======
-                opt.rect.setLeft(35);
-                opt.rect.setRight(widget->width() - 35);
-                linepen.setWidth(2);
-                painter->setPen(linepen);
-            }
-        }
-        QProxyStyle::drawPrimitive(element, &opt, painter, widget);
->>>>>>> origin/develop
         return;
     }
 
