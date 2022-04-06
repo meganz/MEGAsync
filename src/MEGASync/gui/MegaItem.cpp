@@ -2,7 +2,7 @@
 #include "QMegaMessageBox.h"
 #include "MegaApplication.h"
 #include "AvatarWidget.h"
-#include "Model.h"
+#include "SyncModel.h"
 #include "MegaApplication.h"
 #include "mega/utils.h"
 
@@ -45,7 +45,7 @@ MegaItem::MegaItem(std::unique_ptr<MegaNode> node, MegaItem *parentItem, bool sh
     QStringList folderList;
     if(parent_item && parent_item->getNode()->isInShare())
     {
-        foreach(const QString& folder, Model::instance()->getMegaFolders())
+        foreach(const QString& folder, SyncModel::instance()->getMegaFolders())
         {
             if(folder.startsWith(parent_item->getOwnerEmail()))
             {
@@ -57,7 +57,7 @@ MegaItem::MegaItem(std::unique_ptr<MegaNode> node, MegaItem *parentItem, bool sh
     ////////////
     else
     {
-        calculateSyncStatus(Model::instance()->getMegaFolders());
+        calculateSyncStatus(SyncModel::instance()->getMegaFolders());
     }
 }
 
@@ -67,7 +67,7 @@ std::shared_ptr<mega::MegaNode> MegaItem::getNode()
     return mNode;
 }
 
-void MegaItem::setChildren(std::shared_ptr<mega::MegaNodeList> children)
+void MegaItem::setChildren(MegaNodeList *children)
 {
     this->mChildrenSetted = true;
     for (int i = 0; i < children->size(); i++)
@@ -79,7 +79,6 @@ void MegaItem::setChildren(std::shared_ptr<mega::MegaNodeList> children)
         }
         mChildItems.append(new MegaItem(move(node), this, mShowFiles));
     }
-    mAreChildrenSet = true;
 }
 
 bool MegaItem::areChildrenSet()
@@ -134,7 +133,7 @@ void MegaItem::setOwner(std::unique_ptr<mega::MegaUser> user)
     }
     QStringList folderList;
     //Calculating if we have a synced childs.
-    foreach(const QString& folder, Model::instance()->getMegaFolders())
+    foreach(const QString& folder, SyncModel::instance()->getMegaFolders())
     {
         if(folder.startsWith(mOwnerEmail))
         {
@@ -381,7 +380,7 @@ void MegaItem::onRequestFinish(mega::MegaApi *api, mega::MegaRequest *request, m
 
 void MegaItem::calculateSyncStatus(const QStringList &folders)
 {
-    QList<mega::MegaHandle> syncedFolders = Model::instance()->getMegaFolderHandles();
+    QList<mega::MegaHandle> syncedFolders = SyncModel::instance()->getMegaFolderHandles();
     if(syncedFolders.contains(mNode->getHandle()))
     {
         mStatus = STATUS::SYNC;

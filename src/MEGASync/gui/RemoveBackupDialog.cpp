@@ -1,6 +1,7 @@
 #include "RemoveBackupDialog.h"
 #include "ui_RemoveBackupDialog.h"
 #include "MegaApplication.h"
+#include "NodeSelector.h"
 
 RemoveBackupDialog::RemoveBackupDialog(std::shared_ptr<SyncSetting> backup, QWidget *parent) :
     QDialog(parent),
@@ -59,14 +60,14 @@ void RemoveBackupDialog::OnChangeButtonClicked()
 {
     if (!mNodeSelector)
     {
-        mNodeSelector = new NodeSelector(mMegaApi, NodeSelector::SelectMode::UPLOAD_SELECT, this);
+        mNodeSelector = new NodeSelector(NodeSelector::Type::UPLOAD_SELECT, this);
     }
     int result = mNodeSelector->exec();
     if (!mNodeSelector || result != QDialog::Accepted)
     {
         return;
     }
-    mTargetFolder = mNodeSelector->getSelectedFolderHandle();
+    mTargetFolder = mNodeSelector->getSelectedNodeHandle();
     auto targetNode = std::unique_ptr<mega::MegaNode>(mMegaApi->getNodeByHandle(mTargetFolder));
     auto targetRoot = std::unique_ptr<mega::MegaNode>(mMegaApi->getRootNode(targetNode.get()));
 

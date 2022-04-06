@@ -103,8 +103,8 @@ void NodeSelector::nodesReady()
 {
     if (!mMegaApi->isFilesystemAvailable())
     {
-        mNodeSelectorUi->bOk->setEnabled(false);
-        mNodeSelectorUi->bNewFolder->setEnabled(false);
+        ui->bOk->setEnabled(false);
+        ui->bNewFolder->setEnabled(false);
         return;
     }
 
@@ -167,12 +167,12 @@ void NodeSelector::mousePressEvent(QMouseEvent *event)
 
 void NodeSelector::showDefaultUploadOption(bool show)
 {
-    mNodeSelectorUi->cbAlwaysUploadToLocation->setVisible(show);
+    ui->cbAlwaysUploadToLocation->setVisible(show);
 }
 
 void NodeSelector::setDefaultUploadOption(bool value)
 {
-    mNodeSelectorUi->cbAlwaysUploadToLocation->setChecked(value);
+    ui->cbAlwaysUploadToLocation->setChecked(value);
 }
 
 MegaHandle NodeSelector::getSelectedNodeHandle()
@@ -240,15 +240,15 @@ void NodeSelector::setSelectedNodeHandle(MegaHandle selectedHandle)
 
 void NodeSelector::onRequestFinish(mega::MegaApi*, mega::MegaRequest* request, mega::MegaError* e)
 {
-    mNodeSelectorUi->bNewFolder->setEnabled(true);
-    mNodeSelectorUi->bOk->setEnabled(true);
+    ui->bNewFolder->setEnabled(true);
+    ui->bOk->setEnabled(true);
 
     auto type (request->getType());
     auto errorCode (e->getErrorCode());
 
     if (errorCode != mega::MegaError::API_OK)
     {
-        mNodeSelectorUi->tMegaFolders->setEnabled(true);
+        ui->tMegaFolders->setEnabled(true);
         QMegaMessageBox::critical(nullptr, QString::fromUtf8("MEGAsync"),
                                   tr("Error") + QLatin1String(": ")
                                   + QCoreApplication::translate("MegaError", e->getErrorString()));
@@ -342,7 +342,8 @@ void NodeSelector::onGenMEGALinkClicked()
     if (!node || node->getType() == MegaNode::TYPE_ROOT
             || mMegaApi->getAccess(node) != MegaShare::ACCESS_OWNER)
     {
-        mMegaApi->exportNode(node.get());
+        delete node;
+        return;
     }
 
     mMegaApi->exportNode(node);
@@ -355,7 +356,7 @@ void NodeSelector::changeEvent(QEvent *event)
     {
         ui->retranslateUi(this);
         mNewFolderUi->retranslateUi(mNewFolder);
-        mNewFolderUi->errorLabel->setText(mNewFolderUi->errorLabel->text().arg(forbidden));
+        mNewFolderUi->errorLabel->setText(mNewFolderUi->errorLabel->text().arg(FORBIDDEN));
         nodesReady();
     }
     QDialog::changeEvent(event);
@@ -802,7 +803,7 @@ void NodeSelector::setupNewFolderDialog()
     mNewFolder->setWindowFlags(mNewFolder->windowFlags() & ~Qt::WindowContextHelpButtonHint);
     mNewFolderUi->setupUi(mNewFolder);
 
-    mNewFolderUi->errorLabel->setText(mNewFolderUi->errorLabel->text().arg(forbidden));
+    mNewFolderUi->errorLabel->setText(mNewFolderUi->errorLabel->text().arg(FORBIDDEN));
     // The dialog doesn't get resized on error
     mNewFolderUi->textLabel->setMinimumSize(mNewFolderUi->errorLabel->sizeHint());
 
@@ -829,13 +830,13 @@ void NodeSelector::setupNewFolderDialog()
     });
     connect(mNewFolderUi->buttonBox, &QDialogButtonBox::accepted, this, [this]
     {
-        if(mNewFolderUi->lineEdit->text().trimmed().contains(forbiddenRx))
+        if(mNewFolderUi->lineEdit->text().trimmed().contains(FORBIDDEN_REGEXP))
         {
             // show error label, dialog stays open
             mNewFolderUi->textLabel->hide();
             mNewFolderUi->errorLabel->show();
             Utilities::animateFadein(mNewFolderUi->errorLabel);
-            mNewFolderErrorTimer.start(newFolderErrorDisplayTime); //(re)start timer
+            mNewFolderErrorTimer.start(NEW_FOLDER_DISPLAY_TIME_MS); //(re)start timer
             mNewFolderUi->lineEdit->setFocus();
         }
         else
@@ -848,12 +849,7 @@ void NodeSelector::setupNewFolderDialog()
 
 bool NodeSelector::getDefaultUploadOption()
 {
-   return mNodeSelectorUi->cbAlwaysUploadToLocation->isChecked();
-}
-
-void NodeSelector::onMyBackupsRootDir(mega::MegaHandle handle)
-{
-    mMyBackupsRootDirHandle = handle;
+   return ui->cbAlwaysUploadToLocation->isChecked();
 }
 
 void NodeSelector::Navigation::removeFromForward(const mega::MegaHandle &handle)

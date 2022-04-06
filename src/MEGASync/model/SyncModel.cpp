@@ -368,18 +368,6 @@ QStringList SyncModel::getMegaFolders(mega::MegaSync::SyncType type)
     return value;
 }
 
-QString Model::getMegaFolderByHandle(const MegaHandle &handle)
-{
-    for (auto &cs : configuredSyncs)
-    {
-        if(configuredSyncsMap[cs]->getMegaHandle() == handle)
-        {
-            return configuredSyncsMap[cs]->getMegaFolder();
-        }
-    }
-    return QString();
-}
-
 QStringList SyncModel::getLocalFolders(mega::MegaSync::SyncType type)
 {
     QMutexLocker qm(&syncMutex);

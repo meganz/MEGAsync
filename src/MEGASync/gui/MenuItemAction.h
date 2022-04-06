@@ -45,7 +45,6 @@ private:
 protected:
     bool eventFilter(QObject* obj, QEvent* event);
     const QString& getColor() const; /* return color based on accent value */
-    QString getColor2() const; /* return color based on accent value */
 };
 
 #endif // TRANSFERMENUITEMACTION_H

@@ -2,7 +2,7 @@
 #include "MegaApplication.h"
 #include "control/Utilities.h"
 #include "Preferences.h"
-#include "Model.h"
+#include "SyncModel.h"
 #include "mega/types.h"
 
 
