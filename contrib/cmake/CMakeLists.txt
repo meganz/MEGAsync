@@ -262,12 +262,14 @@ set (MOC_INPUT
     ${MEGAsyncDir}/gui/PlanWidget.h
     ${MEGAsyncDir}/gui/PSAwidget.h
     ${MEGAsyncDir}/gui/QAlertsModel.h
-    ${MEGAsyncDir}/gui/QMegaModel.h
+    ${MEGAsyncDir}/gui/MegaItemModel.h
     ${MEGAsyncDir}/gui/QSyncItemWidget.h
     ${MEGAsyncDir}/gui/SettingsDialog.h
-    ${MEGAsyncDir}/gui/NotificationsSettings.h
     ${MEGAsyncDir}/gui/SetupWizard.h
+    ${MEGAsyncDir}/gui/NotificationsSettings.h
     ${MEGAsyncDir}/gui/StatusInfo.h
+    ${MEGAsyncDir}/gui/MegaItemProxyModel.h
+    ${MEGAsyncDir}/gui/MegaItemTreeView.h
     ${MEGAsyncDir}/gui/StreamingFromMegaDialog.h
     ${MEGAsyncDir}/gui/UpgradeDialog.h
     ${MEGAsyncDir}/gui/UpgradeOverStorage.h
@@ -278,8 +280,9 @@ set (MOC_INPUT
     ${MEGAsyncDir}/gui/WaitingSpinnerWidget.h
     ${MEGAsyncDir}/gui/OverQuotaDialog.h
     ${MEGAsyncDir}/gui/ProxySettings.h
-    ${MEGAsyncDir}/gui/BandwidthSettings.h
     ${MEGAsyncDir}/gui/SwitchButton.h
+    ${MEGAsyncDir}/gui/BandwidthSettings.h
+    ${MEGAsyncDir}/gui/MegaItemDelegates.h
     ${MEGAsyncDir}/gui/GuiUtilities.h
     ${MEGAsyncDir}/gui/EventHelper.h
     ${MEGAsyncDir}/gui/ViewLoadingScene.h
@@ -405,7 +408,7 @@ set (SRCS
     ${MEGAsyncDir}/gui/AccountDetailsDialog.cpp
     ${MEGAsyncDir}/gui/DownloadFromMegaDialog.cpp
     ${MEGAsyncDir}/gui/UsageWidget.cpp
-    ${MEGAsyncDir}/gui/QMegaModel.cpp
+    ${MEGAsyncDir}/gui/MegaItemModel.cpp
     ${MEGAsyncDir}/gui/MegaItem.cpp
     ${MEGAsyncDir}/gui/ChangeLogDialog.cpp
     ${MEGAsyncDir}/gui/GuestWidget.cpp
@@ -435,7 +438,11 @@ set (SRCS
     ${MEGAsyncDir}/gui/ProxySettings.cpp
     ${MEGAsyncDir}/gui/BandwidthSettings.cpp
     ${MEGAsyncDir}/gui/SwitchButton.cpp
+    ${MEGAsyncDir}/gui/MegaItemDelegates.cpp
+    ${MEGAsyncDir}/gui/MegaItemProxyModel.cpp
+    ${MEGAsyncDir}/gui/MegaItemTreeView.cpp
     ${MEGAsyncDir}/gui/GuiUtilities.cpp
+    ${MEGAsyncDir}/gui/UserAttributesRequests.cpp
 
     ${MEGAsyncDir}/transfers/gui/TransfersStatusWidget.cpp
     ${MEGAsyncDir}/transfers/gui/TransferItem.cpp
@@ -471,6 +478,7 @@ set (SRCS
     ${MEGAsyncDir}/control/ConnectivityChecker.cpp
     ${MEGAsyncDir}/control/TransferRemainingTime.cpp
     ${MEGAsyncDir}/control/MegaController.cpp
+    ${MEGAsyncDir}/control/UserAttributesManager.cpp
 
     ${MEGAsyncDir}/model/SyncSettings.cpp
     ${MEGAsyncDir}/model/Model.cpp
@@ -705,13 +713,20 @@ if (CMAKE_HOST_APPLE)
             COMMENT "Adding PkgInfo file to app bundle..."
             )
 
+	 add_custom_command(
+            TARGET MEGAsync
+            POST_BUILD
+            COMMAND /usr/libexec/PlistBuddy -c \"Set :CFBundleShortVersionString ${MEGASYNC_VERSION}\" \"$<TARGET_FILE_DIR:MEGAsync>/../Info.plist\"
+            COMMENT "Setting version to Info.plist..."
+            )
+
     execute_process(
         COMMAND bash "-c" "grep \"const QString Preferences::VERSION_STRING\" ${MEGAsyncDir}/control/Preferences.cpp | awk -F '\"' '{print $2}'"
         OUTPUT_VARIABLE MEGASYNC_VERSION
         OUTPUT_STRIP_TRAILING_WHITESPACE)
 
     message("MEGAsync version = ${MEGASYNC_VERSION}")
-    set_target_properties(MEGAsync PROPERTIES MACOSX_BUNDLE_SHORT_VERSION_STRING "${MEGASYNC_VERSION}")
+    #set_target_properties(MEGAsync PROPERTIES MACOSX_BUNDLE_SHORT_VERSION_STRING "${MEGASYNC_VERSION}")
 endif()
 
 set(FULLREQUIREMENTS TRUE CACHE BOOL "Verbose output")

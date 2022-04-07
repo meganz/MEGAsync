@@ -99,7 +99,6 @@ public:
     bool isPublicNode() const;
     bool isCancelable() const;
     bool isFinished() const;
-    bool isDownload() const;
     bool isUpload() const;
     bool isSyncTransfer() const;
     bool isActive() const;

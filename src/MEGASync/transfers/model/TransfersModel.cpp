@@ -366,11 +366,9 @@ void TransferThread::resetCompletedDownloads(QList<QExplicitlySharedDataPointer<
 ///////////////// TRANSFERS MODEL //////////////////////////////////////////////
 
 const int PROCESS_TIMER = 100;
-const int UPDATE_NUMBER_LIMIT = 100;
-const int RESET_AFTER_EMPTY_RECEIVES = 5;
+const int RESET_AFTER_EMPTY_RECEIVES = 10;
 const unsigned long long ACTIVE_PRIORITY_OFFSET = 100000000000000;
 const unsigned long long COMPLETED_PRIORITY_OFFSET = 200000000000000;
-const char* TransfersModel::SORTED_BY_STATE = "SORTED_BY_STATE";
 
 TransfersModel::TransfersModel(QObject *parent) :
     QAbstractItemModel (parent),
@@ -885,6 +883,19 @@ void TransfersModel::retryTransfers(QModelIndexList indexes)
     clearTransfers(indexes);
 }
 
+void TransfersModel::reset()
+{
+    beginResetModel();
+
+    mTagByOrder.clear();
+    mTransfersCount = TransfersCount();
+    mTransfers.clear();
+    mCancelingMode = 0;
+    mFailingMode = 0;
+
+    endResetModel();
+}
+
 void TransfersModel::openFolderByTag(TransferTag tag)
 {
     auto row = mTagByOrder.value(tag);
@@ -897,15 +908,13 @@ void TransfersModel::openFolderByTag(TransferTag tag)
 
 TransfersCount TransfersModel::getTransfersCount()
 {
-    return mTransferEventWorker->getTransfersCount();
+    return mTransfersCount;
 }
 
 void TransfersModel::cancelTransfers(const QModelIndexList& indexes, QWidget* canceledFrom)
 {
     if(indexes.isEmpty())
     {
-        clearTransfers(QModelIndexList());
-
         mMegaApi->cancelTransfers(MegaTransfer::TYPE_UPLOAD);
         mMegaApi->cancelTransfers(MegaTransfer::TYPE_DOWNLOAD);
     }
@@ -1074,66 +1083,64 @@ void TransfersModel::pauseResumeAllTransfers(bool state)
 
     mAreAllPaused = state;
 
-    if(!mTransfers.isEmpty())
+    auto tagsUpdated(0);
+
+    if (mAreAllPaused)
     {
-        auto tagsUpdated(0);
+        mMegaApi->pauseTransfers(mAreAllPaused);
+        TransferTag followingTag(0);
+        unsigned long long followingTagPriority(0);
 
-        if (mAreAllPaused)
-        {
-            mMegaApi->pauseTransfers(mAreAllPaused);
-            TransferTag followingTag(0);
-            unsigned long long followingTagPriority(0);
+        std::for_each(mTransfers.crbegin(), mTransfers.crend(), [this, &tagsUpdated, &followingTag, &followingTagPriority](QExplicitlySharedDataPointer<TransferData> item)
+                      mutable {
 
-            std::for_each(mTransfers.crbegin(), mTransfers.crend(), [this, &tagsUpdated, &followingTag, &followingTagPriority](QExplicitlySharedDataPointer<TransferData> item)
-                          mutable {
-
-                if(item->mState & TransferData::PAUSABLE_STATES_MASK)
-                {
-                    pauseResumeTransferByTag(item->mTag, mAreAllPaused);
-                    if(followingTag == 0 || followingTagPriority > item->mPriority)
-                    {
-                        followingTag = item->mTag;
-                        followingTagPriority = item->mPriority;
-                    }
-                    tagsUpdated++;
-
-                    if(tagsUpdated % 1000 == 0)
-                    {
-                        tagsUpdated = 0;
-
-                        qApp->processEvents();
-                    }
-                }
-            });
-
-            if(followingTag > 0)
+            if(item->mState & TransferData::PAUSABLE_STATES_MASK)
             {
-                sendDataChanged(mTagByOrder.value(followingTag));
-            }
-        }
-        else
-        {
-            std::for_each(mTransfers.cbegin(), mTransfers.cend(), [this, &tagsUpdated](QExplicitlySharedDataPointer<TransferData> item)
-                          mutable {
-
-                if(item->mState & TransferData::TRANSFER_PAUSED)
+                pauseResumeTransferByTag(item->mTag, mAreAllPaused);
+                if(followingTag == 0 || followingTagPriority > item->mPriority)
                 {
-                    pauseResumeTransferByTag(item->mTag, mAreAllPaused);
-
-                    tagsUpdated++;
-
-                    if(tagsUpdated % 1000 == 0)
-                    {
-                        tagsUpdated = 0;
-
-                        qApp->processEvents();
-                    }
-
+                    followingTag = item->mTag;
+                    followingTagPriority = item->mPriority;
                 }
-            });
-            mMegaApi->pauseTransfers(mAreAllPaused);
+                tagsUpdated++;
+
+                if(tagsUpdated % 1000 == 0)
+                {
+                    tagsUpdated = 0;
+
+                    qApp->processEvents();
+                }
+            }
+        });
+
+        if(followingTag > 0)
+        {
+            sendDataChanged(mTagByOrder.value(followingTag));
         }
     }
+    else
+    {
+        std::for_each(mTransfers.cbegin(), mTransfers.cend(), [this, &tagsUpdated](QExplicitlySharedDataPointer<TransferData> item)
+                      mutable {
+
+            if(item->mState & TransferData::TRANSFER_PAUSED)
+            {
+                pauseResumeTransferByTag(item->mTag, mAreAllPaused);
+
+                tagsUpdated++;
+
+                if(tagsUpdated % 1000 == 0)
+                {
+                    tagsUpdated = 0;
+
+                    qApp->processEvents();
+                }
+
+            }
+        });
+        mMegaApi->pauseTransfers(mAreAllPaused);
+    }
+
 
     emit pauseStateChanged(mAreAllPaused);
 }
@@ -1203,11 +1210,30 @@ long long TransfersModel::getNumberOfFinishedForFileType(Utilities::FileType fil
 
 void TransfersModel::updateTransfersCount()
 {
+    auto count = mTransferEventWorker->getTransfersCount();
+
+    if(isCancelingModeActive())
+    {
+        if(mTransfersCount.totalUploads < count.totalUploads
+                || mTransfersCount.totalDownloads < count.totalDownloads)
+        {
+            return;
+        }
+
+    }
+
+    mTransfersCount = count;
+
     emit transfersCountUpdated();
 }
 
 void TransfersModel::removeRows(QModelIndexList& indexesToRemove)
 {
+    if(indexesToRemove.isEmpty())
+    {
+        return;
+    }
+
     std::sort(indexesToRemove.begin(), indexesToRemove.end(),[](QModelIndex check1, QModelIndex check2){
         return check1.row() > check2.row();
     });
@@ -1215,9 +1241,12 @@ void TransfersModel::removeRows(QModelIndexList& indexesToRemove)
     // First clear finished transfers (remove rows), then cancel the others.
     // This way, there is no risk of messing up the rows order with cancel requests.
     int count (0);
-    int row (indexesToRemove.last().row());
+    //We add 1 to row, as the row will be reduced by one as soon as the loop starts
+    int row (indexesToRemove.last().row() + 1);
     for (auto index : indexesToRemove)
     {
+        row--;
+
         // Init row with row of first tag
         if (count == 0)
         {
@@ -1234,13 +1263,12 @@ void TransfersModel::removeRows(QModelIndexList& indexesToRemove)
 
         // We have at least one row
         count++;
-        row--;
     }
-    // Flush pooled rows (start at row + 1).
+    // Flush pooled rows (start at row).
     // This happens when the last item processed is in a finished state.
-    if (count > 0)
+    if (count > 0 && row >= 0)
     {
-        removeRows(row + 1, count, DEFAULT_IDX);
+        removeRows(row, count, DEFAULT_IDX);
     }
 
     updateTagsByOrder();
@@ -1289,7 +1317,7 @@ void TransfersModel::setFailingMode(bool state)
     {
         mFailingMode--;
 
-        if(mFailingMode == 0)
+        if(mFailingMode == 0 && !isCancelingModeActive())
         {
             emit unblockUi();
         }
@@ -1303,16 +1331,20 @@ bool TransfersModel::isCancelingModeActive() const
 
 void TransfersModel::setCancelingMode(bool state)
 {
-    if(state && mCancelingMode == 0)
+    if(state)
     {
+        if(mCancelingMode == 0)
+        {
+            emit blockUi();
+        }
+
         mCancelingMode = RESET_AFTER_EMPTY_RECEIVES;
-        emit blockUi();
     }
     else if(!state && mCancelingMode != 0)
     {
         mCancelingMode--;
 
-        if(mCancelingMode == 0)
+        if(mCancelingMode == 0 && !isFailingModeActive())
         {
             emit unblockUi();
         }

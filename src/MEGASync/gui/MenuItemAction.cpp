@@ -11,7 +11,6 @@ MenuItemAction::MenuItemAction(const QString title, const QIcon icon, bool manag
     : QWidgetAction(NULL), mAccent(accent)
 {
     this->title = new QLabel();
-    setLabelText(title);
     this->icon = new QIcon(icon);
     this->hoverIcon = NULL;
     this->value = NULL;
@@ -24,7 +23,7 @@ MenuItemAction::MenuItemAction(const QString title, const QIcon icon, bool manag
         container->setAttribute(Qt::WA_TransparentForMouseEvents);
     }
 
-    setupActionWidget(iconSize);
+    setupActionWidget(iconSize, title);
     setDefaultWidget(container);
 }
 
@@ -32,7 +31,6 @@ MenuItemAction::MenuItemAction(const QString title, const QString value, const Q
     : QWidgetAction(NULL), mAccent(accent)
 {
     this->title = new QLabel();
-    setLabelText(title);
     this->value = new QLabel(value);
     this->icon = new QIcon(icon);
     this->hoverIcon = NULL;
@@ -45,7 +43,7 @@ MenuItemAction::MenuItemAction(const QString title, const QString value, const Q
         container->setAttribute(Qt::WA_TransparentForMouseEvents);
     }
 
-    setupActionWidget(iconSize);
+    setupActionWidget(iconSize, title);
     setDefaultWidget(container);
 }
 
@@ -66,7 +64,7 @@ MenuItemAction::MenuItemAction(const QString title, const QIcon icon, const QIco
         container->setAttribute(Qt::WA_TransparentForMouseEvents);
     }
 
-    setupActionWidget(iconSize);
+    setupActionWidget(iconSize, title);
     setDefaultWidget(container);
 }
 
@@ -120,7 +118,7 @@ void MenuItemAction::setHighlight(bool highlight)
     }
 }
 
-void MenuItemAction::setupActionWidget(QSize iconSize)
+void MenuItemAction::setupActionWidget(QSize iconSize, const QString& actionTitle)
 {
     container->setMinimumHeight(32);
     container->setMaximumHeight(32);
@@ -141,6 +139,8 @@ void MenuItemAction::setupActionWidget(QSize iconSize)
 
     title->setParent(container);
     title->setStyleSheet(QString::fromAscii("color: %1;").arg(getColor()));
+    // Set title after setting-up the stylesheet to take the font into account (needed for eliding)
+    setLabelText(actionTitle);
 
     layout = new QHBoxLayout();
     layout->setContentsMargins(QMargins(16, 0, 8, 0));

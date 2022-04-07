@@ -32,7 +32,6 @@ MegaTransferView::MegaTransferView(QWidget* parent) :
     mOpenItemAction(nullptr),
     mShowInFolderAction(nullptr),
     mClearAction(nullptr)
-
 {
     setMouseTracking(true);
     setAutoScroll(false);
@@ -53,9 +52,6 @@ void MegaTransferView::setup(TransfersWidget* tw)
     connect(this, &MegaTransferView::customContextMenuRequested,
             this, &MegaTransferView::onCustomContextMenu);
 
-    connect(tw, &TransfersWidget::cancelClearVisibleRows,
-            this, &MegaTransferView::onCancelClearVisibleTransfers);
-
     createContextMenu();
 }
 
@@ -73,20 +69,17 @@ QModelIndexList MegaTransferView::getTransfers(bool onlyVisible, TransferData::T
 
     auto rowCount = onlyVisible ? proxy->rowCount(QModelIndex()) : sourceModel->rowCount(QModelIndex());
 
-    if (rowCount > 0)
+    for (auto row (0); row < rowCount; ++row)
     {
-        for (auto row (0); row < rowCount; ++row)
+        auto index (model()->index(row, 0, QModelIndex()));
+        auto d (qvariant_cast<TransferItem>(index.data()).getTransferData());
+        if(state == TransferData::TRANSFER_NONE || (d && d->mState & state))
         {
-            auto index (model()->index(row, 0, QModelIndex()));
-            auto d (qvariant_cast<TransferItem>(index.data()).getTransferData());
-            if(state == TransferData::TRANSFER_NONE || (d && d->mState & state))
+            if (proxy)
             {
-                if (proxy)
-                {
-                    index = proxy->mapToSource(index);
-                }
-                indexes.push_back(index);
+                index = proxy->mapToSource(index);
             }
+            indexes.push_back(index);
         }
     }
 
@@ -135,14 +128,14 @@ void MegaTransferView::onPauseResumeSelection(bool pauseState)
     update();
 }
 
-void MegaTransferView::onCancelClearVisibleTransfers()
+void MegaTransferView::onCancelVisibleTransfers()
 {
     QModelIndexList indexes = getTransfers(true);
 
     QPointer<MegaTransferView> dialog = QPointer<MegaTransferView>(this);
 
     if (QMegaMessageBox::warning(this, QString::fromUtf8("MEGAsync"),
-                             tr("Are you sure you want to cancel or clear the following transfer(s)?", "", indexes.size()),
+                             tr("Are you sure you want to cancel the following transfer(s)?", "", indexes.size()),
                              QMessageBox::Yes | QMessageBox::No, QMessageBox::No)
             != QMessageBox::Yes
             || !dialog)
@@ -175,6 +168,22 @@ void MegaTransferView::onCancelClearSelectedTransfers()
     sourceModel->cancelTransfers(indexes, this);
 }
 
+void MegaTransferView::onCancelAllTransfers()
+{
+    QPointer<MegaTransferView> dialog = QPointer<MegaTransferView>(this);
+
+    if (QMegaMessageBox::warning(this, QString::fromUtf8("MEGAsync"),
+                             tr("Are you sure you want to cancel all transfers?"),
+                             QMessageBox::Yes | QMessageBox::No, QMessageBox::No)
+            != QMessageBox::Yes
+            || !dialog)
+    {
+        return;
+    }
+
+    cancelAndClearAllTransfers(true, false);
+}
+
 void MegaTransferView::onCancelAndClearAllTransfers()
 {
     QPointer<MegaTransferView> dialog = QPointer<MegaTransferView>(this);
@@ -188,9 +197,30 @@ void MegaTransferView::onCancelAndClearAllTransfers()
         return;
     }
 
-    auto proxy(qobject_cast<QSortFilterProxyModel*>(model()));
-    auto sourceModel(qobject_cast<TransfersModel*>(proxy->sourceModel()));
-    sourceModel->cancelTransfers(QModelIndexList(), this);
+
+    cancelAndClearAllTransfers(true, true);
+}
+
+void MegaTransferView::cancelAndClearAllTransfers(bool cancel, bool clear)
+{
+    if(cancel | clear)
+    {
+        auto proxy(qobject_cast<QSortFilterProxyModel*>(model()));
+        auto sourceModel(qobject_cast<TransfersModel*>(proxy->sourceModel()));
+        if(cancel)
+        {
+            sourceModel->cancelTransfers(QModelIndexList(), this);
+        }
+        if(clear)
+        {
+            sourceModel->clearTransfers(QModelIndexList());
+        }
+
+        if(cancel && clear)
+        {
+            sourceModel->reset();
+        }
+    }
 }
 
 int MegaTransferView::getVerticalScrollBarWidth() const

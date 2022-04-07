@@ -109,6 +109,7 @@ public:
     QStringList getSyncNames();
     QStringList getSyncIDs();
     QStringList getMegaFolders();
+    QString getMegaFolderByHandle(const mega::MegaHandle& handle);
     QStringList getLocalFolders();
     QList<mega::MegaHandle> getMegaFolderHandles();
 

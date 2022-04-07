@@ -9,6 +9,8 @@
 #include "HighDpiResize.h"
 
 #include <QCloseEvent>
+#include <QInputDialog>
+
 
 #if QT_VERSION >= 0x050000
 #include <QtConcurrent/QtConcurrent>
@@ -96,13 +98,17 @@ void StreamingFromMegaDialog::closeEvent(QCloseEvent *event)
 
 void StreamingFromMegaDialog::on_bFromCloud_clicked()
 {
-    const unique_ptr<NodeSelector> nodeSelector{::mega::make_unique<NodeSelector>(megaApi, NodeSelector::STREAM_SELECT, this->parentWidget())};
+    const unique_ptr<NodeSelector> nodeSelector{::mega::make_unique<NodeSelector>(NodeSelector::STREAM_SELECT, this->parentWidget())};
+    if (mSelectedMegaNode)
+    {
+        nodeSelector->setSelectedNodeHandle(mSelectedMegaNode->getHandle());
+    }
     int result = nodeSelector->exec();
     if (!nodeSelector || result != QDialog::Accepted)
     {
         return;
     }
-    MegaNode *node = megaApi->getNodeByHandle(nodeSelector->getSelectedFolderHandle());
+    MegaNode *node = megaApi->getNodeByHandle(nodeSelector->getSelectedNodeHandle());
     updateFileInfoFromNode(node);
 }
 

@@ -63,3 +63,4 @@ readline/8.0 all:off osx:on
 
 # cryptopp with static CRT, for fully-static updater
 cryptopp-staticcrt/8.2.0 all:off windows:on
+ 

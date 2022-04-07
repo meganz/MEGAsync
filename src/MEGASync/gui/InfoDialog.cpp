@@ -218,7 +218,7 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
     connect(ui->wSortNotifications, SIGNAL(clicked()), this, SLOT(on_bActualFilter_clicked()));
     connect(app, &MegaApplication::avatarReady, this, &InfoDialog::setAvatar);
 
-    connect(app->getTransfersModel(), &TransfersModel::transfersCountUpdated, this, &InfoDialog::onTransfersDataUpdated);
+    connect(app->getTransfersModel(), &TransfersModel::transfersCountUpdated, this, &InfoDialog::updateTransfersCount);
 
     //Set window properties
 #ifdef Q_OS_LINUX
@@ -450,6 +450,7 @@ void InfoDialog::moveEvent(QMoveEvent*)
 void InfoDialog::setBandwidthOverquotaState(QuotaState state)
 {
     transferQuotaState = state;
+    setUsage();
 }
 
 void InfoDialog::enableTransferOverquotaAlert()
@@ -695,8 +696,9 @@ void InfoDialog::updateTransfersCount()
     ui->bTransferManager->setPercentDownloads(percentDownloads);
 
     if (!TransfersCountUpdated.pendingDownloads && !TransfersCountUpdated.pendingUploads
-            && TransfersCountUpdated.totalUploadBytes == 0 && TransfersCountUpdated.totalDownloadBytes == 0
-            && TransfersCountUpdated.totalUploads != 0 && TransfersCountUpdated.totalDownloads != 0)
+            && TransfersCountUpdated.totalUploadBytes == TransfersCountUpdated.completedUploadBytes
+            && TransfersCountUpdated.totalDownloadBytes == TransfersCountUpdated.completedDownloadBytes
+            && (TransfersCountUpdated.totalUploads != 0 || TransfersCountUpdated.totalDownloads != 0))
     {
         if (!overQuotaState && (ui->sActiveTransfers->currentWidget() != ui->pUpdated))
         {
@@ -707,6 +709,10 @@ void InfoDialog::updateTransfersCount()
         {
             app->showNotificationMessage(tr("All transfers have been completed"));
         }
+
+        QTimer::singleShot(2000, [this](){
+            ui->bTransferManager->reset();
+        });
     }
 }
 
@@ -897,33 +903,6 @@ void InfoDialog::addSync()
     {
         addSync(INVALID_HANDLE);
         app->createAppMenus();
-    }
-}
-
-void InfoDialog::onAllUploadsFinished()
-{
-}
-
-void InfoDialog::onAllDownloadsFinished()
-{
-
-}
-
-void InfoDialog::onAllTransfersFinished()
-{
-    auto transfersCount = app->getTransfersModel()->getTransfersCount();
-
-    if (!transfersCount.pendingDownloads && !transfersCount.pendingUploads)
-    {
-        if (!overQuotaState && (ui->sActiveTransfers->currentWidget() != ui->pUpdated))
-        {
-            updateDialogState();
-        }
-
-        if ((QDateTime::currentMSecsSinceEpoch() - preferences->lastTransferNotificationTimestamp()) > Preferences::MIN_TRANSFER_NOTIFICATION_INTERVAL_MS)
-        {
-            app->showNotificationMessage(tr("All transfers have been completed"));
-        }
     }
 }
 
@@ -1379,9 +1358,6 @@ void InfoDialog::updateNotificationsTreeView(QAbstractItemModel *model, QAbstrac
 
 void InfoDialog::reset()
 {
-    activeDownloadState = activeUploadState = MegaTransfer::STATE_NONE;
-    uploadActiveTransferPriority = downloadActiveTransferPriority = 0xFFFFFFFFFFFFFFFFULL;
-    uploadActiveTransferTag = downloadActiveTransferTag = -1;
     notificationsReady = false;
     ui->sNotifications->setCurrentWidget(ui->pNoNotifications);
     ui->wSortNotifications->setActualFilter(AlertFilterType::ALL_TYPES);
@@ -1405,11 +1381,6 @@ void InfoDialog::reset()
 void InfoDialog::setPSAannouncement(int id, QString title, QString text, QString urlImage, QString textButton, QString linkButton)
 {
     ui->wPSA->setAnnounce(id, title, text, urlImage, textButton, linkButton);
-}
-
-void InfoDialog::onTransfersDataUpdated()
-{
-    updateTransfersCount();
 }
 
 void InfoDialog::changeEvent(QEvent *event)

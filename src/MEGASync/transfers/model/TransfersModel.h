@@ -115,8 +115,6 @@ class TransfersModel : public QAbstractItemModel
     Q_OBJECT
 
 public:
-    static const char* SORTED_BY_STATE;
-
     explicit TransfersModel(QObject* parent = 0);
     ~TransfersModel();
 
@@ -140,6 +138,7 @@ public:
     void openFolderByTag(TransferTag tag);
     void retryTransferByIndex(const QModelIndex& index);
     void retryTransfers(QModelIndexList indexes);
+    void reset();
     void cancelTransfers(const QModelIndexList& indexes, QWidget *canceledFrom);
     void clearTransfers(const QModelIndexList& indexes);
     void clearTransfers(const QMap<QModelIndex,QExplicitlySharedDataPointer<TransferData>> uploads,
@@ -210,6 +209,7 @@ private:
     QThread* mTransferEventThread;
     TransferThread* mTransferEventWorker;
     QTimer mTimer;
+    TransfersCount mTransfersCount;
 
     QList<QExplicitlySharedDataPointer<TransferData>> mTransfers;
 

@@ -12,6 +12,7 @@ SOURCES += $$PWD/HTTPServer.cpp \
     $$PWD/EncryptedSettings.cpp \
     $$PWD/CrashHandler.cpp \
     $$PWD/ExportProcessor.cpp \
+    $$PWD/UserAttributesManager.cpp \
     $$PWD/Utilities.cpp \
     $$PWD/ThreadPool.cpp \
     $$PWD/MegaDownloader.cpp \
@@ -30,6 +31,7 @@ HEADERS  +=  $$PWD/HTTPServer.h \
     $$PWD/EncryptedSettings.h \
     $$PWD/CrashHandler.h \
     $$PWD/ExportProcessor.h \
+    $$PWD/UserAttributesManager.h \
     $$PWD/Utilities.h \
     $$PWD/ThreadPool.h \
     $$PWD/MegaDownloader.h \

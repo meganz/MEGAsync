@@ -1868,7 +1868,7 @@ QToolButton
              <cursorShape>PointingHandCursor</cursorShape>
             </property>
             <property name="toolTip">
-             <string>Clear All</string>
+             <string>Cancel and clear all</string>
             </property>
             <property name="icon">
              <iconset resource="../../../gui/Resources_win.qrc">

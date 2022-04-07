@@ -8,12 +8,12 @@ StatusInfo::StatusInfo(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    isOverQuota = false;
+    mIsOverQuota = false;
 
-    scanningTimer.setSingleShot(false);
-    scanningTimer.setInterval(60);
-    scanningAnimationIndex = 1;
-    connect(&scanningTimer, SIGNAL(timeout()), this, SLOT(scanningAnimationStep()));
+    mScanningTimer.setSingleShot(false);
+    mScanningTimer.setInterval(60);
+    mScanningAnimationIndex = 1;
+    connect(&mScanningTimer, SIGNAL(timeout()), this, SLOT(scanningAnimationStep()));
 }
 
 StatusInfo::~StatusInfo()
@@ -23,15 +23,15 @@ StatusInfo::~StatusInfo()
 
 void StatusInfo::setState(int state)
 {
-    this->state = state;
+    this->mState = state;
 
-    switch (this->state)
+    switch (this->mState)
     {
         case STATE_PAUSED:
         {
-            if (scanningTimer.isActive())
+            if (mScanningTimer.isActive())
             {
-                scanningTimer.stop();
+                mScanningTimer.stop();
             }
 
             const QString statusText{tr("Paused")};
@@ -43,12 +43,12 @@ void StatusInfo::setState(int state)
         }
         case STATE_UPDATED:
         {
-            if (scanningTimer.isActive())
+            if (mScanningTimer.isActive())
             {
-                scanningTimer.stop();
+                mScanningTimer.stop();
             }
 
-            if (isOverQuota)
+            if (mIsOverQuota)
             {
                 const QString statusText{tr("Account full")};
                 ui->lStatusDesc->setToolTip(statusText);
@@ -69,10 +69,10 @@ void StatusInfo::setState(int state)
         }
         case STATE_SYNCING:
         {
-            if (!scanningTimer.isActive())
+            if (!mScanningTimer.isActive())
             {
-                scanningAnimationIndex = 1;
-                scanningTimer.start();
+                mScanningAnimationIndex = 1;
+                mScanningTimer.start();
             }
 
             const QString statusText{tr("Syncing")+QString::fromUtf8("...")};
@@ -82,10 +82,10 @@ void StatusInfo::setState(int state)
         }
         case STATE_WAITING:
         {
-            if (!scanningTimer.isActive())
+            if (!mScanningTimer.isActive())
             {
-                scanningAnimationIndex = 1;
-                scanningTimer.start();
+                mScanningAnimationIndex = 1;
+                mScanningTimer.start();
             }
 
             const QString statusText{tr("Waiting")+QString::fromUtf8("...")};
@@ -95,10 +95,10 @@ void StatusInfo::setState(int state)
         }
         case STATE_INDEXING:
         {
-            if (!scanningTimer.isActive())
+            if (!mScanningTimer.isActive())
             {
-                scanningAnimationIndex = 1;
-                scanningTimer.start();
+                mScanningAnimationIndex = 1;
+                mScanningTimer.start();
             }
 
             const QString statusText{tr("Scanning")+QString::fromUtf8("...")};
@@ -108,10 +108,10 @@ void StatusInfo::setState(int state)
         }
         case STATE_TRANSFERRING:
         {
-            if (!scanningTimer.isActive())
+            if (!mScanningTimer.isActive())
             {
-                scanningAnimationIndex = 1;
-                scanningTimer.start();
+                mScanningAnimationIndex = 1;
+                mScanningTimer.start();
             }
 
             const QString statusText{tr("Transferring")+QString::fromUtf8("...")};
@@ -126,21 +126,21 @@ void StatusInfo::setState(int state)
 
 int StatusInfo::getState()
 {
-    return state;
+    return mState;
 }
 
 void StatusInfo::setOverQuotaState(bool oq)
 {
-    isOverQuota = oq;
-    setState(state);
+    mIsOverQuota = oq;
+    setState(mState);
 }
 
 void StatusInfo::scanningAnimationStep()
 {
-    scanningAnimationIndex = scanningAnimationIndex%12;
-    scanningAnimationIndex++;
+    mScanningAnimationIndex = mScanningAnimationIndex%12;
+    mScanningAnimationIndex++;
     ui->bIconState->setIcon(Utilities::getCachedPixmap(
-                                QString::fromUtf8(":/images/ico_menu_scanning_%1.png").arg(scanningAnimationIndex)));
+                                QString::fromUtf8(":/images/ico_menu_scanning_%1.png").arg(mScanningAnimationIndex)));
     ui->bIconState->setIconSize(QSize(24, 24));
 }
 
@@ -149,7 +149,7 @@ void StatusInfo::changeEvent(QEvent *event)
     if (event->type() == QEvent::LanguageChange)
     {
         ui->retranslateUi(this);
-        setState(state);
+        setState(mState);
     }
     QWidget::changeEvent(event);
 }

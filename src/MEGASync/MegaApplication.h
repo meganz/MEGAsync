@@ -560,7 +560,7 @@ private:
 #endif
     void loadSyncExclusionRules(QString email = QString());
 
-    static long long computeExclusionSizeLimit(const long long sizeLimitValue);
+    static long long computeExclusionSizeLimit(const long long sizeLimitValue, const int unit);
 
     QList<QNetworkInterface> findNewNetworkInterfaces();
     bool checkNetworkInterfaces(const QList<QNetworkInterface>& newNetworkInterfaces) const;

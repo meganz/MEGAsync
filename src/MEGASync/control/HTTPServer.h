@@ -122,13 +122,9 @@ class HTTPServer: public QTcpServer
         void processPostRequest(QAbstractSocket* socket, HTTPRequest* request,
                                 const QStringList& headers, const QString& content);
         void processOptionRequest(QAbstractSocket* socket, HTTPRequest* request, const QStringList& headers);
-
         void sendPreFlightResponse(QAbstractSocket* socket, HTTPRequest* request, bool sendPrivateNetworkField);
-
         bool hasFieldWithValue(const QStringList& headers, const char* fieldName, const char* value);
-
         bool isPreFlightCorsRequest(const QStringList& headers);
-
         bool isRequestOfType(const QStringList& headers, const char* typeName);
 
         struct VersionCommandAnswer
@@ -138,7 +134,7 @@ class HTTPServer: public QTcpServer
             QString response;
         };
 
-        void versionCommand(HTTPRequest request, QAbstractSocket* socket);
+        void versionCommand(const HTTPRequest &request, QAbstractSocket* socket);
         void openLinkRequest(QString& response, const HTTPRequest& request);
         void externalDownloadRequest(QString& response, const HTTPRequest& request, QAbstractSocket* socket);
         void externalFileUploadRequest(QString& response, const HTTPRequest& request);
@@ -150,7 +146,7 @@ class HTTPServer: public QTcpServer
         void externalTransferQueryProgress(QString& response, const HTTPRequest& request);
         void externalShowInFolder(QString& response, const HTTPRequest& request);
 
-        void endProcessRequest(QAbstractSocket *socket, HTTPRequest request, QString response);
+        void endProcessRequest(QAbstractSocket *socket, const HTTPRequest &request, QString response);
 
         RequestType GetRequestType(const HTTPRequest& request);
         bool disabled;
