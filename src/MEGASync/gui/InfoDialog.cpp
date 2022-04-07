@@ -590,11 +590,6 @@ void InfoDialog::updateTransfersCount()
             updateDialogState();
         }
 
-        if ((QDateTime::currentMSecsSinceEpoch() - preferences->lastTransferNotificationTimestamp()) > Preferences::MIN_TRANSFER_NOTIFICATION_INTERVAL_MS)
-        {
-            app->showNotificationMessage(tr("All transfers have been completed"));
-        }
-
         QTimer::singleShot(2000, [this](){
             ui->bTransferManager->reset();
         });

@@ -223,7 +223,6 @@ private:
     mega::QTMegaTransferListener *delegateListener;
 
     bool mAreAllPaused;
-    bool stopModelProcessing;
 };
 
 #endif // TRANSFERSMODEL_H

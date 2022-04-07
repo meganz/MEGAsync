@@ -413,6 +413,8 @@ TransfersModel::~TransfersModel()
 
 void TransfersModel::pauseModelProcessing(bool value)
 {
+    QMutexLocker lock(&mModelMutex);
+
     if(value)
     {
         mTimer.stop();
@@ -499,7 +501,9 @@ void TransfersModel::onProcessTransfers()
             QtConcurrent::run([this](){
                 if(mModelMutex.tryLock())
                 {
+                    blockSignals(true);
                     processCancelTransfers();
+                    blockSignals(false);
                     updateTransfersCount();
 
                     mModelMutex.unlock();
@@ -518,7 +522,10 @@ void TransfersModel::onProcessTransfers()
             QtConcurrent::run([this](){
                 if(mModelMutex.tryLock())
                 {
+                    blockSignals(true);
                     processFailedTransfers();
+                    blockSignals(false);
+
                     updateTransfersCount();
 
                     mModelMutex.unlock();
@@ -728,8 +735,11 @@ void TransfersModel::processCancelTransfers()
 
         for (auto it = mTransfersToProcess.canceledTransfersByTag.begin(); it != mTransfersToProcess.canceledTransfersByTag.end();)
         {
-            auto row = mTagByOrder.value((*it)->mTag);
-            indexesToCancel.append(index(row,0, DEFAULT_IDX));
+            auto row = mTagByOrder.value((*it)->mTag,-1);
+            if(row >= 0)
+            {
+                indexesToCancel.append(index(row,0, DEFAULT_IDX));
+            }
 
             mTransfersToProcess.canceledTransfersByTag.erase(it++);
         }
@@ -894,6 +904,8 @@ void TransfersModel::reset()
     mFailingMode = 0;
 
     endResetModel();
+
+    emit transfersCountUpdated();
 }
 
 void TransfersModel::openFolderByTag(TransferTag tag)
@@ -985,18 +997,15 @@ void TransfersModel::classifyUploadOrDownloadTransfers(QMap<QModelIndex, QExplic
     auto d (getTransfer(index.row()));
 
     // Clear (remove rows of) finished transfers
-    if (d)
+    if (d && d->isFinished())
     {
-        if(d->isFinished())
+        if(d->isUpload())
         {
-            if(d->isUpload())
-            {
-                uploads.insert(index, d);
-            }
-            else
-            {
-                downloads.insert(index, d);
-            }
+            uploads.insert(index, d);
+        }
+        else
+        {
+            downloads.insert(index, d);
         }
     }
 }
