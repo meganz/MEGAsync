@@ -959,8 +959,10 @@ color: #666666;
 }</string>
              </property>
              <property name="text">
-              <string>We're backing up your folders. The time this takes depends on the files 
-in these folders.</string>
+              <string>We're backing up your folders. The time this takes depends on the files in these folders.</string>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
              </property>
             </widget>
            </item>
@@ -972,8 +974,10 @@ color: #666666;
 }</string>
              </property>
              <property name="text">
-              <string>We're backing up your folder. The time this takes depends on the files 
-in this folder.</string>
+              <string>We're backing up your folder. The time this takes depends on the files in this folder.</string>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
              </property>
             </widget>
            </item>
@@ -997,8 +1001,10 @@ color: #666666;
 }</string>
              </property>
              <property name="text">
-              <string>Folders will be stored in the Vault and you can check the status of your 
-backups in Backup Centre.</string>
+              <string>Folders will be stored in the Vault and you can check the status of your backups in Backup Centre.</string>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
              </property>
             </widget>
            </item>

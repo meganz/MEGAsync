@@ -7,13 +7,13 @@
     <x>0</x>
     <y>0</y>
     <width>540</width>
-    <height>351</height>
+    <height>350</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
     <width>536</width>
-    <height>0</height>
+    <height>350</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -74,6 +74,9 @@ color:#666666;
      <property name="text">
       <string>To stop backing up this folder, you need to either move it or delete it.</string>
      </property>
+     <property name="wordWrap">
+      <bool>true</bool>
+     </property>
     </widget>
    </item>
    <item>
@@ -85,10 +88,10 @@ color:#666666;
       <number>16</number>
      </property>
      <property name="topMargin">
-      <number>25</number>
+      <number>15</number>
      </property>
      <property name="bottomMargin">
-      <number>25</number>
+      <number>15</number>
      </property>
      <item>
       <widget class="QRadioButton" name="rMoveFolder">
@@ -106,6 +109,12 @@ color:#111111;
      </item>
      <item>
       <widget class="QLabel" name="lMoveFolder">
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>0</height>
+        </size>
+       </property>
        <property name="styleSheet">
         <string notr="true">QLabel{
 font-size:11px;
@@ -114,8 +123,10 @@ padding-left:15px;
 }</string>
        </property>
        <property name="text">
-        <string>Move this folder from the Vault to another location in your Cloud Drive to get full access to
-your data. This folder will stop being backed up.</string>
+        <string>Move this folder from the Vault to another location in your Cloud Drive to get full access to your data. This folder will stop being backed up.</string>
+       </property>
+       <property name="wordWrap">
+        <bool>true</bool>
        </property>
       </widget>
      </item>
@@ -266,10 +277,25 @@ padding-left:15px;
 }</string>
        </property>
        <property name="text">
-        <string>Folder will be deleted from MEGA. It won`t be deleted from your computer. This action
-cannot be undone.</string>
+        <string>Folder will be deleted from MEGA. It won`t be deleted from your computer. This action cannot be undone.</string>
+       </property>
+       <property name="wordWrap">
+        <bool>true</bool>
        </property>
       </widget>
+     </item>
+     <item>
+      <spacer name="verticalSpacer_2">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>20</width>
+         <height>0</height>
+        </size>
+       </property>
+      </spacer>
      </item>
     </layout>
    </item>
