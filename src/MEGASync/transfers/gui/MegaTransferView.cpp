@@ -242,19 +242,23 @@ void MegaTransferView::cancelAndClearAllTransfers(bool cancel, bool clear)
     {
         auto proxy(qobject_cast<QSortFilterProxyModel*>(model()));
         auto sourceModel(qobject_cast<TransfersModel*>(proxy->sourceModel()));
-        if(cancel)
+        if(cancel && clear)
         {
-            sourceModel->cancelTransfers(QModelIndexList(), this);
+            sourceModel->setResetMode();
         }
+
+        sourceModel->pauseModelProcessing(true);
+
         if(clear)
         {
             sourceModel->clearTransfers(QModelIndexList());
         }
-
-        if(cancel && clear)
+        if(cancel)
         {
-            sourceModel->reset();
+            sourceModel->cancelTransfers(QModelIndexList(), this);
         }
+
+        sourceModel->pauseModelProcessing(false);
     }
 }
 

@@ -902,6 +902,7 @@ void TransferManager::on_bCancelClearAll_clicked()
     if(transfersView)
     {
         transfersView->onCancelAndClearAllTransfers();
+        on_tAllTransfers_clicked();
 
         //Use to repaint and update the transfers state
         transfersView->update();

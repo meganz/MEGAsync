@@ -50,9 +50,11 @@ void TransfersManagerSortFilterProxyModel::sort(int sortCriterion, Qt::SortOrder
     QFuture<void> filtered = QtConcurrent::run([this, order, sortCriterion](){
         auto sourceM = qobject_cast<TransfersModel*>(sourceModel());
         sourceM->lockModelMutex(true);
+        sourceM->blockSignals(true);
         QSortFilterProxyModel::invalidate();
         QSortFilterProxyModel::sort(0, order);
         sourceM->lockModelMutex(false);
+        sourceM->blockSignals(false);
     });
     mFilterWatcher.setFuture(filtered);
 }
@@ -87,9 +89,11 @@ void TransfersManagerSortFilterProxyModel::setFilterFixedString(const QString& p
     QFuture<void> filtered = QtConcurrent::run([this](){
         auto sourceM = qobject_cast<TransfersModel*>(sourceModel());
         sourceM->lockModelMutex(true);
+        sourceM->blockSignals(true);
         QSortFilterProxyModel::invalidate();
         QSortFilterProxyModel::sort(0,  sortOrder());
         sourceM->lockModelMutex(false);
+        sourceM->blockSignals(false);
     });
 
     mFilterWatcher.setFuture(filtered);
@@ -105,9 +109,11 @@ void TransfersManagerSortFilterProxyModel::textSearchTypeChanged()
     QFuture<void> filtered = QtConcurrent::run([this](){
         auto sourceM = qobject_cast<TransfersModel*>(sourceModel());
         sourceM->lockModelMutex(true);
+        sourceM->blockSignals(true);
         QSortFilterProxyModel::invalidate();
         QSortFilterProxyModel::sort(0, sortOrder());
         sourceM->lockModelMutex(false);
+        sourceM->blockSignals(false);
     });
     mFilterWatcher.setFuture(filtered);
 

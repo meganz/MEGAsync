@@ -155,6 +155,7 @@ void TransferManagerDelegateWidget::updateTransferState()
                 statusString = tr("Completing");
                 showTPauseResume = false;
                 showTCancelClear = false;
+                mUi->wProgressBar->setVisible(true);
                 mUi->sStatus->setCurrentWidget(mUi->pActive);
                 mLastPauseResuemtTransferIconName.clear();
             }

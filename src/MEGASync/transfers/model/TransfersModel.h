@@ -70,7 +70,7 @@ public:
                               && failedTransfersByTag.isEmpty();}
     };
 
-    TransferThread(){auxCounter = 0;}
+    TransferThread();
     ~TransferThread(){}
 
     TransfersCount getTransfersCount();
@@ -105,8 +105,6 @@ private:
     QMutex mCacheMutex;
     QMutex mCountersMutex;
     TransfersCount mTransfersCount;
-    int auxCounter;
-
 };
 
 
@@ -138,7 +136,7 @@ public:
     void openFolderByTag(TransferTag tag);
     void retryTransferByIndex(const QModelIndex& index);
     void retryTransfers(QModelIndexList indexes);
-    void reset();
+    void setResetMode();
     void cancelTransfers(const QModelIndexList& indexes, QWidget *canceledFrom);
     void clearTransfers(const QModelIndexList& indexes);
     void clearTransfers(const QMap<QModelIndex,QExplicitlySharedDataPointer<TransferData>> uploads,
@@ -223,6 +221,7 @@ private:
     mega::QTMegaTransferListener *delegateListener;
 
     bool mAreAllPaused;
+    bool mModelReset;
 };
 
 #endif // TRANSFERSMODEL_H
