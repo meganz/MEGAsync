@@ -152,7 +152,7 @@ void BackupsWizard::setupStep1()
 
     qDebug("Backups Wizard: step 1 Init");
     refreshNextButtonState();
-    mUi->sSteps->setCurrentWidget(mUi->pStep1);
+    setCurrentWidgetsSteps(mUi->pStep1);
     mUi->sButtons->setCurrentWidget(mUi->pStepButtons);
     mUi->bCancel->setEnabled(true);
     mUi->bNext->setText(tr("Next"));
@@ -221,7 +221,7 @@ void BackupsWizard::setupStep2()
     mFoldersProxyModel->showOnlyChecked(true);
     qDebug("Backups Wizard: step 2 Init");
     refreshNextButtonState();
-    mUi->sSteps->setCurrentWidget(mUi->pStep2);
+    setCurrentWidgetsSteps(mUi->pStep2);
     mUi->bNext->setText(tr("Setup"));
     mUi->bBack->show();
 
@@ -277,7 +277,7 @@ void BackupsWizard::setupError()
     mUi->line1->hide();
     mUi->line2->hide();
     mUi->bTryAgain->setFocus();
-    mUi->sSteps->setCurrentWidget(mUi->pError);
+    setCurrentWidgetsSteps(mUi->pError);
 
     mUi->sButtons->setCurrentWidget(mUi->pErrorButtons);
     showLess();
@@ -517,6 +517,16 @@ void BackupsWizard::nextStep(const Steps &step)
     refreshNextButtonState();
 }
 
+void BackupsWizard::setCurrentWidgetsSteps(QWidget *widget)
+{
+    foreach(auto& widget_child, mUi->sSteps->findChildren<QWidget*>())
+    {
+        mUi->sSteps->removeWidget(widget_child);
+    }
+    mUi->sSteps->addWidget(widget);
+    mUi->sSteps->setCurrentWidget(widget);
+}
+
 void BackupsWizard::on_bNext_clicked()
 {
     qDebug("Backups Wizard: next clicked");
@@ -648,8 +658,6 @@ void BackupsWizard::on_bShowMore_clicked()
     {
         showMore();
     }
-    qDebug() << mUi->tTextEdit->minimumHeight() << mUi->tTextEdit->sizeHint();
-
 }
 
 void BackupsWizard::setupComplete()
@@ -663,8 +671,7 @@ void BackupsWizard::setupComplete()
 
         mUi->lSuccessTextSingular->setVisible(show_singular);
         mUi->lSuccessTextPlural->setVisible(!show_singular);
-
-        mUi->sSteps->setCurrentWidget(mUi->pSuccessfull);
+        setCurrentWidgetsSteps(mUi->pSuccessfull);
 
         mUi->sButtons->setCurrentWidget(mUi->pSuccessButtons);
         mUi->bViewInBackupCentre->setFocus();

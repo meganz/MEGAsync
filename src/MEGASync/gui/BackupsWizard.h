@@ -86,6 +86,7 @@ class BackupsWizard : public QDialog
         QString remoteFolderExistsDialog();
         void refreshNextButtonState();
         void nextStep(const Steps& step);
+        void setCurrentWidgetsSteps(QWidget* widget);
 
         Ui::BackupsWizard* mUi;
         HighDpiResize mHighDpiResize;

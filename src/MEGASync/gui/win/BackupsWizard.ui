@@ -29,7 +29,7 @@
    <string>Setup backups</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="../Resources_macx.qrc">
+   <iconset resource="../Resources_win.qrc">
     <normaloff>:/images/icons/ico_backup.png</normaloff>:/images/icons/ico_backup.png</iconset>
   </property>
   <property name="styleSheet">
@@ -266,7 +266,7 @@ margin: 4px;
       <string notr="true"/>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>2</number>
      </property>
      <widget class="QWidget" name="pStep1">
       <property name="sizePolicy">
@@ -504,9 +504,6 @@ margin: 4px;
                 </property>
                 <property name="verticalScrollMode">
                  <enum>QAbstractItemView::ScrollPerItem</enum>
-                </property>
-                <property name="resizeMode">
-                 <enum>QListView::Adjust</enum>
                 </property>
                 <property name="resizeMode">
                  <enum>QListView::Adjust</enum>
@@ -921,7 +918,7 @@ margin: 4px;
           <string/>
          </property>
          <property name="pixmap">
-          <pixmap resource="../Resources_macx.qrc">:/images/bug_report_success.png</pixmap>
+          <pixmap resource="../Resources_win.qrc">:/images/bug_report_success.png</pixmap>
          </property>
         </widget>
        </item>
@@ -934,6 +931,7 @@ margin: 4px;
           <widget class="QLabel" name="lTitle">
            <property name="font">
             <font>
+             <family>Lato</family>
              <pointsize>-1</pointsize>
             </font>
            </property>
@@ -961,8 +959,10 @@ color: #666666;
 }</string>
              </property>
              <property name="text">
-              <string>We're backing up your folders. The time this takes depends on the files 
-in these folders.</string>
+              <string>We're backing up your folders. The time this takes depends on the files in these folders.</string>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
              </property>
             </widget>
            </item>
@@ -974,8 +974,10 @@ color: #666666;
 }</string>
              </property>
              <property name="text">
-              <string>We're backing up your folder. The time this takes depends on the files 
-in this folder.</string>
+              <string>We're backing up your folder. The time this takes depends on the files in this folder.</string>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
              </property>
             </widget>
            </item>
@@ -989,6 +991,7 @@ in this folder.</string>
              </property>
              <property name="font">
               <font>
+               <family>Lato</family>
                <pointsize>-1</pointsize>
               </font>
              </property>
@@ -998,8 +1001,10 @@ color: #666666;
 }</string>
              </property>
              <property name="text">
-              <string>Folders will be stored in the Vault and you can check the status of your 
-backups in Backup Centre.</string>
+              <string>Folders will be stored in the Vault and you can check the status of your backups in Backup Centre.</string>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
              </property>
             </widget>
            </item>
@@ -1020,7 +1025,7 @@ backups in Backup Centre.</string>
           <string/>
          </property>
          <property name="pixmap">
-          <pixmap resource="../Resources_macx.qrc">:/images/icon_error.png</pixmap>
+          <pixmap resource="../Resources_win.qrc">:/images/icon_error.png</pixmap>
          </property>
         </widget>
        </item>
@@ -1036,6 +1041,7 @@ backups in Backup Centre.</string>
           <widget class="QLabel" name="lErrorTitlePlural">
            <property name="font">
             <font>
+             <family>Lato</family>
              <pointsize>-1</pointsize>
             </font>
            </property>
@@ -1067,6 +1073,7 @@ color:#333333;
           <widget class="QLabel" name="lErrorTextPlural">
            <property name="font">
             <font>
+             <family>Lato</family>
              <pointsize>-1</pointsize>
             </font>
            </property>
@@ -1129,6 +1136,7 @@ color:rgba(0,0,0,0.1);
            </property>
            <property name="font">
             <font>
+             <family>Lato</family>
              <pointsize>-1</pointsize>
             </font>
            </property>
@@ -1177,6 +1185,7 @@ color:rgba(0,0,0,0.1);
           <widget class="QPushButton" name="bShowMore">
            <property name="font">
             <font>
+             <family>Lato</family>
              <pointsize>-1</pointsize>
              <underline>true</underline>
             </font>
@@ -1398,7 +1407,6 @@ color:#666666;
   </layout>
  </widget>
  <resources>
-  <include location="../Resources_macx.qrc"/>
   <include location="../Resources_win.qrc"/>
  </resources>
  <connections/>

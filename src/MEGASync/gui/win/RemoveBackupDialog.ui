@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>540</width>
-    <height>351</height>
+    <height>329</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -74,6 +74,9 @@ color:#666666;
      <property name="text">
       <string>To stop backing up this folder, you need to either move it or delete it.</string>
      </property>
+     <property name="wordWrap">
+      <bool>true</bool>
+     </property>
     </widget>
    </item>
    <item>
@@ -90,7 +93,7 @@ color:#666666;
      <property name="bottomMargin">
       <number>25</number>
      </property>
-     <item>
+     <item alignment="Qt::AlignTop">
       <widget class="QRadioButton" name="rMoveFolder">
        <property name="styleSheet">
         <string notr="true">*{
@@ -104,7 +107,7 @@ color:#111111;
        </property>
       </widget>
      </item>
-     <item>
+     <item alignment="Qt::AlignTop">
       <widget class="QLabel" name="lMoveFolder">
        <property name="styleSheet">
         <string notr="true">QLabel{
@@ -114,8 +117,10 @@ padding-left:15px;
 }</string>
        </property>
        <property name="text">
-        <string>Move this folder from the Vault to another location in your Cloud Drive to get full access to
-your data. This folder will stop being backed up.</string>
+        <string>Move this folder from the Vault to another location in your Cloud Drive to get full access to your data. This folder will stop being backed up.</string>
+       </property>
+       <property name="wordWrap">
+        <bool>true</bool>
        </property>
       </widget>
      </item>
@@ -242,7 +247,7 @@ font-size:13px;
        </property>
       </spacer>
      </item>
-     <item>
+     <item alignment="Qt::AlignTop">
       <widget class="QRadioButton" name="rDeleteFolder">
        <property name="styleSheet">
         <string notr="true">*{
@@ -256,7 +261,7 @@ color:#111111;
        </property>
       </widget>
      </item>
-     <item>
+     <item alignment="Qt::AlignTop">
       <widget class="QLabel" name="lDeleteFolder">
        <property name="styleSheet">
         <string notr="true">QLabel{
@@ -266,10 +271,25 @@ padding-left:15px;
 }</string>
        </property>
        <property name="text">
-        <string>Folder will be deleted from MEGA. It won`t be deleted from your computer. This action
-cannot be undone.</string>
+        <string>Folder will be deleted from MEGA. It won`t be deleted from your computer. This action cannot be undone.</string>
+       </property>
+       <property name="wordWrap">
+        <bool>true</bool>
        </property>
       </widget>
+     </item>
+     <item>
+      <spacer name="verticalSpacer_2">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>20</width>
+         <height>0</height>
+        </size>
+       </property>
+      </spacer>
      </item>
     </layout>
    </item>
