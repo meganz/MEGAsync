@@ -23,11 +23,6 @@ TransferThread::TransferThread()
 
 TransferThread::TransfersToProcess TransferThread::processTransfers()
 {
-    qDebug() << mTransfersCount.totalDownloads <<
-    mTransfersCount.completedDownloadBytes <<
-    mTransfersCount.totalDownloadBytes <<
-    mTransfersCount.failedDownloads;
-
    TransfersToProcess transfers;
    if(mCacheMutex.tryLock())
    {
@@ -344,11 +339,6 @@ void TransferThread::resetCompletedDownloads(QList<QExplicitlySharedDataPointer<
 {
     QMutexLocker lock(&mCountersMutex);
 
-    qDebug() << mTransfersCount.totalDownloads <<
-    mTransfersCount.completedDownloadBytes <<
-    mTransfersCount.totalDownloadBytes <<
-    mTransfersCount.failedDownloads;
-
     foreach(auto& transfer, transfersToReset)
     {
         if(mTransfersCount.totalDownloads > 0)
@@ -366,11 +356,6 @@ void TransferThread::resetCompletedDownloads(QList<QExplicitlySharedDataPointer<
             }
         }
     }
-
-    qDebug() << mTransfersCount.totalDownloads <<
-    mTransfersCount.completedDownloadBytes <<
-    mTransfersCount.totalDownloadBytes <<
-    mTransfersCount.failedDownloads << transfersToReset.size();
 }
 
 ///////////////// TRANSFERS MODEL //////////////////////////////////////////////
@@ -1359,9 +1344,7 @@ void TransfersModel::setCancelingMode(bool state)
             if(mModelReset)
             {
                 mModelReset = false;
-                qDebug() << mTransfersCount.completedDownloads() << mTransfers.size();
                 clearTransfers(QModelIndexList());
-                qDebug() << mTransfersCount.completedDownloads() << mTransfers.size();
             }
 
             emit unblockUi();
