@@ -582,22 +582,27 @@ void TransferManager::onStorageStateChanged(int storageState)
 
 void TransferManager::onVerticalScrollBarVisibilityChanged(bool state)
 {
-    auto transfersView = dynamic_cast<MegaTransferView*>(sender());
-    if(transfersView)
-    {
-        if(state)
-        {
-            int sliderWidth = transfersView->getVerticalScrollBarWidth();
-            mUi->wRightPanelScrollMargin->changeSize(sliderWidth,0,QSizePolicy::Fixed, QSizePolicy::Preferred);
-        }
-        else
-        {
-            mUi->wRightPanelScrollMargin->changeSize(0,0,QSizePolicy::Fixed, QSizePolicy::Preferred);
-        }
+    QPointer<TransferManager> currentTransferManager = this;
 
-        if(mUi->wRightPaneHeaderLayout)
+    if(currentTransferManager)
+    {
+        auto transfersView = dynamic_cast<MegaTransferView*>(sender());
+        if(transfersView)
         {
-            mUi->wRightPaneHeaderLayout->invalidate();
+            if(state)
+            {
+                int sliderWidth = transfersView->getVerticalScrollBarWidth();
+                mUi->wRightPanelScrollMargin->changeSize(sliderWidth,0,QSizePolicy::Fixed, QSizePolicy::Preferred);
+            }
+            else
+            {
+                mUi->wRightPanelScrollMargin->changeSize(0,0,QSizePolicy::Fixed, QSizePolicy::Preferred);
+            }
+
+            if(mUi->wRightPaneHeaderLayout)
+            {
+                mUi->wRightPaneHeaderLayout->invalidate();
+            }
         }
     }
 }
