@@ -9,6 +9,7 @@
 #include "QMegaMessageBox.h"
 
 #include <QMouseEvent>
+#include <QPainterPath>
 
 constexpr uint PB_PRECISION = 1000;
 const QColor HOVER_COLOR = QColor("#FAFAFA");
