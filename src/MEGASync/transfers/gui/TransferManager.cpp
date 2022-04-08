@@ -200,11 +200,6 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
     }
 }
 
-void TransferManager::pauseModel(bool value)
-{
-    mModel->pauseModelProcessing(value);
-}
-
 void TransferManager::onPauseStateChangedByTransferResume()
 {
     onUpdatePauseState(false);
@@ -369,11 +364,12 @@ void TransferManager::onCancelVisibleRows()
     {
         if(mCurrentTab == ALL_TRANSFERS_TAB)
         {
-            transfersView->onCancelAllTransfers();
+            on_bCancelClearAll_clicked();
         }
         else
         {
             transfersView->onCancelVisibleTransfers();
+
         }
 
         //Use to repaint and update the transfers state

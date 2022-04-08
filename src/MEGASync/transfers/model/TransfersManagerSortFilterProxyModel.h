@@ -23,7 +23,6 @@ public:
         bool moveRows(const QModelIndex& proxyParent, int proxyRow, int count,
                       const QModelIndex& destinationParent, int destinationChild) override;
         void sort(int column, Qt::SortOrder order = Qt::AscendingOrder) override;
-        void invalidate();
         void setSourceModel(QAbstractItemModel *sourceModel) override;
         void setFilterFixedString(const QString &pattern);
         void textSearchTypeChanged();
@@ -85,6 +84,7 @@ protected:
 private slots:
         void onRowsAboutToBeRemoved(const QModelIndex& parent, int first, int last);
         void onModelSortedFiltered();
+        void onModelUnblockedRequest();
 
 private:
         ThreadPool* mThreadPool;
