@@ -23,6 +23,7 @@ StalledIssuesDialog::StalledIssuesDialog(QWidget *parent) :
 
     setAttribute(Qt::WA_DeleteOnClose, true);
 
+    MegaSyncApp->getStalledIssuesModel()->updateStalledIssues();
 }
 
 StalledIssuesDialog::~StalledIssuesDialog()
@@ -33,4 +34,9 @@ StalledIssuesDialog::~StalledIssuesDialog()
 void StalledIssuesDialog::on_doneButton_clicked()
 {
     close();
+}
+
+void StalledIssuesDialog::on_updateButton_clicked()
+{
+    MegaSyncApp->getStalledIssuesModel()->updateStalledIssues();
 }

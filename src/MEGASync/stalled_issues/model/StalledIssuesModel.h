@@ -2,6 +2,7 @@
 #define STALLEDISSUESMODEL_H
 
 #include "QTMegaRequestListener.h"
+#include "QTMegaGlobalListener.h"
 #include "StalledIssue.h"
 
 #include <QObject>
@@ -16,7 +17,8 @@ public:
     explicit StalledIssuesReceiver(QObject *parent = nullptr);
     ~StalledIssuesReceiver(){}
 
-    StalledIssuesDataList processStalledIssues();
+signals:
+    void stalledIssuesReady(StalledIssuesDataList);
 
 protected:
     void onRequestFinish(::mega::MegaApi*, ::mega::MegaRequest *request, ::mega::MegaError*);
@@ -24,9 +26,11 @@ protected:
 private:
     QMutex mCacheMutex;
     StalledIssuesDataList mCacheStalledIssues;
+
+    void processStalledIssues();
 };
 
-class StalledIssuesModel : public QAbstractItemModel
+class StalledIssuesModel : public QAbstractItemModel, public mega::MegaGlobalListener
 {
     Q_OBJECT
 
@@ -44,26 +48,33 @@ public:
     Qt::ItemFlags flags(const QModelIndex &index) const override;
 
     void finishStalledIssues(const QModelIndexList& indexes);
+    void updateStalledIssues();
+
+    bool hasStalledIssues() const;
 
 signals:
     void stalledIssuesReceived(bool state);
 
+protected slots:
+    void onGlobalSyncStateChanged(mega::MegaApi *api) override;
+
 private slots:
-    void onProcessStalledIssues();
+    void onProcessStalledIssues(StalledIssuesDataList list);
 
 private:
     void removeRows(QModelIndexList &indexesToRemove);
     void updateStalledIssuedByOrder();
+    void reset();
 
     QThread* mStalledIssuesThread;
     StalledIssuesReceiver* mStalledIssuedReceiver;
-    mega::QTMegaRequestListener* mDelegateListener;
+    mega::QTMegaRequestListener* mRequestListener;
+    mega::QTMegaGlobalListener* mGlobalListener;
     mega::MegaApi* mMegaApi;
-    QTimer mStalledIssuesTimer;
+    bool mHasStalledIssues;
 
     mutable StalledIssuesDataList mStalledIssues;
     mutable QHash<QExplicitlySharedDataPointer<StalledIssueData>, int> mStalledIssuesByOrder;
-    mutable QStringList mAddedStalledIssues;
 };
 
 #endif // STALLEDISSUESMODEL_H

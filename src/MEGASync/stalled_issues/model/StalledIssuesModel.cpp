@@ -4,41 +4,33 @@
 
 StalledIssuesReceiver::StalledIssuesReceiver(QObject *parent) : QObject(parent), mega::MegaRequestListener()
 {
-
 }
 
-QList<QExplicitlySharedDataPointer<StalledIssueData>> StalledIssuesReceiver::processStalledIssues()
+void StalledIssuesReceiver::processStalledIssues()
 {
-    if(mCacheMutex.tryLock())
+    StalledIssuesDataList auxList;
+
+    if(mCacheStalledIssues.size() > 2000)
     {
-        if(mCacheStalledIssues.size() > 2000)
+        for(auto index = 0; index < 2000
+            && !mCacheStalledIssues.isEmpty(); ++index)
         {
-            StalledIssuesDataList auxList;
-            for(auto index = 0; index < 2000
-                && !mCacheStalledIssues.isEmpty(); ++index)
+            auto& firstItem = mCacheStalledIssues.first();
+            if(firstItem)
             {
-                auto& firstItem = mCacheStalledIssues.first();
-                if(firstItem)
-                {
-                    auxList.append(firstItem);
-                    mCacheStalledIssues.removeOne(firstItem);
-                }
+                auxList.append(firstItem);
+                mCacheStalledIssues.removeOne(firstItem);
             }
-
-            mCacheMutex.unlock();
-            return auxList;
-        }
-        else
-        {
-            auto auxList = mCacheStalledIssues;
-            mCacheStalledIssues.clear();
-
-            mCacheMutex.unlock();
-            return auxList;
         }
     }
+    else
+    {
+        auxList = mCacheStalledIssues;
+        mCacheStalledIssues.clear();
 
-    return StalledIssuesDataList();
+    }
+
+    emit stalledIssuesReady(auxList);
 }
 
 void StalledIssuesReceiver::onRequestFinish(mega::MegaApi*, mega::MegaRequest *request, mega::MegaError*)
@@ -69,78 +61,84 @@ void StalledIssuesReceiver::onRequestFinish(mega::MegaApi*, mega::MegaRequest *r
                 mCacheStalledIssues.append(d);
             }
         }
+
+        processStalledIssues();
     }
 }
 
-StalledIssuesModel::StalledIssuesModel(QObject *parent) : QAbstractItemModel(parent),
-     mMegaApi (MegaSyncApp->getMegaApi())
+StalledIssuesModel::StalledIssuesModel(QObject *parent) : QAbstractItemModel(parent)
+   , mMegaApi (MegaSyncApp->getMegaApi())
+   , mHasStalledIssues(false)
 {
     mStalledIssuesThread = new QThread();
     mStalledIssuedReceiver = new StalledIssuesReceiver();
-    mDelegateListener = new mega::QTMegaRequestListener(mMegaApi, mStalledIssuedReceiver);
-    mStalledIssuedReceiver->moveToThread(mStalledIssuesThread);
-    mDelegateListener->moveToThread(mStalledIssuesThread);
-    mMegaApi->addRequestListener(mDelegateListener);
 
-    mStalledIssuesTimer.setInterval(100);
-    QObject::connect(&mStalledIssuesTimer, &QTimer::timeout, this, &StalledIssuesModel::onProcessStalledIssues);
-    mStalledIssuesTimer.start();
+    mRequestListener = new mega::QTMegaRequestListener(mMegaApi, mStalledIssuedReceiver);
+    mStalledIssuedReceiver->moveToThread(mStalledIssuesThread);
+    mRequestListener->moveToThread(mStalledIssuesThread);
+    mMegaApi->addRequestListener(mRequestListener);
+
+    mGlobalListener = new mega::QTMegaGlobalListener(mMegaApi,this);
+    mMegaApi->addGlobalListener(mGlobalListener);
 
     mStalledIssuesThread->start();
+
+    qDebug() << "CONNECTED" << connect(mStalledIssuedReceiver, &StalledIssuesReceiver::stalledIssuesReady,
+            this, &StalledIssuesModel::onProcessStalledIssues,
+            Qt::QueuedConnection);
 }
 
 StalledIssuesModel::~StalledIssuesModel()
 {
-    mMegaApi->removeRequestListener(mDelegateListener);
+    mMegaApi->removeRequestListener(mRequestListener);
+    mMegaApi->removeGlobalListener(mGlobalListener);
+
     mStalledIssuesThread->quit();
     mStalledIssuesThread->deleteLater();
     mStalledIssuedReceiver->deleteLater();
 
-    mDelegateListener->deleteLater();
+    mRequestListener->deleteLater();
 }
 
-void StalledIssuesModel::onProcessStalledIssues()
+void StalledIssuesModel::onProcessStalledIssues(StalledIssuesDataList stalledIssues)
 {
-    auto stalledIssues = mStalledIssuedReceiver->processStalledIssues();
+    reset();
+
     if(!stalledIssues.isEmpty())
     {
-        foreach(auto issue, stalledIssues)
+
+        auto totalRows = rowCount(QModelIndex());
+        auto rowsToBeInserted(static_cast<int>(stalledIssues.size()));
+
+        beginInsertRows(QModelIndex(), totalRows, totalRows + rowsToBeInserted - 1);
+
+        for (auto it = stalledIssues.begin(); it != stalledIssues.end();)
         {
-            if(mAddedStalledIssues.contains(issue->mFileName))
-            {
-                stalledIssues.removeOne(issue);
-            }
+            mStalledIssues.append((*it));
+            mStalledIssuesByOrder.insert((*it), rowCount(QModelIndex()) - 1);
+
+            stalledIssues.removeOne((*it));
+            it++;
         }
 
-        if(!stalledIssues.isEmpty())
-        {
-            auto totalRows = rowCount(QModelIndex());
-            auto rowsToBeInserted(static_cast<int>(stalledIssues.size()));
+        endInsertRows();
 
-            beginInsertRows(QModelIndex(), totalRows, totalRows + rowsToBeInserted - 1);
-
-            for (auto it = stalledIssues.begin(); it != stalledIssues.end();)
-            {
-                mStalledIssues.append((*it));
-                mStalledIssuesByOrder.insert((*it), rowCount(QModelIndex()) - 1);
-                mAddedStalledIssues.append((*it)->mFileName);
-
-                stalledIssues.removeOne((*it));
-                it++;
-            }
-
-            endInsertRows();
-
-            emit stalledIssuesReceived(true);
-        }
+        emit stalledIssuesReceived(true);
     }
-    else
+}
+
+void StalledIssuesModel::updateStalledIssues()
+{
+    if (mMegaApi->isSyncStalled())
     {
-        if (mMegaApi->isSyncStalled())
-        {
-            mMegaApi->getSyncProblems(nullptr, true);
-        }
+        mMegaApi->getSyncProblems(nullptr, true);
     }
+}
+
+void StalledIssuesModel::onGlobalSyncStateChanged(mega::MegaApi* api)
+{
+    mHasStalledIssues = api->isSyncStalled();
+    emit stalledIssuesReceived(api->isSyncStalled());
 }
 
 Qt::DropActions StalledIssuesModel::supportedDropActions() const
@@ -290,4 +288,19 @@ void StalledIssuesModel::updateStalledIssuedByOrder()
         auto item = mStalledIssues.at(row);
         mStalledIssuesByOrder.insert(item, row);
     }
+}
+
+bool StalledIssuesModel::hasStalledIssues() const
+{
+    return mHasStalledIssues;
+}
+
+void StalledIssuesModel::reset()
+{
+    beginResetModel();
+
+    mStalledIssues.clear();
+    mStalledIssuesByOrder.clear();
+
+    endResetModel();
 }

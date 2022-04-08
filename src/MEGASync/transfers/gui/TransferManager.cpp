@@ -175,6 +175,8 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
             &StalledIssuesModel::stalledIssuesReceived,
             this, &TransferManager::onStalledIssuesStateChanged);
 
+    onStalledIssuesStateChanged(MegaSyncApp->getStalledIssuesModel()->hasStalledIssues());
+
     mSpeedRefreshTimer->setSingleShot(false);
     connect(mSpeedRefreshTimer, &QTimer::timeout,
             this, &TransferManager::refreshSpeed);
@@ -223,7 +225,7 @@ void TransferManager::on_viewStalledIssuesButton_clicked()
 {
     if(!mStalledIssuesDialog)
     {
-        mStalledIssuesDialog = new StalledIssuesDialog(this);
+        mStalledIssuesDialog = new StalledIssuesDialog(parentWidget());
         connect(mStalledIssuesDialog, &QObject::destroyed, [this](){
             mStalledIssuesDialog = nullptr;
         });
@@ -754,7 +756,6 @@ void TransferManager::onStalledIssuesStateChanged(bool state)
 {
     mFoundStalledIssues = state;
     showStalledIssuesInfo();
-
 }
 
 void TransferManager::showStalledIssuesInfo()

@@ -9,6 +9,9 @@ StalledIssueData::StalledIssueData(const mega::MegaSyncStall *stallIssue)
     , mIsNameConflict(false)
 {
     update(stallIssue);
+
+    qRegisterMetaType<StalledIssueDataPtr>("StalledIssueDataPtr");
+    qRegisterMetaType<StalledIssuesDataList>("StalledIssuesDataList");
 }
 
 void StalledIssueData::update(const mega::MegaSyncStall *stallIssue)

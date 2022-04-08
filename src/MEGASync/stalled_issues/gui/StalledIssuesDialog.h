@@ -19,6 +19,7 @@ public:
 
 private slots:
     void on_doneButton_clicked();
+    void on_updateButton_clicked();
 
 private:
     Ui::StalledIssuesDialog *ui;

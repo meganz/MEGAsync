@@ -66,4 +66,7 @@ Q_DECLARE_METATYPE(StalledIssue)
 using StalledIssueDataPtr = QExplicitlySharedDataPointer<StalledIssueData>;
 using StalledIssuesDataList = QList<StalledIssueDataPtr>;
 
+Q_DECLARE_METATYPE(StalledIssueDataPtr)
+Q_DECLARE_METATYPE(StalledIssuesDataList)
+
 #endif // STALLEDISSUE_H
