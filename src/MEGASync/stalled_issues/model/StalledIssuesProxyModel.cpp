@@ -10,6 +10,21 @@ StalledIssuesProxyModel::StalledIssuesProxyModel(QObject *parent) :QSortFilterPr
 
 }
 
+//void StalledIssuesProxyModel::setSourceModel(QAbstractItemModel *sourceModel)
+//{
+
+//}
+
+int StalledIssuesProxyModel::rowCount(const QModelIndex &parent) const
+{
+    if(sourceModel()->rowCount() == 0)
+    {
+        return 0;
+    }
+
+    return QSortFilterProxyModel::rowCount(parent);
+}
+
 bool StalledIssuesProxyModel::canFetchMore(const QModelIndex &parent) const
 {
     return QSortFilterProxyModel::canFetchMore(parent);

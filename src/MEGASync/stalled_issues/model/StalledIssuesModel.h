@@ -18,14 +18,14 @@ public:
     ~StalledIssuesReceiver(){}
 
 signals:
-    void stalledIssuesReady(StalledIssuesDataList);
+    void stalledIssuesReady(StalledIssuesList);
 
 protected:
     void onRequestFinish(::mega::MegaApi*, ::mega::MegaRequest *request, ::mega::MegaError*);
 
 private:
     QMutex mCacheMutex;
-    StalledIssuesDataList mCacheStalledIssues;
+    StalledIssuesList mCacheStalledIssues;
 
     void processStalledIssues();
 };
@@ -59,7 +59,7 @@ protected slots:
     void onGlobalSyncStateChanged(mega::MegaApi *api) override;
 
 private slots:
-    void onProcessStalledIssues(StalledIssuesDataList list);
+    void onProcessStalledIssues(StalledIssuesList list);
 
 private:
     void removeRows(QModelIndexList &indexesToRemove);
@@ -73,8 +73,8 @@ private:
     mega::MegaApi* mMegaApi;
     bool mHasStalledIssues;
 
-    mutable StalledIssuesDataList mStalledIssues;
-    mutable QHash<QExplicitlySharedDataPointer<StalledIssueData>, int> mStalledIssuesByOrder;
+    mutable StalledIssuesList mStalledIssues;
+    mutable QHash<StalledIssue*, int> mStalledIssuesByOrder;
 };
 
 #endif // STALLEDISSUESMODEL_H

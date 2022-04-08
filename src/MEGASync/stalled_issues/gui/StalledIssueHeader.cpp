@@ -18,7 +18,7 @@ StalledIssueHeader::~StalledIssueHeader()
 void StalledIssueHeader::refreshUi()
 {
     auto fileTypeIcon = Utilities::getCachedPixmap(Utilities::getExtensionPixmapName(
-                                                       getData()->mFileName, QLatin1Literal(":/images/drag_")));
+                                                       getData().getFileName(), QLatin1Literal(":/images/drag_")));
     ui->fileTypeIcon->setPixmap(fileTypeIcon.pixmap(ui->fileTypeIcon->size()));
 
     refreshUiByStalledReason();
@@ -26,7 +26,7 @@ void StalledIssueHeader::refreshUi()
 
 void StalledIssueHeader::refreshUiByStalledReason()
 {
-    switch(getData()->mReason)
+    switch(getData().getReason())
     {
     case mega::MegaSyncStall::SyncStallReason::LocalAndRemotePreviouslyUnsyncedDiffer_userMustChoose:
     {
@@ -34,7 +34,7 @@ void StalledIssueHeader::refreshUiByStalledReason()
 
         auto errorTitleIcon = Utilities::getCachedPixmap(QLatin1Literal(":/images/StalledIssues/ico_menu_full.png"));
         ui->errorTitleIcon->setPixmap(errorTitleIcon.pixmap(ui->errorTitleIcon->size()));
-        ui->errorTitleText->setText(tr("Can´t sync <b>%1</b>").arg(getData()->mFileName));
+        ui->errorTitleText->setText(tr("Can´t sync <b>%1</b>").arg(getData().getFileName()));
 
         auto errorDescriptionIcon = Utilities::getCachedPixmap(QLatin1Literal(":/images/ico_info_hover.png"));
         ui->errorDescriptionIcon->setPixmap(errorDescriptionIcon.pixmap(ui->errorDescriptionIcon->size()));

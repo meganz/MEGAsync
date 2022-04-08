@@ -15,7 +15,6 @@ StalledIssueDelegate::StalledIssueDelegate(StalledIssuesProxyModel* proxyModel, 
      mProxyModel (proxyModel),
      mSourceModel (qobject_cast<StalledIssuesModel*>(
                        mProxyModel->sourceModel())),
-     mEditor(nullptr),
      QStyledItemDelegate(view)
 {
     mCacheManager.setProxyModel(mProxyModel);
@@ -28,8 +27,7 @@ StalledIssueDelegate::~StalledIssueDelegate()
 QSize StalledIssueDelegate::sizeHint(const QStyleOptionViewItem&, const QModelIndex& index) const
 {
     auto stalledIssueItem (qvariant_cast<StalledIssue>(index.data(Qt::DisplayRole)));
-    auto data = stalledIssueItem.getStalledIssueData();
-    StalledIssueBaseDelegateWidget* w (getStalledIssueItemWidget(index, data));
+    StalledIssueBaseDelegateWidget* w (getStalledIssueItemWidget(index, stalledIssueItem));
     if(w)
     {
        auto size = w->sizeHint();
@@ -51,7 +49,6 @@ void StalledIssueDelegate::paint(QPainter *painter, const QStyleOptionViewItem &
         auto width (option.rect.width());
         auto height (option.rect.height());
         auto stalledIssueItem (qvariant_cast<StalledIssue>(index.data(Qt::DisplayRole)));
-        auto data = stalledIssueItem.getStalledIssueData();
 
         painter->fillRect(option.rect,Qt::white);
 
@@ -59,12 +56,11 @@ void StalledIssueDelegate::paint(QPainter *painter, const QStyleOptionViewItem &
         painter->save();
         painter->translate(pos);
 
-        StalledIssueBaseDelegateWidget* w (getStalledIssueItemWidget(index, data));
+        StalledIssueBaseDelegateWidget* w (getStalledIssueItemWidget(index, stalledIssueItem));
         if(!w)
         {
             return;
         }
-
 
         w->setGeometry(option.rect);
         w->render(option, painter, QRegion(0, 0, width, height));
@@ -114,13 +110,10 @@ bool StalledIssueDelegate::editorEvent(QEvent *event, QAbstractItemModel *model,
                     if(index.parent().isValid())
                     {
                         auto parentIndex = index.parent();
-                        qDebug() << index << index.parent() << mView->isExpanded(parentIndex);
                         mView->isExpanded(parentIndex) ? mView->collapse(parentIndex) : mView->expand(parentIndex);
                     }
                     else
                     {
-
-                        qDebug() << index  << mView->isExpanded(index);
                         mView->isExpanded(index) ? mView->collapse(index) : mView->expand(index);
                     }
                 }
@@ -134,20 +127,15 @@ bool StalledIssueDelegate::editorEvent(QEvent *event, QAbstractItemModel *model,
 QWidget *StalledIssueDelegate::createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
     auto stalledIssueItem (qvariant_cast<StalledIssue>(index.data(Qt::DisplayRole)));
-    auto data = stalledIssueItem.getStalledIssueData();
 
-    mEditor = getNonCacheStalledIssueItemWidget(index,parent, data);
-    mEditor->setStyleSheet(QString::fromUtf8("*{background-color: transparent;}"));
-    mEditor->setGeometry(option.rect);
+    auto editor = getNonCacheStalledIssueItemWidget(index,parent, stalledIssueItem);
+    editor->setStyleSheet(QString::fromUtf8("*{background-color: transparent;}"));
+    editor->setGeometry(option.rect);
 
-    connect(mEditor, &QObject::destroyed, this, [this](){
-        mEditor = nullptr;
-    });
-
-    return mEditor;
+    return editor;
 }
 
-void StalledIssueDelegate::updateEditorGeometry(QWidget *editor, const QStyleOptionViewItem &option, const QModelIndex &index) const
+void StalledIssueDelegate::updateEditorGeometry(QWidget *editor, const QStyleOptionViewItem &option, const QModelIndex &) const
 {
     editor->setGeometry(option.rect);
 }
@@ -156,22 +144,13 @@ bool StalledIssueDelegate::event(QEvent *event)
 {
     if(auto hoverEvent = dynamic_cast<MegaDelegateHoverEvent*>(event))
     {
-        if(hoverEvent->type() == QEvent::Leave)
+        if(hoverEvent->type() == QEvent::Enter)
         {
-            onHoverLeave(hoverEvent->index(),hoverEvent->rect());
-        }
-        else if(hoverEvent->type() == QEvent::Enter)
-        {
-            onHoverEnter(hoverEvent->index(), hoverEvent->rect());
-        }
-        else if(hoverEvent->type() == QEvent::MouseMove)
-        {
-            //onHoverMove(hoverEvent->index(), hoverEvent->rect(), hoverEvent->mousePos());
+            onHoverEnter(hoverEvent->index());
         }
     }
 
     return QStyledItemDelegate::event(event);
-
 }
 
 bool StalledIssueDelegate::eventFilter(QObject *object, QEvent *event)
@@ -179,24 +158,18 @@ bool StalledIssueDelegate::eventFilter(QObject *object, QEvent *event)
     return QStyledItemDelegate::eventFilter(object, event);
 }
 
-void StalledIssueDelegate::onHoverLeave(const QModelIndex &index, const QRect &rect)
+void StalledIssueDelegate::onHoverEnter(const QModelIndex &index)
 {
-    mView->closeEditor(mEditor, QAbstractItemDelegate::NoHint);
-    mEditor = nullptr;
-}
-
-void StalledIssueDelegate::onHoverEnter(const QModelIndex &index, const QRect &rect)
-{
-    if(mEditor)
+    if(mView->isPersistentEditorOpen(mView->currentIndex()))
     {
-        mView->closeEditor(mEditor, QAbstractItemDelegate::NoHint);
-        mEditor = nullptr;
+        mView->closePersistentEditor(mView->currentIndex());
     }
+
     mView->setCurrentIndex(index);
     mView->edit(index);
 }
 
-StalledIssueBaseDelegateWidget *StalledIssueDelegate::getStalledIssueItemWidget(const QModelIndex &index, StalledIssueDataPtr data) const
+StalledIssueBaseDelegateWidget *StalledIssueDelegate::getStalledIssueItemWidget(const QModelIndex &index, const StalledIssue& data) const
 {
     StalledIssueBaseDelegateWidget* item(nullptr);
 
@@ -212,7 +185,7 @@ StalledIssueBaseDelegateWidget *StalledIssueDelegate::getStalledIssueItemWidget(
     return item;
 }
 
-StalledIssueBaseDelegateWidget *StalledIssueDelegate::getNonCacheStalledIssueItemWidget(const QModelIndex &index, QWidget* parent, StalledIssueDataPtr data) const
+StalledIssueBaseDelegateWidget *StalledIssueDelegate::getNonCacheStalledIssueItemWidget(const QModelIndex &index, QWidget* parent, const StalledIssue &data) const
 {
     StalledIssueBaseDelegateWidget* item(nullptr);
 

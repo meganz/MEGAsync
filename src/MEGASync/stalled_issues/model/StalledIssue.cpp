@@ -3,15 +3,14 @@
 #include "MegaApplication.h"
 
 StalledIssueData::StalledIssueData(const mega::MegaSyncStall *stallIssue)
-    : mReason(mega::MegaSyncStall::SyncStallReason::NoReason)
-    , mIsCloud(false)
+    : mIsCloud(false)
     , mIsImmediate(false)
-    , mIsNameConflict(false)
 {
     update(stallIssue);
 
     qRegisterMetaType<StalledIssueDataPtr>("StalledIssueDataPtr");
     qRegisterMetaType<StalledIssuesDataList>("StalledIssuesDataList");
+    qRegisterMetaType<StalledIssuesList>("StalledIssuesList");
 }
 
 void StalledIssueData::update(const mega::MegaSyncStall *stallIssue)
@@ -21,45 +20,46 @@ void StalledIssueData::update(const mega::MegaSyncStall *stallIssue)
         mIndexPath    = QString::fromUtf8(stallIssue->indexPath());
         mLocalPath    = QString::fromUtf8(stallIssue->localPath());
         mCloudPath    = QString::fromUtf8(stallIssue->cloudPath());
-        mReason       = stallIssue->reason();
         mIsCloud      = stallIssue->isCloud();
         mIsImmediate  = stallIssue->isImmediate();
         mReasonString = QString::fromUtf8(stallIssue->reasonString());
-        mIsNameConflict = false;
-
-        if(mIsCloud)
-        {
-            auto splittedIndexPath = mIndexPath.split(QString::fromUtf8("/"));
-            mFileName = splittedIndexPath.last();
-        }
-        else
-        {
-            auto splittedIndexPath = mIndexPath.split(QString::fromUtf8("\\"));
-            mFileName = splittedIndexPath.last();
-        }
     }
-}
-
-bool StalledIssueData::isEqual(const StalledIssueData &data)
-{
-    if(mIndexPath == data.mIndexPath && mLocalPath == data.mIndexPath && mCloudPath == data.mCloudPath
-            && mReason == data.mReason && mIsCloud == data.mIsCloud && mIsImmediate == data.mIsImmediate
-            && mReasonString == data.mReasonString && mIsNameConflict == mIsNameConflict)
-    {
-        return true;
-    }
-
-    return false;
 }
 
 //Conflicted Names stalled issue
-ConflictedNamesStalledIssueData::ConflictedNamesStalledIssueData(mega::MegaSyncNameConflict *stallIssue)
-    :StalledIssueData()
+ConflictedNamesStalledIssue::ConflictedNamesStalledIssue()
+    : StalledIssue()
 {
-    update(stallIssue);
+    mIsNameConflict = true;
 }
 
-void ConflictedNamesStalledIssueData::update(mega::MegaSyncNameConflict* nameConflictStallIssue)
+ConflictedNamesStalledIssue::ConflictedNamesStalledIssue(const QExplicitlySharedDataPointer<StalledIssueData> &tdr)
+{
+    mIsNameConflict = true;
+    d.append(tdr);
+}
+
+
+ConflictedNamesStalledIssue::ConflictedNamesStalledIssue(mega::MegaSyncNameConflict *nameConflictStallIssue)
+    : StalledIssue()
+{
+    mIsNameConflict = true;
+    auto data = StalledIssueDataPtr(new StalledIssueData());
+    d.append(data);
+    update(nameConflictStallIssue);
+}
+
+QStringList ConflictedNamesStalledIssue::localNames() const
+{
+    return mLocalNames;
+}
+
+QStringList ConflictedNamesStalledIssue::cloudNames() const
+{
+    return mCloudNames;
+}
+
+void ConflictedNamesStalledIssue::update(const mega::MegaSyncNameConflict* nameConflictStallIssue)
 {
     if (mega::MegaStringList* cn = nameConflictStallIssue->cloudNames())
     {
@@ -72,7 +72,7 @@ void ConflictedNamesStalledIssueData::update(mega::MegaSyncNameConflict* nameCon
     {
         if (cp && *cp)
         {
-            mCloudPath = QString::fromUtf8(cp);
+            getStalledIssueData()->mCloudPath = QString::fromUtf8(cp);
         }
     }
     if (mega::MegaStringList* ln = nameConflictStallIssue->localNames())
@@ -86,9 +86,88 @@ void ConflictedNamesStalledIssueData::update(mega::MegaSyncNameConflict* nameCon
     {
         if (lp && *lp)
         {
-            mLocalPath = QString::fromUtf8(lp);
+            getStalledIssueData()->mLocalPath = QString::fromUtf8(lp);
         }
     }
 
     mIsNameConflict = true;
+}
+
+StalledIssue::StalledIssue(const QExplicitlySharedDataPointer<StalledIssueData> &tdr, mega::MegaSyncStall::SyncStallReason reason)
+{
+    d.append(tdr);
+    extractFileName(tdr);
+    mReason = reason;
+}
+
+StalledIssue::StalledIssue(const QList<QExplicitlySharedDataPointer<StalledIssueData> > &tdr, mega::MegaSyncStall::SyncStallReason reason)
+{
+    d = tdr;
+    if(!tdr.isEmpty())
+    {
+       extractFileName(tdr.first());
+    }
+    mReason = reason;
+}
+
+void StalledIssue::addStalledIssueData(QExplicitlySharedDataPointer<StalledIssueData> data)
+{
+    d.append(data);
+}
+
+void StalledIssue::extractFileName(const QExplicitlySharedDataPointer<StalledIssueData> &tdr)
+{
+    if(tdr->mIsCloud)
+    {
+        auto splittedIndexPath = tdr->mIndexPath.split(QString::fromUtf8("/"));
+        mFileName = splittedIndexPath.last();
+    }
+    else
+    {
+        auto splittedIndexPath = tdr->mIndexPath.split(QString::fromUtf8("\\"));
+        mFileName = splittedIndexPath.last();
+    }
+}
+
+QExplicitlySharedDataPointer<StalledIssueData> StalledIssue::getStalledIssueData(int index) const
+{
+    return d.size() > index ? d.at(index) : QExplicitlySharedDataPointer<StalledIssueData>();
+}
+
+int StalledIssue::stalledIssuesCount() const
+{
+    return d.size();
+}
+
+mega::MegaSyncStall::SyncStallReason StalledIssue::getReason() const
+{
+    return mReason;
+}
+
+const QString& StalledIssue::getFileName() const
+{
+    return mFileName;
+}
+
+bool StalledIssue::isNameConflict() const
+{
+    return mIsNameConflict;
+}
+
+bool StalledIssue::operator==(const StalledIssue &data)
+{
+    if(data.stalledIssuesCount() != stalledIssuesCount())
+    {
+        return false;
+    }
+
+    for(int index = 0; index < stalledIssuesCount(); ++index)
+    {
+       if(getStalledIssueData(index) != data.getStalledIssueData(index))
+       {
+           return false;
+       }
+    }
+
+    return true;
 }

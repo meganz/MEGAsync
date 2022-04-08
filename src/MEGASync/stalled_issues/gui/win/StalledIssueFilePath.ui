@@ -16,7 +16,7 @@
   <property name="styleSheet">
    <string notr="true">*
 {
-	background-color: #transparent;
+	background-color: transparent;
 }
 
 #filePath, #filePathIcon
@@ -53,7 +53,26 @@
    <item row="1" column="0">
     <widget class="QWidget" name="lines" native="true"/>
    </item>
-   <item row="1" column="3">
+   <item row="0" column="0">
+    <widget class="QLabel" name="LocalOrRemoteIcon">
+     <property name="minimumSize">
+      <size>
+       <width>24</width>
+       <height>24</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>24</width>
+       <height>24</height>
+      </size>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="1">
     <widget class="QWidget" name="filePathContainer" native="true">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
@@ -118,26 +137,7 @@
      </layout>
     </widget>
    </item>
-   <item row="0" column="0">
-    <widget class="QLabel" name="LocalOrRemoteIcon">
-     <property name="minimumSize">
-      <size>
-       <width>24</width>
-       <height>24</height>
-      </size>
-     </property>
-     <property name="maximumSize">
-      <size>
-       <width>24</width>
-       <height>24</height>
-      </size>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="3" alignment="Qt::AlignLeft">
+   <item row="0" column="1" alignment="Qt::AlignLeft">
     <widget class="QLabel" name="LocalOrRemoteText">
      <property name="text">
       <string/>

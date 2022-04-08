@@ -16,6 +16,10 @@ void MegaDelegateHoverManager::setView(QAbstractItemView *view)
     mView = view;
     mView->setMouseTracking(true);
     mView->viewport()->installEventFilter(this);
+
+    connect(mView->model(), &QAbstractItemModel::modelAboutToBeReset,this, [this](){
+        mCurrentIndex = QModelIndex();
+    });
 }
 
 bool MegaDelegateHoverManager::eventFilter(QObject *watched, QEvent *event)

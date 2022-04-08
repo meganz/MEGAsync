@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>LocalAndRemotePreviouslyUnsynceDifferWidget</class>
+ <widget class="QWidget" name="LocalAndRemotePreviouslyUnsynceDifferWidget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>329</width>
+    <height>64</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">#chooseLocalCopy, #chooseRemoteCopy
+{
+    border: 1px solid #D6D6D6;
+    border-radius: 4px;
+}</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <property name="spacing">
+    <number>7</number>
+   </property>
+   <property name="leftMargin">
+    <number>7</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>7</number>
+   </property>
+   <item alignment="Qt::AlignTop">
+    <widget class="QLabel" name="selectLabel">
+     <property name="font">
+      <font>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>Please select which version you want to keep</string>
+     </property>
+     <property name="indent">
+      <number>55</number>
+     </property>
+    </widget>
+   </item>
+   <item alignment="Qt::AlignTop">
+    <widget class="StalledIssueChooseWidget" name="chooseLocalCopy" native="true"/>
+   </item>
+   <item alignment="Qt::AlignTop">
+    <widget class="StalledIssueChooseWidget" name="chooseRemoteCopy" native="true"/>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>StalledIssueChooseWidget</class>
+   <extends>QWidget</extends>
+   <header>StalledIssueChooseWidget.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
  <class>StalledIssueChooseWidget</class>
- <widget class="QWidget" name="StalledIssueChooseWidget">
+ <widget class="QFrame" name="StalledIssueChooseWidget">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -43,6 +43,9 @@
    border: 1px; 
    border-color:  rgba(0, 0, 0,13);
 }</string>
+  </property>
+  <property name="frameShape">
+   <enum>QFrame::Box</enum>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <property name="spacing">
@@ -99,7 +102,7 @@
       <item>
        <widget class="QLabel" name="titleLabel">
         <property name="text">
-         <string>HOLA</string>
+         <string/>
         </property>
        </widget>
       </item>

@@ -38,7 +38,6 @@ protected:
 
 private:
     QAbstractItemView* mView;
-    QStyledItemDelegate* mDelegate;
     QModelIndex mCurrentIndex;
 
     void sendEvent(QEvent::Type eventType, const QPoint& point = QPoint());

@@ -9,7 +9,7 @@ namespace Ui {
 class StalledIssueChooseWidget;
 }
 
-class StalledIssueChooseWidget : public StalledIssueBaseDelegateWidget
+class StalledIssueChooseWidget : public QFrame
 {
     Q_OBJECT
 
@@ -17,13 +17,15 @@ public:
     explicit StalledIssueChooseWidget(QWidget *parent = nullptr);
     ~StalledIssueChooseWidget();
 
-    void refreshUi() override;
+    void setData(StalledIssueDataPtr data, const QString &fileName);
+    const StalledIssueDataPtr& data();
 
-protected:
-    void paintEvent(QPaintEvent *event) override;
+signals:
+    void chooseButtonClicked();
 
 private:
     Ui::StalledIssueChooseWidget *ui;
+    StalledIssueDataPtr mData;
 };
 
 #endif // STALLEDISSUECHOOSEWIDGET_H

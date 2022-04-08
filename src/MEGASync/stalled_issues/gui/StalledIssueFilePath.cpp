@@ -19,7 +19,8 @@ StalledIssueFilePath::~StalledIssueFilePath()
 
 void StalledIssueFilePath::refreshUi()
 {
-    auto data = getData();
+    //The file path always get the first StalledIssueDataPtr
+    const auto& data = getData().getStalledIssueData();
 
     if(data->mIsCloud)
     {
@@ -39,11 +40,11 @@ void StalledIssueFilePath::refreshUi()
     ui->filePath->setText(data->mIndexPath);
 
     QIcon fileTypeIcon;
-    auto splittedFile = data->mFileName.split(QString::fromUtf8("."));
+    auto splittedFile = getData().getFileName().split(QString::fromUtf8("."));
     if(splittedFile.size() != 1)
     {
         fileTypeIcon = Utilities::getCachedPixmap(Utilities::getExtensionPixmapName(
-                                                           data->mFileName, QLatin1Literal(":/images/drag_")));
+                                                           getData().getFileName(), QLatin1Literal(":/images/drag_")));
     }
     else
     {

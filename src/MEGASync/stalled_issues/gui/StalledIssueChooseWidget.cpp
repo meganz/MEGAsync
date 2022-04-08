@@ -5,13 +5,15 @@
 #include "MegaApplication.h"
 
 StalledIssueChooseWidget::StalledIssueChooseWidget(QWidget *parent) :
-    StalledIssueBaseDelegateWidget(parent),
+    QFrame(parent),
     ui(new Ui::StalledIssueChooseWidget)
 {
     ui->setupUi(this);
 
     ui->CloudPath->hide();
     ui->LocalPath->hide();
+
+    connect(ui->chooseButton, &QPushButton::clicked, this, &StalledIssueChooseWidget::chooseButtonClicked);
 }
 
 StalledIssueChooseWidget::~StalledIssueChooseWidget()
@@ -19,22 +21,26 @@ StalledIssueChooseWidget::~StalledIssueChooseWidget()
     delete ui;
 }
 
-void StalledIssueChooseWidget::refreshUi()
+void StalledIssueChooseWidget::setData(StalledIssueDataPtr data, const QString& fileName)
 {
-    ui->titleLabel->setText(getData()->mIsCloud ? tr("Remote Copy") : tr("Local Copy"));
-    ui->fileNameText->setText(getData()->mFileName);
+    mData = data;
+
+    ui->titleLabel->setText(mData->mIsCloud ? tr("Remote Copy") : tr("Local Copy"));
+    ui->fileNameText->setText(fileName);
 
     auto fileTypeIcon = Utilities::getCachedPixmap(Utilities::getExtensionPixmapName(
-                                                       getData()->mFileName, QLatin1Literal(":/images/drag_")));
+                                                       fileName, QLatin1Literal(":/images/drag_")));
     ui->fileTypeIcon->setPixmap(fileTypeIcon.pixmap(ui->fileTypeIcon->size()));
     ui->fileSize->setText(Utilities::getSizeString((unsigned long long)50));
 
     ui->LocalPath->show();
-    ui->LocalPath->updateUi(getCurrentIndex(), getData());
 
-    if(getData()->mIsCloud)
+    StalledIssue stalledData(data);
+    ui->LocalPath->updateUi(QModelIndex(), stalledData);
+
+    if(mData->mIsCloud)
     {
-        std::unique_ptr<mega::MegaNode> node(MegaSyncApp->getMegaApi()->getNodeByPath(getData()->mIndexPath.toStdString().c_str()));
+        std::unique_ptr<mega::MegaNode> node(MegaSyncApp->getMegaApi()->getNodeByPath(mData->mIndexPath.toStdString().c_str()));
         if(node)
         {
             ui->fileSize->setText(Utilities::getSizeString(node->getSize()));
@@ -42,7 +48,7 @@ void StalledIssueChooseWidget::refreshUi()
     }
     else
     {
-        QFile file(getData()->mIndexPath);
+        QFile file(mData->mIndexPath);
         if(file.exists())
         {
             ui->fileSize->setText(Utilities::getSizeString(file.size()));
@@ -50,7 +56,7 @@ void StalledIssueChooseWidget::refreshUi()
     }
 }
 
-void StalledIssueChooseWidget::paintEvent(QPaintEvent *event)
+const StalledIssueDataPtr &StalledIssueChooseWidget::data()
 {
-
+    return mData;
 }

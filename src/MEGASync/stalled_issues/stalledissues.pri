@@ -9,11 +9,13 @@ SOURCES +=  \
     $$PWD/gui/StalledIssueDelegate.cpp \
     $$PWD/gui/StalledIssueFilePath.cpp \
     $$PWD/gui/StalledIssuesView.cpp \
-    $$PWD/model/StalledIssue.cpp \
+    $$PWD/gui/stalled_issues_cases/LocalAndRemotePreviouslyUnsynceDifferWidget.cpp \
     $$PWD/gui/StalledIssuesDelegateWidgetsCache.cpp \
-    $$PWD/model/StalledIssuesModel.cpp \
     $$PWD/gui/StalledIssuesDialog.cpp \
     $$PWD/gui/StalledIssueHeader.cpp \
+    $$PWD/gui/stalled_issues_cases/LocalAndRemotePreviouslyUnsynceDifferWidget.cpp \
+    $$PWD/model/StalledIssue.cpp \
+    $$PWD/model/StalledIssuesModel.cpp \
     $$PWD/model/StalledIssuesProxyModel.cpp
 
 HEADERS  +=   \
@@ -22,11 +24,13 @@ HEADERS  +=   \
     $$PWD/gui/StalledIssueDelegate.h \
     $$PWD/gui/StalledIssueFilePath.h \
     $$PWD/gui/StalledIssuesView.h \
-    $$PWD/model/StalledIssue.h \
+    $$PWD/gui/stalled_issues_cases/LocalAndRemotePreviouslyUnsynceDifferWidget.h \
     $$PWD/gui/StalledIssuesDelegateWidgetsCache.h \
-    $$PWD/model/StalledIssuesModel.h \
     $$PWD/gui/StalledIssuesDialog.h \
     $$PWD/gui/StalledIssueHeader.h \
+    $$PWD/gui/stalled_issues_cases/LocalAndRemotePreviouslyUnsynceDifferWidget.h \
+    $$PWD/model/StalledIssuesModel.h \
+    $$PWD/model/StalledIssue.h \
     $$PWD/model/StalledIssuesProxyModel.h
 
 win32 {
@@ -35,5 +39,6 @@ win32 {
     FORMS    += $$PWD/gui/win/StalledIssueHeader.ui \
                 $$PWD/gui/win/StalledIssueChooseWidget.ui \
                 $$PWD/gui/win/StalledIssuesDialog.ui \
-                $$PWD/gui/win/StalledIssueFilePath.ui
+                $$PWD/gui/win/StalledIssueFilePath.ui \
+                $$PWD/gui/stalled_issues_cases/win/LocalAndRemotePreviouslyUnsynceDifferWidget.ui
 }

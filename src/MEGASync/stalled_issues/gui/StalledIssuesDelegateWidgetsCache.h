@@ -17,11 +17,11 @@ class StalledIssuesDelegateWidgetsCache
 public:
     StalledIssuesDelegateWidgetsCache();
 
-    StalledIssueHeader* getStalledIssueHeaderWidget(const QModelIndex& index, QWidget *parent, StalledIssueDataPtr data) const;
-    StalledIssueBaseDelegateWidget* getStalledIssueInfoWidget(const QModelIndex& index, QWidget *parent, StalledIssueDataPtr data) const;
+    StalledIssueHeader* getStalledIssueHeaderWidget(const QModelIndex& index, QWidget *parent, const StalledIssue &data) const;
+    StalledIssueBaseDelegateWidget* getStalledIssueInfoWidget(const QModelIndex& index, QWidget *parent, const StalledIssue &data) const;
 
-    StalledIssueHeader* getNonCacheStalledIssueHeaderWidget(const QModelIndex &index, QWidget *parent, StalledIssueDataPtr data) const;
-    StalledIssueBaseDelegateWidget* getNonCacheStalledIssueInfoWidget(const QModelIndex& index, QWidget *parent, StalledIssueDataPtr data) const;
+    StalledIssueHeader* getNonCacheStalledIssueHeaderWidget(const QModelIndex &index, QWidget *parent, const StalledIssue &data) const;
+    StalledIssueBaseDelegateWidget* getNonCacheStalledIssueInfoWidget(const QModelIndex& index, QWidget *parent, const StalledIssue &data) const;
 
     void setProxyModel(StalledIssuesProxyModel *proxyModel);
 
