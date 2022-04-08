@@ -96,11 +96,8 @@ void TransferData::update(mega::MegaTransfer* transfer)
             mFinishedTime = 0;
         }
 
-
-
         TransferRemainingTime rem(mSpeed, remBytes);
         mRemainingTime = rem.calculateRemainingTimeSeconds(mSpeed, remBytes).count();
-
 
         auto megaError (transfer->getLastErrorExtended());
         if (megaError)
@@ -168,18 +165,13 @@ bool TransferData::isPublicNode() const
 {
     auto result(false);
 
-    //TODO publicNode
     if(mNodeHandle)
     {
-        MegaNode *ownNode = ((MegaApplication*)qApp)->getMegaApi()->getNodeByHandle(mNodeHandle);
-        if (ownNode)
+        std::unique_ptr<MegaNode> ownNode(MegaSyncApp->getMegaApi()->getNodeByHandle(mNodeHandle));
+
+        if (ownNode && MegaSyncApp->getMegaApi()->getAccess(ownNode.get()) == MegaShare::ACCESS_OWNER)
         {
-           auto access = ((MegaApplication*)qApp)->getMegaApi()->getAccess(ownNode);
-           if (access == MegaShare::ACCESS_OWNER)
-           {
-               result = true;
-           }
-           delete ownNode;
+            result = true;
         }
     }
 
@@ -213,7 +205,7 @@ bool TransferData::isPaused() const
 
 bool TransferData::isProcessing() const
 {
-    return mState & TRANSFER_ACTIVE || mState & TRANSFER_COMPLETING;
+    return mState & (TRANSFER_ACTIVE | TRANSFER_COMPLETING);
 }
 
 bool TransferData::isCompleted() const
@@ -224,11 +216,6 @@ bool TransferData::isCompleted() const
 bool TransferData::hasFailed() const
 {
     return mState & TRANSFER_FAILED;
-}
-
-bool TransferData::isDownload() const
-{
-    return mType > TRANSFER_UPLOAD;
 }
 
 bool TransferData::isFinished() const

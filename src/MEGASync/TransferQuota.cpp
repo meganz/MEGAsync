@@ -13,6 +13,7 @@ TransferQuota::TransferQuota(mega::MegaApi* megaApi,
       mOsNotifications{std::move(desktopNotifications)},
       mUpgradeDialog{nullptr},
       mQuotaState{QuotaState::OK},
+      mWaitTimeUntil{std::chrono::system_clock::time_point()},
       overQuotaAlertVisible{false},
       almostQuotaAlertVisible{false}
 {
@@ -51,7 +52,8 @@ void TransferQuota::updateQuotaState()
     {
         auto newState (mQuotaState);
 
-        if (newState == QuotaState::OVERQUOTA && std::chrono::system_clock::now() >= mWaitTimeUntil)
+        // Check if the overquota timeout given by the API has expired
+        if (mQuotaState == QuotaState::OVERQUOTA && std::chrono::system_clock::now() >= mWaitTimeUntil)
         {
             newState = QuotaState::OK;
             mWaitTimeUntil = std::chrono::system_clock::time_point();
@@ -59,15 +61,23 @@ void TransferQuota::updateQuotaState()
             emit waitTimeIsOver();
         }
 
-        if (newState != QuotaState::OVERQUOTA)
+        // We have 2 cases:
+        // Unlimited (0) totalBytes (ex. Free account) --> makes no sense to check %, OQ given
+        //                                                 for a limited time by API
+        // Limited (>0) totalBytes --> check % and set according status. OVERQUOTA trumps FULL
+        const auto totalBytes (mPreferences->totalBandwidth());
+        if (totalBytes > 0)
         {
             const auto usedBytes (mPreferences->usedBandwidth());
-            const auto totalBytes (mPreferences->totalBandwidth());
             const auto usagePercent (Utilities::partPer(usedBytes, totalBytes, 100));
 
             if (usagePercent >= FULL_QUOTA_PER_CENT)
             {
-                newState = QuotaState::FULL;
+                // Overquota possible only if >= FULL
+                if (newState != QuotaState::OVERQUOTA)
+                {
+                    newState = QuotaState::FULL;
+                }
             }
             else if (usagePercent >= ALMOST_OVER_QUOTA_PER_CENT)
             {
@@ -79,6 +89,7 @@ void TransferQuota::updateQuotaState()
             }
         }
 
+        // Emit new state and take action accordingly
         if (newState != mQuotaState)
         {
             mQuotaState = newState;

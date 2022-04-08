@@ -159,15 +159,15 @@ private slots:
     void on_bFolders_clicked();
     void on_bUploadFolder_clicked();
     void on_bDownloadFolder_clicked();
-    void on_bAddName_clicked();
-    void on_bDeleteName_clicked();
-    void on_cExcludeUpperThan_clicked();
-    void on_cExcludeLowerThan_clicked();
-    void on_eUpperThan_valueChanged(int i);
-    void on_eLowerThan_valueChanged(int i);
-    void on_cbExcludeUpperUnit_currentIndexChanged(int index);
-    void on_cbExcludeLowerUnit_currentIndexChanged(int index);
-    void on_bRestart_clicked();
+    //void on_bAddName_clicked();
+    //void on_bDeleteName_clicked();
+    //void on_cExcludeUpperThan_clicked();
+    //void on_cExcludeLowerThan_clicked();
+    //void on_eUpperThan_valueChanged(int i);
+    //void on_eLowerThan_valueChanged(int i);
+    //void on_cbExcludeUpperUnit_currentIndexChanged(int index);
+    //void on_cbExcludeLowerUnit_currentIndexChanged(int index);
+    //void on_bRestart_clicked();
 
     // Network
     void on_bNetwork_clicked();
@@ -192,8 +192,9 @@ private:
     void addSyncRow(int row, const QString& name, const QString& lPath,
                     const QString& rPath, bool boxTicked, QString runStateString, int error, mega::MegaHandle megaHandle,
                     mega::MegaHandle tag, std::shared_ptr<SyncSetting> syncSetting = nullptr);
-    void saveExcludeSyncNames();
+//    void saveExcludeSyncNames();
     void updateNetworkTab();
+    void setShortCutsForToolBarItems();
     void showUnexpectedSyncError(const QString& message);
 
     enum
@@ -251,6 +252,5 @@ private:
     bool mHasDefaultUploadOption;
     bool mHasDefaultDownloadOption;
     QPointer<ProxySettings> mProxySettingsDialog;
-    void setShortCutsForToolBarItems();
 };
 #endif // SETTINGSDIALOG_H

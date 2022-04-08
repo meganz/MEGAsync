@@ -620,9 +620,6 @@ QString Utilities::getFinishedTimeString(long long secs)
 
 QString Utilities::getSizeString(unsigned long long bytes)
 {
-    QString language = ((MegaApplication*)qApp)->getCurrentLanguageCode();
-    QLocale locale(language);
-
     auto size = getSizeStringWithoutUnits(bytes);
 
     if (bytes >= TB)
@@ -689,7 +686,7 @@ QString Utilities::getSizeStringWithoutUnits(unsigned long long bytes)
         return locale.toString( ((int)((10 * bytes) / KB))/10.0);
     }
 
-    return locale.toString(bytes) + QStringLiteral(" ");
+    return locale.toString(bytes);
 }
 
 QString Utilities::getSizeStringWithoutUnits(long long bytes)
@@ -699,9 +696,56 @@ QString Utilities::getSizeStringWithoutUnits(long long bytes)
         return getSizeStringWithoutUnits(static_cast<unsigned long long>(bytes));
     }
 
-    return QStringLiteral(" ");
+    return QString();
 }
 
+Utilities::ProgressSize Utilities::getProgressSizes(unsigned long long transferredBytes, unsigned long long totalBytes)
+{
+    ProgressSize sizes;
+    Q_ASSERT(totalBytes >= transferredBytes);
+
+    if (transferredBytes >= 0 && totalBytes >= 0)
+    {    
+        QString language = ((MegaApplication*)qApp)->getCurrentLanguageCode();
+        QLocale locale(language);
+
+        //Init on 1 for Bytes
+        unsigned long long sizeToCompare(0);
+        QString Units;
+
+        if (totalBytes >= TB)
+        {
+            sizeToCompare = TB;
+            Units = QCoreApplication::translate("Utilities", "TB");
+        }
+        else if (totalBytes >= GB)
+        {
+            sizeToCompare = GB;
+            Units = QCoreApplication::translate("Utilities", "GB");
+        }
+        else if (totalBytes >= MB)
+        {
+            sizeToCompare = MB;
+            Units = QCoreApplication::translate("Utilities", "MB");
+        }
+        else if (totalBytes >= KB)
+        {
+            sizeToCompare = KB;
+            Units = QCoreApplication::translate("Utilities", "KB");
+        }
+        else
+        {
+            sizeToCompare = 1;
+            Units = QCoreApplication::translate("Utilities", "Bytes");
+        }
+
+        sizes.transferredBytes = locale.toString( ((int)((10 * transferredBytes) / sizeToCompare))/10.0);
+        sizes.totalBytes = locale.toString( ((int)((10 * totalBytes) / sizeToCompare))/10.0);
+        sizes.units = QStringLiteral(" ") + Units;
+    }
+
+    return sizes;
+}
 
 QString Utilities::extractJSONString(QString json, QString name)
 {

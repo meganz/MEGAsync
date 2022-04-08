@@ -323,6 +323,18 @@ QToolButton
   background-color: #FFA500;
 }
 
+#tActionButton:disabled
+{
+	 height: 32px;
+    min-height: 32px;
+    max-height: 32px;
+  border-radius: 16px;
+	padding-left: 20px;
+	padding-right: 20px;
+  background-color: #D3D3D3;
+}
+
+
 #tSeePlans
 {
   background-color: #3ACC86;
@@ -1874,7 +1886,7 @@ QToolButton
              <cursorShape>PointingHandCursor</cursorShape>
             </property>
             <property name="toolTip">
-             <string>Clear All</string>
+             <string>Cancel and clear all</string>
             </property>
             <property name="icon">
              <iconset resource="../../../gui/Resources_linux.qrc">

@@ -317,6 +317,7 @@ void HTTPServer::processRequest(QAbstractSocket *socket, HTTPRequest request)
     switch(GetRequestType(request))
     {
     case VERSION_COMMAND:
+        //Version command is taken using QtConcurrent, this is why the case is broken, as the response is received later
         versionCommand(request, socket);
         return;
     case OPEN_LINK_REQUEST_START:
@@ -358,7 +359,7 @@ void HTTPServer::processRequest(QAbstractSocket *socket, HTTPRequest request)
     endProcessRequest(socket,request, response);
 }
 
-void HTTPServer::endProcessRequest(QAbstractSocket* socket,HTTPRequest request, QString response)
+void HTTPServer::endProcessRequest(QAbstractSocket* socket,const HTTPRequest& request, QString response)
 {
     QPointer<QAbstractSocket> safeSocket = socket;
     QPointer<HTTPServer> safeServer = this;
@@ -410,7 +411,7 @@ void HTTPServer::peerVerifyError(const QSslError &)
 {
 }
 
-void HTTPServer::versionCommand(HTTPRequest request, QAbstractSocket *socket)
+void HTTPServer::versionCommand(const HTTPRequest& request, QAbstractSocket *socket)
 {
     auto future = QtConcurrent::run([this, socket, request]() -> VersionCommandAnswer
     {

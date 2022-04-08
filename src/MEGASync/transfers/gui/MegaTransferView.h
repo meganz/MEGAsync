@@ -24,13 +24,14 @@ public:
     void disableContextMenus(bool option);
 
     void onPauseResumeVisibleRows(bool isPaused);
+    void onCancelAllTransfers();
     void onCancelAndClearAllTransfers();
 
     int getVerticalScrollBarWidth() const;
 
 public slots:
     void onPauseResumeSelection(bool pauseState);
-    void onCancelClearVisibleTransfers();
+    void onCancelVisibleTransfers();
     void onCancelClearSelectedTransfers();
     void onClearCompletedVisibleTransfers();
     void onRetryVisibleTransfers();
@@ -89,9 +90,12 @@ private:
     void createContextMenu();
     void updateContextMenu(bool enablePause, bool enableResume, bool enableMove, bool enableClear,
                            bool enableCancel, bool isTopIndex, bool isBottomIndex);
+    void cancelAndClearAllTransfers(bool cancel, bool clear);
 
     QModelIndexList getTransfers(bool onlyVisible, TransferData::TransferStates state = TransferData::TRANSFER_NONE);
+    bool isSingleTransfer(bool onlyVisible, TransferData::TransferStates state = TransferData::TRANSFER_NONE);
     QModelIndexList getSelectedTransfers();
+    bool isSingleSelectedTransfers();
 };
 
 #endif // MEGATRANSFERVIEW_H

@@ -50,8 +50,14 @@ void TransferManagerDelegateWidget::updateTransferState()
         {
             if(stateHasChanged())
             {
-                switch (getData()->mType)
+                if (!getData()->mTransferredBytes)
                 {
+                    statusString = QString::fromUtf8("%1%2").arg(tr("starting"), QString::fromUtf8("…"));
+                }
+                else
+                {
+                    switch (getData()->mType)
+                    {
                     case TransferData::TRANSFER_DOWNLOAD:
                     case TransferData::TRANSFER_LTCPDOWNLOAD:
                     {
@@ -68,6 +74,7 @@ void TransferManagerDelegateWidget::updateTransferState()
                         statusString = tr("Syncing");
                         break;
                     }
+                    }
                 }
                 mLastPauseResuemtTransferIconName = QLatin1Literal(":images/lists_pause_ico.png");
                 pauseResumeTooltip = tr("Pause transfer");
@@ -80,12 +87,7 @@ void TransferManagerDelegateWidget::updateTransferState()
                              timeString
                            : Utilities::getTimeString(getData()->mRemainingTime);
 
-           /* if(getData()->mTransferredBytes == 0 && getData()->mSpeed == 0)
-            {
-                speedString = Utilities::getSizeString(getData()->mTotalSize)
-                        + QLatin1Literal("/s");
-            }
-            else */if(getData()->mTotalSize == getData()->mTransferredBytes)
+            if(getData()->mTotalSize == getData()->mTransferredBytes)
             {
                 speedString = QString::fromUtf8("…");
             }
@@ -153,6 +155,7 @@ void TransferManagerDelegateWidget::updateTransferState()
                 statusString = tr("Completing");
                 showTPauseResume = false;
                 showTCancelClear = false;
+                mUi->wProgressBar->setVisible(true);
                 mUi->sStatus->setCurrentWidget(mUi->pActive);
                 mLastPauseResuemtTransferIconName.clear();
             }
@@ -249,12 +252,15 @@ void TransferManagerDelegateWidget::updateTransferState()
     }
 
     // Total size
-    mUi->lTotal->setText(Utilities::getSizeString(getData()->mTotalSize));
 
     // Done label
     auto transferedB (getData()->mTransferredBytes);
     auto totalB (getData()->mTotalSize);
-    mUi->lDone->setText(Utilities::getSizeStringWithoutUnits(transferedB) + QLatin1Literal("/"));
+
+    auto sizes = Utilities::getProgressSizes(transferedB, totalB);
+
+    mUi->lDone->setText(sizes.transferredBytes + QLatin1Literal("/"));
+    mUi->lTotal->setText(sizes.totalBytes + QLatin1Literal(" ") + sizes.units);
 
     // Progress bar
     int permil = getData()->mState & (TransferData::TRANSFER_COMPLETED | TransferData::TRANSFER_COMPLETING) ?

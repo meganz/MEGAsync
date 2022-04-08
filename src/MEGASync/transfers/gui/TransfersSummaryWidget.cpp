@@ -190,6 +190,9 @@ void TransfersSummaryWidget::reset()
     setCompletedUploads(0);
     setTotalDownloads(0);
     setTotalUploads(0);
+
+    setPercentUploads(0.0);
+    setPercentDownloads(0.0);
 }
 
 void TransfersSummaryWidget::resizeAnimation()

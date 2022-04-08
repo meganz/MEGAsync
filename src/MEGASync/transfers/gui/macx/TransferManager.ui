@@ -9,15 +9,9 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1161</width>
-    <height>720</height>
+    <width>1070</width>
+    <height>752</height>
    </rect>
-  </property>
-  <property name="minimumSize">
-   <size>
-    <width>1000</width>
-    <height>0</height>
-   </size>
   </property>
   <property name="windowTitle">
    <string>Transfer Manager</string>
@@ -109,7 +103,7 @@ QGroupBox::title
     padding-left: 10px;
 }
 
-#wTransferring QPushButton
+#wMediaType QPushButton, #wTransferring QPushButton, #wSearch QPushButton
 {
     width: 200px;
     min-width: 180px;
@@ -130,7 +124,7 @@ QGroupBox::title
     color: #333333;
     border: none;
     text-align: left;
-    padding-left:-1px;
+    padding-left: -1px;
     qProperty-iconSize: 24px;
 }
 
@@ -321,6 +315,17 @@ QToolButton
 	padding-left: 20px;
 	padding-right: 20px;
   background-color: #FFA500;
+}
+
+#tActionButton:disabled
+{
+	 height: 32px;
+    min-height: 32px;
+    max-height: 32px;
+  border-radius: 16px;
+	padding-left: 20px;
+	padding-right: 20px;
+  background-color: #D3D3D3;
 }
 
 #tSeePlans
@@ -1763,7 +1768,7 @@ QToolButton
          <string notr="true"/>
         </property>
         <property name="currentIndex">
-         <number>1</number>
+         <number>0</number>
         </property>
         <widget class="QWidget" name="pSpeedAndClear">
          <layout class="QHBoxLayout" name="pSpeedAndClearLayout" stretch="1,1,0,0">
@@ -1820,7 +1825,7 @@ QToolButton
           <item>
            <widget class="QPushButton" name="bUpSpeed">
             <property name="sizePolicy">
-             <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
@@ -1874,7 +1879,7 @@ QToolButton
              <cursorShape>PointingHandCursor</cursorShape>
             </property>
             <property name="toolTip">
-             <string>Clear All</string>
+             <string>Cancel and clear all</string>
             </property>
             <property name="icon">
              <iconset resource="../../../gui/Resources_macx.qrc">
@@ -2178,6 +2183,9 @@ QToolButton
                </property>
                <property name="cursor">
                 <cursorShape>PointingHandCursor</cursorShape>
+               </property>
+               <property name="toolTip">
+                <string>See Plans</string>
                </property>
                <property name="text">
                 <string>See plans</string>
@@ -2552,7 +2560,7 @@ QToolButton
       <item>
        <widget class="QStackedWidget" name="sTransfers">
         <property name="currentIndex">
-         <number>0</number>
+         <number>5</number>
         </property>
         <widget class="TransfersWidget" name="wTransfers">
          <property name="sizePolicy">
