@@ -53,8 +53,6 @@ public:
     void disableGetLink(bool disable);
     ~TransferManager();
 
-    void pauseModel(bool state);
-
 public slots:
     void onTransferQuotaStateChanged(QuotaState transferQuotaState);
     void onStorageStateChanged(int storageState);

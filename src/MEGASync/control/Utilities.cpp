@@ -736,7 +736,7 @@ Utilities::ProgressSize Utilities::getProgressSizes(unsigned long long transferr
         else
         {
             sizeToCompare = 1;
-            Units = QCoreApplication::translate("Utilities", "TB");
+            Units = QCoreApplication::translate("Utilities", "Bytes");
         }
 
         sizes.transferredBytes = locale.toString( ((int)((10 * transferredBytes) / sizeToCompare))/10.0);

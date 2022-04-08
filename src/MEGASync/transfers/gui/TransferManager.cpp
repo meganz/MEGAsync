@@ -200,11 +200,6 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
     }
 }
 
-void TransferManager::pauseModel(bool value)
-{
-    mModel->pauseModelProcessing(value);
-}
-
 void TransferManager::onPauseStateChangedByTransferResume()
 {
     onUpdatePauseState(false);
@@ -369,11 +364,12 @@ void TransferManager::onCancelVisibleRows()
     {
         if(mCurrentTab == ALL_TRANSFERS_TAB)
         {
-            transfersView->onCancelAllTransfers();
+            on_bCancelClearAll_clicked();
         }
         else
         {
             transfersView->onCancelVisibleTransfers();
+
         }
 
         //Use to repaint and update the transfers state
@@ -582,22 +578,27 @@ void TransferManager::onStorageStateChanged(int storageState)
 
 void TransferManager::onVerticalScrollBarVisibilityChanged(bool state)
 {
-    auto transfersView = dynamic_cast<MegaTransferView*>(sender());
-    if(transfersView)
-    {
-        if(state)
-        {
-            int sliderWidth = transfersView->getVerticalScrollBarWidth();
-            mUi->wRightPanelScrollMargin->changeSize(sliderWidth,0,QSizePolicy::Fixed, QSizePolicy::Preferred);
-        }
-        else
-        {
-            mUi->wRightPanelScrollMargin->changeSize(0,0,QSizePolicy::Fixed, QSizePolicy::Preferred);
-        }
+    QPointer<TransferManager> currentTransferManager = this;
 
-        if(mUi->wRightPaneHeaderLayout)
+    if(currentTransferManager)
+    {
+        auto transfersView = dynamic_cast<MegaTransferView*>(sender());
+        if(transfersView)
         {
-            mUi->wRightPaneHeaderLayout->invalidate();
+            if(state)
+            {
+                int sliderWidth = transfersView->getVerticalScrollBarWidth();
+                mUi->wRightPanelScrollMargin->changeSize(sliderWidth,0,QSizePolicy::Fixed, QSizePolicy::Preferred);
+            }
+            else
+            {
+                mUi->wRightPanelScrollMargin->changeSize(0,0,QSizePolicy::Fixed, QSizePolicy::Preferred);
+            }
+
+            if(mUi->wRightPaneHeaderLayout)
+            {
+                mUi->wRightPaneHeaderLayout->invalidate();
+            }
         }
     }
 }
@@ -897,6 +898,7 @@ void TransferManager::on_bCancelClearAll_clicked()
     if(transfersView)
     {
         transfersView->onCancelAndClearAllTransfers();
+        on_tAllTransfers_clicked();
 
         //Use to repaint and update the transfers state
         transfersView->update();

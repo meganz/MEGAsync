@@ -50,28 +50,25 @@ void TransfersManagerSortFilterProxyModel::sort(int sortCriterion, Qt::SortOrder
     QFuture<void> filtered = QtConcurrent::run([this, order, sortCriterion](){
         auto sourceM = qobject_cast<TransfersModel*>(sourceModel());
         sourceM->lockModelMutex(true);
-        QSortFilterProxyModel::invalidate();
+        sourceM->blockSignals(true);
+        invalidate();
         QSortFilterProxyModel::sort(0, order);
         sourceM->lockModelMutex(false);
+        sourceM->blockSignals(false);
     });
     mFilterWatcher.setFuture(filtered);
-}
-
-void TransfersManagerSortFilterProxyModel::invalidate()
-{
-    resetAllCounters();
-    emit modelAboutToBeChanged();
-
-    QSortFilterProxyModel::invalidate();
-
-    emit modelChanged();
-    emit searchNumbersChanged();
 }
 
 void TransfersManagerSortFilterProxyModel::setSourceModel(QAbstractItemModel *sourceModel)
 {
     connect(sourceModel, &QAbstractItemModel::rowsAboutToBeRemoved,
             this, &TransfersManagerSortFilterProxyModel::onRowsAboutToBeRemoved, Qt::DirectConnection);
+
+    if(auto transferModel = dynamic_cast<TransfersModel*>(sourceModel))
+    {
+        connect(transferModel, &TransfersModel::unblockUi,
+                this, &TransfersManagerSortFilterProxyModel::onModelUnblockedRequest, Qt::DirectConnection);
+    }
 
     QSortFilterProxyModel::setSourceModel(sourceModel);
 }
@@ -87,9 +84,11 @@ void TransfersManagerSortFilterProxyModel::setFilterFixedString(const QString& p
     QFuture<void> filtered = QtConcurrent::run([this](){
         auto sourceM = qobject_cast<TransfersModel*>(sourceModel());
         sourceM->lockModelMutex(true);
-        QSortFilterProxyModel::invalidate();
+        sourceM->blockSignals(true);
+        invalidate();
         QSortFilterProxyModel::sort(0,  sortOrder());
         sourceM->lockModelMutex(false);
+        sourceM->blockSignals(false);
     });
 
     mFilterWatcher.setFuture(filtered);
@@ -105,9 +104,11 @@ void TransfersManagerSortFilterProxyModel::textSearchTypeChanged()
     QFuture<void> filtered = QtConcurrent::run([this](){
         auto sourceM = qobject_cast<TransfersModel*>(sourceModel());
         sourceM->lockModelMutex(true);
-        QSortFilterProxyModel::invalidate();
+        sourceM->blockSignals(true);
+        invalidate();
         QSortFilterProxyModel::sort(0, sortOrder());
         sourceM->lockModelMutex(false);
+        sourceM->blockSignals(false);
     });
     mFilterWatcher.setFuture(filtered);
 
@@ -123,6 +124,13 @@ void TransfersManagerSortFilterProxyModel::onModelSortedFiltered()
 
     emit modelChanged();
     emit searchNumbersChanged();
+}
+
+//When the central model request an ui unblock, it´s because an action in other thread has finished completely (canceling or failing)
+//We invalidate the proxy model to refresh it, as the action in the other thread has the signals blocked to speed up things.
+void TransfersManagerSortFilterProxyModel::onModelUnblockedRequest()
+{
+    invalidate();
 }
 
 void TransfersManagerSortFilterProxyModel::setFilters(const TransferData::TransferTypes transferTypes,

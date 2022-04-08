@@ -9,7 +9,6 @@
 #include "QMegaMessageBox.h"
 
 #include <QMouseEvent>
-#include <QPainterPath>
 
 constexpr uint PB_PRECISION = 1000;
 const QColor HOVER_COLOR = QColor("#FAFAFA");
@@ -156,6 +155,7 @@ void TransferManagerDelegateWidget::updateTransferState()
                 statusString = tr("Completing");
                 showTPauseResume = false;
                 showTCancelClear = false;
+                mUi->wProgressBar->setVisible(true);
                 mUi->sStatus->setCurrentWidget(mUi->pActive);
                 mLastPauseResuemtTransferIconName.clear();
             }
