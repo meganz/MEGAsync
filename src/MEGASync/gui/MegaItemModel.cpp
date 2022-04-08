@@ -189,7 +189,9 @@ int MegaItemModel::rowCount(const QModelIndex &parent) const
     {
         return mRootItems.size();
     }
-    return 0;
+#ifndef WIN32
+    return 0;  // unreachable code
+#endif
 }
 
 QVariant MegaItemModel::headerData(int section, Qt::Orientation orientation, int role) const

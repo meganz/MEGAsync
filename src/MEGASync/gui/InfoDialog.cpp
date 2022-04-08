@@ -18,7 +18,7 @@
 #include "platform/Platform.h"
 #include "assert.h"
 
-#ifdef _WIN32    
+#ifdef _WIN32
 #include <chrono>
 using namespace std::chrono;
 #endif
@@ -705,10 +705,12 @@ void InfoDialog::updateTransfersCount()
             updateDialogState();
         }
 
-        if ((QDateTime::currentMSecsSinceEpoch() - preferences->lastTransferNotificationTimestamp()) > Preferences::MIN_TRANSFER_NOTIFICATION_INTERVAL_MS)
-        {
-            app->showNotificationMessage(tr("All transfers have been completed"));
-        }
+        // this should not be occurring for sync transfers
+        //
+        //if ((QDateTime::currentMSecsSinceEpoch() - preferences->lastTransferNotificationTimestamp()) > Preferences::MIN_TRANSFER_NOTIFICATION_INTERVAL_MS)
+        //{
+        //    app->showNotificationMessage(tr("All transfers have been completed"));
+        //}
 
         QTimer::singleShot(2000, [this](){
             ui->bTransferManager->reset();
@@ -1597,7 +1599,7 @@ void InfoDialog::drawAvatar(QString email)
 void InfoDialog::animateStates(bool opt)
 {
     if (opt) //Enable animation for scanning/waiting states
-    {        
+    {
         ui->lUploadToMega->setIcon(Utilities::getCachedPixmap(QString::fromUtf8("://images/init_scanning.png")));
         ui->lUploadToMega->setIconSize(QSize(352,234));
         ui->lUploadToMegaDesc->setStyleSheet(QString::fromUtf8("font-size: 14px;"));
@@ -1624,7 +1626,7 @@ void InfoDialog::animateStates(bool opt)
         }
     }
     else //Disable animation
-    {   
+    {
         ui->lUploadToMega->setIcon(Utilities::getCachedPixmap(QString::fromUtf8("://images/upload_to_mega.png")));
         ui->lUploadToMega->setIconSize(QSize(352,234));
         ui->lUploadToMegaDesc->setStyleSheet(QString::fromUtf8("font-size: 18px;"));
@@ -1886,7 +1888,7 @@ void InfoDialog::highLightMenuEntry(QAction *action)
     {
         return;
     }
-    
+
     MenuItemAction* pAction = (MenuItemAction*)action;
     if (lastHovered)
     {
