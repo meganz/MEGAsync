@@ -295,6 +295,14 @@ public:
     static QString getSizeString(long long bytes);
     static QString getSizeStringWithoutUnits(unsigned long long bytes);
     static QString getSizeStringWithoutUnits(long long bytes);
+    struct ProgressSize
+    {
+        QString transferredBytes;
+        QString totalBytes;
+        QString units;
+    };
+    static ProgressSize getProgressSizes(unsigned long long transferredBytes, unsigned long long totalBytes);
+
     static QString getTimeString(long long secs, bool secondPrecision = true, bool color = true);
     static QString getQuantityString(unsigned long long quantity);
     static QString getFinishedTimeString(long long secs);

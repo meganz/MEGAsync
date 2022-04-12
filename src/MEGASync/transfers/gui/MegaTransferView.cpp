@@ -86,6 +86,32 @@ QModelIndexList MegaTransferView::getTransfers(bool onlyVisible, TransferData::T
     return indexes;
 }
 
+bool MegaTransferView::isSingleTransfer(bool onlyVisible, TransferData::TransferStates state)
+{
+    QModelIndexList indexes;
+    auto proxy(qobject_cast<QSortFilterProxyModel*>(model()));
+    auto sourceModel(qobject_cast<TransfersModel*>(proxy->sourceModel()));
+
+    auto rowCount = onlyVisible ? proxy->rowCount(QModelIndex()) : sourceModel->rowCount(QModelIndex());
+
+    for (auto row (0); row < rowCount; ++row)
+    {
+        auto index (model()->index(row, 0, QModelIndex()));
+        auto d (qvariant_cast<TransferItem>(index.data()).getTransferData());
+        if(state == TransferData::TRANSFER_NONE || (d && d->mState & state))
+        {
+            indexes.push_back(index);
+
+            if(indexes.size() > 1)
+            {
+                return false;
+            }
+        }
+    }
+
+    return true;
+}
+
 QModelIndexList MegaTransferView::getSelectedTransfers()
 {
     auto proxy(qobject_cast<QSortFilterProxyModel*>(model()));
@@ -102,6 +128,12 @@ QModelIndexList MegaTransferView::getSelectedTransfers()
     }
 
     return indexes;
+}
+
+bool MegaTransferView::isSingleSelectedTransfers()
+{
+    auto selection = selectionModel()->selection();
+    return !(selection.size() > 1);
 }
 
 void MegaTransferView::onPauseResumeVisibleRows(bool pauseState)
@@ -130,18 +162,20 @@ void MegaTransferView::onPauseResumeSelection(bool pauseState)
 
 void MegaTransferView::onCancelVisibleTransfers()
 {
-    QModelIndexList indexes = getTransfers(true);
+    bool singleTransfer = isSingleTransfer(true);
 
     QPointer<MegaTransferView> dialog = QPointer<MegaTransferView>(this);
 
     if (QMegaMessageBox::warning(this, QString::fromUtf8("MEGAsync"),
-                             tr("Are you sure you want to cancel the following transfer(s)?", "", indexes.size()),
+                             tr("Are you sure you want to cancel the following transfer(s)?", "", !singleTransfer),
                              QMessageBox::Yes | QMessageBox::No, QMessageBox::No)
             != QMessageBox::Yes
             || !dialog)
     {
         return;
     }
+
+    auto indexes = getTransfers(true);
 
     auto proxy (qobject_cast<QSortFilterProxyModel*>(model()));
     auto sourceModel(qobject_cast<TransfersModel*>(proxy->sourceModel()));
@@ -150,18 +184,20 @@ void MegaTransferView::onCancelVisibleTransfers()
 
 void MegaTransferView::onCancelClearSelectedTransfers()
 {
-    QModelIndexList indexes = getSelectedTransfers();
+    bool singleTransfer = isSingleSelectedTransfers();
 
     QPointer<MegaTransferView> dialog = QPointer<MegaTransferView>(this);
 
     if (QMegaMessageBox::warning(this, QString::fromUtf8("MEGAsync"),
-                             tr("Are you sure you want to cancel or clear the following transfer(s)?", "", indexes.size()),
+                             tr("Are you sure you want to cancel or clear the following transfer(s)?", "", !singleTransfer),
                              QMessageBox::Yes | QMessageBox::No, QMessageBox::No)
             != QMessageBox::Yes
             || !dialog)
     {
         return;
     }
+
+    QModelIndexList indexes = getSelectedTransfers();
 
     auto proxy (qobject_cast<QSortFilterProxyModel*>(model()));
     auto sourceModel(qobject_cast<TransfersModel*>(proxy->sourceModel()));
@@ -197,7 +233,6 @@ void MegaTransferView::onCancelAndClearAllTransfers()
         return;
     }
 
-
     cancelAndClearAllTransfers(true, true);
 }
 
@@ -207,14 +242,23 @@ void MegaTransferView::cancelAndClearAllTransfers(bool cancel, bool clear)
     {
         auto proxy(qobject_cast<QSortFilterProxyModel*>(model()));
         auto sourceModel(qobject_cast<TransfersModel*>(proxy->sourceModel()));
-        if(cancel)
+        if(cancel && clear)
         {
-            sourceModel->cancelTransfers(QModelIndexList(), this);
+            sourceModel->setResetMode();
         }
+
+        sourceModel->pauseModelProcessing(true);
+
         if(clear)
         {
             sourceModel->clearTransfers(QModelIndexList());
         }
+        if(cancel)
+        {
+            sourceModel->cancelTransfers(QModelIndexList(), this);
+        }
+
+        sourceModel->pauseModelProcessing(false);
     }
 }
 
@@ -225,12 +269,15 @@ int MegaTransferView::getVerticalScrollBarWidth() const
 
 void MegaTransferView::onClearCompletedVisibleTransfers()
 {
-    QModelIndexList indexes = getTransfers(true, TransferData::FINISHED_STATES_MASK);
+    auto proxy (qobject_cast<QSortFilterProxyModel*>(model()));
+    auto sourceModel(qobject_cast<TransfersModel*>(proxy->sourceModel()));
+
+    bool singleTransfer = isSingleTransfer(true, TransferData::FINISHED_STATES_MASK);
 
     QPointer<MegaTransferView> dialog = QPointer<MegaTransferView>(this);
 
     if (QMegaMessageBox::warning(this, QString::fromUtf8("MEGAsync"),
-                                 tr("Are you sure you want to clear the following transfer(s)?", "", indexes.size()),
+                                 tr("Are you sure you want to clear the following transfer(s)?", "", !singleTransfer),
                                  QMessageBox::Yes | QMessageBox::No, QMessageBox::No)
             != QMessageBox::Yes
             || !dialog)
@@ -238,25 +285,27 @@ void MegaTransferView::onClearCompletedVisibleTransfers()
         return;
     }
 
-    auto proxy (qobject_cast<QSortFilterProxyModel*>(model()));
-    auto sourceModel(qobject_cast<TransfersModel*>(proxy->sourceModel()));
+    auto indexes = getTransfers(true, TransferData::FINISHED_STATES_MASK);
+
     sourceModel->clearTransfers(indexes);
 }
 
 void MegaTransferView::onRetryVisibleTransfers()
 {
-    QModelIndexList indexes = getTransfers(true, TransferData::TRANSFER_FAILED);
+    bool singleTransfer = isSingleTransfer(true, TransferData::TRANSFER_FAILED);
 
     QPointer<MegaTransferView> dialog = QPointer<MegaTransferView>(this);
 
     if (QMegaMessageBox::warning(this, QString::fromUtf8("MEGAsync"),
-                                 tr("Are you sure you want to retry the following transfer(s)?", "", indexes.size()),
+                                 tr("Are you sure you want to retry the following transfer(s)?", "", !singleTransfer),
                                  QMessageBox::Yes | QMessageBox::No, QMessageBox::No)
             != QMessageBox::Yes
             || !dialog)
     {
         return;
     }
+
+    QModelIndexList indexes = getTransfers(true, TransferData::TRANSFER_FAILED);
 
     auto proxy (qobject_cast<QSortFilterProxyModel*>(model()));
     auto sourceModel(qobject_cast<TransfersModel*>(proxy->sourceModel()));

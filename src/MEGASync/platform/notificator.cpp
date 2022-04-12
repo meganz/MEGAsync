@@ -605,6 +605,8 @@ void MegaNotification::dBusNotificationCallback(QDBusMessage dbusMssage)
 
 MegaNotification::MegaNotification()
 {
+    qRegisterMetaType<CloseReason>("CloseReason");
+    qRegisterMetaType<Action>("Action");
     title = QString::fromUtf8("MEGA");
     text = QString::fromUtf8("MEGAsync");
     expirationTime = 10000;

@@ -36,7 +36,7 @@ private:
     QLabel* value;
     QHBoxLayout* layout;
 
-    void setupActionWidget(QSize iconSize);
+    void setupActionWidget(QSize iconSize, const QString& actionTitle);
     QString getColor(); /* return color based on accent value */
 };
 

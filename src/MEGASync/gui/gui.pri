@@ -2,9 +2,12 @@ QT       += network
 
 SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/BalloonToolTip.cpp \
+    $$PWD/MegaItemDelegates.cpp \
     $$PWD/EventHelper.cpp \
     $$PWD/InfoDialog.cpp \
     $$PWD/MegaDelegateHoverManager.cpp \
+    $$PWD/MegaItemProxyModel.cpp \
+    $$PWD/MegaItemTreeView.cpp \
     $$PWD/NotificationsSettings.cpp \
     $$PWD/OverQuotaDialog.cpp \
     $$PWD/ScanningWidget.cpp \
@@ -24,7 +27,7 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/AccountDetailsDialog.cpp \
     $$PWD/DownloadFromMegaDialog.cpp \
     $$PWD/UsageWidget.cpp \
-    $$PWD/QMegaModel.cpp \
+    $$PWD/MegaItemModel.cpp \
     $$PWD/MegaItem.cpp \
     $$PWD/ChangeLogDialog.cpp \
     $$PWD/GuestWidget.cpp \
@@ -55,6 +58,7 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/FilterAlertWidget.cpp \
     $$PWD/AlertFilterType.cpp \
     $$PWD/BugReportDialog.cpp \
+    $$PWD/UserAttributesRequests.cpp \
     $$PWD/VerifyLockMessage.cpp \
     $$PWD/MegaInfoMessage.cpp \
     $$PWD/WaitingSpinnerWidget.cpp \
@@ -66,9 +70,12 @@ SOURCES += $$PWD/SettingsDialog.cpp \
 
 HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/BalloonToolTip.h \
+    $$PWD/MegaItemDelegates.h \
     $$PWD/EventHelper.h \
     $$PWD/InfoDialog.h \
     $$PWD/MegaDelegateHoverManager.h \
+    $$PWD/MegaItemProxyModel.h \
+    $$PWD/MegaItemTreeView.h \
     $$PWD/NotificationsSettings.h \
     $$PWD/OverQuotaDialog.h \
     $$PWD/ScanningWidget.h \
@@ -88,7 +95,7 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/AccountDetailsDialog.h \
     $$PWD/DownloadFromMegaDialog.h \
     $$PWD/UsageWidget.h \
-    $$PWD/QMegaModel.h \
+    $$PWD/MegaItemModel.h \
     $$PWD/MegaItem.h \
     $$PWD/ChangeLogDialog.h \
     $$PWD/GuestWidget.h \
@@ -119,6 +126,7 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/FilterAlertWidget.h \
     $$PWD/AlertFilterType.h \
     $$PWD/BugReportDialog.h \
+    $$PWD/UserAttributesRequests.h \
     $$PWD/VerifyLockMessage.h \
     $$PWD/ViewLoadingScene.h \
     $$PWD/MegaInfoMessage.h \

@@ -29,7 +29,7 @@
    <string>Add folder</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">QWidget
+   <string notr="true">QWidget#BindFolderDialog
 {
 font-size: 11px;
 }

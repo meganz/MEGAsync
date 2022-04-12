@@ -340,6 +340,7 @@ void InfoDialog::moveEvent(QMoveEvent*)
 void InfoDialog::setBandwidthOverquotaState(QuotaState state)
 {
     transferQuotaState = state;
+    setUsage();
 }
 
 void InfoDialog::enableTransferOverquotaAlert()
@@ -592,11 +593,6 @@ void InfoDialog::updateTransfersCount()
         if (!overQuotaState && (ui->sActiveTransfers->currentWidget() != ui->pUpdated))
         {
             updateDialogState();
-        }
-
-        if ((QDateTime::currentMSecsSinceEpoch() - preferences->lastTransferNotificationTimestamp()) > Preferences::MIN_TRANSFER_NOTIFICATION_INTERVAL_MS)
-        {
-            app->showNotificationMessage(tr("All transfers have been completed"));
         }
 
         QTimer::singleShot(2000, [this](){

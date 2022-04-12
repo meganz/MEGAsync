@@ -48,7 +48,7 @@ void InfoDialogTransfersWidget::configureTransferView()
     }
 
     auto tDelegate = new MegaTransferDelegate(mModel, mUi->tView);
-    mUi->tView->setItemDelegate((QAbstractItemDelegate *)tDelegate);
+    mUi->tView->setItemDelegate(tDelegate);
     mUi->tView->header()->close();
     mUi->tView->setSelectionMode(QAbstractItemView::NoSelection);
     mUi->tView->setDragEnabled(false);

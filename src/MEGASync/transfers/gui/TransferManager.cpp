@@ -385,11 +385,12 @@ void TransferManager::onCancelVisibleRows()
     {
         if(mCurrentTab == ALL_TRANSFERS_TAB)
         {
-            transfersView->onCancelAllTransfers();
+            on_bCancelClearAll_clicked();
         }
         else
         {
             transfersView->onCancelVisibleTransfers();
+
         }
 
         //Use to repaint and update the transfers state
@@ -595,22 +596,27 @@ void TransferManager::onStorageStateChanged(int storageState)
 
 void TransferManager::onVerticalScrollBarVisibilityChanged(bool state)
 {
-    auto transfersView = dynamic_cast<MegaTransferView*>(sender());
-    if(transfersView)
-    {
-        if(state)
-        {
-            int sliderWidth = transfersView->getVerticalScrollBarWidth();
-            mUi->wRightPanelScrollMargin->changeSize(sliderWidth,0,QSizePolicy::Fixed, QSizePolicy::Preferred);
-        }
-        else
-        {
-            mUi->wRightPanelScrollMargin->changeSize(0,0,QSizePolicy::Fixed, QSizePolicy::Preferred);
-        }
+    QPointer<TransferManager> currentTransferManager = this;
 
-        if(mUi->wRightPaneHeaderLayout)
+    if(currentTransferManager)
+    {
+        auto transfersView = dynamic_cast<MegaTransferView*>(sender());
+        if(transfersView)
         {
-            mUi->wRightPaneHeaderLayout->invalidate();
+            if(state)
+            {
+                int sliderWidth = transfersView->getVerticalScrollBarWidth();
+                mUi->wRightPanelScrollMargin->changeSize(sliderWidth,0,QSizePolicy::Fixed, QSizePolicy::Preferred);
+            }
+            else
+            {
+                mUi->wRightPanelScrollMargin->changeSize(0,0,QSizePolicy::Fixed, QSizePolicy::Preferred);
+            }
+
+            if(mUi->wRightPaneHeaderLayout)
+            {
+                mUi->wRightPaneHeaderLayout->invalidate();
+            }
         }
     }
 }
@@ -676,13 +682,15 @@ void TransferManager::refreshSearchStats()
 
         if(mUi->tDlResults->property(LABEL_NUMBER).toLongLong() != nbDl)
         {
-            mUi->tDlResults->setText(QString(tr("Downloads\t\t\t\t%1")).arg(nbDl));
+            QString downloadText(tr("Downloads"));
+            mUi->tDlResults->setText(QString(downloadText + QString::fromUtf8("\t\t\t\t") + QString::number(nbDl)));
             mUi->tDlResults->setProperty(LABEL_NUMBER, nbDl);
         }
 
         if(mUi->tUlResults->property(LABEL_NUMBER).toLongLong() != nbUl)
         {
-            mUi->tUlResults->setText(QString(tr("Uploads\t\t\t\t%1")).arg(nbUl));
+            QString uploadText(tr("Uploads"));
+            mUi->tUlResults->setText(QString(uploadText + QString::fromUtf8("\t\t\t\t") + QString::number(nbUl)));
             mUi->tUlResults->setProperty(LABEL_NUMBER, nbUl);
         }
 
@@ -690,7 +698,9 @@ void TransferManager::refreshSearchStats()
         mUi->lNbResults->setProperty("results", bool(nbAll));
         mUi->lNbResults->style()->unpolish(mUi->lNbResults);
         mUi->lNbResults->style()->polish(mUi->lNbResults);
-        mUi->tAllResults->setText(QString(tr("All\t\t\t\t%1")).arg(nbAll));
+
+        QString allText(tr("All"));
+        mUi->tAllResults->setText(allText + QString::fromUtf8("\t\t\t\t") + QString::number(nbAll));
 
         mUi->searchByTextTypeSelector->setVisible(nbDl != 0 && nbUl != 0);
 
@@ -916,6 +926,7 @@ void TransferManager::on_bCancelClearAll_clicked()
     if(transfersView)
     {
         transfersView->onCancelAndClearAllTransfers();
+        on_tAllTransfers_clicked();
 
         //Use to repaint and update the transfers state
         transfersView->update();
@@ -931,6 +942,9 @@ void TransferManager::toggleTab(TM_TAB newTab)
 {
     if (mCurrentTab != newTab)
     {
+        //First, update the data
+        onTransfersDataUpdated();
+
         // De-activate old tab frame
         if (mCurrentTab != NO_TAB)
         {

@@ -16,6 +16,11 @@ static const QModelIndex DEFAULT_IDX = QModelIndex();
 const int MAX_TRANSFERS = 2000;
 
 //LISTENER THREAD
+TransferThread::TransferThread()
+{
+
+}
+
 TransferThread::TransfersToProcess TransferThread::processTransfers()
 {
    TransfersToProcess transfers;
@@ -311,73 +316,62 @@ void TransferThread::resetCompletedUploads(QList<QExplicitlySharedDataPointer<Tr
 {
     QMutexLocker lock(&mCountersMutex);
 
-    unsigned long long totalTransferredBytes(0);
-    unsigned long long totalTransferBytes(0);
-    int failedTransfers(0);
-
     foreach(auto& transfer, transfersToReset)
     {
-        totalTransferredBytes += transfer->isCompleted() ? transfer->mTotalSize : transfer->mTransferredBytes;
-        totalTransferBytes+= transfer->mTotalSize;
-        mTransfersCount.transfersByType[transfer->mFileType]--;
-        mTransfersCount.transfersFinishedByType[transfer->mFileType]--;
-
-        if(transfer->hasFailed())
+        if(mTransfersCount.totalUploads > 0)
         {
-            failedTransfers++;
-            transfer->removeFailedTransfer();
+            mTransfersCount.totalUploads--;
+            mTransfersCount.completedUploadBytes -= transfer->isCompleted() ? transfer->mTotalSize : transfer->mTransferredBytes;
+            mTransfersCount.totalUploadBytes -= transfer->mTotalSize;
+            mTransfersCount.transfersByType[transfer->mFileType]--;
+            mTransfersCount.transfersFinishedByType[transfer->mFileType]--;
+
+            if(transfer->hasFailed())
+            {
+                mTransfersCount.failedUploads++;
+                transfer->removeFailedTransfer();
+            }
         }
     }
-
-    mTransfersCount.totalUploads -= transfersToReset.size();
-    mTransfersCount.completedUploadBytes -= totalTransferredBytes;
-    mTransfersCount.totalUploadBytes -= totalTransferBytes;
-    mTransfersCount.failedUploads -= failedTransfers;
 }
 
 void TransferThread::resetCompletedDownloads(QList<QExplicitlySharedDataPointer<TransferData>> transfersToReset)
 {
     QMutexLocker lock(&mCountersMutex);
 
-    unsigned long long totalTransferredBytes(0);
-    unsigned long long totalTransferBytes(0);
-    int failedTransfers(0);
-
     foreach(auto& transfer, transfersToReset)
     {
-        totalTransferredBytes += transfer->isCompleted() != 0 ? transfer->mTotalSize : transfer->mTransferredBytes;
-        totalTransferBytes+= transfer->mTotalSize;
-        mTransfersCount.transfersByType[transfer->mFileType]--;
-        mTransfersCount.transfersFinishedByType[transfer->mFileType]--;
-
-        if(transfer->hasFailed())
+        if(mTransfersCount.totalDownloads > 0)
         {
-            failedTransfers++;
-            transfer->removeFailedTransfer();
+            mTransfersCount.totalDownloads--;
+            mTransfersCount.completedDownloadBytes -= transfer->isCompleted() ? transfer->mTotalSize : transfer->mTransferredBytes;
+            mTransfersCount.totalDownloadBytes -= transfer->mTotalSize;
+            mTransfersCount.transfersByType[transfer->mFileType]--;
+            mTransfersCount.transfersFinishedByType[transfer->mFileType]--;
+
+            if(transfer->hasFailed())
+            {
+                mTransfersCount.failedDownloads++;
+                transfer->removeFailedTransfer();
+            }
         }
     }
-
-    mTransfersCount.totalDownloads -= transfersToReset.size();
-    mTransfersCount.completedDownloadBytes -= totalTransferredBytes;
-    mTransfersCount.totalDownloadBytes -= totalTransferBytes;
-    mTransfersCount.failedDownloads -= failedTransfers;
 }
 
 ///////////////// TRANSFERS MODEL //////////////////////////////////////////////
 
 const int PROCESS_TIMER = 100;
-const int UPDATE_NUMBER_LIMIT = 100;
 const int RESET_AFTER_EMPTY_RECEIVES = 10;
 const unsigned long long ACTIVE_PRIORITY_OFFSET = 100000000000000;
 const unsigned long long COMPLETED_PRIORITY_OFFSET = 200000000000000;
-const char* TransfersModel::SORTED_BY_STATE = "SORTED_BY_STATE";
 
 TransfersModel::TransfersModel(QObject *parent) :
     QAbstractItemModel (parent),
     mMegaApi (MegaSyncApp->getMegaApi()),
     mPreferences (Preferences::instance()),
     mCancelingMode(0),
-    mFailingMode(0)
+    mFailingMode(0),
+    mModelReset(false)
 {
     qRegisterMetaType<QList<QPersistentModelIndex>>("QList<QPersistentModelIndex>");
 
@@ -415,6 +409,8 @@ TransfersModel::~TransfersModel()
 
 void TransfersModel::pauseModelProcessing(bool value)
 {
+    QMutexLocker lock(&mModelMutex);
+
     if(value)
     {
         mTimer.stop();
@@ -501,7 +497,9 @@ void TransfersModel::onProcessTransfers()
             QtConcurrent::run([this](){
                 if(mModelMutex.tryLock())
                 {
+                    blockSignals(true);
                     processCancelTransfers();
+                    blockSignals(false);
                     updateTransfersCount();
 
                     mModelMutex.unlock();
@@ -520,7 +518,10 @@ void TransfersModel::onProcessTransfers()
             QtConcurrent::run([this](){
                 if(mModelMutex.tryLock())
                 {
+                    blockSignals(true);
                     processFailedTransfers();
+                    blockSignals(false);
+
                     updateTransfersCount();
 
                     mModelMutex.unlock();
@@ -653,7 +654,8 @@ void TransfersModel::processUpdateTransfers()
 
         if(d && d->hasChanged(*it))
         {
-            if(((*it)->isFinished()) || (*it)->isProcessing())
+            if((!isCancelingModeActive() && !isFailingModeActive())
+                    && ((*it)->isFinished()) || (*it)->isProcessing())
             {
                 if(d->mState != (*it)->mState)
                 {
@@ -730,8 +732,11 @@ void TransfersModel::processCancelTransfers()
 
         for (auto it = mTransfersToProcess.canceledTransfersByTag.begin(); it != mTransfersToProcess.canceledTransfersByTag.end();)
         {
-            auto row = mTagByOrder.value((*it)->mTag);
-            indexesToCancel.append(index(row,0, DEFAULT_IDX));
+            auto row = mTagByOrder.value((*it)->mTag,-1);
+            if(row >= 0)
+            {
+                indexesToCancel.append(index(row,0, DEFAULT_IDX));
+            }
 
             mTransfersToProcess.canceledTransfersByTag.erase(it++);
         }
@@ -885,6 +890,11 @@ void TransfersModel::retryTransfers(QModelIndexList indexes)
     clearTransfers(indexes);
 }
 
+void TransfersModel::setResetMode()
+{
+    mModelReset = true;
+}
+
 void TransfersModel::openFolderByTag(TransferTag tag)
 {
     auto row = mTagByOrder.value(tag);
@@ -974,18 +984,15 @@ void TransfersModel::classifyUploadOrDownloadTransfers(QMap<QModelIndex, QExplic
     auto d (getTransfer(index.row()));
 
     // Clear (remove rows of) finished transfers
-    if (d)
+    if (d && d->isFinished())
     {
-        if(d->isFinished())
+        if(d->isUpload())
         {
-            if(d->isUpload())
-            {
-                uploads.insert(index, d);
-            }
-            else
-            {
-                downloads.insert(index, d);
-            }
+            uploads.insert(index, d);
+        }
+        else
+        {
+            downloads.insert(index, d);
         }
     }
 }
@@ -1189,12 +1196,12 @@ void TransfersModel::lockModelMutex(bool lock)
 
 long long TransfersModel::getNumberOfTransfersForFileType(Utilities::FileType fileType) const
 {
-    return mTransferEventWorker->getTransfersCount().transfersByType.value(fileType);
+    return mTransfersCount.transfersByType.value(fileType);
 }
 
 long long TransfersModel::getNumberOfFinishedForFileType(Utilities::FileType fileType) const
 {
-    return mTransferEventWorker->getTransfersCount().transfersFinishedByType.value(fileType);
+    return mTransfersCount.transfersFinishedByType.value(fileType);
 }
 
 void TransfersModel::updateTransfersCount()
@@ -1218,6 +1225,11 @@ void TransfersModel::updateTransfersCount()
 
 void TransfersModel::removeRows(QModelIndexList& indexesToRemove)
 {
+    if(indexesToRemove.isEmpty())
+    {
+        return;
+    }
+
     std::sort(indexesToRemove.begin(), indexesToRemove.end(),[](QModelIndex check1, QModelIndex check2){
         return check1.row() > check2.row();
     });
@@ -1225,9 +1237,12 @@ void TransfersModel::removeRows(QModelIndexList& indexesToRemove)
     // First clear finished transfers (remove rows), then cancel the others.
     // This way, there is no risk of messing up the rows order with cancel requests.
     int count (0);
-    int row (indexesToRemove.last().row());
+    //We add 1 to row, as the row will be reduced by one as soon as the loop starts
+    int row (indexesToRemove.last().row() + 1);
     for (auto index : indexesToRemove)
     {
+        row--;
+
         // Init row with row of first tag
         if (count == 0)
         {
@@ -1244,13 +1259,12 @@ void TransfersModel::removeRows(QModelIndexList& indexesToRemove)
 
         // We have at least one row
         count++;
-        row--;
     }
-    // Flush pooled rows (start at row + 1).
+    // Flush pooled rows (start at row).
     // This happens when the last item processed is in a finished state.
     if (count > 0 && row >= 0)
     {
-        removeRows(row + 1, count, DEFAULT_IDX);
+        removeRows(row, count, DEFAULT_IDX);
     }
 
     updateTagsByOrder();
@@ -1325,9 +1339,14 @@ void TransfersModel::setCancelingMode(bool state)
     else if(!state && mCancelingMode != 0)
     {
         mCancelingMode--;
-
         if(mCancelingMode == 0 && !isFailingModeActive())
         {
+            if(mModelReset)
+            {
+                mModelReset = false;
+                clearTransfers(QModelIndexList());
+            }
+
             emit unblockUi();
         }
     }
