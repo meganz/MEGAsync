@@ -1075,8 +1075,7 @@ void InfoDialog::updateDialogState()
         overlay->setVisible(false);
         ui->wPSA->hidePSA();
     }
-    else if (model->hasUnattendedDisabledSyncs(mega::MegaSync::TYPE_TWOWAY)
-             || model->hasUnattendedDisabledSyncs(mega::MegaSync::TYPE_BACKUP))
+    else if (model->hasUnattendedDisabledSyncs({mega::MegaSync::TYPE_TWOWAY, mega::MegaSync::TYPE_BACKUP}))
     {
         if (model->hasUnattendedDisabledSyncs(mega::MegaSync::TYPE_TWOWAY)
             && model->hasUnattendedDisabledSyncs(mega::MegaSync::TYPE_BACKUP))
@@ -2054,15 +2053,13 @@ void InfoDialog::on_bOpenBackupsSettings_clicked()
 
 void InfoDialog::on_bDismissAllSyncsSettings_clicked()
 {
-    model->dismissUnattendedDisabledSyncs(mega::MegaSync::TYPE_TWOWAY);
-    model->dismissUnattendedDisabledSyncs(mega::MegaSync::TYPE_BACKUP);
+    model->dismissUnattendedDisabledSyncs(SyncModel::AllHandledSyncTypes);
 }
 
 void InfoDialog::on_bOpenAllSyncsSettings_clicked()
 {
     MegaSyncApp->openSettings(SettingsDialog::SYNCS_TAB);
-    model->dismissUnattendedDisabledSyncs(mega::MegaSync::TYPE_TWOWAY);
-    model->dismissUnattendedDisabledSyncs(mega::MegaSync::TYPE_BACKUP);
+    model->dismissUnattendedDisabledSyncs(SyncModel::AllHandledSyncTypes);
 }
 
 int InfoDialog::getLoggedInMode() const

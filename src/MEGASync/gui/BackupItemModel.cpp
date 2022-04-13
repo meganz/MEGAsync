@@ -238,7 +238,7 @@ bool BackupItemModel::removeColumns(int column, int count, const QModelIndex &pa
 void BackupItemModel::resetModel()
 {
     beginResetModel();
-    mList = mOrderedList = mSyncModel->getSyncsByType(mega::MegaSync::SyncType::TYPE_BACKUP);
+    mList = mOrderedList = mSyncModel->getSyncSettingsByType(mega::MegaSync::TYPE_BACKUP);
     sort(mSortColumn, mSortOrder);
     endResetModel();
 }
