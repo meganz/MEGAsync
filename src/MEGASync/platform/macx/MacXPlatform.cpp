@@ -363,6 +363,42 @@ QString MacXPlatform::getDeviceName()
     return deviceName;
 }
 
+void MacXPlatform::initMenu(QMenu* m)
+{
+    if (m)
+    {
+        m->setStyleSheet(QLatin1String("QMenu {"
+                                           "background: #ffffff;"
+                                           "padding-top: 5px;"
+                                           "padding-bottom: 5px;"
+                                           "border: 1px solid #B8B8B8;"
+                                           "border-radius: 5px;"
+                                       "}"
+                                       "QMenu::separator {"
+                                           "height: 1px;"
+                                           "margin: 0px 8px 0px 8px;"
+                                           "background-color: rgba(0, 0, 0, 0.1);"
+                                       "}"
+                                       // For vanilla QMenus (only in TransferManager)
+                                       "QMenu::item {"
+                                           "font-size: 14px;"
+                                           "margin: 6px 16px 6px 16px;"
+                                           "color: #777777;"
+                                       "}"
+                                       "QMenu::item:selected {"
+                                           "color: #000000;"
+                                       "}"
+                                       // For menus with MenuItemActions
+                                       "QLabel {"
+                                           "font-family: Lato;"
+                                           "font-size: 14px;"
+                                           "padding: 0px;"
+                                       "}"
+                                       ));
+        m->ensurePolished();
+    }
+}
+
 // Platform-specific strings
 const char* MacXPlatform::settingsString {QT_TRANSLATE_NOOP("Platform", "Preferences")};
 const char* MacXPlatform::exitString {QT_TRANSLATE_NOOP("Platform", "Quit")};

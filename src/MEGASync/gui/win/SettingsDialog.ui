@@ -119,28 +119,6 @@ background-color: rgba(0,120,215,0.8);
 border-right: 1px solid #2b8bd7;
 }
 
-#tSyncs QMenu
-{
-border: 1px solid #B8B8B8;
-border-radius: 8px;
-background: #ffffff;
-padding-top: 8px;
-padding-bottom: 8px;
-}
-
-#tSyncs QMenu::separator
-{
-height: 1px;
-margin: 0px 8px 0px 8px;
-background-color: rgba(0, 0, 0, 0.1);
-}
-
-#tSyncs QMenu::item
-{
-background-color: transparent;
-border-radius: 8px;
-}
-
 #lAccountType, #lName
 {
 font-size: 13px;
@@ -1996,28 +1974,7 @@ border:none;
 padding-left: 10px;
 padding-top:4px;
 }
-
-QMenu
-{
-border: 1px solid #B8B8B8;
-border-radius: 8px;
-background: #ffffff;
-padding-top: 8px;
-padding-bottom: 8px;
-}
-
-QMenu::separator
-{
-height: 1px;
-margin: 0px 8px 0px 8px;
-background-color: rgba(0, 0, 0, 0.1);
-}
-
-QMenu::item
-{
-background-color: transparent;
-border-radius: 8px;
-}</string>
+</string>
             </property>
             <property name="frameShape">
              <enum>QFrame::NoFrame</enum>

@@ -3,20 +3,10 @@
 #include "InfoDialog.h"
 #include "Preferences.h"
 #include "model/SyncModel.h"
+#include "Platform.h"
 
 #include <QtConcurrent/QtConcurrent>
 
-const QLatin1String MENU_STYLESHEET ("QMenu {"
-                                     "border: 1px solid #B8B8B8;"
-                                     "border-radius: 5px;"
-                                     "background: #ffffff;"
-                                     "padding-top: 4px;"
-                                     "padding-bottom: 4px;}"
-                                     "QMenu::separator{"
-                                     "margin-top: 4px;"
-                                     "margin-bottom: 4px;"
-                                     "height: 1px;"
-                                     "background: rgba(0,0,0,0.1);}");
 
 #ifdef Q_OS_WINDOWS
 const QLatin1String DEVICE_ICON ("://images/icons/pc/pc-win_24.png");
@@ -70,16 +60,8 @@ SyncsMenu::SyncsMenu(mega::MegaSync::SyncType type, QObject *parent) : QObject(p
     mMenuAction->setIcon(iconMenu);
     mMenuAction->setParent(this);
 
-    mMenu->setStyleSheet(MENU_STYLESHEET);
+    Platform::initMenu(mMenu.get());
     mMenu->setToolTipsVisible(true);
-
-    // Do not display broken menu shadow in windows
-#ifdef _WIN32
-    mMenu->setAttribute(Qt::WA_TranslucentBackground);
-    mMenu->setWindowFlags(mMenu->windowFlags()
-                          | Qt::FramelessWindowHint
-                          | Qt::NoDropShadowWindowHint);
-#endif
 
     //Highlight menu entry on mouse over
     connect(mMenu.get(), &QMenu::hovered,

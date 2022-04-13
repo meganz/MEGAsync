@@ -24,6 +24,7 @@
 #include <QButtonGroup>
 #include <QtConcurrent/QtConcurrent>
 #include <QShortcut>
+#include <QMenu>
 
 #include <assert.h>
 
@@ -1644,10 +1645,10 @@ void SettingsDialog::onCellClicked(int row, int column)
     mSelectedSyncRow = row;
 
     QMenu *menu(new QMenu(mUi->tSyncs));
-    menu->setAttribute(Qt::WA_TranslucentBackground);
-#if defined(Q_OS_WINDOWS)
-    menu->setWindowFlags(menu->windowFlags() | Qt::FramelessWindowHint | Qt::NoDropShadowWindowHint);
-#elif defined(Q_OS_MACOS)
+
+    Platform::initMenu(menu);
+
+#if defined(Q_OS_MACOS)
     connect(this, &SettingsDialog::closeMenus, menu, &SettingsDialog::close);
 #endif
 

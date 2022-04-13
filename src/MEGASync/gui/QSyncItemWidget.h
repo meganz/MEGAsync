@@ -2,7 +2,6 @@
 #define QSYNCITEMWIDGET_H
 
 #include <QWidget>
-#include <QMenu>
 #include "gui/MenuItemAction.h"
 #include <megaapi.h>
 

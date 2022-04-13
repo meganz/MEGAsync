@@ -92,22 +92,7 @@ void MegaTransferView::createContextMenu()
     if (!contextInProgressMenu)
     {
         contextInProgressMenu = new QMenu(this);
-        contextInProgressMenu->setStyleSheet(QString::fromAscii(
-#ifdef __APPLE__
-                                   "QMenu {background: #ffffff;}"
-#else
-                                   "QMenu { border: 1px solid #B8B8B8; border-radius: 5px; background: #ffffff; padding-top: 5px; padding-bottom: 5px;}"
-#endif
-
-#if QT_VERSION < 0x050000
-                                   "QMenu::item {font-family: Lato; margin: 5px 9px 5px 9px; color: #777777; padding: 5px 16px 5px 8px;} "
-                                   "QMenu::item:selected {background: #aaaaaa; border: 1px solid #aaaaaa; border-radius: 2px; margin-left: 9px; margin-right: 9px; color: #ffffff; padding: 4px 15px 4px 7px;}"
-#else
-                                   "QMenu::item {font-family: Lato; margin: 5px 9px 5px 9px; color: #777777; padding: 5px 8px;} "
-                                   "QMenu::item:selected {background: #aaaaaa; border: 1px solid #aaaaaa; border-radius: 2px; margin-left: 9px; margin-right: 9px; color: #ffffff; padding: 4px 7px;}"
-#endif
-                                   "QMenu::separator {height: 1px; margin: 6px 0px 6px 0px; background-color: rgba(0, 0, 0, 0.1);}"
-                                   "QMenu::item:disabled {background-color: #ffffff; color: rgba(119,119,119,0.3); border: none; margin: 5px 9px 5px 9px;}"));
+        Platform::initMenu(contextInProgressMenu);
     }
     else
     {
@@ -197,16 +182,7 @@ void MegaTransferView::createCompletedContextMenu()
     if (!contextCompleted)
     {
         contextCompleted = new QMenu(this);
-        contextCompleted->setStyleSheet(QString::fromAscii(
-                                   "QMenu {background: #ffffff;}"
-#if QT_VERSION < 0x050000
-                                   "QMenu::item {font-family: Lato; margin: 5px 9px 5px 9px; margin-right: 8px; color: #777777; padding: 5px 16px 5px 8px;} "
-                                   "QMenu::item:selected {background: #aaaaaa; border: 1px solid #aaaaaa; border-radius: 2px; margin-left: 7px; margin-right: 7px; color: #ffffff; padding: 4px 15px 4px 7px;}"
-#else
-                                   "QMenu::item {font-family: Lato; margin: 5px 9px 5px 9px; color: #777777; padding: 5px 8px;} "
-                                   "QMenu::item:selected {background: #aaaaaa; border: 1px solid #aaaaaa; border-radius: 2px; margin-left: 7px; margin-right: 7px; color: #ffffff; padding: 5px 8px;}"
-#endif
-                                   ));
+        Platform::initMenu(contextCompleted);
     }
     else
     {

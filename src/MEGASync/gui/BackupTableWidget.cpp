@@ -83,10 +83,7 @@ void BackupTableWidget::showContextMenu(const QPoint &pos, const QModelIndex ind
     auto sync = index.data(Qt::UserRole).value<std::shared_ptr<SyncSetting>>();
 
     QMenu *menu(new QMenu(this));
-    menu->setAttribute(Qt::WA_TranslucentBackground);
-#if defined(Q_OS_WINDOWS)
-    menu->setWindowFlags(menu->windowFlags() | Qt::FramelessWindowHint | Qt::NoDropShadowWindowHint);
-#endif
+    Platform::initMenu(menu);
 
     // Show in system file explorer action
     auto openLocalAction (new MenuItemAction(QCoreApplication::translate("Platform", Platform::fileExplorerString),

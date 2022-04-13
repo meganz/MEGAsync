@@ -139,7 +139,6 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     "QTableView::indicator {width: 13px;height: 13px;}"
     "QMessageBox QLabel {font-size: 13px;}"
     "QMessageBox QPushButton {font-size: 13px;padding-right: 12px;padding-left: 12px;}"
-    "QMenu {font-size: 13px;}"
     "QToolTip {font-size: 13px;}"
     "QFileDialog QPushButton {font-size: 13px;padding-right: 12px;padding-left: 12px;}"
     "QFileDialog QWidget {font-size: 13px;}"
@@ -6165,7 +6164,11 @@ void MegaApplication::createAppMenus()
     }
 
     createTrayIconMenus();
-    createInfoDialogMenus();
+
+    if (preferences->logged())
+    {
+        createInfoDialogMenus();
+    }
 
     updateTrayIconMenu();
 }
@@ -6230,13 +6233,6 @@ void MegaApplication::createTrayIconMenus()
 
         initialTrayMenu->insertAction(guestSettingsAction, showStatusAction);
     }
-
-#ifdef _WIN32
-    //The following should not be required, but
-    //prevents it from being truncated on the first display
-    initialTrayMenu->show();
-    initialTrayMenu->hide();
-#endif
 }
 
 void MegaApplication::createInfoDialogMenus()
@@ -6358,6 +6354,7 @@ void MegaApplication::createInfoDialogMenus()
 
 #endif
 
+    // Info Dialog overflow menu
     if (infoDialogMenu)
     {
         QList<QAction*> actions = infoDialogMenu->actions();
@@ -6372,11 +6369,7 @@ void MegaApplication::createInfoDialogMenus()
     {
         infoDialogMenu->deleteLater();
         infoDialogMenu = new QMenu();
-#ifdef __APPLE__
-        infoDialogMenu->setStyleSheet(QString::fromUtf8("QMenu {background: #ffffff; padding-top: 8px; padding-bottom: 8px;}"));
-#else
-        infoDialogMenu->setStyleSheet(QString::fromUtf8("QMenu { border: 1px solid #B8B8B8; border-radius: 5px; background: #ffffff; padding-top: 5px; padding-bottom: 5px;}"));
-#endif
+        Platform::initMenu(infoDialogMenu);
 
         //Highlight menu entry on mouse over
         connect(infoDialogMenu, SIGNAL(hovered(QAction*)), this, SLOT(highLightMenuEntry(QAction*)), Qt::QueuedConnection);
@@ -6495,22 +6488,6 @@ void MegaApplication::createInfoDialogMenus()
     infoDialogMenu->addAction(settingsAction);
     infoDialogMenu->addSeparator();
     infoDialogMenu->addAction(exitAction);
-
-#if defined(Q_OS_WINDOWS) || defined(Q_OS_LINUX)
-    // Make widget transparent (otherwise it shows a white background in its corners)
-    infoDialogMenu->setAttribute(Qt::WA_TranslucentBackground);
-    // Disable drop shadow (does not take into account curved corners)
-    infoDialogMenu->setWindowFlags(infoDialogMenu->windowFlags()
-                                   | Qt::FramelessWindowHint
-                                   | Qt::NoDropShadowWindowHint);
-#endif
-#ifdef Q_OS_WINDOWS
-    //The following should not be required, but
-    //prevents it from being truncated on the first display
-    infoDialogMenu->show();
-    infoDialogMenu->hide();
-
-#endif
 }
 
 void MegaApplication::createGuestMenu()
@@ -6534,12 +6511,7 @@ void MegaApplication::createGuestMenu()
     {
         guestMenu->deleteLater();
         guestMenu = new QMenu();
-
-#ifdef __APPLE__
-        guestMenu->setStyleSheet(QString::fromUtf8("QMenu {background: #ffffff; padding-top: 8px; padding-bottom: 8px;}"));
-#else
-        guestMenu->setStyleSheet(QString::fromUtf8("QMenu { border: 1px solid #B8B8B8; border-radius: 5px; background: #ffffff; padding-top: 5px; padding-bottom: 5px;}"));
-#endif
+        Platform::initMenu(guestMenu);
     }
 
     if (exitActionGuest)
@@ -6582,18 +6554,6 @@ void MegaApplication::createGuestMenu()
     guestMenu->addAction(settingsActionGuest);
     guestMenu->addSeparator();
     guestMenu->addAction(exitActionGuest);
-
-#ifdef _WIN32
-    // Disable drop shadow (appears squared in Windows)
-    guestMenu->setAttribute(Qt::WA_TranslucentBackground);
-    guestMenu->setWindowFlags(guestMenu->windowFlags()
-                                   | Qt::FramelessWindowHint
-                                   | Qt::NoDropShadowWindowHint);
-    //The following should not be required, but
-    //prevents it from being truncated on the first display
-    guestMenu->show();
-    guestMenu->hide();
-#endif
 }
 
 void MegaApplication::refreshStorageUIs()

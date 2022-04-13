@@ -1,6 +1,8 @@
 #include "FilterAlertWidget.h"
 #include "ui_FilterAlertWidget.h"
 
+const int FilterAlertWidget::RED_BUBBLE_MARGIN = 17;
+
 FilterAlertWidget::FilterAlertWidget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::FilterAlertWidget)
@@ -10,6 +12,7 @@ FilterAlertWidget::FilterAlertWidget(QWidget *parent) :
 
     setWindowFlags(windowFlags() | Qt::FramelessWindowHint | Qt::Popup);
     setAttribute(Qt::WA_TranslucentBackground);
+    adjustSize();
 }
 
 FilterAlertWidget::~FilterAlertWidget()
@@ -36,6 +39,7 @@ void FilterAlertWidget::setUnseenNotifications(long long all, long long contacts
     else
     {
         ui->bNumberNotifications->setText(QString::number(allUnseen));
+        ui->bNumberNotifications->setFixedWidth(ui->bNumberNotifications->fontMetrics().width(QString::number(allUnseen)) + RED_BUBBLE_MARGIN);
         ui->bNumberNotifications->show();
     }
 
@@ -46,6 +50,7 @@ void FilterAlertWidget::setUnseenNotifications(long long all, long long contacts
     else
     {
         ui->bNumberNotificationsContacts->setText(QString::number(contactsUnseen));
+        ui->bNumberNotificationsContacts->setFixedWidth(ui->bNumberNotificationsContacts->fontMetrics().width(QString::number(contactsUnseen)) + RED_BUBBLE_MARGIN);
         ui->bNumberNotificationsContacts->show();
     }
 
@@ -56,6 +61,7 @@ void FilterAlertWidget::setUnseenNotifications(long long all, long long contacts
     else
     {
         ui->bNumberNotificationsShares->setText(QString::number(sharesUnseen));
+        ui->bNumberNotificationsShares->setFixedWidth(ui->bNumberNotificationsShares->fontMetrics().width(QString::number(sharesUnseen)) + RED_BUBBLE_MARGIN);
         ui->bNumberNotificationsShares->show();
     }
 
@@ -66,8 +72,10 @@ void FilterAlertWidget::setUnseenNotifications(long long all, long long contacts
     else
     {
         ui->bNumberNotificationsPayments->setText(QString::number(paymentUnseen));
+        ui->bNumberNotificationsPayments->setFixedWidth(ui->bNumberNotificationsPayments->fontMetrics().width(QString::number(paymentUnseen)) + RED_BUBBLE_MARGIN);
         ui->bNumberNotificationsPayments->show();
     }
+    adjustSize();
 }
 
 void FilterAlertWidget::on_bAll_clicked()
