@@ -2,7 +2,7 @@
 #include "MegaApplication.h"
 #include "control/Utilities.h"
 #include "Preferences.h"
-#include "Model.h"
+#include "model/Model.h"
 #include "mega/types.h"
 
 
@@ -185,11 +185,8 @@ int MegaItemModel::rowCount(const QModelIndex &parent) const
         }
         return item->getNumChildren();
     }
-    else
-    {
-        return mRootItems.size();
-    }
-    return 0;
+
+    return mRootItems.size();
 }
 
 QVariant MegaItemModel::headerData(int section, Qt::Orientation orientation, int role) const

@@ -2,7 +2,7 @@
 #include "QMegaMessageBox.h"
 #include "MegaApplication.h"
 #include "AvatarWidget.h"
-#include "Model.h"
+#include "model/Model.h"
 #include "MegaApplication.h"
 #include "mega/utils.h"
 
