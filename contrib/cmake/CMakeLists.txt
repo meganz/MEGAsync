@@ -212,6 +212,7 @@ set (MOC_INPUT
     ${MEGAsyncDir}/control/UpdateTask.h
     ${MEGAsyncDir}/control/ThreadPool.h
     ${MEGAsyncDir}/control/MegaController.h
+    ${MEGAsyncDir}/control/UserAttributesManager.h
     ${MEGAsyncDir}/model/SyncSettings.h
     ${MEGAsyncDir}/model/Model.h
     ${MEGAsyncDir}/gui/AlertItem.h
@@ -292,6 +293,7 @@ set (MOC_INPUT
     ${MEGAsyncDir}/gui/MegaItemDelegates.h
     ${MEGAsyncDir}/gui/GuiUtilities.h
     ${MEGAsyncDir}/gui/EventHelper.h
+    ${MEGAsyncDir}/gui/UserAttributesRequests.h
     ${MEGAsyncDir}/platform/notificator.h
     ${MEGAsyncDir}/mega/bindings/qt/QTMegaGlobalListener.h
     ${MEGAsyncDir}/mega/bindings/qt/QTMegaListener.h
@@ -442,6 +444,7 @@ set (SRCS
     ${MEGAsyncDir}/gui/MegaItemProxyModel.cpp
     ${MEGAsyncDir}/gui/MegaItemTreeView.cpp
     ${MEGAsyncDir}/gui/GuiUtilities.cpp
+    ${MEGAsyncDir}/gui/UserAttributesRequests.cpp
 
     ${MEGAsyncDir}/gui/EventHelper.cpp
     ${MEGAsyncDir}/mega/bindings/qt/QTMegaRequestListener.cpp
@@ -465,6 +468,7 @@ set (SRCS
     ${MEGAsyncDir}/control/ConnectivityChecker.cpp
     ${MEGAsyncDir}/control/TransferRemainingTime.cpp
     ${MEGAsyncDir}/control/MegaController.cpp
+    ${MEGAsyncDir}/control/UserAttributesManager.cpp
 
     ${MEGAsyncDir}/model/SyncSettings.cpp
     ${MEGAsyncDir}/model/Model.cpp
