@@ -58,6 +58,7 @@ public:
     static bool isUserActive();
     static double getUpTime();
     static QString getDeviceName();
+    static void initMenu(QMenu* m);
 
     static int fd;
 

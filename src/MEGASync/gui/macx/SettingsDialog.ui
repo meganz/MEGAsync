@@ -126,11 +126,6 @@ border: 1px solid #D8D8D8;
     border-right: 1px solid #2b8bd7;
 }
 
-#tSyncs QMenu
-{
-background-color: white;
-}
-
 /* Account pane css props*/
 #lAccountType
 {
@@ -3096,28 +3091,7 @@ QTableView::item
 border: none;
 padding-left: 10px;
 }
-
-QMenu
-{
-border: 1px solid #B8B8B8;
-border-radius: 8px;
-background: #ffffff;
-padding-top: 8px;
-padding-bottom: 8px;
-}
-
-QMenu::separator
-{
-height: 1px;
-margin: 0px 8px 0px 8px;
-background-color: rgba(0, 0, 0, 0.1);
-}
-
-QMenu::item
-{
-background-color: transparent;
-border-radius: 8px;
-}</string>
+</string>
                </property>
                <property name="alternatingRowColors">
                 <bool>true</bool>

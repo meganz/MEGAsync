@@ -111,15 +111,15 @@ void MenuItemAction::setupActionWidget(const QSize& iconSize)
     mTitle->setStyleSheet(QString::fromLatin1("color: %1;").arg(getColor()));
 
     auto layout = new QHBoxLayout();
-    layout->setContentsMargins(QMargins(16 + mTreeDepth * 33, 0, 8, 0));
+    layout->setContentsMargins(QMargins(16 + mTreeDepth * 20, 0, 16, 0));
     layout->setSpacing(12);
     layout->addWidget(mIconButton);
     layout->addWidget(mTitle);
-    layout->addItem(new QSpacerItem(10, 10, QSizePolicy::Expanding, QSizePolicy::Expanding));
 
     if (mValue)
     {
-        mValue->setStyleSheet(QString::fromLatin1("padding-right: 6px; color: %1;").arg(getColor()));
+        layout->addItem(new QSpacerItem(10, 10, QSizePolicy::Expanding, QSizePolicy::Expanding));
+        mValue->setStyleSheet(QString::fromLatin1("color: %1;").arg(getColor()));
         layout->addWidget(mValue);
     }
     mContainer->setLayout(layout);

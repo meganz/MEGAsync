@@ -1493,6 +1493,43 @@ QString WindowsPlatform::getDeviceName()
     return deviceName;
 }
 
+void WindowsPlatform::initMenu(QMenu* m)
+{
+    if (m)
+    {
+        m->setStyleSheet(QLatin1String("QMenu {"
+                                           "background: #ffffff;"
+                                           "padding-top: 6px;"
+                                           "padding-bottom: 6px;"
+                                           "border: 1px solid #B8B8B8;"
+                                       "}"
+                                       "QMenu::separator {"
+                                           "height: 1px;"
+                                           "margin: 6px 10px 6px 10px;"
+                                           "background-color: rgba(0, 0, 0, 0.1);"
+                                       "}"
+                                       // For vanilla QMenus (only in TransferManager)
+                                       "QMenu::item {"
+                                           "font-family: Lato;"
+                                           "font-size: 14px;"
+                                           "margin: 6px 16px 6px 16px;"
+                                           "color: #777777;"
+                                       "}"
+                                       "QMenu::item:selected {"
+                                           "color: #000000;"
+                                       "}"
+                                       // For menus with MenuItemActions
+                                       "QLabel {"
+                                           "font-family: Lato;"
+                                           "font-size: 14px;"
+                                           "padding: 0px;"
+                                       "}"
+                                       ));
+        m->ensurePolished();
+    }
+}
+
+
 // Platform-specific strings
 const char* WindowsPlatform::settingsString {QT_TRANSLATE_NOOP("Platform", "Settings")};
 const char* WindowsPlatform::exitString {QT_TRANSLATE_NOOP("Platform", "Exit")};

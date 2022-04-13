@@ -2,7 +2,6 @@
 #define GUESTWIDGET_H
 
 #include <QWidget>
-#include <QMenu>
 #include <QPushButton>
 #include "megaapi.h"
 #include "QTMegaRequestListener.h"

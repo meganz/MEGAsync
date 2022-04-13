@@ -2,8 +2,10 @@
 #include "MegaItem.h"
 #include "MegaApplication.h"
 #include "MegaItemProxyModel.h"
+#include "Platform.h"
 
 #include <QPainter>
+#include <QMenu>
 
 MegaItemTreeView::MegaItemTreeView(QWidget* parent) :
     QTreeView(parent),
@@ -102,6 +104,7 @@ void MegaItemTreeView::contextMenuEvent(QContextMenuEvent *event)
         }
 
         QMenu customMenu;
+        Platform::initMenu(&customMenu);
         MegaNode *node = mMegaApi->getNodeByHandle(getSelectedNodeHandle());
         MegaNode *parent = mMegaApi->getParentNode(node);
 

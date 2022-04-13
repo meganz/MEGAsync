@@ -12,7 +12,6 @@
 
 #include <QMessageBox>
 #include <QPointer>
-#include <QMenu>
 #include <QShortcut>
 
 // Human-friendly list of forbidden chars for New Remote Folder
