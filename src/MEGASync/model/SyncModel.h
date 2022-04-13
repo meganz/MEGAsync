@@ -6,6 +6,7 @@
 #include <QStringList>
 #include <QSet>
 #include <QMutex>
+#include <QVector>
 
 #include "control/Preferences.h"
 #include "model/SyncSettings.h"
@@ -32,6 +33,7 @@ class Preferences;
 class SyncModel : public QObject
 {
     Q_OBJECT
+    using SyncType = mega::MegaSync::SyncType;
 
 signals:
     void syncStateChanged(std::shared_ptr<SyncSetting> syncSettings);
@@ -50,12 +52,14 @@ private:
 protected:
     QMutex syncMutex;
 
-    QMap<mega::MegaSync::SyncType, QList<mega::MegaHandle>> configuredSyncs; //Tags of configured syncs
+    QMap<SyncType, QList<mega::MegaHandle>> configuredSyncs; //Tags of configured syncs
     QMap<mega::MegaHandle, std::shared_ptr<SyncSetting>> configuredSyncsMap;
     QMap<mega::MegaHandle, std::shared_ptr<SyncSetting>> syncsSettingPickedFromOldConfig;
-    QMap<mega::MegaSync::SyncType, QSet<mega::MegaHandle>> unattendedDisabledSyncs; //Tags of syncs disabled due to errors since last dismissed
+    QMap<SyncType, QSet<mega::MegaHandle>> unattendedDisabledSyncs; //Tags of syncs disabled due to errors since last dismissed
 
 public:
+    static const QVector<SyncType> AllHandledSyncTypes;
+
     void reset();
     static SyncModel *instance();
 
@@ -79,30 +83,49 @@ public:
     void pickInfoFromOldSync(const SyncData &osd, mega::MegaHandle backupId, bool loadedFromPreviousSessions);
 
     // remove syncs from model
-    void removeSyncedFolder(int num, mega::MegaSync::SyncType type = mega::MegaSync::TYPE_TWOWAY);
+    void removeSyncedFolder(int num, SyncType type);
     void removeSyncedFolderByBackupId(mega::MegaHandle backupId);
     void removeAllFolders();
 
     // Getters
-    std::shared_ptr<SyncSetting> getSyncSetting(int num, mega::MegaSync::SyncType type = mega::MegaSync::TYPE_TWOWAY);
+    std::shared_ptr<SyncSetting> getSyncSetting(int num, SyncType type);
     std::shared_ptr<SyncSetting> getSyncSettingByTag(mega::MegaHandle tag);
-    QList<std::shared_ptr<SyncSetting>> getSyncsByType(mega::MegaSync::SyncType type = mega::MegaSync::TYPE_TWOWAY);
+    QList<std::shared_ptr<SyncSetting>> getSyncSettingsByType(const QVector<SyncType>& types);
+    QList<std::shared_ptr<SyncSetting>> getSyncSettingsByType(SyncType type)
+        {return getSyncSettingsByType(QVector<SyncType>(type));}
+    QList<std::shared_ptr<SyncSetting>> getAllSyncSettings()
+        {return getSyncSettingsByType(AllHandledSyncTypes);}
 
-    int getNumSyncedFolders(mega::MegaSync::SyncType type = mega::MegaSync::TYPE_TWOWAY);
+    int getNumSyncedFolders(const QVector<mega::MegaSync::SyncType>& types);
+    int getNumSyncedFolders(SyncType type)
+        {return getNumSyncedFolders(QVector<mega::MegaSync::SyncType>(type));}
 
-    // FIXME: Remove unattended disabled syncs
-    bool hasUnattendedDisabledSyncs(mega::MegaSync::SyncType type = mega::MegaSync::TYPE_TWOWAY) const;
-    void addUnattendedDisabledSync(mega::MegaHandle tag, mega::MegaSync::SyncType type = mega::MegaSync::TYPE_TWOWAY);
-    void removeUnattendedDisabledSync(mega::MegaHandle tag, mega::MegaSync::SyncType type = mega::MegaSync::TYPE_TWOWAY);
-    void setUnattendedDisabledSyncs(QSet<mega::MegaHandle> tags);
-    void dismissUnattendedDisabledSyncs(mega::MegaSync::SyncType type = mega::MegaSync::TYPE_TWOWAY);
-    // --
+    bool hasUnattendedDisabledSyncs(const QVector<SyncType>& types) const;
+    bool hasUnattendedDisabledSyncs(SyncType type) const
+        {return hasUnattendedDisabledSyncs(QVector<SyncType>(type));}
+    void addUnattendedDisabledSync(mega::MegaHandle tag, SyncType type);
+    void removeUnattendedDisabledSync(mega::MegaHandle tag, SyncType type);
+    void setUnattendedDisabledSyncs(const QSet<mega::MegaHandle>& tags);
+    void dismissUnattendedDisabledSyncs(const QVector<SyncType>& types);
+    void dismissUnattendedDisabledSyncs(SyncType type)
+        {return dismissUnattendedDisabledSyncs(QVector<SyncType>(type));}
 
-    QStringList getSyncNames(mega::MegaSync::SyncType type = mega::MegaSync::TYPE_TWOWAY);
-    QStringList getSyncIDs(mega::MegaSync::SyncType type = mega::MegaSync::TYPE_TWOWAY);
-    QStringList getMegaFolders(mega::MegaSync::SyncType type = mega::MegaSync::TYPE_TWOWAY);
-    QStringList getLocalFolders(mega::MegaSync::SyncType type = mega::MegaSync::TYPE_TWOWAY);
-    QList<mega::MegaHandle> getMegaFolderHandles(mega::MegaSync::SyncType type = mega::MegaSync::TYPE_TWOWAY);
+
+    QStringList getSyncNames(const QVector<SyncType>& types);
+    QStringList getSyncNames(SyncType type)
+        {return getSyncNames(QVector<SyncType>(type));}
+    QStringList getSyncIDs(const QVector<SyncType>& types);
+    QStringList getSyncIDs(SyncType type)
+        {return getSyncIDs(QVector<SyncType>(type));}
+    QStringList getMegaFolders(const QVector<SyncType>& types);
+    QStringList getMegaFolders(SyncType type)
+        {return getMegaFolders(QVector<SyncType>(type));}
+    QStringList getLocalFolders(const QVector<SyncType>& types);
+    QStringList getLocalFolders(SyncType type)
+        {return getLocalFolders(QVector<mega::MegaSync::SyncType>(type));}
+    QList<mega::MegaHandle> getMegaFolderHandles(const QVector<SyncType>& types);
+    QList<mega::MegaHandle> getMegaFolderHandles(SyncType type)
+        {return getMegaFolderHandles(QVector<SyncType>(type));}
 
     bool isRemoteRootSynced();
 

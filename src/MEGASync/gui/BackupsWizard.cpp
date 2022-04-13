@@ -378,12 +378,7 @@ bool BackupsWizard::isFolderAlreadySynced(const QString& path, bool displayWarni
     QString message;
 
     // Gather all synced or backed-up dirs
-    QStringList localFolders;
-    for (auto type : {mega::MegaSync::SyncType::TYPE_TWOWAY,
-         mega::MegaSync::SyncType::TYPE_BACKUP})
-    {
-        localFolders += SyncModel::instance()->getLocalFolders(type);
-    }
+    QStringList localFolders (SyncModel::instance()->getLocalFolders(SyncModel::AllHandledSyncTypes));
 
     // First check existing syncs
     auto lf (localFolders.cbegin());
@@ -896,4 +891,3 @@ Qt::ItemFlags ProxyModel::flags(const QModelIndex &index) const
 {
     return QSortFilterProxyModel::flags(index)  & ~Qt::ItemIsSelectable;
 }
-

@@ -56,20 +56,16 @@ void NotifyServer::acceptConnection()
         // send the list of current synced folders to the new client
         int localFolders = 0;
         SyncModel *model = SyncModel::instance();
-        for (int i = 0; i < model->getNumSyncedFolders(); i++)
+        for (auto syncSetting : model->getAllSyncSettings())
         {
-            auto syncSetting = model->getSyncSetting(i);
-
             QString c = QDir::toNativeSeparators(QDir(syncSetting->getLocalFolder()).canonicalPath());
-            if (!c.size() || !syncSetting->isActive())
+            if (!c.isEmpty() && syncSetting->isActive())
             {
-                continue;
+                localFolders++;
+                client->write("A");
+                client->write(c.toUtf8().constData());
+                client->write("\n");
             }
-
-            localFolders++;
-            client->write("A");
-            client->write(c.toUtf8().constData());
-            client->write("\n");
         }
 
         if (!localFolders)

@@ -60,16 +60,19 @@ static constexpr int NETWORK_LIMITS_MAX {9999};
 
 long long calculateCacheSize()
 {
-    SyncModel* mModel = SyncModel::instance();
     long long cacheSize = 0;
-    for (int i = 0; i < mModel->getNumSyncedFolders(); i++)
+    auto model (SyncModel::instance());
+    for (auto syncType : SyncModel::AllHandledSyncTypes)
     {
-        auto syncSetting = mModel->getSyncSetting(i);
-        QString syncPath = syncSetting->getLocalFolder();
-        if (!syncPath.isEmpty())
+        for (int i = 0; i < model->getNumSyncedFolders(syncType); i++)
         {
-            Utilities::getFolderSize(syncPath + QDir::separator()
-                                     + QString::fromUtf8(MEGA_DEBRIS_FOLDER), &cacheSize);
+            auto syncSetting = model->getSyncSetting(i, syncType);
+            QString syncPath = syncSetting->getLocalFolder();
+            if (!syncPath.isEmpty())
+            {
+                Utilities::getFolderSize(syncPath + QDir::separator()
+                                         + QString::fromUtf8(MEGA_DEBRIS_FOLDER), &cacheSize);
+            }
         }
     }
     return cacheSize;
@@ -856,15 +859,14 @@ void SettingsDialog::on_bGeneral_clicked()
 void SettingsDialog::on_bClearCache_clicked()
 {
     QString syncs;
-    for (int i = 0; i < mModel->getNumSyncedFolders(); i++)
+    for (auto syncSetting : mModel->getAllSyncSettings())
     {
-        auto syncSetting = mModel->getSyncSetting(i);
         QFileInfo fi(syncSetting->getLocalFolder() + QDir::separator()
                      + QString::fromUtf8(MEGA_DEBRIS_FOLDER));
         if (fi.exists() && fi.isDir())
         {
             syncs += QString::fromUtf8("<br/><a href=\"local://#%1\">%2</a>")
-                    .arg(fi.absoluteFilePath() + QDir::separator()).arg(syncSetting->name());
+                     .arg(fi.absoluteFilePath() + QDir::separator()).arg(syncSetting->name());
         }
     }
 
@@ -1061,10 +1063,9 @@ void SettingsDialog::on_cOverlayIcons_toggled(bool checked)
 #ifdef Q_OS_MACOS
     Platform::notifyRestartSyncFolders();
 #else
-    for (int i = 0; i < mModel->getNumSyncedFolders(); i++)
+    for (auto localFolder : mModel->getLocalFolders(SyncModel::AllHandledSyncTypes))
     {
-        auto syncSetting = mModel->getSyncSetting(i);
-        mApp->notifyItemChange(syncSetting->getLocalFolder(), MegaApi::STATE_NONE);
+            mApp->notifyItemChange(localFolder, MegaApi::STATE_NONE);
     }
 #endif
 }
@@ -1075,9 +1076,8 @@ void SettingsDialog::on_cFinderIcons_toggled(bool checked)
     if (mLoadingSettings) return;
     if (checked)
     {
-        for (int i = 0; i < mModel->getNumSyncedFolders(); i++)
+        for (auto syncSetting : mModel->getAllSyncSettings())
         {
-            auto syncSetting = mModel->getSyncSetting(i);
             Platform::addSyncToLeftPane(syncSetting->getLocalFolder(),
                                         syncSetting->name(),
                                         syncSetting->getSyncID());
@@ -1392,7 +1392,8 @@ void SettingsDialog::loadSyncSettings()
 
     mUi->tSyncs->horizontalHeader()->setVisible(true);
     mUi->tSyncs->horizontalHeader()->setDefaultAlignment(Qt::AlignLeft);
-    int numFolders = mModel->getNumSyncedFolders();
+    const auto syncSettings (mModel->getSyncSettingsByType(MegaSync::TYPE_TWOWAY));
+    int numFolders (syncSettings.size());
     mUi->tSyncs->setRowCount(numFolders);
     mUi->tSyncs->setColumnCount(SYNC_COL_NB);
     mUi->tSyncs->setColumnHidden(SYNC_COL_TAG, true);    //hidden tag
@@ -1409,15 +1410,9 @@ void SettingsDialog::loadSyncSettings()
     // New check up. Need to reset, syncs state could have changed
     mAreSyncsDisabled = false;
 
-    for (int i = 0; i < numFolders; i++)
+    for (int i = 0; i < numFolders; ++i)
     {
-        auto syncSetting = mModel->getSyncSetting(i);
-        if (!syncSetting)
-        {
-            assert("A sync has been deleting while trying to loop in");
-            continue;
-        }
-
+        auto syncSetting = syncSettings[i];
         // Check if current sync is disabled by an error.
         mAreSyncsDisabled = mAreSyncsDisabled || static_cast<bool>(syncSetting->getError());
 
@@ -1691,7 +1686,7 @@ void SettingsDialog::showInFolderClicked()
 
 void SettingsDialog::showInMegaClicked()
 {
-    auto syncSetting = SyncModel::instance()->getSyncSetting(mSelectedSyncRow);
+    auto syncSetting = mModel->getSyncSetting(mSelectedSyncRow, MegaSync::TYPE_TWOWAY);
 
     std::unique_ptr<char[]> np (MegaSyncApp->getMegaApi()->getNodePathByNodeHandle(
                                     syncSetting->getMegaHandle()));
@@ -1759,10 +1754,6 @@ void SettingsDialog::saveSyncSettings()
     connect(mSaveSyncsProgress.get(), &ProgressHelper::completed,
             this, &SettingsDialog::onSavingSyncsCompleted);
 
-    // Uncomment the following to see a progress bar when saving
-    // (which being modal will prevent from modifying while changing)
-    //Utilities::showProgressDialog(mSaveSettingsProgress.get(), this);
-
     ProgressHelperCompletionGuard g(mSaveSyncsProgress.get());
 
     if (!mProxyOnly)
@@ -1770,9 +1761,9 @@ void SettingsDialog::saveSyncSettings()
         onSavingSyncsProgress(0);
 
         // 1 - loop through the syncs in the model to remove or update
-        for (int i = 0; i < mModel->getNumSyncedFolders(); i++)
+        for (int i = 0; i < mModel->getNumSyncedFolders(MegaSync::TYPE_TWOWAY); i++)
         {
-            auto syncSetting = mModel->getSyncSetting(i);
+            auto syncSetting = mModel->getSyncSetting(i, MegaSync::TYPE_TWOWAY);
             if (!syncSetting)
             {
                 assert("missing setting when looping for saving");

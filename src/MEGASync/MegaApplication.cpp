@@ -791,8 +791,7 @@ void MegaApplication::updateTrayIcon()
         }
 #endif
     }
-    else if (model->hasUnattendedDisabledSyncs(MegaSync::TYPE_TWOWAY)
-             || model->hasUnattendedDisabledSyncs(MegaSync::TYPE_BACKUP))
+    else if (model->hasUnattendedDisabledSyncs({MegaSync::TYPE_TWOWAY, MegaSync::TYPE_BACKUP}))
     {
         if (model->hasUnattendedDisabledSyncs(MegaSync::TYPE_TWOWAY)
             && model->hasUnattendedDisabledSyncs(MegaSync::TYPE_BACKUP))
@@ -1333,7 +1332,7 @@ if (!preferences->lastExecutionTime())
         }
 
         preferences->setNotifyDisabledSyncsOnLogin(false);
-        model->dismissUnattendedDisabledSyncs();
+        model->dismissUnattendedDisabledSyncs(MegaSync::TYPE_TWOWAY);
     }
 
     model->setUnattendedDisabledSyncs(preferences->getDisabledSyncTags());
@@ -2134,11 +2133,10 @@ void MegaApplication::cleanAll()
     networkCheckTimer->stop();
     stopUpdateTask();
     Platform::stopShellDispatcher();
-    // TODO : replace with getSettings and iterator
-    for (int i = 0; i < model->getNumSyncedFolders(); i++)
+
+    for (auto localFolder : model->getLocalFolders(SyncModel::AllHandledSyncTypes))
     {
-        auto syncSetting = model->getSyncSetting(i);
-        notifyItemChange(syncSetting->getLocalFolder(), MegaApi::STATE_NONE);
+        notifyItemChange(localFolder, MegaApi::STATE_NONE);
     }
 
     mSyncController.reset();
@@ -3376,10 +3374,8 @@ void MegaApplication::cleanLocalCaches(bool all)
     if (all || preferences->cleanerDaysLimit())
     {
         int timeLimitDays = preferences->cleanerDaysLimitValue();
-        for (int i = 0; i < model->getNumSyncedFolders(); i++)
+        for (auto syncPath : model->getLocalFolders(SyncModel::AllHandledSyncTypes))
         {
-            auto syncSetting = model->getSyncSetting(i);
-            QString syncPath = syncSetting->getLocalFolder();
             if (!syncPath.isEmpty())
             {
                 QDir cacheDir(syncPath + QDir::separator() + QString::fromUtf8(MEGA_DEBRIS_FOLDER));
@@ -6017,30 +6013,19 @@ void MegaApplication::trayIconActivated(QSystemTrayIcon::ActivationReason reason
         }
 
         // open local folder for the first active setting
-        std::shared_ptr<SyncSetting> firstActiveSyncSetting;
-
-        for (int i = 0; i < model->getNumSyncedFolders(); i++)
+        const auto syncSettings (model->getAllSyncSettings());
+        auto firstActiveSyncSetting (std::find_if(syncSettings.cbegin(), syncSettings.cend(),
+                                                  [](std::shared_ptr<SyncSetting> s)
+                                     {return s->isActive();}));
+        if (firstActiveSyncSetting != syncSettings.cend())
         {
-            auto syncSetting = model->getSyncSetting(i);
-
-            if (syncSetting->isActive())
+            infoDialogTimer->stop();
+            infoDialog->hide();
+            QString localFolderPath = (*firstActiveSyncSetting)->getLocalFolder();
+            if (!localFolderPath.isEmpty())
             {
-                firstActiveSyncSetting = syncSetting;
-                break;
+                QtConcurrent::run(QDesktopServices::openUrl, QUrl::fromLocalFile(localFolderPath));
             }
-        }
-
-        if (!firstActiveSyncSetting)
-        {
-            return;
-        }
-
-        infoDialogTimer->stop();
-        infoDialog->hide();
-        QString localFolderPath = firstActiveSyncSetting->getLocalFolder();
-        if (!localFolderPath.isEmpty())
-        {
-            QtConcurrent::run(QDesktopServices::openUrl, QUrl::fromLocalFile(localFolderPath));
         }
     }
     else if (reason == QSystemTrayIcon::MiddleClick)
@@ -6729,7 +6714,7 @@ void MegaApplication::onEvent(MegaApi*, MegaEvent* event)
     }
     else if (event->getType() == MegaEvent::EVENT_SYNCS_RESTORED)
     {
-        if (SyncModel::instance()->getNumSyncedFolders() > 0)
+        if (SyncModel::instance()->getNumSyncedFolders(SyncModel::AllHandledSyncTypes) > 0)
         {
             Platform::notifyAllSyncFoldersAdded();
         }
@@ -7092,17 +7077,14 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
         }
 
         //Check for any sync disabled by logout to warn user on next login with user&password
-        for (int i = 0; i < model->getNumSyncedFolders(); i++)
+        const auto syncSettings (model->getAllSyncSettings());
+        auto isErrorLoggedOut = [](std::shared_ptr<SyncSetting> s) {return s->getError() == MegaSync::LOGGED_OUT;};
+        if (std::any_of(syncSettings.cbegin(), syncSettings.cend(), isErrorLoggedOut))
         {
-            auto syncSetting = model->getSyncSetting(i);
-            if (syncSetting->getError() == MegaSync::Error::LOGGED_OUT)
-            {
-                preferences->setNotifyDisabledSyncsOnLogin(true);
-                break;
-            }
+            preferences->setNotifyDisabledSyncsOnLogin(true);
         }
-        model->reset();
 
+        model->reset();
 
         // Queue processing of logout cleanup to avoid race conditions
         // due to threadifing processing.

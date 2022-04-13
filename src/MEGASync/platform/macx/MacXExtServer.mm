@@ -55,10 +55,8 @@ void MacXExtServer::acceptConnection()
 
         // send the list of current synced folders to the new client
         SyncModel *model = SyncModel::instance();
-        for (int i = 0; i < model->getNumSyncedFolders(); i++)
+        for (auto syncSetting : model->getAllSyncSettings())
         {
-            auto syncSetting = model->getSyncSetting(i);
-
             QString syncPath = QDir::toNativeSeparators(QDir(syncSetting->getLocalFolder()).canonicalPath());
             if (!syncPath.size() || !syncSetting->isActive())
             {
@@ -404,10 +402,8 @@ void MacXExtServer::notifyAllClients(int op)
         command = QString::fromUtf8("D:");
     }
 
-    for (int i = 0; i < model->getNumSyncedFolders(); i++)
+    for (auto syncSetting : model->getAllSyncSettings())
     {
-        auto syncSetting = model->getSyncSetting(i);
-
         QString syncPath = QDir::toNativeSeparators(QDir(syncSetting->getLocalFolder()).canonicalPath());
         if (!syncPath.size() || !syncSetting->isActive())
         {
