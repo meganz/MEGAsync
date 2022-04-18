@@ -45,7 +45,7 @@ MegaItem::MegaItem(std::unique_ptr<MegaNode> node, MegaItem *parentItem, bool sh
     QStringList folderList;
     if(parent_item && parent_item->getNode()->isInShare())
     {
-        foreach(const QString& folder, SyncModel::instance()->getMegaFolders())
+        foreach(const QString& folder, SyncModel::instance()->getMegaFolders(SyncModel::AllHandledSyncTypes))
         {
             if(folder.startsWith(parent_item->getOwnerEmail()))
             {
@@ -57,7 +57,7 @@ MegaItem::MegaItem(std::unique_ptr<MegaNode> node, MegaItem *parentItem, bool sh
     ////////////
     else
     {
-        calculateSyncStatus(SyncModel::instance()->getMegaFolders());
+        calculateSyncStatus(SyncModel::instance()->getMegaFolders(SyncModel::AllHandledSyncTypes));
     }
 }
 
@@ -133,7 +133,7 @@ void MegaItem::setOwner(std::unique_ptr<mega::MegaUser> user)
     }
     QStringList folderList;
     //Calculating if we have a synced childs.
-    foreach(const QString& folder, SyncModel::instance()->getMegaFolders())
+    foreach(const QString& folder, SyncModel::instance()->getMegaFolders(SyncModel::AllHandledSyncTypes))
     {
         if(folder.startsWith(mOwnerEmail))
         {
@@ -380,7 +380,7 @@ void MegaItem::onRequestFinish(mega::MegaApi *api, mega::MegaRequest *request, m
 
 void MegaItem::calculateSyncStatus(const QStringList &folders)
 {
-    QList<mega::MegaHandle> syncedFolders = SyncModel::instance()->getMegaFolderHandles();
+    auto syncedFolders = SyncModel::instance()->getMegaFolderHandles(SyncModel::AllHandledSyncTypes);
     if(syncedFolders.contains(mNode->getHandle()))
     {
         mStatus = STATUS::SYNC;
