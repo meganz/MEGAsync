@@ -152,20 +152,25 @@ void InfoDialogTransferDelegateWidget::setType()
 {
     QIcon icon;
 
-    switch (getData()->mType)
+    auto transferType = getData()->mType;
+
+    if(transferType & TransferData::TRANSFER_SYNC)
     {
-        case TransferData::TransferType::TRANSFER_UPLOAD:
-            icon = Utilities::getCachedPixmap(QString::fromLatin1(":/images/upload_item_ico.png"));
-            mUi->pbTransfer->setStyleSheet(QString::fromUtf8("QProgressBar#pbTransfer{background-color: transparent;}"
-                                                            "QProgressBar#pbTransfer::chunk {background-color: #2ba6de;}"));
-            break;
-        case TransferData::TransferType::TRANSFER_DOWNLOAD:
-            icon = Utilities::getCachedPixmap(QString::fromLatin1(":/images/download_item_ico.png"));
-            mUi->pbTransfer->setStyleSheet(QString::fromUtf8("QProgressBar#pbTransfer{background-color: transparent;}"
-                                                            "QProgressBar#pbTransfer::chunk {background-color: #31b500;}"));
-            break;
-        default:
-            break;
+        icon = Utilities::getCachedPixmap(QString::fromLatin1(":/images/synching_ico.png"));
+        mUi->pbTransfer->setStyleSheet(QString::fromUtf8("QProgressBar#pbTransfer{background-color: transparent;}"
+                                                        "QProgressBar#pbTransfer::chunk {background-color: #31b500;}"));
+    }
+    else if(transferType & TransferData::TRANSFER_DOWNLOAD || transferType & TransferData::TRANSFER_LTCPDOWNLOAD)
+    {
+        icon = Utilities::getCachedPixmap(QString::fromLatin1(":/images/download_item_ico.png"));
+        mUi->pbTransfer->setStyleSheet(QString::fromUtf8("QProgressBar#pbTransfer{background-color: transparent;}"
+                                                        "QProgressBar#pbTransfer::chunk {background-color: #31b500;}"));
+    }
+    else if(transferType & TransferData::TRANSFER_UPLOAD)
+    {
+        icon = Utilities::getCachedPixmap(QString::fromLatin1(":/images/upload_item_ico.png"));
+        mUi->pbTransfer->setStyleSheet(QString::fromUtf8("QProgressBar#pbTransfer{background-color: transparent;}"
+                                                        "QProgressBar#pbTransfer::chunk {background-color: #2ba6de;}"));
     }
 
     mUi->lTransferType->setIcon(icon);
@@ -181,18 +186,19 @@ void InfoDialogTransferDelegateWidget::updateFinishedIco(int transferType, int e
 {
     QIcon iconCompleted;
 
-    switch (transferType)
+    if(transferType & TransferData::TRANSFER_SYNC)
     {
-        case TransferData::TransferType::TRANSFER_UPLOAD:
-            iconCompleted = Utilities::getCachedPixmap(errorCode < 0 ? QString::fromLatin1(":/images/upload_fail_item_ico.png")
-                                                                      : QString::fromLatin1(":/images/uploaded_item_ico.png"));
-            break;
-        case TransferData::TransferType::TRANSFER_DOWNLOAD:
-            iconCompleted = Utilities::getCachedPixmap(errorCode < 0 ? QString::fromLatin1(":/images/download_fail_item_ico.png")
-                                                                      : QString::fromLatin1(":/images/downloaded_item_ico.png"));
-            break;
-        default:
-            break;
+        iconCompleted = Utilities::getCachedPixmap(QLatin1Literal(":/images/synching_ico.png"));
+    }
+    else if(transferType & TransferData::TRANSFER_DOWNLOAD || transferType & TransferData::TRANSFER_LTCPDOWNLOAD)
+    {
+        iconCompleted = Utilities::getCachedPixmap(errorCode < 0 ? QString::fromLatin1(":/images/download_fail_item_ico.png")
+                                                                  : QString::fromLatin1(":/images/downloaded_item_ico.png"));
+    }
+    else if(transferType & TransferData::TRANSFER_UPLOAD)
+    {
+        iconCompleted = Utilities::getCachedPixmap(errorCode < 0 ? QString::fromLatin1(":/images/upload_fail_item_ico.png")
+                                                                  : QString::fromLatin1(":/images/uploaded_item_ico.png"));
     }
 
     mUi->lTransferTypeCompleted->setIcon(iconCompleted);

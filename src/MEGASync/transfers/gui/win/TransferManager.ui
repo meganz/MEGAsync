@@ -246,7 +246,7 @@ QGroupBox::title
     qProperty-iconSize: 36px;
 }
  
-QToolButton
+#wLeftPane QToolButton, #wRightPane QToolButton
 {
   border: none;
 }
