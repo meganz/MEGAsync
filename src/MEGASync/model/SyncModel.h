@@ -92,24 +92,23 @@ public:
     std::shared_ptr<SyncSetting> getSyncSettingByTag(mega::MegaHandle tag);
     QList<std::shared_ptr<SyncSetting>> getSyncSettingsByType(const QVector<SyncType>& types);
     QList<std::shared_ptr<SyncSetting>> getSyncSettingsByType(SyncType type)
-        {return getSyncSettingsByType(QVector<SyncType>(type));}
+        {return getSyncSettingsByType(QVector<SyncType>({type}));}
     QList<std::shared_ptr<SyncSetting>> getAllSyncSettings()
         {return getSyncSettingsByType(AllHandledSyncTypes);}
 
     int getNumSyncedFolders(const QVector<mega::MegaSync::SyncType>& types);
     int getNumSyncedFolders(SyncType type)
-        {return getNumSyncedFolders(QVector<mega::MegaSync::SyncType>(type));}
+        {return getNumSyncedFolders(QVector<SyncType>({type}));}
 
     bool hasUnattendedDisabledSyncs(const QVector<SyncType>& types) const;
     bool hasUnattendedDisabledSyncs(SyncType type) const
-        {return hasUnattendedDisabledSyncs(QVector<SyncType>(type));}
+        {return hasUnattendedDisabledSyncs(QVector<SyncType>({type}));}
     void addUnattendedDisabledSync(mega::MegaHandle tag, SyncType type);
     void removeUnattendedDisabledSync(mega::MegaHandle tag, SyncType type);
     void setUnattendedDisabledSyncs(const QSet<mega::MegaHandle>& tags);
     void dismissUnattendedDisabledSyncs(const QVector<SyncType>& types);
     void dismissUnattendedDisabledSyncs(SyncType type)
-        {return dismissUnattendedDisabledSyncs(QVector<SyncType>(type));}
-
+        {return dismissUnattendedDisabledSyncs(QVector<SyncType>({type}));}
 
     QStringList getSyncNames(const QVector<SyncType>& types);
     QStringList getSyncNames(SyncType type)
@@ -122,10 +121,10 @@ public:
         {return getMegaFolders(QVector<SyncType>(type));}
     QStringList getLocalFolders(const QVector<SyncType>& types);
     QStringList getLocalFolders(SyncType type)
-        {return getLocalFolders(QVector<mega::MegaSync::SyncType>(type));}
+        {return getLocalFolders(QVector<SyncType>({type}));}
     QList<mega::MegaHandle> getMegaFolderHandles(const QVector<SyncType>& types);
     QList<mega::MegaHandle> getMegaFolderHandles(SyncType type)
-        {return getMegaFolderHandles(QVector<SyncType>(type));}
+        {return getMegaFolderHandles(QVector<SyncType>({type}));}
 
     bool isRemoteRootSynced();
 
