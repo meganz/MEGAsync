@@ -32,6 +32,9 @@ protected:
 protected slots:
     void onHoverEnter(const QModelIndex& index);
 
+private slots:
+    void onIssueFixed();
+
 private:
     StalledIssueBaseDelegateWidget *getStalledIssueItemWidget(const QModelIndex &index, const StalledIssue &data) const;
     StalledIssueBaseDelegateWidget *getNonCacheStalledIssueItemWidget(const QModelIndex &index, QWidget *parent, const StalledIssue& data) const;

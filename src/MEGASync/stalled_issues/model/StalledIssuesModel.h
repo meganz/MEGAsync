@@ -54,6 +54,7 @@ public:
 
 signals:
     void stalledIssuesReceived(bool state);
+    void stalledIssuesCountChanged();
 
 protected slots:
     void onGlobalSyncStateChanged(mega::MegaApi *api) override;
@@ -63,6 +64,7 @@ private slots:
 
 private:
     void removeRows(QModelIndexList &indexesToRemove);
+    bool removeRows(int row, int count, const QModelIndex& parent = QModelIndex());
     void updateStalledIssuedByOrder();
     void reset();
 

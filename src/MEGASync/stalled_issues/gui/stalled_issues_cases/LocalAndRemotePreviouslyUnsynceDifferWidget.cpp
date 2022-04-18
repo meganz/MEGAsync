@@ -3,12 +3,15 @@
 
 #include "MegaApplication.h"
 #include "StalledIssuesModel.h"
+#include "mega/types.h"
 
 #include <QFile>
 
 LocalAndRemotePreviouslyUnsynceDifferWidget::LocalAndRemotePreviouslyUnsynceDifferWidget(QWidget *parent) :
-    StalledIssueBaseDelegateWidget(parent),
-    ui(new Ui::LocalAndRemotePreviouslyUnsynceDifferWidget)
+    StalledIssueBaseDelegateWidget(parent), mega::MegaRequestListener(),
+    ui(new Ui::LocalAndRemotePreviouslyUnsynceDifferWidget),
+    mListener(mega::make_unique<mega::QTMegaRequestListener>(MegaSyncApp->getMegaApi(), this)),
+    mRemovedRemoteHandle(0)
 {
     ui->setupUi(this);
 
@@ -31,13 +34,29 @@ void LocalAndRemotePreviouslyUnsynceDifferWidget::refreshUi()
     }
 }
 
-void LocalAndRemotePreviouslyUnsynceDifferWidget::onLocalButtonClicked()
+void LocalAndRemotePreviouslyUnsynceDifferWidget::onRequestFinish(mega::MegaApi *, mega::MegaRequest *request, mega::MegaError *e)
 {
-    auto fileNode = std::shared_ptr<mega::MegaNode>(MegaSyncApp->getMegaApi()->getNodeByPath(ui->chooseLocalCopy->data()->mCloudPath.toStdString().c_str()));
+    if (request->getType() == mega::MegaRequest::TYPE_REMOVE)
+    {
+        if (e->getErrorCode() == mega::MegaError::API_OK)
+        {
+            auto handle = request->getNodeHandle();
+            if(handle && handle == mRemovedRemoteHandle)
+            {
+                emit issueFixed();
+                mRemovedRemoteHandle = 0;
+            }
+        }
+    }
+}
+
+void LocalAndRemotePreviouslyUnsynceDifferWidget::onLocalButtonClicked()
+{ 
+    auto fileNode(MegaSyncApp->getMegaApi()->getNodeByPath(ui->chooseRemoteCopy->data()->mIndexPath.toStdString().c_str()));
     if(fileNode)
     {
-        MegaSyncApp->getMegaApi()->remove(fileNode.get());
-        MegaSyncApp->getStalledIssuesModel()->updateStalledIssues();
+        mRemovedRemoteHandle = fileNode->getHandle();
+        MegaSyncApp->getMegaApi()->remove(fileNode, mListener.get());
     }
 }
 
@@ -48,7 +67,7 @@ void LocalAndRemotePreviouslyUnsynceDifferWidget::onRemoteButtonClicked()
     {
         if(file.remove())
         {
-            MegaSyncApp->getStalledIssuesModel()->updateStalledIssues();
+            emit issueFixed();
         }
     }
 }

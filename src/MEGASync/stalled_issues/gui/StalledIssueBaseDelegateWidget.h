@@ -21,6 +21,9 @@ public:
 
     const StalledIssue &getData() const;
 
+signals:
+    void issueFixed();
+
 protected:
     virtual void refreshUi() = 0;
 

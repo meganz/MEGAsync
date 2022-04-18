@@ -28,6 +28,8 @@ class TransferManager : public QDialog
 {
     Q_OBJECT
 
+    static const char* ITS_ON;
+
 public:
     enum TM_TAB
     {

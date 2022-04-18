@@ -1020,5 +1020,8 @@
         <file>images/StalledIssues/PC_ico_rest.png</file>
         <file>images/StalledIssues/PC_ico_rest@2x.png</file>
         <file>images/StalledIssues/PC_ico_rest@3x.png</file>
+        <file>images/rotate-cw.png</file>
+        <file>images/rotate-cw@2x.png</file>
+        <file>images/rotate-cw@3x.png</file>
     </qresource>
 </RCC>

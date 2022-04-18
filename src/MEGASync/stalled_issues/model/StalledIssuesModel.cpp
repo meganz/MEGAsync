@@ -152,6 +152,7 @@ void StalledIssuesModel::onProcessStalledIssues(StalledIssuesList stalledIssues)
         }
 
         endInsertRows();
+        emit stalledIssuesCountChanged();
     }
 
     emit stalledIssuesReceived(true);
@@ -292,7 +293,7 @@ void StalledIssuesModel::removeRows(QModelIndexList &indexesToRemove)
         // If rows are non-contiguous, flush and start from item
         if (row != index.row())
         {
-            QAbstractItemModel::removeRows(row + 1, count, QModelIndex());
+            removeRows(row + 1, count, QModelIndex());
             count = 0;
             row = index.row();
         }
@@ -305,10 +306,33 @@ void StalledIssuesModel::removeRows(QModelIndexList &indexesToRemove)
     // This happens when the last item processed is in a finished state.
     if (count > 0)
     {
-        QAbstractItemModel::removeRows(row + 1, count, QModelIndex());
+        removeRows(row + 1, count, QModelIndex());
     }
 
     updateStalledIssuedByOrder();
+}
+
+bool StalledIssuesModel::removeRows(int row, int count, const QModelIndex &parent)
+{
+    if (parent == QModelIndex() && count > 0 && row >= 0)
+    {
+        beginRemoveRows(parent, row, row + count - 1);
+
+        for (auto i (0); i < count; ++i)
+        {
+            mStalledIssues.removeAt(i);
+        }
+
+        endRemoveRows();
+
+        emit stalledIssuesCountChanged();
+
+        return true;
+    }
+    else
+    {
+        return false;
+    }
 }
 
 void StalledIssuesModel::updateStalledIssuedByOrder()
@@ -336,4 +360,6 @@ void StalledIssuesModel::reset()
     mStalledIssuesByOrder.clear();
 
     endResetModel();
+
+    emit stalledIssuesCountChanged();
 }

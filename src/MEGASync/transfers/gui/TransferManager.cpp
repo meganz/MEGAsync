@@ -20,7 +20,7 @@ const int TransferManager::SPEED_REFRESH_PERIOD_MS;
 const int TransferManager::STATS_REFRESH_PERIOD_MS;
 
 const char* LABEL_NUMBER = "NUMBER";
-const char* ITS_ON = "itsOn";
+const char* TransferManager::ITS_ON = "itsOn";
 constexpr long long NB_INIT_VALUE = 0LL;
 
 TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :

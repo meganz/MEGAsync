@@ -121,7 +121,7 @@ bool StalledIssueDelegate::editorEvent(QEvent *event, QAbstractItemModel *model,
         }
     }
 
-   return QStyledItemDelegate::editorEvent(event, model, option, index);
+    return QStyledItemDelegate::editorEvent(event, model, option, index);
 }
 
 QWidget *StalledIssueDelegate::createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const
@@ -169,6 +169,16 @@ void StalledIssueDelegate::onHoverEnter(const QModelIndex &index)
     mView->edit(index);
 }
 
+void StalledIssueDelegate::onIssueFixed()
+{
+   auto senderWidget = dynamic_cast<StalledIssueBaseDelegateWidget*>(sender());
+   if(senderWidget)
+   {
+       auto index = senderWidget->getCurrentIndex();
+       mSourceModel->finishStalledIssues(QModelIndexList() << index);
+   }
+}
+
 StalledIssueBaseDelegateWidget *StalledIssueDelegate::getStalledIssueItemWidget(const QModelIndex &index, const StalledIssue& data) const
 {
     StalledIssueBaseDelegateWidget* item(nullptr);
@@ -197,6 +207,8 @@ StalledIssueBaseDelegateWidget *StalledIssueDelegate::getNonCacheStalledIssueIte
     {
         item = mCacheManager.getNonCacheStalledIssueHeaderWidget(index,parent, data);
     }
+
+    connect(item, &StalledIssueBaseDelegateWidget::issueFixed, this, &StalledIssueDelegate::onIssueFixed);
 
     return item;
 }
