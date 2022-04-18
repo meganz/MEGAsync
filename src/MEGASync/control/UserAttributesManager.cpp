@@ -26,13 +26,16 @@ void UserAttributesManager::onRequestFinish(mega::MegaApi *api, mega::MegaReques
 
 void UserAttributesManager::onUsersUpdate(mega::MegaApi*, mega::MegaUserList *users)
 {
-    for (int i = 0; i < users->size(); i++)
+    if (users)
     {
-        mega::MegaUser *user = users->get(i);
-        auto userEmail = QString::fromUtf8(user->getEmail());
-        foreach(auto request, mRequests.values(userEmail))
+        for (int i = 0; i < users->size(); i++)
         {
-            request->updateAttributes(user);
+            mega::MegaUser *user = users->get(i);
+            auto userEmail = QString::fromUtf8(user->getEmail());
+            foreach(auto request, mRequests.values(userEmail))
+            {
+                request->updateAttributes(user);
+            }
         }
     }
 }
