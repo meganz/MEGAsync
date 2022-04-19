@@ -200,8 +200,16 @@ void DesktopNotifications::processAlert(mega::MegaUserAlert* alert)
     // alerts are sent again after seen state updated, so lets only notify the unseen alerts
     if(!alert->getSeen())
     {
-        auto fullNameRequest = mUserAttributes.value(QString::fromUtf8(alert->getEmail()));
-        auto fullName = fullNameRequest->getFullName();
+        QString fullName;
+        QString email = QString::fromUtf8(alert->getEmail());
+        if (!email.isEmpty())
+        {
+            auto fullNameRequest = mUserAttributes.value(email);
+            if (fullNameRequest)
+            {
+                fullName = fullNameRequest->getFullName();
+            }
+        }
 
         switch (alert->getType())
         {
@@ -216,7 +224,7 @@ void DesktopNotifications::processAlert(mega::MegaUserAlert* alert)
 
                 auto notification = CreateContacNotification(tr("New Contact Request"),
                                                              tr("[A] sent you a contact request").replace(QString::fromUtf8("[A]"), fullName),
-                                                             QString::fromUtf8(alert->getEmail()),
+                                                             email,
                                                              actions);
 
                 QObject::connect(notification, &MegaNotification::activated, this, &DesktopNotifications::replayIncomingPendingRequest);
@@ -241,7 +249,7 @@ void DesktopNotifications::processAlert(mega::MegaUserAlert* alert)
             {
                 auto notification = CreateContacNotification(tr("New Contact Request"),
                                                              tr("Reminder") + QStringLiteral(": ") + tr("You have a contact request"),
-                                                             QString::fromUtf8(alert->getEmail()),
+                                                             email,
                                                              QStringList() << tr("View"));
 
                 QObject::connect(notification, &MegaNotification::activated, this, &DesktopNotifications::viewContactOnWebClient);
@@ -259,7 +267,7 @@ void DesktopNotifications::processAlert(mega::MegaUserAlert* alert)
 
                 auto notification = CreateContacNotification(tr("New Contact Established"),
                                                              tr("New contact with [A] has been established").replace(QString::fromUtf8("[A]"), fullName),
-                                                             QString::fromUtf8(alert->getEmail()),
+                                                             email,
                                                              actions);
 
                 QObject::connect(notification, &MegaNotification::activated, this, &DesktopNotifications::viewContactOnWebClient);
