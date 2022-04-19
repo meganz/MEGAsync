@@ -11,7 +11,8 @@ TransfersWidget::TransfersWidget(QWidget* parent) :
     QWidget (parent),
     ui (new Ui::TransfersWidget),
     tDelegate (nullptr),
-    app (qobject_cast<MegaApplication*>(qApp))
+    app (qobject_cast<MegaApplication*>(qApp)),
+    mAllTransfersTab(false)
 {
     ui->setupUi(this);
 
@@ -76,7 +77,6 @@ void TransfersWidget::configureTransferView()
 
     tDelegate = new MegaTransferDelegate(mProxyModel, ui->tvTransfers);
     ui->tvTransfers->setup(this);
-    mDelegateHoverManager.setView(ui->tvTransfers);
     ui->tvTransfers->setItemDelegate(tDelegate);
 
     onPauseStateChanged(mProxyModel->isAnyPaused());
@@ -89,6 +89,7 @@ void TransfersWidget::configureTransferView()
     ui->tvTransfers->setDragDropMode(QAbstractItemView::InternalMove);
 
     mLoadingScene.setView(ui->tvTransfers);
+    mDelegateHoverManager.setView(ui->tvTransfers);
 }
 
 void TransfersWidget::pausedTransfers(bool paused)
@@ -119,15 +120,28 @@ void TransfersWidget::on_tCancelClearVisible_clicked()
 
 void TransfersWidget::onPauseStateChanged(bool pauseState)
 {
-    ui->tPauseResumeVisible->setToolTip(pauseState ?
-                                        tr("Resume visible transfers")
-                                      : tr("Pause visible transfers"));
-    ui->tPauseResumeVisible->blockSignals(true);
-    ui->tPauseResumeVisible->setChecked(pauseState);
-    ui->tPauseResumeVisible->blockSignals(false);
+    if(mAllTransfersTab)
+    {
+        ui->tPauseResumeVisible->setToolTip(pauseState ?
+                                            tr("Resume all")
+                                          : tr("Pause all"));
+    }
+    else
+    {
+        ui->tPauseResumeVisible->setToolTip(pauseState ?
+                                                tr("Resume visible transfers")
+                                              : tr("Pause visible transfers"));
+    }
 
-    //Use to repaint and update the transfers state
-    ui->tvTransfers->update();
+    if(ui->tPauseResumeVisible->isChecked() != pauseState)
+    {
+        ui->tPauseResumeVisible->blockSignals(true);
+        ui->tPauseResumeVisible->setChecked(pauseState);
+        ui->tPauseResumeVisible->blockSignals(false);
+
+        //Use to repaint and update the transfers state
+        ui->tvTransfers->update();
+    }
 }
 
 void TransfersWidget::textFilterChanged(const QString& pattern)
@@ -304,6 +318,13 @@ void TransfersWidget::onVerticalScrollBarVisibilityChanged(bool state)
     {
         ui->wTableHeaderLayout->invalidate();
     }
+}
+
+void TransfersWidget::setAllTransfersTab(bool allTransfersTab)
+{
+    mAllTransfersTab = allTransfersTab;
+
+    onPauseStateChanged(ui->tPauseResumeVisible->isChecked());
 }
 
 void TransfersWidget::on_tPauseResumeVisible_toggled(bool state)

@@ -737,7 +737,7 @@ void MegaApplication::updateTrayIcon()
             { "paused", QString::fromUtf8("://images/tray_pause.ico") },
             { "logging", QString::fromUtf8("://images/login_ico.ico") },
             { "alert", QString::fromUtf8("://images/alert_ico.ico") },
-            { "someissues", QString::fromUtf8("://images/alert_ico.ico") }
+            { "someissues", QString::fromUtf8("://images/warning_ico.ico") }
 
         #else
             { "warning", QString::fromUtf8("://images/warning.svg") },
@@ -746,7 +746,7 @@ void MegaApplication::updateTrayIcon()
             { "paused", QString::fromUtf8("://images/paused.svg") },
             { "logging", QString::fromUtf8("://images/logging.svg") },
             { "alert", QString::fromUtf8("://images/alert.svg") },
-            { "someissues", QString::fromUtf8("://images/alert.svg") }
+            { "someissues", QString::fromUtf8("://images/warning.svg") }
         #endif
     #else
             { "warning", QString::fromUtf8("://images/icon_overquota_mac.png") },
@@ -755,7 +755,7 @@ void MegaApplication::updateTrayIcon()
             { "paused", QString::fromUtf8("://images/icon_paused_mac.png") },
             { "logging", QString::fromUtf8("://images/icon_logging_mac.png") },
             { "alert", QString::fromUtf8("://images/icon_alert_mac.png") },
-            { "someissues", QString::fromUtf8("://images/icon_alert_mac.png") }
+            { "someissues", QString::fromUtf8("://images/icon_overquota_mac.png") }
     #endif
         };
 
@@ -844,8 +844,16 @@ void MegaApplication::updateTrayIcon()
     }
     else if (paused)
     {
-        tooltipState = tr("Paused");
-        icon = icons["paused"];
+        if(mTransfersModel && mTransfersModel->hasFailedTransfers())
+        {
+            tooltipState = tr("Some issues ocurred");
+            icon = icons["someissues"];
+        }
+        else
+        {
+            tooltipState = tr("Paused");
+            icon = icons["paused"];
+        }
 
 #ifdef __APPLE__
         if (scanningTimer->isActive())

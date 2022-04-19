@@ -218,6 +218,7 @@ protected:
     void setBlockedStateLabel(QString state);
     void updateBlockedState();
     void updateState();
+    bool checkFailedState();
     void changeEvent(QEvent * event) override;
     bool eventFilter(QObject *obj, QEvent *e) override;
     void paintEvent( QPaintEvent * e) override;

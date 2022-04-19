@@ -728,8 +728,11 @@ void InfoDialog::updateState()
 
     if (preferences->getGlobalPaused())
     {
-        mState = StatusInfo::TRANSFERS_STATES::STATE_PAUSED;
-        animateStates(waiting || indexing || syncing);
+        if(!checkFailedState())
+        {
+            mState = StatusInfo::TRANSFERS_STATES::STATE_PAUSED;
+            animateStates(waiting || indexing || syncing);
+        }
     }
     else
     {
@@ -767,20 +770,16 @@ void InfoDialog::updateState()
         }
         else
         {
-            if(app->getTransfersModel()->hasFailedTransfers())
+            if(!checkFailedState())
             {
-                if(mState != StatusInfo::TRANSFERS_STATES::STATE_FAILED)
+                if(mState != StatusInfo::TRANSFERS_STATES::STATE_UPDATED)
                 {
-                    mState = StatusInfo::TRANSFERS_STATES::STATE_FAILED;
+                    mState = StatusInfo::TRANSFERS_STATES::STATE_UPDATED;
                     animateStates(false);
                 }
             }
-            else if (mState != StatusInfo::TRANSFERS_STATES::STATE_UPDATED)
-            {
-                mState = StatusInfo::TRANSFERS_STATES::STATE_UPDATED;
-                animateStates(false);
-            }
         }
+
     }
 
     if(ui->wStatus->getState() != mState)
@@ -788,6 +787,25 @@ void InfoDialog::updateState()
         ui->wStatus->setState(mState);
         ui->bTransferManager->setPaused(preferences->getGlobalPaused());
     }
+}
+
+bool InfoDialog::checkFailedState()
+{
+    auto isFailed(false);
+
+    if(app->getTransfersModel()->hasFailedTransfers())
+    {
+        if(mState != StatusInfo::TRANSFERS_STATES::STATE_FAILED)
+        {
+            mState = StatusInfo::TRANSFERS_STATES::STATE_FAILED;
+            animateStates(false);
+
+        }
+
+        isFailed = true;
+    }
+
+    return isFailed;
 }
 
 void InfoDialog::addSync()

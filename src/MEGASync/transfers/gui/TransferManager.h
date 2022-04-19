@@ -139,7 +139,7 @@ private slots:
     void on_bArchives_clicked();
     void on_bDocuments_clicked();
     void on_bImages_clicked();
-    void on_bMusic_clicked();
+    void on_bAudio_clicked();
     void on_bVideos_clicked();
     void on_bOther_clicked();
     void on_bText_clicked();
