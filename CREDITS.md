@@ -1,25 +1,23 @@
-## CREDITS
+# CREDITS
 
-Here is the list of the external libraries used by MEGAsync.
-We thank them all for their contributions:
+Here is the list of the third party libraries used by MEGA Desktop Application.
+We are grateful and thankful for their efforts and the opportunity to rely and
+extend on their existing body of work.
 
-#### QT
-http://www.qt.io/
+## Qt SDK
+http://www.qt.io/ © 2016 The Qt Company Ltd.
 
-© 2016 The Qt Company Ltd.
+### Description
+Qt is the cross-platform framework for C++ GUI development.
 
-###### Description:
-QT is framework for cross-platform develppment
+### Usage
+Qt is used by MEGA Desktop to get cross-platform compatibility and GUI
+functionality across the supported desktop operating systems.
 
-######  Usage:
-QT is the framework used by MEGAsync to get cross platform compatibility 
-
-######  License: 
-Dual license: LGPL 3
+### Licence 
+Dual licence: LGPL 3
 
 https://www.gnu.org/licenses/lgpl-3.0.html
-
-https://www.gnu.org/licenses/licenses.html
 
 http://www.qt.io/licensing/
 
