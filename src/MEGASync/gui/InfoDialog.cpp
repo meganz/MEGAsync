@@ -206,8 +206,8 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
 
     ui->lOQDesc->setTextFormat(Qt::RichText);
 
-    state = STATE_STARTING;
-    ui->wStatus->setState(state);
+    mState = StatusInfo::TRANSFERS_STATES::STATE_STARTING;
+    ui->wStatus->setState(mState);
 
     megaApi = app->getMegaApi();
     preferences = Preferences::instance();
@@ -728,56 +728,64 @@ void InfoDialog::updateState()
 
     if (preferences->getGlobalPaused())
     {
-        state = STATE_PAUSED;
+        mState = StatusInfo::TRANSFERS_STATES::STATE_PAUSED;
         animateStates(waiting || indexing || syncing);
     }
     else
     {
         if (indexing)
         {
-            if (state != STATE_INDEXING)
+            if (mState != StatusInfo::TRANSFERS_STATES::STATE_INDEXING)
             {
-                state = STATE_INDEXING;
+                mState = StatusInfo::TRANSFERS_STATES::STATE_INDEXING;
                 animateStates(true);
             }
         }
         else if (syncing)
         {
-            if (state != STATE_SYNCING)
+            if (mState != StatusInfo::TRANSFERS_STATES::STATE_SYNCING)
             {
-                state = STATE_SYNCING;
+                mState = StatusInfo::TRANSFERS_STATES::STATE_SYNCING;
                 animateStates(true);
             }
         }
         else if (waiting)
         {
-            if (state != STATE_WAITING)
+            if (mState != StatusInfo::TRANSFERS_STATES::STATE_WAITING)
             {
-                state = STATE_WAITING;
+                mState = StatusInfo::TRANSFERS_STATES::STATE_WAITING;
                 animateStates(true);
             }
         }
         else if (transferring)
         {
-            if (state != STATE_TRANSFERRING)
+            if (mState != StatusInfo::TRANSFERS_STATES::STATE_TRANSFERRING)
             {
-                state = STATE_TRANSFERRING;
+                mState = StatusInfo::TRANSFERS_STATES::STATE_TRANSFERRING;
                 animateStates(true);
             }
         }
         else
         {
-            if (state != STATE_UPDATED)
+            if(app->getTransfersModel()->hasFailedTransfers())
             {
-                state = STATE_UPDATED;
+                if(mState != StatusInfo::TRANSFERS_STATES::STATE_FAILED)
+                {
+                    mState = StatusInfo::TRANSFERS_STATES::STATE_FAILED;
+                    animateStates(false);
+                }
+            }
+            else if (mState != StatusInfo::TRANSFERS_STATES::STATE_UPDATED)
+            {
+                mState = StatusInfo::TRANSFERS_STATES::STATE_UPDATED;
                 animateStates(false);
             }
         }
     }
 
-    if(ui->wStatus->getState() != state)
+    if(ui->wStatus->getState() != mState)
     {
-        ui->wStatus->setState(state);
+        ui->wStatus->setState(mState);
         ui->bTransferManager->setPaused(preferences->getGlobalPaused());
     }
 }
@@ -1283,7 +1291,7 @@ void InfoDialog::changeEvent(QEvent *event)
         if (preferences->logged())
         {
             setUsage();
-            state = STATE_STARTING;
+            mState = StatusInfo::TRANSFERS_STATES::STATE_STARTING;
             updateDialogState();
         }
     }

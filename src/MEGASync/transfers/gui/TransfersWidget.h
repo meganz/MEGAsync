@@ -45,7 +45,6 @@ public:
     ~TransfersWidget();
 
 public slots:
-    void on_pHeaderSize_clicked();
     void onHeaderItemClicked(int sortBy, Qt::SortOrder order);
     void on_tPauseResumeVisible_toggled(bool state);
     void on_tCancelClearVisible_clicked();

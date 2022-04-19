@@ -47,6 +47,7 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
     setAttribute(Qt::WA_DeleteOnClose, true);
 
     mUi->lTextSearch->installEventFilter(this);
+    mUi->leSearchField->installEventFilter(this);
 
     mModel = mUi->wTransfers->getModel();
 
@@ -409,13 +410,13 @@ void TransferManager::refreshStateStats()
     // The check Failed states -----------------------------------------------------------------
     countLabel = mNumberLabelsGroup[FAILED_TAB];
 
-    processedNumber = mTransfersCount.failedUploads + mTransfersCount.failedDownloads;
-    countLabelText = processedNumber > 0 ? QString::number(processedNumber) : QString();
+    long long failedNumber(mTransfersCount.failedUploads + mTransfersCount.failedDownloads);
+    countLabelText = failedNumber > 0 ? QString::number(failedNumber) : QString();
 
     // Update if the value changed
     if (countLabel->text().isEmpty() || countLabelText != countLabel->text())
     {
-        if (mCurrentTab != FAILED_TAB && processedNumber == 0)
+        if (mCurrentTab != FAILED_TAB && failedNumber == 0)
         {
             countLabel->parentWidget()->hide();
             countLabel->clear();
@@ -423,7 +424,7 @@ void TransferManager::refreshStateStats()
         else
         {
             countLabel->parentWidget()->show();
-            countLabel->setVisible(processedNumber > 0);
+            countLabel->setVisible(failedNumber > 0);
             countLabel->setText(countLabelText);
         }
     }
@@ -440,7 +441,14 @@ void TransferManager::refreshStateStats()
 
         // If we don't have transfers, stop refresh timer and show "Up to date",
         // and if current tab is ALL TRANSFERS, show empty.
-        if (processedNumber == 0)
+        if(failedNumber != 0)
+        {
+            leftFooterWidget = mUi->pSomeIssues;
+            mSpeedRefreshTimer->stop();
+            countLabel->hide();
+            countLabel->clear();
+        }
+        else if (processedNumber == 0)
         {
             leftFooterWidget = mUi->pUpToDate;
             mSpeedRefreshTimer->stop();
@@ -750,6 +758,14 @@ void TransferManager::on_bSearch_clicked()
 {
     mUi->wTitleAndSearch->setCurrentWidget(mUi->pSearch);
     mUi->leSearchField->setText(QString());
+}
+
+void TransferManager::on_leSearchField_editingFinished()
+{
+    if(mUi->leSearchField->text().isEmpty())
+    {
+       mUi->wTitleAndSearch->setCurrentWidget(mUi->pTransfers);
+    }
 }
 
 void TransferManager::on_tSearchIcon_clicked()
@@ -1082,6 +1098,16 @@ bool TransferManager::eventFilter(QObject *obj, QEvent *event)
                                   .elidedText(mUi->leSearchField->text(),
                                               Qt::ElideMiddle,
                                               newWidth - 24));
+    }
+    else if(obj == mUi->leSearchField && event->type() == QEvent::KeyPress)
+    {
+        auto keyEvent = dynamic_cast<QKeyEvent*>(event);
+        if(keyEvent && keyEvent->key() == Qt::Key_Escape)
+        {
+            event->accept();
+            mUi->leSearchField->editingFinished();
+            return true;
+        }
     }
     return false;
 }

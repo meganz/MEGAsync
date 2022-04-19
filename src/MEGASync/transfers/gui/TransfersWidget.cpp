@@ -112,15 +112,6 @@ void TransfersWidget::onHeaderItemClicked(int sortBy, Qt::SortOrder order)
     mProxyModel->sort(sortBy, order);
 }
 
-void TransfersWidget::on_pHeaderSize_clicked()
-{
-    Qt::SortOrder order (Qt::AscendingOrder);
-    SortCriterion sortBy (
-                SortCriterion::TOTAL_SIZE);
-
-    mProxyModel->sort(static_cast<int>(sortBy), order);
-}
-
 void TransfersWidget::on_tCancelClearVisible_clicked()
 {
     emit cancelClearVisibleRows();

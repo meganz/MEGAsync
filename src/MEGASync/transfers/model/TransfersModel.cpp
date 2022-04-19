@@ -910,6 +910,11 @@ TransfersCount TransfersModel::getTransfersCount()
     return mTransfersCount;
 }
 
+bool TransfersModel::hasFailedTransfers()
+{
+    return mTransfersCount.failedDownloads != 0 || mTransfersCount.failedUploads != 0;
+}
+
 void TransfersModel::cancelTransfers(const QModelIndexList& indexes, QWidget* canceledFrom)
 {
     if(indexes.isEmpty())

@@ -119,6 +119,7 @@ private slots:
     void on_tActionButton_clicked();
     void on_tSeePlans_clicked();
     void on_bSearch_clicked();
+    void on_leSearchField_editingFinished();
     void on_tSearchIcon_clicked();
     void on_bSearchString_clicked();
     void on_tSearchCancel_clicked();

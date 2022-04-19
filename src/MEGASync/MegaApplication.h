@@ -207,7 +207,7 @@ public:
     void pushToThreadPool(std::function<void()> functor);
     SetupWizard *getSetupWizard() const;
 
-    TransfersModel* getTransfersModel(){return mModel;}
+    TransfersModel* getTransfersModel(){return mTransfersModel;}
 
     /**
      * @brief migrates sync configuration and fetches nodes
@@ -556,7 +556,7 @@ protected:
     std::shared_ptr<DesktopNotifications> mOsNotifications;
     QMutex mMutexOpenUrls;
     QMap<QString, std::chrono::system_clock::time_point> mOpenUrlsClusterTs;
-    TransfersModel* mModel;
+    TransfersModel* mTransfersModel;
 
 private:
 #ifdef _WIN32
