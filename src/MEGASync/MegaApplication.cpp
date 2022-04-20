@@ -4935,6 +4935,8 @@ void MegaApplication::transferManagerActionClicked(int tab)
 
     transferManager->setActiveTab(tab);
     transferManager->showNormal();
+    transferManager->activateWindow();
+    transferManager->raise();
 }
 
 void MegaApplication::loginActionClicked()
