@@ -1170,7 +1170,7 @@ background-color: #E2E2E2;
              <string notr="true"/>
             </property>
             <property name="text">
-             <string>Logging in ...</string>
+             <string>Logging in...</string>
             </property>
             <property name="alignment">
              <set>Qt::AlignCenter</set>
