@@ -1120,26 +1120,23 @@ bool TransferManager::eventFilter(QObject *obj, QEvent *event)
             return true;
         }
     }
-    return false;
+    return QDialog::eventFilter(obj, event);
 }
 
 void TransferManager::closeEvent(QCloseEvent *event)
 {
-    if(event->type() == QEvent::Close)
-    {
-        auto proxy (mUi->wTransfers->getProxyModel());
+    auto proxy (mUi->wTransfers->getProxyModel());
 
-        if(proxy->isModelProcessing())
-        {
-            connect(proxy, &TransfersManagerSortFilterProxyModel::modelChanged, this, [this](){
-                close();
-            });
-            event->ignore();
-        }
-        else
-        {
-            event->accept();
-        }
+    if(proxy->isModelProcessing())
+    {
+        connect(proxy, &TransfersManagerSortFilterProxyModel::modelChanged, this, [this](){
+            close();
+        });
+        event->ignore();
+    }
+    else
+    {
+        QDialog::closeEvent(event);
     }
 }
 

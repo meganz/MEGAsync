@@ -47,7 +47,7 @@ void TransfersManagerSortFilterProxyModel::sort(int sortCriterion, Qt::SortOrder
         mSortCriterion = static_cast<SortCriterion>(sortCriterion);
     }
 
-    QFuture<void> filtered = QtConcurrent::run([this, order, sortCriterion](){
+    QFuture<void> filtered = QtConcurrent::run([this, order](){
         auto sourceM = qobject_cast<TransfersModel*>(sourceModel());
         sourceM->lockModelMutex(true);
         sourceM->blockSignals(true);
@@ -185,11 +185,10 @@ void TransfersManagerSortFilterProxyModel::resetTransfersStateCounters()
     mPausedTransfers.clear();
 }
 
-TransferBaseDelegateWidget *TransfersManagerSortFilterProxyModel::createTransferManagerItem(QWidget* parent)
+TransferBaseDelegateWidget *TransfersManagerSortFilterProxyModel::createTransferManagerItem(QWidget*)
 {
     auto item = new TransferManagerDelegateWidget(nullptr);
 
-    //All are UniqueConnection to avoid reconnecting if thw item already exists in cache and it is not a new item
     connect(item, &TransferManagerDelegateWidget::cancelClearTransfer,
             this, &TransfersManagerSortFilterProxyModel::onCancelClearTransfer);
     connect(item, &TransferManagerDelegateWidget::pauseResumeTransfer,

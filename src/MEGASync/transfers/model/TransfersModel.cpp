@@ -627,7 +627,7 @@ void TransfersModel::processActiveTransfers(QList<QExplicitlySharedDataPointer<T
         for (auto it = transfersToActive.begin(); it != transfersToActive.end();)
         {
             mTransfers.prepend((*it));
-            (*it)->mPriority -= 100000000000000;
+            (*it)->mPriority -= ACTIVE_PRIORITY_OFFSET;
 
             transfersToActive.erase(it++);
         }
@@ -642,7 +642,6 @@ void TransfersModel::processUpdateTransfers()
 {
     QList<int> rowsToUpdate;
     QList<QExplicitlySharedDataPointer<TransferData>> transfersFinished;
-    QList<QExplicitlySharedDataPointer<TransferData>> transfersActive;
     QModelIndexList rowsToRemove;
 
     for (auto it = mTransfersToProcess.updateTransfersByTag.begin(); it != mTransfersToProcess.updateTransfersByTag.end();)
@@ -1312,8 +1311,8 @@ void TransfersModel::removeTransfer(int row)
 
 void TransfersModel::sendDataChanged(int row)
 {
-    QModelIndex bottomRight (index(row, 0, DEFAULT_IDX));
-    emit dataChanged(bottomRight, bottomRight);
+    QModelIndex indexChanged (index(row, 0, DEFAULT_IDX));
+    emit dataChanged(indexChanged, indexChanged);
 }
 
 bool TransfersModel::isFailingModeActive() const
