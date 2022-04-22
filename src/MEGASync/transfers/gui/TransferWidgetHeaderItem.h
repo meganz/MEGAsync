@@ -16,11 +16,11 @@ public:
     explicit TransferWidgetHeaderItem(QWidget *parent = nullptr);
     ~TransferWidgetHeaderItem();
 
-    Q_PROPERTY(QString title MEMBER mTitle READ title() WRITE setTitle())
+    Q_PROPERTY(QString title MEMBER mTitle READ title WRITE setTitle)
     QString title() const;
     void setTitle(const QString &title);
 
-    Q_PROPERTY(int sortCriterion MEMBER mSortCriterion READ sortCriterion() WRITE setSortCriterion())
+    Q_PROPERTY(int sortCriterion MEMBER mSortCriterion READ sortCriterion WRITE setSortCriterion)
     int sortCriterion() const;
     void setSortCriterion(const int &sortCriterion);
 

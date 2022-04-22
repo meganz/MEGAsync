@@ -15,7 +15,8 @@ StalledIssueDelegate::StalledIssueDelegate(StalledIssuesProxyModel* proxyModel, 
      mProxyModel (proxyModel),
      mSourceModel (qobject_cast<StalledIssuesModel*>(
                        mProxyModel->sourceModel())),
-     QStyledItemDelegate(view)
+     QStyledItemDelegate(view),
+     mEditor(nullptr)
 {
     mCacheManager.setProxyModel(mProxyModel);
 }
@@ -48,22 +49,25 @@ void StalledIssueDelegate::paint(QPainter *painter, const QStyleOptionViewItem &
         auto pos (option.rect.topLeft());
         auto width (option.rect.width());
         auto height (option.rect.height());
-        auto stalledIssueItem (qvariant_cast<StalledIssue>(index.data(Qt::DisplayRole)));
 
-        painter->fillRect(option.rect,Qt::white);
-
-
+        painter->fillRect(option.rect, Qt::white);
         painter->save();
         painter->translate(pos);
 
-        StalledIssueBaseDelegateWidget* w (getStalledIssueItemWidget(index, stalledIssueItem));
-        if(!w)
+        if(!mEditor || mEditor->getCurrentIndex() != index)
         {
-            return;
-        }
+            auto stalledIssueItem (qvariant_cast<StalledIssue>(index.data(Qt::DisplayRole)));
+            StalledIssueBaseDelegateWidget* w (getStalledIssueItemWidget(index, stalledIssueItem));
+            if(!w)
+            {
+                return;
+            }
 
-        w->setGeometry(option.rect);
-        w->render(option, painter, QRegion(0, 0, width, height));
+            w->expand(mView->isExpanded(index));
+            w->setGeometry(option.rect);
+            w->hide();
+            w->render(option, painter, QRegion(0, 0, width, height));
+        }
 
         bool drawBottomLine(false);
 
@@ -86,7 +90,7 @@ void StalledIssueDelegate::paint(QPainter *painter, const QStyleOptionViewItem &
             pen.setColor(QColor("#000000"));
             painter->setPen(pen);
             painter->setOpacity(0.08);
-            painter->drawLine(QPoint(0, option.rect.height() -1),QPoint(option.rect.width(),option.rect.height() -1));
+            painter->drawLine(QPoint(0 - option.rect.x(), option.rect.height() -1),QPoint(mView->width(),option.rect.height() -1));
         }
 
         painter->restore();
@@ -107,14 +111,15 @@ bool StalledIssueDelegate::editorEvent(QEvent *event, QAbstractItemModel *model,
             {
                 if(index.isValid())
                 {
-                    if(index.parent().isValid())
+                    if(!index.parent().isValid())
                     {
-                        auto parentIndex = index.parent();
-                        mView->isExpanded(parentIndex) ? mView->collapse(parentIndex) : mView->expand(parentIndex);
-                    }
-                    else
-                    {
-                        mView->isExpanded(index) ? mView->collapse(index) : mView->expand(index);
+                        auto currentState = mView->isExpanded(index);
+                        currentState ? mView->collapse(index) : mView->expand(index);
+
+                        if(mEditor)
+                        {
+                            mEditor->expand(!currentState);
+                        }
                     }
                 }
             }
@@ -128,11 +133,11 @@ QWidget *StalledIssueDelegate::createEditor(QWidget *parent, const QStyleOptionV
 {
     auto stalledIssueItem (qvariant_cast<StalledIssue>(index.data(Qt::DisplayRole)));
 
-    auto editor = getNonCacheStalledIssueItemWidget(index,parent, stalledIssueItem);
-    editor->setStyleSheet(QString::fromUtf8("*{background-color: transparent;}"));
-    editor->setGeometry(option.rect);
+    mEditor = getNonCacheStalledIssueItemWidget(index,parent, stalledIssueItem);
+    mEditor->expand(mView->isExpanded(index));
+    mEditor->setGeometry(option.rect);
 
-    return editor;
+    return mEditor;
 }
 
 void StalledIssueDelegate::updateEditorGeometry(QWidget *editor, const QStyleOptionViewItem &option, const QModelIndex &) const
@@ -148,6 +153,17 @@ bool StalledIssueDelegate::event(QEvent *event)
         {
             onHoverEnter(hoverEvent->index());
         }
+        else if(hoverEvent->type() == QEvent::Leave)
+        {
+            onHoverLeave(hoverEvent->index());
+        }
+        else if(hoverEvent->type() == QEvent::MouseMove)
+        {
+            if(!mEditor)
+            {
+                onHoverEnter(hoverEvent->index());
+            }
+        }
     }
 
     return QStyledItemDelegate::event(event);
@@ -160,13 +176,20 @@ bool StalledIssueDelegate::eventFilter(QObject *object, QEvent *event)
 
 void StalledIssueDelegate::onHoverEnter(const QModelIndex &index)
 {
-    if(mView->isPersistentEditorOpen(mView->currentIndex()))
-    {
-        mView->closePersistentEditor(mView->currentIndex());
-    }
-
     mView->setCurrentIndex(index);
     mView->edit(index);
+}
+
+void StalledIssueDelegate::onHoverLeave(const QModelIndex& index)
+{
+    if(mEditor)
+    {
+        //Small hack to avoid blinks when changing from editor to delegate paint
+        auto editor = mEditor.data();
+        mEditor = nullptr;
+        mView->update(index);
+        mView->closeEditor(editor, QAbstractItemDelegate::NoHint);
+    }
 }
 
 void StalledIssueDelegate::onIssueFixed()

@@ -2,6 +2,7 @@
 #define STALLEDISSUESDIALOG_H
 
 #include "MegaDelegateHoverManager.h"
+#include "StalledIssue.h"
 
 #include <QDialog>
 #include <QGraphicsDropShadowEffect>
@@ -10,19 +11,12 @@ namespace Ui {
 class StalledIssuesDialog;
 }
 
+class StalledIssueTab;
+
 class StalledIssuesDialog : public QDialog
 {
     Q_OBJECT
 public:
-    enum SI_TAB
-    {
-        ALL_ISSUES_TAB         = 0,
-        NAME_CONFLICTS_TAB     = 1,
-        ITEM_TYPE_TAB          = 2,
-        OTHER_TAB              = 3
-    };
-    Q_ENUM(SI_TAB)
-
     explicit StalledIssuesDialog(QWidget *parent = nullptr);
     ~StalledIssuesDialog();
 
@@ -34,15 +28,13 @@ private slots:
     void on_updateButton_clicked();
     void onStalledIssuesModelCountChanged();
 
-    void toggleTab(QObject* toggledObj);
+    void toggleTab(StalledIssueFilterCriterion filterCriterion);
 
 private:
     Ui::StalledIssuesDialog *ui;
     MegaDelegateHoverManager mViewHoverManager;
-    SI_TAB mCurrentTab;
+    StalledIssueFilterCriterion mCurrentTab;
 
-    QMap<SI_TAB, QWidget*> mTabFramesToggleGroup;
-    QGraphicsDropShadowEffect* mShadowTab;
 };
 
 #endif // STALLEDISSUESDIALOG_H

@@ -3,15 +3,16 @@
 
 #include "Utilities.h"
 #include "MegaApplication.h"
+#include "StalledIssueHeader.h"
 
 StalledIssueChooseWidget::StalledIssueChooseWidget(QWidget *parent) :
     QFrame(parent),
     ui(new Ui::StalledIssueChooseWidget)
 {
     ui->setupUi(this);
+    setIndent();
 
-    ui->CloudPath->hide();
-    ui->LocalPath->hide();
+    ui->chooseTitle->installEventFilter(this);
 
     connect(ui->chooseButton, &QPushButton::clicked, this, &StalledIssueChooseWidget::chooseButtonClicked);
 }
@@ -33,10 +34,10 @@ void StalledIssueChooseWidget::setData(StalledIssueDataPtr data, const QString& 
     ui->fileTypeIcon->setPixmap(fileTypeIcon.pixmap(ui->fileTypeIcon->size()));
     ui->fileSize->setText(Utilities::getSizeString((unsigned long long)50));
 
-    ui->LocalPath->show();
+    ui->path->show();
 
     StalledIssue stalledData(data);
-    ui->LocalPath->updateUi(QModelIndex(), stalledData);
+    ui->path->updateUi(QModelIndex(), stalledData);
 
     if(mData->mIsCloud)
     {
@@ -59,4 +60,42 @@ void StalledIssueChooseWidget::setData(StalledIssueDataPtr data, const QString& 
 const StalledIssueDataPtr &StalledIssueChooseWidget::data()
 {
     return mData;
+}
+
+void StalledIssueChooseWidget::setIndent()
+{
+    auto chooseMargins = ui->chooseTitle->contentsMargins();
+    chooseMargins.setLeft(StalledIssueHeader::ICON_INDENT);
+    ui->chooseTitle->setContentsMargins(chooseMargins);
+
+    auto fileNameMargins= ui->fileNameContainer->contentsMargins();
+    fileNameMargins.setLeft(StalledIssueHeader::ICON_INDENT);
+    ui->fileNameContainer->setContentsMargins(fileNameMargins);
+
+    ui->path->setIndent(StalledIssueHeader::ICON_INDENT);
+}
+
+void StalledIssueChooseWidget::paintEvent(QPaintEvent *)
+{
+    QPainter painter(this);
+    painter.setPen(QPen(QColor("#D6D6D6"), 1));
+    painter.setRenderHint(QPainter::Antialiasing, true);
+    painter.drawRoundedRect(QRectF(0.0,0.0,width(), height()),6,6);
+}
+
+bool StalledIssueChooseWidget::eventFilter(QObject *watched, QEvent *event)
+{
+    if(watched == ui->chooseTitle && event->type() == QEvent::Paint)
+    {
+        QPainter painter(ui->chooseTitle);
+        painter.setBrush(QColor("#F5F5F5"));
+        painter.setPen(Qt::NoPen);
+        QPainterPath path;
+        path.setFillRule(Qt::WindingFill);
+        path.addRoundedRect( QRect(0,0, ui->chooseTitle->width(), 6), 6, 6);
+        path.addRect(QRect( 0, 3, ui->chooseTitle->width(), ui->chooseTitle->height() -3)); // Top right corner not rounded
+        painter.drawPath(path.simplified());
+    }
+
+    return QFrame::eventFilter(watched, event);
 }

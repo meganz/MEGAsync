@@ -5,18 +5,19 @@
 #include "StalledIssuesModel.h"
 #include "StalledIssuesProxyModel.h"
 #include "StalledIssueDelegate.h"
+#include "StalledIssuesProxyModel.h"
 
 #include "Utilities.h"
-
-const char* ITS_ON = "itsOn";
 
 StalledIssuesDialog::StalledIssuesDialog(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::StalledIssuesDialog),
-    mCurrentTab(ALL_ISSUES_TAB),
-    mShadowTab (new QGraphicsDropShadowEffect(nullptr))
+    mCurrentTab(StalledIssueFilterCriterion::ALL_ISSUES)
 {
     ui->setupUi(this);
+
+    setWindowFlags(Qt::Window);
+    setAttribute(Qt::WA_DeleteOnClose, true);
 
     auto model = new StalledIssuesProxyModel(this);
     model->setSourceModel(MegaSyncApp->getStalledIssuesModel());
@@ -27,45 +28,19 @@ StalledIssuesDialog::StalledIssuesDialog(QWidget *parent) :
     auto delegate = new StalledIssueDelegate(model, ui->stalledIssuesTree);
     ui->stalledIssuesTree->setItemDelegate(delegate);
 
-    setAttribute(Qt::WA_DeleteOnClose, true);
-
     connect(MegaSyncApp->getStalledIssuesModel(), &StalledIssuesModel::stalledIssuesCountChanged,
             this,  &StalledIssuesDialog::onStalledIssuesModelCountChanged);
 
     MegaSyncApp->getStalledIssuesModel()->updateStalledIssues();
 
     //Init all categories
-    mTabFramesToggleGroup[ALL_ISSUES_TAB] = ui->allIssuesTag;
-    QIcon tagIcon = Utilities::getCachedPixmap(QString::fromUtf8(":/images/sidebar_failed_ico.png"));
-    ui->allIssuesIcon->setPixmap(tagIcon.pixmap(ui->allIssuesIcon->size()));
-
-    mTabFramesToggleGroup[NAME_CONFLICTS_TAB] = ui->nameTag;
-    tagIcon = Utilities::getCachedPixmap(QString::fromUtf8(":/images/sidebar_failed_ico.png"));
-    ui->nameIcon->setPixmap(tagIcon.pixmap(ui->nameIcon->size()));
-
-    mTabFramesToggleGroup[ITEM_TYPE_TAB] = ui->itemTypeTag;
-    tagIcon = Utilities::getCachedPixmap(QString::fromUtf8(":/images/sidebar_failed_ico.png"));
-    ui->itemTypeIcon->setPixmap(tagIcon.pixmap(ui->itemTypeIcon->size()));
-
-    mTabFramesToggleGroup[OTHER_TAB] = ui->otherTag;
-    tagIcon = Utilities::getCachedPixmap(QString::fromUtf8(":/images/sidebar_failed_ico.png"));
-    ui->otherIcon->setPixmap(tagIcon.pixmap(ui->otherIcon->size()));
-
-    for (auto tabFrame : qAsConst(mTabFramesToggleGroup))
+    auto tabs = ui->header->findChildren<StalledIssueTab*>();
+    foreach(auto tab, tabs)
     {
-        tabFrame->setProperty(ITS_ON, false);
-        tabFrame->installEventFilter(this);
+        connect(tab, &StalledIssueTab::tabToggled, this, &StalledIssuesDialog::toggleTab);
     }
 
-    toggleTab(ui->allIssuesTag);
-
-    QColor shadowColor ("#E5E5E5");
-    mShadowTab->setParent(this);
-    mShadowTab->setBlurRadius(5);
-    mShadowTab->setXOffset(0);
-    mShadowTab->setYOffset(0);
-    mShadowTab->setColor(shadowColor);
-    mShadowTab->setEnabled(true);
+    ui->allIssuesTab->setItsOn(true);
 }
 
 StalledIssuesDialog::~StalledIssuesDialog()
@@ -75,11 +50,6 @@ StalledIssuesDialog::~StalledIssuesDialog()
 
 bool StalledIssuesDialog::eventFilter(QObject* obj, QEvent* event)
 {
-    if(event->type() == QEvent::MouseButtonRelease)
-    {
-       toggleTab(obj);
-    }
-
     return QDialog::eventFilter(obj, event);
 }
 
@@ -95,23 +65,15 @@ void StalledIssuesDialog::on_updateButton_clicked()
 
 void StalledIssuesDialog::onStalledIssuesModelCountChanged()
 {
-    auto isEmpty = MegaSyncApp->getStalledIssuesModel()->rowCount(QModelIndex()) == 0;
+    auto isEmpty = ui->stalledIssuesTree->model()->rowCount(QModelIndex()) == 0;
     ui->TreeViewContainer->setCurrentWidget(isEmpty ? ui->EmptyViewContainerPage : ui->TreeViewContainerPage);
 }
 
-void StalledIssuesDialog::toggleTab(QObject* toggledObj)
+void StalledIssuesDialog::toggleTab(StalledIssueFilterCriterion filterCriterion)
 {
-    if(auto toggledWidget = dynamic_cast<QWidget*>(toggledObj))
-    {
-        auto tab = mTabFramesToggleGroup.key(toggledWidget,ALL_ISSUES_TAB);
-
-        mTabFramesToggleGroup[mCurrentTab]->setProperty(ITS_ON, false);
-        mCurrentTab = tab;
-        toggledWidget->setProperty(ITS_ON, true);
-        toggledWidget->setGraphicsEffect(mShadowTab);
-
-        ui->categories->setStyleSheet(ui->categories->styleSheet());
-
-        //Change filter
-    }
+  if(auto proxyModel = dynamic_cast<StalledIssuesProxyModel*>(ui->stalledIssuesTree->model()))
+  {
+      proxyModel->filter(filterCriterion);
+      onStalledIssuesModelCountChanged();
+  }
 }

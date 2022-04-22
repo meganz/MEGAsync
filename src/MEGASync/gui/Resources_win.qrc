@@ -1023,5 +1023,35 @@
         <file>images/rotate-cw.png</file>
         <file>images/rotate-cw@2x.png</file>
         <file>images/rotate-cw@3x.png</file>
+        <file>images/StalledIssues/alert-circle-small-outline.png</file>
+        <file>images/StalledIssues/alert-circle-small-outline@2x.png</file>
+        <file>images/StalledIssues/alert-circle-small-outline@3x.png</file>
+        <file>images/StalledIssues/alert-circle-small-solid.png</file>
+        <file>images/StalledIssues/alert-circle-small-solid@2x.png</file>
+        <file>images/StalledIssues/alert-circle-small-solid@3x.png</file>
+        <file>images/StalledIssues/edit-small-outline.png</file>
+        <file>images/StalledIssues/edit-small-outline@2x.png</file>
+        <file>images/StalledIssues/edit-small-outline@3x.png</file>
+        <file>images/StalledIssues/edit-small-solid.png</file>
+        <file>images/StalledIssues/edit-small-solid@2x.png</file>
+        <file>images/StalledIssues/edit-small-solid@3x.png</file>
+        <file>images/StalledIssues/folder-small-outline.png</file>
+        <file>images/StalledIssues/folder-small-outline@2x.png</file>
+        <file>images/StalledIssues/folder-small-outline@3x.png</file>
+        <file>images/StalledIssues/folder-small-solid.png</file>
+        <file>images/StalledIssues/folder-small-solid@2x.png</file>
+        <file>images/StalledIssues/folder-small-solid@3x.png</file>
+        <file>images/StalledIssues/more-circle-small-outline.png</file>
+        <file>images/StalledIssues/more-circle-small-outline@2x.png</file>
+        <file>images/StalledIssues/more-circle-small-outline@3x.png</file>
+        <file>images/StalledIssues/more-circle-small-solid.png</file>
+        <file>images/StalledIssues/more-circle-small-solid@2x.png</file>
+        <file>images/StalledIssues/more-circle-small-solid@3x.png</file>
+        <file>images/StalledIssues/options_ico_rest.png</file>
+        <file>images/StalledIssues/options_ico_rest@2x.png</file>
+        <file>images/StalledIssues/options_ico_rest@3x.png</file>
+        <file>images/StalledIssues/ic-open-outside.png</file>
+        <file>images/StalledIssues/ic-open-outside@2x.png</file>
+        <file>images/StalledIssues/ic-open-outside@3x.png</file>
     </qresource>
 </RCC>

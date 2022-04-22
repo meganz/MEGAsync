@@ -55,7 +55,8 @@ void StalledIssuesReceiver::onRequestFinish(mega::MegaApi*, mega::MegaRequest *r
                 auto stall = sl->get(i);
                 bool coupleFound(false);
 
-                if(stall->reason() == mega::MegaSyncStall::SyncStallReason::LocalAndRemotePreviouslyUnsyncedDiffer_userMustChoose)
+                if(stall->reason() == mega::MegaSyncStall::SyncStallReason::LocalAndRemotePreviouslyUnsyncedDiffer_userMustChoose
+                        || stall->reason() == mega::MegaSyncStall::SyncStallReason::LocalAndRemoteChangedSinceLastSyncedState_userMustChoose)
                 {
                     for(int index = 0; index < mCacheStalledIssues.size(); ++index)
                     {
@@ -182,12 +183,14 @@ Qt::DropActions StalledIssuesModel::supportedDropActions() const
 
 bool StalledIssuesModel::hasChildren(const QModelIndex &parent) const
 {
-    if (!parent.parent().isValid())
+    auto stalledIssueItem = static_cast<StalledIssue*>(parent.internalPointer());
+    if (stalledIssueItem)
     {
-        return true;
+        return false;
     }
 
-    return false;
+
+    return true;
 }
 
 int StalledIssuesModel::rowCount(const QModelIndex &parent) const
@@ -213,9 +216,10 @@ QVariant StalledIssuesModel::data(const QModelIndex &index, int role) const
 {
     if (role == Qt::DisplayRole)
     {
-        if(index.parent().isValid())
+        auto stalledIssueItem = static_cast<StalledIssue*>(index.internalPointer());
+        if (stalledIssueItem)
         {
-            return QVariant::fromValue(StalledIssue(mStalledIssues.at(index.parent().row())));
+            return QVariant::fromValue((*stalledIssueItem));
         }
         else
         {
@@ -252,7 +256,7 @@ QModelIndex StalledIssuesModel::index(int row, int column, const QModelIndex &pa
 {
     if(parent.isValid())
     {
-        auto stalledIssue = mStalledIssues.value(parent.row());
+        auto& stalledIssue = mStalledIssues[parent.row()];
         return createIndex(0, 0, &stalledIssue);
     }
     else

@@ -8,25 +8,33 @@
 #include <QWidget>
 #include <QStyleOptionViewItem>
 
-namespace Ui {
-class StalledIssueHeader;
-}
+#include "ui_StalledIssueHeader.h"
 
 class StalledIssueHeader : public StalledIssueBaseDelegateWidget
 {
     Q_OBJECT
 
 public:
+
+    static const int BODY_INDENT;
+    static const int ARROW_INDENT;
+    static const int ICON_INDENT;
+
     explicit StalledIssueHeader(QWidget *parent = nullptr);
     ~StalledIssueHeader();
 
-protected:
-    void refreshUi() override;
+    void expand(bool state) override;
+    void showAction();
 
-private:
+signals:
+    void actionClicked();
+
+protected:
+    virtual void refreshCaseUi() = 0;
     Ui::StalledIssueHeader *ui;
 
-    void refreshUiByStalledReason();
+private:
+    void refreshUi() override;
 };
 
 #endif // STALLEDISSUEHEADER_H

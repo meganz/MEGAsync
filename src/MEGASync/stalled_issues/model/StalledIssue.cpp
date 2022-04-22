@@ -5,6 +5,8 @@
 StalledIssueData::StalledIssueData(const mega::MegaSyncStall *stallIssue)
     : mIsCloud(false)
     , mIsImmediate(false)
+    , mIsMissing(false)
+    , mIsBlocked(false)
 {
     update(stallIssue);
 
@@ -24,6 +26,11 @@ void StalledIssueData::update(const mega::MegaSyncStall *stallIssue)
         mIsImmediate  = stallIssue->isImmediate();
         mReasonString = QString::fromUtf8(stallIssue->reasonString());
     }
+}
+
+bool StalledIssueData::hasMoveInfo() const
+{
+    return !mMovePath.isEmpty();
 }
 
 //Conflicted Names stalled issue

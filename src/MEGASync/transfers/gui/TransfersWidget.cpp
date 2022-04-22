@@ -76,19 +76,17 @@ void TransfersWidget::configureTransferView()
 
     tDelegate = new MegaTransferDelegate(mProxyModel, ui->tvTransfers);
     ui->tvTransfers->setup(this);
-    mDelegateHoverManager.setView(ui->tvTransfers);
-    ui->tvTransfers->setItemDelegate(tDelegate);
-
-    onPauseStateChanged(mProxyModel->isAnyPaused());
-
     ui->tvTransfers->setModel(mProxyModel);
-
+    ui->tvTransfers->setItemDelegate(tDelegate);
+    onPauseStateChanged(mProxyModel->isAnyPaused());
     ui->tvTransfers->setDragEnabled(true);
     ui->tvTransfers->viewport()->setAcceptDrops(true);
     ui->tvTransfers->setDropIndicatorShown(true);
     ui->tvTransfers->setDragDropMode(QAbstractItemView::InternalMove);
 
     mLoadingScene.setView(ui->tvTransfers);
+
+    mDelegateHoverManager.setView(ui->tvTransfers);
 }
 
 void TransfersWidget::pausedTransfers(bool paused)

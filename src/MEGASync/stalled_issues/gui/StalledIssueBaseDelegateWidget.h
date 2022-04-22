@@ -12,10 +12,13 @@ class StalledIssueBaseDelegateWidget : public QWidget
 public:
     explicit StalledIssueBaseDelegateWidget(QWidget *parent = nullptr);
 
+    virtual void expand(bool){}
+
     void render(const QStyleOptionViewItem &option,
                 QPainter *painter,
                 const QRegion &sourceRegion);
     virtual void updateUi(const QModelIndex &index, const StalledIssue &data);
+    virtual void setIndent(int){}
 
     QModelIndex getCurrentIndex() const;
 
@@ -24,10 +27,9 @@ public:
 signals:
     void issueFixed();
 
-protected:
+private:
     virtual void refreshUi() = 0;
 
-private:
     StalledIssue mData;
     QModelIndex mCurrentIndex;
 };

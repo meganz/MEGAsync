@@ -8,6 +8,8 @@ MegaDelegateHoverManager::MegaDelegateHoverManager() : mView(nullptr)
 
 void MegaDelegateHoverManager::setView(QAbstractItemView *view)
 {
+    Q_ASSERT(view->model());
+
     if(mView)
     {
         mView->viewport()->removeEventFilter(this);
@@ -18,6 +20,10 @@ void MegaDelegateHoverManager::setView(QAbstractItemView *view)
     mView->viewport()->installEventFilter(this);
 
     connect(mView->model(), &QAbstractItemModel::modelAboutToBeReset,this, [this](){
+        mCurrentIndex = QModelIndex();
+    });
+
+    connect(mView->model(), &QAbstractItemModel::layoutChanged,this, [this](){
         mCurrentIndex = QModelIndex();
     });
 

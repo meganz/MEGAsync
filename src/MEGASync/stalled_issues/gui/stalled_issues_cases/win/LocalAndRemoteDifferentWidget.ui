@@ -1,31 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>LocalAndRemotePreviouslyUnsynceDifferWidget</class>
- <widget class="QWidget" name="LocalAndRemotePreviouslyUnsynceDifferWidget">
+ <class>LocalAndRemoteDifferentWidget</class>
+ <widget class="QWidget" name="LocalAndRemoteDifferentWidget">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>329</width>
+    <width>336</width>
     <height>64</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string notr="true"/>
   </property>
   <property name="styleSheet">
-   <string notr="true">#chooseLocalCopy, #chooseRemoteCopy
-{
-    border: 1px solid #D6D6D6;
-    border-radius: 4px;
-}</string>
+   <string notr="true"/>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <property name="spacing">
     <number>7</number>
    </property>
    <property name="leftMargin">
-    <number>7</number>
+    <number>0</number>
    </property>
    <property name="topMargin">
     <number>0</number>
@@ -37,15 +33,26 @@
     <widget class="QLabel" name="selectLabel">
      <property name="font">
       <font>
+       <family>Lato 13</family>
+       <pointsize>-1</pointsize>
        <weight>75</weight>
        <bold>true</bold>
       </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">#selectLabel
+{
+    font-family: Lato Bold;
+    font-size: 13px;
+    line-height: 16px;
+    color: #333333;
+}</string>
      </property>
      <property name="text">
       <string>Please select which version you want to keep</string>
      </property>
      <property name="indent">
-      <number>55</number>
+      <number>0</number>
      </property>
     </widget>
    </item>

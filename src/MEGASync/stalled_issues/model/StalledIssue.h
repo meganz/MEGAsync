@@ -6,6 +6,14 @@
 #include <QSharedData>
 #include <QObject>
 
+enum class StalledIssueFilterCriterion
+{
+    ALL_ISSUES = 0,
+    NAME_CONFLICTS,
+    ITEM_TYPE_CONFLICTS,
+    OTHER_CONFLICTS,
+};
+
 class StalledIssueData : public QSharedData
 {
 public:
@@ -18,6 +26,11 @@ public:
     bool mIsCloud;
     bool mIsImmediate;
     QString mReasonString;
+    bool mIsMissing;
+    bool mIsBlocked;
+    QString mMovePath;
+
+    bool hasMoveInfo() const;
 
 private:
     friend class StalledIssue;

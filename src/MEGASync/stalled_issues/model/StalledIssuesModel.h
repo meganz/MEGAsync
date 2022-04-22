@@ -41,7 +41,7 @@ public:
     virtual Qt::DropActions supportedDropActions() const;
     bool hasChildren(const QModelIndex& parent) const;
     int rowCount(const QModelIndex& parent) const;
-    int columnCount(const QModelIndex& parent = QModelIndex()) const;
+    int columnCount(const QModelIndex& = QModelIndex()) const;
     QVariant data(const QModelIndex& index, int role) const;
     QModelIndex parent(const QModelIndex& index) const;
     QModelIndex index(int row, int column, const QModelIndex& parent = QModelIndex()) const;

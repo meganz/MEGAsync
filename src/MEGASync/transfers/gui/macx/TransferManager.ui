@@ -210,7 +210,7 @@ QGroupBox::title
     max-height: 36px;
 }
 
-#bUpToDate
+#bUpToDate, #bSomeIssues
 {
     height: 36px;
     min-height: 36px;
@@ -1931,7 +1931,55 @@ QToolButton
           </item>
          </layout>
         </widget>
-       </widget>
+        <widget class="QWidget" name="pSomeIssues">
+         <layout class="QHBoxLayout" name="horizontalLayout_2">
+          <property name="spacing">
+           <number>0</number>
+          </property>
+          <property name="leftMargin">
+           <number>0</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
+           <number>0</number>
+          </property>
+          <item>
+           <widget class="QPushButton" name="bSomeIssues">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>36</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>36</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>Some issues occurred</string>
+            </property>
+            <property name="icon">
+             <iconset resource="../../../gui/Resources_macx.qrc">
+              <normaloff>:/images/sidebar_cancel_all_ico.png</normaloff>:/images/sidebar_cancel_all_ico.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>36</width>
+              <height>36</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+	   </widget>
       </item>
      </layout>
     </widget>

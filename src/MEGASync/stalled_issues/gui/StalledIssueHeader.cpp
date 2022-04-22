@@ -1,13 +1,18 @@
 #include "StalledIssueHeader.h"
-#include "ui_StalledIssueHeader.h"
 
 #include "Utilities.h"
+
+const int StalledIssueHeader::ARROW_INDENT = 6 + 16; //Left margin + arrow;
+const int StalledIssueHeader::ICON_INDENT = 8 + 48; // fileIcon + spacer;
+const int StalledIssueHeader::BODY_INDENT = StalledIssueHeader::ARROW_INDENT + StalledIssueHeader::ICON_INDENT; // full indent;
 
 StalledIssueHeader::StalledIssueHeader(QWidget *parent) :
     StalledIssueBaseDelegateWidget(parent),
     ui(new Ui::StalledIssueHeader)
 {
     ui->setupUi(this);
+    ui->actionButton->hide();
+    connect(ui->actionButton, &QPushButton::clicked, this, &StalledIssueHeader::actionClicked);
 }
 
 StalledIssueHeader::~StalledIssueHeader()
@@ -15,30 +20,33 @@ StalledIssueHeader::~StalledIssueHeader()
     delete ui;
 }
 
-void StalledIssueHeader::refreshUi()
+void StalledIssueHeader::expand(bool state)
 {
-    auto fileTypeIcon = Utilities::getCachedPixmap(Utilities::getExtensionPixmapName(
-                                                       getData().getFileName(), QLatin1Literal(":/images/drag_")));
-    ui->fileTypeIcon->setPixmap(fileTypeIcon.pixmap(ui->fileTypeIcon->size()));
-
-    refreshUiByStalledReason();
+    auto arrowIcon = Utilities::getCachedPixmap(state ? QLatin1Literal(":/images/node_selector/Icon-Small-Arrow-Down.png") :  QLatin1Literal(":/images/node_selector/Icon-Small-Arrow-Left.png"));
+    ui->arrow->setPixmap(arrowIcon.pixmap(ui->arrow->size()));
 }
 
-void StalledIssueHeader::refreshUiByStalledReason()
+void StalledIssueHeader::showAction()
 {
-    switch(getData().getReason())
-    {
-    case mega::MegaSyncStall::SyncStallReason::LocalAndRemotePreviouslyUnsyncedDiffer_userMustChoose:
-    {
-        //ui->actionButton->hide();
+    ui->actionButton->setVisible(true);
+}
 
-        auto errorTitleIcon = Utilities::getCachedPixmap(QLatin1Literal(":/images/StalledIssues/ico_menu_full.png"));
-        ui->errorTitleIcon->setPixmap(errorTitleIcon.pixmap(ui->errorTitleIcon->size()));
-        ui->errorTitleText->setText(tr("Can´t sync <b>%1</b>").arg(getData().getFileName()));
+void StalledIssueHeader::refreshUi()
+{
+    QIcon fileTypeIcon;
 
-        auto errorDescriptionIcon = Utilities::getCachedPixmap(QLatin1Literal(":/images/ico_info_hover.png"));
-        ui->errorDescriptionIcon->setPixmap(errorDescriptionIcon.pixmap(ui->errorDescriptionIcon->size()));
-        ui->errorDescriptionText->setText(tr("This file has conflicting copies"));
+    auto splittedFile = getData().getFileName().split(QString::fromUtf8("."));
+    if(splittedFile.size() != 1)
+    {
+        fileTypeIcon = Utilities::getCachedPixmap(Utilities::getExtensionPixmapName(
+                                                      getData().getFileName(), QLatin1Literal(":/images/drag_")));
     }
+    else
+    {
+        fileTypeIcon = Utilities::getCachedPixmap(QLatin1Literal(":/images/color_folder.png"));
     }
+
+    ui->fileTypeIcon->setPixmap(fileTypeIcon.pixmap(ui->fileTypeIcon->size()));
+
+    refreshCaseUi();
 }

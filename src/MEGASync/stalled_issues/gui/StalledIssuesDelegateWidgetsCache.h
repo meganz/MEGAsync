@@ -29,6 +29,9 @@ private:
     mutable QMap<int, StalledIssueHeader*> mStalledIssueHeaderWidgets;
     mutable QMap<int, QMap<int, StalledIssueBaseDelegateWidget*>> mStalledIssueWidgets;
 
+    StalledIssueBaseDelegateWidget* createBodyWidget(const QModelIndex& index, QWidget *parent, const StalledIssue &data) const;
+    StalledIssueHeader* createHeaderWidget(const QModelIndex& index, QWidget *parent, const StalledIssue &data) const;
+
     StalledIssuesProxyModel* mProxyModel;
 };
 

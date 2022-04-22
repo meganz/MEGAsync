@@ -8,6 +8,7 @@
 #include <QStyledItemDelegate>
 #include <QSortFilterProxyModel>
 #include <QTreeView>
+#include <QPointer>
 
 class StalledIssueBaseDelegateWidget;
 class StalledIssuesView;
@@ -31,6 +32,7 @@ protected:
 
 protected slots:
     void onHoverEnter(const QModelIndex& index);
+    void onHoverLeave(const QModelIndex&index);
 
 private slots:
     void onIssueFixed();
@@ -43,6 +45,8 @@ private:
     StalledIssuesProxyModel* mProxyModel;
     StalledIssuesModel* mSourceModel;
     StalledIssuesDelegateWidgetsCache mCacheManager;
+
+    mutable QPointer<StalledIssueBaseDelegateWidget> mEditor;
 };
 
 #endif // STALLEDISSUEDELEGATE_H

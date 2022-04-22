@@ -1,30 +1,38 @@
-#include "LocalAndRemotePreviouslyUnsynceDifferWidget.h"
-#include "ui_LocalAndRemotePreviouslyUnsynceDifferWidget.h"
+#include "LocalAndRemoteDifferentWidget.h"
+#include "ui_LocalAndRemoteDifferentWidget.h"
 
 #include "MegaApplication.h"
 #include "StalledIssuesModel.h"
+#include "StalledIssueHeader.h"
+
 #include "mega/types.h"
 
 #include <QFile>
 
-LocalAndRemotePreviouslyUnsynceDifferWidget::LocalAndRemotePreviouslyUnsynceDifferWidget(QWidget *parent) :
+LocalAndRemoteDifferentWidget::LocalAndRemoteDifferentWidget(QWidget *parent) :
     StalledIssueBaseDelegateWidget(parent), mega::MegaRequestListener(),
-    ui(new Ui::LocalAndRemotePreviouslyUnsynceDifferWidget),
+    ui(new Ui::LocalAndRemoteDifferentWidget),
     mListener(mega::make_unique<mega::QTMegaRequestListener>(MegaSyncApp->getMegaApi(), this)),
     mRemovedRemoteHandle(0)
 {
     ui->setupUi(this);
 
-    connect(ui->chooseLocalCopy, &StalledIssueChooseWidget::chooseButtonClicked, this, &LocalAndRemotePreviouslyUnsynceDifferWidget::onLocalButtonClicked);
-    connect(ui->chooseRemoteCopy, &StalledIssueChooseWidget::chooseButtonClicked, this, &LocalAndRemotePreviouslyUnsynceDifferWidget::onRemoteButtonClicked);
+    connect(ui->chooseLocalCopy, &StalledIssueChooseWidget::chooseButtonClicked, this, &LocalAndRemoteDifferentWidget::onLocalButtonClicked);
+    connect(ui->chooseRemoteCopy, &StalledIssueChooseWidget::chooseButtonClicked, this, &LocalAndRemoteDifferentWidget::onRemoteButtonClicked);
+
+    auto margins = ui->verticalLayout->contentsMargins();
+    margins.setLeft(StalledIssueHeader::ARROW_INDENT);
+    ui->verticalLayout->setContentsMargins(margins);
+
+    ui->selectLabel->setIndent(StalledIssueHeader::ICON_INDENT);
 }
 
-LocalAndRemotePreviouslyUnsynceDifferWidget::~LocalAndRemotePreviouslyUnsynceDifferWidget()
+LocalAndRemoteDifferentWidget::~LocalAndRemoteDifferentWidget()
 {
     delete ui;
 }
 
-void LocalAndRemotePreviouslyUnsynceDifferWidget::refreshUi()
+void LocalAndRemoteDifferentWidget::refreshUi()
 {
     auto issue = getData();
     for(int index = 0; index < issue.stalledIssuesCount(); ++index)
@@ -34,7 +42,7 @@ void LocalAndRemotePreviouslyUnsynceDifferWidget::refreshUi()
     }
 }
 
-void LocalAndRemotePreviouslyUnsynceDifferWidget::onRequestFinish(mega::MegaApi *, mega::MegaRequest *request, mega::MegaError *e)
+void LocalAndRemoteDifferentWidget::onRequestFinish(mega::MegaApi *, mega::MegaRequest *request, mega::MegaError *e)
 {
     if (request->getType() == mega::MegaRequest::TYPE_REMOVE)
     {
@@ -50,7 +58,7 @@ void LocalAndRemotePreviouslyUnsynceDifferWidget::onRequestFinish(mega::MegaApi 
     }
 }
 
-void LocalAndRemotePreviouslyUnsynceDifferWidget::onLocalButtonClicked()
+void LocalAndRemoteDifferentWidget::onLocalButtonClicked()
 { 
     auto fileNode(MegaSyncApp->getMegaApi()->getNodeByPath(ui->chooseRemoteCopy->data()->mIndexPath.toStdString().c_str()));
     if(fileNode)
@@ -60,7 +68,7 @@ void LocalAndRemotePreviouslyUnsynceDifferWidget::onLocalButtonClicked()
     }
 }
 
-void LocalAndRemotePreviouslyUnsynceDifferWidget::onRemoteButtonClicked()
+void LocalAndRemoteDifferentWidget::onRemoteButtonClicked()
 {
     QFile file(ui->chooseLocalCopy->data()->mIndexPath);
     if(file.exists())

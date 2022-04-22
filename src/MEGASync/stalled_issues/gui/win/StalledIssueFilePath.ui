@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>130</width>
-    <height>57</height>
+    <width>165</width>
+    <height>107</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,23 +17,11 @@
    <string notr="true">*
 {
 	background-color: transparent;
-}
-
-#filePath, #filePathIcon
-{
-   background-color: &quot;transparent&quot;;
-}
-
-#filePathContainer
-{
-  height: 24px;
-  border-radius: 4px;
-  background-color: #F5F5F5;
 }</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <property name="leftMargin">
-    <number>55</number>
+    <number>0</number>
    </property>
    <property name="topMargin">
     <number>3</number>
@@ -50,10 +38,7 @@
    <property name="verticalSpacing">
     <number>0</number>
    </property>
-   <item row="1" column="0">
-    <widget class="QWidget" name="lines" native="true"/>
-   </item>
-   <item row="0" column="0">
+   <item row="0" column="1">
     <widget class="QLabel" name="LocalOrRemoteIcon">
      <property name="minimumSize">
       <size>
@@ -73,6 +58,25 @@
     </widget>
    </item>
    <item row="1" column="1">
+    <widget class="QWidget" name="lines" native="true"/>
+   </item>
+   <item row="0" column="2" alignment="Qt::AlignLeft">
+    <widget class="QLabel" name="LocalOrRemoteText">
+     <property name="styleSheet">
+      <string notr="true">#LocalOrRemoteText
+{
+    font-family: Lato;
+    font-size: 12px;
+    line-height: 15px;
+    color: #666666;
+}</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="2">
     <widget class="QWidget" name="filePathContainer" native="true">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
@@ -91,6 +95,35 @@
        <width>16777215</width>
        <height>24</height>
       </size>
+     </property>
+     <property name="cursor">
+      <cursorShape>PointingHandCursor</cursorShape>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">#filePath, #filePathIcon
+{
+   background-color: &quot;transparent&quot;;
+}
+
+#filePath
+{
+    font-family: Lato;
+    font-size: 12px;
+    line-height: 20px;
+    color: #333333;
+}
+
+#filePathContainer
+{
+  height: 24px;
+  border-radius: 4px;
+  background-color: #F5F5F5;
+}
+
+QPushButton
+{
+    border: none;
+}</string>
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout">
       <property name="spacing">
@@ -134,15 +167,241 @@
         </property>
        </widget>
       </item>
+      <item>
+       <spacer name="horizontalSpacer">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>0</width>
+          <height>0</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
+       <widget class="QLabel" name="filePathAction">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>16</width>
+          <height>16</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16</width>
+          <height>16</height>
+         </size>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
+      </item>
      </layout>
     </widget>
    </item>
-   <item row="0" column="1" alignment="Qt::AlignLeft">
-    <widget class="QLabel" name="LocalOrRemoteText">
-     <property name="text">
-      <string/>
+   <item row="2" column="2">
+    <widget class="QWidget" name="moveFile" native="true">
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>50</height>
+      </size>
      </property>
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>50</height>
+      </size>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">#moveLabel
+{
+    font-family: Lato;
+    font-size: 12px;
+    line-height: 20px;
+    color: #999999;
+}</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_2">
+      <property name="leftMargin">
+       <number>0</number>
+      </property>
+      <property name="topMargin">
+       <number>0</number>
+      </property>
+      <property name="rightMargin">
+       <number>0</number>
+      </property>
+      <property name="bottomMargin">
+       <number>0</number>
+      </property>
+      <property name="spacing">
+       <number>3</number>
+      </property>
+      <item row="0" column="0">
+       <widget class="QWidget" name="moveLines" native="true">
+        <property name="minimumSize">
+         <size>
+          <width>13</width>
+          <height>24</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>13</width>
+          <height>24</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QLabel" name="moveLabel">
+        <property name="text">
+         <string>move</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0" colspan="2">
+       <widget class="QWidget" name="moveFilePathContainer" native="true">
+        <property name="cursor">
+         <cursorShape>PointingHandCursor</cursorShape>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">#moveFilePath, #moveFilePathIcon
+{
+   background-color: &quot;transparent&quot;;
+}
+
+#moveFilePath
+{
+    font-family: Lato;
+    font-size: 12px;
+    line-height: 20px;
+    color: #333333;
+}
+
+#moveFilePathContainer
+{
+  height: 24px;
+  border-radius: 4px;
+  background-color: #F5F5F5;
+}
+
+QPushButton
+{
+    border:none;
+}</string>
+        </property>
+        <layout class="QHBoxLayout" name="horizontalLayout_2">
+         <property name="spacing">
+          <number>3</number>
+         </property>
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
+         <item>
+          <widget class="QLabel" name="moveFilePathIcon">
+           <property name="minimumSize">
+            <size>
+             <width>24</width>
+             <height>24</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>24</width>
+             <height>24</height>
+            </size>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="moveFilePath">
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer_2">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QLabel" name="moveFilePathAction">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>16</width>
+             <height>16</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>16</width>
+             <height>16</height>
+            </size>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+     </layout>
     </widget>
+   </item>
+   <item row="0" column="0">
+    <spacer name="indent">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeType">
+      <enum>QSizePolicy::Fixed</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>0</width>
+       <height>0</height>
+      </size>
+     </property>
+    </spacer>
    </item>
   </layout>
  </widget>
