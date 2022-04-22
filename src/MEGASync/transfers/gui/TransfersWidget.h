@@ -44,8 +44,9 @@ public:
     TransfersManagerSortFilterProxyModel* getProxyModel() {return mProxyModel;}
     ~TransfersWidget();
 
+    void setAllTransfersTab(bool allTransfersTab);
+
 public slots:
-    void on_pHeaderSize_clicked();
     void onHeaderItemClicked(int sortBy, Qt::SortOrder order);
     void on_tPauseResumeVisible_toggled(bool state);
     void on_tCancelClearVisible_clicked();
@@ -75,6 +76,7 @@ private:
     ViewLoadingScene<TransferManagerLoadingItem> mLoadingScene;
     MegaDelegateHoverManager mDelegateHoverManager;
     bool mClearMode;
+    bool mAllTransfersTab;
     MegaApplication *app;
 
     void configureTransferView();

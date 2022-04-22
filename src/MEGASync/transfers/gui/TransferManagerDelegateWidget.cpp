@@ -286,7 +286,7 @@ void TransferManagerDelegateWidget::setFileNameAndType()
 
     // File name
     QString localPath = getData()->path();
-    mUi->lTransferName->setToolTip(localPath.isEmpty() ? getData()->mFilename : localPath);
+    mUi->lTransferName->setToolTip(getData()->mFilename);
     mUi->lTransferName->setText(mUi->lTransferName->fontMetrics()
                                 .elidedText(getData()->mFilename, Qt::ElideMiddle,
                                             mUi->wName->contentsRect().width() - 12));

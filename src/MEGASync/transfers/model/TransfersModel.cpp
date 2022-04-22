@@ -328,7 +328,7 @@ void TransferThread::resetCompletedUploads(QList<QExplicitlySharedDataPointer<Tr
 
             if(transfer->hasFailed())
             {
-                mTransfersCount.failedUploads++;
+                mTransfersCount.failedUploads--;
                 transfer->removeFailedTransfer();
             }
         }
@@ -351,7 +351,7 @@ void TransferThread::resetCompletedDownloads(QList<QExplicitlySharedDataPointer<
 
             if(transfer->hasFailed())
             {
-                mTransfersCount.failedDownloads++;
+                mTransfersCount.failedDownloads--;
                 transfer->removeFailedTransfer();
             }
         }
@@ -912,12 +912,35 @@ TransfersCount TransfersModel::getTransfersCount()
     return mTransfersCount;
 }
 
+bool TransfersModel::hasFailedTransfers()
+{
+    return mTransfersCount.failedDownloads != 0 || mTransfersCount.failedUploads != 0;
+}
+
 void TransfersModel::cancelTransfers(const QModelIndexList& indexes, QWidget* canceledFrom)
 {
     if(indexes.isEmpty())
     {
         mMegaApi->cancelTransfers(MegaTransfer::TYPE_UPLOAD);
         mMegaApi->cancelTransfers(MegaTransfer::TYPE_DOWNLOAD);
+
+        auto count = rowCount(DEFAULT_IDX);
+        for (auto row = 0; row < count;++row)
+        {
+            auto d (getTransfer(row));
+
+            // Clear (remove rows of) finished transfers
+            if (d)
+            {
+                if (!d->isCancelable())
+                {
+                    QMegaMessageBox::warning(canceledFrom, QString::fromUtf8("MEGAsync"),
+                                             tr("Some Transfers cannot be cancelled or cleared"),
+                                             QMessageBox::Ok);
+                    break;
+                }
+            }
+        }
     }
     else
     {

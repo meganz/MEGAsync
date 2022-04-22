@@ -126,6 +126,7 @@ private slots:
     void on_tActionButton_clicked();
     void on_tSeePlans_clicked();
     void on_bSearch_clicked();
+    void on_leSearchField_editingFinished();
     void on_tSearchIcon_clicked();
     void on_bSearchString_clicked();
     void on_tSearchCancel_clicked();
@@ -149,7 +150,7 @@ private slots:
     void on_bArchives_clicked();
     void on_bDocuments_clicked();
     void on_bImages_clicked();
-    void on_bMusic_clicked();
+    void on_bAudio_clicked();
     void on_bVideos_clicked();
     void on_bOther_clicked();
     void on_bText_clicked();

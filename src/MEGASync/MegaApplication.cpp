@@ -656,7 +656,6 @@ void MegaApplication::initialize()
     mTransfersModel = new TransfersModel(nullptr);
     connect(mTransfersModel, &TransfersModel::transfersCountUpdated, this, &MegaApplication::onTransfersModelUpdate);
 
-
     mStalledIssuesModel = new StalledIssuesModel(this);
 }
 
@@ -740,7 +739,8 @@ void MegaApplication::updateTrayIcon()
             { "uptodate", QString::fromUtf8("://images/app_ico.ico") },
             { "paused", QString::fromUtf8("://images/tray_pause.ico") },
             { "logging", QString::fromUtf8("://images/login_ico.ico") },
-            { "alert", QString::fromUtf8("://images/alert_ico.ico") }
+            { "alert", QString::fromUtf8("://images/alert_ico.ico") },
+            { "someissues", QString::fromUtf8("://images/warning_ico.ico") }
 
         #else
             { "warning", QString::fromUtf8("://images/warning.svg") },
@@ -748,7 +748,8 @@ void MegaApplication::updateTrayIcon()
             { "uptodate", QString::fromUtf8("://images/uptodate.svg") },
             { "paused", QString::fromUtf8("://images/paused.svg") },
             { "logging", QString::fromUtf8("://images/logging.svg") },
-            { "alert", QString::fromUtf8("://images/alert.svg") }
+            { "alert", QString::fromUtf8("://images/alert.svg") },
+            { "someissues", QString::fromUtf8("://images/warning.svg") }
         #endif
     #else
             { "warning", QString::fromUtf8("://images/icon_overquota_mac.png") },
@@ -756,7 +757,8 @@ void MegaApplication::updateTrayIcon()
             { "uptodate", QString::fromUtf8("://images/icon_synced_mac.png") },
             { "paused", QString::fromUtf8("://images/icon_paused_mac.png") },
             { "logging", QString::fromUtf8("://images/icon_logging_mac.png") },
-            { "alert", QString::fromUtf8("://images/icon_alert_mac.png") }
+            { "alert", QString::fromUtf8("://images/icon_alert_mac.png") },
+            { "someissues", QString::fromUtf8("://images/icon_overquota_mac.png") }
     #endif
         };
 
@@ -845,8 +847,16 @@ void MegaApplication::updateTrayIcon()
     }
     else if (paused)
     {
-        tooltipState = tr("Paused");
-        icon = icons["paused"];
+        if(mTransfersModel && mTransfersModel->hasFailedTransfers())
+        {
+            tooltipState = tr("Some issues ocurred");
+            icon = icons["someissues"];
+        }
+        else
+        {
+            tooltipState = tr("Paused");
+            icon = icons["paused"];
+        }
 
 #ifdef __APPLE__
         if (scanningTimer->isActive())
@@ -886,8 +896,16 @@ void MegaApplication::updateTrayIcon()
     }
     else
     {
-        tooltipState = tr("Up to date");
-        icon = icons["uptodate"];
+        if(mTransfersModel && mTransfersModel->hasFailedTransfers())
+        {
+            tooltipState = tr("Some issues ocurred");
+            icon = icons["someissues"];
+        }
+        else
+        {
+            tooltipState = tr("Up to date");
+            icon = icons["uptodate"];
+        }
 
 #ifdef __APPLE__
         if (scanningTimer->isActive())
@@ -1676,7 +1694,6 @@ void MegaApplication::createTransferManagerDialog()
     if(!transferManager)
     {
         transferManager = new TransferManager(megaApi);
-        transferManager->hide();
 
         // Signal/slot to notify the tracking of unseen completed transfers of Transfer Manager. If Completed tab is
         // active, tracking is disabled
@@ -4926,12 +4943,9 @@ void MegaApplication::transferManagerActionClicked(int tab)
     createTransferManagerDialog();
 
     transferManager->setActiveTab(tab);
-    Platform::activateBackgroundWindow(transferManager);
-    transferManager->showMinimized();
     transferManager->showNormal();
     transferManager->activateWindow();
     transferManager->raise();
-    transferManager->show();
 }
 
 void MegaApplication::loginActionClicked()

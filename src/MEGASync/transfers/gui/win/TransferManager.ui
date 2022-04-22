@@ -210,7 +210,7 @@ QGroupBox::title
     max-height: 36px;
 }
 
-#bUpToDate
+#bUpToDate, #bSomeIssues
 {
     height: 36px;
     min-height: 36px;
@@ -246,7 +246,7 @@ QGroupBox::title
     qProperty-iconSize: 36px;
 }
  
-QToolButton
+#wLeftPane QToolButton, #wRightPane QToolButton
 {
   border: none;
 }
@@ -1525,7 +1525,7 @@ QToolButton
           </widget>
          </item>
          <item>
-          <widget class="QFrame" name="fMusic">
+          <widget class="QFrame" name="fAudio">
            <property name="minimumSize">
             <size>
              <width>0</width>
@@ -1549,12 +1549,12 @@ QToolButton
              <number>0</number>
             </property>
             <item>
-             <widget class="QPushButton" name="bMusic">
+             <widget class="QPushButton" name="bAudio">
               <property name="cursor">
                <cursorShape>PointingHandCursor</cursorShape>
               </property>
               <property name="text">
-               <string>Music</string>
+               <string>Audio</string>
               </property>
               <property name="icon">
                <iconset resource="../../../gui/Resources_win.qrc">
@@ -1579,7 +1579,7 @@ QToolButton
              </spacer>
             </item>
             <item>
-             <widget class="QLabel" name="lMusicNb">
+             <widget class="QLabel" name="lAudioNb">
               <property name="sizePolicy">
                <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
                 <horstretch>0</horstretch>
@@ -1953,6 +1953,54 @@ QToolButton
             <property name="icon">
              <iconset resource="../../../gui/Resources_win.qrc">
               <normaloff>:/images/sidebar_up_to_date_ico.png</normaloff>:/images/sidebar_up_to_date_ico.png</iconset>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+        <widget class="QWidget" name="pSomeIssues">
+         <layout class="QHBoxLayout" name="horizontalLayout_2">
+          <property name="spacing">
+           <number>0</number>
+          </property>
+          <property name="leftMargin">
+           <number>0</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
+           <number>0</number>
+          </property>
+          <item>
+           <widget class="QPushButton" name="bSomeIssues">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>36</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>36</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>Some issues occurred</string>
+            </property>
+            <property name="icon">
+             <iconset resource="../../../gui/Resources_win.qrc">
+              <normaloff>:/images/sidebar_cancel_all_ico.png</normaloff>:/images/sidebar_cancel_all_ico.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>36</width>
+              <height>36</height>
+             </size>
             </property>
            </widget>
           </item>

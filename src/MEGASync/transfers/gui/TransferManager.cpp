@@ -52,6 +52,7 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
     setAttribute(Qt::WA_DeleteOnClose, true);
 
     mUi->lTextSearch->installEventFilter(this);
+    mUi->leSearchField->installEventFilter(this);
 
     mModel = mUi->wTransfers->getModel();
 
@@ -80,7 +81,7 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
     mTabFramesToggleGroup[FAILED_TAB]        = mUi->fFailed;
     mTabFramesToggleGroup[SEARCH_TAB]        = mUi->fSearchString;
     mTabFramesToggleGroup[TYPE_OTHER_TAB]    = mUi->fOther;
-    mTabFramesToggleGroup[TYPE_AUDIO_TAB]    = mUi->fMusic;
+    mTabFramesToggleGroup[TYPE_AUDIO_TAB]    = mUi->fAudio;
     mTabFramesToggleGroup[TYPE_VIDEO_TAB]    = mUi->fVideos;
     mTabFramesToggleGroup[TYPE_ARCHIVE_TAB]  = mUi->fArchives;
     mTabFramesToggleGroup[TYPE_DOCUMENT_TAB] = mUi->fDocuments;
@@ -112,7 +113,7 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
     mNumberLabelsGroup[COMPLETED_TAB]        = mUi->lCompleted;
     mNumberLabelsGroup[FAILED_TAB]           = mUi->lFailed;
     mNumberLabelsGroup[TYPE_OTHER_TAB]       = mUi->lOtherNb;
-    mNumberLabelsGroup[TYPE_AUDIO_TAB]       = mUi->lMusicNb;
+    mNumberLabelsGroup[TYPE_AUDIO_TAB]       = mUi->lAudioNb;
     mNumberLabelsGroup[TYPE_VIDEO_TAB]       = mUi->lVideosNb;
     mNumberLabelsGroup[TYPE_ARCHIVE_TAB]     = mUi->lArchivesNb;
     mNumberLabelsGroup[TYPE_DOCUMENT_TAB]    = mUi->lDocumentsNb;
@@ -333,14 +334,14 @@ void TransferManager::onUpdatePauseState(bool isPaused)
     {
         static const QIcon icon(QLatin1String(":/images/sidebar_resume_ico.png"));
         mUi->bPause->setIcon(icon);
-        mUi->bPause->setToolTip(tr("Resume All"));
+        mUi->bPause->setToolTip(tr("Resume all"));
         mUi->lPaused->setText(tr("All Paused"));
     }
     else
     {
         static const QIcon icon(QLatin1String(":/images/sidebar_pause_ico.png"));
         mUi->bPause->setIcon(icon);
-        mUi->bPause->setToolTip(tr("Pause All"));
+        mUi->bPause->setToolTip(tr("Pause all"));
         mUi->lPaused->clear();
     }
 
@@ -444,13 +445,13 @@ void TransferManager::refreshStateStats()
     // The check Failed states -----------------------------------------------------------------
     countLabel = mNumberLabelsGroup[FAILED_TAB];
 
-    processedNumber = mTransfersCount.failedUploads + mTransfersCount.failedDownloads;
-    countLabelText = processedNumber > 0 ? QString::number(processedNumber) : QString();
+    long long failedNumber(mTransfersCount.failedUploads + mTransfersCount.failedDownloads);
+    countLabelText = failedNumber > 0 ? QString::number(failedNumber) : QString();
 
     // Update if the value changed
     if (countLabel->text().isEmpty() || countLabelText != countLabel->text())
     {
-        if (mCurrentTab != FAILED_TAB && processedNumber == 0)
+        if (mCurrentTab != FAILED_TAB && failedNumber == 0)
         {
             countLabel->parentWidget()->hide();
             countLabel->clear();
@@ -458,7 +459,7 @@ void TransferManager::refreshStateStats()
         else
         {
             countLabel->parentWidget()->show();
-            countLabel->setVisible(processedNumber > 0);
+            countLabel->setVisible(failedNumber > 0);
             countLabel->setText(countLabelText);
         }
     }
@@ -475,7 +476,7 @@ void TransferManager::refreshStateStats()
 
         // If we don't have transfers, stop refresh timer and show "Up to date",
         // and if current tab is ALL TRANSFERS, show empty.
-        if (processedNumber == 0)
+        if (processedNumber == 0 && failedNumber == 0)
         {
             leftFooterWidget = mUi->pUpToDate;
             mSpeedRefreshTimer->stop();
@@ -496,6 +497,11 @@ void TransferManager::refreshStateStats()
 
             countLabel->show();
             countLabel->setText(countLabelText);
+
+            if(failedNumber != 0)
+            {
+                leftFooterWidget = mUi->pSomeIssues;
+            }
         }
 
         if(leftFooterWidget)
@@ -805,6 +811,14 @@ void TransferManager::on_bSearch_clicked()
     mUi->leSearchField->setText(QString());
 }
 
+void TransferManager::on_leSearchField_editingFinished()
+{
+    if(mUi->leSearchField->text().isEmpty())
+    {
+       mUi->wTitleAndSearch->setCurrentWidget(mUi->pTransfers);
+    }
+}
+
 void TransferManager::on_tSearchIcon_clicked()
 {
     QString pattern (mUi->leSearchField->text());
@@ -894,9 +908,9 @@ void TransferManager::on_bImages_clicked()
     onFileTypeButtonClicked(TYPE_IMAGE_TAB, Utilities::FileType::TYPE_IMAGE, tr("Images"));
 }
 
-void TransferManager::on_bMusic_clicked()
+void TransferManager::on_bAudio_clicked()
 {
-    onFileTypeButtonClicked(TYPE_AUDIO_TAB, Utilities::FileType::TYPE_AUDIO, tr("Music"));
+    onFileTypeButtonClicked(TYPE_AUDIO_TAB, Utilities::FileType::TYPE_AUDIO, tr("Audio"));
 }
 
 void TransferManager::on_bVideos_clicked()
@@ -983,35 +997,48 @@ void TransferManager::toggleTab(TM_TAB newTab)
         // Show pause button on tab except completed tab,
         // and set Clear All button string,
         // Emit wether we are showing completed or not
-        if (newTab == COMPLETED_TAB)
-        {
-            mUi->tActionButton->setText(tr("Clear All"));
-            mUi->wTransfers->updateHeaderItems(tr("Time Completed"),
-                              tr("Clear All Visible"),
-                              tr("Avg. speed"));
-
-        }
-        else if (newTab == FAILED_TAB)
-        {
-            mUi->tActionButton->setText(tr("Retry All"));
-            mUi->wTransfers->updateHeaderItems(tr("Time Completed"),
-                              tr("Cancel All Visible"),
-                              tr("Avg. speed"));
-        }
-        else if (newTab > TYPES_TAB_BASE && newTab < TYPES_LAST)
-        {
-            mUi->wTransfers->updateHeaderItems(tr("Time"),
-                              tr("Cancel All Visible"),
-                              tr("Speed"));
-
-            mUi->tActionButton->setText(tr("Clear Completed"));
-        }
-        //UPLOAD // DOWNLOAD // ALL TRANSFERS
-        else
+        if (newTab == ALL_TRANSFERS_TAB)
         {
             mUi->wTransfers->updateHeaderItems(tr("Time left"),
-                              tr("Cancel All Visible"),
+                              tr("Cancel all"),
                               tr("Speed"));
+
+            mUi->wTransfers->setAllTransfersTab(true);
+        }
+        else
+        {
+            if (newTab == COMPLETED_TAB)
+            {
+                mUi->tActionButton->setText(tr("Clear All"));
+                mUi->wTransfers->updateHeaderItems(tr("Time Completed"),
+                                                   tr("Clear all visible"),
+                                                   tr("Avg. speed"));
+
+            }
+            else if (newTab == FAILED_TAB)
+            {
+                mUi->tActionButton->setText(tr("Retry all"));
+                mUi->wTransfers->updateHeaderItems(tr("Time Completed"),
+                                                   tr("Cancel all visible"),
+                                                   tr("Avg. speed"));
+            }
+            else if (newTab > TYPES_TAB_BASE && newTab < TYPES_LAST)
+            {
+                mUi->wTransfers->updateHeaderItems(tr("Time"),
+                                                   tr("Cancel all visible"),
+                                                   tr("Speed"));
+
+                mUi->tActionButton->setText(tr("Clear Completed"));
+            }
+            //UPLOAD // DOWNLOAD
+            else
+            {
+                mUi->wTransfers->updateHeaderItems(tr("Time left"),
+                                                   tr("Cancel all visible"),
+                                                   tr("Speed"));
+            }
+
+            mUi->wTransfers->setAllTransfersTab(false);
         }
 
         //The rest of cases
@@ -1135,6 +1162,16 @@ bool TransferManager::eventFilter(QObject *obj, QEvent *event)
                                   .elidedText(mUi->leSearchField->text(),
                                               Qt::ElideMiddle,
                                               newWidth - 24));
+    }
+    else if(obj == mUi->leSearchField && event->type() == QEvent::KeyPress)
+    {
+        auto keyEvent = dynamic_cast<QKeyEvent*>(event);
+        if(keyEvent && keyEvent->key() == Qt::Key_Escape)
+        {
+            event->accept();
+            mUi->leSearchField->editingFinished();
+            return true;
+        }
     }
     return false;
 }

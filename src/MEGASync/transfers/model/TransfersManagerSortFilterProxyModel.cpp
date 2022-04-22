@@ -187,7 +187,7 @@ void TransfersManagerSortFilterProxyModel::resetTransfersStateCounters()
 
 TransferBaseDelegateWidget *TransfersManagerSortFilterProxyModel::createTransferManagerItem(QWidget* parent)
 {
-    auto item = new TransferManagerDelegateWidget(parent);
+    auto item = new TransferManagerDelegateWidget(nullptr);
 
     //All are UniqueConnection to avoid reconnecting if thw item already exists in cache and it is not a new item
     connect(item, &TransferManagerDelegateWidget::cancelClearTransfer,

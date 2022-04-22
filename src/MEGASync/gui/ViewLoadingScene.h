@@ -198,9 +198,22 @@ public:
 
         if(state)
         {
-            auto firstVisibleIndex = mView->indexAt(mView->rect().topLeft());
-            auto lastVisibleIndex = mView->indexAt(mView->rect().bottomLeft());
-            int visibleRows = lastVisibleIndex.row() - firstVisibleIndex.row() + 1;
+            int visibleRows(MAX_LOADING_ROWS);
+
+            if(mViewModel->rowCount() != 0)
+            {
+                auto firstVisibleIndex = mView->indexAt(mView->rect().topLeft());
+                auto lastVisibleIndex = mView->indexAt(mView->rect().bottomLeft());
+
+                if(!lastVisibleIndex.isValid())
+                {
+                    visibleRows = mViewModel->rowCount() - firstVisibleIndex.row() + 1;
+                }
+                else
+                {
+                    visibleRows = lastVisibleIndex.row() - firstVisibleIndex.row() + 1;
+                }
+            }
 
             for(int row = 0; row < visibleRows; ++row)
             {
