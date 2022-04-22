@@ -961,7 +961,7 @@ QString Utilities::getReadableStringFromTs(MegaIntegerList *list)
     for (int it = qMax(0, list->size() - 3); it < list->size(); it++)//Display only the most recent 3 times
     {
         int64_t ts = list->get(it);
-        QDateTime date = QDateTime::fromSecsSinceEpoch(ts);
+        QDateTime date = QDateTime::fromMSecsSinceEpoch(ts * 1000l);
         readableTimes.append(QLocale().toString(date.date(), QLocale::LongFormat));
 
         if (it != list->size() - 1)
@@ -1051,7 +1051,7 @@ void Utilities::getDaysAndHoursToTimestamp(int64_t secsTimestamps, int64_t &rema
     }
 
     // Get seconcs diff between now and secsTimestamps
-    int64_t tDiff = secsTimestamps - QDateTime::currentDateTimeUtc().toSecsSinceEpoch();
+    int64_t tDiff = secsTimestamps - QDateTime::currentDateTimeUtc().toMSecsSinceEpoch() / 1000;
 
     // Compute in hours, then in days
     remainHours = tDiff / 3600;
