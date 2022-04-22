@@ -126,7 +126,7 @@ void StatusInfo::setState(TRANSFERS_STATES state)
                 mScanningTimer.stop();
             }
 
-            const QString statusText{tr("Some issues ocurred")};
+            const QString statusText{tr("Some issues occurred")};
             ui->lStatusDesc->setToolTip(statusText);
             ui->lStatusDesc->setText(statusText);
             ui->bIconState->setIcon(Utilities::getCachedPixmap(QString::fromUtf8(":/images/sidebar_cancel_all_ico.png")));
