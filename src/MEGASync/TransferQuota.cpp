@@ -122,7 +122,7 @@ void TransferQuota::checkExecuteDialog()
         {
             mUpgradeDialog = new UpgradeDialog(mMegaApi, mPricing, mCurrency);
             QObject::connect(mUpgradeDialog, &UpgradeDialog::finished, this, &TransferQuota::upgradeDialogFinished);
-            Platform::activateBackgroundWindow(mUpgradeDialog);
+            mUpgradeDialog->activateWindow();
             mUpgradeDialog->show();
         }
         else if (!mUpgradeDialog->isVisible())

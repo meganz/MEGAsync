@@ -293,11 +293,6 @@ bool MacXPlatform::enableSetuidBit()
     return result;
 }
 
-void MacXPlatform::activateBackgroundWindow(QDialog *)
-{
-
-}
-
 bool MacXPlatform::registerUpdateJob()
 {
     return registerUpdateDaemon();

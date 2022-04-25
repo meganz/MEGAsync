@@ -4887,7 +4887,6 @@ void MegaApplication::transferManagerActionClicked(int tab)
     if (transferManager)
     {
         transferManager->setActiveTab(tab);
-        transferManager->showNormal();
         transferManager->activateWindow();
         transferManager->raise();
         transferManager->updateState();
@@ -4902,7 +4901,7 @@ void MegaApplication::transferManagerActionClicked(int tab)
     connect(transferManager, SIGNAL(userActivity()), this, SLOT(registerUserActivity()));
     transferManager->setActiveTab(tab);
 
-    Platform::activateBackgroundWindow(transferManager);
+    transferManager->activateWindow();
     transferManager->show();
 }
 
@@ -5156,7 +5155,7 @@ void MegaApplication::processUploads()
     }
     uploadFolderSelector = new UploadToMegaDialog(megaApi);
     uploadFolderSelector->setDefaultFolder(preferences->uploadFolder());
-    Platform::activateBackgroundWindow(uploadFolderSelector);
+    uploadFolderSelector->activateWindow();
     uploadFolderSelector->exec();
     if (!uploadFolderSelector)
     {
@@ -5250,7 +5249,7 @@ void MegaApplication::processDownloads()
     }
 
     downloadFolderSelector = new DownloadFromMegaDialog(preferences->downloadFolder());
-    Platform::activateBackgroundWindow(downloadFolderSelector);
+    downloadFolderSelector->activateWindow();
     downloadFolderSelector->exec();
     if (!downloadFolderSelector)
     {
@@ -6044,7 +6043,7 @@ void MegaApplication::openInfoWizard()
     infoWizard = new InfoWizard();
     connect(infoWizard, SIGNAL(actionButtonClicked(int)), this, SLOT(userAction(int)));
     connect(infoWizard, SIGNAL(finished(int)), this, SLOT(infoWizardDialogFinished(int)));
-    Platform::activateBackgroundWindow(infoWizard);
+    infoWizard->activateWindow();
     infoWizard->show();
 }
 
