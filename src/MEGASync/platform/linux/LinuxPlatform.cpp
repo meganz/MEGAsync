@@ -331,11 +331,6 @@ void LinuxPlatform::enableDialogBlur(QDialog*)
 
 }
 
-void LinuxPlatform::activateBackgroundWindow(QDialog*)
-{
-
-}
-
 void LinuxPlatform::execBackgroundWindow(QDialog* window)
 {
     window->exec();
