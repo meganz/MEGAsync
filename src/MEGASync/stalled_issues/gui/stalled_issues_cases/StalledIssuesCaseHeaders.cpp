@@ -12,10 +12,7 @@ LocalAndRemotePreviouslyUnsyncedDifferHeader::LocalAndRemotePreviouslyUnsyncedDi
 
 void LocalAndRemotePreviouslyUnsyncedDifferHeader::refreshCaseUi()
 {
-    auto errorTitleIcon = Utilities::getCachedPixmap(QLatin1Literal(":/images/StalledIssues/ico_menu_full.png"));
-    ui->errorTitleIcon->setPixmap(errorTitleIcon.pixmap(ui->errorTitleIcon->size()));
     ui->errorTitleText->setText(tr("Can´t sync <b>%1</b>").arg(getData().getFileName()));
-
     ui->errorDescriptionText->setText(tr("This file has conflicting copies"));
 }
 
@@ -28,10 +25,7 @@ LocalAndRemoteChangedSinceLastSyncedStateHeader::LocalAndRemoteChangedSinceLastS
 
 void LocalAndRemoteChangedSinceLastSyncedStateHeader::refreshCaseUi()
 {
-    auto errorTitleIcon = Utilities::getCachedPixmap(QLatin1Literal(":/images/StalledIssues/ico_menu_full.png"));
-    ui->errorTitleIcon->setPixmap(errorTitleIcon.pixmap(ui->errorTitleIcon->size()));
     ui->errorTitleText->setText(tr("Can´t sync <b>%1</b>").arg(getData().getFileName()));
-
     ui->errorDescriptionText->setText(tr("This file has changed since it it was last synced."));
 }
 
@@ -44,10 +38,7 @@ SpecialFilesNotSupportedHeader::SpecialFilesNotSupportedHeader(QWidget *parent)
 
 void SpecialFilesNotSupportedHeader::refreshCaseUi()
 {
-    auto errorTitleIcon = Utilities::getCachedPixmap(QLatin1Literal(":/images/StalledIssues/ico_menu_full.png"));
-    ui->errorTitleIcon->setPixmap(errorTitleIcon.pixmap(ui->errorTitleIcon->size()));
     ui->errorTitleText->setText(tr("Cannot access <b>%1</b>").arg(getData().getFileName()));
-
     ui->errorDescriptionText->setText(tr("filesystem error preventing file access: Special files not supported"));
 
     ui->actionButton->show();
@@ -71,3 +62,37 @@ void SpecialFilesNotSupportedHeader::on_actionButton_clicked()
         MegaSyncApp->getMegaApi()->setLegacyExcludedPaths(&vExclusionPaths);
     }
 }
+
+//Local folder not scannable
+LocalFolderNotScannableHeader::LocalFolderNotScannableHeader(QWidget *parent)
+    : StalledIssueHeader(parent)
+{}
+
+void LocalFolderNotScannableHeader::refreshCaseUi()
+{
+    ui->errorTitleText->setText(tr("Cannot access <b>%1</b>").arg(getData().getFileName()));
+    ui->errorDescriptionText->setText(tr("filesystem error preventing folder scanning"));
+}
+
+//Local folder not scannable
+DeleteWaitingOnMovesHeader::DeleteWaitingOnMovesHeader(QWidget *parent)
+    : StalledIssueHeader(parent)
+{}
+
+void DeleteWaitingOnMovesHeader::refreshCaseUi()
+{
+    ui->errorTitleText->setText(tr("waiting to move <b>%1</b>").arg(getData().getFileName()));
+    ui->errorDescriptionText->setText(tr("waiting for other processes to complete"));
+}
+
+//ApplyMoveNeedsOtherSideParentFolderToExist
+ApplyMoveNeedsOtherSideParentFolderToExistHeader::ApplyMoveNeedsOtherSideParentFolderToExistHeader(QWidget *parent)
+    : StalledIssueHeader(parent)
+{}
+
+void ApplyMoveNeedsOtherSideParentFolderToExistHeader::refreshCaseUi()
+{
+    ui->errorTitleText->setText(tr("Can´t move <b>%1</b> to the selected location").arg(getData().getFileName()));
+    ui->errorDescriptionText->setText(tr("Cannot reach the destination folder on the cloud"));
+}
+

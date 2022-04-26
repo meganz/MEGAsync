@@ -1,16 +1,15 @@
 #include "StalledIssuesDelegateWidgetsCache.h"
 
 #include "stalled_issues_cases/LocalAndRemoteDifferentWidget.h"
+#include "stalled_issues_cases/OtherSideMissingOrBlocked.h"
 #include "stalled_issues_cases/StalledIssuesCaseHeaders.h"
 #include "StalledIssuesProxyModel.h"
 #include "StalledIssueFilePath.h"
 
 #include "Utilities.h"
 
-
 StalledIssuesDelegateWidgetsCache::StalledIssuesDelegateWidgetsCache()
-{
-}
+{}
 
 void StalledIssuesDelegateWidgetsCache::setProxyModel(StalledIssuesProxyModel *proxyModel)
 {
@@ -77,6 +76,8 @@ StalledIssueBaseDelegateWidget *StalledIssuesDelegateWidgetsCache::createBodyWid
     switch(reason)
     {
         case mega::MegaSyncStall::SyncStallReason::SpecialFilesNotSupported:
+        case mega::MegaSyncStall::SyncStallReason::LocalFolderNotScannable:
+        case mega::MegaSyncStall::SyncStallReason::DeleteWaitingOnMoves:
         {
             auto filePath  = new StalledIssueFilePath(parent);
             filePath->setIndent(StalledIssueHeader::BODY_INDENT);
@@ -90,8 +91,14 @@ StalledIssueBaseDelegateWidget *StalledIssuesDelegateWidgetsCache::createBodyWid
 
             break;
         }
+        case mega::MegaSyncStall::SyncStallReason::ApplyMoveNeedsOtherSideParentFolderToExist:
+        {
+            item = new OtherSideMissingOrBlocked(parent);
+            break;
+        }
         default:
         {
+             //Do not add a dummy body, I prefer it to break
         }
     }
 
@@ -114,6 +121,16 @@ StalledIssueHeader *StalledIssuesDelegateWidgetsCache::createHeaderWidget(const 
             header  = new SpecialFilesNotSupportedHeader(parent);
             break;
         }
+        case mega::MegaSyncStall::SyncStallReason::LocalFolderNotScannable:
+        {
+            header  = new LocalFolderNotScannableHeader(parent);
+            break;
+        }
+        case mega::MegaSyncStall::SyncStallReason::DeleteWaitingOnMoves:
+        {
+            header  = new DeleteWaitingOnMovesHeader(parent);
+            break;
+        }
         case mega::MegaSyncStall::SyncStallReason::LocalAndRemoteChangedSinceLastSyncedState_userMustChoose:
         {
             header = new LocalAndRemoteChangedSinceLastSyncedStateHeader(parent);
@@ -124,9 +141,14 @@ StalledIssueHeader *StalledIssuesDelegateWidgetsCache::createHeaderWidget(const 
             header  = new LocalAndRemotePreviouslyUnsyncedDifferHeader(parent);
             break;
         }
+        case mega::MegaSyncStall::SyncStallReason::ApplyMoveNeedsOtherSideParentFolderToExist:
+        {
+            header  = new ApplyMoveNeedsOtherSideParentFolderToExistHeader(parent);
+            break;
+        }
         default:
         {
-
+            //Do not add a dummy header, I prefer it to break
         }
     }
 

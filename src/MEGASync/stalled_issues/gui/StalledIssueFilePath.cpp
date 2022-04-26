@@ -108,7 +108,7 @@ bool StalledIssueFilePath::eventFilter(QObject *watched, QEvent *event)
     }
     else if(watched == ui->moveLines && event->type() == QEvent::Paint)
     {
-        QPainter p(ui->lines);
+        QPainter p(ui->moveLines);
         p.setPen(QPen(QColor("#D6D6D6"),1));
 
         auto width(ui->lines->width());

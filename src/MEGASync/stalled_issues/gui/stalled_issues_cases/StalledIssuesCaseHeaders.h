@@ -37,4 +37,40 @@ protected slots:
     void on_actionButton_clicked();
 };
 
+//Local Folder not scanneable
+class LocalFolderNotScannableHeader : public StalledIssueHeader
+{
+    Q_OBJECT
+
+public:
+    LocalFolderNotScannableHeader(QWidget *parent = nullptr);
+
+protected:
+    void refreshCaseUi() override;
+};
+
+//Delete waiting on moves
+class DeleteWaitingOnMovesHeader : public StalledIssueHeader
+{
+    Q_OBJECT
+
+public:
+    DeleteWaitingOnMovesHeader(QWidget *parent = nullptr);
+
+protected:
+    void refreshCaseUi() override;
+};
+
+//ApplyMoveNeedsOtherSideParentFolderToExist
+class ApplyMoveNeedsOtherSideParentFolderToExistHeader : public StalledIssueHeader
+{
+    Q_OBJECT
+
+public:
+    ApplyMoveNeedsOtherSideParentFolderToExistHeader(QWidget *parent = nullptr);
+
+protected:
+    void refreshCaseUi() override;
+};
+
 #endif // STALLEDISSUESCASEHEADERS_H

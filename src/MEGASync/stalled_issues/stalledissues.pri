@@ -14,6 +14,7 @@ SOURCES +=  \
     $$PWD/gui/StalledIssuesDelegateWidgetsCache.cpp \
     $$PWD/gui/StalledIssuesDialog.cpp \
     $$PWD/gui/StalledIssueHeader.cpp \
+    $$PWD/gui/stalled_issues_cases/OtherSideMissingOrBlocked.cpp \
     $$PWD/gui/stalled_issues_cases/StalledIssuesCaseHeaders.cpp \
     $$PWD/model/StalledIssue.cpp \
     $$PWD/model/StalledIssuesModel.cpp \
@@ -30,6 +31,7 @@ HEADERS  +=   \
     $$PWD/gui/StalledIssuesDialog.h \
     $$PWD/gui/StalledIssueHeader.h \
     $$PWD/gui/stalled_issues_cases/LocalAndRemoteDifferentWidget.h \
+    $$PWD/gui/stalled_issues_cases/OtherSideMissingOrBlocked.h \
     $$PWD/gui/stalled_issues_cases/StalledIssuesCaseHeaders.h \
     $$PWD/model/StalledIssuesModel.h \
     $$PWD/model/StalledIssue.h \
@@ -43,5 +45,6 @@ win32 {
                 $$PWD/gui/win/StalledIssuesDialog.ui \
                 $$PWD/gui/win/StalledIssueFilePath.ui \
                 $$PWD/gui/win/StalledIssueTab.ui \
-                $$PWD/gui/stalled_issues_cases/win/LocalAndRemoteDifferentWidget.ui
+                $$PWD/gui/stalled_issues_cases/win/LocalAndRemoteDifferentWidget.ui \
+                $$PWD/gui/stalled_issues_cases/win/OtherSideMissingOrBlocked.ui
 }

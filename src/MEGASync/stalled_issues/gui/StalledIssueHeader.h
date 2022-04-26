@@ -26,9 +26,6 @@ public:
     void expand(bool state) override;
     void showAction();
 
-signals:
-    void actionClicked();
-
 protected:
     virtual void refreshCaseUi() = 0;
     Ui::StalledIssueHeader *ui;

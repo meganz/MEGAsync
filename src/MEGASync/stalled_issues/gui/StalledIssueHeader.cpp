@@ -11,8 +11,8 @@ StalledIssueHeader::StalledIssueHeader(QWidget *parent) :
     ui(new Ui::StalledIssueHeader)
 {
     ui->setupUi(this);
+
     ui->actionButton->hide();
-    connect(ui->actionButton, &QPushButton::clicked, this, &StalledIssueHeader::actionClicked);
 }
 
 StalledIssueHeader::~StalledIssueHeader()
@@ -33,6 +33,9 @@ void StalledIssueHeader::showAction()
 
 void StalledIssueHeader::refreshUi()
 {
+    auto errorTitleIcon = Utilities::getCachedPixmap(QLatin1Literal(":/images/StalledIssues/ico_menu_full.png"));
+    ui->errorTitleIcon->setPixmap(errorTitleIcon.pixmap(ui->errorTitleIcon->size()));
+
     QIcon fileTypeIcon;
 
     auto splittedFile = getData().getFileName().split(QString::fromUtf8("."));
