@@ -2301,6 +2301,7 @@ QToolButton
             <string>Open links</string>
            </property>
            <property name="icon">
+             <iconset resource="../../../gui/Resources_macx.qrc">
              <normaloff>:/images/import_toolbar_ico.png</normaloff>:/images/import_toolbar_ico.png</iconset>
            </property>
           </widget>
