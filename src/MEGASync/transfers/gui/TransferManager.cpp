@@ -42,7 +42,7 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
 
     mUi->wTransfers->setupTransfers();
 #ifndef Q_OS_MACOS
-    setWindowFlags(windowFlags() | Qt::Window | Qt::FramelessWindowHint);
+    setWindowFlags(windowFlags() | Qt::Window);
 #endif
     setAttribute(Qt::WA_DeleteOnClose, true);
 
