@@ -88,6 +88,21 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
         tabFrame->setProperty("itsOn", false);
     }
 
+    mTooltipNameByTab[ALL_TRANSFERS_TAB] = tr("all");
+    mTooltipNameByTab[DOWNLOADS_TAB]     = tr("all downloads");
+    mTooltipNameByTab[UPLOADS_TAB]       = tr("all uploads");
+    mTooltipNameByTab[COMPLETED_TAB]     = tr("all completed");
+    mTooltipNameByTab[FAILED_TAB]        = tr("all failed");
+    mTooltipNameByTab[SEARCH_TAB]        = tr("all search results");
+    mTooltipNameByTab[TYPE_OTHER_TAB]    = tr("all");
+    mTooltipNameByTab[TYPE_AUDIO_TAB]    = tr("all audios");
+    mTooltipNameByTab[TYPE_VIDEO_TAB]    = tr("all videos");
+    mTooltipNameByTab[TYPE_ARCHIVE_TAB]  = tr("all archives");
+    mTooltipNameByTab[TYPE_DOCUMENT_TAB] = tr("all documents");
+    mTooltipNameByTab[TYPE_IMAGE_TAB]    = tr("all images");
+    mTooltipNameByTab[TYPE_TEXT_TAB]     = tr("all texts");
+
+
     mTabNoItem[ALL_TRANSFERS_TAB] = mUi->wNoTransfers;
     mTabNoItem[DOWNLOADS_TAB]     = mUi->wNoDownloads;
     mTabNoItem[UPLOADS_TAB]       = mUi->wNoUploads;
@@ -886,7 +901,7 @@ void TransferManager::onFileTypeButtonClicked(TM_TAB tab, Utilities::FileType fi
 }
 
 
-void TransferManager::on_bImportLinks_clicked()
+void TransferManager::on_bOpenLinks_clicked()
 {
     qobject_cast<MegaApplication*>(qApp)->importLinks();
 }
@@ -941,52 +956,55 @@ void TransferManager::toggleTab(TM_TAB newTab)
         mTabFramesToggleGroup[newTab]->setProperty(ITS_ON, true);
         mTabFramesToggleGroup[newTab]->setGraphicsEffect(mShadowTab);
 
+        TransfersWidget::HeaderInfo headerInfo;
+
+        QString cancelBase(tr("Cancel and clear "));
+
         // Show pause button on tab except completed tab,
         // and set Clear All button string,
         // Emit wether we are showing completed or not
         if (newTab == ALL_TRANSFERS_TAB)
         {
-            mUi->wTransfers->updateHeaderItems(tr("Time left"),
-                              tr("Cancel all"),
-                              tr("Speed"));
-
-            mUi->wTransfers->setAllTransfersTab(true);
+            headerInfo.headerTime = tr("Time left");
+            headerInfo.headerSpeed = tr("Speed");
         }
         else
         {
             if (newTab == COMPLETED_TAB)
             {
                 mUi->tActionButton->setText(tr("Clear All"));
-                mUi->wTransfers->updateHeaderItems(tr("Time Completed"),
-                                                   tr("Clear all visible"),
-                                                   tr("Avg. speed"));
+                headerInfo.headerTime = tr("Time Completed");
+                headerInfo.headerSpeed = tr("Avg. speed");
 
+                cancelBase = tr("Clear ");
             }
             else if (newTab == FAILED_TAB)
             {
                 mUi->tActionButton->setText(tr("Retry all"));
-                mUi->wTransfers->updateHeaderItems(tr("Time Completed"),
-                                                   tr("Cancel all visible"),
-                                                   tr("Avg. speed"));
+                headerInfo.headerTime = tr("Time Completed");
+                headerInfo.headerSpeed = tr("Avg. speed");
             }
             else if (newTab > TYPES_TAB_BASE && newTab < TYPES_LAST)
             {
-                mUi->wTransfers->updateHeaderItems(tr("Time"),
-                                                   tr("Cancel all visible"),
-                                                   tr("Speed"));
+                headerInfo.headerTime = tr("Time");
+                headerInfo.headerSpeed = tr("Speed");
 
                 mUi->tActionButton->setText(tr("Clear Completed"));
             }
             //UPLOAD // DOWNLOAD
             else
             {
-                mUi->wTransfers->updateHeaderItems(tr("Time left"),
-                                                   tr("Cancel all visible"),
-                                                   tr("Speed"));
+                headerInfo.headerTime = tr("Time left");
+                headerInfo.headerSpeed = tr("Speed");
             }
 
-            mUi->wTransfers->setAllTransfersTab(false);
         }
+
+        headerInfo.cancelClearTooltip = cancelBase + mTooltipNameByTab[newTab];
+        headerInfo.pauseTooltip = tr("Pause ") + mTooltipNameByTab[newTab];
+        headerInfo.resumeTooltip = tr("Resume ") + mTooltipNameByTab[newTab];
+
+        mUi->wTransfers->updateHeaderItems(headerInfo);
 
         //The rest of cases
         if (mCurrentTab == COMPLETED_TAB

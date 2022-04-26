@@ -85,6 +85,7 @@ private:
     QMap<TM_TAB, QFrame*> mTabFramesToggleGroup;
     QMap<TM_TAB, QLabel*> mNumberLabelsGroup;
     QMap<TM_TAB, QWidget*> mTabNoItem;
+    QMap<TM_TAB, QString> mTooltipNameByTab;
 
     TransfersModel* mModel;
     TransfersCount mTransfersCount;
@@ -129,7 +130,7 @@ private slots:
     void on_tUlResults_clicked();
     void on_bPause_clicked();
 
-    void on_bImportLinks_clicked();
+    void on_bOpenLinks_clicked();
     void on_tCogWheel_clicked();
     void on_bDownload_clicked();
     void on_bUpload_clicked();
