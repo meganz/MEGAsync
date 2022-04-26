@@ -3215,11 +3215,6 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 <context>
     <name>NotificationsSettings</name>
     <message>
-        <source>Account notifications:</source>
-        <translatorcomment>Title for notifications setting pane</translatorcomment>
-        <translation>Account notifications:</translation>
-    </message>
-    <message>
         <source>Shares</source>
         <translatorcomment>Notification category for shared folders and nodes</translatorcomment>
         <translation>Shares</translation>
@@ -3265,11 +3260,6 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translation>Info</translation>
     </message>
     <message>
-        <source>Desktop notifications</source>
-        <translatorcomment>Title of a checkbox for disconnectig notifications</translatorcomment>
-        <translation>Desktop notifications</translation>
-    </message>
-    <message>
         <source>Someone accepted your contact request</source>
         <translatorcomment>Title of a checkbox for disconnectig notifications</translatorcomment>
         <translation>Someone accepted your contact request</translation>
@@ -3288,6 +3278,16 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <source>Shares:</source>
         <translatorcomment>Notification category for non-critical info notifications (macx)</translatorcomment>
         <translation>Shares:</translation>
+    </message>
+    <message>
+        <source>System notifications:</source>
+	    <translatorcomment>Title of a checkbox for disconnectig all notifications</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Info notifications</source>
+		<translatorcomment>Title of a checkbox for disconnectig secondary info notifications</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
