@@ -493,7 +493,7 @@ modeselected:
 
   !insertmacro DEBUG_MSG "Installing files"
 
-  ;SetRebootFlag true
+  SetRebootFlag false
   SetOverwrite on
 
   SetOutPath "$INSTDIR"
@@ -814,6 +814,7 @@ modeselected:
 #  Pop $0
 
   !insertmacro DEBUG_MSG "Creating shortcuts"
+  SetRebootFlag false
   StrCmp "CurrentUser" $MultiUser.InstallMode currentuser2
   SetShellVarContext all
   !insertmacro MUI_STARTMENU_WRITE_BEGIN Application
@@ -1088,4 +1089,5 @@ Section Uninstall
   DeleteRegKey ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}"
   DeleteRegKey HKLM "${PRODUCT_DIR_REGKEY}"
   SetAutoClose true
+  SetRebootFlag false
 SectionEnd
