@@ -5,11 +5,10 @@
 
 namespace UserAttributes
 {
-UserAttributesManager::UserAttributesManager()
+UserAttributesManager::UserAttributesManager() :
+    mDelegateListener(new mega::QTMegaListener(MegaSyncApp->getMegaApi(), this))
 {
-    const auto megaApp = static_cast<MegaApplication*>(qApp);
-    mDelegateListener = new mega::QTMegaListener(megaApp->getMegaApi(), this);
-    megaApp->getMegaApi()->addListener(mDelegateListener);
+    MegaSyncApp->getMegaApi()->addListener(mDelegateListener.get());
 }
 
 void UserAttributesManager::onRequestFinish(mega::MegaApi *api, mega::MegaRequest *incoming_request, mega::MegaError *e)
