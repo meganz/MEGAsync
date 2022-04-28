@@ -2096,7 +2096,7 @@ font-family: &quot;Lato&quot;;
 }</string>
          </property>
          <property name="text">
-          <string>Enjoy MEGAsync!</string>
+          <string>Enjoy MEGAsync</string>
          </property>
          <property name="alignment">
           <set>Qt::AlignHCenter|Qt::AlignTop</set>
