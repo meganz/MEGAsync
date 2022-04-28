@@ -29,7 +29,7 @@ protected:
 
 private:
     Ui::InfoDialogTransfersWidget *mUi;
-    InfoDialogTransfersProxyModel *mModel;
+    InfoDialogTransfersProxyModel *mProxyModel;
     MegaDelegateHoverManager mViewHoverManager;
 
 private:

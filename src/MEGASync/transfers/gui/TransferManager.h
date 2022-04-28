@@ -91,6 +91,7 @@ private:
     QMap<TM_TAB, QFrame*> mTabFramesToggleGroup;
     QMap<TM_TAB, QLabel*> mNumberLabelsGroup;
     QMap<TM_TAB, QWidget*> mTabNoItem;
+    QMap<TM_TAB, QString> mTooltipNameByTab;
 
     TransfersModel* mModel;
     TransfersCount mTransfersCount;
@@ -127,6 +128,7 @@ private slots:
     void on_tActionButton_clicked();
     void on_tSeePlans_clicked();
     void on_bSearch_clicked();
+    void on_leSearchField_editingFinished();
     void on_tSearchIcon_clicked();
     void on_bSearchString_clicked();
     void on_tSearchCancel_clicked();
@@ -136,7 +138,7 @@ private slots:
     void on_tUlResults_clicked();
     void on_bPause_clicked();
 
-    void on_bImportLinks_clicked();
+    void on_bOpenLinks_clicked();
     void on_tCogWheel_clicked();
     void on_bDownload_clicked();
     void on_bUpload_clicked();
@@ -146,7 +148,7 @@ private slots:
     void on_bArchives_clicked();
     void on_bDocuments_clicked();
     void on_bImages_clicked();
-    void on_bMusic_clicked();
+    void on_bAudio_clicked();
     void on_bVideos_clicked();
     void on_bOther_clicked();
     void on_bText_clicked();

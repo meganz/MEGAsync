@@ -21,13 +21,13 @@ StatusInfo::~StatusInfo()
     delete ui;
 }
 
-void StatusInfo::setState(int state)
+void StatusInfo::setState(TRANSFERS_STATES state)
 {
     this->mState = state;
 
     switch (this->mState)
     {
-        case STATE_PAUSED:
+        case TRANSFERS_STATES::STATE_PAUSED:
         {
             if (mScanningTimer.isActive())
             {
@@ -41,7 +41,7 @@ void StatusInfo::setState(int state)
             ui->bIconState->setIconSize(QSize(24, 24));
             break;
         }
-        case STATE_UPDATED:
+        case TRANSFERS_STATES::STATE_UPDATED:
         {
             if (mScanningTimer.isActive())
             {
@@ -67,7 +67,7 @@ void StatusInfo::setState(int state)
 
             break;
         }
-        case STATE_SYNCING:
+        case TRANSFERS_STATES::STATE_SYNCING:
         {
             if (!mScanningTimer.isActive())
             {
@@ -80,7 +80,7 @@ void StatusInfo::setState(int state)
             ui->lStatusDesc->setText(statusText);
             break;
         }
-        case STATE_WAITING:
+        case TRANSFERS_STATES::STATE_WAITING:
         {
             if (!mScanningTimer.isActive())
             {
@@ -93,7 +93,7 @@ void StatusInfo::setState(int state)
             ui->lStatusDesc->setText(statusText);
             break;
         }
-        case STATE_INDEXING:
+        case TRANSFERS_STATES::STATE_INDEXING:
         {
             if (!mScanningTimer.isActive())
             {
@@ -106,7 +106,7 @@ void StatusInfo::setState(int state)
             ui->lStatusDesc->setText(statusText);
             break;
         }
-        case STATE_TRANSFERRING:
+        case TRANSFERS_STATES::STATE_TRANSFERRING:
         {
             if (!mScanningTimer.isActive())
             {
@@ -119,12 +119,26 @@ void StatusInfo::setState(int state)
             ui->lStatusDesc->setText(statusText);
             break;
         }
+        case TRANSFERS_STATES::STATE_FAILED:
+        {
+            if (mScanningTimer.isActive())
+            {
+                mScanningTimer.stop();
+            }
+
+            const QString statusText{QCoreApplication::translate("TransferManager","Some issues occurred")};
+            ui->lStatusDesc->setToolTip(statusText);
+            ui->lStatusDesc->setText(statusText);
+            ui->bIconState->setIcon(Utilities::getCachedPixmap(QString::fromUtf8(":/images/sidebar_cancel_all_ico.png")));
+            ui->bIconState->setIconSize(QSize(24, 24));
+            break;
+        }
         default:
             break;
     }
 }
 
-int StatusInfo::getState()
+StatusInfo::TRANSFERS_STATES StatusInfo::getState()
 {
     return mState;
 }

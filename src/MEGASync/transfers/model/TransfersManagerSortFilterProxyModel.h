@@ -33,7 +33,7 @@ public:
         void resetAllFilters();
         int  getNumberOfItems(TransferData::TransferType transferType);
 
-        TransferBaseDelegateWidget* createTransferManagerItem(QWidget *parent) override;
+        TransferBaseDelegateWidget* createTransferManagerItem(QWidget *) override;
 
         int  getPausedTransfers() const;
         bool areAllPaused() const;

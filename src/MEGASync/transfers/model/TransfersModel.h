@@ -153,6 +153,7 @@ public:
     long long  getNumberOfTransfersForFileType(Utilities::FileType fileType) const;
     long long  getNumberOfFinishedForFileType(Utilities::FileType fileType) const;
     TransfersCount getTransfersCount();
+    bool hasFailedTransfers();
 
     void startTransfer(QExplicitlySharedDataPointer<TransferData> transfer);
     void updateTransfer(QExplicitlySharedDataPointer<TransferData> transfer);

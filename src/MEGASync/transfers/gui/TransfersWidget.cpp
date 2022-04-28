@@ -76,7 +76,6 @@ void TransfersWidget::configureTransferView()
 
     tDelegate = new MegaTransferDelegate(mProxyModel, ui->tvTransfers);
     ui->tvTransfers->setup(this);
-    mDelegateHoverManager.setView(ui->tvTransfers);
     ui->tvTransfers->setItemDelegate(tDelegate);
 
     onPauseStateChanged(mProxyModel->isAnyPaused());
@@ -89,6 +88,7 @@ void TransfersWidget::configureTransferView()
     ui->tvTransfers->setDragDropMode(QAbstractItemView::InternalMove);
 
     mLoadingScene.setView(ui->tvTransfers);
+    mDelegateHoverManager.setView(ui->tvTransfers);
 }
 
 void TransfersWidget::pausedTransfers(bool paused)
@@ -112,15 +112,6 @@ void TransfersWidget::onHeaderItemClicked(int sortBy, Qt::SortOrder order)
     mProxyModel->sort(sortBy, order);
 }
 
-void TransfersWidget::on_pHeaderSize_clicked()
-{
-    Qt::SortOrder order (Qt::AscendingOrder);
-    SortCriterion sortBy (
-                SortCriterion::TOTAL_SIZE);
-
-    mProxyModel->sort(static_cast<int>(sortBy), order);
-}
-
 void TransfersWidget::on_tCancelClearVisible_clicked()
 {
     emit cancelClearVisibleRows();
@@ -129,14 +120,18 @@ void TransfersWidget::on_tCancelClearVisible_clicked()
 void TransfersWidget::onPauseStateChanged(bool pauseState)
 {
     ui->tPauseResumeVisible->setToolTip(pauseState ?
-                                        tr("Resume visible transfers")
-                                      : tr("Pause visible transfers"));
-    ui->tPauseResumeVisible->blockSignals(true);
-    ui->tPauseResumeVisible->setChecked(pauseState);
-    ui->tPauseResumeVisible->blockSignals(false);
+                                            mHeaderInfo.resumeTooltip
+                                           : mHeaderInfo.pauseTooltip);
 
-    //Use to repaint and update the transfers state
-    ui->tvTransfers->update();
+    if(ui->tPauseResumeVisible->isChecked() != pauseState)
+    {
+        ui->tPauseResumeVisible->blockSignals(true);
+        ui->tPauseResumeVisible->setChecked(pauseState);
+        ui->tPauseResumeVisible->blockSignals(false);
+
+        //Use to repaint and update the transfers state
+        ui->tvTransfers->update();
+    }
 }
 
 void TransfersWidget::textFilterChanged(const QString& pattern)
@@ -163,11 +158,17 @@ void TransfersWidget::transferFilterReset()
     mProxyModel->resetAllFilters();
 }
 
-void TransfersWidget::updateHeaderItems(const QString &headerTime, const QString &cancelClearTooltip, const QString &headerSpeed)
+void TransfersWidget::updateHeaderItems(const HeaderInfo &info)
 {
-    ui->timeColumn->setTitle(headerTime);
-    ui->tCancelClearVisible->setToolTip(cancelClearTooltip);
-    ui->speedColumn->setTitle(headerSpeed);
+    mHeaderInfo = info;
+
+    ui->timeColumn->setTitle(info.headerTime);
+    ui->tCancelClearVisible->setToolTip(info.cancelClearTooltip);
+    ui->speedColumn->setTitle(info.headerSpeed);
+
+    ui->tPauseResumeVisible->setToolTip(ui->tPauseResumeVisible->isChecked() ?
+                                           info.resumeTooltip
+                                          : info.pauseTooltip);
 }
 
 void TransfersWidget::changeEvent(QEvent *event)

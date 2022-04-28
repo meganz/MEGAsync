@@ -328,7 +328,7 @@ void TransferThread::resetCompletedUploads(QList<QExplicitlySharedDataPointer<Tr
 
             if(transfer->hasFailed())
             {
-                mTransfersCount.failedUploads++;
+                mTransfersCount.failedUploads--;
                 transfer->removeFailedTransfer();
             }
         }
@@ -351,7 +351,7 @@ void TransferThread::resetCompletedDownloads(QList<QExplicitlySharedDataPointer<
 
             if(transfer->hasFailed())
             {
-                mTransfersCount.failedDownloads++;
+                mTransfersCount.failedDownloads--;
                 transfer->removeFailedTransfer();
             }
         }
@@ -627,7 +627,7 @@ void TransfersModel::processActiveTransfers(QList<QExplicitlySharedDataPointer<T
         for (auto it = transfersToActive.begin(); it != transfersToActive.end();)
         {
             mTransfers.prepend((*it));
-            (*it)->mPriority -= 100000000000000;
+            (*it)->mPriority -= ACTIVE_PRIORITY_OFFSET;
 
             transfersToActive.erase(it++);
         }
@@ -642,7 +642,6 @@ void TransfersModel::processUpdateTransfers()
 {
     QList<int> rowsToUpdate;
     QList<QExplicitlySharedDataPointer<TransferData>> transfersFinished;
-    QList<QExplicitlySharedDataPointer<TransferData>> transfersActive;
     QModelIndexList rowsToRemove;
 
     for (auto it = mTransfersToProcess.updateTransfersByTag.begin(); it != mTransfersToProcess.updateTransfersByTag.end();)
@@ -910,12 +909,35 @@ TransfersCount TransfersModel::getTransfersCount()
     return mTransfersCount;
 }
 
+bool TransfersModel::hasFailedTransfers()
+{
+    return mTransfersCount.failedDownloads != 0 || mTransfersCount.failedUploads != 0;
+}
+
 void TransfersModel::cancelTransfers(const QModelIndexList& indexes, QWidget* canceledFrom)
 {
     if(indexes.isEmpty())
     {
         mMegaApi->cancelTransfers(MegaTransfer::TYPE_UPLOAD);
         mMegaApi->cancelTransfers(MegaTransfer::TYPE_DOWNLOAD);
+
+        auto count = rowCount(DEFAULT_IDX);
+        for (auto row = 0; row < count;++row)
+        {
+            auto d (getTransfer(row));
+
+            // Clear (remove rows of) finished transfers
+            if (d)
+            {
+                if (!d->isCancelable())
+                {
+                    QMegaMessageBox::warning(canceledFrom, QString::fromUtf8("MEGAsync"),
+                                             tr("Some Transfers cannot be cancelled or cleared"),
+                                             QMessageBox::Ok);
+                    break;
+                }
+            }
+        }
     }
     else
     {
@@ -1289,8 +1311,8 @@ void TransfersModel::removeTransfer(int row)
 
 void TransfersModel::sendDataChanged(int row)
 {
-    QModelIndex bottomRight (index(row, 0, DEFAULT_IDX));
-    emit dataChanged(bottomRight, bottomRight);
+    QModelIndex indexChanged (index(row, 0, DEFAULT_IDX));
+    emit dataChanged(indexChanged, indexChanged);
 }
 
 bool TransfersModel::isFailingModeActive() const

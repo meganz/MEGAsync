@@ -19,6 +19,7 @@
 #include "FilterAlertWidget.h"
 #include "QtPositioningBugFixer.h"
 #include "TransferQuota.h"
+#include "StatusInfo.h"
 #include <memory>
 #ifdef _WIN32
 #include <chrono>
@@ -33,18 +34,6 @@ class MegaApplication;
 class InfoDialog : public QDialog, public mega::MegaTransferListener
 {
     Q_OBJECT
-
-    enum {
-        STATE_STARTING,
-        STATE_PAUSED,
-        STATE_WAITING,
-        STATE_INDEXING,
-        STATE_UPDATED,
-        STATE_SYNCING,
-        STATE_TRANSFERRING,
-    };
-
-
 
 public:
 
@@ -199,7 +188,7 @@ private:
     bool syncing; //if any sync is in syncing state
     bool transferring; // if there are ongoing regular transfers
     GuestWidget *gWidget;
-    int state;
+    StatusInfo::TRANSFERS_STATES mState;
     bool overQuotaState;
     bool transferOverquotaAlertEnabled;
     bool transferAlmostOverquotaAlertEnabled;
@@ -235,6 +224,7 @@ protected:
     void setBlockedStateLabel(QString state);
     void updateBlockedState();
     void updateState();
+    bool checkFailedState();
     void changeEvent(QEvent * event) override;
     bool eventFilter(QObject *obj, QEvent *e) override;
     void paintEvent( QPaintEvent * e) override;

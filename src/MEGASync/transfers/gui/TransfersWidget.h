@@ -36,16 +36,24 @@ public:
                         const TransferData::TransferStates transferStates,
                         const Utilities::FileTypes fileTypes);
     void transferFilterReset();
-    void updateHeaderItems(const QString& headerTime,
-                           const QString& cancelClearTooltip,
-                           const QString& headerSpeed);
+
+    struct HeaderInfo
+    {
+        QString headerTime;
+        QString cancelClearTooltip;
+        QString headerSpeed;
+
+        QString pauseTooltip;
+        QString resumeTooltip;
+    };
+
+    void updateHeaderItems(const HeaderInfo& info);
 
     TransfersModel* getModel();
     TransfersManagerSortFilterProxyModel* getProxyModel() {return mProxyModel;}
     ~TransfersWidget();
 
 public slots:
-    void on_pHeaderSize_clicked();
     void onHeaderItemClicked(int sortBy, Qt::SortOrder order);
     void on_tPauseResumeVisible_toggled(bool state);
     void on_tCancelClearVisible_clicked();
@@ -76,6 +84,8 @@ private:
     MegaDelegateHoverManager mDelegateHoverManager;
     bool mClearMode;
     MegaApplication *app;
+
+    HeaderInfo mHeaderInfo;
 
     void configureTransferView();
     void clearOrCancel(const QList<QExplicitlySharedDataPointer<TransferData>>& pool, int state, int firstRow);
