@@ -5,8 +5,6 @@
 StalledIssueData::StalledIssueData(const mega::MegaSyncStall *stallIssue)
     : mIsCloud(false)
     , mIsImmediate(false)
-    , mIsMissing(false)
-    , mIsBlocked(false)
 {
     update(stallIssue);
 
@@ -19,7 +17,7 @@ void StalledIssueData::update(const mega::MegaSyncStall *stallIssue)
 {
     if(stallIssue)
     {
-        mIndexPath    = QString::fromUtf8(stallIssue->indexPath());
+        mIndexPath.path    = QString::fromUtf8(stallIssue->indexPath());
         mLocalPath    = QString::fromUtf8(stallIssue->localPath());
         mCloudPath    = QString::fromUtf8(stallIssue->cloudPath());
         mIsCloud      = stallIssue->isCloud();
@@ -126,12 +124,12 @@ void StalledIssue::extractFileName(const QExplicitlySharedDataPointer<StalledIss
 {
     if(tdr->mIsCloud)
     {
-        auto splittedIndexPath = tdr->mIndexPath.split(QString::fromUtf8("/"));
+        auto splittedIndexPath = tdr->mIndexPath.path.split(QString::fromUtf8("/"));
         mFileName = splittedIndexPath.last();
     }
     else
     {
-        auto splittedIndexPath = tdr->mIndexPath.split(QString::fromUtf8("\\"));
+        auto splittedIndexPath = tdr->mIndexPath.path.split(QString::fromUtf8("\\"));
         mFileName = splittedIndexPath.last();
     }
 }
@@ -154,6 +152,16 @@ mega::MegaSyncStall::SyncStallReason StalledIssue::getReason() const
 const QString& StalledIssue::getFileName() const
 {
     return mFileName;
+}
+
+bool StalledIssue::isCloud() const
+{
+    if(stalledIssuesCount() > 0)
+    {
+        return getStalledIssueData()->mIsCloud;
+    }
+
+    return false;
 }
 
 bool StalledIssue::isNameConflict() const

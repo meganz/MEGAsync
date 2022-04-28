@@ -999,6 +999,41 @@ QString Utilities::joinLogZipFiles(MegaApi *megaApi, const QDateTime *timestampS
     return QString();
 }
 
+QString Utilities::getElidedPath(const QString &path, uint8_t firstPart, uint8_t secondPart, uint8_t maxDepth)
+{
+    if((firstPart + secondPart) > maxDepth)
+    {
+        return path;
+    }
+
+    QString elidedPath;
+    QStringList splittedPath = path.split(QDir::separator());
+
+    if(splittedPath.size() > maxDepth)
+    {
+        auto separator = QDir::separator();
+        for(int index = 0; index < firstPart; ++index)
+        {
+            elidedPath.append(splittedPath.at(index));
+            elidedPath.append(separator);
+        }
+
+        elidedPath.append(QString::fromUtf8("…"));
+
+        for(int index = splittedPath.size() - secondPart; index < splittedPath.size(); ++index)
+        {
+            elidedPath.append(separator);
+            elidedPath.append(splittedPath.at(index));
+        }
+    }
+    else
+    {
+        elidedPath = path;
+    }
+
+    return elidedPath;
+}
+
 void Utilities::adjustToScreenFunc(QPoint position, QWidget *what)
 {
     QDesktopWidget *desktop = QApplication::desktop();

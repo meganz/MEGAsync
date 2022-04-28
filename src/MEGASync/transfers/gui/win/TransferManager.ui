@@ -2713,6 +2713,9 @@ QGroupBox::title
                 </item>
                 <item>
                  <widget class="QPushButton" name="viewStalledIssuesButton">
+                  <property name="cursor">
+                   <cursorShape>PointingHandCursor</cursorShape>
+                  </property>
                   <property name="text">
                    <string>View...</string>
                   </property>

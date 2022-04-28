@@ -49,6 +49,67 @@ protected:
     void refreshCaseUi() override;
 };
 
+//Folder contains locked files
+class FolderContainsLockedFilesHeader : public StalledIssueHeader
+{
+    Q_OBJECT
+
+public:
+    FolderContainsLockedFilesHeader(QWidget *parent = nullptr);
+
+protected:
+    void refreshCaseUi() override;
+};
+
+//Can fingerprint file yet
+class CantFingerprintFileYetHeader : public StalledIssueHeader
+{
+    Q_OBJECT
+
+public:
+    CantFingerprintFileYetHeader(QWidget *parent = nullptr);
+
+protected:
+    void refreshCaseUi() override;
+};
+
+//Create folder failed
+class CreateFolderFailedHeader : public StalledIssueHeader
+{
+    Q_OBJECT
+
+public:
+    CreateFolderFailedHeader(QWidget *parent = nullptr);
+
+protected:
+    void refreshCaseUi() override;
+};
+
+//Could not moved to local debris
+class CouldNotMoveToLocalDebrisFolderHeader : public StalledIssueHeader
+{
+    Q_OBJECT
+
+public:
+    CouldNotMoveToLocalDebrisFolderHeader(QWidget *parent = nullptr);
+
+protected:
+    void refreshCaseUi() override;
+};
+
+
+//Move or rename failed
+class MoveOrRenameFailedHeader : public StalledIssueHeader
+{
+    Q_OBJECT
+
+public:
+    MoveOrRenameFailedHeader(QWidget *parent = nullptr);
+
+protected:
+    void refreshCaseUi() override;
+};
+
 //Delete waiting on moves
 class DeleteWaitingOnMovesHeader : public StalledIssueHeader
 {
@@ -68,6 +129,30 @@ class ApplyMoveNeedsOtherSideParentFolderToExistHeader : public StalledIssueHead
 
 public:
     ApplyMoveNeedsOtherSideParentFolderToExistHeader(QWidget *parent = nullptr);
+
+protected:
+    void refreshCaseUi() override;
+};
+
+//Unable to load ignore file
+class UnableToLoadIgnoreFileHeader : public StalledIssueHeader
+{
+    Q_OBJECT
+
+public:
+    UnableToLoadIgnoreFileHeader(QWidget *parent = nullptr);
+
+protected:
+    void refreshCaseUi() override;
+};
+
+//SyncItemExceedsSupoortedTreeDepth
+class SyncItemExceedsSupoortedTreeDepthHeader : public StalledIssueHeader
+{
+    Q_OBJECT
+
+public:
+    SyncItemExceedsSupoortedTreeDepthHeader(QWidget *parent = nullptr);
 
 protected:
     void refreshCaseUi() override;

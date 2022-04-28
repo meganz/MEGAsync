@@ -76,8 +76,14 @@ StalledIssueBaseDelegateWidget *StalledIssuesDelegateWidgetsCache::createBodyWid
     switch(reason)
     {
         case mega::MegaSyncStall::SyncStallReason::SpecialFilesNotSupported:
-        case mega::MegaSyncStall::SyncStallReason::LocalFolderNotScannable:
         case mega::MegaSyncStall::SyncStallReason::DeleteWaitingOnMoves:
+        case mega::MegaSyncStall::SyncStallReason::MoveOrRenameFailed:
+        case mega::MegaSyncStall::SyncStallReason::FolderContainsLockedFiles:
+        case mega::MegaSyncStall::SyncStallReason::CantFingrprintFileYet:
+        case mega::MegaSyncStall::SyncStallReason::CreateFolderFailed:
+        case mega::MegaSyncStall::SyncStallReason::CouldNotMoveToLocalDebrisFolder:
+        case mega::MegaSyncStall::SyncStallReason::UnableToLoadIgnoreFile:
+        case mega::MegaSyncStall::SyncStallReason::SyncItemExceedsSupportedTreeDepth:
         {
             auto filePath  = new StalledIssueFilePath(parent);
             filePath->setIndent(StalledIssueHeader::BODY_INDENT);
@@ -91,6 +97,7 @@ StalledIssueBaseDelegateWidget *StalledIssuesDelegateWidgetsCache::createBodyWid
 
             break;
         }
+        case mega::MegaSyncStall::SyncStallReason::LocalFolderNotScannable:
         case mega::MegaSyncStall::SyncStallReason::ApplyMoveNeedsOtherSideParentFolderToExist:
         {
             item = new OtherSideMissingOrBlocked(parent);
@@ -119,6 +126,41 @@ StalledIssueHeader *StalledIssuesDelegateWidgetsCache::createHeaderWidget(const 
         case mega::MegaSyncStall::SyncStallReason::SpecialFilesNotSupported:
         {
             header  = new SpecialFilesNotSupportedHeader(parent);
+            break;
+        }
+        case mega::MegaSyncStall::SyncStallReason::MoveOrRenameFailed:
+        {
+            header  = new MoveOrRenameFailedHeader(parent);
+            break;
+        }
+        case mega::MegaSyncStall::SyncStallReason::SyncItemExceedsSupportedTreeDepth:
+        {
+            header  = new SyncItemExceedsSupoortedTreeDepthHeader(parent);
+            break;
+        }
+        case mega::MegaSyncStall::SyncStallReason::UnableToLoadIgnoreFile:
+        {
+            header  = new UnableToLoadIgnoreFileHeader(parent);
+            break;
+        }
+        case mega::MegaSyncStall::SyncStallReason::CreateFolderFailed:
+        {
+            header  = new CreateFolderFailedHeader(parent);
+            break;
+        }
+        case mega::MegaSyncStall::SyncStallReason::CouldNotMoveToLocalDebrisFolder:
+        {
+            header  = new CouldNotMoveToLocalDebrisFolderHeader(parent);
+            break;
+        }
+        case mega::MegaSyncStall::SyncStallReason::CantFingrprintFileYet:
+        {
+            header  = new CantFingerprintFileYetHeader(parent);
+            break;
+        }
+        case mega::MegaSyncStall::SyncStallReason::FolderContainsLockedFiles:
+        {
+            header  = new FolderContainsLockedFilesHeader(parent);
             break;
         }
         case mega::MegaSyncStall::SyncStallReason::LocalFolderNotScannable:

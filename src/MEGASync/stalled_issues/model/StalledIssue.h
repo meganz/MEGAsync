@@ -14,21 +14,32 @@ enum class StalledIssueFilterCriterion
     OTHER_CONFLICTS,
 };
 
+
 class StalledIssueData : public QSharedData
 {
 public:
+    struct Path
+    {
+        bool isMissing;
+        bool isBlocked;
+        QString path;
+
+        Path() : isMissing(false), isBlocked(false){}
+        bool isEmpty() const {return path.isEmpty();}
+    };
+
     StalledIssueData(const mega::MegaSyncStall* stallIssue = nullptr);
     ~StalledIssueData(){}
 
-    QString mIndexPath;
+    Path mIndexPath;
+    Path mMovePath;
+
     QString mLocalPath;
     QString mCloudPath;
+
     bool mIsCloud;
     bool mIsImmediate;
     QString mReasonString;
-    bool mIsMissing;
-    bool mIsBlocked;
-    QString mMovePath;
 
     bool hasMoveInfo() const;
 
@@ -61,6 +72,7 @@ class StalledIssue
 
         mega::MegaSyncStall::SyncStallReason getReason() const;
         const QString& getFileName() const;
+        bool isCloud() const;
 
         bool isNameConflict() const;
 

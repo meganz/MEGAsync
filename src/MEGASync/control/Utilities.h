@@ -313,6 +313,8 @@ public:
     static void getPROurlWithParameters(QString &url);
     static QString joinLogZipFiles(mega::MegaApi *megaApi, const QDateTime *timestampSince = nullptr, QString appendHashReference = QString());
 
+    static QString getElidedPath(const QString& path, int firstPart, int secondPart, int maxDepth);
+
     static void adjustToScreenFunc(QPoint position, QWidget *what);
     static QString minProPlanNeeded(std::shared_ptr<mega::MegaPricing> pricing, long long usedStorage);
     static QString getReadableStringFromTs(mega::MegaIntegerList* list);

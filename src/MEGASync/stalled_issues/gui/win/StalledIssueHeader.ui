@@ -74,7 +74,7 @@ QPushButton
     <number>6</number>
    </property>
    <property name="topMargin">
-    <number>0</number>
+    <number>6</number>
    </property>
    <property name="rightMargin">
     <number>7</number>
@@ -129,14 +129,14 @@ QPushButton
        <widget class="QLabel" name="errorTitleIcon">
         <property name="minimumSize">
          <size>
-          <width>16</width>
-          <height>16</height>
+          <width>24</width>
+          <height>24</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
-          <width>16</width>
-          <height>16</height>
+          <width>24</width>
+          <height>24</height>
          </size>
         </property>
         <property name="text">
@@ -192,7 +192,7 @@ QPushButton
        <number>3</number>
       </property>
       <property name="leftMargin">
-       <number>0</number>
+       <number>1</number>
       </property>
       <property name="topMargin">
        <number>0</number>

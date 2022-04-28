@@ -5,6 +5,7 @@
 
 #include <QWidget>
 #include <QLabel>
+#include <QEvent>
 
 namespace Ui {
 class StalledIssueFilePath;
@@ -28,7 +29,8 @@ protected:
     bool eventFilter(QObject *watched, QEvent *event) override;
 
 private:
-    void fillPathName(const StalledIssueDataPtr& data, QLabel *label);
+    void fillPathName(StalledIssueData::Path data, QLabel* label);
+    void showHoverAction(QEvent::Type type, QWidget* actionWidget, const QString &path);
 
     Ui::StalledIssueFilePath *ui;
 };

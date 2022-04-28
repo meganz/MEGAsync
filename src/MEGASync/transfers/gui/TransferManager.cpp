@@ -495,8 +495,16 @@ void TransferManager::refreshStateStats()
                 }
             }
 
-            countLabel->show();
-            countLabel->setText(countLabelText);
+            if(processedNumber != 0)
+            {
+                countLabel->show();
+                countLabel->setText(countLabelText);
+            }
+            else
+            {
+                countLabel->hide();
+                countLabel->clear();
+            }
 
             if(failedNumber != 0)
             {

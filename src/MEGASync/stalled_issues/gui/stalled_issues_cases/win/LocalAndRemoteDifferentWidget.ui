@@ -29,6 +29,9 @@
    <property name="rightMargin">
     <number>7</number>
    </property>
+   <property name="bottomMargin">
+    <number>15</number>
+   </property>
    <item alignment="Qt::AlignTop">
     <widget class="QLabel" name="selectLabel">
      <property name="font">

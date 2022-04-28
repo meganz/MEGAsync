@@ -59,14 +59,6 @@ void StalledIssueTab::setItsOn(bool itsOn)
 
     if(mItsOn)
     {
-        QColor shadowColor ("#E5E5E5");
-        mShadowTab->setParent(this);
-        mShadowTab->setBlurRadius(5);
-        mShadowTab->setXOffset(0);
-        mShadowTab->setYOffset(0);
-        mShadowTab->setColor(shadowColor);
-        mShadowTab->setEnabled(true);
-
         emit tabToggled(static_cast<StalledIssueFilterCriterion>(mFilterCriterion));
     }
 

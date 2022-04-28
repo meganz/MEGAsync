@@ -26,6 +26,7 @@ protected:
 private:
     QMutex mCacheMutex;
     StalledIssuesList mCacheStalledIssues;
+    void processDeleteWaitingOnMoves(QList<const mega::MegaSyncStall*> stalls);
 
     void processStalledIssues();
 };

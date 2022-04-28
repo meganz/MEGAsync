@@ -50,10 +50,12 @@ void StalledIssuesReceiver::onRequestFinish(mega::MegaApi*, mega::MegaRequest *r
 
         if (mega::MegaSyncStallList* sl = ptr->stalls())
         {
+            QList<const mega::MegaSyncStall*> deleteWaitingOnMovesStalls;
+
             for (int i = 0; i < sl->size(); ++i)
             {
                 auto stall = sl->get(i);
-                bool coupleFound(false);
+                bool createStalledIssue(true);
 
                 if(stall->reason() == mega::MegaSyncStall::SyncStallReason::LocalAndRemotePreviouslyUnsyncedDiffer_userMustChoose
                         || stall->reason() == mega::MegaSyncStall::SyncStallReason::LocalAndRemoteChangedSinceLastSyncedState_userMustChoose)
@@ -67,36 +69,153 @@ void StalledIssuesReceiver::onRequestFinish(mega::MegaApi*, mega::MegaRequest *r
                            if(stall->isCloud())
                             {
                                 if(QString::fromStdString(stall->indexPath()) == issue.getStalledIssueData()->mCloudPath
-                                        && QString::fromStdString(stall->localPath()) == issue.getStalledIssueData()->mIndexPath)
+                                        && QString::fromStdString(stall->localPath()) == issue.getStalledIssueData()->mIndexPath.path)
                                 {
                                     issue.addStalledIssueData(StalledIssueDataPtr(new StalledIssueData(stall)));
-                                    coupleFound = true;
+                                    createStalledIssue = false;
                                     break;
                                 }
                             }
                             else
                             {
                                 if(QString::fromStdString(stall->indexPath()) == issue.getStalledIssueData()->mLocalPath
-                                        && QString::fromStdString(stall->cloudPath()) == issue.getStalledIssueData()->mIndexPath)
+                                        && QString::fromStdString(stall->cloudPath()) == issue.getStalledIssueData()->mIndexPath.path)
                                 {
                                     issue.addStalledIssueData(StalledIssueDataPtr(new StalledIssueData(stall)));
-                                    coupleFound = true;
+                                    createStalledIssue = false;
                                     break;
                                 }
                             }
                         }
                     }
                 }
+                else if(stall->reason() == mega::MegaSyncStall::SyncStallReason::DeleteWaitingOnMoves || stall->reason() == mega::MegaSyncStall::SyncStallReason::MoveNeedsDestinationNodeProcessing)
+                {
+                    deleteWaitingOnMovesStalls.append(stall);
+                    continue;
+                }
 
-                if(!coupleFound)
+                if(createStalledIssue)
                 {
                     StalledIssue d (StalledIssueDataPtr(new StalledIssueData(stall)), stall->reason());
                     mCacheStalledIssues.append(d);
                 }
             }
+
+            processDeleteWaitingOnMoves(deleteWaitingOnMovesStalls);
         }
 
         processStalledIssues();
+    }
+}
+
+void StalledIssuesReceiver::processDeleteWaitingOnMoves(QList<const mega::MegaSyncStall *> stalls)
+{
+    foreach(auto stall, stalls)
+    {
+        for(int index = 0; index < mCacheStalledIssues.size(); ++index)
+        {
+            auto& issue = mCacheStalledIssues[index];
+
+            if(issue.getReason() == mega::MegaSyncStall::SyncStallReason::ApplyMoveNeedsOtherSideParentFolderToExist)
+            {
+                if(issue.getStalledIssueData()->mIsCloud)
+                {
+                    auto remoteData = issue.getStalledIssueData();
+
+                    if(stall->isCloud())
+                    {
+                        if(QString::fromUtf8(stall->cloudPath()) == remoteData->mIndexPath.path)
+                        {
+                            StalledIssueDataPtr localData(new StalledIssueData(nullptr));
+                            issue.addStalledIssueData(localData);
+
+                            QFileInfo localTargetInfo(remoteData->mLocalPath);
+                            localData->mMovePath.path = QDir::toNativeSeparators(localTargetInfo.dir().path());
+                            localData->mMovePath.isMissing = true;
+
+                            QFileInfo localSourceInfo(QString::fromUtf8(stall->localPath()));
+                            localData->mIndexPath.path = QDir::toNativeSeparators(localSourceInfo.dir().path());
+
+                            QFileInfo cloudSourceInfo(remoteData->mCloudPath);
+                            remoteData->mIndexPath.path = cloudSourceInfo.dir().path();
+
+                            QFileInfo cloudTargetInfo(QString::fromUtf8(stall->cloudPath()));
+                            remoteData->mMovePath.path = cloudTargetInfo.dir().path();
+
+                            break;
+                        }
+                    }
+                }
+                else
+                {
+                    if(stall->isCloud())
+                    {
+                        auto localPath = QString::fromUtf8(stall->localPath());
+                        auto nativeLocalPath = QDir::toNativeSeparators(localPath);
+
+                        if(nativeLocalPath == issue.getStalledIssueData()->mMovePath.path)
+                        {
+                            auto localData = issue.getStalledIssueData();
+
+                            StalledIssueDataPtr remoteData (new StalledIssueData(nullptr));
+                            remoteData->mIsCloud = true;
+
+                            QFileInfo remoteInfo(localData->mCloudPath);
+                            remoteData->mIndexPath.path = remoteInfo.dir().path();
+
+                            remoteData->mMovePath.path = QString::fromUtf8(stall->indexPath());
+                            remoteData->mMovePath.isMissing = true;
+
+                            issue.addStalledIssueData(remoteData);
+                            break;
+                        }
+                    }
+                    else
+                    {
+                        if(QString::fromStdString(stall->indexPath()) == issue.getStalledIssueData()->mLocalPath)
+                        {
+                            auto localData = issue.getStalledIssueData();
+                            QFileInfo moveInfo(localData->mIndexPath.path);
+                            localData->mMovePath.path = QDir::toNativeSeparators(moveInfo.dir().path());
+
+                            QFileInfo localInfo(localData->mLocalPath);
+                            localData->mIndexPath.path = QDir::toNativeSeparators(localInfo.dir().path());
+
+                            localData->mCloudPath = QString::fromUtf8(stall->cloudPath());
+                            break;
+                        }
+                    }
+                }
+            }
+            else if(issue.getReason() == mega::MegaSyncStall::SyncStallReason::LocalFolderNotScannable)
+            {
+                auto localData = issue.getStalledIssueData();
+
+                if(stall->isCloud())
+                {
+                    if(QString::fromUtf8(stall->cloudPath()) == localData->mIndexPath.path)
+                    {
+                        StalledIssueDataPtr remoteData(new StalledIssueData(nullptr));
+                        issue.addStalledIssueData(remoteData);
+
+                        QFileInfo remoteTargetInfo(QString::fromUtf8(stall->cloudPath()));
+                        remoteData->mMovePath.path = remoteTargetInfo.dir().path();
+
+                        QFileInfo remoteSourceInfo(QString::fromUtf8(stall->indexPath()));
+                        remoteData->mIndexPath.path = remoteSourceInfo.dir().path();
+
+                        remoteData->mIndexPath.path = QDir::toNativeSeparators(localData->mIndexPath.path);
+
+                        QFileInfo localTargetInfo(QString::fromUtf8(stall->localPath()));
+                        localData->mMovePath.path = QDir::toNativeSeparators(localTargetInfo.dir().path());
+                        localData->mMovePath.isBlocked = true;
+
+                        break;
+                    }
+                }
+            }
+        }
     }
 }
 

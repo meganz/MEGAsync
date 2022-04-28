@@ -41,7 +41,7 @@ void StalledIssueChooseWidget::setData(StalledIssueDataPtr data, const QString& 
 
     if(mData->mIsCloud)
     {
-        std::unique_ptr<mega::MegaNode> node(MegaSyncApp->getMegaApi()->getNodeByPath(mData->mIndexPath.toStdString().c_str()));
+        std::unique_ptr<mega::MegaNode> node(MegaSyncApp->getMegaApi()->getNodeByPath(mData->mIndexPath.path.toStdString().c_str()));
         if(node)
         {
             ui->fileSize->setText(Utilities::getSizeString(node->getSize()));
@@ -49,7 +49,7 @@ void StalledIssueChooseWidget::setData(StalledIssueDataPtr data, const QString& 
     }
     else
     {
-        QFile file(mData->mIndexPath);
+        QFile file(mData->mIndexPath.path);
         if(file.exists())
         {
             ui->fileSize->setText(Utilities::getSizeString(file.size()));

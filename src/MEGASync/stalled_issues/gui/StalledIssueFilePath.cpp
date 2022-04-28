@@ -13,11 +13,13 @@ StalledIssueFilePath::StalledIssueFilePath(QWidget *parent) :
 {
     ui->setupUi(this);
     ui->filePathAction->hide();
+    ui->moveFilePathAction->hide();
 
     ui->moveLines->installEventFilter(this);
     ui->lines->installEventFilter(this);
 
     ui->filePathContainer->installEventFilter(this);
+    ui->moveFilePathContainer->installEventFilter(this);
 
     auto openIcon = Utilities::getCachedPixmap(QLatin1Literal(":/images/StalledIssues/ic-open-outside.png"));
     ui->filePathAction->setPixmap(openIcon.pixmap(ui->filePathAction->size()));
@@ -49,7 +51,7 @@ void StalledIssueFilePath::fillFilePath()
         ui->LocalOrRemoteText->setText(tr("Local:"));
     }
 
-    fillPathName(data, ui->filePath);
+    fillPathName(data->mIndexPath, ui->filePath);
 
     QIcon fileTypeIcon;
     auto splittedFile = getData().getFileName().split(QString::fromUtf8("."));
@@ -64,6 +66,7 @@ void StalledIssueFilePath::fillFilePath()
     }
 
     ui->filePathIcon->setPixmap(fileTypeIcon.pixmap(ui->filePathIcon->size()));
+    ui->moveFilePathIcon->setPixmap(fileTypeIcon.pixmap(ui->moveFilePathIcon->size()));
 }
 
 void StalledIssueFilePath::fillMoveFilePath()
@@ -73,7 +76,7 @@ void StalledIssueFilePath::fillMoveFilePath()
 
     if(data->hasMoveInfo())
     {
-        fillPathName(data, ui->moveFilePath);
+        fillPathName(data->mMovePath, ui->moveFilePath);
     }
     else
     {
@@ -119,85 +122,39 @@ bool StalledIssueFilePath::eventFilter(QObject *watched, QEvent *event)
     }
     else if(watched == ui->filePathContainer)
     {
-       if(event->type() == QEvent::Enter)
-       {
-           ui->filePathAction->show();
-       }
-       else if(event->type() == QEvent::Leave)
-       {
-           ui->filePathAction->hide();
-       }
-       else if(event->type() == QEvent::MouseButtonRelease)
-       {
-           const auto& data = getData().getStalledIssueData();
-
-           if(data)
-           {
-               if(data->mIsCloud)
-               {
-                   mega::MegaNode* node (MegaSyncApp->getMegaApi()->getNodeByPath(ui->filePath->text().toStdString().c_str()));
-                   if (node)
-                   {
-                       const char* handle = node->getBase64Handle();
-                       QString url = QString::fromUtf8("mega://#fm/") + QString::fromUtf8(handle);
-                       QtConcurrent::run(QDesktopServices::openUrl, QUrl(url));
-                       delete [] handle;
-                       delete node;
-                   }
-               }
-               else
-               {
-                   QtConcurrent::run([=]
-                   {
-                       if (!data->mIndexPath.isEmpty())
-                       {
-                           Platform::showInFolder(ui->filePath->text());
-                       }
-                   });
-               }
-           }
-       }
+        showHoverAction(event->type(), ui->filePathAction, getData().getStalledIssueData()->mIndexPath.path);
     }
+    else if(watched == ui->moveFilePathContainer)
+    {
+        showHoverAction(event->type(), ui->moveFilePathAction,  getData().getStalledIssueData()->mMovePath.path);
+    }
+
     return StalledIssueBaseDelegateWidget::eventFilter(watched, event);
 }
 
 
-void StalledIssueFilePath::fillPathName(const StalledIssueDataPtr &data, QLabel* label)
+void StalledIssueFilePath::fillPathName(StalledIssueData::Path data, QLabel* label)
 {
-    QIcon fileTypeIcon;
-
     bool mInRed(false);
-    auto path = data->mIndexPath;
-    if(data->mIsMissing)
+    if(data.isMissing)
     {
-        fileTypeIcon = Utilities::getCachedPixmap(QLatin1Literal(":/images/ico_question_hover.png"));
-        path.append(QString::fromUtf8(" (missing)"));
+        data.path.append(QString::fromUtf8(" (missing)"));
 
         mInRed = true;
     }
     else
     {
-        if(data->mIsBlocked)
+        if(data.isBlocked)
         {
-            path.append(QString::fromUtf8(" (blocked)"));
+            data.path.append(QString::fromUtf8(" (blocked)"));
 
             mInRed = true;
         }
-
-        auto splittedFile = getData().getFileName().split(QString::fromUtf8("."));
-        if(splittedFile.size() != 1)
-        {
-            fileTypeIcon = Utilities::getCachedPixmap(Utilities::getExtensionPixmapName(
-                                                          getData().getFileName(), QLatin1Literal(":/images/drag_")));
-        }
-        else
-        {
-            fileTypeIcon = Utilities::getCachedPixmap(QLatin1Literal(":/images/color_folder.png"));
-        }
     }
 
-    ui->moveFilePathIcon->setPixmap(fileTypeIcon.pixmap(ui->moveFilePathIcon->size()));
-    label->setText(path);
+    QString elidedPath = Utilities::getElidedPath(data.path, 5,1,10);
+
+    label->setText(elidedPath);
 
     if(mInRed)
     {
@@ -206,5 +163,44 @@ void StalledIssueFilePath::fillPathName(const StalledIssueDataPtr &data, QLabel*
     else
     {
         label->setStyleSheet(QString());
+    }
+}
+
+void StalledIssueFilePath::showHoverAction(QEvent::Type type, QWidget *actionWidget, const QString& path)
+{
+    if(type == QEvent::Enter)
+    {
+        actionWidget->show();
+    }
+    else if(type == QEvent::Leave)
+    {
+        actionWidget->hide();
+    }
+    else if(type == QEvent::MouseButtonRelease)
+    {
+        const auto& data = getData().getStalledIssueData();
+
+        if(data)
+        {
+            if(data->mIsCloud)
+            {
+                mega::MegaNode* node (MegaSyncApp->getMegaApi()->getNodeByPath(path.toStdString().c_str()));
+                if (node)
+                {
+                    const char* handle = node->getBase64Handle();
+                    QString url = QString::fromUtf8("mega://#fm/") + QString::fromUtf8(handle);
+                    QtConcurrent::run(QDesktopServices::openUrl, QUrl(url));
+                    delete [] handle;
+                    delete node;
+                }
+            }
+            else
+            {
+                QtConcurrent::run([=]
+                {
+                    Platform::showInFolder(path);
+                });
+            }
+        }
     }
 }
