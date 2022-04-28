@@ -779,7 +779,7 @@ QString Utilities::getDefaultBasePath()
 
 void Utilities::getPROurlWithParameters(QString &url)
 {
-    Preferences *preferences = Preferences::instance();
+    auto preferences = Preferences::instance();
     MegaApi *megaApi = ((MegaApplication *)qApp)->getMegaApi();
 
     if (!preferences || !megaApi)

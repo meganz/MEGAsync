@@ -4,6 +4,7 @@
 #include "MegaApplication.h"
 #include "Platform.h"
 #include "UserAttributesRequests.h"
+
 #include <QCoreApplication>
 #include <QtConcurrent/QtConcurrent>
 
@@ -45,14 +46,14 @@ QString getIconsPath()
     return MegaApplication::applicationDataPath() + QDir::separator() + iconFolderName + QDir::separator();
 }
 
-DesktopNotifications::DesktopNotifications(const QString &appName, QSystemTrayIcon *trayIcon, Preferences *preferences)
+DesktopNotifications::DesktopNotifications(const QString &appName, QSystemTrayIcon *trayIcon)
     :mAppIcon(QString::fromUtf8("://images/app_128.png")),
      mNewContactIconPath(getIconsPath() + newContactIconName),
      mStorageQuotaFullIconPath(getIconsPath() + storageQuotaFullIconName),
      mStorageQuotaWarningIconPath(getIconsPath() + storageQuotaWarningIconName),
      mFolderIconPath(getIconsPath() + folderIconName),
      mFileDownloadSucceedIconPath(getIconsPath() + fileDownloadSucceedIconName),
-     mPreferences(preferences),
+     mPreferences(Preferences::instance()),
      mIsFirstTime(true)
 {
 #ifdef __APPLE__

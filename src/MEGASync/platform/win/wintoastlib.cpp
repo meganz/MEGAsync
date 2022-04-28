@@ -447,7 +447,7 @@ std::wstring WinToast::configureAUMI(_In_ const std::wstring &companyName,
 bool getCreateLinkUserPreference(const std::wstring &appName)
 {
     // Load user preference
-    Preferences* p = Preferences::instance();
+    auto p = Preferences::instance();
     if (p->neverCreateLink())
         return false;
 

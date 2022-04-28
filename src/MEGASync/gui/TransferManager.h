@@ -54,7 +54,7 @@ private:
     MenuItemAction *importLinksAction;
     MenuItemAction *uploadAction;
     MenuItemAction *downloadAction;
-    Preferences *preferences;
+    std::shared_ptr<Preferences> preferences;
     QPoint dragPosition;
     long long notificationNumber;
     QTimer *refreshTransferTime;
