@@ -592,7 +592,7 @@ void MegaApplication::initialize()
                 }
 
 #ifndef __APPLE__
-                QMegaMessageBox::information(nullptr, QString::fromUtf8("MEGAsync"), tr("Thank you for your collaboration!"));
+                QMegaMessageBox::information(nullptr, QString::fromUtf8("MEGAsync"), tr("Thank you for your collaboration"));
 #endif
             }
         }
@@ -5795,9 +5795,9 @@ void MegaApplication::onUpdateAvailable(bool requested)
     if (requested)
     {
 #ifdef WIN32
-        showInfoMessage(tr("A new version of MEGAsync is available! Click on this message to install it"));
+        showInfoMessage(tr("A new version of MEGAsync is available. Click on this message to install it"));
 #else
-        showInfoMessage(tr("A new version of MEGAsync is available!"));
+        showInfoMessage(tr("A new version of MEGAsync is available"));
 #endif
     }
 }
@@ -6016,7 +6016,7 @@ void MegaApplication::onMessageClicked()
         return;
     }
 
-    if (lastTrayMessage == tr("A new version of MEGAsync is available! Click on this message to install it"))
+    if (lastTrayMessage == tr("A new version of MEGAsync is available. Click on this message to install it"))
     {
         triggerInstallUpdate();
     }

@@ -1044,7 +1044,7 @@ void SetupWizard::page_welcome()
     ui->bCancel->setFocus();
     ui->bCancel->setDefault(true);
 
-    ui->lHeader->setText(tr("We are all done!"));
+    ui->lHeader->setText(tr("We are all done"));
 
     if (!loggingStarted) //Logging started at main dialog
     {
