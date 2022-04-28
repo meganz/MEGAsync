@@ -837,7 +837,6 @@ void TransferManager::enableUserActions(bool enabled)
     mUi->bDownload->setEnabled(enabled);
     mUi->bSearch->setEnabled(enabled);
     mUi->bPause->setEnabled(enabled);
-    mUi->bImportLinks->setEnabled(enabled);
     mUi->tCogWheel->setEnabled(enabled);
     mUi->tUploads->setEnabled(enabled);
     mUi->tDownloads->setEnabled(enabled);
@@ -1101,15 +1100,8 @@ void TransferManager::refreshView()
             {
                 widgetToShow = mTabNoItem[mCurrentTab];
             }
-
-           if (mUi->sTransfers->currentWidget() != widgetToShow)
-            {
-                mUi->sTransfers->setCurrentWidget(widgetToShow);
-            }
         }
-
-	updateTransferWidget(widgetToShow);
-
+        updateTransferWidget(widgetToShow);
         checkActionAndMediaVisibility();
     }
 }
