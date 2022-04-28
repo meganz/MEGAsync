@@ -7,10 +7,9 @@
 
 MegaItemTreeView::MegaItemTreeView(QWidget* parent) :
     QTreeView(parent),
-    mMegaApi(static_cast<MegaApplication*>(qApp)->getMegaApi())
+    mMegaApi(MegaSyncApp->getMegaApi())
 {
 }
-
 
 QModelIndex MegaItemTreeView::getIndexFromSourceModel(const QModelIndex& index) const
 {
@@ -77,15 +76,11 @@ void MegaItemTreeView::keyPressEvent(QKeyEvent *event)
 
     auto proxyModel = dynamic_cast<MegaItemProxyModel*>(model());
 
-    static QModelIndex rootIndex = proxyModel->getIndexFromNode(static_cast<MegaApplication*>(qApp)->getRootNode());
+    static QModelIndex rootIndex = proxyModel->getIndexFromNode(MegaSyncApp->getRootNode());
     static QList<int> bannedFromRootKeyList = QList<int>() << Qt::Key_Left << Qt::Key_Right
                                                      << Qt::Key_Plus << Qt::Key_Minus;
 
-    if(bannedFromRootKeyList.contains(event->key()) && selectedRows.contains(rootIndex))
-    {
-        return;
-    }
-    else
+    if(!bannedFromRootKeyList.contains(event->key()) || !selectedRows.contains(rootIndex))
     {
         QTreeView::keyPressEvent(event);
     }
@@ -102,12 +97,12 @@ void MegaItemTreeView::contextMenuEvent(QContextMenuEvent *event)
         }
 
         QMenu customMenu;
-        MegaNode *node = mMegaApi->getNodeByHandle(getSelectedNodeHandle());
-        MegaNode *parent = mMegaApi->getParentNode(node);
+        auto node = std::unique_ptr<MegaNode>(mMegaApi->getNodeByHandle(getSelectedNodeHandle()));
+        auto parent = std::unique_ptr<MegaNode>(mMegaApi->getParentNode(node.get()));
 
         if (parent && node)
         {
-            int access = mMegaApi->getAccess(node);
+            int access = mMegaApi->getAccess(node.get());
 
             if (access == MegaShare::ACCESS_OWNER)
             {
@@ -122,11 +117,6 @@ void MegaItemTreeView::contextMenuEvent(QContextMenuEvent *event)
 
         if (!customMenu.actions().isEmpty())
             customMenu.exec(mapToGlobal(event->pos()));
-
-        delete parent;
-        parent = nullptr;
-        delete node;
-        node = nullptr;
 }
 
 void MegaItemTreeView::removeNode()
@@ -138,4 +128,3 @@ void MegaItemTreeView::getMegaLink()
 {
     emit getMegaLinkClicked();
 }
-
