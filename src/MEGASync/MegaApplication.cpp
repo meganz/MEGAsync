@@ -400,8 +400,8 @@ void MegaApplication::initialize()
     qRegisterMetaTypeStreamOperators<QQueue<QString> >("QQueueQString");
 
     preferences = Preferences::instance();
-    connect(preferences, SIGNAL(stateChanged()), this, SLOT(changeState()));
-    connect(preferences, SIGNAL(updated(int)), this, SLOT(showUpdatedMessage(int)));
+    connect(preferences.get(), SIGNAL(stateChanged()), this, SLOT(changeState()));
+    connect(preferences.get(), SIGNAL(updated(int)), this, SLOT(showUpdatedMessage(int)));
     preferences->initialize(dataPath);
 
     model = Model::instance();
@@ -424,7 +424,7 @@ void MegaApplication::initialize()
     QString language = preferences->language();
     changeLanguage(language);
 
-    mOsNotifications = std::make_shared<DesktopNotifications>(applicationName(), trayIcon, preferences);
+    mOsNotifications = std::make_shared<DesktopNotifications>(applicationName(), trayIcon);
 
     Qt::KeyboardModifiers modifiers = queryKeyboardModifiers();
     if (modifiers.testFlag(Qt::ControlModifier)
@@ -598,7 +598,7 @@ void MegaApplication::initialize()
         }
     }
 
-    transferQuota = ::mega::make_unique<TransferQuota>(megaApi, preferences, mOsNotifications);
+    transferQuota = ::mega::make_unique<TransferQuota>(mOsNotifications);
     connect(transferQuota.get(), &TransferQuota::waitTimeIsOver, this, &MegaApplication::updateStatesAfterTransferOverQuotaTimeHasExpired);
 
     periodicTasksTimer = new QTimer(this);
@@ -4618,7 +4618,7 @@ void MegaApplication::importLinks()
     LinkProcessor *linkProcessor = new LinkProcessor(linkList, megaApi, megaApiFolders);
 
     //Open the import dialog
-    importDialog = new ImportMegaLinksDialog(megaApi, preferences, linkProcessor);
+    importDialog = new ImportMegaLinksDialog(linkProcessor);
     importDialog->exec();
     if (!importDialog)
     {

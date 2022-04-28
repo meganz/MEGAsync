@@ -224,7 +224,7 @@ void StreamingFromMegaDialog::on_bOpenOther_clicked()
 {
     QString defaultPath;
 
-    Preferences *preferences = Preferences::instance();
+    auto preferences = Preferences::instance();
     QString lastPath = preferences->lastCustomStreamingApp();
     QFileInfo lastFile(lastPath);
     if (!lastPath.size() || !lastFile.exists())

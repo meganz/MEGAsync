@@ -68,7 +68,7 @@ void AvatarWidget::drawAvatarFromEmail(const QString& email)
             delete [] userHandle;
         }
 
-        Preferences* preferences = Preferences::instance();
+        auto preferences = Preferences::instance();
         QString fullname = (preferences->firstName() + preferences->lastName()).trimmed();
         if (fullname.isEmpty())
         {
