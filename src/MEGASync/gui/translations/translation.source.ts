@@ -2679,11 +2679,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>Terms of Service breached</translation>
     </message>
     <message>
-        <source>Not accessible due to ToS/AUP violation</source>
-        <translatorcomment>Error shown when import a link that has violated ToS/AUP.</translatorcomment>
-        <translation>Not accessible due to ToS/AUP violation</translation>
-    </message>
-    <message>
         <source>Upload produces recursivity</source>
         <translatorcomment>Error label to indicate a situation of recursivity during uploads</translatorcomment>
         <translation>Transfer failed due to a recursive directory structure</translation>
@@ -2692,6 +2687,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Storage Quota Exceeded. Upgrade now</source>
         <translatorcomment>Error label to indicate a situation of storage quota exceeded and the user needs to upgrade now in order to continue working with the account.</translatorcomment>
         <translation>Storage Quota Exceeded. Please upgrade now</translation>
+    </message>
+    <message>
+        <source>Not accessible due to ToS/AUP violation</source>
+        <translatorcomment>Error shown when import a link that has violated ToS/AUP.</translatorcomment>
+        <translation type="unfinished">File removed as it violated our Terms of Service</translation>
     </message>
 </context>
 <context>
@@ -4850,11 +4850,6 @@ Do you want to restart MEGAsync now?</source>
         <source>Please verify your account using the confirmation link that we have sent to your email account</source>
         <translatorcomment>Label displayed at last step of creation account process to inform the user to verify the new created account.</translatorcomment>
         <translation>Please verify your account using the confirmation link that we have sent to your email account</translation>
-    </message>
-    <message>
-        <source>Logging in ...</source>
-        <translatorcomment>Label displayed while logging process.</translatorcomment>
-        <translation>Logging in …</translation>
     </message>
     <message>
         <source>Choose install type</source>
