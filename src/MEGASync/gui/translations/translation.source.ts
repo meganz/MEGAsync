@@ -607,7 +607,7 @@ Please enter a different name to identify this synced folder:</source>
     <name>BugReportDialog</name>
     <message>
         <source>Bug report</source>
-        <translatorcomment>Title of the dialog used to send bug reports to support team.</translatorcomment>
+        <translatorcomment>Title of the dialog used to send an issue report to support team.</translatorcomment>
         <translation>Report issue</translation>
     </message>
     <message>
