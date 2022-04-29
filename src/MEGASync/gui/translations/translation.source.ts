@@ -1470,11 +1470,6 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation>Syncs</translation>
     </message>
     <message>
-        <source>All transfers have been completed</source>
-        <translatorcomment>Label to indicate that all pending transfers are already completed</translatorcomment>
-        <translation>All transfers have been completed</translation>
-    </message>
-    <message>
         <source>Add Sync</source>
         <translatorcomment>Button label to add a new synchronization (String as short as possible)</translatorcomment>
         <translation>Add Sync</translation>
@@ -1748,7 +1743,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>starting</source>
-        <translatorcomment>Show the state "starting" in the transfer</translatorcomment>
+        <translatorcomment>Show the state &quot;starting&quot; in the transfer</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3025,7 +3020,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation type="unfinished"></translation>
     </message>
     <message numerus="yes">
-        <source>Are you sure you want to cancel the following transfer(s)?</source> 
+        <source>Are you sure you want to cancel the following transfer(s)?</source>
         <translatorcomment>message box to ask the user about canceling the selected transfers</translatorcomment>
         <translation type="unfinished">
             <numerusform></numerusform>
@@ -5493,11 +5488,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Music</source>
-        <translatorcomment>Categories for music type transfers</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Other</source>
         <translatorcomment>Categories for other type transfers</translatorcomment>
         <translation type="unfinished"></translation>
@@ -5538,21 +5528,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Import links</source>
-        <translatorcomment>Button to open the import link dialog</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Resume All</source>
-        <translatorcomment>Button to start all transfers</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pause All</source>
-        <translatorcomment>Button to pause all transfers</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Clear All</source>
         <translatorcomment>Button to cancel and remove all transfers</translatorcomment>
         <translation type="unfinished">Clear All</translation>
@@ -5583,12 +5558,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Your queued downloads exceeds the current quota available for your IP address.
-</source>
-        <translatorcomment>Extra info for exceed transfer quota</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>See Plans</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5606,23 +5575,8 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Clear All Visible</source>
-        <translatorcomment>Tooltip for table clear button</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Avg. speed</source>
         <translatorcomment>Text for table header</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Retry All</source>
-        <translatorcomment>In Failed category, button to retry all failed transfers</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel All Visible</source>
-        <translatorcomment>Tooltip for table clear button</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -5638,6 +5592,123 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Time left</source>
         <translatorcomment>Text for table header, when there are only completed transfers</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Audio</source>
+		<translatorcomment>Categories for audio type transfers</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open links</source>
+		<translatorcomment>Button to open MEGA public links dialog. It will let you to import and/or download.</translatorcomment>
+        <translation type="unfinished">Open links</translation>
+    </message>
+    <message>
+        <source>Your queued downloads exceeds the current quota available for your IP address.
+
+</source>
+        <translatorcomment>Message shown when the transfer quota is exceeded</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>all</source>
+		<translatorcomment>Part of the pause/resume/cancel tooltip for Other and All categories</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>all downloads</source>
+		<translatorcomment>Part of the pause/resume/cancel tooltip for All downloads category</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>all uploads</source>
+		<translatorcomment>Part of the pause/resume/cancel tooltip for All uploads category</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>all completed</source>
+		<translatorcomment>Part of the pause/resume/cancel tooltip for Completed category</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>all failed</source>
+		<translatorcomment>Part of the pause/resume/cancel tooltip for Failed category</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>all search results</source>
+		<translatorcomment>Part of the pause/resume/cancel tooltip for search results category</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>all audios</source>
+		<translatorcomment>Part of the pause/resume/cancel tooltip for audio category</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>all videos</source>
+		<translatorcomment>Part of the pause/resume/cancel tooltip for video category</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>all archives</source>
+		<translatorcomment>Part of the pause/resume/cancel tooltip for archives category</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>all documents</source>
+		<translatorcomment>Part of the pause/resume/cancel tooltip for document category</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>all images</source>
+		<translatorcomment>Part of the pause/resume/cancel tooltip for imgaes category</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>all texts</source>
+		<translatorcomment>Part of the pause/resume/cancel tooltip for text category</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Resume all</source>
+		<translatorcomment>Tooltip for global pause/resume button</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pause all</source>
+		<translatorcomment>Tooltip for global pause/resume button</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel and clear </source>
+		<translatorcomment>Tooltip for global cancel button</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Clear </source>
+		<translatorcomment>First part of the tooltip shown in completed</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Retry all</source>
+		<translatorcomment>Button text for retry all button in Failed category</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pause </source>
+		<translatorcomment>First part of the tooltip shown in each category</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Resume </source>
+		<translatorcomment>First part of the tooltip shown in each category</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Some issues occurred</source>
+		<translatorcomment>Message shown when there are some failed transfers</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -5769,6 +5840,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
             <numerusform></numerusform>
         </translation>
     </message>
+    <message>
+        <source>Some Transfers cannot be cancelled or cleared</source>
+		<translatorcomment>Message shown when the user tries to cancel a sync transfer (which cannot be cancelled)</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>TransfersStateInfoWidget</name>
@@ -5818,16 +5894,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Cancel all selected transfers</source>
         <translatorcomment>Tooltip for the cancel all selected transfers button</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Resume visible transfers</source>
-        <translatorcomment>Start filtered transfers</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pause visible transfers</source>
-        <translatorcomment>Pause filtered transfers</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>

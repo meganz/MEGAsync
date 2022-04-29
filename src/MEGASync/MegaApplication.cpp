@@ -849,7 +849,7 @@ void MegaApplication::updateTrayIcon()
     {
         if(mTransfersModel && mTransfersModel->hasFailedTransfers())
         {
-            tooltipState = tr("Some issues ocurred");
+            tooltipState = QCoreApplication::translate("TransferManager","Some issues occurred");
             icon = icons["someissues"];
         }
         else
@@ -898,7 +898,7 @@ void MegaApplication::updateTrayIcon()
     {
         if(mTransfersModel && mTransfersModel->hasFailedTransfers())
         {
-            tooltipState = tr("Some issues ocurred");
+            tooltipState = QCoreApplication::translate("TransferManager","Some issues occurred");
             icon = icons["someissues"];
         }
         else
@@ -1694,6 +1694,7 @@ void MegaApplication::createTransferManagerDialog()
     if(!transferManager)
     {
         transferManager = new TransferManager(megaApi);
+        infoDialog->setTransferManager(transferManager);
 
         // Signal/slot to notify the tracking of unseen completed transfers of Transfer Manager. If Completed tab is
         // active, tracking is disabled

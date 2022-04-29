@@ -11,17 +11,17 @@ using namespace mega;
 InfoDialogTransfersWidget::InfoDialogTransfersWidget(QWidget *parent) :
     QWidget(parent),
     mUi(new Ui::InfoDialogTransfersWidget),
-    mModel(nullptr)
+    mProxyModel(nullptr)
 {
     mUi->setupUi(this);
 }
 
 void InfoDialogTransfersWidget::setupTransfers()
 {
-    mModel = new InfoDialogTransfersProxyModel(mUi->tView);
-    mModel->setSourceModel(MegaSyncApp->getTransfersModel());
-    mModel->sort(0);
-    mModel->setDynamicSortFilter(true);
+    mProxyModel = new InfoDialogTransfersProxyModel(mUi->tView);
+    mProxyModel->setSourceModel(MegaSyncApp->getTransfersModel());
+    mProxyModel->sort(0);
+    mProxyModel->setDynamicSortFilter(true);
 
     configureTransferView();
 }
@@ -29,25 +29,25 @@ void InfoDialogTransfersWidget::setupTransfers()
 InfoDialogTransfersWidget::~InfoDialogTransfersWidget()
 {
     delete mUi;
-    delete mModel;
+    delete mProxyModel;
 }
 
 void InfoDialogTransfersWidget::showEvent(QShowEvent*)
 {
-    if(mModel)
+    if(mProxyModel)
     {
-       mModel->invalidate();
+       mProxyModel->invalidate();
     }
 }
 
 void InfoDialogTransfersWidget::configureTransferView()
 {
-    if (!mModel)
+    if (!mProxyModel)
     {
         return;
     }
 
-    auto tDelegate = new MegaTransferDelegate(mModel, mUi->tView);
+    auto tDelegate = new MegaTransferDelegate(mProxyModel, mUi->tView);
     mUi->tView->setItemDelegate(tDelegate);
     mUi->tView->header()->close();
     mUi->tView->setSelectionMode(QAbstractItemView::NoSelection);
@@ -55,7 +55,7 @@ void InfoDialogTransfersWidget::configureTransferView()
     mUi->tView->viewport()->setAcceptDrops(false);
     mUi->tView->setDropIndicatorShown(false);
     mUi->tView->setDragDropMode(QAbstractItemView::InternalMove);
-    mUi->tView->setModel(mModel);
+    mUi->tView->setModel(mProxyModel);
     mUi->tView->setFocusPolicy(Qt::NoFocus);
     mUi->tView->disableContextMenus(true);
 

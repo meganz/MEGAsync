@@ -37,7 +37,8 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
     mStatsRefreshTimer(new QTimer(this)),
     mStorageQuotaState(MegaApi::STORAGE_STATE_UNKNOWN),
     mTransferQuotaState(QuotaState::OK),
-    mFoundStalledIssues(false)
+    mFoundStalledIssues(false),
+    mScanningAnimationIndex(1)
 {
     mUi->setupUi(this);
 
@@ -46,9 +47,9 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
     mDragBackDrop->hide();
 
     mUi->wTransfers->setupTransfers();
-//#ifndef Q_OS_MACOS
-//    setWindowFlags(windowFlags() | Qt::Window | Qt::FramelessWindowHint);
-//#endif
+#ifndef Q_OS_MACOS
+    setWindowFlags(windowFlags() | Qt::Window);
+#endif
     setAttribute(Qt::WA_DeleteOnClose, true);
 
     mUi->lTextSearch->installEventFilter(this);
@@ -92,6 +93,21 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
     {
         tabFrame->setProperty("itsOn", false);
     }
+
+    mTooltipNameByTab[ALL_TRANSFERS_TAB] = tr("all");
+    mTooltipNameByTab[DOWNLOADS_TAB]     = tr("all downloads");
+    mTooltipNameByTab[UPLOADS_TAB]       = tr("all uploads");
+    mTooltipNameByTab[COMPLETED_TAB]     = tr("all completed");
+    mTooltipNameByTab[FAILED_TAB]        = tr("all failed");
+    mTooltipNameByTab[SEARCH_TAB]        = tr("all search results");
+    mTooltipNameByTab[TYPE_OTHER_TAB]    = tr("all");
+    mTooltipNameByTab[TYPE_AUDIO_TAB]    = tr("all audios");
+    mTooltipNameByTab[TYPE_VIDEO_TAB]    = tr("all videos");
+    mTooltipNameByTab[TYPE_ARCHIVE_TAB]  = tr("all archives");
+    mTooltipNameByTab[TYPE_DOCUMENT_TAB] = tr("all documents");
+    mTooltipNameByTab[TYPE_IMAGE_TAB]    = tr("all images");
+    mTooltipNameByTab[TYPE_TEXT_TAB]     = tr("all texts");
+
 
     mTabNoItem[ALL_TRANSFERS_TAB] = mUi->wNoTransfers;
     mTabNoItem[DOWNLOADS_TAB]     = mUi->wNoDownloads;
@@ -174,12 +190,14 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
 
     mFoundStalledIssues = MegaSyncApp->getStalledIssuesModel()->rowCount(QModelIndex()) != 0;
     showStalledIssuesInfo();
-
     connect(MegaSyncApp->getStalledIssuesModel(),
             &StalledIssuesModel::stalledIssuesReceived,
             this, &TransferManager::onStalledIssuesStateChanged);
 
     onStalledIssuesStateChanged(MegaSyncApp->getStalledIssuesModel()->hasStalledIssues());
+
+    mScanningTimer.setInterval(60);
+    connect(&mScanningTimer, &QTimer::timeout, this, &TransferManager::onScanningAnimationUpdate);
 
     mSpeedRefreshTimer->setSingleShot(false);
     connect(mSpeedRefreshTimer, &QTimer::timeout,
@@ -470,53 +488,54 @@ void TransferManager::refreshStateStats()
     processedNumber = mTransfersCount.pendingDownloads + mTransfersCount.pendingUploads;
     countLabelText = processedNumber > 0 ? QString::number(processedNumber) : QString();
 
-    if (countLabel->text().isEmpty() || countLabelText != countLabel->text())
-    {
-        QWidget* leftFooterWidget (nullptr);
+    QWidget* leftFooterWidget (nullptr);
 
-        // If we don't have transfers, stop refresh timer and show "Up to date",
-        // and if current tab is ALL TRANSFERS, show empty.
-        if (processedNumber == 0 && failedNumber == 0)
+    // If we don't have transfers, stop refresh timer and show "Up to date",
+    // and if current tab is ALL TRANSFERS, show empty.
+    if (processedNumber == 0 && failedNumber == 0)
+    {
+        leftFooterWidget = mUi->pUpToDate;
+        mSpeedRefreshTimer->stop();
+        countLabel->hide();
+        countLabel->clear();
+    }
+    else
+    {
+        // If we didn't have transfers, launch timer and show speed.
+        if (countLabel->text().isEmpty())
         {
-            leftFooterWidget = mUi->pUpToDate;
-            mSpeedRefreshTimer->stop();
-            countLabel->hide();
-            countLabel->clear();
+            if(!mSpeedRefreshTimer->isActive())
+            {
+                mSpeedRefreshTimer->start(std::chrono::milliseconds(SPEED_REFRESH_PERIOD_MS));
+            }
+        }
+
+        if(processedNumber != 0)
+        {
+            leftFooterWidget = mUi->pSpeedAndClear;
+
+            countLabel->show();
+            countLabel->setText(countLabelText);
         }
         else
         {
-            // If we didn't have transfers, launch timer and show speed.
-            if (countLabel->text().isEmpty())
-            {
-                leftFooterWidget = mUi->pSpeedAndClear;
-                if(!mSpeedRefreshTimer->isActive())
-                {
-                   mSpeedRefreshTimer->start(std::chrono::milliseconds(SPEED_REFRESH_PERIOD_MS));
-                }
-            }
-
-            if(processedNumber != 0)
-            {
-                countLabel->show();
-                countLabel->setText(countLabelText);
-            }
-            else
-            {
-                countLabel->hide();
-                countLabel->clear();
-            }
-
-            if(failedNumber != 0)
-            {
-                leftFooterWidget = mUi->pSomeIssues;
-            }
+            countLabel->hide();
+            countLabel->clear();
         }
 
-        if(leftFooterWidget)
+        if(failedNumber != 0)
         {
-            mUi->sStatus->setCurrentWidget(leftFooterWidget);
+            leftFooterWidget = mUi->pSomeIssues;
         }
     }
+
+
+
+    if(leftFooterWidget && leftFooterWidget != mUi->sStatus->currentWidget())
+    {
+        mUi->sStatus->setCurrentWidget(leftFooterWidget);
+    }
+
 }
 
 void TransferManager::refreshTypeStats()
@@ -947,7 +966,7 @@ void TransferManager::onFileTypeButtonClicked(TM_TAB tab, Utilities::FileType fi
 }
 
 
-void TransferManager::on_bImportLinks_clicked()
+void TransferManager::on_bOpenLinks_clicked()
 {
     qobject_cast<MegaApplication*>(qApp)->importLinks();
 }
@@ -1002,52 +1021,55 @@ void TransferManager::toggleTab(TM_TAB newTab)
         mTabFramesToggleGroup[newTab]->setProperty(ITS_ON, true);
         mTabFramesToggleGroup[newTab]->setGraphicsEffect(mShadowTab);
 
+        TransfersWidget::HeaderInfo headerInfo;
+
+        QString cancelBase(tr("Cancel and clear "));
+
         // Show pause button on tab except completed tab,
         // and set Clear All button string,
         // Emit wether we are showing completed or not
         if (newTab == ALL_TRANSFERS_TAB)
         {
-            mUi->wTransfers->updateHeaderItems(tr("Time left"),
-                              tr("Cancel all"),
-                              tr("Speed"));
-
-            mUi->wTransfers->setAllTransfersTab(true);
+            headerInfo.headerTime = tr("Time left");
+            headerInfo.headerSpeed = tr("Speed");
         }
         else
         {
             if (newTab == COMPLETED_TAB)
             {
                 mUi->tActionButton->setText(tr("Clear All"));
-                mUi->wTransfers->updateHeaderItems(tr("Time Completed"),
-                                                   tr("Clear all visible"),
-                                                   tr("Avg. speed"));
+                headerInfo.headerTime = tr("Time Completed");
+                headerInfo.headerSpeed = tr("Avg. speed");
 
+                cancelBase = tr("Clear ");
             }
             else if (newTab == FAILED_TAB)
             {
                 mUi->tActionButton->setText(tr("Retry all"));
-                mUi->wTransfers->updateHeaderItems(tr("Time Completed"),
-                                                   tr("Cancel all visible"),
-                                                   tr("Avg. speed"));
+                headerInfo.headerTime = tr("Time Completed");
+                headerInfo.headerSpeed = tr("Avg. speed");
             }
             else if (newTab > TYPES_TAB_BASE && newTab < TYPES_LAST)
             {
-                mUi->wTransfers->updateHeaderItems(tr("Time"),
-                                                   tr("Cancel all visible"),
-                                                   tr("Speed"));
+                headerInfo.headerTime = tr("Time");
+                headerInfo.headerSpeed = tr("Speed");
 
                 mUi->tActionButton->setText(tr("Clear Completed"));
             }
             //UPLOAD // DOWNLOAD
             else
             {
-                mUi->wTransfers->updateHeaderItems(tr("Time left"),
-                                                   tr("Cancel all visible"),
-                                                   tr("Speed"));
+                headerInfo.headerTime = tr("Time left");
+                headerInfo.headerSpeed = tr("Speed");
             }
 
-            mUi->wTransfers->setAllTransfersTab(false);
         }
+
+        headerInfo.cancelClearTooltip = cancelBase + mTooltipNameByTab[newTab];
+        headerInfo.pauseTooltip = tr("Pause ") + mTooltipNameByTab[newTab];
+        headerInfo.resumeTooltip = tr("Resume ") + mTooltipNameByTab[newTab];
+
+        mUi->wTransfers->updateHeaderItems(headerInfo);
 
         //The rest of cases
         if (mCurrentTab == COMPLETED_TAB
@@ -1181,26 +1203,23 @@ bool TransferManager::eventFilter(QObject *obj, QEvent *event)
             return true;
         }
     }
-    return false;
+    return QDialog::eventFilter(obj, event);
 }
 
 void TransferManager::closeEvent(QCloseEvent *event)
 {
-    if(event->type() == QEvent::Close)
-    {
-        auto proxy (mUi->wTransfers->getProxyModel());
+    auto proxy (mUi->wTransfers->getProxyModel());
 
-        if(proxy->isModelProcessing())
-        {
-            connect(proxy, &TransfersManagerSortFilterProxyModel::modelChanged, this, [this](){
-                close();
-            });
-            event->ignore();
-        }
-        else
-        {
-            event->accept();
-        }
+    if(proxy->isModelProcessing())
+    {
+        connect(proxy, &TransfersManagerSortFilterProxyModel::modelChanged, this, [this](){
+            close();
+        });
+        event->ignore();
+    }
+    else
+    {
+        QDialog::closeEvent(event);
     }
 }
 
@@ -1228,6 +1247,26 @@ void TransferManager::dropEvent(QDropEvent* event)
     }
 
     MegaSyncApp->shellUpload(pathsToAdd);
+}
+
+void TransferManager::setTransferState(const StatusInfo::TRANSFERS_STATES &transferState)
+{
+    if(transferState == StatusInfo::TRANSFERS_STATES::STATE_INDEXING)
+    {
+        mScanningTimer.start();
+        mUi->sStatus->setCurrentWidget(mUi->pScanning);
+    }
+    else
+    {
+        mScanningTimer.stop();
+        mScanningAnimationIndex = 1;
+        refreshStateStats();
+    }
+}
+
+void TransferManager::onScanningAnimationUpdate()
+{
+    mUi->bScanning->setIcon(StatusInfo::scanningIcon(mScanningAnimationIndex));
 }
 
 void TransferManager::dragEnterEvent(QDragEnterEvent *event)

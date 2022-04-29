@@ -29,6 +29,7 @@ class InfoDialog;
 }
 
 class MegaApplication;
+class TransferManager;
 class InfoDialog : public QDialog, public mega::MegaTransferListener, ::mega::MegaRequestListener
 {
     Q_OBJECT
@@ -92,6 +93,8 @@ public:
     void showNotifications();
 
     void move(int x, int y);
+
+    void setTransferManager(TransferManager *transferManager);
 
 private:
     InfoDialog() = default;
@@ -208,6 +211,8 @@ private:
     long long unseenNotifications = 0;
 
     AccountDetailsDialog* accountDetailsDialog;
+
+    TransferManager* mTransferManager;
 
 #ifdef Q_OS_LINUX
     bool doNotActAsPopup;

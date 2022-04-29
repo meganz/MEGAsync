@@ -14,6 +14,7 @@
 #include "ui_InfoDialog.h"
 #include "control/Utilities.h"
 #include "MegaApplication.h"
+#include "TransferManager.h"
 #include "MenuItemAction.h"
 #include "platform/Platform.h"
 #include "assert.h"
@@ -86,7 +87,8 @@ void InfoDialog::showSyncProblems(QString problemText)
 InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddialog) :
     QDialog(parent),
     ui(new Ui::InfoDialog),
-    qtBugFixer(this)
+    qtBugFixer(this),
+    mTransferManager(nullptr)
 {
     ui->setupUi(this);
 
@@ -795,6 +797,10 @@ void InfoDialog::updateState()
     {
         ui->wStatus->setState(mState);
         ui->bTransferManager->setPaused(preferences->getGlobalPaused());
+        if(mTransferManager)
+        {
+            mTransferManager->setTransferState(mState);
+        }
     }
 }
 
@@ -1897,4 +1903,10 @@ void InfoDialog::paintEvent(QPaintEvent * e)
 double InfoDialog::computeRatio(long long completed, long long remaining)
 {
     return static_cast<double>(completed) / static_cast<double>(remaining);
+}
+
+void InfoDialog::setTransferManager(TransferManager *transferManager)
+{
+    mTransferManager = transferManager;
+    mTransferManager->setTransferState(mState);
 }

@@ -11,8 +11,7 @@ TransfersWidget::TransfersWidget(QWidget* parent) :
     QWidget (parent),
     ui (new Ui::TransfersWidget),
     tDelegate (nullptr),
-    app (qobject_cast<MegaApplication*>(qApp)),
-    mAllTransfersTab(false)
+    app (qobject_cast<MegaApplication*>(qApp))
 {
     ui->setupUi(this);
 
@@ -117,18 +116,9 @@ void TransfersWidget::on_tCancelClearVisible_clicked()
 
 void TransfersWidget::onPauseStateChanged(bool pauseState)
 {
-    if(mAllTransfersTab)
-    {
-        ui->tPauseResumeVisible->setToolTip(pauseState ?
-                                            tr("Resume all")
-                                          : tr("Pause all"));
-    }
-    else
-    {
-        ui->tPauseResumeVisible->setToolTip(pauseState ?
-                                                tr("Resume visible transfers")
-                                              : tr("Pause visible transfers"));
-    }
+    ui->tPauseResumeVisible->setToolTip(pauseState ?
+                                            mHeaderInfo.resumeTooltip
+                                           : mHeaderInfo.pauseTooltip);
 
     if(ui->tPauseResumeVisible->isChecked() != pauseState)
     {
@@ -165,11 +155,17 @@ void TransfersWidget::transferFilterReset()
     mProxyModel->resetAllFilters();
 }
 
-void TransfersWidget::updateHeaderItems(const QString &headerTime, const QString &cancelClearTooltip, const QString &headerSpeed)
+void TransfersWidget::updateHeaderItems(const HeaderInfo &info)
 {
-    ui->timeColumn->setTitle(headerTime);
-    ui->tCancelClearVisible->setToolTip(cancelClearTooltip);
-    ui->speedColumn->setTitle(headerSpeed);
+    mHeaderInfo = info;
+
+    ui->timeColumn->setTitle(info.headerTime);
+    ui->tCancelClearVisible->setToolTip(info.cancelClearTooltip);
+    ui->speedColumn->setTitle(info.headerSpeed);
+
+    ui->tPauseResumeVisible->setToolTip(ui->tPauseResumeVisible->isChecked() ?
+                                           info.resumeTooltip
+                                          : info.pauseTooltip);
 }
 
 void TransfersWidget::changeEvent(QEvent *event)
@@ -315,13 +311,6 @@ void TransfersWidget::onVerticalScrollBarVisibilityChanged(bool state)
     {
         ui->wTableHeaderLayout->invalidate();
     }
-}
-
-void TransfersWidget::setAllTransfersTab(bool allTransfersTab)
-{
-    mAllTransfersTab = allTransfersTab;
-
-    onPauseStateChanged(ui->tPauseResumeVisible->isChecked());
 }
 
 void TransfersWidget::on_tPauseResumeVisible_toggled(bool state)

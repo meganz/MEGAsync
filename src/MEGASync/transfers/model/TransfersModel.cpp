@@ -380,10 +380,10 @@ TransfersModel::TransfersModel(QObject *parent) :
 
     mTransferEventThread = new QThread();
     mTransferEventWorker = new TransferThread();
-    delegateListener = new QTMegaTransferListener(mMegaApi, mTransferEventWorker);
+    mDelegateListener = new QTMegaTransferListener(mMegaApi, mTransferEventWorker);
     mTransferEventWorker->moveToThread(mTransferEventThread);
-    delegateListener->moveToThread(mTransferEventThread);
-    mMegaApi->addTransferListener(delegateListener);
+    mDelegateListener->moveToThread(mTransferEventThread);
+    mMegaApi->addTransferListener(mDelegateListener);
 
     //Update transfers state for the first time
     updateTransfersCount();
@@ -401,7 +401,7 @@ TransfersModel::~TransfersModel()
     mTransfers.clear();
 
     // Disconect listener
-    mMegaApi->removeTransferListener(delegateListener);
+    mMegaApi->removeTransferListener(mDelegateListener);
     mTransferEventThread->quit();
     mTransferEventThread->deleteLater();
     mTransferEventWorker->deleteLater();
@@ -629,7 +629,7 @@ void TransfersModel::processActiveTransfers(QList<QExplicitlySharedDataPointer<T
         for (auto it = transfersToActive.begin(); it != transfersToActive.end();)
         {
             mTransfers.prepend((*it));
-            (*it)->mPriority -= 100000000000000;
+            (*it)->mPriority -= ACTIVE_PRIORITY_OFFSET;
 
             transfersToActive.erase(it++);
         }
@@ -644,7 +644,6 @@ void TransfersModel::processUpdateTransfers()
 {
     QList<int> rowsToUpdate;
     QList<QExplicitlySharedDataPointer<TransferData>> transfersFinished;
-    QList<QExplicitlySharedDataPointer<TransferData>> transfersActive;
     QModelIndexList rowsToRemove;
 
     for (auto it = mTransfersToProcess.updateTransfersByTag.begin(); it != mTransfersToProcess.updateTransfersByTag.end();)
@@ -1314,8 +1313,8 @@ void TransfersModel::removeTransfer(int row)
 
 void TransfersModel::sendDataChanged(int row)
 {
-    QModelIndex bottomRight (index(row, 0, DEFAULT_IDX));
-    emit dataChanged(bottomRight, bottomRight);
+    QModelIndex indexChanged (index(row, 0, DEFAULT_IDX));
+    emit dataChanged(indexChanged, indexChanged);
 }
 
 bool TransfersModel::isFailingModeActive() const

@@ -222,6 +222,18 @@ QGroupBox::title
     text-align: left;
 }
 
+#bScanning
+{
+    height: 24px;
+    min-height: 24px;
+    max-height: 24px;
+    border: none;
+    color: #333333;
+    font-size: 14px;
+    qProperty-iconSize: 24px;
+    text-align: left;
+}
+
 #pSpeedAndClear QPushButton
 {
     border-radius: 12px;
@@ -1795,7 +1807,7 @@ QGroupBox::title
          <string notr="true"/>
         </property>
         <property name="currentIndex">
-         <number>1</number>
+         <number>3</number>
         </property>
         <widget class="QWidget" name="pSpeedAndClear">
          <layout class="QHBoxLayout" name="pSpeedAndClearLayout" stretch="1,1,0,0">
@@ -2001,6 +2013,32 @@ QGroupBox::title
               <width>36</width>
               <height>36</height>
              </size>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+        <widget class="QWidget" name="pScanning">
+         <layout class="QHBoxLayout" name="horizontalLayout_5">
+          <property name="spacing">
+           <number>0</number>
+          </property>
+          <property name="leftMargin">
+           <number>8</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
+           <number>0</number>
+          </property>
+          <item>
+           <widget class="QPushButton" name="bScanning">
+            <property name="text">
+             <string>Scanning</string>
             </property>
            </widget>
           </item>
@@ -2320,12 +2358,12 @@ QGroupBox::title
           </spacer>
          </item>
          <item row="0" column="1">
-          <widget class="QPushButton" name="bImportLinks">
+          <widget class="QPushButton" name="bOpenLinks">
            <property name="cursor">
             <cursorShape>PointingHandCursor</cursorShape>
            </property>
            <property name="text">
-            <string>Import links</string>
+            <string>Open links</string>
            </property>
            <property name="icon">
             <iconset resource="../../../gui/Resources_win.qrc">
@@ -2850,7 +2888,10 @@ QGroupBox::title
  <resources>
   <include location="../../../gui/Resources_win.qrc"/>
   <include location="../../../gui/Resources_win.qrc"/>
+<<<<<<< HEAD
   <include location="../../../gui/Resources_win.qrc"/>
+=======
+>>>>>>> origin/feature/transfer-manager
  </resources>
  <connections>
   <connection>

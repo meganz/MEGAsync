@@ -127,7 +127,7 @@ bool InfoDialogTransfersProxyModel::filterAcceptsRow(int sourceRow, const QModel
            {
                mNextTransferTag = -1;
            }
-           else if(!accept && (mNextTransferTag < 0 || mNextTransferTag == d->mTag || mNextTransferTag > d->mTag))
+           else if(!accept && (mNextTransferTag < 0 || mNextTransferTag >= d->mTag))
            {
                accept = true;
                mNextTransferTag = d->mTag;

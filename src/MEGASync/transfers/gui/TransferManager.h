@@ -8,6 +8,7 @@
 #include "TransferItem.h"
 #include "TransfersModel.h"
 #include "TransferQuota.h"
+#include "StatusInfo.h"
 
 #include <QGraphicsEffect>
 #include <QTimer>
@@ -57,6 +58,8 @@ public:
     void disableGetLink(bool disable);
     ~TransferManager();
 
+    void setTransferState(const StatusInfo::TRANSFERS_STATES &transferState);
+
 public slots:
     void onTransferQuotaStateChanged(QuotaState transferQuotaState);
     void onStorageStateChanged(int storageState);
@@ -84,11 +87,15 @@ private:
     Ui::TransferManager* mUi;
     mega::MegaApi* mMegaApi;
 
+    QTimer mScanningTimer;
+    int mScanningAnimationIndex;
+
     Preferences* mPreferences;
     QPoint mDragPosition;
     QMap<TM_TAB, QFrame*> mTabFramesToggleGroup;
     QMap<TM_TAB, QLabel*> mNumberLabelsGroup;
     QMap<TM_TAB, QWidget*> mTabNoItem;
+    QMap<TM_TAB, QString> mTooltipNameByTab;
 
     TransfersModel* mModel;
     TransfersCount mTransfersCount;
@@ -139,8 +146,7 @@ private slots:
     void onStalledIssuesStateChanged(bool state);
     void on_viewStalledIssuesButton_clicked();
     void showStalledIssuesInfo();
-
-    void on_bImportLinks_clicked();
+    void on_bOpenLinks_clicked();
     void on_tCogWheel_clicked();
     void on_bDownload_clicked();
     void on_bUpload_clicked();
@@ -168,6 +174,8 @@ private slots:
 
     void refreshSpeed();
     void refreshView();
+
+    void onScanningAnimationUpdate();
 };
 
 #endif // TRANSFERMANAGER_H
