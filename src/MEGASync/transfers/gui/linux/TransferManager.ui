@@ -228,6 +228,18 @@ QGroupBox::title
     text-align: left;
 }
 
+#bScanning
+{
+    height: 24px;
+    min-height: 24px;
+    max-height: 24px;
+    border: none;
+    color: #333333;
+    font-size: 14px;
+    qProperty-iconSize: 24px;
+    text-align: left;
+}
+
 #pSpeedAndClear QPushButton
 {
     border-radius: 12px;
