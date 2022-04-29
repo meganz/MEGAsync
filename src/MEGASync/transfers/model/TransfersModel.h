@@ -219,7 +219,7 @@ private:
 
     QHash<TransferTag, int> mTagByOrder;
     mutable QMutex mModelMutex;
-    mega::QTMegaTransferListener *delegateListener;
+    mega::QTMegaTransferListener *mDelegateListener;
 
     bool mAreAllPaused;
     bool mModelReset;

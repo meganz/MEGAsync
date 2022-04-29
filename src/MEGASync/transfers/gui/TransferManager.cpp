@@ -32,7 +32,8 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
     mSpeedRefreshTimer(new QTimer(this)),
     mStatsRefreshTimer(new QTimer(this)),
     mStorageQuotaState(MegaApi::STORAGE_STATE_UNKNOWN),
-    mTransferQuotaState(QuotaState::OK)
+    mTransferQuotaState(QuotaState::OK),
+    mScanningAnimationIndex(1)
 {
     mUi->setupUi(this);
 
@@ -181,6 +182,9 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
             &TransfersWidget::disableTransferManager,[this](bool state){
         setDisabled(state);
     });
+
+    mScanningTimer.setInterval(60);
+    connect(&mScanningTimer, &QTimer::timeout, this, &TransferManager::onScanningAnimationUpdate);
 
     mSpeedRefreshTimer->setSingleShot(false);
     connect(mSpeedRefreshTimer, &QTimer::timeout,
@@ -450,45 +454,54 @@ void TransferManager::refreshStateStats()
     processedNumber = mTransfersCount.pendingDownloads + mTransfersCount.pendingUploads;
     countLabelText = processedNumber > 0 ? QString::number(processedNumber) : QString();
 
-    if (countLabel->text().isEmpty() || countLabelText != countLabel->text())
-    {
-        QWidget* leftFooterWidget (nullptr);
+    QWidget* leftFooterWidget (nullptr);
 
-        // If we don't have transfers, stop refresh timer and show "Up to date",
-        // and if current tab is ALL TRANSFERS, show empty.
-        if (processedNumber == 0 && failedNumber == 0)
+    // If we don't have transfers, stop refresh timer and show "Up to date",
+    // and if current tab is ALL TRANSFERS, show empty.
+    if (processedNumber == 0 && failedNumber == 0)
+    {
+        leftFooterWidget = mUi->pUpToDate;
+        mSpeedRefreshTimer->stop();
+        countLabel->hide();
+        countLabel->clear();
+    }
+    else
+    {
+        // If we didn't have transfers, launch timer and show speed.
+        if (countLabel->text().isEmpty())
         {
-            leftFooterWidget = mUi->pUpToDate;
-            mSpeedRefreshTimer->stop();
-            countLabel->hide();
-            countLabel->clear();
-        }
-        else
-        {
-            // If we didn't have transfers, launch timer and show speed.
-            if (countLabel->text().isEmpty())
+            if(!mSpeedRefreshTimer->isActive())
             {
-                leftFooterWidget = mUi->pSpeedAndClear;
-                if(!mSpeedRefreshTimer->isActive())
-                {
-                   mSpeedRefreshTimer->start(std::chrono::milliseconds(SPEED_REFRESH_PERIOD_MS));
-                }
+                mSpeedRefreshTimer->start(std::chrono::milliseconds(SPEED_REFRESH_PERIOD_MS));
             }
+        }
+
+        if(processedNumber != 0)
+        {
+            leftFooterWidget = mUi->pSpeedAndClear;
 
             countLabel->show();
             countLabel->setText(countLabelText);
-
-            if(failedNumber != 0)
-            {
-                leftFooterWidget = mUi->pSomeIssues;
-            }
+        }
+        else
+        {
+            countLabel->hide();
+            countLabel->clear();
         }
 
-        if(leftFooterWidget)
+        if(failedNumber != 0)
         {
-            mUi->sStatus->setCurrentWidget(leftFooterWidget);
+            leftFooterWidget = mUi->pSomeIssues;
         }
     }
+
+
+
+    if(leftFooterWidget && leftFooterWidget != mUi->sStatus->currentWidget())
+    {
+        mUi->sStatus->setCurrentWidget(leftFooterWidget);
+    }
+
 }
 
 void TransferManager::refreshTypeStats()
@@ -1182,6 +1195,26 @@ void TransferManager::dropEvent(QDropEvent* event)
     }
 
     MegaSyncApp->shellUpload(pathsToAdd);
+}
+
+void TransferManager::setTransferState(const StatusInfo::TRANSFERS_STATES &transferState)
+{
+    if(transferState == StatusInfo::TRANSFERS_STATES::STATE_INDEXING)
+    {
+        mScanningTimer.start();
+        mUi->sStatus->setCurrentWidget(mUi->pScanning);
+    }
+    else
+    {
+        mScanningTimer.stop();
+        mScanningAnimationIndex = 1;
+        refreshStateStats();
+    }
+}
+
+void TransferManager::onScanningAnimationUpdate()
+{
+    mUi->bScanning->setIcon(StatusInfo::scanningIcon(mScanningAnimationIndex));
 }
 
 void TransferManager::dragEnterEvent(QDragEnterEvent *event)

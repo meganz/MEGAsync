@@ -1691,6 +1691,7 @@ void MegaApplication::createTransferManagerDialog()
     if(!transferManager)
     {
         transferManager = new TransferManager(megaApi);
+        infoDialog->setTransferManager(transferManager);
 
         // Signal/slot to notify the tracking of unseen completed transfers of Transfer Manager. If Completed tab is
         // active, tracking is disabled

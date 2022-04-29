@@ -1986,6 +1986,32 @@ QToolButton
           </item>
          </layout>
         </widget>
+	    <widget class="QWidget" name="pScanning">
+         <layout class="QHBoxLayout" name="horizontalLayout_5">
+          <property name="spacing">
+           <number>0</number>
+          </property>
+          <property name="leftMargin">
+           <number>8</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
+           <number>0</number>
+          </property>
+          <item>
+           <widget class="QPushButton" name="bScanning">
+            <property name="text">
+             <string>Scanning</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
 	   </widget>
       </item>
      </layout>

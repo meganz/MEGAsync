@@ -380,10 +380,10 @@ TransfersModel::TransfersModel(QObject *parent) :
 
     mTransferEventThread = new QThread();
     mTransferEventWorker = new TransferThread();
-    delegateListener = new QTMegaTransferListener(mMegaApi, mTransferEventWorker);
+    mDelegateListener = new QTMegaTransferListener(mMegaApi, mTransferEventWorker);
     mTransferEventWorker->moveToThread(mTransferEventThread);
-    delegateListener->moveToThread(mTransferEventThread);
-    mMegaApi->addTransferListener(delegateListener);
+    mDelegateListener->moveToThread(mTransferEventThread);
+    mMegaApi->addTransferListener(mDelegateListener);
 
     //Update transfers state for the first time
     updateTransfersCount();
@@ -401,7 +401,7 @@ TransfersModel::~TransfersModel()
     mTransfers.clear();
 
     // Disconect listener
-    mMegaApi->removeTransferListener(mTransferEventWorker);
+    mMegaApi->removeTransferListener(mDelegateListener);
     mTransferEventThread->quit();
     mTransferEventThread->deleteLater();
     mTransferEventWorker->deleteLater();

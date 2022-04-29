@@ -149,12 +149,17 @@ void StatusInfo::setOverQuotaState(bool oq)
     setState(mState);
 }
 
+QIcon StatusInfo::scanningIcon(int& index)
+{
+    index = index%12;
+    index++;
+    return Utilities::getCachedPixmap(
+                                QString::fromUtf8(":/images/ico_menu_scanning_%1.png").arg(index));
+}
+
 void StatusInfo::scanningAnimationStep()
 {
-    mScanningAnimationIndex = mScanningAnimationIndex%12;
-    mScanningAnimationIndex++;
-    ui->bIconState->setIcon(Utilities::getCachedPixmap(
-                                QString::fromUtf8(":/images/ico_menu_scanning_%1.png").arg(mScanningAnimationIndex)));
+    ui->bIconState->setIcon(scanningIcon(mScanningAnimationIndex));
     ui->bIconState->setIconSize(QSize(24, 24));
 }
 
