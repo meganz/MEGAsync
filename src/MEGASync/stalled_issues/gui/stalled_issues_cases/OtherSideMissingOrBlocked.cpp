@@ -30,13 +30,23 @@ void OtherSideMissingOrBlocked::refreshUi()
 
     if(issue.stalledIssuesCount() == 2)
     {
-        auto mainIssue = issue.getStalledIssueData();
-        bool isCloud(issue.getStalledIssueData()->mIsCloud);
+        ui->localPath->hide();
+        ui->remotePath->hide();
 
         for(int index = 0; index < issue.stalledIssuesCount(); ++index)
         {
             auto data = issue.getStalledIssueData(index);
-            data->mIsCloud ? ui->remotePath->updateUi(getCurrentIndex(), data) : ui->localPath->updateUi(getCurrentIndex(), data);
+
+            if(data->mIsCloud)
+            {
+                ui->remotePath->show();
+                ui->remotePath->updateUi(getCurrentIndex(), data);
+            }
+            else
+            {
+                ui->localPath->show();
+                ui->localPath->updateUi(getCurrentIndex(), data);
+            }
         }
     }
 }

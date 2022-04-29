@@ -7,16 +7,48 @@
     <x>0</x>
     <y>0</y>
     <width>165</width>
-    <height>111</height>
+    <height>116</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string notr="true"/>
   </property>
   <property name="styleSheet">
    <string notr="true">*
 {
 	background-color: transparent;
+}
+
+#moveFilePathContainer[itsHover=false], #filePathContainer[itsHover=false]
+{
+  height: 24px;
+  border-radius: 4px;
+  background-color: rgba(0,0,0,0.04);
+}
+
+#moveFilePathContainer[itsHover=true], #filePathContainer[itsHover=true]
+{
+  height: 24px;
+  border-radius: 4px;
+  background-color: rgba(0,0,0,0.1);
+}
+
+#filePath, #filePathIcon, #moveFilePath, #moveFilePathIcon
+{
+   background-color: &quot;transparent&quot;;
+}
+
+#filePath, #moveFilePath
+{
+    font-family: Lato;
+    font-size: 12px;
+    line-height: 20px;
+    color: #333333;
+}
+
+QPushButton
+{
+    border: none;
 }</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
@@ -100,30 +132,10 @@
       <cursorShape>PointingHandCursor</cursorShape>
      </property>
      <property name="styleSheet">
-      <string notr="true">#filePath, #filePathIcon
-{
-   background-color: &quot;transparent&quot;;
-}
-
-#filePath
-{
-    font-family: Lato;
-    font-size: 12px;
-    line-height: 20px;
-    color: #333333;
-}
-
-#filePathContainer
-{
-  height: 24px;
-  border-radius: 4px;
-  background-color: #F5F5F5;
-}
-
-QPushButton
-{
-    border: none;
-}</string>
+      <string notr="true"/>
+     </property>
+     <property name="itsHover" stdset="0">
+      <bool>false</bool>
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout">
       <property name="spacing">
@@ -276,30 +288,10 @@ QPushButton
          <cursorShape>PointingHandCursor</cursorShape>
         </property>
         <property name="styleSheet">
-         <string notr="true">#moveFilePath, #moveFilePathIcon
-{
-   background-color: &quot;transparent&quot;;
-}
-
-#moveFilePath
-{
-    font-family: Lato;
-    font-size: 12px;
-    line-height: 20px;
-    color: #333333;
-}
-
-#moveFilePathContainer
-{
-  height: 24px;
-  border-radius: 4px;
-  background-color: #F5F5F5;
-}
-
-QPushButton
-{
-    border:none;
-}</string>
+         <string notr="true"/>
+        </property>
+        <property name="itsHover" stdset="0">
+         <bool>false</bool>
         </property>
         <layout class="QHBoxLayout" name="horizontalLayout_2">
          <property name="spacing">

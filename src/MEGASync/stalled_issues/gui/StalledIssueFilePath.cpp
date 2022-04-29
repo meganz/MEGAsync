@@ -171,10 +171,14 @@ void StalledIssueFilePath::showHoverAction(QEvent::Type type, QWidget *actionWid
     if(type == QEvent::Enter)
     {
         actionWidget->show();
+        actionWidget->parent()->setProperty("itsHover", true);
+        setStyleSheet(styleSheet());
     }
     else if(type == QEvent::Leave)
     {
         actionWidget->hide();
+        actionWidget->parent()->setProperty("itsHover", false);
+        setStyleSheet(styleSheet());
     }
     else if(type == QEvent::MouseButtonRelease)
     {

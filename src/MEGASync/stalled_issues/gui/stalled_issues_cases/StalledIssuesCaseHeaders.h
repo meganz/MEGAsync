@@ -34,7 +34,7 @@ protected:
     void refreshCaseUi() override;
 
 protected slots:
-    void on_actionButton_clicked();
+    void on_actionButton_clicked() override;
 };
 
 //Local Folder not scanneable
@@ -156,6 +156,36 @@ public:
 
 protected:
     void refreshCaseUi() override;
+
+protected slots:
+    void on_actionButton_clicked() override;
+};
+
+//Move Target Name Too Long Header
+class MoveTargetNameTooLongHeader : public StalledIssueHeader
+{
+    Q_OBJECT
+
+public:
+    MoveTargetNameTooLongHeader(QWidget *parent = nullptr);
+
+protected:
+    void refreshCaseUi() override;
+};
+
+//Matched Against Unidentified Item
+class MatchedAgainstUnidentifiedItemHeader : public StalledIssueHeader
+{
+    Q_OBJECT
+
+public:
+    MatchedAgainstUnidentifiedItemHeader(QWidget *parent = nullptr);
+
+protected:
+    void refreshCaseUi() override;
+
+protected slots:
+    void on_actionButton_clicked() override;
 };
 
 #endif // STALLEDISSUESCASEHEADERS_H

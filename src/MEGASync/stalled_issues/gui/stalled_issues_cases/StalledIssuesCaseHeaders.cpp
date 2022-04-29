@@ -4,6 +4,16 @@
 #include <Preferences.h>
 #include <MegaApplication.h>
 
+#include <QDebug>
+
+#ifdef _WIN32
+    #include "minwindef.h"
+#elif Q_OS_MACOS
+    #include "sys/syslimits.h"
+#elif Q_OS_LINUX
+    #include "limits.h"
+#endif
+
 LocalAndRemotePreviouslyUnsyncedDifferHeader::LocalAndRemotePreviouslyUnsyncedDifferHeader(QWidget *parent)
     : StalledIssueHeader(parent)
 {
@@ -34,33 +44,20 @@ SpecialFilesNotSupportedHeader::SpecialFilesNotSupportedHeader(QWidget *parent)
     : StalledIssueHeader(parent)
 {
     connect(ui->actionButton, &QPushButton::clicked, this, &SpecialFilesNotSupportedHeader::on_actionButton_clicked);
+
+    ui->actionButton->show();
+    ui->actionButton->setText(tr("Ignore"));
 }
 
 void SpecialFilesNotSupportedHeader::refreshCaseUi()
 {
     ui->errorTitleText->setText(tr("Cannot access <b>%1</b>").arg(getData().getFileName()));
     ui->errorDescriptionText->setText(tr("filesystem error preventing file access: Special files not supported"));
-
-    ui->actionButton->show();
-    ui->actionButton->setText(tr("Ignore"));
 }
 
 void SpecialFilesNotSupportedHeader::on_actionButton_clicked()
 {
-    auto data = getData().getStalledIssueData();
-    if(data)
-    {
-        Preferences::instance()->setExcludedSyncPaths(QStringList() << data->mIndexPath.path);
-        Preferences::instance()->setCrashed(true);
-
-        QStringList exclusionPaths = Preferences::instance()->getExcludedSyncPaths();
-        std::vector<std::string> vExclusionPaths;
-        for (int i = 0; i < exclusionPaths.size(); i++)
-        {
-            vExclusionPaths.push_back(exclusionPaths[i].toUtf8().constData());
-        }
-        MegaSyncApp->getMegaApi()->setLegacyExcludedPaths(&vExclusionPaths);
-    }
+    ignoreFile();
 }
 
 //Local folder not scannable
@@ -166,11 +163,60 @@ void UnableToLoadIgnoreFileHeader::refreshCaseUi()
 //SyncItemExceedsSupoortedTreeDepth
 SyncItemExceedsSupoortedTreeDepthHeader::SyncItemExceedsSupoortedTreeDepthHeader(QWidget *parent)
     : StalledIssueHeader(parent)
-{}
+{
+    ui->actionButton->show();
+    ui->actionButton->setText(tr("Ignore"));
+}
 
 void SyncItemExceedsSupoortedTreeDepthHeader::refreshCaseUi()
 {
     ui->errorTitleText->setText(tr("Unable to sync <b>%1</b>").arg(getData().getFileName()));
     ui->errorDescriptionText->setText(tr("Target is too deep on your folder structure. Please move it to a location that is less\nthan 64 folders deep."));
 }
+
+void SyncItemExceedsSupoortedTreeDepthHeader::on_actionButton_clicked()
+{
+    ignoreFile();
+}
+
+//MoveTargetNameTooLongHeader
+MoveTargetNameTooLongHeader::MoveTargetNameTooLongHeader(QWidget *parent)
+    : StalledIssueHeader(parent)
+{}
+
+void MoveTargetNameTooLongHeader::refreshCaseUi()
+{
+    auto maxCharacters(0);
+
+#ifdef Q_OS_MACX
+    maxCharacters = NAME_MAX;
+#elif defined(_WIN32)
+    maxCharacters = MAX_PATH;
+#elif defined (Q_OS_LINUX)
+    maxCharacters = NAME_MAX;
+#endif
+
+    ui->errorTitleText->setText(tr("Unable to sync <b>%1</b>").arg(getData().getFileName()));
+    ui->errorDescriptionText->setText(tr("File name too long. Your Operating System only supports file\nnames up to %1 characters.").arg(QString::number(maxCharacters)));
+}
+
+//Matched Against Unidentified Item
+MatchedAgainstUnidentifiedItemHeader::MatchedAgainstUnidentifiedItemHeader(QWidget *parent)
+    : StalledIssueHeader(parent)
+{
+    ui->actionButton->show();
+    ui->actionButton->setText(tr("Ignore"));
+}
+
+void MatchedAgainstUnidentifiedItemHeader::refreshCaseUi()
+{
+    ui->errorTitleText->setText(tr("Cannot access <b>%1</b>").arg(getData().getFileName()));
+    ui->errorDescriptionText->setText(tr("cannot identify item"));
+}
+
+void MatchedAgainstUnidentifiedItemHeader::on_actionButton_clicked()
+{
+    ignoreFile();
+}
+
 

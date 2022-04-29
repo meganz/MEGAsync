@@ -84,6 +84,8 @@ StalledIssueBaseDelegateWidget *StalledIssuesDelegateWidgetsCache::createBodyWid
         case mega::MegaSyncStall::SyncStallReason::CouldNotMoveToLocalDebrisFolder:
         case mega::MegaSyncStall::SyncStallReason::UnableToLoadIgnoreFile:
         case mega::MegaSyncStall::SyncStallReason::SyncItemExceedsSupportedTreeDepth:
+        case mega::MegaSyncStall::SyncStallReason::MoveTargetNameTooLong:
+        case mega::MegaSyncStall::SyncStallReason::MatchedAgainstUnidentifiedItem:
         {
             auto filePath  = new StalledIssueFilePath(parent);
             filePath->setIndent(StalledIssueHeader::BODY_INDENT);
@@ -136,6 +138,16 @@ StalledIssueHeader *StalledIssuesDelegateWidgetsCache::createHeaderWidget(const 
         case mega::MegaSyncStall::SyncStallReason::SyncItemExceedsSupportedTreeDepth:
         {
             header  = new SyncItemExceedsSupoortedTreeDepthHeader(parent);
+            break;
+        }
+        case mega::MegaSyncStall::SyncStallReason::MoveTargetNameTooLong:
+        {
+            header  = new MoveTargetNameTooLongHeader(parent);
+            break;
+        }
+        case mega::MegaSyncStall::SyncStallReason::MatchedAgainstUnidentifiedItem:
+        {
+            header  = new MatchedAgainstUnidentifiedItemHeader(parent);
             break;
         }
         case mega::MegaSyncStall::SyncStallReason::UnableToLoadIgnoreFile:

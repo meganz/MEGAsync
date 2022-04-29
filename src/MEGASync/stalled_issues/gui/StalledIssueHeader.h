@@ -7,6 +7,7 @@
 
 #include <QWidget>
 #include <QStyleOptionViewItem>
+#include <QFutureWatcher>
 
 #include "ui_StalledIssueHeader.h"
 
@@ -30,8 +31,18 @@ protected:
     virtual void refreshCaseUi() = 0;
     Ui::StalledIssueHeader *ui;
 
+    void ignoreFile();
+
+protected slots:
+    virtual void on_actionButton_clicked(){}
+
+private slots:
+    void onIgnoreFileFinished();
+
 private:
     void refreshUi() override;
+
+    QFutureWatcher<void> mIgnoreWatcher;
 };
 
 #endif // STALLEDISSUEHEADER_H

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>170</width>
-    <height>77</height>
+    <width>225</width>
+    <height>57</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -35,9 +35,13 @@
    <string notr="true"/>
   </property>
   <property name="styleSheet">
-   <string notr="true">#selectionText
+   <string notr="true">*
 {
-  font-family: Lato;
+   font-family: Lato;
+}
+
+#selectionText
+{
   color: #333333;
   font-size: 13px;
   font-weight: bold;
@@ -45,7 +49,6 @@
 
 #errorDescriptionText
 {
-  font-family: Lato;
   color: #666666;
   font-size: 12px;
   font-weight: normal;
@@ -53,20 +56,31 @@
 
 #errorTitleText
 {
-  font-family: Lato;
   color: #333333;
   font-size: 13px;
   font-weight: normal;
 }
 
-QPushButton
+#actionButton
 {
-    font-family: Lato;
-    font-size: 14px;
-    color: #333333;
-    background-color: #FCFCFC;
-    border-radius: 3px;
-    border: 1px solid rgba(0,0,0, 0.15);
+   font-size:14px;
+   background-color: #FCFCFC;
+   color: #333333FF;
+   border-radius:3px;
+   border: 1px solid rgba(0,0,0,0.05);
+   padding-left: 16px;
+   padding-right: 16px;
+}
+
+#actionButton:hover
+{
+   font-size:14px;
+   background-color: #FCFCFC;
+   color: rgba(255,255,255,255,0.05);
+   border-radius:3px;
+   border: 1px solid rgba(0,0,0,0.05);
+   padding-left: 16px;
+   padding-right: 16px;
 }</string>
   </property>
   <layout class="QGridLayout" name="gridLayout" columnstretch="0,0,0,0,0,0,0">
@@ -77,10 +91,10 @@ QPushButton
     <number>6</number>
    </property>
    <property name="rightMargin">
-    <number>7</number>
+    <number>20</number>
    </property>
    <property name="bottomMargin">
-    <number>3</number>
+    <number>9</number>
    </property>
    <property name="horizontalSpacing">
     <number>0</number>
@@ -171,8 +185,23 @@ QPushButton
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>32</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>32</height>
+      </size>
+     </property>
      <property name="cursor">
       <cursorShape>PointingHandCursor</cursorShape>
+     </property>
+     <property name="styleSheet">
+      <string notr="true"/>
      </property>
      <property name="text">
       <string/>

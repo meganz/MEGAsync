@@ -1,6 +1,11 @@
 #include "StalledIssueHeader.h"
 
+#include <MegaApplication.h>
+#include <Preferences.h>
+
 #include "Utilities.h"
+
+#include <QFile>
 
 const int StalledIssueHeader::ARROW_INDENT = 6 + 16; //Left margin + arrow;
 const int StalledIssueHeader::ICON_INDENT = 8 + 48; // fileIcon + spacer;
@@ -29,6 +34,64 @@ void StalledIssueHeader::expand(bool state)
 void StalledIssueHeader::showAction()
 {
     ui->actionButton->setVisible(true);
+}
+
+void StalledIssueHeader::ignoreFile()
+{
+    auto data = getData().getStalledIssueData();
+    if(data)
+    {
+        auto path = data->mIndexPath.path;
+
+        connect(&mIgnoreWatcher, &QFutureWatcher<void>::finished,
+                this, &StalledIssueHeader::onIgnoreFileFinished);
+
+        QFuture<void> addToIgnore = QtConcurrent::run([path]()
+        {
+            QFileInfo stalledIssuePathInfo(path);
+            QDir ignoreDir(path);
+
+            while(ignoreDir.exists())
+            {
+                QFile ignore(ignoreDir.path() + QDir::separator() + QString::fromUtf8(".megaignore"));
+                if(ignore.exists())
+                {
+                    ignore.open(QFile::Append | QFile::Text);
+
+                    QTextStream streamIn(&ignore);
+                    streamIn << QChar((int)'\n');
+
+                    if(stalledIssuePathInfo.isFile())
+                    {
+                        streamIn << QString::fromUtf8("-f:");
+                    }
+                    else
+                    {
+                        streamIn << QString::fromUtf8("-dp:");
+                    }
+
+                    streamIn << ignoreDir.relativeFilePath(stalledIssuePathInfo.path());
+                    ignore.close();
+
+                    break;
+                }
+
+                if(!ignoreDir.cdUp())
+                {
+                    break;
+                }
+            }
+        });
+
+        mIgnoreWatcher.setFuture(addToIgnore);
+    }
+}
+
+void StalledIssueHeader::onIgnoreFileFinished()
+{
+    emit issueFixed();
+    disconnect(&mIgnoreWatcher, &QFutureWatcher<void>::finished,
+            this, &StalledIssueHeader::onIgnoreFileFinished);
 }
 
 void StalledIssueHeader::refreshUi()
