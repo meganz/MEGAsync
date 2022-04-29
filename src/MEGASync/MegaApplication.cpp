@@ -1602,15 +1602,11 @@ void MegaApplication::processDownloadQueue(QString path)
 
 void MegaApplication::unityFix()
 {
-    static QMenu *dummyMenu = NULL;
-    if (!dummyMenu)
-    {
-        dummyMenu = new QMenu();
-        connect(this, SIGNAL(unityFixSignal()), dummyMenu, SLOT(close()), Qt::QueuedConnection);
-    }
-
+    static QMenu dummyMenu;
+    connect(this, &MegaApplication::unityFixSignal, &dummyMenu, &QMenu::close,
+            static_cast<Qt::ConnectionType>(Qt::QueuedConnection | Qt::UniqueConnection));
     emit unityFixSignal();
-    dummyMenu->exec();
+    dummyMenu.exec();
 }
 
 void MegaApplication::closeDialogs(bool/* bwoverquota*/)
