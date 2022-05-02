@@ -3019,7 +3019,7 @@ QList<SyncData> Preferences::readOldCachedSyncs(int *cachedBusinessState, int *c
 
     // if not logged in & email provided, read old syncs from that user and load new-cache sync from prev session
     bool temporarilyLoggedPrefs = false;
-    if (instance()->logged() && !email.isEmpty())
+    if (!instance()->logged() && !email.isEmpty())
     {
         loadedSyncsMap.clear(); //ensure loaded are empty even when there is no email
         temporarilyLoggedPrefs = instance()->enterUser(email);
