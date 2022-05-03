@@ -14,6 +14,7 @@ using namespace mega;
 static const QModelIndex DEFAULT_IDX = QModelIndex();
 
 const int MAX_TRANSFERS = 2000;
+const int CANCEL_THRESHOLD_THREAD = 100;
 
 //LISTENER THREAD
 TransferThread::TransferThread()
@@ -492,19 +493,31 @@ void TransfersModel::onProcessTransfers()
 
         if(containsTransfersToCancel > 0)
         {
-            setCancelingMode(true);
+            if(containsTransfersToCancel > CANCEL_THRESHOLD_THREAD)
+            {
+                setCancelingMode(true);
 
-            QtConcurrent::run([this](){
+                QtConcurrent::run([this](){
+                    if(mModelMutex.tryLock())
+                    {
+                        blockSignals(true);
+                        processCancelTransfers();
+                        blockSignals(false);
+                        updateTransfersCount();
+
+                        mModelMutex.unlock();
+                    }
+                });
+            }
+            else
+            {
                 if(mModelMutex.tryLock())
                 {
-                    blockSignals(true);
                     processCancelTransfers();
-                    blockSignals(false);
                     updateTransfersCount();
-
                     mModelMutex.unlock();
                 }
-            });
+            }
         }
         else if(isCancelingModeActive())
         {
@@ -796,6 +809,46 @@ void TransfersModel::getLinks(QList<int>& rows)
     }
 }
 
+void TransfersModel::openInMEGA(QList<int> &rows)
+{
+    if (!rows.isEmpty())
+    {
+        for (auto row : rows)
+        {
+            auto d (getTransfer(row));
+
+            MegaNode *node (nullptr);
+
+            if (d->mState == TransferData::TRANSFER_FAILED)
+            {
+                auto transfer = mMegaApi->getTransferByTag(d->mTag);
+                if(transfer)
+                {
+                    node = transfer->getPublicMegaNode();
+                }
+            }
+            else if(d->mNodeHandle)
+            {
+                node = ((MegaApplication*)qApp)->getMegaApi()->getNodeByHandle(d->mNodeHandle);
+            }
+
+            if (node)
+            {
+                char *handle = node->getBase64Handle();
+                char *key = node->getBase64Key();
+                if (handle && key)
+                {
+                    QString url = QString::fromUtf8("mega://#fm/") + QString::fromUtf8(handle);
+                    QtConcurrent::run(QDesktopServices::openUrl, QUrl(url));
+                }
+                delete [] key;
+                delete [] handle;
+                delete node;
+            }
+        }
+    }
+}
+
 void TransfersModel::openFolderByIndex(const QModelIndex& index)
 {
     QtConcurrent::run([=]
@@ -918,8 +971,7 @@ void TransfersModel::cancelTransfers(const QModelIndexList& indexes, QWidget* ca
 {
     if(indexes.isEmpty())
     {
-        mMegaApi->cancelTransfers(MegaTransfer::TYPE_UPLOAD);
-        mMegaApi->cancelTransfers(MegaTransfer::TYPE_DOWNLOAD);
+        bool someTransfersAreNotCancelable(false);
 
         auto count = rowCount(DEFAULT_IDX);
         for (auto row = 0; row < count;++row)
@@ -931,12 +983,20 @@ void TransfersModel::cancelTransfers(const QModelIndexList& indexes, QWidget* ca
             {
                 if (!d->isCancelable())
                 {
-                    QMegaMessageBox::warning(canceledFrom, QString::fromUtf8("MEGAsync"),
-                                             tr("Some Transfers cannot be cancelled or cleared"),
-                                             QMessageBox::Ok);
+                    someTransfersAreNotCancelable = true;
                     break;
                 }
             }
+        }
+
+        mMegaApi->cancelTransfers(MegaTransfer::TYPE_UPLOAD);
+        mMegaApi->cancelTransfers(MegaTransfer::TYPE_DOWNLOAD);
+
+        if(someTransfersAreNotCancelable)
+        {
+            QMegaMessageBox::warning(canceledFrom, QString::fromUtf8("MEGAsync"),
+                                     tr("Some Transfers cannot be cancelled or cleared. "),
+                                     QMessageBox::Ok);
         }
     }
     else

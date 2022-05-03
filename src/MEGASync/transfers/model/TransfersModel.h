@@ -132,6 +132,7 @@ public:
                   const QModelIndex& destinationParent, int destinationChild);
 
     void getLinks(QList<int>& rows);
+    void openInMEGA(QList<int>& rows);
     void openFolderByIndex(const QModelIndex& index);
     void openFolderByTag(TransferTag tag);
     void retryTransferByIndex(const QModelIndex& index);

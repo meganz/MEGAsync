@@ -29,6 +29,7 @@ MegaTransferView::MegaTransferView(QWidget* parent) :
     mMoveToBottomAction(nullptr),
     mCancelAction(nullptr),
     mGetLinkAction(nullptr),
+    mOpenInMEGAAction(nullptr),
     mOpenItemAction(nullptr),
     mShowInFolderAction(nullptr),
     mClearAction(nullptr)
@@ -59,6 +60,7 @@ void MegaTransferView::disableGetLink(bool disable)
 {
     mDisableLink = disable;
     mGetLinkAction->setEnabled(!disable);
+    mOpenInMEGAAction->setEnabled(!disable);
 }
 
 QModelIndexList MegaTransferView::getTransfers(bool onlyVisible, TransferData::TransferStates state)
@@ -423,6 +425,16 @@ void MegaTransferView::createContextMenu()
                                  tr("Get link"), this);
     connect(mGetLinkAction, &QAction::triggered, this, &MegaTransferView::getLinkClicked);
 
+    if (mOpenInMEGAAction)
+    {
+        mOpenInMEGAAction->deleteLater();
+        mOpenInMEGAAction = nullptr;
+    }
+
+    mOpenInMEGAAction = new QAction(QIcon(QLatin1String(":/images/ico_open_MEGA.png")),
+                                 tr("Open in MEGA"), this);
+    connect(mOpenInMEGAAction, &QAction::triggered, this, &MegaTransferView::openInMEGAClicked);
+
     if (mOpenItemAction)
     {
         mOpenItemAction->deleteLater();
@@ -459,6 +471,7 @@ void MegaTransferView::createContextMenu()
 
     mContextMenu->addAction(mOpenItemAction);
     mContextMenu->addAction(mShowInFolderAction);
+    mContextMenu->addAction(mOpenInMEGAAction);
 
     mContextMenu->addSeparator();
 
@@ -527,6 +540,7 @@ void MegaTransferView::updateContextMenu(bool enablePause, bool enableResume, bo
     }
 
     mGetLinkAction->setVisible(showLink);
+    mOpenInMEGAAction->setVisible(showLink);
     mOpenItemAction->setVisible(showOpen);
     mShowInFolderAction->setVisible(showShowInFolder);
 
@@ -861,6 +875,32 @@ void MegaTransferView::getLinkClicked()
     if (!rows.isEmpty())
     {
         mParentTransferWidget->getModel()->getLinks(rows);
+    }
+
+    clearSelection();
+}
+
+void MegaTransferView::openInMEGAClicked()
+{
+    if (mDisableLink)
+    {
+        return;
+    }
+
+    QList<int> rows;
+    auto proxy(qobject_cast<QSortFilterProxyModel*>(model()));
+
+    const auto indexes (proxy ?
+                            proxy->mapSelectionToSource(selectionModel()->selection()).indexes()
+                          : selectionModel()->selection().indexes());
+    for (auto index : indexes)
+    {
+        rows.push_back(index.row());
+    }
+
+    if (!rows.isEmpty())
+    {
+        mParentTransferWidget->getModel()->openInMEGA(rows);
     }
 
     clearSelection();

@@ -43,7 +43,7 @@ void Utilities::initializeExtensions()
 
     extensionIcons[QString::fromAscii("mp3")] = extensionIcons[QString::fromAscii("wav")]  = extensionIcons[QString::fromAscii("3ga")]  =
                             extensionIcons[QString::fromAscii("aif")]  = extensionIcons[QString::fromAscii("aiff")] =
-                            extensionIcons[QString::fromAscii("flac")] = extensionIcons[QString::fromAscii("iff")]  =
+                            extensionIcons[QString::fromAscii("flac")] = extensionIcons[QString::fromAscii("iff")]  = extensionIcons[QString::fromAscii("ogg")] =
                             extensionIcons[QString::fromAscii("m4a")]  = extensionIcons[QString::fromAscii("wma")]  =  QString::fromAscii("audio.png");
 
     extensionIcons[QString::fromAscii("dxf")] = extensionIcons[QString::fromAscii("dwg")] =  QString::fromAscii("cad.png");
@@ -157,9 +157,43 @@ void Utilities::initializeFileTypes()
             = FileType::TYPE_VIDEO;
     fileTypes[getExtensionPixmapName(QLatin1Literal("a.tar"), QString())]
             = FileType::TYPE_ARCHIVE;
+    fileTypes[getExtensionPixmapName(QLatin1Literal("a.torrent"), QString())]
+            = FileType::TYPE_ARCHIVE;
+    fileTypes[getExtensionPixmapName(QLatin1Literal("a.dmg"), QString())]
+            = FileType::TYPE_ARCHIVE;
+    fileTypes[getExtensionPixmapName(QLatin1Literal("a.xd"), QString())]
+            = FileType::TYPE_ARCHIVE;
+    fileTypes[getExtensionPixmapName(QLatin1Literal("a.sketch"), QString())]
+            = FileType::TYPE_ARCHIVE;
     fileTypes[getExtensionPixmapName(QLatin1Literal("a.odt"), QString())]
             = FileType::TYPE_DOCUMENT;
+    fileTypes[getExtensionPixmapName(QLatin1Literal("a.pdf"), QString())]
+            = FileType::TYPE_DOCUMENT;
+    fileTypes[getExtensionPixmapName(QLatin1Literal("a.doc"), QString())]
+            = FileType::TYPE_DOCUMENT;
+    fileTypes[getExtensionPixmapName(QLatin1Literal("a.ods"), QString())]
+            = FileType::TYPE_DOCUMENT;
+    fileTypes[getExtensionPixmapName(QLatin1Literal("a.odt"), QString())]
+            = FileType::TYPE_DOCUMENT;
+    fileTypes[getExtensionPixmapName(QLatin1Literal("a.ppt"), QString())]
+            = FileType::TYPE_DOCUMENT;
+    fileTypes[getExtensionPixmapName(QLatin1Literal("a.pages"), QString())]
+            = FileType::TYPE_DOCUMENT;
+    fileTypes[getExtensionPixmapName(QLatin1Literal("a.numbers"), QString())]
+            = FileType::TYPE_DOCUMENT;
+    fileTypes[getExtensionPixmapName(QLatin1Literal("a.key"), QString())]
+            = FileType::TYPE_DOCUMENT;
     fileTypes[getExtensionPixmapName(QLatin1Literal("a.png"), QString())]
+            = FileType::TYPE_IMAGE;
+    fileTypes[getExtensionPixmapName(QLatin1Literal("a.jpg"), QString())]
+            = FileType::TYPE_IMAGE;
+    fileTypes[getExtensionPixmapName(QLatin1Literal("a.ai"), QString())]
+            = FileType::TYPE_IMAGE;
+    fileTypes[getExtensionPixmapName(QLatin1Literal("a.abr"), QString())]
+            = FileType::TYPE_IMAGE;
+    fileTypes[getExtensionPixmapName(QLatin1Literal("a.3fr"), QString())]
+            = FileType::TYPE_IMAGE;
+    fileTypes[getExtensionPixmapName(QLatin1Literal("a.svg"), QString())]
             = FileType::TYPE_IMAGE;
     fileTypes[getExtensionPixmapName(QLatin1Literal("a.bin"), QString())]
             = FileType::TYPE_OTHER;
