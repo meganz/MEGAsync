@@ -18,9 +18,7 @@ const int CANCEL_THRESHOLD_THREAD = 100;
 
 //LISTENER THREAD
 TransferThread::TransferThread()
-{
-
-}
+{}
 
 TransferThread::TransfersToProcess TransferThread::processTransfers()
 {
@@ -89,7 +87,6 @@ QExplicitlySharedDataPointer<TransferData> TransferThread::createData(MegaTransf
 
     return d;
 }
-
 
 bool TransferThread::checkIfRepeatedAndSubstitute(QMap<int, QExplicitlySharedDataPointer<TransferData>>& dataMap, MegaTransfer* transfer)
 {
@@ -653,7 +650,6 @@ void TransfersModel::processActiveTransfers(QList<QExplicitlySharedDataPointer<T
 
 void TransfersModel::processUpdateTransfers()
 {
-    QList<int> rowsToUpdate;
     QList<QExplicitlySharedDataPointer<TransferData>> transfersFinished;
     QModelIndexList rowsToRemove;
 
@@ -678,22 +674,17 @@ void TransfersModel::processUpdateTransfers()
                 {
                     updateTransferPriority((*it));
                     mTransfers[row] = (*it);
-                    rowsToUpdate.append(row);
+                    sendDataChanged(row);
                 }
             }
             else
             {
                 mTransfers[row] = (*it);
-                rowsToUpdate.append(row);
+                sendDataChanged(row);
             }
         }
 
         mTransfersToProcess.updateTransfersByTag.erase(it++);
-    }
-
-    foreach(auto& row, rowsToUpdate)
-    {
-        sendDataChanged(row);
     }
 
     if(!transfersFinished.isEmpty())
