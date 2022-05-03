@@ -89,6 +89,9 @@ public:
 
     virtual void removeTransferByTag(int transferTag) = 0;
     virtual void removeAllTransfers() = 0;
+
+    void retryAllTransfers();
+
     virtual mega::MegaTransfer *getTransferByTag(int tag) = 0;
 
     QCache<int, TransferItem> transferItems;

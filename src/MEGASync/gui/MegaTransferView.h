@@ -69,6 +69,7 @@ private slots:
     void clearTransferClicked();
     void clearAllTransferClicked();
 
+    void retryAllFailedTransferClicked();
 signals:
     void showContextMenu(QPoint pos);
 };

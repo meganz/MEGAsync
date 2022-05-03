@@ -66,7 +66,7 @@
   border: none;
 }
 
-#bClearAll:disabled, #bPause:disabled, #bAdd:disabled
+#bClearAll:disabled, #bPause:disabled, #bAdd:disabled, bRetryAll:disabled
 {
 	color: rgba(119, 119, 119, 30%);
 }
@@ -89,7 +89,7 @@
 
 }
 
-#bAdd:hover, #bPause::hover, #bClearAll::hover
+#bAdd:hover, #bPause::hover, #bClearAll::hover, bRetryAll:hover
 {
   border: 1px solid rgba(0, 0, 0, 20%);
   border-radius: 3px;
@@ -98,7 +98,7 @@
 
 }
 
-#bAdd:pressed, #bPause::pressed, #bClearAll::pressed
+#bAdd:pressed, #bPause::pressed, #bClearAll::pressed, bRetryAll:pressed
 {
   background-color: rgba(0, 0, 0, 10%);
   border: 1px solid rgba(0, 0, 0, 20%);
@@ -118,7 +118,7 @@
   font-style: normal;
   color: #ffffff;
 }
-#bClose::hover
+#bClose::hover, bRetryAll::hover
 {
   border: 1px solid rgba(0, 0, 0, 60%);
   border-radius: 3px;
@@ -126,7 +126,7 @@
                                       stop: 0 #999999, stop: 1 #aaaaaa);
 }
 
-#bClose::pressed
+#bClose::pressed, bRetryAll::pressed
 {
   border: 1px solid rgba(0, 0, 0, 60%);
   border-radius: 3px;
@@ -786,7 +786,42 @@ border-top: 1px solid rgba(0, 0, 0, 10%);
          <string>Clear all</string>
         </property>
         <property name="icon">
-         <iconset resource="../Resources_macx.qrc">
+         <iconset resource="../Resources_linux.qrc">
+          <normaloff>:/images/clear_ico.png</normaloff>:/images/clear_ico.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>24</width>
+          <height>24</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="bRetryAll">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>120</width>
+          <height>32</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>32</height>
+         </size>
+        </property>
+        <property name="cursor">
+         <cursorShape>ArrowCursor</cursorShape>
+        </property>
+        <property name="text">
+         <string>Clear all</string>
+        </property>
+        <property name="icon">
+         <iconset resource="../Resources_linux.qrc">
           <normaloff>:/images/clear_ico.png</normaloff>:/images/clear_ico.png</iconset>
         </property>
         <property name="iconSize">

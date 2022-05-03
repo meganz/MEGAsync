@@ -63,6 +63,11 @@ void TransfersWidget::clearTransfers()
     if (model) model->removeAllTransfers();
 }
 
+void TransfersWidget::retryTransfers()
+{
+    model->retryAllTransfers();
+}
+
 TransfersWidget::~TransfersWidget()
 {
     delete ui;

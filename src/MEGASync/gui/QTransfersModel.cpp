@@ -82,3 +82,8 @@ QTransfersModel::~QTransfersModel()
 {
     qDeleteAll(transfers);
 }
+
+void QTransfersModel::retryAllTransfers()
+{
+  // Interface stub
+}

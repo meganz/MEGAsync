@@ -61,7 +61,7 @@ private:
     ThreadPool* mThreadPool;
 
     void createAddMenu();
-    void onTransfersActive(bool exists);  
+    void onTransfersActive(bool clearExists, bool retryExists);
 
 public slots:
     void updateState();
@@ -77,6 +77,8 @@ private slots:
     void on_bClearAll_clicked();
 
     void refreshFinishedTime();
+
+    void on_bRetryAll_clicked();
 
 protected:
     void changeEvent(QEvent *event);

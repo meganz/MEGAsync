@@ -378,6 +378,7 @@ void QCustomTransfersModel::updateActiveTransfer(MegaApi *api, MegaTransfer *new
     }
 }
 
+
 transfer_it QCustomTransfersModel::getInsertPosition(MegaTransfer *transfer)
 {
     transfer_it it = transferOrder.begin();

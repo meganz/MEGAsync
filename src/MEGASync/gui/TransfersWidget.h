@@ -25,6 +25,8 @@ public:
     void setupTransfers(std::shared_ptr<mega::MegaTransferData> transferData, int type);
     void refreshTransferItems();
     void clearTransfers();
+
+    void retryTransfers();
     void pausedTransfers(bool paused);
     void disableGetLink(bool disable);
     QTransfersModel *getModel();

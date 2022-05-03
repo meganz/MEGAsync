@@ -526,21 +526,21 @@ void TransferManager::updateState()
     QWidget *w = ui->wTransfers->currentWidget();
     if (w == ui->wActiveTransfers)
     {
-        onTransfersActive(ui->wActiveTransfers->areTransfersActive());
+        onTransfersActive(ui->wActiveTransfers->areTransfersActive(), false);
     }
     else if (w == ui->wDownloads)
     {
-        onTransfersActive(ui->wDownloads->areTransfersActive());
+        onTransfersActive(ui->wDownloads->areTransfersActive(), false);
         ui->wDownloads->pausedTransfers(preferences->getDownloadsPaused());
     }
     else if (w == ui->wUploads)
     {
-        onTransfersActive(ui->wUploads->areTransfersActive());
+        onTransfersActive(ui->wUploads->areTransfersActive(), false);
         ui->wUploads->pausedTransfers(preferences->getUploadsPaused());
     }
     else if (w == ui->wCompleted)
     {
-        onTransfersActive(ui->wCompleted->areTransfersActive());
+        onTransfersActive(ui->wCompleted->areTransfersActive(), true);
     }
 }
 
@@ -623,9 +623,9 @@ void TransferManager::refreshFinishedTime()
     }
 }
 
-void TransferManager::onTransfersActive(bool exists)
+void TransferManager::onTransfersActive(bool clearExists, bool retryExists)
 {
-    ui->bClearAll->setEnabled(exists);
+    ui->bClearAll->setEnabled(clearExists);
 }
 
 void TransferManager::updateNumberOfCompletedTransfers(int num)
@@ -700,3 +700,12 @@ void TransferManager::mouseReleaseEvent(QMouseEvent*)
     dragPosition = QPoint(-1, -1);
 }
 
+
+void TransferManager::on_bRetryAll_clicked()
+{
+    QWidget *w = ui->wTransfers->currentWidget();
+    if(w == ui->wCompleted)
+    {
+        ui->wCompleted->retryTransfers();
+    }
+}

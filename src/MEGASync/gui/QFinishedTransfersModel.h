@@ -26,10 +26,12 @@ protected:
 
 private slots:
     void refreshTransferItem(int tag);
+    void retryAllFailedTransfers(); 
 
 public slots:
     void removeAllTransfers();
     void removeTransferByTag(int transferTag);
+    void retryAllTransfers();
 };
 
 #endif // QFINISHEDTRANSFERSMODEL_H
