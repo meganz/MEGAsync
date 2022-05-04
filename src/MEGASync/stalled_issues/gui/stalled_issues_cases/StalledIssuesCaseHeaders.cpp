@@ -160,6 +160,20 @@ void ApplyMoveNeedsOtherSideParentFolderToExistHeader::refreshCaseUi()
                             .arg(getData().isCloud() ? tr("on the cloud") : tr("on your device")));
 }
 
+//ApplyMoveNeedsOtherSideParentFolderToExist
+ApplyMoveIsBlockedByExistingItemHeader::ApplyMoveIsBlockedByExistingItemHeader(QWidget *parent)
+    : StalledIssueHeader(parent)
+{}
+
+void ApplyMoveIsBlockedByExistingItemHeader::refreshCaseUi()
+{
+    setLeftTitleText(tr("Can´t move"));
+    addFileName();
+    setRightTitleText(tr("to the selected location"));
+    setTitleDescriptionText(tr("Something is blocking the action on the destination folder."));
+}
+
+
 //MoveNeedsDestinationNodeProcessing
 MoveNeedsDestinationNodeProcessingHeader::MoveNeedsDestinationNodeProcessingHeader(QWidget *parent)
     : StalledIssueHeader(parent)
@@ -241,6 +255,29 @@ void MoveTargetNameTooLongHeader::refreshCaseUi()
                                "\nnames up to %1 characters.").arg(QString::number(maxCharacters)));
 }
 
+//MoveTargetNameTooLongHeader
+CreateFolderNameTooLongHeader::CreateFolderNameTooLongHeader(QWidget *parent)
+    : StalledIssueHeader(parent)
+{}
+
+void CreateFolderNameTooLongHeader::refreshCaseUi()
+{
+    auto maxCharacters(0);
+
+#ifdef Q_OS_MACX
+    maxCharacters = NAME_MAX;
+#elif defined(_WIN32)
+    maxCharacters = MAX_PATH;
+#elif defined (Q_OS_LINUX)
+    maxCharacters = NAME_MAX;
+#endif
+
+    setLeftTitleText(tr("Unable to sync"));
+    addFileName();
+    setTitleDescriptionText(tr("Folder name too long. Your Operating System only supports folder"
+                               "\nnames up to %1 characters.").arg(QString::number(maxCharacters)));
+}
+
 //Matched Against Unidentified Item
 MatchedAgainstUnidentifiedItemHeader::MatchedAgainstUnidentifiedItemHeader(QWidget *parent)
     : StalledIssueHeader(parent)
@@ -260,7 +297,6 @@ void MatchedAgainstUnidentifiedItemHeader::on_actionButton_clicked()
     ignoreFile();
 }
 
-
 //Moving download to target
 MovingDownloadToTargetHeader::MovingDownloadToTargetHeader(QWidget *parent)
     : StalledIssueHeader(parent)
@@ -274,4 +310,70 @@ void MovingDownloadToTargetHeader::refreshCaseUi()
     setTitleDescriptionText(tr("Moving the downloaded file to its final destination failed."));
 }
 
+//Upsync needs target folder
+UpsyncNeedsTargetFolderHeader::UpsyncNeedsTargetFolderHeader(QWidget *parent)
+    : StalledIssueHeader(parent)
+{
+}
+
+void UpsyncNeedsTargetFolderHeader::refreshCaseUi()
+{
+    setLeftTitleText(tr("Can´t upload"));
+    addFileName();
+    setRightTitleText(tr("to the selected location"));
+    setTitleDescriptionText(tr("Cannot reach the destination folder."));
+}
+
+//Downsync needs target folder
+DownsyncNeedsTargetFolderHeader::DownsyncNeedsTargetFolderHeader(QWidget *parent)
+    : StalledIssueHeader(parent)
+{
+}
+
+void DownsyncNeedsTargetFolderHeader::refreshCaseUi()
+{
+    setLeftTitleText(tr("Can´t download"));
+    addFileName();
+    setRightTitleText(tr("to the selected location"));
+    setTitleDescriptionText(tr("Cannot reach the destination folder."));
+}
+
+//WaitingForFileToStopChanging
+WaitingForFileToStopChangingHeader::WaitingForFileToStopChangingHeader(QWidget *parent)
+    : StalledIssueHeader(parent)
+{
+}
+
+void WaitingForFileToStopChangingHeader::refreshCaseUi()
+{
+    setLeftTitleText(tr("Waiting to upload"));
+    addFileName();
+    setTitleDescriptionText(tr("Waiting for other processes to complete."));
+}
+
+//SymlinksNotSupported
+SymlinksNotSuppoertedHeader::SymlinksNotSuppoertedHeader(QWidget *parent)
+    : StalledIssueHeader(parent)
+{
+}
+
+void SymlinksNotSuppoertedHeader::refreshCaseUi()
+{
+    setLeftTitleText(tr("Cannot access"));
+    addFileName();
+    setTitleDescriptionText(tr("Filesystem error preventing folder access: Symlink not supported."));
+}
+
+//SymlinksNotSupported
+FolderMatchedAgainstFileHeader::FolderMatchedAgainstFileHeader(QWidget *parent)
+    : StalledIssueHeader(parent)
+{
+}
+
+void FolderMatchedAgainstFileHeader::refreshCaseUi()
+{
+    setLeftTitleText(tr("Cannot sync"));
+    addFileName();
+    setTitleDescriptionText(tr("Cannot sync folders against files."));
+}
 

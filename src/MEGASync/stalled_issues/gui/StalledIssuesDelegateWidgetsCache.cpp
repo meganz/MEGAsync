@@ -85,10 +85,15 @@ StalledIssueBaseDelegateWidget *StalledIssuesDelegateWidgetsCache::createBodyWid
         case mega::MegaSyncStall::SyncStallReason::UnableToLoadIgnoreFile:
         case mega::MegaSyncStall::SyncStallReason::SyncItemExceedsSupportedTreeDepth:
         case mega::MegaSyncStall::SyncStallReason::MoveTargetNameTooLong:
+        case mega::MegaSyncStall::SyncStallReason::CreateFolderNameTooLong:
         case mega::MegaSyncStall::SyncStallReason::MatchedAgainstUnidentifiedItem:
         case mega::MegaSyncStall::SyncStallReason::DeleteOrMoveWaitingOnScanning:
         case mega::MegaSyncStall::SyncStallReason::LocalFolderNotScannable:
         case mega::MegaSyncStall::SyncStallReason::MovingDownloadToTarget:
+        case mega::MegaSyncStall::SyncStallReason::UpsyncNeedsTargetFolder:
+        case mega::MegaSyncStall::SyncStallReason::DownsyncNeedsTargetFolder:
+        case mega::MegaSyncStall::SyncStallReason::WaitingForFileToStopChanging:
+        case mega::MegaSyncStall::SyncStallReason::SymlinksNotSupported:
         {
             auto filePath  = new StalledIssueFilePath(parent);
             filePath->setIndent(StalledIssueHeader::BODY_INDENT);
@@ -103,7 +108,9 @@ StalledIssueBaseDelegateWidget *StalledIssuesDelegateWidgetsCache::createBodyWid
             break;
         }
         case mega::MegaSyncStall::SyncStallReason::ApplyMoveNeedsOtherSideParentFolderToExist:
+        case mega::MegaSyncStall::SyncStallReason::ApplyMoveIsBlockedByExistingItem:
         case mega::MegaSyncStall::SyncStallReason::MoveNeedsDestinationNodeProcessing:
+        case mega::MegaSyncStall::SyncStallReason::FolderMatchedAgainstFile:
         {
             item = new OtherSideMissingOrBlocked(parent);
             break;
@@ -145,7 +152,7 @@ StalledIssueHeader *StalledIssuesDelegateWidgetsCache::createHeaderWidget(const 
         }
         case mega::MegaSyncStall::SyncStallReason::DeleteOrMoveWaitingOnScanning:
         {
-            header  = new MoveOrRenameFailedHeader(parent);
+            header  = new DeleteOrMoveWaitingOnScanningHeader(parent);
             break;
         }
         case mega::MegaSyncStall::SyncStallReason::SyncItemExceedsSupportedTreeDepth:
@@ -156,6 +163,11 @@ StalledIssueHeader *StalledIssuesDelegateWidgetsCache::createHeaderWidget(const 
         case mega::MegaSyncStall::SyncStallReason::MoveTargetNameTooLong:
         {
             header  = new MoveTargetNameTooLongHeader(parent);
+            break;
+        }
+        case mega::MegaSyncStall::SyncStallReason::CreateFolderNameTooLong:
+        {
+            header  = new CreateFolderNameTooLongHeader(parent);
             break;
         }
         case mega::MegaSyncStall::SyncStallReason::MatchedAgainstUnidentifiedItem:
@@ -213,9 +225,39 @@ StalledIssueHeader *StalledIssuesDelegateWidgetsCache::createHeaderWidget(const 
             header  = new ApplyMoveNeedsOtherSideParentFolderToExistHeader(parent);
             break;
         }
+        case mega::MegaSyncStall::SyncStallReason::ApplyMoveIsBlockedByExistingItem:
+        {
+            header  = new ApplyMoveIsBlockedByExistingItemHeader(parent);
+            break;
+        }
         case mega::MegaSyncStall::SyncStallReason::MoveNeedsDestinationNodeProcessing:
         {
             header  = new MoveNeedsDestinationNodeProcessingHeader(parent);
+            break;
+        }
+        case mega::MegaSyncStall::SyncStallReason::UpsyncNeedsTargetFolder:
+        {
+            header  = new UpsyncNeedsTargetFolderHeader(parent);
+            break;
+        }
+        case mega::MegaSyncStall::SyncStallReason::DownsyncNeedsTargetFolder:
+        {
+            header  = new DownsyncNeedsTargetFolderHeader(parent);
+            break;
+        }
+        case mega::MegaSyncStall::SyncStallReason::WaitingForFileToStopChanging:
+        {
+            header  = new WaitingForFileToStopChangingHeader(parent);
+            break;
+        }
+        case mega::MegaSyncStall::SyncStallReason::SymlinksNotSupported:
+        {
+            header  = new SymlinksNotSuppoertedHeader(parent);
+            break;
+        }
+        case mega::MegaSyncStall::SyncStallReason::FolderMatchedAgainstFile:
+        {
+            header  = new FolderMatchedAgainstFileHeader(parent);
             break;
         }
         default:

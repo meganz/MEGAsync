@@ -134,6 +134,18 @@ protected:
     void refreshCaseUi() override;
 };
 
+//ApplyMoveIsBlockedByExistingItem
+class ApplyMoveIsBlockedByExistingItemHeader : public StalledIssueHeader
+{
+    Q_OBJECT
+
+public:
+    ApplyMoveIsBlockedByExistingItemHeader(QWidget *parent = nullptr);
+
+protected:
+    void refreshCaseUi() override;
+};
+
 //MoveNeedsDestinationNodeProcessing
 class MoveNeedsDestinationNodeProcessingHeader : public StalledIssueHeader
 {
@@ -185,6 +197,18 @@ protected:
     void refreshCaseUi() override;
 };
 
+//Create Folder Name Too Long
+class CreateFolderNameTooLongHeader : public StalledIssueHeader
+{
+    Q_OBJECT
+
+public:
+    CreateFolderNameTooLongHeader(QWidget *parent = nullptr);
+
+protected:
+    void refreshCaseUi() override;
+};
+
 //Delete or Move Waiting onScanning
 class DeleteOrMoveWaitingOnScanningHeader : public StalledIssueHeader
 {
@@ -219,6 +243,66 @@ class MovingDownloadToTargetHeader : public StalledIssueHeader
 
 public:
     MovingDownloadToTargetHeader(QWidget *parent = nullptr);
+
+protected:
+    void refreshCaseUi() override;
+};
+
+//Upsync needs target folder
+class UpsyncNeedsTargetFolderHeader : public StalledIssueHeader
+{
+    Q_OBJECT
+
+public:
+    UpsyncNeedsTargetFolderHeader(QWidget *parent = nullptr);
+
+protected:
+    void refreshCaseUi() override;
+};
+
+//Downsync needs target folder
+class DownsyncNeedsTargetFolderHeader : public StalledIssueHeader
+{
+    Q_OBJECT
+
+public:
+    DownsyncNeedsTargetFolderHeader(QWidget *parent = nullptr);
+
+protected:
+    void refreshCaseUi() override;
+};
+
+//WaitingForFileToStopChanging
+class WaitingForFileToStopChangingHeader : public StalledIssueHeader
+{
+    Q_OBJECT
+
+public:
+    WaitingForFileToStopChangingHeader(QWidget *parent = nullptr);
+
+protected:
+    void refreshCaseUi() override;
+};
+
+//SymlinksNotSupported
+class SymlinksNotSuppoertedHeader : public StalledIssueHeader
+{
+    Q_OBJECT
+
+public:
+    SymlinksNotSuppoertedHeader(QWidget *parent = nullptr);
+
+protected:
+    void refreshCaseUi() override;
+};
+
+//Folder matched against file
+class FolderMatchedAgainstFileHeader : public StalledIssueHeader
+{
+    Q_OBJECT
+
+public:
+    FolderMatchedAgainstFileHeader(QWidget *parent = nullptr);
 
 protected:
     void refreshCaseUi() override;
