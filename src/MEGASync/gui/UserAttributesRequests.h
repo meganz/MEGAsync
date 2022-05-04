@@ -16,10 +16,9 @@ public:
 
     void onRequestFinish(mega::MegaApi *, mega::MegaRequest *incoming_request, mega::MegaError *) override;
     void requestAttribute() override;
-    void updateAttributes(mega::MegaUser* user);
+    void updateAttributes(mega::MegaUser* user) override;
 
     QString getFullName();
-
 
 private:
     QString mFirstName;
@@ -37,7 +36,7 @@ public:
 
     void onRequestFinish(mega::MegaApi *, mega::MegaRequest *incoming_request, mega::MegaError *) override;
     void requestAttribute() override;
-    void updateAttributes(mega::MegaUser* user);
+    void updateAttributes(mega::MegaUser* user) override;
 
     QPixmap GetPixmap(int diameter);
 

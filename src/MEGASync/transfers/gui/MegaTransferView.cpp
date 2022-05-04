@@ -224,7 +224,7 @@ void MegaTransferView::onCancelAllTransfers()
     cancelAndClearAllTransfers(true, false);
 }
 
-void MegaTransferView::onClearVisibleTransfers()
+void MegaTransferView::onClearAllTransfers()
 {
     bool singleTransfer = isSingleTransfer(true);
 
@@ -258,6 +258,32 @@ void MegaTransferView::onCancelAndClearAllTransfers()
     }
 
     cancelAndClearAllTransfers(true, true);
+}
+
+void MegaTransferView::onCancelAndClearVisibleTransfers()
+{
+    bool singleTransfer = isSingleTransfer(true);
+
+    QPointer<MegaTransferView> dialog = QPointer<MegaTransferView>(this);
+
+    if (QMegaMessageBox::warning(this, QString::fromUtf8("MEGAsync"),
+                             tr("Are you sure you want to cancel and clear this(these) transfer(s)?", "", !singleTransfer),
+                             QMessageBox::Yes | QMessageBox::No, QMessageBox::No)
+            != QMessageBox::Yes
+            || !dialog)
+    {
+        return;
+    }
+
+    auto proxy (qobject_cast<QSortFilterProxyModel*>(model()));
+    auto sourceModel(qobject_cast<TransfersModel*>(proxy->sourceModel()));
+
+    auto indexes = getTransfers(true, TransferData::FINISHED_STATES_MASK);
+    sourceModel->clearTransfers(indexes);
+
+    //Cancel transfers
+    auto cancelIndexes = getTransfers(true);
+    sourceModel->cancelTransfers(cancelIndexes, this);
 }
 
 void MegaTransferView::cancelAndClearAllTransfers(bool cancel, bool clear)

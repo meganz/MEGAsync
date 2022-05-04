@@ -205,7 +205,7 @@ private:
 
 private:
     mega::MegaApi* mMegaApi;
-    Preferences* mPreferences;
+    std::shared_ptr<Preferences> mPreferences;
     QThread* mTransferEventThread;
     TransferThread* mTransferEventWorker;
     QTimer mTimer;

@@ -226,7 +226,7 @@ private:
 
     Ui::SettingsDialog* mUi;
     MegaApplication* mApp;
-    Preferences* mPreferences;
+    std::shared_ptr<Preferences> mPreferences;
     Controller* mController;
     Model* mModel;
     mega::MegaApi* mMegaApi;

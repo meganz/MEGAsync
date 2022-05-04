@@ -86,7 +86,7 @@ private:
     QTimer mScanningTimer;
     int mScanningAnimationIndex;
 
-    Preferences* mPreferences;
+    std::shared_ptr<Preferences> mPreferences;
     QPoint mDragPosition;
     QMap<TM_TAB, QFrame*> mTabFramesToggleGroup;
     QMap<TM_TAB, QLabel*> mNumberLabelsGroup;

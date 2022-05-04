@@ -18,7 +18,7 @@ class AccountDetailsDialog : public QDialog, public IStorageObserver
 public:
     explicit AccountDetailsDialog(QWidget* parent = 0);
     ~AccountDetailsDialog();
-    void refresh(Preferences *details);
+    void refresh();
     void updateStorageElements();
 
 private:

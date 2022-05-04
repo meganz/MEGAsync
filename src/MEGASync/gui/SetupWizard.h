@@ -102,7 +102,7 @@ protected:
     Ui::SetupWizard *ui;
     MegaApplication *app;
     mega::MegaApi *megaApi;
-    Preferences *preferences;
+    std::shared_ptr<Preferences> preferences;
     uint64_t selectedMegaFolderHandle;
     QString sessionKey;
     mega::QTMegaRequestListener *delegateListener;

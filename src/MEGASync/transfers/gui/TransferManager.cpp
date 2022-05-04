@@ -395,11 +395,11 @@ void TransferManager::onCancelVisibleRows()
         }
         else if(mCurrentTab == COMPLETED_TAB)
         {
-            transfersView->onClearVisibleTransfers();
+            transfersView->onClearAllTransfers();
         }
         else if(mCurrentTab > TYPES_TAB_BASE && mCurrentTab < TYPES_LAST)
         {
-            transfersView->onCancelAndClearAllTransfers();
+            transfersView->onCancelAndClearVisibleTransfers();
         }
         else
         {

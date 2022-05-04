@@ -2,7 +2,7 @@
 #include "QMegaMessageBox.h"
 #include "MegaApplication.h"
 #include "AvatarWidget.h"
-#include "Model.h"
+#include "model/Model.h"
 #include "MegaApplication.h"
 #include "mega/utils.h"
 
@@ -16,17 +16,17 @@ using namespace mega;
 MegaItem::MegaItem(std::unique_ptr<MegaNode> node, MegaItem *parentItem, bool showFiles) :
     QObject(parentItem),
     mShowFiles(showFiles),
-    mOwnerFirstName(QString::fromUtf8("")),
-    mOwnerLastName(QString::fromUtf8("")),
-    mOwnerEmail(QString::fromUtf8("")),
+    mOwnerFirstName(QString()),
+    mOwnerLastName(QString()),
+    mOwnerEmail(QString()),
     mOwnerIcon(QPixmap()),
     mStatus(STATUS::NONE),
     mCameraFolder(false),
     mChatFilesFolder(false),
-    mChildrenSetted(false),
+    mChildrenSet(false),
     mNode(std::move(node)),
     mOwner(nullptr),
-    mDelegateListener(mega::make_unique<QTMegaRequestListener>(static_cast<MegaApplication*>(qApp)->getMegaApi(), this))
+    mDelegateListener(mega::make_unique<QTMegaRequestListener>(MegaSyncApp->getMegaApi(), this))
 { 
     if(isRoot() || mNode->isFile() || mNode->isInShare())
     {
@@ -49,7 +49,7 @@ MegaItem::MegaItem(std::unique_ptr<MegaNode> node, MegaItem *parentItem, bool sh
         {
             if(folder.startsWith(parent_item->getOwnerEmail()))
             {
-                folderList.append(folder.split(QString::fromUtf8(":")).last().prepend(QString::fromUtf8("/")));
+                folderList.append(folder.split(QLatin1Char(':')).last().prepend(QLatin1Char('/')));
             }
         }
         calculateSyncStatus(folderList);
@@ -67,12 +67,12 @@ std::shared_ptr<mega::MegaNode> MegaItem::getNode()
     return mNode;
 }
 
-void MegaItem::setChildren(MegaNodeList *children)
+void MegaItem::setChildren(std::shared_ptr<MegaNodeList> children)
 {
-    this->mChildrenSetted = true;
+    mChildrenSet = true;
     for (int i = 0; i < children->size(); i++)
     {
-        auto node = std::unique_ptr<MegaNode>(children->get(i));
+        auto node = std::unique_ptr<MegaNode>(children->get(i)->copy());
         if (!mShowFiles && node->getType() == MegaNode::TYPE_FILE)
         {
             break;
@@ -83,7 +83,7 @@ void MegaItem::setChildren(MegaNodeList *children)
 
 bool MegaItem::areChildrenSet()
 {
-    return mChildrenSetted;
+    return mChildrenSet;
 }
 
 MegaItem *MegaItem::getParent()
@@ -110,7 +110,7 @@ QString MegaItem::getOwnerName()
 {
     if(!mOwnerFirstName.isEmpty() && !mOwnerLastName.isEmpty())
     {
-        return mOwnerFirstName + QString::fromUtf8(" ") + mOwnerLastName;
+        return mOwnerFirstName + QLatin1Char(' ') + mOwnerLastName;
     }
     return mOwnerEmail;
 }
@@ -124,7 +124,7 @@ void MegaItem::setOwner(std::unique_ptr<mega::MegaUser> user)
 {
     mOwner = move(user);
     mOwnerEmail = QString::fromUtf8(mOwner->getEmail());
-    MegaApi* megaApi = static_cast<MegaApplication*>(qApp)->getMegaApi();
+    MegaApi* megaApi = MegaSyncApp->getMegaApi();
     if(megaApi)
     {
         megaApi->getUserAttribute(mOwner.get(), mega::MegaApi::USER_ATTR_FIRSTNAME, mDelegateListener.get());
@@ -137,7 +137,7 @@ void MegaItem::setOwner(std::unique_ptr<mega::MegaUser> user)
     {
         if(folder.startsWith(mOwnerEmail))
         {
-            folderList.append(folder.split(QString::fromUtf8(":")).last().prepend(QString::fromUtf8("/")));
+            folderList.append(folder.split(QLatin1Char(':')).last().prepend(QLatin1Char('/')));
         }
     }
     calculateSyncStatus(folderList);
@@ -155,14 +155,14 @@ QIcon MegaItem::getStatusIcons()
     {
     case STATUS::SYNC:
     {
-        statusIcons.addFile(QString::fromAscii("://images/Item-sync-press.png"), QSize(), QIcon::Selected); //normal style icon
-        statusIcons.addFile(QString::fromAscii("://images/Item-sync-rest.png"), QSize(), QIcon::Normal); //normal style icon
+        statusIcons.addFile(QLatin1String("://images/Item-sync-press.png"), QSize(), QIcon::Selected); //normal style icon
+        statusIcons.addFile(QLatin1String("://images/Item-sync-rest.png"), QSize(), QIcon::Normal); //normal style icon
         break;
     }
     case STATUS::SYNC_PARENT:
     {
-        statusIcons.addFile(QString::fromAscii("://images/Item-sync-press.png"), QSize(), QIcon::Selected); //normal style icon
-        statusIcons.addFile(QString::fromAscii("://images/node_selector/icon-small-sync-disabled.png"), QSize(), QIcon::Normal); //normal style icon
+        statusIcons.addFile(QLatin1String("://images/Item-sync-press.png"), QSize(), QIcon::Selected); //normal style icon
+        statusIcons.addFile(QLatin1String("://images/node_selector/icon-small-sync-disabled.png"), QSize(), QIcon::Normal); //normal style icon
         break;
     }
     default:
@@ -181,42 +181,42 @@ QIcon MegaItem::getFolderIcon()
         if(mCameraFolder)
         {
             QIcon icon;
-            icon.addFile(QString::fromAscii("://images/node_selector/small-camera-sync.png"), QSize(), QIcon::Normal);
-            icon.addFile(QString::fromAscii("://images/node_selector/small-folder-camera-sync-disabled.png"), QSize(), QIcon::Disabled);
+            icon.addFile(QLatin1String("://images/node_selector/small-camera-sync.png"), QSize(), QIcon::Normal);
+            icon.addFile(QLatin1String("://images/node_selector/small-folder-camera-sync-disabled.png"), QSize(), QIcon::Disabled);
             return icon;
         }
         else if(mChatFilesFolder)
         {
             QIcon icon;
-            icon.addFile(QString::fromAscii("://images/node_selector/small-chat-files.png"), QSize(), QIcon::Normal);
-            icon.addFile(QString::fromAscii("://images/node_selector/small-chat-files-disabled.png"), QSize(), QIcon::Disabled);
+            icon.addFile(QLatin1String("://images/node_selector/small-chat-files.png"), QSize(), QIcon::Normal);
+            icon.addFile(QLatin1String("://images/node_selector/small-chat-files-disabled.png"), QSize(), QIcon::Disabled);
             return icon;
         }
         else if (getNode()->isInShare())
         {
             QIcon icon;
-            icon.addFile(QString::fromAscii("://images/node_selector/small-folder-incoming.png"), QSize(), QIcon::Normal);
-            icon.addFile(QString::fromAscii("://images/node_selector/small-folder-incoming-disabled.png"), QSize(), QIcon::Disabled);
+            icon.addFile(QLatin1String("://images/node_selector/small-folder-incoming.png"), QSize(), QIcon::Normal);
+            icon.addFile(QLatin1String("://images/node_selector/small-folder-incoming-disabled.png"), QSize(), QIcon::Disabled);
             return icon;
         }
         else if (getNode()->isOutShare())
         {
             QIcon icon;
-            icon.addFile(QString::fromAscii("://images/node_selector/small-folder-outgoing.png"), QSize(), QIcon::Normal);
-            icon.addFile(QString::fromAscii("://images/node_selector/small-folder-outgoing_disabled.png"), QSize(), QIcon::Disabled);
+            icon.addFile(QLatin1String("://images/node_selector/small-folder-outgoing.png"), QSize(), QIcon::Normal);
+            icon.addFile(QLatin1String("://images/node_selector/small-folder-outgoing_disabled.png"), QSize(), QIcon::Disabled);
             return icon;
         }
         else if(isRoot())
         {
             QIcon icon;
-            icon.addFile(QString::fromAscii("://images/ico-cloud-drive.png"));
+            icon.addFile(QLatin1String("://images/ico-cloud-drive.png"));
             return icon;
         }
         else
         {
             QIcon icon;
-            icon.addFile(QString::fromAscii("://images/node_selector/small-folder.png"), QSize(), QIcon::Normal);
-            icon.addFile(QString::fromAscii("://images/node_selector/small-folder-disabled.png"), QSize(), QIcon::Disabled);
+            icon.addFile(QLatin1String("://images/node_selector/small-folder.png"), QSize(), QIcon::Normal);
+            icon.addFile(QLatin1String("://images/node_selector/small-folder-disabled.png"), QSize(), QIcon::Disabled);
             return icon;
         }
     }
@@ -279,7 +279,6 @@ void MegaItem::removeNode(std::shared_ptr<MegaNode> node)
         {
             MegaItem* item = mChildItems.takeAt(i);
             delete item;
-            item = nullptr;
             return;
         }
     }
@@ -287,12 +286,12 @@ void MegaItem::removeNode(std::shared_ptr<MegaNode> node)
 
 void MegaItem::displayFiles(bool enable)
 {
-    this->mShowFiles = enable;
+    mShowFiles = enable;
 }
 
 void MegaItem::setCameraFolder()
 {
-   mCameraFolder = true;
+    mCameraFolder = true;
 }
 
 void MegaItem::setChatFilesFolder()
@@ -320,8 +319,8 @@ void MegaItem::onRequestFinish(mega::MegaApi *api, mega::MegaRequest *request, m
     Q_UNUSED(api);
     if (e->getErrorCode() != MegaError::API_OK && e->getErrorCode() != MegaError::API_ENOENT)
     {
-        QMegaMessageBox::critical(nullptr, QString::fromUtf8("MEGAsync"), tr("Error") +
-                                  QString::fromUtf8(": ") + QCoreApplication::translate("MegaError", e->getErrorString()));
+        QMegaMessageBox::critical(nullptr, QLatin1String("MEGAsync"), tr("Error") +
+                                  QLatin1String(": ") + QCoreApplication::translate("MegaError", e->getErrorString()));
         return;
     }
     if(request->getType() == mega::MegaRequest::TYPE_GET_ATTR_USER)
@@ -358,7 +357,7 @@ void MegaItem::onRequestFinish(mega::MegaApi *api, mega::MegaRequest *request, m
             {
                 QFile::remove(fileRoute);
                 const char* color = nullptr;
-                if(mega::MegaApi* megaApi = static_cast<MegaApplication*>(qApp)->getMegaApi())
+                if(mega::MegaApi* megaApi = MegaSyncApp->getMegaApi())
                 {
                     color = megaApi->getUserAvatarColor(mOwner.get());
                 }
@@ -389,16 +388,16 @@ void MegaItem::calculateSyncStatus(const QStringList &folders)
 
     QString parentFolders;
     std::shared_ptr<MegaNode> n = mNode;
-    parentFolders.append(QString::fromUtf8("/"));
+    parentFolders.append(QLatin1Char('/'));
     parentFolders.append(QString::fromUtf8(n->getName()));
-    MegaApi* megaApi = static_cast<MegaApplication*>(qApp)->getMegaApi();
-    while(n->getParentHandle () != INVALID_HANDLE)
+    MegaApi* megaApi = MegaSyncApp->getMegaApi();
+    while(n->getParentHandle() != INVALID_HANDLE)
     {
         n = std::shared_ptr<MegaNode>(megaApi->getNodeByHandle(n->getParentHandle()));
         if(n->getType() != MegaNode::TYPE_ROOT)
         {
             parentFolders.prepend(QString::fromUtf8(n->getName()));
-            parentFolders.prepend(QString::fromUtf8("/"));
+            parentFolders.prepend(QLatin1Char('/'));
         }
     }
 
@@ -415,8 +414,7 @@ void MegaItem::calculateSyncStatus(const QStringList &folders)
     }
 }
 
-
 bool MegaItem::isRoot()
 {
-    return getNode()->getHandle() == static_cast<MegaApplication*>(qApp)->getRootNode()->getHandle();
+    return mNode->getHandle() == MegaSyncApp->getRootNode()->getHandle();
 }

@@ -1170,7 +1170,7 @@ background-color: #E2E2E2;
              <string notr="true"/>
             </property>
             <property name="text">
-             <string>Logging in ...</string>
+             <string>Logging in...</string>
             </property>
             <property name="alignment">
              <set>Qt::AlignCenter</set>
@@ -2071,7 +2071,7 @@ font-family: &quot;Lato&quot;;
 }</string>
          </property>
          <property name="text">
-          <string>Enjoy MEGAsync!</string>
+          <string>Enjoy MEGAsync</string>
          </property>
          <property name="alignment">
           <set>Qt::AlignHCenter|Qt::AlignTop</set>

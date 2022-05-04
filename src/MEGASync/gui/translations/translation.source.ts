@@ -549,7 +549,7 @@ Please enter a different name to identify this synced folder:</source>
     <name>BugReportDialog</name>
     <message>
         <source>Bug report</source>
-        <translatorcomment>Title of the dialog used to send bug reports to support team.</translatorcomment>
+        <translatorcomment>Title of the dialog used to send an issue report to support team.</translatorcomment>
         <translation>Report issue</translation>
     </message>
     <message>
@@ -1521,7 +1521,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>You&apos;re running out of storage space.</source>
         <translatorcomment>Label to inform the user that the account is running out of storage space.</translatorcomment>
-        <translation>You’re running out of space!</translation>
+        <translation>You&apos;re running out of storage space.</translation>
     </message>
     <message>
         <source>Upgrade to PRO now before your account runs full and your uploads to MEGA stop.</source>
@@ -1619,11 +1619,6 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation>%1 used</translation>
     </message>
     <message>
-        <source>Your data is at risk!</source>
-        <translatorcomment>Label to indicate that your data is at risk due to the current account is in over quota storage state for long time without fixing the situation.</translatorcomment>
-        <translation>Your data is at risk!</translation>
-    </message>
-    <message>
         <source>We have contacted you by email to [A] on [B] but you still have [C] files taking up [D] in your MEGA account, which requires you to have [E].</source>
         <translatorcomment>Informative label about account status regarding over quota storage. Placeholders will be replaced: [A] - user email, [B] - localized date list of emails sent to inform the user about the situation,  [C] - amount of files in the current account, [D] - amount of storage used and [E] - min PRO plan needed to fix the situation.</translatorcomment>
         <translation>We have contacted you by email to [A] on [B], but you still have [C] files taking up [D] in your MEGA account, which requires you to have [E].</translation>
@@ -1692,6 +1687,12 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <source>Open Settings</source>
         <translatorcomment>Button label to open MEGAsync preferences dialog (Linux and Windows).</translatorcomment>
         <translation>Open Settings</translation>
+    </message>
+    <message>
+        <source>Your data is at risk</source>
+        <translatorcomment>Label to indicate that your data is at risk due to the current account is in over quota storage state for long time without fixing the situation.
+</translatorcomment>
+        <translation>Your data is at risk</translation>
     </message>
 </context>
 <context>
@@ -1994,20 +1995,10 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation>Install update</translation>
     </message>
     <message>
-        <source>A new version of MEGAsync is available! Click on this message to install it</source>
-        <translatorcomment>Notification message launched to inform the user that there is an available update .</translatorcomment>
-        <translation>A new version of MEGAsync is available! Click on this message to install it</translation>
-    </message>
-    <message>
         <source>There was a problem installing the update. Please try again later or download the last version from:
 https://mega.co.nz/#sync</source>
         <translatorcomment>Notification message launched when a problem occurs during the installation of an update. Keep &quot;\n&quot; codes.</translatorcomment>
         <translation>There was a problem installing the update. Please try again later or download the latest version from: https://mega.nz/sync</translation>
-    </message>
-    <message>
-        <source>Thank you for your collaboration!</source>
-        <translatorcomment>Message displayed to thank when a user send a crash report report to MEGA.</translatorcomment>
-        <translation>Thank you for your collaboration!</translation>
     </message>
     <message>
         <source>Update available. Downloading...</source>
@@ -2039,11 +2030,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>MEGAsync is now running. Click the system tray icon to open the status window.</source>
         <translatorcomment>Notification message launched when an user logged in succesfully. String as short as possible.</translatorcomment>
         <translation>MEGAsync is now running. Click the system tray icon to open the status window.</translation>
-    </message>
-    <message>
-        <source>A new version of MEGAsync is available!</source>
-        <translatorcomment>Notification message launched when an update is available.</translatorcomment>
-        <translation>A new version of MEGAsync is available</translation>
     </message>
     <message>
         <source>MEGAsync is now running. Click the menu bar icon to open the status window.</source>
@@ -2489,6 +2475,21 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translatorcomment>Notification message launched when your syncs have been disabled.</translatorcomment>
         <translation>Your syncs have been disabled</translation>
     </message>
+    <message>
+        <source>Thank you for your collaboration</source>
+        <translatorcomment>Message displayed to thank when a user send a crash report report to MEGA.</translatorcomment>
+        <translation></translation>
+    </message>
+    <message>
+        <source>A new version of MEGAsync is available. Click on this message to install it</source>
+        <translatorcomment>Notification message launched to inform the user that there is an available update .</translatorcomment>
+        <translation></translation>
+    </message>
+    <message>
+        <source>A new version of MEGAsync is available</source>
+        <translatorcomment>Notification message launched when an update is available.</translatorcomment>
+        <translation></translation>
+    </message>
 </context>
 <context>
     <name>MegaError</name>
@@ -2636,11 +2637,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>Terms of Service breached</translation>
     </message>
     <message>
-        <source>Not accessible due to ToS/AUP violation</source>
-        <translatorcomment>Error shown when import a link that has violated ToS/AUP.</translatorcomment>
-        <translation>Not accessible due to ToS/AUP violation</translation>
-    </message>
-    <message>
         <source>Upload produces recursivity</source>
         <translatorcomment>Error label to indicate a situation of recursivity during uploads</translatorcomment>
         <translation>Transfer failed due to a recursive directory structure</translation>
@@ -2649,6 +2645,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Storage Quota Exceeded. Upgrade now</source>
         <translatorcomment>Error label to indicate a situation of storage quota exceeded and the user needs to upgrade now in order to continue working with the account.</translatorcomment>
         <translation>Storage Quota Exceeded. Please upgrade now</translation>
+    </message>
+    <message>
+        <source>Not accessible due to ToS/AUP violation</source>
+        <translatorcomment>Error shown when import a link that has violated ToS/AUP.</translatorcomment>
+        <translation type="unfinished">File removed as it violated our Terms of Service</translation>
     </message>
 </context>
 <context>
@@ -3198,11 +3199,6 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 <context>
     <name>NotificationsSettings</name>
     <message>
-        <source>Account notifications:</source>
-        <translatorcomment>Title for notifications setting pane</translatorcomment>
-        <translation>Account notifications:</translation>
-    </message>
-    <message>
         <source>Shares</source>
         <translatorcomment>Notification category for shared folders and nodes</translatorcomment>
         <translation>Shares</translation>
@@ -3248,11 +3244,6 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translation>Info</translation>
     </message>
     <message>
-        <source>Desktop notifications</source>
-        <translatorcomment>Title of a checkbox for disconnectig notifications</translatorcomment>
-        <translation>Desktop notifications</translation>
-    </message>
-    <message>
         <source>Someone accepted your contact request</source>
         <translatorcomment>Title of a checkbox for disconnectig notifications</translatorcomment>
         <translation>Someone accepted your contact request</translation>
@@ -3271,6 +3262,16 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <source>Shares:</source>
         <translatorcomment>Notification category for non-critical info notifications (macx)</translatorcomment>
         <translation>Shares:</translation>
+    </message>
+    <message>
+        <source>System notifications:</source>
+        <translatorcomment>Title of a checkbox for disconnectig all notifications</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Info notifications</source>
+        <translatorcomment>Title of a checkbox for disconnectig secondary info notifications</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4835,11 +4836,6 @@ Do you want to restart MEGAsync now?</source>
         <translation>Please verify your account using the confirmation link that we have sent to your email account</translation>
     </message>
     <message>
-        <source>Logging in ...</source>
-        <translatorcomment>Label displayed while logging process.</translatorcomment>
-        <translation>Logging in …</translation>
-    </message>
-    <message>
         <source>Choose install type</source>
         <translatorcomment>Label displayed to inform the user about the installation type for the synchronizations (selective or full sync)</translatorcomment>
         <translation>Choose install type</translation>
@@ -5115,11 +5111,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>Selective sync</translation>
     </message>
     <message>
-        <source>Enjoy MEGAsync!</source>
-        <translatorcomment>Label displayed when user completes the setup wizard</translatorcomment>
-        <translation>Enjoy MEGAsync!</translation>
-    </message>
-    <message>
         <source>Please, enter your last name</source>
         <translatorcomment>Label displayed when the user has not filled the last name field.</translatorcomment>
         <translation>Please enter your last name</translation>
@@ -5155,14 +5146,19 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>Your entire Cloud Drive will be synchronized with a local folder.</translation>
     </message>
     <message>
-        <source>We are all done!</source>
-        <translatorcomment>Label shown when the user completes the initial setup wizard</translatorcomment>
-        <translation>We are all done!</translation>
-    </message>
-    <message>
         <source>Log in</source>
         <translatorcomment>Button label to open Login form</translatorcomment>
         <translation>Log in</translation>
+    </message>
+    <message>
+        <source>Enjoy MEGAsync</source>
+        <translatorcomment>Label displayed when user completes the setup wizard</translatorcomment>
+        <translation></translation>
+    </message>
+    <message>
+        <source>We are all done</source>
+        <translatorcomment>Label shown when the user completes the initial setup wizard</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
