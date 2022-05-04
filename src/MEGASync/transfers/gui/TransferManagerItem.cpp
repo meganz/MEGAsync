@@ -274,7 +274,7 @@ void TransferManagerItem::updateFinishedTime()
         return;
     }
 
-    Preferences *preferences = Preferences::instance();
+    auto preferences = Preferences::instance();
     QDateTime now = QDateTime::currentDateTime();
     qint64 secs = ( now.toMSecsSinceEpoch() / 100 - (preferences->getMsDiffTimeWithSDK() + dsFinishedTime) ) / 10;
     ui->lRemainingTimeCompleted->setText(Utilities::getFinishedTimeString(secs));

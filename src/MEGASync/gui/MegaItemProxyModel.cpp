@@ -44,11 +44,7 @@ void MegaItemProxyModel::showReadWriteFolders(bool value)
 mega::MegaHandle MegaItemProxyModel::getHandle(const QModelIndex &index)
 {
     auto node = getNode(index);
-    if(node)
-    {
-        return node->getHandle();
-    }
-    return mega::INVALID_HANDLE;
+    return node ? node->getHandle() : mega::INVALID_HANDLE;
 }
 
 QModelIndex MegaItemProxyModel::getIndexFromSource(const QModelIndex& index)
@@ -62,7 +58,7 @@ QModelIndex MegaItemProxyModel::getIndexFromHandle(const mega::MegaHandle& handl
     {
         return QModelIndex();
     }
-    auto megaApi = static_cast<MegaApplication*>(qApp)->getMegaApi();
+    auto megaApi = MegaSyncApp->getMegaApi();
     auto node = std::shared_ptr<mega::MegaNode>(megaApi->getNodeByHandle(handle));
     QModelIndex ret = getIndexFromNode(node);
 
@@ -77,19 +73,18 @@ QVector<QModelIndex> MegaItemProxyModel::getRelatedModelIndexes(const std::share
     {
         return ret;
     }
-    std::shared_ptr<mega::MegaNode> this_node = node;
     auto parentNodeList = std::shared_ptr<mega::MegaNodeList>(mega::MegaNodeList::createInstance());
-    parentNodeList->addNode(node->copy());
-    mega::MegaApi* megaApi = static_cast<MegaApplication*>(qApp)->getMegaApi();
-    mega::MegaNode* rootNode = megaApi->getRootNode();
+    parentNodeList->addNode(node.get());
+    mega::MegaApi* megaApi = MegaSyncApp->getMegaApi();
+    auto  rootNodeHandle = MegaSyncApp->getRootNode()->getHandle();
 
+    std::shared_ptr<mega::MegaNode> this_node = node;
     while(this_node)
     {
-        this_node = std::shared_ptr<mega::MegaNode>(megaApi->getParentNode(this_node.get()));
-        if(this_node && (!isInShare || this_node->getHandle() != rootNode->getHandle()))
+        this_node.reset(megaApi->getParentNode(this_node.get()));
+        if(this_node && (!isInShare || this_node->getHandle() != rootNodeHandle))
         {
-            mega::MegaNode* copy = this_node->copy();
-            parentNodeList->addNode(copy);
+            parentNodeList->addNode(this_node.get());
         }
     }
     ret.append(forEach(parentNodeList));
@@ -171,7 +166,6 @@ bool MegaItemProxyModel::lessThan(const QModelIndex &left, const QModelIndex &ri
       }
     }
 
-
     return QSortFilterProxyModel::lessThan(left, right);
 }
 
@@ -190,22 +184,18 @@ bool MegaItemProxyModel::filterAcceptsRow(int sourceRow, const QModelIndex &sour
                {
                    return filterAcceptsRow(index.row(), index);
                }
-               mega::MegaApi* megaApi = static_cast<MegaApplication*>(qApp)->getMegaApi();
+               mega::MegaApi* megaApi = MegaSyncApp->getMegaApi();
                int accs = megaApi->getAccess(node.get());
                if(node->isInShare())
                {
-                    if(accs == mega::MegaShare::ACCESS_READ && !mFilter.showReadOnly)
-                    {
-                        return false;
-                    }
-                    if(accs == mega::MegaShare::ACCESS_READWRITE && !mFilter.showReadWriteFolders)
+                    if((accs == mega::MegaShare::ACCESS_READ && !mFilter.showReadOnly)
+                       || (accs == mega::MegaShare::ACCESS_READWRITE && !mFilter.showReadWriteFolders))
                     {
                         return false;
                     }
                }
                return ((node->isInShare() && mFilter.showInShares)
                        || (!node->isInShare() && mFilter.showCloudDrive));
-
             }
         }
     }
@@ -215,15 +205,10 @@ bool MegaItemProxyModel::filterAcceptsRow(int sourceRow, const QModelIndex &sour
 bool MegaItemProxyModel::filterAcceptsColumn(int sourceColumn, const QModelIndex &sourceParent) const
 {
     Q_UNUSED(sourceParent);
-    if(sourceColumn == MegaItemModel::COLUMN::NODE || sourceColumn == MegaItemModel::COLUMN::STATUS)
-    {
-        return true;
-    }
-    else if(mFilter.showInShares && sourceColumn == MegaItemModel::COLUMN::USER)
-    {
-       return true;
-    }
-    else if(mFilter.showCloudDrive && sourceColumn == MegaItemModel::COLUMN::DATE)
+    if(sourceColumn == MegaItemModel::COLUMN::NODE
+       || sourceColumn == MegaItemModel::COLUMN::STATUS
+       || (mFilter.showInShares && sourceColumn == MegaItemModel::COLUMN::USER)
+       || (mFilter.showCloudDrive && sourceColumn == MegaItemModel::COLUMN::DATE))
     {
         return true;
     }
@@ -236,20 +221,21 @@ QVector<QModelIndex> MegaItemProxyModel::forEach(std::shared_ptr<mega::MegaNodeL
 
     for(int j = parentNodeList->size()-1; j >= 0; --j)
     {
+        auto handle = parentNodeList->get(j)->getHandle();
         for(int i = 0; i < sourceModel()->rowCount(parent); ++i)
         {
             QModelIndex index = sourceModel()->index(i, 0, parent);
 
             if(MegaItem* megaItem = static_cast<MegaItem*>(index.internalPointer()))
             {
-                if(parentNodeList->get(j)->getHandle() == megaItem->getNode()->getHandle() )
+                if(handle == megaItem->getNode()->getHandle())
                 {
                     ret.append(mapFromSource(index));
 
                     auto interList = std::shared_ptr<mega::MegaNodeList>(mega::MegaNodeList::createInstance());
                     for(int k = 0; k < parentNodeList->size() - 1; ++k)
                     {
-                        interList->addNode(parentNodeList->get(k)->copy());
+                        interList->addNode(parentNodeList->get(k));
                     }
                     ret.append(forEach(interList, index));
                     break;
@@ -257,6 +243,7 @@ QVector<QModelIndex> MegaItemProxyModel::forEach(std::shared_ptr<mega::MegaNodeL
             }
         }
     }
+
     return ret;
 }
 
@@ -266,19 +253,14 @@ QModelIndex MegaItemProxyModel::getIndexFromNode(const std::shared_ptr<mega::Meg
     {
         return QModelIndex();
     }
-    std::shared_ptr<mega::MegaNode> root_p_node = node;
-    mega::MegaApi* megaApi = static_cast<MegaApplication*>(qApp)->getMegaApi();
+    mega::MegaApi* megaApi = MegaSyncApp->getMegaApi();
 
-    while(root_p_node)
+    std::shared_ptr<mega::MegaNode> root_p_node = node;
+    auto p_node = std::unique_ptr<mega::MegaNode>(megaApi->getParentNode(root_p_node.get()));
+    while(p_node)
     {
-        if(auto p_node = std::shared_ptr<mega::MegaNode>(megaApi->getParentNode(root_p_node.get())))
-        {
-            root_p_node = p_node;
-        }
-        else
-        {
-            break;
-        }
+        root_p_node = std::move(p_node);
+        p_node.reset(megaApi->getParentNode(root_p_node.get()));
     }
 
     QVector<QModelIndex> indexList = getRelatedModelIndexes(node, root_p_node->isInShare());

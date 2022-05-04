@@ -44,7 +44,7 @@ private:
     Model();
 
     ///////////////// SYNCS ///////////////////////
-    Preferences *preferences;
+    std::shared_ptr<Preferences> preferences;
     bool isFirstSyncDone = false;
     ///////////// END OF SYNCS ////////////////////
 

@@ -43,7 +43,7 @@ void Utilities::initializeExtensions()
 
     extensionIcons[QString::fromAscii("mp3")] = extensionIcons[QString::fromAscii("wav")]  = extensionIcons[QString::fromAscii("3ga")]  =
                             extensionIcons[QString::fromAscii("aif")]  = extensionIcons[QString::fromAscii("aiff")] =
-                            extensionIcons[QString::fromAscii("flac")] = extensionIcons[QString::fromAscii("iff")]  =
+                            extensionIcons[QString::fromAscii("flac")] = extensionIcons[QString::fromAscii("iff")]  = extensionIcons[QString::fromAscii("ogg")] =
                             extensionIcons[QString::fromAscii("m4a")]  = extensionIcons[QString::fromAscii("wma")]  =  QString::fromAscii("audio.png");
 
     extensionIcons[QString::fromAscii("dxf")] = extensionIcons[QString::fromAscii("dwg")] =  QString::fromAscii("cad.png");
@@ -157,9 +157,43 @@ void Utilities::initializeFileTypes()
             = FileType::TYPE_VIDEO;
     fileTypes[getExtensionPixmapName(QLatin1Literal("a.tar"), QString())]
             = FileType::TYPE_ARCHIVE;
+    fileTypes[getExtensionPixmapName(QLatin1Literal("a.torrent"), QString())]
+            = FileType::TYPE_ARCHIVE;
+    fileTypes[getExtensionPixmapName(QLatin1Literal("a.dmg"), QString())]
+            = FileType::TYPE_ARCHIVE;
+    fileTypes[getExtensionPixmapName(QLatin1Literal("a.xd"), QString())]
+            = FileType::TYPE_ARCHIVE;
+    fileTypes[getExtensionPixmapName(QLatin1Literal("a.sketch"), QString())]
+            = FileType::TYPE_ARCHIVE;
     fileTypes[getExtensionPixmapName(QLatin1Literal("a.odt"), QString())]
             = FileType::TYPE_DOCUMENT;
+    fileTypes[getExtensionPixmapName(QLatin1Literal("a.pdf"), QString())]
+            = FileType::TYPE_DOCUMENT;
+    fileTypes[getExtensionPixmapName(QLatin1Literal("a.doc"), QString())]
+            = FileType::TYPE_DOCUMENT;
+    fileTypes[getExtensionPixmapName(QLatin1Literal("a.ods"), QString())]
+            = FileType::TYPE_DOCUMENT;
+    fileTypes[getExtensionPixmapName(QLatin1Literal("a.odt"), QString())]
+            = FileType::TYPE_DOCUMENT;
+    fileTypes[getExtensionPixmapName(QLatin1Literal("a.ppt"), QString())]
+            = FileType::TYPE_DOCUMENT;
+    fileTypes[getExtensionPixmapName(QLatin1Literal("a.pages"), QString())]
+            = FileType::TYPE_DOCUMENT;
+    fileTypes[getExtensionPixmapName(QLatin1Literal("a.numbers"), QString())]
+            = FileType::TYPE_DOCUMENT;
+    fileTypes[getExtensionPixmapName(QLatin1Literal("a.key"), QString())]
+            = FileType::TYPE_DOCUMENT;
     fileTypes[getExtensionPixmapName(QLatin1Literal("a.png"), QString())]
+            = FileType::TYPE_IMAGE;
+    fileTypes[getExtensionPixmapName(QLatin1Literal("a.jpg"), QString())]
+            = FileType::TYPE_IMAGE;
+    fileTypes[getExtensionPixmapName(QLatin1Literal("a.ai"), QString())]
+            = FileType::TYPE_IMAGE;
+    fileTypes[getExtensionPixmapName(QLatin1Literal("a.abr"), QString())]
+            = FileType::TYPE_IMAGE;
+    fileTypes[getExtensionPixmapName(QLatin1Literal("a.3fr"), QString())]
+            = FileType::TYPE_IMAGE;
+    fileTypes[getExtensionPixmapName(QLatin1Literal("a.svg"), QString())]
             = FileType::TYPE_IMAGE;
     fileTypes[getExtensionPixmapName(QLatin1Literal("a.bin"), QString())]
             = FileType::TYPE_OTHER;
@@ -889,7 +923,7 @@ QString Utilities::getDefaultBasePath()
 
 void Utilities::getPROurlWithParameters(QString &url)
 {
-    Preferences *preferences = Preferences::instance();
+    auto preferences = Preferences::instance();
     MegaApi *megaApi = ((MegaApplication *)qApp)->getMegaApi();
 
     if (!preferences || !megaApi)
@@ -1071,7 +1105,7 @@ QString Utilities::getReadableStringFromTs(MegaIntegerList *list)
     for (int it = qMax(0, list->size() - 3); it < list->size(); it++)//Display only the most recent 3 times
     {
         int64_t ts = list->get(it);
-        QDateTime date = QDateTime::fromSecsSinceEpoch(ts);
+        QDateTime date = QDateTime::fromMSecsSinceEpoch(ts * 1000l);
         readableTimes.append(QLocale().toString(date.date(), QLocale::LongFormat));
 
         if (it != list->size() - 1)
@@ -1161,7 +1195,7 @@ void Utilities::getDaysAndHoursToTimestamp(int64_t secsTimestamps, int64_t &rema
     }
 
     // Get seconcs diff between now and secsTimestamps
-    int64_t tDiff = secsTimestamps - QDateTime::currentDateTimeUtc().toSecsSinceEpoch();
+    int64_t tDiff = secsTimestamps - QDateTime::currentDateTimeUtc().toMSecsSinceEpoch() / 1000;
 
     // Compute in hours, then in days
     remainHours = tDiff / 3600;

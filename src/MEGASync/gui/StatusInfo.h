@@ -32,6 +32,8 @@ public:
     TRANSFERS_STATES getState();
     void setOverQuotaState(bool oq);
 
+    static QIcon scanningIcon(int &index);
+
 protected:
     void changeEvent(QEvent * event);
 

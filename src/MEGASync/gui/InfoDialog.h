@@ -31,6 +31,8 @@ class InfoDialog;
 }
 
 class MegaApplication;
+class TransferManager;
+
 class InfoDialog : public QDialog, public mega::MegaTransferListener
 {
     Q_OBJECT
@@ -87,6 +89,8 @@ public:
     void showNotifications();
 
     void move(int x, int y);
+
+    void setTransferManager(TransferManager *transferManager);
 
 private:
     InfoDialog() = default;
@@ -202,6 +206,8 @@ private:
 
     AccountDetailsDialog* accountDetailsDialog;
 
+    TransferManager* mTransferManager;
+
 #ifdef Q_OS_LINUX
     bool doNotActAsPopup;
 #endif
@@ -235,7 +241,7 @@ protected:
     QTimer uploadsFinishedTimer;
     QTimer transfersFinishedTimer;
     MegaApplication *app;
-    Preferences *preferences;
+    std::shared_ptr<Preferences> preferences;
     Model *model;
     Controller *controller;
     mega::MegaApi *megaApi;

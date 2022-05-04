@@ -132,6 +132,7 @@ public:
                   const QModelIndex& destinationParent, int destinationChild);
 
     void getLinks(QList<int>& rows);
+    void openInMEGA(QList<int>& rows);
     void openFolderByIndex(const QModelIndex& index);
     void openFolderByTag(TransferTag tag);
     void retryTransferByIndex(const QModelIndex& index);
@@ -204,7 +205,7 @@ private:
 
 private:
     mega::MegaApi* mMegaApi;
-    Preferences* mPreferences;
+    std::shared_ptr<Preferences> mPreferences;
     QThread* mTransferEventThread;
     TransferThread* mTransferEventWorker;
     QTimer mTimer;
@@ -219,7 +220,7 @@ private:
 
     QHash<TransferTag, int> mTagByOrder;
     mutable QMutex mModelMutex;
-    mega::QTMegaTransferListener *delegateListener;
+    mega::QTMegaTransferListener *mDelegateListener;
 
     bool mAreAllPaused;
     bool mModelReset;

@@ -32,7 +32,9 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
     mSpeedRefreshTimer(new QTimer(this)),
     mStatsRefreshTimer(new QTimer(this)),
     mStorageQuotaState(MegaApi::STORAGE_STATE_UNKNOWN),
-    mTransferQuotaState(QuotaState::OK)
+    mTransferQuotaState(QuotaState::OK),
+    mScanningAnimationIndex(1),
+    mSearchFieldReturnPressed(false)
 {
     mUi->setupUi(this);
 
@@ -42,7 +44,7 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
 
     mUi->wTransfers->setupTransfers();
 #ifndef Q_OS_MACOS
-    setWindowFlags(windowFlags() | Qt::Window | Qt::FramelessWindowHint);
+    setWindowFlags(windowFlags() | Qt::Window);
 #endif
     setAttribute(Qt::WA_DeleteOnClose, true);
 
@@ -180,7 +182,16 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
     connect(mUi->wTransfers,
             &TransfersWidget::disableTransferManager,[this](bool state){
         setDisabled(state);
+
+        if(!state && mSearchFieldReturnPressed)
+        {
+            mUi->leSearchField->setFocus();
+            mSearchFieldReturnPressed = false;
+        }
     });
+
+    mScanningTimer.setInterval(60);
+    connect(&mScanningTimer, &QTimer::timeout, this, &TransferManager::onScanningAnimationUpdate);
 
     mSpeedRefreshTimer->setSingleShot(false);
     connect(mSpeedRefreshTimer, &QTimer::timeout,
@@ -401,7 +412,15 @@ void TransferManager::onCancelVisibleRows()
     {
         if(mCurrentTab == ALL_TRANSFERS_TAB)
         {
-            on_bCancelClearAll_clicked();
+            onCancelAllClicked();
+        }
+        else if(mCurrentTab == COMPLETED_TAB)
+        {
+            transfersView->onClearAllTransfers();
+        }
+        else if(mCurrentTab > TYPES_TAB_BASE && mCurrentTab < TYPES_LAST)
+        {
+            transfersView->onCancelAndClearVisibleTransfers();
         }
         else
         {
@@ -471,45 +490,54 @@ void TransferManager::refreshStateStats()
     processedNumber = mTransfersCount.pendingDownloads + mTransfersCount.pendingUploads;
     countLabelText = processedNumber > 0 ? QString::number(processedNumber) : QString();
 
-    if (countLabel->text().isEmpty() || countLabelText != countLabel->text())
-    {
-        QWidget* leftFooterWidget (nullptr);
+    QWidget* leftFooterWidget (nullptr);
 
-        // If we don't have transfers, stop refresh timer and show "Up to date",
-        // and if current tab is ALL TRANSFERS, show empty.
-        if (processedNumber == 0 && failedNumber == 0)
+    // If we don't have transfers, stop refresh timer and show "Up to date",
+    // and if current tab is ALL TRANSFERS, show empty.
+    if (processedNumber == 0 && failedNumber == 0)
+    {
+        leftFooterWidget = mUi->pUpToDate;
+        mSpeedRefreshTimer->stop();
+        countLabel->hide();
+        countLabel->clear();
+    }
+    else
+    {
+        // If we didn't have transfers, launch timer and show speed.
+        if (countLabel->text().isEmpty())
         {
-            leftFooterWidget = mUi->pUpToDate;
-            mSpeedRefreshTimer->stop();
-            countLabel->hide();
-            countLabel->clear();
-        }
-        else
-        {
-            // If we didn't have transfers, launch timer and show speed.
-            if (countLabel->text().isEmpty())
+            if(!mSpeedRefreshTimer->isActive())
             {
-                leftFooterWidget = mUi->pSpeedAndClear;
-                if(!mSpeedRefreshTimer->isActive())
-                {
-                   mSpeedRefreshTimer->start(std::chrono::milliseconds(SPEED_REFRESH_PERIOD_MS));
-                }
+                mSpeedRefreshTimer->start(std::chrono::milliseconds(SPEED_REFRESH_PERIOD_MS));
             }
+        }
+
+        if(processedNumber != 0)
+        {
+            leftFooterWidget = mUi->pSpeedAndClear;
 
             countLabel->show();
             countLabel->setText(countLabelText);
-
-            if(failedNumber != 0)
-            {
-                leftFooterWidget = mUi->pSomeIssues;
-            }
+        }
+        else
+        {
+            countLabel->hide();
+            countLabel->clear();
         }
 
-        if(leftFooterWidget)
+        if(failedNumber != 0)
         {
-            mUi->sStatus->setCurrentWidget(leftFooterWidget);
+            leftFooterWidget = mUi->pSomeIssues;
         }
     }
+
+
+
+    if(leftFooterWidget && leftFooterWidget != mUi->sStatus->currentWidget())
+    {
+        mUi->sStatus->setCurrentWidget(leftFooterWidget);
+    }
+
 }
 
 void TransferManager::refreshTypeStats()
@@ -799,8 +827,11 @@ void TransferManager::on_leSearchField_editingFinished()
 void TransferManager::on_tSearchIcon_clicked()
 {
     QString pattern (mUi->leSearchField->text());
-
-    if (pattern != QString())
+    if(pattern.isEmpty())
+    {
+        on_tClearSearchResult_clicked();
+    }
+    else
     {
         mUi->bSearchString->setText(mUi->bSearchString->fontMetrics()
                                     .elidedText(pattern,
@@ -808,6 +839,7 @@ void TransferManager::on_tSearchIcon_clicked()
                                                 mUi->bSearchString->width()));
         applyTextSearch(pattern);
     }
+
 }
 
 void TransferManager::applyTextSearch(const QString& text)
@@ -954,6 +986,19 @@ void TransferManager::on_bCancelClearAll_clicked()
     if(transfersView)
     {
         transfersView->onCancelAndClearAllTransfers();
+        on_tAllTransfers_clicked();
+
+        //Use to repaint and update the transfers state
+        transfersView->update();
+    }
+}
+
+void TransferManager::onCancelAllClicked()
+{
+    auto transfersView = findChild<MegaTransferView*>();
+    if(transfersView)
+    {
+        transfersView->onCancelAllTransfers();
         on_tAllTransfers_clicked();
 
         //Use to repaint and update the transfers state
@@ -1156,8 +1201,13 @@ bool TransferManager::eventFilter(QObject *obj, QEvent *event)
         if(keyEvent && keyEvent->key() == Qt::Key_Escape)
         {
             event->accept();
-            mUi->leSearchField->editingFinished();
+            on_leSearchField_editingFinished();
+            focusNextChild();
             return true;
+        }
+        else if(keyEvent && keyEvent->key() == Qt::Key_Return)
+        {
+            mSearchFieldReturnPressed = true;
         }
     }
     return QDialog::eventFilter(obj, event);
@@ -1204,6 +1254,26 @@ void TransferManager::dropEvent(QDropEvent* event)
     }
 
     MegaSyncApp->shellUpload(pathsToAdd);
+}
+
+void TransferManager::setTransferState(const StatusInfo::TRANSFERS_STATES &transferState)
+{
+    if(transferState == StatusInfo::TRANSFERS_STATES::STATE_INDEXING)
+    {
+        mScanningTimer.start();
+        mUi->sStatus->setCurrentWidget(mUi->pScanning);
+    }
+    else
+    {
+        mScanningTimer.stop();
+        mScanningAnimationIndex = 1;
+        refreshStateStats();
+    }
+}
+
+void TransferManager::onScanningAnimationUpdate()
+{
+    mUi->bScanning->setIcon(StatusInfo::scanningIcon(mScanningAnimationIndex));
 }
 
 void TransferManager::dragEnterEvent(QDragEnterEvent *event)

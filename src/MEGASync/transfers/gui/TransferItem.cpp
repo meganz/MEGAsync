@@ -71,7 +71,6 @@ void TransferData::update(mega::MegaTransfer* transfer)
         mPriority = transfer->getPriority();
         mTransferredBytes = static_cast<unsigned long long>(transfer->getTransferredBytes());
         mTotalSize = static_cast<unsigned long long>(transfer->getTotalBytes());
-        unsigned long long remBytes = mTotalSize - mTransferredBytes;
 
         if(mState & TransferData::FINISHED_STATES_MASK)
         {
@@ -96,8 +95,16 @@ void TransferData::update(mega::MegaTransfer* transfer)
             mFinishedTime = 0;
         }
 
-        TransferRemainingTime rem(mSpeed, remBytes);
-        mRemainingTime = rem.calculateRemainingTimeSeconds(mSpeed, remBytes).count();
+        if(mTotalSize > mTransferredBytes)
+        {
+            unsigned long long remBytes = mTotalSize - mTransferredBytes;
+            TransferRemainingTime rem(mSpeed, remBytes);
+            mRemainingTime = rem.calculateRemainingTimeSeconds(mSpeed, remBytes).count();
+        }
+        else
+        {
+            mRemainingTime = 0;
+        }
 
         auto megaError (transfer->getLastErrorExtended());
         if (megaError)

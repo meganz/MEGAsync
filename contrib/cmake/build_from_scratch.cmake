@@ -43,7 +43,7 @@ else()
 endif()
 
 if(NOT MEGA_QT_VERSION)
-    set(MEGA_QT_VERSION 5.12.11)
+    set(MEGA_QT_VERSION 5.12.12)
 endif()
 
 set(_triplet ${TRIPLET})

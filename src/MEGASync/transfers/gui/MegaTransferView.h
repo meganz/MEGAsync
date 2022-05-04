@@ -25,7 +25,9 @@ public:
 
     void onPauseResumeVisibleRows(bool isPaused);
     void onCancelAllTransfers();
+    void onClearAllTransfers();
     void onCancelAndClearAllTransfers();
+    void onCancelAndClearVisibleTransfers();
 
     int getVerticalScrollBarWidth() const;
 
@@ -56,6 +58,7 @@ private slots:
     void moveDownClicked();
     void moveToBottomClicked();
     void getLinkClicked();
+    void openInMEGAClicked();
     void openItemClicked();
     void showInFolderClicked();
     void showInMegaClicked();
@@ -82,6 +85,7 @@ private:
     QAction* mMoveDownAction;
     QAction* mMoveToBottomAction;
     QAction* mCancelAction;
+    QAction* mOpenInMEGAAction;
     QAction* mGetLinkAction;
     QAction* mOpenItemAction;
     QAction* mShowInFolderAction;

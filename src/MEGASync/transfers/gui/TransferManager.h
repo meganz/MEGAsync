@@ -9,6 +9,7 @@
 #include "TransferItem.h"
 #include "TransfersModel.h"
 #include "TransferQuota.h"
+#include "StatusInfo.h"
 
 #include <QGraphicsEffect>
 #include <QTimer>
@@ -58,6 +59,8 @@ public:
     void enterBlockingState();
     void leaveBlockingState();
 
+    void setTransferState(const StatusInfo::TRANSFERS_STATES &transferState);
+
 public slots:
     void onTransferQuotaStateChanged(QuotaState transferQuotaState);
     void onStorageStateChanged(int storageState);
@@ -86,7 +89,10 @@ private:
     Ui::TransferManager* mUi;
     mega::MegaApi* mMegaApi;
 
-    Preferences* mPreferences;
+    QTimer mScanningTimer;
+    int mScanningAnimationIndex;
+
+    std::shared_ptr<Preferences> mPreferences;
     QPoint mDragPosition;
     QMap<TM_TAB, QFrame*> mTabFramesToggleGroup;
     QMap<TM_TAB, QLabel*> mNumberLabelsGroup;
@@ -95,6 +101,8 @@ private:
 
     TransfersModel* mModel;
     TransfersCount mTransfersCount;
+
+    bool mSearchFieldReturnPressed;
 
     TM_TAB mCurrentTab;
     QGraphicsDropShadowEffect* mShadowTab;
@@ -143,6 +151,7 @@ private slots:
     void on_bDownload_clicked();
     void on_bUpload_clicked();
     void on_bCancelClearAll_clicked();
+    void onCancelAllClicked();
     void on_leSearchField_returnPressed();
 
     void on_bArchives_clicked();
@@ -166,7 +175,9 @@ private slots:
 
     void refreshSpeed();
     void refreshView();
+
     void updateTransferWidget(QWidget* widgetToShow);
+    void onScanningAnimationUpdate();
 };
 
 #endif // TRANSFERMANAGER_H

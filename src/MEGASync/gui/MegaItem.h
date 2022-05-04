@@ -25,7 +25,7 @@ public:
     explicit MegaItem(std::unique_ptr<mega::MegaNode> node, MegaItem *parentItem = 0, bool showFiles = false);
 
     std::shared_ptr<mega::MegaNode> getNode();
-    void setChildren(mega::MegaNodeList *children);
+    void setChildren(std::shared_ptr<mega::MegaNodeList> children);
 
     bool areChildrenSet();
     MegaItem *getParent();
@@ -66,7 +66,7 @@ protected:
     int mStatus;
     bool mCameraFolder;
     bool mChatFilesFolder;
-    bool mChildrenSetted;
+    bool mChildrenSet;
 
     std::shared_ptr<mega::MegaNode> mNode;
     QList<MegaItem*> mChildItems;

@@ -408,7 +408,7 @@ CrashHandler* CrashHandler::instance()
 
 void CrashHandler::tryReboot()
 {
-    Preferences *preferences = Preferences::instance();
+    auto preferences = Preferences::instance();
     preferences->setCrashed(true);
 
     if ((QDateTime::currentMSecsSinceEpoch()-preferences->getLastReboot()) > Preferences::MIN_REBOOT_INTERVAL_MS)
@@ -481,7 +481,7 @@ bool CrashHandler::writeMinidump()
 
 QStringList CrashHandler::getPendingCrashReports()
 {
-    Preferences *preferences = Preferences::instance();
+    auto preferences = Preferences::instance();
     QStringList previousCrashes = preferences->getPreviousCrashes();
     QStringList result;
 
@@ -576,7 +576,7 @@ void CrashHandler::sendPendingCrashReports(QString userMessage)
 
 void CrashHandler::discardPendingCrashReports()
 {
-    Preferences *preferences = Preferences::instance();
+    auto preferences = Preferences::instance();
     QStringList crashes = getPendingCrashReports();
     QStringList previousCrashes = preferences->getPreviousCrashes();
     for (int i = 0; i < crashes.size(); i++)

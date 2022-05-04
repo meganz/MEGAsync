@@ -14,6 +14,7 @@
 #include "ui_InfoDialog.h"
 #include "control/Utilities.h"
 #include "MegaApplication.h"
+#include "TransferManager.h"
 #include "MenuItemAction.h"
 #include "platform/Platform.h"
 #include "assert.h"
@@ -73,7 +74,8 @@ void InfoDialog::upAreaHovered(QMouseEvent *event)
 InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddialog) :
     QDialog(parent),
     ui(new Ui::InfoDialog),
-    qtBugFixer(this)
+    qtBugFixer(this),
+    mTransferManager(nullptr)
 {
     ui->setupUi(this);
 
@@ -791,6 +793,10 @@ void InfoDialog::updateState()
     {
         ui->wStatus->setState(mState);
         ui->bTransferManager->setPaused(preferences->getGlobalPaused());
+        if(mTransferManager)
+        {
+            mTransferManager->setTransferState(mState);
+        }
     }
 }
 
@@ -1920,4 +1926,10 @@ void InfoDialog::enableUserActions(bool value)
     ui->bAddSync->setEnabled(value);
     ui->bUpload->setEnabled(value);
     ui->bDownload->setEnabled(value);
+}
+
+void InfoDialog::setTransferManager(TransferManager *transferManager)
+{
+    mTransferManager = transferManager;
+    mTransferManager->setTransferState(mState);
 }
