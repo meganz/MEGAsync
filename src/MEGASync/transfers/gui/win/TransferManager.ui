@@ -2637,7 +2637,7 @@ QGroupBox::title
              </item>
             </layout>
            </widget>
-           <widget class="QWidget" name="stalledIssuesHeaderInfo">
+           <widget class="QWidget" name="pStalledIssuesHeaderInfo">
             <layout class="QHBoxLayout" name="horizontalLayout_2">
              <item>
               <spacer name="horizontalSpacer_16">
@@ -2653,7 +2653,7 @@ QGroupBox::title
               </spacer>
              </item>
              <item>
-              <widget class="QWidget" name="stalledIssuesContainer" native="true">
+              <widget class="SomeIssuesOccurredMessage" name="stalledIssuesContainer" native="true">
                <layout class="QHBoxLayout" name="horizontalLayout_5">
                 <property name="spacing">
                  <number>0</number>
@@ -2670,67 +2670,6 @@ QGroupBox::title
                 <property name="bottomMargin">
                  <number>0</number>
                 </property>
-                <item>
-                 <widget class="QPushButton" name="clearStalledIssuesButton">
-                  <property name="text">
-                   <string/>
-                  </property>
-                  <property name="icon">
-                   <iconset>
-                    <normalon>:/images/icon_error.png</normalon>
-                   </iconset>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <spacer name="horizontalSpacer_19">
-                  <property name="orientation">
-                   <enum>Qt::Horizontal</enum>
-                  </property>
-                  <property name="sizeType">
-                   <enum>QSizePolicy::Fixed</enum>
-                  </property>
-                  <property name="sizeHint" stdset="0">
-                   <size>
-                    <width>20</width>
-                    <height>20</height>
-                   </size>
-                  </property>
-                 </spacer>
-                </item>
-                <item>
-                 <widget class="QLabel" name="stalledIssuesInfoLabel">
-                  <property name="text">
-                   <string>Some sync issues ocurred.</string>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <spacer name="horizontalSpacer_18">
-                  <property name="orientation">
-                   <enum>Qt::Horizontal</enum>
-                  </property>
-                  <property name="sizeType">
-                   <enum>QSizePolicy::Fixed</enum>
-                  </property>
-                  <property name="sizeHint" stdset="0">
-                   <size>
-                    <width>124</width>
-                    <height>20</height>
-                   </size>
-                  </property>
-                 </spacer>
-                </item>
-                <item>
-                 <widget class="QPushButton" name="viewStalledIssuesButton">
-                  <property name="cursor">
-                   <cursorShape>PointingHandCursor</cursorShape>
-                  </property>
-                  <property name="text">
-                   <string>View...</string>
-                  </property>
-                 </widget>
-                </item>
                </layout>
               </widget>
              </item>
@@ -2854,6 +2793,12 @@ QGroupBox::title
    <class>TransfersWidget</class>
    <extends>QWidget</extends>
    <header>TransfersWidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>SomeIssuesOccurredMessage</class>
+   <extends>QWidget</extends>
+   <header>SomeIssuesOccurredMessage.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

@@ -23,7 +23,6 @@ void SomeIssuesOccurredMessage::on_viewIssuesButton_clicked()
         mStalledIssuesDialog = new StalledIssuesDialog();
     }
 
-    Platform::activateBackgroundWindow(mStalledIssuesDialog);
     mStalledIssuesDialog->showNormal();
     mStalledIssuesDialog->activateWindow();
     mStalledIssuesDialog->raise();
