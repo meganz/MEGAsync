@@ -963,8 +963,10 @@ void TransfersModel::cancelTransfers(const QModelIndexList& indexes, QWidget* ca
     if(indexes.isEmpty())
     {
         bool someTransfersAreNotCancelable(false);
+        bool isSyncTransfer(false);
 
         auto count = rowCount(DEFAULT_IDX);
+
         for (auto row = 0; row < count;++row)
         {
             auto d (getTransfer(row));
@@ -975,6 +977,12 @@ void TransfersModel::cancelTransfers(const QModelIndexList& indexes, QWidget* ca
                 if (!d->isCancelable())
                 {
                     someTransfersAreNotCancelable = true;
+
+                    if(d->isSyncTransfer())
+                    {
+                        isSyncTransfer = true;
+                    }
+
                     break;
                 }
             }
@@ -985,9 +993,18 @@ void TransfersModel::cancelTransfers(const QModelIndexList& indexes, QWidget* ca
 
         if(someTransfersAreNotCancelable)
         {
-            QMegaMessageBox::warning(canceledFrom, QString::fromUtf8("MEGAsync"),
-                                     tr("Some Transfers cannot be cancelled or cleared. "),
-                                     QMessageBox::Ok);
+            if(isSyncTransfer)
+            {
+                QMegaMessageBox::warning(canceledFrom, QString::fromUtf8("MEGAsync"),
+                                         tr("Sync transfers cannot be cancelled.\nPlease remove the sync from settings to remove these transfers."),
+                                         QMessageBox::Ok);
+            }
+            else
+            {
+                QMegaMessageBox::warning(canceledFrom, QString::fromUtf8("MEGAsync"),
+                                         tr("Some transfers cannot be cancelled or cleared. "),
+                                         QMessageBox::Ok);
+            }
         }
     }
     else
@@ -996,6 +1013,9 @@ void TransfersModel::cancelTransfers(const QModelIndexList& indexes, QWidget* ca
         QMap<QModelIndex, QExplicitlySharedDataPointer<TransferData>> downloadToClear;
 
         QList<TransferTag> toCancel;
+
+        int transferCannotBeCancellable(0);
+        int syncTransferCannotBeCancellable(0);
 
         // First clear finished transfers (remove rows), then cancel the others.
         // This way, there is no risk of messing up the rows order with cancel requests.
@@ -1006,13 +1026,24 @@ void TransfersModel::cancelTransfers(const QModelIndexList& indexes, QWidget* ca
             // Clear (remove rows of) finished transfers
             if (d)
             {
-                if (d->isCancelable())
+                if(!d->isCancelable())
+                {
+                    if(d->isFinished())
+                    {
+                        classifyUploadOrDownloadTransfers(uploadToClear, downloadToClear,index);
+                    }
+                    else
+                    {
+                        transferCannotBeCancellable++;
+                        if(d->isSyncTransfer())
+                        {
+                            syncTransferCannotBeCancellable++;
+                        }
+                    }
+                }
+                else
                 {
                     toCancel.append(d->mTag);
-                }
-                else if(d->isFinished())
-                {
-                    classifyUploadOrDownloadTransfers(uploadToClear, downloadToClear,index);
                 }
             }
         }
@@ -1039,11 +1070,36 @@ void TransfersModel::cancelTransfers(const QModelIndexList& indexes, QWidget* ca
             }
         }
 
-        if(!uploadToClear.isEmpty() && !downloadToClear.isEmpty() && !toCancel.isEmpty())
+
+        if(transferCannotBeCancellable > 0 || (!uploadToClear.isEmpty() || !downloadToClear.isEmpty()))
         {
-            QMegaMessageBox::warning(canceledFrom, QString::fromUtf8("MEGAsync"),
-                                     tr("Transfer(s) cannot be cancelled or cleared", "", uploadToClear.size() + downloadToClear.size() + toCancel.size()),
-                                     QMessageBox::Ok);
+            //Clear is not empty and some transfers cannot be cleared
+            if((!uploadToClear.isEmpty() || !downloadToClear.isEmpty()) && transferCannotBeCancellable > 0)
+            {
+                QMegaMessageBox::warning(canceledFrom, QString::fromUtf8("MEGAsync"),
+                                         tr("Transfer(s) cannot be cancelled or cleared.", "", transferCannotBeCancellable + uploadToClear.size() + downloadToClear.size()),
+                                         QMessageBox::Ok);
+            }
+            //SOme transfers cannot be cleared
+            else if(!uploadToClear.isEmpty() || !downloadToClear.isEmpty())
+            {
+                QMegaMessageBox::warning(canceledFrom, QString::fromUtf8("MEGAsync"),
+                                         tr("Transfer(s) cannot be cleared.", "", uploadToClear.size() + downloadToClear.size()),
+                                         QMessageBox::Ok);
+            }
+            //
+            else if(transferCannotBeCancellable > 0 && syncTransferCannotBeCancellable == transferCannotBeCancellable)
+            {
+                QMegaMessageBox::warning(canceledFrom, QString::fromUtf8("MEGAsync"),
+                                         tr("Sync transfer(s) cannot be cancelled.\nPlease remove the sync from settings to remove this(these) transfer(s).", "", syncTransferCannotBeCancellable),
+                                         QMessageBox::Ok);
+            }
+            else
+            {
+                QMegaMessageBox::warning(canceledFrom, QString::fromUtf8("MEGAsync"),
+                                         tr("Transfer(s) cannot be cancelled.", "", transferCannotBeCancellable),
+                                         QMessageBox::Ok);
+            }
         }
     }
 

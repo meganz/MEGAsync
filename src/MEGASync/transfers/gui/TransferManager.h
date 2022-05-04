@@ -96,6 +96,8 @@ private:
     TransfersModel* mModel;
     TransfersCount mTransfersCount;
 
+    bool mSearchFieldReturnPressed;
+
     TM_TAB mCurrentTab;
     QGraphicsDropShadowEffect* mShadowTab;
     QSet<Utilities::FileType> mFileTypesFilter;
@@ -141,6 +143,7 @@ private slots:
     void on_bDownload_clicked();
     void on_bUpload_clicked();
     void on_bCancelClearAll_clicked();
+    void onCancelAllClicked();
     void on_leSearchField_returnPressed();
 
     void on_bArchives_clicked();

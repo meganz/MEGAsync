@@ -25,6 +25,7 @@ public:
 
     void onPauseResumeVisibleRows(bool isPaused);
     void onCancelAllTransfers();
+    void onClearVisibleTransfers();
     void onCancelAndClearAllTransfers();
 
     int getVerticalScrollBarWidth() const;

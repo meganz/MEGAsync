@@ -169,7 +169,7 @@ void MegaTransferView::onCancelVisibleTransfers()
     QPointer<MegaTransferView> dialog = QPointer<MegaTransferView>(this);
 
     if (QMegaMessageBox::warning(this, QString::fromUtf8("MEGAsync"),
-                             tr("Are you sure you want to cancel the following transfer(s)?", "", !singleTransfer),
+                             tr("Are you sure you want to cancel this(these) transfer(s)?", "", !singleTransfer),
                              QMessageBox::Yes | QMessageBox::No, QMessageBox::No)
             != QMessageBox::Yes
             || !dialog)
@@ -191,7 +191,7 @@ void MegaTransferView::onCancelClearSelectedTransfers()
     QPointer<MegaTransferView> dialog = QPointer<MegaTransferView>(this);
 
     if (QMegaMessageBox::warning(this, QString::fromUtf8("MEGAsync"),
-                             tr("Are you sure you want to cancel or clear the following transfer(s)?", "", !singleTransfer),
+                             tr("Are you sure you want to cancel or clear this(these) transfer(s)?", "", !singleTransfer),
                              QMessageBox::Yes | QMessageBox::No, QMessageBox::No)
             != QMessageBox::Yes
             || !dialog)
@@ -208,10 +208,12 @@ void MegaTransferView::onCancelClearSelectedTransfers()
 
 void MegaTransferView::onCancelAllTransfers()
 {
+    bool singleTransfer = isSingleTransfer(true);
+
     QPointer<MegaTransferView> dialog = QPointer<MegaTransferView>(this);
 
     if (QMegaMessageBox::warning(this, QString::fromUtf8("MEGAsync"),
-                             tr("Are you sure you want to cancel all transfers?"),
+                             tr("Are you sure you want to cancel this(these) transfer(s)?", "", !singleTransfer),
                              QMessageBox::Yes | QMessageBox::No, QMessageBox::No)
             != QMessageBox::Yes
             || !dialog)
@@ -222,12 +224,32 @@ void MegaTransferView::onCancelAllTransfers()
     cancelAndClearAllTransfers(true, false);
 }
 
-void MegaTransferView::onCancelAndClearAllTransfers()
+void MegaTransferView::onClearVisibleTransfers()
 {
+    bool singleTransfer = isSingleTransfer(true);
+
     QPointer<MegaTransferView> dialog = QPointer<MegaTransferView>(this);
 
     if (QMegaMessageBox::warning(this, QString::fromUtf8("MEGAsync"),
-                             tr("Are you sure you want to cancel and clear all transfers?"),
+                             tr("Are you sure you want to clear this(these) transfer(s)?", "", !singleTransfer),
+                             QMessageBox::Yes | QMessageBox::No, QMessageBox::No)
+            != QMessageBox::Yes
+            || !dialog)
+    {
+        return;
+    }
+
+    cancelAndClearAllTransfers(false, true);
+}
+
+void MegaTransferView::onCancelAndClearAllTransfers()
+{
+    bool singleTransfer = isSingleTransfer(true);
+
+    QPointer<MegaTransferView> dialog = QPointer<MegaTransferView>(this);
+
+    if (QMegaMessageBox::warning(this, QString::fromUtf8("MEGAsync"),
+                             tr("Are you sure you want to cancel and clear this(these) transfer(s)?", "", !singleTransfer),
                              QMessageBox::Yes | QMessageBox::No, QMessageBox::No)
             != QMessageBox::Yes
             || !dialog)
@@ -279,7 +301,7 @@ void MegaTransferView::onClearCompletedVisibleTransfers()
     QPointer<MegaTransferView> dialog = QPointer<MegaTransferView>(this);
 
     if (QMegaMessageBox::warning(this, QString::fromUtf8("MEGAsync"),
-                                 tr("Are you sure you want to clear the following transfer(s)?", "", !singleTransfer),
+                                 tr("Are you sure you want to clear this(these) transfer(s)?", "", !singleTransfer),
                                  QMessageBox::Yes | QMessageBox::No, QMessageBox::No)
             != QMessageBox::Yes
             || !dialog)
@@ -299,7 +321,7 @@ void MegaTransferView::onRetryVisibleTransfers()
     QPointer<MegaTransferView> dialog = QPointer<MegaTransferView>(this);
 
     if (QMegaMessageBox::warning(this, QString::fromUtf8("MEGAsync"),
-                                 tr("Are you sure you want to retry the following transfer(s)?", "", !singleTransfer),
+                                 tr("Are you sure you want to retry this(these) transfer(s)?", "", !singleTransfer),
                                  QMessageBox::Yes | QMessageBox::No, QMessageBox::No)
             != QMessageBox::Yes
             || !dialog)
