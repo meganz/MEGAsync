@@ -4,6 +4,7 @@ INCLUDEPATH += $$PWD/gui
 INCLUDEPATH += $$PWD/model
 
 SOURCES +=  \
+    $$PWD/gui/StalledIssueLoadingItem.cpp \
     $$PWD/gui/StalledIssueTab.cpp \
     $$PWD/gui/StalledIssueChooseWidget.cpp \
     $$PWD/gui/StalledIssueBaseDelegateWidget.cpp \
@@ -21,6 +22,7 @@ SOURCES +=  \
     $$PWD/model/StalledIssuesProxyModel.cpp
 
 HEADERS  +=   \
+    $$PWD/gui/StalledIssueLoadingItem.h \
     $$PWD/gui/StalledIssueTab.h \
     $$PWD/gui/StalledIssueChooseWidget.h \
     $$PWD/gui/StalledIssueBaseDelegateWidget.h \
@@ -45,6 +47,7 @@ win32 {
                 $$PWD/gui/win/StalledIssuesDialog.ui \
                 $$PWD/gui/win/StalledIssueFilePath.ui \
                 $$PWD/gui/win/StalledIssueTab.ui \
+                $$PWD/gui/win/StalledIssueLoadingItem.ui \
                 $$PWD/gui/stalled_issues_cases/win/LocalAndRemoteDifferentWidget.ui \
                 $$PWD/gui/stalled_issues_cases/win/OtherSideMissingOrBlocked.ui
 }

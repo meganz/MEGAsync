@@ -147,7 +147,6 @@ private slots:
     void on_bBuyQuota_clicked();
 
     void onAnimationFinished();
-    void onAnimationFinishedBlockedError();
 
     void sTabsChanged(int tab);
 
@@ -212,7 +211,7 @@ private:
 
     AccountDetailsDialog* accountDetailsDialog;
 
-    TransferManager* mTransferManager;
+    QPointer<TransferManager> mTransferManager;
 
 #ifdef Q_OS_LINUX
     bool doNotActAsPopup;
@@ -221,19 +220,18 @@ private:
     QPropertyAnimation *animation;
     QGraphicsOpacityEffect *opacityEffect;
 
-    bool shownBlockedError = false;
-    QPropertyAnimation *minHeightAnimationBlockedError;
-    QPropertyAnimation *maxHeightAnimationBlockedError;
-    QParallelAnimationGroup animationGroupBlockedError;
-    void hideBlockedError(bool animated = false);
-    void showBlockedError();
+    bool shownSomeIssuesOccurred = false;
+    QPropertyAnimation *minHeightAnimationSomeIssues;
+    QPropertyAnimation *maxHeightAnimationSomeIssues;
+    QParallelAnimationGroup animationGroupSomeIssues;
+    void hideSomeIssues();
+    void showSomeIssues();
 
     std::unique_ptr<QMenu> syncsMenu;
     MenuItemAction *addSyncAction;
     MenuItemAction *lastHovered;
 
 protected:
-    void setBlockedStateLabel(QString state);
     void updateBlockedState();
     void updateState();
     bool checkFailedState();

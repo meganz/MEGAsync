@@ -2,6 +2,10 @@
 #include "ui_StalledIssueTab.h"
 
 #include "Utilities.h"
+#include "StalledIssuesModel.h"
+#include "MegaApplication.h"
+
+const char* StalledIssueTab::HOVER_PROPERTY = "itsHover";
 
 StalledIssueTab::StalledIssueTab(QWidget *parent) :
     QFrame(parent),
@@ -10,6 +14,9 @@ StalledIssueTab::StalledIssueTab(QWidget *parent) :
     mShadowTab (new QGraphicsDropShadowEffect(nullptr))
 {
     ui->setupUi(this);
+
+    connect(MegaSyncApp->getStalledIssuesModel(),
+            &StalledIssuesModel::stalledIssuesCountChanged, this, &StalledIssueTab::onUpdateCounter);
 }
 
 StalledIssueTab::~StalledIssueTab()
@@ -45,6 +52,38 @@ void StalledIssueTab::mouseReleaseEvent(QMouseEvent *event)
     }
 
     QWidget::mouseReleaseEvent(event);
+}
+
+void StalledIssueTab::enterEvent(QEvent*)
+{
+   if(isEnabled())
+   {
+       setProperty(HOVER_PROPERTY,true);
+       setStyleSheet(styleSheet());
+
+       if(!mIconPrefix.isEmpty())
+       {
+           QString iconName =  QString::fromUtf8(":images/StalledIssues/") + mIconPrefix
+                   + QString::fromUtf8("-solid")
+                   + QString::fromUtf8(".png");
+           QIcon icon = Utilities::getCachedPixmap(iconName);
+
+           ui->icon->setPixmap(icon.pixmap(ui->icon->size()));
+       }
+   }
+}
+
+void StalledIssueTab::leaveEvent(QEvent*)
+{
+    setProperty(HOVER_PROPERTY,false);
+    setStyleSheet(styleSheet());
+    updateIcon();
+}
+
+void StalledIssueTab::onUpdateCounter()
+{
+    ui->counter->setText(QString::number(
+                             MegaSyncApp->getStalledIssuesModel()->getCountByFilterCriterion(static_cast<StalledIssueFilterCriterion>(mFilterCriterion))));
 }
 
 bool StalledIssueTab::itsOn() const

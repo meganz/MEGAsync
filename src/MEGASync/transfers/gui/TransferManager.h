@@ -112,7 +112,6 @@ private:
     int mStorageQuotaState;
     QuotaState mTransferQuotaState;
 
-    StalledIssuesDialog* mStalledIssuesDialog;
     bool mFoundStalledIssues;
 
     void toggleTab(TM_TAB newTab);
@@ -144,7 +143,6 @@ private slots:
     void on_bPause_clicked();
 
     void onStalledIssuesStateChanged(bool state);
-    void on_viewStalledIssuesButton_clicked();
     void showStalledIssuesInfo();
     void on_bOpenLinks_clicked();
     void on_tCogWheel_clicked();

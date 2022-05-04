@@ -30,7 +30,6 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
     mMegaApi(megaApi),
     mPreferences(Preferences::instance()),
     mModel(nullptr),
-    mStalledIssuesDialog(nullptr),
     mCurrentTab(NO_TAB),
     mShadowTab (new QGraphicsDropShadowEffect(nullptr)),
     mSpeedRefreshTimer(new QTimer(this)),
@@ -204,7 +203,7 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
             this, &TransferManager::refreshSpeed);
 
     // Connect to storage quota signals
-    connect(qobject_cast<MegaApplication*>(qApp), &MegaApplication::storageStateChanged,
+    connect(MegaSyncApp, &MegaApplication::storageStateChanged,
             this, &TransferManager::onStorageStateChanged,
             Qt::QueuedConnection);
 
@@ -236,25 +235,6 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
 void TransferManager::onPauseStateChangedByTransferResume()
 {
     onUpdatePauseState(false);
-}
-
-void TransferManager::on_viewStalledIssuesButton_clicked()
-{
-    if(!mStalledIssuesDialog)
-    {
-        mStalledIssuesDialog = new StalledIssuesDialog(parentWidget());
-        connect(mStalledIssuesDialog, &QObject::destroyed, [this](){
-            mStalledIssuesDialog = nullptr;
-        });
-    }
-
-    Platform::activateBackgroundWindow(mStalledIssuesDialog);
-    mStalledIssuesDialog->showMinimized();
-    mStalledIssuesDialog->showNormal();
-    mStalledIssuesDialog->setGeometry(geometry());
-    mStalledIssuesDialog->activateWindow();
-    mStalledIssuesDialog->raise();
-    mStalledIssuesDialog->show();
 }
 
 void TransferManager::setActiveTab(int t)
@@ -492,7 +472,7 @@ void TransferManager::refreshStateStats()
 
     // If we don't have transfers, stop refresh timer and show "Up to date",
     // and if current tab is ALL TRANSFERS, show empty.
-    if (processedNumber == 0 && failedNumber == 0)
+    if (processedNumber == 0 && failedNumber == 0 && !MegaSyncApp->getStalledIssuesModel()->hasStalledIssues())
     {
         leftFooterWidget = mUi->pUpToDate;
         mSpeedRefreshTimer->stop();
@@ -523,7 +503,7 @@ void TransferManager::refreshStateStats()
             countLabel->clear();
         }
 
-        if(failedNumber != 0)
+        if(failedNumber != 0 || MegaSyncApp->getStalledIssuesModel()->hasStalledIssues())
         {
             leftFooterWidget = mUi->pSomeIssues;
         }
@@ -635,7 +615,7 @@ void TransferManager::onStorageStateChanged(int storageState)
         default:
         {
             mUi->lStorageOverQuota->hide();
-            QuotaState tQuotaState (qobject_cast<MegaApplication*>(qApp)->getTransferQuotaState());
+            QuotaState tQuotaState (MegaSyncApp->getTransferQuotaState());
             mUi->tSeePlans->setVisible(tQuotaState == QuotaState::FULL);
             break;
         }
@@ -824,7 +804,7 @@ void TransferManager::showStalledIssuesInfo()
 {
     if(mFoundStalledIssues && (mCurrentTab != SEARCH_TAB && mCurrentTab != COMPLETED_TAB))
     {
-        mUi->sCurrentContentInfo->setCurrentWidget(mUi->stalledIssuesHeaderInfo);
+        mUi->sCurrentContentInfo->setCurrentWidget(mUi->pStalledIssuesHeaderInfo);
     }
     else
     {
@@ -968,22 +948,22 @@ void TransferManager::onFileTypeButtonClicked(TM_TAB tab, Utilities::FileType fi
 
 void TransferManager::on_bOpenLinks_clicked()
 {
-    qobject_cast<MegaApplication*>(qApp)->importLinks();
+    MegaSyncApp->importLinks();
 }
 
 void TransferManager::on_tCogWheel_clicked()
 {
-    qobject_cast<MegaApplication*>(qApp)->openSettings();
+    MegaSyncApp->openSettings();
 }
 
 void TransferManager::on_bDownload_clicked()
 {
-    qobject_cast<MegaApplication*>(qApp)->downloadActionClicked();
+    MegaSyncApp->downloadActionClicked();
 }
 
 void TransferManager::on_bUpload_clicked()
 {
-    qobject_cast<MegaApplication*>(qApp)->uploadActionClicked(this);
+    MegaSyncApp->uploadActionClicked(this);
 }
 
 void TransferManager::on_bCancelClearAll_clicked()
@@ -1102,6 +1082,8 @@ void TransferManager::toggleTab(TM_TAB newTab)
             }
         }
 
+        mCurrentTab = newTab;
+
         // Set current header widget: search or not
         if (newTab == SEARCH_TAB)
         {
@@ -1114,8 +1096,6 @@ void TransferManager::toggleTab(TM_TAB newTab)
             showStalledIssuesInfo();
             mUi->wTransfers->textFilterChanged(QString());
         }
-
-        mCurrentTab = newTab;
 
         refreshView();
 
@@ -1258,8 +1238,11 @@ void TransferManager::setTransferState(const StatusInfo::TRANSFERS_STATES &trans
     }
     else
     {
-        mScanningTimer.stop();
-        mScanningAnimationIndex = 1;
+        if(mScanningTimer.isActive())
+        {
+            mScanningTimer.stop();
+            mScanningAnimationIndex = 1;
+        }
         refreshStateStats();
     }
 }

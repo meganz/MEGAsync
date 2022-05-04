@@ -406,7 +406,7 @@ TransfersModel::~TransfersModel()
     mTransferEventThread->deleteLater();
     mTransferEventWorker->deleteLater();
 
-    delegateListener->deleteLater();
+    mDelegateListener->deleteLater();
 }
 
 void TransfersModel::pauseModelProcessing(bool value)

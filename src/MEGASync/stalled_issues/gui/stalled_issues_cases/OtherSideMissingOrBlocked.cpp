@@ -26,27 +26,22 @@ void OtherSideMissingOrBlocked::refreshUi()
 {
     auto issue = getData();
 
-    Q_ASSERT(issue.stalledIssuesCount() == 2);
+    ui->localPath->hide();
+    ui->remotePath->hide();
 
-    if(issue.stalledIssuesCount() == 2)
+    for(int index = 0; index < issue.stalledIssuesCount(); ++index)
     {
-        ui->localPath->hide();
-        ui->remotePath->hide();
+        auto data = issue.getStalledIssueData(index);
 
-        for(int index = 0; index < issue.stalledIssuesCount(); ++index)
+        if(data->mIsCloud)
         {
-            auto data = issue.getStalledIssueData(index);
-
-            if(data->mIsCloud)
-            {
-                ui->remotePath->show();
-                ui->remotePath->updateUi(getCurrentIndex(), data);
-            }
-            else
-            {
-                ui->localPath->show();
-                ui->localPath->updateUi(getCurrentIndex(), data);
-            }
+            ui->remotePath->show();
+            ui->remotePath->updateUi(getCurrentIndex(), data);
+        }
+        else
+        {
+            ui->localPath->show();
+            ui->localPath->updateUi(getCurrentIndex(), data);
         }
     }
 }

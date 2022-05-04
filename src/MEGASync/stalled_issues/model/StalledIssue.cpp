@@ -17,9 +17,7 @@ void StalledIssueData::update(const mega::MegaSyncStall *stallIssue)
 {
     if(stallIssue)
     {
-        mIndexPath.path    = QString::fromUtf8(stallIssue->indexPath());
-        mLocalPath    = QString::fromUtf8(stallIssue->localPath());
-        mCloudPath    = QString::fromUtf8(stallIssue->cloudPath());
+        mPath.path    = QString::fromUtf8(stallIssue->indexPath());
         mIsCloud      = stallIssue->isCloud();
         mIsImmediate  = stallIssue->isImmediate();
         mReasonString = QString::fromUtf8(stallIssue->reasonString());
@@ -77,7 +75,7 @@ void ConflictedNamesStalledIssue::update(const mega::MegaSyncNameConflict* nameC
     {
         if (cp && *cp)
         {
-            getStalledIssueData()->mCloudPath = QString::fromUtf8(cp);
+            getStalledIssueData()->mPath.path = QString::fromUtf8(cp);
         }
     }
     if (mega::MegaStringList* ln = nameConflictStallIssue->localNames())
@@ -91,7 +89,7 @@ void ConflictedNamesStalledIssue::update(const mega::MegaSyncNameConflict* nameC
     {
         if (lp && *lp)
         {
-            getStalledIssueData()->mLocalPath = QString::fromUtf8(lp);
+            getStalledIssueData()->mPath.path = QString::fromUtf8(lp);
         }
     }
 
@@ -124,12 +122,12 @@ void StalledIssue::extractFileName(const QExplicitlySharedDataPointer<StalledIss
 {
     if(tdr->mIsCloud)
     {
-        auto splittedIndexPath = tdr->mIndexPath.path.split(QString::fromUtf8("/"));
+        auto splittedIndexPath = tdr->mPath.path.split(QString::fromUtf8("/"));
         mFileName = splittedIndexPath.last();
     }
     else
     {
-        auto splittedIndexPath = tdr->mIndexPath.path.split(QString::fromUtf8("\\"));
+        auto splittedIndexPath = tdr->mPath.path.split(QString::fromUtf8("\\"));
         mFileName = splittedIndexPath.last();
     }
 }
@@ -185,4 +183,50 @@ bool StalledIssue::operator==(const StalledIssue &data)
     }
 
     return true;
+}
+
+StalledIssueFilterCriterion StalledIssue::getCriterionByReason(mega::MegaSyncStall::SyncStallReason reason)
+{
+    switch (reason)
+    {
+        case mega::MegaSyncStall::SyncStallReason::ApplyMoveNeedsOtherSideParentFolderToExist:
+        case mega::MegaSyncStall::SyncStallReason::ApplyMoveIsBlockedByExistingItem:
+        case mega::MegaSyncStall::SyncStallReason::MoveNeedsDestinationNodeProcessing:
+        case mega::MegaSyncStall::SyncStallReason::UpsyncNeedsTargetFolder:
+        case mega::MegaSyncStall::SyncStallReason::DownsyncNeedsTargetFolder:
+        case mega::MegaSyncStall::SyncStallReason::DeleteOrMoveWaitingOnScanning:
+        case mega::MegaSyncStall::SyncStallReason::DeleteWaitingOnMoves:
+        case mega::MegaSyncStall::SyncStallReason::WaitingForFileToStopChanging:
+        case mega::MegaSyncStall::SyncStallReason::MovingDownloadToTarget:
+        case mega::MegaSyncStall::SyncStallReason::LocalAndRemoteChangedSinceLastSyncedState_userMustChoose:
+        case mega::MegaSyncStall::SyncStallReason::CouldNotMoveToLocalDebrisFolder:
+        case mega::MegaSyncStall::SyncStallReason::LocalFolderNotScannable:
+        case mega::MegaSyncStall::SyncStallReason::SymlinksNotSupported:
+        case mega::MegaSyncStall::SyncStallReason::FolderMatchedAgainstFile:
+        case mega::MegaSyncStall::SyncStallReason::MatchedAgainstUnidentifiedItem:
+        case mega::MegaSyncStall::SyncStallReason::MoveOrRenameFailed:
+        {
+            return StalledIssueFilterCriterion::ITEM_TYPE_CONFLICTS;
+            break;
+        }
+        case mega::MegaSyncStall::SyncStallReason::CreateFolderFailed:
+        case mega::MegaSyncStall::SyncStallReason::UnknownExclusionState:
+        case mega::MegaSyncStall::SyncStallReason::UnableToLoadIgnoreFile:
+        case mega::MegaSyncStall::SyncStallReason::MoveTargetNameTooLong:
+        case mega::MegaSyncStall::SyncStallReason::DownloadTargetNameTooLong:
+        case mega::MegaSyncStall::SyncStallReason::CreateFolderNameTooLong:
+        case mega::MegaSyncStall::SyncStallReason::CantFingrprintFileYet:
+        case mega::MegaSyncStall::SyncStallReason::FolderContainsLockedFiles:
+        case mega::MegaSyncStall::SyncStallReason::LocalAndRemotePreviouslyUnsyncedDiffer_userMustChoose:
+        case mega::MegaSyncStall::SyncStallReason::SyncItemExceedsSupportedTreeDepth:
+        case mega::MegaSyncStall::SyncStallReason::MACVerificationFailure:
+        case mega::MegaSyncStall::SyncStallReason::NoNameTripletsDetected:
+        case mega::MegaSyncStall::SyncStallReason::EncounteredHardLinkAtMoveSource:
+        case mega::MegaSyncStall::SyncStallReason::SpecialFilesNotSupported:
+        default:
+        {
+            return StalledIssueFilterCriterion::OTHER_CONFLICTS;
+            break;
+        }
+    }
 }

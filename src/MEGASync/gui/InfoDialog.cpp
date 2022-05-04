@@ -16,6 +16,7 @@
 #include "MegaApplication.h"
 #include "TransferManager.h"
 #include "MenuItemAction.h"
+#include "StalledIssuesModel.h"
 #include "platform/Platform.h"
 #include "assert.h"
 
@@ -193,8 +194,7 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
 
     reset();
 
-    ui->lSDKblock->setText(QString());
-    ui->wBlocked->setVisible(false);
+    hideSomeIssues();
 
     //Initialize header dialog and disable chat features
     ui->wHeader->setStyleSheet(QString::fromUtf8("#wHeader {border: none;}"));
@@ -288,13 +288,6 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
         delete psaData;
     }
 #endif
-
-    minHeightAnimationBlockedError = new QPropertyAnimation();
-    maxHeightAnimationBlockedError = new QPropertyAnimation();
-
-    animationGroupBlockedError.addAnimation(minHeightAnimationBlockedError);
-    animationGroupBlockedError.addAnimation(maxHeightAnimationBlockedError);
-    connect(&animationGroupBlockedError, SIGNAL(finished()), this, SLOT(onAnimationFinishedBlockedError()));
 
     adjustSize();
 }
@@ -669,57 +662,15 @@ void InfoDialog::updateBlockedState()
         return;
     }
 
-    if (!waiting)
+    if (megaApi->isSyncStalled())
     {
-        if (ui->wBlocked->isVisible())
-        {
-            setBlockedStateLabel(QString::fromUtf8(""));
-        }
+        showSomeIssues();
     }
     else
     {
-        if (megaApi->isSyncStalled())
-        {
-            QString fileBlocked = QString::fromUtf8("Syncs have stalled");
-
-            if (ui->sActiveTransfers->currentWidget() != ui->pUpdated)
-            {
-                setBlockedStateLabel(tr("Blocked file: %1").arg(fileBlocked));
-            }
-            else
-            {
-                 setBlockedStateLabel(QString::fromUtf8(""));
-            }
-
-            ui->lUploadToMegaDesc->setStyleSheet(QString::fromUtf8("font-size: 14px;"));
-            ui->lUploadToMegaDesc->setText(tr("Blocked file: %1").arg(fileBlocked));
-        }
-        else if (megaApi->isWaiting())
-        {
-
-            if (ui->sActiveTransfers->currentWidget() != ui->pUpdated)
-            {
-                setBlockedStateLabel(tr("The process is taking longer than expected. Please wait..."));
-            }
-            else
-            {
-                setBlockedStateLabel(QString::fromUtf8(""));
-            }
-
-            ui->lUploadToMegaDesc->setStyleSheet(QString::fromUtf8("font-size: 14px;"));
-            ui->lUploadToMegaDesc->setText(tr("The process is taking longer than expected. Please wait..."));
-        }
-        else
-        {
-            if (ui->sActiveTransfers->currentWidget() != ui->pUpdated)
-            {
-                setBlockedStateLabel(QString::fromUtf8(""));
-            }
-
-            ui->lUploadToMegaDesc->setStyleSheet(QString::fromUtf8("font-size: 14px;"));
-            ui->lUploadToMegaDesc->setText(QString::fromUtf8(""));
-        }
+        hideSomeIssues();
     }
+
 }
 
 void InfoDialog::updateState()
@@ -737,9 +688,11 @@ void InfoDialog::updateState()
         return;
     }
 
+    auto failState = checkFailedState();
+
     if (preferences->getGlobalPaused())
     {
-        if(!checkFailedState())
+        if(!failState)
         {
             mState = StatusInfo::TRANSFERS_STATES::STATE_PAUSED;
             animateStates(waiting || indexing || syncing);
@@ -747,31 +700,7 @@ void InfoDialog::updateState()
     }
     else
     {
-        if (indexing)
-        {
-            if (mState != StatusInfo::TRANSFERS_STATES::STATE_INDEXING)
-            {
-                mState = StatusInfo::TRANSFERS_STATES::STATE_INDEXING;
-                animateStates(true);
-            }
-        }
-        else if (syncing)
-        {
-            if (mState != StatusInfo::TRANSFERS_STATES::STATE_SYNCING)
-            {
-                mState = StatusInfo::TRANSFERS_STATES::STATE_SYNCING;
-                animateStates(true);
-            }
-        }
-        else if (waiting)
-        {
-            if (mState != StatusInfo::TRANSFERS_STATES::STATE_WAITING)
-            {
-                mState = StatusInfo::TRANSFERS_STATES::STATE_WAITING;
-                animateStates(true);
-            }
-        }
-        else if (transferring)
+        if (transferring)
         {
             if (mState != StatusInfo::TRANSFERS_STATES::STATE_TRANSFERRING)
             {
@@ -779,9 +708,33 @@ void InfoDialog::updateState()
                 animateStates(true);
             }
         }
-        else
+        else if(!failState)
         {
-            if(!checkFailedState())
+            if (indexing)
+            {
+                if (mState != StatusInfo::TRANSFERS_STATES::STATE_INDEXING)
+                {
+                    mState = StatusInfo::TRANSFERS_STATES::STATE_INDEXING;
+                    animateStates(true);
+                }
+            }
+            else if (syncing)
+            {
+                if (mState != StatusInfo::TRANSFERS_STATES::STATE_SYNCING)
+                {
+                    mState = StatusInfo::TRANSFERS_STATES::STATE_SYNCING;
+                    animateStates(true);
+                }
+            }
+            else if (waiting)
+            {
+                if (mState != StatusInfo::TRANSFERS_STATES::STATE_WAITING)
+                {
+                    mState = StatusInfo::TRANSFERS_STATES::STATE_WAITING;
+                    animateStates(true);
+                }
+            }
+            else
             {
                 if(mState != StatusInfo::TRANSFERS_STATES::STATE_UPDATED)
                 {
@@ -808,13 +761,12 @@ bool InfoDialog::checkFailedState()
 {
     auto isFailed(false);
 
-    if(app->getTransfersModel()->hasFailedTransfers())
+    if(app->getTransfersModel()->hasFailedTransfers() || app->getStalledIssuesModel()->hasStalledIssues())
     {
         if(mState != StatusInfo::TRANSFERS_STATES::STATE_FAILED)
         {
             mState = StatusInfo::TRANSFERS_STATES::STATE_FAILED;
             animateStates(false);
-
         }
 
         isFailed = true;
@@ -1291,8 +1243,8 @@ void InfoDialog::reset()
 
     ui->bTransferManager->reset();
 
-    ui->wBlocked->hide();
-    shownBlockedError = false;
+    hideSomeIssues();
+    shownSomeIssuesOccurred = false;
 
     setUnseenNotifications(0);
     if (filterMenu)
@@ -1759,52 +1711,22 @@ void InfoDialog::sTabsChanged(int tab)
 
 
 
-void InfoDialog::hideBlockedError(bool animated)
+void InfoDialog::hideSomeIssues()
 {
-    if (!shownBlockedError)
-    {
-        return;
-    }
-    shownBlockedError = false;
-    minHeightAnimationBlockedError->setTargetObject(ui->wBlocked);
-    maxHeightAnimationBlockedError->setTargetObject(ui->wBlocked);
-    minHeightAnimationBlockedError->setPropertyName("minimumHeight");
-    maxHeightAnimationBlockedError->setPropertyName("maximumHeight");
-    minHeightAnimationBlockedError->setStartValue(30);
-    maxHeightAnimationBlockedError->setStartValue(30);
-    minHeightAnimationBlockedError->setEndValue(0);
-    maxHeightAnimationBlockedError->setEndValue(0);
-    minHeightAnimationBlockedError->setDuration(animated ? 250 : 1);
-    maxHeightAnimationBlockedError->setDuration(animated ? 250 : 1);
-    animationGroupBlockedError.start();
-    ui->wBlocked->show();
+    shownSomeIssuesOccurred = false;
+    ui->wSomeIssuesOccurred->hide();
 }
 
-void InfoDialog::showBlockedError()
+void InfoDialog::showSomeIssues()
 {
-    if (shownBlockedError)
+    if (shownSomeIssuesOccurred)
     {
         return;
     }
 
-    ui->wBlocked->show();
-    minHeightAnimationBlockedError->setTargetObject(ui->wBlocked);
-    maxHeightAnimationBlockedError->setTargetObject(ui->wBlocked);
-    minHeightAnimationBlockedError->setPropertyName("minimumHeight");
-    maxHeightAnimationBlockedError->setPropertyName("maximumHeight");
-    minHeightAnimationBlockedError->setStartValue(0);
-    maxHeightAnimationBlockedError->setStartValue(0);
-    minHeightAnimationBlockedError->setEndValue(30);
-    maxHeightAnimationBlockedError->setEndValue(30);
-    minHeightAnimationBlockedError->setDuration(250);
-    maxHeightAnimationBlockedError->setDuration(250);
-    animationGroupBlockedError.start();
-    shownBlockedError = true;
-}
-
-void InfoDialog::onAnimationFinishedBlockedError()
-{
-    ui->wBlocked->setVisible(shownBlockedError);
+    ui->wSomeIssuesOccurred->show();
+    animationGroupSomeIssues.start();
+    shownSomeIssuesOccurred = true;
 }
 
 void InfoDialog::highLightMenuEntry(QAction *action)
@@ -1850,20 +1772,6 @@ void InfoDialog::move(int x, int y)
    qtBugFixer.onStartMove();
 #endif
    QDialog::move(x, y);
-}
-
-void InfoDialog::setBlockedStateLabel(QString state)
-{
-    if (state.isEmpty())
-    {
-        hideBlockedError(true);
-    }
-    else
-    {
-        showBlockedError();
-    }
-
-    ui->lSDKblock->setText(state);
 }
 
 long long InfoDialog::getUnseenNotifications() const

@@ -10,6 +10,7 @@
 const int StalledIssueHeader::ARROW_INDENT = 6 + 16; //Left margin + arrow;
 const int StalledIssueHeader::ICON_INDENT = 8 + 48; // fileIcon + spacer;
 const int StalledIssueHeader::BODY_INDENT = StalledIssueHeader::ARROW_INDENT + StalledIssueHeader::ICON_INDENT; // full indent;
+const int StalledIssueHeader::HEIGHT = 60;
 
 StalledIssueHeader::StalledIssueHeader(QWidget *parent) :
     StalledIssueBaseDelegateWidget(parent),
@@ -31,9 +32,31 @@ void StalledIssueHeader::expand(bool state)
     ui->arrow->setPixmap(arrowIcon.pixmap(ui->arrow->size()));
 }
 
-void StalledIssueHeader::showAction()
+void StalledIssueHeader::showAction(const QString &actionButtonText)
 {
     ui->actionButton->setVisible(true);
+    ui->actionButton->setText(actionButtonText);
+}
+
+void StalledIssueHeader::setLeftTitleText(const QString &text)
+{
+    ui->leftTitleText->setText(text);
+}
+
+void StalledIssueHeader::addFileName()
+{
+    ui->fileNameTitle->setText(getData().getFileName());
+    ui->fileNameTitle->installEventFilter(this);
+}
+
+void StalledIssueHeader::setRightTitleText(const QString &text)
+{
+    ui->rightTitleText->setText(text);
+}
+
+void StalledIssueHeader::setTitleDescriptionText(const QString &text)
+{
+    ui->errorDescriptionText->setText(text);
 }
 
 void StalledIssueHeader::ignoreFile()
@@ -41,7 +64,7 @@ void StalledIssueHeader::ignoreFile()
     auto data = getData().getStalledIssueData();
     if(data)
     {
-        auto path = data->mIndexPath.path;
+        auto path = data->mPath.path;
 
         connect(&mIgnoreWatcher, &QFutureWatcher<void>::finished,
                 this, &StalledIssueHeader::onIgnoreFileFinished);
@@ -61,16 +84,9 @@ void StalledIssueHeader::ignoreFile()
                     QTextStream streamIn(&ignore);
                     streamIn << QChar((int)'\n');
 
-                    if(stalledIssuePathInfo.isFile())
-                    {
-                        streamIn << QString::fromUtf8("-f:");
-                    }
-                    else
-                    {
-                        streamIn << QString::fromUtf8("-dp:");
-                    }
+                    streamIn << QString::fromUtf8("-:");
 
-                    streamIn << ignoreDir.relativeFilePath(stalledIssuePathInfo.path());
+                    streamIn << ignoreDir.relativeFilePath(path);
                     ignore.close();
 
                     break;
@@ -87,11 +103,27 @@ void StalledIssueHeader::ignoreFile()
     }
 }
 
+QString StalledIssueHeader::fileName()
+{
+return QString();
+}
+
 void StalledIssueHeader::onIgnoreFileFinished()
 {
     emit issueFixed();
     disconnect(&mIgnoreWatcher, &QFutureWatcher<void>::finished,
-            this, &StalledIssueHeader::onIgnoreFileFinished);
+               this, &StalledIssueHeader::onIgnoreFileFinished);
+}
+
+bool StalledIssueHeader::eventFilter(QObject *watched, QEvent *event)
+{
+    if(watched == ui->fileNameTitle && event->type() == QEvent::Resize)
+    {
+        auto elidedText = ui->fileNameTitle->fontMetrics().elidedText(getData().getFileName(),Qt::ElideMiddle, ui->fileNameTitle->width());
+        ui->fileNameTitle->setText(elidedText);
+    }
+
+    return StalledIssueBaseDelegateWidget::eventFilter(watched, event);
 }
 
 void StalledIssueHeader::refreshUi()
@@ -109,7 +141,7 @@ void StalledIssueHeader::refreshUi()
     }
     else
     {
-        fileTypeIcon = Utilities::getCachedPixmap(QLatin1Literal(":/images/color_folder.png"));
+        fileTypeIcon = Utilities::getCachedPixmap(QLatin1Literal(":/images/color_folder@2x.png"));
     }
 
     ui->fileTypeIcon->setPixmap(fileTypeIcon.pixmap(ui->fileTypeIcon->size()));

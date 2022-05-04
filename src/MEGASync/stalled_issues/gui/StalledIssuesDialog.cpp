@@ -12,6 +12,7 @@
 StalledIssuesDialog::StalledIssuesDialog(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::StalledIssuesDialog),
+    mProxyModel(nullptr),
     mCurrentTab(StalledIssueFilterCriterion::ALL_ISSUES)
 {
     ui->setupUi(this);
@@ -19,19 +20,23 @@ StalledIssuesDialog::StalledIssuesDialog(QWidget *parent) :
     setWindowFlags(Qt::Window);
     setAttribute(Qt::WA_DeleteOnClose, true);
 
-    auto model = new StalledIssuesProxyModel(this);
-    model->setSourceModel(MegaSyncApp->getStalledIssuesModel());
+    mProxyModel = new StalledIssuesProxyModel(this);
+    mProxyModel->setSourceModel(MegaSyncApp->getStalledIssuesModel());
 
-    ui->stalledIssuesTree->setModel(model);
+    ui->stalledIssuesTree->setModel(mProxyModel);
     mViewHoverManager.setView(ui->stalledIssuesTree);
 
-    auto delegate = new StalledIssueDelegate(model, ui->stalledIssuesTree);
+    auto delegate = new StalledIssueDelegate(mProxyModel, ui->stalledIssuesTree);
     ui->stalledIssuesTree->setItemDelegate(delegate);
+    mLoadingScene.setView(ui->stalledIssuesTree);
 
-    connect(MegaSyncApp->getStalledIssuesModel(), &StalledIssuesModel::stalledIssuesCountChanged,
-            this,  &StalledIssuesDialog::onStalledIssuesModelCountChanged);
+    connect(mProxyModel, &StalledIssuesProxyModel::uiBlocked,
+            this,  &StalledIssuesDialog::onUiBlocked);
+    connect(mProxyModel, &StalledIssuesProxyModel::uiUnblocked,
+            this,  &StalledIssuesDialog::onUiUnblocked);
 
-    MegaSyncApp->getStalledIssuesModel()->updateStalledIssues();
+    connect(MegaSyncApp->getStalledIssuesModel(), &StalledIssuesModel::stalledIssuesReceived,
+            this,  &StalledIssuesDialog::onStalledIssuesLoaded);
 
     //Init all categories
     auto tabs = ui->header->findChildren<StalledIssueTab*>();
@@ -41,6 +46,8 @@ StalledIssuesDialog::StalledIssuesDialog(QWidget *parent) :
     }
 
     ui->allIssuesTab->setItsOn(true);
+
+    on_updateButton_clicked();
 }
 
 StalledIssuesDialog::~StalledIssuesDialog()
@@ -60,6 +67,7 @@ void StalledIssuesDialog::on_doneButton_clicked()
 
 void StalledIssuesDialog::on_updateButton_clicked()
 {
+    onUiBlocked();
     MegaSyncApp->getStalledIssuesModel()->updateStalledIssues();
 }
 
@@ -76,4 +84,22 @@ void StalledIssuesDialog::toggleTab(StalledIssueFilterCriterion filterCriterion)
       proxyModel->filter(filterCriterion);
       onStalledIssuesModelCountChanged();
   }
+}
+
+void StalledIssuesDialog::onUiBlocked()
+{
+    setDisabled(true);
+    mLoadingScene.setLoadingScene(true);
+}
+
+void StalledIssuesDialog::onUiUnblocked()
+{
+    setDisabled(false);
+    mLoadingScene.setLoadingScene(false);
+}
+
+void StalledIssuesDialog::onStalledIssuesLoaded()
+{
+    onUiUnblocked();
+    mProxyModel->updateFilter();
 }

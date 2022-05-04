@@ -66,8 +66,7 @@ void StalledIssuesReceiver::onRequestFinish(mega::MegaApi*, mega::MegaRequest *r
                         {
                            if(stall->isCloud())
                             {
-                                if(QString::fromStdString(stall->indexPath()) == issue.getStalledIssueData()->mCloudPath
-                                        && QString::fromStdString(stall->localPath()) == issue.getStalledIssueData()->mIndexPath.path)
+                                if(QString::fromStdString(stall->localPath()) == issue.getStalledIssueData()->mPath.path)
                                 {
                                     issue.addStalledIssueData(StalledIssueDataPtr(new StalledIssueData(stall)));
                                     createStalledIssue = false;
@@ -76,8 +75,7 @@ void StalledIssuesReceiver::onRequestFinish(mega::MegaApi*, mega::MegaRequest *r
                             }
                             else
                             {
-                                if(QString::fromStdString(stall->indexPath()) == issue.getStalledIssueData()->mLocalPath
-                                        && QString::fromStdString(stall->cloudPath()) == issue.getStalledIssueData()->mIndexPath.path)
+                                if(QString::fromStdString(stall->cloudPath()) == issue.getStalledIssueData()->mPath.path)
                                 {
                                     issue.addStalledIssueData(StalledIssueDataPtr(new StalledIssueData(stall)));
                                     createStalledIssue = false;
@@ -86,6 +84,71 @@ void StalledIssuesReceiver::onRequestFinish(mega::MegaApi*, mega::MegaRequest *r
                             }
                         }
                     }
+                }
+                else  if(stall->reason() == mega::MegaSyncStall::SyncStallReason::ApplyMoveNeedsOtherSideParentFolderToExist)
+                {
+                    StalledIssue d (StalledIssueDataPtr(new StalledIssueData(stall)), stall->reason());
+
+                    auto destinationData = StalledIssueDataPtr(new StalledIssueData());
+                    d.addStalledIssueData(destinationData);
+
+                    QDir localDir(QString::fromUtf8(stall->localPath()));
+
+                    if(stall->isCloud())
+                    {
+                        destinationData->mPath.path = QDir::toNativeSeparators(localDir.path());
+
+                        QDir sourceCloudPath(QString::fromUtf8(stall->indexPath()));
+                        QDir targetCloudPath(QString::fromUtf8(stall->cloudPath()));
+
+                        d.getStalledIssueData()->mPath.path = sourceCloudPath.path();
+                        d.getStalledIssueData()->mMovePath.path = targetCloudPath.path();
+                    }
+                    else
+                    {
+                        QDir targetCloudDir(QString::fromUtf8(stall->cloudPath()));
+                        destinationData->mPath.path = targetCloudDir.path();
+
+                        QDir targetLocalDir(QString::fromUtf8(stall->indexPath()));
+
+                        d.getStalledIssueData()->mPath.path = QDir::toNativeSeparators(localDir.path());
+                        d.getStalledIssueData()->mMovePath.path = QDir::toNativeSeparators(targetLocalDir.path());
+                    }
+
+                     mCacheStalledIssues.append(d);
+                    createStalledIssue = false;
+                }
+                else  if(stall->reason() == mega::MegaSyncStall::SyncStallReason::MoveNeedsDestinationNodeProcessing)
+                {
+                    StalledIssue d (StalledIssueDataPtr(new StalledIssueData(stall)), stall->reason());
+
+                    auto destinationData = StalledIssueDataPtr(new StalledIssueData());
+                    d.addStalledIssueData(destinationData);
+
+                    QDir localDir(QString::fromUtf8(stall->localPath()));
+
+                    if(stall->isCloud())
+                    {
+                        destinationData->mPath.path = QDir::toNativeSeparators(localDir.path());
+
+                        QDir sourceCloudPath(QString::fromUtf8(stall->indexPath()));
+                        QDir targetCloudPath(QString::fromUtf8(stall->cloudPath()));
+
+                        d.getStalledIssueData()->mPath.path = sourceCloudPath.path();
+                        d.getStalledIssueData()->mMovePath.path = targetCloudPath.path();
+                    }
+                    else
+                    {
+                        destinationData->mPath.path = QString::fromUtf8(stall->cloudPath());
+
+
+                        QDir sourceLocalPath(QString::fromUtf8(stall->indexPath()));
+                        d.getStalledIssueData()->mPath.path = QDir::toNativeSeparators(sourceLocalPath.path());
+                        d.getStalledIssueData()->mMovePath.path = QDir::toNativeSeparators(localDir.path());
+                    }
+
+                     mCacheStalledIssues.append(d);
+                    createStalledIssue = false;
                 }
 
                 if(createStalledIssue)
@@ -136,27 +199,33 @@ StalledIssuesModel::~StalledIssuesModel()
 
 void StalledIssuesModel::onProcessStalledIssues(StalledIssuesList stalledIssues)
 {
-    if(!stalledIssues.isEmpty())
+    QtConcurrent::run([this, stalledIssues]()
     {
-        auto totalRows = rowCount(QModelIndex());
-        auto rowsToBeInserted(static_cast<int>(stalledIssues.size()));
-
-        beginInsertRows(QModelIndex(), totalRows, totalRows + rowsToBeInserted - 1);
-
-        for (auto it = stalledIssues.begin(); it != stalledIssues.end();)
+        if(!stalledIssues.isEmpty())
         {
-            mStalledIssues.append((*it));
-            mStalledIssuesByOrder.insert(&(*it), rowCount(QModelIndex()) - 1);
+            QMutexLocker lock(&mModelMutex);
 
-            stalledIssues.removeOne((*it));
-            it++;
+            auto totalRows = rowCount(QModelIndex());
+            auto rowsToBeInserted(static_cast<int>(stalledIssues.size()));
+
+            beginInsertRows(QModelIndex(), totalRows, totalRows + rowsToBeInserted - 1);
+
+            for (auto it = stalledIssues.begin(); it != stalledIssues.end();)
+            {
+                StalledIssue issue(*it);
+                mStalledIssues.append(issue);
+                mStalledIssuesByOrder.insert(&issue, rowCount(QModelIndex()) - 1);
+                mCountByFilterCriterion[static_cast<int>(StalledIssue::getCriterionByReason((*it).getReason()))]++;
+
+                it++;
+            }
+
+            endInsertRows();
+            emit stalledIssuesCountChanged();
         }
 
-        endInsertRows();
-        emit stalledIssuesCountChanged();
-    }
-
-    emit stalledIssuesReceived(true);
+        emit stalledIssuesReceived(true);
+    });
 }
 
 void StalledIssuesModel::updateStalledIssues()
@@ -167,6 +236,10 @@ void StalledIssuesModel::updateStalledIssues()
     if (mMegaApi->isSyncStalled())
     {
         mMegaApi->getSyncProblems(nullptr, true);
+    }
+    else
+    {
+        emit stalledIssuesReceived(false);
     }
 }
 
@@ -207,7 +280,7 @@ int StalledIssuesModel::rowCount(const QModelIndex &parent) const
    return 0;
 }
 
-int StalledIssuesModel::columnCount(const QModelIndex &parent) const
+int StalledIssuesModel::columnCount(const QModelIndex &) const
 {
    return 1;
 }
@@ -329,8 +402,6 @@ bool StalledIssuesModel::removeRows(int row, int count, const QModelIndex &paren
 
         endRemoveRows();
 
-        emit stalledIssuesCountChanged();
-
         return true;
     }
     else
@@ -342,18 +413,35 @@ bool StalledIssuesModel::removeRows(int row, int count, const QModelIndex &paren
 void StalledIssuesModel::updateStalledIssuedByOrder()
 {
     mStalledIssuesByOrder.clear();
+    mCountByFilterCriterion.clear();
 
     //Recalculate rest of items
     for(int row = 0; row < rowCount(QModelIndex()); ++row)
     {
         auto item = mStalledIssues.at(row);
         mStalledIssuesByOrder.insert(&item, row);
+
+        mCountByFilterCriterion[static_cast<int>(StalledIssue::getCriterionByReason(item.getReason()))]++;
     }
+
+    emit stalledIssuesCountChanged();
 }
 
 bool StalledIssuesModel::hasStalledIssues() const
 {
     return mHasStalledIssues;
+}
+
+void StalledIssuesModel::lockModelMutex(bool lock)
+{
+    if (lock)
+    {
+        mModelMutex.lock();
+    }
+    else
+    {
+        mModelMutex.unlock();
+    }
 }
 
 void StalledIssuesModel::reset()
@@ -362,8 +450,21 @@ void StalledIssuesModel::reset()
 
     mStalledIssues.clear();
     mStalledIssuesByOrder.clear();
+    mCountByFilterCriterion.clear();
 
     endResetModel();
 
     emit stalledIssuesCountChanged();
+}
+
+int StalledIssuesModel::getCountByFilterCriterion(StalledIssueFilterCriterion criterion)
+{
+    if(criterion == StalledIssueFilterCriterion::ALL_ISSUES)
+    {
+        return rowCount(QModelIndex());
+    }
+    else
+    {
+        return mCountByFilterCriterion.value((int)criterion,0);
+    }
 }

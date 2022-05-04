@@ -47,10 +47,14 @@ public:
     QModelIndex index(int row, int column, const QModelIndex& parent = QModelIndex()) const;
     Qt::ItemFlags flags(const QModelIndex &index) const override;
 
+    int getCountByFilterCriterion(StalledIssueFilterCriterion criterion);
+
     void finishStalledIssues(const QModelIndexList& indexes);
     void updateStalledIssues();
 
     bool hasStalledIssues() const;
+
+    void lockModelMutex(bool lock);
 
 signals:
     void stalledIssuesReceived(bool state);
@@ -75,8 +79,12 @@ private:
     mega::MegaApi* mMegaApi;
     bool mHasStalledIssues;
 
+    mutable QMutex mModelMutex;
+
     mutable StalledIssuesList mStalledIssues;
     mutable QHash<StalledIssue*, int> mStalledIssuesByOrder;
+
+    QHash<int, int> mCountByFilterCriterion;
 };
 
 #endif // STALLEDISSUESMODEL_H

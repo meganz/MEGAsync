@@ -29,16 +29,17 @@
    <string notr="true"/>
   </property>
   <property name="styleSheet">
-   <string notr="true">QFrame[itsOn=true] 
+   <string notr="true">QFrame[itsOn=true], QFrame[itsHover=true] 
 {
 	 border-radius: 12px;  
     border: 1px solid rgba(0,0,0,0.1);
     background: solid white;
 }
 
-QFrame[itsOn=false] 
+QFrame[itsOn=false][itsHover=false]
 {
 	border-radius: 12px;
+   border: 1px solid #EAEBEC;
 	background-color: #EAEBEC;
 }
 
@@ -47,6 +48,12 @@ QLabel
 	color: #333333;
    font-size: 13px;
 }</string>
+  </property>
+  <property name="itsHover" stdset="0">
+   <bool>false</bool>
+  </property>
+  <property name="itsOn" stdset="0">
+   <bool>false</bool>
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout">
    <property name="leftMargin">

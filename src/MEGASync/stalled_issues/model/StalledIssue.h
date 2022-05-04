@@ -14,7 +14,6 @@ enum class StalledIssueFilterCriterion
     OTHER_CONFLICTS,
 };
 
-
 class StalledIssueData : public QSharedData
 {
 public:
@@ -31,11 +30,8 @@ public:
     StalledIssueData(const mega::MegaSyncStall* stallIssue = nullptr);
     ~StalledIssueData(){}
 
-    Path mIndexPath;
     Path mMovePath;
-
-    QString mLocalPath;
-    QString mCloudPath;
+    Path mPath;
 
     bool mIsCloud;
     bool mIsImmediate;
@@ -76,7 +72,9 @@ class StalledIssue
 
         bool isNameConflict() const;
 
-         bool operator==(const StalledIssue &data);
+        bool operator==(const StalledIssue &data);
+
+        static StalledIssueFilterCriterion getCriterionByReason(mega::MegaSyncStall::SyncStallReason reason);
 
 protected:
         QList<QExplicitlySharedDataPointer<StalledIssueData>> d;

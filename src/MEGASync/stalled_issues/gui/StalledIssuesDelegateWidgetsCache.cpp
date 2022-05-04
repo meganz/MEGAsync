@@ -86,6 +86,9 @@ StalledIssueBaseDelegateWidget *StalledIssuesDelegateWidgetsCache::createBodyWid
         case mega::MegaSyncStall::SyncStallReason::SyncItemExceedsSupportedTreeDepth:
         case mega::MegaSyncStall::SyncStallReason::MoveTargetNameTooLong:
         case mega::MegaSyncStall::SyncStallReason::MatchedAgainstUnidentifiedItem:
+        case mega::MegaSyncStall::SyncStallReason::DeleteOrMoveWaitingOnScanning:
+        case mega::MegaSyncStall::SyncStallReason::LocalFolderNotScannable:
+        case mega::MegaSyncStall::SyncStallReason::MovingDownloadToTarget:
         {
             auto filePath  = new StalledIssueFilePath(parent);
             filePath->setIndent(StalledIssueHeader::BODY_INDENT);
@@ -99,8 +102,8 @@ StalledIssueBaseDelegateWidget *StalledIssuesDelegateWidgetsCache::createBodyWid
 
             break;
         }
-        case mega::MegaSyncStall::SyncStallReason::LocalFolderNotScannable:
         case mega::MegaSyncStall::SyncStallReason::ApplyMoveNeedsOtherSideParentFolderToExist:
+        case mega::MegaSyncStall::SyncStallReason::MoveNeedsDestinationNodeProcessing:
         {
             item = new OtherSideMissingOrBlocked(parent);
             break;
@@ -131,6 +134,16 @@ StalledIssueHeader *StalledIssuesDelegateWidgetsCache::createHeaderWidget(const 
             break;
         }
         case mega::MegaSyncStall::SyncStallReason::MoveOrRenameFailed:
+        {
+            header  = new MoveOrRenameFailedHeader(parent);
+            break;
+        }
+        case mega::MegaSyncStall::SyncStallReason::MovingDownloadToTarget:
+        {
+            header  = new MovingDownloadToTargetHeader(parent);
+            break;
+        }
+        case mega::MegaSyncStall::SyncStallReason::DeleteOrMoveWaitingOnScanning:
         {
             header  = new MoveOrRenameFailedHeader(parent);
             break;
@@ -198,6 +211,11 @@ StalledIssueHeader *StalledIssuesDelegateWidgetsCache::createHeaderWidget(const 
         case mega::MegaSyncStall::SyncStallReason::ApplyMoveNeedsOtherSideParentFolderToExist:
         {
             header  = new ApplyMoveNeedsOtherSideParentFolderToExistHeader(parent);
+            break;
+        }
+        case mega::MegaSyncStall::SyncStallReason::MoveNeedsDestinationNodeProcessing:
+        {
+            header  = new MoveNeedsDestinationNodeProcessingHeader(parent);
             break;
         }
         default:

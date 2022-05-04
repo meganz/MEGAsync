@@ -6,6 +6,7 @@ INCLUDEPATH += $$PWD/gui
 SOURCES += $$PWD/model/TransfersModel.cpp \
            $$PWD/model/InfoDialogTransfersProxyModel.cpp \
            $$PWD/model/TransfersManagerSortFilterProxyModel.cpp \
+           $$PWD/gui/SomeIssuesOccurredMessage.cpp \
            $$PWD/gui/InfoDialogTransferDelegateWidget.cpp \
            $$PWD/gui/InfoDialogTransfersWidget.cpp \
            $$PWD/gui/MegaTransferDelegate.cpp  \
@@ -25,6 +26,7 @@ HEADERS += $$PWD/model/InfoDialogTransfersProxyModel.h \
            $$PWD/model/TransfersManagerSortFilterProxyModel.h \
            $$PWD/model/TransfersSortFilterProxyBaseModel.h \
            $$PWD/model/TransfersModel.h \
+		   $$PWD/gui/SomeIssuesOccurredMessage.h \
            $$PWD/gui/InfoDialogTransferDelegateWidget.h \
            $$PWD/gui/InfoDialogTransfersWidget.h \
            $$PWD/gui/MegaTransferDelegate.h  \
@@ -53,7 +55,8 @@ win32 {
                 $$PWD/gui/win/InfoDialogTransfersWidget.ui \
                 $$PWD/gui/win/InfoDialogTransferDelegateWidget.ui \
                 $$PWD/gui/win/TransfersStatusWidget.ui \
-                $$PWD/gui/win/TransfersSummaryWidget.ui
+                $$PWD/gui/win/TransfersSummaryWidget.ui \
+				$$PWD/gui/win/SomeIssuesOccurredMessage.ui
 }
 
 macx {
@@ -69,7 +72,8 @@ macx {
                 $$PWD/gui/macx/InfoDialogTransfersWidget.ui \
                 $$PWD/gui/macx/InfoDialogTransferDelegateWidget.ui \
                 $$PWD/gui/macx/TransfersStatusWidget.ui \
-                $$PWD/gui/macx/TransfersSummaryWidget.ui
+                $$PWD/gui/macx/TransfersSummaryWidget.ui \
+				$$PWD/gui/macx/SomeIssuesOccurredMessage.ui
 }
 
 unix:!macx {
@@ -85,5 +89,6 @@ unix:!macx {
                 $$PWD/gui/linux/InfoDialogTransfersWidget.ui \
                 $$PWD/gui/linux/InfoDialogTransferDelegateWidget.ui \
                 $$PWD/gui/linux/TransfersStatusWidget.ui \
-                $$PWD/gui/linux/TransfersSummaryWidget.ui
+                $$PWD/gui/linux/TransfersSummaryWidget.ui \
+				$$PWD/gui/linux/SomeIssuesOccurredMessage.ui
 }

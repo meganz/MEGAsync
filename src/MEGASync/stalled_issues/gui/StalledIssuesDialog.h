@@ -3,6 +3,9 @@
 
 #include "MegaDelegateHoverManager.h"
 #include "StalledIssue.h"
+#include "StalledIssueLoadingItem.h"
+
+#include <ViewLoadingScene.h>
 
 #include <QDialog>
 #include <QGraphicsDropShadowEffect>
@@ -12,6 +15,7 @@ class StalledIssuesDialog;
 }
 
 class StalledIssueTab;
+class StalledIssuesProxyModel;
 
 class StalledIssuesDialog : public QDialog
 {
@@ -30,11 +34,17 @@ private slots:
 
     void toggleTab(StalledIssueFilterCriterion filterCriterion);
 
+    void onUiBlocked();
+    void onUiUnblocked();
+
+    void onStalledIssuesLoaded();
+
 private:
     Ui::StalledIssuesDialog *ui;
     MegaDelegateHoverManager mViewHoverManager;
     StalledIssueFilterCriterion mCurrentTab;
-
+    ViewLoadingScene<StalledIssueLoadingItem> mLoadingScene;
+    StalledIssuesProxyModel* mProxyModel;
 };
 
 #endif // STALLEDISSUESDIALOG_H

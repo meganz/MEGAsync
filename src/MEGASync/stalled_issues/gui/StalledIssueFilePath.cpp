@@ -7,6 +7,8 @@
 #include <QPainter>
 #include <QPoint>
 
+const char* StalledIssueFilePath::FULL_PATH = "fullPath";
+
 StalledIssueFilePath::StalledIssueFilePath(QWidget *parent) :
     StalledIssueBaseDelegateWidget(parent),
     ui(new Ui::StalledIssueFilePath)
@@ -51,7 +53,7 @@ void StalledIssueFilePath::fillFilePath()
         ui->LocalOrRemoteText->setText(tr("Local:"));
     }
 
-    fillPathName(data->mIndexPath, ui->filePath);
+    fillPathName(data->mPath, ui->filePath);
 
     QIcon fileTypeIcon;
     auto splittedFile = getData().getFileName().split(QString::fromUtf8("."));
@@ -122,11 +124,19 @@ bool StalledIssueFilePath::eventFilter(QObject *watched, QEvent *event)
     }
     else if(watched == ui->filePathContainer)
     {
-        showHoverAction(event->type(), ui->filePathAction, getData().getStalledIssueData()->mIndexPath.path);
+        showHoverAction(event->type(), ui->filePathAction, getData().getStalledIssueData()->mPath.path);
     }
     else if(watched == ui->moveFilePathContainer)
     {
         showHoverAction(event->type(), ui->moveFilePathAction,  getData().getStalledIssueData()->mMovePath.path);
+    }
+    else if(auto label = dynamic_cast<QLabel*>(watched))
+    {
+        auto fullPath = label->property(FULL_PATH);
+        if(fullPath.isValid())
+        {
+            label->setText(label->fontMetrics().elidedText(fullPath.toString(), Qt::ElideMiddle,label->width()));
+        }
     }
 
     return StalledIssueBaseDelegateWidget::eventFilter(watched, event);
@@ -152,9 +162,11 @@ void StalledIssueFilePath::fillPathName(StalledIssueData::Path data, QLabel* lab
         }
     }
 
-    QString elidedPath = Utilities::getElidedPath(data.path, 5,1,10);
+    //for elided text in real time
+    label->installEventFilter(this);
+    label->setProperty(FULL_PATH, data.path);
 
-    label->setText(elidedPath);
+    label->setText(data.path);
 
     if(mInRed)
     {

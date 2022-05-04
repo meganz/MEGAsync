@@ -4,6 +4,7 @@
 #include <QString>
 #include <QHash>
 #include <QPixmap>
+#include <QLabel>
 #include <QProgressDialog>
 #include <control/MegaController.h>
 
@@ -313,7 +314,7 @@ public:
     static void getPROurlWithParameters(QString &url);
     static QString joinLogZipFiles(mega::MegaApi *megaApi, const QDateTime *timestampSince = nullptr, QString appendHashReference = QString());
 
-    static QString getElidedPath(const QString& path, uint8_t firstPart, uint8_t secondPart, uint8_t maxDepth);
+    static QString getElidedPath(const QString& path, uint8_t firstPart, uint8_t secondPart, uint8_t maxDepth, QLabel* label);
 
     static void adjustToScreenFunc(QPoint position, QWidget *what);
     static QString minProPlanNeeded(std::shared_ptr<mega::MegaPricing> pricing, long long usedStorage);

@@ -15,6 +15,8 @@ class StalledIssueFilePath : public StalledIssueBaseDelegateWidget
 {
     Q_OBJECT
 
+    static const char* FULL_PATH;
+
 public:
     explicit StalledIssueFilePath(QWidget *parent = nullptr);
     ~StalledIssueFilePath();

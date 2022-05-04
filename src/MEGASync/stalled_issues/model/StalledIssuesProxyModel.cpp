@@ -2,12 +2,16 @@
 
 #include "StalledIssueHeader.h"
 #include "StalledIssueChooseWidget.h"
+#include "StalledIssuesModel.h"
 
 #include <QDebug>
+#include <QElapsedTimer>
+#include <QtConcurrent/QtConcurrent>
 
 StalledIssuesProxyModel::StalledIssuesProxyModel(QObject *parent) :QSortFilterProxyModel(parent)
 {
-
+    connect(&mFilterWatcher, &QFutureWatcher<void>::finished,
+            this, &StalledIssuesProxyModel::onModelFiltered);
 }
 
 int StalledIssuesProxyModel::rowCount(const QModelIndex &parent) const
@@ -22,8 +26,23 @@ int StalledIssuesProxyModel::rowCount(const QModelIndex &parent) const
 
 void StalledIssuesProxyModel::filter(StalledIssueFilterCriterion filterCriterion)
 {
+    emit uiBlocked();
     mFilterCriterion = filterCriterion;
-    invalidate();
+
+    QFuture<void> filtered = QtConcurrent::run([this](){
+        auto sourceM = qobject_cast<StalledIssuesModel*>(sourceModel());
+        sourceM->lockModelMutex(true);
+        sourceM->blockSignals(true);
+        invalidate();
+        sourceM->lockModelMutex(false);
+        sourceM->blockSignals(false);
+    });
+    mFilterWatcher.setFuture(filtered);
+}
+
+void StalledIssuesProxyModel::updateFilter()
+{
+    filter(mFilterCriterion);
 }
 
 bool StalledIssuesProxyModel::canFetchMore(const QModelIndex &parent) const
@@ -46,17 +65,19 @@ bool StalledIssuesProxyModel::filterAcceptsRow(int source_row, const QModelIndex
         {
             return d.isNameConflict();
         }
-        else if(mFilterCriterion == StalledIssueFilterCriterion::ITEM_TYPE_CONFLICTS)
-        {
-            return false;
-        }
         else
         {
-            return false;
+            auto filterCriterion = StalledIssue::getCriterionByReason(d.getReason());
+            return filterCriterion == mFilterCriterion;
         }
     }
     else
     {
         return QSortFilterProxyModel::filterAcceptsRow(source_row, source_parent);
     }
+}
+
+void StalledIssuesProxyModel::onModelFiltered()
+{
+    emit uiUnblocked();
 }

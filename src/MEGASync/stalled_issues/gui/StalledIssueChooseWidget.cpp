@@ -13,6 +13,7 @@ StalledIssueChooseWidget::StalledIssueChooseWidget(QWidget *parent) :
     setIndent();
 
     ui->chooseTitle->installEventFilter(this);
+    ui->fileNameText->installEventFilter(this);
 
     connect(ui->chooseButton, &QPushButton::clicked, this, &StalledIssueChooseWidget::chooseButtonClicked);
 }
@@ -25,6 +26,7 @@ StalledIssueChooseWidget::~StalledIssueChooseWidget()
 void StalledIssueChooseWidget::setData(StalledIssueDataPtr data, const QString& fileName)
 {
     mData = data;
+    mFileName = fileName;
 
     ui->titleLabel->setText(mData->mIsCloud ? tr("Remote Copy") : tr("Local Copy"));
     ui->fileNameText->setText(fileName);
@@ -41,7 +43,7 @@ void StalledIssueChooseWidget::setData(StalledIssueDataPtr data, const QString& 
 
     if(mData->mIsCloud)
     {
-        std::unique_ptr<mega::MegaNode> node(MegaSyncApp->getMegaApi()->getNodeByPath(mData->mIndexPath.path.toStdString().c_str()));
+        std::unique_ptr<mega::MegaNode> node(MegaSyncApp->getMegaApi()->getNodeByPath(mData->mPath.path.toStdString().c_str()));
         if(node)
         {
             ui->fileSize->setText(Utilities::getSizeString(node->getSize()));
@@ -49,7 +51,7 @@ void StalledIssueChooseWidget::setData(StalledIssueDataPtr data, const QString& 
     }
     else
     {
-        QFile file(mData->mIndexPath.path);
+        QFile file(mData->mPath.path);
         if(file.exists())
         {
             ui->fileSize->setText(Utilities::getSizeString(file.size()));
@@ -95,6 +97,11 @@ bool StalledIssueChooseWidget::eventFilter(QObject *watched, QEvent *event)
         path.addRoundedRect( QRect(0,0, ui->chooseTitle->width(), 6), 6, 6);
         path.addRect(QRect( 0, 3, ui->chooseTitle->width(), ui->chooseTitle->height() -3)); // Top right corner not rounded
         painter.drawPath(path.simplified());
+    }
+    else if(watched == ui->fileNameText && event->type() == QEvent::Resize)
+    {
+        auto elidedText = ui->fileNameText->fontMetrics().elidedText(mFileName,Qt::ElideMiddle, ui->fileNameText->width());
+        ui->fileNameText->setText(elidedText);
     }
 
     return QFrame::eventFilter(watched, event);

@@ -9,6 +9,7 @@
 #include <QPainter>
 #include <QDebug>
 #include <QMouseEvent>
+#include <QElapsedTimer>
 
 StalledIssueDelegate::StalledIssueDelegate(StalledIssuesProxyModel* proxyModel,  StalledIssuesView *view)
     :mView(view),
@@ -27,13 +28,20 @@ StalledIssueDelegate::~StalledIssueDelegate()
 
 QSize StalledIssueDelegate::sizeHint(const QStyleOptionViewItem&, const QModelIndex& index) const
 {
-    auto stalledIssueItem (qvariant_cast<StalledIssue>(index.data(Qt::DisplayRole)));
-    StalledIssueBaseDelegateWidget* w (getStalledIssueItemWidget(index, stalledIssueItem));
-    if(w)
+    if(!index.parent().isValid())
     {
-       auto size = w->sizeHint();
+        return QSize(200,StalledIssueHeader::HEIGHT);
+    }
+    else
+    {
+        auto stalledIssueItem (qvariant_cast<StalledIssue>(index.data(Qt::DisplayRole)));
+        StalledIssueBaseDelegateWidget* w (getStalledIssueItemWidget(index, stalledIssueItem));
+        if(w)
+        {
+            auto size = w->sizeHint();
 
-       return  size;
+            return  size;
+        }
     }
 
     return QSize();
@@ -41,16 +49,43 @@ QSize StalledIssueDelegate::sizeHint(const QStyleOptionViewItem&, const QModelIn
 
 void StalledIssueDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
+    QElapsedTimer timer;
+    timer.start();
+    QList<double> times;
+
     auto rowCount (index.model()->rowCount());
     auto row (index.row());
 
     if (index.isValid() && row < rowCount)
     {
         auto pos (option.rect.topLeft());
-        auto width (option.rect.width());
-        auto height (option.rect.height());
 
-        painter->fillRect(option.rect, Qt::white);
+        QColor rowColor;
+
+        if(index.parent().isValid())
+        {
+            rowColor = Qt::white;
+        }
+        else
+        {
+            if(index.row()%2 == 0)
+            {
+                rowColor = Qt::white;
+            }
+            else
+            {
+                rowColor.setRed(0);
+                rowColor.setGreen(0);
+                rowColor.setBlue(0);
+                rowColor.setAlphaF(0.05);
+            }
+        }
+
+
+        painter->fillRect(option.rect, rowColor);
+
+        times.append(timer.nsecsElapsed()/1000000.0);
+
         painter->save();
         painter->translate(pos);
 
@@ -63,11 +98,15 @@ void StalledIssueDelegate::paint(QPainter *painter, const QStyleOptionViewItem &
                 return;
             }
 
+            times.append(timer.nsecsElapsed()/1000000.0);
+
             w->expand(mView->isExpanded(index));
             w->setGeometry(option.rect);
-            w->hide();
-            w->render(option, painter, QRegion(0, 0, width, height));
+            w->render(option, painter, QRegion(0, 0, option.rect.width(), option.rect.height()));
         }
+
+
+        times.append(timer.nsecsElapsed()/1000000.0);
 
         bool drawBottomLine(false);
 
@@ -92,6 +131,9 @@ void StalledIssueDelegate::paint(QPainter *painter, const QStyleOptionViewItem &
             painter->setOpacity(0.08);
             painter->drawLine(QPoint(0 - option.rect.x(), option.rect.height() -1),QPoint(mView->width(),option.rect.height() -1));
         }
+
+
+        times.append(timer.nsecsElapsed()/1000000.0);
 
         painter->restore();
     }
@@ -119,6 +161,16 @@ bool StalledIssueDelegate::editorEvent(QEvent *event, QAbstractItemModel *model,
                         if(mEditor)
                         {
                             mEditor->expand(!currentState);
+
+                            //If it is going to be expanded
+                            if(!currentState)
+                            {
+                                auto childIndex = index.child(0,0);
+                                if(childIndex.isValid())
+                                {
+                                    mView->scrollTo(childIndex);
+                                }
+                            }
                         }
                     }
                 }
@@ -208,11 +260,11 @@ StalledIssueBaseDelegateWidget *StalledIssueDelegate::getStalledIssueItemWidget(
 
     if(index.parent().isValid())
     {
-        item = mCacheManager.getStalledIssueInfoWidget(index,mView, data);
+        item = mCacheManager.getStalledIssueInfoWidget(index,mView->viewport(), data);
     }
     else
     {
-        item = mCacheManager.getStalledIssueHeaderWidget(index,mView, data);
+        item = mCacheManager.getStalledIssueHeaderWidget(index,mView->viewport(), data);
     }
 
     return item;

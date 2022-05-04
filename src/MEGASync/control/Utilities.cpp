@@ -999,12 +999,50 @@ QString Utilities::joinLogZipFiles(MegaApi *megaApi, const QDateTime *timestampS
     return QString();
 }
 
-QString Utilities::getElidedPath(const QString &path, uint8_t firstPart, uint8_t secondPart, uint8_t maxDepth)
+QString Utilities::getElidedPath(const QString &path, uint8_t firstPart, uint8_t secondPart, uint8_t maxDepth, QLabel* label)
 {
     if((firstPart + secondPart) > maxDepth)
     {
         return path;
     }
+
+//    QFontMetrics fontMetrics = label->fontMetrics();
+//    QFileInfo pathInfo(path);
+
+//    if(pathInfo.isFile())
+//    {
+//        auto pathWidth = fontMetrics.boundingRect(pathInfo.path());
+//        auto fileWidth = fontMetrics.boundingRect(pathInfo.fileName());
+
+//        if(pathWidth + fileWidth > label->width())
+//        {
+//            if(pathWidth > fileWidth)
+//            {
+//                QStringList splittedPath = path.split(QDir::separator());
+
+//                auto separator = QDir::separator();
+//                for(int index = 0; index < firstPart; ++index)
+//                {
+//                    elidedPath.append(splittedPath.at(index));
+//                    elidedPath.append(separator);
+//                }
+
+//                elidedPath.append(QString::fromUtf8("…"));
+
+//                for(int index = splittedPath.size() - secondPart; index < splittedPath.size(); ++index)
+//                {
+//                    elidedPath.append(separator);
+//                    elidedPath.append(splittedPath.at(index));
+//                }
+//            }
+//        }
+
+//    }
+//    else
+//    {
+
+//    }
+
 
     QString elidedPath;
     QStringList splittedPath = path.split(QDir::separator());

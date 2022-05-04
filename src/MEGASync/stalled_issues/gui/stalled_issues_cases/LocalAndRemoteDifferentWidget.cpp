@@ -60,7 +60,7 @@ void LocalAndRemoteDifferentWidget::onRequestFinish(mega::MegaApi *, mega::MegaR
 
 void LocalAndRemoteDifferentWidget::onLocalButtonClicked()
 { 
-    auto fileNode(MegaSyncApp->getMegaApi()->getNodeByPath(ui->chooseRemoteCopy->data()->mIndexPath.path.toStdString().c_str()));
+    auto fileNode(MegaSyncApp->getMegaApi()->getNodeByPath(ui->chooseRemoteCopy->data()->mPath.path.toStdString().c_str()));
     if(fileNode)
     {
         mRemovedRemoteHandle = fileNode->getHandle();
@@ -70,7 +70,7 @@ void LocalAndRemoteDifferentWidget::onLocalButtonClicked()
 
 void LocalAndRemoteDifferentWidget::onRemoteButtonClicked()
 {
-    QFile file(ui->chooseLocalCopy->data()->mIndexPath.path);
+    QFile file(ui->chooseLocalCopy->data()->mPath.path);
     if(file.exists())
     {
         if(file.remove())

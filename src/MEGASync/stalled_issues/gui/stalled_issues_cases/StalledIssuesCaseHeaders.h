@@ -134,6 +134,18 @@ protected:
     void refreshCaseUi() override;
 };
 
+//MoveNeedsDestinationNodeProcessing
+class MoveNeedsDestinationNodeProcessingHeader : public StalledIssueHeader
+{
+    Q_OBJECT
+
+public:
+    MoveNeedsDestinationNodeProcessingHeader(QWidget *parent = nullptr);
+
+protected:
+    void refreshCaseUi() override;
+};
+
 //Unable to load ignore file
 class UnableToLoadIgnoreFileHeader : public StalledIssueHeader
 {
@@ -173,6 +185,18 @@ protected:
     void refreshCaseUi() override;
 };
 
+//Delete or Move Waiting onScanning
+class DeleteOrMoveWaitingOnScanningHeader : public StalledIssueHeader
+{
+    Q_OBJECT
+
+public:
+    DeleteOrMoveWaitingOnScanningHeader(QWidget *parent = nullptr);
+
+protected:
+    void refreshCaseUi() override;
+};
+
 //Matched Against Unidentified Item
 class MatchedAgainstUnidentifiedItemHeader : public StalledIssueHeader
 {
@@ -186,6 +210,18 @@ protected:
 
 protected slots:
     void on_actionButton_clicked() override;
+};
+
+//Moving Download To Target
+class MovingDownloadToTargetHeader : public StalledIssueHeader
+{
+    Q_OBJECT
+
+public:
+    MovingDownloadToTargetHeader(QWidget *parent = nullptr);
+
+protected:
+    void refreshCaseUi() override;
 };
 
 #endif // STALLEDISSUESCASEHEADERS_H

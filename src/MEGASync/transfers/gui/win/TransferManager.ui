@@ -361,34 +361,6 @@ QGroupBox::title
 {
   background-color: #2BA6DE;
   color: #FFFFFF;
-}
-
-#stalledIssuesContainer
-{
- height: 36px;
-  border-radius: 8px;
-  background-color: #FDEBEB;
-}
-
-#stalledIssuesContainer QPushButton
-{
-    color: #FFFFFF;
-    font-size: 14px;
-}
-
-#viewStalledIssuesButton
-{
-   height:24px;
-   width: 71px;
-   background-color: #F0373A;
-   color: #FFFFFF;
-   border-radius:3px;
-}
-
-#stalledIssuesInfoLabel
-{
-    color: #DA3135;
-   font-size: 13px;
 }</string>
   </property>
   <layout class="QHBoxLayout" name="TransferManagerLayout">

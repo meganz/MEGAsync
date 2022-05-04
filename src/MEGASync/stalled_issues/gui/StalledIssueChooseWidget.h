@@ -32,6 +32,7 @@ protected:
 private:
     Ui::StalledIssueChooseWidget *ui;
     StalledIssueDataPtr mData;
+    QString mFileName;
 };
 
 #endif // STALLEDISSUECHOOSEWIDGET_H

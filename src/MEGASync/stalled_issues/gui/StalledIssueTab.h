@@ -15,6 +15,8 @@ class StalledIssueTab : public QFrame
 {
     Q_OBJECT
 
+    static const char* HOVER_PROPERTY;
+
 public:
     explicit StalledIssueTab(QWidget *parent = nullptr);
     ~StalledIssueTab();
@@ -36,6 +38,11 @@ signals:
 
 protected:
     void mouseReleaseEvent(QMouseEvent *event) override;
+    void enterEvent(QEvent*) override;
+    void leaveEvent(QEvent*) override;
+
+private slots:
+    void onUpdateCounter();
 
 private:
     Q_PROPERTY(bool itsOn MEMBER mItsOn READ itsOn WRITE setItsOn)

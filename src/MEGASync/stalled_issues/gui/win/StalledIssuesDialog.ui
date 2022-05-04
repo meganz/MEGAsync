@@ -6,9 +6,21 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>261</width>
-    <height>426</height>
+    <width>800</width>
+    <height>600</height>
    </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>800</width>
+    <height>600</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>16777215</width>
+    <height>16777215</height>
+   </size>
   </property>
   <property name="windowTitle">
    <string>Stalled Issues</string>
@@ -281,6 +293,81 @@
       <number>0</number>
      </property>
      <widget class="QWidget" name="TreeViewContainerPage">
+      <property name="styleSheet">
+       <string notr="true">QScrollBar:vertical
+{
+    background: #f6f6f6;
+    width: 15px;
+    border-left: 1px solid #E4E4E4;
+}
+
+QScrollBar::sub-line:vertical, QScrollBar::add-line:vertical
+{
+    border: none;
+    background: none;
+    width:0px;
+    height:0px;
+}
+
+QScrollBar::handle:vertical
+{
+    background: #c0c0c0;
+    min-height: 20px;
+    border-radius: 4px;
+    margin: 3px 4px 3px 2px;
+}
+
+QMenu
+{
+    border: 1px solid #B8B8B8;
+   border-radius: 8px;
+    background: #ffffff;
+    padding-top: 16px;
+    padding-bottom: 16px;
+    padding-left: 8px;
+    padding-right: 8px;
+}
+
+QMenu::item
+{
+   font-size: 14px;
+   color: #333333;
+   background: transparent; 
+   margin-top: 3px;
+   margin-bottom: 3px;
+   padding-left: 16px;
+   padding-right: 16px;
+   margin-left: 16px;
+   margin-right: 16px;
+}
+
+QMenu::item:selected
+{
+    font-weight: bold;  
+}
+
+QMenu::separator
+{
+    height: 1px;
+	width: 164px;
+	min-width: 164px;
+	max-width: 164px;
+    background-color: #EEEEEE;
+    margin-top: 9px;
+    margin-bottom: 9px;
+}
+
+QMenu::item:disabled
+{
+    background-color: #ffffff;
+    color: rgba(119,119,119,0.3);
+}
+
+QMenu::item:default
+{
+    color: #F46265;
+}</string>
+      </property>
       <layout class="QVBoxLayout" name="verticalLayout_2">
        <property name="spacing">
         <number>0</number>
@@ -303,7 +390,7 @@
           <bool>false</bool>
          </property>
          <property name="styleSheet">
-          <string notr="true">background-color: rgba(255, 255, 255, 0);</string>
+          <string notr="true">background-color: rgba(255, 255, 255,0);</string>
          </property>
          <property name="frameShape">
           <enum>QFrame::NoFrame</enum>
@@ -314,11 +401,20 @@
          <property name="lineWidth">
           <number>0</number>
          </property>
+         <property name="sizeAdjustPolicy">
+          <enum>QAbstractScrollArea::AdjustToContents</enum>
+         </property>
+         <property name="autoScroll">
+          <bool>false</bool>
+         </property>
          <property name="editTriggers">
           <set>QAbstractItemView::NoEditTriggers</set>
          </property>
          <property name="alternatingRowColors">
-          <bool>true</bool>
+          <bool>false</bool>
+         </property>
+         <property name="verticalScrollMode">
+          <enum>QAbstractItemView::ScrollPerPixel</enum>
          </property>
          <property name="indentation">
           <number>0</number>
@@ -368,7 +464,7 @@
           <string>...</string>
          </property>
          <property name="icon">
-          <iconset resource="../../../gui/Resources_win.qrc">
+          <iconset resource="../../../gui/Resources_linux.qrc">
            <normaloff>:/images/no_transfers.png</normaloff>:/images/no_transfers.png</iconset>
          </property>
          <property name="iconSize">
@@ -520,8 +616,10 @@ QPushButton
   </customwidget>
  </customwidgets>
  <resources>
+  <include location="../../../gui/Resources_linux.qrc"/>
   <include location="../../../gui/Resources_win.qrc"/>
   <include location="../../../gui/Resources_win.qrc"/>
+  <include location="../../../gui/Resources_linux.qrc"/>
   <include location="../../../gui/Resources_win.qrc"/>
  </resources>
  <connections/>
