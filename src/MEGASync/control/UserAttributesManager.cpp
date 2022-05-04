@@ -5,11 +5,10 @@
 
 namespace UserAttributes
 {
-UserAttributesManager::UserAttributesManager()
+UserAttributesManager::UserAttributesManager() :
+    mDelegateListener(new mega::QTMegaListener(MegaSyncApp->getMegaApi(), this))
 {
-    const auto megaApp = static_cast<MegaApplication*>(qApp);
-    mDelegateListener = new mega::QTMegaListener(megaApp->getMegaApi(), this);
-    megaApp->getMegaApi()->addListener(mDelegateListener);
+    MegaSyncApp->getMegaApi()->addListener(mDelegateListener.get());
 }
 
 void UserAttributesManager::onRequestFinish(mega::MegaApi *api, mega::MegaRequest *incoming_request, mega::MegaError *e)
@@ -26,13 +25,16 @@ void UserAttributesManager::onRequestFinish(mega::MegaApi *api, mega::MegaReques
 
 void UserAttributesManager::onUsersUpdate(mega::MegaApi*, mega::MegaUserList *users)
 {
-    for (int i = 0; i < users->size(); i++)
+    if (users)
     {
-        mega::MegaUser *user = users->get(i);
-        auto userEmail = QString::fromUtf8(user->getEmail());
-        foreach(auto request, mRequests.values(userEmail))
+        for (int i = 0; i < users->size(); i++)
         {
-            request->updateAttributes(user);
+            mega::MegaUser *user = users->get(i);
+            auto userEmail = QString::fromUtf8(user->getEmail());
+            foreach(auto request, mRequests.values(userEmail))
+            {
+                request->updateAttributes(user);
+            }
         }
     }
 }

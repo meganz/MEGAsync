@@ -434,7 +434,7 @@ protected:
     SetupWizard *setupWizard;
     SettingsDialog *settingsDialog;
     InfoDialog *infoDialog;
-    Preferences *preferences;
+    std::shared_ptr<Preferences> preferences;
     Model *model;
     Controller *controller;
     mega::MegaApi *megaApi;

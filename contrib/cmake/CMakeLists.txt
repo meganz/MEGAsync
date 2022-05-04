@@ -218,6 +218,7 @@ set (MOC_INPUT
     ${MEGAsyncDir}/control/UpdateTask.h
     ${MEGAsyncDir}/control/ThreadPool.h
     ${MEGAsyncDir}/control/MegaController.h
+    ${MEGAsyncDir}/control/UserAttributesManager.h
     ${MEGAsyncDir}/model/SyncSettings.h
     ${MEGAsyncDir}/transfers/model/TransfersManagerSortFilterProxyModel.h
     ${MEGAsyncDir}/transfers/model/TransfersSortFilterProxyBaseModel.h
@@ -285,6 +286,7 @@ set (MOC_INPUT
     ${MEGAsyncDir}/gui/MegaItemDelegates.h
     ${MEGAsyncDir}/gui/GuiUtilities.h
     ${MEGAsyncDir}/gui/EventHelper.h
+    ${MEGAsyncDir}/gui/UserAttributesRequests.h
     ${MEGAsyncDir}/gui/ViewLoadingScene.h
     ${MEGAsyncDir}/platform/notificator.h
 

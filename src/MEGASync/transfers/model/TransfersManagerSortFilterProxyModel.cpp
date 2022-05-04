@@ -438,6 +438,17 @@ bool TransfersManagerSortFilterProxyModel::lessThan(const QModelIndex &left, con
     return QSortFilterProxyModel::lessThan(left, right);
 }
 
+QMimeData *TransfersManagerSortFilterProxyModel::mimeData(const QModelIndexList &indexes) const
+{
+    //sorted in inverse order to guarantee that the original order is preserved
+    auto sortedIndexes(indexes);
+    std::sort(sortedIndexes.begin(), sortedIndexes.end(),[](const QModelIndex& index1, const QModelIndex& index2){
+        return index1.row() > index2.row();
+    });
+
+    return TransfersSortFilterProxyBaseModel::mimeData(sortedIndexes);
+}
+
 int TransfersManagerSortFilterProxyModel::getPausedTransfers() const
 {
     return mPausedTransfers.size();

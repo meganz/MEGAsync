@@ -395,8 +395,8 @@ void MegaApplication::initialize()
     qRegisterMetaTypeStreamOperators<QQueue<QString> >("QQueueQString");
 
     preferences = Preferences::instance();
-    connect(preferences, SIGNAL(stateChanged()), this, SLOT(changeState()));
-    connect(preferences, SIGNAL(updated(int)), this, SLOT(showUpdatedMessage(int)));
+    connect(preferences.get(), SIGNAL(stateChanged()), this, SLOT(changeState()));
+    connect(preferences.get(), SIGNAL(updated(int)), this, SLOT(showUpdatedMessage(int)));
     preferences->initialize(dataPath);
 
     model = Model::instance();
@@ -419,7 +419,7 @@ void MegaApplication::initialize()
     QString language = preferences->language();
     changeLanguage(language);
 
-    mOsNotifications = std::make_shared<DesktopNotifications>(applicationName(), trayIcon, preferences);
+    mOsNotifications = std::make_shared<DesktopNotifications>(applicationName(), trayIcon);
 
     Qt::KeyboardModifiers modifiers = queryKeyboardModifiers();
     if (modifiers.testFlag(Qt::ControlModifier)
@@ -429,12 +429,7 @@ void MegaApplication::initialize()
     }
 
     QString basePath = QDir::toNativeSeparators(dataPath + QString::fromUtf8("/"));
-
-#ifndef __APPLE__
     megaApi = new MegaApi(Preferences::CLIENT_KEY, basePath.toUtf8().constData(), Preferences::USER_AGENT);
-#else
-    megaApi = new MegaApi(Preferences::CLIENT_KEY, basePath.toUtf8().constData(), Preferences::USER_AGENT, MacXPlatform::fd);
-#endif
 
     megaApiFolders = new MegaApi(Preferences::CLIENT_KEY, basePath.toUtf8().constData(), Preferences::USER_AGENT);
 
@@ -586,13 +581,13 @@ void MegaApplication::initialize()
                 }
 
 #ifndef __APPLE__
-                QMegaMessageBox::information(nullptr, QString::fromUtf8("MEGAsync"), tr("Thank you for your collaboration!"));
+                QMegaMessageBox::information(nullptr, QString::fromUtf8("MEGAsync"), tr("Thank you for your collaboration"));
 #endif
             }
         }
     }
 
-    transferQuota = ::mega::make_unique<TransferQuota>(megaApi, preferences, mOsNotifications);
+    transferQuota = ::mega::make_unique<TransferQuota>(mOsNotifications);
     connect(transferQuota.get(), &TransferQuota::waitTimeIsOver, this, &MegaApplication::updateStatesAfterTransferOverQuotaTimeHasExpired);
 
     periodicTasksTimer = new QTimer(this);
@@ -1626,15 +1621,11 @@ void MegaApplication::processDownloadQueue(QString path)
 
 void MegaApplication::unityFix()
 {
-    static QMenu *dummyMenu = NULL;
-    if (!dummyMenu)
-    {
-        dummyMenu = new QMenu();
-        connect(this, SIGNAL(unityFixSignal()), dummyMenu, SLOT(close()), Qt::QueuedConnection);
-    }
-
+    static QMenu dummyMenu;
+    connect(this, &MegaApplication::unityFixSignal, &dummyMenu, &QMenu::close,
+            static_cast<Qt::ConnectionType>(Qt::QueuedConnection | Qt::UniqueConnection));
     emit unityFixSignal();
-    dummyMenu->exec();
+    dummyMenu.exec();
 }
 
 void MegaApplication::closeDialogs(bool/* bwoverquota*/)
@@ -4689,7 +4680,7 @@ void MegaApplication::importLinks()
     LinkProcessor *linkProcessor = new LinkProcessor(linkList, megaApi, megaApiFolders);
 
     //Open the import dialog
-    importDialog = new ImportMegaLinksDialog(megaApi, preferences, linkProcessor);
+    importDialog = new ImportMegaLinksDialog(linkProcessor);
     importDialog->exec();
     if (!importDialog)
     {
@@ -5199,7 +5190,7 @@ void MegaApplication::processUploads()
     }
     uploadFolderSelector = new UploadToMegaDialog(megaApi);
     uploadFolderSelector->setDefaultFolder(preferences->uploadFolder());
-    Platform::activateBackgroundWindow(uploadFolderSelector);
+    uploadFolderSelector->activateWindow();
     uploadFolderSelector->exec();
     if (!uploadFolderSelector)
     {
@@ -5293,7 +5284,7 @@ void MegaApplication::processDownloads()
     }
 
     downloadFolderSelector = new DownloadFromMegaDialog(preferences->downloadFolder());
-    Platform::activateBackgroundWindow(downloadFolderSelector);
+    downloadFolderSelector->activateWindow();
     downloadFolderSelector->exec();
     if (!downloadFolderSelector)
     {
@@ -5839,9 +5830,9 @@ void MegaApplication::onUpdateAvailable(bool requested)
     if (requested)
     {
 #ifdef WIN32
-        showInfoMessage(tr("A new version of MEGAsync is available! Click on this message to install it"));
+        showInfoMessage(tr("A new version of MEGAsync is available. Click on this message to install it"));
 #else
-        showInfoMessage(tr("A new version of MEGAsync is available!"));
+        showInfoMessage(tr("A new version of MEGAsync is available"));
 #endif
     }
 }
@@ -6060,7 +6051,7 @@ void MegaApplication::onMessageClicked()
         return;
     }
 
-    if (lastTrayMessage == tr("A new version of MEGAsync is available! Click on this message to install it"))
+    if (lastTrayMessage == tr("A new version of MEGAsync is available. Click on this message to install it"))
     {
         triggerInstallUpdate();
     }
@@ -6087,7 +6078,7 @@ void MegaApplication::openInfoWizard()
     infoWizard = new InfoWizard();
     connect(infoWizard, SIGNAL(actionButtonClicked(int)), this, SLOT(userAction(int)));
     connect(infoWizard, SIGNAL(finished(int)), this, SLOT(infoWizardDialogFinished(int)));
-    Platform::activateBackgroundWindow(infoWizard);
+    infoWizard->activateWindow();
     infoWizard->show();
 }
 

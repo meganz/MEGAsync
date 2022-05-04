@@ -245,7 +245,7 @@ protected:
     QTimer uploadsFinishedTimer;
     QTimer transfersFinishedTimer;
     MegaApplication *app;
-    Preferences *preferences;
+    std::shared_ptr<Preferences> preferences;
     Model *model;
     Controller *controller;
     mega::MegaApi *megaApi;

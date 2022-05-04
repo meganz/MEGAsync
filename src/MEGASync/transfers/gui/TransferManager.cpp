@@ -37,7 +37,8 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
     mStorageQuotaState(MegaApi::STORAGE_STATE_UNKNOWN),
     mTransferQuotaState(QuotaState::OK),
     mFoundStalledIssues(false),
-    mScanningAnimationIndex(1)
+    mScanningAnimationIndex(1),
+    mSearchFieldReturnPressed(false)
 {
     mUi->setupUi(this);
 
@@ -185,6 +186,12 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
     connect(mUi->wTransfers,
             &TransfersWidget::disableTransferManager,[this](bool state){
         setDisabled(state);
+
+        if(!state && mSearchFieldReturnPressed)
+        {
+            mUi->leSearchField->setFocus();
+            mSearchFieldReturnPressed = false;
+        }
     });
 
     mFoundStalledIssues = MegaSyncApp->getStalledIssuesModel()->rowCount(QModelIndex()) != 0;
@@ -398,7 +405,15 @@ void TransferManager::onCancelVisibleRows()
     {
         if(mCurrentTab == ALL_TRANSFERS_TAB)
         {
-            on_bCancelClearAll_clicked();
+            onCancelAllClicked();
+        }
+        else if(mCurrentTab == COMPLETED_TAB)
+        {
+            transfersView->onClearAllTransfers();
+        }
+        else if(mCurrentTab > TYPES_TAB_BASE && mCurrentTab < TYPES_LAST)
+        {
+            transfersView->onCancelAndClearVisibleTransfers();
         }
         else
         {
@@ -829,8 +844,11 @@ void TransferManager::on_leSearchField_editingFinished()
 void TransferManager::on_tSearchIcon_clicked()
 {
     QString pattern (mUi->leSearchField->text());
-
-    if (pattern != QString())
+    if(pattern.isEmpty())
+    {
+        on_tClearSearchResult_clicked();
+    }
+    else
     {
         mUi->bSearchString->setText(mUi->bSearchString->fontMetrics()
                                     .elidedText(pattern,
@@ -838,6 +856,7 @@ void TransferManager::on_tSearchIcon_clicked()
                                                 mUi->bSearchString->width()));
         applyTextSearch(pattern);
     }
+
 }
 
 void TransferManager::applyTextSearch(const QString& text)
@@ -972,6 +991,19 @@ void TransferManager::on_bCancelClearAll_clicked()
     if(transfersView)
     {
         transfersView->onCancelAndClearAllTransfers();
+        on_tAllTransfers_clicked();
+
+        //Use to repaint and update the transfers state
+        transfersView->update();
+    }
+}
+
+void TransferManager::onCancelAllClicked()
+{
+    auto transfersView = findChild<MegaTransferView*>();
+    if(transfersView)
+    {
+        transfersView->onCancelAllTransfers();
         on_tAllTransfers_clicked();
 
         //Use to repaint and update the transfers state
@@ -1179,8 +1211,13 @@ bool TransferManager::eventFilter(QObject *obj, QEvent *event)
         if(keyEvent && keyEvent->key() == Qt::Key_Escape)
         {
             event->accept();
-            mUi->leSearchField->editingFinished();
+            on_leSearchField_editingFinished();
+            focusNextChild();
             return true;
+        }
+        else if(keyEvent && keyEvent->key() == Qt::Key_Return)
+        {
+            mSearchFieldReturnPressed = true;
         }
     }
     return QDialog::eventFilter(obj, event);

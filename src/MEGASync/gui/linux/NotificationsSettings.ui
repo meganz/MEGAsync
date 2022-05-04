@@ -35,7 +35,7 @@
       <item>
        <widget class="QLabel" name="GeneralSwithState">
         <property name="text">
-         <string>Account notifications:</string>
+         <string>System notifications:</string>
         </property>
        </widget>
       </item>
@@ -151,7 +151,7 @@
          <item>
           <widget class="QCheckBox" name="DesktopCheck">
            <property name="text">
-            <string>Desktop notifications</string>
+            <string>Info notifications</string>
            </property>
            <property name="NotificationType" stdset="0">
             <UInt>7</UInt>

@@ -30,7 +30,7 @@ class TransferQuota: public QObject
 {
     Q_OBJECT
 public:
-    TransferQuota(mega::MegaApi* megaApi, Preferences *preferences, std::shared_ptr<DesktopNotifications> desktopNotifications);
+    TransferQuota(std::shared_ptr<DesktopNotifications> desktopNotifications);
     void setOverQuota(std::chrono::milliseconds waitTime);
     void updateQuotaState();
     bool isOverQuota();
@@ -49,7 +49,7 @@ private:
     mega::MegaApi* mMegaApi;
     std::shared_ptr<mega::MegaPricing> mPricing;
     std::shared_ptr<mega::MegaCurrency> mCurrency;
-    Preferences* mPreferences;
+    std::shared_ptr<Preferences> mPreferences;
     std::shared_ptr<DesktopNotifications> mOsNotifications;
     UpgradeDialog* mUpgradeDialog;
     QuotaState mQuotaState;

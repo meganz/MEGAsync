@@ -30,7 +30,7 @@ AccountDetailsDialog::AccountDetailsDialog(QWidget *parent) :
     mUi->wCircularTransfer->setProgressBarGradient(QColor(96, 209, 254), QColor(88, 185, 243));
 
     // Get fresh data
-    refresh(Preferences::instance());
+    refresh();
 
     // Init HiDPI
     mHighDpiResize.init(this);
@@ -45,8 +45,9 @@ AccountDetailsDialog::~AccountDetailsDialog()
     delete mUi;
 }
 
-void AccountDetailsDialog::refresh(Preferences* preferences)
+void AccountDetailsDialog::refresh()
 {
+    auto preferences = Preferences::instance();
     // Get account type
     auto accType(preferences->accountType());
 
@@ -245,5 +246,5 @@ void AccountDetailsDialog::updateStorageElements()
     // Prevent other updates of these fields (due to events) after the first one
     MegaSyncApp->dettachStorageObserver(*this);
 
-    refresh(Preferences::instance());
+    refresh();
 }

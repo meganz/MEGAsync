@@ -43,7 +43,7 @@ protected:
    bool alreadyDownloaded(QString relativePath, QString fileSignature);
    bool alreadyExists(QString absolutePath, QString fileSignature);
 
-   Preferences *preferences;
+   std::shared_ptr<Preferences> preferences;
    QStringList downloadURLs;
    QStringList localPaths;
    QStringList fileSignatures;

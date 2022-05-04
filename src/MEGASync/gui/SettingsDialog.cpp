@@ -568,7 +568,7 @@ void SettingsDialog::loadSettings()
 
     if (mAccountDetailsDialog)
     {
-        mAccountDetailsDialog->refresh(mPreferences);
+        mAccountDetailsDialog->refresh();
     }
 
     updateUploadFolder();

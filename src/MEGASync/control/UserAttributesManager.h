@@ -63,10 +63,11 @@ public:
 
     void onRequestFinish(mega::MegaApi *api, mega::MegaRequest *incoming_request, mega::MegaError *e) override;
     void onUsersUpdate(mega::MegaApi *, mega::MegaUserList *users) override;
-    explicit UserAttributesManager();
 
 private:
-    mega::QTMegaListener* mDelegateListener;
+    explicit UserAttributesManager();
+
+    std::unique_ptr<mega::QTMegaListener> mDelegateListener;
     QMap<QString, std::shared_ptr<AttributeRequest>> mRequests;
 };
 }
