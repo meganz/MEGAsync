@@ -974,7 +974,7 @@ void TransfersModel::cancelTransfers(const QModelIndexList& indexes, QWidget* ca
             // Clear (remove rows of) finished transfers
             if (d)
             {
-                if (!d->isCancelable())
+                if (!d->isCompleted() && !d->isCancelable())
                 {
                     someTransfersAreNotCancelable = true;
 
@@ -1071,24 +1071,10 @@ void TransfersModel::cancelTransfers(const QModelIndexList& indexes, QWidget* ca
         }
 
 
-        if(transferCannotBeCancellable > 0 || (!uploadToClear.isEmpty() || !downloadToClear.isEmpty()))
+        if(transferCannotBeCancellable > 0)
         {
             //Clear is not empty and some transfers cannot be cleared
-            if((!uploadToClear.isEmpty() || !downloadToClear.isEmpty()) && transferCannotBeCancellable > 0)
-            {
-                QMegaMessageBox::warning(canceledFrom, QString::fromUtf8("MEGAsync"),
-                                         tr("Transfer(s) cannot be cancelled or cleared.", "", transferCannotBeCancellable + uploadToClear.size() + downloadToClear.size()),
-                                         QMessageBox::Ok);
-            }
-            //SOme transfers cannot be cleared
-            else if(!uploadToClear.isEmpty() || !downloadToClear.isEmpty())
-            {
-                QMegaMessageBox::warning(canceledFrom, QString::fromUtf8("MEGAsync"),
-                                         tr("Transfer(s) cannot be cleared.", "", uploadToClear.size() + downloadToClear.size()),
-                                         QMessageBox::Ok);
-            }
-            //
-            else if(transferCannotBeCancellable > 0 && syncTransferCannotBeCancellable == transferCannotBeCancellable)
+            if(transferCannotBeCancellable > 0 && syncTransferCannotBeCancellable == transferCannotBeCancellable)
             {
                 QMegaMessageBox::warning(canceledFrom, QString::fromUtf8("MEGAsync"),
                                          tr("Sync transfer(s) cannot be cancelled.\nPlease remove the sync from settings to remove this(these) transfer(s).", "", syncTransferCannotBeCancellable),

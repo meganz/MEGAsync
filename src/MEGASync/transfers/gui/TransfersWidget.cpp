@@ -79,6 +79,7 @@ void TransfersWidget::configureTransferView()
     ui->tvTransfers->setItemDelegate(tDelegate);
 
     onPauseStateChanged(mProxyModel->isAnyPaused());
+    onCheckCancelButtonVisibility(false);
 
     ui->tvTransfers->setModel(mProxyModel);
 
