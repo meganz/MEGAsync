@@ -85,11 +85,15 @@ void StalledIssuesReceiver::onRequestFinish(mega::MegaApi*, mega::MegaRequest *r
                         }
                     }
                 }
-                else  if(stall->reason() == mega::MegaSyncStall::SyncStallReason::ApplyMoveNeedsOtherSideParentFolderToExist)
+                else  if(stall->reason() == mega::MegaSyncStall::SyncStallReason::ApplyMoveNeedsOtherSideParentFolderToExist
+                         || stall->reason() == mega::MegaSyncStall::SyncStallReason::ApplyMoveIsBlockedByExistingItem)
                 {
                     StalledIssue d (StalledIssueDataPtr(new StalledIssueData(stall)), stall->reason());
 
-                    auto destinationData = StalledIssueDataPtr(new StalledIssueData());
+                    bool isMissing(stall->reason() == mega::MegaSyncStall::SyncStallReason::ApplyMoveNeedsOtherSideParentFolderToExist);
+                    bool isBlocked(stall->reason() == mega::MegaSyncStall::SyncStallReason::ApplyMoveIsBlockedByExistingItem);
+
+                    auto destinationData = StalledIssueDataPtr(new StalledIssueData(stall));
                     d.addStalledIssueData(destinationData);
 
                     QDir localDir(QString::fromUtf8(stall->localPath()));
@@ -97,9 +101,13 @@ void StalledIssuesReceiver::onRequestFinish(mega::MegaApi*, mega::MegaRequest *r
                     if(stall->isCloud())
                     {
                         destinationData->mPath.path = QDir::toNativeSeparators(localDir.path());
+                        destinationData->mIsCloud = false;
+                        destinationData->mPath.isMissing = isMissing;
+                        destinationData->mPath.isBlocked = isBlocked;
 
-                        QDir sourceCloudPath(QString::fromUtf8(stall->indexPath()));
-                        QDir targetCloudPath(QString::fromUtf8(stall->cloudPath()));
+
+                        QDir sourceCloudPath(QString::fromUtf8(stall->cloudPath()));
+                        QDir targetCloudPath(QString::fromUtf8(stall->indexPath()));
 
                         d.getStalledIssueData()->mPath.path = sourceCloudPath.path();
                         d.getStalledIssueData()->mMovePath.path = targetCloudPath.path();
@@ -108,6 +116,9 @@ void StalledIssuesReceiver::onRequestFinish(mega::MegaApi*, mega::MegaRequest *r
                     {
                         QDir targetCloudDir(QString::fromUtf8(stall->cloudPath()));
                         destinationData->mPath.path = targetCloudDir.path();
+                        destinationData->mIsCloud = true;
+                        destinationData->mPath.isMissing = isMissing;
+                        destinationData->mPath.isBlocked = isBlocked;
 
                         QDir targetLocalDir(QString::fromUtf8(stall->indexPath()));
 
