@@ -45,7 +45,9 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
     mUi->wTransfers->setupTransfers();
 #ifndef Q_OS_MACOS
     setWindowFlags(windowFlags() | Qt::Window);
+    mUi->leSearchField->setAttribute(Qt::WA_MacShowFocusRect,0);
 #endif
+
     setAttribute(Qt::WA_DeleteOnClose, true);
 
     mUi->lTextSearch->installEventFilter(this);
@@ -659,6 +661,7 @@ void TransferManager::onTransferQuotaStateChanged(QuotaState transferQuotaState)
     switch (mTransferQuotaState)
     {
         case QuotaState::FULL:
+        case QuotaState::OVERQUOTA:
         {
             mUi->tSeePlans->show();
             mUi->pTransferOverQuota->show();

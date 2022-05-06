@@ -545,10 +545,6 @@ void MegaTransferView::updateContextMenu(bool enablePause, bool enableResume, bo
 {
     mPauseAction->setVisible(enablePause);
     mResumeAction->setVisible(enableResume);
-    mMoveToTopAction->setVisible(enableMove);
-    mMoveUpAction->setVisible(enableMove);
-    mMoveToBottomAction->setVisible(enableMove);
-    mMoveDownAction->setVisible(enableMove);
     mCancelAction->setVisible(enableCancel);
     mClearAction->setVisible(enableClear);
 
@@ -605,11 +601,20 @@ void MegaTransferView::updateContextMenu(bool enablePause, bool enableResume, bo
         mCancelAction->setText(tr("Cancel Transfers"));
     }
 
-    mMoveToTopAction->setVisible(!isTopIndex);
-    mMoveUpAction->setVisible(!isTopIndex);
-
-    mMoveToBottomAction->setVisible(!isBottomIndex);
-    mMoveDownAction->setVisible(!isBottomIndex);
+    if(enableMove)
+    {
+        mMoveToTopAction->setVisible(!isTopIndex);
+        mMoveUpAction->setVisible(!isTopIndex);
+        mMoveToBottomAction->setVisible(!isBottomIndex);
+        mMoveDownAction->setVisible(!isBottomIndex);
+    }
+    else
+    {
+        mMoveToTopAction->setVisible(false);
+        mMoveUpAction->setVisible(false);
+        mMoveToBottomAction->setVisible(false);
+        mMoveDownAction->setVisible(false);
+    }
 }
 
 void MegaTransferView::mouseReleaseEvent(QMouseEvent* event)

@@ -228,6 +228,14 @@ QGroupBox::title
     text-align: left;
 }
 
+#lStorageOverQuota
+{
+  color: #F46265;
+  font-size: 12px;
+  font-weight: bold;
+  padding-left: 14px;
+}
+
 #bScanning
 {
     height: 24px;

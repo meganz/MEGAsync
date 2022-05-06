@@ -280,6 +280,14 @@ QToolButton
   padding-left: 14px;
 }
 
+#lStorageOverQuota
+{
+  color: #F46265;
+  font-size: 12px;
+  font-weight: bold;
+  padding-left: 14px;
+}
+
 #lNbResults[results=true]
 {
   color: #2BA6DE;

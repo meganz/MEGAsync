@@ -296,6 +296,14 @@ QGroupBox::title
   padding-left: 2px;
 }
 
+#lStorageOverQuota
+{
+  color: #F46265;
+  font-size: 12px;
+  font-weight: bold;
+  padding-left: 14px;
+}
+
 #lTransferOverQuotaInfo
 {
    color: #777777;

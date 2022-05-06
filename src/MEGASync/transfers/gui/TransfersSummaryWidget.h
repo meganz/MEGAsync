@@ -46,11 +46,8 @@ public:
     void adjustFontSizeToText(QFont *font, int maxWidth, QString uploadText, int fontsize = 12.0);
     int adjustSizeToText(QFont *font, int maxWidth, int minWidth, int margins, long long partial, long long total, int &posDotsPartial, int &posDotsTotal, QString &text, int fontsize);
 
-
-    void setTotalUploads(long long  value);
-    void setCompletedDownloads(long long  value);
-    void setTotalDownloads(long long  value);
-    void setCompletedUploads(long long  value);
+    void setUploads(long long  completed, long long total);
+    void setDownloads(long long  completed, long long total);
 
     void initialize();
     void reset();
@@ -160,9 +157,9 @@ private:
     qreal speed = 0;
 
     long long totalUploads;
-    long long completedUploads;
+    long long currentUpload;
     long long totalDownloads;
-    long long completedDownloads;
+    long long currentDownload;
 
     QFont fontUploads;
     QFont fontDownloads;
