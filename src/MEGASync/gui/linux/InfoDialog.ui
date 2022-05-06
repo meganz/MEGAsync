@@ -1366,6 +1366,33 @@ font-family: &quot;Lato&quot;;
                        </widget>
                       </item>
                       <item>
+                       <widget class="QWidget" name="wSomeIssuesOccurred" native="true">
+                        <property name="styleSheet">
+                         <string notr="true">background-color: rgb(255, 255, 255);</string>
+                        </property>
+                        <layout class="QHBoxLayout" name="horizontalLayout_15">
+                         <property name="spacing">
+                          <number>0</number>
+                         </property>
+                         <property name="leftMargin">
+                          <number>10</number>
+                         </property>
+                         <property name="topMargin">
+                          <number>5</number>
+                         </property>
+                         <property name="rightMargin">
+                          <number>10</number>
+                         </property>
+                         <property name="bottomMargin">
+                          <number>5</number>
+                         </property>
+                         <item>
+                          <widget class="SomeIssuesOccurredMessage" name="issuesContainer" native="true"/>
+                         </item>
+                        </layout>
+                       </widget>
+                      </item>
+                      <item>
                        <widget class="QStackedWidget" name="sActiveTransfers">
                         <property name="sizePolicy">
                          <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
@@ -3306,6 +3333,12 @@ border: none;
    <class>AlertFilterType</class>
    <extends>QWidget</extends>
    <header location="global">AlertFilterType.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>SomeIssuesOccurredMessage</class>
+   <extends>QWidget</extends>
+   <header>SomeIssuesOccurredMessage.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

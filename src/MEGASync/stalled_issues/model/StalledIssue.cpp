@@ -120,15 +120,16 @@ void StalledIssue::addStalledIssueData(QExplicitlySharedDataPointer<StalledIssue
 
 void StalledIssue::extractFileName(const QExplicitlySharedDataPointer<StalledIssueData> &tdr)
 {
-    if(tdr->mIsCloud)
+    QFileInfo fileInfo(tdr->mPath.path);
+
+    if(fileInfo.isFile())
     {
         auto splittedIndexPath = tdr->mPath.path.split(QString::fromUtf8("/"));
         mFileName = splittedIndexPath.last();
     }
     else
     {
-        auto splittedIndexPath = tdr->mPath.path.split(QString::fromUtf8("\\"));
-        mFileName = splittedIndexPath.last();
+        mFileName = tdr->mPath.path;
     }
 }
 

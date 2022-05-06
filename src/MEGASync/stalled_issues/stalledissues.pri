@@ -51,3 +51,16 @@ win32 {
                 $$PWD/gui/stalled_issues_cases/win/LocalAndRemoteDifferentWidget.ui \
                 $$PWD/gui/stalled_issues_cases/win/OtherSideMissingOrBlocked.ui
 }
+
+unix:!macx {
+RESOURCES += $$PWD/../gui/Resources_linux.qrc
+INCLUDEPATH += $$PWD/gui/win
+FORMS    += $$PWD/gui/linux/StalledIssueHeader.ui \
+            $$PWD/gui/linux/StalledIssueChooseWidget.ui \
+            $$PWD/gui/linux/StalledIssuesDialog.ui \
+            $$PWD/gui/linux/StalledIssueFilePath.ui \
+            $$PWD/gui/linux/StalledIssueTab.ui \
+            $$PWD/gui/linux/StalledIssueLoadingItem.ui \
+            $$PWD/gui/stalled_issues_cases/linux/LocalAndRemoteDifferentWidget.ui \
+            $$PWD/gui/stalled_issues_cases/linux/OtherSideMissingOrBlocked.ui
+}

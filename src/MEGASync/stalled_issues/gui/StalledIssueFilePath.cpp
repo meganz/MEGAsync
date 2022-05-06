@@ -54,21 +54,6 @@ void StalledIssueFilePath::fillFilePath()
     }
 
     fillPathName(data->mPath, ui->filePath);
-
-    QIcon fileTypeIcon;
-    auto splittedFile = getData().getFileName().split(QString::fromUtf8("."));
-    if(splittedFile.size() != 1)
-    {
-        fileTypeIcon = Utilities::getCachedPixmap(Utilities::getExtensionPixmapName(
-                                                           getData().getFileName(), QLatin1Literal(":/images/drag_")));
-    }
-    else
-    {
-        fileTypeIcon = Utilities::getCachedPixmap(QLatin1Literal(":/images/color_folder.png"));
-    }
-
-    ui->filePathIcon->setPixmap(fileTypeIcon.pixmap(ui->filePathIcon->size()));
-    ui->moveFilePathIcon->setPixmap(fileTypeIcon.pixmap(ui->moveFilePathIcon->size()));
 }
 
 void StalledIssueFilePath::fillMoveFilePath()
@@ -176,6 +161,37 @@ void StalledIssueFilePath::fillPathName(StalledIssueData::Path data, QLabel* lab
     {
         label->setStyleSheet(QString());
     }
+
+    QIcon fileTypeIcon;
+    if(data.isMissing)
+    {
+        fileTypeIcon = Utilities::getCachedPixmap(Utilities::getExtensionPixmapName(
+                                                      getData().getFileName(), QLatin1Literal(":/images/sidebar_failed_ico.png")));
+    }
+    else
+    {
+        QFileInfo fileInfo(getData().getFileName());
+        if(fileInfo.isFile())
+        {
+            if(fileInfo.baseName() == getData().getFileName())
+            {
+                fileTypeIcon = Utilities::getCachedPixmap(Utilities::getExtensionPixmapName(
+                                                              getData().getFileName(), QLatin1Literal(":/images/sidebar_failed_ico.png")));
+            }
+            else
+            {
+                fileTypeIcon = Utilities::getCachedPixmap(Utilities::getExtensionPixmapName(
+                                                              getData().getFileName(), QLatin1Literal(":/images/drag_")));
+            }
+        }
+        else
+        {
+            fileTypeIcon = Utilities::getCachedPixmap(QLatin1Literal(":/images/color_folder.png"));
+        }
+    }
+
+    ui->filePathIcon->setPixmap(fileTypeIcon.pixmap(ui->filePathIcon->size()));
+    ui->moveFilePathIcon->setPixmap(fileTypeIcon.pixmap(ui->moveFilePathIcon->size()));
 }
 
 void StalledIssueFilePath::showHoverAction(QEvent::Type type, QWidget *actionWidget, const QString& path)

@@ -46,7 +46,7 @@ void StalledIssueChooseWidget::setData(StalledIssueDataPtr data, const QString& 
         std::unique_ptr<mega::MegaNode> node(MegaSyncApp->getMegaApi()->getNodeByPath(mData->mPath.path.toStdString().c_str()));
         if(node)
         {
-            ui->fileSize->setText(Utilities::getSizeString(node->getSize()));
+            ui->fileSize->setText(Utilities::getSizeString((long long)node->getSize()));
         }
     }
     else

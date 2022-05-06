@@ -8,9 +8,9 @@
 
 #ifdef _WIN32
     #include "minwindef.h"
-#elif Q_OS_MACOS
+#elif defined Q_OS_MACOS
     #include "sys/syslimits.h"
-#elif Q_OS_LINUX
+#elif defined Q_OS_LINUX
     #include "limits.h"
 #endif
 

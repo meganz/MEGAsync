@@ -53,11 +53,12 @@ void StalledIssuesReceiver::onRequestFinish(mega::MegaApi*, mega::MegaRequest *r
             for (int i = 0; i < sl->size(); ++i)
             {
                 auto stall = sl->get(i);
-                bool createStalledIssue(true);
 
                 if(stall->reason() == mega::MegaSyncStall::SyncStallReason::LocalAndRemotePreviouslyUnsyncedDiffer_userMustChoose
                         || stall->reason() == mega::MegaSyncStall::SyncStallReason::LocalAndRemoteChangedSinceLastSyncedState_userMustChoose)
                 {
+                    bool createStalledIssue(true);
+
                     for(int index = 0; index < mCacheStalledIssues.size(); ++index)
                     {
                         auto& issue = mCacheStalledIssues[index];
@@ -84,85 +85,124 @@ void StalledIssuesReceiver::onRequestFinish(mega::MegaApi*, mega::MegaRequest *r
                             }
                         }
                     }
+
+                    if(createStalledIssue)
+                    {
+                        StalledIssue d (StalledIssueDataPtr(new StalledIssueData(stall)), stall->reason());
+                        mCacheStalledIssues.append(d);
+                    }
                 }
                 else  if(stall->reason() == mega::MegaSyncStall::SyncStallReason::ApplyMoveNeedsOtherSideParentFolderToExist
                          || stall->reason() == mega::MegaSyncStall::SyncStallReason::ApplyMoveIsBlockedByExistingItem)
                 {
                     StalledIssue d (StalledIssueDataPtr(new StalledIssueData(stall)), stall->reason());
 
-                    bool isMissing(stall->reason() == mega::MegaSyncStall::SyncStallReason::ApplyMoveNeedsOtherSideParentFolderToExist);
-                    bool isBlocked(stall->reason() == mega::MegaSyncStall::SyncStallReason::ApplyMoveIsBlockedByExistingItem);
-
                     auto destinationData = StalledIssueDataPtr(new StalledIssueData(stall));
                     d.addStalledIssueData(destinationData);
 
-                    QDir localDir(QString::fromUtf8(stall->localPath()));
+                    QFileInfo localDir(QString::fromUtf8(stall->localPath()));
 
                     if(stall->isCloud())
                     {
-                        destinationData->mPath.path = QDir::toNativeSeparators(localDir.path());
+                        destinationData->mPath.path = QDir::toNativeSeparators(localDir.isFile() ? localDir.path() : localDir.filePath());
                         destinationData->mIsCloud = false;
-                        destinationData->mPath.isMissing = isMissing;
-                        destinationData->mPath.isBlocked = isBlocked;
 
+                        QFileInfo sourceCloudPath(QString::fromUtf8(stall->indexPath()));
+                        QFileInfo targetCloudPath(QString::fromUtf8(stall->cloudPath()));
 
-                        QDir sourceCloudPath(QString::fromUtf8(stall->cloudPath()));
-                        QDir targetCloudPath(QString::fromUtf8(stall->indexPath()));
-
-                        d.getStalledIssueData()->mPath.path = sourceCloudPath.path();
-                        d.getStalledIssueData()->mMovePath.path = targetCloudPath.path();
+                        d.getStalledIssueData()->mPath.path = sourceCloudPath.isFile() ? sourceCloudPath.path() : sourceCloudPath.filePath();
+                        d.getStalledIssueData()->mMovePath.path = targetCloudPath.isFile() ? targetCloudPath.path() : targetCloudPath.filePath();
                     }
                     else
                     {
-                        QDir targetCloudDir(QString::fromUtf8(stall->cloudPath()));
-                        destinationData->mPath.path = targetCloudDir.path();
+                        QFileInfo targetCloudDir(QString::fromUtf8(stall->cloudPath()));
+                        destinationData->mPath.path = targetCloudDir.isFile() ? targetCloudDir.path() : targetCloudDir.filePath();
                         destinationData->mIsCloud = true;
-                        destinationData->mPath.isMissing = isMissing;
-                        destinationData->mPath.isBlocked = isBlocked;
 
-                        QDir targetLocalDir(QString::fromUtf8(stall->indexPath()));
+                        QFileInfo targetLocalDir(QString::fromUtf8(stall->indexPath()));
 
-                        d.getStalledIssueData()->mPath.path = QDir::toNativeSeparators(localDir.path());
-                        d.getStalledIssueData()->mMovePath.path = QDir::toNativeSeparators(targetLocalDir.path());
+                        d.getStalledIssueData()->mPath.path = QDir::toNativeSeparators(localDir.isFile() ? localDir.path() : localDir.filePath());
+                        d.getStalledIssueData()->mMovePath.path = QDir::toNativeSeparators(targetLocalDir.isFile() ? targetLocalDir.path() : targetLocalDir.filePath());
                     }
 
-                     mCacheStalledIssues.append(d);
-                    createStalledIssue = false;
+                    if(stall->reason() == mega::MegaSyncStall::SyncStallReason::ApplyMoveIsBlockedByExistingItem)
+                    {
+                        destinationData->mPath.isBlocked = true;
+                    }
+
+                    if(stall->reason() == mega::MegaSyncStall::SyncStallReason::ApplyMoveNeedsOtherSideParentFolderToExist)
+                    {
+                        d.getStalledIssueData()->mMovePath.isMissing = true;
+                    }
+
+                    mCacheStalledIssues.append(d);
                 }
                 else  if(stall->reason() == mega::MegaSyncStall::SyncStallReason::MoveNeedsDestinationNodeProcessing)
                 {
                     StalledIssue d (StalledIssueDataPtr(new StalledIssueData(stall)), stall->reason());
 
-                    auto destinationData = StalledIssueDataPtr(new StalledIssueData());
-                    d.addStalledIssueData(destinationData);
-
-                    QDir localDir(QString::fromUtf8(stall->localPath()));
+                    QFileInfo localDir(QString::fromUtf8(stall->localPath()));
 
                     if(stall->isCloud())
                     {
-                        destinationData->mPath.path = QDir::toNativeSeparators(localDir.path());
+                        auto destinationData = StalledIssueDataPtr(new StalledIssueData());
+                        d.addStalledIssueData(destinationData);
+                        destinationData->mPath.path = QDir::toNativeSeparators(localDir.isFile() ? localDir.path() : localDir.filePath());
 
-                        QDir sourceCloudPath(QString::fromUtf8(stall->indexPath()));
-                        QDir targetCloudPath(QString::fromUtf8(stall->cloudPath()));
+                        //Here we should have the target local path, which is blocked...
 
-                        d.getStalledIssueData()->mPath.path = sourceCloudPath.path();
-                        d.getStalledIssueData()->mMovePath.path = targetCloudPath.path();
+                        QFileInfo sourceCloudPath(QString::fromUtf8(stall->indexPath()));
+                        QFileInfo targetCloudPath(QString::fromUtf8(stall->cloudPath()));
+
+                        d.getStalledIssueData()->mPath.path = sourceCloudPath.isFile() ? sourceCloudPath.path() : sourceCloudPath.filePath();
+                        d.getStalledIssueData()->mMovePath.path = targetCloudPath.isFile() ? targetCloudPath.path() : targetCloudPath.filePath();
                     }
                     else
                     {
-                        destinationData->mPath.path = QString::fromUtf8(stall->cloudPath());
+                        QFileInfo sourceLocalPath(QString::fromUtf8(stall->indexPath()));
 
-
-                        QDir sourceLocalPath(QString::fromUtf8(stall->indexPath()));
-                        d.getStalledIssueData()->mPath.path = QDir::toNativeSeparators(sourceLocalPath.path());
-                        d.getStalledIssueData()->mMovePath.path = QDir::toNativeSeparators(localDir.path());
+                        d.getStalledIssueData()->mPath.path = QDir::toNativeSeparators(sourceLocalPath.isFile() ? sourceLocalPath.path() : sourceLocalPath.filePath());
+                        d.getStalledIssueData()->mMovePath.path = QDir::toNativeSeparators(localDir.isFile() ? localDir.path() : localDir.filePath());
                     }
 
-                     mCacheStalledIssues.append(d);
-                    createStalledIssue = false;
+                    mCacheStalledIssues.append(d);
                 }
+                //These stall issues are only local stalled issues
+                else  if(stall->reason() == mega::MegaSyncStall::SyncStallReason::UpsyncNeedsTargetFolder)
+                {
+                    StalledIssue d (StalledIssueDataPtr(new StalledIssueData(stall)), stall->reason());
 
-                if(createStalledIssue)
+                    auto cloudData = StalledIssueDataPtr(new StalledIssueData());
+                    d.addStalledIssueData(cloudData);
+
+                    QFileInfo sourceCloudPath(QString::fromUtf8(stall->cloudPath()));
+                    cloudData->mPath.path = sourceCloudPath.isFile() ? sourceCloudPath.path() : sourceCloudPath.filePath();
+                    cloudData->mPath.isMissing = true;
+
+                    mCacheStalledIssues.append(d);
+                }
+                //These stall issues are only cloud stalled issues
+                else  if(stall->reason() == mega::MegaSyncStall::SyncStallReason::DownsyncNeedsTargetFolder)
+                {
+                    StalledIssue d (StalledIssueDataPtr(new StalledIssueData(stall)), stall->reason());
+
+                    auto localData = StalledIssueDataPtr(new StalledIssueData());
+                    d.addStalledIssueData(localData);
+
+                    QFileInfo sourceLocalPath(QString::fromUtf8(stall->localPath()));
+                    localData->mPath.path = sourceLocalPath.isFile() ? sourceLocalPath.path() : sourceLocalPath.filePath();
+                    localData->mPath.isMissing = true;
+
+                    mCacheStalledIssues.append(d);
+                }
+                else  if(stall->reason() == mega::MegaSyncStall::SyncStallReason::DeleteOrMoveWaitingOnScanning)
+                {
+                    StalledIssue d (StalledIssueDataPtr(new StalledIssueData(stall)), stall->reason());
+                    d.getStalledIssueData()->mPath.isMissing = true;
+
+                    mCacheStalledIssues.append(d);
+                }
+                else
                 {
                     StalledIssue d (StalledIssueDataPtr(new StalledIssueData(stall)), stall->reason());
                     mCacheStalledIssues.append(d);
