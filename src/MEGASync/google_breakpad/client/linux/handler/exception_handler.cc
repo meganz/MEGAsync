@@ -327,7 +327,7 @@ void ExceptionHandler::SignalHandler(int sig, siginfo_t* info, void* uc) {
   }
 
   bool handled = false;
-  for (int i = handler_stack_->size() - 1; !handled && i >= 0; --i) {
+  for (int i = static_cast<int>(handler_stack_->size()) - 1; !handled && i >= 0; --i) {
     handled = (*handler_stack_)[i]->HandleSignal(sig, info, uc);
   }
 
@@ -349,7 +349,8 @@ void ExceptionHandler::SignalHandler(int sig, siginfo_t* info, void* uc) {
     // In order to retrigger it, we have to queue a new signal by calling
     // kill() ourselves.  The special case (si_pid == 0 && sig == SIGABRT) is
     // due to the kernel sending a SIGABRT from a user request via SysRQ.
-    if (tgkill(getpid(), syscall(__NR_gettid), sig) < 0) {
+    int returnValue = static_cast<int>(syscall(__NR_gettid));
+    if (tgkill(getpid(), returnValue, sig) < 0) {
       // If we failed to kill ourselves (e.g. because a sandbox disallows us
       // to do so), we instead resort to terminating our process. This will
       // result in an incorrect exit code.
@@ -411,7 +412,7 @@ bool ExceptionHandler::HandleSignal(int, siginfo_t* info, void* uc) {
            sizeof(context.float_state));
   }
 #endif
-  context.tid = syscall(__NR_gettid);
+  context.tid = static_cast<int>(syscall(__NR_gettid));
   if (crash_handler_ != NULL) {
     if (crash_handler_(&context, sizeof(context), callback_context_)) {
       return true;
@@ -505,7 +506,7 @@ bool ExceptionHandler::GenerateDump(CrashContext *context) {
 void ExceptionHandler::SendContinueSignalToChild() {
   static const char okToContinueMessage = 'a';
   int r;
-  r = HANDLE_EINTR(sys_write(fdes[1], &okToContinueMessage, sizeof(char)));
+  r = static_cast<int>(HANDLE_EINTR(sys_write(fdes[1], &okToContinueMessage, sizeof(char))));
   if (r == -1)
   {
     static const char msg[] = "ExceptionHandler::SendContinueSignalToChild \
@@ -521,7 +522,7 @@ void ExceptionHandler::SendContinueSignalToChild() {
 void ExceptionHandler::WaitForContinueSignal() {
   int r;
   char receivedMessage;
-  r = HANDLE_EINTR(sys_read(fdes[0], &receivedMessage, sizeof(char)));
+  r = static_cast<int>(HANDLE_EINTR(sys_read(fdes[0], &receivedMessage, sizeof(char))));
   if (r == -1)
   {
     static const char msg[] = "ExceptionHandler::WaitForContinueSignal \
