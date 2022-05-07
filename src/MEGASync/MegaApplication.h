@@ -351,6 +351,7 @@ private slots:
     void onBlocked();
     void onUnblocked();
     void onTransfersModelUpdate();
+    void onTransferManagerClosed();
 
 protected:
     void createTrayIcon();
@@ -513,7 +514,8 @@ protected:
     QList<QNetworkInterface> activeNetworkInterfaces;
     QMap<QString, QString> pendingLinks;
     std::unique_ptr<MegaSyncLogger> logger;
-    QPointer<TransferManager> transferManager;
+    QPointer<TransferManager> mTransferManager;
+    QRect mTransferManagerGeometry;
     QMap<int, mega::MegaTransfer*> finishedTransfers;
     QList<mega::MegaTransfer*> finishedTransferOrder;
     QSet<int> finishedBlockedTransfers;

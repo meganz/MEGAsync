@@ -71,6 +71,7 @@ signals:
     void showCompleted(bool showCompleted);
     void clearCompletedTransfers();
     void retryAllTransfers();
+    void aboutToClose();
 
 protected:
     bool eventFilter(QObject *obj, QEvent *event) override;

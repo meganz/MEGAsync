@@ -283,7 +283,7 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     storageOverquotaDialog = NULL;
     infoWizard = NULL;
     isFirstFileSynced = false;
-    transferManager = nullptr;
+    mTransferManager = nullptr;
     cleaningSchedulerExecution = 0;
     lastUserActivityExecution = 0;
     lastTsBusinessWarning = 0;
@@ -1630,8 +1630,8 @@ void MegaApplication::unityFix()
 
 void MegaApplication::closeDialogs(bool/* bwoverquota*/)
 {
-    delete transferManager;
-    transferManager = NULL;
+    delete mTransferManager;
+    mTransferManager = NULL;
 
     delete setupWizard;
     setupWizard = NULL;
@@ -1682,16 +1682,17 @@ void MegaApplication::closeDialogs(bool/* bwoverquota*/)
 
 void MegaApplication::createTransferManagerDialog()
 {
-    if(!transferManager)
+    if(!mTransferManager)
     {
-        transferManager = new TransferManager(megaApi);
-        infoDialog->setTransferManager(transferManager);
+        mTransferManager = new TransferManager(megaApi);
+        infoDialog->setTransferManager(mTransferManager);
 
         // Signal/slot to notify the tracking of unseen completed transfers of Transfer Manager. If Completed tab is
         // active, tracking is disabled
-        connect(transferManager, SIGNAL(userActivity()), this, SLOT(registerUserActivity()));
+        connect(mTransferManager, &TransferManager::userActivity, this, &MegaApplication::registerUserActivity);
         connect(transferQuota.get(), &TransferQuota::sendState,
-                transferManager, &TransferManager::onTransferQuotaStateChanged);
+                mTransferManager, &TransferManager::onTransferQuotaStateChanged);
+        connect(mTransferManager, &TransferManager::aboutToClose, this, &MegaApplication::onTransferManagerClosed);
     }
 }
 
@@ -4230,6 +4231,11 @@ void MegaApplication::onTransfersModelUpdate()
     }
 }
 
+void MegaApplication::onTransferManagerClosed()
+{
+    mTransferManagerGeometry = mTransferManager->geometry();
+}
+
 void MegaApplication::fetchNodes(QString email)
 {
     assert(!mFetchingNodes);
@@ -4934,10 +4940,15 @@ void MegaApplication::transferManagerActionClicked(int tab)
 
     createTransferManagerDialog();
 
-    transferManager->setActiveTab(tab);
-    transferManager->showNormal();
-    transferManager->activateWindow();
-    transferManager->raise();
+    if(!mTransferManagerGeometry.isEmpty())
+    {
+        mTransferManager->setGeometry(mTransferManagerGeometry);
+    }
+
+    mTransferManager->setActiveTab(tab);
+    mTransferManager->showNormal();
+    mTransferManager->activateWindow();
+    mTransferManager->raise();
 }
 
 void MegaApplication::loginActionClicked()
@@ -5020,12 +5031,12 @@ void MegaApplication::changeDisplay(QScreen*)
         infoDialog->setWindowFlags(Qt::FramelessWindowHint);
         infoDialog->setWindowFlags(Qt::FramelessWindowHint | Qt::Popup);
     }
-    if (transferManager && transferManager->isVisible())
+    if (mTransferManager && mTransferManager->isVisible())
     {
         //hack to force qt to reconsider zoom/sizes/etc ...
         //this closes the window
-        transferManager->setWindowFlags(Qt::Window);
-        transferManager->setWindowFlags(Qt::Window | Qt::FramelessWindowHint);
+        mTransferManager->setWindowFlags(Qt::Window);
+        mTransferManager->setWindowFlags(Qt::Window | Qt::FramelessWindowHint);
     }
 }
 #endif
@@ -7832,7 +7843,7 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
         finishedTransfers.insert(transfer->getTag(), t);
         finishedTransferOrder.push_back(t);
 
-        if (!transferManager)
+        if (!mTransferManager)
         {
             completedTabActive = false;
         }

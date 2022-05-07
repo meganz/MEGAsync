@@ -673,6 +673,7 @@ void TransferManager::onTransferQuotaStateChanged(QuotaState transferQuotaState)
     switch (mTransferQuotaState)
     {
         case QuotaState::FULL:
+        case QuotaState::OVERQUOTA:
         {
             mUi->tSeePlans->show();
             mUi->pTransferOverQuota->show();
@@ -694,17 +695,7 @@ void TransferManager::onTransferQuotaStateChanged(QuotaState transferQuotaState)
 
 void TransferManager::checkPauseButtonVisibilityIfPossible()
 {
-    if(mTransferQuotaState == QuotaState::FULL || (mStorageQuotaState == MegaApi::STORAGE_STATE_PAYWALL
-                                                   || mStorageQuotaState == MegaApi::STORAGE_STATE_RED))
-    {
-        mUi->bPause->setVisible(false);
-        mUi->lPaused->setVisible(false);
-    }
-    else
-    {
-        mUi->lPaused->setVisible(mModel->areAllPaused());
-        mUi->bPause->setVisible(true);
-    }
+    mUi->lPaused->setVisible(mModel->areAllPaused());
 }
 
 void TransferManager::refreshSpeed()
@@ -797,16 +788,28 @@ void TransferManager::on_tSeePlans_clicked()
 void TransferManager::on_bPause_clicked()
 {
     auto newState = !mModel->areAllPaused();
-    mModel->pauseResumeAllTransfers(newState);
-    onUpdatePauseState(newState);
 
-    //Use to repaint and update the transfers state
-    auto transfersView = findChild<MegaTransferView*>();
-    if(transfersView)
+    if(newState && (mTransferQuotaState == QuotaState::FULL || mTransferQuotaState == QuotaState::OVERQUOTA
+            || (mStorageQuotaState == MegaApi::STORAGE_STATE_PAYWALL
+            || mStorageQuotaState == MegaApi::STORAGE_STATE_RED)))
     {
-        transfersView->update();
+        MegaSyncApp->checkOverStorageStates();
+        mUi->bPause->blockSignals(true);
+        mUi->bPause->setChecked(mUi->bPause->isChecked());
+        mUi->bPause->blockSignals(false);
     }
+    else
+    {
+        mModel->pauseResumeAllTransfers(newState);
+        onUpdatePauseState(newState);
 
+        //Use to repaint and update the transfers state
+        auto transfersView = findChild<MegaTransferView*>();
+        if(transfersView)
+        {
+            transfersView->update();
+        }
+    }
 }
 
 void TransferManager::onStalledIssuesStateChanged(bool state)
@@ -1236,6 +1239,7 @@ void TransferManager::closeEvent(QCloseEvent *event)
     }
     else
     {
+        emit aboutToClose();
         QDialog::closeEvent(event);
     }
 }
