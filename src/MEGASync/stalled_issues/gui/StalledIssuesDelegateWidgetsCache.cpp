@@ -94,10 +94,12 @@ StalledIssueBaseDelegateWidget *StalledIssuesDelegateWidgetsCache::createBodyWid
         case mega::MegaSyncStall::SyncStallReason::DownsyncNeedsTargetFolder:
         case mega::MegaSyncStall::SyncStallReason::WaitingForFileToStopChanging:
         case mega::MegaSyncStall::SyncStallReason::SymlinksNotSupported:
+        case mega::MegaSyncStall::SyncStallReason::ApplyMoveNeedsOtherSideParentFolderToExist:
+        case mega::MegaSyncStall::SyncStallReason::ApplyMoveIsBlockedByExistingItem:
+        case mega::MegaSyncStall::SyncStallReason::MoveNeedsDestinationNodeProcessing:
+        case mega::MegaSyncStall::SyncStallReason::FolderMatchedAgainstFile:
         {
-            auto filePath  = new StalledIssueFilePath(parent);
-            filePath->setIndent(StalledIssueHeader::BODY_INDENT);
-            item = filePath;
+            item = new OtherSideMissingOrBlocked(parent);
             break;
         }
         case mega::MegaSyncStall::SyncStallReason::LocalAndRemotePreviouslyUnsyncedDiffer_userMustChoose:
@@ -105,14 +107,6 @@ StalledIssueBaseDelegateWidget *StalledIssuesDelegateWidgetsCache::createBodyWid
         {
             item = new LocalAndRemoteDifferentWidget(parent);
 
-            break;
-        }
-        case mega::MegaSyncStall::SyncStallReason::ApplyMoveNeedsOtherSideParentFolderToExist:
-        case mega::MegaSyncStall::SyncStallReason::ApplyMoveIsBlockedByExistingItem:
-        case mega::MegaSyncStall::SyncStallReason::MoveNeedsDestinationNodeProcessing:
-        case mega::MegaSyncStall::SyncStallReason::FolderMatchedAgainstFile:
-        {
-            item = new OtherSideMissingOrBlocked(parent);
             break;
         }
         default:

@@ -20,9 +20,6 @@ TransfersManagerSortFilterProxyModel::TransfersManagerSortFilterProxyModel(QObje
       mSortCriterion (SortCriterion::PRIORITY),
       mThreadPool (ThreadPoolSingleton::getInstance())
 {
-    qRegisterMetaType<QAbstractItemModel::LayoutChangeHint>("QAbstractItemModel::LayoutChangeHint");
-    qRegisterMetaType<QVector<int>>("QVector<int>");
-
     connect(&mFilterWatcher, &QFutureWatcher<void>::finished,
             this, &TransfersManagerSortFilterProxyModel::onModelSortedFiltered);
 

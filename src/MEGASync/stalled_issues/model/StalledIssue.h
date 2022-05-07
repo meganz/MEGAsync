@@ -59,10 +59,10 @@ class StalledIssue
     public:
         StalledIssue(){}
         StalledIssue(const StalledIssue& tdr) : d(tdr.d), mReason(tdr.getReason()), mIsNameConflict(tdr.isNameConflict()), mFileName(tdr.getFileName()) {}
-        StalledIssue(const QExplicitlySharedDataPointer<StalledIssueData>& tdr, mega::MegaSyncStall::SyncStallReason reason = mega::MegaSyncStall::SyncStallReason::NoReason);
-        StalledIssue(const QList<QExplicitlySharedDataPointer<StalledIssueData>>& tdr, mega::MegaSyncStall::SyncStallReason reason = mega::MegaSyncStall::SyncStallReason::NoReason);
+        StalledIssue(const mega::MegaSyncStall *stallIssue);
+        //StalledIssue(const QList<QExplicitlySharedDataPointer<StalledIssueData>>& tdr, mega::MegaSyncStall::SyncStallReason reason = mega::MegaSyncStall::SyncStallReason::NoReason);
 
-        void addStalledIssueData(QExplicitlySharedDataPointer<StalledIssueData> data);
+        void addStalledIssueData(const mega::MegaSyncStall *stallIssue);
         QExplicitlySharedDataPointer<StalledIssueData> getStalledIssueData(int index = 0) const;
         int stalledIssuesCount() const;
 
@@ -83,7 +83,9 @@ protected:
         QString mFileName;
 
 private:
-        void extractFileName(const QExplicitlySharedDataPointer<StalledIssueData>& tdr);
+        void extractFileName(const mega::MegaSyncStall *stall);
+        void fillIssue(const mega::MegaSyncStall *stall);
+        void addStalledIssueData(QExplicitlySharedDataPointer<StalledIssueData> data);
 };
 Q_DECLARE_METATYPE(StalledIssue)
 

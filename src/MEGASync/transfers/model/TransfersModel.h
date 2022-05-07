@@ -226,4 +226,8 @@ private:
     bool mModelReset;
 };
 
+Q_DECLARE_METATYPE(QAbstractItemModel::LayoutChangeHint)
+Q_DECLARE_METATYPE(QVector<int>)
+Q_DECLARE_METATYPE(QList<QPersistentModelIndex>)
+
 #endif // TRANSFERSMODEL_H

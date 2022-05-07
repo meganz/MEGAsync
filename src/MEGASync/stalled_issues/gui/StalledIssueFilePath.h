@@ -11,7 +11,7 @@ namespace Ui {
 class StalledIssueFilePath;
 }
 
-class StalledIssueFilePath : public StalledIssueBaseDelegateWidget
+class StalledIssueFilePath : public QWidget
 {
     Q_OBJECT
 
@@ -21,20 +21,22 @@ public:
     explicit StalledIssueFilePath(QWidget *parent = nullptr);
     ~StalledIssueFilePath();
 
-    void fillFilePath();
-    void fillMoveFilePath();
-
     void setIndent(int indent);
+    void updateUi(QExplicitlySharedDataPointer<StalledIssueData> data, const QString& fileName);
 
 protected:
-    void refreshUi() override;
     bool eventFilter(QObject *watched, QEvent *event) override;
 
 private:
     void fillPathName(StalledIssueData::Path data, QLabel* label);
     void showHoverAction(QEvent::Type type, QWidget* actionWidget, const QString &path);
 
+    void fillFilePath();
+    void fillMoveFilePath();
+
     Ui::StalledIssueFilePath *ui;
+    QExplicitlySharedDataPointer<StalledIssueData> mData;
+    QString mFileName;
 };
 
 #endif // STALLEDISSUEFILEPATH_H

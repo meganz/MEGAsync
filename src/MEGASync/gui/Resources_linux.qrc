@@ -1026,5 +1026,8 @@
         <file>images/StalledIssues/ico_menu_full.png</file>
         <file>images/StalledIssues/ico_menu_full@2x.png</file>
         <file>images/StalledIssues/ico_menu_full@3x.png</file>
+        <file>images/StalledIssues/help-circle.png</file>
+        <file>images/StalledIssues/help-circle@2x.png</file>
+        <file>images/StalledIssues/help-circle@3x.png</file>
     </qresource>
 </RCC>

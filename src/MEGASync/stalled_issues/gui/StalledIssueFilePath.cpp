@@ -10,7 +10,7 @@
 const char* StalledIssueFilePath::FULL_PATH = "fullPath";
 
 StalledIssueFilePath::StalledIssueFilePath(QWidget *parent) :
-    StalledIssueBaseDelegateWidget(parent),
+    QWidget(parent),
     ui(new Ui::StalledIssueFilePath)
 {
     ui->setupUi(this);
@@ -35,10 +35,7 @@ StalledIssueFilePath::~StalledIssueFilePath()
 
 void StalledIssueFilePath::fillFilePath()
 {
-    //The file path always get the first StalledIssueDataPtr
-    const auto& data = getData().getStalledIssueData();
-
-    if(data->mIsCloud)
+    if(mData->mIsCloud)
     {
         auto remoteIcon = Utilities::getCachedPixmap(QLatin1Literal(":/images/cloud_upload_item_ico.png"));
         ui->LocalOrRemoteIcon->setPixmap(remoteIcon.pixmap(ui->LocalOrRemoteIcon->size()));
@@ -53,17 +50,14 @@ void StalledIssueFilePath::fillFilePath()
         ui->LocalOrRemoteText->setText(tr("Local:"));
     }
 
-    fillPathName(data->mPath, ui->filePath);
+    fillPathName(mData->mPath, ui->filePath);
 }
 
 void StalledIssueFilePath::fillMoveFilePath()
 {
-    //The file path always get the first StalledIssueDataPtr
-    const auto& data = getData().getStalledIssueData();
-
-    if(data->hasMoveInfo())
+    if(mData->hasMoveInfo())
     {
-        fillPathName(data->mMovePath, ui->moveFilePath);
+        fillPathName(mData->mMovePath, ui->moveFilePath);
     }
     else
     {
@@ -77,8 +71,11 @@ void StalledIssueFilePath::setIndent(int indent)
     ui->gridLayout->invalidate();
 }
 
-void StalledIssueFilePath::refreshUi()
+void StalledIssueFilePath::updateUi(QExplicitlySharedDataPointer<StalledIssueData> data, const QString& fileName)
 {
+    mData = data;
+    mFileName = fileName;
+
     fillFilePath();
     fillMoveFilePath();
 }
@@ -88,7 +85,8 @@ bool StalledIssueFilePath::eventFilter(QObject *watched, QEvent *event)
     if(watched == ui->lines && event->type() == QEvent::Paint)
     {
         QPainter p(ui->lines);
-        p.setPen(QPen(QColor("#D6D6D6"),1));
+        p.setPen(QPen(QColor("#000000"),1));
+        p.setOpacity(0.2);
 
         auto width(ui->lines->width());
         auto height(ui->lines->height());
@@ -99,21 +97,22 @@ bool StalledIssueFilePath::eventFilter(QObject *watched, QEvent *event)
     else if(watched == ui->moveLines && event->type() == QEvent::Paint)
     {
         QPainter p(ui->moveLines);
-        p.setPen(QPen(QColor("#D6D6D6"),1));
+        p.setPen(QPen(QColor("#000000"),1));
+        p.setOpacity(0.2);
 
         auto width(ui->lines->width());
         auto height(ui->lines->height());
 
-        p.drawLine(QPoint(width/2,0), QPoint(width/2, ui->lines->height()));
-        p.drawLine(QPoint(width/2,height/2), QPoint(width, height/2));
+        p.drawLine(QPoint(0,height/2), QPoint(width, height/2));
+        p.drawLine(QPoint(0,0), QPoint(0, ui->lines->height()));
     }
     else if(watched == ui->filePathContainer)
     {
-        showHoverAction(event->type(), ui->filePathAction, getData().getStalledIssueData()->mPath.path);
+        showHoverAction(event->type(), ui->filePathAction, mData->mPath.path);
     }
     else if(watched == ui->moveFilePathContainer)
     {
-        showHoverAction(event->type(), ui->moveFilePathAction,  getData().getStalledIssueData()->mMovePath.path);
+        showHoverAction(event->type(), ui->moveFilePathAction,  mData->mMovePath.path);
     }
     else if(auto label = dynamic_cast<QLabel*>(watched))
     {
@@ -124,7 +123,7 @@ bool StalledIssueFilePath::eventFilter(QObject *watched, QEvent *event)
         }
     }
 
-    return StalledIssueBaseDelegateWidget::eventFilter(watched, event);
+    return QWidget::eventFilter(watched, event);
 }
 
 
@@ -165,23 +164,21 @@ void StalledIssueFilePath::fillPathName(StalledIssueData::Path data, QLabel* lab
     QIcon fileTypeIcon;
     if(data.isMissing)
     {
-        fileTypeIcon = Utilities::getCachedPixmap(Utilities::getExtensionPixmapName(
-                                                      getData().getFileName(), QLatin1Literal(":/images/sidebar_failed_ico.png")));
+        fileTypeIcon = Utilities::getCachedPixmap(QLatin1Literal(":/images/StalledIssues/help-circle.png"));
     }
     else
     {
-        QFileInfo fileInfo(getData().getFileName());
+        QFileInfo fileInfo(mFileName);
         if(fileInfo.isFile())
         {
-            if(fileInfo.baseName() == getData().getFileName())
+            if(fileInfo.baseName() == mFileName)
             {
-                fileTypeIcon = Utilities::getCachedPixmap(Utilities::getExtensionPixmapName(
-                                                              getData().getFileName(), QLatin1Literal(":/images/sidebar_failed_ico.png")));
+                fileTypeIcon = Utilities::getCachedPixmap(QLatin1Literal(":/images/StalledIssues/help-circle.png"));
             }
             else
             {
                 fileTypeIcon = Utilities::getCachedPixmap(Utilities::getExtensionPixmapName(
-                                                              getData().getFileName(), QLatin1Literal(":/images/drag_")));
+                                                              mFileName, QLatin1Literal(":/images/drag_")));
             }
         }
         else
@@ -210,29 +207,24 @@ void StalledIssueFilePath::showHoverAction(QEvent::Type type, QWidget *actionWid
     }
     else if(type == QEvent::MouseButtonRelease)
     {
-        const auto& data = getData().getStalledIssueData();
-
-        if(data)
+        if(mData->mIsCloud)
         {
-            if(data->mIsCloud)
+            mega::MegaNode* node (MegaSyncApp->getMegaApi()->getNodeByPath(path.toStdString().c_str()));
+            if (node)
             {
-                mega::MegaNode* node (MegaSyncApp->getMegaApi()->getNodeByPath(path.toStdString().c_str()));
-                if (node)
-                {
-                    const char* handle = node->getBase64Handle();
-                    QString url = QString::fromUtf8("mega://#fm/") + QString::fromUtf8(handle);
-                    QtConcurrent::run(QDesktopServices::openUrl, QUrl(url));
-                    delete [] handle;
-                    delete node;
-                }
+                const char* handle = node->getBase64Handle();
+                QString url = QString::fromUtf8("mega://#fm/") + QString::fromUtf8(handle);
+                QtConcurrent::run(QDesktopServices::openUrl, QUrl(url));
+                delete [] handle;
+                delete node;
             }
-            else
+        }
+        else
+        {
+            QtConcurrent::run([=]
             {
-                QtConcurrent::run([=]
-                {
-                    Platform::showInFolder(path);
-                });
-            }
+                Platform::showInFolder(path);
+            });
         }
     }
 }

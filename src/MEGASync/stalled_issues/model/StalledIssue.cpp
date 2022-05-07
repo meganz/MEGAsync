@@ -17,7 +17,6 @@ void StalledIssueData::update(const mega::MegaSyncStall *stallIssue)
 {
     if(stallIssue)
     {
-        mPath.path    = QString::fromUtf8(stallIssue->indexPath());
         mIsCloud      = stallIssue->isCloud();
         mIsImmediate  = stallIssue->isImmediate();
         mReasonString = QString::fromUtf8(stallIssue->reasonString());
@@ -96,21 +95,16 @@ void ConflictedNamesStalledIssue::update(const mega::MegaSyncNameConflict* nameC
     mIsNameConflict = true;
 }
 
-StalledIssue::StalledIssue(const QExplicitlySharedDataPointer<StalledIssueData> &tdr, mega::MegaSyncStall::SyncStallReason reason)
+StalledIssue::StalledIssue(const mega::MegaSyncStall *stallIssue)
 {
-    d.append(tdr);
-    extractFileName(tdr);
-    mReason = reason;
+    extractFileName(stallIssue);
+    fillIssue(stallIssue);
+    mReason = stallIssue->reason();
 }
 
-StalledIssue::StalledIssue(const QList<QExplicitlySharedDataPointer<StalledIssueData> > &tdr, mega::MegaSyncStall::SyncStallReason reason)
+void StalledIssue::addStalledIssueData(const mega::MegaSyncStall *stallIssue)
 {
-    d = tdr;
-    if(!tdr.isEmpty())
-    {
-       extractFileName(tdr.first());
-    }
-    mReason = reason;
+    fillIssue(stallIssue);
 }
 
 void StalledIssue::addStalledIssueData(QExplicitlySharedDataPointer<StalledIssueData> data)
@@ -118,19 +112,65 @@ void StalledIssue::addStalledIssueData(QExplicitlySharedDataPointer<StalledIssue
     d.append(data);
 }
 
-void StalledIssue::extractFileName(const QExplicitlySharedDataPointer<StalledIssueData> &tdr)
+void StalledIssue::fillIssue(const mega::MegaSyncStall *stall)
 {
-    QFileInfo fileInfo(tdr->mPath.path);
+    StalledIssueDataPtr tdr(new StalledIssueData(stall));
+    d.append(tdr);
 
-    if(fileInfo.isFile())
+    if(stall->isCloud())
     {
-        auto splittedIndexPath = tdr->mPath.path.split(QString::fromUtf8("/"));
-        mFileName = splittedIndexPath.last();
+        tdr->mPath.path    = QString::fromUtf8(stall->indexPath());
     }
     else
     {
-        mFileName = tdr->mPath.path;
+        QFileInfo pathInfo(QString::fromUtf8(stall->indexPath()));
+        tdr->mPath.path = QDir::toNativeSeparators(pathInfo.path());
     }
+
+    if(stall->isCloud())
+    {
+        QString cloudPath(QString::fromUtf8(stall->cloudPath()));
+        if(!cloudPath.isEmpty())
+        {
+            QFileInfo cloudPathInfo(cloudPath);
+            getStalledIssueData()->mMovePath.path = cloudPathInfo.isFile() ? cloudPathInfo.path() : cloudPathInfo.filePath();
+        }
+
+        QString localPath(QString::fromUtf8(stall->localPath()));
+        if(!localPath.isEmpty())
+        {
+            auto localData = StalledIssueDataPtr(new StalledIssueData());
+            addStalledIssueData(localData);
+
+            QFileInfo localPathInfo(localPath);
+            localData->mPath.path = localPathInfo.path();
+        }
+    }
+    else
+    {
+        QString localPath(QString::fromUtf8(stall->localPath()));
+        if(!localPath.isEmpty())
+        {
+            QFileInfo localPathInfo(localPath);
+            getStalledIssueData()->mMovePath.path = localPathInfo.path();
+        }
+
+        QString cloudPath(QString::fromUtf8(stall->cloudPath()));
+        if(!cloudPath.isEmpty())
+        {
+            auto cloudData = StalledIssueDataPtr(new StalledIssueData());
+            addStalledIssueData(cloudData);
+
+            QFileInfo cloudPathInfo(cloudPath);
+            cloudData->mPath.path = cloudPathInfo.path();
+        }
+    }
+}
+
+void StalledIssue::extractFileName(const mega::MegaSyncStall *stall)
+{
+    QFileInfo fileInfo(QString::fromUtf8(stall->indexPath()));
+    mFileName = fileInfo.fileName();
 }
 
 QExplicitlySharedDataPointer<StalledIssueData> StalledIssue::getStalledIssueData(int index) const

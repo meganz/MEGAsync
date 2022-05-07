@@ -38,8 +38,7 @@ void StalledIssueChooseWidget::setData(StalledIssueDataPtr data, const QString& 
 
     ui->path->show();
 
-    StalledIssue stalledData(data);
-    ui->path->updateUi(QModelIndex(), stalledData);
+    ui->path->updateUi(data, fileName);
 
     if(mData->mIsCloud)
     {

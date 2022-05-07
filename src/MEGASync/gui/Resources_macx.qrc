@@ -728,5 +728,8 @@
         <file>images/StalledIssues/more-circle-small-outline@2x.png</file>
         <file>images/StalledIssues/more-circle-small-solid.png</file>
         <file>images/StalledIssues/more-circle-small-solid@2x.png</file>
+        <file>images/StalledIssues/help-circle.png</file>
+        <file>images/StalledIssues/help-circle@2x.png</file>
+        <file>images/StalledIssues/help-circle@3x.png</file>
     </qresource>
 </RCC>

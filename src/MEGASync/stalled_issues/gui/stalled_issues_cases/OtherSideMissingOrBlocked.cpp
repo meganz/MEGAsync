@@ -36,12 +36,12 @@ void OtherSideMissingOrBlocked::refreshUi()
         if(data->mIsCloud)
         {
             ui->remotePath->show();
-            ui->remotePath->updateUi(getCurrentIndex(), data);
+            ui->remotePath->updateUi(data, issue.getFileName());
         }
         else
         {
             ui->localPath->show();
-            ui->localPath->updateUi(getCurrentIndex(), data);
+            ui->localPath->updateUi(data, issue.getFileName());
         }
     }
 }
