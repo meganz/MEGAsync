@@ -7,6 +7,8 @@
 #include <QSpinBox>
 #include <QComboBox>
 
+const int TOOLTIP_DELAY = 250;
+
 void MegaProxyStyle::drawComplexControl(QStyle::ComplexControl control, const QStyleOptionComplex *option, QPainter *painter, const QWidget *widget) const
 {
     painter->setRenderHints(QPainter::Antialiasing | QPainter::TextAntialiasing | QPainter::SmoothPixmapTransform | QPainter::HighQualityAntialiasing, true);
@@ -115,6 +117,15 @@ int MegaProxyStyle::pixelMetric(PixelMetric metric, const QStyleOption * option,
         return 24;
     }
     return QProxyStyle::pixelMetric(metric, option, widget);
+}
+
+int MegaProxyStyle::styleHint(StyleHint hint, const QStyleOption *option, const QWidget *widget, QStyleHintReturn *returnData) const
+{
+    if (hint == QStyle::SH_ToolTip_WakeUpDelay)
+    {
+        return TOOLTIP_DELAY;
+    }
+    return QProxyStyle::styleHint(hint, option, widget, returnData);
 }
 
 QIcon MegaProxyStyle::standardIcon(QStyle::StandardPixmap standardIcon, const QStyleOption *option, const QWidget *widget) const

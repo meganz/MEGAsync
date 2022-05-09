@@ -287,7 +287,6 @@ public:
         TYPE_ARCHIVE  = 0x08,
         TYPE_DOCUMENT = 0x10,
         TYPE_IMAGE    = 0x20,
-        TYPE_TEXT     = 0x40,
     };
     Q_DECLARE_FLAGS(FileTypes, FileType)
 

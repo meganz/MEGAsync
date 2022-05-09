@@ -703,6 +703,12 @@ bool MegaTransferView::eventFilter(QObject *object, QEvent *event)
     return QTreeView::eventFilter(object, event);
 }
 
+void MegaTransferView::focusOutEvent(QFocusEvent *event)
+{
+    clearSelection();
+    QTreeView::focusOutEvent(event);
+}
+
 void MegaTransferView::onCustomContextMenu(const QPoint& point)
 {
     bool enablePause = false;

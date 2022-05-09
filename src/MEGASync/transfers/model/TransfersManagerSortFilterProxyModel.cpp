@@ -20,9 +20,6 @@ TransfersManagerSortFilterProxyModel::TransfersManagerSortFilterProxyModel(QObje
       mSortCriterion (SortCriterion::PRIORITY),
       mThreadPool (ThreadPoolSingleton::getInstance())
 {
-    qRegisterMetaType<QAbstractItemModel::LayoutChangeHint>("QAbstractItemModel::LayoutChangeHint");
-    qRegisterMetaType<QVector<int>>("QVector<int>");
-
     connect(&mFilterWatcher, &QFutureWatcher<void>::finished,
             this, &TransfersManagerSortFilterProxyModel::onModelSortedFiltered);
 
@@ -51,10 +48,12 @@ void TransfersManagerSortFilterProxyModel::sort(int sortCriterion, Qt::SortOrder
         auto sourceM = qobject_cast<TransfersModel*>(sourceModel());
         sourceM->lockModelMutex(true);
         sourceM->blockSignals(true);
+        blockSignals(true);
         invalidate();
         QSortFilterProxyModel::sort(0, order);
         sourceM->lockModelMutex(false);
         sourceM->blockSignals(false);
+        blockSignals(false);
     });
     mFilterWatcher.setFuture(filtered);
 }
@@ -85,10 +84,12 @@ void TransfersManagerSortFilterProxyModel::setFilterFixedString(const QString& p
         auto sourceM = qobject_cast<TransfersModel*>(sourceModel());
         sourceM->lockModelMutex(true);
         sourceM->blockSignals(true);
+        blockSignals(true);
         invalidate();
         QSortFilterProxyModel::sort(0,  sortOrder());
         sourceM->lockModelMutex(false);
         sourceM->blockSignals(false);
+        blockSignals(false);
     });
 
     mFilterWatcher.setFuture(filtered);
@@ -105,10 +106,12 @@ void TransfersManagerSortFilterProxyModel::textSearchTypeChanged()
         auto sourceM = qobject_cast<TransfersModel*>(sourceModel());
         sourceM->lockModelMutex(true);
         sourceM->blockSignals(true);
+        blockSignals(true);
         invalidate();
         QSortFilterProxyModel::sort(0, sortOrder());
         sourceM->lockModelMutex(false);
         sourceM->blockSignals(false);
+        blockSignals(false);
     });
     mFilterWatcher.setFuture(filtered);
 
@@ -121,6 +124,10 @@ void TransfersManagerSortFilterProxyModel::onModelSortedFiltered()
     {
         sourceM->pauseModelProcessing(false);
     }
+
+    emit cancelableTransfersChanged(!mNoSyncTransfers.isEmpty() || !mCompletedTransfers.isEmpty());
+    emit activeTransfersChanged(!mActiveTransfers.isEmpty());
+    emit pausedTransfersChanged(!mPausedTransfers.isEmpty());
 
     emit modelChanged();
     emit searchNumbersChanged();

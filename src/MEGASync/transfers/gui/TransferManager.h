@@ -44,7 +44,6 @@ public:
         TYPE_ARCHIVE_TAB  = TYPES_TAB_BASE + toInt(Utilities::FileType::TYPE_ARCHIVE),
         TYPE_DOCUMENT_TAB = TYPES_TAB_BASE + toInt(Utilities::FileType::TYPE_DOCUMENT),
         TYPE_IMAGE_TAB    = TYPES_TAB_BASE + toInt(Utilities::FileType::TYPE_IMAGE),
-        TYPE_TEXT_TAB     = TYPES_TAB_BASE + toInt(Utilities::FileType::TYPE_TEXT),
         TYPES_LAST
     };
     Q_ENUM(TM_TAB)
@@ -67,6 +66,7 @@ signals:
     void showCompleted(bool showCompleted);
     void clearCompletedTransfers();
     void retryAllTransfers();
+    void aboutToClose();
 
 protected:
     bool eventFilter(QObject *obj, QEvent *event) override;
@@ -75,6 +75,7 @@ protected:
     void dragEnterEvent(QDragEnterEvent* event) override;
     void dragLeaveEvent(QDragLeaveEvent* event) override;
     void dropEvent(QDropEvent *event) override;
+    void mouseReleaseEvent(QMouseEvent *event) override;
 
 private:
     static constexpr int SPEED_REFRESH_PERIOD_MS = 700;
@@ -137,6 +138,7 @@ private slots:
     void on_tDlResults_clicked();
     void on_tUlResults_clicked();
     void on_bPause_clicked();
+    void pauseResumeTransfers(bool isPaused);
 
     void on_bOpenLinks_clicked();
     void on_tCogWheel_clicked();
@@ -152,12 +154,12 @@ private slots:
     void on_bAudio_clicked();
     void on_bVideos_clicked();
     void on_bOther_clicked();
-    void on_bText_clicked();
 
     void onUpdatePauseState(bool isPaused);
     void onPauseStateChangedByTransferResume();
     void checkCancelAllButtonVisibility();
     void onPauseResumeVisibleRows(bool isPaused);
+    void showQuotaStorageDialogs(bool isPaused);
     void onCancelVisibleRows();
 
     void onTransfersDataUpdated();

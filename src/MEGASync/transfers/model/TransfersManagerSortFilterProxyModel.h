@@ -47,8 +47,6 @@ signals:
         void modelAboutToBeChanged();
         void modelChanged();
         void searchNumbersChanged();
-        void modelAboutToBeSorted();
-        void modelSorted();
         void transferPauseResume(bool);
         void transferRetry();
         void transferCancelClear();
@@ -102,8 +100,5 @@ private:
         void resetAllCounters();
         void resetTransfersStateCounters();
 };
-
-Q_DECLARE_METATYPE(QAbstractItemModel::LayoutChangeHint)
-Q_DECLARE_METATYPE(QVector<int>)
 
 #endif // TRANSFERSSORTFILTERPROXYMODEL_H

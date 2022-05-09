@@ -372,6 +372,8 @@ TransfersModel::TransfersModel(QObject *parent) :
     mModelReset(false)
 {
     qRegisterMetaType<QList<QPersistentModelIndex>>("QList<QPersistentModelIndex>");
+    qRegisterMetaType<QAbstractItemModel::LayoutChangeHint>("QAbstractItemModel::LayoutChangeHint");
+    qRegisterMetaType<QVector<int>>("QVector<int>");
 
     mAreAllPaused = mPreferences->getGlobalPaused();
     mMegaApi->pauseTransfers(mAreAllPaused);
@@ -1272,13 +1274,16 @@ void TransfersModel::pauseResumeTransferByTag(TransferTag tag, bool pauseState)
 
         if(pauseState)
         {
-            bool wasProcessing (d->isProcessing());
-            d->mState = TransferData::TRANSFER_PAUSED;
-
-            if(wasProcessing)
+            if(d->mState & TransferData::PAUSABLE_STATES_MASK)
             {
-                d->mPriority += ACTIVE_PRIORITY_OFFSET;
-                sendDataChanged(row);
+                bool wasProcessing (d->isProcessing());
+                d->mState = TransferData::TRANSFER_PAUSED;
+
+                if(wasProcessing)
+                {
+                    d->mPriority += ACTIVE_PRIORITY_OFFSET;
+                    sendDataChanged(row);
+                }
             }
         }
         else
@@ -1294,6 +1299,7 @@ void TransfersModel::pauseResumeTransferByIndex(const QModelIndex &index, bool p
 {
     const auto transferItem (
                 qvariant_cast<TransferItem>(index.data(Qt::DisplayRole)));
+
     pauseResumeTransferByTag(transferItem.getTransferData()->mTag, pauseState);
 }
 
