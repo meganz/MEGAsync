@@ -331,7 +331,8 @@ int StalledIssuesModel::rowCount(const QModelIndex &parent) const
        return 1;
    }
 
-   return 0;
+   // unreachable code
+   //return 0;
 }
 
 int StalledIssuesModel::columnCount(const QModelIndex &) const

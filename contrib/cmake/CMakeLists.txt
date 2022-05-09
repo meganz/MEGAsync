@@ -83,6 +83,8 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOUIC_SEARCH_PATHS ${CMAKE_AUTOUIC_SEARCH_PATHS} "${MEGAsyncDir}/gui/${UiDir}")
 set(CMAKE_AUTOUIC_SEARCH_PATHS ${CMAKE_AUTOUIC_SEARCH_PATHS} "${MEGAsyncDir}/transfers/gui/${UiDir}")
+set(CMAKE_AUTOUIC_SEARCH_PATHS ${CMAKE_AUTOUIC_SEARCH_PATHS} "${MEGAsyncDir}/stalled_issues/gui/${UiDir}")
+set(CMAKE_AUTOUIC_SEARCH_PATHS ${CMAKE_AUTOUIC_SEARCH_PATHS} "${MEGAsyncDir}/stalled_issues/gui/stalled_issues_cases/${UiDir}")
 
 #AUTOMOC
 set(CMAKE_AUTOMOC ON)
@@ -98,6 +100,9 @@ include_directories( "${MEGAsyncDir}/mega/bindings/qt" )
 include_directories( "${MEGAsyncDir}/control" )
 include_directories( "${MEGAsyncDir}/model" )
 include_directories( "${MEGAsyncDir}/gui" )
+include_directories( "${MEGAsyncDir}/stalled_issues/model" )
+include_directories( "${MEGAsyncDir}/stalled_issues/gui" )
+include_directories( "${MEGAsyncDir}/stalled_issues/gui/${UiDir}" )
 include_directories( "${MEGAsyncDir}/platform" )
 include_directories( "${MEGAsyncDir}/gui/${UiDir}" )
 include_directories( "${MEGAsyncDir}/transfers/gui" )
@@ -179,6 +184,15 @@ set (FORMS
     ${MEGAsyncDir}/transfers/gui/${UiDir}/TransfersSummaryWidget.ui
     ${MEGAsyncDir}/transfers/gui/${UiDir}/TransferManagerDelegateWidget.ui
 	${MEGAsyncDir}/transfers/gui/${UiDir}/TransferManagerLoadingItem.ui
+    ${MEGAsyncDir}/transfers/gui/${UiDir}/SomeIssuesOccurredMessage.ui
+    ${MEGAsyncDir}/stalled_issues/gui/${UiDir}/StalledIssueChooseWidget.ui
+    ${MEGAsyncDir}/stalled_issues/gui/${UiDir}/StalledIssueFilePath.ui
+    ${MEGAsyncDir}/stalled_issues/gui/${UiDir}/StalledIssueHeader.ui
+    ${MEGAsyncDir}/stalled_issues/gui/${UiDir}/StalledIssueLoadingItem.ui
+    ${MEGAsyncDir}/stalled_issues/gui/${UiDir}/StalledIssuesDialog.ui
+    ${MEGAsyncDir}/stalled_issues/gui/${UiDir}/StalledIssueTab.ui
+    ${MEGAsyncDir}/stalled_issues/gui/stalled_issues_cases/${UiDir}/LocalAndRemoteDifferentWidget.ui
+    ${MEGAsyncDir}/stalled_issues/gui/stalled_issues_cases/${UiDir}/OtherSideMissingOrBlocked.ui
 
     )
 
@@ -305,6 +319,18 @@ set (MOC_INPUT
     ${MEGAsyncDir}/transfers/gui/MegaTransferDelegate.h
     ${MEGAsyncDir}/transfers/gui/MegaTransferView.h
     ${MEGAsyncDir}/transfers/gui/TransferWidgetHeaderItem.h
+    ${MEGAsyncDir}/transfers/gui/SomeIssuesOccurredMessage.h
+
+    ${MEGAsyncDir}/stalled_issues/gui/StalledIssueChooseWidget.h
+    ${MEGAsyncDir}/stalled_issues/gui/StalledIssueFilePath.h
+    ${MEGAsyncDir}/stalled_issues/gui/StalledIssueHeader.h
+    ${MEGAsyncDir}/stalled_issues/gui/StalledIssueLoadingItem.h
+    ${MEGAsyncDir}/stalled_issues/gui/StalledIssuesDialog.h
+    ${MEGAsyncDir}/stalled_issues/gui/StalledIssueTab.h
+    ${MEGAsyncDir}/stalled_issues/gui/stalled_issues_cases/LocalAndRemoteDifferentWidget.h
+    ${MEGAsyncDir}/stalled_issues/gui/stalled_issues_cases/OtherSideMissingOrBlocked.h
+    ${MEGAsyncDir}/stalled_issues/gui/stalled_issues_cases/StalledIssuesCaseHeaders.h
+
 )
 
 if (NOT CMAKE_HOST_APPLE)
@@ -378,6 +404,24 @@ set (SRCS
     ${MEGAsyncDir}/transfers/gui/TransferManagerDelegateWidget.cpp
     ${MEGAsyncDir}/gui/MegaDelegateHoverManager.cpp
     ${MEGAsyncDir}/transfers/gui/TransferManagerLoadingItem.cpp
+    ${MEGAsyncDir}/transfers/gui/SomeIssuesOccurredMessage.cpp
+    ${MEGAsyncDir}/stalled_issues/model/StalledIssue.cpp
+    ${MEGAsyncDir}/stalled_issues/model/StalledIssuesModel.cpp
+    ${MEGAsyncDir}/stalled_issues/model/StalledIssuesProxyModel.cpp
+    ${MEGAsyncDir}/stalled_issues/gui/StalledIssueChooseWidget.cpp
+    ${MEGAsyncDir}/stalled_issues/gui/StalledIssueFilePath.cpp
+    ${MEGAsyncDir}/stalled_issues/gui/StalledIssueHeader.cpp
+    ${MEGAsyncDir}/stalled_issues/gui/StalledIssueLoadingItem.cpp
+    ${MEGAsyncDir}/stalled_issues/gui/StalledIssuesDialog.cpp
+    ${MEGAsyncDir}/stalled_issues/gui/StalledIssueTab.cpp
+    ${MEGAsyncDir}/stalled_issues/gui/StalledIssueBaseDelegateWidget.cpp
+    ${MEGAsyncDir}/stalled_issues/gui/StalledIssuesView.cpp
+    ${MEGAsyncDir}/stalled_issues/gui/StalledIssueDelegate.cpp
+    ${MEGAsyncDir}/stalled_issues/gui/StalledIssuesDelegateWidgetsCache.cpp
+    ${MEGAsyncDir}/stalled_issues/gui/stalled_issues_cases/LocalAndRemoteDifferentWidget.cpp
+    ${MEGAsyncDir}/stalled_issues/gui/stalled_issues_cases/OtherSideMissingOrBlocked.cpp
+    ${MEGAsyncDir}/stalled_issues/gui/stalled_issues_cases/StalledIssuesCaseHeaders.cpp
+
 
     ${FORMS}
     ${MOC_INPUT}
