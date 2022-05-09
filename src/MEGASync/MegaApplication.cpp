@@ -1711,6 +1711,11 @@ void MegaApplication::createTransferManagerDialog()
                 mTransferManager, &TransferManager::onTransferQuotaStateChanged);
         connect(mTransferManager, &TransferManager::aboutToClose, this, &MegaApplication::onTransferManagerClosed);
         connect(mTransferManager, SIGNAL(cancelScanning()), this, SLOT(cancelScanningStage()));
+
+        if (inScanningStage)
+        {
+            mTransferManager->enterBlockingState();
+        }
     }
 }
 
@@ -3292,11 +3297,12 @@ void MegaApplication::setTransferUiInBlockingState()
 {
     MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Transfer UI entering blocking state").toUtf8().constData());
 
+    inScanningStage = true;
     enableTransferActions(false);
 
-    if (transferManager)
+    if (mTransferManager)
     {
-        transferManager->enterBlockingState();
+        mTransferManager->enterBlockingState();
     }
 
     if (infoDialog)
@@ -3309,11 +3315,12 @@ void MegaApplication::setTransferUiInUnblockedState()
 {
     MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Transfer UI leaving blocking state").toUtf8().constData());
 
+    inScanningStage = false;
     enableTransferActions(true);
 
-    if (transferManager)
+    if (mTransferManager)
     {
-        transferManager->leaveBlockingState();
+        mTransferManager->leaveBlockingState();
     }
 
     if (infoDialog)
