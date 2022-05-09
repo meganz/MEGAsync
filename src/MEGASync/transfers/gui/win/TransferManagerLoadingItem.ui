@@ -425,13 +425,13 @@ background-color: rgb(200, 200, 200);</string>
         </property>
         <property name="minimumSize">
          <size>
-          <width>110</width>
+          <width>125</width>
           <height>63</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
-          <width>110</width>
+          <width>125</width>
           <height>63</height>
          </size>
         </property>

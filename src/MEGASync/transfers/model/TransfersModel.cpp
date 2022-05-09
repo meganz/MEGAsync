@@ -372,6 +372,8 @@ TransfersModel::TransfersModel(QObject *parent) :
     mModelReset(false)
 {
     qRegisterMetaType<QList<QPersistentModelIndex>>("QList<QPersistentModelIndex>");
+    qRegisterMetaType<QAbstractItemModel::LayoutChangeHint>("QAbstractItemModel::LayoutChangeHint");
+    qRegisterMetaType<QVector<int>>("QVector<int>");
 
     mAreAllPaused = mPreferences->getGlobalPaused();
     mMegaApi->pauseTransfers(mAreAllPaused);
@@ -974,7 +976,7 @@ void TransfersModel::cancelTransfers(const QModelIndexList& indexes, QWidget* ca
             // Clear (remove rows of) finished transfers
             if (d)
             {
-                if (!d->isCancelable())
+                if (!d->isCompleted() && !d->isCancelable())
                 {
                     someTransfersAreNotCancelable = true;
 
@@ -1071,24 +1073,10 @@ void TransfersModel::cancelTransfers(const QModelIndexList& indexes, QWidget* ca
         }
 
 
-        if(transferCannotBeCancellable > 0 || (!uploadToClear.isEmpty() || !downloadToClear.isEmpty()))
+        if(transferCannotBeCancellable > 0)
         {
             //Clear is not empty and some transfers cannot be cleared
-            if((!uploadToClear.isEmpty() || !downloadToClear.isEmpty()) && transferCannotBeCancellable > 0)
-            {
-                QMegaMessageBox::warning(canceledFrom, QString::fromUtf8("MEGAsync"),
-                                         tr("Transfer(s) cannot be cancelled or cleared.", "", transferCannotBeCancellable + uploadToClear.size() + downloadToClear.size()),
-                                         QMessageBox::Ok);
-            }
-            //SOme transfers cannot be cleared
-            else if(!uploadToClear.isEmpty() || !downloadToClear.isEmpty())
-            {
-                QMegaMessageBox::warning(canceledFrom, QString::fromUtf8("MEGAsync"),
-                                         tr("Transfer(s) cannot be cleared.", "", uploadToClear.size() + downloadToClear.size()),
-                                         QMessageBox::Ok);
-            }
-            //
-            else if(transferCannotBeCancellable > 0 && syncTransferCannotBeCancellable == transferCannotBeCancellable)
+            if(transferCannotBeCancellable > 0 && syncTransferCannotBeCancellable == transferCannotBeCancellable)
             {
                 QMegaMessageBox::warning(canceledFrom, QString::fromUtf8("MEGAsync"),
                                          tr("Sync transfer(s) cannot be cancelled.\nPlease remove the sync from settings to remove this(these) transfer(s).", "", syncTransferCannotBeCancellable),
@@ -1286,13 +1274,16 @@ void TransfersModel::pauseResumeTransferByTag(TransferTag tag, bool pauseState)
 
         if(pauseState)
         {
-            bool wasProcessing (d->isProcessing());
-            d->mState = TransferData::TRANSFER_PAUSED;
-
-            if(wasProcessing)
+            if(d->mState & TransferData::PAUSABLE_STATES_MASK)
             {
-                d->mPriority += ACTIVE_PRIORITY_OFFSET;
-                sendDataChanged(row);
+                bool wasProcessing (d->isProcessing());
+                d->mState = TransferData::TRANSFER_PAUSED;
+
+                if(wasProcessing)
+                {
+                    d->mPriority += ACTIVE_PRIORITY_OFFSET;
+                    sendDataChanged(row);
+                }
             }
         }
         else
@@ -1308,6 +1299,7 @@ void TransfersModel::pauseResumeTransferByIndex(const QModelIndex &index, bool p
 {
     const auto transferItem (
                 qvariant_cast<TransferItem>(index.data(Qt::DisplayRole)));
+
     pauseResumeTransferByTag(transferItem.getTransferData()->mTag, pauseState);
 }
 

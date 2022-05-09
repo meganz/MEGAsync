@@ -41,7 +41,6 @@ void TransferManagerDelegateWidget::updateTransferState()
     QString statusString;
 
     auto state = getData()->mState;
-    //state = TransferData::TRANSFER_QUEUED;
 
     // Set values according to transfer state
     switch (state)
@@ -110,11 +109,11 @@ void TransferManagerDelegateWidget::updateTransferState()
 
                 if(getData()->mTransferredBytes != 0)
                 {
-                    mUi->sStatus->setCurrentWidget(mUi->pPausedQueued);
+                    mUi->sStatus->setCurrentWidget(mUi->pPaused);
                 }
                 else
                 {
-                    mUi->sStatus->setCurrentWidget(mUi->pPaused);
+                    mUi->sStatus->setCurrentWidget(mUi->pPausedQueued);
                 }
             }
 

@@ -47,8 +47,6 @@ signals:
         void modelAboutToBeChanged();
         void modelChanged();
         void searchNumbersChanged();
-        void modelAboutToBeSorted();
-        void modelSorted();
         void transferPauseResume(bool);
         void transferRetry();
         void transferCancelClear();
@@ -81,6 +79,7 @@ protected:
         mutable QSet<int> mNoSyncTransfers;
         mutable QSet<int> mActiveTransfers;
         mutable QSet<int> mPausedTransfers;
+        mutable QSet<int> mCompletedTransfers;
 
 private slots:
         void onRowsAboutToBeRemoved(const QModelIndex& parent, int first, int last);
@@ -96,12 +95,10 @@ private:
         void removeActiveTransferFromCounter(TransferTag tag) const;
         void removePausedTransferFromCounter(TransferTag tag) const;
         void removeNonSyncedTransferFromCounter(TransferTag tag) const;
+        void removeCompletedTransferFromCounter(TransferTag tag) const;
 
         void resetAllCounters();
         void resetTransfersStateCounters();
 };
-
-Q_DECLARE_METATYPE(QAbstractItemModel::LayoutChangeHint)
-Q_DECLARE_METATYPE(QVector<int>)
 
 #endif // TRANSFERSSORTFILTERPROXYMODEL_H

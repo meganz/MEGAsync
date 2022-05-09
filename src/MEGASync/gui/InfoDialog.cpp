@@ -567,10 +567,8 @@ void InfoDialog::updateTransfersCount()
 {
     auto TransfersCountUpdated = app->getTransfersModel()->getTransfersCount();
 
-    ui->bTransferManager->setCompletedDownloads(TransfersCountUpdated.completedDownloads());
-    ui->bTransferManager->setCompletedUploads(TransfersCountUpdated.completedUploads());
-    ui->bTransferManager->setTotalDownloads(TransfersCountUpdated.totalDownloads);
-    ui->bTransferManager->setTotalUploads(TransfersCountUpdated.totalUploads);
+    ui->bTransferManager->setDownloads(TransfersCountUpdated.completedDownloads(), TransfersCountUpdated.totalDownloads);
+    ui->bTransferManager->setUploads(TransfersCountUpdated.completedUploads(), TransfersCountUpdated.totalUploads);
 
     double percentUploads(0.0);
     if(TransfersCountUpdated.totalUploadBytes != 0)

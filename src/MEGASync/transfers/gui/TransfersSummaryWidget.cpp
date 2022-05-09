@@ -32,8 +32,8 @@ TransfersSummaryWidget::TransfersSummaryWidget(QWidget *parent) :
     brushwhitebackground = QBrush(QColor(QString::fromUtf8("#FFFFFF")));
     pentext = QPen(QColor("#FFFFFF"));
 
-    completedDownloads = 0;
-    completedUploads = 0;
+    currentDownload = 0;
+    currentUpload = 0;
     totalUploads = 0;
     totalDownloads = 0;
 
@@ -186,10 +186,8 @@ void TransfersSummaryWidget::initialize()
 
 void TransfersSummaryWidget::reset()
 {
-    setCompletedDownloads(0);
-    setCompletedUploads(0);
-    setTotalDownloads(0);
-    setTotalUploads(0);
+    setDownloads(0,0);
+    setUploads(0,0);
 
     setPercentUploads(0.0);
     setPercentDownloads(0.0);
@@ -480,10 +478,10 @@ int TransfersSummaryWidget::adjustSizeToText(QFont *font, int maxWidth, int minW
 void TransfersSummaryWidget::updateUploadsText(bool force)
 {
     QString previousText = uploadsText;
-    uploadsText = Utilities::getQuantityString(completedUploads) + QStringLiteral("/") + Utilities::getQuantityString(totalUploads);
+    uploadsText = Utilities::getQuantityString(currentUpload) + QStringLiteral("/") + Utilities::getQuantityString(totalUploads);
     int prevUpEllipseWidth = upEllipseWidth;
 
-    if (!completedUploads && !totalUploads)
+    if (!currentUpload && !totalUploads)
     {
         upEllipseWidth = 0;
         if (prevUpEllipseWidth != upEllipseWidth)
@@ -499,7 +497,7 @@ void TransfersSummaryWidget::updateUploadsText(bool force)
 
         if (upEllipseWidthMax)
         {
-            upEllipseWidth = adjustSizeToText(&fontUploads, upEllipseWidthMax, upEllipseWidthMin, fontMarginXLeft + fontMarginXRight, completedUploads, totalUploads, upPosDotsPartial, upPosDotsTotal, uploadsTextToRender, maxFontSize);
+            upEllipseWidth = adjustSizeToText(&fontUploads, upEllipseWidthMax, upEllipseWidthMin, fontMarginXLeft + fontMarginXRight, currentUpload, totalUploads, upPosDotsPartial, upPosDotsTotal, uploadsTextToRender, maxFontSize);
             upMaxWidthText = upEllipseWidth - (fontMarginXLeft + fontMarginXRight);
             if (prevUpEllipseWidth != upEllipseWidth)
             {
@@ -509,7 +507,7 @@ void TransfersSummaryWidget::updateUploadsText(bool force)
     }
     else if (uploadsText != previousText)
     {
-        QString spartial = Utilities::getQuantityString(completedUploads);
+        QString spartial = Utilities::getQuantityString(currentUpload);
         QString stotal = Utilities::getQuantityString(totalUploads);
         if (upPosDotsPartial && upPosDotsPartial < spartial.size())
         {
@@ -526,10 +524,10 @@ void TransfersSummaryWidget::updateUploadsText(bool force)
 void TransfersSummaryWidget::updateDownloadsText(bool force)
 {
     QString previousText = downloadsText;
-    downloadsText = Utilities::getQuantityString(completedDownloads) + QStringLiteral("/") + Utilities::getQuantityString(totalDownloads);
+    downloadsText = Utilities::getQuantityString(currentDownload) + QStringLiteral("/") + Utilities::getQuantityString(totalDownloads);
     int prevDlEllipseWidth = dlEllipseWidth;
 
-    if (!completedDownloads && !totalDownloads)
+    if (!currentDownload && !totalDownloads)
     {
         dlEllipseWidth = 0;
         if (prevDlEllipseWidth != dlEllipseWidth)
@@ -548,7 +546,7 @@ void TransfersSummaryWidget::updateDownloadsText(bool force)
 
         if (dlEllipseWidthMax)
         {
-            dlEllipseWidth = adjustSizeToText(&fontDownloads, dlEllipseWidthMax, dlEllipseWidthMin, fontMarginXLeft + fontMarginXRight, completedDownloads, totalDownloads, dlPosDotsPartial, dlPosDotsTotal, downloadsTextToRender, maxFontSize);
+            dlEllipseWidth = adjustSizeToText(&fontDownloads, dlEllipseWidthMax, dlEllipseWidthMin, fontMarginXLeft + fontMarginXRight, currentDownload, totalDownloads, dlPosDotsPartial, dlPosDotsTotal, downloadsTextToRender, maxFontSize);
             dlMaxWidthText = dlEllipseWidth - (fontMarginXLeft + fontMarginXRight);
             if (prevDlEllipseWidth != dlEllipseWidth)
             {
@@ -561,7 +559,7 @@ void TransfersSummaryWidget::updateDownloadsText(bool force)
     }
     else if (downloadsText != previousText)
     {
-        QString spartial = Utilities::getQuantityString(completedDownloads);
+        QString spartial = Utilities::getQuantityString(currentDownload);
         QString stotal = Utilities::getQuantityString(totalDownloads);
         if (dlPosDotsPartial && dlPosDotsPartial < spartial.size())
         {
@@ -587,41 +585,50 @@ void TransfersSummaryWidget::updateDownloads()
     update();
 }
 
-void TransfersSummaryWidget::setTotalDownloads(long long  value)
+void TransfersSummaryWidget::setUploads(long long completed, long long total)
 {
-    if (totalDownloads != value)
+    long long currentTransfer(0);
+
+    if(total > 0)
     {
-        totalDownloads = value;
-        updateDownloads();
+        currentTransfer = completed != total ? completed + 1 : completed;
     }
+
+    if (currentUpload != currentTransfer)
+    {
+        currentUpload = currentTransfer;
+    }
+
+    if (totalUploads != total)
+    {
+        totalUploads = total;
+    }
+
+    updateUploads();
 }
 
-void TransfersSummaryWidget::setCompletedDownloads(long long  value)
+void TransfersSummaryWidget::setDownloads(long long completed, long long total)
 {
-    if (completedDownloads != value)
+    long long currentTransfer(0);
+
+    if(total > 0)
     {
-        completedDownloads = value;
-        updateDownloads();
+        currentTransfer = completed != total ? completed + 1 : total;
     }
+
+    if (currentDownload != currentTransfer)
+    {
+        currentDownload = currentTransfer;
+    }
+
+    if (totalDownloads != total)
+    {
+        totalDownloads = total;
+    }
+
+    updateDownloads();
 }
 
-void TransfersSummaryWidget::setTotalUploads(long long  value)
-{
-    if (totalUploads != value)
-    {
-        totalUploads = value;
-        updateUploads();
-    }
-}
-
-void TransfersSummaryWidget::setCompletedUploads(long long  value)
-{
-    if (completedUploads != value)
-    {
-        completedUploads = value;
-        updateUploads();
-    }
-}
 
 void TransfersSummaryWidget::expand(bool noAnimate)
 {

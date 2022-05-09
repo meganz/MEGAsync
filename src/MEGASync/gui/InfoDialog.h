@@ -206,7 +206,7 @@ private:
 
     AccountDetailsDialog* accountDetailsDialog;
 
-    TransferManager* mTransferManager;
+    QPointer<TransferManager> mTransferManager;
 
 #ifdef Q_OS_LINUX
     bool doNotActAsPopup;

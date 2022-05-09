@@ -132,9 +132,9 @@ QProgressBar::chunk
 
 #sStatus
 {
-    width: 110px;
-    min-width: 110px;
-    max-width: 110px;
+    width: 125px;
+    min-width: 125px;
+    max-width: 125px;
     height: 63px;
     min-height: 63px;
     max-height: 63px;
@@ -142,9 +142,9 @@ QProgressBar::chunk
 
 #lItemStatus, #lItemQueued, #lItemPaused, #lRetryMsg
 {
-	width: 110px;
-    min-width: 110px;
-    max-width: 110px;
+	width: 125px;
+    min-width: 125px;
+    max-width: 125px;
     height: 63px;
     min-height: 63px;
     max-height: 63px;
@@ -602,13 +602,13 @@ QProgressBar::chunk
         <widget class="QStackedWidget" name="sStatus">
          <property name="minimumSize">
           <size>
-           <width>110</width>
+           <width>125</width>
            <height>63</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>110</width>
+           <width>125</width>
            <height>63</height>
           </size>
          </property>
@@ -621,7 +621,7 @@ QProgressBar::chunk
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>110</width>
+             <width>125</width>
              <height>63</height>
             </rect>
            </property>
@@ -636,7 +636,7 @@ QProgressBar::chunk
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>110</width>
+             <width>125</width>
              <height>63</height>
             </rect>
            </property>
@@ -651,19 +651,19 @@ QProgressBar::chunk
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>110</width>
+             <width>125</width>
              <height>63</height>
             </rect>
            </property>
            <property name="minimumSize">
             <size>
-             <width>110</width>
+             <width>125</width>
              <height>63</height>
             </size>
            </property>
            <property name="maximumSize">
             <size>
-             <width>110</width>
+             <width>125</width>
              <height>63</height>
             </size>
            </property>
@@ -681,7 +681,7 @@ QProgressBar::chunk
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>110</width>
+             <width>125</width>
              <height>63</height>
             </rect>
            </property>

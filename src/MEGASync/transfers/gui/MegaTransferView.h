@@ -50,6 +50,7 @@ protected:
     void keyPressEvent(QKeyEvent *event) override;
     void selectionChanged(const QItemSelection &selected, const QItemSelection &deselected) override;
     bool eventFilter(QObject *object, QEvent *event) override;
+    void focusOutEvent(QFocusEvent *event) override;
 
 private slots:
     void onCustomContextMenu(const QPoint& point);

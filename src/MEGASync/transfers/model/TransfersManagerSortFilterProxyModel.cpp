@@ -20,9 +20,6 @@ TransfersManagerSortFilterProxyModel::TransfersManagerSortFilterProxyModel(QObje
       mSortCriterion (SortCriterion::PRIORITY),
       mThreadPool (ThreadPoolSingleton::getInstance())
 {
-    qRegisterMetaType<QAbstractItemModel::LayoutChangeHint>("QAbstractItemModel::LayoutChangeHint");
-    qRegisterMetaType<QVector<int>>("QVector<int>");
-
     connect(&mFilterWatcher, &QFutureWatcher<void>::finished,
             this, &TransfersManagerSortFilterProxyModel::onModelSortedFiltered);
 
@@ -51,10 +48,12 @@ void TransfersManagerSortFilterProxyModel::sort(int sortCriterion, Qt::SortOrder
         auto sourceM = qobject_cast<TransfersModel*>(sourceModel());
         sourceM->lockModelMutex(true);
         sourceM->blockSignals(true);
+        blockSignals(true);
         invalidate();
         QSortFilterProxyModel::sort(0, order);
         sourceM->lockModelMutex(false);
         sourceM->blockSignals(false);
+        blockSignals(false);
     });
     mFilterWatcher.setFuture(filtered);
 }
@@ -85,10 +84,12 @@ void TransfersManagerSortFilterProxyModel::setFilterFixedString(const QString& p
         auto sourceM = qobject_cast<TransfersModel*>(sourceModel());
         sourceM->lockModelMutex(true);
         sourceM->blockSignals(true);
+        blockSignals(true);
         invalidate();
         QSortFilterProxyModel::sort(0,  sortOrder());
         sourceM->lockModelMutex(false);
         sourceM->blockSignals(false);
+        blockSignals(false);
     });
 
     mFilterWatcher.setFuture(filtered);
@@ -105,10 +106,12 @@ void TransfersManagerSortFilterProxyModel::textSearchTypeChanged()
         auto sourceM = qobject_cast<TransfersModel*>(sourceModel());
         sourceM->lockModelMutex(true);
         sourceM->blockSignals(true);
+        blockSignals(true);
         invalidate();
         QSortFilterProxyModel::sort(0, sortOrder());
         sourceM->lockModelMutex(false);
         sourceM->blockSignals(false);
+        blockSignals(false);
     });
     mFilterWatcher.setFuture(filtered);
 
@@ -121,6 +124,10 @@ void TransfersManagerSortFilterProxyModel::onModelSortedFiltered()
     {
         sourceM->pauseModelProcessing(false);
     }
+
+    emit cancelableTransfersChanged(!mNoSyncTransfers.isEmpty() || !mCompletedTransfers.isEmpty());
+    emit activeTransfersChanged(!mActiveTransfers.isEmpty());
+    emit pausedTransfersChanged(!mPausedTransfers.isEmpty());
 
     emit modelChanged();
     emit searchNumbersChanged();
@@ -183,6 +190,11 @@ void TransfersManagerSortFilterProxyModel::resetTransfersStateCounters()
     mNoSyncTransfers.clear();
     mActiveTransfers.clear();
     mPausedTransfers.clear();
+    mCompletedTransfers.clear();
+
+    emit cancelableTransfersChanged(false);
+    emit activeTransfersChanged(true);
+    emit pausedTransfersChanged(true);
 }
 
 TransferBaseDelegateWidget *TransfersManagerSortFilterProxyModel::createTransferManagerItem(QWidget*)
@@ -298,6 +310,25 @@ bool TransfersManagerSortFilterProxyModel::filterAcceptsRow(int sourceRow, const
             {
                 removePausedTransferFromCounter(d->mTag);
             }
+
+            if(accept && d->isCompleted())
+            {
+                if(!mCompletedTransfers.contains(d->mTag))
+                {
+                    bool wasEmpty(mCompletedTransfers.isEmpty());
+
+                    mCompletedTransfers.insert(d->mTag);
+
+                    if(wasEmpty)
+                    {
+                        emit cancelableTransfersChanged(true);
+                    }
+                }
+            }
+            else
+            {
+                removeCompletedTransferFromCounter(d->mTag);
+            }
         }
 
         return accept;
@@ -395,9 +426,23 @@ void TransfersManagerSortFilterProxyModel::removeNonSyncedTransferFromCounter(Tr
     }
 }
 
+void TransfersManagerSortFilterProxyModel::removeCompletedTransferFromCounter(TransferTag tag) const
+{
+    if(mCompletedTransfers.contains(tag))
+    {
+        auto wasEmpty(mCompletedTransfers.isEmpty());
+
+        mCompletedTransfers.remove(tag);
+
+        if(!wasEmpty && mCompletedTransfers.isEmpty())
+        {
+            emit cancelableTransfersChanged(false);
+        }
+    }
+}
+
 bool TransfersManagerSortFilterProxyModel::lessThan(const QModelIndex &left, const QModelIndex &right) const
 {
-
     const auto leftItem (qvariant_cast<TransferItem>(left.data()).getTransferData());
     const auto rightItem (qvariant_cast<TransferItem>(right.data()).getTransferData());
 
