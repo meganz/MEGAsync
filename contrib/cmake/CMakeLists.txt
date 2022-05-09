@@ -56,9 +56,6 @@ set(RepoDir "${CMAKE_CURRENT_LIST_DIR}/../.."  CACHE STRING "")
 set(MEGAsyncDir "${RepoDir}/src/MEGASync")
 set(MEGAupdaterDir "${RepoDir}/src/MEGAUpdater")
 set(MEGAShellExtDir "${RepoDir}/src/MEGAShellExt")
-if(CMAKE_HOST_APPLE)
-    set(MEGAloaderDir "${RepoDir}/src/MEGALoader")
-endif(CMAKE_HOST_APPLE)
 
 get_filename_component(MEGAsyncDir ${MEGAsyncDir} REALPATH)
 
@@ -790,12 +787,6 @@ if(CMAKE_HOST_WIN32)
     set_property(TARGET MEGAShellExt PROPERTY MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
     set_target_properties(MEGAShellExt  PROPERTIES LINK_FLAGS_RELEASE " /DEBUG " )
 endif()
-
-#-------------- MEGA Loader for OSX --------------------
-
-if(CMAKE_HOST_APPLE)
-    add_executable(MEGAloader MACOSX_BUNDLE ${MEGAloaderDir}/MEGALoader.cpp)
-endif(CMAKE_HOST_APPLE)
 
 #-------------- MEGA Sync unit tests --------------------
 add_library(catch INTERFACE)
