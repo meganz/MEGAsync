@@ -75,7 +75,7 @@
      <property name="sizeHint" stdset="0">
       <size>
        <width>20</width>
-       <height>20</height>
+       <height>5</height>
       </size>
      </property>
     </spacer>
@@ -121,10 +121,13 @@
      <property name="orientation">
       <enum>Qt::Vertical</enum>
      </property>
+     <property name="sizeType">
+      <enum>QSizePolicy::Fixed</enum>
+     </property>
      <property name="sizeHint" stdset="0">
       <size>
        <width>20</width>
-       <height>106</height>
+       <height>20</height>
       </size>
      </property>
     </spacer>
