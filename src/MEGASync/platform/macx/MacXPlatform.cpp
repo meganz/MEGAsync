@@ -3,54 +3,15 @@
 
 using namespace std;
 
-int MacXPlatform::fd = -1;
 MacXSystemServiceTask* MacXPlatform::systemServiceTask = NULL;
 QPointer<MacXExtServerService> MacXPlatform::extService;
 
 static const QString kFinderSyncBundleId = QString::fromUtf8("mega.mac.MEGAShellExtFinder");
 static const QString kFinderSyncPath = QString::fromUtf8("/Applications/MEGAsync.app/Contents/PlugIns/MEGAShellExtFinder.appex/");
 
-void MacXPlatform::initialize(int argc, char *argv[])
+void MacXPlatform::initialize(int /*argc*/, char *[] /*argv*/)
 {
-#ifdef QT_DEBUG
-    return;
-#endif
-
     setMacXActivationPolicy();
-    SetProcessName(QString::fromUtf8("MEGAsync"));
-
-    fd = -1;
-    if (argc)
-    {
-        long int value = strtol(argv[argc - 1], NULL, 10);
-        if (value > 0 && value < INT_MAX)
-        {
-            fd = value;
-        }
-    }
-
-    if (fd < 0)
-    {
-        if (!enableSetuidBit())
-        {
-            MacXPlatform::disableSignalHandler();
-            ::exit(0);
-        }
-
-        //Reboot
-        QString app = MegaApplication::applicationDirPath();
-        QString launchCommand = QString::fromUtf8("open");
-        QStringList args = QStringList();
-        QDir appPath(app);
-        appPath.cdUp();
-        appPath.cdUp();
-        args.append(QString::fromAscii("-n"));
-        args.append(appPath.absolutePath());
-        QProcess::startDetached(launchCommand, args);
-        sleep(2);
-        MacXPlatform::disableSignalHandler();
-        ::exit(0);
-    }
 }
 
 void MacXPlatform::prepareForSync()
@@ -65,6 +26,7 @@ QStringList MacXPlatform::multipleUpload(QString uploadTitle)
 
 bool MacXPlatform::enableTrayIcon(QString executable)
 {
+    Q_UNUSED(executable)
     return false;
 }
 
@@ -278,19 +240,6 @@ QString MacXPlatform::getDefaultOpenApp(QString extension)
 void MacXPlatform::enableDialogBlur(QDialog *dialog)
 {
 
-}
-
-bool MacXPlatform::enableSetuidBit()
-{
-    QString command = QString::fromUtf8("do shell script \"chown root /Applications/MEGAsync.app/Contents/MacOS/MEGAsync && chmod 4755 /Applications/MEGAsync.app/Contents/MacOS/MEGAsync && echo true\"");
-    char *response = runWithRootPrivileges((char *)command.toUtf8().constData());
-    if (!response)
-    {
-        return false;
-    }
-    bool result = strlen(response) >= 4 && !strncmp(response, "true", 4);
-    delete [] response;
-    return result;
 }
 
 bool MacXPlatform::registerUpdateJob()
