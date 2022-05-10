@@ -22,7 +22,7 @@ public:
     MegaDownloader(mega::MegaApi *megaApi);
     virtual ~MegaDownloader() = default;
     bool processDownloadQueue(QQueue<WrappedNode*>* downloadQueue, BlockingBatch& downloadBatches,
-                              QString path, unsigned long long appDataId);
+                              const QString &path, unsigned long long appDataId);
 
 protected:
     bool download(WrappedNode *parent, QFileInfo info, QString appData, mega::MegaCancelToken *cancelToken);

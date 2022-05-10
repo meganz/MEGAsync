@@ -13,7 +13,8 @@ MegaDownloader::MegaDownloader(MegaApi *megaApi) : QObject()
     this->megaApi = megaApi;
 }
 
-bool MegaDownloader::processDownloadQueue(QQueue<WrappedNode*>* downloadQueue, BlockingBatch& downloadBatches, QString path, unsigned long long appDataId)
+bool MegaDownloader::processDownloadQueue(QQueue<WrappedNode*>* downloadQueue, BlockingBatch& downloadBatches,
+                                          const QString& path, unsigned long long appDataId)
 {
     mNoTransferStarted = true;
     // If the destination path doesn't exist and we can't create it,
