@@ -5,6 +5,7 @@
 
 #include <QSharedData>
 #include <QObject>
+#include <QFileInfo>
 
 enum class StalledIssueFilterCriterion
 {
@@ -27,22 +28,35 @@ public:
         bool isEmpty() const {return path.isEmpty();}
     };
 
-    StalledIssueData(const mega::MegaSyncStall* stallIssue = nullptr);
+    StalledIssueData();
     ~StalledIssueData(){}
+
+    const Path& getPath() const;
+    const Path& getMovePath() const;
+    bool isCloud() const;
+
+    bool hasMoveInfo() const;
+    bool isEmpty() const;
+
+    QString getFilePath() const;
+    QString getMoveFilePath() const;
+
+    QString getNativeFilePath() const;
+    QString getNativeMoveFilePath() const;
+
+    QString getNativePath() const;
+    QString getNativeMovePath() const;
+
+    QString getFileName() const;
+
+private:
+    friend class StalledIssue;
+    friend class ConflictedNamesStalledIssue;
 
     Path mMovePath;
     Path mPath;
 
     bool mIsCloud;
-    bool mIsImmediate;
-    QString mReasonString;
-
-    bool hasMoveInfo() const;
-
-private:
-    friend class StalledIssue;
-
-    void update(const mega::MegaSyncStall* stallIssue);
 };
 
 Q_DECLARE_TYPEINFO(StalledIssueData, Q_MOVABLE_TYPE);
@@ -58,16 +72,17 @@ class StalledIssue
 {
     public:
         StalledIssue(){}
-        StalledIssue(const StalledIssue& tdr) : d(tdr.d), mReason(tdr.getReason()), mIsNameConflict(tdr.isNameConflict()), mFileName(tdr.getFileName()) {}
+        StalledIssue(const StalledIssue& tdr) : mLocalData(tdr.mLocalData), mCloudData(tdr.mCloudData), mReason(tdr.getReason()), mIsNameConflict(tdr.isNameConflict()) {}
         StalledIssue(const mega::MegaSyncStall *stallIssue);
-        //StalledIssue(const QList<QExplicitlySharedDataPointer<StalledIssueData>>& tdr, mega::MegaSyncStall::SyncStallReason reason = mega::MegaSyncStall::SyncStallReason::NoReason);
 
-        void addStalledIssueData(const mega::MegaSyncStall *stallIssue);
-        QExplicitlySharedDataPointer<StalledIssueData> getStalledIssueData(int index = 0) const;
-        int stalledIssuesCount() const;
+        void fillIssue(const mega::MegaSyncStall *stall);
+
+        //Don´t think it´s going to be more stalled issues than 2 (local and remote)
+        const QExplicitlySharedDataPointer<StalledIssueData> &getLocalData() const;
+        const QExplicitlySharedDataPointer<StalledIssueData> &getCloudData() const;
 
         mega::MegaSyncStall::SyncStallReason getReason() const;
-        const QString& getFileName() const;
+        QString getFileName() const;
         bool isCloud() const;
 
         bool isNameConflict() const;
@@ -77,15 +92,18 @@ class StalledIssue
         static StalledIssueFilterCriterion getCriterionByReason(mega::MegaSyncStall::SyncStallReason reason);
 
 protected:
-        QList<QExplicitlySharedDataPointer<StalledIssueData>> d;
+        bool initLocalIssue();
+        QExplicitlySharedDataPointer<StalledIssueData> mCloudData;
+
+        bool initCloudIssue();
+        QExplicitlySharedDataPointer<StalledIssueData> mLocalData;
+
+        bool mIsCloud = false;
+        bool mIsImmediate = false;
+        QString mReasonString;
         mega::MegaSyncStall::SyncStallReason mReason = mega::MegaSyncStall::SyncStallReason::NoReason;
         bool mIsNameConflict = false;
-        QString mFileName;
 
-private:
-        void extractFileName(const mega::MegaSyncStall *stall);
-        void fillIssue(const mega::MegaSyncStall *stall);
-        void addStalledIssueData(QExplicitlySharedDataPointer<StalledIssueData> data);
 };
 Q_DECLARE_METATYPE(StalledIssue)
 
@@ -93,7 +111,6 @@ class ConflictedNamesStalledIssue : public StalledIssue
 {
 public:
     ConflictedNamesStalledIssue();
-    ConflictedNamesStalledIssue(const QExplicitlySharedDataPointer<StalledIssueData>& tdr);
     ConflictedNamesStalledIssue(mega::MegaSyncNameConflict* nameConflictStallIssue);
 
     ~ConflictedNamesStalledIssue(){}

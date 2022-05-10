@@ -38,6 +38,12 @@ StalledIssuesDialog::StalledIssuesDialog(QWidget *parent) :
     connect(MegaSyncApp->getStalledIssuesModel(), &StalledIssuesModel::stalledIssuesReceived,
             this,  &StalledIssuesDialog::onStalledIssuesLoaded);
 
+    connect(MegaSyncApp->getStalledIssuesModel(), &StalledIssuesModel::globalSyncStateChanged,
+            this,  &StalledIssuesDialog::onGlobalSyncStateChanged);
+
+    connect(MegaSyncApp->getStalledIssuesModel(), &StalledIssuesModel::stalledIssuesCountChanged,
+            this,  &StalledIssuesDialog::onStalledIssuesModelCountChanged);
+
     //Init all categories
     auto tabs = ui->header->findChildren<StalledIssueTab*>();
     foreach(auto tab, tabs)
@@ -73,8 +79,11 @@ void StalledIssuesDialog::on_updateButton_clicked()
 
 void StalledIssuesDialog::onStalledIssuesModelCountChanged()
 {
-    auto isEmpty = ui->stalledIssuesTree->model()->rowCount(QModelIndex()) == 0;
-    ui->TreeViewContainer->setCurrentWidget(isEmpty ? ui->EmptyViewContainerPage : ui->TreeViewContainerPage);
+    if(auto proxyModel = dynamic_cast<StalledIssuesProxyModel*>(ui->stalledIssuesTree->model()))
+    {
+        auto isEmpty = proxyModel->rowCount(QModelIndex()) == 0;
+        ui->TreeViewContainer->setCurrentWidget(isEmpty ? ui->EmptyViewContainerPage : ui->TreeViewContainerPage);
+    }
 }
 
 void StalledIssuesDialog::toggleTab(StalledIssueFilterCriterion filterCriterion)
@@ -82,7 +91,6 @@ void StalledIssuesDialog::toggleTab(StalledIssueFilterCriterion filterCriterion)
   if(auto proxyModel = dynamic_cast<StalledIssuesProxyModel*>(ui->stalledIssuesTree->model()))
   {
       proxyModel->filter(filterCriterion);
-      onStalledIssuesModelCountChanged();
   }
 }
 
@@ -96,10 +104,24 @@ void StalledIssuesDialog::onUiUnblocked()
 {
     setDisabled(false);
     mLoadingScene.setLoadingScene(false);
+    onStalledIssuesModelCountChanged();
 }
 
 void StalledIssuesDialog::onStalledIssuesLoaded()
 {
     onUiUnblocked();
     mProxyModel->updateFilter();
+}
+
+void StalledIssuesDialog::onGlobalSyncStateChanged(bool state)
+{
+    if(state)
+    {
+        onUiUnblocked();
+        mProxyModel->updateFilter();
+    }
+    else
+    {
+        mProxyModel->invalidate();
+    }
 }

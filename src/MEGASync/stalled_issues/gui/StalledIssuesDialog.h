@@ -31,6 +31,7 @@ private slots:
     void on_doneButton_clicked();
     void on_updateButton_clicked();
     void onStalledIssuesModelCountChanged();
+    void onGlobalSyncStateChanged(bool state);
 
     void toggleTab(StalledIssueFilterCriterion filterCriterion);
 

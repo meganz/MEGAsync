@@ -35,10 +35,15 @@ LocalAndRemoteDifferentWidget::~LocalAndRemoteDifferentWidget()
 void LocalAndRemoteDifferentWidget::refreshUi()
 {
     auto issue = getData();
-    for(int index = 0; index < issue.stalledIssuesCount(); ++index)
+
+    if(issue.getLocalData())
     {
-        auto data = issue.getStalledIssueData(index);
-        data->mIsCloud ? ui->chooseRemoteCopy->setData(data, issue.getFileName()) : ui->chooseLocalCopy->setData(data, issue.getFileName());
+        ui->chooseLocalCopy->setData(issue.getLocalData());
+    }
+
+    if(issue.getCloudData())
+    {
+        ui->chooseRemoteCopy->setData(issue.getCloudData());
     }
 }
 
@@ -60,7 +65,7 @@ void LocalAndRemoteDifferentWidget::onRequestFinish(mega::MegaApi *, mega::MegaR
 
 void LocalAndRemoteDifferentWidget::onLocalButtonClicked()
 { 
-    auto fileNode(MegaSyncApp->getMegaApi()->getNodeByPath(ui->chooseRemoteCopy->data()->mPath.path.toStdString().c_str()));
+    auto fileNode(MegaSyncApp->getMegaApi()->getNodeByPath(ui->chooseRemoteCopy->data()->getFilePath().toStdString().c_str()));
     if(fileNode)
     {
         mRemovedRemoteHandle = fileNode->getHandle();
@@ -70,7 +75,7 @@ void LocalAndRemoteDifferentWidget::onLocalButtonClicked()
 
 void LocalAndRemoteDifferentWidget::onRemoteButtonClicked()
 {
-    QFile file(ui->chooseLocalCopy->data()->mPath.path);
+    QFile file(ui->chooseLocalCopy->data()->getNativeFilePath());
     if(file.exists())
     {
         if(file.remove())

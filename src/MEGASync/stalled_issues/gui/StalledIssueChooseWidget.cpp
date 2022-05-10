@@ -23,12 +23,12 @@ StalledIssueChooseWidget::~StalledIssueChooseWidget()
     delete ui;
 }
 
-void StalledIssueChooseWidget::setData(StalledIssueDataPtr data, const QString& fileName)
+void StalledIssueChooseWidget::setData(StalledIssueDataPtr data)
 {
     mData = data;
-    mFileName = fileName;
+    auto fileName = mData->getFileName();
 
-    ui->titleLabel->setText(mData->mIsCloud ? tr("Remote Copy") : tr("Local Copy"));
+    ui->titleLabel->setText(mData->isCloud() ? tr("Remote Copy") : tr("Local Copy"));
     ui->fileNameText->setText(fileName);
 
     auto fileTypeIcon = Utilities::getCachedPixmap(Utilities::getExtensionPixmapName(
@@ -37,12 +37,11 @@ void StalledIssueChooseWidget::setData(StalledIssueDataPtr data, const QString& 
     ui->fileSize->setText(Utilities::getSizeString((unsigned long long)50));
 
     ui->path->show();
+    ui->path->updateUi(data);
 
-    ui->path->updateUi(data, fileName);
-
-    if(mData->mIsCloud)
+    if(mData->isCloud())
     {
-        std::unique_ptr<mega::MegaNode> node(MegaSyncApp->getMegaApi()->getNodeByPath(mData->mPath.path.toStdString().c_str()));
+        std::unique_ptr<mega::MegaNode> node(MegaSyncApp->getMegaApi()->getNodeByPath(mData->getFilePath().toStdString().c_str()));
         if(node)
         {
             ui->fileSize->setText(Utilities::getSizeString((long long)node->getSize()));
@@ -50,7 +49,7 @@ void StalledIssueChooseWidget::setData(StalledIssueDataPtr data, const QString& 
     }
     else
     {
-        QFile file(mData->mPath.path);
+        QFile file(mData->getNativeFilePath());
         if(file.exists())
         {
             ui->fileSize->setText(Utilities::getSizeString(file.size()));
@@ -97,9 +96,9 @@ bool StalledIssueChooseWidget::eventFilter(QObject *watched, QEvent *event)
         path.addRect(QRect( 0, 3, ui->chooseTitle->width(), ui->chooseTitle->height() -3)); // Top right corner not rounded
         painter.drawPath(path.simplified());
     }
-    else if(watched == ui->fileNameText && event->type() == QEvent::Resize)
+    else if(mData && watched == ui->fileNameText && event->type() == QEvent::Resize)
     {
-        auto elidedText = ui->fileNameText->fontMetrics().elidedText(mFileName,Qt::ElideMiddle, ui->fileNameText->width());
+        auto elidedText = ui->fileNameText->fontMetrics().elidedText(mData->getFileName(),Qt::ElideMiddle, ui->fileNameText->width());
         ui->fileNameText->setText(elidedText);
     }
 

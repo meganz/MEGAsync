@@ -29,19 +29,18 @@ void OtherSideMissingOrBlocked::refreshUi()
     ui->localPath->hide();
     ui->remotePath->hide();
 
-    for(int index = 0; index < issue.stalledIssuesCount(); ++index)
-    {
-        auto data = issue.getStalledIssueData(index);
+    auto localData = issue.getLocalData();
+    auto cloudData = issue.getCloudData();
 
-        if(data->mIsCloud)
-        {
-            ui->remotePath->show();
-            ui->remotePath->updateUi(data, issue.getFileName());
-        }
-        else
-        {
-            ui->localPath->show();
-            ui->localPath->updateUi(data, issue.getFileName());
-        }
+    if(cloudData)
+    {
+        ui->remotePath->show();
+        ui->remotePath->updateUi(cloudData);
+    }
+
+    if(localData)
+    {
+        ui->localPath->show();
+        ui->localPath->updateUi(localData);
     }
 }

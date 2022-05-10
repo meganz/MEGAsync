@@ -37,16 +37,16 @@ void StalledIssuesReceiver::onRequestFinish(mega::MegaApi*, mega::MegaRequest *r
     {
         QMutexLocker lock(&mCacheMutex);
 
-        if (mega::MegaSyncNameConflictList* cl = ptr->nameConflicts())
-        {
-            for (int i = 0; i < cl->size(); ++i)
-            {
-                auto nameConflictStall = cl->get(i);
+//        if (mega::MegaSyncNameConflictList* cl = ptr->nameConflicts())
+//        {
+//            for (int i = 0; i < cl->size(); ++i)
+//            {
+//                auto nameConflictStall = cl->get(i);
 
-                ConflictedNamesStalledIssue conflictNameItem(nameConflictStall);
-                mCacheStalledIssues.append(conflictNameItem);
-            }
-        }
+//                ConflictedNamesStalledIssue conflictNameItem(nameConflictStall);
+//                mCacheStalledIssues.append(conflictNameItem);
+//            }
+//        }
 
         if (mega::MegaSyncStallList* sl = ptr->stalls())
         {
@@ -65,20 +65,21 @@ void StalledIssuesReceiver::onRequestFinish(mega::MegaApi*, mega::MegaRequest *r
 
                         if(issue.getReason() == stall->reason())
                         {
-                           if(stall->isCloud())
+                            if(stall->isCloud())
                             {
-                                if(QString::fromStdString(stall->localPath()) == issue.getStalledIssueData()->mPath.path)
+                                if(QString::fromStdString(stall->localPath())
+                                        == issue.getLocalData()->getPath().path)
                                 {
-                                    issue.addStalledIssueData(stall);
+                                    issue.fillIssue(stall);
                                     createStalledIssue = false;
                                     break;
                                 }
                             }
                             else
                             {
-                                if(QString::fromStdString(stall->cloudPath()) == issue.getStalledIssueData()->mPath.path)
+                                if(QString::fromStdString(stall->cloudPath()) == issue.getCloudData()->getPath().path)
                                 {
-                                    issue.addStalledIssueData(stall);
+                                    issue.fillIssue(stall);
                                     createStalledIssue = false;
                                     break;
                                 }
@@ -97,87 +98,27 @@ void StalledIssuesReceiver::onRequestFinish(mega::MegaApi*, mega::MegaRequest *r
                 {
                     StalledIssue d (stall);
 
-                    if(d.stalledIssuesCount() > 1)
+                    if(stall->reason() == mega::MegaSyncStall::SyncStallReason::ApplyMoveIsBlockedByExistingItem && d.getLocalData())
                     {
-                        auto destinationData = d.getStalledIssueData(1);
-
-                        QFileInfo localDir(QString::fromUtf8(stall->localPath()));
-
-                        if(stall->isCloud())
-                        {
-                            //destinationData->mPath.path = QDir::toNativeSeparators(localDir.path());
-                            //destinationData->mIsCloud = false;
-
-                            //QFileInfo sourceCloudPath(QString::fromUtf8(stall->indexPath()));
-                            //QFileInfo targetCloudPath(QString::fromUtf8(stall->cloudPath()));
-
-                            //d.getStalledIssueData()->mPath.path = sourceCloudPath.path();
-                            //d.getStalledIssueData()->mMovePath.path = targetCloudPath.path();
-                        }
-                        else
-                        {
-                            //QFileInfo targetCloudDir(QString::fromUtf8(stall->cloudPath()));
-                            //destinationData->mPath.path = targetCloudDir.path();
-                            destinationData->mIsCloud = true;
-
-                            //QFileInfo targetLocalDir(QString::fromUtf8(stall->indexPath()));
-
-                            //d.getStalledIssueData()->mPath.path = QDir::toNativeSeparators(localDir.path());
-                            //d.getStalledIssueData()->mMovePath.path = QDir::toNativeSeparators(ttargetLocalDir.path());
-                        }
-
-                        if(stall->reason() == mega::MegaSyncStall::SyncStallReason::ApplyMoveIsBlockedByExistingItem)
-                        {
-                            destinationData->mPath.isBlocked = true;
-                        }
-
-                        if(stall->reason() == mega::MegaSyncStall::SyncStallReason::ApplyMoveNeedsOtherSideParentFolderToExist)
-                        {
-                            d.getStalledIssueData()->mMovePath.isMissing = true;
-                        }
+                        //d.getLocalData()->getPath().isBlocked = true;
                     }
+
+                    if(stall->reason() == mega::MegaSyncStall::SyncStallReason::ApplyMoveNeedsOtherSideParentFolderToExist && d.getCloudData())
+                    {
+                        //d.getCloudData()->getMovePath().isMissing = true;
+                    }
+
 
                     mCacheStalledIssues.append(d);
                 }
-//                else  if(stall->reason() == mega::MegaSyncStall::SyncStallReason::MoveNeedsDestinationNodeProcessing)
-//                {
-//                    StalledIssue d (stall);
-
-//                    QFileInfo localDir(QString::fromUtf8(stall->localPath()));
-
-//                    if(stall->isCloud() && d.stalledIssuesCount() > 1)
-//                    {
-//                        auto destinationData = d.getStalledIssueData(1);
-//                        destinationData->mPath.path = QDir::toNativeSeparators(localDir.path());
-
-//                        //Here we should have the target local path, which is blocked...
-
-//                        QFileInfo sourceCloudPath(QString::fromUtf8(stall->indexPath()));
-//                        QFileInfo targetCloudPath(QString::fromUtf8(stall->cloudPath()));
-
-//                        d.getStalledIssueData()->mPath.path = sourceCloudPath.path();
-//                        d.getStalledIssueData()->mMovePath.path = targetCloudPath.path();
-//                    }
-//                    else
-//                    {
-//                        QFileInfo sourceLocalPath(QString::fromUtf8(stall->indexPath()));
-
-//                        d.getStalledIssueData()->mPath.path = QDir::toNativeSeparators(sourceLocalPath.path());
-//                        d.getStalledIssueData()->mMovePath.path = QDir::toNativeSeparators(localDir.path());
-//                    }
-
-//                    mCacheStalledIssues.append(d);
-//                }
                 //These stall issues are only local stalled issues
                 else  if(stall->reason() == mega::MegaSyncStall::SyncStallReason::UpsyncNeedsTargetFolder)
                 {
                     StalledIssue d (stall);
 
-                    if(d.stalledIssuesCount() > 1)
+                    if(d.getCloudData())
                     {
-                        //QFileInfo sourceCloudPath(QString::fromUtf8(stall->cloudPath()));
-                        //d.getStalledIssueData(1)->mPath.path = sourceCloudPath.path();
-                        d.getStalledIssueData(1)->mPath.isMissing = true;
+                        //d.getCloudData()->getPath().isMissing = true;
                     }
 
                     mCacheStalledIssues.append(d);
@@ -187,11 +128,9 @@ void StalledIssuesReceiver::onRequestFinish(mega::MegaApi*, mega::MegaRequest *r
                 {
                     StalledIssue d (stall);
 
-                    if(d.stalledIssuesCount() > 1)
+                    if(d.getLocalData() > 1)
                     {
-                        //QFileInfo sourceLocalPath(QString::fromUtf8(stall->localPath()));
-                        //d.getStalledIssueData(1)->mPath.path = sourceLocalPath.path();
-                        d.getStalledIssueData(1)->mPath.isMissing = true;
+                        //d.getLocalData()->getPath().isMissing = true;
                     }
 
                     mCacheStalledIssues.append(d);
@@ -199,7 +138,11 @@ void StalledIssuesReceiver::onRequestFinish(mega::MegaApi*, mega::MegaRequest *r
                 else  if(stall->reason() == mega::MegaSyncStall::SyncStallReason::DeleteOrMoveWaitingOnScanning)
                 {
                     StalledIssue d (stall);
-                    d.getStalledIssueData()->mPath.isMissing = true;
+
+                    if(d.getLocalData())
+                    {
+                        //d.getLocalData()->getPath().isMissing = true;
+                    }
 
                     mCacheStalledIssues.append(d);
                 }
@@ -251,8 +194,9 @@ StalledIssuesModel::~StalledIssuesModel()
 
 void StalledIssuesModel::onProcessStalledIssues(StalledIssuesList stalledIssues)
 {
-    QtConcurrent::run([this, stalledIssues]()
-    {
+    //Try blocking signals
+    //QtConcurrent::run([this, stalledIssues]()
+    //{
         reset();
 
         if(!stalledIssues.isEmpty())
@@ -277,9 +221,8 @@ void StalledIssuesModel::onProcessStalledIssues(StalledIssuesList stalledIssues)
             endInsertRows();
             emit stalledIssuesCountChanged();
         }
-
         emit stalledIssuesReceived(true);
-    });
+    //});
 }
 
 void StalledIssuesModel::updateStalledIssues()
@@ -300,7 +243,8 @@ void StalledIssuesModel::updateStalledIssues()
 void StalledIssuesModel::onGlobalSyncStateChanged(mega::MegaApi* api)
 {
     mHasStalledIssues = api->isSyncStalled();
-    emit stalledIssuesReceived(api->isSyncStalled());
+    emit globalSyncStateChanged(mHasStalledIssues);/*
+    emit stalledIssuesReceived(mHasStalledIssues);*/
 }
 
 Qt::DropActions StalledIssuesModel::supportedDropActions() const
@@ -316,7 +260,6 @@ bool StalledIssuesModel::hasChildren(const QModelIndex &parent) const
         return false;
     }
 
-
     return true;
 }
 
@@ -330,9 +273,6 @@ int StalledIssuesModel::rowCount(const QModelIndex &parent) const
    {
        return 1;
    }
-
-   // unreachable code
-   //return 0;
 }
 
 int StalledIssuesModel::columnCount(const QModelIndex &) const

@@ -22,7 +22,7 @@ public:
     ~StalledIssueFilePath();
 
     void setIndent(int indent);
-    void updateUi(QExplicitlySharedDataPointer<StalledIssueData> data, const QString& fileName);
+    void updateUi(QExplicitlySharedDataPointer<StalledIssueData> data);
 
 protected:
     bool eventFilter(QObject *watched, QEvent *event) override;
@@ -36,7 +36,6 @@ private:
 
     Ui::StalledIssueFilePath *ui;
     QExplicitlySharedDataPointer<StalledIssueData> mData;
-    QString mFileName;
 };
 
 #endif // STALLEDISSUEFILEPATH_H

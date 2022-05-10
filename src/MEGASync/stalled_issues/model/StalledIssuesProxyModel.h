@@ -19,6 +19,8 @@ public:
     void filter(StalledIssueFilterCriterion filterCriterion);
     void updateFilter();
 
+    void setSourceModel(QAbstractItemModel *sourceModel) override;
+
 signals:
     void uiBlocked();
     void uiUnblocked();

@@ -197,7 +197,7 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
     mFoundStalledIssues = MegaSyncApp->getStalledIssuesModel()->rowCount(QModelIndex()) != 0;
     showStalledIssuesInfo();
     connect(MegaSyncApp->getStalledIssuesModel(),
-            &StalledIssuesModel::stalledIssuesReceived,
+            &StalledIssuesModel::globalSyncStateChanged,
             this, &TransferManager::onStalledIssuesStateChanged);
 
     onStalledIssuesStateChanged(MegaSyncApp->getStalledIssuesModel()->hasStalledIssues());

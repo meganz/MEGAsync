@@ -59,20 +59,18 @@ void StalledIssueHeader::setTitleDescriptionText(const QString &text)
     ui->errorDescriptionText->setText(text);
 }
 
+//Ignore local file
 void StalledIssueHeader::ignoreFile()
 {
-    auto data = getData().getStalledIssueData();
+    auto data = getData().getLocalData();
     if(data)
     {
-        auto path = data->mPath.path;
-
         connect(&mIgnoreWatcher, &QFutureWatcher<void>::finished,
                 this, &StalledIssueHeader::onIgnoreFileFinished);
 
-        QFuture<void> addToIgnore = QtConcurrent::run([path]()
+        QFuture<void> addToIgnore = QtConcurrent::run([data]()
         {
-            QFileInfo stalledIssuePathInfo(path);
-            QDir ignoreDir(path);
+            QDir ignoreDir(data->getNativePath());
 
             while(ignoreDir.exists())
             {
@@ -86,7 +84,7 @@ void StalledIssueHeader::ignoreFile()
 
                     streamIn << QString::fromUtf8("-:");
 
-                    streamIn << ignoreDir.relativeFilePath(path);
+                    streamIn << ignoreDir.relativeFilePath(data->getNativeFilePath());
                     ignore.close();
 
                     break;

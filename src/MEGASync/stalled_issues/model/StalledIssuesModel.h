@@ -58,6 +58,7 @@ public:
 
 signals:
     void stalledIssuesReceived(bool state);
+    void globalSyncStateChanged(bool state);
     void stalledIssuesCountChanged();
 
 protected slots:

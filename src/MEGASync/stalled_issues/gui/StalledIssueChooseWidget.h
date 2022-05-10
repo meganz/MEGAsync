@@ -17,7 +17,7 @@ public:
     explicit StalledIssueChooseWidget(QWidget *parent = nullptr);
     ~StalledIssueChooseWidget();
 
-    void setData(StalledIssueDataPtr data, const QString &fileName);
+    void setData(StalledIssueDataPtr data);
     const StalledIssueDataPtr& data();
 
     void setIndent();
@@ -32,7 +32,6 @@ protected:
 private:
     Ui::StalledIssueChooseWidget *ui;
     StalledIssueDataPtr mData;
-    QString mFileName;
 };
 
 #endif // STALLEDISSUECHOOSEWIDGET_H

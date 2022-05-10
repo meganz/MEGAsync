@@ -33,9 +33,11 @@ void StalledIssuesProxyModel::filter(StalledIssueFilterCriterion filterCriterion
         auto sourceM = qobject_cast<StalledIssuesModel*>(sourceModel());
         sourceM->lockModelMutex(true);
         sourceM->blockSignals(true);
+        blockSignals(true);
         invalidate();
         sourceM->lockModelMutex(false);
         sourceM->blockSignals(false);
+        blockSignals(false);
     });
     mFilterWatcher.setFuture(filtered);
 }
@@ -43,6 +45,11 @@ void StalledIssuesProxyModel::filter(StalledIssueFilterCriterion filterCriterion
 void StalledIssuesProxyModel::updateFilter()
 {
     filter(mFilterCriterion);
+}
+
+void StalledIssuesProxyModel::setSourceModel(QAbstractItemModel *sourceModel)
+{
+    QSortFilterProxyModel::setSourceModel(sourceModel);
 }
 
 bool StalledIssuesProxyModel::canFetchMore(const QModelIndex &parent) const
