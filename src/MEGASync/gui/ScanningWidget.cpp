@@ -2,6 +2,7 @@
 #include "ui_ScanningWidget.h"
 
 #include <QMovie>
+#include "BlurredShadowEffect.h"
 #include "Utilities.h"
 
 ScanningWidget::ScanningWidget(QWidget *parent) :
@@ -14,6 +15,11 @@ ScanningWidget::ScanningWidget(QWidget *parent) :
 
     mUi->lScanning->setProperty("role", QString::fromLatin1("title"));
     mUi->lExplanation->setProperty("role", QString::fromLatin1("details"));
+
+    mUi->pBlockingStageCancel->setGraphicsEffect(CreateBlurredShadowEffect());
+
+    connect(mUi->pBlockingStageCancel, &QPushButton::clicked,
+            this, &ScanningWidget::onCancelClicked);
 }
 
 ScanningWidget::~ScanningWidget()
@@ -47,7 +53,7 @@ void ScanningWidget::updateAnimation()
     mMovie->start();
 }
 
-void ScanningWidget::on_pBlockingStageCancel_clicked()
+void ScanningWidget::onCancelClicked()
 {
     emit cancel();
 }

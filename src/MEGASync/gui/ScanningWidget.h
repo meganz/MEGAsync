@@ -23,7 +23,7 @@ signals:
     void cancel();
 
 private slots:
-    void on_pBlockingStageCancel_clicked();
+    void onCancelClicked();
 
 private:
     Ui::ScanningWidget *mUi;

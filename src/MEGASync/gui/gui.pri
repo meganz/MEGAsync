@@ -2,6 +2,7 @@ QT       += network
 
 SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/BalloonToolTip.cpp \
+    $$PWD/BlurredShadowEffect.cpp \
     $$PWD/MegaItemDelegates.cpp \
     $$PWD/EventHelper.cpp \
     $$PWD/InfoDialog.cpp \
@@ -70,6 +71,7 @@ SOURCES += $$PWD/SettingsDialog.cpp \
 
 HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/BalloonToolTip.h \
+    $$PWD/BlurredShadowEffect.h \
     $$PWD/MegaItemDelegates.h \
     $$PWD/EventHelper.h \
     $$PWD/InfoDialog.h \

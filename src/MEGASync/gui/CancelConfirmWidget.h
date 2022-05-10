@@ -22,8 +22,8 @@ signals:
     void dismiss();
 
 private slots:
-    void on_pDismiss_clicked();
-    void on_pProceed_clicked();
+    void onDismissClicked();
+    void onProceedClicked();
 
 private:
     void enableButtons(bool value);
