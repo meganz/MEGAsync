@@ -330,6 +330,7 @@ void InfoDialog::showEvent(QShowEvent *event)
 
     isShown = true;
     QDialog::showEvent(event);
+    mTransferScanCancelUi->update();
 }
 
 void InfoDialog::moveEvent(QMoveEvent*)

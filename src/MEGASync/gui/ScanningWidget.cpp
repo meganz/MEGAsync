@@ -42,6 +42,11 @@ void ScanningWidget::hide()
     mUi->lAnimation->setMovie(nullptr);
 }
 
+void ScanningWidget::updateAnimation()
+{
+    mMovie->start();
+}
+
 void ScanningWidget::on_pBlockingStageCancel_clicked()
 {
     emit cancel();

@@ -16,6 +16,7 @@ public:
 
     void show();
     void hide();
+    void update();
     bool isActive();
 
 signals:
