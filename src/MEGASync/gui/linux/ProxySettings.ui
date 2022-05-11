@@ -88,11 +88,8 @@
           <verstretch>0</verstretch>
          </sizepolicy>
         </property>
-        <property name="focusPolicy">
-         <enum>Qt::StrongFocus</enum>
-        </property>
         <property name="text">
-         <string>Proxy Settings:</string>
+         <string>Proxy settings:</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignRight|Qt::AlignTop|Qt::AlignTrailing</set>
@@ -113,18 +110,6 @@
           <verstretch>0</verstretch>
          </sizepolicy>
         </property>
-        <property name="minimumSize">
-         <size>
-          <width>100</width>
-          <height>24</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>16777215</width>
-          <height>24</height>
-         </size>
-        </property>
         <item>
          <property name="text">
           <string>HTTP</string>
@@ -142,18 +127,6 @@
         <property name="enabled">
          <bool>false</bool>
         </property>
-        <property name="minimumSize">
-         <size>
-          <width>0</width>
-          <height>24</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>16777215</width>
-          <height>24</height>
-         </size>
-        </property>
         <property name="text">
          <string>Proxy server requires a password</string>
         </property>
@@ -161,9 +134,6 @@
       </item>
       <item row="12" column="0">
        <widget class="QLabel" name="lProxyUsername">
-        <property name="focusPolicy">
-         <enum>Qt::NoFocus</enum>
-        </property>
         <property name="text">
          <string>Username:</string>
         </property>
@@ -174,9 +144,6 @@
       </item>
       <item row="10" column="0">
        <widget class="QLabel" name="lProxyServer">
-        <property name="focusPolicy">
-         <enum>Qt::StrongFocus</enum>
-        </property>
         <property name="text">
          <string>Server:</string>
         </property>
@@ -186,20 +153,20 @@
        </widget>
       </item>
       <item row="13" column="1">
-       <widget class="QLineEdit" name="eProxyPassword">
+       <widget class="PasswordLineEdit" name="eProxyPassword">
         <property name="enabled">
          <bool>false</bool>
         </property>
         <property name="minimumSize">
          <size>
           <width>240</width>
-          <height>24</height>
+          <height>0</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
           <width>240</width>
-          <height>24</height>
+          <height>16777215</height>
          </size>
         </property>
         <property name="accessibleName">
@@ -242,13 +209,13 @@
            <property name="minimumSize">
             <size>
              <width>240</width>
-             <height>24</height>
+             <height>0</height>
             </size>
            </property>
            <property name="maximumSize">
             <size>
              <width>240</width>
-             <height>24</height>
+             <height>16777215</height>
             </size>
            </property>
            <property name="inputMethodHints">
@@ -283,13 +250,13 @@
            <property name="minimumSize">
             <size>
              <width>32</width>
-             <height>24</height>
+             <height>0</height>
             </size>
            </property>
            <property name="maximumSize">
             <size>
              <width>60</width>
-             <height>24</height>
+             <height>16777215</height>
             </size>
            </property>
            <property name="inputMethodHints">
@@ -321,9 +288,6 @@
       </item>
       <item row="9" column="0">
        <widget class="QLabel" name="lProxyType">
-        <property name="focusPolicy">
-         <enum>Qt::StrongFocus</enum>
-        </property>
         <property name="text">
          <string>Proxy type:</string>
         </property>
@@ -339,7 +303,7 @@
         </property>
         <layout class="QVBoxLayout" name="wProxyChoiceLayout">
          <property name="spacing">
-          <number>0</number>
+          <number>10</number>
          </property>
          <property name="leftMargin">
           <number>0</number>
@@ -355,40 +319,16 @@
          </property>
          <item>
           <widget class="QRadioButton" name="rNoProxy">
-           <property name="minimumSize">
-            <size>
-             <width>0</width>
-             <height>24</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>16777215</width>
-             <height>24</height>
-            </size>
-           </property>
            <property name="focusPolicy">
             <enum>Qt::StrongFocus</enum>
            </property>
            <property name="text">
-            <string>No proxy</string>
+            <string>No Proxy</string>
            </property>
           </widget>
          </item>
          <item>
           <widget class="QRadioButton" name="rProxyManual">
-           <property name="minimumSize">
-            <size>
-             <width>0</width>
-             <height>24</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>16777215</width>
-             <height>24</height>
-            </size>
-           </property>
            <property name="focusPolicy">
             <enum>Qt::StrongFocus</enum>
            </property>
@@ -396,7 +336,7 @@
             <string notr="true"/>
            </property>
            <property name="text">
-            <string>Proxy</string>
+            <string>Manual</string>
            </property>
           </widget>
          </item>
@@ -411,13 +351,13 @@
         <property name="minimumSize">
          <size>
           <width>240</width>
-          <height>24</height>
+          <height>0</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
           <width>240</width>
-          <height>24</height>
+          <height>16777215</height>
          </size>
         </property>
         <property name="accessibleName">
@@ -435,9 +375,6 @@
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
-        </property>
-        <property name="focusPolicy">
-         <enum>Qt::NoFocus</enum>
         </property>
         <property name="text">
          <string>Password:</string>
@@ -460,7 +397,7 @@
      </property>
      <layout class="QHBoxLayout" name="buttonBoxLayout">
       <property name="spacing">
-       <number>8</number>
+       <number>10</number>
       </property>
       <property name="leftMargin">
        <number>0</number>
@@ -497,7 +434,7 @@
       <item>
        <widget class="QPushButton" name="bUpdate">
         <property name="text">
-         <string>Update</string>
+         <string>Apply</string>
         </property>
         <property name="default">
          <bool>true</bool>
@@ -509,6 +446,25 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>PasswordLineEdit</class>
+   <extends>QLineEdit</extends>
+   <header>PasswordLineEdit.h</header>
+  </customwidget>
+ </customwidgets>
+ <tabstops>
+  <tabstop>rNoProxy</tabstop>
+  <tabstop>rProxyManual</tabstop>
+  <tabstop>cProxyType</tabstop>
+  <tabstop>eProxyServer</tabstop>
+  <tabstop>eProxyPort</tabstop>
+  <tabstop>cProxyRequiresPassword</tabstop>
+  <tabstop>eProxyUsername</tabstop>
+  <tabstop>eProxyPassword</tabstop>
+  <tabstop>bCancel</tabstop>
+  <tabstop>bUpdate</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

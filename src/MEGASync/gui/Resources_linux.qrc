@@ -10,24 +10,6 @@
         <file>fonts/SourceSansPro-Light.ttf</file>
         <file>fonts/SourceSansPro-Regular.ttf</file>
         <file>fonts/SourceSansPro-Semibold.ttf</file>
-        <file>images/account_32.png</file>
-        <file>images/account_32@2x.png</file>
-        <file>images/account_32@3x.png</file>
-        <file>images/account_type_over.png</file>
-        <file>images/account_type_over@2x.png</file>
-        <file>images/account_type_over@3x.png</file>
-        <file>images/account_type_press.png</file>
-        <file>images/account_type_press@2x.png</file>
-        <file>images/account_type_press@3x.png</file>
-        <file>images/achievements.png</file>
-        <file>images/achievements@2x.png</file>
-        <file>images/achievements@3x.png</file>
-        <file>images/add_ico.png</file>
-        <file>images/add_ico@2x.png</file>
-        <file>images/add_ico@3x.png</file>
-        <file>images/advanced_32.png</file>
-        <file>images/advanced_32@2x.png</file>
-        <file>images/advanced_32@3x.png</file>
         <file>images/alert.svg</file>
         <file>images/app_128.png</file>
         <file>images/app_128@2x.png</file>
@@ -38,24 +20,9 @@
         <file>images/arrow-to-left.png</file>
         <file>images/arrow-to-left@2x.png</file>
         <file>images/arrow-to-left@3x.png</file>
-        <file>images/avatar_frame.png</file>
-        <file>images/avatar_frame@2x.png</file>
-        <file>images/avatar_frame@3x.png</file>
-        <file>images/bandwidth_32.png</file>
-        <file>images/bandwidth_32@2x.png</file>
-        <file>images/bandwidth_32@3x.png</file>
         <file>images/bug_report_success.png</file>
         <file>images/bug_report_success@2x.png</file>
         <file>images/bug_report_success@3x.png</file>
-        <file>images/business.png</file>
-        <file>images/business@2x.png</file>
-        <file>images/business@3x.png</file>
-        <file>images/bwupgrade.png</file>
-        <file>images/bwupgrade@2x.png</file>
-        <file>images/bwupgrade@3x.png</file>
-        <file>images/card_border.png</file>
-        <file>images/card_border@2x.png</file>
-        <file>images/card_border@3x.png</file>
         <file>images/clear_ico.png</file>
         <file>images/clear_ico@2x.png</file>
         <file>images/clear_ico@3x.png</file>
@@ -98,9 +65,6 @@
         <file>images/download_fail_item_ico.png</file>
         <file>images/download_fail_item_ico@2x.png</file>
         <file>images/download_fail_item_ico@3x.png</file>
-        <file>images/download_from_mega_ico_white.png</file>
-        <file>images/download_from_mega_ico_white@2x.png</file>
-        <file>images/download_from_mega_ico_white@3x.png</file>
         <file>images/download_item_ico.png</file>
         <file>images/download_item_ico@2x.png</file>
         <file>images/download_item_ico@3x.png</file>
@@ -110,9 +74,6 @@
         <file>images/downloaded_item_ico.png</file>
         <file>images/downloaded_item_ico@2x.png</file>
         <file>images/downloaded_item_ico@3x.png</file>
-        <file>images/downloading.gif</file>
-        <file>images/downloading@2x.gif</file>
-        <file>images/downloading@3x.gif</file>
         <file>images/drag_3D.png</file>
         <file>images/drag_3D@2x.png</file>
         <file>images/drag_3D@3x.png</file>
@@ -236,35 +197,23 @@
         <file>images/full_sync_ico.png</file>
         <file>images/full_sync_ico@2x.png</file>
         <file>images/full_sync_ico@3x.png</file>
-        <file>images/get_link_ico.png</file>
-        <file>images/get_link_ico@2x.png</file>
-        <file>images/get_link_ico@3x.png</file>
-        <file>images/get_link_ico_white.png</file>
-        <file>images/get_link_ico_white@2x.png</file>
-        <file>images/get_link_ico_white@3x.png</file>
         <file>images/grey_folder.png</file>
         <file>images/grey_folder@2x.png</file>
         <file>images/grey_folder@3x.png</file>
         <file>images/help_ico.png</file>
         <file>images/help_ico@2x.png</file>
         <file>images/help_ico@3x.png</file>
+        <file>images/ico-cloud-drive.png</file>
+        <file>images/ico-cloud-drive@2x.png</file>
+        <file>images/ico-cloud-drive@3x.png</file>
         <file>images/ico_about_MEGA.png</file>
         <file>images/ico_about_MEGA@2x.png</file>
         <file>images/ico_about_MEGA@3x.png</file>
         <file>images/ico_about_MEGA_out@3x.png</file>
         <file>images/ico_about_MEGA_over@3x.png</file>
-        <file>images/ico_add_sync.png</file>
-        <file>images/ico_add_sync@2x.png</file>
-        <file>images/ico_add_sync@3x.png</file>
-        <file>images/ico_add_sync_folder.png</file>
         <file>images/ico_add_sync_folder.png</file>
         <file>images/ico_add_sync_folder@2x.png</file>
-        <file>images/ico_add_sync_folder@2x.png</file>
         <file>images/ico_add_sync_folder@3x.png</file>
-        <file>images/ico_add_sync_folder@3x.png</file>
-        <file>images/ico_cloud_drive.png</file>
-        <file>images/ico_cloud_drive@2x.png</file>
-        <file>images/ico_cloud_drive@3x.png</file>
         <file>images/ico_download.png</file>
         <file>images/ico_download@2x.png</file>
         <file>images/ico_download@3x.png</file>
@@ -295,9 +244,6 @@
         <file>images/ico_item_retry_greyed.png</file>
         <file>images/ico_item_retry_greyed@2x.png</file>
         <file>images/ico_item_retry_greyed@3x.png</file>
-        <file>images/ico_MEGA_website.png</file>
-        <file>images/ico_MEGA_website@2x.png</file>
-        <file>images/ico_MEGA_website@3x.png</file>
         <file>images/ico_MEGA_website_out@3x.png</file>
         <file>images/ico_MEGA_website_over@3x.png</file>
         <file>images/ico_menu_full.png</file>
@@ -355,9 +301,6 @@
         <file>images/ico_quit@3x.png</file>
         <file>images/ico_quit_out@3x.png</file>
         <file>images/ico_quit_over@3x.png</file>
-        <file>images/ico_resume_transfers_state.png</file>
-        <file>images/ico_resume_transfers_state@2x.png</file>
-        <file>images/ico_resume_transfers_state@3x.png</file>
         <file>images/ico_stream.png</file>
         <file>images/ico_stream@2x.png</file>
         <file>images/ico_stream@3x.png</file>
@@ -388,9 +331,6 @@
         <file>images/icon_question.png</file>
         <file>images/icon_question@2x.png</file>
         <file>images/icon_question@3x.png</file>
-        <file>images/icon_question_white.png</file>
-        <file>images/icon_question_white@2x.png</file>
-        <file>images/icon_question_white@3x.png</file>
         <file>images/icon_right_slide.png</file>
         <file>images/icon_right_slide@2x.png</file>
         <file>images/icon_right_slide@3x.png</file>
@@ -461,21 +401,12 @@
         <file>images/login_setup_step3.png</file>
         <file>images/login_setup_step3@2x.png</file>
         <file>images/login_setup_step3@3x.png</file>
-        <file>images/mbox-warning.png</file>
-        <file>images/mbox-warning@2x.png</file>
-        <file>images/mbox-warning@3x.png</file>
         <file>images/mega_notifications.png</file>
         <file>images/mega_notifications@2x.png</file>
         <file>images/mega_notifications@3x.png</file>
         <file>images/more_settings.png</file>
         <file>images/more_settings@2x.png</file>
         <file>images/more_settings@3x.png</file>
-        <file>images/Nav_Dot_active.png</file>
-        <file>images/Nav_Dot_active@2x.png</file>
-        <file>images/Nav_Dot_active@3x.png</file>
-        <file>images/Nav_Dot_inactive.png</file>
-        <file>images/Nav_Dot_inactive@2x.png</file>
-        <file>images/Nav_Dot_inactive@3x.png</file>
         <file>images/no_downloads.png</file>
         <file>images/no_downloads@2x.png</file>
         <file>images/no_downloads@3x.png</file>
@@ -510,9 +441,6 @@
         <file>images/play_ico.png</file>
         <file>images/play_ico@2x.png</file>
         <file>images/play_ico@3x.png</file>
-        <file>images/proxies_32.png</file>
-        <file>images/proxies_32@2x.png</file>
-        <file>images/proxies_32@3x.png</file>
         <file>images/resume.png</file>
         <file>images/resume@2x.png</file>
         <file>images/resume@3x.png</file>
@@ -525,9 +453,6 @@
         <file>images/selective_sync_ico.png</file>
         <file>images/selective_sync_ico@2x.png</file>
         <file>images/selective_sync_ico@3x.png</file>
-        <file>images/separator line.png</file>
-        <file>images/separator line@2x.png</file>
-        <file>images/separator line@3x.png</file>
         <file>images/setup_step1.png</file>
         <file>images/setup_step1@2x.png</file>
         <file>images/setup_step1@3x.png</file>
@@ -567,9 +492,6 @@
         <file>images/small_cad.png</file>
         <file>images/small_cad@2x.png</file>
         <file>images/small_cad@3x.png</file>
-        <file>images/small_camera_sync.png</file>
-        <file>images/small_camera_sync@2x.png</file>
-        <file>images/small_camera_sync@3x.png</file>
         <file>images/small_compressed.png</file>
         <file>images/small_compressed@2x.png</file>
         <file>images/small_compressed@3x.png</file>
@@ -585,15 +507,6 @@
         <file>images/small_experiencedesign.png</file>
         <file>images/small_experiencedesign@2x.png</file>
         <file>images/small_experiencedesign@3x.png</file>
-        <file>images/small_folder.png</file>
-        <file>images/small_folder@2x.png</file>
-        <file>images/small_folder@3x.png</file>
-        <file>images/small_folder_incoming.png</file>
-        <file>images/small_folder_incoming@2x.png</file>
-        <file>images/small_folder_incoming@3x.png</file>
-        <file>images/small_folder_outgoing.png</file>
-        <file>images/small_folder_outgoing@2x.png</file>
-        <file>images/small_folder_outgoing@3x.png</file>
         <file>images/small_font.png</file>
         <file>images/small_font@2x.png</file>
         <file>images/small_font@3x.png</file>
@@ -669,9 +582,6 @@
         <file>images/step_4_selective_sync.png</file>
         <file>images/step_4_selective_sync@2x.png</file>
         <file>images/step_4_selective_sync@3x.png</file>
-        <file>images/storage.png</file>
-        <file>images/storage@2x.png</file>
-        <file>images/storage@3x.png</file>
         <file>images/storage_almost_full.png</file>
         <file>images/storage_almost_full@2x.png</file>
         <file>images/storage_almost_full@3x.png</file>
@@ -702,25 +612,13 @@
         <file>images/streaming_on_icon.png</file>
         <file>images/streaming_on_icon@2x.png</file>
         <file>images/streaming_on_icon@3x.png</file>
-        <file>images/strong_mark.png</file>
-        <file>images/strong_mark@2x.png</file>
-        <file>images/strong_mark@3x.png</file>
         <file>images/success.png</file>
         <file>images/success@2x.png</file>
         <file>images/success@3x.png</file>
         <file>images/sync_item_ico.png</file>
         <file>images/sync_item_ico@2x.png</file>
         <file>images/sync_item_ico@3x.png</file>
-        <file>images/synching.gif</file>
         <file>images/synching.svg</file>
-        <file>images/synching@2x.gif</file>
-        <file>images/synching@3x.gif</file>
-        <file>images/takedown.png</file>
-        <file>images/takedown@2x.png</file>
-        <file>images/takedown@3x.png</file>
-        <file>images/takedown_padding.png</file>
-        <file>images/takedown_padding@2x.png</file>
-        <file>images/takedown_padding@3x.png</file>
         <file>images/transfer_empty_100.png</file>
         <file>images/transfer_empty_100@2x.png</file>
         <file>images/transfer_empty_100@3x.png</file>
@@ -739,9 +637,6 @@
         <file>images/tray_preferences_ico.png</file>
         <file>images/tray_preferences_ico@2x.png</file>
         <file>images/tray_preferences_ico@3x.png</file>
-        <file>images/tray_transfer_manager_ico.png</file>
-        <file>images/tray_transfer_manager_ico@2x.png</file>
-        <file>images/tray_transfer_manager_ico@3x.png</file>
         <file>images/upload_fail_item_ico.png</file>
         <file>images/upload_fail_item_ico@2x.png</file>
         <file>images/upload_fail_item_ico@3x.png</file>
@@ -757,9 +652,6 @@
         <file>images/uploaded_item_ico.png</file>
         <file>images/uploaded_item_ico@2x.png</file>
         <file>images/uploaded_item_ico@3x.png</file>
-        <file>images/uploading.gif</file>
-        <file>images/uploading@2x.gif</file>
-        <file>images/uploading@3x.gif</file>
         <file>images/uptodate.svg</file>
         <file>images/warning.svg</file>
         <file>translations/MEGASyncStrings_ar.qm</file>
@@ -786,18 +678,6 @@
         <file>images/Folder@3x.png</file>
         <file>images/File_download_succeed@3x.png</file>
         <file>images/Failed_to_download@3x.png</file>
-        <file>images/ic_options.png</file>
-        <file>images/ic_options@2x.png</file>
-        <file>images/ic_options@3x.png</file>
-        <file>images/ic_sync_warning.png</file>
-        <file>images/ic_sync_warning@2x.png</file>
-        <file>images/ic_sync_warning@3x.png</file>
-        <file>images/ic_two_way_sync.png</file>
-        <file>images/ic_two_way_sync@2x.png</file>
-        <file>images/ic_two_way_sync@3x.png</file>
-        <file>images/ic_options_hover.png</file>
-        <file>images/ic_options_hover@3x.png</file>
-        <file>images/ic_options_hover@2x.png</file>
         <file>images/ic_sync_warning.png</file>
         <file>images/ic_sync_warning@2x.png</file>
         <file>images/ic_sync_warning@3x.png</file>
@@ -828,9 +708,6 @@
         <file>images/warning-disabled-syncs.png</file>
         <file>images/warning-disabled-syncs@2x.png</file>
         <file>images/warning-disabled-syncs@3x.png</file>
-        <file>images/Icon_Win_Imports.png</file>
-        <file>images/Icon_Win_Imports@2x.png</file>
-        <file>images/Icon_Win_Imports@3x.png</file>
         <file>images/settings-syncs-warn.png</file>
         <file>images/settings-syncs-warn@3x.png</file>
         <file>images/settings-syncs-warn@2x.png</file>
@@ -855,6 +732,9 @@
         <file>images/Small_Pro_III.png</file>
         <file>images/Small_Pro_III@2x.png</file>
         <file>images/Small_Pro_III@3x.png</file>
+        <file>images/Small_Business.png</file>
+        <file>images/Small_Business@2x.png</file>
+        <file>images/Small_Business@3x.png</file>
         <file>images/megasync_logo.png</file>
         <file>images/megasync_logo@3x.png</file>
         <file>images/megasync_logo@2x.png</file>
@@ -864,15 +744,6 @@
         <file>images/ico_open_MEGA.png</file>
         <file>images/ico_open_MEGA@2x.png</file>
         <file>images/ico_open_MEGA@3x.png</file>
-        <file>images/Item_sync_press.png</file>
-        <file>images/Item_sync_press@2x.png</file>
-        <file>images/Item_sync_press@3x.png</file>
-        <file>images/Item_sync_rest.png</file>
-        <file>images/Item_sync_rest@2x.png</file>
-        <file>images/Item_sync_rest@3x.png</file>
-        <file>images/Item_options_hover.png</file>
-        <file>images/Item_options_hover@2x.png</file>
-        <file>images/Item_options_hover@3x.png</file>
         <file>images/Item_options_rest.png</file>
         <file>images/Item_options_rest@2x.png</file>
         <file>images/Item_options_rest@3x.png</file>
@@ -882,5 +753,125 @@
         <file>images/show_in_folder_ico.png</file>
         <file>images/show_in_folder_ico@2x.png</file>
         <file>images/show_in_folder_ico@3x.png</file>
+        <file>images/settings-folders.png</file>
+        <file>images/settings-folders@3x.png</file>
+        <file>images/settings-folders@2x.png</file>
+        <file>images/ico_dialog_check.png</file>
+        <file>images/ico_dialog_check@2x.png</file>
+        <file>images/ico_dialog_check@3x.png</file>
+        <file>images/ico_dialog_check_green.png</file>
+        <file>images/ico_dialog_check_green@2x.png</file>
+        <file>images/ico_dialog_check_green@3x.png</file>
+        <file>images/ico_info_rest.png</file>
+        <file>images/ico_info_rest@2x.png</file>
+        <file>images/ico_info_rest@3x.png</file>
+        <file>images/ico_info_hover.png</file>
+        <file>images/ico_info_hover@2x.png</file>
+        <file>images/ico_info_hover@3x.png</file>
+        <file>images/ico_question_hover.png</file>
+        <file>images/ico_question_hover@2x.png</file>
+        <file>images/ico_question_hover@3x.png</file>
+        <file>images/ico_question_rest.png</file>
+        <file>images/ico_question_rest@2x.png</file>
+        <file>images/ico_question_rest@3x.png</file>
+        <file>animations/full-transfer.gif</file>
+        <file>animations/full-transfer@2x.gif</file>
+        <file>animations/full-transfer@3x.gif</file>
+        <file>animations/full-storage@3x.gif</file>
+        <file>animations/full-storage@2x.gif</file>
+        <file>animations/full-storage.gif</file>
+        <file>animations/uploading@3x.gif</file>
+        <file>animations/uploading@2x.gif</file>
+        <file>animations/uploading.gif</file>
+        <file>animations/synching@3x.gif</file>
+        <file>animations/synching@2x.gif</file>
+        <file>animations/synching.gif</file>
+        <file>animations/downloading@3x.gif</file>
+        <file>animations/downloading@2x.gif</file>
+        <file>animations/downloading.gif</file>
+        <file>images/Icon_Small_Backups@3x.png</file>
+        <file>images/Icon_Small_Backups@2x.png</file>
+        <file>images/Icon_Small_Backups.png</file>
+        <file>images/node_selector/Icon-Small-Arrow-Down.png</file>
+        <file>images/node_selector/Icon-Small-Arrow-Down@2x.png</file>
+        <file>images/node_selector/Icon-Small-Arrow-Down@3x.png</file>
+        <file>images/node_selector/Icon-Small-Arrow-Down-hover.png</file>
+        <file>images/node_selector/Icon-Small-Arrow-Down-hover@2x.png</file>
+        <file>images/node_selector/Icon-Small-Arrow-Down-hover@3x.png</file>
+        <file>images/node_selector/Icon-Small-Arrow-Left.png</file>
+        <file>images/node_selector/Icon-Small-Arrow-Left@2x.png</file>
+        <file>images/node_selector/Icon-Small-Arrow-Left@3x.png</file>
+        <file>images/node_selector/Icon-Small-Arrow-Left-hover.png</file>
+        <file>images/node_selector/Icon-Small-Arrow-Left-hover@2x.png</file>
+        <file>images/node_selector/Icon-Small-Arrow-Left-hover@3x.png</file>
+        <file>images/Icon_Win_Notifications.png</file>
+        <file>images/Icon_Win_Notifications@2x.png</file>
+        <file>images/Icon_Win_Notifications@3x.png</file>
+        <file>images/Switches/switch_checked_down.svg</file>
+        <file>images/Switches/switch_checked_hover.svg</file>
+        <file>images/Switches/switch_checked_rest.svg</file>
+        <file>images/Switches/switch_unchecked_down.svg</file>
+        <file>images/Switches/switch_unchecked_hover.svg</file>
+        <file>images/Switches/switch_unchecked_rest.svg</file>
+        <file>images/node_selector/arrow-left-disabled-ico.png</file>
+        <file>images/node_selector/arrow-left-disabled-ico@2x.png</file>
+        <file>images/node_selector/arrow-left-disabled-ico@3x.png</file>
+        <file>images/node_selector/arrow-left-ico.png</file>
+        <file>images/node_selector/arrow-left-ico@2x.png</file>
+        <file>images/node_selector/arrow-left-ico@3x.png</file>
+        <file>images/node_selector/arrow-right-disabled-ico.png</file>
+        <file>images/node_selector/arrow-right-disabled-ico@2x.png</file>
+        <file>images/node_selector/arrow-right-disabled-ico@3x.png</file>
+        <file>images/node_selector/arrow-right-ico.png</file>
+        <file>images/node_selector/arrow-right-ico@2x.png</file>
+        <file>images/node_selector/arrow-right-ico@3x.png</file>
+        <file>images/node_selector/icon-small-MEGA.png</file>
+        <file>images/node_selector/icon-small-MEGA@2x.png</file>
+        <file>images/node_selector/icon-small-MEGA@3x.png</file>
+        <file>images/node_selector/icon-small-sync-disabled.png</file>
+        <file>images/node_selector/icon-small-sync-disabled@2x.png</file>
+        <file>images/node_selector/icon-small-sync-disabled@3x.png</file>
+        <file>images/node_selector/small-camera-sync.png</file>
+        <file>images/node_selector/small-camera-sync@2x.png</file>
+        <file>images/node_selector/small-camera-sync@3x.png</file>
+        <file>images/node_selector/small-chat-files.png</file>
+        <file>images/node_selector/small-chat-files@2x.png</file>
+        <file>images/node_selector/small-chat-files@3x.png</file>
+        <file>images/node_selector/small-chat-files-disabled.png</file>
+        <file>images/node_selector/small-chat-files-disabled@2x.png</file>
+        <file>images/node_selector/small-chat-files-disabled@3x.png</file>
+        <file>images/node_selector/small-folder.png</file>
+        <file>images/node_selector/small-folder@2x.png</file>
+        <file>images/node_selector/small-folder@3x.png</file>
+        <file>images/node_selector/small-folder-camera-sync-disabled.png</file>
+        <file>images/node_selector/small-folder-camera-sync-disabled@2x.png</file>
+        <file>images/node_selector/small-folder-camera-sync-disabled@3x.png</file>
+        <file>images/node_selector/small-folder-incoming.png</file>
+        <file>images/node_selector/small-folder-incoming@2x.png</file>
+        <file>images/node_selector/small-folder-incoming@3x.png</file>
+        <file>images/node_selector/small-folder-incoming-disabled.png</file>
+        <file>images/node_selector/small-folder-incoming-disabled@2x.png</file>
+        <file>images/node_selector/small-folder-incoming-disabled@3x.png</file>
+        <file>images/node_selector/small-folder-outgoing.png</file>
+        <file>images/node_selector/small-folder-outgoing@2x.png</file>
+        <file>images/node_selector/small-folder-outgoing@3x.png</file>
+        <file>images/Item-sync-rest@3x.png</file>
+        <file>images/Item-sync-press.png</file>
+        <file>images/Item-sync-press@2x.png</file>
+        <file>images/Item-sync-press@3x.png</file>
+        <file>images/Item-sync-rest.png</file>
+        <file>images/Item-sync-rest@2x.png</file>
+        <file>images/password/ico_eye_reveal@3x.png</file>
+        <file>images/password/ico_eye_reveal@2x.png</file>
+        <file>images/password/ico_eye_reveal.png</file>
+        <file>images/password/ico_eye_hide@3x.png</file>
+        <file>images/password/ico_eye_hide@2x.png</file>
+        <file>images/password/ico_eye_hide.png</file>
+        <file>images/password/ico_eye_hide_disabled.png</file>
+        <file>images/password/ico_eye_hide_disabled@2x.png</file>
+        <file>images/password/ico_eye_hide_disabled@3x.png</file>
+        <file>images/password/ico_eye_reveal_disabled.png</file>
+        <file>images/password/ico_eye_reveal_disabled@2x.png</file>
+        <file>images/password/ico_eye_reveal_disabled@3x.png</file>
     </qresource>
 </RCC>

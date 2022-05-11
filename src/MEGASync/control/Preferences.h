@@ -2,7 +2,6 @@
 #define PREFERENCES_H
 
 #include <iostream>
-#include <QString>
 #include <QLocale>
 #include <QStringList>
 #include <QMutex>
@@ -11,9 +10,9 @@
 #include "control/EncryptedSettings.h"
 #include "model/Model.h"
 #include <assert.h>
-#include <memory>
 #include "megaapi.h"
 #include <chrono>
+#include <type_traits>
 
 Q_DECLARE_METATYPE(QList<long long>)
 
@@ -28,15 +27,15 @@ signals:
     void updated(int lastVersion);
 
 private:
-    static Preferences *preferences;
-
     Preferences();
 
     std::map<QString, QVariant> cache;
 
 public:
     //NOT thread-safe. Must be called before creating threads.
-    static Preferences *instance();
+    static std::shared_ptr<Preferences> instance();
+    Preferences(const Preferences&) = delete;
+    Preferences& operator=(const Preferences&) = delete;
     void initialize(QString dataPath);
     void setEmailAndGeneralSettings(const QString &email);
 
@@ -142,6 +141,35 @@ public:
     int getBlockedState();
     void setBlockedState(int value);
 
+    //**** Notifications ****/
+    enum class NotificationsTypes
+    {
+        GENERAL_SWITCH_NOTIFICATIONS = 0,
+        NEW_FOLDERS_SHARED_WITH_ME,
+        NODES_SHARED_WITH_ME_CREATED_OR_REMOVED,
+        FOLDERS_SHARED_WITH_ME_DELETED,
+        NEW_CONTACT_REQUESTS,
+        PENDING_CONTACT_REQUEST_REMINDER,
+        CONTACT_ESTABLISHED,
+        INFO_MESSAGES,
+        LAST
+    };
+    Q_ENUM(NotificationsTypes)
+
+    static constexpr std::underlying_type<NotificationsTypes>::type
+        notificationsTypeUT(NotificationsTypes type) noexcept{
+        return static_cast<std::underlying_type<NotificationsTypes>::type>(type);
+    }
+
+    bool isNotificationEnabled(NotificationsTypes type, bool includingGeneralSwitch = true);
+    bool isAnyNotificationEnabled(bool includingGeneralSwitch = true);
+    bool isGeneralSwitchNotificationsOn();
+    void enableNotifications(NotificationsTypes type, bool value);
+    void recoverDeprecatedNotificationsSettings();
+
+    static QString notificationsTypeToString(NotificationsTypes type);
+    //**** END OF Notifications ****/
+
     void setTemporalBandwidthValid(bool value);
     long long temporalBandwidth();
     void setTemporalBandwidth(long long value);
@@ -153,8 +181,6 @@ public:
     void setAccountType(int value);
     long long proExpirityTime();
     void setProExpirityTime(long long value);
-    bool showNotifications();
-    void setShowNotifications(bool value);
     bool startOnStartup();
     void setStartOnStartup(bool value);
     bool usingHttpsOnly();
@@ -256,6 +282,12 @@ public:
     void setUploadFolder(long long value);
     long long importFolder();
     void setImportFolder(long long value);
+
+    bool getImportMegaLinksEnabled();
+    void setImportMegaLinksEnabled(const bool value);
+
+    bool getDownloadMegaLinksEnabled();
+    void setDownloadMegaLinksEnabled(const bool value);
 
     bool neverCreateLink();
     void setNeverCreateLink(bool value);
@@ -425,6 +457,7 @@ public:
     static std::chrono::milliseconds OVER_QUOTA_ACTION_DIALOGS_DISABLE_TIME;
 
     static int STATE_REFRESH_INTERVAL_MS;
+    static int NETWORK_REFRESH_INTERVAL_MS;
     static int FINISHED_TRANSFER_REFRESH_INTERVAL_MS;
 
     static long long MIN_UPDATE_NOTIFICATION_INTERVAL_MS;
@@ -467,7 +500,7 @@ public:
     static const qint16 HTTP_PORT;
     static const qint16 HTTPS_PORT;
 
-    static QStringList HTTPS_ALLOWED_ORIGINS;
+    static const QStringList HTTPS_ALLOWED_ORIGINS;
     static bool HTTPS_ORIGIN_CHECK_ENABLED;
     static const QString FINDER_EXT_BUNDLE_ID;
     static QString BASE_URL;
@@ -506,7 +539,7 @@ protected:
     void cleanCache();
     void removeFromCache(const QString &key);
 
-    EncryptedSettings *settings;
+    std::unique_ptr<EncryptedSettings> mSettings;
 
     // sync configuration from old syncs
     QList<SyncData> oldSyncs;
@@ -586,7 +619,6 @@ protected:
     static const QString blockedStateQKey;
     static const QString accountTypeKey;
     static const QString proExpirityTimeKey;
-    static const QString showNotificationsKey;
     static const QString startOnStartupKey;
     static const QString languageKey;
     static const QString updateAutomaticallyKey;
@@ -671,8 +703,16 @@ protected:
     static const QString disabledSyncsKey;
     static const QString neverCreateLinkKey;
     static const QString notifyDisabledSyncsKey;
+    static const QString importMegaLinksEnabledKey;
+    static const QString downloadMegaLinksEnabledKey;
 
+    //Notifications Default value
     static const bool defaultShowNotifications;
+
+    //Only for retrocompatibility purposes
+    static const QString showDeprecatedNotificationsKey;
+    static const bool defaultDeprecatedNotifications;
+
     static const bool defaultStartOnStartup;
     static const bool defaultUpdateAutomatically;
     static const int  defaultUploadLimitKB;
@@ -709,6 +749,8 @@ protected:
     static const int defaultAccountStatus;
     static const bool defaultNeedsFetchNodes;
     static const bool defaultNeverCreateLink;
+    static const bool defaultImportMegaLinksEnabled;
+    static const bool defaultDownloadMegaLinksEnabled;
 };
 
 #endif // PREFERENCES_H

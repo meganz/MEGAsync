@@ -49,7 +49,6 @@ public:
     static QByteArray getLocalStorageKey();
     static QString getDefaultOpenApp(QString extension);
     static void enableDialogBlur(QDialog *dialog);
-    static void activateBackgroundWindow(QDialog *window);
     static bool registerUpdateJob();
     static void execBackgroundWindow(QDialog *window);
     static void uninstall();
@@ -62,6 +61,7 @@ public:
 
     static const char* settingsString;
     static const char* exitString;
+    static const char* fileExplorerString;
 
 private:
     static void disableSignalHandler();

@@ -1,8 +1,16 @@
 QT       += network
 
 SOURCES += $$PWD/SettingsDialog.cpp \
+    $$PWD/BalloonToolTip.cpp \
+    $$PWD/MegaItemDelegates.cpp \
+    $$PWD/EventHelper.cpp \
     $$PWD/InfoDialog.cpp \
+    $$PWD/MegaItemProxyModel.cpp \
+    $$PWD/MegaItemTreeView.cpp \
+    $$PWD/NotificationsSettings.cpp \
     $$PWD/OverQuotaDialog.cpp \
+    $$PWD/QtPositioningBugFixer.cpp \
+    $$PWD/PasswordLineEdit.cpp \
     $$PWD/SetupWizard.cpp \
     $$PWD/NodeSelector.cpp \
     $$PWD/FolderBinder.cpp \
@@ -17,13 +25,12 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/AccountDetailsDialog.cpp \
     $$PWD/DownloadFromMegaDialog.cpp \
     $$PWD/UsageWidget.cpp \
-    $$PWD/QMegaModel.cpp \
+    $$PWD/MegaItemModel.cpp \
     $$PWD/MegaItem.cpp \
     $$PWD/ChangeLogDialog.cpp \
     $$PWD/GuestWidget.cpp \
     $$PWD/StreamingFromMegaDialog.cpp \
     $$PWD/MegaProgressCustomDialog.cpp \
-    $$PWD/ConfirmSSLexception.cpp \
     $$PWD/UpgradeDialog.cpp \
     $$PWD/PlanWidget.cpp \
     $$PWD/InfoWizard.cpp \
@@ -65,15 +72,26 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/FilterAlertWidget.cpp \
     $$PWD/AlertFilterType.cpp \
     $$PWD/BugReportDialog.cpp \
+    $$PWD/UserAttributesRequests.cpp \
     $$PWD/VerifyLockMessage.cpp \
     $$PWD/MegaInfoMessage.cpp \
     $$PWD/WaitingSpinnerWidget.cpp \
     $$PWD/ProxySettings.cpp \
-    $$PWD/BandwidthSettings.cpp
+    $$PWD/BandwidthSettings.cpp \
+    $$PWD/SwitchButton.cpp \
+    $$PWD/GuiUtilities.cpp
 
 HEADERS  += $$PWD/SettingsDialog.h \
+    $$PWD/BalloonToolTip.h \
+    $$PWD/MegaItemDelegates.h \
+    $$PWD/EventHelper.h \
     $$PWD/InfoDialog.h \
+    $$PWD/MegaItemProxyModel.h \
+    $$PWD/MegaItemTreeView.h \
+    $$PWD/NotificationsSettings.h \
     $$PWD/OverQuotaDialog.h \
+    $$PWD/QtPositioningBugFixer.h \
+    $$PWD/PasswordLineEdit.h \
     $$PWD/SetupWizard.h \
     $$PWD/NodeSelector.h \
     $$PWD/FolderBinder.h \
@@ -88,13 +106,12 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/AccountDetailsDialog.h \
     $$PWD/DownloadFromMegaDialog.h \
     $$PWD/UsageWidget.h \
-    $$PWD/QMegaModel.h \
+    $$PWD/MegaItemModel.h \
     $$PWD/MegaItem.h \
     $$PWD/ChangeLogDialog.h \
     $$PWD/GuestWidget.h \
     $$PWD/StreamingFromMegaDialog.h \
     $$PWD/MegaProgressCustomDialog.h \
-    $$PWD/ConfirmSSLexception.h \
     $$PWD/UpgradeDialog.h \
     $$PWD/PlanWidget.h \
     $$PWD/InfoWizard.h \
@@ -136,11 +153,14 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/FilterAlertWidget.h \
     $$PWD/AlertFilterType.h \
     $$PWD/BugReportDialog.h \
+    $$PWD/UserAttributesRequests.h \
     $$PWD/VerifyLockMessage.h \
     $$PWD/MegaInfoMessage.h \
     $$PWD/WaitingSpinnerWidget.h \
     $$PWD/ProxySettings.h \
-    $$PWD/BandwidthSettings.h
+    $$PWD/BandwidthSettings.h \
+    $$PWD/SwitchButton.h \
+    $$PWD/GuiUtilities.h
 
 INCLUDEPATH += $$PWD
 
@@ -168,7 +188,6 @@ win32 {
                 $$PWD/win/ChangeLogDialog.ui \
                 $$PWD/win/GuestWidget.ui \
                 $$PWD/win/StreamingFromMegaDialog.ui \
-                $$PWD/win/ConfirmSSLexception.ui \
                 $$PWD/win/MegaProgressCustomDialog.ui \
                 $$PWD/win/PlanWidget.ui \
                 $$PWD/win/UpgradeDialog.ui \
@@ -196,11 +215,11 @@ win32 {
                 $$PWD/win/LockedPopOver.ui \
                 $$PWD/win/VerifyLockMessage.ui \
                 $$PWD/win/MegaInfoMessage.ui \
-                $$PWD/win/DynamicTransferQuotaPopOver.ui \
                 $$PWD/win/OverQuotaDialog.ui \
                 $$PWD/win/ProxySettings.ui \
                 $$PWD/win/BandwidthSettings.ui \
-                $$PWD/win/NewFolderDialog.ui
+                $$PWD/win/NewFolderDialog.ui \
+                $$PWD/win/NotificationsSettings.ui
 }
 
 macx {
@@ -225,7 +244,6 @@ macx {
                 $$PWD/macx/PermissionsDialog.ui \
                 $$PWD/macx/PermissionsWidget.ui \
                 $$PWD/macx/MegaProgressCustomDialog.ui \
-                $$PWD/macx/ConfirmSSLexception.ui \
                 $$PWD/macx/PlanWidget.ui \
                 $$PWD/macx/UpgradeDialog.ui \
                 $$PWD/macx/InfoWizard.ui \
@@ -253,11 +271,11 @@ macx {
                 $$PWD/macx/LockedPopOver.ui \
                 $$PWD/macx/VerifyLockMessage.ui \
                 $$PWD/macx/MegaInfoMessage.ui \
-                $$PWD/macx/DynamicTransferQuotaPopOver.ui \
                 $$PWD/macx/OverQuotaDialog.ui \
                 $$PWD/macx/ProxySettings.ui \
                 $$PWD/macx/BandwidthSettings.ui \
-                $$PWD/macx/NewFolderDialog.ui
+                $$PWD/macx/NewFolderDialog.ui \
+                $$PWD/macx/NotificationsSettings.ui
 
     #Asset catalog need to load SF symbol images of toolbar items for custom NSToolbar
     QMAKE_ASSET_CATALOGS += $$PWD/images/Images.xcassets
@@ -265,11 +283,12 @@ macx {
     QT += macextras
 
     OBJECTIVE_SOURCES +=    $$PWD/CocoaHelpButton.mm \
+                            $$PWD/CocoaSwitchButton.mm \
                             $$PWD/MegaSystemTrayIcon.mm \
                             $$PWD/QMacSpinningProgressIndicator.mm \
                             $$PWD/QSegmentedControl.mm
 
-    HEADERS += $$PWD/CocoaHelpButton.h $$PWD/MegaSystemTrayIcon.h $$PWD/QSegmentedControl.h
+    HEADERS += $$PWD/CocoaHelpButton.h $$PWD/CocoaSwitchButton.h $$PWD/MegaSystemTrayIcon.h $$PWD/QSegmentedControl.h
 
     HEADERS += $$PWD/PermissionsDialog.h \
                $$PWD/PermissionsWidget.h \
@@ -278,10 +297,8 @@ macx {
                $$PWD/PermissionsWidget.cpp
 }
  else {
-    HEADERS += $$PWD/LockedPopOver.h \
-               $$PWD/DynamicTransferQuotaPopOver.h
-    SOURCES += $$PWD/LockedPopOver.cpp \
-               $$PWD/DynamicTransferQuotaPopOver.cpp
+    HEADERS += $$PWD/LockedPopOver.h
+    SOURCES += $$PWD/LockedPopOver.cpp
 }
 
 unix:!macx {
@@ -307,7 +324,6 @@ unix:!macx {
                 $$PWD/linux/PermissionsDialog.ui \
                 $$PWD/linux/PermissionsWidget.ui \
                 $$PWD/linux/MegaProgressCustomDialog.ui \
-                $$PWD/linux/ConfirmSSLexception.ui \
                 $$PWD/linux/PlanWidget.ui \
                 $$PWD/linux/UpgradeDialog.ui \
                 $$PWD/linux/InfoWizard.ui \
@@ -334,11 +350,11 @@ unix:!macx {
                 $$PWD/linux/LockedPopOver.ui \
                 $$PWD/linux/VerifyLockMessage.ui \
                 $$PWD/linux/MegaInfoMessage.ui \
-                $$PWD/linux/DynamicTransferQuotaPopOver.ui \
                 $$PWD/linux/OverQuotaDialog.ui \
                 $$PWD/linux/ProxySettings.ui \
                 $$PWD/linux/BandwidthSettings.ui \
-                $$PWD/linux/NewFolderDialog.ui
+                $$PWD/linux/NewFolderDialog.ui \
+                $$PWD/linux/NotificationsSettings.ui
 
     HEADERS += $$PWD/PermissionsDialog.h \
                $$PWD/PermissionsWidget.h

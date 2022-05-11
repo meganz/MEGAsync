@@ -54,7 +54,6 @@ height: 16px;
 #cImport, #cDownload
 {
 spacing: 10px;
-padding-left: 10px;
 }
 </string>
   </property>
@@ -127,16 +126,34 @@ padding-left: 10px;
        <number>9</number>
       </property>
       <item>
-       <widget class="QCheckBox" name="cDownload">
-        <property name="enabled">
-         <bool>true</bool>
-        </property>
-        <property name="text">
-         <string>Download to my computer</string>
-        </property>
-        <property name="checked">
-         <bool>true</bool>
-        </property>
+       <widget class="QWidget" name="widget_4" native="true">
+        <layout class="QHBoxLayout" name="horizontalLayout_5">
+         <property name="leftMargin">
+          <number>10</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
+         <item>
+          <widget class="QCheckBox" name="cDownload">
+           <property name="enabled">
+            <bool>true</bool>
+           </property>
+           <property name="text">
+            <string>Download to my computer</string>
+           </property>
+           <property name="checked">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </widget>
       </item>
       <item>
@@ -185,7 +202,7 @@ padding-left: 10px;
          <item>
           <widget class="QPushButton" name="bLocalFolder">
            <property name="sizePolicy">
-            <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+            <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
              <horstretch>0</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
@@ -202,13 +219,37 @@ padding-left: 10px;
        </widget>
       </item>
       <item>
-       <widget class="QCheckBox" name="cImport">
-        <property name="text">
-         <string>Import to my cloud drive</string>
+       <widget class="QWidget" name="widget_3" native="true">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>0</height>
+         </size>
         </property>
-        <property name="checked">
-         <bool>true</bool>
-        </property>
+        <layout class="QHBoxLayout" name="horizontalLayout_4">
+         <property name="leftMargin">
+          <number>10</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
+         <item>
+          <widget class="QCheckBox" name="cImport">
+           <property name="text">
+            <string>Import to my cloud drive</string>
+           </property>
+           <property name="checked">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </widget>
       </item>
       <item>

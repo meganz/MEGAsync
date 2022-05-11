@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string notr="true"/>
   </property>
   <property name="styleSheet">
    <string notr="true">#bSyncState, #bWarning
@@ -43,35 +43,7 @@
     <number>0</number>
    </property>
    <item>
-    <widget class="QPushButton" name="bSyncState">
-     <property name="minimumSize">
-      <size>
-       <width>16</width>
-       <height>16</height>
-      </size>
-     </property>
-     <property name="maximumSize">
-      <size>
-       <width>16</width>
-       <height>16</height>
-      </size>
-     </property>
-     <property name="cursor">
-      <cursorShape>PointingHandCursor</cursorShape>
-     </property>
-     <property name="iconSize">
-      <size>
-       <width>16</width>
-       <height>16</height>
-      </size>
-     </property>
-     <property name="flat">
-      <bool>true</bool>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QPushButton" name="bWarning">
+    <widget class="QLabel" name="lSyncState">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
        <horstretch>0</horstretch>
@@ -90,28 +62,12 @@
        <height>16</height>
       </size>
      </property>
-     <property name="text">
-      <string/>
-     </property>
-     <property name="icon">
-      <iconset resource="../Resources_macx.qrc">
-       <normaloff>:/images/ic_sync_warning.png</normaloff>:/images/ic_sync_warning.png</iconset>
-     </property>
-     <property name="iconSize">
-      <size>
-       <width>16</width>
-       <height>16</height>
-      </size>
-     </property>
-     <property name="flat">
-      <bool>true</bool>
-     </property>
     </widget>
    </item>
    <item>
     <widget class="QLabel" name="lSyncName">
      <property name="sizePolicy">
-      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+      <sizepolicy hsizetype="Ignored" vsizetype="Preferred">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
@@ -129,7 +85,7 @@
       </size>
      </property>
      <property name="text">
-      <string>asdfasdfasdf</string>
+      <string/>
      </property>
     </widget>
    </item>

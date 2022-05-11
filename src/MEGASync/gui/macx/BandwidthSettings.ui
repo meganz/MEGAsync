@@ -9,12 +9,50 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>599</width>
-    <height>384</height>
+    <width>658</width>
+    <height>463</height>
    </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>0</width>
+    <height>0</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>16777215</width>
+    <height>16777215</height>
+   </size>
   </property>
   <property name="windowTitle">
    <string>Bandwidth</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">#lUploadRateLimitDesc, #lDownloadRateLimitDesc, #lNumberOfTCPconnections
+{
+  color: #242424;
+  font-family: &quot;SF Pro Text&quot;;
+  font-size: 13px;
+}
+
+#lUseHttps
+{
+  color: #666666;
+  font-family: &quot;SF Pro Text&quot;;
+  font-size: 11px;
+}
+
+#wSeparatorBandwidthBottom, #wSeparatorRateLimits, #wSeparatorTCPconnections
+{
+margin-left: 32px;
+margin-right: 32px;
+}
+
+#lNumberOfTCPconnections
+{
+margin-bottom: 8px;
+}</string>
   </property>
   <property name="modal">
    <bool>true</bool>
@@ -22,6 +60,12 @@
   <layout class="QVBoxLayout" name="verticalLayout">
    <property name="sizeConstraint">
     <enum>QLayout::SetFixedSize</enum>
+   </property>
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
    </property>
    <property name="bottomMargin">
     <number>12</number>
@@ -53,6 +97,9 @@
          </size>
         </property>
         <layout class="QHBoxLayout" name="horizontalLayout">
+         <property name="spacing">
+          <number>5</number>
+         </property>
          <property name="leftMargin">
           <number>0</number>
          </property>
@@ -69,22 +116,22 @@
           <widget class="QWidget" name="wLeftUploadRate" native="true">
            <property name="minimumSize">
             <size>
-             <width>203</width>
+             <width>225</width>
              <height>0</height>
             </size>
            </property>
            <property name="maximumSize">
             <size>
-             <width>203</width>
+             <width>225</width>
              <height>16777215</height>
             </size>
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_32">
             <property name="leftMargin">
-             <number>0</number>
+             <number>32</number>
             </property>
             <property name="topMargin">
-             <number>6</number>
+             <number>0</number>
             </property>
             <property name="rightMargin">
              <number>0</number>
@@ -95,7 +142,7 @@
             <item>
              <widget class="QLabel" name="lUploadRateLimitDesc">
               <property name="focusPolicy">
-               <enum>Qt::StrongFocus</enum>
+               <enum>Qt::NoFocus</enum>
               </property>
               <property name="styleSheet">
                <string notr="true"/>
@@ -130,7 +177,7 @@
              <number>0</number>
             </property>
             <property name="rightMargin">
-             <number>0</number>
+             <number>32</number>
             </property>
             <property name="bottomMargin">
              <number>0</number>
@@ -156,6 +203,9 @@
                <string notr="true"/>
               </property>
               <layout class="QFormLayout" name="formLayout">
+               <property name="sizeConstraint">
+                <enum>QLayout::SetDefaultConstraint</enum>
+               </property>
                <property name="fieldGrowthPolicy">
                 <enum>QFormLayout::FieldsStayAtSizeHint</enum>
                </property>
@@ -196,7 +246,7 @@
                  </property>
                  <property name="minimumSize">
                   <size>
-                   <width>0</width>
+                   <width>100</width>
                    <height>0</height>
                   </size>
                  </property>
@@ -230,7 +280,7 @@
                  </property>
                  <property name="minimumSize">
                   <size>
-                   <width>0</width>
+                   <width>240</width>
                    <height>0</height>
                   </size>
                  </property>
@@ -241,16 +291,19 @@
                   </size>
                  </property>
                  <property name="focusPolicy">
-                  <enum>Qt::StrongFocus</enum>
+                  <enum>Qt::NoFocus</enum>
                  </property>
                  <property name="styleSheet">
                   <string notr="true"/>
                  </property>
                  <property name="text">
-                  <string>(about 90% of the available bandwidth)</string>
+                  <string>(Max. 90% of available bandwidth)</string>
                  </property>
                  <property name="alignment">
                   <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+                 </property>
+                 <property name="wordWrap">
+                  <bool>false</bool>
                  </property>
                  <property name="indent">
                   <number>-1</number>
@@ -267,7 +320,7 @@
                  </property>
                  <property name="minimumSize">
                   <size>
-                   <width>90</width>
+                   <width>100</width>
                    <height>0</height>
                   </size>
                  </property>
@@ -281,7 +334,7 @@
                   <enum>Qt::StrongFocus</enum>
                  </property>
                  <property name="text">
-                  <string>Don't limit</string>
+                  <string>No limit</string>
                  </property>
                  <property name="checked">
                   <bool>false</bool>
@@ -383,7 +436,7 @@
                      </size>
                     </property>
                     <property name="focusPolicy">
-                     <enum>Qt::StrongFocus</enum>
+                     <enum>Qt::NoFocus</enum>
                     </property>
                     <property name="text">
                      <string>KB/s</string>
@@ -424,6 +477,9 @@
          </size>
         </property>
         <layout class="QHBoxLayout" name="horizontalLayout_18">
+         <property name="spacing">
+          <number>5</number>
+         </property>
          <property name="leftMargin">
           <number>0</number>
          </property>
@@ -440,13 +496,13 @@
           <widget class="QWidget" name="wLeftDownloadRate" native="true">
            <property name="minimumSize">
             <size>
-             <width>203</width>
+             <width>225</width>
              <height>0</height>
             </size>
            </property>
            <property name="maximumSize">
             <size>
-             <width>203</width>
+             <width>225</width>
              <height>16777215</height>
             </size>
            </property>
@@ -466,7 +522,7 @@
             <item>
              <widget class="QLabel" name="lDownloadRateLimitDesc">
               <property name="focusPolicy">
-               <enum>Qt::StrongFocus</enum>
+               <enum>Qt::NoFocus</enum>
               </property>
               <property name="styleSheet">
                <string notr="true"/>
@@ -561,7 +617,7 @@
                  </property>
                  <property name="minimumSize">
                   <size>
-                   <width>90</width>
+                   <width>100</width>
                    <height>0</height>
                   </size>
                  </property>
@@ -575,7 +631,7 @@
                   <enum>Qt::StrongFocus</enum>
                  </property>
                  <property name="text">
-                  <string>Don't limit</string>
+                  <string>No limit</string>
                  </property>
                  <property name="checked">
                   <bool>true</bool>
@@ -615,7 +671,7 @@
                      </sizepolicy>
                     </property>
                     <property name="focusPolicy">
-                     <enum>Qt::TabFocus</enum>
+                     <enum>Qt::StrongFocus</enum>
                     </property>
                     <property name="text">
                      <string>Limit to:</string>
@@ -674,7 +730,7 @@
                      </size>
                     </property>
                     <property name="focusPolicy">
-                     <enum>Qt::StrongFocus</enum>
+                     <enum>Qt::NoFocus</enum>
                     </property>
                     <property name="text">
                      <string>KB/s</string>
@@ -723,6 +779,9 @@
        <height>1</height>
       </size>
      </property>
+     <property name="styleSheet">
+      <string notr="true"/>
+     </property>
     </widget>
    </item>
    <item>
@@ -735,13 +794,13 @@
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout_21">
       <property name="spacing">
-       <number>13</number>
+       <number>5</number>
       </property>
       <property name="leftMargin">
        <number>0</number>
       </property>
       <property name="topMargin">
-       <number>0</number>
+       <number>5</number>
       </property>
       <property name="rightMargin">
        <number>0</number>
@@ -751,7 +810,19 @@
       </property>
       <item>
        <widget class="QWidget" name="wLeftTCPconnections" native="true">
-        <layout class="QVBoxLayout" name="verticalLayout_36">
+        <property name="minimumSize">
+         <size>
+          <width>225</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>225</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout_2">
          <property name="leftMargin">
           <number>0</number>
          </property>
@@ -764,7 +835,7 @@
          <property name="bottomMargin">
           <number>0</number>
          </property>
-         <item>
+         <item alignment="Qt::AlignRight">
           <widget class="QLabel" name="lNumberOfTCPconnections">
            <property name="minimumSize">
             <size>
@@ -778,8 +849,11 @@
              <height>16777215</height>
             </size>
            </property>
+           <property name="styleSheet">
+            <string notr="true"/>
+           </property>
            <property name="text">
-            <string>Number of parallel TCP connections per transfer:</string>
+            <string>Number of connections per transfer:</string>
            </property>
            <property name="alignment">
             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -829,10 +903,10 @@
            </property>
            <layout class="QHBoxLayout" name="horizontalLayout_20">
             <property name="spacing">
-             <number>12</number>
+             <number>24</number>
             </property>
             <property name="leftMargin">
-             <number>3</number>
+             <number>2</number>
             </property>
             <property name="topMargin">
              <number>0</number>
@@ -844,61 +918,109 @@
              <number>0</number>
             </property>
             <item>
-             <widget class="QLabel" name="lDownloadConnections">
-              <property name="text">
-               <string>Downloads</string>
-              </property>
+             <widget class="QWidget" name="wDownloadConnections" native="true">
+              <layout class="QHBoxLayout" name="horizontalLayout_3">
+               <property name="spacing">
+                <number>3</number>
+               </property>
+               <property name="leftMargin">
+                <number>0</number>
+               </property>
+               <property name="topMargin">
+                <number>0</number>
+               </property>
+               <property name="rightMargin">
+                <number>0</number>
+               </property>
+               <property name="bottomMargin">
+                <number>0</number>
+               </property>
+               <item alignment="Qt::AlignBottom">
+                <widget class="QLabel" name="lDownloadConnections">
+                 <property name="styleSheet">
+                  <string notr="true">margin-bottom: 5px;</string>
+                 </property>
+                 <property name="text">
+                  <string>Downloads:</string>
+                 </property>
+                </widget>
+               </item>
+               <item alignment="Qt::AlignBottom">
+                <widget class="QComboBox" name="eMaxDownloadConnections">
+                 <property name="minimumSize">
+                  <size>
+                   <width>50</width>
+                   <height>0</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>50</width>
+                   <height>16777215</height>
+                  </size>
+                 </property>
+                 <property name="focusPolicy">
+                  <enum>Qt::StrongFocus</enum>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true"/>
+                 </property>
+                </widget>
+               </item>
+              </layout>
              </widget>
             </item>
             <item>
-             <widget class="QSpinBox" name="eMaxDownloadConnections">
-              <property name="minimumSize">
-               <size>
-                <width>40</width>
-                <height>0</height>
-               </size>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignCenter</set>
-              </property>
-              <property name="minimum">
-               <number>1</number>
-              </property>
-              <property name="maximum">
-               <number>6</number>
-              </property>
-              <property name="value">
-               <number>4</number>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QLabel" name="lUploadConnections">
-              <property name="text">
-               <string>Uploads</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QSpinBox" name="eMaxUploadConnections">
-              <property name="minimumSize">
-               <size>
-                <width>40</width>
-                <height>0</height>
-               </size>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignCenter</set>
-              </property>
-              <property name="minimum">
-               <number>1</number>
-              </property>
-              <property name="maximum">
-               <number>6</number>
-              </property>
-              <property name="value">
-               <number>3</number>
-              </property>
+             <widget class="QWidget" name="wUploadConnections" native="true">
+              <layout class="QHBoxLayout" name="horizontalLayout_4">
+               <property name="spacing">
+                <number>3</number>
+               </property>
+               <property name="leftMargin">
+                <number>0</number>
+               </property>
+               <property name="topMargin">
+                <number>0</number>
+               </property>
+               <property name="rightMargin">
+                <number>0</number>
+               </property>
+               <property name="bottomMargin">
+                <number>0</number>
+               </property>
+               <item alignment="Qt::AlignBottom">
+                <widget class="QLabel" name="lUploadConnections">
+                 <property name="styleSheet">
+                  <string notr="true">margin-bottom: 5px;</string>
+                 </property>
+                 <property name="text">
+                  <string>Uploads:</string>
+                 </property>
+                </widget>
+               </item>
+               <item alignment="Qt::AlignBottom">
+                <widget class="QComboBox" name="eMaxUploadConnections">
+                 <property name="minimumSize">
+                  <size>
+                   <width>50</width>
+                   <height>0</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>50</width>
+                   <height>16777215</height>
+                  </size>
+                 </property>
+                 <property name="focusPolicy">
+                  <enum>Qt::StrongFocus</enum>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true"/>
+                 </property>
+                </widget>
+               </item>
+              </layout>
              </widget>
             </item>
             <item>
@@ -937,19 +1059,22 @@
        <height>1</height>
       </size>
      </property>
+     <property name="styleSheet">
+      <string notr="true"/>
+     </property>
     </widget>
    </item>
    <item>
     <widget class="QWidget" name="wDontHTTP" native="true">
      <layout class="QVBoxLayout" name="verticalLayout_37">
       <property name="leftMargin">
-       <number>220</number>
+       <number>235</number>
       </property>
       <property name="topMargin">
        <number>0</number>
       </property>
       <property name="rightMargin">
-       <number>0</number>
+       <number>32</number>
       </property>
       <property name="bottomMargin">
        <number>0</number>
@@ -962,6 +1087,9 @@
           <height>20</height>
          </size>
         </property>
+        <property name="focusPolicy">
+         <enum>Qt::StrongFocus</enum>
+        </property>
         <property name="styleSheet">
          <string notr="true"/>
         </property>
@@ -972,15 +1100,23 @@
       </item>
       <item>
        <widget class="QLabel" name="lUseHttps">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>16777215</height>
+         </size>
+        </property>
         <property name="styleSheet">
-         <string notr="true">#lUseHttps
-{
-margin-left: 0px;
-margin-right:0px;
-}</string>
+         <string notr="true"/>
         </property>
         <property name="text">
-         <string>Enable this option only if your transfers don't start. In normal circumstances HTTP is satisfactory as all transfers are already encrypted.</string>
+         <string>Enable this option only if your transfers don't start. Under normal circumstances, HTTP is satisfactory as all transfers are already encrypted by MEGA.</string>
         </property>
         <property name="wordWrap">
          <bool>true</bool>
@@ -1004,11 +1140,23 @@ margin-right:0px;
        <height>1</height>
       </size>
      </property>
+     <property name="styleSheet">
+      <string notr="true"/>
+     </property>
     </widget>
    </item>
    <item>
     <widget class="QWidget" name="buttonBox" native="true">
      <layout class="QHBoxLayout" name="horizontalLayout_2">
+      <property name="spacing">
+       <number>7</number>
+      </property>
+      <property name="leftMargin">
+       <number>32</number>
+      </property>
+      <property name="rightMargin">
+       <number>32</number>
+      </property>
       <item>
        <spacer name="horizontalSpacer_2">
         <property name="orientation">
@@ -1024,15 +1172,27 @@ margin-right:0px;
       </item>
       <item>
        <widget class="QPushButton" name="bCancel">
+        <property name="focusPolicy">
+         <enum>Qt::StrongFocus</enum>
+        </property>
         <property name="text">
          <string>Cancel</string>
+        </property>
+        <property name="autoDefault">
+         <bool>false</bool>
         </property>
        </widget>
       </item>
       <item>
        <widget class="QPushButton" name="bUpdate">
+        <property name="focusPolicy">
+         <enum>Qt::StrongFocus</enum>
+        </property>
         <property name="text">
          <string>Update</string>
+        </property>
+        <property name="autoDefault">
+         <bool>false</bool>
         </property>
         <property name="default">
          <bool>true</bool>
@@ -1044,6 +1204,25 @@ margin-right:0px;
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>rUploadAutoLimit</tabstop>
+  <tabstop>rUploadNoLimit</tabstop>
+  <tabstop>rUploadLimit</tabstop>
+  <tabstop>eUploadLimit</tabstop>
+  <tabstop>rDownloadNoLimit</tabstop>
+  <tabstop>rDownloadLimit</tabstop>
+  <tabstop>eDownloadLimit</tabstop>
+  <tabstop>eMaxDownloadConnections</tabstop>
+  <tabstop>eMaxUploadConnections</tabstop>
+  <tabstop>cbUseHttps</tabstop>
+  <tabstop>bCancel</tabstop>
+  <tabstop>bUpdate</tabstop>
+  <tabstop>lUploadRateLimitDesc</tabstop>
+  <tabstop>lUploadLimit</tabstop>
+  <tabstop>lDownloadRateLimitDesc</tabstop>
+  <tabstop>lUploadAutoLimit</tabstop>
+  <tabstop>lDownloadLimit</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

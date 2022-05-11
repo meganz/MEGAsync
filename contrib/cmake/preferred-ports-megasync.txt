@@ -1,13 +1,16 @@
+# cmake\vcpkg toolchain dependencies
+vcpkg-cmake-config/7375bb408f2278d2f1875c259beef93332697ba7
+vcpkg-cmake/7375bb408f2278d2f1875c259beef93332697ba7
 
 # direct core dependencies of the SDK
 c-ares/c303dd024e2dc03a0665ddffbb12a1077933e649
 cryptopp/c303dd024e2dc03a0665ddffbb12a1077933e649
-curl/c303dd024e2dc03a0665ddffbb12a1077933e649 all:curl-empty-bindir.patch
+curl/7375bb408f2278d2f1875c259beef93332697ba7
 libsodium/c303dd024e2dc03a0665ddffbb12a1077933e649
 openssl/c303dd024e2dc03a0665ddffbb12a1077933e649 osx:off
-openssl-unix/c303dd024e2dc03a0665ddffbb12a1077933e649 osx:off
-openssl-windows/c303dd024e2dc03a0665ddffbb12a1077933e649 osx:off
-pcre/c303dd024e2dc03a0665ddffbb12a1077933e649
+openssl-unix/c303dd024e2dc03a0665ddffbb12a1077933e649 all:off linux:on
+openssl-windows/c303dd024e2dc03a0665ddffbb12a1077933e649 all:off windows:on
+pcre/61b3046e513d189495ee37247e6cc550ee75e471
 sqlite3/c303dd024e2dc03a0665ddffbb12a1077933e649
 zlib/c303dd024e2dc03a0665ddffbb12a1077933e649
 libuv/c303dd024e2dc03a0665ddffbb12a1077933e649
@@ -17,24 +20,24 @@ libmediainfo/19.09
 libzen/0.4.37
 
 # ffmpeg (video preview/thumbnail generation)
-vcpkg-pkgconfig-get-modules/7179350f94ed5cafaf7c0ed9cffdca6adb6407a5
-ffmpeg/7179350f94ed5cafaf7c0ed9cffdca6adb6407a5 osx:ffmpeg-use-yasm.patch
+ffmpeg/c303dd024e2dc03a0665ddffbb12a1077933e649
 
-# freeimage and its dependencies (image preview/thumbnail generation)
-freeimage/c303dd024e2dc03a0665ddffbb12a1077933e649 all:freeimage-bool-typedef-and-xbm-msvc-compiler-bug.patch
-libpng/c303dd024e2dc03a0665ddffbb12a1077933e649
-libjpeg-turbo/c303dd024e2dc03a0665ddffbb12a1077933e649
-tiff/c303dd024e2dc03a0665ddffbb12a1077933e649
-openjpeg/c303dd024e2dc03a0665ddffbb12a1077933e649
-libwebp/c303dd024e2dc03a0665ddffbb12a1077933e649
-libraw/c303dd024e2dc03a0665ddffbb12a1077933e649
-jxrlib/c303dd024e2dc03a0665ddffbb12a1077933e649
-openexr/c303dd024e2dc03a0665ddffbb12a1077933e649 all:openexr-no-python.patch
-jasper/c303dd024e2dc03a0665ddffbb12a1077933e649 all:jasper-no-freeglut.patch
-liblzma/c303dd024e2dc03a0665ddffbb12a1077933e649
+#freeimage and its dependencies (image preview/thumbnail generation)
+freeimage/7375bb408f2278d2f1875c259beef93332697ba7 osx:freeimage-bool-typedef-xcode-compiler.patch
+libpng/7375bb408f2278d2f1875c259beef93332697ba7
+libjpeg-turbo/7375bb408f2278d2f1875c259beef93332697ba7
+tiff/7375bb408f2278d2f1875c259beef93332697ba7
+openjpeg/7375bb408f2278d2f1875c259beef93332697ba7
+libwebp/7375bb408f2278d2f1875c259beef93332697ba7 all:libwebp-no-freeglut-no-avx.patch
+libraw/7375bb408f2278d2f1875c259beef93332697ba7 ios:libraw-ios.patch
+jxrlib/7375bb408f2278d2f1875c259beef93332697ba7 ios:jxrlib-ios-guiddef-fix.patch
+openexr/7375bb408f2278d2f1875c259beef93332697ba7 ios:openexr-ios.patch
+jasper/7375bb408f2278d2f1875c259beef93332697ba7 all:jasper-no-freeglut.patch
+liblzma/7375bb408f2278d2f1875c259beef93332697ba7 ios:liblzma-ios.patch
 #python3 not needed; it only provides python bindings to use openexr from python
-libffi/7179350f94ed5cafaf7c0ed9cffdca6adb6407a5
-opengl/c303dd024e2dc03a0665ddffbb12a1077933e649
+libffi/7375bb408f2278d2f1875c259beef93332697ba7
+opengl/7375bb408f2278d2f1875c259beef93332697ba7
+#freeglut (cross platform window manager) not needed; problematic on some platforms, pulling in many, many dependencies
 
 # pdfium libraries, specific version for build stability  (preview/thumbnail generation for pdfs)
 # (see 3rdParty_deps.txt on instructions on how to get source)
@@ -43,16 +46,16 @@ pdfium/3710
 pdfium-freetype/2-8-73
 
 # dependencies of pdfium
-icu/7179350f94ed5cafaf7c0ed9cffdca6adb6407a5 osx:icu-enable-aarch64-osx.patch
+icu/c303dd024e2dc03a0665ddffbb12a1077933e649
 lcms/c303dd024e2dc03a0665ddffbb12a1077933e649
-libjpeg-turbo/c303dd024e2dc03a0665ddffbb12a1077933e649
-openjpeg/c303dd024e2dc03a0665ddffbb12a1077933e649
-libpng/c303dd024e2dc03a0665ddffbb12a1077933e649
+libjpeg-turbo/7375bb408f2278d2f1875c259beef93332697ba7
+openjpeg/7375bb408f2278d2f1875c259beef93332697ba7
+libpng/7375bb408f2278d2f1875c259beef93332697ba7
 bzip2/c303dd024e2dc03a0665ddffbb12a1077933e649
 
 # for the tests, just to get the build through
-gtest/c303dd024e2dc03a0665ddffbb12a1077933e649
+gtest/7375bb408f2278d2f1875c259beef93332697ba7
 readline/8.0 all:off osx:on
 
 # cryptopp with static CRT, for fully-static updater
-cryptopp-staticcrt/8.2.0 all:off win:on
+cryptopp-staticcrt/8.2.0 all:off windows:on

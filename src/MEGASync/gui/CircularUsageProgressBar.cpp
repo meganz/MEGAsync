@@ -233,14 +233,16 @@ void CircularUsageProgressBar::setState(STATE state)
     setValue(mPbValue);
 }
 
-void CircularUsageProgressBar::setEmptyBarTotalValueUnknown()
+void CircularUsageProgressBar::setTotalValueUnknown(bool isEmptyBar)
 {
-    setBarTotalValueUnkown(0, &mOkPbGradient);
-}
-
-void CircularUsageProgressBar::setFullBarTotalValueUnkown()
-{
-    setBarTotalValueUnkown(CircularUsageProgressBar::MAXVALUE, &mFullPbGradient);
+    if (isEmptyBar)
+    {
+        setBarTotalValueUnkown(0, &mOkPbGradient);
+    }
+    else
+    {
+        setBarTotalValueUnkown(CircularUsageProgressBar::MAXVALUE, &mFullPbGradient);
+    }
 }
 
 void CircularUsageProgressBar::setProgressBarGradient(QColor light, QColor dark)

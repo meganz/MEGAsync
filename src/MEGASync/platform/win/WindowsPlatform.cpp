@@ -1042,7 +1042,7 @@ QString WindowsPlatform::getDefaultOpenApp(QString extension)
     return QString();
 }
 
-void WindowsPlatform::enableDialogBlur(QDialog *dialog)
+void WindowsPlatform::enableDialogBlur(QDialog*)
 {
     // this feature doesn't work well yet
     return;
@@ -1090,28 +1090,6 @@ void WindowsPlatform::enableDialogBlur(QDialog *dialog)
     }
 #endif
 #endif
-}
-
-void WindowsPlatform::activateBackgroundWindow(QDialog *window)
-{
-    DWORD currentThreadId = GetCurrentThreadId();
-    DWORD foregroundThreadId = 0;
-    HWND foregroundWindow;
-    bool threadAttached = false;
-
-    if (QGuiApplication::applicationState() != Qt::ApplicationActive
-        && (foregroundWindow = GetForegroundWindow())
-        && (foregroundThreadId = GetWindowThreadProcessId(foregroundWindow, NULL))
-        && (foregroundThreadId != currentThreadId))
-    {
-        threadAttached = AttachThreadInput(foregroundThreadId, currentThreadId, TRUE);
-    }
-    window->showMinimized();
-    window->showNormal();
-    if (threadAttached)
-    {
-        AttachThreadInput(foregroundThreadId, currentThreadId, FALSE);
-    }
 }
 
 LPTSTR WindowsPlatform::getCurrentSid()
@@ -1545,3 +1523,4 @@ void ShellNotifier::notify(const std::string& path) const
 // Platform-specific strings
 const char* WindowsPlatform::settingsString {QT_TRANSLATE_NOOP("Platform", "Settings")};
 const char* WindowsPlatform::exitString {QT_TRANSLATE_NOOP("Platform", "Exit")};
+const char* WindowsPlatform::fileExplorerString {QT_TRANSLATE_NOOP("Platform", "Show in Explorer")};

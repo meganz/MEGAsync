@@ -76,7 +76,7 @@ void ActiveTransfersWidget::onTransferStart(mega::MegaApi *api, mega::MegaTransf
     updateTransferInfo(transfer);
 }
 
-void ActiveTransfersWidget::onTransferFinish(mega::MegaApi *api, mega::MegaTransfer *transfer, mega::MegaError *e)
+void ActiveTransfersWidget::onTransferFinish(mega::MegaApi* api, mega::MegaTransfer* transfer, mega::MegaError*)
 {
     if (transfer->isStreamingTransfer() || transfer->isFolderTransfer())
     {
@@ -107,7 +107,7 @@ void ActiveTransfersWidget::onTransferUpdate(mega::MegaApi *api, mega::MegaTrans
     updateTransferInfo(transfer);
 }
 
-void ActiveTransfersWidget::onTransferTemporaryError(mega::MegaApi *api, mega::MegaTransfer *transfer, mega::MegaError *e)
+void ActiveTransfersWidget::onTransferTemporaryError(mega::MegaApi*, mega::MegaTransfer*, mega::MegaError*)
 {
 
 }
@@ -426,16 +426,16 @@ void ActiveTransfersWidget::setType(TransferData *td, int type, bool isSyncTrans
             {
                 loadIconResourceUp = QPixmap(ratio < 2 ? QString::fromUtf8(":/images/cloud_upload_item_ico.png")
                                                            : QString::fromUtf8(":/images/cloud_upload_item_ico@2x.png"));
-                animationUp = new QMovie(ratio < 2 ? QString::fromUtf8(":/images/uploading.gif")
-                                                 : QString::fromUtf8(":/images/uploading@2x.gif"));
+                animationUp = new QMovie(ratio < 2 ? QString::fromUtf8(":/animations/uploading.gif")
+                                                 : QString::fromUtf8(":/animations/uploading@2x.gif"));
                 ui->bUpCancel->show();
             }
             else
             {
                 loadIconResourceUp = QPixmap(ratio < 2 ? QString::fromUtf8(":/images/sync_item_ico.png")
                                                            : QString::fromUtf8(":/images/sync_item_ico@2x.png"));
-                animationUp = new QMovie(ratio < 2 ? QString::fromUtf8(":/images/synching.gif")
-                                                 : QString::fromUtf8(":/images/synching@2x.gif"));
+                animationUp = new QMovie(ratio < 2 ? QString::fromUtf8(":/animations/synching.gif")
+                                                 : QString::fromUtf8(":/animations/synching@2x.gif"));
                 ui->bUpCancel->hide();
             }
             break;
@@ -446,8 +446,8 @@ void ActiveTransfersWidget::setType(TransferData *td, int type, bool isSyncTrans
             {
                 loadIconResourceDown = QPixmap(ratio < 2 ? QString::fromUtf8(":/images/cloud_download_item_ico.png")
                                                            : QString::fromUtf8(":/images/cloud_download_item_ico@2x.png"));
-                animationDown = new QMovie(ratio < 2 ? QString::fromUtf8(":/images/downloading.gif")
-                                                 : QString::fromUtf8(":/images/downloading@2x.gif"));
+                animationDown = new QMovie(ratio < 2 ? QString::fromUtf8(":/animations/downloading.gif")
+                                                 : QString::fromUtf8(":/animations/downloading@2x.gif"));
                 ui->bDownCancel->show();
 
             }
@@ -455,8 +455,8 @@ void ActiveTransfersWidget::setType(TransferData *td, int type, bool isSyncTrans
             {
                 loadIconResourceDown = QPixmap(ratio < 2 ? QString::fromUtf8(":/images/sync_item_ico.png")
                                                            : QString::fromUtf8(":/images/sync_item_ico@2x.png"));
-                animationDown = new QMovie(ratio < 2 ? QString::fromUtf8(":/images/synching.gif")
-                                                 : QString::fromUtf8(":/images/synching@2x.gif"));
+                animationDown = new QMovie(ratio < 2 ? QString::fromUtf8(":/animations/synching.gif")
+                                                 : QString::fromUtf8(":/animations/synching@2x.gif"));
                 ui->bDownCancel->hide();
 
             }
@@ -504,7 +504,7 @@ void ActiveTransfersWidget::updateTransferState(TransferData *td)
     QString remainingTimeString;
 
     // "- m - s"
-    static const auto undeterminedRemainingTimeString{QString::fromUtf8(
+    static const QString undeterminedRemainingTimeString{QString::fromUtf8(
                     "- <span style=\"color:#777777; text-decoration:none;\">m</span>"
                     " - <span style=\"color:#777777; text-decoration:none;\">s</span>"
                     )};
@@ -513,10 +513,10 @@ void ActiveTransfersWidget::updateTransferState(TransferData *td)
     case MegaTransfer::STATE_ACTIVE:
     {
         // The remaining time is considered infinite if remaining time value is the max possible.
-        const auto infiniteRemainingTime{td->remainingTimeSeconds.count()
+        const bool infiniteRemainingTime{td->remainingTimeSeconds.count()
                     && td->remainingTimeSeconds == td->remainingTimeSeconds.max()};
         // Test if the transfer will complete in less than 1 minute
-        const auto lowerThanMinute{td->remainingTimeSeconds.count()
+        const bool lowerThanMinute{td->remainingTimeSeconds.count()
                     && td->remainingTimeSeconds < std::chrono::minutes{1}};
 
         // Adapt time display according to remainig time
@@ -528,7 +528,7 @@ void ActiveTransfersWidget::updateTransferState(TransferData *td)
         else if(lowerThanMinute)
         {
             // If less than a minute, "1m"
-            static const auto lowerThanMinuteTimeString{QString::fromUtf8("%1 <span style=\"color:#777777; text-decoration:none;\">m</span>").arg(QString::fromUtf8("&lt; 1"))};
+            static const auto lowerThanMinuteTimeString = QString::fromUtf8("%1 <span style=\"color:#777777; text-decoration:none;\">m</span>").arg(QString::fromUtf8("&lt; 1"));
             remainingTimeString = lowerThanMinuteTimeString;
         }
         else if (td->remainingTimeSeconds.count())
@@ -552,7 +552,7 @@ void ActiveTransfersWidget::updateTransferState(TransferData *td)
     }
 
     // Update progress bar
-    unsigned int permil = (td->totalSize > 0) ? ((1000 * td->totalTransferredBytes) / td->totalSize) : 0;
+    unsigned int permil = (td->totalSize > 0) ? static_cast<unsigned int>((1000 * td->totalTransferredBytes) / td->totalSize) : 0;
     if (td->type == MegaTransfer::TYPE_DOWNLOAD)
     {
         ui->sDownloads->setCurrentWidget(ui->wActiveDownloads);

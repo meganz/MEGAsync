@@ -1,6 +1,12 @@
 #[[
     Run this file from its current folder in script mode, with triplet as a defined parameter:
-        cmake -DTRIPLET=<triplet> [-DTARGET=<target>[;<targets>...] ] -P build_from_scratch.cmake
+
+        cmake -DTRIPLET=<triplet> [-DEXTRA_ARGS=<-DVAR=VALUE>[;<-DVAR=VALUE...>] ] [-DTARGET=<target>[;<targets>...] ] -P build_from_scratch.cmake
+		
+	eg, for getting started on windows (comment out the pdfium lines in preferred-ports-megasync.txt first):
+	
+		cmake -DTRIPLET=x64-windows-mega -DEXTRA_ARGS="-DUSE_PDFIUM=0" -P build_from_scratch.cmake
+		
     It will set up and build 3rdparty in a folder next to the SDK repo, and also
     build the SDK against those 3rd party libraries.
     pdfium must be supplied manually, or it can be commented out in preferred-ports-megasync.txt
@@ -30,15 +36,29 @@ if(NOT TRIPLET)
     usage_exit("Triplet was not provided")
 endif()
 
+if(NOT EXTRA_ARGS)
+    set(_extra_cmake_args "")
+else()
+    set(_extra_cmake_args ${EXTRA_ARGS})
+endif()
+
+if(NOT MEGA_QT_VERSION)
+    set(MEGA_QT_VERSION 5.12.11)
+endif()
+
 set(_triplet ${TRIPLET})
 set(_app_dir "${_script_cwd}/../..")
 set(_sdk_dir "${_app_dir}/src/MEGASync/mega")
 
 message(STATUS "Building for triplet ${_triplet} with APP  ${_app_dir}  SDK ${_sdk_dir} ")
 
-set (_3rdparty_dir "${_app_dir}/../3rdparty_desktop")
-
-file(MAKE_DIRECTORY ${_3rdparty_dir})
+if (VCPKG_PREBUILT)
+    set (_3rdparty_dir "${VCPKG_PREBUILT}")
+	set (_build3rdparty 0)
+else()
+    set (_3rdparty_dir "${_app_dir}/../3rdparty_desktop")
+	set (_build3rdparty 1)
+endif()
 
 set(CMAKE_EXECUTE_PROCESS_COMMAND_ECHO STDOUT)
 
@@ -56,52 +76,58 @@ function(execute_checked_command)
     endif()
 endfunction()
 
-# Configure and build the build3rdparty tool
+if (${_build3rdparty})
 
-execute_checked_command(
-    COMMAND ${_cmake}
-        -S ${_sdk_dir}/contrib/cmake/build3rdParty
-        -B ${_3rdparty_dir}
-        -DCMAKE_BUILD_TYPE=Release
-)
+	file(MAKE_DIRECTORY ${_3rdparty_dir})
 
-execute_checked_command(
-    COMMAND ${_cmake}
-        --build ${_3rdparty_dir}
-        --config Release
-)
+	# Configure and build the build3rdparty tool
 
-# Use the prep tool to set up just our dependencies and no others
+	execute_checked_command(
+		COMMAND ${_cmake}
+			-S ${_sdk_dir}/contrib/cmake/build3rdParty
+			-B ${_3rdparty_dir}
+			-DCMAKE_BUILD_TYPE=Release
+	)
 
-if(WIN32)
-    set(_3rdparty_tool_exe "${_3rdparty_dir}/Release/build3rdParty.exe")
-    set(_3rdparty_vcpkg_dir "${_3rdparty_dir}/Release/vcpkg/")
-else()
-    set(_3rdparty_tool_exe "${_3rdparty_dir}/build3rdParty")
-    set(_3rdparty_vcpkg_dir "${_3rdparty_dir}/vcpkg/")
-endif()
+	execute_checked_command(
+		COMMAND ${_cmake}
+			--build ${_3rdparty_dir}
+			--config Release
+	)
 
-set(_3rdparty_tool_common_args
-    --ports "${_script_cwd}/preferred-ports-megasync.txt"
-    --triplet ${_triplet}
-    --sdkroot ${_sdk_dir}
-)
+	# Use the prep tool to set up just our dependencies and no others
 
-execute_checked_command(
-    COMMAND ${_3rdparty_tool_exe}
-        --setup
-        --removeunusedports
-        --nopkgconfig
-        ${_3rdparty_tool_common_args}
-    WORKING_DIRECTORY ${_3rdparty_dir}
-)
+	if(WIN32)
+		set(_3rdparty_tool_exe "${_3rdparty_dir}/Release/build3rdParty.exe")
+		set(_3rdparty_vcpkg_dir "${_3rdparty_dir}/Release/vcpkg/")
+	else()
+		set(_3rdparty_tool_exe "${_3rdparty_dir}/build3rdParty")
+		set(_3rdparty_vcpkg_dir "${_3rdparty_dir}/vcpkg/")
+	endif()
 
-execute_checked_command(
-    COMMAND ${_3rdparty_tool_exe}
-        --build
-        ${_3rdparty_tool_common_args}
-    WORKING_DIRECTORY ${_3rdparty_dir}
-)
+	set(_3rdparty_tool_common_args
+		--ports "${_script_cwd}/preferred-ports-megasync.txt"
+		--triplet ${_triplet}
+		--sdkroot ${_sdk_dir}
+	)
+
+	execute_checked_command(
+		COMMAND ${_3rdparty_tool_exe}
+			--setup
+			--removeunusedports
+			--nopkgconfig
+			${_3rdparty_tool_common_args}
+		WORKING_DIRECTORY ${_3rdparty_dir}
+	)
+
+	execute_checked_command(
+		COMMAND ${_3rdparty_tool_exe}
+			--build
+			${_3rdparty_tool_common_args}
+		WORKING_DIRECTORY ${_3rdparty_dir}
+	)
+
+endif(${_build3rdparty})
 
 # Allows use of the VCPKG_XXXX variables defined in the triplet file
 # We search our own custom triplet folder, and then the standard ones searched by vcpkg
@@ -136,6 +162,7 @@ set(_common_cmake_args
     "-DMega3rdPartyDir=${_3rdparty_dir}"
     "-DVCPKG_TRIPLET=${_triplet}"
     -DUSE_THIRDPARTY_FROM_VCPKG=1
+    -DMEGA_QT_VERSION=${MEGA_QT_VERSION}
     -S ${_script_cwd}
 )
 
@@ -145,7 +172,7 @@ endif()
 
 if(WIN32)
     if(_triplet MATCHES "staticdev$")
-        set(_extra_cmake_args -DMEGA_LINK_DYNAMIC_CRT=0 -DUNCHECKED_ITERATORS=1)
+        list(APPEND _extra_cmake_args -DMEGA_LINK_DYNAMIC_CRT=0 -DUNCHECKED_ITERATORS=1)
     endif()
 
     if(VCPKG_TARGET_ARCHITECTURE STREQUAL "x86")
@@ -188,6 +215,7 @@ else()
                 ${_common_cmake_args}
                 -B ${_build_dir}
                 "-DCMAKE_BUILD_TYPE=${_config}"
+                ${_extra_cmake_args}
         )
 
         execute_checked_command(

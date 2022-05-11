@@ -156,10 +156,10 @@ FreedesktopImage::FreedesktopImage(const QImage &img):
 
     for (unsigned int ptr = 0; ptr < num_pixels; ++ptr)
     {
-        image[ptr*BYTES_PER_PIXEL+0] = data[ptr] >> 16; // R
-        image[ptr*BYTES_PER_PIXEL+1] = data[ptr] >> 8;  // G
-        image[ptr*BYTES_PER_PIXEL+2] = data[ptr];       // B
-        image[ptr*BYTES_PER_PIXEL+3] = data[ptr] >> 24; // A
+        image[ptr*BYTES_PER_PIXEL+0] = static_cast<char>(data[ptr] >> 16); // R
+        image[ptr*BYTES_PER_PIXEL+1] = static_cast<char>(data[ptr] >> 8);  // G
+        image[ptr*BYTES_PER_PIXEL+2] = static_cast<char>(data[ptr]);       // B
+        image[ptr*BYTES_PER_PIXEL+3] = static_cast<char>(data[ptr] >> 24); // A
     }
 }
 
@@ -605,6 +605,8 @@ void MegaNotification::dBusNotificationCallback(QDBusMessage dbusMssage)
 
 MegaNotification::MegaNotification()
 {
+    qRegisterMetaType<CloseReason>("CloseReason");
+    qRegisterMetaType<Action>("Action");
     title = QString::fromUtf8("MEGA");
     text = QString::fromUtf8("MEGAsync");
     expirationTime = 10000;

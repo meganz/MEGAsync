@@ -17,7 +17,7 @@ class ImportMegaLinksDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit ImportMegaLinksDialog(mega::MegaApi *megaApi, Preferences *preferences, LinkProcessor *linkProcessor, QWidget *parent = 0);
+    explicit ImportMegaLinksDialog(LinkProcessor *linkProcessor, QWidget *parent = 0);
     ~ImportMegaLinksDialog();
 
     bool shouldImport();
@@ -35,16 +35,23 @@ public slots:
     void onLinkInfoAvailable(int id);
     void onLinkInfoRequestFinish();
     void onLinkStateChanged(int id, int state);
+    void accept() override;
 
 protected:
-    void changeEvent(QEvent * event);
+    void changeEvent(QEvent * event) override;
 
 private:
     Ui::ImportMegaLinksDialog *ui;
-    mega::MegaApi *megaApi;
-    LinkProcessor *linkProcessor;
+    mega::MegaApi *mMegaApi;
+    std::shared_ptr<Preferences> mPreferences;
+    LinkProcessor *mLinkProcessor;
     bool finished;
     HighDpiResize highDpiResize;
+
+    void initUiAsLogged(std::shared_ptr<Preferences> preferences);
+    void initUiAsUnlogged();
+    void initImportFolderControl(std::shared_ptr<Preferences> preferences);
+    void setInvalidImportFolder(std::shared_ptr<Preferences> preferences);
 
     void enableOkButton() const;
     void enableLocalFolder(bool enable);

@@ -133,6 +133,14 @@ extern "C" {
 # undef lstat64
 #endif
 
+#define PUSH_NO_DEPRECATED_WARNING()                               \
+    _Pragma( "GCC diagnostic push" )                                \
+    _Pragma( "GCC diagnostic ignored \"-Wdeprecated\" " )
+
+#define POP_NO_DEPRECATED_WARNING() \
+    _Pragma( "GCC diagnostic pop" )
+
+
 /* As glibc often provides subtly incompatible data structures (and implicit
  * wrapper functions that convert them), we provide our own kernel data
  * structures for use by the system calls.
@@ -1818,7 +1826,7 @@ struct kernel_statfs {
     #define _LSS_RETURN(type, res, cast)                                      \
       do {                                                                    \
         if ((uint64_t)(res) >= (uint64_t)(-4095)) {                           \
-          LSS_ERRNO = -(res);                                                 \
+          LSS_ERRNO = static_cast<int>(-(res));                               \
           res = -1;                                                           \
         }                                                                     \
         return (type)(cast)(res);                                             \
@@ -1934,6 +1942,8 @@ struct kernel_statfs {
                                 LSS_SYSCALL_ARG(arg3), LSS_SYSCALL_ARG(arg4), \
                                 LSS_SYSCALL_ARG(arg5), LSS_SYSCALL_ARG(arg6));\
       }
+
+PUSH_NO_DEPRECATED_WARNING()
     LSS_INLINE int LSS_NAME(clone)(int (*fn)(void *), void *child_stack,
                                    int flags, void *arg, int *parent_tidptr,
                                    void *newtls, int *child_tidptr) {
@@ -2012,6 +2022,8 @@ struct kernel_statfs {
       LSS_RETURN(int, __res);
     }
     LSS_INLINE _syscall2(int, arch_prctl, int, c, void *, a)
+
+POP_NO_DEPRECATED_WARNING()
 
     /* Need to make sure loff_t isn't truncated to 32-bits under x32.  */
     LSS_INLINE int LSS_NAME(fadvise64)(int fd, loff_t offset, loff_t len,
@@ -3540,7 +3552,7 @@ struct kernel_statfs {
      */
     int rc, err;
     LSS_NAME(sched_yield)();
-    rc = LSS_NAME(ptrace)(PTRACE_DETACH, pid, (void *)0, (void *)0);
+    rc = static_cast<int>(LSS_NAME(ptrace)(PTRACE_DETACH, pid, (void *)0, (void *)0));
     err = LSS_ERRNO;
     LSS_NAME(tkill)(pid, SIGCONT);
     /* Old systems don't have tkill */
@@ -3568,7 +3580,7 @@ struct kernel_statfs {
             ? 8192 : limit.rlim_cur;
 #else
         return LSS_NAME(getrlimit)(RLIMIT_NOFILE, &limit) < 0
-            ? 8192 : limit.rlim_cur;
+            ? 8192 : static_cast<int>(limit.rlim_cur);
 #endif
       }
       case _SC_PAGESIZE:

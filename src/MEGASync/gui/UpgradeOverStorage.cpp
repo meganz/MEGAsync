@@ -2,198 +2,187 @@
 #include "ui_UpgradeOverStorage.h"
 #include "Utilities.h"
 #include "Preferences.h"
-#include <QDateTime>
-#include <QUrl>
-#include <QStyle>
-#include <math.h>
 #include "gui/PlanWidget.h"
 
 using namespace mega;
 
-UpgradeOverStorage::UpgradeOverStorage(MegaApi *megaApi, MegaPricing *pricing, QWidget *parent) :
+UpgradeOverStorage::UpgradeOverStorage(MegaApi* megaApi, std::shared_ptr<mega::MegaPricing> pricing,
+                                       std::shared_ptr<MegaCurrency> currency, QWidget* parent) :
     QDialog(parent),
-    ui(new Ui::UpgradeOverStorage)
+    mUi(new Ui::UpgradeOverStorage),
+    mMegaApi (megaApi),
+    mPricing (pricing),
+    mCurrency (currency)
 {
-    ui->setupUi(this);
+    mUi->setupUi(this);
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);  
 
-    this->megaApi = megaApi;
-    if (pricing)
-    {
-        this->pricing = pricing->copy();
-    }
-    else
-    {
-        this->pricing = NULL;
-    }
+    delete mUi->wPlans->layout();
+    mPlansLayout = new QHBoxLayout(mUi->wPlans);
+    mPlansLayout->setContentsMargins(0, 0, 0, 0);
+    mPlansLayout->setSpacing(8);
 
-    checkAchievementsEnabled();
-    refreshUsedStorage();
+    updatePlans();  
+    configureAnimation();
 
-    plansLayout = new QHBoxLayout();
-    plansLayout->setContentsMargins(20,5,20,0);
-    plansLayout->setSpacing(2);
+    mHighDpiResize.init(this);
 
-    delete ui->wPlans->layout();
-    ui->wPlans->setLayout(plansLayout);
-
-    updatePlans();
-
-    highDpiResize.init(this);
-}
-
-void UpgradeOverStorage::setPricing(MegaPricing *pricing)
-{
-    if (!pricing)
-    {
-        return;
-    }
-
-    if (this->pricing)
-    {
-        delete this->pricing;
-    }
-
-    this->pricing = pricing->copy();
-    updatePlans();
-}
-
-//TODO: Refresh me when account details is updated.
-void UpgradeOverStorage::refreshUsedStorage()
-{
-    Preferences *preferences = Preferences::instance();
-    long long usedStorage  = preferences->usedStorage();
-    long long totalStorage = preferences->totalStorage();
-
-    if (totalStorage == 0 || usedStorage < totalStorage)
-    {
-        ui->wUsage->hide();
-    }
-    else
-    {
-        ui->wUsage->show();
-
-        int percentage = floor((100 * ((double)usedStorage) / totalStorage));
-        ui->pUsageStorage->setValue(percentage > 100 ? 100 : percentage);
-
-        if (percentage >= 100)
-        {
-            ui->pUsageStorage->setProperty("almostoq", false);
-            ui->pUsageStorage->setProperty("crossedge", true);
-        }
-        else if (percentage > 90)
-        {
-            ui->pUsageStorage->setProperty("crossedge", false);
-            ui->pUsageStorage->setProperty("almostoq", true);
-        }
-        else
-        {
-            ui->pUsageStorage->setProperty("crossedge", false);
-            ui->pUsageStorage->setProperty("almostoq", false);
-        }
-
-        ui->pUsageStorage->style()->unpolish(ui->pUsageStorage);
-        ui->pUsageStorage->style()->polish(ui->pUsageStorage);
-
-        QString used = tr("%1 of %2").arg(QString::fromUtf8("<span style=\"color:#333333; font-size: 16px; text-decoration:none;\">%1</span>")
-                                     .arg(QString::number(percentage).append(QString::fromAscii("%&nbsp;"))))
-                                     .arg(QString::fromUtf8("<span style=\"color:#333333; font-size: 16px; text-decoration:none;\">&nbsp;%1</span>")
-                                     .arg(Utilities::getSizeString(totalStorage)));
-        ui->lPercentageUsedStorage->setText(used);
-        ui->lTotalUsedStorage->setText(tr("USED STORAGE %1").arg(QString::fromUtf8("<span style=\"color:#333333; font-size: 16px; text-decoration:none;\">&nbsp;&nbsp;%1</span>")
-                                       .arg(Utilities::getSizeString(usedStorage))));
-    }
-
-    checkAchievementsEnabled();
+    //Keep storage details hidden until we receive the account details
+    mUi->lAccountUsed->hide();
 }
 
 UpgradeOverStorage::~UpgradeOverStorage()
 {
-    delete ui;
-    delete pricing;
+    delete mUi;
 }
+
+void UpgradeOverStorage::setPricing(std::shared_ptr<mega::MegaPricing> pricing,
+                                    std::shared_ptr<MegaCurrency> currency)
+{
+    if (pricing && currency)
+    {
+        mPricing = pricing;
+        mCurrency = currency;
+        updatePlans();
+    }
+}
+
+void UpgradeOverStorage::refreshStorageDetails()
+{
+    auto preferences = Preferences::instance();
+    auto totalStorage(preferences->totalStorage());
+    mUi->lAccountUsed->setText(tr("100% of the %1 available used on your account.")
+                               .arg(Utilities::getSizeString(totalStorage)));
+    mUi->lAccountUsed->show();
+}
+
 
 void UpgradeOverStorage::updatePlans()
 {
-    if (!pricing)
+    if (mPricing && mCurrency)
     {
-        return;
-    }
-
-    clearPlans();
-
-    QString userAgent = QString::fromUtf8(megaApi->getUserAgent());
-    int products = pricing->getNumProducts();
-    for (int it = 0; it < products; it++)
-    {
-        if (pricing->getMonths(it) == 1)
+        clearPlans();
+        bool isBillingCurrency (false);
+        QVector<PlanWidget*> cards;
+        int minPriceFontSize (std::numeric_limits<int>::max());
+        QByteArray bSym (QByteArray::fromBase64(mCurrency->getCurrencySymbol()));
+        QString billingCurrencySymbol (QString::fromUtf8(bSym.data()));
+        QString billingCurrencyName (QString::fromUtf8(mCurrency->getCurrencyName()));
+        QString localCurrencyName;
+        QString localCurrencySymbol;
+        QByteArray lSym (QByteArray::fromBase64(mCurrency->getLocalCurrencySymbol()));
+        if (lSym.isEmpty())
         {
-            PlanInfo data = {
-                pricing->getAmount(it),
-                convertCurrency(pricing->getCurrency(it)),
-                pricing->getGBStorage(it),
-                pricing->getGBTransfer(it),
-                pricing->getProLevel(it)
-            };
-            plansLayout->addWidget(new PlanWidget(data, userAgent));
+            localCurrencySymbol = billingCurrencySymbol;
+            localCurrencyName = billingCurrencyName;
+            isBillingCurrency = true;
         }
-    }
-}
+        else
+        {
+            localCurrencySymbol = QString::fromUtf8(lSym.data());
+            localCurrencyName = QString::fromUtf8(mCurrency->getLocalCurrencyName());
+        }
 
-void UpgradeOverStorage::checkAchievementsEnabled()
-{
-    if (megaApi && megaApi->isAchievementsEnabled())
-    {
-        ui->lAchievements->setTextFormat(Qt::RichText);
-        ui->lAchievements->setTextInteractionFlags(Qt::LinksAccessibleByMouse);
-        ui->lAchievements->setOpenExternalLinks(true);
-        ui->lAchievements->setText(ui->lAchievements->text()
-                                   .replace(QString::fromUtf8("[A]"), QString::fromUtf8("<a href=\"mega://#fm/account/achievements\"><span style=\"color:#333333; text-decoration:underline;\">"))
-                                   .replace(QString::fromUtf8("[/A]"), QString::fromUtf8("</span></a>")));
-        ui->wAchievements->show();
-        setFixedHeight(600);
-    }
-    else
-    {
-        ui->wAchievements->hide();
-        setFixedHeight(540);
+        QString userAgent (QString::fromUtf8(mMegaApi->getUserAgent()));
+        int products (mPricing->getNumProducts());
+        for (int it = 0; it < products; it++)
+        {
+            if (mPricing->getMonths(it) == 1)
+            {
+                PlanInfo data {
+                    0, 0, 0,
+                    mPricing->getProLevel(it),
+                    mPricing->getGBPerStorage(it),
+                    mPricing->getGBPerTransfer(it),
+                    0, 0, 0, 0, 0, 0,
+                    billingCurrencySymbol,
+                    billingCurrencyName,
+                    localCurrencySymbol,
+                    localCurrencyName
+                };
+
+                if (!mPricing->isBusinessType(it))
+                {
+                    data.minUsers = 1;
+                    data.gbStorage = mPricing->getGBStorage(it);
+                    data.gbTransfer =  mPricing->getGBTransfer(it);
+                    data.pricePerUserBilling = static_cast<unsigned int>(mPricing->getAmount(it));
+                    data.pricePerUserLocal = isBillingCurrency ?
+                                                 data.pricePerUserBilling
+                                               : static_cast<unsigned int>(mPricing->getLocalPrice(it));
+                }
+                else
+                {
+                    data.minUsers = mPricing->getMinUsers(it);
+                    data.gbStorage = mPricing->getGBStoragePerUser(it);
+                    data.gbTransfer =  mPricing->getGBTransferPerUser(it);
+                    data.pricePerUserBilling = mPricing->getPricePerUser(it);
+                    data.pricePerStorageBilling = mPricing->getPricePerStorage(it);
+                    data.pricePerTransferBilling = mPricing->getPricePerTransfer(it);
+                    if (isBillingCurrency)
+                    {
+                        data.pricePerUserLocal = data.pricePerUserBilling;
+                        data.pricePerStorageLocal = data.pricePerStorageBilling;
+                        data.pricePerTransferLocal = data.pricePerTransferBilling;
+                    }
+                    else
+                    {
+                        data.pricePerUserLocal = mPricing->getLocalPricePerUser(it);
+                        data.pricePerStorageLocal = mPricing->getLocalPricePerStorage(it);
+                        data.pricePerTransferLocal = mPricing->getLocalPricePerTransfer(it);
+                    }
+                }
+
+                PlanWidget* card (new PlanWidget(data, userAgent, this));
+                mPlansLayout->addWidget(card);
+                mUi->lPriceEstimation->setVisible(!isBillingCurrency);
+                cards.append(card);
+                minPriceFontSize = std::min(minPriceFontSize, card->getPriceFontSizePx());
+            }
+        }
+
+        // Set the price font soze to the minimum found
+        for (auto card : cards)
+        {
+            card->setPriceFontSizePx(minPriceFontSize);
+        }
+
+        mUi->wPlans->adjustSize();
+        adjustSize();
     }
 }
 
 void UpgradeOverStorage::clearPlans()
 {
-    while (QLayoutItem* item = plansLayout->takeAt(0))
+    while (QLayoutItem* item = mPlansLayout->takeAt(0))
     {
         if (QWidget* widget = item->widget())
         {
-            delete widget;
+            widget->deleteLater();
         }
         delete item;
     }
 }
 
-QString UpgradeOverStorage::convertCurrency(const char *currency)
+void UpgradeOverStorage::configureAnimation()
 {
-    if (!strcmp(currency, "EUR"))
-    {
-        return QString::fromUtf8("€");
-    }
 
-    if (!strcmp(currency, "USD"))
-    {
-        return QString::fromUtf8("$");
-    }
+    auto ratio = Utilities::getDevicePixelRatio();
+    mAnimation.reset(new QMovie(ratio < 2 ? QLatin1String(":/animations/full-storage.gif")
+                                          : QLatin1String(":/animations/full-storage@2x.gif")));
 
-    return QString::fromUtf8(currency);
+    mUi->lAnimationOverStorage->setMovie(mAnimation.get());
+    mUi->lAnimationOverStorage->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
+
+    mAnimation.get()->start();
 }
 
 void UpgradeOverStorage::changeEvent(QEvent *event)
 {
     if (event->type() == QEvent::LanguageChange)
     {
-        ui->retranslateUi(this);
-        refreshUsedStorage();
+        mUi->retranslateUi(this);
+        refreshStorageDetails();
     }
     QDialog::changeEvent(event);
 }
-

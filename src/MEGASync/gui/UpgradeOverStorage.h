@@ -1,10 +1,15 @@
 #ifndef UPGRADEOVERSTORAGE_H
 #define UPGRADEOVERSTORAGE_H
 
+#include "HighDpiResize.h"
+
+#include <megaapi.h>
+
 #include <QDialog>
 #include <QHBoxLayout>
-#include <megaapi.h>
-#include "HighDpiResize.h"
+#include <QMovie>
+
+#include <memory>
 
 namespace Ui {
 class UpgradeOverStorage;
@@ -15,26 +20,29 @@ class UpgradeOverStorage : public QDialog
     Q_OBJECT
 
 public:
-    explicit UpgradeOverStorage(mega::MegaApi *megaApi, mega::MegaPricing *pricing, QWidget *parent = 0);
-    void refreshUsedStorage();
-    void setPricing(mega::MegaPricing *pricing);
+    explicit UpgradeOverStorage(mega::MegaApi* megaApi, std::shared_ptr<mega::MegaPricing> pricing,
+                                std::shared_ptr<mega::MegaCurrency> currency,
+                                QWidget* parent = nullptr);
     ~UpgradeOverStorage();
 
-private:
-    Ui::UpgradeOverStorage *ui;
-    QHBoxLayout* plansLayout;
-    HighDpiResize highDpiResize;
-
-    void updatePlans();
-    void checkAchievementsEnabled();
-    QString convertCurrency(const char *currency);
-    void clearPlans();
-
+    void refreshStorageDetails();
+    void setPricing(std::shared_ptr<mega::MegaPricing> pricing,
+                    std::shared_ptr<mega::MegaCurrency> currency);
 protected:
-    void changeEvent(QEvent* event);
+    void changeEvent(QEvent* event) override;
 
-    mega::MegaPricing *pricing;
-    mega::MegaApi *megaApi;
+private:
+    void updatePlans();
+    void clearPlans();
+    void configureAnimation();
+
+    Ui::UpgradeOverStorage* mUi;
+    QHBoxLayout* mPlansLayout;
+    std::unique_ptr<QMovie> mAnimation;
+    HighDpiResize mHighDpiResize;
+    mega::MegaApi* mMegaApi;
+    std::shared_ptr<mega::MegaPricing> mPricing;
+    std::shared_ptr<mega::MegaCurrency> mCurrency;
 };
 
 #endif // UPGRADEOVERSTORAGE_H

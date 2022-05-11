@@ -282,7 +282,7 @@ border: none;
       <item>
        <widget class="QPushButton" name="bLogout">
         <property name="text">
-         <string>Logout</string>
+         <string>Log out</string>
         </property>
        </widget>
       </item>

@@ -117,7 +117,7 @@ unsigned my_uint_len(uintmax_t i) {
 //   i_len: the length of the integer in base 10 (see |my_uint_len|).
 void my_uitos(char* output, uintmax_t i, unsigned i_len) {
   for (unsigned index = i_len; index; --index, i /= 10)
-    output[index - 1] = '0' + (i % 10);
+    output[index - 1] = static_cast<char>('0' + (i % 10));
 }
 
 const char* my_strchr(const char* haystack, char needle) {

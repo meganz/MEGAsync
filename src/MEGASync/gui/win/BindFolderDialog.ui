@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Add synchronized folder</string>
+   <string>Add folder</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <property name="spacing">
@@ -42,7 +42,7 @@ min-height: 48px;
    <item>
     <widget class="QGroupBox" name="groupBox">
      <property name="title">
-      <string>Add synchronized folder</string>
+      <string>Add synchronised folder</string>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_2">
       <item>

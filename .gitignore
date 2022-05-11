@@ -49,13 +49,14 @@ Makefile
 # osc files
 .osc
 
+# ctags files
+tags
 
 #build stuff
 /src/MEGAShellExtDolphin/megasync-plugin-overlay.moc
 build-MEGA*
 build-cmake*
 build-x??-*/
-
 
 .vs
 
@@ -78,3 +79,6 @@ src/.qmake.stash
 *.rej
 
 /contrib/cmake/cmake-build-*
+*.stash
+*.Debug
+*.Release

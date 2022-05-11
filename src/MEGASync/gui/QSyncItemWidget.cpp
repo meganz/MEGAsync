@@ -18,10 +18,6 @@ QSyncItemWidget::QSyncItemWidget(int itemType, QWidget* parent) :
     mNodesUpToDate (true)
 {
     mUi->setupUi(this);
-
-    mUi->bSyncState->show();
-    mUi->bWarning->hide();
-
     installEventFilter(this);
     configureSyncTypeUI(itemType);
 
@@ -82,21 +78,7 @@ QSyncItemWidget::~QSyncItemWidget()
 
 void QSyncItemWidget::configureSyncTypeUI(int type) const
 {
-    switch (type)
-    {
-    case LOCAL_FOLDER:
-    {
-        mUi->bSyncState->show();
-        }
-        break;
-        case REMOTE_FOLDER:
-        {
-            mUi->bSyncState->hide();
-        }
-        break;
-        default:
-        break;
-    }
+    mUi->lSyncState->setVisible(type == LOCAL_FOLDER);
 }
 
 void QSyncItemWidget::setError(int error)
@@ -105,17 +87,15 @@ void QSyncItemWidget::setError(int error)
 
     if (error)
     {
-        mUi->bWarning->setToolTip(QCoreApplication::translate("MegaSyncError",
+        mUi->lSyncState->setStyleSheet(QString::fromLatin1("#lSyncState {border-image: url(\"://images/ic_sync_warning.png\")}"));
+        mUi->lSyncState->setToolTip(QCoreApplication::translate("MegaSyncError",
                                                              mega::MegaSync::getMegaSyncErrorCode(
                                                                  error)));
-        mUi->bWarning->show();
-        mUi->bSyncState->hide();
     }
     else
     {
-        mUi->bSyncState->setToolTip(QString());
-        mUi->bWarning->hide();
-        mUi->bSyncState->show();
+        mUi->lSyncState->setToolTip(QString());
+        setSelected(mSelected);
     }
 
     elidePathLabel();
@@ -190,20 +170,18 @@ void QSyncItemWidget::setSyncSetting(const std::shared_ptr<SyncSetting>& value)
 
 void QSyncItemWidget::setSelected(bool selected)
 {
-    QString ss;
-    QIcon syncStateIcon;
-    if (selected)
+    mSelected = selected;
+    if (mSelected)
     {
-        ss = QString::fromUtf8("#lSyncName {color: white;}");
-        syncStateIcon = QIcon(QString::fromUtf8("://images/Item_sync_press.png"));
+        mUi->lSyncName->setStyleSheet(QString::fromLatin1("#lSyncName {color: white;}"));
+        if(!mError)
+            mUi->lSyncState->setStyleSheet(QString::fromLatin1("#lSyncState {border-image: url(\"://images/Item-sync-press.png\")}"));
     }
     else
     {
-        ss = QString::fromUtf8("#lSyncName {color: black;}");
-        syncStateIcon = QIcon(QString::fromUtf8("://images/Item_sync_rest.png"));
+        mUi->lSyncName->setStyleSheet(QString::fromLatin1("#lSyncName {color: black;}"));
+        if(!mError)
+            mUi->lSyncState->setStyleSheet(QString::fromLatin1("#lSyncState {border-image: url(\"://images/Item-sync-rest.png\")}"));
     }
-    mUi->lSyncName->setStyleSheet(ss);
-    mUi->bSyncState->setIcon(syncStateIcon);
-    mSelected = selected;
 }
 

@@ -29,6 +29,7 @@ using namespace std::chrono;
 
 using namespace mega;
 
+static constexpr int DEFAULT_MIN_PERCENTAGE{1};
 
 void InfoDialog::pauseResumeClicked()
 {
@@ -71,7 +72,8 @@ void InfoDialog::upAreaHovered(QMouseEvent *event)
 
 InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddialog) :
     QDialog(parent),
-    ui(new Ui::InfoDialog)
+    ui(new Ui::InfoDialog),
+    qtBugFixer(this)
 {
     ui->setupUi(this);
 
@@ -190,7 +192,8 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
     ui->wCircularQuota->setProgressBarGradient(QColor("#60D1FE"), QColor("#58B9F3"));
 
 #ifdef __APPLE__
-    if (QSysInfo::MacintoshVersion <= QSysInfo::MV_10_9) //Issues with mavericks and popup management
+    auto current = QOperatingSystemVersion::current();
+    if (current <= QOperatingSystemVersion::OSXMavericks) //Issues with mavericks and popup management
     {
         installEventFilter(this);
     }
@@ -337,9 +340,17 @@ void InfoDialog::showEvent(QShowEvent *event)
     QDialog::showEvent(event);
 }
 
+void InfoDialog::moveEvent(QMoveEvent*)
+{
+#ifdef __linux__
+    qtBugFixer.onEndMove();
+#endif
+}
+
 void InfoDialog::setBandwidthOverquotaState(QuotaState state)
 {
     transferQuotaState = state;
+    setUsage();
 }
 
 void InfoDialog::enableTransferOverquotaAlert()
@@ -455,16 +466,19 @@ void InfoDialog::setUsage()
                         break;
                     }
                 }
-            ui->wCircularStorage->setValue(Utilities::partPer(usedStorage, totalStorage));
+            auto parts (usedStorage ?
+                            std::max(Utilities::partPer(usedStorage, totalStorage),
+                                     DEFAULT_MIN_PERCENTAGE)
+                          : 0);
+            ui->wCircularStorage->setValue(parts);
             usedStorageString = QString::fromUtf8("%1 /%2")
-                                .arg(QString::fromUtf8("<span style='color:%1;"
-                                                       "font-family: Lato;"
-                                                       "text-decoration:none;'>%2</span>")
-                                     .arg(usageColorS)
-                                     .arg(Utilities::getSizeString(usedStorage)))
-                                .arg(QString::fromUtf8("<span style=' font-family: Lato;"
-                                                       "text-decoration:none;'>&nbsp;%1</span>")
-                                     .arg(Utilities::getSizeString(totalStorage)));
+                    .arg(QString::fromUtf8("<span style='color:%1;"
+                                           "font-family: Lato;"
+                                           "text-decoration:none;'>%2</span>")
+                         .arg(usageColorS, Utilities::getSizeString(usedStorage)))
+                    .arg(QString::fromUtf8("<span style=' font-family: Lato;"
+                                           "text-decoration:none;'>&nbsp;%1</span>")
+                         .arg(Utilities::getSizeString(totalStorage)));
         }
     }
 
@@ -478,7 +492,7 @@ void InfoDialog::setUsage()
     if (accType == Preferences::ACCOUNT_TYPE_BUSINESS)
     {
         ui->sQuota->setCurrentWidget(ui->wBusinessQuota);
-        ui->wCircularStorage->setEmptyBarTotalValueUnknown();
+        ui->wCircularStorage->setTotalValueUnknown();
         usedTransferString = QString::fromUtf8("<span style='color: #333333;"
                                                     "font-size:20px; font-family: Lato;"
                                                     "text-decoration:none;'>%1</span>")
@@ -486,9 +500,12 @@ void InfoDialog::setUsage()
     }
     else
     {
+        ui->sQuota->setCurrentWidget(ui->wCircularQuota);
+
         QString usageColor;
         // Set color according to state
-        switch (transferQuotaState) {
+        switch (transferQuotaState)
+        {
             case QuotaState::OK:
             {
                 ui->wCircularQuota->setState(CircularUsageProgressBar::STATE_OK);
@@ -501,6 +518,8 @@ void InfoDialog::setUsage()
                 usageColor = QString::fromUtf8("#F98400");
                 break;
             }
+            case QuotaState::OVERQUOTA:
+            // Fallthrough
             case QuotaState::FULL:
             {
                 ui->wCircularQuota->setState(CircularUsageProgressBar::STATE_OVER);
@@ -508,55 +527,40 @@ void InfoDialog::setUsage()
                 break;
             }
         }
-        ui->sQuota->setCurrentWidget(ui->wCircularQuota);
 
         if (accType == Preferences::ACCOUNT_TYPE_FREE)
         {
 
-            // Set UI according to state
-            switch (transferQuotaState) {
-                case QuotaState::OK:
-                // Fallthrough
-                case QuotaState::WARNING:
-                {
-                    ui->wCircularQuota->setEmptyBarTotalValueUnknown();
-                    break;
-                }
-                case QuotaState::FULL:
-                {
-                    ui->wCircularQuota->setFullBarTotalValueUnkown();
-                    break;
-                }
-            }
-
+            ui->wCircularQuota->setTotalValueUnknown(transferQuotaState != QuotaState::FULL
+                                                        && transferQuotaState != QuotaState::OVERQUOTA);
             usedTransferString = tr("%1 used")
                                  .arg(QString::fromUtf8("<span style='color:%1;"
                                                         "font-family: Lato;"
                                                         "text-decoration:none;'>%2</span>")
-                                      .arg(usageColor)
-                                      .arg(Utilities::getSizeString(usedTransfer)));
+                                      .arg(usageColor, Utilities::getSizeString(usedTransfer)));
         }
         else
         {
-            if (preferences->totalBandwidth() == 0)
+            auto totalTransfer (preferences->totalBandwidth());
+            if (totalTransfer == 0)
             {
-                ui->wCircularQuota->setEmptyBarTotalValueUnknown();
+                ui->wCircularQuota->setTotalValueUnknown();
                 usedTransferString = Utilities::getSizeString(0ull);
             }
             else
             {
-                auto totalTransfer(preferences->totalBandwidth());
+                auto parts (usedTransfer ?
+                                std::max(Utilities::partPer(usedTransfer, totalTransfer),
+                                         DEFAULT_MIN_PERCENTAGE)
+                              : 0);
 
-                auto percentage = Utilities::partPer(usedTransfer, totalTransfer);
-                ui->wCircularQuota->setValue(percentage);
-
+                ui->wCircularQuota->setValue(parts);
                 usedTransferString = QString::fromUtf8("%1 /%2")
                                      .arg(QString::fromUtf8("<span style='color:%1;"
                                                             "font-family: Lato;"
                                                             "text-decoration:none;'>%2</span>")
-                                          .arg(usageColor)
-                                          .arg(Utilities::getSizeString(usedTransfer)))
-                                     .arg(QString::fromUtf8("<span style='font-family: Lato;"
+                                          .arg(usageColor, Utilities::getSizeString(usedTransfer)),
+                                          QString::fromUtf8("<span style='font-family: Lato;"
                                                             "text-decoration:none;"
                                                             "'>&nbsp;%1</span>")
                                           .arg(Utilities::getSizeString(totalTransfer)));
@@ -939,7 +943,7 @@ void InfoDialog::updateDialogState()
                 .replace(QString::fromUtf8("[B]"), Utilities::getReadableStringFromTs(tsWarnings))
                 .replace(QString::fromUtf8("[C]"), QString::number(numFiles))
                 .replace(QString::fromUtf8("[D]"), Utilities::getSizeString(preferences->usedStorage()))
-                .replace(QString::fromUtf8("[E]"), Utilities::minProPlanNeeded(static_cast<MegaApplication *>(qApp)->getPricing(), preferences->usedStorage()))
+                .replace(QString::fromUtf8("[E]"), Utilities::minProPlanNeeded(MegaSyncApp->getPricing(), preferences->usedStorage()))
                 + QString::fromUtf8("</p>");
         ui->lOverDiskQuotaLabel->setText(overDiskText);
 
@@ -1166,7 +1170,7 @@ void InfoDialog::addSync(MegaHandle h)
                                                     .arg(localFolderPath));
 
    //Connect failing signals
-   connect(addSyncStep, &ActionProgress::failed, this, [this, localFolderPath](int errorCode)
+   connect(addSyncStep, &ActionProgress::failed, this, [localFolderPath](int errorCode)
    {
        static_cast<MegaApplication *>(qApp)->showAddSyncError(errorCode, localFolderPath);
    }, Qt::QueuedConnection);
@@ -1247,12 +1251,22 @@ void InfoDialog::on_bAddSync_clicked()
         }
 
         syncsMenu.reset(new QMenu());
+        syncsMenu->setToolTipsVisible(true);
 
 #ifdef __APPLE__
         syncsMenu->setStyleSheet(QString::fromAscii("QMenu {background: #ffffff; padding-top: 8px; padding-bottom: 8px;}"));
 #else
         syncsMenu->setStyleSheet(QString::fromAscii("QMenu { border: 1px solid #B8B8B8; border-radius: 5px; background: #ffffff; padding-top: 8px; padding-bottom: 8px;}"
                                                     "QMenu::separator {height: 1px; margin: 6px 0px 6px 0px; background-color: rgba(0, 0, 0, 0.1);}"));
+#endif
+
+#if defined(Q_OS_WINDOWS) || defined(Q_OS_LINUX)
+        // Make widget transparent (otherwise it shows a white background in its corners)
+        syncsMenu->setAttribute(Qt::WA_TranslucentBackground);
+        // Disable drop shadow (does not take into account curved corners)
+        syncsMenu->setWindowFlags(syncsMenu->windowFlags()
+                                  | Qt::FramelessWindowHint
+                                  | Qt::NoDropShadowWindowHint);
 #endif
 
         //Highlight menu entry on mouse over
@@ -1434,7 +1448,7 @@ void InfoDialog::onTransferFinish(MegaApi *api, MegaTransfer *transfer, MegaErro
                 completedDownloadBytes -= transfer->getTransferredBytes();
                 if (circlesShowAllActiveTransfersProgress)
                 {
-                    ui->bTransferManager->setPercentDownloads( completedDownloadBytes *1.0 / leftDownloadBytes);
+                    ui->bTransferManager->setPercentDownloads(computeRatio(completedDownloadBytes, leftDownloadBytes));
                 }
             }
 
@@ -1458,7 +1472,7 @@ void InfoDialog::onTransferFinish(MegaApi *api, MegaTransfer *transfer, MegaErro
                 completedUploadBytes -= transfer->getTransferredBytes();
                 if (circlesShowAllActiveTransfersProgress)
                 {
-                    ui->bTransferManager->setPercentUploads( completedUploadBytes *1.0 / leftUploadBytes);
+                    ui->bTransferManager->setPercentUploads(computeRatio(completedUploadBytes, leftUploadBytes));
                 }
             }
 
@@ -1472,7 +1486,7 @@ void InfoDialog::onTransferFinish(MegaApi *api, MegaTransfer *transfer, MegaErro
     }
 }
 
-void InfoDialog::onTransferStart(MegaApi *api, MegaTransfer *transfer)
+void InfoDialog::onTransferStart(MegaApi*, MegaTransfer* transfer)
 {
     updateTransfersCount();
     if (transfer)
@@ -1488,7 +1502,7 @@ void InfoDialog::onTransferStart(MegaApi *api, MegaTransfer *transfer)
     }
 }
 
-void InfoDialog::onTransferUpdate(MegaApi *api, MegaTransfer *transfer)
+void InfoDialog::onTransferUpdate(MegaApi*, MegaTransfer* transfer)
 {
     if (transfer)
     {
@@ -1499,7 +1513,7 @@ void InfoDialog::onTransferUpdate(MegaApi *api, MegaTransfer *transfer)
             currentCompletedDownloadBytes = transfer->getTransferredBytes();
             if (circlesShowAllActiveTransfersProgress)
             {
-                ui->bTransferManager->setPercentDownloads( completedDownloadBytes *1.0 / leftDownloadBytes);
+                ui->bTransferManager->setPercentDownloads(computeRatio(completedDownloadBytes, leftDownloadBytes));
             }
             else
             {
@@ -1512,7 +1526,7 @@ void InfoDialog::onTransferUpdate(MegaApi *api, MegaTransfer *transfer)
                 {
                     downloadActiveTransferPriority = transfer->getPriority();
                     downloadActiveTransferState = transfer->getState();
-                    ui->bTransferManager->setPercentDownloads(currentCompletedDownloadBytes *1.0 /currentDownloadBytes);
+                    ui->bTransferManager->setPercentDownloads(computeRatio(currentCompletedDownloadBytes, currentDownloadBytes));
                 }
             }
         }
@@ -1523,7 +1537,7 @@ void InfoDialog::onTransferUpdate(MegaApi *api, MegaTransfer *transfer)
             currentCompletedUploadBytes = transfer->getTransferredBytes();
             if (circlesShowAllActiveTransfersProgress)
             {
-                ui->bTransferManager->setPercentUploads( completedUploadBytes *1.0 / leftUploadBytes);
+                ui->bTransferManager->setPercentUploads(computeRatio(completedUploadBytes, leftUploadBytes));
             }
             else
             {
@@ -1536,7 +1550,7 @@ void InfoDialog::onTransferUpdate(MegaApi *api, MegaTransfer *transfer)
                 {
                     uploadActiveTransferPriority = transfer->getPriority();
                     uploadActiveTransferState = transfer->getState();
-                    ui->bTransferManager->setPercentUploads(currentCompletedUploadBytes *1.0 /currentUploadBytes);
+                    ui->bTransferManager->setPercentUploads(computeRatio(currentCompletedUploadBytes, currentUploadBytes));
                 }
             }
         }
@@ -1618,7 +1632,8 @@ bool InfoDialog::eventFilter(QObject *obj, QEvent *e)
 
 #endif
 #ifdef __APPLE__
-    if (QSysInfo::MacintoshVersion <= QSysInfo::MV_10_9) //manage spontaneus mouse press events
+    auto current = QOperatingSystemVersion::current();
+    if (current <= QOperatingSystemVersion::OSXMavericks) //manage spontaneus mouse press events
     {
         if (obj == this && e->type() == QEvent::MouseButtonPress && e->spontaneous())
         {
@@ -2077,6 +2092,14 @@ void InfoDialog::showNotifications()
     on_tNotifications_clicked();
 }
 
+void InfoDialog::move(int x, int y)
+{
+#ifdef __linux__
+   qtBugFixer.onStartMove();
+#endif
+   QDialog::move(x, y);
+}
+
 void InfoDialog::setBlockedStateLabel(QString state)
 {
     if (state.isEmpty())
@@ -2109,7 +2132,7 @@ void InfoDialog::setUnseenNotifications(long long value)
     ui->bNumberUnseenNotifications->show();
 }
 
-void InfoDialog::setUnseenTypeNotifications(int all, int contacts, int shares, int payment)
+void InfoDialog::setUnseenTypeNotifications(long long all, long long contacts, long long shares, long long payment)
 {
     filterMenu->setUnseenNotifications(all, contacts, shares, payment);
 }
@@ -2125,4 +2148,9 @@ void InfoDialog::paintEvent(QPaintEvent * e)
     p.setCompositionMode(QPainter::CompositionMode_Clear);
     p.fillRect(ui->wArrow->rect(), Qt::transparent);
 #endif
+}
+
+double InfoDialog::computeRatio(long long completed, long long remaining)
+{
+    return static_cast<double>(completed) / static_cast<double>(remaining);
 }

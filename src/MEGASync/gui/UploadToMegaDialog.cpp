@@ -3,8 +3,8 @@
 #include "gui/NodeSelector.h"
 #include "control/Utilities.h"
 #include "MegaApplication.h"
+
 #include <QPointer>
-#include "HighDpiResize.h"
 
 using namespace mega;
 
@@ -12,9 +12,9 @@ UploadToMegaDialog::UploadToMegaDialog(MegaApi *megaApi, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::UploadToMegaDialog)
 {
-    ui->setupUi(this);
-    setAttribute(Qt::WA_QuitOnClose, false);
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
+
+    ui->setupUi(this);
 
     this->megaApi = megaApi;
     this->delegateListener = new QTMegaRequestListener(megaApi, this);
@@ -85,11 +85,11 @@ void UploadToMegaDialog::onRequestFinish(MegaApi *, MegaRequest *request, MegaEr
 
 void UploadToMegaDialog::on_bChange_clicked()
 {
-    QPointer<NodeSelector> nodeSelector = new NodeSelector(megaApi, NodeSelector::UPLOAD_SELECT, this->parentWidget());
+    QPointer<NodeSelector> nodeSelector = new NodeSelector(NodeSelector::UPLOAD_SELECT, this);
     MegaNode *defaultNode = megaApi->getNodeByPath(ui->eFolderPath->text().toUtf8().constData());
     if (defaultNode)
     {
-        nodeSelector->setSelectedFolderHandle(defaultNode->getHandle());
+        nodeSelector->setSelectedNodeHandle(defaultNode->getHandle());
         delete defaultNode;
     }
 
@@ -100,7 +100,7 @@ void UploadToMegaDialog::on_bChange_clicked()
         return;
     }
 
-    MegaHandle selectedMegaFolderHandle = nodeSelector->getSelectedFolderHandle();
+    MegaHandle selectedMegaFolderHandle = nodeSelector->getSelectedNodeHandle();
     MegaNode *node = megaApi->getNodeByHandle(selectedMegaFolderHandle);
     if (!node)
     {

@@ -159,7 +159,6 @@ macx {
         $$PWD/macx/NSPopover+MISSINGBackgroundView.h \
         $$PWD/macx/LockedPopOver.h \
         $$PWD/macx/Protocol.h \
-        $$PWD/macx/DynamicTransferQuotaPopOver.h \
         $$PWD/macx/MacXExtServerService.h \
         $$PWD/macx/QCustomMacToolbar.h
 
@@ -179,7 +178,6 @@ macx {
             $$PWD/macx/MacXLocalSocketPrivate.mm \
             $$PWD/macx/NSPopover+MISSINGBackgroundView.mm \
             $$PWD/macx/LockedPopOver.mm \
-            $$PWD/macx/DynamicTransferQuotaPopOver.mm \
             $$PWD/macx/QCustomMacToolbar.mm
 
     LIBS += -framework Cocoa

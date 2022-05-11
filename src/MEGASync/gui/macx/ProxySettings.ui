@@ -9,12 +9,19 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>497</width>
+    <width>593</width>
     <height>485</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Bandwidth</string>
+   <string>Proxies</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">#wSeparatorBottom
+{
+margin-right: 20px;
+margin-left: 20px;
+}</string>
   </property>
   <property name="modal">
    <bool>true</bool>
@@ -22,6 +29,18 @@
   <layout class="QVBoxLayout" name="verticalLayout">
    <property name="sizeConstraint">
     <enum>QLayout::SetFixedSize</enum>
+   </property>
+   <property name="leftMargin">
+    <number>12</number>
+   </property>
+   <property name="topMargin">
+    <number>12</number>
+   </property>
+   <property name="rightMargin">
+    <number>12</number>
+   </property>
+   <property name="bottomMargin">
+    <number>12</number>
    </property>
    <item>
     <widget class="QWidget" name="gProxy" native="true">
@@ -31,27 +50,24 @@
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
-     <layout class="QGridLayout" name="gridLayout_2">
+     <layout class="QGridLayout" name="gridLayout_2" columnminimumwidth="200,0">
       <property name="sizeConstraint">
        <enum>QLayout::SetDefaultConstraint</enum>
       </property>
       <property name="leftMargin">
-       <number>16</number>
+       <number>0</number>
       </property>
       <property name="topMargin">
        <number>0</number>
       </property>
       <property name="rightMargin">
-       <number>9</number>
+       <number>0</number>
       </property>
       <property name="bottomMargin">
-       <number>1</number>
+       <number>2</number>
       </property>
-      <property name="horizontalSpacing">
+      <property name="spacing">
        <number>12</number>
-      </property>
-      <property name="verticalSpacing">
-       <number>18</number>
       </property>
       <item row="13" column="1">
        <widget class="QLineEdit" name="eProxyUsername">
@@ -239,13 +255,26 @@
            </property>
           </widget>
          </item>
+         <item>
+          <spacer name="horizontalSpacer_2">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
         </layout>
        </widget>
       </item>
       <item row="11" column="0">
        <widget class="QLabel" name="lProxyServer">
         <property name="focusPolicy">
-         <enum>Qt::StrongFocus</enum>
+         <enum>Qt::NoFocus</enum>
         </property>
         <property name="text">
          <string>Server:</string>
@@ -256,7 +285,7 @@
        </widget>
       </item>
       <item row="14" column="1">
-       <widget class="QLineEdit" name="eProxyPassword">
+       <widget class="PasswordLineEdit" name="eProxyPassword">
         <property name="enabled">
          <bool>false</bool>
         </property>
@@ -322,7 +351,7 @@
             <enum>Qt::StrongFocus</enum>
            </property>
            <property name="text">
-            <string>No proxy</string>
+            <string>No Proxy</string>
            </property>
           </widget>
          </item>
@@ -372,7 +401,7 @@
             <string notr="true"/>
            </property>
            <property name="text">
-            <string>Proxy</string>
+            <string>Manual</string>
            </property>
           </widget>
          </item>
@@ -382,7 +411,7 @@
       <item row="10" column="0">
        <widget class="QLabel" name="lProxyType">
         <property name="focusPolicy">
-         <enum>Qt::StrongFocus</enum>
+         <enum>Qt::NoFocus</enum>
         </property>
         <property name="text">
          <string>Proxy type:</string>
@@ -416,10 +445,10 @@
             </sizepolicy>
            </property>
            <property name="focusPolicy">
-            <enum>Qt::StrongFocus</enum>
+            <enum>Qt::NoFocus</enum>
            </property>
            <property name="text">
-            <string>Proxy Settings:</string>
+            <string>Proxy settings:</string>
            </property>
            <property name="alignment">
             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -450,22 +479,19 @@
      <property name="orientation">
       <enum>Qt::Vertical</enum>
      </property>
+     <property name="sizeType">
+      <enum>QSizePolicy::Preferred</enum>
+     </property>
      <property name="sizeHint" stdset="0">
       <size>
        <width>20</width>
-       <height>40</height>
+       <height>5</height>
       </size>
      </property>
     </spacer>
    </item>
    <item>
     <widget class="QWidget" name="wSeparatorBottom" native="true">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
      <property name="minimumSize">
       <size>
        <width>0</width>
@@ -478,40 +504,28 @@
        <height>1</height>
       </size>
      </property>
-     <property name="focusPolicy">
-      <enum>Qt::NoFocus</enum>
-     </property>
      <property name="styleSheet">
-      <string notr="true">QWidget{
-margin-left: 9px;
-margin-right: 9px;
-}</string>
-     </property>
-     <property name="text" stdset="0">
-      <string/>
-     </property>
-     <property name="iconSize" stdset="0">
-      <size>
-       <width>576</width>
-       <height>1</height>
-      </size>
+      <string notr="true"/>
      </property>
     </widget>
    </item>
    <item>
     <widget class="QWidget" name="buttonBox" native="true">
      <layout class="QHBoxLayout" name="horizontalLayout">
+      <property name="spacing">
+       <number>7</number>
+      </property>
       <property name="leftMargin">
-       <number>9</number>
+       <number>20</number>
       </property>
       <property name="topMargin">
-       <number>9</number>
+       <number>7</number>
       </property>
       <property name="rightMargin">
-       <number>9</number>
+       <number>20</number>
       </property>
       <property name="bottomMargin">
-       <number>9</number>
+       <number>12</number>
       </property>
       <item>
        <spacer name="horizontalSpacer">
@@ -531,12 +545,18 @@ margin-right: 9px;
         <property name="text">
          <string>Cancel</string>
         </property>
+        <property name="autoDefault">
+         <bool>false</bool>
+        </property>
        </widget>
       </item>
       <item>
        <widget class="QPushButton" name="bUpdate">
         <property name="text">
          <string>Update</string>
+        </property>
+        <property name="autoDefault">
+         <bool>false</bool>
         </property>
         <property name="default">
          <bool>true</bool>
@@ -548,6 +568,29 @@ margin-right: 9px;
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>PasswordLineEdit</class>
+   <extends>QLineEdit</extends>
+   <header>PasswordLineEdit.h</header>
+  </customwidget>
+ </customwidgets>
+ <tabstops>
+  <tabstop>rNoProxy</tabstop>
+  <tabstop>rProxyAuto</tabstop>
+  <tabstop>rProxyManual</tabstop>
+  <tabstop>cProxyType</tabstop>
+  <tabstop>eProxyServer</tabstop>
+  <tabstop>eProxyPort</tabstop>
+  <tabstop>cProxyRequiresPassword</tabstop>
+  <tabstop>eProxyUsername</tabstop>
+  <tabstop>eProxyPassword</tabstop>
+  <tabstop>bCancel</tabstop>
+  <tabstop>bUpdate</tabstop>
+  <tabstop>lProxyType</tabstop>
+  <tabstop>lProxyServer</tabstop>
+  <tabstop>lProxySettings2</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

@@ -57,9 +57,9 @@ private:
 
     ActionProgress *mProgressHelper;
 
-    std::function<void(mega::MegaApi* api, mega::MegaRequest *request, mega::MegaError *e)> onRequestFinishCallback;
     bool mAutoremove = true;
     bool executeInAppThread = true;
+    std::function<void(mega::MegaApi* api, mega::MegaRequest *request, mega::MegaError *e)> onRequestFinishCallback;
 
 public:
 
@@ -75,10 +75,10 @@ public:
     {
     }
 
-    void onRequestFinish(mega::MegaApi *api, mega::MegaRequest *request, mega::MegaError *e);
+    virtual void onRequestFinish(mega::MegaApi *api, mega::MegaRequest *request, mega::MegaError *e);
     virtual void onRequestStart(mega::MegaApi* api, mega::MegaRequest *request);
-    virtual void onRequestUpdate(mega::MegaApi* api, mega::MegaRequest *request) {}
-    virtual void onRequestTemporaryError(mega::MegaApi *api, mega::MegaRequest *request, mega::MegaError* e) {}
+    virtual void onRequestUpdate(mega::MegaApi*, mega::MegaRequest*) {}
+    virtual void onRequestTemporaryError(mega::MegaApi*, mega::MegaRequest*, mega::MegaError*) {}
 };
 
 

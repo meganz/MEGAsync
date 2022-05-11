@@ -92,7 +92,7 @@ QPushButton
      <item>
       <widget class="QPushButton" name="bLocalFolder">
        <property name="text">
-        <string>Choose</string>
+        <string>Select</string>
        </property>
        <property name="iconSize">
         <size>
@@ -141,7 +141,7 @@ QPushButton
         <bool>true</bool>
        </property>
        <property name="text">
-        <string>Choose</string>
+        <string>Select</string>
        </property>
        <property name="iconSize">
         <size>

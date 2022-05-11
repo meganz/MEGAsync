@@ -17,6 +17,9 @@ ProxySettings::ProxySettings(MegaApplication *app, QWidget *parent) :
     mProgressDialog(new MegaProgressCustomDialog(this))
 {
     mUi->setupUi(this);
+
+    setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
+
     mUi->eProxyPort->setValidator(new QIntValidator(0, std::numeric_limits<uint16_t>::max(), this));
     mProgressDialog->setWindowModality(Qt::WindowModal);
 

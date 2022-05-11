@@ -975,7 +975,7 @@ background: transparent;</string>
                <item>
                 <widget class="QLabel" name="lLoginTitle">
                  <property name="text">
-                  <string>Login</string>
+                  <string>Log in</string>
                  </property>
                 </widget>
                </item>
@@ -988,7 +988,7 @@ background: transparent;</string>
                   </sizepolicy>
                  </property>
                  <property name="text">
-                  <string>You need to login MEGA account to run MEGA desktop app.</string>
+                  <string>You need to log into MEGA account to run MEGA desktop app.</string>
                  </property>
                  <property name="wordWrap">
                   <bool>true</bool>
@@ -1043,7 +1043,7 @@ background: transparent;</string>
 </string>
               </property>
               <property name="text">
-               <string>Login</string>
+               <string>Log in</string>
               </property>
              </widget>
             </item>

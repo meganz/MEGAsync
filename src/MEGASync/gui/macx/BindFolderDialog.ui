@@ -26,10 +26,10 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>Add synchronized folder</string>
+   <string>Add folder</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">QWidget
+   <string notr="true">QWidget#BindFolderDialog
 {
 font-size: 11px;
 }
@@ -88,7 +88,7 @@ min-height: 48px;
       </sizepolicy>
      </property>
      <property name="text">
-      <string>Add synchronized folder:</string>
+      <string>Add synchronised folder:</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>
@@ -211,7 +211,7 @@ margin-right: 32px;</string>
          </size>
         </property>
         <property name="text">
-         <string>OK</string>
+         <string>Add</string>
         </property>
        </widget>
       </item>

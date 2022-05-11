@@ -9,7 +9,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>487</width>
+    <width>469</width>
     <height>356</height>
    </rect>
   </property>
@@ -92,7 +92,7 @@
          <enum>Qt::StrongFocus</enum>
         </property>
         <property name="text">
-         <string>Proxy Settings:</string>
+         <string>Proxy settings:</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignRight|Qt::AlignTop|Qt::AlignTrailing</set>
@@ -186,7 +186,7 @@
        </widget>
       </item>
       <item row="13" column="1">
-       <widget class="QLineEdit" name="eProxyPassword">
+       <widget class="PasswordLineEdit" name="eProxyPassword">
         <property name="enabled">
          <bool>false</bool>
         </property>
@@ -371,7 +371,7 @@
             <enum>Qt::StrongFocus</enum>
            </property>
            <property name="text">
-            <string>No proxy</string>
+            <string>No Proxy</string>
            </property>
           </widget>
          </item>
@@ -421,7 +421,7 @@
             <string notr="true"/>
            </property>
            <property name="text">
-            <string>Proxy</string>
+            <string>Manual</string>
            </property>
           </widget>
          </item>
@@ -522,7 +522,7 @@
       <item>
        <widget class="QPushButton" name="bUpdate">
         <property name="text">
-         <string>Update</string>
+         <string>Apply</string>
         </property>
         <property name="default">
          <bool>true</bool>
@@ -534,6 +534,13 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>PasswordLineEdit</class>
+   <extends>QLineEdit</extends>
+   <header>PasswordLineEdit.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

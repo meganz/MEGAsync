@@ -365,7 +365,7 @@ void CustomTransferItem::updateTransfer()
     }
 
     // Update progress bar
-    unsigned int permil = (totalSize > 0) ? ((1000 * totalTransferredBytes) / totalSize) : 0;
+    unsigned int permil = (totalSize > 0) ? static_cast<unsigned int>((1000 * totalTransferredBytes) / totalSize) : 0;
     ui->pbTransfer->setValue(permil);
 }
 
@@ -376,7 +376,7 @@ void CustomTransferItem::updateFinishedTime()
         return;
     }
 
-    Preferences *preferences = Preferences::instance();
+    auto preferences = Preferences::instance();
     QDateTime now = QDateTime::currentDateTime();
     qint64 secs = ( now.toMSecsSinceEpoch() / 100 - (preferences->getMsDiffTimeWithSDK() + dsFinishedTime) ) / 10;
 

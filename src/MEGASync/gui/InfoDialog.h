@@ -17,6 +17,7 @@
 #include "HighDpiResize.h"
 #include "Utilities.h"
 #include "FilterAlertWidget.h"
+#include "QtPositioningBugFixer.h"
 #include "TransferQuota.h"
 #include <memory>
 #ifdef _WIN32
@@ -95,11 +96,13 @@ public:
 #endif
 
     void setUnseenNotifications(long long value);
-    void setUnseenTypeNotifications(int all, int contacts, int shares, int payment);
+    void setUnseenTypeNotifications(long long all, long long contacts, long long shares, long long payment);
     long long getUnseenNotifications() const;
     void closeSyncsMenu();
     int getLoggedInMode() const;
     void showNotifications();
+
+    void move(int x, int y);
 
 private:
     InfoDialog() = default;
@@ -108,6 +111,7 @@ private:
     void updateTransfersCount();
     void hideEvent(QHideEvent *event) override;
     void showEvent(QShowEvent *event) override;
+    void moveEvent(QMoveEvent *) override;
 
 public slots:
 
@@ -256,12 +260,17 @@ protected:
     QTimer uploadsFinishedTimer;
     QTimer transfersFinishedTimer;
     MegaApplication *app;
-    Preferences *preferences;
+    std::shared_ptr<Preferences> preferences;
     Model *model;
     Controller *controller;
     mega::MegaApi *megaApi;
     mega::MegaTransfer *activeDownload;
     mega::MegaTransfer *activeUpload;
+
+ private:
+    static double computeRatio(long long completed, long long remaining);
+
+    QtPositioningBugFixer qtBugFixer;
 };
 
 #endif // INFODIALOG_H

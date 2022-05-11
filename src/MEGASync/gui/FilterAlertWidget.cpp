@@ -8,7 +8,7 @@ FilterAlertWidget::FilterAlertWidget(QWidget *parent) :
     ui->setupUi(this);
     setUnseenNotifications(0, 0, 0, 0);
 
-    setWindowFlags(Qt::FramelessWindowHint | Qt::Popup);
+    setWindowFlags(windowFlags() | Qt::FramelessWindowHint | Qt::Popup);
     setAttribute(Qt::WA_TranslucentBackground);
 }
 
@@ -22,12 +22,12 @@ void FilterAlertWidget::reset()
     setUnseenNotifications(0, 0, 0, 0);
 }
 
-void FilterAlertWidget::setUnseenNotifications(int all, int contacts, int shares, int payment)
+void FilterAlertWidget::setUnseenNotifications(long long all, long long contacts, long long shares, long long payment)
 {
-    int allUnseen = all > 0 ? all : 0;
-    int contactsUnseen = contacts > 0 ? contacts : 0;
-    int sharesUnseen = shares > 0 ? shares : 0;
-    int paymentUnseen = payment > 0 ? payment : 0;
+    long long allUnseen = all > 0 ? all : 0;
+    long long contactsUnseen = contacts > 0 ? contacts : 0;
+    long long sharesUnseen = shares > 0 ? shares : 0;
+    long long paymentUnseen = payment > 0 ? payment : 0;
 
     if (!allUnseen)
     {

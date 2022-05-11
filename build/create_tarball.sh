@@ -58,14 +58,11 @@ rm -fr MEGAsync/MEGAsync/megasync*.dsc
 
 # fix version number in template files and copy to appropriate directories
 sed -e "s/MEGASYNC_VERSION/$MEGASYNC_VERSION/g" templates/MEGAsync/megasync.spec | sed "s#^ *##g" > MEGAsync/MEGAsync/megasync.spec
-for dist in xUbuntu_{1,2}{0,1,2,3,4,5,6,7,8,9}.{04,10} Debian_{7,8,9,10}.0 Debian_testing; do
-if [ -f templates/MEGAsync/megasync-$dist.dsc ]; then
-	sed -e "s/MEGASYNC_VERSION/$MEGASYNC_VERSION/g" templates/MEGAsync/megasync-$dist.dsc > MEGAsync/MEGAsync/megasync-$dist.dsc
-else
-	sed -e "s/MEGASYNC_VERSION/$MEGASYNC_VERSION/g" templates/MEGAsync/megasync.dsc > MEGAsync/MEGAsync/megasync-$dist.dsc
-fi
-done
+sed -e "s/MEGASYNC_VERSION/$MEGASYNC_VERSION/g" templates/MEGAsync/megasync.dsc > MEGAsync/MEGAsync/megasync.dsc
 sed -e "s/MEGASYNC_VERSION/$MEGASYNC_VERSION/g" templates/MEGAsync/PKGBUILD > MEGAsync/MEGAsync/PKGBUILD
+for dscFile in `find templates/MEGAsync/ -name megasync-xUbuntu_* -o -name megasync-Debian_* -o -name megasync-Raspbian_*`; do
+    sed -e "s/MEGASYNC_VERSION/$MEGASYNC_VERSION/g" "${dscFile}" > MEGAsync/MEGAsync/`basename ${dscFile}`
+done
 
 #include license as copyright file
 echo "Format: http://www.debian.org/doc/packaging-manuals/copyright-format/1.0/" > MEGAsync/MEGAsync/debian.copyright
@@ -130,7 +127,7 @@ ln -s ../../src/configure $MEGASYNC_NAME/configure
 ln -s ../../src/MEGA.pro $MEGASYNC_NAME/MEGA.pro
 ln -s ../../src/MEGASync $MEGASYNC_NAME/MEGASync
 ln -s $archives $MEGASYNC_NAME/archives
-tar czfh $MEGASYNC_NAME.tar.gz $MEGASYNC_NAME
+tar czfh $MEGASYNC_NAME.tar.gz --exclude-vcs $MEGASYNC_NAME
 rm -rf $MEGASYNC_NAME
 
 mv $cwd/config.h_bktarball $cwd/../src/MEGASync/mega/include/mega/config.h || true

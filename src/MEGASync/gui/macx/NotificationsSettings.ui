@@ -1,0 +1,395 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>NotificationsSettings</class>
+ <widget class="QWidget" name="NotificationsSettings">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>545</width>
+    <height>361</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string notr="true"/>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">#wSeparatorShares, #wSeparatorContacts, #wSeparatorInfo
+{
+background-color: rgba(0,0,0,0.1);
+}
+
+
+</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <property name="spacing">
+    <number>0</number>
+   </property>
+   <property name="leftMargin">
+    <number>32</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>32</number>
+   </property>
+   <property name="bottomMargin">
+    <number>0</number>
+   </property>
+   <item>
+    <layout class="QGridLayout" name="glAccountNotifications" columnminimumwidth="200,0">
+     <property name="topMargin">
+      <number>0</number>
+     </property>
+     <property name="horizontalSpacing">
+      <number>4</number>
+     </property>
+     <item row="0" column="0">
+      <widget class="QLabel" name="GeneralSwitchLabel">
+       <property name="minimumSize">
+        <size>
+         <width>195</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>195</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>System notifications:</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+       <property name="wordWrap">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1" alignment="Qt::AlignLeft">
+      <widget class="QWidget" name="GeneralSwithContainer" native="true">
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="NotificationType" stdset="0">
+        <UInt>0</UInt>
+       </property>
+       <layout class="QHBoxLayout" name="GeneralSwitchLayout">
+        <property name="spacing">
+         <number>0</number>
+        </property>
+        <property name="leftMargin">
+         <number>0</number>
+        </property>
+        <property name="topMargin">
+         <number>0</number>
+        </property>
+        <property name="rightMargin">
+         <number>0</number>
+        </property>
+        <property name="bottomMargin">
+         <number>0</number>
+        </property>
+        <item>
+         <widget class="SwitchButton" name="GeneralSwitch" native="true"/>
+        </item>
+       </layout>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="QWidget" name="NotificationSettingCheckboxes" native="true">
+     <layout class="QVBoxLayout" name="verticalLayout_2">
+      <property name="spacing">
+       <number>0</number>
+      </property>
+      <property name="leftMargin">
+       <number>0</number>
+      </property>
+      <property name="topMargin">
+       <number>0</number>
+      </property>
+      <property name="rightMargin">
+       <number>0</number>
+      </property>
+      <property name="bottomMargin">
+       <number>0</number>
+      </property>
+      <item>
+       <widget class="QWidget" name="wSeparatorShares" native="true">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>1</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>1</height>
+         </size>
+        </property>
+        <property name="IconSize" stdset="0">
+         <size>
+          <width>576</width>
+          <height>1</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <layout class="QGridLayout" name="glShares" columnstretch="0,0" columnminimumwidth="200,0">
+        <property name="topMargin">
+         <number>18</number>
+        </property>
+        <property name="bottomMargin">
+         <number>18</number>
+        </property>
+        <property name="horizontalSpacing">
+         <number>4</number>
+        </property>
+        <property name="verticalSpacing">
+         <number>12</number>
+        </property>
+        <item row="3" column="1" alignment="Qt::AlignLeft">
+         <widget class="QCheckBox" name="AddOrRemovedFilesCheck">
+          <property name="text">
+           <string>Added or removed files</string>
+          </property>
+          <property name="NotificationType" stdset="0">
+           <UInt>2</UInt>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="1" alignment="Qt::AlignLeft">
+         <widget class="QCheckBox" name="RemovedAcccessCheck">
+          <property name="text">
+           <string>Access to a shared folder was removed</string>
+          </property>
+          <property name="NotificationType" stdset="0">
+           <UInt>3</UInt>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1" rowspan="3">
+         <widget class="QCheckBox" name="NewSharedCheck">
+          <property name="text">
+           <string>New shared folder from contact</string>
+          </property>
+          <property name="NotificationType" stdset="0">
+           <UInt>1</UInt>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="0" rowspan="3">
+         <widget class="QLabel" name="SharesLabel">
+          <property name="minimumSize">
+           <size>
+            <width>195</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>195</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>Shares:</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <widget class="QWidget" name="wSeparatorContacts" native="true">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>1</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>1</height>
+         </size>
+        </property>
+        <property name="IconSize" stdset="0">
+         <size>
+          <width>576</width>
+          <height>1</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <layout class="QGridLayout" name="glContacts" columnminimumwidth="200,0">
+        <property name="topMargin">
+         <number>18</number>
+        </property>
+        <property name="bottomMargin">
+         <number>18</number>
+        </property>
+        <property name="horizontalSpacing">
+         <number>4</number>
+        </property>
+        <property name="verticalSpacing">
+         <number>12</number>
+        </property>
+        <item row="0" column="0">
+         <widget class="QLabel" name="ContactLabel">
+          <property name="minimumSize">
+           <size>
+            <width>195</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>195</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>Contacts:</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <widget class="QCheckBox" name="NewContactCheck">
+          <property name="text">
+           <string>New contact request</string>
+          </property>
+          <property name="NotificationType" stdset="0">
+           <UInt>4</UInt>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="1">
+         <widget class="QCheckBox" name="ContactReminderCheck">
+          <property name="text">
+           <string>Pending contact request reminder</string>
+          </property>
+          <property name="NotificationType" stdset="0">
+           <UInt>5</UInt>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="1">
+         <widget class="QCheckBox" name="ContactAceptedCheck">
+          <property name="text">
+           <string>Someone accepted your contact request</string>
+          </property>
+          <property name="NotificationType" stdset="0">
+           <UInt>6</UInt>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <widget class="QWidget" name="wSeparatorInfo" native="true">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>1</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>1</height>
+         </size>
+        </property>
+        <property name="IconSize" stdset="0">
+         <size>
+          <width>576</width>
+          <height>1</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <layout class="QGridLayout" name="glInfo" columnstretch="0,0" columnminimumwidth="200,0">
+        <property name="sizeConstraint">
+         <enum>QLayout::SetDefaultConstraint</enum>
+        </property>
+        <property name="topMargin">
+         <number>18</number>
+        </property>
+        <property name="bottomMargin">
+         <number>18</number>
+        </property>
+        <property name="horizontalSpacing">
+         <number>4</number>
+        </property>
+        <property name="verticalSpacing">
+         <number>12</number>
+        </property>
+        <item row="0" column="0" rowspan="2">
+         <widget class="QLabel" name="InfoLabel">
+          <property name="minimumSize">
+           <size>
+            <width>195</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>195</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>Info:</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1" rowspan="2">
+         <widget class="QCheckBox" name="DesktopCheck">
+          <property name="text">
+           <string>Info notifications</string>
+          </property>
+          <property name="NotificationType" stdset="0">
+           <UInt>7</UInt>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>SwitchButton</class>
+   <extends>QWidget</extends>
+   <header location="global">SwitchButton.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>

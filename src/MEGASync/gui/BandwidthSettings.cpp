@@ -12,10 +12,24 @@ BandwidthSettings::BandwidthSettings(MegaApplication *app, QWidget *parent) :
 {
     mUi->setupUi(this);
 
+    setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
+
     mUi->eUploadLimit->setValidator(new QIntValidator(0, 1000000000, this));
     mUi->eDownloadLimit->setValidator(new QIntValidator(0, 1000000000, this));
+#ifdef Q_OS_MACOS
+    mUi->eMaxDownloadConnections->setMaxCount(mega::MegaClient::MAX_NUM_CONNECTIONS);
+    mUi->eMaxUploadConnections->setMaxCount(mega::MegaClient::MAX_NUM_CONNECTIONS);
+
+    for(unsigned i = 1; i <= mega::MegaClient::MAX_NUM_CONNECTIONS; i++)
+    {
+        mUi->eMaxDownloadConnections->addItem(QString::number(i), i);
+        mUi->eMaxUploadConnections->addItem(QString::number(i), i);
+    }
+
+#else
     mUi->eMaxDownloadConnections->setRange(1, mega::MegaClient::MAX_NUM_CONNECTIONS);
     mUi->eMaxUploadConnections->setRange(1, mega::MegaClient::MAX_NUM_CONNECTIONS);
+#endif
 
     QButtonGroup* downloadButtonGroup = new QButtonGroup(this);
     downloadButtonGroup->addButton(mUi->rDownloadLimit);
@@ -52,8 +66,13 @@ void BandwidthSettings::initialize()
                                    : QString::number(downloadLimitKB));
     mUi->eDownloadLimit->setEnabled(mUi->rDownloadLimit->isChecked());
 
+#ifdef Q_OS_MACOS
+    mUi->eMaxDownloadConnections->setCurrentText(QString::number(mPreferences->parallelDownloadConnections()));
+    mUi->eMaxUploadConnections->setCurrentText(QString::number(mPreferences->parallelUploadConnections()));
+#else
     mUi->eMaxDownloadConnections->setValue(mPreferences->parallelDownloadConnections());
     mUi->eMaxUploadConnections->setValue(mPreferences->parallelUploadConnections());
+#endif
 
     mUi->cbUseHttps->setChecked(mPreferences->usingHttpsOnly());
 }
@@ -107,6 +126,19 @@ void BandwidthSettings::on_bUpdate_clicked()
         mPreferences->setDownloadLimitKB(mUi->eDownloadLimit->text().toInt());
     }
 
+#ifdef Q_OS_MACOS
+    int uploadValue = mUi->eMaxUploadConnections->itemData(mUi->eMaxUploadConnections->currentIndex()).toInt();
+    if (uploadValue != mPreferences->parallelUploadConnections())
+    {
+        mPreferences->setParallelUploadConnections(uploadValue);
+    }
+
+    int downloadValue = mUi->eMaxDownloadConnections->itemData(mUi->eMaxDownloadConnections->currentIndex()).toInt();
+    if (downloadValue != mPreferences->parallelDownloadConnections())
+    {
+        mPreferences->setParallelDownloadConnections(downloadValue);
+    }
+#else
     if (mUi->eMaxUploadConnections->value() != mPreferences->parallelUploadConnections())
     {
         mPreferences->setParallelUploadConnections(mUi->eMaxUploadConnections->value());
@@ -115,6 +147,8 @@ void BandwidthSettings::on_bUpdate_clicked()
     {
         mPreferences->setParallelDownloadConnections(mUi->eMaxDownloadConnections->value());
     }
+#endif
+
 
     if (mUi->cbUseHttps->isChecked() != mPreferences->usingHttpsOnly())
     {

@@ -7,6 +7,7 @@
 #include "control/AppStatsEvents.h"
 #include "gui/MultiQFileDialog.h"
 #include "gui/Login2FA.h"
+#include "gui/GuiUtilities.h"
 #include "platform/Platform.h"
 
 #include <QKeyEvent>
@@ -22,7 +23,6 @@ SetupWizard::SetupWizard(MegaApplication *app, QWidget *parent) :
     ui(new Ui::SetupWizard)
 {
     ui->setupUi(this);
-    setAttribute(Qt::WA_QuitOnClose, false);
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
     setWindowModality(Qt::WindowModal);
 
@@ -90,7 +90,7 @@ SetupWizard::~SetupWizard()
     delete ui;
 }
 
-void SetupWizard::onRequestStart(MegaApi *api, MegaRequest *request)
+void SetupWizard::onRequestStart(MegaApi*, MegaRequest* request)
 {
     if (request->getType() == MegaRequest::TYPE_LOGIN)
     {
@@ -342,14 +342,7 @@ void SetupWizard::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
 
 void SetupWizard::onRequestUpdate(MegaApi *, MegaRequest *request)
 {
-    if (request->getType() == MegaRequest::TYPE_FETCH_NODES)
-    {
-        if (request->getTotalBytes() > 0)
-        {
-            ui->progressBar->setMaximum(request->getTotalBytes());
-            ui->progressBar->setValue(request->getTransferredBytes());
-        }
-    }
+    GuiUtilities::updateDataRequestProgressBar(ui->progressBar, request);
 }
 
 void SetupWizard::goToStep(int page)
@@ -481,7 +474,7 @@ void SetupWizard::on_bNext_clicked()
             defaultFolderPath.append(QString::fromUtf8("/MEGAsync"));
             ui->eMegaFolder->setText(QString::fromUtf8("/MEGAsync"));
             ui->lAdvancedSetup->setText(tr("Selective sync:"));
-            ui->lHeader->setText(tr("Setup selective sync"));
+            ui->lHeader->setText(tr("Set up selective sync"));
             ui->bSyncType->setIcon(QIcon(QString::fromAscii("://images/step_4_selective_sync.png")));
             ui->bSyncType->setIconSize(QSize(94, 94));
             ui->lSyncType->setText(tr("Selective sync"));
@@ -497,7 +490,7 @@ void SetupWizard::on_bNext_clicked()
             defaultFolderPath.append(QString::fromUtf8("/MEGA"));
             ui->eMegaFolder->setText(QString::fromUtf8("/"));
             ui->lAdvancedSetup->setText(tr("Select Local folder:"));
-            ui->lHeader->setText(tr("Setup full sync"));
+            ui->lHeader->setText(tr("Set up full sync"));
             ui->bSyncType->setIcon(QIcon(QString::fromAscii("://images/step_4_full_sync.png")));
             ui->bSyncType->setIconSize(QSize(94, 94));
             ui->lSyncType->setText(tr("Full Sync"));
@@ -740,7 +733,7 @@ void SetupWizard::on_bLocalFolder_clicked()
 
 void SetupWizard::on_bMegaFolder_clicked()
 {
-    QPointer<NodeSelector> nodeSelector = new NodeSelector(megaApi, NodeSelector::SYNC_SELECT, this);
+    QPointer<NodeSelector> nodeSelector = new NodeSelector(NodeSelector::SYNC_SELECT, this);
 #ifdef Q_OS_LINUX
     nodeSelector->setWindowFlags(nodeSelector->windowFlags() | (Qt::Tool));
 #endif
@@ -751,7 +744,7 @@ void SetupWizard::on_bMegaFolder_clicked()
         return;
     }
 
-    selectedMegaFolderHandle = nodeSelector->getSelectedFolderHandle();
+    selectedMegaFolderHandle = nodeSelector->getSelectedNodeHandle();
     MegaNode *node = megaApi->getNodeByHandle(selectedMegaFolderHandle);
     if (!node)
     {
@@ -964,7 +957,7 @@ void SetupWizard::page_login()
     ui->eLoginEmail->setFocus();
     ui->bNext->setDefault(true);
 
-    ui->lHeader->setText(tr("Login to your MEGA account"));
+    ui->lHeader->setText(tr("Log in to your MEGA account"));
     ui->bCurrentStep->setIcon(QIcon(QString::fromAscii("://images/setup_step2.png")));
     ui->bCurrentStep->setIconSize(QSize(512, 44));
 
@@ -1051,7 +1044,7 @@ void SetupWizard::page_welcome()
     ui->bCancel->setFocus();
     ui->bCancel->setDefault(true);
 
-    ui->lHeader->setText(tr("We are all done!"));
+    ui->lHeader->setText(tr("We are all done"));
 
     if (!loggingStarted) //Logging started at main dialog
     {
@@ -1092,7 +1085,7 @@ void SetupWizard::page_newaccount()
     ui->bBack->setEnabled(false);
     ui->bSkip->setVisible(true);
     ui->bSkip->setEnabled(true);
-    ui->bSkip->setText(tr("Login"));
+    ui->bSkip->setText(tr("Log in"));
     ui->eName->setFocus();
     ui->bNext->setDefault(true);
     ui->cAgreeWithTerms->setChecked(false);
@@ -1182,7 +1175,7 @@ void SetupWizard::lTermsLink_clicked()
     ui->cAgreeWithTerms->toggle();
 }
 
-void SetupWizard::on_lTermsLink_linkActivated(const QString &link)
+void SetupWizard::on_lTermsLink_linkActivated(const QString& /*link*/)
 {
     QtConcurrent::run(QDesktopServices::openUrl, QUrl(Preferences::BASE_URL + QString::fromUtf8("/terms")));
 }
@@ -1237,7 +1230,7 @@ void SetupWizard::onPasswordTextChanged(QString text)
 }
 
 PreConfiguredSync::PreConfiguredSync(QString localFolder, MegaHandle megaFolderHandle, QString syncName):
-    mLocalFolder{localFolder}, mMegaFolderHandle{megaFolderHandle},mSyncName(syncName)
+    mMegaFolderHandle(megaFolderHandle), mLocalFolder(localFolder), mSyncName(syncName)
 {
 
 }

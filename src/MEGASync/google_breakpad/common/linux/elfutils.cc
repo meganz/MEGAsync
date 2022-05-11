@@ -71,7 +71,7 @@ void FindElfClassSection(const char *elf_base,
 
   if (section != NULL && section->sh_size > 0) {
     *section_start = elf_base + section->sh_offset;
-    *section_size = section->sh_size;
+    *section_size = static_cast<int>(section->sh_size);
   }
 }
 
@@ -98,7 +98,7 @@ void FindElfClassSegment(const char *elf_base,
   for (int i = 0; i < elf_header->e_phnum; ++i) {
     if (phdrs[i].p_type == segment_type) {
       *segment_start = elf_base + phdrs[i].p_offset;
-      *segment_size = phdrs[i].p_filesz;
+      *segment_size = static_cast<int>(phdrs[i].p_filesz);
       return;
     }
   }

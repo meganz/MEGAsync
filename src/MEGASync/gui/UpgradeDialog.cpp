@@ -5,227 +5,202 @@
 #include "ui_UpgradeDialog.h"
 #include "Utilities.h"
 #include "Preferences.h"
+#include "gui/PlanWidget.h"
+
 #include <QDateTime>
-#include <QUrl>
-#include "HighDpiResize.h"
-#include <QMouseEvent>
-#include "mega/types.h"
 
-using namespace mega;
+static constexpr long long TIMER_INTERVAL_MS (1000ll); // 1s
 
-UpgradeDialog::UpgradeDialog(MegaApi *megaApi, MegaPricing *pricing, QWidget *parent)
-    :QDialog(parent),
-    ui(new Ui::UpgradeDialog)
+UpgradeDialog::UpgradeDialog(mega::MegaApi* megaApi, std::shared_ptr<mega::MegaPricing> pricing,
+                             std::shared_ptr<mega::MegaCurrency> currency, QWidget* parent)
+    : QDialog(parent),
+      mUi (new Ui::UpgradeDialog),
+      mMegaApi (megaApi),
+      mPricing (pricing),
+      mCurrency (currency),
+      mFinishTime (0ll)
 {
-    ui->setupUi(this);
+    mUi->setupUi(this);
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
-    ui->toolButtonQuestion->setAttribute(Qt::WA_TransparentForMouseEvents);
 
-    this->megaApi = megaApi;
-    if (pricing)
-    {
-        this->pricing = pricing->copy();
-    }
-    else
-    {
-        this->pricing = NULL;
-    }
-
-    finishTime = 0;
-
-    ui->labelInfo->setTextFormat(Qt::RichText);
-    ui->labelInfo->setText(QString::fromUtf8("<p style=\"line-height: 20px;\">") + ui->labelInfo->text() + QString::fromUtf8("</p>"));
-    refreshAccountDetails();
-
-    plansLayout = new QHBoxLayout();
-    plansLayout->setContentsMargins(18,0,18,0);
-    plansLayout->setSpacing(0);
-
-    delete ui->wPlans->layout();
-    ui->wPlans->setLayout(plansLayout);
+    delete mUi->wPlans->layout();
+    mPlansLayout = new QHBoxLayout(mUi->wPlans);
+    mPlansLayout->setContentsMargins(0, 0, 0, 0);
+    mPlansLayout->setSpacing(8);
 
     updatePlans();
+    configureAnimation();
 
-    timer = new QTimer(this);
-    timer->setSingleShot(false);
-    connect(timer, SIGNAL(timeout()), this, SLOT(unitTimeElapsed()));
-    highDpiResize.init(this);
+    mHighDpiResize.init(this);
 
-#ifdef __APPLE__
-    QSize size = mPopOver->size();
-    m_NativePopOver = allocatePopOverWithView(mPopOver->nativeView(), size);
-    mPopOver->show();
-#endif
-}
-
-void UpgradeDialog::setTimestamp(long long time)
-{
-    finishTime = time;
-    unitTimeElapsed();
-    if (!timer->isActive())
-    {
-        timer->start(1000);
-    }
-}
-
-void UpgradeDialog::setPricing(MegaPricing *pricing)
-{
-    if (!pricing)
-    {
-        return;
-    }
-
-    if (this->pricing)
-    {
-        delete this->pricing;
-    }
-
-    this->pricing = pricing->copy();
-    updatePlans();
-}
-
-void UpgradeDialog::refreshAccountDetails()
-{
-    Preferences *preferences = Preferences::instance();
-    if (preferences->isTemporalBandwidthValid() && preferences->temporalBandwidth())
-    {
-        QString url = QString::fromUtf8("mega://#pro");
-        Utilities::getPROurlWithParameters(url);
-
-        mPopOver->updateMessage(tr("The IP address you are using has utilised %1 of data transfer in the last 6 hours,"
-                                   " which took you over our current limit. To remove this limit,"
-                                   " you can [A]upgrade to PRO[/A], which will give you your own transfer quota"
-                                   " package and also ample extra storage space. ")
-                           .arg(Utilities::getSizeString(preferences->temporalBandwidth()))
-                           .replace(QString::fromUtf8("[A]"), QString::fromUtf8("<a href=\"%1\"><span style=\"color:#d90007; text-decoration:none;\">").arg(url))
-                           .replace(QString::fromUtf8("[/A]"), QString::fromUtf8("</span></a>"))
-                           .replace(QString::fromUtf8(" 6 "), QString::fromUtf8(" ").append(QString::number(preferences->temporalBandwidthInterval())).append(QString::fromUtf8(" ")))
-                           + QString::fromUtf8("</p>"));
-        ui->toolButtonQuestion->setVisible(true);
-    }
-    else
-    {
-        ui->toolButtonQuestion->setVisible(false);
-    }
+    mTimer = new QTimer(this);
+    mTimer->setSingleShot(false);
+    connect(mTimer, &QTimer::timeout, this, &UpgradeDialog::unitTimeElapsed);
 }
 
 UpgradeDialog::~UpgradeDialog()
 {
-    delete ui;
-    delete pricing;
+    delete mUi;
+}
+
+void UpgradeDialog::setPricing(std::shared_ptr<mega::MegaPricing> pricing,
+                               std::shared_ptr<mega::MegaCurrency> currency)
+{
+    if (pricing && currency)
+    {
+        mPricing = pricing;
+        mCurrency = currency;
+        updatePlans();
+    }
+}
+
+void UpgradeDialog::setTimestamp(long long time)
+{
+    mFinishTime = time;
+    unitTimeElapsed();
+    if (!mTimer->isActive())
+    {
+        mTimer->start(TIMER_INTERVAL_MS);
+    }
+}
+
+void UpgradeDialog::changeEvent(QEvent* event)
+{
+    if (event->type() == QEvent::LanguageChange)
+    {
+        mUi->retranslateUi(this);
+    }
+    QDialog::changeEvent(event);
 }
 
 void UpgradeDialog::updatePlans()
 {
-    if (!pricing)
+    if (mPricing && mCurrency)
     {
-        return;
-    }
-
-    clearPlans();
-
-    QString userAgent = QString::fromUtf8(megaApi->getUserAgent());
-    int products = pricing->getNumProducts();
-    for (int it = 0; it < products; it++)
-    {
-        if (pricing->getMonths(it) == 1)
+        clearPlans();
+        bool isBillingCurrency (false);
+        QVector<PlanWidget*> cards;
+        int minPriceFontSize (std::numeric_limits<int>::max());
+        QByteArray bSym (QByteArray::fromBase64(mCurrency->getCurrencySymbol()));
+        QString billingCurrencySymbol (QString::fromUtf8(bSym.data()));
+        QString billingCurrencyName (QString::fromUtf8(mCurrency->getCurrencyName()));
+        QString localCurrencyName;
+        QString localCurrencySymbol;
+        QByteArray lSym (QByteArray::fromBase64(mCurrency->getLocalCurrencySymbol()));
+        if (lSym.isEmpty())
         {
-            PlanInfo data = {
-                pricing->getAmount(it),
-                convertCurrency(pricing->getCurrency(it)),
-                pricing->getGBStorage(it),
-                pricing->getGBTransfer(it),
-                pricing->getProLevel(it)
-            };
-            plansLayout->addWidget(new PlanWidget(data, userAgent));
+            localCurrencySymbol = billingCurrencySymbol;
+            localCurrencyName = billingCurrencyName;
+            isBillingCurrency = true;
         }
-    } 
+        else
+        {
+            localCurrencySymbol = QString::fromUtf8(lSym.data());
+            localCurrencyName = QString::fromUtf8(mCurrency->getLocalCurrencyName());
+        }
+
+        QString userAgent (QString::fromUtf8(mMegaApi->getUserAgent()));
+        int products (mPricing->getNumProducts());
+        for (int it = 0; it < products; it++)
+        {
+            if (mPricing->getMonths(it) == 1)
+            {
+                PlanInfo data {
+                    0, 0, 0,
+                    mPricing->getProLevel(it),
+                    mPricing->getGBPerStorage(it),
+                    mPricing->getGBPerTransfer(it),
+                    0, 0, 0, 0, 0, 0,
+                    billingCurrencySymbol,
+                    billingCurrencyName,
+                    localCurrencySymbol,
+                    localCurrencyName
+                };
+
+                if (!mPricing->isBusinessType(it))
+                {
+                    data.minUsers = 1;
+                    data.gbStorage = mPricing->getGBStorage(it);
+                    data.gbTransfer =  mPricing->getGBTransfer(it);
+                    data.pricePerUserBilling = static_cast<unsigned int>(mPricing->getAmount(it));
+                    data.pricePerUserLocal = isBillingCurrency ?
+                                                 data.pricePerUserBilling
+                                               : static_cast<unsigned int>(mPricing->getLocalPrice(it));
+                }
+                else
+                {
+                    data.minUsers = mPricing->getMinUsers(it);
+                    data.gbStorage = mPricing->getGBStoragePerUser(it);
+                    data.gbTransfer =  mPricing->getGBTransferPerUser(it);
+                    data.pricePerUserBilling = mPricing->getPricePerUser(it);
+                    data.pricePerStorageBilling = mPricing->getPricePerStorage(it);
+                    data.pricePerTransferBilling = mPricing->getPricePerTransfer(it);
+                    if (isBillingCurrency)
+                    {
+                        data.pricePerUserLocal = data.pricePerUserBilling;
+                        data.pricePerStorageLocal = data.pricePerStorageBilling;
+                        data.pricePerTransferLocal = data.pricePerTransferBilling;
+                    }
+                    else
+                    {
+                        data.pricePerUserLocal = mPricing->getLocalPricePerUser(it);
+                        data.pricePerStorageLocal = mPricing->getLocalPricePerStorage(it);
+                        data.pricePerTransferLocal = mPricing->getLocalPricePerTransfer(it);
+                    }
+                }
+
+                PlanWidget* card (new PlanWidget(data, userAgent, this));
+                mPlansLayout->addWidget(card);
+                mUi->lPriceEstimation->setVisible(!isBillingCurrency);
+                cards.append(card);
+                minPriceFontSize = std::min(minPriceFontSize, card->getPriceFontSizePx());
+            }
+        }
+
+
+        // Set the price font soze to the minimum found
+        for (auto card : cards)
+        {
+            card->setPriceFontSizePx(minPriceFontSize);
+        }
+
+        mUi->wPlans->adjustSize();
+        adjustSize();
+    }
 }
 
 void UpgradeDialog::clearPlans()
 {
-    while (QLayoutItem* item = plansLayout->takeAt(0))
+    while (QLayoutItem* item = mPlansLayout->takeAt(0))
     {
         if (QWidget* widget = item->widget())
         {
-            delete widget;
+            widget->deleteLater();
         }
         delete item;
     }
 }
 
-void UpgradeDialog::mousePressEvent(QMouseEvent *event)
+void UpgradeDialog::configureAnimation()
 {
-    const QPoint mousePositionButtonRelated{ui->toolButtonQuestion->mapFrom(this, event->pos())};
-    if (ui->toolButtonQuestion->rect().contains(mousePositionButtonRelated))
-    {
-#ifdef __APPLE__
-        showPopOverRelativeToRect(winId(), m_NativePopOver, event->localPos());
-#else
+    auto ratio = Utilities::getDevicePixelRatio();
+    mAnimation.reset(new QMovie(ratio < 2 ? QLatin1String(":/animations/full-transfer.gif")
+                                          : QLatin1String(":/animations/full-transfer@2x.gif")));
 
-        const QPoint mouseGlobalPosition{event->globalPos()};
+    mUi->lAnimationOverStorage->setMovie(mAnimation.get());
+    mUi->lAnimationOverStorage->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
 
-        mPopOver->show();
-        mPopOver->ensurePolished();
-        mPopOver->move(mouseGlobalPosition - QPoint(mPopOver->width() / 2, mPopOver->height() + 10));
-        Utilities::adjustToScreenFunc(mouseGlobalPosition, mPopOver.get());
-
-        const int initialWidth{mPopOver->width()};
-        const int initialHeight{mPopOver->height()};
-
-        // size might be incorrect the first time it's shown. This works around that and repositions at the expected position afterwards
-        QTimer::singleShot(1, this, [this, mouseGlobalPosition, initialWidth, initialHeight] ()
-        {
-            mPopOver->update();
-            mPopOver->ensurePolished();
-
-            const bool sizeChanged{initialWidth != mPopOver->width() || initialHeight != mPopOver->height()};
-            if (sizeChanged)
-            {
-                mPopOver->move(mouseGlobalPosition - QPoint(mPopOver->width()/2, mPopOver->height()));
-                Utilities::adjustToScreenFunc(mouseGlobalPosition, mPopOver.get());
-                mPopOver->update();
-            }
-        });
-#endif
-    }
-}
-
-QString UpgradeDialog::convertCurrency(const char *currency)
-{
-    if (!strcmp(currency, "EUR"))
-    {
-        return QString::fromUtf8("€");
-    }
-
-    if (!strcmp(currency, "USD"))
-    {
-        return QString::fromUtf8("$");
-    }
-
-    return QString::fromUtf8(currency);
+    mAnimation.get()->start();
 }
 
 void UpgradeDialog::unitTimeElapsed()
 {
-    long long remainingTime = finishTime - QDateTime::currentMSecsSinceEpoch() / 1000;
+    long long remainingTime = mFinishTime - QDateTime::currentMSecsSinceEpoch() / TIMER_INTERVAL_MS;
     if (remainingTime < 0)
     {
         remainingTime = 0;
     }
-    ui->labelRemainingTime->setText(tr("Please upgrade to Pro to continue immediately, or wait %1 to continue for free. ").arg(Utilities::getTimeString(remainingTime)));
-}
-
-void UpgradeDialog::changeEvent(QEvent *event)
-{
-    if (event->type() == QEvent::LanguageChange)
-    {
-        ui->retranslateUi(this);
-        if (!ui->labelInfo->text().contains(QString::fromUtf8("line-height")))
-        {
-            ui->labelInfo->setText(QString::fromUtf8("<p style=\"line-height: 20px;\">") + ui->labelInfo->text() + QString::fromUtf8("</p>"));
-        }
-        refreshAccountDetails();
-    }
-    QDialog::changeEvent(event);
+    mUi->lEncourageUpgrade->setText(tr("Please upgrade to Pro to continue immediately,"
+                                       " or wait %1 to continue for free")
+                                    .arg(Utilities::getTimeString(remainingTime, true, false)));
 }

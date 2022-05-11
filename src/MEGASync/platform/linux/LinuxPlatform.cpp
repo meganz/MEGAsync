@@ -14,10 +14,6 @@ using namespace mega;
 
 static xcb_atom_t getAtom(xcb_connection_t * const connection, const char *name);
 
-static std::string getProperty(xcb_connection_t * const connection,
-                               const xcb_window_t window,
-                               const char *name);
-
 ExtServer *LinuxPlatform::ext_server = NULL;
 NotifyServer *LinuxPlatform::notify_server = NULL;
 
@@ -28,7 +24,7 @@ QString LinuxPlatform::set_icon = QString::fromUtf8("gvfs-set-attribute -t strin
 QString LinuxPlatform::remove_icon = QString::fromUtf8("gvfs-set-attribute -t unset \"%1\" metadata::custom-icon");
 QString LinuxPlatform::custom_icon = QString::fromUtf8("/usr/share/icons/hicolor/256x256/apps/mega.png");
 
-void LinuxPlatform::initialize(int argc, char *argv[])
+void LinuxPlatform::initialize(int /*argc*/, char** /*argv*/)
 {
 }
 
@@ -37,7 +33,7 @@ void LinuxPlatform::prepareForSync()
 
 }
 
-bool LinuxPlatform::enableTrayIcon(QString executable)
+bool LinuxPlatform::enableTrayIcon(QString /*executable*/)
 {
     return false;
 }
@@ -114,7 +110,12 @@ bool LinuxPlatform::isTilingWindowManager()
 void LinuxPlatform::showInFolder(QString pathIn)
 {
     QString filebrowser = getDefaultFileBrowserApp();
-    QProcess::startDetached(filebrowser + QString::fromAscii(" \"") + pathIn + QString::fromUtf8("\""));
+    // Nautilus on Gnome, does not open the directory if argument is given without surrounding double-quotes;
+    // Path is passed through QUrl which properly escapes special chars in native platform URIs
+    // which takes care of path names also containing double-quotes withing, which will stop
+    // Nautilus from parsing the argument string all-together
+    QProcess::startDetached(filebrowser + QString::fromLatin1(" \"")
+                            + QUrl::fromLocalFile(pathIn).toString() + QString::fromLatin1("\""));
 }
 
 void LinuxPlatform::startShellDispatcher(MegaApplication *receiver)
@@ -145,7 +146,7 @@ void LinuxPlatform::stopShellDispatcher()
     }
 }
 
-void LinuxPlatform::syncFolderAdded(QString syncPath, QString syncName, QString syncID)
+void LinuxPlatform::syncFolderAdded(QString syncPath, QString /*syncName*/, QString /*syncID*/)
 {
     if (QFile(custom_icon).exists())
     {
@@ -164,7 +165,7 @@ void LinuxPlatform::syncFolderAdded(QString syncPath, QString syncName, QString 
     }
 }
 
-void LinuxPlatform::syncFolderRemoved(QString syncPath, QString syncName, QString syncID)
+void LinuxPlatform::syncFolderRemoved(QString syncPath, QString /*syncName*/, QString /*syncID*/)
 {
     QFile *folder = new QFile(syncPath);
     if (folder->exists())
@@ -194,12 +195,12 @@ void LinuxPlatform::notifyAllSyncFoldersRemoved()
 
 }
 
-QByteArray LinuxPlatform::encrypt(QByteArray data, QByteArray key)
+QByteArray LinuxPlatform::encrypt(QByteArray data, QByteArray /*key*/)
 {
     return data;
 }
 
-QByteArray LinuxPlatform::decrypt(QByteArray data, QByteArray key)
+QByteArray LinuxPlatform::decrypt(QByteArray data, QByteArray /*key*/)
 {
     return data;
 }
@@ -304,33 +305,66 @@ std::string LinuxPlatform::getValue(const char * const name, const std::string &
 
 QString LinuxPlatform::getWindowManagerName()
 {
-    static std::string window_manager_name;
+    static QString wmName;
     static bool cached = false;
 
     if (!cached)
     {
-        window_manager_name =
-          getProperty(QX11Info::connection(),
-                      QX11Info::appRootWindow(),
-                      "_NET_WM_NAME");
+        const int maxLen = 1024;
+        const auto connection = QX11Info::connection();
+        const auto appRootWindow = static_cast<xcb_window_t>(QX11Info::appRootWindow());
 
+        auto wmCheckAtom = getAtom(QX11Info::connection(), "_NET_SUPPORTING_WM_CHECK");
+        // Get window manager
+        auto reply = xcb_get_property_reply(connection,
+                                            xcb_get_property(connection,
+                                                             false,
+                                                             appRootWindow,
+                                                             wmCheckAtom,
+                                                             XCB_ATOM_WINDOW,
+                                                             0,
+                                                             maxLen),
+                                            nullptr);
+
+        if (reply && reply->format == 32 && reply->type == XCB_ATOM_WINDOW)
+        {
+            // Get window manager name
+            const xcb_window_t windowManager = *(static_cast<xcb_window_t*>(xcb_get_property_value(reply)));
+
+            if (windowManager != XCB_WINDOW_NONE)
+            {
+                const auto utf8StringAtom = getAtom(connection, "UTF8_STRING");
+                const auto wmNameAtom = getAtom(connection, "_NET_WM_NAME");
+
+                auto wmReply = xcb_get_property_reply(connection,
+                                                      xcb_get_property(connection,
+                                                                       false,
+                                                                       windowManager,
+                                                                       wmNameAtom,
+                                                                       utf8StringAtom,
+                                                                       0,
+                                                                       maxLen),
+                                                      nullptr);
+                if (wmReply && wmReply->format == 8 && wmReply->type == utf8StringAtom)
+                {
+                    wmName = QString::fromUtf8(static_cast<const char*>(xcb_get_property_value(wmReply)),
+                                                                        xcb_get_property_value_length(wmReply));
+                }
+                free(wmReply);
+            }
+        }
+        free(reply);
         cached = true;
     }
-
-    return QString::fromStdString(window_manager_name);
+    return wmName;
 }
 
-void LinuxPlatform::enableDialogBlur(QDialog *dialog)
+void LinuxPlatform::enableDialogBlur(QDialog*)
 {
 
 }
 
-void LinuxPlatform::activateBackgroundWindow(QDialog *)
-{
-
-}
-
-void LinuxPlatform::execBackgroundWindow(QDialog *window)
+void LinuxPlatform::execBackgroundWindow(QDialog* window)
 {
     window->exec();
 }
@@ -439,7 +473,7 @@ bool LinuxPlatform::isUserActive()
 xcb_atom_t getAtom(xcb_connection_t * const connection, const char *name)
 {
     xcb_intern_atom_cookie_t cookie =
-      xcb_intern_atom(connection, 0, strlen(name), name);
+      xcb_intern_atom(connection, 0, static_cast<uint16_t>(strlen(name)), name);
     xcb_intern_atom_reply_t *reply =
       xcb_intern_atom_reply(connection, cookie, nullptr);
 
@@ -452,55 +486,7 @@ xcb_atom_t getAtom(xcb_connection_t * const connection, const char *name)
     return result;
 }
 
-std::string getProperty(xcb_connection_t * const connection,
-                        const xcb_window_t window,
-                        const char *name)
-{
-    static xcb_atom_t atom_type = XCB_ATOM_NONE;
-    static const size_t buffer_length = 255;
-
-    char buffer[buffer_length + 1];
-
-    if (!atom_type)
-    {
-        atom_type = getAtom(connection, "UTF8_STRING");
-        if (!atom_type)
-            return std::string();
-    }
-
-    xcb_atom_t atom_name = getAtom(connection, name);
-    if (!atom_name)
-        return std::string();
-
-    xcb_get_property_cookie_t cookie =
-      xcb_get_property(connection,
-                       0,
-                       window,
-                       atom_name,
-                       atom_type,
-                       0,
-                       buffer_length);
-
-    xcb_get_property_reply_t *reply =
-      xcb_get_property_reply(connection, cookie, nullptr);
-    if (!reply)
-        return std::string();
-
-    const int value_length = xcb_get_property_value_length(reply);
-    if (value_length > 0)
-    {
-        const char *value =
-          static_cast<const char *>(xcb_get_property_value(reply));
-
-        memcpy(buffer, value, value_length);
-        buffer[value_length] = '\0';
-    }
-
-    free(reply);
-
-    return std::string(buffer);
-}
-
 // Platform-specific strings
 const char* LinuxPlatform::settingsString {QT_TRANSLATE_NOOP("Platform", "Settings")};
 const char* LinuxPlatform::exitString {QT_TRANSLATE_NOOP("Platform", "Exit")};
+const char* LinuxPlatform::fileExplorerString {QT_TRANSLATE_NOOP("Platform", "Show in folder")};

@@ -54,7 +54,6 @@ public:
     static std::string getValue(const char * const name, const std::string &default_value);
     static QString getWindowManagerName();
     static void enableDialogBlur(QDialog *dialog);
-    static void activateBackgroundWindow(QDialog *window);
     static void execBackgroundWindow(QDialog *window);
     static bool registerUpdateJob();
     static void uninstall();
@@ -64,6 +63,7 @@ public:
 
     static const char* settingsString;
     static const char* exitString;
+    static const char* fileExplorerString;
 };
 
 #endif // LINUXPLATFORM_H
