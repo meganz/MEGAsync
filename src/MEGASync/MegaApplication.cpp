@@ -314,6 +314,8 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
 
 MegaApplication::~MegaApplication()
 {
+    destroyInfoDialogMenus();
+
     logger.reset();
 
     if (!translator.isEmpty())
@@ -3407,6 +3409,15 @@ void MegaApplication::logInfoDialogCoordinates(const char *message, const QRect 
                  .arg(RectToString(screenGeometry))
                  .arg(otherInformation)
                  .toUtf8().constData());
+}
+
+void MegaApplication::destroyInfoDialogMenus()
+{
+    if (menuSignalMapper)
+    {
+        menuSignalMapper->deleteLater();
+        menuSignalMapper = nullptr;
+    }
 }
 
 void MegaApplication::setupWizardFinished(int result)
@@ -6638,7 +6649,7 @@ void MegaApplication::createInfoDialogMenus()
         if (menuSignalMapper)
         {
             menuSignalMapper->deleteLater();
-            menuSignalMapper = NULL;
+            menuSignalMapper = nullptr;
         }
 
         menuSignalMapper = new QSignalMapper();

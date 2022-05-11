@@ -74,6 +74,6 @@ private:
     std::shared_ptr<Preferences> mPreferences;
     bool mIsFirstTime;//Check first time alerts are added to show unified message of unread.
 
-    QMap<QString, mega::MegaUserAlert*> mPendingUserAlerts;
+    QMultiMap<QString, mega::MegaUserAlert*> mPendingUserAlerts;
     QMap<QString, std::shared_ptr<UserAttributes::FullNameAttributeRequest>> mUserAttributes;
 };

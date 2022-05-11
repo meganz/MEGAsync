@@ -43,8 +43,8 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
     mDragBackDrop->hide();
 
     mUi->wTransfers->setupTransfers();
-#ifndef Q_OS_MACOS
-    setWindowFlags(windowFlags() | Qt::Window);
+
+#ifdef Q_OS_MACOS
     mUi->leSearchField->setAttribute(Qt::WA_MacShowFocusRect,0);
 #endif
 
@@ -1278,6 +1278,8 @@ void TransferManager::changeEvent(QEvent *event)
 void TransferManager::dropEvent(QDropEvent* event)
 {
     mDragBackDrop->hide();
+
+    event->proposedAction();
     QDialog::dropEvent(event);
 
     QQueue<QString> pathsToAdd;
@@ -1321,6 +1323,7 @@ void TransferManager::dragEnterEvent(QDragEnterEvent *event)
 {
     if(event->mimeData()->hasUrls())
     {
+        event->proposedAction();
         event->accept();
         mDragBackDrop->show();
         mDragBackDrop->resize(size());

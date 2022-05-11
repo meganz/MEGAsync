@@ -115,7 +115,7 @@ void UTF32ToUTF16Char(wchar_t in, uint16_t out[2]) {
 }
 
 static inline uint16_t Swap(uint16_t value) {
-  return (value >> 8) | static_cast<uint16_t>(value << 8);
+  return static_cast<uint16_t>((value >> 8) | (value << 8));
 }
 
 string UTF16ToUTF8(const vector<uint16_t> &in, bool swap) {

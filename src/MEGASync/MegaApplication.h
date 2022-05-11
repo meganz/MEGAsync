@@ -602,6 +602,8 @@ private:
     void fixMultiscreenResizeBug(int& posX, int& posY);
 
     static void logInfoDialogCoordinates(const char* message, const QRect& screenGeometry, const QString& otherInformation);
+
+    void destroyInfoDialogMenus();
 };
 
 class DeferPreferencesSyncForScope
