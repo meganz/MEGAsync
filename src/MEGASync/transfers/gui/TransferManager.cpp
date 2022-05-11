@@ -904,14 +904,8 @@ void TransferManager::applyTextSearch(const QString& text)
 
 void TransferManager::enableUserActions(bool enabled)
 {
-    mUi->bUpload->setEnabled(enabled);
-    mUi->bDownload->setEnabled(enabled);
-    mUi->bSearch->setEnabled(enabled);
-    mUi->bPause->setEnabled(enabled);
-    mUi->tCogWheel->setEnabled(enabled);
-    mUi->tUploads->setEnabled(enabled);
-    mUi->tDownloads->setEnabled(enabled);
-    mUi->tAllTransfers->setEnabled(enabled);
+    mUi->wLeftPane->setEnabled(enabled);
+    mUi->wRightPaneHeader->setEnabled(enabled);
 }
 
 void TransferManager::on_bSearchString_clicked()
