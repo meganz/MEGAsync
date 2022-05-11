@@ -26,6 +26,8 @@ private slots:
     void onCancelClicked();
 
 private:
+    void startAnimation();
+
     Ui::ScanningWidget *mUi;
     QMovie *mMovie = nullptr;
 };

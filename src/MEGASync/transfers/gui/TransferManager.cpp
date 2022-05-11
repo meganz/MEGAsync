@@ -235,7 +235,8 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
     }
 
     mTransferScanCancelUi = new TransferScanCancelUi(mUi->sTransfers);
-    connect(mTransferScanCancelUi, SIGNAL(cancelTransfers()), this, SIGNAL(cancelScanning()));
+    connect(mTransferScanCancelUi, &TransferScanCancelUi::cancelTransfers,
+            this, &TransferManager::cancelScanning);
 }
 
 void TransferManager::pauseModel(bool value)
