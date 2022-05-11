@@ -17,6 +17,9 @@ StalledIssueFilePath::StalledIssueFilePath(QWidget *parent) :
     ui->filePathAction->hide();
     ui->moveFilePathAction->hide();
 
+    ui->file->hide();
+    ui->moveFile->hide();
+
     ui->moveLines->installEventFilter(this);
     ui->lines->installEventFilter(this);
 
@@ -43,13 +46,6 @@ void StalledIssueFilePath::updateUi(QExplicitlySharedDataPointer<StalledIssueDat
 {
     mData = data;
 
-    fillFilePath();
-    fillMoveFilePath();
-    updateFileIcons();
-}
-
-void StalledIssueFilePath::fillFilePath()
-{
     if(mData->isCloud())
     {
         auto remoteIcon = Utilities::getCachedPixmap(QLatin1Literal(":/images/cloud_upload_item_ico.png"));
@@ -65,8 +61,17 @@ void StalledIssueFilePath::fillFilePath()
         ui->LocalOrRemoteText->setText(tr("Local:"));
     }
 
+    fillFilePath();
+    fillMoveFilePath();
+    updateFileIcons();
+}
+
+void StalledIssueFilePath::fillFilePath()
+{
     if(!mData->getPath().isEmpty())
     {
+        ui->file->show();
+
         auto filePath = mData->getNativePath();
         if(!filePath.isEmpty())
         {
@@ -75,15 +80,11 @@ void StalledIssueFilePath::fillFilePath()
         }
         else
         {
-            ui->filePathContainer->hide();
+            ui->filePath->setText(QString::fromUtf8("-"));
         }
 
         mData->getPath().mPathProblem != mega::MegaSyncStall::SyncPathProblem::NoProblem
                 ?  ui->pathProblem->setText(getSyncPathProblemString(mData->getPath().mPathProblem)) : ui->pathProblem->hide();
-    }
-    else
-    {
-        ui->file->hide();
     }
 }
 
@@ -91,6 +92,8 @@ void StalledIssueFilePath::fillMoveFilePath()
 {
     if(!mData->getMovePath().isEmpty())
     {
+        ui->moveFile->show();
+
         auto filePath = mData->getNativeMovePath();
         if(!filePath.isEmpty())
         {
@@ -99,15 +102,11 @@ void StalledIssueFilePath::fillMoveFilePath()
         }
         else
         {
-            ui->moveFilePathContainer->hide();
+            ui->moveFilePath->setText(QString::fromUtf8("-"));
         }
 
         mData->getMovePath().mPathProblem != mega::MegaSyncStall::SyncPathProblem::NoProblem
                 ?  ui->movePathProblem->setText(getSyncPathProblemString(mData->getMovePath().mPathProblem)) : ui->movePathProblem->hide();
-    }
-    else
-    {
-        ui->moveFile->hide();
     }
 }
 
@@ -159,11 +158,11 @@ bool StalledIssueFilePath::eventFilter(QObject *watched, QEvent *event)
         p.setPen(QPen(QColor("#000000"),1));
         p.setOpacity(0.2);
 
-        auto width(ui->lines->width());
-        auto height(ui->lines->height());
+        auto width(ui->moveLines->width());
+        auto height(ui->moveLines->height());
 
         p.drawLine(QPoint(0,height/2), QPoint(width, height/2));
-        p.drawLine(QPoint(0,0), QPoint(0, ui->lines->height()));
+        p.drawLine(QPoint(0,0), QPoint(0, ui->moveLines->height()));
     }
     else if(event->type() == QEvent::Enter || event->type() == QEvent::Leave || event->type() == QEvent::MouseButtonRelease)
     {
@@ -307,7 +306,7 @@ QString StalledIssueFilePath::getSyncPathProblemString(mega::MegaSyncStall::Sync
         }
         case mega::MegaSyncStall::DestinationPathInUnresolvedArea:
         {
-            return tr("Destination path is in an unresolved are.");
+            return tr("Destination path is in an unresolved area.");
             break;
         }
         case mega::MegaSyncStall::MACVerificationFailure:
