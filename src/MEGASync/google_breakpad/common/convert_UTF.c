@@ -61,6 +61,13 @@ static const UTF32 halfMask = 0x3FFUL;
 #define true        1
 #endif
 
+#define PUSH_NO_FALLTHROUGH_WARNING()                               \
+    _Pragma( "GCC diagnostic push" )                                \
+    _Pragma( "GCC diagnostic ignored \"-Wimplicit-fallthrough\" " )
+
+#define POP_NO_FALLTHROUGH_WARNING() \
+    _Pragma( "GCC diagnostic pop" )
+
 /* --------------------------------------------------------------------- */
 
 ConversionResult ConvertUTF32toUTF16 (const UTF32** sourceStart, const UTF32* sourceEnd,
@@ -268,13 +275,15 @@ ConversionResult ConvertUTF16toUTF8 (const UTF16** sourceStart, const UTF16* sou
         source = oldSource; /* Back up source pointer! */
         target -= bytesToWrite; result = targetExhausted; break;
     }
+PUSH_NO_FALLTHROUGH_WARNING()
     switch (bytesToWrite) { /* note: everything falls through. */
         case 4: *--target = (UTF8)((ch | byteMark) & byteMask); ch >>= 6;
         case 3: *--target = (UTF8)((ch | byteMark) & byteMask); ch >>= 6;
         case 2: *--target = (UTF8)((ch | byteMark) & byteMask); ch >>= 6;
         case 1: *--target =  (UTF8)(ch | firstByteMark[bytesToWrite]);
-    }
+    }    
     target += bytesToWrite;
+POP_NO_FALLTHROUGH_WARNING()
   }
 *sourceStart = source;
 *targetStart = target;
@@ -297,13 +306,14 @@ return result;
 static Boolean isLegalUTF8(const UTF8 *source, int length) {
   UTF8 a;
   const UTF8 *srcptr = source+length;
+
+PUSH_NO_FALLTHROUGH_WARNING()
   switch (length) {
     default: return false;
       /* Everything else falls through when "true"... */
     case 4: if ((a = (*--srcptr)) < 0x80 || a > 0xBF) return false;
     case 3: if ((a = (*--srcptr)) < 0x80 || a > 0xBF) return false;
     case 2: if ((a = (*--srcptr)) > 0xBF) return false;
-
       switch (*source) {
         /* no fall-through in this inner switch */
         case 0xE0: if (a < 0xA0) return false; break;
@@ -315,6 +325,7 @@ static Boolean isLegalUTF8(const UTF8 *source, int length) {
 
       case 1: if (*source >= 0x80 && *source < 0xC2) return false;
   }
+POP_NO_FALLTHROUGH_WARNING()
   if (*source > 0xF4) return false;
   return true;
 }
@@ -354,6 +365,7 @@ ConversionResult ConvertUTF8toUTF16 (const UTF8** sourceStart, const UTF8* sourc
     /*
      * The cases all fall through. See "Note A" below.
      */
+PUSH_NO_FALLTHROUGH_WARNING()
     switch (extraBytesToRead) {
         case 5: ch += *source++; ch <<= 6; /* remember, illegal UTF-8 */
         case 4: ch += *source++; ch <<= 6; /* remember, illegal UTF-8 */
@@ -363,6 +375,7 @@ ConversionResult ConvertUTF8toUTF16 (const UTF8** sourceStart, const UTF8* sourc
         case 0: ch += *source++;
     }
     ch -= offsetsFromUTF8[extraBytesToRead];
+POP_NO_FALLTHROUGH_WARNING()
 
     if (target >= targetEnd) {
         source -= (extraBytesToRead+1); /* Back up source pointer! */
@@ -444,6 +457,7 @@ ConversionResult ConvertUTF32toUTF8 (const UTF32** sourceStart, const UTF32* sou
         --source; /* Back up source pointer! */
         target -= bytesToWrite; result = targetExhausted; break;
     }
+PUSH_NO_FALLTHROUGH_WARNING()
     switch (bytesToWrite) { /* note: everything falls through. */
         case 4: *--target = (UTF8)((ch | byteMark) & byteMask); ch >>= 6;
         case 3: *--target = (UTF8)((ch | byteMark) & byteMask); ch >>= 6;
@@ -451,6 +465,7 @@ ConversionResult ConvertUTF32toUTF8 (const UTF32** sourceStart, const UTF32* sou
         case 1: *--target = (UTF8) (ch | firstByteMark[bytesToWrite]);
     }
     target += bytesToWrite;
+POP_NO_FALLTHROUGH_WARNING()
   }
 *sourceStart = source;
 *targetStart = target;
@@ -478,6 +493,7 @@ ConversionResult ConvertUTF8toUTF32 (const UTF8** sourceStart, const UTF8* sourc
     /*
      * The cases all fall through. See "Note A" below.
      */
+PUSH_NO_FALLTHROUGH_WARNING()
     switch (extraBytesToRead) {
         case 5: ch += *source++; ch <<= 6;
         case 4: ch += *source++; ch <<= 6;
@@ -487,6 +503,7 @@ ConversionResult ConvertUTF8toUTF32 (const UTF8** sourceStart, const UTF8* sourc
         case 0: ch += *source++;
     }
     ch -= offsetsFromUTF8[extraBytesToRead];
+POP_NO_FALLTHROUGH_WARNING()
 
     if (target >= targetEnd) {
         source -= (extraBytesToRead+1); /* Back up the source pointer! */

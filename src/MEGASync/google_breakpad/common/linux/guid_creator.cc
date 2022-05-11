@@ -57,16 +57,16 @@ class GUIDGenerator {
     bytes[0] = n & 0xff;
     bytes[1] = (n >> 8) & 0xff;
     bytes[2] = (n >> 16) & 0xff;
-    bytes[3] = (n >> 24) & 0xff;
+    bytes[3] = static_cast<uint8_t>((n >> 24) & 0xff);
   }
 
   static bool CreateGUID(GUID *guid) {
     InitOnce();
-    guid->data1 = random();
-    guid->data2 = (uint16_t)(random());
-    guid->data3 = (uint16_t)(random());
-    UInt32ToBytes(&guid->data4[0], random());
-    UInt32ToBytes(&guid->data4[4], random());
+    guid->data1 = RandomAsUint32();
+    guid->data2 = RandomAsUint16();
+    guid->data3 = RandomAsUint16();
+    UInt32ToBytes(&guid->data4[0], RandomAsUint32());
+    UInt32ToBytes(&guid->data4[4], RandomAsUint32());
     return true;
   }
 
@@ -76,7 +76,17 @@ class GUIDGenerator {
   }
 
   static void InitOnceImpl() {
-    srandom(time(NULL));
+    srandom(static_cast<unsigned int>(time(NULL)));
+  }
+
+  static inline uint16_t RandomAsUint16()
+  {
+      return static_cast<uint16_t>(random());
+  }
+
+  static inline uint32_t RandomAsUint32()
+  {
+      return static_cast<uint32_t>(random());
   }
 
   static pthread_once_t once_control;

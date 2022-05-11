@@ -102,7 +102,7 @@ class LineReader {
       } else if (n == 0) {
         hit_eof_ = true;
       } else {
-        buf_used_ += n;
+        buf_used_ += static_cast<unsigned>(n);
       }
 
       // At this point, we have either set the hit_eof_ flag, or we have more

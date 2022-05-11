@@ -223,15 +223,15 @@ void CPUFillFromThreadInfo(MDRawContextAMD64 *out,
   out->context_flags = MD_CONTEXT_AMD64_FULL |
                        MD_CONTEXT_AMD64_SEGMENTS;
 
-  out->cs = info.regs.cs;
+  out->cs = static_cast<uint16_t>(info.regs.cs);
 
-  out->ds = info.regs.ds;
-  out->es = info.regs.es;
-  out->fs = info.regs.fs;
-  out->gs = info.regs.gs;
+  out->ds = static_cast<uint16_t>(info.regs.ds);
+  out->es = static_cast<uint16_t>(info.regs.es);
+  out->fs = static_cast<uint16_t>(info.regs.fs);
+  out->gs = static_cast<uint16_t>(info.regs.gs);
 
-  out->ss = info.regs.ss;
-  out->eflags = info.regs.eflags;
+  out->ss = static_cast<uint16_t>(info.regs.ss);
+  out->eflags = static_cast<uint32_t>(info.regs.eflags);
 
   out->dr0 = info.dregs[0];
   out->dr1 = info.dregs[1];
@@ -265,11 +265,11 @@ void CPUFillFromThreadInfo(MDRawContextAMD64 *out,
 
   out->flt_save.control_word = info.fpregs.cwd;
   out->flt_save.status_word = info.fpregs.swd;
-  out->flt_save.tag_word = info.fpregs.ftw;
+  out->flt_save.tag_word = static_cast<uint8_t>(info.fpregs.ftw);
   out->flt_save.error_opcode = info.fpregs.fop;
-  out->flt_save.error_offset = info.fpregs.rip;
+  out->flt_save.error_offset = static_cast<uint32_t>(info.fpregs.rip);
   out->flt_save.error_selector = 0;  // We don't have this.
-  out->flt_save.data_offset = info.fpregs.rdp;
+  out->flt_save.data_offset = static_cast<uint32_t>(info.fpregs.rdp);
   out->flt_save.data_selector = 0;   // We don't have this.
   out->flt_save.mx_csr = info.fpregs.mxcsr;
   out->flt_save.mx_csr_mask = info.fpregs.mxcr_mask;
@@ -283,12 +283,12 @@ void CPUFillFromUContext(MDRawContextAMD64 *out, const ucontext_t *uc,
 
   out->context_flags = MD_CONTEXT_AMD64_FULL;
 
-  out->cs = regs[REG_CSGSFS] & 0xffff;
+  out->cs = static_cast<uint16_t>(regs[REG_CSGSFS] & 0xffff);
 
-  out->fs = (regs[REG_CSGSFS] >> 32) & 0xffff;
-  out->gs = (regs[REG_CSGSFS] >> 16) & 0xffff;
+  out->fs = static_cast<uint16_t>((regs[REG_CSGSFS] >> 32) & 0xffff);
+  out->gs = static_cast<uint16_t>((regs[REG_CSGSFS] >> 16) & 0xffff);
 
-  out->eflags = regs[REG_EFL];
+  out->eflags = static_cast<uint32_t>(regs[REG_EFL]);
 
   out->rax = regs[REG_RAX];
   out->rcx = regs[REG_RCX];
@@ -312,10 +312,10 @@ void CPUFillFromUContext(MDRawContextAMD64 *out, const ucontext_t *uc,
 
   out->flt_save.control_word = fpregs->cwd;
   out->flt_save.status_word = fpregs->swd;
-  out->flt_save.tag_word = fpregs->ftw;
+  out->flt_save.tag_word = static_cast<uint8_t>(fpregs->ftw);
   out->flt_save.error_opcode = fpregs->fop;
-  out->flt_save.error_offset = fpregs->rip;
-  out->flt_save.data_offset = fpregs->rdp;
+  out->flt_save.error_offset = static_cast<uint32_t>(fpregs->rip);
+  out->flt_save.data_offset = static_cast<uint32_t>(fpregs->rdp);
   out->flt_save.error_selector = 0;  // We don't have this.
   out->flt_save.data_selector = 0;  // We don't have this.
   out->flt_save.mx_csr = fpregs->mxcsr;
@@ -521,7 +521,7 @@ class MinidumpWriter {
 
     header.get()->signature = MD_HEADER_SIGNATURE;
     header.get()->version = MD_HEADER_VERSION;
-    header.get()->time_date_stamp = time(NULL);
+    header.get()->time_date_stamp = static_cast<uint32_t>(time(NULL));
     header.get()->stream_count = kNumWriters;
     header.get()->stream_directory_rva = dir.position();
 
@@ -746,7 +746,7 @@ class MinidumpWriter {
 
   // Write information about the threads.
   bool WriteThreadListStream(MDRawDirectory* dirent) {
-    const unsigned num_threads = dumper_->threads().size();
+    const size_t num_threads = dumper_->threads().size();
 
     TypedMDRVA<uint32_t> list(&minidump_writer_);
     if (!list.AllocateObjectAndArray(num_threads, sizeof(MDRawThread)))
@@ -755,7 +755,7 @@ class MinidumpWriter {
     dirent->stream_type = MD_THREAD_LIST_STREAM;
     dirent->location = list.location();
 
-    *list.get() = num_threads;
+    *list.get() = static_cast<MDType>(num_threads);
 
     // If there's a minidump size limit, check if it might be exceeded.  Since
     // most of the space is filled with stack data, just check against that.
@@ -764,7 +764,7 @@ class MinidumpWriter {
     // have only kLimitMaxExtraThreadStackLen bytes dumped.
     int extra_thread_stack_len = -1;  // default to no maximum
     if (minidump_size_limit_ >= 0) {
-      const unsigned estimated_total_stack_size = num_threads *
+      const size_t estimated_total_stack_size = num_threads *
           kLimitAverageThreadStackLength;
       const off_t estimated_minidump_size = minidump_writer_.position() +
           estimated_total_stack_size + kLimitMinidumpFudgeFactor;
@@ -809,8 +809,8 @@ class MinidumpWriter {
             uintptr_t end_of_range =
               std::min(uintptr_t(ip + (kIPMemorySize / 2)),
                        uintptr_t(mapping.start_addr + mapping.size));
-            ip_memory_d.memory.data_size =
-              end_of_range - ip_memory_d.start_of_memory_range;
+            uint64_t dataSize = end_of_range - ip_memory_d.start_of_memory_range;
+            ip_memory_d.memory.data_size = static_cast<uint32_t>(dataSize);
             break;
           }
         }
@@ -934,8 +934,8 @@ class MinidumpWriter {
   // Because of this, we also include the full, unparsed, /proc/$x/maps file in
   // another stream in the file.
   bool WriteMappings(MDRawDirectory* dirent) {
-    const unsigned num_mappings = dumper_->mappings().size();
-    unsigned num_output_mappings = mapping_list_.size();
+    const size_t num_mappings = dumper_->mappings().size();
+    size_t num_output_mappings = mapping_list_.size();
 
     for (unsigned i = 0; i < dumper_->mappings().size(); ++i) {
       const MappingInfo& mapping = *dumper_->mappings()[i];
@@ -956,7 +956,7 @@ class MinidumpWriter {
 
     dirent->stream_type = MD_MODULE_LIST_STREAM;
     dirent->location = list.location();
-    *list.get() = num_output_mappings;
+    *list.get() = static_cast<MDType>(num_output_mappings);
 
     // First write all the mappings from the dumper
     unsigned int j = 0;
@@ -994,7 +994,7 @@ class MinidumpWriter {
     my_memset(&mod, 0, MD_MODULE_SIZE);
 
     mod.base_of_image = mapping.start_addr;
-    mod.size_of_image = mapping.size;
+    mod.size_of_image = static_cast<uint32_t>(mapping.size);
     const size_t filepath_len = my_strlen(mapping.name);
 
     // Figure out file name from path
@@ -1036,7 +1036,7 @@ class MinidumpWriter {
     mod.cv_record = cv.location();
 
     MDLocationDescriptor ld;
-    if (!minidump_writer_.WriteString(mapping.name, filepath_len, &ld))
+    if (!minidump_writer_.WriteString(mapping.name, static_cast<int>(filepath_len), &ld))
       return false;
     mod.module_name_rva = ld.rva;
     return true;
@@ -1058,10 +1058,10 @@ class MinidumpWriter {
     dirent->stream_type = MD_MEMORY_LIST_STREAM;
     dirent->location = list.location();
 
-    *list.get() = memory_blocks_.size();
+    *list.get() = static_cast<MDType>(memory_blocks_.size());
 
     for (size_t i = 0; i < memory_blocks_.size(); ++i) {
-      list.CopyIndexAfterObject(i, &memory_blocks_[i],
+      list.CopyIndexAfterObject(static_cast<unsigned int>(i), &memory_blocks_[i],
                                 sizeof(MDMemoryDescriptor));
     }
     return true;
@@ -1102,7 +1102,7 @@ class MinidumpWriter {
   bool WriteDSODebugStream(MDRawDirectory* dirent) {
     ElfW(Phdr)* phdr = reinterpret_cast<ElfW(Phdr) *>(dumper_->auxv()[AT_PHDR]);
     char* base;
-    int phnum = dumper_->auxv()[AT_PHNUM];
+    int phnum = static_cast<int>(dumper_->auxv()[AT_PHNUM]);
     if (!phnum || !phdr)
       return false;
 
@@ -1136,7 +1136,7 @@ class MinidumpWriter {
 
     for (int i = 0;;) {
       ElfW(Dyn) dyn;
-      dynamic_length += sizeof(dyn);
+      dynamic_length += static_cast<uint32_t>(sizeof(dyn));
       dumper_->CopyFromProcess(&dyn, GetCrashThread(), dynamic+i++,
                                sizeof(dyn));
       if (dyn.d_tag == DT_DEBUG) {
@@ -1227,7 +1227,7 @@ class MinidumpWriter {
   void set_minidump_size_limit(off_t limit) { minidump_size_limit_ = limit; }
 
  private:
-  void* Alloc(unsigned bytes) {
+  void* Alloc(size_t bytes) {
     return dumper_->allocator()->Alloc(bytes);
   }
 
@@ -1377,11 +1377,12 @@ class MinidumpWriter {
     // by adding one.
     cpu_info_table[0].value++;
 
-    sys_info->number_of_processors = cpu_info_table[0].value;
+    sys_info->number_of_processors = static_cast<unsigned char>(cpu_info_table[0].value);
 #if !defined(__mips__)
-    sys_info->processor_level      = cpu_info_table[3].value;
-    sys_info->processor_revision   = cpu_info_table[1].value << 8 |
+    sys_info->processor_level      = static_cast<uint16_t>(cpu_info_table[3].value);
+    int rawProcessorRevision       = cpu_info_table[1].value << 8 |
                                      cpu_info_table[2].value;
+    sys_info->processor_revision   = static_cast<uint16_t>(rawProcessorRevision);
 #endif
 
     if (vendor_id[0] != '\0') {
@@ -1640,7 +1641,7 @@ class MinidumpWriter {
         continue;
       }
       memory.Copy(pos, &buffers->data, buffers->len);
-      pos += buffers->len;
+      pos += static_cast<MDRVA>(buffers->len);
     }
     *result = memory.location();
     return true;

@@ -132,7 +132,7 @@ void NodeSelector::nodesReady()
         ui->bNewFolder->hide();
         setWindowTitle(tr("Select items"));
         break;
-    }    
+    }
     ui->tMegaFolders->setModel(mProxyModel.get());
     ui->tMegaFolders->sortByColumn(MegaItemModel::NODE, Qt::AscendingOrder);
     checkBackForwardButtons();
@@ -465,45 +465,84 @@ void NodeSelector::onbNewFolderClicked()
 
 void NodeSelector::onbOkClicked()
 {
-    auto node = std::unique_ptr<MegaNode>(mMegaApi->getNodeByHandle(getSelectedNodeHandle()));
-    if (!node)
-    {
-        reject();
-        return;
-    }
+    bool correctNodeSelected(true);
 
-    int access = mMegaApi->getAccess(node.get());
-    if ((mSelectMode == NodeSelector::UPLOAD_SELECT) && ((access < MegaShare::ACCESS_READWRITE)))
+    if(mSelectMode == NodeSelector::DOWNLOAD_SELECT)
     {
-        QMegaMessageBox::warning(nullptr, tr("Error"), tr("You need Read & Write or Full access rights to be able to upload to the selected folder."), QMessageBox::Ok);
-        return;
-    }
-    else if ((mSelectMode == NodeSelector::SYNC_SELECT) && (access < MegaShare::ACCESS_FULL))
-    {
-        QMegaMessageBox::warning(nullptr, tr("Error"), tr("You need Full access right to be able to sync the selected folder."), QMessageBox::Ok);
-        return;
-    }
-    else if ((mSelectMode == NodeSelector::STREAM_SELECT) && node->isFolder())
-    {
-        QMegaMessageBox::warning(nullptr, tr("Error"), tr("Only files can be used for streaming."), QMessageBox::Ok);
-        return;
-    }
-
-    if (mSelectMode == NodeSelector::SYNC_SELECT)
-    {
-        const char* path = mMegaApi->getNodePath(node.get());
-        auto check = std::unique_ptr<MegaNode>(mMegaApi->getNodeByPath(path));
-        delete [] path;
-        if (!check)
+        auto nodes = getMultiSelectionNodeHandle();
+        int wrongNodes(0);
+        foreach(auto& nodeHandle, nodes)
         {
-            QMegaMessageBox::warning(nullptr, tr("Warning"), tr("Invalid folder for synchronization.\n"
+            auto node = std::unique_ptr<MegaNode>(mMegaApi->getNodeByHandle(nodeHandle));
+            if(!node)
+            {
+                ++wrongNodes;
+            }
+        }
+        if(wrongNodes > 0)
+        {
+            correctNodeSelected = false;
+            if(isCloudDrive())
+            {
+                QMegaMessageBox::warning(nullptr, tr("Error"), tr("Item selection(s) removed. To reselect, close this window and try again.", "", wrongNodes), QMessageBox::Ok);
+            }
+            else
+            {
+                if(wrongNodes == nodes.size())
+                {
+                    QMegaMessageBox::warning(nullptr, tr("Error"), tr("You no longer have access to (this)(these) item(s). Ask the owner to share again.", "", wrongNodes), QMessageBox::Ok);
+                }
+                else
+                {
+                    QMegaMessageBox::warning(nullptr, tr("Error"), tr("You no longer have access to (this)(some of these) item(s). Ask the owner to share again.", "", wrongNodes), QMessageBox::Ok);
+                }
+            }
+        }
+    }
+    else
+    {
+        auto node = std::unique_ptr<MegaNode>(mMegaApi->getNodeByHandle(getSelectedNodeHandle()));
+        if (!node)
+        {
+            QMegaMessageBox::warning(nullptr, tr("Error"), tr("Item selection removed. To reselect, close this window and try again."),
+                                                 QMessageBox::Ok);
+            correctNodeSelected = false;
+        }
+        else
+        {
+            int access = mMegaApi->getAccess(node.get());
+            if ((mSelectMode == NodeSelector::UPLOAD_SELECT) && ((access < MegaShare::ACCESS_READWRITE)))
+            {
+                QMegaMessageBox::warning(nullptr, tr("Error"), tr("You need Read & Write or Full access rights to be able to upload to the selected folder."), QMessageBox::Ok);
+                correctNodeSelected = false;
+            }
+            else if ((mSelectMode == NodeSelector::SYNC_SELECT) && (access < MegaShare::ACCESS_FULL))
+            {
+                QMegaMessageBox::warning(nullptr, tr("Error"), tr("You need Full access right to be able to sync the selected folder."), QMessageBox::Ok);
+                correctNodeSelected = false;
+            }
+            else if ((mSelectMode == NodeSelector::STREAM_SELECT) && node->isFolder())
+            {
+                QMegaMessageBox::warning(nullptr, tr("Error"), tr("Only files can be used for streaming."), QMessageBox::Ok);
+                correctNodeSelected = false;
+            }
+            else if (mSelectMode == NodeSelector::SYNC_SELECT)
+            {
+                const char* path = mMegaApi->getNodePath(node.get());
+                auto check = std::unique_ptr<MegaNode>(mMegaApi->getNodeByPath(path));
+                delete [] path;
+                if (!check)
+                {
+                    QMegaMessageBox::warning(nullptr, tr("Warning"), tr("Invalid folder for synchronization.\n"
                                                          "Please, ensure that you don't use characters like '\\' '/' or ':' in your folder names."),
-                                 QMessageBox::Ok);
-            return;
+                                             QMessageBox::Ok);
+                    correctNodeSelected = false;
+                }
+            }
         }
     }
 
-    accept();
+    correctNodeSelected ? accept() : reject();
 }
 
 void NodeSelector::onbShowIncomingSharesClicked()

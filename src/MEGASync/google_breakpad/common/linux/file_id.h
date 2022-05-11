@@ -68,6 +68,8 @@ class FileID {
                                         char* buffer, int buffer_length);
 
  private:
+  static char ConvertComponentToChar(int component);
+
   // Storage for the path specified
   char path_[PATH_MAX];
 };

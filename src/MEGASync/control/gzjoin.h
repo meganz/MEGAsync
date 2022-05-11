@@ -397,7 +397,7 @@ local void gzcopy(GZJOIN_PATH_CHAR_T *name, int clr, unsigned long *crc, unsigne
     start = in->next;
     last = start[0] & 1;
     if (last && clr)
-        start[0] &= ~1;
+        start[0] &= static_cast<unsigned char>(~1);
     strm.avail_out = 0;
     for (;;) {
         /* if input used and output done, write used input and get more */
@@ -414,7 +414,10 @@ local void gzcopy(GZJOIN_PATH_CHAR_T *name, int clr, unsigned long *crc, unsigne
         ret = inflate(&strm, Z_BLOCK);
         switch (ret) {
         case Z_MEM_ERROR:
+        {
             bail("out of memory", "");
+            break;
+        }
         case Z_DATA_ERROR:
             bail("invalid compressed data in ", in->name);
         }
@@ -437,7 +440,7 @@ local void gzcopy(GZJOIN_PATH_CHAR_T *name, int clr, unsigned long *crc, unsigne
                 pos = 0x100 >> pos;
                 last = strm.next_in[-1] & pos;
                 if (last && clr)
-                    in->buf[strm.next_in - in->buf - 1] &= ~pos;
+                    in->buf[strm.next_in - in->buf - 1] &= static_cast<unsigned char>(~pos);
             }
             else {
                 /* next last-block bit is in next unused byte */
@@ -450,7 +453,7 @@ local void gzcopy(GZJOIN_PATH_CHAR_T *name, int clr, unsigned long *crc, unsigne
                 }
                 last = strm.next_in[0] & 1;
                 if (last && clr)
-                    in->buf[strm.next_in - in->buf] &= ~1;
+                    in->buf[strm.next_in - in->buf] &= static_cast<unsigned char>(~1);
             }
         }
     }
@@ -480,11 +483,17 @@ local void gzcopy(GZJOIN_PATH_CHAR_T *name, int clr, unsigned long *crc, unsigne
             /* even -- append 1, 2, or 3 empty fixed blocks */
             switch (pos) {
             case 6:
+            {
                 putc(last | 8, out);
                 last = 0;
+                break;
+            }
             case 4:
+            {
                 putc(last | 0x20, out);
                 last = 0;
+                break;
+            }
             case 2:
                 putc(last | 0x80, out);
                 putc(0, out);
