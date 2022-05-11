@@ -25,16 +25,6 @@ bool StalledIssueData::isCloud() const
     return mIsCloud;
 }
 
-bool StalledIssueData::hasMoveInfo() const
-{
-    return !mMovePath.isEmpty();
-}
-
-bool StalledIssueData::isEmpty() const
-{
-    return mPath.path.isEmpty() && !hasMoveInfo();
-}
-
 QString StalledIssueData::getFilePath() const
 {
     QFileInfo filePath(mPath.path);
@@ -168,10 +158,7 @@ void ConflictedNamesStalledIssue::update(const mega::MegaSyncNameConflict* nameC
 }
 
 StalledIssue::StalledIssue(const mega::MegaSyncStall *stallIssue)
-    : mReason(stallIssue->reason()),
-      mIsImmediate(stallIssue->isImmediate()),
-      mReasonString(QString::fromStdString(stallIssue->reasonString())),
-      mIsCloud(stallIssue->isCloud())
+    : mReason(stallIssue->reason())
 {
     fillIssue(stallIssue);
 }
@@ -202,44 +189,44 @@ bool StalledIssue::initCloudIssue()
 
 void StalledIssue::fillIssue(const mega::MegaSyncStall *stall)
 {
-    if(stall->isCloud())
-    {
-        initCloudIssue();
+    auto localSourcePathProblem = static_cast<mega::MegaSyncStall::SyncPathProblem>(stall->pathProblem(false,0));
+    auto localTargetPathProblem = static_cast<mega::MegaSyncStall::SyncPathProblem>(stall->pathProblem(false,1));
 
-        getCloudData()->mPath.path = QString::fromUtf8(stall->indexPath());
+    auto localSourcePath = QString::fromUtf8(stall->path(false,0));
+    auto localTargetPath = QString::fromUtf8(stall->path(false,1));
 
-        QString cloudPath(QString::fromUtf8(stall->cloudPath()));
-        if(!cloudPath.isEmpty())
-        {
-            QFileInfo cloudPathInfo(cloudPath);
-            getCloudData()->mMovePath.path = cloudPathInfo.isFile() ? cloudPathInfo.path() : cloudPathInfo.filePath();
-        }
-
-        QString localPath(QString::fromUtf8(stall->localPath()));
-        if(!localPath.isEmpty() && initLocalIssue())
-        {
-            getLocalData()->mPath.path = QString::fromUtf8(stall->localPath());
-        }
-    }
-    else
+    if(localSourcePathProblem != mega::MegaSyncStall::SyncPathProblem::NoProblem || !localSourcePath.isEmpty())
     {
         initLocalIssue();
+        getLocalData()->mPath.path = localSourcePath;
+        getLocalData()->mPath.mPathProblem = localSourcePathProblem;
+    }
 
-        getLocalData()->mPath.path = QString::fromUtf8(stall->indexPath());
+    if(localTargetPathProblem != mega::MegaSyncStall::SyncPathProblem::NoProblem || !localTargetPath.isEmpty())
+    {
+        initLocalIssue();
+        getLocalData()->mMovePath.path = localTargetPath;
+        getLocalData()->mMovePath.mPathProblem = localTargetPathProblem;
+    }
 
-        QString localPath(QString::fromUtf8(stall->localPath()));
-        if(!localPath.isEmpty())
-        {
-            QFileInfo localPathInfo(localPath);
-            getLocalData()->mMovePath.path = QDir::toNativeSeparators(localPathInfo.path());
-        }
+    auto cloudSourcePathProblem = static_cast<mega::MegaSyncStall::SyncPathProblem>(stall->pathProblem(true,0));
+    auto cloudTargetPathProblem = static_cast<mega::MegaSyncStall::SyncPathProblem>(stall->pathProblem(true,1));
 
-        QString cloudPath(QString::fromUtf8(stall->cloudPath()));
-        if(!cloudPath.isEmpty() && initCloudIssue())
-        {
-            QFileInfo cloudPathInfo(cloudPath);
-            getCloudData()->mPath.path = cloudPathInfo.path();
-        }
+    auto cloudSourcePath = QString::fromUtf8(stall->path(true,0));
+    auto cloudTargetPath = QString::fromUtf8(stall->path(true,1));
+
+    if(cloudSourcePathProblem != mega::MegaSyncStall::SyncPathProblem::NoProblem || !cloudSourcePath.isEmpty())
+    {
+        initCloudIssue();
+        getCloudData()->mPath.path = cloudSourcePath;
+        getCloudData()->mPath.mPathProblem = cloudSourcePathProblem;
+    }
+
+    if(cloudTargetPathProblem != mega::MegaSyncStall::SyncPathProblem::NoProblem || !cloudTargetPath.isEmpty())
+    {
+        initCloudIssue();
+        getCloudData()->mMovePath.path = cloudTargetPath;
+        getCloudData()->mMovePath.mPathProblem = cloudTargetPathProblem;
     }
 }
 
@@ -274,11 +261,6 @@ QString StalledIssue::getFileName() const
     }
 }
 
-bool StalledIssue::isCloud() const
-{
-    return mIsCloud;
-}
-
 bool StalledIssue::isNameConflict() const
 {
     return mIsNameConflict;
@@ -298,40 +280,22 @@ StalledIssueFilterCriterion StalledIssue::getCriterionByReason(mega::MegaSyncSta
 {
     switch (reason)
     {
-        case mega::MegaSyncStall::SyncStallReason::ApplyMoveNeedsOtherSideParentFolderToExist:
-        case mega::MegaSyncStall::SyncStallReason::ApplyMoveIsBlockedByExistingItem:
-        case mega::MegaSyncStall::SyncStallReason::MoveNeedsDestinationNodeProcessing:
-        case mega::MegaSyncStall::SyncStallReason::UpsyncNeedsTargetFolder:
-        case mega::MegaSyncStall::SyncStallReason::DownsyncNeedsTargetFolder:
-        case mega::MegaSyncStall::SyncStallReason::DeleteOrMoveWaitingOnScanning:
-        case mega::MegaSyncStall::SyncStallReason::DeleteWaitingOnMoves:
-        case mega::MegaSyncStall::SyncStallReason::WaitingForFileToStopChanging:
-        case mega::MegaSyncStall::SyncStallReason::MovingDownloadToTarget:
-        case mega::MegaSyncStall::SyncStallReason::LocalAndRemoteChangedSinceLastSyncedState_userMustChoose:
-        case mega::MegaSyncStall::SyncStallReason::CouldNotMoveToLocalDebrisFolder:
-        case mega::MegaSyncStall::SyncStallReason::LocalFolderNotScannable:
-        case mega::MegaSyncStall::SyncStallReason::SymlinksNotSupported:
-        case mega::MegaSyncStall::SyncStallReason::FolderMatchedAgainstFile:
-        case mega::MegaSyncStall::SyncStallReason::MatchedAgainstUnidentifiedItem:
-        case mega::MegaSyncStall::SyncStallReason::MoveOrRenameFailed:
+        case mega::MegaSyncStall::SyncStallReason::FileIssue:
         {
             return StalledIssueFilterCriterion::ITEM_TYPE_CONFLICTS;
             break;
         }
-        case mega::MegaSyncStall::SyncStallReason::CreateFolderFailed:
-        case mega::MegaSyncStall::SyncStallReason::UnknownExclusionState:
-        case mega::MegaSyncStall::SyncStallReason::UnableToLoadIgnoreFile:
-        case mega::MegaSyncStall::SyncStallReason::MoveTargetNameTooLong:
-        case mega::MegaSyncStall::SyncStallReason::DownloadTargetNameTooLong:
-        case mega::MegaSyncStall::SyncStallReason::CreateFolderNameTooLong:
-        case mega::MegaSyncStall::SyncStallReason::CantFingrprintFileYet:
-        case mega::MegaSyncStall::SyncStallReason::FolderContainsLockedFiles:
-        case mega::MegaSyncStall::SyncStallReason::LocalAndRemotePreviouslyUnsyncedDiffer_userMustChoose:
+        case mega::MegaSyncStall::SyncStallReason::MoveOrRenameCannotOccur:
+        case mega::MegaSyncStall::SyncStallReason::DeleteOrMoveWaitingOnScanning:
+        case mega::MegaSyncStall::SyncStallReason::DeleteWaitingOnMoves:
+        case mega::MegaSyncStall::SyncStallReason::UploadIssue:
+        case mega::MegaSyncStall::SyncStallReason::DownloadIssue:
+        case mega::MegaSyncStall::SyncStallReason::CannotCreateFolder:
+        case mega::MegaSyncStall::SyncStallReason::CannotPerformDeletion:
         case mega::MegaSyncStall::SyncStallReason::SyncItemExceedsSupportedTreeDepth:
-        case mega::MegaSyncStall::SyncStallReason::MACVerificationFailure:
-        case mega::MegaSyncStall::SyncStallReason::NoNameTripletsDetected:
-        case mega::MegaSyncStall::SyncStallReason::EncounteredHardLinkAtMoveSource:
-        case mega::MegaSyncStall::SyncStallReason::SpecialFilesNotSupported:
+        case mega::MegaSyncStall::SyncStallReason::FolderMatchedAgainstFile:
+        case mega::MegaSyncStall::SyncStallReason::LocalAndRemoteChangedSinceLastSyncedState_userMustChoose:
+        case mega::MegaSyncStall::SyncStallReason::LocalAndRemotePreviouslyUnsyncedDiffer_userMustChoose:
         default:
         {
             return StalledIssueFilterCriterion::OTHER_CONFLICTS;

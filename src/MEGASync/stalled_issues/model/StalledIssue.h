@@ -20,12 +20,11 @@ class StalledIssueData : public QSharedData
 public:
     struct Path
     {
-        bool isMissing;
-        bool isBlocked;
         QString path;
+        mega::MegaSyncStall::SyncPathProblem mPathProblem = mega::MegaSyncStall::SyncPathProblem::NoProblem;
 
-        Path() : isMissing(false), isBlocked(false){}
-        bool isEmpty() const {return path.isEmpty();}
+        Path(){}
+        bool isEmpty() const {return path.isEmpty() && mPathProblem == mega::MegaSyncStall::SyncPathProblem::NoProblem;}
     };
 
     StalledIssueData();
@@ -34,9 +33,6 @@ public:
     const Path& getPath() const;
     const Path& getMovePath() const;
     bool isCloud() const;
-
-    bool hasMoveInfo() const;
-    bool isEmpty() const;
 
     QString getFilePath() const;
     QString getMoveFilePath() const;
@@ -78,12 +74,12 @@ class StalledIssue
         void fillIssue(const mega::MegaSyncStall *stall);
 
         //Don´t think it´s going to be more stalled issues than 2 (local and remote)
-        const QExplicitlySharedDataPointer<StalledIssueData> &getLocalData() const;
-        const QExplicitlySharedDataPointer<StalledIssueData> &getCloudData() const;
+        const QExplicitlySharedDataPointer<StalledIssueData>& getLocalData() const;
+        const QExplicitlySharedDataPointer<StalledIssueData>& getCloudData() const;
 
         mega::MegaSyncStall::SyncStallReason getReason() const;
+
         QString getFileName() const;
-        bool isCloud() const;
 
         bool isNameConflict() const;
 
@@ -98,10 +94,8 @@ protected:
         bool initCloudIssue();
         QExplicitlySharedDataPointer<StalledIssueData> mLocalData;
 
-        bool mIsCloud = false;
-        bool mIsImmediate = false;
-        QString mReasonString;
         mega::MegaSyncStall::SyncStallReason mReason = mega::MegaSyncStall::SyncStallReason::NoReason;
+
         bool mIsNameConflict = false;
 
 };

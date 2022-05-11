@@ -3,108 +3,49 @@
 
 #include <StalledIssueHeader.h>
 
-class LocalAndRemotePreviouslyUnsyncedDifferHeader : public StalledIssueHeader
-{
-public:
-    LocalAndRemotePreviouslyUnsyncedDifferHeader(QWidget *parent = nullptr);
-
-protected:
-    void refreshCaseUi() override;
-};
-
-//Local and remote previously synced differ
-class LocalAndRemoteChangedSinceLastSyncedStateHeader : public StalledIssueHeader
-{
-public:
-    LocalAndRemoteChangedSinceLastSyncedStateHeader(QWidget *parent = nullptr);
-
-protected:
-    void refreshCaseUi() override;
-};
-
-//Special Files not supported
-class SpecialFilesNotSupportedHeader : public StalledIssueHeader
+//DefaultHeader failed
+class DefaultHeader : public StalledIssueHeader
 {
     Q_OBJECT
 
 public:
-    SpecialFilesNotSupportedHeader(QWidget *parent = nullptr);
-
-protected:
-    void refreshCaseUi() override;
-
-protected slots:
-    void on_actionButton_clicked() override;
-};
-
-//Local Folder not scanneable
-class LocalFolderNotScannableHeader : public StalledIssueHeader
-{
-    Q_OBJECT
-
-public:
-    LocalFolderNotScannableHeader(QWidget *parent = nullptr);
-
-protected:
-    void refreshCaseUi() override;
-};
-
-//Folder contains locked files
-class FolderContainsLockedFilesHeader : public StalledIssueHeader
-{
-    Q_OBJECT
-
-public:
-    FolderContainsLockedFilesHeader(QWidget *parent = nullptr);
-
-protected:
-    void refreshCaseUi() override;
-};
-
-//Can fingerprint file yet
-class CantFingerprintFileYetHeader : public StalledIssueHeader
-{
-    Q_OBJECT
-
-public:
-    CantFingerprintFileYetHeader(QWidget *parent = nullptr);
+    DefaultHeader(QWidget *parent = nullptr);
 
 protected:
     void refreshCaseUi() override;
 };
 
 //Create folder failed
-class CreateFolderFailedHeader : public StalledIssueHeader
+class FileIssueHeader : public StalledIssueHeader
 {
     Q_OBJECT
 
 public:
-    CreateFolderFailedHeader(QWidget *parent = nullptr);
+    FileIssueHeader(QWidget *parent = nullptr);
 
 protected:
     void refreshCaseUi() override;
 };
-
-//Could not moved to local debris
-class CouldNotMoveToLocalDebrisFolderHeader : public StalledIssueHeader
-{
-    Q_OBJECT
-
-public:
-    CouldNotMoveToLocalDebrisFolderHeader(QWidget *parent = nullptr);
-
-protected:
-    void refreshCaseUi() override;
-};
-
 
 //Move or rename failed
-class MoveOrRenameFailedHeader : public StalledIssueHeader
+class MoveOrRenameCannotOccurHeader : public StalledIssueHeader
 {
     Q_OBJECT
 
 public:
-    MoveOrRenameFailedHeader(QWidget *parent = nullptr);
+    MoveOrRenameCannotOccurHeader(QWidget *parent = nullptr);
+
+protected:
+    void refreshCaseUi() override;
+};
+
+//Delete or Move Waiting onScanning
+class DeleteOrMoveWaitingOnScanningHeader : public StalledIssueHeader
+{
+    Q_OBJECT
+
+public:
+    DeleteOrMoveWaitingOnScanningHeader(QWidget *parent = nullptr);
 
 protected:
     void refreshCaseUi() override;
@@ -122,49 +63,49 @@ protected:
     void refreshCaseUi() override;
 };
 
-//ApplyMoveNeedsOtherSideParentFolderToExist
-class ApplyMoveNeedsOtherSideParentFolderToExistHeader : public StalledIssueHeader
+//Upsync needs target folder
+class UploadIssueHeader : public StalledIssueHeader
 {
     Q_OBJECT
 
 public:
-    ApplyMoveNeedsOtherSideParentFolderToExistHeader(QWidget *parent = nullptr);
+    UploadIssueHeader(QWidget *parent = nullptr);
 
 protected:
     void refreshCaseUi() override;
 };
 
-//ApplyMoveIsBlockedByExistingItem
-class ApplyMoveIsBlockedByExistingItemHeader : public StalledIssueHeader
+//Downsync needs target folder
+class DownloadIssueHeader : public StalledIssueHeader
 {
     Q_OBJECT
 
 public:
-    ApplyMoveIsBlockedByExistingItemHeader(QWidget *parent = nullptr);
+    DownloadIssueHeader(QWidget *parent = nullptr);
 
 protected:
     void refreshCaseUi() override;
 };
 
-//MoveNeedsDestinationNodeProcessing
-class MoveNeedsDestinationNodeProcessingHeader : public StalledIssueHeader
+//Create folder failed
+class CannotCreateFolderHeader : public StalledIssueHeader
 {
     Q_OBJECT
 
 public:
-    MoveNeedsDestinationNodeProcessingHeader(QWidget *parent = nullptr);
+    CannotCreateFolderHeader(QWidget *parent = nullptr);
 
 protected:
     void refreshCaseUi() override;
 };
 
-//Unable to load ignore file
-class UnableToLoadIgnoreFileHeader : public StalledIssueHeader
+//Create folder failed
+class CannotPerformDeletionHeader : public StalledIssueHeader
 {
     Q_OBJECT
 
 public:
-    UnableToLoadIgnoreFileHeader(QWidget *parent = nullptr);
+    CannotPerformDeletionHeader(QWidget *parent = nullptr);
 
 protected:
     void refreshCaseUi() override;
@@ -185,116 +126,6 @@ protected slots:
     void on_actionButton_clicked() override;
 };
 
-//Move Target Name Too Long Header
-class MoveTargetNameTooLongHeader : public StalledIssueHeader
-{
-    Q_OBJECT
-
-public:
-    MoveTargetNameTooLongHeader(QWidget *parent = nullptr);
-
-protected:
-    void refreshCaseUi() override;
-};
-
-//Create Folder Name Too Long
-class CreateFolderNameTooLongHeader : public StalledIssueHeader
-{
-    Q_OBJECT
-
-public:
-    CreateFolderNameTooLongHeader(QWidget *parent = nullptr);
-
-protected:
-    void refreshCaseUi() override;
-};
-
-//Delete or Move Waiting onScanning
-class DeleteOrMoveWaitingOnScanningHeader : public StalledIssueHeader
-{
-    Q_OBJECT
-
-public:
-    DeleteOrMoveWaitingOnScanningHeader(QWidget *parent = nullptr);
-
-protected:
-    void refreshCaseUi() override;
-};
-
-//Matched Against Unidentified Item
-class MatchedAgainstUnidentifiedItemHeader : public StalledIssueHeader
-{
-    Q_OBJECT
-
-public:
-    MatchedAgainstUnidentifiedItemHeader(QWidget *parent = nullptr);
-
-protected:
-    void refreshCaseUi() override;
-
-protected slots:
-    void on_actionButton_clicked() override;
-};
-
-//Moving Download To Target
-class MovingDownloadToTargetHeader : public StalledIssueHeader
-{
-    Q_OBJECT
-
-public:
-    MovingDownloadToTargetHeader(QWidget *parent = nullptr);
-
-protected:
-    void refreshCaseUi() override;
-};
-
-//Upsync needs target folder
-class UpsyncNeedsTargetFolderHeader : public StalledIssueHeader
-{
-    Q_OBJECT
-
-public:
-    UpsyncNeedsTargetFolderHeader(QWidget *parent = nullptr);
-
-protected:
-    void refreshCaseUi() override;
-};
-
-//Downsync needs target folder
-class DownsyncNeedsTargetFolderHeader : public StalledIssueHeader
-{
-    Q_OBJECT
-
-public:
-    DownsyncNeedsTargetFolderHeader(QWidget *parent = nullptr);
-
-protected:
-    void refreshCaseUi() override;
-};
-
-//WaitingForFileToStopChanging
-class WaitingForFileToStopChangingHeader : public StalledIssueHeader
-{
-    Q_OBJECT
-
-public:
-    WaitingForFileToStopChangingHeader(QWidget *parent = nullptr);
-
-protected:
-    void refreshCaseUi() override;
-};
-
-//SymlinksNotSupported
-class SymlinksNotSuppoertedHeader : public StalledIssueHeader
-{
-    Q_OBJECT
-
-public:
-    SymlinksNotSuppoertedHeader(QWidget *parent = nullptr);
-
-protected:
-    void refreshCaseUi() override;
-};
 
 //Folder matched against file
 class FolderMatchedAgainstFileHeader : public StalledIssueHeader
@@ -303,6 +134,25 @@ class FolderMatchedAgainstFileHeader : public StalledIssueHeader
 
 public:
     FolderMatchedAgainstFileHeader(QWidget *parent = nullptr);
+
+protected:
+    void refreshCaseUi() override;
+};
+
+class LocalAndRemotePreviouslyUnsyncedDifferHeader : public StalledIssueHeader
+{
+public:
+    LocalAndRemotePreviouslyUnsyncedDifferHeader(QWidget *parent = nullptr);
+
+protected:
+    void refreshCaseUi() override;
+};
+
+//Local and remote previously synced differ
+class LocalAndRemoteChangedSinceLastSyncedStateHeader : public StalledIssueHeader
+{
+public:
+    LocalAndRemoteChangedSinceLastSyncedStateHeader(QWidget *parent = nullptr);
 
 protected:
     void refreshCaseUi() override;

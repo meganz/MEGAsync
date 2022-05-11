@@ -14,6 +14,174 @@
     #include "limits.h"
 #endif
 
+//Local folder not scannable
+DefaultHeader::DefaultHeader(QWidget *parent)
+    : StalledIssueHeader(parent)
+{}
+
+void DefaultHeader::refreshCaseUi()
+{
+    setLeftTitleText(tr("Error detected with"));
+    addFileName();
+    setTitleDescriptionText(tr("Reason not found."));
+}
+
+//Local folder not scannable
+FileIssueHeader::FileIssueHeader(QWidget *parent)
+    : StalledIssueHeader(parent)
+{}
+
+void FileIssueHeader::refreshCaseUi()
+{
+    setLeftTitleText(tr("File Issue text"));
+    addFileName();
+    setTitleDescriptionText(tr("Example text."));
+}
+
+//Local folder not scannable
+MoveOrRenameCannotOccurHeader::MoveOrRenameCannotOccurHeader(QWidget *parent)
+    : StalledIssueHeader(parent)
+{}
+
+void MoveOrRenameCannotOccurHeader::refreshCaseUi()
+{
+    setLeftTitleText(tr("Cannot move or rename"));
+    addFileName();
+    setTitleDescriptionText(tr("Filesystem error preventing file acces."));
+}
+
+//Delete or Move Waiting onScanning
+DeleteOrMoveWaitingOnScanningHeader::DeleteOrMoveWaitingOnScanningHeader(QWidget *parent)
+    : StalledIssueHeader(parent)
+{}
+
+void DeleteOrMoveWaitingOnScanningHeader::refreshCaseUi()
+{
+    setLeftTitleText(tr("Can´t find"));
+    addFileName();
+    setTitleDescriptionText(tr("Waiting to finish scan to see if the file was moved or deleted."));
+}
+
+//Local folder not scannable
+DeleteWaitingOnMovesHeader::DeleteWaitingOnMovesHeader(QWidget *parent)
+    : StalledIssueHeader(parent)
+{}
+
+void DeleteWaitingOnMovesHeader::refreshCaseUi()
+{
+    setLeftTitleText(tr("Waiting to move"));
+    addFileName();
+    setTitleDescriptionText(tr("Waiting for other processes to complete."));
+}
+
+//Upsync needs target folder
+UploadIssueHeader::UploadIssueHeader(QWidget *parent)
+    : StalledIssueHeader(parent)
+{
+}
+
+void UploadIssueHeader::refreshCaseUi()
+{
+    setLeftTitleText(tr("Can´t upload"));
+    addFileName();
+    setRightTitleText(tr("to the selected location"));
+    setTitleDescriptionText(tr("Cannot reach the destination folder."));
+}
+
+//Downsync needs target folder
+DownloadIssueHeader::DownloadIssueHeader(QWidget *parent)
+    : StalledIssueHeader(parent)
+{
+}
+
+void DownloadIssueHeader::refreshCaseUi()
+{
+    setLeftTitleText(tr("Can´t download"));
+    addFileName();
+    setRightTitleText(tr("to the selected location"));
+    setTitleDescriptionText(tr("Cannot reach the destination folder."));
+}
+
+//Create folder failed
+CannotCreateFolderHeader::CannotCreateFolderHeader(QWidget *parent)
+    : StalledIssueHeader(parent)
+{}
+
+void CannotCreateFolderHeader::refreshCaseUi()
+{
+    setLeftTitleText(tr("Cannot create"));
+    addFileName();
+    setTitleDescriptionText(tr("Filesystem error preventing folder access."));
+}
+
+//Create folder failed
+CannotPerformDeletionHeader::CannotPerformDeletionHeader(QWidget *parent)
+    : StalledIssueHeader(parent)
+{}
+
+void CannotPerformDeletionHeader::refreshCaseUi()
+{
+    setLeftTitleText(tr("Cannot perform deletion"));
+    addFileName();
+    setTitleDescriptionText(tr("Filesystem error preventing folder access."));
+}
+
+//SyncItemExceedsSupoortedTreeDepth
+SyncItemExceedsSupoortedTreeDepthHeader::SyncItemExceedsSupoortedTreeDepthHeader(QWidget *parent)
+    : StalledIssueHeader(parent)
+{
+    showAction(tr("Ignore"));
+}
+
+void SyncItemExceedsSupoortedTreeDepthHeader::refreshCaseUi()
+{
+    setLeftTitleText(tr("Unable to sync"));
+    addFileName();
+    setTitleDescriptionText(tr("Target is too deep on your folder structure. Please move it to a location that is less"
+                                "\nthan 64 folders deep."));
+}
+
+void SyncItemExceedsSupoortedTreeDepthHeader::on_actionButton_clicked()
+{
+    ignoreFile();
+}
+
+////MoveTargetNameTooLongHeader
+//CreateFolderNameTooLongHeader::CreateFolderNameTooLongHeader(QWidget *parent)
+//    : StalledIssueHeader(parent)
+//{}
+
+//void CreateFolderNameTooLongHeader::refreshCaseUi()
+//{
+//    auto maxCharacters(0);
+
+//#ifdef Q_OS_MACX
+//    maxCharacters = NAME_MAX;
+//#elif defined(_WIN32)
+//    maxCharacters = MAX_PATH;
+//#elif defined (Q_OS_LINUX)
+//    maxCharacters = NAME_MAX;
+//#endif
+
+//    setLeftTitleText(tr("Unable to sync"));
+//    addFileName();
+//    setTitleDescriptionText(tr("Folder name too long. Your Operating System only supports folder"
+//                               "\nnames up to %1 characters.").arg(QString::number(maxCharacters)));
+//}
+
+//SymlinksNotSupported
+FolderMatchedAgainstFileHeader::FolderMatchedAgainstFileHeader(QWidget *parent)
+    : StalledIssueHeader(parent)
+{
+}
+
+void FolderMatchedAgainstFileHeader::refreshCaseUi()
+{
+    setLeftTitleText(tr("Cannot sync"));
+    addFileName();
+    setTitleDescriptionText(tr("Cannot sync folders against files."));
+}
+
 LocalAndRemotePreviouslyUnsyncedDifferHeader::LocalAndRemotePreviouslyUnsyncedDifferHeader(QWidget *parent)
     : StalledIssueHeader(parent)
 {
@@ -40,340 +208,3 @@ void LocalAndRemoteChangedSinceLastSyncedStateHeader::refreshCaseUi()
     addFileName();
     setTitleDescriptionText(tr("This file has changed since it it was last synced."));
 }
-
-//Special Files not supported
-SpecialFilesNotSupportedHeader::SpecialFilesNotSupportedHeader(QWidget *parent)
-    : StalledIssueHeader(parent)
-{
-    showAction(tr("Ignore"));
-}
-
-void SpecialFilesNotSupportedHeader::refreshCaseUi()
-{
-    setLeftTitleText(tr("Cannot access"));
-    addFileName();
-    setTitleDescriptionText(tr("filesystem error preventing file access: Special files not supported."));
-}
-
-void SpecialFilesNotSupportedHeader::on_actionButton_clicked()
-{
-    ignoreFile();
-}
-
-//Local folder not scannable
-LocalFolderNotScannableHeader::LocalFolderNotScannableHeader(QWidget *parent)
-    : StalledIssueHeader(parent)
-{}
-
-void LocalFolderNotScannableHeader::refreshCaseUi()
-{
-    setLeftTitleText(tr("Can´t move"));
-    addFileName();
-    setRightTitleText(tr("to the selected location"));
-    setTitleDescriptionText(tr("Cannot reach the destination folder."));
-}
-
-//Folder contains locked files
-FolderContainsLockedFilesHeader::FolderContainsLockedFilesHeader(QWidget *parent)
-    : StalledIssueHeader(parent)
-{}
-
-void FolderContainsLockedFilesHeader::refreshCaseUi()
-{
-    setLeftTitleText(tr("Unable to scan"));
-    addFileName();
-    setTitleDescriptionText(tr("Some contents of this folder are locked. Please see if any of its files are opened by\n"
-                                         "another program. Close the program and try again."));
-}
-
-//Can fingerprint file yet
-CantFingerprintFileYetHeader::CantFingerprintFileYetHeader(QWidget *parent)
-    : StalledIssueHeader(parent)
-{}
-
-void CantFingerprintFileYetHeader::refreshCaseUi()
-{
-    setLeftTitleText(tr("Unable to sync"));
-    addFileName();
-    setTitleDescriptionText(tr("File is opened by another program. Close the process and try again."));
-}
-
-//Local folder not scannable
-MoveOrRenameFailedHeader::MoveOrRenameFailedHeader(QWidget *parent)
-    : StalledIssueHeader(parent)
-{}
-
-void MoveOrRenameFailedHeader::refreshCaseUi()
-{
-    setLeftTitleText(tr("Cannot move or rename"));
-    addFileName();
-    setTitleDescriptionText(tr("Filesystem error preventing file acces."));
-}
-
-//Could not moved to local debris
-CouldNotMoveToLocalDebrisFolderHeader::CouldNotMoveToLocalDebrisFolderHeader(QWidget *parent)
-    : StalledIssueHeader(parent)
-{}
-
-void CouldNotMoveToLocalDebrisFolderHeader::refreshCaseUi()
-{
-    setLeftTitleText(tr("Cannot update"));
-    addFileName();
-    setTitleDescriptionText(tr("The sync tried to move this file to the debris folder, but the operation failed."));
-}
-
-//Create folder failed
-CreateFolderFailedHeader::CreateFolderFailedHeader(QWidget *parent)
-    : StalledIssueHeader(parent)
-{}
-
-void CreateFolderFailedHeader::refreshCaseUi()
-{
-    setLeftTitleText(tr("Cannot create"));
-    addFileName();
-    setTitleDescriptionText(tr("Filesystem error preventing folder access."));
-}
-
-//Local folder not scannable
-DeleteWaitingOnMovesHeader::DeleteWaitingOnMovesHeader(QWidget *parent)
-    : StalledIssueHeader(parent)
-{}
-
-void DeleteWaitingOnMovesHeader::refreshCaseUi()
-{
-    setLeftTitleText(tr("Waiting to move"));
-    addFileName();
-    setTitleDescriptionText(tr("Waiting for other processes to complete."));
-}
-
-//ApplyMoveNeedsOtherSideParentFolderToExist
-ApplyMoveNeedsOtherSideParentFolderToExistHeader::ApplyMoveNeedsOtherSideParentFolderToExistHeader(QWidget *parent)
-    : StalledIssueHeader(parent)
-{}
-
-void ApplyMoveNeedsOtherSideParentFolderToExistHeader::refreshCaseUi()
-{
-    setLeftTitleText(tr("Can´t move"));
-    addFileName();
-    setRightTitleText(tr("to the selected location"));
-    setTitleDescriptionText(tr("Cannot reach the destination folder %1")
-                            .arg(getData().isCloud() ? tr("on the cloud") : tr("on your device")));
-}
-
-//ApplyMoveNeedsOtherSideParentFolderToExist
-ApplyMoveIsBlockedByExistingItemHeader::ApplyMoveIsBlockedByExistingItemHeader(QWidget *parent)
-    : StalledIssueHeader(parent)
-{}
-
-void ApplyMoveIsBlockedByExistingItemHeader::refreshCaseUi()
-{
-    setLeftTitleText(tr("Can´t move"));
-    addFileName();
-    setRightTitleText(tr("to the selected location"));
-    setTitleDescriptionText(tr("Something is blocking the action on the destination folder."));
-}
-
-
-//MoveNeedsDestinationNodeProcessing
-MoveNeedsDestinationNodeProcessingHeader::MoveNeedsDestinationNodeProcessingHeader(QWidget *parent)
-    : StalledIssueHeader(parent)
-{}
-
-void MoveNeedsDestinationNodeProcessingHeader::refreshCaseUi()
-{
-    setLeftTitleText(tr("Can´t move"));
-    addFileName();
-    setRightTitleText(tr("to the selected location"));
-    setTitleDescriptionText(tr("Cannot reach the destination folder."));
-}
-
-//Unable to load ignore file
-UnableToLoadIgnoreFileHeader::UnableToLoadIgnoreFileHeader(QWidget *parent)
-    : StalledIssueHeader(parent)
-{}
-
-void UnableToLoadIgnoreFileHeader::refreshCaseUi()
-{
-    setLeftTitleText(tr("Unable to load"));
-    addFileName();
-    setTitleDescriptionText(tr("Cannot read ignore file."));
-}
-
-//Delete or Move Waiting onScanning
-DeleteOrMoveWaitingOnScanningHeader::DeleteOrMoveWaitingOnScanningHeader(QWidget *parent)
-    : StalledIssueHeader(parent)
-{}
-
-void DeleteOrMoveWaitingOnScanningHeader::refreshCaseUi()
-{
-    setLeftTitleText(tr("Can´t find"));
-    addFileName();
-    setTitleDescriptionText(tr("Waiting to finish scan to see if the file was moved or deleted."));
-}
-
-
-//SyncItemExceedsSupoortedTreeDepth
-SyncItemExceedsSupoortedTreeDepthHeader::SyncItemExceedsSupoortedTreeDepthHeader(QWidget *parent)
-    : StalledIssueHeader(parent)
-{
-    showAction(tr("Ignore"));
-}
-
-void SyncItemExceedsSupoortedTreeDepthHeader::refreshCaseUi()
-{
-    setLeftTitleText(tr("Unable to sync"));
-    addFileName();
-    setTitleDescriptionText(tr("Target is too deep on your folder structure. Please move it to a location that is less"
-                                "\nthan 64 folders deep."));
-}
-
-void SyncItemExceedsSupoortedTreeDepthHeader::on_actionButton_clicked()
-{
-    ignoreFile();
-}
-
-//MoveTargetNameTooLongHeader
-MoveTargetNameTooLongHeader::MoveTargetNameTooLongHeader(QWidget *parent)
-    : StalledIssueHeader(parent)
-{}
-
-void MoveTargetNameTooLongHeader::refreshCaseUi()
-{
-    auto maxCharacters(0);
-
-#ifdef Q_OS_MACX
-    maxCharacters = NAME_MAX;
-#elif defined(_WIN32)
-    maxCharacters = MAX_PATH;
-#elif defined (Q_OS_LINUX)
-    maxCharacters = NAME_MAX;
-#endif
-
-    setLeftTitleText(tr("Unable to sync"));
-    addFileName();
-    setTitleDescriptionText(tr("File name too long. Your Operating System only supports file"
-                               "\nnames up to %1 characters.").arg(QString::number(maxCharacters)));
-}
-
-//MoveTargetNameTooLongHeader
-CreateFolderNameTooLongHeader::CreateFolderNameTooLongHeader(QWidget *parent)
-    : StalledIssueHeader(parent)
-{}
-
-void CreateFolderNameTooLongHeader::refreshCaseUi()
-{
-    auto maxCharacters(0);
-
-#ifdef Q_OS_MACX
-    maxCharacters = NAME_MAX;
-#elif defined(_WIN32)
-    maxCharacters = MAX_PATH;
-#elif defined (Q_OS_LINUX)
-    maxCharacters = NAME_MAX;
-#endif
-
-    setLeftTitleText(tr("Unable to sync"));
-    addFileName();
-    setTitleDescriptionText(tr("Folder name too long. Your Operating System only supports folder"
-                               "\nnames up to %1 characters.").arg(QString::number(maxCharacters)));
-}
-
-//Matched Against Unidentified Item
-MatchedAgainstUnidentifiedItemHeader::MatchedAgainstUnidentifiedItemHeader(QWidget *parent)
-    : StalledIssueHeader(parent)
-{
-    showAction(tr("Ignore"));
-}
-
-void MatchedAgainstUnidentifiedItemHeader::refreshCaseUi()
-{
-    setLeftTitleText(tr("Cannot access"));
-    addFileName();
-    setTitleDescriptionText(tr("Cannot identify item."));
-}
-
-void MatchedAgainstUnidentifiedItemHeader::on_actionButton_clicked()
-{
-    ignoreFile();
-}
-
-//Moving download to target
-MovingDownloadToTargetHeader::MovingDownloadToTargetHeader(QWidget *parent)
-    : StalledIssueHeader(parent)
-{
-}
-
-void MovingDownloadToTargetHeader::refreshCaseUi()
-{
-    setLeftTitleText(tr("Waiting to finish downloading"));
-    addFileName();
-    setTitleDescriptionText(tr("Moving the downloaded file to its final destination failed."));
-}
-
-//Upsync needs target folder
-UpsyncNeedsTargetFolderHeader::UpsyncNeedsTargetFolderHeader(QWidget *parent)
-    : StalledIssueHeader(parent)
-{
-}
-
-void UpsyncNeedsTargetFolderHeader::refreshCaseUi()
-{
-    setLeftTitleText(tr("Can´t upload"));
-    addFileName();
-    setRightTitleText(tr("to the selected location"));
-    setTitleDescriptionText(tr("Cannot reach the destination folder."));
-}
-
-//Downsync needs target folder
-DownsyncNeedsTargetFolderHeader::DownsyncNeedsTargetFolderHeader(QWidget *parent)
-    : StalledIssueHeader(parent)
-{
-}
-
-void DownsyncNeedsTargetFolderHeader::refreshCaseUi()
-{
-    setLeftTitleText(tr("Can´t download"));
-    addFileName();
-    setRightTitleText(tr("to the selected location"));
-    setTitleDescriptionText(tr("Cannot reach the destination folder."));
-}
-
-//WaitingForFileToStopChanging
-WaitingForFileToStopChangingHeader::WaitingForFileToStopChangingHeader(QWidget *parent)
-    : StalledIssueHeader(parent)
-{
-}
-
-void WaitingForFileToStopChangingHeader::refreshCaseUi()
-{
-    setLeftTitleText(tr("Waiting to upload"));
-    addFileName();
-    setTitleDescriptionText(tr("Waiting for other processes to complete."));
-}
-
-//SymlinksNotSupported
-SymlinksNotSuppoertedHeader::SymlinksNotSuppoertedHeader(QWidget *parent)
-    : StalledIssueHeader(parent)
-{
-}
-
-void SymlinksNotSuppoertedHeader::refreshCaseUi()
-{
-    setLeftTitleText(tr("Cannot access"));
-    addFileName();
-    setTitleDescriptionText(tr("Filesystem error preventing folder access: Symlink not supported."));
-}
-
-//SymlinksNotSupported
-FolderMatchedAgainstFileHeader::FolderMatchedAgainstFileHeader(QWidget *parent)
-    : StalledIssueHeader(parent)
-{
-}
-
-void FolderMatchedAgainstFileHeader::refreshCaseUi()
-{
-    setLeftTitleText(tr("Cannot sync"));
-    addFileName();
-    setTitleDescriptionText(tr("Cannot sync folders against files."));
-}
-

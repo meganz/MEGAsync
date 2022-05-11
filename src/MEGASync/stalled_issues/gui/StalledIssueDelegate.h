@@ -20,7 +20,7 @@ class StalledIssueDelegate : public QStyledItemDelegate
 public:
     StalledIssueDelegate(StalledIssuesProxyModel* proxyModel,  StalledIssuesView* view);
     ~StalledIssueDelegate();
-    QSize sizeHint(const QStyleOptionViewItem&, const QModelIndex&index) const;
+    QSize sizeHint(const QStyleOptionViewItem&option, const QModelIndex&index) const;
 
 protected:
     void paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const override;

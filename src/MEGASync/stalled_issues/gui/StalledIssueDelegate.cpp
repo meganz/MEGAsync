@@ -26,7 +26,7 @@ StalledIssueDelegate::~StalledIssueDelegate()
 {
 }
 
-QSize StalledIssueDelegate::sizeHint(const QStyleOptionViewItem&, const QModelIndex& index) const
+QSize StalledIssueDelegate::sizeHint(const QStyleOptionViewItem& option, const QModelIndex& index) const
 {
     if(!index.parent().isValid())
     {
@@ -38,13 +38,11 @@ QSize StalledIssueDelegate::sizeHint(const QStyleOptionViewItem&, const QModelIn
         StalledIssueBaseDelegateWidget* w (getStalledIssueItemWidget(index, stalledIssueItem));
         if(w)
         {
-            auto size = w->sizeHint();
-
-            return  size;
+            return w->sizeHint();
         }
     }
 
-    return QSize();
+    return QStyledItemDelegate::sizeHint(option, index);
 }
 
 void StalledIssueDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const

@@ -15,8 +15,6 @@ class StalledIssueFilePath : public QWidget
 {
     Q_OBJECT
 
-    static const char* FULL_PATH;
-
 public:
     explicit StalledIssueFilePath(QWidget *parent = nullptr);
     ~StalledIssueFilePath();
@@ -28,11 +26,13 @@ protected:
     bool eventFilter(QObject *watched, QEvent *event) override;
 
 private:
-    void fillPathName(StalledIssueData::Path data, QLabel* label);
     void showHoverAction(QEvent::Type type, QWidget* actionWidget, const QString &path);
+    void updateFileIcons();
 
     void fillFilePath();
     void fillMoveFilePath();
+
+    QString getSyncPathProblemString(mega::MegaSyncStall::SyncPathProblem pathProblem);
 
     Ui::StalledIssueFilePath *ui;
     QExplicitlySharedDataPointer<StalledIssueData> mData;

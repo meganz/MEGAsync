@@ -75,43 +75,26 @@ StalledIssueBaseDelegateWidget *StalledIssuesDelegateWidgetsCache::createBodyWid
 
     switch(reason)
     {
-        case mega::MegaSyncStall::SyncStallReason::SpecialFilesNotSupported:
-        case mega::MegaSyncStall::SyncStallReason::DeleteWaitingOnMoves:
-        case mega::MegaSyncStall::SyncStallReason::MoveOrRenameFailed:
-        case mega::MegaSyncStall::SyncStallReason::FolderContainsLockedFiles:
-        case mega::MegaSyncStall::SyncStallReason::CantFingrprintFileYet:
-        case mega::MegaSyncStall::SyncStallReason::CreateFolderFailed:
-        case mega::MegaSyncStall::SyncStallReason::CouldNotMoveToLocalDebrisFolder:
-        case mega::MegaSyncStall::SyncStallReason::UnableToLoadIgnoreFile:
-        case mega::MegaSyncStall::SyncStallReason::SyncItemExceedsSupportedTreeDepth:
-        case mega::MegaSyncStall::SyncStallReason::MoveTargetNameTooLong:
-        case mega::MegaSyncStall::SyncStallReason::CreateFolderNameTooLong:
-        case mega::MegaSyncStall::SyncStallReason::MatchedAgainstUnidentifiedItem:
-        case mega::MegaSyncStall::SyncStallReason::DeleteOrMoveWaitingOnScanning:
-        case mega::MegaSyncStall::SyncStallReason::LocalFolderNotScannable:
-        case mega::MegaSyncStall::SyncStallReason::MovingDownloadToTarget:
-        case mega::MegaSyncStall::SyncStallReason::UpsyncNeedsTargetFolder:
-        case mega::MegaSyncStall::SyncStallReason::DownsyncNeedsTargetFolder:
-        case mega::MegaSyncStall::SyncStallReason::WaitingForFileToStopChanging:
-        case mega::MegaSyncStall::SyncStallReason::SymlinksNotSupported:
-        case mega::MegaSyncStall::SyncStallReason::ApplyMoveNeedsOtherSideParentFolderToExist:
-        case mega::MegaSyncStall::SyncStallReason::ApplyMoveIsBlockedByExistingItem:
-        case mega::MegaSyncStall::SyncStallReason::MoveNeedsDestinationNodeProcessing:
-        case mega::MegaSyncStall::SyncStallReason::FolderMatchedAgainstFile:
-        {
-            item = new OtherSideMissingOrBlocked(parent);
-            break;
-        }
         case mega::MegaSyncStall::SyncStallReason::LocalAndRemotePreviouslyUnsyncedDiffer_userMustChoose:
         case mega::MegaSyncStall::SyncStallReason::LocalAndRemoteChangedSinceLastSyncedState_userMustChoose:
         {
             item = new LocalAndRemoteDifferentWidget(parent);
-
             break;
         }
+        case mega::MegaSyncStall::SyncStallReason::FileIssue:
+        case mega::MegaSyncStall::SyncStallReason::MoveOrRenameCannotOccur:
+        case mega::MegaSyncStall::SyncStallReason::DeleteOrMoveWaitingOnScanning:
+        case mega::MegaSyncStall::SyncStallReason::DeleteWaitingOnMoves:
+        case mega::MegaSyncStall::SyncStallReason::UploadIssue:
+        case mega::MegaSyncStall::SyncStallReason::DownloadIssue:
+        case mega::MegaSyncStall::SyncStallReason::CannotCreateFolder:
+        case mega::MegaSyncStall::SyncStallReason::CannotPerformDeletion:
+        case mega::MegaSyncStall::SyncStallReason::FolderMatchedAgainstFile:
+        case mega::MegaSyncStall::SyncStallReason::SyncItemExceedsSupportedTreeDepth:
         default:
         {
-             //Do not add a dummy body, I prefer it to break
+            item = new OtherSideMissingOrBlocked(parent);
+            break;
         }
     }
 
@@ -129,19 +112,14 @@ StalledIssueHeader *StalledIssuesDelegateWidgetsCache::createHeaderWidget(const 
 
     switch(data.getReason())
     {
-        case mega::MegaSyncStall::SyncStallReason::SpecialFilesNotSupported:
+        case mega::MegaSyncStall::SyncStallReason::FileIssue:
         {
-            header  = new SpecialFilesNotSupportedHeader(parent);
+            header  = new FileIssueHeader(parent);
             break;
         }
-        case mega::MegaSyncStall::SyncStallReason::MoveOrRenameFailed:
+        case mega::MegaSyncStall::SyncStallReason::MoveOrRenameCannotOccur:
         {
-            header  = new MoveOrRenameFailedHeader(parent);
-            break;
-        }
-        case mega::MegaSyncStall::SyncStallReason::MovingDownloadToTarget:
-        {
-            header  = new MovingDownloadToTargetHeader(parent);
+            header  = new MoveOrRenameCannotOccurHeader(parent);
             break;
         }
         case mega::MegaSyncStall::SyncStallReason::DeleteOrMoveWaitingOnScanning:
@@ -149,59 +127,39 @@ StalledIssueHeader *StalledIssuesDelegateWidgetsCache::createHeaderWidget(const 
             header  = new DeleteOrMoveWaitingOnScanningHeader(parent);
             break;
         }
-        case mega::MegaSyncStall::SyncStallReason::SyncItemExceedsSupportedTreeDepth:
-        {
-            header  = new SyncItemExceedsSupoortedTreeDepthHeader(parent);
-            break;
-        }
-        case mega::MegaSyncStall::SyncStallReason::MoveTargetNameTooLong:
-        {
-            header  = new MoveTargetNameTooLongHeader(parent);
-            break;
-        }
-        case mega::MegaSyncStall::SyncStallReason::CreateFolderNameTooLong:
-        {
-            header  = new CreateFolderNameTooLongHeader(parent);
-            break;
-        }
-        case mega::MegaSyncStall::SyncStallReason::MatchedAgainstUnidentifiedItem:
-        {
-            header  = new MatchedAgainstUnidentifiedItemHeader(parent);
-            break;
-        }
-        case mega::MegaSyncStall::SyncStallReason::UnableToLoadIgnoreFile:
-        {
-            header  = new UnableToLoadIgnoreFileHeader(parent);
-            break;
-        }
-        case mega::MegaSyncStall::SyncStallReason::CreateFolderFailed:
-        {
-            header  = new CreateFolderFailedHeader(parent);
-            break;
-        }
-        case mega::MegaSyncStall::SyncStallReason::CouldNotMoveToLocalDebrisFolder:
-        {
-            header  = new CouldNotMoveToLocalDebrisFolderHeader(parent);
-            break;
-        }
-        case mega::MegaSyncStall::SyncStallReason::CantFingrprintFileYet:
-        {
-            header  = new CantFingerprintFileYetHeader(parent);
-            break;
-        }
-        case mega::MegaSyncStall::SyncStallReason::FolderContainsLockedFiles:
-        {
-            header  = new FolderContainsLockedFilesHeader(parent);
-            break;
-        }
-        case mega::MegaSyncStall::SyncStallReason::LocalFolderNotScannable:
-        {
-            header  = new LocalFolderNotScannableHeader(parent);
-            break;
-        }
         case mega::MegaSyncStall::SyncStallReason::DeleteWaitingOnMoves:
         {
             header  = new DeleteWaitingOnMovesHeader(parent);
+            break;
+        }
+        case mega::MegaSyncStall::SyncStallReason::UploadIssue:
+        {
+            header  = new UploadIssueHeader(parent);
+            break;
+        }
+        case mega::MegaSyncStall::SyncStallReason::DownloadIssue:
+        {
+            header  = new DownloadIssueHeader(parent);
+            break;
+        }
+        case mega::MegaSyncStall::SyncStallReason::CannotCreateFolder:
+        {
+            header  = new CannotCreateFolderHeader(parent);
+            break;
+        }
+        case mega::MegaSyncStall::SyncStallReason::CannotPerformDeletion:
+        {
+            header  = new CannotPerformDeletionHeader(parent);
+            break;
+        }
+        case mega::MegaSyncStall::SyncStallReason::FolderMatchedAgainstFile:
+        {
+            header  = new FolderMatchedAgainstFileHeader(parent);
+            break;
+        }
+        case mega::MegaSyncStall::SyncStallReason::SyncItemExceedsSupportedTreeDepth:
+        {
+            header  = new SyncItemExceedsSupoortedTreeDepthHeader(parent);
             break;
         }
         case mega::MegaSyncStall::SyncStallReason::LocalAndRemoteChangedSinceLastSyncedState_userMustChoose:
@@ -214,49 +172,9 @@ StalledIssueHeader *StalledIssuesDelegateWidgetsCache::createHeaderWidget(const 
             header  = new LocalAndRemotePreviouslyUnsyncedDifferHeader(parent);
             break;
         }
-        case mega::MegaSyncStall::SyncStallReason::ApplyMoveNeedsOtherSideParentFolderToExist:
-        {
-            header  = new ApplyMoveNeedsOtherSideParentFolderToExistHeader(parent);
-            break;
-        }
-        case mega::MegaSyncStall::SyncStallReason::ApplyMoveIsBlockedByExistingItem:
-        {
-            header  = new ApplyMoveIsBlockedByExistingItemHeader(parent);
-            break;
-        }
-        case mega::MegaSyncStall::SyncStallReason::MoveNeedsDestinationNodeProcessing:
-        {
-            header  = new MoveNeedsDestinationNodeProcessingHeader(parent);
-            break;
-        }
-        case mega::MegaSyncStall::SyncStallReason::UpsyncNeedsTargetFolder:
-        {
-            header  = new UpsyncNeedsTargetFolderHeader(parent);
-            break;
-        }
-        case mega::MegaSyncStall::SyncStallReason::DownsyncNeedsTargetFolder:
-        {
-            header  = new DownsyncNeedsTargetFolderHeader(parent);
-            break;
-        }
-        case mega::MegaSyncStall::SyncStallReason::WaitingForFileToStopChanging:
-        {
-            header  = new WaitingForFileToStopChangingHeader(parent);
-            break;
-        }
-        case mega::MegaSyncStall::SyncStallReason::SymlinksNotSupported:
-        {
-            header  = new SymlinksNotSuppoertedHeader(parent);
-            break;
-        }
-        case mega::MegaSyncStall::SyncStallReason::FolderMatchedAgainstFile:
-        {
-            header  = new FolderMatchedAgainstFileHeader(parent);
-            break;
-        }
         default:
         {
-            //Do not add a dummy header, I prefer it to break
+            header = new DefaultHeader(parent);
         }
     }
 

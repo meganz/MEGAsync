@@ -8,13 +8,12 @@
 #include <QPainter>
 #include <QPoint>
 
-const char* StalledIssueFilePath::FULL_PATH = "fullPath";
-
 StalledIssueFilePath::StalledIssueFilePath(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::StalledIssueFilePath)
 {
     ui->setupUi(this);
+
     ui->filePathAction->hide();
     ui->moveFilePathAction->hide();
 
@@ -46,6 +45,7 @@ void StalledIssueFilePath::updateUi(QExplicitlySharedDataPointer<StalledIssueDat
 
     fillFilePath();
     fillMoveFilePath();
+    updateFileIcons();
 }
 
 void StalledIssueFilePath::fillFilePath()
@@ -65,24 +65,45 @@ void StalledIssueFilePath::fillFilePath()
         ui->LocalOrRemoteText->setText(tr("Local:"));
     }
 
-    StalledIssueData::Path data;
-    data.path = mData->getNativePath();
-    data.isBlocked = mData->getPath().isBlocked;
-    data.isMissing = mData->getPath().isMissing;
+    if(!mData->getPath().isEmpty())
+    {
+        auto filePath = mData->getNativePath();
+        if(!filePath.isEmpty())
+        {
+            ui->filePath->installEventFilter(this);
+            ui->filePath->setText(mData->getNativePath());
+        }
+        else
+        {
+            ui->filePathContainer->hide();
+        }
 
-    fillPathName(data, ui->filePath);
+        mData->getPath().mPathProblem != mega::MegaSyncStall::SyncPathProblem::NoProblem
+                ?  ui->pathProblem->setText(getSyncPathProblemString(mData->getPath().mPathProblem)) : ui->pathProblem->hide();
+    }
+    else
+    {
+        ui->file->hide();
+    }
 }
 
 void StalledIssueFilePath::fillMoveFilePath()
 {
-    if(mData->hasMoveInfo())
+    if(!mData->getMovePath().isEmpty())
     {
-        StalledIssueData::Path data;
-        data.path = mData->getNativeMovePath();
-        data.isBlocked = mData->getMovePath().isBlocked;
-        data.isMissing = mData->getMovePath().isMissing;
+        auto filePath = mData->getNativeMovePath();
+        if(!filePath.isEmpty())
+        {
+            ui->moveFilePath->installEventFilter(this);
+            ui->moveFilePath->setText(mData->getNativePath());
+        }
+        else
+        {
+            ui->moveFilePathContainer->hide();
+        }
 
-        fillPathName(data, ui->moveFilePath);
+        mData->getMovePath().mPathProblem != mega::MegaSyncStall::SyncPathProblem::NoProblem
+                ?  ui->movePathProblem->setText(getSyncPathProblemString(mData->getMovePath().mPathProblem)) : ui->movePathProblem->hide();
     }
     else
     {
@@ -90,71 +111,33 @@ void StalledIssueFilePath::fillMoveFilePath()
     }
 }
 
-void StalledIssueFilePath::fillPathName(StalledIssueData::Path data, QLabel* label)
+void StalledIssueFilePath::updateFileIcons()
 {
-    bool mInRed(false);
-    if(data.isMissing)
-    {
-        data.path.append(QString::fromUtf8(" (missing)"));
-
-        mInRed = true;
-    }
-    else
-    {
-        if(data.isBlocked)
-        {
-            data.path.append(QString::fromUtf8(" (blocked)"));
-
-            mInRed = true;
-        }
-    }
-
-    //for elided text in real time
-    label->installEventFilter(this);
-    label->setProperty(FULL_PATH, data.path);
-
-    label->setText(data.path);
-
-    if(mInRed)
-    {
-        label->setStyleSheet(QStringLiteral("color: red;"));
-    }
-    else
-    {
-        label->setStyleSheet(QString());
-    }
-
     QIcon fileTypeIcon;
-    if(data.isMissing)
+    QFileInfo fileInfo(mData->getFileName());
+
+    if(fileInfo.isFile())
     {
-        fileTypeIcon = Utilities::getCachedPixmap(QLatin1Literal(":/images/StalledIssues/help-circle.png"));
-    }
-    else
-    {
-        QFileInfo fileInfo(data.path);
-        if(fileInfo.isFile())
+        //Without extension
+        if(mData->getFileName() == fileInfo.baseName())
         {
-            //Without extension
-            if(data.path.endsWith(fileInfo.baseName()))
-            {
-                fileTypeIcon = Utilities::getCachedPixmap(QLatin1Literal(":/images/StalledIssues/help-circle.png"));
-            }
-            else
-            {
-                fileTypeIcon = Utilities::getCachedPixmap(Utilities::getExtensionPixmapName(
-                                                              fileInfo.fileName(), QLatin1Literal(":/images/drag_")));
-            }
+            fileTypeIcon = Utilities::getCachedPixmap(QLatin1Literal(":/images/StalledIssues/help-circle.png"));
         }
         else
         {
-            fileTypeIcon = Utilities::getCachedPixmap(QLatin1Literal(":/images/color_folder.png"));
+            fileTypeIcon = Utilities::getCachedPixmap(Utilities::getExtensionPixmapName(
+                                                          fileInfo.fileName(), QLatin1Literal(":/images/drag_")));
         }
     }
+    else
+    {
+        fileTypeIcon = Utilities::getCachedPixmap(QLatin1Literal(":/images/color_folder.png"));
+    }
+
 
     ui->filePathIcon->setPixmap(fileTypeIcon.pixmap(ui->filePathIcon->size()));
     ui->moveFilePathIcon->setPixmap(fileTypeIcon.pixmap(ui->moveFilePathIcon->size()));
 }
-
 
 bool StalledIssueFilePath::eventFilter(QObject *watched, QEvent *event)
 {
@@ -197,10 +180,20 @@ bool StalledIssueFilePath::eventFilter(QObject *watched, QEvent *event)
     {
         if(auto label = dynamic_cast<QLabel*>(watched))
         {
-            auto fullPath = label->property(FULL_PATH);
-            if(fullPath.isValid())
+            QString fullPath;
+
+            if(label == ui->filePath)
             {
-                label->setText(label->fontMetrics().elidedText(fullPath.toString(), Qt::ElideMiddle,label->width()));
+                fullPath = mData->getNativePath();
+            }
+            else if(label == ui->moveFilePath)
+            {
+                fullPath = mData->getNativeMovePath();
+            }
+
+            if(!fullPath.isEmpty())
+            {
+                label->setText(label->fontMetrics().elidedText(fullPath, Qt::ElideMiddle,label->width()));
             }
         }
     }
@@ -255,5 +248,109 @@ void StalledIssueFilePath::showHoverAction(QEvent::Type type, QWidget *actionWid
                 QMegaMessageBox::warning(nullptr, QString::fromUtf8("MEGAsync"), QString::fromUtf8("Path %1 does not exist.").arg(path));
             }
         }
+    }
+}
+
+QString StalledIssueFilePath::getSyncPathProblemString(mega::MegaSyncStall::SyncPathProblem pathProblem)
+{
+    switch(pathProblem)
+    {
+        case mega::MegaSyncStall::FileChangingFrequently:
+        {
+            return tr("File is being frequently changing.");
+            break;
+        }
+        case mega::MegaSyncStall::IgnoreRulesUnknown:
+        {
+            return tr("Ignore rules unknown.");
+            break;
+        }
+        case mega::MegaSyncStall::DetectedHardLink:
+        {
+            return tr("Hard link detected.");
+            break;
+        }
+        case mega::MegaSyncStall::DetectedSymlink:
+        {
+            return tr("Detected Sym link.");
+            break;
+        }
+        case mega::MegaSyncStall::DetectedSpecialFile:
+        {
+            return tr("Detected special file.");
+            break;
+        }
+        case mega::MegaSyncStall::DifferentFileOrFolderIsAlreadyPresent:
+        {
+            return tr("Different file or folder is already present.");
+            break;
+        }
+        case mega::MegaSyncStall::ParentFolderDoesNotExist:
+        {
+            return tr("Parent folder does not exist.");
+            break;
+        }
+        case mega::MegaSyncStall::FilesystemErrorDuringOperation:
+        {
+            return tr("Filesystem error during operation.");
+            break;
+        }
+        case mega::MegaSyncStall::NameTooLongForFilesystem:
+        {
+            return tr("Name too long for filesystem.");
+            break;
+        }
+        case mega::MegaSyncStall::CannotFingrprintFile:
+        {
+            return tr("Cannot fingerprint file.");
+            break;
+        }
+        case mega::MegaSyncStall::DestinationPathInUnresolvedArea:
+        {
+            return tr("Destination path is in an unresolved are.");
+            break;
+        }
+        case mega::MegaSyncStall::MACVerificationFailure:
+        {
+            return tr("MAC verification failure.");
+            break;
+        }
+        case mega::MegaSyncStall::DeletedOrMovedByUser:
+        {
+            return tr("Deleted or moved by user.");
+            break;
+        }
+        case mega::MegaSyncStall::FileFolderDeletedByUser:
+        {
+            return tr("Deleted by user.");
+            break;
+        }
+        case mega::MegaSyncStall::MoveToDebrisFolderFailed:
+        {
+            return tr("Move to debris folder failed.");
+            break;
+        }
+        case mega::MegaSyncStall::IgnoreFileMalformed:
+        {
+            return tr("Ingore file malformed.");
+            break;
+        }
+        case mega::MegaSyncStall::FilesystemErrorListingFolder:
+        {
+            return tr("Error Listing folder in filesystem.");
+            break;
+        }
+        case mega::MegaSyncStall::FilesystemErrorIdentifyingFolderContent:
+        {
+            return tr("Error identifying folder content in filesystem.");
+            break;
+        }
+        case mega::MegaSyncStall::UndecryptedCloudNode:
+        {
+            return tr("Cloud node undecrypted.");
+            break;
+        }
+        default:
+            return tr("Error not detected");
     }
 }

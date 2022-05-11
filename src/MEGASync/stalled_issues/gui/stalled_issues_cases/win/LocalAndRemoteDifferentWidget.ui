@@ -24,7 +24,7 @@
     <number>0</number>
    </property>
    <property name="topMargin">
-    <number>0</number>
+    <number>5</number>
    </property>
    <property name="rightMargin">
     <number>7</number>
@@ -38,7 +38,6 @@
       <font>
        <family>Lato 13</family>
        <pointsize>-1</pointsize>
-       <weight>75</weight>
        <bold>true</bold>
       </font>
      </property>
