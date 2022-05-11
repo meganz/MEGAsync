@@ -215,6 +215,9 @@
      </item>
      <item>
       <widget class="QPushButton" name="pDismiss">
+       <property name="cursor">
+        <cursorShape>PointingHandCursor</cursorShape>
+       </property>
        <property name="text">
         <string>Dismiss</string>
        </property>
@@ -222,6 +225,9 @@
      </item>
      <item>
       <widget class="QPushButton" name="pProceed">
+       <property name="cursor">
+        <cursorShape>PointingHandCursor</cursorShape>
+       </property>
        <property name="text">
         <string>Proceed</string>
        </property>
