@@ -32,7 +32,9 @@ void TransferScanCancelUi::hide()
 void TransferScanCancelUi::update()
 {
     if (mContainer->currentWidget() == mBlockingWidget)
+    {
         mBlockingWidget->updateAnimation();
+    }
 }
 
 bool TransferScanCancelUi::isActive()
