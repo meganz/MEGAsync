@@ -18,23 +18,22 @@ const int TransferManager::STATS_REFRESH_PERIOD_MS;
 
 const char* LABEL_NUMBER = "NUMBER";
 const char* ITS_ON = "itsOn";
-constexpr long long NB_INIT_VALUE = 0LL;
 
 TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
     QDialog(parent),
     mUi(new Ui::TransferManager),
-    mUiDragBackDrop(new Ui::TransferManagerDragBackDrop),
     mMegaApi(megaApi),
+    mScanningAnimationIndex(1),
     mPreferences(Preferences::instance()),
     mModel(nullptr),
+    mSearchFieldReturnPressed(false),
     mCurrentTab(NO_TAB),
     mShadowTab (new QGraphicsDropShadowEffect(nullptr)),
     mSpeedRefreshTimer(new QTimer(this)),
     mStatsRefreshTimer(new QTimer(this)),
+    mUiDragBackDrop(new Ui::TransferManagerDragBackDrop),
     mStorageQuotaState(MegaApi::STORAGE_STATE_UNKNOWN),
-    mTransferQuotaState(QuotaState::OK),
-    mScanningAnimationIndex(1),
-    mSearchFieldReturnPressed(false)
+    mTransferQuotaState(QuotaState::OK)
 {
     mUi->setupUi(this);
 
@@ -371,8 +370,6 @@ void TransferManager::onUpdatePauseState(bool isPaused)
 
 void TransferManager::checkCancelAllButtonVisibility()
 {
-    auto proxy (mUi->wTransfers->getProxyModel());
-
     auto sizePolicy = mUi->bCancelClearAll->sizePolicy();
     if(!sizePolicy.retainSizeWhenHidden())
     {
@@ -776,8 +773,9 @@ void TransferManager::refreshSearchStats()
             mUi->tUlResults->setProperty(LABEL_NUMBER, nbUl);
         }
 
-        mUi->lNbResults->setText(QString(tr("%1 result(s) found","",nbAll)).arg(nbAll));
-        mUi->lNbResults->setProperty("results", bool(nbAll));
+        int intNbAll = static_cast<int>(nbAll);
+        mUi->lNbResults->setText(QString(tr("%1 result(s) found","", intNbAll)).arg(nbAll));
+        mUi->lNbResults->setProperty("results", static_cast<bool>(nbAll));
         mUi->lNbResults->style()->unpolish(mUi->lNbResults);
         mUi->lNbResults->style()->polish(mUi->lNbResults);
 
