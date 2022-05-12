@@ -74,8 +74,8 @@ void InfoDialog::upAreaHovered(QMouseEvent *event)
 InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddialog) :
     QDialog(parent),
     ui(new Ui::InfoDialog),
-    qtBugFixer(this),
-    mTransferManager(nullptr)
+    mTransferManager(nullptr),
+    qtBugFixer(this)
 {
     ui->setupUi(this);
 
@@ -574,13 +574,13 @@ void InfoDialog::updateTransfersCount()
     double percentUploads(0.0);
     if(TransfersCountUpdated.totalUploadBytes != 0)
     {
-        percentUploads = (TransfersCountUpdated.completedUploadBytes*1.0)/ TransfersCountUpdated.totalUploadBytes;
+        percentUploads = static_cast<double>(TransfersCountUpdated.completedUploadBytes) / static_cast<double>(TransfersCountUpdated.totalUploadBytes);
     }
 
     double percentDownloads(0.0);
     if(TransfersCountUpdated.totalDownloadBytes != 0)
     {
-        percentDownloads = (TransfersCountUpdated.completedDownloadBytes*1.0)/ TransfersCountUpdated.totalDownloadBytes;
+        percentDownloads = static_cast<double>(TransfersCountUpdated.completedDownloadBytes)/ static_cast<double>(TransfersCountUpdated.totalDownloadBytes);
     }
 
     ui->bTransferManager->setPercentUploads(percentUploads);
