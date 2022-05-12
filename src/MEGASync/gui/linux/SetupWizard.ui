@@ -844,7 +844,7 @@ font-size: 11px;
                 <string notr="true"/>
                </property>
                <property name="text">
-                <string>I agree with the MEGA &lt;a href=&quot;https://mega.co.nz/#terms&quot;&gt;Terms of Service&lt;/a&gt;</string>
+                <string>I agree with the MEGA &lt;A&gt;Terms of Service&lt;/A&gt;</string>
                </property>
                <property name="textFormat">
                 <enum>Qt::RichText</enum>

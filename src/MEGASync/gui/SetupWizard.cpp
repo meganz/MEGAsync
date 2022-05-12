@@ -51,12 +51,10 @@ SetupWizard::SetupWizard(MegaApplication *app, QWidget *parent) :
     delegateListener = new QTMegaRequestListener(megaApi, this);
     megaApi->addRequestListener(delegateListener);
 
-    ui->lTermsLink->setText(ui->lTermsLink->text().replace(
-        QString::fromUtf8("\">"),
-        QString::fromUtf8("\" style=\"color:#DC0000\">"))
-        .replace(QString::fromUtf8("mega.co.nz"), QString::fromUtf8("mega.nz")));
-
-
+    QString agreeLink = ui->lTermsLink->text();
+    agreeLink.replace(QString::fromLatin1("<A>"), QString::fromLatin1("<a href=\"https://mega.nz/#terms\" style=\"color:#DC0000\">"));
+    agreeLink.replace(QString::fromLatin1("</A>"), QString::fromLatin1("</a>"));
+    ui->lTermsLink->setText(agreeLink);
 
     m_animation = new QPropertyAnimation(ui->wErrorMessage, "size");
     m_animation->setDuration(400);
