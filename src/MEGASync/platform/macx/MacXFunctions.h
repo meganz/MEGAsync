@@ -27,6 +27,8 @@ bool runHttpServer();
 bool runHttpsServer();
 bool userActive();
 double uptime();
+QString appBundlePath();
+
 
 //You take the ownership of the returned value
 NSPopover* allocatePopOverWithView(NSView* view, QSize size);

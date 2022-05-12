@@ -690,3 +690,15 @@ void releaseIdObject(id obj)
 {
     [obj release];
 }
+
+QString appBundlePath()
+{
+    NSString *appPath = [[NSBundle mainBundle] bundlePath];
+    if (appPath == nil)
+    {
+        return QString();
+    }
+
+    return fromNSString(appPath);
+}
+

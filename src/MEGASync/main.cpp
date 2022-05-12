@@ -413,7 +413,7 @@ int main(int argc, char *argv[])
     }
 #endif
 
-    for(const auto message : logMessages)
+    for(const auto &message : logMessages)
     {
         MegaApi::log(message.logLevel, message.message.toStdString().c_str());
     }

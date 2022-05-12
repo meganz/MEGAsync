@@ -83,6 +83,16 @@ void MegaApplication::loadDataPath()
 MegaApplication::MegaApplication(int &argc, char **argv) :
     QApplication(argc, argv)
 {
+
+#ifndef QT_DEBUG
+    QString path = appBundlePath();
+    if (path.compare(QStringLiteral("/Applications/MEGAsync.app")))
+    {
+        QMessageBox::warning(nullptr, QCoreApplication::translate("MegaSyncError", "Error"), QCoreApplication::translate("MegaSyncError", "MEGA Desktop App is not able to run from this current location. Please run the application from /Applications path"), QMessageBox::Ok);
+        ::exit(0);
+    }
+#endif
+
     appfinished = false;
 
     bool logToStdout = false;
