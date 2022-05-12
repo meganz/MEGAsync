@@ -828,7 +828,7 @@
                 <string notr="true"/>
                </property>
                <property name="text">
-                <string>I agree with the MEGA &lt;A&gt;Terms of Service&lt;/A&gt;</string>
+                <string>I agree with the MEGA [A]Terms of Service[/A]</string>
                </property>
                <property name="textFormat">
                 <enum>Qt::RichText</enum>
