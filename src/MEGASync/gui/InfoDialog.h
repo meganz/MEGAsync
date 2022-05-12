@@ -273,7 +273,6 @@ protected:
     mega::MegaTransfer *activeDownload;
     mega::MegaTransfer *activeUpload;
     std::shared_ptr<SyncController> mSyncController;
-    mega::MegaHandle mBackupRootHandle;
 
  private:
     static double computeRatio(long long completed, long long remaining);
