@@ -838,16 +838,6 @@ void TransferManager::pauseResumeTransfers(bool isPaused)
 {
     mModel->pauseResumeAllTransfers(isPaused);
     onUpdatePauseState(isPaused);
-
-    if(newState && (mTransferQuotaState == QuotaState::FULL || mTransferQuotaState == QuotaState::OVERQUOTA
-            || (mStorageQuotaState == MegaApi::STORAGE_STATE_PAYWALL
-            || mStorageQuotaState == MegaApi::STORAGE_STATE_RED)))
-    {
-        MegaSyncApp->checkOverStorageStates();
-        mUi->bPause->blockSignals(true);
-        mUi->bPause->setChecked(mUi->bPause->isChecked());
-        mUi->bPause->blockSignals(false);
-    }
 }
 
 void TransferManager::onStalledIssuesStateChanged(bool state)

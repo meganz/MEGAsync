@@ -464,7 +464,7 @@ QMenu::item:default
           <string>...</string>
          </property>
          <property name="icon">
-          <iconset resource="../../../gui/Resources_linux.qrc">
+          <iconset resource="../../../gui/Resources_win.qrc">
            <normaloff>:/images/no_transfers.png</normaloff>:/images/no_transfers.png</iconset>
          </property>
          <property name="iconSize">
@@ -616,10 +616,6 @@ QPushButton
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="../../../gui/Resources_linux.qrc"/>
-  <include location="../../../gui/Resources_win.qrc"/>
-  <include location="../../../gui/Resources_win.qrc"/>
-  <include location="../../../gui/Resources_linux.qrc"/>
   <include location="../../../gui/Resources_win.qrc"/>
  </resources>
  <connections/>

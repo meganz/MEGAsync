@@ -313,8 +313,6 @@ public:
     static void getPROurlWithParameters(QString &url);
     static QString joinLogZipFiles(mega::MegaApi *megaApi, const QDateTime *timestampSince = nullptr, QString appendHashReference = QString());
 
-    static QString getElidedPath(const QString& path, uint8_t firstPart, uint8_t secondPart, uint8_t maxDepth, QLabel* label);
-
     static void adjustToScreenFunc(QPoint position, QWidget *what);
     static QString minProPlanNeeded(std::shared_ptr<mega::MegaPricing> pricing, long long usedStorage);
     static QString getReadableStringFromTs(mega::MegaIntegerList* list);
@@ -330,6 +328,11 @@ public:
     // Note: remainingHours and remaininDays represent the same value.
     // i.e. for 1 day & 3 hours remaining, remainingHours will be 27, not 3.
     static void getDaysAndHoursToTimestamp(int64_t secsTimestamps, int64_t &remaininDays, int64_t &remainingHours);
+
+    static bool moveFileToTrash(const QString& filePath);
+#ifdef Q_OS_LINUX
+    static QDir linuxTrashLocation(const QString& sourcePath);
+#endif
 
     // shows a ProgressDialog while some progress goes on. it returns a copy of the object,
     // but the object will be deleted when the progress closes

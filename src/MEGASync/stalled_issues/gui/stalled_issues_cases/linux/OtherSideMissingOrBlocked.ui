@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string notr="true"/>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <property name="spacing">
@@ -41,7 +41,7 @@
   <customwidget>
    <class>StalledIssueFilePath</class>
    <extends>QWidget</extends>
-   <header>StalledIssueFilePath.h</header>
+   <header>stalledissuefilepath.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
