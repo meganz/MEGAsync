@@ -149,8 +149,6 @@ void Utilities::initializeExtensions()
 
 void Utilities::initializeFileTypes()
 {
-    fileTypes[getExtensionPixmapName(QLatin1Literal("a.txt"), QString())]
-            = FileType::TYPE_TEXT;
     fileTypes[getExtensionPixmapName(QLatin1Literal("a.wav"), QString())]
             = FileType::TYPE_AUDIO;
     fileTypes[getExtensionPixmapName(QLatin1Literal("a.mkv"), QString())]
@@ -165,6 +163,8 @@ void Utilities::initializeFileTypes()
             = FileType::TYPE_ARCHIVE;
     fileTypes[getExtensionPixmapName(QLatin1Literal("a.sketch"), QString())]
             = FileType::TYPE_ARCHIVE;
+    fileTypes[getExtensionPixmapName(QLatin1Literal("a.txt"), QString())]
+            = FileType::TYPE_DOCUMENT;
     fileTypes[getExtensionPixmapName(QLatin1Literal("a.odt"), QString())]
             = FileType::TYPE_DOCUMENT;
     fileTypes[getExtensionPixmapName(QLatin1Literal("a.pdf"), QString())]

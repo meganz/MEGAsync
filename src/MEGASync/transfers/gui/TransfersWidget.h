@@ -36,6 +36,7 @@ public:
                         const TransferData::TransferStates transferStates,
                         const Utilities::FileTypes fileTypes);
     void transferFilterReset();
+    void mouseRelease(const QPoint& point);
 
     struct HeaderInfo
     {
@@ -95,6 +96,7 @@ signals:
     void updateSearchFilter(const QString& pattern);
     void applyFilter();
     void pauseResumeVisibleRows(bool state);
+    void transferPauseResumeStateChanged(bool isPaused);
     void cancelClearVisibleRows();
 
     void disableTransferManager(bool);

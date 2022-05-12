@@ -40,7 +40,7 @@ TransfersWidget::TransfersWidget(QWidget* parent) :
 }
 void TransfersWidget::setupTransfers()
 {
-    mProxyModel = new TransfersManagerSortFilterProxyModel(this);
+    mProxyModel = new TransfersManagerSortFilterProxyModel(ui->tvTransfers);
     mProxyModel->setSourceModel(app->getTransfersModel());
     mProxyModel->sort(static_cast<int>(SortCriterion::PRIORITY), Qt::DescendingOrder);
 
@@ -76,6 +76,10 @@ void TransfersWidget::configureTransferView()
 
     tDelegate = new MegaTransferDelegate(mProxyModel, ui->tvTransfers);
     ui->tvTransfers->setup(this);
+
+    onPauseStateChanged(mProxyModel->isAnyPaused());
+    onCheckCancelButtonVisibility(false);
+
     ui->tvTransfers->setModel(mProxyModel);
     ui->tvTransfers->setItemDelegate(tDelegate);
     onPauseStateChanged(mProxyModel->isAnyPaused());
@@ -153,6 +157,30 @@ void TransfersWidget::filtersChanged(const TransferData::TransferTypes transferT
 void TransfersWidget::transferFilterReset()
 {
     mProxyModel->resetAllFilters();
+}
+
+void TransfersWidget::mouseRelease(const QPoint &point)
+{
+   if(ui->tvTransfers->isVisible())
+   {
+       auto viewGlobalPos = parentWidget()->mapToGlobal(ui->tvTransfers->pos());
+       QRect viewGlobalRect(viewGlobalPos, ui->tvTransfers->size());
+
+       auto pressedOnView = viewGlobalRect.contains(point);
+       if(!pressedOnView)
+       {
+           ui->tvTransfers->clearSelection();
+       }
+       else
+       {
+           auto localPos = mapTo(ui->tvTransfers, point);
+           auto pressedIndex = ui->tvTransfers->indexAt(localPos);
+           if(!pressedIndex.isValid())
+           {
+               ui->tvTransfers->clearSelection();
+           }
+       }
+   }
 }
 
 void TransfersWidget::updateHeaderItems(const HeaderInfo &info)
@@ -238,6 +266,8 @@ void TransfersWidget::onPauseResumeButtonCheckedOnDelegate(bool pause)
             onPauseStateChanged(mProxyModel->isAnyPaused());
         }
     }
+
+    emit transferPauseResumeStateChanged(pause);
 }
 
 void TransfersWidget::onCancelClearButtonPressedOnDelegate()

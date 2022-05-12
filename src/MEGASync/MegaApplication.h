@@ -300,6 +300,7 @@ public slots:
     void checkNetworkInterfaces();
     void checkMemoryUsage();
     void checkOverStorageStates();
+    void checkOverQuotaStates();
     void periodicTasks();
     void cleanAll();
     void onDupplicateLink(QString link, QString name, mega::MegaHandle handle);
@@ -594,6 +595,8 @@ private:
     void fixMultiscreenResizeBug(int& posX, int& posY);
 
     static void logInfoDialogCoordinates(const char* message, const QRect& screenGeometry, const QString& otherInformation);
+
+    void destroyInfoDialogMenus();
 };
 
 class DeferPreferencesSyncForScope

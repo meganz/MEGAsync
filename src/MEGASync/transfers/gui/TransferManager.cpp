@@ -47,9 +47,11 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
     mDragBackDrop->hide();
 
     mUi->wTransfers->setupTransfers();
-#ifndef Q_OS_MACOS
-    setWindowFlags(windowFlags() | Qt::Window);
+
+#ifdef Q_OS_MACOS
+    mUi->leSearchField->setAttribute(Qt::WA_MacShowFocusRect,0);
 #endif
+
     setAttribute(Qt::WA_DeleteOnClose, true);
 
     mUi->lTextSearch->installEventFilter(this);
@@ -87,7 +89,6 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
     mTabFramesToggleGroup[TYPE_ARCHIVE_TAB]  = mUi->fArchives;
     mTabFramesToggleGroup[TYPE_DOCUMENT_TAB] = mUi->fDocuments;
     mTabFramesToggleGroup[TYPE_IMAGE_TAB]    = mUi->fImages;
-    mTabFramesToggleGroup[TYPE_TEXT_TAB]     = mUi->fText;
 
     for (auto tabFrame : qAsConst(mTabFramesToggleGroup))
     {
@@ -106,8 +107,6 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
     mTooltipNameByTab[TYPE_ARCHIVE_TAB]  = tr("all archives");
     mTooltipNameByTab[TYPE_DOCUMENT_TAB] = tr("all documents");
     mTooltipNameByTab[TYPE_IMAGE_TAB]    = tr("all images");
-    mTooltipNameByTab[TYPE_TEXT_TAB]     = tr("all texts");
-
 
     mTabNoItem[ALL_TRANSFERS_TAB] = mUi->wNoTransfers;
     mTabNoItem[DOWNLOADS_TAB]     = mUi->wNoDownloads;
@@ -121,7 +120,6 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
     mTabNoItem[TYPE_ARCHIVE_TAB]  = mUi->wNoTransfers;
     mTabNoItem[TYPE_DOCUMENT_TAB] = mUi->wNoTransfers;
     mTabNoItem[TYPE_IMAGE_TAB]    = mUi->wNoTransfers;
-    mTabNoItem[TYPE_TEXT_TAB]     = mUi->wNoTransfers;
 
     mNumberLabelsGroup[ALL_TRANSFERS_TAB]    = mUi->lAllTransfers;
     mNumberLabelsGroup[DOWNLOADS_TAB]        = mUi->lDownloads;
@@ -134,7 +132,6 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
     mNumberLabelsGroup[TYPE_ARCHIVE_TAB]     = mUi->lArchivesNb;
     mNumberLabelsGroup[TYPE_DOCUMENT_TAB]    = mUi->lDocumentsNb;
     mNumberLabelsGroup[TYPE_IMAGE_TAB]       = mUi->lImagesNb;
-    mNumberLabelsGroup[TYPE_TEXT_TAB]        = mUi->lTextNb;
 
     QMetaEnum tabs = QMetaEnum::fromType<TM_TAB>();
 
@@ -180,6 +177,9 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
     connect(mUi->wTransfers, &TransfersWidget::pauseResumeVisibleRows,
                 this, &TransferManager::onPauseResumeVisibleRows);
 
+    connect(mUi->wTransfers, &TransfersWidget::transferPauseResumeStateChanged,
+                this, &TransferManager::showQuotaStorageDialogs);
+
     connect(mUi->wTransfers, &TransfersWidget::cancelClearVisibleRows,
                 this, &TransferManager::onCancelVisibleRows);
 
@@ -208,6 +208,14 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
     mSpeedRefreshTimer->setSingleShot(false);
     connect(mSpeedRefreshTimer, &QTimer::timeout,
             this, &TransferManager::refreshSpeed);
+
+    auto sizePolicy = mUi->bDownSpeed->sizePolicy();
+    sizePolicy.setRetainSizeWhenHidden(true);
+    mUi->bDownSpeed->setSizePolicy(sizePolicy);
+
+    sizePolicy = mUi->bUpSpeed->sizePolicy();
+    sizePolicy.setRetainSizeWhenHidden(true);
+    mUi->bUpSpeed->setSizePolicy(sizePolicy);
 
     // Connect to storage quota signals
     connect(MegaSyncApp, &MegaApplication::storageStateChanged,
@@ -350,7 +358,7 @@ void TransferManager::onUpdatePauseState(bool isPaused)
         mUi->lPaused->clear();
     }
 
-    mUi->lPaused->setVisible(isPaused);
+    mUi->lPaused->setVisible(isPaused && !mUi->lStorageOverQuota->isVisible() && !mUi->pTransferOverQuota->isVisible());
 }
 
 void TransferManager::checkCancelAllButtonVisibility()
@@ -366,7 +374,8 @@ void TransferManager::checkCancelAllButtonVisibility()
 
     //Get the most updated transferCount
     mTransfersCount = mModel->getTransfersCount();
-    if((mTransfersCount.completedDownloads() + mTransfersCount.completedUploadBytes) == 0 && !proxy->isAnyCancelable())
+    if((mTransfersCount.completedDownloads() + mTransfersCount.completedUploadBytes) == 0
+            && (mTransfersCount.pendingDownloads + mTransfersCount.pendingUploads == 0))
     {
         mUi->bCancelClearAll->setVisible(false);
     }
@@ -378,6 +387,8 @@ void TransferManager::checkCancelAllButtonVisibility()
 
 void TransferManager::onPauseResumeVisibleRows(bool isPaused)
 {
+    showQuotaStorageDialogs(isPaused);
+
     auto transfersView = findChild<MegaTransferView*>();
 
     if(mCurrentTab == ALL_TRANSFERS_TAB)
@@ -393,8 +404,29 @@ void TransferManager::onPauseResumeVisibleRows(bool isPaused)
         }
     }
 
-    //Use to repaint and update the transfers state
-    transfersView->update();
+    if(transfersView)
+    {
+        //Use to repaint and update the transfers state
+        transfersView->update();
+    }
+}
+
+void TransferManager::showQuotaStorageDialogs(bool isPaused)
+{
+    if(!isPaused && (mTransferQuotaState == QuotaState::FULL || mTransferQuotaState == QuotaState::OVERQUOTA
+            || (mStorageQuotaState == MegaApi::STORAGE_STATE_PAYWALL
+            || mStorageQuotaState == MegaApi::STORAGE_STATE_RED)))
+    {
+        if(mStorageQuotaState == MegaApi::STORAGE_STATE_PAYWALL
+          || mStorageQuotaState == MegaApi::STORAGE_STATE_RED)
+        {
+            MegaSyncApp->checkOverStorageStates();
+        }
+        else
+        {
+            MegaSyncApp->checkOverQuotaStates();
+        }
+    }
 }
 
 void TransferManager::onCancelVisibleRows()
@@ -700,10 +732,19 @@ void TransferManager::checkPauseButtonVisibilityIfPossible()
 
 void TransferManager::refreshSpeed()
 {
-    auto upSpeed (static_cast<unsigned long long>(mMegaApi->getCurrentUploadSpeed()));
-    auto dlSpeed (static_cast<unsigned long long>(mMegaApi->getCurrentDownloadSpeed()));
-    mUi->bUpSpeed->setText(Utilities::getSizeString(upSpeed) + QLatin1Literal("/s"));
-    mUi->bDownSpeed->setText(Utilities::getSizeString(dlSpeed) + QLatin1Literal("/s"));
+    mUi->bUpSpeed->setVisible(mTransfersCount.pendingUploads);
+    if(mTransfersCount.pendingUploads)
+    {
+        auto upSpeed (static_cast<unsigned long long>(mMegaApi->getCurrentUploadSpeed()));
+        mUi->bUpSpeed->setText(Utilities::getSizeString(upSpeed) + QLatin1Literal("/s"));
+    }
+
+    mUi->bDownSpeed->setVisible(mTransfersCount.pendingDownloads);
+    if(mTransfersCount.pendingDownloads)
+    {
+        auto dlSpeed (static_cast<unsigned long long>(mMegaApi->getCurrentDownloadSpeed()));
+        mUi->bDownSpeed->setText(Utilities::getSizeString(dlSpeed) + QLatin1Literal("/s"));
+    }
 }
 
 void TransferManager::refreshSearchStats()
@@ -788,6 +829,15 @@ void TransferManager::on_tSeePlans_clicked()
 void TransferManager::on_bPause_clicked()
 {
     auto newState = !mModel->areAllPaused();
+    pauseResumeTransfers(newState);
+
+    showQuotaStorageDialogs(newState);
+}
+
+void TransferManager::pauseResumeTransfers(bool isPaused)
+{
+    mModel->pauseResumeAllTransfers(isPaused);
+    onUpdatePauseState(isPaused);
 
     if(newState && (mTransferQuotaState == QuotaState::FULL || mTransferQuotaState == QuotaState::OVERQUOTA
             || (mStorageQuotaState == MegaApi::STORAGE_STATE_PAYWALL
@@ -797,18 +847,6 @@ void TransferManager::on_bPause_clicked()
         mUi->bPause->blockSignals(true);
         mUi->bPause->setChecked(mUi->bPause->isChecked());
         mUi->bPause->blockSignals(false);
-    }
-    else
-    {
-        mModel->pauseResumeAllTransfers(newState);
-        onUpdatePauseState(newState);
-
-        //Use to repaint and update the transfers state
-        auto transfersView = findChild<MegaTransferView*>();
-        if(transfersView)
-        {
-            transfersView->update();
-        }
     }
 }
 
@@ -952,11 +990,6 @@ void TransferManager::on_bOther_clicked()
     onFileTypeButtonClicked(TYPE_OTHER_TAB, Utilities::FileType::TYPE_OTHER, tr("Other"));
 }
 
-void TransferManager::on_bText_clicked()
-{
-    onFileTypeButtonClicked(TYPE_TEXT_TAB, Utilities::FileType::TYPE_TEXT, tr("Text"));
-}
-
 void TransferManager::onFileTypeButtonClicked(TM_TAB tab, Utilities::FileType fileType, const QString& tabLabel)
 {
   if (mCurrentTab != tab)
@@ -966,7 +999,6 @@ void TransferManager::onFileTypeButtonClicked(TM_TAB tab, Utilities::FileType fi
         toggleTab(tab);
   }
 }
-
 
 void TransferManager::on_bOpenLinks_clicked()
 {
@@ -1258,6 +1290,8 @@ void TransferManager::changeEvent(QEvent *event)
 void TransferManager::dropEvent(QDropEvent* event)
 {
     mDragBackDrop->hide();
+
+    event->proposedAction();
     QDialog::dropEvent(event);
 
     QQueue<QString> pathsToAdd;
@@ -1268,6 +1302,13 @@ void TransferManager::dropEvent(QDropEvent* event)
     }
 
     MegaSyncApp->shellUpload(pathsToAdd);
+}
+
+void TransferManager::mouseReleaseEvent(QMouseEvent *event)
+{
+    mUi->wTransfers->mouseRelease(event->globalPos());
+
+    QDialog::mouseReleaseEvent(event);
 }
 
 void TransferManager::setTransferState(const StatusInfo::TRANSFERS_STATES &transferState)
@@ -1297,6 +1338,7 @@ void TransferManager::dragEnterEvent(QDragEnterEvent *event)
 {
     if(event->mimeData()->hasUrls())
     {
+        event->proposedAction();
         event->accept();
         mDragBackDrop->show();
         mDragBackDrop->resize(size());

@@ -110,7 +110,7 @@ void NotifyServer::doSendToAll(const char *type, QByteArray str)
 
 void NotifyServer::notifyItemChange(string *localPath)
 {
-    emit sendToAll("P", QByteArray(localPath->data(), localPath->size()));
+    emit sendToAll("P", QByteArray(localPath->data(), static_cast<int>(localPath->size())));
 }
 
 void NotifyServer::notifySyncAdd(QString path)

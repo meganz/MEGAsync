@@ -181,12 +181,19 @@ void FileID::ConvertIdentifierToString(const uint8_t identifier[kMDGUIDSize],
     if (idx == 4 || idx == 6 || idx == 8 || idx == 10)
       buffer[buffer_idx++] = '-';
 
-    buffer[buffer_idx++] = (hi >= 10) ? 'A' + hi - 10 : '0' + hi;
-    buffer[buffer_idx++] = (lo >= 10) ? 'A' + lo - 10 : '0' + lo;
+    buffer[buffer_idx++] = ConvertComponentToChar(hi);
+    buffer[buffer_idx++] = ConvertComponentToChar(lo);
   }
 
   // NULL terminate
   buffer[(buffer_idx < buffer_length) ? buffer_idx : buffer_idx - 1] = 0;
+}
+
+char FileID::ConvertComponentToChar(int component)
+{
+    int limit = 10;
+    int returnValue = (component >= limit) ? 'A' + component - limit : '0' + component;
+    return static_cast<char>(returnValue);
 }
 
 }  // namespace google_breakpad
