@@ -79,7 +79,6 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
     QDialog(parent),
     ui(new Ui::InfoDialog),
     mSyncController (new SyncController()),
-    mBackupRootHandle (mega::INVALID_HANDLE),
     qtBugFixer(this)
 {
     ui->setupUi(this);
@@ -1254,9 +1253,10 @@ void InfoDialog::addBackup()
             if (h == mega::INVALID_HANDLE)
                 return;
 
-            mBackupRootHandle = h;
             if (addBackup)
-                addBackup->setMyBackupsFolder(QString::fromUtf8(megaApi->getNodePathByNodeHandle(mBackupRootHandle)));
+            {
+                addBackup->setMyBackupsFolder(mSyncController->getMyBackupsLocalizedPath() + QLatin1Char('/'));
+            }
         });
 
         mSyncController->getMyBackupsHandle();
@@ -1271,14 +1271,11 @@ void InfoDialog::addBackup()
 
         connect(addBackup, &AddBackupDialog::accepted, this, [this, addBackup]()
         {
-            if (mBackupRootHandle == mega::INVALID_HANDLE)
-                return;
-
             if(addBackup)
             {
                 QDir dirToBackup (addBackup->getSelectedFolder());
                 mSyncController->addSync(QDir::toNativeSeparators(dirToBackup.canonicalPath()),
-                                         mBackupRootHandle, dirToBackup.dirName(),
+                                         mega::INVALID_HANDLE, dirToBackup.dirName(),
                                          MegaSync::TYPE_BACKUP);
             }
         });

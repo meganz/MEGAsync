@@ -4,7 +4,6 @@
 #include "model/SyncModel.h"
 #include "control/SyncController.h"
 #include "megaapi.h"
-#include "RenameTargetFolderDialog.h"
 #include "control/Utilities.h"
 #include "HighDpiResize.h"
 
@@ -77,13 +76,12 @@ class BackupsWizard : public QDialog
         void setupStep2();
         void setupError();
         void setupFinalize();
-        void setupMyBackupsDir(bool nameCollision = false);
+        void setupMyBackupsDir();
         void setupBackups();
         void setupComplete();
         bool isSomethingChecked();
         void processNextBackupSetup();
         bool isFolderAlreadySynced(const QString& path, bool displayWarning = false);
-        QString remoteFolderExistsDialog();
         void refreshNextButtonState();
         void nextStep(const Steps& step);
         void setCurrentWidgetsSteps(QWidget* widget);
@@ -93,7 +91,6 @@ class BackupsWizard : public QDialog
         SyncController mSyncController;
         bool mCreateBackupsDir;
         mega::MegaHandle mDeviceDirHandle;
-        QString mBackupsDirName;
         bool mHaveBackupsDir;
         bool mError;
         bool mUserCancelled;

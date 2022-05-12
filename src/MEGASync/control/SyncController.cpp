@@ -4,7 +4,7 @@
 
 using namespace mega;
 
-#define MegaSyncApp (static_cast<MegaApplication *>(QCoreApplication::instance()))
+const char* SyncController::DEFAULT_BACKUPS_ROOT_DIRNAME = "My backups";
 
 SyncController::SyncController(QObject* parent)
     : QObject(parent),
@@ -26,7 +26,7 @@ SyncController::~SyncController()
 }
 
 void SyncController::addSync(const QString &localFolder, const MegaHandle &remoteHandle,
-                             const QString& syncName, mega::MegaSync::SyncType type)
+                             const QString& syncName, MegaSync::SyncType type)
 {
     if (localFolder.isEmpty() && syncName.isEmpty())
     {
@@ -42,7 +42,7 @@ void SyncController::addSync(const QString &localFolder, const MegaHandle &remot
                      syncName.toUtf8().constData(), remoteHandle, nullptr, mDelegateListener);
 }
 
-void SyncController::removeSync(std::shared_ptr<SyncSetting> syncSetting, const mega::MegaHandle& remoteHandle)
+void SyncController::removeSync(std::shared_ptr<SyncSetting> syncSetting, const MegaHandle& remoteHandle)
 {
     if (!syncSetting)
     {
@@ -142,10 +142,9 @@ QString SyncController::getSyncAPIErrorMsg(int megaError)
     }
 }
 
-void SyncController::setMyBackupsDirName(const QString& name)
+void SyncController::setMyBackupsDirName()
 {
-    assert(!name.isEmpty()); // This should not be called with an empty name, restrict at the UI level
-
+    QString name = tr(SyncController::DEFAULT_BACKUPS_ROOT_DIRNAME);
     mApi->setMyBackupsFolder(name.toUtf8().constData(), mDelegateListener);
 }
 
@@ -157,10 +156,31 @@ void SyncController::getMyBackupsHandle()
         emit myBackupsHandle(mMyBackupsHandle);
 }
 
-void SyncController::setMyBackupsHandle(mega::MegaHandle handle)
+void SyncController::setMyBackupsHandle(MegaHandle handle)
 {
     mMyBackupsHandle = handle;
     emit myBackupsHandle(mMyBackupsHandle);
+}
+
+// For now the path looks like "/My backups", without the "/Backups" root
+QString SyncController::getMyBackupsLocalizedPath()
+{
+    QString backupsDirPath = QLatin1Char('/');
+
+    if (mMyBackupsHandle != INVALID_HANDLE)
+    {
+        // If the node exists, it's very easy: get the path from there
+        auto backupsRootNode = std::unique_ptr<MegaNode> (mApi->getNodeByHandle(mMyBackupsHandle));
+        backupsDirPath += QString::fromUtf8(backupsRootNode->getName());
+    }
+    else
+    {
+        backupsDirPath += tr(SyncController::DEFAULT_BACKUPS_ROOT_DIRNAME);
+    }
+
+    qDebug() << QString::fromUtf8("SyncController: Backups root dir: \"%1\"").arg(backupsDirPath);
+
+    return backupsDirPath;
 }
 
 void SyncController::onRequestFinish(MegaApi *api, MegaRequest *req, MegaError *e)
@@ -344,7 +364,7 @@ void SyncController::onRequestFinish(MegaApi *api, MegaRequest *req, MegaError *
         int subCommand (req->getParamType());
         if (subCommand == MegaApi::USER_ATTR_MY_BACKUPS_FOLDER)
         {
-            mega::MegaHandle handle = INVALID_HANDLE;
+            MegaHandle handle = INVALID_HANDLE;
             if (errorCode == MegaError::API_OK)
             {
                 handle = req->getNodeHandle();

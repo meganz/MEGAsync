@@ -15,7 +15,6 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/OverQuotaDialog.cpp \
     $$PWD/QtPositioningBugFixer.cpp \
     $$PWD/PasswordLineEdit.cpp \
-    $$PWD/RenameTargetFolderDialog.cpp \
     $$PWD/SetupWizard.cpp \
     $$PWD/NodeSelector.cpp \
     $$PWD/FolderBinder.cpp \
@@ -104,7 +103,6 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/OverQuotaDialog.h \
     $$PWD/QtPositioningBugFixer.h \
     $$PWD/PasswordLineEdit.h \
-    $$PWD/RenameTargetFolderDialog.h \
     $$PWD/SetupWizard.h \
     $$PWD/NodeSelector.h \
     $$PWD/FolderBinder.h \
@@ -235,7 +233,6 @@ win32 {
                 $$PWD/win/ProxySettings.ui \
                 $$PWD/win/BandwidthSettings.ui \
                 $$PWD/win/BackupsWizard.ui \
-                $$PWD/win/RenameTargetFolderDialog.ui \
                 $$PWD/win/BackupSetupSuccessDialog.ui \
                 $$PWD/win/NewFolderDialog.ui \
                 $$PWD/win/AddBackupDialog.ui \
@@ -296,7 +293,6 @@ macx {
                 $$PWD/macx/ProxySettings.ui \
                 $$PWD/macx/BandwidthSettings.ui \
                 $$PWD/macx/BackupsWizard.ui \
-                $$PWD/macx/RenameTargetFolderDialog.ui \
                 $$PWD/macx/BackupSetupSuccessDialog.ui \
                 $$PWD/macx/NewFolderDialog.ui \
                 $$PWD/macx/AddBackupDialog.ui \
@@ -380,7 +376,6 @@ unix:!macx {
                 $$PWD/linux/OverQuotaDialog.ui \
                 $$PWD/linux/ProxySettings.ui \
                 $$PWD/linux/BandwidthSettings.ui \
-                $$PWD/linux/RenameTargetFolderDialog.ui \
                 $$PWD/linux/BackupSetupSuccessDialog.ui \
                 $$PWD/linux/NewFolderDialog.ui \
                 $$PWD/linux/AddBackupDialog.ui \

@@ -175,7 +175,6 @@ set (FORMS
     ${MEGAsyncDir}/gui/${UiDir}/BandwidthSettings.ui
     ${MEGAsyncDir}/gui/${UiDir}/NewFolderDialog.ui
     ${MEGAsyncDir}/gui/${UiDir}/BackupsWizard.ui
-    ${MEGAsyncDir}/gui/${UiDir}/RenameTargetFolderDialog.ui
     ${MEGAsyncDir}/gui/${UiDir}/BackupSetupSuccessDialog.ui
     ${MEGAsyncDir}/gui/${UiDir}/AddBackupDialog.ui
     ${MEGAsyncDir}/gui/${UiDir}/RemoveBackupDialog.ui
@@ -302,7 +301,6 @@ set (MOC_INPUT
     ${MEGAsyncDir}/gui/BandwidthSettings.h
     ${MEGAsyncDir}/gui/MegaItemDelegates.h
     ${MEGAsyncDir}/gui/BackupsWizard.h
-    ${MEGAsyncDir}/gui/RenameTargetFolderDialog.h
     ${MEGAsyncDir}/gui/SyncsMenu.h
     ${MEGAsyncDir}/gui/AddBackupDialog.h
     ${MEGAsyncDir}/gui/RemoveBackupDialog.h
@@ -458,7 +456,6 @@ set (SRCS
     ${MEGAsyncDir}/gui/ProxySettings.cpp
     ${MEGAsyncDir}/gui/BandwidthSettings.cpp
     ${MEGAsyncDir}/gui/BackupsWizard.cpp
-    ${MEGAsyncDir}/gui/RenameTargetFolderDialog.cpp
     ${MEGAsyncDir}/gui/SyncsMenu.cpp
     ${MEGAsyncDir}/gui/AddBackupDialog.cpp
     ${MEGAsyncDir}/gui/RemoveBackupDialog.cpp

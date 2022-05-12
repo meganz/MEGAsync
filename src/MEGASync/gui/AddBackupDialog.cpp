@@ -36,12 +36,7 @@ AddBackupDialog::~AddBackupDialog()
 void AddBackupDialog::setMyBackupsFolder(const QString& folder)
 {
     mMyBackupsFolder = folder;
-    QString fold = folder;
-    if(!mDeviceName.isEmpty())
-    {
-        fold.append(QString::fromUtf8("/") + mDeviceName);
-    }
-    mUi->backupToLabel->setText(fold);
+    mUi->backupToLabel->setText(mMyBackupsFolder + mDeviceName);
 }
 
 QDir AddBackupDialog::getSelectedFolder()
@@ -65,10 +60,5 @@ void AddBackupDialog::on_changeButton_clicked()
 void AddBackupDialog::onDeviceNameSet(const QString &devName)
 {
     mDeviceName = devName;
-    if(!mUi->backupToLabel->text().isEmpty())
-    {
-        QString text = mUi->backupToLabel->text();
-        text.append(QString::fromUtf8("/") + mDeviceName);
-        mUi->backupToLabel->setText(text);
-    }
+    mUi->backupToLabel->setText(mMyBackupsFolder + mDeviceName);
 }

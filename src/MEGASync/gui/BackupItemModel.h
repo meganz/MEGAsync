@@ -51,7 +51,7 @@ signals:
     void enableSync(std::shared_ptr<SyncSetting> syncSetting);
     void disableSync(std::shared_ptr<SyncSetting> syncSetting);
 
-private slots:
+public slots:
     void resetModel();
 
 private:

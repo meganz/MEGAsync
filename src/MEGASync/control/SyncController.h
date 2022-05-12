@@ -30,11 +30,14 @@ public:
     void enableSync(std::shared_ptr<SyncSetting> syncSetting);
     void disableSync(std::shared_ptr<SyncSetting> syncSetting);
 
-    void setMyBackupsDirName(const QString& name);
+    void setMyBackupsDirName();
     void getMyBackupsHandle();
+    QString getMyBackupsLocalizedPath();
 
     void setDeviceName(const QString& name);
     void getDeviceName();
+
+    static const char* DEFAULT_BACKUPS_ROOT_DIRNAME;
 
 signals:
     void syncAddStatus(int errorCode, QString errorMsg, QString name);

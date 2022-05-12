@@ -16,7 +16,6 @@ BackupItemModel::BackupItemModel(QObject *parent)
     // individual updates might be better, especially to save selection indexes
     connect(mSyncModel, &SyncModel::syncStateChanged, this, &BackupItemModel::resetModel);
     connect(mSyncModel, &SyncModel::syncRemoved, this, &BackupItemModel::resetModel);
-    resetModel();
 }
 
 QVariant BackupItemModel::headerData(int section, Qt::Orientation orientation, int role) const

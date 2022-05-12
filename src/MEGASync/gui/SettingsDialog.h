@@ -198,6 +198,7 @@ protected:
 private:
     void connectBackupHandlers();
     void loadBackupSettings();
+    void processPendingBackup();
 
     void loadSettings();
     void onCacheSizeAvailable();
@@ -268,6 +269,7 @@ private:
     bool mHasDefaultDownloadOption;
     QPointer<ProxySettings> mProxySettingsDialog;
     mega::MegaHandle mBackupRootHandle;
-    QString  mBackupRootDirName;
+    bool mCreateBackupRootDir;
+    QDir mPendingBackup;
 };
 #endif // SETTINGSDIALOG_H

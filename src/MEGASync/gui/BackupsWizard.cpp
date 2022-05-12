@@ -33,7 +33,6 @@ BackupsWizard::BackupsWizard(QWidget* parent) :
     mSyncController(),
     mCreateBackupsDir (false),
     mDeviceDirHandle (mega::INVALID_HANDLE),
-    mBackupsDirName (),
     mHaveBackupsDir (false),
     mError (false),
     mUserCancelled (false),
@@ -111,7 +110,6 @@ void BackupsWizard::showLess()
     mUi->line2->hide();
     setMinimumHeight(FINAL_STEP_MIN_SIZE.height());
     resize(width(), FINAL_STEP_MIN_SIZE.height());
-
 }
 
 void BackupsWizard::showMore()
@@ -256,7 +254,6 @@ void BackupsWizard::setupStep2()
 
 void BackupsWizard::setupError()
 {
-
     mUi->bShowMore->setVisible(mErrList.size() > SHOW_MORE_VISIBILITY);
 
     bool show_singular = mErrList.size() < 2;
@@ -295,29 +292,19 @@ void BackupsWizard::setupFinalize()
     nextStep(SETUP_MYBACKUPS_DIR);
 }
 
-void BackupsWizard::setupMyBackupsDir(bool nameCollision)
+void BackupsWizard::setupMyBackupsDir()
 {
-    qDebug("Backups Wizard: setup MyBackups");
-    // If the user cancels, exit wizard
-    if (mBackupsDirName.isEmpty())
+    qDebug("Backups Wizard: setup Backups root dir");
+
+    // Create MyBackups folder if necessary
+    if (mCreateBackupsDir)
     {
-        // If the user cancels, exit wizard (this condition can be met only when executing this
-        // code for the second time, as mBackupsDirName is initialized to a non-empty value.)
-        mUserCancelled = true;
-        nextStep(EXIT);
+        mSyncController.setMyBackupsDirName();
     }
     else
     {
-        // Create MyBackups folder if necessary
-        if (mCreateBackupsDir || nameCollision)
-        {
-            mSyncController.setMyBackupsDirName(mBackupsDirName);
-        }
-        else
-        {
-            // If not, proceed to setting-up backups
-            nextStep(SETUP_BACKUPS);
-        }
+        // If not, proceed to setting-up backups
+        nextStep(SETUP_BACKUPS);
     }
 }
 
@@ -356,12 +343,11 @@ void BackupsWizard::processNextBackupSetup()
             mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_INFO,
                                QString::fromUtf8("Backups Wizard: setup backup \"%1\" to \"%2\"")
                                .arg(it.value().folderName,
-                                    mBackupsDirName +  QLatin1Char('/')
-                                    + mUi->lDeviceNameStep1->text() + QLatin1Char('/')
+                                    mUi->leBackupTo->text() + QLatin1Char('/')
                                     + it.key()).toUtf8().constData());
 
             mSyncController.addSync(it.key(), mega::INVALID_HANDLE,
-                                               it.value().folderName, mega::MegaSync::TYPE_BACKUP);
+                                    it.value().folderName, mega::MegaSync::TYPE_BACKUP);
             return;
         }
     }
@@ -440,19 +426,6 @@ bool BackupsWizard::isFolderAlreadySynced(const QString& path, bool displayWarni
     }
 
     return (!message.isEmpty());
-}
-
-// Returns new name if new name set; empty string if backup canceled.
-QString BackupsWizard::remoteFolderExistsDialog()
-{
-    QString newName(QLatin1String(""));
-    RenameTargetFolderDialog renameDialog;
-
-    if (renameDialog.exec() == QDialog::Accepted)
-    {
-        newName = renameDialog.getNewFolderName();
-    }
-    return newName;
 }
 
 // State machine orchestrator
@@ -692,69 +665,34 @@ void BackupsWizard::onDeviceNameSet(QString deviceName)
 void BackupsWizard::onBackupsDirSet(mega::MegaHandle backupsDirHandle)
 {
     mHaveBackupsDir = true;
-    QString backupsDirPath;
-    auto api (MegaSyncApp->getMegaApi());
 
-    if (backupsDirHandle != mega::INVALID_HANDLE)
-    {
-        // We still have to check if the folder exists... try to get its path
-        std::unique_ptr<mega::MegaNode> backupsDirNode (api->getNodeByHandle(backupsDirHandle));
-        if (backupsDirNode)
-        {
-            backupsDirPath = QString::fromUtf8(api->getNodePath(backupsDirNode.get()));
-            if (!backupsDirPath.isEmpty())
-            {
-                // If the folder exists, take note
-                mBackupsDirName = QDir(backupsDirPath).dirName();
-                mCreateBackupsDir = false;
-            }
-        }
-    }
+    QString backupsDirPath = mSyncController.getMyBackupsLocalizedPath();
 
-    auto vaultNode (MegaSyncApp->getVaultNode());
-    auto vaultName (QCoreApplication::translate("MegaNodeNames", vaultNode->getName()));
-    auto vaultPath (QString::fromUtf8(api->getNodePath(vaultNode.get())));
+    // If the handle is invalid, program the folder to be created
+    mCreateBackupsDir = (backupsDirHandle == mega::INVALID_HANDLE);
 
-    // If backupsDirPath is empty, the remote folder does not exist and we have to create it.
-    if (backupsDirPath.isEmpty())
-    {
-        // If remote dir does not exist, use default name and program its creation
-        mBackupsDirName = tr("My Backups");
-        backupsDirPath = vaultPath + QLatin1Char('/') + mBackupsDirName;
-        mCreateBackupsDir = true;
-        qDebug() << QString::fromLatin1("Backups Wizard: MyBackups dir: \"%1\"").arg(backupsDirPath);
-    }
-
-    // Build device backup path
-    mUi->leBackupTo->setText(backupsDirPath.replace(backupsDirPath.indexOf(vaultPath),
-                                                    vaultPath.size(), vaultName)
-                             + QLatin1Char('/')
-                             + mUi->lDeviceNameStep1->text());
+    // Update path display
+    mUi->leBackupTo->setText(backupsDirPath + QLatin1Char('/') + mUi->lDeviceNameStep1->text());
     refreshNextButtonState();
 }
 
 void BackupsWizard::onSetMyBackupsDirRequestStatus(int errorCode, const QString& errorMsg)
 {
-    bool nameCollision (false);
-    if (errorCode == mega::MegaError::API_EACCESS)
+    if (errorCode == mega::MegaError::API_OK)
     {
-        // If dir already exists, prompt for new name
-        mHaveBackupsDir = false;
-        nameCollision = true;
-        mBackupsDirName = remoteFolderExistsDialog();
+        mCreateBackupsDir = false;
+        setupMyBackupsDir();
     }
-    else if (errorCode != mega::MegaError::API_OK)
+    else
     {
         QMegaMessageBox::critical(nullptr, tr("Error"),
                                   tr("Creating or setting folder \"%1\" as backups root failed.\nReason: %2")
-                                  .arg(mBackupsDirName, errorMsg));
+                                  .arg(mSyncController.getMyBackupsLocalizedPath(), errorMsg));
     }
-    setupMyBackupsDir(nameCollision);
 }
 
 void BackupsWizard::onSyncAddRequestStatus(int errorCode, const QString& errorMsg, const QString& name)
 {
-
     // Update tooltip and icon according to result
     if (errorCode == mega::MegaError::API_OK)
     {
@@ -769,7 +707,6 @@ void BackupsWizard::onSyncAddRequestStatus(int errorCode, const QString& errorMs
         info.status = ERR;
         mBackupsStatus.insert(name, info);
     }
-
 
     //Check if the process is completed or there are still pending requests
     bool finished(true);
@@ -828,7 +765,6 @@ void BackupsWizard::onSyncAddRequestStatus(int errorCode, const QString& errorMs
             }
             nextStep(ERROR_FOUND);
         }
-
 
         mLoadingWindow->hide();
     }
