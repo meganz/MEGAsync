@@ -79,7 +79,7 @@ MultiQFileDialog::MultiQFileDialog(QWidget *parent, const QString &caption, cons
     }
 
     QList<QWidget *> widgets = findChildren<QWidget *>();
-    for (QList<QWidget *>::const_iterator it = widgets.begin(); it != widgets.end(); ++it)
+    for (QList<QWidget *>::const_iterator it = widgets.cbegin(); it != widgets.cend(); ++it)
     {
        (*it)->installEventFilter(this);
     }
