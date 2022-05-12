@@ -96,67 +96,6 @@ QString StalledIssueData::getFileName() const
     }
 }
 
-//Conflicted Names stalled issue
-ConflictedNamesStalledIssue::ConflictedNamesStalledIssue()
-    : StalledIssue()
-{
-    mIsNameConflict = true;
-}
-
-ConflictedNamesStalledIssue::ConflictedNamesStalledIssue(mega::MegaSyncNameConflict *nameConflictStallIssue)
-    : StalledIssue()
-{
-    mIsNameConflict = true;
-    update(nameConflictStallIssue);
-}
-
-QStringList ConflictedNamesStalledIssue::localNames() const
-{
-    return mLocalNames;
-}
-
-QStringList ConflictedNamesStalledIssue::cloudNames() const
-{
-    return mCloudNames;
-}
-
-void ConflictedNamesStalledIssue::update(const mega::MegaSyncNameConflict* nameConflictStallIssue)
-{
-    if (mega::MegaStringList* cn = nameConflictStallIssue->cloudNames())
-    {
-        for (int j = 0; j < cn->size(); ++j)
-        {
-            mCloudNames.append(QString::fromUtf8(cn->get(j)));
-        }
-    }
-    if (auto cp = nameConflictStallIssue->cloudPath())
-    {
-        if (cp && *cp)
-        {
-            initCloudIssue();
-
-            getCloudData()->mPath.path = QString::fromUtf8(cp);
-        }
-    }
-    if (mega::MegaStringList* ln = nameConflictStallIssue->localNames())
-    {
-        for (int j = 0; j < ln->size(); ++j)
-        {
-            mLocalNames.append(QString::fromUtf8(ln->get(j)));
-        }
-    }
-    if (auto lp = nameConflictStallIssue->localPath())
-    {
-        if (lp && *lp)
-        {
-            initLocalIssue();
-            getLocalData()->mPath.path = QString::fromUtf8(lp);
-        }
-    }
-
-    mIsNameConflict = true;
-}
-
 StalledIssue::StalledIssue(const mega::MegaSyncStall *stallIssue)
     : mReason(stallIssue->reason())
 {
@@ -283,6 +222,11 @@ StalledIssueFilterCriterion StalledIssue::getCriterionByReason(mega::MegaSyncSta
         case mega::MegaSyncStall::SyncStallReason::FileIssue:
         {
             return StalledIssueFilterCriterion::ITEM_TYPE_CONFLICTS;
+            break;
+        }
+        case mega::MegaSyncStall::SyncStallReason::NamesWouldClashWhenSynced:
+        {
+            return StalledIssueFilterCriterion::NAME_CONFLICTS;
             break;
         }
         case mega::MegaSyncStall::SyncStallReason::MoveOrRenameCannotOccur:

@@ -33,31 +33,16 @@ void StalledIssuesReceiver::processStalledIssues()
 
 void StalledIssuesReceiver::onRequestFinish(mega::MegaApi*, mega::MegaRequest *request, mega::MegaError*)
 {
-    if (auto ptr = request->getMegaSyncProblems())
+    if (auto stalls = request->getMegaSyncStallList())
     {
         QMutexLocker lock(&mCacheMutex);
 
-//        if (mega::MegaSyncNameConflictList* cl = ptr->nameConflicts())
-//        {
-//            for (int i = 0; i < cl->size(); ++i)
-//            {
-//                auto nameConflictStall = cl->get(i);
-
-//                ConflictedNamesStalledIssue conflictNameItem(nameConflictStall);
-//                mCacheStalledIssues.append(conflictNameItem);
-//            }
-//        }
-
-        if (mega::MegaSyncStallList* sl = ptr->stalls())
+        for (int i = 0; i < stalls->size(); ++i)
         {
-            for (int i = 0; i < sl->size(); ++i)
-            {
-                auto stall = sl->get(i);
+            auto stall = stalls->get(i);
 
-                StalledIssue d (stall);
-                mCacheStalledIssues.append(d);
-
-            }
+            StalledIssue d (stall);
+            mCacheStalledIssues.append(d);
         }
 
         processStalledIssues();
@@ -138,7 +123,7 @@ void StalledIssuesModel::updateStalledIssues()
 
     if (mMegaApi->isSyncStalled())
     {
-        mMegaApi->getSyncProblems(nullptr, true);
+        mMegaApi->getMegaSyncStallList(nullptr);
     }
     else
     {

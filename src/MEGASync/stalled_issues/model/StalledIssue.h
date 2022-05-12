@@ -101,26 +101,6 @@ protected:
 };
 Q_DECLARE_METATYPE(StalledIssue)
 
-class ConflictedNamesStalledIssue : public StalledIssue
-{
-public:
-    ConflictedNamesStalledIssue();
-    ConflictedNamesStalledIssue(mega::MegaSyncNameConflict* nameConflictStallIssue);
-
-    ~ConflictedNamesStalledIssue(){}
-
-    void update(const mega::MegaSyncNameConflict* stallIssue);
-
-    QStringList localNames() const;
-    QStringList cloudNames() const;
-
-private:
-    QStringList mLocalNames;
-    QStringList mCloudNames;
-};
-
-//Q_DECLARE_TYPEINFO(ConflictedNamesStalledIssue, Q_MOVABLE_TYPE);
-Q_DECLARE_METATYPE(ConflictedNamesStalledIssue)
 
 using StalledIssuesList = QList<StalledIssue>;
 Q_DECLARE_METATYPE(StalledIssuesList)

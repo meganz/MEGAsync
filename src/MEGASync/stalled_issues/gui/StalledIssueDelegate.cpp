@@ -247,8 +247,13 @@ void StalledIssueDelegate::onIssueFixed()
    auto senderWidget = dynamic_cast<StalledIssueBaseDelegateWidget*>(sender());
    if(senderWidget)
    {
-       auto index = senderWidget->getCurrentIndex();
-       mSourceModel->finishStalledIssues(QModelIndexList() << index);
+       auto proxyIndex = senderWidget->getCurrentIndex();
+       QModelIndex sourceIndex = proxyIndex.parent().isValid() ? mProxyModel->mapToSource(proxyIndex.parent()) : mProxyModel->mapToSource(proxyIndex);
+
+       if(sourceIndex.isValid())
+       {
+           mSourceModel->finishStalledIssues(QModelIndexList() << sourceIndex);
+       }
    }
 }
 
