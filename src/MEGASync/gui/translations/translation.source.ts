@@ -5199,6 +5199,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>I agree with the MEGA &lt;A&gt;Terms of Service&lt;/A&gt;</source>
+        <translatorcomment>Label to agree with the Terms of use. Keep the &lt;A&gt; and &lt;/A&gt; tags, they are used for HTML code insertion. Keep the string as short as possible.</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
 </context>
