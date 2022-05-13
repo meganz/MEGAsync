@@ -3212,6 +3212,22 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translatorcomment>Node selector button Text. Switch the view to show only the incoming shares nodes (files and folders)</translatorcomment>
         <translation type="unfinished">Incoming Shares</translation>
     </message>
+    <message numerus="yes">
+        <source>Item selection removed. To reselect, close this window and try again.</source>
+        <translatorcomment>Error message shown while the user is trying to download an file or folder but it is removed using another client</translatorcomment>
+        <translation>
+            <numerusform>Item selection removed. To reselect, close this window and try again.</numerusform>
+            <numerusform>Items selection removed. To reselect, close this window and try again.</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>You no longer have access to this item. Ask the owner to share again.</source>
+        <translatorcomment>Error message shown when the user is trying to download an file or folder from an incoming share and the owner stops sharing/removes all items</translatorcomment>
+        <translation>
+            <numerusform>You no longer have access to this item. Ask the owner to share again.</numerusform>
+            <numerusform>You no longer have access to these items. Ask the owner to share again.</numerusform>
+        </translation>
+    </message>
 </context>
 <context>
     <name>NotificationsSettings</name>
@@ -4838,11 +4854,6 @@ Do you want to restart MEGAsync now?</source>
         <translation>Repeat password:</translation>
     </message>
     <message>
-        <source>I agree with the MEGA &lt;a href=&quot;https://mega.co.nz/#terms&quot;&gt;Terms of Service&lt;/a&gt;</source>
-        <translatorcomment>Label to aggre with the Terms of use.  Keep code &lt;a href=&quot;https://mega.co.nz/#terms&quot;&gt;Terms of Service&lt;/a&gt; .String as short as possible.</translatorcomment>
-        <translation>I agree with the MEGA &lt;a href=&quot;https://mega.nz/terms&quot;&gt;Terms of Service&lt;/a&gt;</translation>
-    </message>
-    <message>
         <source>Log in to your MEGA account</source>
         <translatorcomment>Label to let the user login with his credentials.</translatorcomment>
         <translation>Log in to your MEGA account</translation>
@@ -5175,6 +5186,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>We are all done</source>
         <translatorcomment>Label shown when the user completes the initial setup wizard</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>I agree with the MEGA [A]Terms of Service[/A]</source>
+        <translatorcomment>Label to agree with the Terms of use. Keep the [A] and [/A] tags, they are used for HTML code insertion. Keep the string as short as possible.</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
 </context>

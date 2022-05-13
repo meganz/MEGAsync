@@ -484,18 +484,12 @@ void NodeSelector::onbOkClicked()
             correctNodeSelected = false;
             if(isCloudDrive())
             {
-                QMegaMessageBox::warning(nullptr, tr("Error"), tr("Item selection(s) removed. To reselect, close this window and try again.", "", wrongNodes), QMessageBox::Ok);
+                QMegaMessageBox::warning(nullptr, tr("Error"), tr("Item selection removed. To reselect, close this window and try again.", "", wrongNodes), QMessageBox::Ok);
             }
             else
             {
-                if(wrongNodes == nodes.size())
-                {
-                    QMegaMessageBox::warning(nullptr, tr("Error"), tr("You no longer have access to (this)(these) item(s). Ask the owner to share again.", "", wrongNodes), QMessageBox::Ok);
-                }
-                else
-                {
-                    QMegaMessageBox::warning(nullptr, tr("Error"), tr("You no longer have access to (this)(some of these) item(s). Ask the owner to share again.", "", wrongNodes), QMessageBox::Ok);
-                }
+                QMegaMessageBox::warning(nullptr, tr("Error"), tr("You no longer have access to this item. Ask the owner to share again.", "", wrongNodes), QMessageBox::Ok);
+
             }
         }
     }
