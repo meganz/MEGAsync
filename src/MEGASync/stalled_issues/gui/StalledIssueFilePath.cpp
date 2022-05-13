@@ -150,7 +150,7 @@ bool StalledIssueFilePath::eventFilter(QObject *watched, QEvent *event)
         auto height(ui->lines->height());
 
         p.drawLine(QPoint(width/2,0), QPoint(width/2, ui->lines->height()/2));
-        p.drawLine(QPoint(width/2,height/2), QPoint(width, height/2));
+        p.drawLine(QPoint(width/2,height/2), QPoint(width - 2, height/2));
     }
     else if(watched == ui->moveLines && event->type() == QEvent::Paint)
     {

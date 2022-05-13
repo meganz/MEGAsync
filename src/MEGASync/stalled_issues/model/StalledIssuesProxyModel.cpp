@@ -9,10 +9,7 @@
 #include <QtConcurrent/QtConcurrent>
 
 StalledIssuesProxyModel::StalledIssuesProxyModel(QObject *parent) :QSortFilterProxyModel(parent)
-{
-    connect(&mFilterWatcher, &QFutureWatcher<void>::finished,
-            this, &StalledIssuesProxyModel::onModelFiltered);
-}
+{}
 
 int StalledIssuesProxyModel::rowCount(const QModelIndex &parent) const
 {
@@ -26,20 +23,25 @@ int StalledIssuesProxyModel::rowCount(const QModelIndex &parent) const
 
 void StalledIssuesProxyModel::filter(StalledIssueFilterCriterion filterCriterion)
 {
-    emit uiBlocked();
     mFilterCriterion = filterCriterion;
 
-    QFuture<void> filtered = QtConcurrent::run([this](){
-        auto sourceM = qobject_cast<StalledIssuesModel*>(sourceModel());
-        sourceM->lockModelMutex(true);
-        sourceM->blockSignals(true);
-        blockSignals(true);
-        invalidate();
-        sourceM->lockModelMutex(false);
-        sourceM->blockSignals(false);
-        blockSignals(false);
-    });
-    mFilterWatcher.setFuture(filtered);
+    auto sourceM = qobject_cast<StalledIssuesModel*>(sourceModel());
+    if(sourceM->rowCount(QModelIndex()) != 0)
+    {
+        emit uiBlocked();
+
+        //Test if it is worth it, because there is not sorting and the sort takes longer than filtering.
+        QFuture<void> filtered = QtConcurrent::run([this, sourceM](){
+            sourceM->lockModelMutex(true);
+            sourceM->blockSignals(true);
+            blockSignals(true);
+            invalidateFilter();
+            sourceM->lockModelMutex(false);
+            sourceM->blockSignals(false);
+            blockSignals(false);
+            emit uiUnblocked();
+        });
+    }
 }
 
 void StalledIssuesProxyModel::updateFilter()
@@ -82,9 +84,4 @@ bool StalledIssuesProxyModel::filterAcceptsRow(int source_row, const QModelIndex
     {
         return QSortFilterProxyModel::filterAcceptsRow(source_row, source_parent);
     }
-}
-
-void StalledIssuesProxyModel::onModelFiltered()
-{
-    emit uiUnblocked();
 }

@@ -29,9 +29,6 @@ protected:
     bool canFetchMore(const QModelIndex &parent) const override;
     bool filterAcceptsRow(int source_row, const QModelIndex &source_parent) const override;
 
-private slots:
-    void onModelFiltered();
-
 private:
     StalledIssueFilterCriterion mFilterCriterion;
     QFutureWatcher<void> mFilterWatcher;

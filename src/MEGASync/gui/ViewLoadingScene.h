@@ -7,6 +7,7 @@
 #include <QStyledItemDelegate>
 #include <QTimer>
 #include <QPainter>
+#include <QSortFilterProxyModel>
 
 class LoadingSceneDelegateBase : public QStyledItemDelegate
 {
@@ -155,7 +156,6 @@ private:
     mutable QVector<DelegateWidget*> mLoadingItems;
 };
 
-
 template <class DelegateWidget>
 class ViewLoadingScene
 {
@@ -174,6 +174,11 @@ public:
     {
         mLoadingDelegate->deleteLater();
         mLoadingModel->deleteLater();
+    }
+
+    bool isLoadingViewSet() const
+    {
+        return mView->model() == mLoadingModel;
     }
 
     inline void setView(QAbstractItemView* view)
@@ -198,21 +203,13 @@ public:
 
         if(state)
         {
-            int visibleRows(MAX_LOADING_ROWS);
+            int delegateHeight(mLoadingDelegate->sizeHint(QStyleOptionViewItem(), QModelIndex()).height());
 
-            if(mViewModel->rowCount() != 0)
+            mView->updateGeometry();
+            int visibleRows = mView->size().height()/delegateHeight;
+            if(visibleRows > MAX_LOADING_ROWS || visibleRows < 0)
             {
-                auto firstVisibleIndex = mView->indexAt(mView->rect().topLeft());
-                auto lastVisibleIndex = mView->indexAt(mView->rect().bottomLeft());
-
-                if(!lastVisibleIndex.isValid())
-                {
-                    visibleRows = mViewModel->rowCount() - firstVisibleIndex.row() + 1;
-                }
-                else
-                {
-                    visibleRows = lastVisibleIndex.row() - firstVisibleIndex.row() + 1;
-                }
+                visibleRows = MAX_LOADING_ROWS;
             }
 
             for(int row = 0; row < visibleRows; ++row)
@@ -240,6 +237,19 @@ private:
     QAbstractItemDelegate* mViewDelegate;
     QAbstractItemView* mView;
     QAbstractItemModel* mViewModel;
+    QAbstractItemModel* mPotentialSourceModel;
+
+    int rowCount() const
+    {
+        if(auto proxyModel = dynamic_cast<QSortFilterProxyModel*>(mViewModel))
+        {
+            return proxyModel->sourceModel()->rowCount();
+        }
+        else
+        {
+            return mViewModel->rowCount();
+        }
+    }
 };
 
 #endif // VIEWLOADINGSCENE_H

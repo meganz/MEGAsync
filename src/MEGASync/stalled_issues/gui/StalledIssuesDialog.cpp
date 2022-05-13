@@ -96,15 +96,24 @@ void StalledIssuesDialog::toggleTab(StalledIssueFilterCriterion filterCriterion)
 
 void StalledIssuesDialog::onUiBlocked()
 {
-    setDisabled(true);
-    mLoadingScene.setLoadingScene(true);
+    if(!mLoadingScene.isLoadingViewSet())
+    {
+        setDisabled(true);
+        mLoadingScene.setLoadingScene(true);
+
+        //Show the view
+        ui->TreeViewContainer->setCurrentWidget(ui->TreeViewContainerPage);
+    }
 }
 
 void StalledIssuesDialog::onUiUnblocked()
 {
-    setDisabled(false);
-    mLoadingScene.setLoadingScene(false);
-    onStalledIssuesModelCountChanged();
+    if(mLoadingScene.isLoadingViewSet())
+    {
+        setDisabled(false);
+        mLoadingScene.setLoadingScene(false);
+        onStalledIssuesModelCountChanged();
+    }
 }
 
 void StalledIssuesDialog::onStalledIssuesLoaded()

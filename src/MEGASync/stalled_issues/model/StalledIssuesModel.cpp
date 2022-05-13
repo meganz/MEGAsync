@@ -134,8 +134,7 @@ void StalledIssuesModel::updateStalledIssues()
 void StalledIssuesModel::onGlobalSyncStateChanged(mega::MegaApi* api)
 {
     mHasStalledIssues = api->isSyncStalled();
-    emit globalSyncStateChanged(mHasStalledIssues);/*
-    emit stalledIssuesReceived(mHasStalledIssues);*/
+    emit globalSyncStateChanged(mHasStalledIssues);
 }
 
 Qt::DropActions StalledIssuesModel::supportedDropActions() const
