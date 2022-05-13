@@ -3214,28 +3214,19 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
     <message numerus="yes">
         <source>Item selection removed. To reselect, close this window and try again.</source>
-        <translation type="unfinished">
+        <translatorcomment>Error message shown while the user is trying to download an file or folder but it is removed using another client</translatorcomment>
+        <translation>
             <numerusform>Item selection removed. To reselect, close this window and try again.</numerusform>
-            <numerusform>Item selections removed. To reselect, close this window and try again.</numerusform>
+            <numerusform>Items selection removed. To reselect, close this window and try again.</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>You no longer have access to this item. Ask the owner to share again.</source>
-        <translation type="unfinished">
+        <translatorcomment>Error message shown when the user is trying to download an file or folder from an incoming share and the owner stops sharing/removes all items</translatorcomment>
+        <translation>
             <numerusform>You no longer have access to this item. Ask the owner to share again.</numerusform>
             <numerusform>You no longer have access to these items. Ask the owner to share again.</numerusform>
         </translation>
-    </message>
-    <message numerus="yes">
-        <source>You no longer have access to this item. Ask the owner to share again.</source>
-        <translation type="unfinished">
-            <numerusform>You no longer have access to this item. Ask the owner to share again.</numerusform>
-            <numerusform>You no longer have access to some of these items. Ask the owner to share again.</numerusform>
-        </translation>
-    </message>
-    <message>
-        <source>Item selection removed. To reselect, close this window and try again.</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5198,8 +5189,8 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>I agree with the MEGA &lt;A&gt;Terms of Service&lt;/A&gt;</source>
-        <translatorcomment>Label to agree with the Terms of use. Keep the &lt;A&gt; and &lt;/A&gt; tags, they are used for HTML code insertion. Keep the string as short as possible.</translatorcomment>
+        <source>I agree with the MEGA [A]Terms of Service[/A]</source>
+        <translatorcomment>Label to agree with the Terms of use. Keep the [A] and [/A] tags, they are used for HTML code insertion. Keep the string as short as possible.</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
 </context>
