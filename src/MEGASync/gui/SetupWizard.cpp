@@ -52,8 +52,8 @@ SetupWizard::SetupWizard(MegaApplication *app, QWidget *parent) :
     megaApi->addRequestListener(delegateListener);
 
     QString agreeLink = ui->lTermsLink->text();
-    agreeLink.replace(QString::fromLatin1("<A>"), QString::fromLatin1("<a href=\"https://mega.nz/#terms\" style=\"color:#DC0000\">"));
-    agreeLink.replace(QString::fromLatin1("</A>"), QString::fromLatin1("</a>"));
+    agreeLink.replace(QLatin1String("[A]"), QLatin1String("<a href=\"https://mega.nz/#terms\" style=\"color:#DC0000\">"));
+    agreeLink.replace(QLatin1String("[/A]"), QLatin1String("</a>"));
     ui->lTermsLink->setText(agreeLink);
 
     m_animation = new QPropertyAnimation(ui->wErrorMessage, "size");
