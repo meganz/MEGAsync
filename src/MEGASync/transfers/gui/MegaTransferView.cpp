@@ -763,7 +763,21 @@ void MegaTransferView::onCustomContextMenu(const QPoint& point)
         }
     }
     updateContextMenu(enablePause, enableResume, enableMove, enableClear, enableCancel, isTopIndex, isBottomIndex);
-    mContextMenu->exec(mapToGlobal(point));
+
+    //Check if any of the action is visible, if not, do not show the qmenu
+    bool atLeastOneVisible(false);
+    foreach(auto action, mContextMenu->actions())
+    {
+        if(!action->isSeparator() && action->isVisible())
+        {
+            atLeastOneVisible = true;
+        }
+    }
+
+    if(atLeastOneVisible)
+    {
+        mContextMenu->exec(mapToGlobal(point));
+    }
 }
 
 void MegaTransferView::moveToTopClicked()
