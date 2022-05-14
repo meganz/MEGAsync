@@ -10,10 +10,8 @@
 #include <QFile>
 
 LocalAndRemoteDifferentWidget::LocalAndRemoteDifferentWidget(QWidget *parent) :
-    StalledIssueBaseDelegateWidget(parent), mega::MegaRequestListener(),
-    ui(new Ui::LocalAndRemoteDifferentWidget),
-    mListener(mega::make_unique<mega::QTMegaRequestListener>(MegaSyncApp->getMegaApi(), this)),
-    mRemovedRemoteHandle(0)
+    StalledIssueBaseDelegateWidget(parent),
+    ui(new Ui::LocalAndRemoteDifferentWidget)
 {
     ui->setupUi(this);
 
@@ -36,52 +34,23 @@ void LocalAndRemoteDifferentWidget::refreshUi()
 {
     auto issue = getData();
 
-    if(issue.getLocalData())
+    if(issue.consultLocalData())
     {
-        ui->chooseLocalCopy->setData(issue.getLocalData());
+        ui->chooseLocalCopy->setData(issue.consultLocalData());
     }
 
-    if(issue.getCloudData())
+    if(issue.consultCloudData())
     {
-        ui->chooseRemoteCopy->setData(issue.getCloudData());
-    }
-}
-
-void LocalAndRemoteDifferentWidget::onRequestFinish(mega::MegaApi *, mega::MegaRequest *request, mega::MegaError *e)
-{
-    if (request->getType() == mega::MegaRequest::TYPE_MOVE)
-    {
-        if (e->getErrorCode() == mega::MegaError::API_OK)
-        {
-            auto handle = request->getNodeHandle();
-            if(handle && handle == mRemovedRemoteHandle)
-            {
-                emit issueFixed();
-                mRemovedRemoteHandle = 0;
-            }
-        }
+        ui->chooseRemoteCopy->setData(issue.consultCloudData());
     }
 }
 
-void LocalAndRemoteDifferentWidget::onLocalButtonClicked()
+void LocalAndRemoteDifferentWidget::onLocalButtonClicked(int)
 { 
-    auto fileNode(MegaSyncApp->getMegaApi()->getNodeByPath(ui->chooseRemoteCopy->data()->getFilePath().toStdString().c_str()));
-    if(fileNode)
-    {
-        mRemovedRemoteHandle = fileNode->getHandle();
-        auto rubbishNode = MegaSyncApp->getMegaApi()->getRubbishNode();
-        MegaSyncApp->getMegaApi()->moveNode(fileNode,rubbishNode, mListener.get());
-    }
+    mUtilities.removeRemoteFile(ui->chooseRemoteCopy->data()->getFilePath());
 }
 
-void LocalAndRemoteDifferentWidget::onRemoteButtonClicked()
+void LocalAndRemoteDifferentWidget::onRemoteButtonClicked(int)
 {
-    QFile file(ui->chooseLocalCopy->data()->getNativeFilePath());
-    if(file.exists())
-    {
-         if(Utilities::moveFileToTrash(ui->chooseLocalCopy->data()->getNativeFilePath()))
-         {
-             emit issueFixed();
-         }
-    }
+    mUtilities.removeLocalFile(ui->chooseRemoteCopy->data()->getNativeFilePath());
 }

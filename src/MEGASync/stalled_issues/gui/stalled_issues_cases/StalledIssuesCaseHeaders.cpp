@@ -139,11 +139,17 @@ void SyncItemExceedsSupoortedTreeDepthHeader::refreshCaseUi()
     addFileName();
     setTitleDescriptionText(tr("Target is too deep on your folder structure. Please move it to a location that is less"
                                 "\nthan 64 folders deep."));
+
+
 }
 
-void SyncItemExceedsSupoortedTreeDepthHeader::on_actionButton_clicked()
+void SyncItemExceedsSupoortedTreeDepthHeader::on_actionButton_clicked(int)
 {
-    ignoreFile();
+    auto data = getData().consultLocalData();
+    if(data)
+    {
+        mUtilities.ignoreFile(data->getNativeFilePath());
+    }
 }
 
 ////MoveTargetNameTooLongHeader
@@ -207,4 +213,17 @@ void LocalAndRemoteChangedSinceLastSyncedStateHeader::refreshCaseUi()
     setLeftTitleText(tr("Can´t sync"));
     addFileName();
     setTitleDescriptionText(tr("This file has changed since it it was last synced."));
+}
+
+//Name Conflicts
+NameConflictsHeader::NameConflictsHeader(QWidget *parent)
+    : StalledIssueHeader(parent)
+{
+
+}
+
+void NameConflictsHeader::refreshCaseUi()
+{
+    setLeftTitleText(tr("Can´t sync the following files"));
+    setTitleDescriptionText(tr("There are name conflicts to solve."));
 }

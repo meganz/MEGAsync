@@ -42,7 +42,7 @@ void StalledIssueFilePath::setIndent(int indent)
     ui->gridLayout->invalidate();
 }
 
-void StalledIssueFilePath::updateUi(QExplicitlySharedDataPointer<StalledIssueData> data)
+void StalledIssueFilePath::updateUi(StalledIssueDataPtr data)
 {
     mData = data;
 

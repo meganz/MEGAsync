@@ -45,6 +45,14 @@ void StalledIssuesReceiver::onRequestFinish(mega::MegaApi*, mega::MegaRequest *r
             mCacheStalledIssues.append(d);
         }
 
+        for (int i = 0; i < stalls->nameConflictsSize(); ++i)
+        {
+            auto stall = stalls->getNameConflicts(i);
+
+            NameConflictedStalledIssue d (stall);
+            mCacheStalledIssues.append(d);
+        }
+
         processStalledIssues();
     }
 }

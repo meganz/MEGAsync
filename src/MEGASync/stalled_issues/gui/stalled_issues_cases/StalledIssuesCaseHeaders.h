@@ -123,7 +123,7 @@ protected:
     void refreshCaseUi() override;
 
 protected slots:
-    void on_actionButton_clicked() override;
+    void on_actionButton_clicked(int) override;
 };
 
 
@@ -153,6 +153,16 @@ class LocalAndRemoteChangedSinceLastSyncedStateHeader : public StalledIssueHeade
 {
 public:
     LocalAndRemoteChangedSinceLastSyncedStateHeader(QWidget *parent = nullptr);
+
+protected:
+    void refreshCaseUi() override;
+};
+
+//Local and remote previously synced differ
+class NameConflictsHeader : public StalledIssueHeader
+{
+public:
+    NameConflictsHeader(QWidget *parent = nullptr);
 
 protected:
     void refreshCaseUi() override;

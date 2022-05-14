@@ -66,13 +66,29 @@ QString StalledIssueData::getNativeMoveFilePath() const
 QString StalledIssueData::getNativePath() const
 {
     QFileInfo filePath(mPath.path);
-    return QDir::toNativeSeparators(filePath.path());
+
+    if(isCloud())
+    {
+        return filePath.path();
+    }
+    else
+    {
+        return QDir::toNativeSeparators(filePath.path());
+    }
 }
 
 QString StalledIssueData::getNativeMovePath() const
 {
     QFileInfo filePath(mMovePath.path);
-    return QDir::toNativeSeparators(filePath.path());
+
+    if(isCloud())
+    {
+        return filePath.path();
+    }
+    else
+    {
+        return QDir::toNativeSeparators(filePath.path());
+    }
 }
 
 QString StalledIssueData::getFileName() const
@@ -106,7 +122,7 @@ bool StalledIssue::initLocalIssue()
 {
     if(!mLocalData)
     {
-        mLocalData = StalledIssueDataPtr(new StalledIssueData());
+        mLocalData = QExplicitlySharedDataPointer<StalledIssueData>(new StalledIssueData());
         return true;
     }
 
@@ -117,7 +133,7 @@ bool StalledIssue::initCloudIssue()
 {
     if(!mCloudData)
     {
-        mCloudData = StalledIssueDataPtr(new StalledIssueData());
+        mCloudData = QExplicitlySharedDataPointer<StalledIssueData>(new StalledIssueData());
         mCloudData->mIsCloud = true;
 
         return true;
@@ -169,12 +185,22 @@ void StalledIssue::fillIssue(const mega::MegaSyncStall *stall)
     }
 }
 
-const QExplicitlySharedDataPointer<StalledIssueData>& StalledIssue::getLocalData() const
+const StalledIssueDataPtr StalledIssue::consultLocalData() const
 {
     return mLocalData;
 }
 
-const QExplicitlySharedDataPointer<StalledIssueData>& StalledIssue::getCloudData() const
+const StalledIssueDataPtr StalledIssue::consultCloudData() const
+{
+    return mCloudData;
+}
+
+const QExplicitlySharedDataPointer<StalledIssueData> &StalledIssue::getLocalData() const
+{
+    return mLocalData;
+}
+
+const QExplicitlySharedDataPointer<StalledIssueData> &StalledIssue::getCloudData() const
 {
     return mCloudData;
 }
@@ -198,11 +224,6 @@ QString StalledIssue::getFileName() const
     {
         return QString();
     }
-}
-
-bool StalledIssue::isNameConflict() const
-{
-    return mIsNameConflict;
 }
 
 bool StalledIssue::operator==(const StalledIssue &data)
@@ -246,4 +267,80 @@ StalledIssueFilterCriterion StalledIssue::getCriterionByReason(mega::MegaSyncSta
             break;
         }
     }
+}
+
+//Name conflict Stalled Issue
+NameConflictedStalledIssue::NameConflictedStalledIssue(const NameConflictedStalledIssue &tdr)
+    : StalledIssue(tdr)
+{
+
+}
+
+NameConflictedStalledIssue::NameConflictedStalledIssue(const mega::MegaSyncStall *stallIssue)
+    : StalledIssue()
+{
+    fillIssue(stallIssue);
+}
+
+void NameConflictedStalledIssue::fillIssue(const mega::MegaSyncStall *stall)
+{
+    auto localSourcePathProblem = static_cast<mega::MegaSyncStall::SyncPathProblem>(stall->pathProblem(false,0));
+    auto localTargetPathProblem = static_cast<mega::MegaSyncStall::SyncPathProblem>(stall->pathProblem(false,1));
+
+    auto localSourcePath = QString::fromUtf8(stall->path(false,0));
+    auto localTargetPath = QString::fromUtf8(stall->path(false,1));
+
+    if(localSourcePathProblem != mega::MegaSyncStall::SyncPathProblem::NoProblem || !localSourcePath.isEmpty())
+    {
+        initLocalIssue();
+        getLocalData()->mPath.path = localSourcePath;
+        getLocalData()->mPath.mPathProblem = localSourcePathProblem;
+    }
+
+    if(localTargetPathProblem != mega::MegaSyncStall::SyncPathProblem::NoProblem || !localTargetPath.isEmpty())
+    {
+        initLocalIssue();
+        getLocalData()->mMovePath.path = localTargetPath;
+        getLocalData()->mMovePath.mPathProblem = localTargetPathProblem;
+    }
+
+    auto cloudSourcePathProblem = static_cast<mega::MegaSyncStall::SyncPathProblem>(stall->pathProblem(true,0));
+    auto cloudTargetPathProblem = static_cast<mega::MegaSyncStall::SyncPathProblem>(stall->pathProblem(true,1));
+
+    auto cloudSourcePath = QString::fromUtf8(stall->path(true,0));
+    auto cloudTargetPath = QString::fromUtf8(stall->path(true,1));
+
+    if(cloudSourcePathProblem != mega::MegaSyncStall::SyncPathProblem::NoProblem || !cloudSourcePath.isEmpty())
+    {
+        initCloudIssue();
+        getCloudData()->mPath.path = cloudSourcePath;
+        getCloudData()->mPath.mPathProblem = cloudSourcePathProblem;
+    }
+
+    if(cloudTargetPathProblem != mega::MegaSyncStall::SyncPathProblem::NoProblem || !cloudTargetPath.isEmpty())
+    {
+        initCloudIssue();
+        getCloudData()->mMovePath.path = cloudTargetPath;
+        getCloudData()->mMovePath.mPathProblem = cloudTargetPathProblem;
+    }
+}
+
+NameConflictedStalledIssue::NameConflictData NameConflictedStalledIssue::getNameConflictLocalData() const
+{
+    NameConflictData data;
+    data.conflictedNames = mLocalConflictedNames;
+    data.data = consultLocalData();
+    data.isCloud = false;
+
+    return data;
+}
+
+NameConflictedStalledIssue::NameConflictData NameConflictedStalledIssue::getNameConflictCloudData() const
+{
+    NameConflictData data;
+    data.conflictedNames = mCloudConflictedNames;
+    data.data = consultCloudData();
+    data.isCloud = true;
+
+    return data;
 }

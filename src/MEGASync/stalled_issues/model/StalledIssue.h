@@ -7,6 +7,8 @@
 #include <QObject>
 #include <QFileInfo>
 
+#include <memory>
+
 enum class StalledIssueFilterCriterion
 {
     ALL_ISSUES = 0,
@@ -47,7 +49,7 @@ public:
 
 private:
     friend class StalledIssue;
-    friend class ConflictedNamesStalledIssue;
+    friend class NameConflictedStalledIssue;
 
     Path mMovePath;
     Path mPath;
@@ -58,48 +60,93 @@ private:
 Q_DECLARE_TYPEINFO(StalledIssueData, Q_MOVABLE_TYPE);
 Q_DECLARE_METATYPE(StalledIssueData)
 
-using StalledIssueDataPtr = QExplicitlySharedDataPointer<StalledIssueData>;
+using StalledIssueDataPtr = QExplicitlySharedDataPointer<const StalledIssueData>;
 using StalledIssuesDataList = QList<StalledIssueDataPtr>;
 
 Q_DECLARE_METATYPE(StalledIssueDataPtr)
 Q_DECLARE_METATYPE(StalledIssuesDataList)
 
+class StalledIssueVariant
+{
+public:
+    StalledIssueVariant(){}
+    StalledIssueVariant(const StalledIssueVariant& tdr) : mData(tdr.mData) {}
+    StalledIssueVariant(const std::shared_ptr<StalledIssue> data)
+        : mData(data)
+    {}
+
+    const std::shared_ptr<StalledIssue> &StalledIssueVariant::data() const
+    {
+        return mData;
+    }
+
+private:
+    std::shared_ptr<StalledIssue> mData;
+};
+
+Q_DECLARE_METATYPE(StalledIssueVariant)
+
 class StalledIssue
 {
-    public:
-        StalledIssue(){}
-        StalledIssue(const StalledIssue& tdr) : mLocalData(tdr.mLocalData), mCloudData(tdr.mCloudData), mReason(tdr.getReason()), mIsNameConflict(tdr.isNameConflict()) {}
-        StalledIssue(const mega::MegaSyncStall *stallIssue);
+public:
+    StalledIssue(){}
+    StalledIssue(const StalledIssue& tdr) : mLocalData(tdr.mLocalData), mCloudData(tdr.mCloudData), mReason(tdr.getReason()) {}
+    StalledIssue(const mega::MegaSyncStall *stallIssue);
 
-        void fillIssue(const mega::MegaSyncStall *stall);
+    //Don´t think it´s going to be more stalled issues than 2 (local and remote)
+    const StalledIssueDataPtr consultLocalData() const;
+    const StalledIssueDataPtr consultCloudData() const;
 
-        //Don´t think it´s going to be more stalled issues than 2 (local and remote)
-        const QExplicitlySharedDataPointer<StalledIssueData>& getLocalData() const;
-        const QExplicitlySharedDataPointer<StalledIssueData>& getCloudData() const;
+    mega::MegaSyncStall::SyncStallReason getReason() const;
+    QString getFileName() const;
+    static StalledIssueFilterCriterion getCriterionByReason(mega::MegaSyncStall::SyncStallReason reason);
 
-        mega::MegaSyncStall::SyncStallReason getReason() const;
-
-        QString getFileName() const;
-
-        bool isNameConflict() const;
-
-        bool operator==(const StalledIssue &data);
-
-        static StalledIssueFilterCriterion getCriterionByReason(mega::MegaSyncStall::SyncStallReason reason);
+    bool operator==(const StalledIssue &data);
 
 protected:
-        bool initLocalIssue();
-        QExplicitlySharedDataPointer<StalledIssueData> mCloudData;
+    bool initLocalIssue();
+    const QExplicitlySharedDataPointer<StalledIssueData>& getCloudData() const;
+    QExplicitlySharedDataPointer<StalledIssueData> mCloudData;
 
-        bool initCloudIssue();
-        QExplicitlySharedDataPointer<StalledIssueData> mLocalData;
+    bool initCloudIssue();
+    QExplicitlySharedDataPointer<StalledIssueData> mLocalData;
+    const QExplicitlySharedDataPointer<StalledIssueData>& getLocalData() const;
 
-        mega::MegaSyncStall::SyncStallReason mReason = mega::MegaSyncStall::SyncStallReason::NoReason;
+    virtual void fillIssue(const mega::MegaSyncStall *stall);
 
-        bool mIsNameConflict = false;
+    mega::MegaSyncStall::SyncStallReason mReason = mega::MegaSyncStall::SyncStallReason::NoReason;
 
 };
 Q_DECLARE_METATYPE(StalledIssue)
+
+class NameConflictedStalledIssue : public StalledIssue
+{
+public:
+    struct NameConflictData
+    {
+        StalledIssueDataPtr data;
+        QStringList conflictedNames;
+        bool isCloud;
+    };
+
+    NameConflictedStalledIssue(){}
+    NameConflictedStalledIssue(const NameConflictedStalledIssue& tdr);
+    NameConflictedStalledIssue(const mega::MegaSyncStall *stallIssue);
+
+    void fillIssue(const mega::MegaSyncStall *stall) override;
+
+    NameConflictData getNameConflictLocalData() const;
+    NameConflictData getNameConflictCloudData() const;
+
+private:
+    using StalledIssue::getLocalData;
+    using StalledIssue::getCloudData;
+
+    QStringList mCloudConflictedNames;
+    QStringList mLocalConflictedNames;
+
+};
+Q_DECLARE_METATYPE(NameConflictedStalledIssue)
 
 
 using StalledIssuesList = QList<StalledIssue>;

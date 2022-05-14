@@ -23,7 +23,7 @@ public:
     void setIndent();
 
 signals:
-    void chooseButtonClicked();
+    void chooseButtonClicked(int id);
 
 protected:
     void paintEvent(QPaintEvent *) override;

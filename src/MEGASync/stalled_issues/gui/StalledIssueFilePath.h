@@ -20,7 +20,7 @@ public:
     ~StalledIssueFilePath();
 
     void setIndent(int indent);
-    void updateUi(QExplicitlySharedDataPointer<StalledIssueData> data);
+    void updateUi(StalledIssueDataPtr data);
 
 protected:
     bool eventFilter(QObject *watched, QEvent *event) override;
@@ -35,7 +35,7 @@ private:
     QString getSyncPathProblemString(mega::MegaSyncStall::SyncPathProblem pathProblem);
 
     Ui::StalledIssueFilePath *ui;
-    QExplicitlySharedDataPointer<StalledIssueData> mData;
+    StalledIssueDataPtr mData;
 };
 
 #endif // STALLEDISSUEFILEPATH_H

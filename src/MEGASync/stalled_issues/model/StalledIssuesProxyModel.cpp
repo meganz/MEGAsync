@@ -70,10 +70,6 @@ bool StalledIssuesProxyModel::filterAcceptsRow(int source_row, const QModelIndex
         {
             return true;
         }
-        else if(mFilterCriterion == StalledIssueFilterCriterion::NAME_CONFLICTS)
-        {
-            return d.isNameConflict();
-        }
         else
         {
             auto filterCriterion = StalledIssue::getCriterionByReason(d.getReason());

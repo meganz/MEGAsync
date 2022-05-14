@@ -64,7 +64,8 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/ProxySettings.cpp \
     $$PWD/BandwidthSettings.cpp \
     $$PWD/SwitchButton.cpp \
-    $$PWD/GuiUtilities.cpp
+    $$PWD/GuiUtilities.cpp \
+	$$PWD/RenameDialog.cpp
 
 HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/BalloonToolTip.h \
@@ -131,7 +132,8 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/ProxySettings.h \
     $$PWD/BandwidthSettings.h \
     $$PWD/SwitchButton.h \
-    $$PWD/GuiUtilities.h
+    $$PWD/GuiUtilities.h \
+    $$PWD/RenameDialog.h
 
 INCLUDEPATH += $$PWD
 
@@ -182,6 +184,7 @@ win32 {
                 $$PWD/win/BandwidthSettings.ui \
                 $$PWD/win/NewFolderDialog.ui \
                 $$PWD/win/NotificationsSettings.ui\
+				$$PWD/win/RenameDialog.ui 
 }
 
 macx {

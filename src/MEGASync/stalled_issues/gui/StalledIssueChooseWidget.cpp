@@ -15,7 +15,8 @@ StalledIssueChooseWidget::StalledIssueChooseWidget(QWidget *parent) :
     ui->chooseTitle->installEventFilter(this);
     ui->fileNameText->installEventFilter(this);
 
-    connect(ui->chooseButton, &QPushButton::clicked, this, &StalledIssueChooseWidget::chooseButtonClicked);
+    ui->chooseTitle->addActionButton(tr("Choose"), 0);
+    connect(ui->chooseTitle, &StalledIssueActionTitle::actionClicked, this, &StalledIssueChooseWidget::chooseButtonClicked);
 }
 
 StalledIssueChooseWidget::~StalledIssueChooseWidget()
@@ -28,7 +29,7 @@ void StalledIssueChooseWidget::setData(StalledIssueDataPtr data)
     mData = data;
     auto fileName = mData->getFileName();
 
-    ui->titleLabel->setText(mData->isCloud() ? tr("Remote Copy") : tr("Local Copy"));
+    ui->chooseTitle->setTitle(mData->isCloud() ? tr("Remote Copy") : tr("Local Copy"));
     ui->fileNameText->setText(fileName);
 
     auto fileTypeIcon = Utilities::getCachedPixmap(Utilities::getExtensionPixmapName(
@@ -64,9 +65,7 @@ const StalledIssueDataPtr &StalledIssueChooseWidget::data()
 
 void StalledIssueChooseWidget::setIndent()
 {
-    auto chooseMargins = ui->chooseTitle->contentsMargins();
-    chooseMargins.setLeft(StalledIssueHeader::ICON_INDENT);
-    ui->chooseTitle->setContentsMargins(chooseMargins);
+    ui->chooseTitle->setIndent(StalledIssueHeader::ICON_INDENT);
 
     auto fileNameMargins= ui->fileNameContainer->contentsMargins();
     fileNameMargins.setLeft(StalledIssueHeader::ICON_INDENT);

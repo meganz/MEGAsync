@@ -4,6 +4,7 @@ INCLUDEPATH += $$PWD/gui
 INCLUDEPATH += $$PWD/model
 
 SOURCES +=  \
+    $$PWD/gui/StalledIssueChooseTitle.cpp \
     $$PWD/gui/StalledIssueLoadingItem.cpp \
     $$PWD/gui/StalledIssueTab.cpp \
     $$PWD/gui/StalledIssueChooseWidget.cpp \
@@ -15,13 +16,17 @@ SOURCES +=  \
     $$PWD/gui/StalledIssuesDelegateWidgetsCache.cpp \
     $$PWD/gui/StalledIssuesDialog.cpp \
     $$PWD/gui/StalledIssueHeader.cpp \
+    $$PWD/gui/stalled_issues_cases/LocalAndRemoteNameConflicts.cpp \
+    $$PWD/gui/stalled_issues_cases/NameConflict.cpp \
     $$PWD/gui/stalled_issues_cases/OtherSideMissingOrBlocked.cpp \
     $$PWD/gui/stalled_issues_cases/StalledIssuesCaseHeaders.cpp \
+    $$PWD/model/StalledIssuesUtilities.cpp \
     $$PWD/model/StalledIssue.cpp \
     $$PWD/model/StalledIssuesModel.cpp \
     $$PWD/model/StalledIssuesProxyModel.cpp
 
 HEADERS  +=   \
+    $$PWD/gui/StalledIssueChooseTitle.h \
     $$PWD/gui/StalledIssueLoadingItem.h \
     $$PWD/gui/StalledIssueTab.h \
     $$PWD/gui/StalledIssueChooseWidget.h \
@@ -33,8 +38,11 @@ HEADERS  +=   \
     $$PWD/gui/StalledIssuesDialog.h \
     $$PWD/gui/StalledIssueHeader.h \
     $$PWD/gui/stalled_issues_cases/LocalAndRemoteDifferentWidget.h \
+    $$PWD/gui/stalled_issues_cases/LocalAndRemoteNameConflicts.h \
+    $$PWD/gui/stalled_issues_cases/NameConflict.h \
     $$PWD/gui/stalled_issues_cases/OtherSideMissingOrBlocked.h \
     $$PWD/gui/stalled_issues_cases/StalledIssuesCaseHeaders.h \
+    $$PWD/model/StalledIssuesUtilities.h \
     $$PWD/model/StalledIssuesModel.h \
     $$PWD/model/StalledIssue.h \
     $$PWD/model/StalledIssuesProxyModel.h
@@ -48,8 +56,11 @@ win32 {
                 $$PWD/gui/win/StalledIssueFilePath.ui \
                 $$PWD/gui/win/StalledIssueTab.ui \
                 $$PWD/gui/win/StalledIssueLoadingItem.ui \
+                $$PWD/gui/win/StalledIssueChooseTitle.ui \
                 $$PWD/gui/stalled_issues_cases/win/LocalAndRemoteDifferentWidget.ui \
-                $$PWD/gui/stalled_issues_cases/win/OtherSideMissingOrBlocked.ui
+                $$PWD/gui/stalled_issues_cases/win/OtherSideMissingOrBlocked.ui \
+                $$PWD/gui/stalled_issues_cases/win/NameConflict.ui \
+                $$PWD/gui/stalled_issues_cases/win/LocalAndRemoteNameConflicts.ui
 }
 
 unix:!macx {

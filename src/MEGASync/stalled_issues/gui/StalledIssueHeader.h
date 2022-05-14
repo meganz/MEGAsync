@@ -38,14 +38,10 @@ public:
 protected:
     virtual void refreshCaseUi() = 0;
 
-    void ignoreFile();
     QString fileName();
 
 protected slots:
-    virtual void on_actionButton_clicked(){}
-
-private slots:
-    void onIgnoreFileFinished();
+    virtual void on_actionButton_clicked(int){}
 
 private:
     bool eventFilter(QObject *watched, QEvent *event) override;

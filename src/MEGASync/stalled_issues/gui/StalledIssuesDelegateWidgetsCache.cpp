@@ -1,6 +1,7 @@
 #include "StalledIssuesDelegateWidgetsCache.h"
 
 #include "stalled_issues_cases/LocalAndRemoteDifferentWidget.h"
+#include "stalled_issues_cases/LocalAndRemoteNameConflicts.h"
 #include "stalled_issues_cases/OtherSideMissingOrBlocked.h"
 #include "stalled_issues_cases/StalledIssuesCaseHeaders.h"
 #include "StalledIssuesProxyModel.h"
@@ -79,6 +80,11 @@ StalledIssueBaseDelegateWidget *StalledIssuesDelegateWidgetsCache::createBodyWid
         case mega::MegaSyncStall::SyncStallReason::LocalAndRemoteChangedSinceLastSyncedState_userMustChoose:
         {
             item = new LocalAndRemoteDifferentWidget(parent);
+            break;
+        }
+        case mega::MegaSyncStall::SyncStallReason::NamesWouldClashWhenSynced:
+        {
+            item = new LocalAndRemoteNameConflicts(parent);
             break;
         }
         case mega::MegaSyncStall::SyncStallReason::FileIssue:
@@ -170,6 +176,11 @@ StalledIssueHeader *StalledIssuesDelegateWidgetsCache::createHeaderWidget(const 
         case mega::MegaSyncStall::SyncStallReason::LocalAndRemotePreviouslyUnsyncedDiffer_userMustChoose:
         {
             header  = new LocalAndRemotePreviouslyUnsyncedDifferHeader(parent);
+            break;
+        }
+        case mega::MegaSyncStall::SyncStallReason::NamesWouldClashWhenSynced:
+        {
+            header  = new NameConflictsHeader(parent);
             break;
         }
         default:

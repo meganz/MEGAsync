@@ -11,7 +11,7 @@ namespace Ui {
 class LocalAndRemoteDifferentWidget;
 }
 
-class LocalAndRemoteDifferentWidget : public StalledIssueBaseDelegateWidget, public mega::MegaRequestListener
+class LocalAndRemoteDifferentWidget : public StalledIssueBaseDelegateWidget
 {
     Q_OBJECT
 
@@ -21,17 +21,12 @@ public:
 
     void refreshUi() override;
 
-protected slots:
-    void onRequestFinish(mega::MegaApi *, mega::MegaRequest *request, mega::MegaError *e);
-
 private slots:
-    void onLocalButtonClicked();
-    void onRemoteButtonClicked();
+    void onLocalButtonClicked(int);
+    void onRemoteButtonClicked(int);
 
 private:
     Ui::LocalAndRemoteDifferentWidget *ui;
-    std::unique_ptr<mega::QTMegaRequestListener> mListener;
-    mega::MegaHandle mRemovedRemoteHandle;
 };
 
 #endif // LOCALANDREMOTEDIFFERENTWIDGET_H

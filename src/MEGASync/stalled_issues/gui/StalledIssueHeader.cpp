@@ -59,58 +59,9 @@ void StalledIssueHeader::setTitleDescriptionText(const QString &text)
     ui->errorDescriptionText->setText(text);
 }
 
-//Ignore local file
-void StalledIssueHeader::ignoreFile()
-{
-    auto data = getData().getLocalData();
-    if(data)
-    {
-        connect(&mIgnoreWatcher, &QFutureWatcher<void>::finished,
-                this, &StalledIssueHeader::onIgnoreFileFinished);
-
-        QFuture<void> addToIgnore = QtConcurrent::run([data]()
-        {
-            QDir ignoreDir(data->getNativePath());
-
-            while(ignoreDir.exists())
-            {
-                QFile ignore(ignoreDir.path() + QDir::separator() + QString::fromUtf8(".megaignore"));
-                if(ignore.exists())
-                {
-                    ignore.open(QFile::Append | QFile::Text);
-
-                    QTextStream streamIn(&ignore);
-                    streamIn << QChar((int)'\n');
-
-                    streamIn << QString::fromUtf8("-:");
-
-                    streamIn << ignoreDir.relativeFilePath(data->getNativeFilePath());
-                    ignore.close();
-
-                    break;
-                }
-
-                if(!ignoreDir.cdUp())
-                {
-                    break;
-                }
-            }
-        });
-
-        mIgnoreWatcher.setFuture(addToIgnore);
-    }
-}
-
 QString StalledIssueHeader::fileName()
 {
 return QString();
-}
-
-void StalledIssueHeader::onIgnoreFileFinished()
-{
-    emit issueFixed();
-    disconnect(&mIgnoreWatcher, &QFutureWatcher<void>::finished,
-               this, &StalledIssueHeader::onIgnoreFileFinished);
 }
 
 bool StalledIssueHeader::eventFilter(QObject *watched, QEvent *event)

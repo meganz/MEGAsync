@@ -2,9 +2,11 @@
 #define STALLEDISSUEBASEDELEGATEWIDGET_H
 
 #include <StalledIssue.h>
+#include <StalledIssuesUtilities.h>
 
 #include <QWidget>
 #include <QStyleOptionViewItem>
+
 
 class StalledIssueBaseDelegateWidget : public QWidget
 {
@@ -26,6 +28,9 @@ public:
 
 signals:
     void issueFixed();
+
+protected:
+    StalledIssuesUtilities mUtilities;
 
 private:
     virtual void refreshUi() = 0;

@@ -29,8 +29,8 @@ void OtherSideMissingOrBlocked::refreshUi()
     ui->localPath->hide();
     ui->remotePath->hide();
 
-    auto localData = issue.getLocalData();
-    auto cloudData = issue.getCloudData();
+    auto localData = issue.consultLocalData();
+    auto cloudData = issue.consultCloudData();
 
     if(cloudData)
     {

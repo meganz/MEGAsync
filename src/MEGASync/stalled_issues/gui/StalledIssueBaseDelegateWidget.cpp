@@ -1,11 +1,21 @@
 #include "StalledIssueBaseDelegateWidget.h"
 
-StalledIssueBaseDelegateWidget::StalledIssueBaseDelegateWidget(QWidget *parent) : QWidget(parent)
-{
+#include "MegaApplication.h"
 
+#include "mega/types.h"
+
+#include <QtConcurrent/QtConcurrent>
+#include <QFile>
+
+StalledIssueBaseDelegateWidget::StalledIssueBaseDelegateWidget(QWidget *parent)
+    : QWidget(parent)
+{
+    connect(&mUtilities, &StalledIssuesUtilities::actionFinished, this, [this](){
+        emit issueFixed();
+    });
 }
 
-void StalledIssueBaseDelegateWidget::render(const QStyleOptionViewItem &option,
+void StalledIssueBaseDelegateWidget::render(const QStyleOptionViewItem &,
             QPainter *painter,
             const QRegion &sourceRegion)
 {
