@@ -3,8 +3,8 @@
 #include "RemovedSharesNotificator.h"
 #include "Preferences.h"
 #include "QTMegaRequestListener.h"
+
 #include <QObject>
-#include <memory>
 
 namespace mega {
 class MegaUserAlertList;
@@ -25,7 +25,7 @@ public:
         NEW_SHARED_NODES = 2,
         REMOVED_SHARED_NODES = 3
     };
-    DesktopNotifications(const QString& appName, QSystemTrayIcon* trayIcon, Preferences *preferences);
+    DesktopNotifications(const QString& appName, QSystemTrayIcon* trayIcon);
     void addUserAlertList(mega::MegaUserAlertList *alertList);
     void sendOverStorageNotification(int state) const;
     void sendOverTransferNotification(const QString& title) const;
@@ -71,9 +71,9 @@ private:
     QString mNewContactIconPath, mStorageQuotaFullIconPath, mStorageQuotaWarningIconPath;
     QString mFolderIconPath, mFileDownloadSucceedIconPath;
     RemovedSharesNotificator mRemovedSharedNotificator;
-    Preferences *mPreferences;
+    std::shared_ptr<Preferences> mPreferences;
     bool mIsFirstTime;//Check first time alerts are added to show unified message of unread.
 
-    QMap<QString, mega::MegaUserAlert*> mPendingUserAlerts;
+    QMultiMap<QString, mega::MegaUserAlert*> mPendingUserAlerts;
     QMap<QString, std::shared_ptr<UserAttributes::FullNameAttributeRequest>> mUserAttributes;
 };

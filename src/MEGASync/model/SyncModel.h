@@ -44,7 +44,7 @@ private:
     static std::unique_ptr<SyncModel> model;
     SyncModel();
 
-    Preferences *preferences;
+    std::shared_ptr<Preferences> preferences;
     bool isFirstSyncDone = false;
 
     void saveUnattendedDisabledSyncs();

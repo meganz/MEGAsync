@@ -753,24 +753,6 @@ QToolButton
                            </item>
                            <item>
                             <widget class="QPushButton" name="bNumberUnseenNotifications">
-                             <property name="sizePolicy">
-                              <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-                               <horstretch>0</horstretch>
-                               <verstretch>0</verstretch>
-                              </sizepolicy>
-                             </property>
-                             <property name="minimumSize">
-                              <size>
-                               <width>6</width>
-                               <height>14</height>
-                              </size>
-                             </property>
-                             <property name="maximumSize">
-                              <size>
-                               <width>16777215</width>
-                               <height>14</height>
-                              </size>
-                             </property>
                              <property name="styleSheet">
                               <string notr="true">#bNumberUnseenNotifications
 {
@@ -780,9 +762,12 @@ font-weight: bold;
 font-family: Lato;
 font-size: 11px;
 border-radius: 4px;
-padding-left: 4px;
-padding-right: 4px;
+border: none;
+padding: 0px 4px 1px 4px;
 margin-right: 4px;
+min-width: 6px;
+min-height: 14px;
+max-height: 14px;
 }</string>
                              </property>
                              <property name="text">
@@ -1367,7 +1352,7 @@ background-color: transparent;
 }</string>
                         </property>
                         <property name="currentIndex">
-                         <number>5</number>
+                         <number>0</number>
                         </property>
                         <widget class="QWidget" name="pUpdated">
                          <property name="sizePolicy">
@@ -1955,7 +1940,7 @@ background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
 }</string>
                                </property>
                                <property name="text">
-                                <string>Your data is at risk!</string>
+                                <string>Your data is at risk</string>
                                </property>
                                <property name="alignment">
                                 <set>Qt::AlignCenter</set>

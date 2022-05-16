@@ -1092,28 +1092,6 @@ void WindowsPlatform::enableDialogBlur(QDialog*)
 #endif
 }
 
-void WindowsPlatform::activateBackgroundWindow(QDialog *window)
-{
-    DWORD currentThreadId = GetCurrentThreadId();
-    DWORD foregroundThreadId = 0;
-    HWND foregroundWindow;
-    bool threadAttached = false;
-
-    if (QGuiApplication::applicationState() != Qt::ApplicationActive
-        && (foregroundWindow = GetForegroundWindow())
-        && (foregroundThreadId = GetWindowThreadProcessId(foregroundWindow, NULL))
-        && (foregroundThreadId != currentThreadId))
-    {
-        threadAttached = AttachThreadInput(foregroundThreadId, currentThreadId, TRUE);
-    }
-    window->showMinimized();
-    window->showNormal();
-    if (threadAttached)
-    {
-        AttachThreadInput(foregroundThreadId, currentThreadId, FALSE);
-    }
-}
-
 LPTSTR WindowsPlatform::getCurrentSid()
 {
     HANDLE hTok = NULL;

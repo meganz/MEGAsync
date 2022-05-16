@@ -196,11 +196,6 @@ else()
 endif()
 
 set (MOC_INPUT
-    ${MEGAsyncDir}/platform/notificator.h
-    ${MEGAsyncDir}/mega/bindings/qt/QTMegaGlobalListener.h
-    ${MEGAsyncDir}/mega/bindings/qt/QTMegaListener.h
-    ${MEGAsyncDir}/mega/bindings/qt/QTMegaRequestListener.h
-    ${MEGAsyncDir}/mega/bindings/qt/QTMegaTransferListener.h
     ${MEGAsyncDir}/MegaApplication.h
     ${MEGAsyncDir}/DesktopNotifications.h
     ${MEGAsyncDir}/TransferQuota.h
@@ -222,6 +217,7 @@ set (MOC_INPUT
     ${MEGAsyncDir}/control/ThreadPool.h
     ${MEGAsyncDir}/control/MegaController.h
     ${MEGAsyncDir}/control/SyncController.h
+    ${MEGAsyncDir}/control/UserAttributesManager.h
     ${MEGAsyncDir}/model/SyncSettings.h
     ${MEGAsyncDir}/model/Model.h
     ${MEGAsyncDir}/gui/AlertItem.h
@@ -277,8 +273,8 @@ set (MOC_INPUT
     ${MEGAsyncDir}/gui/QTransfersModel.h
     ${MEGAsyncDir}/gui/QSyncItemWidget.h
     ${MEGAsyncDir}/gui/SettingsDialog.h
-    ${MEGAsyncDir}/gui/NotificationsSettings.h
     ${MEGAsyncDir}/gui/SetupWizard.h
+    ${MEGAsyncDir}/gui/NotificationsSettings.h
     ${MEGAsyncDir}/gui/StatusInfo.h
     ${MEGAsyncDir}/gui/MegaItemProxyModel.h
     ${MEGAsyncDir}/gui/MegaItemTreeView.h
@@ -307,9 +303,9 @@ set (MOC_INPUT
     ${MEGAsyncDir}/gui/SwitchButton.h
     ${MEGAsyncDir}/gui/GuiUtilities.h
     ${MEGAsyncDir}/gui/EventHelper.h
+    ${MEGAsyncDir}/gui/UserAttributesRequests.h
     ${MEGAsyncDir}/gui/BackupTableWidget.h
-    ${MEGAsyncDir}/gui/BackupItemModel.h
-
+    ${MEGAsyncDir}/gui/BackupItemModel.h    
     ${MEGAsyncDir}/platform/notificator.h
     ${MEGAsyncDir}/mega/bindings/qt/QTMegaGlobalListener.h
     ${MEGAsyncDir}/mega/bindings/qt/QTMegaListener.h
@@ -320,7 +316,7 @@ set (MOC_INPUT
 if (NOT CMAKE_HOST_APPLE)
     set (MOC_INPUT ${MOC_INPUT}
         ${MEGAsyncDir}/gui/LockedPopOver.h
-		${MEGAsyncDir}/gui/SwitchButton.h
+        ${MEGAsyncDir}/gui/SwitchButton.h
         )
 endif (NOT CMAKE_HOST_APPLE)
 
@@ -342,7 +338,7 @@ else()
     set (MOC_INPUT ${MOC_INPUT}
 
         ${MEGAsyncDir}/gui/CocoaHelpButton.h
-	${MEGAsyncDir}/gui/CocoaSwitchButton.h
+        ${MEGAsyncDir}/gui/CocoaSwitchButton.h
         ${MEGAsyncDir}/gui/MegaSystemTrayIcon.h
 
         ${MEGAsyncDir}/gui/PermissionsDialog.h
@@ -388,12 +384,12 @@ set (SRCS
     ${MEGAsyncDir}/gui/CircularUsageProgressBar.cpp
     ${MEGAsyncDir}/gui/FilterAlertWidget.cpp
     ${MEGAsyncDir}/gui/MegaAlertDelegate.cpp
+    ${MEGAsyncDir}/gui/NotificationsSettings.cpp
     ${MEGAsyncDir}/gui/QAlertsModel.cpp
     ${MEGAsyncDir}/gui/QFilterAlertsModel.cpp
     ${MEGAsyncDir}/gui/TransfersStatusWidget.cpp
     ${MEGAsyncDir}/gui/TransfersSummaryWidget.cpp
     ${MEGAsyncDir}/gui/SettingsDialog.cpp
-    ${MEGAsyncDir}/gui/NotificationsSettings.cpp
     ${MEGAsyncDir}/gui/BalloonToolTip.cpp
     ${MEGAsyncDir}/gui/InfoDialog.cpp
     ${MEGAsyncDir}/gui/QtPositioningBugFixer.cpp
@@ -464,11 +460,11 @@ set (SRCS
     ${MEGAsyncDir}/gui/MegaItemProxyModel.cpp
     ${MEGAsyncDir}/gui/MegaItemTreeView.cpp
     ${MEGAsyncDir}/gui/GuiUtilities.cpp
+    ${MEGAsyncDir}/gui/UserAttributesRequests.cpp
+
     ${MEGAsyncDir}/gui/EventHelper.cpp
-	${MEGAsyncDir}/gui/BackupTableWidget.cpp
-	${MEGAsyncDir}/gui/BackupItemModel.cpp
-
-
+    ${MEGAsyncDir}/gui/BackupTableWidget.cpp
+    ${MEGAsyncDir}/gui/BackupItemModel.cpp
     ${MEGAsyncDir}/mega/bindings/qt/QTMegaRequestListener.cpp
     ${MEGAsyncDir}/mega/bindings/qt/QTMegaTransferListener.cpp
     ${MEGAsyncDir}/mega/bindings/qt/QTMegaGlobalListener.cpp
@@ -491,6 +487,7 @@ set (SRCS
     ${MEGAsyncDir}/control/TransferRemainingTime.cpp
     ${MEGAsyncDir}/control/MegaController.cpp
     ${MEGAsyncDir}/control/SyncController.cpp
+    ${MEGAsyncDir}/control/UserAttributesManager.cpp
 
     ${MEGAsyncDir}/model/SyncSettings.cpp
     ${MEGAsyncDir}/model/Model.cpp

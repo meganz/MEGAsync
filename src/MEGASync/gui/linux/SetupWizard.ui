@@ -844,7 +844,7 @@ font-size: 11px;
                 <string notr="true"/>
                </property>
                <property name="text">
-                <string>I agree with the MEGA &lt;a href=&quot;https://mega.co.nz/#terms&quot;&gt;Terms of Service&lt;/a&gt;</string>
+                <string>I agree with the MEGA [A]Terms of Service[/A]</string>
                </property>
                <property name="textFormat">
                 <enum>Qt::RichText</enum>
@@ -1186,7 +1186,7 @@ background-color: #E2E2E2;
              <string notr="true"/>
             </property>
             <property name="text">
-             <string>Logging in ...</string>
+             <string>Logging in...</string>
             </property>
             <property name="alignment">
              <set>Qt::AlignCenter</set>
@@ -2096,7 +2096,7 @@ font-family: &quot;Lato&quot;;
 }</string>
          </property>
          <property name="text">
-          <string>Enjoy MEGAsync!</string>
+          <string>Enjoy MEGAsync</string>
          </property>
          <property name="alignment">
           <set>Qt::AlignHCenter|Qt::AlignTop</set>

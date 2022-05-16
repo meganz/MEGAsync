@@ -428,7 +428,7 @@ protected:
     SetupWizard *setupWizard;
     SettingsDialog *settingsDialog;
     InfoDialog *infoDialog;
-    Preferences *preferences;
+    std::shared_ptr<Preferences> preferences;
     SyncModel *model;
     Controller *controller;
     mega::MegaApi *megaApi;
@@ -589,6 +589,8 @@ private:
     void fixMultiscreenResizeBug(int& posX, int& posY);
 
     static void logInfoDialogCoordinates(const char* message, const QRect& screenGeometry, const QString& otherInformation);
+
+
 };
 
 class DeferPreferencesSyncForScope

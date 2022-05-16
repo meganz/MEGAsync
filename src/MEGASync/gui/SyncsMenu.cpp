@@ -71,7 +71,6 @@ SyncsMenu::SyncsMenu(mega::MegaSync::SyncType type, QObject *parent) : QObject(p
 
 void SyncsMenu::refresh()
 {
-    Preferences* preferences (Preferences::instance());
     SyncModel* model (SyncModel::instance());
     MenuItemAction* firstBackup (nullptr);
 
@@ -100,7 +99,7 @@ void SyncsMenu::refresh()
     int activeFolders (0);
 
     // Get number of <type>. Show only "Add <type>" button if no items, and whole menu otherwise.
-    int numItems = (preferences->logged()) ?
+    int numItems = (Preferences::instance()->logged()) ?
                        model->getNumSyncedFolders(mType)
                      : 0;
     if (numItems > 0)

@@ -93,7 +93,7 @@ private:
 protected:
     mega::QTMegaRequestListener *delegateListener;
     mega::MegaApi *megaApi;
-    Preferences *preferences;
+    std::shared_ptr<Preferences> preferences;
     bool closing;
     bool loggingStarted;
 

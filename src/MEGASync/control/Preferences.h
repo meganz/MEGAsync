@@ -2,7 +2,6 @@
 #define PREFERENCES_H
 
 #include <iostream>
-#include <QString>
 #include <QLocale>
 #include <QStringList>
 #include <QMutex>
@@ -11,7 +10,6 @@
 #include "control/EncryptedSettings.h"
 #include "model/SyncModel.h"
 #include <assert.h>
-#include <memory>
 #include "megaapi.h"
 #include <chrono>
 #include <type_traits>
@@ -29,15 +27,15 @@ signals:
     void updated(int lastVersion);
 
 private:
-    static Preferences *preferences;
-
     Preferences();
 
     std::map<QString, QVariant> cache;
 
 public:
     //NOT thread-safe. Must be called before creating threads.
-    static Preferences *instance();
+    static std::shared_ptr<Preferences> instance();
+    Preferences(const Preferences&) = delete;
+    Preferences& operator=(const Preferences&) = delete;
     void initialize(QString dataPath);
     void setEmailAndGeneralSettings(const QString &email);
 
@@ -502,7 +500,7 @@ public:
     static const qint16 HTTP_PORT;
     static const qint16 HTTPS_PORT;
 
-    static QStringList HTTPS_ALLOWED_ORIGINS;
+    static const QStringList HTTPS_ALLOWED_ORIGINS;
     static bool HTTPS_ORIGIN_CHECK_ENABLED;
     static const QString FINDER_EXT_BUNDLE_ID;
     static QString BASE_URL;
@@ -541,7 +539,7 @@ protected:
     void cleanCache();
     void removeFromCache(const QString &key);
 
-    EncryptedSettings *settings;
+    std::unique_ptr<EncryptedSettings> mSettings;
 
     // sync configuration from old syncs
     QList<SyncData> oldSyncs;

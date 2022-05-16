@@ -224,7 +224,7 @@ bool LinuxDumper::EnumerateMappings() {
           module->size = end_addr - start_addr;
           module->offset = offset;
           if (name != NULL) {
-            const unsigned l = my_strlen(name);
+            const size_t l = my_strlen(name);
             if (l < sizeof(module->name))
               my_memcpy(module->name, name, l);
           }

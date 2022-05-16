@@ -30,8 +30,8 @@ NodeSelector::NodeSelector(int selectMode, QWidget *parent) :
     mNewFolderUi(new Ui::NewFolderDialog),
     mNewFolder(new QDialog(this)),
     mSelectMode(selectMode),
-    mMegaApi(static_cast<MegaApplication*>(qApp)->getMegaApi()),
-    mDelegateListener(mega::make_unique<QTMegaRequestListener>(static_cast<MegaApplication*>(qApp)->getMegaApi(), this)),
+    mMegaApi(MegaSyncApp->getMegaApi()),
+    mDelegateListener(mega::make_unique<QTMegaRequestListener>(mMegaApi, this)),
     mModel(nullptr)
 {
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
@@ -63,11 +63,10 @@ NodeSelector::NodeSelector(int selectMode, QWidget *parent) :
     ui->tMegaFolders->setColumnWidth(MegaItemModel::COLUMN::STATUS, MegaItemModel::ROW_HEIGHT * 2);
     ui->tMegaFolders->setItemDelegate(new  NodeRowDelegate(ui->tMegaFolders));
     ui->tMegaFolders->setItemDelegateForColumn(MegaItemModel::STATUS, new IconDelegate(ui->tMegaFolders));
-    ui->tMegaFolders->setExpanded(mProxyModel->getIndexFromHandle(mMegaApi->getRootNode()->getHandle()),true);
+    ui->tMegaFolders->setExpanded(mProxyModel->getIndexFromHandle(MegaSyncApp->getRootNode()->getHandle()),true);
     ui->tMegaFolders->setTextElideMode(Qt::ElideMiddle);
 
     ui->lFolderName->setText(tr("Cloud Drive"));
-
 
     connect(ui->tMegaFolders->selectionModel(), &QItemSelectionModel::selectionChanged, this, &NodeSelector::onSelectionChanged);
     connect(ui->tMegaFolders, &MegaItemTreeView::removeNodeClicked, this, &NodeSelector::onDeleteClicked);
@@ -131,7 +130,7 @@ void NodeSelector::nodesReady()
         ui->bNewFolder->hide();
         setWindowTitle(tr("Select items"));
         break;
-    }    
+    }
     ui->tMegaFolders->setModel(mProxyModel.get());
     ui->tMegaFolders->sortByColumn(MegaItemModel::NODE, Qt::AscendingOrder);
     checkBackForwardButtons();
@@ -203,18 +202,17 @@ void NodeSelector::setSelectedNodeHandle(MegaHandle selectedHandle)
     auto node = std::shared_ptr<MegaNode>(mMegaApi->getNodeByHandle(selectedHandle));
     if (!node)
         return;
-    std::shared_ptr<MegaNode> root_p_node = node;
 
-    while(root_p_node)
+    auto root_p_node = node;
+    auto p_node = std::unique_ptr<MegaNode>(mMegaApi->getParentNode(root_p_node.get()));
+    while(p_node)
     {
-        if(auto p_node = std::shared_ptr<MegaNode>(mMegaApi->getParentNode(root_p_node.get())))
-            root_p_node = p_node;
-        else
-            break;
+        root_p_node = std::move(p_node);
+        p_node.reset(mMegaApi->getParentNode(root_p_node.get()));
     }
 
     bool isInShare = false;
-    if( root_p_node && root_p_node->isInShare())
+    if(root_p_node && root_p_node->isInShare())
     {
         isInShare=true;
         onbShowIncomingSharesClicked();
@@ -232,7 +230,7 @@ void NodeSelector::setSelectedNodeHandle(MegaHandle selectedHandle)
 
     if(modelIndexList.size() > 0)
     {
-        ui->tMegaFolders->selectionModel()->setCurrentIndex(modelIndexList.last(), QItemSelectionModel::ClearAndSelect | QItemSelectionModel::Rows	);
+        ui->tMegaFolders->selectionModel()->setCurrentIndex(modelIndexList.last(), QItemSelectionModel::ClearAndSelect | QItemSelectionModel::Rows);
         ui->tMegaFolders->selectionModel()->select(modelIndexList.last(), QItemSelectionModel::ClearAndSelect | QItemSelectionModel::Rows);
     }
 }
@@ -248,7 +246,7 @@ void NodeSelector::onRequestFinish(mega::MegaApi*, mega::MegaRequest* request, m
     if (errorCode != mega::MegaError::API_OK)
     {
         ui->tMegaFolders->setEnabled(true);
-        QMegaMessageBox::critical(nullptr, QString::fromUtf8("MEGAsync"),
+        QMegaMessageBox::critical(nullptr, QLatin1String("MEGAsync"),
                                   tr("Error") + QLatin1String(": ")
                                   + QCoreApplication::translate("MegaError", e->getErrorString()));
         return;
@@ -265,7 +263,7 @@ void NodeSelector::onRequestFinish(mega::MegaApi*, mega::MegaRequest* request, m
                 QModelIndex idx = ui->tMegaFolders->rootIndex();
                 if(!idx.isValid())
                 {
-                    idx = mProxyModel->getIndexFromNode(((MegaApplication*)qApp)->getRootNode());
+                    idx = mProxyModel->getIndexFromNode(MegaSyncApp->getRootNode());
                 }
                 QModelIndex row = mProxyModel->insertNode(std::move(nodeUnique), idx);
                 ui->tMegaFolders->selectionModel()->select(row, QItemSelectionModel::ClearAndSelect | QItemSelectionModel::Rows);
@@ -294,8 +292,8 @@ void NodeSelector::onRequestFinish(mega::MegaApi*, mega::MegaRequest* request, m
 
 void NodeSelector::onDeleteClicked()
 {
-    MegaNode *node = mMegaApi->getNodeByHandle(getSelectedNodeHandle());
-    int access = mMegaApi->getAccess(node);
+    auto node = std::unique_ptr<MegaNode>(mMegaApi->getNodeByHandle(getSelectedNodeHandle()));
+    int access = mMegaApi->getAccess(node.get());
     if (!node || access < MegaShare::ACCESS_FULL)
     {
         return;
@@ -303,7 +301,7 @@ void NodeSelector::onDeleteClicked()
 
     QPointer<NodeSelector> currentDialog = this;
     if (QMegaMessageBox::question(this,
-                             QString::fromUtf8("MEGAsync"),
+                             QLatin1String("MEGAsync"),
                              tr("Are you sure that you want to delete \"%1\"?")
                                 .arg(QString::fromUtf8(node->getName())),
                              QMessageBox::Yes | QMessageBox::No, QMessageBox::No)
@@ -325,28 +323,25 @@ void NodeSelector::onDeleteClicked()
                 || !strcmp(name, "CRYPTO_ERROR")
                 || !strcmp(name, "BLANK"))
         {
-            mMegaApi->remove(node, mDelegateListener.get());
+            mMegaApi->remove(node.get(), mDelegateListener.get());
         }
         else
         {
-            auto rubbish = ((MegaApplication*)qApp)->getRubbishNode();
-            mMegaApi->moveNode(node, rubbish.get(), mDelegateListener.get());
+            auto rubbish = MegaSyncApp->getRubbishNode();
+            mMegaApi->moveNode(node.get(), rubbish.get(), mDelegateListener.get());
         }
     }
 }
 
 void NodeSelector::onGenMEGALinkClicked()
 {
-    MegaNode *node = mMegaApi->getNodeByHandle(getSelectedNodeHandle());
+    auto node = std::unique_ptr<MegaNode>(mMegaApi->getNodeByHandle(getSelectedNodeHandle()));
     if (!node || node->getType() == MegaNode::TYPE_ROOT
-            || mMegaApi->getAccess(node) != MegaShare::ACCESS_OWNER)
+            || mMegaApi->getAccess(node.get()) != MegaShare::ACCESS_OWNER)
     {
-        delete node;
         return;
     }
-
-    mMegaApi->exportNode(node);
-    delete node;
+    mMegaApi->exportNode(node.get());
 }
 
 void NodeSelector::changeEvent(QEvent *event)
@@ -438,10 +433,7 @@ void NodeSelector::onbNewFolderClicked()
     auto parentNode = mProxyModel->getNode(ui->tMegaFolders->rootIndex());
     if (!parentNode)
     {
-        auto rootNode = MegaSyncApp->getRootNode();
-        if (rootNode)
-            parentNode = std::shared_ptr<MegaNode>(rootNode);
-
+        parentNode = MegaSyncApp->getRootNode();
         if (!parentNode)
             return;
     }
@@ -477,56 +469,78 @@ void NodeSelector::onbNewFolderClicked()
 
 void NodeSelector::onbOkClicked()
 {
-    MegaNode *node = mMegaApi->getNodeByHandle(getSelectedNodeHandle());
-    if (!node)
-    {
-        reject();
-        return;
-    }
+    bool correctNodeSelected(true);
 
-    int access = mMegaApi->getAccess(node);
-    if ((mSelectMode == NodeSelector::UPLOAD_SELECT) && ((access < MegaShare::ACCESS_READWRITE)))
+    if(mSelectMode == NodeSelector::DOWNLOAD_SELECT)
     {
-        QMegaMessageBox::warning(nullptr, tr("Error"),
-                                 tr("You need Read & Write or Full access rights "
-                                    "to be able to upload to the selected folder."),
-                                 QMessageBox::Ok);
-        return;
-
-    }
-    else if ((mSelectMode == NodeSelector::SYNC_SELECT) && (access < MegaShare::ACCESS_FULL))
-    {
-        QMegaMessageBox::warning(nullptr, tr("Error"),
-                                 tr("You need Full access right "
-                                    "to be able to sync the selected folder."),
-                                 QMessageBox::Ok);
-        return;
-    }
-    else if ((mSelectMode == NodeSelector::STREAM_SELECT) && node->isFolder())
-    {
-        QMegaMessageBox::warning(nullptr, tr("Error"),
-                                 tr("Only files can be used for streaming."),
-                                 QMessageBox::Ok);
-        return;
-    }
-
-    if (mSelectMode == NodeSelector::SYNC_SELECT)
-    {
-        const char* path = mMegaApi->getNodePath(node);
-        MegaNode *check = mMegaApi->getNodeByPath(path);
-        delete [] path;
-        if (!check)
+        auto nodes = getMultiSelectionNodeHandle();
+        int wrongNodes(0);
+        foreach(auto& nodeHandle, nodes)
         {
-            QMegaMessageBox::warning(nullptr, tr("Warning"),
-                                     tr("Invalid folder for synchronization.\n"
-                                        "Please, ensure that you don't use characters "
-                                        "like '\\' '/' or ':' in your folder names."),
-                                     QMessageBox::Ok);
-            return;
+            auto node = std::unique_ptr<MegaNode>(mMegaApi->getNodeByHandle(nodeHandle));
+            if(!node)
+            {
+                ++wrongNodes;
+            }
+        }
+        if(wrongNodes > 0)
+        {
+            correctNodeSelected = false;
+            if(isCloudDrive())
+            {
+                QMegaMessageBox::warning(nullptr, tr("Error"), tr("Item selection removed. To reselect, close this window and try again.", "", wrongNodes), QMessageBox::Ok);
+            }
+            else
+            {
+                QMegaMessageBox::warning(nullptr, tr("Error"), tr("You no longer have access to this item. Ask the owner to share again.", "", wrongNodes), QMessageBox::Ok);
+
+            }
+        }
+    }
+    else
+    {
+        auto node = std::unique_ptr<MegaNode>(mMegaApi->getNodeByHandle(getSelectedNodeHandle()));
+        if (!node)
+        {
+            QMegaMessageBox::warning(nullptr, tr("Error"), tr("Item selection removed. To reselect, close this window and try again."),
+                                                 QMessageBox::Ok);
+            correctNodeSelected = false;
+        }
+        else
+        {
+            int access = mMegaApi->getAccess(node.get());
+            if ((mSelectMode == NodeSelector::UPLOAD_SELECT) && ((access < MegaShare::ACCESS_READWRITE)))
+            {
+                QMegaMessageBox::warning(nullptr, tr("Error"), tr("You need Read & Write or Full access rights to be able to upload to the selected folder."), QMessageBox::Ok);
+                correctNodeSelected = false;
+            }
+            else if ((mSelectMode == NodeSelector::SYNC_SELECT) && (access < MegaShare::ACCESS_FULL))
+            {
+                QMegaMessageBox::warning(nullptr, tr("Error"), tr("You need Full access right to be able to sync the selected folder."), QMessageBox::Ok);
+                correctNodeSelected = false;
+            }
+            else if ((mSelectMode == NodeSelector::STREAM_SELECT) && node->isFolder())
+            {
+                QMegaMessageBox::warning(nullptr, tr("Error"), tr("Only files can be used for streaming."), QMessageBox::Ok);
+                correctNodeSelected = false;
+            }
+            else if (mSelectMode == NodeSelector::SYNC_SELECT)
+            {
+                const char* path = mMegaApi->getNodePath(node.get());
+                auto check = std::unique_ptr<MegaNode>(mMegaApi->getNodeByPath(path));
+                delete [] path;
+                if (!check)
+                {
+                    QMegaMessageBox::warning(nullptr, tr("Warning"), tr("Invalid folder for synchronization.\n"
+                                                         "Please, ensure that you don't use characters like '\\' '/' or ':' in your folder names."),
+                                             QMessageBox::Ok);
+                    correctNodeSelected = false;
+                }
+            }
         }
     }
 
-    accept();
+    correctNodeSelected ? accept() : reject();
 }
 
 void NodeSelector::onbShowIncomingSharesClicked()
@@ -644,7 +658,6 @@ void NodeSelector::restoreExpandedItems()
         iterateForRestore(mNavInShares.expandedHandles);
         mNavInShares.expandedHandles.clear();
     }
-
 }
 
 void NodeSelector::iterateForRestore(const QList<MegaHandle> &list, const QModelIndex &parent)
@@ -681,10 +694,7 @@ bool NodeSelector::isAllowedToEnterInIndex(const QModelIndex &idx)
 
 bool NodeSelector::isCloudDrive()
 {
-    if(mProxyModel)
-        return mProxyModel->isShowOnlyCloudDrive();
-
-    return true;
+    return mProxyModel ? mProxyModel->isShowOnlyCloudDrive() : true;
 }
 
 void NodeSelector::setRootIndex(const QModelIndex &idx)
@@ -742,25 +752,17 @@ void NodeSelector::setRootIndex(const QModelIndex &idx)
             ui->lFolderName->setToolTip(nodeName);
         else
             ui->lFolderName->setToolTip(QString());
-
     }
-
 }
 
 MegaHandle NodeSelector::getHandleByIndex(const QModelIndex& idx)
 {
-    if(mProxyModel)
-        return mProxyModel->getHandle(idx);
-
-    return mega::INVALID_HANDLE;
+    return mProxyModel ? mProxyModel->getHandle(idx) : mega::INVALID_HANDLE;
 }
 
 QModelIndex NodeSelector::getIndexFromHandle(const mega::MegaHandle &handle)
 {
-    if(mProxyModel)
-        return mProxyModel->getIndexFromHandle(handle);
-
-    return QModelIndex();
+    return mProxyModel ? mProxyModel->getIndexFromHandle(handle) : QModelIndex();
 }
 
 void NodeSelector::checkBackForwardButtons()
@@ -786,15 +788,9 @@ void NodeSelector::checkNewFolderButtonVisibility()
     if(mSelectMode == SYNC_SELECT || mSelectMode == UPLOAD_SELECT)
     {
         auto sourceIndex = mProxyModel->getIndexFromSource(ui->tMegaFolders->rootIndex());
-        if(!sourceIndex.isValid() && !isCloudDrive())
-        {
-            ui->bNewFolder->hide();
-            return;
-        }
-        ui->bNewFolder->show();
+        ui->bNewFolder->setVisible(sourceIndex.isValid() || isCloudDrive());
     }
 }
-
 
 void NodeSelector::setupNewFolderDialog()
 {
@@ -856,23 +852,23 @@ void NodeSelector::Navigation::removeFromForward(const mega::MegaHandle &handle)
     if(forwardHandles.size() == 0)
         return;
 
-    auto megaApi = static_cast<MegaApplication*>(qApp)->getMegaApi();
-    auto node = megaApi->getNodeByHandle(handle);
+    auto megaApi = MegaSyncApp->getMegaApi();
+    auto node = std::unique_ptr<mega::MegaNode>(megaApi->getNodeByHandle(handle));
     if(!node)
         return;
 
-    auto parentNode = megaApi->getParentNode(node);
+    auto parentNode = std::unique_ptr<mega::MegaNode>(megaApi->getParentNode(node.get()));
     if(!parentNode)
         return;
 
     //if we are visiting common parent node we only have to store the new one and remove the old
     for(auto it = forwardHandles.begin(); it != forwardHandles.end(); ++it)
     {
-        auto lastForwardNode = megaApi->getNodeByHandle(*it);
+        auto lastForwardNode = std::unique_ptr<mega::MegaNode>(megaApi->getNodeByHandle(*it));
         if(!lastForwardNode)
            return;
 
-        auto brotherParentNode = megaApi->getParentNode(lastForwardNode);
+        auto brotherParentNode = std::unique_ptr<mega::MegaNode>(megaApi->getParentNode(lastForwardNode.get()));
         if(!brotherParentNode)
           return;
 
@@ -894,7 +890,7 @@ void NodeSelector::Navigation::appendToBackward(const mega::MegaHandle& handle)
 {
     if(backwardHandles.isEmpty() || backwardHandles.last() != handle)
     {
-        for(auto it = backwardHandles.begin(); it != backwardHandles.end();++it)
+        for(auto it = backwardHandles.begin(); it != backwardHandles.end(); ++it)
         {
             if(*it == handle)
             {

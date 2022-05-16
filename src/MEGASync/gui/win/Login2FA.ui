@@ -78,12 +78,7 @@ background-color:  rgba(0, 0, 0, 10%);
 	font-family: &quot;Lato&quot;;
 	font-size: 11px;
 }
-
-QPushButton
-{
-	padding-right: 12px;
-	padding-left: 12px;
-}</string>
+</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_2">
    <property name="spacing">
@@ -607,12 +602,6 @@ QPushButton
       </item>
       <item>
        <widget class="QPushButton" name="bCancel">
-        <property name="minimumSize">
-         <size>
-          <width>0</width>
-          <height>22</height>
-         </size>
-        </property>
         <property name="focusPolicy">
          <enum>Qt::StrongFocus</enum>
         </property>
@@ -623,12 +612,6 @@ QPushButton
       </item>
       <item>
        <widget class="QPushButton" name="bNext">
-        <property name="minimumSize">
-         <size>
-          <width>0</width>
-          <height>22</height>
-         </size>
-        </property>
         <property name="focusPolicy">
          <enum>Qt::StrongFocus</enum>
         </property>

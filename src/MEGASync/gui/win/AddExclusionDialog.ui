@@ -89,12 +89,6 @@ font-size: 11px;
       </property>
       <item>
        <widget class="QPushButton" name="bChooseFile">
-        <property name="minimumSize">
-         <size>
-          <width>0</width>
-          <height>22</height>
-         </size>
-        </property>
         <property name="text">
          <string>Choose File</string>
         </property>
@@ -102,12 +96,6 @@ font-size: 11px;
       </item>
       <item>
        <widget class="QPushButton" name="bChoose">
-        <property name="minimumSize">
-         <size>
-          <width>0</width>
-          <height>22</height>
-         </size>
-        </property>
         <property name="text">
          <string>Choose Folder</string>
         </property>
@@ -128,12 +116,6 @@ font-size: 11px;
       </item>
       <item>
        <widget class="QPushButton" name="bCancel">
-        <property name="minimumSize">
-         <size>
-          <width>0</width>
-          <height>22</height>
-         </size>
-        </property>
         <property name="text">
          <string>Cancel</string>
         </property>
@@ -141,12 +123,6 @@ font-size: 11px;
       </item>
       <item>
        <widget class="QPushButton" name="bOk">
-        <property name="minimumSize">
-         <size>
-          <width>0</width>
-          <height>22</height>
-         </size>
-        </property>
         <property name="text">
          <string>OK</string>
         </property>

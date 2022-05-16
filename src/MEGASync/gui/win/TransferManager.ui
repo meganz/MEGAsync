@@ -43,6 +43,7 @@
 {
 	border: none;
 }
+
 #wHeader
 {
      /*background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
@@ -52,10 +53,12 @@
 								 stop: 0.7 #f1f1f1, stop: 0.8 #f0f0f0,
 								 stop: 0.9 #efefef, stop: 1 #EEEEEE);*/
 }
+
 #wOptions
 {
 	/*background: #ececec;*/
 }
+
 #tAllTransfers, #tDownloads, #tUploads
 {
   font-family: &quot;Lato&quot;;
@@ -81,6 +84,17 @@
 	color: rgba(119, 119, 119, 30%);
 }
 
+#bAdd, #bClose, #bPause, #bClearAll
+{
+ height: 30px;
+ min-height: 30px;
+ max-height: 30px;
+ min-width: 100px;
+ font-family: &quot;Lato&quot;;
+ font-size: 14px;
+ border-radius: 3px;
+}
+
 #bClose
 {
     color: rgba(255, 255, 255, 30%);
@@ -90,67 +104,55 @@
 {
  background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
                                       stop: 0 #ffffff, stop: 1 #fafafa);
- border-radius: 3px;
- border: 1px solid rgba(0, 0, 0, 5%);
- padding: 7px 12px 7px 6px;
- font-family: &quot;Lato&quot;;
- font-size: 14px;
+ border: 1px solid rgb(234, 234, 234);
  color: #777777;
-
 }
 
 #bAdd:hover, #bPause::hover, #bClearAll::hover
 {
-  border: 1px solid rgba(0, 0, 0, 20%);
-  border-radius: 3px;
+  border: 1px solid rgb(198, 198, 198);
   background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
                                       stop: 0 #ffffff, stop: 1 #fafafa);
-
 }
 
 #bAdd:pressed, #bPause::pressed, #bClearAll::pressed
 {
-  background-color: rgba(0, 0, 0, 10%);
+  background-color: rgb(182, 182, 182);
   border: 1px solid rgba(0, 0, 0, 20%);
-  border-radius: 3px;
 }
 
 #bClose
 {
   background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
                                       stop: 0 #999999, stop: 1 #aaaaaa);
-  border-radius: 3px;
-  border: 1px solid rgba(0, 0, 0, 45%);
-  padding: 7px 24px 7px 24px;
-  font-family: &quot;Lato&quot;;
-  font-size: 14px;
-  font-weight: normal;
-  font-style: normal;
+  border: 1px solid rgb(109, 109, 109);
   color: #ffffff;
 }
+
 #bClose::hover
 {
-  border: 1px solid rgba(0, 0, 0, 60%);
-  border-radius: 3px;
+  border: 1px solid rgb(79, 79, 79);
   background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
                                       stop: 0 #999999, stop: 1 #aaaaaa);
 }
 
 #bClose::pressed
 {
-  border: 1px solid rgba(0, 0, 0, 60%);
-  border-radius: 3px;
+  border: 1px solid rgb(79, 79, 79);
   background-color: rgba(0, 0, 0, 50%);
 }
 
 #bNumberCompleted
-
 {
   font-family: &quot;Lato&quot;;
   font-size: 12px;
   color: #FFFFFF;
   background-color: #9A9A9A;
   border-radius: 4px;
+  min-width: 6px;
+  min-height: 15px; 
+  max-height: 15px;
+  margin: 0px;
   padding: 1px 5px 1px 5px;
 }</string>
   </property>
@@ -265,22 +267,10 @@
              <number>0</number>
             </property>
             <property name="bottomMargin">
-             <number>16</number>
+             <number>0</number>
             </property>
-            <item>
+            <item alignment="Qt::AlignTop">
              <widget class="QPushButton" name="bAdd">
-              <property name="minimumSize">
-               <size>
-                <width>120</width>
-                <height>32</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>16777215</width>
-                <height>32</height>
-               </size>
-              </property>
               <property name="cursor">
                <cursorShape>PointingHandCursor</cursorShape>
               </property>
@@ -556,20 +546,8 @@ QToolButton
                 </property>
                </widget>
               </item>
-              <item>
+              <item alignment="Qt::AlignVCenter">
                <widget class="QPushButton" name="bNumberCompleted">
-                <property name="minimumSize">
-                 <size>
-                  <width>6</width>
-                  <height>15</height>
-                 </size>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>16777215</width>
-                  <height>15</height>
-                 </size>
-                </property>
                 <property name="focusPolicy">
                  <enum>Qt::NoFocus</enum>
                 </property>
@@ -731,28 +709,16 @@ border-top: 1px solid rgba(0, 0, 0, 10%);
        <number>7</number>
       </property>
       <property name="topMargin">
-       <number>7</number>
+       <number>0</number>
       </property>
       <property name="rightMargin">
        <number>7</number>
       </property>
       <property name="bottomMargin">
-       <number>4</number>
+       <number>0</number>
       </property>
-      <item>
+      <item alignment="Qt::AlignVCenter">
        <widget class="QPushButton" name="bPause">
-        <property name="minimumSize">
-         <size>
-          <width>120</width>
-          <height>32</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>16777215</width>
-          <height>32</height>
-         </size>
-        </property>
         <property name="cursor">
          <cursorShape>PointingHandCursor</cursorShape>
         </property>
@@ -771,22 +737,10 @@ border-top: 1px solid rgba(0, 0, 0, 10%);
         </property>
        </widget>
       </item>
-      <item>
+      <item alignment="Qt::AlignVCenter">
        <widget class="QPushButton" name="bClearAll">
         <property name="enabled">
          <bool>false</bool>
-        </property>
-        <property name="minimumSize">
-         <size>
-          <width>120</width>
-          <height>32</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>16777215</width>
-          <height>32</height>
-         </size>
         </property>
         <property name="cursor">
          <cursorShape>PointingHandCursor</cursorShape>
@@ -819,20 +773,8 @@ border-top: 1px solid rgba(0, 0, 0, 10%);
         </property>
        </spacer>
       </item>
-      <item>
+      <item alignment="Qt::AlignVCenter">
        <widget class="QPushButton" name="bClose">
-        <property name="minimumSize">
-         <size>
-          <width>120</width>
-          <height>32</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>16777215</width>
-          <height>32</height>
-         </size>
-        </property>
         <property name="cursor">
          <cursorShape>PointingHandCursor</cursorShape>
         </property>

@@ -244,7 +244,7 @@ private:
 
     Ui::SettingsDialog* mUi;
     MegaApplication* mApp;
-    Preferences* mPreferences;
+    std::shared_ptr<Preferences> mPreferences;
     Controller* mController;
     SyncController mSyncController;
     SyncModel* mModel;

@@ -2,11 +2,9 @@
 #include "MegaApplication.h"
 #include "control/Utilities.h"
 #include "Preferences.h"
-#include "SyncModel.h"
+#include "model/SyncModel.h"
 #include "mega/types.h"
 
-
-#include <QBrush>
 #include <QApplication>
 #include <QToolTip>
 
@@ -19,15 +17,17 @@ MegaItemModel::MegaItemModel(QObject *parent) :
     mRequiredRights(MegaShare::ACCESS_READ),
     mDisplayFiles(false),
     mSyncSetupMode(false),
-    mDelegateListener(mega::make_unique<QTMegaRequestListener>(static_cast<MegaApplication*>(qApp)->getMegaApi(), this))
+    mDelegateListener(mega::make_unique<QTMegaRequestListener>(MegaSyncApp->getMegaApi(), this))
 {
-   MegaApi* megaApi = static_cast<MegaApplication*>(qApp)->getMegaApi();
+   MegaApi* megaApi = MegaSyncApp->getMegaApi();
    auto root = std::unique_ptr<MegaNode>(megaApi->getRootNode());
    mRootItems.append(new MegaItem(move(root)));
-   MegaNodeList *folders = megaApi->getInShares();
+   auto folders = std::unique_ptr<MegaNodeList>(megaApi->getInShares());
+
+   //incoming shares
    for (int j = 0; j < folders->size(); j++)
    {
-       auto folder = std::unique_ptr<MegaNode>(folders->get(j));
+       auto folder = std::unique_ptr<MegaNode>(folders->get(j)->copy());
        auto user = std::unique_ptr<MegaUser>(megaApi->getUserFromInShare(folder.get()));
        MegaItem* item = new MegaItem(move(folder));
        item->setOwner(move(user));
@@ -38,7 +38,6 @@ MegaItemModel::MegaItemModel(QObject *parent) :
    megaApi->getCameraUploadsFolder(mDelegateListener.get());
    megaApi->getCameraUploadsFolderSecondary(mDelegateListener.get());
    megaApi->getMyChatFilesFolder(mDelegateListener.get());
-
 }
 
 int MegaItemModel::columnCount(const QModelIndex &) const
@@ -142,8 +141,9 @@ QModelIndex MegaItemModel::index(int row, int column, const QModelIndex &parent)
         MegaItem* item = static_cast<MegaItem*>(parent.internalPointer());
         if (!item->areChildrenSet())
         {
-            MegaApi* megaApi = static_cast<MegaApplication*>(qApp)->getMegaApi();
-            item->setChildren(megaApi->getChildren(item->getNode().get()));
+            MegaApi* megaApi = MegaSyncApp->getMegaApi();
+            auto children = std::shared_ptr<MegaNodeList>(megaApi->getChildren(item->getNode().get()));
+            item->setChildren(children);
         }
 
         return createIndex(row, column, item->getChild(row));
@@ -180,16 +180,14 @@ int MegaItemModel::rowCount(const QModelIndex &parent) const
         MegaItem *item = static_cast<MegaItem*>(parent.internalPointer());
         if (!item->areChildrenSet())
         {
-            MegaApi* megaApi = static_cast<MegaApplication*>(qApp)->getMegaApi();
-            item->setChildren(megaApi->getChildren(item->getNode().get()));
+            MegaApi* megaApi = MegaSyncApp->getMegaApi();
+            auto children = std::shared_ptr<MegaNodeList>(megaApi->getChildren(item->getNode().get()));
+            item->setChildren(children);
         }
         return item->getNumChildren();
     }
-    else
-    {
-        return mRootItems.size();
-    }
-    return 0;
+
+    return mRootItems.size();
 }
 
 QVariant MegaItemModel::headerData(int section, Qt::Orientation orientation, int role) const
@@ -244,7 +242,7 @@ QVariant MegaItemModel::headerData(int section, Qt::Orientation orientation, int
         {
             if(section == STATUS)
             {
-                return QIcon(QString::fromAscii("://images/node_selector/icon-small-MEGA.png"));
+                return QIcon(QLatin1String("://images/node_selector/icon-small-MEGA.png"));
             }
         }
     }
@@ -258,7 +256,7 @@ void MegaItemModel::setSyncSetupMode(bool value)
 
 void MegaItemModel::showFiles(bool show)
 {
-    this->mDisplayFiles = show;
+    mDisplayFiles = show;
     for(QList<MegaItem*>::iterator it = mRootItems.begin(); it != mRootItems.end();)
     {
         if((*it)->getNode()->isFile() && !show)
@@ -381,11 +379,11 @@ QVariant MegaItemModel::getText(const QModelIndex &index, MegaItem *item) const
             {
                 return QVariant();
             }
-            const QString language = ((MegaApplication*)qApp)->getCurrentLanguageCode();
+            const QString language = MegaSyncApp->getCurrentLanguageCode();
             QLocale locale(language);
             QDateTime dateTime = dateTime.fromSecsSinceEpoch(item->getNode()->getCreationTime());
             QDateTime currentDate = currentDate.currentDateTime();
-            QString dateFormat = QString::fromUtf8("dd MMM yyyy");
+            QLatin1String dateFormat ("dd MMM yyyy");
             QString timeFormat = locale.timeFormat(QLocale::ShortFormat);
 
             if(currentDate.toString(dateFormat)
@@ -408,7 +406,7 @@ QVariant MegaItemModel::getText(const QModelIndex &index, MegaItem *item) const
         default:
             break;
     }
-    return QVariant(QString::fromUtf8(""));
+    return QVariant(QLatin1String(""));
 }
 
 void MegaItemModel::onRequestFinish(mega::MegaApi *api, mega::MegaRequest *request, mega::MegaError *e)
@@ -497,15 +495,11 @@ int MegaItemModel::insertPosition(const std::unique_ptr<MegaNode>& node)
 {
     int type = node->getType();
     int i;
-    for (i = 0; i < mRootItems.size(); i++)
+    for (i = 0; i < mRootItems.size(); ++i)
     {
-        std::shared_ptr<MegaNode> n = mRootItems.at(i)->getNode();
-        int nodeType = n->getType();
-        if (type < nodeType)
-        {
-            continue;
-        }
-        if (qstricmp(node->getName(), n->getName()) <= 0)
+        std::shared_ptr<MegaNode> otherNode = mRootItems.at(i)->getNode();
+        int otherNodeType = otherNode->getType();
+        if (type >= otherNodeType && qstricmp(node->getName(), otherNode->getName()) <= 0)
         {
             break;
         }
