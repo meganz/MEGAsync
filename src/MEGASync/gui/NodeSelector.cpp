@@ -375,6 +375,13 @@ void NodeSelector::onSelectionChanged(QItemSelection, QItemSelection)
         if (node)
         {
             selectedFolder =  node->getHandle();
+            if (node->getType() == MegaNode::TYPE_FILE) {
+                QString fileSizeText = QString::fromUtf8("File size: %L1 byte.").arg(node->getSize());
+                ui->label->setText(fileSizeText);
+            }
+            else {
+                ui->label->setText(QString());
+            }
         }
         else
         {

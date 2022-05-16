@@ -164,6 +164,11 @@ TRANSLATIONS = \
 
 CODECFORTR = UTF8
 
+msvc {
+    QMAKE_CFLAGS += /utf-8
+    QMAKE_CXXFLAGS += /utf-8
+}
+
 win32 {
     greaterThan(QT_MAJOR_VERSION, 4) {
         greaterThan(QT_MINOR_VERSION, 1) {
