@@ -611,7 +611,7 @@ QPushButton
   <customwidget>
    <class>StalledIssueTab</class>
    <extends>QFrame</extends>
-   <header>gui/StalledIssueTab.h</header>
+   <header>StalledIssueTab.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

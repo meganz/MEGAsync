@@ -96,7 +96,7 @@
   <customwidget>
    <class>StalledIssueFilePath</class>
    <extends>QWidget</extends>
-   <header>stalledissuefilepath.h</header>
+   <header>StalledIssueFilePath.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

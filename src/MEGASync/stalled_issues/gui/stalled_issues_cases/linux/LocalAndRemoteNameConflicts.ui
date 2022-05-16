@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>293</width>
-    <height>55</height>
+    <width>352</width>
+    <height>79</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -23,6 +23,7 @@
       <font>
        <family>Lato 13</family>
        <pointsize>-1</pointsize>
+       <weight>75</weight>
        <bold>true</bold>
       </font>
      </property>
@@ -71,7 +72,7 @@
   <customwidget>
    <class>NameConflict</class>
    <extends>QWidget</extends>
-   <header>NameConflict.h</header>
+   <header>stalled_issues_cases/NameConflict.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
