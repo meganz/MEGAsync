@@ -332,7 +332,9 @@ set (MOC_INPUT
     ${MEGAsyncDir}/stalled_issues/gui/StalledIssueLoadingItem.h
     ${MEGAsyncDir}/stalled_issues/gui/StalledIssuesDialog.h
     ${MEGAsyncDir}/stalled_issues/gui/StalledIssueTab.h
+    ${MEGAsyncDir}/stalled_issues/gui/stalled_issues_cases/NameConflict.h
     ${MEGAsyncDir}/stalled_issues/gui/stalled_issues_cases/LocalAndRemoteDifferentWidget.h
+    ${MEGAsyncDir}/stalled_issues/gui/stalled_issues_cases/LocalAndRemoteNameConflicts.h
     ${MEGAsyncDir}/stalled_issues/gui/stalled_issues_cases/OtherSideMissingOrBlocked.h
     ${MEGAsyncDir}/stalled_issues/gui/stalled_issues_cases/StalledIssuesCaseHeaders.h
 
@@ -413,7 +415,9 @@ set (SRCS
     ${MEGAsyncDir}/stalled_issues/model/StalledIssue.cpp
     ${MEGAsyncDir}/stalled_issues/model/StalledIssuesModel.cpp
     ${MEGAsyncDir}/stalled_issues/model/StalledIssuesProxyModel.cpp
+    ${MEGAsyncDir}/stalled_issues/model/StalledIssuesUtilities.cpp
     ${MEGAsyncDir}/stalled_issues/gui/StalledIssueChooseWidget.cpp
+    ${MEGAsyncDir}/stalled_issues/gui/StalledIssueChooseTitle.cpp
     ${MEGAsyncDir}/stalled_issues/gui/StalledIssueFilePath.cpp
     ${MEGAsyncDir}/stalled_issues/gui/StalledIssueHeader.cpp
     ${MEGAsyncDir}/stalled_issues/gui/StalledIssueLoadingItem.cpp
@@ -423,7 +427,9 @@ set (SRCS
     ${MEGAsyncDir}/stalled_issues/gui/StalledIssuesView.cpp
     ${MEGAsyncDir}/stalled_issues/gui/StalledIssueDelegate.cpp
     ${MEGAsyncDir}/stalled_issues/gui/StalledIssuesDelegateWidgetsCache.cpp
+    ${MEGAsyncDir}/stalled_issues/gui/stalled_issues_cases/NameConflict.cpp
     ${MEGAsyncDir}/stalled_issues/gui/stalled_issues_cases/LocalAndRemoteDifferentWidget.cpp
+    ${MEGAsyncDir}/stalled_issues/gui/stalled_issues_cases/LocalAndRemoteNameConflicts.cpp
     ${MEGAsyncDir}/stalled_issues/gui/stalled_issues_cases/OtherSideMissingOrBlocked.cpp
     ${MEGAsyncDir}/stalled_issues/gui/stalled_issues_cases/StalledIssuesCaseHeaders.cpp
 
