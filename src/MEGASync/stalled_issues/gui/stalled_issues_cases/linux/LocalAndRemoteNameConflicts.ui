@@ -1,38 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>LocalAndRemoteDifferentWidget</class>
- <widget class="QWidget" name="LocalAndRemoteDifferentWidget">
+ <class>LocalAndRemoteNameConflicts</class>
+ <widget class="QWidget" name="LocalAndRemoteNameConflicts">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>336</width>
-    <height>81</height>
+    <width>293</width>
+    <height>55</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string notr="true"/>
-  </property>
-  <property name="styleSheet">
-   <string notr="true"/>
+   <string>Form</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
-   <property name="spacing">
-    <number>7</number>
-   </property>
-   <property name="leftMargin">
-    <number>0</number>
-   </property>
    <property name="topMargin">
     <number>10</number>
    </property>
-   <property name="rightMargin">
-    <number>7</number>
-   </property>
-   <property name="bottomMargin">
-    <number>15</number>
-   </property>
-   <item alignment="Qt::AlignTop">
+   <item>
     <widget class="QLabel" name="selectLabel">
      <property name="font">
       <font>
@@ -74,19 +59,19 @@
      </property>
     </spacer>
    </item>
-   <item alignment="Qt::AlignTop">
-    <widget class="StalledIssueChooseWidget" name="chooseLocalCopy" native="true"/>
+   <item>
+    <widget class="NameConflict" name="localConflictNames" native="true"/>
    </item>
-   <item alignment="Qt::AlignTop">
-    <widget class="StalledIssueChooseWidget" name="chooseRemoteCopy" native="true"/>
+   <item>
+    <widget class="NameConflict" name="cloudConflictNames" native="true"/>
    </item>
   </layout>
  </widget>
  <customwidgets>
   <customwidget>
-   <class>StalledIssueChooseWidget</class>
+   <class>NameConflict</class>
    <extends>QWidget</extends>
-   <header>StalledIssueChooseWidget.h</header>
+   <header>NameConflict.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

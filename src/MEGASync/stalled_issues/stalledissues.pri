@@ -72,6 +72,9 @@ FORMS    += $$PWD/gui/linux/StalledIssueHeader.ui \
             $$PWD/gui/linux/StalledIssueFilePath.ui \
             $$PWD/gui/linux/StalledIssueTab.ui \
             $$PWD/gui/linux/StalledIssueLoadingItem.ui \
+            $$PWD/gui/linux/StalledIssueChooseTitle.ui \
             $$PWD/gui/stalled_issues_cases/linux/LocalAndRemoteDifferentWidget.ui \
-            $$PWD/gui/stalled_issues_cases/linux/OtherSideMissingOrBlocked.ui
+            $$PWD/gui/stalled_issues_cases/linux/OtherSideMissingOrBlocked.ui \
+            $$PWD/gui/stalled_issues_cases/linux/NameConflict.ui \
+            $$PWD/gui/stalled_issues_cases/linux/LocalAndRemoteNameConflicts.ui
 }

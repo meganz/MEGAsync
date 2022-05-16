@@ -166,6 +166,7 @@ set (FORMS
     ${MEGAsyncDir}/gui/${UiDir}/UpgradeOverStorage.ui
     ${MEGAsyncDir}/gui/${UiDir}/ChangePassword.ui
     ${MEGAsyncDir}/gui/${UiDir}/Login2FA.ui
+    ${MEGAsyncDir}/gui/${UiDir}/RenameDialog.ui
 # added per platform    ${MEGAsyncDir}/gui/${UiDir}/LockedPopOver.ui
     ${MEGAsyncDir}/gui/${UiDir}/VerifyLockMessage.ui
     ${MEGAsyncDir}/gui/${UiDir}/MegaInfoMessage.ui
@@ -173,17 +174,17 @@ set (FORMS
     ${MEGAsyncDir}/gui/${UiDir}/ProxySettings.ui
     ${MEGAsyncDir}/gui/${UiDir}/BandwidthSettings.ui
     ${MEGAsyncDir}/gui/${UiDir}/NewFolderDialog.ui
-	${MEGAsyncDir}/transfers/gui/${UiDir}/InfoDialogTransfersWidget.ui
-	${MEGAsyncDir}/transfers/gui/${UiDir}/InfoDialogTransferDelegateWidget.ui
+    ${MEGAsyncDir}/transfers/gui/${UiDir}/InfoDialogTransfersWidget.ui
+    ${MEGAsyncDir}/transfers/gui/${UiDir}/InfoDialogTransferDelegateWidget.ui
     ${MEGAsyncDir}/transfers/gui/${UiDir}/TransferWidgetHeaderItem.ui
     ${MEGAsyncDir}/transfers/gui/${UiDir}/TransferManager.ui
     ${MEGAsyncDir}/transfers/gui/${UiDir}/TransferManagerDragBackDrop.ui
     ${MEGAsyncDir}/transfers/gui/${UiDir}/TransfersWidget.ui
     ${MEGAsyncDir}/transfers/gui/${UiDir}/TransfersStateInfoWidget.ui
-	${MEGAsyncDir}/transfers/gui/${UiDir}/TransfersStatusWidget.ui
+    ${MEGAsyncDir}/transfers/gui/${UiDir}/TransfersStatusWidget.ui
     ${MEGAsyncDir}/transfers/gui/${UiDir}/TransfersSummaryWidget.ui
     ${MEGAsyncDir}/transfers/gui/${UiDir}/TransferManagerDelegateWidget.ui
-	${MEGAsyncDir}/transfers/gui/${UiDir}/TransferManagerLoadingItem.ui
+    ${MEGAsyncDir}/transfers/gui/${UiDir}/TransferManagerLoadingItem.ui
     ${MEGAsyncDir}/transfers/gui/${UiDir}/SomeIssuesOccurredMessage.ui
     ${MEGAsyncDir}/stalled_issues/gui/${UiDir}/StalledIssueChooseWidget.ui
     ${MEGAsyncDir}/stalled_issues/gui/${UiDir}/StalledIssueFilePath.ui
@@ -191,8 +192,11 @@ set (FORMS
     ${MEGAsyncDir}/stalled_issues/gui/${UiDir}/StalledIssueLoadingItem.ui
     ${MEGAsyncDir}/stalled_issues/gui/${UiDir}/StalledIssuesDialog.ui
     ${MEGAsyncDir}/stalled_issues/gui/${UiDir}/StalledIssueTab.ui
+    ${MEGAsyncDir}/stalled_issues/gui/${UiDir}/StalledIssueChooseTitle.ui
     ${MEGAsyncDir}/stalled_issues/gui/stalled_issues_cases/${UiDir}/LocalAndRemoteDifferentWidget.ui
     ${MEGAsyncDir}/stalled_issues/gui/stalled_issues_cases/${UiDir}/OtherSideMissingOrBlocked.ui
+    ${MEGAsyncDir}/stalled_issues/gui/stalled_issues_cases/${UiDir}/LocalAndRemoteNameConflicts.ui
+    ${MEGAsyncDir}/stalled_issues/gui/stalled_issues_cases/${UiDir}/NameConflict.ui
 
     )
 
@@ -302,6 +306,7 @@ set (MOC_INPUT
     ${MEGAsyncDir}/gui/EventHelper.h
     ${MEGAsyncDir}/gui/UserAttributesRequests.h
     ${MEGAsyncDir}/gui/ViewLoadingScene.h
+    ${MEGAsyncDir}/gui/RenameDialog.h
     ${MEGAsyncDir}/platform/notificator.h
 
     ${MEGAsyncDir}/mega/bindings/qt/QTMegaGlobalListener.h
@@ -489,6 +494,7 @@ set (SRCS
     ${MEGAsyncDir}/gui/MegaItemTreeView.cpp
     ${MEGAsyncDir}/gui/GuiUtilities.cpp
     ${MEGAsyncDir}/gui/UserAttributesRequests.cpp
+    ${MEGAsyncDir}/gui/RenameDialog.cpp
 
     ${MEGAsyncDir}/transfers/gui/TransfersStatusWidget.cpp
     ${MEGAsyncDir}/transfers/gui/TransferItem.cpp

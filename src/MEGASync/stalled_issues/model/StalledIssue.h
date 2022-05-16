@@ -66,34 +66,6 @@ using StalledIssuesDataList = QList<StalledIssueDataPtr>;
 Q_DECLARE_METATYPE(StalledIssueDataPtr)
 Q_DECLARE_METATYPE(StalledIssuesDataList)
 
-class StalledIssueVariant
-{
-public:
-    StalledIssueVariant(){}
-    StalledIssueVariant(const StalledIssueVariant& tdr) : mData(tdr.mData) {}
-    StalledIssueVariant(const std::shared_ptr<StalledIssue> data)
-        : mData(data)
-    {}
-
-    const std::shared_ptr<StalledIssue> &data() const
-    {
-        return mData;
-    }
-
-    bool operator==(const StalledIssueVariant &issue)
-    {
-        return issue.mData == this->mData;
-    }
-
-private:
-    std::shared_ptr<StalledIssue> mData;
-};
-
-Q_DECLARE_METATYPE(StalledIssueVariant)
-
-using StalledIssuesVariantList = QList<StalledIssueVariant>;
-Q_DECLARE_METATYPE(StalledIssuesVariantList)
-
 class StalledIssue
 {
 public:
@@ -160,5 +132,33 @@ private:
 };
 
 Q_DECLARE_METATYPE(NameConflictedStalledIssue)
+
+class StalledIssueVariant
+{
+public:
+    StalledIssueVariant(){}
+    StalledIssueVariant(const StalledIssueVariant& tdr) : mData(tdr.mData) {}
+    StalledIssueVariant(const std::shared_ptr<StalledIssue> data)
+        : mData(data)
+    {}
+
+    const std::shared_ptr<StalledIssue> &data() const
+    {
+        return mData;
+    }
+
+    bool operator==(const StalledIssueVariant &issue)
+    {
+        return issue.mData == this->mData;
+    }
+
+private:
+    std::shared_ptr<StalledIssue> mData;
+};
+
+Q_DECLARE_METATYPE(StalledIssueVariant)
+
+using StalledIssuesVariantList = QList<StalledIssueVariant>;
+Q_DECLARE_METATYPE(StalledIssuesVariantList)
 
 #endif // STALLEDISSUE_H
