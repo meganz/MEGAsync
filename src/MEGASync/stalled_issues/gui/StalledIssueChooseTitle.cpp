@@ -3,6 +3,7 @@
 
 #include <QPushButton>
 #include <QPainter>
+#include <QPainterPath>
 
 const char* BUTTON_ID = "BUTTON_ID";
 
