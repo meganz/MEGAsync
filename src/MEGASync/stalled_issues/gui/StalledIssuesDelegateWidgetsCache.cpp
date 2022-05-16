@@ -17,7 +17,16 @@ void StalledIssuesDelegateWidgetsCache::setProxyModel(StalledIssuesProxyModel *p
     mProxyModel = proxyModel;
 }
 
-StalledIssueHeader *StalledIssuesDelegateWidgetsCache::getStalledIssueHeaderWidget(const QModelIndex &index, QWidget *parent, const StalledIssue &data) const
+void StalledIssuesDelegateWidgetsCache::reset()
+{
+    qDeleteAll(mStalledIssueHeaderWidgets);
+    foreach(auto map, mStalledIssueWidgets.values())
+    {
+        qDeleteAll(map);
+    }
+}
+
+StalledIssueHeader *StalledIssuesDelegateWidgetsCache::getStalledIssueHeaderWidget(const QModelIndex &index, QWidget *parent, const StalledIssueVariant &issue) const
 {
     auto row = index.row() % 10;
 
@@ -25,54 +34,54 @@ StalledIssueHeader *StalledIssuesDelegateWidgetsCache::getStalledIssueHeaderWidg
 
     if(!header)
     {
-        header = createHeaderWidget(index, parent, data);
+        header = createHeaderWidget(index, parent, issue);
         header->hide();
     }
     else
     {
-        header->updateUi(index, data);
+        header->updateUi(index, issue);
     }
 
     return header;
 }
 
-StalledIssueBaseDelegateWidget *StalledIssuesDelegateWidgetsCache::getStalledIssueInfoWidget(const QModelIndex &index, QWidget *parent, const StalledIssue &data) const
+StalledIssueBaseDelegateWidget *StalledIssuesDelegateWidgetsCache::getStalledIssueInfoWidget(const QModelIndex &index, QWidget *parent, const StalledIssueVariant &issue) const
 {
     auto row = index.parent().row() % 10;
 
-    auto reason = data.getReason();
+    auto reason = issue.data()->getReason();
     auto& itemsByRowMap = mStalledIssueWidgets[toInt(reason)];
     auto item = itemsByRowMap[row];
 
     if(!item)
     {
-        item = createBodyWidget(index, parent, data);
+        item = createBodyWidget(index, parent, issue);
         item->hide();
 
         itemsByRowMap.insert(row, item);
     }
     else
     {
-        item->updateUi(index, data);
+        item->updateUi(index, issue);
     }
 
     return item;
 }
 
-StalledIssueHeader *StalledIssuesDelegateWidgetsCache::getNonCacheStalledIssueHeaderWidget(const QModelIndex& index, QWidget* parent, const StalledIssue &data) const
+StalledIssueHeader *StalledIssuesDelegateWidgetsCache::getNonCacheStalledIssueHeaderWidget(const QModelIndex& index, QWidget* parent, const StalledIssueVariant &issue) const
 {
-    return createHeaderWidget(index, parent, data);
+    return createHeaderWidget(index, parent, issue);
 }
 
-StalledIssueBaseDelegateWidget *StalledIssuesDelegateWidgetsCache::getNonCacheStalledIssueInfoWidget(const QModelIndex &index, QWidget *parent, const StalledIssue& data) const
+StalledIssueBaseDelegateWidget *StalledIssuesDelegateWidgetsCache::getNonCacheStalledIssueInfoWidget(const QModelIndex &index, QWidget *parent, const StalledIssueVariant& issue) const
 {
-   return createBodyWidget(index, parent, data);
+   return createBodyWidget(index, parent, issue);
 }
 
-StalledIssueBaseDelegateWidget *StalledIssuesDelegateWidgetsCache::createBodyWidget(const QModelIndex &index, QWidget *parent, const StalledIssue &data) const
+StalledIssueBaseDelegateWidget *StalledIssuesDelegateWidgetsCache::createBodyWidget(const QModelIndex &index, QWidget *parent, const StalledIssueVariant &issue) const
 {
     StalledIssueBaseDelegateWidget* item(nullptr);
-    auto reason = data.getReason();
+    auto reason = issue.data()->getReason();
 
     switch(reason)
     {
@@ -106,17 +115,17 @@ StalledIssueBaseDelegateWidget *StalledIssuesDelegateWidgetsCache::createBodyWid
 
     if(item)
     {
-        item->updateUi(index, data);
+        item->updateUi(index, issue);
     }
 
     return item;
 }
 
-StalledIssueHeader *StalledIssuesDelegateWidgetsCache::createHeaderWidget(const QModelIndex &index, QWidget *parent, const StalledIssue &data) const
+StalledIssueHeader *StalledIssuesDelegateWidgetsCache::createHeaderWidget(const QModelIndex &index, QWidget *parent, const StalledIssueVariant &issue) const
 {
     StalledIssueHeader* header(nullptr);
 
-    switch(data.getReason())
+    switch(issue.data()->getReason())
     {
         case mega::MegaSyncStall::SyncStallReason::FileIssue:
         {
@@ -191,7 +200,7 @@ StalledIssueHeader *StalledIssuesDelegateWidgetsCache::createHeaderWidget(const 
 
     if(header)
     {
-        header->updateUi(index, data);
+        header->updateUi(index, issue);
     }
 
     return header;

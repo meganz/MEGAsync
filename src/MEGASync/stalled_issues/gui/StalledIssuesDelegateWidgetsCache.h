@@ -6,6 +6,7 @@
 
 #include <QMap>
 #include <QModelIndex>
+#include <QPointer>
 
 class StalledIssueHeader;
 class StalledIssueFilePath;
@@ -17,20 +18,22 @@ class StalledIssuesDelegateWidgetsCache
 public:
     StalledIssuesDelegateWidgetsCache();
 
-    StalledIssueHeader* getStalledIssueHeaderWidget(const QModelIndex& index, QWidget *parent, const StalledIssue &data) const;
-    StalledIssueBaseDelegateWidget* getStalledIssueInfoWidget(const QModelIndex& index, QWidget *parent, const StalledIssue &data) const;
+    StalledIssueHeader* getStalledIssueHeaderWidget(const QModelIndex& index, QWidget *parent, const StalledIssueVariant &issue) const;
+    StalledIssueBaseDelegateWidget* getStalledIssueInfoWidget(const QModelIndex& index, QWidget *parent, const StalledIssueVariant &issue) const;
 
-    StalledIssueHeader* getNonCacheStalledIssueHeaderWidget(const QModelIndex &index, QWidget *parent, const StalledIssue &data) const;
-    StalledIssueBaseDelegateWidget* getNonCacheStalledIssueInfoWidget(const QModelIndex& index, QWidget *parent, const StalledIssue &data) const;
+    StalledIssueHeader* getNonCacheStalledIssueHeaderWidget(const QModelIndex &index, QWidget *parent, const StalledIssueVariant &issue) const;
+    StalledIssueBaseDelegateWidget* getNonCacheStalledIssueInfoWidget(const QModelIndex& index, QWidget *parent, const StalledIssueVariant &issue) const;
 
     void setProxyModel(StalledIssuesProxyModel *proxyModel);
 
-private:
-    mutable QMap<int, StalledIssueHeader*> mStalledIssueHeaderWidgets;
-    mutable QMap<int, QMap<int, StalledIssueBaseDelegateWidget*>> mStalledIssueWidgets;
+    void reset();
 
-    StalledIssueBaseDelegateWidget* createBodyWidget(const QModelIndex& index, QWidget *parent, const StalledIssue &data) const;
-    StalledIssueHeader* createHeaderWidget(const QModelIndex& index, QWidget *parent, const StalledIssue &data) const;
+private:
+    mutable QMap<int, QPointer<StalledIssueHeader>> mStalledIssueHeaderWidgets;
+    mutable QMap<int, QMap<int, QPointer<StalledIssueBaseDelegateWidget>>> mStalledIssueWidgets;
+
+    StalledIssueBaseDelegateWidget* createBodyWidget(const QModelIndex& index, QWidget *parent, const StalledIssueVariant &issue) const;
+    StalledIssueHeader* createHeaderWidget(const QModelIndex& index, QWidget *parent, const StalledIssueVariant &issue) const;
 
     StalledIssuesProxyModel* mProxyModel;
 };

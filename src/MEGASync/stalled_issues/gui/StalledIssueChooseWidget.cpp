@@ -74,28 +74,9 @@ void StalledIssueChooseWidget::setIndent()
     ui->path->setIndent(StalledIssueHeader::ICON_INDENT);
 }
 
-void StalledIssueChooseWidget::paintEvent(QPaintEvent *)
-{
-    QPainter painter(this);
-    painter.setPen(QPen(QColor("#D6D6D6"), 1));
-    painter.setRenderHint(QPainter::Antialiasing, true);
-    painter.drawRoundedRect(QRectF(0.0,0.0,width(), height()),6,6);
-}
-
 bool StalledIssueChooseWidget::eventFilter(QObject *watched, QEvent *event)
 {
-    if(watched == ui->chooseTitle && event->type() == QEvent::Paint)
-    {
-        QPainter painter(ui->chooseTitle);
-        painter.setBrush(QColor("#F5F5F5"));
-        painter.setPen(Qt::NoPen);
-        QPainterPath path;
-        path.setFillRule(Qt::WindingFill);
-        path.addRoundedRect( QRect(0,0, ui->chooseTitle->width(), 6), 6, 6);
-        path.addRect(QRect( 0, 3, ui->chooseTitle->width(), ui->chooseTitle->height() -3)); // Top right corner not rounded
-        painter.drawPath(path.simplified());
-    }
-    else if(mData && watched == ui->fileNameText && event->type() == QEvent::Resize)
+    if(mData && watched == ui->fileNameText && event->type() == QEvent::Resize)
     {
         auto elidedText = ui->fileNameText->fontMetrics().elidedText(mData->getFileName(),Qt::ElideMiddle, ui->fileNameText->width());
         ui->fileNameText->setText(elidedText);

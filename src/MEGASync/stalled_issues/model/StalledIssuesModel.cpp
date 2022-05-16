@@ -8,7 +8,7 @@ StalledIssuesReceiver::StalledIssuesReceiver(QObject *parent) : QObject(parent),
 
 void StalledIssuesReceiver::processStalledIssues()
 {
-    StalledIssuesList auxList;
+    StalledIssuesVariantList auxList;
 
     if(mCacheStalledIssues.size() > 2000)
     {
@@ -41,16 +41,18 @@ void StalledIssuesReceiver::onRequestFinish(mega::MegaApi*, mega::MegaRequest *r
         {
             auto stall = stalls->get(i);
 
-            StalledIssue d (stall);
-            mCacheStalledIssues.append(d);
-        }
-
-        for (int i = 0; i < stalls->nameConflictsSize(); ++i)
-        {
-            auto stall = stalls->getNameConflicts(i);
-
-            NameConflictedStalledIssue d (stall);
-            mCacheStalledIssues.append(d);
+            if(stall->reason() == mega::MegaSyncStall::SyncStallReason::NamesWouldClashWhenSynced)
+            {
+                std::shared_ptr<NameConflictedStalledIssue> d (new NameConflictedStalledIssue(stall));
+                StalledIssueVariant variant(d);
+                mCacheStalledIssues.append(variant);
+            }
+            else
+            {
+                std::shared_ptr<StalledIssue> d (new StalledIssue(stall));
+                StalledIssueVariant variant(d);
+                mCacheStalledIssues.append(variant);
+            }
         }
 
         processStalledIssues();
@@ -59,7 +61,8 @@ void StalledIssuesReceiver::onRequestFinish(mega::MegaApi*, mega::MegaRequest *r
 
 StalledIssuesModel::StalledIssuesModel(QObject *parent) : QAbstractItemModel(parent)
    , mMegaApi (MegaSyncApp->getMegaApi())
-   , mHasStalledIssues(false)
+   , mHasStalledIssues(false),
+     mUpdateWhenGlobalStateChanges(false)
 {
     mStalledIssuesThread = new QThread();
     mStalledIssuedReceiver = new StalledIssuesReceiver();
@@ -91,7 +94,7 @@ StalledIssuesModel::~StalledIssuesModel()
     mRequestListener->deleteLater();
 }
 
-void StalledIssuesModel::onProcessStalledIssues(StalledIssuesList stalledIssues)
+void StalledIssuesModel::onProcessStalledIssues(StalledIssuesVariantList stalledIssues)
 {
     //Try blocking signals
     //QtConcurrent::run([this, stalledIssues]()
@@ -109,10 +112,10 @@ void StalledIssuesModel::onProcessStalledIssues(StalledIssuesList stalledIssues)
 
             for (auto it = stalledIssues.begin(); it != stalledIssues.end();)
             {
-                StalledIssue issue(*it);
+                StalledIssueVariant issue(*it);
                 mStalledIssues.append(issue);
                 mStalledIssuesByOrder.insert(&issue, rowCount(QModelIndex()) - 1);
-                mCountByFilterCriterion[static_cast<int>(StalledIssue::getCriterionByReason((*it).getReason()))]++;
+                mCountByFilterCriterion[static_cast<int>(StalledIssue::getCriterionByReason((*it).data()->getReason()))]++;
 
                 it++;
             }
@@ -126,6 +129,8 @@ void StalledIssuesModel::onProcessStalledIssues(StalledIssuesList stalledIssues)
 
 void StalledIssuesModel::updateStalledIssues()
 {
+    blockUi();
+
     //For a future, add a Loading Windows here
     reset();
 
@@ -139,10 +144,24 @@ void StalledIssuesModel::updateStalledIssues()
     }
 }
 
+void StalledIssuesModel::updateStalledIssuesWhenReady()
+{
+    mUpdateWhenGlobalStateChanges = true;
+}
+
 void StalledIssuesModel::onGlobalSyncStateChanged(mega::MegaApi* api)
 {
-    mHasStalledIssues = api->isSyncStalled();
+    auto newValue = api->isSyncStalled();
+    auto stateChanged = newValue != mHasStalledIssues;
+    mHasStalledIssues = newValue;
+
     emit globalSyncStateChanged(mHasStalledIssues);
+
+    if(mUpdateWhenGlobalStateChanges || stateChanged)
+    {
+        updateStalledIssues();
+        mUpdateWhenGlobalStateChanges = false;
+    }
 }
 
 Qt::DropActions StalledIssuesModel::supportedDropActions() const
@@ -182,14 +201,14 @@ QVariant StalledIssuesModel::data(const QModelIndex &index, int role) const
 {
     if (role == Qt::DisplayRole)
     {
-        auto stalledIssueItem = static_cast<StalledIssue*>(index.internalPointer());
+        auto stalledIssueItem = static_cast<StalledIssueVariant*>(index.internalPointer());
         if (stalledIssueItem)
         {
             return QVariant::fromValue((*stalledIssueItem));
         }
         else
         {
-            return QVariant::fromValue(StalledIssue(mStalledIssues.at(index.row())));
+            return QVariant::fromValue(StalledIssueVariant(mStalledIssues.at(index.row())));
         }
     }
 
@@ -203,7 +222,7 @@ QModelIndex StalledIssuesModel::parent(const QModelIndex &index) const
         return QModelIndex();
     }
 
-    auto stalledIssueItem = static_cast<StalledIssue*>(index.internalPointer());
+    auto stalledIssueItem = static_cast<StalledIssueVariant*>(index.internalPointer());
     if (!stalledIssueItem)
     {
         return QModelIndex();
@@ -314,7 +333,7 @@ void StalledIssuesModel::updateStalledIssuedByOrder()
         auto item = mStalledIssues.at(row);
         mStalledIssuesByOrder.insert(&item, row);
 
-        mCountByFilterCriterion[static_cast<int>(StalledIssue::getCriterionByReason(item.getReason()))]++;
+        mCountByFilterCriterion[static_cast<int>(StalledIssue::getCriterionByReason(item.data()->getReason()))]++;
     }
 
     emit stalledIssuesCountChanged();
@@ -335,6 +354,16 @@ void StalledIssuesModel::lockModelMutex(bool lock)
     {
         mModelMutex.unlock();
     }
+}
+
+void StalledIssuesModel::blockUi()
+{
+    emit uiBlocked();
+}
+
+void StalledIssuesModel::unBlockUi()
+{
+    emit uiUnblocked();
 }
 
 void StalledIssuesModel::reset()

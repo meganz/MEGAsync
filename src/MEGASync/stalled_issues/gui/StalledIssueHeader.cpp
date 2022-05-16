@@ -45,7 +45,7 @@ void StalledIssueHeader::setLeftTitleText(const QString &text)
 
 void StalledIssueHeader::addFileName()
 {
-    ui->fileNameTitle->setText(getData().getFileName());
+    ui->fileNameTitle->setText(getData().data()->getFileName());
     ui->fileNameTitle->installEventFilter(this);
 }
 
@@ -68,7 +68,7 @@ bool StalledIssueHeader::eventFilter(QObject *watched, QEvent *event)
 {
     if(watched == ui->fileNameTitle && event->type() == QEvent::Resize)
     {
-        auto elidedText = ui->fileNameTitle->fontMetrics().elidedText(getData().getFileName(),Qt::ElideMiddle, ui->fileNameTitle->width());
+        auto elidedText = ui->fileNameTitle->fontMetrics().elidedText(getData().data()->getFileName(),Qt::ElideMiddle, ui->fileNameTitle->width());
         ui->fileNameTitle->setText(elidedText);
     }
 
@@ -82,11 +82,11 @@ void StalledIssueHeader::refreshUi()
 
     QIcon fileTypeIcon;
 
-    auto splittedFile = getData().getFileName().split(QString::fromUtf8("."));
+    auto splittedFile = getData().data()->getFileName().split(QString::fromUtf8("."));
     if(splittedFile.size() != 1)
     {
         fileTypeIcon = Utilities::getCachedPixmap(Utilities::getExtensionPixmapName(
-                                                      getData().getFileName(), QLatin1Literal(":/images/drag_")));
+                                                      getData().data()->getFileName(), QLatin1Literal(":/images/drag_")));
     }
     else
     {

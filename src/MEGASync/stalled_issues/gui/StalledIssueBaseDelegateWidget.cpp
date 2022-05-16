@@ -8,7 +8,8 @@
 #include <QFile>
 
 StalledIssueBaseDelegateWidget::StalledIssueBaseDelegateWidget(QWidget *parent)
-    : QWidget(parent)
+    : QWidget(parent),
+      mKeepEditor(false)
 {
     connect(&mUtilities, &StalledIssuesUtilities::actionFinished, this, [this](){
         emit issueFixed();
@@ -21,12 +22,12 @@ void StalledIssueBaseDelegateWidget::render(const QStyleOptionViewItem &,
 {
     QWidget::render(painter,QPoint(0,0),sourceRegion);
 }
-void StalledIssueBaseDelegateWidget::updateUi(const QModelIndex& index, const StalledIssue &data)
+void StalledIssueBaseDelegateWidget::updateUi(const QModelIndex& index, const StalledIssueVariant &data)
 {
     mCurrentIndex = index;
     mData = data;
 
-   refreshUi();
+    refreshUi();
 }
 
 QModelIndex StalledIssueBaseDelegateWidget::getCurrentIndex() const
@@ -34,7 +35,21 @@ QModelIndex StalledIssueBaseDelegateWidget::getCurrentIndex() const
     return mCurrentIndex;
 }
 
-const StalledIssue& StalledIssueBaseDelegateWidget::getData() const
+const StalledIssueVariant& StalledIssueBaseDelegateWidget::getData() const
 {
     return mData;
+}
+
+bool StalledIssueBaseDelegateWidget::keepEditor() const
+{
+    return mKeepEditor;
+}
+
+void StalledIssueBaseDelegateWidget::setKeepEditor(bool newKeepEditor)
+{
+    if(mKeepEditor != newKeepEditor)
+    {
+        mKeepEditor = newKeepEditor;
+        emit editorKeepStateChanged(mKeepEditor);
+    }
 }

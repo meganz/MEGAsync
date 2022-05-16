@@ -143,9 +143,9 @@ void SyncItemExceedsSupoortedTreeDepthHeader::refreshCaseUi()
 
 }
 
-void SyncItemExceedsSupoortedTreeDepthHeader::on_actionButton_clicked(int)
+void SyncItemExceedsSupoortedTreeDepthHeader::on_actionButton_clicked()
 {
-    auto data = getData().consultLocalData();
+    auto data = getData().data()->consultLocalData();
     if(data)
     {
         mUtilities.ignoreFile(data->getNativeFilePath());
@@ -224,6 +224,8 @@ NameConflictsHeader::NameConflictsHeader(QWidget *parent)
 
 void NameConflictsHeader::refreshCaseUi()
 {
-    setLeftTitleText(tr("Can´t sync the following files"));
+    QFileInfo info(getData().data()->getFileName());
+
+    setLeftTitleText(tr("Can´t sync the following %1").arg(info.isFile() ? tr("files") : tr("folders")));
     setTitleDescriptionText(tr("There are name conflicts to solve."));
 }

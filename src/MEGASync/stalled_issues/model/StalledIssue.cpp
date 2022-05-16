@@ -7,7 +7,12 @@ StalledIssueData::StalledIssueData()
 {
     qRegisterMetaType<StalledIssueDataPtr>("StalledIssueDataPtr");
     qRegisterMetaType<StalledIssuesDataList>("StalledIssuesDataList");
-    qRegisterMetaType<StalledIssuesList>("StalledIssuesList");
+
+    qRegisterMetaType<StalledIssue>("StalledIssue");
+    qRegisterMetaType<NameConflictedStalledIssue>("NameConflictedStalledIssue");
+
+    qRegisterMetaType<StalledIssueVariant>("StalledIssueVariant");
+    qRegisterMetaType<StalledIssuesVariantList>("StalledIssuesVariantList");
 }
 
 const StalledIssueData::Path &StalledIssueData::getPath() const
@@ -279,49 +284,48 @@ NameConflictedStalledIssue::NameConflictedStalledIssue(const NameConflictedStall
 NameConflictedStalledIssue::NameConflictedStalledIssue(const mega::MegaSyncStall *stallIssue)
     : StalledIssue()
 {
+    mReason = stallIssue->reason();
     fillIssue(stallIssue);
 }
 
 void NameConflictedStalledIssue::fillIssue(const mega::MegaSyncStall *stall)
 {
-    auto localSourcePathProblem = static_cast<mega::MegaSyncStall::SyncPathProblem>(stall->pathProblem(false,0));
-    auto localTargetPathProblem = static_cast<mega::MegaSyncStall::SyncPathProblem>(stall->pathProblem(false,1));
+    auto localConflictNames = stall->pathCount(false);
 
-    auto localSourcePath = QString::fromUtf8(stall->path(false,0));
-    auto localTargetPath = QString::fromUtf8(stall->path(false,1));
-
-    if(localSourcePathProblem != mega::MegaSyncStall::SyncPathProblem::NoProblem || !localSourcePath.isEmpty())
+    if(localConflictNames > 0)
     {
         initLocalIssue();
-        getLocalData()->mPath.path = localSourcePath;
-        getLocalData()->mPath.mPathProblem = localSourcePathProblem;
+
+        for(unsigned int index = 0; index < localConflictNames; ++index)
+        {
+            QFileInfo localPath(QString::fromUtf8(stall->path(false,index)));
+
+            mLocalConflictedNames.append(localPath.fileName());
+
+            if(getLocalData()->mPath.isEmpty())
+            {
+                getLocalData()->mPath.path = localPath.filePath();
+            }
+        }
     }
 
-    if(localTargetPathProblem != mega::MegaSyncStall::SyncPathProblem::NoProblem || !localTargetPath.isEmpty())
-    {
-        initLocalIssue();
-        getLocalData()->mMovePath.path = localTargetPath;
-        getLocalData()->mMovePath.mPathProblem = localTargetPathProblem;
-    }
+    auto cloudConflictNames = stall->pathCount(true);
 
-    auto cloudSourcePathProblem = static_cast<mega::MegaSyncStall::SyncPathProblem>(stall->pathProblem(true,0));
-    auto cloudTargetPathProblem = static_cast<mega::MegaSyncStall::SyncPathProblem>(stall->pathProblem(true,1));
-
-    auto cloudSourcePath = QString::fromUtf8(stall->path(true,0));
-    auto cloudTargetPath = QString::fromUtf8(stall->path(true,1));
-
-    if(cloudSourcePathProblem != mega::MegaSyncStall::SyncPathProblem::NoProblem || !cloudSourcePath.isEmpty())
-    {
-        initCloudIssue();
-        getCloudData()->mPath.path = cloudSourcePath;
-        getCloudData()->mPath.mPathProblem = cloudSourcePathProblem;
-    }
-
-    if(cloudTargetPathProblem != mega::MegaSyncStall::SyncPathProblem::NoProblem || !cloudTargetPath.isEmpty())
+    if(cloudConflictNames > 0)
     {
         initCloudIssue();
-        getCloudData()->mMovePath.path = cloudTargetPath;
-        getCloudData()->mMovePath.mPathProblem = cloudTargetPathProblem;
+
+        for(unsigned int index = 0; index < cloudConflictNames; ++index)
+        {
+            QFileInfo cloudPath(QString::fromUtf8(stall->path(true,index)));
+
+            mCloudConflictedNames.append(cloudPath.fileName());
+
+            if(getCloudData()->mPath.isEmpty())
+            {
+                getCloudData()->mPath.path = cloudPath.filePath();
+            }
+        }
     }
 }
 

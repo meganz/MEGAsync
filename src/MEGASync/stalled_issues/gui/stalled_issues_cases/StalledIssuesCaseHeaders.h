@@ -123,7 +123,7 @@ protected:
     void refreshCaseUi() override;
 
 protected slots:
-    void on_actionButton_clicked(int) override;
+    void on_actionButton_clicked() override;
 };
 
 

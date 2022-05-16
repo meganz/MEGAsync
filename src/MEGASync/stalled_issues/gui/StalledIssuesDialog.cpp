@@ -30,9 +30,9 @@ StalledIssuesDialog::StalledIssuesDialog(QWidget *parent) :
     ui->stalledIssuesTree->setItemDelegate(delegate);
     mLoadingScene.setView(ui->stalledIssuesTree);
 
-    connect(mProxyModel, &StalledIssuesProxyModel::uiBlocked,
+    connect(MegaSyncApp->getStalledIssuesModel(), &StalledIssuesModel::uiBlocked,
             this,  &StalledIssuesDialog::onUiBlocked);
-    connect(mProxyModel, &StalledIssuesProxyModel::uiUnblocked,
+    connect(MegaSyncApp->getStalledIssuesModel(), &StalledIssuesModel::uiUnblocked,
             this,  &StalledIssuesDialog::onUiUnblocked);
 
     connect(MegaSyncApp->getStalledIssuesModel(), &StalledIssuesModel::stalledIssuesReceived,
@@ -73,8 +73,7 @@ void StalledIssuesDialog::on_doneButton_clicked()
 
 void StalledIssuesDialog::on_updateButton_clicked()
 {
-    onUiBlocked();
-    MegaSyncApp->getStalledIssuesModel()->updateStalledIssues();
+    mProxyModel->updateStalledIssues();
 }
 
 void StalledIssuesDialog::onStalledIssuesModelCountChanged()

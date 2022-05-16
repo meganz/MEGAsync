@@ -34,14 +34,14 @@ void LocalAndRemoteDifferentWidget::refreshUi()
 {
     auto issue = getData();
 
-    if(issue.consultLocalData())
+    if(issue.data()->consultLocalData())
     {
-        ui->chooseLocalCopy->setData(issue.consultLocalData());
+        ui->chooseLocalCopy->setData(issue.data()->consultLocalData());
     }
 
-    if(issue.consultCloudData())
+    if(issue.data()->consultCloudData())
     {
-        ui->chooseRemoteCopy->setData(issue.consultCloudData());
+        ui->chooseRemoteCopy->setData(issue.data()->consultCloudData());
     }
 }
 

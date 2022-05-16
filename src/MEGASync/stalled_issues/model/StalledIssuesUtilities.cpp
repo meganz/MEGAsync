@@ -9,9 +9,7 @@
 StalledIssuesUtilities::StalledIssuesUtilities() : mega::MegaRequestListener(),
     mListener(mega::make_unique<mega::QTMegaRequestListener>(MegaSyncApp->getMegaApi(), this)),
     mRemoteHandle(0)
-{
-
-}
+{}
 
 void StalledIssuesUtilities::ignoreFile(const QString &path)
 {
@@ -48,7 +46,6 @@ void StalledIssuesUtilities::ignoreFile(const QString &path)
     });
 
     mIgnoreWatcher.setFuture(addToIgnore);
-
 }
 
 void StalledIssuesUtilities::onIgnoreFileFinished()
@@ -95,29 +92,5 @@ void StalledIssuesUtilities::removeLocalFile(const QString& path)
          {
              emit actionFinished();
          }
-    }
-}
-
-void StalledIssuesUtilities::renameCloudFile(const QString &path, const QString &newFile)
-{
-    auto fileNode(MegaSyncApp->getMegaApi()->getNodeByPath(path.toStdString().c_str()));
-    if(fileNode)
-    {
-        mRemoteHandle = fileNode->getHandle();
-        MegaSyncApp->getMegaApi()->renameNode(fileNode, newFile.toStdString().c_str(), mListener.get());
-    }
-}
-
-void StalledIssuesUtilities::renameLocalFile(const QString &path, const QString &newFile)
-{
-    QFile file(path);
-    if(file.exists())
-    {
-        QFileInfo fileInfo(path);
-
-        if(file.rename(fileInfo.path() + newFile))
-        {
-            emit actionFinished();
-        }
     }
 }

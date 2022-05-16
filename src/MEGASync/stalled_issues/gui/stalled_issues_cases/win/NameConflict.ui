@@ -10,16 +10,38 @@
     <height>71</height>
    </rect>
   </property>
-  <property name="windowTitle">
-   <string>Form</string>
+  <property name="styleSheet">
+   <string notr="true">#frame 
+{
+    border-radius: 6px;
+    border: 1px solid  #D6D6D6;
+}</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
+   <property name="spacing">
+    <number>0</number>
+   </property>
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
+    <number>0</number>
+   </property>
    <item>
-    <widget class="StalledIssueFilePath" name="path" native="true"/>
-   </item>
-   <item>
-    <widget class="QWidget" name="nameConflicts" native="true">
-     <layout class="QVBoxLayout" name="nameConflictsLayout">
+    <widget class="QFrame" name="frame">
+     <property name="frameShape">
+      <enum>QFrame::Box</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Plain</enum>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_2">
       <property name="spacing">
        <number>0</number>
       </property>
@@ -33,8 +55,38 @@
        <number>0</number>
       </property>
       <property name="bottomMargin">
-       <number>0</number>
+       <number>3</number>
       </property>
+      <item>
+       <widget class="StalledIssueFilePath" name="path" native="true"/>
+      </item>
+      <item>
+       <widget class="QWidget" name="nameConflicts" native="true">
+        <property name="styleSheet">
+         <string notr="true">#StalledIssueActionTitle
+{
+    height: 32 px;
+}</string>
+        </property>
+        <layout class="QVBoxLayout" name="nameConflictsLayout">
+         <property name="spacing">
+          <number>3</number>
+         </property>
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <property name="topMargin">
+          <number>10</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
+        </layout>
+       </widget>
+      </item>
      </layout>
     </widget>
    </item>

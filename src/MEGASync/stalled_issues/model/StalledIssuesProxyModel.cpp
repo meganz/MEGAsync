@@ -28,7 +28,7 @@ void StalledIssuesProxyModel::filter(StalledIssueFilterCriterion filterCriterion
     auto sourceM = qobject_cast<StalledIssuesModel*>(sourceModel());
     if(sourceM->rowCount(QModelIndex()) != 0)
     {
-        emit uiBlocked();
+        sourceM->blockUi();
 
         //Test if it is worth it, because there is not sorting and the sort takes longer than filtering.
         QFuture<void> filtered = QtConcurrent::run([this, sourceM](){
@@ -39,7 +39,7 @@ void StalledIssuesProxyModel::filter(StalledIssueFilterCriterion filterCriterion
             sourceM->lockModelMutex(false);
             sourceM->blockSignals(false);
             blockSignals(false);
-            emit uiUnblocked();
+            sourceM->unBlockUi();
         });
     }
 }
@@ -54,6 +54,15 @@ void StalledIssuesProxyModel::setSourceModel(QAbstractItemModel *sourceModel)
     QSortFilterProxyModel::setSourceModel(sourceModel);
 }
 
+void StalledIssuesProxyModel::updateStalledIssues()
+{
+    auto sourceM = qobject_cast<StalledIssuesModel*>(sourceModel());
+    if(sourceM)
+    {
+        sourceM->updateStalledIssues();
+    }
+}
+
 bool StalledIssuesProxyModel::canFetchMore(const QModelIndex &parent) const
 {
     return QSortFilterProxyModel::canFetchMore(parent);
@@ -65,14 +74,14 @@ bool StalledIssuesProxyModel::filterAcceptsRow(int source_row, const QModelIndex
 
     if(index.data().isValid())
     {
-        const auto d (qvariant_cast<StalledIssue>(index.data()));
+        const auto d (qvariant_cast<StalledIssueVariant>(index.data()));
         if(mFilterCriterion == StalledIssueFilterCriterion::ALL_ISSUES)
         {
             return true;
         }
         else
         {
-            auto filterCriterion = StalledIssue::getCriterionByReason(d.getReason());
+            auto filterCriterion = StalledIssue::getCriterionByReason(d.data()->getReason());
             return filterCriterion == mFilterCriterion;
         }
     }

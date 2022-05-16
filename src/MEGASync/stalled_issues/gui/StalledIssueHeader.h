@@ -41,7 +41,7 @@ protected:
     QString fileName();
 
 protected slots:
-    virtual void on_actionButton_clicked(int){}
+    virtual void on_actionButton_clicked(){}
 
 private:
     bool eventFilter(QObject *watched, QEvent *event) override;

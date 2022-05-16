@@ -19,15 +19,19 @@ public:
     void render(const QStyleOptionViewItem &option,
                 QPainter *painter,
                 const QRegion &sourceRegion);
-    virtual void updateUi(const QModelIndex &index, const StalledIssue &data);
+    virtual void updateUi(const QModelIndex &index, const StalledIssueVariant &data);
     virtual void setIndent(int){}
 
     QModelIndex getCurrentIndex() const;
+    const StalledIssueVariant &getData() const;
 
-    const StalledIssue &getData() const;
+    bool keepEditor() const;
+    void setKeepEditor(bool newKeepEditor);
 
 signals:
     void issueFixed();
+    void updateIssues();
+    void editorKeepStateChanged(bool state);
 
 protected:
     StalledIssuesUtilities mUtilities;
@@ -35,8 +39,9 @@ protected:
 private:
     virtual void refreshUi() = 0;
 
-    StalledIssue mData;
+    StalledIssueVariant mData;
     QModelIndex mCurrentIndex;
+    bool mKeepEditor;
 };
 
 #endif // STALLEDISSUEBASEDELEGATEWIDGET_H

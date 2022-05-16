@@ -19,8 +19,6 @@ public:
     void ignoreFile(const QString& path);
     void removeRemoteFile(const QString& path);
     void removeLocalFile(const QString& path);
-    void renameCloudFile(const QString& path, const QString& newFile);
-    void renameLocalFile(const QString& path, const QString& newFile);
 
 signals:
     void actionFinished();

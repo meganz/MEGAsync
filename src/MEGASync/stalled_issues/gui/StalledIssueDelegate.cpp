@@ -12,14 +12,18 @@
 #include <QElapsedTimer>
 
 StalledIssueDelegate::StalledIssueDelegate(StalledIssuesProxyModel* proxyModel,  StalledIssuesView *view)
-    :mView(view),
+    :QStyledItemDelegate(view),
+     mView(view),
      mProxyModel (proxyModel),
-     mSourceModel (qobject_cast<StalledIssuesModel*>(
-                       mProxyModel->sourceModel())),
-     QStyledItemDelegate(view),
      mEditor(nullptr)
 {
+    mSourceModel = qobject_cast<StalledIssuesModel*>(
+                      mProxyModel->sourceModel());
+
     mCacheManager.setProxyModel(mProxyModel);
+    connect(mSourceModel, &QAbstractItemModel::modelReset, this, [this](){
+        mCacheManager.reset();
+    });
 }
 
 StalledIssueDelegate::~StalledIssueDelegate()
@@ -34,7 +38,7 @@ QSize StalledIssueDelegate::sizeHint(const QStyleOptionViewItem& option, const Q
     }
     else
     {
-        auto stalledIssueItem (qvariant_cast<StalledIssue>(index.data(Qt::DisplayRole)));
+        auto stalledIssueItem (qvariant_cast<StalledIssueVariant>(index.data(Qt::DisplayRole)));
         StalledIssueBaseDelegateWidget* w (getStalledIssueItemWidget(index, stalledIssueItem));
         if(w)
         {
@@ -89,7 +93,7 @@ void StalledIssueDelegate::paint(QPainter *painter, const QStyleOptionViewItem &
 
         if(!mEditor || mEditor->getCurrentIndex() != index)
         {
-            auto stalledIssueItem (qvariant_cast<StalledIssue>(index.data(Qt::DisplayRole)));
+            auto stalledIssueItem (qvariant_cast<StalledIssueVariant>(index.data(Qt::DisplayRole)));
             StalledIssueBaseDelegateWidget* w (getStalledIssueItemWidget(index, stalledIssueItem));
             if(!w)
             {
@@ -181,7 +185,7 @@ bool StalledIssueDelegate::editorEvent(QEvent *event, QAbstractItemModel *model,
 
 QWidget *StalledIssueDelegate::createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
-    auto stalledIssueItem (qvariant_cast<StalledIssue>(index.data(Qt::DisplayRole)));
+    auto stalledIssueItem (qvariant_cast<StalledIssueVariant>(index.data(Qt::DisplayRole)));
 
     mEditor = getNonCacheStalledIssueItemWidget(index,parent, stalledIssueItem);
     mEditor->expand(mView->isExpanded(index));
@@ -209,10 +213,7 @@ bool StalledIssueDelegate::event(QEvent *event)
         }
         else if(hoverEvent->type() == QEvent::MouseMove)
         {
-            if(!mEditor)
-            {
-                onHoverEnter(hoverEvent->index());
-            }
+            onHoverEnter(hoverEvent->index());
         }
     }
 
@@ -226,15 +227,20 @@ bool StalledIssueDelegate::eventFilter(QObject *object, QEvent *event)
 
 void StalledIssueDelegate::onHoverEnter(const QModelIndex &index)
 {
-    mView->setCurrentIndex(index);
-    mView->edit(index);
+    if(!mEditor)
+    {
+        mView->setCurrentIndex(index);
+        mView->edit(index);
+    }
 }
 
 void StalledIssueDelegate::onHoverLeave(const QModelIndex& index)
 {
-    if(mEditor)
+    if(mEditor && !mEditor->keepEditor())
     {
         //Small hack to avoid blinks when changing from editor to delegate paint
+        //Set the editor to nullptr and update the view -> Then the delegate paints the base widget
+        //before the editor is removed
         auto editor = mEditor.data();
         mEditor = nullptr;
         mView->update(index);
@@ -257,7 +263,20 @@ void StalledIssueDelegate::onIssueFixed()
    }
 }
 
-StalledIssueBaseDelegateWidget *StalledIssueDelegate::getStalledIssueItemWidget(const QModelIndex &index, const StalledIssue& data) const
+void StalledIssueDelegate::onUpdateIssues()
+{
+    mProxyModel->updateStalledIssues();
+}
+
+void StalledIssueDelegate::onEditorKeepStateChanged(bool newKeepState)
+{
+   if(mEditor && !newKeepState)
+   {
+       onHoverLeave(mEditor->getCurrentIndex());
+   }
+}
+
+StalledIssueBaseDelegateWidget *StalledIssueDelegate::getStalledIssueItemWidget(const QModelIndex &index, const StalledIssueVariant& data) const
 {
     StalledIssueBaseDelegateWidget* item(nullptr);
 
@@ -273,7 +292,7 @@ StalledIssueBaseDelegateWidget *StalledIssueDelegate::getStalledIssueItemWidget(
     return item;
 }
 
-StalledIssueBaseDelegateWidget *StalledIssueDelegate::getNonCacheStalledIssueItemWidget(const QModelIndex &index, QWidget* parent, const StalledIssue &data) const
+StalledIssueBaseDelegateWidget *StalledIssueDelegate::getNonCacheStalledIssueItemWidget(const QModelIndex &index, QWidget* parent, const StalledIssueVariant &data) const
 {
     StalledIssueBaseDelegateWidget* item(nullptr);
 
@@ -287,6 +306,8 @@ StalledIssueBaseDelegateWidget *StalledIssueDelegate::getNonCacheStalledIssueIte
     }
 
     connect(item, &StalledIssueBaseDelegateWidget::issueFixed, this, &StalledIssueDelegate::onIssueFixed);
+    connect(item, &StalledIssueBaseDelegateWidget::updateIssues, this, &StalledIssueDelegate::onUpdateIssues);
+    connect(item, &StalledIssueBaseDelegateWidget::editorKeepStateChanged, this, &StalledIssueDelegate::onEditorKeepStateChanged);
 
     return item;
 }

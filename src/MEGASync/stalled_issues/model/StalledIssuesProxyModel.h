@@ -20,10 +20,8 @@ public:
     void updateFilter();
 
     void setSourceModel(QAbstractItemModel *sourceModel) override;
-
-signals:
-    void uiBlocked();
-    void uiUnblocked();
+    void updateStalledIssues();
+    void updateStalledIssuesWhenReady();
 
 protected:
     bool canFetchMore(const QModelIndex &parent) const override;

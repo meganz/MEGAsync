@@ -36,10 +36,12 @@ protected slots:
 
 private slots:
     void onIssueFixed();
+    void onUpdateIssues();
+    void onEditorKeepStateChanged(bool newKeepState);
 
 private:
-    StalledIssueBaseDelegateWidget *getStalledIssueItemWidget(const QModelIndex &index, const StalledIssue &data) const;
-    StalledIssueBaseDelegateWidget *getNonCacheStalledIssueItemWidget(const QModelIndex &index, QWidget *parent, const StalledIssue& data) const;
+    StalledIssueBaseDelegateWidget *getStalledIssueItemWidget(const QModelIndex &index, const StalledIssueVariant &data) const;
+    StalledIssueBaseDelegateWidget *getNonCacheStalledIssueItemWidget(const QModelIndex &index, QWidget *parent, const StalledIssueVariant& data) const;
 
     StalledIssuesView* mView;
     StalledIssuesProxyModel* mProxyModel;
