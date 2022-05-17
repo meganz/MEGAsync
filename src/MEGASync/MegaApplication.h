@@ -436,7 +436,7 @@ protected:
     QFilterAlertsModel *notificationsProxyModel;
     QAlertsModel *notificationsModel;
     MegaAlertDelegate *notificationsDelegate;
-    std::unique_ptr<QObject> context{new QObject};
+    QObject *context;
     QString crashReportFilePath;
 
     HTTPServer *httpServer;
