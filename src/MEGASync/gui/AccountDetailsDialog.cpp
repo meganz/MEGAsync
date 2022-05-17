@@ -202,7 +202,7 @@ void AccountDetailsDialog::refresh()
         mUi->lUsedCloudDrive->setText(Utilities::getSizeString(usedStorage));
 
         // ---- Vault usage
-        auto usedVaultStorage = preferences->inboxStorage();
+        auto usedVaultStorage = preferences->vaultStorage();
         parts = usedVaultStorage ?
                     std::max(Utilities::partPer(usedVaultStorage, totalStorage, PRECISION),
                              DEFAULT_MIN_PERCENTAGE)

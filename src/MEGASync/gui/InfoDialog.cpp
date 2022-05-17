@@ -161,7 +161,6 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
     activeDownload = NULL;
     activeUpload = NULL;
     cloudItem = NULL;
-    inboxItem = NULL;
     sharesItem = NULL;
     rubbishItem = NULL;
     gWidget = NULL;
@@ -965,7 +964,7 @@ void InfoDialog::updateDialogState()
         MegaIntegerList* tsWarnings = megaApi->getOverquotaWarningsTs();
         const char *email = megaApi->getMyEmail();
 
-        long long numFiles{preferences->cloudDriveFiles() + preferences->inboxFiles() + preferences->rubbishFiles()};
+        long long numFiles{preferences->cloudDriveFiles() + preferences->vaultFiles() + preferences->rubbishFiles()};
         QString overDiskText = QString::fromUtf8("<p style='line-height: 20px;'>") + ui->lOverDiskQuotaLabel->text()
                 .replace(QString::fromUtf8("[A]"), QString::fromUtf8(email))
                 .replace(QString::fromUtf8("[B]"), Utilities::getReadableStringFromTs(tsWarnings))
