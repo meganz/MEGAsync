@@ -23,7 +23,7 @@ AccountDetailsDialog::AccountDetailsDialog(QWidget *parent) :
 
     // Set progressbars precision
     mUi->pbCloudDrive->setMaximum(PRECISION);
-    mUi->pbInbox->setMaximum(PRECISION);
+    mUi->pbVault->setMaximum(PRECISION);
     mUi->pbRubbish->setMaximum(PRECISION);
 
     // Set transfer quota progress bar color to blue
@@ -201,23 +201,23 @@ void AccountDetailsDialog::refresh()
 
         mUi->lUsedCloudDrive->setText(Utilities::getSizeString(usedStorage));
 
-        // ---- Inbox usage
-        auto usedInboxStorage = preferences->inboxStorage();
-        parts = usedInboxStorage ?
-                    std::max(Utilities::partPer(usedInboxStorage, totalStorage, PRECISION),
+        // ---- Vault usage
+        auto usedVaultStorage = preferences->inboxStorage();
+        parts = usedVaultStorage ?
+                    std::max(Utilities::partPer(usedVaultStorage, totalStorage, PRECISION),
                              DEFAULT_MIN_PERCENTAGE)
                   : 0;
-        mUi->pbInbox->setValue(std::min(PRECISION, parts));
+        mUi->pbVault->setValue(std::min(PRECISION, parts));
 
         // Display only if not empty. Resize dialog to adequate height.
-        if (usedInboxStorage > 0)
+        if (usedVaultStorage > 0)
         {
-            mUi->lUsedInbox->setText(Utilities::getSizeString(usedInboxStorage));
-            mUi->wInbox->setVisible(true);
+            mUi->lUsedVault->setText(Utilities::getSizeString(usedVaultStorage));
+            mUi->wVault->setVisible(true);
         }
         else
         {
-            mUi->wInbox->setVisible(false);
+            mUi->wVault->setVisible(false);
         }
 
         // ---- Rubbish bin usage
