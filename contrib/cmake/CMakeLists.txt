@@ -279,7 +279,6 @@ set (MOC_INPUT
     ${MEGAsyncDir}/gui/UpgradeDialog.h
     ${MEGAsyncDir}/gui/UpgradeOverStorage.h
     ${MEGAsyncDir}/gui/UploadToMegaDialog.h
-    ${MEGAsyncDir}/gui/UsageWidget.h
     ${MEGAsyncDir}/gui/VerifyLockMessage.h
     ${MEGAsyncDir}/gui/MegaInfoMessage.h
     ${MEGAsyncDir}/gui/WaitingSpinnerWidget.h
@@ -391,7 +390,6 @@ set (SRCS
     ${MEGAsyncDir}/gui/MegaProxyStyle.cpp
     ${MEGAsyncDir}/gui/AccountDetailsDialog.cpp
     ${MEGAsyncDir}/gui/DownloadFromMegaDialog.cpp
-    ${MEGAsyncDir}/gui/UsageWidget.cpp
     ${MEGAsyncDir}/gui/MegaItemModel.cpp
     ${MEGAsyncDir}/gui/MegaItem.cpp
     ${MEGAsyncDir}/gui/ChangeLogDialog.cpp
