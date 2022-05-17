@@ -24,9 +24,8 @@ QStringList MacXPlatform::multipleUpload(QString uploadTitle)
     return uploadMultipleFiles(uploadTitle);
 }
 
-bool MacXPlatform::enableTrayIcon(QString executable)
+bool MacXPlatform::enableTrayIcon(QString /*executable*/)
 {
-    Q_UNUSED(executable)
     return false;
 }
 
