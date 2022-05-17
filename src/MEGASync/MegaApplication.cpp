@@ -7296,9 +7296,9 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
             preferences->setCloudDriveFiles(details->getNumFiles(rootHandle));
             preferences->setCloudDriveFolders(details->getNumFolders(rootHandle));
 
-            preferences->setInboxStorage(details->getStorageUsed(vaultHandle));
-            preferences->setInboxFiles(details->getNumFiles(vaultHandle));
-            preferences->setInboxFolders(details->getNumFolders(vaultHandle));
+            preferences->setVaultStorage(details->getStorageUsed(vaultHandle));
+            preferences->setVaultFiles(details->getNumFiles(vaultHandle));
+            preferences->setVaultFolders(details->getNumFolders(vaultHandle));
 
             preferences->setRubbishStorage(details->getStorageUsed(rubbishHandle));
             preferences->setRubbishFiles(details->getNumFiles(rubbishHandle));

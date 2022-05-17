@@ -199,7 +199,6 @@ private:
     FilterAlertWidget *filterMenu;
 
     MenuItemAction *cloudItem;
-    MenuItemAction *inboxItem;
     MenuItemAction *sharesItem;
     MenuItemAction *rubbishItem;
 

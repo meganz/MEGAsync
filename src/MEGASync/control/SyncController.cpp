@@ -165,7 +165,7 @@ void SyncController::setMyBackupsHandle(MegaHandle handle)
 // For now the path looks like "/My backups", without the "/Backups" root
 QString SyncController::getMyBackupsLocalizedPath()
 {
-    QString backupsDirPath = QLatin1Char('/');
+    QString backupsDirPath = QString::fromLatin1("/");
 
     if (mMyBackupsHandle != INVALID_HANDLE)
     {
