@@ -234,7 +234,6 @@ signals:
     void startUpdaterThread();
     void tryUpdate();
     void installUpdate();
-    void unityFixSignal();
     void clearAllFinishedTransfers();
     void clearFinishedTransfer(int transferTag);
     void fetchNodesAfterBlock();
@@ -358,7 +357,6 @@ protected:
     void applyStorageState(int state, bool doNotAskForUserStats = false);
     void processUploadQueue(mega::MegaHandle nodeHandle);
     void processDownloadQueue(QString path);
-    void unityFix();
     void disableSyncs();
     void restoreSyncs();
     void closeDialogs(bool bwoverquota = false);

@@ -1597,15 +1597,6 @@ void MegaApplication::processDownloadQueue(QString path)
     }
 }
 
-void MegaApplication::unityFix()
-{
-    static QMenu dummyMenu;
-    connect(this, &MegaApplication::unityFixSignal, &dummyMenu, &QMenu::close,
-            static_cast<Qt::ConnectionType>(Qt::QueuedConnection | Qt::UniqueConnection));
-    emit unityFixSignal();
-    dummyMenu.exec();
-}
-
 void MegaApplication::closeDialogs(bool/* bwoverquota*/)
 {
     delete transferManager;
@@ -2236,11 +2227,6 @@ void MegaApplication::repositionInfoDialog()
     calculateInfoDialogCoordinates(infoDialog, &posx, &posy);
 
     fixMultiscreenResizeBug(posx, posy);
-
-    if (isLinux)
-    {
-        unityFix();
-    }
 
     MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Moving Info Dialog to posx = %1, posy = %2")
                  .arg(posx)
