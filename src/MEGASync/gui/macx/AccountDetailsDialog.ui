@@ -59,7 +59,7 @@ QLabel
     min-width:440px;
 }
 
-#lCloudDrive, #lInbox, #lRubbish, #lStorage, #lTransfer
+#lCloudDrive, #lVault, #lRubbish, #lStorage, #lTransfer
 {
   color: #333333;
   font-size: 13px;
@@ -67,14 +67,14 @@ QLabel
   qproperty-alignment: 'AlignLeft | AlignVCenter';
 }
 
-#wCloudDrive, #wRubbish, #wInbox
+#wCloudDrive, #wRubbish, #wVault
 {
     height: 32px;
     max-height: 32px;
     min-height: 32px;
 }
 
-#wCloudDrive, #wRubbish, #wInbox, QProgressBar, #lUsedCloudDrive, #lUsedInbox,  #lUsedRubbish, #lUsedByVersions
+#wCloudDrive, #wRubbish, #wVault, QProgressBar, #lUsedCloudDrive, #lUsedVault,  #lUsedRubbish, #lUsedByVersions
 {
     margin-right: 24px;
 }
@@ -89,7 +89,7 @@ QLabel
     padding-bottom: 4px;
 }
 
-#lCloudDrive, #lInbox, #lRubbish
+#lCloudDrive, #lVault, #lRubbish
 {
     margin-left: 10px;
     qproperty-alignment: 'AlignLeft | AlignBottom';
@@ -100,14 +100,14 @@ QProgressBar
     margin-left: 12px;
 }
 
-#lUsedCloudDrive, #lUsedInbox,  #lUsedRubbish, #lUsedByVersions
+#lUsedCloudDrive, #lUsedVault,  #lUsedRubbish, #lUsedByVersions
 {
   color: #333333;
   font-size: 13px;
   padding-right: 4px;
 }
 
-#lUsedCloudDrive, #lUsedInbox,  #lUsedRubbish
+#lUsedCloudDrive, #lUsedVault,  #lUsedRubbish
 {
     qproperty-alignment: 'AlignRight | AlignBottom';
 }
@@ -181,14 +181,19 @@ QProgressBar
     qproperty-iconSize: 24px;
 }
 
+#bCloudDrive, #bVault, #bRubbish
+{
+    qproperty-iconSize: 24px;
+}
+
 #bCloudDrive
 {
     qproperty-icon : url(:/images/Cloud_Drive_24_ico.png);
 }
 
-#bInbox
+#bVault
 {
-    qproperty-icon : url(:/images/Inbox_24_ico.png);
+    qproperty-icon : url(:/images/Backups_24_ico.png);
 }
 
 #bRubbish
@@ -806,7 +811,7 @@ QProgressBar::chunk
        </widget>
       </item>
       <item>
-       <widget class="QWidget" name="wInbox" native="true">
+       <widget class="QWidget" name="wVault" native="true">
         <layout class="QHBoxLayout" name="horizontalLayout_21">
          <property name="spacing">
           <number>0</number>
@@ -824,7 +829,7 @@ QProgressBar::chunk
           <number>0</number>
          </property>
          <item>
-          <widget class="QPushButton" name="bInbox"/>
+          <widget class="QPushButton" name="bVault"/>
          </item>
          <item>
           <layout class="QVBoxLayout" name="verticalLayout_20">
@@ -837,19 +842,19 @@ QProgressBar::chunk
               <number>0</number>
              </property>
              <item>
-              <widget class="QLabel" name="lInbox">
+              <widget class="QLabel" name="lVault">
                <property name="text">
-                <string>Inbox</string>
+                <string>Backups</string>
                </property>
               </widget>
              </item>
              <item>
-              <widget class="QLabel" name="lUsedInbox"/>
+              <widget class="QLabel" name="lUsedVault"/>
              </item>
             </layout>
            </item>
            <item>
-            <widget class="QProgressBar" name="pbInbox">
+            <widget class="QProgressBar" name="pbVault">
              <property name="value">
               <number>0</number>
              </property>
