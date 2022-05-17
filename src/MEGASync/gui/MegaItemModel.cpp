@@ -208,7 +208,7 @@ QVariant MegaItemModel::headerData(int section, Qt::Orientation orientation, int
              }
              case DATE:
              {
-                 return tr("Recently Used");
+                 return tr("Recently used");
              }
              case NODE:
              {
@@ -367,6 +367,8 @@ QVariant MegaItemModel::getText(const QModelIndex &index, MegaItem *item) const
     {
         case COLUMN::NODE:
         {
+            if(item->isRoot())
+                return QApplication::translate("MegaNodeNames", item->getNode()->getName());
             return QVariant(QString::fromUtf8(item->getNode()->getName()));
         }
         case COLUMN::USER:

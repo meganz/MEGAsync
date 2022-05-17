@@ -2749,11 +2749,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Recently Used</source>
-        <translatorcomment>Column title. This column shows when this file or folder was changed.</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Name</source>
         <translatorcomment>Column title. This column shows the name of a file or folder.</translatorcomment>
         <translation type="unfinished">Name</translation>
@@ -2791,6 +2786,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>%1 at %2</source>
         <translatorcomment>Text that appears on &quot;Recently Used&quot; column if the last change was previously to yesterday. %1 represents the date (day month and year), while %2 represents the hour)</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Recently used</source>
+        <translatorcomment>Column title. This column shows when this file or folder was changed.</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3202,16 +3202,6 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translatorcomment>Node selector dialog title</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Cloud Drive</source>
-        <translatorcomment>Node selector button Text. Switch the view to show only the cloud drive nodes (files and folders)</translatorcomment>
-        <translation type="unfinished">Cloud Drive</translation>
-    </message>
-    <message>
-        <source>Incoming Shares</source>
-        <translatorcomment>Node selector button Text. Switch the view to show only the incoming shares nodes (files and folders)</translatorcomment>
-        <translation type="unfinished">Incoming Shares</translation>
-    </message>
     <message numerus="yes">
         <source>Item selection removed. To reselect, close this window and try again.</source>
         <translatorcomment>Error message shown while the user is trying to download an file or folder but it is removed using another client</translatorcomment>
@@ -3227,6 +3217,16 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
             <numerusform>You no longer have access to this item. Ask the owner to share again.</numerusform>
             <numerusform>You no longer have access to these items. Ask the owner to share again.</numerusform>
         </translation>
+    </message>
+    <message>
+        <source>Cloud drive</source>
+        <translatorcomment>Node selector button Text. Switch the view to show only the cloud drive nodes (files and folders)</translatorcomment>
+        <translation type="unfinished">Cloud Drive</translation>
+    </message>
+    <message>
+        <source>Incoming shares</source>
+        <translatorcomment>Node selector button Text. Switch the view to show only the incoming shares nodes (files and folders)</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
