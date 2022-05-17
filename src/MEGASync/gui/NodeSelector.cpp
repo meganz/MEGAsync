@@ -115,7 +115,6 @@ void NodeSelector::nodesReady()
     {
     case NodeSelector::SYNC_SELECT:
         mModel->setSyncSetupMode(true);
-        mProxyModel->showReadWriteFolders(false);
         // fall through
     case NodeSelector::UPLOAD_SELECT:
         mProxyModel->showReadOnlyFolders(false);
@@ -217,7 +216,7 @@ void NodeSelector::setSelectedNodeHandle(MegaHandle selectedHandle)
     if(root_p_node && root_p_node->isInShare())
     {
         isInShare=true;
-        onbShowIncomingSharesClicked();
+        onTabSelected(SHARES);
     }
 
     QVector<QModelIndex> modelIndexList = mProxyModel->getRelatedModelIndexes(node, isInShare);
@@ -479,6 +478,7 @@ void NodeSelector::onbOkClicked()
                 ++wrongNodes;
             }
         }
+
         if(wrongNodes > 0)
         {
             correctNodeSelected = false;
@@ -489,7 +489,6 @@ void NodeSelector::onbOkClicked()
             else
             {
                 QMegaMessageBox::warning(nullptr, tr("Error"), tr("You no longer have access to this item. Ask the owner to share again.", "", wrongNodes), QMessageBox::Ok);
-
             }
         }
     }
