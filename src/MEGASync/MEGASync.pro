@@ -190,7 +190,9 @@ macx {
 
     QMAKE_INFO_PLIST = Info_MEGA.plist
 
-    QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.12
+    contains(QT_ARCH, arm64):QMAKE_MACOSX_DEPLOYMENT_TARGET = 11.1
+    else:QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.12
+
     QMAKE_CXXFLAGS += -fvisibility=hidden -fvisibility-inlines-hidden
     QMAKE_LFLAGS += -F /System/Library/Frameworks/Security.framework/
     QMAKE_LFLAGS += -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk
