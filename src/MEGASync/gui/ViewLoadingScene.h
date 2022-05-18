@@ -8,6 +8,7 @@
 #include <QTimer>
 #include <QPainter>
 #include <QSortFilterProxyModel>
+#include <QDebug>
 
 class LoadingSceneDelegateBase : public QStyledItemDelegate
 {
@@ -207,6 +208,20 @@ public:
 
             mView->updateGeometry();
             int visibleRows = mView->size().height()/delegateHeight;
+
+            //If the rowCount is higher than the visible rows, the vertical header is visible
+            if(mViewModel)
+            {
+                if(mViewModel->rowCount() > visibleRows)
+                {
+                    visibleRows++;
+                }
+                else if(mViewModel->rowCount() < visibleRows)
+                {
+                    visibleRows = mViewModel->rowCount();
+                }
+            }
+
             if(visibleRows > MAX_LOADING_ROWS || visibleRows < 0)
             {
                 visibleRows = MAX_LOADING_ROWS;
