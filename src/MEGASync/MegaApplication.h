@@ -559,6 +559,7 @@ private:
 #endif
     void loadSyncExclusionRules(QString email = QString());
 
+    static std::pair<QString,QString> buildFinishedTransferTitleAndMessage(const TransferMetaData *data);
     static long long computeExclusionSizeLimit(const long long sizeLimitValue, const int unit);
 
     QList<QNetworkInterface> findNewNetworkInterfaces();
