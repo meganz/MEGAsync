@@ -112,7 +112,7 @@
     <message>
         <source>Enter a name, an absolute path (wildcards * and ? are allowed) or choose which file or folder you want to exclude from the synchronization</source>
         <translatorcomment>Label to describe the different options that the user have to set a exclusion for all synchronizations.</translatorcomment>
-        <translation>Введите имя, полный путь (подстановочные символы * и ? разрешены) или выберите, какой файл или папку вы хотите исключить из синхронизации</translation>
+        <translation>Введите имя, полный путь (подстановочные символы * и ? разрешены) или выберите, какой файл или папку вы хотите исключить из синхронизации.</translation>
     </message>
     <message>
         <source>Choose File</source>
@@ -476,7 +476,7 @@
     <message>
         <source>(Max. 90% of available bandwidth)</source>
         <translatorcomment>Label to indicate that auto rate option will take a maximum of 90% of the available bandwidth.</translatorcomment>
-        <translation>(Макс. 90% доступной полосы пропускания)</translation>
+        <translation>(Макс. 90 % доступной полосы пропускания)</translation>
     </message>
     <message>
         <source>Download rate limit</source>
@@ -585,7 +585,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Add folder</source>
         <translatorcomment>Title for dialog when adding new folders for a sync (Windows and Linux)</translatorcomment>
-        <translation>Добавить папку</translation>
+        <translation>Добавление папки</translation>
     </message>
     <message>
         <source>Add synchronised folder</source>
@@ -600,7 +600,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Add synchronised folder:</source>
         <translatorcomment>Label to indicate the user to add synchronised folder (macOS)</translatorcomment>
-        <translation>Добавить синхронизируемую папку:</translation>
+        <translation>Добавьте синхронизируемую папку:</translation>
     </message>
 </context>
 <context>
@@ -608,7 +608,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Bug report</source>
         <translatorcomment>Title of the dialog used to send bug reports to support team.</translatorcomment>
-        <translation>Сообщение об ошибке</translation>
+        <translation>Сообщение о проблеме</translation>
     </message>
     <message>
         <source>Please clearly describe the issue you encountered. The more details, the easier for us to resolve. Your submission will be reviewed by our development team.</source>
@@ -1315,7 +1315,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>You can not sync a shared folder without Full Access permissions</source>
         <translatorcomment>Label to inform a user about the incompatibility of sync a shared folder without Full Access permissions</translatorcomment>
-        <translation>Вы не можете синхронизировать общую папку без прав полного доступа.</translation>
+        <translation>Вы не можете синхронизировать общую папку без прав полного доступа</translation>
     </message>
     <message>
         <source>Select</source>
@@ -1388,7 +1388,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Please check your e-mail and click the link to confirm your account.</source>
         <translatorcomment>Label shown when a user has created and account to inform that he needs to check his e-mail and confirm his account.</translatorcomment>
-        <translation>Проверьте электронную почту и перейдите по ссылке для подтверждения аккаунта</translation>
+        <translation>Проверьте электронную почту и перейдите по ссылке для подтверждения аккаунта.</translation>
     </message>
     <message>
         <source>You have attempted to log in too many times.[BR]Please wait until %1 and try again.</source>
@@ -2097,7 +2097,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your config is corrupt, please start over</source>
         <translatorcomment>Message displayed when an error occurs loading configurations from Settings file.</translatorcomment>
-        <translation>Ваш файл конфигураций повреждён, начните заново.</translation>
+        <translation>Ваш файл конфигураций повреждён, начните заново</translation>
     </message>
     <message>
         <source>Error getting link: </source>
@@ -2142,17 +2142,17 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the remote folder is in the rubbish bin</source>
         <translatorcomment>Notification message launched when a sync is disabled due to the remote folder has been deleted. Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
-        <translation>Синхронизация &quot;%1&quot; была отключена, так как удалённая папка находится в корзине</translation>
+        <translation>Синхронизация «%1» была отключена, так как удалённая папка находится в корзине</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the local folder has changed</source>
         <translatorcomment>Notification message launched when a sync is disabled due to the local folder has changed(moved/deleted/...). Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
-        <translation>Синхронизация &quot;%1&quot; была отключена, так как локальная папка была изменена.</translation>
+        <translation>Синхронизация «%1» была отключена, так как локальная папка была изменена</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&apos;t have full access</source>
         <translatorcomment>Notification message launched when a sync is disabled due to the access problems. Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
-        <translation>Синхронизация &quot;%1&quot; отключена. Удалённая папка (или её часть) не имеет полного доступа.</translation>
+        <translation>Синхронизация «%1» отключена. Удалённая папка (или её часть) не имеет полного доступа.</translation>
     </message>
     <message>
         <source>Over quota</source>
@@ -2167,7 +2167,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Error getting link information</source>
         <translatorcomment>Notification  error message shown while getting information from a public link.</translatorcomment>
-        <translation>Ошибка при получении информации о ссылке.</translation>
+        <translation>Ошибка при получении информации о ссылке</translation>
     </message>
     <message>
         <source>DEBUG mode disabled</source>
@@ -2799,7 +2799,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Foreign target storage quota reached</source>
         <translatorcomment>Label to show that foreign target account has exceeded its storage quota during a SDK operation.</translatorcomment>
-        <translation>Владелец синхронизируемой папки превысил квоту хранения</translation>
+        <translation>Владелец синхронизируемой папки превысил квоту хранения.</translation>
     </message>
     <message>
         <source>Remote path has changed</source>
@@ -2879,7 +2879,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Too many changes in account, local state invalid</source>
         <translatorcomment>SDK error label shown to inform the user that local state of a sync is invalid due to too many changes.</translatorcomment>
-        <translation>Неверный статус синхронизации из-за слишком большого количества изменений в вашем аккаунте.</translation>
+        <translation>Неверный статус синхронизации из-за слишком большого количества изменений в вашем аккаунте</translation>
     </message>
     <message>
         <source>Undefined error</source>
@@ -3097,7 +3097,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
     <message>
         <source>Are you sure that you want to delete &quot;%1&quot;?</source>
-        <translation>Действительно удалить &quot;%1&quot;?</translation>
+        <translation>Действительно удалить «%1»?</translation>
     </message>
     <message>
         <source>Delete</source>
@@ -3106,7 +3106,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Only files can be used for streaming.</source>
         <translatorcomment>Warning message when users try to select a folder for streaming</translatorcomment>
-        <translation>Можно транслировать только файлы</translation>
+        <translation>Можно транслировать только файлы.</translation>
     </message>
     <message>
         <source>Select items</source>
@@ -3295,7 +3295,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Depleted transfer quota</source>
         <translatorcomment>Label to indicate that transfer quota has been depleted.</translatorcomment>
-        <translation>Исчерпана квота передач.</translation>
+        <translation>Исчерпана квота передач</translation>
     </message>
 </context>
 <context>
@@ -3447,7 +3447,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>minimum %1 users</source>
         <translatorcomment>Label to inform about the minimun number of users for a business plan. %1 will be replaced with the minimum number of users.</translatorcomment>
-        <translation>минимум %1 польз.</translation>
+        <translation>минимум %1 польз</translation>
     </message>
     <message>
         <source>storage</source>
@@ -3798,7 +3798,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Show </source>
         <translatorcomment>Contextual menu from file list headers that allow to enable or disable diferent columns (size, type, data modified)</translatorcomment>
-        <translation>Показать </translation>
+        <translation>Показать</translation>
     </message>
     <message>
         <source>All files (*)</source>
@@ -3918,7 +3918,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Are you sure you want to delete &apos;%1&apos;?</source>
         <translatorcomment>Warning message shown before deleting a file or a folder.</translatorcomment>
-        <translation>Вы действительно хотите удалить ‘%1’?</translation>
+        <translation>Вы действительно хотите удалить «%1»?</translation>
     </message>
     <message>
         <source>File &amp;name:</source>
@@ -4033,7 +4033,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>&lt;b&gt;The name &quot;%1&quot; cannot be used.&lt;/b&gt;&lt;p&gt;Try using another name, with fewer characters or no punctuation marks.</source>
         <translatorcomment>Alert message when file name is incorrect</translatorcomment>
-        <translation>&lt;b&gt;Имя “%1” использовать нельзя.&lt;/b&gt;&lt;p&gt;Попробуйте использовать другое имя, с меньшим количеством символов или без знаков препинания.</translation>
+        <translation>&lt;b&gt;Имя «%1» использовать нельзя.&lt;/b&gt;&lt;p&gt;Попробуйте использовать другое имя, с меньшим количеством символов или без знаков препинания.</translation>
     </message>
 </context>
 <context>
@@ -4135,7 +4135,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>%1 (%2%) of %3 used</source>
         <translatorcomment>Label to indicate the amount and percentage of used and total space available. Keep %1 (%2%) and %3 substitution placeholders because they will be filled with the required amounts of storage space dynamically.</translatorcomment>
-        <translation>Использовано %1 (%2%) из %3</translation>
+        <translation>Использовано %1 (%2 %) из %3</translation>
     </message>
     <message>
         <source>Warning</source>
@@ -4735,7 +4735,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>I agree with the MEGA &lt;a href=&quot;https://mega.co.nz/#terms&quot;&gt;Terms of Service&lt;/a&gt;</source>
         <translatorcomment>Label to aggre with the Terms of use.  Keep code &lt;a href=&quot;https://mega.co.nz/#terms&quot;&gt;Terms of Service&lt;/a&gt; .String as short as possible.</translatorcomment>
-        <translation>Я согласен с &lt;a href=&quot;https://mega.nz/terms&quot;&gt;условиями использования&lt;/a&gt; MEGA</translation>
+        <translation>Я согласен с &lt;a href=&#8221;https://mega.nz/terms&#8221;&gt;условиями использования&lt;/a&gt; MEGA</translation>
     </message>
     <message>
         <source>Log in to your MEGA account</source>
@@ -4745,7 +4745,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Please verify your account using the confirmation link that we have sent to your email account</source>
         <translatorcomment>Label displayed at last step of creation account process to inform the user to verify the new created account.</translatorcomment>
-        <translation>Пожалуйста, подтвердите свою учётную запись, используя ссылку подтверждения, которую мы выслали на ваш почтовый ящик.</translation>
+        <translation>Пожалуйста, подтвердите свою учётную запись, используя ссылку подтверждения, которую мы выслали на ваш почтовый ящик</translation>
     </message>
     <message>
         <source>Logging in ...</source>
@@ -5284,7 +5284,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Error getting link information</source>
         <translatorcomment>Error message shown when a there is an error getting the information of a public link</translatorcomment>
-        <translation>Ошибка при получении информации о ссылке.</translation>
+        <translation>Ошибка при получении информации о ссылке</translation>
     </message>
     <message>
         <source>Stream error: transfer overquota</source>
@@ -5479,7 +5479,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Depleted transfer quota</source>
         <translatorcomment>Label to indicate that transfer quota has been depleted.</translatorcomment>
-        <translation>Исчерпана квота передач.</translation>
+        <translation>Исчерпана квота передач</translation>
     </message>
     <message>
         <source>This limit is dynamic and depends on the amount of unused bandwidth we have available.</source>
@@ -5489,7 +5489,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Please upgrade to Pro to continue immediately, or wait %1 to continue for free</source>
         <translatorcomment>Warning label shown when user reaches over transfer quota situation. The user can upgrade Plan or wait %1 time until new free quota is allowed.</translatorcomment>
-        <translation>Пожалуйста, улучшите аккаунт до Pro, чтобы продолжить немедленно, или подождите %1, чтобы продолжить бесплатно.</translation>
+        <translation>Пожалуйста, улучшите аккаунт до Pro, чтобы продолжить немедленно, или подождите %1, чтобы продолжить бесплатно</translation>
     </message>
     <message>
         <source>* The local currency price is an estimate only. All transactions shown charged in Euros.</source>
@@ -5650,7 +5650,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>1 day ago</source>
         <translatorcomment>Label to indicate that a transfer has finished 1 day ago</translatorcomment>
-        <translation>1  день назад</translation>
+        <translation>1 день назад</translation>
     </message>
     <message>
         <source>%1 days ago</source>

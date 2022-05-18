@@ -104,7 +104,7 @@ void PlanWidget::updatePlanInfo()
         QString price (toPrice(mDetails.pricePerUserBilling / 100.,
                                mDetails.billingCurrencySymbol));
         smallPrice = tr("%1 per user").arg(price);
-        mUi->lMinimumUsersBusiness->setText(tr("minimum %1 users").arg(mDetails.minUsers));
+        mUi->lMinimumUsersBusiness->setText(tr("minimum %n user", "", mDetails.minUsers));
     }
     else
     {

@@ -583,70 +583,28 @@ void ActiveTransfersWidget::updateNumberOfTransfers(mega::MegaApi *api)
     totalDownloads = api->getNumPendingDownloads();
     ui->lRemainingDownloads->setText(QString::fromUtf8("%1").arg(totalDownloads));
 
-    const bool totalDownloadsChangeFromOne{previousTotalDownloads == 1 && totalDownloads != 1};
-    if(totalDownloadsChangeFromOne)
-    {
-        ui->lDescRemainingDown->setText(tr("Remaining Downloads"));
-    }
-
-    const bool totalDownloadsChangeToOne{previousTotalDownloads != 1 && totalDownloads == 1};
-    if(totalDownloadsChangeToOne)
-    {
-        ui->lDescRemainingDown->setText(tr("Remaining Download"));
-    }
-
-    const bool totalUploadsChangeFromOne{previousTotalUploads == 1 && totalUploads != 1};
-    if(totalUploadsChangeFromOne)
-    {
-        ui->lDescRemainingUp->setText(tr("Remaining Uploads"));
-    }
-
-    const bool totalUploadsChangeToOne{previousTotalUploads != 1 && totalUploads == 1};
-    if(totalUploadsChangeToOne)
-    {
-        ui->lDescRemainingUp->setText(tr("Remaining Upload"));
-    }
+    ui->lDescRemainingUp->setText(tr("Remaining upload", "", totalUploads));
+    ui->lDescRemainingDown->setText(tr("Remaining download", "", totalDownloads));
 
     previousTotalDownloads = totalDownloads;
     previousTotalUploads = totalUploads;
 
-    if (totalDownloads)
-    {
-        ui->sDownloads->setCurrentWidget(ui->wActiveDownloads);
-    }
-    else
-    {
-        ui->sDownloads->setCurrentWidget(ui->wNoDownloads);
-    }
+    QWidget* downloadWidget = (totalDownloads) ? ui->wActiveDownloads : ui->wNoDownloads;
+    ui->sDownloads->setCurrentWidget(downloadWidget);
 
-    if (totalUploads)
-    {
-        ui->sUploads->setCurrentWidget(ui->wActiveUploads);
-    }
-    else
-    {
-        ui->sUploads->setCurrentWidget(ui->wNoUploads);
-    }
+    QWidget* uploadWidget = (totalUploads) ? ui->wActiveUploads : ui->wNoUploads;
+    ui->sUploads->setCurrentWidget(uploadWidget);
 
-    if (!totalDownloads && !totalUploads)
+    const bool areThereTransfers = (!totalDownloads && !totalUploads);
+    if (areThereTransfers)
     {
         ui->sTransfersContainer->setCurrentWidget(ui->pNoTransfers);
-        if (mWhichGraphsStyleSheet != 1)
-        {
-            ui->bGraphsSeparator->setStyleSheet(QString::fromAscii("background-color: transparent; "
-                "border: none; "));
-            mWhichGraphsStyleSheet = 1;
-        }
+        updateTransfersContainerStyleSheet(1, "transparent");
     }
     else
     {
         ui->sTransfersContainer->setCurrentWidget(ui->pTransfers);
-        if (mWhichGraphsStyleSheet != 2)
-        {
-            ui->bGraphsSeparator->setStyleSheet(QString::fromAscii("background-color: rgba(0, 0, 0, 10%); "
-                "border: none; "));
-            mWhichGraphsStyleSheet = 2;
-        }
+        updateTransfersContainerStyleSheet(2, "rgba(0, 0, 0, 10%)");
     }
 }
 
@@ -709,6 +667,17 @@ void ActiveTransfersWidget::changeEvent(QEvent *event)
         ui->retranslateUi(this);
     }
     QWidget::changeEvent(event);
+}
+
+void ActiveTransfersWidget::updateTransfersContainerStyleSheet(int whichStyleSheet, const char* backgroundColor)
+{
+    if (mWhichGraphsStyleSheet != whichStyleSheet)
+    {
+        const QString styleSheet = QString::fromAscii("background-color: ") +
+                QString::fromAscii(backgroundColor) + QString::fromAscii("; border: none; ");
+        ui->bGraphsSeparator->setStyleSheet(styleSheet);
+        mWhichGraphsStyleSheet = whichStyleSheet;
+    }
 }
 
 TransferData::TransferData()

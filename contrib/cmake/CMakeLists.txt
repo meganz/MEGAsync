@@ -195,6 +195,7 @@ set (MOC_INPUT
     ${MEGAsyncDir}/RemovedSharesNotificator.h
     ${MEGAsyncDir}/UserAlertTimedClustering.h
     ${MEGAsyncDir}/ScaleFactorManager.h
+    ${MEGAsyncDir}/CommonMessages.h
     ${MEGAsyncDir}/control/ConnectivityChecker.h
     ${MEGAsyncDir}/control/CrashHandler.h
     ${MEGAsyncDir}/control/EncryptedSettings.h
@@ -358,6 +359,7 @@ set (SRCS
     ${MEGAsyncDir}/RemovedSharesNotificator.cpp
     ${MEGAsyncDir}/UserAlertTimedClustering.cpp
     ${MEGAsyncDir}/ScaleFactorManager.cpp
+    ${MEGAsyncDir}/CommonMessages.cpp
 
     ${FORMS}
     ${MOC_INPUT}

@@ -112,7 +112,7 @@
     <message>
         <source>Enter a name, an absolute path (wildcards * and ? are allowed) or choose which file or folder you want to exclude from the synchronization</source>
         <translatorcomment>Label to describe the different options that the user have to set a exclusion for all synchronizations.</translatorcomment>
-        <translation>Een naam invoeren, een absoluut pad (tekens * en ? zijn toegestaan) of kies welk bestand of map u wilt laten uitsluiten van de synchronisatie</translation>
+        <translation>Een naam invoeren, een absoluut pad (tekens * en ? zijn toegestaan) of kies welk bestand of map u wilt laten uitsluiten van de synchronisatie.</translation>
     </message>
     <message>
         <source>Choose File</source>
@@ -570,7 +570,7 @@
         <source>The name &quot;%1&quot; is already in use for another sync
 Please enter a different name to identify this synced folder:</source>
         <translatorcomment>Detailed message displayed when a user is using a name for a local folder that is already used. Preserve &quot;%1&quot; code because is used to indicate the local folder at runtime.</translatorcomment>
-        <translation>De naam &quot;%1&quot; is al in gebruik voor een andere synchronisatie. Voer een andere naam in om deze gesynchroniseerde map te identificeren:</translation>
+        <translation>De naam &#8220;%1&#8221; is al in gebruik voor een andere synchronisatie. Voer een andere naam in om deze gesynchroniseerde map te identificeren:</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -1128,7 +1128,7 @@ In sommige gevallen kunnen ze details over uw gegevens bevatten, zoals bestands-
     <message>
         <source>Account Suspended</source>
         <translatorcomment>Title to inform that a business account is actually suspended.</translatorcomment>
-        <translation>Account Geschorst.</translation>
+        <translation>Account Geschorst</translation>
     </message>
     <message>
         <source>Contact your business account administrator to resolve the issue and activate your account.</source>
@@ -1186,7 +1186,7 @@ In sommige gevallen kunnen ze details over uw gegevens bevatten, zoals bestands-
     <message>
         <source>You don&apos;t have write permissions in this local folder.</source>
         <translatorcomment>Label to indicate that a user don&apos;t have write permissions in the selected local folder to download files/folders from MEGA.</translatorcomment>
-        <translation>U heeft geen schrijf rechten voor deze lokale map</translation>
+        <translation>U heeft geen schrijf rechten voor deze lokale map.</translation>
     </message>
 </context>
 <context>
@@ -1289,7 +1289,7 @@ In sommige gevallen kunnen ze details over uw gegevens bevatten, zoals bestands-
     <message>
         <source>MEGAsync won&apos;t be able to download anything here.</source>
         <translatorcomment>Label to indicate that MEGAsync won&apos;t be able to download anything due to the user doesn&apos;t have writhe permissions on the local selected folder.</translatorcomment>
-        <translation>MEGAsync is niet in staat hier te downloaden</translation>
+        <translation>MEGAsync is niet in staat hier te downloaden.</translation>
     </message>
     <message>
         <source>Do you want to continue?</source>
@@ -1299,7 +1299,7 @@ In sommige gevallen kunnen ze details over uw gegevens bevatten, zoals bestands-
     <message>
         <source>You don&apos;t have write permissions in this local folder.</source>
         <translatorcomment>Label to indicate that a user don&apos;t have write permissions in the selected local folder for a synchronization.</translatorcomment>
-        <translation>U heeft geen schrijf rechten voor deze lokale map</translation>
+        <translation>U heeft geen schrijf rechten voor deze lokale map.</translation>
     </message>
     <message>
         <source>You are trying to sync an extremely large folder.
@@ -1393,8 +1393,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>You have attempted to log in too many times.[BR]Please wait until %1 and try again.</source>
         <translatorcomment>Label shown at main dialog to inform the user that he has failed to log in several times and has to wait before trying again.</translatorcomment>
-        <translation>U heeft te vaak geprobeerd om in te loggen. 
-[BR] Wacht alstublieft tot%1 en probeer het opnieuw.</translation>
+        <translation>U heeft te vaak geprobeerd om in te loggen.[BR] Wacht alstublieft tot%1 en probeer het opnieuw.</translation>
     </message>
     <message>
         <source>Your account has been blocked. Please contact support@mega.co.nz</source>
@@ -1649,7 +1648,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Please upgrade to PRO.</source>
         <translatorcomment>Label to encourage the user to upgrade to PRO</translatorcomment>
-        <translation>Uw account upgraden</translation>
+        <translation>Uw account upgraden.</translation>
     </message>
     <message>
         <source>Upload</source>
@@ -1754,7 +1753,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Depleted transfer quota.</source>
         <translatorcomment>Title to indicate a situation of depleted transfer quota for the current account.</translatorcomment>
-        <translation>Uitgeput overdrachtstegoed</translation>
+        <translation>Uitgeput overdrachtstegoed.</translation>
     </message>
     <message>
         <source>All downloads are currently disabled.</source>
@@ -1806,7 +1805,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <name>InfoWizard</name>
     <message>
         <source>You are not logged in</source>
-        <translation>U bent niet ingelogd.</translation>
+        <translation>U bent niet ingelogd</translation>
     </message>
     <message>
         <source>Log in</source>
@@ -1840,7 +1839,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Create account to join MEGA collaboration platform.</source>
         <translatorcomment>Description label to encourage user to create a MEGA account.</translatorcomment>
-        <translation>Creëer een account om mee te doen met de MEGA Samenwerkingsplatform.</translation>
+        <translation>Creëer een account om mee te doen met de MEGA samenwerkingsplatform.</translation>
     </message>
     <message>
         <source>Know more about MEGA desktop app. [A]Read more[/A]</source>
@@ -2113,12 +2112,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the remote folder doesn&apos;t exist</source>
         <translatorcomment>Notification message launched checking  remote synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.</translatorcomment>
-        <translation>Uw synchronisatie &quot;%1&quot; is gestopt omdat de externe map niet bestaat</translation>
+        <translation>Uw synchronisatie &#8220;%1&#8221; is gestopt omdat de externe map niet bestaat</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</source>
         <translatorcomment>Notification message launched checking  local synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.</translatorcomment>
-        <translation>Uw sync &quot;%1&quot; is uitgeschakeld omdat de lokale map niet bestaat</translation>
+        <translation>Uw sync &#8220;%1&#8221; is uitgeschakeld omdat de lokale map niet bestaat</translation>
     </message>
     <message>
         <source>Your account has been blocked. Please contact support@mega.co.nz</source>
@@ -2143,17 +2142,17 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the remote folder is in the rubbish bin</source>
         <translatorcomment>Notification message launched when a sync is disabled due to the remote folder has been deleted. Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
-        <translation>Uw sync “%1”  is uitgeschakeld omdat de externe map zich in de Prullenbak bevindt</translation>
+        <translation>Uw sync “%1” is uitgeschakeld omdat de externe map zich in de Prullenbak bevindt</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the local folder has changed</source>
         <translatorcomment>Notification message launched when a sync is disabled due to the local folder has changed(moved/deleted/...). Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
-        <translation>Uw sync &quot;%1&quot; is uitgeschakeld omdat de lokale map is veranderd</translation>
+        <translation>Uw sync &#8220;%1&#8221; is uitgeschakeld omdat de lokale map is veranderd</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&apos;t have full access</source>
         <translatorcomment>Notification message launched when a sync is disabled due to the access problems. Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
-        <translation>Uw sync &quot;%1&quot; is uitgeschakeld. De externe map (of een deel ervan) heeft geen volledige toegang</translation>
+        <translation>Uw sync &#8220;%1&#8221; is uitgeschakeld. De externe map (of een deel ervan) heeft geen volledige toegang</translation>
     </message>
     <message>
         <source>Over quota</source>
@@ -2163,7 +2162,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the synchronization of VirtualBox shared folders is not supported due to deficiencies in that filesystem.</source>
         <translatorcomment>Notification message launched when an user is trying to sync a non valid VirtualBox shared folder . Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
-        <translation>Uw synchronisatie ”%1″ is uitgeschakeld omdat de synchronisatie van VirtualBox gedeelde mappen niet wordt ondersteund vanwege gebreken in dat bestandssysteem.</translation>
+        <translation>Uw synchronisatie “%1” is uitgeschakeld omdat de synchronisatie van VirtualBox gedeelde mappen niet wordt ondersteund vanwege gebreken in dat bestandssysteem.</translation>
     </message>
     <message>
         <source>Error getting link information</source>
@@ -2427,7 +2426,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Account Suspended</source>
         <translatorcomment>Title to inform that a business account is actually suspended.</translatorcomment>
-        <translation>Account Geschorst.</translation>
+        <translation>Account Geschorst</translation>
     </message>
     <message>
         <source>Your account is currently [A]suspended[/A]. You can only browse your data.</source>
@@ -2492,7 +2491,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your sync &quot;%1&quot; has been disabled. Reason: %2</source>
         <translatorcomment>Notification message launched when a sync is disabled. Keep &quot;%1&quot; code because is filled with the name of the sync at runtime and %2 with the reason of the error.</translatorcomment>
-        <translation>Uw synchronisatie “%1”  is uitgeschakeld. Reden: %2</translation>
+        <translation>Uw synchronisatie “%1” is uitgeschakeld. Reden: %2</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been enabled</source>
@@ -2658,7 +2657,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Your account was terminated due to breach of Mega’s Terms of Service, such as abuse of rights of others; sharing and/or importing illegal data; or system abuse.</source>
-        <translation>Uw account is beëindigd wegens schending van MEGA&apos;s  Algemene Voorwaarden, zoals misbruik van rechten van anderen; het delen en/of importeren van illegale gegevens; of systeemmisbruik.</translation>
+        <translation>Uw account is beëindigd wegens schending van MEGA&#8217;s Algemene Voorwaarden, zoals misbruik van rechten van anderen; het delen en/of importeren van illegale gegevens; of systeemmisbruik.</translation>
     </message>
     <message>
         <source>SSL verification failed</source>
@@ -3098,7 +3097,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
     <message>
         <source>Are you sure that you want to delete &quot;%1&quot;?</source>
-        <translation>Weet u zeker dat u &quot;%1&quot; wilt verwijderen?</translation>
+        <translation>Weet u zeker dat u &#8220;%1&#8221; wilt verwijderen?</translation>
     </message>
     <message>
         <source>Delete</source>
@@ -3493,7 +3492,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Additional transfer quota charged at %1 per %2TB.</source>
         <translatorcomment>Balloon tooltip to inform users that additional transfer quota for business plan will be charged at %1 price per %2 TB. %1 reflect price and %2 storage unit.</translatorcomment>
-        <translation>Extra overdrachtstegoed in rekening gebracht  op %1 per %2TB.</translation>
+        <translation>Extra overdrachtstegoed in rekening gebracht op %1 per %2TB.</translation>
     </message>
 </context>
 <context>
@@ -3800,7 +3799,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Show </source>
         <translatorcomment>Contextual menu from file list headers that allow to enable or disable diferent columns (size, type, data modified)</translatorcomment>
-        <translation>Weergeven </translation>
+        <translation>Weergeven</translation>
     </message>
     <message>
         <source>All files (*)</source>
@@ -3941,7 +3940,7 @@ Controleer of de juiste directory naam was gegeven.</translation>
 Do you want to replace it?</source>
         <translatorcomment>Warning message thrown when the file alredy exists when saving</translatorcomment>
         <translation>%1 bestaat al.
- Wilt u het vervangen?</translation>
+Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>%1
@@ -3949,15 +3948,15 @@ File not found.
 Please verify the correct file name was given.</source>
         <translatorcomment>Warning message when the file name to open is incorrect</translatorcomment>
         <translation>%1
-Bestand niet gevonden. 
- Controleer of de juiste bestandsnaam is opgegeven.</translation>
+Bestand niet gevonden.
+Controleer of de juiste bestandsnaam is opgegeven.</translation>
     </message>
     <message>
         <source>&apos;%1&apos; is write protected.
 Do you want to delete it anyway?</source>
         <translatorcomment>Warning message when a write protected file is about to be delete</translatorcomment>
-        <translation>”%1″ is beveiligd tegen schrijven. 
- Wilt u deze toch verwijderen?</translation>
+        <translation>&#8221;%1” is beveiligd tegen schrijven.
+Wilt u deze toch verwijderen?</translation>
     </message>
 </context>
 <context>
@@ -4035,7 +4034,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>&lt;b&gt;The name &quot;%1&quot; cannot be used.&lt;/b&gt;&lt;p&gt;Try using another name, with fewer characters or no punctuation marks.</source>
         <translatorcomment>Alert message when file name is incorrect</translatorcomment>
-        <translation>&lt;b&gt; De naam “%1”  kan niet worden gebruikt. &lt;/b&gt;&lt;p&gt; Probeer een andere naam, met minder tekens of zonder leestekens.</translation>
+        <translation>&lt;b&gt; De naam “%1” kan niet worden gebruikt.&lt;/b&gt;&lt;p&gt;Probeer een andere naam, met minder tekens of zonder leestekens.</translation>
     </message>
 </context>
 <context>
@@ -4274,7 +4273,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Local folder with a backup of files deleted in MEGA</source>
         <translatorcomment>Tooltip shown when hovering local debris label.</translatorcomment>
-        <translation>Een lokale map met een backup van bestanden die verwijderd zijn in MEGA.</translation>
+        <translation>Een lokale map met een backup van bestanden die verwijderd zijn in MEGA</translation>
     </message>
     <message>
         <source>Folder in MEGA with a backup of files deleted in the local computer</source>
@@ -4737,7 +4736,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>I agree with the MEGA &lt;a href=&quot;https://mega.co.nz/#terms&quot;&gt;Terms of Service&lt;/a&gt;</source>
         <translatorcomment>Label to aggre with the Terms of use.  Keep code &lt;a href=&quot;https://mega.co.nz/#terms&quot;&gt;Terms of Service&lt;/a&gt; .String as short as possible.</translatorcomment>
-        <translation>Ik ga akkoord met de MEGA &lt;a href=&quot;https://mega.nz/terms&quot;&gt;Algemene Voorwaarden&lt;/a&gt;</translation>
+        <translation>Ik ga akkoord met de MEGA &lt;a href=&#8221;https://mega.nz/terms&#8221;&gt;Algemene Voorwaarden&lt;/a&gt;</translation>
     </message>
     <message>
         <source>Log in to your MEGA account</source>
@@ -4920,12 +4919,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your local folder and your MEGA Cloud Drive will be automatically synchronized.</source>
         <translatorcomment>Label to inform the user that the synchronization stablished will be automatically synchronized.</translatorcomment>
-        <translation>Uw lokale map en uw MEGA Cloud Schijf zullen automatisch worden gesynchroniseerd</translation>
+        <translation>Uw lokale map en uw MEGA Cloud Schijf zullen automatisch worden gesynchroniseerd.</translation>
     </message>
     <message>
         <source>You don&apos;t have write permissions in this local folder.</source>
         <translatorcomment>Message displayed when a user is trying to synchronized a local folder in wich the user has no write permissions.</translatorcomment>
-        <translation>U heeft geen schrijf rechten voor deze lokale map</translation>
+        <translation>U heeft geen schrijf rechten voor deze lokale map.</translation>
     </message>
     <message>
         <source>MEGAsync won&apos;t be able to download anything here.</source>
@@ -4997,13 +4996,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>You have attempted to log in too many times.[BR]Please wait until %1 and try again.</source>
-        <translation>U heeft te vaak geprobeerd om in te loggen. 
-[BR] Wacht alstublieft tot%1 en probeer het opnieuw.</translation>
+        <translation>U heeft te vaak geprobeerd om in te loggen.[BR] Wacht alstublieft tot%1 en probeer het opnieuw.</translation>
     </message>
     <message>
         <source>When you finish this assistant, you will be able to sync additional folders using the settings dialog</source>
         <translatorcomment>Label to inform the user about the possibility to add new synchronizations through settings dialog once the initial setup wizard is at final stage</translatorcomment>
-        <translation>Wanneer u deze assistentie klaar heeft, bent u in staat om aanvullende mappen te synchroniseren door gebruik van de instellingen dialoog,</translation>
+        <translation>Wanneer u deze assistentie klaar heeft, bent u in staat om aanvullende mappen te synchroniseren door gebruik van de instellingen dialoog</translation>
     </message>
     <message>
         <source>First name:</source>
@@ -5456,7 +5454,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Depleted transfer quota.</source>
         <translatorcomment>System notification title to inform the user about depleted transfer quota situation.</translatorcomment>
-        <translation>Uitgeput overdrachtstegoed</translation>
+        <translation>Uitgeput overdrachtstegoed.</translation>
     </message>
 </context>
 <context>
@@ -5497,7 +5495,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>* The local currency price is an estimate only. All transactions shown charged in Euros.</source>
         <translatorcomment>Informative label to inform users about billing currency used for non Euro payments.</translatorcomment>
-        <translation>* De prijs in lokale valuta is slechts een schatting. Alle getoonde transacties worden in euro&apos;s in rekening gebracht.</translation>
+        <translation>* De prijs in lokale valuta is slechts een schatting. Alle getoonde transacties worden in euro&#8217;s in rekening gebracht.</translation>
     </message>
     <message>
         <source>Your download could not proceed because it exceeds your free transfer allowance.</source>
@@ -5540,7 +5538,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>* The local currency price is an estimate only. All transactions shown charged in Euros.</source>
         <translatorcomment>Informative label to inform users about billing currency used for non Euro payments.</translatorcomment>
-        <translation>* De prijs in lokale valuta is slechts een schatting. Alle getoonde transacties worden in euro&apos;s in rekening gebracht.</translation>
+        <translation>* De prijs in lokale valuta is slechts een schatting. Alle getoonde transacties worden in euro&#8217;s in rekening gebracht.</translation>
     </message>
     <message>
         <source>100% of the %1 available used on your account.</source>
@@ -5786,7 +5784,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
 
 Do you want to create one?</source>
         <translatorcomment>Warning message shown when there is no valid link in Windows Start Menu. Explain the causes of not having it and let the user to recreate it.</translatorcomment>
-        <translation>%1vond geen geldige link in het Startmenu. Het niet hebben van een link kan de correcte werking van bureaubladmeldingen belemmeren.
+        <translation>%1 vond geen geldige link in het Startmenu. Het niet hebben van een link kan de correcte werking van bureaubladmeldingen belemmeren.
 
 Wilt u er een maken?</translation>
     </message>

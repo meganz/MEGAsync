@@ -112,7 +112,7 @@
     <message>
         <source>Enter a name, an absolute path (wildcards * and ? are allowed) or choose which file or folder you want to exclude from the synchronization</source>
         <translatorcomment>Label to describe the different options that the user have to set a exclusion for all synchronizations.</translatorcomment>
-        <translation>Introdu un nume, o cale absolută (caracterele wildcard * și ? sunt permise) sau alege care fișier sau folder vrei să-l excluzi de la sincronizare</translation>
+        <translation>Introdu un nume, o cale absolută (caracterele wildcard * și ? sunt permise) sau alege care fișier sau folder vrei să-l excluzi de la sincronizare.</translation>
     </message>
     <message>
         <source>Choose File</source>
@@ -353,7 +353,7 @@
     <message>
         <source>Your payment for the [A] plan was received</source>
         <translatorcomment>Label to indicate that the user has paid for a [A] PRO plan. Placeholder will be replaced by the PRO plan name</translatorcomment>
-        <translation>Plata pentru planul [A] a fost primită.</translation>
+        <translation>Plata pentru planul [A] a fost primită</translation>
     </message>
     <message>
         <source>Your payment for the [A] plan was unsuccessful</source>
@@ -476,7 +476,7 @@
     <message>
         <source>(Max. 90% of available bandwidth)</source>
         <translatorcomment>Label to indicate that auto rate option will take a maximum of 90% of the available bandwidth.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>(Max. 90 % din lățimea de bandă disponibilă)</translation>
     </message>
     <message>
         <source>Download rate limit</source>
@@ -1607,7 +1607,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>The process is taking longer than expected. Please wait...</source>
-        <translation>Procesul durează mai mult decât era de așteptat. Te rugăm să aștepți…</translation>
+        <translation>Procesul durează mai mult decât era de așteptat. Te rugăm să aștepți.</translation>
     </message>
     <message>
         <source>Upload to MEGA now</source>
@@ -3642,7 +3642,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>&amp;Yes</source>
         <translatorcomment>Label for confirm button. Keep capital letter.</translatorcomment>
-        <translation>Da (&amp;Y)</translation>
+        <translation>&amp;Da</translation>
     </message>
     <message>
         <source>&amp;No</source>
@@ -3657,7 +3657,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>&amp;Cancel</source>
         <translatorcomment>Label for cancel button. Keep capital letter.</translatorcomment>
-        <translation>Anulează (&amp;C)</translation>
+        <translation>&amp;Anulează</translation>
     </message>
 </context>
 <context>
@@ -3790,7 +3790,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Show </source>
         <translatorcomment>Contextual menu from file list headers that allow to enable or disable diferent columns (size, type, data modified)</translatorcomment>
-        <translation>Afișează </translation>
+        <translation>Afișează</translation>
     </message>
     <message>
         <source>All files (*)</source>
@@ -3875,12 +3875,12 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>&amp;Open</source>
         <translatorcomment>Ok Button text when the dialog is executed for opening a file. The ampersand means that the key after can be used for triggers the action instead of using the mouse to click it. The shortcut key chosen cannot be the same as the one chosen on the next strings (File &amp;name, &amp;Choose, &amp;Save).</translatorcomment>
-        <translation>Deschide(&amp;O)</translation>
+        <translation>&amp;Deschide</translation>
     </message>
     <message>
         <source>&amp;Choose</source>
         <translatorcomment>Ok Button text when the dialog is executed for choosing a directory. The ampersand means that the key after can be used for triggers the action instead of using the mouse to click it. The shortcut key chosen cannot be the same as the one chosen on the next strings (File &amp;name, &amp;Open, &amp;Save).</translatorcomment>
-        <translation>Alege(&amp;C)</translation>
+        <translation>&amp;Alege</translation>
     </message>
     <message>
         <source>&amp;Save</source>
@@ -3895,12 +3895,12 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>&amp;Delete</source>
         <translatorcomment>Contextual menu action for deleting a folder or a file. The ampersand means that the key after can be used for triggers the action instead of using the mouse to click it. The shortcut key chosen cannot be the same as the one chosen on the next strings (&amp;Rename, Show &amp;hidden files, &amp;New Folder).</translatorcomment>
-        <translation>Șterge(&amp;D)</translation>
+        <translation>Ș&amp;terge</translation>
     </message>
     <message>
         <source>Show &amp;hidden files</source>
         <translatorcomment>Contextual menu action for showing or not showing hidden files. The ampersand means that the key after can be used for triggers the action instead of using the mouse to click it. The shortcut key chosen cannot be the same as the one chosen on the next strings (&amp;Rename, &amp;Delete, &amp;New Folder).</translatorcomment>
-        <translation>Afișează fișierele ascunse(&amp;H)</translation>
+        <translation>Afișează fișierele as&amp;cunse</translation>
     </message>
     <message>
         <source>&amp;New Folder</source>
@@ -4032,7 +4032,7 @@ Vrei să îl ștergi oricum?</translation>
     <name>QPlatformTheme</name>
     <message>
         <source>&amp;Yes</source>
-        <translation>Da (&amp;Y)</translation>
+        <translation>&amp;Da</translation>
     </message>
     <message>
         <source>&amp;No</source>
@@ -4127,7 +4127,7 @@ Vrei să îl ștergi oricum?</translation>
     <message>
         <source>%1 (%2%) of %3 used</source>
         <translatorcomment>Label to indicate the amount and percentage of used and total space available. Keep %1 (%2%) and %3 substitution placeholders because they will be filled with the required amounts of storage space dynamically.</translatorcomment>
-        <translation>%1 (%2%) din %3 folosiți</translation>
+        <translation>%1 (%2 %) din %3 folosiți</translation>
     </message>
     <message>
         <source>Warning</source>
@@ -4727,7 +4727,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>I agree with the MEGA &lt;a href=&quot;https://mega.co.nz/#terms&quot;&gt;Terms of Service&lt;/a&gt;</source>
         <translatorcomment>Label to aggre with the Terms of use.  Keep code &lt;a href=&quot;https://mega.co.nz/#terms&quot;&gt;Terms of Service&lt;/a&gt; .String as short as possible.</translatorcomment>
-        <translation>Sunt de acord cu &lt;a href=&quot;https://mega.nz/terms&quot;&gt;Termenii de utilizare a serviciului&lt;/a&gt; MEGA</translation>
+        <translation>Sunt de acord cu &lt;a href=&#8221;https://mega.nz/terms&#8221;&gt;Termenii de utilizare a serviciului&lt;/a&gt; MEGA</translation>
     </message>
     <message>
         <source>Log in to your MEGA account</source>

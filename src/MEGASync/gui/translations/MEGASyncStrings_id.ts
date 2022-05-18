@@ -112,7 +112,7 @@
     <message>
         <source>Enter a name, an absolute path (wildcards * and ? are allowed) or choose which file or folder you want to exclude from the synchronization</source>
         <translatorcomment>Label to describe the different options that the user have to set a exclusion for all synchronizations.</translatorcomment>
-        <translation>Masukkan nama, path absolut (wildcard * dan ? diizinkan) atau pilih file atau folder yang ingin anda kecualikan dari sinkronisasi</translation>
+        <translation>Masukkan nama, path absolut (wildcard * dan ? diizinkan) atau pilih file atau folder yang ingin anda kecualikan dari sinkronisasi.</translation>
     </message>
     <message>
         <source>Choose File</source>
@@ -570,7 +570,7 @@
         <source>The name &quot;%1&quot; is already in use for another sync
 Please enter a different name to identify this synced folder:</source>
         <translatorcomment>Detailed message displayed when a user is using a name for a local folder that is already used. Preserve &quot;%1&quot; code because is used to indicate the local folder at runtime.</translatorcomment>
-        <translation>Nama &quot;%1&quot; sudah dipakai untuk sync yang lain. Harap masukan nama yang lain untuk mengidentifikasi folder sync ini:</translation>
+        <translation>Nama &#8220;%1&#8221; sudah dipakai untuk sync yang lain. Harap masukan nama yang lain untuk mengidentifikasi folder sync ini:</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -668,7 +668,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Bug report can&apos;t be submitted due to some error. Please try again or contact our support team via [A]support@mega.co.nz[/A]</source>
         <translatorcomment>Warning message shown when some error occurs during uploading a bug report.</translatorcomment>
-        <translation>Masalah Anda tidak dapat diunggah karena terjadi kesalahan. Silakan coba lagi nanti atau hubungi tim dukungan kami melalui [A]support@mega.nz[/A] jika masalah terus berlanjut .</translation>
+        <translation>Masalah Anda tidak dapat diunggah karena terjadi kesalahan. Silakan coba lagi nanti atau hubungi tim dukungan kami melalui [A]support@mega.nz[/A] jika masalah terus berlanjut.</translation>
     </message>
     <message>
         <source>Ok</source>
@@ -2112,12 +2112,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the remote folder doesn&apos;t exist</source>
         <translatorcomment>Notification message launched checking  remote synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.</translatorcomment>
-        <translation>Sync &quot;%1&quot; anda telah dinon-aktifkan karena remote folder tidak tersedia</translation>
+        <translation>Sync &#8220;%1&#8221; anda telah dinon-aktifkan karena remote folder tidak tersedia</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</source>
         <translatorcomment>Notification message launched checking  local synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.</translatorcomment>
-        <translation>Sync &quot;%1&quot; anda telah di non-aktifkan karena folder lokal tidak ditemukan</translation>
+        <translation>Sync &#8220;%1&#8221; anda telah di non-aktifkan karena folder lokal tidak ditemukan</translation>
     </message>
     <message>
         <source>Your account has been blocked. Please contact support@mega.co.nz</source>
@@ -2142,17 +2142,17 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the remote folder is in the rubbish bin</source>
         <translatorcomment>Notification message launched when a sync is disabled due to the remote folder has been deleted. Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
-        <translation>Sync anda &quot;%1&quot; telah dibatalkan karena remote folder di dalam rubbish bin</translation>
+        <translation>Sync anda &#8220;%1&#8221; telah dibatalkan karena remote folder di dalam rubbish bin</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the local folder has changed</source>
         <translatorcomment>Notification message launched when a sync is disabled due to the local folder has changed(moved/deleted/...). Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
-        <translation>Sync &quot;%1&quot; anda telah di non-aktifkan karena folder lokal telah berubah</translation>
+        <translation>Sync &#8220;%1&#8221; anda telah di non-aktifkan karena folder lokal telah berubah</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&apos;t have full access</source>
         <translatorcomment>Notification message launched when a sync is disabled due to the access problems. Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
-        <translation>Sync &quot;%1&quot; anda telah berhasil di non-aktifkan. Remote folder (atau sebagian dari itu) tidak memiliki akses penuh</translation>
+        <translation>Sync &#8220;%1&#8221; anda telah berhasil di non-aktifkan. Remote folder (atau sebagian dari itu) tidak memiliki akses penuh</translation>
     </message>
     <message>
         <source>Over quota</source>
@@ -2162,7 +2162,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the synchronization of VirtualBox shared folders is not supported due to deficiencies in that filesystem.</source>
         <translatorcomment>Notification message launched when an user is trying to sync a non valid VirtualBox shared folder . Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
-        <translation>Sync anda &quot;%1&quot; telah dibatalkan karena sinkronisasi folder berbagi VirtualBox tidak didukung karena defisiensi pada filesystem tersebut.</translation>
+        <translation>Sync anda &#8220;%1&#8221; telah dibatalkan karena sinkronisasi folder berbagi VirtualBox tidak didukung karena defisiensi pada filesystem tersebut.</translation>
     </message>
     <message>
         <source>Error getting link information</source>
@@ -2200,7 +2200,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Transfer canceled</source>
-        <translation>Transfer dibatalkan!</translation>
+        <translation>Transfer dibatalkan</translation>
     </message>
     <message>
         <source>You are not logged in</source>
@@ -3442,7 +3442,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>%1 per user</source>
         <translatorcomment>Label to indicate the price per user of business plan. %1 will be replaced with specific price.</translatorcomment>
-        <translation>%1 per pengguna </translation>
+        <translation>%1 per pengguna</translation>
     </message>
     <message>
         <source>minimum %1 users</source>
@@ -3548,8 +3548,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 - Meningkatkan pengalaman pengguna.
 - Menambahkan panel notifikasi baru di dialog pengaturan.
 - Perbaikan dan penyesuaian UI kecil lainnya.
-- Memperbaiki kerusakan yang terdeteksi di Windows, Linux, dan macOS.
-</translation>
+- Memperbaiki kerusakan yang terdeteksi di Windows, Linux, dan macOS.</translation>
     </message>
 </context>
 <context>
@@ -3798,7 +3797,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Show </source>
         <translatorcomment>Contextual menu from file list headers that allow to enable or disable diferent columns (size, type, data modified)</translatorcomment>
-        <translation>Tampilkan </translation>
+        <translation>Tampilkan</translation>
     </message>
     <message>
         <source>All files (*)</source>
@@ -4352,7 +4351,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>%1 (local cache)</source>
         <translatorcomment>Section label name for local cache summary and actions. Keep %1 placeholder, which is used to fill in the platform specific name for local sync cache (debris).</translatorcomment>
-        <translation>%1(cache lokal) </translation>
+        <translation>%1(cache lokal)</translation>
     </message>
     <message>
         <source>Space used:</source>
@@ -4447,7 +4446,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Move…</source>
         <translatorcomment>Button label text allowing the user to change the default Uploads or Downloads folders for the app.</translatorcomment>
-        <translation>Pindah...</translation>
+        <translation>Pindah…</translation>
     </message>
     <message>
         <source>Exclude files smaller than</source>
@@ -4735,7 +4734,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>I agree with the MEGA &lt;a href=&quot;https://mega.co.nz/#terms&quot;&gt;Terms of Service&lt;/a&gt;</source>
         <translatorcomment>Label to aggre with the Terms of use.  Keep code &lt;a href=&quot;https://mega.co.nz/#terms&quot;&gt;Terms of Service&lt;/a&gt; .String as short as possible.</translatorcomment>
-        <translation>Saya setuju dengan &lt;a href=&quot;https://mega.nz/terms&quot;&gt;Kebijakan Pelayanan&lt;/a&gt; MEGA</translation>
+        <translation>Saya setuju dengan &lt;a href=&#8221;https://mega.nz/terms&#8221;&gt;Kebijakan Pelayanan&lt;/a&gt; MEGA</translation>
     </message>
     <message>
         <source>Log in to your MEGA account</source>
@@ -4918,7 +4917,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your local folder and your MEGA Cloud Drive will be automatically synchronized.</source>
         <translatorcomment>Label to inform the user that the synchronization stablished will be automatically synchronized.</translatorcomment>
-        <translation>Folder lokal anda dan MEGA Cloud Drive akan secara otomatis disinkronisasi</translation>
+        <translation>Folder lokal anda dan MEGA Cloud Drive akan secara otomatis disinkronisasi.</translation>
     </message>
     <message>
         <source>You don&apos;t have write permissions in this local folder.</source>
@@ -5289,7 +5288,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Stream error: transfer overquota</source>
         <translatorcomment>Informative label to indicate the user that there is a stream error because of transfer overquota situation.</translatorcomment>
-        <translation>Kesalahan aliran: transfer kuota berlebihan</translation>
+        <translation>Kesalahan aliran: transfer kuota berlebihan.</translation>
     </message>
     <message>
         <source>Please wait...</source>
@@ -5489,7 +5488,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Please upgrade to Pro to continue immediately, or wait %1 to continue for free</source>
         <translatorcomment>Warning label shown when user reaches over transfer quota situation. The user can upgrade Plan or wait %1 time until new free quota is allowed.</translatorcomment>
-        <translation>Harap tingkatkan ke Pro untuk segera melanjutkan, atau tunggu %1 untuk melanjutkan secara gratis </translation>
+        <translation>Harap tingkatkan ke Pro untuk segera melanjutkan, atau tunggu %1 untuk melanjutkan secara gratis</translation>
     </message>
     <message>
         <source>* The local currency price is an estimate only. All transactions shown charged in Euros.</source>
@@ -5542,7 +5541,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>100% of the %1 available used on your account.</source>
         <translatorcomment>Informative message for the user when it is in over storage situation, letting know about the %1 space used and reaching the 100% limit of his current storage amount.</translatorcomment>
-        <translation>100% dari %1 tersedia digunakan di akun anda. </translation>
+        <translation>100% dari %1 tersedia digunakan di akun anda.</translation>
     </message>
     <message>
         <source>Choose annual billing and get 12 months for the price of 10</source>

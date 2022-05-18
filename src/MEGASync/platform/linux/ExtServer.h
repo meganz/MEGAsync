@@ -35,6 +35,7 @@ class ExtServer: public QObject
     QString sockPath;
     QList<QLocalSocket *> m_clients;
     const char *GetAnswerToRequest(const char *buf);
+    static QString getActionName(const int actionId);
 
     void addToQueue(QQueue<QString>& queue, const char* content);
     void clearQueues();

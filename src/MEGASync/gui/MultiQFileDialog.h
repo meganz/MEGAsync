@@ -19,6 +19,9 @@ public:
                   bool mMultiSelect = true,
                   const QString& filter = QString());
 
+public slots:
+    void accept();
+
 protected:
     QLineEdit* mLe;
     QPushButton* mBOpen;
@@ -29,8 +32,11 @@ protected:
 
     bool eventFilter(QObject* obj, QEvent* e);
 
-public slots:
-    void accept();
+private:
+    void findSelectedFilesAndFoldersCount(int& fileCount, int& folderCount);
+    void updateOpenButtonEnabledStatus(int selectedItemCount);
+    int findItemCountInLineEdit();
+    static QString createWindowTitle(int fileCount, int folderCount);
 
 private slots:
     void onSelectionChanged();

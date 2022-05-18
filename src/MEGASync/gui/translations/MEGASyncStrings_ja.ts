@@ -112,7 +112,7 @@
     <message>
         <source>Enter a name, an absolute path (wildcards * and ? are allowed) or choose which file or folder you want to exclude from the synchronization</source>
         <translatorcomment>Label to describe the different options that the user have to set a exclusion for all synchronizations.</translatorcomment>
-        <translation>名前、絶対パス（ワイルドカード*と？は許可）を入力するか、同期から除外したいファイルまたはフォルダを選択します</translation>
+        <translation>名前、絶対パス（ワイルドカード*と？は許可）を入力するか、同期から除外したいファイルまたはフォルダを選択します。</translation>
     </message>
     <message>
         <source>Choose File</source>
@@ -368,7 +368,7 @@
     <message>
         <source>Your PRO membership plan will expire in [A] days</source>
         <translatorcomment>Label to indicate that the PRO membership will expire in [A] days. Placeholder will be replaced by the remaining days until plan will expire.</translatorcomment>
-        <translation>お客様のProメンバーシッププランは[A]日後に失効します。</translation>
+        <translation>お客様のProメンバーシッププランは[A]日後に失効します</translation>
     </message>
     <message>
         <source>PRO membership plan expiring soon</source>
@@ -554,7 +554,7 @@
     <message>
         <source>A synced folder cannot be inside another synced folder</source>
         <translatorcomment>Message displayed when an user is adding nested local folders for synchronization.</translatorcomment>
-        <translation>同期フォルダを別の同期フォルダ内に配置することはできません。</translation>
+        <translation>同期フォルダを別の同期フォルダ内に配置することはできません</translation>
     </message>
     <message>
         <source>The selected MEGA folder is already synced</source>
@@ -570,7 +570,7 @@
         <source>The name &quot;%1&quot; is already in use for another sync
 Please enter a different name to identify this synced folder:</source>
         <translatorcomment>Detailed message displayed when a user is using a name for a local folder that is already used. Preserve &quot;%1&quot; code because is used to indicate the local folder at runtime.</translatorcomment>
-        <translation>名前 &quot;%1&quot;はすでに別の同期に使用されています。この同期フォルダを識別するために別の名前を入力してください：</translation>
+        <translation>名前 &#8220;%1&#8221;はすでに別の同期に使用されています。この同期フォルダを識別するために別の名前を入力してください：</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -771,7 +771,7 @@ Please enter a different name to identify this synced folder:</source>
     </message>
     <message>
         <source>The entered passwords don&apos;t match</source>
-        <translation>入力されたパスワードが合致しません。</translation>
+        <translation>入力されたパスワードが合致しません</translation>
     </message>
     <message>
         <source>Please, enter a stronger password</source>
@@ -892,7 +892,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Your PRO membership plan will expire in 1 day</source>
         <translatorcomment>Label to indicate that the PRO membership will expire in 1 day.</translatorcomment>
-        <translation>お客様のProメンバーシッププランは1日後に失効いたします。</translation>
+        <translation>お客様のProメンバーシッププランは1日後に失効いたします</translation>
     </message>
     <message>
         <source>Your PRO membership plan will expire in [A] days</source>
@@ -1092,7 +1092,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>You have [A] days left to save your data</source>
         <translatorcomment>Notification content to inform the days the user have to save the date before possible deletion. [A] will be replace with remaining days amount.</translatorcomment>
-        <translation>あなたのデータを保存できる残りの日数は[A]日です。</translation>
+        <translation>あなたのデータを保存できる残りの日数は[A]日です</translation>
     </message>
     <message>
         <source>Show in folder</source>
@@ -1107,7 +1107,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Please resolve your payment issue to avoid suspension of your account.</source>
         <translatorcomment>Notification text to inform the user that there is a payment issue with the business accounts that needs to be solved to continue and avoid suspension.</translatorcomment>
-        <translation>お支払いの問題をできるだけ早く解決し、お客様のビジネスアカウントの一時停止を回避してください。</translation>
+        <translation>お支払いの問題をできるだけ早く解決し、お客様のビジネスアカウントの一時停止を回避してください</translation>
     </message>
     <message>
         <source>Pay Now</source>
@@ -1495,7 +1495,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Your download has started</source>
         <translatorcomment>Notification shown when a web download is started.</translatorcomment>
-        <translation>ダウンロードが開始しました。</translation>
+        <translation>ダウンロードが開始しました</translation>
     </message>
 </context>
 <context>
@@ -1804,7 +1804,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <name>InfoWizard</name>
     <message>
         <source>You are not logged in</source>
-        <translation>ログインしていません。</translation>
+        <translation>ログインしていません</translation>
     </message>
     <message>
         <source>Log in</source>
@@ -1949,7 +1949,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Error: Invalid destination folder. The upload has been cancelled</source>
         <translatorcomment>Notification message launched when a problem occurs uploading files to a destination folder in MEGA.</translatorcomment>
-        <translation>エラー：宛先フォルダが無効。アップロードは中止されました。</translation>
+        <translation>エラー：宛先フォルダが無効。アップロードは中止されました</translation>
     </message>
     <message>
         <source>About MEGAsync</source>
@@ -1959,12 +1959,12 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>The link has been copied to the clipboard</source>
         <translatorcomment>Notification message launched when a link to a file has been copied succesfully to the clipboard.</translatorcomment>
-        <translation>そのリンクはクリップボードにコピーされました。</translation>
+        <translation>そのリンクはクリップボードにコピーされました</translation>
     </message>
     <message>
         <source>The links have been copied to the clipboard</source>
         <translatorcomment>Notification message launched when some links have been copied succesfully to the clipboard.</translatorcomment>
-        <translation>それらリンクはクリップボードにコピーされました。</translation>
+        <translation>それらリンクはクリップボードにコピーされました</translation>
     </message>
     <message>
         <source>Logging in...</source>
@@ -1999,7 +1999,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>MEGAsync has been updated</source>
         <translatorcomment>Notification message launched when an update has been succesfully applied.</translatorcomment>
-        <translation>MEGAsync は更新されました。</translation>
+        <translation>MEGAsync は更新されました</translation>
     </message>
     <message>
         <source>Waiting</source>
@@ -2014,7 +2014,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>An update will be applied during the next application restart</source>
         <translatorcomment>Notification message launched when an update is already downloaded but not applied yet. It will be applied during the next application restart.</translatorcomment>
-        <translation>最新版は、次回のアプリケーションの再起動時に適用されます。</translation>
+        <translation>最新版は、次回のアプリケーションの再起動時に適用されます</translation>
     </message>
     <message>
         <source>Installing update...</source>
@@ -2034,7 +2034,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>A new version of MEGAsync is available! Click on this message to install it</source>
         <translatorcomment>Notification message launched to inform the user that there is an available update .</translatorcomment>
-        <translation>MEGAsyncの新しいバージョンをご利用いただけます！　こちらのメッセージをクリックするとインストールできます。</translation>
+        <translation>MEGAsyncの新しいバージョンをご利用いただけます！　こちらのメッセージをクリックするとインストールできます</translation>
     </message>
     <message>
         <source>There was a problem installing the update. Please try again later or download the last version from:
@@ -2096,7 +2096,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your config is corrupt, please start over</source>
         <translatorcomment>Message displayed when an error occurs loading configurations from Settings file.</translatorcomment>
-        <translation>構成に欠陥がありますので、やり直してください。</translation>
+        <translation>構成に欠陥がありますので、やり直してください</translation>
     </message>
     <message>
         <source>Error getting link: </source>
@@ -2116,7 +2116,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</source>
         <translatorcomment>Notification message launched checking  local synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.</translatorcomment>
-        <translation>ローカルフォルダが存在しないため、同期 &quot;%1&quot; が無効になっています</translation>
+        <translation>ローカルフォルダが存在しないため、同期 &#8220;%1&#8221; が無効になっています</translation>
     </message>
     <message>
         <source>Your account has been blocked. Please contact support@mega.co.nz</source>
@@ -2141,17 +2141,17 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the remote folder is in the rubbish bin</source>
         <translatorcomment>Notification message launched when a sync is disabled due to the remote folder has been deleted. Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
-        <translation>リモートフォルダがごみ箱に入っているため、同期&quot;%1&quot; は無効となっています</translation>
+        <translation>リモートフォルダがごみ箱に入っているため、同期&#8221;%1&#8221; は無効となっています</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the local folder has changed</source>
         <translatorcomment>Notification message launched when a sync is disabled due to the local folder has changed(moved/deleted/...). Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
-        <translation>ローカルフォルダが変わったため、同期 &quot;%1&quot; は無効となりました</translation>
+        <translation>ローカルフォルダが変わったため、同期 &#8220;%1&#8221; は無効となりました</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&apos;t have full access</source>
         <translatorcomment>Notification message launched when a sync is disabled due to the access problems. Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
-        <translation>同期 &quot;%1&quot; が無効になっています。リモートフォルダ（またはその一部）にフル アクセス権がありません</translation>
+        <translation>同期 &#8220;%1&#8221; が無効になっています。リモートフォルダ（またはその一部）にフル アクセス権がありません</translation>
     </message>
     <message>
         <source>Over quota</source>
@@ -2495,7 +2495,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your sync &quot;%1&quot; has been enabled</source>
         <translatorcomment>Notificaton message shown when %1 sync has been enable. %1 will be replaced with sync name at runtime.</translatorcomment>
-        <translation>同期「%1」は有効になりました。</translation>
+        <translation>同期「%1」は有効になりました</translation>
     </message>
     <message>
         <source>MEGAsync will continue to work, however updates will no longer be supported for versions prior to OS X Yosemite soon.</source>
@@ -3076,7 +3076,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Invalid folder for synchronization.
 Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apos; or &apos;:&apos; in your folder names.</source>
         <translatorcomment>Message displayed when a user is trying to create a synchronization using not allowed characthers. Keep  &apos;\\&apos; &apos;/&apos; and &apos;:&apos; codes.</translatorcomment>
-        <translation>同期用のフォルダが無効です。フォルダ名に &apos;\&apos;、 &apos;/&apos;、 &apos;：&apos;などの文字を使用しないようにしてください。</translation>
+        <translation>同期用のフォルダが無効です。フォルダ名に &#8216;\&#8217;、 &#8216;/&#8217;、 &#8216;：&#8217;などの文字を使用しないようにしてください。</translation>
     </message>
     <message>
         <source>Always upload to this destination</source>
@@ -3164,7 +3164,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Someone has accepted your contact request</source>
         <translatorcomment>Title of a checkbox for disconnectig notifications</translatorcomment>
-        <translation>誰かがあなたの連絡先要求を受け入れました。</translation>
+        <translation>誰かがあなたの連絡先要求を受け入れました</translation>
     </message>
     <message>
         <source>Info</source>
@@ -3475,7 +3475,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>With our end-to-end encryption, the way your team works has never been more secure and private.</source>
         <translatorcomment>Balloon tooltip to inform users when hovering ? button about the benefits of business plan.</translatorcomment>
-        <translation>当社のエンドツーエンドの暗号化により、あなたのチームの作業がこれまで以上に安全かつプライベートになりました</translation>
+        <translation>当社のエンドツーエンドの暗号化により、あなたのチームの作業がこれまで以上に安全かつプライベートになりました。</translation>
     </message>
     <message>
         <source>Get started with secure file storage.</source>
@@ -3640,7 +3640,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Your proxy settings are invalid or the proxy doesn&apos;t respond</source>
         <translatorcomment>Message shown when there is an error testing the proxy settings.</translatorcomment>
-        <translation>プロキシ設定が無効かプロキシが応答しません。</translation>
+        <translation>プロキシ設定が無効かプロキシが応答しません</translation>
     </message>
 </context>
 <context>
@@ -3796,7 +3796,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Show </source>
         <translatorcomment>Contextual menu from file list headers that allow to enable or disable diferent columns (size, type, data modified)</translatorcomment>
-        <translation>表示： </translation>
+        <translation>表示</translation>
     </message>
     <message>
         <source>All files (*)</source>
@@ -3916,7 +3916,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Are you sure you want to delete &apos;%1&apos;?</source>
         <translatorcomment>Warning message shown before deleting a file or a folder.</translatorcomment>
-        <translation>‘%1’を削除してもよろしいですか？　</translation>
+        <translation>‘%1’を削除してもよろしいですか？</translation>
     </message>
     <message>
         <source>File &amp;name:</source>
@@ -4210,7 +4210,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Always keep physical control of your master key (e.g. on a client device, external storage, or print).</source>
         <translatorcomment>Label to inform the user to keep physical control of the master key.</translatorcomment>
-        <translation>回復キーは常に物理的に管理してください（例：クライアントデバイス上、外部ストレージ、または印刷）</translation>
+        <translation>回復キーは常に物理的に管理してください（例：クライアントデバイス上、外部ストレージ、または印刷）。</translation>
     </message>
     <message>
         <source>Exclude by size</source>
@@ -4280,7 +4280,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Disabling file versioning will prevent the creation and storage of new file versions. Do you want to continue?</source>
         <translatorcomment>Informative text shown when user is trying to disable file versioning before proceeding.</translatorcomment>
-        <translation>ファイルのバージョン管理を無効にすると、新しいファイルバージョンの作成と保存ができなくなります。続行しますか？　</translation>
+        <translation>ファイルのバージョン管理を無効にすると、新しいファイルバージョンの作成と保存ができなくなります。続行しますか？</translation>
     </message>
     <message>
         <source>You are about to permanently remove all file versions. Would you like to proceed?</source>
@@ -4360,7 +4360,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Remove files older than</source>
         <translatorcomment>Label for checkbox to remove local cache files older than a specified number of days.</translatorcomment>
-        <translation>以下の日数より古いファイルを削除します：</translation>
+        <translation>以下の日数より古いファイルを削除します</translation>
     </message>
     <message>
         <source>days</source>
@@ -4450,12 +4450,12 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Exclude files smaller than</source>
         <translatorcomment>Checkbox label text allowing the user to enable / disable file exclusion from synchronization, smaller than the specified size.</translatorcomment>
-        <translation>次の値より小さいファイルを除外：</translation>
+        <translation>次の値より小さいファイルを除外</translation>
     </message>
     <message>
         <source>Exclude files bigger than</source>
         <translatorcomment>Checkbox label text allowing the user to enable / disable file exclusion from synchronization, bigger than the specified size.</translatorcomment>
-        <translation>次の値よりも大きいファイルを除外：</translation>
+        <translation>次の値よりも大きいファイルを除外</translation>
     </message>
     <message>
         <source>Restart MEGA Desktop App to apply changes.</source>
@@ -4610,7 +4610,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Synchronization will stop working. Are you sure?</source>
         <translatorcomment>Message label indicating that the synchronizations will stop if the user logs out. Ask for confirmation.</translatorcomment>
-        <translation>同期が停止します。よろしいですか？　</translation>
+        <translation>同期が停止します。よろしいですか？</translation>
     </message>
     <message>
         <source>Open in MEGA</source>
@@ -4733,7 +4733,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>I agree with the MEGA &lt;a href=&quot;https://mega.co.nz/#terms&quot;&gt;Terms of Service&lt;/a&gt;</source>
         <translatorcomment>Label to aggre with the Terms of use.  Keep code &lt;a href=&quot;https://mega.co.nz/#terms&quot;&gt;Terms of Service&lt;/a&gt; .String as short as possible.</translatorcomment>
-        <translation>私はMEGAの&lt;a href=&quot;https://mega.nz/terms&quot;&gt;ご利用規約&lt;/a&gt;に同意します</translation>
+        <translation>私はMEGAの&lt;a href=&#8221;https://mega.nz/terms&#8221;&gt;ご利用規約&lt;/a&gt;に同意します</translation>
     </message>
     <message>
         <source>Log in to your MEGA account</source>
@@ -4743,7 +4743,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Please verify your account using the confirmation link that we have sent to your email account</source>
         <translatorcomment>Label displayed at last step of creation account process to inform the user to verify the new created account.</translatorcomment>
-        <translation>あなたのメールアドレスに送られた確認リンクを使って、あなたのアカウントを検証してください。</translation>
+        <translation>あなたのメールアドレスに送られた確認リンクを使って、あなたのアカウントを検証してください</translation>
     </message>
     <message>
         <source>Logging in ...</source>
@@ -4853,12 +4853,12 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>The entered passwords don&apos;t match</source>
         <translatorcomment>Label displayed when the user has filled different password.</translatorcomment>
-        <translation>入力されたパスワードが合致しません。</translation>
+        <translation>入力されたパスワードが合致しません</translation>
     </message>
     <message>
         <source>You have to accept our terms of service</source>
         <translatorcomment>Label displayed when the user has not check the agreement of terms of service.</translatorcomment>
-        <translation>当社のご利用規約に同意していただく必要がございます。</translation>
+        <translation>当社のご利用規約に同意していただく必要がございます</translation>
     </message>
     <message>
         <source>Creating account...</source>
@@ -4998,7 +4998,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>When you finish this assistant, you will be able to sync additional folders using the settings dialog</source>
         <translatorcomment>Label to inform the user about the possibility to add new synchronizations through settings dialog once the initial setup wizard is at final stage</translatorcomment>
-        <translation>このアシスタントを終了すると、設定ダイアログを使用して追加のフォルダを同期することができます。</translation>
+        <translation>このアシスタントを終了すると、設定ダイアログを使用して追加のフォルダを同期することができます</translation>
     </message>
     <message>
         <source>First name:</source>
@@ -5028,7 +5028,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Enjoy MEGAsync!</source>
         <translatorcomment>Label displayed when user completes the setup wizard</translatorcomment>
-        <translation>MEGAsyncをお楽しみください！　</translation>
+        <translation>MEGAsyncをお楽しみください！</translation>
     </message>
     <message>
         <source>Please, enter your last name</source>
