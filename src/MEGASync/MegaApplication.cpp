@@ -231,6 +231,8 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     notificationsProxyModel = NULL;
     notificationsDelegate = NULL;
 
+    context = new QObject(this);
+
 #ifdef _WIN32
     windowsMenu = nullptr;
     windowsExitAction = NULL;
@@ -586,7 +588,7 @@ void MegaApplication::initialize()
                         crashTimestamp = crashTimestamp.addSecs(-300); //to gather some logging before the crash
                     }
 
-                    connect(logger.get(), &MegaSyncLogger::logReadyForReporting, context.get(), [this, crashTimestamp]()
+                    connect(logger.get(), &MegaSyncLogger::logReadyForReporting, context, [this, crashTimestamp]()
                     {
                         crashReportFilePath = Utilities::joinLogZipFiles(megaApi, &crashTimestamp, CrashHandler::instance()->getLastCrashHash());
                         if (!crashReportFilePath.isNull()
@@ -595,7 +597,7 @@ void MegaApplication::initialize()
                             megaApi->startUploadForSupport(QDir::toNativeSeparators(crashReportFilePath).toUtf8().constData(), false);
                             crashReportFilePath.clear();
                         }
-                        context.get()->deleteLater();
+                        context->deleteLater();
                     });
 
                     logger->prepareForReporting();
