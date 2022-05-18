@@ -906,7 +906,7 @@ QProgressBar::chunk
             </property>
             <property name="icon">
              <iconset resource="../../../gui/Resources_win.qrc">
-              <normaloff>:/images/lists_pause_ico.png</normaloff>:/images/lists_pause_ico.png</iconset>
+              <normaloff>:/images/transfer_manager/transfers_actions/lists_pause_ico_default.png</normaloff>:/images/transfer_manager/transfers_actions/lists_pause_ico_default.png</iconset>
             </property>
            </widget>
           </item>
@@ -965,7 +965,12 @@ QProgressBar::chunk
             </property>
             <property name="icon">
              <iconset resource="../../../gui/Resources_win.qrc">
-              <normaloff>:/images/lists_cancel_ico.png</normaloff>:/images/lists_cancel_ico.png</iconset>
+              <normaloff>:/images/transfer_manager/transfers_actions/lists_cancel_ico_default.png</normaloff>:/images/transfer_manager/transfers_actions/lists_cancel_ico_default.png</iconset>
+            </property>
+            <property name="icon_prefix" stdset="0">
+             <url>
+              <string>qrc:/images/transfer_manager/transfers_actions/lists_cancel_ico_default.png</string>
+             </url>
             </property>
            </widget>
           </item>

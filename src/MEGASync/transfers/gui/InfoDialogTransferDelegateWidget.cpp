@@ -156,20 +156,20 @@ void InfoDialogTransferDelegateWidget::setType()
 
     if(transferType & TransferData::TRANSFER_SYNC)
     {
-        icon = Utilities::getCachedPixmap(QString::fromLatin1(":/images/synching_ico.png"));
-        mUi->pbTransfer->setStyleSheet(QString::fromUtf8("QProgressBar#pbTransfer{background-color: transparent;}"
+        icon = Utilities::getCachedPixmap(QString::fromLatin1(":/images/transfer_manager/transfers_states/synching_ico.png"));
+        mUi->pbTransfer->setStyleSheet(QString::fromLatin1("QProgressBar#pbTransfer{background-color: transparent;}"
                                                         "QProgressBar#pbTransfer::chunk {background-color: #31b500;}"));
     }
     else if(transferType & TransferData::TRANSFER_DOWNLOAD || transferType & TransferData::TRANSFER_LTCPDOWNLOAD)
     {
-        icon = Utilities::getCachedPixmap(QString::fromLatin1(":/images/download_item_ico.png"));
-        mUi->pbTransfer->setStyleSheet(QString::fromUtf8("QProgressBar#pbTransfer{background-color: transparent;}"
+        icon = Utilities::getCachedPixmap(QString::fromLatin1(":/images/transfer_manager/transfers_states/download_item_ico.png"));
+        mUi->pbTransfer->setStyleSheet(QString::fromLatin1("QProgressBar#pbTransfer{background-color: transparent;}"
                                                         "QProgressBar#pbTransfer::chunk {background-color: #31b500;}"));
     }
     else if(transferType & TransferData::TRANSFER_UPLOAD)
     {
-        icon = Utilities::getCachedPixmap(QString::fromLatin1(":/images/upload_item_ico.png"));
-        mUi->pbTransfer->setStyleSheet(QString::fromUtf8("QProgressBar#pbTransfer{background-color: transparent;}"
+        icon = Utilities::getCachedPixmap(QString::fromLatin1(":/images/transfer_manager/transfers_states/upload_item_ico.png"));
+        mUi->pbTransfer->setStyleSheet(QString::fromLatin1("QProgressBar#pbTransfer{background-color: transparent;}"
                                                         "QProgressBar#pbTransfer::chunk {background-color: #2ba6de;}"));
     }
 
@@ -188,17 +188,17 @@ void InfoDialogTransferDelegateWidget::updateFinishedIco(int transferType, int e
 
     if(transferType & TransferData::TRANSFER_SYNC)
     {
-        iconCompleted = Utilities::getCachedPixmap(QLatin1Literal(":/images/synching_ico.png"));
+        iconCompleted = Utilities::getCachedPixmap(QLatin1Literal(":/images/transfer_manager/transfers_states/synching_ico.png"));
     }
     else if(transferType & TransferData::TRANSFER_DOWNLOAD || transferType & TransferData::TRANSFER_LTCPDOWNLOAD)
     {
-        iconCompleted = Utilities::getCachedPixmap(errorCode < 0 ? QString::fromLatin1(":/images/download_fail_item_ico.png")
-                                                                  : QString::fromLatin1(":/images/downloaded_item_ico.png"));
+        iconCompleted = Utilities::getCachedPixmap(errorCode < 0 ? QString::fromLatin1(":/images/transfer_manager/transfers_states/download_fail_item_ico.png")
+                                                                  : QString::fromLatin1(":/images/transfer_manager/transfers_states/downloaded_item_ico.png"));
     }
     else if(transferType & TransferData::TRANSFER_UPLOAD)
     {
-        iconCompleted = Utilities::getCachedPixmap(errorCode < 0 ? QString::fromLatin1(":/images/upload_fail_item_ico.png")
-                                                                  : QString::fromLatin1(":/images/uploaded_item_ico.png"));
+        iconCompleted = Utilities::getCachedPixmap(errorCode < 0 ? QString::fromLatin1(":/images/transfer_manager/transfers_states/upload_fail_item_ico.png")
+                                                                  : QString::fromLatin1(":/images/transfer_manager/transfers_states/uploaded_item_ico.png"));
     }
 
     mUi->lTransferTypeCompleted->setIcon(iconCompleted);

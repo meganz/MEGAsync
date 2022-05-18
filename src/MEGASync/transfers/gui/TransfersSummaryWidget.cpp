@@ -3,7 +3,6 @@
 
 #include <QPainter>
 #include <QtMath>
-#include <QDebug>
 #include <QPainterPath>
 #include <QTimer>
 #include "Utilities.h"
@@ -13,7 +12,6 @@ TransfersSummaryWidget::TransfersSummaryWidget(QWidget *parent) :
     ui(new Ui::TransfersSummaryWidget)
 {
     ui->setupUi(this);
-//    ui->bTransfersStatus->setAttribute(Qt::WA_TransparentForMouseEvents);
 
     status = Status::EXPANDED;
     minwidth = 28;
@@ -37,9 +35,8 @@ TransfersSummaryWidget::TransfersSummaryWidget(QWidget *parent) :
     totalUploads = 0;
     totalDownloads = 0;
 
-
-    upArrowPixmapOrig = QIcon(QString::fromUtf8(":/images/upload_item_ico_white.png")).pixmap(12.0, 12.0);
-    dlArrowPixmapOrig = QIcon(QString::fromUtf8(":/images/download_item_ico_white.png")).pixmap(12.0, 12.0);
+    upArrowPixmapOrig = QIcon(QString::fromLatin1(":/images/transfer_manager/transfers_states/upload_item_ico_white.png")).pixmap(12.0, 12.0);
+    dlArrowPixmapOrig = QIcon(QString::fromLatin1(":/images/transfer_manager/transfers_states/download_item_ico_white.png")).pixmap(12.0, 12.0);
 
     connect(ui->bpause, SIGNAL(clicked()), this, SIGNAL(pauseResumeClicked()));
 }

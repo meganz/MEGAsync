@@ -10,6 +10,7 @@
 
 #include <QMouseEvent>
 #include <QScrollBar>
+#include <QPalette>
 
 using namespace mega;
 
@@ -142,6 +143,18 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
         }
     }
 
+    auto leftPaneButtons = mUi->wLeftPane->findChildren<QAbstractButton*>();
+    foreach(auto& button, leftPaneButtons)
+    {
+        mButtonIconManager.addButton(button);
+    }
+
+    auto rightPaneButtons = mUi->wRightPaneHeader->findChildren<QAbstractButton*>();
+    foreach(auto& button, rightPaneButtons)
+    {
+        mButtonIconManager.addButton(button);
+    }
+
     connect(mModel, &TransfersModel::pauseStateChanged,
             mUi->wTransfers, &TransfersWidget::onPauseStateChanged);
     connect(mModel, &TransfersModel::pauseStateChanged,
@@ -214,6 +227,8 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
 
     // Init state
     onUpdatePauseState(mModel->areAllPaused());
+    mUi->bPause->setChecked(mModel->areAllPaused());
+
     auto storageState = MegaSyncApp->getAppliedStorageState();
     auto transferQuotaState = MegaSyncApp->getTransferQuotaState();
     onStorageStateChanged(storageState);
@@ -331,15 +346,11 @@ void TransferManager::onUpdatePauseState(bool isPaused)
 {
     if (isPaused)
     {
-        static const QIcon icon(QLatin1String(":/images/sidebar_resume_ico.png"));
-        mUi->bPause->setIcon(icon);
         mUi->bPause->setToolTip(tr("Resume all"));
         mUi->lPaused->setText(tr("All Paused"));
     }
     else
     {
-        static const QIcon icon(QLatin1String(":/images/sidebar_pause_ico.png"));
-        mUi->bPause->setIcon(icon);
         mUi->bPause->setToolTip(tr("Pause all"));
         mUi->lPaused->clear();
     }
@@ -349,8 +360,6 @@ void TransferManager::onUpdatePauseState(bool isPaused)
 
 void TransferManager::checkCancelAllButtonVisibility()
 {
-    auto proxy (mUi->wTransfers->getProxyModel());
-
     auto sizePolicy = mUi->bCancelClearAll->sizePolicy();
     if(!sizePolicy.retainSizeWhenHidden())
     {
@@ -1027,11 +1036,22 @@ void TransferManager::toggleTab(TM_TAB newTab)
         if (mCurrentTab != NO_TAB)
         {
             mTabFramesToggleGroup[mCurrentTab]->setProperty(ITS_ON, false);
+            auto pushButton = mTabFramesToggleGroup[mCurrentTab]->findChild<QPushButton*>();
+            if(pushButton)
+            {
+                pushButton->setChecked(false);
+            }
         }
 
         // Activate new tab frame
         mTabFramesToggleGroup[newTab]->setProperty(ITS_ON, true);
         mTabFramesToggleGroup[newTab]->setGraphicsEffect(mShadowTab);
+
+        auto pushButton = mTabFramesToggleGroup[newTab]->findChild<QPushButton*>();
+        if(pushButton)
+        {
+            pushButton->setChecked(true);
+        }
 
         TransfersWidget::HeaderInfo headerInfo;
 

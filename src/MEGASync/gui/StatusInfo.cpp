@@ -129,7 +129,7 @@ void StatusInfo::setState(TRANSFERS_STATES state)
             const QString statusText{QCoreApplication::translate("TransferManager","Some issues occurred")};
             ui->lStatusDesc->setToolTip(statusText);
             ui->lStatusDesc->setText(statusText);
-            ui->bIconState->setIcon(Utilities::getCachedPixmap(QString::fromUtf8(":/images/sidebar_cancel_all_ico.png")));
+            ui->bIconState->setIcon(Utilities::getCachedPixmap(QString::fromUtf8(":/images/transfer_manager/sidebar/cancel_all_ico_default.png")));
             ui->bIconState->setIconSize(QSize(24, 24));
             break;
         }

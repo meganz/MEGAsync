@@ -37,6 +37,12 @@ TransfersWidget::TransfersWidget(QWidget* parent) :
 
     //Align header pause/cancel buttons to view pause/cancel button
     connect(ui->tvTransfers, &MegaTransferView::verticalScrollBarVisibilityChanged, this, &TransfersWidget::onVerticalScrollBarVisibilityChanged);
+
+    auto leftPaneButtons = ui->wTableHeader->findChildren<QAbstractButton*>();
+    foreach(auto& button, leftPaneButtons)
+    {
+        mButtonIconManager.addButton(button);
+    }
 }
 void TransfersWidget::setupTransfers()
 {

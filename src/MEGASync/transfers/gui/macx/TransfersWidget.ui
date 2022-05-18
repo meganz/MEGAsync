@@ -435,9 +435,8 @@ TransferWidgetHeaderItem  QLabel
              <string>Pause or resume all selected transfers</string>
             </property>
             <property name="icon">
-             <iconset resource="../../../gui/Resources_win.qrc">
-              <normaloff>:/images/lists_pause_all_ico.png</normaloff>
-              <normalon>:/images/lists_resume_all_ico.png</normalon>:/images/lists_pause_all_ico.png</iconset>
+             <iconset resource="../../../gui/Resources_macx.qrc">
+              <normaloff>:/images/transfer_manager/transfers_actions/lists_pause_all_ico_default.png</normaloff>:/images/transfer_manager/transfers_actions/lists_pause_all_ico_default.png</iconset>
             </property>
             <property name="iconSize">
              <size>
@@ -450,6 +449,14 @@ TransferWidgetHeaderItem  QLabel
             </property>
             <property name="autoRaise" stdset="0">
              <bool>false</bool>
+            </property>
+            <property name="hover_selected" stdset="0">
+             <bool>true</bool>
+            </property>
+            <property name="icon_prefix" stdset="0">
+             <url>
+              <string>qrc:/images/transfer_manager/transfers_actions/lists_pause_all_ico_default.png</string>
+             </url>
             </property>
            </widget>
           </item>
@@ -475,13 +482,18 @@ TransferWidgetHeaderItem  QLabel
             </property>
             <property name="icon">
              <iconset resource="../../../gui/Resources_macx.qrc">
-              <normaloff>:/images/lists_cancel_all_ico.png</normaloff>:/images/lists_cancel_all_ico.png</iconset>
+              <normaloff>:/images/transfer_manager/transfers_actions/lists_cancel_all_ico_default.png</normaloff>:/images/transfer_manager/transfers_actions/lists_cancel_all_ico_default.png</iconset>
             </property>
             <property name="iconSize">
              <size>
               <width>24</width>
               <height>24</height>
              </size>
+            </property>
+            <property name="icon_prefix" stdset="0">
+             <url>
+              <string>qrc:/images/transfer_manager/transfers_actions/lists_cancel_all_ico_default.png</string>
+             </url>
             </property>
            </widget>
           </item>

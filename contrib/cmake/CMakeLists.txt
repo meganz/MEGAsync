@@ -285,6 +285,7 @@ set (MOC_INPUT
     ${MEGAsyncDir}/gui/EventHelper.h
     ${MEGAsyncDir}/gui/UserAttributesRequests.h
     ${MEGAsyncDir}/gui/ViewLoadingScene.h
+    ${MEGAsyncDir}/gui/ButtonIconManager.h
     ${MEGAsyncDir}/platform/notificator.h
 
     ${MEGAsyncDir}/mega/bindings/qt/QTMegaGlobalListener.h
@@ -443,6 +444,7 @@ set (SRCS
     ${MEGAsyncDir}/gui/MegaItemTreeView.cpp
     ${MEGAsyncDir}/gui/GuiUtilities.cpp
     ${MEGAsyncDir}/gui/UserAttributesRequests.cpp
+    ${MEGAsyncDir}/gui/ButtonIconManager.cpp
 
     ${MEGAsyncDir}/transfers/gui/TransfersStatusWidget.cpp
     ${MEGAsyncDir}/transfers/gui/TransferItem.cpp

@@ -47,9 +47,6 @@
         <file>images/completed_item_ico.png</file>
         <file>images/completed_item_ico@2x.png</file>
         <file>images/completed_item_ico@3x.png</file>
-        <file>images/Completed_transfers.png</file>
-        <file>images/Completed_transfers@2x.png</file>
-        <file>images/Completed_transfers@3x.png</file>
         <file>images/confirmation_link.png</file>
         <file>images/confirmation_link@2x.png</file>
         <file>images/confirmation_link@3x.png</file>
@@ -62,18 +59,6 @@
         <file>images/desktop_app_TM.png</file>
         <file>images/desktop_app_TM@2x.png</file>
         <file>images/desktop_app_TM@3x.png</file>
-        <file>images/download_fail_item_ico.png</file>
-        <file>images/download_fail_item_ico@2x.png</file>
-        <file>images/download_fail_item_ico@3x.png</file>
-        <file>images/download_item_ico.png</file>
-        <file>images/download_item_ico@2x.png</file>
-        <file>images/download_item_ico@3x.png</file>
-        <file>images/download_item_ico_white.png</file>
-        <file>images/download_item_ico_white@2x.png</file>
-        <file>images/download_item_ico_white@3x.png</file>
-        <file>images/downloaded_item_ico.png</file>
-        <file>images/downloaded_item_ico@2x.png</file>
-        <file>images/downloaded_item_ico@3x.png</file>
         <file>images/drag_3D.png</file>
         <file>images/drag_3D@2x.png</file>
         <file>images/drag_3D@3x.png</file>
@@ -407,15 +392,6 @@
         <file>images/more_settings.png</file>
         <file>images/more_settings@2x.png</file>
         <file>images/more_settings@3x.png</file>
-        <file>images/no_downloads.png</file>
-        <file>images/no_downloads@2x.png</file>
-        <file>images/no_downloads@3x.png</file>
-        <file>images/no_transfers.png</file>
-        <file>images/no_transfers@2x.png</file>
-        <file>images/no_transfers@3x.png</file>
-        <file>images/no_uploads.png</file>
-        <file>images/no_uploads@2x.png</file>
-        <file>images/no_uploads@3x.png</file>
         <file>images/notification_color.png</file>
         <file>images/notification_color@2x.png</file>
         <file>images/notification_color@3x.png</file>
@@ -425,13 +401,7 @@
         <file>images/pause_big_ico.png</file>
         <file>images/pause_big_ico@2x.png</file>
         <file>images/pause_big_ico@3x.png</file>
-        <file>images/pause_ico.png</file>
-        <file>images/pause_ico@2x.png</file>
-        <file>images/pause_ico@3x.png</file>
         <file>images/paused.svg</file>
-        <file>images/paused_transfers.png</file>
-        <file>images/paused_transfers@2x.png</file>
-        <file>images/paused_transfers@3x.png</file>
         <file>images/payment_padding.png</file>
         <file>images/payment_padding@2x.png</file>
         <file>images/payment_padding@3x.png</file>
@@ -637,21 +607,9 @@
         <file>images/tray_preferences_ico.png</file>
         <file>images/tray_preferences_ico@2x.png</file>
         <file>images/tray_preferences_ico@3x.png</file>
-        <file>images/upload_fail_item_ico.png</file>
-        <file>images/upload_fail_item_ico@2x.png</file>
-        <file>images/upload_fail_item_ico@3x.png</file>
-        <file>images/upload_item_ico.png</file>
-        <file>images/upload_item_ico@2x.png</file>
-        <file>images/upload_item_ico@3x.png</file>
-        <file>images/upload_item_ico_white.png</file>
-        <file>images/upload_item_ico_white@2x.png</file>
-        <file>images/upload_item_ico_white@3x.png</file>
         <file>images/upload_to_mega.png</file>
         <file>images/upload_to_mega@2x.png</file>
         <file>images/upload_to_mega@3x.png</file>
-        <file>images/uploaded_item_ico.png</file>
-        <file>images/uploaded_item_ico@2x.png</file>
-        <file>images/uploaded_item_ico@3x.png</file>
         <file>images/uptodate.svg</file>
         <file>images/warning.svg</file>
         <file>translations/MEGASyncStrings_ar.qm</file>
@@ -789,75 +747,9 @@
         <file>animations/downloading@3x.gif</file>
         <file>animations/downloading@2x.gif</file>
         <file>animations/downloading.gif</file>
-        <file>images/sidebar_search_ico.png</file>
-        <file>images/sidebar_search_ico@2x.png</file>
-        <file>images/sidebar_search_ico@3x.png</file>
         <file>images/import_toolbar_ico.png</file>
         <file>images/import_toolbar_ico@2x.png</file>
         <file>images/import_toolbar_ico@3x.png</file>
-        <file>images/upload_toolbar_ico.png</file>
-        <file>images/upload_toolbar_ico@2x.png</file>
-        <file>images/upload_toolbar_ico@3x.png</file>
-        <file>images/download_toolbar_ico.png</file>
-        <file>images/download_toolbar_ico@2x.png</file>
-        <file>images/download_toolbar_ico@3x.png</file>
-        <file>images/search_ico.png</file>
-        <file>images/search_ico@2x.png</file>
-        <file>images/search_ico@3x.png</file>
-        <file>images/sidebar_pause_ico.png</file>
-        <file>images/sidebar_pause_ico@2x.png</file>
-        <file>images/sidebar_pause_ico@3x.png</file>
-        <file>images/sidebar_resume_ico.png</file>
-        <file>images/sidebar_resume_ico@2x.png</file>
-        <file>images/sidebar_resume_ico@3x.png</file>
-        <file>images/arrow_download_ico.png</file>
-        <file>images/arrow_download_ico@2x.png</file>
-        <file>images/arrow_download_ico@3x.png</file>
-        <file>images/arrow_upload_ico.png</file>
-        <file>images/arrow_upload_ico@2x.png</file>
-        <file>images/arrow_upload_ico@3x.png</file>
-        <file>images/sidebar_downloads_ico.png</file>
-        <file>images/sidebar_downloads_ico@2x.png</file>
-        <file>images/sidebar_downloads_ico@3x.png</file>
-        <file>images/sidebar_finished_ico.png</file>
-        <file>images/sidebar_finished_ico@2x.png</file>
-        <file>images/sidebar_finished_ico@3x.png</file>
-        <file>images/all_transfers_ico.png</file>
-        <file>images/all_transfers_ico@2x.png</file>
-        <file>images/all_transfers_ico@3x.png</file>
-        <file>images/uploads_ico.png</file>
-        <file>images/uploads_ico@2x.png</file>
-        <file>images/uploads_ico@3x.png</file>
-        <file>images/search_result_ico.png</file>
-        <file>images/search_result_ico@2x.png</file>
-        <file>images/search_result_ico@3x.png</file>
-        <file>images/lists_cancel_ico.png</file>
-        <file>images/lists_cancel_ico@2x.png</file>
-        <file>images/lists_cancel_ico@3x.png</file>
-        <file>images/lists_cancel_all_ico.png</file>
-        <file>images/lists_cancel_all_ico@2x.png</file>
-        <file>images/lists_cancel_all_ico@3x.png</file>
-        <file>images/lists_cancel_hover_ico.png</file>
-        <file>images/lists_cancel_hover_ico@2x.png</file>
-        <file>images/lists_cancel_hover_ico@3x.png</file>
-        <file>images/lists_pause_all_ico.png</file>
-        <file>images/lists_pause_all_ico@2x.png</file>
-        <file>images/lists_pause_all_ico@3x.png</file>
-        <file>images/lists_pause_hover_ico.png</file>
-        <file>images/lists_pause_hover_ico@2x.png</file>
-        <file>images/lists_pause_hover_ico@3x.png</file>
-        <file>images/lists_pause_ico.png</file>
-        <file>images/lists_pause_ico@2x.png</file>
-        <file>images/lists_pause_ico@3x.png</file>
-        <file>images/lists_resume_all_ico.png</file>
-        <file>images/lists_resume_all_ico@2x.png</file>
-        <file>images/lists_resume_all_ico@3x.png</file>
-        <file>images/lists_resume_hover_ico.png</file>
-        <file>images/lists_resume_hover_ico@2x.png</file>
-        <file>images/lists_resume_hover_ico@3x.png</file>
-        <file>images/lists_resume_ico.png</file>
-        <file>images/lists_resume_ico@2x.png</file>
-        <file>images/lists_resume_ico@3x.png</file>
         <file>images/Icon_Small_Backups@3x.png</file>
         <file>images/Icon_Small_Backups@2x.png</file>
         <file>images/Icon_Small_Backups.png</file>
@@ -882,54 +774,6 @@
         <file>images/Switches/switch_unchecked_down.svg</file>
         <file>images/Switches/switch_unchecked_hover.svg</file>
         <file>images/Switches/switch_unchecked_rest.svg</file>
-        <file>images/delete_search_ico.png</file>
-        <file>images/delete_search_ico@2x.png</file>
-        <file>images/delete_search_ico@3x.png</file>
-        <file>images/sidebar_up_to_date_ico.png</file>
-        <file>images/sidebar_up_to_date_ico@2x.png</file>
-        <file>images/sidebar_up_to_date_ico@3x.png</file>
-        <file>images/move_bottom_ico.png</file>
-        <file>images/move_bottom_ico@2x.png</file>
-        <file>images/move_bottom_ico@3x.png</file>
-        <file>images/move_down_ico.png</file>
-        <file>images/move_down_ico@2x.png</file>
-        <file>images/move_down_ico@3x.png</file>
-        <file>images/move_top_ico.png</file>
-        <file>images/move_top_ico@2x.png</file>
-        <file>images/move_top_ico@3x.png</file>
-        <file>images/move_up_ico.png</file>
-        <file>images/move_up_ico@2x.png</file>
-        <file>images/move_up_ico@3x.png</file>
-        <file>images/open_file_ico.png</file>
-        <file>images/open_file_ico@2x.png</file>
-        <file>images/open_file_ico@3x.png</file>
-        <file>images/ico_clear.png</file>
-        <file>images/ico_clear@2x.png</file>
-        <file>images/ico_clear@3x.png</file>
-        <file>images/synching_ico.png</file>
-        <file>images/synching_ico@2x.png</file>
-        <file>images/synching_ico@3x.png</file>
-        <file>images/preferences_toolbar_ico.png</file>
-        <file>images/preferences_toolbar_ico@2x.png</file>
-        <file>images/preferences_toolbar_ico@3x.png</file>
-        <file>images/sidebar_cancel_all_ico.png</file>
-        <file>images/sidebar_cancel_all_ico@2x.png</file>
-        <file>images/sidebar_cancel_all_ico@3x.png</file>
-        <file>images/resume_ico.png</file>
-        <file>images/resume_ico@2x.png</file>
-        <file>images/resume_ico@3x.png</file>
-        <file>images/cancel_transfer_ico.png</file>
-        <file>images/cancel_transfer_ico@2x.png</file>
-        <file>images/cancel_transfer_ico@3x.png</file>
-        <file>images/get_link_ico.png</file>
-        <file>images/get_link_ico@2x.png</file>
-        <file>images/get_link_ico@3x.png</file>
-        <file>images/no_search_results.png</file>
-        <file>images/no_search_results@2x.png</file>
-        <file>images/no_search_results@3x.png</file>
-        <file>images/sidebar_failed_ico.png</file>
-        <file>images/sidebar_failed_ico@2x.png</file>
-        <file>images/sidebar_failed_ico@3x.png</file>
         <file>images/node_selector/arrow-left-disabled-ico.png</file>
         <file>images/node_selector/arrow-left-disabled-ico@2x.png</file>
         <file>images/node_selector/arrow-left-disabled-ico@3x.png</file>
@@ -996,5 +840,281 @@
         <file>images/chevron-up-ico.png</file>
         <file>images/chevron-up-ico@2x.png</file>
         <file>images/chevron-up-ico@3x.png</file>
+        <file>images/transfer_manager/context_menu/cancel_transfer_ico.png</file>
+        <file>images/transfer_manager/context_menu/cancel_transfer_ico@2x.png</file>
+        <file>images/transfer_manager/context_menu/cancel_transfer_ico@3x.png</file>
+        <file>images/transfer_manager/context_menu/get_link_ico.png</file>
+        <file>images/transfer_manager/context_menu/get_link_ico@2x.png</file>
+        <file>images/transfer_manager/context_menu/get_link_ico@3x.png</file>
+        <file>images/transfer_manager/context_menu/ico_clear.png</file>
+        <file>images/transfer_manager/context_menu/ico_clear@2x.png</file>
+        <file>images/transfer_manager/context_menu/ico_clear@3x.png</file>
+        <file>images/transfer_manager/context_menu/move_bottom_ico.png</file>
+        <file>images/transfer_manager/context_menu/move_bottom_ico@2x.png</file>
+        <file>images/transfer_manager/context_menu/move_bottom_ico@3x.png</file>
+        <file>images/transfer_manager/context_menu/move_down_ico.png</file>
+        <file>images/transfer_manager/context_menu/move_down_ico@2x.png</file>
+        <file>images/transfer_manager/context_menu/move_down_ico@3x.png</file>
+        <file>images/transfer_manager/context_menu/move_top_ico.png</file>
+        <file>images/transfer_manager/context_menu/move_top_ico@2x.png</file>
+        <file>images/transfer_manager/context_menu/move_top_ico@3x.png</file>
+        <file>images/transfer_manager/context_menu/move_up_ico.png</file>
+        <file>images/transfer_manager/context_menu/move_up_ico@2x.png</file>
+        <file>images/transfer_manager/context_menu/move_up_ico@3x.png</file>
+        <file>images/transfer_manager/context_menu/open_file_ico.png</file>
+        <file>images/transfer_manager/context_menu/open_file_ico@2x.png</file>
+        <file>images/transfer_manager/context_menu/open_file_ico@3x.png</file>
+        <file>images/transfer_manager/context_menu/pause_ico.png</file>
+        <file>images/transfer_manager/context_menu/pause_ico@2x.png</file>
+        <file>images/transfer_manager/context_menu/pause_ico@3x.png</file>
+        <file>images/transfer_manager/context_menu/resume_ico.png</file>
+        <file>images/transfer_manager/context_menu/resume_ico@2x.png</file>
+        <file>images/transfer_manager/context_menu/resume_ico@3x.png</file>
+        <file>images/transfer_manager/empty_categories/Completed_transfers.png</file>
+        <file>images/transfer_manager/empty_categories/Completed_transfers@2x.png</file>
+        <file>images/transfer_manager/empty_categories/Completed_transfers@3x.png</file>
+        <file>images/transfer_manager/empty_categories/no_downloads.png</file>
+        <file>images/transfer_manager/empty_categories/no_downloads@2x.png</file>
+        <file>images/transfer_manager/empty_categories/no_downloads@3x.png</file>
+        <file>images/transfer_manager/empty_categories/no_search_results.png</file>
+        <file>images/transfer_manager/empty_categories/no_search_results@2x.png</file>
+        <file>images/transfer_manager/empty_categories/no_search_results@3x.png</file>
+        <file>images/transfer_manager/empty_categories/no_transfers.png</file>
+        <file>images/transfer_manager/empty_categories/no_transfers@2x.png</file>
+        <file>images/transfer_manager/empty_categories/no_transfers@3x.png</file>
+        <file>images/transfer_manager/empty_categories/no_uploads.png</file>
+        <file>images/transfer_manager/empty_categories/no_uploads@2x.png</file>
+        <file>images/transfer_manager/empty_categories/no_uploads@3x.png</file>
+        <file>images/transfer_manager/empty_categories/paused_transfers.png</file>
+        <file>images/transfer_manager/empty_categories/paused_transfers@2x.png</file>
+        <file>images/transfer_manager/empty_categories/paused_transfers@3x.png</file>
+        <file>images/transfer_manager/sidebar/all_transfers_ico_default.png</file>
+        <file>images/transfer_manager/sidebar/all_transfers_ico_default@2x.png</file>
+        <file>images/transfer_manager/sidebar/all_transfers_ico_default@3x.png</file>
+        <file>images/transfer_manager/sidebar/all_transfers_ico_hover.png</file>
+        <file>images/transfer_manager/sidebar/all_transfers_ico_hover@2x.png</file>
+        <file>images/transfer_manager/sidebar/all_transfers_ico_hover@3x.png</file>
+        <file>images/transfer_manager/sidebar/all_transfers_ico_selected.png</file>
+        <file>images/transfer_manager/sidebar/all_transfers_ico_selected@2x.png</file>
+        <file>images/transfer_manager/sidebar/all_transfers_ico_selected@3x.png</file>
+        <file>images/transfer_manager/sidebar/audio_default.png</file>
+        <file>images/transfer_manager/sidebar/audio_default@2x.png</file>
+        <file>images/transfer_manager/sidebar/audio_default@3x.png</file>
+        <file>images/transfer_manager/sidebar/audio_hover.png</file>
+        <file>images/transfer_manager/sidebar/audio_hover@2x.png</file>
+        <file>images/transfer_manager/sidebar/audio_hover@3x.png</file>
+        <file>images/transfer_manager/sidebar/audio_selected.png</file>
+        <file>images/transfer_manager/sidebar/audio_selected@2x.png</file>
+        <file>images/transfer_manager/sidebar/audio_selected@3x.png</file>
+        <file>images/transfer_manager/sidebar/cancel_all_ico_default.png</file>
+        <file>images/transfer_manager/sidebar/cancel_all_ico_default@2x.png</file>
+        <file>images/transfer_manager/sidebar/cancel_all_ico_default@3x.png</file>
+        <file>images/transfer_manager/sidebar/cancel_all_ico_hover.png</file>
+        <file>images/transfer_manager/sidebar/cancel_all_ico_hover@2x.png</file>
+        <file>images/transfer_manager/sidebar/cancel_all_ico_hover@3x.png</file>
+        <file>images/transfer_manager/sidebar/compressed_default.png</file>
+        <file>images/transfer_manager/sidebar/compressed_default@2x.png</file>
+        <file>images/transfer_manager/sidebar/compressed_default@3x.png</file>
+        <file>images/transfer_manager/sidebar/compressed_hover.png</file>
+        <file>images/transfer_manager/sidebar/compressed_hover@2x.png</file>
+        <file>images/transfer_manager/sidebar/compressed_hover@3x.png</file>
+        <file>images/transfer_manager/sidebar/compressed_selected.png</file>
+        <file>images/transfer_manager/sidebar/compressed_selected@2x.png</file>
+        <file>images/transfer_manager/sidebar/compressed_selected@3x.png</file>
+        <file>images/transfer_manager/sidebar/downloads_ico_default.png</file>
+        <file>images/transfer_manager/sidebar/downloads_ico_default@2x.png</file>
+        <file>images/transfer_manager/sidebar/downloads_ico_default@3x.png</file>
+        <file>images/transfer_manager/sidebar/downloads_ico_hover.png</file>
+        <file>images/transfer_manager/sidebar/downloads_ico_hover@2x.png</file>
+        <file>images/transfer_manager/sidebar/downloads_ico_hover@3x.png</file>
+        <file>images/transfer_manager/sidebar/downloads_ico_selected.png</file>
+        <file>images/transfer_manager/sidebar/downloads_ico_selected@2x.png</file>
+        <file>images/transfer_manager/sidebar/downloads_ico_selected@3x.png</file>
+        <file>images/transfer_manager/sidebar/failed_ico_default.png</file>
+        <file>images/transfer_manager/sidebar/failed_ico_default@2x.png</file>
+        <file>images/transfer_manager/sidebar/failed_ico_default@3x.png</file>
+        <file>images/transfer_manager/sidebar/finished_ico_default.png</file>
+        <file>images/transfer_manager/sidebar/finished_ico_default@2x.png</file>
+        <file>images/transfer_manager/sidebar/finished_ico_default@3x.png</file>
+        <file>images/transfer_manager/sidebar/finished_ico_hover.png</file>
+        <file>images/transfer_manager/sidebar/finished_ico_hover@2x.png</file>
+        <file>images/transfer_manager/sidebar/finished_ico_hover@3x.png</file>
+        <file>images/transfer_manager/sidebar/finished_ico_selected.png</file>
+        <file>images/transfer_manager/sidebar/finished_ico_selected@2x.png</file>
+        <file>images/transfer_manager/sidebar/finished_ico_selected@3x.png</file>
+        <file>images/transfer_manager/sidebar/generic_default.png</file>
+        <file>images/transfer_manager/sidebar/generic_default@2x.png</file>
+        <file>images/transfer_manager/sidebar/generic_default@3x.png</file>
+        <file>images/transfer_manager/sidebar/generic_hover.png</file>
+        <file>images/transfer_manager/sidebar/generic_hover@2x.png</file>
+        <file>images/transfer_manager/sidebar/generic_hover@3x.png</file>
+        <file>images/transfer_manager/sidebar/generic_selected.png</file>
+        <file>images/transfer_manager/sidebar/generic_selected@2x.png</file>
+        <file>images/transfer_manager/sidebar/generic_selected@3x.png</file>
+        <file>images/transfer_manager/sidebar/image_default.png</file>
+        <file>images/transfer_manager/sidebar/image_default@2x.png</file>
+        <file>images/transfer_manager/sidebar/image_default@3x.png</file>
+        <file>images/transfer_manager/sidebar/image_hover.png</file>
+        <file>images/transfer_manager/sidebar/image_hover@2x.png</file>
+        <file>images/transfer_manager/sidebar/image_hover@3x.png</file>
+        <file>images/transfer_manager/sidebar/image_selected.png</file>
+        <file>images/transfer_manager/sidebar/image_selected@2x.png</file>
+        <file>images/transfer_manager/sidebar/image_selected@3x.png</file>
+        <file>images/transfer_manager/sidebar/text_default.png</file>
+        <file>images/transfer_manager/sidebar/text_default@2x.png</file>
+        <file>images/transfer_manager/sidebar/text_default@3x.png</file>
+        <file>images/transfer_manager/sidebar/text_hover.png</file>
+        <file>images/transfer_manager/sidebar/text_hover@2x.png</file>
+        <file>images/transfer_manager/sidebar/text_hover@3x.png</file>
+        <file>images/transfer_manager/sidebar/text_selected.png</file>
+        <file>images/transfer_manager/sidebar/text_selected@2x.png</file>
+        <file>images/transfer_manager/sidebar/text_selected@3x.png</file>
+        <file>images/transfer_manager/sidebar/up_to_date_ico.png</file>
+        <file>images/transfer_manager/sidebar/up_to_date_ico@2x.png</file>
+        <file>images/transfer_manager/sidebar/up_to_date_ico@3x.png</file>
+        <file>images/transfer_manager/sidebar/uploads_ico_default.png</file>
+        <file>images/transfer_manager/sidebar/uploads_ico_default@2x.png</file>
+        <file>images/transfer_manager/sidebar/uploads_ico_default@3x.png</file>
+        <file>images/transfer_manager/sidebar/uploads_ico_hover.png</file>
+        <file>images/transfer_manager/sidebar/uploads_ico_hover@2x.png</file>
+        <file>images/transfer_manager/sidebar/uploads_ico_hover@3x.png</file>
+        <file>images/transfer_manager/sidebar/uploads_ico_selected.png</file>
+        <file>images/transfer_manager/sidebar/uploads_ico_selected@2x.png</file>
+        <file>images/transfer_manager/sidebar/uploads_ico_selected@3x.png</file>
+        <file>images/transfer_manager/sidebar/video_default.png</file>
+        <file>images/transfer_manager/sidebar/video_default@2x.png</file>
+        <file>images/transfer_manager/sidebar/video_default@3x.png</file>
+        <file>images/transfer_manager/sidebar/video_hover.png</file>
+        <file>images/transfer_manager/sidebar/video_hover@2x.png</file>
+        <file>images/transfer_manager/sidebar/video_hover@3x.png</file>
+        <file>images/transfer_manager/sidebar/video_selected.png</file>
+        <file>images/transfer_manager/sidebar/video_selected@2x.png</file>
+        <file>images/transfer_manager/sidebar/video_selected@3x.png</file>
+        <file>images/transfer_manager/toolbar/download_toolbar_ico_default.png</file>
+        <file>images/transfer_manager/toolbar/download_toolbar_ico_default@2x.png</file>
+        <file>images/transfer_manager/toolbar/download_toolbar_ico_default@3x.png</file>
+        <file>images/transfer_manager/toolbar/download_toolbar_ico_hover.png</file>
+        <file>images/transfer_manager/toolbar/download_toolbar_ico_hover@2x.png</file>
+        <file>images/transfer_manager/toolbar/download_toolbar_ico_hover@3x.png</file>
+        <file>images/transfer_manager/toolbar/import_toolbar_ico_default.png</file>
+        <file>images/transfer_manager/toolbar/import_toolbar_ico_default@2x.png</file>
+        <file>images/transfer_manager/toolbar/import_toolbar_ico_default@3x.png</file>
+        <file>images/transfer_manager/toolbar/import_toolbar_ico_hover.png</file>
+        <file>images/transfer_manager/toolbar/import_toolbar_ico_hover@2x.png</file>
+        <file>images/transfer_manager/toolbar/import_toolbar_ico_hover@3x.png</file>
+        <file>images/transfer_manager/toolbar/preferences_toolbar_ico_default.png</file>
+        <file>images/transfer_manager/toolbar/preferences_toolbar_ico_default@2x.png</file>
+        <file>images/transfer_manager/toolbar/preferences_toolbar_ico_default@3x.png</file>
+        <file>images/transfer_manager/toolbar/preferences_toolbar_ico_hover.png</file>
+        <file>images/transfer_manager/toolbar/preferences_toolbar_ico_hover@2x.png</file>
+        <file>images/transfer_manager/toolbar/preferences_toolbar_ico_hover@3x.png</file>
+        <file>images/transfer_manager/toolbar/upload_toolbar_ico_default.png</file>
+        <file>images/transfer_manager/toolbar/upload_toolbar_ico_default@2x.png</file>
+        <file>images/transfer_manager/toolbar/upload_toolbar_ico_default@3x.png</file>
+        <file>images/transfer_manager/toolbar/upload_toolbar_ico_hover.png</file>
+        <file>images/transfer_manager/toolbar/upload_toolbar_ico_hover@2x.png</file>
+        <file>images/transfer_manager/toolbar/upload_toolbar_ico_hover@3x.png</file>
+        <file>images/transfer_manager/transfers_actions/lists_cancel_all_ico_default.png</file>
+        <file>images/transfer_manager/transfers_actions/lists_cancel_all_ico_default@2x.png</file>
+        <file>images/transfer_manager/transfers_actions/lists_cancel_all_ico_default@3x.png</file>
+        <file>images/transfer_manager/transfers_actions/lists_cancel_ico_default.png</file>
+        <file>images/transfer_manager/transfers_actions/lists_cancel_ico_default@2x.png</file>
+        <file>images/transfer_manager/transfers_actions/lists_cancel_ico_default@3x.png</file>
+        <file>images/transfer_manager/transfers_actions/lists_pause_all_ico_default.png</file>
+        <file>images/transfer_manager/transfers_actions/lists_pause_all_ico_default@2x.png</file>
+        <file>images/transfer_manager/transfers_actions/lists_pause_all_ico_default@3x.png</file>
+        <file>images/transfer_manager/transfers_actions/lists_pause_ico_default.png</file>
+        <file>images/transfer_manager/transfers_actions/lists_pause_ico_default@2x.png</file>
+        <file>images/transfer_manager/transfers_actions/lists_pause_ico_default@3x.png</file>
+        <file>images/transfer_manager/transfers_actions/lists_pause_ico_hover.png</file>
+        <file>images/transfer_manager/transfers_actions/lists_pause_ico_hover@2x.png</file>
+        <file>images/transfer_manager/transfers_actions/lists_pause_ico_hover@3x.png</file>
+        <file>images/transfer_manager/transfers_states/arrow_download_ico.png</file>
+        <file>images/transfer_manager/transfers_states/arrow_download_ico@2x.png</file>
+        <file>images/transfer_manager/transfers_states/arrow_download_ico@3x.png</file>
+        <file>images/transfer_manager/transfers_states/arrow_upload_ico.png</file>
+        <file>images/transfer_manager/transfers_states/arrow_upload_ico@2x.png</file>
+        <file>images/transfer_manager/transfers_states/arrow_upload_ico@3x.png</file>
+        <file>images/transfer_manager/transfers_states/download_fail_item_ico.png</file>
+        <file>images/transfer_manager/transfers_states/download_fail_item_ico@2x.png</file>
+        <file>images/transfer_manager/transfers_states/download_fail_item_ico@3x.png</file>
+        <file>images/transfer_manager/transfers_states/download_item_ico.png</file>
+        <file>images/transfer_manager/transfers_states/download_item_ico@2x.png</file>
+        <file>images/transfer_manager/transfers_states/download_item_ico@3x.png</file>
+        <file>images/transfer_manager/transfers_states/download_item_ico_white.png</file>
+        <file>images/transfer_manager/transfers_states/download_item_ico_white@2x.png</file>
+        <file>images/transfer_manager/transfers_states/download_item_ico_white@3x.png</file>
+        <file>images/transfer_manager/transfers_states/downloaded_item_ico.png</file>
+        <file>images/transfer_manager/transfers_states/downloaded_item_ico@2x.png</file>
+        <file>images/transfer_manager/transfers_states/downloaded_item_ico@3x.png</file>
+        <file>images/transfer_manager/transfers_states/synching_ico.png</file>
+        <file>images/transfer_manager/transfers_states/synching_ico@2x.png</file>
+        <file>images/transfer_manager/transfers_states/synching_ico@3x.png</file>
+        <file>images/transfer_manager/transfers_states/upload_fail_item_ico.png</file>
+        <file>images/transfer_manager/transfers_states/upload_fail_item_ico@2x.png</file>
+        <file>images/transfer_manager/transfers_states/upload_fail_item_ico@3x.png</file>
+        <file>images/transfer_manager/transfers_states/upload_item_ico.png</file>
+        <file>images/transfer_manager/transfers_states/upload_item_ico@2x.png</file>
+        <file>images/transfer_manager/transfers_states/upload_item_ico@3x.png</file>
+        <file>images/transfer_manager/transfers_states/upload_item_ico_white.png</file>
+        <file>images/transfer_manager/transfers_states/upload_item_ico_white@2x.png</file>
+        <file>images/transfer_manager/transfers_states/upload_item_ico_white@3x.png</file>
+        <file>images/transfer_manager/transfers_states/uploaded_item_ico.png</file>
+        <file>images/transfer_manager/transfers_states/uploaded_item_ico@2x.png</file>
+        <file>images/transfer_manager/transfers_states/uploaded_item_ico@3x.png</file>
+        <file>images/transfer_manager/sidebar/sidebar_pause_ico_default.png</file>
+        <file>images/transfer_manager/sidebar/sidebar_pause_ico_default@2x.png</file>
+        <file>images/transfer_manager/sidebar/sidebar_pause_ico_default@3x.png</file>
+        <file>images/transfer_manager/sidebar/sidebar_search_ico_default.png</file>
+        <file>images/transfer_manager/sidebar/sidebar_search_ico_default@2x.png</file>
+        <file>images/transfer_manager/sidebar/sidebar_search_ico_default@3x.png</file>
+        <file>images/transfer_manager/transfers_actions/lists_pause_all_ico_selected.png</file>
+        <file>images/transfer_manager/transfers_actions/lists_pause_all_ico_selected@2x.png</file>
+        <file>images/transfer_manager/transfers_actions/lists_pause_all_ico_selected@3x.png</file>
+        <file>images/transfer_manager/transfers_actions/lists_pause_ico_hover_selected.png</file>
+        <file>images/transfer_manager/transfers_actions/lists_pause_ico_hover_selected@2x.png</file>
+        <file>images/transfer_manager/transfers_actions/lists_pause_ico_hover_selected@3x.png</file>
+        <file>images/transfer_manager/transfers_actions/lists_pause_ico_selected.png</file>
+        <file>images/transfer_manager/transfers_actions/lists_pause_ico_selected@2x.png</file>
+        <file>images/transfer_manager/transfers_actions/lists_pause_ico_selected@3x.png</file>
+        <file>images/transfer_manager/sidebar/sidebar_pause_ico_selected.png</file>
+        <file>images/transfer_manager/sidebar/sidebar_pause_ico_selected@2x.png</file>
+        <file>images/transfer_manager/sidebar/sidebar_pause_ico_selected@3x.png</file>
+        <file>images/transfer_manager/sidebar/search_result_default.png</file>
+        <file>images/transfer_manager/sidebar/search_result_default@2x.png</file>
+        <file>images/transfer_manager/sidebar/search_result_default@3x.png</file>
+        <file>images/transfer_manager/sidebar/search_result_hover.png</file>
+        <file>images/transfer_manager/sidebar/search_result_hover@2x.png</file>
+        <file>images/transfer_manager/sidebar/search_result_hover@3x.png</file>
+        <file>images/transfer_manager/sidebar/search_result_selected.png</file>
+        <file>images/transfer_manager/sidebar/search_result_selected@2x.png</file>
+        <file>images/transfer_manager/sidebar/search_result_selected@3x.png</file>
+        <file>images/transfer_manager/sidebar/search_ico_default.png</file>
+        <file>images/transfer_manager/sidebar/search_ico_default@2x.png</file>
+        <file>images/transfer_manager/sidebar/search_ico_default@3x.png</file>
+        <file>images/transfer_manager/sidebar/sidebar_pause_ico_hover.png</file>
+        <file>images/transfer_manager/sidebar/sidebar_pause_ico_hover@2x.png</file>
+        <file>images/transfer_manager/sidebar/sidebar_pause_ico_hover@3x.png</file>
+        <file>images/transfer_manager/sidebar/sidebar_pause_ico_hover_selected.png</file>
+        <file>images/transfer_manager/sidebar/sidebar_pause_ico_hover_selected@2x.png</file>
+        <file>images/transfer_manager/sidebar/sidebar_pause_ico_hover_selected@3x.png</file>
+        <file>images/transfer_manager/sidebar/sidebar_search_ico_hover.png</file>
+        <file>images/transfer_manager/sidebar/sidebar_search_ico_hover@2x.png</file>
+        <file>images/transfer_manager/sidebar/sidebar_search_ico_hover@3x.png</file>
+        <file>images/transfer_manager/sidebar/delete_search_ico_hover.png</file>
+        <file>images/transfer_manager/sidebar/delete_search_ico_hover@2x.png</file>
+        <file>images/transfer_manager/sidebar/delete_search_ico_hover@3x.png</file>
+        <file>images/transfer_manager/sidebar/delete_search_ico_default.png</file>
+        <file>images/transfer_manager/sidebar/delete_search_ico_default@2x.png</file>
+        <file>images/transfer_manager/sidebar/delete_search_ico_default@3x.png</file>
+        <file>images/transfer_manager/sidebar/delete_search_result_default.png</file>
+        <file>images/transfer_manager/sidebar/delete_search_result_default@2x.png</file>
+        <file>images/transfer_manager/sidebar/delete_search_result_default@3x.png</file>
+        <file>images/transfer_manager/sidebar/delete_search_result_hover.png</file>
+        <file>images/transfer_manager/sidebar/delete_search_result_hover@2x.png</file>
+        <file>images/transfer_manager/sidebar/delete_search_result_hover@3x.png</file>
+        <file>images/transfer_manager/transfers_actions/lists_cancel_all_ico_hover.png</file>
+        <file>images/transfer_manager/transfers_actions/lists_cancel_all_ico_hover@2x.png</file>
+        <file>images/transfer_manager/transfers_actions/lists_cancel_all_ico_hover@3x.png</file>
     </qresource>
 </RCC>

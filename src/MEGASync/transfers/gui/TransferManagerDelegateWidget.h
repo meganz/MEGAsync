@@ -48,7 +48,7 @@ private:
     bool setPauseResumeTransferIcon(const QString &name);
 
     Ui::TransferManagerDelegateWidget *mUi;
-    QString mLastPauseResuemtTransferIconName;
+    QString mPauseResumeTransferDefaultIconName;
 };
 
 #endif // TRANSFERMANAGERDELEGATEWIDGET_H

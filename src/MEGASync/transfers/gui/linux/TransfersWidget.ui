@@ -420,8 +420,7 @@ TransferWidgetHeaderItem  QLabel
              </property>
              <property name="icon">
               <iconset resource="../../../gui/Resources_linux.qrc">
-               <normaloff>:/images/lists_pause_all_ico.png</normaloff>
-               <normalon>:/images/lists_resume_all_ico.png</normalon>:/images/lists_pause_all_ico.png</iconset>
+               <normaloff>:/images/transfer_manager/transfers_actions/lists_pause_all_ico_default.png</normaloff>:/images/transfer_manager/transfers_actions/lists_pause_all_ico_default.png</iconset>
              </property>
              <property name="iconSize">
               <size>
@@ -431,6 +430,14 @@ TransferWidgetHeaderItem  QLabel
              </property>
              <property name="checkable">
               <bool>true</bool>
+             </property>
+             <property name="hover_selected" stdset="0">
+              <bool>true</bool>
+             </property>
+             <property name="icon_prefix" stdset="0">
+              <url>
+               <string>qrc:/images/transfer_manager/transfers_actions/lists_pause_all_ico_default.png</string>
+              </url>
              </property>
             </widget>
            </widget>
@@ -463,7 +470,7 @@ TransferWidgetHeaderItem  QLabel
             </property>
             <property name="icon">
              <iconset resource="../../../gui/Resources_linux.qrc">
-              <normaloff>:/images/lists_cancel_all_ico.png</normaloff>:/images/lists_cancel_all_ico.png</iconset>
+              <normaloff>:/images/transfer_manager/transfers_actions/lists_cancel_all_ico_default.png</normaloff>:/images/transfer_manager/transfers_actions/lists_cancel_all_ico_default.png</iconset>
             </property>
             <property name="iconSize">
              <size>
@@ -473,6 +480,11 @@ TransferWidgetHeaderItem  QLabel
             </property>
             <property name="checkable">
              <bool>false</bool>
+            </property>
+            <property name="icon_prefix" stdset="0">
+             <url>
+              <string>qrc:/images/transfer_manager/transfers_actions/lists_cancel_all_ico_default.png</string>
+             </url>
             </property>
            </widget>
           </item>
