@@ -178,7 +178,7 @@ QGroupBox::title
     min-height: 24px;
     max-height: 24px;
     max-width: 24px;
-    qProperty-iconSize: 24px;
+    qProperty-iconSize: 16px;
     border: none;
     padding: 0px;
     margin: 0px;
@@ -540,6 +540,14 @@ QToolButton
             <property name="checkable">
              <bool>true</bool>
             </property>
+            <property name="hover_selected" stdset="0">
+             <bool>true</bool>
+            </property>
+            <property name="icon_prefix" stdset="0">
+             <url>
+              <string>qrc:/images/transfer_manager/sidebar/sidebar_pause_ico_default.png</string>
+             </url>
+            </property>
            </widget>
           </item>
           <item>
@@ -560,7 +568,7 @@ QToolButton
               <height>32</height>
              </size>
             </property>
-            <property name="icon_pregix" stdset="0">
+            <property name="icon_prefix" stdset="0">
              <url>
               <string>qrc:/images/transfer_manager/sidebar/sidebar_search_ico_default.png</string>
              </url>
@@ -720,6 +728,11 @@ QToolButton
               <property name="flat">
                <bool>false</bool>
               </property>
+              <property name="icon_prefix" stdset="0">
+               <url>
+                <string>qrc:/images/transfer_manager/sidebar/all_transfers_ico_default.png</string>
+               </url>
+              </property>
              </widget>
             </item>
             <item>
@@ -808,6 +821,11 @@ QToolButton
               <property name="autoDefault">
                <bool>false</bool>
               </property>
+              <property name="icon_prefix" stdset="0">
+               <url>
+                <string>qrc:/images/transfer_manager/sidebar/downloads_ico_default.png</string>
+               </url>
+              </property>
              </widget>
             </item>
             <item>
@@ -895,6 +913,11 @@ QToolButton
               </property>
               <property name="autoDefault">
                <bool>false</bool>
+              </property>
+              <property name="icon_prefix" stdset="0">
+               <url>
+                <string>qrc:/images/transfer_manager/sidebar/uploads_ico_default.png</string>
+               </url>
               </property>
              </widget>
             </item>
@@ -987,6 +1010,11 @@ QToolButton
               <property name="autoDefault">
                <bool>false</bool>
               </property>
+              <property name="icon_prefix" stdset="0">
+               <url>
+                <string>qrc:/images/transfer_manager/sidebar/finished_ico_default.png</string>
+               </url>
+              </property>
              </widget>
             </item>
             <item>
@@ -1077,6 +1105,11 @@ QToolButton
               </property>
               <property name="autoDefault">
                <bool>false</bool>
+              </property>
+              <property name="icon_prefix" stdset="0">
+               <url>
+                <string>qrc:/images/transfer_manager/sidebar/failed_ico_default.png</string>
+               </url>
               </property>
              </widget>
             </item>
@@ -1190,6 +1223,11 @@ QToolButton
               <property name="autoDefault">
                <bool>false</bool>
               </property>
+              <property name="icon_prefix" stdset="0">
+               <url>
+                <string>qrc:/images/transfer_manager/sidebar/compressed_default.png</string>
+               </url>
+              </property>
              </widget>
             </item>
             <item>
@@ -1278,6 +1316,11 @@ QToolButton
               <property name="autoDefault">
                <bool>false</bool>
               </property>
+              <property name="icon_prefix" stdset="0">
+               <url>
+                <string>qrc:/images/transfer_manager/sidebar/text_default.png</string>
+               </url>
+              </property>
              </widget>
             </item>
             <item>
@@ -1362,6 +1405,11 @@ QToolButton
               </property>
               <property name="autoDefault">
                <bool>false</bool>
+              </property>
+              <property name="icon_prefix" stdset="0">
+               <url>
+                <string>qrc:/images/transfer_manager/sidebar/image_default.png</string>
+               </url>
               </property>
              </widget>
             </item>
@@ -1448,6 +1496,11 @@ QToolButton
               <property name="autoDefault">
                <bool>false</bool>
               </property>
+              <property name="icon_prefix" stdset="0">
+               <url>
+                <string>qrc:/images/transfer_manager/sidebar/video_default.png</string>
+               </url>
+              </property>
              </widget>
             </item>
             <item>
@@ -1533,6 +1586,11 @@ QToolButton
               <property name="autoDefault">
                <bool>false</bool>
               </property>
+              <property name="icon_prefix" stdset="0">
+               <url>
+                <string>qrc:/images/transfer_manager/sidebar/audio_default.png</string>
+               </url>
+              </property>
              </widget>
             </item>
             <item>
@@ -1617,6 +1675,11 @@ QToolButton
               </property>
               <property name="autoDefault">
                <bool>false</bool>
+              </property>
+              <property name="icon_prefix" stdset="0">
+               <url>
+                <string>qrc:/images/transfer_manager/sidebar/generic_default.png</string>
+               </url>
               </property>
              </widget>
             </item>
@@ -1730,6 +1793,11 @@ QToolButton
               <property name="autoDefault">
                <bool>false</bool>
               </property>
+              <property name="icon_prefix" stdset="0">
+               <url>
+                <string>qrc:/images/transfer_manager/sidebar/search_result_default.png</string>
+               </url>
+              </property>
              </widget>
             </item>
             <item>
@@ -1776,7 +1844,7 @@ QToolButton
          <string notr="true"/>
         </property>
         <property name="currentIndex">
-         <number>1</number>
+         <number>0</number>
         </property>
         <widget class="QWidget" name="pSpeedAndClear">
          <layout class="QHBoxLayout" name="pSpeedAndClearLayout" stretch="1,1,0,0">
