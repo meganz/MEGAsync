@@ -269,7 +269,6 @@ set (MOC_INPUT
     ${MEGAsyncDir}/gui/NotificationsSettings.h
     ${MEGAsyncDir}/gui/CancelConfirmWidget.h	
     ${MEGAsyncDir}/gui/SetupWizard.h
-    ${MEGAsyncDir}/gui/NotificationsSettings.h
     ${MEGAsyncDir}/gui/StatusInfo.h
     ${MEGAsyncDir}/gui/MegaItemProxyModel.h
     ${MEGAsyncDir}/gui/MegaItemTreeView.h
