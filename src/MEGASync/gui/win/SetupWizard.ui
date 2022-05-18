@@ -26,7 +26,7 @@
    <string>Set up Assistant - MEGAsync</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">QPushButton, QLabel, QLineEdit
+   <string notr="true">QLabel, QLineEdit
 {
 font-size: 11px;
 }
@@ -92,12 +92,6 @@ font-size: 11px;
 #wErrorMessage
 {
 	background-color: #333333;
-}
-
-QPushButton
-{
-	padding-right: 12px;
-	padding-left: 12px;
 }</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
@@ -116,7 +110,7 @@ QPushButton
    <property name="bottomMargin">
     <number>0</number>
    </property>
-   <item>
+   <item alignment="Qt::AlignTop">
     <widget class="QWidget" name="wHeader" native="true">
      <property name="minimumSize">
       <size>
@@ -476,7 +470,7 @@ QPushButton
       </size>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>3</number>
      </property>
      <widget class="QWidget" name="pNewAccount">
       <property name="styleSheet">
@@ -853,11 +847,8 @@ QPushButton
                <property name="focusPolicy">
                 <enum>Qt::NoFocus</enum>
                </property>
-               <property name="styleSheet">
-                <string notr="true"/>
-               </property>
                <property name="text">
-                <string>I agree with the MEGA &lt;a href=&quot;https://mega.co.nz/#terms&quot;&gt;Terms of Service&lt;/a&gt;</string>
+                <string>I agree with the MEGA [A]Terms of Service[/A]</string>
                </property>
                <property name="textFormat">
                 <enum>Qt::RichText</enum>
@@ -1281,7 +1272,7 @@ background-color: #E2E2E2;
             </property>
             <layout class="QVBoxLayout" name="verticalLayout_12" stretch="0,0">
              <property name="spacing">
-              <number>12</number>
+              <number>0</number>
              </property>
              <property name="topMargin">
               <number>21</number>
@@ -1289,7 +1280,7 @@ background-color: #E2E2E2;
              <property name="bottomMargin">
               <number>14</number>
              </property>
-             <item>
+             <item alignment="Qt::AlignHCenter">
               <widget class="QPushButton" name="rTypicalSetup">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -1310,9 +1301,7 @@ background-color: #E2E2E2;
                 </size>
                </property>
                <property name="font">
-                <font>
-                 <pointsize>-1</pointsize>
-                </font>
+                <font/>
                </property>
                <property name="focusPolicy">
                 <enum>Qt::NoFocus</enum>
@@ -1382,7 +1371,7 @@ border: none;</string>
                 <item>
                  <widget class="QLabel" name="lTypicalHeader">
                   <property name="sizePolicy">
-                   <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+                   <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                     <horstretch>0</horstretch>
                     <verstretch>0</verstretch>
                    </sizepolicy>
@@ -1495,7 +1484,7 @@ color: #E2574C;
             </property>
             <layout class="QVBoxLayout" name="verticalLayout_13">
              <property name="spacing">
-              <number>12</number>
+              <number>0</number>
              </property>
              <property name="leftMargin">
               <number>12</number>
@@ -1506,7 +1495,7 @@ color: #E2574C;
              <property name="bottomMargin">
               <number>14</number>
              </property>
-             <item>
+             <item alignment="Qt::AlignHCenter">
               <widget class="QPushButton" name="rAdvancedSetup">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -1527,9 +1516,7 @@ color: #E2574C;
                 </size>
                </property>
                <property name="font">
-                <font>
-                 <pointsize>-1</pointsize>
-                </font>
+                <font/>
                </property>
                <property name="focusPolicy">
                 <enum>Qt::NoFocus</enum>
@@ -1599,7 +1586,7 @@ border: none;</string>
                 <item>
                  <widget class="QLabel" name="lAdvancedHeader">
                   <property name="sizePolicy">
-                   <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+                   <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                     <horstretch>0</horstretch>
                     <verstretch>0</verstretch>
                    </sizepolicy>
@@ -1847,12 +1834,6 @@ font-size: 13px;
             </item>
             <item>
              <widget class="QPushButton" name="bLocalFolder">
-              <property name="minimumSize">
-               <size>
-                <width>0</width>
-                <height>22</height>
-               </size>
-              </property>
               <property name="text">
                <string>Change</string>
               </property>
@@ -1900,12 +1881,6 @@ font-size: 13px;
             </item>
             <item>
              <widget class="QPushButton" name="bMegaFolder">
-              <property name="minimumSize">
-               <size>
-                <width>0</width>
-                <height>22</height>
-               </size>
-              </property>
               <property name="text">
                <string>Change</string>
               </property>
@@ -2157,7 +2132,7 @@ font-family: &quot;Lato&quot;;
          </property>
         </widget>
        </item>
-       <item>
+       <item alignment="Qt::AlignBottom">
         <widget class="QWidget" name="wAllDone" native="true">
          <property name="minimumSize">
           <size>
@@ -2239,12 +2214,6 @@ image: url(://images/desktop_app_TM.png);
               </item>
               <item>
                <widget class="QPushButton" name="bFinish">
-                <property name="minimumSize">
-                 <size>
-                  <width>0</width>
-                  <height>22</height>
-                 </size>
-                </property>
                 <property name="text">
                  <string>Finish</string>
                 </property>
@@ -2293,12 +2262,6 @@ image: url(://images/desktop_app_TM.png);
       </property>
       <item>
        <widget class="QPushButton" name="bSkip">
-        <property name="minimumSize">
-         <size>
-          <width>0</width>
-          <height>22</height>
-         </size>
-        </property>
         <property name="text">
          <string>Skip</string>
         </property>
@@ -2319,12 +2282,6 @@ image: url(://images/desktop_app_TM.png);
       </item>
       <item>
        <widget class="QPushButton" name="bCancel">
-        <property name="minimumSize">
-         <size>
-          <width>0</width>
-          <height>22</height>
-         </size>
-        </property>
         <property name="text">
          <string>Cancel</string>
         </property>
@@ -2332,12 +2289,6 @@ image: url(://images/desktop_app_TM.png);
       </item>
       <item>
        <widget class="QPushButton" name="bBack">
-        <property name="minimumSize">
-         <size>
-          <width>0</width>
-          <height>22</height>
-         </size>
-        </property>
         <property name="text">
          <string>Back</string>
         </property>
@@ -2345,12 +2296,6 @@ image: url(://images/desktop_app_TM.png);
       </item>
       <item>
        <widget class="QPushButton" name="bNext">
-        <property name="minimumSize">
-         <size>
-          <width>0</width>
-          <height>22</height>
-         </size>
-        </property>
         <property name="text">
          <string>Next</string>
         </property>

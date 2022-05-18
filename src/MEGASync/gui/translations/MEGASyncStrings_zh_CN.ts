@@ -6,7 +6,7 @@
     <message>
         <source>Account usage details</source>
         <translatorcomment>Title of the dialog that displays account usage details for the actual logged user.</translatorcomment>
-        <translation>帐户使用量明细</translation>
+        <translation>帐户使用详情</translation>
     </message>
     <message>
         <source>Cloud Drive</source>
@@ -41,7 +41,7 @@
     <message>
         <source>Of that, size taken up by file versions:</source>
         <translatorcomment>Label to indicate the amount of size occupied by file versions.</translatorcomment>
-        <translation>文件历史版本占用大小</translation>
+        <translation>文件版本占用大小</translation>
     </message>
 </context>
 <context>
@@ -107,12 +107,12 @@
     <message>
         <source>Add exclusion</source>
         <translatorcomment>Title of the dialog displayed when an user is adding a new exclusion rule for the synchronizations.</translatorcomment>
-        <translation>添加排除的文件</translation>
+        <translation>添加排除项目</translation>
     </message>
     <message>
         <source>Enter a name, an absolute path (wildcards * and ? are allowed) or choose which file or folder you want to exclude from the synchronization</source>
         <translatorcomment>Label to describe the different options that the user have to set a exclusion for all synchronizations.</translatorcomment>
-        <translation>输入名称、绝对路径（通配符 * 和 ？亦可）或选择要从同步中排除的文件或文件夹</translation>
+        <translation>请输入名称、路径（允许使用通配符 * 和 ?）或选择要从同步中排除的文件或文件夹。</translation>
     </message>
     <message>
         <source>Choose File</source>
@@ -152,17 +152,17 @@
     <message>
         <source>Select the file or folder you want to exclude</source>
         <translatorcomment>Caption of dialog to select a file or folder to exclude for the synchronizations</translatorcomment>
-        <translation>选择要排除的文件或文件夹</translation>
+        <translation>请选择您要排除的文件或文件夹</translation>
     </message>
     <message>
         <source>Select the folder you want to exclude</source>
         <translatorcomment>Caption of dialog to select a folder to exclude for the synchronizations</translatorcomment>
-        <translation>选择要排除的文件夹</translation>
+        <translation>请选择您要排除的文件夹</translation>
     </message>
     <message>
         <source>Select the file you want to exclude</source>
         <translatorcomment>Caption of dialog to select a file to exclude for the synchronizations</translatorcomment>
-        <translation>选择要排除的文件</translation>
+        <translation>请选择您要排除的文件</translation>
     </message>
 </context>
 <context>
@@ -185,7 +185,7 @@
     <message>
         <source>Incoming Shares</source>
         <translatorcomment>Label to indicate that the application is showing only incoming share notifications</translatorcomment>
-        <translation>传入的分享</translation>
+        <translation>传入的共享</translation>
     </message>
 </context>
 <context>
@@ -203,7 +203,7 @@
     <message>
         <source>Incoming Shares</source>
         <translatorcomment>Label title for Incoming shares category of a notification</translatorcomment>
-        <translation>传入的分享</translation>
+        <translation>传入的共享</translation>
     </message>
     <message>
         <source>Payment</source>
@@ -233,7 +233,7 @@
     <message>
         <source>Contact Blocked</source>
         <translatorcomment>Notification label that indicates the user has blocked a contact</translatorcomment>
-        <translation>联系人已阻止</translation>
+        <translation>联系人已屏蔽</translation>
     </message>
     <message>
         <source>Contact Updated</source>
@@ -268,12 +268,12 @@
     <message>
         <source>[A] sent you a contact request</source>
         <translatorcomment>Label to indicate that [A] sent you a contact request. Placeholder will be replaced by email of user that sent the request.</translatorcomment>
-        <translation>[A]向你发送了一个联系人请求</translation>
+        <translation>[A]向您发送了联系人请求</translation>
     </message>
     <message>
         <source>[A] cancelled their contact request</source>
         <translatorcomment>Label to indicate that [A] cancelled a contact request. Placeholder will be replaced by email of user that cancelled the request.</translatorcomment>
-        <translation>[A]已取消他们的联系人请求</translation>
+        <translation>[A]已取消其联系人请求</translation>
     </message>
     <message>
         <source>You have a contact request</source>
@@ -283,7 +283,7 @@
     <message>
         <source>[A] deleted you as a contact</source>
         <translatorcomment>Label to indicate that [A] deleted you as a contact. Placeholder will be replaced by email of user that deleted the contact.</translatorcomment>
-        <translation>[A]已将您删除</translation>
+        <translation>[A]已将您从联系人中删除</translation>
     </message>
     <message>
         <source>[A] has been deleted/deactivated</source>
@@ -298,22 +298,22 @@
     <message>
         <source>[A] blocked you as contact</source>
         <translatorcomment>Label to indicate that [A] has blocked you as a contact. Placeholder will be replaced by email of user.</translatorcomment>
-        <translation>[A]已忽略您的联系人请求</translation>
+        <translation>[A]已将您从联系人中屏蔽</translation>
     </message>
     <message>
         <source>You ignored a contact request</source>
         <translatorcomment>Label to indicate that the user has ignored a contact request.</translatorcomment>
-        <translation>您已忽略一个联系人邀请</translation>
+        <translation>您已忽略联系人请求</translation>
     </message>
     <message>
         <source>You accepted a contact request</source>
         <translatorcomment>Label to indicate that the user has accepted a contact request.</translatorcomment>
-        <translation>您已接受一个联系人邀请</translation>
+        <translation>您已接受联系人请求</translation>
     </message>
     <message>
         <source>You denied a contact request</source>
         <translatorcomment>Label to indicate that the user has denied a contact request.</translatorcomment>
-        <translation>您已拒绝一个联系人邀请</translation>
+        <translation>您已拒绝联系人请求</translation>
     </message>
     <message>
         <source>[A] accepted your contact request</source>
@@ -343,32 +343,32 @@
     <message>
         <source>[A] removed 1 item</source>
         <translatorcomment>Label to indicate that [A] has removed 1 item from a shared folder. Placeholder will be replaced by email of the user that made the deletion.</translatorcomment>
-        <translation>[A]已删除1个项目</translation>
+        <translation>[A]已移除1个项目</translation>
     </message>
     <message>
         <source>[A] removed [B] items</source>
         <translatorcomment>Label to indicate that [A] has removed [B] items from a shared folder. Placeholder [A] will be replaced by email of the user that made the deletion and [B] with the number of removed items.</translatorcomment>
-        <translation>[A]已删除[B]个项目</translation>
+        <translation>[A]已移除[B]个项目</translation>
     </message>
     <message>
         <source>Your payment for the [A] plan was received</source>
         <translatorcomment>Label to indicate that the user has paid for a [A] PRO plan. Placeholder will be replaced by the PRO plan name</translatorcomment>
-        <translation>已收到您购买的[A]付款</translation>
+        <translation>您的[A]方案付款已收到</translation>
     </message>
     <message>
         <source>Your payment for the [A] plan was unsuccessful</source>
         <translatorcomment>Label to indicate that the the payment for a [A] PRO plan has failed. Placeholder will be replaced by the PRO plan name</translatorcomment>
-        <translation>您购买的[A]计划未成功</translation>
+        <translation>您的[A]方案付款失败</translation>
     </message>
     <message>
         <source>Your PRO membership plan will expire in 1 day</source>
         <translatorcomment>Label to indicate that the PRO membership will expire in 1 day.</translatorcomment>
-        <translation>您的Pro会员将于1天后到期</translation>
+        <translation>您的Pro会员方案将于1天后到期</translation>
     </message>
     <message>
         <source>Your PRO membership plan will expire in [A] days</source>
         <translatorcomment>Label to indicate that the PRO membership will expire in [A] days. Placeholder will be replaced by the remaining days until plan will expire.</translatorcomment>
-        <translation>您的Pro会员将于[A]天后到期</translation>
+        <translation>您的Pro会员方案将于[A]天后到期</translation>
     </message>
     <message>
         <source>PRO membership plan expiring soon</source>
@@ -378,22 +378,22 @@
     <message>
         <source>Your PRO membership plan expired 1 day ago</source>
         <translatorcomment>Label to indicate that the PRO membership expired 1 day ago.</translatorcomment>
-        <translation>您的Pro会员已于1天前到期</translation>
+        <translation>您的Pro会员方案已于1天前到期</translation>
     </message>
     <message>
         <source>Your PRO membership plan expired [A] days ago</source>
         <translatorcomment>Label to indicate that the PRO membership expired [A] days ago. Placeholder will be replaced by the days from the expiration of the PRO membership.</translatorcomment>
-        <translation>您的Pro会员已于[A]天前到期</translation>
+        <translation>您的Pro会员方案已于[A]天前到期</translation>
     </message>
     <message>
         <source>Your publicly shared has been taken down</source>
         <translatorcomment>Label to indicate that your public shared has been taken down.</translatorcomment>
-        <translation>您的公共分享已删除</translation>
+        <translation>您的公开分享已被删除。</translation>
     </message>
     <message>
         <source>Your taken down has been reinstated</source>
         <translatorcomment>Label to indicate that your public shared has been reinstated.</translatorcomment>
-        <translation>您的公共分享已恢复</translation>
+        <translation>您的公开分享已恢复。</translation>
     </message>
     <message>
         <source>Reminder</source>
@@ -403,12 +403,12 @@
     <message>
         <source>Access to shared folder was removed by [A]</source>
         <translatorcomment>Label to indicate that the access for a shared folder has been removed by [A]. Keep placeholder. It will be replaced at runtime with specific email.</translatorcomment>
-        <translation>[A]已删除对共享文件夹的访问</translation>
+        <translation>[A]移除了对共享文件夹的访问权限</translation>
     </message>
     <message>
         <source>New Shared folder from [X]</source>
         <translatorcomment>Label to indicate that [X] shared a folder with current user. Placeholder will be replaced by email of sharer user.</translatorcomment>
-        <translation>新的分享文件夹从[X]</translation>
+        <translation>来自[X]的新共享文件夹</translation>
     </message>
     <message>
         <source>Shared Folder Activity</source>
@@ -418,27 +418,27 @@
     <message>
         <source>Access to shared folder was removed</source>
         <translatorcomment>Label to indicate that the access to a shared folder has been removed by the owner</translatorcomment>
-        <translation>当共享文件夹的权限被移除时</translation>
+        <translation>共享文件夹的访问权限已被移除</translation>
     </message>
     <message>
         <source>Your publicly shared file ([A]) has been taken down</source>
         <translatorcomment>Label to indicate that public shared file has been taken down. Placeholder [A] will be replaced by the name of the file.</translatorcomment>
-        <translation>您的公共共享文件([A])已被删除</translation>
+        <translation>您公开分享的文件（[A]）已被删除</translation>
     </message>
     <message>
         <source>Your publicly shared folder ([A]) has been taken down</source>
         <translatorcomment>Label to indicate that public shared folder has been taken down. Placeholder [A] will be replaced by the name of the folder.</translatorcomment>
-        <translation>您的公共共享文件夹([A])已被删除</translation>
+        <translation>您公开分享的文件夹（[A]）已被删除</translation>
     </message>
     <message>
         <source>Your publicly shared file ([A]) has been reinstated</source>
         <translatorcomment>Label to indicate that public shared file has been reinstated. Placeholder [A] will be replaced by the name of the file.</translatorcomment>
-        <translation>您的公共共享文件([A])已恢复</translation>
+        <translation>您公开分享的文件（[A]）已恢复</translation>
     </message>
     <message>
         <source>Your publicly shared folder ([A]) has been reinstated</source>
         <translatorcomment>Label to indicate that public shared folder has been reinstated. Placeholder [A] will be replaced by the name of the folder.</translatorcomment>
-        <translation>您的公共共享文件夹([A])已恢复</translation>
+        <translation>您公开分享的文件夹（[A]）已恢复</translation>
     </message>
 </context>
 <context>
@@ -451,7 +451,7 @@
     <message>
         <source>Upload rate limit</source>
         <translatorcomment>Section title for upload rate limit details.</translatorcomment>
-        <translation>上传速度限制</translation>
+        <translation>上传速率限制</translation>
     </message>
     <message>
         <source>No limit</source>
@@ -461,7 +461,7 @@
     <message>
         <source>Limit to:</source>
         <translatorcomment>Radio button text to indicate the limit for transfer rate.</translatorcomment>
-        <translation>限于：</translation>
+        <translation>限制在：</translation>
     </message>
     <message>
         <source>KB/s</source>
@@ -481,12 +481,12 @@
     <message>
         <source>Download rate limit</source>
         <translatorcomment>Section title for download rate limit details.</translatorcomment>
-        <translation>限制下载速度</translation>
+        <translation>下载速率限制</translation>
     </message>
     <message>
         <source>Number of connections per transfer</source>
         <translatorcomment>Section title for number of connections per transfer details.</translatorcomment>
-        <translation>每次传输的连接数</translation>
+        <translation>单个传输的连接数</translation>
     </message>
     <message>
         <source>Downloads:</source>
@@ -521,17 +521,17 @@
     <message>
         <source>Upload rate limit:</source>
         <translatorcomment>Label to indicate the limit of upload rate on macOS.</translatorcomment>
-        <translation>上传速度限制：</translation>
+        <translation>上传速率限制：</translation>
     </message>
     <message>
         <source>Download rate limit:</source>
         <translatorcomment>Label to indicate the limit of download rate on macOS.</translatorcomment>
-        <translation>下载速度限制：</translation>
+        <translation>下载速率限制：</translation>
     </message>
     <message>
         <source>Number of connections per transfer:</source>
         <translatorcomment>Label to indicate the number con connections per transfer on macOS.</translatorcomment>
-        <translation>单次传输的连接数：</translation>
+        <translation>单个传输的连接数：</translation>
     </message>
     <message>
         <source>Update</source>
@@ -544,12 +544,12 @@
     <message>
         <source>Please select a local folder and a MEGA folder</source>
         <translatorcomment>Message displayed when an user is adding a synchronized folder an either local or remote folder are empty.</translatorcomment>
-        <translation>请选择一个本地文件夹与一个MEGA文件夹</translation>
+        <translation>请选择一个本地文件夹和一个MEGA文件夹</translation>
     </message>
     <message>
         <source>The selected local folder is already synced</source>
         <translatorcomment>Message displayed when an user is adding a local folder wich is already synced.</translatorcomment>
-        <translation>已选的本地文件夹已同步</translation>
+        <translation>所选的本地文件夹已同步</translation>
     </message>
     <message>
         <source>A synced folder cannot be inside another synced folder</source>
@@ -559,7 +559,7 @@
     <message>
         <source>The selected MEGA folder is already synced</source>
         <translatorcomment>Message displayed when an user is adding an already synchronized remote folder.</translatorcomment>
-        <translation>已选的MEGA文件夹已同步</translation>
+        <translation>所选的MEGA文件夹已同步</translation>
     </message>
     <message>
         <source>Sync name</source>
@@ -570,7 +570,7 @@
         <source>The name &quot;%1&quot; is already in use for another sync
 Please enter a different name to identify this synced folder:</source>
         <translatorcomment>Detailed message displayed when a user is using a name for a local folder that is already used. Preserve &quot;%1&quot; code because is used to indicate the local folder at runtime.</translatorcomment>
-        <translation>该名称“%1”已用于其他同步。请输入不同的名称以区别此同步文件夹：</translation>
+        <translation>该名称“%1”已用于另一个同步。请输入其他名称以区别此同步文件夹：</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -628,7 +628,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Attach diagnostic log files to assist with debugging</source>
         <translatorcomment>Check box to confirm the attachment and upload of log files generated by MEGAsync to our support team.</translatorcomment>
-        <translation>附加诊断日志文件以帮助调试</translation>
+        <translation>附加诊断日志文件以协助调试</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -648,7 +648,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Bug report is uploading, it may take a few minutes</source>
         <translatorcomment>Label to indicate that the bug report is being uploaded to our support team.</translatorcomment>
-        <translation>您报告的问题正在上传中，这可能需要几分钟时间。</translation>
+        <translation>您报告的问题正在上传，这可能需要几分钟时间。</translation>
     </message>
     <message>
         <source>Bug report success!</source>
@@ -658,7 +658,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Your bug report has been submitted, a confirmation email will sent to you accordingly.</source>
         <translatorcomment>Label to inform the user that he will receive a confirmation email </translatorcomment>
-        <translation>您报告的问题已上传，确认邮件将发送至您的邮箱。</translation>
+        <translation>您的问题已提交，我们将向您发送一封确认电子邮件。</translation>
     </message>
     <message>
         <source>Error on submitting bug report</source>
@@ -703,7 +703,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Please wait until the current upload is completed.</source>
         <translatorcomment>Informative message shown to the user to inform that needs to wait until the current bug report upload is completed to start a new one bug report.</translatorcomment>
-        <translation>请等待完成当前上传。</translation>
+        <translation>请等待当前上传完成。</translation>
     </message>
 </context>
 <context>
@@ -736,7 +736,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>[A]This software uses Qt ([C] 2018 The Qt Company Ltd) which is covered by GNU LESSER GENERAL PUBLIC LICENSE Version 3[/A]</source>
         <translatorcomment>QT copyright notice shown at changelog dialog. [A][/A] placeholders used to provide ui style and [C] placeholder will be replaced by copyright symbol.</translatorcomment>
-        <translation>[A]本软件使用Qt ([C] 2018 The Qt Company Ltd)，其通过GNU LESSER GENERAL PUBLIC LICENSE Version 3保护[/A]</translation>
+        <translation>[A]本软件使用GNU宽通用公共许可证第3版所涵盖的Qt应用程序开发框架（[C]2018 The Qt Company Ltd）[/A]</translation>
     </message>
 </context>
 <context>
@@ -811,7 +811,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>You can help us to improve MEGAsync by sending this error report. It doesn&apos;t contain any personal information. If you want to give us more details, please write them below:</source>
         <translatorcomment>Label to indicate if the user wants to add some more details to attach to the crash report.</translatorcomment>
-        <translation>您可藉由发送错误报告来协助我们改善MEGAsync。这将不会包含任何个人资料。如果您愿意提供更多细节给我们，请列于下方：</translation>
+        <translation>您可以通过发送此错误报告来帮助我们改进MEGAsync。这不会包含任何个人信息。如果您想向我们提供更多详细信息，请在下面写下您的留言：</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -827,7 +827,7 @@ Please enter a different name to identify this synced folder:</source>
         <source>Attach diagnostic log files to assist with debugging[Br](in some cases it may contain details about your data, such as file or folder names)</source>
         <translatorcomment>Checkbox to let the user attach diagnostic log files for analysis when an application crash occurs. Keep [Br] place holder.</translatorcomment>
         <translation>附加诊断日志文件可协助调试。
-在某些情况下，它们可能包含有关您的数据的详细信息，例如文件或文件夹名称。</translation>
+在某些情况下，它们可能包含有关您数据的详细信息，例如文件或文件夹名称。</translation>
     </message>
 </context>
 <context>
@@ -835,12 +835,12 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>failed:</source>
         <translatorcomment>Label to indicate that the transfer failed. The reason will be appended after colon symbol.</translatorcomment>
-        <translation>传输失败：</translation>
+        <translation>失败：</translation>
     </message>
     <message>
         <source>starting...</source>
         <translatorcomment>Label to indicate that a transfer is starting.</translatorcomment>
-        <translation>正在开始传输…</translation>
+        <translation>正在开始&#8230;</translation>
     </message>
     <message>
         <source>PAUSED</source>
@@ -850,7 +850,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>queued</source>
         <translatorcomment>Label to indicate that a transfer is queued.</translatorcomment>
-        <translation>已入进程</translation>
+        <translation>已在队列中</translation>
     </message>
     <message>
         <source>retrying...</source>
@@ -860,7 +860,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>completing...</source>
         <translatorcomment>Label to indicate that a transfer is being completed.</translatorcomment>
-        <translation>正在完成传输…</translation>
+        <translation>正在完成…</translation>
     </message>
     <message>
         <source>Added [A]</source>
@@ -875,7 +875,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Transfer quota exceeded</source>
         <translatorcomment>Label to indicate that a transfer is halted due to the account is out of transfer quota</translatorcomment>
-        <translation>超出传输流量限制</translation>
+        <translation>已超出传输流量上限</translation>
     </message>
 </context>
 <context>
@@ -883,22 +883,22 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>[A] added 1 item</source>
         <translatorcomment>Label to indicate that [A] has added 1 item to a shared folder. Placeholder will be replaced by email of the user that made the addition.</translatorcomment>
-        <translation>[A]已添加1个项目</translation>
+        <translation>[A]添加了1个项目</translation>
     </message>
     <message>
         <source>[A] added [B] items</source>
         <translatorcomment>Label to indicate that [A] has added [B] items to a shared folder. Placeholder [A] will be replaced by email of the user that made the additions and [B] with the number of added items.</translatorcomment>
-        <translation>[A]已添加[B]个项目</translation>
+        <translation>[A]添加了[B]个项目</translation>
     </message>
     <message>
         <source>Your PRO membership plan will expire in 1 day</source>
         <translatorcomment>Label to indicate that the PRO membership will expire in 1 day.</translatorcomment>
-        <translation>您的Pro会员将于1天后到期</translation>
+        <translation>您的Pro会员方案将于1天后到期</translation>
     </message>
     <message>
         <source>Your PRO membership plan will expire in [A] days</source>
         <translatorcomment>Label to indicate that the PRO membership will expire in [A] days. Placeholder will be replaced by the remaining days until plan will expire.</translatorcomment>
-        <translation>您的Pro会员将于[A]天后到期</translation>
+        <translation>您的Pro会员方案将于[A]天后到期</translation>
     </message>
     <message>
         <source>PRO membership plan expiring soon</source>
@@ -908,12 +908,12 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Your PRO membership plan expired 1 day ago</source>
         <translatorcomment>Label to indicate that the PRO membership expired 1 day ago.</translatorcomment>
-        <translation>您的Pro会员已于1天前到期</translation>
+        <translation>您的Pro会员方案已于1天前到期</translation>
     </message>
     <message>
         <source>Your PRO membership plan expired [A] days ago</source>
         <translatorcomment>Label to indicate that the PRO membership expired [A] days ago. Placeholder will be replaced by the days from the expiration of the PRO membership.</translatorcomment>
-        <translation>您的Pro会员已于[A]天前到期</translation>
+        <translation>您的Pro会员方案已于[A]天前到期</translation>
     </message>
     <message>
         <source>[A] has left the shared folder</source>
@@ -923,12 +923,12 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Access to shared folder was removed</source>
         <translatorcomment>Label to indicate that the access for a shared folder has been removed.</translatorcomment>
-        <translation>当共享文件夹的权限被移除时</translation>
+        <translation>共享文件夹的访问权限已被移除</translation>
     </message>
     <message>
         <source>Access to shared folder was removed by [A]</source>
         <translatorcomment>Label to indicate that the access for a shared folder has been removed by [A]. Keep placeholder. It will be replaced at runtime with specific email.</translatorcomment>
-        <translation>[A]已删除对共享文件夹的访问</translation>
+        <translation>[A]移除了对共享文件夹的访问权限</translation>
     </message>
     <message>
         <source>New Contact Request</source>
@@ -938,7 +938,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>[A] sent you a contact request</source>
         <translatorcomment>Label to indicate that [A] sent you a contact request. Placeholder will be replaced by email of user that sent the request.</translatorcomment>
-        <translation>[A]向你发送了一个联系人请求</translation>
+        <translation>[A]向您发送了联系人请求</translation>
     </message>
     <message>
         <source>Accept</source>
@@ -968,7 +968,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>New Contact Established</source>
         <translatorcomment>Title of the notification when a contact relationship has been established.</translatorcomment>
-        <translation>已建立新联系人</translation>
+        <translation>新联系人已建立</translation>
     </message>
     <message>
         <source>New contact with [A] has been established</source>
@@ -983,22 +983,22 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Shared Folder Received</source>
         <translatorcomment>Title of the notification when a shared folder has been received</translatorcomment>
-        <translation>已收到共享文件夹</translation>
+        <translation>共享文件夹已收到</translation>
     </message>
     <message>
         <source>New shared folder from [X]</source>
         <translatorcomment>Label to indicate that [X] shared a folder with current user. Placeholder will be replaced by email of sharer user.</translatorcomment>
-        <translation>新的分享文件夹从[X]</translation>
+        <translation>来自[X]的新共享文件夹</translation>
     </message>
     <message>
         <source>Shared Folder Removed</source>
         <translatorcomment>Title of the notification when a shared folder has been removed</translatorcomment>
-        <translation>已删除共享文件夹</translation>
+        <translation>共享文件夹已移除</translation>
     </message>
     <message>
         <source>Shared Folder Updated</source>
         <translatorcomment>Generic label to indicate that there is an update in a shared folder but the name of the shared folder is not available.</translatorcomment>
-        <translation>已更新共享文件夹</translation>
+        <translation>共享文件夹已更新</translation>
     </message>
     <message>
         <source>Payment Info</source>
@@ -1028,37 +1028,37 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>You have unread notifications</source>
         <translatorcomment>Label to indicate that actual user has unread notification.</translatorcomment>
-        <translation>您有未读消息</translation>
+        <translation>您有未读通知</translation>
     </message>
     <message>
         <source>Your publicly shared file ([A]) has been reinstated</source>
         <translatorcomment>Label to indicate that public shared file has been reinstated. Placeholder [A] will be replaced by the name of the file.</translatorcomment>
-        <translation>您的公共共享文件([A])已恢复</translation>
+        <translation>您公开分享的文件（[A]）已恢复</translation>
     </message>
     <message>
         <source>Your publicly shared file ([A]) has been taken down</source>
         <translatorcomment>Label to indicate that public shared file has been taken down. Placeholder [A] will be replaced by the name of the file.</translatorcomment>
-        <translation>您的公共共享文件([A])已被删除</translation>
+        <translation>您公开分享的文件（[A]）已被删除</translation>
     </message>
     <message>
         <source>Your publicly shared folder ([A]) has been reinstated</source>
         <translatorcomment>Label to indicate that public shared folder has been reinstated. Placeholder [A] will be replaced by the name of the folder.</translatorcomment>
-        <translation>您的公共共享文件夹([A])已恢复</translation>
+        <translation>您公开分享的文件夹（[A]）已恢复</translation>
     </message>
     <message>
         <source>Your publicly shared folder ([A]) has been taken down</source>
         <translatorcomment>Label to indicate that public shared folder has been taken down. Placeholder [A] will be replaced by the name of the folder.</translatorcomment>
-        <translation>您的公共共享文件夹([A])已被删除</translation>
+        <translation>您公开分享的文件夹（[A]）已被删除</translation>
     </message>
     <message>
         <source>Your taken down has been reinstated</source>
         <translatorcomment>Label to indicate that your public shared has been reinstated.</translatorcomment>
-        <translation>您的公共分享已恢复</translation>
+        <translation>您的公开分享已恢复。</translation>
     </message>
     <message>
         <source>Your publicly shared has been taken down</source>
         <translatorcomment>Label to indicate that your public shared has been taken down.</translatorcomment>
-        <translation>您的公共分享已删除</translation>
+        <translation>您的公开分享已被删除。</translation>
     </message>
     <message>
         <source>Takedown Notice</source>
@@ -1073,7 +1073,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Upgrade now to a PRO account.</source>
         <translatorcomment>Notification message shown to encourage the user to upgrade his account</translatorcomment>
-        <translation>立即升级至Pro会员帐户。</translation>
+        <translation>立即升级到Pro会员帐户。</translation>
     </message>
     <message>
         <source>Get PRO</source>
@@ -1232,7 +1232,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Click the toolbar item for a menu.</source>
         <translatorcomment>Tooltip for MEGA finder toolbar button</translatorcomment>
-        <translation>点击工具栏图标以显示菜单</translation>
+        <translation>点击工具栏图标以显示菜单。</translation>
     </message>
     <message>
         <source>1 file</source>
@@ -1824,12 +1824,12 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Login or create an account to start using MEGA Desktop app.</source>
         <translatorcomment>Description label to inform the user about next step in order to use MEGA Desktop app. Users will need to login or create an account.</translatorcomment>
-        <translation>登录或创建一个帐户即可开始使用MEGA桌面App</translation>
+        <translation>登录或创建一个帐户即可开始使用MEGA桌面App。</translation>
     </message>
     <message>
         <source>You need to login MEGA account to run MEGA desktop app.</source>
         <translatorcomment>Description label to indicate the user needs to login in order to run and fully use MEGA desktop app.</translatorcomment>
-        <translation>您需要登录MEGA帐户并运行MEGA桌面App</translation>
+        <translation>您需要登录MEGA帐户并运行MEGA桌面App。</translation>
     </message>
     <message>
         <source>Create account</source>
@@ -1950,7 +1950,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Error: Invalid destination folder. The upload has been cancelled</source>
         <translatorcomment>Notification message launched when a problem occurs uploading files to a destination folder in MEGA.</translatorcomment>
-        <translation>错误：目的地文件夹无效。上传已被取消。</translation>
+        <translation>错误：目的地文件夹无效。上传已被取消</translation>
     </message>
     <message>
         <source>About MEGAsync</source>
@@ -2097,7 +2097,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your config is corrupt, please start over</source>
         <translatorcomment>Message displayed when an error occurs loading configurations from Settings file.</translatorcomment>
-        <translation>您的config已损坏，请重新开始。</translation>
+        <translation>您的config已损坏，请重新开始</translation>
     </message>
     <message>
         <source>Error getting link: </source>
@@ -2112,12 +2112,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the remote folder doesn&apos;t exist</source>
         <translatorcomment>Notification message launched checking  remote synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.</translatorcomment>
-        <translation>因远程文件夹不存在，您的同步&quot;%1&quot; 已被停用。</translation>
+        <translation>因远程文件夹不存在，您的同步“%1” 已被停用</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</source>
         <translatorcomment>Notification message launched checking  local synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.</translatorcomment>
-        <translation>您的同步&quot;%1&quot;未激活因为本机文件夹不存在</translation>
+        <translation>您的同步“%1”未激活因为本机文件夹不存在</translation>
     </message>
     <message>
         <source>Your account has been blocked. Please contact support@mega.co.nz</source>
@@ -2132,7 +2132,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>You have been logged out on this computer from another location</source>
         <translatorcomment>Message displayed when the current account has been logged out from other computer/website.</translatorcomment>
-        <translation>您的账号已经由其他设备登出。</translation>
+        <translation>您的账号已经由其他设备登出</translation>
     </message>
     <message>
         <source>You have been logged out because of this error: %1</source>
@@ -2142,17 +2142,17 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the remote folder is in the rubbish bin</source>
         <translatorcomment>Notification message launched when a sync is disabled due to the remote folder has been deleted. Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
-        <translation>您的同步&quot;%1&quot;因远程文件夹在垃圾桶中故已被停用</translation>
+        <translation>您的同步“%1”因远程文件夹在垃圾桶中故已被停用</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the local folder has changed</source>
         <translatorcomment>Notification message launched when a sync is disabled due to the local folder has changed(moved/deleted/...). Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
-        <translation>您的同步&quot;%1&quot;未激活因为本机文件夹已变更</translation>
+        <translation>您的同步“%1”未激活因为本机文件夹已变更</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&apos;t have full access</source>
         <translatorcomment>Notification message launched when a sync is disabled due to the access problems. Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
-        <translation>同步&quot;%1&quot;已被停用，远程文件夹(或其中的部分内容)未获得完全授权。</translation>
+        <translation>同步“%1”已被停用，远程文件夹(或其中的部分内容)未获得完全授权。</translation>
     </message>
     <message>
         <source>Over quota</source>
@@ -2200,7 +2200,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Transfer canceled</source>
-        <translation>传输已取消！</translation>
+        <translation>传输已取消</translation>
     </message>
     <message>
         <source>You are not logged in</source>
@@ -3097,7 +3097,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
     <message>
         <source>Are you sure that you want to delete &quot;%1&quot;?</source>
-        <translation>您确定要删除&quot;%1&quot; 吗？</translation>
+        <translation>您确定要删除“%1” 吗？</translation>
     </message>
     <message>
         <source>Delete</source>
@@ -3285,7 +3285,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Streams are temporarily disabled.</source>
         <translatorcomment>Label to indicate that streaming transfers  of MEGAsync (context menu, stream option) is temporarily disabled due to a situation of over transfer quota.</translatorcomment>
-        <translation>流媒体已被暂时禁用</translation>
+        <translation>流媒体已被暂时禁用。</translation>
     </message>
     <message>
         <source>You have exceeded the available transfer quota for your account. You can add streams but transfers will remain queued until there is enough bandwidth on your account.</source>
@@ -3472,7 +3472,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Store even more with our premium secure cloud storage offering.</source>
         <translatorcomment>Balloon tooltip to inform users when hovering ? button about the benefits of Pro III plan.</translatorcomment>
-        <translation>使用我们的专业且安全的云存储空间存储更多内容。</translation>
+        <translation>使用我们提供的高级安全云存储空间存储更多。</translation>
     </message>
     <message>
         <source>With our end-to-end encryption, the way your team works has never been more secure and private.</source>
@@ -3642,7 +3642,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Your proxy settings are invalid or the proxy doesn&apos;t respond</source>
         <translatorcomment>Message shown when there is an error testing the proxy settings.</translatorcomment>
-        <translation>您的proxy服务器设定无效或proxy服务器未回应。</translation>
+        <translation>您的proxy服务器设定无效或proxy服务器未回应</translation>
     </message>
 </context>
 <context>
@@ -3918,7 +3918,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Are you sure you want to delete &apos;%1&apos;?</source>
         <translatorcomment>Warning message shown before deleting a file or a folder.</translatorcomment>
-        <translation>您确定要删除‘%1’？</translation>
+        <translation>您确定要删除“%1”？</translation>
     </message>
     <message>
         <source>File &amp;name:</source>
@@ -4527,7 +4527,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Your MEGA account is full. Uploads are disabled and folder synchronisation is paused.</source>
         <translatorcomment>Warning text message shown in Sync pane when account storage is full.</translatorcomment>
-        <translation>您的 MEGA 帐户存储空间已满。上传已停止，文件夹同步也已被暂停。</translation>
+        <translation>您的MEGA帐户存储空间已满。上传已停止，文件夹同步也已暂停。</translation>
     </message>
     <message>
         <source>Your account security depends on the strength of your password. Passwords should be unique and impossible to guess. We recommend using a password manager.</source>
@@ -4612,12 +4612,12 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Synchronization will stop working. Are you sure?</source>
         <translatorcomment>Message label indicating that the synchronizations will stop if the user logs out. Ask for confirmation.</translatorcomment>
-        <translation>同步将停止，您确定登出吗？</translation>
+        <translation>同步将停止，确定登出吗？</translation>
     </message>
     <message>
         <source>Open in MEGA</source>
         <translatorcomment>Text label for action menu item to open the selected Sync folder in MEGA web app File Manager. Keep string as short as possible, as this shows up in menu similar to a context menu.</translatorcomment>
-        <translation>在 MEGA 中打开</translation>
+        <translation>在MEGA中打开</translation>
     </message>
     <message>
         <source>Remove synced folder</source>
@@ -4632,7 +4632,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Restart MEGAsync</source>
         <translatorcomment>Title text of dialog shown when clicking on Restart application button. Keep as short as possible.</translatorcomment>
-        <translation>重启 MEGAsync</translation>
+        <translation>重新启动MEGAsync</translation>
     </message>
     <message>
         <source>No limit</source>
@@ -4667,7 +4667,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>MEGA Folder</source>
         <translatorcomment>Label to indicate the MEGA folder column for sync table. String as short as possible.</translatorcomment>
-        <translation>MEGA 文件夹</translation>
+        <translation>MEGA文件夹</translation>
     </message>
     <message>
         <source>Choose which files or folders you want to exclude from synchronisation.</source>
@@ -4735,7 +4735,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>I agree with the MEGA &lt;a href=&quot;https://mega.co.nz/#terms&quot;&gt;Terms of Service&lt;/a&gt;</source>
         <translatorcomment>Label to aggre with the Terms of use.  Keep code &lt;a href=&quot;https://mega.co.nz/#terms&quot;&gt;Terms of Service&lt;/a&gt; .String as short as possible.</translatorcomment>
-        <translation>我同意MEGA &lt;a href=&quot;https：//mega.nz/terms&quot;&gt;服务条款&lt;/a&gt;</translation>
+        <translation>我同意MEGA &lt;a href=&#8221;https：//mega.nz/terms&#8221;&gt;服务条款&lt;/a&gt;</translation>
     </message>
     <message>
         <source>Log in to your MEGA account</source>
@@ -4928,7 +4928,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>MEGAsync won&apos;t be able to download anything here.</source>
         <translatorcomment>Message displayed when a user is trying to synchronized a local folder in wich the user has no write permissions.</translatorcomment>
-        <translation>MEGAsync 无法从这里下载任何资料</translation>
+        <translation>MEGAsync 无法从这里下载任何资料。</translation>
     </message>
     <message>
         <source>Do you want to continue?</source>
@@ -5000,7 +5000,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>When you finish this assistant, you will be able to sync additional folders using the settings dialog</source>
         <translatorcomment>Label to inform the user about the possibility to add new synchronizations through settings dialog once the initial setup wizard is at final stage</translatorcomment>
-        <translation>完成这个步骤之后，您稍候依然可以通过设定界面新增同步路径。</translation>
+        <translation>完成这个步骤之后，您稍候依然可以通过设定界面新增同步路径</translation>
     </message>
     <message>
         <source>First name:</source>
@@ -5289,7 +5289,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Stream error: transfer overquota</source>
         <translatorcomment>Informative label to indicate the user that there is a stream error because of transfer overquota situation.</translatorcomment>
-        <translation>传输错误：超出传输流量</translation>
+        <translation>传输错误：超出传输流量。</translation>
     </message>
     <message>
         <source>Please wait...</source>
@@ -5448,7 +5448,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Limited available transfer quota.</source>
         <translatorcomment>System notification title to inform the user about limited available transfer quota. Above 90 percent of transfer quota usage reached.</translatorcomment>
-        <translation>已限制可用传输流量</translation>
+        <translation>已限制可用传输流量。</translation>
     </message>
     <message>
         <source>Depleted transfer quota.</source>
@@ -5494,7 +5494,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>* The local currency price is an estimate only. All transactions shown charged in Euros.</source>
         <translatorcomment>Informative label to inform users about billing currency used for non Euro payments.</translatorcomment>
-        <translation>*本地货币价格仅为估值。所有交易均以欧元收费。</translation>
+        <translation>*本地货币价格仅为估值。所有交易均以欧元结算。</translation>
     </message>
     <message>
         <source>Your download could not proceed because it exceeds your free transfer allowance.</source>
@@ -5537,7 +5537,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>* The local currency price is an estimate only. All transactions shown charged in Euros.</source>
         <translatorcomment>Informative label to inform users about billing currency used for non Euro payments.</translatorcomment>
-        <translation>*本地货币价格仅为估值。所有交易均以欧元收费。</translation>
+        <translation>*本地货币价格仅为估值。所有交易均以欧元结算。</translation>
     </message>
     <message>
         <source>100% of the %1 available used on your account.</source>

@@ -83,6 +83,19 @@ void MegaApplication::loadDataPath()
 MegaApplication::MegaApplication(int &argc, char **argv) :
     QApplication(argc, argv)
 {
+
+#if defined Q_OS_MACX && !defined QT_DEBUG
+    if (!getenv("MEGA_DISABLE_RUN_MAC_RESTRICTION"))
+    {
+        QString path = appBundlePath();
+        if (path.compare(QStringLiteral("/Applications/MEGAsync.app")))
+        {
+            QMessageBox::warning(nullptr, QCoreApplication::translate("MegaSyncError", "Error"), QCoreApplication::translate("MegaSyncError", "MEGA Desktop App is not able to run from this current location. Please run the application from /Applications path"), QMessageBox::Ok);
+            ::exit(0);
+        }
+    }
+#endif
+
     appfinished = false;
 
     bool logToStdout = false;
@@ -128,10 +141,9 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     "QCheckBox::indicator:unchecked:pressed {image: url(:/images/cb_unchecked_pressed.svg);}"
     "QCheckBox::indicator:unchecked:disabled {image: url(:/images/cb_unchecked_disabled.svg);}"
     "QMessageBox QLabel {font-size: 13px;}"
-    "QMessageBox QPushButton {font-size: 13px;padding-right: 12px;padding-left: 12px;}"
     "QMenu {font-size: 13px;}"
     "QToolTip {font-size: 13px;}"
-    "QFileDialog QPushButton {font-size: 13px;padding-right: 12px;padding-left: 12px;}"
+    "QPushButton {font-size: 12px; padding-right: 12px; padding-left: 12px; min-height: 22px;}"
     "QFileDialog QWidget {font-size: 13px;}"
     "QRadioButton::indicator {width: 13px; height: 13px;}"
     "QRadioButton::indicator:unchecked {image: url(:/images/rb_unchecked.svg);}"
@@ -218,6 +230,8 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     notificationsModel = NULL;
     notificationsProxyModel = NULL;
     notificationsDelegate = NULL;
+
+    context = new QObject(this);
 
 #ifdef _WIN32
     windowsMenu = nullptr;
@@ -574,7 +588,7 @@ void MegaApplication::initialize()
                         crashTimestamp = crashTimestamp.addSecs(-300); //to gather some logging before the crash
                     }
 
-                    connect(logger.get(), &MegaSyncLogger::logReadyForReporting, context.get(), [this, crashTimestamp]()
+                    connect(logger.get(), &MegaSyncLogger::logReadyForReporting, context, [this, crashTimestamp]()
                     {
                         crashReportFilePath = Utilities::joinLogZipFiles(megaApi, &crashTimestamp, CrashHandler::instance()->getLastCrashHash());
                         if (!crashReportFilePath.isNull()
@@ -583,7 +597,7 @@ void MegaApplication::initialize()
                             megaApi->startUploadForSupport(QDir::toNativeSeparators(crashReportFilePath).toUtf8().constData(), false);
                             crashReportFilePath.clear();
                         }
-                        context.get()->deleteLater();
+                        context->deleteLater();
                     });
 
                     logger->prepareForReporting();
@@ -1598,15 +1612,6 @@ void MegaApplication::processDownloadQueue(QString path)
     }
 }
 
-void MegaApplication::unityFix()
-{
-    static QMenu dummyMenu;
-    connect(this, &MegaApplication::unityFixSignal, &dummyMenu, &QMenu::close,
-            static_cast<Qt::ConnectionType>(Qt::QueuedConnection | Qt::UniqueConnection));
-    emit unityFixSignal();
-    dummyMenu.exec();
-}
-
 void MegaApplication::closeDialogs(bool/* bwoverquota*/)
 {
     delete transferManager;
@@ -2237,11 +2242,6 @@ void MegaApplication::repositionInfoDialog()
     calculateInfoDialogCoordinates(infoDialog, &posx, &posy);
 
     fixMultiscreenResizeBug(posx, posy);
-
-    if (isLinux)
-    {
-        unityFix();
-    }
 
     MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Moving Info Dialog to posx = %1, posy = %2")
                  .arg(posx)
@@ -2878,6 +2878,57 @@ void MegaApplication::loadSyncExclusionRules(QString email)
 
 }
 
+std::pair<QString,QString> MegaApplication::buildFinishedTransferTitleAndMessage(const TransferMetaData *data)
+{
+    QString title;
+    QString message;
+    if (data->transfersFileOK && data->transfersFolderOK)
+    {
+        // Multi plural issue : can't resolve in one single string.
+        // see https://stackoverflow.com/questions/51889719/localisation-of-multiple-plurals-in-qt
+        QString fileStringPart = tr("%n file", "", data->transfersFileOK);
+        QString folderStringPart = tr("%n folder", "", data->transfersFolderOK);
+
+        if (data->transferDirection == MegaTransfer::TYPE_UPLOAD)
+        {
+            title = tr("Upload");
+            message = tr("%1 and %2 were successfully uploaded").arg(fileStringPart).arg(folderStringPart);
+        }
+        else if (data->transferDirection == MegaTransfer::TYPE_DOWNLOAD)
+        {
+            title = tr("Download");
+            message = tr("%1 and %2 were successfully downloaded").arg(fileStringPart).arg(folderStringPart);
+        }
+    }
+    else if (data->transfersFileOK)
+    {
+        if (data->transferDirection == MegaTransfer::TYPE_UPLOAD)
+        {
+            title = tr("File Upload");
+            message = tr("%n file was successfully uploaded", "", data->transfersFileOK);
+        }
+        else if (data->transferDirection == MegaTransfer::TYPE_DOWNLOAD)
+        {
+            title = tr("File Download");
+            message = tr("%n file was successfully downloaded", "", data->transfersFileOK);
+        }
+    }
+    else if (data->transfersFolderOK)
+    {
+        if (data->transferDirection == MegaTransfer::TYPE_UPLOAD)
+        {
+            title = tr("Folder Upload");
+            message = tr("%n folder was successfully uploaded", "", data->transfersFolderOK);
+        }
+        else if (data->transferDirection == MegaTransfer::TYPE_DOWNLOAD)
+        {
+            title = tr("Folder Download");
+            message = tr("%n folder was successfully downloaded", "", data->transfersFolderOK);
+        }
+    }
+    return std::make_pair(title,message);
+}
+
 long long MegaApplication::computeExclusionSizeLimit(const long long sizeLimitValue, const int unit)
 {
     const double sizeLimitPower = pow(static_cast<double>(1024), static_cast<double>(unit));
@@ -3106,7 +3157,6 @@ QStringList MegaApplication::explodeIpv6(const QHostAddress &ipAddress)
     }
     return addressParts;
 }
-
 
 void MegaApplication::reconnectIfNecessary(const bool disconnected, const QList<QNetworkInterface> &newNetworkInterfaces)
 {
@@ -3916,130 +3966,11 @@ void MegaApplication::showNotificationFinishedTransfers(unsigned long long appDa
 
     if (data->pendingTransfers == 0)
     {
-        QString title;
-        QString message;
-
-        if (data->transfersFileOK || data->transfersFolderOK)
-        {
-            switch (data->transferDirection)
-            {
-                case MegaTransfer::TYPE_UPLOAD:
-                {
-                    if (data->transfersFileOK && data->transfersFolderOK)
-                    {
-                        title = tr("Upload");
-                        if (data->transfersFolderOK == 1)
-                        {
-                            if (data->transfersFileOK == 1)
-                            {
-                                message = tr("1 file and 1 folder were successfully uploaded");
-                            }
-                            else
-                            {
-                                message = tr("%1 files and 1 folder were successfully uploaded").arg(data->transfersFileOK);
-                            }
-                        }
-                        else
-                        {
-                            if (data->transfersFileOK == 1)
-                            {
-                                message = tr("1 file and %1 folders were successfully uploaded").arg(data->transfersFolderOK);
-                            }
-                            else
-                            {
-                                message = tr("%1 files and %2 folders were successfully uploaded").arg(data->transfersFileOK).arg(data->transfersFolderOK);
-                            }
-                        }
-                    }
-                    else if (!data->transfersFileOK)
-                    {
-                        title = tr("Folder Upload");
-                        if (data->transfersFolderOK == 1)
-                        {
-                            message = tr("1 folder was successfully uploaded");
-                        }
-                        else
-                        {
-                            message = tr("%1 folders were successfully uploaded").arg(data->transfersFolderOK);
-                        }
-                    }
-                    else
-                    {
-                        title = tr("File Upload");
-                        if (data->transfersFileOK == 1)
-                        {
-                            message = tr("1 file was successfully uploaded");
-                        }
-                        else
-                        {
-                            message = tr("%1 files were successfully uploaded").arg(data->transfersFileOK);
-                        }
-                    }
-                    break;
-                }
-                case MegaTransfer::TYPE_DOWNLOAD:
-                {
-                    if (data->transfersFileOK && data->transfersFolderOK)
-                    {
-                        title = tr("Download");
-                        if (data->transfersFolderOK == 1)
-                        {
-                            if (data->transfersFileOK == 1)
-                            {
-                                message = tr("1 file and 1 folder were successfully downloaded");
-                            }
-                            else
-                            {
-                                message = tr("%1 files and 1 folder were successfully downloaded").arg(data->transfersFileOK);
-                            }
-                        }
-                        else
-                        {
-                            if (data->transfersFileOK == 1)
-                            {
-                                message = tr("1 file and %1 folders were successfully downloaded").arg(data->transfersFolderOK);
-                            }
-                            else
-                            {
-                                message = tr("%1 files and %2 folders were successfully downloaded").arg(data->transfersFileOK).arg(data->transfersFolderOK);
-                            }
-                        }
-                    }
-                    else if (!data->transfersFileOK)
-                    {
-                        title = tr("Folder Download");
-                        if (data->transfersFolderOK == 1)
-                        {
-                            message = tr("1 folder was successfully downloaded");
-                        }
-                        else
-                        {
-                            message = tr("%1 folders were successfully downloaded").arg(data->transfersFolderOK);
-                        }
-                    }
-                    else
-                    {
-                        title = tr("File Download");
-                        if (data->transfersFileOK == 1)
-                        {
-                            message = tr("1 file was successfully downloaded");
-                        }
-                        else
-                        {
-                            message = tr("%1 files were successfully downloaded").arg(data->transfersFileOK);
-                        }
-                    }
-                    break;
-                }
-                default:
-                    break;
-            }
-        }
-
-        if (mOsNotifications && !message.isEmpty())
+        std::pair<QString,QString> titleAndMessage = buildFinishedTransferTitleAndMessage(data);
+        if (mOsNotifications && !titleAndMessage.second.isEmpty())
         {
             preferences->setLastTransferNotificationTimestamp();
-            mOsNotifications->sendFinishedTransferNotification(title, message, data->localPath);
+            mOsNotifications->sendFinishedTransferNotification(titleAndMessage.first, titleAndMessage.second, data->localPath);
         }
 
         transferAppData.erase(it);

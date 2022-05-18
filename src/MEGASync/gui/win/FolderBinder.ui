@@ -19,27 +19,10 @@
 font-size: 11px;
 }
 
-QCheckBox::indicator {
-     width: 16px;
-     height: 16px;
- }
-
-QRadioButton::indicator {
-     width: 16px;
-     height: 16px;
- }
-
 QScrollBar:horizontal {
 height: 16px;
 }
 
-QPushButton
-{
-    min-height: 24px;
-	height: 24px;
-	padding-right: 12px;
-	padding-left: 12px;
-}
 </string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">

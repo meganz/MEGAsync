@@ -30,7 +30,6 @@ ID_BUNDLE=mega.mac
 MOUNTDIR=tmp
 RESOURCES=installer/resourcesDMG
 MSYNC_PREFIX=MEGASync/
-MLOADER_PREFIX=MEGALoader/
 MUPDATER_PREFIX=MEGAUpdater/
 
 host_arch=`uname -m`
@@ -146,10 +145,8 @@ if [ ${build} -eq 1 -o ${build_cmake} -eq 1 ]; then
 
         cmake -DUSE_THIRDPARTY_FROM_VCPKG=1 -DMega3rdPartyDir=${VCPKGPATH} -DCMAKE_PREFIX_PATH=${MEGAQTPATH} ${CMAKE_EXTRA} -S ../contrib/cmake
         cmake --build ./ --target MEGAsync -j`sysctl -n hw.ncpu`
-        cmake --build ./ --target MEGAloader -j`sysctl -n hw.ncpu`
         cmake --build ./ --target MEGAupdater -j`sysctl -n hw.ncpu`
         MSYNC_PREFIX=""
-        MLOADER_PREFIX=""
         MUPDATER_PREFIX=""
     else
         # crosscompilation detection should be managed detecting the qmake taget and host arch in the project files.
@@ -164,13 +161,9 @@ if [ ${build} -eq 1 -o ${build_cmake} -eq 1 ]; then
     ${MEGAQTPATH}/bin/macdeployqt ${MSYNC_PREFIX}MEGAsync.app -no-strip
     dsymutil ${MSYNC_PREFIX}MEGAsync.app/Contents/MacOS/MEGAsync -o MEGAsync.app.dSYM
     strip ${MSYNC_PREFIX}MEGAsync.app/Contents/MacOS/MEGAsync
-    dsymutil ${MLOADER_PREFIX}MEGAloader.app/Contents/MacOS/MEGAloader -o MEGAloader.dSYM
-    strip ${MLOADER_PREFIX}MEGAloader.app/Contents/MacOS/MEGAloader
     dsymutil ${MUPDATER_PREFIX}MEGAupdater.app/Contents/MacOS/MEGAupdater -o MEGAupdater.dSYM
     strip ${MUPDATER_PREFIX}MEGAupdater.app/Contents/MacOS/MEGAupdater
 
-    mv ${MSYNC_PREFIX}MEGAsync.app/Contents/MacOS/MEGAsync ${MSYNC_PREFIX}MEGAsync.app/Contents/MacOS/MEGAclient
-    mv ${MLOADER_PREFIX}MEGAloader.app/Contents/MacOS/MEGAloader ${MSYNC_PREFIX}MEGAsync.app/Contents/MacOS/MEGAsync
     mv ${MUPDATER_PREFIX}MEGAupdater.app/Contents/MacOS/MEGAupdater ${MSYNC_PREFIX}MEGAsync.app/Contents/MacOS/MEGAupdater
 
     if [ ${build_cmake} -ne 1 ]; then
@@ -195,16 +188,16 @@ if [ ${build} -eq 1 -o ${build_cmake} -eq 1 ]; then
     /usr/libexec/PlistBuddy -c "Set :CFBundleShortVersionString $MEGASYNC_VERSION" "${MSYNC_PREFIX}$APP_NAME.app/Contents/Info.plist"
 
     if [ ${build_cmake} -ne 1 ]; then
-        install_name_tool -change @loader_path/$AVCODEC_VERSION @executable_path/../Frameworks/$AVCODEC_VERSION MEGASync/MEGAsync.app/Contents/MacOS/MEGAclient
-        install_name_tool -change @loader_path/$AVFORMAT_VERSION @executable_path/../Frameworks/$AVFORMAT_VERSION MEGASync/MEGAsync.app/Contents/MacOS/MEGAclient
-        install_name_tool -change @loader_path/$AVUTIL_VERSION @executable_path/../Frameworks/$AVUTIL_VERSION MEGASync/MEGAsync.app/Contents/MacOS/MEGAclient
-        install_name_tool -change @loader_path/$SWSCALE_VERSION @executable_path/../Frameworks/$SWSCALE_VERSION MEGASync/MEGAsync.app/Contents/MacOS/MEGAclient
+        install_name_tool -change @loader_path/$AVCODEC_VERSION @executable_path/../Frameworks/$AVCODEC_VERSION MEGASync/MEGAsync.app/Contents/MacOS/MEGAsync
+        install_name_tool -change @loader_path/$AVFORMAT_VERSION @executable_path/../Frameworks/$AVFORMAT_VERSION MEGASync/MEGAsync.app/Contents/MacOS/MEGAsync
+        install_name_tool -change @loader_path/$AVUTIL_VERSION @executable_path/../Frameworks/$AVUTIL_VERSION MEGASync/MEGAsync.app/Contents/MacOS/MEGAsync
+        install_name_tool -change @loader_path/$SWSCALE_VERSION @executable_path/../Frameworks/$SWSCALE_VERSION MEGASync/MEGAsync.app/Contents/MacOS/MEGAsync
 
         rm -r $APP_NAME.app || :
         mv $MSYNC_PREFIX/$APP_NAME.app ./
     fi
 
-    otool -L MEGAsync.app/Contents/MacOS/MEGAclient
+    otool -L MEGAsync.app/Contents/MacOS/MEGAsync
 
     #Attach shell extension
     xcodebuild clean build CODE_SIGN_IDENTITY="-" CODE_SIGNING_REQUIRED=NO -jobs "$(sysctl -n hw.ncpu)" -configuration Release -target MEGAShellExtFinder -project ../src/MEGAShellExtFinder/MEGAFinderSync.xcodeproj/

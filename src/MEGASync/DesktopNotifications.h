@@ -55,7 +55,6 @@ private:
     void notifyUnreadNotifications() const;
 
     QString getItemsAddedText(mega::MegaUserAlert* info);
-    QString createPaymentReminderText(int64_t expirationTimeStamp);
     QString createDeletedShareMessage(mega::MegaUserAlert* info);
     QString createTakeDownMessage(mega::MegaUserAlert* alert, bool isReinstated = false) const;
     int countUnseenAlerts(mega::MegaUserAlertList *alertList);

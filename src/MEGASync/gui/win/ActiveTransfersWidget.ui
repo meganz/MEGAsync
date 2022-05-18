@@ -500,7 +500,7 @@ background-color: rgba(0, 0, 0, 10%);
                     </size>
                    </property>
                    <property name="text">
-                    <string>Remaining Downloads</string>
+                    <string/>
                    </property>
                   </widget>
                  </item>
@@ -1209,7 +1209,7 @@ background-color: rgba(0, 0, 0, 10%);
                     </size>
                    </property>
                    <property name="text">
-                    <string>Remaining Uploads</string>
+                    <string/>
                    </property>
                   </widget>
                  </item>
