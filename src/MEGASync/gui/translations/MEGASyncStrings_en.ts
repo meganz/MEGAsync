@@ -506,7 +506,7 @@
     <message>
         <source>Enable this option only if your transfers don&apos;t start. Under normal circumstances, HTTP is satisfactory as all transfers are already encrypted by MEGA.</source>
         <translatorcomment>Description label about the option &quot;Don&apos;t use HTTP&quot; checkbox.</translatorcomment>
-        <translation>Enable this option only if your transfers don&apos;t start. Under normal circumstances, HTTP is satisfactory as all transfers are already encrypted by MEGA.</translation>
+        <translation>Enable this option only if your transfers don&#8217;t start. Under normal circumstances, HTTP is satisfactory as all transfers are already encrypted by MEGA.</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -4735,7 +4735,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>I agree with the MEGA &lt;a href=&quot;https://mega.co.nz/#terms&quot;&gt;Terms of Service&lt;/a&gt;</source>
         <translatorcomment>Label to aggre with the Terms of use.  Keep code &lt;a href=&quot;https://mega.co.nz/#terms&quot;&gt;Terms of Service&lt;/a&gt; .String as short as possible.</translatorcomment>
-        <translation>I agree with the MEGA &lt;a href=&quot;https://mega.nz/terms&quot;&gt;Terms of Service&lt;/a&gt;</translation>
+        <translation>I agree with the MEGA &lt;a href=&#8221;https://mega.nz/terms&#8221;&gt;Terms of Service&lt;/a&gt;</translation>
     </message>
     <message>
         <source>Log in to your MEGA account</source>
@@ -5387,7 +5387,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Syncs aren&apos;t affected by this action.</source>
         <translatorcomment>Description label for warning dialog indicating that syncs are not going to be affected by accepting this dialog</translatorcomment>
-        <translation>Syncs aren&apos;t affected by this action.</translation>
+        <translation>Syncs aren&#8217;t affected by this action.</translation>
     </message>
     <message>
         <source>Continue transfers</source>

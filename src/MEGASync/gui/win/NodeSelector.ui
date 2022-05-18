@@ -23,7 +23,8 @@
    <string>Select a MEGA folder</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">QDialog{
+   <string notr="true">QDialog
+{
 background:#FFFFFF;
 }
 
@@ -37,25 +38,8 @@ QWidget
 font-size: 11px;
 }
 
-QCheckBox::indicator {
-     width: 16px;
-     height: 16px;
- }
-
-QRadioButton::indicator {
-     width: 16px;
-     height: 16px;
- }
-
 QScrollBar:horizontal {
 height: 16px;
-}
-
-QPushButton
-{
-	height: 22px;
-	padding-right: 11px;
-	padding-left: 11px;
 }
 </string>
   </property>
@@ -120,7 +104,7 @@ QPushButton:!checked {
 </string>
        </property>
        <property name="text">
-        <string>Cloud Drive</string>
+        <string>Cloud drive</string>
        </property>
        <property name="iconSize">
         <size>
@@ -167,7 +151,7 @@ QPushButton:!checked {
 </string>
        </property>
        <property name="text">
-        <string>Incoming Shares</string>
+        <string>Incoming shares</string>
        </property>
        <property name="checkable">
         <bool>true</bool>
@@ -287,6 +271,7 @@ QPushButton:!checked {
        <property name="font">
         <font>
          <pointsize>-1</pointsize>
+         <weight>50</weight>
          <bold>false</bold>
          <strikeout>false</strikeout>
          <kerning>false</kerning>
@@ -532,12 +517,6 @@ padding-right:10px;
       </property>
       <item>
        <widget class="QPushButton" name="bNewFolder">
-        <property name="minimumSize">
-         <size>
-          <width>100</width>
-          <height>0</height>
-         </size>
-        </property>
         <property name="text">
          <string>New folder</string>
         </property>
@@ -558,15 +537,6 @@ padding-right:10px;
       </item>
       <item>
        <widget class="QPushButton" name="bOk">
-        <property name="minimumSize">
-         <size>
-          <width>0</width>
-          <height>0</height>
-         </size>
-        </property>
-        <property name="styleSheet">
-         <string notr="true"/>
-        </property>
         <property name="text">
          <string>OK</string>
         </property>
@@ -574,12 +544,6 @@ padding-right:10px;
       </item>
       <item>
        <widget class="QPushButton" name="bCancel">
-        <property name="minimumSize">
-         <size>
-          <width>0</width>
-          <height>0</height>
-         </size>
-        </property>
         <property name="text">
          <string>Cancel</string>
         </property>

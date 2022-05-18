@@ -26,7 +26,6 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/MegaProxyStyle.cpp \
     $$PWD/AccountDetailsDialog.cpp \
     $$PWD/DownloadFromMegaDialog.cpp \
-    $$PWD/UsageWidget.cpp \
     $$PWD/MegaItemModel.cpp \
     $$PWD/MegaItem.cpp \
     $$PWD/ChangeLogDialog.cpp \
@@ -93,7 +92,6 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/MegaProxyStyle.h \
     $$PWD/AccountDetailsDialog.h \
     $$PWD/DownloadFromMegaDialog.h \
-    $$PWD/UsageWidget.h \
     $$PWD/MegaItemModel.h \
     $$PWD/MegaItem.h \
     $$PWD/ChangeLogDialog.h \

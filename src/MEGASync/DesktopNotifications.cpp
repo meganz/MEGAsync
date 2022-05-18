@@ -1,7 +1,8 @@
 #include "megaapi.h"
-#include "mega/user.h"
+#include "CommonMessages.h"
 #include "DesktopNotifications.h"
 #include "MegaApplication.h"
+#include "mega/user.h"
 #include "Platform.h"
 #include "UserAttributesRequests.h"
 
@@ -71,50 +72,10 @@ DesktopNotifications::DesktopNotifications(const QString &appName, QSystemTrayIc
 
 QString DesktopNotifications::getItemsAddedText(mega::MegaUserAlert *info)
 {
-    const auto updatedItems =info->getNumber(1) + info->getNumber(0);
+    const int updatedItems = static_cast<int>(info->getNumber(1) + info->getNumber(0));
     auto FullNameRequest = mUserAttributes.value(QString::fromUtf8(info->getEmail()));
-    if (updatedItems == 1)
-    {
-        return tr("[A] added 1 item")
-                .replace(QString::fromUtf8("[A]"), FullNameRequest->getFullName());
-    }
-    else
-    {
-         return tr("[A] added [B] items")
-                 .replace(QString::fromUtf8("[A]"), FullNameRequest->getFullName())
-                 .replace(QString::fromUtf8("[B]"), QString::number(updatedItems));
-    }
-}
-
-QString DesktopNotifications::createPaymentReminderText(int64_t expirationTimeStamp)
-{
-    QDateTime expiredDate;
-    expiredDate.setMSecsSinceEpoch(expirationTimeStamp * 1000);
-    QDateTime currentDate(QDateTime::currentDateTime());
-
-    const auto daysExpired = currentDate.daysTo(expiredDate);
-    if (daysExpired == 1)
-    {
-        return tr("Your PRO membership plan will expire in 1 day");
-    }
-    else if (daysExpired > 0)
-    {
-        return tr("Your PRO membership plan will expire in [A] days")
-                .replace(QString::fromUtf8("[A]"), QString::number(daysExpired));
-    }
-    else if (daysExpired == 0)
-    {
-        return tr("PRO membership plan expiring soon");
-    }
-    else if (daysExpired == -1)
-    {
-        return tr("Your PRO membership plan expired 1 day ago");
-    }
-    else
-    {
-        return tr("Your PRO membership plan expired [A] days ago")
-                .replace(QString::fromUtf8("[A]"), QString::number(-daysExpired));
-    }
+    return tr("[A] added %n item", "", updatedItems)
+            .replace(QString::fromUtf8("[A]"), FullNameRequest->getFullName());
 }
 
 QString DesktopNotifications::createDeletedShareMessage(mega::MegaUserAlert* info)
@@ -314,7 +275,7 @@ void DesktopNotifications::processAlert(mega::MegaUserAlert* alert)
             auto notification = new MegaNotification();
             notification->setTitle(tr("Payment Info"));
             constexpr int paymentReminderIndex{1};
-            notification->setText(createPaymentReminderText(alert->getTimestamp(paymentReminderIndex)));
+            notification->setText(CommonMessages::createPaymentReminder(alert->getTimestamp(paymentReminderIndex)));
             notification->setActions(QStringList() << tr("Upgrade"));
             notification->setImage(mAppIcon);
             connect(notification, &MegaNotification::activated, this, &DesktopNotifications::redirectToUpgrade);
@@ -564,7 +525,7 @@ void DesktopNotifications::sendOverStorageNotification(int state) const
         const auto megaApi = static_cast<MegaApplication*>(qApp)->getMegaApi();
         int64_t remainDaysOut(0);
         Utilities::getDaysToTimestamp(megaApi->getOverquotaDeadlineTs(), remainDaysOut);
-        notification->setText(tr("You have [A] days left to save your data").replace(QString::fromUtf8("[A]"), QString::number(remainDaysOut)));
+        notification->setText(tr("You have %n day left to save your data", "", static_cast<int>(remainDaysOut)));
         notification->setActions(QStringList() << tr("Get PRO"));
         notification->setImage(mAppIcon);
         connect(notification, &MegaNotification::activated, this, &DesktopNotifications::redirectToUpgrade);

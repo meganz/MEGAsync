@@ -112,7 +112,7 @@
     <message>
         <source>Enter a name, an absolute path (wildcards * and ? are allowed) or choose which file or folder you want to exclude from the synchronization</source>
         <translatorcomment>Label to describe the different options that the user have to set a exclusion for all synchronizations.</translatorcomment>
-        <translation>Wprowadź nazwę, lub ścieżkę (możesz używać * i ?) lub wybrać plik lub katalog króry chcesz wykluczyć</translation>
+        <translation>Wprowadź nazwę, lub ścieżkę (możesz używać * i ?) lub wybrać plik lub katalog króry chcesz wykluczyć.</translation>
     </message>
     <message>
         <source>Choose File</source>
@@ -393,7 +393,7 @@
     <message>
         <source>Your taken down has been reinstated</source>
         <translatorcomment>Label to indicate that your public shared has been reinstated.</translatorcomment>
-        <translation>Twój usunięty link został przywrócony</translation>
+        <translation>Twój usunięty link został przywrócony.</translation>
     </message>
     <message>
         <source>Reminder</source>
@@ -570,7 +570,7 @@
         <source>The name &quot;%1&quot; is already in use for another sync
 Please enter a different name to identify this synced folder:</source>
         <translatorcomment>Detailed message displayed when a user is using a name for a local folder that is already used. Preserve &quot;%1&quot; code because is used to indicate the local folder at runtime.</translatorcomment>
-        <translation>Nazwa &quot;%1&quot; jest już używana do kolejnej synchronizacji. Wprowadź inną nazwę, aby zidentyfikować ten zsynchronizowany folder:</translation>
+        <translation>Nazwa „%1” jest już używana do kolejnej synchronizacji. Wprowadź inną nazwę, aby zidentyfikować ten zsynchronizowany folder:</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -806,7 +806,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>MEGAsync has detected a problem. These are the details:</source>
         <translatorcomment>Label to indicate that a crash has occured and the detailed stacktrace of the problem.</translatorcomment>
-        <translation>MEGAsync wykrył problemy:</translation>
+        <translation>Program MEGAsync wykrył problem. Oto szczegóły:</translation>
     </message>
     <message>
         <source>You can help us to improve MEGAsync by sending this error report. It doesn&apos;t contain any personal information. If you want to give us more details, please write them below:</source>
@@ -1053,7 +1053,7 @@ W niektórych przypadkach mogą one zawierać szczegóły dotyczące Twoich dany
     <message>
         <source>Your taken down has been reinstated</source>
         <translatorcomment>Label to indicate that your public shared has been reinstated.</translatorcomment>
-        <translation>Twój usunięty link został przywrócony</translation>
+        <translation>Twój usunięty link został przywrócony.</translation>
     </message>
     <message>
         <source>Your publicly shared has been taken down</source>
@@ -1108,7 +1108,7 @@ W niektórych przypadkach mogą one zawierać szczegóły dotyczące Twoich dany
     <message>
         <source>Please resolve your payment issue to avoid suspension of your account.</source>
         <translatorcomment>Notification text to inform the user that there is a payment issue with the business accounts that needs to be solved to continue and avoid suspension.</translatorcomment>
-        <translation>Prosimy o jak najszybsze rozwiązanie problemu płatności, aby uniknąć zawieszenia konta biznesowego.</translation>
+        <translation>Prosimy o jak najszybsze rozwiązanie problemu płatności, aby uniknąć zawieszenia konta biznesowego</translation>
     </message>
     <message>
         <source>Pay Now</source>
@@ -1328,7 +1328,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Login</source>
         <translatorcomment>Button label to start the Login process. (String as short as possible)</translatorcomment>
-        <translation>Login</translation>
+        <translation>Zaloguj się</translation>
     </message>
     <message>
         <source>Create account</source>
@@ -1373,7 +1373,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Fetching file list...</source>
         <translatorcomment>Label shown at main dialog to show the current operation. In this case fetching file information from servers.</translatorcomment>
-        <translation>Pobieram listę plików</translation>
+        <translation>Pobieram listę plików…</translation>
     </message>
     <message>
         <source>Error</source>
@@ -2097,7 +2097,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your config is corrupt, please start over</source>
         <translatorcomment>Message displayed when an error occurs loading configurations from Settings file.</translatorcomment>
-        <translation>Twoja konfiguracja zawiera błędy, prosimy spróbować ponownie.</translation>
+        <translation>Twoja konfiguracja zawiera błędy, prosimy spróbować ponownie</translation>
     </message>
     <message>
         <source>Error getting link: </source>
@@ -2112,12 +2112,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the remote folder doesn&apos;t exist</source>
         <translatorcomment>Notification message launched checking  remote synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.</translatorcomment>
-        <translation>Synchronizacja &quot;%1&quot; została zablokowana, ponieważ zdalny katalog nie istnieje</translation>
+        <translation>Synchronizacja „%1” została zablokowana, ponieważ zdalny katalog nie istnieje</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</source>
         <translatorcomment>Notification message launched checking  local synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.</translatorcomment>
-        <translation>Twoja synchronizacja &quot;%1&quot; została zablokowana ponieważ lokalny katalog nie istnieje</translation>
+        <translation>Twoja synchronizacja „%1” została zablokowana ponieważ lokalny katalog nie istnieje</translation>
     </message>
     <message>
         <source>Your account has been blocked. Please contact support@mega.co.nz</source>
@@ -2142,17 +2142,17 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the remote folder is in the rubbish bin</source>
         <translatorcomment>Notification message launched when a sync is disabled due to the remote folder has been deleted. Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
-        <translation>Synchonizacja &quot;%1&quot; została wstrzymana ponieważ katalog zdalny został umieszczony w koszu</translation>
+        <translation>Synchonizacja „%1” została wstrzymana ponieważ katalog zdalny został umieszczony w koszu</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the local folder has changed</source>
         <translatorcomment>Notification message launched when a sync is disabled due to the local folder has changed(moved/deleted/...). Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
-        <translation>Twoja synchronizacja &quot;%1&quot; została zablokowana ponieważ lokalny katalog został zmieniony</translation>
+        <translation>Twoja synchronizacja „%1” została zablokowana ponieważ lokalny katalog został zmieniony</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&apos;t have full access</source>
         <translatorcomment>Notification message launched when a sync is disabled due to the access problems. Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
-        <translation>Twoja synchronizacja &quot;%1&quot; została zablokowana. Zdalny katalog (lub jego część) nie posiada pełnego dostępu</translation>
+        <translation>Twoja synchronizacja „%1” została zablokowana. Zdalny katalog (lub jego część) nie posiada pełnego dostępu</translation>
     </message>
     <message>
         <source>Over quota</source>
@@ -2196,11 +2196,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Fetching file list...</source>
-        <translation>Pobieram listę plików</translation>
+        <translation>Pobieram listę plików…</translation>
     </message>
     <message>
         <source>Transfer canceled</source>
-        <translation>Transfer anulowany!</translation>
+        <translation>Transfer anulowany</translation>
     </message>
     <message>
         <source>You are not logged in</source>
@@ -2246,7 +2246,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Please consider updating your operating system.</source>
-        <translation>Zalecamy aktualizację systemu operacyjnego</translation>
+        <translation>Zalecamy aktualizację systemu operacyjnego.</translation>
     </message>
     <message>
         <source>Stream</source>
@@ -2549,7 +2549,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Request failed, retrying</source>
         <translatorcomment>Label to show that a request error occurs during a SDK operation.</translatorcomment>
-        <translation>Żądanie nie powiodło się, ponowić próbę?</translation>
+        <translation>Żądanie nie powiodło się, panawiam próbę</translation>
     </message>
     <message>
         <source>Rate limit exceeded</source>
@@ -3097,7 +3097,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
     <message>
         <source>Are you sure that you want to delete &quot;%1&quot;?</source>
-        <translation>Czy na pewno chcesz usunąć &quot;%1&quot;?</translation>
+        <translation>Czy na pewno chcesz usunąć „%1”?</translation>
     </message>
     <message>
         <source>Delete</source>
@@ -3452,7 +3452,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>storage</source>
         <translatorcomment>Label to indicate the specific storage of a pro plan.</translatorcomment>
-        <translation>storage</translation>
+        <translation>powierzchnia</translation>
     </message>
     <message>
         <source>transfer</source>
@@ -3688,7 +3688,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Alt+Left</source>
         <translatorcomment>Shortcut for Back button.It is shown in the button tooltip.</translatorcomment>
-        <translation>Alt+Left</translation>
+        <translation>Alt+Lewy</translation>
     </message>
     <message>
         <source>Forward</source>
@@ -3703,7 +3703,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Alt+Right</source>
         <translatorcomment>Shortcut for Forward button.It is shown in the button tooltip.</translatorcomment>
-        <translation>Alt+Right</translation>
+        <translation>Alt+Prawy</translation>
     </message>
     <message>
         <source>Parent Directory</source>
@@ -3718,7 +3718,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Alt+Up</source>
         <translatorcomment>Shortcut for Parent Directory button.It is shown in the button tooltip.</translatorcomment>
-        <translation>Alt+Up</translation>
+        <translation>Alt+Góra</translation>
     </message>
     <message>
         <source>Create New Folder</source>
@@ -3798,7 +3798,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Show </source>
         <translatorcomment>Contextual menu from file list headers that allow to enable or disable diferent columns (size, type, data modified)</translatorcomment>
-        <translation>Pokaż </translation>
+        <translation>Pokaż</translation>
     </message>
     <message>
         <source>All files (*)</source>
@@ -3918,7 +3918,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Are you sure you want to delete &apos;%1&apos;?</source>
         <translatorcomment>Warning message shown before deleting a file or a folder.</translatorcomment>
-        <translation>Czy na pewno chcesz usunąć ‘%1’?</translation>
+        <translation>Czy na pewno chcesz usunąć „%1”?</translation>
     </message>
     <message>
         <source>File &amp;name:</source>
@@ -3983,7 +3983,7 @@ Czy mimo to chcesz je usunąć?</translation>
     <message>
         <source>%1 bytes</source>
         <translatorcomment>File size measured in bytes</translatorcomment>
-        <translation>%1 bytes</translation>
+        <translation>%1 bajty</translation>
     </message>
     <message>
         <source>Invalid filename</source>
@@ -4028,12 +4028,12 @@ Czy mimo to chcesz je usunąć?</translation>
     <message>
         <source>%1 byte(s)</source>
         <translatorcomment>File size measured in bytes</translatorcomment>
-        <translation>%1 byte(s)</translation>
+        <translation>%1 bajt(y)</translation>
     </message>
     <message>
         <source>&lt;b&gt;The name &quot;%1&quot; cannot be used.&lt;/b&gt;&lt;p&gt;Try using another name, with fewer characters or no punctuation marks.</source>
         <translatorcomment>Alert message when file name is incorrect</translatorcomment>
-        <translation>&lt;b&gt;Nie można użyć nazwy “%1”.&lt;/b&gt;&lt;p&gt; Spróbuj użyć innej nazwy, z mniejszą liczbą znaków lub bez znaków interpunkcyjnych.</translation>
+        <translation>&lt;b&gt;Nie można użyć nazwy „%1”.&lt;/b&gt;&lt;p&gt; Spróbuj użyć innej nazwy, z mniejszą liczbą znaków lub bez znaków interpunkcyjnych.</translation>
     </message>
 </context>
 <context>
@@ -4212,7 +4212,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Always keep physical control of your master key (e.g. on a client device, external storage, or print).</source>
         <translatorcomment>Label to inform the user to keep physical control of the master key.</translatorcomment>
-        <translation>Zawsze bądź w posiadaniu Klucza Zapasowego (e.g. na  swoim urządzeniu, zewnętrznym dysku lub w wersji drukowanej).</translation>
+        <translation>Zawsze bądź w posiadaniu Klucza Zapasowego (np. na swoim urządzeniu, zewnętrznym dysku lub w wersji drukowanej).</translation>
     </message>
     <message>
         <source>Exclude by size</source>
@@ -4277,7 +4277,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Folder in MEGA with a backup of files deleted in the local computer</source>
         <translatorcomment>Tooltip shown when hovering remote SyncDebris label.</translatorcomment>
-        <translation>Katalog na MEGA z kopią zapasową plików został usunięty z komputera.</translation>
+        <translation>Katalog na MEGA z kopią zapasową plików został usunięty z komputera</translation>
     </message>
     <message>
         <source>Disabling file versioning will prevent the creation and storage of new file versions. Do you want to continue?</source>
@@ -4447,7 +4447,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Move…</source>
         <translatorcomment>Button label text allowing the user to change the default Uploads or Downloads folders for the app.</translatorcomment>
-        <translation>Przenieś...</translation>
+        <translation>Przenieś…</translation>
     </message>
     <message>
         <source>Exclude files smaller than</source>
@@ -4467,7 +4467,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Change Settings…</source>
         <translatorcomment>Button label text for Bandwidth and Proxy settings in Network pane.</translatorcomment>
-        <translation>Zmień ustawienia...</translation>
+        <translation>Zmień ustawienia…</translation>
     </message>
     <message>
         <source>Proxies</source>
@@ -4735,12 +4735,12 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>I agree with the MEGA &lt;a href=&quot;https://mega.co.nz/#terms&quot;&gt;Terms of Service&lt;/a&gt;</source>
         <translatorcomment>Label to aggre with the Terms of use.  Keep code &lt;a href=&quot;https://mega.co.nz/#terms&quot;&gt;Terms of Service&lt;/a&gt; .String as short as possible.</translatorcomment>
-        <translation>Akceptuję &lt;a href=&quot;https://mega.nz/terms&quot;&gt;regulamin&lt;/a&gt; MEGA</translation>
+        <translation>Akceptuję &lt;a href=&#8221;https://mega.nz/terms&#8221;&gt;regulamin&lt;/a&gt; MEGA</translation>
     </message>
     <message>
         <source>Log in to your MEGA account</source>
         <translatorcomment>Label to let the user login with his credentials.</translatorcomment>
-        <translation>Zaloguj się do swojego konta MEGA.</translation>
+        <translation>Zaloguj się do swojego konta MEGA</translation>
     </message>
     <message>
         <source>Please verify your account using the confirmation link that we have sent to your email account</source>
@@ -4810,7 +4810,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Fetching file list...</source>
         <translatorcomment>Label displayed while the application is retrieving all file list from the server.</translatorcomment>
-        <translation>Pobieram listę plików</translation>
+        <translation>Pobieram listę plików…</translation>
     </message>
     <message>
         <source>Incorrect email and/or password.</source>
@@ -5000,7 +5000,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>When you finish this assistant, you will be able to sync additional folders using the settings dialog</source>
         <translatorcomment>Label to inform the user about the possibility to add new synchronizations through settings dialog once the initial setup wizard is at final stage</translatorcomment>
-        <translation>Kiedy zakończysz ten proces, zawsze będziesz mógł zmienić ustawienia w dowolnym momencie.</translation>
+        <translation>Kiedy zakończysz ten proces, zawsze będziesz mógł zmienić ustawienia w dowolnym momencie</translation>
     </message>
     <message>
         <source>First name:</source>
@@ -5133,7 +5133,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Remove from left pane</source>
         <translatorcomment>Context menu option to remove MEGA item from explorer left pane</translatorcomment>
-        <translation>Usuń z lewgo panela</translation>
+        <translation>Usuń z lewego panelu</translation>
     </message>
     <message>
         <source>View on MEGA</source>
@@ -5489,7 +5489,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Please upgrade to Pro to continue immediately, or wait %1 to continue for free</source>
         <translatorcomment>Warning label shown when user reaches over transfer quota situation. The user can upgrade Plan or wait %1 time until new free quota is allowed.</translatorcomment>
-        <translation>Proszę uaktualnić do wersji Pro, aby natychmiast kontynuować lub poczekać %1, aby kontynuować za darmo.</translation>
+        <translation>Proszę uaktualnić do wersji Pro, aby natychmiast kontynuować lub poczekać %1, aby kontynuować za darmo</translation>
     </message>
     <message>
         <source>* The local currency price is an estimate only. All transactions shown charged in Euros.</source>

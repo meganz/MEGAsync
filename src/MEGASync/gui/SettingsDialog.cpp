@@ -1160,8 +1160,7 @@ void SettingsDialog::updateBandwidthElements()
 
     if (accountType == Preferences::ACCOUNT_TYPE_FREE)
     {
-        mUi->lBandwidth->setText(tr("Used quota for the last %1 hours:")
-                                .arg(mPreferences->bandwidthInterval()));
+        mUi->lBandwidth->setText(tr("Used quota for the last %n hour:", "", mPreferences->bandwidthInterval()));
         mUi->lBandwidthFree->show();
         mUi->lBandwidthFree->setText(Utilities::getSizeString(usedBandwidth));
     }

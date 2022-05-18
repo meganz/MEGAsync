@@ -56,9 +56,6 @@ set(RepoDir "${CMAKE_CURRENT_LIST_DIR}/../.."  CACHE STRING "")
 set(MEGAsyncDir "${RepoDir}/src/MEGASync")
 set(MEGAupdaterDir "${RepoDir}/src/MEGAUpdater")
 set(MEGAShellExtDir "${RepoDir}/src/MEGAShellExt")
-if(CMAKE_HOST_APPLE)
-    set(MEGAloaderDir "${RepoDir}/src/MEGALoader")
-endif(CMAKE_HOST_APPLE)
 
 get_filename_component(MEGAsyncDir ${MEGAsyncDir} REALPATH)
 
@@ -201,6 +198,7 @@ set (MOC_INPUT
     ${MEGAsyncDir}/RemovedSharesNotificator.h
     ${MEGAsyncDir}/UserAlertTimedClustering.h
     ${MEGAsyncDir}/ScaleFactorManager.h
+    ${MEGAsyncDir}/CommonMessages.h
     ${MEGAsyncDir}/control/ConnectivityChecker.h
     ${MEGAsyncDir}/control/CrashHandler.h
     ${MEGAsyncDir}/control/EncryptedSettings.h
@@ -272,7 +270,6 @@ set (MOC_INPUT
     ${MEGAsyncDir}/gui/UpgradeDialog.h
     ${MEGAsyncDir}/gui/UpgradeOverStorage.h
     ${MEGAsyncDir}/gui/UploadToMegaDialog.h
-    ${MEGAsyncDir}/gui/UsageWidget.h
     ${MEGAsyncDir}/gui/VerifyLockMessage.h
     ${MEGAsyncDir}/gui/MegaInfoMessage.h
     ${MEGAsyncDir}/gui/WaitingSpinnerWidget.h
@@ -365,6 +362,7 @@ set (SRCS
     ${MEGAsyncDir}/RemovedSharesNotificator.cpp
     ${MEGAsyncDir}/UserAlertTimedClustering.cpp
     ${MEGAsyncDir}/ScaleFactorManager.cpp
+    ${MEGAsyncDir}/CommonMessages.cpp
 
     ${MEGAsyncDir}/model/Model.cpp
     ${MEGAsyncDir}/model/SyncSettings.cpp
@@ -407,7 +405,6 @@ set (SRCS
     ${MEGAsyncDir}/gui/MegaProxyStyle.cpp
     ${MEGAsyncDir}/gui/AccountDetailsDialog.cpp
     ${MEGAsyncDir}/gui/DownloadFromMegaDialog.cpp
-    ${MEGAsyncDir}/gui/UsageWidget.cpp
     ${MEGAsyncDir}/gui/MegaItemModel.cpp
     ${MEGAsyncDir}/gui/MegaItem.cpp
     ${MEGAsyncDir}/gui/ChangeLogDialog.cpp
@@ -810,12 +807,6 @@ if(CMAKE_HOST_WIN32)
     set_property(TARGET MEGAShellExt PROPERTY MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
     set_target_properties(MEGAShellExt  PROPERTIES LINK_FLAGS_RELEASE " /DEBUG " )
 endif()
-
-#-------------- MEGA Loader for OSX --------------------
-
-if(CMAKE_HOST_APPLE)
-    add_executable(MEGAloader MACOSX_BUNDLE ${MEGAloaderDir}/MEGALoader.cpp)
-endif(CMAKE_HOST_APPLE)
 
 #-------------- MEGA Sync unit tests --------------------
 add_library(catch INTERFACE)

@@ -237,7 +237,6 @@ signals:
     void startUpdaterThread();
     void tryUpdate();
     void installUpdate();
-    void unityFixSignal();
     void clearAllFinishedTransfers();
     void clearFinishedTransfer(int transferTag);
     void fetchNodesAfterBlock();
@@ -365,7 +364,6 @@ protected:
     void applyStorageState(int state, bool doNotAskForUserStats = false);
     void processUploadQueue(mega::MegaHandle nodeHandle);
     void processDownloadQueue(QString path);
-    void unityFix();
     void disableSyncs();
     void restoreSyncs();
     void closeDialogs(bool bwoverquota = false);
@@ -446,7 +444,7 @@ protected:
     QFilterAlertsModel *notificationsProxyModel;
     QAlertsModel *notificationsModel;
     MegaAlertDelegate *notificationsDelegate;
-    std::unique_ptr<QObject> context{new QObject};
+    QObject *context;
     QString crashReportFilePath;
 
     HTTPServer *httpServer;
@@ -567,6 +565,7 @@ private:
 #endif
     void loadSyncExclusionRules(QString email = QString());
 
+    static std::pair<QString,QString> buildFinishedTransferTitleAndMessage(const TransferMetaData *data);
     static long long computeExclusionSizeLimit(const long long sizeLimitValue, const int unit);
 
     QList<QNetworkInterface> findNewNetworkInterfaces();

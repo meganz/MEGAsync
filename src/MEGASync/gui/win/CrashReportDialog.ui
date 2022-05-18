@@ -19,24 +19,8 @@
 font-size: 11px;
 }
 
-QCheckBox::indicator {
-     width: 16px;
-     height: 16px;
- }
-
-QRadioButton::indicator {
-     width: 16px;
-     height: 16px;
- }
-
 QScrollBar:horizontal {
 height: 16px;
-}
-
-QPushButton
-{
-    min-height: 14px;
-	height: 14px;
 }
 
 </string>
@@ -129,12 +113,6 @@ spacing:10px;
           <verstretch>0</verstretch>
          </sizepolicy>
         </property>
-        <property name="minimumSize">
-         <size>
-          <width>0</width>
-          <height>16</height>
-         </size>
-        </property>
         <property name="text">
          <string>Send report</string>
         </property>
@@ -147,12 +125,6 @@ spacing:10px;
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
-        </property>
-        <property name="minimumSize">
-         <size>
-          <width>0</width>
-          <height>16</height>
-         </size>
         </property>
         <property name="text">
          <string>Cancel</string>
