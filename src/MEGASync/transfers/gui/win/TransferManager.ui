@@ -112,6 +112,7 @@ QGroupBox::title
     color: #15191F;
     border: none;
     text-align: left;
+    padding-left: -1px;
     qProperty-iconSize: 24px;
 }
 
@@ -121,7 +122,7 @@ QGroupBox::title
     min-width: 180px;
     max-width: 200px;
     font-size: 14px;
-    color: #333333;
+    color: #15191F;
     border: none;
     text-align: left;
     padding-left: -1px;
@@ -130,9 +131,9 @@ QGroupBox::title
 
 #wTitleAndSearch
 {
-     height: 32px;
-     min-height: 32px;
-     max-height: 32px;
+     height: 34px;
+     min-height: 34px;
+     max-height: 34px;
 }
 
 #pSearch
@@ -412,6 +413,7 @@ QGroupBox::title
       <string notr="true">#wLeftPane QFrame &gt; QLabel
 {
     font-weight: bold;
+    color: #999999;
     font-size: 10px;
 	text-align: right;
     border-radius: 12px;
@@ -423,10 +425,11 @@ QGroupBox::title
     background: solid white;
 }
 
-#wLeftPane QFrame[itsOn=true]  QLabel
+#wLeftPane QFrame[itsOn=true]  &gt; QLabel
 {
     border: 1px solid #F5F5F5; 
     background-color: #FAFAFA;
+    color: #333333;
 }
 
 #wLeftPane QFrame[itsOn=false] 
@@ -463,13 +466,13 @@ QGroupBox::title
         <property name="minimumSize">
          <size>
           <width>0</width>
-          <height>32</height>
+          <height>34</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
           <width>16777215</width>
-          <height>32</height>
+          <height>34</height>
          </size>
         </property>
         <property name="currentIndex">
@@ -700,13 +703,19 @@ QGroupBox::title
             <property name="bottomMargin">
              <number>0</number>
             </property>
-            <item>
+            <item alignment="Qt::AlignLeft">
              <widget class="QPushButton" name="tAllTransfers">
               <property name="sizePolicy">
-               <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>199</width>
+                <height>16777215</height>
+               </size>
               </property>
               <property name="font">
                <font>
@@ -717,9 +726,6 @@ QGroupBox::title
               </property>
               <property name="cursor">
                <cursorShape>PointingHandCursor</cursorShape>
-              </property>
-              <property name="styleSheet">
-               <string notr="true"/>
               </property>
               <property name="text">
                <string>All transfers</string>
@@ -779,6 +785,13 @@ QGroupBox::title
                 <width>16777215</width>
                 <height>24</height>
                </size>
+              </property>
+              <property name="font">
+               <font>
+                <family>Lato</family>
+                <pointsize>-1</pointsize>
+                <bold>true</bold>
+               </font>
               </property>
               <property name="text">
                <string notr="true"/>
@@ -1134,8 +1147,8 @@ QGroupBox::title
                <string>Failed</string>
               </property>
               <property name="icon">
-               <iconset theme="failed_ico" resource="../../../gui/Resources_win.qrc">
-                <normaloff>:/images/transfer_manager/sidebar/failed_ico_default.png</normaloff>:/images/transfer_manager/sidebar/failed_ico_default.png</iconset>
+               <iconset resource="../../../gui/Resources_win.qrc">
+                <normaloff>:/images/transfer_manager/sidebar/sidebar_failed_ico_default.png</normaloff>:/images/transfer_manager/sidebar/sidebar_failed_ico_default.png</iconset>
               </property>
               <property name="checkable">
                <bool>true</bool>
@@ -1881,7 +1894,7 @@ QGroupBox::title
          <string notr="true"/>
         </property>
         <property name="currentIndex">
-         <number>1</number>
+         <number>0</number>
         </property>
         <widget class="QWidget" name="pSpeedAndClear">
          <layout class="QHBoxLayout" name="pSpeedAndClearLayout" stretch="1,1,0,0">
@@ -2051,6 +2064,9 @@ QGroupBox::title
               <height>24</height>
              </size>
             </property>
+            <property name="ignore_button_manager" stdset="0">
+             <bool>true</bool>
+            </property>
            </widget>
           </item>
          </layout>
@@ -2099,6 +2115,9 @@ QGroupBox::title
               <height>24</height>
              </size>
             </property>
+            <property name="ignore_button_manager" stdset="0">
+             <bool>true</bool>
+            </property>
            </widget>
           </item>
          </layout>
@@ -2124,6 +2143,9 @@ QGroupBox::title
            <widget class="QPushButton" name="bScanning">
             <property name="text">
              <string>Scanning</string>
+            </property>
+            <property name="ignore_button_manager" stdset="0">
+             <bool>true</bool>
             </property>
            </widget>
           </item>
@@ -2778,7 +2800,7 @@ QGroupBox::title
       <item>
        <widget class="QStackedWidget" name="sTransfers">
         <property name="currentIndex">
-         <number>1</number>
+         <number>0</number>
         </property>
         <widget class="TransfersWidget" name="wTransfers">
          <property name="sizePolicy">

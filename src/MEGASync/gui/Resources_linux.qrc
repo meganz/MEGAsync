@@ -930,9 +930,6 @@
         <file>images/transfer_manager/sidebar/downloads_ico_selected.png</file>
         <file>images/transfer_manager/sidebar/downloads_ico_selected@2x.png</file>
         <file>images/transfer_manager/sidebar/downloads_ico_selected@3x.png</file>
-        <file>images/transfer_manager/sidebar/failed_ico_default.png</file>
-        <file>images/transfer_manager/sidebar/failed_ico_default@2x.png</file>
-        <file>images/transfer_manager/sidebar/failed_ico_default@3x.png</file>
         <file>images/transfer_manager/sidebar/finished_ico_default.png</file>
         <file>images/transfer_manager/sidebar/finished_ico_default@2x.png</file>
         <file>images/transfer_manager/sidebar/finished_ico_default@3x.png</file>
@@ -1014,21 +1011,6 @@
         <file>images/transfer_manager/toolbar/upload_toolbar_ico_hover.png</file>
         <file>images/transfer_manager/toolbar/upload_toolbar_ico_hover@2x.png</file>
         <file>images/transfer_manager/toolbar/upload_toolbar_ico_hover@3x.png</file>
-        <file>images/transfer_manager/transfers_actions/lists_cancel_all_ico_default.png</file>
-        <file>images/transfer_manager/transfers_actions/lists_cancel_all_ico_default@2x.png</file>
-        <file>images/transfer_manager/transfers_actions/lists_cancel_all_ico_default@3x.png</file>
-        <file>images/transfer_manager/transfers_actions/lists_cancel_ico_default.png</file>
-        <file>images/transfer_manager/transfers_actions/lists_cancel_ico_default@2x.png</file>
-        <file>images/transfer_manager/transfers_actions/lists_cancel_ico_default@3x.png</file>
-        <file>images/transfer_manager/transfers_actions/lists_pause_all_ico_default.png</file>
-        <file>images/transfer_manager/transfers_actions/lists_pause_all_ico_default@2x.png</file>
-        <file>images/transfer_manager/transfers_actions/lists_pause_all_ico_default@3x.png</file>
-        <file>images/transfer_manager/transfers_actions/lists_pause_ico_default.png</file>
-        <file>images/transfer_manager/transfers_actions/lists_pause_ico_default@2x.png</file>
-        <file>images/transfer_manager/transfers_actions/lists_pause_ico_default@3x.png</file>
-        <file>images/transfer_manager/transfers_actions/lists_pause_ico_hover.png</file>
-        <file>images/transfer_manager/transfers_actions/lists_pause_ico_hover@2x.png</file>
-        <file>images/transfer_manager/transfers_actions/lists_pause_ico_hover@3x.png</file>
         <file>images/transfer_manager/transfers_states/arrow_download_ico.png</file>
         <file>images/transfer_manager/transfers_states/arrow_download_ico@2x.png</file>
         <file>images/transfer_manager/transfers_states/arrow_download_ico@3x.png</file>
@@ -1068,15 +1050,6 @@
         <file>images/transfer_manager/sidebar/sidebar_search_ico_default.png</file>
         <file>images/transfer_manager/sidebar/sidebar_search_ico_default@2x.png</file>
         <file>images/transfer_manager/sidebar/sidebar_search_ico_default@3x.png</file>
-        <file>images/transfer_manager/transfers_actions/lists_pause_all_ico_selected.png</file>
-        <file>images/transfer_manager/transfers_actions/lists_pause_all_ico_selected@2x.png</file>
-        <file>images/transfer_manager/transfers_actions/lists_pause_all_ico_selected@3x.png</file>
-        <file>images/transfer_manager/transfers_actions/lists_pause_ico_hover_selected.png</file>
-        <file>images/transfer_manager/transfers_actions/lists_pause_ico_hover_selected@2x.png</file>
-        <file>images/transfer_manager/transfers_actions/lists_pause_ico_hover_selected@3x.png</file>
-        <file>images/transfer_manager/transfers_actions/lists_pause_ico_selected.png</file>
-        <file>images/transfer_manager/transfers_actions/lists_pause_ico_selected@2x.png</file>
-        <file>images/transfer_manager/transfers_actions/lists_pause_ico_selected@3x.png</file>
         <file>images/transfer_manager/sidebar/sidebar_pause_ico_selected.png</file>
         <file>images/transfer_manager/sidebar/sidebar_pause_ico_selected@2x.png</file>
         <file>images/transfer_manager/sidebar/sidebar_pause_ico_selected@3x.png</file>
@@ -1113,8 +1086,50 @@
         <file>images/transfer_manager/sidebar/delete_search_result_hover.png</file>
         <file>images/transfer_manager/sidebar/delete_search_result_hover@2x.png</file>
         <file>images/transfer_manager/sidebar/delete_search_result_hover@3x.png</file>
+        <file>images/transfer_manager/sidebar/sidebar_failed_ico_default.png</file>
+        <file>images/transfer_manager/sidebar/sidebar_failed_ico_default@2x.png</file>
+        <file>images/transfer_manager/sidebar/sidebar_failed_ico_default@3x.png</file>
+        <file>images/transfer_manager/sidebar/sidebar_failed_ico_hover.png</file>
+        <file>images/transfer_manager/sidebar/sidebar_failed_ico_hover@2x.png</file>
+        <file>images/transfer_manager/sidebar/sidebar_failed_ico_hover@3x.png</file>
+        <file>images/transfer_manager/sidebar/sidebar_failed_ico_selected.png</file>
+        <file>images/transfer_manager/sidebar/sidebar_failed_ico_selected@2x.png</file>
+        <file>images/transfer_manager/sidebar/sidebar_failed_ico_selected@3x.png</file>
+        <file>images/transfer_manager/transfers_actions/lists_cancel_all_ico_default.png</file>
+        <file>images/transfer_manager/transfers_actions/lists_cancel_all_ico_default@2x.png</file>
+        <file>images/transfer_manager/transfers_actions/lists_cancel_all_ico_default@3x.png</file>
         <file>images/transfer_manager/transfers_actions/lists_cancel_all_ico_hover.png</file>
         <file>images/transfer_manager/transfers_actions/lists_cancel_all_ico_hover@2x.png</file>
         <file>images/transfer_manager/transfers_actions/lists_cancel_all_ico_hover@3x.png</file>
+        <file>images/transfer_manager/transfers_actions/lists_cancel_ico_default.png</file>
+        <file>images/transfer_manager/transfers_actions/lists_cancel_ico_default@2x.png</file>
+        <file>images/transfer_manager/transfers_actions/lists_cancel_ico_default@3x.png</file>
+        <file>images/transfer_manager/transfers_actions/lists_cancel_ico_hover.png</file>
+        <file>images/transfer_manager/transfers_actions/lists_cancel_ico_hover@2x.png</file>
+        <file>images/transfer_manager/transfers_actions/lists_cancel_ico_hover@3x.png</file>
+        <file>images/transfer_manager/transfers_actions/lists_pause_all_ico_default.png</file>
+        <file>images/transfer_manager/transfers_actions/lists_pause_all_ico_default@2x.png</file>
+        <file>images/transfer_manager/transfers_actions/lists_pause_all_ico_default@3x.png</file>
+        <file>images/transfer_manager/transfers_actions/lists_pause_all_ico_hover_selected.png</file>
+        <file>images/transfer_manager/transfers_actions/lists_pause_all_ico_hover_selected@2x.png</file>
+        <file>images/transfer_manager/transfers_actions/lists_pause_all_ico_hover_selected@3x.png</file>
+        <file>images/transfer_manager/transfers_actions/lists_pause_all_ico_selected.png</file>
+        <file>images/transfer_manager/transfers_actions/lists_pause_all_ico_selected@2x.png</file>
+        <file>images/transfer_manager/transfers_actions/lists_pause_all_ico_selected@3x.png</file>
+        <file>images/transfer_manager/transfers_actions/lists_pause_ico_default.png</file>
+        <file>images/transfer_manager/transfers_actions/lists_pause_ico_default@2x.png</file>
+        <file>images/transfer_manager/transfers_actions/lists_pause_ico_default@3x.png</file>
+        <file>images/transfer_manager/transfers_actions/lists_pause_ico_hover.png</file>
+        <file>images/transfer_manager/transfers_actions/lists_pause_ico_hover@2x.png</file>
+        <file>images/transfer_manager/transfers_actions/lists_pause_ico_hover@3x.png</file>
+        <file>images/transfer_manager/transfers_actions/lists_pause_ico_hover_selected.png</file>
+        <file>images/transfer_manager/transfers_actions/lists_pause_ico_hover_selected@2x.png</file>
+        <file>images/transfer_manager/transfers_actions/lists_pause_ico_hover_selected@3x.png</file>
+        <file>images/transfer_manager/transfers_actions/lists_pause_ico_selected.png</file>
+        <file>images/transfer_manager/transfers_actions/lists_pause_ico_selected@2x.png</file>
+        <file>images/transfer_manager/transfers_actions/lists_pause_ico_selected@3x.png</file>
+        <file>images/transfer_manager/transfers_actions/lists_pause_all_ico_hover.png</file>
+        <file>images/transfer_manager/transfers_actions/lists_pause_all_ico_hover@2x.png</file>
+        <file>images/transfer_manager/transfers_actions/lists_pause_all_ico_hover@3x.png</file>
     </qresource>
 </RCC>

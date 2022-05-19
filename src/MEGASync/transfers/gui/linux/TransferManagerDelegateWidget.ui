@@ -204,13 +204,13 @@ QProgressBar::chunk
 
 #tPauseResumeTransfer, #tCancelClearTransfer
 {
-    width: 24px;
-    min-width: 24px;
-    max-width: 24px;
-    height: 24px;
-    min-height: 24px;
-    max-height: 24px;
-    qProperty-iconSize: 24px;
+    width: 16px;
+    min-width: 16px;
+    max-width: 16px;
+    height: 16px;
+    min-height: 16px;
+    max-height: 16px;
+    qProperty-iconSize: 16px;
     padding-left: 0px;
     margin-right: 0px;
     border: none;}</string>
@@ -825,13 +825,13 @@ QProgressBar::chunk
          </property>
          <property name="minimumSize">
           <size>
-           <width>24</width>
+           <width>16</width>
            <height>63</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>24</width>
+           <width>16</width>
            <height>63</height>
           </size>
          </property>
@@ -855,14 +855,14 @@ QProgressBar::chunk
            <widget class="QToolButton" name="tPauseResumeTransfer">
             <property name="minimumSize">
              <size>
-              <width>24</width>
-              <height>24</height>
+              <width>16</width>
+              <height>16</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
-              <width>24</width>
-              <height>24</height>
+              <width>16</width>
+              <height>16</height>
              </size>
             </property>
             <property name="icon">
@@ -884,13 +884,13 @@ QProgressBar::chunk
          </property>
          <property name="minimumSize">
           <size>
-           <width>24</width>
+           <width>16</width>
            <height>63</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>24</width>
+           <width>16</width>
            <height>63</height>
           </size>
          </property>
@@ -914,14 +914,14 @@ QProgressBar::chunk
            <widget class="QToolButton" name="tCancelClearTransfer">
             <property name="minimumSize">
              <size>
-              <width>24</width>
-              <height>24</height>
+              <width>16</width>
+              <height>16</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
-              <width>24</width>
-              <height>24</height>
+              <width>16</width>
+              <height>16</height>
              </size>
             </property>
             <property name="icon">

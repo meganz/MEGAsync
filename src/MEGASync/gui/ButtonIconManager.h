@@ -11,6 +11,16 @@ class ButtonIconManager : public QObject
     static const char*   ICON_PREFIX;
     static const char*   HOVER_SELECTED_FLAG;
     static const char*   CHECK_STATE;
+    static const char*   IGNORE_BUTTON;
+
+    struct IconInfo
+    {
+        QString extension;
+        QString iconName;
+        QString iconPath;
+
+        bool isEmpty(){return iconName.isEmpty();}
+    };
 
 public:
     struct Settings
@@ -40,18 +50,14 @@ private slots:
     void onButtonChecked();
 
 private:
-    void fillIcon(QIcon& icon, const QString& iconPath);
+    void fillIcon(const IconInfo& info, QIcon& icon);
     void changeButtonTextColor(QAbstractButton* button, double alpha);
-    void splitIconPath(const QUrl& iconPath);
-    bool cleanIconName(const QString& name, const QString& separator);
+    IconInfo splitIconPath(const QUrl& iconPath);
+    bool cleanIconName(IconInfo& info, const QString& separator);
 
     void setDefaultIcon(QAbstractButton* button);
     void setHoverIcon(QAbstractButton* button);
     void setSelectedIcon(QAbstractButton* button);
-
-    QString mExtension;
-    QString mIconBaseName;
-    QString mIconPath;
 
     Settings mSettings;
 };

@@ -43,16 +43,6 @@
     background-color: white;
 }
 
-#wPauseResumeVisible
-{
-    width: 24px;
-    min-width: 24px;
-    max-width: 24px;
-    height: 24px;
-    min-height: 24px;
-    max-height: 24px;
-}
-
 #wTableHeader QPushButton
 {
 	color: #666666;
@@ -418,14 +408,14 @@ TransferWidgetHeaderItem  QLabel
            <widget class="QPushButton" name="tPauseResumeVisible">
             <property name="minimumSize">
              <size>
-              <width>24</width>
-              <height>24</height>
+              <width>16</width>
+              <height>16</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
-              <width>24</width>
-              <height>24</height>
+              <width>16</width>
+              <height>16</height>
              </size>
             </property>
             <property name="cursor">
@@ -440,8 +430,8 @@ TransferWidgetHeaderItem  QLabel
             </property>
             <property name="iconSize">
              <size>
-              <width>24</width>
-              <height>24</height>
+              <width>16</width>
+              <height>16</height>
              </size>
             </property>
             <property name="checkable">
@@ -461,14 +451,14 @@ TransferWidgetHeaderItem  QLabel
            <widget class="QPushButton" name="tCancelClearVisible">
             <property name="minimumSize">
              <size>
-              <width>24</width>
-              <height>24</height>
+              <width>16</width>
+              <height>16</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
-              <width>24</width>
-              <height>24</height>
+              <width>16</width>
+              <height>16</height>
              </size>
             </property>
             <property name="cursor">
@@ -483,8 +473,8 @@ TransferWidgetHeaderItem  QLabel
             </property>
             <property name="iconSize">
              <size>
-              <width>24</width>
-              <height>24</height>
+              <width>16</width>
+              <height>16</height>
              </size>
             </property>
             <property name="icon_prefix" stdset="0">

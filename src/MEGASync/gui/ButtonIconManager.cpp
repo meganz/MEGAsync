@@ -10,6 +10,7 @@
 const char* ButtonIconManager::ICON_PREFIX = "icon_prefix";
 const char* ButtonIconManager::HOVER_SELECTED_FLAG = "hover_selected";
 const char* ButtonIconManager::CHECK_STATE = "check_state";
+const char* ButtonIconManager::IGNORE_BUTTON = "ignore_button_manager";
 
 ButtonIconManager::ButtonIconManager(QObject * parent) :
     QObject(parent)
@@ -17,13 +18,15 @@ ButtonIconManager::ButtonIconManager(QObject * parent) :
 
 void ButtonIconManager::addButton(QAbstractButton *button)
 {
-    button->installEventFilter(this);
-    connect(button, &QAbstractButton::toggled, this, &ButtonIconManager::onButtonChecked);
+    if(!button->property(IGNORE_BUTTON).toBool())
+    {
+        button->installEventFilter(this);
+        connect(button, &QAbstractButton::toggled, this, &ButtonIconManager::onButtonChecked);
 
-    changeButtonTextColor(button, 1.0 - mSettings.opacityGap);
-    setDefaultIcon(button);
+        setDefaultIcon(button);
 
-    button->setProperty(CHECK_STATE, button->isChecked());
+        button->setProperty(CHECK_STATE, button->isChecked());
+    }
 }
 
 bool ButtonIconManager::eventFilter(QObject * watched, QEvent * event)
@@ -45,7 +48,7 @@ bool ButtonIconManager::eventFilter(QObject * watched, QEvent * event)
             setDefaultIcon(button);
         }
     }
-    //Do not depend on checked signal
+    //Do not depend on checked signal as the button signals can be blocked
     else if(event->type() == QEvent::Paint)
     {
         if(button->isCheckable())
@@ -63,21 +66,23 @@ bool ButtonIconManager::eventFilter(QObject * watched, QEvent * event)
 
 void ButtonIconManager::setDefaultIcon(QAbstractButton *button)
 {
-    splitIconPath(button->property(ICON_PREFIX).toUrl());
+    auto iconInfo = splitIconPath(button->property(ICON_PREFIX).toUrl());
 
-    if(!mIconBaseName.isEmpty())
+    if(!iconInfo.isEmpty())
     {
         auto newIcon = button->icon();
-        // The push button is hovered by mouse
+
         // The push button is not hovered by mouse
         if(button->isCheckable() && button->isChecked())
         {
-            fillIcon(newIcon, mIconBaseName.append(mSettings.selected_suffix));
+            iconInfo.iconName.append(mSettings.selected_suffix);
+            fillIcon(iconInfo, newIcon);
             changeButtonTextColor(button, 1.0);
         }
         else
         {
-            fillIcon(newIcon, mIconBaseName.append(mSettings.default_suffix));
+            iconInfo.iconName.append(mSettings.default_suffix);
+            fillIcon(iconInfo, newIcon);
             changeButtonTextColor(button, 1.0 - mSettings.opacityGap);
         }
 
@@ -87,9 +92,9 @@ void ButtonIconManager::setDefaultIcon(QAbstractButton *button)
 
 void ButtonIconManager::setHoverIcon(QAbstractButton *button)
 {
-    splitIconPath(button->property(ICON_PREFIX).toUrl());
+    auto iconInfo = splitIconPath(button->property(ICON_PREFIX).toUrl());
 
-    if(!mIconBaseName.isEmpty())
+    if(!iconInfo.isEmpty())
     {
         auto hoverSelectedAvailable = button->property(HOVER_SELECTED_FLAG).toBool();
         auto newIcon = button->icon();
@@ -98,16 +103,19 @@ void ButtonIconManager::setHoverIcon(QAbstractButton *button)
         {
             if(hoverSelectedAvailable)
             {
-                fillIcon(newIcon, mIconBaseName.append(mSettings.hover_selected_suffix));
+                iconInfo.iconName.append(mSettings.hover_selected_suffix);
+                fillIcon(iconInfo, newIcon);
             }
             else
             {
-                fillIcon(newIcon, mIconBaseName.append(mSettings.hover_suffix));
+                iconInfo.iconName.append(mSettings.hover_suffix);
+                fillIcon(iconInfo, newIcon);
             }
         }
         else
         {
-            fillIcon(newIcon, mIconBaseName.append(mSettings.hover_suffix));
+            iconInfo.iconName.append(mSettings.hover_suffix);
+            fillIcon(iconInfo, newIcon);
         }
 
         changeButtonTextColor(button, 1.0);
@@ -117,18 +125,22 @@ void ButtonIconManager::setHoverIcon(QAbstractButton *button)
 
 void ButtonIconManager::setSelectedIcon(QAbstractButton *button)
 {
-    splitIconPath(button->property(ICON_PREFIX).toUrl());
-    if(!mIconBaseName.isEmpty())
+    auto iconInfo = splitIconPath(button->property(ICON_PREFIX).toUrl());
+
+    if(!iconInfo.isEmpty())
     {
+        //The button is checked
         auto newIcon = button->icon();
         if(button->isChecked())
         {
-            fillIcon(newIcon, mIconBaseName.append(mSettings.selected_suffix));
+            iconInfo.iconName.append(mSettings.selected_suffix);
+            fillIcon(iconInfo, newIcon);
             changeButtonTextColor(button, 1.0);
         }
         else
         {
-            fillIcon(newIcon, mIconBaseName.append(mSettings.hover_suffix));
+            iconInfo.iconName.append(mSettings.hover_suffix);
+            fillIcon(iconInfo, newIcon);
             changeButtonTextColor(button, 1.0 - mSettings.opacityGap);
         }
 
@@ -166,54 +178,59 @@ void ButtonIconManager::changeButtonTextColor(QAbstractButton* button, double al
     }
 }
 
-void ButtonIconManager::splitIconPath(const QUrl &iconPath)
+ButtonIconManager::IconInfo ButtonIconManager::splitIconPath(const QUrl &iconPath)
 {
-    QFileInfo info(iconPath.path());
-    mExtension = info.completeSuffix();
-    mIconPath = info.path();
+    IconInfo info;
+
+    QFileInfo pathInfo(iconPath.path());
+    info.extension = pathInfo.completeSuffix();
+    info.iconPath = pathInfo.path();
+    info.iconName = pathInfo.baseName();
 
     //Temporary code...not very clean
-    if(!cleanIconName(info.baseName(), QString::fromLatin1("_")))
+    if(!cleanIconName(info, QString::fromLatin1("_")))
     {
-        cleanIconName(info.baseName(), QString::fromLatin1("-"));
+        cleanIconName(info, QString::fromLatin1("-"));
     }
+
+    return info;
 }
 
-bool ButtonIconManager::cleanIconName(const QString& name, const QString& separator)
+bool ButtonIconManager::cleanIconName(IconInfo& info, const QString& separator)
 {
-    auto iconName = name;
-    auto splittedIconPath = iconName.split(separator);
+    auto splittedIconPath = info.iconName.split(separator);
     if(splittedIconPath.size() > 1)
     {
         splittedIconPath.removeLast();
-        mIconBaseName = splittedIconPath.join(separator);
+        info.iconName = splittedIconPath.join(separator);
         return true;
     }
     else
     {
+        info.iconName.clear();
         return false;
     }
 }
 
-void ButtonIconManager::fillIcon(QIcon &icon, const QString &iconPath)
+void ButtonIconManager::fillIcon(const IconInfo& info, QIcon& icon)
 {
     QString result;
     QString init(QString::fromLatin1(":"));
     QString separator(QString::fromLatin1("/"));
     QString pointSeparator(QString::fromLatin1("."));
     result.reserve(init.length()
-                   + mIconPath.length()
+                   + info.iconPath.length()
                    + separator.length()
-                   + iconPath.length()
+                   + info.iconName.length()
                    + pointSeparator.length()
-                   + mExtension.length());
+                   + info.extension.length());
 
     result.append(init);
-    result.append(mIconPath);
+    result.append(info.iconPath);
     result.append(separator);
-    result.append(iconPath);
+    result.append(info.iconName);
     result.append(pointSeparator);
-    result.append(mExtension);
+    result.append(info.extension);
 
     icon.addFile(QDir::toNativeSeparators(result), QSize(), QIcon::Normal, QIcon::Off);
 }

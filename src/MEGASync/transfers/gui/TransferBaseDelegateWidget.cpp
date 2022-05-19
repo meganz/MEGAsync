@@ -60,7 +60,6 @@ bool TransferBaseDelegateWidget::setActionTransferIcon(QToolButton *button, cons
     if (oldIconName.isEmpty() || oldIconName != iconName)
     {
         button->setIcon(Utilities::getCachedPixmap(iconName));
-        button->setIconSize(QSize(24,24));
         mLastActionTransferIconName.insert(button, iconName);
 
         update = true;

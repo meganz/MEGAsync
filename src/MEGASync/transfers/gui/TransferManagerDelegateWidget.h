@@ -26,6 +26,7 @@ public:
 
 protected:
     void mouseDoubleClickEvent(QMouseEvent *event) override;
+    void resizeEvent(QResizeEvent *) override;
 
 signals:
     void cancelClearTransfer(bool isClear);

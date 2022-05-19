@@ -143,14 +143,14 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
         }
     }
 
-    auto leftPaneButtons = mUi->wLeftPane->findChildren<QAbstractButton*>();
-    foreach(auto& button, leftPaneButtons)
+    auto managedButtons = mUi->wLeftPane->findChildren<QAbstractButton*>();
+    foreach(auto& button, managedButtons)
     {
         mButtonIconManager.addButton(button);
     }
 
-    auto rightPaneButtons = mUi->wRightPaneHeader->findChildren<QAbstractButton*>();
-    foreach(auto& button, rightPaneButtons)
+    managedButtons = mUi->wRightPaneHeader->findChildren<QAbstractButton*>();
+    foreach(auto& button, managedButtons)
     {
         mButtonIconManager.addButton(button);
     }
