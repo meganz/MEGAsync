@@ -179,10 +179,6 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
             &TransfersManagerSortFilterProxyModel::searchNumbersChanged,
             this, &TransferManager::refreshSearchStats);
 
-    connect(mUi->wTransfers->getProxyModel(),
-            &TransfersManagerSortFilterProxyModel::cancelableTransfersChanged,
-            this, &TransferManager::checkCancelAllButtonVisibility);
-
     connect(mUi->wTransfers, &TransfersWidget::pauseResumeVisibleRows,
                 this, &TransferManager::onPauseResumeVisibleRows);
 
@@ -356,28 +352,6 @@ void TransferManager::onUpdatePauseState(bool isPaused)
     }
 
     mUi->lPaused->setVisible(isPaused && !mUi->lStorageOverQuota->isVisible() && !mUi->pTransferOverQuota->isVisible());
-}
-
-void TransferManager::checkCancelAllButtonVisibility()
-{
-    auto sizePolicy = mUi->bCancelClearAll->sizePolicy();
-    if(!sizePolicy.retainSizeWhenHidden())
-    {
-        sizePolicy.setRetainSizeWhenHidden(true);
-        mUi->bCancelClearAll->setSizePolicy(sizePolicy);
-    }
-
-    //Get the most updated transferCount
-    mTransfersCount = mModel->getTransfersCount();
-    if((mTransfersCount.completedDownloads() + mTransfersCount.completedUploadBytes) == 0
-            && (mTransfersCount.pendingDownloads + mTransfersCount.pendingUploads == 0))
-    {
-        mUi->bCancelClearAll->setVisible(false);
-    }
-    else
-    {
-        mUi->bCancelClearAll->setVisible(true);
-    }
 }
 
 void TransferManager::onPauseResumeVisibleRows(bool isPaused)

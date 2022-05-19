@@ -201,7 +201,7 @@ TransferWidgetHeaderItem  QLabel
            <height>28</height>
           </size>
          </property>
-         <layout class="QHBoxLayout" name="wTableHeaderLayout" stretch="0,0,0,0,0,0,0,0,0,0">
+         <layout class="QHBoxLayout" name="wTableHeaderLayout" stretch="0,0,0,0,0,0,0,0,0,0,0">
           <property name="spacing">
            <number>0</number>
           </property>
@@ -384,16 +384,46 @@ TransferWidgetHeaderItem  QLabel
            </widget>
           </item>
           <item>
-           <widget class="QWidget" name="wPauseResumeVisible" native="true">
-            <widget class="QPushButton" name="tPauseResumeVisible">
-             <property name="geometry">
-              <rect>
-               <x>0</x>
-               <y>0</y>
-               <width>16</width>
-               <height>16</height>
-              </rect>
+           <widget class="QWidget" name="wPauseResumeVisible" native="true"/>
+          </item>
+          <item>
+           <widget class="QWidget" name="wPauseResume" native="true">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
              </property>
+            <property name="minimumSize">
+             <size>
+              <width>24</width>
+              <height>24</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>24</width>
+              <height>24</height>
+             </size>
+            </property>
+            <layout class="QHBoxLayout" name="horizontalLayout">
+             <property name="spacing">
+              <number>0</number>
+             </property>
+             <property name="leftMargin">
+              <number>0</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
+              <number>0</number>
+             </property>
+             <item>
+              <widget class="QPushButton" name="tPauseResumeVisible">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                <horstretch>0</horstretch>
@@ -440,9 +470,47 @@ TransferWidgetHeaderItem  QLabel
               </url>
              </property>
             </widget>
+             </item>
+            </layout>
            </widget>
           </item>
-          <item alignment="Qt::AlignLeft">
+          <item>
+           <widget class="QWidget" name="wCancelClear" native="true">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>24</width>
+              <height>24</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>24</width>
+              <height>24</height>
+             </size>
+            </property>
+            <layout class="QHBoxLayout" name="horizontalLayout_2">
+             <property name="spacing">
+              <number>0</number>
+             </property>
+             <property name="leftMargin">
+              <number>0</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
+              <number>0</number>
+             </property>
+             <item>
            <widget class="QPushButton" name="tCancelClearVisible">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
@@ -486,6 +554,9 @@ TransferWidgetHeaderItem  QLabel
               <string>qrc:/images/transfer_manager/transfers_actions/lists_cancel_all_ico_default.png</string>
              </url>
             </property>
+           </widget>
+          </item>
+            </layout>
            </widget>
           </item>
           <item>

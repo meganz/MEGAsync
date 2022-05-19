@@ -103,7 +103,7 @@ QGroupBox::title
     padding-left: 10px;
 }
 
-#wMediaType QPushButton, #wTransferring QPushButton, #wSearch QPushButton
+#wTransferring QPushButton
 {
     width: 200px;
     min-width: 180px;
@@ -112,7 +112,7 @@ QGroupBox::title
     color: #15191F;
     border: none;
     text-align: left;
-    padding-left: -1px;
+    padding-left: 0px;
     qProperty-iconSize: 24px;
 }
 
@@ -167,13 +167,13 @@ QGroupBox::title
 
 #tSearchCancel
 {
-    width: 24px;
-    height: 24px;
-    min-width: 24px;
-    min-height: 24px;
-    max-height: 24px;
-    max-width: 24px;
-    qProperty-iconSize: 24px;
+    width: 16px;
+    height: 16px;
+    min-width: 16px;
+    min-height: 16px;
+    max-height: 16px;
+    max-width: 16px;
+    qProperty-iconSize: 16px;
     border: none;
     padding: 0px;
     margin: 0px;
@@ -181,12 +181,12 @@ QGroupBox::title
 
 #tClearSearchResult
 {
-    width: 24px;
-    height: 24px;
-    min-width: 24px;
-    min-height: 24px;
-    max-width: 24px;
-    max-height: 24px;
+    width: 16px;
+    height: 16px;
+    min-width: 16px;
+    min-height: 16px;
+    max-width: 16px;
+    max-height: 16px;
     qProperty-iconSize: 16px;
 }
 
@@ -643,12 +643,30 @@ QToolButton
           </item>
           <item>
            <widget class="QToolButton" name="tSearchCancel">
+            <property name="minimumSize">
+             <size>
+              <width>16</width>
+              <height>16</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16</width>
+              <height>16</height>
+             </size>
+            </property>
             <property name="cursor">
              <cursorShape>PointingHandCursor</cursorShape>
             </property>
             <property name="icon">
              <iconset resource="../../../gui/Resources_macx.qrc">
               <normaloff>:/images/transfer_manager/sidebar/delete_search_ico_default.png</normaloff>:/images/transfer_manager/sidebar/delete_search_ico_default.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>16</width>
+              <height>16</height>
+             </size>
             </property>
             <property name="icon_prefix" stdset="0">
              <url>
@@ -1816,6 +1834,18 @@ QToolButton
             </item>
             <item>
              <widget class="QToolButton" name="tClearSearchResult">
+              <property name="minimumSize">
+               <size>
+                <width>16</width>
+                <height>16</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>16</width>
+                <height>16</height>
+               </size>
+              </property>
               <property name="cursor">
                <cursorShape>PointingHandCursor</cursorShape>
               </property>
@@ -1858,7 +1888,7 @@ QToolButton
          <string notr="true"/>
         </property>
         <property name="currentIndex">
-         <number>3</number>
+         <number>0</number>
         </property>
         <widget class="QWidget" name="pSpeedAndClear">
          <layout class="QHBoxLayout" name="pSpeedAndClearLayout" stretch="1,1,0,0">
@@ -2422,7 +2452,7 @@ QToolButton
            </property>
            <property name="sizeHint" stdset="0">
             <size>
-             <width>15</width>
+             <width>0</width>
              <height>20</height>
             </size>
            </property>

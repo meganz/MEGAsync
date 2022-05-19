@@ -119,7 +119,7 @@ QGroupBox::title
     border: none;
     text-align: left;
     qProperty-iconSize: 24px;
-    padding-left:-1px;
+    padding-left:0px;
 }
 
 #wMediaType QPushButton, #wSearch QPushButton
@@ -2402,7 +2402,7 @@ QToolButton
            </property>
            <property name="sizeHint" stdset="0">
             <size>
-             <width>15</width>
+             <width>0</width>
              <height>20</height>
             </size>
            </property>

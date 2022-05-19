@@ -414,8 +414,44 @@ TransferWidgetHeaderItem  QLabel
             </property>
            </widget>
           </item>
-          <item alignment="Qt::AlignLeft|Qt::AlignVCenter">
-           <widget class="QPushButton" name="tPauseResumeVisible">
+          <item>
+           <widget class="QWidget" name="wCancelClear" native="true">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>24</width>
+              <height>24</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>24</width>
+              <height>24</height>
+             </size>
+            </property>
+            <layout class="QHBoxLayout" name="horizontalLayout">
+             <property name="spacing">
+              <number>0</number>
+             </property>
+             <property name="leftMargin">
+              <number>0</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
+              <number>0</number>
+             </property>
+             <item>
+              <widget class="QPushButton" name="tCancelClearVisible">
             <property name="minimumSize">
              <size>
               <width>16</width>
@@ -432,11 +468,11 @@ TransferWidgetHeaderItem  QLabel
              <cursorShape>PointingHandCursor</cursorShape>
             </property>
             <property name="toolTip">
-             <string>Pause or resume all selected transfers</string>
+                <string>Cancel all selected transfers</string>
             </property>
             <property name="icon">
              <iconset resource="../../../gui/Resources_macx.qrc">
-              <normaloff>:/images/transfer_manager/transfers_actions/lists_pause_all_ico_default.png</normaloff>:/images/transfer_manager/transfers_actions/lists_pause_all_ico_default.png</iconset>
+                 <normaloff>:/images/transfer_manager/transfers_actions/lists_cancel_all_ico_default.png</normaloff>:/images/transfer_manager/transfers_actions/lists_cancel_all_ico_default.png</iconset>
             </property>
             <property name="iconSize">
              <size>
@@ -444,24 +480,54 @@ TransferWidgetHeaderItem  QLabel
               <height>16</height>
              </size>
             </property>
-            <property name="checkable">
-             <bool>true</bool>
-            </property>
-            <property name="autoRaise" stdset="0">
-             <bool>false</bool>
-            </property>
-            <property name="hover_selected" stdset="0">
-             <bool>true</bool>
-            </property>
             <property name="icon_prefix" stdset="0">
              <url>
-              <string>qrc:/images/transfer_manager/transfers_actions/lists_pause_all_ico_default.png</string>
+                 <string>qrc:/images/transfer_manager/transfers_actions/lists_cancel_all_ico_default.png</string>
              </url>
             </property>
            </widget>
           </item>
-          <item alignment="Qt::AlignLeft|Qt::AlignVCenter">
-           <widget class="QPushButton" name="tCancelClearVisible">
+            </layout>
+           </widget>
+          </item>
+          <item>
+           <widget class="QWidget" name="wPauseResume" native="true">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>24</width>
+              <height>24</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>24</width>
+              <height>24</height>
+             </size>
+            </property>
+            <layout class="QHBoxLayout" name="horizontalLayout_2">
+             <property name="spacing">
+              <number>0</number>
+             </property>
+             <property name="leftMargin">
+              <number>0</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
+              <number>0</number>
+             </property>
+             <item>
+              <widget class="QPushButton" name="tPauseResumeVisible">
             <property name="minimumSize">
              <size>
               <width>16</width>
@@ -478,11 +544,11 @@ TransferWidgetHeaderItem  QLabel
              <cursorShape>PointingHandCursor</cursorShape>
             </property>
             <property name="toolTip">
-             <string>Cancel all selected transfers</string>
+                <string>Pause or resume all selected transfers</string>
             </property>
             <property name="icon">
              <iconset resource="../../../gui/Resources_macx.qrc">
-              <normaloff>:/images/transfer_manager/transfers_actions/lists_cancel_all_ico_default.png</normaloff>:/images/transfer_manager/transfers_actions/lists_cancel_all_ico_default.png</iconset>
+                 <normaloff>:/images/transfer_manager/transfers_actions/lists_pause_all_ico_default.png</normaloff>:/images/transfer_manager/transfers_actions/lists_pause_all_ico_default.png</iconset>
             </property>
             <property name="iconSize">
              <size>
@@ -490,11 +556,23 @@ TransferWidgetHeaderItem  QLabel
               <height>16</height>
              </size>
             </property>
+               <property name="checkable">
+                <bool>true</bool>
+               </property>
+               <property name="autoRaise" stdset="0">
+                <bool>false</bool>
+               </property>
+               <property name="hover_selected" stdset="0">
+                <bool>true</bool>
+               </property>
             <property name="icon_prefix" stdset="0">
              <url>
-              <string>qrc:/images/transfer_manager/transfers_actions/lists_cancel_all_ico_default.png</string>
+                 <string>qrc:/images/transfer_manager/transfers_actions/lists_pause_all_ico_default.png</string>
              </url>
             </property>
+           </widget>
+          </item>
+            </layout>
            </widget>
           </item>
           <item>
