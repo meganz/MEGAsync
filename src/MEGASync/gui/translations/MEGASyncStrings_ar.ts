@@ -112,7 +112,7 @@
     <message>
         <source>Enter a name, an absolute path (wildcards * and ? are allowed) or choose which file or folder you want to exclude from the synchronization</source>
         <translatorcomment>Label to describe the different options that the user have to set a exclusion for all synchronizations.</translatorcomment>
-        <translation>أدخل اسم، أو مسار مطلق (الرموز المسموح بها هي ؟ و  *) أو اختر أي ملف أو مجلد تريد استثنائه من عملية التزامن</translation>
+        <translation>أدخل اسم، أو مسار مطلق (الرموز المسموح بها هي ؟ و *) أو اختر أي ملف أو مجلد تريد استثنائه من عملية التزامن.</translation>
     </message>
     <message>
         <source>Choose File</source>
@@ -373,7 +373,7 @@
     <message>
         <source>PRO membership plan expiring soon</source>
         <translatorcomment>Label to indicate that the PRO membership will expire soon.</translatorcomment>
-        <translation>ستنتهي صلاحية اشتراك برو Pro الخاص بك قريباً.</translation>
+        <translation>ستنتهي صلاحية اشتراك برو Pro الخاص بك قريباً</translation>
     </message>
     <message>
         <source>Your PRO membership plan expired 1 day ago</source>
@@ -388,12 +388,12 @@
     <message>
         <source>Your publicly shared has been taken down</source>
         <translatorcomment>Label to indicate that your public shared has been taken down.</translatorcomment>
-        <translation>تم إزالة مشاركتك العامة</translation>
+        <translation>تم إزالة مشاركتك العامة.</translation>
     </message>
     <message>
         <source>Your taken down has been reinstated</source>
         <translatorcomment>Label to indicate that your public shared has been reinstated.</translatorcomment>
-        <translation>تم استعادت مشاركتك العامة</translation>
+        <translation>تم استعادت مشاركتك العامة.</translation>
     </message>
     <message>
         <source>Reminder</source>
@@ -506,7 +506,7 @@
     <message>
         <source>Enable this option only if your transfers don&apos;t start. Under normal circumstances, HTTP is satisfactory as all transfers are already encrypted by MEGA.</source>
         <translatorcomment>Description label about the option &quot;Don&apos;t use HTTP&quot; checkbox.</translatorcomment>
-        <translation>قم بتمكين هذا الخيار فقط إذا لم تبدأ عمليات تراسل المعطيات الخاصة بك. في ظل الظروف العادية ، يكون HTTP مرضيًا لأن جميع عمليات تراسل المعطيات مشفرة بالفعل بواسطة ميغا MEGA.</translation>
+        <translation>قم بتمكين هذا الخيار فقط إذا لم تبدأ عمليات تراسل المعطيات الخاصة بك. في ظل الظروف العادية، يكون HTTP مرضيًا لأن جميع عمليات تراسل المعطيات مشفرة بالفعل بواسطة ميغا MEGA.</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -570,7 +570,7 @@
         <source>The name &quot;%1&quot; is already in use for another sync
 Please enter a different name to identify this synced folder:</source>
         <translatorcomment>Detailed message displayed when a user is using a name for a local folder that is already used. Preserve &quot;%1&quot; code because is used to indicate the local folder at runtime.</translatorcomment>
-        <translation>الاسم &quot;%1&quot; مستخدم مع مزامنة أخرى، يرجى اختيار اسم اخر لمزامنة هذا المجلد:</translation>
+        <translation>الاسم “%1” مستخدم مع مزامنة أخرى، يرجى اختيار اسم اخر لمزامنة هذا المجلد:</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -811,7 +811,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>You can help us to improve MEGAsync by sending this error report. It doesn&apos;t contain any personal information. If you want to give us more details, please write them below:</source>
         <translatorcomment>Label to indicate if the user wants to add some more details to attach to the crash report.</translatorcomment>
-        <translation>يمكنك مساعدتنا في تحسين MEGAsync بإرسال تقرير عن الخطأ هذا. لا يحتوي على أي معلومات شخصية. إذا كنت ترغب في تزويدنا بمزيد من التفاصيل ، فيرجى كتابتها أدناه:</translation>
+        <translation>يمكنك مساعدتنا في تحسين MEGAsync بإرسال تقرير عن الخطأ هذا. لا يحتوي على أي معلومات شخصية. إذا كنت ترغب في تزويدنا بمزيد من التفاصيل، فيرجى كتابتها أدناه:</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -903,7 +903,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>PRO membership plan expiring soon</source>
         <translatorcomment>Label to indicate that the PRO membership will expire soon.</translatorcomment>
-        <translation>ستنتهي صلاحية اشتراك برو Pro الخاص بك قريباً.</translation>
+        <translation>ستنتهي صلاحية اشتراك برو Pro الخاص بك قريباً</translation>
     </message>
     <message>
         <source>Your PRO membership plan expired 1 day ago</source>
@@ -1053,12 +1053,12 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Your taken down has been reinstated</source>
         <translatorcomment>Label to indicate that your public shared has been reinstated.</translatorcomment>
-        <translation>تم استعادت مشاركتك العامة</translation>
+        <translation>تم استعادت مشاركتك العامة.</translation>
     </message>
     <message>
         <source>Your publicly shared has been taken down</source>
         <translatorcomment>Label to indicate that your public shared has been taken down.</translatorcomment>
-        <translation>تم إزالة مشاركتك العامة</translation>
+        <translation>تم إزالة مشاركتك العامة.</translation>
     </message>
     <message>
         <source>Takedown Notice</source>
@@ -1232,7 +1232,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Click the toolbar item for a menu.</source>
         <translatorcomment>Tooltip for MEGA finder toolbar button</translatorcomment>
-        <translation>اضغط على شريط الأدوات للقائمة</translation>
+        <translation>اضغط على شريط الأدوات للقائمة.</translation>
     </message>
     <message>
         <source>1 file</source>
@@ -1306,7 +1306,7 @@ Please enter a different name to identify this synced folder:</source>
 To prevent the syncing of entire boot volumes, which is inefficient and dangerous,
 we ask you to start with a smaller folder and add more data while MEGAsync is running.</source>
         <translatorcomment>Label to inform a user about the fact of syncing a extremely large folder and the possible drawbacks that could arise.</translatorcomment>
-        <translation>أنت تحاول مزامنة مجلد كبير للغاية. لمنع مزامنة وحدات تخزين تمهيد الحاسب بالكامل ، وهو أمر غير فعال وخطير، نطلب منك البدء بمجلد أصغر وإضافة المزيد من البيانات أثناء تشغيل MEGAsync.</translation>
+        <translation>أنت تحاول مزامنة مجلد كبير للغاية. لتجنب مزامنة كامل قرص اقلاع الحاسب. هذا غير فعال و غير آمن يرجى البدء بمجلد أصغر وإضافة المزيد من البيانات أثناء تشغيل MEGAsync.</translation>
     </message>
     <message>
         <source>Error</source>
@@ -1768,7 +1768,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Limited available transfer quota</source>
         <translatorcomment>Title to indicate that current account has limited transfer quota. Transfer usage above 90 per cent of the total.</translatorcomment>
-        <translation>حجم تراسل متاح محدود.</translation>
+        <translation>حجم تراسل متاح محدود</translation>
     </message>
     <message>
         <source>Your queued transfers exceed the current quota available for your IP address and can therefore be interrupted.</source>
@@ -1819,7 +1819,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>MEGA Desktop app</source>
         <translatorcomment>Title of MEGA Desktop app within initial information wizard.</translatorcomment>
-        <translation>تطبيق ميغا MEGA  للحاسوب المكتبي </translation>
+        <translation>تطبيق ميغا MEGA للحاسوب المكتبي</translation>
     </message>
     <message>
         <source>Login or create an account to start using MEGA Desktop app.</source>
@@ -2072,12 +2072,12 @@ https://mega.co.nz/#sync</source>
         <source>Unable to get the filesystem.
 Please, try again. If the problem persists please contact bug@mega.co.nz</source>
         <translatorcomment>Message displayed when an error occurs while fetching nodes from the server.</translatorcomment>
-        <translation>غير قادر على الحصول على نظام الملفات. حاول مرة أخرى. إذا استمرت المشكلة ، فيرجى التواصل معنا على bug@mega.nz</translation>
+        <translation>غير قادر على الحصول على ملفات النظام. حاول مرة أخرى. إذا استمرت المشكلة يرجى التواصل معنا على bug@mega.nz</translation>
     </message>
     <message>
         <source>MEGAsync is now running. Click the system tray icon to open the status window.</source>
         <translatorcomment>Notification message launched when an user logged in succesfully. String as short as possible.</translatorcomment>
-        <translation>MEGAsync تعمل الآن. انقر فوق أيقونة أدوات النظام لفتح نافذة الحالة</translation>
+        <translation>MEGAsync تعمل الآن. انقر فوق أيقونة أدوات النظام لفتح نافذة الحالة.</translation>
     </message>
     <message>
         <source>A new version of MEGAsync is available!</source>
@@ -2087,7 +2087,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>MEGAsync is now running. Click the menu bar icon to open the status window.</source>
         <translatorcomment>Notification message launched when an user logged in succesfully. String as short as possible.</translatorcomment>
-        <translation>MEGAsync  يعمل الان. اضغط على ايقونة القائمة لفتح نافذة الحالة.</translation>
+        <translation>MEGAsync يعمل الان. اضغط على ايقونة القائمة لفتح نافذة الحالة.</translation>
     </message>
     <message>
         <source>Show status</source>
@@ -2107,17 +2107,17 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>MEGAsync is unable to connect. Please check your Internet connectivity and local firewall configuration. Note that most antivirus software includes a firewall.</source>
         <translatorcomment>Notification message launched when a connectivity problem occurs.</translatorcomment>
-        <translation>MEGAsync  غير قادر علي الاتصال. الرجاء التحقق من اتصال الإنترنت الخاص بك واعدادات جدار الحماية المحلي. يرجي ملاحظة أن برامج مكافحة الفيروسات تتضمن جدار الحماية.</translation>
+        <translation>MEGAsync غير قادر علي الاتصال. الرجاء التحقق من اتصال الإنترنت الخاص بك واعدادات جدار الحماية المحلي. يرجي ملاحظة أن برامج مكافحة الفيروسات تتضمن جدار الحماية.</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the remote folder doesn&apos;t exist</source>
         <translatorcomment>Notification message launched checking  remote synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.</translatorcomment>
-        <translation>تم تعطيل مزامنة ”%1“ لأن المجلد على السحابة غير موجود</translation>
+        <translation>تم تعطيل مزامنة “%1” لأن المجلد على السحابة غير موجود</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</source>
         <translatorcomment>Notification message launched checking  local synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.</translatorcomment>
-        <translation>تم تعطيل المزامنة &quot;%1&quot; بسبب عدم وجود المجلد المحلي</translation>
+        <translation>تم تعطيل المزامنة “%1” بسبب عدم وجود المجلد المحلي</translation>
     </message>
     <message>
         <source>Your account has been blocked. Please contact support@mega.co.nz</source>
@@ -2142,17 +2142,17 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the remote folder is in the rubbish bin</source>
         <translatorcomment>Notification message launched when a sync is disabled due to the remote folder has been deleted. Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
-        <translation>تم تعطيل مزامنة ”%1“ لأن المجلد على السحابة موجود في سلة المحذوفات</translation>
+        <translation>تم تعطيل مزامنة “%1” لأن المجلد على السحابة موجود في سلة المحذوفات</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the local folder has changed</source>
         <translatorcomment>Notification message launched when a sync is disabled due to the local folder has changed(moved/deleted/...). Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
-        <translation>تم تعطيل المزامنة &quot;%1&quot; بسبب تغير المجلد المحلي</translation>
+        <translation>تم تعطيل المزامنة “%1” بسبب تغير المجلد المحلي</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&apos;t have full access</source>
         <translatorcomment>Notification message launched when a sync is disabled due to the access problems. Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
-        <translation>تم تعطيل مزامنة ”%1“ .المجلد على السحابة (أو جزء منه) ليس لديه صلاحية الوصول الكامل إليه</translation>
+        <translation>تم تعطيل مزامنة “%1” .المجلد على السحابة (أو جزء منه) ليس لديه صلاحية الوصول الكامل إليه</translation>
     </message>
     <message>
         <source>Over quota</source>
@@ -2217,7 +2217,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Could not find a system tray to place MEGAsync tray icon. MEGAsync is intended to be used with a system tray icon but it can work fine without it. If you want to open the interface, just try to open MEGAsync again.</source>
         <translatorcomment>Message shown to the user to inform that MEGAsync is not able to find a systray to place tray icon</translatorcomment>
-        <translation>تعذر العثور على أدوات النظام لوضع أيقونة الأدوات على MEGAsync . ويهدف MEGAsync لاستخدامها مع أيقونة الأدوات ويمكنها العمل دونها. إذا كنت ترغب في فتح الواجهة، فقط حاول فتح MEGAsync مرة أخرى.</translation>
+        <translation>تعذر العثور على أدوات النظام لوضع أيقونة الأدوات على MEGAsync. ويهدف MEGAsync لاستخدامها مع أيقونة الأدوات ويمكنها العمل دونها. إذا كنت ترغب في فتح الواجهة، فقط حاول فتح MEGAsync مرة أخرى.</translation>
     </message>
     <message>
         <source>Error getting link:</source>
@@ -2232,7 +2232,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>The link can&apos;t be generated because the file is in an incoming shared folder or in your Rubbish Bin</source>
         <translatorcomment>Notification error message shown while generating a public link of a file from an incoming shared folder or from the rubbish bin</translatorcomment>
-        <translation>لا يمكن إنشاء الرابط لأن الملف موجود داخل مجلد مشارك وارد أو في سلة  المحذوفات.</translation>
+        <translation>لا يمكن إنشاء الرابط لأن الملف موجود داخل مجلد مشارك وارد أو في سلة المحذوفات.</translation>
     </message>
     <message>
         <source>Upload</source>
@@ -2436,7 +2436,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your upload(s) cannot proceed because %1&apos;s account is full</source>
         <translatorcomment>Informative message shown when a user is trying to upload data to a inshare that is in overquota state. %1 will be replaced with sharer account to inform the user.</translatorcomment>
-        <translation>لا يمكن مواصلة الترفيع(ات) الخاص بك لأن %1 من الحساب ممتلئ</translation>
+        <translation>لا يمكن مواصلة الترفيع(ات) الخاص بك لأن %1 من الحساب ممتلئ.</translation>
     </message>
     <message>
         <source>contact</source>
@@ -2657,7 +2657,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Your account was terminated due to breach of Mega’s Terms of Service, such as abuse of rights of others; sharing and/or importing illegal data; or system abuse.</source>
-        <translation>تم إنهاء حسابك بسبب خرق شروط الخدمة الخاصة بميغا MEGA، مثل إساءة استخدام حقوق الآخرين؛ مشاركة و/ أو استيراد البيانات غير القانونية ؛ أو إساءة استخدام النظام.</translation>
+        <translation>تم إنهاء حسابك بسبب خرق شروط الخدمة الخاصة بميغا MEGA، مثل إساءة استخدام حقوق الآخرين؛ مشاركة و/ أو استيراد البيانات غير القانونية؛ أو إساءة استخدام النظام.</translation>
     </message>
     <message>
         <source>SSL verification failed</source>
@@ -2715,7 +2715,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account.</source>
         <translatorcomment>Description label to indicate the user that his password may be leaked and needs to perform email verification to continue.</translatorcomment>
-        <translation>تم تسريب كلمة المرور الخاصة بك وتستخدمها الآن  أطراف خبيثة لتسجيل الدخول إلى حساباتك، بما في ذلك على سبيل المثال لا الحصر، حساب ميغا MEGA الخاص بك.</translation>
+        <translation>تم تسريب كلمة المرور الخاصة بك وتستخدمها الآن أطراف خبيثة لتسجيل الدخول إلى حساباتك، بما في ذلك على سبيل المثال لا الحصر، حساب ميغا MEGA الخاص بك.</translation>
     </message>
 </context>
 <context>
@@ -3009,7 +3009,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>You are syncing a local folder formatted with a FAT filesystem. That filesystem has deficiencies managing big files and modification times that can cause synchronization problems (e.g. when daylight saving changes), so it&apos;s strongly recommended that you only sync folders formatted with more reliable filesystems like NTFS (more information [A]here[/A]).</source>
         <translatorcomment>Informative message shown when a user is trying to sync using a FAT filesystem.</translatorcomment>
-        <translation>أنت تقوم بمزامنة مجلد محلي منسق بنظام ملفات FAT. يحتوي نظام الملفات هذا على عيوب في إدارة الملفات الكبيرة وأوقات التعديل التي يمكن أن تسبب مشاكل في المزامنة (على سبيل المثال عند تغير التوقيت الصيفي)، لذلك يوصى بشدة بمزامنة المجلدات المنسقة بأنظمة ملفات أكثر موثوقية مثل NTFS فقط (مزيد من المعلومات [A]هنا[/A] ).</translation>
+        <translation>أنت تقوم بمزامنة مجلد محلي منسق بنظام ملفات FAT. يحتوي نظام الملفات هذا على عيوب في إدارة الملفات الكبيرة وأوقات التعديل التي يمكن أن تسبب مشاكل في المزامنة (على سبيل المثال عند تغير التوقيت الصيفي)، لذلك يوصى بشدة بمزامنة المجلدات المنسقة بأنظمة ملفات أكثر موثوقية مثل NTFS فقط (مزيد من المعلومات [A]هنا[/A]).</translation>
     </message>
     <message>
         <source>You are syncing a local folder shared with VMWare. Those folders do not support filesystem notifications so MEGAsync will have to be continuously scanning to detect changes in your files and folders. Please use a different folder if possible to reduce the CPU usage.</source>
@@ -3097,7 +3097,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
     <message>
         <source>Are you sure that you want to delete &quot;%1&quot;?</source>
-        <translation>هل أنت متأكد أنك تريد حذف ”%1“؟</translation>
+        <translation>هل أنت متأكد أنك تريد حذف “%1”؟</translation>
     </message>
     <message>
         <source>Delete</source>
@@ -3176,7 +3176,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Desktop notifications</source>
         <translatorcomment>Title of a checkbox for disconnectig notifications</translatorcomment>
-        <translation>إشعارات الحاسوب المكتبي.</translation>
+        <translation>إشعارات الحاسوب المكتبي</translation>
     </message>
     <message>
         <source>Someone accepted your contact request</source>
@@ -3477,7 +3477,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>With our end-to-end encryption, the way your team works has never been more secure and private.</source>
         <translatorcomment>Balloon tooltip to inform users when hovering ? button about the benefits of business plan.</translatorcomment>
-        <translation>مع تشفيرنا من طرف إلى طرف، فإن طريقة عمل فريقك أكثر أماناً وخصوصية من أي وقت مضى .</translation>
+        <translation>مع تشفيرنا من طرف إلى طرف، فإن طريقة عمل فريقك أكثر أماناً وخصوصية من أي وقت مضى.</translation>
     </message>
     <message>
         <source>Get started with secure file storage.</source>
@@ -3798,7 +3798,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Show </source>
         <translatorcomment>Contextual menu from file list headers that allow to enable or disable diferent columns (size, type, data modified)</translatorcomment>
-        <translation>عرض </translation>
+        <translation>عرض</translation>
     </message>
     <message>
         <source>All files (*)</source>
@@ -3954,7 +3954,7 @@ Please verify the correct file name was given.</source>
         <source>&apos;%1&apos; is write protected.
 Do you want to delete it anyway?</source>
         <translatorcomment>Warning message when a write protected file is about to be delete</translatorcomment>
-        <translation>”%1” محمي من الكتابة. 
+        <translation>”%1” محمي من الكتابة.
 هل تريد حذفه على أية حال؟</translation>
     </message>
 </context>
@@ -4033,7 +4033,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>&lt;b&gt;The name &quot;%1&quot; cannot be used.&lt;/b&gt;&lt;p&gt;Try using another name, with fewer characters or no punctuation marks.</source>
         <translatorcomment>Alert message when file name is incorrect</translatorcomment>
-        <translation>&lt;b&gt;لا يمكن استخدام الاسم ”%1“.&lt;/b&gt;&lt;p&gt;حاول استخدام اسم آخر، بمحارف أقل أو بدون علامات ترقيم.</translation>
+        <translation>&lt;b&gt;لا يمكن استخدام الاسم “%1”.&lt;/b&gt;&lt;p&gt;حاول استخدام اسم آخر، بمحارف أقل أو بدون علامات ترقيم.</translation>
     </message>
 </context>
 <context>
@@ -4277,7 +4277,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Folder in MEGA with a backup of files deleted in the local computer</source>
         <translatorcomment>Tooltip shown when hovering remote SyncDebris label.</translatorcomment>
-        <translation>مجلد من ميغا MEGA مع نسخة احتياطية من ملفات تم حذفهم من الحاسوب المحلي </translation>
+        <translation>مجلد من ميغا MEGA مع نسخة احتياطية من ملفات تم حذفهم من الحاسوب المحلي</translation>
     </message>
     <message>
         <source>Disabling file versioning will prevent the creation and storage of new file versions. Do you want to continue?</source>
@@ -4312,7 +4312,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Your sync &quot;%1&quot; can&apos;t be enabled. Reason: %2</source>
         <translatorcomment>Error message shown when an error occurs trying to enable a sync. %1 is name of sync and %2 is reason of error.</translatorcomment>
-        <translation>لا يمكن تمكين المزامنة ”%1“. السبب: %2</translation>
+        <translation>لا يمكن تمكين المزامنة “%1”. السبب: %2</translation>
     </message>
     <message>
         <source>General</source>
@@ -4427,7 +4427,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Your password is not stored by MEGA and we cannot recover it for you. To avoid losing access to your account, save your Recovery Key in a safe place.</source>
         <translatorcomment>Informative text message shown in the Recovery Key section in Security pane, inviting the user to save the Recovery Key in a safe place.</translatorcomment>
-        <translation>لا يتم تخزين كلمة المرور الخاصة بك بواسطة ميغا MEGA ولا يمكننا استعادتها لك. لتجنب فقدان الوصول إلى حسابك ، احفظ مفتاح الاستعادة في مكان آمن.</translation>
+        <translation>لا يتم تخزين كلمة المرور الخاصة بك بواسطة ميغا MEGA ولا يمكننا استعادتها لك. لتجنب فقدان الوصول إلى حسابك، احفظ مفتاح الاستعادة في مكان آمن.</translation>
     </message>
     <message>
         <source>Password</source>
@@ -4735,7 +4735,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>I agree with the MEGA &lt;a href=&quot;https://mega.co.nz/#terms&quot;&gt;Terms of Service&lt;/a&gt;</source>
         <translatorcomment>Label to aggre with the Terms of use.  Keep code &lt;a href=&quot;https://mega.co.nz/#terms&quot;&gt;Terms of Service&lt;/a&gt; .String as short as possible.</translatorcomment>
-        <translation>أنا أوافق على &lt;a href=&quot;https://mega.nz/terms&quot;&gt;شروط استخدام خدمة&lt;/a&gt; ميغا MEGA</translation>
+        <translation>أنا أوافق على &lt;a href=&#8221;https://mega.nz/terms&#8221;&gt;شروط استخدام خدمة&lt;/a&gt; ميغا MEGA</translation>
     </message>
     <message>
         <source>Log in to your MEGA account</source>
@@ -4750,7 +4750,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Logging in ...</source>
         <translatorcomment>Label displayed while logging process.</translatorcomment>
-        <translation>تسجيل الدخول …</translation>
+        <translation>تسجيل الدخول…</translation>
     </message>
     <message>
         <source>Choose install type</source>
@@ -4760,7 +4760,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source> Sync your entire cloud drive</source>
         <translatorcomment>Label displayed to inform the user about the Full sync (Sync the entire cloud drive)</translatorcomment>
-        <translation>قم بمزامنة  السواقة السحابية بالكامل</translation>
+        <translation>قم بمزامنة السواقة السحابية بالكامل</translation>
     </message>
     <message>
         <source>Selective sync</source>
@@ -4995,7 +4995,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>You have attempted to log in too many times.[BR]Please wait until %1 and try again.</source>
-        <translation>لقد حاولت تسجيل الدخول مرات كثيرة.[BR]الرجاء الانتظار حتى %1 ثم المحاولة ثانية</translation>
+        <translation>لقد حاولت تسجيل الدخول مرات كثيرة.[BR]الرجاء الانتظار حتى %1 ثم المحاولة ثانية.</translation>
     </message>
     <message>
         <source>When you finish this assistant, you will be able to sync additional folders using the settings dialog</source>
@@ -5289,7 +5289,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Stream error: transfer overquota</source>
         <translatorcomment>Informative label to indicate the user that there is a stream error because of transfer overquota situation.</translatorcomment>
-        <translation>خطأ في البث: تجاوز حجم تراسل معطيات المتاح</translation>
+        <translation>خطأ في البث: تجاوز حجم تراسل معطيات المتاح.</translation>
     </message>
     <message>
         <source>Please wait...</source>
@@ -5330,7 +5330,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Uploads</source>
         <translatorcomment>Label of tab to access all active uploads</translatorcomment>
-        <translation>الترفيعات:</translation>
+        <translation>الترفيعات</translation>
     </message>
     <message>
         <source>Completed</source>
@@ -5504,7 +5504,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Choose annual billing and get 12 months for the price of 10</source>
         <translatorcomment>Informative label to inform the user about offer purchasing one-year Pro plan within upgrade dialog when user reaches over quota state.</translatorcomment>
-        <translation>اختر الفوترة السنوية واحصل على 12 شهرًا بسعر 10 </translation>
+        <translation>اختر الفوترة السنوية واحصل على 12 شهرًا بسعر 10</translation>
     </message>
     <message>
         <source>Transfer quota exceeded</source>
@@ -5547,7 +5547,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Choose annual billing and get 12 months for the price of 10</source>
         <translatorcomment>Informative label to inform the user about offer purchasing one-year Pro plan within upgrade dialog when user reaches over storage state.</translatorcomment>
-        <translation>اختر الفوترة السنوية واحصل على 12 شهرًا بسعر 10 </translation>
+        <translation>اختر الفوترة السنوية واحصل على 12 شهرًا بسعر 10</translation>
     </message>
 </context>
 <context>
@@ -5720,7 +5720,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Pro III</source>
         <translatorcomment>Label to refer Pro III tier</translatorcomment>
-        <translation>برو  Pro III</translation>
+        <translation>برو Pro III</translation>
     </message>
 </context>
 <context>

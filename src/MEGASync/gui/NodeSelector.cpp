@@ -47,8 +47,8 @@ NodeSelector::NodeSelector(int selectMode, QWidget *parent) :
     connect(ui->bShowIncomingShares, &QPushButton::clicked, this, &NodeSelector::onbShowIncomingSharesClicked);
     connect(ui->bShowCloudDrive, &QPushButton::clicked,this , &NodeSelector::onbShowCloudDriveClicked);
 #else
-    ui->tabBar->addTab(tr("Cloud Drive"));
-    ui->tabBar->addTab(tr("Incoming Shares"));
+    ui->tabBar->addTab(tr("Cloud drive"));
+    ui->tabBar->addTab(tr("Incoming shares"));
     connect(ui->tabBar, &QTabBar::currentChanged, this, &NodeSelector::onTabSelected);
 #endif
 
@@ -66,7 +66,7 @@ NodeSelector::NodeSelector(int selectMode, QWidget *parent) :
     ui->tMegaFolders->setExpanded(mProxyModel->getIndexFromHandle(MegaSyncApp->getRootNode()->getHandle()),true);
     ui->tMegaFolders->setTextElideMode(Qt::ElideMiddle);
 
-    ui->lFolderName->setText(tr("Cloud Drive"));
+    ui->lFolderName->setText(tr("Cloud drive"));
 
     connect(ui->tMegaFolders->selectionModel(), &QItemSelectionModel::selectionChanged, this, &NodeSelector::onSelectionChanged);
     connect(ui->tMegaFolders, &MegaItemTreeView::removeNodeClicked, this, &NodeSelector::onDeleteClicked);
@@ -113,7 +113,6 @@ void NodeSelector::nodesReady()
     {
     case NodeSelector::SYNC_SELECT:
         mModel->setSyncSetupMode(true);
-        mProxyModel->showReadWriteFolders(false);
         // fall through
     case NodeSelector::UPLOAD_SELECT:
         mProxyModel->showReadOnlyFolders(false);
@@ -215,7 +214,7 @@ void NodeSelector::setSelectedNodeHandle(MegaHandle selectedHandle)
     if(root_p_node && root_p_node->isInShare())
     {
         isInShare=true;
-        onbShowIncomingSharesClicked();
+        onTabSelected(SHARES);
     }
 
     QVector<QModelIndex> modelIndexList = mProxyModel->getRelatedModelIndexes(node, isInShare);
@@ -483,6 +482,7 @@ void NodeSelector::onbOkClicked()
                 ++wrongNodes;
             }
         }
+
         if(wrongNodes > 0)
         {
             correctNodeSelected = false;
@@ -493,7 +493,6 @@ void NodeSelector::onbOkClicked()
             else
             {
                 QMegaMessageBox::warning(nullptr, tr("Error"), tr("You no longer have access to this item. Ask the owner to share again.", "", wrongNodes), QMessageBox::Ok);
-
             }
         }
     }
@@ -703,9 +702,9 @@ void NodeSelector::setRootIndex(const QModelIndex &idx)
     if(!idx.isValid())
     {
         if(isCloudDrive())
-            ui->lFolderName->setText(tr("Cloud Drive"));
+            ui->lFolderName->setText(tr("Cloud drive"));
         else
-            ui->lFolderName->setText(tr("Incoming Shares"));
+            ui->lFolderName->setText(tr("Incoming shares"));
 
         ui->lFolderName->setToolTip(QString());
 

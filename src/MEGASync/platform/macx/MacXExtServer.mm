@@ -1,5 +1,6 @@
 #include "MacXExtServer.h"
 #include <assert.h>
+#include "CommonMessages.h"
 
 #if QT_VERSION >= 0x050000
 #include <QtConcurrent/QtConcurrent>
@@ -186,43 +187,7 @@ bool MacXExtServer::GetAnswerToRequest(const char *buf, QByteArray *response)
                     return false;
             }
 
-            QString sNumFiles;
-            if (numFiles == 1)
-            {
-                sNumFiles = QCoreApplication::translate("ShellExtension", "1 file");
-            }
-            else if (numFiles > 1)
-            {
-                sNumFiles = QCoreApplication::translate("ShellExtension", "%1 files").arg(numFiles);
-            }
-
-            QString sNumFolders;
-            if (numFolders == 1)
-            {
-                sNumFolders = QCoreApplication::translate("ShellExtension", "1 folder");
-            }
-            else if (numFolders > 1)
-            {
-                sNumFolders = QCoreApplication::translate("ShellExtension", "%1 folders").arg(numFolders);
-            }
-
-            QString fullString;
-            if (numFiles && numFolders)
-            {
-                fullString = QCoreApplication::translate("ShellExtension", "%1 (%2, %3)")
-                        .arg(actionString).arg(sNumFiles).arg(sNumFolders);
-            }
-            else if (numFiles && !numFolders)
-            {
-                fullString = QCoreApplication::translate("ShellExtension", "%1 (%2)")
-                        .arg(actionString).arg(sNumFiles);
-            }
-            else if (!numFiles && numFolders)
-            {
-                fullString = QCoreApplication::translate("ShellExtension", "%1 (%2)")
-                        .arg(actionString).arg(sNumFolders);
-            }
-
+            QString fullString = CommonMessages::createShellExtensionActionLabel(actionString, numFiles, numFolders);
             response->append(fullString.toUtf8().constData());
             return true;
         }

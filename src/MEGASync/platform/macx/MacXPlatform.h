@@ -19,7 +19,6 @@ class MacXPlatform
 
 private:
     MacXPlatform() {}
-    static bool enableSetuidBit();
     static MacXSystemServiceTask *systemServiceTask;
     static QPointer<MacXExtServerService> extService; //Set to NULL upon deletion
 
@@ -27,7 +26,7 @@ public:
     static void initialize(int argc, char *argv[]);
     static void prepareForSync();
     static QStringList multipleUpload(QString uploadTitle);
-    static bool enableTrayIcon(QString executable);
+    static bool enableTrayIcon(QString);
     static void notifyItemChange(std::string *localPath, int newState);
     static bool startOnStartup(bool value);
     static bool isStartOnStartupActive();
@@ -58,8 +57,6 @@ public:
     static double getUpTime();
     static QString getDeviceName();
     static void initMenu(QMenu* m);
-
-    static int fd;
 
     static const char* settingsString;
     static const char* exitString;

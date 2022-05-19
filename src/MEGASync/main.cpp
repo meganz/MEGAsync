@@ -413,7 +413,7 @@ int main(int argc, char *argv[])
     }
 #endif
 
-    for(const auto message : logMessages)
+    for(const auto &message : logMessages)
     {
         MegaApi::log(message.logLevel, message.message.toStdString().c_str());
     }
@@ -658,7 +658,6 @@ int main(int argc, char *argv[])
     QT_TRANSLATE_NOOP("QFileSystemModel", "Date Modified");
     QT_TRANSLATE_NOOP("QFileSystemModel", "My Computer");
     QT_TRANSLATE_NOOP("QFileSystemModel", "Computer");
-    QT_TRANSLATE_NOOP("QFileSystemModel", "%1 byte(s)");
 
     QT_TRANSLATE_NOOP("Installer", "Choose Users");
     QT_TRANSLATE_NOOP("Installer", "Choose for which users you want to install $(^NameDA).");
@@ -702,10 +701,8 @@ int main(int argc, char *argv[])
     QT_TRANSLATE_NOOP("FinderExtensionApp", "View on MEGA");
     QT_TRANSLATE_NOOP("FinderExtensionApp", "No options available");
     QT_TRANSLATE_NOOP("FinderExtensionApp", "Click the toolbar item for a menu.");
-    QT_TRANSLATE_NOOP("FinderExtensionApp", "1 file");
-    QT_TRANSLATE_NOOP("FinderExtensionApp", "%i files");
-    QT_TRANSLATE_NOOP("FinderExtensionApp", "1 folder");
-    QT_TRANSLATE_NOOP("FinderExtensionApp", "%i folders");
+    QT_TRANSLATE_NOOP("FinderExtensionApp", "%n file", "", n);
+    QT_TRANSLATE_NOOP("FinderExtensionApp", "%n folder", "", n);
     QT_TRANSLATE_NOOP("FinderExtensionApp", "View previous versions");
     QT_TRANSLATE_NOOP("MegaNodeNames", "Cloud Drive");
     QT_TRANSLATE_NOOP("MegaNodeNames", "Backups");

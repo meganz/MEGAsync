@@ -1,4 +1,6 @@
 #include "MultiQFileDialog.h"
+
+#include "CommonMessages.h"
 #include <QApplication>
 #include <QKeyEvent>
 
@@ -178,13 +180,22 @@ void MultiQFileDialog::accept()
 
 void MultiQFileDialog::onSelectionChanged()
 {
-    QString actionString = QCoreApplication::translate("ShellExtension", "Upload to MEGA");
-
-    QStringList files = selectedFiles();
     int numFiles = 0;
     int numFolders = 0;
+    findSelectedFilesAndFoldersCount(numFiles, numFolders);
 
+    if (mBOpen)
+    {
+        updateOpenButtonEnabledStatus(numFiles + numFolders);
+    }
+
+    setWindowTitle(createWindowTitle(numFiles, numFolders));
+}
+
+void MultiQFileDialog::findSelectedFilesAndFoldersCount(int& fileCount, int& folderCount)
+{
     QString dir (directory().absolutePath());
+    QStringList files = selectedFiles();
 
     // Do not select a file/folder whose name is the same as the parent
     // upon entering a directory.
@@ -202,76 +213,46 @@ void MultiQFileDialog::onSelectionChanged()
             {
                 if (fi.isDir())
                 {
-                    numFolders++;
+                    ++folderCount;
                 }
                 else
                 {
-                    numFiles++;
+                    ++fileCount;
                 }
             }
         }
     }
+}
 
-    if (mBOpen)
+void MultiQFileDialog::updateOpenButtonEnabledStatus(int selectedItemCount)
+{
+    mEnableOkButton = (selectedItemCount > 0);
+
+    if (selectedItemCount > 0)
     {
-        int nbSelected (numFolders + numFiles);
-        mEnableOkButton = (nbSelected > 0);
+        int nbItemsInLineEdit = findItemCountInLineEdit();
+        mEnableOkButton = nbItemsInLineEdit == selectedItemCount;
+    }
 
-        // Check that the lineEdit and the view are in sync
-        if (nbSelected > 0)
+    mBOpen->setEnabled(mEnableOkButton);
+}
+
+int MultiQFileDialog::findItemCountInLineEdit()
+{
+    int itemCount = 0;
+    const QStringList items (mLe->text().split(QString::fromUtf8("\"")));
+    for (auto item (items.cbegin()); item != items.cend(); item++)
+    {
+        if (!item->trimmed().isEmpty())
         {
-            int nbItemsInLineEdit (0);
-            const QStringList items (mLe->text().split(QString::fromUtf8("\"")));
-            for (auto item (items.cbegin()); item != items.cend(); item++)
-            {
-                if (!item->trimmed().isEmpty())
-                {
-                    nbItemsInLineEdit++;
-                }
-            }
-            mEnableOkButton = nbItemsInLineEdit == nbSelected;
+            itemCount++;
         }
+    }
+    return itemCount;
+}
 
-        mBOpen->setEnabled(mEnableOkButton);
-    }
-
-    QString sNumFiles;
-    if (numFiles == 1)
-    {
-        sNumFiles = QCoreApplication::translate("ShellExtension", "1 file");
-    }
-    else if (numFiles > 1)
-    {
-        sNumFiles = QCoreApplication::translate("ShellExtension", "%1 files")
-                .arg(numFiles);
-    }
-
-    QString sNumFolders;
-    if (numFolders == 1)
-    {
-        sNumFolders = QCoreApplication::translate("ShellExtension", "1 folder");
-    }
-    else if (numFolders > 1)
-    {
-        sNumFolders = QCoreApplication::translate("ShellExtension", "%1 folders")
-                .arg(numFolders);
-    }
-
-    QString fullString;
-    if (numFiles && numFolders)
-    {
-        fullString = QCoreApplication::translate("ShellExtension", "%1 (%2, %3)")
-                .arg(actionString).arg(sNumFiles).arg(sNumFolders);
-    }
-    else if (numFiles && !numFolders)
-    {
-        fullString = QCoreApplication::translate("ShellExtension", "%1 (%2)")
-                .arg(actionString).arg(sNumFiles);
-    }
-    else if (!numFiles && numFolders)
-    {
-        fullString = QCoreApplication::translate("ShellExtension", "%1 (%2)")
-                .arg(actionString).arg(sNumFolders);
-    }
-    setWindowTitle(fullString);
+QString MultiQFileDialog::createWindowTitle(int fileCount, int folderCount)
+{
+    QString actionString = QCoreApplication::translate("ShellExtension", "Upload to MEGA");
+    return CommonMessages::createShellExtensionActionLabel(actionString, fileCount, folderCount);
 }
