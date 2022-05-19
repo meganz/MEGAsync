@@ -26,6 +26,7 @@ public:
 
 protected:
     void mouseDoubleClickEvent(QMouseEvent *event) override;
+    void resizeEvent(QResizeEvent *) override;
 
 signals:
     void cancelClearTransfer(bool isClear);
@@ -48,7 +49,7 @@ private:
     bool setPauseResumeTransferIcon(const QString &name);
 
     Ui::TransferManagerDelegateWidget *mUi;
-    QString mLastPauseResuemtTransferIconName;
+    QString mPauseResumeTransferDefaultIconName;
 };
 
 #endif // TRANSFERMANAGERDELEGATEWIDGET_H

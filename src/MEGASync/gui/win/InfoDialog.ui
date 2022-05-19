@@ -28,6 +28,7 @@
  background-color:  #F4F6F8;
 
 }
+
 #tTransfers, #tNotifications
 {
   font-family: &quot;Lato&quot;;
@@ -36,6 +37,7 @@
   padding: 0px 8px 0px 8px;
   border: none;
 }
+
 #tNotifications
 {
   padding: 0px 4px 0px 16px;
@@ -59,6 +61,7 @@ font-weight: normal;
 border: none;
 color: #333333;
 }
+
 QPushButton
 {
     padding-right: 12px;
@@ -777,24 +780,6 @@ QToolButton
                            </item>
                            <item>
                             <widget class="QPushButton" name="bNumberUnseenNotifications">
-                             <property name="sizePolicy">
-                              <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-                               <horstretch>0</horstretch>
-                               <verstretch>0</verstretch>
-                              </sizepolicy>
-                             </property>
-                             <property name="minimumSize">
-                              <size>
-                               <width>6</width>
-                               <height>14</height>
-                              </size>
-                             </property>
-                             <property name="maximumSize">
-                              <size>
-                               <width>16777215</width>
-                               <height>14</height>
-                              </size>
-                             </property>
                              <property name="styleSheet">
                               <string notr="true">#bNumberUnseenNotifications
 {
@@ -804,9 +789,12 @@ font-weight: bold;
 font-family: Lato;
 font-size: 11px;
 border-radius: 4px;
-padding-left: 4px;
-padding-right: 4px;
+border: none;
+padding: 0px 4px 1px 4px;
 margin-right: 4px;
+min-width: 6px;
+min-height: 14px;
+max-height: 14px;
 }</string>
                              </property>
                              <property name="text">
@@ -2081,7 +2069,7 @@ background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
 }</string>
                                </property>
                                <property name="text">
-                                <string>We have contacted you by email to [A] on [B] but you still have [C] files taking up [D] in your MEGA account, which requires you to have [E].</string>
+                                <string/>
                                </property>
                                <property name="alignment">
                                 <set>Qt::AlignHCenter|Qt::AlignTop</set>

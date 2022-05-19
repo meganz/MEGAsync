@@ -9,6 +9,8 @@
 #include "TransferManagerLoadingItem.h"
 #include "ViewLoadingScene.h"
 
+#include "ButtonIconManager.h"
+
 #include <QToolButton>
 #include <QStandardItemModel>
 #include <QMessageBox>
@@ -87,6 +89,8 @@ private:
     MegaApplication *app;
 
     HeaderInfo mHeaderInfo;
+
+    ButtonIconManager mButtonIconManager;
 
     void configureTransferView();
     void clearOrCancel(const QList<QExplicitlySharedDataPointer<TransferData>>& pool, int state, int firstRow);

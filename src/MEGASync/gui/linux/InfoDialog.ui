@@ -2055,7 +2055,7 @@ background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
 }</string>
                                </property>
                                <property name="text">
-                                <string>We have contacted you by email to [A] on [B] but you still have [C] files taking up [D] in your MEGA account, which requires you to have [E].</string>
+                                <string/>
                                </property>
                                <property name="alignment">
                                 <set>Qt::AlignHCenter|Qt::AlignTop</set>

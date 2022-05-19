@@ -1,7 +1,6 @@
 #include "TransfersStatusWidget.h"
 #include "ui_TransfersStatusWidget.h"
 #include <QPainter>
-#include <QDebug>
 #include <QtMath>
 
 void TransfersStatusWidget::updateSizes()

@@ -109,9 +109,10 @@ QGroupBox::title
     min-width: 180px;
     max-width: 200px;
     font-size: 14px;
-    color: #333333;
+    color: #15191F;
     border: none;
     text-align: left;
+    padding-left: -1px;
     qProperty-iconSize: 24px;
 }
 
@@ -121,7 +122,7 @@ QGroupBox::title
     min-width: 180px;
     max-width: 200px;
     font-size: 14px;
-    color: #333333;
+    color: #15191F;
     border: none;
     text-align: left;
     padding-left: -1px;
@@ -186,7 +187,7 @@ QGroupBox::title
     min-height: 24px;
     max-width: 24px;
     max-height: 24px;
-    qProperty-iconSize: 24px;
+    qProperty-iconSize: 16px;
 }
 
 #bPause, #bSearch
@@ -197,7 +198,7 @@ QGroupBox::title
     min-width: 36px;
     max-height: 36px;
     max-width: 36px;
-    qProperty-iconSize: 36px;
+    qProperty-iconSize: 32px;
     padding: 0px;
     margin: 0px;
     border: none;
@@ -218,7 +219,7 @@ QGroupBox::title
     border: none;
     color: #333333;
     font-size: 14px;
-    qProperty-iconSize: 36px;
+    qProperty-iconSize: 24px;
     text-align: left;
 }
 
@@ -411,7 +412,8 @@ QToolButton
      <property name="styleSheet">
       <string notr="true">#wLeftPane QFrame &gt; QLabel
 {
-    font-weight: bold;
+    color: #999999;
+     font-weight: bold;
     font-size: 10px;
 	text-align: right;
     border-radius: 12px;
@@ -423,16 +425,11 @@ QToolButton
     background: solid white;
 }
 
-#wLeftPane QFrame[itsOn=true]  QLabel
+#wLeftPane QFrame[itsOn=true] &gt; QLabel
 {
     border: 1px solid #F5F5F5; 
     background-color: #FAFAFA;
     color: #333333;
-}
-
-#wLeftPane QFrame[itsOn=true] QPushButton
-{
-    font-weight: bold;
 }
 
 #wLeftPane QFrame[itsOn=false] 
@@ -472,6 +469,9 @@ QToolButton
       </property>
       <item>
        <widget class="QStackedWidget" name="wTitleAndSearch">
+        <property name="midLineWidth">
+         <number>0</number>
+        </property>
         <property name="currentIndex">
          <number>0</number>
         </property>
@@ -517,12 +517,44 @@ QToolButton
           </item>
           <item>
            <widget class="QToolButton" name="bPause">
+            <property name="minimumSize">
+             <size>
+              <width>36</width>
+              <height>36</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>36</width>
+              <height>36</height>
+             </size>
+            </property>
             <property name="cursor">
              <cursorShape>PointingHandCursor</cursorShape>
             </property>
+            <property name="autoFillBackground">
+             <bool>false</bool>
+            </property>
             <property name="icon">
              <iconset resource="../../../gui/Resources_macx.qrc">
-              <normaloff>:/images/sidebar_pause_ico.png</normaloff>:/images/sidebar_pause_ico.png</iconset>
+              <normaloff>:/images/transfer_manager/sidebar/sidebar_pause_ico_default.png</normaloff>:/images/transfer_manager/sidebar/sidebar_pause_ico_default.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>32</width>
+              <height>32</height>
+             </size>
+            </property>
+            <property name="checkable">
+             <bool>true</bool>
+            </property>
+            <property name="icon_prefix" stdset="0">
+             <url>
+              <string>qrc:/images/transfer_manager/sidebar/sidebar_pause_ico_default.png</string>
+             </url>
+            </property>
+            <property name="hover_selected" stdset="0">
+             <bool>true</bool>
             </property>
            </widget>
           </item>
@@ -536,7 +568,18 @@ QToolButton
             </property>
             <property name="icon">
              <iconset resource="../../../gui/Resources_macx.qrc">
-              <normaloff>:/images/sidebar_search_ico.png</normaloff>:/images/sidebar_search_ico.png</iconset>
+              <normaloff>:/images/transfer_manager/sidebar/sidebar_search_ico_default.png</normaloff>:/images/transfer_manager/sidebar/sidebar_search_ico_default.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>32</width>
+              <height>32</height>
+             </size>
+            </property>
+            <property name="icon_prefix" stdset="0">
+             <url>
+              <string>qrc:/images/transfer_manager/sidebar/sidebar_search_ico_default.png</string>
+             </url>
             </property>
            </widget>
           </item>
@@ -569,7 +612,13 @@ QToolButton
             </property>
             <property name="icon">
              <iconset resource="../../../gui/Resources_macx.qrc">
-              <normaloff>:/images/search_ico.png</normaloff>:/images/search_ico.png</iconset>
+              <normaloff>:/images/transfer_manager/sidebar/search_ico_default.png</normaloff>:/images/transfer_manager/sidebar/search_ico_default.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>18</width>
+              <height>18</height>
+             </size>
             </property>
            </widget>
           </item>
@@ -599,7 +648,12 @@ QToolButton
             </property>
             <property name="icon">
              <iconset resource="../../../gui/Resources_macx.qrc">
-              <normaloff>:/images/delete_search_ico.png</normaloff>:/images/delete_search_ico.png</iconset>
+              <normaloff>:/images/transfer_manager/sidebar/delete_search_ico_default.png</normaloff>:/images/transfer_manager/sidebar/delete_search_ico_default.png</iconset>
+            </property>
+            <property name="icon_prefix" stdset="0">
+             <url>
+              <string>qrc:/images/transfer_manager/sidebar/delete_search_ico_default.png</string>
+             </url>
             </property>
            </widget>
           </item>
@@ -677,13 +731,21 @@ QToolButton
               </property>
               <property name="icon">
                <iconset resource="../../../gui/Resources_macx.qrc">
-                <normaloff>:/images/all_transfers_ico.png</normaloff>:/images/all_transfers_ico.png</iconset>
+                <normaloff>:/images/transfer_manager/sidebar/all_transfers_ico_default.png</normaloff>:/images/transfer_manager/sidebar/all_transfers_ico_default.png</iconset>
+              </property>
+              <property name="checkable">
+               <bool>true</bool>
               </property>
               <property name="autoDefault">
                <bool>false</bool>
               </property>
               <property name="flat">
                <bool>false</bool>
+              </property>
+              <property name="icon_prefix" stdset="0">
+               <url>
+                <string>qrc:/images/transfer_manager/sidebar/all_transfers_ico_default.png</string>
+               </url>
               </property>
              </widget>
             </item>
@@ -765,10 +827,18 @@ QToolButton
               </property>
               <property name="icon">
                <iconset resource="../../../gui/Resources_macx.qrc">
-                <normaloff>:/images/sidebar_downloads_ico.png</normaloff>:/images/sidebar_downloads_ico.png</iconset>
+                <normaloff>:/images/transfer_manager/sidebar/downloads_ico_default.png</normaloff>:/images/transfer_manager/sidebar/downloads_ico_default.png</iconset>
+              </property>
+              <property name="checkable">
+               <bool>true</bool>
               </property>
               <property name="autoDefault">
                <bool>false</bool>
+              </property>
+              <property name="icon_prefix" stdset="0">
+               <url>
+                <string>qrc:/images/transfer_manager/sidebar/downloads_ico_default.png</string>
+               </url>
               </property>
              </widget>
             </item>
@@ -850,10 +920,18 @@ QToolButton
               </property>
               <property name="icon">
                <iconset resource="../../../gui/Resources_macx.qrc">
-                <normaloff>:/images/uploads_ico.png</normaloff>:/images/uploads_ico.png</iconset>
+                <normaloff>:/images/transfer_manager/sidebar/uploads_ico_default.png</normaloff>:/images/transfer_manager/sidebar/uploads_ico_default.png</iconset>
+              </property>
+              <property name="checkable">
+               <bool>true</bool>
               </property>
               <property name="autoDefault">
                <bool>false</bool>
+              </property>
+              <property name="icon_prefix" stdset="0">
+               <url>
+                <string>qrc:/images/transfer_manager/sidebar/uploads_ico_default.png</string>
+               </url>
               </property>
              </widget>
             </item>
@@ -938,10 +1016,18 @@ QToolButton
               </property>
               <property name="icon">
                <iconset resource="../../../gui/Resources_macx.qrc">
-                <normaloff>:/images/sidebar_finished_ico.png</normaloff>:/images/sidebar_finished_ico.png</iconset>
+                <normaloff>:/images/transfer_manager/sidebar/finished_ico_default.png</normaloff>:/images/transfer_manager/sidebar/finished_ico_default.png</iconset>
+              </property>
+              <property name="checkable">
+               <bool>true</bool>
               </property>
               <property name="autoDefault">
                <bool>false</bool>
+              </property>
+              <property name="icon_prefix" stdset="0">
+               <url>
+                <string>qrc:/images/transfer_manager/sidebar/finished_ico_default.png</string>
+               </url>
               </property>
              </widget>
             </item>
@@ -1026,10 +1112,18 @@ QToolButton
               </property>
               <property name="icon">
                <iconset resource="../../../gui/Resources_macx.qrc">
-                <normaloff>:/images/sidebar_failed_ico.png</normaloff>:/images/sidebar_failed_ico.png</iconset>
+                <normaloff>:/images/transfer_manager/sidebar/sidebar_failed_ico_default.png</normaloff>:/images/transfer_manager/sidebar/sidebar_failed_ico_default.png</iconset>
+              </property>
+              <property name="checkable">
+               <bool>true</bool>
               </property>
               <property name="autoDefault">
                <bool>false</bool>
+              </property>
+              <property name="icon_prefix" stdset="0">
+               <url>
+                <string>qrc:/images/transfer_manager/sidebar/sidebar_failed_ico_default.png</string>
+               </url>
               </property>
              </widget>
             </item>
@@ -1135,10 +1229,18 @@ QToolButton
               </property>
               <property name="icon">
                <iconset resource="../../../gui/Resources_macx.qrc">
-                <normaloff>:/images/drag_compressed.png</normaloff>:/images/drag_compressed.png</iconset>
+                <normaloff>:/images/transfer_manager/sidebar/compressed_default.png</normaloff>:/images/transfer_manager/sidebar/compressed_default.png</iconset>
+              </property>
+              <property name="checkable">
+               <bool>true</bool>
               </property>
               <property name="autoDefault">
                <bool>false</bool>
+              </property>
+              <property name="icon_prefix" stdset="0">
+               <url>
+                <string>qrc:/images/transfer_manager/sidebar/compressed_default.png</string>
+               </url>
               </property>
              </widget>
             </item>
@@ -1220,10 +1322,18 @@ QToolButton
               </property>
               <property name="icon">
                <iconset resource="../../../gui/Resources_macx.qrc">
-                <normaloff>:/images/drag_text.png</normaloff>:/images/drag_text.png</iconset>
+                <normaloff>:/images/transfer_manager/sidebar/text_default.png</normaloff>:/images/transfer_manager/sidebar/text_default.png</iconset>
+              </property>
+              <property name="checkable">
+               <bool>true</bool>
               </property>
               <property name="autoDefault">
                <bool>false</bool>
+              </property>
+              <property name="icon_prefix" stdset="0">
+               <url>
+                <string>qrc:/images/transfer_manager/sidebar/text_default.png</string>
+               </url>
               </property>
              </widget>
             </item>
@@ -1302,10 +1412,18 @@ QToolButton
               </property>
               <property name="icon">
                <iconset resource="../../../gui/Resources_macx.qrc">
-                <normaloff>:/images/drag_image.png</normaloff>:/images/drag_image.png</iconset>
+                <normaloff>:/images/transfer_manager/sidebar/image_default.png</normaloff>:/images/transfer_manager/sidebar/image_default.png</iconset>
+              </property>
+              <property name="checkable">
+               <bool>true</bool>
               </property>
               <property name="autoDefault">
                <bool>false</bool>
+              </property>
+              <property name="icon_prefix" stdset="0">
+               <url>
+                <string>qrc:/images/transfer_manager/sidebar/image_default.png</string>
+               </url>
               </property>
              </widget>
             </item>
@@ -1384,10 +1502,18 @@ QToolButton
               </property>
               <property name="icon">
                <iconset resource="../../../gui/Resources_macx.qrc">
-                <normaloff>:/images/drag_video.png</normaloff>:/images/drag_video.png</iconset>
+                <normaloff>:/images/transfer_manager/sidebar/video_default.png</normaloff>:/images/transfer_manager/sidebar/video_default.png</iconset>
+              </property>
+              <property name="checkable">
+               <bool>true</bool>
               </property>
               <property name="autoDefault">
                <bool>false</bool>
+              </property>
+              <property name="icon_prefix" stdset="0">
+               <url>
+                <string>qrc:/images/transfer_manager/sidebar/video_default.png</string>
+               </url>
               </property>
              </widget>
             </item>
@@ -1466,10 +1592,18 @@ QToolButton
               </property>
               <property name="icon">
                <iconset resource="../../../gui/Resources_macx.qrc">
-                <normaloff>:/images/drag_audio.png</normaloff>:/images/drag_audio.png</iconset>
+                <normaloff>:/images/transfer_manager/sidebar/audio_default.png</normaloff>:/images/transfer_manager/sidebar/audio_default.png</iconset>
+              </property>
+              <property name="checkable">
+               <bool>true</bool>
               </property>
               <property name="autoDefault">
                <bool>false</bool>
+              </property>
+              <property name="icon_prefix" stdset="0">
+               <url>
+                <string>qrc:/images/transfer_manager/sidebar/audio_default.png</string>
+               </url>
               </property>
              </widget>
             </item>
@@ -1548,10 +1682,18 @@ QToolButton
               </property>
               <property name="icon">
                <iconset resource="../../../gui/Resources_macx.qrc">
-                <normaloff>:/images/drag_generic.png</normaloff>:/images/drag_generic.png</iconset>
+                <normaloff>:/images/transfer_manager/sidebar/generic_default.png</normaloff>:/images/transfer_manager/sidebar/generic_default.png</iconset>
+              </property>
+              <property name="checkable">
+               <bool>true</bool>
               </property>
               <property name="autoDefault">
                <bool>false</bool>
+              </property>
+              <property name="icon_prefix" stdset="0">
+               <url>
+                <string>qrc:/images/transfer_manager/sidebar/generic_default.png</string>
+               </url>
               </property>
              </widget>
             </item>
@@ -1657,10 +1799,18 @@ QToolButton
               </property>
               <property name="icon">
                <iconset resource="../../../gui/Resources_macx.qrc">
-                <normaloff>:/images/search_result_ico.png</normaloff>:/images/search_result_ico.png</iconset>
+                <normaloff>:/images/transfer_manager/sidebar/search_result_default.png</normaloff>:/images/transfer_manager/sidebar/search_result_default.png</iconset>
+              </property>
+              <property name="checkable">
+               <bool>true</bool>
               </property>
               <property name="autoDefault">
                <bool>false</bool>
+              </property>
+              <property name="icon_prefix" stdset="0">
+               <url>
+                <string>qrc:/images/transfer_manager/sidebar/search_result_default.png</string>
+               </url>
               </property>
              </widget>
             </item>
@@ -1674,7 +1824,12 @@ QToolButton
               </property>
               <property name="icon">
                <iconset resource="../../../gui/Resources_macx.qrc">
-                <normaloff>:/images/lists_cancel_ico.png</normaloff>:/images/lists_cancel_ico.png</iconset>
+                <normaloff>:/images/transfer_manager/sidebar/delete_search_result_default.png</normaloff>:/images/transfer_manager/sidebar/delete_search_result_default.png</iconset>
+              </property>
+              <property name="icon_prefix" stdset="0">
+               <url>
+                <string>qrc:/images/transfer_manager/sidebar/delete_search_result_default.png</string>
+               </url>
               </property>
              </widget>
             </item>
@@ -1703,7 +1858,7 @@ QToolButton
          <string notr="true"/>
         </property>
         <property name="currentIndex">
-         <number>0</number>
+         <number>3</number>
         </property>
         <widget class="QWidget" name="pSpeedAndClear">
          <layout class="QHBoxLayout" name="pSpeedAndClearLayout" stretch="1,1,0,0">
@@ -1747,7 +1902,7 @@ QToolButton
             </property>
             <property name="icon">
              <iconset resource="../../../gui/Resources_macx.qrc">
-              <normaloff>:/images/arrow_download_ico.png</normaloff>:/images/arrow_download_ico.png</iconset>
+              <normaloff>:/images/transfer_manager/transfers_states/arrow_download_ico.png</normaloff>:/images/transfer_manager/transfers_states/arrow_download_ico.png</iconset>
             </property>
             <property name="iconSize">
              <size>
@@ -1782,7 +1937,7 @@ QToolButton
             </property>
             <property name="icon">
              <iconset resource="../../../gui/Resources_macx.qrc">
-              <normaloff>:/images/arrow_upload_ico.png</normaloff>:/images/arrow_upload_ico.png</iconset>
+              <normaloff>:/images/transfer_manager/transfers_states/arrow_upload_ico.png</normaloff>:/images/transfer_manager/transfers_states/arrow_upload_ico.png</iconset>
             </property>
             <property name="iconSize">
              <size>
@@ -1818,13 +1973,18 @@ QToolButton
             </property>
             <property name="icon">
              <iconset resource="../../../gui/Resources_macx.qrc">
-              <normaloff>:/images/sidebar_cancel_all_ico.png</normaloff>:/images/sidebar_cancel_all_ico.png</iconset>
+              <normaloff>:/images/transfer_manager/sidebar/cancel_all_ico_default.png</normaloff>:/images/transfer_manager/sidebar/cancel_all_ico_default.png</iconset>
             </property>
             <property name="iconSize">
              <size>
-              <width>36</width>
-              <height>36</height>
+              <width>24</width>
+              <height>24</height>
              </size>
+            </property>
+            <property name="icon_prefix" stdset="0">
+             <url>
+              <string>qrc:/images/transfer_manager/sidebar/cancel_all_ico_default.png</string>
+             </url>
             </property>
            </widget>
           </item>
@@ -1860,7 +2020,16 @@ QToolButton
             </property>
             <property name="icon">
              <iconset resource="../../../gui/Resources_macx.qrc">
-              <normaloff>:/images/sidebar_up_to_date_ico.png</normaloff>:/images/sidebar_up_to_date_ico.png</iconset>
+              <normaloff>:/images/transfer_manager/sidebar/up_to_date_ico.png</normaloff>:/images/transfer_manager/sidebar/up_to_date_ico.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>24</width>
+              <height>24</height>
+             </size>
+            </property>
+            <property name="ignore_button_manager" stdset="0">
+             <bool>true</bool>
             </property>
            </widget>
           </item>
@@ -1902,13 +2071,16 @@ QToolButton
             </property>
             <property name="icon">
              <iconset resource="../../../gui/Resources_macx.qrc">
-              <normaloff>:/images/sidebar_cancel_all_ico.png</normaloff>:/images/sidebar_cancel_all_ico.png</iconset>
+              <normaloff>:/images/transfer_manager/sidebar/cancel_all_ico_default.png</normaloff>:/images/transfer_manager/sidebar/cancel_all_ico_default.png</iconset>
             </property>
             <property name="iconSize">
              <size>
-              <width>36</width>
-              <height>36</height>
+              <width>24</width>
+              <height>24</height>
              </size>
+            </property>
+            <property name="ignore_button_manager" stdset="0">
+             <bool>true</bool>
             </property>
            </widget>
           </item>
@@ -1935,6 +2107,9 @@ QToolButton
            <widget class="QPushButton" name="bScanning">
             <property name="text">
              <string>Scanning</string>
+            </property>
+            <property name="ignore_button_manager" stdset="0">
+             <bool>true</bool>
             </property>
            </widget>
           </item>
@@ -2262,8 +2437,13 @@ QToolButton
             <string>Open links</string>
            </property>
            <property name="icon">
-             <iconset resource="../../../gui/Resources_macx.qrc">
-             <normaloff>:/images/import_toolbar_ico.png</normaloff>:/images/import_toolbar_ico.png</iconset>
+            <iconset resource="../../../gui/Resources_macx.qrc">
+             <normaloff>:/images/transfer_manager/toolbar/import_toolbar_ico_default.png</normaloff>:/images/transfer_manager/toolbar/import_toolbar_ico_default.png</iconset>
+           </property>
+           <property name="icon_prefix" stdset="0">
+            <url>
+             <string>qrc:/images/transfer_manager/toolbar/import_toolbar_ico_default.png</string>
+            </url>
            </property>
           </widget>
          </item>
@@ -2277,7 +2457,12 @@ QToolButton
            </property>
            <property name="icon">
             <iconset resource="../../../gui/Resources_macx.qrc">
-             <normaloff>:/images/download_toolbar_ico.png</normaloff>:/images/download_toolbar_ico.png</iconset>
+             <normaloff>:/images/transfer_manager/toolbar/download_toolbar_ico_default.png</normaloff>:/images/transfer_manager/toolbar/download_toolbar_ico_default.png</iconset>
+           </property>
+           <property name="icon_prefix" stdset="0">
+            <url>
+             <string>qrc:/images/transfer_manager/toolbar/download_toolbar_ico_default.png</string>
+            </url>
            </property>
           </widget>
          </item>
@@ -2288,7 +2473,12 @@ QToolButton
            </property>
            <property name="icon">
             <iconset resource="../../../gui/Resources_macx.qrc">
-             <normaloff>:/images/preferences_toolbar_ico.png</normaloff>:/images/preferences_toolbar_ico.png</iconset>
+             <normaloff>:/images/transfer_manager/toolbar/preferences_toolbar_ico_default.png</normaloff>:/images/transfer_manager/toolbar/preferences_toolbar_ico_default.png</iconset>
+           </property>
+           <property name="icon_prefix" stdset="0">
+            <url>
+             <string>qrc:/images/transfer_manager/toolbar/preferences_toolbar_ico_default.png</string>
+            </url>
            </property>
           </widget>
          </item>
@@ -2302,7 +2492,12 @@ QToolButton
            </property>
            <property name="icon">
             <iconset resource="../../../gui/Resources_macx.qrc">
-             <normaloff>:/images/upload_toolbar_ico.png</normaloff>:/images/upload_toolbar_ico.png</iconset>
+             <normaloff>:/images/transfer_manager/toolbar/upload_toolbar_ico_default.png</normaloff>:/images/transfer_manager/toolbar/upload_toolbar_ico_default.png</iconset>
+           </property>
+           <property name="icon_prefix" stdset="0">
+            <url>
+             <string>qrc:/images/transfer_manager/toolbar/upload_toolbar_ico_default.png</string>
+            </url>
            </property>
           </widget>
          </item>
@@ -2602,7 +2797,7 @@ QToolButton
       <item>
        <widget class="QStackedWidget" name="sTransfers">
         <property name="currentIndex">
-         <number>5</number>
+         <number>1</number>
         </property>
         <widget class="TransfersWidget" name="wTransfers">
          <property name="sizePolicy">
@@ -2621,7 +2816,7 @@ QToolButton
             </property>
             <property name="icon">
              <iconset resource="../../../gui/Resources_macx.qrc">
-              <normaloff>:/images/no_uploads.png</normaloff>:/images/no_uploads.png</iconset>
+              <normaloff>:/images/transfer_manager/empty_categories/no_uploads.png</normaloff>:/images/transfer_manager/empty_categories/no_uploads.png</iconset>
             </property>
            </widget>
           </item>
@@ -2636,7 +2831,7 @@ QToolButton
             </property>
             <property name="icon">
              <iconset resource="../../../gui/Resources_macx.qrc">
-              <normaloff>:/images/no_downloads.png</normaloff>:/images/no_downloads.png</iconset>
+              <normaloff>:/images/transfer_manager/empty_categories/no_downloads.png</normaloff>:/images/transfer_manager/empty_categories/no_downloads.png</iconset>
             </property>
            </widget>
           </item>
@@ -2651,7 +2846,7 @@ QToolButton
             </property>
             <property name="icon">
              <iconset resource="../../../gui/Resources_macx.qrc">
-              <normaloff>:/images/no_transfers.png</normaloff>:/images/no_transfers.png</iconset>
+              <normaloff>:/images/transfer_manager/empty_categories/no_transfers.png</normaloff>:/images/transfer_manager/empty_categories/no_transfers.png</iconset>
             </property>
            </widget>
           </item>
@@ -2666,7 +2861,7 @@ QToolButton
             </property>
             <property name="icon">
              <iconset resource="../../../gui/Resources_macx.qrc">
-              <normaloff>:/images/no_search_results.png</normaloff>:/images/no_search_results.png</iconset>
+              <normaloff>:/images/transfer_manager/empty_categories/no_search_results.png</normaloff>:/images/transfer_manager/empty_categories/no_search_results.png</iconset>
             </property>
            </widget>
           </item>
@@ -2681,7 +2876,7 @@ QToolButton
             </property>
             <property name="icon">
              <iconset resource="../../../gui/Resources_macx.qrc">
-              <normaloff>:/images/Completed_transfers.png</normaloff>:/images/Completed_transfers.png</iconset>
+              <normaloff>:/images/transfer_manager/empty_categories/Completed_transfers.png</normaloff>:/images/transfer_manager/empty_categories/Completed_transfers.png</iconset>
             </property>
            </widget>
           </item>

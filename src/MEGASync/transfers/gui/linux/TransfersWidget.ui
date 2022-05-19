@@ -45,12 +45,12 @@
 
 #wPauseResumeVisible
 {
-    width: 24px;
-    min-width: 24px;
-    max-width: 24px;
-    height: 24px;
-    min-height: 24px;
-    max-height: 24px;
+    width: 16px;
+    min-width:16px;
+    max-width: 16px;
+    height: 16px;
+    min-height:16px;
+    max-height: 16px;
 }
 
 #wTableHeader QPushButton
@@ -390,8 +390,8 @@ TransferWidgetHeaderItem  QLabel
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>24</width>
-               <height>24</height>
+               <width>16</width>
+               <height>16</height>
               </rect>
              </property>
              <property name="sizePolicy">
@@ -402,14 +402,14 @@ TransferWidgetHeaderItem  QLabel
              </property>
              <property name="minimumSize">
               <size>
-               <width>24</width>
-               <height>24</height>
+               <width>16</width>
+               <height>16</height>
               </size>
              </property>
              <property name="maximumSize">
               <size>
-               <width>24</width>
-               <height>24</height>
+               <width>16</width>
+               <height>16</height>
               </size>
              </property>
              <property name="cursor">
@@ -420,17 +420,24 @@ TransferWidgetHeaderItem  QLabel
              </property>
              <property name="icon">
               <iconset resource="../../../gui/Resources_linux.qrc">
-               <normaloff>:/images/lists_pause_all_ico.png</normaloff>
-               <normalon>:/images/lists_resume_all_ico.png</normalon>:/images/lists_pause_all_ico.png</iconset>
+               <normaloff>:/images/transfer_manager/transfers_actions/lists_pause_all_ico_default.png</normaloff>:/images/transfer_manager/transfers_actions/lists_pause_all_ico_default.png</iconset>
              </property>
              <property name="iconSize">
               <size>
-               <width>24</width>
-               <height>24</height>
+               <width>16</width>
+               <height>16</height>
               </size>
              </property>
              <property name="checkable">
               <bool>true</bool>
+             </property>
+             <property name="hover_selected" stdset="0">
+              <bool>true</bool>
+             </property>
+             <property name="icon_prefix" stdset="0">
+              <url>
+               <string>qrc:/images/transfer_manager/transfers_actions/lists_pause_all_ico_default.png</string>
+              </url>
              </property>
             </widget>
            </widget>
@@ -445,14 +452,14 @@ TransferWidgetHeaderItem  QLabel
             </property>
             <property name="minimumSize">
              <size>
-              <width>24</width>
-              <height>24</height>
+              <width>16</width>
+              <height>16</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
-              <width>24</width>
-              <height>24</height>
+              <width>16</width>
+              <height>16</height>
              </size>
             </property>
             <property name="cursor">
@@ -463,16 +470,21 @@ TransferWidgetHeaderItem  QLabel
             </property>
             <property name="icon">
              <iconset resource="../../../gui/Resources_linux.qrc">
-              <normaloff>:/images/lists_cancel_all_ico.png</normaloff>:/images/lists_cancel_all_ico.png</iconset>
+              <normaloff>:/images/transfer_manager/transfers_actions/lists_cancel_all_ico_default.png</normaloff>:/images/transfer_manager/transfers_actions/lists_cancel_all_ico_default.png</iconset>
             </property>
             <property name="iconSize">
              <size>
-              <width>24</width>
-              <height>24</height>
+              <width>16</width>
+              <height>16</height>
              </size>
             </property>
             <property name="checkable">
              <bool>false</bool>
+            </property>
+            <property name="icon_prefix" stdset="0">
+             <url>
+              <string>qrc:/images/transfer_manager/transfers_actions/lists_cancel_all_ico_default.png</string>
+             </url>
             </property>
            </widget>
           </item>

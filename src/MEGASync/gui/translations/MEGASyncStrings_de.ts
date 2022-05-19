@@ -112,7 +112,7 @@
     <message>
         <source>Enter a name, an absolute path (wildcards * and ? are allowed) or choose which file or folder you want to exclude from the synchronization</source>
         <translatorcomment>Label to describe the different options that the user have to set a exclusion for all synchronizations.</translatorcomment>
-        <translation>Geben Sie einen Namen oder einen absoluten Pfad (mit den Wildcards * und ?) ein oder wählen Sie die Datei oder den Ordner, die nicht synchronisiert werden sollen</translation>
+        <translation>Geben Sie einen Namen oder einen absoluten Pfad (mit den Wildcards * und ?) ein oder wählen Sie die Datei oder den Ordner, die nicht synchronisiert werden sollen.</translation>
     </message>
     <message>
         <source>Choose File</source>
@@ -147,7 +147,7 @@
     <message>
         <source>Please enter a valid file name or absolute path.</source>
         <translatorcomment>Information message shown when the user selects an invalid file name or path for the exclusion</translatorcomment>
-        <translation>Bitte geben Sie einen gültigen Dateinamen oder absoluten Pfad ein</translation>
+        <translation>Bitte geben Sie einen gültigen Dateinamen oder absoluten Pfad ein.</translation>
     </message>
     <message>
         <source>Select the file or folder you want to exclude</source>
@@ -476,7 +476,7 @@
     <message>
         <source>(Max. 90% of available bandwidth)</source>
         <translatorcomment>Label to indicate that auto rate option will take a maximum of 90% of the available bandwidth.</translatorcomment>
-        <translation>(Max. 90% der verfügbaren Bandbreite)</translation>
+        <translation>(Max. 90 % der verfügbaren Bandbreite)</translation>
     </message>
     <message>
         <source>Download rate limit</source>
@@ -549,7 +549,7 @@
     <message>
         <source>The selected local folder is already synced</source>
         <translatorcomment>Message displayed when an user is adding a local folder wich is already synced.</translatorcomment>
-        <translation>Eine mehrfache Synchronisierung desselben Ordners wird nicht unterstützt.</translation>
+        <translation>Eine mehrfache Synchronisierung desselben Ordners wird nicht unterstützt</translation>
     </message>
     <message>
         <source>A synced folder cannot be inside another synced folder</source>
@@ -559,7 +559,7 @@
     <message>
         <source>The selected MEGA folder is already synced</source>
         <translatorcomment>Message displayed when an user is adding an already synchronized remote folder.</translatorcomment>
-        <translation>Eine mehrfache Synchronisierung desselben Ordners wird nicht unterstützt.</translation>
+        <translation>Eine mehrfache Synchronisierung desselben Ordners wird nicht unterstützt</translation>
     </message>
     <message>
         <source>Sync name</source>
@@ -663,7 +663,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Error on submitting bug report</source>
         <translatorcomment>Error message shown when some error occurs during uploading a bug report.</translatorcomment>
-        <translation>Fehler beim Upload der Problem-Meldung</translation>
+        <translation>Fehler beim Upload der Problem-Meldung.</translation>
     </message>
     <message>
         <source>Bug report can&apos;t be submitted due to some error. Please try again or contact our support team via [A]support@mega.co.nz[/A]</source>
@@ -767,7 +767,7 @@ Please enter a different name to identify this synced folder:</source>
     </message>
     <message>
         <source>Please enter your password</source>
-        <translation>Bitte geben Sie Ihr Passwort ein.</translation>
+        <translation>Bitte geben Sie Ihr Passwort ein</translation>
     </message>
     <message>
         <source>The entered passwords don&apos;t match</source>
@@ -793,7 +793,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>[A]%</source>
         <translatorcomment>Percent sign style. Form and spacing between digit and sign is different in each language.</translatorcomment>
-        <translation>[A]%</translation>
+        <translation>[A] %</translation>
     </message>
 </context>
 <context>
@@ -1073,7 +1073,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Upgrade now to a PRO account.</source>
         <translatorcomment>Notification message shown to encourage the user to upgrade his account</translatorcomment>
-        <translation>Erweitern Sie Ihren Account auf Pro!</translation>
+        <translation>Erweitern Sie Ihren Account auf Pro.</translation>
     </message>
     <message>
         <source>Get PRO</source>
@@ -1133,7 +1133,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Contact your business account administrator to resolve the issue and activate your account.</source>
         <translatorcomment>Notification text to inform the user to contact his master business account to resolve the issue and reactivate the account.</translatorcomment>
-        <translation>Bitte setzen Sie sich zur Lösung des Problems und zur Aktivierung Ihres Accounts mit Ihrem Administrator in Verbindung</translation>
+        <translation>Bitte setzen Sie sich zur Lösung des Problems und zur Aktivierung Ihres Accounts mit Ihrem Administrator in Verbindung.</translation>
     </message>
 </context>
 <context>
@@ -1232,7 +1232,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Click the toolbar item for a menu.</source>
         <translatorcomment>Tooltip for MEGA finder toolbar button</translatorcomment>
-        <translation>Menü öffnen</translation>
+        <translation>Klicken Sie auf das Symbolleistenelement, um ein Menü zu öffnen.</translation>
     </message>
     <message>
         <source>1 file</source>
@@ -1315,7 +1315,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>You can not sync a shared folder without Full Access permissions</source>
         <translatorcomment>Label to inform a user about the incompatibility of sync a shared folder without Full Access permissions</translatorcomment>
-        <translation>Das Synchronisieren einer Ordnerfreigabe erfordert volle Zugriffsrechte.</translation>
+        <translation>Das Synchronisieren einer Ordnerfreigabe erfordert volle Zugriffsrechte</translation>
     </message>
     <message>
         <source>Select</source>
@@ -1383,7 +1383,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Incorrect email and/or password.</source>
         <translatorcomment>Message box shown when user enters incorrect email and/or password at login</translatorcomment>
-        <translation>Ungültige E-Mail oder ungültiges Passwort</translation>
+        <translation>Ungültige E-Mail oder ungültiges Passwort.</translation>
     </message>
     <message>
         <source>Please check your e-mail and click the link to confirm your account.</source>
@@ -1453,7 +1453,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Why am I seeing this?</source>
         <translatorcomment>Label to inform the user about why the account is locked and needs verification (email verification)</translatorcomment>
-        <translation>Details</translation>
+        <translation>Warum wird mir das angezeigt?</translation>
     </message>
     <message>
         <source>Resend email</source>
@@ -2015,7 +2015,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>An update will be applied during the next application restart</source>
         <translatorcomment>Notification message launched when an update is already downloaded but not applied yet. It will be applied during the next application restart.</translatorcomment>
-        <translation>Die neue Version wird beim nächsten Neustart aktiviert.</translation>
+        <translation>Die neue Version wird beim nächsten Neustart aktiviert</translation>
     </message>
     <message>
         <source>Installing update...</source>
@@ -2056,7 +2056,7 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>No update available at this time</source>
         <translatorcomment>Notification message launched when a user is cheking if there are any available updates.</translatorcomment>
-        <translation>Derzeit ist keine neue Version verfügbar.</translation>
+        <translation>Derzeit ist keine neue Version verfügbar</translation>
     </message>
     <message>
         <source>Error</source>
@@ -2097,7 +2097,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your config is corrupt, please start over</source>
         <translatorcomment>Message displayed when an error occurs loading configurations from Settings file.</translatorcomment>
-        <translation>Ihre Einstellungen konnten nicht gelesen werden. Bitte erstellen Sie sie erneut.</translation>
+        <translation>Ihre Einstellungen konnten nicht gelesen werden. Bitte erstellen Sie sie erneut</translation>
     </message>
     <message>
         <source>Error getting link: </source>
@@ -2117,7 +2117,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</source>
         <translatorcomment>Notification message launched checking  local synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.</translatorcomment>
-        <translation>Ihr Sync „%1“ wurde deaktiviert, da der lokale Ordner nicht existiert.</translation>
+        <translation>Ihr Sync „%1“ wurde deaktiviert, da der lokale Ordner nicht existiert</translation>
     </message>
     <message>
         <source>Your account has been blocked. Please contact support@mega.co.nz</source>
@@ -2142,12 +2142,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the remote folder is in the rubbish bin</source>
         <translatorcomment>Notification message launched when a sync is disabled due to the remote folder has been deleted. Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
-        <translation>Ihr Sync „%1“ wurde deaktiviert, weil der Zielordner in Ihren Cloud-Papierkorb verschoben wurde.</translation>
+        <translation>Ihr Sync „%1“ wurde deaktiviert, weil der Zielordner in Ihren Cloud-Papierkorb verschoben wurde</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the local folder has changed</source>
         <translatorcomment>Notification message launched when a sync is disabled due to the local folder has changed(moved/deleted/...). Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
-        <translation>Ihr Sync „%1“ wurde deaktiviert, da sich der lokale Ordner geändert hat.</translation>
+        <translation>Ihr Sync „%1“ wurde deaktiviert, da sich der lokale Ordner geändert hat</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&apos;t have full access</source>
@@ -2200,7 +2200,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Transfer canceled</source>
-        <translation>Transfer storniert!</translation>
+        <translation>Transfer storniert</translation>
     </message>
     <message>
         <source>You are not logged in</source>
@@ -2695,7 +2695,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Why am I seeing this?</source>
         <translatorcomment>Label to inform the user about why the account is locked and needs verification (email verification)</translatorcomment>
-        <translation>Details</translation>
+        <translation>Warum wird mir das angezeigt?</translation>
     </message>
     <message>
         <source>Close</source>
@@ -3114,7 +3114,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
     <message>
         <source>Select just one file.</source>
-        <translation>Bitte wählen Sie nur eine Datei aus.</translation>
+        <translation>Bitte wählen Sie nur eine Datei aus</translation>
     </message>
     <message>
         <source>Get MEGA link</source>
@@ -3798,7 +3798,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Show </source>
         <translatorcomment>Contextual menu from file list headers that allow to enable or disable diferent columns (size, type, data modified)</translatorcomment>
-        <translation>Anzeigen </translation>
+        <translation>Anzeigen</translation>
     </message>
     <message>
         <source>All files (*)</source>
@@ -3918,7 +3918,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Are you sure you want to delete &apos;%1&apos;?</source>
         <translatorcomment>Warning message shown before deleting a file or a folder.</translatorcomment>
-        <translation>‘%1’ wirklich löschen?</translation>
+        <translation>„%1” wirklich löschen?</translation>
     </message>
     <message>
         <source>File &amp;name:</source>
@@ -4028,7 +4028,7 @@ Trotzdem löschen?</translation>
     <message>
         <source>%1 byte(s)</source>
         <translatorcomment>File size measured in bytes</translatorcomment>
-        <translation>%1 Byte(s)</translation>
+        <translation>%1 Byte(s)</translation>
     </message>
     <message>
         <source>&lt;b&gt;The name &quot;%1&quot; cannot be used.&lt;/b&gt;&lt;p&gt;Try using another name, with fewer characters or no punctuation marks.</source>
@@ -4135,7 +4135,7 @@ Trotzdem löschen?</translation>
     <message>
         <source>%1 (%2%) of %3 used</source>
         <translatorcomment>Label to indicate the amount and percentage of used and total space available. Keep %1 (%2%) and %3 substitution placeholders because they will be filled with the required amounts of storage space dynamically.</translatorcomment>
-        <translation>%1 (%2%) von %3 belegt</translation>
+        <translation>%1 (%2 %) von %3 belegt</translation>
     </message>
     <message>
         <source>Warning</source>
@@ -4272,12 +4272,12 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Local folder with a backup of files deleted in MEGA</source>
         <translatorcomment>Tooltip shown when hovering local debris label.</translatorcomment>
-        <translation>Ein Ordner auf Ihrem Computer, in den Dateien verschoben werden, die der Sync-Prozess löscht.</translation>
+        <translation>Ein Ordner auf Ihrem Computer, in den Dateien verschoben werden, die der Sync-Prozess löscht</translation>
     </message>
     <message>
         <source>Folder in MEGA with a backup of files deleted in the local computer</source>
         <translatorcomment>Tooltip shown when hovering remote SyncDebris label.</translatorcomment>
-        <translation>Ein Ordner in Ihrem Cloud-Papierkorb, in den Dateien verschoben werden, die der Sync-Prozess löscht.</translation>
+        <translation>Ein Ordner in Ihrem Cloud-Papierkorb, in den Dateien verschoben werden, die der Sync-Prozess löscht</translation>
     </message>
     <message>
         <source>Disabling file versioning will prevent the creation and storage of new file versions. Do you want to continue?</source>
@@ -4735,7 +4735,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>I agree with the MEGA &lt;a href=&quot;https://mega.co.nz/#terms&quot;&gt;Terms of Service&lt;/a&gt;</source>
         <translatorcomment>Label to aggre with the Terms of use.  Keep code &lt;a href=&quot;https://mega.co.nz/#terms&quot;&gt;Terms of Service&lt;/a&gt; .String as short as possible.</translatorcomment>
-        <translation>Ich akzeptiere die MEGA &lt;a href=&quot;https://mega.nz/terms&quot;&gt;Nutzungsbedingungen&lt;/a&gt;</translation>
+        <translation>Ich akzeptiere die MEGA &lt;a href=&#8221;https://mega.nz/terms&#8221;&gt;Nutzungsbedingungen&lt;/a&gt;</translation>
     </message>
     <message>
         <source>Log in to your MEGA account</source>
@@ -4745,7 +4745,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Please verify your account using the confirmation link that we have sent to your email account</source>
         <translatorcomment>Label displayed at last step of creation account process to inform the user to verify the new created account.</translatorcomment>
-        <translation>Bitte klicken Sie auf den Bestätigungslink, den wir Ihnen per e-mail zugeschickt haben, um Ihren Account zu aktivieren.</translation>
+        <translation>Bitte klicken Sie auf den Bestätigungslink, den wir Ihnen per e-mail zugeschickt haben, um Ihren Account zu aktivieren</translation>
     </message>
     <message>
         <source>Logging in ...</source>
@@ -4805,7 +4805,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>User already exists</source>
         <translatorcomment>Message displayed when a user is trying to create an account with the name of an existing user.</translatorcomment>
-        <translation>Dieser Account ist bereits registriert.</translation>
+        <translation>Dieser Account ist bereits registriert</translation>
     </message>
     <message>
         <source>Fetching file list...</source>
@@ -4815,7 +4815,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Incorrect email and/or password.</source>
         <translatorcomment>Message displayed when a user is trying to loging with an incorrect email/password.</translatorcomment>
-        <translation>Ungültige E-Mail oder ungültiges Passwort</translation>
+        <translation>Ungültige E-Mail oder ungültiges Passwort.</translation>
     </message>
     <message>
         <source>MEGA folder doesn&apos;t exist</source>
@@ -4860,7 +4860,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>You have to accept our terms of service</source>
         <translatorcomment>Label displayed when the user has not check the agreement of terms of service.</translatorcomment>
-        <translation>Sie müssen die AGBs akzeptieren.</translation>
+        <translation>Sie müssen die AGBs akzeptieren</translation>
     </message>
     <message>
         <source>Creating account...</source>
@@ -5289,7 +5289,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Stream error: transfer overquota</source>
         <translatorcomment>Informative label to indicate the user that there is a stream error because of transfer overquota situation.</translatorcomment>
-        <translation>Streamingfehler: Transfervolumen verbraucht</translation>
+        <translation>Streamingfehler: Transfervolumen verbraucht.</translation>
     </message>
     <message>
         <source>Please wait...</source>
@@ -5448,7 +5448,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Limited available transfer quota.</source>
         <translatorcomment>System notification title to inform the user about limited available transfer quota. Above 90 percent of transfer quota usage reached.</translatorcomment>
-        <translation>Transfervolumen möglicherweise nicht ausreichend</translation>
+        <translation>Transfervolumen möglicherweise nicht ausreichend.</translation>
     </message>
     <message>
         <source>Depleted transfer quota.</source>
@@ -5542,7 +5542,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>100% of the %1 available used on your account.</source>
         <translatorcomment>Informative message for the user when it is in over storage situation, letting know about the %1 space used and reaching the 100% limit of his current storage amount.</translatorcomment>
-        <translation>Ihr Account belegt 100% der verfügbaren %1.</translation>
+        <translation>Ihr Account belegt 100 % der verfügbaren %1.</translation>
     </message>
     <message>
         <source>Choose annual billing and get 12 months for the price of 10</source>
@@ -5728,7 +5728,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Why am I seeing this?</source>
         <translatorcomment>Label to inform the user about why the account is locked and needs verification (email verification)</translatorcomment>
-        <translation>Details</translation>
+        <translation>Warum wird mir das angezeigt?</translation>
     </message>
     <message>
         <source>Log out</source>

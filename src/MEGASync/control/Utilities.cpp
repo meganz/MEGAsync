@@ -570,85 +570,46 @@ QString Utilities::getQuantityString(unsigned long long quantity)
 
 QString Utilities::getFinishedTimeString(long long secs)
 {
-    // <2 seconds: just now!
+    const int SECS_IN_1_MINUTE = 60;
+    const int SECS_IN_1_HOUR = 3600;
+    const int SECS_IN_1_DAY = 86400;
+    const int SECS_IN_1_MONTH = 2592000;
+    const int SECS_IN_1_YEAR = 31536000;
+
     if (secs < 2)
     {
         return QCoreApplication::translate("Utilities", "just now");
     }
-    // < 1 minute
-    else if (secs < 60)
+    else if (secs < SECS_IN_1_MINUTE)
     {
-        return QCoreApplication::translate("Utilities", "%1 seconds ago").arg(secs);
+        const int secsAsInt = static_cast<int>(secs);
+        return QCoreApplication::translate("Utilities", "%n second ago", "", secsAsInt);
     }
-    // < 1 hour
-    else if (secs < 3600)
+    else if (secs < SECS_IN_1_HOUR)
     {
-        // Compute minutes. We can safely cast because secs < 3600, thus minutes < 60
-        int minutes = static_cast<int>(secs/60);
-        if (minutes == 1)
-        {
-            return QCoreApplication::translate("Utilities", "1 minute ago");
-        }
-        else
-        {
-            return QCoreApplication::translate("Utilities", "%1 minutes ago").arg(minutes);
-        }
+        const int minutes = static_cast<int>(secs/SECS_IN_1_MINUTE);
+        return QCoreApplication::translate("Utilities", "%n minute ago", "", minutes);
     }
-    // < 1 day
-    else if (secs < 86400)
+    else if (secs < SECS_IN_1_DAY)
     {
-        // Compute hours. We can safely cast because secs < 86400, thus hours < 24
-        int hours = static_cast<int>(secs/3600);
-        if (hours == 1)
-        {
-            return QCoreApplication::translate("Utilities", "1 hour ago");
-        }
-        else
-        {
-            return QCoreApplication::translate("Utilities", "%1 hours ago").arg(hours);
-        }
+        const int hours = static_cast<int>(secs/SECS_IN_1_HOUR);
+        return QCoreApplication::translate("Utilities", "%n hour ago", "", hours);
     }
-    // < 1 month
-    else if (secs < 2628000)
+    else if (secs < SECS_IN_1_MONTH)
     {
-        // Compute days. We can safely cast because secs < 2628000, thus days < 31
-        int days = static_cast<int>(secs/86400);
-        if (days == 1)
-        {
-            return QCoreApplication::translate("Utilities", "1 day ago");
-        }
-        else
-        {
-            return QCoreApplication::translate("Utilities", "%1 days ago").arg(days);
-        }
+        const int days = static_cast<int>(secs/SECS_IN_1_DAY);
+        return QCoreApplication::translate("Utilities", "%n day ago", "", days);
     }
-    // < 1 year
-    else if (secs < 31536000)
+    else if (secs < SECS_IN_1_YEAR)
     {
-        // Compute months. We can safely cast because secs < 31536000, thus days < 12
-        int months = static_cast<int>(secs/2628000);
-        if (months == 1)
-        {
-            return QCoreApplication::translate("Utilities", "1 month ago");
-        }
-        else
-        {
-            return QCoreApplication::translate("Utilities", "%1 months ago").arg(months);
-        }
+        const int months = static_cast<int>(secs/SECS_IN_1_MONTH);
+        return QCoreApplication::translate("Utilities", "%n month ago", "", months);
     }
     // We might not need century precision... give years.
     else
     {
-        // Compute years. We need at least 64 bits to avoid any overflow.
-        long long years = secs/31536000;
-        if (years == 1)
-        {
-            return QCoreApplication::translate("Utilities", "1 year ago");
-        }
-        else
-        {
-            return QCoreApplication::translate("Utilities", "%1 years ago").arg(years);
-        }
+        const int years = static_cast<int>(secs/SECS_IN_1_YEAR);
+        return QCoreApplication::translate("Utilities", "%n year ago", "", years);
     }
 }
 

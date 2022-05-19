@@ -109,9 +109,10 @@ QGroupBox::title
     min-width: 180px;
     max-width: 200px;
     font-size: 14px;
-    color: #333333;
+    color: #15191F;
     border: none;
     text-align: left;
+    padding-left: -1px;
     qProperty-iconSize: 24px;
 }
 
@@ -121,7 +122,7 @@ QGroupBox::title
     min-width: 180px;
     max-width: 200px;
     font-size: 14px;
-    color: #333333;
+    color: #15191F;
     border: none;
     text-align: left;
     padding-left: -1px;
@@ -172,7 +173,7 @@ QGroupBox::title
     min-height: 24px;
     max-height: 24px;
     max-width: 24px;
-    qProperty-iconSize: 24px;
+    qProperty-iconSize: 16px;
     border: none;
     padding: 0px;
     margin: 0px;
@@ -186,7 +187,7 @@ QGroupBox::title
     min-height: 24px;
     max-width: 24px;
     max-height: 24px;
-    qProperty-iconSize: 24px;
+    qProperty-iconSize: 16px;
 }
 
 #bPause, #bSearch
@@ -197,7 +198,7 @@ QGroupBox::title
     min-width: 36px;
     max-height: 36px;
     max-width: 36px;
-    qProperty-iconSize: 36px;
+    qProperty-iconSize: 32px;
     padding: 0px;
     margin: 0px;
     border: none;
@@ -218,7 +219,7 @@ QGroupBox::title
     border: none;
     color: #333333;
     font-size: 14px;
-    qProperty-iconSize: 36px;
+    qProperty-iconSize: 24px;
     text-align: left;
 }
 
@@ -411,6 +412,7 @@ QGroupBox::title
       <string notr="true">#wLeftPane QFrame &gt; QLabel
 {
     font-weight: bold;
+    color: #999999;
     font-size: 10px;
 	text-align: right;
     border-radius: 12px;
@@ -422,16 +424,11 @@ QGroupBox::title
     background: solid white;
 }
 
-#wLeftPane QFrame[itsOn=true]  QLabel
+#wLeftPane QFrame[itsOn=true]  &gt; QLabel
 {
     border: 1px solid #F5F5F5; 
     background-color: #FAFAFA;
     color: #333333;
-}
-
-#wLeftPane QFrame[itsOn=true] QPushButton
-{
-    font-weight: bold;
 }
 
 #wLeftPane QFrame[itsOn=false] 
@@ -444,12 +441,6 @@ QGroupBox::title
 {
     border: 1px transparent #FAFAFA; 
     background: transparent;
-    color: #999999;
-}
-
-#wLeftPane QFrame[itsOn=false] QPushButton
-{
-    font-weight: normal;
 }
 </string>
      </property>
@@ -471,6 +462,18 @@ QGroupBox::title
       </property>
       <item>
        <widget class="QStackedWidget" name="wTitleAndSearch">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>34</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>34</height>
+         </size>
+        </property>
         <property name="currentIndex">
          <number>0</number>
         </property>
@@ -521,7 +524,24 @@ QGroupBox::title
             </property>
             <property name="icon">
              <iconset resource="../../../gui/Resources_win.qrc">
-              <normaloff>:/images/sidebar_pause_ico.png</normaloff>:/images/sidebar_pause_ico.png</iconset>
+              <normaloff>:/images/transfer_manager/sidebar/sidebar_pause_ico_default.png</normaloff>:/images/transfer_manager/sidebar/sidebar_pause_ico_default.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>32</width>
+              <height>32</height>
+             </size>
+            </property>
+            <property name="checkable">
+             <bool>true</bool>
+            </property>
+            <property name="icon_prefix" stdset="0">
+             <url>
+              <string>qrc:/images/transfer_manager/sidebar/sidebar_pause_ico_default.png</string>
+             </url>
+            </property>
+            <property name="hover_selected" stdset="0">
+             <bool>true</bool>
             </property>
            </widget>
           </item>
@@ -535,7 +555,21 @@ QGroupBox::title
             </property>
             <property name="icon">
              <iconset resource="../../../gui/Resources_win.qrc">
-              <normaloff>:/images/sidebar_search_ico.png</normaloff>:/images/sidebar_search_ico.png</iconset>
+              <normaloff>:/images/transfer_manager/sidebar/sidebar_search_ico_default.png</normaloff>:/images/transfer_manager/sidebar/sidebar_search_ico_default.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>32</width>
+              <height>32</height>
+             </size>
+            </property>
+            <property name="checkable">
+             <bool>true</bool>
+            </property>
+            <property name="icon_prefix" stdset="0">
+             <url>
+              <string>qrc:/images/transfer_manager/sidebar/sidebar_search_ico_default.png</string>
+             </url>
             </property>
            </widget>
           </item>
@@ -567,8 +601,11 @@ QGroupBox::title
              </sizepolicy>
             </property>
             <property name="icon">
-             <iconset resource="../../../gui/Resources_win.qrc">
-              <normaloff>:/images/search_ico.png</normaloff>:/images/search_ico.png</iconset>
+             <iconset theme="search_ico" resource="../../../gui/Resources_win.qrc">
+              <normaloff>:/images/transfer_manager/sidebar/search_ico_default.png</normaloff>:/images/transfer_manager/sidebar/search_ico_default.png</iconset>
+            </property>
+            <property name="checkable">
+             <bool>true</bool>
             </property>
            </widget>
           </item>
@@ -597,8 +634,13 @@ QGroupBox::title
              <cursorShape>PointingHandCursor</cursorShape>
             </property>
             <property name="icon">
-             <iconset resource="../../../gui/Resources_win.qrc">
-              <normaloff>:/images/delete_search_ico.png</normaloff>:/images/delete_search_ico.png</iconset>
+             <iconset theme="delete_search_ico" resource="../../../gui/Resources_win.qrc">
+              <normaloff>:/images/transfer_manager/sidebar/delete_search_ico_default.png</normaloff>:/images/transfer_manager/sidebar/delete_search_ico_default.png</iconset>
+            </property>
+            <property name="icon_prefix" stdset="0">
+             <url>
+              <string>qrc:/images/transfer_manager/sidebar/delete_search_ico_default.png</string>
+             </url>
             </property>
            </widget>
           </item>
@@ -660,13 +702,26 @@ QGroupBox::title
             <property name="bottomMargin">
              <number>0</number>
             </property>
-            <item>
+            <item alignment="Qt::AlignLeft">
              <widget class="QPushButton" name="tAllTransfers">
               <property name="sizePolicy">
-               <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>199</width>
+                <height>16777215</height>
+               </size>
+              </property>
+              <property name="font">
+               <font>
+                <family>Lato</family>
+                <pointsize>-1</pointsize>
+                <bold>false</bold>
+               </font>
               </property>
               <property name="cursor">
                <cursorShape>PointingHandCursor</cursorShape>
@@ -676,13 +731,21 @@ QGroupBox::title
               </property>
               <property name="icon">
                <iconset resource="../../../gui/Resources_win.qrc">
-                <normaloff>:/images/all_transfers_ico.png</normaloff>:/images/all_transfers_ico.png</iconset>
+                <normaloff>:/images/transfer_manager/sidebar/all_transfers_ico_default.png</normaloff>:/images/transfer_manager/sidebar/all_transfers_ico_default.png</iconset>
+              </property>
+              <property name="checkable">
+               <bool>true</bool>
               </property>
               <property name="autoDefault">
                <bool>false</bool>
               </property>
               <property name="flat">
                <bool>false</bool>
+              </property>
+              <property name="icon_prefix" stdset="0">
+               <url>
+                <string>qrc:/images/transfer_manager/sidebar/all_transfers_ico_default.png</string>
+               </url>
               </property>
              </widget>
             </item>
@@ -722,6 +785,13 @@ QGroupBox::title
                 <height>24</height>
                </size>
               </property>
+              <property name="font">
+               <font>
+                <family>Lato</family>
+                <pointsize>-1</pointsize>
+                <bold>true</bold>
+               </font>
+              </property>
               <property name="text">
                <string notr="true"/>
               </property>
@@ -756,6 +826,13 @@ QGroupBox::title
                 <verstretch>0</verstretch>
                </sizepolicy>
               </property>
+              <property name="font">
+               <font>
+                <family>Lato</family>
+                <pointsize>-1</pointsize>
+                <bold>false</bold>
+               </font>
+              </property>
               <property name="cursor">
                <cursorShape>PointingHandCursor</cursorShape>
               </property>
@@ -763,11 +840,19 @@ QGroupBox::title
                <string>Downloads</string>
               </property>
               <property name="icon">
-               <iconset resource="../../../gui/Resources_win.qrc">
-                <normaloff>:/images/sidebar_downloads_ico.png</normaloff>:/images/sidebar_downloads_ico.png</iconset>
+               <iconset theme="downloads_ico" resource="../../../gui/Resources_win.qrc">
+                <normaloff>:/images/transfer_manager/sidebar/downloads_ico_default.png</normaloff>:/images/transfer_manager/sidebar/downloads_ico_default.png</iconset>
+              </property>
+              <property name="checkable">
+               <bool>true</bool>
               </property>
               <property name="autoDefault">
                <bool>false</bool>
+              </property>
+              <property name="icon_prefix" stdset="0">
+               <url>
+                <string>qrc:/images/transfer_manager/sidebar/downloads_ico_default.png</string>
+               </url>
               </property>
              </widget>
             </item>
@@ -841,6 +926,13 @@ QGroupBox::title
                 <verstretch>0</verstretch>
                </sizepolicy>
               </property>
+              <property name="font">
+               <font>
+                <family>Lato</family>
+                <pointsize>-1</pointsize>
+                <bold>false</bold>
+               </font>
+              </property>
               <property name="cursor">
                <cursorShape>PointingHandCursor</cursorShape>
               </property>
@@ -848,11 +940,19 @@ QGroupBox::title
                <string>Uploads</string>
               </property>
               <property name="icon">
-               <iconset resource="../../../gui/Resources_win.qrc">
-                <normaloff>:/images/uploads_ico.png</normaloff>:/images/uploads_ico.png</iconset>
+               <iconset theme="uploads_ico" resource="../../../gui/Resources_win.qrc">
+                <normaloff>:/images/transfer_manager/sidebar/uploads_ico_default.png</normaloff>:/images/transfer_manager/sidebar/uploads_ico_default.png</iconset>
+              </property>
+              <property name="checkable">
+               <bool>true</bool>
               </property>
               <property name="autoDefault">
                <bool>false</bool>
+              </property>
+              <property name="icon_prefix" stdset="0">
+               <url>
+                <string>qrc:/images/transfer_manager/sidebar/uploads_ico_default.png</string>
+               </url>
               </property>
              </widget>
             </item>
@@ -929,6 +1029,13 @@ QGroupBox::title
                 <verstretch>0</verstretch>
                </sizepolicy>
               </property>
+              <property name="font">
+               <font>
+                <family>Lato</family>
+                <pointsize>-1</pointsize>
+                <bold>false</bold>
+               </font>
+              </property>
               <property name="cursor">
                <cursorShape>PointingHandCursor</cursorShape>
               </property>
@@ -936,11 +1043,19 @@ QGroupBox::title
                <string>Finished</string>
               </property>
               <property name="icon">
-               <iconset resource="../../../gui/Resources_win.qrc">
-                <normaloff>:/images/sidebar_finished_ico.png</normaloff>:/images/sidebar_finished_ico.png</iconset>
+               <iconset theme="finished_ico" resource="../../../gui/Resources_win.qrc">
+                <normaloff>:/images/transfer_manager/sidebar/finished_ico_default.png</normaloff>:/images/transfer_manager/sidebar/finished_ico_default.png</iconset>
+              </property>
+              <property name="checkable">
+               <bool>true</bool>
               </property>
               <property name="autoDefault">
                <bool>false</bool>
+              </property>
+              <property name="icon_prefix" stdset="0">
+               <url>
+                <string>qrc:/images/transfer_manager/sidebar/finished_ico_default.png</string>
+               </url>
               </property>
              </widget>
             </item>
@@ -1017,6 +1132,13 @@ QGroupBox::title
                 <verstretch>0</verstretch>
                </sizepolicy>
               </property>
+              <property name="font">
+               <font>
+                <family>Lato</family>
+                <pointsize>-1</pointsize>
+                <bold>false</bold>
+               </font>
+              </property>
               <property name="cursor">
                <cursorShape>PointingHandCursor</cursorShape>
               </property>
@@ -1025,10 +1147,18 @@ QGroupBox::title
               </property>
               <property name="icon">
                <iconset resource="../../../gui/Resources_win.qrc">
-                <normaloff>:/images/sidebar_failed_ico.png</normaloff>:/images/sidebar_failed_ico.png</iconset>
+                <normaloff>:/images/transfer_manager/sidebar/sidebar_failed_ico_default.png</normaloff>:/images/transfer_manager/sidebar/sidebar_failed_ico_default.png</iconset>
+              </property>
+              <property name="checkable">
+               <bool>true</bool>
               </property>
               <property name="autoDefault">
                <bool>false</bool>
+              </property>
+              <property name="icon_prefix" stdset="0">
+               <url>
+                <string>qrc:/images/transfer_manager/sidebar/failed_ico_default.png</string>
+               </url>
               </property>
              </widget>
             </item>
@@ -1133,11 +1263,19 @@ QGroupBox::title
                <string>Archives</string>
               </property>
               <property name="icon">
-               <iconset resource="../../../gui/Resources_win.qrc">
-                <normaloff>:/images/drag_compressed.png</normaloff>:/images/drag_compressed.png</iconset>
+               <iconset theme="compressed" resource="../../../gui/Resources_win.qrc">
+                <normaloff>:/images/transfer_manager/sidebar/compressed_default.png</normaloff>:/images/transfer_manager/sidebar/compressed_default.png</iconset>
+              </property>
+              <property name="checkable">
+               <bool>true</bool>
               </property>
               <property name="autoDefault">
                <bool>false</bool>
+              </property>
+              <property name="icon_prefix" stdset="0">
+               <url>
+                <string>qrc:/images/transfer_manager/sidebar/compressed_default.png</string>
+               </url>
               </property>
              </widget>
             </item>
@@ -1218,11 +1356,19 @@ QGroupBox::title
                <string>Documents</string>
               </property>
               <property name="icon">
-               <iconset resource="../../../gui/Resources_win.qrc">
-                <normaloff>:/images/drag_text.png</normaloff>:/images/drag_text.png</iconset>
+               <iconset theme="text" resource="../../../gui/Resources_win.qrc">
+                <normaloff>:/images/transfer_manager/sidebar/text_default.png</normaloff>:/images/transfer_manager/sidebar/text_default.png</iconset>
+              </property>
+              <property name="checkable">
+               <bool>true</bool>
               </property>
               <property name="autoDefault">
                <bool>false</bool>
+              </property>
+              <property name="icon_prefix" stdset="0">
+               <url>
+                <string>qrc:/images/transfer_manager/sidebar/text_default.png</string>
+               </url>
               </property>
              </widget>
             </item>
@@ -1300,11 +1446,19 @@ QGroupBox::title
                <string>Images</string>
               </property>
               <property name="icon">
-               <iconset resource="../../../gui/Resources_win.qrc">
-                <normaloff>:/images/drag_image.png</normaloff>:/images/drag_image.png</iconset>
+               <iconset theme="image" resource="../../../gui/Resources_win.qrc">
+                <normaloff>:/images/transfer_manager/sidebar/image_default.png</normaloff>:/images/transfer_manager/sidebar/image_default.png</iconset>
+              </property>
+              <property name="checkable">
+               <bool>true</bool>
               </property>
               <property name="autoDefault">
                <bool>false</bool>
+              </property>
+              <property name="icon_prefix" stdset="0">
+               <url>
+                <string>qrc:/images/transfer_manager/sidebar/image_default.png</string>
+               </url>
               </property>
              </widget>
             </item>
@@ -1382,11 +1536,19 @@ QGroupBox::title
                <string>Videos</string>
               </property>
               <property name="icon">
-               <iconset resource="../../../gui/Resources_win.qrc">
-                <normaloff>:/images/drag_video.png</normaloff>:/images/drag_video.png</iconset>
+               <iconset theme="video" resource="../../../gui/Resources_win.qrc">
+                <normaloff>:/images/transfer_manager/sidebar/video_default.png</normaloff>:/images/transfer_manager/sidebar/video_default.png</iconset>
+              </property>
+              <property name="checkable">
+               <bool>true</bool>
               </property>
               <property name="autoDefault">
                <bool>false</bool>
+              </property>
+              <property name="icon_prefix" stdset="0">
+               <url>
+                <string>qrc:/images/transfer_manager/sidebar/video_default.png</string>
+               </url>
               </property>
              </widget>
             </item>
@@ -1464,11 +1626,19 @@ QGroupBox::title
                <string>Audio</string>
               </property>
               <property name="icon">
-               <iconset resource="../../../gui/Resources_win.qrc">
-                <normaloff>:/images/drag_audio.png</normaloff>:/images/drag_audio.png</iconset>
+               <iconset theme="audio" resource="../../../gui/Resources_win.qrc">
+                <normaloff>:/images/transfer_manager/sidebar/audio_default.png</normaloff>:/images/transfer_manager/sidebar/audio_default.png</iconset>
+              </property>
+              <property name="checkable">
+               <bool>true</bool>
               </property>
               <property name="autoDefault">
                <bool>false</bool>
+              </property>
+              <property name="icon_prefix" stdset="0">
+               <url>
+                <string>qrc:/images/transfer_manager/sidebar/audio_default.png</string>
+               </url>
               </property>
              </widget>
             </item>
@@ -1546,11 +1716,19 @@ QGroupBox::title
                <string>Other</string>
               </property>
               <property name="icon">
-               <iconset resource="../../../gui/Resources_win.qrc">
-                <normaloff>:/images/drag_generic.png</normaloff>:/images/drag_generic.png</iconset>
+               <iconset theme="generic" resource="../../../gui/Resources_win.qrc">
+                <normaloff>:/images/transfer_manager/sidebar/generic_default.png</normaloff>:/images/transfer_manager/sidebar/generic_default.png</iconset>
+              </property>
+              <property name="checkable">
+               <bool>true</bool>
               </property>
               <property name="autoDefault">
                <bool>false</bool>
+              </property>
+              <property name="icon_prefix" stdset="0">
+               <url>
+                <string>qrc:/images/transfer_manager/sidebar/generic_default.png</string>
+               </url>
               </property>
              </widget>
             </item>
@@ -1655,11 +1833,19 @@ QGroupBox::title
                <string notr="true"/>
               </property>
               <property name="icon">
-               <iconset resource="../../../gui/Resources_win.qrc">
-                <normaloff>:/images/search_result_ico.png</normaloff>:/images/search_result_ico.png</iconset>
+               <iconset theme="search_result" resource="../../../gui/Resources_win.qrc">
+                <normaloff>:/images/transfer_manager/sidebar/search_result_default.png</normaloff>:/images/transfer_manager/sidebar/search_result_default.png</iconset>
+              </property>
+              <property name="checkable">
+               <bool>true</bool>
               </property>
               <property name="autoDefault">
                <bool>false</bool>
+              </property>
+              <property name="icon_prefix" stdset="0">
+               <url>
+                <string>qrc:/images/transfer_manager/sidebar/search_result_default.png</string>
+               </url>
               </property>
              </widget>
             </item>
@@ -1672,8 +1858,13 @@ QGroupBox::title
                <string/>
               </property>
               <property name="icon">
-               <iconset resource="../../../gui/Resources_win.qrc">
-                <normaloff>:/images/lists_cancel_ico.png</normaloff>:/images/lists_cancel_ico.png</iconset>
+               <iconset theme="delete_search" resource="../../../gui/Resources_win.qrc">
+                <normaloff>:/images/transfer_manager/sidebar/delete_search_result_default.png</normaloff>:/images/transfer_manager/sidebar/delete_search_result_default.png</iconset>
+              </property>
+              <property name="icon_prefix" stdset="0">
+               <url>
+                <string>qrc:/images/transfer_manager/sidebar/delete_search_result_default.png</string>
+               </url>
               </property>
              </widget>
             </item>
@@ -1702,7 +1893,7 @@ QGroupBox::title
          <string notr="true"/>
         </property>
         <property name="currentIndex">
-         <number>3</number>
+         <number>0</number>
         </property>
         <widget class="QWidget" name="pSpeedAndClear">
          <layout class="QHBoxLayout" name="pSpeedAndClearLayout" stretch="1,1,0,0">
@@ -1746,7 +1937,7 @@ QGroupBox::title
             </property>
             <property name="icon">
              <iconset resource="../../../gui/Resources_win.qrc">
-              <normaloff>:/images/arrow_download_ico.png</normaloff>:/images/arrow_download_ico.png</iconset>
+              <normaloff>:/images/transfer_manager/transfers_states/arrow_download_ico.png</normaloff>:/images/transfer_manager/transfers_states/arrow_download_ico.png</iconset>
             </property>
             <property name="iconSize">
              <size>
@@ -1781,7 +1972,7 @@ QGroupBox::title
             </property>
             <property name="icon">
              <iconset resource="../../../gui/Resources_win.qrc">
-              <normaloff>:/images/arrow_upload_ico.png</normaloff>:/images/arrow_upload_ico.png</iconset>
+              <normaloff>:/images/transfer_manager/transfers_states/arrow_upload_ico.png</normaloff>:/images/transfer_manager/transfers_states/arrow_upload_ico.png</iconset>
             </property>
             <property name="iconSize">
              <size>
@@ -1816,14 +2007,19 @@ QGroupBox::title
              <string>Cancel and clear all</string>
             </property>
             <property name="icon">
-             <iconset resource="../../../gui/Resources_win.qrc">
-              <normaloff>:/images/sidebar_cancel_all_ico.png</normaloff>:/images/sidebar_cancel_all_ico.png</iconset>
+             <iconset theme="cancel_all_ico" resource="../../../gui/Resources_win.qrc">
+              <normaloff>:/images/transfer_manager/sidebar/cancel_all_ico_default.png</normaloff>:/images/transfer_manager/sidebar/cancel_all_ico_default.png</iconset>
             </property>
             <property name="iconSize">
              <size>
-              <width>36</width>
-              <height>36</height>
+              <width>24</width>
+              <height>24</height>
              </size>
+            </property>
+            <property name="icon_prefix" stdset="0">
+             <url>
+              <string>qrc:/images/transfer_manager/sidebar/cancel_all_ico_default.png</string>
+             </url>
             </property>
            </widget>
           </item>
@@ -1859,7 +2055,16 @@ QGroupBox::title
             </property>
             <property name="icon">
              <iconset resource="../../../gui/Resources_win.qrc">
-              <normaloff>:/images/sidebar_up_to_date_ico.png</normaloff>:/images/sidebar_up_to_date_ico.png</iconset>
+              <normaloff>:/images/transfer_manager/sidebar/up_to_date_ico.png</normaloff>:/images/transfer_manager/sidebar/up_to_date_ico.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>24</width>
+              <height>24</height>
+             </size>
+            </property>
+            <property name="ignore_button_manager" stdset="0">
+             <bool>true</bool>
             </property>
            </widget>
           </item>
@@ -1901,13 +2106,16 @@ QGroupBox::title
             </property>
             <property name="icon">
              <iconset resource="../../../gui/Resources_win.qrc">
-              <normaloff>:/images/sidebar_cancel_all_ico.png</normaloff>:/images/sidebar_cancel_all_ico.png</iconset>
+              <normaloff>:/images/transfer_manager/sidebar/cancel_all_ico_default.png</normaloff>:/images/transfer_manager/sidebar/cancel_all_ico_default.png</iconset>
             </property>
             <property name="iconSize">
              <size>
-              <width>36</width>
-              <height>36</height>
+              <width>24</width>
+              <height>24</height>
              </size>
+            </property>
+            <property name="ignore_button_manager" stdset="0">
+             <bool>true</bool>
             </property>
            </widget>
           </item>
@@ -1934,6 +2142,9 @@ QGroupBox::title
            <widget class="QPushButton" name="bScanning">
             <property name="text">
              <string>Scanning</string>
+            </property>
+            <property name="ignore_button_manager" stdset="0">
+             <bool>true</bool>
             </property>
            </widget>
           </item>
@@ -2261,8 +2472,13 @@ QGroupBox::title
             <string>Open links</string>
            </property>
            <property name="icon">
-            <iconset resource="../../../gui/Resources_win.qrc">
-             <normaloff>:/images/import_toolbar_ico.png</normaloff>:/images/import_toolbar_ico.png</iconset>
+            <iconset theme="import_toolbar_ico" resource="../../../gui/Resources_win.qrc">
+             <normaloff>:/images/transfer_manager/toolbar/import_toolbar_ico_default.png</normaloff>:/images/transfer_manager/toolbar/import_toolbar_ico_default.png</iconset>
+           </property>
+           <property name="icon_prefix" stdset="0">
+            <url>
+             <string>qrc:/images/transfer_manager/toolbar/import_toolbar_ico_default.png</string>
+            </url>
            </property>
           </widget>
          </item>
@@ -2275,8 +2491,13 @@ QGroupBox::title
             <string>Download</string>
            </property>
            <property name="icon">
-            <iconset resource="../../../gui/Resources_win.qrc">
-             <normaloff>:/images/download_toolbar_ico.png</normaloff>:/images/download_toolbar_ico.png</iconset>
+            <iconset theme="download_toolbar_ico" resource="../../../gui/Resources_win.qrc">
+             <normaloff>:/images/transfer_manager/toolbar/download_toolbar_ico_default.png</normaloff>:/images/transfer_manager/toolbar/download_toolbar_ico_default.png</iconset>
+           </property>
+           <property name="icon_prefix" stdset="0">
+            <url>
+             <string>qrc:/images/transfer_manager/toolbar/download_toolbar_ico_default.png</string>
+            </url>
            </property>
           </widget>
          </item>
@@ -2286,8 +2507,13 @@ QGroupBox::title
             <cursorShape>PointingHandCursor</cursorShape>
            </property>
            <property name="icon">
-            <iconset resource="../../../gui/Resources_win.qrc">
-             <normaloff>:/images/preferences_toolbar_ico.png</normaloff>:/images/preferences_toolbar_ico.png</iconset>
+            <iconset theme="preferences_toolbar_ico" resource="../../../gui/Resources_win.qrc">
+             <normaloff>:/images/transfer_manager/toolbar/preferences_toolbar_ico_default.png</normaloff>:/images/transfer_manager/toolbar/preferences_toolbar_ico_default.png</iconset>
+           </property>
+           <property name="icon_prefix" stdset="0">
+            <url>
+             <string>qrc:/images/transfer_manager/toolbar/preferences_toolbar_ico_default.png</string>
+            </url>
            </property>
           </widget>
          </item>
@@ -2300,8 +2526,13 @@ QGroupBox::title
             <string>Upload</string>
            </property>
            <property name="icon">
-            <iconset resource="../../../gui/Resources_win.qrc">
-             <normaloff>:/images/upload_toolbar_ico.png</normaloff>:/images/upload_toolbar_ico.png</iconset>
+            <iconset theme="upload_toolbar_ico" resource="../../../gui/Resources_win.qrc">
+             <normaloff>:/images/transfer_manager/toolbar/upload_toolbar_ico_default.png</normaloff>:/images/transfer_manager/toolbar/upload_toolbar_ico_default.png</iconset>
+           </property>
+           <property name="icon_prefix" stdset="0">
+            <url>
+             <string>qrc:/images/transfer_manager/toolbar/upload_toolbar_ico_default.png</string>
+            </url>
            </property>
           </widget>
          </item>
@@ -2619,7 +2850,7 @@ QGroupBox::title
       <item>
        <widget class="QStackedWidget" name="sTransfers">
         <property name="currentIndex">
-         <number>5</number>
+         <number>0</number>
         </property>
         <widget class="TransfersWidget" name="wTransfers">
          <property name="sizePolicy">
@@ -2638,7 +2869,7 @@ QGroupBox::title
             </property>
             <property name="icon">
              <iconset resource="../../../gui/Resources_win.qrc">
-              <normaloff>:/images/no_uploads.png</normaloff>:/images/no_uploads.png</iconset>
+              <normaloff>:/images/transfer_manager/empty_categories/no_uploads.png</normaloff>:/images/transfer_manager/empty_categories/no_uploads.png</iconset>
             </property>
            </widget>
           </item>
@@ -2653,7 +2884,7 @@ QGroupBox::title
             </property>
             <property name="icon">
              <iconset resource="../../../gui/Resources_win.qrc">
-              <normaloff>:/images/no_downloads.png</normaloff>:/images/no_downloads.png</iconset>
+              <normaloff>:/images/transfer_manager/empty_categories/no_downloads.png</normaloff>:/images/transfer_manager/empty_categories/no_downloads.png</iconset>
             </property>
            </widget>
           </item>
@@ -2668,7 +2899,7 @@ QGroupBox::title
             </property>
             <property name="icon">
              <iconset resource="../../../gui/Resources_win.qrc">
-              <normaloff>:/images/no_transfers.png</normaloff>:/images/no_transfers.png</iconset>
+              <normaloff>:/images/transfer_manager/empty_categories/no_transfers.png</normaloff>:/images/transfer_manager/empty_categories/no_transfers.png</iconset>
             </property>
            </widget>
           </item>
@@ -2683,7 +2914,7 @@ QGroupBox::title
             </property>
             <property name="icon">
              <iconset resource="../../../gui/Resources_win.qrc">
-              <normaloff>:/images/no_search_results.png</normaloff>:/images/no_search_results.png</iconset>
+              <normaloff>:/images/transfer_manager/empty_categories/no_search_results.png</normaloff>:/images/transfer_manager/empty_categories/no_search_results.png</iconset>
             </property>
            </widget>
           </item>
@@ -2698,7 +2929,7 @@ QGroupBox::title
             </property>
             <property name="icon">
              <iconset resource="../../../gui/Resources_win.qrc">
-              <normaloff>:/images/Completed_transfers.png</normaloff>:/images/Completed_transfers.png</iconset>
+              <normaloff>:/images/transfer_manager/empty_categories/Completed_transfers.png</normaloff>:/images/transfer_manager/empty_categories/Completed_transfers.png</iconset>
             </property>
            </widget>
           </item>

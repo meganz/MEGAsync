@@ -9,6 +9,7 @@
 #include "TransfersModel.h"
 #include "TransferQuota.h"
 #include "StatusInfo.h"
+#include "ButtonIconManager.h"
 
 #include <QGraphicsEffect>
 #include <QTimer>
@@ -116,6 +117,7 @@ private:
     QuotaState mTransferQuotaState;
 
     bool mFoundStalledIssues;
+    ButtonIconManager mButtonIconManager;
 
     void toggleTab(TM_TAB newTab);
     void refreshStateStats();

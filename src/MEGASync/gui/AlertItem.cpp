@@ -1,5 +1,6 @@
 #include "AlertItem.h"
 #include "ui_AlertItem.h"
+#include "CommonMessages.h"
 #include <QDateTime>
 #include "MegaApplication.h"
 #include "UserAttributesRequests.h"
@@ -329,33 +330,17 @@ void AlertItem::setAlertContent(MegaUserAlert *alert)
             case MegaUserAlert::TYPE_NEWSHAREDNODES:
             {
                 int64_t updatedItems = alert->getNumber(1) + alert->getNumber(0);
-                if (updatedItems == 1)
-                {
-                    notificationContent = tr("[A] added 1 item")
-                            .replace(QString::fromUtf8("[A]"), formatRichString(mUserAttributes->getFullName()));
-                }
-                else
-                {
-                    notificationContent = tr("[A] added [B] items")
-                            .replace(QString::fromUtf8("[A]"), formatRichString(mUserAttributes->getFullName()))
-                            .replace(QString::fromUtf8("[B]"), QString::number(updatedItems));
-                }
+                notificationContent = tr("[A] added %n item", "", static_cast<int>(updatedItems))
+                        .replace(QString::fromUtf8("[A]"), formatRichString(mUserAttributes->getFullName()))
+                        .replace(QString::fromUtf8("[B]"), QString::number(updatedItems));
                 break;
             }
             case MegaUserAlert::TYPE_REMOVEDSHAREDNODES:
             {
                 int64_t updatedItems = alert->getNumber(0);
-                if (updatedItems == 1)
-                {
-                    notificationContent = tr("[A] removed 1 item")
-                            .replace(QString::fromUtf8("[A]"), formatRichString(mUserAttributes->getFullName()));
-                }
-                else
-                {
-                    notificationContent = tr("[A] removed [B] items")
-                            .replace(QString::fromUtf8("[A]"), formatRichString(mUserAttributes->getFullName()))
-                            .replace(QString::fromUtf8("[B]"), QString::number(updatedItems));
-                }
+                notificationContent = tr("[A] removed %n item", "", static_cast<int>(updatedItems))
+                        .replace(QString::fromUtf8("[A]"), formatRichString(mUserAttributes->getFullName()))
+                        .replace(QString::fromUtf8("[B]"), QString::number(updatedItems));
                 break;
             }
             // Payment notifications
@@ -369,33 +354,7 @@ void AlertItem::setAlertContent(MegaUserAlert *alert)
                 break;
             case MegaUserAlert::TYPE_PAYMENTREMINDER:
             {
-                QDateTime expiredDate;
-                expiredDate.setMSecsSinceEpoch(alert->getTimestamp(1) * 1000);
-                QDateTime currentDate(QDateTime::currentDateTime());
-
-                const int daysExpired = static_cast<int>(currentDate.daysTo(expiredDate));
-                if (daysExpired == 1)
-                {
-                    notificationContent = tr("Your PRO membership plan will expire in 1 day");
-                }
-                else if (daysExpired > 0)
-                {
-                    notificationContent = tr("Your PRO membership plan will expire in [A] days")
-                            .replace(QString::fromUtf8("[A]"), formatRichString(QString::number(daysExpired)));
-                }
-                else if (daysExpired == 0)
-                {
-                    notificationContent = tr("PRO membership plan expiring soon");
-                }
-                else if (daysExpired == -1)
-                {
-                    notificationContent = tr("Your PRO membership plan expired 1 day ago");
-                }
-                else
-                {
-                    notificationContent = tr("Your PRO membership plan expired [A] days ago")
-                            .replace(QString::fromUtf8("[A]"), formatRichString(QString::number(-daysExpired)));
-                }
+                notificationContent = CommonMessages::createPaymentReminder(alert->getTimestamp(1));
                 break;
             }
             // Takedown notifications

@@ -22,13 +22,6 @@
 font-size: 12px;
 }
 
-QPushButton
-{
-padding-left: 10px;
-padding-right: 10px;
-min-height: 22px;
-}
-
 QComboBox
 {
 min-height: 24px;
@@ -3017,12 +3010,6 @@ color: #0078D7;
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>
   <customwidget>
-   <class>WaitingSpinnerWidget</class>
-   <extends>QWidget</extends>
-   <header location="global">WaitingSpinnerWidget.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
    <class>AvatarWidget</class>
    <extends>QWidget</extends>
    <header>AvatarWidget.h</header>
@@ -3032,6 +3019,12 @@ color: #0078D7;
    <class>NotificationsSettings</class>
    <extends>QWidget</extends>
    <header location="global">NotificationsSettings.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>WaitingSpinnerWidget</class>
+   <extends>QWidget</extends>
+   <header location="global">WaitingSpinnerWidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
