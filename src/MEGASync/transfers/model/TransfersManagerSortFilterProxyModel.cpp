@@ -54,6 +54,7 @@ void TransfersManagerSortFilterProxyModel::sort(int sortCriterion, Qt::SortOrder
         sourceM->lockModelMutex(false);
         sourceM->blockSignals(false);
         blockSignals(false);
+        emit layoutChanged();
     });
     mFilterWatcher.setFuture(filtered);
 }
@@ -90,6 +91,7 @@ void TransfersManagerSortFilterProxyModel::setFilterFixedString(const QString& p
         sourceM->lockModelMutex(false);
         sourceM->blockSignals(false);
         blockSignals(false);
+        emit layoutChanged();
     });
 
     mFilterWatcher.setFuture(filtered);
@@ -112,6 +114,7 @@ void TransfersManagerSortFilterProxyModel::textSearchTypeChanged()
         sourceM->lockModelMutex(false);
         sourceM->blockSignals(false);
         blockSignals(false);
+        emit layoutChanged();
     });
     mFilterWatcher.setFuture(filtered);
 

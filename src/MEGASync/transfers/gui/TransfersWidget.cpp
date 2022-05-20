@@ -23,16 +23,6 @@ TransfersWidget::TransfersWidget(QWidget* parent) :
     connect(ui->statusColumn, &TransferWidgetHeaderItem::toggled, this, &TransfersWidget::onHeaderItemClicked);
     connect(ui->timeColumn, &TransferWidgetHeaderItem::toggled, this, &TransfersWidget::onHeaderItemClicked);
 
-
-    //Keep size when hidden
-    auto sizePolicy = ui->tCancelClearVisible->sizePolicy();
-    if(!sizePolicy.retainSizeWhenHidden())
-    {
-        sizePolicy.setRetainSizeWhenHidden(true);
-        ui->tCancelClearVisible->setSizePolicy(sizePolicy);
-        ui->tPauseResumeVisible->setSizePolicy(sizePolicy);
-    }
-
     model = app->getTransfersModel();
 
     //Align header pause/cancel buttons to view pause/cancel button
