@@ -159,19 +159,13 @@ void TransfersWidget::mouseRelease(const QPoint &point)
 {
    if(ui->tvTransfers->isVisible())
    {
-       auto viewGlobalPos = parentWidget()->mapToGlobal(ui->tvTransfers->pos());
-       QRect viewGlobalRect(viewGlobalPos, ui->tvTransfers->size());
+       if(!ui->tvTransfers->selectionModel()->selection().isEmpty())
+       {
+           auto viewGlobalPos = parentWidget()->mapToGlobal(ui->tvTransfers->pos());
+           QRect viewGlobalRect(viewGlobalPos, ui->tvTransfers->size());
 
-       auto pressedOnView = viewGlobalRect.contains(point);
-       if(!pressedOnView)
-       {
-           ui->tvTransfers->clearSelection();
-       }
-       else
-       {
-           auto localPos = mapTo(ui->tvTransfers, point);
-           auto pressedIndex = ui->tvTransfers->indexAt(localPos);
-           if(!pressedIndex.isValid())
+           auto pressedOnView = viewGlobalRect.contains(point);
+           if(!pressedOnView)
            {
                ui->tvTransfers->clearSelection();
            }
