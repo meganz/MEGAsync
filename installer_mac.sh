@@ -42,6 +42,13 @@ sign=0
 createdmg=0
 notarize=0
 
+build_time=0
+sign_time=0
+dmg_time=0
+notarize_time=0
+total_time=0
+
+
 while [ "$1" != "" ]; do
     case $1 in
         --arch )
@@ -101,6 +108,8 @@ if [ ${full_pkg_cmake} -eq 1 ]; then
 fi
 
 if [ ${build} -eq 1 -o ${build_cmake} -eq 1 ]; then
+    build_time_start=`date +%s`
+
     if [ -z "${MEGAQTPATH}" ] || [ ! -d "${MEGAQTPATH}/bin" ]; then
         echo "Please set MEGAQTPATH env variable to a valid QT installation path!"
         exit 1;
@@ -203,9 +212,12 @@ if [ ${build} -eq 1 -o ${build_cmake} -eq 1 ]; then
     xcodebuild clean build CODE_SIGN_IDENTITY="-" CODE_SIGNING_REQUIRED=NO -jobs "$(sysctl -n hw.ncpu)" -configuration Release -target MEGAShellExtFinder -project ../src/MEGAShellExtFinder/MEGAFinderSync.xcodeproj/
     cp -a ../src/MEGAShellExtFinder/build/Release/MEGAShellExtFinder.appex $APP_NAME.app/Contents/Plugins/
     cd ..
+
+    build_time=`expr $(date +%s) - $build_time_start`
 fi
 
 if [ "$sign" = "1" ]; then
+    sign_time_start=`date +%s`
 	cd Release_${target_arch}
 	cp -R $APP_NAME.app ${APP_NAME}_unsigned.app
 	echo "Signing 'APPBUNDLE'"
@@ -213,9 +225,11 @@ if [ "$sign" = "1" ]; then
 	echo "Checking signature"
 	spctl -vv -a $APP_NAME.app
 	cd ..
+    sign_time=`expr $(date +%s) - $sign_time_start`
 fi
 
 if [ "$createdmg" = "1" ]; then
+    dmg_time_start=`date +%s`
 	cd Release_${target_arch}
 	[ -f $APP_NAME.dmg ] && rm $APP_NAME.dmg
 	echo "DMG CREATION PROCESS..."
@@ -250,10 +264,11 @@ if [ "$createdmg" = "1" ]; then
 	rm $APP_NAME-tmp.dmg
 	rmdir $MOUNTDIR
 	cd ..
+    dmg_time=`expr $(date +%s) - $dmg_time_start`
 fi
 
 if [ "$notarize" = "1" ]; then
-
+    notarize_time_start=`date +%s`
 	cd Release_${target_arch}
 	if [ ! -f $APP_NAME.dmg ];then
 		echo ""
@@ -323,6 +338,12 @@ if [ "$notarize" = "1" ]; then
 		fi
 	fi
 	cd ..
+    notarize_time=`expr $(date +%s) - $notarize_time_start`
 fi
 
-echo "DONE"
+if [ ${build} -eq 1 -o ${build_cmake} -eq 1 ]; then echo "Build:        ${build_time} s"; fi
+if [ ${sign} -eq 1 ]; then echo "Sign:         ${sign_time} s"; fi
+if [ ${createdmg} -eq 1 ]; then echo "dmg:          ${dmg_time} s"; fi
+if [ ${notarize} -eq 1 ]; then echo "Notarization: ${notarize_time} s"; fi
+echo ""
+echo "DONE in       "`expr ${build_time} + ${sign_time} + ${dmg_time} + ${notarize_time}`" s"
