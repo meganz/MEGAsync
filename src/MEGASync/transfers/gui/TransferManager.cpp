@@ -1028,8 +1028,9 @@ void TransferManager::toggleTab(TM_TAB newTab)
         }
 
         TransfersWidget::HeaderInfo headerInfo;
+        auto proxyModel(mUi->wTransfers->getProxyModel());
 
-        QString cancelBase(tr("Cancel and clear "));
+        QString cancelBase(proxyModel->isAnyCancelable() ? tr("Cancel and clear ") : tr("Clear "));
 
         // Show pause button on tab except completed tab,
         // and set Clear All button string,
