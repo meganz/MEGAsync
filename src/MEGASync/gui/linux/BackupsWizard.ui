@@ -116,14 +116,12 @@ background: solid #FAFAFA;
 
 #lDeviceIconStep1
 {
-border: none;
+border-image: url(&quot;:/images/icons/pc/pc-linux_48.png&quot;);
 }
 
 #lDeviceIconStep2
 {
-border: none;
-margin-left: 12px;
-background: solid #FAFAFA;
+border-image: url(&quot;:/images/icons/pc/pc-linux_24.png&quot;);
 }
 
 #lDeviceNameStep1, #lDeviceNameStep2
@@ -396,15 +394,12 @@ margin: 4px;
                </property>
                <property name="maximumSize">
                 <size>
-                 <width>16777215</width>
+                 <width>48</width>
                  <height>48</height>
                 </size>
                </property>
                <property name="text">
                 <string notr="true"/>
-               </property>
-               <property name="pixmap">
-                <pixmap resource="../Resources_linux.qrc">:/images/icons/pc/pc-linux_48.png</pixmap>
                </property>
                <property name="scaledContents">
                 <bool>false</bool>
@@ -771,7 +766,7 @@ margin: 4px;
               <enum>QLayout::SetDefaultConstraint</enum>
              </property>
              <property name="leftMargin">
-              <number>0</number>
+              <number>12</number>
              </property>
              <property name="topMargin">
               <number>0</number>
@@ -790,11 +785,20 @@ margin: 4px;
                  <verstretch>0</verstretch>
                 </sizepolicy>
                </property>
+               <property name="minimumSize">
+                <size>
+                 <width>24</width>
+                 <height>24</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>24</width>
+                 <height>24</height>
+                </size>
+               </property>
                <property name="text">
                 <string/>
-               </property>
-               <property name="pixmap">
-                <pixmap resource="../Resources_linux.qrc">:/images/icons/pc/pc-linux_24.png</pixmap>
                </property>
                <property name="alignment">
                 <set>Qt::AlignCenter</set>
