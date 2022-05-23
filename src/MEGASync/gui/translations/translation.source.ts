@@ -2925,6 +2925,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translatorcomment>Label to show that an undefined error occurs during a SDK operation.</translatorcomment>
         <translation>Undefined error</translation>
     </message>
+    <message>
+        <source>You can&apos;t run MEGA Desktop App from this location. Move it into the Applications folder then run it.</source>
+        <translatorcomment>Error message shown when the user is trying to run MEGA Desktop App from a path different than Applications. Only affects to macOS.</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MegaTransferDelegate</name>
@@ -5637,33 +5642,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Choose</source>
         <translatorcomment>Button label to select the upload folder (String as short as possible)</translatorcomment>
         <translation>Choose</translation>
-    </message>
-</context>
-<context>
-    <name>UsageWidget</name>
-    <message>
-        <source>Cloud Drive</source>
-        <translation>Cloud Drive</translation>
-    </message>
-    <message>
-        <source>Rubbish Bin</source>
-        <translation>Rubbish Bin</translation>
-    </message>
-    <message>
-        <source>Incoming Shares</source>
-        <translation>Incoming Shares</translation>
-    </message>
-    <message>
-        <source>Inbox</source>
-        <translation>Inbox</translation>
-    </message>
-    <message>
-        <source>Used</source>
-        <translation>Used</translation>
-    </message>
-    <message>
-        <source>Available</source>
-        <translation>Available</translation>
     </message>
 </context>
 <context>
