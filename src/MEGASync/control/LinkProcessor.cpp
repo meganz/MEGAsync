@@ -335,10 +335,10 @@ bool LinkProcessor::atLeastOneLinkValidAndSelected() const
 void LinkProcessor::startDownload(mega::MegaNode* linkNode, const QString &localPath)
 {
     const bool startFirst = false;
-    const char* path = (localPath + QDir::separator()).toUtf8().constData();
+    QByteArray path = (localPath + QDir::separator()).toUtf8();
     const char* name = nullptr;
     const char* appData = nullptr;
     MegaCancelToken* cancelToken = nullptr; // No cancellation possible
     MegaTransferListener* listener = nullptr;
-    megaApi->startDownload(linkNode, path, name, appData, startFirst, cancelToken, listener);
+    megaApi->startDownload(linkNode, path.constData(), name, appData, startFirst, cancelToken, listener);
 }
