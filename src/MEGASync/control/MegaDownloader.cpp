@@ -11,9 +11,9 @@
 
 using namespace mega;
 
-MegaDownloader::MegaDownloader(MegaApi *megaApi) : QObject()
+MegaDownloader::MegaDownloader(MegaApi* _megaApi)
+    : QObject(), megaApi(_megaApi)
 {
-    this->megaApi = megaApi;
 }
 
 bool MegaDownloader::processDownloadQueue(QQueue<WrappedNode*>* downloadQueue, BlockingBatch& downloadBatches,
@@ -31,7 +31,7 @@ bool MegaDownloader::processDownloadQueue(QQueue<WrappedNode*>* downloadQueue, B
     }
 
     // Get transfer's metadata
-    TransferMetaData *data = ((MegaApplication*)qApp)->getTransferAppData(appDataId);
+    TransferMetaData *data = (static_cast<MegaApplication*>(qApp))->getTransferAppData(appDataId);
 
     auto batch = std::shared_ptr<TransferBatch>(new TransferBatch());
 
@@ -221,7 +221,7 @@ QString MegaDownloader::buildEscapedPath(const char *nodeName, QString currentPa
     return currentPathWithSep + escapedNameStr;
 }
 
-bool MegaDownloader::createDirIfNotPresent(QString path)
+bool MegaDownloader::createDirIfNotPresent(const QString& path)
 {
     QDir dir(path);
     if (!dir.exists())
