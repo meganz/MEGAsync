@@ -22,7 +22,7 @@ StalledIssueDelegate::StalledIssueDelegate(StalledIssuesProxyModel* proxyModel, 
 
     mCacheManager.setProxyModel(mProxyModel);
     connect(mSourceModel, &QAbstractItemModel::modelReset, this, [this](){
-        mCacheManager.reset();
+        resetCache();
     });
 }
 
@@ -47,6 +47,11 @@ QSize StalledIssueDelegate::sizeHint(const QStyleOptionViewItem& option, const Q
     }
 
     return QStyledItemDelegate::sizeHint(option, index);
+}
+
+void StalledIssueDelegate::resetCache()
+{
+    mCacheManager.reset();
 }
 
 void StalledIssueDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
@@ -187,9 +192,12 @@ QWidget *StalledIssueDelegate::createEditor(QWidget *parent, const QStyleOptionV
 {
     auto stalledIssueItem (qvariant_cast<StalledIssueVariant>(index.data(Qt::DisplayRole)));
 
-    mEditor = getNonCacheStalledIssueItemWidget(index,parent, stalledIssueItem);
-    mEditor->expand(mView->isExpanded(index));
-    mEditor->setGeometry(option.rect);
+    if(stalledIssueItem.consultData())
+    {
+        mEditor = getNonCacheStalledIssueItemWidget(index,parent, stalledIssueItem);
+        mEditor->expand(mView->isExpanded(index));
+        mEditor->setGeometry(option.rect);
+    }
 
     return mEditor;
 }
@@ -258,14 +266,9 @@ void StalledIssueDelegate::onIssueFixed()
 
        if(sourceIndex.isValid())
        {
-           mSourceModel->finishStalledIssues(QModelIndexList() << sourceIndex);
+           //mSourceModel->finishStalledIssues(QModelIndexList() << sourceIndex);
        }
    }
-}
-
-void StalledIssueDelegate::onUpdateIssues()
-{
-    mProxyModel->updateStalledIssues();
 }
 
 void StalledIssueDelegate::onEditorKeepStateChanged(bool newKeepState)
@@ -305,8 +308,6 @@ StalledIssueBaseDelegateWidget *StalledIssueDelegate::getNonCacheStalledIssueIte
         item = mCacheManager.getNonCacheStalledIssueHeaderWidget(index,parent, data);
     }
 
-    connect(item, &StalledIssueBaseDelegateWidget::issueFixed, this, &StalledIssueDelegate::onIssueFixed);
-    connect(item, &StalledIssueBaseDelegateWidget::updateIssues, this, &StalledIssueDelegate::onUpdateIssues);
     connect(item, &StalledIssueBaseDelegateWidget::editorKeepStateChanged, this, &StalledIssueDelegate::onEditorKeepStateChanged);
 
     return item;

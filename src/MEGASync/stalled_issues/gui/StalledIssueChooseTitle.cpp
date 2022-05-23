@@ -44,6 +44,24 @@ void StalledIssueActionTitle::addActionButton(const QString &text, int id)
     ui->actionLayout->addWidget(button);
 }
 
+void StalledIssueActionTitle::hideActionButton(int id)
+{
+    auto buttons = ui->actionContainer->findChildren<QPushButton*>();
+    foreach(auto& button, buttons)
+    {
+        if(button->property(BUTTON_ID).toInt() == id)
+        {
+            button->hide();
+        }
+    }
+}
+
+void StalledIssueActionTitle::addMessage(const QString &message)
+{
+    auto messageLabel = new QLabel(message);
+    ui->actionLayout->addWidget(messageLabel);
+}
+
 void StalledIssueActionTitle::setIndent(int indent)
 {
     auto chooseMargins = contentsMargins();
@@ -54,7 +72,8 @@ void StalledIssueActionTitle::setIndent(int indent)
 void StalledIssueActionTitle::paintEvent(QPaintEvent *event)
 {
     QPainter painter(this);
-    painter.setBrush(QColor("#F5F5F5"));
+    QColor backgroundColor = palette().color(isEnabled() ? QPalette::ColorGroup::Active : QPalette::ColorGroup::Disabled, QPalette::ColorRole::Background);
+    painter.setBrush(backgroundColor);
     painter.setPen(Qt::NoPen);
     QPainterPath path;
     path.setFillRule(Qt::WindingFill);

@@ -4,10 +4,15 @@
 #include "Utilities.h"
 #include "MegaApplication.h"
 #include "StalledIssueHeader.h"
+#include "StalledIssuesModel.h"
+
+static const int BUTTON_ID = 0;
 
 StalledIssueChooseWidget::StalledIssueChooseWidget(QWidget *parent) :
     QFrame(parent),
-    ui(new Ui::StalledIssueChooseWidget)
+    ui(new Ui::StalledIssueChooseWidget),
+    mIsSolved(false),
+    mPreviousSolveState(false)
 {
     ui->setupUi(this);
     setIndent();
@@ -15,8 +20,8 @@ StalledIssueChooseWidget::StalledIssueChooseWidget(QWidget *parent) :
     ui->chooseTitle->installEventFilter(this);
     ui->fileNameText->installEventFilter(this);
 
-    ui->chooseTitle->addActionButton(tr("Choose"), 0);
-    connect(ui->chooseTitle, &StalledIssueActionTitle::actionClicked, this, &StalledIssueChooseWidget::chooseButtonClicked);
+    ui->chooseTitle->addActionButton(tr("Choose"), BUTTON_ID);
+    connect(ui->chooseTitle, &StalledIssueActionTitle::actionClicked, this, &StalledIssueChooseWidget::onActionClicked);
 }
 
 StalledIssueChooseWidget::~StalledIssueChooseWidget()
@@ -26,10 +31,9 @@ StalledIssueChooseWidget::~StalledIssueChooseWidget()
 
 void StalledIssueChooseWidget::setData(StalledIssueDataPtr data)
 {
-    mData = data;
-    auto fileName = mData->getFileName();
+    auto fileName = data->getFileName();
 
-    ui->chooseTitle->setTitle(mData->isCloud() ? tr("Remote Copy") : tr("Local Copy"));
+    ui->chooseTitle->setTitle(data->isCloud() ? tr("Remote Copy") : tr("Local Copy"));
     ui->fileNameText->setText(fileName);
 
     auto fileTypeIcon = Utilities::getCachedPixmap(Utilities::getExtensionPixmapName(
@@ -40,9 +44,9 @@ void StalledIssueChooseWidget::setData(StalledIssueDataPtr data)
     ui->path->show();
     ui->path->updateUi(data);
 
-    if(mData->isCloud())
+    if(data->isCloud())
     {
-        std::unique_ptr<mega::MegaNode> node(MegaSyncApp->getMegaApi()->getNodeByPath(mData->getFilePath().toStdString().c_str()));
+        std::unique_ptr<mega::MegaNode> node(MegaSyncApp->getMegaApi()->getNodeByPath(data->getFilePath().toStdString().c_str()));
         if(node)
         {
             ui->fileSize->setText(Utilities::getSizeString((long long)node->getSize()));
@@ -50,12 +54,29 @@ void StalledIssueChooseWidget::setData(StalledIssueDataPtr data)
     }
     else
     {
-        QFile file(mData->getNativeFilePath());
+        QFile file(data->getNativeFilePath());
         if(file.exists())
         {
             ui->fileSize->setText(Utilities::getSizeString(file.size()));
         }
     }
+
+    if(mPreviousSolveState != mIsSolved)
+    {
+        mPreviousSolveState = mIsSolved;
+
+        if(mIsSolved)
+        {
+            ui->chooseTitle->setDisabled(true);
+            ui->chooseTitle->hideActionButton(BUTTON_ID);
+            if(data->isSolved())
+            {
+                ui->chooseTitle->addMessage(tr("Choosed"));
+            }
+        }
+    }
+
+    mData = data;
 }
 
 const StalledIssueDataPtr &StalledIssueChooseWidget::data()
@@ -83,4 +104,14 @@ bool StalledIssueChooseWidget::eventFilter(QObject *watched, QEvent *event)
     }
 
     return QFrame::eventFilter(watched, event);
+}
+
+void StalledIssueChooseWidget::onActionClicked(int button_id)
+{
+    emit chooseButtonClicked(button_id);
+}
+
+void StalledIssueChooseWidget::setIssueSolved(bool newIssueSolved)
+{
+    mIsSolved = newIssueSolved;
 }

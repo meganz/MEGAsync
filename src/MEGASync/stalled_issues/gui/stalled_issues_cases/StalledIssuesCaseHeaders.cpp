@@ -3,6 +3,7 @@
 #include <Utilities.h>
 #include <Preferences.h>
 #include <MegaApplication.h>
+#include <StalledIssuesModel.h>
 
 #include <QDebug>
 
@@ -137,18 +138,24 @@ void SyncItemExceedsSupoortedTreeDepthHeader::refreshCaseUi()
 {
     setLeftTitleText(tr("Unable to sync"));
     addFileName();
-    setTitleDescriptionText(tr("Target is too deep on your folder structure. Please move it to a location that is less"
-                                "\nthan 64 folders deep."));
+    setTitleDescriptionText(tr("Target is too deep on your folder structure.\nPlease move it to a location that is less than 64 folders deep."));
 
-
+    if(mIsSolved != getData().consultData()->isSolved())
+    {
+        hideAction();
+        showMessage(tr("Ignored"));
+        mIsSolved = true;
+    }
 }
 
 void SyncItemExceedsSupoortedTreeDepthHeader::on_actionButton_clicked()
 {
-    auto data = getData().data()->consultLocalData();
+    auto data = getData().consultData()->consultLocalData();
     if(data)
     {
         mUtilities.ignoreFile(data->getNativeFilePath());
+        MegaSyncApp->getStalledIssuesModel()->solveIssue(false,getCurrentIndex());
+        refreshCaseUi();
     }
 }
 
@@ -224,8 +231,7 @@ NameConflictsHeader::NameConflictsHeader(QWidget *parent)
 
 void NameConflictsHeader::refreshCaseUi()
 {
-    QFileInfo info(getData().data()->getFileName());
-
-    setLeftTitleText(tr("Can´t sync the following %1").arg(info.isFile() ? tr("files") : tr("folders")));
-    setTitleDescriptionText(tr("There are name conflicts to solve."));
+    setLeftTitleText(tr("Name Conflicts:"));
+    setTitleDescriptionText(tr("These folders contain multiple names that can't be synced because"
+                               "\nthey would overwrite the same name on the other side of the sync"));
 }

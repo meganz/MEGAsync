@@ -71,6 +71,12 @@
    padding-left: 16px;
    padding-right: 16px;
    height: 26px;
+}
+
+QLabel
+{
+   font-size:14px;
+   color: #333333;
 }</string>
      </property>
      <layout class="QHBoxLayout" name="actionLayout">

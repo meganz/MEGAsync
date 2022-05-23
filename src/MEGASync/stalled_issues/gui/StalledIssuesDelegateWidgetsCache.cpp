@@ -49,14 +49,15 @@ StalledIssueBaseDelegateWidget *StalledIssuesDelegateWidgetsCache::getStalledIss
 {
     auto row = index.parent().row() % 10;
 
-    auto reason = issue.data()->getReason();
+    auto reason = issue.consultData()->getReason();
     auto& itemsByRowMap = mStalledIssueWidgets[toInt(reason)];
     auto item = itemsByRowMap[row];
 
     if(!item)
     {
         item = createBodyWidget(index, parent, issue);
-        item->hide();
+        item->setAttribute(Qt::WA_WState_ExplicitShowHide, false);
+        item->setAttribute(Qt::WA_WState_Hidden , true);
 
         itemsByRowMap.insert(row, item);
     }
@@ -81,7 +82,7 @@ StalledIssueBaseDelegateWidget *StalledIssuesDelegateWidgetsCache::getNonCacheSt
 StalledIssueBaseDelegateWidget *StalledIssuesDelegateWidgetsCache::createBodyWidget(const QModelIndex &index, QWidget *parent, const StalledIssueVariant &issue) const
 {
     StalledIssueBaseDelegateWidget* item(nullptr);
-    auto reason = issue.data()->getReason();
+    auto reason = issue.consultData()->getReason();
 
     switch(reason)
     {
@@ -125,7 +126,7 @@ StalledIssueHeader *StalledIssuesDelegateWidgetsCache::createHeaderWidget(const 
 {
     StalledIssueHeader* header(nullptr);
 
-    switch(issue.data()->getReason())
+    switch(issue.consultData()->getReason())
     {
         case mega::MegaSyncStall::SyncStallReason::FileIssue:
         {

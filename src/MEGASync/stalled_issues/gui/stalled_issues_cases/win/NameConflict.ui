@@ -63,9 +63,11 @@
       <item>
        <widget class="QWidget" name="nameConflicts" native="true">
         <property name="styleSheet">
-         <string notr="true">#StalledIssueActionTitle
+         <string notr="true">StalledIssueActionTitle
 {
-    height: 32 px;
+    min-height: 32 px;
+    max-height: 32px;
+    background-color: #F5F5F5;
 }</string>
         </property>
         <layout class="QVBoxLayout" name="nameConflictsLayout">

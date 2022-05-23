@@ -5,6 +5,7 @@
 #include "StalledIssueChooseTitle.h"
 
 #include <MegaApplication.h>
+#include <StalledIssuesModel.h>
 #include "RenameDialog.h"
 #include "QMegaMessageBox.h"
 
@@ -29,38 +30,79 @@ NameConflict::~NameConflict()
 
 void NameConflict::updateUi(NameConflictedStalledIssue::NameConflictData data)
 {
-    mData = data;
     ui->path->hide();
 
-    if(mData.data)
+    if(data.data)
     {
         ui->path->show();
-        ui->path->updateUi(mData.data);
+        ui->path->updateUi(data.data);
     }
 
     //Fill conflict names
-    auto conflictedNames = mData.conflictedNames;
+    auto conflictedNames = data.conflictedNames;
     auto nameConflictWidgets = ui->nameConflicts->findChildren<StalledIssueActionTitle*>();
+    auto totalUpdate(nameConflictWidgets.size() >= conflictedNames.size());
 
     for(int index = 0; index < conflictedNames.size(); ++index)
     {
-        if(nameConflictWidgets.size() > index)
+        StalledIssueActionTitle* title(nullptr);
+        if(totalUpdate)
         {
-            nameConflictWidgets.at(index)->setTitle(conflictedNames.at(index));
+            title = nameConflictWidgets.first();
+            nameConflictWidgets.removeFirst();
         }
         else
         {
-            auto chooseFile = new StalledIssueActionTitle(this);
-            chooseFile->setIndent(StalledIssueHeader::ICON_INDENT);
-            chooseFile->setTitle(conflictedNames.at(index));
-            chooseFile->addActionButton(tr("Rename"), RENAME_ID);
-            chooseFile->addActionButton(tr("Remove"), REMOVE_ID);
+            title = new StalledIssueActionTitle(this);
+            title->setFixedHeight(32);
+            title->setIndent(StalledIssueHeader::ICON_INDENT);
+            title->addActionButton(tr("Rename"), RENAME_ID);
+            title->addActionButton(tr("Remove"), REMOVE_ID);
 
-            connect(chooseFile, &StalledIssueActionTitle::actionClicked, this, &NameConflict::onActionClicked);
+            connect(title, &StalledIssueActionTitle::actionClicked, this, &NameConflict::onActionClicked);
 
-            ui->nameConflictsLayout->addWidget(chooseFile);
+            ui->nameConflictsLayout->addWidget(title);
+        }
+
+        title->setTitle(conflictedNames.at(index).conflictedName);
+
+        if(title &&
+                (!mData.data
+                 || (mData.conflictedNames.size() > index
+                 && (data.conflictedNames.at(index).isSolved() != mData.conflictedNames.at(index).isSolved()))))
+        {
+            bool isSolved(conflictedNames.at(index).isSolved());
+            title->setDisabled(isSolved);
+            if(isSolved)
+            {
+                title->hideActionButton(RENAME_ID);
+                title->hideActionButton(REMOVE_ID);
+
+                if(conflictedNames.at(index).solved ==  NameConflictedStalledIssue::ConflictedNameInfo::SolvedType::REMOVE)
+                {
+                    title->addMessage(tr("REMOVED"));
+                }
+                else
+                {
+                    title->addMessage(tr("RENAME TO %1").arg(conflictedNames.at(index).renameTo));
+                }
+            }
         }
     }
+
+    //No longer exist conflicts
+    foreach(auto titleToRemove, nameConflictWidgets)
+    {
+        removeConflictedNameWidget(titleToRemove);
+    }
+
+    mData = data;
+}
+
+void NameConflict::removeConflictedNameWidget(QWidget* widget)
+{
+    ui->nameConflictsLayout->removeWidget(widget);
+    widget->deleteLater();
 }
 
 void NameConflict::onActionClicked(int actionId)
@@ -78,8 +120,6 @@ void NameConflict::onActionClicked(int actionId)
             delegateWidget->setKeepEditor(true);
         }
 
-        bool actionAccepted(true);
-
         if(actionId == RENAME_ID)
         {
             QPointer<NameConflict> currentWidget = QPointer<NameConflict>(this);
@@ -88,9 +128,22 @@ void NameConflict::onActionClicked(int actionId)
             dialog.init(mData.data->isCloud(), info.filePath());
             auto result = dialog.exec();
 
-            if(result == QDialog::Rejected)
+            if(result == QDialog::Accepted)
             {
-                actionAccepted = false;
+                auto newName(dialog.newName());
+
+                if(mData.isCloud)
+                {
+                    MegaSyncApp->getStalledIssuesModel()->solveCloudConflictedNameByRename(chooseTitle->title()
+                                                                                           , newName, delegateWidget->getCurrentIndex());
+                }
+                else
+                {
+                    MegaSyncApp->getStalledIssuesModel()->solveLocalConflictedNameByRename(chooseTitle->title()
+                                                                                           , newName, delegateWidget->getCurrentIndex());
+                }
+
+                chooseTitle->setDisabled(true);
             }
 
             if(!currentWidget)
@@ -105,20 +158,18 @@ void NameConflict::onActionClicked(int actionId)
             if (QMegaMessageBox::warning(nullptr, QString::fromUtf8("MEGAsync"),
                                      tr("Are you sure you want to remote the %1 %2?").arg(info.isFile() ? tr("file") : tr("folder")).arg(info.fileName()),
                                      QMessageBox::Yes | QMessageBox::No, QMessageBox::No)
-                    != QMessageBox::Yes
-                    || !currentWidget)
-            {
-                actionAccepted = false;
-            }
-            else
+                    == QMessageBox::Yes
+                    && currentWidget)
             {
                 if(mData.isCloud)
                 {
                     mUtilities.removeRemoteFile(info.filePath());
+                    MegaSyncApp->getStalledIssuesModel()->solveCloudConflictedNameByRemove(chooseTitle->title(), delegateWidget->getCurrentIndex());
                 }
                 else
                 {
                     mUtilities.removeLocalFile(QDir::toNativeSeparators(info.filePath()));
+                    MegaSyncApp->getStalledIssuesModel()->solveLocalConflictedNameByRemove(chooseTitle->title(), delegateWidget->getCurrentIndex());
                 }
             }
         }
@@ -126,13 +177,8 @@ void NameConflict::onActionClicked(int actionId)
         //Now, close the editor beacuse the action has been finished
         if(delegateWidget)
         {
+            emit refreshUi();
             delegateWidget->setKeepEditor(false);
-        }
-
-        if(actionAccepted)
-        {
-            //This updates the stalled issues...but it is too fast
-            emit actionFinished();
         }
     }
 }

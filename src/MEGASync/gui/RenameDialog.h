@@ -23,8 +23,7 @@ public:
     void init(bool isCloud, const QString& originalPath);
     void setEditorValidator(const QValidator *v);
 
-    void renameCloudFile();
-    void renameLocalFile();
+    QString newName();
 
 signals:
     void renameFinished(const QString& newName);
@@ -34,7 +33,8 @@ protected slots:
     void accept() override;
 
 private:
-    QString newName();
+    void renameCloudFile();
+    void renameLocalFile();
 
     Ui::RenameDialog *ui;
 

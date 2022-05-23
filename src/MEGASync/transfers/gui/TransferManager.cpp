@@ -207,7 +207,7 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
         }
     });
 
-    mFoundStalledIssues = MegaSyncApp->getStalledIssuesModel()->rowCount(QModelIndex()) != 0;
+    mFoundStalledIssues = MegaSyncApp->getStalledIssuesModel()->hasStalledIssues();
     showStalledIssuesInfo();
     connect(MegaSyncApp->getStalledIssuesModel(),
             &StalledIssuesModel::globalSyncStateChanged,

@@ -16,6 +16,7 @@ class StalledIssuesDialog;
 
 class StalledIssueTab;
 class StalledIssuesProxyModel;
+class StalledIssueDelegate;
 
 class StalledIssuesDialog : public QDialog
 {
@@ -46,6 +47,7 @@ private:
     StalledIssueFilterCriterion mCurrentTab;
     ViewLoadingScene<StalledIssueLoadingItem> mLoadingScene;
     StalledIssuesProxyModel* mProxyModel;
+    StalledIssueDelegate* mDelegate;
 };
 
 #endif // STALLEDISSUESDIALOG_H

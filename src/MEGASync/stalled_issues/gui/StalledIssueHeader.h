@@ -28,6 +28,9 @@ public:
     void expand(bool state) override;
 
     void showAction(const QString& actionButtonText);
+    void hideAction();
+
+    void showMessage(const QString& message);
 
     void setLeftTitleText(const QString& text);
     void addFileName();

@@ -4,6 +4,7 @@
 
 StalledIssueData::StalledIssueData()
     : mIsCloud(false)
+    , mIsSolved(false)
 {
     qRegisterMetaType<StalledIssueDataPtr>("StalledIssueDataPtr");
     qRegisterMetaType<StalledIssuesDataList>("StalledIssuesDataList");
@@ -117,8 +118,36 @@ QString StalledIssueData::getFileName() const
     }
 }
 
+bool StalledIssueData::isEqual(const mega::MegaSyncStall* stall) const
+{
+    QString sourcePath;
+    QString targetPath;
+
+    if(mIsCloud)
+    {
+        sourcePath = QString::fromUtf8(stall->path(true,0));
+        targetPath = QString::fromUtf8(stall->path(true,1));
+    }
+    else
+    {
+        sourcePath = QString::fromUtf8(stall->path(false,0));
+        targetPath = QString::fromUtf8(stall->path(false,1));
+    }
+
+    return (sourcePath.compare(mPath.path) == 0 || targetPath.compare(mMovePath.path) == 0);
+}
+
+bool StalledIssueData::isSolved() const
+{
+    return mIsSolved;
+}
+
+void StalledIssueData::setIsSolved(bool newIsSolved)
+{
+    mIsSolved = newIsSolved;
+}
+
 StalledIssue::StalledIssue(const mega::MegaSyncStall *stallIssue)
-    : mReason(stallIssue->reason())
 {
     fillIssue(stallIssue);
 }
@@ -149,6 +178,8 @@ bool StalledIssue::initCloudIssue()
 
 void StalledIssue::fillIssue(const mega::MegaSyncStall *stall)
 {
+    mReason = stall->reason();
+
     auto localSourcePathProblem = static_cast<mega::MegaSyncStall::SyncPathProblem>(stall->pathProblem(false,0));
     auto localTargetPathProblem = static_cast<mega::MegaSyncStall::SyncPathProblem>(stall->pathProblem(false,1));
 
@@ -187,6 +218,25 @@ void StalledIssue::fillIssue(const mega::MegaSyncStall *stall)
         initCloudIssue();
         getCloudData()->mMovePath.path = cloudTargetPath;
         getCloudData()->mMovePath.mPathProblem = cloudTargetPathProblem;
+    }
+}
+
+bool StalledIssue::isSolved() const
+{
+    return mIsSolved;
+}
+
+void StalledIssue::setIsSolved(bool isCloud)
+{
+    mIsSolved = true;
+
+    if(!isCloud && getLocalData())
+    {
+        getLocalData()->setIsSolved(true);
+    }
+    else if(isCloud && getCloudData())
+    {
+        getCloudData()->setIsSolved(true);
     }
 }
 
@@ -239,6 +289,16 @@ bool StalledIssue::operator==(const StalledIssue &data)
     equal &= (mCloudData == data.getCloudData());
 
     return equal;
+}
+
+void StalledIssue::updateIssue(const mega::MegaSyncStall *stallIssue)
+{
+    mLocalData.reset();
+    mCloudData.reset();
+
+    mIsSolved = false;
+
+    fillIssue(stallIssue);
 }
 
 StalledIssueFilterCriterion StalledIssue::getCriterionByReason(mega::MegaSyncStall::SyncStallReason reason)
@@ -300,7 +360,8 @@ void NameConflictedStalledIssue::fillIssue(const mega::MegaSyncStall *stall)
         {
             QFileInfo localPath(QString::fromUtf8(stall->path(false,index)));
 
-            mLocalConflictedNames.append(localPath.fileName());
+            ConflictedNameInfo info(localPath.fileName());
+            mLocalConflictedNames.append(info);
 
             if(getLocalData()->mPath.isEmpty())
             {
@@ -319,7 +380,8 @@ void NameConflictedStalledIssue::fillIssue(const mega::MegaSyncStall *stall)
         {
             QFileInfo cloudPath(QString::fromUtf8(stall->path(true,index)));
 
-            mCloudConflictedNames.append(cloudPath.fileName());
+            ConflictedNameInfo info(cloudPath.fileName());
+            mCloudConflictedNames.append(info);
 
             if(getCloudData()->mPath.isEmpty())
             {
@@ -327,6 +389,32 @@ void NameConflictedStalledIssue::fillIssue(const mega::MegaSyncStall *stall)
             }
         }
     }
+}
+
+QStringList NameConflictedStalledIssue::convertConflictedNames(bool cloud, const mega::MegaSyncStall *stall)
+{
+    QStringList names;
+
+    auto conflictNamesCount = stall->pathCount(cloud);
+
+    for(unsigned int index = 0; index < conflictNamesCount; ++index)
+    {
+        QFileInfo cloudPath(QString::fromUtf8(stall->path(cloud,index)));
+        names.append(cloudPath.fileName());
+    }
+
+    return names;
+}
+
+void NameConflictedStalledIssue::updateIssue(const mega::MegaSyncStall *stallIssue)
+{
+   mCloudConflictedNames.clear();
+   mLocalConflictedNames.clear();
+
+   mLocalData.reset();
+   mCloudData.reset();
+
+   fillIssue(stallIssue);
 }
 
 NameConflictedStalledIssue::NameConflictData NameConflictedStalledIssue::getNameConflictLocalData() const
@@ -347,4 +435,62 @@ NameConflictedStalledIssue::NameConflictData NameConflictedStalledIssue::getName
     data.isCloud = true;
 
     return data;
+}
+
+bool NameConflictedStalledIssue::solveLocalConflictedName(const QString &name, ConflictedNameInfo::SolvedType type)
+{
+    for (auto it = mLocalConflictedNames.begin(); it != mLocalConflictedNames.end(); ++it)
+    {
+        if((*it).conflictedName == name)
+        {
+            (*it).solved = type;
+            return true;
+        }
+    }
+
+    return false;
+}
+
+bool NameConflictedStalledIssue::solveCloudConflictedName(const QString &name, NameConflictedStalledIssue::ConflictedNameInfo::SolvedType type)
+{
+    for (auto it = mCloudConflictedNames.begin(); it != mCloudConflictedNames.end(); ++it)
+    {
+        if((*it).conflictedName == name)
+        {
+            (*it).solved = type;
+            return true;
+        }
+    }
+
+    return false;
+}
+
+bool NameConflictedStalledIssue::solveLocalConflictedNameByRename(const QString &name, const QString &renameTo)
+{
+    for (auto it = mLocalConflictedNames.begin(); it != mLocalConflictedNames.end(); ++it)
+    {
+        if((*it).conflictedName == name)
+        {
+            (*it).solved = NameConflictedStalledIssue::ConflictedNameInfo::SolvedType::RENAME;;
+            (*it).renameTo = renameTo;
+            return true;
+        }
+    }
+
+    return false;
+}
+
+bool NameConflictedStalledIssue::solveCloudConflictedNameByRename(const QString &name, const QString &renameTo)
+{
+    for (auto it = mCloudConflictedNames.begin(); it != mCloudConflictedNames.end(); ++it)
+    {
+        if((*it).conflictedName == name)
+        {
+            (*it).solved = NameConflictedStalledIssue::ConflictedNameInfo::SolvedType::RENAME;
+            (*it).renameTo = renameTo;
+            return true;
+        }
+    }
+
+    return false;
 }

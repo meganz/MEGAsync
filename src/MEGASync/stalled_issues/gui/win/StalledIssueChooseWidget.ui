@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>69</width>
-    <height>63</height>
+    <height>80</height>
    </rect>
   </property>
   <property name="styleSheet">
@@ -44,6 +44,14 @@
    </property>
    <item>
     <widget class="QFrame" name="frame">
+     <property name="styleSheet">
+      <string notr="true">#chooseTitle
+{ 
+    min-height: 32px;
+    max-height: 32px;
+    background-color: #F5F5F5;
+}</string>
+     </property>
      <property name="frameShape">
       <enum>QFrame::Panel</enum>
      </property>
@@ -69,7 +77,7 @@
       <item>
        <widget class="StalledIssueActionTitle" name="chooseTitle" native="true">
         <property name="sizePolicy">
-         <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+         <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
@@ -77,14 +85,17 @@
         <property name="minimumSize">
          <size>
           <width>0</width>
-          <height>0</height>
+          <height>32</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
           <width>16777215</width>
-          <height>16777215</height>
+          <height>32</height>
          </size>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: #F5F5F5;</string>
         </property>
        </widget>
       </item>

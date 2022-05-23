@@ -29,12 +29,11 @@ public:
     void setKeepEditor(bool newKeepEditor);
 
 signals:
-    void issueFixed();
-    void updateIssues();
     void editorKeepStateChanged(bool state);
 
 protected:
     StalledIssuesUtilities mUtilities;
+    bool mIsSolved;
 
 private:
     virtual void refreshUi() = 0;

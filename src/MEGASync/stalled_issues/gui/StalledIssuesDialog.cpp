@@ -26,8 +26,8 @@ StalledIssuesDialog::StalledIssuesDialog(QWidget *parent) :
     ui->stalledIssuesTree->setModel(mProxyModel);
     mViewHoverManager.setView(ui->stalledIssuesTree);
 
-    auto delegate = new StalledIssueDelegate(mProxyModel, ui->stalledIssuesTree);
-    ui->stalledIssuesTree->setItemDelegate(delegate);
+    mDelegate = new StalledIssueDelegate(mProxyModel, ui->stalledIssuesTree);
+    ui->stalledIssuesTree->setItemDelegate(mDelegate);
     mLoadingScene.setView(ui->stalledIssuesTree);
 
     connect(MegaSyncApp->getStalledIssuesModel(), &StalledIssuesModel::uiBlocked,
@@ -117,8 +117,9 @@ void StalledIssuesDialog::onUiUnblocked()
 
 void StalledIssuesDialog::onStalledIssuesLoaded()
 {
-    onUiUnblocked();
+    mDelegate->resetCache();
     mProxyModel->updateFilter();
+    onUiUnblocked();
 }
 
 void StalledIssuesDialog::onGlobalSyncStateChanged(bool state)

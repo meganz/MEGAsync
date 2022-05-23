@@ -431,6 +431,12 @@ QMenu::item:default
          <attribute name="headerVisible">
           <bool>false</bool>
          </attribute>
+         <attribute name="headerCascadingSectionResizes">
+          <bool>false</bool>
+         </attribute>
+         <attribute name="headerStretchLastSection">
+          <bool>true</bool>
+         </attribute>
         </widget>
        </item>
       </layout>
@@ -465,7 +471,7 @@ QMenu::item:default
          </property>
          <property name="icon">
           <iconset resource="../../../gui/Resources_win.qrc">
-           <normaloff>:/images/no_transfers.png</normaloff>:/images/no_transfers.png</iconset>
+           <normaloff>:/images/transfer_manager/empty_categories/no_transfers@2x.png</normaloff>:/images/transfer_manager/empty_categories/no_transfers@2x.png</iconset>
          </property>
          <property name="iconSize">
           <size>

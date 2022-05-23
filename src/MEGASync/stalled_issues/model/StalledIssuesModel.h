@@ -14,21 +14,41 @@ class StalledIssuesReceiver : public QObject, public mega::MegaRequestListener
 {
     Q_OBJECT
 public:
+    struct StalledIssuesReceived
+    {
+        StalledIssuesVariantList mNewStalledIssues;
+        StalledIssuesVariantList mUpdateStalledIssues;
+        StalledIssuesVariantList mDeleteStalledIssues;
+
+        bool isEmpty(){return mNewStalledIssues.isEmpty() && mUpdateStalledIssues.isEmpty() && mDeleteStalledIssues.isEmpty();}
+        void clear()
+        {
+            mNewStalledIssues.clear();
+            mUpdateStalledIssues.clear();
+            mDeleteStalledIssues.clear();
+        }
+    };
+
     explicit StalledIssuesReceiver(QObject *parent = nullptr);
     ~StalledIssuesReceiver(){}
 
+    bool setCurrentStalledIssuesToCompare(const StalledIssuesVariantList &currentIssues);
+
 signals:
-    void stalledIssuesReady(StalledIssuesVariantList);
+    void stalledIssuesReady(StalledIssuesReceived);
 
 protected:
     void onRequestFinish(::mega::MegaApi*, ::mega::MegaRequest *request, ::mega::MegaError*);
 
 private:
     QMutex mCacheMutex;
-    StalledIssuesVariantList mCacheStalledIssues;
+    StalledIssuesReceived mCacheStalledIssues;
+    StalledIssuesVariantList mCurrentStalledIssues;
 
     void processStalledIssues();
 };
+
+Q_DECLARE_METATYPE(StalledIssuesReceiver::StalledIssuesReceived);
 
 class StalledIssuesModel : public QAbstractItemModel, public mega::MegaGlobalListener
 {
@@ -59,6 +79,15 @@ public:
     void blockUi();
     void unBlockUi();
 
+    //Methods to modify data
+    void solveLocalConflictedNameByRemove(const QString& name, const QModelIndex& index);
+    void solveLocalConflictedNameByRename(const QString& name, const QString& renameTo, const QModelIndex& index);
+
+    void solveCloudConflictedNameByRemove(const QString& name, const QModelIndex& index);
+    void solveCloudConflictedNameByRename(const QString& name, const QString &renameTo, const QModelIndex& index);
+
+    void solveIssue(bool isCloud, const QModelIndex& index);
+
 signals:
     void stalledIssuesReceived(bool state);
     void globalSyncStateChanged(bool state);
@@ -71,13 +100,14 @@ protected slots:
     void onGlobalSyncStateChanged(mega::MegaApi *api) override;
 
 private slots:
-    void onProcessStalledIssues(StalledIssuesVariantList list);
+    void onProcessStalledIssues(StalledIssuesReceiver::StalledIssuesReceived issuesReceived);
 
 private:
     void removeRows(QModelIndexList &indexesToRemove);
     bool removeRows(int row, int count, const QModelIndex& parent = QModelIndex()) override;
     void updateStalledIssuedByOrder();
     void reset();
+    QModelIndex getSolveIssueIndex(const QModelIndex& index);
 
     QThread* mStalledIssuesThread;
     StalledIssuesReceiver* mStalledIssuedReceiver;
@@ -86,6 +116,7 @@ private:
     mega::MegaApi* mMegaApi;
     bool mHasStalledIssues;
     bool mUpdateWhenGlobalStateChanges;
+    bool mIssuesRequested;
 
     mutable QMutex mModelMutex;
 

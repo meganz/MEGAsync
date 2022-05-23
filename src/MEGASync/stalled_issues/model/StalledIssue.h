@@ -47,6 +47,11 @@ public:
 
     QString getFileName() const;
 
+    bool isEqual(const mega::MegaSyncStall *stall) const;
+
+    bool isSolved() const;
+    void setIsSolved(bool newIsSolved);
+
 private:
     friend class StalledIssue;
     friend class NameConflictedStalledIssue;
@@ -55,6 +60,7 @@ private:
     Path mPath;
 
     bool mIsCloud;
+    bool mIsSolved;
 };
 
 Q_DECLARE_TYPEINFO(StalledIssueData, Q_MOVABLE_TYPE);
@@ -70,7 +76,7 @@ class StalledIssue
 {
 public:
     StalledIssue(){}
-    StalledIssue(const StalledIssue& tdr) : mLocalData(tdr.mLocalData), mCloudData(tdr.mCloudData), mReason(tdr.getReason()) {}
+    StalledIssue(const StalledIssue& tdr) : mLocalData(tdr.mLocalData), mCloudData(tdr.mCloudData), mReason(tdr.getReason()), mIsSolved(tdr.mIsSolved)  {}
     StalledIssue(const mega::MegaSyncStall *stallIssue);
 
     //Don´t think it´s going to be more stalled issues than 2 (local and remote)
@@ -82,6 +88,11 @@ public:
     static StalledIssueFilterCriterion getCriterionByReason(mega::MegaSyncStall::SyncStallReason reason);
 
     bool operator==(const StalledIssue &data);
+
+    virtual void updateIssue(const mega::MegaSyncStall *stallIssue);
+
+    bool isSolved() const;
+    void setIsSolved(bool isCloud);
 
 protected:
     bool initCloudIssue();
@@ -95,6 +106,7 @@ protected:
     virtual void fillIssue(const mega::MegaSyncStall *stall);
 
     mega::MegaSyncStall::SyncStallReason mReason = mega::MegaSyncStall::SyncStallReason::NoReason;
+    bool mIsSolved = false;
 
 };
 
@@ -103,14 +115,35 @@ Q_DECLARE_METATYPE(StalledIssue)
 class NameConflictedStalledIssue : public StalledIssue
 {
 public:
+    struct ConflictedNameInfo
+    {
+        enum class SolvedType
+        {
+            REMOVE = 0,
+            RENAME,
+            UNSOLVED
+        };
+
+        QString conflictedName;
+        QString renameTo;
+        SolvedType solved;
+
+        ConflictedNameInfo(const QString& name):conflictedName(name),solved(SolvedType::UNSOLVED){}
+        bool operator==(const ConflictedNameInfo &data)
+        {
+            return conflictedName == data.conflictedName;
+        }
+        bool isSolved() const {return solved != SolvedType::UNSOLVED;}
+    };
+
     struct NameConflictData
     {
+        //Not const?? Depending on who is the liable to update the GUI -> From the SDK or from the MEGASync itself?
         StalledIssueDataPtr data;
-        QStringList conflictedNames;
+        QList<ConflictedNameInfo> conflictedNames;
         bool isCloud;
 
-        bool isEmpty() const { return data == nullptr;}
-        ~NameConflictData(){}
+        bool isEmpty() const { return conflictedNames.isEmpty();}
     };
 
     NameConflictedStalledIssue(){}
@@ -122,12 +155,22 @@ public:
     NameConflictData getNameConflictLocalData() const;
     NameConflictData getNameConflictCloudData() const;
 
+    bool solveLocalConflictedName(const QString& name, ConflictedNameInfo::SolvedType type);
+    bool solveCloudConflictedName(const QString& name, ConflictedNameInfo::SolvedType type);
+
+    bool solveLocalConflictedNameByRename(const QString& name, const QString& renameTo);
+    bool solveCloudConflictedNameByRename(const QString& name, const QString& renameTo);
+
+    static QStringList convertConflictedNames(bool cloud, const mega::MegaSyncStall *stall);
+
+    void updateIssue(const mega::MegaSyncStall *stallIssue) override;
+
 private:
     using StalledIssue::getLocalData;
     using StalledIssue::getCloudData;
 
-    QStringList mCloudConflictedNames;
-    QStringList mLocalConflictedNames;
+    QList<ConflictedNameInfo> mCloudConflictedNames;
+    QList<ConflictedNameInfo> mLocalConflictedNames;
 
 };
 
@@ -142,9 +185,14 @@ public:
         : mData(data)
     {}
 
-    const std::shared_ptr<StalledIssue> &data() const
+    const std::shared_ptr<const StalledIssue> consultData() const
     {
         return mData;
+    }
+
+    void updateData(const mega::MegaSyncStall *stallIssue)
+    {
+        mData->updateIssue(stallIssue);
     }
 
     bool operator==(const StalledIssueVariant &issue)
@@ -153,12 +201,19 @@ public:
     }
 
 private:
+    friend class StalledIssuesModel;
+
+    const std::shared_ptr<StalledIssue> &data() const
+    {
+        return mData;
+    }
+
     std::shared_ptr<StalledIssue> mData;
 };
 
 Q_DECLARE_METATYPE(StalledIssueVariant)
 
-using StalledIssuesVariantList = QList<StalledIssueVariant>;
+using StalledIssuesVariantList = QList<std::shared_ptr<StalledIssueVariant>>;
 Q_DECLARE_METATYPE(StalledIssuesVariantList)
 
 #endif // STALLEDISSUE_H

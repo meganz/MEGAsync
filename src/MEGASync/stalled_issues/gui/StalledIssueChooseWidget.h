@@ -22,15 +22,22 @@ public:
 
     void setIndent();
 
+    void setIssueSolved(bool newIssueSolved);
+
 signals:
     void chooseButtonClicked(int id);
 
 protected:
     bool eventFilter(QObject *watched, QEvent *event) override;
 
+private slots:
+    void onActionClicked(int button_id);
+
 private:
     Ui::StalledIssueChooseWidget *ui;
     StalledIssueDataPtr mData;
+    bool mIsSolved;
+    bool mPreviousSolveState;
 };
 
 #endif // STALLEDISSUECHOOSEWIDGET_H

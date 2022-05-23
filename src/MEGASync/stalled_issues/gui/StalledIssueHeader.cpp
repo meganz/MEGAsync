@@ -10,7 +10,7 @@
 const int StalledIssueHeader::ARROW_INDENT = 6 + 16; //Left margin + arrow;
 const int StalledIssueHeader::ICON_INDENT = 8 + 48; // fileIcon + spacer;
 const int StalledIssueHeader::BODY_INDENT = StalledIssueHeader::ARROW_INDENT + StalledIssueHeader::ICON_INDENT; // full indent;
-const int StalledIssueHeader::HEIGHT = 60;
+const int StalledIssueHeader::HEIGHT = 64;
 
 StalledIssueHeader::StalledIssueHeader(QWidget *parent) :
     StalledIssueBaseDelegateWidget(parent),
@@ -19,6 +19,7 @@ StalledIssueHeader::StalledIssueHeader(QWidget *parent) :
     ui->setupUi(this);
 
     ui->actionButton->hide();
+    ui->actionMessage->hide();
 }
 
 StalledIssueHeader::~StalledIssueHeader()
@@ -38,6 +39,17 @@ void StalledIssueHeader::showAction(const QString &actionButtonText)
     ui->actionButton->setText(actionButtonText);
 }
 
+void StalledIssueHeader::hideAction()
+{
+    ui->actionButton->setVisible(false);
+}
+
+void StalledIssueHeader::showMessage(const QString &message)
+{
+    ui->actionMessage->setVisible(true);
+    ui->actionMessage->setText(message);
+}
+
 void StalledIssueHeader::setLeftTitleText(const QString &text)
 {
     ui->leftTitleText->setText(text);
@@ -45,7 +57,7 @@ void StalledIssueHeader::setLeftTitleText(const QString &text)
 
 void StalledIssueHeader::addFileName()
 {
-    ui->fileNameTitle->setText(getData().data()->getFileName());
+    ui->fileNameTitle->setText(getData().consultData()->getFileName());
     ui->fileNameTitle->installEventFilter(this);
 }
 
@@ -68,7 +80,7 @@ bool StalledIssueHeader::eventFilter(QObject *watched, QEvent *event)
 {
     if(watched == ui->fileNameTitle && event->type() == QEvent::Resize)
     {
-        auto elidedText = ui->fileNameTitle->fontMetrics().elidedText(getData().data()->getFileName(),Qt::ElideMiddle, ui->fileNameTitle->width());
+        auto elidedText = ui->fileNameTitle->fontMetrics().elidedText(getData().consultData()->getFileName(),Qt::ElideMiddle, ui->fileNameTitle->width());
         ui->fileNameTitle->setText(elidedText);
     }
 
@@ -82,11 +94,11 @@ void StalledIssueHeader::refreshUi()
 
     QIcon fileTypeIcon;
 
-    auto splittedFile = getData().data()->getFileName().split(QString::fromUtf8("."));
+    auto splittedFile = getData().consultData()->getFileName().split(QString::fromUtf8("."));
     if(splittedFile.size() != 1)
     {
         fileTypeIcon = Utilities::getCachedPixmap(Utilities::getExtensionPixmapName(
-                                                      getData().data()->getFileName(), QLatin1Literal(":/images/drag_")));
+                                                      getData().consultData()->getFileName(), QLatin1Literal(":/images/drag_")));
     }
     else
     {

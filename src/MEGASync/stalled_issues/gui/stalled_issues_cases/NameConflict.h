@@ -20,12 +20,15 @@ public:
     void updateUi(NameConflictedStalledIssue::NameConflictData data);
 
 signals:
-    void actionFinished();
+    void refreshUi();
+    void conflictSolved();
 
 private slots:
     void onActionClicked(int actionId);
 
 private:
+    void removeConflictedNameWidget(QWidget *widget);
+
     Ui::NameConflict *ui;
     NameConflictedStalledIssue::NameConflictData mData;
     StalledIssuesUtilities mUtilities;

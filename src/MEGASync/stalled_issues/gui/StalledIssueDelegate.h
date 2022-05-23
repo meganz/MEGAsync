@@ -21,6 +21,7 @@ public:
     StalledIssueDelegate(StalledIssuesProxyModel* proxyModel,  StalledIssuesView* view);
     ~StalledIssueDelegate();
     QSize sizeHint(const QStyleOptionViewItem&option, const QModelIndex&index) const;
+    void resetCache();
 
 protected:
     void paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const override;
@@ -36,7 +37,6 @@ protected slots:
 
 private slots:
     void onIssueFixed();
-    void onUpdateIssues();
     void onEditorKeepStateChanged(bool newKeepState);
 
 private:

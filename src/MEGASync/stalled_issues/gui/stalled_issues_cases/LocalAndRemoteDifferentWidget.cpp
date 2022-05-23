@@ -34,23 +34,31 @@ void LocalAndRemoteDifferentWidget::refreshUi()
 {
     auto issue = getData();
 
-    if(issue.data()->consultLocalData())
+    if(issue.consultData()->consultLocalData())
     {
-        ui->chooseLocalCopy->setData(issue.data()->consultLocalData());
+        ui->chooseLocalCopy->setIssueSolved(issue.consultData()->isSolved());
+        ui->chooseLocalCopy->setData(issue.consultData()->consultLocalData());
     }
 
-    if(issue.data()->consultCloudData())
+    if(issue.consultData()->consultCloudData())
     {
-        ui->chooseRemoteCopy->setData(issue.data()->consultCloudData());
+        ui->chooseRemoteCopy->setIssueSolved(issue.consultData()->isSolved());
+        ui->chooseRemoteCopy->setData(issue.consultData()->consultCloudData());
     }
 }
 
 void LocalAndRemoteDifferentWidget::onLocalButtonClicked(int)
 { 
     mUtilities.removeRemoteFile(ui->chooseRemoteCopy->data()->getFilePath());
+    MegaSyncApp->getStalledIssuesModel()->solveIssue(false, getCurrentIndex());
+
+    refreshUi();
 }
 
 void LocalAndRemoteDifferentWidget::onRemoteButtonClicked(int)
 {
-    mUtilities.removeLocalFile(ui->chooseRemoteCopy->data()->getNativeFilePath());
+    mUtilities.removeLocalFile(ui->chooseLocalCopy->data()->getNativeFilePath());
+    MegaSyncApp->getStalledIssuesModel()->solveIssue(true, getCurrentIndex());
+
+    refreshUi();
 }

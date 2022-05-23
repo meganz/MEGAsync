@@ -15,15 +15,8 @@ LocalAndRemoteNameConflicts::LocalAndRemoteNameConflicts(QWidget *parent) :
 
     ui->selectLabel->setIndent(StalledIssueHeader::ICON_INDENT);
 
-    connect(ui->cloudConflictNames, &NameConflict::actionFinished, this,
-            [this](){
-        updateIssues();
-    });
-
-    connect(ui->localConflictNames, &NameConflict::actionFinished, this,
-            [this](){
-        updateIssues();
-    });
+    connect(ui->cloudConflictNames, &NameConflict::refreshUi, this, &LocalAndRemoteNameConflicts::refreshUi);
+    connect(ui->localConflictNames, &NameConflict::refreshUi, this, &LocalAndRemoteNameConflicts::refreshUi);
 }
 
 LocalAndRemoteNameConflicts::~LocalAndRemoteNameConflicts()
@@ -33,12 +26,30 @@ LocalAndRemoteNameConflicts::~LocalAndRemoteNameConflicts()
 
 void LocalAndRemoteNameConflicts::refreshUi()
 {
-    if(auto nameConflict = std::dynamic_pointer_cast<NameConflictedStalledIssue>(getData().data()))
+    if(auto nameConflict = std::dynamic_pointer_cast<const NameConflictedStalledIssue>(getData().consultData()))
     {
         auto cloudData = nameConflict->getNameConflictCloudData();
-        cloudData.isEmpty() ? ui->cloudConflictNames->hide() : ui->cloudConflictNames->updateUi(cloudData);
+        if(cloudData.isEmpty())
+        {
+            ui->cloudConflictNames->hide();
+        }
+        else
+        {
+            ui->cloudConflictNames->updateUi(cloudData);
+            ui->cloudConflictNames->show();
+        }
 
         auto localData = nameConflict->getNameConflictLocalData();
-        localData.isEmpty() ? ui->localConflictNames->hide() : ui->localConflictNames->updateUi(localData);
+        if(localData.isEmpty())
+        {
+            ui->localConflictNames->hide();
+        }
+        else
+        {
+            ui->localConflictNames->updateUi(localData);
+            ui->localConflictNames->show();
+        }
+
+        update();
     }
 }

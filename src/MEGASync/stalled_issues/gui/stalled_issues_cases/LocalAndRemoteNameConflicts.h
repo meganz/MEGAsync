@@ -15,6 +15,7 @@ public:
     explicit LocalAndRemoteNameConflicts(QWidget *parent = nullptr);
     ~LocalAndRemoteNameConflicts();
 
+public slots:
     void refreshUi() override;
 
 private:

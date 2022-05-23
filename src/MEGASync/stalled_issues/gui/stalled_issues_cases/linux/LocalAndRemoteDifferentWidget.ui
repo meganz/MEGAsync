@@ -6,9 +6,15 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>336</width>
-    <height>81</height>
+    <width>288</width>
+    <height>86</height>
    </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>0</width>
+    <height>0</height>
+   </size>
   </property>
   <property name="windowTitle">
    <string notr="true"/>
@@ -74,11 +80,11 @@
      </property>
     </spacer>
    </item>
-   <item alignment="Qt::AlignTop">
-    <widget class="StalledIssueChooseWidget" name="chooseLocalCopy" native="true"/>
-   </item>
-   <item alignment="Qt::AlignTop">
+   <item>
     <widget class="StalledIssueChooseWidget" name="chooseRemoteCopy" native="true"/>
+   </item>
+   <item>
+    <widget class="StalledIssueChooseWidget" name="chooseLocalCopy" native="true"/>
    </item>
   </layout>
  </widget>

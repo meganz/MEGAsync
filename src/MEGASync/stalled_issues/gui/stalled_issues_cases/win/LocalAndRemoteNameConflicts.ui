@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>293</width>
-    <height>55</height>
+    <width>528</width>
+    <height>97</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -36,7 +36,8 @@
 }</string>
      </property>
      <property name="text">
-      <string>Please select which version you want to keep</string>
+      <string>Renaming or removing files can resolve this issue,
+or click the Folders below to make adjustments in the local filesystem or in MEGA</string>
      </property>
      <property name="indent">
       <number>0</number>
@@ -60,10 +61,10 @@
     </spacer>
    </item>
    <item>
-    <widget class="NameConflict" name="localConflictNames" native="true"/>
+    <widget class="NameConflict" name="cloudConflictNames" native="true"/>
    </item>
    <item>
-    <widget class="NameConflict" name="cloudConflictNames" native="true"/>
+    <widget class="NameConflict" name="localConflictNames" native="true"/>
    </item>
   </layout>
  </widget>

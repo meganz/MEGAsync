@@ -47,13 +47,13 @@ void TransfersManagerSortFilterProxyModel::sort(int sortCriterion, Qt::SortOrder
     QFuture<void> filtered = QtConcurrent::run([this, order](){
         auto sourceM = qobject_cast<TransfersModel*>(sourceModel());
         sourceM->lockModelMutex(true);
-        sourceM->blockSignals(true);
-        blockSignals(true);
+        //sourceM->blockSignals(true);
+        //blockSignals(true);
         invalidate();
         QSortFilterProxyModel::sort(0, order);
         sourceM->lockModelMutex(false);
-        sourceM->blockSignals(false);
-        blockSignals(false);
+        //sourceM->blockSignals(false);
+        //blockSignals(false);
     });
     mFilterWatcher.setFuture(filtered);
 }
@@ -83,13 +83,13 @@ void TransfersManagerSortFilterProxyModel::setFilterFixedString(const QString& p
     QFuture<void> filtered = QtConcurrent::run([this](){
         auto sourceM = qobject_cast<TransfersModel*>(sourceModel());
         sourceM->lockModelMutex(true);
-        sourceM->blockSignals(true);
-        blockSignals(true);
+        //sourceM->blockSignals(true);
+        //blockSignals(true);
         invalidate();
         QSortFilterProxyModel::sort(0,  sortOrder());
         sourceM->lockModelMutex(false);
-        sourceM->blockSignals(false);
-        blockSignals(false);
+        //sourceM->blockSignals(false);
+        //blockSignals(false);
     });
 
     mFilterWatcher.setFuture(filtered);
@@ -105,13 +105,13 @@ void TransfersManagerSortFilterProxyModel::textSearchTypeChanged()
     QFuture<void> filtered = QtConcurrent::run([this](){
         auto sourceM = qobject_cast<TransfersModel*>(sourceModel());
         sourceM->lockModelMutex(true);
-        sourceM->blockSignals(true);
-        blockSignals(true);
+        //sourceM->blockSignals(true);
+        //blockSignals(true);
         invalidate();
         QSortFilterProxyModel::sort(0, sortOrder());
         sourceM->lockModelMutex(false);
-        sourceM->blockSignals(false);
-        blockSignals(false);
+        //sourceM->blockSignals(false);
+        //blockSignals(false);
     });
     mFilterWatcher.setFuture(filtered);
 

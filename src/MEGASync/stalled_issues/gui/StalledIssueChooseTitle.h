@@ -19,6 +19,9 @@ public:
     QString title() const;
 
     void addActionButton(const QString& text, int id);
+    void hideActionButton(int id);
+
+    void addMessage(const QString& message);
 
     void setIndent(int indent);
 

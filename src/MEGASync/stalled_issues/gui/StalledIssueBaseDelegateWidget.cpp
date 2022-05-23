@@ -9,11 +9,9 @@
 
 StalledIssueBaseDelegateWidget::StalledIssueBaseDelegateWidget(QWidget *parent)
     : QWidget(parent),
-      mKeepEditor(false)
+      mKeepEditor(false),
+      mIsSolved(false)
 {
-    connect(&mUtilities, &StalledIssuesUtilities::actionFinished, this, [this](){
-        emit issueFixed();
-    });
 }
 
 void StalledIssueBaseDelegateWidget::render(const QStyleOptionViewItem &,

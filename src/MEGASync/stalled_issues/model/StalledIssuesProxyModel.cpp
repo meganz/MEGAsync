@@ -31,14 +31,10 @@ void StalledIssuesProxyModel::filter(StalledIssueFilterCriterion filterCriterion
         sourceM->blockUi();
 
         //Test if it is worth it, because there is not sorting and the sort takes longer than filtering.
-        QFuture<void> filtered = QtConcurrent::run([this, sourceM](){
+         QtConcurrent::run([this, sourceM](){
             sourceM->lockModelMutex(true);
-            sourceM->blockSignals(true);
-            blockSignals(true);
             invalidateFilter();
             sourceM->lockModelMutex(false);
-            sourceM->blockSignals(false);
-            blockSignals(false);
             sourceM->unBlockUi();
         });
     }
@@ -81,7 +77,7 @@ bool StalledIssuesProxyModel::filterAcceptsRow(int source_row, const QModelIndex
         }
         else
         {
-            auto filterCriterion = StalledIssue::getCriterionByReason(d.data()->getReason());
+            auto filterCriterion = StalledIssue::getCriterionByReason(d.consultData()->getReason());
             return filterCriterion == mFilterCriterion;
         }
     }
