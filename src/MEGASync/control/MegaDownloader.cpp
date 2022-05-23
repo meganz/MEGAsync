@@ -1,10 +1,13 @@
 #include "MegaDownloader.h"
-#include "Utilities.h"
+
 #include "MegaApplication.h"
+#include "Utilities.h"
 #include "TransferBatch.h"
-#include <memory>
+
 #include <QDateTime>
 #include <QPointer>
+
+#include <memory>
 
 using namespace mega;
 
