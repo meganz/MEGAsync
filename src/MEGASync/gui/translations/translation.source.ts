@@ -2927,7 +2927,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>You can&apos;t run MEGA Desktop App from this location. Move it into the Applications folder then run it.</source>
-        <translatorcomment>Error message shown when the user is trying to run MEGA Desktop App from a path different than Applications. Only affets to macOS.</translatorcomment>
+        <translatorcomment>Error message shown when the user is trying to run MEGA Desktop App from a path different than Applications. Only affects to macOS.</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
 </context>
