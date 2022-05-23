@@ -1,16 +1,18 @@
 #ifndef MEGADOWNLOADER_H
 #define MEGADOWNLOADER_H
 
+#include "control/Utilities.h"
+#include "control/TransferBatch.h"
+#include "TransferMetadata.h"
+
+#include "megaapi.h"
+
 #include <QObject>
 #include <QString>
 #include <QFileInfo>
 #include <QDir>
 #include <QQueue>
 #include <QMap>
-#include "megaapi.h"
-#include "control/Utilities.h"
-#include "control/TransferBatch.h"
-#include "TransferMetadata.h"
 
 class MegaDownloader : public QObject
 {
