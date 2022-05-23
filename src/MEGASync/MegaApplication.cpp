@@ -7885,6 +7885,7 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
     int folderTransferTag = transfer->getFolderTransferTag();
     bool isFileTransfer = (folderTransferTag == 0);
     bool isFolderTransfer = (folderTransferTag == -1);
+    bool isOnScanStage = mBlockingBatch.hasCancelToken();
     if (isFileTransfer || isFolderTransfer)
     {
 
@@ -7935,7 +7936,7 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
         }
     }
 
-    if (transfer->isFolderTransfer())
+    if (transfer->isFolderTransfer() && !isOnScanStage)
     {
         if (e->getErrorCode() != MegaError::API_OK)
         {
