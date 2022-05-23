@@ -36,17 +36,9 @@ void UserAlertTimedClustering::addUserAlert(mega::MegaUserAlert *alert, const QS
 
 QString getRemovedItemsMessage(int64_t removedItems, const QString& userName)
 {
-    if (removedItems == 1)
-    {
-        return QCoreApplication::translate("OsNotifications", "[A] removed 1 item")
-                .replace(QString::fromUtf8("[A]"), userName);
-    }
-    else
-    {
-         return QCoreApplication::translate("OsNotifications", "[A] removed [B] items")
-                 .replace(QString::fromUtf8("[A]"), userName)
-                 .replace(QString::fromUtf8("[B]"), QString::number(removedItems));
-    }
+    const int removedItemsAsInt = static_cast<int>(removedItems);
+    return QCoreApplication::translate("OsNotifications", "[A] removed %n item", "", removedItemsAsInt)
+            .replace(QString::fromUtf8("[A]"), userName);
 }
 
 void UserAlertTimedClustering::onClusterTimerTimeout()

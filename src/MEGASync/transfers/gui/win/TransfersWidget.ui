@@ -43,16 +43,6 @@
     background-color: white;
 }
 
-#wPauseResumeVisible
-{
-    width: 24px;
-    min-width: 24px;
-    max-width: 24px;
-    height: 24px;
-    min-height: 24px;
-    max-height: 24px;
-}
-
 #wTableHeader QPushButton
 {
 	color: #666666;
@@ -95,7 +85,10 @@ TransferWidgetHeaderItem  QLabel
 }
 </string>
   </property>
-  <layout class="QGridLayout" name="TransfersWidgetLayout">
+  <layout class="QHBoxLayout" name="horizontalLayout">
+   <property name="spacing">
+    <number>0</number>
+   </property>
    <property name="sizeConstraint">
     <enum>QLayout::SetDefaultConstraint</enum>
    </property>
@@ -111,10 +104,7 @@ TransferWidgetHeaderItem  QLabel
    <property name="bottomMargin">
     <number>0</number>
    </property>
-   <property name="spacing">
-    <number>0</number>
-   </property>
-   <item row="0" column="0">
+   <item>
     <widget class="QStackedWidget" name="sWidget">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
@@ -414,8 +404,14 @@ TransferWidgetHeaderItem  QLabel
             </property>
            </widget>
           </item>
-          <item alignment="Qt::AlignLeft|Qt::AlignVCenter">
-           <widget class="QPushButton" name="tPauseResumeVisible">
+          <item>
+           <widget class="QWidget" name="wPauseResume" native="true">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
             <property name="minimumSize">
              <size>
               <width>24</width>
@@ -426,6 +422,36 @@ TransferWidgetHeaderItem  QLabel
              <size>
               <width>24</width>
               <height>24</height>
+             </size>
+            </property>
+            <layout class="QHBoxLayout" name="horizontalLayout_2">
+             <property name="spacing">
+              <number>0</number>
+             </property>
+             <property name="leftMargin">
+              <number>0</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
+              <number>0</number>
+             </property>
+             <item>
+           <widget class="QPushButton" name="tPauseResumeVisible">
+            <property name="minimumSize">
+             <size>
+              <width>16</width>
+              <height>16</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16</width>
+              <height>16</height>
              </size>
             </property>
             <property name="cursor">
@@ -436,25 +462,38 @@ TransferWidgetHeaderItem  QLabel
             </property>
             <property name="icon">
              <iconset resource="../../../gui/Resources_win.qrc">
-              <normaloff>:/images/lists_pause_all_ico.png</normaloff>
-              <normalon>:/images/lists_resume_all_ico.png</normalon>:/images/lists_pause_all_ico.png</iconset>
+              <normaloff>:/images/transfer_manager/transfers_actions/lists_pause_all_ico_default.png</normaloff>:/images/transfer_manager/transfers_actions/lists_pause_all_ico_default.png</iconset>
             </property>
             <property name="iconSize">
              <size>
-              <width>24</width>
-              <height>24</height>
+              <width>16</width>
+              <height>16</height>
              </size>
             </property>
             <property name="checkable">
              <bool>true</bool>
             </property>
-            <property name="autoRaise" stdset="0">
-             <bool>false</bool>
+            <property name="icon_prefix" stdset="0">
+             <url>
+              <string>qrc:/images/transfer_manager/transfers_actions/lists_pause_all_ico_default.png</string>
+             </url>
+            </property>
+            <property name="hover_selected" stdset="0">
+             <bool>true</bool>
             </property>
            </widget>
           </item>
-          <item alignment="Qt::AlignLeft|Qt::AlignVCenter">
-           <widget class="QPushButton" name="tCancelClearVisible">
+            </layout>
+           </widget>
+          </item>
+          <item>
+           <widget class="QWidget" name="wCancelClear" native="true">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
             <property name="minimumSize">
              <size>
               <width>24</width>
@@ -467,6 +506,36 @@ TransferWidgetHeaderItem  QLabel
               <height>24</height>
              </size>
             </property>
+            <layout class="QHBoxLayout" name="horizontalLayout_3">
+             <property name="spacing">
+              <number>0</number>
+             </property>
+             <property name="leftMargin">
+              <number>0</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
+              <number>0</number>
+             </property>
+             <item>
+           <widget class="QPushButton" name="tCancelClearVisible">
+            <property name="minimumSize">
+             <size>
+              <width>16</width>
+              <height>16</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16</width>
+              <height>16</height>
+             </size>
+            </property>
             <property name="cursor">
              <cursorShape>PointingHandCursor</cursorShape>
             </property>
@@ -475,14 +544,22 @@ TransferWidgetHeaderItem  QLabel
             </property>
             <property name="icon">
              <iconset resource="../../../gui/Resources_win.qrc">
-              <normaloff>:/images/lists_cancel_all_ico.png</normaloff>:/images/lists_cancel_all_ico.png</iconset>
+              <normaloff>:/images/transfer_manager/transfers_actions/lists_cancel_all_ico_default.png</normaloff>:/images/transfer_manager/transfers_actions/lists_cancel_all_ico_default.png</iconset>
             </property>
             <property name="iconSize">
              <size>
-              <width>24</width>
-              <height>24</height>
+              <width>16</width>
+              <height>16</height>
              </size>
             </property>
+            <property name="icon_prefix" stdset="0">
+             <url>
+              <string>qrc:/images/transfer_manager/transfers_actions/lists_cancel_all_ico_default.png</string>
+             </url>
+            </property>
+           </widget>
+          </item>
+            </layout>
            </widget>
           </item>
           <item>

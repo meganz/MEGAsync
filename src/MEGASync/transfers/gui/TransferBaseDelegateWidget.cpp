@@ -1,7 +1,6 @@
 #include "TransferBaseDelegateWidget.h"
 #include "QMegaMessageBox.h"
 
-#include <QDebug>
 #include <QPointer>
 
 TransferBaseDelegateWidget::TransferBaseDelegateWidget(QWidget *parent)
@@ -13,11 +12,12 @@ TransferBaseDelegateWidget::TransferBaseDelegateWidget(QWidget *parent)
 
 void TransferBaseDelegateWidget::updateUi(const QExplicitlySharedDataPointer<TransferData> data, int)
 {
-    if(mData != data || mData->mTag != data->mTag)
+    if(!mData || mData->mTag != data->mTag)
     {
         mPreviousState = TransferData::TransferState::TRANSFER_NONE;
-        mData = data;
     }
+
+    mData = data;
 
     setType();
     setFileNameAndType();
@@ -60,7 +60,6 @@ bool TransferBaseDelegateWidget::setActionTransferIcon(QToolButton *button, cons
     if (oldIconName.isEmpty() || oldIconName != iconName)
     {
         button->setIcon(Utilities::getCachedPixmap(iconName));
-        button->setIconSize(QSize(24,24));
         mLastActionTransferIconName.insert(button, iconName);
 
         update = true;

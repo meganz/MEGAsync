@@ -2,7 +2,6 @@
 #include "ui_TransferWidgetHeaderItem.h"
 
 #include "Utilities.h"
-#include <QDebug>
 
 TransferWidgetHeaderItem::TransferWidgetHeaderItem(QWidget *parent) :
     QWidget(parent),

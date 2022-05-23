@@ -10,6 +10,7 @@
 
 #include <QMouseEvent>
 #include <QScrollBar>
+#include <QPalette>
 
 using namespace mega;
 
@@ -141,6 +142,18 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
         }
     }
 
+    auto managedButtons = mUi->wLeftPane->findChildren<QAbstractButton*>();
+    foreach(auto& button, managedButtons)
+    {
+        mButtonIconManager.addButton(button);
+    }
+
+    managedButtons = mUi->wRightPaneHeader->findChildren<QAbstractButton*>();
+    foreach(auto& button, managedButtons)
+    {
+        mButtonIconManager.addButton(button);
+    }
+
     connect(mModel, &TransfersModel::pauseStateChanged,
             mUi->wTransfers, &TransfersWidget::onPauseStateChanged);
     connect(mModel, &TransfersModel::pauseStateChanged,
@@ -164,10 +177,6 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
     connect(mUi->wTransfers->getProxyModel(),
             &TransfersManagerSortFilterProxyModel::searchNumbersChanged,
             this, &TransferManager::refreshSearchStats);
-
-    connect(mUi->wTransfers->getProxyModel(),
-            &TransfersManagerSortFilterProxyModel::cancelableTransfersChanged,
-            this, &TransferManager::checkCancelAllButtonVisibility);
 
     connect(mUi->wTransfers, &TransfersWidget::pauseResumeVisibleRows,
                 this, &TransferManager::onPauseResumeVisibleRows);
@@ -213,6 +222,8 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
 
     // Init state
     onUpdatePauseState(mModel->areAllPaused());
+    mUi->bPause->setChecked(mModel->areAllPaused());
+
     auto storageState = MegaSyncApp->getAppliedStorageState();
     auto transferQuotaState = MegaSyncApp->getTransferQuotaState();
     onStorageStateChanged(storageState);
@@ -352,42 +363,16 @@ void TransferManager::onUpdatePauseState(bool isPaused)
 {
     if (isPaused)
     {
-        static const QIcon icon(QLatin1String(":/images/sidebar_resume_ico.png"));
-        mUi->bPause->setIcon(icon);
         mUi->bPause->setToolTip(tr("Resume all"));
         mUi->lPaused->setText(tr("All Paused"));
     }
     else
     {
-        static const QIcon icon(QLatin1String(":/images/sidebar_pause_ico.png"));
-        mUi->bPause->setIcon(icon);
         mUi->bPause->setToolTip(tr("Pause all"));
         mUi->lPaused->clear();
     }
 
     mUi->lPaused->setVisible(isPaused && !mUi->lStorageOverQuota->isVisible() && !mUi->pTransferOverQuota->isVisible());
-}
-
-void TransferManager::checkCancelAllButtonVisibility()
-{
-    auto sizePolicy = mUi->bCancelClearAll->sizePolicy();
-    if(!sizePolicy.retainSizeWhenHidden())
-    {
-        sizePolicy.setRetainSizeWhenHidden(true);
-        mUi->bCancelClearAll->setSizePolicy(sizePolicy);
-    }
-
-    //Get the most updated transferCount
-    mTransfersCount = mModel->getTransfersCount();
-    if((mTransfersCount.completedDownloads() + mTransfersCount.completedUploadBytes) == 0
-            && (mTransfersCount.pendingDownloads + mTransfersCount.pendingUploads == 0))
-    {
-        mUi->bCancelClearAll->setVisible(false);
-    }
-    else
-    {
-        mUi->bCancelClearAll->setVisible(true);
-    }
 }
 
 void TransferManager::onPauseResumeVisibleRows(bool isPaused)
@@ -1047,15 +1032,27 @@ void TransferManager::toggleTab(TM_TAB newTab)
         if (mCurrentTab != NO_TAB)
         {
             mTabFramesToggleGroup[mCurrentTab]->setProperty(ITS_ON, false);
+            auto pushButton = mTabFramesToggleGroup[mCurrentTab]->findChild<QPushButton*>();
+            if(pushButton)
+            {
+                pushButton->setChecked(false);
+            }
         }
 
         // Activate new tab frame
         mTabFramesToggleGroup[newTab]->setProperty(ITS_ON, true);
         mTabFramesToggleGroup[newTab]->setGraphicsEffect(mShadowTab);
 
-        TransfersWidget::HeaderInfo headerInfo;
+        auto pushButton = mTabFramesToggleGroup[newTab]->findChild<QPushButton*>();
+        if(pushButton)
+        {
+            pushButton->setChecked(true);
+        }
 
-        QString cancelBase(tr("Cancel and clear "));
+        TransfersWidget::HeaderInfo headerInfo;
+        auto proxyModel(mUi->wTransfers->getProxyModel());
+
+        QString cancelBase(proxyModel->isAnyCancelable() ? tr("Cancel and clear ") : tr("Clear "));
 
         // Show pause button on tab except completed tab,
         // and set Clear All button string,

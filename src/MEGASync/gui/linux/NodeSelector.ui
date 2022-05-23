@@ -110,7 +110,7 @@ height: 16px;
         <string notr="true"/>
        </property>
        <property name="text">
-        <string>Cloud Drive</string>
+        <string>Cloud drive</string>
        </property>
        <property name="checkable">
         <bool>true</bool>
@@ -132,7 +132,7 @@ height: 16px;
         <string notr="true"/>
        </property>
        <property name="text">
-        <string>Incoming Shares</string>
+        <string>Incoming shares</string>
        </property>
        <property name="checkable">
         <bool>true</bool>

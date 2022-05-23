@@ -8,6 +8,7 @@
 #include <QTimer>
 #include <QPainter>
 #include <QSortFilterProxyModel>
+#include <QPointer>
 
 class LoadingSceneDelegateBase : public QStyledItemDelegate
 {
@@ -54,22 +55,27 @@ protected:
 private slots:
     void onLoadingTimerTimeout()
     {
-        if(mOpacity < MIN_OPACITY)
-        {
-            mOpacitySteps = OPACITY_STEPS;
-            mOpacity = MIN_OPACITY;
-        }
-        else if(mOpacity > MAX_OPACITY)
-        {
-            mOpacitySteps = -OPACITY_STEPS;
-            mOpacity = MAX_OPACITY;
-        }
-        else
-        {
-            mOpacity += mOpacitySteps;
-        }
+        QPointer<LoadingSceneDelegateBase> currentClass(this);
 
-        mView->update();
+        if(currentClass)
+        {
+            if(mOpacity < MIN_OPACITY)
+            {
+                mOpacitySteps = OPACITY_STEPS;
+                mOpacity = MIN_OPACITY;
+            }
+            else if(mOpacity > MAX_OPACITY)
+            {
+                mOpacitySteps = -OPACITY_STEPS;
+                mOpacity = MAX_OPACITY;
+            }
+            else
+            {
+                mOpacity += mOpacitySteps;
+            }
+
+            mView->update();
+        }
     }
 
 private:
@@ -207,6 +213,22 @@ public:
 
             mView->updateGeometry();
             int visibleRows = mView->size().height()/delegateHeight;
+
+            //If the rowCount is higher than the visible rows, the vertical header is visible
+            if(mViewModel)
+            {
+                auto rows = mViewModel->rowCount();
+
+                if(rows > visibleRows)
+                {
+                    visibleRows++;
+                }
+                else if(rows != 0 && mViewModel->rowCount() < visibleRows)
+                {
+                    visibleRows = mViewModel->rowCount();
+                }
+            }
+
             if(visibleRows > MAX_LOADING_ROWS || visibleRows < 0)
             {
                 visibleRows = MAX_LOADING_ROWS;

@@ -29,30 +29,7 @@
    <string notr="true">QWidget
 {
 font-size: 11px;
-}
-
-QCheckBox::indicator {
-     width: 16px;
-     height: 16px;
- }
-
-QRadioButton::indicator {
-     width: 16px;
-     height: 16px;
- }
-
-QScrollBar:horizontal {
-height: 16px;
-}
-
-QPushButton
-{
-    min-height: 14px;
-	height: 14px;
-	padding-right: 12px;
-	padding-left: 12px;
-}
-</string>
+}</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <property name="spacing">
@@ -138,23 +115,8 @@ QPushButton
       </item>
       <item>
        <widget class="QPushButton" name="bChange">
-        <property name="minimumSize">
-         <size>
-          <width>0</width>
-          <height>22</height>
-         </size>
-        </property>
         <property name="text">
          <string>Choose</string>
-        </property>
-        <property name="iconSize">
-         <size>
-          <width>24</width>
-          <height>24</height>
-         </size>
-        </property>
-        <property name="flat">
-         <bool>false</bool>
         </property>
        </widget>
       </item>
@@ -216,12 +178,6 @@ QPushButton
       </item>
       <item>
        <widget class="QPushButton" name="bOK">
-        <property name="minimumSize">
-         <size>
-          <width>0</width>
-          <height>22</height>
-         </size>
-        </property>
         <property name="text">
          <string>OK</string>
         </property>
@@ -229,12 +185,6 @@ QPushButton
       </item>
       <item>
        <widget class="QPushButton" name="bCancel">
-        <property name="minimumSize">
-         <size>
-          <width>0</width>
-          <height>22</height>
-         </size>
-        </property>
         <property name="text">
          <string>Cancel</string>
         </property>

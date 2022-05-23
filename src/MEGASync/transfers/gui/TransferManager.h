@@ -10,6 +10,7 @@
 #include "TransfersModel.h"
 #include "TransferQuota.h"
 #include "StatusInfo.h"
+#include "ButtonIconManager.h"
 
 #include <QGraphicsEffect>
 #include <QTimer>
@@ -23,6 +24,10 @@ class TransferManager;
 namespace Ui {
 class TransferManagerDragBackDrop;
 }
+
+#include <QObject>
+#include <QPushButton>
+#include <QEvent>
 
 class TransferManager : public QDialog
 {
@@ -118,6 +123,8 @@ private:
     int mStorageQuotaState;
     QuotaState mTransferQuotaState;
 
+    ButtonIconManager mButtonIconManager;
+
     void toggleTab(TM_TAB newTab);
     void refreshStateStats();
     void refreshTypeStats();
@@ -165,7 +172,6 @@ private slots:
 
     void onUpdatePauseState(bool isPaused);
     void onPauseStateChangedByTransferResume();
-    void checkCancelAllButtonVisibility();
     void onPauseResumeVisibleRows(bool isPaused);
     void showQuotaStorageDialogs(bool isPaused);
     void onCancelVisibleRows();

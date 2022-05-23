@@ -23,20 +23,16 @@ TransfersWidget::TransfersWidget(QWidget* parent) :
     connect(ui->statusColumn, &TransferWidgetHeaderItem::toggled, this, &TransfersWidget::onHeaderItemClicked);
     connect(ui->timeColumn, &TransferWidgetHeaderItem::toggled, this, &TransfersWidget::onHeaderItemClicked);
 
-
-    //Keep size when hidden
-    auto sizePolicy = ui->tCancelClearVisible->sizePolicy();
-    if(!sizePolicy.retainSizeWhenHidden())
-    {
-        sizePolicy.setRetainSizeWhenHidden(true);
-        ui->tCancelClearVisible->setSizePolicy(sizePolicy);
-        ui->tPauseResumeVisible->setSizePolicy(sizePolicy);
-    }
-
     model = app->getTransfersModel();
 
     //Align header pause/cancel buttons to view pause/cancel button
     connect(ui->tvTransfers, &MegaTransferView::verticalScrollBarVisibilityChanged, this, &TransfersWidget::onVerticalScrollBarVisibilityChanged);
+
+    auto leftPaneButtons = ui->wTableHeader->findChildren<QAbstractButton*>();
+    foreach(auto& button, leftPaneButtons)
+    {
+        mButtonIconManager.addButton(button);
+    }
 }
 void TransfersWidget::setupTransfers()
 {
@@ -163,19 +159,13 @@ void TransfersWidget::mouseRelease(const QPoint &point)
 {
    if(ui->tvTransfers->isVisible())
    {
-       auto viewGlobalPos = parentWidget()->mapToGlobal(ui->tvTransfers->pos());
-       QRect viewGlobalRect(viewGlobalPos, ui->tvTransfers->size());
+       if(!ui->tvTransfers->selectionModel()->selection().isEmpty())
+       {
+           auto viewGlobalPos = parentWidget()->mapToGlobal(ui->tvTransfers->pos());
+           QRect viewGlobalRect(viewGlobalPos, ui->tvTransfers->size());
 
-       auto pressedOnView = viewGlobalRect.contains(point);
-       if(!pressedOnView)
-       {
-           ui->tvTransfers->clearSelection();
-       }
-       else
-       {
-           auto localPos = mapTo(ui->tvTransfers, point);
-           auto pressedIndex = ui->tvTransfers->indexAt(localPos);
-           if(!pressedIndex.isValid())
+           auto pressedOnView = viewGlobalRect.contains(point);
+           if(!pressedOnView)
            {
                ui->tvTransfers->clearSelection();
            }

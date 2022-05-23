@@ -75,7 +75,7 @@ bool MegaDelegateHoverManager::eventFilter(QObject *watched, QEvent *event)
 
 void MegaDelegateHoverManager::sendEvent(QEvent::Type eventType, const QPoint &point)
 {
-    if(mCurrentIndex.isValid())
+    if(mCurrentIndex.row() >= 0)
     {
         auto delegate = mView->itemDelegateForColumn(mCurrentIndex.column());
         if(!delegate)

@@ -36,26 +36,6 @@
 {
 font-size: 11px;
 }
-
-QCheckBox::indicator {
-     width: 16px;
-     height: 16px;
- }
-
-QRadioButton::indicator {
-     width: 16px;
-     height: 16px;
- }
-
-QScrollBar:horizontal {
-height: 16px;
-}
-
-QPushButton
-{
-    padding-right: 12px;
-    padding-left: 12px;
-}
 </string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout" stretch="1,0">
@@ -86,18 +66,6 @@ QPushButton
       <size>
        <width>0</width>
        <height>38</height>
-      </size>
-     </property>
-     <property name="maximumSize">
-      <size>
-       <width>16777215</width>
-       <height>16777215</height>
-      </size>
-     </property>
-     <property name="sizeIncrement">
-      <size>
-       <width>0</width>
-       <height>0</height>
       </size>
      </property>
     </widget>
@@ -181,18 +149,6 @@ QPushButton
            <property name="enabled">
             <bool>true</bool>
            </property>
-           <property name="minimumSize">
-            <size>
-             <width>24</width>
-             <height>0</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>16777215</width>
-             <height>16777215</height>
-            </size>
-           </property>
            <property name="styleSheet">
             <string notr="true"/>
            </property>
@@ -259,18 +215,6 @@ QPushButton
          </item>
          <item>
           <widget class="QPushButton" name="bMegaFolder">
-           <property name="minimumSize">
-            <size>
-             <width>24</width>
-             <height>0</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>16777215</width>
-             <height>16777215</height>
-            </size>
-           </property>
            <property name="text">
             <string>Choose</string>
            </property>
