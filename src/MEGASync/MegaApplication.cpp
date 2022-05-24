@@ -4849,7 +4849,12 @@ void MegaApplication::showChangeLog()
     changeLogDialog->show();
 }
 
-void MegaApplication::uploadActionClicked(QWidget* openFrom)
+void MegaApplication::uploadActionClicked()
+{
+    uploadActionClickedFromWindow(nullptr);
+}
+
+void MegaApplication::uploadActionClickedFromWindow(QWidget* openFrom)
 {
     if (appfinished)
     {
@@ -6500,35 +6505,16 @@ void MegaApplication::createInfoDialogMenus()
         infoDialogMenu->installEventFilter(this);
     }
 
-    if (exitAction)
-    {
-        exitAction->deleteLater();
-        exitAction = NULL;
-    }
+    recreateMenuAction(&exitAction, QCoreApplication::translate("Platform", Platform::exitString),
+                       "://images/ico_quit.png", &MegaApplication::exitApplication);
+    recreateMenuAction(&settingsAction, QCoreApplication::translate("Platform", Platform::settingsString),
+                       "://images/ico_preferences.png", &MegaApplication::openSettings);
+    recreateMenuAction(&myCloudAction, tr("Cloud drive"), "://images/cloud.png", &MegaApplication::goToMyCloud);
 
-    exitAction = new MenuItemAction(QCoreApplication::translate("Platform", Platform::exitString), QIcon(QString::fromUtf8("://images/ico_quit.png")), true);
-    connect(exitAction, SIGNAL(triggered()), this, SLOT(exitApplication()), Qt::QueuedConnection);
-
-    if (settingsAction)
-    {
-        settingsAction->deleteLater();
-        settingsAction = NULL;
-    }
-
-    settingsAction = new MenuItemAction(QCoreApplication::translate("Platform", Platform::settingsString), QIcon(QString::fromUtf8("://images/ico_preferences.png")), true);
-    connect(settingsAction, SIGNAL(triggered()), this, SLOT(openSettings()), Qt::QueuedConnection);
-
-    if (myCloudAction)
-    {
-        myCloudAction->deleteLater();
-        myCloudAction = NULL;
-    }
-
-    myCloudAction = new MenuItemAction(tr("Cloud drive"), QIcon(QString::fromUtf8("://images/ico-cloud-drive.png")), true);
-    connect(myCloudAction, SIGNAL(triggered()), this, SLOT(goToMyCloud()), Qt::QueuedConnection);
-
+    bool previousEnabledState = true;
     if (addSyncAction)
     {
+        previousEnabledState = addSyncAction->isEnabled();
         addSyncAction->deleteLater();
         addSyncAction = NULL;
     }
@@ -6537,6 +6523,7 @@ void MegaApplication::createInfoDialogMenus()
     if (num == 0)
     {
         addSyncAction = new MenuItemAction(tr("Add Sync"), QIcon(QString::fromUtf8("://images/ico_add_sync_folder.png")), true);
+        addSyncAction->setEnabled(previousEnabledState);
 
 #if QT_VERSION > QT_VERSION_CHECK(5, 7, 0)
         connect(addSyncAction, &MenuItemAction::triggered, infoDialog,
@@ -6549,8 +6536,12 @@ void MegaApplication::createInfoDialogMenus()
     else
     {
         addSyncAction = new MenuItemAction(tr("Syncs"), QIcon(QString::fromUtf8("://images/ico_add_sync_folder.png")), true);
+        addSyncAction->setEnabled(previousEnabledState);
+
+        previousEnabledState = true;
         if (syncsMenu)
         {
+            previousEnabledState = syncsMenu->isEnabled();
             for (QAction *a: syncsMenu->actions())
             {
                 a->deleteLater();
@@ -6561,6 +6552,7 @@ void MegaApplication::createInfoDialogMenus()
 
         syncsMenu = new QMenu();
         syncsMenu->setToolTipsVisible(true);
+        //syncsMenu->setEnabled(previousEnabledState);
 
 #ifdef __APPLE__
         syncsMenu->setStyleSheet(QString::fromUtf8("QMenu {background: #ffffff; padding-top: 8px; padding-bottom: 8px;}"));
@@ -6643,41 +6635,10 @@ void MegaApplication::createInfoDialogMenus()
         }
     }
 
-    if (importLinksAction)
-    {
-        importLinksAction->deleteLater();
-        importLinksAction = NULL;
-    }
-
-    importLinksAction = new MenuItemAction(tr("Open links"), QIcon(QString::fromUtf8("://images/ico_Import_links.png")), true);
-    connect(importLinksAction, SIGNAL(triggered()), this, SLOT(importLinks()), Qt::QueuedConnection);
-
-    if (uploadAction)
-    {
-        uploadAction->deleteLater();
-        uploadAction = NULL;
-    }
-
-    uploadAction = new MenuItemAction(tr("Upload"), QIcon(QString::fromUtf8("://images/ico_upload.png")), true);
-    connect(uploadAction, SIGNAL(triggered()), this, SLOT(uploadActionClicked()), Qt::QueuedConnection);
-
-    if (downloadAction)
-    {
-        downloadAction->deleteLater();
-        downloadAction = NULL;
-    }
-
-    downloadAction = new MenuItemAction(tr("Download"), QIcon(QString::fromUtf8("://images/ico_download.png")), true);
-    connect(downloadAction, SIGNAL(triggered()), this, SLOT(downloadActionClicked()), Qt::QueuedConnection);
-
-    if (streamAction)
-    {
-        streamAction->deleteLater();
-        streamAction = NULL;
-    }
-
-    streamAction = new MenuItemAction(tr("Stream"), QIcon(QString::fromUtf8("://images/ico_stream.png")), true);
-    connect(streamAction, SIGNAL(triggered()), this, SLOT(streamActionClicked()), Qt::QueuedConnection);
+    recreateMenuAction(&importLinksAction, tr("Open links"), "://images/ico_Import_links.png", &MegaApplication::importLinks);
+    recreateMenuAction(&uploadAction, tr("Upload"), "://images/ico_upload.png", &MegaApplication::uploadActionClicked);
+    recreateMenuAction(&downloadAction, tr("Download"), "://images/ico_download.png", &MegaApplication::downloadActionClicked);
+    recreateMenuAction(&streamAction, tr("Stream"), "://images/ico_stream.png", &MegaApplication::streamActionClicked);
 
     if (updateAction)
     {

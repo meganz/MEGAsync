@@ -243,7 +243,8 @@ public slots:
     void goToMyCloud();
     void pauseTransfers();
     void showChangeLog();
-    void uploadActionClicked(QWidget *openFrom = nullptr);
+    void uploadActionClicked();
+    void uploadActionClickedFromWindow(QWidget *openFrom);
     void loginActionClicked();
     void copyFileLink(mega::MegaHandle fileHandle, QString nodeKey = QString());
     void downloadActionClicked();
@@ -603,6 +604,23 @@ private:
     static void logInfoDialogCoordinates(const char* message, const QRect& screenGeometry, const QString& otherInformation);
 
     void destroyInfoDialogMenus();
+
+    template <class Func>
+    void recreateMenuAction(MenuItemAction** action, const QString& actionName,
+                            const char* iconPath, Func slotFunc)
+    {
+        bool previousEnabledState = true;
+        if (*action)
+        {
+            previousEnabledState = (*action)->isEnabled();
+            (*action)->deleteLater();
+            *action = nullptr;
+        }
+
+        *action = new MenuItemAction(actionName, QIcon(QString::fromUtf8(iconPath)), true);
+        connect(*action, &QAction::triggered, this, slotFunc, Qt::QueuedConnection);
+        (*action)->setEnabled(previousEnabledState);
+    }
 };
 
 class DeferPreferencesSyncForScope
