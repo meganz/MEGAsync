@@ -536,7 +536,7 @@ QGroupBox::title
             <property name="checkable">
              <bool>true</bool>
             </property>
-            <property name="icon_prefix" stdset="0">
+            <property name="default_icon" stdset="0">
              <url>
               <string>qrc:/images/transfer_manager/sidebar/sidebar_pause_ico_default.png</string>
              </url>
@@ -567,7 +567,7 @@ QGroupBox::title
             <property name="checkable">
              <bool>true</bool>
             </property>
-            <property name="icon_prefix" stdset="0">
+            <property name="default_icon" stdset="0">
              <url>
               <string>qrc:/images/transfer_manager/sidebar/sidebar_search_ico_default.png</string>
              </url>
@@ -638,7 +638,7 @@ QGroupBox::title
              <iconset theme="delete_search_ico" resource="../../../gui/Resources_win.qrc">
               <normaloff>:/images/transfer_manager/sidebar/delete_search_ico_default.png</normaloff>:/images/transfer_manager/sidebar/delete_search_ico_default.png</iconset>
             </property>
-            <property name="icon_prefix" stdset="0">
+            <property name="default_icon" stdset="0">
              <url>
               <string>qrc:/images/transfer_manager/sidebar/delete_search_ico_default.png</string>
              </url>
@@ -743,7 +743,7 @@ QGroupBox::title
               <property name="flat">
                <bool>false</bool>
               </property>
-              <property name="icon_prefix" stdset="0">
+              <property name="default_icon" stdset="0">
                <url>
                 <string>qrc:/images/transfer_manager/sidebar/all_transfers_ico_default.png</string>
                </url>
@@ -850,7 +850,7 @@ QGroupBox::title
               <property name="autoDefault">
                <bool>false</bool>
               </property>
-              <property name="icon_prefix" stdset="0">
+              <property name="default_icon" stdset="0">
                <url>
                 <string>qrc:/images/transfer_manager/sidebar/downloads_ico_default.png</string>
                </url>
@@ -950,7 +950,7 @@ QGroupBox::title
               <property name="autoDefault">
                <bool>false</bool>
               </property>
-              <property name="icon_prefix" stdset="0">
+              <property name="default_icon" stdset="0">
                <url>
                 <string>qrc:/images/transfer_manager/sidebar/uploads_ico_default.png</string>
                </url>
@@ -1053,7 +1053,7 @@ QGroupBox::title
               <property name="autoDefault">
                <bool>false</bool>
               </property>
-              <property name="icon_prefix" stdset="0">
+              <property name="default_icon" stdset="0">
                <url>
                 <string>qrc:/images/transfer_manager/sidebar/finished_ico_default.png</string>
                </url>
@@ -1156,7 +1156,7 @@ QGroupBox::title
               <property name="autoDefault">
                <bool>false</bool>
               </property>
-              <property name="icon_prefix" stdset="0">
+              <property name="default_icon" stdset="0">
                <url>
                 <string>qrc:/images/transfer_manager/sidebar/failed_ico_default.png</string>
                </url>
@@ -1273,7 +1273,7 @@ QGroupBox::title
               <property name="autoDefault">
                <bool>false</bool>
               </property>
-              <property name="icon_prefix" stdset="0">
+              <property name="default_icon" stdset="0">
                <url>
                 <string>qrc:/images/transfer_manager/sidebar/compressed_default.png</string>
                </url>
@@ -1366,7 +1366,7 @@ QGroupBox::title
               <property name="autoDefault">
                <bool>false</bool>
               </property>
-              <property name="icon_prefix" stdset="0">
+              <property name="default_icon" stdset="0">
                <url>
                 <string>qrc:/images/transfer_manager/sidebar/text_default.png</string>
                </url>
@@ -1456,7 +1456,7 @@ QGroupBox::title
               <property name="autoDefault">
                <bool>false</bool>
               </property>
-              <property name="icon_prefix" stdset="0">
+              <property name="default_icon" stdset="0">
                <url>
                 <string>qrc:/images/transfer_manager/sidebar/image_default.png</string>
                </url>
@@ -1546,7 +1546,7 @@ QGroupBox::title
               <property name="autoDefault">
                <bool>false</bool>
               </property>
-              <property name="icon_prefix" stdset="0">
+              <property name="default_icon" stdset="0">
                <url>
                 <string>qrc:/images/transfer_manager/sidebar/video_default.png</string>
                </url>
@@ -1636,7 +1636,7 @@ QGroupBox::title
               <property name="autoDefault">
                <bool>false</bool>
               </property>
-              <property name="icon_prefix" stdset="0">
+              <property name="default_icon" stdset="0">
                <url>
                 <string>qrc:/images/transfer_manager/sidebar/audio_default.png</string>
                </url>
@@ -1726,7 +1726,7 @@ QGroupBox::title
               <property name="autoDefault">
                <bool>false</bool>
               </property>
-              <property name="icon_prefix" stdset="0">
+              <property name="default_icon" stdset="0">
                <url>
                 <string>qrc:/images/transfer_manager/sidebar/generic_default.png</string>
                </url>
@@ -1843,7 +1843,7 @@ QGroupBox::title
               <property name="autoDefault">
                <bool>false</bool>
               </property>
-              <property name="icon_prefix" stdset="0">
+              <property name="default_icon" stdset="0">
                <url>
                 <string>qrc:/images/transfer_manager/sidebar/search_result_default.png</string>
                </url>
@@ -1862,7 +1862,7 @@ QGroupBox::title
                <iconset theme="delete_search" resource="../../../gui/Resources_win.qrc">
                 <normaloff>:/images/transfer_manager/sidebar/delete_search_result_default.png</normaloff>:/images/transfer_manager/sidebar/delete_search_result_default.png</iconset>
               </property>
-              <property name="icon_prefix" stdset="0">
+              <property name="default_icon" stdset="0">
                <url>
                 <string>qrc:/images/transfer_manager/sidebar/delete_search_result_default.png</string>
                </url>
@@ -2017,7 +2017,7 @@ QGroupBox::title
               <height>24</height>
              </size>
             </property>
-            <property name="icon_prefix" stdset="0">
+            <property name="default_icon" stdset="0">
              <url>
               <string>qrc:/images/transfer_manager/sidebar/cancel_all_ico_default.png</string>
              </url>
@@ -2225,7 +2225,7 @@ QGroupBox::title
             <iconset theme="download_toolbar_ico" resource="../../../gui/Resources_win.qrc">
              <normaloff>:/images/transfer_manager/toolbar/download_toolbar_ico_default.png</normaloff>:/images/transfer_manager/toolbar/download_toolbar_ico_default.png</iconset>
            </property>
-           <property name="icon_prefix" stdset="0">
+           <property name="default_icon" stdset="0">
             <url>
              <string>qrc:/images/transfer_manager/toolbar/download_toolbar_ico_default.png</string>
             </url>
@@ -2244,7 +2244,7 @@ QGroupBox::title
             <iconset theme="upload_toolbar_ico" resource="../../../gui/Resources_win.qrc">
              <normaloff>:/images/transfer_manager/toolbar/upload_toolbar_ico_default.png</normaloff>:/images/transfer_manager/toolbar/upload_toolbar_ico_default.png</iconset>
            </property>
-           <property name="icon_prefix" stdset="0">
+           <property name="default_icon" stdset="0">
             <url>
              <string>qrc:/images/transfer_manager/toolbar/upload_toolbar_ico_default.png</string>
             </url>
@@ -2768,7 +2768,7 @@ QGroupBox::title
             <iconset theme="preferences_toolbar_ico" resource="../../../gui/Resources_win.qrc">
              <normaloff>:/images/transfer_manager/toolbar/preferences_toolbar_ico_default.png</normaloff>:/images/transfer_manager/toolbar/preferences_toolbar_ico_default.png</iconset>
            </property>
-           <property name="icon_prefix" stdset="0">
+           <property name="default_icon" stdset="0">
             <url>
              <string>qrc:/images/transfer_manager/toolbar/preferences_toolbar_ico_default.png</string>
             </url>
@@ -2787,7 +2787,7 @@ QGroupBox::title
             <iconset theme="import_toolbar_ico" resource="../../../gui/Resources_win.qrc">
              <normaloff>:/images/transfer_manager/toolbar/import_toolbar_ico_default.png</normaloff>:/images/transfer_manager/toolbar/import_toolbar_ico_default.png</iconset>
            </property>
-           <property name="icon_prefix" stdset="0">
+           <property name="default_icon" stdset="0">
             <url>
              <string>qrc:/images/transfer_manager/toolbar/import_toolbar_ico_default.png</string>
             </url>

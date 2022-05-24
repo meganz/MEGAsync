@@ -144,7 +144,7 @@ private slots:
     void on_tAllResults_clicked();
     void on_tDlResults_clicked();
     void on_tUlResults_clicked();
-    void on_bPause_clicked();
+    void on_bPause_toggled();
     void pauseResumeTransfers(bool isPaused);
 
     void on_bOpenLinks_clicked();

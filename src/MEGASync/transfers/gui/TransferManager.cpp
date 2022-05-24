@@ -223,7 +223,6 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
 
     // Init state
     onUpdatePauseState(mModel->areAllPaused());
-    mUi->bPause->setChecked(mModel->areAllPaused());
 
     auto storageState = MegaSyncApp->getAppliedStorageState();
     auto transferQuotaState = MegaSyncApp->getTransferQuotaState();
@@ -344,11 +343,25 @@ void TransferManager::onUpdatePauseState(bool isPaused)
     {
         mUi->bPause->setToolTip(tr("Resume all"));
         mUi->lPaused->setText(tr("All Paused"));
+
+        if(!mUi->bPause->isChecked())
+        {
+           mUi->bPause->blockSignals(true);
+           mUi->bPause->setChecked(true);
+           mUi->bPause->blockSignals(false);
+        }
     }
     else
     {
         mUi->bPause->setToolTip(tr("Pause all"));
         mUi->lPaused->clear();
+
+        if(mUi->bPause->isChecked())
+        {
+            mUi->bPause->blockSignals(true);
+            mUi->bPause->setChecked(false);
+            mUi->bPause->blockSignals(false);
+        }
     }
 
     mUi->lPaused->setVisible(isPaused && !mUi->lStorageOverQuota->isVisible() && !mUi->pTransferOverQuota->isVisible());
@@ -795,7 +808,7 @@ void TransferManager::on_tSeePlans_clicked()
     QtConcurrent::run(QDesktopServices::openUrl, QUrl(url));
 }
 
-void TransferManager::on_bPause_clicked()
+void TransferManager::on_bPause_toggled()
 {
     auto newState = !mModel->areAllPaused();
     pauseResumeTransfers(newState);

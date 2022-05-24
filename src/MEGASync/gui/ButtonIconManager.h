@@ -46,9 +46,6 @@ public:
 protected:
     virtual bool eventFilter(QObject * watched, QEvent * event) override;
 
-private slots:
-    void onButtonChecked();
-
 private:
     void fillIcon(const IconInfo& info, QIcon& icon);
     void changeButtonTextColor(QAbstractButton* button, double alpha);
