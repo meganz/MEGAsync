@@ -1919,6 +1919,7 @@ double InfoDialog::computeRatio(long long completed, long long remaining)
 
 void InfoDialog::enableUserActions(bool value)
 {
+    ui->bAvatar->setEnabled(value);
     ui->bUpgrade->setEnabled(value);
     ui->bAddSync->setEnabled(value);
     ui->bUpload->setEnabled(value);
