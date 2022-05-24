@@ -18,6 +18,7 @@
 #include <utime.h>
 #else
 #include <windows.h>
+#include <shellapi.h>
 #endif
 
 using namespace std;
