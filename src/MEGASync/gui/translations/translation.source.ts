@@ -765,25 +765,25 @@ Please enter a different name to identify this synced folder:</source>
 </context>
 <context>
     <name>CommonMessages</name>
+    <message numerus="yes">
+        <source>Your Pro membership plan will expire in %n day</source>
+        <translatorcomment>Label to indicate that the PRO membership will expire in %n days. Placeholder will be replaced by the remaining days until plan will expire.</translatorcomment>
+        <translation type="unfinished">
+            <numerusform>Your Pro membership plan will expire in %n day</numerusform>
+            <numerusform>Your Pro membership plan will expire in %n days</numerusform>
+        </translation>
+    </message>
     <message>
-        <source>PRO membership plan expiring soon</source>
+        <source>Pro membership plan expiring soon</source>
         <translatorcomment>Label to indicate that the PRO membership will expire soon.</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message numerus="yes">
-        <source>Your PRO membership plan will expire in %n day</source>
-        <translatorcomment>Label to indicate that the PRO membership will expire in %n days. Placeholder will be replaced by the remaining days until plan will expire.</translatorcomment>
-        <translation type="unfinished">
-            <numerusform>Your PRO membership plan will expire in %n day</numerusform>
-            <numerusform>Your PRO membership plan will expire in %n days</numerusform>
-        </translation>
-    </message>
-    <message numerus="yes">
-        <source>Your PRO membership plan expired %n day ago</source>
+        <source>Your Pro membership plan expired %n day ago</source>
         <translatorcomment>Label to indicate that the PRO membership expired %n days ago. Placeholder will be replaced by the days from the expiration of the PRO membership.</translatorcomment>
         <translation type="unfinished">
-            <numerusform>Your PRO membership plan expired %n day ago</numerusform>
-            <numerusform>Your PRO membership plan expired %n days ago</numerusform>
+            <numerusform>Your Pro membership plan expired %n day ago</numerusform>
+            <numerusform>Your Pro membership plan expired %n days ago</numerusform>
         </translation>
     </message>
 </context>
@@ -1027,16 +1027,6 @@ In some cases they may contain details about your data, such as file or folder n
         <translation>Your account is almost full.</translation>
     </message>
     <message>
-        <source>Upgrade now to a PRO account.</source>
-        <translatorcomment>Notification message shown to encourage the user to upgrade his account</translatorcomment>
-        <translation>Upgrade now to a PRO account.</translation>
-    </message>
-    <message>
-        <source>Get PRO</source>
-        <translatorcomment>Notification button to redirect the user to upgrade account.</translatorcomment>
-        <translation>Get PRO</translation>
-    </message>
-    <message>
         <source>Your account is full.</source>
         <translatorcomment>Title of the system notification when the account is full.</translatorcomment>
         <translation>Your account is full.</translation>
@@ -1101,6 +1091,16 @@ In some cases they may contain details about your data, such as file or folder n
             <numerusform>You have %n day left to save your data</numerusform>
             <numerusform>You have %n days left to save your data</numerusform>
         </translation>
+    </message>
+    <message>
+        <source>Upgrade now to a Pro account.</source>
+        <translatorcomment>Notification message shown to encourage the user to upgrade his account</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Get Pro</source>
+        <translatorcomment>Notification button to redirect the user to upgrade account.</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
