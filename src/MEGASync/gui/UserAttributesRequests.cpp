@@ -60,7 +60,7 @@ QString FullNameAttributeRequest::getFullName()
 {
     if(mFirstName.isEmpty() && mLastName.isEmpty())
     {
-        return QString();
+        return getEmail();
     }
 
     return QString(QString::fromUtf8("%1 %2")).arg(mFirstName).arg(mLastName);
@@ -68,7 +68,14 @@ QString FullNameAttributeRequest::getFullName()
 
 std::shared_ptr<FullNameAttributeRequest> FullNameAttributeRequest::requestFullName(const char *user_email)
 {
-    return UserAttributesManager::instance().requestAttribute<FullNameAttributeRequest>(user_email);
+    if(user_email)
+    {
+        return UserAttributesManager::instance().requestAttribute<FullNameAttributeRequest>(user_email);
+    }
+    else
+    {
+        return nullptr;
+    }
 }
 
 

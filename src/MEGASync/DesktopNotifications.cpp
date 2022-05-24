@@ -133,15 +133,15 @@ void DesktopNotifications::addUserAlertList(mega::MegaUserAlertList *alertList)
 
         if(!userEmail.isEmpty())
         {
-            auto FullNameUserAttributes = UserAttributes::FullNameAttributeRequest::requestFullName(alert->getEmail());
-            if(!mUserAttributes.contains(userEmail))
+            auto fullNameUserAttributes = UserAttributes::FullNameAttributeRequest::requestFullName(alert->getEmail());
+            if(fullNameUserAttributes && !mUserAttributes.contains(userEmail))
             {
-                mUserAttributes.insert(userEmail, FullNameUserAttributes);
-                connect(FullNameUserAttributes.get(), &UserAttributes::FullNameAttributeRequest::attributeReady,
+                mUserAttributes.insert(userEmail, fullNameUserAttributes);
+                connect(fullNameUserAttributes.get(), &UserAttributes::FullNameAttributeRequest::attributeReady,
                         this, &DesktopNotifications::OnUserAttributesReady, Qt::UniqueConnection);
             }
 
-            if(FullNameUserAttributes->getFullName().isEmpty())
+            if(fullNameUserAttributes && fullNameUserAttributes->getFullName().isEmpty())
             {
                 mPendingUserAlerts.insert(userEmail, alert->copy());
             }
