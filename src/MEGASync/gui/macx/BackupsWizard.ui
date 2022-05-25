@@ -284,8 +284,11 @@ margin: 4px;
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
+         <property name="styleSheet">
+          <string notr="true">font-size:20px;</string>
+         </property>
          <property name="text">
-          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:20px;&quot;&gt;1. &lt;/span&gt;&lt;span style=&quot; font-size:20px; font-weight:600;&quot;&gt;Select&lt;/span&gt;&lt;span style=&quot; font-size:20px;&quot;&gt; folders to backup&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          <string/>
          </property>
          <property name="textFormat">
           <enum>Qt::RichText</enum>
@@ -300,11 +303,14 @@ margin: 4px;
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
+         <property name="styleSheet">
+          <string notr="true">font-size:12px;</string>
+         </property>
          <property name="text">
-          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:12px;&quot;&gt;MEGA Backup ensures changes to your local folders and files are automatically uploaded and synchronised to the MEGA Cloud.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          <string>You can back up folders from your computer to MEGA. Files will automatically back up when the desktop app is running.</string>
          </property>
          <property name="textFormat">
-          <enum>Qt::RichText</enum>
+          <enum>Qt::PlainText</enum>
          </property>
          <property name="wordWrap">
           <bool>true</bool>
@@ -668,8 +674,11 @@ margin: 4px;
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
+         <property name="styleSheet">
+          <string notr="true">font-size:20px;</string>
+         </property>
          <property name="text">
-          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:20px;&quot;&gt;2. &lt;/span&gt;&lt;span style=&quot; font-size:20px; font-weight:600;&quot;&gt;Confirm&lt;/span&gt;&lt;span style=&quot; font-size:20px;&quot;&gt; backup settings&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          <string/>
          </property>
          <property name="textFormat">
           <enum>Qt::RichText</enum>
@@ -685,7 +694,7 @@ margin: 4px;
           </sizepolicy>
          </property>
          <property name="text">
-          <string>Backup folders</string>
+          <string>Selected backup folders</string>
          </property>
         </widget>
        </item>
@@ -985,7 +994,7 @@ color: #666666;
 }</string>
              </property>
              <property name="text">
-              <string>Folders will be stored in the Vault and you can check the status of your backups in Backup Centre.</string>
+              <string>Folders will be stored in backups and you can check the status of your backups in backup centre.</string>
              </property>
              <property name="wordWrap">
               <bool>true</bool>
