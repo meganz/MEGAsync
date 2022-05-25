@@ -45,6 +45,7 @@ private slots:
 private:
     void setAvatar(mega::MegaUserAlert *alert);
     QString formatRichString(QString str);
+    QString getUserFullName(mega::MegaUserAlert *alert);
 
 private:
     Ui::AlertItem *ui;

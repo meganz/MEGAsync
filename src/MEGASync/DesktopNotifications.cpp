@@ -74,27 +74,47 @@ QString DesktopNotifications::getItemsAddedText(mega::MegaUserAlert *info)
 {
     const int updatedItems = static_cast<int>(info->getNumber(1) + info->getNumber(0));
     auto FullNameRequest = mUserAttributes.value(QString::fromUtf8(info->getEmail()));
-    return tr("[A] added %n item", "", updatedItems)
-            .replace(QString::fromUtf8("[A]"), FullNameRequest->getFullName());
+    QString message(tr("[A] added %n item", "", updatedItems));
+    if(FullNameRequest)
+    {
+        return message
+                .replace(QString::fromUtf8("[A]"), FullNameRequest->getFullName());
+    }
+    else
+    {
+        return message
+                .replace(QString::fromUtf8("[A]"), QString::fromUtf8(info->getEmail()));
+    }
 }
 
 QString DesktopNotifications::createDeletedShareMessage(mega::MegaUserAlert* info)
 {
     QString message;
+    QString name;
+
     const bool someoneLeftTheFolder{info->getNumber(0) == 0};
     auto FullNameRequest = mUserAttributes.value(QString::fromUtf8(info->getEmail()));
-    auto FullName = FullNameRequest->getFullName();
+    if(FullNameRequest)
+    {
+        name = FullNameRequest->getFullName();
+    }
+    else
+    {
+        name = QString::fromUtf8(info->getEmail());
+    }
+
     if (someoneLeftTheFolder)
     {
         message = tr("[A] has left the shared folder")
-                .replace(QString::fromUtf8("[A]"), FullName);
+                .replace(QString::fromUtf8("[A]"), name);
     }
     else //Access for the user was removed by share owner
     {
-        message = FullName.isEmpty() ? tr("Access to shared folder was removed") :
-                                    tr("Access to shared folder was removed by [A]")
-                                    .replace(QString::fromUtf8("[A]"), FullName);
+        message = name.isEmpty() ? tr("Access to shared folder was removed") :
+                                       tr("Access to shared folder was removed by [A]")
+                                       .replace(QString::fromUtf8("[A]"), name);
     }
+
     return message;
 }
 
@@ -141,7 +161,9 @@ void DesktopNotifications::addUserAlertList(mega::MegaUserAlertList *alertList)
                         this, &DesktopNotifications::OnUserAttributesReady, Qt::UniqueConnection);
             }
 
-            if(fullNameUserAttributes && fullNameUserAttributes->getFullName().isEmpty())
+            //getFullName with false argument, as we want to know if the attribute is ready (if returs empty, it is not ready).
+            //If we called it with true argument, it would returns the user email.
+            if(fullNameUserAttributes && fullNameUserAttributes->getFullName(false).isEmpty())
             {
                 mPendingUserAlerts.insert(userEmail, alert->copy());
             }

@@ -8,27 +8,31 @@ namespace UserAttributes
 //FUL NAME REQUEST
 //
 //
-void FullNameAttributeRequest::onRequestFinish(mega::MegaApi*, mega::MegaRequest* incoming_request, mega::MegaError*)
+void FullNameAttributeRequest::onRequestFinish(mega::MegaApi*, mega::MegaRequest* incoming_request, mega::MegaError* e)
 {
-    if(incoming_request->getParamType() == mega::MegaApi::USER_ATTR_FIRSTNAME)
+    if(incoming_request->getParamType() == mega::MegaApi::USER_ATTR_FIRSTNAME
+            || incoming_request->getParamType() == mega::MegaApi::USER_ATTR_LASTNAME)
     {
-        mFirstName = QString::fromUtf8(incoming_request->getText());
+        mRequestReceived++;
 
-        if(mFirstName.isEmpty())
+        if(e->getErrorCode() == mega::MegaError::API_OK)
         {
-            mFirstName = QString::fromUtf8(incoming_request->getEmail());
+            if(incoming_request->getParamType() == mega::MegaApi::USER_ATTR_FIRSTNAME)
+            {
+                mFirstName = QString::fromUtf8(incoming_request->getText());
+
+                if(mFirstName.isEmpty())
+                {
+                    mFirstName = QString::fromUtf8(incoming_request->getEmail());
+                }
+            }
+            else if(incoming_request->getParamType() == mega::MegaApi::USER_ATTR_LASTNAME)
+            {
+                mLastName = QString::fromUtf8(incoming_request->getText());
+            }
         }
 
-        if(!mLastName.isEmpty())
-        {
-            emit attributeReady();
-        }
-    }
-    else if(incoming_request->getParamType() == mega::MegaApi::USER_ATTR_LASTNAME)
-    {
-        mLastName = QString::fromUtf8(incoming_request->getText());
-
-        if(!mFirstName.isEmpty())
+        if(mRequestReceived == 2)
         {
             emit attributeReady();
         }
@@ -37,6 +41,8 @@ void FullNameAttributeRequest::onRequestFinish(mega::MegaApi*, mega::MegaRequest
 
 void FullNameAttributeRequest::requestAttribute()
 {
+    mRequestReceived = 0;
+
     const auto megaApp = static_cast<MegaApplication*>(qApp);
     megaApp->getMegaApi()->getUserAttribute(mUserEmail.toStdString().c_str(),mega::ATTR_FIRSTNAME);
     megaApp->getMegaApi()->getUserAttribute(mUserEmail.toStdString().c_str(),mega::ATTR_LASTNAME);
@@ -44,20 +50,34 @@ void FullNameAttributeRequest::requestAttribute()
 
 void FullNameAttributeRequest::updateAttributes(mega::MegaUser *user)
 {
-    if (user->hasChanged(mega::MegaUser::CHANGE_TYPE_FIRSTNAME))
+    if(user->hasChanged(mega::MegaUser::CHANGE_TYPE_FIRSTNAME)
+            || user->hasChanged(mega::MegaUser::CHANGE_TYPE_LASTNAME))
     {
-        const auto megaApp = static_cast<MegaApplication*>(qApp);
-        megaApp->getMegaApi()->getUserAttribute(mUserEmail.toStdString().c_str(),mega::ATTR_FIRSTNAME);
-    }
-    else if(user->hasChanged(mega::MegaUser::CHANGE_TYPE_LASTNAME))
-    {
-        const auto megaApp = static_cast<MegaApplication*>(qApp);
-        megaApp->getMegaApi()->getUserAttribute(mUserEmail.toStdString().c_str(),mega::ATTR_LASTNAME);
+        if (user->hasChanged(mega::MegaUser::CHANGE_TYPE_FIRSTNAME))
+        {
+            const auto megaApp = static_cast<MegaApplication*>(qApp);
+            megaApp->getMegaApi()->getUserAttribute(mUserEmail.toStdString().c_str(),mega::ATTR_FIRSTNAME);
+        }
+        else if(user->hasChanged(mega::MegaUser::CHANGE_TYPE_LASTNAME))
+        {
+            const auto megaApp = static_cast<MegaApplication*>(qApp);
+            megaApp->getMegaApi()->getUserAttribute(mUserEmail.toStdString().c_str(),mega::ATTR_LASTNAME);
+        }
+
+        if(mRequestReceived > 0)
+        {
+            mRequestReceived--;
+        }
     }
 }
 
-QString FullNameAttributeRequest::getFullName()
+QString FullNameAttributeRequest::getFullName(bool returnEmailIfEmpty)
 {
+    if(!returnEmailIfEmpty && mRequestReceived < 2)
+    {
+        return QString();
+    }
+
     if(mFirstName.isEmpty() && mLastName.isEmpty())
     {
         return getEmail();
