@@ -11,8 +11,6 @@ public:
 
     void paint(QPainter* painter, const QStyleOptionViewItem& option,
                const QModelIndex& index) const override;
-private:
-    void initStyleOption(QStyleOptionViewItem *option, const QModelIndex &index) const override;
 };
 
 class NodeRowDelegate : public QStyledItemDelegate

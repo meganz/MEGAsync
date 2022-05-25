@@ -23,6 +23,9 @@ static constexpr int NEW_FOLDER_DISPLAY_TIME_MS = 10000; //10s in milliseconds
 
 const int NodeSelector::LABEL_ELIDE_MARGIN = 100;
 
+const char* NodeSelector::IN_SHARES = "Incoming shares";
+const char* NodeSelector::CLD_DRIVE = "Cloud drive";
+
 
 NodeSelector::NodeSelector(int selectMode, QWidget *parent) :
     QDialog(parent),
@@ -47,8 +50,8 @@ NodeSelector::NodeSelector(int selectMode, QWidget *parent) :
     connect(ui->bShowIncomingShares, &QPushButton::clicked, this, &NodeSelector::onbShowIncomingSharesClicked);
     connect(ui->bShowCloudDrive, &QPushButton::clicked,this , &NodeSelector::onbShowCloudDriveClicked);
 #else
-    ui->tabBar->addTab(tr("Cloud drive"));
-    ui->tabBar->addTab(tr("Incoming shares"));
+    ui->tabBar->addTab(tr(CLD_DRIVE));
+    ui->tabBar->addTab(tr(IN_SHARES));
     connect(ui->tabBar, &QTabBar::currentChanged, this, &NodeSelector::onTabSelected);
 #endif
 
@@ -57,12 +60,14 @@ NodeSelector::NodeSelector(int selectMode, QWidget *parent) :
     ui->tMegaFolders->setContextMenuPolicy(Qt::DefaultContextMenu);
     ui->tMegaFolders->setExpandsOnDoubleClick(false);
     ui->tMegaFolders->setSortingEnabled(true);
+    ui->tMegaFolders->setHeader(new MegaItemHeaderView(Qt::Horizontal));
     ui->tMegaFolders->header()->setFixedHeight(MegaItemModel::ROW_HEIGHT);
     ui->tMegaFolders->header()->moveSection(MegaItemModel::STATUS, MegaItemModel::NODE);
     ui->tMegaFolders->header()->setProperty("HeaderIconCenter", true);
     ui->tMegaFolders->setColumnWidth(MegaItemModel::COLUMN::STATUS, MegaItemModel::ROW_HEIGHT * 2);
     ui->tMegaFolders->setItemDelegate(new  NodeRowDelegate(ui->tMegaFolders));
     ui->tMegaFolders->setItemDelegateForColumn(MegaItemModel::STATUS, new IconDelegate(ui->tMegaFolders));
+    ui->tMegaFolders->setItemDelegateForColumn(MegaItemModel::USER, new IconDelegate(ui->tMegaFolders));
     ui->tMegaFolders->setExpanded(mProxyModel->getIndexFromHandle(MegaSyncApp->getRootNode()->getHandle()),true);
     ui->tMegaFolders->setTextElideMode(Qt::ElideMiddle);
 
@@ -142,12 +147,12 @@ void NodeSelector::nodesReady()
 
 void NodeSelector::showEvent(QShowEvent* )
 {
-    ui->tMegaFolders->setColumnWidth(MegaItemModel::COLUMN::NODE, qRound(ui->tMegaFolders->width() * 0.6));
+    ui->tMegaFolders->setColumnWidth(MegaItemModel::COLUMN::NODE, qRound(ui->tMegaFolders->width() * 0.57));
 }
 
 void NodeSelector::resizeEvent(QResizeEvent *)
 {
-    ui->tMegaFolders->setColumnWidth(MegaItemModel::COLUMN::NODE, qRound(ui->tMegaFolders->width() * 0.6));
+    ui->tMegaFolders->setColumnWidth(MegaItemModel::COLUMN::NODE, qRound(ui->tMegaFolders->width() * 0.57));
 }
 
 void NodeSelector::mousePressEvent(QMouseEvent *event)
@@ -350,7 +355,14 @@ void NodeSelector::changeEvent(QEvent *event)
         ui->retranslateUi(this);
         mNewFolderUi->retranslateUi(mNewFolder);
         mNewFolderUi->errorLabel->setText(mNewFolderUi->errorLabel->text().arg(FORBIDDEN));
-        nodesReady();
+
+        if(!ui->tMegaFolders->rootIndex().isValid())
+        {
+            if(isCloudDrive())
+                ui->lFolderName->setText(tr(CLD_DRIVE));
+            else
+                ui->lFolderName->setText(tr(IN_SHARES));
+        }
     }
     QDialog::changeEvent(event);
 }
@@ -702,9 +714,9 @@ void NodeSelector::setRootIndex(const QModelIndex &idx)
     if(!idx.isValid())
     {
         if(isCloudDrive())
-            ui->lFolderName->setText(tr("Cloud drive"));
+            ui->lFolderName->setText(tr(CLD_DRIVE));
         else
-            ui->lFolderName->setText(tr("Incoming shares"));
+            ui->lFolderName->setText(tr(IN_SHARES));
 
         ui->lFolderName->setToolTip(QString());
 
@@ -852,28 +864,36 @@ void NodeSelector::Navigation::removeFromForward(const mega::MegaHandle &handle)
         return;
 
     auto megaApi = MegaSyncApp->getMegaApi();
-    auto node = std::unique_ptr<mega::MegaNode>(megaApi->getNodeByHandle(handle));
-    if(!node)
-        return;
+    auto p_node = std::unique_ptr<mega::MegaNode>(megaApi->getNodeByHandle(handle));
 
-    auto parentNode = std::unique_ptr<mega::MegaNode>(megaApi->getParentNode(node.get()));
-    if(!parentNode)
-        return;
-
-    //if we are visiting common parent node we only have to store the new one and remove the old
-    for(auto it = forwardHandles.begin(); it != forwardHandles.end(); ++it)
+    QMap<MegaHandle, MegaHandle> parentHandles;
+    while(p_node)
     {
-        auto lastForwardNode = std::unique_ptr<mega::MegaNode>(megaApi->getNodeByHandle(*it));
-        if(!lastForwardNode)
-           return;
+        MegaHandle actualHandle = p_node->getHandle();
+        p_node.reset(megaApi->getParentNode(p_node.get()));
+        MegaHandle parentHandle= INVALID_HANDLE;
+        if(p_node)
+            parentHandle = p_node->getHandle();
+        parentHandles.insert(parentHandle, actualHandle);
+    }
 
-        auto brotherParentNode = std::unique_ptr<mega::MegaNode>(megaApi->getParentNode(lastForwardNode.get()));
-        if(!brotherParentNode)
-          return;
+    p_node.reset(megaApi->getNodeByHandle(forwardHandles.last()));
+    QMap<MegaHandle, MegaHandle> actualListParentHandles;
+    while(p_node)
+    {
+        MegaHandle actualHandle = p_node->getHandle();
+        p_node.reset(megaApi->getParentNode(p_node.get()));
+        MegaHandle parentHandle= INVALID_HANDLE;
+        if(p_node)
+            parentHandle = p_node->getHandle();
+        actualListParentHandles.insert(parentHandle, actualHandle);
+    }
 
-        if(brotherParentNode->getHandle() == parentNode->getHandle())
+    for(auto it = actualListParentHandles.begin(); it != actualListParentHandles.end(); ++it)
+    {
+        if(parentHandles.contains(it.key()))
         {
-            forwardHandles.erase(it, forwardHandles.end());
+            forwardHandles.clear();
             return;
         }
     }
@@ -887,22 +907,12 @@ void NodeSelector::Navigation::remove(const mega::MegaHandle &handle)
 
 void NodeSelector::Navigation::appendToBackward(const mega::MegaHandle& handle)
 {
-    if(backwardHandles.isEmpty() || backwardHandles.last() != handle)
-    {
-        for(auto it = backwardHandles.begin(); it != backwardHandles.end(); ++it)
-        {
-            if(*it == handle)
-            {
-              backwardHandles.erase(it, backwardHandles.end());
-              break;
-            }
-        }
+    if(!backwardHandles.contains(handle))
         backwardHandles.append(handle);
-    }
 }
 
 void NodeSelector::Navigation::appendToForward(const mega::MegaHandle &handle)
 {
-    if(forwardHandles.isEmpty() || forwardHandles.last() != handle)
+    if(!forwardHandles.contains(handle))
         forwardHandles.append(handle);
 }

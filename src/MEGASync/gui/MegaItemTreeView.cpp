@@ -3,6 +3,7 @@
 #include "MegaApplication.h"
 #include "MegaItemProxyModel.h"
 #include "Platform.h"
+#include "MegaItemModel.h"
 
 #include <QPainter>
 #include <QMenu>
@@ -131,3 +132,25 @@ void MegaItemTreeView::getMegaLink()
 {
     emit getMegaLinkClicked();
 }
+
+MegaItemHeaderView::MegaItemHeaderView(Qt::Orientation orientation, QWidget *parent) :
+    QHeaderView(orientation, parent)
+{
+    setDefaultAlignment(Qt::AlignLeft);
+    setStretchLastSection(true);
+    setDefaultSectionSize(35);
+}
+
+void MegaItemHeaderView::paintSection(QPainter *painter, const QRect &rect, int logicalIndex) const
+{
+    QRect vrect = rect; 
+
+#ifdef _WIN32
+    if(logicalIndex == MegaItemModel::USER)
+        vrect.moveTo(vrect.x() - 2,vrect.y());
+#endif
+
+    QHeaderView::paintSection(painter, vrect, logicalIndex);
+}
+
+
