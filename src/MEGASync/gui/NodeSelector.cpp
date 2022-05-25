@@ -555,7 +555,7 @@ void NodeSelector::onbShowIncomingSharesClicked()
     if(mProxyModel)
     {
         saveExpandedItems();
-        mProxyModel->showOnlyInShares();
+        mProxyModel->showOnlyInShares(mSelectMode == NodeSelector::SYNC_SELECT);
         restoreExpandedItems();
         checkNewFolderButtonVisibility();
         checkBackForwardButtons();

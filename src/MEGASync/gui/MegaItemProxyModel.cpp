@@ -23,9 +23,9 @@ void MegaItemProxyModel::showOnlyCloudDrive()
     invalidateFilter();
 }
 
-void MegaItemProxyModel::showOnlyInShares()
+void MegaItemProxyModel::showOnlyInShares(bool isSyncSelect)
 {
-    mFilter.showOnlyInShares();
+    mFilter.showOnlyInShares(isSyncSelect);
     invalidateFilter();
 }
 

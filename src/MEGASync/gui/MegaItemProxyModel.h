@@ -22,7 +22,7 @@ public:
         Filter() : showInShares(false), showCloudDrive(true), showReadOnly(true),
                     showReadWriteFolders(true){};
         void showOnlyCloudDrive(){showInShares=false; showCloudDrive = true;}
-        void showOnlyInShares(){showInShares=true; showCloudDrive = false;}
+        void showOnlyInShares(bool isSyncSelect = true){showInShares = true; showCloudDrive = false; showReadWriteFolders = !isSyncSelect;}
         bool isShowOnlyInShares(){return showInShares && !showCloudDrive;}
         bool isShowOnlyCloudDrive(){return !showInShares && showCloudDrive;}
     };
@@ -30,7 +30,7 @@ public:
     explicit MegaItemProxyModel(QObject* parent = nullptr);
     void setFilter(const Filter& f);
     void showOnlyCloudDrive();
-    void showOnlyInShares();
+    void showOnlyInShares(bool isSyncSelect = true);
     void showReadOnlyFolders(bool value);
     void showReadWriteFolders(bool value);
 
