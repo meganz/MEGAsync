@@ -64,6 +64,14 @@ BackupsWizard::BackupsWizard(QWidget* parent) :
     mUi->lvFoldersStep1->setModel(mFoldersProxyModel);
     mUi->lvFoldersStep2->setModel(mFoldersProxyModel);
 
+    QString titleStep1 = tr("1. [B]Select[/B] folders to backup");
+    titleStep1.replace(QString::fromUtf8("[B]"), QString::fromUtf8("<b>"));
+    titleStep1.replace(QString::fromUtf8("[/B]"), QString::fromUtf8("</b>"));
+    QString titleStep2 = tr("2. [B]Confirm[/B] backup settings");
+    titleStep2.replace(QString::fromUtf8("[B]"), QString::fromUtf8("<b>"));
+    titleStep2.replace(QString::fromUtf8("[/B]"), QString::fromUtf8("</b>"));
+    mUi->lTitleStep1->setText(titleStep1);
+    mUi->lTitleStep2->setText(titleStep2);
     // Go to Step 1
     setupStep1();
 
