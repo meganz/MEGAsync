@@ -48,7 +48,14 @@ void MoveOrRenameCannotOccurHeader::refreshCaseUi()
 {
     setLeftTitleText(tr("Cannot move or rename"));
     addFileName();
-    setTitleDescriptionText(tr("Filesystem error preventing file acces."));
+    if (getData().consultData()->mDetectedMEGASide)
+    {
+        setTitleDescriptionText(tr("A move or rename was detected in MEGA, but could not be replicated in the local filesystem."));
+    }
+    else
+    {
+        setTitleDescriptionText(tr("A move or rename was detected in the local filesystem, but could not be replicated in MEGA."));
+    }
 }
 
 //Delete or Move Waiting onScanning

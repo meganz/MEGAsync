@@ -179,6 +179,7 @@ bool StalledIssue::initCloudIssue()
 void StalledIssue::fillIssue(const mega::MegaSyncStall *stall)
 {
     mReason = stall->reason();
+    mDetectedMEGASide = stall->detectedCloudSide();
 
     auto localSourcePathProblem = static_cast<mega::MegaSyncStall::SyncPathProblem>(stall->pathProblem(false,0));
     auto localTargetPathProblem = static_cast<mega::MegaSyncStall::SyncPathProblem>(stall->pathProblem(false,1));
@@ -282,7 +283,7 @@ QString StalledIssue::getFileName() const
 }
 
 bool StalledIssue::operator==(const StalledIssue &data)
-{   
+{
     bool equal(true);
 
     equal &= (mLocalData == data.getLocalData());

@@ -156,7 +156,10 @@ void NameConflict::onActionClicked(int actionId)
             QPointer<NameConflict> currentWidget = QPointer<NameConflict>(this);
 
             if (QMegaMessageBox::warning(nullptr, QString::fromUtf8("MEGAsync"),
-                                     tr("Are you sure you want to remote the %1 %2?").arg(info.isFile() ? tr("file") : tr("folder")).arg(info.fileName()),
+                                     tr("Are you sure you want to remove the %1 %2 %3?")
+                                     .arg(mData.isCloud ? tr("remote") : tr("local"))
+                                     .arg(info.isFile() ? tr("file") : tr("folder"))
+                                     .arg(info.fileName()),
                                      QMessageBox::Yes | QMessageBox::No, QMessageBox::No)
                     == QMessageBox::Yes
                     && currentWidget)

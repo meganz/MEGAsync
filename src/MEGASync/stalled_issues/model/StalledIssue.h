@@ -76,7 +76,7 @@ class StalledIssue
 {
 public:
     StalledIssue(){}
-    StalledIssue(const StalledIssue& tdr) : mLocalData(tdr.mLocalData), mCloudData(tdr.mCloudData), mReason(tdr.getReason()), mIsSolved(tdr.mIsSolved)  {}
+    StalledIssue(const StalledIssue& tdr) : mLocalData(tdr.mLocalData), mCloudData(tdr.mCloudData), mReason(tdr.getReason()), mIsSolved(tdr.mIsSolved), mDetectedMEGASide(tdr.mDetectedMEGASide)  {}
     StalledIssue(const mega::MegaSyncStall *stallIssue);
 
     //Don´t think it´s going to be more stalled issues than 2 (local and remote)
@@ -94,6 +94,8 @@ public:
     bool isSolved() const;
     void setIsSolved(bool isCloud);
 
+    bool mDetectedMEGASide = false;
+
 protected:
     bool initCloudIssue();
     const QExplicitlySharedDataPointer<StalledIssueData>& getLocalData() const;
@@ -107,7 +109,6 @@ protected:
 
     mega::MegaSyncStall::SyncStallReason mReason = mega::MegaSyncStall::SyncStallReason::NoReason;
     bool mIsSolved = false;
-
 };
 
 Q_DECLARE_METATYPE(StalledIssue)
