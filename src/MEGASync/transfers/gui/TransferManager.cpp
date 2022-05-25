@@ -183,10 +183,6 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
             &TransfersManagerSortFilterProxyModel::searchNumbersChanged,
             this, &TransferManager::refreshSearchStats);
 
-    connect(mUi->wTransfers->getProxyModel(),
-            &TransfersManagerSortFilterProxyModel::cancelableTransfersChanged,
-            this, &TransferManager::checkCancelAllButtonVisibility);
-
     connect(mUi->wTransfers, &TransfersWidget::pauseResumeVisibleRows,
                 this, &TransferManager::onPauseResumeVisibleRows);
 
@@ -239,7 +235,6 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
 
     // Init state
     onUpdatePauseState(mModel->areAllPaused());
-    mUi->bPause->setChecked(mModel->areAllPaused());
 
     auto storageState = MegaSyncApp->getAppliedStorageState();
     auto transferQuotaState = MegaSyncApp->getTransferQuotaState();
@@ -362,36 +357,28 @@ void TransferManager::onUpdatePauseState(bool isPaused)
     {
         mUi->bPause->setToolTip(tr("Resume all"));
         mUi->lPaused->setText(tr("All Paused"));
+
+        if(!mUi->bPause->isChecked())
+        {
+           mUi->bPause->blockSignals(true);
+           mUi->bPause->setChecked(true);
+           mUi->bPause->blockSignals(false);
+        }
     }
     else
     {
         mUi->bPause->setToolTip(tr("Pause all"));
         mUi->lPaused->clear();
+
+        if(mUi->bPause->isChecked())
+        {
+            mUi->bPause->blockSignals(true);
+            mUi->bPause->setChecked(false);
+            mUi->bPause->blockSignals(false);
+        }
     }
 
     mUi->lPaused->setVisible(isPaused && !mUi->lStorageOverQuota->isVisible() && !mUi->pTransferOverQuota->isVisible());
-}
-
-void TransferManager::checkCancelAllButtonVisibility()
-{
-    auto sizePolicy = mUi->bCancelClearAll->sizePolicy();
-    if(!sizePolicy.retainSizeWhenHidden())
-    {
-        sizePolicy.setRetainSizeWhenHidden(true);
-        mUi->bCancelClearAll->setSizePolicy(sizePolicy);
-    }
-
-    //Get the most updated transferCount
-    mTransfersCount = mModel->getTransfersCount();
-    if((mTransfersCount.completedDownloads() + mTransfersCount.completedUploadBytes) == 0
-            && (mTransfersCount.pendingDownloads + mTransfersCount.pendingUploads == 0))
-    {
-        mUi->bCancelClearAll->setVisible(false);
-    }
-    else
-    {
-        mUi->bCancelClearAll->setVisible(true);
-    }
 }
 
 void TransferManager::onPauseResumeVisibleRows(bool isPaused)
@@ -835,7 +822,7 @@ void TransferManager::on_tSeePlans_clicked()
     QtConcurrent::run(QDesktopServices::openUrl, QUrl(url));
 }
 
-void TransferManager::on_bPause_clicked()
+void TransferManager::on_bPause_toggled()
 {
     auto newState = !mModel->areAllPaused();
     pauseResumeTransfers(newState);
@@ -1079,8 +1066,9 @@ void TransferManager::toggleTab(TM_TAB newTab)
         }
 
         TransfersWidget::HeaderInfo headerInfo;
+        auto proxyModel(mUi->wTransfers->getProxyModel());
 
-        QString cancelBase(tr("Cancel and clear "));
+        QString cancelBase(proxyModel->isAnyCancelable() ? tr("Cancel and clear ") : tr("Clear "));
 
         // Show pause button on tab except completed tab,
         // and set Clear All button string,

@@ -119,7 +119,7 @@ QGroupBox::title
     border: none;
     text-align: left;
     qProperty-iconSize: 24px;
-    padding-left:-1px;
+    padding-left:0px;
 }
 
 #wMediaType QPushButton, #wSearch QPushButton
@@ -540,7 +540,7 @@ QToolButton
             <property name="hover_selected" stdset="0">
              <bool>true</bool>
             </property>
-            <property name="icon_prefix" stdset="0">
+            <property name="default_icon" stdset="0">
              <url>
               <string>qrc:/images/transfer_manager/sidebar/sidebar_pause_ico_default.png</string>
              </url>
@@ -565,7 +565,7 @@ QToolButton
               <height>32</height>
              </size>
             </property>
-            <property name="icon_prefix" stdset="0">
+            <property name="default_icon" stdset="0">
              <url>
               <string>qrc:/images/transfer_manager/sidebar/sidebar_search_ico_default.png</string>
              </url>
@@ -633,7 +633,7 @@ QToolButton
              <iconset resource="../../../gui/Resources_linux.qrc">
               <normaloff>:/images/transfer_manager/sidebar/delete_search_ico_default.png</normaloff>:/images/transfer_manager/sidebar/delete_search_ico_default.png</iconset>
             </property>
-            <property name="icon_prefix" stdset="0">
+            <property name="default_icon" stdset="0">
              <url>
               <string>qrc:/images/transfer_manager/sidebar/delete_search_ico_default.png</string>
              </url>
@@ -725,7 +725,7 @@ QToolButton
               <property name="flat">
                <bool>false</bool>
               </property>
-              <property name="icon_prefix" stdset="0">
+              <property name="default_icon" stdset="0">
                <url>
                 <string>qrc:/images/transfer_manager/sidebar/all_transfers_ico_default.png</string>
                </url>
@@ -818,7 +818,7 @@ QToolButton
               <property name="autoDefault">
                <bool>false</bool>
               </property>
-              <property name="icon_prefix" stdset="0">
+              <property name="default_icon" stdset="0">
                <url>
                 <string>qrc:/images/transfer_manager/sidebar/downloads_ico_default.png</string>
                </url>
@@ -911,7 +911,7 @@ QToolButton
               <property name="autoDefault">
                <bool>false</bool>
               </property>
-              <property name="icon_prefix" stdset="0">
+              <property name="default_icon" stdset="0">
                <url>
                 <string>qrc:/images/transfer_manager/sidebar/uploads_ico_default.png</string>
                </url>
@@ -1007,7 +1007,7 @@ QToolButton
               <property name="autoDefault">
                <bool>false</bool>
               </property>
-              <property name="icon_prefix" stdset="0">
+              <property name="default_icon" stdset="0">
                <url>
                 <string>qrc:/images/transfer_manager/sidebar/finished_ico_default.png</string>
                </url>
@@ -1103,7 +1103,7 @@ QToolButton
               <property name="autoDefault">
                <bool>false</bool>
               </property>
-              <property name="icon_prefix" stdset="0">
+              <property name="default_icon" stdset="0">
                <url>
                 <string>qrc:/images/transfer_manager/sidebar/sidebar_failed_ico_default.png</string>
                </url>
@@ -1220,7 +1220,7 @@ QToolButton
               <property name="autoDefault">
                <bool>false</bool>
               </property>
-              <property name="icon_prefix" stdset="0">
+              <property name="default_icon" stdset="0">
                <url>
                 <string>qrc:/images/transfer_manager/sidebar/compressed_default.png</string>
                </url>
@@ -1313,7 +1313,7 @@ QToolButton
               <property name="autoDefault">
                <bool>false</bool>
               </property>
-              <property name="icon_prefix" stdset="0">
+              <property name="default_icon" stdset="0">
                <url>
                 <string>qrc:/images/transfer_manager/sidebar/text_default.png</string>
                </url>
@@ -1403,7 +1403,7 @@ QToolButton
               <property name="autoDefault">
                <bool>false</bool>
               </property>
-              <property name="icon_prefix" stdset="0">
+              <property name="default_icon" stdset="0">
                <url>
                 <string>qrc:/images/transfer_manager/sidebar/image_default.png</string>
                </url>
@@ -1493,7 +1493,7 @@ QToolButton
               <property name="autoDefault">
                <bool>false</bool>
               </property>
-              <property name="icon_prefix" stdset="0">
+              <property name="default_icon" stdset="0">
                <url>
                 <string>qrc:/images/transfer_manager/sidebar/video_default.png</string>
                </url>
@@ -1583,7 +1583,7 @@ QToolButton
               <property name="autoDefault">
                <bool>false</bool>
               </property>
-              <property name="icon_prefix" stdset="0">
+              <property name="default_icon" stdset="0">
                <url>
                 <string>qrc:/images/transfer_manager/sidebar/audio_default.png</string>
                </url>
@@ -1673,7 +1673,7 @@ QToolButton
               <property name="autoDefault">
                <bool>false</bool>
               </property>
-              <property name="icon_prefix" stdset="0">
+              <property name="default_icon" stdset="0">
                <url>
                 <string>qrc:/images/transfer_manager/sidebar/generic_default.png</string>
                </url>
@@ -1790,7 +1790,7 @@ QToolButton
               <property name="autoDefault">
                <bool>false</bool>
               </property>
-              <property name="icon_prefix" stdset="0">
+              <property name="default_icon" stdset="0">
                <url>
                 <string>qrc:/images/transfer_manager/sidebar/search_result_default.png</string>
                </url>
@@ -1809,7 +1809,7 @@ QToolButton
                <iconset resource="../../../gui/Resources_linux.qrc">
                 <normaloff>:/images/transfer_manager/sidebar/delete_search_result_default.png</normaloff>:/images/transfer_manager/sidebar/delete_search_result_default.png</iconset>
               </property>
-              <property name="icon_prefix" stdset="0">
+              <property name="default_icon" stdset="0">
                <url>
                 <string>qrc:/images/transfer_manager/sidebar/delete_search_result_default.png</string>
                </url>
@@ -1964,7 +1964,7 @@ QToolButton
               <height>24</height>
              </size>
             </property>
-            <property name="icon_prefix" stdset="0">
+            <property name="default_icon" stdset="0">
              <url>
               <string>qrc:/images/transfer_manager/sidebar/cancel_all_ico_default.png</string>
              </url>
@@ -2402,7 +2402,7 @@ QToolButton
            </property>
            <property name="sizeHint" stdset="0">
             <size>
-             <width>15</width>
+             <width>0</width>
              <height>20</height>
             </size>
            </property>
@@ -2420,7 +2420,7 @@ QToolButton
             <iconset resource="../../../gui/Resources_linux.qrc">
              <normaloff>:/images/transfer_manager/toolbar/import_toolbar_ico_default.png</normaloff>:/images/transfer_manager/toolbar/import_toolbar_ico_default.png</iconset>
            </property>
-           <property name="icon_prefix" stdset="0">
+           <property name="default_icon" stdset="0">
             <url>
              <string>qrc:/images/transfer_manager/toolbar/import_toolbar_ico_default.png</string>
             </url>
@@ -2439,7 +2439,7 @@ QToolButton
             <iconset resource="../../../gui/Resources_linux.qrc">
              <normaloff>:/images/transfer_manager/toolbar/download_toolbar_ico_default.png</normaloff>:/images/transfer_manager/toolbar/download_toolbar_ico_default.png</iconset>
            </property>
-           <property name="icon_prefix" stdset="0">
+           <property name="default_icon" stdset="0">
             <url>
              <string>qrc:/images/transfer_manager/toolbar/download_toolbar_ico_default.png</string>
             </url>
@@ -2455,7 +2455,7 @@ QToolButton
             <iconset resource="../../../gui/Resources_linux.qrc">
              <normaloff>:/images/transfer_manager/toolbar/preferences_toolbar_ico_default.png</normaloff>:/images/transfer_manager/toolbar/preferences_toolbar_ico_default.png</iconset>
            </property>
-           <property name="icon_prefix" stdset="0">
+           <property name="default_icon" stdset="0">
             <url>
              <string>qrc:/images/transfer_manager/toolbar/preferences_toolbar_ico_default.png</string>
             </url>
@@ -2474,7 +2474,7 @@ QToolButton
             <iconset resource="../../../gui/Resources_linux.qrc">
              <normaloff>:/images/transfer_manager/toolbar/upload_toolbar_ico_default.png</normaloff>:/images/transfer_manager/toolbar/upload_toolbar_ico_default.png</iconset>
            </property>
-           <property name="icon_prefix" stdset="0">
+           <property name="default_icon" stdset="0">
             <url>
              <string>qrc:/images/transfer_manager/toolbar/upload_toolbar_ico_default.png</string>
             </url>

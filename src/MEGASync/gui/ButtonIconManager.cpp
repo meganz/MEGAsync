@@ -7,7 +7,7 @@
 
 #include <QDebug>
 
-const char* ButtonIconManager::ICON_PREFIX = "icon_prefix";
+const char* ButtonIconManager::ICON_PREFIX = "default_icon";
 const char* ButtonIconManager::HOVER_SELECTED_FLAG = "hover_selected";
 const char* ButtonIconManager::CHECK_STATE = "check_state";
 const char* ButtonIconManager::IGNORE_BUTTON = "ignore_button_manager";
@@ -21,10 +21,7 @@ void ButtonIconManager::addButton(QAbstractButton *button)
     if(!button->property(IGNORE_BUTTON).toBool())
     {
         button->installEventFilter(this);
-        connect(button, &QAbstractButton::toggled, this, &ButtonIconManager::onButtonChecked);
-
         setDefaultIcon(button);
-
         button->setProperty(CHECK_STATE, button->isChecked());
     }
 }
@@ -144,20 +141,8 @@ void ButtonIconManager::setSelectedIcon(QAbstractButton *button)
             changeButtonTextColor(button, 1.0 - mSettings.opacityGap);
         }
 
-
         button->setIcon(newIcon);
     }
-}
-
-void ButtonIconManager::onButtonChecked()
-{
-    QAbstractButton * button = qobject_cast<QAbstractButton*>(sender());
-    if (!button)
-    {
-        return;
-    }
-
-    setSelectedIcon(button);
 }
 
 void ButtonIconManager::changeButtonTextColor(QAbstractButton* button, double alphaValue)

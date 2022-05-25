@@ -621,6 +621,12 @@ void MegaTransferView::updateContextMenu(bool enablePause, bool enableResume, bo
 
 void MegaTransferView::mouseReleaseEvent(QMouseEvent* event)
 {
+    auto pressedIndex = indexAt(event->pos());
+    if(!pressedIndex.isValid())
+    {
+        clearSelection();
+    }
+
     QTreeView::mouseReleaseEvent(event);
 }
 

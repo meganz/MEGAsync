@@ -368,10 +368,13 @@ void TransfersManagerSortFilterProxyModel::onRowsAboutToBeRemoved(const QModelIn
            {
               removeNonSyncedTransferFromCounter(d->mTag);
            }
+           else if(d->isFinished())
+           {
+               removeCompletedTransferFromCounter(d->mTag);
+           }
 
            removeActiveTransferFromCounter(d->mTag);
            removePausedTransferFromCounter(d->mTag);
-
        }
    }
 

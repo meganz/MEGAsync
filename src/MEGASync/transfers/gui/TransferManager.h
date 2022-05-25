@@ -145,7 +145,7 @@ private slots:
     void on_tAllResults_clicked();
     void on_tDlResults_clicked();
     void on_tUlResults_clicked();
-    void on_bPause_clicked();
+    void on_bPause_toggled();
     void pauseResumeTransfers(bool isPaused);
 
     void onStalledIssuesStateChanged(bool state);
@@ -167,7 +167,6 @@ private slots:
 
     void onUpdatePauseState(bool isPaused);
     void onPauseStateChangedByTransferResume();
-    void checkCancelAllButtonVisibility();
     void onPauseResumeVisibleRows(bool isPaused);
     void showQuotaStorageDialogs(bool isPaused);
     void onCancelVisibleRows();
