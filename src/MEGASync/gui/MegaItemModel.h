@@ -76,12 +76,12 @@ protected:
     int mRequiredRights;
     bool mDisplayFiles;
     bool mSyncSetupMode;
+    bool mDisableBackups;
 
 private:
     int insertPosition(const std::unique_ptr<mega::MegaNode>& node);
+    mega::MegaApi* mMegaApi;
     std::unique_ptr<mega::QTMegaRequestListener> mDelegateListener;
-
-
 };
 
 #endif // MEGAITEMMODEL_H

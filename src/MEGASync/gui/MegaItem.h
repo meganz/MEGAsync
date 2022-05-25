@@ -41,6 +41,7 @@ public:
     int getStatus();
     bool isSyncable();
     bool isRoot();
+    bool isVault();
     int insertPosition(const std::unique_ptr<mega::MegaNode> &node);
     void insertNode(std::unique_ptr<mega::MegaNode> node, int index);
     void removeNode(std::shared_ptr<mega::MegaNode> node);
@@ -74,6 +75,7 @@ protected:
 
 private:
     void calculateSyncStatus(const QStringList& folders);
+    mega::MegaApi* mMegaApi;
     std::unique_ptr<mega::QTMegaRequestListener> mDelegateListener;
 
 };

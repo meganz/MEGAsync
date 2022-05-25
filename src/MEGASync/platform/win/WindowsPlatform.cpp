@@ -1486,12 +1486,13 @@ void WindowsPlatform::initMenu(QMenu* m)
                                            "margin: 6px 10px 6px 10px;"
                                            "background-color: rgba(0, 0, 0, 0.1);"
                                        "}"
-                                       // For vanilla QMenus (only in TransferManager)
+                                       // For vanilla QMenus (only in TransferManager and MegaItemTreeView (NodeSelector))
                                        "QMenu::item {"
                                            "font-family: Lato;"
                                            "font-size: 14px;"
                                            "margin: 6px 16px 6px 16px;"
                                            "color: #777777;"
+                                           "padding-right: 16px;"
                                        "}"
                                        "QMenu::item:selected {"
                                            "color: #000000;"

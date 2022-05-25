@@ -668,6 +668,12 @@
         <file>images/password/ico_eye_reveal_disabled.png</file>
         <file>images/password/ico_eye_reveal_disabled@2x.png</file>
         <file>images/password/ico_eye_reveal_disabled@3x.png</file>
+        <file>images/node_selector/cloud@3x.png</file>
+        <file>images/node_selector/cloud@2x.png</file>
+        <file>images/node_selector/cloud.png</file>
+        <file>images/node_selector/Backups_small_ico.png</file>
+        <file>images/node_selector/Backups_small_ico@2x.png</file>
+        <file>images/node_selector/Backups_small_ico@3x.png</file>
         <file>images/small_folder@2x.png</file>
         <file>images/small_folder@3x.png</file>
         <file>images/small_folder.png</file>

@@ -44,7 +44,7 @@ void MegaItemTreeView::drawBranches(QPainter *painter, const QRect &rect, const 
 {
     QModelIndex idx = getIndexFromSourceModel(index);
     MegaItem *item = static_cast<MegaItem*>(idx.internalPointer());
-    if(item && item->isRoot())
+    if(item && (item->isRoot() || item->isVault()))
     {
         QStyleOptionViewItem opt = viewOptions();
         opt.rect = rect;
@@ -63,7 +63,7 @@ void MegaItemTreeView::mousePressEvent(QMouseEvent *event)
     QPoint pos = event->pos();
     QModelIndex index = getIndexFromSourceModel(indexAt(pos));
     MegaItem *item = static_cast<MegaItem*>(index.internalPointer());
-    if(item && item->isRoot())
+    if(item && (item->isRoot() || item->isVault()))
     {   //this line avoid to cloud drive being collapsed and at same time it allows to select it.
         QAbstractItemView::mousePressEvent(event);
     }
@@ -103,7 +103,7 @@ void MegaItemTreeView::contextMenuEvent(QContextMenuEvent *event)
         Platform::initMenu(&customMenu);
         auto node = std::unique_ptr<MegaNode>(mMegaApi->getNodeByHandle(getSelectedNodeHandle()));
         auto parent = std::unique_ptr<MegaNode>(mMegaApi->getParentNode(node.get()));
-
+        auto proxyModel = static_cast<MegaItemProxyModel*>(model());
         if (parent && node)
         {
             int access = mMegaApi->getAccess(node.get());
@@ -113,7 +113,7 @@ void MegaItemTreeView::contextMenuEvent(QContextMenuEvent *event)
                 customMenu.addAction(tr("Get MEGA link"), this, SLOT(getMegaLink()));
             }
 
-            if (access >= MegaShare::ACCESS_FULL)
+            if (access >= MegaShare::ACCESS_FULL && !proxyModel->isShowOnlyVault())
             {
                 customMenu.addAction(tr("Delete"), this, SLOT(removeNode()));
             }
