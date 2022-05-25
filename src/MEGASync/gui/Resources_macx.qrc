@@ -594,9 +594,6 @@
         <file>images/node_selector/small-chat-files-disabled.png</file>
         <file>images/node_selector/small-chat-files-disabled@2x.png</file>
         <file>images/node_selector/small-chat-files-disabled@3x.png</file>
-        <file>images/node_selector/small-folder.png</file>
-        <file>images/node_selector/small-folder@2x.png</file>
-        <file>images/node_selector/small-folder@3x.png</file>
         <file>images/node_selector/small-folder-camera-sync-disabled.png</file>
         <file>images/node_selector/small-folder-camera-sync-disabled@2x.png</file>
         <file>images/node_selector/small-folder-camera-sync-disabled@3x.png</file>
@@ -629,5 +626,11 @@
         <file>images/password/ico_eye_reveal_disabled.png</file>
         <file>images/password/ico_eye_reveal_disabled@2x.png</file>
         <file>images/password/ico_eye_reveal_disabled@3x.png</file>
+        <file>images/small_folder@2x.png</file>
+        <file>images/small_folder@3x.png</file>
+        <file>images/small_folder.png</file>
+        <file>images/node_selector/icon_small_user.png</file>
+        <file>images/node_selector/icon_small_user@2x.png</file>
+        <file>images/node_selector/icon_small_user@3x.png</file>
     </qresource>
 </RCC>

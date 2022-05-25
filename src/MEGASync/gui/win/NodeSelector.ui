@@ -412,12 +412,13 @@ padding-top: 2px;
 
 QHeaderView::section {
 background: #FFFFFF;
-padding-left: 8px;
 border-left:1px solid #dadada;			
 border-top:0 px;
 border-bottom:0px;					 					 				 					 	
 border-right:0px;
+padding-left:3px;
 }
+
 
 QHeaderView::section::first
 {

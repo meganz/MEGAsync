@@ -38,8 +38,8 @@ public:
     enum COLUMN{
       NODE = 0,
       STATUS,
-      DATE,
       USER,
+      DATE,
       last
     };
 
