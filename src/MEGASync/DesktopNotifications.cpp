@@ -163,7 +163,7 @@ void DesktopNotifications::addUserAlertList(mega::MegaUserAlertList *alertList)
 
             //getFullName with false argument, as we want to know if the attribute is ready (if returs empty, it is not ready).
             //If we called it with true argument, it would returns the user email.
-            if(fullNameUserAttributes && fullNameUserAttributes->getFullName(false).isEmpty())
+            if(fullNameUserAttributes && !fullNameUserAttributes->areAttributesReady())
             {
                 mPendingUserAlerts.insert(userEmail, alert->copy());
             }

@@ -71,19 +71,19 @@ void FullNameAttributeRequest::updateAttributes(mega::MegaUser *user)
     }
 }
 
-QString FullNameAttributeRequest::getFullName(bool returnEmailIfEmpty)
+QString FullNameAttributeRequest::getFullName()
 {
-    if(!returnEmailIfEmpty && mRequestReceived < 2)
-    {
-        return QString();
-    }
-
     if(mFirstName.isEmpty() && mLastName.isEmpty())
     {
         return getEmail();
     }
 
     return QString(QString::fromUtf8("%1 %2")).arg(mFirstName).arg(mLastName);
+}
+
+bool FullNameAttributeRequest::areAttributesReady()
+{
+    return mRequestReceived == 2;
 }
 
 std::shared_ptr<FullNameAttributeRequest> FullNameAttributeRequest::requestFullName(const char *user_email)

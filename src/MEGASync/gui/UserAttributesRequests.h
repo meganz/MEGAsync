@@ -18,7 +18,8 @@ public:
     void requestAttribute() override;
     void updateAttributes(mega::MegaUser* user) override;
 
-    QString getFullName(bool returnEmailIfEmpty = true);
+    QString getFullName();
+    bool areAttributesReady();
 
 private:
     QString mFirstName;
