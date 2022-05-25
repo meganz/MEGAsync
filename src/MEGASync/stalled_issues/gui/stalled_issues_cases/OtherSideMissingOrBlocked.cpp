@@ -14,7 +14,9 @@ OtherSideMissingOrBlocked::OtherSideMissingOrBlocked(QWidget *parent) :
     ui->verticalLayout->setContentsMargins(margins);
 
     ui->localPath->setIndent(StalledIssueHeader::ICON_INDENT);
+    ui->localPath->showFullPath();
     ui->remotePath->setIndent(StalledIssueHeader::ICON_INDENT);
+    ui->remotePath->showFullPath();
 }
 
 OtherSideMissingOrBlocked::~OtherSideMissingOrBlocked()

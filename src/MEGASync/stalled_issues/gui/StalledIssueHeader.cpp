@@ -73,7 +73,7 @@ void StalledIssueHeader::setTitleDescriptionText(const QString &text)
 
 QString StalledIssueHeader::fileName()
 {
-return QString();
+    return QString();
 }
 
 bool StalledIssueHeader::eventFilter(QObject *watched, QEvent *event)
@@ -93,9 +93,19 @@ void StalledIssueHeader::refreshUi()
     ui->errorTitleIcon->setPixmap(errorTitleIcon.pixmap(ui->errorTitleIcon->size()));
 
     QIcon fileTypeIcon;
+    QFileInfo fileInfo;
 
-    auto splittedFile = getData().consultData()->getFileName().split(QString::fromUtf8("."));
-    if(splittedFile.size() != 1)
+    //Get full path -> it can be taken from the cloud data or the local data.
+    if(getData().consultData()->consultLocalData())
+    {
+        fileInfo.setFile(getData().consultData()->consultLocalData()->getNativeFilePath());
+    }
+    else if(getData().consultData()->consultCloudData())
+    {
+        fileInfo.setFile(getData().consultData()->consultCloudData()->getNativeFilePath());
+    }
+
+    if(fileInfo.isFile())
     {
         fileTypeIcon = Utilities::getCachedPixmap(Utilities::getExtensionPixmapName(
                                                       getData().consultData()->getFileName(), QLatin1Literal(":/images/drag_")));

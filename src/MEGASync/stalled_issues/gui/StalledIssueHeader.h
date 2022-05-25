@@ -16,7 +16,6 @@ class StalledIssueHeader : public StalledIssueBaseDelegateWidget
     Q_OBJECT
 
 public:
-
     static const int BODY_INDENT;
     static const int ARROW_INDENT;
     static const int ICON_INDENT;

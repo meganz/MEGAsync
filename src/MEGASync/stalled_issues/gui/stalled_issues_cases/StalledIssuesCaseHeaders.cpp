@@ -239,6 +239,6 @@ NameConflictsHeader::NameConflictsHeader(QWidget *parent)
 void NameConflictsHeader::refreshCaseUi()
 {
     setLeftTitleText(tr("Name Conflicts:"));
-    setTitleDescriptionText(tr("These folders contain multiple names that can't be synced because"
-                               "\nthey would overwrite the same name on the other side of the sync"));
+    setTitleDescriptionText(tr("These folders contain multiple names on one side, that would all become the same single name on the other side of the sync."
+                               "\nThis may be due to syncing to case insensitive local filesystems, or the effects of escaped characters."));
 }

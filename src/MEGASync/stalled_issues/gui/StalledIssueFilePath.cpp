@@ -10,7 +10,8 @@
 
 StalledIssueFilePath::StalledIssueFilePath(QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::StalledIssueFilePath)
+    ui(new Ui::StalledIssueFilePath),
+    mShowFullPath(false)
 {
     ui->setupUi(this);
 
@@ -66,17 +67,22 @@ void StalledIssueFilePath::updateUi(StalledIssueDataPtr data)
     updateFileIcons();
 }
 
+void StalledIssueFilePath::showFullPath()
+{
+    mShowFullPath = true;
+}
+
 void StalledIssueFilePath::fillFilePath()
 {
     if(!mData->getPath().isEmpty())
     {
         ui->file->show();
 
-        auto filePath = mData->getNativePath();
+        auto filePath = getFilePath();
         if(!filePath.isEmpty())
         {
             ui->filePath->installEventFilter(this);
-            ui->filePath->setText(mData->getNativePath());
+            ui->filePath->setText(filePath);
         }
         else
         {
@@ -88,17 +94,22 @@ void StalledIssueFilePath::fillFilePath()
     }
 }
 
+QString StalledIssueFilePath::getFilePath()
+{
+    return mShowFullPath? mData->getNativeFilePath() : mData->getNativePath();
+}
+
 void StalledIssueFilePath::fillMoveFilePath()
 {
     if(!mData->getMovePath().isEmpty())
     {
         ui->moveFile->show();
 
-        auto filePath = mData->getNativeMovePath();
+        auto filePath = getMoveFilePath();
         if(!filePath.isEmpty())
         {
             ui->moveFilePath->installEventFilter(this);
-            ui->moveFilePath->setText(mData->getNativePath());
+            ui->moveFilePath->setText(filePath);
         }
         else
         {
@@ -108,6 +119,11 @@ void StalledIssueFilePath::fillMoveFilePath()
         mData->getMovePath().mPathProblem != mega::MegaSyncStall::SyncPathProblem::NoProblem
                 ?  ui->movePathProblem->setText(getSyncPathProblemString(mData->getMovePath().mPathProblem)) : ui->movePathProblem->hide();
     }
+}
+
+QString StalledIssueFilePath::getMoveFilePath()
+{
+    return mShowFullPath? mData->getNativeMoveFilePath() : mData->getNativeMovePath();
 }
 
 void StalledIssueFilePath::updateFileIcons()
@@ -168,11 +184,11 @@ bool StalledIssueFilePath::eventFilter(QObject *watched, QEvent *event)
     {
         if(watched == ui->filePathContainer)
         {
-            showHoverAction(event->type(), ui->filePathAction, mData->getNativeFilePath());
+            showHoverAction(event->type(), ui->filePathAction, getFilePath());
         }
         else if(watched == ui->moveFilePathContainer)
         {
-            showHoverAction(event->type(), ui->moveFilePathAction,  mData->getNativeMoveFilePath());
+            showHoverAction(event->type(), ui->moveFilePathAction,  getMoveFilePath());
         }
     }
     else if(event->type() == QEvent::Resize)
@@ -183,11 +199,11 @@ bool StalledIssueFilePath::eventFilter(QObject *watched, QEvent *event)
 
             if(label == ui->filePath)
             {
-                fullPath = mData->getNativePath();
+                fullPath = getFilePath();
             }
             else if(label == ui->moveFilePath)
             {
-                fullPath = mData->getNativeMovePath();
+                fullPath = getMoveFilePath();
             }
 
             if(!fullPath.isEmpty())

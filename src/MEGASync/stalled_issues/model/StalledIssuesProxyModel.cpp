@@ -48,6 +48,9 @@ void StalledIssuesProxyModel::updateFilter()
 void StalledIssuesProxyModel::setSourceModel(QAbstractItemModel *sourceModel)
 {
     QSortFilterProxyModel::setSourceModel(sourceModel);
+    connect(sourceModel, &QAbstractItemModel::modelAboutToBeReset,this,[this](){
+        invalidate();
+    });
 }
 
 void StalledIssuesProxyModel::updateStalledIssues()

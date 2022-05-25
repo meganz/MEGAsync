@@ -79,7 +79,6 @@ public:
     StalledIssue(const StalledIssue& tdr) : mLocalData(tdr.mLocalData), mCloudData(tdr.mCloudData), mReason(tdr.getReason()), mIsSolved(tdr.mIsSolved), mDetectedMEGASide(tdr.mDetectedMEGASide)  {}
     StalledIssue(const mega::MegaSyncStall *stallIssue);
 
-    //Don´t think it´s going to be more stalled issues than 2 (local and remote)
     const StalledIssueDataPtr consultLocalData() const;
     const StalledIssueDataPtr consultCloudData() const;
 
@@ -204,7 +203,7 @@ public:
 private:
     friend class StalledIssuesModel;
 
-    const std::shared_ptr<StalledIssue> &data() const
+    const std::shared_ptr<StalledIssue> &getData() const
     {
         return mData;
     }

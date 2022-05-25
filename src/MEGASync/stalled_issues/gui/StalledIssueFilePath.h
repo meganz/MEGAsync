@@ -21,6 +21,7 @@ public:
 
     void setIndent(int indent);
     void updateUi(StalledIssueDataPtr data);
+    void showFullPath();
 
 protected:
     bool eventFilter(QObject *watched, QEvent *event) override;
@@ -30,12 +31,16 @@ private:
     void updateFileIcons();
 
     void fillFilePath();
+    QString getFilePath();
+
     void fillMoveFilePath();
+    QString getMoveFilePath();
 
     QString getSyncPathProblemString(mega::MegaSyncStall::SyncPathProblem pathProblem);
 
     Ui::StalledIssueFilePath *ui;
     StalledIssueDataPtr mData;
+    bool mShowFullPath;
 };
 
 #endif // STALLEDISSUEFILEPATH_H

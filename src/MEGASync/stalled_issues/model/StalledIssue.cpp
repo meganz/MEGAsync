@@ -231,11 +231,11 @@ void StalledIssue::setIsSolved(bool isCloud)
 {
     mIsSolved = true;
 
-    if(!isCloud && getLocalData())
+    if(!isCloud && consultLocalData())
     {
         getLocalData()->setIsSolved(true);
     }
-    else if(isCloud && getCloudData())
+    else if(isCloud && consultCloudData())
     {
         getCloudData()->setIsSolved(true);
     }
@@ -364,7 +364,7 @@ void NameConflictedStalledIssue::fillIssue(const mega::MegaSyncStall *stall)
             ConflictedNameInfo info(localPath.fileName());
             mLocalConflictedNames.append(info);
 
-            if(getLocalData()->mPath.isEmpty())
+            if(consultLocalData()->mPath.isEmpty())
             {
                 getLocalData()->mPath.path = localPath.filePath();
             }
@@ -384,7 +384,7 @@ void NameConflictedStalledIssue::fillIssue(const mega::MegaSyncStall *stall)
             ConflictedNameInfo info(cloudPath.fileName());
             mCloudConflictedNames.append(info);
 
-            if(getCloudData()->mPath.isEmpty())
+            if(consultCloudData()->mPath.isEmpty())
             {
                 getCloudData()->mPath.path = cloudPath.filePath();
             }
