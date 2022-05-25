@@ -4,6 +4,7 @@
 #include "megaapi.h"
 
 #include <QTreeView>
+#include <QHeaderView>
 
 class MegaItemProxyModel;
 
@@ -41,6 +42,17 @@ private:
     MegaItemProxyModel* proxyModel() const;
 
     MegaApi* mMegaApi;
+
+};
+
+class MegaItemHeaderView : public QHeaderView
+{
+    Q_OBJECT
+public:
+    explicit MegaItemHeaderView(Qt::Orientation orientation, QWidget* parent = nullptr);
+
+protected:
+    void paintSection(QPainter *painter, const QRect &rect, int logicalIndex) const override;
 
 };
 
