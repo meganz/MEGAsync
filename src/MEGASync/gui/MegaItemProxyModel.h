@@ -21,16 +21,19 @@ public:
         bool showReadWriteFolders = true;
         Filter() : showInShares(false), showCloudDrive(true), showReadOnly(true),
                     showReadWriteFolders(true){};
-        void showOnlyCloudDrive(){showInShares=false; showCloudDrive = true;}
+        void showOnlyCloudDrive(){showInShares = false; showCloudDrive = true;}
         void showOnlyInShares(){showInShares=true; showCloudDrive = false;}
+        void showOnlyVault(){showInShares = false; showCloudDrive = false;}
         bool isShowOnlyInShares(){return showInShares && !showCloudDrive;}
         bool isShowOnlyCloudDrive(){return !showInShares && showCloudDrive;}
+        bool isShowOnlyVault(){return !showInShares && !showCloudDrive;}
     };
 
     explicit MegaItemProxyModel(QObject* parent = nullptr);
     void setFilter(const Filter& f);
     void showOnlyCloudDrive();
     void showOnlyInShares();
+    void showOnlyVault();
     void showReadOnlyFolders(bool value);
     void showReadWriteFolders(bool value);
 
@@ -44,6 +47,7 @@ public:
     void removeNode(const QModelIndex &item);
     bool isShowOnlyInShares();
     bool isShowOnlyCloudDrive();
+    bool isShowOnlyVault();
     bool lessThan(const QModelIndex &left, const QModelIndex &right) const override;
 
 protected:

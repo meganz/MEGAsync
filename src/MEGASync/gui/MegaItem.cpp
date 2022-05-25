@@ -26,7 +26,8 @@ MegaItem::MegaItem(std::unique_ptr<MegaNode> node, MegaItem *parentItem, bool sh
     mChildrenSet(false),
     mNode(std::move(node)),
     mOwner(nullptr),
-    mDelegateListener(mega::make_unique<QTMegaRequestListener>(MegaSyncApp->getMegaApi(), this))
+    mMegaApi(MegaSyncApp->getMegaApi()),
+    mDelegateListener(mega::make_unique<QTMegaRequestListener>(mMegaApi, this))
 { 
     if(isRoot() || mNode->isFile() || mNode->isInShare())
     {
@@ -43,6 +44,11 @@ MegaItem::MegaItem(std::unique_ptr<MegaNode> node, MegaItem *parentItem, bool sh
     }
 
     QStringList folderList;
+    if(isVault() || (parent_item && parent_item->isVault()))
+    {
+        mStatus = STATUS::BACKUP;
+        return;
+    }
     if(parent_item && parent_item->getNode()->isInShare())
     {
         foreach(const QString& folder, SyncModel::instance()->getMegaFolders(SyncModel::AllHandledSyncTypes))
@@ -124,13 +130,10 @@ void MegaItem::setOwner(std::unique_ptr<mega::MegaUser> user)
 {
     mOwner = move(user);
     mOwnerEmail = QString::fromUtf8(mOwner->getEmail());
-    MegaApi* megaApi = MegaSyncApp->getMegaApi();
-    if(megaApi)
-    {
-        megaApi->getUserAttribute(mOwner.get(), mega::MegaApi::USER_ATTR_FIRSTNAME, mDelegateListener.get());
-        megaApi->getUserAttribute(mOwner.get(), mega::MegaApi::USER_ATTR_LASTNAME, mDelegateListener.get());
-        megaApi->getUserAvatar(mOwner.get(), Utilities::getAvatarPath(mOwnerEmail).toUtf8().constData(), mDelegateListener.get());
-    }
+    mMegaApi->getUserAttribute(mOwner.get(), mega::MegaApi::USER_ATTR_FIRSTNAME, mDelegateListener.get());
+    mMegaApi->getUserAttribute(mOwner.get(), mega::MegaApi::USER_ATTR_LASTNAME, mDelegateListener.get());
+    mMegaApi->getUserAvatar(mOwner.get(), Utilities::getAvatarPath(mOwnerEmail).toUtf8().constData(), mDelegateListener.get());
+
     QStringList folderList;
     //Calculating if we have a synced childs.
     foreach(const QString& folder, SyncModel::instance()->getMegaFolders(SyncModel::AllHandledSyncTypes))
@@ -209,11 +212,47 @@ QIcon MegaItem::getFolderIcon()
         else if(isRoot())
         {
             QIcon icon;
-            icon.addFile(QLatin1String("://images/ico-cloud-drive.png"));
+            icon.addFile(QLatin1String("://images/node_selector/cloud.png"));
+            return icon;
+        }
+        else if(isVault())
+        {
+            QIcon icon;
+            icon.addFile(QLatin1String("://images/node_selector/Backups_small_ico.png"));
             return icon;
         }
         else
         {
+            QString nodeDeviceId (QString::fromUtf8(getNode()->getDeviceId()));
+            if (!nodeDeviceId.isEmpty())
+            {
+                std::unique_ptr<mega::MegaNode> parent (mMegaApi->getNodeByHandle(getNode()->getParentHandle()));
+                if (parent)
+                {
+                    QString parentDeviceId (QString::fromUtf8(parent->getDeviceId()));
+                    if (parentDeviceId.isEmpty())
+                    {
+                        // TODO, future: choose icon according to host OS
+                        if (nodeDeviceId == QString::fromUtf8(mMegaApi->getDeviceId()))
+                        {
+                            #ifdef Q_OS_WINDOWS
+                            static const QIcon thisDeviceIcon (QLatin1String("://images/icons/pc/pc-win_24.png"));
+                            #elif defined(Q_OS_MACOS)
+                            static const QIcon thisDeviceIcon (QLatin1String("://images/icons/pc/pc-mac_24.png"));
+                            #elif defined(Q_OS_LINUX)
+                            static const QIcon thisDeviceIcon (QLatin1String("://images/icons/pc/pc-linux_24.png"));
+                            #endif
+                            return thisDeviceIcon;
+                        }
+                        else
+                        {
+                            static const QIcon genericIcon (QLatin1String("://images/icons/pc/pc_24.png"));
+                            return genericIcon;
+                        }
+                    }
+                }
+            }
+
             QIcon icon;
             icon.addFile(QLatin1String("://images/small_folder.png"), QSize(), QIcon::Normal);
             icon.addFile(QLatin1String("://images/node_selector/small-folder-disabled.png"), QSize(), QIcon::Disabled);
@@ -235,7 +274,8 @@ bool MegaItem::isSyncable()
 {       
     return mStatus != SYNC
             && mStatus != SYNC_PARENT
-            && mStatus != SYNC_CHILD;
+            && mStatus != SYNC_CHILD
+            && mStatus != BACKUP;
 }
 
 int MegaItem::insertPosition(const std::unique_ptr<MegaNode>& node)
@@ -357,10 +397,8 @@ void MegaItem::onRequestFinish(mega::MegaApi *api, mega::MegaRequest *request, m
             {
                 QFile::remove(fileRoute);
                 const char* color = nullptr;
-                if(mega::MegaApi* megaApi = MegaSyncApp->getMegaApi())
-                {
-                    color = megaApi->getUserAvatarColor(mOwner.get());
-                }
+                color = mMegaApi->getUserAvatarColor(mOwner.get());
+
                 QColor avatarColor(color);
                 delete [] color;
                 QLinearGradient gradient(ICON_SIZE, ICON_SIZE, ICON_SIZE, ICON_SIZE);
@@ -390,10 +428,9 @@ void MegaItem::calculateSyncStatus(const QStringList &folders)
     std::shared_ptr<MegaNode> n = mNode;
     parentFolders.append(QLatin1Char('/'));
     parentFolders.append(QString::fromUtf8(n->getName()));
-    MegaApi* megaApi = MegaSyncApp->getMegaApi();
-    while(n->getParentHandle() != INVALID_HANDLE)
+    while(n->getParentHandle () != INVALID_HANDLE)
     {
-        n = std::shared_ptr<MegaNode>(megaApi->getNodeByHandle(n->getParentHandle()));
+        n = std::shared_ptr<MegaNode>(mMegaApi->getNodeByHandle(n->getParentHandle()));
         if(n->getType() != MegaNode::TYPE_ROOT)
         {
             parentFolders.prepend(QString::fromUtf8(n->getName()));
@@ -417,4 +454,12 @@ void MegaItem::calculateSyncStatus(const QStringList &folders)
 bool MegaItem::isRoot()
 {
     return mNode->getHandle() == MegaSyncApp->getRootNode()->getHandle();
+}
+
+bool MegaItem::isVault()
+{
+    if(auto restNode = MegaSyncApp->getVaultNode())
+        return getNode()->getHandle() == restNode->getHandle();
+
+    return false;
 }

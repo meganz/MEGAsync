@@ -32,12 +32,14 @@ public:
 
     enum TabItem{
         CLOUD_DRIVE = 0,
-        SHARES
+        SHARES,
+        VAULT,
     };
 
     static const int LABEL_ELIDE_MARGIN;
     static const char* CLD_DRIVE;
     static const char* IN_SHARES;
+    static const char* BACKUPS;
     explicit NodeSelector(int selectMode, QWidget *parent = 0);
 
     ~NodeSelector();
@@ -68,6 +70,7 @@ private slots:
     void onbOkClicked();
     void onbShowIncomingSharesClicked();
     void onbShowCloudDriveClicked();
+    void onbShowBackupsFolderClicked();
     void onTabSelected(int index);
     void onSelectionChanged(const QItemSelection& selected, const QItemSelection& deselected);
 
@@ -91,15 +94,24 @@ private:
     void saveExpandedItems();
     void iterateForSaveExpanded(QList<mega::MegaHandle>& saveList, const QModelIndex& parent = QModelIndex());
     void restoreExpandedItems();
+    void restoreExpandedItems(Navigation &nav);
     void iterateForRestore(const QList<mega::MegaHandle> &list, const QModelIndex& parent = QModelIndex());
     bool isAllowedToEnterInIndex(const QModelIndex & idx);
     bool isCloudDrive();
+    bool isVault();
+    bool isInShares();
+    void navigateIntoOperation(Navigation& nav, const QModelIndex& idx);
+    void navigateBackwardOperation(Navigation& nav);
+    void navigateForwardOperation(Navigation& nav);
+    TabItem getSelectedTab();
     void setRootIndex(const QModelIndex& idx);
+    bool showBackups();
     mega::MegaHandle getHandleByIndex(const QModelIndex& idx);
     QModelIndex getIndexFromHandle(const mega::MegaHandle& handle);
     QModelIndex getSelectedIndex();
     Navigation mNavCloudDrive;
     Navigation mNavInShares;
+    Navigation mNavVault;
 
     Ui::NodeSelector *ui;
     Ui::NewFolderDialog *mNewFolderUi;

@@ -17,27 +17,34 @@ MegaItemModel::MegaItemModel(QObject *parent) :
     mRequiredRights(MegaShare::ACCESS_READ),
     mDisplayFiles(false),
     mSyncSetupMode(false),
-    mDelegateListener(mega::make_unique<QTMegaRequestListener>(MegaSyncApp->getMegaApi(), this))
+    mMegaApi(MegaSyncApp->getMegaApi()),
+    mDelegateListener(mega::make_unique<QTMegaRequestListener>(mMegaApi, this))
 {
-   MegaApi* megaApi = MegaSyncApp->getMegaApi();
-   auto root = std::unique_ptr<MegaNode>(megaApi->getRootNode());
+   auto root = std::unique_ptr<MegaNode>(mMegaApi->getRootNode());
+
+   //cloud drive
    mRootItems.append(new MegaItem(move(root)));
-   auto folders = std::unique_ptr<MegaNodeList>(megaApi->getInShares());
 
    //incoming shares
+   auto folders = std::unique_ptr<MegaNodeList>(mMegaApi->getInShares());
    for (int j = 0; j < folders->size(); j++)
    {
        auto folder = std::unique_ptr<MegaNode>(folders->get(j)->copy());
-       auto user = std::unique_ptr<MegaUser>(megaApi->getUserFromInShare(folder.get()));
+       auto user = std::unique_ptr<MegaUser>(mMegaApi->getUserFromInShare(folder.get()));
        MegaItem* item = new MegaItem(move(folder));
        item->setOwner(move(user));
        connect(item, &MegaItem::infoUpdated, this, &MegaItemModel::onItemInfoUpdated);
        mRootItems.append(item);
    }
 
-   megaApi->getCameraUploadsFolder(mDelegateListener.get());
-   megaApi->getCameraUploadsFolderSecondary(mDelegateListener.get());
-   megaApi->getMyChatFilesFolder(mDelegateListener.get());
+   //backups vault
+   if(auto vaultNode = std::unique_ptr<MegaNode>(mMegaApi->getVaultNode()))
+       mRootItems.append(new MegaItem(move(vaultNode)));
+
+   mMegaApi->getCameraUploadsFolder(mDelegateListener.get());
+   mMegaApi->getCameraUploadsFolderSecondary(mDelegateListener.get());
+   mMegaApi->getMyChatFilesFolder(mDelegateListener.get());
+
 }
 
 int MegaItemModel::columnCount(const QModelIndex &) const
@@ -116,14 +123,13 @@ QVariant MegaItemModel::data(const QModelIndex &index, int role) const
         case toInt(NodeRowDelegateRoles::ENABLED_ROLE):
         {
             if(mSyncSetupMode)
-            {
                 return item->isSyncable();
-            }
+
             return true;
         }
         case toInt(NodeRowDelegateRoles::INDENT_ROLE):
         {
-            return item->isRoot()? -10 : 0;
+            return item->isRoot() || item->isVault()? -10: 0;
         }
         default:
         {
@@ -145,8 +151,7 @@ QModelIndex MegaItemModel::index(int row, int column, const QModelIndex &parent)
         MegaItem* item = static_cast<MegaItem*>(parent.internalPointer());
         if (!item->areChildrenSet())
         {
-            MegaApi* megaApi = MegaSyncApp->getMegaApi();
-            auto children = std::shared_ptr<MegaNodeList>(megaApi->getChildren(item->getNode().get()));
+            auto children = std::shared_ptr<MegaNodeList>(mMegaApi->getChildren(item->getNode().get()));
             item->setChildren(children);
         }
 
@@ -184,8 +189,7 @@ int MegaItemModel::rowCount(const QModelIndex &parent) const
         MegaItem *item = static_cast<MegaItem*>(parent.internalPointer());
         if (!item->areChildrenSet())
         {
-            MegaApi* megaApi = MegaSyncApp->getMegaApi();
-            auto children = std::shared_ptr<MegaNodeList>(megaApi->getChildren(item->getNode().get()));
+            auto children = std::shared_ptr<MegaNodeList>(mMegaApi->getChildren(item->getNode().get()));
             item->setChildren(children);
         }
         return item->getNumChildren();
@@ -372,16 +376,20 @@ QVariant MegaItemModel::getText(const QModelIndex &index, MegaItem *item) const
     {
         case COLUMN::NODE:
         {
+            //To remove when SDK returns correct names for this nodes
+            if(item->isVault())
+                return QCoreApplication::translate("MegaNodeNames", "Backups");
+
             if(item->isRoot())
                 return QApplication::translate("MegaNodeNames", item->getNode()->getName());
+                
             return QVariant(QString::fromUtf8(item->getNode()->getName()));
         }
         case COLUMN::DATE:
         {
-            if(item->isRoot())
-            {
+            if(item->isRoot() || item->isVault())
                 return QVariant();
-            }
+
             const QString language = MegaSyncApp->getCurrentLanguageCode();
             QLocale locale(language);
             QDateTime dateTime = dateTime.fromSecsSinceEpoch(item->getNode()->getCreationTime());

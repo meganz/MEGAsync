@@ -7,6 +7,7 @@
 #include <QToolTip>
 #include <QFontMetrics>
 
+
 IconDelegate::IconDelegate(QObject* parent) :
     QStyledItemDelegate(parent)
 {
@@ -29,6 +30,7 @@ void IconDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, 
 
 const int NodeRowDelegate::MARGIN = 7;
 const int NodeRowDelegate::ICON_MARGIN = 37;
+const int NodeRowDelegate::DIFF_WITH_STD_ICON = 5;
 
 NodeRowDelegate::NodeRowDelegate(QObject *parent) :
     QStyledItemDelegate(parent)
@@ -41,6 +43,9 @@ void NodeRowDelegate::paint(QPainter *painter, const QStyleOptionViewItem &optio
     QStyleOptionViewItem opt(option);
     int indentValue = index.data(toInt(NodeRowDelegateRoles::INDENT_ROLE)).toInt();
     opt.rect.adjust(indentValue, 0, 0, 0);
+    if(indentValue < 0)
+        opt.decorationSize = QSize(opt.decorationSize.width() - DIFF_WITH_STD_ICON, opt.decorationSize.height() - DIFF_WITH_STD_ICON);
+
     QStyledItemDelegate::paint(painter, opt, index);
 }
 

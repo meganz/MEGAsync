@@ -17,6 +17,12 @@ void MegaItemProxyModel::setFilter(const Filter &f)
     mFilter.showReadOnly = f.showReadOnly;
 }
 
+void MegaItemProxyModel::showOnlyVault()
+{
+    mFilter.showOnlyVault();
+    invalidateFilter();
+}
+
 void MegaItemProxyModel::showOnlyCloudDrive()
 {
     mFilter.showOnlyCloudDrive();
@@ -139,6 +145,11 @@ bool MegaItemProxyModel::isShowOnlyCloudDrive()
     return mFilter.isShowOnlyCloudDrive();
 }
 
+bool MegaItemProxyModel::isShowOnlyVault()
+{
+    return mFilter.isShowOnlyVault();
+}
+
 bool MegaItemProxyModel::lessThan(const QModelIndex &left, const QModelIndex &right) const
 {
     bool lIsFile = left.data(toInt(MegaItemModelRoles::IS_FILE_ROLE)).toBool();
@@ -194,6 +205,10 @@ bool MegaItemProxyModel::filterAcceptsRow(int sourceRow, const QModelIndex &sour
                         return false;
                     }
                }
+               else if(megaItem->isVault())
+               {
+                    return !mFilter.showInShares && !mFilter.showCloudDrive;
+               }
                return ((node->isInShare() && mFilter.showInShares)
                        || (!node->isInShare() && mFilter.showCloudDrive));
             }
@@ -214,6 +229,7 @@ bool MegaItemProxyModel::filterAcceptsColumn(int sourceColumn, const QModelIndex
     case MegaItemModel::COLUMN::USER:
         return mFilter.showInShares;
     }
+
     return false;
 }
 

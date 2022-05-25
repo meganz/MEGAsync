@@ -217,7 +217,7 @@ set (MOC_INPUT
     ${MEGAsyncDir}/control/SyncController.h
     ${MEGAsyncDir}/control/UserAttributesManager.h
     ${MEGAsyncDir}/model/SyncSettings.h
-    ${MEGAsyncDir}/model/Model.h
+    ${MEGAsyncDir}/model/SyncModel.h
     ${MEGAsyncDir}/gui/AlertItem.h
     ${MEGAsyncDir}/gui/AlertFilterType.h
     ${MEGAsyncDir}/gui/BugReportDialog.h
@@ -487,7 +487,7 @@ set (SRCS
     ${MEGAsyncDir}/control/UserAttributesManager.cpp
 
     ${MEGAsyncDir}/model/SyncSettings.cpp
-    ${MEGAsyncDir}/model/Model.cpp
+    ${MEGAsyncDir}/model/SyncModel.cpp
 
     ${MEGAsyncDir}/platform/notificator.cpp
 
