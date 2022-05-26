@@ -12,10 +12,10 @@
 
 static const int AVATAR_DIAMETER (60);
 static const int AVATAR_RADIUS (AVATAR_DIAMETER / 2);
-static const int AVATAR_LETTER_SIZE_PT_FULL (85);
+static const int AVATAR_LETTER_SIZE_PT_FULL (60);
 static const int LETTER_PIXMAP_SIZE (150);
-static const int LATO_FONT_ADJUST_SHADOW (-6);
-static const int LATO_FONT_ADJUST (-8);
+static const int LATO_FONT_ADJUST_SHADOW (6);
+static const int LATO_FONT_ADJUST (-4);
 
 
 AvatarWidget::AvatarWidget(QWidget* parent) :
@@ -130,31 +130,35 @@ QPixmap AvatarPixmap::maskFromImagePath(const QString &pathToFile, int size)
     return pm;
 }
 
-QPixmap AvatarPixmap::createFromLetter(const QString& letter, QLinearGradient gradient, int size)
+QPixmap AvatarPixmap::createFromLetter(const QChar& letter, const QColor& color, int size)
 {
     QPixmap pm(QSize(LETTER_PIXMAP_SIZE, LETTER_PIXMAP_SIZE));
     QRect rect = pm.rect();
-    pm.fill(Qt::transparent);
+
+    // Setup background gradient: dark to light, bottom left to top right
+    QLinearGradient gradient(size, size, size, size);
+    gradient.setColorAt(1.0, color.lighter(130));
+    gradient.setColorAt(0.0, color);
+    gradient.setStart(-size / 2.0, size / 2.0);
+    gradient.setFinalStop(size / 2.0, -size / 2.0);
 
     // Draw background
-
+    pm.fill(Qt::transparent);
     QPainter painter(&pm);
     painter.setRenderHints(QPainter::Antialiasing | QPainter::TextAntialiasing );
-
     painter.setPen(Qt::NoPen);
     painter.setBrush(QBrush(gradient));
     painter.drawEllipse(rect);
 
+    // Draw letter with drop shadow (using background base color, but darker)
     QFont font = painter.font();
     font.setPointSize(AVATAR_LETTER_SIZE_PT_FULL);
-    font.setFamily(QString::fromUtf8("Lato Semibold"));
+    font.setFamily(QLatin1String("Lato Semibold"));
     painter.setFont(font);
-    painter.setPen(Qt::black);
-    painter.drawText(rect.adjusted(0, LATO_FONT_ADJUST_SHADOW, 2, 0), letter, QTextOption(Qt::AlignCenter));
+    painter.setPen(color.darker(145));
+    painter.drawText(rect.adjusted(0, LATO_FONT_ADJUST_SHADOW, 10, 0), letter, QTextOption(Qt::AlignCenter));
     painter.setPen(Qt::white);
     painter.drawText(rect.adjusted(0, LATO_FONT_ADJUST, 0, 0), letter, QTextOption(Qt::AlignCenter));
-
-
 
     painter.end();
     // Convert the image to a pixmap and rescale it.  Take pixel ratio into
@@ -166,4 +170,3 @@ QPixmap AvatarPixmap::createFromLetter(const QString& letter, QLinearGradient gr
 
     return pm;
 }
-

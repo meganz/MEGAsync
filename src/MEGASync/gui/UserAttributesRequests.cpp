@@ -221,11 +221,8 @@ const QPixmap& AvatarAttributeRequest::getPixmap(const int& size) const
     if(icon.isNull())
     {
         if(!mLetterAvatarInfo.isEmpty())
-        {
-            QLinearGradient gradient(size, size, size, size);
-            gradient.setColorAt(1.0, mLetterAvatarInfo.color.lighter(130));
-            gradient.setColorAt(0.0, mLetterAvatarInfo.color);
-            icon = AvatarPixmap::createFromLetter(QString(mLetterAvatarInfo.letter), gradient, size);
+        {           
+            icon = AvatarPixmap::createFromLetter(mLetterAvatarInfo.letter, mLetterAvatarInfo.color, size);
         }
         else
         {
