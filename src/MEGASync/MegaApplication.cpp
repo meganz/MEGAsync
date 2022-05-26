@@ -3320,11 +3320,13 @@ void MegaApplication::logBatchStatus(const char* tag)
 
 void MegaApplication::enableTransferActions(bool enable)
 {
+#ifdef _WIN32
     windowsSettingsAction->setEnabled(enable);
     windowsImportLinksAction->setEnabled(enable);
     windowsUploadAction->setEnabled(enable);
     windowsDownloadAction->setEnabled(enable);
     windowsStreamAction->setEnabled(enable);
+#endif
 
     guestSettingsAction->setEnabled(enable);
     importLinksAction->setEnabled(enable);
