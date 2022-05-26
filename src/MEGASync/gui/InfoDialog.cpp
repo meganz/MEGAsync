@@ -10,6 +10,7 @@
 #include <QFileInfo>
 #include <QEvent>
 #include <QScrollBar>
+
 #include "InfoDialog.h"
 #include "ui_InfoDialog.h"
 #include "control/Utilities.h"
@@ -78,6 +79,8 @@ void InfoDialog::upAreaHovered(QMouseEvent *event)
 InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddialog) :
     QDialog(parent),
     ui(new Ui::InfoDialog),
+    mBackupsWizard (nullptr),
+    mAddBackupDialog (nullptr),
     mSyncController (new SyncController()),
     qtBugFixer(this)
 {
@@ -265,6 +268,25 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
     connect(overlay, SIGNAL(clicked()), this, SLOT(onOverlayClicked()));
     connect(this, SIGNAL(openTransferManager(int)), app, SLOT(externalOpenTransferManager(int)));
 
+    // Connect sync controller signals
+    connect(mSyncController.get(), &SyncController::myBackupsHandle, this, [this](mega::MegaHandle h)
+    {
+        if (h == mega::INVALID_HANDLE)
+            return;
+
+        if (mAddBackupDialog)
+        {
+            mAddBackupDialog->setMyBackupsFolder(mSyncController->getMyBackupsLocalizedPath() + QLatin1Char('/'));
+        }
+    });
+    connect(mSyncController.get(), &SyncController::syncAddStatus, this, [](const int errorCode, const QString errorMsg, QString name)
+    {
+        if (errorCode != MegaError::API_OK)
+        {
+            QMegaMessageBox::warning(nullptr, tr("Error adding backup %1").arg(name), errorMsg);
+        }
+    });
+
     if (preferences->logged())
     {
         setUsage();
@@ -300,6 +322,8 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
 InfoDialog::~InfoDialog()
 {
     removeEventFilter(this);
+    delete mBackupsWizard;
+    delete mAddBackupDialog;
     delete ui;
     delete gWidget;
     delete activeDownload;
@@ -1236,55 +1260,53 @@ void InfoDialog::addSync(MegaHandle h)
 
 void InfoDialog::addBackup()
 {
-    // If no backups configured: show wizard, else show single add backup dialog
+    // If no backups configured: show wizard, else show "add single backup" dialog
     int nbBackups(SyncModel::instance()->getNumSyncedFolders(mega::MegaSync::TYPE_BACKUP));
 
     if (nbBackups > 0)
     {
-        QPointer<AddBackupDialog> addBackup = new AddBackupDialog();
-        addBackup->setAttribute(Qt::WA_DeleteOnClose);
-        addBackup->setWindowModality(Qt::ApplicationModal);
-
-        connect(mSyncController.get(), &SyncController::myBackupsHandle, this, [this, addBackup](mega::MegaHandle h)
+        if (mAddBackupDialog)
         {
-            if (h == mega::INVALID_HANDLE)
-                return;
-
-            if (addBackup)
-            {
-                addBackup->setMyBackupsFolder(mSyncController->getMyBackupsLocalizedPath() + QLatin1Char('/'));
-            }
-        });
-
-        mSyncController->getMyBackupsHandle();
-
-        connect(mSyncController.get(), &SyncController::syncAddStatus, this, [](const int errorCode, const QString errorMsg, QString name)
+            mAddBackupDialog->activateWindow();
+            mAddBackupDialog->raise();
+            mAddBackupDialog->setFocus();
+        }
+        else
         {
-            if (errorCode != MegaError::API_OK)
-            {
-                QMegaMessageBox::warning(nullptr, tr("Error adding backup %1").arg(name), errorMsg);
-            }
-        });
+            mAddBackupDialog = new AddBackupDialog();
+            mSyncController->getMyBackupsHandle();
 
-        connect(addBackup, &AddBackupDialog::accepted, this, [this, addBackup]()
-        {
-            if(addBackup)
+            mAddBackupDialog->setAttribute(Qt::WA_DeleteOnClose);
+            mAddBackupDialog->setWindowModality(Qt::ApplicationModal);
+
+            connect(mAddBackupDialog, &AddBackupDialog::accepted, this, [this]()
             {
-                QDir dirToBackup (addBackup->getSelectedFolder());
-                mSyncController->addSync(QDir::toNativeSeparators(dirToBackup.canonicalPath()),
-                                         mega::INVALID_HANDLE, dirToBackup.dirName(),
-                                         MegaSync::TYPE_BACKUP);
-            }
-        });
-        mSyncController->getMyBackupsHandle();
-        addBackup->show();
+                if(mAddBackupDialog)
+                {
+                    QDir dirToBackup (mAddBackupDialog->getSelectedFolder());
+                    mSyncController->addSync(QDir::toNativeSeparators(dirToBackup.canonicalPath()),
+                                             mega::INVALID_HANDLE, dirToBackup.dirName(),
+                                             MegaSync::TYPE_BACKUP);
+                }
+            });
+            mAddBackupDialog->show();
+        }
     }
     else
     {
-        BackupsWizard *wizard = new BackupsWizard();
-        wizard->setAttribute(Qt::WA_DeleteOnClose);
-        wizard->setWindowModality(Qt::ApplicationModal);
-        wizard->show();
+        if (mBackupsWizard)
+        {
+            mBackupsWizard->activateWindow();
+            mBackupsWizard->raise();
+            mBackupsWizard->setFocus();
+        }
+        else
+        {
+            mBackupsWizard = new BackupsWizard();
+            mBackupsWizard->setAttribute(Qt::WA_DeleteOnClose);
+            mBackupsWizard->setWindowModality(Qt::ApplicationModal);
+            mBackupsWizard->show();
+        }
     }
 }
 

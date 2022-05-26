@@ -70,6 +70,9 @@ class BackupsWizard : public QDialog
         explicit BackupsWizard(QWidget* parent = nullptr);
         ~BackupsWizard();
 
+    protected:
+        void changeEvent(QEvent* event) override;
+
     private:
         void showLess();
         void showMore();
