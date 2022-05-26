@@ -797,7 +797,7 @@ margin: 4px;
                 </size>
                </property>
                <property name="text">
-                <string/>
+                <string notr="true"/>
                </property>
                <property name="alignment">
                 <set>Qt::AlignCenter</set>
@@ -813,7 +813,7 @@ margin: 4px;
                 </sizepolicy>
                </property>
                <property name="text">
-                <string/>
+                <string notr="true"/>
                </property>
               </widget>
              </item>
@@ -826,7 +826,7 @@ margin: 4px;
                 </sizepolicy>
                </property>
                <property name="text">
-                <string/>
+                <string notr="true"/>
                </property>
                <property name="alignment">
                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -918,7 +918,7 @@ margin: 4px;
        <item alignment="Qt::AlignTop">
         <widget class="QLabel" name="label">
          <property name="text">
-          <string/>
+          <string notr="true"/>
          </property>
          <property name="pixmap">
           <pixmap resource="../Resources_win.qrc">:/images/bug_report_success.png</pixmap>
@@ -1025,7 +1025,7 @@ color: #666666;
        <item alignment="Qt::AlignTop">
         <widget class="QLabel" name="lErrorIcon">
          <property name="text">
-          <string/>
+          <string notr="true"/>
          </property>
          <property name="pixmap">
           <pixmap resource="../Resources_win.qrc">:/images/icon_error.png</pixmap>

@@ -102,6 +102,35 @@ BackupsWizard::~BackupsWizard()
     delete mUi;
 }
 
+void BackupsWizard::changeEvent(QEvent* event)
+{
+    if (event->type() == QEvent::LanguageChange)
+    {
+        mUi->retranslateUi(this);
+
+        // mUi->retranslateUi sets text to tr("Next"), so we have
+        // to change it if we are not in step 1
+        if(mUi->sSteps->currentWidget() != mUi->pStep1)
+        {
+            mUi->bNext->setText(tr("Setup"));
+        }
+
+        // Same with error "Collapse"/"Show more"
+        if (mUi->line1->isVisible() && mUi->line2->isVisible())
+        {
+            mUi->bShowMore->setText(tr("Collapse"));
+        }
+
+        // If the backups root dir has not been created yet, localize the name
+        if (mHaveBackupsDir && mCreateBackupsDir)
+        {
+            mUi->leBackupTo->setText(mSyncController.getMyBackupsLocalizedPath()
+                                     + QLatin1Char('/') + mUi->lDeviceNameStep1->text());
+        }
+    }
+    QDialog::changeEvent(event);
+}
+
 void BackupsWizard::showLess()
 {
     QFontMetrics fm (mUi->tTextEdit->font());
@@ -756,8 +785,8 @@ void BackupsWizard::onSyncAddRequestStatus(int errorCode, const QString& errorMs
                 {
                     mErrList.append(it.value().folderName);
                     QIcon   warnIcon (QIcon(QLatin1String("://images/icons/folder/folder-mono-with-warning_24.png")));
-                    QString tooltipMsg (item->data(Qt::UserRole).toString()
-                                        + QLatin1String("\nError: ") + errorMsg);
+                    QString tooltipMsg (item->data(Qt::UserRole).toString() + QLatin1Char('\n')
+                                        + tr("Error: ") + errorMsg);
                     item->setData(warnIcon, Qt::DecorationRole);
                     item->setData(tooltipMsg, Qt::ToolTipRole);
                     item->setData(Qt::Unchecked, Qt::CheckStateRole);

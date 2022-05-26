@@ -22,6 +22,7 @@
 #include "SyncsMenu.h"
 #include "control/SyncController.h"
 #include "AddBackupDialog.h"
+#include "BackupsWizard.h"
 
 #include <memory>
 #ifdef _WIN32
@@ -235,6 +236,8 @@ private:
     long long unseenNotifications = 0;
 
     AccountDetailsDialog* accountDetailsDialog;
+    QPointer<BackupsWizard> mBackupsWizard;
+    QPointer<AddBackupDialog> mAddBackupDialog;
 
 #ifdef Q_OS_LINUX
     bool doNotActAsPopup;
