@@ -7813,8 +7813,11 @@ void MegaApplication::onTransferStart(MegaApi *api, MegaTransfer *transfer)
         return;
     }
 
-    updateFileTransferBatchesAndUi(mBlockingBatch);
-    logBatchStatus("onTransferStart");
+    if(!transfer->isSyncTransfer() && !transfer->isBackupTransfer())
+    {
+        updateFileTransferBatchesAndUi(mBlockingBatch);
+        logBatchStatus("onTransferStart");
+    }
 
     DeferPreferencesSyncForScope deferrer(this);
 
@@ -7850,10 +7853,13 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
     if (isFileTransfer || isFolderTransfer)
     {
 
-        mBlockingBatch.onTransferFinished(isFolderTransfer);
-        updateIfBlockingStageFinished(mBlockingBatch);
-        updateFreedCancelToken(transfer);
-        logBatchStatus("onTransferFinish");
+        if(!transfer->isSyncTransfer() && !transfer->isBackupTransfer())
+        {
+            mBlockingBatch.onTransferFinished(isFolderTransfer);
+            updateIfBlockingStageFinished(mBlockingBatch);
+            updateFreedCancelToken(transfer);
+            logBatchStatus("onTransferFinish");
+        }
 
         const char *notificationKey = transfer->getAppData();
         if (notificationKey)
@@ -8010,10 +8016,13 @@ void MegaApplication::onTransferUpdate(MegaApi*, MegaTransfer* transfer)
         return;
     }
 
-    if (transfer->getStage() >= MegaTransfer::STAGE_TRANSFERRING_FILES)
+    if(!transfer->isSyncTransfer() && !transfer->isBackupTransfer())
     {
-        updateFolderTransferBatchesAndUi(mBlockingBatch);
-        logBatchStatus("onTransferUpdate");
+        if (transfer->getStage() >= MegaTransfer::STAGE_TRANSFERRING_FILES)
+        {
+            updateFolderTransferBatchesAndUi(mBlockingBatch);
+            logBatchStatus("onTransferUpdate");
+        }
     }
 
     if (transfer->isStreamingTransfer() || transfer->isFolderTransfer())
