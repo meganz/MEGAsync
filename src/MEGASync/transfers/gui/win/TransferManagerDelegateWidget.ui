@@ -979,11 +979,6 @@ QProgressBar::chunk
               <height>16</height>
              </size>
             </property>
-            <property name="icon_prefix" stdset="0">
-             <url>
-              <string>qrc:/images/transfer_manager/transfers_actions/lists_cancel_ico_default.png</string>
-             </url>
-            </property>
            </widget>
           </item>
          </layout>
