@@ -149,174 +149,173 @@ void DesktopNotifications::addUserAlertList(mega::MegaUserAlertList *alertList)
     for(int iAlert = 0; iAlert < alertList->size(); iAlert++)
     {
         const auto alert = alertList->get(iAlert);
-        auto userEmail = QString::fromUtf8(alert->getEmail());
 
-        if(!userEmail.isEmpty())
+        // alerts are sent again after seen state updated, so lets only notify the unseen alerts
+        if(!alert->getSeen())
         {
-            auto fullNameUserAttributes = UserAttributes::FullNameAttributeRequest::requestFullName(alert->getEmail());
-            if(fullNameUserAttributes && !mUserAttributes.contains(userEmail))
-            {
-                mUserAttributes.insert(userEmail, fullNameUserAttributes);
-                connect(fullNameUserAttributes.get(), &UserAttributes::FullNameAttributeRequest::attributeReady,
-                        this, &DesktopNotifications::OnUserAttributesReady, Qt::UniqueConnection);
-            }
+            auto userEmail = QString::fromUtf8(alert->getEmail());
 
-            //getFullName with false argument, as we want to know if the attribute is ready (if returs empty, it is not ready).
-            //If we called it with true argument, it would returns the user email.
-            if(fullNameUserAttributes && !fullNameUserAttributes->areAttributesReady())
+            if(!userEmail.isEmpty())
             {
-                mPendingUserAlerts.insert(userEmail, alert->copy());
+                auto fullNameUserAttributes = UserAttributes::FullNameAttributeRequest::requestFullName(alert->getEmail());
+                if(fullNameUserAttributes && !mUserAttributes.contains(userEmail))
+                {
+                    mUserAttributes.insert(userEmail, fullNameUserAttributes);
+                    connect(fullNameUserAttributes.get(), &UserAttributes::FullNameAttributeRequest::attributeReady,
+                            this, &DesktopNotifications::OnUserAttributesReady, Qt::UniqueConnection);
+                }
+
+                if(fullNameUserAttributes && !fullNameUserAttributes->isAttributeReady())
+                {
+                    mPendingUserAlerts.insert(userEmail, alert->copy());
+                }
+                else
+                {
+                    processAlert(alert);
+                }
             }
             else
             {
                 processAlert(alert);
             }
         }
-        else
-        {
-            processAlert(alert);
-        }
     }
 }
 
 void DesktopNotifications::processAlert(mega::MegaUserAlert* alert)
 {
-    // alerts are sent again after seen state updated, so lets only notify the unseen alerts
-    if(!alert->getSeen())
+    QString fullName;
+    QString email = QString::fromUtf8(alert->getEmail());
+    if (!email.isEmpty())
     {
-        QString fullName;
-        QString email = QString::fromUtf8(alert->getEmail());
-        if (!email.isEmpty())
+        auto fullNameRequest = mUserAttributes.value(email);
+        if (fullNameRequest)
         {
-            auto fullNameRequest = mUserAttributes.value(email);
-            if (fullNameRequest)
-            {
-                fullName = fullNameRequest->getFullName();
-            }
+            fullName = fullNameRequest->getFullName();
         }
+    }
 
-        switch (alert->getType())
+    switch (alert->getType())
+    {
+    case mega::MegaUserAlert::TYPE_INCOMINGPENDINGCONTACT_REQUEST:
+    {
+        if(mPreferences->isNotificationEnabled(Preferences::NotificationsTypes::NEW_CONTACT_REQUESTS))
         {
-        case mega::MegaUserAlert::TYPE_INCOMINGPENDINGCONTACT_REQUEST:
-        {
-            if(mPreferences->isNotificationEnabled(Preferences::NotificationsTypes::NEW_CONTACT_REQUESTS))
-            {
-                QStringList actions(tr("Accept"));
+            QStringList actions(tr("Accept"));
 #ifndef __APPLE__
-                actions << tr("Reject");
+            actions << tr("Reject");
 #endif
 
-                auto notification = CreateContacNotification(tr("New Contact Request"),
-                                                             tr("[A] sent you a contact request").replace(QString::fromUtf8("[A]"), fullName),
-                                                             email,
-                                                             actions);
+            auto notification = CreateContacNotification(tr("New Contact Request"),
+                                                         tr("[A] sent you a contact request").replace(QString::fromUtf8("[A]"), fullName),
+                                                         email,
+                                                         actions);
 
-                QObject::connect(notification, &MegaNotification::activated, this, &DesktopNotifications::replayIncomingPendingRequest);
+            QObject::connect(notification, &MegaNotification::activated, this, &DesktopNotifications::replayIncomingPendingRequest);
 
-            }
-            break;
         }
-        case mega::MegaUserAlert::TYPE_INCOMINGPENDINGCONTACT_CANCELLED:
-        {
-            //Kept to remind decision about this notification
-            //This notification is sent when the user cancels a incoming pending notification
-            //The current implementation on the SDK filters this kind of notifications, and
-            //all "own-caused-user" notifications are blocked.
-            //However, as in MEGA Desktop App this notification has been developed,
-            //only the last step (notification sending) has been removed just in case it needs to be used again.
+        break;
+    }
+    case mega::MegaUserAlert::TYPE_INCOMINGPENDINGCONTACT_CANCELLED:
+    {
+        //Kept to remind decision about this notification
+        //This notification is sent when the user cancels a incoming pending notification
+        //The current implementation on the SDK filters this kind of notifications, and
+        //all "own-caused-user" notifications are blocked.
+        //However, as in MEGA Desktop App this notification has been developed,
+        //only the last step (notification sending) has been removed just in case it needs to be used again.
 
-            break;
-        }
-        case mega::MegaUserAlert::TYPE_INCOMINGPENDINGCONTACT_REMINDER:
+        break;
+    }
+    case mega::MegaUserAlert::TYPE_INCOMINGPENDINGCONTACT_REMINDER:
+    {
+        if(mPreferences->isNotificationEnabled(Preferences::NotificationsTypes::PENDING_CONTACT_REQUEST_REMINDER))
         {
-            if(mPreferences->isNotificationEnabled(Preferences::NotificationsTypes::PENDING_CONTACT_REQUEST_REMINDER))
-            {
-                auto notification = CreateContacNotification(tr("New Contact Request"),
-                                                             tr("Reminder") + QStringLiteral(": ") + tr("You have a contact request"),
-                                                             email,
-                                                             QStringList() << tr("View"));
+            auto notification = CreateContacNotification(tr("New Contact Request"),
+                                                         tr("Reminder") + QStringLiteral(": ") + tr("You have a contact request"),
+                                                         email,
+                                                         QStringList() << tr("View"));
 
-                QObject::connect(notification, &MegaNotification::activated, this, &DesktopNotifications::viewContactOnWebClient);
-            }
-            break;
+            QObject::connect(notification, &MegaNotification::activated, this, &DesktopNotifications::viewContactOnWebClient);
         }
-        case mega::MegaUserAlert::TYPE_CONTACTCHANGE_CONTACTESTABLISHED:
+        break;
+    }
+    case mega::MegaUserAlert::TYPE_CONTACTCHANGE_CONTACTESTABLISHED:
+    {
+        if(mPreferences->isNotificationEnabled(Preferences::NotificationsTypes::CONTACT_ESTABLISHED))
         {
-            if(mPreferences->isNotificationEnabled(Preferences::NotificationsTypes::CONTACT_ESTABLISHED))
-            {
-                QStringList actions(tr("Accept"));
+            QStringList actions(tr("Accept"));
 #ifndef __APPLE__
-                actions << tr("Chat");
+            actions << tr("Chat");
 #endif
 
-                auto notification = CreateContacNotification(tr("New Contact Established"),
-                                                             tr("New contact with [A] has been established").replace(QString::fromUtf8("[A]"), fullName),
-                                                             email,
-                                                             actions);
+            auto notification = CreateContacNotification(tr("New Contact Established"),
+                                                         tr("New contact with [A] has been established").replace(QString::fromUtf8("[A]"), fullName),
+                                                         email,
+                                                         actions);
 
-                QObject::connect(notification, &MegaNotification::activated, this, &DesktopNotifications::viewContactOnWebClient);
-            }
-            break;
+            QObject::connect(notification, &MegaNotification::activated, this, &DesktopNotifications::viewContactOnWebClient);
         }
-        case mega::MegaUserAlert::TYPE_NEWSHARE:
+        break;
+    }
+    case mega::MegaUserAlert::TYPE_NEWSHARE:
+    {
+        if(mPreferences->isNotificationEnabled(Preferences::NotificationsTypes::NEW_FOLDERS_SHARED_WITH_ME))
         {
-            if(mPreferences->isNotificationEnabled(Preferences::NotificationsTypes::NEW_FOLDERS_SHARED_WITH_ME))
-            {
-                const QString message{tr("New shared folder from [X]")
-                            .replace(QString::fromUtf8("[X]"), fullName)};
-                notifySharedUpdate(alert, message, NEW_SHARE);
-            }
-            break;
+            const QString message{tr("New shared folder from [X]")
+                        .replace(QString::fromUtf8("[X]"), fullName)};
+            notifySharedUpdate(alert, message, NEW_SHARE);
         }
-        case mega::MegaUserAlert::TYPE_DELETEDSHARE:
+        break;
+    }
+    case mega::MegaUserAlert::TYPE_DELETEDSHARE:
+    {
+        if(mPreferences->isNotificationEnabled(Preferences::NotificationsTypes::FOLDERS_SHARED_WITH_ME_DELETED))
         {
-            if(mPreferences->isNotificationEnabled(Preferences::NotificationsTypes::FOLDERS_SHARED_WITH_ME_DELETED))
-            {
-                notifySharedUpdate(alert, createDeletedShareMessage(alert), DELETE_SHARE);
-            }
-            break;
+            notifySharedUpdate(alert, createDeletedShareMessage(alert), DELETE_SHARE);
         }
-        case mega::MegaUserAlert::TYPE_NEWSHAREDNODES:
+        break;
+    }
+    case mega::MegaUserAlert::TYPE_NEWSHAREDNODES:
+    {
+        if(mPreferences->isNotificationEnabled(Preferences::NotificationsTypes::NODES_SHARED_WITH_ME_CREATED_OR_REMOVED))
         {
-            if(mPreferences->isNotificationEnabled(Preferences::NotificationsTypes::NODES_SHARED_WITH_ME_CREATED_OR_REMOVED))
-            {
-                notifySharedUpdate(alert, getItemsAddedText(alert), NEW_SHARED_NODES);
-            }
-            break;
+            notifySharedUpdate(alert, getItemsAddedText(alert), NEW_SHARED_NODES);
         }
-        case mega::MegaUserAlert::TYPE_REMOVEDSHAREDNODES:
+        break;
+    }
+    case mega::MegaUserAlert::TYPE_REMOVEDSHAREDNODES:
+    {
+        if(mPreferences->isNotificationEnabled(Preferences::NotificationsTypes::NODES_SHARED_WITH_ME_CREATED_OR_REMOVED))
         {
-            if(mPreferences->isNotificationEnabled(Preferences::NotificationsTypes::NODES_SHARED_WITH_ME_CREATED_OR_REMOVED))
-            {
-                mRemovedSharedNotificator.addUserAlert(alert, fullName);
-            }
-            break;
+            mRemovedSharedNotificator.addUserAlert(alert, fullName);
         }
-        case mega::MegaUserAlert::TYPE_PAYMENTREMINDER:
-        {
-            auto notification = new MegaNotification();
-            notification->setTitle(tr("Payment Info"));
-            constexpr int paymentReminderIndex{1};
-            notification->setText(CommonMessages::createPaymentReminder(alert->getTimestamp(paymentReminderIndex)));
-            notification->setActions(QStringList() << tr("Upgrade"));
-            notification->setImage(mAppIcon);
-            connect(notification, &MegaNotification::activated, this, &DesktopNotifications::redirectToUpgrade);
-            mNotificator->notify(notification);
-            break;
-        }
-        case mega::MegaUserAlert::TYPE_TAKEDOWN:
-        {
-            notifyTakeDown(alert, false);
-            break;
-        }
-        case mega::MegaUserAlert::TYPE_TAKEDOWN_REINSTATED:
-        {
-            notifyTakeDown(alert, true);
-            break;
-        }
-        default:
-            break;
-        }
+        break;
+    }
+    case mega::MegaUserAlert::TYPE_PAYMENTREMINDER:
+    {
+        auto notification = new MegaNotification();
+        notification->setTitle(tr("Payment Info"));
+        constexpr int paymentReminderIndex{1};
+        notification->setText(CommonMessages::createPaymentReminder(alert->getTimestamp(paymentReminderIndex)));
+        notification->setActions(QStringList() << tr("Upgrade"));
+        notification->setImage(mAppIcon);
+        connect(notification, &MegaNotification::activated, this, &DesktopNotifications::redirectToUpgrade);
+        mNotificator->notify(notification);
+        break;
+    }
+    case mega::MegaUserAlert::TYPE_TAKEDOWN:
+    {
+        notifyTakeDown(alert, false);
+        break;
+    }
+    case mega::MegaUserAlert::TYPE_TAKEDOWN_REINSTATED:
+    {
+        notifyTakeDown(alert, true);
+        break;
+    }
+    default:
+        break;
     }
 }
 

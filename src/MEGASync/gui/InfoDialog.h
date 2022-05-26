@@ -106,7 +106,6 @@ public:
 
 private:
     InfoDialog() = default;
-    void drawAvatar(QString email);
     void animateStates(bool opt);
     void updateTransfersCount();
     void hideEvent(QHideEvent *event) override;

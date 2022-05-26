@@ -49,15 +49,17 @@ void AlertItem::setAlertData(MegaUserAlert *alert)
 
     if(alert->getEmail())
     {
-        mUserAttributes = UserAttributes::FullNameAttributeRequest::requestFullName(alert->getEmail());
+        mFullNameAttributes = UserAttributes::FullNameAttributeRequest::requestFullName(alert->getEmail());
 
-        if(mUserAttributes)
+        if(mFullNameAttributes)
         {
-            connect(mUserAttributes.get(), &UserAttributes::FullNameAttributeRequest::attributeReady, this, &AlertItem::onAttributesReady);        
+            connect(mFullNameAttributes.get(), &UserAttributes::FullNameAttributeRequest::attributeReady, this, &AlertItem::onAttributesReady);
         }
 
-        //If it is the first time the user is requested, the request can take a while to be received.
-        //While, the email is shown and as soon as the attributes are ready, they are updated
+       ui->wAvatarContact->setUserEmail(alert->getEmail());
+       connect(ui->wAvatarContact, &AvatarWidget::avatarUpdated, this, [this](){
+           emit refreshAlertItem(mAlertUser->getId());
+       });
     }
 
     onAttributesReady();
@@ -72,7 +74,6 @@ void AlertItem::onAttributesReady()
         return megaApi ? megaApi->getNodeByHandle(handle) : nullptr;
     }));
 }
-
 
 void AlertItem::setAlertType(int type)
 {
@@ -166,7 +167,6 @@ void AlertItem::setAlertHeading(MegaUserAlert *alert)
         case MegaUserAlert::TYPE_INCOMINGPENDINGCONTACT_CANCELLED:
         case MegaUserAlert::TYPE_INCOMINGPENDINGCONTACT_REMINDER:
         {
-            setAvatar(alert);
             mNotificationHeading = tr("New Contact Request");
             ui->sIconWidget->setCurrentWidget(ui->pContact);
             ui->sIconWidget->show();
@@ -175,7 +175,6 @@ void AlertItem::setAlertHeading(MegaUserAlert *alert)
         case MegaUserAlert::TYPE_CONTACTCHANGE_DELETEDYOU:
         case MegaUserAlert::TYPE_CONTACTCHANGE_ACCOUNTDELETED:
         {
-            setAvatar(alert);
             mNotificationHeading = tr("Contact Deleted");
             ui->sIconWidget->setCurrentWidget(ui->pContact);
             ui->sIconWidget->show();
@@ -183,7 +182,6 @@ void AlertItem::setAlertHeading(MegaUserAlert *alert)
         }
         case MegaUserAlert::TYPE_CONTACTCHANGE_CONTACTESTABLISHED:
         {
-            setAvatar(alert);
             mNotificationHeading = tr("Contact Established");
             ui->sIconWidget->setCurrentWidget(ui->pContact);
             ui->sIconWidget->show();
@@ -191,7 +189,6 @@ void AlertItem::setAlertHeading(MegaUserAlert *alert)
         }
         case MegaUserAlert::TYPE_CONTACTCHANGE_BLOCKEDYOU:
         {
-            setAvatar(alert);
             mNotificationHeading = tr("Contact Blocked");
             ui->sIconWidget->setCurrentWidget(ui->pContact);
             ui->sIconWidget->show();
@@ -201,7 +198,6 @@ void AlertItem::setAlertHeading(MegaUserAlert *alert)
         case MegaUserAlert::TYPE_UPDATEDPENDINGCONTACTINCOMING_ACCEPTED:
         case MegaUserAlert::TYPE_UPDATEDPENDINGCONTACTINCOMING_DENIED:
         {
-            setAvatar(alert);
             mNotificationHeading = tr("Contact Updated");
             ui->sIconWidget->setCurrentWidget(ui->pContact);
             ui->sIconWidget->show();
@@ -209,7 +205,6 @@ void AlertItem::setAlertHeading(MegaUserAlert *alert)
         }
         case MegaUserAlert::TYPE_UPDATEDPENDINGCONTACTOUTGOING_ACCEPTED:
         {
-            setAvatar(alert);
             mNotificationHeading = tr("Contact Accepted");
             ui->sIconWidget->setCurrentWidget(ui->pContact);
             ui->sIconWidget->show();
@@ -217,7 +212,6 @@ void AlertItem::setAlertHeading(MegaUserAlert *alert)
         }
         case MegaUserAlert::TYPE_UPDATEDPENDINGCONTACTOUTGOING_DENIED:
         {
-            setAvatar(alert);
             mNotificationHeading = tr("Contact Denied");
             ui->sIconWidget->setCurrentWidget(ui->pContact);
             ui->sIconWidget->show();
@@ -479,26 +473,6 @@ void AlertItem::changeEvent(QEvent *event)
     QWidget::changeEvent(event);
 }
 
-void AlertItem::setAvatar(MegaUserAlert *alert)
-{
-    QString color;
-    const char* avatarColor = megaApi->getUserAvatarColor(megaApi->handleToBase64(qHash(QString::fromUtf8(alert->getEmail()))));
-
-    if (avatarColor)
-    {
-        color = QString::fromUtf8(avatarColor);
-        delete [] avatarColor;
-    }
-
-    QString fullname = QString::fromUtf8(alert->getEmail());
-    if (fullname.isEmpty())
-    {
-        fullname = QString::fromUtf8("C");
-    }
-
-    ui->wAvatarContact->setAvatarLetter(fullname.at(0).toUpper(), color);
-}
-
 QString AlertItem::formatRichString(QString str)
 {
     return QString::fromUtf8("<span style='color:#333333; font-family: Lato; font-size: 14px; font-weight: bold; text-decoration:none;'><bold>%1</bold></span>")
@@ -507,5 +481,5 @@ QString AlertItem::formatRichString(QString str)
 
 QString AlertItem::getUserFullName(MegaUserAlert *alert)
 {
-    return mUserAttributes ? mUserAttributes->getFullName() : QString::fromUtf8(alert->getEmail());
+    return mFullNameAttributes ? mFullNameAttributes->getFullName() : QString::fromUtf8(alert->getEmail());
 }

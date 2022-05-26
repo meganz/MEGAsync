@@ -1,10 +1,10 @@
 #include "MegaItem.h"
 #include "QMegaMessageBox.h"
 #include "MegaApplication.h"
-#include "AvatarWidget.h"
 #include "model/Model.h"
 #include "MegaApplication.h"
 #include "mega/utils.h"
+#include "UserAttributesRequests.h"
 
 #include <QByteArray>
 
@@ -16,17 +16,13 @@ using namespace mega;
 MegaItem::MegaItem(std::unique_ptr<MegaNode> node, MegaItem *parentItem, bool showFiles) :
     QObject(parentItem),
     mShowFiles(showFiles),
-    mOwnerFirstName(QString()),
-    mOwnerLastName(QString()),
     mOwnerEmail(QString()),
-    mOwnerIcon(QPixmap()),
     mStatus(STATUS::NONE),
     mCameraFolder(false),
     mChatFilesFolder(false),
     mChildrenSet(false),
     mNode(std::move(node)),
-    mOwner(nullptr),
-    mDelegateListener(mega::make_unique<QTMegaRequestListener>(MegaSyncApp->getMegaApi(), this))
+    mOwner(nullptr)
 { 
     if(isRoot() || mNode->isFile() || mNode->isInShare())
     {
@@ -108,10 +104,11 @@ int MegaItem::indexOf(MegaItem *item)
 
 QString MegaItem::getOwnerName()
 {
-    if(!mOwnerFirstName.isEmpty() && !mOwnerLastName.isEmpty())
+    if(mFullNameAttribute && mFullNameAttribute->isAttributeReady())
     {
-        return mOwnerFirstName + QLatin1Char(' ') + mOwnerLastName;
+        return mFullNameAttribute->getFullName();
     }
+
     return mOwnerEmail;
 }
 
@@ -122,15 +119,27 @@ QString MegaItem::getOwnerEmail()
 
 void MegaItem::setOwner(std::unique_ptr<mega::MegaUser> user)
 {
-    mOwner = move(user);
+    mOwner = std::move(user);
     mOwnerEmail = QString::fromUtf8(mOwner->getEmail());
-    MegaApi* megaApi = MegaSyncApp->getMegaApi();
-    if(megaApi)
+    mFullNameAttribute = UserAttributes::FullNameAttributeRequest::requestFullName(mOwner->getEmail());
+    if(mFullNameAttribute)
     {
-        megaApi->getUserAttribute(mOwner.get(), mega::MegaApi::USER_ATTR_FIRSTNAME, mDelegateListener.get());
-        megaApi->getUserAttribute(mOwner.get(), mega::MegaApi::USER_ATTR_LASTNAME, mDelegateListener.get());
-        megaApi->getUserAvatar(mOwner.get(), Utilities::getAvatarPath(mOwnerEmail).toUtf8().constData(), mDelegateListener.get());
+        connect(mFullNameAttribute.get(), &UserAttributes::FullNameAttributeRequest::attributeReady, this, &MegaItem::onFullNameAttributeReady);
+        if(mFullNameAttribute->isAttributeReady())
+        {
+            onFullNameAttributeReady();
+        }
     }
+    mAvatarAttribute = UserAttributes::AvatarAttributeRequest::requestAvatar(mOwner->getEmail());
+    if(mAvatarAttribute)
+    {
+        connect(mAvatarAttribute.get(), &UserAttributes::AvatarAttributeRequest::attributeReady, this, &MegaItem::onAvatarAttributeReady);
+        if(mAvatarAttribute->isAttributeReady())
+        {
+            onAvatarAttributeReady();
+        }
+    }
+
     QStringList folderList;
     //Calculating if we have a synced childs.
     foreach(const QString& folder, Model::instance()->getMegaFolders())
@@ -143,9 +152,24 @@ void MegaItem::setOwner(std::unique_ptr<mega::MegaUser> user)
     calculateSyncStatus(folderList);
 }
 
+void MegaItem::onFullNameAttributeReady()
+{
+    emit infoUpdated(Qt::DisplayRole);
+}
+
+void MegaItem::onAvatarAttributeReady()
+{
+    emit infoUpdated(Qt::DecorationRole);
+}
+
 QPixmap MegaItem::getOwnerIcon()
 {
-    return mOwnerIcon;
+    if(mAvatarAttribute)
+    {
+        return mAvatarAttribute->getPixmap(ICON_SIZE);
+    }
+
+    return QPixmap();
 }
 
 QIcon MegaItem::getStatusIcons()
@@ -312,69 +336,6 @@ MegaItem::~MegaItem()
 {
     qDeleteAll(mChildItems);
     mChildItems.clear();
-}
-
-void MegaItem::onRequestFinish(mega::MegaApi *api, mega::MegaRequest *request, mega::MegaError *e)
-{
-    Q_UNUSED(api);
-    if (e->getErrorCode() != MegaError::API_OK && e->getErrorCode() != MegaError::API_ENOENT)
-    {
-        QMegaMessageBox::critical(nullptr, QLatin1String("MEGAsync"), tr("Error") +
-                                  QLatin1String(": ") + QCoreApplication::translate("MegaError", e->getErrorString()));
-        return;
-    }
-    if(request->getType() == mega::MegaRequest::TYPE_GET_ATTR_USER)
-    {
-        switch(request->getParamType())
-        {
-        case mega::MegaApi::USER_ATTR_FIRSTNAME:
-        {
-            mOwnerFirstName = QString::fromUtf8(request->getText());
-            emit infoUpdated(Qt::DisplayRole);
-            break;
-        }
-        case mega::MegaApi::USER_ATTR_LASTNAME:
-        {
-            mOwnerLastName = QString::fromUtf8(request->getText());
-            emit infoUpdated(Qt::DisplayRole);
-            break;
-        }
-        case mega::MegaApi::USER_ATTR_AVATAR:
-        {
-            QString fileRoute = QString::fromUtf8(request->getFile());
-            #ifdef WIN32
-            if (fileRoute.startsWith(QString::fromUtf8("\\\\?\\")))
-            {
-                fileRoute = fileRoute.mid(4);
-            }
-            #endif
-
-            if(e->getErrorCode() != MegaError::API_ENOENT)
-            {
-                mOwnerIcon = AvatarPixmap::maskFromImagePath(fileRoute, ICON_SIZE);
-            }
-            else
-            {
-                QFile::remove(fileRoute);
-                const char* color = nullptr;
-                if(mega::MegaApi* megaApi = MegaSyncApp->getMegaApi())
-                {
-                    color = megaApi->getUserAvatarColor(mOwner.get());
-                }
-                QColor avatarColor(color);
-                delete [] color;
-                QLinearGradient gradient(ICON_SIZE, ICON_SIZE, ICON_SIZE, ICON_SIZE);
-                gradient.setColorAt(1.0, avatarColor.lighter(130));
-                gradient.setColorAt(0.0, avatarColor);
-                mOwnerIcon = AvatarPixmap::createFromLetter(getOwnerName().at(0), gradient, ICON_SIZE);
-            }
-            emit infoUpdated(Qt::DecorationRole);
-            break;
-        }
-        default:
-            break;
-        }
-    }
 }
 
 void MegaItem::calculateSyncStatus(const QStringList &folders)

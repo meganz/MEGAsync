@@ -10,21 +10,25 @@ class FullNameAttributeRequest : public AttributeRequest
     Q_OBJECT
 
 public:
-    FullNameAttributeRequest(const QString& userEmail) : AttributeRequest(userEmail), mRequestReceived(0){}
+    FullNameAttributeRequest(const QString& userEmail) : AttributeRequest(userEmail){}
 
-    static std::shared_ptr<FullNameAttributeRequest> requestFullName(const char* user_email);
+    static std::shared_ptr<const FullNameAttributeRequest> requestFullName(const char* user_email);
 
     void onRequestFinish(mega::MegaApi *, mega::MegaRequest *incoming_request, mega::MegaError *e) override;
     void requestAttribute() override;
     void updateAttributes(mega::MegaUser* user) override;
 
-    QString getFullName();
-    bool areAttributesReady();
+    QString getFullName() const;
+    bool isAttributeReady() const override;
+    const QString& getFirstName() const;
+    const QString& getLastName() const;
+
+signals:
+    void attributeReady(const QString&);
 
 private:
     QString mFirstName;
     QString mLastName;
-    uint8_t mRequestReceived;
 };
 
 class AvatarAttributeRequest : public AttributeRequest
@@ -32,18 +36,47 @@ class AvatarAttributeRequest : public AttributeRequest
     Q_OBJECT
 
 public:
-    AvatarAttributeRequest(const QString& userEmail) : AttributeRequest(userEmail){}
 
-    static std::shared_ptr<AvatarAttributeRequest> requestAvatar(const char* user_email);
+    AvatarAttributeRequest(const QString& userEmail);
 
-    void onRequestFinish(mega::MegaApi *, mega::MegaRequest *incoming_request, mega::MegaError *) override;
+    static std::shared_ptr<const AvatarAttributeRequest> requestAvatar(const char* user_email);
+    std::shared_ptr<FullNameAttributeRequest> getFullNameRequest();
+
+    void onRequestFinish(mega::MegaApi *, mega::MegaRequest *incoming_request, mega::MegaError *e) override;
     void requestAttribute() override;
     void updateAttributes(mega::MegaUser* user) override;
 
-    QPixmap GetPixmap(int diameter);
+    const QPixmap& getPixmap(const int& size) const;
+
+    bool isAttributeReady() const override;
+
+signals:
+    void attributeReady();
+
+private slots:
+    void onFullNameAttributeReady();
 
 private:
-    QString mFilePath;
+    struct LetterInfo
+    {
+        QChar letter;
+        QColor color;
+
+        bool isEmpty() const {return letter.isNull();}
+        void clear()
+        {
+            letter = QChar();
+            color = QColor();
+        }
+    };
+
+    void fillLetterInfo();
+    void getLetterColor();
+
+    mutable QMap<int,QPixmap> mIcon;
+    QString mIconPath;
+    LetterInfo mLetterAvatarInfo;
+    std::shared_ptr<FullNameAttributeRequest> mFullNameRequest;
 };
 }
 
