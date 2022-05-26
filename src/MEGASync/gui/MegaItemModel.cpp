@@ -74,15 +74,19 @@ QVariant MegaItemModel::data(const QModelIndex &index, int role) const
         }
         case  Qt::TextAlignmentRole:
         {
-            if(index.column() == STATUS)
+            if(index.column() == STATUS || index.column() == USER)
             {
-                return QVariant::fromValue<Qt::Alignment>(Qt::AlignHCenter);
+                return QVariant::fromValue<Qt::Alignment>(Qt::AlignHCenter | Qt::AlignCenter);
             }
             break;
         }
         case Qt::ToolTipRole:
         {
-            if(mSyncSetupMode)
+            if(index.column() == USER)
+            {
+                return item->getOwnerName();
+            }
+            else if(mSyncSetupMode)
             {
                 if((item->getStatus() == MegaItem::SYNC)
                                       || (item->getStatus() == MegaItem::SYNC_CHILD))
@@ -119,7 +123,7 @@ QVariant MegaItemModel::data(const QModelIndex &index, int role) const
         }
         case toInt(NodeRowDelegateRoles::INDENT_ROLE):
         {
-            return item->isRoot()? -10: 0;
+            return item->isRoot()? -10 : 0;
         }
         default:
         {
@@ -199,12 +203,9 @@ QVariant MegaItemModel::headerData(int section, Qt::Orientation orientation, int
              switch(section)
              {
              case STATUS:
-             {
-                 return QString();
-             }
              case USER:
              {
-                 return tr("Owner");
+                 return QLatin1String();
              }
              case DATE:
              {
@@ -243,6 +244,10 @@ QVariant MegaItemModel::headerData(int section, Qt::Orientation orientation, int
             if(section == STATUS)
             {
                 return QIcon(QLatin1String("://images/node_selector/icon-small-MEGA.png"));
+            }
+            else if(section == USER)
+            {
+                return QIcon(QLatin1String("://images/node_selector/icon_small_user.png"));
             }
         }
     }
@@ -370,10 +375,6 @@ QVariant MegaItemModel::getText(const QModelIndex &index, MegaItem *item) const
             if(item->isRoot())
                 return QApplication::translate("MegaNodeNames", item->getNode()->getName());
             return QVariant(QString::fromUtf8(item->getNode()->getName()));
-        }
-        case COLUMN::USER:
-        {
-            return QVariant(item->getOwnerName());
         }
         case COLUMN::DATE:
         {

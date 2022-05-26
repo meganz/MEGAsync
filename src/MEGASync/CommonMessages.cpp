@@ -8,15 +8,15 @@ QString CommonMessages::createPaymentReminder(int64_t expirationTimeStamp)
     const int daysExpired = computeDaysToExpiration(expirationTimeStamp);
     if (daysExpired > 0)
     {
-        return QCoreApplication::translate("CommonMessages","Your PRO membership plan will expire in %n day", "", daysExpired);
+        return QCoreApplication::translate("CommonMessages","Your Pro membership plan will expire in %n day", "", daysExpired);
     }
     else if (daysExpired == 0)
     {
-        return QCoreApplication::translate("CommonMessages","PRO membership plan expiring soon");
+        return QCoreApplication::translate("CommonMessages","Pro membership plan expiring soon");
     }
     else
     {
-        return QCoreApplication::translate("CommonMessages","Your PRO membership plan expired %n day ago", "", -daysExpired);
+        return QCoreApplication::translate("CommonMessages","Your Pro membership plan expired %n day ago", "", -daysExpired);
     }
 }
 
