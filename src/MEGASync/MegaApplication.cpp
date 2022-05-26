@@ -274,6 +274,7 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     waiting = false;
     updated = false;
     syncing = false;
+    syncStalled = false;
     transferring = false;
     checkupdate = false;
     updateAction = NULL;
@@ -875,6 +876,11 @@ void MegaApplication::updateTrayIcon()
             scanningTimer->stop();
         }
 #endif
+    }
+    else if (syncStalled)
+    {
+        tooltipState = tr("Stalled");
+        icon = icons["alert"];
     }
     else if (indexing || waiting || syncing || transferring)
     {
@@ -8182,6 +8188,7 @@ void MegaApplication::onGlobalSyncStateChangedImpl(MegaApi *, bool timeout)
         indexing = megaApi->isScanning();
         waiting = megaApi->isWaiting() || megaApi->isSyncStalled();
         syncing = megaApi->isSyncing();
+        syncStalled = megaApi->syncsHaveStalls();
         auto transferCount = getTransfersModel()->getTransfersCount();
         transferring = transferCount.pendingUploads || transferCount.pendingDownloads;
 
@@ -8215,8 +8222,8 @@ void MegaApplication::onGlobalSyncStateChangedImpl(MegaApi *, bool timeout)
        });
     }
 
-    MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("Current state. Paused = %1 Indexing = %2 Waiting = %3 Syncing = %4")
-                 .arg(paused).arg(indexing).arg(waiting).arg(syncing).toUtf8().constData());
+    MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("Current state. Paused = %1 Indexing = %2 Waiting = %3 Syncing = %4 Stalled = %5")
+                 .arg(paused).arg(indexing).arg(waiting).arg(syncing).arg(syncStalled).toUtf8().constData());
 
     updateTrayIcon();
 }

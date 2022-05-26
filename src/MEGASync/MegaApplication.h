@@ -527,6 +527,7 @@ protected:
     bool indexing;
     bool waiting;
     bool syncing; //if any sync is in syncing state
+    bool syncStalled = false;
     bool updated;
     bool transferring; //if there is any regular transfer in progress
     bool checkupdate;
