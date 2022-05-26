@@ -3320,6 +3320,8 @@ void MegaApplication::logBatchStatus(const char* tag)
 
 void MegaApplication::enableTransferActions(bool enable)
 {
+    guestSettingsAction->setEnabled(enable);
+
     importLinksAction->setEnabled(enable);
     uploadAction->setEnabled(enable);
     downloadAction->setEnabled(enable);
