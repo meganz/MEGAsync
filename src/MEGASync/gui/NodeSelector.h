@@ -36,7 +36,8 @@ public:
     };
 
     static const int LABEL_ELIDE_MARGIN;
-
+    static const char* CLD_DRIVE;
+    static const char* IN_SHARES;
     explicit NodeSelector(int selectMode, QWidget *parent = 0);
 
     ~NodeSelector();

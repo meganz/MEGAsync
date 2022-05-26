@@ -7,7 +7,7 @@
 MegaItemProxyModel::MegaItemProxyModel(QObject* parent) :
     QSortFilterProxyModel(parent)
 {
-
+    setSortCaseSensitivity(Qt::CaseInsensitive);
 }
 
 void MegaItemProxyModel::setFilter(const Filter &f)
@@ -205,12 +205,14 @@ bool MegaItemProxyModel::filterAcceptsRow(int sourceRow, const QModelIndex &sour
 bool MegaItemProxyModel::filterAcceptsColumn(int sourceColumn, const QModelIndex &sourceParent) const
 {
     Q_UNUSED(sourceParent);
-    if(sourceColumn == MegaItemModel::COLUMN::NODE
-       || sourceColumn == MegaItemModel::COLUMN::STATUS
-       || (mFilter.showInShares && sourceColumn == MegaItemModel::COLUMN::USER)
-       || (mFilter.showCloudDrive && sourceColumn == MegaItemModel::COLUMN::DATE))
-    {
+    switch(sourceColumn)
+    { // Fallthrough
+    case MegaItemModel::COLUMN::NODE:
+    case MegaItemModel::COLUMN::STATUS:
+    case MegaItemModel::COLUMN::DATE:
         return true;
+    case MegaItemModel::COLUMN::USER:
+        return mFilter.showInShares;
     }
     return false;
 }

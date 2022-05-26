@@ -396,8 +396,10 @@ void MegaTransferView::createContextMenu()
         mPauseAction = nullptr;
     }
 
+    auto indexes = selectedIndexes();
+
     mPauseAction = new QAction(QIcon(QLatin1String(":/images/transfer_manager/context_menu/pause_ico.png")),
-                                     tr("Pause Transfer(s)"), this);
+                                     tr("Pause Transfer(s)","", indexes.size()), this);
     connect(mPauseAction, &QAction::triggered,
             this, &MegaTransferView::pauseSelectedClicked);
 
@@ -408,7 +410,7 @@ void MegaTransferView::createContextMenu()
     }
 
     mResumeAction = new QAction(QIcon(QLatin1String(":/images/transfer_manager/context_menu/resume_ico.png")),
-                                      tr("Resume Transfer(s)"), this);
+                                      tr("Resume Transfer(s)", "", indexes.size()), this);
     connect(mResumeAction, &QAction::triggered,
             this, &MegaTransferView::resumeSelectedClicked);
 
@@ -459,7 +461,7 @@ void MegaTransferView::createContextMenu()
     }
 
     mCancelAction = new QAction(QIcon(QLatin1String(":/images/transfer_manager/context_menu/cancel_transfer_ico.png")),
-                                      tr("Cancel Transfer(s)"), this);
+                                      tr("Cancel Transfer(s)", "", indexes.size()), this);
     connect(mCancelAction, &QAction::triggered,
             this, &MegaTransferView::cancelSelectedClicked);
 
@@ -589,19 +591,6 @@ void MegaTransferView::updateContextMenu(bool enablePause, bool enableResume, bo
     mOpenInMEGAAction->setVisible(showLink);
     mOpenItemAction->setVisible(showOpen);
     mShowInFolderAction->setVisible(showShowInFolder);
-
-    if (onlyOneSelected)
-    {
-        mPauseAction->setText(tr("Pause Transfer"));
-        mResumeAction->setText(tr("Resume Transfer"));
-        mCancelAction->setText(tr("Cancel Transfer"));
-    }
-    else
-    {
-        mPauseAction->setText(tr("Pause Transfers"));
-        mResumeAction->setText(tr("Resume Transfers"));
-        mCancelAction->setText(tr("Cancel Transfers"));
-    }
 
     if(enableMove)
     {

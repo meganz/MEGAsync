@@ -498,8 +498,8 @@ void DesktopNotifications::sendOverStorageNotification(int state) const
     {
         auto notification = new MegaNotification();
         notification->setTitle(tr("Your account is almost full."));
-        notification->setText(tr("Upgrade now to a PRO account."));
-        notification->setActions(QStringList() << tr("Get PRO"));
+        notification->setText(tr("Upgrade now to a Pro account."));
+        notification->setActions(QStringList() << tr("Get Pro"));
         notification->setImage(mAppIcon);
         notification->setImagePath(mStorageQuotaWarningIconPath);
         connect(notification, &MegaNotification::activated, this, &DesktopNotifications::redirectToUpgrade);
@@ -510,8 +510,8 @@ void DesktopNotifications::sendOverStorageNotification(int state) const
     {
         auto notification = new MegaNotification();
         notification->setTitle(tr("Your account is full."));
-        notification->setText(tr("Upgrade now to a PRO account."));
-        notification->setActions(QStringList() << tr("Get PRO"));
+        notification->setText(tr("Upgrade now to a Pro account."));
+        notification->setActions(QStringList() << tr("Get Pro"));
         notification->setImage(mAppIcon);
         notification->setImagePath(mStorageQuotaFullIconPath);
         connect(notification, &MegaNotification::activated, this, &DesktopNotifications::redirectToUpgrade);
@@ -526,7 +526,7 @@ void DesktopNotifications::sendOverStorageNotification(int state) const
         int64_t remainDaysOut(0);
         Utilities::getDaysToTimestamp(megaApi->getOverquotaDeadlineTs(), remainDaysOut);
         notification->setText(tr("You have %n day left to save your data", "", static_cast<int>(remainDaysOut)));
-        notification->setActions(QStringList() << tr("Get PRO"));
+        notification->setActions(QStringList() << tr("Get Pro"));
         notification->setImage(mAppIcon);
         connect(notification, &MegaNotification::activated, this, &DesktopNotifications::redirectToUpgrade);
         mNotificator->notify(notification);
@@ -541,8 +541,8 @@ void DesktopNotifications::sendOverTransferNotification(const QString &title) co
 {
     const auto notification = new MegaNotification();
     notification->setTitle(title);
-    notification->setText(tr("Upgrade now to a PRO account."));
-    notification->setActions(QStringList() << tr("Get PRO"));
+    notification->setText(tr("Upgrade now to a Pro account."));
+    notification->setActions(QStringList() << tr("Get Pro"));
     notification->setImage(mAppIcon);
     connect(notification, &MegaNotification::activated, this, &DesktopNotifications::redirectToUpgrade);
     mNotificator->notify(notification);

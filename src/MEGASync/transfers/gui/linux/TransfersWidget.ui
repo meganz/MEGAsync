@@ -464,7 +464,7 @@ TransferWidgetHeaderItem  QLabel
              <property name="hover_selected" stdset="0">
               <bool>true</bool>
              </property>
-             <property name="icon_prefix" stdset="0">
+             <property name="default_icon" stdset="0">
               <url>
                <string>qrc:/images/transfer_manager/transfers_actions/lists_pause_all_ico_default.png</string>
               </url>
@@ -549,7 +549,7 @@ TransferWidgetHeaderItem  QLabel
             <property name="checkable">
              <bool>false</bool>
             </property>
-            <property name="icon_prefix" stdset="0">
+            <property name="default_icon" stdset="0">
              <url>
               <string>qrc:/images/transfer_manager/transfers_actions/lists_cancel_all_ico_default.png</string>
              </url>
