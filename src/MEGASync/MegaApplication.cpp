@@ -3320,8 +3320,13 @@ void MegaApplication::logBatchStatus(const char* tag)
 
 void MegaApplication::enableTransferActions(bool enable)
 {
-    guestSettingsAction->setEnabled(enable);
+    windowsSettingsAction->setEnabled(enable);
+    windowsImportLinksAction->setEnabled(enable);
+    windowsUploadAction->setEnabled(enable);
+    windowsDownloadAction->setEnabled(enable);
+    windowsStreamAction->setEnabled(enable);
 
+    guestSettingsAction->setEnabled(enable);
     importLinksAction->setEnabled(enable);
     uploadAction->setEnabled(enable);
     downloadAction->setEnabled(enable);
@@ -3331,6 +3336,10 @@ void MegaApplication::enableTransferActions(bool enable)
     if (syncsMenu)
     {
         syncsMenu->setEnabled(enable);
+    }
+    if (addSyncAction)
+    {
+        addSyncAction->setEnabled(enable);
     }
 }
 
@@ -6383,68 +6392,16 @@ void MegaApplication::createInfoDialogMenus()
         }
     }
 
-    if (windowsExitAction)
-    {
-        windowsExitAction->deleteLater();
-        windowsExitAction = NULL;
-    }
-
-    windowsExitAction = new QAction(QCoreApplication::translate("Platform", Platform::exitString), this);
-    connect(windowsExitAction, SIGNAL(triggered()), this, SLOT(exitApplication()));
-
-    if (windowsSettingsAction)
-    {
-        windowsSettingsAction->deleteLater();
-        windowsSettingsAction = NULL;
-    }
-
-    windowsSettingsAction = new QAction(QCoreApplication::translate("Platform", Platform::settingsString), this);
-    connect(windowsSettingsAction, SIGNAL(triggered()), this, SLOT(openSettings()));
-
-    if (windowsImportLinksAction)
-    {
-        windowsImportLinksAction->deleteLater();
-        windowsImportLinksAction = NULL;
-    }
-
-    windowsImportLinksAction = new QAction(tr("Open links"), this);
-    connect(windowsImportLinksAction, SIGNAL(triggered()), this, SLOT(importLinks()));
-
-    if (windowsUploadAction)
-    {
-        windowsUploadAction->deleteLater();
-        windowsUploadAction = NULL;
-    }
-
-    windowsUploadAction = new QAction(tr("Upload"), this);
-    connect(windowsUploadAction, SIGNAL(triggered()), this, SLOT(uploadActionClicked()));
-
-    if (windowsDownloadAction)
-    {
-        windowsDownloadAction->deleteLater();
-        windowsDownloadAction = NULL;
-    }
-
-    windowsDownloadAction = new QAction(tr("Download"), this);
-    connect(windowsDownloadAction, SIGNAL(triggered()), this, SLOT(downloadActionClicked()));
-
-    if (windowsStreamAction)
-    {
-        windowsStreamAction->deleteLater();
-        windowsStreamAction = NULL;
-    }
-
-    windowsStreamAction = new QAction(tr("Stream"), this);
-    connect(windowsStreamAction, SIGNAL(triggered()), this, SLOT(streamActionClicked()));
-
-    if (windowsTransferManagerAction)
-    {
-        windowsTransferManagerAction->deleteLater();
-        windowsTransferManagerAction = NULL;
-    }
-
-    windowsTransferManagerAction = new QAction(tr("Transfer manager"), this);
-    connect(windowsTransferManagerAction, SIGNAL(triggered()), this, SLOT(transferManagerActionClicked()));
+    recreateAction(&windowsExitAction, QCoreApplication::translate("Platform", Platform::exitString),
+                   &MegaApplication::exitApplication);
+    recreateAction(&windowsSettingsAction, QCoreApplication::translate("Platform", Platform::settingsString),
+                   &MegaApplication::openSettings);
+    recreateAction(&windowsImportLinksAction, tr("Open links"), &MegaApplication::importLinks);
+    recreateAction(&windowsUploadAction, tr("Upload"), &MegaApplication::uploadActionClicked);
+    recreateAction(&windowsDownloadAction, tr("Download"), &MegaApplication::downloadActionClicked);
+    recreateAction(&windowsStreamAction, tr("Stream"), &MegaApplication::streamActionClicked);
+    recreateAction(&windowsTransferManagerAction, tr("Transfer manager"),
+                   &MegaApplication::transferManagerActionClicked);
 
     if (windowsUpdateAction)
     {
@@ -6511,7 +6468,7 @@ void MegaApplication::createInfoDialogMenus()
                        "://images/ico_quit.png", &MegaApplication::exitApplication);
     recreateMenuAction(&settingsAction, QCoreApplication::translate("Platform", Platform::settingsString),
                        "://images/ico_preferences.png", &MegaApplication::openSettings);
-    recreateMenuAction(&myCloudAction, tr("Cloud drive"), "://images/cloud.png", &MegaApplication::goToMyCloud);
+    recreateMenuAction(&myCloudAction, tr("Cloud drive"), "://images/ico-cloud-drive.png", &MegaApplication::goToMyCloud);
 
     bool previousEnabledState = true;
     if (addSyncAction)

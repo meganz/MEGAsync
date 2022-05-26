@@ -621,6 +621,22 @@ private:
         connect(*action, &QAction::triggered, this, slotFunc, Qt::QueuedConnection);
         (*action)->setEnabled(previousEnabledState);
     }
+
+    template <class Func>
+    void recreateAction(QAction** action, const QString& actionName, Func slotFunc)
+    {
+        bool previousEnabledState = true;
+        if (*action)
+        {
+            previousEnabledState = (*action)->isEnabled();
+            (*action)->deleteLater();
+            *action = nullptr;
+        }
+
+        *action = new QAction(actionName, this);
+        connect(*action, &QAction::triggered, this, slotFunc);
+        (*action)->setEnabled(previousEnabledState);
+    }
 };
 
 class DeferPreferencesSyncForScope
