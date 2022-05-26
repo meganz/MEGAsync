@@ -2,6 +2,7 @@
 #include "ui_RemoveBackupDialog.h"
 #include "MegaApplication.h"
 #include "NodeSelector.h"
+#include <QButtonGroup>
 
 RemoveBackupDialog::RemoveBackupDialog(std::shared_ptr<SyncSetting> backup, QWidget *parent) :
     QDialog(parent),
@@ -25,6 +26,11 @@ RemoveBackupDialog::RemoveBackupDialog(std::shared_ptr<SyncSetting> backup, QWid
     mUi->lTarget->setText(QCoreApplication::translate("MegaNodeNames",
                                                       MegaSyncApp->getRootNode()->getName())
                           .append(QLatin1Char('/')));
+
+    QButtonGroup *group = new QButtonGroup(this);
+    group->setExclusive(true);
+    group->addButton(mUi->rDeleteFolder);
+    group->addButton(mUi->rMoveFolder);
 }
 
 RemoveBackupDialog::~RemoveBackupDialog()

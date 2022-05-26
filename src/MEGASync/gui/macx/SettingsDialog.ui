@@ -3071,6 +3071,9 @@ margin-right: 7px;
              </property>
              <item>
               <widget class="BackupTableWidget" name="backupTableWidget">
+               <property name="focusPolicy">
+                <enum>Qt::NoFocus</enum>
+               </property>
                <property name="styleSheet">
                 <string notr="true">QTableView
 {
@@ -3089,7 +3092,7 @@ padding-left: 12px;
 QTableView::item
 {
 border: none;
-padding-left: 10px;
+padding-left: 3px;
 }
 </string>
                </property>
@@ -3188,7 +3191,7 @@ padding-left: 10px;
                <item>
                 <widget class="QLabel" name="label">
                  <property name="text">
-                  <string>Backup foder</string>
+                  <string>Backup folder:</string>
                  </property>
                 </widget>
                </item>
@@ -3206,6 +3209,9 @@ padding-left: 10px;
                 <widget class="QPushButton" name="bOpenBackupFolder">
                  <property name="text">
                   <string>View in MEGA</string>
+                 </property>
+                 <property name="autoDefault">
+                  <bool>false</bool>
                  </property>
                 </widget>
                </item>
@@ -4708,7 +4714,7 @@ margin-right: 32px;</string>
            </sizepolicy>
           </property>
           <property name="currentIndex">
-           <number>3</number>
+           <number>4</number>
           </property>
           <widget class="QWidget" name="wGeneralFooter">
            <layout class="QVBoxLayout" name="verticalLayout_32">
@@ -4832,6 +4838,9 @@ margin-right: 32px;</string>
              <widget class="QPushButton" name="bBackupCenter">
               <property name="text">
                <string>To Backup Center</string>
+              </property>
+              <property name="autoDefault">
+               <bool>false</bool>
               </property>
              </widget>
             </item>

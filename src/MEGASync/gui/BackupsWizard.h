@@ -13,6 +13,7 @@
 #include <QSemaphore>
 #include <QStandardItemModel>
 #include <QSortFilterProxyModel>
+#include <QStyledItemDelegate>
 
 namespace Ui {
 class BackupsWizard;
@@ -115,6 +116,14 @@ class BackupsWizard : public QDialog
         void onBackupsDirSet(mega::MegaHandle backupsDirHandle);
         void onSetMyBackupsDirRequestStatus(int errorCode, const QString& errorMsg);
         void onSyncAddRequestStatus(int errorCode, const QString &errorMsg, const QString &name);
+};
+
+class WizardDelegate : public QStyledItemDelegate
+{
+public:
+    explicit WizardDelegate(QObject *parent = nullptr);
+    void paint(QPainter* painter, const QStyleOptionViewItem& option,
+               const QModelIndex& index) const override;
 };
 
 #endif // BACKUPSWIZARD_H

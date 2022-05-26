@@ -928,7 +928,7 @@ margin: 4px;
        <item>
         <layout class="QVBoxLayout" name="verticalLayout_3" stretch="0,1">
          <property name="spacing">
-          <number>10</number>
+          <number>16</number>
          </property>
          <item alignment="Qt::AlignTop">
           <widget class="QLabel" name="lTitle">

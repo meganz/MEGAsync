@@ -7,24 +7,29 @@
 #include "EventHelper.h"
 
 #include <QStandardPaths>
+#include <QStyleOption>
 #include <QtConcurrent/QtConcurrent>
 #include <QDebug>
 #include <QTimer>
 
-constexpr int HEIGHT_ROW_STEP_1 (40);
-constexpr int MARGIN_LV_STEP_1 (50);
-constexpr int MAX_ROWS_STEP_1 (3);
-constexpr int HEIGHT_MAX_STEP_1 (413);
-constexpr int HEIGHT_MIN_STEP_1 (HEIGHT_MAX_STEP_1 - HEIGHT_ROW_STEP_1 * MAX_ROWS_STEP_1);
-constexpr int HEIGHT_ROW_STEP_2 (32);
-constexpr int MARGIN_LV_STEP_2 (36);
-constexpr int MAX_ROWS_STEP_2 (5);
-constexpr int HEIGHT_MIN_STEP_2 (260);
-constexpr int HEIGHT_MAX_STEP_2 (HEIGHT_MIN_STEP_2 + HEIGHT_ROW_STEP_2 * MAX_ROWS_STEP_2 + 47); //+47 is the height of the wBackupTo widget in step 2.
-constexpr QSize FINAL_STEP_MIN_SIZE (QSize(520, 215));
-constexpr QSize SIZE_STEP_1 (QSize(600, 370));
-constexpr int SHOW_MORE_VISIBILITY (2);
+const int HEIGHT_ROW_STEP_1 (40);
+const int MARGIN_LV_STEP_1 (50);
+const int MAX_ROWS_STEP_1 (3);
+const int HEIGHT_MAX_STEP_1 (413);
+const int HEIGHT_MIN_STEP_1 (HEIGHT_MAX_STEP_1 - HEIGHT_ROW_STEP_1 * MAX_ROWS_STEP_1);
+const int HEIGHT_ROW_STEP_2 (32);
+const int MARGIN_LV_STEP_2 (36);
+const int MAX_ROWS_STEP_2 (5);
+const int HEIGHT_MIN_STEP_2 (260);
+const int HEIGHT_MAX_STEP_2 (HEIGHT_MIN_STEP_2 + HEIGHT_ROW_STEP_2 * MAX_ROWS_STEP_2 + 47); //+47 is the height of the wBackupTo widget in step 2.
+const QSize FINAL_STEP_MIN_SIZE (QSize(520, 230));
+const QSize SIZE_STEP_1 (QSize(600, 370));
+const int SHOW_MORE_VISIBILITY (2);
 
+const int ICON_POSITION_S1(50);
+const int ICON_POSITION_S2(3);
+
+const int TEXT_MARGIN(12);
 
 
 BackupsWizard::BackupsWizard(QWidget* parent) :
@@ -63,6 +68,8 @@ BackupsWizard::BackupsWizard(QWidget* parent) :
     mFoldersProxyModel->setSourceModel(mFoldersModel);
     mUi->lvFoldersStep1->setModel(mFoldersProxyModel);
     mUi->lvFoldersStep2->setModel(mFoldersProxyModel);
+    mUi->lvFoldersStep1->setItemDelegate(new WizardDelegate(this));
+    mUi->lvFoldersStep2->setItemDelegate(new WizardDelegate(this));
 
     QString titleStep1 = tr("1. [B]Select[/B] folders to backup");
     titleStep1.replace(QString::fromUtf8("[B]"), QString::fromUtf8("<b>"));
@@ -587,7 +594,6 @@ void BackupsWizard::on_bMoreFolders_clicked()
         // Jump to item in list
         auto idx = mFoldersModel->indexFromItem(item);
         mUi->lvFoldersStep1->scrollTo(idx,QAbstractItemView::PositionAtCenter);
-
         refreshNextButtonState();
         qDebug() << QString::fromUtf8("Backups Wizard: add folder \"%1\"").arg(path);
     }
@@ -834,4 +840,71 @@ QVariant ProxyModel::data(const QModelIndex &index, int role) const
 Qt::ItemFlags ProxyModel::flags(const QModelIndex &index) const
 {
     return QSortFilterProxyModel::flags(index)  & ~Qt::ItemIsSelectable;
+}
+
+WizardDelegate::WizardDelegate(QObject *parent) : QStyledItemDelegate(parent)
+{
+
+}
+
+void WizardDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
+{
+    painter->save();
+    QStyleOptionViewItem optCopy(option);
+    bool isS1(option.widget->objectName() == QLatin1String("lvFoldersStep1"));
+
+    //draw the checkbox
+    if(isS1 && index.flags().testFlag(Qt::ItemIsUserCheckable))
+    {
+        optCopy.features |= QStyleOptionViewItem::HasCheckIndicator;
+        optCopy.state = optCopy.state & ~QStyle::State_HasFocus;
+
+        // sets the state
+        optCopy.state |= index.data(Qt::CheckStateRole).toBool() ? QStyle::State_On : QStyle::State_Off;
+
+        QRect checkBoxRect = QApplication::style()->subElementRect(QStyle::SE_ViewItemCheckIndicator, &optCopy, optCopy.widget);
+        optCopy.rect = checkBoxRect;
+        QApplication::style()->drawPrimitive(QStyle::PE_IndicatorViewItemCheck, &optCopy, painter, optCopy.widget);
+
+    }
+
+    // draw the icon
+    QIcon::Mode mode = QIcon::Normal;
+    if (!(optCopy.state & QStyle::State_Enabled))
+        mode = QIcon::Disabled;
+    else if (optCopy.state & QStyle::State_Selected)
+        mode = QIcon::Selected;
+    QIcon::State state = optCopy.state & QStyle::State_Open ? QIcon::On : QIcon::Off;
+    QIcon icon =  qvariant_cast<QIcon>(index.data(Qt::DecorationRole));
+    if(!icon.isNull())
+    {
+        optCopy.features |= QStyleOptionViewItem::HasDecoration;
+    }
+    optCopy.icon = icon;
+    QRect iconRect = QApplication::style()->subElementRect(QStyle::SE_ItemViewItemDecoration, &optCopy, optCopy.widget);
+    int offset = isS1 ? ICON_POSITION_S1 : ICON_POSITION_S2;
+    iconRect.moveTo(QPoint(offset, iconRect.y()));
+    optCopy.rect = iconRect;
+    optCopy.icon.paint(painter, optCopy.rect, optCopy.decorationAlignment, mode, state);
+
+    // draw the text
+    QString text = qvariant_cast<QString>(index.data(Qt::DisplayRole));
+    if (!text.isEmpty())
+    {
+        optCopy.text = text;
+        QPalette::ColorGroup cg = optCopy.state & QStyle::State_Enabled
+                              ? QPalette::Normal : QPalette::Disabled;
+
+        if (cg == QPalette::Normal && !(optCopy.state & QStyle::State_Active))
+            cg = QPalette::Inactive;
+
+        optCopy.rect = option.rect;
+        painter->setPen(optCopy.palette.color(cg, QPalette::Text));
+        QRect textRect = QApplication::style()->subElementRect(QStyle::SE_ItemViewItemText, &optCopy, optCopy.widget);
+        textRect.moveTo(iconRect.right() + TEXT_MARGIN, textRect.y());
+
+        painter->drawText(textRect, optCopy.text, QTextOption(Qt::AlignVCenter | Qt::AlignLeft));
+    }
+
+  painter->restore();
 }
