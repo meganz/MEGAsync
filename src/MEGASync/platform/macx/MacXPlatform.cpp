@@ -339,6 +339,8 @@ void MacXPlatform::initMenu(QMenu* m)
                                            "padding: 0px;"
                                        "}"
                                        ));
+        m->setAttribute(Qt::WA_TranslucentBackground);
+        m->setWindowFlags(m->windowFlags() | Qt::FramelessWindowHint);
         m->ensurePolished();
     }
 }

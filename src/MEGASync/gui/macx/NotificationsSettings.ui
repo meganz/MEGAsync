@@ -390,6 +390,15 @@ background-color: rgba(0,0,0,0.1);
    <container>1</container>
   </customwidget>
  </customwidgets>
+ <tabstops>
+  <tabstop>NewSharedCheck</tabstop>
+  <tabstop>AddOrRemovedFilesCheck</tabstop>
+  <tabstop>RemovedAcccessCheck</tabstop>
+  <tabstop>NewContactCheck</tabstop>
+  <tabstop>ContactReminderCheck</tabstop>
+  <tabstop>ContactAceptedCheck</tabstop>
+  <tabstop>DesktopCheck</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>
