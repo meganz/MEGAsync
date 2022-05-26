@@ -165,6 +165,14 @@ bool MegaItemProxyModel::lessThan(const QModelIndex &left, const QModelIndex &ri
         return lStatus < rStatus;
       }
     }
+    bool leftToIntOK = false;
+    bool rightToIntOK = false;
+    int leftInt = left.data(Qt::DisplayRole).toInt(&leftToIntOK);
+    int rightInt = right.data(Qt::DisplayRole).toInt(&rightToIntOK);
+    if(leftToIntOK && rightToIntOK)
+    {
+        return leftInt < rightInt;
+    }
 
     return QSortFilterProxyModel::lessThan(left, right);
 }
