@@ -87,6 +87,7 @@ while [ "$1" != "" ]; do
             ;;
         * )
             Usage
+            echo "Unknown parameter: ${1}"
             exit 1
     esac
     shift
@@ -123,6 +124,11 @@ if [ ${build} -eq 1 -o ${build_cmake} -eq 1 ]; then
     echo "Building with:"
     echo "  MEGAQTPATH : ${MEGAQTPATH}"
     echo "  VCPKGPATH  : ${VCPKGPATH}"
+
+    if ! lipo -archs ${MEGAQTPATH}/lib/QtCore.framework/QtCore 2>/dev/null | grep ${target_arch} >/dev/null; then
+        echo "Qt libs for ${target_arch} are not present in ${MEGAQTPATH} Qt installation."
+        exit 1
+    fi
 
     if [ ${build_cmake} -ne 1 ]; then
         AVCODEC_VERSION=libavcodec.58.dylib
@@ -341,6 +347,7 @@ if [ "$notarize" = "1" ]; then
     notarize_time=`expr $(date +%s) - $notarize_time_start`
 fi
 
+echo ""
 if [ ${build} -eq 1 -o ${build_cmake} -eq 1 ]; then echo "Build:        ${build_time} s"; fi
 if [ ${sign} -eq 1 ]; then echo "Sign:         ${sign_time} s"; fi
 if [ ${createdmg} -eq 1 ]; then echo "dmg:          ${dmg_time} s"; fi
