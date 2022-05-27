@@ -72,6 +72,8 @@ NodeSelector::NodeSelector(int selectMode, QWidget *parent) :
     ui->tMegaFolders->setItemDelegateForColumn(MegaItemModel::USER, new IconDelegate(ui->tMegaFolders));
     ui->tMegaFolders->setExpanded(mProxyModel->getIndexFromHandle(MegaSyncApp->getRootNode()->getHandle()),true);
     ui->tMegaFolders->setTextElideMode(Qt::ElideMiddle);
+    ui->tMegaFolders->sortByColumn(MegaItemModel::NODE, Qt::AscendingOrder);
+    ui->bOk->setEnabled(false);
 
     ui->lFolderName->setText(tr("Cloud drive"));
 
@@ -138,7 +140,7 @@ void NodeSelector::nodesReady()
         break;
     }
     ui->tMegaFolders->setModel(mProxyModel.get());
-    ui->tMegaFolders->sortByColumn(MegaItemModel::NODE, Qt::AscendingOrder);
+    //ui->tMegaFolders->sortByColumn(MegaItemModel::NODE, Qt::AscendingOrder);
     checkBackForwardButtons();
 
 //Disable animation for OS X due to problems showing the tree icons
@@ -602,8 +604,9 @@ void NodeSelector::onTabSelected(int index)
 void NodeSelector::onSelectionChanged(const QItemSelection& selected, const QItemSelection& deselected)
 {
     Q_UNUSED(deselected)
-    if(mSelectMode == UPLOAD_SELECT || mSelectMode == DOWNLOAD_SELECT || !mProxyModel)
+    if(mSelectMode == UPLOAD_SELECT || mSelectMode == DOWNLOAD_SELECT)
     {
+        ui->bOk->setEnabled(true);
         return;
     }
     foreach(auto& index, selected.indexes())

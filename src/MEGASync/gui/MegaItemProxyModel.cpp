@@ -146,15 +146,16 @@ bool MegaItemProxyModel::lessThan(const QModelIndex &left, const QModelIndex &ri
 
     if(lIsFile && !rIsFile)
     {
-        return false;
+        return sortOrder() == Qt::DescendingOrder;
     }
     else if(!lIsFile && rIsFile)
     {
-        return true;
+        return sortOrder() != Qt::DescendingOrder;
     }
+
     if(left.column() == MegaItemModel::DATE && right.column() == MegaItemModel::DATE)
     {
-        return left.data(toInt(MegaItemModelRoles::DATE_ROLE)) > right.data(toInt(MegaItemModelRoles::DATE_ROLE));
+        return left.data(toInt(MegaItemModelRoles::DATE_ROLE)) < right.data(toInt(MegaItemModelRoles::DATE_ROLE));
     }
     if(left.column() == MegaItemModel::STATUS && right.column() == MegaItemModel::STATUS)
     {
