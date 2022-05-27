@@ -137,7 +137,7 @@ QPixmap AvatarPixmap::createFromLetter(const QChar& letter, const QColor& color,
 
     // Setup background gradient: dark to light, bottom left to top right
     QLinearGradient gradient(size, size, size, size);
-    gradient.setColorAt(1.0, color.lighter(130));
+    gradient.setColorAt(1.0, color.lighter(111));
     gradient.setColorAt(0.0, color);
     gradient.setStart(-size / 2.0, size / 2.0);
     gradient.setFinalStop(size / 2.0, -size / 2.0);
@@ -155,7 +155,7 @@ QPixmap AvatarPixmap::createFromLetter(const QChar& letter, const QColor& color,
     font.setPointSize(AVATAR_LETTER_SIZE_PT_FULL);
     font.setFamily(QLatin1String("Lato Semibold"));
     painter.setFont(font);
-    painter.setPen(color.darker(145));
+    painter.setPen(color.darker(110));
     painter.drawText(rect.adjusted(0, LATO_FONT_ADJUST_SHADOW, 10, 0), letter, QTextOption(Qt::AlignCenter));
     painter.setPen(Qt::white);
     painter.drawText(rect.adjusted(0, LATO_FONT_ADJUST, 0, 0), letter, QTextOption(Qt::AlignCenter));
