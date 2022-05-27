@@ -65,7 +65,8 @@ void FullNameAttributeRequest::updateAttributes(mega::MegaUser *user)
             requestFirstNameAttribute();
 
         }
-        else if(hasLastnameChanged)
+
+        if(hasLastnameChanged)
         {
             requestLastNameAttribute();
         }

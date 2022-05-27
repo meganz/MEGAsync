@@ -250,8 +250,15 @@ void AlertItem::setAlertHeading(MegaUserAlert *alert)
             break;
     }
 
+
     ui->lHeading->ensurePolished();
     ui->lHeading->setText(ui->lHeading->fontMetrics().elidedText(mNotificationHeading, Qt::ElideMiddle,ui->lHeading->minimumWidth()));
+
+    if(alert->getEmail())
+    {
+        mNotificationHeading.append(QString::fromLatin1(" (") + QString::fromUtf8(alert->getEmail()) + QString::fromLatin1(")"));
+        setToolTip(mNotificationHeading);
+    }
 }
 
 void AlertItem::setAlertContent(MegaUserAlert *alert)

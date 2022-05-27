@@ -48,6 +48,7 @@ public:
             auto requestType = typeid(*request).name();
             if(requestType == classType)
             {
+                //Do not request attribute again, as it is done the first time
                 return std::dynamic_pointer_cast<AttributeClass>(request);
             }
         }
