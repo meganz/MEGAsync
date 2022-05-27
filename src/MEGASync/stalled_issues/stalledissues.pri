@@ -63,9 +63,25 @@ win32 {
                 $$PWD/gui/stalled_issues_cases/win/LocalAndRemoteNameConflicts.ui
 }
 
+macx {
+    RESOURCES += $$PWD/../gui/Resources_macx.qrc
+    INCLUDEPATH += $$PWD/gui/macx
+    FORMS    += $$PWD/gui/macx/StalledIssueHeader.ui \
+                $$PWD/gui/macx/StalledIssueChooseWidget.ui \
+                $$PWD/gui/macx/StalledIssuesDialog.ui \
+                $$PWD/gui/macx/StalledIssueFilePath.ui \
+                $$PWD/gui/macx/StalledIssueTab.ui \
+                $$PWD/gui/macx/StalledIssueLoadingItem.ui \
+                $$PWD/gui/macx/StalledIssueChooseTitle.ui \
+                $$PWD/gui/stalled_issues_cases/macx/LocalAndRemoteDifferentWidget.ui \
+                $$PWD/gui/stalled_issues_cases/macx/OtherSideMissingOrBlocked.ui \
+                $$PWD/gui/stalled_issues_cases/macx/NameConflict.ui \
+                $$PWD/gui/stalled_issues_cases/macx/LocalAndRemoteNameConflicts.ui
+}
+
 unix:!macx {
 RESOURCES += $$PWD/../gui/Resources_linux.qrc
-INCLUDEPATH += $$PWD/gui/win
+INCLUDEPATH += $$PWD/gui/linux
 FORMS    += $$PWD/gui/linux/StalledIssueHeader.ui \
             $$PWD/gui/linux/StalledIssueChooseWidget.ui \
             $$PWD/gui/linux/StalledIssuesDialog.ui \

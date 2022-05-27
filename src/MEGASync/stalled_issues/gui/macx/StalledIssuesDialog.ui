@@ -470,7 +470,7 @@ QMenu::item:default
           <string>...</string>
          </property>
          <property name="icon">
-          <iconset resource="../../../gui/Resources_linux.qrc">
+          <iconset resource="../../../gui/Resources_macx.qrc">
            <normaloff>:/images/transfer_manager/empty_categories/no_transfers@2x.png</normaloff>:/images/transfer_manager/empty_categories/no_transfers@2x.png</iconset>
          </property>
          <property name="iconSize">
@@ -557,7 +557,7 @@ QPushButton
          <string>Refresh</string>
         </property>
         <property name="icon">
-         <iconset resource="../../../gui/Resources_linux.qrc">
+         <iconset resource="../../../gui/Resources_macx.qrc">
           <normaloff>:/images/rotate-cw.png</normaloff>:/images/rotate-cw.png</iconset>
         </property>
         <property name="iconSize">
@@ -622,7 +622,7 @@ QPushButton
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="../../../gui/Resources_linux.qrc"/>
+  <include location="../../../gui/Resources_macx.qrc"/>
  </resources>
  <connections/>
 </ui>
