@@ -262,8 +262,8 @@ void DesktopNotifications::processAlert(mega::MegaUserAlert* alert)
     {
         if(mPreferences->isNotificationEnabled(Preferences::NotificationsTypes::NEW_FOLDERS_SHARED_WITH_ME))
         {
-            const QString message{tr("New shared folder from [X]")
-                        .replace(QString::fromUtf8("[X]"), fullName)};
+            const QString message{tr("New shared folder from [A]")
+                        .replace(QString::fromUtf8("[A]"), fullName)};
             notifySharedUpdate(alert, message, NEW_SHARE);
         }
         break;

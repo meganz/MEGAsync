@@ -12,12 +12,15 @@ namespace UserAttributes
 //
 void FullNameAttributeRequest::onRequestFinish(mega::MegaApi*, mega::MegaRequest* incoming_request, mega::MegaError* e)
 {
-    if(incoming_request->getParamType() == mega::MegaApi::USER_ATTR_FIRSTNAME
-            || incoming_request->getParamType() == mega::MegaApi::USER_ATTR_LASTNAME)
+    bool isFirstNameRequest(incoming_request->getParamType() == mega::MegaApi::USER_ATTR_FIRSTNAME);
+    bool isLastNameRequest(incoming_request->getParamType() == mega::MegaApi::USER_ATTR_LASTNAME);
+
+    if(isFirstNameRequest
+            || isLastNameRequest)
     {
         if(e->getErrorCode() == mega::MegaError::API_OK)
         {
-            if(incoming_request->getParamType() == mega::MegaApi::USER_ATTR_FIRSTNAME)
+            if(isFirstNameRequest)
             {
                 mFirstName = QString::fromUtf8(incoming_request->getText());
 
@@ -26,7 +29,7 @@ void FullNameAttributeRequest::onRequestFinish(mega::MegaApi*, mega::MegaRequest
                     mFirstName = QString::fromUtf8(incoming_request->getEmail());
                 }
             }
-            else if(incoming_request->getParamType() == mega::MegaApi::USER_ATTR_LASTNAME)
+            else if(isLastNameRequest)
             {
                 mLastName = QString::fromUtf8(incoming_request->getText());
             }
@@ -46,30 +49,41 @@ void FullNameAttributeRequest::onRequestFinish(mega::MegaApi*, mega::MegaRequest
 
 void FullNameAttributeRequest::requestAttribute()
 {
-    mFirstName.clear();
-    mLastName.clear();
-
-    MegaSyncApp->getMegaApi()->getUserAttribute(mUserEmail.toStdString().c_str(),mega::ATTR_FIRSTNAME);
-    MegaSyncApp->getMegaApi()->getUserAttribute(mUserEmail.toStdString().c_str(),mega::ATTR_LASTNAME);
+    requestFirstNameAttribute();
+    requestLastNameAttribute();
 }
 
 void FullNameAttributeRequest::updateAttributes(mega::MegaUser *user)
 {
-    if(user->hasChanged(mega::MegaUser::CHANGE_TYPE_FIRSTNAME)
-            || user->hasChanged(mega::MegaUser::CHANGE_TYPE_LASTNAME))
+    bool hasFirstnameChanged = user->hasChanged(mega::MegaUser::CHANGE_TYPE_FIRSTNAME);
+    bool hasLastnameChanged = user->hasChanged(mega::MegaUser::CHANGE_TYPE_LASTNAME);
+
+    if(hasFirstnameChanged || hasLastnameChanged)
     {
-        if (user->hasChanged(mega::MegaUser::CHANGE_TYPE_FIRSTNAME))
+        if (hasFirstnameChanged)
         {
-            mFirstName.clear();
-            MegaSyncApp->getMegaApi()->getUserAttribute(mUserEmail.toStdString().c_str(),mega::ATTR_FIRSTNAME);
+            requestFirstNameAttribute();
+
         }
-        else if(user->hasChanged(mega::MegaUser::CHANGE_TYPE_LASTNAME))
+        else if(hasLastnameChanged)
         {
-            mLastName.clear();
-            MegaSyncApp->getMegaApi()->getUserAttribute(mUserEmail.toStdString().c_str(),mega::ATTR_LASTNAME);
+            requestLastNameAttribute();
         }
     }
 }
+
+void FullNameAttributeRequest::requestFirstNameAttribute()
+{
+    mFirstName.clear();
+    MegaSyncApp->getMegaApi()->getUserAttribute(mUserEmail.toUtf8().constData(),mega::ATTR_FIRSTNAME);
+}
+
+void FullNameAttributeRequest::requestLastNameAttribute()
+{
+    mLastName.clear();
+    MegaSyncApp->getMegaApi()->getUserAttribute(mUserEmail.toUtf8().constData(),mega::ATTR_LASTNAME);
+}
+
 
 QString FullNameAttributeRequest::getFullName() const
 {
@@ -115,7 +129,7 @@ std::shared_ptr<const FullNameAttributeRequest> FullNameAttributeRequest::reques
 AvatarAttributeRequest::AvatarAttributeRequest(const QString &userEmail)
  : AttributeRequest(userEmail)
 {
-    mFullNameRequest = UserAttributesManager::instance().requestAttribute<FullNameAttributeRequest>(userEmail.toStdString().c_str());
+    mFullNameRequest = UserAttributesManager::instance().requestAttribute<FullNameAttributeRequest>(userEmail.toUtf8());
     connect(mFullNameRequest.get(), &FullNameAttributeRequest::attributeReady, this, &AvatarAttributeRequest::onFullNameAttributeReady);
 
     getLetterColor();
@@ -170,8 +184,8 @@ void AvatarAttributeRequest::onRequestFinish(mega::MegaApi*, mega::MegaRequest* 
 
 void AvatarAttributeRequest::requestAttribute()
 {
-    MegaSyncApp->getMegaApi()->getUserAvatar(mUserEmail.toStdString().c_str(),
-                                         Utilities::getAvatarPath(QString::fromUtf8(mUserEmail.toStdString().c_str())).toUtf8().constData());
+    MegaSyncApp->getMegaApi()->getUserAvatar(mUserEmail.toUtf8(),
+                                         Utilities::getAvatarPath(getEmail()).toUtf8());
 }
 
 void AvatarAttributeRequest::updateAttributes(mega::MegaUser *user)

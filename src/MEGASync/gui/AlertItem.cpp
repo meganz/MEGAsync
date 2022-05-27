@@ -306,8 +306,8 @@ void AlertItem::setAlertContent(MegaUserAlert *alert)
                 break;
             // Share notifications
             case MegaUserAlert::TYPE_NEWSHARE:
-                notificationContent = tr("New Shared folder from [X]")
-                        .replace(QString::fromUtf8("[X]"), formatRichString(getUserFullName(alert)));
+                notificationContent = tr("New Shared folder from [A]")
+                        .replace(QString::fromUtf8("[A]"), formatRichString(getUserFullName(alert)));
                 break;
             case MegaUserAlert::TYPE_DELETEDSHARE:
             {

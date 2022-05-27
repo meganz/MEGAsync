@@ -27,6 +27,9 @@ signals:
     void attributeReady(const QString&);
 
 private:
+    void requestFirstNameAttribute();
+    void requestLastNameAttribute();
+
     QString mFirstName;
     QString mLastName;
 };
