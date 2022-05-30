@@ -1358,6 +1358,7 @@ bool InfoDialog::eventFilter(QObject *obj, QEvent *e)
     }
     else if (obj == this)
     {
+
         static bool in = false;
         if (e->type() == QEvent::Enter)
         {
@@ -1366,8 +1367,19 @@ bool InfoDialog::eventFilter(QObject *obj, QEvent *e)
         if (e->type() == QEvent::Leave)
         {
             in = false;
+            if(!isActiveWindow())
+            {
+                hide();
+                return true;
+            }
         }
+
         if (e->type() == QEvent::WindowDeactivate && !in)
+        {
+            hide();
+            return true;
+        }
+        if(e->type() == QEvent::FocusOut && !in)
         {
             hide();
             return true;

@@ -163,6 +163,8 @@ public:
 
     bool areAllPaused() const;
 
+
+
 signals:
     void pauseStateChanged(bool pauseState);
     void transferPauseStateChanged();
@@ -180,7 +182,6 @@ public slots:
 private slots:
     void onPauseStateChanged();
     void processStartTransfers(QList<QExplicitlySharedDataPointer<TransferData>>& transfersToStart);
-    void processActiveTransfers(QList<QExplicitlySharedDataPointer<TransferData>>& transfersActive);
     void processUpdateTransfers();
     void processCancelTransfers();
     void processFailedTransfers();

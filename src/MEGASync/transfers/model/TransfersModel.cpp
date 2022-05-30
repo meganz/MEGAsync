@@ -628,28 +628,6 @@ void TransfersModel::startTransfer(QExplicitlySharedDataPointer<TransferData> tr
     updateTransferPriority(transfer);
 }
 
-void TransfersModel::processActiveTransfers(QList<QExplicitlySharedDataPointer<TransferData>>& transfersToActive)
-{
-    if (!transfersToActive.isEmpty())
-    {
-        auto rowsToBeInserted(static_cast<int>(transfersToActive.size()));
-
-        beginInsertRows(DEFAULT_IDX, 0, rowsToBeInserted - 1);
-
-        for (auto it = transfersToActive.begin(); it != transfersToActive.end();)
-        {
-            mTransfers.prepend((*it));
-            (*it)->mPriority -= ACTIVE_PRIORITY_OFFSET;
-
-            transfersToActive.erase(it++);
-        }
-
-        updateTagsByOrder();
-
-        endInsertRows();
-    }
-}
-
 void TransfersModel::processUpdateTransfers()
 {
     QList<QExplicitlySharedDataPointer<TransferData>> transfersFinished;
