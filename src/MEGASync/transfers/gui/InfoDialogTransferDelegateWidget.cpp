@@ -16,8 +16,8 @@ const QRect InfoDialogTransferDelegateWidget::FullRect = QRect(0,0,400,60);
 InfoDialogTransferDelegateWidget::InfoDialogTransferDelegateWidget(QWidget *parent) :
     TransferBaseDelegateWidget(parent),
     mUi(new Ui::InfoDialogTransferDelegateWidget),
-    mActionButtonsEnabled(false),
-    mMegaApi(MegaSyncApp->getMegaApi())
+    mMegaApi(MegaSyncApp->getMegaApi()),
+    mActionButtonsEnabled(false)
 {
     mUi->setupUi(this);
 
@@ -114,7 +114,7 @@ void InfoDialogTransferDelegateWidget::updateTransferState()
     }
 
     // Update progress bar
-    unsigned int permil = (getData()->mTotalSize > 0) ? ((1000 * getData()->mTransferredBytes) / getData()->mTotalSize) : 0;
+    unsigned int permil = static_cast<unsigned int>((getData()->mTotalSize > 0) ? ((1000 * getData()->mTransferredBytes) / getData()->mTotalSize) : 0);
     mUi->pbTransfer->setValue(permil);
 }
 

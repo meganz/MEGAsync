@@ -171,12 +171,13 @@ class ViewLoadingScene
 
 public:
     ViewLoadingScene() :
-        mLoadingModel(nullptr),
-        mLoadingDelegate(nullptr),
         mViewDelegate(nullptr),
         mView(nullptr),
         mViewModel(nullptr),
+        mPotentialSourceModel(nullptr),
         mLoadingView(nullptr),
+        mLoadingModel(nullptr),
+        mLoadingDelegate(nullptr),
         mViewLayout(nullptr)
     {}
 

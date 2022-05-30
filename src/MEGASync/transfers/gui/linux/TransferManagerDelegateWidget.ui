@@ -380,7 +380,7 @@ QProgressBar::chunk
             </property>
             <property name="minimumSize">
              <size>
-              <width>155</width>
+              <width>105</width>
               <height>20</height>
              </size>
             </property>
@@ -587,6 +587,12 @@ QProgressBar::chunk
          <property name="text">
           <string/>
          </property>
+         <property name="iconSize">
+          <size>
+           <width>16</width>
+           <height>16</height>
+          </size>
+         </property>
         </widget>
        </item>
        <item>
@@ -604,7 +610,7 @@ QProgressBar::chunk
           </size>
          </property>
          <property name="currentIndex">
-          <number>5</number>
+          <number>0</number>
          </property>
          <widget class="QWidget" name="pActive">
           <widget class="QLabel" name="lItemStatus">
@@ -645,6 +651,18 @@ QProgressBar::chunk
              <width>125</width>
              <height>63</height>
             </rect>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>125</width>
+             <height>63</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>125</width>
+             <height>63</height>
+            </size>
            </property>
            <property name="text">
             <string/>

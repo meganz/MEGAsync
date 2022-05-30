@@ -5,8 +5,8 @@
 
 TransferWidgetHeaderItem::TransferWidgetHeaderItem(QWidget *parent) :
     QWidget(parent),
-    mCurrentSortOrder(Qt::DescendingOrder),
-    ui(new Ui::TransferWidgetHeaderItem)
+    ui(new Ui::TransferWidgetHeaderItem),
+    mCurrentSortOrder(Qt::DescendingOrder)
 {
     ui->setupUi(this);
 
