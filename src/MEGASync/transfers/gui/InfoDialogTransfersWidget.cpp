@@ -36,7 +36,6 @@ void InfoDialogTransfersWidget::showEvent(QShowEvent*)
 {
     if(mProxyModel)
     {    
-        qDebug() << "SHOW AGAIN";
         mProxyModel->invalidate();
     }
 }
