@@ -665,7 +665,7 @@ void TransfersModel::processUpdateTransfers()
         if(d && d->hasChanged(*it))
         {
             if((!isCancelingModeActive() && !isFailingModeActive())
-                    && ((*it)->isFinished()) || (*it)->isProcessing())
+                    && ((*it)->isFinished() || (*it)->isProcessing()))
             {
                 if(d->mState != (*it)->mState)
                 {

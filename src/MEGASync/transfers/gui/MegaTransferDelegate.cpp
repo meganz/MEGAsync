@@ -94,6 +94,8 @@ bool MegaTransferDelegate::event(QEvent *event)
                 onHoverEnter(hoverEvent->index(), hoverEvent->rect());
                 break;
             }
+            default:
+                break;
         }
     }
 

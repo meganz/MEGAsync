@@ -735,9 +735,9 @@ void TransferManager::refreshSearchStats()
     {
         // Update search results number
         auto proxy (mUi->wTransfers->getProxyModel());
-        long long nbDl (proxy->getNumberOfItems(TransferData::TRANSFER_DOWNLOAD));
-        long long nbUl (proxy->getNumberOfItems(TransferData::TRANSFER_UPLOAD));
-        long long nbAll (nbDl + nbUl);
+        int nbDl (proxy->getNumberOfItems(TransferData::TRANSFER_DOWNLOAD));
+        int nbUl (proxy->getNumberOfItems(TransferData::TRANSFER_UPLOAD));
+        int nbAll (nbDl + nbUl);
 
         if(mUi->tDlResults->property(LABEL_NUMBER).toLongLong() != nbDl)
         {
