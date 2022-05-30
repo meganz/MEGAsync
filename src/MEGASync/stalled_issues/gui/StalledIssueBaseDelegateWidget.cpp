@@ -9,8 +9,8 @@
 
 StalledIssueBaseDelegateWidget::StalledIssueBaseDelegateWidget(QWidget *parent)
     : QWidget(parent),
-      mKeepEditor(false),
-      mIsSolved(false)
+      mIsSolved(false),
+      mKeepEditor(false)
 {
 }
 

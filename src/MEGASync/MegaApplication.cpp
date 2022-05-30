@@ -8289,6 +8289,7 @@ void MegaApplication::onSyncStateChanged(MegaApi *api, MegaSync *sync)
                 {
                     showErrorMessage(tr("Your sync \"%1\" has been temporarily disabled").arg(QString::fromUtf8(syncSetting->getName())).append(QString::fromUtf8(": "))
                         .append(QCoreApplication::translate("MegaSyncError", MegaSync::getMegaSyncErrorCode(syncSetting->getError()))));
+                    break;
                 }
                 case MegaSync::Error::LOCAL_PATH_UNAVAILABLE:
                 {

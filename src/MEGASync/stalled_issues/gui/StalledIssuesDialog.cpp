@@ -12,8 +12,9 @@
 StalledIssuesDialog::StalledIssuesDialog(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::StalledIssuesDialog),
+    mCurrentTab(StalledIssueFilterCriterion::ALL_ISSUES),
     mProxyModel(nullptr),
-    mCurrentTab(StalledIssueFilterCriterion::ALL_ISSUES)
+    mDelegate(nullptr)
 {
     ui->setupUi(this);
 

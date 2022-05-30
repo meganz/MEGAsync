@@ -27,19 +27,19 @@ constexpr long long NB_INIT_VALUE = 0LL;
 TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
     QDialog(parent),
     mUi(new Ui::TransferManager),
-    mUiDragBackDrop(new Ui::TransferManagerDragBackDrop),
     mMegaApi(megaApi),
+    mScanningAnimationIndex(1),
     mPreferences(Preferences::instance()),
     mModel(nullptr),
+    mSearchFieldReturnPressed(false),
     mCurrentTab(NO_TAB),
     mShadowTab (new QGraphicsDropShadowEffect(nullptr)),
     mSpeedRefreshTimer(new QTimer(this)),
     mStatsRefreshTimer(new QTimer(this)),
+    mUiDragBackDrop(new Ui::TransferManagerDragBackDrop),
     mStorageQuotaState(MegaApi::STORAGE_STATE_UNKNOWN),
     mTransferQuotaState(QuotaState::OK),
-    mFoundStalledIssues(false),
-    mScanningAnimationIndex(1),
-    mSearchFieldReturnPressed(false)
+    mFoundStalledIssues(false)
 {
     mUi->setupUi(this);
 

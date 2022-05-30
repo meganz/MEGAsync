@@ -56,10 +56,6 @@ void StalledIssueDelegate::resetCache()
 
 void StalledIssueDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
-    QElapsedTimer timer;
-    timer.start();
-    QList<double> times;
-
     auto rowCount (index.model()->rowCount());
     auto row (index.row());
 
@@ -88,10 +84,7 @@ void StalledIssueDelegate::paint(QPainter *painter, const QStyleOptionViewItem &
             }
         }
 
-
         painter->fillRect(option.rect, rowColor);
-
-        times.append(timer.nsecsElapsed()/1000000.0);
 
         painter->save();
         painter->translate(pos);
@@ -105,15 +98,10 @@ void StalledIssueDelegate::paint(QPainter *painter, const QStyleOptionViewItem &
                 return;
             }
 
-            times.append(timer.nsecsElapsed()/1000000.0);
-
             w->expand(mView->isExpanded(index));
             w->setGeometry(option.rect);
             w->render(option, painter, QRegion(0, 0, option.rect.width(), option.rect.height()));
         }
-
-
-        times.append(timer.nsecsElapsed()/1000000.0);
 
         bool drawBottomLine(false);
 
@@ -133,14 +121,11 @@ void StalledIssueDelegate::paint(QPainter *painter, const QStyleOptionViewItem &
         {
             QPen pen = painter->pen();
             pen.setWidth(1);
-            pen.setColor(QColor("#000000"));
+            pen.setColor(Qt::black);
             painter->setPen(pen);
             painter->setOpacity(0.08);
             painter->drawLine(QPoint(0 - option.rect.x(), option.rect.height() -1),QPoint(mView->width(),option.rect.height() -1));
         }
-
-
-        times.append(timer.nsecsElapsed()/1000000.0);
 
         painter->restore();
     }

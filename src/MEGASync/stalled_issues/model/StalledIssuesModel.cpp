@@ -36,7 +36,7 @@ void StalledIssuesReceiver::onRequestFinish(mega::MegaApi*, mega::MegaRequest *r
 
         mCacheStalledIssues.clear();
 
-        for (int i = 0; i < stalls->size(); ++i)
+        for (size_t i = 0; i < stalls->size(); ++i)
         {
             auto stall = stalls->get(i);
 

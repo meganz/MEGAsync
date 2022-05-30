@@ -76,7 +76,7 @@ class StalledIssue
 {
 public:
     StalledIssue(){}
-    StalledIssue(const StalledIssue& tdr) : mLocalData(tdr.mLocalData), mCloudData(tdr.mCloudData), mReason(tdr.getReason()), mIsSolved(tdr.mIsSolved), mDetectedMEGASide(tdr.mDetectedMEGASide)  {}
+    StalledIssue(const StalledIssue& tdr) : mDetectedMEGASide(tdr.mDetectedMEGASide), mLocalData(tdr.mLocalData), mCloudData(tdr.mCloudData), mReason(tdr.getReason()), mIsSolved(tdr.mIsSolved)  {}
     StalledIssue(const mega::MegaSyncStall *stallIssue);
 
     const StalledIssueDataPtr consultLocalData() const;
@@ -199,6 +199,8 @@ public:
     {
         return issue.mData == this->mData;
     }
+
+    StalledIssueVariant& operator=(const StalledIssueVariant& other) = default;
 
 private:
     friend class StalledIssuesModel;

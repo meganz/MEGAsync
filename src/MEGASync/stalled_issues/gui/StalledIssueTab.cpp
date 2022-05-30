@@ -9,8 +9,9 @@ const char* StalledIssueTab::HOVER_PROPERTY = "itsHover";
 
 StalledIssueTab::StalledIssueTab(QWidget *parent) :
     QFrame(parent),
-    mItsOn(false),
     ui(new Ui::StalledIssueTab),
+    mItsOn(false),
+    mFilterCriterion(-1),
     mShadowTab (new QGraphicsDropShadowEffect(nullptr))
 {
     ui->setupUi(this);
