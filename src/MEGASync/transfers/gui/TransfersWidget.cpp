@@ -317,19 +317,22 @@ void TransfersWidget::onPausedTransferCounterChanged(bool state)
 
 void TransfersWidget::onVerticalScrollBarVisibilityChanged(bool state)
 {
-    if(state)
+    if(ui->tvTransfers->isVisible())
     {
-        int sliderWidth = ui->tvTransfers->verticalScrollBar()->width();
-        ui->rightMargin->changeSize(sliderWidth,0,QSizePolicy::Fixed, QSizePolicy::Preferred);
-    }
-    else
-    {
-        ui->rightMargin->changeSize(0,0,QSizePolicy::Fixed, QSizePolicy::Preferred);
-    }
+        if(state)
+        {
+            int sliderWidth = ui->tvTransfers->verticalScrollBar()->width();
+            ui->rightMargin->changeSize(sliderWidth,0,QSizePolicy::Fixed, QSizePolicy::Preferred);
+        }
+        else
+        {
+            ui->rightMargin->changeSize(0,0,QSizePolicy::Fixed, QSizePolicy::Preferred);
+        }
 
-    if(ui->wTableHeaderLayout)
-    {
-        ui->wTableHeaderLayout->invalidate();
+        if(ui->wTableHeaderLayout)
+        {
+            ui->wTableHeaderLayout->invalidate();
+        }
     }
 }
 

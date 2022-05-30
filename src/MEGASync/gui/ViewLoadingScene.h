@@ -215,11 +215,13 @@ public:
         if(!mLoadingModel)
         {
             mLoadingView = new QTreeView();
-            mLoadingView->setStyleSheet(QString::fromLatin1("background-color: transparent;"));
+            mLoadingView->setContentsMargins(mView->contentsMargins());
+            mLoadingView->setStyleSheet(mView->styleSheet());
             mLoadingView->header()->setStretchLastSection(true);
             mLoadingView->header()->hide();
-            mLoadingView->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+            mLoadingView->setSizePolicy(mView->sizePolicy());
             mLoadingView->setFrameStyle(QFrame::NoFrame);
+            mLoadingView->setIndentation(0);
 
             mLoadingModel = new QStandardItemModel(mLoadingView);
             mLoadingDelegate = new LoadingSceneDelegate<DelegateWidget>(mLoadingView);
@@ -268,8 +270,9 @@ public:
         else
         {
             mLoadingModel->setRowCount(0);
-            mView->show();
             mLoadingView->hide();
+
+            mView->show();
         }
 
         mLoadingDelegate->setLoading(state);
