@@ -34,9 +34,6 @@ TransferBaseDelegateWidget* InfoDialogTransfersProxyModel::createTransferManager
 
 void InfoDialogTransfersProxyModel::setSourceModel(QAbstractItemModel *sourceModel)
 {
-    connect(sourceModel, &QAbstractItemModel::rowsAboutToBeRemoved,
-            this, &InfoDialogTransfersProxyModel::onRowsAboutToBeRemoved, Qt::DirectConnection);
-
     QSortFilterProxyModel::setSourceModel(sourceModel);
 }
 
@@ -158,35 +155,16 @@ bool InfoDialogTransfersProxyModel::filterAcceptsRow(int sourceRow, const QModel
            {
                auto indexToShow(sourceModel()->index(mNextTransferSourceRow,0));
 
-               const auto dMost (qvariant_cast<TransferItem>(indexToShow.data()).getTransferData());
-               if(dMost)
+               if(indexToShow.isValid())
                {
-                   qDebug() << dMost->mFilename << indexToShow.row();
+                   //Let the filterAcceptsRow loop finish, and the send the signal
+                   QTimer::singleShot(20,[this, indexToShow](){
+                       emit sourceModel()->dataChanged(indexToShow, indexToShow);
+                   });
                }
-
-               sourceModel()->dataChanged(indexToShow, indexToShow);
            }
        }
     }
 
     return accept;
-}
-
-void InfoDialogTransfersProxyModel::onRowsAboutToBeRemoved(const QModelIndex &parent, int first, int last)
-{
-    //Update next transfer to process
-    for(int row = first; row <= last; ++row)
-    {
-        QModelIndex index = sourceModel()->index(row, 0, parent);
-
-        if(index.isValid())
-        {
-            const auto d (qvariant_cast<TransferItem>(index.data()).getTransferData());
-            if(d && mNextTransferSourceRow == d->mTag)
-            {
-                mNextTransferSourceRow = -1;
-                break;
-            }
-        }
-    }
 }

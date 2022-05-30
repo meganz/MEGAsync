@@ -31,9 +31,6 @@ protected:
     bool lessThan(const QModelIndex &left, const QModelIndex &right) const override;
     bool filterAcceptsRow(int sourceRow, const QModelIndex& sourceParent) const override;
 
-private slots:
-        void onRowsAboutToBeRemoved(const QModelIndex& parent, int first, int last);
-
 private:
     mutable unsigned long long mNextTransferPriority;
     mutable int mNextTransferSourceRow;
