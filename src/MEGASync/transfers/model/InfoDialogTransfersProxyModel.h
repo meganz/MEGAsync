@@ -18,6 +18,10 @@ public:
 
     void setSourceModel(QAbstractItemModel* sourceModel) override;
 
+    int rowCount(const QModelIndex &parent) const override;
+
+    void invalidate();
+
 protected slots:
     void onCopyTransferLinkRequested();
     void onOpenTransferFolderRequested();
@@ -31,7 +35,9 @@ private slots:
         void onRowsAboutToBeRemoved(const QModelIndex& parent, int first, int last);
 
 private:
-    mutable int mNextTransferTag;
+    mutable unsigned long long mNextTransferPriority;
+    mutable int mNextTransferSourceRow;
+    mutable bool mInvalidating;
 
 };
 
