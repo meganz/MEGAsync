@@ -68,6 +68,7 @@ SOURCES += $$PWD/SettingsDialog.cpp \
 	$$PWD/RenameDialog.cpp
 
 HEADERS  += $$PWD/SettingsDialog.h \
+    $$PWD/AutoResizeStackedWidget.h \
     $$PWD/BalloonToolTip.h \
     $$PWD/ButtonIconManager.h \
     $$PWD/MegaItemDelegates.h \

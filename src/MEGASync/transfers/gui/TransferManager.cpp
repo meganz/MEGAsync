@@ -356,7 +356,6 @@ void TransferManager::onUpdatePauseState(bool isPaused)
     if (isPaused)
     {
         mUi->bPause->setToolTip(tr("Resume all"));
-        mUi->lPaused->setText(tr("All Paused"));
 
         if(!mUi->bPause->isChecked())
         {
@@ -368,7 +367,6 @@ void TransferManager::onUpdatePauseState(bool isPaused)
     else
     {
         mUi->bPause->setToolTip(tr("Pause all"));
-        mUi->lPaused->clear();
 
         if(mUi->bPause->isChecked())
         {
@@ -723,7 +721,7 @@ void TransferManager::onTransferQuotaStateChanged(QuotaState transferQuotaState)
 
 void TransferManager::checkPauseButtonVisibilityIfPossible()
 {
-    mUi->lPaused->setVisible(mModel->areAllPaused());
+    mUi->lPaused->setVisible(mModel->areAllPaused() && !mUi->lStorageOverQuota->isVisible() && !mUi->pTransferOverQuota->isVisible());
 }
 
 void TransferManager::refreshSpeed()
