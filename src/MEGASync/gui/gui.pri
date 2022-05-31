@@ -67,6 +67,7 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/GuiUtilities.cpp
 
 HEADERS  += $$PWD/SettingsDialog.h \
+    $$PWD/AutoResizeStackedWidget.h \
     $$PWD/BalloonToolTip.h \
     $$PWD/ButtonIconManager.h \
     $$PWD/MegaItemDelegates.h \
