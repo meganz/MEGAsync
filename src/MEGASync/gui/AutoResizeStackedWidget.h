@@ -17,6 +17,7 @@ public:
     {
         if(e->type() == QEvent::Polish)
         {
+            mMinimumHeight = minimumHeight();
             connect(this, &QStackedWidget::currentChanged, this, &AutoResizeStackedWidget::onUpdateHeight);
             onUpdateHeight();
         }
@@ -42,14 +43,17 @@ private slots:
             widget(index)->removeEventFilter(this);
         }
 
-        auto currentHeight = currentWidget() ? currentWidget()->sizeHint().height() : minimumHeight();
-        setFixedHeight(currentHeight >= minimumHeight() ? currentHeight : minimumHeight());
+        auto currentHeight = currentWidget() ? currentWidget()->sizeHint().height() : mMinimumHeight;
+        setFixedHeight(currentHeight >= mMinimumHeight ? currentHeight : mMinimumHeight);
 
         if(currentWidget())
         {
             currentWidget()->installEventFilter(this);
         }
     }
+
+private:
+    int mMinimumHeight;
 };
 
 #endif // AUTORESIZESTACKEDWIDGET_H

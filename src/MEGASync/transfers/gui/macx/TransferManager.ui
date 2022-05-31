@@ -2747,7 +2747,7 @@ QToolButton
           <widget class="QWidget" name="pToolButtons" native="true">
            <layout class="QHBoxLayout" name="horizontalLayout_15">
             <property name="spacing">
-             <number>5</number>
+             <number>30</number>
             </property>
             <property name="leftMargin">
              <number>0</number>
