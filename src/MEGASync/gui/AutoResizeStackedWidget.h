@@ -3,6 +3,7 @@
 
 #include <QStackedWidget>
 #include <QEvent>
+#include <QDebug>
 
 class AutoResizeStackedWidget : public QStackedWidget
 {
@@ -10,13 +11,13 @@ class AutoResizeStackedWidget : public QStackedWidget
 
 public:
     AutoResizeStackedWidget(QWidget* parent): QStackedWidget(parent){
-        connect(this, &QStackedWidget::currentChanged, this, &AutoResizeStackedWidget::onUpdateHeight);
     }
 
     bool event(QEvent* e) override
     {
         if(e->type() == QEvent::Polish)
         {
+            connect(this, &QStackedWidget::currentChanged, this, &AutoResizeStackedWidget::onUpdateHeight);
             onUpdateHeight();
         }
 
@@ -41,7 +42,8 @@ private slots:
             widget(index)->removeEventFilter(this);
         }
 
-        setFixedHeight(currentWidget() ? currentWidget()->sizeHint().height() : minimumHeight());
+        auto currentHeight = currentWidget() ? currentWidget()->sizeHint().height() : minimumHeight();
+        setFixedHeight(currentHeight >= minimumHeight() ? currentHeight : minimumHeight());
 
         if(currentWidget())
         {
