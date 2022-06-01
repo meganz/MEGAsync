@@ -194,6 +194,7 @@ private:
     void saveExcludeSyncNames();
     void updateNetworkTab();
     void setShortCutsForToolBarItems();
+    void updateCacheSchedulerDaysLabel();
 
     enum
     {
