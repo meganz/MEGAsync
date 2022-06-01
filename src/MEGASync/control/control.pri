@@ -42,14 +42,14 @@ HEADERS  +=  $$PWD/HTTPServer.h \
     $$PWD/gzjoin.h
 
 macx {
-    OBJECTIVE_SOURCES += $$PWD/macx/Utilities.mm
+    OBJECTIVE_SOURCES += $$PWD/macx/OSUtilities.mm
 }
 
 unix:!macx {
-    SOURCES += $$PWD/linux/Utilities.cpp
+    SOURCES += $$PWD/linux/OSUtilities.cpp
 }
 
 win32 {
-    SOURCES += $$PWD/win/Utilities.cpp
+    SOURCES += $$PWD/win/OSUtilities.cpp
 }
 

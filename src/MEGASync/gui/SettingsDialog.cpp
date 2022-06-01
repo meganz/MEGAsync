@@ -135,7 +135,6 @@ SettingsDialog::SettingsDialog(MegaApplication* app, bool proxyOnly, QWidget* pa
     mUi->bDeleteName->hide();
     mUi->excludeButtonsContainer->hide();
     mUi->gExcludeByName->hide();
-    mUi->wExclusions->hide();
 #endif // ! Q_OS_MACOS
     mUi->lExcludedNames->hide();
     mUi->gExcludeBySize->hide();
