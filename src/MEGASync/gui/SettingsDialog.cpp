@@ -128,11 +128,16 @@ SettingsDialog::SettingsDialog(MegaApplication* app, bool proxyOnly, QWidget* pa
     mUi->gExcludedFilesInfo->hide();
 
     // No more viewing/editing of the old set of exclusions.  .megaingore is taking over
-    mUi->gExcludeByName->hide();
-    mUi->lExcludedNames->hide();
-    mUi->excludeButtonsContainer->hide();
+#ifdef Q_OS_MACOS
+    mUi->wContainerExclusions->hide();
+#else // Q_OS_MACOS
     mUi->bAddName->hide();
     mUi->bDeleteName->hide();
+    mUi->excludeButtonsContainer->hide();
+    mUi->gExcludeByName->hide();
+    mUi->wExclusions->hide();
+#endif // ! Q_OS_MACOS
+    mUi->lExcludedNames->hide();
     mUi->gExcludeBySize->hide();
     mUi->cbExcludeUpperUnit->hide();
     mUi->eLowerThan->hide();
@@ -455,10 +460,13 @@ void SettingsDialog::initializeNativeUIComponents()
             this, &SettingsDialog::on_bDelete_clicked);
 
     mUi->wExclusionsSegmentedControl->configureTableSegment();
+
+#ifndef Q_OS_MACOS
     connect(mUi->wExclusionsSegmentedControl, &QSegmentedControl::addButtonClicked,
             this, &SettingsDialog::on_bAddName_clicked);
     connect(mUi->wExclusionsSegmentedControl, &QSegmentedControl::removeButtonClicked,
             this, &SettingsDialog::on_bDeleteName_clicked);
+#endif // ! Q_OS_MACOS
 }
 #endif
 

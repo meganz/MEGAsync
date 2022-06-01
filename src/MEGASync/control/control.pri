@@ -40,3 +40,16 @@ HEADERS  +=  $$PWD/HTTPServer.h \
     $$PWD/ConnectivityChecker.h \
     $$PWD/qrcodegen.h \
     $$PWD/gzjoin.h
+
+macx {
+    OBJECTIVE_SOURCES += $$PWD/macx/Utilities.mm
+}
+
+unix:!macx {
+    SOURCES += $$PWD/linux/Utilities.cpp
+}
+
+win32 {
+    SOURCES += $$PWD/win/Utilities.cpp
+}
+
