@@ -72,7 +72,7 @@ or click the Folders below to make adjustments in the local filesystem or in MEG
   <customwidget>
    <class>NameConflict</class>
    <extends>QWidget</extends>
-   <header>NameConflict.h</header>
+   <header>stalled_issues_cases/NameConflict.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

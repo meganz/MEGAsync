@@ -2989,15 +2989,15 @@ QToolButton
    <container>1</container>
   </customwidget>
   <customwidget>
-<<<<<<< HEAD
    <class>SomeIssuesOccurredMessage</class>
    <extends>QWidget</extends>
    <header>SomeIssuesOccurredMessage.h</header>
-=======
+   <container>1</container>
+  </customwidget>
+  <customwidget>
    <class>AutoResizeStackedWidget</class>
    <extends>QStackedWidget</extends>
    <header>AutoResizeStackedWidget.h</header>
->>>>>>> origin/feature/transfer-manager
    <container>1</container>
   </customwidget>
  </customwidgets>
