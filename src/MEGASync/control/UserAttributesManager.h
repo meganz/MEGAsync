@@ -18,11 +18,9 @@ public:
     virtual void onRequestFinish(mega::MegaApi *api, mega::MegaRequest *request, mega::MegaError *e) = 0;
     virtual void requestAttribute()= 0;
     virtual void updateAttributes(mega::MegaUser* user) = 0;
+    virtual bool isAttributeReady() const = 0;
 
-    const QString& getEmail(){return mUserEmail;}
-
-signals:
-    void attributeReady();
+    const QString& getEmail() const {return mUserEmail;}
 
 protected:
     QString mUserEmail;
@@ -50,6 +48,7 @@ public:
             auto requestType = typeid(*request).name();
             if(requestType == classType)
             {
+                //Do not request attribute again, as it is done the first time
                 return std::dynamic_pointer_cast<AttributeClass>(request);
             }
         }

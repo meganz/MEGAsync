@@ -40,20 +40,20 @@ protected:
     void changeEvent(QEvent *event);
 
 private slots:
-    void OnAttributesReady();
+    void onAttributesReady();
 
 private:
-    void setAvatar(mega::MegaUserAlert *alert);
     QString formatRichString(QString str);
+    QString getUserFullName(mega::MegaUserAlert *alert);
 
 private:
     Ui::AlertItem *ui;
     mega::MegaApi *megaApi;
-    QString notificationHeading;
-    std::unique_ptr<mega::MegaNode> alertNode;
-    std::unique_ptr<mega::MegaUserAlert> alertUser;
-    std::shared_ptr<UserAttributes::FullNameAttributeRequest> mUserAttributes;
-    QFutureWatcher<mega::MegaNode*> getAlertNodeWatcher;
+    QString mNotificationHeading;
+    std::unique_ptr<mega::MegaNode> mAlertNode;
+    std::unique_ptr<mega::MegaUserAlert> mAlertUser;
+    std::shared_ptr<const UserAttributes::FullNameAttributeRequest> mFullNameAttributes;
+    QFutureWatcher<mega::MegaNode*> mAlertNodeWatcher;
 };
 
 #endif // ALERTITEM_H

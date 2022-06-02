@@ -1804,6 +1804,11 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation>Log in or create an account to start using the MEGA Desktop App.</translation>
     </message>
     <message>
+        <source>You need to log into MEGA account to use the MEGA desktop app.</source>
+        <translatorcomment>Description label to indicate the user needs to log in in order to fully use MEGA desktop app.</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Create account</source>
         <translatorcomment>Button label to offer the user the option to create an account</translatorcomment>
         <translation>Create account</translation>
@@ -1817,11 +1822,6 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <source>Know more about MEGA desktop app. [A]Read more[/A]</source>
         <translatorcomment>Label with hyperlink to sync client webpage to know more about MEGA desktop app. Keep placeholders.</translatorcomment>
         <translation>Learn more about the MEGA Desktop App. [A]Read more[/A]</translation>
-    </message>
-    <message>
-        <source>You need to log into MEGA account to run MEGA desktop app.</source>
-        <translatorcomment>Description label to indicate the user needs to log in in order to run and fully use MEGA desktop app.</translatorcomment>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2691,11 +2691,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Folder contents already synced</source>
         <translatorcomment>Tooltip text to notify the user that some folder inside the folder that he is hovering with mouse is already synced.</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Owner</source>
-        <translatorcomment>Column title. This column shows the name of the original owner in incoming shares section.</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4437,11 +4432,6 @@ Do you want to restart MEGAsync now?</source>
         <translation>Remove files older than</translation>
     </message>
     <message>
-        <source>days</source>
-        <translatorcomment>Suffix text label for number of days to keep files in local cache.</translatorcomment>
-        <translation>days</translation>
-    </message>
-    <message>
         <source>SyncDebris (remote cache)</source>
         <translatorcomment>Section label name for remote cache summary and clear action.</translatorcomment>
         <translation>SyncDebris (remote cache)</translation>
@@ -4780,8 +4770,16 @@ Do you want to restart MEGAsync now?</source>
         <source>Used quota for the last %n hour:</source>
         <translatorcomment>Informative text shown in Account pane for Free account type. Indicates the used quota in the last %n specified number of hours. Keep the %n subsitution argument.</translatorcomment>
         <translation type="unfinished">
-            <numerusform>Used quota for the last %n hour:</numerusform>
+            <numerusform>Used quota for the last hour:</numerusform>
             <numerusform>Used quota for the last %n hours:</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>day</source>
+        <translatorcomment>Suffix text label for number of days to keep files in local cache.</translatorcomment>
+        <translation type="unfinished">
+            <numerusform>day</numerusform>
+            <numerusform>days</numerusform>
         </translation>
     </message>
 </context>
