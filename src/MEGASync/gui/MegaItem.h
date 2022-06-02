@@ -8,7 +8,12 @@
 
 #include <memory>
 
-class MegaItem : public QObject, public mega::MegaRequestListener
+namespace UserAttributes{
+class FullNameAttributeRequest;
+class AvatarAttributeRequest;
+}
+
+class MegaItem : public QObject
 {
     Q_OBJECT
     static const int ICON_SIZE;
@@ -51,18 +56,12 @@ public:
 
     ~MegaItem();
 
-public slots:
-    void onRequestFinish(mega::MegaApi* api, mega::MegaRequest *request, mega::MegaError* e) override;
-
 signals:
     void infoUpdated(int role);
 
 protected:
     bool mShowFiles;
-    QString mOwnerFirstName;
-    QString mOwnerLastName;
     QString mOwnerEmail;
-    QPixmap mOwnerIcon;
     int mStatus;
     bool mCameraFolder;
     bool mChatFilesFolder;
@@ -72,9 +71,15 @@ protected:
     QList<MegaItem*> mChildItems;
     std::unique_ptr<mega::MegaUser> mOwner;
 
+private slots:
+    void onFullNameAttributeReady();
+    void onAvatarAttributeReady();
+
 private:
     void calculateSyncStatus(const QStringList& folders);
     std::unique_ptr<mega::QTMegaRequestListener> mDelegateListener;
+    std::shared_ptr<const UserAttributes::FullNameAttributeRequest> mFullNameAttribute;
+    std::shared_ptr<const UserAttributes::AvatarAttributeRequest> mAvatarAttribute;
 
 };
 

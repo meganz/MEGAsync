@@ -409,7 +409,7 @@ void InfoDialog::setAvatar()
     const char *email = megaApi->getMyEmail();
     if (email)
     {
-        drawAvatar(QString::fromUtf8(email));
+        ui->bAvatar->setUserEmail(email);
         delete [] email;
     }
 }
@@ -1760,11 +1760,6 @@ void InfoDialog::regenerateLayout(int blockState, InfoDialog* olddialog)
     app->repositionInfoDialog();
 
     app->onGlobalSyncStateChanged(NULL);
-}
-
-void InfoDialog::drawAvatar(QString email)
-{
-    ui->bAvatar->drawAvatarFromEmail(email);
 }
 
 void InfoDialog::animateStates(bool opt)
