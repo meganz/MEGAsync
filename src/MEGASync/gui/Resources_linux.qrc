@@ -861,9 +861,6 @@
         <file>images/StalledIssues/more-circle-small-solid.png</file>
         <file>images/StalledIssues/more-circle-small-solid@2x.png</file>
         <file>images/StalledIssues/more-circle-small-solid@3x.png</file>
-        <file>images/StalledIssues/PC_ico_rest.png</file>
-        <file>images/StalledIssues/PC_ico_rest@2x.png</file>
-        <file>images/StalledIssues/PC_ico_rest@3x.png</file>
         <file>images/StalledIssues/ico_menu_full.png</file>
         <file>images/StalledIssues/ico_menu_full@2x.png</file>
         <file>images/StalledIssues/ico_menu_full@3x.png</file>
@@ -1167,5 +1164,41 @@
         <file>images/node_selector/icon_small_user.png</file>
         <file>images/node_selector/icon_small_user@2x.png</file>
         <file>images/node_selector/icon_small_user@3x.png</file>
+        <file>images/StalledIssues/alert_circle_small_default.png</file>
+        <file>images/StalledIssues/alert_circle_small_default@2x.png</file>
+        <file>images/StalledIssues/alert_circle_small_default@3x.png</file>
+        <file>images/StalledIssues/tree_link_default.png</file>
+        <file>images/StalledIssues/tree_link_default@2x.png</file>
+        <file>images/StalledIssues/tree_link_default@3x.png</file>
+        <file>images/StalledIssues/tree_link_end_default.png</file>
+        <file>images/StalledIssues/tree_link_end_default@2x.png</file>
+        <file>images/StalledIssues/tree_link_end_default@3x.png</file>
+        <file>images/StalledIssues/tree_end_default.png</file>
+        <file>images/StalledIssues/tree_end_default@2x.png</file>
+        <file>images/StalledIssues/tree_end_default@3x.png</file>
+        <file>images/StalledIssues/check_default.png</file>
+        <file>images/StalledIssues/check_default@2x.png</file>
+        <file>images/StalledIssues/check_default@3x.png</file>
+        <file>images/StalledIssues/cloud_default.png</file>
+        <file>images/StalledIssues/cloud_default@2x.png</file>
+        <file>images/StalledIssues/cloud_default@3x.png</file>
+        <file>images/StalledIssues/folder_orange_default.png</file>
+        <file>images/StalledIssues/folder_orange_default@2x.png</file>
+        <file>images/StalledIssues/folder_orange_default@3x.png</file>
+        <file>images/StalledIssues/monitor_default.png</file>
+        <file>images/StalledIssues/monitor_default@2x.png</file>
+        <file>images/StalledIssues/monitor_default@3x.png</file>
+        <file>images/StalledIssues/remove_default.png</file>
+        <file>images/StalledIssues/remove_default@2x.png</file>
+        <file>images/StalledIssues/remove_default@3x.png</file>
+        <file>images/StalledIssues/rename_node_default.png</file>
+        <file>images/StalledIssues/rename_node_default@2x.png</file>
+        <file>images/StalledIssues/rename_node_default@3x.png</file>
+        <file>images/StalledIssues/folder_error_default.png</file>
+        <file>images/StalledIssues/folder_error_default@2x.png</file>
+        <file>images/StalledIssues/folder_error_default@3x.png</file>
+        <file>images/StalledIssues/tree_double_link_default.png</file>
+        <file>images/StalledIssues/tree_double_link_default@2x.png</file>
+        <file>images/StalledIssues/tree_double_link_default@3x.png</file>
     </qresource>
 </RCC>

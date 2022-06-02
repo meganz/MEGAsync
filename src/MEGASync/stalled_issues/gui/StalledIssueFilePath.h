@@ -29,6 +29,9 @@ protected:
 private:
     void showHoverAction(QEvent::Type type, QWidget* actionWidget, const QString &path);
     void updateFileIcons();
+    void updateMoveFileIcons();
+
+    QIcon getPathIcon(const QFileInfo& fileInfo, bool hasProblem);
 
     void fillFilePath();
     QString getFilePath();

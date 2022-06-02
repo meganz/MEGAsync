@@ -8,6 +8,9 @@
 #include <QPainter>
 #include <QPoint>
 
+static const char* ITS_HOVER = "ItsHover";
+static const char* HAS_PROBLEM = "hasProblem";
+
 StalledIssueFilePath::StalledIssueFilePath(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::StalledIssueFilePath),
@@ -21,8 +24,9 @@ StalledIssueFilePath::StalledIssueFilePath(QWidget *parent) :
     ui->file->hide();
     ui->moveFile->hide();
 
-    ui->moveLines->installEventFilter(this);
     ui->lines->installEventFilter(this);
+    ui->moveLines->installEventFilter(this);
+    ui->movePathProblemLines->installEventFilter(this);
 
     ui->filePathContainer->installEventFilter(this);
     ui->moveFilePathContainer->installEventFilter(this);
@@ -49,15 +53,15 @@ void StalledIssueFilePath::updateUi(StalledIssueDataPtr data)
 
     if(mData->isCloud())
     {
-        auto remoteIcon = Utilities::getCachedPixmap(QLatin1Literal(":/images/cloud_upload_item_ico.png"));
-        ui->LocalOrRemoteIcon->setPixmap(remoteIcon.pixmap(ui->LocalOrRemoteIcon->size()));
+        auto remoteIcon = Utilities::getCachedPixmap(QLatin1Literal(":/images/StalledIssues/cloud_default.png"));
+        ui->LocalOrRemoteIcon->setPixmap(remoteIcon.pixmap(QSize(16,16)));
 
         ui->LocalOrRemoteText->setText(tr("on MEGA:"));
     }
     else
     {
-        auto localIcon = Utilities::getCachedPixmap(QLatin1Literal(":/images/StalledIssues/PC_ico_rest.png"));
-        ui->LocalOrRemoteIcon->setPixmap(localIcon.pixmap(ui->LocalOrRemoteIcon->size()));
+        auto localIcon = Utilities::getCachedPixmap(QLatin1Literal(":/images/StalledIssues/monitor_default.png"));
+        ui->LocalOrRemoteIcon->setPixmap(localIcon.pixmap(QSize(16,16)));
 
         ui->LocalOrRemoteText->setText(tr("Local:"));
     }
@@ -65,6 +69,7 @@ void StalledIssueFilePath::updateUi(StalledIssueDataPtr data)
     fillFilePath();
     fillMoveFilePath();
     updateFileIcons();
+    updateMoveFileIcons();
 }
 
 void StalledIssueFilePath::showFullPath()
@@ -89,8 +94,12 @@ void StalledIssueFilePath::fillFilePath()
             ui->filePath->setText(QString::fromUtf8("-"));
         }
 
-        mData->getPath().mPathProblem != mega::MegaSyncStall::SyncPathProblem::NoProblem
-                ?  ui->pathProblem->setText(getSyncPathProblemString(mData->getPath().mPathProblem)) : ui->pathProblem->hide();
+        auto hasProblem(mData->getPath().mPathProblem != mega::MegaSyncStall::SyncPathProblem::NoProblem);
+        hasProblem ?  ui->pathProblemMessage->setText(getSyncPathProblemString(mData->getPath().mPathProblem)) : ui->pathProblemContainer->hide();
+        hasProblem ? ui->filePathContainer->setCursor(Qt::ArrowCursor) : ui->filePathContainer->setCursor(Qt::PointingHandCursor);
+
+        ui->filePathContainer->setProperty(HAS_PROBLEM,hasProblem);
+        setStyleSheet(styleSheet());
     }
 }
 
@@ -116,8 +125,11 @@ void StalledIssueFilePath::fillMoveFilePath()
             ui->moveFilePath->setText(QString::fromUtf8("-"));
         }
 
-        mData->getMovePath().mPathProblem != mega::MegaSyncStall::SyncPathProblem::NoProblem
-                ?  ui->movePathProblem->setText(getSyncPathProblemString(mData->getMovePath().mPathProblem)) : ui->movePathProblem->hide();
+        auto hasProblem(mData->getMovePath().mPathProblem != mega::MegaSyncStall::SyncPathProblem::NoProblem);
+        hasProblem ?  ui->movePathProblemMessage->setText(getSyncPathProblemString(mData->getMovePath().mPathProblem)) : ui->movePathProblemContainer->hide();
+        hasProblem ? ui->moveFilePathContainer->setCursor(Qt::ArrowCursor) : ui->moveFilePathContainer->setCursor(Qt::PointingHandCursor);
+        ui->moveFilePathContainer->setProperty(HAS_PROBLEM,hasProblem);
+        setStyleSheet(styleSheet());
     }
 }
 
@@ -128,13 +140,41 @@ QString StalledIssueFilePath::getMoveFilePath()
 
 void StalledIssueFilePath::updateFileIcons()
 {
-    QIcon fileTypeIcon;
-    QFileInfo fileInfo(mData->getFileName());
+    QFileInfo fileInfo(mData->getNativeFilePath());
+    auto hasProblem(mData->getPath().mPathProblem != mega::MegaSyncStall::SyncPathProblem::NoProblem);
+    QIcon fileTypeIcon(getPathIcon(fileInfo, hasProblem));
 
-    if(fileInfo.isFile())
+    ui->filePathIcon->setPixmap(fileTypeIcon.pixmap(ui->filePathIcon->size()));
+}
+
+void StalledIssueFilePath::updateMoveFileIcons()
+{
+    QFileInfo fileInfo(mData->getNativeMoveFilePath());
+    auto hasProblem(mData->getMovePath().mPathProblem != mega::MegaSyncStall::SyncPathProblem::NoProblem);
+    QIcon fileTypeIcon(getPathIcon(fileInfo, hasProblem));
+
+    ui->moveFilePathIcon->setPixmap(fileTypeIcon.pixmap(ui->moveFilePathIcon->size()));
+}
+
+QIcon StalledIssueFilePath::getPathIcon(const QFileInfo &fileInfo, bool hasProblem)
+{
+    QIcon fileTypeIcon;
+
+    bool isFile(false);
+
+    if(fileInfo.exists())
+    {
+        isFile = fileInfo.isFile();
+    }
+    else
+    {
+        isFile = !fileInfo.completeSuffix().isEmpty();
+    }
+
+    if(isFile)
     {
         //Without extension
-        if(mData->getFileName() == fileInfo.baseName())
+        if(fileInfo.completeSuffix().isEmpty())
         {
             fileTypeIcon = Utilities::getCachedPixmap(QLatin1Literal(":/images/StalledIssues/help-circle.png"));
         }
@@ -146,70 +186,88 @@ void StalledIssueFilePath::updateFileIcons()
     }
     else
     {
-        fileTypeIcon = Utilities::getCachedPixmap(QLatin1Literal(":/images/color_folder.png"));
+        if(hasProblem)
+        {
+            fileTypeIcon = Utilities::getCachedPixmap(QLatin1Literal(":/images/StalledIssues/folder_error_default.png"));
+        }
+        else
+        {
+            fileTypeIcon = Utilities::getCachedPixmap(QLatin1Literal(":/images/StalledIssues/folder_orange_default.png"));
+        }
+
     }
 
-
-    ui->filePathIcon->setPixmap(fileTypeIcon.pixmap(ui->filePathIcon->size()));
-    ui->moveFilePathIcon->setPixmap(fileTypeIcon.pixmap(ui->moveFilePathIcon->size()));
+    return fileTypeIcon;
 }
 
 bool StalledIssueFilePath::eventFilter(QObject *watched, QEvent *event)
 {
-    if(watched == ui->lines && event->type() == QEvent::Paint)
+    if(event->type() == QEvent::Enter || event->type() == QEvent::Leave || event->type() == QEvent::MouseButtonRelease)
     {
-        QPainter p(ui->lines);
-        p.setPen(QPen(QColor("#000000"),1));
-        p.setOpacity(0.2);
-
-        auto width(ui->lines->width());
-        auto height(ui->lines->height());
-
-        p.drawLine(QPoint(width/2,0), QPoint(width/2, ui->lines->height()/2));
-        p.drawLine(QPoint(width/2,height/2), QPoint(width - 2, height/2));
-    }
-    else if(watched == ui->moveLines && event->type() == QEvent::Paint)
-    {
-        QPainter p(ui->moveLines);
-        p.setPen(QPen(QColor("#000000"),1));
-        p.setOpacity(0.2);
-
-        auto width(ui->moveLines->width());
-        auto height(ui->moveLines->height());
-
-        p.drawLine(QPoint(0,height/2), QPoint(width, height/2));
-        p.drawLine(QPoint(0,0), QPoint(0, ui->moveLines->height()));
-    }
-    else if(event->type() == QEvent::Enter || event->type() == QEvent::Leave || event->type() == QEvent::MouseButtonRelease)
-    {
-        if(watched == ui->filePathContainer)
+        if(watched == ui->filePathContainer && !ui->filePathContainer->property(HAS_PROBLEM).toBool())
         {
             showHoverAction(event->type(), ui->filePathAction, getFilePath());
         }
-        else if(watched == ui->moveFilePathContainer)
+        else if(watched == ui->moveFilePathContainer && !ui->moveFilePathContainer->property(HAS_PROBLEM).toBool())
         {
             showHoverAction(event->type(), ui->moveFilePathAction,  getMoveFilePath());
         }
     }
     else if(event->type() == QEvent::Resize)
     {
-        if(auto label = dynamic_cast<QLabel*>(watched))
+        if(watched == ui->filePath || watched == ui->moveFilePath)
         {
-            QString fullPath;
+            auto label = dynamic_cast<QLabel*>(watched);
+            if(label)
+            {
+                QString fullPath;
 
-            if(label == ui->filePath)
-            {
-                fullPath = getFilePath();
-            }
-            else if(label == ui->moveFilePath)
-            {
-                fullPath = getMoveFilePath();
-            }
+                if(watched == ui->filePath)
+                {
+                    fullPath = getFilePath();
+                }
+                else if(watched == ui->moveFilePath)
+                {
+                    fullPath = getMoveFilePath();
+                }
 
-            if(!fullPath.isEmpty())
-            {
-                label->setText(label->fontMetrics().elidedText(fullPath, Qt::ElideMiddle,label->width()));
+                if(!fullPath.isEmpty())
+                {
+                    label->setText(label->fontMetrics().elidedText(fullPath, Qt::ElideMiddle,label->width()));
+                }
             }
+        }
+        else if(watched == ui->lines)
+        {
+            auto hasProblem(mData->getPath().mPathProblem != mega::MegaSyncStall::SyncPathProblem::NoProblem);
+            if(hasProblem)
+            {
+                auto fileTypeIcon = Utilities::getCachedPixmap(QLatin1Literal(":/images/StalledIssues/tree_link_end_default.png"));
+                ui->lines->setPixmap(fileTypeIcon.pixmap(ui->lines->size()));
+            }
+            else
+            {
+                auto fileTypeIcon = Utilities::getCachedPixmap(QLatin1Literal(":/images/StalledIssues/tree_end_default.png"));
+                ui->lines->setPixmap(fileTypeIcon.pixmap(ui->lines->size()));
+            }
+        }
+        else if(watched == ui->movePathProblemLines)
+        {
+            auto hasProblem(mData->getMovePath().mPathProblem != mega::MegaSyncStall::SyncPathProblem::NoProblem);
+            if(hasProblem)
+            {
+                auto fileTypeIcon = Utilities::getCachedPixmap(QLatin1Literal(":/images/StalledIssues/tree_double_link_default.png"));
+                ui->movePathProblemLines->setPixmap(fileTypeIcon.pixmap(ui->movePathProblemLines->size()));
+            }
+            else
+            {
+                ui->movePathProblemLines->setPixmap(QPixmap());
+            }
+        }
+        else if(watched == ui->moveLines)
+        {
+            auto fileTypeIcon = Utilities::getCachedPixmap(QLatin1Literal(":/images/StalledIssues/tree_link_default.png"));
+            ui->moveLines->setPixmap(fileTypeIcon.pixmap(ui->moveLines->size()));
         }
     }
 
@@ -221,13 +279,13 @@ void StalledIssueFilePath::showHoverAction(QEvent::Type type, QWidget *actionWid
     if(type == QEvent::Enter)
     {
         actionWidget->show();
-        actionWidget->parent()->setProperty("itsHover", true);
+        actionWidget->parent()->setProperty(ITS_HOVER, true);
         setStyleSheet(styleSheet());
     }
     else if(type == QEvent::Leave)
     {
         actionWidget->hide();
-        actionWidget->parent()->setProperty("itsHover", false);
+        actionWidget->parent()->setProperty(ITS_HOVER, false);
         setStyleSheet(styleSheet());
     }
     else if(type == QEvent::MouseButtonRelease)

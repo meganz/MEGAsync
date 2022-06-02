@@ -105,14 +105,14 @@ void StalledIssueHeader::refreshUi()
         fileInfo.setFile(getData().consultData()->consultCloudData()->getNativeFilePath());
     }
 
-    if(fileInfo.isFile())
+    if(!fileInfo.completeSuffix().isEmpty())
     {
         fileTypeIcon = Utilities::getCachedPixmap(Utilities::getExtensionPixmapName(
                                                       getData().consultData()->getFileName(), QLatin1Literal(":/images/drag_")));
     }
     else
     {
-        fileTypeIcon = Utilities::getCachedPixmap(QLatin1Literal(":/images/color_folder@2x.png"));
+        fileTypeIcon = Utilities::getCachedPixmap(QLatin1Literal(":/images/StalledIssues/folder_orange_default@2x.png"));
     }
 
     ui->fileTypeIcon->setPixmap(fileTypeIcon.pixmap(ui->fileTypeIcon->size()));
