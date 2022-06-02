@@ -98,6 +98,7 @@ private:
     mega::MegaHandle getHandleByIndex(const QModelIndex& idx);
     QModelIndex getIndexFromHandle(const mega::MegaHandle& handle);
     QModelIndex getSelectedIndex();
+    QModelIndex getParentIncomingShareByIndex(QModelIndex idx);
     Navigation mNavCloudDrive;
     Navigation mNavInShares;
 

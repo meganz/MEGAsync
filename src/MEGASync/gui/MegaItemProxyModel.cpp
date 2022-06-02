@@ -10,13 +10,6 @@ MegaItemProxyModel::MegaItemProxyModel(QObject* parent) :
     setSortCaseSensitivity(Qt::CaseInsensitive);
 }
 
-void MegaItemProxyModel::setFilter(const Filter &f)
-{
-    mFilter.showCloudDrive = f.showCloudDrive;
-    mFilter.showInShares = f.showInShares;
-    mFilter.showReadOnly = f.showReadOnly;
-}
-
 void MegaItemProxyModel::showOnlyCloudDrive()
 {
     mFilter.showOnlyCloudDrive();
@@ -38,6 +31,12 @@ void MegaItemProxyModel::showReadOnlyFolders(bool value)
 void MegaItemProxyModel::showReadWriteFolders(bool value)
 {
     mFilter.showReadWriteFolders = value;
+    invalidateFilter();
+}
+
+void MegaItemProxyModel::showOwnerColumn(bool value)
+{
+    mFilter.showOwnerColumn = value;
     invalidateFilter();
 }
 
@@ -221,7 +220,7 @@ bool MegaItemProxyModel::filterAcceptsColumn(int sourceColumn, const QModelIndex
     case MegaItemModel::COLUMN::DATE:
         return true;
     case MegaItemModel::COLUMN::USER:
-        return mFilter.showInShares;
+        return mFilter.showInShares && mFilter.showOwnerColumn;
     }
     return false;
 }

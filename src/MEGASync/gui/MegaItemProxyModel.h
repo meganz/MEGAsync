@@ -19,6 +19,7 @@ public:
         bool showCloudDrive = true;
         bool showReadOnly = true;
         bool showReadWriteFolders = true;
+        bool showOwnerColumn = true;
         Filter() : showInShares(false), showCloudDrive(true), showReadOnly(true),
                     showReadWriteFolders(true){};
         void showOnlyCloudDrive(){showInShares=false; showCloudDrive = true;}
@@ -28,11 +29,11 @@ public:
     };
 
     explicit MegaItemProxyModel(QObject* parent = nullptr);
-    void setFilter(const Filter& f);
     void showOnlyCloudDrive();
     void showOnlyInShares(bool isSyncSelect = true);
     void showReadOnlyFolders(bool value);
     void showReadWriteFolders(bool value);
+    void showOwnerColumn(bool value);
 
     mega::MegaHandle getHandle(const QModelIndex &index);
     std::shared_ptr<mega::MegaNode> getNode(const QModelIndex& index);

@@ -205,6 +205,21 @@ QModelIndex NodeSelector::getSelectedIndex()
     return ret;
 }
 
+QModelIndex NodeSelector::getParentIncomingShareByIndex(QModelIndex idx)
+{
+    while(idx.isValid())
+    {
+        if(MegaItem *item = static_cast<MegaItem*>(idx.internalPointer()))
+        {
+            if(item->getNode()->isInShare())
+                return idx;
+            else
+                idx = idx.parent();
+        }
+    }
+    return QModelIndex();
+}
+
 void NodeSelector::setSelectedNodeHandle(MegaHandle selectedHandle)
 {
     auto node = std::shared_ptr<MegaNode>(mMegaApi->getNodeByHandle(selectedHandle));
@@ -717,36 +732,58 @@ void NodeSelector::setRootIndex(const QModelIndex &idx)
         else
             ui->lFolderName->setText(tr(IN_SHARES));
 
+        QModelIndexList selectedIndexes = ui->tMegaFolders->selectionModel()->selectedIndexes();
+        mProxyModel->showOwnerColumn(true);
+        foreach(auto& selection, selectedIndexes)
+        {
+            ui->tMegaFolders->selectionModel()->select(selection, QItemSelectionModel::ClearAndSelect | QItemSelectionModel::Rows);
+        }
         ui->lFolderName->setToolTip(QString());
-
+        ui->lOwnerIcon->setPixmap(QPixmap());
         ui->lIcon->setPixmap(QPixmap());
         return;
     }
+
     auto source_idx = mProxyModel->getIndexFromSource(idx);
     if(!source_idx.isValid())
     {
+        ui->lOwnerIcon->setPixmap(QPixmap());
         ui->lIcon->setPixmap(QPixmap());
         return;
     }
+
+    //Taking the sync icon
     if(source_idx.column() != MegaItemModel::COLUMN::STATUS)
     {
         source_idx = source_idx.sibling(source_idx.row(), MegaItemModel::COLUMN::STATUS);
     }
-    QIcon icon = qvariant_cast<QIcon>(source_idx.data(Qt::DecorationRole));
+    QIcon syncIcon = qvariant_cast<QIcon>(source_idx.data(Qt::DecorationRole));
 
     MegaItem *item = static_cast<MegaItem*>(source_idx.internalPointer());
     if(!item)
         return;
 
-    if(!icon.isNull())
+    if(!syncIcon.isNull())
     {
         QFontMetrics fm(font());
-        QPixmap pm = icon.pixmap(QSize(fm.height()+3, fm.height()+3), QIcon::Normal);
+        QPixmap pm = syncIcon.pixmap(QSize(fm.height()+3, fm.height()+3), QIcon::Normal);
         ui->lIcon->setPixmap(pm);
     }
     else
     {
         ui->lIcon->setPixmap(QPixmap());
+    }
+
+    if(!isCloudDrive())
+    {
+        mProxyModel->showOwnerColumn(false);
+        QModelIndex in_share_idx = getParentIncomingShareByIndex(source_idx);
+        in_share_idx = in_share_idx.sibling(in_share_idx.row(), MegaItemModel::COLUMN::USER);
+        QPixmap pm = qvariant_cast<QPixmap>(in_share_idx.data(Qt::DecorationRole));
+        QString tooltip = in_share_idx.data(Qt::ToolTipRole).toString();
+        ui->lOwnerIcon->setToolTip(tooltip);
+        ui->lOwnerIcon->setPixmap(pm);
+
     }
     auto node = item->getNode();
     if(node)
