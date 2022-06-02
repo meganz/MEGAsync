@@ -239,7 +239,7 @@ QIcon MegaItem::getFolderIcon()
         else
         {
             QIcon icon;
-            icon.addFile(QLatin1String("://images/node_selector/small-folder.png"), QSize(), QIcon::Normal);
+            icon.addFile(QLatin1String("://images/small_folder.png"), QSize(), QIcon::Normal);
             icon.addFile(QLatin1String("://images/node_selector/small-folder-disabled.png"), QSize(), QIcon::Disabled);
             return icon;
         }

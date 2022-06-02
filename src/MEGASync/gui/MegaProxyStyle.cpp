@@ -51,7 +51,7 @@ void MegaProxyStyle::drawControl(QStyle::ControlElement element, const QStyleOpt
                     return;
             }
         }
-    }
+        }
     }
     default:
         break;
