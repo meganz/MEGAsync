@@ -10,6 +10,7 @@
 #include "gui/QSyncItemWidget.h"
 #include "gui/ProxySettings.h"
 #include "gui/BandwidthSettings.h"
+#include "UserAttributesRequests.h"
 
 #include <QApplication>
 #include <QDesktopServices>
@@ -543,6 +544,12 @@ void SettingsDialog::loadSettings()
     auto fullName ((mPreferences->firstName() + QStringLiteral(" ")
                 + mPreferences->lastName()).trimmed());
     mUi->lName->setText(fullName);
+
+    //Update name in case it changes
+    auto fullNameRequest = UserAttributes::FullNameAttributeRequest::requestFullName(mPreferences->email().toStdString().c_str());
+    connect(fullNameRequest.get(), &UserAttributes::FullNameAttributeRequest::attributeReady, this, [this](const QString& fullName){
+        mUi->lName->setText(fullName);
+    });
 
     // account type and details
     updateAccountElements();
@@ -1337,7 +1344,7 @@ void SettingsDialog::setAvatar()
     const char* email = mMegaApi->getMyEmail();
     if (email)
     {
-        mUi->wAvatar->drawAvatarFromEmail(QString::fromUtf8(email));
+        mUi->wAvatar->setUserEmail(email);
         delete [] email;
     }
 }
