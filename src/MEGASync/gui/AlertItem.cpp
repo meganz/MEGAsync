@@ -48,6 +48,7 @@ void AlertItem::setAlertData(MegaUserAlert *alert)
 {
     mAlertUser.reset(alert->copy());
 
+    //Alerts from your own user come without email (like Payment reminders)
     if(alert->getEmail())
     {
         mFullNameAttributes = UserAttributes::FullNameAttributeRequest::requestFullName(alert->getEmail());
@@ -59,6 +60,7 @@ void AlertItem::setAlertData(MegaUserAlert *alert)
 
         ui->wAvatarContact->setUserEmail(alert->getEmail());
     }
+    //If it comes without email, it is because is an own alert, then take your email.
     else
     {
         ui->wAvatarContact->setUserEmail(Preferences::instance()->email().toUtf8());
