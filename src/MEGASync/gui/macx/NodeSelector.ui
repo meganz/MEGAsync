@@ -914,12 +914,34 @@ margin-right: 31px;
            <font>
             <family>SF Pro Text</family>
             <pointsize>-1</pointsize>
-            <weight>50</weight>
             <bold>false</bold>
            </font>
           </property>
           <property name="text">
-            <string notr="true">FolderName</string>
+           <string notr="true">FolderName</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer_7">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeType">
+           <enum>QSizePolicy::Fixed</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>7</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <widget class="QLabel" name="lOwnerIcon">
+          <property name="text">
+           <string/>
           </property>
          </widget>
         </item>
