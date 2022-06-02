@@ -6,6 +6,7 @@
 #include "UserAttributesRequests.h"
 #include <QFutureWatcher>
 #include <QFuture>
+#include <Preferences.h>
 
 #if QT_VERSION >= 0x050000
 #include <QtConcurrent/QtConcurrent>
@@ -56,11 +57,16 @@ void AlertItem::setAlertData(MegaUserAlert *alert)
             connect(mFullNameAttributes.get(), &UserAttributes::FullNameAttributeRequest::attributeReady, this, &AlertItem::onAttributesReady);
         }
 
-       ui->wAvatarContact->setUserEmail(alert->getEmail());
-       connect(ui->wAvatarContact, &AvatarWidget::avatarUpdated, this, [this](){
-           emit refreshAlertItem(mAlertUser->getId());
-       });
+        ui->wAvatarContact->setUserEmail(alert->getEmail());
     }
+    else
+    {
+        ui->wAvatarContact->setUserEmail(Preferences::instance()->email().toUtf8());
+    }
+
+    connect(ui->wAvatarContact, &AvatarWidget::avatarUpdated, this, [this](){
+        emit refreshAlertItem(mAlertUser->getId());
+    });
 
     onAttributesReady();
 }
