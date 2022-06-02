@@ -3,6 +3,10 @@ INCLUDEPATH += $$PWD
 
 QT       += network
 
+# recreate source folder tree for object files. Needed to build OS utilities,
+# otherwise all obj files are placed into same directory, causing overwrite.
+CONFIG += object_parallel_to_source
+
 SOURCES += $$PWD/HTTPServer.cpp \
     $$PWD/Preferences.cpp \
     $$PWD/LinkProcessor.cpp \
@@ -42,14 +46,14 @@ HEADERS  +=  $$PWD/HTTPServer.h \
     $$PWD/gzjoin.h
 
 macx {
-    OBJECTIVE_SOURCES += $$PWD/macx/OSUtilities.mm
+    OBJECTIVE_SOURCES += $$PWD/macx/Utilities.mm
 }
 
 unix:!macx {
-    SOURCES += $$PWD/linux/OSUtilities.cpp
+    SOURCES += $$PWD/linux/Utilities.cpp
 }
 
 win32 {
-    SOURCES += $$PWD/win/OSUtilities.cpp
+    SOURCES += $$PWD/win/Utilities.cpp
 }
 
