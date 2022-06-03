@@ -93,12 +93,6 @@ void MegaProxyStyle::drawPrimitive(QStyle::PrimitiveElement element, const QStyl
                 }
 
                 QStyleOption modOption(*option);
-                QColor c("#FF654F");
-
-                QPen linepen(c);
-                linepen.setCapStyle(Qt::RoundCap);
-                linepen.setWidth(8);
-                painter->setPen(linepen);
 
                 int adjustTop(0);
 
@@ -120,8 +114,16 @@ void MegaProxyStyle::drawPrimitive(QStyle::PrimitiveElement element, const QStyl
                     modOption.rect.adjust(0,adjustTop,0,adjustTop);
                 }
 
-                painter->drawPoint(modOption.rect.topLeft() + QPoint(25, 0));
-                painter->drawPoint(modOption.rect.topRight() - QPoint(25, 0));
+                QPoint leftPoint(modOption.rect.topLeft() + QPoint(25, 0));
+                QPoint rightPoint(modOption.rect.topRight() - QPoint(25, 0));
+
+                QPen linepen("#FF654F");
+                linepen.setCapStyle(Qt::RoundCap);
+                linepen.setWidth(8);
+                painter->setPen(linepen);
+
+                painter->drawPoint(leftPoint);
+                painter->drawPoint(rightPoint);
 
                 QPen whitepen(Qt::white);
                 whitepen.setWidth(4);

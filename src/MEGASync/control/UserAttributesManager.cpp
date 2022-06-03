@@ -30,12 +30,15 @@ void UserAttributesManager::onUsersUpdate(mega::MegaApi*, mega::MegaUserList *us
         for (int i = 0; i < users->size(); i++)
         {
             mega::MegaUser *user = users->get(i);
-            auto userEmail = QString::fromUtf8(user->getEmail());
-            foreach(auto request, mRequests.values(userEmail))
+            if(!user->isOwnChange())
             {
-                request->updateAttributes(user);
+                auto userEmail = QString::fromUtf8(user->getEmail());
+                foreach(auto request, mRequests.values(userEmail))
+                {
+                    request->updateAttributes(user);
+                }
             }
         }
     }
 }
-}
+}//end namespace UserAttributes
