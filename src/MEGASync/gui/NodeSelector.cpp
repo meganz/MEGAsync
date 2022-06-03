@@ -767,7 +767,6 @@ void NodeSelector::setRootIndex(const QModelIndex &idx)
 
     if(!syncIcon.isNull())
     {
-        QFontMetrics fm(font());
         QPixmap pm = syncIcon.pixmap(QSize(MegaItem::ICON_SIZE, MegaItem::ICON_SIZE), QIcon::Normal);
         ui->lIcon->setPixmap(pm);
         ui->syncSpacer->spacerItem()->changeSize(10, 0);
