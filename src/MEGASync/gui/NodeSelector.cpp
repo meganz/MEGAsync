@@ -478,11 +478,11 @@ void NodeSelector::onbNewFolderClicked()
         for (int i = 0; i < mProxyModel->rowCount(modelIndex); i++)
         {
             QModelIndex row = mProxyModel->index(i, 0, modelIndex);
-            auto node = mProxyModel->getNode(row);
+            auto nodeI = mProxyModel->getNode(row);
 
-            if (node && newFolderName.compare(QString::fromUtf8(node->getName())) == 0)
+            if (nodeI && newFolderName.compare(QString::fromUtf8(nodeI->getName())) == 0)
             {
-                setSelectedNodeHandle(node->getHandle());
+                setSelectedNodeHandle(nodeI->getHandle());
                 ui->tMegaFolders->selectionModel()->select(row, QItemSelectionModel::ClearAndSelect | QItemSelectionModel::Rows);
                 ui->tMegaFolders->selectionModel()->setCurrentIndex(row, QItemSelectionModel::ClearAndSelect | QItemSelectionModel::Rows);
                 break;
@@ -740,7 +740,9 @@ void NodeSelector::setRootIndex(const QModelIndex &idx)
         }
         ui->lFolderName->setToolTip(QString());
         ui->lOwnerIcon->setPixmap(QPixmap());
+        ui->avatarSpacer->spacerItem()->changeSize(0, 0);
         ui->lIcon->setPixmap(QPixmap());
+        ui->syncSpacer->spacerItem()->changeSize(0, 0);
         return;
     }
 
@@ -766,12 +768,14 @@ void NodeSelector::setRootIndex(const QModelIndex &idx)
     if(!syncIcon.isNull())
     {
         QFontMetrics fm(font());
-        QPixmap pm = syncIcon.pixmap(QSize(fm.height()+3, fm.height()+3), QIcon::Normal);
+        QPixmap pm = syncIcon.pixmap(QSize(MegaItem::ICON_SIZE, MegaItem::ICON_SIZE), QIcon::Normal);
         ui->lIcon->setPixmap(pm);
+        ui->syncSpacer->spacerItem()->changeSize(10, 0);
     }
     else
     {
         ui->lIcon->setPixmap(QPixmap());
+        ui->syncSpacer->spacerItem()->changeSize(0, 0);
     }
 
     if(!isCloudDrive())
@@ -783,7 +787,7 @@ void NodeSelector::setRootIndex(const QModelIndex &idx)
         QString tooltip = in_share_idx.data(Qt::ToolTipRole).toString();
         ui->lOwnerIcon->setToolTip(tooltip);
         ui->lOwnerIcon->setPixmap(pm);
-
+        ui->avatarSpacer->spacerItem()->changeSize(10, 0);
     }
     auto node = item->getNode();
     if(node)
