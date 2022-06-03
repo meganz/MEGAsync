@@ -53,7 +53,7 @@ struct TransfersCount
 
 };
 
-class TransferThread : public mega::QTMegaTransferListener
+class TransferThread :  public QObject,public mega::MegaTransferListener
 {
     Q_OBJECT
 public:
@@ -163,8 +163,6 @@ public:
 
     bool areAllPaused() const;
 
-
-
 signals:
     void pauseStateChanged(bool pauseState);
     void transferPauseStateChanged();
@@ -209,6 +207,7 @@ private:
     std::shared_ptr<Preferences> mPreferences;
     QThread* mTransferEventThread;
     TransferThread* mTransferEventWorker;
+    mega::QTMegaTransferListener *mDelegateListener;
     QTimer mTimer;
     TransfersCount mTransfersCount;
 

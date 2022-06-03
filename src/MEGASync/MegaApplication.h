@@ -517,6 +517,7 @@ protected:
     std::unique_ptr<MegaSyncLogger> logger;
     QPointer<TransferManager> mTransferManager;
     QRect mTransferManagerGeometry;
+    bool mTransferManagerFullScreen;
     QMap<int, mega::MegaTransfer*> finishedTransfers;
     QList<mega::MegaTransfer*> finishedTransferOrder;
     QSet<int> finishedBlockedTransfers;

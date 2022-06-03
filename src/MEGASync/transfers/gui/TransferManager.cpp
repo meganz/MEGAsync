@@ -644,9 +644,15 @@ void TransferManager::onStorageStateChanged(int storageState)
             mUi->lStorageOverQuota->hide();
             QuotaState tQuotaState (qobject_cast<MegaApplication*>(qApp)->getTransferQuotaState());
             mUi->tSeePlans->setVisible(tQuotaState == QuotaState::FULL);
+
             break;
         }
     }
+
+    //TransferQuota is not visible when storage state error is set
+    //This is why we need to check the current transfer quota state
+    //in case we need to show the transferquota errors again
+    onTransferQuotaStateChanged(mTransferQuotaState);
 
     checkPauseButtonVisibilityIfPossible();
 }
@@ -688,7 +694,8 @@ void TransferManager::onTransferQuotaStateChanged(QuotaState transferQuotaState)
         case QuotaState::OVERQUOTA:
         {
             mUi->tSeePlans->show();
-            mUi->pTransferOverQuota->show();
+            mUi->pTransferOverQuota->setVisible(mStorageQuotaState != MegaApi::STORAGE_STATE_PAYWALL
+                                                && mStorageQuotaState != MegaApi::STORAGE_STATE_RED);
             break;
         }
         case QuotaState::OK:

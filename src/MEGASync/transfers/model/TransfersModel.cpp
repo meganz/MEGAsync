@@ -17,7 +17,7 @@ const int MAX_TRANSFERS = 2000;
 const int CANCEL_THRESHOLD_THREAD = 100;
 
 //LISTENER THREAD
-TransferThread::TransferThread() : mega::QTMegaTransferListener(MegaSyncApp->getMegaApi(),new mega::MegaTransferListener())
+TransferThread::TransferThread()
 {}
 
 TransferThread::TransfersToProcess TransferThread::processTransfers()
@@ -381,7 +381,9 @@ TransfersModel::TransfersModel(QObject *parent) :
     mTransferEventThread = new QThread();
     mTransferEventWorker = new TransferThread();
     mTransferEventWorker->moveToThread(mTransferEventThread);
-    mMegaApi->addTransferListener(mTransferEventWorker);
+    mDelegateListener = new QTMegaTransferListener(mMegaApi, mTransferEventWorker);
+    mDelegateListener->moveToThread(mTransferEventThread);
+    mMegaApi->addTransferListener(mDelegateListener);
 
     //Update transfers state for the first time
     updateTransfersCount();
@@ -399,7 +401,7 @@ TransfersModel::~TransfersModel()
     mTransfers.clear();
 
     // Disconect listener
-    mMegaApi->removeTransferListener(mTransferEventWorker);
+    mMegaApi->removeTransferListener(mDelegateListener);
     mTransferEventThread->quit();
     mTransferEventThread->deleteLater();
     mTransferEventWorker->deleteLater();

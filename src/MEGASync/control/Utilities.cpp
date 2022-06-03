@@ -197,6 +197,8 @@ void Utilities::initializeFileTypes()
             = FileType::TYPE_DOCUMENT;
     fileTypes[getExtensionPixmapName(QLatin1Literal("a.key"), QString())]
             = FileType::TYPE_DOCUMENT;
+    fileTypes[getExtensionPixmapName(QLatin1Literal("a.xml"), QString())]
+            = FileType::TYPE_DOCUMENT;
     fileTypes[getExtensionPixmapName(QLatin1Literal("a.png"), QString())]
             = FileType::TYPE_IMAGE;
     fileTypes[getExtensionPixmapName(QLatin1Literal("a.jpg"), QString())]
