@@ -17,7 +17,7 @@ const int MAX_TRANSFERS = 2000;
 const int CANCEL_THRESHOLD_THREAD = 100;
 
 //LISTENER THREAD
-TransferThread::TransferThread()
+TransferThread::TransferThread() : mega::QTMegaTransferListener(MegaSyncApp->getMegaApi(),new mega::MegaTransferListener())
 {}
 
 TransferThread::TransfersToProcess TransferThread::processTransfers()
@@ -380,10 +380,8 @@ TransfersModel::TransfersModel(QObject *parent) :
 
     mTransferEventThread = new QThread();
     mTransferEventWorker = new TransferThread();
-    mDelegateListener = new QTMegaTransferListener(mMegaApi, mTransferEventWorker);
     mTransferEventWorker->moveToThread(mTransferEventThread);
-    mDelegateListener->moveToThread(mTransferEventThread);
-    mMegaApi->addTransferListener(mDelegateListener);
+    mMegaApi->addTransferListener(mTransferEventWorker);
 
     //Update transfers state for the first time
     updateTransfersCount();
@@ -401,7 +399,7 @@ TransfersModel::~TransfersModel()
     mTransfers.clear();
 
     // Disconect listener
-    mMegaApi->removeTransferListener(mDelegateListener);
+    mMegaApi->removeTransferListener(mTransferEventWorker);
     mTransferEventThread->quit();
     mTransferEventThread->deleteLater();
     mTransferEventWorker->deleteLater();
@@ -1565,7 +1563,18 @@ Qt::ItemFlags TransfersModel::flags(const QModelIndex& index) const
 {
     if (index.isValid())
     {
-        return QAbstractItemModel::flags(index) | Qt::ItemIsDragEnabled;
+        auto indexData = getTransfer(index.row());
+        if(indexData)
+        {
+            if(indexData->isFinished())
+            {
+                return QAbstractItemModel::flags(index);
+            }
+            else
+            {
+                return QAbstractItemModel::flags(index) | Qt::ItemIsDragEnabled;
+            }
+        }
     }
     return QAbstractItemModel::flags(index) | Qt::ItemIsDropEnabled;
 }

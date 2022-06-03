@@ -80,29 +80,64 @@ void MegaProxyStyle::drawPrimitive(QStyle::PrimitiveElement element, const QStyl
 
     if (element == QStyle::PE_IndicatorItemViewItemDrop && !option->rect.isNull())
     {
-        QStyleOption modOption(*option);
-        QColor c("#FF654F");
+        auto view = dynamic_cast<const QAbstractItemView*>(widget);
+        if (view)
+        {
+            auto index = view->indexAt(option->rect.topLeft());
 
-        QPen linepen(c);
-        linepen.setCapStyle(Qt::RoundCap);
-        linepen.setWidth(8);
-        painter->setPen(linepen);
-        painter->drawPoint(modOption.rect.topLeft() + QPoint(25, 0));
-        painter->drawPoint(modOption.rect.topRight() - QPoint(25, 0));
+            if (index.isValid())
+            {
+                if(!(index.flags() & Qt::ItemIsDropEnabled) && !(index.flags() & Qt::ItemIsDragEnabled))
+                {
+                    return;
+                }
 
-        QPen whitepen(Qt::white);
-        whitepen.setWidth(4);
-        whitepen.setCapStyle(Qt::RoundCap);
-        painter->setPen(whitepen);
-        painter->drawPoint(modOption.rect.topLeft() + QPoint(25, 0));
-        painter->drawPoint(modOption.rect.topRight() - QPoint(25, 0));
+                QStyleOption modOption(*option);
+                QColor c("#FF654F");
 
-        modOption.rect.setLeft(30);
-        modOption.rect.setRight(modOption.rect.width());
-        linepen.setWidth(2);
-        painter->setPen(linepen);
+                QPen linepen(c);
+                linepen.setCapStyle(Qt::RoundCap);
+                linepen.setWidth(8);
+                painter->setPen(linepen);
 
-        QProxyStyle::drawPrimitive(element, &modOption, painter, widget);
+                int adjustTop(0);
+
+                //The top and bottom rows indicator was cut by the middle
+                //Move the indicator lines avoid this ugly cut
+                {
+                    auto indexRect = view->visualRect(index);
+                    auto isTop(modOption.rect.y() == indexRect.y());
+
+                    if(isTop && index.row() == 0)
+                    {
+                        adjustTop = 5;
+                    }
+                    else if(!isTop && (index.row() == (view->model()->rowCount() -1)))
+                    {
+                        adjustTop = -5;
+                    }
+
+                    modOption.rect.adjust(0,adjustTop,0,adjustTop);
+                }
+
+                painter->drawPoint(modOption.rect.topLeft() + QPoint(25, 0));
+                painter->drawPoint(modOption.rect.topRight() - QPoint(25, 0));
+
+                QPen whitepen(Qt::white);
+                whitepen.setWidth(4);
+                whitepen.setCapStyle(Qt::RoundCap);
+                painter->setPen(whitepen);
+                painter->drawPoint(leftPoint);
+                painter->drawPoint(rightPoint);
+
+                modOption.rect.setLeft(30);
+                modOption.rect.setRight(modOption.rect.width());
+                linepen.setWidth(2);
+                painter->setPen(linepen);
+
+                QProxyStyle::drawPrimitive(element, &modOption, painter, widget);
+            }
+        }
 
         return;
     }

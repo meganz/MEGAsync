@@ -53,7 +53,7 @@ struct TransfersCount
 
 };
 
-class TransferThread :  public QObject,public mega::MegaTransferListener
+class TransferThread : public mega::QTMegaTransferListener
 {
     Q_OBJECT
 public:
@@ -221,7 +221,6 @@ private:
 
     QHash<TransferTag, int> mTagByOrder;
     mutable QMutex mModelMutex;
-    mega::QTMegaTransferListener *mDelegateListener;
 
     bool mAreAllPaused;
     bool mModelReset;

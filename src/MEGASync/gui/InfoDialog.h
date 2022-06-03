@@ -129,7 +129,7 @@ private slots:
 
     void on_tTransfers_clicked();
     void on_tNotifications_clicked();
-    void on_bActualFilter_clicked();
+    void onActualFilterClicked();
     void applyFilterOption(int opt);
     void on_bNotificationsSettings_clicked();
 
