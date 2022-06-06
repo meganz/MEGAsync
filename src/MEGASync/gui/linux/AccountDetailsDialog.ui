@@ -47,7 +47,7 @@ QLabel
     min-width:440px;
 }
 
-#lCloudDrive, #lInbox, #lRubbish, #lStorage, #lTransfer
+#lCloudDrive, #lInbox, #lRubbish, #lStorage, #lTransfer, #lAvailable
 {
   color: #333333;
   font-size: 13px;
@@ -59,7 +59,7 @@ QLabel
   qproperty-alignment: 'AlignLeft | AlignVCenter';
 }
 
-#lCloudDrive, #lInbox, #lRubbish
+#lCloudDrive, #lInbox, #lRubbish, #lAvailable
 {
     qproperty-alignment: 'AlignLeft | AlignBottom';
 }
@@ -79,7 +79,7 @@ QLabel
     padding-bottom: 4px;
 }
 
-#lUsedCloudDrive, #lUsedInbox,  #lUsedRubbish, #lUsedByVersions
+#lUsedCloudDrive, #lUsedInbox,  #lUsedRubbish, #lUsedByVersions, #lAvailableStorage
 {
   color: #333333;
   font-size: 13px;
@@ -99,7 +99,6 @@ QLabel
 
 #wDetailedUsage
 {
-    max-height: 160px;
     min-height: 120px;
 }
 
@@ -155,17 +154,28 @@ QLabel
 
 #bCloudDrive
 {
-    qproperty-icon : url(:/images/Cloud_Drive_24_ico.png);
+    qproperty-icon : url(:/images/account_details/Cloud_Drive_24_ico.png);
 }
 
 #bInbox
 {
-    qproperty-icon : url(:/images/Inbox_24_ico.png);
+    qproperty-icon : url(:/images/account_details/Inbox_24_ico.png);
 }
 
 #bRubbish
 {
-    qproperty-icon : url(:/images/Bin_24_ico.png);
+    qproperty-icon : url(:/images/account_details/Bin_24_ico.png);
+}
+
+#bAvailable
+{
+    qproperty-icon : url(:/images/account_details/available_storage.png);
+}
+
+#lVersionIcon
+{
+    qproperty-icon : url(:/images/account_details/versions.png);
+	padding-left:4px;
 }
 
 #lLoading
@@ -697,6 +707,12 @@ QProgressBar::chunk
    </item>
    <item>
     <widget class="QWidget" name="wDetailedUsage" native="true">
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>16777215</height>
+      </size>
+     </property>
      <layout class="QVBoxLayout" name="wDetailedUsageLayout">
       <property name="spacing">
        <number>8</number>
@@ -1016,6 +1032,93 @@ QProgressBar::chunk
         </layout>
        </widget>
       </item>
+      <item>
+       <widget class="QWidget" name="wAvailable" native="true">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>32</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>32</height>
+         </size>
+        </property>
+        <layout class="QHBoxLayout" name="horizontalLayout_12">
+         <property name="spacing">
+          <number>12</number>
+         </property>
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
+         <item>
+          <widget class="QPushButton" name="bAvailable">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>32</width>
+             <height>32</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>32</width>
+             <height>32</height>
+            </size>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>24</width>
+             <height>24</height>
+            </size>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_13">
+           <property name="spacing">
+            <number>0</number>
+           </property>
+           <property name="rightMargin">
+            <number>8</number>
+           </property>
+           <item alignment="Qt::AlignVCenter">
+            <widget class="QLabel" name="lAvailable">
+             <property name="text">
+              <string>Available Storage</string>
+             </property>
+            </widget>
+           </item>
+           <item alignment="Qt::AlignRight|Qt::AlignVCenter">
+            <widget class="QLabel" name="lAvailableStorage"/>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </widget>
+      </item>
      </layout>
     </widget>
    </item>
@@ -1037,6 +1140,13 @@ QProgressBar::chunk
       <property name="bottomMargin">
        <number>26</number>
       </property>
+      <item>
+       <widget class="QLabel" name="lVersionIcon">
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
+      </item>
       <item>
        <widget class="QLabel" name="lVersions">
         <property name="sizePolicy">
@@ -1069,8 +1179,6 @@ QProgressBar::chunk
    <container>1</container>
   </customwidget>
  </customwidgets>
- <resources>
-  <include location="../Resources_linux.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>

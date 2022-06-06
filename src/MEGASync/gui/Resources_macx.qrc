@@ -461,13 +461,6 @@
         <file>images/new_contact@3x.png</file>
         <file>images/ic_sync_warning.png</file>
         <file>images/ic_sync_warning@2x.png</file>
-        <file>images/Bin_24_ico.png</file>
-        <file>images/Bin_24_ico@2x.png</file>
-        <file>images/Cloud_Drive_24_ico.png</file>
-        <file>images/Cloud_Drive_24_ico@2x.png</file>
-        <file>images/Inbox_24_ico.png</file>
-        <file>images/Inbox_24_ico@2x.png</file>
-        <file>images/Inbox_24_ico@3x.png</file>
         <file>images/key_big.png</file>
         <file>images/key_big@2x.png</file>
         <file>images/lock_big.png</file>
@@ -959,5 +952,20 @@
         <file>images/StalledIssues/tree_double_link_default.png</file>
         <file>images/StalledIssues/tree_double_link_default@2x.png</file>
         <file>images/StalledIssues/tree_double_link_default@3x.png</file>
+        <file>images/account_details/versions@3x.png</file>
+        <file>images/account_details/versions@2x.png</file>
+        <file>images/account_details/versions.png</file>
+        <file>images/account_details/available_storage@3x.png</file>
+        <file>images/account_details/available_storage@2x.png</file>
+        <file>images/account_details/available_storage.png</file>
+        <file>images/account_details/Inbox_24_ico@3x.png</file>
+        <file>images/account_details/Inbox_24_ico@2x.png</file>
+        <file>images/account_details/Inbox_24_ico.png</file>
+        <file>images/account_details/Cloud_Drive_24_ico@3x.png</file>
+        <file>images/account_details/Cloud_Drive_24_ico@2x.png</file>
+        <file>images/account_details/Cloud_Drive_24_ico.png</file>
+        <file>images/account_details/Bin_24_ico@3x.png</file>
+        <file>images/account_details/Bin_24_ico@2x.png</file>
+        <file>images/account_details/Bin_24_ico.png</file>
     </qresource>
 </RCC>
