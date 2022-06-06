@@ -4186,7 +4186,6 @@ void MegaApplication::onTransfersModelUpdate()
 
 void MegaApplication::onTransferManagerClosed()
 {
-    mTransferManagerGeometry = mTransferManager->geometry();
 }
 
 void MegaApplication::fetchNodes(QString email)
@@ -4892,16 +4891,9 @@ void MegaApplication::transferManagerActionClicked(int tab)
     }
 
     createTransferManagerDialog();
-
-    if(!mTransferManagerGeometry.isEmpty())
-    {
-        mTransferManager->setGeometry(mTransferManagerGeometry);
-    }
-
     mTransferManager->setActiveTab(tab);
-    mTransferManager->showNormal();
-    mTransferManager->activateWindow();
-    mTransferManager->raise();
+
+    mTransferManagerGeometryRetainer.showDialog(mTransferManager);
 }
 
 void MegaApplication::loginActionClicked()

@@ -24,8 +24,6 @@ namespace Ui {
 class TransferManagerDragBackDrop;
 }
 
-class StalledIssuesDialog;
-
 class TransferManager : public QDialog
 {
     Q_OBJECT

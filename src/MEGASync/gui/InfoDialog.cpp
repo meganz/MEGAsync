@@ -118,7 +118,7 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
     connect(ui->bTransferManager, SIGNAL(upAreaHovered(QMouseEvent *)), this, SLOT(upAreaHovered(QMouseEvent*)));
     connect(ui->bTransferManager, SIGNAL(dlAreaHovered(QMouseEvent *)), this, SLOT(dlAreaHovered(QMouseEvent *)));
 
-    connect(ui->wSortNotifications, SIGNAL(clicked()), this, SLOT(on_bActualFilter_clicked()));
+    connect(ui->wSortNotifications, SIGNAL(clicked()), this, SLOT(onActualFilterClicked()));
     connect(app, &MegaApplication::avatarReady, this, &InfoDialog::setAvatar);
 
     connect(app->getTransfersModel(), &TransfersModel::transfersCountUpdated, this, &InfoDialog::updateTransfersCount);
@@ -404,7 +404,7 @@ void InfoDialog::setAvatar()
     const char *email = megaApi->getMyEmail();
     if (email)
     {
-        drawAvatar(QString::fromUtf8(email));
+        ui->bAvatar->setUserEmail(email);
         delete [] email;
     }
 }
@@ -1476,11 +1476,6 @@ void InfoDialog::regenerateLayout(int blockState, InfoDialog* olddialog)
     app->onGlobalSyncStateChanged(NULL);
 }
 
-void InfoDialog::drawAvatar(QString email)
-{
-    ui->bAvatar->drawAvatarFromEmail(email);
-}
-
 void InfoDialog::animateStates(bool opt)
 {
     if (opt) //Enable animation for scanning/waiting states
@@ -1564,7 +1559,7 @@ void InfoDialog::on_tNotifications_clicked()
     ui->sTabs->setCurrentWidget(ui->pNotificationsTab);
 }
 
-void InfoDialog::on_bActualFilter_clicked()
+void InfoDialog::onActualFilterClicked()
 {
     if (!notificationsReady || !filterMenu)
     {

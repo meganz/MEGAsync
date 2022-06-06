@@ -816,7 +816,7 @@ font-weight: bold;
              <string notr="true">font-style: normal;</string>
             </property>
             <property name="text">
-             <string>days</string>
+             <string notr="true">days</string>
             </property>
             <property name="alignment">
              <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>

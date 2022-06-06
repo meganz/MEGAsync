@@ -9,7 +9,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1101</width>
+    <width>1225</width>
     <height>718</height>
    </rect>
   </property>
@@ -2827,7 +2827,7 @@ QGroupBox::title
            </property>
            <layout class="QHBoxLayout" name="horizontalLayout_15">
             <property name="spacing">
-             <number>30</number>
+             <number>24</number>
             </property>
             <property name="leftMargin">
              <number>0</number>

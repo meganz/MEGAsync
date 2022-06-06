@@ -44,6 +44,7 @@
 #include "gui/VerifyLockMessage.h"
 #include "DesktopNotifications.h"
 #include "TransferQuota.h"
+#include "DialogGeometryRetainer.h"
 
 class TransfersModel;
 class StalledIssuesModel;
@@ -514,7 +515,7 @@ protected:
     QMap<QString, QString> pendingLinks;
     std::unique_ptr<MegaSyncLogger> logger;
     QPointer<TransferManager> mTransferManager;
-    QRect mTransferManagerGeometry;
+    bool mTransferManagerFullScreen;
     QMap<int, mega::MegaTransfer*> finishedTransfers;
     QList<mega::MegaTransfer*> finishedTransferOrder;
     QSet<int> finishedBlockedTransfers;
@@ -557,6 +558,8 @@ protected:
     QMutex mMutexOpenUrls;
     QMap<QString, std::chrono::system_clock::time_point> mOpenUrlsClusterTs;
     TransfersModel* mTransfersModel;
+    DialogGeometryRetainer<TransferManager> mTransferManagerGeometryRetainer;
+
     StalledIssuesModel* mStalledIssuesModel;
 
 private:

@@ -306,6 +306,7 @@ set (MOC_INPUT
     ${MEGAsyncDir}/gui/ViewLoadingScene.h
     ${MEGAsyncDir}/gui/RenameDialog.h
     ${MEGAsyncDir}/gui/ButtonIconManager.h
+    ${MEGAsyncDir}/gui/DialogGeometryRetainer.h
     ${MEGAsyncDir}/platform/notificator.h
 
     ${MEGAsyncDir}/mega/bindings/qt/QTMegaGlobalListener.h

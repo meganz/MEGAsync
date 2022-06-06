@@ -196,6 +196,7 @@ private:
     void updateNetworkTab();
     void setShortCutsForToolBarItems();
     void showUnexpectedSyncError(const QString& message);
+    void updateCacheSchedulerDaysLabel();
 
     enum
     {

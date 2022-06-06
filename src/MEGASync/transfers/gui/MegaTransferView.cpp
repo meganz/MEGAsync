@@ -35,7 +35,7 @@ MegaTransferView::MegaTransferView(QWidget* parent) :
     mClearAction(nullptr)
 {
     setMouseTracking(true);
-    setAutoScroll(false);
+    setAutoScroll(true);
 
     verticalScrollBar()->installEventFilter(this);
 }

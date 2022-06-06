@@ -97,6 +97,20 @@ void Utilities::initializeExtensions()
                             extensionIcons[QString::fromAscii("nef")] = extensionIcons[QString::fromAscii("pef")]  =
                             extensionIcons[QString::fromAscii("rw2")] = extensionIcons[QString::fromAscii("srf")]  =
                             extensionIcons[QString::fromAscii("orf")] = extensionIcons[QString::fromAscii("rwl")]  =
+                            extensionIcons[QString::fromAscii("ari")] = extensionIcons[QString::fromAscii("braw")]  =
+                            extensionIcons[QString::fromAscii("crw")] = extensionIcons[QString::fromAscii("cr3")]  =
+                            extensionIcons[QString::fromAscii("cap")] = extensionIcons[QString::fromAscii("data")]  =
+                            extensionIcons[QString::fromAscii("dcs")] = extensionIcons[QString::fromAscii("drf")]  =
+                            extensionIcons[QString::fromAscii("eip")] = extensionIcons[QString::fromAscii("erf")]  =
+                            extensionIcons[QString::fromAscii("gpr")] = extensionIcons[QString::fromAscii("iiq")]  =
+                            extensionIcons[QString::fromAscii("k25")] = extensionIcons[QString::fromAscii("kdc")]  =
+                            extensionIcons[QString::fromAscii("mdc")] = extensionIcons[QString::fromAscii("mos")]  =
+                            extensionIcons[QString::fromAscii("nrw")] = extensionIcons[QString::fromAscii("obm")]  =
+                            extensionIcons[QString::fromAscii("ptx")] = extensionIcons[QString::fromAscii("pxn")]  =
+                            extensionIcons[QString::fromAscii("r3d")] = extensionIcons[QString::fromAscii("raf")]  =
+                            extensionIcons[QString::fromAscii("raw")] = extensionIcons[QString::fromAscii("rwz")]  =
+                            extensionIcons[QString::fromAscii("sr2")] = extensionIcons[QString::fromAscii("srw")]  =
+                            extensionIcons[QString::fromAscii("tif")] = extensionIcons[QString::fromAscii("x3f")]  =
                             QString::fromAscii("raw.png");
 
     extensionIcons[QString::fromAscii("ods")]  = extensionIcons[QString::fromAscii("ots")]  =
@@ -183,6 +197,8 @@ void Utilities::initializeFileTypes()
     fileTypes[getExtensionPixmapName(QLatin1Literal("a.numbers"), QString())]
             = FileType::TYPE_DOCUMENT;
     fileTypes[getExtensionPixmapName(QLatin1Literal("a.key"), QString())]
+            = FileType::TYPE_DOCUMENT;
+    fileTypes[getExtensionPixmapName(QLatin1Literal("a.xml"), QString())]
             = FileType::TYPE_DOCUMENT;
     fileTypes[getExtensionPixmapName(QLatin1Literal("a.xls"), QString())]
             = FileType::TYPE_DOCUMENT;

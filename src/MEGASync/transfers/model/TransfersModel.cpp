@@ -380,8 +380,8 @@ TransfersModel::TransfersModel(QObject *parent) :
 
     mTransferEventThread = new QThread();
     mTransferEventWorker = new TransferThread();
-    mDelegateListener = new QTMegaTransferListener(mMegaApi, mTransferEventWorker);
     mTransferEventWorker->moveToThread(mTransferEventThread);
+    mDelegateListener = new QTMegaTransferListener(mMegaApi, mTransferEventWorker);
     mDelegateListener->moveToThread(mTransferEventThread);
     mMegaApi->addTransferListener(mDelegateListener);
 
@@ -1567,7 +1567,18 @@ Qt::ItemFlags TransfersModel::flags(const QModelIndex& index) const
 {
     if (index.isValid())
     {
-        return QAbstractItemModel::flags(index) | Qt::ItemIsDragEnabled;
+        auto indexData = getTransfer(index.row());
+        if(indexData)
+        {
+            if(indexData->isFinished())
+            {
+                return QAbstractItemModel::flags(index);
+            }
+            else
+            {
+                return QAbstractItemModel::flags(index) | Qt::ItemIsDragEnabled;
+            }
+        }
     }
     return QAbstractItemModel::flags(index) | Qt::ItemIsDropEnabled;
 }

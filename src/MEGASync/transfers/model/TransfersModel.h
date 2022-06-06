@@ -163,8 +163,6 @@ public:
 
     bool areAllPaused() const;
 
-
-
 signals:
     void pauseStateChanged(bool pauseState);
     void transferPauseStateChanged();
@@ -209,6 +207,7 @@ private:
     std::shared_ptr<Preferences> mPreferences;
     QThread* mTransferEventThread;
     TransferThread* mTransferEventWorker;
+    mega::QTMegaTransferListener *mDelegateListener;
     QTimer mTimer;
     TransfersCount mTransfersCount;
 
@@ -221,7 +220,6 @@ private:
 
     QHash<TransferTag, int> mTagByOrder;
     mutable QMutex mModelMutex;
-    mega::QTMegaTransferListener *mDelegateListener;
 
     bool mAreAllPaused;
     bool mModelReset;

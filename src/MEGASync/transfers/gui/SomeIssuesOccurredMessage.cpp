@@ -23,7 +23,5 @@ void SomeIssuesOccurredMessage::on_viewIssuesButton_clicked()
         mStalledIssuesDialog = new StalledIssuesDialog();
     }
 
-    mStalledIssuesDialog->showNormal();
-    mStalledIssuesDialog->activateWindow();
-    mStalledIssuesDialog->raise();
+    mStalledIssuesGeometryRetainer.showDialog(mStalledIssuesDialog);
 }

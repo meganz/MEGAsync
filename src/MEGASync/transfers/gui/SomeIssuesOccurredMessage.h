@@ -1,6 +1,9 @@
 #ifndef SOMEISSUESOCCURREDMESSAGE_H
 #define SOMEISSUESOCCURREDMESSAGE_H
 
+#include <DialogGeometryRetainer.h>
+#include <StalledIssuesDialog.h>
+
 #include <QWidget>
 #include <QPointer>
 
@@ -24,6 +27,7 @@ private slots:
 private:
     Ui::SomeIssuesOccurredMessage *ui;
     QPointer<StalledIssuesDialog> mStalledIssuesDialog;
+    DialogGeometryRetainer<StalledIssuesDialog> mStalledIssuesGeometryRetainer;
     bool mFoundStalledIssues;
 };
 
