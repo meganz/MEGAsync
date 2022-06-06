@@ -58,7 +58,8 @@ void TransferScanCancelUi::onCancelDismissed()
 
 const char* TransferScanCancelUi::getControlStyles()
 {
-    const char* styles = "*[role=\"title\"] {font-family: \"Times New Roman\";font-size: 18px; font-weight:500;}"
+    const char* styles = "*{ font-family: Lato; }"
+                         "*[role=\"title\"] {font-size: 18px; font-weight:500;}"
                             "*[role=\"details\"] {font-size: 14px;}"
                             "QPushButton { "
                             "   font-size: 16px; font-weight:400;"
