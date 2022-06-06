@@ -10,10 +10,8 @@ LocalAndRemoteNameConflicts::LocalAndRemoteNameConflicts(QWidget *parent) :
     ui->setupUi(this);
 
     auto margins = ui->verticalLayout->contentsMargins();
-    margins.setLeft(StalledIssueHeader::ARROW_INDENT);
+    margins.setLeft(StalledIssueHeader::GROUPBOX_INDENT);
     ui->verticalLayout->setContentsMargins(margins);
-
-    ui->selectLabel->setIndent(StalledIssueHeader::ICON_INDENT);
 
     connect(ui->cloudConflictNames, &NameConflict::refreshUi, this, &LocalAndRemoteNameConflicts::refreshUi);
     connect(ui->localConflictNames, &NameConflict::refreshUi, this, &LocalAndRemoteNameConflicts::refreshUi);

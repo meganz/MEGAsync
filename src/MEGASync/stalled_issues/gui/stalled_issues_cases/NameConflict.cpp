@@ -2,7 +2,7 @@
 #include "ui_NameConflict.h"
 
 #include "StalledIssueHeader.h"
-#include "StalledIssueChooseTitle.h"
+#include "StalledIssueActionTitle.h"
 
 #include <MegaApplication.h>
 #include <StalledIssuesModel.h>
@@ -19,8 +19,7 @@ NameConflict::NameConflict(QWidget *parent) :
     ui(new Ui::NameConflict)
 {
     ui->setupUi(this);
-
-    ui->path->setIndent(StalledIssueHeader::ICON_INDENT);
+    ui->path->setIndent(StalledIssueHeader::GROUPBOX_CONTENTS_INDENT);
 }
 
 NameConflict::~NameConflict()
@@ -54,10 +53,11 @@ void NameConflict::updateUi(NameConflictedStalledIssue::NameConflictData data)
         else
         {
             title = new StalledIssueActionTitle(this);
-            title->setFixedHeight(32);
-            title->setIndent(StalledIssueHeader::ICON_INDENT);
-            title->addActionButton(tr("Rename"), RENAME_ID);
-            title->addActionButton(tr("Remove"), REMOVE_ID);
+            title->setRoundedCorners(StalledIssueActionTitle::RoundedCorners::ALL_CORNERS);
+            QIcon renameIcon(QString::fromUtf8("://images/StalledIssues/rename_node_default.png"));
+            QIcon removeIcon(QString::fromUtf8("://images/StalledIssues/remove_default.png"));
+            title->addActionButton(renameIcon, tr("Rename"), RENAME_ID);
+            title->addActionButton(removeIcon, QString(), REMOVE_ID);
 
             connect(title, &StalledIssueActionTitle::actionClicked, this, &NameConflict::onActionClicked);
 
@@ -65,6 +65,7 @@ void NameConflict::updateUi(NameConflictedStalledIssue::NameConflictData data)
         }
 
         title->setTitle(conflictedNames.at(index).conflictedName);
+        title->showIcon();
 
         if(title &&
                 (!mData.data

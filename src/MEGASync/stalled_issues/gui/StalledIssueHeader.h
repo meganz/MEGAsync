@@ -20,6 +20,8 @@ public:
     static const int ARROW_INDENT;
     static const int ICON_INDENT;
     static const int HEIGHT;
+    static const int GROUPBOX_INDENT;
+    static const int GROUPBOX_CONTENTS_INDENT;
 
     explicit StalledIssueHeader(QWidget *parent = nullptr);
     ~StalledIssueHeader();

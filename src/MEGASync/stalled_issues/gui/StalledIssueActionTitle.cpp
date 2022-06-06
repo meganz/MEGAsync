@@ -1,18 +1,24 @@
-#include "StalledIssueChooseTitle.h"
+#include "StalledIssueActionTitle.h"
 #include "ui_StalledIssueChooseTitle.h"
+
+#include <Utilities.h>
 
 #include <QPushButton>
 #include <QPainter>
 #include <QPainterPath>
+#include <QFileInfo>
 
-const char* BUTTON_ID = "BUTTON_ID";
+const char* BUTTON_ID = "button_id";
+const char* ONLY_ICON = "onlyIcon";
 
 StalledIssueActionTitle::StalledIssueActionTitle(QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::StalledIssueChooseTitle)
+    ui(new Ui::StalledIssueChooseTitle),
+    mRoundedCorners(RoundedCorners::TOP_CORNERS)
 {
     ui->setupUi(this);
     ui->titleLabel->installEventFilter(this);
+    ui->icon->hide();
 }
 
 StalledIssueActionTitle::~StalledIssueActionTitle()
@@ -31,10 +37,12 @@ QString StalledIssueActionTitle::title() const
     return mTitle;
 }
 
-void StalledIssueActionTitle::addActionButton(const QString &text, int id)
+void StalledIssueActionTitle::addActionButton(const QIcon& icon,const QString &text, int id)
 {
-    auto button = new QPushButton(text, this);
+    auto button = new QPushButton(icon, text, this);
+
     button->setProperty(BUTTON_ID, id);
+    button->setProperty(ONLY_ICON, false);
     button->setCursor(Qt::PointingHandCursor);
     connect(button, &QPushButton::clicked, this, [this]()
     {
@@ -42,6 +50,17 @@ void StalledIssueActionTitle::addActionButton(const QString &text, int id)
     });
 
     ui->actionLayout->addWidget(button);
+
+    if(!icon.isNull())
+    {
+        button->setIconSize(QSize(24,24));
+
+        if(text.isEmpty())
+        {
+            button->setProperty(ONLY_ICON, true);
+            ui->actionContainer->setStyleSheet(ui->actionContainer->styleSheet());
+        }
+    }
 }
 
 void StalledIssueActionTitle::hideActionButton(int id)
@@ -54,6 +73,25 @@ void StalledIssueActionTitle::hideActionButton(int id)
             button->hide();
         }
     }
+}
+
+void StalledIssueActionTitle::showIcon()
+{
+    QFileInfo fileInfo(title());
+    QIcon fileTypeIcon;
+
+    if(!fileInfo.completeSuffix().isEmpty())
+    {
+        fileTypeIcon = Utilities::getCachedPixmap(Utilities::getExtensionPixmapName(
+                                                      title(), QLatin1Literal(":/images/drag_")));
+    }
+    else
+    {
+        fileTypeIcon = Utilities::getCachedPixmap(QLatin1Literal(":/images/StalledIssues/folder_orange_default@2x.png"));
+    }
+
+    ui->icon->setPixmap(fileTypeIcon.pixmap(ui->icon->size()));
+    ui->icon->show();
 }
 
 void StalledIssueActionTitle::addMessage(const QString &message)
@@ -69,7 +107,13 @@ void StalledIssueActionTitle::setIndent(int indent)
     setContentsMargins(chooseMargins);
 }
 
-void StalledIssueActionTitle::paintEvent(QPaintEvent *event)
+void StalledIssueActionTitle::setRoundedCorners(RoundedCorners type)
+{
+    mRoundedCorners = type;
+    update();
+}
+
+void StalledIssueActionTitle::paintEvent(QPaintEvent*)
 {
     QPainter painter(this);
     QColor backgroundColor = palette().color(isEnabled() ? QPalette::ColorGroup::Active : QPalette::ColorGroup::Disabled, QPalette::ColorRole::Background);
@@ -77,8 +121,17 @@ void StalledIssueActionTitle::paintEvent(QPaintEvent *event)
     painter.setPen(Qt::NoPen);
     QPainterPath path;
     path.setFillRule(Qt::WindingFill);
-    path.addRoundedRect( QRect(0,0, width(), 6), 6, 6);
-    path.addRect(QRect( 0, 3, width(), height() -3)); // Top right corner not rounded
+
+    if(mRoundedCorners == RoundedCorners::ALL_CORNERS)
+    {
+        path.addRoundedRect( QRect(0,0, width(), height()), 6, 6);
+    }
+    else if(mRoundedCorners == RoundedCorners::TOP_CORNERS)
+    {
+        path.addRoundedRect( QRect(0,0, width(), 6), 6, 6);
+        path.addRect(QRect( 0, 3, width(), height() -3)); // Top right corner not rounded
+    }
+
     painter.drawPath(path.simplified());
 }
 

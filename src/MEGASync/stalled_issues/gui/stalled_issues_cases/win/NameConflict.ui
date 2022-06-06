@@ -46,27 +46,24 @@
        <number>0</number>
       </property>
       <property name="leftMargin">
-       <number>0</number>
+       <number>5</number>
       </property>
       <property name="topMargin">
-       <number>0</number>
+       <number>5</number>
       </property>
       <property name="rightMargin">
-       <number>0</number>
+       <number>5</number>
       </property>
       <property name="bottomMargin">
-       <number>3</number>
+       <number>0</number>
       </property>
-      <item>
-       <widget class="StalledIssueFilePath" name="path" native="true"/>
-      </item>
       <item>
        <widget class="QWidget" name="nameConflicts" native="true">
         <property name="styleSheet">
          <string notr="true">StalledIssueActionTitle
 {
-    min-height: 32 px;
-    max-height: 32px;
+    min-height: 40 px;
+    max-height: 40 px;
     background-color: #F5F5F5;
 }</string>
         </property>
@@ -78,7 +75,7 @@
           <number>0</number>
          </property>
          <property name="topMargin">
-          <number>10</number>
+          <number>0</number>
          </property>
          <property name="rightMargin">
           <number>0</number>
@@ -88,6 +85,9 @@
          </property>
         </layout>
        </widget>
+      </item>
+      <item>
+       <widget class="StalledIssueFilePath" name="path" native="true"/>
       </item>
      </layout>
     </widget>

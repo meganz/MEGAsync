@@ -4,7 +4,7 @@ INCLUDEPATH += $$PWD/gui
 INCLUDEPATH += $$PWD/model
 
 SOURCES +=  \
-    $$PWD/gui/StalledIssueChooseTitle.cpp \
+    $$PWD/gui/StalledIssueActionTitle.cpp \
     $$PWD/gui/StalledIssueLoadingItem.cpp \
     $$PWD/gui/StalledIssueTab.cpp \
     $$PWD/gui/StalledIssueChooseWidget.cpp \
@@ -26,7 +26,7 @@ SOURCES +=  \
     $$PWD/model/StalledIssuesProxyModel.cpp
 
 HEADERS  +=   \
-    $$PWD/gui/StalledIssueChooseTitle.h \
+    $$PWD/gui/StalledIssueActionTitle.h \
     $$PWD/gui/StalledIssueLoadingItem.h \
     $$PWD/gui/StalledIssueTab.h \
     $$PWD/gui/StalledIssueChooseWidget.h \
@@ -56,7 +56,7 @@ win32 {
                 $$PWD/gui/win/StalledIssueFilePath.ui \
                 $$PWD/gui/win/StalledIssueTab.ui \
                 $$PWD/gui/win/StalledIssueLoadingItem.ui \
-                $$PWD/gui/win/StalledIssueChooseTitle.ui \
+                $$PWD/gui/win/StalledIssueActionTitle.ui \
                 $$PWD/gui/stalled_issues_cases/win/LocalAndRemoteDifferentWidget.ui \
                 $$PWD/gui/stalled_issues_cases/win/OtherSideMissingOrBlocked.ui \
                 $$PWD/gui/stalled_issues_cases/win/NameConflict.ui \
@@ -72,7 +72,7 @@ macx {
                 $$PWD/gui/macx/StalledIssueFilePath.ui \
                 $$PWD/gui/macx/StalledIssueTab.ui \
                 $$PWD/gui/macx/StalledIssueLoadingItem.ui \
-                $$PWD/gui/macx/StalledIssueChooseTitle.ui \
+                $$PWD/gui/macx/StalledIssueActionTitle.ui \
                 $$PWD/gui/stalled_issues_cases/macx/LocalAndRemoteDifferentWidget.ui \
                 $$PWD/gui/stalled_issues_cases/macx/OtherSideMissingOrBlocked.ui \
                 $$PWD/gui/stalled_issues_cases/macx/NameConflict.ui \
@@ -88,7 +88,7 @@ FORMS    += $$PWD/gui/linux/StalledIssueHeader.ui \
             $$PWD/gui/linux/StalledIssueFilePath.ui \
             $$PWD/gui/linux/StalledIssueTab.ui \
             $$PWD/gui/linux/StalledIssueLoadingItem.ui \
-            $$PWD/gui/linux/StalledIssueChooseTitle.ui \
+            $$PWD/gui/linux/StalledIssueActionTitle.ui \
             $$PWD/gui/stalled_issues_cases/linux/LocalAndRemoteDifferentWidget.ui \
             $$PWD/gui/stalled_issues_cases/linux/OtherSideMissingOrBlocked.ui \
             $$PWD/gui/stalled_issues_cases/linux/NameConflict.ui \

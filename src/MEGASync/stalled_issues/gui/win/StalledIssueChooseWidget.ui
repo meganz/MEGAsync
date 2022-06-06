@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>69</width>
-    <height>80</height>
+    <width>72</width>
+    <height>90</height>
    </rect>
   </property>
   <property name="styleSheet">
@@ -31,7 +31,7 @@
     <number>0</number>
    </property>
    <property name="leftMargin">
-    <number>0</number>
+    <number>5</number>
    </property>
    <property name="topMargin">
     <number>0</number>
@@ -206,9 +206,6 @@
        </widget>
       </item>
       <item>
-       <widget class="StalledIssueFilePath" name="path" native="true"/>
-      </item>
-      <item>
        <spacer name="verticalSpacer">
         <property name="orientation">
          <enum>Qt::Vertical</enum>
@@ -220,6 +217,27 @@
          </size>
         </property>
        </spacer>
+      </item>
+      <item>
+       <widget class="QWidget" name="pathContainer" native="true">
+        <layout class="QHBoxLayout" name="horizontalLayout">
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>10</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
+         <item>
+          <widget class="StalledIssueFilePath" name="path" native="true"/>
+         </item>
+        </layout>
+       </widget>
       </item>
      </layout>
     </widget>
@@ -236,7 +254,7 @@
   <customwidget>
    <class>StalledIssueActionTitle</class>
    <extends>QWidget</extends>
-   <header>StalledIssueChooseTitle.h</header>
+   <header>StalledIssueActionTitle.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

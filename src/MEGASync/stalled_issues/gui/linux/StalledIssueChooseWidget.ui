@@ -236,7 +236,7 @@
   <customwidget>
    <class>StalledIssueActionTitle</class>
    <extends>QWidget</extends>
-   <header>StalledIssueChooseTitle.h</header>
+   <header>StalledIssueActionTitle.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

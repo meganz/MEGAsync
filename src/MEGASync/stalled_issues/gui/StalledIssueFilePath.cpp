@@ -140,7 +140,7 @@ QString StalledIssueFilePath::getMoveFilePath()
 
 void StalledIssueFilePath::updateFileIcons()
 {
-    QFileInfo fileInfo(mData->getNativeFilePath());
+    QFileInfo fileInfo(getFilePath());
     auto hasProblem(mData->getPath().mPathProblem != mega::MegaSyncStall::SyncPathProblem::NoProblem);
     QIcon fileTypeIcon(getPathIcon(fileInfo, hasProblem));
 
@@ -149,7 +149,7 @@ void StalledIssueFilePath::updateFileIcons()
 
 void StalledIssueFilePath::updateMoveFileIcons()
 {
-    QFileInfo fileInfo(mData->getNativeMoveFilePath());
+    QFileInfo fileInfo(getMoveFilePath());
     auto hasProblem(mData->getMovePath().mPathProblem != mega::MegaSyncStall::SyncPathProblem::NoProblem);
     QIcon fileTypeIcon(getPathIcon(fileInfo, hasProblem));
 

@@ -15,12 +15,16 @@ StalledIssueChooseWidget::StalledIssueChooseWidget(QWidget *parent) :
     mPreviousSolveState(false)
 {
     ui->setupUi(this);
-    setIndent();
+
+    ui->path->setIndent(StalledIssueHeader::GROUPBOX_CONTENTS_INDENT);
+    auto layoutMargins = ui->fileNameContainer->contentsMargins();
+    layoutMargins.setLeft(StalledIssueHeader::StalledIssueHeader::GROUPBOX_CONTENTS_INDENT);
+    ui->fileNameContainer->setContentsMargins(layoutMargins);
 
     ui->chooseTitle->installEventFilter(this);
     ui->fileNameText->installEventFilter(this);
 
-    ui->chooseTitle->addActionButton(tr("Choose"), BUTTON_ID);
+    ui->chooseTitle->addActionButton(QIcon(), tr("Choose"), BUTTON_ID);
     connect(ui->chooseTitle, &StalledIssueActionTitle::actionClicked, this, &StalledIssueChooseWidget::onActionClicked);
 }
 
@@ -86,13 +90,7 @@ const StalledIssueDataPtr &StalledIssueChooseWidget::data()
 
 void StalledIssueChooseWidget::setIndent()
 {
-    ui->chooseTitle->setIndent(StalledIssueHeader::ICON_INDENT);
 
-    auto fileNameMargins= ui->fileNameContainer->contentsMargins();
-    fileNameMargins.setLeft(StalledIssueHeader::ICON_INDENT);
-    ui->fileNameContainer->setContentsMargins(fileNameMargins);
-
-    ui->path->setIndent(StalledIssueHeader::ICON_INDENT);
 }
 
 bool StalledIssueChooseWidget::eventFilter(QObject *watched, QEvent *event)
