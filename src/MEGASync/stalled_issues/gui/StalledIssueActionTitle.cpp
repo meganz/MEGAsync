@@ -1,5 +1,5 @@
 #include "StalledIssueActionTitle.h"
-#include "ui_StalledIssueChooseTitle.h"
+#include "ui_StalledIssueActionTitle.h"
 
 #include <Utilities.h>
 
