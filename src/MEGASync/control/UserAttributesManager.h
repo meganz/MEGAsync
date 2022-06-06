@@ -54,7 +54,7 @@ public:
         }
 
         auto request = std::make_shared<AttributeClass>(userEmail);
-        mRequests.insertMulti(userEmail, std::static_pointer_cast<AttributeRequest>(request));
+        mRequests.insert(userEmail, std::static_pointer_cast<AttributeRequest>(request));
         request->requestAttribute();
 
         return request;
@@ -67,7 +67,7 @@ private:
     explicit UserAttributesManager();
 
     std::unique_ptr<mega::QTMegaListener> mDelegateListener;
-    QMap<QString, std::shared_ptr<AttributeRequest>> mRequests;
+    QMultiMap<QString, std::shared_ptr<AttributeRequest>> mRequests;
 };
 }
 

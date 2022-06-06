@@ -63,7 +63,10 @@ void AlertItem::setAlertData(MegaUserAlert *alert)
     //If it comes without email, it is because is an own alert, then take your email.
     else
     {
-        ui->wAvatarContact->setUserEmail(Preferences::instance()->email().toUtf8());
+        if(megaApi)
+        {
+            ui->wAvatarContact->setUserEmail(megaApi->getMyEmail());
+        }
     }
 
     connect(ui->wAvatarContact, &AvatarWidget::avatarUpdated, this, [this](){
