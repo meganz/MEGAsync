@@ -6,7 +6,6 @@
 #include "UserAttributesRequests.h"
 #include <QFutureWatcher>
 #include <QFuture>
-#include <Preferences.h>
 
 #if QT_VERSION >= 0x050000
 #include <QtConcurrent/QtConcurrent>
