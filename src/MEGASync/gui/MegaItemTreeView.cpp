@@ -58,11 +58,6 @@ void MegaItemTreeView::drawBranches(QPainter *painter, const QRect &rect, const 
 
 void MegaItemTreeView::mousePressEvent(QMouseEvent *event)
 {
-    if(event->type() == QEvent::MouseButtonDblClick && event->button() == Qt::RightButton)
-    {
-        return;
-    }
-
     QPoint pos = event->pos();
     QModelIndex index = getIndexFromSourceModel(indexAt(pos));
     MegaItem *item = static_cast<MegaItem*>(index.internalPointer());
@@ -73,6 +68,14 @@ void MegaItemTreeView::mousePressEvent(QMouseEvent *event)
     else
     {
         QTreeView::mousePressEvent(event);
+    }
+}
+
+void MegaItemTreeView::mouseDoubleClickEvent(QMouseEvent *event)
+{
+    if(event->button() != Qt::RightButton)
+    {
+        QTreeView::mouseDoubleClickEvent(event);
     }
 }
 
