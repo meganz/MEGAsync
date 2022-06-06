@@ -10,13 +10,14 @@ class AutoResizeStackedWidget : public QStackedWidget
 
 public:
     AutoResizeStackedWidget(QWidget* parent): QStackedWidget(parent){
-        connect(this, &QStackedWidget::currentChanged, this, &AutoResizeStackedWidget::onUpdateHeight);
     }
 
     bool event(QEvent* e) override
     {
         if(e->type() == QEvent::Polish)
         {
+            mMinimumHeight = minimumHeight();
+            connect(this, &QStackedWidget::currentChanged, this, &AutoResizeStackedWidget::onUpdateHeight, Qt::UniqueConnection);
             onUpdateHeight();
         }
 
@@ -41,13 +42,17 @@ private slots:
             widget(index)->removeEventFilter(this);
         }
 
-        setFixedHeight(currentWidget() ? currentWidget()->sizeHint().height() : minimumHeight());
+        auto currentHeight = currentWidget() ? currentWidget()->sizeHint().height() : mMinimumHeight;
+        setFixedHeight(currentHeight >= mMinimumHeight ? currentHeight : mMinimumHeight);
 
         if(currentWidget())
         {
             currentWidget()->installEventFilter(this);
         }
     }
+
+private:
+    int mMinimumHeight;
 };
 
 #endif // AUTORESIZESTACKEDWIDGET_H
