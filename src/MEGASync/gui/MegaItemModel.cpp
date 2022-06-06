@@ -421,7 +421,6 @@ void MegaItemModel::onRequestFinish(mega::MegaApi *api, mega::MegaRequest *reque
     }
     if(request->getType() == mega::MegaRequest::TYPE_GET_ATTR_USER)
     {
-
         switch(request->getParamType())
         {
         case mega::MegaApi::USER_ATTR_CAMERA_UPLOADS_FOLDER:

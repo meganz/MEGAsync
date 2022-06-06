@@ -94,7 +94,7 @@ private:
     void iterateForRestore(const QList<mega::MegaHandle> &list, const QModelIndex& parent = QModelIndex());
     bool isAllowedToEnterInIndex(const QModelIndex & idx);
     bool isCloudDrive();
-    void setRootIndex(const QModelIndex& idx);
+    void setRootIndex(const QModelIndex& proxy_idx);
     mega::MegaHandle getHandleByIndex(const QModelIndex& idx);
     QModelIndex getIndexFromHandle(const mega::MegaHandle& handle);
     QModelIndex getSelectedIndex();

@@ -722,10 +722,14 @@ bool NodeSelector::isCloudDrive()
     return mProxyModel ? mProxyModel->isShowOnlyCloudDrive() : true;
 }
 
-void NodeSelector::setRootIndex(const QModelIndex &idx)
+void NodeSelector::setRootIndex(const QModelIndex& proxy_idx)
 {
-    ui->tMegaFolders->setRootIndex(idx);
-    if(!idx.isValid())
+    //In case the idx is coming from a potentially hidden column, we always take the STATUS column
+    //If you set a hidden column, the view does not accept it even if the column is visible at this point
+    auto status_column_idx = proxy_idx.sibling(proxy_idx.row(), MegaItemModel::COLUMN::STATUS);
+
+    ui->tMegaFolders->setRootIndex(status_column_idx);
+    if(!status_column_idx.isValid())
     {
         if(isCloudDrive())
             ui->lFolderName->setText(tr(CLD_DRIVE));
@@ -746,7 +750,7 @@ void NodeSelector::setRootIndex(const QModelIndex &idx)
         return;
     }
 
-    auto source_idx = mProxyModel->getIndexFromSource(idx);
+    auto source_idx = mProxyModel->getIndexFromSource(status_column_idx);
     if(!source_idx.isValid())
     {
         ui->lOwnerIcon->setPixmap(QPixmap());
@@ -755,10 +759,6 @@ void NodeSelector::setRootIndex(const QModelIndex &idx)
     }
 
     //Taking the sync icon
-    if(source_idx.column() != MegaItemModel::COLUMN::STATUS)
-    {
-        source_idx = source_idx.sibling(source_idx.row(), MegaItemModel::COLUMN::STATUS);
-    }
     QIcon syncIcon = qvariant_cast<QIcon>(source_idx.data(Qt::DecorationRole));
 
     MegaItem *item = static_cast<MegaItem*>(source_idx.internalPointer());
