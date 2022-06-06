@@ -70,6 +70,7 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/AutoResizeStackedWidget.h \
     $$PWD/BalloonToolTip.h \
     $$PWD/ButtonIconManager.h \
+    $$PWD/DialogGeometryRetainer.h \
     $$PWD/MegaItemDelegates.h \
     $$PWD/EventHelper.h \
     $$PWD/InfoDialog.h \

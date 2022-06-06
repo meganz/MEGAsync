@@ -219,7 +219,6 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     updatingSSLcert = false;
     lastSSLcertUpdate = 0;
     mTransfersModel = nullptr;
-    mTransferManagerFullScreen = false;
 
     notificationsModel = NULL;
     notificationsProxyModel = NULL;
@@ -4175,16 +4174,6 @@ void MegaApplication::onTransfersModelUpdate()
 
 void MegaApplication::onTransferManagerClosed()
 {
-    if(mTransferManager->isFullScreen())
-    {
-        mTransferManagerGeometry = QRect();
-        mTransferManagerFullScreen = true;
-    }
-    else
-    {
-        mTransferManagerGeometry = mTransferManager->geometry();
-        mTransferManagerFullScreen = false;
-    }
 }
 
 void MegaApplication::fetchNodes(QString email)
@@ -4889,22 +4878,7 @@ void MegaApplication::transferManagerActionClicked(int tab)
     createTransferManagerDialog();
     mTransferManager->setActiveTab(tab);
 
-    if(mTransferManagerFullScreen)
-    {
-        mTransferManager->showFullScreen();
-    }
-    else
-    {
-        if(!mTransferManagerGeometry.isEmpty())
-        {
-            mTransferManager->setGeometry(mTransferManagerGeometry);
-        }
-
-        mTransferManager->showNormal();
-    }
-
-    mTransferManager->activateWindow();
-    mTransferManager->raise();
+    mTransferManagerGeometryRetainer.showDialog(mTransferManager);
 }
 
 void MegaApplication::loginActionClicked()

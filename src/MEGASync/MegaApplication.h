@@ -44,6 +44,7 @@
 #include "gui/VerifyLockMessage.h"
 #include "DesktopNotifications.h"
 #include "TransferQuota.h"
+#include "DialogGeometryRetainer.h"
 
 class TransfersModel;
 
@@ -516,7 +517,6 @@ protected:
     QMap<QString, QString> pendingLinks;
     std::unique_ptr<MegaSyncLogger> logger;
     QPointer<TransferManager> mTransferManager;
-    QRect mTransferManagerGeometry;
     bool mTransferManagerFullScreen;
     QMap<int, mega::MegaTransfer*> finishedTransfers;
     QList<mega::MegaTransfer*> finishedTransferOrder;
@@ -559,6 +559,7 @@ protected:
     QMutex mMutexOpenUrls;
     QMap<QString, std::chrono::system_clock::time_point> mOpenUrlsClusterTs;
     TransfersModel* mTransfersModel;
+    DialogGeometryRetainer<TransferManager> mTransferManagerGeometryRetainer;
 
 private:
 #ifdef _WIN32
