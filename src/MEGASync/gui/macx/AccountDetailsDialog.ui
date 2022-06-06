@@ -59,11 +59,15 @@ QLabel
     min-width:440px;
 }
 
-#lCloudDrive, #lInbox, #lRubbish, #lStorage, #lTransfer
+#lCloudDrive, #lInbox, #lRubbish, #lStorage, #lTransfer, #lAvailable
 {
   color: #333333;
   font-size: 13px;
   font-weight: bold;
+}
+
+#lStorage, #lTransfer
+{
   qproperty-alignment: 'AlignLeft | AlignVCenter';
 }
 
@@ -74,7 +78,7 @@ QLabel
     min-height: 32px;
 }
 
-#wCloudDrive, #wRubbish, #wInbox, QProgressBar, #lUsedCloudDrive, #lUsedInbox,  #lUsedRubbish, #lUsedByVersions
+#wCloudDrive, #wRubbish, #wInbox, QProgressBar, #lUsedCloudDrive, #lUsedInbox,  #lUsedRubbish, #lUsedByVersions, #lAvailableStorage
 {
     margin-right: 24px;
 }
@@ -89,7 +93,7 @@ QLabel
     padding-bottom: 4px;
 }
 
-#lCloudDrive, #lInbox, #lRubbish
+#lCloudDrive, #lInbox, #lRubbish, #lAvailable
 {
     margin-left: 10px;
     qproperty-alignment: 'AlignLeft | AlignBottom';
@@ -100,26 +104,25 @@ QProgressBar
     margin-left: 12px;
 }
 
-#lUsedCloudDrive, #lUsedInbox,  #lUsedRubbish, #lUsedByVersions
+#lUsedCloudDrive, #lUsedInbox,  #lUsedRubbish, #lUsedByVersions, #lAvailableStorage
 {
   color: #333333;
   font-size: 13px;
   padding-right: 4px;
 }
 
-#lUsedCloudDrive, #lUsedInbox,  #lUsedRubbish
+#lUsedCloudDrive, #lUsedInbox, #lUsedRubbish
 {
     qproperty-alignment: 'AlignRight | AlignBottom';
 }
 
-#lUsedByVersions
+#lUsedByVersions, #lAvailableStorage
 {
     qproperty-alignment: 'AlignRight | AlignVCenter';
 }
 
 #wDetailedUsage
 {
-    max-height: 160px;
     min-height: 120px;
 }
 
@@ -183,17 +186,28 @@ QProgressBar
 
 #bCloudDrive
 {
-    qproperty-icon : url(:/images/Cloud_Drive_24_ico.png);
+    qproperty-icon : url(:/images/account_details/Cloud_Drive_24_ico.png);
 }
 
 #bInbox
 {
-    qproperty-icon : url(:/images/Inbox_24_ico.png);
+    qproperty-icon : url(:/images/account_details/Inbox_24_ico.png);
 }
 
 #bRubbish
 {
-    qproperty-icon : url(:/images/Bin_24_ico.png);
+    qproperty-icon : url(:/images/account_details/Bin_24_ico.png);
+}
+
+#bAvailable
+{
+    qproperty-icon : url(:/images/account_details/available_storage.png);
+}
+
+#lVersionIcon
+{
+    qproperty-icon : url(:/images/account_details/versions.png);
+	padding-left:4px;
 }
 
 #lLoading
@@ -260,7 +274,6 @@ QProgressBar::chunk
 {
     color: #333333;
     font-size: 13px;
-    margin-left: 24px;
     padding-left: 8px;
 }
 
@@ -731,6 +744,12 @@ QProgressBar::chunk
    </item>
    <item>
     <widget class="QWidget" name="wDetailedUsage" native="true">
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>16777215</height>
+      </size>
+     </property>
      <layout class="QVBoxLayout" name="wDetailedUsageLayout">
       <property name="spacing">
        <number>8</number>
@@ -921,6 +940,90 @@ QProgressBar::chunk
         </layout>
        </widget>
       </item>
+      <item>
+       <widget class="QWidget" name="wAvailable" native="true">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>32</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>32</height>
+         </size>
+        </property>
+        <layout class="QHBoxLayout" name="horizontalLayout_12">
+         <property name="spacing">
+          <number>0</number>
+         </property>
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
+         <item>
+          <widget class="QPushButton" name="bAvailable">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>56</width>
+             <height>32</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>56</width>
+             <height>32</height>
+            </size>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>24</width>
+             <height>24</height>
+            </size>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_13">
+           <property name="spacing">
+            <number>0</number>
+           </property>
+           <item alignment="Qt::AlignVCenter">
+            <widget class="QLabel" name="lAvailable">
+             <property name="text">
+              <string>Available Storage</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="lAvailableStorage"/>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </widget>
+      </item>
      </layout>
     </widget>
    </item>
@@ -931,7 +1034,7 @@ QProgressBar::chunk
        <number>0</number>
       </property>
       <property name="leftMargin">
-       <number>0</number>
+       <number>24</number>
       </property>
       <property name="topMargin">
        <number>0</number>
@@ -942,6 +1045,13 @@ QProgressBar::chunk
       <property name="bottomMargin">
        <number>0</number>
       </property>
+      <item>
+       <widget class="QLabel" name="lVersionIcon">
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
+      </item>
       <item>
        <widget class="QLabel" name="lVersions">
         <property name="sizePolicy">
