@@ -432,14 +432,8 @@ void MegaItemModel::onRequestFinish(mega::MegaApi *api, mega::MegaRequest *reque
             {
                 if(MegaItem* item = static_cast<MegaItem*>(idx.internalPointer()))
                 {
-                    if(request->getParamType() == mega::MegaApi::USER_ATTR_CAMERA_UPLOADS_FOLDER)
-                    {
-                        item->setCameraFolder();
-                    }
-                    else
-                    {
-                        item->setCameraFolder();
-                    }
+                    request->getParamType() == mega::MegaApi::USER_ATTR_CAMERA_UPLOADS_FOLDER
+                            ? item->setCameraFolder() : item->setChatFilesFolder();
                 }
             }
 
