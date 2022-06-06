@@ -18,7 +18,7 @@ public:
         if(e->type() == QEvent::Polish)
         {
             mMinimumHeight = minimumHeight();
-            connect(this, &QStackedWidget::currentChanged, this, &AutoResizeStackedWidget::onUpdateHeight);
+            connect(this, &QStackedWidget::currentChanged, this, &AutoResizeStackedWidget::onUpdateHeight, Qt::UniqueConnection);
             onUpdateHeight();
         }
 

@@ -226,7 +226,8 @@ void AvatarAttributeRequest::fillLetterInfo()
 void AvatarAttributeRequest::getLetterColor()
 {
     const char* color = MegaSyncApp->getMegaApi()->getUserAvatarColor(MegaSyncApp->getMegaApi()->handleToBase64(qHash(getEmail())));
-    mLetterAvatarInfo.color = QColor(color);
+    mLetterAvatarInfo.color = color == nullptr ? Qt::red : QColor(color);
+
     delete [] color;
 }
 
