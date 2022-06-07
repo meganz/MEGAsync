@@ -517,7 +517,9 @@ QModelIndex MegaItemModel::findItemByNodeHandle(const mega::MegaHandle& handle, 
         {
           auto ret = findItemByNodeHandle(handle, child);
           if(ret.isValid())
-            return ret;
+          {
+              return ret;
+          }
         }
     }
     return QModelIndex();
