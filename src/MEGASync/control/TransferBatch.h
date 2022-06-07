@@ -59,6 +59,7 @@ public:
     void onTransferFinished(bool isFolderTransfer);
 
     bool hasCancelToken();
+    bool isValid() const ;
 
     std::shared_ptr<mega::MegaCancelToken> getCancelToken();
 

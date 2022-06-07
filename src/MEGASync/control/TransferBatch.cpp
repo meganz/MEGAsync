@@ -129,6 +129,11 @@ bool BlockingBatch::hasCancelToken()
     return mBatch && mBatch->getCancelTokenPtr();
 }
 
+bool BlockingBatch::isValid() const
+{
+    return mBatch != nullptr;
+}
+
 std::shared_ptr<mega::MegaCancelToken> BlockingBatch::getCancelToken()
 {
     if (mBatch)

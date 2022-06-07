@@ -3273,20 +3273,26 @@ void MegaApplication::cancelScanningStage()
 
 void MegaApplication::updateFileTransferBatchesAndUi(BlockingBatch &batch)
 {
-    QString message = QString::fromUtf8("updateFileTransferBatchesAndUi");
-    MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, message.toUtf8().constData());
+    if(batch.isValid())
+    {
+        QString message = QString::fromUtf8("updateFileTransferBatchesAndUi");
+        MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, message.toUtf8().constData());
 
-    batch.onFileScanCompleted();
-    updateIfBlockingStageFinished(batch);
+        batch.onFileScanCompleted();
+        updateIfBlockingStageFinished(batch);
+    }
 }
 
 void MegaApplication::updateFolderTransferBatchesAndUi(BlockingBatch &batch)
 {
-    QString message = QString::fromUtf8("updateFolderTransferBatchesAndUi");
-    MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, message.toUtf8().constData());
+    if(batch.isValid())
+    {
+        QString message = QString::fromUtf8("updateFolderTransferBatchesAndUi");
+        MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, message.toUtf8().constData());
 
-    batch.onFolderScanCompleted();
-    updateIfBlockingStageFinished(batch);
+        batch.onFolderScanCompleted();
+        updateIfBlockingStageFinished(batch);
+    }
 }
 
 void MegaApplication::updateIfBlockingStageFinished(BlockingBatch &batch)
@@ -7803,9 +7809,13 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
 
         if(!transfer->isSyncTransfer() && !transfer->isBackupTransfer())
         {
-            mBlockingBatch.onTransferFinished(isFolderTransfer);
-            updateIfBlockingStageFinished(mBlockingBatch);
-            updateFreedCancelToken(transfer);
+            if(mBlockingBatch.isValid())
+            {
+                mBlockingBatch.onTransferFinished(isFolderTransfer);
+                updateIfBlockingStageFinished(mBlockingBatch);
+                updateFreedCancelToken(transfer);
+            }
+
             logBatchStatus("onTransferFinish");
         }
 
