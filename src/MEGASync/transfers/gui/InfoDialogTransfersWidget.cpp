@@ -35,8 +35,8 @@ InfoDialogTransfersWidget::~InfoDialogTransfersWidget()
 void InfoDialogTransfersWidget::showEvent(QShowEvent*)
 {
     if(mProxyModel)
-    {
-       mProxyModel->invalidate();
+    {    
+        mProxyModel->invalidate();
     }
 }
 

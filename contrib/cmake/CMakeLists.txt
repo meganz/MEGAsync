@@ -285,9 +285,11 @@ set (MOC_INPUT
     ${MEGAsyncDir}/gui/GuiUtilities.h
     ${MEGAsyncDir}/gui/EventHelper.h
     ${MEGAsyncDir}/gui/UserAttributesRequests.h
+    ${MEGAsyncDir}/gui/AutoResizeStackedWidget.h
     ${MEGAsyncDir}/gui/ViewLoadingScene.h
     ${MEGAsyncDir}/gui/ScanningWidget.h
     ${MEGAsyncDir}/gui/ButtonIconManager.h
+    ${MEGAsyncDir}/gui/DialogGeometryRetainer.h
     ${MEGAsyncDir}/platform/notificator.h
 
     ${MEGAsyncDir}/mega/bindings/qt/QTMegaGlobalListener.h

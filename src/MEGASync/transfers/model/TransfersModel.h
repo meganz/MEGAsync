@@ -180,7 +180,6 @@ public slots:
 private slots:
     void onPauseStateChanged();
     void processStartTransfers(QList<QExplicitlySharedDataPointer<TransferData>>& transfersToStart);
-    void processActiveTransfers(QList<QExplicitlySharedDataPointer<TransferData>>& transfersActive);
     void processUpdateTransfers();
     void processCancelTransfers();
     void processFailedTransfers();
@@ -208,6 +207,7 @@ private:
     std::shared_ptr<Preferences> mPreferences;
     QThread* mTransferEventThread;
     TransferThread* mTransferEventWorker;
+    mega::QTMegaTransferListener *mDelegateListener;
     QTimer mTimer;
     TransfersCount mTransfersCount;
 
@@ -220,7 +220,6 @@ private:
 
     QHash<TransferTag, int> mTagByOrder;
     mutable QMutex mModelMutex;
-    mega::QTMegaTransferListener *mDelegateListener;
 
     bool mAreAllPaused;
     bool mModelReset;

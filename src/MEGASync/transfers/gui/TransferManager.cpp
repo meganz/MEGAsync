@@ -363,7 +363,6 @@ void TransferManager::onUpdatePauseState(bool isPaused)
     if (isPaused)
     {
         mUi->bPause->setToolTip(tr("Resume all"));
-        mUi->lPaused->setText(tr("All Paused"));
 
         if(!mUi->bPause->isChecked())
         {
@@ -375,7 +374,6 @@ void TransferManager::onUpdatePauseState(bool isPaused)
     else
     {
         mUi->bPause->setToolTip(tr("Pause all"));
-        mUi->lPaused->clear();
 
         if(mUi->bPause->isChecked())
         {
@@ -664,9 +662,15 @@ void TransferManager::onStorageStateChanged(int storageState)
             mUi->lStorageOverQuota->hide();
             QuotaState tQuotaState (qobject_cast<MegaApplication*>(qApp)->getTransferQuotaState());
             mUi->tSeePlans->setVisible(tQuotaState == QuotaState::FULL);
+
             break;
         }
     }
+
+    //TransferQuota is not visible when storage state error is set
+    //This is why we need to check the current transfer quota state
+    //in case we need to show the transferquota errors again
+    onTransferQuotaStateChanged(mTransferQuotaState);
 
     checkPauseButtonVisibilityIfPossible();
 }
@@ -708,7 +712,8 @@ void TransferManager::onTransferQuotaStateChanged(QuotaState transferQuotaState)
         case QuotaState::OVERQUOTA:
         {
             mUi->tSeePlans->show();
-            mUi->pTransferOverQuota->show();
+            mUi->pTransferOverQuota->setVisible(mStorageQuotaState != MegaApi::STORAGE_STATE_PAYWALL
+                                                && mStorageQuotaState != MegaApi::STORAGE_STATE_RED);
             break;
         }
         case QuotaState::OK:
@@ -727,7 +732,7 @@ void TransferManager::onTransferQuotaStateChanged(QuotaState transferQuotaState)
 
 void TransferManager::checkPauseButtonVisibilityIfPossible()
 {
-    mUi->lPaused->setVisible(mModel->areAllPaused());
+    mUi->lPaused->setVisible(mModel->areAllPaused() && !mUi->lStorageOverQuota->isVisible() && !mUi->pTransferOverQuota->isVisible());
 }
 
 void TransferManager::refreshSpeed()
@@ -753,9 +758,9 @@ void TransferManager::refreshSearchStats()
     {
         // Update search results number
         auto proxy (mUi->wTransfers->getProxyModel());
-        long long nbDl (proxy->getNumberOfItems(TransferData::TRANSFER_DOWNLOAD));
-        long long nbUl (proxy->getNumberOfItems(TransferData::TRANSFER_UPLOAD));
-        long long nbAll (nbDl + nbUl);
+        int nbDl (proxy->getNumberOfItems(TransferData::TRANSFER_DOWNLOAD));
+        int nbUl (proxy->getNumberOfItems(TransferData::TRANSFER_UPLOAD));
+        int nbAll (nbDl + nbUl);
 
         if(mUi->tDlResults->property(LABEL_NUMBER).toLongLong() != nbDl)
         {
@@ -1281,7 +1286,7 @@ void TransferManager::dropEvent(QDropEvent* event)
 {
     mDragBackDrop->hide();
 
-    event->proposedAction();
+    event->acceptProposedAction();
     QDialog::dropEvent(event);
 
     QQueue<QString> pathsToAdd;
@@ -1325,7 +1330,7 @@ void TransferManager::dragEnterEvent(QDragEnterEvent *event)
 {
     if(event->mimeData()->hasUrls())
     {
-        event->proposedAction();
+        event->acceptProposedAction();
         event->accept();
         mDragBackDrop->show();
         mDragBackDrop->resize(size());

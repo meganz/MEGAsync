@@ -483,6 +483,8 @@ bool TransfersManagerSortFilterProxyModel::lessThan(const QModelIndex &left, con
                 return leftItem->getRawFinishedTime() < rightItem->getRawFinishedTime();
             }
         }
+        default:
+            break;
         }
     }
 

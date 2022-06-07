@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1070</width>
-    <height>752</height>
+    <width>1225</width>
+    <height>718</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -2211,45 +2211,23 @@ QGroupBox::title
           <number>24</number>
          </property>
          <property name="verticalSpacing">
-          <number>3</number>
+          <number>5</number>
          </property>
          <item row="0" column="3">
-          <widget class="QPushButton" name="bDownload">
-           <property name="cursor">
-            <cursorShape>PointingHandCursor</cursorShape>
+          <spacer name="wRightPanelScrollMargin">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
            </property>
-           <property name="text">
-            <string>Download</string>
+           <property name="sizeType">
+            <enum>QSizePolicy::Fixed</enum>
            </property>
-           <property name="icon">
-            <iconset theme="download_toolbar_ico" resource="../../../gui/Resources_win.qrc">
-             <normaloff>:/images/transfer_manager/toolbar/download_toolbar_ico_default.png</normaloff>:/images/transfer_manager/toolbar/download_toolbar_ico_default.png</iconset>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>0</width>
+             <height>20</height>
+            </size>
            </property>
-           <property name="default_icon" stdset="0">
-            <url>
-             <string>qrc:/images/transfer_manager/toolbar/download_toolbar_ico_default.png</string>
-            </url>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="2">
-          <widget class="QPushButton" name="bUpload">
-           <property name="cursor">
-            <cursorShape>PointingHandCursor</cursorShape>
-           </property>
-           <property name="text">
-            <string>Upload</string>
-           </property>
-           <property name="icon">
-            <iconset theme="upload_toolbar_ico" resource="../../../gui/Resources_win.qrc">
-             <normaloff>:/images/transfer_manager/toolbar/upload_toolbar_ico_default.png</normaloff>:/images/transfer_manager/toolbar/upload_toolbar_ico_default.png</iconset>
-           </property>
-           <property name="default_icon" stdset="0">
-            <url>
-             <string>qrc:/images/transfer_manager/toolbar/upload_toolbar_ico_default.png</string>
-            </url>
-           </property>
-          </widget>
+          </spacer>
          </item>
          <item row="0" column="0" alignment="Qt::AlignTop">
           <widget class="QStackedWidget" name="sCurrentContent">
@@ -2392,7 +2370,7 @@ QGroupBox::title
               <number>0</number>
              </property>
              <property name="horizontalSpacing">
-              <number>2</number>
+              <number>10</number>
              </property>
              <property name="verticalSpacing">
               <number>0</number>
@@ -2486,12 +2464,18 @@ QGroupBox::title
            </widget>
           </widget>
          </item>
-         <item row="1" column="0" colspan="5" alignment="Qt::AlignTop">
-          <widget class="QStackedWidget" name="sCurrentContentInfo">
+         <item row="1" column="0" colspan="3" alignment="Qt::AlignTop">
+          <widget class="AutoResizeStackedWidget" name="sCurrentContentInfo">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>20</height>
+            </size>
+           </property>
            <property name="maximumSize">
             <size>
              <width>16777215</width>
-             <height>50</height>
+             <height>16777215</height>
             </size>
            </property>
            <property name="currentIndex">
@@ -2501,6 +2485,9 @@ QGroupBox::title
             <layout class="QVBoxLayout" name="verticalLayout_3">
              <property name="spacing">
               <number>0</number>
+             </property>
+             <property name="sizeConstraint">
+              <enum>QLayout::SetMinimumSize</enum>
              </property>
              <property name="leftMargin">
               <number>8</number>
@@ -2516,6 +2503,12 @@ QGroupBox::title
              </property>
              <item alignment="Qt::AlignTop">
               <widget class="QLabel" name="lPaused">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
                <property name="text">
                 <string>All Paused</string>
                </property>
@@ -2523,6 +2516,12 @@ QGroupBox::title
              </item>
              <item alignment="Qt::AlignTop">
               <widget class="QWidget" name="pTransferOverQuota" native="true">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
                <property name="minimumSize">
                 <size>
                  <width>0</width>
@@ -2540,7 +2539,7 @@ QGroupBox::title
                  <number>0</number>
                 </property>
                 <property name="bottomMargin">
-                 <number>0</number>
+                 <number>5</number>
                 </property>
                 <property name="spacing">
                  <number>2</number>
@@ -2591,9 +2590,7 @@ QGroupBox::title
                 <item row="1" column="1" alignment="Qt::AlignTop">
                  <widget class="QLabel" name="lTransferOverQuotaInfo">
                   <property name="text">
-                   <string>Your queued downloads exceeds the current quota available for your IP address.
-
-</string>
+                   <string>Your queued downloads exceeds the current quota available for your IP address.</string>
                   </property>
                  </widget>
                 </item>
@@ -2602,6 +2599,12 @@ QGroupBox::title
              </item>
              <item alignment="Qt::AlignTop">
               <widget class="QLabel" name="lStorageOverQuota">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
                <property name="text">
                 <string>Account is full</string>
                </property>
@@ -2613,6 +2616,9 @@ QGroupBox::title
             <layout class="QVBoxLayout" name="verticalLayout_4">
              <property name="spacing">
               <number>4</number>
+             </property>
+             <property name="sizeConstraint">
+              <enum>QLayout::SetMinimumSize</enum>
              </property>
              <property name="leftMargin">
               <number>8</number>
@@ -2628,6 +2634,12 @@ QGroupBox::title
              </property>
              <item alignment="Qt::AlignTop">
               <widget class="QLabel" name="lNbResults">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
                <property name="minimumSize">
                 <size>
                  <width>0</width>
@@ -2647,6 +2659,12 @@ QGroupBox::title
              </item>
              <item alignment="Qt::AlignTop">
               <widget class="QWidget" name="searchByTextTypeSelector" native="true">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
                <layout class="QHBoxLayout" name="searchByTypeLayout">
                 <property name="spacing">
                  <number>8</number>
@@ -2743,55 +2761,123 @@ QGroupBox::title
            </widget>
           </widget>
          </item>
-         <item row="0" column="5">
-          <spacer name="wRightPanelScrollMargin">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeType">
-            <enum>QSizePolicy::Fixed</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
+         <item row="0" column="1" colspan="2">
+          <widget class="QWidget" name="pToolButtons" native="true">
+           <property name="minimumSize">
             <size>
              <width>0</width>
-             <height>20</height>
+             <height>0</height>
             </size>
            </property>
-          </spacer>
-         </item>
-         <item row="0" column="4">
-          <widget class="QToolButton" name="tCogWheel">
-           <property name="cursor">
-            <cursorShape>PointingHandCursor</cursorShape>
+           <property name="maximumSize">
+            <size>
+             <width>16777215</width>
+             <height>16777215</height>
+            </size>
            </property>
-           <property name="icon">
-            <iconset theme="preferences_toolbar_ico" resource="../../../gui/Resources_win.qrc">
-             <normaloff>:/images/transfer_manager/toolbar/preferences_toolbar_ico_default.png</normaloff>:/images/transfer_manager/toolbar/preferences_toolbar_ico_default.png</iconset>
-           </property>
-           <property name="default_icon" stdset="0">
-            <url>
-             <string>qrc:/images/transfer_manager/toolbar/preferences_toolbar_ico_default.png</string>
-            </url>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="1">
-          <widget class="QPushButton" name="bOpenLinks">
-           <property name="cursor">
-            <cursorShape>PointingHandCursor</cursorShape>
-           </property>
-           <property name="text">
-            <string>Open links</string>
-           </property>
-           <property name="icon">
-            <iconset theme="import_toolbar_ico" resource="../../../gui/Resources_win.qrc">
-             <normaloff>:/images/transfer_manager/toolbar/import_toolbar_ico_default.png</normaloff>:/images/transfer_manager/toolbar/import_toolbar_ico_default.png</iconset>
-           </property>
-           <property name="default_icon" stdset="0">
-            <url>
-             <string>qrc:/images/transfer_manager/toolbar/import_toolbar_ico_default.png</string>
-            </url>
-           </property>
+           <layout class="QHBoxLayout" name="horizontalLayout_15">
+            <property name="spacing">
+             <number>24</number>
+            </property>
+            <property name="leftMargin">
+             <number>0</number>
+            </property>
+            <property name="topMargin">
+             <number>0</number>
+            </property>
+            <property name="rightMargin">
+             <number>0</number>
+            </property>
+            <property name="bottomMargin">
+             <number>0</number>
+            </property>
+            <item>
+             <spacer name="horizontalSpacer_6">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>0</width>
+                <height>0</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item>
+             <widget class="QPushButton" name="bOpenLinks">
+              <property name="cursor">
+               <cursorShape>PointingHandCursor</cursorShape>
+              </property>
+              <property name="text">
+               <string>Open links</string>
+              </property>
+              <property name="icon">
+               <iconset theme="import_toolbar_ico" resource="../../../gui/Resources_win.qrc">
+                <normaloff>:/images/transfer_manager/toolbar/import_toolbar_ico_default.png</normaloff>:/images/transfer_manager/toolbar/import_toolbar_ico_default.png</iconset>
+              </property>
+              <property name="default_icon" stdset="0">
+               <url>
+                <string>qrc:/images/transfer_manager/toolbar/import_toolbar_ico_default.png</string>
+               </url>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="bUpload">
+              <property name="cursor">
+               <cursorShape>PointingHandCursor</cursorShape>
+              </property>
+              <property name="text">
+               <string>Upload</string>
+              </property>
+              <property name="icon">
+               <iconset theme="upload_toolbar_ico" resource="../../../gui/Resources_win.qrc">
+                <normaloff>:/images/transfer_manager/toolbar/upload_toolbar_ico_default.png</normaloff>:/images/transfer_manager/toolbar/upload_toolbar_ico_default.png</iconset>
+              </property>
+              <property name="default_icon" stdset="0">
+               <url>
+                <string>qrc:/images/transfer_manager/toolbar/upload_toolbar_ico_default.png</string>
+               </url>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="bDownload">
+              <property name="cursor">
+               <cursorShape>PointingHandCursor</cursorShape>
+              </property>
+              <property name="text">
+               <string>Download</string>
+              </property>
+              <property name="icon">
+               <iconset theme="download_toolbar_ico" resource="../../../gui/Resources_win.qrc">
+                <normaloff>:/images/transfer_manager/toolbar/download_toolbar_ico_default.png</normaloff>:/images/transfer_manager/toolbar/download_toolbar_ico_default.png</iconset>
+              </property>
+              <property name="default_icon" stdset="0">
+               <url>
+                <string>qrc:/images/transfer_manager/toolbar/download_toolbar_ico_default.png</string>
+               </url>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QToolButton" name="tCogWheel">
+              <property name="cursor">
+               <cursorShape>PointingHandCursor</cursorShape>
+              </property>
+              <property name="icon">
+               <iconset theme="preferences_toolbar_ico" resource="../../../gui/Resources_win.qrc">
+                <normaloff>:/images/transfer_manager/toolbar/preferences_toolbar_ico_default.png</normaloff>:/images/transfer_manager/toolbar/preferences_toolbar_ico_default.png</iconset>
+              </property>
+              <property name="default_icon" stdset="0">
+               <url>
+                <string>qrc:/images/transfer_manager/toolbar/preferences_toolbar_ico_default.png</string>
+               </url>
+              </property>
+             </widget>
+            </item>
+           </layout>
           </widget>
          </item>
         </layout>
@@ -2899,8 +2985,15 @@ QGroupBox::title
    <header>TransfersWidget.h</header>
    <container>1</container>
   </customwidget>
+  <customwidget>
+   <class>AutoResizeStackedWidget</class>
+   <extends>QStackedWidget</extends>
+   <header>AutoResizeStackedWidget.h</header>
+   <container>1</container>
+  </customwidget>
  </customwidgets>
  <resources>
+  <include location="../../../gui/Resources_win.qrc"/>
   <include location="../../../gui/Resources_win.qrc"/>
  </resources>
  <connections>

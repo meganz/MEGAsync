@@ -1716,7 +1716,6 @@ void MegaApplication::createTransferManagerDialog()
         connect(mTransferManager, &TransferManager::userActivity, this, &MegaApplication::registerUserActivity);
         connect(transferQuota.get(), &TransferQuota::sendState,
                 mTransferManager, &TransferManager::onTransferQuotaStateChanged);
-        connect(mTransferManager, &TransferManager::aboutToClose, this, &MegaApplication::onTransferManagerClosed);
         connect(mTransferManager, SIGNAL(cancelScanning()), this, SLOT(cancelScanningStage()));
 
         if (inScanningStage)
@@ -4348,11 +4347,6 @@ void MegaApplication::onTransfersModelUpdate()
     }
 }
 
-void MegaApplication::onTransferManagerClosed()
-{
-    mTransferManagerGeometry = mTransferManager->geometry();
-}
-
 void MegaApplication::fetchNodes(QString email)
 {
     assert(!mFetchingNodes);
@@ -5058,16 +5052,9 @@ void MegaApplication::transferManagerActionClicked(int tab)
     }
 
     createTransferManagerDialog();
-
-    if(!mTransferManagerGeometry.isEmpty())
-    {
-        mTransferManager->setGeometry(mTransferManagerGeometry);
-    }
-
     mTransferManager->setActiveTab(tab);
-    mTransferManager->showNormal();
-    mTransferManager->activateWindow();
-    mTransferManager->raise();
+
+    mTransferManagerGeometryRetainer.showDialog(mTransferManager);
 }
 
 void MegaApplication::loginActionClicked()

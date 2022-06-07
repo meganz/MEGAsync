@@ -173,7 +173,8 @@ public:
         mLoadingDelegate(nullptr),
         mViewDelegate(nullptr),
         mView(nullptr),
-        mViewModel(nullptr)
+        mViewModel(nullptr),
+        mPotentialSourceModel(nullptr)
     {}
 
     ~ViewLoadingScene()

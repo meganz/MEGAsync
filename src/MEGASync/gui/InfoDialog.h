@@ -94,7 +94,6 @@ public:
 
 private:
     InfoDialog() = default;
-    void drawAvatar(QString email);
     void animateStates(bool opt);
     void hideEvent(QHideEvent *event) override;
     void showEvent(QShowEvent *event) override;
@@ -134,7 +133,7 @@ private slots:
 
     void on_tTransfers_clicked();
     void on_tNotifications_clicked();
-    void on_bActualFilter_clicked();
+    void onActualFilterClicked();
     void applyFilterOption(int opt);
     void on_bNotificationsSettings_clicked();
 

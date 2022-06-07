@@ -125,7 +125,7 @@ bool TransferData::hasChanged(QExplicitlySharedDataPointer<TransferData> data)
     if(mState == data->mState && mPriority == data->mPriority)
     {
         if(mTransferredBytes == data->mTransferredBytes &&
-                data->mState != mega::MegaTransfer::STATE_COMPLETING)
+                data->mState != TransferData::TransferState::TRANSFER_COMPLETING)
         {
             result = false;
         }
@@ -153,7 +153,7 @@ int64_t TransferData::getFinishedTime() const
 
 QString TransferData::getFormattedFinishedTime() const
 {
-    return QDateTime::fromTime_t(mFinishedTime).toLocalTime().toString(QString::fromStdString("hh:mm"));
+    return QDateTime::fromTime_t(static_cast<uint>(mFinishedTime)).toLocalTime().toString(QString::fromLatin1("hh:mm"));
 }
 
 QString TransferData::path() const

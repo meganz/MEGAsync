@@ -3,10 +3,14 @@
 #include "InfoDialogTransferDelegateWidget.h"
 #include "TransfersModel.h"
 
+#include <QElapsedTimer>
+
 //SORT FILTER PROXY MODEL
 InfoDialogTransfersProxyModel::InfoDialogTransfersProxyModel(QObject *parent) :
     TransfersSortFilterProxyBaseModel(parent),
-    mNextTransferTag(-1)
+    mNextTransferSourceRow(-1),
+    mNextTransferPriority(0),
+    mInvalidating(false)
 {
 }
 
@@ -30,10 +34,22 @@ TransferBaseDelegateWidget* InfoDialogTransfersProxyModel::createTransferManager
 
 void InfoDialogTransfersProxyModel::setSourceModel(QAbstractItemModel *sourceModel)
 {
-    connect(sourceModel, &QAbstractItemModel::rowsAboutToBeRemoved,
-            this, &InfoDialogTransfersProxyModel::onRowsAboutToBeRemoved, Qt::DirectConnection);
-
     QSortFilterProxyModel::setSourceModel(sourceModel);
+}
+
+int InfoDialogTransfersProxyModel::rowCount(const QModelIndex &parent) const
+{
+    return QSortFilterProxyModel::rowCount(parent);
+}
+
+void InfoDialogTransfersProxyModel::invalidate()
+{
+    mNextTransferPriority = 0;
+    mNextTransferSourceRow = -1;
+
+    mInvalidating = true;
+    QSortFilterProxyModel::invalidate();
+    mInvalidating = false;
 }
 
 void InfoDialogTransfersProxyModel::onCopyTransferLinkRequested()
@@ -121,38 +137,34 @@ bool InfoDialogTransfersProxyModel::filterAcceptsRow(int sourceRow, const QModel
                      || d->mState & TransferData::TransferState::TRANSFER_ACTIVE
                      || d->mState & TransferData::TransferState::TRANSFER_FAILED);
 
-
            //Show next transfer to process
-           if(accept && d->mTag == mNextTransferTag)
+           if(!accept)
            {
-               mNextTransferTag = -1;
+               if(mNextTransferSourceRow == sourceRow)
+               {
+                   return true;
+               }
+               else if(mNextTransferPriority == 0 || mNextTransferPriority > d->mPriority)
+               {
+                   mNextTransferPriority = d->mPriority;
+                   mNextTransferSourceRow = sourceRow;
+               }
            }
-           else if(!accept && (mNextTransferTag < 0 || mNextTransferTag >= d->mTag))
+
+           if(mInvalidating && sourceRow == (sourceModel()->rowCount() -1))
            {
-               accept = true;
-               mNextTransferTag = d->mTag;
+               auto indexToShow(sourceModel()->index(mNextTransferSourceRow,0));
+
+               if(indexToShow.isValid())
+               {
+                   //Let the filterAcceptsRow loop finish, and the send the signal
+                   QTimer::singleShot(20,[this, indexToShow](){
+                       emit sourceModel()->dataChanged(indexToShow, indexToShow);
+                   });
+               }
            }
        }
     }
 
     return accept;
-}
-
-void InfoDialogTransfersProxyModel::onRowsAboutToBeRemoved(const QModelIndex &parent, int first, int last)
-{
-    //Update next transfer to process
-    for(int row = first; row <= last; ++row)
-    {
-        QModelIndex index = sourceModel()->index(row, 0, parent);
-
-        if(index.isValid())
-        {
-            const auto d (qvariant_cast<TransferItem>(index.data()).getTransferData());
-            if(d && mNextTransferTag == d->mTag)
-            {
-                mNextTransferTag = -1;
-                break;
-            }
-        }
-    }
 }
