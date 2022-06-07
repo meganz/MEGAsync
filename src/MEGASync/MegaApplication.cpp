@@ -8419,11 +8419,6 @@ void MegaApplication::onSyncAdded(MegaApi *api, MegaSync *sync, int additionStat
         onSyncDisabled(syncSetting);
     }
 
-    if (settingsDialog)
-    {
-        settingsDialog->loadSyncSettings();
-    }
-
     onGlobalSyncStateChanged(api);
 }
 

@@ -924,6 +924,12 @@
         <file>images/password/ico_eye_reveal_disabled.png</file>
         <file>images/password/ico_eye_reveal_disabled@2x.png</file>
         <file>images/password/ico_eye_reveal_disabled@3x.png</file>
+        <file>images/icons/synced-ico-hover.png</file>
+        <file>images/icons/synced-ico-rest@3x.png</file>
+        <file>images/icons/synced-ico-hover@2x.png</file>
+        <file>images/icons/synced-ico-hover@3x.png</file>
+        <file>images/icons/synced-ico-rest@2x.png</file>
+        <file>images/icons/synced-ico-rest.png</file>
         <file>images/node_selector/cloud@3x.png</file>
         <file>images/node_selector/cloud@2x.png</file>
         <file>images/node_selector/cloud.png</file>

@@ -159,7 +159,6 @@ set (FORMS
     ${MEGAsyncDir}/gui/${UiDir}/InfoDialogTransfersWidget.ui
     ${MEGAsyncDir}/gui/${UiDir}/StatusInfo.ui
     ${MEGAsyncDir}/gui/${UiDir}/PSAwidget.ui
-    ${MEGAsyncDir}/gui/${UiDir}/QSyncItemWidget.ui
     ${MEGAsyncDir}/gui/${UiDir}/UpgradeOverStorage.ui
     ${MEGAsyncDir}/gui/${UiDir}/ChangePassword.ui
     ${MEGAsyncDir}/gui/${UiDir}/Login2FA.ui
@@ -269,7 +268,6 @@ set (MOC_INPUT
     ${MEGAsyncDir}/gui/QAlertsModel.h
     ${MEGAsyncDir}/gui/MegaItemModel.h
     ${MEGAsyncDir}/gui/QTransfersModel.h
-    ${MEGAsyncDir}/gui/QSyncItemWidget.h
     ${MEGAsyncDir}/gui/SettingsDialog.h
     ${MEGAsyncDir}/gui/SetupWizard.h
     ${MEGAsyncDir}/gui/NotificationsSettings.h
@@ -302,7 +300,10 @@ set (MOC_INPUT
     ${MEGAsyncDir}/gui/EventHelper.h
     ${MEGAsyncDir}/gui/UserAttributesRequests.h
     ${MEGAsyncDir}/gui/BackupTableWidget.h
-    ${MEGAsyncDir}/gui/BackupItemModel.h    
+    ${MEGAsyncDir}/gui/BackupItemModel.h
+    ${MEGAsyncDir}/gui/SyncTableView.h
+    ${MEGAsyncDir}/gui/BackupTableView.h
+
     ${MEGAsyncDir}/platform/notificator.h
     ${MEGAsyncDir}/mega/bindings/qt/QTMegaGlobalListener.h
     ${MEGAsyncDir}/mega/bindings/qt/QTMegaListener.h
@@ -417,7 +418,6 @@ set (SRCS
     ${MEGAsyncDir}/gui/TransferManager.cpp
     ${MEGAsyncDir}/gui/TransfersWidget.cpp
     ${MEGAsyncDir}/gui/QTransfersModel.cpp
-    ${MEGAsyncDir}/gui/QSyncItemWidget.cpp
     ${MEGAsyncDir}/gui/QActiveTransfersModel.cpp
     ${MEGAsyncDir}/gui/QFinishedTransfersModel.cpp
     ${MEGAsyncDir}/gui/MegaTransferDelegate.cpp
@@ -457,6 +457,11 @@ set (SRCS
     ${MEGAsyncDir}/gui/MegaItemProxyModel.cpp
     ${MEGAsyncDir}/gui/MegaItemTreeView.cpp
     ${MEGAsyncDir}/gui/GuiUtilities.cpp
+    ${MEGAsyncDir}/gui/EventHelper.cpp
+	${MEGAsyncDir}/gui/BackupTableWidget.cpp
+	${MEGAsyncDir}/gui/BackupItemModel.cpp
+    ${MEGAsyncDir}/gui/SyncTableView.cpp
+    ${MEGAsyncDir}/gui/BackupTableView.cpp
     ${MEGAsyncDir}/gui/UserAttributesRequests.cpp
 
     ${MEGAsyncDir}/gui/EventHelper.cpp

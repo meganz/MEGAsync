@@ -165,6 +165,11 @@ void WaitingSpinnerWidget::setInnerRadius(int radius) {
     updateSize();
 }
 
+void WaitingSpinnerWidget::setCenterOnParent(bool value)
+{
+    _centerOnParent = value;
+}
+
 qint64 WaitingSpinnerWidget::getStartTime()
 {
     return _startTime;

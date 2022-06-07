@@ -1,17 +1,17 @@
-#ifndef BACKUPTABLEWIDGET_H
+#ifndef BACKUPTABLEVIEW_H
 #define BACKUPTABLEWIDGET_H
 
 #include "model/SyncSettings.h"
-
+#include "SyncTableView.h"
 #include <QObject>
 #include <QTableView>
 
-class BackupTableWidget : public QTableView
+class BackupTableView : public SyncTableView
 {
     Q_OBJECT
 
 public:
-    BackupTableWidget(QWidget *parent = nullptr);
+    BackupTableView(QWidget *parent = nullptr);
     /* To call after model is set */
     void customize();
 
@@ -20,11 +20,11 @@ signals:
     void openInMEGA(mega::MegaHandle handle);
 
 protected:
-    void keyPressEvent(QKeyEvent *event) override;
+    void initTable() override;
 
 private slots:
-    void onCustomContextMenuRequested(const QPoint& pos);
-    void onCellClicked(const QModelIndex &index);
+    void onCustomContextMenuRequested(const QPoint& pos) override;
+    void onCellClicked(const QModelIndex &index) override;
 
 private:
     void showContextMenu(const QPoint &pos, const QModelIndex index);

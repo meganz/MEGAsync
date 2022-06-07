@@ -8,6 +8,7 @@
 #include "Preferences.h"
 #include "HighDpiResize.h"
 #include "control/Utilities.h"
+#include "SyncItemModel.h"
 #include "BackupItemModel.h"
 
 #include "MegaController.h"
@@ -65,8 +66,7 @@ public:
 
     // Syncs
     enum SyncStateInformation {NO_SAVING_SYNCS = 0, SAVING_SYNCS = 1};
-    void loadSyncSettings();
-    void addSyncFolder(mega::MegaHandle megaFolderHandle);
+    void addSyncFolder(mega::MegaHandle megaFolderHandle = mega::INVALID_HANDLE);
 
     // Folders
     void updateUploadFolder();
@@ -91,13 +91,6 @@ public slots:
 
     // Account
     void storageStateChanged(int state);
-
-    // Syncs
-    void syncStateChanged(int state);
-    void onSyncStateChanged(std::shared_ptr<SyncSetting>);
-    void onEnableSyncFailed(int, std::shared_ptr<SyncSetting> syncSetting);
-    void onDisableSyncFailed(std::shared_ptr<SyncSetting> syncSetting);
-    void onSyncSelected(const QItemSelection& selected, const QItemSelection& deselected);
 
 private slots:
     void on_bHelp_clicked();
@@ -136,19 +129,16 @@ private slots:
     void setAvatar();
 
     // Syncs
-    void onSavingSyncsProgress(double progress);
-    void onSavingSyncsCompleted();
+
     void on_bSyncs_clicked();
-    void on_bAdd_clicked();
-    void on_bDelete_clicked();
-    void on_tSyncs_doubleClicked(const QModelIndex &index);
-    void onCellClicked(int row, int column);
-    void showInFolderClicked();
-    void showInMegaClicked();
-    void onDeleteSync();
+    void on_bAddSync_clicked();
+    void on_bDeleteSync_clicked();
 #ifndef WIN32
     void on_bPermissions_clicked();
 #endif
+
+    // FIXME: Re-evaluate the Saving Syncs progress code
+    void onSavingSyncsCompleted();
 
     // Backup
     void on_bBackup_clicked();
@@ -196,33 +186,20 @@ protected:
     void restartApp();
 
 private:
+    void connectSyncHandlers();
+    void loadSyncSettings();
     void connectBackupHandlers();
     void loadBackupSettings();
     void processPendingBackup();
 
     void loadSettings();
     void onCacheSizeAvailable();
-    void saveSyncSettings();
-    void savingSyncs(bool completed, QObject* item);
-    void syncsStateInformation(int state);
-    void addSyncRow(int row, const QString& name, const QString& lPath,
-                    const QString& rPath, bool isActive, int error, mega::MegaHandle megaHandle,
-                    mega::MegaHandle tag, std::shared_ptr<SyncSetting> syncSetting = nullptr);
     void saveExcludeSyncNames();
     void updateNetworkTab();
     void setShortCutsForToolBarItems();
 
-    enum
-    {
-        SYNC_COL_ENABLE_CB = 0,
-        SYNC_COL_LFOLDER   = 1,
-        SYNC_COL_RFOLDER   = 2,
-        SYNC_COL_MENU      = 3,
-        SYNC_COL_TAG       = 4,
-        SYNC_COL_HANDLE    = 5,
-        SYNC_COL_NAME      = 6,
-        SYNC_COL_NB
-    };
+    // FIXME: Re-evaluate the Saving Syncs progress code
+    void syncsStateInformation(int state);
 
 #ifdef Q_OS_MACOS
     void reloadToolBarItemNames();
@@ -247,6 +224,7 @@ private:
     std::shared_ptr<Preferences> mPreferences;
     Controller* mController;
     SyncController mSyncController;
+    SyncController mBackupController;
     SyncModel* mModel;
     mega::MegaApi* mMegaApi;
     HighDpiResize mHighDpiResize;
@@ -262,8 +240,6 @@ private:
     int mDebugCounter; // Easter Egg
     QStringList mSyncNames;
     bool mAreSyncsDisabled; //Check if there are any sync disabled by any kind of error
-    bool mIsSavingSyncsOnGoing;
-    int mSelectedSyncRow;
     std::unique_ptr<ProgressHelper> mSaveSyncsProgress;
     bool mHasDefaultUploadOption;
     bool mHasDefaultDownloadOption;

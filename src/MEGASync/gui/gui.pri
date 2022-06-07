@@ -3,7 +3,7 @@ QT       += network
 SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/AddBackupDialog.cpp \
     $$PWD/BackupItemModel.cpp \
-    $$PWD/BackupTableWidget.cpp \
+    $$PWD/BackupTableView.cpp \
     $$PWD/BackupsWizard.cpp \
     $$PWD/BalloonToolTip.cpp \
     $$PWD/MegaItemDelegates.cpp \
@@ -19,6 +19,8 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/NodeSelector.cpp \
     $$PWD/FolderBinder.cpp \
     $$PWD/BindFolderDialog.cpp \
+    $$PWD/SyncItemModel.cpp \
+    $$PWD/SyncTableView.cpp \
     $$PWD/SyncTreeWidget.cpp \
     $$PWD/SyncsMenu.cpp \
     $$PWD/UploadToMegaDialog.cpp \
@@ -65,7 +67,6 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/UpgradeOverStorage.cpp \
     $$PWD/Login2FA.cpp \
     $$PWD/QRWidget.cpp \
-    $$PWD/QSyncItemWidget.cpp \
     $$PWD/TransfersStatusWidget.cpp \
     $$PWD/TransfersSummaryWidget.cpp \
     $$PWD/CircularUsageProgressBar.cpp \
@@ -90,7 +91,7 @@ SOURCES += $$PWD/SettingsDialog.cpp \
 HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/AddBackupDialog.h \
     $$PWD/BackupItemModel.h \
-    $$PWD/BackupTableWidget.h \
+    $$PWD/BackupTableView.h \
     $$PWD/BackupsWizard.h \
     $$PWD/BalloonToolTip.h \
     $$PWD/MegaItemDelegates.h \
@@ -106,6 +107,8 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/NodeSelector.h \
     $$PWD/FolderBinder.h \
     $$PWD/BindFolderDialog.h \
+    $$PWD/SyncItemModel.h \
+    $$PWD/SyncTableView.h \
     $$PWD/SyncTreeWidget.h \
     $$PWD/SyncsMenu.h \
     $$PWD/UploadToMegaDialog.h \
@@ -152,7 +155,6 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/ChangePassword.h \
     $$PWD/Login2FA.h \
     $$PWD/QRWidget.h \
-    $$PWD/QSyncItemWidget.h \
     $$PWD/TransfersStatusWidget.h \
     $$PWD/TransfersSummaryWidget.h \
     $$PWD/CircularUsageProgressBar.h \
@@ -217,7 +219,6 @@ win32 {
                 $$PWD/win/UpgradeOverStorage.ui \
                 $$PWD/win/ChangePassword.ui \
                 $$PWD/win/Login2FA.ui \
-                $$PWD/win/QSyncItemWidget.ui \
                 $$PWD/win/TransfersStatusWidget.ui \
                 $$PWD/win/AlertItem.ui \
                 $$PWD/win/TransfersSummaryWidget.ui \
@@ -277,7 +278,6 @@ macx {
                 $$PWD/macx/UpgradeOverStorage.ui \
                 $$PWD/macx/ChangePassword.ui \
                 $$PWD/macx/Login2FA.ui \
-                $$PWD/macx/QSyncItemWidget.ui \
                 $$PWD/macx/TransfersStatusWidget.ui \
                 $$PWD/macx/AlertItem.ui \
                 $$PWD/macx/TransfersSummaryWidget.ui \
@@ -361,7 +361,6 @@ unix:!macx {
                 $$PWD/linux/UpgradeOverStorage.ui \
                 $$PWD/linux/ChangePassword.ui \
                 $$PWD/linux/Login2FA.ui \
-                $$PWD/linux/QSyncItemWidget.ui \
                 $$PWD/linux/TransfersStatusWidget.ui \
                 $$PWD/linux/AlertItem.ui \
                 $$PWD/linux/TransfersSummaryWidget.ui \
@@ -374,6 +373,8 @@ unix:!macx {
                 $$PWD/linux/OverQuotaDialog.ui \
                 $$PWD/linux/ProxySettings.ui \
                 $$PWD/linux/BandwidthSettings.ui \
+                $$PWD/linux/NewFolderDialog.ui \
+                $$PWD/linux/RenameTargetFolderDialog.ui \
                 $$PWD/linux/BackupSetupSuccessDialog.ui \
                 $$PWD/linux/NewFolderDialog.ui \
                 $$PWD/linux/AddBackupDialog.ui \

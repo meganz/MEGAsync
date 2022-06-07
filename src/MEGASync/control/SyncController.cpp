@@ -25,6 +25,18 @@ SyncController::~SyncController()
     delete mDelegateListener;
 }
 
+void SyncController::addBackup(const QString &localFolder)
+{
+    QDir dirToBackup(localFolder);
+    addBackup(dirToBackup);
+}
+
+void SyncController::addBackup(const QDir &dirToBackup)
+{
+    addSync(QDir::toNativeSeparators(dirToBackup.canonicalPath()), mega::INVALID_HANDLE,
+            dirToBackup.dirName(), mega::MegaSync::TYPE_BACKUP);
+}
+
 void SyncController::addSync(const QString &localFolder, const MegaHandle &remoteHandle,
                              const QString& syncName, MegaSync::SyncType type)
 {

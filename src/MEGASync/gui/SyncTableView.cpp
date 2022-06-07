@@ -1,0 +1,208 @@
+#include "SyncTableView.h"
+
+#include "platform/Platform.h"
+#include "MenuItemAction.h"
+#include "SyncController.h"
+
+#include <QHeaderView>
+#include <QMenu>
+#include <QtConcurrent/QtConcurrent>
+
+SyncTableView::SyncTableView(QWidget *parent)
+    : QTableView(parent),
+    mSyncController(this),
+    mIsFirstTime(true)
+{
+    setIconSize(QSize(24, 24));
+
+    setContextMenuPolicy(Qt::CustomContextMenu);
+    connect(this, &SyncTableView::customContextMenuRequested, this, &SyncTableView::onCustomContextMenuRequested);
+    connect(this, &SyncTableView::pressed, this, &SyncTableView::onCellClicked);
+}
+
+void SyncTableView::keyPressEvent(QKeyEvent *event)
+{
+    // implement smarter row based navigation
+    switch(event->key())
+    {
+        case Qt::Key_Left:
+        case Qt::Key_Right:
+            event->ignore();
+            return;
+        case Qt::Key_Tab:
+            if(currentIndex().row() >= (model()->rowCount() - 1))
+                selectRow(0);
+            else
+                selectRow(currentIndex().row() + 1);
+            return;
+        case Qt::Key_Backtab:
+            if(currentIndex().row() <= 0)
+                selectRow(model()->rowCount() - 1);
+            else
+                selectRow(currentIndex().row() - 1);
+            return;
+        default:
+            QTableView::keyPressEvent(event);
+    }
+}
+
+void SyncTableView::showEvent(QShowEvent *event)
+{
+    if(mIsFirstTime)
+    {
+        Q_UNUSED(event);
+        initTable();
+        mIsFirstTime = false;
+    }
+}
+
+void SyncTableView::initTable()
+{
+    setItemDelegate(new SelectionIconNoChangeOnDisable(this));
+    setItemDelegateForColumn(SyncItemModel::Column::MENU, new MenuItemDelegate(this));
+
+    horizontalHeader()->setSortIndicator(-1, Qt::AscendingOrder);
+    horizontalHeader()->resizeSection(SyncItemModel::Column::ENABLED, FIXED_COLUMN_WIDTH);
+    horizontalHeader()->resizeSection(SyncItemModel::Column::MENU, FIXED_COLUMN_WIDTH);
+    horizontalHeader()->resizeSection(SyncItemModel::Column::MENU, FIXED_COLUMN_WIDTH);
+
+    horizontalHeader()->setDefaultAlignment(Qt::AlignLeft);
+    horizontalHeader()->setSectionResizeMode(SyncItemModel::Column::ENABLED, QHeaderView::Fixed);
+    horizontalHeader()->setSectionResizeMode(SyncItemModel::Column::MENU, QHeaderView::Fixed);
+    horizontalHeader()->resizeSection(SyncItemModel::Column::LNAME, (width() - FIXED_COLUMN_WIDTH * 2) / 2);
+
+    horizontalHeader()->setSectionResizeMode(SyncItemModel::Column::LNAME, QHeaderView::Interactive);
+    horizontalHeader()->setSectionResizeMode(SyncItemModel::Column::RNAME, QHeaderView::Stretch);
+
+    setFont(QFont().defaultFamily());
+
+    // Hijack the sorting on the dots MENU column and hide the sort indicator,
+    // instead of showing a bogus sort on that column;
+    connect(horizontalHeader(), &QHeaderView::sortIndicatorChanged, this, [this](int index, Qt::SortOrder order)
+    {
+        if (index == SyncItemModel::Column::MENU)
+            horizontalHeader()->setSortIndicator(-1, order);
+    });
+}
+
+void SyncTableView::onCustomContextMenuRequested(const QPoint &pos)
+{
+    QModelIndex index = indexAt(pos);
+    if(index.isValid() && (index.column() > SyncItemModel::Column::ENABLED))
+        showContextMenu(viewport()->mapToGlobal(pos), index);
+}
+
+void SyncTableView::onCellClicked(const QModelIndex &index)
+{
+    if(index.isValid() && (index.column() != SyncItemModel::Column::ENABLED))
+       selectionModel()->setCurrentIndex(model()->index(index.row(), SyncItemModel::Column::ENABLED), QItemSelectionModel::NoUpdate);
+    if(index.isValid() && (index.column() == SyncItemModel::Column::MENU))
+        showContextMenu(QCursor().pos(), index);
+}
+
+void SyncTableView::showContextMenu(const QPoint &pos, const QModelIndex index)
+{
+    QMenu *menu(new QMenu(this));
+    Platform::initMenu(menu);
+    menu->setAttribute(Qt::WA_DeleteOnClose);
+
+    // Show in file explorer action
+    auto showLocalAction (new MenuItemAction(QCoreApplication::translate("Platform", Platform::fileExplorerString),
+                                             QIcon(QString::fromUtf8("://images/show_in_folder_ico.png"))));
+    connect(showLocalAction, &MenuItemAction::triggered, this, [index]()
+    {
+        auto sync = index.data(Qt::UserRole).value<std::shared_ptr<SyncSetting>>();
+        QtConcurrent::run(QDesktopServices::openUrl, QUrl::fromLocalFile(sync->getLocalFolder()));
+    });
+
+    // Show in Mega web action
+    auto showRemoteAction (new MenuItemAction(tr("Open in MEGA"),
+                                              QIcon(QString::fromUtf8("://images/ico_open_MEGA.png"))));
+    connect(showRemoteAction, &MenuItemAction::triggered, this, [index]()
+    {
+        auto sync = index.data(Qt::UserRole).value<std::shared_ptr<SyncSetting>>();
+        QString url = QString::fromUtf8("mega://#fm/") + sync->getMegaFolder();
+        QtConcurrent::run(QDesktopServices::openUrl, QUrl(url));
+    });
+
+    // Remove Sync action
+    auto delAction (new MenuItemAction(tr("Remove synced folder"),
+                                       QIcon(QString::fromUtf8("://images/ico_Delete.png"))));
+    delAction->setAccent(true);
+    connect(delAction, &MenuItemAction::triggered, this, [this, index]()
+    {
+        auto sync = index.data(Qt::UserRole).value<std::shared_ptr<SyncSetting>>();
+        mSyncController.removeSync(index.data(Qt::UserRole).value<std::shared_ptr<SyncSetting>>());
+    });
+
+
+    showLocalAction->setParent(menu);
+    showRemoteAction->setParent(menu);
+    delAction->setParent(menu);
+
+    menu->addAction(showLocalAction);
+    menu->addAction(showRemoteAction);
+    menu->addSeparator();
+    menu->addAction(delAction);
+
+    menu->popup(pos);
+}
+
+MenuItemDelegate::MenuItemDelegate(QObject *parent) : QStyledItemDelegate(parent)
+{
+
+}
+
+MenuItemDelegate::~MenuItemDelegate()
+{
+
+}
+
+void MenuItemDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
+{
+    painter->save();
+    QStyledItemDelegate::paint(painter, option, index);
+    QIcon icon = qvariant_cast<QIcon>(index.data(Qt::DecorationRole));
+    Qt::Alignment alignment = index.data(Qt::TextAlignmentRole).value<Qt::Alignment>();
+    painter->setPen(QColor(Qt::white));
+    painter->setBrush(QColor(Qt::white));
+    QIcon::Mode mode = QIcon::Mode::Normal;
+    if(option.state & QStyle::State_Selected)
+    {
+        mode = QIcon::Mode::Selected;
+        painter->setPen(QColor::fromRgb(0, 120, 215, 204));
+        painter->setBrush(QColor::fromRgb(0, 120, 215, 204));
+    }
+    QRect rectToDraw = option.rect;
+    painter->setPen(Qt::NoPen);
+    painter->drawRect(rectToDraw);
+
+    icon.paint(painter, option.rect, alignment, mode);
+    painter->restore();
+}
+
+void MenuItemDelegate::initStyleOption(QStyleOptionViewItem *option, const QModelIndex &index) const
+{
+    QStyledItemDelegate::initStyleOption(option, index);
+    option->icon = QIcon();
+    option->state.setFlag(QStyle::State_Selected, false);
+}
+
+SelectionIconNoChangeOnDisable::SelectionIconNoChangeOnDisable(QObject *parent) : QStyledItemDelegate(parent)
+{
+
+}
+
+SelectionIconNoChangeOnDisable::~SelectionIconNoChangeOnDisable()
+{
+
+}
+
+void SelectionIconNoChangeOnDisable::initStyleOption(QStyleOptionViewItem *option, const QModelIndex &index) const
+{
+    QStyledItemDelegate::initStyleOption(option, index);
+    if(!option->state.testFlag(QStyle::State_Enabled) && option->state.testFlag(QStyle::State_Selected))
+    {
+        option->state.setFlag(QStyle::State_Enabled, true);
+    }
+}
