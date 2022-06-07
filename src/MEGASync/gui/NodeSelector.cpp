@@ -140,7 +140,6 @@ void NodeSelector::nodesReady()
         break;
     }
     ui->tMegaFolders->setModel(mProxyModel.get());
-    //ui->tMegaFolders->sortByColumn(MegaItemModel::NODE, Qt::AscendingOrder);
     checkBackForwardButtons();
 
 //Disable animation for OS X due to problems showing the tree icons
@@ -212,9 +211,13 @@ QModelIndex NodeSelector::getParentIncomingShareByIndex(QModelIndex idx)
         if(MegaItem *item = static_cast<MegaItem*>(idx.internalPointer()))
         {
             if(item->getNode()->isInShare())
+            {
                 return idx;
+            }
             else
+            {
                 idx = idx.parent();
+            }
         }
     }
     return QModelIndex();
