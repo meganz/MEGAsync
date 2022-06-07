@@ -1,12 +1,13 @@
 #pragma once
 
-#include <QString>
-
 #include "model/SyncSettings.h"
 #include "model/SyncModel.h"
 #include "QTMegaRequestListener.h"
 
 #include "megaapi.h"
+
+#include <QString>
+#include <QDir>
 
 /**
  * @brief Sync Controller class
@@ -23,9 +24,10 @@ public:
     SyncController(QObject* parent = nullptr);
     ~SyncController();
 
+    void addBackup(const QString& localFolder);
+    void addBackup(const QDir& dirToBackup);
     void addSync(const QString &localFolder, const mega::MegaHandle &remoteHandle,
-                 const QString& syncName = QString(),
-                 mega::MegaSync::SyncType type = mega::MegaSync::TYPE_TWOWAY);
+                 const QString& syncName, mega::MegaSync::SyncType type = mega::MegaSync::TYPE_TWOWAY);
     void removeSync(std::shared_ptr<SyncSetting> syncSetting, const mega::MegaHandle& remoteHandle = mega::INVALID_HANDLE);
     void enableSync(std::shared_ptr<SyncSetting> syncSetting);
     void disableSync(std::shared_ptr<SyncSetting> syncSetting);

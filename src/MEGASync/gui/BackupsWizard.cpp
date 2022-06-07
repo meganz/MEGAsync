@@ -390,8 +390,7 @@ void BackupsWizard::processNextBackupSetup()
                                     mUi->leBackupTo->text() + QLatin1Char('/')
                                     + it.key()).toUtf8().constData());
 
-            mSyncController.addSync(it.key(), mega::INVALID_HANDLE,
-                                    it.value().folderName, mega::MegaSync::TYPE_BACKUP);
+            mSyncController.addBackup(it.key());
             return;
         }
     }

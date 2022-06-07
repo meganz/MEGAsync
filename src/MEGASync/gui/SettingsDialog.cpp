@@ -1,4 +1,3 @@
-#include "mega/types.h"
 #include "MegaApplication.h"
 #include "SettingsDialog.h"
 #include "QMegaMessageBox.h"
@@ -7,12 +6,13 @@
 #include "platform/Platform.h"
 #include "gui/AddExclusionDialog.h"
 #include "gui/BugReportDialog.h"
-#include "gui/QSyncItemWidget.h"
 #include "gui/ProxySettings.h"
 #include "gui/BandwidthSettings.h"
 #include "gui/BackupsWizard.h"
 #include "gui/AddBackupDialog.h"
 #include "gui/RemoveBackupDialog.h"
+
+#include "mega/types.h"
 
 #include <QApplication>
 #include <QDesktopServices>
@@ -91,8 +91,8 @@ SettingsDialog::SettingsDialog(MegaApplication* app, bool proxyOnly, QWidget* pa
     mUi (new Ui::SettingsDialog),
     mApp (app),
     mPreferences (Preferences::instance()),
-    mController (Controller::instance()),
     mSyncController (),
+    mBackupController (),
     mModel (SyncModel::instance()),
     mMegaApi (app->getMegaApi()),
     mLoadingSettings (0),
@@ -102,8 +102,6 @@ SettingsDialog::SettingsDialog(MegaApplication* app, bool proxyOnly, QWidget* pa
     mRemoteCacheSize (-1),
     mDebugCounter (0),
     mAreSyncsDisabled (false),
-    mIsSavingSyncsOnGoing (false),
-    mSelectedSyncRow(-1),
     mBackupRootHandle(mega::INVALID_HANDLE),
     mCreateBackupRootDir (true),
     mPendingBackup()
@@ -178,7 +176,6 @@ SettingsDialog::SettingsDialog(MegaApplication* app, bool proxyOnly, QWidget* pa
 
 #ifdef Q_OS_MACOS
     this->setWindowTitle(tr("Preferences"));
-    mUi->tSyncs->horizontalHeader()->setDefaultAlignment(Qt::AlignLeft);
     mUi->cStartOnStartup->setText(tr("Launch at login"));
     mUi->lLocalDebris->setText(mUi->lLocalDebris->text().arg(QString::fromUtf8(MEGA_DEBRIS_FOLDER)));
 
@@ -228,16 +225,9 @@ SettingsDialog::SettingsDialog(MegaApplication* app, bool proxyOnly, QWidget* pa
     connect(mApp, &MegaApplication::storageStateChanged, this, &SettingsDialog::storageStateChanged);
     storageStateChanged(app->getAppliedStorageState());
 
-    connect(mModel, &SyncModel::syncStateChanged, this, &SettingsDialog::onSyncStateChanged);
-    connect(mModel, &SyncModel::syncRemoved, this, &SettingsDialog::onSyncStateChanged);
-
-    connect(mUi->tSyncs, &QTableWidget::cellClicked,
-            this, &SettingsDialog::onCellClicked);
-
-    connect(mUi->tSyncs->selectionModel(), &QItemSelectionModel::selectionChanged,
-            this, &SettingsDialog::onSyncSelected);
-    mUi->tSyncs->setMouseTracking(true);
     syncsStateInformation(SyncStateInformation::NO_SAVING_SYNCS);
+
+    connectSyncHandlers();
 
     connectBackupHandlers();
 }
@@ -462,9 +452,9 @@ void SettingsDialog::initializeNativeUIComponents()
     // Configure segmented control for +/- syncs
     mUi->wSyncsSegmentedControl->configureTableSegment();
     connect(mUi->wSyncsSegmentedControl, &QSegmentedControl::addButtonClicked,
-            this, &SettingsDialog::on_bAdd_clicked);
+            this, &SettingsDialog::on_bAddSync_clicked);
     connect(mUi->wSyncsSegmentedControl, &QSegmentedControl::removeButtonClicked,
-            this, &SettingsDialog::on_bDelete_clicked);
+            this, &SettingsDialog::on_bDeleteSync_clicked);
 
     mUi->wBackupSegmentedControl->configureTableSegment();
     connect(mUi->wBackupSegmentedControl, &QSegmentedControl::addButtonClicked,
@@ -592,10 +582,8 @@ void SettingsDialog::loadSettings()
     updateUploadFolder();
     updateDownloadFolder();
 
-    //Syncs
     loadSyncSettings();
 
-    //Backup
     loadBackupSettings();
 
 #ifdef Q_OS_WINDOWS
@@ -703,22 +691,12 @@ void SettingsDialog::onRemoteCacheSizeAvailable()
     onCacheSizeAvailable();
 }
 
-void SettingsDialog::onSavingSyncsProgress(double progress)
-{
-    Q_UNUSED(progress)
-    syncsStateInformation(SyncStateInformation::SAVING_SYNCS);
-    savingSyncs(false, mUi->pSyncs);
-    mIsSavingSyncsOnGoing = true;
-}
-
 void SettingsDialog::onSavingSyncsCompleted()
 {
     auto closeDelay = std::max(0ll, 350ll - (QDateTime::currentMSecsSinceEpoch()
-                                             - mUi->wSpinningIndicator->getStartTime()));
+                                                 - mUi->wSpinningIndicator->getStartTime()));
     QTimer::singleShot(closeDelay, this, [this] () {
-        mIsSavingSyncsOnGoing = false;
         syncsStateInformation(SyncStateInformation::NO_SAVING_SYNCS);
-        savingSyncs(true, mUi->pSyncs);
     });
 }
 
@@ -1384,192 +1362,94 @@ void SettingsDialog::setAvatar()
 
 // Syncs -------------------------------------------------------------------------------------------
 
+void SettingsDialog::connectSyncHandlers()
+{
+
+    connect(&mSyncController, &SyncController::syncAddStatus, this, [](int errorCode, const QString errorMsg)
+    {
+        if (errorCode != MegaError::API_OK)
+            QMegaMessageBox::critical(nullptr, tr("Error adding sync"), errorMsg);
+    }, Qt::QueuedConnection);
+
+    connect(&mSyncController, &SyncController::syncRemoveError, this, [](std::shared_ptr<SyncSetting> sync)
+    {
+        QMegaMessageBox::critical(nullptr, tr("Error removing sync"),
+                                  tr("Your sync \"%1\" can't be removed. Reason: %2")
+                                  .arg(sync->name())
+                                  .arg(QCoreApplication::translate("MegaSyncError", MegaSync::getMegaSyncErrorCode(sync->getError()))));
+    }, Qt::QueuedConnection);
+
+    connect(&mSyncController, &SyncController::syncEnableError, this, [](std::shared_ptr<SyncSetting> sync)
+    {
+        QMegaMessageBox::critical(nullptr, tr("Error enabling sync"),
+                                  tr("Your sync \"%1\" can't be enabled. Reason: %2")
+                                  .arg(sync->name())
+                                  .arg(QCoreApplication::translate("MegaSyncError", MegaSync::getMegaSyncErrorCode(sync->getError()))));
+    }, Qt::QueuedConnection);
+
+    connect(&mSyncController, &SyncController::syncDisableError, this, [](std::shared_ptr<SyncSetting> sync)
+    {
+        QMegaMessageBox::critical(nullptr, tr("Error disabling sync"),
+                                  tr("Your sync \"%1\" can't be disabled. Reason: %2")
+                                  .arg(sync->name())
+                                  .arg(QCoreApplication::translate("MegaSyncError", MegaSync::getMegaSyncErrorCode(sync->getError()))));
+    }, Qt::QueuedConnection);
+}
+
 void SettingsDialog::loadSyncSettings()
 {
-    mUi->tSyncs->clearContents();
-    mSyncNames.clear();
-
-    // TODO: incomplete: we also neeed a copy of configuredSyncs from theh model to iterate
-    // in the right order.
-    //Get a snapshot of current syncs to avoid possible issues if some of them are removed during loop op
-//    QMap<MegaHandle, std::shared_ptr<SyncSetting>> syncs = mModel->getCopyOfSettings();
-
-    mUi->tSyncs->horizontalHeader()->setVisible(true);
-    mUi->tSyncs->horizontalHeader()->setDefaultAlignment(Qt::AlignLeft);
-    const auto syncSettings (mModel->getSyncSettingsByType(MegaSync::TYPE_TWOWAY));
-    int numFolders (syncSettings.size());
-    mUi->tSyncs->setRowCount(numFolders);
-    mUi->tSyncs->setColumnCount(SYNC_COL_NB);
-    mUi->tSyncs->setColumnHidden(SYNC_COL_TAG, true);    //hidden tag
-    mUi->tSyncs->setColumnHidden(SYNC_COL_HANDLE, true); //hidden handle
-    mUi->tSyncs->setColumnHidden(SYNC_COL_NAME, true);   //hidden name
-    mUi->tSyncs->horizontalHeader()->setSectionResizeMode(SYNC_COL_ENABLE_CB, QHeaderView::Fixed);
-    mUi->tSyncs->horizontalHeader()->setSectionResizeMode(SYNC_COL_MENU, QHeaderView::Fixed);
-    mUi->tSyncs->horizontalHeader()->setSectionResizeMode(SYNC_COL_LFOLDER,QHeaderView::Stretch);
-    mUi->tSyncs->horizontalHeader()->setSectionResizeMode(SYNC_COL_RFOLDER,QHeaderView::Stretch);
-    int miniMumSectionSize (mUi->tSyncs->horizontalHeader()->minimumSectionSize());
-    mUi->tSyncs->horizontalHeader()->resizeSection(SYNC_COL_ENABLE_CB, miniMumSectionSize);
-    mUi->tSyncs->horizontalHeader()->resizeSection(SYNC_COL_MENU, miniMumSectionSize);
-
-    // New check up. Need to reset, syncs state could have changed
-    mAreSyncsDisabled = false;
-
-    for (int i = 0; i < numFolders; ++i)
+    SyncItemModel *model(new SyncItemModel(mUi->syncTableView));
+    model->fillData();
+    connect(model, &SyncItemModel::enableSync, this, [this](std::shared_ptr<SyncSetting> sync)
     {
-        auto syncSetting = syncSettings[i];
-        // Check if current sync is disabled by an error.
-        mAreSyncsDisabled = mAreSyncsDisabled || static_cast<bool>(syncSetting->getError());
+        syncsStateInformation(SyncStateInformation::SAVING_SYNCS);
+        mSyncController.enableSync(sync);
+    });
+    connect(model, &SyncItemModel::disableSync, this, [this](std::shared_ptr<SyncSetting> sync)
+    {
+        syncsStateInformation(SyncStateInformation::SAVING_SYNCS);
+        mSyncController.disableSync(sync);
+    });
+    connect(model, &SyncItemModel::syncUpdateFinished, this, [this]()
+    {
+        onSavingSyncsCompleted();
+    });
 
-        addSyncRow(i, syncSetting->name(), syncSetting->getLocalFolder(),
-                   syncSetting->getMegaFolder(), syncSetting->isActive(),
-                   syncSetting->getError(), syncSetting->getMegaHandle(),
-                   syncSetting->backupId(), syncSetting);
-    }
-    syncsStateInformation(SyncStateInformation::NO_SAVING_SYNCS);
+    SyncItemSortModel *sortModel = new SyncItemSortModel(mUi->syncTableView);
+    sortModel->setSourceModel(model);
+    mUi->syncTableView->setModel(sortModel);
+
 }
 
 void SettingsDialog::addSyncFolder(MegaHandle megaFolderHandle)
 {
-    const bool dismissed{mApp->showSyncOverquotaDialog()};
-    if(!dismissed)
-    {
+    if(!mApp->showSyncOverquotaDialog())
         return;
-    }
 
-    QStringList currentLocalFolders;
-    QStringList currentMegaFoldersPaths;
-    for (int i = 0; i < mUi->tSyncs->rowCount(); i++)
-    {
-        //notice: this also takes into account !active ones
-        QWidget* w (mUi->tSyncs->cellWidget(i, SYNC_COL_LFOLDER));
-        currentLocalFolders.append(static_cast<QSyncItemWidget*>(w)->fullPath());
-        w = mUi->tSyncs->cellWidget(i, SYNC_COL_RFOLDER);
-        currentMegaFoldersPaths.append(static_cast<QSyncItemWidget*>(w)->fullPath());
-    }
-
-    QPointer<BindFolderDialog> dialog = new BindFolderDialog(mApp, mSyncNames, currentLocalFolders,
-                                                             currentMegaFoldersPaths, this);
-    if (megaFolderHandle != mega::INVALID_HANDLE)
-    {
-        dialog->setMegaFolder(megaFolderHandle);
-    }
+    QPointer<BindFolderDialog> dialog = new BindFolderDialog(mApp, mSyncNames, mModel->getLocalFolders(SyncModel::AllHandledSyncTypes),
+                                                             mModel->getMegaFolders(SyncModel::AllHandledSyncTypes), this);
+    dialog->setMegaFolder(megaFolderHandle);
 
     int result = dialog->exec();
+
     if (!dialog || result != QDialog::Accepted)
     {
         delete dialog;
         return;
     }
 
-    QString localFolderPath = QDir::toNativeSeparators(QDir(dialog->getLocalFolder())
-                                                       .canonicalPath());
-    if (!localFolderPath.length() || !dialog->getMegaPath().size())
+    QString localFolderPath = QDir::toNativeSeparators(QDir(dialog->getLocalFolder()).canonicalPath());
+
+    if (localFolderPath.isEmpty() || dialog->getMegaPath().isEmpty()
+        || dialog->getSyncName().isEmpty() || !dialog->getMegaFolder())
     {
         delete dialog;
         return;
     }
 
-    int pos = mUi->tSyncs->rowCount();
-    mUi->tSyncs->setRowCount(pos + 1);
-
-    addSyncRow(pos, dialog->getSyncName(), localFolderPath, dialog->getMegaPath(),
-               true, 0, dialog->getMegaFolder(), INVALID_HANDLE);
+    mSyncController.addSync(localFolderPath, dialog->getMegaFolder(), dialog->getSyncName());
 
     delete dialog;
-
-    saveSyncSettings();
-}
-
-void SettingsDialog::syncStateChanged(int state)
-{
-    if (state)
-    {
-        Platform::prepareForSync();
-    }
-
-    saveSyncSettings();
-}
-
-void SettingsDialog::onSyncStateChanged(std::shared_ptr<SyncSetting>)
-{
-    loadSyncSettings();
-}
-
-// errorCode reffers to the requestErrorCode.
-void SettingsDialog::onEnableSyncFailed(int errorCode, std::shared_ptr<SyncSetting> syncSetting)
-{
-    switch (errorCode)
-    {
-        case MegaSync::Error::NO_SYNC_ERROR:
-        {
-            assert(false && "unexpected no error after enabling failed");
-            return;
-        }
-        default:
-        {
-            QMegaMessageBox::critical(nullptr, tr("Error enabling sync"),
-                                      tr("Your sync \"%1\" can't be enabled. Reason: %2").arg(
-                                          syncSetting->name(),
-                                          tr(MegaSync::getMegaSyncErrorCode(errorCode))));
-            break;
-        }
-    }
-
-    loadSyncSettings();
-}
-
-void SettingsDialog::onDisableSyncFailed(std::shared_ptr<SyncSetting> syncSetting)
-{
-    QMegaMessageBox::critical(nullptr, tr("Error"),
-                              tr("Unexpected error disabling sync %1").arg(syncSetting->name()));
-}
-
-void SettingsDialog::onSyncSelected(const QItemSelection& selected, const QItemSelection& deselected)
-{
-    Q_UNUSED(deselected)
-
-    int row (-1);
-
-    // Get selected row
-    if (!selected.isEmpty())
-    {
-        row = selected.first().indexes().first().row();
-        mSelectedSyncRow = row;
-    }
-    else if (mSelectedSyncRow != -1)
-    {
-        row = mSelectedSyncRow;
-    }
-    else
-    {
-        mSelectedSyncRow = -1;
-    }
-
-    for (int i = 0; i < mUi->tSyncs->rowCount(); ++i)
-    {
-        bool select (false);
-        QString menuRsc (QString::fromUtf8("://images/Item_options_rest.png"));
-
-        if (i == row)
-        {
-            menuRsc = QString::fromUtf8("://images/Item_options_press.png");
-            select = true;
-        }
-
-        // Paths
-        auto w (qobject_cast<QSyncItemWidget*>(mUi->tSyncs->cellWidget(i, SYNC_COL_LFOLDER)));
-        // Check if the row has not been deleted
-        if (w)
-        {
-            w->setSelected(select);
-            w = qobject_cast<QSyncItemWidget*>(mUi->tSyncs->cellWidget(i, SYNC_COL_RFOLDER));
-            w->setSelected(select);
-
-            // Menu
-            auto lMenu (qobject_cast<QWidget*>(mUi->tSyncs->cellWidget(i, SYNC_COL_MENU)));
-            lMenu->setStyleSheet(SYNCS_TAB_MENU_LABEL_QSS.arg(menuRsc));
-        }
-    }
 }
 
 void SettingsDialog::on_bSyncs_clicked()
@@ -1582,7 +1462,6 @@ void SettingsDialog::on_bSyncs_clicked()
     }
 
     mUi->wStack->setCurrentWidget(mUi->pSyncs);
-    mUi->tSyncs->horizontalHeader()->setVisible(true);
 
 #ifdef Q_OS_MACOS
     emit closeMenus();
@@ -1591,132 +1470,6 @@ void SettingsDialog::on_bSyncs_clicked()
 #endif
 }
 
-void SettingsDialog::on_bAdd_clicked()
-{
-    addSyncFolder(mega::INVALID_HANDLE);
-}
-
-void SettingsDialog::on_bDelete_clicked()
-{
-    if (mSelectedSyncRow == -1)
-    {
-        return;
-    }
-
-    mUi->tSyncs->removeRow(mSelectedSyncRow);
-    mSyncNames.removeAt(mSelectedSyncRow);
-
-    saveSyncSettings();
-}
-
-void SettingsDialog::on_tSyncs_doubleClicked(const QModelIndex& index)
-{
-    //FIXME: When using custom widget for row items, remove double check or use cellwidget to fix it.
-    if (!index.column())
-    {
-        auto w (static_cast<QSyncItemWidget*>(mUi->tSyncs->cellWidget(index.row(),
-                                                                     SYNC_COL_LFOLDER)));
-        QtConcurrent::run(QDesktopServices::openUrl, QUrl::fromLocalFile(w->fullPath()));
-    }
-    else
-    {
-        auto w (static_cast<QSyncItemWidget*>(mUi->tSyncs->cellWidget(index.row(),
-                                                                     SYNC_COL_RFOLDER)));
-        QString megaFolderPath = w->fullPath();
-        MegaNode* node = mMegaApi->getNodeByPath(megaFolderPath.toUtf8().constData());
-        if (node)
-        {
-            const char *handle = node->getBase64Handle();
-            QString url = QString::fromUtf8("mega://#fm/") + QString::fromUtf8(handle);
-            QtConcurrent::run(QDesktopServices::openUrl, QUrl(url));
-            delete [] handle;
-            delete node;
-        }
-    }
-}
-
-void SettingsDialog::onCellClicked(int row, int column)
-{
-    if (column != SYNC_COL_MENU)
-        return;
-
-    mSelectedSyncRow = row;
-
-    QMenu *menu(new QMenu(mUi->tSyncs));
-
-    Platform::initMenu(menu);
-
-#if defined(Q_OS_MACOS)
-    connect(this, &SettingsDialog::closeMenus, menu, &SettingsDialog::close);
-#endif
-
-    // Show in explorer action
-    auto showLocalAction (new MenuItemAction(QCoreApplication::translate("Platform", Platform::fileExplorerString),
-                                             QIcon(QString::fromUtf8("://images/show_in_folder_ico.png"))));
-    connect(showLocalAction, &MenuItemAction::triggered,
-            this, &SettingsDialog::showInFolderClicked);
-
-    // Show in Mega action
-    auto showRemoteAction (new MenuItemAction(tr("Open in MEGA"),
-                                              QIcon(QString::fromUtf8("://images/ico_open_MEGA.png"))));
-    connect(showRemoteAction, &MenuItemAction::triggered,
-            this, &SettingsDialog::showInMegaClicked);
-    // Delete Sync action
-    auto delAction (new MenuItemAction(tr("Remove synced folder"),
-                                       QIcon(QString::fromUtf8("://images/ico_Delete.png"))));
-    delAction->setAccent(true);
-    connect(delAction, &MenuItemAction::triggered,
-            this, &SettingsDialog::onDeleteSync, Qt::QueuedConnection);
-
-    showLocalAction->setParent(menu);
-    showRemoteAction->setParent(menu);
-    delAction->setParent(menu);
-
-    menu->addAction(showLocalAction);
-    menu->addAction(showRemoteAction);
-    menu->addSeparator();
-    menu->addAction(delAction);
-
-    QWidget* w (mUi->tSyncs->cellWidget(row, column));
-    menu->popup(w->mapToGlobal(w->rect().center()));
-}
-
-void SettingsDialog::showInFolderClicked()
-{
-    QWidget* w (mUi->tSyncs->cellWidget(mSelectedSyncRow, SYNC_COL_LFOLDER));
-    QString localFolderPath (qobject_cast<QSyncItemWidget*>(w)->fullPath());
-    QtConcurrent::run(QDesktopServices::openUrl, QUrl::fromLocalFile(localFolderPath));
-}
-
-void SettingsDialog::showInMegaClicked()
-{
-    auto syncSetting = mModel->getSyncSetting(mSelectedSyncRow, MegaSync::TYPE_TWOWAY);
-
-    std::unique_ptr<char[]> np (MegaSyncApp->getMegaApi()->getNodePathByNodeHandle(
-                                    syncSetting->getMegaHandle()));
-    if (np)
-    {
-        MegaNode* node (mMegaApi->getNodeByPath(np.get()));
-        if (node)
-        {
-            const char* handle = node->getBase64Handle();
-            QString url = QString::fromUtf8("mega://#fm/") + QString::fromUtf8(handle);
-            QtConcurrent::run(QDesktopServices::openUrl, QUrl(url));
-            delete [] handle;
-            delete node;
-        }
-    }
-    SyncModel::instance()->updateMegaFolder(np ? QString::fromUtf8(np.get())
-                                           : QString(),
-                                        syncSetting);
-}
-
-void SettingsDialog::onDeleteSync()
-{
-    mUi->tSyncs->removeRow(mSelectedSyncRow);
-    mSyncNames.removeAt(mSelectedSyncRow);
-    saveSyncSettings();
-}
 
 #ifndef WIN32
 void SettingsDialog::on_bPermissions_clicked()
@@ -1750,252 +1503,35 @@ void SettingsDialog::on_bPermissions_clicked()
 }
 #endif
 
-void SettingsDialog::saveSyncSettings()
+void SettingsDialog::on_bAddSync_clicked()
 {
-    mSaveSyncsProgress.reset(new ProgressHelper(false, tr("Saving Sync settings")));
-    connect(mSaveSyncsProgress.get(), &ProgressHelper::progress,
-            this, &SettingsDialog::onSavingSyncsProgress);
-    connect(mSaveSyncsProgress.get(), &ProgressHelper::completed,
-            this, &SettingsDialog::onSavingSyncsCompleted);
-
-    ProgressHelperCompletionGuard g(mSaveSyncsProgress.get());
-
-    if (!mProxyOnly)
-    {
-        onSavingSyncsProgress(0);
-
-        // 1 - loop through the syncs in the model to remove or update
-        for (int i = 0; i < mModel->getNumSyncedFolders(MegaSync::TYPE_TWOWAY); i++)
-        {
-            auto syncSetting = mModel->getSyncSetting(i, MegaSync::TYPE_TWOWAY);
-            if (!syncSetting)
-            {
-                assert("missing setting when looping for saving");
-                continue;
-            }
-
-            // 1.1 - remove no longer present:
-            bool found = false;
-            for (int j = 0; j < mUi->tSyncs->rowCount(); j++)
-            {
-                auto tagItem = mUi->tSyncs->cellWidget(j, SYNC_COL_TAG);
-                if (tagItem
-                        && static_cast<QLabel*>(tagItem)->text().toULongLong()
-                        == syncSetting->backupId())
-                {
-                    found = true;
-                    break;
-                }
-            }
-            if (!found) //sync no longer found in settings: needs removing
-            {
-                MegaApi::log(MegaApi::LOG_LEVEL_INFO,
-                             QString::fromUtf8("Removing sync: %1").arg(
-                                 syncSetting->name()).toUtf8().constData());
-                ActionProgress* removeSyncStep =
-                        new ActionProgress(true, QString::fromUtf8("Removing sync: %1 - %2").arg(
-                                               syncSetting->getLocalFolder(),
-                                               syncSetting->getMegaFolder()));
-                mSaveSyncsProgress->addStep(removeSyncStep);
-                mController->removeSync(syncSetting, removeSyncStep);
-            }
-
-            // 1.2 - enable/disable changed syncs
-            for (int j = 0; j < mUi->tSyncs->rowCount(); j++)
-            {
-                QWidget* cbParent (mUi->tSyncs->cellWidget(j, SYNC_COL_ENABLE_CB));
-                auto cb (cbParent->findChild<QCheckBox*>());
-                bool enabled = cb->isChecked();
-                bool disabled = !enabled;
-
-                auto tagItem = qobject_cast<QLabel*>(mUi->tSyncs->cellWidget(j, SYNC_COL_TAG));
-
-                if (tagItem && tagItem->text().toULongLong() == syncSetting->backupId())
-                {
-                    if (disabled && syncSetting->isActive()) //sync disabled
-                    {
-                        ActionProgress* disableSyncStep
-                                = new ActionProgress(true,
-                                                     QString::fromUtf8("Disabling sync: %1 - %2")
-                                                     .arg(syncSetting->getLocalFolder(),
-                                                          syncSetting->getMegaFolder()));
-                        mSaveSyncsProgress->addStep(disableSyncStep);
-
-                        connect(disableSyncStep, &ActionProgress::failedRequest,
-                                this, [this, syncSetting](MegaRequest* request, MegaError* error)
-                        {
-                            Q_UNUSED(request)
-                            if (error->getErrorCode())
-                            {
-                                QObject temporary;
-                                QObject::connect(&temporary, &QObject::destroyed,
-                                                 this, [this, syncSetting](){
-                                    //Note: this might get executed before onSyncStateChanged!
-                                    onDisableSyncFailed(syncSetting);
-                                    loadSyncSettings(); //to no longer show the failed line
-                                }, Qt::QueuedConnection);
-                            }
-                        }, Qt::DirectConnection); //We need direct connection to use request & error
-
-                        mController->disableSync(syncSetting, disableSyncStep);
-                    }
-                    else if (enabled && !syncSetting->isActive()) //sync re-enabled!
-                    {
-                        ActionProgress* enableSyncStep
-                                = new ActionProgress(true,
-                                                     QString::fromUtf8("Enabling sync: %1 - %2")
-                                                     .arg(syncSetting->getLocalFolder(),
-                                                          syncSetting->getMegaFolder()));
-                        mSaveSyncsProgress->addStep(enableSyncStep);
-                        connect(enableSyncStep, &ActionProgress::failedRequest,
-                                this, [this, syncSetting](MegaRequest* request, MegaError* error)
-                        {
-                            if (error->getErrorCode())
-                            {
-                                auto syncError = request->getNumDetails();
-                                QObject temporary;
-                                QObject::connect(&temporary, &QObject::destroyed,
-                                                 this, [this, syncError, syncSetting](){
-                                    //Note: this might get executed before onSyncStateChanged!
-                                    //(syncSettings might have some old values), that's why we
-                                    // don't use syncSetting->getError.
-                                    onEnableSyncFailed(syncError, syncSetting);
-                                    loadSyncSettings(); //to no longer show the failed line
-                                }, Qt::QueuedConnection);
-                            }
-                        }, Qt::DirectConnection); //We need direct connection to use request & error
-
-                        mController->enableSync(syncSetting, enableSyncStep);
-                    }
-                    break;
-                }
-                else
-                {
-                    assert("paths changed for an already configured sync");
-                }
-            }
-        }
-
-        // 2 - look for new syncs
-        for (int j = 0; j < mUi->tSyncs->rowCount(); j++)
-        {
-            auto tagItem = mUi->tSyncs->cellWidget(j, SYNC_COL_TAG);
-            if (!tagItem) //not found: new sync
-            {
-                QWidget* cbParent (mUi->tSyncs->cellWidget(j, SYNC_COL_ENABLE_CB));
-                auto cb (cbParent->findChild<QCheckBox*>());
-                bool enabled = cb->isChecked();
-                if (enabled)
-                {
-                    QWidget* w (mUi->tSyncs->cellWidget(j, SYNC_COL_LFOLDER));
-                    QString localFolderPath = qobject_cast<QSyncItemWidget*>(w)->fullPath();
-                    w = mUi->tSyncs->cellWidget(j, SYNC_COL_RFOLDER);
-                    QString megaFolderPath = qobject_cast<QSyncItemWidget*>(w)->fullPath();
-                    w = mUi->tSyncs->cellWidget(j, SYNC_COL_HANDLE);
-                    MegaHandle nodeHandle = qobject_cast<QLabel*>(w)->text().toULongLong();
-                    w = mUi->tSyncs->cellWidget(j, SYNC_COL_NAME);
-                    QString syncName =qobject_cast<QLabel*>(w)->text();
-
-                    MegaApi::log(MegaApi::LOG_LEVEL_INFO,
-                                 QString::fromUtf8("Adding sync from Settings: %1 - %2")
-                                 .arg(localFolderPath, megaFolderPath).toUtf8().constData());
-
-                    ActionProgress* addSyncStep =
-                            new ActionProgress(true, QString::fromUtf8("Adding sync: %1 - %2")
-                                               .arg(localFolderPath, megaFolderPath));
-                    mSaveSyncsProgress->addStep(addSyncStep);
-
-                    //Connect failing signals
-                    connect(addSyncStep, &ActionProgress::failed,
-                            this, [this, localFolderPath, megaFolderPath](int errorCode)
-                    {
-                        MegaSyncApp->showAddSyncError(errorCode, localFolderPath, megaFolderPath);
-                        loadSyncSettings(); //to no longer show the failed line
-                    }, Qt::QueuedConnection);
-
-                    connect(addSyncStep, &ActionProgress::failedRequest,
-                            this, [this, localFolderPath, megaFolderPath](MegaRequest* request,
-                            MegaError* error)
-                    {
-                        if (error->getErrorCode())
-                        {
-                            auto reqCopy = request->copy();
-                            auto errCopy = error->copy();
-
-                            QObject temporary;
-                            QObject::connect(&temporary, &QObject::destroyed,
-                                             this, [this, reqCopy, errCopy, localFolderPath,
-                                             megaFolderPath](){
-
-                                // we might want to handle this separately
-                                // (i.e: indicate errors in SyncSettings engine)
-                                MegaSyncApp->showAddSyncError(reqCopy, errCopy, localFolderPath,
-                                                      megaFolderPath);
-                                loadSyncSettings();  //to no longer show the failed line
-
-                                delete reqCopy;
-                                delete errCopy;
-                                //(syncSettings might have some old values),
-                                // that's why we don't use syncSetting->getError.
-                            }, Qt::QueuedConnection);
-                        }
-                    }, Qt::DirectConnection); //Note, we need direct connection to use request & error
-
-                    mController->addSync(localFolderPath, nodeHandle, syncName, addSyncStep);
-                }
-                else
-                {
-                    assert("adding a disabled sync is not allowed");
-                }
-
-                continue;
-            }
-        }
-    }
+    addSyncFolder(mega::INVALID_HANDLE);
 }
 
-void SettingsDialog::savingSyncs(bool completed, QObject* item)
+void SettingsDialog::on_bDeleteSync_clicked()
 {
-    if (!item)
+    if(mUi->syncTableView->selectionModel()->hasSelection())
     {
-        return;
+        QModelIndex index = mUi->syncTableView->selectionModel()->selectedRows().first();
+        mSyncController.removeSync(index.data(Qt::UserRole).value<std::shared_ptr<SyncSetting>>());
     }
-
-    for(auto *widget : item->findChildren<QWidget*>())
-    {
-        widget->setEnabled(completed);
-    }
-
-#ifndef Q_OS_MACOS
-    mUi->bGeneral->setEnabled(completed);
-    mUi->bAccount->setEnabled(completed);
-    mUi->bSyncs->setEnabled(completed);
-    mUi->bBackup->setEnabled(completed);
-    mUi->bSecurity->setEnabled(completed);
-    mUi->bFolders->setEnabled(completed);
-    mUi->bNetwork->setEnabled(completed);
-    mUi->bNotifications->setEnabled(completed);
-#else
-    mToolBar->setEnableToolbarItems(completed);
-#endif
 }
 
 void SettingsDialog::syncsStateInformation(int state)
 {
-    // If saving syncs are still in progress, wait the timeout for setting state widget
-    if (mIsSavingSyncsOnGoing)
-    {
-        return;
-    }
-
     switch (state)
     {
         case SAVING_SYNCS:
+            setEnabled(false);
+            //if we are on sync tab
             mUi->wSpinningIndicator->start();
             mUi->sSyncsState->setCurrentWidget(mUi->pSavingSyncs);
+            mUi->wSpinningIndicatorBackups->start();
+            mUi->wSaveBackups->setVisible(true);
             break;
         default:
         {
+            setEnabled(true);
             mUi->wSpinningIndicator->stop();
             // If any sync is disabled, shows warning message
             if (mAreSyncsDisabled)
@@ -2006,121 +1542,36 @@ void SettingsDialog::syncsStateInformation(int state)
                 QString syncs(QString::fromUtf8("settings-syncs-error"));
                 mToolBar->customizeIconToolBarItem(bSyncs.get(), syncs);
 #else
-                mUi->bSyncs->setIcon(QIcon(QString::fromUtf8(":/images/settings-syncs-warn.png")));
+               mUi->bSyncs->setIcon(QIcon(QString::fromUtf8(":/images/settings-syncs-warn.png")));
 #endif
-            }
-            else
-            {
-                mUi->sSyncsState->setCurrentWidget(mUi->pNoErrors);
+             }
+             else
+             {
+                 mUi->sSyncsState->setCurrentWidget(mUi->pNoErrors);
 
 #ifdef Q_OS_MACOS
                 QString syncs(QString::fromUtf8("settings-syncs"));
                 mToolBar->customizeIconToolBarItem(bSyncs.get(), syncs);
 #else
-                mUi->bSyncs->setIcon(QIcon(QString::fromUtf8(":/images/settings-syncs.png")));
+                 mUi->bSyncs->setIcon(QIcon(QString::fromUtf8(":/images/settings-syncs.png")));
 #endif
-            }
+             }
+
+             mUi->wSpinningIndicatorBackups->stop();
+             mUi->wSaveBackups->setVisible(false);
+
         }
             break;
     }
 }
 
-void SettingsDialog::addSyncRow(int row, const QString& name, const QString& lPath,
-                                const QString& rPath, bool isActive, int error,
-                                MegaHandle megaHandle, MegaHandle tag,
-                                std::shared_ptr<SyncSetting> syncSetting)
-{
-    // Col 0: Enabled/Disabled checkbox
-    QWidget* w = new QWidget();
-    QHBoxLayout* hl = new QHBoxLayout();
-    QCheckBox* c = new QCheckBox();
-
-#ifdef Q_OS_MACOS
-    //Set fixed size to avoid misplaced of checkbox for sync row items
-    hl->setContentsMargins(0, 0, 11, 0);
-    c->setFixedSize(16, 16);
-#else
-    hl->setContentsMargins(0, 0, 0, 0);
-#endif
-
-    w->setLayout(hl);
-    hl->addWidget(c);
-    hl->setAlignment(c, Qt::AlignCenter);
-
-    // Note: isEnabled refers to enable/disabled by the user. It could be temporary
-    //       disabled or even failed. This should be shown in the UI.
-    c->setChecked(isActive);
-    c->setToolTip(tr("Enable / disable"));
-    connect(c, &QCheckBox::stateChanged,
-            this, &SettingsDialog::syncStateChanged, Qt::QueuedConnection);
-
-    mUi->tSyncs->setCellWidget(row, SYNC_COL_ENABLE_CB, w);
-
-    // Col 1: Local folder
-    QSyncItemWidget* localFolder = new QSyncItemWidget(QSyncItemWidget::LOCAL_FOLDER, this);
-    QString localFolderQString = lPath;
-#ifdef Q_OS_WINDOWS
-    if (localFolderQString.startsWith(QString::fromUtf8("\\\\?\\")))
-    {
-        localFolderQString = localFolderQString.mid(4);
-    }
-#endif
-    localFolder->setPath(localFolderQString, name);
-    localFolder->setToolTip(localFolderQString);
-    localFolder->setError(error);
-    mUi->tSyncs->setCellWidget(row, SYNC_COL_LFOLDER, localFolder);
-
-    // Col 2: Mega Folder
-    QSyncItemWidget* megaFolder = new QSyncItemWidget(QSyncItemWidget::REMOTE_FOLDER, this);
-    assert(rPath.size() && "remote folder lacks path");
-    megaFolder->setPath(rPath.size() ?
-                            rPath
-                          : QString::fromUtf8("---"));
-    megaFolder->setToolTip(rPath);
-    megaFolder->setSyncSetting(syncSetting);
-    megaFolder->mSyncRootHandle = megaHandle;
-    mUi->tSyncs->setCellWidget(row, SYNC_COL_RFOLDER, megaFolder);
-
-    // Col 3: menu
-    QLabel* lMenu (new QLabel);
-    QString menuRsc (QString::fromUtf8("://images/Item_options_rest.png"));
-    lMenu->setFixedSize(16, 16);
-
-    QWidget* menuWidget = new QWidget();
-    QHBoxLayout* horizontalLayout = new QHBoxLayout();
-    horizontalLayout->addWidget(lMenu);
-    menuWidget->setStyleSheet(SYNCS_TAB_MENU_LABEL_QSS.arg(menuRsc));
-    horizontalLayout->setContentsMargins(0, 0, 0, 0);
-    horizontalLayout->setAlignment(lMenu, Qt::AlignCenter);
-    menuWidget->setLayout(horizontalLayout);
-
-    mUi->tSyncs->setCellWidget(row, SYNC_COL_MENU, menuWidget);
-
-    // Col 4: tag. HIDDEN
-    if (tag != INVALID_HANDLE)
-    {
-        QLabel* lTag = new QLabel(QString::number(tag));
-        mUi->tSyncs->setCellWidget(row, SYNC_COL_TAG, lTag);
-    }
-
-    // Col 5: MegaHandle. HIDDEN
-    QLabel* lHandle = new QLabel(QString::number(megaHandle));
-    mUi->tSyncs->setCellWidget(row, SYNC_COL_HANDLE, lHandle);
-
-    // Col 6: SyncName. HIDDEN
-    QLabel* lName = new QLabel(name);
-    mUi->tSyncs->setCellWidget(row, SYNC_COL_NAME, lName);
-
-    mSyncNames.append(name);
-}
-
 // Backup ----------------------------------------------------------------------------------------
 void SettingsDialog::connectBackupHandlers()
 {
-    connect(mUi->backupTableWidget, &BackupTableWidget::removeBackup, this, &SettingsDialog::removeBackup);
-    connect(mUi->backupTableWidget, &BackupTableWidget::openInMEGA, this, &SettingsDialog::openMEGAHandleInExplorer);
+    connect(mUi->backupTableView, &BackupTableView::removeBackup, this, &SettingsDialog::removeBackup);
+    connect(mUi->backupTableView, &BackupTableView::openInMEGA, this, &SettingsDialog::openMEGAHandleInExplorer);
 
-    connect(&mSyncController, &SyncController::myBackupsHandle, this, [this](mega::MegaHandle backupRootHandle)
+    connect(&mBackupController, &SyncController::myBackupsHandle, this, [this](mega::MegaHandle backupRootHandle)
     {
         if(backupRootHandle == mega::INVALID_HANDLE)
         {
@@ -2137,79 +1588,72 @@ void SettingsDialog::connectBackupHandlers()
         mUi->lBackupFolder->setText(mSyncController.getMyBackupsLocalizedPath());
     });
 
-    connect(&mSyncController, &SyncController::setMyBackupsStatus, this, [](int errorCode, QString errorMsg)
+    connect(&mBackupController, &SyncController::setMyBackupsStatus, this, [](int errorCode, QString errorMsg)
     {
         if (errorCode != mega::MegaError::API_OK)
             QMegaMessageBox::critical(nullptr, tr("Backup Error"), tr("Error creating Backups root folder: %2") .arg(errorMsg));
     });
 
-    connect(&mSyncController, &SyncController::syncAddStatus, this, [](const int errorCode, const QString errorMsg, QString name)
+    connect(&mBackupController, &SyncController::syncAddStatus, this, [](const int errorCode, const QString errorMsg, QString name)
     {
         if (errorCode != MegaError::API_OK)
             QMegaMessageBox::warning(nullptr, tr("Error adding backup %1").arg(name), errorMsg);
     });
 
-    connect(&mSyncController, &SyncController::syncRemoveError, this, [](std::shared_ptr<SyncSetting> sync)
+    connect(&mBackupController, &SyncController::syncRemoveError, this, [](std::shared_ptr<SyncSetting> sync)
     {
         QMegaMessageBox::warning(nullptr, tr("Error removing backup"),
                                   tr("Your backup \"%1\" can't be removed. Reason: %2")
                                   .arg(sync->name())
-                                  .arg(tr(MegaSync::getMegaSyncErrorCode(sync->getError()))));
-    });
+                                  .arg(QCoreApplication::translate("MegaSyncError", MegaSync::getMegaSyncErrorCode(sync->getError()))));
+    }, Qt::QueuedConnection);
 
-    connect(&mSyncController, &SyncController::syncEnableError, this, [](std::shared_ptr<SyncSetting> sync)
+    connect(&mBackupController, &SyncController::syncEnableError, this, [](std::shared_ptr<SyncSetting> sync)
     {
         QMegaMessageBox::warning(nullptr, tr("Error enabling backup"),
                                   tr("Your backup \"%1\" can't be enabled. Reason: %2")
                                   .arg(sync->name())
-                                  .arg(tr(MegaSync::getMegaSyncErrorCode(sync->getError()))));
-    });
+                                  .arg(QCoreApplication::translate("MegaSyncError", MegaSync::getMegaSyncErrorCode(sync->getError()))));
+    }, Qt::QueuedConnection);
 
-    connect(&mSyncController, &SyncController::syncDisableError, this, [](std::shared_ptr<SyncSetting> sync)
+    connect(&mBackupController, &SyncController::syncDisableError, this, [](std::shared_ptr<SyncSetting> sync)
     {
         QMegaMessageBox::warning(nullptr, tr("Error disabling backup"),
                                   tr("Your sync \"%1\" can't be disabled. Reason: %2")
                                   .arg(sync->name())
-                                  .arg(tr(MegaSync::getMegaSyncErrorCode(sync->getError()))));
-    });
+                                  .arg(QCoreApplication::translate("MegaSyncError", MegaSync::getMegaSyncErrorCode(sync->getError()))));
+    }, Qt::QueuedConnection);
 }
 
 void SettingsDialog::loadBackupSettings()
 {
-    BackupItemModel *model(new BackupItemModel(mUi->backupTableWidget));
+    BackupItemModel *model(new BackupItemModel(mUi->backupTableView));
+    model->fillData();
     connect(model, &BackupItemModel::enableSync, this, [this](std::shared_ptr<SyncSetting> sync)
     {
-        mSyncController.enableSync(sync);
+        syncsStateInformation(SyncStateInformation::SAVING_SYNCS);
+        mBackupController.enableSync(sync);
     });
     connect(model, &BackupItemModel::disableSync, this, [this](std::shared_ptr<SyncSetting> sync)
     {
-        mSyncController.disableSync(sync);
+        syncsStateInformation(SyncStateInformation::SAVING_SYNCS);
+        mBackupController.disableSync(sync);
     });
-
-    connect(model, &BackupItemModel::modelReset, this, [this]()
+    connect(model, &BackupItemModel::syncUpdateFinished, this, [this]()
     {
-        // Get backup handle here, in order to:
-        // 1. Init when the settings dialog is opened
-        // 2. React if the backups root dir is created from outside of the
-        // settings dialog (and a backup is created, making the model reset)
-        if (mBackupRootHandle == mega::INVALID_HANDLE)
-        {
-            mSyncController.getMyBackupsHandle();
-        }
+        onSavingSyncsCompleted();
     });
-
-    model->resetModel();
-    mUi->backupTableWidget->setModel(model);
-    mUi->backupTableWidget->customize();
+    SyncItemSortModel *sortModel = new SyncItemSortModel(mUi->syncTableView);
+    sortModel->setSourceModel(model);
+    mUi->backupTableView->setModel(sortModel);
+    mBackupController.getMyBackupsHandle();
 }
 
 void SettingsDialog::processPendingBackup()
 {
     if (mPendingBackup != QDir() && mBackupRootHandle != mega::INVALID_HANDLE)
     {
-        mSyncController.addSync(QDir::toNativeSeparators(mPendingBackup.canonicalPath()),
-                                mega::INVALID_HANDLE, mPendingBackup.dirName(),
-                                MegaSync::TYPE_BACKUP);
+        mSyncController.addBackup(mPendingBackup);
         mPendingBackup = QDir();
     }
 }
@@ -2245,7 +1689,7 @@ void SettingsDialog::on_bAddBackup_clicked()
 
         if (mCreateBackupRootDir)
         {
-            mSyncController.setMyBackupsDirName();
+            mBackupController.setMyBackupsDirName();
         }
         else
         {
@@ -2256,10 +1700,10 @@ void SettingsDialog::on_bAddBackup_clicked()
 
 void SettingsDialog::on_bDeleteBackup_clicked()
 {
-    if(!mUi->backupTableWidget->selectionModel()->hasSelection())
+    if(!mUi->backupTableView->selectionModel()->hasSelection())
         return;
 
-    QModelIndex index = mUi->backupTableWidget->selectionModel()->selectedRows().first();
+    QModelIndex index = mUi->backupTableView->selectionModel()->selectedRows().first();
     std::shared_ptr<SyncSetting> backup = index.data(Qt::UserRole).value<std::shared_ptr<SyncSetting>>();
 
     if(backup == nullptr)
@@ -2276,7 +1720,7 @@ void SettingsDialog::removeBackup(std::shared_ptr<SyncSetting> backup)
 
     connect(dialog, &RemoveBackupDialog::accepted, this, [this, dialog]()
     {
-        mSyncController.removeSync(dialog->backupToRemove(), dialog->targetFolder());
+        mBackupController.removeSync(dialog->backupToRemove(), dialog->targetFolder());
     });
 }
 

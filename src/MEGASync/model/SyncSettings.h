@@ -77,3 +77,5 @@ public:
 };
 
 Q_DECLARE_METATYPE(SyncSetting);
+Q_DECLARE_SMART_POINTER_METATYPE(std::shared_ptr)
+Q_DECLARE_METATYPE(std::shared_ptr<SyncSetting>)
