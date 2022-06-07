@@ -38,8 +38,8 @@ public:
 
     void showDialog(DialogClass* dialog)
     {
-        auto isBaseOfDialog(std::is_base_of_v<QDialog, DialogClass>);
-        Q_ASSERT(!mDialog && isBaseOfDialog);
+        auto isBaseOfDialog(std::is_base_of<QDialog, DialogClass>::value);
+        Q_ASSERT(isBaseOfDialog);
 
         if(mDialog)
         {
@@ -88,7 +88,6 @@ protected:
             }
         }
     }
-
 
 private:
     bool mMaximized;

@@ -1269,7 +1269,7 @@ void TransferManager::dropEvent(QDropEvent* event)
 {
     mDragBackDrop->hide();
 
-    event->proposedAction();
+    event->acceptProposedAction();
     QDialog::dropEvent(event);
 
     QQueue<QString> pathsToAdd;
@@ -1313,7 +1313,7 @@ void TransferManager::dragEnterEvent(QDragEnterEvent *event)
 {
     if(event->mimeData()->hasUrls())
     {
-        event->proposedAction();
+        event->acceptProposedAction();
         event->accept();
         mDragBackDrop->show();
         mDragBackDrop->resize(size());
