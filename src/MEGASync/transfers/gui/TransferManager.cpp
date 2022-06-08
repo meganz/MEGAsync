@@ -1048,7 +1048,7 @@ void TransferManager::toggleTab(TM_TAB newTab)
         TransfersWidget::HeaderInfo headerInfo;
         auto proxyModel(mUi->wTransfers->getProxyModel());
 
-        QString cancelBase(proxyModel->isAnyCancelable() ? tr("Cancel and clear ") : tr("Clear "));
+        QString cancelBase(tr("Cancel "));
 
         // Show pause button on tab except completed tab,
         // and set Clear All button string,
@@ -1080,6 +1080,8 @@ void TransferManager::toggleTab(TM_TAB newTab)
                 headerInfo.headerSpeed = tr("Speed");
 
                 mUi->tActionButton->setText(tr("Clear Completed"));
+
+                cancelBase = proxyModel->isAnyCancelable() ? tr("Cancel and clear ") : tr("Clear ");
             }
             //UPLOAD // DOWNLOAD
             else
@@ -1087,7 +1089,6 @@ void TransferManager::toggleTab(TM_TAB newTab)
                 headerInfo.headerTime = tr("Time left");
                 headerInfo.headerSpeed = tr("Speed");
             }
-
         }
 
         headerInfo.cancelClearTooltip = cancelBase + mTooltipNameByTab[newTab];

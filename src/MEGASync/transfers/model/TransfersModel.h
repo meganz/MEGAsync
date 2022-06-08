@@ -51,6 +51,21 @@ struct TransfersCount
     int completedDownloads(){return totalDownloads - pendingDownloads - failedDownloads;}
     int completedUploads(){return totalUploads - pendingUploads - failedUploads;}
 
+    void clear()
+    {
+        totalUploads = 0;
+        totalDownloads = 0;
+        pendingUploads = 0;
+        pendingDownloads = 0;
+        failedUploads = 0;
+        failedDownloads = 0;
+        completedUploadBytes = 0;
+        completedDownloadBytes = 0;
+        totalUploadBytes = 0;
+        totalDownloadBytes = 0;
+        transfersByType.clear();
+        transfersFinishedByType.clear();
+    }
 };
 
 class TransferThread :  public QObject,public mega::MegaTransferListener
@@ -68,6 +83,13 @@ public:
                               && startTransfersByTag.isEmpty()
                               && canceledTransfersByTag.isEmpty()
                               && failedTransfersByTag.isEmpty();}
+
+        void clear(){
+            updateTransfersByTag.clear();
+            startTransfersByTag.clear();
+            canceledTransfersByTag.clear();
+            failedTransfersByTag.clear();
+        }
     };
 
     TransferThread();
@@ -79,6 +101,7 @@ public:
     void resetCompletedTransfers();
 
     TransfersToProcess processTransfers();
+    void clear();
 
 public slots:
     void onTransferStart(mega::MegaApi*, mega::MegaTransfer* transfer);
@@ -99,6 +122,14 @@ private:
         QMap<TransferTag, QExplicitlySharedDataPointer<TransferData>> startTransfersByTag;
         QMap<TransferTag, QExplicitlySharedDataPointer<TransferData>> canceledTransfersByTag;
         QMap<TransferTag, QExplicitlySharedDataPointer<TransferData>> failedTransfersByTag;
+
+        void clear()
+        {
+            updateTransfersByTag.clear();
+            startTransfersByTag.clear();
+            canceledTransfersByTag.clear();
+            failedTransfersByTag.clear();
+        }
     };
 
     cacheTransfers mTransfersToProcess;
@@ -130,6 +161,8 @@ public:
     bool removeRows(int row, int count, const QModelIndex& parent = QModelIndex());
     bool moveRows(const QModelIndex& sourceParent, int sourceRow, int count,
                   const QModelIndex& destinationParent, int destinationChild);
+
+    void resetModel();
 
     void getLinks(QList<int>& rows);
     void openInMEGA(QList<int>& rows);
