@@ -357,11 +357,6 @@
         <translation>Access to a shared folder was removed by [A]</translation>
     </message>
     <message>
-        <source>New Shared folder from [X]</source>
-        <translatorcomment>Label to indicate that [X] shared a folder with current user. Placeholder will be replaced by email of sharer user.</translatorcomment>
-        <translation>New shared folder from [X]</translation>
-    </message>
-    <message>
         <source>Shared Folder Activity</source>
         <translatorcomment>Generic label to indicate that there is activity in a shared folder but the name of the shared folder is not available.</translatorcomment>
         <translation>Shared Folder Activity</translation>
@@ -406,6 +401,16 @@
             <numerusform>[A] removed %n item</numerusform>
             <numerusform>[A] removed %n items</numerusform>
         </translation>
+    </message>
+    <message>
+        <source>Decryption error</source>
+        <translatorcomment>Label to indicate a decryption error for a folder name. Replacement for old NO_KEY term.</translatorcomment>
+        <translation type="unfinished">Decryption error</translation>
+    </message>
+    <message>
+        <source>New shared folder from [A]</source>
+        <translatorcomment>Label to indicate that [A] shared a folder with current user. Placeholder will be replaced by email of sharer user.</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -942,11 +947,6 @@ In some cases they may contain details about your data, such as file or folder n
         <translation>Shared Folder Received</translation>
     </message>
     <message>
-        <source>New shared folder from [X]</source>
-        <translatorcomment>Label to indicate that [X] shared a folder with current user. Placeholder will be replaced by email of sharer user.</translatorcomment>
-        <translation>New shared folder from [X]</translation>
-    </message>
-    <message>
         <source>Shared Folder Removed</source>
         <translatorcomment>Title of the notification when a shared folder has been removed</translatorcomment>
         <translation>Shared Folder Removed</translation>
@@ -1100,6 +1100,11 @@ In some cases they may contain details about your data, such as file or folder n
     <message>
         <source>Get Pro</source>
         <translatorcomment>Notification button to redirect the user to upgrade account.</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>New shared folder from [A]</source>
+        <translatorcomment>Desktop notification label to indicate that [A] shared a folder with current user. Placeholder will be replaced by email of sharer user.</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2671,14 +2676,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account.</source>
         <translatorcomment>Description label to indicate the user that his password may be leaked and needs to perform email verification to continue.</translatorcomment>
         <translation>Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account.</translation>
-    </message>
-</context>
-<context>
-    <name>MegaItem</name>
-    <message>
-        <source>Error</source>
-        <translatorcomment>Label shown to show an error</translatorcomment>
-        <translation type="unfinished">Error</translation>
     </message>
 </context>
 <context>
