@@ -58,17 +58,21 @@ void TransferScanCancelUi::onCancelDismissed()
 
 const char* TransferScanCancelUi::getControlStyles()
 {
-    const char* styles = "*{ font-family: Lato; }"
-                         "*[role=\"title\"] {font-size: 18px; font-weight:500;}"
-                            "*[role=\"details\"] {font-size: 14px;}"
+    const char* styles =    "*{ font-family: Lato; }"
+                            "*[role=\"title\"] { "
+                            "   font-size: 18px; font-weight:500;"
+                            "   color: #333333;"
+                            "}"
+                            "*[role=\"details\"] {font-size: 14px; color: #666666;}"
                             "QPushButton { "
                             "   font-size: 16px; font-weight:400;"
-                            "   padding-top : 8px; padding-bottom : 8px; padding-left : 15px; padding-right : 15px;"
-                            "   background-color : white;"
-                            "   border-style: solid; border-width: 1px; border-color: #d7d6d5; border-radius: 5px;"
+                            "   padding-top : 10px; padding-bottom : 12px; padding-left : 15px; padding-right : 15px;"
+                            "   background-color : #FCFCFC;"
+                            "   border-style: solid; border-width: 1px; border-color: #d7d6d5; border-radius: 3px;"
+                            "   color: #333333;"
                             "}"
                             "QPushButton:pressed { background-color : rgb(238, 238, 236); }"
-                            "QPushButton#pProceed { background-color: rgb(0, 191, 165);}"
+                            "QPushButton#pProceed { background-color: #00BFA5; color: #FFFFFF; border-color: #00AC94}"
                             "QPushButton#pProceed:pressed { background-color: rgb(0, 179, 155);}";
     return styles;
 }

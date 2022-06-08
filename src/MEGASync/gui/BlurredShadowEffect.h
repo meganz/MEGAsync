@@ -4,5 +4,6 @@
 #include <QGraphicsEffect>
 
 QGraphicsEffect* CreateBlurredShadowEffect();
+QGraphicsEffect* CreateBlurredShadowEffect(const QColor& shadowColor);
 
 #endif // BLURREDSHADOWEFFECT_H

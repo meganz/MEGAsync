@@ -9,7 +9,7 @@ CancelConfirmWidget::CancelConfirmWidget(QWidget *parent) :
 {
     ui->setupUi(this);
     ui->pDismiss->setGraphicsEffect(CreateBlurredShadowEffect());
-    ui->pProceed->setGraphicsEffect(CreateBlurredShadowEffect());
+    ui->pProceed->setGraphicsEffect(CreateBlurredShadowEffect(QColor(217, 0, 7, 76)));
 
     connect(ui->pDismiss, &QPushButton::clicked, this, &CancelConfirmWidget::onDismissClicked);
     connect(ui->pProceed, &QPushButton::clicked, this, &CancelConfirmWidget::onProceedClicked);
