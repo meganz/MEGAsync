@@ -52,11 +52,6 @@
         <translation>Нет передач</translation>
     </message>
     <message>
-        <source>Remaining Downloads</source>
-        <translatorcomment>Label to indicate the number of remaining downloads</translatorcomment>
-        <translation>Оставшиеся скачивания</translation>
-    </message>
-    <message>
         <source>download speed</source>
         <translatorcomment>Label to indicate the actual current download speed</translatorcomment>
         <translation>скорость скачивания</translation>
@@ -65,11 +60,6 @@
         <source>No Downloads</source>
         <translatorcomment>Label to indicate that there are no active downloads at current time</translatorcomment>
         <translation>Нет скачиваний</translation>
-    </message>
-    <message>
-        <source>Remaining Uploads</source>
-        <translatorcomment>Label to indicate the number of remaining uploads</translatorcomment>
-        <translation>Оставшиеся загрузки в облако</translation>
     </message>
     <message>
         <source>upload speed</source>
@@ -91,15 +81,15 @@
         <translatorcomment>Warning message shown when an user try to cancel the selected transfer</translatorcomment>
         <translation>Действительно отменить эту передачу?</translation>
     </message>
-    <message>
-        <source>Remaining Download</source>
-        <translatorcomment>Label when there is only one remaining download (singular)</translatorcomment>
-        <translation>Оставшееся скачивание</translation>
+    <message numerus="yes">
+        <source>Remaining upload</source>
+        <translatorcomment>Label to indicate the remaining upload(s)</translatorcomment>
+        <translation><numerusform>загрузка осталась</numerusform><numerusform>загрузки осталось</numerusform><numerusform>загрузок осталось</numerusform><numerusform>загрузки осталось</numerusform></translation>
     </message>
-    <message>
-        <source>Remaining Upload</source>
-        <translatorcomment>Label when there is only one remaining upload (singular)</translatorcomment>
-        <translation>Оставшаяся загрузка в облако</translation>
+    <message numerus="yes">
+        <source>Remaining download</source>
+        <translatorcomment>Label to indicate the remaining download(s)</translatorcomment>
+        <translation><numerusform>скачивание осталось</numerusform><numerusform>скачивания осталось</numerusform><numerusform>скачиваний осталось</numerusform><numerusform>скачивания осталось</numerusform></translation>
     </message>
 </context>
 <context>
@@ -288,7 +278,7 @@
     <message>
         <source>[A] has been deleted/deactivated</source>
         <translatorcomment>Label to indicate that [A] has been deleted from your contacts. Placeholder will be replaced by email of user deleted</translatorcomment>
-        <translation>[A] удалён/деактивирован</translation>
+        <translation>[A] удалён или деактивирован</translation>
     </message>
     <message>
         <source>[A] established you as a contact</source>
@@ -331,26 +321,6 @@
         <translation>[A] покинул общую папку</translation>
     </message>
     <message>
-        <source>[A] added 1 item</source>
-        <translatorcomment>Label to indicate that [A] has added 1 item to a shared folder. Placeholder will be replaced by email of the user that made the addition.</translatorcomment>
-        <translation>[A] добавил 1 элемент</translation>
-    </message>
-    <message>
-        <source>[A] added [B] items</source>
-        <translatorcomment>Label to indicate that [A] has added [B] items to a shared folder. Placeholder [A] will be replaced by email of the user that made the additions and [B] with the number of added items.</translatorcomment>
-        <translation>[A] добавил элементы ([B])</translation>
-    </message>
-    <message>
-        <source>[A] removed 1 item</source>
-        <translatorcomment>Label to indicate that [A] has removed 1 item from a shared folder. Placeholder will be replaced by email of the user that made the deletion.</translatorcomment>
-        <translation>[A] удалил 1 элемент</translation>
-    </message>
-    <message>
-        <source>[A] removed [B] items</source>
-        <translatorcomment>Label to indicate that [A] has removed [B] items from a shared folder. Placeholder [A] will be replaced by email of the user that made the deletion and [B] with the number of removed items.</translatorcomment>
-        <translation>[A] удалил элементы ([B])</translation>
-    </message>
-    <message>
         <source>Your payment for the [A] plan was received</source>
         <translatorcomment>Label to indicate that the user has paid for a [A] PRO plan. Placeholder will be replaced by the PRO plan name</translatorcomment>
         <translation>Ваша оплата плана [A] получена</translation>
@@ -359,31 +329,6 @@
         <source>Your payment for the [A] plan was unsuccessful</source>
         <translatorcomment>Label to indicate that the the payment for a [A] PRO plan has failed. Placeholder will be replaced by the PRO plan name</translatorcomment>
         <translation>Ваша оплата плана [A] не удалась</translation>
-    </message>
-    <message>
-        <source>Your PRO membership plan will expire in 1 day</source>
-        <translatorcomment>Label to indicate that the PRO membership will expire in 1 day.</translatorcomment>
-        <translation>Ваша Pro-подписка истекает через 1 день</translation>
-    </message>
-    <message>
-        <source>Your PRO membership plan will expire in [A] days</source>
-        <translatorcomment>Label to indicate that the PRO membership will expire in [A] days. Placeholder will be replaced by the remaining days until plan will expire.</translatorcomment>
-        <translation>Ваша Pro-подписка истекает через [A] д.</translation>
-    </message>
-    <message>
-        <source>PRO membership plan expiring soon</source>
-        <translatorcomment>Label to indicate that the PRO membership will expire soon.</translatorcomment>
-        <translation>Pro-подписка скоро истекает</translation>
-    </message>
-    <message>
-        <source>Your PRO membership plan expired 1 day ago</source>
-        <translatorcomment>Label to indicate that the PRO membership expired 1 day ago.</translatorcomment>
-        <translation>Ваша Pro-подписка истекла 1 день назад</translation>
-    </message>
-    <message>
-        <source>Your PRO membership plan expired [A] days ago</source>
-        <translatorcomment>Label to indicate that the PRO membership expired [A] days ago. Placeholder will be replaced by the days from the expiration of the PRO membership.</translatorcomment>
-        <translation>Ваша Pro-подписка истекла [A] д. назад</translation>
     </message>
     <message>
         <source>Your publicly shared has been taken down</source>
@@ -440,6 +385,16 @@
         <translatorcomment>Label to indicate that public shared folder has been reinstated. Placeholder [A] will be replaced by the name of the folder.</translatorcomment>
         <translation>Ваша общедоступная папка ([A]) была восстановлена</translation>
     </message>
+    <message numerus="yes">
+        <source>[A] added %n item</source>
+        <translatorcomment>Label to indicate that [A] has added %n items to a shared folder. Placeholder [A] will be replaced by email of the user that made the additions and %n with the number of added items.</translatorcomment>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>[A] removed %n item</source>
+        <translatorcomment>Label to indicate that [A] has removed %n items from a shared folder. Placeholder [A] will be replaced by email of the user that made the deletion and %n with the number of removed items.</translatorcomment>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+    </message>
 </context>
 <context>
     <name>BandwidthSettings</name>
@@ -476,7 +431,7 @@
     <message>
         <source>(Max. 90% of available bandwidth)</source>
         <translatorcomment>Label to indicate that auto rate option will take a maximum of 90% of the available bandwidth.</translatorcomment>
-        <translation>(Макс. 90 % доступной полосы пропускания)</translation>
+        <translation>(Макс. 90% доступной полосы пропускания)</translation>
     </message>
     <message>
         <source>Download rate limit</source>
@@ -506,7 +461,7 @@
     <message>
         <source>Enable this option only if your transfers don&apos;t start. Under normal circumstances, HTTP is satisfactory as all transfers are already encrypted by MEGA.</source>
         <translatorcomment>Description label about the option &quot;Don&apos;t use HTTP&quot; checkbox.</translatorcomment>
-        <translation>Включите эту опцию, только если передача не начинается. Обычно HTTP достаточно, так как все передачи уже зашифрованы MEGA.</translation>
+        <translation>Включите эту опцию, только если передачи не начинаются. В обычных условиях HTTP достаточно, так как все передачи уже зашифрованы MEGA.</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -711,7 +666,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Terms of Service</source>
         <translatorcomment>Label for Terms of Service link.</translatorcomment>
-        <translation>Условия предоставления услуг</translation>
+        <translation>Условия использования</translation>
     </message>
     <message>
         <source>Privacy Policy</source>
@@ -794,6 +749,24 @@ Please enter a different name to identify this synced folder:</source>
         <source>[A]%</source>
         <translatorcomment>Percent sign style. Form and spacing between digit and sign is different in each language.</translatorcomment>
         <translation>[A]%</translation>
+    </message>
+</context>
+<context>
+    <name>CommonMessages</name>
+    <message numerus="yes">
+        <source>Your Pro membership plan will expire in %n day</source>
+        <translatorcomment>Label to indicate that the PRO membership will expire in %n days. Placeholder will be replaced by the remaining days until plan will expire.</translatorcomment>
+        <translation><numerusform>Ваша Pro-подписка истекает через %n день</numerusform><numerusform>Ваша Pro-подписка истекает через %n дня</numerusform><numerusform>Ваша Pro-подписка истекает через %n дней</numerusform><numerusform>Ваша Pro-подписка истекает через %n дня</numerusform></translation>
+    </message>
+    <message>
+        <source>Pro membership plan expiring soon</source>
+        <translatorcomment>Label to indicate that the PRO membership will expire soon.</translatorcomment>
+        <translation>Pro-подписка скоро истекает</translation>
+    </message>
+    <message numerus="yes">
+        <source>Your Pro membership plan expired %n day ago</source>
+        <translatorcomment>Label to indicate that the PRO membership expired %n days ago. Placeholder will be replaced by the days from the expiration of the PRO membership.</translatorcomment>
+        <translation><numerusform>Ваша Pro-подписка истекла %n день назад</numerusform><numerusform>Ваша Pro-подписка истекла %n дня назад</numerusform><numerusform>Ваша Pro-подписка истекла %n дней назад</numerusform><numerusform>Ваша Pro-подписка истекла %n дня назад</numerusform></translation>
     </message>
 </context>
 <context>
@@ -880,41 +853,6 @@ Please enter a different name to identify this synced folder:</source>
 </context>
 <context>
     <name>DesktopNotifications</name>
-    <message>
-        <source>[A] added 1 item</source>
-        <translatorcomment>Label to indicate that [A] has added 1 item to a shared folder. Placeholder will be replaced by email of the user that made the addition.</translatorcomment>
-        <translation>[A] добавил 1 элемент</translation>
-    </message>
-    <message>
-        <source>[A] added [B] items</source>
-        <translatorcomment>Label to indicate that [A] has added [B] items to a shared folder. Placeholder [A] will be replaced by email of the user that made the additions and [B] with the number of added items.</translatorcomment>
-        <translation>[A] добавил элементы ([B])</translation>
-    </message>
-    <message>
-        <source>Your PRO membership plan will expire in 1 day</source>
-        <translatorcomment>Label to indicate that the PRO membership will expire in 1 day.</translatorcomment>
-        <translation>Ваша Pro-подписка истекает через 1 день</translation>
-    </message>
-    <message>
-        <source>Your PRO membership plan will expire in [A] days</source>
-        <translatorcomment>Label to indicate that the PRO membership will expire in [A] days. Placeholder will be replaced by the remaining days until plan will expire.</translatorcomment>
-        <translation>Ваша Pro-подписка истекает через [A] д.</translation>
-    </message>
-    <message>
-        <source>PRO membership plan expiring soon</source>
-        <translatorcomment>Label to indicate that the PRO membership will expire soon.</translatorcomment>
-        <translation>Pro-подписка скоро истекает</translation>
-    </message>
-    <message>
-        <source>Your PRO membership plan expired 1 day ago</source>
-        <translatorcomment>Label to indicate that the PRO membership expired 1 day ago.</translatorcomment>
-        <translation>Ваша Pro-подписка истекла 1 день назад</translation>
-    </message>
-    <message>
-        <source>Your PRO membership plan expired [A] days ago</source>
-        <translatorcomment>Label to indicate that the PRO membership expired [A] days ago. Placeholder will be replaced by the days from the expiration of the PRO membership.</translatorcomment>
-        <translation>Ваша Pro-подписка истекла [A] д. назад</translation>
-    </message>
     <message>
         <source>[A] has left the shared folder</source>
         <translatorcomment>Label to indicate that [A] has left a shared folder. Placeholder will be replaced by email of the user that left the folder.</translatorcomment>
@@ -1071,16 +1009,6 @@ Please enter a different name to identify this synced folder:</source>
         <translation>Ваш аккаунт почти заполнен.</translation>
     </message>
     <message>
-        <source>Upgrade now to a PRO account.</source>
-        <translatorcomment>Notification message shown to encourage the user to upgrade his account</translatorcomment>
-        <translation>Улучшите аккаунт до Pro сейчас.</translation>
-    </message>
-    <message>
-        <source>Get PRO</source>
-        <translatorcomment>Notification button to redirect the user to upgrade account.</translatorcomment>
-        <translation>Получить Pro</translation>
-    </message>
-    <message>
         <source>Your account is full.</source>
         <translatorcomment>Title of the system notification when the account is full.</translatorcomment>
         <translation>Ваш аккаунт заполнен.</translation>
@@ -1089,11 +1017,6 @@ Please enter a different name to identify this synced folder:</source>
         <source>Your data is at risk</source>
         <translatorcomment>System notification title to indicate that your data is at risk due to the current account is in over quota storage state for long time without fixing the situation.</translatorcomment>
         <translation>Ваши данные в опасности</translation>
-    </message>
-    <message>
-        <source>You have [A] days left to save your data</source>
-        <translatorcomment>Notification content to inform the days the user have to save the date before possible deletion. [A] will be replace with remaining days amount.</translatorcomment>
-        <translation>У вас есть [A] д., чтобы сохранить данные</translation>
     </message>
     <message>
         <source>Show in folder</source>
@@ -1134,6 +1057,26 @@ Please enter a different name to identify this synced folder:</source>
         <source>Contact your business account administrator to resolve the issue and activate your account.</source>
         <translatorcomment>Notification text to inform the user to contact his master business account to resolve the issue and reactivate the account.</translatorcomment>
         <translation>Обратитесь к администратору своего бизнес-аккаунта, чтобы решить проблему и активировать аккаунт.</translation>
+    </message>
+    <message numerus="yes">
+        <source>[A] added %n item</source>
+        <translatorcomment>Label to indicate that [A] has added %n items to a shared folder. Placeholder [A] will be replaced by email of the user that made the additions and %n with the number of added items.</translatorcomment>
+        <translation><numerusform>[A] добавил %n элемент</numerusform><numerusform>[A] добавил %n элемента</numerusform><numerusform>[A] добавил %n элементов</numerusform><numerusform>[A] добавил %n элемента</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>You have %n day left to save your data</source>
+        <translatorcomment>Notification content to inform the days the user have to save the date before possible deletion. %n will be replaced with remaining days amount.</translatorcomment>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+    </message>
+    <message>
+        <source>Upgrade now to a Pro account.</source>
+        <translatorcomment>Notification message shown to encourage the user to upgrade his account</translatorcomment>
+        <translation>Улучшите аккаунт до Pro сейчас.</translation>
+    </message>
+    <message>
+        <source>Get Pro</source>
+        <translatorcomment>Notification button to redirect the user to upgrade account.</translatorcomment>
+        <translation>Получить Pro</translation>
     </message>
 </context>
 <context>
@@ -1235,28 +1178,18 @@ Please enter a different name to identify this synced folder:</source>
         <translation>Щёлкните по элементу на панели инструментов для вызова меню.</translation>
     </message>
     <message>
-        <source>1 file</source>
-        <translatorcomment>Context menu option label to indicate the user has selected a file</translatorcomment>
-        <translation>1 файл</translation>
-    </message>
-    <message>
-        <source>%i files</source>
-        <translatorcomment>Context menu option label to indicate the user has selected %i number of files</translatorcomment>
-        <translation>Файлов: %i</translation>
-    </message>
-    <message>
-        <source>1 folder</source>
-        <translatorcomment>Context menu option label to indicate the user has selected a folder</translatorcomment>
-        <translation>1 папка</translation>
-    </message>
-    <message>
-        <source>%i folders</source>
-        <translatorcomment>Context menu option label to indicate the user has selected %i number of folders</translatorcomment>
-        <translation>Папок: %i</translation>
-    </message>
-    <message>
         <source>View previous versions</source>
         <translation>Просмотр предыдущих версий</translation>
+    </message>
+    <message numerus="yes">
+        <source>%n file</source>
+        <translatorcomment>Context menu option label to indicate the user has selected %n number of files</translatorcomment>
+        <translation><numerusform>%n файл</numerusform><numerusform>%n файла</numerusform><numerusform>%n файлов</numerusform><numerusform>%n файла</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>%n folder</source>
+        <translatorcomment>Context menu option label to indicate the user has selected %n number of folders</translatorcomment>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
 </context>
 <context>
@@ -1334,11 +1267,6 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <source>Create account</source>
         <translatorcomment>Button label to start the creation of an account process. (String as short as possible)</translatorcomment>
         <translation>Зарегистрироваться</translation>
-    </message>
-    <message>
-        <source>Login to MEGA</source>
-        <translatorcomment>Label shown at main dialog before logging in</translatorcomment>
-        <translation>Вход в MEGA</translation>
     </message>
     <message>
         <source>Email address</source>
@@ -1489,6 +1417,16 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <source>[A]Lost your authenticator device?[/A]</source>
         <translatorcomment>Label with hyperlink to recovery website when user is entering incorrect 2FA code during login stage</translatorcomment>
         <translation>[A]Потеряли устройство аутентификации?[/A]</translation>
+    </message>
+    <message>
+        <source>Log into MEGA</source>
+        <translatorcomment>Label shown at login dialog where the user can introduce his user and password</translatorcomment>
+        <translation>Вход в MEGA</translation>
+    </message>
+    <message>
+        <source>Our SSL key can&apos;t be verified. You could be affected by a man-in-the-middle attack or your antivirus software could be intercepting your communications and causing this problem. Please disable it and try again.</source>
+        <translatorcomment>Error message shown when the program detects an issues with SSL key verification.</translatorcomment>
+        <translation>Наш SSL-ключ не удаётся проверить. Это может быть вызвано «атакой посредника», или ваше антивирусное программное обеспечение может перехватывать сообщения, вызывая эту проблему. Отключите его и повторите попытку.</translation>
     </message>
 </context>
 <context>
@@ -1726,21 +1664,6 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation>%1 использовано</translation>
     </message>
     <message>
-        <source>Your data is at risk!</source>
-        <translatorcomment>Label to indicate that your data is at risk due to the current account is in over quota storage state for long time without fixing the situation.</translatorcomment>
-        <translation>Ваши данные в опасности!</translation>
-    </message>
-    <message>
-        <source>We have contacted you by email to [A] on [B] but you still have [C] files taking up [D] in your MEGA account, which requires you to have [E].</source>
-        <translatorcomment>Informative label about account status regarding over quota storage. Placeholders will be replaced: [A] - user email, [B] - localized date list of emails sent to inform the user about the situation,  [C] - amount of files in the current account, [D] - amount of storage used and [E] - min PRO plan needed to fix the situation.</translatorcomment>
-        <translation>Мы писали вам по электронной почте [A] [B], но у вас всё ещё [C] файлов, занимающих [D] в вашем MEGA-аккаунте, для чего требуется план [E].</translation>
-    </message>
-    <message>
-        <source>You have [A][B] days[/A] left to upgrade. After that, your data is subject to deletion.</source>
-        <translatorcomment>Label to informa about the deadline time to upgrade. Otherwise, data is subject to deletion. Placeholder info: [A][/A] - needed to format and apply text style, [B]- number of days left to upgrade.</translatorcomment>
-        <translation>У вас остаётся[A][B] д.[/A] для улучшения. После этого ваши данные подлежат удалению.</translation>
-    </message>
-    <message>
         <source>Upgrade account</source>
         <translatorcomment>Button label to forward the user to the webclient for upgrade the current account.</translatorcomment>
         <translation>Улучшить аккаунт</translation>
@@ -1776,11 +1699,6 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation>Передачи в очереди превышают текущую квоту, доступную для вашего IP-адреса, и поэтому могут быть прерваны.</translation>
     </message>
     <message>
-        <source>You have [A][B] hours[/A] left to upgrade. After that, your data is subject to deletion.</source>
-        <translatorcomment>Label to inform about the deadline time to upgrade. Otherwise, data is subject to deletion. Placeholder info: [A][/A] - needed to format and apply text style, [B]- number of hours left to upgrade.</translatorcomment>
-        <translation>У вас остаётся[A][B] ч.[/A], чтобы улучшить аккаунт. После этого ваши данные подлежат удалению.</translation>
-    </message>
-    <message>
         <source>One or more syncs have been disabled</source>
         <translatorcomment>Label to indicate that some syncs have been disable due to some error.</translatorcomment>
         <translation>Одна или несколько синхронизаций были отключены</translation>
@@ -1799,6 +1717,26 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <source>Open Settings</source>
         <translatorcomment>Button label to open MEGAsync preferences dialog (Linux and Windows).</translatorcomment>
         <translation>Открыть настройки</translation>
+    </message>
+    <message>
+        <source>Your data is at risk</source>
+        <translatorcomment>Label to indicate that your data is at risk due to the current account is in over quota storage state for long time without fixing the situation.</translatorcomment>
+        <translation>Ваши данные в опасности</translation>
+    </message>
+    <message numerus="yes">
+        <source>We have contacted you by email to [A] on [B] but you still have %n file taking up [D] in your MEGA account, which requires you to have [E].</source>
+        <translatorcomment>Informative label about account status regarding over quota storage. Placeholders will be replaced: [A] - user email, [B] - localized date list of emails sent to inform the user about the situation,  %n - amount of files in the current account, [D] - amount of storage used and [E] - min PRO plan needed to fix the situation.</translatorcomment>
+        <translation><numerusform>Мы писали вам по электронной почте [A] [B], но у вас всё ещё %n файл, занимающий [D] в вашем MEGA-аккаунте, для чего требуется план [E].</numerusform><numerusform>Мы писали вам по электронной почте [A] [B], но у вас всё ещё %n файла, занимающих [D] в вашем MEGA-аккаунте, для чего требуется план [E].</numerusform><numerusform>Мы писали вам по электронной почте [A] [B], но у вас всё ещё %n файлов, занимающих [D] в вашем MEGA-аккаунте, для чего требуется план [E].</numerusform><numerusform>Мы писали вам по электронной почте [A] [B], но у вас всё ещё %n файла, занимающих [D] в вашем MEGA-аккаунте, для чего требуется план [E].</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>You have [A]%n day[/A] left to upgrade. After that, your data is subject to deletion.</source>
+        <translatorcomment>Label to inform about the deadline time to upgrade. Otherwise, data is subject to deletion. Placeholder info: [A][/A] - needed to format and apply text style, %n- number of days left to upgrade.</translatorcomment>
+        <translation><numerusform>У вас остаётся [A]%n день[/A], чтобы улучшить аккаунт. После этого ваши данные подлежат удалению.</numerusform><numerusform>У вас остаётся [A]%n дня[/A], чтобы улучшить аккаунт. После этого ваши данные подлежат удалению.</numerusform><numerusform>У вас остаётся [A]%n дней[/A], чтобы улучшить аккаунт. После этого ваши данные подлежат удалению.</numerusform><numerusform>У вас остаётся [A]%n дня[/A], чтобы улучшить аккаунт. После этого ваши данные подлежат удалению.</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>You have [A]%n hour[/A] left to upgrade. After that, your data is subject to deletion.</source>
+        <translatorcomment>Label to inform about the deadline time to upgrade. Otherwise, data is subject to deletion. Placeholder info: [A][/A] - needed to format and apply text style, %n- number of hours left to upgrade.</translatorcomment>
+        <translation><numerusform>У вас остаётся [A]%n час[/A], чтобы улучшить аккаунт. После этого ваши данные подлежат удалению.</numerusform><numerusform>У вас остаётся [A]%n часа[/A], чтобы улучшить аккаунт. После этого ваши данные подлежат удалению.</numerusform><numerusform>У вас остаётся [A]%n часов[/A], чтобы улучшить аккаунт. После этого ваши данные подлежат удалению.</numerusform><numerusform>У вас остаётся [A]%n часа[/A], чтобы улучшить аккаунт. После этого ваши данные подлежат удалению.</numerusform></translation>
     </message>
 </context>
 <context>
@@ -1827,9 +1765,9 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation>Войдите или зарегистрируйтесь, чтобы начать пользоваться настольным приложением MEGA.</translation>
     </message>
     <message>
-        <source>You need to login MEGA account to run MEGA desktop app.</source>
-        <translatorcomment>Description label to indicate the user needs to login in order to run and fully use MEGA desktop app.</translatorcomment>
-        <translation>Вам необходимо войти в аккаунт, чтобы запустить настольное приложение MEGA.</translation>
+        <source>You need to log into MEGA account to use the MEGA desktop app.</source>
+        <translatorcomment>Description label to indicate the user needs to log in in order to fully use MEGA desktop app.</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Create account</source>
@@ -1918,7 +1856,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Next</source>
         <translatorcomment>Button text to confirm 2FA dialog</translatorcomment>
-        <translation>Вперёд</translation>
+        <translation>Далее</translation>
     </message>
     <message>
         <source>Invalid code</source>
@@ -2033,20 +1971,10 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation>Установить обновление</translation>
     </message>
     <message>
-        <source>A new version of MEGAsync is available! Click on this message to install it</source>
-        <translatorcomment>Notification message launched to inform the user that there is an available update .</translatorcomment>
-        <translation>Доступна новая версия MEGAsync! Нажмите на это сообщение для установки</translation>
-    </message>
-    <message>
         <source>There was a problem installing the update. Please try again later or download the last version from:
 https://mega.co.nz/#sync</source>
         <translatorcomment>Notification message launched when a problem occurs during the installation of an update. Keep &quot;\n&quot; codes.</translatorcomment>
         <translation>Произошла ошибка при установке обновления. Пожалуйста, попробуйте позже или загрузите последнюю версию с: https://mega.nz/sync</translation>
-    </message>
-    <message>
-        <source>Thank you for your collaboration!</source>
-        <translatorcomment>Message displayed to thank when a user send a crash report report to MEGA.</translatorcomment>
-        <translation>Спасибо за сотрудничество!</translation>
     </message>
     <message>
         <source>Update available. Downloading...</source>
@@ -2078,11 +2006,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>MEGAsync is now running. Click the system tray icon to open the status window.</source>
         <translatorcomment>Notification message launched when an user logged in succesfully. String as short as possible.</translatorcomment>
         <translation>MEGAsync запущен. Нажмите на иконку в системном трее, чтобы открыть окно статуса.</translation>
-    </message>
-    <message>
-        <source>A new version of MEGAsync is available!</source>
-        <translatorcomment>Notification message launched when an update is available.</translatorcomment>
-        <translation>Доступна новая версия MEGAsync</translation>
     </message>
     <message>
         <source>MEGAsync is now running. Click the menu bar icon to open the status window.</source>
@@ -2177,7 +2100,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>DEBUG mode enabled. A log is being created in your desktop (MEGAsync.log)</source>
         <translatorcomment>Notification message shown when the DEBUG mode is enabled.</translatorcomment>
-        <translation>Режим ОТЛАДКИ включен. Журнал создаётся на рабочем столе (MEGAsync.log).</translation>
+        <translation>Режим ОТЛАДКИ включён. Журнал создаётся на рабочем столе (MEGAsync.log).</translation>
     </message>
     <message>
         <source>Error: Invalid destination folder. The download has been cancelled</source>
@@ -2232,7 +2155,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>The link can&apos;t be generated because the file is in an incoming shared folder or in your Rubbish Bin</source>
         <translatorcomment>Notification error message shown while generating a public link of a file from an incoming shared folder or from the rubbish bin</translatorcomment>
-        <translation>Нельзя сгенерировать ссылку на файл, находящийся в общей папке или корзине.</translation>
+        <translation>Нельзя сгенерировать ссылку на файл, находящийся во входящей общей папке или корзине.</translation>
     </message>
     <message>
         <source>Upload</source>
@@ -2266,77 +2189,17 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your password has been changed.</source>
         <translatorcomment>Success message shown when the password has been changed</translatorcomment>
-        <translation>Ваш пароль был изменен.</translation>
-    </message>
-    <message>
-        <source>1 file and 1 folder were successfully uploaded</source>
-        <translatorcomment>System notification to inform the user that 1 files and 1 folder were successfully uploaded</translatorcomment>
-        <translation>1 файл и 1 папка успешно загружены</translation>
-    </message>
-    <message>
-        <source>%1 files and 1 folder were successfully uploaded</source>
-        <translatorcomment>System notification to inform the user that %1 files and 1 folder were successfully uploaded</translatorcomment>
-        <translation>Файлы(%1) и 1 папка успешно загружены</translation>
-    </message>
-    <message>
-        <source>1 file and %1 folders were successfully uploaded</source>
-        <translatorcomment>System notification to inform the user that 1 files and %1 folders were successfully uploaded</translatorcomment>
-        <translation>1 файл и папки(%1) успешно загружены</translation>
-    </message>
-    <message>
-        <source>%1 files and %2 folders were successfully uploaded</source>
-        <translatorcomment>System notification to inform the user that %1 files and %2 folder were successfully uploaded</translatorcomment>
-        <translation>Файлы(%1) и папки(%2) успешно загружены</translation>
+        <translation>Ваш пароль был изменён.</translation>
     </message>
     <message>
         <source>Folder Upload</source>
         <translatorcomment>Title of system notifications related to a folder upload</translatorcomment>
-        <translation>Загрузить папку</translation>
-    </message>
-    <message>
-        <source>1 folder was successfully uploaded</source>
-        <translatorcomment>System notification to inform the user that 1 folder was successfully uploaded</translatorcomment>
-        <translation>1 папка успешно загружена</translation>
-    </message>
-    <message>
-        <source>%1 folders were successfully uploaded</source>
-        <translatorcomment>System notification to inform the user that %1 folders were successfully uploaded</translatorcomment>
-        <translation>Папки(%1) успешно загружены</translation>
+        <translation>Загрузка папки</translation>
     </message>
     <message>
         <source>File Upload</source>
         <translatorcomment>Title of system notifications related to a file upload</translatorcomment>
-        <translation>Загрузить файл</translation>
-    </message>
-    <message>
-        <source>1 file was successfully uploaded</source>
-        <translatorcomment>System notification to inform the user that 1 file was successfully uploaded</translatorcomment>
-        <translation>1 файл успешно загружен</translation>
-    </message>
-    <message>
-        <source>%1 files were successfully uploaded</source>
-        <translatorcomment>System notification to inform the user that %1 files were successfully uploaded</translatorcomment>
-        <translation>Файлы(%1) успешно загружены</translation>
-    </message>
-    <message>
-        <source>1 file and 1 folder were successfully downloaded</source>
-        <translatorcomment>System notification to inform the user that 1 files and 1 folder were successfully downloaded</translatorcomment>
-        <translation>1 файл и 1 папка успешно скачаны</translation>
-    </message>
-    <message>
-        <source>%1 files and 1 folder were successfully downloaded</source>
-        <translatorcomment>System notification to inform the user that %1 files and 1 folder were successfully downloaded</translatorcomment>
-        <translation>Файлы(%1) и 1 папка успешно скачаны</translation>
-    </message>
-    <message>
-        <source>1 file and %1 folders were successfully downloaded</source>
-        <translatorcomment>System notification to inform the user that 1 files and %1 folders were successfully downloaded</translatorcomment>
-        <translation>1 файл и папки(%1) успешно скачаны</translation>
-    </message>
-    <message>
-        <source>%1 files and %2 folders were successfully downloaded</source>
-        <translatorcomment>System notification to inform the user that %1 files and %2 folder were successfully downloaded</translatorcomment>
-        <translation>Файлы(%1) и папки(%2) успешно скачаны</translation>
+        <translation>Загрузка файла</translation>
     </message>
     <message>
         <source>Folder Download</source>
@@ -2344,29 +2207,9 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>Скачивание папки</translation>
     </message>
     <message>
-        <source>1 folder was successfully downloaded</source>
-        <translatorcomment>System notification to inform the user that 1 folder was successfully downloaded</translatorcomment>
-        <translation>1 папка успешно скачана</translation>
-    </message>
-    <message>
-        <source>%1 folders were successfully downloaded</source>
-        <translatorcomment>System notification to inform the user that %1 folders were successfully downloaded</translatorcomment>
-        <translation>Папки(%1) успешно скачаны</translation>
-    </message>
-    <message>
         <source>File Download</source>
         <translatorcomment>Title of system notifications related to a file download</translatorcomment>
         <translation>Скачивание файла</translation>
-    </message>
-    <message>
-        <source>1 file was successfully downloaded</source>
-        <translatorcomment>System notification to inform the user that 1 file was successfully downloaded</translatorcomment>
-        <translation>1 файл успешно скачан</translation>
-    </message>
-    <message>
-        <source>%1 files were successfully downloaded</source>
-        <translatorcomment>System notification to inform the user that %1 files were successfully downloaded</translatorcomment>
-        <translation>Файлы(%1) успешно скачаны</translation>
     </message>
     <message>
         <source>Add Sync</source>
@@ -2416,7 +2259,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Payment Failed</source>
         <translatorcomment>Notification title shown when a payment has failed for a business account.</translatorcomment>
-        <translation>Платеж не прошел</translation>
+        <translation>Платеж не прошёл</translation>
     </message>
     <message>
         <source>This month&apos;s payment has failed. Please resolve your payment issue as soon as possible to avoid any suspension of your business account.</source>
@@ -2501,7 +2344,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>MEGAsync will continue to work, however updates will no longer be supported for versions prior to OS X Yosemite soon.</source>
         <translatorcomment>Informative message box shown if user is running an old OSX version (previous than Yosemite), informing that app updates for such systems will cease soon.</translatorcomment>
-        <translation>MEGAsync продолжит работать, однако обновления для версий до OS X Yosemite в ближайшее время не будут поддерживаться.</translation>
+        <translation>MEGAsync продолжит работать, однако обновления для версий до OS X Yosemite больше не будут выпускаться.</translation>
     </message>
     <message>
         <source>One or more syncs have been disabled. Go to preferences to enable them again.</source>
@@ -2527,6 +2370,61 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Your syncs have been disabled</source>
         <translatorcomment>Notification message launched when your syncs have been disabled.</translatorcomment>
         <translation>Ваши синхронизации отключены</translation>
+    </message>
+    <message>
+        <source>Thank you for your collaboration</source>
+        <translatorcomment>Informative message shown when a user makes a report to thank for his help.</translatorcomment>
+        <translation>Спасибо за сотрудничество</translation>
+    </message>
+    <message numerus="yes">
+        <source>%n file</source>
+        <translatorcomment>File count, where %n is the number of files. Used to build the &quot;Files and folders successfully uploaded/downloaded&quot; string.</translatorcomment>
+        <translation><numerusform>%n файл</numerusform><numerusform>%n файла</numerusform><numerusform>%n файлов</numerusform><numerusform>%n файла</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>%n folder</source>
+        <translatorcomment>Folder count, where %n is the number of folders. Used to build the &quot;Files and folders successfully uploaded/downloaded&quot; string.</translatorcomment>
+        <translation><numerusform>%n папка</numerusform><numerusform>%n папки</numerusform><numerusform>%n папок</numerusform><numerusform>%n папки</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>%n file was successfully uploaded</source>
+        <translatorcomment>System notification to inform the user that %1 files were successfully uploaded</translatorcomment>
+        <translation><numerusform>%n файл успешно загружен</numerusform><numerusform>%n файла успешно загружено</numerusform><numerusform>%n файлов успешно загружено</numerusform><numerusform>%n файла успешно загружено</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>%n file was successfully downloaded</source>
+        <translatorcomment>System notification to inform the user that %1 files were successfully downloaded</translatorcomment>
+        <translation><numerusform>%n файл успешно скачан</numerusform><numerusform>%n файла успешно скачано</numerusform><numerusform>%n файлов успешно скачано</numerusform><numerusform>%n файла успешно скачано</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>%n folder was successfully uploaded</source>
+        <translatorcomment>System notification to inform the user that %n folders were successfully uploaded</translatorcomment>
+        <translation><numerusform>%n папка успешно загружена</numerusform><numerusform>%n папки успешно загружено</numerusform><numerusform>%n папкок успешно загружено</numerusform><numerusform>%n папки успешно загружено</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>%n folder was successfully downloaded</source>
+        <translatorcomment>System notification to inform the user that %n folders were successfully downloaded</translatorcomment>
+        <translation><numerusform>%n папка успешно скачана</numerusform><numerusform>%n папки успешно скачано</numerusform><numerusform>%n папок успешно скачано</numerusform><numerusform>%n папки успешно скачано</numerusform></translation>
+    </message>
+    <message>
+        <source>A new version of MEGAsync is available. Click on this message to install it</source>
+        <translatorcomment>System notification to inform the user that there is a new version of MEGAsync available for update. Windows version.</translatorcomment>
+        <translation>Доступна новая версия MEGAsync. Нажмите на это сообщение для установки</translation>
+    </message>
+    <message>
+        <source>A new version of MEGAsync is available</source>
+        <translatorcomment>System notification to inform the user that there is a new version of MEGAsync available for update. macOS version cannot be installed making click so, a new string is provided</translatorcomment>
+        <translation>Доступна новая версия MEGAsync</translation>
+    </message>
+    <message>
+        <source>%1 and %2 were successfully uploaded</source>
+        <translatorcomment>System notification to inform the user that %1 files and %2 folders were successfully uploaded. The %1 is a sentence part for files and %2 for folders.</translatorcomment>
+        <translation>Загружены %1 и %2</translation>
+    </message>
+    <message>
+        <source>%1 and %2 were successfully downloaded</source>
+        <translatorcomment>System notification to inform the user that %1 files and %2 folders were successfully downloaded. The %1 is a sentence part for files and %2 for folders.</translatorcomment>
+        <translation>Скачаны %1 и %2</translation>
     </message>
 </context>
 <context>
@@ -2653,7 +2551,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Your account has been suspended due to multiple breaches of MEGA’s Terms of Service. Please check your email inbox.</source>
-        <translation>Ваш аккаунт был заблокирован из-за многочисленных нарушений Условий предоставления услуг MEGA. Пожалуйста, проверьте свой почтовый ящик.</translation>
+        <translation>Ваш аккаунт был заблокирован из-за многочисленных нарушений Условий использования MEGA. Пожалуйста, проверьте свой почтовый ящик.</translation>
     </message>
     <message>
         <source>Your account was terminated due to breach of Mega’s Terms of Service, such as abuse of rights of others; sharing and/or importing illegal data; or system abuse.</source>
@@ -2672,12 +2570,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Terms of Service breached</source>
         <translatorcomment>Error shown when terms of service are breached during download.</translatorcomment>
-        <translation>Нарушены условия предоставления услуг</translation>
+        <translation>Нарушены условия использования</translation>
     </message>
     <message>
         <source>Not accessible due to ToS/AUP violation</source>
         <translatorcomment>Error shown when import a link that has violated ToS/AUP.</translatorcomment>
-        <translation>Недоступно из-за нарушения условий предоставления услуг/политики допустимого использования</translation>
+        <translation>Недоступно из-за нарушения условий использования/политики допустимого использования</translation>
     </message>
     <message>
         <source>Upload produces recursivity</source>
@@ -2710,12 +2608,91 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>It is possible that you are using the same password for your MEGA account as for other services, and that at least one of these other services has suffered a data breach.</source>
         <translatorcomment>Description label to inform the user about possible data breach in other systems.</translatorcomment>
-        <translation>Возможно, вы используете тот же пароль для своего аккаунта MEGA, что и для других служб, и что по крайней мере одна из этих других служб пострадала от утечки данных.</translation>
+        <translation>Возможно, вы используете для своего аккаунта MEGA тот же пароль, что и для других служб, и что по крайней мере одна из этих других служб пострадала от утечки данных.</translation>
     </message>
     <message>
         <source>Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account.</source>
         <translatorcomment>Description label to indicate the user that his password may be leaked and needs to perform email verification to continue.</translatorcomment>
         <translation>Ваш пароль утёк и теперь используется плохими игроками для входа в ваши аккаунты, включая, но не ограничиваясь аккаунтом MEGA.</translation>
+    </message>
+</context>
+<context>
+    <name>MegaItem</name>
+    <message>
+        <source>Error</source>
+        <translatorcomment>Label shown to show an error</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>MegaItemModel</name>
+    <message>
+        <source>Folder already synced</source>
+        <translatorcomment>Tooltip text to notify the user that this folder is already synced.</translatorcomment>
+        <translation>Папка уже синхронизирована</translation>
+    </message>
+    <message>
+        <source>Folder contents already synced</source>
+        <translatorcomment>Tooltip text to notify the user that some folder inside the folder that he is hovering with mouse is already synced.</translatorcomment>
+        <translation>Содержимое папки уже синхронизировано</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translatorcomment>Column title. This column shows the name of a file or folder.</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sort by status</source>
+        <translatorcomment>First column title tooltip(this column title doesn´t contains text, it shows an icon). Sorts the order of the column by node status, for example synced folders first or last.</translatorcomment>
+        <translation>Сортировать по статусу</translation>
+    </message>
+    <message>
+        <source>Sort by owner name</source>
+        <translatorcomment>Owner column title tooltip. Sorts the order of the column by owner name alphabetically.</translatorcomment>
+        <translation>Сортировать по имени владельца</translation>
+    </message>
+    <message>
+        <source>Sort by date</source>
+        <translatorcomment>Recently used column title tooltip. Sorts the order of the column by date.</translatorcomment>
+        <translation>Сортировать по дате</translation>
+    </message>
+    <message>
+        <source>Sort by name</source>
+        <translatorcomment>Node name column title tooltip. Sorts the order of the column by date.</translatorcomment>
+        <translation>Сортировать по названию</translation>
+    </message>
+    <message>
+        <source>Today at %1</source>
+        <translatorcomment>Text that appears on &quot;Recently Used&quot; column if the last change was happened today. %1 represents the hour</translatorcomment>
+        <translation>Сегодня в %1</translation>
+    </message>
+    <message>
+        <source>Yesterday at %1</source>
+        <translatorcomment>Text that appears on &quot;Recently Used&quot; column if the last change was happened yesterday. %1 represents the hour</translatorcomment>
+        <translation>Вчера в %1</translation>
+    </message>
+    <message>
+        <source>%1 at %2</source>
+        <translatorcomment>Text that appears on &quot;Recently Used&quot; column if the last change was previously to yesterday. %1 represents the date (day month and year), while %2 represents the hour)</translatorcomment>
+        <translation>%1 в %2</translation>
+    </message>
+    <message>
+        <source>Recently used</source>
+        <translatorcomment>Column title. This column shows when this file or folder was changed.</translatorcomment>
+        <translation>Последнее изменение</translation>
+    </message>
+</context>
+<context>
+    <name>MegaItemTreeView</name>
+    <message>
+        <source>Get MEGA link</source>
+        <translatorcomment>Contextual menu text that appears when we right click on a folder/file on node selector. It creates an MEGA link and copy to Clipboard.</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translatorcomment>Contextual menu text that appears when we right click on a folder/file on node selector. It removes the node (file or folder).</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2839,12 +2816,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Remote node has been deleted</source>
         <translatorcomment>SDK error label shown when remote node has been deleted</translatorcomment>
-        <translation>Удаленная синхронизируемая папка удалена</translation>
+        <translation>Удалённая синхронизируемая папка удалена</translation>
     </message>
     <message>
         <source>Remote node is inside Rubbish Bin</source>
         <translatorcomment>SDK error label shown when remote node is inside Rubbish bin.</translatorcomment>
-        <translation>Удаленная синхронизируемая папка находится в корзине</translation>
+        <translation>Удалённая синхронизируемая папка находится в корзине</translation>
     </message>
     <message>
         <source>Unsupported VBoxSharedFolderFS filesystem</source>
@@ -2885,6 +2862,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Undefined error</source>
         <translatorcomment>Label to show that an undefined error occurs during a SDK operation.</translatorcomment>
         <translation>Неопределённая ошибка</translation>
+    </message>
+    <message>
+        <source>You can&apos;t run MEGA Desktop App from this location. Move it into the Applications folder then run it.</source>
+        <translatorcomment>Error message shown when the user is trying to run MEGA Desktop App from a path different than Applications. Only affects to macOS.</translatorcomment>
+        <translation>Вы не можете запустить настольное приложение MEGA отсюда. Переместите его в папку «Приложения» и запустите.</translation>
     </message>
 </context>
 <context>
@@ -3027,7 +3009,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Enter the new folder name:</source>
         <translatorcomment>Label to inform the user about entering a new folder name because the name provided does contain forbidden characters.</translatorcomment>
-        <translation>Введите новое имя папки:</translation>
+        <translation>Введите новое название папки:</translation>
     </message>
     <message>
         <source>The following characters are not allowed:
@@ -3078,7 +3060,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Invalid folder for synchronization.
 Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apos; or &apos;:&apos; in your folder names.</source>
         <translatorcomment>Message displayed when a user is trying to create a synchronization using not allowed characthers. Keep  &apos;\\&apos; &apos;/&apos; and &apos;:&apos; codes.</translatorcomment>
-        <translation>Недействительная папка для синхронизации.Убедитесь, что вы не используете символы «\», «/» или «:» в именах папок.</translation>
+        <translation>Недействительная папка для синхронизации. Убедитесь, что вы не используете символы «\», «/» или «:» в названиях папок.</translation>
     </message>
     <message>
         <source>Always upload to this destination</source>
@@ -3100,34 +3082,42 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translation>Действительно удалить «%1»?</translation>
     </message>
     <message>
-        <source>Delete</source>
-        <translation>Удалить</translation>
-    </message>
-    <message>
         <source>Only files can be used for streaming.</source>
         <translatorcomment>Warning message when users try to select a folder for streaming</translatorcomment>
         <translation>Можно транслировать только файлы.</translation>
     </message>
     <message>
         <source>Select items</source>
-        <translation>Выбрать элементы</translation>
+        <translation>Выбор элементов</translation>
     </message>
     <message>
-        <source>Select just one file.</source>
-        <translation>Выбрать только один файл</translation>
+        <source>Select a MEGA folder</source>
+        <translatorcomment>Node selector dialog title</translatorcomment>
+        <translation>Выбор MEGA-папки</translation>
+    </message>
+    <message numerus="yes">
+        <source>Item selection removed. To reselect, close this window and try again.</source>
+        <translatorcomment>Error message shown while the user is trying to download an file or folder but it is removed using another client</translatorcomment>
+        <translation><numerusform>Выбранный элемент удалёны. Для повторного выбора закройте это окно и повторите попытку.</numerusform><numerusform>Выбранные элементы удалены. Для повторного выбора закройте это окно и повторите попытку.</numerusform><numerusform>Выбранные элементы удалены. Для повторного выбора закройте это окно и повторите попытку.</numerusform><numerusform>Выбранные элементы удалены. Для повторного выбора закройте это окно и повторите попытку.</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>You no longer have access to this item. Ask the owner to share again.</source>
+        <translatorcomment>Error message shown when the user is trying to download an file or folder from an incoming share and the owner stops sharing/removes all items</translatorcomment>
+        <translation><numerusform>У вас больше нет доступа к этому элементу. Попросите владельца поделиться ещё раз.</numerusform><numerusform>У вас больше нет доступа к этим элементам. Попросите владельца поделиться ещё раз.</numerusform><numerusform>У вас больше нет доступа к этим элементам. Попросите владельца поделиться ещё раз.</numerusform><numerusform>У вас больше нет доступа к этим элементам. Попросите владельца поделиться ещё раз.</numerusform></translation>
     </message>
     <message>
-        <source>Get MEGA link</source>
-        <translation>Получить MEGA-ссылку</translation>
+        <source>Cloud drive</source>
+        <translatorcomment>Node selector button Text. Switch the view to show only the cloud drive nodes (files and folders)</translatorcomment>
+        <translation>Облачный диск</translation>
+    </message>
+    <message>
+        <source>Incoming shares</source>
+        <translatorcomment>Node selector button Text. Switch the view to show only the incoming shares nodes (files and folders)</translatorcomment>
+        <translation>Входящие элементы</translation>
     </message>
 </context>
 <context>
     <name>NotificationsSettings</name>
-    <message>
-        <source>Account notifications:</source>
-        <translatorcomment>Title for notifications setting pane</translatorcomment>
-        <translation>Уведомления аккаунта:</translation>
-    </message>
     <message>
         <source>Shares</source>
         <translatorcomment>Notification category for shared folders and nodes</translatorcomment>
@@ -3174,11 +3164,6 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translation>Информация</translation>
     </message>
     <message>
-        <source>Desktop notifications</source>
-        <translatorcomment>Title of a checkbox for disconnectig notifications</translatorcomment>
-        <translation>Уведомления на рабочем столе</translation>
-    </message>
-    <message>
         <source>Someone accepted your contact request</source>
         <translatorcomment>Title of a checkbox for disconnectig notifications</translatorcomment>
         <translation>Кто-то принял ваш запрос на добавление в контакты</translation>
@@ -3198,6 +3183,16 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translatorcomment>Notification category for non-critical info notifications (macx)</translatorcomment>
         <translation>Общие элементы:</translation>
     </message>
+    <message>
+        <source>System notifications:</source>
+        <translatorcomment>Title of a checkbox for disconnectig all notifications</translatorcomment>
+        <translation>Системные уведомления:</translation>
+    </message>
+    <message>
+        <source>Info notifications</source>
+        <translatorcomment>Title of a checkbox for disconnectig secondary info notifications</translatorcomment>
+        <translation>Информационные уведомления</translation>
+    </message>
 </context>
 <context>
     <name>Notificator</name>
@@ -3209,15 +3204,10 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 </context>
 <context>
     <name>OsNotifications</name>
-    <message>
-        <source>[A] removed 1 item</source>
-        <translatorcomment>Label to indicate that [A] has removed 1 item from a shared folder. Placeholder will be replaced by email of the user that made the deletion.</translatorcomment>
-        <translation>[A] удалил 1 элемент</translation>
-    </message>
-    <message>
-        <source>[A] removed [B] items</source>
-        <translatorcomment>Label to indicate that [A] has removed [B] items from a shared folder. Placeholder [A] will be replaced by email of the user that made the deletion and [B] with the number of removed items.</translatorcomment>
-        <translation>[A] удалил элементы ([B])</translation>
+    <message numerus="yes">
+        <source>[A] removed %n item</source>
+        <translatorcomment>Label to indicate that [A] has removed %n items from a shared folder. Placeholder [A] will be replaced by email of the user that made the deletion and %n with the number of removed items.</translatorcomment>
+        <translation><numerusform>[A] удалил %n элемент</numerusform><numerusform>[A] удалил %n элемента</numerusform><numerusform>[A] удалил %n элементов</numerusform><numerusform>[A] удалил %n элемента</numerusform></translation>
     </message>
 </context>
 <context>
@@ -3230,7 +3220,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>You have exceeded the available storage space for your account. You can add syncs but they will remain disabled until there is enough space on your account.</source>
         <translatorcomment>Informative label to indicate the user has exceeded the storage limit, letting set syncs but disabled until there is enough free storage space within the account.</translatorcomment>
-        <translation>Вы превысили доступное место для хранения вашим аккаунтом. Вы можете добавлять синхронизации, но они останутся отключенными, пока в аккаунте не будет достаточно места.</translation>
+        <translation>Вы превысили доступное хранилище для вашим аккаунтом. Вы можете добавлять синхронизации, но они останутся отключенными, пока в аккаунте не будет достаточно места.</translation>
     </message>
     <message>
         <source>Buy more space</source>
@@ -3245,7 +3235,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>You have exceeded the available storage space for your account. You can add uploads but transfers will remain queued until there is enough space on your account.</source>
         <translatorcomment>Informative label to indicate the user has exceeded the storage limit, letting to add new uploads that will be queued until there is enough free storage space within the account.</translatorcomment>
-        <translation>Вы превысили доступное место для хранения вашим аккаунтом. Вы можете добавлять загрузки, но они останутся в ожидании, пока в аккаунте не будет достаточно места.</translation>
+        <translation>Вы превысили доступное хранилище для вашего аккаунта. Вы можете добавлять загрузки, но они останутся в ожидании, пока в аккаунте не будет достаточно места.</translation>
     </message>
     <message>
         <source>Syncs are temporarily disabled.</source>
@@ -3325,6 +3315,19 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
 </context>
 <context>
+    <name>PasswordLineEdit</name>
+    <message>
+        <source>Show password</source>
+        <translatorcomment>Password box eye icon tooltip</translatorcomment>
+        <translation>Показать пароль</translation>
+    </message>
+    <message>
+        <source>Hide password</source>
+        <translatorcomment>Password box eye icon tooltip</translatorcomment>
+        <translation>Скрыть пароль</translation>
+    </message>
+</context>
+<context>
     <name>PasteMegaLinksDialog</name>
     <message>
         <source>Enter one or multiple MEGA file links</source>
@@ -3354,7 +3357,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Invalid MEGA Link</source>
         <translatorcomment>Label to indicate that MEGA link processed is invalid/incorrect </translatorcomment>
-        <translation>Неправильная ссылка MEGA</translation>
+        <translation>Неправильная MEGA-ссылка</translation>
     </message>
     <message>
         <source>Open links</source>
@@ -3367,7 +3370,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Permissions for new folders and files</source>
         <translatorcomment>Title of the dialog that allows to change the default permissions for new files and folders created by MEGAsync.</translatorcomment>
-        <translation>Разрешения для новых папок и файлов</translation>
+        <translation>Права для новых папок и файлов</translation>
     </message>
     <message>
         <source>Folders</source>
@@ -3382,12 +3385,12 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Group permissions:</source>
         <translatorcomment>Label just before the new group permissions that will be applied to new files and folders</translatorcomment>
-        <translation>Групповые разрешения:</translation>
+        <translation>Групповые права:</translation>
     </message>
     <message>
         <source>Public permissions:</source>
         <translatorcomment>Label just before the new public permissions that will be applied to new files and folders</translatorcomment>
-        <translation>Публичные разрешения:</translation>
+        <translation>Публичные права:</translation>
     </message>
     <message>
         <source>Files</source>
@@ -3402,7 +3405,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Owner permissions:</source>
         <translatorcomment>Label just before the new owner permissions that will be applied to new files and folders</translatorcomment>
-        <translation>Полномочия владельца:</translation>
+        <translation>Права владельца:</translation>
     </message>
 </context>
 <context>
@@ -3443,11 +3446,6 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <source>%1 per user</source>
         <translatorcomment>Label to indicate the price per user of business plan. %1 will be replaced with specific price.</translatorcomment>
         <translation>%1 за пользователя</translation>
-    </message>
-    <message>
-        <source>minimum %1 users</source>
-        <translatorcomment>Label to inform about the minimun number of users for a business plan. %1 will be replaced with the minimum number of users.</translatorcomment>
-        <translation>минимум %1 польз</translation>
     </message>
     <message>
         <source>storage</source>
@@ -3494,6 +3492,11 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translatorcomment>Balloon tooltip to inform users that additional transfer quota for business plan will be charged at %1 price per %2 TB. %1 reflect price and %2 storage unit.</translatorcomment>
         <translation>Дополнительные передачи по %1 за %2 ТБ.</translation>
     </message>
+    <message numerus="yes">
+        <source>minimum %n user</source>
+        <translatorcomment>Label to inform about the minimum number of users for a business plan. %1 will be replaced with the minimum number of users.</translatorcomment>
+        <translation><numerusform>минимум %n пользователь</numerusform><numerusform>минимум %n пользователя</numerusform><numerusform>минимум %n пользователей</numerusform><numerusform>минимум %n пользователя</numerusform></translation>
+    </message>
 </context>
 <context>
     <name>Platform</name>
@@ -3505,7 +3508,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Quit</source>
         <translatorcomment>Label displayed to let the user quit the application (MacOS). Max 20 characters. Keep capital letter.</translatorcomment>
-        <translation>Выйти</translation>
+        <translation>Выход</translation>
     </message>
     <message>
         <source>Settings</source>
@@ -3954,7 +3957,7 @@ Please verify the correct file name was given.</source>
         <source>&apos;%1&apos; is write protected.
 Do you want to delete it anyway?</source>
         <translatorcomment>Warning message when a write protected file is about to be delete</translatorcomment>
-        <translation>”%1” защищён от записи.
+        <translation>«%1» защищён от записи.
 Вы всё равно хотите удалить его?</translation>
     </message>
 </context>
@@ -3993,7 +3996,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>Name</source>
         <translatorcomment>Header name of the column that shows file names</translatorcomment>
-        <translation>Имя</translation>
+        <translation>Название</translation>
     </message>
     <message>
         <source>Size</source>
@@ -4024,11 +4027,6 @@ Do you want to delete it anyway?</source>
         <source>Computer</source>
         <translatorcomment>Name of the top level of the filesystem in unix platform</translatorcomment>
         <translation>Компьютер</translation>
-    </message>
-    <message>
-        <source>%1 byte(s)</source>
-        <translatorcomment>File size measured in bytes</translatorcomment>
-        <translation>%1 Б</translation>
     </message>
     <message>
         <source>&lt;b&gt;The name &quot;%1&quot; cannot be used.&lt;/b&gt;&lt;p&gt;Try using another name, with fewer characters or no punctuation marks.</source>
@@ -4135,7 +4133,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>%1 (%2%) of %3 used</source>
         <translatorcomment>Label to indicate the amount and percentage of used and total space available. Keep %1 (%2%) and %3 substitution placeholders because they will be filled with the required amounts of storage space dynamically.</translatorcomment>
-        <translation>Использовано %1 (%2 %) из %3</translation>
+        <translation>Использовано %1 (%2%) из %3</translation>
     </message>
     <message>
         <source>Warning</source>
@@ -4155,7 +4153,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>Full scan</source>
         <translatorcomment>Title of the message dialog for Full scan operation.</translatorcomment>
-        <translation>Полная проверка</translation>
+        <translation>Полное сканирование</translation>
     </message>
     <message>
         <source>MEGAsync will perform a full scan of your synced folders when it starts.
@@ -4232,12 +4230,12 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Backups of the previous versions of your synced files in MEGA will be permanently deleted. Please, check your [A] folder in the Rubbish Bin of your MEGA account to see if you need to rescue something before continuing.</source>
         <translatorcomment>Message shown to inform the user about the deletion of the remote cache and its consequences. Keep [A] substitution placeholder.</translatorcomment>
-        <translation>Резервные копии ранее синхронизированных файлов на компьютере будут полностью удалены. Проверьте папку [A] в корзине MEGA, если нужно что-то оставить.</translation>
+        <translation>Резервные копии ранее синхронизированных файлов на компьютере будут полностью удалены. Проверьте папку «[A]» в корзине MEGA, если нужно что-то оставить.</translation>
     </message>
     <message>
         <source>Do you want to restart MEGAsync now?</source>
         <translatorcomment>Message shown when clicking on restart MEGAsync button in Settings.</translatorcomment>
-        <translation>Перезагрузить MEGAsync сейчас?</translation>
+        <translation>Перезапустить MEGAsync сейчас?</translation>
     </message>
     <message>
         <source>Permissions</source>
@@ -4365,11 +4363,6 @@ Do you want to restart MEGAsync now?</source>
         <translation>Удалять файлы старше</translation>
     </message>
     <message>
-        <source>days</source>
-        <translatorcomment>Suffix text label for number of days to keep files in local cache.</translatorcomment>
-        <translation>д.</translation>
-    </message>
-    <message>
         <source>SyncDebris (remote cache)</source>
         <translatorcomment>Section label name for remote cache summary and clear action.</translatorcomment>
         <translation>SyncDebris (удалённый кеш)</translation>
@@ -4422,7 +4415,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Recovery Key</source>
         <translatorcomment>Section title for MEGA recovery key download in Security pane.</translatorcomment>
-        <translation>Ключ Восстановления</translation>
+        <translation>Ключ восстановления</translation>
     </message>
     <message>
         <source>Your password is not stored by MEGA and we cannot recover it for you. To avoid losing access to your account, save your Recovery Key in a safe place.</source>
@@ -4477,7 +4470,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Force a Full Scan</source>
         <translatorcomment>Button label text for allowing the user to initiate a full scan of synchronized folders, after restarting MEGA Desktop Application. Keep as short as possible.</translatorcomment>
-        <translation>Принудительная полная проверка</translation>
+        <translation>Полное сканирование</translation>
     </message>
     <message>
         <source>Session history</source>
@@ -4590,11 +4583,6 @@ Do you want to restart MEGAsync now?</source>
         <translation>Установить обновление</translation>
     </message>
     <message>
-        <source>Used quota for the last %1 hours:</source>
-        <translatorcomment>Informative text shown in Account pane for Free account type. Indicates the used quota in the last %1 specified number of hours. Keep the %1 subsitution argument.</translatorcomment>
-        <translation>Использовано за последние %1 ч.:</translation>
-    </message>
-    <message>
         <source>Free</source>
         <translatorcomment>Text label indicating the Free tier of account type in Account pane, next to the shield icon indicating also the type of account.</translatorcomment>
         <translation>Бесплатно</translation>
@@ -4702,12 +4690,22 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Notifications</source>
         <translatorcomment>Title for the Settings -&gt; Notifications pane tab button. Keep as short as possible.</translatorcomment>
-        <translation>Оповещения</translation>
+        <translation>Уведомления</translation>
     </message>
     <message>
         <source>Launch at login</source>
         <translatorcomment>Label to let the user start MEGAsync on login with a checkbox.</translatorcomment>
         <translation>Запускать при входе в систему</translation>
+    </message>
+    <message numerus="yes">
+        <source>Used quota for the last %n hour:</source>
+        <translatorcomment>Informative text shown in Account pane for Free account type. Indicates the used quota in the last %n specified number of hours. Keep the %n subsitution argument.</translatorcomment>
+        <translation><numerusform>Использовано за последний час:</numerusform><numerusform>Использовано за последние %n часа:</numerusform><numerusform>Использовано за последние %n часов:</numerusform><numerusform>Использовано за последние %n часа:</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>day</source>
+        <translatorcomment>Suffix text label for number of days to keep files in local cache.</translatorcomment>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
 </context>
 <context>
@@ -4715,7 +4713,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Create a new MEGA account</source>
         <translatorcomment>Label displayed when a user is creating a new MEGA account.</translatorcomment>
-        <translation>Создать новую учётную запись MEGA</translation>
+        <translation>Регистрация в MEGA</translation>
     </message>
     <message>
         <source>Email:</source>
@@ -4733,24 +4731,14 @@ Do you want to restart MEGAsync now?</source>
         <translation>Повторите пароль:</translation>
     </message>
     <message>
-        <source>I agree with the MEGA &lt;a href=&quot;https://mega.co.nz/#terms&quot;&gt;Terms of Service&lt;/a&gt;</source>
-        <translatorcomment>Label to aggre with the Terms of use.  Keep code &lt;a href=&quot;https://mega.co.nz/#terms&quot;&gt;Terms of Service&lt;/a&gt; .String as short as possible.</translatorcomment>
-        <translation>Я согласен с &lt;a href=&#8221;https://mega.nz/terms&#8221;&gt;условиями использования&lt;/a&gt; MEGA</translation>
-    </message>
-    <message>
         <source>Log in to your MEGA account</source>
         <translatorcomment>Label to let the user login with his credentials.</translatorcomment>
-        <translation>Войти в аккаунт MEGA</translation>
+        <translation>Вход в аккаунт MEGA</translation>
     </message>
     <message>
         <source>Please verify your account using the confirmation link that we have sent to your email account</source>
         <translatorcomment>Label displayed at last step of creation account process to inform the user to verify the new created account.</translatorcomment>
-        <translation>Пожалуйста, подтвердите свою учётную запись, используя ссылку подтверждения, которую мы выслали на ваш почтовый ящик</translation>
-    </message>
-    <message>
-        <source>Logging in ...</source>
-        <translatorcomment>Label displayed while logging process.</translatorcomment>
-        <translation>Вход…</translation>
+        <translation>Пожалуйста, подтвердите аккаунт, используя ссылку подтверждения, которую мы выслали на ваш почтовый ящик</translation>
     </message>
     <message>
         <source>Choose install type</source>
@@ -4820,7 +4808,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>MEGA folder doesn&apos;t exist</source>
         <translatorcomment>Label displayed when an error occurs with a remote folder.</translatorcomment>
-        <translation>Папка MEGA не существует</translation>
+        <translation>MEGA-папка не существует</translation>
     </message>
     <message>
         <source>Finish</source>
@@ -4860,7 +4848,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>You have to accept our terms of service</source>
         <translatorcomment>Label displayed when the user has not check the agreement of terms of service.</translatorcomment>
-        <translation>Вам нужно согласиться с условиями предоставления услуг</translation>
+        <translation>Вам нужно согласиться с условиями использования</translation>
     </message>
     <message>
         <source>Creating account...</source>
@@ -5020,17 +5008,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Sync specific folders in your cloud drive</source>
         <translatorcomment>Label to inform the user about the selective sync mode of MEGAsync</translatorcomment>
-        <translation>Синхронизировать определенные папки с вашим облачным диском</translation>
+        <translation>Синхронизировать определённые папки с вашим облачным диском</translation>
     </message>
     <message>
         <source>Selective sync:</source>
         <translatorcomment>Label next to information about the selective sync mode.</translatorcomment>
         <translation>Выборочная синхронизация</translation>
-    </message>
-    <message>
-        <source>Enjoy MEGAsync!</source>
-        <translatorcomment>Label displayed when user completes the setup wizard</translatorcomment>
-        <translation>Наслаждайтесь MEGAsync!</translation>
     </message>
     <message>
         <source>Please, enter your last name</source>
@@ -5068,14 +5051,24 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>Весь ваш облачный диск будет синхронизироваться с локальной папкой.</translation>
     </message>
     <message>
-        <source>We are all done!</source>
-        <translatorcomment>Label shown when the user completes the initial setup wizard</translatorcomment>
-        <translation>Всё готово!</translation>
-    </message>
-    <message>
         <source>Log in</source>
         <translatorcomment>Button label to open Login form</translatorcomment>
         <translation>Войти</translation>
+    </message>
+    <message>
+        <source>I agree with the MEGA [A]Terms of Service[/A]</source>
+        <translatorcomment>Label to agree with the Terms of use. Keep the [A] and [/A] tags, they are used for HTML code insertion. Keep the string as short as possible.</translatorcomment>
+        <translation>Я соглашаюсь с [A]Условиями использования[/A] MEGA</translation>
+    </message>
+    <message>
+        <source>Enjoy MEGAsync</source>
+        <translatorcomment>Label displayed when user completes the setup wizard</translatorcomment>
+        <translation>Наслаждайтесь MEGAsync</translation>
+    </message>
+    <message>
+        <source>We are all done</source>
+        <translatorcomment>Label shown when the user completes the initial setup wizard</translatorcomment>
+        <translation>Всё готово</translation>
     </message>
 </context>
 <context>
@@ -5101,26 +5094,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>Отослать пользователю MEGA</translation>
     </message>
     <message>
-        <source>1 file</source>
-        <translatorcomment>Label to indicate one file.</translatorcomment>
-        <translation>1 файл</translation>
-    </message>
-    <message>
-        <source>%1 files</source>
-        <translatorcomment>Label to indicate several file. Keep %1 code because it will be filled with the number of files at runtime.</translatorcomment>
-        <translation>Файлов: %1</translation>
-    </message>
-    <message>
-        <source>1 folder</source>
-        <translatorcomment>Label to indicate one folder.</translatorcomment>
-        <translation>1 папка</translation>
-    </message>
-    <message>
-        <source>%1 folders</source>
-        <translatorcomment>Label to indicate several folders. Keep %1 code because it will be filled with the number of folders at runtime.</translatorcomment>
-        <translation>Папок: %1</translation>
-    </message>
-    <message>
         <source>%1 (%2, %3)</source>
         <translatorcomment>Keep %1 (%2, %3) code because it will be filled with the number of folders at runtime. It will generate strings like: Upload to MEGA (5 files, 3 folders)</translatorcomment>
         <translation>%1 (%2, %3)</translation>
@@ -5144,6 +5117,16 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>View previous versions</source>
         <translatorcomment>Context menu option to view previous versions of a file through web browser within your MEGA account</translatorcomment>
         <translation>Просмотр предыдущих версий</translation>
+    </message>
+    <message numerus="yes">
+        <source>%n file</source>
+        <translatorcomment>Label to indicate file count. Keep %n code because it will be filled with the number of files at runtime.</translatorcomment>
+        <translation><numerusform>%n файл</numerusform><numerusform>%n файла</numerusform><numerusform>%n файлов</numerusform><numerusform>%n файла</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>%n folder</source>
+        <translatorcomment>Label to indicate folder count. Keep %n code because it will be filled with the number of folders at runtime.</translatorcomment>
+        <translation><numerusform>%n папка</numerusform><numerusform>%n папки</numerusform><numerusform>%n папок</numerusform><numerusform>%n папки</numerusform></translation>
     </message>
 </context>
 <context>
@@ -5194,7 +5177,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Stream from MEGA</source>
         <translatorcomment>Title of the dialog to stream files from MEGA</translatorcomment>
-        <translation>Трансляция с MEGA</translation>
+        <translation>Трансляция из MEGA</translation>
     </message>
     <message>
         <source>Select media from...</source>
@@ -5389,16 +5372,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translatorcomment>Description label for warning dialog indicating that syncs are not going to be affected by accepting this dialog</translatorcomment>
         <translation>Это действие не влияет на синхронизации.</translation>
     </message>
-    <message>
-        <source>Continue transfers</source>
-        <translatorcomment>Button label that indicates that no one of active transfers will be cancelled (Cancel button on dialog)</translatorcomment>
-        <translation>Продолжить передачи</translation>
-    </message>
-    <message>
-        <source>Cancel all transfers</source>
-        <translatorcomment>Button label that indicates that all active transfers will be cancelled (Accept button on dialog)</translatorcomment>
-        <translation>Отменить все передачи</translation>
-    </message>
 </context>
 <context>
     <name>TransferManagerItem</name>
@@ -5471,7 +5444,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Paused Transfers</source>
         <translatorcomment>Label to indicate that active transfers are paused</translatorcomment>
-        <translation>Остановленные передачи</translation>
+        <translation>Приостановленные передачи</translation>
     </message>
 </context>
 <context>
@@ -5555,7 +5528,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Upload to MEGA</source>
         <translatorcomment>Label and Title of the dialog displayed when a user is trying to upload a file/folder to MEGA.(MAX 20 characters)</translatorcomment>
-        <translation>Загрузить на MEGA</translation>
+        <translation>Загрузить в MEGA</translation>
     </message>
     <message>
         <source>Please, select the upload folder for your files:</source>
@@ -5585,34 +5558,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Choose</source>
         <translatorcomment>Button label to select the upload folder (String as short as possible)</translatorcomment>
-        <translation>Выберите</translation>
-    </message>
-</context>
-<context>
-    <name>UsageWidget</name>
-    <message>
-        <source>Cloud Drive</source>
-        <translation>Облачный диск</translation>
-    </message>
-    <message>
-        <source>Rubbish Bin</source>
-        <translation>Корзина</translation>
-    </message>
-    <message>
-        <source>Incoming Shares</source>
-        <translation>Входящие общие папки</translation>
-    </message>
-    <message>
-        <source>Inbox</source>
-        <translation>Входящие</translation>
-    </message>
-    <message>
-        <source>Used</source>
-        <translation>Использовано</translation>
-    </message>
-    <message>
-        <source>Available</source>
-        <translation>Доступно</translation>
+        <translation>Выбрать</translation>
     </message>
 </context>
 <context>
@@ -5621,61 +5567,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>just now</source>
         <translatorcomment>Label to indicate that a transfer has finished right now</translatorcomment>
         <translation>только что</translation>
-    </message>
-    <message>
-        <source>%1 seconds ago</source>
-        <translatorcomment>Label to indicate that a transfer has finished %1 seconds ago</translatorcomment>
-        <translation>%1 секунд назад</translation>
-    </message>
-    <message>
-        <source>1 minute ago</source>
-        <translatorcomment>Label to indicate that a transfer has finished 1 minute ago</translatorcomment>
-        <translation>1 минуту назад</translation>
-    </message>
-    <message>
-        <source>%1 minutes ago</source>
-        <translatorcomment>Label to indicate that a transfer has finished %1 minutes ago</translatorcomment>
-        <translation>%1 минут назад</translation>
-    </message>
-    <message>
-        <source>1 hour ago</source>
-        <translatorcomment>Label to indicate that a transfer has finished 1 hour ago</translatorcomment>
-        <translation>1 час назад</translation>
-    </message>
-    <message>
-        <source>%1 hours ago</source>
-        <translatorcomment>Label to indicate that a transfer has finished %1 hours ago</translatorcomment>
-        <translation>%1 часов назад</translation>
-    </message>
-    <message>
-        <source>1 day ago</source>
-        <translatorcomment>Label to indicate that a transfer has finished 1 day ago</translatorcomment>
-        <translation>1 день назад</translation>
-    </message>
-    <message>
-        <source>%1 days ago</source>
-        <translatorcomment>Label to indicate that a transfer has finished %1 days ago</translatorcomment>
-        <translation>%1 дней назад</translation>
-    </message>
-    <message>
-        <source>1 month ago</source>
-        <translatorcomment>Label to indicate that a transfer has finished %1 month ago</translatorcomment>
-        <translation>1 месяц назад</translation>
-    </message>
-    <message>
-        <source>%1 months ago</source>
-        <translatorcomment>Label to indicate that a transfer has finished %1 months ago</translatorcomment>
-        <translation>%1 месяцев назад</translation>
-    </message>
-    <message>
-        <source>1 year ago</source>
-        <translatorcomment>Label to indicate that a transfer has finished %1 year ago</translatorcomment>
-        <translation>1 год назад</translation>
-    </message>
-    <message>
-        <source>%1 years ago</source>
-        <translatorcomment>Label to indicate that a transfer has finished %1 years ago</translatorcomment>
-        <translation>%1 лет назад</translation>
     </message>
     <message>
         <source>TB</source>
@@ -5721,6 +5612,36 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Pro III</source>
         <translatorcomment>Label to refer Pro III tier</translatorcomment>
         <translation>Pro III</translation>
+    </message>
+    <message numerus="yes">
+        <source>%n second ago</source>
+        <translatorcomment>Label to indicate that a transfer has finished %n seconds ago</translatorcomment>
+        <translation><numerusform>%n секунду назад</numerusform><numerusform>%n секунды назад</numerusform><numerusform>%n секунд назад</numerusform><numerusform>%n секунды назад</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>%n minute ago</source>
+        <translatorcomment>Label to indicate that a transfer has finished %n minutes ago</translatorcomment>
+        <translation><numerusform>%n минуту назад</numerusform><numerusform>%n минуты назад</numerusform><numerusform>%n минут назад</numerusform><numerusform>%n минуты назад</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>%n hour ago</source>
+        <translatorcomment>Label to indicate that a transfer has finished %n hours ago</translatorcomment>
+        <translation><numerusform>%n час назад</numerusform><numerusform>%n часа назад</numerusform><numerusform>%n часов назад</numerusform><numerusform>%n часа назад</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>%n day ago</source>
+        <translatorcomment>Label to indicate that a transfer has finished %n days ago</translatorcomment>
+        <translation><numerusform>%n день назад</numerusform><numerusform>%n дня назад</numerusform><numerusform>%n дней назад</numerusform><numerusform>%n дня назад</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>%n month ago</source>
+        <translatorcomment>Label to indicate that a transfer has finished %n months ago</translatorcomment>
+        <translation><numerusform>%n месяц назад</numerusform><numerusform>%n месяца назад</numerusform><numerusform>%n месяцев назад</numerusform><numerusform>%n месяца назад</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>%n year ago</source>
+        <translatorcomment>Label to indicate that a transfer has finished %n years ago</translatorcomment>
+        <translation><numerusform>%n год назад</numerusform><numerusform>%n года назад</numerusform><numerusform>%n лет назад</numerusform><numerusform>%n года назад</numerusform></translation>
     </message>
 </context>
 <context>
