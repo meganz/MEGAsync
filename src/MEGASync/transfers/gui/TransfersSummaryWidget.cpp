@@ -662,6 +662,11 @@ void TransfersSummaryWidget::updateSizes()
         }
     }
 
+    if(ui->bpause->isVisible() && (currentDownload == 0 && currentUpload == 0))
+    {
+         ui->bpause->hide();
+    }
+
     if (qMin(lastwidth, lastheigth) != minwidthheight)
     {
         wpen = qFloor(minwidthheight/28.0*1);
