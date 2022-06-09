@@ -38,7 +38,7 @@ public:
 
     void showDialog(DialogClass* dialog)
     {
-        auto isBaseOfDialog(std::is_base_of<QDialog, DialogClass>::value);
+        auto isBaseOfDialog(std::is_base_of<QWidget, DialogClass>::value);
         Q_ASSERT(isBaseOfDialog);
 
         if(mDialog)
@@ -61,7 +61,7 @@ public:
 
             if(mMaximized)
             {
-                mDialog->showFullScreen();
+                mDialog->showMaximized();
             }
             else
             {

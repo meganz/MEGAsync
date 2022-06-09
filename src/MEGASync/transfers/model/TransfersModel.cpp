@@ -1579,7 +1579,7 @@ void TransfersModel::resetModel()
      mTransfersToProcess.clear();
      mCancelingMode = 0;
      mFailingMode = 0;
-     mTagByOrder.clear();g
+     mTagByOrder.clear();
 
      endResetModel();
 }

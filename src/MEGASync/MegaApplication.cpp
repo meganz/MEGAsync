@@ -729,8 +729,6 @@ void MegaApplication::setTrayIconFromTheme(QString icon)
 
 void MegaApplication::updateTrayIcon()
 {
-    mThreadPool->push([this](){
-
     if (appfinished || !trayIcon)
     {
         return;
@@ -960,7 +958,6 @@ void MegaApplication::updateTrayIcon()
     {
         trayIcon->setToolTip(tooltip);
     }
-    });
 }
 
 void MegaApplication::start()
