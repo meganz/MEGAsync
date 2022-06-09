@@ -9,11 +9,6 @@
         <translation>Account usage details</translation>
     </message>
     <message>
-        <source>Cloud Drive</source>
-        <translatorcomment>Label for Cloud Drive space used. Maintain capital letters in each word.(Max 18 characters)</translatorcomment>
-        <translation>Cloud Drive</translation>
-    </message>
-    <message>
         <source>Inbox</source>
         <translatorcomment>Label for Inbox space used. Maintain capital letters in each word.(Max 18 characters)</translatorcomment>
         <translation>Inbox</translation>
@@ -34,14 +29,24 @@
         <translation>Transfer</translation>
     </message>
     <message>
-        <source>Bin</source>
-        <translatorcomment>Label for Bin space used. Maintain capital letter.</translatorcomment>
-        <translation>Bin</translation>
-    </message>
-    <message>
         <source>Of that, size taken up by file versions:</source>
         <translatorcomment>Label to indicate the amount of size occupied by file versions.</translatorcomment>
         <translation>Size taken up by file versions</translation>
+    </message>
+    <message>
+        <source>Cloud drive</source>
+        <translatorcomment>Label for Cloud drive space used. Maintain capital letter in first word.(Max 18 characters)</translatorcomment>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Rubbish bin</source>
+        <translatorcomment>Label for Rubbish bin space used. Maintain capital letter in first word.(Max 18 characters)</translatorcomment>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Available storage</source>
+        <translatorcomment>Label for Available storage space used. Maintain capital letter in first word.(Max 18 characters)</translatorcomment>
+        <translation></translation>
     </message>
 </context>
 <context>
