@@ -47,7 +47,7 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
 
 #ifdef Q_OS_MACOS
     mUi->leSearchField->setAttribute(Qt::WA_MacShowFocusRect,0);
-#elif
+#else
     Qt::WindowFlags flags =  Qt::Window;
     this->setWindowFlags(flags);
 #endif

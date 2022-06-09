@@ -446,6 +446,8 @@ bool TransferManagerDelegateWidget::eventFilter(QObject *watched, QEvent *event)
                                     .elidedText(getData()->mFilename, Qt::ElideMiddle,
                                                 mUi->wName->contentsRect().width() - 12));
     }
+
+    return TransferBaseDelegateWidget::eventFilter(watched, event);
 }
 
 void TransferManagerDelegateWidget::on_tPauseResumeTransfer_clicked()

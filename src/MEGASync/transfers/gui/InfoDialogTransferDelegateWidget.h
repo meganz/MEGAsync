@@ -48,6 +48,9 @@ signals:
     void copyTransferLink();
     void openTransferFolder();
 
+protected:
+    bool eventFilter(QObject *watched, QEvent *event) override;
+
 private slots: 
     void on_lShowInFolder_clicked();
     void on_lActionTransfer_clicked();
