@@ -55,6 +55,14 @@ bool ButtonIconManager::eventFilter(QObject * watched, QEvent * event)
             }
         }
     }
+    else if(button->isCheckable() && event->type() == QEvent::MouseButtonPress)
+    {
+        if(button->isChecked())
+        {
+            event->accept();
+            return true;
+        }
+    }
 
     return QObject::eventFilter(watched, event);
 }
