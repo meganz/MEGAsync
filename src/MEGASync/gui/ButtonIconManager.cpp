@@ -5,8 +5,6 @@
 #include <QVariant>
 #include <QDir>
 
-#include <QDebug>
-
 const char* ButtonIconManager::ICON_PREFIX = "default_icon";
 const char* ButtonIconManager::HOVER_SELECTED_FLAG = "hover_selected";
 const char* ButtonIconManager::CHECK_STATE = "check_state";
@@ -55,6 +53,14 @@ bool ButtonIconManager::eventFilter(QObject * watched, QEvent * event)
                 setDefaultIcon(button);
                 button->setProperty(CHECK_STATE, button->isChecked());
             }
+        }
+    }
+    else if(button->isCheckable() && event->type() == QEvent::MouseButtonPress)
+    {
+        if(button->isChecked())
+        {
+            event->accept();
+            return true;
         }
     }
 

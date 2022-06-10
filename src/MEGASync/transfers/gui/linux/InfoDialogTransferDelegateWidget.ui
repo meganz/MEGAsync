@@ -658,7 +658,7 @@ background-color: rgba(0, 0, 0, 8%);
                        <number>0</number>
                       </property>
                       <item>
-                       <widget class="QPushButton" name="lTransferType">
+                       <widget class="QLabel" name="lTransferType">
                         <property name="sizePolicy">
                          <sizepolicy hsizetype="Minimum" vsizetype="Maximum">
                           <horstretch>0</horstretch>
@@ -686,12 +686,9 @@ background-color: rgba(0, 0, 0, 8%);
                         <property name="text">
                          <string/>
                         </property>
-                        <property name="iconSize">
-                         <size>
-                          <width>10</width>
-                          <height>12</height>
-                         </size>
-                        </property>
+                        <property name="alignment">
+                         <set>Qt::AlignCenter</set>
+                        </property>						
                        </widget>
                       </item>
                       <item>

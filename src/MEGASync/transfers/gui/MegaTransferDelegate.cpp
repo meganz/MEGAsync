@@ -16,6 +16,7 @@
 #include <QPainterPath>
 #include <QToolTip>
 #include <QSortFilterProxyModel>
+#include <QScrollBar>
 
 using namespace mega;
 
@@ -54,6 +55,19 @@ void MegaTransferDelegate::paint(QPainter *painter, const QStyleOptionViewItem &
         {
             w->move(pos);
         }
+
+#ifdef __APPLE__
+        //On Linux and Windows, the width depends on the vertical scroll bar visibility.
+        //On MacOS, the width does not change when the scrollbar visibility changes
+        //This is why we need to adapt it manually
+        if(mView)
+        {
+            if(mView->verticalScrollBar() && mView->verticalScrollBar()->isVisible())
+            {
+                width -= mView->verticalScrollBar()->width();
+            }
+        }
+#endif
 
         // Resize if window resized
         if (w->width() != width)

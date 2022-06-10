@@ -26,8 +26,9 @@ InfoDialogTransferDelegateWidget::InfoDialogTransferDelegateWidget(QWidget *pare
     mUi->lShowInFolder->setSizePolicy(retainShowInFolder);
 
     mUi->bClockDown->setVisible(false);
-
     mUi->lShowInFolder->hide();
+
+    mUi->lTransferType->installEventFilter(this);
 }
 
 InfoDialogTransferDelegateWidget::~InfoDialogTransferDelegateWidget()
@@ -173,8 +174,7 @@ void InfoDialogTransferDelegateWidget::setType()
                                                         "QProgressBar#pbTransfer::chunk {background-color: #2ba6de;}"));
     }
 
-    mUi->lTransferType->setIcon(icon);
-    mUi->lTransferType->setIconSize(mUi->lTransferType->size());
+    mUi->lTransferType->setPixmap(icon.pixmap(mUi->lTransferType->size()));
 }
 
 QString InfoDialogTransferDelegateWidget::getTransferName()
@@ -375,6 +375,16 @@ QSize InfoDialogTransferDelegateWidget::minimumSizeHint() const
 QSize InfoDialogTransferDelegateWidget::sizeHint() const
 {
     return FullRect.size();
+}
+
+bool InfoDialogTransferDelegateWidget::eventFilter(QObject *watched, QEvent *event)
+{
+    if(watched == mUi->lTransferType && event->type() == QEvent::Resize)
+    {
+        setType();
+    }
+
+    return TransferBaseDelegateWidget::eventFilter(watched, event);
 }
 
 void InfoDialogTransferDelegateWidget::on_lShowInFolder_clicked()

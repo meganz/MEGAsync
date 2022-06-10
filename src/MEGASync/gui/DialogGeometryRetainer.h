@@ -49,7 +49,7 @@ public:
         mDialog = dialog;
 
         //First time this is used
-        if(mDialogClassName.isEmpty())
+        if(mDialogClassName.isEmpty() || mDialogGeometry.isEmpty())
         {
             mDialog->showNormal();
             mDialogClassName = QString::fromUtf8(typeid(DialogClass).name());
@@ -61,7 +61,7 @@ public:
 
             if(mMaximized)
             {
-                mDialog->showFullScreen();
+                mDialog->showMaximized();
             }
             else
             {
@@ -88,7 +88,6 @@ protected:
             }
         }
     }
-
 
 private:
     bool mMaximized;

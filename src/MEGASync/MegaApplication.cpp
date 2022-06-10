@@ -733,8 +733,6 @@ void MegaApplication::setTrayIconFromTheme(QString icon)
 
 void MegaApplication::updateTrayIcon()
 {
-    mThreadPool->push([this](){
-
     if (appfinished || !trayIcon)
     {
         return;
@@ -969,7 +967,6 @@ void MegaApplication::updateTrayIcon()
     {
         trayIcon->setToolTip(tooltip);
     }
-    });
 }
 
 void MegaApplication::start()
@@ -3441,7 +3438,6 @@ void MegaApplication::unlink(bool keepLogs)
     megaApi->logout(true, nullptr);
     megaApiFolders->setAccountAuth(nullptr);
     Platform::notifyAllSyncFoldersRemoved();
-
     for (unsigned i = 3; i--; )
     {
         inflightUserStats[i] = false;
@@ -7137,7 +7133,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
                 QMegaMessageBox::information(nullptr, QString::fromUtf8("MEGAsync"), tr("You have been logged out because of this error: %1")
                                          .arg(QCoreApplication::translate("MegaError", e->getErrorString())));
             }
-            unlink();
+            unlink();            
         }
 
         //Check for any sync disabled by logout to warn user on next login with user&password
@@ -7151,6 +7147,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
             }
         }
         model->reset();
+        mTransfersModel->resetModel();
 
 
         // Queue processing of logout cleanup to avoid race conditions
