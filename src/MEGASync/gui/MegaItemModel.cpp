@@ -421,42 +421,25 @@ void MegaItemModel::onRequestFinish(mega::MegaApi *api, mega::MegaRequest *reque
     }
     if(request->getType() == mega::MegaRequest::TYPE_GET_ATTR_USER)
     {
-
         switch(request->getParamType())
         {
         case mega::MegaApi::USER_ATTR_CAMERA_UPLOADS_FOLDER:
         case mega::MegaApi::USER_ATTR_MY_CHAT_FILES_FOLDER:
         {
-            QModelIndex rootIndex = index(0,0);
-            for(int i = 0; i < rowCount(rootIndex); ++i)
+            QModelIndex idx = findItemByNodeHandle(request->getNodeHandle(), index(0, 0));
+            if(idx.isValid())
             {
-                //we only update this column because we retrieve the data in async mode
-                //so it is possible that we doesn´t have the information from the start
-                QModelIndex idx = index(i, COLUMN::NODE, rootIndex);
-                if(idx.isValid())
+                if(MegaItem* item = static_cast<MegaItem*>(idx.internalPointer()))
                 {
-                    if(MegaItem* chkItem = static_cast<MegaItem*>(idx.internalPointer()))
-                    {
-                        if(chkItem->getNode()->getHandle() == request->getNodeHandle())
-                        {
-                            if(request->getParamType() == mega::MegaApi::USER_ATTR_CAMERA_UPLOADS_FOLDER)
-                            {
-                                chkItem->setCameraFolder();
-                            }
-                            else
-                            {
-                                chkItem->setChatFilesFolder();
-                            }
-
-                            QVector<int> roles;
-                            roles.append(Qt::DecorationRole);
-                            emit dataChanged(idx, idx, roles);
-                            return;
-                        }
-                    }
+                    request->getParamType() == mega::MegaApi::USER_ATTR_CAMERA_UPLOADS_FOLDER
+                            ? item->setCameraFolder() : item->setChatFilesFolder();
                 }
             }
-            break;
+
+            QVector<int> roles;
+            roles.append(Qt::DecorationRole);
+            emit dataChanged(idx, idx, roles);
+            return;
         }
         default:
             break;
@@ -508,4 +491,36 @@ int MegaItemModel::insertPosition(const std::unique_ptr<MegaNode>& node)
         }
     }
     return i;
+}
+
+QModelIndex MegaItemModel::findItemByNodeHandle(const mega::MegaHandle& handle, const QModelIndex &parent)
+{
+    for(int i = 0; i < rowCount(parent); ++i)
+    {
+        QModelIndex idx = index(i, COLUMN::NODE, parent);
+        if(idx.isValid())
+        {
+            QString name = idx.data(Qt::DisplayRole).toString();
+            if(MegaItem* chkItem = static_cast<MegaItem*>(idx.internalPointer()))
+            {
+                if(chkItem->getNode()->isFolder() && chkItem->getNode()->getHandle() == handle)
+                {
+                    return idx;
+                }
+            }
+        }
+    }
+    for(int i = 0; i < rowCount(parent); ++i)
+    {
+        QModelIndex child = parent.child(i, COLUMN::NODE);
+        if(child.isValid())
+        {
+          auto ret = findItemByNodeHandle(handle, child);
+          if(ret.isValid())
+          {
+              return ret;
+          }
+        }
+    }
+    return QModelIndex();
 }

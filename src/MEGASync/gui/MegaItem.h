@@ -16,8 +16,8 @@ class AvatarAttributeRequest;
 class MegaItem : public QObject
 {
     Q_OBJECT
-    static const int ICON_SIZE;
 public:
+    static const int ICON_SIZE;
 
     enum STATUS{
         SYNC,
