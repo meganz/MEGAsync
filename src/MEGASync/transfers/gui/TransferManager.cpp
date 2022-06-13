@@ -46,6 +46,9 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
 
 #ifdef Q_OS_MACOS
     mUi->leSearchField->setAttribute(Qt::WA_MacShowFocusRect,0);
+#else
+    Qt::WindowFlags flags =  Qt::Window;
+    this->setWindowFlags(flags);
 #endif
 
     setAttribute(Qt::WA_DeleteOnClose, true);
@@ -56,8 +59,6 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
     mModel = mUi->wTransfers->getModel();
 
     Platform::enableDialogBlur(this);
-    Qt::WindowFlags flags =  Qt::Window;
-    this->setWindowFlags(flags);
 
     mUi->wSearch->hide();
     mUi->wMediaType->hide();
@@ -1070,7 +1071,7 @@ void TransferManager::toggleTab(TM_TAB newTab)
         TransfersWidget::HeaderInfo headerInfo;
         auto proxyModel(mUi->wTransfers->getProxyModel());
 
-        QString cancelBase(proxyModel->isAnyCancelable() ? tr("Cancel and clear ") : tr("Clear "));
+        QString cancelBase(tr("Cancel "));
 
         // Show pause button on tab except completed tab,
         // and set Clear All button string,
@@ -1102,6 +1103,8 @@ void TransferManager::toggleTab(TM_TAB newTab)
                 headerInfo.headerSpeed = tr("Speed");
 
                 mUi->tActionButton->setText(tr("Clear Completed"));
+
+                cancelBase = proxyModel->isAnyCancelable() ? tr("Cancel and clear ") : tr("Clear ");
             }
             //UPLOAD // DOWNLOAD
             else
@@ -1109,7 +1112,6 @@ void TransferManager::toggleTab(TM_TAB newTab)
                 headerInfo.headerTime = tr("Time left");
                 headerInfo.headerSpeed = tr("Speed");
             }
-
         }
 
         headerInfo.cancelClearTooltip = cancelBase + mTooltipNameByTab[newTab];
@@ -1293,7 +1295,16 @@ void TransferManager::dropEvent(QDropEvent* event)
     QList<QUrl> urlsToAdd = event->mimeData()->urls();
     foreach(auto& urlToAdd, urlsToAdd)
     {
-        pathsToAdd.append(urlToAdd.toLocalFile());
+        auto file = urlToAdd.toLocalFile();
+#ifdef __APPLE__
+        QFileInfo fileInfo(file);
+        if (fileInfo.isDir())
+        {
+            file.remove(file.length()-1,1);
+        }
+#endif
+
+        pathsToAdd.append(file);
     }
 
     MegaSyncApp->shellUpload(pathsToAdd);

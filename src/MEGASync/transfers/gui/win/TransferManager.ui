@@ -1158,7 +1158,7 @@ QGroupBox::title
               </property>
               <property name="default_icon" stdset="0">
                <url>
-                <string>qrc:/images/transfer_manager/sidebar/failed_ico_default.png</string>
+                <string>qrc:/images/transfer_manager/sidebar/sidebar_failed_ico_default.png</string>
                </url>
               </property>
              </widget>

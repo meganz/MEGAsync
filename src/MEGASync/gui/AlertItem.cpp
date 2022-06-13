@@ -237,7 +237,11 @@ void AlertItem::setAlertHeading(MegaUserAlert *alert)
             ui->sIconWidget->show();
             mNotificationHeading = QString::fromUtf8(mAlertNode ? mAlertNode->getName() : alert->getName());
 
-            if (mNotificationHeading.isEmpty())
+            if (mNotificationHeading == QString::fromLatin1("NO_KEY"))
+            {
+                mNotificationHeading = tr("Decryption error");
+            }
+            else if (mNotificationHeading.isEmpty())
             {
                 mNotificationHeading = tr("Shared Folder Activity");
             }
@@ -323,7 +327,7 @@ void AlertItem::setAlertContent(MegaUserAlert *alert)
                 break;
             // Share notifications
             case MegaUserAlert::TYPE_NEWSHARE:
-                notificationContent = tr("New Shared folder from [A]")
+                notificationContent = tr("New shared folder from [A]")
                         .replace(QString::fromUtf8("[A]"), formatRichString(getUserFullName(alert)));
                 break;
             case MegaUserAlert::TYPE_DELETEDSHARE:

@@ -806,7 +806,7 @@ QProgressBar::chunk
              <item>
               <widget class="QLabel" name="lCloudDrive">
                <property name="text">
-                <string>Cloud Drive</string>
+                <string>Cloud drive</string>
                </property>
               </widget>
              </item>
@@ -1008,7 +1008,7 @@ QProgressBar::chunk
              <item>
               <widget class="QLabel" name="lRubbish">
                <property name="text">
-                <string>Bin</string>
+                <string>Rubbish bin</string>
                </property>
               </widget>
              </item>
@@ -1107,7 +1107,7 @@ QProgressBar::chunk
            <item alignment="Qt::AlignVCenter">
             <widget class="QLabel" name="lAvailable">
              <property name="text">
-              <string>Available Storage</string>
+              <string>Available storage</string>
              </property>
             </widget>
            </item>

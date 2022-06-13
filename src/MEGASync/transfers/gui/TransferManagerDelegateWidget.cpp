@@ -22,6 +22,7 @@ TransferManagerDelegateWidget::TransferManagerDelegateWidget(QWidget *parent) :
 {
     mUi->setupUi(this);
     mUi->pbTransfer->setMaximum(PB_PRECISION);
+    mUi->wName->installEventFilter(this);
 }
 
 TransferManagerDelegateWidget::~TransferManagerDelegateWidget()
@@ -435,9 +436,18 @@ void TransferManagerDelegateWidget::mouseDoubleClickEvent(QMouseEvent *event)
 
 void TransferManagerDelegateWidget::resizeEvent(QResizeEvent*)
 {
-    mUi->lTransferName->setText(mUi->lTransferName->fontMetrics()
-                                .elidedText(getData()->mFilename, Qt::ElideMiddle,
-                                            mUi->wName->contentsRect().width() - 12));
+}
+
+bool TransferManagerDelegateWidget::eventFilter(QObject *watched, QEvent *event)
+{
+    if(watched == mUi->wName && event->type() == QEvent::Resize)
+    {
+        mUi->lTransferName->setText(mUi->lTransferName->fontMetrics()
+                                    .elidedText(getData()->mFilename, Qt::ElideMiddle,
+                                                mUi->wName->contentsRect().width() - 12));
+    }
+
+    return TransferBaseDelegateWidget::eventFilter(watched, event);
 }
 
 void TransferManagerDelegateWidget::on_tPauseResumeTransfer_clicked()

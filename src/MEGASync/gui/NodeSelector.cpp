@@ -72,6 +72,8 @@ NodeSelector::NodeSelector(int selectMode, QWidget *parent) :
     ui->tMegaFolders->setItemDelegateForColumn(MegaItemModel::USER, new IconDelegate(ui->tMegaFolders));
     ui->tMegaFolders->setExpanded(mProxyModel->getIndexFromHandle(MegaSyncApp->getRootNode()->getHandle()),true);
     ui->tMegaFolders->setTextElideMode(Qt::ElideMiddle);
+    ui->tMegaFolders->sortByColumn(MegaItemModel::NODE, Qt::AscendingOrder);
+    ui->bOk->setEnabled(false);
 
     ui->lFolderName->setText(tr("Cloud drive"));
 
@@ -138,7 +140,6 @@ void NodeSelector::nodesReady()
         break;
     }
     ui->tMegaFolders->setModel(mProxyModel.get());
-    ui->tMegaFolders->sortByColumn(MegaItemModel::NODE, Qt::AscendingOrder);
     checkBackForwardButtons();
 
 //Disable animation for OS X due to problems showing the tree icons
@@ -201,6 +202,25 @@ QModelIndex NodeSelector::getSelectedIndex()
     if(ui->tMegaFolders->selectionModel()->selectedRows().size() > 0)
         ret = ui->tMegaFolders->selectionModel()->selectedRows().at(0);
     return ret;
+}
+
+QModelIndex NodeSelector::getParentIncomingShareByIndex(QModelIndex idx)
+{
+    while(idx.isValid())
+    {
+        if(MegaItem *item = static_cast<MegaItem*>(idx.internalPointer()))
+        {
+            if(item->getNode()->isInShare())
+            {
+                return idx;
+            }
+            else
+            {
+                idx = idx.parent();
+            }
+        }
+    }
+    return QModelIndex();
 }
 
 void NodeSelector::setSelectedNodeHandle(MegaHandle selectedHandle)
@@ -461,11 +481,11 @@ void NodeSelector::onbNewFolderClicked()
         for (int i = 0; i < mProxyModel->rowCount(modelIndex); i++)
         {
             QModelIndex row = mProxyModel->index(i, 0, modelIndex);
-            auto node = mProxyModel->getNode(row);
+            auto nodeI = mProxyModel->getNode(row);
 
-            if (node && newFolderName.compare(QString::fromUtf8(node->getName())) == 0)
+            if (nodeI && newFolderName.compare(QString::fromUtf8(nodeI->getName())) == 0)
             {
-                setSelectedNodeHandle(node->getHandle());
+                setSelectedNodeHandle(nodeI->getHandle());
                 ui->tMegaFolders->selectionModel()->select(row, QItemSelectionModel::ClearAndSelect | QItemSelectionModel::Rows);
                 ui->tMegaFolders->selectionModel()->setCurrentIndex(row, QItemSelectionModel::ClearAndSelect | QItemSelectionModel::Rows);
                 break;
@@ -555,7 +575,7 @@ void NodeSelector::onbShowIncomingSharesClicked()
     if(mProxyModel)
     {
         saveExpandedItems();
-        mProxyModel->showOnlyInShares();
+        mProxyModel->showOnlyInShares(mSelectMode == NodeSelector::SYNC_SELECT);
         restoreExpandedItems();
         checkNewFolderButtonVisibility();
         checkBackForwardButtons();
@@ -602,8 +622,9 @@ void NodeSelector::onTabSelected(int index)
 void NodeSelector::onSelectionChanged(const QItemSelection& selected, const QItemSelection& deselected)
 {
     Q_UNUSED(deselected)
-    if(mSelectMode == UPLOAD_SELECT || mSelectMode == DOWNLOAD_SELECT || !mProxyModel)
+    if(mSelectMode == UPLOAD_SELECT || mSelectMode == DOWNLOAD_SELECT)
     {
+        ui->bOk->setEnabled(true);
         return;
     }
     foreach(auto& index, selected.indexes())
@@ -704,46 +725,71 @@ bool NodeSelector::isCloudDrive()
     return mProxyModel ? mProxyModel->isShowOnlyCloudDrive() : true;
 }
 
-void NodeSelector::setRootIndex(const QModelIndex &idx)
+void NodeSelector::setRootIndex(const QModelIndex& proxy_idx)
 {
-    ui->tMegaFolders->setRootIndex(idx);
-    if(!idx.isValid())
+    //In case the idx is coming from a potentially hidden column, we always take the STATUS column
+    //If you set a hidden column, the view does not accept it even if the column is visible at this point
+    auto status_column_idx = proxy_idx.sibling(proxy_idx.row(), MegaItemModel::COLUMN::STATUS);
+
+    ui->tMegaFolders->setRootIndex(status_column_idx);
+    if(!status_column_idx.isValid())
     {
         if(isCloudDrive())
             ui->lFolderName->setText(tr(CLD_DRIVE));
         else
             ui->lFolderName->setText(tr(IN_SHARES));
 
+        QModelIndexList selectedIndexes = ui->tMegaFolders->selectionModel()->selectedIndexes();
+        mProxyModel->showOwnerColumn(true);
+        foreach(auto& selection, selectedIndexes)
+        {
+            ui->tMegaFolders->selectionModel()->select(selection, QItemSelectionModel::ClearAndSelect | QItemSelectionModel::Rows);
+        }
         ui->lFolderName->setToolTip(QString());
-
+        ui->lOwnerIcon->setPixmap(QPixmap());
+        ui->avatarSpacer->spacerItem()->changeSize(0, 0);
         ui->lIcon->setPixmap(QPixmap());
+        ui->syncSpacer->spacerItem()->changeSize(0, 0);
         return;
     }
-    auto source_idx = mProxyModel->getIndexFromSource(idx);
+
+    auto source_idx = mProxyModel->getIndexFromSource(status_column_idx);
     if(!source_idx.isValid())
     {
+        ui->lOwnerIcon->setPixmap(QPixmap());
         ui->lIcon->setPixmap(QPixmap());
         return;
     }
-    if(source_idx.column() != MegaItemModel::COLUMN::STATUS)
-    {
-        source_idx = source_idx.sibling(source_idx.row(), MegaItemModel::COLUMN::STATUS);
-    }
-    QIcon icon = qvariant_cast<QIcon>(source_idx.data(Qt::DecorationRole));
+
+    //Taking the sync icon
+    QIcon syncIcon = qvariant_cast<QIcon>(source_idx.data(Qt::DecorationRole));
 
     MegaItem *item = static_cast<MegaItem*>(source_idx.internalPointer());
     if(!item)
         return;
 
-    if(!icon.isNull())
+    if(!syncIcon.isNull())
     {
-        QFontMetrics fm(font());
-        QPixmap pm = icon.pixmap(QSize(fm.height()+3, fm.height()+3), QIcon::Normal);
+        QPixmap pm = syncIcon.pixmap(QSize(MegaItem::ICON_SIZE, MegaItem::ICON_SIZE), QIcon::Normal);
         ui->lIcon->setPixmap(pm);
+        ui->syncSpacer->spacerItem()->changeSize(10, 0);
     }
     else
     {
         ui->lIcon->setPixmap(QPixmap());
+        ui->syncSpacer->spacerItem()->changeSize(0, 0);
+    }
+
+    if(!isCloudDrive())
+    {
+        mProxyModel->showOwnerColumn(false);
+        QModelIndex in_share_idx = getParentIncomingShareByIndex(source_idx);
+        in_share_idx = in_share_idx.sibling(in_share_idx.row(), MegaItemModel::COLUMN::USER);
+        QPixmap pm = qvariant_cast<QPixmap>(in_share_idx.data(Qt::DecorationRole));
+        QString tooltip = in_share_idx.data(Qt::ToolTipRole).toString();
+        ui->lOwnerIcon->setToolTip(tooltip);
+        ui->lOwnerIcon->setPixmap(pm);
+        ui->avatarSpacer->spacerItem()->changeSize(10, 0);
     }
     auto node = item->getNode();
     if(node)

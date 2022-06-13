@@ -3,7 +3,6 @@
 
 #include <QStackedWidget>
 #include <QEvent>
-#include <QDebug>
 
 class AutoResizeStackedWidget : public QStackedWidget
 {

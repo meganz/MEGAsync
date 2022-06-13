@@ -44,6 +44,14 @@ TransferThread::TransfersToProcess TransferThread::processTransfers()
    return transfers;
 }
 
+void TransferThread::clear()
+{
+    QMutexLocker lock(&mCacheMutex);
+
+    mTransfersToProcess.clear();
+    mTransfersCount.clear();
+}
+
 QList<QExplicitlySharedDataPointer<TransferData>> TransferThread::extractFromCache(QMap<int, QExplicitlySharedDataPointer<TransferData>>& dataMap, int spaceForTransfers)
 {
     if(!dataMap.isEmpty() && spaceForTransfers > 0)
@@ -1552,6 +1560,21 @@ bool TransfersModel::moveRows(const QModelIndex &sourceParent, int sourceRow, in
         return true;
     }
     return false;
+}
+
+void TransfersModel::resetModel()
+{
+     beginResetModel();
+
+     mTransfersCount.clear();
+     mTransfers.clear();
+     mTransferEventWorker->clear();
+     mTransfersToProcess.clear();
+     mCancelingMode = 0;
+     mFailingMode = 0;
+     mTagByOrder.clear();
+
+     endResetModel();
 }
 
 Qt::ItemFlags TransfersModel::flags(const QModelIndex& index) const

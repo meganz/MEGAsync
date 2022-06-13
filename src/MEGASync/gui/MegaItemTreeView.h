@@ -24,6 +24,7 @@ protected:
                               const QModelIndex &index) const override;
 
     void mousePressEvent(QMouseEvent *event) override;
+    void mouseDoubleClickEvent(QMouseEvent *event) override;
     void keyPressEvent(QKeyEvent *event) override;
 
     void contextMenuEvent(QContextMenuEvent *event) override;
