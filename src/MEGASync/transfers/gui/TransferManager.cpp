@@ -90,7 +90,13 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
 
     for (auto tabFrame : qAsConst(mTabFramesToggleGroup))
     {
-        tabFrame->setProperty("itsOn", false);
+        tabFrame->setProperty(ITS_ON, false);
+
+        auto pushButton = tabFrame->findChild<QPushButton*>();
+        if(pushButton)
+        {
+            pushButton->setProperty(ButtonIconManager::DISABLE_UNCHECK_ON_CLICK, true);
+        }
     }
 
     mTooltipNameByTab[ALL_TRANSFERS_TAB] = tr("all");

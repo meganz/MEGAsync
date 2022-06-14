@@ -10,6 +10,8 @@ const char* ButtonIconManager::HOVER_SELECTED_FLAG = "hover_selected";
 const char* ButtonIconManager::CHECK_STATE = "check_state";
 const char* ButtonIconManager::IGNORE_BUTTON = "ignore_button_manager";
 
+const char* ButtonIconManager::DISABLE_UNCHECK_ON_CLICK = "disable_uncheck_on_click";
+
 ButtonIconManager::ButtonIconManager(QObject * parent) :
     QObject(parent)
 {}
@@ -32,35 +34,42 @@ bool ButtonIconManager::eventFilter(QObject * watched, QEvent * event)
         return false;
     }
 
-    if(event->type() == QEvent::Enter || event->type() == QEvent::Leave)
+    if(button->isEnabled())
     {
-        if (event->type() == QEvent::Enter)
+        if(event->type() == QEvent::Enter || event->type() == QEvent::Leave)
         {
-            setHoverIcon(button);
-        }
-        else if (event->type() == QEvent::Leave)
-        {
-            setDefaultIcon(button);
-        }
-    }
-    //Do not depend on checked signal as the button signals can be blocked
-    else if(event->type() == QEvent::Paint)
-    {
-        if(button->isCheckable())
-        {
-            if(button->property(CHECK_STATE).toBool() != button->isChecked())
+            if (event->type() == QEvent::Enter)
+            {
+                setHoverIcon(button);
+            }
+            else if (event->type() == QEvent::Leave)
             {
                 setDefaultIcon(button);
-                button->setProperty(CHECK_STATE, button->isChecked());
             }
         }
-    }
-    else if(button->isCheckable() && event->type() == QEvent::MouseButtonPress)
-    {
-        if(button->isChecked())
+        //Do not depend on checked signal as the button signals can be blocked
+        else if(event->type() == QEvent::Paint)
         {
-            event->accept();
-            return true;
+            if(button->isCheckable())
+            {
+                if(button->property(CHECK_STATE).toBool() != button->isChecked())
+                {
+                    setDefaultIcon(button);
+                    button->setProperty(CHECK_STATE, button->isChecked());
+                }
+            }
+        }
+        else if(button->isCheckable() && event->type() == QEvent::MouseButtonPress)
+        {
+            auto disableUncheckOnClick = button->property(DISABLE_UNCHECK_ON_CLICK).toBool();
+            if(disableUncheckOnClick)
+            {
+                if(button->isChecked())
+                {
+                    event->accept();
+                    return true;
+                }
+            }
         }
     }
 
