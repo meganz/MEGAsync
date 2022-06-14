@@ -3610,20 +3610,13 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Added support to stream file links from a folder link.
+        <source>- Full redesign of remote file picker.
 - Fixed translation issues.
-- Improved the user experience.
-- Added a new notifications panel in the settings dialog.
 - Other minor UI fixes and adjustments.
 - Fixed detected crashes on Windows, Linux and macOS.
 </source>
-        <translation>- Added support to stream file links from a folder link.
-- Fixed translation issues.
-- Improved the user experience.
-- Added a new notifications panel in the settings dialog.
-- Other minor UI fixes and adjustments.
-- Fixed detected crashes on Windows, Linux and macOS.
-</translation>
+        <translatorcomment>Changelog for version 4.6.7</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
