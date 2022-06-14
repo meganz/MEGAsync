@@ -16,6 +16,7 @@ public:
 
     void show();
     void hide();
+    void disableCancelling();
     void update();
     bool isActive();
 

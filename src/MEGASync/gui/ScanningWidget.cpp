@@ -18,12 +18,10 @@ ScanningWidget::ScanningWidget(QWidget *parent) :
                                   : QString::fromUtf8(":/animations/scanning@2x.gif");
     mMovie->setFileName(gifFile);
 
-
     mUi->lScanning->setProperty("role", QString::fromLatin1("title"));
     mUi->lExplanation->setProperty("role", QString::fromLatin1("details"));
 
     mUi->pBlockingStageCancel->setGraphicsEffect(CreateBlurredShadowEffect());
-
     connect(mUi->pBlockingStageCancel, &QPushButton::clicked,
             this, &ScanningWidget::onCancelClicked);
 }
@@ -37,12 +35,18 @@ ScanningWidget::~ScanningWidget()
 void ScanningWidget::show()
 {
     startAnimation();
+    mUi->pBlockingStageCancel->setEnabled(true);
 }
 
 void ScanningWidget::hide()
 {
     mMovie->stop();
     mUi->lAnimation->setMovie(nullptr);
+}
+
+void ScanningWidget::disableCancelButton()
+{
+    mUi->pBlockingStageCancel->setEnabled(false);
 }
 
 void ScanningWidget::updateAnimation()

@@ -82,7 +82,8 @@ void MegaApplication::loadDataPath()
 }
 
 MegaApplication::MegaApplication(int &argc, char **argv) :
-    QApplication(argc, argv)
+    QApplication(argc, argv),
+    scanStageController(this)
 {
 
 #if defined Q_OS_MACX && !defined QT_DEBUG
@@ -324,6 +325,9 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
 #ifdef __APPLE__
     scanningTimer = NULL;
 #endif
+
+    connect(&scanStageController, &ScanStageController::enableTransferActions,
+            this, &MegaApplication::enableTransferActions);
 }
 
 MegaApplication::~MegaApplication()
@@ -508,7 +512,8 @@ void MegaApplication::initialize()
     uploader = new MegaUploader(megaApi);
     downloader = new MegaDownloader(megaApi);
     connect(downloader, &MegaDownloader::finishedTransfers, this, &MegaApplication::showNotificationFinishedTransfers, Qt::QueuedConnection);
-    connect(downloader, &MegaDownloader::startingTransfers, this, &MegaApplication::setTransferUiInBlockingState);
+    connect(downloader, &MegaDownloader::startingTransfers,
+            &scanStageController, &ScanStageController::startDelayedScanStage);
 
     connectivityTimer = new QTimer(this);
     connectivityTimer->setSingleShot(true);
@@ -1652,7 +1657,8 @@ void MegaApplication::processDownloadQueue(QString path)
 void MegaApplication::closeDialogs(bool/* bwoverquota*/)
 {
     delete mTransferManager;
-    mTransferManager = NULL;
+    mTransferManager = nullptr;
+    scanStageController.updateReference(mTransferManager);
 
     delete setupWizard;
     setupWizard = NULL;
@@ -1714,11 +1720,11 @@ void MegaApplication::createTransferManagerDialog()
         connect(transferQuota.get(), &TransferQuota::sendState,
                 mTransferManager, &TransferManager::onTransferQuotaStateChanged);
         connect(mTransferManager, SIGNAL(cancelScanning()), this, SLOT(cancelScanningStage()));
-
         if (inScanningStage)
         {
             mTransferManager->enterBlockingState();
         }
+        scanStageController.updateReference(mTransferManager);
     }
 }
 
@@ -2677,6 +2683,7 @@ void MegaApplication::createInfoDialog()
     connect(transferQuota.get(), &TransferQuota::overQuotaMessageNeedsToBeShown, infoDialog, &InfoDialog::enableTransferOverquotaAlert);
     connect(transferQuota.get(), &TransferQuota::almostOverQuotaMessageNeedsToBeShown, infoDialog, &InfoDialog::enableTransferAlmostOverquotaAlert);
     connect(infoDialog, SIGNAL(cancelScanning()), this, SLOT(cancelScanningStage()));
+    scanStageController.updateReference(infoDialog);
 }
 
 QuotaState MegaApplication::getTransferQuotaState() const
@@ -3296,7 +3303,7 @@ void MegaApplication::updateIfBlockingStageFinished(BlockingBatch &batch)
 {
     if (batch.isBlockingStageFinished())
     {
-        setTransferUiInUnblockedState();
+        scanStageController.stopDelayedScanStage();
         unblockBatch(batch);
     }
 }
@@ -3360,48 +3367,12 @@ void MegaApplication::updateFreedCancelToken(MegaTransfer* transfer)
     }
 }
 
-void MegaApplication::setTransferUiInBlockingState()
-{
-    MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Transfer UI entering blocking state").toUtf8().constData());
-
-    inScanningStage = true;
-    enableTransferActions(false);
-
-    if (mTransferManager)
-    {
-        mTransferManager->enterBlockingState();
-    }
-
-    if (infoDialog)
-    {
-        infoDialog->enterBlockingState();
-    }
-}
-
-void MegaApplication::setTransferUiInUnblockedState()
-{
-    MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Transfer UI leaving blocking state").toUtf8().constData());
-
-    inScanningStage = false;
-    enableTransferActions(true);
-
-    if (mTransferManager)
-    {
-        mTransferManager->leaveBlockingState();
-    }
-
-    if (infoDialog)
-    {
-        infoDialog->leaveBlockingState();
-    }
-}
-
 void MegaApplication::startingUpload()
 {
     if (noUploadedStarted)
     {
         noUploadedStarted = false;
-        setTransferUiInBlockingState();
+        scanStageController.startDelayedScanStage();
     }
 }
 

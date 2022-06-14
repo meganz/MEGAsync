@@ -29,6 +29,15 @@ void TransferScanCancelUi::hide()
     mContainer->setCurrentWidget(mLastSelectedWidget);
 }
 
+void TransferScanCancelUi::disableCancelling()
+{
+    mBlockingWidget->disableCancelButton();
+    if (mContainer->currentWidget() != mBlockingWidget)
+    {
+        mContainer->setCurrentWidget(mBlockingWidget);
+    }
+}
+
 void TransferScanCancelUi::update()
 {
     if (mContainer->currentWidget() == mBlockingWidget)

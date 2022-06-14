@@ -1322,6 +1322,11 @@ void InfoDialog::leaveBlockingState()
     mTransferScanCancelUi->hide();
 }
 
+void InfoDialog::disableCancelling()
+{
+    mTransferScanCancelUi->disableCancelling();
+}
+
 void InfoDialog::changeEvent(QEvent *event)
 {
     if (event->type() == QEvent::LanguageChange)
