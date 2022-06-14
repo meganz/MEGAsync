@@ -1,5 +1,5 @@
 #ifndef BACKUPTABLEVIEW_H
-#define BACKUPTABLEWIDGET_H
+#define BACKUPTABLEVIEW_H
 
 #include "model/SyncSettings.h"
 #include "SyncTableView.h"
@@ -30,4 +30,4 @@ private:
     void showContextMenu(const QPoint &pos, const QModelIndex index);
 };
 
-#endif // BACKUPTABLEWIDGET_H
+#endif // BACKUPTABLEVIEW_H

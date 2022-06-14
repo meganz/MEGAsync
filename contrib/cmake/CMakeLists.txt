@@ -299,8 +299,8 @@ set (MOC_INPUT
     ${MEGAsyncDir}/gui/GuiUtilities.h
     ${MEGAsyncDir}/gui/EventHelper.h
     ${MEGAsyncDir}/gui/UserAttributesRequests.h
-    ${MEGAsyncDir}/gui/BackupTableWidget.h
     ${MEGAsyncDir}/gui/BackupItemModel.h
+    ${MEGAsyncDir}/gui/SyncItemModel.h
     ${MEGAsyncDir}/gui/SyncTableView.h
     ${MEGAsyncDir}/gui/BackupTableView.h
 
@@ -458,14 +458,13 @@ set (SRCS
     ${MEGAsyncDir}/gui/MegaItemTreeView.cpp
     ${MEGAsyncDir}/gui/GuiUtilities.cpp
     ${MEGAsyncDir}/gui/EventHelper.cpp
-	${MEGAsyncDir}/gui/BackupTableWidget.cpp
 	${MEGAsyncDir}/gui/BackupItemModel.cpp
+	${MEGAsyncDir}/gui/SyncItemModel.cpp
     ${MEGAsyncDir}/gui/SyncTableView.cpp
     ${MEGAsyncDir}/gui/BackupTableView.cpp
     ${MEGAsyncDir}/gui/UserAttributesRequests.cpp
 
     ${MEGAsyncDir}/gui/EventHelper.cpp
-    ${MEGAsyncDir}/gui/BackupTableWidget.cpp
     ${MEGAsyncDir}/gui/BackupItemModel.cpp
     ${MEGAsyncDir}/mega/bindings/qt/QTMegaRequestListener.cpp
     ${MEGAsyncDir}/mega/bindings/qt/QTMegaTransferListener.cpp
