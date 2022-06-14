@@ -89,7 +89,16 @@ void StalledIssueDelegate::paint(QPainter *painter, const QStyleOptionViewItem &
         painter->save();
         painter->translate(pos);
 
-        if(!mEditor || mEditor->getCurrentIndex() != index)
+        bool renderDelegate(!mEditor || mEditor->getCurrentIndex() != index);
+
+#ifdef __APPLE__
+        if(mEditor)
+        {
+            renderDelegate |= mEditor->keepEditor();
+        }
+#endif
+
+        if(renderDelegate)
         {
             auto stalledIssueItem (qvariant_cast<StalledIssueVariant>(index.data(Qt::DisplayRole)));
             StalledIssueBaseDelegateWidget* w (getStalledIssueItemWidget(index, stalledIssueItem));
@@ -137,39 +146,6 @@ void StalledIssueDelegate::paint(QPainter *painter, const QStyleOptionViewItem &
 
 bool StalledIssueDelegate::editorEvent(QEvent *event, QAbstractItemModel *model, const QStyleOptionViewItem &option, const QModelIndex &index)
 {
-    if(event->type() == QEvent::MouseButtonRelease)
-    {
-        if(auto mouseButtonEvent = dynamic_cast<QMouseEvent*>(event))
-        {
-            if(mouseButtonEvent->button() == Qt::LeftButton)
-            {
-                if(index.isValid())
-                {
-                    if(!index.parent().isValid())
-                    {
-                        auto currentState = mView->isExpanded(index);
-                        currentState ? mView->collapse(index) : mView->expand(index);
-
-                        if(mEditor)
-                        {
-                            mEditor->expand(!currentState);
-
-                            //If it is going to be expanded
-                            if(!currentState)
-                            {
-                                auto childIndex = index.child(0,0);
-                                if(childIndex.isValid())
-                                {
-                                    mView->scrollTo(childIndex);
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-
     return QStyledItemDelegate::editorEvent(event, model, option, index);
 }
 
@@ -215,6 +191,41 @@ bool StalledIssueDelegate::event(QEvent *event)
 
 bool StalledIssueDelegate::eventFilter(QObject *object, QEvent *event)
 {
+    if(event->type() == QEvent::MouseButtonRelease)
+    {
+        if(auto mouseButtonEvent = dynamic_cast<QMouseEvent*>(event))
+        {
+            if(mouseButtonEvent->button() == Qt::LeftButton)
+            {
+                auto index = mView->indexAt(mouseButtonEvent->pos());
+                if(index.isValid())
+                {
+                    if(!index.parent().isValid())
+                    {
+                        auto currentState = mView->isExpanded(index);
+                        currentState ? mView->collapse(index) : mView->expand(index);
+
+                        if(mEditor)
+                        {
+                            mEditor->expand(!currentState);
+
+                            //If it is going to be expanded
+                            if(!currentState)
+                            {
+                                auto childIndex = index.child(0,0);
+                                if(childIndex.isValid())
+                                {
+                                    mView->scrollTo(childIndex);
+                                }
+                            }
+
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
+    }
     return QStyledItemDelegate::eventFilter(object, event);
 }
 

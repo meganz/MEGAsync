@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>528</width>
+    <width>538</width>
     <height>97</height>
    </rect>
   </property>
@@ -14,6 +14,9 @@
    <string>Form</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
    <property name="topMargin">
     <number>10</number>
    </property>
@@ -40,7 +43,7 @@
 or click the Folders below to make adjustments in the local filesystem or in MEGA</string>
      </property>
      <property name="indent">
-      <number>0</number>
+      <number>11</number>
      </property>
     </widget>
    </item>

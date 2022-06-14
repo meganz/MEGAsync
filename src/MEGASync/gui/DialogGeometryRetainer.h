@@ -39,7 +39,7 @@ public:
     void showDialog(DialogClass* dialog)
     {
         auto isBaseOfDialog(std::is_base_of<QDialog, DialogClass>::value);
-        Q_ASSERT(!mDialog && isBaseOfDialog);
+        Q_ASSERT(isBaseOfDialog);
 
         if(mDialog)
         {
