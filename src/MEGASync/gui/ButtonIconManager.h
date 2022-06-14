@@ -13,6 +13,7 @@ class ButtonIconManager : public QObject
     static const char*   CHECK_STATE;
     static const char*   IGNORE_BUTTON;
 
+
     struct IconInfo
     {
         QString extension;
@@ -23,6 +24,8 @@ class ButtonIconManager : public QObject
     };
 
 public:
+    static const char*   DISABLE_UNCHECK_ON_CLICK;
+
     struct Settings
     {
         QString hover_suffix;
