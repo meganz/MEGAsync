@@ -43,6 +43,7 @@
 #include "gui/MegaAlertDelegate.h"
 #include "gui/VerifyLockMessage.h"
 #include "DesktopNotifications.h"
+#include "ScanStageController.h"
 #include "TransferQuota.h"
 #include "DialogGeometryRetainer.h"
 
@@ -335,8 +336,6 @@ private slots:
     void onUnblocked();
     void onTransfersModelUpdate();
 
-    void setTransferUiInBlockingState();
-    void setTransferUiInUnblockedState();
     void startingUpload();
     void cancelScanningStage();
 
@@ -547,7 +546,10 @@ protected:
     std::shared_ptr<DesktopNotifications> mOsNotifications;
     QMutex mMutexOpenUrls;
     QMap<QString, std::chrono::system_clock::time_point> mOpenUrlsClusterTs;
+
     TransfersModel* mTransfersModel;
+
+    ScanStageController scanStageController;
     DialogGeometryRetainer<TransferManager> mTransferManagerGeometryRetainer;
 
 private:

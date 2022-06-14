@@ -17,6 +17,7 @@ public:
 
     void show();
     void hide();
+    void disableCancelButton();
     void updateAnimation();
 
 signals:

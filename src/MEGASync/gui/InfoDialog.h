@@ -69,6 +69,7 @@ public:
 
     void enterBlockingState();
     void leaveBlockingState();
+    void disableCancelling();
 
 #ifdef __APPLE__
     void moveArrow(QPoint p);

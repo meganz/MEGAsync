@@ -266,6 +266,11 @@ void TransferManager::leaveBlockingState()
     mTransferScanCancelUi->hide();
 }
 
+void TransferManager::disableCancelling()
+{
+    mTransferScanCancelUi->disableCancelling();
+}
+
 void TransferManager::onPauseStateChangedByTransferResume()
 {
     onUpdatePauseState(false);
@@ -1188,6 +1193,7 @@ void TransferManager::refreshView()
                 widgetToShow = mTabNoItem[mCurrentTab];
             }
         }
+
         updateTransferWidget(widgetToShow);
         checkActionAndMediaVisibility();
     }
