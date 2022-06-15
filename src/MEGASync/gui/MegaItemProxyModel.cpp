@@ -22,6 +22,12 @@ void MegaItemProxyModel::showOnlyInShares(bool isSyncSelect)
     invalidateFilter();
 }
 
+void MegaItemProxyModel::showOnlyVault()
+{
+    mFilter.showOnlyVault();
+    invalidateFilter();
+}
+
 void MegaItemProxyModel::showReadOnlyFolders(bool value)
 {
     mFilter.showReadOnly = value;

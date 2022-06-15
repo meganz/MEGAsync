@@ -81,6 +81,7 @@ protected:
 private:
     int insertPosition(const std::unique_ptr<mega::MegaNode>& node);
     QModelIndex findItemByNodeHandle(const mega::MegaHandle &handle, const QModelIndex& parent);
+    mega::MegaApi* mMegaApi;
     std::unique_ptr<mega::QTMegaRequestListener> mDelegateListener;
 };
 

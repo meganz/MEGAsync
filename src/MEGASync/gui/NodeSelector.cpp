@@ -857,7 +857,7 @@ NodeSelector::TabItem NodeSelector::getSelectedTab()
     return CLOUD_DRIVE;
 }
 
-void NodeSelector::setRootIndex(const QModelIndex &idx)
+void NodeSelector::setRootIndex(const QModelIndex &proxy_idx)
 {
     //In case the idx is coming from a potentially hidden column, we always take the STATUS column
     //If you set a hidden column, the view does not accept it even if the column is visible at this point
