@@ -23,7 +23,8 @@ MegaItem::MegaItem(std::unique_ptr<MegaNode> node, MegaItem *parentItem, bool sh
     mChatFilesFolder(false),
     mChildrenSet(false),
     mNode(std::move(node)),
-    mOwner(nullptr)
+    mOwner(nullptr),
+    mMegaApi(MegaSyncApp->getMegaApi())
 { 
     if(isRoot() || mNode->isFile() || mNode->isInShare())
     {
