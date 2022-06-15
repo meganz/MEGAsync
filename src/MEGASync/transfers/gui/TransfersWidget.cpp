@@ -266,10 +266,12 @@ void TransfersWidget::onCancelClearButtonPressedOnDelegate()
     auto sourceSelection= mProxyModel->mapSelectionToSource(selection);
     auto sourceSelectionIndexes = sourceSelection.indexes();
 
+    auto action = ui->tvTransfers->getSelectedAction();
+
     QPointer<TransfersWidget> dialog = QPointer<TransfersWidget>(this);
 
     if (QMegaMessageBox::warning(this, QString::fromUtf8("MEGAsync"),
-                             tr("Are you sure you want to cancel or clear the following transfer(s)?", "", sourceSelectionIndexes.size()),
+                             tr("Are you sure you want to %1 the following transfer(s)?", "", sourceSelectionIndexes.size()).arg(action),
                              QMessageBox::Yes | QMessageBox::No, QMessageBox::No)
             != QMessageBox::Yes
             || !dialog)

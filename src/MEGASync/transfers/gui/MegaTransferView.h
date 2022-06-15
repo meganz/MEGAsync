@@ -31,6 +31,9 @@ public:
 
     int getVerticalScrollBarWidth() const;
 
+    QString getVisibleAction();
+    QString getSelectedAction();
+
 public slots:
     void onPauseResumeSelection(bool pauseState);
     void onCancelVisibleTransfers();

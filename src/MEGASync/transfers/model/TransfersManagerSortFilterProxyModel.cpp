@@ -527,6 +527,11 @@ bool TransfersManagerSortFilterProxyModel::isAnyActive() const
     return !mActiveTransfers.isEmpty();
 }
 
+bool TransfersManagerSortFilterProxyModel::areAllActive() const
+{
+    return mActiveTransfers.size() == rowCount();
+}
+
 bool TransfersManagerSortFilterProxyModel::isModelProcessing() const
 {
     return mFilterWatcher.isRunning();
