@@ -71,10 +71,7 @@ void TransferManagerItem::setType(int type, bool isSyncTransfer)
     TransferItem::setType(type, isSyncTransfer);
     QIcon icon;
 
-    qreal ratio = 1.0;
-#if QT_VERSION >= 0x050000
-    ratio = qApp->testAttribute(Qt::AA_UseHighDpiPixmaps) ? devicePixelRatio() : 1.0;
-#endif
+    qreal ratio = Utilities::getDevicePixelRatio();
 
     if (isSyncTransfer)
     {

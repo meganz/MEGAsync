@@ -378,7 +378,7 @@ Q_DECLARE_OPERATORS_FOR_FLAGS(Utilities::FileTypes)
 class WrappedNode
 {
 public:
-    // Enum used to record origin of trqnsfer
+    // Enum used to record origin of transfer
     enum TransferOrigin {
         FROM_UNKNOWN   = 0,
         FROM_APP       = 1,
@@ -388,7 +388,7 @@ public:
     // Constructor with origin and pointer to MEGA node. Default to unknown/nullptr
     WrappedNode(TransferOrigin from = WrappedNode::TransferOrigin::FROM_UNKNOWN,
                 mega::MegaNode* node = nullptr)
-        : mTransfersFrom(from), mNode(node){}
+        : mTransfersFrom(from), mNode(node) {}
 
     // Destructor
     ~WrappedNode()
@@ -397,7 +397,7 @@ public:
         delete mNode;
     }
 
-    // Get the transfer orgigin
+    // Get the transfer origin
     WrappedNode::TransferOrigin getTransferOrigin()
     {
         return mTransfersFrom;

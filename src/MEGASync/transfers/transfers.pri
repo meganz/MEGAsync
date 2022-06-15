@@ -18,6 +18,7 @@ SOURCES += $$PWD/model/TransfersModel.cpp \
            $$PWD/gui/TransfersStateInfoWidget.cpp \
            $$PWD/gui/TransfersStatusWidget.cpp \
            $$PWD/gui/TransfersSummaryWidget.cpp \
+           $$PWD/gui/TransferScanCancelUi.cpp \
            $$PWD/gui/TransferWidgetHeaderItem.cpp \
            $$PWD/gui/TransfersWidget.cpp
 
@@ -37,6 +38,7 @@ HEADERS += $$PWD/model/InfoDialogTransfersProxyModel.h \
            $$PWD/gui/TransfersStateInfoWidget.h \
            $$PWD/gui/TransfersStatusWidget.h \
            $$PWD/gui/TransfersSummaryWidget.h \
+           $$PWD/gui/TransferScanCancelUi.h \
            $$PWD/gui/TransferWidgetHeaderItem.h \
            $$PWD/gui/TransfersWidget.h
 

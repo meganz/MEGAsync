@@ -1,6 +1,7 @@
 #ifndef TRANSFERMANAGER_H
 #define TRANSFERMANAGER_H
 
+#include "TransferScanCancelUi.h"
 #include "megaapi.h"
 #include "Preferences.h"
 #include "MenuItemAction.h"
@@ -58,6 +59,11 @@ public:
     void disableGetLink(bool disable);
     ~TransferManager();
 
+    void pauseModel(bool state);
+    void enterBlockingState();
+    void leaveBlockingState();
+    void disableCancelling();
+
     void setTransferState(const StatusInfo::TRANSFERS_STATES &transferState);
 
 public slots:
@@ -70,6 +76,7 @@ signals:
     void userActivity();
     void showCompleted(bool showCompleted);
     void clearCompletedTransfers();
+    void cancelScanning();
     void retryAllTransfers();
     void aboutToClose();
 
@@ -112,6 +119,7 @@ private:
 
     Ui::TransferManagerDragBackDrop* mUiDragBackDrop;
     QWidget* mDragBackDrop;
+    TransferScanCancelUi* mTransferScanCancelUi = nullptr;
 
     int mStorageQuotaState;
     QuotaState mTransferQuotaState;
@@ -123,6 +131,7 @@ private:
     void refreshTypeStats();
     void refreshFileTypesStats();
     void applyTextSearch(const QString& text);
+    void enableUserActions(bool enabled);
     void checkActionAndMediaVisibility();
     void onFileTypeButtonClicked(TM_TAB tab, Utilities::FileType fileType, const QString& tabLabel);
     void checkPauseButtonVisibilityIfPossible();
@@ -176,6 +185,7 @@ private slots:
     void refreshSpeed();
     void refreshView();
 
+    void updateTransferWidget(QWidget* widgetToShow);
     void onScanningAnimationUpdate();
 };
 

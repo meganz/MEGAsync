@@ -13,6 +13,7 @@
 #include "control/MegaController.h"
 #include "model/Model.h"
 #include <QGraphicsOpacityEffect>
+#include "TransferScanCancelUi.h"
 #include "HighDpiResize.h"
 #include "Utilities.h"
 #include "FilterAlertWidget.h"
@@ -23,6 +24,7 @@
 #ifdef _WIN32
 #include <chrono>
 #endif
+
 
 namespace Ui {
 class InfoDialog;
@@ -64,6 +66,10 @@ public:
     void updateNotificationsTreeView(QAbstractItemModel *model, QAbstractItemDelegate *delegate);
 
     void reset();
+
+    void enterBlockingState();
+    void leaveBlockingState();
+    void disableCancelling();
 
 #ifdef __APPLE__
     void moveArrow(QPoint p);
@@ -159,6 +165,7 @@ signals:
     // parameter messageShown is true when alert is enabled, false when dismissed
     void almostTransferOverquotaMsgVisibilityChange(bool messageShown);
     void userActivity();
+    void cancelScanning();
 
 private:
     Ui::InfoDialog *ui;
@@ -243,7 +250,9 @@ protected:
 
  private:
     static double computeRatio(long long completed, long long remaining);
+    void enableUserActions(bool value);
 
+    TransferScanCancelUi* mTransferScanCancelUi = nullptr;
     QtPositioningBugFixer qtBugFixer;
 };
 

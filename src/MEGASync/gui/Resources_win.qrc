@@ -753,6 +753,9 @@
         <file>animations/downloading@3x.gif</file>
         <file>animations/downloading@2x.gif</file>
         <file>animations/downloading.gif</file>
+        <file>animations/scanning.gif</file>
+        <file>animations/scanning@2x.gif</file>
+        <file>animations/scanning@3x.gif</file>
         <file>images/Icon_Small_Backups.png</file>
         <file>images/Icon_Small_Backups@3x.png</file>
         <file>images/Icon_Small_Backups@2x.png</file>

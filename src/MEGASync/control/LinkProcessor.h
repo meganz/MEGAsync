@@ -27,7 +27,7 @@ public:
     void importLinks(mega::MegaNode *node);
     mega::MegaHandle getImportParentFolder();
 
-    void downloadLinks(QString localPath);
+    void downloadLinks(const QString& localPath);
     void setSelected(int linkId, bool selected);
 
     int numSuccessfullImports();
@@ -59,6 +59,9 @@ signals:
 
 public slots:
     virtual void onRequestFinish(mega::MegaApi* api, mega::MegaRequest *request, mega::MegaError* e);
+
+private:
+    void startDownload(mega::MegaNode* linkNode, const QString& localPath);
 };
 
 #endif // LINKPROCESSOR_H
