@@ -145,6 +145,8 @@ QString MegaTransferView::getVisibleAction()
     auto isAnyActive = proxy->isAnyActive();
     auto areAllActive = proxy->areAllActive();
 
+    qDebug() << isAnyActive << areAllActive;
+
     QString action;
     if(isAnyActive)
     {

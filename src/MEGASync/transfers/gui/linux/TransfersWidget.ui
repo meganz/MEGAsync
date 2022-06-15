@@ -566,7 +566,7 @@ TransferWidgetHeaderItem  QLabel
             </property>
             <property name="sizeHint" stdset="0">
              <size>
-              <width>15</width>
+              <width>0</width>
               <height>20</height>
              </size>
             </property>
