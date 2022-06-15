@@ -73,6 +73,14 @@ void MegaItemTreeView::mousePressEvent(QMouseEvent *event)
     }
 }
 
+void MegaItemTreeView::mouseDoubleClickEvent(QMouseEvent *event)
+{
+    if(event->button() != Qt::RightButton)
+    {
+        QTreeView::mouseDoubleClickEvent(event);
+    }
+}
+
 void MegaItemTreeView::keyPressEvent(QKeyEvent *event)
 {
     QModelIndexList selectedRows = selectionModel()->selectedRows();

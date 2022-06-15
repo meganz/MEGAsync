@@ -104,11 +104,12 @@ private:
     void navigateBackwardOperation(Navigation& nav);
     void navigateForwardOperation(Navigation& nav);
     TabItem getSelectedTab();
-    void setRootIndex(const QModelIndex& idx);
     bool showBackups();
+    void setRootIndex(const QModelIndex& proxy_idx);
     mega::MegaHandle getHandleByIndex(const QModelIndex& idx);
     QModelIndex getIndexFromHandle(const mega::MegaHandle& handle);
     QModelIndex getSelectedIndex();
+    QModelIndex getParentIncomingShareByIndex(QModelIndex idx);
     Navigation mNavCloudDrive;
     Navigation mNavInShares;
     Navigation mNavVault;

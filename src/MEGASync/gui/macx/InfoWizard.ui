@@ -988,7 +988,7 @@ background: transparent;</string>
                   </sizepolicy>
                  </property>
                  <property name="text">
-                  <string>You need to log into MEGA account to run MEGA desktop app.</string>
+                  <string>You need to log into MEGA account to use the MEGA desktop app.</string>
                  </property>
                  <property name="wordWrap">
                   <bool>true</bool>

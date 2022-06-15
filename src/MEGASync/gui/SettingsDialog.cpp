@@ -11,7 +11,7 @@
 #include "gui/BackupsWizard.h"
 #include "gui/AddBackupDialog.h"
 #include "gui/RemoveBackupDialog.h"
-
+#include "UserAttributesRequests.h"
 #include "mega/types.h"
 
 #include <QApplication>
@@ -494,6 +494,7 @@ void SettingsDialog::loadSettings()
     mUi->cCacheSchedulerEnabled->setChecked(mPreferences->cleanerDaysLimit());
     mUi->sCacheSchedulerDays->setEnabled(mPreferences->cleanerDaysLimit());
     mUi->sCacheSchedulerDays->setValue(mPreferences->cleanerDaysLimitValue());
+    updateCacheSchedulerDaysLabel();
 
     if (!mPreferences->canUpdate(MegaApplication::applicationFilePath()))
     {
@@ -568,6 +569,12 @@ void SettingsDialog::loadSettings()
     auto fullName ((mPreferences->firstName() + QStringLiteral(" ")
                 + mPreferences->lastName()).trimmed());
     mUi->lName->setText(fullName);
+
+    //Update name in case it changes
+    auto fullNameRequest = UserAttributes::FullNameAttributeRequest::requestFullName(mPreferences->email().toStdString().c_str());
+    connect(fullNameRequest.get(), &UserAttributes::FullNameAttributeRequest::attributeReady, this, [this](const QString& fullName){
+        mUi->lName->setText(fullName);
+    });
 
     // account type and details
     updateAccountElements();
@@ -967,6 +974,7 @@ void SettingsDialog::on_sCacheSchedulerDays_valueChanged(int i)
     if(mUi->cCacheSchedulerEnabled->isChecked())
     {
         mPreferences->setCleanerDaysLimitValue(i);
+        updateCacheSchedulerDaysLabel();
         mApp->cleanLocalCaches();
     }
 }
@@ -1008,6 +1016,7 @@ void SettingsDialog::on_cLanguage_currentIndexChanged(int index)
     {
         mPreferences->setLanguage(selectedLanguage);
         mApp->changeLanguage(selectedLanguage);
+        updateCacheSchedulerDaysLabel();
         QString currentLanguage = mApp->getCurrentLanguageCode();
         mThreadPool->push([=]()
         {
@@ -1355,7 +1364,7 @@ void SettingsDialog::setAvatar()
     const char* email = mMegaApi->getMyEmail();
     if (email)
     {
-        mUi->wAvatar->drawAvatarFromEmail(QString::fromUtf8(email));
+        mUi->wAvatar->setUserEmail(email);
         delete [] email;
     }
 }
@@ -2254,4 +2263,9 @@ void SettingsDialog::setShortCutsForToolBarItems()
         QShortcut *scGeneral = new QShortcut(QKeySequence(QString::fromLatin1("Ctrl+%1").arg(i+1)), this);
         QObject::connect(scGeneral, &QShortcut::activated, this, [=](){ openSettingsTab(i); });
     }
+}
+
+void SettingsDialog::updateCacheSchedulerDaysLabel()
+{
+    mUi->lCacheSchedulerSuffix->setText(tr("day", "", mPreferences->cleanerDaysLimitValue()));
 }

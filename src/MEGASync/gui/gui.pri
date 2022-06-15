@@ -93,6 +93,7 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/BackupItemModel.h \
     $$PWD/BackupTableView.h \
     $$PWD/BackupsWizard.h \
+    $$PWD/AutoResizeStackedWidget.h \
     $$PWD/BalloonToolTip.h \
     $$PWD/MegaItemDelegates.h \
     $$PWD/EventHelper.h \

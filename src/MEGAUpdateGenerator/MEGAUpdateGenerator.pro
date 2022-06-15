@@ -7,14 +7,35 @@ CONFIG(release, debug|release) {
     CONFIG += release
 }
 
+isEmpty(THIRDPARTY_VCPKG_BASE_PATH){
+    THIRDPARTY_VCPKG_BASE_PATH = $$PWD/../../../3rdParty_desktop
+}
+
+win32 {
+    contains(QMAKE_TARGET.arch, x86_64):VCPKG_TRIPLET = x64-windows-mega
+    !contains(QMAKE_TARGET.arch, x86_64):VCPKG_TRIPLET = x86-windows-mega
+}
+macx:VCPKG_TRIPLET = x64-osx-mega
+unix:!macx:VCPKG_TRIPLET = x64-linux
+
+THIRDPARTY_VCPKG_PATH = $$THIRDPARTY_VCPKG_BASE_PATH/vcpkg/installed/$$VCPKG_TRIPLET
+exists($$THIRDPARTY_VCPKG_PATH) {
+   CONFIG += vcpkg
+}
+
 TARGET = MEGAUpdateGenerator
 TEMPLATE = app
 CONFIG += console
 CONFIG -= qt
 
+DEFINES += USE_CRYPTOPP
+DEPENDPATH += $$PWD
+
 SOURCES += ../MEGASync/mega/src/crypto/cryptopp.cpp \
             ../MEGASync/mega/src/base64.cpp \
             ../MEGASync/mega/src/logging.cpp
+
+SOURCES += MEGAUpdateGenerator.cpp
 
 LIBS += -lcryptopp
 
@@ -30,22 +51,25 @@ win32 {
     LIBS += -lws2_32
     DEFINES += USE_CURL
     DEFINES += NOMINMAX
-
 }
 
 macx {
     QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.12
     QMAKE_CXXFLAGS += -DCRYPTOPP_DISABLE_ASM
-    LIBS += -L$$_PRO_FILE_PWD_/../MEGAsync/mega/bindings/qt/3rdparty/libs
 }
 
-DEFINES += USE_CRYPTOPP
-DEPENDPATH += $$PWD
-INCLUDEPATH += $$PWD ../MEGASync/mega/bindings/qt/3rdparty/include \
-                ../MEGASync/mega/bindings/qt/3rdparty/include/cryptopp \
-                ../MEGASync/mega/bindings/qt/3rdparty/include/cares \
-                ../MEGASync/mega/bindings/qt/3rdparty/include/libsodium \
-                ../MEGASync/mega/include/
+vcpkg {
+    INCLUDEPATH += $$THIRDPARTY_VCPKG_PATH/include
+    release:LIBS += -L"$$THIRDPARTY_VCPKG_PATH/lib"
+    debug:LIBS += -L"$$THIRDPARTY_VCPKG_PATH/debug/lib"
+}
+else {
+    INCLUDEPATH += $$PWD ../MEGASync/mega/bindings/qt/3rdparty/include \
+                    ../MEGASync/mega/bindings/qt/3rdparty/include/cryptopp \
+                    ../MEGASync/mega/bindings/qt/3rdparty/include/cares \
+                    ../MEGASync/mega/bindings/qt/3rdparty/include/libsodium \
+                    ../MEGASync/mega/include/
+}
 
 win32 {
     INCLUDEPATH += ../MEGASync/mega/include/mega/wincurl
@@ -55,5 +79,3 @@ unix {
     INCLUDEPATH += ../MEGASync/mega/include/mega/posix
     DEFINES += USE_PTHREAD
 }
-
-SOURCES += MEGAUpdateGenerator.cpp

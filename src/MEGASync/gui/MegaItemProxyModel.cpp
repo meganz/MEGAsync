@@ -10,28 +10,15 @@ MegaItemProxyModel::MegaItemProxyModel(QObject* parent) :
     setSortCaseSensitivity(Qt::CaseInsensitive);
 }
 
-void MegaItemProxyModel::setFilter(const Filter &f)
-{
-    mFilter.showCloudDrive = f.showCloudDrive;
-    mFilter.showInShares = f.showInShares;
-    mFilter.showReadOnly = f.showReadOnly;
-}
-
-void MegaItemProxyModel::showOnlyVault()
-{
-    mFilter.showOnlyVault();
-    invalidateFilter();
-}
-
 void MegaItemProxyModel::showOnlyCloudDrive()
 {
     mFilter.showOnlyCloudDrive();
     invalidateFilter();
 }
 
-void MegaItemProxyModel::showOnlyInShares()
+void MegaItemProxyModel::showOnlyInShares(bool isSyncSelect)
 {
-    mFilter.showOnlyInShares();
+    mFilter.showOnlyInShares(isSyncSelect);
     invalidateFilter();
 }
 
@@ -44,6 +31,12 @@ void MegaItemProxyModel::showReadOnlyFolders(bool value)
 void MegaItemProxyModel::showReadWriteFolders(bool value)
 {
     mFilter.showReadWriteFolders = value;
+    invalidateFilter();
+}
+
+void MegaItemProxyModel::showOwnerColumn(bool value)
+{
+    mFilter.showOwnerColumn = value;
     invalidateFilter();
 }
 
@@ -157,15 +150,16 @@ bool MegaItemProxyModel::lessThan(const QModelIndex &left, const QModelIndex &ri
 
     if(lIsFile && !rIsFile)
     {
-        return false;
+        return sortOrder() == Qt::DescendingOrder;
     }
     else if(!lIsFile && rIsFile)
     {
-        return true;
+        return sortOrder() != Qt::DescendingOrder;
     }
+
     if(left.column() == MegaItemModel::DATE && right.column() == MegaItemModel::DATE)
     {
-        return left.data(toInt(MegaItemModelRoles::DATE_ROLE)) > right.data(toInt(MegaItemModelRoles::DATE_ROLE));
+        return left.data(toInt(MegaItemModelRoles::DATE_ROLE)) < right.data(toInt(MegaItemModelRoles::DATE_ROLE));
     }
     if(left.column() == MegaItemModel::STATUS && right.column() == MegaItemModel::STATUS)
     {
@@ -175,6 +169,14 @@ bool MegaItemProxyModel::lessThan(const QModelIndex &left, const QModelIndex &ri
       {
         return lStatus < rStatus;
       }
+    }
+    bool leftToIntOK = false;
+    bool rightToIntOK = false;
+    int leftInt = left.data(Qt::DisplayRole).toInt(&leftToIntOK);
+    int rightInt = right.data(Qt::DisplayRole).toInt(&rightToIntOK);
+    if(leftToIntOK && rightToIntOK)
+    {
+        return leftInt < rightInt;
     }
 
     return QSortFilterProxyModel::lessThan(left, right);
@@ -227,7 +229,7 @@ bool MegaItemProxyModel::filterAcceptsColumn(int sourceColumn, const QModelIndex
     case MegaItemModel::COLUMN::DATE:
         return true;
     case MegaItemModel::COLUMN::USER:
-        return mFilter.showInShares;
+        return mFilter.showInShares && mFilter.showOwnerColumn;
     }
 
     return false;

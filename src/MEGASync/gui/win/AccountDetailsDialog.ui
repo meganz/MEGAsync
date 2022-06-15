@@ -10,7 +10,7 @@
     <x>0</x>
     <y>0</y>
     <width>440</width>
-    <height>314</height>
+    <height>366</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -43,7 +43,7 @@ QLabel
     min-width:440px;
 }
 
-#lCloudDrive, #lVault, #lRubbish,  #lStorage, #lTransfer
+#lCloudDrive, #lVault, #lRubbish, #lStorage, #lTransfer, #lAvailable
 {
   color: #333333;
   font-size: 13px;
@@ -75,13 +75,13 @@ QLabel
     padding-bottom: 4px;
 }
 
-#lUsedCloudDrive, #lUsedVault,  #lUsedRubbish, #lUsedByVersions
+#lUsedCloudDrive, #lUsedVault,  #lUsedRubbish, #lUsedByVersions, #lAvailableStorage
 {
   color: #333333;
   font-size: 13px;
 }
 
-#lUsedCloudDrive, #lUsedVault,  #lUsedRubbish
+#lUsedCloudDrive, #lUsedVault,  #lUsedRubbish, #lAvailableStorage
 {
     qproperty-alignment: 'AlignRight | AlignBottom';
     padding-right: 4px;
@@ -95,7 +95,6 @@ QLabel
 
 #wDetailedUsage
 {
-    max-height: 160px;
     min-height: 120px;
 }
 
@@ -156,7 +155,7 @@ QLabel
 
 #bCloudDrive
 {
-    qproperty-icon : url(:/images/Cloud_Drive_24_ico.png);
+    qproperty-icon : url(:/images/account_details/Cloud_Drive_24_ico.png);
 }
 
 #bVault
@@ -166,7 +165,18 @@ QLabel
 
 #bRubbish
 {
-    qproperty-icon : url(:/images/Bin_24_ico.png);
+    qproperty-icon : url(:/images/account_details/Bin_24_ico.png);
+}
+
+#bAvailable
+{
+    qproperty-icon : url(:/images/account_details/available_storage.png);
+}
+
+#lVersionIcon
+{
+    qproperty-icon : url(:/images/account_details/versions.png);
+	padding-left:4px;
 }
 
 #lLoading
@@ -698,6 +708,12 @@ QProgressBar::chunk
    </item>
    <item>
     <widget class="QWidget" name="wDetailedUsage" native="true">
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>16777215</height>
+      </size>
+     </property>
      <layout class="QVBoxLayout" name="wDetailedUsageLayout">
       <property name="spacing">
        <number>8</number>
@@ -770,6 +786,12 @@ QProgressBar::chunk
              <height>32</height>
             </size>
            </property>
+           <property name="iconSize">
+            <size>
+             <width>24</width>
+             <height>24</height>
+            </size>
+           </property>
           </widget>
          </item>
          <item>
@@ -785,7 +807,7 @@ QProgressBar::chunk
              <item>
               <widget class="QLabel" name="lCloudDrive">
                <property name="text">
-                <string>Cloud Drive</string>
+                <string>Cloud drive</string>
                </property>
               </widget>
              </item>
@@ -863,6 +885,12 @@ QProgressBar::chunk
             <size>
              <width>32</width>
              <height>32</height>
+            </size>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>24</width>
+             <height>24</height>
             </size>
            </property>
           </widget>
@@ -960,6 +988,12 @@ QProgressBar::chunk
              <height>32</height>
             </size>
            </property>
+           <property name="iconSize">
+            <size>
+             <width>24</width>
+             <height>24</height>
+            </size>
+           </property>
           </widget>
          </item>
          <item>
@@ -975,7 +1009,7 @@ QProgressBar::chunk
              <item>
               <widget class="QLabel" name="lRubbish">
                <property name="text">
-                <string>Bin</string>
+                <string>Rubbish bin</string>
                </property>
               </widget>
              </item>
@@ -993,6 +1027,90 @@ QProgressBar::chunk
               <bool>false</bool>
              </property>
             </widget>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item>
+       <widget class="QWidget" name="wAvailable" native="true">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>32</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>32</height>
+         </size>
+        </property>
+        <layout class="QHBoxLayout" name="horizontalLayout_12">
+         <property name="spacing">
+          <number>12</number>
+         </property>
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
+         <item>
+          <widget class="QPushButton" name="bAvailable">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>32</width>
+             <height>32</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>32</width>
+             <height>32</height>
+            </size>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>24</width>
+             <height>24</height>
+            </size>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_13">
+           <property name="spacing">
+            <number>0</number>
+           </property>
+           <item>
+            <widget class="QLabel" name="lAvailable">
+             <property name="text">
+              <string>Available storage</string>
+             </property>
+            </widget>
+           </item>
+           <item alignment="Qt::AlignVCenter">
+            <widget class="QLabel" name="lAvailableStorage"/>
            </item>
           </layout>
          </item>
@@ -1020,6 +1138,13 @@ QProgressBar::chunk
       <property name="bottomMargin">
        <number>26</number>
       </property>
+      <item>
+       <widget class="QLabel" name="lVersionIcon">
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
+      </item>
       <item>
        <widget class="QLabel" name="lVersions">
         <property name="sizePolicy">
@@ -1052,8 +1177,6 @@ QProgressBar::chunk
    <container>1</container>
   </customwidget>
  </customwidgets>
- <resources>
-  <include location="../Resources_linux.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>

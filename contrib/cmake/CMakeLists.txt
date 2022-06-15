@@ -303,7 +303,7 @@ set (MOC_INPUT
     ${MEGAsyncDir}/gui/SyncItemModel.h
     ${MEGAsyncDir}/gui/SyncTableView.h
     ${MEGAsyncDir}/gui/BackupTableView.h
-
+    ${MEGAsyncDir}/gui/AutoResizeStackedWidget.h
     ${MEGAsyncDir}/platform/notificator.h
     ${MEGAsyncDir}/mega/bindings/qt/QTMegaGlobalListener.h
     ${MEGAsyncDir}/mega/bindings/qt/QTMegaListener.h

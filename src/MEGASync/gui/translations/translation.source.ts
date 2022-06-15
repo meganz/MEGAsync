@@ -9,11 +9,6 @@
         <translation>Account usage details</translation>
     </message>
     <message>
-        <source>Cloud Drive</source>
-        <translatorcomment>Label for Cloud Drive space used. Maintain capital letters in each word.(Max 18 characters)</translatorcomment>
-        <translation>Cloud Drive</translation>
-    </message>
-    <message>
         <source>Inbox</source>
         <translatorcomment>Label for Inbox space used. Maintain capital letters in each word.(Max 18 characters)</translatorcomment>
         <translation>Inbox</translation>
@@ -34,14 +29,24 @@
         <translation>Transfer</translation>
     </message>
     <message>
-        <source>Bin</source>
-        <translatorcomment>Label for Bin space used. Maintain capital letter.</translatorcomment>
-        <translation>Bin</translation>
-    </message>
-    <message>
         <source>Of that, size taken up by file versions:</source>
         <translatorcomment>Label to indicate the amount of size occupied by file versions.</translatorcomment>
         <translation>Size taken up by file versions</translation>
+    </message>
+    <message>
+        <source>Cloud drive</source>
+        <translatorcomment>Label for Cloud drive space used. Maintain capital letter in first word.(Max 18 characters)</translatorcomment>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Rubbish bin</source>
+        <translatorcomment>Label for Rubbish bin space used. Maintain capital letter in first word.(Max 18 characters)</translatorcomment>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Available storage</source>
+        <translatorcomment>Label for Available storage space used. Maintain capital letter in first word.(Max 18 characters)</translatorcomment>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -357,11 +362,6 @@
         <translation>Access to a shared folder was removed by [A]</translation>
     </message>
     <message>
-        <source>New Shared folder from [X]</source>
-        <translatorcomment>Label to indicate that [X] shared a folder with current user. Placeholder will be replaced by email of sharer user.</translatorcomment>
-        <translation>New shared folder from [X]</translation>
-    </message>
-    <message>
         <source>Shared Folder Activity</source>
         <translatorcomment>Generic label to indicate that there is activity in a shared folder but the name of the shared folder is not available.</translatorcomment>
         <translation>Shared Folder Activity</translation>
@@ -406,6 +406,16 @@
             <numerusform>[A] removed %n item</numerusform>
             <numerusform>[A] removed %n items</numerusform>
         </translation>
+    </message>
+    <message>
+        <source>Decryption error</source>
+        <translatorcomment>Label to indicate a decryption error for a folder name. Replacement for old NO_KEY term.</translatorcomment>
+        <translation type="unfinished">Decryption error</translation>
+    </message>
+    <message>
+        <source>New shared folder from [A]</source>
+        <translatorcomment>Label to indicate that [A] shared a folder with current user. Placeholder will be replaced by email of sharer user.</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -942,11 +952,6 @@ In some cases they may contain details about your data, such as file or folder n
         <translation>Shared Folder Received</translation>
     </message>
     <message>
-        <source>New shared folder from [X]</source>
-        <translatorcomment>Label to indicate that [X] shared a folder with current user. Placeholder will be replaced by email of sharer user.</translatorcomment>
-        <translation>New shared folder from [X]</translation>
-    </message>
-    <message>
         <source>Shared Folder Removed</source>
         <translatorcomment>Title of the notification when a shared folder has been removed</translatorcomment>
         <translation>Shared Folder Removed</translation>
@@ -1100,6 +1105,11 @@ In some cases they may contain details about your data, such as file or folder n
     <message>
         <source>Get Pro</source>
         <translatorcomment>Notification button to redirect the user to upgrade account.</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>New shared folder from [A]</source>
+        <translatorcomment>Desktop notification label to indicate that [A] shared a folder with current user. Placeholder will be replaced by email of sharer user.</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1804,6 +1814,11 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation>Log in or create an account to start using the MEGA Desktop App.</translation>
     </message>
     <message>
+        <source>You need to log into MEGA account to use the MEGA desktop app.</source>
+        <translatorcomment>Description label to indicate the user needs to log in in order to fully use MEGA desktop app.</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Create account</source>
         <translatorcomment>Button label to offer the user the option to create an account</translatorcomment>
         <translation>Create account</translation>
@@ -1817,11 +1832,6 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <source>Know more about MEGA desktop app. [A]Read more[/A]</source>
         <translatorcomment>Label with hyperlink to sync client webpage to know more about MEGA desktop app. Keep placeholders.</translatorcomment>
         <translation>Learn more about the MEGA Desktop App. [A]Read more[/A]</translation>
-    </message>
-    <message>
-        <source>You need to log into MEGA account to run MEGA desktop app.</source>
-        <translatorcomment>Description label to indicate the user needs to log in in order to run and fully use MEGA desktop app.</translatorcomment>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2674,14 +2684,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
 </context>
 <context>
-    <name>MegaItem</name>
-    <message>
-        <source>Error</source>
-        <translatorcomment>Label shown to show an error</translatorcomment>
-        <translation type="unfinished">Error</translation>
-    </message>
-</context>
-<context>
     <name>MegaItemModel</name>
     <message>
         <source>Folder already synced</source>
@@ -2691,11 +2693,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Folder contents already synced</source>
         <translatorcomment>Tooltip text to notify the user that some folder inside the folder that he is hovering with mouse is already synced.</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Owner</source>
-        <translatorcomment>Column title. This column shows the name of the original owner in incoming shares section.</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4437,11 +4434,6 @@ Do you want to restart MEGAsync now?</source>
         <translation>Remove files older than</translation>
     </message>
     <message>
-        <source>days</source>
-        <translatorcomment>Suffix text label for number of days to keep files in local cache.</translatorcomment>
-        <translation>days</translation>
-    </message>
-    <message>
         <source>SyncDebris (remote cache)</source>
         <translatorcomment>Section label name for remote cache summary and clear action.</translatorcomment>
         <translation>SyncDebris (remote cache)</translation>
@@ -4780,8 +4772,16 @@ Do you want to restart MEGAsync now?</source>
         <source>Used quota for the last %n hour:</source>
         <translatorcomment>Informative text shown in Account pane for Free account type. Indicates the used quota in the last %n specified number of hours. Keep the %n subsitution argument.</translatorcomment>
         <translation type="unfinished">
-            <numerusform>Used quota for the last %n hour:</numerusform>
+            <numerusform>Used quota for the last hour:</numerusform>
             <numerusform>Used quota for the last %n hours:</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>day</source>
+        <translatorcomment>Suffix text label for number of days to keep files in local cache.</translatorcomment>
+        <translation type="unfinished">
+            <numerusform>day</numerusform>
+            <numerusform>days</numerusform>
         </translation>
     </message>
 </context>

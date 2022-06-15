@@ -197,6 +197,7 @@ private:
     void saveExcludeSyncNames();
     void updateNetworkTab();
     void setShortCutsForToolBarItems();
+    void updateCacheSchedulerDaysLabel();
 
     // FIXME: Re-evaluate the Saving Syncs progress code
     void syncsStateInformation(int state);
