@@ -319,8 +319,6 @@ void TransfersWidget::onPausedTransferCounterChanged(bool state)
 
 void TransfersWidget::onVerticalScrollBarVisibilityChanged(bool state)
 {
-    qDebug() << "VISIBILITY" << state;
-
     if(state)
     {
         int sliderWidth = ui->tvTransfers->verticalScrollBar()->width();
