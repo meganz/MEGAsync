@@ -59,7 +59,7 @@ QLabel
     min-width:440px;
 }
 
-#lCloudDrive, #lInbox, #lVault, #lRubbish, #lStorage, #lTransfer, #lAvailable
+#lCloudDrive, #lVault, #lRubbish, #lStorage, #lTransfer, #lAvailable
 {
   color: #333333;
   font-size: 13px;

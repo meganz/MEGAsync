@@ -47,7 +47,7 @@ QLabel
     min-width:440px;
 }
 
-#lCloudDrive, #lInbox, #lRubbish, #lStorage, #lTransfer, #lAvailable
+#lCloudDrive, #lVault, #lRubbish, #lStorage, #lTransfer, #lAvailable
 {
   color: #333333;
   font-size: 13px;
@@ -59,7 +59,7 @@ QLabel
   qproperty-alignment: 'AlignLeft | AlignVCenter';
 }
 
-#lCloudDrive, #lInbox, #lRubbish, #lAvailable
+#lCloudDrive, #lVault, #lRubbish, #lAvailable
 {
     qproperty-alignment: 'AlignLeft | AlignBottom';
 }
