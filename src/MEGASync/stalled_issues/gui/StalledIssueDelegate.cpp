@@ -197,7 +197,9 @@ bool StalledIssueDelegate::eventFilter(QObject *object, QEvent *event)
         {
             if(mouseButtonEvent->button() == Qt::LeftButton)
             {
-                auto index = mView->indexAt(mouseButtonEvent->pos());
+                auto viewPos = mView->mapFromGlobal(mouseButtonEvent->globalPos());
+                auto index = mView->indexAt(viewPos);
+
                 if(index.isValid())
                 {
                     if(!index.parent().isValid())
