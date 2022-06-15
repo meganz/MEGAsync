@@ -9,11 +9,6 @@
         <translation>รายละเอียดการใช้งานบัญชี</translation>
     </message>
     <message>
-        <source>Cloud Drive</source>
-        <translatorcomment>Label for Cloud Drive space used. Maintain capital letters in each word.(Max 18 characters)</translatorcomment>
-        <translation>คลาวด์ไดรฟ์</translation>
-    </message>
-    <message>
         <source>Inbox</source>
         <translatorcomment>Label for Inbox space used. Maintain capital letters in each word.(Max 18 characters)</translatorcomment>
         <translation>กล่องขาเข้า</translation>
@@ -34,14 +29,24 @@
         <translation>ถ่ายโอน</translation>
     </message>
     <message>
-        <source>Bin</source>
-        <translatorcomment>Label for Bin space used. Maintain capital letter.</translatorcomment>
-        <translation>ถังขยะ</translation>
-    </message>
-    <message>
         <source>Of that, size taken up by file versions:</source>
         <translatorcomment>Label to indicate the amount of size occupied by file versions.</translatorcomment>
         <translation>ขนาดที่ใช้ตามเวอร์ชันของไฟล์</translation>
+    </message>
+    <message>
+        <source>Cloud drive</source>
+        <translatorcomment>Label for Cloud drive space used. Maintain capital letter in first word.(Max 18 characters)</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rubbish bin</source>
+        <translatorcomment>Label for Rubbish bin space used. Maintain capital letter in first word.(Max 18 characters)</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Available storage</source>
+        <translatorcomment>Label for Available storage space used. Maintain capital letter in first word.(Max 18 characters)</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -351,11 +356,6 @@
         <translation>การเข้าถึงโฟลเดอร์ที่แชร์ถูกลบโดย [A]</translation>
     </message>
     <message>
-        <source>New Shared folder from [X]</source>
-        <translatorcomment>Label to indicate that [X] shared a folder with current user. Placeholder will be replaced by email of sharer user.</translatorcomment>
-        <translation>มีการแชร์โฟลเดอร์ใหม่จาก [X]</translation>
-    </message>
-    <message>
         <source>Shared Folder Activity</source>
         <translatorcomment>Generic label to indicate that there is activity in a shared folder but the name of the shared folder is not available.</translatorcomment>
         <translation>กิจกรรมโฟลเดอร์ที่ใช้ร่วมกัน</translation>
@@ -394,6 +394,16 @@
         <source>[A] removed %n item</source>
         <translatorcomment>Label to indicate that [A] has removed %n items from a shared folder. Placeholder [A] will be replaced by email of the user that made the deletion and %n with the number of removed items.</translatorcomment>
         <translation><numerusform>[A] ได้ลบออก %n รายการ</numerusform></translation>
+    </message>
+    <message>
+        <source>Decryption error</source>
+        <translatorcomment>Label to indicate a decryption error for a folder name. Replacement for old NO_KEY term.</translatorcomment>
+        <translation>ข้อผิดพลาดในการถอดรหัสลับ</translation>
+    </message>
+    <message>
+        <source>New shared folder from [A]</source>
+        <translatorcomment>Label to indicate that [A] shared a folder with current user. Placeholder will be replaced by email of sharer user.</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -924,11 +934,6 @@ Please enter a different name to identify this synced folder:</source>
         <translation>แชร์โฟลเดอร์ที่ได้รับ</translation>
     </message>
     <message>
-        <source>New shared folder from [X]</source>
-        <translatorcomment>Label to indicate that [X] shared a folder with current user. Placeholder will be replaced by email of sharer user.</translatorcomment>
-        <translation>มีการแชร์โฟลเดอร์ใหม่จาก [X]</translation>
-    </message>
-    <message>
         <source>Shared Folder Removed</source>
         <translatorcomment>Title of the notification when a shared folder has been removed</translatorcomment>
         <translation>แชร์โฟลเดอร์ถูกลบออก</translation>
@@ -1077,6 +1082,11 @@ Please enter a different name to identify this synced folder:</source>
         <source>Get Pro</source>
         <translatorcomment>Notification button to redirect the user to upgrade account.</translatorcomment>
         <translation>รับบัญชี Pro</translation>
+    </message>
+    <message>
+        <source>New shared folder from [A]</source>
+        <translatorcomment>Label to indicate that [A] shared a folder with current user. Placeholder will be replaced by email of sharer user.</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2617,14 +2627,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
 </context>
 <context>
-    <name>MegaItem</name>
-    <message>
-        <source>Error</source>
-        <translatorcomment>Label shown to show an error</translatorcomment>
-        <translation>ผิดพลาด</translation>
-    </message>
-</context>
-<context>
     <name>MegaItemModel</name>
     <message>
         <source>Folder already synced</source>
@@ -3539,20 +3541,13 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Added support to stream file links from a folder link.
+        <source>- Full redesign of remote file picker.
 - Fixed translation issues.
-- Improved the user experience.
-- Added a new notifications panel in the settings dialog.
 - Other minor UI fixes and adjustments.
 - Fixed detected crashes on Windows, Linux and macOS.
 </source>
-        <translation>- เพิ่มการสนับสนุนการสตรีมลิงก์ไฟล์จากลิงก์โฟลเดอร์แล้ว
-- แก้ไขปัญหาการแปลภาษาที่ไม่ถูกต้องแล้ว
-- ปรับปรุงประสบการณ์การใช้งานของผู้ใช้
-- เพิ่มแผงการแจ้งเตือนใหม่ในกล่องโต้ตอบการตั้งค่า
-- แก้ไขและปรับแต่ง UI เล็กน้อยประปราย
-- แก้ไขข้อขัดข้องที่ตรวจพบใน Windows Linux และ macOS
-</translation>
+        <translatorcomment>Changelog for version 4.6.7</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

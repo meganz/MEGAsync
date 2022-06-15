@@ -9,11 +9,6 @@
         <translation>Détails sur l’utilisation du compte</translation>
     </message>
     <message>
-        <source>Cloud Drive</source>
-        <translatorcomment>Label for Cloud Drive space used. Maintain capital letters in each word.(Max 18 characters)</translatorcomment>
-        <translation>Disque nuagique</translation>
-    </message>
-    <message>
         <source>Inbox</source>
         <translatorcomment>Label for Inbox space used. Maintain capital letters in each word.(Max 18 characters)</translatorcomment>
         <translation>Boîte de réception</translation>
@@ -34,14 +29,24 @@
         <translation>Transfert</translation>
     </message>
     <message>
-        <source>Bin</source>
-        <translatorcomment>Label for Bin space used. Maintain capital letter.</translatorcomment>
-        <translation>Corbeille</translation>
-    </message>
-    <message>
         <source>Of that, size taken up by file versions:</source>
         <translatorcomment>Label to indicate the amount of size occupied by file versions.</translatorcomment>
         <translation>Taille totale occupée par les versions de fichiers</translation>
+    </message>
+    <message>
+        <source>Cloud drive</source>
+        <translatorcomment>Label for Cloud drive space used. Maintain capital letter in first word.(Max 18 characters)</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rubbish bin</source>
+        <translatorcomment>Label for Rubbish bin space used. Maintain capital letter in first word.(Max 18 characters)</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Available storage</source>
+        <translatorcomment>Label for Available storage space used. Maintain capital letter in first word.(Max 18 characters)</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -351,11 +356,6 @@
         <translation>L’accès à un dossier partagé a été supprimé par [A]</translation>
     </message>
     <message>
-        <source>New Shared folder from [X]</source>
-        <translatorcomment>Label to indicate that [X] shared a folder with current user. Placeholder will be replaced by email of sharer user.</translatorcomment>
-        <translation>Nouveau dossier partagé de [X]</translation>
-    </message>
-    <message>
         <source>Shared Folder Activity</source>
         <translatorcomment>Generic label to indicate that there is activity in a shared folder but the name of the shared folder is not available.</translatorcomment>
         <translation>Activité dans un dossier partagé</translation>
@@ -394,6 +394,16 @@
         <source>[A] removed %n item</source>
         <translatorcomment>Label to indicate that [A] has removed %n items from a shared folder. Placeholder [A] will be replaced by email of the user that made the deletion and %n with the number of removed items.</translatorcomment>
         <translation><numerusform>[A] a supprimé %n élément</numerusform><numerusform>[A] a supprimé %n d’éléments</numerusform><numerusform>[A] a supprimé %n éléments</numerusform></translation>
+    </message>
+    <message>
+        <source>Decryption error</source>
+        <translatorcomment>Label to indicate a decryption error for a folder name. Replacement for old NO_KEY term.</translatorcomment>
+        <translation>Erreur de déchiffrement</translation>
+    </message>
+    <message>
+        <source>New shared folder from [A]</source>
+        <translatorcomment>Label to indicate that [A] shared a folder with current user. Placeholder will be replaced by email of sharer user.</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -924,11 +934,6 @@ Dans certains cas, ils pourraient comprendre des détails sur vos données, tels
         <translation>Un dossier partagé a été reçu</translation>
     </message>
     <message>
-        <source>New shared folder from [X]</source>
-        <translatorcomment>Label to indicate that [X] shared a folder with current user. Placeholder will be replaced by email of sharer user.</translatorcomment>
-        <translation>Nouveau dossier partagé de [X]</translation>
-    </message>
-    <message>
         <source>Shared Folder Removed</source>
         <translatorcomment>Title of the notification when a shared folder has been removed</translatorcomment>
         <translation>Un dossier partagé a été supprimé</translation>
@@ -1077,6 +1082,11 @@ Dans certains cas, ils pourraient comprendre des détails sur vos données, tels
         <source>Get Pro</source>
         <translatorcomment>Notification button to redirect the user to upgrade account.</translatorcomment>
         <translation>Obtenir la version Pro</translation>
+    </message>
+    <message>
+        <source>New shared folder from [A]</source>
+        <translatorcomment>Label to indicate that [A] shared a folder with current user. Placeholder will be replaced by email of sharer user.</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2617,14 +2627,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
 </context>
 <context>
-    <name>MegaItem</name>
-    <message>
-        <source>Error</source>
-        <translatorcomment>Label shown to show an error</translatorcomment>
-        <translation>Erreur</translation>
-    </message>
-</context>
-<context>
     <name>MegaItemModel</name>
     <message>
         <source>Folder already synced</source>
@@ -2866,7 +2868,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>You can&apos;t run MEGA Desktop App from this location. Move it into the Applications folder then run it.</source>
         <translatorcomment>Error message shown when the user is trying to run MEGA Desktop App from a path different than Applications. Only affects to macOS.</translatorcomment>
-        <translation>Vous ne pouvez pas exécuter l’appli MEGA pour ordinateur à partir de cet emplacement. Déplacez-la dans le dossier Applications, puis exécutez-la.</translation>
+        <translation>Vous ne pouvez pas exécuter l’appli MEGA pour ordinateur de cet emplacement. Déplacez-la dans le dossier Applications, puis exécutez-la.</translation>
     </message>
 </context>
 <context>
@@ -3539,18 +3541,13 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Added support to stream file links from a folder link.
+        <source>- Full redesign of remote file picker.
 - Fixed translation issues.
-- Improved the user experience.
-- Added a new notifications panel in the settings dialog.
 - Other minor UI fixes and adjustments.
 - Fixed detected crashes on Windows, Linux and macOS.
 </source>
-        <translation>– Ajout de la diffusion en continu de liens de fichiers à partir d’un lien de dossier.
-– Correctif de certains problèmes de traduction.
-– Amélioration de l’expérience utilisateur.
-– Autres correctifs et peaufinages mineurs de l’IU.
-– Correctif de plantages détectés sous Windows, Linux et macOS.</translation>
+        <translatorcomment>Changelog for version 4.6.7</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
