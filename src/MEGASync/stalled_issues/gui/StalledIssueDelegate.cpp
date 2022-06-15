@@ -226,6 +226,11 @@ bool StalledIssueDelegate::eventFilter(QObject *object, QEvent *event)
             }
         }
     }
+    else if(event->type() == QEvent::FocusOut)
+    {
+        return true;
+    }
+
     return QStyledItemDelegate::eventFilter(object, event);
 }
 
