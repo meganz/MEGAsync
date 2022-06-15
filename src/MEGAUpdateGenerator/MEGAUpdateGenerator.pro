@@ -34,7 +34,7 @@ win32 {
 }
 
 macx {
-    contains(QT_ARCH, arm64):QMAKE_MACOSX_DEPLOYMENT_TARGET = 11.1
+    contains(QT_ARCH, arm64):QMAKE_MACOSX_DEPLOYMENT_TARGET = 11.0
     else:QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.12
     QMAKE_CXXFLAGS += -DCRYPTOPP_DISABLE_ASM
     LIBS += -L$$_PRO_FILE_PWD_/../MEGAsync/mega/bindings/qt/3rdparty/libs
