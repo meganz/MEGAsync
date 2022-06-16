@@ -6,13 +6,17 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/BackupTableView.cpp \
     $$PWD/BackupsWizard.cpp \
     $$PWD/BalloonToolTip.cpp \
+    $$PWD/BlurredShadowEffect.cpp \
+    $$PWD/ButtonIconManager.cpp \
     $$PWD/MegaItemDelegates.cpp \
     $$PWD/EventHelper.cpp \
     $$PWD/InfoDialog.cpp \
+    $$PWD/MegaDelegateHoverManager.cpp \
     $$PWD/MegaItemProxyModel.cpp \
     $$PWD/MegaItemTreeView.cpp \
     $$PWD/NotificationsSettings.cpp \
     $$PWD/OverQuotaDialog.cpp \
+    $$PWD/ScanningWidget.cpp \
     $$PWD/QtPositioningBugFixer.cpp \
     $$PWD/PasswordLineEdit.cpp \
     $$PWD/SetupWizard.cpp \
@@ -41,34 +45,18 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/UpgradeDialog.cpp \
     $$PWD/PlanWidget.cpp \
     $$PWD/InfoWizard.cpp \
-    $$PWD/TransferManager.cpp \
-    $$PWD/TransfersWidget.cpp \
-    $$PWD/QTransfersModel.cpp \
-    $$PWD/QActiveTransfersModel.cpp \
-    $$PWD/QFinishedTransfersModel.cpp \
-    $$PWD/MegaTransferDelegate.cpp \
-    $$PWD/MegaTransferView.cpp \
     $$PWD/QMegaMessageBox.cpp \
-    $$PWD/TransfersStateInfoWidget.cpp \
     $$PWD/MegaSpeedGraph.cpp \
-    $$PWD/ActiveTransfersWidget.cpp \
     $$PWD/AvatarWidget.cpp \
     $$PWD/MenuItemAction.cpp \
     $$PWD/AddExclusionDialog.cpp \
-    $$PWD/TransferManagerItem.cpp \
-    $$PWD/TransferItem.cpp \
-    $$PWD/InfoDialogTransfersWidget.cpp \
-    $$PWD/QCustomTransfersModel.cpp \
     $$PWD/StatusInfo.cpp \
     $$PWD/ChangePassword.cpp \
-    $$PWD/CustomTransferItem.cpp \
     $$PWD/PSAwidget.cpp \
     $$PWD/ElidedLabel.cpp \
     $$PWD/UpgradeOverStorage.cpp \
     $$PWD/Login2FA.cpp \
     $$PWD/QRWidget.cpp \
-    $$PWD/TransfersStatusWidget.cpp \
-    $$PWD/TransfersSummaryWidget.cpp \
     $$PWD/CircularUsageProgressBar.cpp \
     $$PWD/HighDpiResize.cpp \
     $$PWD/AlertItem.cpp \
@@ -86,7 +74,8 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/BandwidthSettings.cpp \
     $$PWD/RemoveBackupDialog.cpp \
     $$PWD/SwitchButton.cpp \
-    $$PWD/GuiUtilities.cpp
+    $$PWD/GuiUtilities.cpp \
+    $$PWD/CancelConfirmWidget.cpp
 
 HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/AddBackupDialog.h \
@@ -95,13 +84,18 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/BackupsWizard.h \
     $$PWD/AutoResizeStackedWidget.h \
     $$PWD/BalloonToolTip.h \
+    $$PWD/BlurredShadowEffect.h \
+    $$PWD/ButtonIconManager.h \
+    $$PWD/DialogGeometryRetainer.h \
     $$PWD/MegaItemDelegates.h \
     $$PWD/EventHelper.h \
     $$PWD/InfoDialog.h \
+    $$PWD/MegaDelegateHoverManager.h \
     $$PWD/MegaItemProxyModel.h \
     $$PWD/MegaItemTreeView.h \
     $$PWD/NotificationsSettings.h \
     $$PWD/OverQuotaDialog.h \
+    $$PWD/ScanningWidget.h \
     $$PWD/QtPositioningBugFixer.h \
     $$PWD/PasswordLineEdit.h \
     $$PWD/SetupWizard.h \
@@ -130,34 +124,18 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/UpgradeDialog.h \
     $$PWD/PlanWidget.h \
     $$PWD/InfoWizard.h \
-    $$PWD/TransferManager.h \
-    $$PWD/TransfersWidget.h \
-    $$PWD/QTransfersModel.h \
-    $$PWD/QActiveTransfersModel.h \
-    $$PWD/QFinishedTransfersModel.h \
-    $$PWD/MegaTransferDelegate.h \
-    $$PWD/MegaTransferView.h \
     $$PWD/QMegaMessageBox.h \
-    $$PWD/TransfersStateInfoWidget.h \
     $$PWD/MegaSpeedGraph.h \
-    $$PWD/ActiveTransfersWidget.h \
     $$PWD/AvatarWidget.h \
     $$PWD/MenuItemAction.h \
     $$PWD/AddExclusionDialog.h \
-    $$PWD/TransferManagerItem.h \
-    $$PWD/TransferItem.h \
-    $$PWD/InfoDialogTransfersWidget.h \
-    $$PWD/QCustomTransfersModel.h \
     $$PWD/StatusInfo.h \
-    $$PWD/CustomTransferItem.h \
     $$PWD/PSAwidget.h \
     $$PWD/ElidedLabel.h \
     $$PWD/UpgradeOverStorage.h \
     $$PWD/ChangePassword.h \
     $$PWD/Login2FA.h \
     $$PWD/QRWidget.h \
-    $$PWD/TransfersStatusWidget.h \
-    $$PWD/TransfersSummaryWidget.h \
     $$PWD/CircularUsageProgressBar.h \
     $$PWD/HighDpiResize.h \
     $$PWD/AlertItem.h \
@@ -169,13 +147,15 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/BugReportDialog.h \
     $$PWD/UserAttributesRequests.h \
     $$PWD/VerifyLockMessage.h \
+    $$PWD/ViewLoadingScene.h \
     $$PWD/MegaInfoMessage.h \
     $$PWD/WaitingSpinnerWidget.h \
     $$PWD/ProxySettings.h \
     $$PWD/BandwidthSettings.h \
     $$PWD/RemoveBackupDialog.h \
     $$PWD/SwitchButton.h \
-    $$PWD/GuiUtilities.h
+    $$PWD/GuiUtilities.h \
+    $$PWD/CancelConfirmWidget.h
 
 INCLUDEPATH += $$PWD
 
@@ -187,7 +167,6 @@ win32 {
     RESOURCES += $$PWD/Resources_win.qrc
     INCLUDEPATH += $$PWD/win
     FORMS    += $$PWD/win/InfoDialog.ui \
-                $$PWD/win/CustomTransferItem.ui \
                 $$PWD/win/NodeSelector.ui \
                 $$PWD/win/FolderBinder.ui \
                 $$PWD/win/BindFolderDialog.ui \
@@ -207,22 +186,14 @@ win32 {
                 $$PWD/win/PlanWidget.ui \
                 $$PWD/win/UpgradeDialog.ui \
                 $$PWD/win/InfoWizard.ui \
-                $$PWD/win/TransferManagerItem.ui \
-                $$PWD/win/TransferManager.ui \
-                $$PWD/win/TransfersWidget.ui \
-                $$PWD/win/TransfersStateInfoWidget.ui \
                 $$PWD/win/MegaSpeedGraph.ui \
-                $$PWD/win/ActiveTransfersWidget.ui \
                 $$PWD/win/AddExclusionDialog.ui \
-                $$PWD/win/InfoDialogTransfersWidget.ui \
                 $$PWD/win/StatusInfo.ui \
                 $$PWD/win/PSAwidget.ui \
                 $$PWD/win/UpgradeOverStorage.ui \
                 $$PWD/win/ChangePassword.ui \
                 $$PWD/win/Login2FA.ui \
-                $$PWD/win/TransfersStatusWidget.ui \
                 $$PWD/win/AlertItem.ui \
-                $$PWD/win/TransfersSummaryWidget.ui \
                 $$PWD/win/FilterAlertWidget.ui \
                 $$PWD/win/AlertFilterType.ui \
                 $$PWD/win/BugReportDialog.ui \
@@ -235,9 +206,12 @@ win32 {
                 $$PWD/win/BackupsWizard.ui \
                 $$PWD/win/BackupSetupSuccessDialog.ui \
                 $$PWD/win/NewFolderDialog.ui \
+                $$PWD/win/NotificationsSettings.ui \
+                $$PWD/win/ScanningWidget.ui \
+                $$PWD/win/CancelConfirmWidget.ui \
+                $$PWD/win/NotificationsSettings.ui \
                 $$PWD/win/AddBackupDialog.ui \
-                $$PWD/win/RemoveBackupDialog.ui \
-                $$PWD/win/NotificationsSettings.ui
+                $$PWD/win/RemoveBackupDialog.ui
 }
 
 macx {
@@ -265,23 +239,14 @@ macx {
                 $$PWD/macx/PlanWidget.ui \
                 $$PWD/macx/UpgradeDialog.ui \
                 $$PWD/macx/InfoWizard.ui \
-                $$PWD/macx/TransferManagerItem.ui \
-                $$PWD/macx/TransferManager.ui \
-                $$PWD/macx/TransfersWidget.ui \
-                $$PWD/macx/TransfersStateInfoWidget.ui \
                 $$PWD/macx/MegaSpeedGraph.ui \
-                $$PWD/macx/ActiveTransfersWidget.ui \
                 $$PWD/macx/AddExclusionDialog.ui \
-                $$PWD/macx/InfoDialogTransfersWidget.ui \
                 $$PWD/macx/StatusInfo.ui \
-                $$PWD/macx/CustomTransferItem.ui \
                 $$PWD/macx/PSAwidget.ui \
                 $$PWD/macx/UpgradeOverStorage.ui \
                 $$PWD/macx/ChangePassword.ui \
                 $$PWD/macx/Login2FA.ui \
-                $$PWD/macx/TransfersStatusWidget.ui \
                 $$PWD/macx/AlertItem.ui \
-                $$PWD/macx/TransfersSummaryWidget.ui \
                 $$PWD/macx/FilterAlertWidget.ui \
                 $$PWD/macx/AlertFilterType.ui \
                 $$PWD/macx/BugReportDialog.ui \
@@ -294,9 +259,11 @@ macx {
                 $$PWD/macx/BackupsWizard.ui \
                 $$PWD/macx/BackupSetupSuccessDialog.ui \
                 $$PWD/macx/NewFolderDialog.ui \
+                $$PWD/macx/NotificationsSettings.ui \
+                $$PWD/macx/ScanningWidget.ui \
+                $$PWD/macx/CancelConfirmWidget.ui \
                 $$PWD/macx/AddBackupDialog.ui \
-                $$PWD/macx/RemoveBackupDialog.ui \
-                $$PWD/macx/NotificationsSettings.ui
+                $$PWD/macx/RemoveBackupDialog.ui
 
     #Asset catalog need to load SF symbol images of toolbar items for custom NSToolbar
     QMAKE_ASSET_CATALOGS += $$PWD/images/Images.xcassets
@@ -326,7 +293,6 @@ unix:!macx {
     RESOURCES += $$PWD/Resources_linux.qrc
     INCLUDEPATH += $$PWD/linux
     FORMS    += $$PWD/linux/InfoDialog.ui \
-                $$PWD/linux/CustomTransferItem.ui \
                 $$PWD/linux/NodeSelector.ui \
                 $$PWD/linux/FolderBinder.ui \
                 $$PWD/linux/BindFolderDialog.ui \
@@ -349,22 +315,14 @@ unix:!macx {
                 $$PWD/linux/PlanWidget.ui \
                 $$PWD/linux/UpgradeDialog.ui \
                 $$PWD/linux/InfoWizard.ui \
-                $$PWD/linux/TransferManagerItem.ui \
-                $$PWD/linux/TransferManager.ui \
-                $$PWD/linux/TransfersWidget.ui \
-                $$PWD/linux/TransfersStateInfoWidget.ui \
                 $$PWD/linux/MegaSpeedGraph.ui \
-                $$PWD/linux/ActiveTransfersWidget.ui \
                 $$PWD/linux/AddExclusionDialog.ui \
-                $$PWD/linux/InfoDialogTransfersWidget.ui \
                 $$PWD/linux/StatusInfo.ui \
                 $$PWD/linux/PSAwidget.ui \
                 $$PWD/linux/UpgradeOverStorage.ui \
                 $$PWD/linux/ChangePassword.ui \
                 $$PWD/linux/Login2FA.ui \
-                $$PWD/linux/TransfersStatusWidget.ui \
                 $$PWD/linux/AlertItem.ui \
-                $$PWD/linux/TransfersSummaryWidget.ui \
                 $$PWD/linux/FilterAlertWidget.ui \
                 $$PWD/linux/AlertFilterType.ui \
                 $$PWD/linux/BugReportDialog.ui \
@@ -375,12 +333,13 @@ unix:!macx {
                 $$PWD/linux/ProxySettings.ui \
                 $$PWD/linux/BandwidthSettings.ui \
                 $$PWD/linux/NewFolderDialog.ui \
-                $$PWD/linux/RenameTargetFolderDialog.ui \
+                $$PWD/linux/NotificationsSettings.ui \
+                $$PWD/linux/CancelConfirmWidget.ui \
+                $$PWD/linux/ScanningWidget.ui \
                 $$PWD/linux/BackupSetupSuccessDialog.ui \
                 $$PWD/linux/NewFolderDialog.ui \
                 $$PWD/linux/AddBackupDialog.ui \
-                $$PWD/linux/RemoveBackupDialog.ui \
-                $$PWD/linux/NotificationsSettings.ui
+                $$PWD/linux/RemoveBackupDialog.ui
 
     HEADERS += $$PWD/PermissionsDialog.h \
                $$PWD/PermissionsWidget.h

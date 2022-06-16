@@ -1,3 +1,4 @@
+#include "mega/types.h"
 #include "MegaApplication.h"
 #include "SettingsDialog.h"
 #include "QMegaMessageBox.h"
@@ -12,7 +13,6 @@
 #include "gui/AddBackupDialog.h"
 #include "gui/RemoveBackupDialog.h"
 #include "UserAttributesRequests.h"
-#include "mega/types.h"
 
 #include <QApplication>
 #include <QDesktopServices>
@@ -732,10 +732,6 @@ void SettingsDialog::onAnimationFinished()
     {
         mUi->pBackup->show();
     }
-    else if (mUi->wStack->currentWidget() == mUi->pSecurity)
-    {
-        mUi->pSecurity->show();
-    }
     else if (mUi->wStack->currentWidget() == mUi->pFolders)
     {
         mUi->pFolders->show();
@@ -743,6 +739,10 @@ void SettingsDialog::onAnimationFinished()
     else if (mUi->wStack->currentWidget() == mUi->pNetwork)
     {
         mUi->pNetwork->show();
+    }
+    else if (mUi->wStack->currentWidget() == mUi->pSecurity)
+    {
+        mUi->pSecurity->show();
     }
     else if (mUi->wStack->currentWidget() == mUi->pNotifications)
     {

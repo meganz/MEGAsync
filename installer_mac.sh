@@ -130,6 +130,7 @@ if [ ${build} -eq 1 -o ${build_cmake} -eq 1 ]; then
 
     # Build binaries
     if [ ${build_cmake} -eq 1 ]; then
+        #cmake -DUSE_THIRDPARTY_FROM_VCPKG=1 -DUSE_PREBUILT_3RDPARTY=0 -DCMAKE_OSX_ARCHITECTURES=x86_64 -DCMAKE_PREFIX_PATH=${MEGAQTPATH} -DVCPKG_TRIPLET=x64-osx-mega -DMega3rdPartyDir=${VCPKGPATH} -S ../contrib/cmake
         cmake -DUSE_THIRDPARTY_FROM_VCPKG=1 -DUSE_PREBUILT_3RDPARTY=0 -DCMAKE_PREFIX_PATH=${MEGAQTPATH} -DVCPKG_TRIPLET=x64-osx-mega -DMega3rdPartyDir=${VCPKGPATH} -S ../contrib/cmake
         cmake --build ./ --target MEGAsync -j`sysctl -n hw.ncpu`
         cmake --build ./ --target MEGAupdater -j`sysctl -n hw.ncpu`

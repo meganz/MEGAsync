@@ -1,11 +1,13 @@
 #include "MegaProxyStyle.h"
 #include "gui/MegaTransferView.h"
-#include <EventHelper.h>
 
+#include <EventHelper.h>
 #include <QStyleOption>
 #include <QHeaderView>
 #include <QSpinBox>
 #include <QComboBox>
+
+const int TOOLTIP_DELAY = 250;
 
 void MegaProxyStyle::drawComplexControl(QStyle::ComplexControl control, const QStyleOptionComplex *option, QPainter *painter, const QWidget *widget) const
 {
@@ -78,36 +80,67 @@ void MegaProxyStyle::drawPrimitive(QStyle::PrimitiveElement element, const QStyl
 
     if (element == QStyle::PE_IndicatorItemViewItemDrop && !option->rect.isNull())
     {
-        QStyleOption opt(*option);
-        const MegaTransferView *transferView = dynamic_cast<const MegaTransferView *>(widget);
-        if (transferView)
+        auto view = dynamic_cast<const QAbstractItemView*>(widget);
+        if (view)
         {
-            int type = transferView->getType();
-            if (type == mega::MegaTransfer::TYPE_DOWNLOAD || type == mega::MegaTransfer::TYPE_UPLOAD)
-            {
-                QColor c(type == mega::MegaTransfer::TYPE_DOWNLOAD ? "#31B500" : "#2BA6DE");
+            auto index = view->indexAt(option->rect.topLeft());
 
-                QPen linepen(c);
+            if (index.isValid())
+            {
+                if(!(index.flags() & Qt::ItemIsDropEnabled) && !(index.flags() & Qt::ItemIsDragEnabled))
+                {
+                    return;
+                }
+
+                QStyleOption modOption(*option);
+
+                int adjustTop(0);
+
+                //The top and bottom rows indicator was cut by the middle
+                //Move the indicator lines avoid this ugly cut
+                {
+                    auto indexRect = view->visualRect(index);
+                    auto isTop(modOption.rect.y() == indexRect.y());
+
+                    if(isTop && index.row() == 0)
+                    {
+                        adjustTop = 5;
+                    }
+                    else if(!isTop && (index.row() == (view->model()->rowCount() -1)))
+                    {
+                        adjustTop = -5;
+                    }
+
+                    modOption.rect.adjust(0,adjustTop,0,adjustTop);
+                }
+
+                QPoint leftPoint(modOption.rect.topLeft() + QPoint(25, 0));
+                QPoint rightPoint(modOption.rect.topRight() - QPoint(25, 0));
+
+                QPen linepen("#FF654F");
                 linepen.setCapStyle(Qt::RoundCap);
                 linepen.setWidth(8);
                 painter->setPen(linepen);
-                painter->drawPoint(opt.rect.topLeft() + QPoint(30, 0));
-                painter->drawPoint(opt.rect.topRight() - QPoint(30, 0));
+
+                painter->drawPoint(leftPoint);
+                painter->drawPoint(rightPoint);
 
                 QPen whitepen(Qt::white);
                 whitepen.setWidth(4);
                 whitepen.setCapStyle(Qt::RoundCap);
                 painter->setPen(whitepen);
-                painter->drawPoint(opt.rect.topLeft() + QPoint(30, 0));
-                painter->drawPoint(opt.rect.topRight() - QPoint(30, 0));
+                painter->drawPoint(leftPoint);
+                painter->drawPoint(rightPoint);
 
-                opt.rect.setLeft(35);
-                opt.rect.setRight(widget->width() - 35);
+                modOption.rect.setLeft(30);
+                modOption.rect.setRight(modOption.rect.width());
                 linepen.setWidth(2);
                 painter->setPen(linepen);
+
+                QProxyStyle::drawPrimitive(element, &modOption, painter, widget);
             }
         }
-        QProxyStyle::drawPrimitive(element, &opt, painter, widget);
+
         return;
     }
 
@@ -121,6 +154,15 @@ int MegaProxyStyle::pixelMetric(PixelMetric metric, const QStyleOption * option,
         return 24;
     }
     return QProxyStyle::pixelMetric(metric, option, widget);
+}
+
+int MegaProxyStyle::styleHint(StyleHint hint, const QStyleOption *option, const QWidget *widget, QStyleHintReturn *returnData) const
+{
+    if (hint == QStyle::SH_ToolTip_WakeUpDelay)
+    {
+        return TOOLTIP_DELAY;
+    }
+    return QProxyStyle::styleHint(hint, option, widget, returnData);
 }
 
 QIcon MegaProxyStyle::standardIcon(QStyle::StandardPixmap standardIcon, const QStyleOption *option, const QWidget *widget) const
@@ -152,4 +194,29 @@ void MegaProxyStyle::polish(QWidget *widget)
         EventManager::addEvent(comboBox, QEvent::Wheel, EventHelper::BLOCK);
     }
     QProxyStyle::polish(widget);
+}
+
+void MegaProxyStyle::polish(QPalette &pal)
+{
+    QProxyStyle::polish(pal);
+}
+
+void MegaProxyStyle::polish(QApplication *app)
+{
+    QProxyStyle::polish(app);
+}
+
+void MegaProxyStyle::unpolish(QWidget *widget)
+{
+    QProxyStyle::unpolish(widget);
+}
+
+void MegaProxyStyle::unpolish(QApplication *app)
+{
+    QProxyStyle::unpolish(app);
+}
+
+bool MegaProxyStyle::event(QEvent *e)
+{
+    return QProxyStyle::event(e);
 }

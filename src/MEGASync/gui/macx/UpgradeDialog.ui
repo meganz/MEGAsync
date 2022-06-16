@@ -172,7 +172,7 @@
         </property>
         <layout class="QHBoxLayout" name="horizontalLayout_2">
          <property name="spacing">
-          <number>-1</number>
+          <number>4</number>
          </property>
          <property name="leftMargin">
           <number>30</number>
@@ -202,7 +202,7 @@
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_3">
             <property name="spacing">
-             <number>-1</number>
+             <number>4</number>
             </property>
             <property name="leftMargin">
              <number>0</number>
@@ -360,6 +360,12 @@
    </item>
    <item>
     <widget class="QWidget" name="wContainerPlansAndInfo" native="true">
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>50</height>
+      </size>
+     </property>
      <layout class="QVBoxLayout" name="verticalLayout_5">
       <property name="spacing">
        <number>4</number>
@@ -413,33 +419,15 @@
         </property>
        </widget>
       </item>
-      <item>
-       <widget class="QWidget" name="wPlans" native="true">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="minimumSize">
-         <size>
-          <width>0</width>
-          <height>250</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>16777215</width>
-          <height>16777215</height>
-         </size>
-        </property>
-        <property name="styleSheet">
-         <string notr="true"/>
-        </property>
-       </widget>
-      </item>
      </layout>
     </widget>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="wPlansLayout">
+     <property name="spacing">
+      <number>8</number>
+     </property>
+    </layout>
    </item>
    <item>
     <widget class="QLabel" name="lPriceEstimation">
@@ -458,7 +446,7 @@
      <property name="maximumSize">
       <size>
        <width>16777215</width>
-       <height>16777215</height>
+       <height>50</height>
       </size>
      </property>
      <property name="text">
@@ -486,7 +474,7 @@
      <property name="maximumSize">
       <size>
        <width>16777215</width>
-       <height>16777215</height>
+       <height>50</height>
       </size>
      </property>
      <property name="text">

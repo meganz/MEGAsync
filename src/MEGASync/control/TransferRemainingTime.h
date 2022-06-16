@@ -10,14 +10,15 @@ class TransferRemainingTime
 {
 public:
     TransferRemainingTime();
-    std::chrono::seconds calculateRemainingTimeSeconds(long long speedBytesSecond, long long remainingBytes);
+    TransferRemainingTime(unsigned long long speedBytesSecond, unsigned long long remainingBytes);
+    std::chrono::seconds calculateRemainingTimeSeconds(unsigned long long speedBytesSecond, unsigned long long remainingBytes);
     // The median computation code is simpler using an odd buffer size
     static constexpr unsigned int REMAINING_SECONDS_BUFFER_SIZE{9};
     void reset();
 
 private:
     std::chrono::seconds mRemainingSeconds;
-    int mUpdateRemainingTimeCounter;
-    std::array<long long, REMAINING_SECONDS_BUFFER_SIZE> mRemainingTimesBuffer;
+    unsigned long mUpdateRemainingTimeCounter;
+    std::array<unsigned long long, REMAINING_SECONDS_BUFFER_SIZE> mRemainingTimesBuffer;
     void calculateMedian();
 };
