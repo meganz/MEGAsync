@@ -17,7 +17,7 @@ const int Preferences::VERSION_CODE = 4608;
 const int Preferences::BUILD_ID = 0;
 // Do not change the location of VERSION_STRING, create_tarball.sh parses this file
 const QString Preferences::VERSION_STRING = QString::fromAscii("4.6.8");
-QString Preferences::SDK_ID = QString::fromAscii("728d34f");
+QString Preferences::SDK_ID = QString::fromAscii("1ef93bb");
 const QString Preferences::CHANGELOG = QString::fromUtf8(QT_TR_NOOP(                                                             
 "- Full redesign of remote file picker.\n"
 "- Fixed translation issues.\n"
