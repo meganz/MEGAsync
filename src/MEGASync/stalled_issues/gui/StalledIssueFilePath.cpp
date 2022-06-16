@@ -257,7 +257,8 @@ bool StalledIssueFilePath::eventFilter(QObject *watched, QEvent *event)
             if(hasProblem)
             {
                 auto fileTypeIcon = Utilities::getCachedPixmap(QLatin1Literal(":/images/StalledIssues/tree_double_link_default.png"));
-                ui->movePathProblemLines->setPixmap(fileTypeIcon.pixmap(ui->movePathProblemLines->size()));
+                //TODO avoid using a fixed size
+                ui->movePathProblemLines->setPixmap(fileTypeIcon.pixmap(QSize(24,24)));
             }
             else
             {

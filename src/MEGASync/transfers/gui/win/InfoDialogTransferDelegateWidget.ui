@@ -251,7 +251,7 @@
                 <number>8</number>
                </property>
                <item>
-                <widget class="QPushButton" name="lTransferTypeCompleted">
+                <widget class="QLabel" name="lTransferTypeCompleted">
                  <property name="minimumSize">
                   <size>
                    <width>10</width>
@@ -267,11 +267,8 @@
                  <property name="text">
                   <string/>
                  </property>
-                 <property name="iconSize">
-                  <size>
-                   <width>10</width>
-                   <height>12</height>
-                  </size>
+                 <property name="alignment">
+                  <set>Qt::AlignCenter</set>
                  </property>
                 </widget>
                </item>
@@ -681,9 +678,6 @@ background-color: rgba(0, 0, 0, 8%);
                         <property name="focusPolicy">
                          <enum>Qt::NoFocus</enum>
                         </property>
-                        <property name="styleSheet">
-                         <string notr="true">border: none;</string>
-                        </property>
                         <property name="text">
                          <string/>
                         </property>
@@ -705,6 +699,9 @@ background-color: rgba(0, 0, 0, 8%);
                           <width>16777215</width>
                           <height>16</height>
                          </size>
+                        </property>
+                        <property name="styleSheet">
+                         <string notr="true"/>
                         </property>
                         <property name="text">
                          <string/>

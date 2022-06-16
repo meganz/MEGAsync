@@ -136,7 +136,8 @@ SOURCES += $$PWD/MegaApplication.cpp \
     $$PWD/TransferQuota.cpp \
     $$PWD/UserAlertTimedClustering.cpp \
     $$PWD/ScaleFactorManager.cpp \
-    $$PWD/CommonMessages.cpp
+    $$PWD/CommonMessages.cpp \
+    $$PWD/ScanStageController.cpp
 
 HEADERS += $$PWD/MegaApplication.h \
     $$PWD/DesktopNotifications.h \
@@ -144,7 +145,8 @@ HEADERS += $$PWD/MegaApplication.h \
     $$PWD/TransferQuota.h \
     $$PWD/UserAlertTimedClustering.h \
     $$PWD/ScaleFactorManager.h \
-    $$PWD/CommonMessages.h
+    $$PWD/CommonMessages.h \
+    $$PWD/ScanStageController.h
 
 TRANSLATIONS = \
     gui/translations/MEGASyncStrings_ar.ts \

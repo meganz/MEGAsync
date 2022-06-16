@@ -35,6 +35,14 @@ public:
 
     using QProxyStyle::polish;
     void polish(QWidget *widget) override;
+    void polish(QPalette &pal) override;
+    void polish(QApplication *app) override;
+
+    void unpolish(QWidget *widget) override;
+    void unpolish(QApplication *app) override;
+
+protected:
+    bool event(QEvent *e) override;
 };
 
 #endif // MEGAPROXYSTYLE_H

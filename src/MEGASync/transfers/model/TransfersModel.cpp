@@ -557,35 +557,28 @@ void TransfersModel::onProcessTransfers()
                 setFailingMode(false);
             }
 
-            bool transfersCountNeedsUpdate(false);
-
             if(containsTransfersToStart > 0)
             {
+                QtConcurrent::run([this](){
                 //Do not add new transfers while items are being cancelled
                 if(mModelMutex.tryLock())
                 {
                     processStartTransfers(mTransfersToProcess.startTransfersByTag);
-                    transfersCountNeedsUpdate = true;
+                    processUpdateTransfers();
+                    updateTransfersCount();
 
                     mModelMutex.unlock();
-                }
+                }});
             }
-
-            if(containsTransfersToUpdate > 0)
+            else if(containsTransfersToUpdate > 0)
             {
                 if(mModelMutex.tryLock())
                 {
                     processUpdateTransfers();
-                    transfersCountNeedsUpdate = true;
+                    updateTransfersCount();
 
                     mModelMutex.unlock();
                 }
-            }
-
-
-            if(transfersCountNeedsUpdate)
-            {
-                updateTransfersCount();
             }
         }
     }

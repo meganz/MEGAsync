@@ -266,10 +266,12 @@ void TransfersWidget::onCancelClearButtonPressedOnDelegate()
     auto sourceSelection= mProxyModel->mapSelectionToSource(selection);
     auto sourceSelectionIndexes = sourceSelection.indexes();
 
+    auto action = ui->tvTransfers->getSelectedAction();
+
     QPointer<TransfersWidget> dialog = QPointer<TransfersWidget>(this);
 
     if (QMegaMessageBox::warning(this, QString::fromUtf8("MEGAsync"),
-                             tr("Are you sure you want to cancel or clear the following transfer(s)?", "", sourceSelectionIndexes.size()),
+                             tr("Are you sure you want to %1 the following transfer(s)?", "", sourceSelectionIndexes.size()).arg(action),
                              QMessageBox::Yes | QMessageBox::No, QMessageBox::No)
             != QMessageBox::Yes
             || !dialog)
@@ -317,22 +319,19 @@ void TransfersWidget::onPausedTransferCounterChanged(bool state)
 
 void TransfersWidget::onVerticalScrollBarVisibilityChanged(bool state)
 {
-    if(ui->tvTransfers->isVisible())
+    if(state)
     {
-        if(state)
-        {
-            int sliderWidth = ui->tvTransfers->verticalScrollBar()->width();
-            ui->rightMargin->changeSize(sliderWidth,0,QSizePolicy::Fixed, QSizePolicy::Preferred);
-        }
-        else
-        {
-            ui->rightMargin->changeSize(0,0,QSizePolicy::Fixed, QSizePolicy::Preferred);
-        }
+        int sliderWidth = ui->tvTransfers->verticalScrollBar()->width();
+        ui->rightMargin->changeSize(sliderWidth,0,QSizePolicy::Fixed, QSizePolicy::Preferred);
+    }
+    else
+    {
+        ui->rightMargin->changeSize(0,0,QSizePolicy::Fixed, QSizePolicy::Preferred);
+    }
 
-        if(ui->wTableHeaderLayout)
-        {
-            ui->wTableHeaderLayout->invalidate();
-        }
+    if(ui->wTableHeaderLayout)
+    {
+        ui->wTableHeaderLayout->invalidate();
     }
 }
 

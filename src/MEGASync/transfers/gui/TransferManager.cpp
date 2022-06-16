@@ -22,7 +22,6 @@ const int TransferManager::STATS_REFRESH_PERIOD_MS;
 
 const char* LABEL_NUMBER = "NUMBER";
 const char* TransferManager::ITS_ON = "itsOn";
-constexpr long long NB_INIT_VALUE = 0LL;
 
 TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
     QDialog(parent),
@@ -262,6 +261,32 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
         w->style()->unpolish(w);
         w->style()->polish(w);
     }
+
+    mTransferScanCancelUi = new TransferScanCancelUi(mUi->sTransfers);
+    connect(mTransferScanCancelUi, &TransferScanCancelUi::cancelTransfers,
+            this, &TransferManager::cancelScanning);
+}
+
+void TransferManager::pauseModel(bool value)
+{
+    mModel->pauseModelProcessing(value);
+}
+
+void TransferManager::enterBlockingState()
+{
+    enableUserActions(false);
+    mTransferScanCancelUi->show();
+}
+
+void TransferManager::leaveBlockingState()
+{
+    enableUserActions(true);
+    mTransferScanCancelUi->hide();
+}
+
+void TransferManager::disableCancelling()
+{
+    mTransferScanCancelUi->disableCancelling();
 }
 
 void TransferManager::onPauseStateChangedByTransferResume()
@@ -295,6 +320,7 @@ void TransferManager::setActiveTab(int t)
 TransferManager::~TransferManager()
 {
     delete mUi;
+    delete mTransferScanCancelUi;
 }
 
 void TransferManager::on_tCompleted_clicked()
@@ -581,7 +607,6 @@ void TransferManager::refreshTypeStats()
 
     countLabel->setVisible(!countLabelText.isEmpty());
 
-
     auto uploadTransfers = mTransfersCount.pendingUploads;
 
     countLabel = mNumberLabelsGroup[UPLOADS_TAB];
@@ -592,9 +617,7 @@ void TransferManager::refreshTypeStats()
     {
         countLabel->setText(countLabelText);
     }
-
     countLabel->setVisible(!countLabelText.isEmpty());
-
 }
 
 void TransferManager::refreshFileTypesStats()
@@ -779,8 +802,9 @@ void TransferManager::refreshSearchStats()
             mUi->tUlResults->setProperty(LABEL_NUMBER, nbUl);
         }
 
-        mUi->lNbResults->setText(QString(tr("%1 result(s) found","",nbAll)).arg(nbAll));
-        mUi->lNbResults->setProperty("results", bool(nbAll));
+        int intNbAll = static_cast<int>(nbAll);
+        mUi->lNbResults->setText(QString(tr("%1 result(s) found","", intNbAll)).arg(nbAll));
+        mUi->lNbResults->setProperty("results", static_cast<bool>(nbAll));
         mUi->lNbResults->style()->unpolish(mUi->lNbResults);
         mUi->lNbResults->style()->polish(mUi->lNbResults);
 
@@ -801,10 +825,7 @@ void TransferManager::refreshSearchStats()
             widgetToShow = mTabNoItem[mCurrentTab];
         }
 
-        if (mUi->sTransfers->currentWidget() != widgetToShow)
-        {
-            mUi->sTransfers->setCurrentWidget(widgetToShow);
-        }
+        updateTransferWidget(widgetToShow);
     }
 }
 
@@ -919,6 +940,12 @@ void TransferManager::applyTextSearch(const QString& text)
     toggleTab(SEARCH_TAB);
 }
 
+void TransferManager::enableUserActions(bool enabled)
+{
+    mUi->wLeftPane->setEnabled(enabled);
+    mUi->wRightPaneHeader->setEnabled(enabled);
+}
+
 void TransferManager::on_bSearchString_clicked()
 {
     applyTextSearch(mUi->lTextSearch->text());
@@ -1015,7 +1042,7 @@ void TransferManager::on_bDownload_clicked()
 
 void TransferManager::on_bUpload_clicked()
 {
-    MegaSyncApp->uploadActionClicked(this);
+    qobject_cast<MegaApplication*>(qApp)->uploadActionClickedFromWindow(this);
 }
 
 void TransferManager::on_bCancelClearAll_clicked()
@@ -1196,13 +1223,9 @@ void TransferManager::refreshView()
             {
                 widgetToShow = mTabNoItem[mCurrentTab];
             }
-
-            if (mUi->sTransfers->currentWidget() != widgetToShow)
-            {
-                mUi->sTransfers->setCurrentWidget(widgetToShow);
-            }
         }
 
+        updateTransferWidget(widgetToShow);
         checkActionAndMediaVisibility();
     }
 }
@@ -1372,4 +1395,15 @@ void TransferManager::dragLeaveEvent(QDragLeaveEvent *event)
     mDragBackDrop->hide();
 
     QDialog::dragLeaveEvent(event);
+}
+
+void TransferManager::updateTransferWidget(QWidget* widgetToShow)
+{
+    if (!mTransferScanCancelUi || !mTransferScanCancelUi->isActive())
+    {
+        if (mUi->sTransfers->currentWidget() != widgetToShow)
+        {
+            mUi->sTransfers->setCurrentWidget(widgetToShow);
+        }
+    }
 }

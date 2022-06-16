@@ -290,6 +290,10 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
 #endif
 
     adjustSize();
+
+    mTransferScanCancelUi = new TransferScanCancelUi(ui->sTabs);
+    connect(mTransferScanCancelUi, &TransferScanCancelUi::cancelTransfers,
+            this, &InfoDialog::cancelScanning);
 }
 
 InfoDialog::~InfoDialog()
@@ -333,6 +337,7 @@ void InfoDialog::showEvent(QShowEvent *event)
 
     isShown = true;
     QDialog::showEvent(event);
+    mTransferScanCancelUi->update();
 }
 
 void InfoDialog::moveEvent(QMoveEvent*)
@@ -576,13 +581,13 @@ void InfoDialog::updateTransfersCount()
     double percentUploads(0.0);
     if(TransfersCountUpdated.totalUploadBytes != 0)
     {
-        percentUploads = static_cast<double>(TransfersCountUpdated.completedUploadBytes / (TransfersCountUpdated.totalUploadBytes));
+        percentUploads = static_cast<double>(TransfersCountUpdated.completedUploadBytes) / static_cast<double>(TransfersCountUpdated.totalUploadBytes);
     }
 
     double percentDownloads(0.0);
     if(TransfersCountUpdated.totalDownloadBytes != 0)
     {
-        percentDownloads = static_cast<double>(TransfersCountUpdated.completedDownloadBytes / (TransfersCountUpdated.totalDownloadBytes));
+        percentDownloads = static_cast<double>(TransfersCountUpdated.completedDownloadBytes)/ static_cast<double>(TransfersCountUpdated.totalDownloadBytes);
     }
 
     ui->bTransferManager->setPercentUploads(percentUploads);
@@ -1258,6 +1263,25 @@ void InfoDialog::setPSAannouncement(int id, QString title, QString text, QString
     ui->wPSA->setAnnounce(id, title, text, urlImage, textButton, linkButton);
 }
 
+void InfoDialog::enterBlockingState()
+{
+    enableUserActions(false);
+    ui->wTabOptions->setVisible(false);
+    mTransferScanCancelUi->show();
+}
+
+void InfoDialog::leaveBlockingState()
+{
+    enableUserActions(true);
+    ui->wTabOptions->setVisible(true);
+    mTransferScanCancelUi->hide();
+}
+
+void InfoDialog::disableCancelling()
+{
+    mTransferScanCancelUi->disableCancelling();
+}
+
 void InfoDialog::changeEvent(QEvent *event)
 {
     if (event->type() == QEvent::LanguageChange)
@@ -1808,6 +1832,15 @@ void InfoDialog::paintEvent(QPaintEvent * e)
 double InfoDialog::computeRatio(long long completed, long long remaining)
 {
     return static_cast<double>(completed) / static_cast<double>(remaining);
+}
+
+void InfoDialog::enableUserActions(bool value)
+{
+    ui->bAvatar->setEnabled(value);
+    ui->bUpgrade->setEnabled(value);
+    ui->bAddSync->setEnabled(value);
+    ui->bUpload->setEnabled(value);
+    ui->bDownload->setEnabled(value);
 }
 
 void InfoDialog::setTransferManager(TransferManager *transferManager)

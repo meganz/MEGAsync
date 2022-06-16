@@ -6,7 +6,7 @@ set(MEGA_PROJECT_NAME "MEGAsync-desktop-" CACHE STRING "Project name, SDK will d
 set(CMAKE_VERBOSE_MAKEFILE TRUE CACHE BOOL "Verbose output")
 
 #add a target to have all files within qtcreator projects view
-FILE(GLOB_RECURSE ui_files "${RepoDir}/src/MEGASync/gui/*.h" "${RepoDir}/src/MEGASync/gui/*/*.ui" "${RepoDir}/src/MEGASync/gui/*.qrc")
+FILE(GLOB_RECURSE ui_files "${RepoDir}/src/MEGASync/gui/*.h" "${RepoDir}/src/MEGASync/gui/*/*.ui" "${RepoDir}/src/MEGASync/transfers/gui/*/*.ui" "${RepoDir}/src/MEGASync/gui/*.qrc")
 add_custom_target(ui_assets SOURCES ${ui_files})
 
 if(CMAKE_HOST_APPLE)
@@ -78,10 +78,7 @@ set(3RDPARTY_RUNTIME_PATH "PATH=%PATH%" "${Mega3rdPartyDir}/vcpkg/installed/${VC
 
 set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
-set(CMAKE_AUTOUIC_SEARCH_PATHS ${CMAKE_AUTOUIC_SEARCH_PATHS} "${MEGAsyncDir}/gui/${UiDir}")
-set(CMAKE_AUTOUIC_SEARCH_PATHS ${CMAKE_AUTOUIC_SEARCH_PATHS} "${MEGAsyncDir}/transfers/gui/${UiDir}")
-set(CMAKE_AUTOUIC_SEARCH_PATHS ${CMAKE_AUTOUIC_SEARCH_PATHS} "${MEGAsyncDir}/stalled_issues/gui/${UiDir}")
-set(CMAKE_AUTOUIC_SEARCH_PATHS ${CMAKE_AUTOUIC_SEARCH_PATHS} "${MEGAsyncDir}/stalled_issues/gui/stalled_issues_cases/${UiDir}")
+set(CMAKE_AUTOUIC_SEARCH_PATHS "${MEGAsyncDir}/gui/${UiDir}" "${MEGAsyncDir}/transfers/gui/${UiDir}" "${MEGAsyncDir}/stalled_issues/gui/${UiDir}" "${MEGAsyncDir}/stalled_issues/gui/stalled_issues_cases/${UiDir}")
 
 #AUTOMOC
 set(CMAKE_AUTOMOC ON)
@@ -171,6 +168,8 @@ set (FORMS
     ${MEGAsyncDir}/gui/${UiDir}/ProxySettings.ui
     ${MEGAsyncDir}/gui/${UiDir}/BandwidthSettings.ui
     ${MEGAsyncDir}/gui/${UiDir}/NewFolderDialog.ui
+    ${MEGAsyncDir}/gui/${UiDir}/ScanningWidget.ui
+    ${MEGAsyncDir}/gui/${UiDir}/CancelConfirmWidget.ui
     ${MEGAsyncDir}/transfers/gui/${UiDir}/InfoDialogTransfersWidget.ui
     ${MEGAsyncDir}/transfers/gui/${UiDir}/InfoDialogTransferDelegateWidget.ui
     ${MEGAsyncDir}/transfers/gui/${UiDir}/TransferWidgetHeaderItem.ui
@@ -220,6 +219,7 @@ set (MOC_INPUT
     ${MEGAsyncDir}/UserAlertTimedClustering.h
     ${MEGAsyncDir}/ScaleFactorManager.h
     ${MEGAsyncDir}/CommonMessages.h
+    ${MEGAsyncDir}/ScanStageController.h
     ${MEGAsyncDir}/control/ConnectivityChecker.h
     ${MEGAsyncDir}/control/CrashHandler.h
     ${MEGAsyncDir}/control/EncryptedSettings.h
@@ -234,6 +234,7 @@ set (MOC_INPUT
     ${MEGAsyncDir}/control/UpdateTask.h
     ${MEGAsyncDir}/control/ThreadPool.h
     ${MEGAsyncDir}/control/MegaController.h
+    ${MEGAsyncDir}/control/TransferBatch.h    
     ${MEGAsyncDir}/control/UserAttributesManager.h
     ${MEGAsyncDir}/model/SyncSettings.h
     ${MEGAsyncDir}/transfers/model/TransfersManagerSortFilterProxyModel.h
@@ -282,8 +283,9 @@ set (MOC_INPUT
     ${MEGAsyncDir}/gui/MegaItemModel.h
     ${MEGAsyncDir}/gui/QSyncItemWidget.h
     ${MEGAsyncDir}/gui/SettingsDialog.h
-    ${MEGAsyncDir}/gui/SetupWizard.h
     ${MEGAsyncDir}/gui/NotificationsSettings.h
+    ${MEGAsyncDir}/gui/CancelConfirmWidget.h	
+    ${MEGAsyncDir}/gui/SetupWizard.h
     ${MEGAsyncDir}/gui/StatusInfo.h
     ${MEGAsyncDir}/gui/MegaItemProxyModel.h
     ${MEGAsyncDir}/gui/MegaItemTreeView.h
@@ -305,6 +307,7 @@ set (MOC_INPUT
     ${MEGAsyncDir}/gui/AutoResizeStackedWidget.h
     ${MEGAsyncDir}/gui/ViewLoadingScene.h
     ${MEGAsyncDir}/gui/RenameDialog.h
+    ${MEGAsyncDir}/gui/ScanningWidget.h
     ${MEGAsyncDir}/gui/ButtonIconManager.h
     ${MEGAsyncDir}/gui/DialogGeometryRetainer.h
     ${MEGAsyncDir}/platform/notificator.h
@@ -325,6 +328,7 @@ set (MOC_INPUT
     ${MEGAsyncDir}/transfers/gui/MegaTransferView.h
     ${MEGAsyncDir}/transfers/gui/TransferWidgetHeaderItem.h
     ${MEGAsyncDir}/transfers/gui/SomeIssuesOccurredMessage.h
+    ${MEGAsyncDir}/transfers/gui/TransferScanCancelUi.h
 
     ${MEGAsyncDir}/stalled_issues/gui/StalledIssueChooseWidget.h
 	${MEGAsyncDir}/stalled_issues/gui/StalledIssueActionTitle.h
@@ -338,7 +342,6 @@ set (MOC_INPUT
     ${MEGAsyncDir}/stalled_issues/gui/stalled_issues_cases/LocalAndRemoteNameConflicts.h
     ${MEGAsyncDir}/stalled_issues/gui/stalled_issues_cases/OtherSideMissingOrBlocked.h
     ${MEGAsyncDir}/stalled_issues/gui/stalled_issues_cases/StalledIssuesCaseHeaders.h
-
 )
 
 if (NOT CMAKE_HOST_APPLE)
@@ -402,7 +405,7 @@ set (SRCS
     ${MEGAsyncDir}/UserAlertTimedClustering.cpp
     ${MEGAsyncDir}/ScaleFactorManager.cpp
     ${MEGAsyncDir}/CommonMessages.cpp
-
+    ${MEGAsyncDir}/ScanStageController.cpp
     ${MEGAsyncDir}/model/Model.cpp
     ${MEGAsyncDir}/model/SyncSettings.cpp
     ${MEGAsyncDir}/transfers/model/TransfersManagerSortFilterProxyModel.cpp
@@ -503,7 +506,6 @@ set (SRCS
     ${MEGAsyncDir}/gui/UserAttributesRequests.cpp
     ${MEGAsyncDir}/gui/RenameDialog.cpp
     ${MEGAsyncDir}/gui/ButtonIconManager.cpp
-
     ${MEGAsyncDir}/transfers/gui/TransfersStatusWidget.cpp
     ${MEGAsyncDir}/transfers/gui/TransferItem.cpp
     ${MEGAsyncDir}/transfers/gui/InfoDialogTransfersWidget.cpp
@@ -515,8 +517,12 @@ set (SRCS
     ${MEGAsyncDir}/transfers/gui/TransfersStatusWidget.cpp
     ${MEGAsyncDir}/transfers/gui/TransfersSummaryWidget.cpp
     ${MEGAsyncDir}/transfers/gui/TransferWidgetHeaderItem.cpp
-
+    ${MEGAsyncDir}/transfers/gui/TransferScanCancelUi.cpp
     ${MEGAsyncDir}/gui/EventHelper.cpp
+    ${MEGAsyncDir}/gui/GuiUtilities.cpp
+    ${MEGAsyncDir}/gui/ScanningWidget.cpp
+    ${MEGAsyncDir}/gui/CancelConfirmWidget.cpp
+
     ${MEGAsyncDir}/mega/bindings/qt/QTMegaRequestListener.cpp
     ${MEGAsyncDir}/mega/bindings/qt/QTMegaTransferListener.cpp
     ${MEGAsyncDir}/mega/bindings/qt/QTMegaGlobalListener.cpp
@@ -538,15 +544,12 @@ set (SRCS
     ${MEGAsyncDir}/control/ConnectivityChecker.cpp
     ${MEGAsyncDir}/control/TransferRemainingTime.cpp
     ${MEGAsyncDir}/control/MegaController.cpp
+    ${MEGAsyncDir}/control/TransferBatch.cpp    
     ${MEGAsyncDir}/control/UserAttributesManager.cpp
-
     ${MEGAsyncDir}/model/SyncSettings.cpp
     ${MEGAsyncDir}/model/Model.cpp
-
     ${MEGAsyncDir}/platform/notificator.cpp
-
     ${MEGAsyncDir}/qtlockedfile/qtlockedfile.cpp
-
 )
 
 

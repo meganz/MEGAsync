@@ -19,6 +19,7 @@ SOURCES += $$PWD/model/TransfersModel.cpp \
            $$PWD/gui/TransfersStateInfoWidget.cpp \
            $$PWD/gui/TransfersStatusWidget.cpp \
            $$PWD/gui/TransfersSummaryWidget.cpp \
+           $$PWD/gui/TransferScanCancelUi.cpp \
            $$PWD/gui/TransferWidgetHeaderItem.cpp \
            $$PWD/gui/TransfersWidget.cpp
 
@@ -26,7 +27,7 @@ HEADERS += $$PWD/model/InfoDialogTransfersProxyModel.h \
            $$PWD/model/TransfersManagerSortFilterProxyModel.h \
            $$PWD/model/TransfersSortFilterProxyBaseModel.h \
            $$PWD/model/TransfersModel.h \
-		   $$PWD/gui/SomeIssuesOccurredMessage.h \
+           $$PWD/gui/SomeIssuesOccurredMessage.h \
            $$PWD/gui/InfoDialogTransferDelegateWidget.h \
            $$PWD/gui/InfoDialogTransfersWidget.h \
            $$PWD/gui/MegaTransferDelegate.h  \
@@ -39,6 +40,7 @@ HEADERS += $$PWD/model/InfoDialogTransfersProxyModel.h \
            $$PWD/gui/TransfersStateInfoWidget.h \
            $$PWD/gui/TransfersStatusWidget.h \
            $$PWD/gui/TransfersSummaryWidget.h \
+           $$PWD/gui/TransferScanCancelUi.h \
            $$PWD/gui/TransferWidgetHeaderItem.h \
            $$PWD/gui/TransfersWidget.h
 
@@ -56,7 +58,7 @@ win32 {
                 $$PWD/gui/win/InfoDialogTransferDelegateWidget.ui \
                 $$PWD/gui/win/TransfersStatusWidget.ui \
                 $$PWD/gui/win/TransfersSummaryWidget.ui \
-				$$PWD/gui/win/SomeIssuesOccurredMessage.ui
+                $$PWD/gui/win/SomeIssuesOccurredMessage.ui
 }
 
 macx {
@@ -73,7 +75,7 @@ macx {
                 $$PWD/gui/macx/InfoDialogTransferDelegateWidget.ui \
                 $$PWD/gui/macx/TransfersStatusWidget.ui \
                 $$PWD/gui/macx/TransfersSummaryWidget.ui \
-				$$PWD/gui/macx/SomeIssuesOccurredMessage.ui
+                $$PWD/gui/macx/SomeIssuesOccurredMessage.ui
 }
 
 unix:!macx {
@@ -90,5 +92,5 @@ unix:!macx {
                 $$PWD/gui/linux/InfoDialogTransferDelegateWidget.ui \
                 $$PWD/gui/linux/TransfersStatusWidget.ui \
                 $$PWD/gui/linux/TransfersSummaryWidget.ui \
-				$$PWD/gui/linux/SomeIssuesOccurredMessage.ui
+                $$PWD/gui/linux/SomeIssuesOccurredMessage.ui
 }

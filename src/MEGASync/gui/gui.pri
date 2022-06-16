@@ -2,6 +2,7 @@ QT       += network
 
 SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/BalloonToolTip.cpp \
+    $$PWD/BlurredShadowEffect.cpp \
     $$PWD/ButtonIconManager.cpp \
     $$PWD/MegaItemDelegates.cpp \
     $$PWD/EventHelper.cpp \
@@ -11,6 +12,7 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/MegaItemTreeView.cpp \
     $$PWD/NotificationsSettings.cpp \
     $$PWD/OverQuotaDialog.cpp \
+    $$PWD/ScanningWidget.cpp \
     $$PWD/QtPositioningBugFixer.cpp \
     $$PWD/PasswordLineEdit.cpp \
     $$PWD/SetupWizard.cpp \
@@ -65,11 +67,13 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/BandwidthSettings.cpp \
     $$PWD/SwitchButton.cpp \
     $$PWD/GuiUtilities.cpp \
-	$$PWD/RenameDialog.cpp
+    $$PWD/RenameDialog.cpp \
+    $$PWD/CancelConfirmWidget.cpp
 
 HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/AutoResizeStackedWidget.h \
     $$PWD/BalloonToolTip.h \
+    $$PWD/BlurredShadowEffect.h \
     $$PWD/ButtonIconManager.h \
     $$PWD/DialogGeometryRetainer.h \
     $$PWD/MegaItemDelegates.h \
@@ -80,6 +84,7 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/MegaItemTreeView.h \
     $$PWD/NotificationsSettings.h \
     $$PWD/OverQuotaDialog.h \
+    $$PWD/ScanningWidget.h \
     $$PWD/QtPositioningBugFixer.h \
     $$PWD/PasswordLineEdit.h \
     $$PWD/SetupWizard.h \
@@ -135,7 +140,8 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/BandwidthSettings.h \
     $$PWD/SwitchButton.h \
     $$PWD/GuiUtilities.h \
-    $$PWD/RenameDialog.h
+    $$PWD/RenameDialog.h \
+    $$PWD/CancelConfirmWidget.h
 
 INCLUDEPATH += $$PWD
 
@@ -185,6 +191,9 @@ win32 {
                 $$PWD/win/ProxySettings.ui \
                 $$PWD/win/BandwidthSettings.ui \
                 $$PWD/win/NewFolderDialog.ui \
+                $$PWD/win/NotificationsSettings.ui \
+                $$PWD/win/ScanningWidget.ui \
+                $$PWD/win/CancelConfirmWidget.ui \
                 $$PWD/win/NotificationsSettings.ui\
                 $$PWD/win/RenameDialog.ui
 }
@@ -234,7 +243,9 @@ macx {
                 $$PWD/macx/BandwidthSettings.ui \
                 $$PWD/macx/NewFolderDialog.ui \
                 $$PWD/macx/NotificationsSettings.ui \
-                $$PWD/macx/RenameDialog.ui
+                $$PWD/macx/RenameDialog.ui \
+                $$PWD/macx/ScanningWidget.ui \
+                $$PWD/macx/CancelConfirmWidget.ui
 
     #Asset catalog need to load SF symbol images of toolbar items for custom NSToolbar
     QMAKE_ASSET_CATALOGS += $$PWD/images/Images.xcassets
@@ -305,7 +316,9 @@ unix:!macx {
                 $$PWD/linux/BandwidthSettings.ui \
                 $$PWD/linux/NewFolderDialog.ui \
                 $$PWD/linux/NotificationsSettings.ui \
-                $$PWD/linux/RenameDialog.ui
+                $$PWD/linux/RenameDialog.ui \
+                $$PWD/linux/CancelConfirmWidget.ui \
+                $$PWD/linux/ScanningWidget.ui
 
     HEADERS += $$PWD/PermissionsDialog.h \
                $$PWD/PermissionsWidget.h

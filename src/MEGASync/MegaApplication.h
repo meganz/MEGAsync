@@ -43,6 +43,7 @@
 #include "gui/MegaAlertDelegate.h"
 #include "gui/VerifyLockMessage.h"
 #include "DesktopNotifications.h"
+#include "ScanStageController.h"
 #include "TransferQuota.h"
 #include "DialogGeometryRetainer.h"
 
@@ -58,31 +59,10 @@ class StalledIssuesModel;
 
 Q_DECLARE_METATYPE(QQueue<QString>)
 
-class TransferMetaData
-{
-public:
-    TransferMetaData(int direction, int total = 0, int pending = 0, QString path = QString())
-                    : totalTransfers(total), pendingTransfers(pending),
-                      totalFiles(0), totalFolders(0),
-                      transfersFileOK(0), transfersFolderOK(0),
-                      transfersFailed(0), transfersCancelled(0), transferDirection(direction),
-                      localPath(path) {}
-
-    int totalTransfers;
-    int pendingTransfers;
-    int totalFiles;
-    int totalFolders;
-    int transfersFileOK;
-    int transfersFolderOK;
-    int transfersFailed;
-    int transfersCancelled;
-    int transferDirection;
-    QString localPath;
-};
-
 class Notificator;
 class MEGASyncDelegateListener;
 class ShellNotifier;
+class TransferMetadata;
 
 enum GetUserStatsReason {
     USERSTATS_LOGGEDIN,
@@ -265,7 +245,8 @@ public slots:
     void goToMyCloud();
     void pauseTransfers();
     void showChangeLog();
-    void uploadActionClicked(QWidget *openFrom = nullptr);
+    void uploadActionClicked();
+    void uploadActionClickedFromWindow(QWidget *openFrom);
     void loginActionClicked();
     void copyFileLink(mega::MegaHandle fileHandle, QString nodeKey = QString());
     void downloadActionClicked();
@@ -352,7 +333,9 @@ private slots:
     void onBlocked();
     void onUnblocked();
     void onTransfersModelUpdate();
-    void onTransferManagerClosed();
+
+    void startingUpload();
+    void cancelScanningStage();
 
 protected:
     void createTrayIcon();
@@ -457,8 +440,12 @@ protected:
     QFileDialog *folderUploadSelector;
     QPointer<StreamingFromMegaDialog> streamSelector;
     MultiQFileDialog *multiUploadFileDialog;
+
     QQueue<QString> uploadQueue;
     QQueue<WrappedNode *> downloadQueue;
+    BlockingBatch mBlockingBatch;
+    std::vector<std::shared_ptr<mega::MegaCancelToken>> mUnblockedCancelTokens;
+
     ThreadPool* mThreadPool;
     std::shared_ptr<mega::MegaNode> mRootNode;
     std::shared_ptr<mega::MegaNode> mInboxNode;
@@ -551,13 +538,17 @@ protected:
     int blockState;
     bool blockStateSet = false;
     bool whyamiblockedPeriodicPetition = false;
+    bool inScanningStage = false;
     friend class DeferPreferencesSyncForScope;
     std::unique_ptr<TransferQuota> transferQuota;
     bool transferOverQuotaWaitTimeExpiredReceived;
     std::shared_ptr<DesktopNotifications> mOsNotifications;
     QMutex mMutexOpenUrls;
     QMap<QString, std::chrono::system_clock::time_point> mOpenUrlsClusterTs;
+
     TransfersModel* mTransfersModel;
+
+    ScanStageController scanStageController;
     DialogGeometryRetainer<TransferManager> mTransferManagerGeometryRetainer;
 
     StalledIssuesModel* mStalledIssuesModel;
@@ -591,6 +582,23 @@ private:
     void reconnectIfNecessary(const bool disconnected, const QList<QNetworkInterface>& newNetworkInterfaces);
     bool isIdleForTooLong() const;
 
+    void startUpload(const QString& rawLocalPath, mega::MegaNode* target, mega::MegaCancelToken *cancelToken);
+
+    void updateTransferNodesStage(mega::MegaTransfer* transfer);
+
+    void updateFileTransferBatchesAndUi(BlockingBatch& batch);
+    void updateFolderTransferBatchesAndUi(BlockingBatch& batch);
+    void updateIfBlockingStageFinished(BlockingBatch &batch);
+    void unblockBatch(BlockingBatch &batch);
+
+    void logBatchStatus(const char* tag);
+
+    void enableTransferActions(bool enable);
+
+    void updateFreedCancelToken(mega::MegaTransfer* transfer);
+
+    bool noUploadedStarted = true;
+
     void ConnectServerSignals(HTTPServer* server);
 
     static QString RectToString(const QRect& rect);
@@ -600,6 +608,39 @@ private:
     static void logInfoDialogCoordinates(const char* message, const QRect& screenGeometry, const QString& otherInformation);
 
     void destroyInfoDialogMenus();
+
+    template <class Func>
+    void recreateMenuAction(MenuItemAction** action, const QString& actionName,
+                            const char* iconPath, Func slotFunc)
+    {
+        bool previousEnabledState = true;
+        if (*action)
+        {
+            previousEnabledState = (*action)->isEnabled();
+            (*action)->deleteLater();
+            *action = nullptr;
+        }
+
+        *action = new MenuItemAction(actionName, QIcon(QString::fromUtf8(iconPath)), true);
+        connect(*action, &QAction::triggered, this, slotFunc, Qt::QueuedConnection);
+        (*action)->setEnabled(previousEnabledState);
+    }
+
+    template <class Func>
+    void recreateAction(QAction** action, const QString& actionName, Func slotFunc)
+    {
+        bool previousEnabledState = true;
+        if (*action)
+        {
+            previousEnabledState = (*action)->isEnabled();
+            (*action)->deleteLater();
+            *action = nullptr;
+        }
+
+        *action = new QAction(actionName, this);
+        connect(*action, &QAction::triggered, this, slotFunc);
+        (*action)->setEnabled(previousEnabledState);
+    }
 };
 
 class DeferPreferencesSyncForScope

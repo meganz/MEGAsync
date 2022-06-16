@@ -40,6 +40,7 @@ public:
         bool isAnyPaused() const;
         bool isAnyCancelable() const;
         bool isAnyActive() const;
+        bool areAllActive() const;
 
         bool isModelProcessing() const;
 signals:

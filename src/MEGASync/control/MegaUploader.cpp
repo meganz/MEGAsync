@@ -22,17 +22,15 @@ using namespace std;
 MegaUploader::MegaUploader(MegaApi *megaApi)
 {
     this->megaApi = megaApi;
-
 }
 
 MegaUploader::~MegaUploader()
 {
-
 }
 
-void MegaUploader::upload(QString path, MegaNode *parent, unsigned long long appDataID)
+bool MegaUploader::upload(QString path, MegaNode *parent, unsigned long long appDataID, MegaCancelToken *cancelToken)
 {
-    return upload(QFileInfo(path), parent, appDataID);
+    return upload(QFileInfo(path), parent, appDataID, cancelToken);
 }
 
 bool MegaUploader::filesdiffer(QFileInfo &source, QFileInfo &destination)
@@ -66,13 +64,15 @@ bool MegaUploader::filesdiffer(QFileInfo &source, QFileInfo &destination)
     return false;
 }
 
-void MegaUploader::upload(QFileInfo info, MegaNode *parent, unsigned long long appDataID)
+bool MegaUploader::upload(QFileInfo info, MegaNode *parent, unsigned long long appDataID, MegaCancelToken* cancelToken)
 {
     QPointer<MegaUploader> safePointer = this;
-    QApplication::processEvents();
+
+    QApplication::processEvents(); // Necessary for proper transfer graph updates
+
     if (!safePointer)
     {
-        return;
+        return false;
     }
 
     QString fileName = info.fileName();
@@ -93,6 +93,22 @@ void MegaUploader::upload(QFileInfo info, MegaNode *parent, unsigned long long a
 
     if (info.isFile() || info.isDir())
     {
-        megaApi->startUploadWithData(currentPath.toUtf8().constData(), parent, (QString::number(appDataID) + QString::fromUtf8("*")).toUtf8().constData());
+        QString msg = QString::fromLatin1("Starting upload : '%1' - '%2' - '%3'").arg(info.fileName(), currentPath).arg(appDataID);
+        megaApi->log(MegaApi::LOG_LEVEL_DEBUG, msg.toUtf8().constData());
+        startUpload(currentPath, parent, cancelToken);
+        return true;
     }
+    return false;
+}
+
+void MegaUploader::startUpload(const QString& localPath, MegaNode* parent, MegaCancelToken* cancelToken)
+{
+    const bool startFirst = false;
+    QByteArray localPathArray = localPath.toUtf8();
+    const char* appData = nullptr;
+    const char* filename = nullptr;
+    const int64_t mtime = ::mega::MegaApi::INVALID_CUSTOM_MOD_TIME;
+    const bool isSrcTemporary = false;
+    MegaTransferListener* listener = nullptr;
+    megaApi->startUpload(localPathArray.constData(), parent, filename, mtime, appData, isSrcTemporary, startFirst, cancelToken, listener);
 }

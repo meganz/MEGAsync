@@ -201,8 +201,7 @@ void InfoDialogTransferDelegateWidget::updateFinishedIco(int transferType, int e
                                                                   : QString::fromLatin1(":/images/transfer_manager/transfers_states/uploaded_item_ico.png"));
     }
 
-    mUi->lTransferTypeCompleted->setIcon(iconCompleted);
-    mUi->lTransferTypeCompleted->setIconSize(mUi->lTransferTypeCompleted->size());
+    mUi->lTransferTypeCompleted->setPixmap(iconCompleted.pixmap(mUi->lTransferTypeCompleted->size()));
 }
 
 TransferBaseDelegateWidget::ActionHoverType InfoDialogTransferDelegateWidget::mouseHoverTransfer(bool isHover, const QPoint &pos)

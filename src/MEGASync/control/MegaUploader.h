@@ -16,11 +16,15 @@ class MegaUploader : public QObject
 public:
     MegaUploader(mega::MegaApi *megaApi);
     virtual ~MegaUploader();
-    void upload(QString path, mega::MegaNode *parent, unsigned long long appDataID);
+
+    bool upload(QString path, mega::MegaNode *parent, unsigned long long appDataID, mega::MegaCancelToken *cancelToken);
     bool filesdiffer(QFileInfo &source, QFileInfo &destination);
 
 protected:
-    void upload(QFileInfo info, mega::MegaNode *parent, unsigned long long appDataID);
+    bool upload(QFileInfo info, mega::MegaNode *parent, unsigned long long appDataID, mega::MegaCancelToken *cancelToken);
+
+private:
+    void startUpload(const QString& localPath, mega::MegaNode* parent, mega::MegaCancelToken *cancelToken);
 
     mega::MegaApi *megaApi;
 };
