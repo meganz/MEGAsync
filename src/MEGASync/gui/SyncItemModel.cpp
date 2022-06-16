@@ -256,7 +256,7 @@ mega::MegaSync::SyncType SyncItemModel::getMode()
 
 SyncItemSortModel::SyncItemSortModel(QObject *parent) : QSortFilterProxyModel(parent)
 {
-
+    setSortCaseSensitivity(Qt::CaseInsensitive);
 }
 
 SyncItemSortModel::~SyncItemSortModel()
@@ -270,5 +270,14 @@ bool SyncItemSortModel::lessThan(const QModelIndex &source_left, const QModelInd
     {
        return source_left.data(Qt::CheckStateRole).toInt() > source_right.data(Qt::CheckStateRole).toInt();
     }
-    return source_left.data(Qt::DisplayRole).toString() > source_right.data(Qt::DisplayRole).toString();
+    bool leftToIntOK = false;
+    bool rightToIntOK = false;
+    int leftInt = source_left.data(Qt::DisplayRole).toInt(&leftToIntOK);
+    int rightInt = source_right.data(Qt::DisplayRole).toInt(&rightToIntOK);
+    if(leftToIntOK && rightToIntOK)
+    {
+        return leftInt < rightInt;
+    }
+
+    return QSortFilterProxyModel::lessThan(source_left, source_right);
 }
