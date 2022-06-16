@@ -84,6 +84,8 @@ void MegaApplication::loadDataPath()
 
 MegaApplication::MegaApplication(int &argc, char **argv) :
     QApplication(argc, argv),
+    mSyncs2waysMenu(nullptr),
+    mBackupsMenu(nullptr),
     scanStageController(this)
 {
 
@@ -3363,6 +3365,14 @@ void MegaApplication::enableTransferActions(bool enable)
     downloadAction->setEnabled(enable);
     streamAction->setEnabled(enable);
     settingsAction->setEnabled(enable);
+    if (mSyncs2waysMenu)
+    {
+        mSyncs2waysMenu->setEnabled(enable);
+    }
+    if (mBackupsMenu)
+    {
+        mBackupsMenu->setEnabled(enable);
+    }
 }
 
 void MegaApplication::updateFreedCancelToken(MegaTransfer* transfer)
@@ -6424,23 +6434,20 @@ void MegaApplication::createInfoDialogMenus()
                        "://images/ico_preferences.png", &MegaApplication::openSettings);
     recreateMenuAction(&myCloudAction, tr("Cloud drive"), "://images/ico-cloud-drive.png", &MegaApplication::goToMyCloud);
 
-
-    static SyncsMenu* syncs2waysMenu (nullptr);
-
-    if (!syncs2waysMenu)
+    if (!mSyncs2waysMenu)
     {
-        syncs2waysMenu = new SyncsMenu(MegaSync::TYPE_TWOWAY, infoDialog);
-        connect(syncs2waysMenu, &SyncsMenu::addSync,
+        mSyncs2waysMenu = new SyncsMenu(MegaSync::TYPE_TWOWAY, infoDialog);
+        connect(mSyncs2waysMenu, &SyncsMenu::addSync,
                 infoDialog, &InfoDialog::onAddSync);
+        mSyncs2waysMenu->setEnabled(exitAction->isEnabled());
     }
 
-    static SyncsMenu* backupsMenu (nullptr);
-
-    if (!backupsMenu)
+    if (!mBackupsMenu)
     {
-        backupsMenu = new SyncsMenu(MegaSync::TYPE_BACKUP, infoDialog);
-        connect(backupsMenu, &SyncsMenu::addSync,
+        mBackupsMenu = new SyncsMenu(MegaSync::TYPE_BACKUP, infoDialog);
+        connect(mBackupsMenu, &SyncsMenu::addSync,
                 infoDialog, &InfoDialog::onAddSync);
+        mBackupsMenu->setEnabled(exitAction->isEnabled());
     }
 
     recreateMenuAction(&importLinksAction, tr("Open links"), "://images/ico_Import_links.png", &MegaApplication::importLinks);
@@ -6467,8 +6474,8 @@ void MegaApplication::createInfoDialogMenus()
     infoDialogMenu->addAction(updateAction);
     infoDialogMenu->addAction(myCloudAction);
     infoDialogMenu->addSeparator();
-    infoDialogMenu->addAction(syncs2waysMenu->getAction().get());
-    infoDialogMenu->addAction(backupsMenu->getAction().get());
+    infoDialogMenu->addAction(mSyncs2waysMenu->getAction().get());
+    infoDialogMenu->addAction(mBackupsMenu->getAction().get());
     infoDialogMenu->addAction(importLinksAction);
     infoDialogMenu->addAction(uploadAction);
     infoDialogMenu->addAction(downloadAction);

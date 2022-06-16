@@ -400,6 +400,8 @@ protected:
     MenuItemAction *myCloudAction;
     MenuItemAction *updateAction;
     QAction *showStatusAction;
+    QPointer<SyncsMenu> mSyncs2waysMenu;
+    QPointer<SyncsMenu> mBackupsMenu;
 
     MenuItemAction *exitActionGuest;
     MenuItemAction *settingsActionGuest;

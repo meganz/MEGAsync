@@ -21,6 +21,7 @@ public:
     std::shared_ptr<MenuItemAction> getAction();
     std::shared_ptr<QMenu> getMenu();
     void callMenu(const QPoint& p);
+    void setEnabled(bool state);
 
 signals:
     void addSync(mega::MegaSync::SyncType type);

@@ -88,6 +88,9 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
 {
     ui->setupUi(this);
 
+    mSyncsMenus[ui->bAddSync] = nullptr;
+    mSyncsMenus[ui->bAddBackup] = nullptr;
+
     filterMenu = new FilterAlertWidget(this);
     connect(filterMenu, SIGNAL(onFilterClicked(int)), this, SLOT(applyFilterOption(int)));
 
@@ -1247,12 +1250,19 @@ void InfoDialog::showSyncsMenu(QPushButton* b, mega::MegaSync::SyncType type)
         auto menu (mSyncsMenus[b]);
         if (!menu)
         {
-            menu = new SyncsMenu(type, this);
-            connect(menu, &SyncsMenu::addSync, this, &InfoDialog::onAddSync);
+            menu = createSyncMenu(type, ui->bUpload->isEnabled());
             mSyncsMenus[b] = menu;
         }
         menu->callMenu(b->mapToGlobal(QPoint(b->width() - 100, b->height() + 3)));
     }
+}
+
+SyncsMenu* InfoDialog::createSyncMenu(mega::MegaSync::SyncType type, bool isEnabled)
+{
+    SyncsMenu* menu = new SyncsMenu(type, this);
+    connect(menu, &SyncsMenu::addSync, this, &InfoDialog::onAddSync);
+    menu->setEnabled(isEnabled);
+    return menu;
 }
 
 void InfoDialog::on_bUpload_clicked()
@@ -1923,9 +1933,22 @@ void InfoDialog::enableUserActions(bool value)
 {
     ui->bAvatar->setEnabled(value);
     ui->bUpgrade->setEnabled(value);
-    ui->bAddBackup->setEnabled(value);
-    ui->bAddSync->setEnabled(value);
     ui->bUpload->setEnabled(value);
+
+    // To set the state of the Syncs and Backups button,
+    // we have to first create them if they don't exist
+    for (auto button : mSyncsMenus.keys())
+    {
+        auto syncMenu (mSyncsMenus[button]);
+        if (!syncMenu)
+        {
+            auto type (button == ui->bAddSync ? MegaSync::TYPE_TWOWAY : MegaSync::TYPE_BACKUP);
+            syncMenu = createSyncMenu(type, value);
+            mSyncsMenus[button] = syncMenu;
+        }
+        syncMenu->setEnabled(value);
+        button->setEnabled(syncMenu->getAction()->isEnabled());
+    }
 }
 
 void InfoDialog::setTransferManager(TransferManager *transferManager)
