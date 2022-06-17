@@ -441,7 +441,7 @@ void MegaTransferView::createContextMenu()
     if (!mContextMenu)
     {
         mContextMenu = new QMenu(this);
-        mContextMenu->setWindowFlags(mContextMenu->windowFlags() | Qt::NoDropShadowWindowHint);
+        Platform::initMenu(mContextMenu);
     }
     else
     {        

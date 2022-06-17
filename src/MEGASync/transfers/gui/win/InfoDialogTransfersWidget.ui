@@ -78,57 +78,6 @@ QScrollBar::handle:vertical
     min-height: 20px;
     border-radius: 4px;
     margin: 3px 4px 3px 2px;
-}
-
-QMenu
-{
-    border: 1px solid #B8B8B8;
-   border-radius: 8px;
-    background: #ffffff;
-    padding-top: 16px;
-    padding-bottom: 16px;
-    padding-left: 8px;
-    padding-right: 8px;
-}
-
-QMenu::item
-{
-  font-size: 14px;
-  color: #333333;
-background: transparent;
-margin-top: 3px;
-margin-bottom: 3px;
-    padding-left: 16px;
-    padding-right: 16px;
-    margin-left: 16px;
-    margin-right: 16px;
-}
-
-QMenu::item:selected
-{
-     font-weight: bold;  
-}
-
-QMenu::separator
-{
-    height: 1px;
-	width: 164px;
-	min-width: 164px;
-	max-width: 164px;
-    background-color: #EEEEEE;
-    margin-top: 9px;
-    margin-bottom: 9px;
-}
-
-QMenu::item:disabled
-{
-    background-color: #ffffff;
-    color: rgba(119,119,119,0.3);
-}
-
-QMenu::item:default
-{
-  color: #F46265;
 }</string>
      </property>
      <property name="verticalScrollBarPolicy">
