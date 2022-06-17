@@ -302,6 +302,7 @@ set (MOC_INPUT
     ${MEGAsyncDir}/gui/AutoResizeStackedWidget.h
     ${MEGAsyncDir}/gui/ViewLoadingScene.h
     ${MEGAsyncDir}/gui/ScanningWidget.h
+    ${MEGAsyncDir}/gui/BlurredShadowEffect.h
     ${MEGAsyncDir}/gui/ButtonIconManager.h
     ${MEGAsyncDir}/gui/DialogGeometryRetainer.h
     ${MEGAsyncDir}/platform/notificator.h
@@ -474,6 +475,7 @@ set (SRCS
     ${MEGAsyncDir}/gui/EventHelper.cpp
     ${MEGAsyncDir}/gui/GuiUtilities.cpp
     ${MEGAsyncDir}/gui/ScanningWidget.cpp
+	${MEGAsyncDir}/gui/BlurredShadowEffect.cpp
     ${MEGAsyncDir}/gui/CancelConfirmWidget.cpp
 
     ${MEGAsyncDir}/mega/bindings/qt/QTMegaRequestListener.cpp
@@ -502,6 +504,14 @@ set (SRCS
     ${MEGAsyncDir}/control/UserAttributesManager.cpp
     ${MEGAsyncDir}/model/SyncSettings.cpp
     ${MEGAsyncDir}/model/SyncModel.cpp
+	${MEGAsyncDir}/gui/BackupItemModel.cpp
+    ${MEGAsyncDir}/gui/SyncItemModel.cpp
+    ${MEGAsyncDir}/gui/SyncTableView.cpp
+    ${MEGAsyncDir}/gui/BackupTableView.cpp
+	${MEGAsyncDir}/gui/BackupsWizard.cpp
+    ${MEGAsyncDir}/gui/SyncsMenu.cpp
+    ${MEGAsyncDir}/gui/AddBackupDialog.cpp
+    ${MEGAsyncDir}/gui/RemoveBackupDialog.cpp
     ${MEGAsyncDir}/platform/notificator.cpp
     ${MEGAsyncDir}/qtlockedfile/qtlockedfile.cpp
 )

@@ -2994,7 +2994,6 @@ QGroupBox::title
  </customwidgets>
  <resources>
   <include location="../../../gui/Resources_win.qrc"/>
-  <include location="../../../gui/Resources_win.qrc"/>
  </resources>
  <connections>
   <connection>
