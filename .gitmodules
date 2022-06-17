@@ -1,0 +1,4 @@
+[submodule "src/MEGASync/mega"]
+	path = src/MEGASync/mega
+	url = https://github.com/meganz/sdk.git
+	branch = master
