@@ -374,8 +374,6 @@ unix:!macx {
                 $$PWD/linux/OverQuotaDialog.ui \
                 $$PWD/linux/ProxySettings.ui \
                 $$PWD/linux/BandwidthSettings.ui \
-                $$PWD/linux/NewFolderDialog.ui \
-                $$PWD/linux/RenameTargetFolderDialog.ui \
                 $$PWD/linux/BackupSetupSuccessDialog.ui \
                 $$PWD/linux/NewFolderDialog.ui \
                 $$PWD/linux/AddBackupDialog.ui \

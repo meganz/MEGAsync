@@ -8,6 +8,8 @@
 #include <QSortFilterProxyModel>
 #include <QAbstractItemModel>
 
+#include <QCollator>
+
 
 class SyncItemModel : public QAbstractItemModel
 {
@@ -67,10 +69,10 @@ class SyncItemSortModel : public QSortFilterProxyModel
 {
 public:
     explicit SyncItemSortModel(QObject *parent = nullptr);
-    ~SyncItemSortModel();
 
 protected:
     bool lessThan(const QModelIndex &source_left, const QModelIndex &source_right) const override;
+    QCollator mQCollator;
 };
 
 #endif // SYNCITEMMODEL_H

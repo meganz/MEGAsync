@@ -61,7 +61,6 @@ void SyncTableView::initTable()
     setItemDelegate(new SelectionIconNoChangeOnDisable(this));
     setItemDelegateForColumn(SyncItemModel::Column::MENU, new MenuItemDelegate(this));
 
-    horizontalHeader()->setSortIndicator(-1, Qt::AscendingOrder);
     horizontalHeader()->resizeSection(SyncItemModel::Column::ENABLED, FIXED_COLUMN_WIDTH);
     horizontalHeader()->resizeSection(SyncItemModel::Column::MENU, FIXED_COLUMN_WIDTH);
     horizontalHeader()->resizeSection(SyncItemModel::Column::MENU, FIXED_COLUMN_WIDTH);
@@ -83,6 +82,11 @@ void SyncTableView::initTable()
         if (index == SyncItemModel::Column::MENU)
             horizontalHeader()->setSortIndicator(-1, order);
     });
+
+    // Sort by sync name by default
+    sortByColumn(SyncItemModel::Column::LNAME, Qt::AscendingOrder);
+    setSortingEnabled(true);
+    horizontalHeader()->setSortIndicator(SyncItemModel::Column::LNAME, Qt::AscendingOrder);
 }
 
 void SyncTableView::onCustomContextMenuRequested(const QPoint &pos)

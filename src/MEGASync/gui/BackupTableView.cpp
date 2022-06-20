@@ -32,6 +32,11 @@ void BackupTableView::initTable()
         if (index == BackupItemModel::Column::MENU)
             horizontalHeader()->setSortIndicator(-1, order);
     });
+
+    // Sort by sync name by default
+    sortByColumn(SyncItemModel::Column::LNAME, Qt::AscendingOrder);
+    setSortingEnabled(true);
+    horizontalHeader()->setSortIndicator(SyncItemModel::Column::LNAME, Qt::AscendingOrder);
 }
 
 void BackupTableView::onCustomContextMenuRequested(const QPoint &pos)
