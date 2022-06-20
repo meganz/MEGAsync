@@ -256,28 +256,24 @@ mega::MegaSync::SyncType SyncItemModel::getMode()
 
 SyncItemSortModel::SyncItemSortModel(QObject *parent) : QSortFilterProxyModel(parent)
 {
-    setSortCaseSensitivity(Qt::CaseInsensitive);
-}
-
-SyncItemSortModel::~SyncItemSortModel()
-{
-
+    mQCollator.setNumericMode(true);
+    mQCollator.setCaseSensitivity(Qt::CaseInsensitive);
 }
 
 bool SyncItemSortModel::lessThan(const QModelIndex &source_left, const QModelIndex &source_right) const
 {
-    if(source_left.flags().testFlag(Qt::ItemIsUserCheckable) && source_right.flags().testFlag(Qt::ItemIsUserCheckable))
+    if(source_left.flags().testFlag(Qt::ItemIsUserCheckable)
+            && source_right.flags().testFlag(Qt::ItemIsUserCheckable))
     {
-       return source_left.data(Qt::CheckStateRole).toInt() > source_right.data(Qt::CheckStateRole).toInt();
-    }
-    bool leftToIntOK = false;
-    bool rightToIntOK = false;
-    int leftInt = source_left.data(Qt::DisplayRole).toInt(&leftToIntOK);
-    int rightInt = source_right.data(Qt::DisplayRole).toInt(&rightToIntOK);
-    if(leftToIntOK && rightToIntOK)
-    {
-        return leftInt < rightInt;
+        auto stateLeft (source_left.data(Qt::CheckStateRole).toInt());
+        auto stateRight (source_right.data(Qt::CheckStateRole).toInt());
+        if (stateLeft != stateRight)
+        {
+            return stateLeft > stateRight;
+
+        }
     }
 
-    return QSortFilterProxyModel::lessThan(source_left, source_right);
+    return mQCollator.compare(source_left.data(Qt::DisplayRole).toString(),
+                              source_right.data(Qt::DisplayRole).toString()) < 0;
 }
