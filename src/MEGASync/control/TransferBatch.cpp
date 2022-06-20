@@ -74,6 +74,11 @@ void BlockingBatch::add(std::shared_ptr<TransferBatch> _batch)
     mBatch = _batch;
 }
 
+void BlockingBatch::removeBatch()
+{
+    mBatch.reset();
+}
+
 void BlockingBatch::cancelTransfer()
 {
     if (mBatch)

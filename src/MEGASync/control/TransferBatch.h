@@ -45,6 +45,7 @@ public:
     ~BlockingBatch();
 
     void add(std::shared_ptr<TransferBatch> _batch);
+    void removeBatch();
 
     void cancelTransfer();
 

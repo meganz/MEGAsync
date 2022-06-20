@@ -228,7 +228,7 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
     setAcceptDrops(true);
 
     // Init state
-    onUpdatePauseState(mModel->areAllPaused());
+    onUpdatePauseState(mPreferences->getGlobalPaused());
 
     auto storageState = MegaSyncApp->getAppliedStorageState();
     auto transferQuotaState = MegaSyncApp->getTransferQuotaState();
