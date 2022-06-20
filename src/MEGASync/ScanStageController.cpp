@@ -50,6 +50,11 @@ void ScanStageController::stopDelayedScanStage()
     }
 }
 
+bool ScanStageController::IsInScanningState()
+{
+    return mIsInScanningState;
+}
+
 void ScanStageController::startScanStage()
 {
     mIsInScanningState = true;

@@ -1719,7 +1719,7 @@ void MegaApplication::createTransferManagerDialog()
         connect(transferQuota.get(), &TransferQuota::sendState,
                 mTransferManager, &TransferManager::onTransferQuotaStateChanged);
         connect(mTransferManager, SIGNAL(cancelScanning()), this, SLOT(cancelScanningStage()));
-        if (inScanningStage)
+        if (scanStageController.IsInScanningState())
         {
             mTransferManager->enterBlockingState();
         }

@@ -539,7 +539,6 @@ protected:
     int blockState;
     bool blockStateSet = false;
     bool whyamiblockedPeriodicPetition = false;
-    bool inScanningStage = false;
     friend class DeferPreferencesSyncForScope;
     std::unique_ptr<TransferQuota> transferQuota;
     bool transferOverQuotaWaitTimeExpiredReceived;
