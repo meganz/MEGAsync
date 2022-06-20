@@ -4,7 +4,8 @@
 #include "TransferManager.h"
 
 ScanStageController::ScanStageController(QObject *parent)
-    : QObject(parent), mScanStageTimer(this), mTransferManager(nullptr)
+    : QObject(parent), mInfoDialog(nullptr),
+      mTransferManager(nullptr), mScanStageTimer(this)
 {
     mScanStageTimer.setSingleShot(true);
     connect(&mScanStageTimer, &QTimer::timeout,

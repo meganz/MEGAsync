@@ -32,7 +32,7 @@ private:
 
     void onMinimumDisplayTimeElapsed();
 
-    InfoDialog* mInfoDialog = nullptr;
+    QPointer<InfoDialog> mInfoDialog;
     QPointer<TransferManager> mTransferManager;
     QTimer mScanStageTimer;
     bool mIsInScanningState = false;

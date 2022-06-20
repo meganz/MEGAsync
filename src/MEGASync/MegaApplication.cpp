@@ -1658,7 +1658,6 @@ void MegaApplication::closeDialogs(bool/* bwoverquota*/)
 {
     delete mTransferManager;
     mTransferManager = nullptr;
-    scanStageController.updateReference(mTransferManager);
 
     delete setupWizard;
     setupWizard = NULL;
