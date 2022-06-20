@@ -289,7 +289,14 @@ void BackupsWizard::setupStep2()
                                       nbSelectedFolders * HEIGHT_ROW_STEP_2))) + MARGIN_LV_STEP_2;
     int dialogHeight (std::min(HEIGHT_MAX_STEP_2,
                                HEIGHT_MIN_STEP_2 + listHeight));
+
+#ifndef Q_OS_MAC
     mUi->fFoldersStep2->setMinimumHeight(listHeight);
+#else
+    mUi->fFoldersStep2->setFixedHeight(listHeight);
+#endif
+
+
     setMinimumHeight(dialogHeight);
     resize(width(), dialogHeight);
 

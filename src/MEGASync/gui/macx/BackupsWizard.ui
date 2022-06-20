@@ -10,7 +10,7 @@
     <x>0</x>
     <y>0</y>
     <width>620</width>
-    <height>505</height>
+    <height>375</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -29,7 +29,7 @@
    <string>Setup backups</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="../Resources_win.qrc">
+   <iconset resource="../Resources_macx.qrc">
     <normaloff>:/images/icons/ico_backup.png</normaloff>:/images/icons/ico_backup.png</iconset>
   </property>
   <property name="styleSheet">
@@ -255,7 +255,7 @@ margin: 4px;
       <string notr="true"/>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>3</number>
      </property>
      <widget class="QWidget" name="pStep1">
       <property name="sizePolicy">
@@ -266,13 +266,13 @@ margin: 4px;
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_7">
        <property name="leftMargin">
-        <number>0</number>
+        <number>16</number>
        </property>
        <property name="topMargin">
-        <number>0</number>
+        <number>6</number>
        </property>
        <property name="rightMargin">
-        <number>0</number>
+        <number>16</number>
        </property>
        <property name="bottomMargin">
         <number>0</number>
@@ -319,271 +319,245 @@ margin: 4px;
         </widget>
        </item>
        <item>
-        <layout class="QVBoxLayout" name="verticalLayout_6">
-         <property name="spacing">
-          <number>7</number>
+        <widget class="QFrame" name="fFoldersStep1">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
          </property>
-         <item>
-          <widget class="QLabel" name="lSubtitleStep1">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="text">
-            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:12px;&quot;&gt;MEGA Backup ensures changes to your local folders and files are automatically uploaded and synchronised to the MEGA Cloud.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-           </property>
-           <property name="textFormat">
-            <enum>Qt::RichText</enum>
-           </property>
-           <property name="wordWrap">
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QFrame" name="fFoldersStep1">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="minimumSize">
-            <size>
-             <width>540</width>
-             <height>0</height>
-            </size>
-           </property>
-           <property name="frameShape">
-            <enum>QFrame::NoFrame</enum>
-           </property>
-           <property name="frameShadow">
-            <enum>QFrame::Raised</enum>
-           </property>
-           <layout class="QVBoxLayout" name="verticalLayout">
-            <property name="spacing">
-             <number>0</number>
+         <property name="minimumSize">
+          <size>
+           <width>540</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="frameShape">
+          <enum>QFrame::NoFrame</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Raised</enum>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout">
+          <property name="spacing">
+           <number>0</number>
+          </property>
+          <property name="leftMargin">
+           <number>0</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
+           <number>0</number>
+          </property>
+          <item>
+           <widget class="QWidget" name="wDeviceNameStep1" native="true">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
             </property>
-            <property name="leftMargin">
-             <number>0</number>
-            </property>
-            <property name="topMargin">
-             <number>0</number>
-            </property>
-            <property name="rightMargin">
-             <number>0</number>
-            </property>
-            <property name="bottomMargin">
-             <number>0</number>
-            </property>
-            <item>
-             <widget class="QWidget" name="wDeviceNameStep1" native="true">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <layout class="QHBoxLayout" name="horizontalLayout">
-               <property name="spacing">
-                <number>10</number>
+            <layout class="QHBoxLayout" name="horizontalLayout">
+             <property name="spacing">
+              <number>10</number>
+             </property>
+             <property name="leftMargin">
+              <number>16</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
+              <number>0</number>
+             </property>
+             <item>
+              <widget class="QLabel" name="lDeviceIconStep1">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
                </property>
-               <property name="leftMargin">
-                <number>16</number>
+               <property name="minimumSize">
+                <size>
+                 <width>48</width>
+                 <height>48</height>
+                </size>
                </property>
-               <property name="topMargin">
-                <number>0</number>
+               <property name="maximumSize">
+                <size>
+                 <width>48</width>
+                 <height>48</height>
+                </size>
                </property>
-               <property name="rightMargin">
-                <number>0</number>
+               <property name="text">
+                <string notr="true"/>
                </property>
-               <property name="bottomMargin">
-                <number>0</number>
+               <property name="scaledContents">
+                <bool>false</bool>
                </property>
-               <item>
-                <widget class="QLabel" name="lDeviceIconStep1">
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
-                 <property name="minimumSize">
-                  <size>
-                   <width>48</width>
-                   <height>48</height>
-                  </size>
-                 </property>
-                 <property name="maximumSize">
-                  <size>
-                   <width>48</width>
-                   <height>48</height>
-                  </size>
-                 </property>
-                 <property name="text">
-                  <string notr="true"/>
-                 </property>
-                 <property name="scaledContents">
-                  <bool>false</bool>
-                 </property>
-                </widget>
-               </item>
-               <item alignment="Qt::AlignVCenter">
-                <widget class="QLabel" name="lDeviceNameStep1">
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
-                 <property name="text">
-                  <string notr="true"/>
-                 </property>
-                </widget>
-               </item>
-              </layout>
-             </widget>
-            </item>
-            <item>
-             <widget class="QStackedWidget" name="sFolders">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="currentIndex">
-               <number>0</number>
-              </property>
-              <widget class="QWidget" name="pFolders">
+              </widget>
+             </item>
+             <item alignment="Qt::AlignVCenter">
+              <widget class="QLabel" name="lDeviceNameStep1">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                  <horstretch>0</horstretch>
                  <verstretch>0</verstretch>
                 </sizepolicy>
                </property>
-               <layout class="QVBoxLayout" name="pFoldersLayout">
-                <property name="spacing">
-                 <number>0</number>
-                </property>
-                <property name="leftMargin">
-                 <number>0</number>
-                </property>
-                <property name="topMargin">
-                 <number>0</number>
-                </property>
-                <property name="rightMargin">
-                 <number>0</number>
-                </property>
-                <property name="bottomMargin">
-                 <number>0</number>
-                </property>
-                <item>
-                 <widget class="QListView" name="lvFoldersStep1">
-                  <property name="sizePolicy">
-                   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-                    <horstretch>0</horstretch>
-                    <verstretch>0</verstretch>
-                   </sizepolicy>
-                  </property>
-                  <property name="minimumSize">
-                   <size>
-                    <width>0</width>
-                    <height>0</height>
-                   </size>
-                  </property>
-                  <property name="frameShape">
-                   <enum>QFrame::NoFrame</enum>
-                  </property>
-                  <property name="sizeAdjustPolicy">
-                   <enum>QAbstractScrollArea::AdjustToContents</enum>
-                  </property>
-                  <property name="editTriggers">
-                   <set>QAbstractItemView::NoEditTriggers</set>
-                  </property>
-                  <property name="showDropIndicator" stdset="0">
-                   <bool>false</bool>
-                  </property>
-                  <property name="selectionMode">
-                   <enum>QAbstractItemView::NoSelection</enum>
-                  </property>
-                  <property name="selectionBehavior">
-                   <enum>QAbstractItemView::SelectRows</enum>
-                  </property>
-                  <property name="iconSize">
-                   <size>
-                    <width>24</width>
-                    <height>24</height>
-                   </size>
-                  </property>
-                  <property name="textElideMode">
-                   <enum>Qt::ElideMiddle</enum>
-                  </property>
-                  <property name="verticalScrollMode">
-                   <enum>QAbstractItemView::ScrollPerItem</enum>
-                  </property>
-                  <property name="resizeMode">
-                   <enum>QListView::Adjust</enum>
-                  </property>
-                  <property name="spacing">
-                   <number>0</number>
-                  </property>
-                  <property name="modelColumn">
-                   <number>0</number>
-                  </property>
-                  <property name="uniformItemSizes">
-                   <bool>true</bool>
-                  </property>
-                 </widget>
-                </item>
-               </layout>
-              </widget>
-              <widget class="QWidget" name="pNoFolders">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
+               <property name="text">
+                <string notr="true"/>
                </property>
-               <layout class="QVBoxLayout" name="pFoldersLayout1">
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item>
+           <widget class="QStackedWidget" name="sFolders">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="currentIndex">
+             <number>0</number>
+            </property>
+            <widget class="QWidget" name="pFolders">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <layout class="QVBoxLayout" name="pFoldersLayout">
+              <property name="spacing">
+               <number>0</number>
+              </property>
+              <property name="leftMargin">
+               <number>0</number>
+              </property>
+              <property name="topMargin">
+               <number>0</number>
+              </property>
+              <property name="rightMargin">
+               <number>0</number>
+              </property>
+              <property name="bottomMargin">
+               <number>0</number>
+              </property>
+              <item>
+               <widget class="QListView" name="lvFoldersStep1">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="frameShape">
+                 <enum>QFrame::NoFrame</enum>
+                </property>
+                <property name="sizeAdjustPolicy">
+                 <enum>QAbstractScrollArea::AdjustToContents</enum>
+                </property>
+                <property name="editTriggers">
+                 <set>QAbstractItemView::NoEditTriggers</set>
+                </property>
+                <property name="showDropIndicator" stdset="0">
+                 <bool>false</bool>
+                </property>
+                <property name="selectionMode">
+                 <enum>QAbstractItemView::NoSelection</enum>
+                </property>
+                <property name="selectionBehavior">
+                 <enum>QAbstractItemView::SelectRows</enum>
+                </property>
+                <property name="iconSize">
+                 <size>
+                  <width>24</width>
+                  <height>24</height>
+                 </size>
+                </property>
+                <property name="textElideMode">
+                 <enum>Qt::ElideMiddle</enum>
+                </property>
+                <property name="verticalScrollMode">
+                 <enum>QAbstractItemView::ScrollPerItem</enum>
+                </property>
+                <property name="resizeMode">
+                 <enum>QListView::Adjust</enum>
+                </property>
                 <property name="spacing">
                  <number>0</number>
                 </property>
-                <property name="leftMargin">
+                <property name="modelColumn">
                  <number>0</number>
                 </property>
-                <property name="topMargin">
-                 <number>14</number>
+                <property name="uniformItemSizes">
+                 <bool>true</bool>
                 </property>
-                <property name="rightMargin">
-                 <number>0</number>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+            <widget class="QWidget" name="pNoFolders">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <layout class="QVBoxLayout" name="pFoldersLayout1">
+              <property name="spacing">
+               <number>0</number>
+              </property>
+              <property name="leftMargin">
+               <number>0</number>
+              </property>
+              <property name="topMargin">
+               <number>14</number>
+              </property>
+              <property name="rightMargin">
+               <number>0</number>
+              </property>
+              <property name="bottomMargin">
+               <number>14</number>
+              </property>
+              <item>
+               <widget class="QLabel" name="lNoAvailableFolder">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
                 </property>
-                <property name="bottomMargin">
-                 <number>14</number>
+                <property name="text">
+                 <string>No available folder</string>
                 </property>
-                <item>
-                 <widget class="QLabel" name="lNoAvailableFolder">
-                  <property name="sizePolicy">
-                   <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
-                    <horstretch>0</horstretch>
-                    <verstretch>0</verstretch>
-                   </sizepolicy>
-                  </property>
-                  <property name="text">
-                   <string>No available folder</string>
-                  </property>
-                 </widget>
-                </item>
-               </layout>
-              </widget>
-             </widget>
-            </item>
-           </layout>
-          </widget>
-         </item>
-        </layout>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </widget>
+          </item>
+         </layout>
+        </widget>
        </item>
        <item>
         <widget class="QStackedWidget" name="sMoreFolders">
@@ -743,6 +717,12 @@ margin: 4px;
           <size>
            <width>540</width>
            <height>0</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>16777215</height>
           </size>
          </property>
          <property name="frameShape">
@@ -951,7 +931,7 @@ margin: 4px;
           <string notr="true"/>
          </property>
          <property name="pixmap">
-          <pixmap resource="../Resources_win.qrc">:/images/bug_report_success.png</pixmap>
+          <pixmap resource="../Resources_macx.qrc">:/images/bug_report_success.png</pixmap>
          </property>
         </widget>
        </item>
@@ -1075,20 +1055,29 @@ color: #666666;
        <property name="spacing">
         <number>20</number>
        </property>
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>12</number>
+       </property>
        <item alignment="Qt::AlignTop">
         <widget class="QLabel" name="lErrorIcon">
          <property name="text">
           <string notr="true"/>
          </property>
          <property name="pixmap">
-          <pixmap resource="../Resources_win.qrc">:/images/icon_error.png</pixmap>
+          <pixmap resource="../Resources_macx.qrc">:/images/icon_error.png</pixmap>
          </property>
         </widget>
        </item>
        <item>
-        <layout class="QVBoxLayout" name="verticalLayout_4" stretch="0,0,0,0,0,0,0,0">
+        <layout class="QVBoxLayout" name="verticalLayout_4" stretch="0,0,0,0,0,0,0,0,0,0">
          <property name="spacing">
-          <number>4</number>
+          <number>0</number>
          </property>
          <property name="bottomMargin">
           <number>0</number>
@@ -1124,6 +1113,22 @@ color:#333333;
             <string>Problem backing up folder</string>
            </property>
           </widget>
+         </item>
+         <item>
+          <spacer name="verticalSpacer">
+           <property name="orientation">
+            <enum>Qt::Vertical</enum>
+           </property>
+           <property name="sizeType">
+            <enum>QSizePolicy::Fixed</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>20</width>
+             <height>4</height>
+            </size>
+           </property>
+          </spacer>
          </item>
          <item alignment="Qt::AlignLeft|Qt::AlignTop">
           <widget class="QLabel" name="lErrorTextPlural">
@@ -1168,6 +1173,22 @@ color:rgba(0,0,0,0.1);
             <enum>Qt::Horizontal</enum>
            </property>
           </widget>
+         </item>
+         <item>
+          <spacer name="verticalSpacer_2">
+           <property name="orientation">
+            <enum>Qt::Vertical</enum>
+           </property>
+           <property name="sizeType">
+            <enum>QSizePolicy::Minimum</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>20</width>
+             <height>10</height>
+            </size>
+           </property>
+          </spacer>
          </item>
          <item>
           <widget class="QTextEdit" name="tTextEdit">
@@ -1216,6 +1237,13 @@ color:#666666;
            </property>
            <property name="readOnly">
             <bool>true</bool>
+           </property>
+           <property name="html">
+            <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;meta charset=&quot;utf-8&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Lato'; font-size:13pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; line-height:200%;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
            </property>
           </widget>
          </item>
@@ -1475,7 +1503,7 @@ color:#666666;
   <tabstop>bDismiss</tabstop>
  </tabstops>
  <resources>
-  <include location="../Resources_win.qrc"/>
+  <include location="../Resources_macx.qrc"/>
  </resources>
  <connections/>
 </ui>
