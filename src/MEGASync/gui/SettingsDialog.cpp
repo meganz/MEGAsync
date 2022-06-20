@@ -1436,7 +1436,6 @@ void SettingsDialog::loadSyncSettings()
     SyncItemSortModel *sortModel = new SyncItemSortModel(mUi->syncTableView);
     sortModel->setSourceModel(model);
     mUi->syncTableView->setModel(sortModel);
-
 }
 
 void SettingsDialog::addSyncFolder(MegaHandle megaFolderHandle)
