@@ -1374,34 +1374,43 @@ void SettingsDialog::setAvatar()
 void SettingsDialog::connectSyncHandlers()
 {
 
-    connect(&mSyncController, &SyncController::syncAddStatus, this, [](int errorCode, const QString errorMsg)
+    connect(&mSyncController, &SyncController::syncAddStatus, this, [this](int errorCode, const QString errorMsg)
     {
         if (errorCode != MegaError::API_OK)
+        {
+            onSavingSyncsCompleted();
             QMegaMessageBox::critical(nullptr, tr("Error adding sync"), errorMsg);
+        }
     }, Qt::QueuedConnection);
 
-    connect(&mSyncController, &SyncController::syncRemoveError, this, [](std::shared_ptr<SyncSetting> sync)
+    connect(&mSyncController, &SyncController::syncRemoveError, this, [this](std::shared_ptr<SyncSetting> sync)
     {
+        onSavingSyncsCompleted();
         QMegaMessageBox::critical(nullptr, tr("Error removing sync"),
                                   tr("Your sync \"%1\" can't be removed. Reason: %2")
                                   .arg(sync->name())
                                   .arg(QCoreApplication::translate("MegaSyncError", MegaSync::getMegaSyncErrorCode(sync->getError()))));
+
     }, Qt::QueuedConnection);
 
-    connect(&mSyncController, &SyncController::syncEnableError, this, [](std::shared_ptr<SyncSetting> sync)
+    connect(&mSyncController, &SyncController::syncEnableError, this, [this](std::shared_ptr<SyncSetting> sync)
     {
+        onSavingSyncsCompleted();
         QMegaMessageBox::critical(nullptr, tr("Error enabling sync"),
                                   tr("Your sync \"%1\" can't be enabled. Reason: %2")
                                   .arg(sync->name())
                                   .arg(QCoreApplication::translate("MegaSyncError", MegaSync::getMegaSyncErrorCode(sync->getError()))));
+
     }, Qt::QueuedConnection);
 
-    connect(&mSyncController, &SyncController::syncDisableError, this, [](std::shared_ptr<SyncSetting> sync)
+    connect(&mSyncController, &SyncController::syncDisableError, this, [this](std::shared_ptr<SyncSetting> sync)
     {
+        onSavingSyncsCompleted();
         QMegaMessageBox::critical(nullptr, tr("Error disabling sync"),
                                   tr("Your sync \"%1\" can't be disabled. Reason: %2")
                                   .arg(sync->name())
                                   .arg(QCoreApplication::translate("MegaSyncError", MegaSync::getMegaSyncErrorCode(sync->getError()))));
+
     }, Qt::QueuedConnection);
 }
 
@@ -1427,7 +1436,6 @@ void SettingsDialog::loadSyncSettings()
     SyncItemSortModel *sortModel = new SyncItemSortModel(mUi->syncTableView);
     sortModel->setSourceModel(model);
     mUi->syncTableView->setModel(sortModel);
-
 }
 
 void SettingsDialog::addSyncFolder(MegaHandle megaFolderHandle)
@@ -1597,40 +1605,52 @@ void SettingsDialog::connectBackupHandlers()
         mUi->lBackupFolder->setText(mSyncController.getMyBackupsLocalizedPath());
     });
 
-    connect(&mBackupController, &SyncController::setMyBackupsStatus, this, [](int errorCode, QString errorMsg)
+    connect(&mBackupController, &SyncController::setMyBackupsStatus, this, [this](int errorCode, QString errorMsg)
     {
         if (errorCode != mega::MegaError::API_OK)
+        {
+            onSavingSyncsCompleted();
             QMegaMessageBox::critical(nullptr, tr("Backup Error"), tr("Error creating Backups root folder: %2") .arg(errorMsg));
+        }
     });
 
-    connect(&mBackupController, &SyncController::syncAddStatus, this, [](const int errorCode, const QString errorMsg, QString name)
+    connect(&mBackupController, &SyncController::syncAddStatus, this, [this](const int errorCode, const QString errorMsg, QString name)
     {
         if (errorCode != MegaError::API_OK)
+        {
+            onSavingSyncsCompleted();
             QMegaMessageBox::warning(nullptr, tr("Error adding backup %1").arg(name), errorMsg);
+        }
     });
 
-    connect(&mBackupController, &SyncController::syncRemoveError, this, [](std::shared_ptr<SyncSetting> sync)
+    connect(&mBackupController, &SyncController::syncRemoveError, this, [this](std::shared_ptr<SyncSetting> sync)
     {
+        onSavingSyncsCompleted();
         QMegaMessageBox::warning(nullptr, tr("Error removing backup"),
                                   tr("Your backup \"%1\" can't be removed. Reason: %2")
                                   .arg(sync->name())
                                   .arg(QCoreApplication::translate("MegaSyncError", MegaSync::getMegaSyncErrorCode(sync->getError()))));
+
     }, Qt::QueuedConnection);
 
-    connect(&mBackupController, &SyncController::syncEnableError, this, [](std::shared_ptr<SyncSetting> sync)
+    connect(&mBackupController, &SyncController::syncEnableError, this, [this](std::shared_ptr<SyncSetting> sync)
     {
+        onSavingSyncsCompleted();
         QMegaMessageBox::warning(nullptr, tr("Error enabling backup"),
                                   tr("Your backup \"%1\" can't be enabled. Reason: %2")
                                   .arg(sync->name())
                                   .arg(QCoreApplication::translate("MegaSyncError", MegaSync::getMegaSyncErrorCode(sync->getError()))));
+
     }, Qt::QueuedConnection);
 
-    connect(&mBackupController, &SyncController::syncDisableError, this, [](std::shared_ptr<SyncSetting> sync)
+    connect(&mBackupController, &SyncController::syncDisableError, this, [this](std::shared_ptr<SyncSetting> sync)
     {
+        onSavingSyncsCompleted();
         QMegaMessageBox::warning(nullptr, tr("Error disabling backup"),
                                   tr("Your sync \"%1\" can't be disabled. Reason: %2")
                                   .arg(sync->name())
                                   .arg(QCoreApplication::translate("MegaSyncError", MegaSync::getMegaSyncErrorCode(sync->getError()))));
+
     }, Qt::QueuedConnection);
 }
 

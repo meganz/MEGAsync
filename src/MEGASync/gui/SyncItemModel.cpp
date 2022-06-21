@@ -256,19 +256,24 @@ mega::MegaSync::SyncType SyncItemModel::getMode()
 
 SyncItemSortModel::SyncItemSortModel(QObject *parent) : QSortFilterProxyModel(parent)
 {
-
-}
-
-SyncItemSortModel::~SyncItemSortModel()
-{
-
+    mQCollator.setNumericMode(true);
+    mQCollator.setCaseSensitivity(Qt::CaseInsensitive);
 }
 
 bool SyncItemSortModel::lessThan(const QModelIndex &source_left, const QModelIndex &source_right) const
 {
-    if(source_left.flags().testFlag(Qt::ItemIsUserCheckable) && source_right.flags().testFlag(Qt::ItemIsUserCheckable))
+    if(source_left.flags().testFlag(Qt::ItemIsUserCheckable)
+            && source_right.flags().testFlag(Qt::ItemIsUserCheckable))
     {
-       return source_left.data(Qt::CheckStateRole).toInt() > source_right.data(Qt::CheckStateRole).toInt();
+        auto stateLeft (source_left.data(Qt::CheckStateRole).toInt());
+        auto stateRight (source_right.data(Qt::CheckStateRole).toInt());
+        if (stateLeft != stateRight)
+        {
+            return stateLeft > stateRight;
+
+        }
     }
-    return source_left.data(Qt::DisplayRole).toString() > source_right.data(Qt::DisplayRole).toString();
+
+    return mQCollator.compare(source_left.data(Qt::DisplayRole).toString(),
+                              source_right.data(Qt::DisplayRole).toString()) < 0;
 }

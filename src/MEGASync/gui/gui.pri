@@ -337,7 +337,6 @@ unix:!macx {
                 $$PWD/linux/CancelConfirmWidget.ui \
                 $$PWD/linux/ScanningWidget.ui \
                 $$PWD/linux/BackupSetupSuccessDialog.ui \
-                $$PWD/linux/NewFolderDialog.ui \
                 $$PWD/linux/AddBackupDialog.ui \
                 $$PWD/linux/RemoveBackupDialog.ui
 
