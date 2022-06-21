@@ -35,6 +35,11 @@ bool MegaDownloader::processDownloadQueue(QQueue<WrappedNode*>* downloadQueue, B
 
     auto batch = std::shared_ptr<TransferBatch>(new TransferBatch());
 
+    //Add now the batch in case the transfers are started from the Webclient
+    //In the transfers are started from the webclient, the onTransferStart are received before
+    //the while finishes, and the batch counters are not correctly updated
+    downloadBatches.add(batch);
+
     // Process all nodes in the download queue
     while (!downloadQueue->isEmpty())
     {
@@ -61,16 +66,16 @@ bool MegaDownloader::processDownloadQueue(QQueue<WrappedNode*>* downloadQueue, B
 
         // We now have all the necessary info to effectively download.
         bool transferStarted = download(wNode, currentPath, appData, batch->getCancelTokenPtr());
-        if (transferStarted)
+        if (transferStarted && (wNode->getTransferOrigin() != WrappedNode::FROM_WEBSERVER || node->isFile()))
         {
             batch->add(node->getType() != MegaNode::TYPE_FILE);
         }
         delete wNode;
     }
 
-    if (!batch->isEmpty())
+    if (batch->isEmpty())
     {
-        downloadBatches.add(batch);
+        downloadBatches.removeBatch();
     }
 
     pathMap.clear();

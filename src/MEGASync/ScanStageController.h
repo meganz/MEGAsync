@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <QTimer>
+#include <QPointer>
 
 class InfoDialog;
 class TransferManager;
@@ -31,13 +32,13 @@ private:
 
     void onMinimumDisplayTimeElapsed();
 
-    InfoDialog* infoDialog = nullptr;
-    TransferManager* transferManager = nullptr;
-    QTimer scanStageTimer;
-    bool isInScanningState = false;
-    bool isInScanningStateInMinimumTime = false;
-    const int delayToShowDialogInMs = 800;
-    const int minimumDialogDisplayTimeInMs = 1200;
+    InfoDialog* mInfoDialog = nullptr;
+    QPointer<TransferManager> mTransferManager;
+    QTimer mScanStageTimer;
+    bool mIsInScanningState = false;
+    bool mIsInScanningStateInMinimumTime = false;
+    const int mDelayToShowDialogInMs = 800;
+    const int mMinimumDialogDisplayTimeInMs = 1200;
 };
 
 #endif // SCANSTAGECONTROLLER_H

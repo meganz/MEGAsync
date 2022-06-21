@@ -5587,11 +5587,6 @@ void MegaApplication::externalDownload(QQueue<WrappedNode *> newDownloadQueue)
     }
 
     downloadQueue.append(newDownloadQueue);
-
-    if (preferences->getDownloadsPaused())
-    {
-        megaApi->pauseTransfers(false, MegaTransfer::TYPE_DOWNLOAD);
-    }
 }
 
 void MegaApplication::externalDownload(QString megaLink, QString auth)
@@ -5605,11 +5600,6 @@ void MegaApplication::externalDownload(QString megaLink, QString auth)
 
     if (preferences->logged())
     {
-        if (preferences->getDownloadsPaused())
-        {
-            megaApi->pauseTransfers(false, MegaTransfer::TYPE_DOWNLOAD);
-        }
-
         megaApi->getPublicNode(megaLink.toUtf8().constData());
     }
     else
@@ -7408,16 +7398,6 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
                 preferences->setGlobalPaused(paused);
                 this->paused = paused;
                 break;
-        }
-        if (preferences->getDownloadsPaused() == preferences->getUploadsPaused())
-        {
-            preferences->setGlobalPaused(paused);
-            this->paused = paused;
-        }
-        else
-        {
-            preferences->setGlobalPaused(false);
-            this->paused = false;
         }
 
         if (infoDialog)

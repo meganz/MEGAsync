@@ -225,7 +225,7 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
     setAcceptDrops(true);
 
     // Init state
-    onUpdatePauseState(mModel->areAllPaused());
+    onUpdatePauseState(mPreferences->getGlobalPaused());
 
     auto storageState = MegaSyncApp->getAppliedStorageState();
     auto transferQuotaState = MegaSyncApp->getTransferQuotaState();
@@ -1022,11 +1022,13 @@ void TransferManager::on_bCancelClearAll_clicked()
     auto transfersView = findChild<MegaTransferView*>();
     if(transfersView)
     {
-        transfersView->onCancelAndClearAllTransfers();
-        on_tAllTransfers_clicked();
+        if(transfersView->onCancelAndClearAllTransfers())
+        {
+            on_tAllTransfers_clicked();
 
-        //Use to repaint and update the transfers state
-        transfersView->update();
+            //Use to repaint and update the transfers state
+            transfersView->update();
+        }
     }
 }
 
@@ -1035,11 +1037,13 @@ void TransferManager::onCancelAllClicked()
     auto transfersView = findChild<MegaTransferView*>();
     if(transfersView)
     {
-        transfersView->onCancelAllTransfers();
-        on_tAllTransfers_clicked();
+        if(transfersView->onCancelAllTransfers())
+        {
+            on_tAllTransfers_clicked();
 
-        //Use to repaint and update the transfers state
-        transfersView->update();
+            //Use to repaint and update the transfers state
+            transfersView->update();
+        }
     }
 }
 
