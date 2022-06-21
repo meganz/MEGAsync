@@ -102,7 +102,6 @@ VIAddVersionKey "ProductVersion" "4.6.7.0"
 !define MUI_FINISHPAGE_RUN ;"$INSTDIR\MEGASync.exe"
 !define MUI_FINISHPAGE_RUN_FUNCTION RunFunction
 
-!define MUI_WELCOMEFINISHPAGE_BITMAP "installer\left_banner.bmp"
 ;!define MUI_FINISHPAGE_NOAUTOCLOSE
 
 var APP_NAME
@@ -112,16 +111,18 @@ var ICONS_GROUP
 var USERNAME
 var CURRENT_USER_INSTDIR
 var ALL_USERS_INSTDIR
-var SILENT_USER_INSTDIR
+;var SILENT_USER_INSTDIR
 var SILENT_MULTIUSER
 
 ; Installer pages
+!define MUI_PAGE_CUSTOMFUNCTION_SHOW showHiDpi
 !insertmacro MUI_PAGE_WELCOME
 !insertmacro MUI_PAGE_LICENSE "installer\terms.txt"
 !insertmacro MULTIUSER_PAGE_INSTALLMODE
 !insertmacro MUI_PAGE_STARTMENU Application $ICONS_GROUP
 !insertmacro MUI_PAGE_INSTFILES
 ;Page Custom RebootPage
+!define MUI_PAGE_CUSTOMFUNCTION_SHOW showHiDpi
 !insertmacro MUI_PAGE_FINISH
 
 ; Uninstaller pages
@@ -313,6 +314,29 @@ Function RunExplorer
   ExecDos::exec /ASYNC /DETAILED /DISABLEFSR "explorer.exe"
 FunctionEnd
 
+Var BITMAP_WELCOME
+
+Function showHiDpi
+    System::Call USER32::GetDpiForSystem()i.r0
+    ${If} $0 U<= 0
+        System::Call USER32::GetDC(i0)i.r1
+        System::Call GDI32::GetDeviceCaps(ir1,i88)i.r0
+        System::Call USER32::ReleaseDC(i0,ir1)
+    ${EndIf}
+    
+    ${if} $0 > 288
+        StrCpy $0 288
+    ${ElseIf} $0 < 72
+        StrCpy $0 72
+    ${EndIf}
+
+    strCpy $BITMAP_WELCOME "installer\left_banner\left_banner$0.bmp"
+    
+    ${NSD_SetImage} $mui.WelcomePage.Image $BITMAP_WELCOME  $mui.WelcomePage.Image.Bitmap
+    ${NSD_SetImage} $mui.FinishPage.Image $BITMAP_WELCOME $mui.FinishPage.Image.Bitmap
+    
+FunctionEnd
+
 Function .onInit
   setRebootFlag false
 
@@ -469,7 +493,7 @@ modeselected:
 
   !insertmacro DEBUG_MSG "Installing files"
 
-  ;SetRebootFlag true
+  SetRebootFlag false
   SetOverwrite on
 
   SetOutPath "$INSTDIR"
@@ -790,6 +814,7 @@ modeselected:
 #  Pop $0
 
   !insertmacro DEBUG_MSG "Creating shortcuts"
+  SetRebootFlag false
   StrCmp "CurrentUser" $MultiUser.InstallMode currentuser2
   SetShellVarContext all
   !insertmacro MUI_STARTMENU_WRITE_BEGIN Application
@@ -1064,4 +1089,5 @@ Section Uninstall
   DeleteRegKey ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}"
   DeleteRegKey HKLM "${PRODUCT_DIR_REGKEY}"
   SetAutoClose true
+  SetRebootFlag false
 SectionEnd

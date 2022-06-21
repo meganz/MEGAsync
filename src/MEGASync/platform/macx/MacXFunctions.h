@@ -14,8 +14,6 @@ Q_FORWARD_DECLARE_OBJC_CLASS(NSPopover);
 void setMacXActivationPolicy();
 QStringList qt_mac_NSArrayToQStringList(void *nsarray);
 QStringList uploadMultipleFiles(QString uploadTitle);
-void SetProcessName(QString procname);
-char *runWithRootPrivileges(char *command);
 bool startAtLogin(bool opt);
 bool isStartAtLoginActive();
 void addPathToPlaces(QString path, QString pathName);
@@ -29,6 +27,8 @@ bool runHttpServer();
 bool runHttpsServer();
 bool userActive();
 double uptime();
+QString appBundlePath();
+
 
 //You take the ownership of the returned value
 NSPopover* allocatePopOverWithView(NSView* view, QSize size);

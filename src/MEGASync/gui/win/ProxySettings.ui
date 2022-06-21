@@ -186,7 +186,7 @@
        </widget>
       </item>
       <item row="13" column="1">
-       <widget class="QLineEdit" name="eProxyPassword">
+       <widget class="PasswordLineEdit" name="eProxyPassword">
         <property name="enabled">
          <bool>false</bool>
         </property>
@@ -534,6 +534,13 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>PasswordLineEdit</class>
+   <extends>QLineEdit</extends>
+   <header>PasswordLineEdit.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

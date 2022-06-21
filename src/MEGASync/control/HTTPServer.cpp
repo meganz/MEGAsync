@@ -65,7 +65,7 @@ void HTTPServer::incomingConnection(int socket)
     }
 
     MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, "Incoming webclient connection");
-    Preferences *preferences = Preferences::instance();
+    auto preferences = Preferences::instance();
     QTcpSocket* s = NULL;
     QSslSocket *sslSocket = NULL;
 
@@ -434,7 +434,7 @@ void HTTPServer::openLinkRequest(QString &response, const HTTPRequest& request)
         emit onLinkReceived(link, auth);
         response = QString::fromUtf8("0");
 
-        Preferences *preferences = Preferences::instance();
+        auto preferences = Preferences::instance();
         QString defaultPath = preferences->downloadFolder();
         MegaHandle megaHandle = megaApi->base64ToHandle(handle.toUtf8().constData());
         QMap<MegaHandle, RequestTransferData*>::iterator it = webTransferStateRequests.find(megaHandle);
@@ -449,7 +449,7 @@ void HTTPServer::openLinkRequest(QString &response, const HTTPRequest& request)
             ((MegaApplication *)qApp)->showInfoMessage(tr("Your download has started"));
         }
 
-        if (!isFirstWebDownloadDone && !Preferences::instance()->isFirstWebDownloadDone())
+        if (!isFirstWebDownloadDone && !preferences->isFirstWebDownloadDone())
         {
             megaApi->sendEvent(AppStatsEvents::EVENT_1ST_WEBCLIENT_DL,
                                "MEGAsync first webclient download");

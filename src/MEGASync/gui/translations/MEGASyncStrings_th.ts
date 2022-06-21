@@ -3097,7 +3097,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
     <message>
         <source>Are you sure that you want to delete &quot;%1&quot;?</source>
-        <translation>คุณแน่ใจว่าต้องการลบ &quot;%1&quot; หรือไม่</translation>
+        <translation>คุณแน่ใจว่าต้องการลบ “%1” หรือไม่</translation>
     </message>
     <message>
         <source>Delete</source>
@@ -3798,7 +3798,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Show </source>
         <translatorcomment>Contextual menu from file list headers that allow to enable or disable diferent columns (size, type, data modified)</translatorcomment>
-        <translation>แสดง </translation>
+        <translation>แสดง</translation>
     </message>
     <message>
         <source>All files (*)</source>
@@ -3918,7 +3918,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Are you sure you want to delete &apos;%1&apos;?</source>
         <translatorcomment>Warning message shown before deleting a file or a folder.</translatorcomment>
-        <translation>คุณแน่ใจหรือว่าต้องการลบ ‘%1’</translation>
+        <translation>คุณแน่ใจหรือว่าต้องการลบ “%1”</translation>
     </message>
     <message>
         <source>File &amp;name:</source>
@@ -4735,7 +4735,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>I agree with the MEGA &lt;a href=&quot;https://mega.co.nz/#terms&quot;&gt;Terms of Service&lt;/a&gt;</source>
         <translatorcomment>Label to aggre with the Terms of use.  Keep code &lt;a href=&quot;https://mega.co.nz/#terms&quot;&gt;Terms of Service&lt;/a&gt; .String as short as possible.</translatorcomment>
-        <translation>ฉันยอมรับ&lt;a href=&quot;https://mega.nz/terms&quot;&gt;เงื่อนไขการให้บริการ&lt;/a&gt;ของ MEGA</translation>
+        <translation>ฉันยอมรับ&lt;a href=&#8221;https://mega.nz/terms&#8221;&gt;เงื่อนไขการให้บริการ&lt;/a&gt;ของ MEGA</translation>
     </message>
     <message>
         <source>Log in to your MEGA account</source>

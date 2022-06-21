@@ -41,7 +41,7 @@
     <message>
         <source>Of that, size taken up by file versions:</source>
         <translatorcomment>Label to indicate the amount of size occupied by file versions.</translatorcomment>
-        <translation>파일 버전이 차지하는 용량:</translation>
+        <translation>파일 버전이 차지하는 용량</translation>
     </message>
 </context>
 <context>
@@ -112,7 +112,7 @@
     <message>
         <source>Enter a name, an absolute path (wildcards * and ? are allowed) or choose which file or folder you want to exclude from the synchronization</source>
         <translatorcomment>Label to describe the different options that the user have to set a exclusion for all synchronizations.</translatorcomment>
-        <translation>이름을 입력하거나, 절대 경로(와일드카드 *와 ?가 허용됩니다) 또는 동기화에서 제외할 파일 또는 폴더를 선택하세요</translation>
+        <translation>이름을 입력하거나, 절대 경로(와일드카드 *와 ?가 허용됩니다) 또는 동기화에서 제외할 파일 또는 폴더를 선택하세요.</translation>
     </message>
     <message>
         <source>Choose File</source>
@@ -423,22 +423,22 @@
     <message>
         <source>Your publicly shared file ([A]) has been taken down</source>
         <translatorcomment>Label to indicate that public shared file has been taken down. Placeholder [A] will be replaced by the name of the file.</translatorcomment>
-        <translation>당신의 공개 공유 파일([A])이 게시중단 되었습니다.</translation>
+        <translation>당신의 공개 공유 파일([A])이 게시중단 되었습니다</translation>
     </message>
     <message>
         <source>Your publicly shared folder ([A]) has been taken down</source>
         <translatorcomment>Label to indicate that public shared folder has been taken down. Placeholder [A] will be replaced by the name of the folder.</translatorcomment>
-        <translation>당신의 공개 공유 폴더([A])가 게시중단 되었습니다.</translation>
+        <translation>당신의 공개 공유 폴더([A])가 게시중단 되었습니다</translation>
     </message>
     <message>
         <source>Your publicly shared file ([A]) has been reinstated</source>
         <translatorcomment>Label to indicate that public shared file has been reinstated. Placeholder [A] will be replaced by the name of the file.</translatorcomment>
-        <translation>당신의 공개 공유 파일([A])이 재게시 되었습니다.</translation>
+        <translation>당신의 공개 공유 파일([A])이 재게시 되었습니다</translation>
     </message>
     <message>
         <source>Your publicly shared folder ([A]) has been reinstated</source>
         <translatorcomment>Label to indicate that public shared folder has been reinstated. Placeholder [A] will be replaced by the name of the folder.</translatorcomment>
-        <translation>당신의 공개 공유 폴더([A])이 재게시 되었습니다.</translation>
+        <translation>당신의 공개 공유 폴더([A])이 재게시 되었습니다</translation>
     </message>
 </context>
 <context>
@@ -570,7 +570,7 @@
         <source>The name &quot;%1&quot; is already in use for another sync
 Please enter a different name to identify this synced folder:</source>
         <translatorcomment>Detailed message displayed when a user is using a name for a local folder that is already used. Preserve &quot;%1&quot; code because is used to indicate the local folder at runtime.</translatorcomment>
-        <translation>이름 &quot;%1&quot;은 이미 다른 동기화에 사용중입니다. 이 동기화된 폴더를 식별할 다른 이름을 입력하세요:</translation>
+        <translation>이름 &#8220;%1&#8221;은 이미 다른 동기화에 사용중입니다. 이 동기화된 폴더를 식별할 다른 이름을 입력하세요:</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -663,7 +663,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Error on submitting bug report</source>
         <translatorcomment>Error message shown when some error occurs during uploading a bug report.</translatorcomment>
-        <translation>문제 보고를 업로드하던 중 오류 발생</translation>
+        <translation>문제 보고를 업로드하던 중 오류 발생.</translation>
     </message>
     <message>
         <source>Bug report can&apos;t be submitted due to some error. Please try again or contact our support team via [A]support@mega.co.nz[/A]</source>
@@ -736,7 +736,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>[A]This software uses Qt ([C] 2018 The Qt Company Ltd) which is covered by GNU LESSER GENERAL PUBLIC LICENSE Version 3[/A]</source>
         <translatorcomment>QT copyright notice shown at changelog dialog. [A][/A] placeholders used to provide ui style and [C] placeholder will be replaced by copyright symbol.</translatorcomment>
-        <translation>[A]이 소프트웨어는 GNU 약소 일반 공중 라이센스 버전 3를 적용하고 있는 Qt([C] 2018 The Qt Company Ltd)를 사용하였습니다.[/A]</translation>
+        <translation>[A]이 소프트웨어는 GNU 약소 일반 공중 라이센스 버전 3를 적용하고 있는 Qt([C] 2018 The Qt Company Ltd)를 사용하였습니다[/A]</translation>
     </message>
 </context>
 <context>
@@ -1033,22 +1033,22 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Your publicly shared file ([A]) has been reinstated</source>
         <translatorcomment>Label to indicate that public shared file has been reinstated. Placeholder [A] will be replaced by the name of the file.</translatorcomment>
-        <translation>당신의 공개 공유 파일([A])이 재게시 되었습니다.</translation>
+        <translation>당신의 공개 공유 파일([A])이 재게시 되었습니다</translation>
     </message>
     <message>
         <source>Your publicly shared file ([A]) has been taken down</source>
         <translatorcomment>Label to indicate that public shared file has been taken down. Placeholder [A] will be replaced by the name of the file.</translatorcomment>
-        <translation>당신의 공개 공유 파일([A])이 게시중단 되었습니다.</translation>
+        <translation>당신의 공개 공유 파일([A])이 게시중단 되었습니다</translation>
     </message>
     <message>
         <source>Your publicly shared folder ([A]) has been reinstated</source>
         <translatorcomment>Label to indicate that public shared folder has been reinstated. Placeholder [A] will be replaced by the name of the folder.</translatorcomment>
-        <translation>당신의 공개 공유 폴더([A])이 재게시 되었습니다.</translation>
+        <translation>당신의 공개 공유 폴더([A])이 재게시 되었습니다</translation>
     </message>
     <message>
         <source>Your publicly shared folder ([A]) has been taken down</source>
         <translatorcomment>Label to indicate that public shared folder has been taken down. Placeholder [A] will be replaced by the name of the folder.</translatorcomment>
-        <translation>당신의 공개 공유 폴더([A])가 게시중단 되었습니다.</translation>
+        <translation>당신의 공개 공유 폴더([A])가 게시중단 되었습니다</translation>
     </message>
     <message>
         <source>Your taken down has been reinstated</source>
@@ -1232,7 +1232,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Click the toolbar item for a menu.</source>
         <translatorcomment>Tooltip for MEGA finder toolbar button</translatorcomment>
-        <translation>메뉴를 보려면 툴바 항목을 클릭하세요</translation>
+        <translation>메뉴를 보려면 툴바 항목을 클릭하세요.</translation>
     </message>
     <message>
         <source>1 file</source>
@@ -1383,7 +1383,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Incorrect email and/or password.</source>
         <translatorcomment>Message box shown when user enters incorrect email and/or password at login</translatorcomment>
-        <translation>잘못된 이메일 또는 암호</translation>
+        <translation>잘못된 이메일 또는 암호.</translation>
     </message>
     <message>
         <source>Please check your e-mail and click the link to confirm your account.</source>
@@ -1754,7 +1754,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Depleted transfer quota.</source>
         <translatorcomment>Title to indicate a situation of depleted transfer quota for the current account.</translatorcomment>
-        <translation>전송 할당량 고갈됨</translation>
+        <translation>전송 할당량 고갈됨.</translation>
     </message>
     <message>
         <source>All downloads are currently disabled.</source>
@@ -1789,7 +1789,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Something went wrong while trying to sync your folders.</source>
         <translatorcomment>Label to indicate that an error occurs while trying to resume the syncs</translatorcomment>
-        <translation>폴더를 동기화하던 중 무언가 잘못 되었습니다.</translation>
+        <translation>폴더를 동기화 하던 중 무언가 잘못되었습니다.</translation>
     </message>
     <message>
         <source>Open Preferences</source>
@@ -1806,7 +1806,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <name>InfoWizard</name>
     <message>
         <source>You are not logged in</source>
-        <translation>로그인하지 않은 상태입니다.</translation>
+        <translation>로그인하지 않은 상태입니다</translation>
     </message>
     <message>
         <source>Log in</source>
@@ -2047,7 +2047,7 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>Thank you for your collaboration!</source>
         <translatorcomment>Message displayed to thank when a user send a crash report report to MEGA.</translatorcomment>
-        <translation>협조에 감사드립니다.</translation>
+        <translation>협조에 감사드립니다</translation>
     </message>
     <message>
         <source>Update available. Downloading...</source>
@@ -2073,7 +2073,7 @@ https://mega.co.nz/#sync</source>
         <source>Unable to get the filesystem.
 Please, try again. If the problem persists please contact bug@mega.co.nz</source>
         <translatorcomment>Message displayed when an error occurs while fetching nodes from the server.</translatorcomment>
-        <translation>파일 시스템을 불러올 수 없습니다. 다시 시도하세요. 만약 문제가 계속되면 bug@mega.nz로 연락하세요.</translation>
+        <translation>파일 시스템을 불러올 수 없습니다. 다시 시도하세요. 만약 문제가 계속되면 bug@mega.nz로 연락하세요</translation>
     </message>
     <message>
         <source>MEGAsync is now running. Click the system tray icon to open the status window.</source>
@@ -2113,12 +2113,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the remote folder doesn&apos;t exist</source>
         <translatorcomment>Notification message launched checking  remote synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.</translatorcomment>
-        <translation>원격 폴더가 존재하지 않아서 동기화 &quot;%1&quot;이 비활성화 되었습니다.</translation>
+        <translation>원격 폴더가 존재하지 않아서 동기화 &#8220;%1&#8221;이 비활성화 되었습니다</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</source>
         <translatorcomment>Notification message launched checking  local synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.</translatorcomment>
-        <translation>로컬 폴더가 존재하지 않아서 동기화 &quot;%1&quot;가 해제되었습니다.</translation>
+        <translation>로컬 폴더가 존재하지 않아서 동기화 &#8220;%1&#8221;가 해제되었습니다</translation>
     </message>
     <message>
         <source>Your account has been blocked. Please contact support@mega.co.nz</source>
@@ -2143,17 +2143,17 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the remote folder is in the rubbish bin</source>
         <translatorcomment>Notification message launched when a sync is disabled due to the remote folder has been deleted. Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
-        <translation>원격 폴더가 휴지통에 있어서 &quot;%1&quot;의 동기화가 해제되었습니다</translation>
+        <translation>원격 폴더가 휴지통에 있어서 &#8220;%1&#8221;의 동기화가 해제되었습니다</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the local folder has changed</source>
         <translatorcomment>Notification message launched when a sync is disabled due to the local folder has changed(moved/deleted/...). Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
-        <translation>로컬 폴더가 변경되어서 동기화 &quot;%1&quot;가 해제되었습니다.</translation>
+        <translation>로컬 폴더가 변경되어서 동기화 &#8220;%1&#8221;가 해제되었습니다</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&apos;t have full access</source>
         <translatorcomment>Notification message launched when a sync is disabled due to the access problems. Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
-        <translation>동기화 &quot;%1&quot;가 해제되었습니다. 원격 폴더(또는 일부)가 전체 액세스 권한이 없습니다</translation>
+        <translation>동기화 &#8220;%1&#8221;가 해제되었습니다. 원격 폴더(또는 일부)가 전체 액세스 권한이 없습니다</translation>
     </message>
     <message>
         <source>Over quota</source>
@@ -2178,7 +2178,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>DEBUG mode enabled. A log is being created in your desktop (MEGAsync.log)</source>
         <translatorcomment>Notification message shown when the DEBUG mode is enabled.</translatorcomment>
-        <translation>디버그 모드가 활성화되었습니다. 바탕 화면에 기록이 생성되고 있습니다. (MEGAsync.log)</translation>
+        <translation>디버그 모드가 활성화되었습니다. 바탕 화면에 기록이 생성되고 있습니다 (MEGAsync.log).</translation>
     </message>
     <message>
         <source>Error: Invalid destination folder. The download has been cancelled</source>
@@ -2201,11 +2201,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Transfer canceled</source>
-        <translation>전송 취소됨!</translation>
+        <translation>전송 취소됨</translation>
     </message>
     <message>
         <source>You are not logged in</source>
-        <translation>로그인하지 않은 상태입니다.</translation>
+        <translation>로그인하지 않은 상태입니다</translation>
     </message>
     <message>
         <source>Are you sure you want to exit?</source>
@@ -2347,12 +2347,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>1 folder was successfully downloaded</source>
         <translatorcomment>System notification to inform the user that 1 folder was successfully downloaded</translatorcomment>
-        <translation>폴더 1개가 성공적으로 다운로드 되었습니다.</translation>
+        <translation>폴더 1개가 성공적으로 다운로드 되었습니다</translation>
     </message>
     <message>
         <source>%1 folders were successfully downloaded</source>
         <translatorcomment>System notification to inform the user that %1 folders were successfully downloaded</translatorcomment>
-        <translation>폴더 %1개가 성공적으로 다운로드 되었습니다.</translation>
+        <translation>폴더 %1개가 성공적으로 다운로드 되었습니다</translation>
     </message>
     <message>
         <source>File Download</source>
@@ -2362,12 +2362,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>1 file was successfully downloaded</source>
         <translatorcomment>System notification to inform the user that 1 file was successfully downloaded</translatorcomment>
-        <translation>파일 1개가 성공적으로 다운로드 되었습니다.</translation>
+        <translation>파일 1개가 성공적으로 다운로드 되었습니다</translation>
     </message>
     <message>
         <source>%1 files were successfully downloaded</source>
         <translatorcomment>System notification to inform the user that %1 files were successfully downloaded</translatorcomment>
-        <translation>파일 %1개가 성공적으로 다운로드 되었습니다.</translation>
+        <translation>파일 %1개가 성공적으로 다운로드 되었습니다</translation>
     </message>
     <message>
         <source>Add Sync</source>
@@ -2688,7 +2688,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Storage Quota Exceeded. Upgrade now</source>
         <translatorcomment>Error label to indicate a situation of storage quota exceeded and the user needs to upgrade now in order to continue working with the account.</translatorcomment>
-        <translation>저장소 할당량 초과. 지금 업그레이드 하세요.</translation>
+        <translation>저장소 할당량 초과. 지금 업그레이드 하세요</translation>
     </message>
 </context>
 <context>
@@ -3098,7 +3098,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
     <message>
         <source>Are you sure that you want to delete &quot;%1&quot;?</source>
-        <translation>정말 &quot;%1&quot;을/를 삭제하시겠습니까?</translation>
+        <translation>정말 &#8220;%1&#8221;을/를 삭제하시겠습니까?</translation>
     </message>
     <message>
         <source>Delete</source>
@@ -3463,7 +3463,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Great value for secure cloud storage, sharing and communication.</source>
         <translatorcomment>Balloon tooltip to inform users when hovering ? button about the benefits of Pro I plan.</translatorcomment>
-        <translation>안전한 클라우드 저장소, 공유 그리고 소통에 있어 뛰어난 가성비</translation>
+        <translation>안전한 클라우드 저장소, 공유 그리고 소통에 있어 뛰어난 가성비.</translation>
     </message>
     <message>
         <source>Rest easy knowing you have plenty of secure cloud storage.</source>
@@ -3549,8 +3549,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 - 이용자 경험 향상.
 - 설정 대화창에서 새 알림 패널 추가.
 - 기타 UI 수정 및 조정.
-- Windows, Linux 그리고 macOS에서 탐지된 충돌 수정.
-</translation>
+- Windows, Linux 그리고 macOS에서 탐지된 충돌 수정.</translation>
     </message>
 </context>
 <context>
@@ -3643,7 +3642,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Your proxy settings are invalid or the proxy doesn&apos;t respond</source>
         <translatorcomment>Message shown when there is an error testing the proxy settings.</translatorcomment>
-        <translation>당신의 프록시 설정이 잘못 되었거나 프록시가 응답하지 않습니다.</translation>
+        <translation>당신의 프록시 설정이 잘못되었거나 프록시가 응답하지 않습니다</translation>
     </message>
 </context>
 <context>
@@ -3799,7 +3798,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Show </source>
         <translatorcomment>Contextual menu from file list headers that allow to enable or disable diferent columns (size, type, data modified)</translatorcomment>
-        <translation>보기 </translation>
+        <translation>보기</translation>
     </message>
     <message>
         <source>All files (*)</source>
@@ -3824,7 +3823,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Could not delete directory.</source>
         <translatorcomment>Info message shown when failing deleting a directory</translatorcomment>
-        <translation>디렉토리를 삭제할 수 없습니다</translation>
+        <translation>디렉토리를 삭제할 수 없습니다.</translation>
     </message>
     <message>
         <source>Recent Places</source>
@@ -4673,7 +4672,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Choose which files or folders you want to exclude from synchronisation.</source>
         <translatorcomment>Informative text message encouraging the user to choose files / folders for exclusion in Folders pane.</translatorcomment>
-        <translation>동기화에서 제외할 파일 또는 폴더를 선택하세요.</translation>
+        <translation>동기화에서 제외할 파일 또는 폴더를 선택하세요</translation>
     </message>
     <message>
         <source>Saving synchronised folders…</source>
@@ -4736,7 +4735,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>I agree with the MEGA &lt;a href=&quot;https://mega.co.nz/#terms&quot;&gt;Terms of Service&lt;/a&gt;</source>
         <translatorcomment>Label to aggre with the Terms of use.  Keep code &lt;a href=&quot;https://mega.co.nz/#terms&quot;&gt;Terms of Service&lt;/a&gt; .String as short as possible.</translatorcomment>
-        <translation>MEGA &lt;a href=&quot;https://mega.nz/terms&quot;&gt;이용 약관&lt;/a&gt;에 동의합니다</translation>
+        <translation>MEGA &lt;a href=&#8221;https://mega.nz/terms&#8221;&gt;이용 약관&lt;/a&gt;에 동의합니다</translation>
     </message>
     <message>
         <source>Log in to your MEGA account</source>
@@ -4816,7 +4815,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Incorrect email and/or password.</source>
         <translatorcomment>Message displayed when a user is trying to loging with an incorrect email/password.</translatorcomment>
-        <translation>잘못된 이메일 또는 암호</translation>
+        <translation>잘못된 이메일 또는 암호.</translation>
     </message>
     <message>
         <source>MEGA folder doesn&apos;t exist</source>
@@ -4861,7 +4860,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>You have to accept our terms of service</source>
         <translatorcomment>Label displayed when the user has not check the agreement of terms of service.</translatorcomment>
-        <translation>이용 약관에 동의하여야 합니다.</translation>
+        <translation>이용 약관에 동의하여야 합니다</translation>
     </message>
     <message>
         <source>Creating account...</source>
@@ -4904,7 +4903,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <source>Unable to get the filesystem.
 Please, try again. If the problem persists please contact bug@mega.co.nz</source>
         <translatorcomment>Message displayed when a problem occurs while fetching filesystem from the cloud drive.</translatorcomment>
-        <translation>파일 시스템을 불러올 수 없습니다. 다시 시도하세요. 만약 문제가 계속되면 bug@mega.nz로 연락하세요.</translation>
+        <translation>파일 시스템을 불러올 수 없습니다. 다시 시도하세요. 만약 문제가 계속되면 bug@mega.nz로 연락하세요</translation>
     </message>
     <message>
         <source>Set up Assistant - MEGAsync</source>
@@ -4919,7 +4918,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your local folder and your MEGA Cloud Drive will be automatically synchronized.</source>
         <translatorcomment>Label to inform the user that the synchronization stablished will be automatically synchronized.</translatorcomment>
-        <translation>당신의 로컬 폴더와 MEGA 클라우드 드라이브가 곧 자동으로 동기화됩니다</translation>
+        <translation>당신의 로컬 폴더와 MEGA 클라우드 드라이브가 곧 자동으로 동기화됩니다.</translation>
     </message>
     <message>
         <source>You don&apos;t have write permissions in this local folder.</source>
@@ -5291,7 +5290,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Stream error: transfer overquota</source>
         <translatorcomment>Informative label to indicate the user that there is a stream error because of transfer overquota situation.</translatorcomment>
-        <translation>스트리밍 오류: 전송 할당량 초과</translation>
+        <translation>스트리밍 오류: 전송 할당량 초과.</translation>
     </message>
     <message>
         <source>Please wait...</source>
@@ -5450,12 +5449,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Limited available transfer quota.</source>
         <translatorcomment>System notification title to inform the user about limited available transfer quota. Above 90 percent of transfer quota usage reached.</translatorcomment>
-        <translation>제한된 이용 가능 전송 할당량</translation>
+        <translation>제한된 이용 가능 전송 할당량.</translation>
     </message>
     <message>
         <source>Depleted transfer quota.</source>
         <translatorcomment>System notification title to inform the user about depleted transfer quota situation.</translatorcomment>
-        <translation>전송 할당량 고갈됨</translation>
+        <translation>전송 할당량 고갈됨.</translation>
     </message>
 </context>
 <context>
@@ -5491,7 +5490,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Please upgrade to Pro to continue immediately, or wait %1 to continue for free</source>
         <translatorcomment>Warning label shown when user reaches over transfer quota situation. The user can upgrade Plan or wait %1 time until new free quota is allowed.</translatorcomment>
-        <translation>즉시 계속하려면 Pro로 업그레이드 하거나 무료로 계속하려면 %1 동안 기다리세요.</translation>
+        <translation>즉시 계속하려면 Pro로 업그레이드 하거나 무료로 계속하려면 %1 동안 기다리세요</translation>
     </message>
     <message>
         <source>* The local currency price is an estimate only. All transactions shown charged in Euros.</source>

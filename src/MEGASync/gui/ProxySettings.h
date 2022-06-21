@@ -33,7 +33,7 @@ private:
 
     Ui::ProxySettings* mUi;
     MegaApplication* mApp;
-    Preferences* mPreferences;
+    std::shared_ptr<Preferences> mPreferences;
     ConnectivityChecker* mConnectivityChecker;
     MegaProgressCustomDialog* mProgressDialog;
 };

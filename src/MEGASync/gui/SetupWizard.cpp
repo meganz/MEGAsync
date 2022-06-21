@@ -51,12 +51,10 @@ SetupWizard::SetupWizard(MegaApplication *app, QWidget *parent) :
     delegateListener = new QTMegaRequestListener(megaApi, this);
     megaApi->addRequestListener(delegateListener);
 
-    ui->lTermsLink->setText(ui->lTermsLink->text().replace(
-        QString::fromUtf8("\">"),
-        QString::fromUtf8("\" style=\"color:#DC0000\">"))
-        .replace(QString::fromUtf8("mega.co.nz"), QString::fromUtf8("mega.nz")));
-
-
+    QString agreeLink = ui->lTermsLink->text();
+    agreeLink.replace(QLatin1String("[A]"), QLatin1String("<a href=\"https://mega.nz/#terms\" style=\"color:#DC0000\">"));
+    agreeLink.replace(QLatin1String("[/A]"), QLatin1String("</a>"));
+    ui->lTermsLink->setText(agreeLink);
 
     m_animation = new QPropertyAnimation(ui->wErrorMessage, "size");
     m_animation->setDuration(400);
@@ -733,7 +731,7 @@ void SetupWizard::on_bLocalFolder_clicked()
 
 void SetupWizard::on_bMegaFolder_clicked()
 {
-    QPointer<NodeSelector> nodeSelector = new NodeSelector(megaApi, NodeSelector::SYNC_SELECT, this);
+    QPointer<NodeSelector> nodeSelector = new NodeSelector(NodeSelector::SYNC_SELECT, this);
 #ifdef Q_OS_LINUX
     nodeSelector->setWindowFlags(nodeSelector->windowFlags() | (Qt::Tool));
 #endif
@@ -744,7 +742,7 @@ void SetupWizard::on_bMegaFolder_clicked()
         return;
     }
 
-    selectedMegaFolderHandle = nodeSelector->getSelectedFolderHandle();
+    selectedMegaFolderHandle = nodeSelector->getSelectedNodeHandle();
     MegaNode *node = megaApi->getNodeByHandle(selectedMegaFolderHandle);
     if (!node)
     {
@@ -1044,7 +1042,7 @@ void SetupWizard::page_welcome()
     ui->bCancel->setFocus();
     ui->bCancel->setDefault(true);
 
-    ui->lHeader->setText(tr("We are all done!"));
+    ui->lHeader->setText(tr("We are all done"));
 
     if (!loggingStarted) //Logging started at main dialog
     {

@@ -41,7 +41,7 @@
     <message>
         <source>Of that, size taken up by file versions:</source>
         <translatorcomment>Label to indicate the amount of size occupied by file versions.</translatorcomment>
-        <translation>Taille totale occupée par les versions de fichiers :</translation>
+        <translation>Taille totale occupée par les versions de fichiers</translation>
     </message>
 </context>
 <context>
@@ -736,7 +736,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>[A]This software uses Qt ([C] 2018 The Qt Company Ltd) which is covered by GNU LESSER GENERAL PUBLIC LICENSE Version 3[/A]</source>
         <translatorcomment>QT copyright notice shown at changelog dialog. [A][/A] placeholders used to provide ui style and [C] placeholder will be replaced by copyright symbol.</translatorcomment>
-        <translation>[A]Ce logiciel utilise Qt ([C] 2018 The Qt Company Ltd) sous licence Licence publique générale GNU amoindrie Version 3[/A]</translation>
+        <translation>[A]Ce logiciel utilise Qt ([C] 2018 The Qt Company Ltd) sous licence publique générale GNU amoindrie Version 3[/A]</translation>
     </message>
 </context>
 <context>
@@ -1668,7 +1668,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Notifications</source>
         <translatorcomment>Label to open notifications section at main dialog</translatorcomment>
-        <translation>Notifications </translation>
+        <translation>Notifications</translation>
     </message>
     <message>
         <source>Storage</source>
@@ -1824,12 +1824,12 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Login or create an account to start using MEGA Desktop app.</source>
         <translatorcomment>Description label to inform the user about next step in order to use MEGA Desktop app. Users will need to login or create an account.</translatorcomment>
-        <translation>Connectez-vous ou créez un compte pour commencer à utiliser l’Appli MEGA pour ordinateur.</translation>
+        <translation>Connectez-vous ou créez un compte pour commencer à utiliser l’appli MEGA pour ordinateur.</translation>
     </message>
     <message>
         <source>You need to login MEGA account to run MEGA desktop app.</source>
         <translatorcomment>Description label to indicate the user needs to login in order to run and fully use MEGA desktop app.</translatorcomment>
-        <translation>Vous devez vous connecter à votre compte MEGA pour utiliser l’Appli MEGA pour ordinateur.</translation>
+        <translation>Vous devez vous connecter à votre compte MEGA pour utiliser l’appli MEGA pour ordinateur.</translation>
     </message>
     <message>
         <source>Create account</source>
@@ -1844,7 +1844,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Know more about MEGA desktop app. [A]Read more[/A]</source>
         <translatorcomment>Label with hyperlink to sync client webpage to know more about MEGA desktop app. Keep placeholders.</translatorcomment>
-        <translation>Apprenez-en davantage sur l’Appli MEGA pour ordinateur. [A]Plus de précisions[/A]</translation>
+        <translation>Apprenez-en davantage sur l’appli MEGA pour ordinateur. [A]Plus de précisions[/A]</translation>
     </message>
 </context>
 <context>
@@ -3796,7 +3796,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Show </source>
         <translatorcomment>Contextual menu from file list headers that allow to enable or disable diferent columns (size, type, data modified)</translatorcomment>
-        <translation>Afficher </translation>
+        <translation>Afficher</translation>
     </message>
     <message>
         <source>All files (*)</source>
@@ -4700,7 +4700,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Notifications</source>
         <translatorcomment>Title for the Settings -&gt; Notifications pane tab button. Keep as short as possible.</translatorcomment>
-        <translation>Notifications </translation>
+        <translation>Notifications</translation>
     </message>
     <message>
         <source>Launch at login</source>
@@ -4733,7 +4733,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>I agree with the MEGA &lt;a href=&quot;https://mega.co.nz/#terms&quot;&gt;Terms of Service&lt;/a&gt;</source>
         <translatorcomment>Label to aggre with the Terms of use.  Keep code &lt;a href=&quot;https://mega.co.nz/#terms&quot;&gt;Terms of Service&lt;/a&gt; .String as short as possible.</translatorcomment>
-        <translation>J’accepte les &lt;a href=&quot;https://mega.nz/terms&quot;&gt;Conditions générales d’utilisation&lt;/a&gt; de MEGA</translation>
+        <translation>J’accepte les &lt;a href=&#8221;https://mega.nz/terms&#8221;&gt;Conditions générales d’utilisation&lt;/a&gt; de MEGA</translation>
     </message>
     <message>
         <source>Log in to your MEGA account</source>

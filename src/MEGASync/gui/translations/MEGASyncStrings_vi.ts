@@ -112,7 +112,7 @@
     <message>
         <source>Enter a name, an absolute path (wildcards * and ? are allowed) or choose which file or folder you want to exclude from the synchronization</source>
         <translatorcomment>Label to describe the different options that the user have to set a exclusion for all synchronizations.</translatorcomment>
-        <translation>Nhập tên, dạng tên hay đường dẫn mẫu (được phép sử dụng các ký tự như * và ? để đại diện) hoặc chọn ra tệp tin và thư mục bạn muốn liệt vào danh sách ngoại lệ khỏi quá trình đồng bộ</translation>
+        <translation>Nhập tên, dạng tên hay đường dẫn mẫu (được phép sử dụng các ký tự như * và ? để đại diện) hoặc chọn ra tệp tin và thư mục bạn muốn liệt vào danh sách ngoại lệ khỏi quá trình đồng bộ.</translation>
     </message>
     <message>
         <source>Choose File</source>
@@ -570,7 +570,7 @@
         <source>The name &quot;%1&quot; is already in use for another sync
 Please enter a different name to identify this synced folder:</source>
         <translatorcomment>Detailed message displayed when a user is using a name for a local folder that is already used. Preserve &quot;%1&quot; code because is used to indicate the local folder at runtime.</translatorcomment>
-        <translation>Tiến trình mang tên &quot;%1&quot; đã có trong một phiên đồng bộ. Xin đặt một cái tên khác để phân biệt với thư mục đồng bộ này:</translation>
+        <translation>Tiến trình mang tên “%1” đã có trong một phiên đồng bộ. Xin đặt một cái tên khác để phân biệt với thư mục đồng bộ này:</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -827,7 +827,7 @@ Please enter a different name to identify this synced folder:</source>
         <source>Attach diagnostic log files to assist with debugging[Br](in some cases it may contain details about your data, such as file or folder names)</source>
         <translatorcomment>Checkbox to let the user attach diagnostic log files for analysis when an application crash occurs. Keep [Br] place holder.</translatorcomment>
         <translation>Đính kèm tệp log chẩn đoán để hỗ trợ gỡ lỗi.
-Trong một số trường hợp, log có thể chứa thông tin chi tiết về dữ liệu của bạn, chẳng hạn như tên của tệp hoặc thư mục</translation>
+Trong một số trường hợp, log có thể chứa thông tin chi tiết về dữ liệu của bạn, chẳng hạn như tên của tệp hoặc thư mục.</translation>
     </message>
 </context>
 <context>
@@ -1108,7 +1108,7 @@ Trong một số trường hợp, log có thể chứa thông tin chi tiết v�
     <message>
         <source>Please resolve your payment issue to avoid suspension of your account.</source>
         <translatorcomment>Notification text to inform the user that there is a payment issue with the business accounts that needs to be solved to continue and avoid suspension.</translatorcomment>
-        <translation>Xin giải quyết vấn đề thanh toán ngay lúc sớm nhất để tránh tài khoản doanh nghiệp bị đình chỉ.</translation>
+        <translation>Xin giải quyết vấn đề thanh toán ngay lúc sớm nhất để tránh tài khoản doanh nghiệp bị đình chỉ</translation>
     </message>
     <message>
         <source>Pay Now</source>
@@ -1141,7 +1141,7 @@ Trong một số trường hợp, log có thể chứa thông tin chi tiết v�
     <message>
         <source>Download from MEGA</source>
         <translatorcomment>Label and Title of the dialog displayed when a user is trying to retrieve a file/folder from MEGA.(MAX 20 characters)</translatorcomment>
-        <translation>Tải về từ MEGA</translation>
+        <translation>Tải xuống từ MEGA</translation>
     </message>
     <message>
         <source>Please select the download folder for your files:</source>
@@ -1753,7 +1753,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Depleted transfer quota.</source>
         <translatorcomment>Title to indicate a situation of depleted transfer quota for the current account.</translatorcomment>
-        <translation>Băng thông truyền tải cạn kiệt</translation>
+        <translation>Băng thông truyền tải cạn kiệt.</translation>
     </message>
     <message>
         <source>All downloads are currently disabled.</source>
@@ -2142,7 +2142,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the remote folder is in the rubbish bin</source>
         <translatorcomment>Notification message launched when a sync is disabled due to the remote folder has been deleted. Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
-        <translation>Đồng bộ cho &quot;%1&quot; đã bị tắtvì thư mục đã bị chuyển vào thùng rác ở nơi khác</translation>
+        <translation>Đồng bộ cho “%1” đã bị tắtvì thư mục đã bị chuyển vào thùng rác ở nơi khác</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the local folder has changed</source>
@@ -2200,7 +2200,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Transfer canceled</source>
-        <translation>Phiên tuyền tải đã bị hủy!</translation>
+        <translation>Phiên tuyền tải đã bị hủy</translation>
     </message>
     <message>
         <source>You are not logged in</source>
@@ -3093,11 +3093,11 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>You need Full access right to be able to sync the selected folder.</source>
         <translatorcomment>Error message shown when an user is trying sync a non compatible folder</translatorcomment>
-        <translation>Bạn cần phải có &quot;Toàn quyền truy cập&quot; để đồng bộ thư mục vừa chọn.</translation>
+        <translation>Bạn cần phải có &#8220;Toàn quyền truy cập&#8221; để đồng bộ thư mục vừa chọn.</translation>
     </message>
     <message>
         <source>Are you sure that you want to delete &quot;%1&quot;?</source>
-        <translation>Bạn có chắc muốn xóa &quot;%1&quot; không?</translation>
+        <translation>Bạn có chắc muốn xóa “%1” không?</translation>
     </message>
     <message>
         <source>Delete</source>
@@ -3265,7 +3265,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Importing links is temporarily disabled.</source>
         <translatorcomment>Label to indicate that import links feature is temporarily disabled due to a situation of over transfer quota. User will be able to import but not to download.</translatorcomment>
-        <translation>Chuyển nhập liên kết của tài khoản tạm thời bị gián đoạn</translation>
+        <translation>Chuyển nhập liên kết của tài khoản tạm thời bị gián đoạn.</translation>
     </message>
     <message>
         <source>You have exceeded the available transfer quota for your account. You can import links but transfers will remain queued until there is enough bandwidth on your account.</source>
@@ -3280,7 +3280,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>You have exceeded the available transfer quota for your account. You can add downloads but transfers will remain queued until there is enough bandwidth on your account.</source>
         <translatorcomment>Informative label to indicate the user has exceeded the available transfer quota limit, letting to add new downloads that will remain queued until there is enough bandwidth for the current account.</translatorcomment>
-        <translation>Bạn đã đạt giới hạn băng thông cung cấp cho tài khoản này. Bạn có thể thêm mục muốn tải về vào hàng chờ và việc truyền tải sẽ phải đợt cho đến khi băng thông được hồi phục.</translation>
+        <translation>Bạn đã đạt giới hạn băng thông cung cấp cho tài khoản này. Bạn có thể thêm mục muốn tải xuống vào phiên chờ và việc truyền tải sẽ phải đợt cho đến khi băng thông được hồi phục.</translation>
     </message>
     <message>
         <source>Streams are temporarily disabled.</source>
@@ -3548,8 +3548,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 - Cải thiện trải nghiệm người dùng.
 - Đã thêm bảng thông báo mới trong cài đặt hộp thoại.
 - Sửa lỗi nhỏ và điều chỉnh giao diện người dùng.
-- Khắc phục lỗi treo máy được phát hiện trên Windows, Linux và macOS.
-</translation>
+- Khắc phục lỗi treo máy được phát hiện trên Windows, Linux và macOS.</translation>
     </message>
 </context>
 <context>
@@ -3798,7 +3797,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Show </source>
         <translatorcomment>Contextual menu from file list headers that allow to enable or disable diferent columns (size, type, data modified)</translatorcomment>
-        <translation>Hiện </translation>
+        <translation>Hiện</translation>
     </message>
     <message>
         <source>All files (*)</source>
@@ -3918,7 +3917,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Are you sure you want to delete &apos;%1&apos;?</source>
         <translatorcomment>Warning message shown before deleting a file or a folder.</translatorcomment>
-        <translation>Bạn có chắc muốn xóa ‘%1’ không?</translation>
+        <translation>Bạn có chắc muốn xóa “%1” không?</translation>
     </message>
     <message>
         <source>File &amp;name:</source>
@@ -3954,7 +3953,7 @@ Xin kiểm tra lại tên tệp tin cho đúng.</translation>
         <source>&apos;%1&apos; is write protected.
 Do you want to delete it anyway?</source>
         <translatorcomment>Warning message when a write protected file is about to be delete</translatorcomment>
-        <translation>″%1″ được bảo vệ.
+        <translation>“%1” được bảo vệ.
 Bạn có muốn tiếp tục xóa không?</translation>
     </message>
 </context>
@@ -4735,7 +4734,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>I agree with the MEGA &lt;a href=&quot;https://mega.co.nz/#terms&quot;&gt;Terms of Service&lt;/a&gt;</source>
         <translatorcomment>Label to aggre with the Terms of use.  Keep code &lt;a href=&quot;https://mega.co.nz/#terms&quot;&gt;Terms of Service&lt;/a&gt; .String as short as possible.</translatorcomment>
-        <translation>Tôi đồng ý với &lt;a href=&quot;https://mega.nz/terms&quot;&gt;Điều Khoản Dịch Vụ&lt;/a&gt; của MEGA</translation>
+        <translation>Tôi đồng ý với &lt;a href=&#8221;https://mega.nz/terms&#8221;&gt;Điều Khoản Dịch Vụ&lt;/a&gt; của MEGA</translation>
     </message>
     <message>
         <source>Log in to your MEGA account</source>
@@ -4745,7 +4744,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Please verify your account using the confirmation link that we have sent to your email account</source>
         <translatorcomment>Label displayed at last step of creation account process to inform the user to verify the new created account.</translatorcomment>
-        <translation>Xin xác nhận tài khoản của quý khách bằng cách nhấp vào liên kết xác nhận mà chúng tôi vừa gửi trong email.</translation>
+        <translation>Xin xác nhận tài khoản của quý khách bằng cách nhấp vào liên kết xác nhận mà chúng tôi vừa gửi trong email</translation>
     </message>
     <message>
         <source>Logging in ...</source>
@@ -4860,7 +4859,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>You have to accept our terms of service</source>
         <translatorcomment>Label displayed when the user has not check the agreement of terms of service.</translatorcomment>
-        <translation>Bạn phải chấp thuận Điều Khoản Dịch Vụ.</translation>
+        <translation>Bạn phải chấp thuận Điều Khoản Dịch Vụ</translation>
     </message>
     <message>
         <source>Creating account...</source>
@@ -5448,12 +5447,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Limited available transfer quota.</source>
         <translatorcomment>System notification title to inform the user about limited available transfer quota. Above 90 percent of transfer quota usage reached.</translatorcomment>
-        <translation>Băng thông truyền tải hiện có bị giới hạn</translation>
+        <translation>Băng thông truyền tải hiện có bị giới hạn.</translation>
     </message>
     <message>
         <source>Depleted transfer quota.</source>
         <translatorcomment>System notification title to inform the user about depleted transfer quota situation.</translatorcomment>
-        <translation>Băng thông truyền tải cạn kiệt</translation>
+        <translation>Băng thông truyền tải cạn kiệt.</translation>
     </message>
 </context>
 <context>

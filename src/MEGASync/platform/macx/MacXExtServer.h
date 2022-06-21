@@ -46,7 +46,7 @@ public slots:
 
 private:
    QString sockPath;
-   QList<MacXLocalSocket *> m_clients;
+   QList<QPointer<MacXLocalSocket>> m_clients;
    bool GetAnswerToRequest(const char *buf, QByteArray *response);
 
 signals:

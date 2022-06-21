@@ -353,12 +353,12 @@
     <message>
         <source>Your payment for the [A] plan was received</source>
         <translatorcomment>Label to indicate that the user has paid for a [A] PRO plan. Placeholder will be replaced by the PRO plan name</translatorcomment>
-        <translation>O pagamento do plano [A] foi recebido.</translation>
+        <translation>O pagamento do plano [A] foi recebido</translation>
     </message>
     <message>
         <source>Your payment for the [A] plan was unsuccessful</source>
         <translatorcomment>Label to indicate that the the payment for a [A] PRO plan has failed. Placeholder will be replaced by the PRO plan name</translatorcomment>
-        <translation>Não foi possível fazer o pagamento do plano [A].</translation>
+        <translation>Não foi possível fazer o pagamento do plano [A]</translation>
     </message>
     <message>
         <source>Your PRO membership plan will expire in 1 day</source>
@@ -433,12 +433,12 @@
     <message>
         <source>Your publicly shared file ([A]) has been reinstated</source>
         <translatorcomment>Label to indicate that public shared file has been reinstated. Placeholder [A] will be replaced by the name of the file.</translatorcomment>
-        <translation>A remoção do seu arquivo compartilhado ([A]) foi revogada.</translation>
+        <translation>A remoção do seu arquivo compartilhado ([A]) foi revogada</translation>
     </message>
     <message>
         <source>Your publicly shared folder ([A]) has been reinstated</source>
         <translatorcomment>Label to indicate that public shared folder has been reinstated. Placeholder [A] will be replaced by the name of the folder.</translatorcomment>
-        <translation>A remoção da sua pasta compartilhada ([A]) foi revogada.</translation>
+        <translation>A remoção da sua pasta compartilhada ([A]) foi revogada</translation>
     </message>
 </context>
 <context>
@@ -570,7 +570,7 @@
         <source>The name &quot;%1&quot; is already in use for another sync
 Please enter a different name to identify this synced folder:</source>
         <translatorcomment>Detailed message displayed when a user is using a name for a local folder that is already used. Preserve &quot;%1&quot; code because is used to indicate the local folder at runtime.</translatorcomment>
-        <translation>O nome &quot;%1&quot; já está sendo usado em outra sincronização. Por favor, digite um nome diferente para identificar esta pasta sincronizada:</translation>
+        <translation>O nome “%1” já está sendo usado em outra sincronização. Por favor, digite um nome diferente para identificar esta pasta sincronizada:</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -663,7 +663,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Error on submitting bug report</source>
         <translatorcomment>Error message shown when some error occurs during uploading a bug report.</translatorcomment>
-        <translation>Não foi possível notificar o problema</translation>
+        <translation>Não foi possível notificar o problema.</translation>
     </message>
     <message>
         <source>Bug report can&apos;t be submitted due to some error. Please try again or contact our support team via [A]support@mega.co.nz[/A]</source>
@@ -1033,7 +1033,7 @@ Estes arquivos podem conter detalhes sobre os seus dados, como nomes de arquivos
     <message>
         <source>Your publicly shared file ([A]) has been reinstated</source>
         <translatorcomment>Label to indicate that public shared file has been reinstated. Placeholder [A] will be replaced by the name of the file.</translatorcomment>
-        <translation>A remoção do seu arquivo compartilhado ([A]) foi revogada.</translation>
+        <translation>A remoção do seu arquivo compartilhado ([A]) foi revogada</translation>
     </message>
     <message>
         <source>Your publicly shared file ([A]) has been taken down</source>
@@ -1043,7 +1043,7 @@ Estes arquivos podem conter detalhes sobre os seus dados, como nomes de arquivos
     <message>
         <source>Your publicly shared folder ([A]) has been reinstated</source>
         <translatorcomment>Label to indicate that public shared folder has been reinstated. Placeholder [A] will be replaced by the name of the folder.</translatorcomment>
-        <translation>A remoção da sua pasta compartilhada ([A]) foi revogada.</translation>
+        <translation>A remoção da sua pasta compartilhada ([A]) foi revogada</translation>
     </message>
     <message>
         <source>Your publicly shared folder ([A]) has been taken down</source>
@@ -1108,7 +1108,7 @@ Estes arquivos podem conter detalhes sobre os seus dados, como nomes de arquivos
     <message>
         <source>Please resolve your payment issue to avoid suspension of your account.</source>
         <translatorcomment>Notification text to inform the user that there is a payment issue with the business accounts that needs to be solved to continue and avoid suspension.</translatorcomment>
-        <translation>Por favor, solucione o problema de pagamento o mais breve possível para evitar que a sua conta Business seja bloqueada.</translation>
+        <translation>Por favor, solucione o problema de pagamento o mais breve possível para evitar que a sua conta Business seja bloqueada</translation>
     </message>
     <message>
         <source>Pay Now</source>
@@ -1373,7 +1373,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Fetching file list...</source>
         <translatorcomment>Label shown at main dialog to show the current operation. In this case fetching file information from servers.</translatorcomment>
-        <translation>Listando arquivos</translation>
+        <translation>Listando arquivos…</translation>
     </message>
     <message>
         <source>Error</source>
@@ -1628,7 +1628,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>You&apos;re running out of storage space.</source>
         <translatorcomment>Label to inform the user that the account is running out of storage space.</translatorcomment>
-        <translation>Você está ficando sem espaço de armazenamento.</translation>
+        <translation>Você está ficando sem espaço de armazenamento!</translation>
     </message>
     <message>
         <source>Upgrade to PRO now before your account runs full and your uploads to MEGA stop.</source>
@@ -1648,7 +1648,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Please upgrade to PRO.</source>
         <translatorcomment>Label to encourage the user to upgrade to PRO</translatorcomment>
-        <translation>Faça o upgrade da sua conta</translation>
+        <translation>Faça o upgrade da sua conta.</translation>
     </message>
     <message>
         <source>Upload</source>
@@ -1748,12 +1748,12 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>You must act immediately to save your data</source>
         <translatorcomment>Label to inform the user that deadline for upgrade has been reached. The user needs to fix the situation asap to avoid data deletion.</translatorcomment>
-        <translation>Você deve agir imediatamente para não perder os seus arquivos.</translation>
+        <translation>Você deve agir imediatamente para não perder os seus arquivos</translation>
     </message>
     <message>
         <source>Depleted transfer quota.</source>
         <translatorcomment>Title to indicate a situation of depleted transfer quota for the current account.</translatorcomment>
-        <translation>Cota de transferência excedida</translation>
+        <translation>Cota de transferência excedida.</translation>
     </message>
     <message>
         <source>All downloads are currently disabled.</source>
@@ -1844,7 +1844,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Know more about MEGA desktop app. [A]Read more[/A]</source>
         <translatorcomment>Label with hyperlink to sync client webpage to know more about MEGA desktop app. Keep placeholders.</translatorcomment>
-        <translation>Saiba mais sobre o aplicativo do MEGA para desktop App: [A]mais informações[/A]</translation>
+        <translation>Saiba mais sobre o aplicativo do MEGA para desktop App. [A]Mais informações[/A]</translation>
     </message>
 </context>
 <context>
@@ -1862,7 +1862,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Select whether you want to install $(^NameDA) for yourself only or for all users of this computer. $(^ClickNext)</source>
         <translatorcomment>Label to indicate the type of installation. Preserve $(^NameDA)  and $(^ClickNext) codes.</translatorcomment>
-        <translation>Selecione se deseja instalar $(^NameDA) apenas para você, ou para todos os usuários neste computador.  $(^ClickNext)</translation>
+        <translation>Selecione se deseja instalar $(^NameDA) apenas para você, ou para todos os usuários neste computador. $(^ClickNext)</translation>
     </message>
     <message>
         <source>Install for anyone using this computer</source>
@@ -2035,7 +2035,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>A new version of MEGAsync is available! Click on this message to install it</source>
         <translatorcomment>Notification message launched to inform the user that there is an available update .</translatorcomment>
-        <translation>Uma nova versão do MEGAsync está disponível! Clique nesta mensagem para instalar.</translation>
+        <translation>Uma nova versão do MEGAsync está disponível! Clique nesta mensagem para instalar</translation>
     </message>
     <message>
         <source>There was a problem installing the update. Please try again later or download the last version from:
@@ -2112,12 +2112,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the remote folder doesn&apos;t exist</source>
         <translatorcomment>Notification message launched checking  remote synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.</translatorcomment>
-        <translation>A sua sincronização &quot;%1&quot; foi desativada porque a pasta remota não existe</translation>
+        <translation>A sua sincronização “%1” foi desativada porque a pasta remota não existe</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</source>
         <translatorcomment>Notification message launched checking  local synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.</translatorcomment>
-        <translation>A sua sincronização &quot;%1&quot; foi desativada porque a pasta local não existe</translation>
+        <translation>A sua sincronização “%1” foi desativada porque a pasta local não existe</translation>
     </message>
     <message>
         <source>Your account has been blocked. Please contact support@mega.co.nz</source>
@@ -2142,17 +2142,17 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the remote folder is in the rubbish bin</source>
         <translatorcomment>Notification message launched when a sync is disabled due to the remote folder has been deleted. Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
-        <translation>O seu sync &quot;%1&quot; foi desativadoporque a pasta remota esta no lixo</translation>
+        <translation>O seu sync “%1” foi desativadoporque a pasta remota esta no lixo</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the local folder has changed</source>
         <translatorcomment>Notification message launched when a sync is disabled due to the local folder has changed(moved/deleted/...). Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
-        <translation>A sua sincronização &quot;%1&quot; foi desativada porque a pasta local mudou</translation>
+        <translation>A sua sincronização “%1” foi desativada porque a pasta local mudou</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&apos;t have full access</source>
         <translatorcomment>Notification message launched when a sync is disabled due to the access problems. Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
-        <translation>A sua sincronização &quot;%1&quot; foi desativada. A pasta remota (ou parte dela) não tem acesso total</translation>
+        <translation>A sua sincronização “%1” foi desativada. A pasta remota (ou parte dela) não tem acesso total</translation>
     </message>
     <message>
         <source>Over quota</source>
@@ -2162,7 +2162,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the synchronization of VirtualBox shared folders is not supported due to deficiencies in that filesystem.</source>
         <translatorcomment>Notification message launched when an user is trying to sync a non valid VirtualBox shared folder . Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
-        <translation>A sincronização de ”%1″ foi desativada porque a sincronização de pastas compartilhadas da VirtualBox não é permitida, devido a deficiências no sistema de arquivos.</translation>
+        <translation>A sincronização de “%1” foi desativada porque a sincronização de pastas compartilhadas da VirtualBox não é permitida, devido a deficiências no sistema de arquivos.</translation>
     </message>
     <message>
         <source>Error getting link information</source>
@@ -2196,11 +2196,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Fetching file list...</source>
-        <translation>Listando arquivos</translation>
+        <translation>Listando arquivos…</translation>
     </message>
     <message>
         <source>Transfer canceled</source>
-        <translation>Transferência cancelada!</translation>
+        <translation>Transferência cancelada</translation>
     </message>
     <message>
         <source>You are not logged in</source>
@@ -2496,7 +2496,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your sync &quot;%1&quot; has been enabled</source>
         <translatorcomment>Notificaton message shown when %1 sync has been enable. %1 will be replaced with sync name at runtime.</translatorcomment>
-        <translation>A sincronização da pasta “%1” foi ativada.</translation>
+        <translation>A sincronização da pasta “%1” foi ativada</translation>
     </message>
     <message>
         <source>MEGAsync will continue to work, however updates will no longer be supported for versions prior to OS X Yosemite soon.</source>
@@ -2526,7 +2526,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your syncs have been disabled</source>
         <translatorcomment>Notification message launched when your syncs have been disabled.</translatorcomment>
-        <translation>As suas sincronizações foram desativadas.</translation>
+        <translation>As suas sincronizações foram desativadas</translation>
     </message>
 </context>
 <context>
@@ -2687,7 +2687,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Storage Quota Exceeded. Upgrade now</source>
         <translatorcomment>Error label to indicate a situation of storage quota exceeded and the user needs to upgrade now in order to continue working with the account.</translatorcomment>
-        <translation>Cota de armazenamento excedida. Por favor, faça um upgrade.</translation>
+        <translation>Cota de armazenamento excedida. Por favor, faça um upgrade</translation>
     </message>
 </context>
 <context>
@@ -2799,7 +2799,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Foreign target storage quota reached</source>
         <translatorcomment>Label to show that foreign target account has exceeded its storage quota during a SDK operation.</translatorcomment>
-        <translation>A cota de armazenamento da conta do proprietário da pasta sincronizada foi excedida</translation>
+        <translation>A cota de armazenamento da conta do proprietário da pasta sincronizada foi excedida.</translation>
     </message>
     <message>
         <source>Remote path has changed</source>
@@ -3097,7 +3097,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
     <message>
         <source>Are you sure that you want to delete &quot;%1&quot;?</source>
-        <translation>Tem certeza de que deseja excluir &quot;%1&quot;?</translation>
+        <translation>Tem certeza de que deseja excluir “%1”?</translation>
     </message>
     <message>
         <source>Delete</source>
@@ -3280,7 +3280,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>You have exceeded the available transfer quota for your account. You can add downloads but transfers will remain queued until there is enough bandwidth on your account.</source>
         <translatorcomment>Informative label to indicate the user has exceeded the available transfer quota limit, letting to add new downloads that will remain queued until there is enough bandwidth for the current account.</translatorcomment>
-        <translation>Você excedeu a cota de transferência da sua conta. Você pode adicionar downloads, mas as transferências permanecerão pendentes até haver cota de transferência disponível na sua conta</translation>
+        <translation>Você excedeu a cota de transferência da sua conta. Você pode adicionar downloads, mas as transferências permanecerão pendentes até haver cota de transferência disponível na sua conta.</translation>
     </message>
     <message>
         <source>Streams are temporarily disabled.</source>
@@ -3548,8 +3548,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 - Experiência do usuário melhorada.
 - Adicionado um novo painel de notificações na área de configurações.
 - Outras pequenas correções e ajustes na interface do usuário.
-- Corrigidas falhas detectadas no Windows, Linux e macOS.
-</translation>
+- Corrigidas falhas detectadas no Windows, Linux e macOS.</translation>
     </message>
 </context>
 <context>
@@ -3798,7 +3797,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Show </source>
         <translatorcomment>Contextual menu from file list headers that allow to enable or disable diferent columns (size, type, data modified)</translatorcomment>
-        <translation>Mostrar </translation>
+        <translation>Mostrar</translation>
     </message>
     <message>
         <source>All files (*)</source>
@@ -3918,7 +3917,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Are you sure you want to delete &apos;%1&apos;?</source>
         <translatorcomment>Warning message shown before deleting a file or a folder.</translatorcomment>
-        <translation>Você tem certeza de que quer deletar ”%1″?</translation>
+        <translation>Você tem certeza de que quer deletar “%1”?</translation>
     </message>
     <message>
         <source>File &amp;name:</source>
@@ -4033,7 +4032,7 @@ Você quer deletá-lo mesmo assim?</translation>
     <message>
         <source>&lt;b&gt;The name &quot;%1&quot; cannot be used.&lt;/b&gt;&lt;p&gt;Try using another name, with fewer characters or no punctuation marks.</source>
         <translatorcomment>Alert message when file name is incorrect</translatorcomment>
-        <translation>&lt;b&gt;O nome ”%1″ não pode ser usado.&lt;/b&gt;&lt;p&gt;Tente usar outro nome, com menos caracteres e sem sinais de pontuação.</translation>
+        <translation>&lt;b&gt;O nome “%1” não pode ser usado.&lt;/b&gt;&lt;p&gt;Tente usar outro nome, com menos caracteres e sem sinais de pontuação.</translation>
     </message>
 </context>
 <context>
@@ -4172,7 +4171,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Default folders</source>
         <translatorcomment>Label to indicate the default path section for Uploads and Downloads.</translatorcomment>
-        <translation>Pastas predeterminadas:</translation>
+        <translation>Pastas predeterminadas</translation>
     </message>
     <message>
         <source>Uploads:</source>
@@ -4447,7 +4446,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Move…</source>
         <translatorcomment>Button label text allowing the user to change the default Uploads or Downloads folders for the app.</translatorcomment>
-        <translation>Mover...</translation>
+        <translation>Mover…</translation>
     </message>
     <message>
         <source>Exclude files smaller than</source>
@@ -4467,7 +4466,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Change Settings…</source>
         <translatorcomment>Button label text for Bandwidth and Proxy settings in Network pane.</translatorcomment>
-        <translation>Alterar as configurações...</translation>
+        <translation>Alterar as configurações…</translation>
     </message>
     <message>
         <source>Proxies</source>
@@ -4735,7 +4734,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>I agree with the MEGA &lt;a href=&quot;https://mega.co.nz/#terms&quot;&gt;Terms of Service&lt;/a&gt;</source>
         <translatorcomment>Label to aggre with the Terms of use.  Keep code &lt;a href=&quot;https://mega.co.nz/#terms&quot;&gt;Terms of Service&lt;/a&gt; .String as short as possible.</translatorcomment>
-        <translation>Eu concordo com os &lt;a href=&quot;https://mega.nz/terms&quot;&gt;Termos de serviço&lt;/a&gt; do MEGA</translation>
+        <translation>Eu concordo com os &lt;a href=&#8221;https://mega.nz/terms&#8221;&gt;Termos de serviço&lt;/a&gt; do MEGA</translation>
     </message>
     <message>
         <source>Log in to your MEGA account</source>
@@ -4810,7 +4809,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Fetching file list...</source>
         <translatorcomment>Label displayed while the application is retrieving all file list from the server.</translatorcomment>
-        <translation>Listando arquivos</translation>
+        <translation>Listando arquivos…</translation>
     </message>
     <message>
         <source>Incorrect email and/or password.</source>
@@ -5453,7 +5452,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Depleted transfer quota.</source>
         <translatorcomment>System notification title to inform the user about depleted transfer quota situation.</translatorcomment>
-        <translation>Cota de transferência excedida</translation>
+        <translation>Cota de transferência excedida.</translation>
     </message>
 </context>
 <context>

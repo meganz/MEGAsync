@@ -193,6 +193,8 @@ private:
                     mega::MegaHandle tag, std::shared_ptr<SyncSetting> syncSetting = nullptr);
     void saveExcludeSyncNames();
     void updateNetworkTab();
+    void setShortCutsForToolBarItems();
+    void updateCacheSchedulerDaysLabel();
 
     enum
     {
@@ -225,7 +227,7 @@ private:
 
     Ui::SettingsDialog* mUi;
     MegaApplication* mApp;
-    Preferences* mPreferences;
+    std::shared_ptr<Preferences> mPreferences;
     Controller* mController;
     Model* mModel;
     mega::MegaApi* mMegaApi;
@@ -248,6 +250,5 @@ private:
     bool mHasDefaultUploadOption;
     bool mHasDefaultDownloadOption;
     QPointer<ProxySettings> mProxySettingsDialog;
-    void setShortCutsForToolBarItems();
 };
 #endif // SETTINGSDIALOG_H

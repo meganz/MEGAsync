@@ -354,9 +354,21 @@ QStringList Model::getMegaFolders()
     QStringList value;
     for (auto &cs : configuredSyncs)
     {
-        value.append(configuredSyncsMap[cs]->getMegaFolder());
+        value.append(configuredSyncsMap[cs]->getMegaFolder().append(QLatin1Char('/')));
     }
     return value;
+}
+
+QString Model::getMegaFolderByHandle(const MegaHandle &handle)
+{
+    for (auto &cs : configuredSyncs)
+    {
+        if(configuredSyncsMap[cs]->getMegaHandle() == handle)
+        {
+            return configuredSyncsMap[cs]->getMegaFolder();
+        }
+    }
+    return QString();
 }
 
 QStringList Model::getLocalFolders()

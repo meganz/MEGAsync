@@ -38,7 +38,7 @@ private:
 
     Ui::BandwidthSettings* mUi;
     MegaApplication* mApp;
-    Preferences* mPreferences;
+    std::shared_ptr<Preferences> mPreferences;
 };
 
 #endif // BANDWIDTHSETTINGS_H

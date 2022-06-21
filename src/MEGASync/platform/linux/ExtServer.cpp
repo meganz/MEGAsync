@@ -1,7 +1,9 @@
 #include "ExtServer.h"
+
 #include <sys/types.h>
 #include <pwd.h>
 #include <unistd.h>
+#include "CommonMessages.h"
 #include "control/Utilities.h"
 
 using namespace mega;
@@ -149,70 +151,8 @@ const char *ExtServer::GetAnswerToRequest(const char *buf)
                 break;
             }
 
-            QString actionString;
-            switch (stringId)
-            {
-                case STRING_UPLOAD:
-                    actionString = QCoreApplication::translate("ShellExtension", "Upload to MEGA");
-                    break;
-                case STRING_GETLINK:
-                    actionString = QCoreApplication::translate("ShellExtension", "Get MEGA link");
-                    break;
-                case STRING_SHARE:
-                    actionString = QCoreApplication::translate("ShellExtension", "Share with a MEGA user");
-                    break;
-                case STRING_SEND:
-                    actionString = QCoreApplication::translate("ShellExtension", "Send to a MEGA user");
-                    break;
-                case STRING_VIEW_ON_MEGA:
-                    actionString = QCoreApplication::translate("ShellExtension", "View on MEGA");
-                    break;
-                case STRING_VIEW_VERSIONS:
-                    actionString = QCoreApplication::translate("ShellExtension", "View previous versions");
-                    break;
-            }
-
-            QString sNumFiles;
-            if (numFiles == 1)
-            {
-                sNumFiles = QCoreApplication::translate("ShellExtension", "1 file");
-            }
-            else if (numFiles > 1)
-            {
-                sNumFiles = QCoreApplication::translate("ShellExtension", "%1 files").arg(numFiles);
-            }
-
-            QString sNumFolders;
-            if (numFolders == 1)
-            {
-                sNumFolders = QCoreApplication::translate("ShellExtension", "1 folder");
-            }
-            else if (numFolders > 1)
-            {
-                sNumFolders = QCoreApplication::translate("ShellExtension", "%1 folders").arg(numFolders);
-            }
-
-            QString fullString;
-            if (numFiles && numFolders)
-            {
-                fullString = QCoreApplication::translate("ShellExtension", "%1 (%2, %3)")
-                        .arg(actionString).arg(sNumFiles).arg(sNumFolders);
-            }
-            else if (numFiles && !numFolders)
-            {
-                fullString = QCoreApplication::translate("ShellExtension", "%1 (%2)")
-                        .arg(actionString).arg(sNumFiles);
-            }
-            else if (!numFiles && numFolders)
-            {
-                fullString = QCoreApplication::translate("ShellExtension", "%1 (%2)")
-                        .arg(actionString).arg(sNumFolders);
-            }
-            else
-            {
-                fullString = actionString;
-            }
-
+            QString actionString = getActionName(stringId);
+            QString fullString = CommonMessages::createShellExtensionActionLabel(actionString, numFiles, numFolders);
             strncpy(out, fullString.toUtf8().constData(), BUFSIZE);
             break;
         }
@@ -263,17 +203,17 @@ const char *ExtServer::GetAnswerToRequest(const char *buf)
             clearQueues();
             break;
         }
-        case L'V': //View on MEGA
+        case 'V': //View on MEGA
         {
             viewOnMega(content);
             break;
         }
-        case L'R': //Open pRevious versions
+        case 'R': //Open pRevious versions
         {
             viewOnMega(content);
             break;
         }
-        case L'H': //Has previous versions? (still unsupported)
+        case 'H': //Has previous versions? (still unsupported)
         {
             strncpy(out, "0", BUFSIZE);
             break;
@@ -284,6 +224,33 @@ const char *ExtServer::GetAnswerToRequest(const char *buf)
     }
 
     return out;
+}
+
+QString ExtServer::getActionName(const int actionId)
+{
+    QString name;
+    switch (actionId)
+    {
+        case STRING_UPLOAD:
+            name = QCoreApplication::translate("ShellExtension", "Upload to MEGA");
+            break;
+        case STRING_GETLINK:
+            name = QCoreApplication::translate("ShellExtension", "Get MEGA link");
+            break;
+        case STRING_SHARE:
+            name = QCoreApplication::translate("ShellExtension", "Share with a MEGA user");
+            break;
+        case STRING_SEND:
+            name = QCoreApplication::translate("ShellExtension", "Send to a MEGA user");
+            break;
+        case STRING_VIEW_ON_MEGA:
+            name = QCoreApplication::translate("ShellExtension", "View on MEGA");
+            break;
+        case STRING_VIEW_VERSIONS:
+            name = QCoreApplication::translate("ShellExtension", "View previous versions");
+            break;
+    }
+    return name;
 }
 
 void ExtServer::addToQueue(QQueue<QString> &queue, const char *content)

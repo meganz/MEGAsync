@@ -49,7 +49,7 @@ void UpgradeOverStorage::setPricing(std::shared_ptr<mega::MegaPricing> pricing,
 
 void UpgradeOverStorage::refreshStorageDetails()
 {
-    Preferences* preferences = Preferences::instance();
+    auto preferences = Preferences::instance();
     auto totalStorage(preferences->totalStorage());
     mUi->lAccountUsed->setText(tr("100% of the %1 available used on your account.")
                                .arg(Utilities::getSizeString(totalStorage)));
