@@ -475,7 +475,7 @@ set (SRCS
     ${MEGAsyncDir}/gui/EventHelper.cpp
     ${MEGAsyncDir}/gui/GuiUtilities.cpp
     ${MEGAsyncDir}/gui/ScanningWidget.cpp
-	${MEGAsyncDir}/gui/BlurredShadowEffect.cpp
+    ${MEGAsyncDir}/gui/BlurredShadowEffect.cpp
     ${MEGAsyncDir}/gui/CancelConfirmWidget.cpp
 
     ${MEGAsyncDir}/mega/bindings/qt/QTMegaRequestListener.cpp
@@ -504,11 +504,11 @@ set (SRCS
     ${MEGAsyncDir}/control/UserAttributesManager.cpp
     ${MEGAsyncDir}/model/SyncSettings.cpp
     ${MEGAsyncDir}/model/SyncModel.cpp
-	${MEGAsyncDir}/gui/BackupItemModel.cpp
+    ${MEGAsyncDir}/gui/BackupItemModel.cpp
     ${MEGAsyncDir}/gui/SyncItemModel.cpp
     ${MEGAsyncDir}/gui/SyncTableView.cpp
     ${MEGAsyncDir}/gui/BackupTableView.cpp
-	${MEGAsyncDir}/gui/BackupsWizard.cpp
+    ${MEGAsyncDir}/gui/BackupsWizard.cpp
     ${MEGAsyncDir}/gui/SyncsMenu.cpp
     ${MEGAsyncDir}/gui/AddBackupDialog.cpp
     ${MEGAsyncDir}/gui/RemoveBackupDialog.cpp

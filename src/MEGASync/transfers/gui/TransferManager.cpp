@@ -14,6 +14,9 @@
 
 using namespace mega;
 
+const int TransferManager::SPEED_REFRESH_PERIOD_MS;
+const int TransferManager::STATS_REFRESH_PERIOD_MS;
+
 const char* LABEL_NUMBER = "NUMBER";
 const char* ITS_ON = "itsOn";
 
