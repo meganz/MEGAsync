@@ -24,9 +24,9 @@ public:
     void disableContextMenus(bool option);
 
     void onPauseResumeVisibleRows(bool isPaused);
-    void onCancelAllTransfers();
+    bool onCancelAllTransfers();
     void onClearAllTransfers();
-    void onCancelAndClearAllTransfers();
+    bool onCancelAndClearAllTransfers();
     void onCancelAndClearVisibleTransfers();
 
     int getVerticalScrollBarWidth() const;
