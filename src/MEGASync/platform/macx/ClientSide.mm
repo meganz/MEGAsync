@@ -13,7 +13,7 @@
 {
     if (_socketPrivate)
     {
-        _socketPrivate->buf += QByteArray((const char *)[msg bytes], [msg length]);
+        _socketPrivate->appendToBuffer(QByteArray((const char *)[msg bytes], [msg length]));
         emit _socketPrivate->socket->dataReady();
     }
 }
