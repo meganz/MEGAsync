@@ -36,17 +36,17 @@
     <message>
         <source>Cloud drive</source>
         <translatorcomment>Label for Cloud drive space used. Maintain capital letter in first word.(Max 18 characters)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>السواقة السحابية</translation>
     </message>
     <message>
         <source>Rubbish bin</source>
         <translatorcomment>Label for Rubbish bin space used. Maintain capital letter in first word.(Max 18 characters)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>سلة المحذوفات</translation>
     </message>
     <message>
         <source>Available storage</source>
         <translatorcomment>Label for Available storage space used. Maintain capital letter in first word.(Max 18 characters)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>مساحة التخزين المتاحة</translation>
     </message>
 </context>
 <context>
@@ -89,12 +89,12 @@
     <message numerus="yes">
         <source>Remaining upload</source>
         <translatorcomment>Label to indicate the remaining upload(s)</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>عملية ترفيع متبقية</numerusform><numerusform>عملية ترفيع متبقية</numerusform><numerusform>عملية ترفيع متبقية</numerusform><numerusform>عمليات ترفيع متبقية</numerusform><numerusform>عملية ترفيع متبقية</numerusform><numerusform>عملية ترفيع متبقية</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Remaining download</source>
         <translatorcomment>Label to indicate the remaining download(s)</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>عملية تنزيل متبقية</numerusform><numerusform>عملية تنزيل متبقية</numerusform><numerusform>عملية تنزيل متبقية</numerusform><numerusform>عمليات تنزيل متبقية</numerusform><numerusform>عملية تنزيل متبقية</numerusform><numerusform>عملية تنزيل متبقية</numerusform></translation>
     </message>
 </context>
 <context>
@@ -283,7 +283,7 @@
     <message>
         <source>[A] has been deleted/deactivated</source>
         <translatorcomment>Label to indicate that [A] has been deleted from your contacts. Placeholder will be replaced by email of user deleted</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>[A] تم حذفه/ إلغاء تفعيله</translation>
     </message>
     <message>
         <source>[A] established you as a contact</source>
@@ -388,22 +388,22 @@
     <message numerus="yes">
         <source>[A] added %n item</source>
         <translatorcomment>Label to indicate that [A] has added %n items to a shared folder. Placeholder [A] will be replaced by email of the user that made the additions and %n with the number of added items.</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>[A] أضاف %n عنصر</numerusform><numerusform>[A] أضاف %n عنصر</numerusform><numerusform>[A]  أضاف %n عنصرين</numerusform><numerusform>[A] أضاف %n عناصر</numerusform><numerusform> [A] أضاف %n عنصراً</numerusform><numerusform>[A] أضاف %n عنصر</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>[A] removed %n item</source>
         <translatorcomment>Label to indicate that [A] has removed %n items from a shared folder. Placeholder [A] will be replaced by email of the user that made the deletion and %n with the number of removed items.</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>[A] أزال %n عنصر</numerusform><numerusform>[A] أزال %n عنصر</numerusform><numerusform>[A] أزال %n عنصرين</numerusform><numerusform>[A] أزال %n عناصر</numerusform><numerusform>[A] أزال %n عنصراً</numerusform><numerusform>[A] أزال %n عنصر</numerusform></translation>
     </message>
     <message>
         <source>Decryption error</source>
         <translatorcomment>Label to indicate a decryption error for a folder name. Replacement for old NO_KEY term.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>خطأ فك التشفير</translation>
     </message>
     <message>
         <source>New shared folder from [A]</source>
         <translatorcomment>Label to indicate that [A] shared a folder with current user. Placeholder will be replaced by email of sharer user.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>مجلد مشارك جديد من [A]</translation>
     </message>
 </context>
 <context>
@@ -471,7 +471,7 @@
     <message>
         <source>Enable this option only if your transfers don&apos;t start. Under normal circumstances, HTTP is satisfactory as all transfers are already encrypted by MEGA.</source>
         <translatorcomment>Description label about the option &quot;Don&apos;t use HTTP&quot; checkbox.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>قم بتمكين هذا الخيار فقط إذا لم تبدأ عمليات التراسل الخاصة بك. في ظل الظروف العادية يكون HTTP مُرضيًا لأن جميع عمليات التراسل مشفرة بالفعل بواسطة ميغا MEGA.</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -766,7 +766,7 @@ Please enter a different name to identify this synced folder:</source>
     <message numerus="yes">
         <source>Your Pro membership plan will expire in %n day</source>
         <translatorcomment>Label to indicate that the PRO membership will expire in %n days. Placeholder will be replaced by the remaining days until plan will expire.</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>ستنتهي عضوية باقة برو Pro الخاصة بك في غضون %n يوم</numerusform><numerusform>ستنتهي عضوية باقة برو Pro الخاصة بك في غضون %n يوم</numerusform><numerusform>ستنتهي عضوية باقة برو Pro الخاصة بك في غضون %n يومين</numerusform><numerusform>ستنتهي عضوية باقة برو Pro الخاصة بك في غضون %n أيام</numerusform><numerusform>ستنتهي عضوية باقة برو Pro الخاصة بك في غضون %n يوماً</numerusform><numerusform>ستنتهي عضوية باقة برو Pro الخاصة بك في غضون %n يوم</numerusform></translation>
     </message>
     <message>
         <source>Pro membership plan expiring soon</source>
@@ -776,7 +776,7 @@ Please enter a different name to identify this synced folder:</source>
     <message numerus="yes">
         <source>Your Pro membership plan expired %n day ago</source>
         <translatorcomment>Label to indicate that the PRO membership expired %n days ago. Placeholder will be replaced by the days from the expiration of the PRO membership.</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>انتهت صلاحية عضوية باقة برو Pro الخاصة بك منذ %n يوم</numerusform><numerusform>انتهت صلاحية عضوية باقة برو Pro الخاصة بك منذ %n يوم</numerusform><numerusform>انتهت صلاحية عضوية باقة برو Pro الخاصة بك منذ %n يومين</numerusform><numerusform>انتهت صلاحية عضوية باقة برو Pro الخاصة بك منذ %n أيام</numerusform><numerusform>انتهت صلاحية عضوية باقة برو Pro الخاصة بك منذ %n يوماً</numerusform><numerusform>انتهت صلاحية عضوية باقة برو Pro الخاصة بك منذ %n يوم</numerusform></translation>
     </message>
 </context>
 <context>
@@ -1066,27 +1066,27 @@ Please enter a different name to identify this synced folder:</source>
     <message numerus="yes">
         <source>[A] added %n item</source>
         <translatorcomment>Label to indicate that [A] has added %n items to a shared folder. Placeholder [A] will be replaced by email of the user that made the additions and %n with the number of added items.</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>[A] أضاف %n عنصر</numerusform><numerusform>[A] أضاف %n عنصر</numerusform><numerusform>[A] أضاف %n عنصرين</numerusform><numerusform>[A] أضاف %n عناصر</numerusform><numerusform>[A] أضاف %n عنصراً</numerusform><numerusform>[A] أضاف %n عنصر</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>You have %n day left to save your data</source>
         <translatorcomment>Notification content to inform the days the user have to save the date before possible deletion. %n will be replaced with remaining days amount.</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>لديك %n يوم متبقي للحفاظ على بياناتك</numerusform><numerusform>لديك %n يوم متبقي للحفاظ على بياناتك</numerusform><numerusform>لديك %n يومان متبقيان للحفاظ على بياناتك</numerusform><numerusform>لديك %n أيام متبقية للحفاظ على بياناتك</numerusform><numerusform>لديك %n يوماً متبقي للحفاظ على بياناتك</numerusform><numerusform>لديك %n يوم متبقي للحفاظ على بياناتك</numerusform></translation>
     </message>
     <message>
         <source>Upgrade now to a Pro account.</source>
         <translatorcomment>Notification message shown to encourage the user to upgrade his account</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>قم بالترقية الآن إلى حساب برو Pro.</translation>
     </message>
     <message>
         <source>Get Pro</source>
         <translatorcomment>Notification button to redirect the user to upgrade account.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>احصل على برو Pro</translation>
     </message>
     <message>
         <source>New shared folder from [A]</source>
         <translatorcomment>Label to indicate that [A] shared a folder with current user. Placeholder will be replaced by email of sharer user.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>مجلد مشارك جديد من [A]</translation>
     </message>
 </context>
 <context>
@@ -1194,12 +1194,12 @@ Please enter a different name to identify this synced folder:</source>
     <message numerus="yes">
         <source>%n file</source>
         <translatorcomment>Context menu option label to indicate the user has selected %n number of files</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%n ملف</numerusform><numerusform>%n ملف</numerusform><numerusform>%n ملفان</numerusform><numerusform>%n ملفات</numerusform><numerusform>%n ملفاً</numerusform><numerusform>%n ملف</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n folder</source>
         <translatorcomment>Context menu option label to indicate the user has selected %n number of folders</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%n مجلد</numerusform><numerusform>%n مجلد</numerusform><numerusform>%n مجلدان</numerusform><numerusform>%n مجلدات</numerusform><numerusform>%n مجلداً</numerusform><numerusform>%n مجلد</numerusform></translation>
     </message>
 </context>
 <context>
@@ -1681,7 +1681,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>You must act immediately to save your data</source>
         <translatorcomment>Label to inform the user that deadline for upgrade has been reached. The user needs to fix the situation asap to avoid data deletion.</translatorcomment>
-        <translation>يجب أن تتصرف على الفور لحفظ البيانات الخاصة بك</translation>
+        <translation>يجب أن تتصرف على الفور للحفاظ على البيانات الخاصة بك</translation>
     </message>
     <message>
         <source>Depleted transfer quota.</source>
@@ -1736,17 +1736,17 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message numerus="yes">
         <source>We have contacted you by email to [A] on [B] but you still have %n file taking up [D] in your MEGA account, which requires you to have [E].</source>
         <translatorcomment>Informative label about account status regarding over quota storage. Placeholders will be replaced: [A] - user email, [B] - localized date list of emails sent to inform the user about the situation,  %n - amount of files in the current account, [D] - amount of storage used and [E] - min PRO plan needed to fix the situation.</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>لقد تواصلنا معك عبر البريد الإلكتروني [A] بتاريخ [B] ولكن لا يزال لديك %n ملف يستخدم [D] من حساب ميغا MEGA الخاص بك، والذي يتطلب منك الحصول على [E].</numerusform><numerusform>لقد تواصلنا معك عبر البريد الإلكتروني [A] بتاريخ [B] ولكن لا يزال لديك %n ملف يستخدم [D] من حساب ميغا MEGA الخاص بك، والذي يتطلب منك الحصول على [E].</numerusform><numerusform>لقد تواصلنا معك عبر البريد الإلكتروني [A] بتاريخ [B] ولكن لا يزال لديك %n ملفان يستخدمان [D] من حساب ميغا MEGA الخاص بك، والذي يتطلب منك الحصول على [E].</numerusform><numerusform>لقد تواصلنا معك عبر البريد الإلكتروني [A] بتاريخ [B] ولكن لا يزال لديك %n ملفات تستخدم [D] من حساب ميغا MEGA الخاص بك، والذي يتطلب منك الحصول على [E].</numerusform><numerusform>لقد تواصلنا معك عبر البريد الإلكتروني [A] بتاريخ [B] ولكن لا يزال لديك %n ملفاً تستخدم [D] من حساب ميغا MEGA الخاص بك، والذي يتطلب منك الحصول على [E].</numerusform><numerusform>لقد تواصلنا معك عبر البريد الإلكتروني [A] بتاريخ [B] ولكن لا يزال لديك%n ملف تستخدم [D] من حساب ميغا MEGA الخاص بك، والذي يتطلب منك الحصول على [E].</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>You have [A]%n day[/A] left to upgrade. After that, your data is subject to deletion.</source>
         <translatorcomment>Label to inform about the deadline time to upgrade. Otherwise, data is subject to deletion. Placeholder info: [A][/A] - needed to format and apply text style, %n- number of days left to upgrade.</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>لديك [A]%n يوم[/A] متبقي للترقية. بعد ذلك تخضع بياناتك للحذف.</numerusform><numerusform>لديك [A]%n يوم[/A] متبقي للترقية. بعد ذلك تخضع بياناتك للحذف.</numerusform><numerusform>لديك [A]%n يومان[/A] متبقيان للترقية. بعد ذلك تخضع بياناتك للحذف.</numerusform><numerusform>لديك [A]%n أيام[/A] متبقية للترقية. بعد ذلك تخضع بياناتك للحذف.</numerusform><numerusform>لديك [A]%n يوماً[/A] متبقياً للترقية. بعد ذلك تخضع بياناتك للحذف.</numerusform><numerusform>لديك [A]%n يوم[/A] متبقي للترقية. بعد ذلك تخضع بياناتك للحذف.</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>You have [A]%n hour[/A] left to upgrade. After that, your data is subject to deletion.</source>
         <translatorcomment>Label to inform about the deadline time to upgrade. Otherwise, data is subject to deletion. Placeholder info: [A][/A] - needed to format and apply text style, %n- number of hours left to upgrade.</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>لديك [A]%n ساعة[/A] متبقية للترقية. بعد ذلك تخضع بياناتك للحذف.</numerusform><numerusform>لديك [A]%n ساعة[/A] متبقية للترقية. بعد ذلك تخضع بياناتك للحذف.</numerusform><numerusform>لديك [A]%n ساعتان[/A] متبقيتان للترقية. بعد ذلك تخضع بياناتك للحذف.</numerusform><numerusform>لديك [A]%n ساعات[/A] متبقية للترقية. بعد ذلك تخضع بياناتك للحذف.</numerusform><numerusform>لديك [A]%n ساعة[/A] متبقية للترقية. بعد ذلك تخضع بياناتك للحذف.</numerusform><numerusform>لديك [A]%n ساعة[/A] متبقية للترقية. بعد ذلك تخضع بياناتك للحذف.</numerusform></translation>
     </message>
 </context>
 <context>
@@ -1777,7 +1777,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>You need to log into MEGA account to use the MEGA desktop app.</source>
         <translatorcomment>Description label to indicate the user needs to log in in order to fully use MEGA desktop app.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>تحتاج إلى تسجيل الدخول إلى حساب ميغا MEGA لاستخدام تطبيق ميغا للحاسوب المكتبي MEGA desktop.</translation>
     </message>
     <message>
         <source>Create account</source>
@@ -2384,42 +2384,42 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Thank you for your collaboration</source>
         <translatorcomment>Informative message shown when a user makes a report to thank for his help.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>شكرا لتعاونك</translation>
     </message>
     <message numerus="yes">
         <source>%n file</source>
         <translatorcomment>File count, where %n is the number of files. Used to build the &quot;Files and folders successfully uploaded/downloaded&quot; string.</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%n ملف</numerusform><numerusform>%n ملف</numerusform><numerusform>%n ملفان</numerusform><numerusform>%n ملفات</numerusform><numerusform>%n ملفاً</numerusform><numerusform>%n ملف</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n folder</source>
         <translatorcomment>Folder count, where %n is the number of folders. Used to build the &quot;Files and folders successfully uploaded/downloaded&quot; string.</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%n مجلد</numerusform><numerusform>%n مجلد</numerusform><numerusform>%n مجلدان</numerusform><numerusform>%n مجلدات</numerusform><numerusform>%n مجلداً</numerusform><numerusform>%n مجلد</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n file was successfully uploaded</source>
         <translatorcomment>System notification to inform the user that %1 files were successfully uploaded</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%n ملف تم ترفيعه بنجاح</numerusform><numerusform>%n ملف تم ترفيعه بنجاح</numerusform><numerusform>%n ملفان تم ترفيعهما بنجاح</numerusform><numerusform>%n ملفات تم ترفيعهم بنجاح</numerusform><numerusform>%n ملفاً تم ترفيعهم بنجاح</numerusform><numerusform>%n ملف تم ترفيعهم بنجاح</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n file was successfully downloaded</source>
         <translatorcomment>System notification to inform the user that %1 files were successfully downloaded</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%n ملف تم تنزيله بنجاح</numerusform><numerusform>%n ملف تم تنزيله بنجاح</numerusform><numerusform>%n ملفان تم تنزيلهما بنجاح</numerusform><numerusform>%n ملفات تم تنزيلهم بنجاح</numerusform><numerusform>%n ملفاً تم تنزيلهم بنجاح</numerusform><numerusform>%n ملف تم تنزيلهم بنجاح</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n folder was successfully uploaded</source>
         <translatorcomment>System notification to inform the user that %n folders were successfully uploaded</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%n مجلد تم ترفيعه بنجاح</numerusform><numerusform>%n مجلد تم ترفيعه بنجاح</numerusform><numerusform>%n مجلدان تم ترفيعهما بنجاح</numerusform><numerusform>%n مجلدات تم ترفيعهم بنجاح</numerusform><numerusform>%n مجلداً تم ترفيعهم بنجاح</numerusform><numerusform>%n مجلد تم ترفيعهم بنجاح</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n folder was successfully downloaded</source>
         <translatorcomment>System notification to inform the user that %n folders were successfully downloaded</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%n مجلد تم تنزيله بنجاح</numerusform><numerusform>%n مجلد تم تنزيله بنجاح</numerusform><numerusform>%n مجلدان تم تنزيلهما بنجاح</numerusform><numerusform>%n مجلدات تم تنزيلهم بنجاح</numerusform><numerusform>%n مجلداً تم تنزيلهم بنجاح</numerusform><numerusform>%n مجلد تم تنزيلهم بنجاح</numerusform></translation>
     </message>
     <message>
         <source>A new version of MEGAsync is available. Click on this message to install it</source>
         <translatorcomment>System notification to inform the user that there is a new version of MEGAsync available for update. Windows version.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>يتوفر إصدار جديد من MEGAsync. انقر فوق هذه الرسالة لتثبيته</translation>
     </message>
     <message>
         <source>A new version of MEGAsync is available</source>
@@ -2429,12 +2429,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>%1 and %2 were successfully uploaded</source>
         <translatorcomment>System notification to inform the user that %1 files and %2 folders were successfully uploaded. The %1 is a sentence part for files and %2 for folders.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>%1 و %2 تم ترفيعهم بنجاح</translation>
     </message>
     <message>
         <source>%1 and %2 were successfully downloaded</source>
         <translatorcomment>System notification to inform the user that %1 files and %2 folders were successfully downloaded. The %1 is a sentence part for files and %2 for folders.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>%1 و %2 تم تنزيلهم بنجاح</translation>
     </message>
 </context>
 <context>
@@ -2585,7 +2585,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Not accessible due to ToS/AUP violation</source>
         <translatorcomment>Error shown when import a link that has violated ToS/AUP.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>لا يمكن الوصول إليه بسبب انتهاك شروط استخدام الخدمة أو سياسة الاستخدام المقبول ToS/AUP</translation>
     </message>
     <message>
         <source>Upload produces recursivity</source>
@@ -2631,12 +2631,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Folder already synced</source>
         <translatorcomment>Tooltip text to notify the user that this folder is already synced.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>تمت مزامنة المجلد بالفعل</translation>
     </message>
     <message>
         <source>Folder contents already synced</source>
         <translatorcomment>Tooltip text to notify the user that some folder inside the folder that he is hovering with mouse is already synced.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>تمت مزامنة محتويات المجلد بالفعل</translation>
     </message>
     <message>
         <source>Name</source>
@@ -2646,42 +2646,42 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Sort by status</source>
         <translatorcomment>First column title tooltip(this column title doesn´t contains text, it shows an icon). Sorts the order of the column by node status, for example synced folders first or last.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>فرز حسب الحالة</translation>
     </message>
     <message>
         <source>Sort by owner name</source>
         <translatorcomment>Owner column title tooltip. Sorts the order of the column by owner name alphabetically.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>فرز حسب اسم المالك</translation>
     </message>
     <message>
         <source>Sort by date</source>
         <translatorcomment>Recently used column title tooltip. Sorts the order of the column by date.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>فرز حسب التاريخ</translation>
     </message>
     <message>
         <source>Sort by name</source>
         <translatorcomment>Node name column title tooltip. Sorts the order of the column by date.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>فرز حسب الاسم</translation>
     </message>
     <message>
         <source>Today at %1</source>
         <translatorcomment>Text that appears on &quot;Recently Used&quot; column if the last change was happened today. %1 represents the hour</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>اليوم الساعة %1</translation>
     </message>
     <message>
         <source>Yesterday at %1</source>
         <translatorcomment>Text that appears on &quot;Recently Used&quot; column if the last change was happened yesterday. %1 represents the hour</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>البارحة الساعة %1</translation>
     </message>
     <message>
         <source>%1 at %2</source>
         <translatorcomment>Text that appears on &quot;Recently Used&quot; column if the last change was previously to yesterday. %1 represents the date (day month and year), while %2 represents the hour)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>%1 الساعة %2</translation>
     </message>
     <message>
         <source>Recently used</source>
         <translatorcomment>Column title. This column shows when this file or folder was changed.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>آخر تعديل</translation>
     </message>
 </context>
 <context>
@@ -2868,7 +2868,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>You can&apos;t run MEGA Desktop App from this location. Move it into the Applications folder then run it.</source>
         <translatorcomment>Error message shown when the user is trying to run MEGA Desktop App from a path different than Applications. Only affects to macOS.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>لا يمكنك تشغيل تطبيق ميغا للحاسوب المكتبي MEGA Desktop من هذا الموقع. انقله إلى مجلد التطبيقات ثم قم بتشغيله.</translation>
     </message>
 </context>
 <context>
@@ -3095,17 +3095,17 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Select a MEGA folder</source>
         <translatorcomment>Node selector dialog title</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>اختر مجلد في ميغا MEGA</translation>
     </message>
     <message numerus="yes">
         <source>Item selection removed. To reselect, close this window and try again.</source>
         <translatorcomment>Error message shown while the user is trying to download an file or folder but it is removed using another client</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>تمت إزالة تحديد العنصر. لإعادة التحديد، أغلق هذه النافذة وحاول مرة أخرى.</numerusform><numerusform>تمت إزالة تحديد العنصر. لإعادة التحديد، أغلق هذه النافذة وحاول مرة أخرى.</numerusform><numerusform>تمت إزالة تحديد العنصرين. لإعادة التحديد، أغلق هذه النافذة وحاول مرة أخرى.</numerusform><numerusform>تمت إزالة تحديد العناصر. لإعادة التحديد، أغلق هذه النافذة وحاول مرة أخرى.</numerusform><numerusform>تمت إزالة تحديد العناصر. لإعادة التحديد، أغلق هذه النافذة وحاول مرة أخرى.</numerusform><numerusform>تمت إزالة تحديد العناصر. لإعادة التحديد، أغلق هذه النافذة وحاول مرة أخرى.</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>You no longer have access to this item. Ask the owner to share again.</source>
         <translatorcomment>Error message shown when the user is trying to download an file or folder from an incoming share and the owner stops sharing/removes all items</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>لم يعد لديك حق الوصول إلى هذه العنصر. اطلب من المالك المشاركة مرة أخرى.</numerusform><numerusform>لم يعد لديك حق الوصول إلى هذه العنصر. اطلب من المالك المشاركة مرة أخرى.</numerusform><numerusform>لم يعد لديك حق الوصول إلى هذان العنصران. اطلب من المالك المشاركة مرة أخرى.</numerusform><numerusform>لم يعد لديك حق الوصول إلى هذه العناصر. اطلب من المالك المشاركة مرة أخرى.</numerusform><numerusform>لم يعد لديك حق الوصول إلى هذه العناصر. اطلب من المالك المشاركة مرة أخرى.</numerusform><numerusform>لم يعد لديك حق الوصول إلى هذه العناصر. اطلب من المالك المشاركة مرة أخرى.</numerusform></translation>
     </message>
     <message>
         <source>Cloud drive</source>
@@ -3115,7 +3115,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Incoming shares</source>
         <translatorcomment>Node selector button Text. Switch the view to show only the incoming shares nodes (files and folders)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>مشاركات واردة</translation>
     </message>
 </context>
 <context>
@@ -3188,12 +3188,12 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>System notifications:</source>
         <translatorcomment>Title of a checkbox for disconnectig all notifications</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>إشعارات النظام:</translation>
     </message>
     <message>
         <source>Info notifications</source>
         <translatorcomment>Title of a checkbox for disconnectig secondary info notifications</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>إشعارات المعلومات</translation>
     </message>
 </context>
 <context>
@@ -3209,7 +3209,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message numerus="yes">
         <source>[A] removed %n item</source>
         <translatorcomment>Label to indicate that [A] has removed %n items from a shared folder. Placeholder [A] will be replaced by email of the user that made the deletion and %n with the number of removed items.</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>[A] أزال %n عنصر</numerusform><numerusform>[A] أزال %n عنصر</numerusform><numerusform>[A] أزال %n عنصرين</numerusform><numerusform>[A] أزال %n عناصر</numerusform><numerusform>[A] أزال %n عنصراً</numerusform><numerusform>[A] أزال %n عنصر</numerusform></translation>
     </message>
 </context>
 <context>
@@ -3321,12 +3321,12 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Show password</source>
         <translatorcomment>Password box eye icon tooltip</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>أظهر كلمة المرور</translation>
     </message>
     <message>
         <source>Hide password</source>
         <translatorcomment>Password box eye icon tooltip</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>اخفي كلمة المرور</translation>
     </message>
 </context>
 <context>
@@ -3497,7 +3497,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message numerus="yes">
         <source>minimum %n user</source>
         <translatorcomment>Label to inform about the minimum number of users for a business plan. %1 will be replaced with the minimum number of users.</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>الحد الأدنى %n مستخدم</numerusform><numerusform>الحد الأدنى %n مستخدم</numerusform><numerusform>الحد الأدنى %n مستخدمان</numerusform><numerusform>الحد الأدنى %n مستخدمين</numerusform><numerusform>الحد الأدنى %n مستخدماً</numerusform><numerusform>الحد الأدنى %n مستخدم</numerusform></translation>
     </message>
 </context>
 <context>
@@ -3547,7 +3547,11 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 - Fixed detected crashes on Windows, Linux and macOS.
 </source>
         <translatorcomment>Changelog for version 4.6.7</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>- إعادة تصميم كاملة لمنتقي الملفات عن بعد.
+- إصلاح مشاكل الترجمة.
+- إصلاحات وتعديلات طفيفة أخرى في واجهة المستخدم.
+- إصلاح الأعطال المكتشفة على أنظمة التشغيل ويندوز Windows و لينيكس Linux و ماك macOS.
+</translation>
     </message>
 </context>
 <context>
@@ -4695,12 +4699,12 @@ Do you want to restart MEGAsync now?</source>
     <message numerus="yes">
         <source>Used quota for the last %n hour:</source>
         <translatorcomment>Informative text shown in Account pane for Free account type. Indicates the used quota in the last %n specified number of hours. Keep the %n subsitution argument.</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>الحجم المستخدم لآخر %n ساعة:</numerusform><numerusform>الحجم المستخدم لآخر ساعة:</numerusform><numerusform>الحجم المستخدم لآخر %n ساعتين:</numerusform><numerusform>الحجم المستخدم لآخر %n ساعات:</numerusform><numerusform>الحجم المستخدم لآخر %n ساعة:</numerusform><numerusform>الحجم المستخدم لآخر %n ساعة:</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>day</source>
         <translatorcomment>Suffix text label for number of days to keep files in local cache.</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>يوم</numerusform><numerusform>يوم</numerusform><numerusform>يومان</numerusform><numerusform>أيام</numerusform><numerusform>يوم</numerusform><numerusform>يوم</numerusform></translation>
     </message>
 </context>
 <context>
@@ -5058,12 +5062,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Enjoy MEGAsync</source>
         <translatorcomment>Label displayed when user completes the setup wizard</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>استمتع مع MEGAsync</translation>
     </message>
     <message>
         <source>We are all done</source>
         <translatorcomment>Label shown when the user completes the initial setup wizard</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>تم الانتهاء بنجاح</translation>
     </message>
 </context>
 <context>
@@ -5116,12 +5120,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message numerus="yes">
         <source>%n file</source>
         <translatorcomment>Label to indicate file count. Keep %n code because it will be filled with the number of files at runtime.</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%n ملف</numerusform><numerusform>%n ملف</numerusform><numerusform>%n ملفان</numerusform><numerusform>%n ملفات</numerusform><numerusform>%n ملفاً</numerusform><numerusform>%n ملف</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n folder</source>
         <translatorcomment>Label to indicate folder count. Keep %n code because it will be filled with the number of folders at runtime.</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%n مجلد</numerusform><numerusform>%n مجلد</numerusform><numerusform>%n مجلدان</numerusform><numerusform>%n مجلدات</numerusform><numerusform>%n مجلداً</numerusform><numerusform>%n مجلد</numerusform></translation>
     </message>
 </context>
 <context>
@@ -5365,7 +5369,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Syncs aren&apos;t affected by this action.</source>
         <translatorcomment>Description label for warning dialog indicating that syncs are not going to be affected by accepting this dialog</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>لا تتأثر عمليات المزامنة بهذا الإجراء.</translation>
     </message>
 </context>
 <context>
@@ -5611,32 +5615,32 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message numerus="yes">
         <source>%n second ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n seconds ago</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>منذ %n ثانية</numerusform><numerusform>منذ %n ثانية</numerusform><numerusform>منذ %n ثانيتين </numerusform><numerusform>منذ %n ثواني</numerusform><numerusform>منذ %n ثانية</numerusform><numerusform>منذ %n ثانية</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n minute ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n minutes ago</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>منذ %n ثانية</numerusform><numerusform>منذ %n ثانية</numerusform><numerusform>منذ %n ثانيتين</numerusform><numerusform>منذ %n ثواني</numerusform><numerusform>منذ %n ثانية</numerusform><numerusform>منذ %n ثانية</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n hour ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n hours ago</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>منذ %n ساعة</numerusform><numerusform>منذ %n ساعة</numerusform><numerusform>منذ %n ساعتان</numerusform><numerusform>منذ %n ساعات</numerusform><numerusform>منذ %n ساعة</numerusform><numerusform>منذ %n ساعة</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n day ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n days ago</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>منذ %n يوم</numerusform><numerusform>منذ %n يوم</numerusform><numerusform>منذ %n يومان</numerusform><numerusform>منذ %n أيام</numerusform><numerusform>منذ %n يوماً</numerusform><numerusform>منذ %n يوم</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n month ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n months ago</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>منذ %n شهر</numerusform><numerusform>منذ %n شهر</numerusform><numerusform>منذ %n شهران</numerusform><numerusform>منذ %n أشهر</numerusform><numerusform>منذ %n شهراً</numerusform><numerusform>منذ %n شهر</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n year ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n years ago</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>منذ %n سنة</numerusform><numerusform>منذ %n سنة</numerusform><numerusform>منذ %n سنتان</numerusform><numerusform>منذ %n سنوات</numerusform><numerusform>منذ %n سنة</numerusform><numerusform>منذ %n سنة</numerusform></translation>
     </message>
 </context>
 <context>

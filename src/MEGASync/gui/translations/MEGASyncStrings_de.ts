@@ -2681,7 +2681,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Recently used</source>
         <translatorcomment>Column title. This column shows when this file or folder was changed.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Letzte Änderung</translation>
     </message>
 </context>
 <context>

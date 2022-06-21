@@ -36,17 +36,17 @@
     <message>
         <source>Cloud drive</source>
         <translatorcomment>Label for Cloud drive space used. Maintain capital letter in first word.(Max 18 characters)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Cloud schijf</translation>
     </message>
     <message>
         <source>Rubbish bin</source>
         <translatorcomment>Label for Rubbish bin space used. Maintain capital letter in first word.(Max 18 characters)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Prullenbak</translation>
     </message>
     <message>
         <source>Available storage</source>
         <translatorcomment>Label for Available storage space used. Maintain capital letter in first word.(Max 18 characters)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Beschikbare opslag</translation>
     </message>
 </context>
 <context>
@@ -403,7 +403,7 @@
     <message>
         <source>New shared folder from [A]</source>
         <translatorcomment>Label to indicate that [A] shared a folder with current user. Placeholder will be replaced by email of sharer user.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Nieuwe gedeelde map van [A]</translation>
     </message>
 </context>
 <context>
@@ -1086,7 +1086,7 @@ In sommige gevallen kunnen ze details over uw gegevens bevatten, zoals bestands-
     <message>
         <source>New shared folder from [A]</source>
         <translatorcomment>Label to indicate that [A] shared a folder with current user. Placeholder will be replaced by email of sharer user.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Nieuwe gedeelde map van [A]</translation>
     </message>
 </context>
 <context>
@@ -1777,7 +1777,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>You need to log into MEGA account to use the MEGA desktop app.</source>
         <translatorcomment>Description label to indicate the user needs to log in in order to fully use MEGA desktop app.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>U moet inloggen op het MEGA-account om de MEGA-desktopapplicatie te gebruiken.</translation>
     </message>
     <message>
         <source>Create account</source>
@@ -2681,7 +2681,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Recently used</source>
         <translatorcomment>Column title. This column shows when this file or folder was changed.</translatorcomment>
-        <translation>Laatst gebruikt</translation>
+        <translation>Laatst aangepast</translation>
     </message>
 </context>
 <context>
@@ -2868,7 +2868,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>You can&apos;t run MEGA Desktop App from this location. Move it into the Applications folder then run it.</source>
         <translatorcomment>Error message shown when the user is trying to run MEGA Desktop App from a path different than Applications. Only affects to macOS.</translatorcomment>
-        <translation>U kunt de MEGA Desktop-applicatie niet uitvoeren vanaf deze locatie. Verplaats het naar de map Programma&apos;s en voer het uit.</translation>
+        <translation>U kunt de MEGA Desktop-applicatie niet uitvoeren vanaf deze locatie. Verplaats het naar de map Applicatie en voer het uit.</translation>
     </message>
 </context>
 <context>
@@ -3547,7 +3547,11 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 - Fixed detected crashes on Windows, Linux and macOS.
 </source>
         <translatorcomment>Changelog for version 4.6.7</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>- Volledig herontwerp van externe bestandskiezer.
+ - Vertaalproblemen opgelost.
+ - Andere kleine UI-fixes en aanpassingen.
+ - Vaste gedetecteerde crashes op Windows, Linux en macOS opgelost.
+</translation>
     </message>
 </context>
 <context>

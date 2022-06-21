@@ -36,17 +36,17 @@
     <message>
         <source>Cloud drive</source>
         <translatorcomment>Label for Cloud drive space used. Maintain capital letter in first word.(Max 18 characters)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Ổ mây</translation>
     </message>
     <message>
         <source>Rubbish bin</source>
         <translatorcomment>Label for Rubbish bin space used. Maintain capital letter in first word.(Max 18 characters)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Thùng rác</translation>
     </message>
     <message>
         <source>Available storage</source>
         <translatorcomment>Label for Available storage space used. Maintain capital letter in first word.(Max 18 characters)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Không gian lưu trữ còn lại</translation>
     </message>
 </context>
 <context>
@@ -393,17 +393,17 @@
     <message numerus="yes">
         <source>[A] removed %n item</source>
         <translatorcomment>Label to indicate that [A] has removed %n items from a shared folder. Placeholder [A] will be replaced by email of the user that made the deletion and %n with the number of removed items.</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>[A] đã loại bỏ %n mục</numerusform></translation>
     </message>
     <message>
         <source>Decryption error</source>
         <translatorcomment>Label to indicate a decryption error for a folder name. Replacement for old NO_KEY term.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Lỗi giải mã</translation>
     </message>
     <message>
         <source>New shared folder from [A]</source>
         <translatorcomment>Label to indicate that [A] shared a folder with current user. Placeholder will be replaced by email of sharer user.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Thư mục chia sẻ mới từ [A]</translation>
     </message>
 </context>
 <context>
@@ -1071,7 +1071,7 @@ Trong một số trường hợp, log có thể chứa thông tin chi tiết v�
     <message numerus="yes">
         <source>You have %n day left to save your data</source>
         <translatorcomment>Notification content to inform the days the user have to save the date before possible deletion. %n will be replaced with remaining days amount.</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>Bạn còn lại %n ngày để giải quyết lưu trữ dữ liệu của mình</numerusform></translation>
     </message>
     <message>
         <source>Upgrade now to a Pro account.</source>
@@ -1086,7 +1086,7 @@ Trong một số trường hợp, log có thể chứa thông tin chi tiết v�
     <message>
         <source>New shared folder from [A]</source>
         <translatorcomment>Label to indicate that [A] shared a folder with current user. Placeholder will be replaced by email of sharer user.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Thư mục chia sẻ mới từ [A]</translation>
     </message>
 </context>
 <context>
@@ -1436,7 +1436,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Our SSL key can&apos;t be verified. You could be affected by a man-in-the-middle attack or your antivirus software could be intercepting your communications and causing this problem. Please disable it and try again.</source>
         <translatorcomment>Error message shown when the program detects an issues with SSL key verification.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Không thể xác minh khóa SSL từ MEGA. Bạn có thể đang bị ảnh hưởng bởi hack trung gian hoặc phần mềm chống vi-rút của bạn ngăn chặn việc liên lạc và gây ra sự cố này. Xin vui lòng tạm thời tắt đi và thử lại.</translation>
     </message>
 </context>
 <context>
@@ -1736,17 +1736,17 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message numerus="yes">
         <source>We have contacted you by email to [A] on [B] but you still have %n file taking up [D] in your MEGA account, which requires you to have [E].</source>
         <translatorcomment>Informative label about account status regarding over quota storage. Placeholders will be replaced: [A] - user email, [B] - localized date list of emails sent to inform the user about the situation,  %n - amount of files in the current account, [D] - amount of storage used and [E] - min PRO plan needed to fix the situation.</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>Chúng tôi đã gửi thông báo vào địa chỉ email [A]của quý khách vào ngày [B] nhưng quý khách vẫn còn %n tệp tin chiếm tới [D] trong tài khoản MEGA, quý khách cần phải nâng câp lên [E]để đáp ứng dung lượng.</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>You have [A]%n day[/A] left to upgrade. After that, your data is subject to deletion.</source>
         <translatorcomment>Label to inform about the deadline time to upgrade. Otherwise, data is subject to deletion. Placeholder info: [A][/A] - needed to format and apply text style, %n- number of days left to upgrade.</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>Quý khách còn lại [A]%n ngày[/A] để tiến hành nâng cấp. Nếu không sau thời gian này, dữ liệu của quý khách sẽ bị xóa bỏ.</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>You have [A]%n hour[/A] left to upgrade. After that, your data is subject to deletion.</source>
         <translatorcomment>Label to inform about the deadline time to upgrade. Otherwise, data is subject to deletion. Placeholder info: [A][/A] - needed to format and apply text style, %n- number of hours left to upgrade.</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>Quý khách còn lại [A]%n giờ đồng hồ[/A] để tiến hành nâng cấp. Nếu không sau thời gian này, dữ liệu của quý khách sẽ bị xóa bỏ.</numerusform></translation>
     </message>
 </context>
 <context>
@@ -1777,7 +1777,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>You need to log into MEGA account to use the MEGA desktop app.</source>
         <translatorcomment>Description label to indicate the user needs to log in in order to fully use MEGA desktop app.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Bạn cần phải đăng nhập vào tài khoản MEGA để sử dụng app MEGA cho máy tính.</translation>
     </message>
     <message>
         <source>Create account</source>
@@ -2399,22 +2399,22 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message numerus="yes">
         <source>%n file was successfully uploaded</source>
         <translatorcomment>System notification to inform the user that %1 files were successfully uploaded</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>%n tệp tin đã được tải lên thành công</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n file was successfully downloaded</source>
         <translatorcomment>System notification to inform the user that %1 files were successfully downloaded</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>%n tệp tin đã được tải xuống thành công</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n folder was successfully uploaded</source>
         <translatorcomment>System notification to inform the user that %n folders were successfully uploaded</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>%n thư mục đã được tải lên thành công</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n folder was successfully downloaded</source>
         <translatorcomment>System notification to inform the user that %n folders were successfully downloaded</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>%n thư mục đã được tải xuống thành công</numerusform></translation>
     </message>
     <message>
         <source>A new version of MEGAsync is available. Click on this message to install it</source>
@@ -2429,12 +2429,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>%1 and %2 were successfully uploaded</source>
         <translatorcomment>System notification to inform the user that %1 files and %2 folders were successfully uploaded. The %1 is a sentence part for files and %2 for folders.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>%1 và %2 đã được tải lên thành công</translation>
     </message>
     <message>
         <source>%1 and %2 were successfully downloaded</source>
         <translatorcomment>System notification to inform the user that %1 files and %2 folders were successfully downloaded. The %1 is a sentence part for files and %2 for folders.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>%1 và %2 đã được tải xuống thành công</translation>
     </message>
 </context>
 <context>
@@ -2585,7 +2585,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Not accessible due to ToS/AUP violation</source>
         <translatorcomment>Error shown when import a link that has violated ToS/AUP.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Không thể truy cập được do vi phạm ĐKDV/CSSD</translation>
     </message>
     <message>
         <source>Upload produces recursivity</source>
@@ -2681,7 +2681,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Recently used</source>
         <translatorcomment>Column title. This column shows when this file or folder was changed.</translatorcomment>
-        <translation>Lần sử dụng gần đây</translation>
+        <translation>Lần sửa cuối</translation>
     </message>
 </context>
 <context>
@@ -2689,7 +2689,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Get MEGA link</source>
         <translatorcomment>Contextual menu text that appears when we right click on a folder/file on node selector. It creates an MEGA link and copy to Clipboard.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Lấy đường liên kết MEGA</translation>
     </message>
     <message>
         <source>Delete</source>
@@ -3100,12 +3100,12 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message numerus="yes">
         <source>Item selection removed. To reselect, close this window and try again.</source>
         <translatorcomment>Error message shown while the user is trying to download an file or folder but it is removed using another client</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>Việc lựa chọn các mục đã bị hủy. Để thực hiện chọn lại, đóng cửa sổ này và làm lại từ đầu.</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>You no longer have access to this item. Ask the owner to share again.</source>
         <translatorcomment>Error message shown when the user is trying to download an file or folder from an incoming share and the owner stops sharing/removes all items</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>Bạn không còn quyền truy cập vào các mục này nữa. Xin hỏi chủ sở hữu chia sẻ lại.</numerusform></translation>
     </message>
     <message>
         <source>Cloud drive</source>
@@ -3547,7 +3547,11 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 - Fixed detected crashes on Windows, Linux and macOS.
 </source>
         <translatorcomment>Changelog for version 4.6.7</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>- Thiết kế lại toàn bộ giao diện lựa chọn tệp tin từ xa.
+- Sửa các lỗi dịch thuật ngôn ngữ.
+- Sửa và điều chỉnh nhỏ về giao diện người dùng.
+- Sửa lỗi treo máy trên Windows, Linux và macOS.
+</translation>
     </message>
 </context>
 <context>
@@ -4695,7 +4699,7 @@ Do you want to restart MEGAsync now?</source>
     <message numerus="yes">
         <source>Used quota for the last %n hour:</source>
         <translatorcomment>Informative text shown in Account pane for Free account type. Indicates the used quota in the last %n specified number of hours. Keep the %n subsitution argument.</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>Lượng băng thông đã sử dụng trong %n giờ qua:</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>day</source>

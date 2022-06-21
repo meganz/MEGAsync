@@ -36,17 +36,17 @@
     <message>
         <source>Cloud drive</source>
         <translatorcomment>Label for Cloud drive space used. Maintain capital letter in first word.(Max 18 characters)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>雲端硬碟</translation>
     </message>
     <message>
         <source>Rubbish bin</source>
         <translatorcomment>Label for Rubbish bin space used. Maintain capital letter in first word.(Max 18 characters)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>垃圾筒</translation>
     </message>
     <message>
         <source>Available storage</source>
         <translatorcomment>Label for Available storage space used. Maintain capital letter in first word.(Max 18 characters)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>可用的儲存空間</translation>
     </message>
 </context>
 <context>
@@ -283,7 +283,7 @@
     <message>
         <source>[A] has been deleted/deactivated</source>
         <translatorcomment>Label to indicate that [A] has been deleted from your contacts. Placeholder will be replaced by email of user deleted</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>[A]已被刪除/停用</translation>
     </message>
     <message>
         <source>[A] established you as a contact</source>
@@ -388,12 +388,12 @@
     <message numerus="yes">
         <source>[A] added %n item</source>
         <translatorcomment>Label to indicate that [A] has added %n items to a shared folder. Placeholder [A] will be replaced by email of the user that made the additions and %n with the number of added items.</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>[A]加入了%n個項目</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>[A] removed %n item</source>
         <translatorcomment>Label to indicate that [A] has removed %n items from a shared folder. Placeholder [A] will be replaced by email of the user that made the deletion and %n with the number of removed items.</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>[A]移除了%n個項目</numerusform></translation>
     </message>
     <message>
         <source>Decryption error</source>
@@ -403,7 +403,7 @@
     <message>
         <source>New shared folder from [A]</source>
         <translatorcomment>Label to indicate that [A] shared a folder with current user. Placeholder will be replaced by email of sharer user.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>來自[A]的新共享資料夾</translation>
     </message>
 </context>
 <context>
@@ -766,7 +766,7 @@ Please enter a different name to identify this synced folder:</source>
     <message numerus="yes">
         <source>Your Pro membership plan will expire in %n day</source>
         <translatorcomment>Label to indicate that the PRO membership will expire in %n days. Placeholder will be replaced by the remaining days until plan will expire.</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>您的Pro會員方案將於%n天後到期</numerusform></translation>
     </message>
     <message>
         <source>Pro membership plan expiring soon</source>
@@ -776,7 +776,7 @@ Please enter a different name to identify this synced folder:</source>
     <message numerus="yes">
         <source>Your Pro membership plan expired %n day ago</source>
         <translatorcomment>Label to indicate that the PRO membership expired %n days ago. Placeholder will be replaced by the days from the expiration of the PRO membership.</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>您的Pro會員方案已於%n天前到期</numerusform></translation>
     </message>
 </context>
 <context>
@@ -1071,7 +1071,7 @@ Please enter a different name to identify this synced folder:</source>
     <message numerus="yes">
         <source>You have %n day left to save your data</source>
         <translatorcomment>Notification content to inform the days the user have to save the date before possible deletion. %n will be replaced with remaining days amount.</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>您還有%n天時間保存您的資料</numerusform></translation>
     </message>
     <message>
         <source>Upgrade now to a Pro account.</source>
@@ -1086,7 +1086,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>New shared folder from [A]</source>
         <translatorcomment>Label to indicate that [A] shared a folder with current user. Placeholder will be replaced by email of sharer user.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>來自[A]的新共享資料夾</translation>
     </message>
 </context>
 <context>
@@ -1194,12 +1194,12 @@ Please enter a different name to identify this synced folder:</source>
     <message numerus="yes">
         <source>%n file</source>
         <translatorcomment>Context menu option label to indicate the user has selected %n number of files</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>%n個檔案</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n folder</source>
         <translatorcomment>Context menu option label to indicate the user has selected %n number of folders</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>%n個資料夾</numerusform></translation>
     </message>
 </context>
 <context>
@@ -1436,7 +1436,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Our SSL key can&apos;t be verified. You could be affected by a man-in-the-middle attack or your antivirus software could be intercepting your communications and causing this problem. Please disable it and try again.</source>
         <translatorcomment>Error message shown when the program detects an issues with SSL key verification.</translatorcomment>
-        <translation>我們的SSL密鑰無法驗證。您可能是受到了中間人攻擊的影響，或是您的防毒軟體攔正在截您的通訊並導致此問題。請停用它後重試。</translation>
+        <translation>我們的SSL密鑰無法驗證。您可能是受到了中間人攻擊的影響，或是您的防毒軟體攔正在攔截您的通訊並導致此問題。請停用它後重試。</translation>
     </message>
 </context>
 <context>
@@ -1777,7 +1777,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>You need to log into MEGA account to use the MEGA desktop app.</source>
         <translatorcomment>Description label to indicate the user needs to log in in order to fully use MEGA desktop app.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>您需要登入MEGA帳戶才能使用MEGA桌面應用程式。</translation>
     </message>
     <message>
         <source>Create account</source>
@@ -2389,12 +2389,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message numerus="yes">
         <source>%n file</source>
         <translatorcomment>File count, where %n is the number of files. Used to build the &quot;Files and folders successfully uploaded/downloaded&quot; string.</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>%n個檔案</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n folder</source>
         <translatorcomment>Folder count, where %n is the number of folders. Used to build the &quot;Files and folders successfully uploaded/downloaded&quot; string.</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>%n個資料夾</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n file was successfully uploaded</source>
@@ -2429,12 +2429,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>%1 and %2 were successfully uploaded</source>
         <translatorcomment>System notification to inform the user that %1 files and %2 folders were successfully uploaded. The %1 is a sentence part for files and %2 for folders.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>%1和%2已成功上傳</translation>
     </message>
     <message>
         <source>%1 and %2 were successfully downloaded</source>
         <translatorcomment>System notification to inform the user that %1 files and %2 folders were successfully downloaded. The %1 is a sentence part for files and %2 for folders.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>%1和%2已成功下載</translation>
     </message>
 </context>
 <context>
@@ -2681,7 +2681,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Recently used</source>
         <translatorcomment>Column title. This column shows when this file or folder was changed.</translatorcomment>
-        <translation>最近使用</translation>
+        <translation>上次修改</translation>
     </message>
 </context>
 <context>
@@ -3547,7 +3547,11 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 - Fixed detected crashes on Windows, Linux and macOS.
 </source>
         <translatorcomment>Changelog for version 4.6.7</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>- 重新設計的遠端檔案選取介面。
+- 修復了翻譯問題。
+- 用戶介面其它小地方的修復和調整。
+- 修復在Windows、Linus和macOS上檢測到的崩潰問題。
+</translation>
     </message>
 </context>
 <context>
@@ -4700,7 +4704,7 @@ Do you want to restart MEGAsync now?</source>
     <message numerus="yes">
         <source>day</source>
         <translatorcomment>Suffix text label for number of days to keep files in local cache.</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>天</numerusform></translation>
     </message>
 </context>
 <context>

@@ -36,17 +36,17 @@
     <message>
         <source>Cloud drive</source>
         <translatorcomment>Label for Cloud drive space used. Maintain capital letter in first word.(Max 18 characters)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>云盘</translation>
     </message>
     <message>
         <source>Rubbish bin</source>
         <translatorcomment>Label for Rubbish bin space used. Maintain capital letter in first word.(Max 18 characters)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>回收站</translation>
     </message>
     <message>
         <source>Available storage</source>
         <translatorcomment>Label for Available storage space used. Maintain capital letter in first word.(Max 18 characters)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>可用存储空间</translation>
     </message>
 </context>
 <context>
@@ -403,7 +403,7 @@
     <message>
         <source>New shared folder from [A]</source>
         <translatorcomment>Label to indicate that [A] shared a folder with current user. Placeholder will be replaced by email of sharer user.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>来自[A]的新共享文件夹</translation>
     </message>
 </context>
 <context>
@@ -1086,7 +1086,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>New shared folder from [A]</source>
         <translatorcomment>Label to indicate that [A] shared a folder with current user. Placeholder will be replaced by email of sharer user.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>来自[A]的新共享文件夹</translation>
     </message>
 </context>
 <context>
@@ -1777,7 +1777,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>You need to log into MEGA account to use the MEGA desktop app.</source>
         <translatorcomment>Description label to indicate the user needs to log in in order to fully use MEGA desktop app.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>您需要登录MEGA帐户才能使用MEGA桌面应用程序。</translation>
     </message>
     <message>
         <source>Create account</source>
@@ -2681,7 +2681,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Recently used</source>
         <translatorcomment>Column title. This column shows when this file or folder was changed.</translatorcomment>
-        <translation>最近使用</translation>
+        <translation>上次修改</translation>
     </message>
 </context>
 <context>
@@ -3547,7 +3547,11 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 - Fixed detected crashes on Windows, Linux and macOS.
 </source>
         <translatorcomment>Changelog for version 4.6.7</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>- 对远程文件选择界面进行了重新设计。
+- 修复了翻译问题。
+- 其他小的用户界面修复和调整。
+- 修复了在Windows、Linux和macOS上检测到的崩溃问题。
+</translation>
     </message>
 </context>
 <context>

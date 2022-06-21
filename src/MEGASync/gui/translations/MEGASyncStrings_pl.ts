@@ -36,17 +36,17 @@
     <message>
         <source>Cloud drive</source>
         <translatorcomment>Label for Cloud drive space used. Maintain capital letter in first word.(Max 18 characters)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Dysk w chmurze</translation>
     </message>
     <message>
         <source>Rubbish bin</source>
         <translatorcomment>Label for Rubbish bin space used. Maintain capital letter in first word.(Max 18 characters)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Kosz</translation>
     </message>
     <message>
         <source>Available storage</source>
         <translatorcomment>Label for Available storage space used. Maintain capital letter in first word.(Max 18 characters)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Dostępna pamięć</translation>
     </message>
 </context>
 <context>
@@ -403,7 +403,7 @@
     <message>
         <source>New shared folder from [A]</source>
         <translatorcomment>Label to indicate that [A] shared a folder with current user. Placeholder will be replaced by email of sharer user.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Nowy folder współdzielony z [A]</translation>
     </message>
 </context>
 <context>
@@ -1076,17 +1076,17 @@ W niektórych przypadkach mogą one zawierać szczegóły dotyczące Twoich dany
     <message>
         <source>Upgrade now to a Pro account.</source>
         <translatorcomment>Notification message shown to encourage the user to upgrade his account</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Uaktualnij teraz konto do wersji Pro.</translation>
     </message>
     <message>
         <source>Get Pro</source>
         <translatorcomment>Notification button to redirect the user to upgrade account.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Wybierz Pro</translation>
     </message>
     <message>
         <source>New shared folder from [A]</source>
         <translatorcomment>Label to indicate that [A] shared a folder with current user. Placeholder will be replaced by email of sharer user.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Nowy folder współdzielony z [A]</translation>
     </message>
 </context>
 <context>
@@ -1736,7 +1736,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message numerus="yes">
         <source>We have contacted you by email to [A] on [B] but you still have %n file taking up [D] in your MEGA account, which requires you to have [E].</source>
         <translatorcomment>Informative label about account status regarding over quota storage. Placeholders will be replaced: [A] - user email, [B] - localized date list of emails sent to inform the user about the situation,  %n - amount of files in the current account, [D] - amount of storage used and [E] - min PRO plan needed to fix the situation.</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Skontaktowaliśmy się z Tobą za pośrednictwem poczty elektronicznej do [A] w sprawie [B], ale nadal masz %n plik zajmujący [D] na swoim koncie MEGA, co wymaga posiadania [E].</numerusform><numerusform>Skontaktowaliśmy się z Tobą za pośrednictwem poczty elektronicznej do [A] w sprawie [B], ale nadal masz %n plików zajmujących [D] na swoim koncie MEGA, co wymaga posiadania [E].</numerusform><numerusform>Skontaktowaliśmy się z Tobą za pośrednictwem poczty elektronicznej do [A] w sprawie [B], ale nadal masz %n plików zajmujących [D] na swoim koncie MEGA, co wymaga posiadania [E].</numerusform><numerusform>Skontaktowaliśmy się z Tobą za pośrednictwem poczty elektronicznej do [A] w sprawie [B], ale nadal masz %n plików zajmujących [D] na swoim koncie MEGA, co wymaga posiadania [E].</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>You have [A]%n day[/A] left to upgrade. After that, your data is subject to deletion.</source>
@@ -1777,7 +1777,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>You need to log into MEGA account to use the MEGA desktop app.</source>
         <translatorcomment>Description label to indicate the user needs to log in in order to fully use MEGA desktop app.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Aby korzystać z aplikacji MEGA desktop, należy zalogować się na MEGA konto.</translation>
     </message>
     <message>
         <source>Create account</source>
@@ -2384,7 +2384,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Thank you for your collaboration</source>
         <translatorcomment>Informative message shown when a user makes a report to thank for his help.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Dziękujemy za współpracę</translation>
     </message>
     <message numerus="yes">
         <source>%n file</source>
@@ -2419,7 +2419,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>A new version of MEGAsync is available. Click on this message to install it</source>
         <translatorcomment>System notification to inform the user that there is a new version of MEGAsync available for update. Windows version.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Dostępna jest nowa wersja programu MEGAsync. Kliknij na tę wiadomość, aby ją zainstalować</translation>
     </message>
     <message>
         <source>A new version of MEGAsync is available</source>
@@ -2681,7 +2681,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Recently used</source>
         <translatorcomment>Column title. This column shows when this file or folder was changed.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Ostatnio używane</translation>
     </message>
 </context>
 <context>
@@ -2868,7 +2868,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>You can&apos;t run MEGA Desktop App from this location. Move it into the Applications folder then run it.</source>
         <translatorcomment>Error message shown when the user is trying to run MEGA Desktop App from a path different than Applications. Only affects to macOS.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Z tej lokalizacji nie można uruchomić aplikacji MEGA Pulpit. Przenieś ją do folderu Aplikacje, a następnie uruchom.</translation>
     </message>
 </context>
 <context>
@@ -3110,12 +3110,12 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Cloud drive</source>
         <translatorcomment>Node selector button Text. Switch the view to show only the cloud drive nodes (files and folders)</translatorcomment>
-        <translation>Dysk</translation>
+        <translation>Dysk w chmurze</translation>
     </message>
     <message>
         <source>Incoming shares</source>
         <translatorcomment>Node selector button Text. Switch the view to show only the incoming shares nodes (files and folders)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Przychodzące</translation>
     </message>
 </context>
 <context>
@@ -4700,7 +4700,7 @@ Do you want to restart MEGAsync now?</source>
     <message numerus="yes">
         <source>day</source>
         <translatorcomment>Suffix text label for number of days to keep files in local cache.</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>dzień</numerusform><numerusform>dni</numerusform><numerusform>dni</numerusform><numerusform>dni</numerusform></translation>
     </message>
 </context>
 <context>
@@ -5116,12 +5116,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message numerus="yes">
         <source>%n file</source>
         <translatorcomment>Label to indicate file count. Keep %n code because it will be filled with the number of files at runtime.</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%n plików</numerusform><numerusform>%n plików</numerusform><numerusform>%n plików</numerusform><numerusform>%n plików</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n folder</source>
         <translatorcomment>Label to indicate folder count. Keep %n code because it will be filled with the number of folders at runtime.</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%n katalog</numerusform><numerusform>%n katalogów</numerusform><numerusform>%n katalogów</numerusform><numerusform>%n katalogów</numerusform></translation>
     </message>
 </context>
 <context>
@@ -5365,7 +5365,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Syncs aren&apos;t affected by this action.</source>
         <translatorcomment>Description label for warning dialog indicating that syncs are not going to be affected by accepting this dialog</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>To działanie nie ma wpływu na synchronizację.</translation>
     </message>
 </context>
 <context>
@@ -5611,32 +5611,32 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message numerus="yes">
         <source>%n second ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n seconds ago</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%n sekundę temu</numerusform><numerusform>%n sekund temu</numerusform><numerusform>%n sekund temu</numerusform><numerusform>%n sekund temu</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n minute ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n minutes ago</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%n minutę temu</numerusform><numerusform>%n minut temu</numerusform><numerusform>%n minut temu</numerusform><numerusform>%n minut temu</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n hour ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n hours ago</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%n godzinę temu</numerusform><numerusform>%n godzin temu</numerusform><numerusform>%n godzin temu</numerusform><numerusform>%n godzin temu</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n day ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n days ago</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%n dzień temu</numerusform><numerusform>%n dni temu</numerusform><numerusform>%n dni temu</numerusform><numerusform>%n dni temu</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n month ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n months ago</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%n miesiąc temu</numerusform><numerusform>%n miesięcy temu</numerusform><numerusform>%n miesięcy temu</numerusform><numerusform>%n miesięcy temu</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n year ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n years ago</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%n rok temu</numerusform><numerusform>%n lata temu</numerusform><numerusform>%n lata temu</numerusform><numerusform>%n lata temu</numerusform></translation>
     </message>
 </context>
 <context>
