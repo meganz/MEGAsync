@@ -90,8 +90,8 @@ protected:
     void mouseReleaseEvent(QMouseEvent *event) override;
 
 private:
-    static constexpr int SPEED_REFRESH_PERIOD_MS = 700;
-    static constexpr int STATS_REFRESH_PERIOD_MS = 1000;
+    static const int SPEED_REFRESH_PERIOD_MS = 700;
+    static const int STATS_REFRESH_PERIOD_MS = 1000;
 
     Ui::TransferManager* mUi;
     mega::MegaApi* mMegaApi;
