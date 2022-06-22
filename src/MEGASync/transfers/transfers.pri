@@ -62,7 +62,6 @@ macx {
                 $$PWD/gui/macx/TransferManagerDelegateWidget.ui \
                 $$PWD/gui/macx/TransferManager.ui \
                 $$PWD/gui/macx/TransfersWidget.ui \
-                $$PWD/gui/macx/TransfersStateInfoWidget.ui \
                 $$PWD/gui/macx/TransferManagerLoadingItem.ui \
                 $$PWD/gui/macx/TransferManagerDragBackDrop.ui \
                 $$PWD/gui/macx/InfoDialogTransfersWidget.ui \
@@ -78,7 +77,6 @@ unix:!macx {
                 $$PWD/gui/linux/TransferManagerDelegateWidget.ui \
                 $$PWD/gui/linux/TransferManager.ui \
                 $$PWD/gui/linux/TransfersWidget.ui \
-                $$PWD/gui/linux/TransfersStateInfoWidget.ui \
                 $$PWD/gui/linux/TransferManagerLoadingItem.ui \
                 $$PWD/gui/linux/TransferManagerDragBackDrop.ui \
                 $$PWD/gui/linux/InfoDialogTransfersWidget.ui \

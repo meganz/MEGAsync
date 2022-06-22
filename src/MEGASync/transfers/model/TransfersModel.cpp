@@ -1619,6 +1619,12 @@ QMimeData* TransfersModel::mimeData(const QModelIndexList& indexes) const
     QMimeData* data = new QMimeData();
     data->setData(QString::fromUtf8("application/x-qabstractitemmodeldatalist"), byteArray);
 
+    emit internalMoveStarted();
+
+    connect(data, &QMimeData::destroyed, this, [this](){
+        emit internalMoveFinished();
+    });
+
     return data;
 }
 

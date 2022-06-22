@@ -35,7 +35,7 @@ MegaTransferView::MegaTransferView(QWidget* parent) :
     mClearAction(nullptr)
 {
     setMouseTracking(true);
-    setAutoScroll(true);
+    setAutoScroll(false);
 
     verticalScrollBar()->installEventFilter(this);
 }
@@ -52,6 +52,9 @@ void MegaTransferView::setup(TransfersWidget* tw)
 
     connect(this, &MegaTransferView::customContextMenuRequested,
             this, &MegaTransferView::onCustomContextMenu);
+
+    connect(MegaSyncApp->getTransfersModel(), &TransfersModel::internalMoveStarted, this, &MegaTransferView::onInternalMoveStarted);
+    connect(MegaSyncApp->getTransfersModel(), &TransfersModel::internalMoveFinished, this, &MegaTransferView::onInternalMoveFinished);
 
     createContextMenu();
 }
@@ -693,6 +696,7 @@ void MegaTransferView::changeEvent(QEvent* event)
 void MegaTransferView::dropEvent(QDropEvent* event)
 {
     QAbstractItemView::dropEvent(event);
+    event->acceptProposedAction();
     clearSelection();
 }
 
@@ -1092,4 +1096,14 @@ void MegaTransferView::pauseSelectedClicked()
 void MegaTransferView::resumeSelectedClicked()
 {
     onPauseResumeSelection(false);
+}
+
+void MegaTransferView::onInternalMoveStarted()
+{
+     setAutoScroll(true);
+}
+
+void MegaTransferView::onInternalMoveFinished()
+{
+     setAutoScroll(false);
 }

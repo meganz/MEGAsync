@@ -69,6 +69,8 @@ private slots:
     void clearSelectedClicked();
     void pauseSelectedClicked();
     void resumeSelectedClicked();
+    void onInternalMoveStarted();
+    void onInternalMoveFinished();
 
 private:
     friend class TransferManagerDelegateWidget;

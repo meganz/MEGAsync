@@ -1300,32 +1300,6 @@ void TransferManager::changeEvent(QEvent *event)
     QDialog::changeEvent(event);
 }
 
-void TransferManager::dropEvent(QDropEvent* event)
-{
-    mDragBackDrop->hide();
-
-    event->acceptProposedAction();
-    QDialog::dropEvent(event);
-
-    QQueue<QString> pathsToAdd;
-    QList<QUrl> urlsToAdd = event->mimeData()->urls();
-    foreach(auto& urlToAdd, urlsToAdd)
-    {
-        auto file = urlToAdd.toLocalFile();
-#ifdef __APPLE__
-        QFileInfo fileInfo(file);
-        if (fileInfo.isDir())
-        {
-            file.remove(file.length()-1,1);
-        }
-#endif
-
-        pathsToAdd.append(file);
-    }
-
-    MegaSyncApp->shellUpload(pathsToAdd);
-}
-
 void TransferManager::mouseReleaseEvent(QMouseEvent *event)
 {
     mUi->wTransfers->mouseRelease(event->globalPos());
@@ -1364,6 +1338,32 @@ void TransferManager::dragEnterEvent(QDragEnterEvent *event)
     }
 
     QDialog::dragEnterEvent(event);
+}
+
+void TransferManager::dropEvent(QDropEvent* event)
+{
+    mDragBackDrop->hide();
+
+    event->acceptProposedAction();
+    QDialog::dropEvent(event);
+
+    QQueue<QString> pathsToAdd;
+    QList<QUrl> urlsToAdd = event->mimeData()->urls();
+    foreach(auto& urlToAdd, urlsToAdd)
+    {
+        auto file = urlToAdd.toLocalFile();
+#ifdef __APPLE__
+        QFileInfo fileInfo(file);
+        if (fileInfo.isDir())
+        {
+            file.remove(file.length()-1,1);
+        }
+#endif
+
+        pathsToAdd.append(file);
+    }
+
+    MegaSyncApp->shellUpload(pathsToAdd);
 }
 
 void TransferManager::dragLeaveEvent(QDragLeaveEvent *event)

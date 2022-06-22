@@ -150,7 +150,7 @@ public:
     virtual Qt::ItemFlags flags(const QModelIndex& index) const;
     virtual Qt::DropActions supportedDropActions() const;
     virtual QMimeData* mimeData(const QModelIndexList& indexes) const;
-    virtual bool dropMimeData(const QMimeData* data, Qt::DropAction action, int destRow,
+    bool dropMimeData(const QMimeData* data, Qt::DropAction action, int destRow,
                                                 int column, const QModelIndex& parent);
     bool hasChildren(const QModelIndex& parent) const;
     int rowCount(const QModelIndex& parent) const;
@@ -206,6 +206,8 @@ signals:
     void unblockUi();
     void modelProcessingFinished();
     void transferFinished(const QModelIndex& index);
+    void internalMoveStarted() const;
+    void internalMoveFinished() const;
 
 public slots:
     void pauseResumeAllTransfers(bool state);
