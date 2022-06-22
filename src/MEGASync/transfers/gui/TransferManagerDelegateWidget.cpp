@@ -61,17 +61,17 @@ void TransferManagerDelegateWidget::updateTransferState()
                     case TransferData::TRANSFER_DOWNLOAD:
                     case TransferData::TRANSFER_LTCPDOWNLOAD:
                     {
-                        statusString = tr("Downloading");
+                        statusString = tr("Downloading…");
                         break;
                     }
                     case TransferData::TRANSFER_UPLOAD:
                     {
-                        statusString = tr("Uploading");
+                        statusString = tr("Uploading…");
                         break;
                     }
                     default:
                     {
-                        statusString = tr("Syncing");
+                        statusString = tr("Syncing…");
                         break;
                     }
                     }

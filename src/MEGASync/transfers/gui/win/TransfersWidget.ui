@@ -125,45 +125,8 @@ TransferWidgetHeaderItem  QLabel
       </size>
      </property>
      <property name="currentIndex">
-      <number>1</number>
-     </property>
-     <widget class="TransfersStateInfoWidget" name="pNoTransfers">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="minimumSize">
-       <size>
-        <width>684</width>
-        <height>0</height>
-       </size>
-      </property>
-      <property name="maximumSize">
-       <size>
-        <width>16777215</width>
-        <height>16777215</height>
-       </size>
-      </property>
-      <layout class="QHBoxLayout" name="pNoTransfersLayout">
-       <property name="spacing">
         <number>0</number>
        </property>
-       <property name="leftMargin">
-        <number>0</number>
-       </property>
-       <property name="topMargin">
-        <number>0</number>
-       </property>
-       <property name="rightMargin">
-        <number>0</number>
-       </property>
-       <property name="bottomMargin">
-        <number>0</number>
-       </property>
-      </layout>
-     </widget>
      <widget class="QWidget" name="pTransfers">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
@@ -743,12 +706,6 @@ QMenu::item:default
    <class>MegaTransferView</class>
    <extends>QTreeView</extends>
    <header>MegaTransferView.h</header>
-  </customwidget>
-  <customwidget>
-   <class>TransfersStateInfoWidget</class>
-   <extends>QWidget</extends>
-   <header>TransfersStateInfoWidget.h</header>
-   <container>1</container>
   </customwidget>
   <customwidget>
    <class>TransferWidgetHeaderItem</class>

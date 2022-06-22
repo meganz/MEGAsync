@@ -638,7 +638,7 @@ QProgressBar::chunk
             </rect>
            </property>
            <property name="text">
-            <string>Queued</string>
+            <string>In queued</string>
            </property>
           </widget>
          </widget>

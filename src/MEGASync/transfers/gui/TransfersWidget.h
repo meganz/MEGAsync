@@ -3,7 +3,6 @@
 
 #include <QWidget>
 #include "MegaTransferDelegate.h"
-#include "TransfersStateInfoWidget.h"
 #include "TransfersManagerSortFilterProxyModel.h"
 #include "MegaDelegateHoverManager.h"
 #include "TransferManagerLoadingItem.h"

@@ -98,13 +98,13 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
         }
     }
 
-    mTooltipNameByTab[ALL_TRANSFERS_TAB] = tr("all");
+    mTooltipNameByTab[ALL_TRANSFERS_TAB] = tr("all transfers");
     mTooltipNameByTab[DOWNLOADS_TAB]     = tr("all downloads");
     mTooltipNameByTab[UPLOADS_TAB]       = tr("all uploads");
     mTooltipNameByTab[COMPLETED_TAB]     = tr("all completed");
     mTooltipNameByTab[FAILED_TAB]        = tr("all failed");
     mTooltipNameByTab[SEARCH_TAB]        = tr("all search results");
-    mTooltipNameByTab[TYPE_OTHER_TAB]    = tr("all");
+    mTooltipNameByTab[TYPE_OTHER_TAB]    = tr("all transfers");
     mTooltipNameByTab[TYPE_AUDIO_TAB]    = tr("all audios");
     mTooltipNameByTab[TYPE_VIDEO_TAB]    = tr("all videos");
     mTooltipNameByTab[TYPE_ARCHIVE_TAB]  = tr("all archives");
@@ -352,7 +352,7 @@ void TransferManager::on_tAllTransfers_clicked()
     {
         emit userActivity();
         mUi->wTransfers->filtersChanged({}, TransferData::ACTIVE_STATES_MASK, {});
-        mUi->lCurrentContent->setText(tr("All Transfers"));
+        mUi->lCurrentContent->setText(tr("All transfers"));
 
         toggleTab(ALL_TRANSFERS_TAB);
     }
@@ -374,7 +374,7 @@ void TransferManager::onUpdatePauseState(bool isPaused)
 {
     if (isPaused)
     {
-        mUi->bPause->setToolTip(tr("Resume all"));
+        mUi->bPause->setToolTip(tr("Resume all transfers"));
 
         if(!mUi->bPause->isChecked())
         {
@@ -385,7 +385,7 @@ void TransferManager::onUpdatePauseState(bool isPaused)
     }
     else
     {
-        mUi->bPause->setToolTip(tr("Pause all"));
+        mUi->bPause->setToolTip(tr("Pause all transfers"));
 
         if(mUi->bPause->isChecked())
         {
@@ -1101,7 +1101,7 @@ void TransferManager::toggleTab(TM_TAB newTab)
             if (newTab == COMPLETED_TAB)
             {
                 mUi->tActionButton->setText(tr("Clear All"));
-                headerInfo.headerTime = tr("Time Completed");
+                headerInfo.headerTime = tr("Time completed");
                 headerInfo.headerSpeed = tr("Avg. speed");
 
                 cancelBase = tr("Clear ");
@@ -1109,7 +1109,7 @@ void TransferManager::toggleTab(TM_TAB newTab)
             else if (newTab == FAILED_TAB)
             {
                 mUi->tActionButton->setText(tr("Retry all"));
-                headerInfo.headerTime = tr("Time Completed");
+                headerInfo.headerTime = tr("Time completed");
                 headerInfo.headerSpeed = tr("Avg. speed");
             }
             else if (newTab > TYPES_TAB_BASE && newTab < TYPES_LAST)
@@ -1117,7 +1117,7 @@ void TransferManager::toggleTab(TM_TAB newTab)
                 headerInfo.headerTime = tr("Time");
                 headerInfo.headerSpeed = tr("Speed");
 
-                mUi->tActionButton->setText(tr("Clear Completed"));
+                mUi->tActionButton->setText(tr("Clear completed"));
 
                 cancelBase = proxyModel->isAnyCancelable() ? tr("Cancel and clear ") : tr("Clear ");
             }
