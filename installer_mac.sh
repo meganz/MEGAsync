@@ -100,12 +100,19 @@ if [ ${full_pkg} -eq 1 ]; then
     createdmg=1
     notarize=1
 fi
+
 if [ ${full_pkg_cmake} -eq 1 ]; then
     build=0
     build_cmake=1
     sign=1
     createdmg=1
     notarize=1
+fi
+
+if [ ${build} -ne 1 -a ${build_cmake} -ne 1 -a ${sign} -ne 1 -a ${createdmg} -ne 1 -a ${notarize} -ne 1 ]; then
+   Usage
+   echo "Error: No action selected. Nothing to do."
+   exit 1
 fi
 
 if [ ${build} -eq 1 -o ${build_cmake} -eq 1 ]; then
