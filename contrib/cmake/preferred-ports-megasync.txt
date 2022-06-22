@@ -12,7 +12,9 @@ openssl-unix/c303dd024e2dc03a0665ddffbb12a1077933e649 all:off linux:on
 openssl-windows/c303dd024e2dc03a0665ddffbb12a1077933e649 all:off windows:on
 pcre/61b3046e513d189495ee37247e6cc550ee75e471
 sqlite3/c303dd024e2dc03a0665ddffbb12a1077933e649
-zlib/c303dd024e2dc03a0665ddffbb12a1077933e649
+zlib/9b064ff07b987c8f213fdbf4358122fd4fe38ef1
+
+# needed by the SDK if enabling serving/streaming (outgoing) files via http/s or include a an ftp server
 libuv/c303dd024e2dc03a0665ddffbb12a1077933e649
 
 # mediainfo, customized with constrained functionality (determine media properties such as track length, codec, etc)
@@ -20,7 +22,7 @@ libmediainfo/19.09
 libzen/0.4.37
 
 # ffmpeg (video preview/thumbnail generation)
-ffmpeg/c303dd024e2dc03a0665ddffbb12a1077933e649
+ffmpeg/c303dd024e2dc03a0665ddffbb12a1077933e649 osx:ffmpeg-fix-osx-cross-compilation.patch
 
 #freeimage and its dependencies (image preview/thumbnail generation)
 freeimage/7375bb408f2278d2f1875c259beef93332697ba7 osx:freeimage-bool-typedef-xcode-compiler.patch
@@ -38,8 +40,6 @@ liblzma/7375bb408f2278d2f1875c259beef93332697ba7 ios:liblzma-ios.patch
 libffi/7375bb408f2278d2f1875c259beef93332697ba7
 opengl/7375bb408f2278d2f1875c259beef93332697ba7
 #freeglut (cross platform window manager) not needed; problematic on some platforms, pulling in many, many dependencies
-vcpkg-cmake-config/7375bb408f2278d2f1875c259beef93332697ba7
-vcpkg-cmake/7375bb408f2278d2f1875c259beef93332697ba7
 
 # pdfium libraries, specific version for build stability  (preview/thumbnail generation for pdfs)
 # (see 3rdParty_deps.txt on instructions on how to get source)
@@ -48,12 +48,12 @@ pdfium/3710
 pdfium-freetype/2-8-73
 
 # dependencies of pdfium
-icu/c303dd024e2dc03a0665ddffbb12a1077933e649
+icu/979a5197b3389cfdf91d0ac5d98b6066ce73fd7a
 lcms/c303dd024e2dc03a0665ddffbb12a1077933e649
 libjpeg-turbo/7375bb408f2278d2f1875c259beef93332697ba7
 openjpeg/7375bb408f2278d2f1875c259beef93332697ba7
-libpng/7375bb408f2278d2f1875c259beef93332697ba7
 bzip2/c303dd024e2dc03a0665ddffbb12a1077933e649
+libpng/7375bb408f2278d2f1875c259beef93332697ba7
 
 # for the tests, just to get the build through
 gtest/7375bb408f2278d2f1875c259beef93332697ba7
