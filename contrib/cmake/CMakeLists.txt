@@ -234,7 +234,7 @@ set (MOC_INPUT
     ${MEGAsyncDir}/control/UpdateTask.h
     ${MEGAsyncDir}/control/ThreadPool.h
     ${MEGAsyncDir}/control/MegaController.h
-    ${MEGAsyncDir}/control/TransferBatch.h    
+    ${MEGAsyncDir}/control/TransferBatch.h
     ${MEGAsyncDir}/control/UserAttributesManager.h
     ${MEGAsyncDir}/model/SyncSettings.h
     ${MEGAsyncDir}/transfers/model/TransfersManagerSortFilterProxyModel.h
@@ -284,7 +284,7 @@ set (MOC_INPUT
     ${MEGAsyncDir}/gui/QSyncItemWidget.h
     ${MEGAsyncDir}/gui/SettingsDialog.h
     ${MEGAsyncDir}/gui/NotificationsSettings.h
-    ${MEGAsyncDir}/gui/CancelConfirmWidget.h	
+    ${MEGAsyncDir}/gui/CancelConfirmWidget.h
     ${MEGAsyncDir}/gui/SetupWizard.h
     ${MEGAsyncDir}/gui/StatusInfo.h
     ${MEGAsyncDir}/gui/MegaItemProxyModel.h
@@ -446,6 +446,7 @@ set (SRCS
     ${MEGAsyncDir}/gui/AlertItem.cpp
     ${MEGAsyncDir}/gui/AlertFilterType.cpp
     ${MEGAsyncDir}/gui/BugReportDialog.cpp
+    ${MEGAsyncDir}/gui/BlurredShadowEffect.cpp
     ${MEGAsyncDir}/gui/CircularUsageProgressBar.cpp
     ${MEGAsyncDir}/gui/FilterAlertWidget.cpp
     ${MEGAsyncDir}/gui/MegaAlertDelegate.cpp
@@ -544,7 +545,7 @@ set (SRCS
     ${MEGAsyncDir}/control/ConnectivityChecker.cpp
     ${MEGAsyncDir}/control/TransferRemainingTime.cpp
     ${MEGAsyncDir}/control/MegaController.cpp
-    ${MEGAsyncDir}/control/TransferBatch.cpp    
+    ${MEGAsyncDir}/control/TransferBatch.cpp
     ${MEGAsyncDir}/control/UserAttributesManager.cpp
     ${MEGAsyncDir}/model/SyncSettings.cpp
     ${MEGAsyncDir}/model/Model.cpp
