@@ -3455,6 +3455,38 @@ void MegaApplication::destroyInfoDialogMenus()
     }
 }
 
+MegaApplication::NodeCount MegaApplication::countFilesAndFolders(const QStringList& paths)
+{
+    NodeCount count;
+    count.files = 0;
+    count.folders = 0;
+
+    for (const auto& path : paths)
+    {
+        count.folders++;
+        QDirIterator it (path, QDir::AllEntries | QDir::Hidden | QDir::System | QDir::NoDotAndDotDot, QDirIterator::Subdirectories);
+        while (it.hasNext())
+        {
+            it.next();
+            if (it.fileInfo().isDir())
+            {
+                count.folders++;
+            }
+            else if (it.fileInfo().isFile())
+            {
+                count.files++;
+            }
+        }
+    }
+    return count;
+}
+
+void MegaApplication::processUploads(const QStringList &uploads)
+{
+    uploadQueue.append(uploads);
+    processUploadQueue(folderUploadTarget);
+}
+
 void MegaApplication::setupWizardFinished(int result)
 {
     if (appfinished)
@@ -5722,30 +5754,10 @@ void MegaApplication::externalFolderUpload(qlonglong targetFolder)
     if (folderUploadSelector->result() == QDialog::Accepted)
     {
         QStringList paths = folderUploadSelector->selectedFiles();
-        MegaNode *target = megaApi->getNodeByHandle(folderUploadTarget);
-        int files = 0;
-        int folders = 0;
-        for (const auto& path : paths)
-        {
-            folders++;
-            QDirIterator it (path, QDir::AllEntries | QDir::Hidden | QDir::System | QDir::NoDotAndDotDot, QDirIterator::Subdirectories);
-            while (it.hasNext())
-            {
-                it.next();
-                if (it.fileInfo().isDir())
-                {
-                    folders++;
-                }
-                else if (it.fileInfo().isFile())
-                {
-                    files++;
-                }
-            }
-            startUpload(path, target, nullptr);
-        }
-        delete target;
+        NodeCount nodeCount = countFilesAndFolders(paths);
 
-        HTTPServer::onUploadSelectionAccepted(files, folders);
+        processUploads(paths);
+        HTTPServer::onUploadSelectionAccepted(nodeCount.files, nodeCount.folders);
     }
     else
     {

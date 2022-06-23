@@ -607,6 +607,16 @@ private:
 
     void destroyInfoDialogMenus();
 
+    struct NodeCount
+    {
+        int files;
+        int folders;
+    };
+
+    static NodeCount countFilesAndFolders(const QStringList& paths);
+
+    void processUploads(const QStringList& uploads);
+
     template <class Func>
     void recreateMenuAction(MenuItemAction** action, const QString& actionName,
                             const char* iconPath, Func slotFunc)
