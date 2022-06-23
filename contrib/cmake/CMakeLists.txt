@@ -188,7 +188,6 @@ set (FORMS
     ${MEGAsyncDir}/transfers/gui/${UiDir}/TransferManager.ui
     ${MEGAsyncDir}/transfers/gui/${UiDir}/TransferManagerDragBackDrop.ui
     ${MEGAsyncDir}/transfers/gui/${UiDir}/TransfersWidget.ui
-    ${MEGAsyncDir}/transfers/gui/${UiDir}/TransfersStateInfoWidget.ui
     ${MEGAsyncDir}/transfers/gui/${UiDir}/TransfersStatusWidget.ui
     ${MEGAsyncDir}/transfers/gui/${UiDir}/TransfersSummaryWidget.ui
     ${MEGAsyncDir}/transfers/gui/${UiDir}/TransferManagerDelegateWidget.ui
@@ -303,21 +302,24 @@ set (MOC_INPUT
     ${MEGAsyncDir}/gui/BlurredShadowEffect.h
     ${MEGAsyncDir}/gui/ButtonIconManager.h
     ${MEGAsyncDir}/gui/DialogGeometryRetainer.h
+    ${MEGAsyncDir}/gui/FileFolderNameSetterDialog.h
+    ${MEGAsyncDir}/gui/CancelConfirmWidget.h	
+
     ${MEGAsyncDir}/platform/notificator.h
+    
     ${MEGAsyncDir}/mega/bindings/qt/QTMegaGlobalListener.h
     ${MEGAsyncDir}/mega/bindings/qt/QTMegaListener.h
     ${MEGAsyncDir}/mega/bindings/qt/QTMegaRequestListener.h
     ${MEGAsyncDir}/mega/bindings/qt/QTMegaTransferListener.h
     
     ${MEGAsyncDir}/control/TransferBatch.h    
-    ${MEGAsyncDir}/gui/CancelConfirmWidget.h	
+    
     ${MEGAsyncDir}/transfers/model/TransfersManagerSortFilterProxyModel.h
     ${MEGAsyncDir}/transfers/model/TransfersSortFilterProxyBaseModel.h
     ${MEGAsyncDir}/transfers/model/TransfersModel.h
     ${MEGAsyncDir}/transfers/model/InfoDialogTransfersProxyModel.h
     ${MEGAsyncDir}/transfers/gui/TransferItem.h
     ${MEGAsyncDir}/transfers/gui/TransferManager.h
-    ${MEGAsyncDir}/transfers/gui/TransfersStateInfoWidget.h
     ${MEGAsyncDir}/transfers/gui/TransfersWidget.h
     ${MEGAsyncDir}/transfers/gui/TransfersStatusWidget.h
     ${MEGAsyncDir}/transfers/gui/TransfersSummaryWidget.h
@@ -463,11 +465,11 @@ set (SRCS
     ${MEGAsyncDir}/gui/BlurredShadowEffect.cpp
     ${MEGAsyncDir}/gui/CancelConfirmWidget.cpp
     ${MEGAsyncDir}/gui/MegaDelegateHoverManager.cpp
+    ${MEGAsyncDir}/gui/FileFolderNameSetterDialog.cpp
 
     ${MEGAsyncDir}/transfers/gui/TransfersStatusWidget.cpp
     ${MEGAsyncDir}/transfers/gui/TransferItem.cpp
     ${MEGAsyncDir}/transfers/gui/InfoDialogTransfersWidget.cpp
-    ${MEGAsyncDir}/transfers/gui/TransfersStateInfoWidget.cpp
     ${MEGAsyncDir}/transfers/gui/TransferManager.cpp
     ${MEGAsyncDir}/transfers/gui/TransfersWidget.cpp
     ${MEGAsyncDir}/transfers/gui/MegaTransferDelegate.cpp
@@ -682,7 +684,13 @@ else()
 endif()
 
 
-target_include_directories(MEGAsync PRIVATE ${MEGAsyncDir} ${MEGAsyncDir}/google_breakpad )
+target_include_directories(MEGAsync PRIVATE
+                                    ${MEGAsyncDir}
+                                    ${MEGAsyncDir}/transfers
+                                    ${MEGAsyncDir}/transfers/gui
+                                    ${MEGAsyncDir}/transfers/model
+                                    ${MEGAsyncDir}/google_breakpad
+                                    )
 
 if (CMAKE_HOST_WIN32)
     set(TARGET_LINK_LIBRARIES_PLATFORM ${TARGET_LINK_LIBRARIES_PLATFORM} ole32 Shell32 crypt32 taskschd Kernel32.lib Iphlpapi.lib Userenv.lib Psapi.lib )
@@ -828,29 +836,3 @@ if(CMAKE_HOST_WIN32)
     set_property(TARGET MEGAShellExt PROPERTY MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
     set_target_properties(MEGAShellExt  PROPERTIES LINK_FLAGS_RELEASE " /DEBUG " )
 endif()
-
-#-------------- MEGA Sync unit tests --------------------
-add_library(catch INTERFACE)
-target_include_directories(catch INTERFACE "${RepoDir}/tests/3rdparty/catch")
-add_library(trompeloeil INTERFACE)
-target_include_directories(catch INTERFACE "${RepoDir}/tests/3rdparty/trompeloeil")
-
-set(MEGASyncUnitTestsDir "${RepoDir}/tests/MEGASyncUnitTests")
-set(UNIT_TEST_FILES
-    ${MEGASyncUnitTestsDir}/GuestWidgetTest.cpp
-    ${MEGASyncUnitTestsDir}/control/TransferRemainingTime.Test.cpp
-    ${MEGASyncUnitTestsDir}/Utilities.test.cpp
-    ${MEGASyncUnitTestsDir}/ScaleFactorManager.Test.cpp
-    ${MEGASyncUnitTestsDir}/main.cpp
-    )
-add_executable(MEGASync_unit_tests ${UNIT_TEST_FILES} ${SRCS} ${QM_FILES})
-
-target_link_libraries(MEGASync_unit_tests
-    catch
-    trompeloeil
-    Mega
-    ${MEGA_QT_LINK_LIBRARIES}
-    ${TARGET_LINK_LIBRARIES_PLATFORM}
-    )
-
-target_include_directories(MEGASync_unit_tests PRIVATE ${MEGAsyncDir} ${MEGAsyncDir}/google_breakpad )

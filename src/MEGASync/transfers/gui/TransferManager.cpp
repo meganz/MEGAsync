@@ -1121,7 +1121,6 @@ void TransferManager::toggleTab(TM_TAB newTab)
         }
 
         TransfersWidget::HeaderInfo headerInfo;
-        auto proxyModel(mUi->wTransfers->getProxyModel());
 
         // Show pause button on tab except completed tab,
         // and set Clear All button string,
