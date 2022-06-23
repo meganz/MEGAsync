@@ -379,6 +379,13 @@ QToolButton
   background-color: #2BA6DE;
   color: #FFFFFF;
 }
+
+#wNoDownloads QLabel, #wNoUploads QLabel,  #wNoTransfers QLabel, #wNoFinished QLabel, #wNoResults QLabel
+{
+    color: #333333;
+    font-size: 24px;
+    font-weight: 400;
+}
 </string>
   </property>
   <layout class="QHBoxLayout" name="TransferManagerLayout">
@@ -660,7 +667,7 @@ QToolButton
          </size>
         </property>
         <property name="title">
-         <string>TRANSFERRING</string>
+         <string>Transferring</string>
         </property>
         <property name="flat">
          <bool>true</bool>
@@ -996,7 +1003,7 @@ QToolButton
                <cursorShape>PointingHandCursor</cursorShape>
               </property>
               <property name="text">
-               <string>Finished</string>
+               <string>Completed</string>
               </property>
               <property name="icon">
                <iconset resource="../../../gui/Resources_linux.qrc">
@@ -1161,7 +1168,7 @@ QToolButton
       <item>
        <widget class="QGroupBox" name="wMediaType">
         <property name="title">
-         <string>MEDIA TYPE</string>
+         <string>Media type</string>
         </property>
         <layout class="QVBoxLayout" name="wMediaTypeLayout">
          <property name="spacing">
@@ -1728,7 +1735,7 @@ QToolButton
       <item>
        <widget class="QGroupBox" name="wSearch">
         <property name="title">
-         <string>SEARCH</string>
+         <string>Search</string>
         </property>
         <layout class="QVBoxLayout" name="wSearchLayout">
          <property name="spacing">
@@ -1945,7 +1952,7 @@ QToolButton
            </spacer>
           </item>
           <item>
-           <widget class="QToolButton" name="bCancelClearAll">
+           <widget class="QToolButton" name="bCancelAll">
             <property name="enabled">
              <bool>true</bool>
             </property>
@@ -1953,7 +1960,7 @@ QToolButton
              <cursorShape>PointingHandCursor</cursorShape>
             </property>
             <property name="toolTip">
-             <string>Cancel and clear all</string>
+             <string>Cancel all transfers</string>
             </property>
             <property name="icon">
              <iconset resource="../../../gui/Resources_linux.qrc">
@@ -2320,7 +2327,7 @@ QToolButton
                 </sizepolicy>
                </property>
                <property name="text">
-                <string>All Paused</string>
+                <string>All paused</string>
                </property>
               </widget>
              </item>
@@ -2828,7 +2835,7 @@ QToolButton
       <item>
        <widget class="QStackedWidget" name="sTransfers">
         <property name="currentIndex">
-         <number>0</number>
+         <number>1</number>
         </property>
         <widget class="TransfersWidget" name="wTransfers">
          <property name="sizePolicy">
@@ -2840,7 +2847,16 @@ QToolButton
         </widget>
         <widget class="QWidget" name="wNoUploads">
          <layout class="QGridLayout" name="wNoUploadsLayout">
-          <item row="0" column="0">
+          <property name="topMargin">
+           <number>20</number>
+          </property>
+          <property name="bottomMargin">
+           <number>20</number>
+          </property>
+          <property name="spacing">
+           <number>0</number>
+          </property>
+          <item row="1" column="0">
            <widget class="QToolButton" name="tNoUploads">
             <property name="text">
              <string/>
@@ -2851,11 +2867,82 @@ QToolButton
             </property>
            </widget>
           </item>
+          <item row="3" column="0">
+           <spacer name="verticalSpacer_11">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>40</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item row="0" column="0">
+           <spacer name="verticalSpacer_10">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>40</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="lNoUploads">
+            <property name="text">
+             <string>No uploads</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
          </layout>
         </widget>
         <widget class="QWidget" name="wNoDownloads">
          <layout class="QGridLayout" name="wNoDownloadsLayout">
+          <property name="topMargin">
+           <number>20</number>
+          </property>
+          <property name="bottomMargin">
+           <number>20</number>
+          </property>
+          <property name="spacing">
+           <number>0</number>
+          </property>
+          <item row="3" column="0">
+           <spacer name="verticalSpacer_3">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>40</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
           <item row="0" column="0">
+           <spacer name="verticalSpacer_2">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>40</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item row="1" column="0">
            <widget class="QToolButton" name="tNoDownloads">
             <property name="text">
              <string/>
@@ -2866,11 +2953,43 @@ QToolButton
             </property>
            </widget>
           </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="lNoDownloads">
+            <property name="text">
+             <string>No downloads</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
          </layout>
         </widget>
         <widget class="QWidget" name="wNoTransfers">
          <layout class="QGridLayout" name="wNoTransfersLayout">
-          <item row="0" column="0">
+          <property name="topMargin">
+           <number>20</number>
+          </property>
+          <property name="bottomMargin">
+           <number>20</number>
+          </property>
+          <property name="spacing">
+           <number>0</number>
+          </property>
+          <item row="3" column="0">
+           <spacer name="verticalSpacer_9">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>40</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item row="1" column="0">
            <widget class="QToolButton" name="tNoTransfers">
             <property name="text">
              <string/>
@@ -2881,11 +3000,43 @@ QToolButton
             </property>
            </widget>
           </item>
+          <item row="0" column="0">
+           <spacer name="verticalSpacer_8">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>40</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="lNoTransfers">
+            <property name="text">
+             <string>No transfers</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
          </layout>
         </widget>
         <widget class="QWidget" name="wNoResults">
          <layout class="QGridLayout" name="wNoResultsLayout">
-          <item row="0" column="0">
+          <property name="topMargin">
+           <number>20</number>
+          </property>
+          <property name="bottomMargin">
+           <number>20</number>
+          </property>
+          <property name="spacing">
+           <number>0</number>
+          </property>
+          <item row="1" column="0">
            <widget class="QToolButton" name="tNoResults">
             <property name="text">
              <string/>
@@ -2896,11 +3047,69 @@ QToolButton
             </property>
            </widget>
           </item>
+          <item row="0" column="0">
+           <spacer name="verticalSpacer_6">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>40</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item row="3" column="0">
+           <spacer name="verticalSpacer_7">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>40</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="lNoResults">
+            <property name="text">
+             <string>No search results</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
          </layout>
         </widget>
         <widget class="QWidget" name="wNoFinished">
          <layout class="QGridLayout" name="wNoFinishedLayout">
+          <property name="topMargin">
+           <number>20</number>
+          </property>
+          <property name="bottomMargin">
+           <number>20</number>
+          </property>
+          <property name="spacing">
+           <number>0</number>
+          </property>
           <item row="0" column="0">
+           <spacer name="verticalSpacer_4">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>40</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item row="1" column="0">
            <widget class="QToolButton" name="tNoFinished">
             <property name="text">
              <string/>
@@ -2908,6 +3117,29 @@ QToolButton
             <property name="icon">
              <iconset resource="../../../gui/Resources_linux.qrc">
               <normaloff>:/images/transfer_manager/empty_categories/Completed_transfers.png</normaloff>:/images/transfer_manager/empty_categories/Completed_transfers.png</iconset>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0">
+           <spacer name="verticalSpacer_5">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>40</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="lNoFinished">
+            <property name="text">
+             <string>No completed transfers</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
             </property>
            </widget>
           </item>

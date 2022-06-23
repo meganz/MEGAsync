@@ -4,41 +4,41 @@
 #include "TransferManager.h"
 
 ScanStageController::ScanStageController(QObject *parent)
-    : QObject(parent), scanStageTimer(this)
+    : QObject(parent), mScanStageTimer(this), mTransferManager(nullptr)
 {
-    scanStageTimer.setSingleShot(true);
-    connect(&scanStageTimer, &QTimer::timeout,
+    mScanStageTimer.setSingleShot(true);
+    connect(&mScanStageTimer, &QTimer::timeout,
             this, &ScanStageController::startScanStage);
 }
 
 void ScanStageController::updateReference(InfoDialog *_infoDialog)
 {
-    infoDialog = _infoDialog;
+    mInfoDialog = _infoDialog;
 }
 
 void ScanStageController::updateReference(TransferManager *_transferManager)
 {
-    transferManager = _transferManager;
+    mTransferManager = _transferManager;
 }
 
 void ScanStageController::startDelayedScanStage()
 {
-    if (!scanStageTimer.isActive())
+    if (!mScanStageTimer.isActive())
     {
-        scanStageTimer.start(delayToShowDialogInMs);
+        mScanStageTimer.start(mDelayToShowDialogInMs);
     }
 }
 
 void ScanStageController::stopDelayedScanStage()
 {
-    if (scanStageTimer.isActive())
+    if (mScanStageTimer.isActive())
     {
-        scanStageTimer.stop();
+        mScanStageTimer.stop();
     }
     else
     {
-        isInScanningState = false;
-        if (isInScanningStateInMinimumTime)
+        mIsInScanningState = false;
+        if (mIsInScanningStateInMinimumTime)
         {
             setUiInDisabledScanStage();
         }
@@ -51,9 +51,9 @@ void ScanStageController::stopDelayedScanStage()
 
 void ScanStageController::startScanStage()
 {
-    isInScanningState = true;
-    isInScanningStateInMinimumTime = true;
-    QTimer::singleShot(minimumDialogDisplayTimeInMs, this,
+    mIsInScanningState = true;
+    mIsInScanningStateInMinimumTime = true;
+    QTimer::singleShot(mMinimumDialogDisplayTimeInMs, this,
                        &ScanStageController::onMinimumDisplayTimeElapsed);
 
     setUiInScanStage();
@@ -63,14 +63,14 @@ void ScanStageController::setUiInScanStage()
 {
     emit enableTransferActions(false);
 
-    if (transferManager)
+    if (mTransferManager)
     {
-        transferManager->enterBlockingState();
+        mTransferManager->enterBlockingState();
     }
 
-    if (infoDialog)
+    if (mInfoDialog)
     {
-        infoDialog->enterBlockingState();
+        mInfoDialog->enterBlockingState();
     }
 }
 
@@ -78,34 +78,34 @@ void ScanStageController::setUiInNormalStage()
 {
     emit enableTransferActions(true);
 
-    if (transferManager)
+    if (mTransferManager)
     {
-        transferManager->leaveBlockingState();
+        mTransferManager->leaveBlockingState();
     }
 
-    if (infoDialog)
+    if (mInfoDialog)
     {
-        infoDialog->leaveBlockingState();
+        mInfoDialog->leaveBlockingState();
     }
 }
 
 void ScanStageController::setUiInDisabledScanStage()
 {
-    if (transferManager)
+    if (mTransferManager)
     {
-        transferManager->disableCancelling();
+        mTransferManager->disableCancelling();
     }
 
-    if (infoDialog)
+    if (mInfoDialog)
     {
-        infoDialog->disableCancelling();
+        mInfoDialog->disableCancelling();
     }
 }
 
 void ScanStageController::onMinimumDisplayTimeElapsed()
 {
-    isInScanningStateInMinimumTime = false;
-    if (!isInScanningState)
+    mIsInScanningStateInMinimumTime = false;
+    if (!mIsInScanningState)
     {
         setUiInNormalStage();
     }

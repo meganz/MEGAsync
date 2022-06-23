@@ -73,6 +73,18 @@ bool ButtonIconManager::eventFilter(QObject * watched, QEvent * event)
         }
     }
 
+    //Update the icon if the default_icon property changes
+    if(event->type() == QEvent::DynamicPropertyChange)
+    {
+        if(auto propertyChanged = dynamic_cast<QDynamicPropertyChangeEvent*>(event))
+        {
+            if(propertyChanged->propertyName() == ICON_PREFIX)
+            {
+                setDefaultIcon(button);
+            }
+        }
+    }
+
     return QObject::eventFilter(watched, event);
 }
 

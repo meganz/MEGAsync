@@ -44,7 +44,6 @@ void TransfersWidget::setupTransfers()
 
     connect(mProxyModel, &TransfersManagerSortFilterProxyModel::modelAboutToBeChanged, this, &TransfersWidget::onUiBlocked);
     connect(mProxyModel, &TransfersManagerSortFilterProxyModel::modelChanged, this, &TransfersWidget::onModelChanged);
-    connect(mProxyModel, &TransfersManagerSortFilterProxyModel::cancelableTransfersChanged, this, &TransfersWidget::onCheckCancelButtonVisibility);
     connect(mProxyModel, &TransfersManagerSortFilterProxyModel::activeTransfersChanged, this, &TransfersWidget::onActiveTransferCounterChanged);
     connect(mProxyModel, &TransfersManagerSortFilterProxyModel::pausedTransfersChanged, this, &TransfersWidget::onPausedTransferCounterChanged);
     connect(mProxyModel, &TransfersManagerSortFilterProxyModel::transferPauseResume, this, &TransfersWidget::onPauseResumeButtonCheckedOnDelegate);
@@ -74,7 +73,6 @@ void TransfersWidget::configureTransferView()
     ui->tvTransfers->setup(this);
 
     onPauseStateChanged(mProxyModel->isAnyPaused());
-    onCheckCancelButtonVisibility(false);
 
     ui->tvTransfers->setModel(mProxyModel);
     ui->tvTransfers->setItemDelegate(tDelegate);
@@ -178,12 +176,32 @@ void TransfersWidget::updateHeaderItems(const HeaderInfo &info)
     mHeaderInfo = info;
 
     ui->timeColumn->setTitle(info.headerTime);
-    ui->tCancelClearVisible->setToolTip(info.cancelClearTooltip);
     ui->speedColumn->setTitle(info.headerSpeed);
 
     ui->tPauseResumeVisible->setToolTip(ui->tPauseResumeVisible->isChecked() ?
                                            info.resumeTooltip
                                           : info.pauseTooltip);
+}
+
+void TransfersWidget::updateCancelClearButtonInfo(const CancelClearButtonInfo &info)
+{
+    ui->tCancelClearVisible->setVisible(info.visible);
+
+    if(info.visible)
+    {
+        if(info.clearAction)
+        {
+            ui->tCancelClearVisible->setProperty("default_icon",
+                                                 QString::fromStdString("qrc:/images/transfer_manager/transfers_actions/lists_minus_all_ico_default.png"));
+        }
+        else
+        {
+            ui->tCancelClearVisible->setProperty("default_icon",
+                                                 QString::fromStdString("qrc:/images/transfer_manager/transfers_actions/lists_cancel_all_ico_default.png"));
+        }
+    }
+
+    ui->tCancelClearVisible->setToolTip(info.cancelClearTooltip);
 }
 
 void TransfersWidget::changeEvent(QEvent *event)
@@ -216,11 +234,8 @@ void TransfersWidget::onModelAboutToBeChanged()
 
 void TransfersWidget::onModelChanged()
 {
-    auto isAnyPaused = mProxyModel->isAnyPaused();
-    onPauseStateChanged(isAnyPaused);
-
-    auto isAnyActive = mProxyModel->isAnyActive();
-    onActiveTransferCounterChanged(isAnyActive);
+    onActiveTransferCounterChanged();
+    onPausedTransferCounterChanged();
 
     onUiUnblocked();
 }
@@ -271,7 +286,7 @@ void TransfersWidget::onCancelClearButtonPressedOnDelegate()
     QPointer<TransfersWidget> dialog = QPointer<TransfersWidget>(this);
 
     if (QMegaMessageBox::warning(this, QString::fromUtf8("MEGAsync"),
-                             tr("Are you sure you want to %1 the following transfer(s)?", "", sourceSelectionIndexes.size()).arg(action),
+                             tr("%1 transfer(s)?", "", sourceSelectionIndexes.size()).arg(action),
                              QMessageBox::Yes | QMessageBox::No, QMessageBox::No)
             != QMessageBox::Yes
             || !dialog)
@@ -291,7 +306,7 @@ void TransfersWidget::onRetryButtonPressedOnDelegate()
     QPointer<TransfersWidget> dialog = QPointer<TransfersWidget>(this);
 
     if (QMegaMessageBox::warning(this, QString::fromUtf8("MEGAsync"),
-                             tr("Are you sure you want to retry the following transfer(s)?", "", sourceSelectionIndexes.size()),
+                             tr("Retry transfer(s)?", "", sourceSelectionIndexes.size()),
                              QMessageBox::Yes | QMessageBox::No, QMessageBox::No)
             != QMessageBox::Yes
             || !dialog)
@@ -302,19 +317,14 @@ void TransfersWidget::onRetryButtonPressedOnDelegate()
     getModel()->retryTransfers(sourceSelectionIndexes);
 }
 
-void TransfersWidget::onCheckCancelButtonVisibility(bool state)
+void TransfersWidget::onActiveTransferCounterChanged()
 {
-    ui->tCancelClearVisible->setVisible(state);
+    ui->tPauseResumeVisible->setVisible(mProxyModel->isAnyActive());
 }
 
-void TransfersWidget::onActiveTransferCounterChanged(bool state)
+void TransfersWidget::onPausedTransferCounterChanged()
 {
-    ui->tPauseResumeVisible->setVisible(state);
-}
-
-void TransfersWidget::onPausedTransferCounterChanged(bool state)
-{
-    onPauseStateChanged(state);
+    onPauseStateChanged(mProxyModel->isAnyPaused());
 }
 
 void TransfersWidget::onVerticalScrollBarVisibilityChanged(bool state)

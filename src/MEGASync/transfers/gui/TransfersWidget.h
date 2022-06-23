@@ -3,7 +3,6 @@
 
 #include <QWidget>
 #include "MegaTransferDelegate.h"
-#include "TransfersStateInfoWidget.h"
 #include "TransfersManagerSortFilterProxyModel.h"
 #include "MegaDelegateHoverManager.h"
 #include "TransferManagerLoadingItem.h"
@@ -40,17 +39,26 @@ public:
     void transferFilterReset();
     void mouseRelease(const QPoint& point);
 
+    struct CancelClearButtonInfo
+    {
+         bool    visible;
+         bool    clearAction;
+         QString cancelClearTooltip;
+
+         CancelClearButtonInfo():clearAction(false), visible(true){}
+    };
+
     struct HeaderInfo
     {
         QString headerTime;
-        QString cancelClearTooltip;
-        QString headerSpeed;
 
+        QString headerSpeed;
         QString pauseTooltip;
         QString resumeTooltip;
     };
 
     void updateHeaderItems(const HeaderInfo& info);
+    void updateCancelClearButtonInfo(const CancelClearButtonInfo& info);
 
     TransfersModel* getModel();
     TransfersManagerSortFilterProxyModel* getProxyModel() {return mProxyModel;}
@@ -73,9 +81,8 @@ private slots:
     void onPauseResumeButtonCheckedOnDelegate(bool pause);
     void onCancelClearButtonPressedOnDelegate();
     void onRetryButtonPressedOnDelegate();
-    void onCheckCancelButtonVisibility(bool state);
-    void onActiveTransferCounterChanged(bool state);
-    void onPausedTransferCounterChanged(bool state);
+    void onActiveTransferCounterChanged();
+    void onPausedTransferCounterChanged();
     void onVerticalScrollBarVisibilityChanged(bool state);
 
 private:

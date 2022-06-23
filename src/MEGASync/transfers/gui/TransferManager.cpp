@@ -102,13 +102,13 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
         }
     }
 
-    mTooltipNameByTab[ALL_TRANSFERS_TAB] = tr("all");
+    mTooltipNameByTab[ALL_TRANSFERS_TAB] = tr("all transfers");
     mTooltipNameByTab[DOWNLOADS_TAB]     = tr("all downloads");
     mTooltipNameByTab[UPLOADS_TAB]       = tr("all uploads");
     mTooltipNameByTab[COMPLETED_TAB]     = tr("all completed");
     mTooltipNameByTab[FAILED_TAB]        = tr("all failed");
     mTooltipNameByTab[SEARCH_TAB]        = tr("all search results");
-    mTooltipNameByTab[TYPE_OTHER_TAB]    = tr("all");
+    mTooltipNameByTab[TYPE_OTHER_TAB]    = tr("all transfers");
     mTooltipNameByTab[TYPE_AUDIO_TAB]    = tr("all audios");
     mTooltipNameByTab[TYPE_VIDEO_TAB]    = tr("all videos");
     mTooltipNameByTab[TYPE_ARCHIVE_TAB]  = tr("all archives");
@@ -189,6 +189,26 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
             &TransfersManagerSortFilterProxyModel::searchNumbersChanged,
             this, &TransferManager::refreshSearchStats);
 
+    connect(mUi->wTransfers->getProxyModel(),
+            &TransfersManagerSortFilterProxyModel::searchNumbersChanged,
+            this, &TransferManager::refreshSearchStats);
+
+    connect(mUi->wTransfers->getProxyModel(),
+            &TransfersManagerSortFilterProxyModel::modelChanged,
+            this, &TransferManager::onCheckCancelClearButton);
+
+    connect(mUi->wTransfers->getProxyModel(),
+            &TransfersManagerSortFilterProxyModel::nonSyncTransfersChanged,
+            this, &TransferManager::onCheckCancelClearButton);
+
+    connect(mUi->wTransfers->getProxyModel(),
+            &TransfersManagerSortFilterProxyModel::cancelableTransfersChanged,
+            this, &TransferManager::onCheckCancelClearButton);
+
+    connect(mUi->wTransfers->getProxyModel(),
+            &TransfersManagerSortFilterProxyModel::completedTransfersChanged,
+            this, &TransferManager::onCheckCancelClearButton);
+
     connect(mUi->wTransfers, &TransfersWidget::pauseResumeVisibleRows,
                 this, &TransferManager::onPauseResumeVisibleRows);
 
@@ -197,6 +217,7 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
 
     connect(mUi->wTransfers, &TransfersWidget::cancelClearVisibleRows,
                 this, &TransferManager::onCancelVisibleRows);
+
 
     connect(mUi->wTransfers,
             &TransfersWidget::disableTransferManager,[this](bool state){
@@ -240,7 +261,7 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
     setAcceptDrops(true);
 
     // Init state
-    onUpdatePauseState(mModel->areAllPaused());
+    onUpdatePauseState(mPreferences->getGlobalPaused());
 
     auto storageState = MegaSyncApp->getAppliedStorageState();
     auto transferQuotaState = MegaSyncApp->getTransferQuotaState();
@@ -364,7 +385,7 @@ void TransferManager::on_tAllTransfers_clicked()
     {
         emit userActivity();
         mUi->wTransfers->filtersChanged({}, TransferData::ACTIVE_STATES_MASK, {});
-        mUi->lCurrentContent->setText(tr("All Transfers"));
+        mUi->lCurrentContent->setText(tr("All transfers"));
 
         toggleTab(ALL_TRANSFERS_TAB);
     }
@@ -388,7 +409,7 @@ void TransferManager::onUpdatePauseState(bool isPaused)
 {
     if (isPaused)
     {
-        mUi->bPause->setToolTip(tr("Resume all"));
+        mUi->bPause->setToolTip(tr("Resume all transfers"));
 
         if(!mUi->bPause->isChecked())
         {
@@ -399,7 +420,7 @@ void TransferManager::onUpdatePauseState(bool isPaused)
     }
     else
     {
-        mUi->bPause->setToolTip(tr("Pause all"));
+        mUi->bPause->setToolTip(tr("Pause all transfers"));
 
         if(mUi->bPause->isChecked())
         {
@@ -464,7 +485,7 @@ void TransferManager::onCancelVisibleRows()
     {
         if(mCurrentTab == ALL_TRANSFERS_TAB)
         {
-            onCancelAllClicked();
+            on_bCancelAll_clicked();
         }
         else if(mCurrentTab == COMPLETED_TAB)
         {
@@ -517,7 +538,7 @@ void TransferManager::refreshStateStats()
     // The check Failed states -----------------------------------------------------------------
     countLabel = mNumberLabelsGroup[FAILED_TAB];
 
-    long long failedNumber(mTransfersCount.failedUploads + mTransfersCount.failedDownloads);
+    long long failedNumber(mTransfersCount.totalFailedTransfers());
     countLabelText = failedNumber > 0 ? QString::number(failedNumber) : QString();
 
     // Update if the value changed
@@ -836,16 +857,11 @@ void TransferManager::disableGetLink(bool disable)
 
 void TransferManager::on_tActionButton_clicked()
 {
-    if(mCurrentTab != FAILED_TAB)
-    {
-        emit clearCompletedTransfers();
-    }
-    else
+    if(mCurrentTab == FAILED_TAB)
     {
         emit retryAllTransfers();
+        checkActionAndMediaVisibility();
     }
-
-    checkActionAndMediaVisibility();
 }
 
 void TransferManager::on_tSeePlans_clicked()
@@ -1015,6 +1031,42 @@ void TransferManager::on_bOther_clicked()
     onFileTypeButtonClicked(TYPE_OTHER_TAB, Utilities::FileType::TYPE_OTHER, tr("Other"));
 }
 
+void TransferManager::onCheckCancelClearButton()
+{
+    TransfersWidget::CancelClearButtonInfo cancelClearInfo;
+
+    auto proxyModel(mUi->wTransfers->getProxyModel());
+    cancelClearInfo.visible = !proxyModel->areAllSync() || proxyModel->areAllCompleted();
+
+    QString cancelBase(tr("Cancel "));
+
+    if (mCurrentTab == COMPLETED_TAB)
+    {
+        cancelClearInfo.clearAction = true;
+        cancelBase = tr("Clear ");
+    }
+    else if ((mCurrentTab > TYPES_TAB_BASE && mCurrentTab < TYPES_LAST) || mCurrentTab == SEARCH_TAB)
+    {
+        bool allCompleted(proxyModel->areAllCompleted());
+        bool isAnyCompleted(proxyModel->isAnyCompleted());
+
+        if(allCompleted)
+        {
+            cancelBase = tr("Clear ");
+        }
+        else if(isAnyCompleted)
+        {
+            cancelBase = tr("Cancel and clear ");
+        }
+        //else -> cancelBase = tr("Cancel ");
+
+        cancelClearInfo.clearAction = allCompleted;
+    }
+
+    cancelClearInfo.cancelClearTooltip = cancelBase + mTooltipNameByTab[mCurrentTab];
+    mUi->wTransfers->updateCancelClearButtonInfo(cancelClearInfo);
+}
+
 void TransferManager::onFileTypeButtonClicked(TM_TAB tab, Utilities::FileType fileType, const QString& tabLabel)
 {
   if (mCurrentTab != tab)
@@ -1045,30 +1097,19 @@ void TransferManager::on_bUpload_clicked()
     qobject_cast<MegaApplication*>(qApp)->uploadActionClickedFromWindow(this);
 }
 
-void TransferManager::on_bCancelClearAll_clicked()
+void TransferManager::on_bCancelAll_clicked()
 {
     auto transfersView = findChild<MegaTransferView*>();
     if(transfersView)
     {
-        transfersView->onCancelAndClearAllTransfers();
-        on_tAllTransfers_clicked();
+        if(transfersView->onCancelAllTransfers())
+        {
+            on_tAllTransfers_clicked();
 
-        //Use to repaint and update the transfers state
-        transfersView->update();
-    }
-}
-
-void TransferManager::onCancelAllClicked()
-{
-    auto transfersView = findChild<MegaTransferView*>();
-    if(transfersView)
-    {
-        transfersView->onCancelAllTransfers();
-        on_tAllTransfers_clicked();
-
-        //Use to repaint and update the transfers state
-        transfersView->update();
-    }
+            //Use to repaint and update the transfers state
+            transfersView->update();
+        }
+    };
 }
 
 void TransferManager::on_leSearchField_returnPressed()
@@ -1105,9 +1146,6 @@ void TransferManager::toggleTab(TM_TAB newTab)
         }
 
         TransfersWidget::HeaderInfo headerInfo;
-        auto proxyModel(mUi->wTransfers->getProxyModel());
-
-        QString cancelBase(tr("Cancel "));
 
         // Show pause button on tab except completed tab,
         // and set Clear All button string,
@@ -1122,15 +1160,13 @@ void TransferManager::toggleTab(TM_TAB newTab)
             if (newTab == COMPLETED_TAB)
             {
                 mUi->tActionButton->setText(tr("Clear All"));
-                headerInfo.headerTime = tr("Time Completed");
+                headerInfo.headerTime = tr("Time completed");
                 headerInfo.headerSpeed = tr("Avg. speed");
-
-                cancelBase = tr("Clear ");
             }
             else if (newTab == FAILED_TAB)
             {
                 mUi->tActionButton->setText(tr("Retry all"));
-                headerInfo.headerTime = tr("Time Completed");
+                headerInfo.headerTime = tr("Time completed");
                 headerInfo.headerSpeed = tr("Avg. speed");
             }
             else if (newTab > TYPES_TAB_BASE && newTab < TYPES_LAST)
@@ -1138,9 +1174,7 @@ void TransferManager::toggleTab(TM_TAB newTab)
                 headerInfo.headerTime = tr("Time");
                 headerInfo.headerSpeed = tr("Speed");
 
-                mUi->tActionButton->setText(tr("Clear Completed"));
-
-                cancelBase = proxyModel->isAnyCancelable() ? tr("Cancel and clear ") : tr("Clear ");
+                mUi->tActionButton->setText(tr("Clear completed"));
             }
             //UPLOAD // DOWNLOAD
             else
@@ -1150,7 +1184,6 @@ void TransferManager::toggleTab(TM_TAB newTab)
             }
         }
 
-        headerInfo.cancelClearTooltip = cancelBase + mTooltipNameByTab[newTab];
         headerInfo.pauseTooltip = tr("Pause ") + mTooltipNameByTab[newTab];
         headerInfo.resumeTooltip = tr("Resume ") + mTooltipNameByTab[newTab];
 
@@ -1169,7 +1202,7 @@ void TransferManager::toggleTab(TM_TAB newTab)
             }
             else if(mCurrentTab == FAILED_TAB)
             {
-                transfers = mTransfersCount.failedUploads + mTransfersCount.failedDownloads;
+                transfers = mTransfersCount.totalFailedTransfers();
             }
             else
             {
@@ -1187,8 +1220,6 @@ void TransferManager::toggleTab(TM_TAB newTab)
             }
         }
 
-        mCurrentTab = newTab;
-
         // Set current header widget: search or not
         if (newTab == SEARCH_TAB)
         {
@@ -1202,6 +1233,7 @@ void TransferManager::toggleTab(TM_TAB newTab)
             mUi->wTransfers->textFilterChanged(QString());
         }
 
+        mCurrentTab = newTab;
         refreshView();
 
         // Reload QSS because it is glitchy
@@ -1234,13 +1266,11 @@ void TransferManager::checkActionAndMediaVisibility()
 {
     auto completedTransfers = mTransfersCount.completedDownloads() + mTransfersCount.completedUploads();
     auto allTransfers = mTransfersCount.pendingDownloads + mTransfersCount.pendingUploads;
-    auto failedTransfers = mTransfersCount.failedDownloads + mTransfersCount.failedUploads;
+    auto failedTransfers = mTransfersCount.totalFailedTransfers();
 
     // Show "Clear All/Completed" if there are any completed transfers
     // (only for completed tab and individual media tabs)
-    if ((mCurrentTab == COMPLETED_TAB && completedTransfers > 0) || (mCurrentTab == FAILED_TAB && failedTransfers > 0)
-            || (mCurrentTab >= TYPES_TAB_BASE && mModel->getNumberOfFinishedForFileType(
-                    static_cast<Utilities::FileType>(mCurrentTab - TYPES_TAB_BASE))))
+    if (mCurrentTab == FAILED_TAB && failedTransfers > 0)
     {
         mUi->tActionButton->show();
     }
@@ -1321,32 +1351,6 @@ void TransferManager::changeEvent(QEvent *event)
     QDialog::changeEvent(event);
 }
 
-void TransferManager::dropEvent(QDropEvent* event)
-{
-    mDragBackDrop->hide();
-
-    event->acceptProposedAction();
-    QDialog::dropEvent(event);
-
-    QQueue<QString> pathsToAdd;
-    QList<QUrl> urlsToAdd = event->mimeData()->urls();
-    foreach(auto& urlToAdd, urlsToAdd)
-    {
-        auto file = urlToAdd.toLocalFile();
-#ifdef __APPLE__
-        QFileInfo fileInfo(file);
-        if (fileInfo.isDir())
-        {
-            file.remove(file.length()-1,1);
-        }
-#endif
-
-        pathsToAdd.append(file);
-    }
-
-    MegaSyncApp->shellUpload(pathsToAdd);
-}
-
 void TransferManager::mouseReleaseEvent(QMouseEvent *event)
 {
     mUi->wTransfers->mouseRelease(event->globalPos());
@@ -1388,6 +1392,32 @@ void TransferManager::dragEnterEvent(QDragEnterEvent *event)
     }
 
     QDialog::dragEnterEvent(event);
+}
+
+void TransferManager::dropEvent(QDropEvent* event)
+{
+    mDragBackDrop->hide();
+
+    event->acceptProposedAction();
+    QDialog::dropEvent(event);
+
+    QQueue<QString> pathsToAdd;
+    QList<QUrl> urlsToAdd = event->mimeData()->urls();
+    foreach(auto& urlToAdd, urlsToAdd)
+    {
+        auto file = urlToAdd.toLocalFile();
+#ifdef __APPLE__
+        QFileInfo fileInfo(file);
+        if (fileInfo.isDir())
+        {
+            file.remove(file.length()-1,1);
+        }
+#endif
+
+        pathsToAdd.append(file);
+    }
+
+    MegaSyncApp->shellUpload(pathsToAdd);
 }
 
 void TransferManager::dragLeaveEvent(QDragLeaveEvent *event)

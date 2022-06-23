@@ -320,7 +320,7 @@ QStringList Model::getMegaFolders()
     QStringList value;
     for (auto &cs : configuredSyncs)
     {
-        value.append(configuredSyncsMap[cs]->getMegaFolder());
+        value.append(configuredSyncsMap[cs]->getMegaFolder().append(QLatin1Char('/')));
     }
     return value;
 }

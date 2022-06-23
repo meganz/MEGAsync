@@ -105,7 +105,7 @@ public:
     bool isPaused() const;
     bool isProcessing() const;
     bool isCompleted() const;
-    bool hasFailed() const;
+    bool isFailed() const;
     int64_t getRawFinishedTime() const;
     int64_t getFinishedTime() const;
     QString getFormattedFinishedTime() const;

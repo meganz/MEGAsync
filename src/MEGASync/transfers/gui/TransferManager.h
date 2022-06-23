@@ -88,8 +88,8 @@ protected:
     void mouseReleaseEvent(QMouseEvent *event) override;
 
 private:
-    static constexpr int SPEED_REFRESH_PERIOD_MS = 700;
-    static constexpr int STATS_REFRESH_PERIOD_MS = 1000;
+    static const int SPEED_REFRESH_PERIOD_MS = 700;
+    static const int STATS_REFRESH_PERIOD_MS = 1000;
 
     Ui::TransferManager* mUi;
     mega::MegaApi* mMegaApi;
@@ -161,8 +161,7 @@ private slots:
     void on_tCogWheel_clicked();
     void on_bDownload_clicked();
     void on_bUpload_clicked();
-    void on_bCancelClearAll_clicked();
-    void onCancelAllClicked();
+    void on_bCancelAll_clicked();
     void on_leSearchField_returnPressed();
 
     void on_bArchives_clicked();
@@ -171,6 +170,8 @@ private slots:
     void on_bAudio_clicked();
     void on_bVideos_clicked();
     void on_bOther_clicked();
+
+    void onCheckCancelClearButton();
 
     void onUpdatePauseState(bool isPaused);
     void onPauseStateChangedByTransferResume();

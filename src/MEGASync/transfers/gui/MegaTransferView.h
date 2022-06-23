@@ -24,9 +24,9 @@ public:
     void disableContextMenus(bool option);
 
     void onPauseResumeVisibleRows(bool isPaused);
-    void onCancelAllTransfers();
+    bool onCancelAllTransfers();
     void onClearAllTransfers();
-    void onCancelAndClearAllTransfers();
+    bool onCancelAndClearAllTransfers();
     void onCancelAndClearVisibleTransfers();
 
     int getVerticalScrollBarWidth() const;
@@ -69,6 +69,8 @@ private slots:
     void clearSelectedClicked();
     void pauseSelectedClicked();
     void resumeSelectedClicked();
+    void onInternalMoveStarted();
+    void onInternalMoveFinished();
 
 private:
     friend class TransferManagerDelegateWidget;

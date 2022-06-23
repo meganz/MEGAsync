@@ -6,7 +6,7 @@
 
 #include <MegaApplication.h>
 #include <StalledIssuesModel.h>
-#include "RenameDialog.h"
+//#include "RenameDialog.h"
 #include "QMegaMessageBox.h"
 
 #include <QDialogButtonBox>
@@ -123,34 +123,34 @@ void NameConflict::onActionClicked(int actionId)
 
         if(actionId == RENAME_ID)
         {
-            QPointer<NameConflict> currentWidget = QPointer<NameConflict>(this);
+//            QPointer<NameConflict> currentWidget = QPointer<NameConflict>(this);
 
-            RenameDialog dialog;
-            dialog.init(mData.data->isCloud(), info.filePath());
-            auto result = dialog.exec();
+//            RenameDialog dialog;
+//            dialog.init(mData.data->isCloud(), info.filePath());
+//            auto result = dialog.exec();
 
-            if(result == QDialog::Accepted)
-            {
-                auto newName(dialog.newName());
+//            if(result == QDialog::Accepted)
+//            {
+//                auto newName(dialog.newName());
 
-                if(mData.isCloud)
-                {
-                    MegaSyncApp->getStalledIssuesModel()->solveCloudConflictedNameByRename(chooseTitle->title()
-                                                                                           , newName, delegateWidget->getCurrentIndex());
-                }
-                else
-                {
-                    MegaSyncApp->getStalledIssuesModel()->solveLocalConflictedNameByRename(chooseTitle->title()
-                                                                                           , newName, delegateWidget->getCurrentIndex());
-                }
+//                if(mData.isCloud)
+//                {
+//                    MegaSyncApp->getStalledIssuesModel()->solveCloudConflictedNameByRename(chooseTitle->title()
+//                                                                                           , newName, delegateWidget->getCurrentIndex());
+//                }
+//                else
+//                {
+//                    MegaSyncApp->getStalledIssuesModel()->solveLocalConflictedNameByRename(chooseTitle->title()
+//                                                                                           , newName, delegateWidget->getCurrentIndex());
+//                }
 
-                chooseTitle->setDisabled(true);
-            }
+//                chooseTitle->setDisabled(true);
+//            }
 
-            if(!currentWidget)
-            {
-                return;
-            }
+//            if(!currentWidget)
+//            {
+//                return;
+//            }
         }
         else if(actionId == REMOVE_ID)
         {

@@ -41,6 +41,9 @@ public:
         bool isAnyCancelable() const;
         bool isAnyActive() const;
         bool areAllActive() const;
+        bool areAllSync() const;
+        bool areAllCompleted() const;
+        bool isAnyCompleted() const;
 
         bool isModelProcessing() const;
 signals:
@@ -50,9 +53,18 @@ signals:
         void transferPauseResume(bool);
         void transferRetry();
         void transferCancelClear();
-        void cancelableTransfersChanged(bool) const;
-        void activeTransfersChanged(bool) const;
-        void pausedTransfersChanged(bool) const;
+
+        void completedTransfersChanged() const;
+        void cancelableTransfersChanged() const;
+        void nonSyncTransfersChanged() const;
+        void activeTransfersChanged() const;
+        void pausedTransfersChanged() const;
+
+        void completedTransfersCleared() const;
+        void cancelableTransfersCleared() const;
+        void nonSyncTransfersCleared() const;
+        void activeTransfersCleared() const;
+        void pausedTransfersCleared() const;
 
 protected slots:
         void onCancelClearTransfer();
@@ -76,6 +88,7 @@ protected:
 
         mutable QSet<int> mDlNumber;
         mutable QSet<int> mUlNumber;
+        mutable QSet<int> mCancelableTransfers;
         mutable QSet<int> mNoSyncTransfers;
         mutable QSet<int> mActiveTransfers;
         mutable QSet<int> mPausedTransfers;
@@ -95,7 +108,11 @@ private:
         void removeActiveTransferFromCounter(TransferTag tag) const;
         void removePausedTransferFromCounter(TransferTag tag) const;
         void removeNonSyncedTransferFromCounter(TransferTag tag) const;
+        void removeCancelableTransferFromCounter(TransferTag tag) const;
         void removeCompletedTransferFromCounter(TransferTag tag) const;
+
+        typedef void (TransfersManagerSortFilterProxyModel::*signalToEmit)() const;
+        void emitSignalWithDelay(signalToEmit signal) const;
 
         void resetAllCounters();
         void resetTransfersStateCounters();

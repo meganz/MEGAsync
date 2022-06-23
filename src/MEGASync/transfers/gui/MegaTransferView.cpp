@@ -35,7 +35,7 @@ MegaTransferView::MegaTransferView(QWidget* parent) :
     mClearAction(nullptr)
 {
     setMouseTracking(true);
-    setAutoScroll(true);
+    setAutoScroll(false);
 
     verticalScrollBar()->installEventFilter(this);
 }
@@ -52,6 +52,9 @@ void MegaTransferView::setup(TransfersWidget* tw)
 
     connect(this, &MegaTransferView::customContextMenuRequested,
             this, &MegaTransferView::onCustomContextMenu);
+
+    connect(MegaSyncApp->getTransfersModel(), &TransfersModel::internalMoveStarted, this, &MegaTransferView::onInternalMoveStarted);
+    connect(MegaSyncApp->getTransfersModel(), &TransfersModel::internalMoveFinished, this, &MegaTransferView::onInternalMoveFinished);
 
     createContextMenu();
 }
@@ -148,11 +151,11 @@ QString MegaTransferView::getVisibleAction()
     QString action;
     if(isAnyActive)
     {
-        action = areAllActive ? tr("cancel") : tr("cancel and clear");
+        action = areAllActive ? tr("Cancel") : tr("Cancel and clear");
     }
     else
     {
-        action = tr("clear");
+        action = tr("Clear");
     }
 
     return action;
@@ -184,11 +187,11 @@ QString MegaTransferView::getSelectedAction()
     QString action;
     if(isAnyActive)
     {
-        action = areAllActive ? tr("cancel") : tr("cancel and clear");
+        action = areAllActive ? tr("Cancel") : tr("Cancel and clear");
     }
     else
     {
-        action = tr("clear");
+        action = tr("Clear");
     }
 
     return action;
@@ -227,19 +230,17 @@ void MegaTransferView::onCancelVisibleTransfers()
     QString action = getVisibleAction();
 
     if (QMegaMessageBox::warning(this, QString::fromUtf8("MEGAsync"),
-                             tr("Are you sure you want to %1 this(these) transfer(s)?", "", !singleTransfer).arg(action),
+                             tr("%1 transfer(s)?", "", !singleTransfer).arg(action),
                              QMessageBox::Yes | QMessageBox::No, QMessageBox::No)
-            != QMessageBox::Yes
-            || !dialog)
+            == QMessageBox::Yes
+            && dialog)
     {
-        return;
+        auto indexes = getTransfers(true);
+
+        auto proxy (qobject_cast<TransfersManagerSortFilterProxyModel*>(model()));
+        auto sourceModel(qobject_cast<TransfersModel*>(proxy->sourceModel()));
+        sourceModel->cancelTransfers(indexes, this);
     }
-
-    auto indexes = getTransfers(true);
-
-    auto proxy (qobject_cast<TransfersManagerSortFilterProxyModel*>(model()));
-    auto sourceModel(qobject_cast<TransfersModel*>(proxy->sourceModel()));
-    sourceModel->cancelTransfers(indexes, this);
 }
 
 void MegaTransferView::onCancelClearSelectedTransfers()
@@ -250,37 +251,37 @@ void MegaTransferView::onCancelClearSelectedTransfers()
     QPointer<MegaTransferView> dialog = QPointer<MegaTransferView>(this);
 
     if (QMegaMessageBox::warning(this, QString::fromUtf8("MEGAsync"),
-                             tr("Are you sure you want to %1 this(these) transfer(s)?", "", !singleTransfer).arg(action),
+                             tr("%1 transfer(s)?", "", !singleTransfer).arg(action),
                              QMessageBox::Yes | QMessageBox::No, QMessageBox::No)
-            != QMessageBox::Yes
-            || !dialog)
+            == QMessageBox::Yes
+            && dialog)
     {
-        return;
+        QModelIndexList indexes = getSelectedTransfers();
+
+        auto proxy (qobject_cast<QSortFilterProxyModel*>(model()));
+        auto sourceModel(qobject_cast<TransfersModel*>(proxy->sourceModel()));
+        sourceModel->cancelTransfers(indexes, this);
     }
-
-    QModelIndexList indexes = getSelectedTransfers();
-
-    auto proxy (qobject_cast<QSortFilterProxyModel*>(model()));
-    auto sourceModel(qobject_cast<TransfersModel*>(proxy->sourceModel()));
-    sourceModel->cancelTransfers(indexes, this);
 }
 
-void MegaTransferView::onCancelAllTransfers()
+bool MegaTransferView::onCancelAllTransfers()
 {
+    bool result(false);
     bool singleTransfer = isSingleTransfer(true);
 
     QPointer<MegaTransferView> dialog = QPointer<MegaTransferView>(this);
 
     if (QMegaMessageBox::warning(this, QString::fromUtf8("MEGAsync"),
-                             tr("Are you sure you want to cancel this(these) transfer(s)?", "", !singleTransfer),
+                             tr("Cancel transfer(s)?", "", !singleTransfer),
                              QMessageBox::Yes | QMessageBox::No, QMessageBox::No)
-            != QMessageBox::Yes
-            || !dialog)
+            == QMessageBox::Yes
+            && dialog)
     {
-        return;
+        cancelAndClearAllTransfers(true, false);
+        result = true;
     }
 
-    cancelAndClearAllTransfers(true, false);
+    return result;
 }
 
 void MegaTransferView::onClearAllTransfers()
@@ -290,33 +291,33 @@ void MegaTransferView::onClearAllTransfers()
     QPointer<MegaTransferView> dialog = QPointer<MegaTransferView>(this);
 
     if (QMegaMessageBox::warning(this, QString::fromUtf8("MEGAsync"),
-                             tr("Are you sure you want to clear this(these) transfer(s)?", "", !singleTransfer),
+                             tr("Clear transfer(s)?", "", !singleTransfer),
                              QMessageBox::Yes | QMessageBox::No, QMessageBox::No)
-            != QMessageBox::Yes
-            || !dialog)
+            == QMessageBox::Yes
+            && dialog)
     {
-        return;
+        cancelAndClearAllTransfers(false, true);
     }
-
-    cancelAndClearAllTransfers(false, true);
 }
 
-void MegaTransferView::onCancelAndClearAllTransfers()
+bool MegaTransferView::onCancelAndClearAllTransfers()
 {
+    bool result(false);
     bool singleTransfer = isSingleTransfer(true);
 
     QPointer<MegaTransferView> dialog = QPointer<MegaTransferView>(this);
 
     if (QMegaMessageBox::warning(this, QString::fromUtf8("MEGAsync"),
-                             tr("Are you sure you want to cancel and clear this(these) transfer(s)?", "", !singleTransfer),
+                             tr("Cancel and clear transfer(s)?", "", !singleTransfer),
                              QMessageBox::Yes | QMessageBox::No, QMessageBox::No)
-            != QMessageBox::Yes
-            || !dialog)
+            == QMessageBox::Yes
+            && dialog)
     {
-        return;
+        cancelAndClearAllTransfers(true, true);
+        result = true;
     }
 
-    cancelAndClearAllTransfers(true, true);
+    return result;
 }
 
 void MegaTransferView::onCancelAndClearVisibleTransfers()
@@ -328,23 +329,21 @@ void MegaTransferView::onCancelAndClearVisibleTransfers()
     QPointer<MegaTransferView> dialog = QPointer<MegaTransferView>(this);
 
     if (QMegaMessageBox::warning(this, QString::fromUtf8("MEGAsync"),
-                             tr("Are you sure you want to %1 this(these) transfer(s)?", "", !singleTransfer).arg(action),
+                             tr("%1 transfer(s)?", "", !singleTransfer).arg(action),
                              QMessageBox::Yes | QMessageBox::No, QMessageBox::No)
-            != QMessageBox::Yes
-            || !dialog)
+            == QMessageBox::Yes
+            && dialog)
     {
-        return;
+        auto proxy (qobject_cast<QSortFilterProxyModel*>(model()));
+        auto sourceModel(qobject_cast<TransfersModel*>(proxy->sourceModel()));
+
+        auto indexes = getTransfers(true, TransferData::FINISHED_STATES_MASK);
+        sourceModel->clearTransfers(indexes);
+
+        //Cancel transfers
+        auto cancelIndexes = getTransfers(true);
+        sourceModel->cancelTransfers(cancelIndexes, this);
     }
-
-    auto proxy (qobject_cast<QSortFilterProxyModel*>(model()));
-    auto sourceModel(qobject_cast<TransfersModel*>(proxy->sourceModel()));
-
-    auto indexes = getTransfers(true, TransferData::FINISHED_STATES_MASK);
-    sourceModel->clearTransfers(indexes);
-
-    //Cancel transfers
-    auto cancelIndexes = getTransfers(true);
-    sourceModel->cancelTransfers(cancelIndexes, this);
 }
 
 void MegaTransferView::cancelAndClearAllTransfers(bool cancel, bool clear)
@@ -388,17 +387,14 @@ void MegaTransferView::onClearCompletedVisibleTransfers()
     QPointer<MegaTransferView> dialog = QPointer<MegaTransferView>(this);
 
     if (QMegaMessageBox::warning(this, QString::fromUtf8("MEGAsync"),
-                                 tr("Are you sure you want to clear this(these) transfer(s)?", "", !singleTransfer),
+                                 tr("Clear transfer(s)?", "", !singleTransfer),
                                  QMessageBox::Yes | QMessageBox::No, QMessageBox::No)
-            != QMessageBox::Yes
-            || !dialog)
+            == QMessageBox::Yes
+            && dialog)
     {
-        return;
+        auto indexes = getTransfers(true, TransferData::FINISHED_STATES_MASK);
+        sourceModel->clearTransfers(indexes);
     }
-
-    auto indexes = getTransfers(true, TransferData::FINISHED_STATES_MASK);
-
-    sourceModel->clearTransfers(indexes);
 }
 
 void MegaTransferView::onRetryVisibleTransfers()
@@ -408,19 +404,17 @@ void MegaTransferView::onRetryVisibleTransfers()
     QPointer<MegaTransferView> dialog = QPointer<MegaTransferView>(this);
 
     if (QMegaMessageBox::warning(this, QString::fromUtf8("MEGAsync"),
-                                 tr("Are you sure you want to retry this(these) transfer(s)?", "", !singleTransfer),
+                                 tr("Retry transfer(s)?", "", !singleTransfer),
                                  QMessageBox::Yes | QMessageBox::No, QMessageBox::No)
-            != QMessageBox::Yes
-            || !dialog)
+            == QMessageBox::Yes
+            && dialog)
     {
-        return;
+        QModelIndexList indexes = getTransfers(true, TransferData::TRANSFER_FAILED);
+
+        auto proxy (qobject_cast<QSortFilterProxyModel*>(model()));
+        auto sourceModel(qobject_cast<TransfersModel*>(proxy->sourceModel()));
+        sourceModel->retryTransfers(indexes);
     }
-
-    QModelIndexList indexes = getTransfers(true, TransferData::TRANSFER_FAILED);
-
-    auto proxy (qobject_cast<QSortFilterProxyModel*>(model()));
-    auto sourceModel(qobject_cast<TransfersModel*>(proxy->sourceModel()));
-    sourceModel->retryTransfers(indexes);
 }
 
 void MegaTransferView::onCancelClearSelection(bool isClear)
@@ -622,10 +616,10 @@ void MegaTransferView::updateContextMenu(bool enablePause, bool enableResume, bo
     bool showOpen (false);
     bool showShowInFolder (false);
 
+    auto d (qvariant_cast<TransferItem>(indexes.first().data()).getTransferData());
+
     if (onlyOneAndClear)
     {
-        auto d (qvariant_cast<TransferItem>(indexes.first().data()).getTransferData());
-
         auto state (d->mState);
         auto type ((d->mType & TransferData::TRANSFER_UPLOAD) ?
                        TransferData::TRANSFER_UPLOAD
@@ -645,6 +639,26 @@ void MegaTransferView::updateContextMenu(bool enablePause, bool enableResume, bo
         else if (type == TransferData::TRANSFER_DOWNLOAD)
         {
             showLink = true;
+        }
+    }
+
+    if(onlyOneSelected)
+    {
+        if(d->mType & TransferData::TRANSFER_SYNC)
+        {
+            //Check if the file exists on local drive. Otherwise, show the OpenInMEGAACtion (as it is on the remote drive)
+            auto path = d->path();
+            QFileInfo file(path);
+
+            if(file.exists())
+            {
+                showOpen = true;
+                showShowInFolder = true;
+            }
+            else
+            {
+                showLink = true;
+            }
         }
     }
 
@@ -702,6 +716,7 @@ void MegaTransferView::changeEvent(QEvent* event)
 void MegaTransferView::dropEvent(QDropEvent* event)
 {
     QAbstractItemView::dropEvent(event);
+    event->acceptProposedAction();
     clearSelection();
 }
 
@@ -1101,4 +1116,14 @@ void MegaTransferView::pauseSelectedClicked()
 void MegaTransferView::resumeSelectedClicked()
 {
     onPauseResumeSelection(false);
+}
+
+void MegaTransferView::onInternalMoveStarted()
+{
+     setAutoScroll(true);
+}
+
+void MegaTransferView::onInternalMoveFinished()
+{
+     setAutoScroll(false);
 }

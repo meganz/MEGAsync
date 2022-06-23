@@ -39,7 +39,6 @@ void MegaTransferDelegate::paint(QPainter *painter, const QStyleOptionViewItem &
     if (index.isValid() && row < rowCount)
     {
         auto pos (option.rect.topLeft());
-        auto width (option.rect.width());
         auto height (option.rect.height());
         auto transferItem (qvariant_cast<TransferItem>(index.data(Qt::DisplayRole)));
         auto data = transferItem.getTransferData();
@@ -49,6 +48,18 @@ void MegaTransferDelegate::paint(QPainter *painter, const QStyleOptionViewItem &
         {
             return;
         }
+
+#ifdef __APPLE__
+        auto width = mView->width();
+        width -= mView->contentsMargins().left();
+        width -= mView->contentsMargins().right();
+        if(mView->verticalScrollBar() && mView->verticalScrollBar()->isVisible())
+        {
+            width -= mView->verticalScrollBar()->width();
+        }
+#else
+        auto width (option.rect.width());
+#endif
 
         // Move if position changed
         if (w->pos() != pos)

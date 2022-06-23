@@ -1,14 +1,15 @@
 #!/bin/zsh -e
 
 Usage () {
-    echo "Usage: installer_mac.sh [[--build | --build-cmake] | [--sign] | [--create-dmg] | [--notarize] | [--full-pkg | --full-pkg-cmake]]"
-    echo "    --build          : Builds the app and creates the bundle using qmake."
-    echo "    --build-cmake    : Idem but using cmake"
-    echo "    --sign           : Sign the app"
-    echo "    --create-dmg     : Create the dmg package"
-    echo "    --notarize       : Notarize package against Apple systems."
-    echo "    --full-pkg       : Implies and overrides all the above using qmake"
-    echo "    --full-pkg-cmake : Idem but using cmake"
+    echo "Usage: installer_mac.sh [[--arch [arm64|x86_64]] [--build | --build-cmake] | [--sign] | [--create-dmg] | [--notarize] | [--full-pkg | --full-pkg-cmake]]"
+    echo "    --arch [arm64|x86_64]  : Arch target. It will build for the host arch if not defined."
+    echo "    --build                : Builds the app and creates the bundle using qmake."
+    echo "    --build-cmake          : Idem but using cmake"
+    echo "    --sign                 : Sign the app"
+    echo "    --create-dmg           : Create the dmg package"
+    echo "    --notarize             : Notarize package against Apple systems."
+    echo "    --full-pkg             : Implies and overrides all the above using qmake"
+    echo "    --full-pkg-cmake       : Idem but using cmake"
     echo ""
     echo "Environment variables needed to build:"
     echo "    MEGAQTPATH : Point it to a valid Qt installation path"
@@ -31,6 +32,8 @@ RESOURCES=installer/resourcesDMG
 MSYNC_PREFIX=MEGASync/
 MUPDATER_PREFIX=MEGAUpdater/
 
+host_arch=`uname -m`
+target_arch=${host_arch}
 full_pkg=0
 full_pkg_cmake=0
 build=0
@@ -39,8 +42,20 @@ sign=0
 createdmg=0
 notarize=0
 
+build_time=0
+sign_time=0
+dmg_time=0
+notarize_time=0
+total_time=0
+
+
 while [ "$1" != "" ]; do
     case $1 in
+        --arch )
+            shift
+            target_arch="${1}"
+            if [ "${target_arch}" != "arm64" ] && [ "${target_arch}" != "x86_64" ]; then Usage; echo "Error: Invalid arch value."; exit 1; fi
+            ;;
         --build )
             build=1
             if [ ${build_cmake} -eq 1 ]; then Usage; echo "Error: --build and --build-cmake are mutually exclusive."; exit 1; fi
@@ -72,6 +87,7 @@ while [ "$1" != "" ]; do
             ;;
         * )
             Usage
+            echo "Unknown parameter: ${1}"
             exit 1
     esac
     shift
@@ -84,6 +100,7 @@ if [ ${full_pkg} -eq 1 ]; then
     createdmg=1
     notarize=1
 fi
+
 if [ ${full_pkg_cmake} -eq 1 ]; then
     build=0
     build_cmake=1
@@ -92,7 +109,15 @@ if [ ${full_pkg_cmake} -eq 1 ]; then
     notarize=1
 fi
 
+if [ ${build} -ne 1 -a ${build_cmake} -ne 1 -a ${sign} -ne 1 -a ${createdmg} -ne 1 -a ${notarize} -ne 1 ]; then
+   Usage
+   echo "Error: No action selected. Nothing to do."
+   exit 1
+fi
+
 if [ ${build} -eq 1 -o ${build_cmake} -eq 1 ]; then
+    build_time_start=`date +%s`
+
     if [ -z "${MEGAQTPATH}" ] || [ ! -d "${MEGAQTPATH}/bin" ]; then
         echo "Please set MEGAQTPATH env variable to a valid QT installation path!"
         exit 1;
@@ -107,6 +132,11 @@ if [ ${build} -eq 1 -o ${build_cmake} -eq 1 ]; then
     echo "  MEGAQTPATH : ${MEGAQTPATH}"
     echo "  VCPKGPATH  : ${VCPKGPATH}"
 
+    if ! lipo -archs ${MEGAQTPATH}/lib/QtCore.framework/QtCore 2>/dev/null | grep ${target_arch} >/dev/null; then
+        echo "Qt libs for ${target_arch} are not present in ${MEGAQTPATH} Qt installation."
+        exit 1
+    fi
+
     if [ ${build_cmake} -ne 1 ]; then
         AVCODEC_VERSION=libavcodec.58.dylib
         AVFORMAT_VERSION=libavformat.58.dylib
@@ -115,31 +145,36 @@ if [ ${build} -eq 1 -o ${build_cmake} -eq 1 ]; then
         CARES_VERSION=libcares.2.dylib
         CURL_VERSION=libcurl.dylib
 
-        AVCODEC_PATH=${VCPKGPATH}/vcpkg/installed/x64-osx-mega/lib/$AVCODEC_VERSION
-        AVFORMAT_PATH=${VCPKGPATH}/vcpkg/installed/x64-osx-mega/lib/$AVFORMAT_VERSION
-        AVUTIL_PATH=${VCPKGPATH}/vcpkg/installed/x64-osx-mega/lib/$AVUTIL_VERSION
-        SWSCALE_PATH=${VCPKGPATH}/vcpkg/installed/x64-osx-mega/lib/$SWSCALE_VERSION
-        CARES_PATH=${VCPKGPATH}/vcpkg/installed/x64-osx-mega/lib/$CARES_VERSION
-        CURL_PATH=${VCPKGPATH}/vcpkg/installed/x64-osx-mega/lib/$CURL_VERSION
+        AVCODEC_PATH=${VCPKGPATH}/vcpkg/installed/${target_arch//x86_64/x64}-osx-mega/lib/$AVCODEC_VERSION
+        AVFORMAT_PATH=${VCPKGPATH}/vcpkg/installed/${target_arch//x86_64/x64}-osx-mega/lib/$AVFORMAT_VERSION
+        AVUTIL_PATH=${VCPKGPATH}/vcpkg/installed/${target_arch//x86_64/x64}-osx-mega/lib/$AVUTIL_VERSION
+        SWSCALE_PATH=${VCPKGPATH}/vcpkg/installed/${target_arch//x86_64/x64}-osx-mega/lib/$SWSCALE_VERSION
+        CARES_PATH=${VCPKGPATH}/vcpkg/installed/${target_arch//x86_64/x64}-osx-mega/lib/$CARES_VERSION
+        CURL_PATH=${VCPKGPATH}/vcpkg/installed/${target_arch//x86_64/x64}-osx-mega/lib/$CURL_VERSION
     fi
 
     # Clean previous build
-    rm -rf Release_x64
-    mkdir Release_x64
-    cd Release_x64
+    rm -rf Release_${target_arch}
+    mkdir Release_${target_arch}
+    cd Release_${target_arch}
 
     # Build binaries
     if [ ${build_cmake} -eq 1 ]; then
-        #cmake -DUSE_THIRDPARTY_FROM_VCPKG=1 -DUSE_PREBUILT_3RDPARTY=0 -DCMAKE_OSX_ARCHITECTURES=x86_64 -DCMAKE_PREFIX_PATH=${MEGAQTPATH} -DVCPKG_TRIPLET=x64-osx-mega -DMega3rdPartyDir=${VCPKGPATH} -S ../contrib/cmake
-        cmake -DUSE_THIRDPARTY_FROM_VCPKG=1 -DUSE_PREBUILT_3RDPARTY=0 -DCMAKE_PREFIX_PATH=${MEGAQTPATH} -DVCPKG_TRIPLET=x64-osx-mega -DMega3rdPartyDir=${VCPKGPATH} -S ../contrib/cmake
+        # Detect crosscompilation and set CMAKE_OSX_ARCHITECTURES.
+        if  [ "${target_arch}" != "${host_arch}" ]; then
+            CMAKE_EXTRA="-DCMAKE_OSX_ARCHITECTURES=${target_arch}"
+        fi
+
+        cmake -DUSE_THIRDPARTY_FROM_VCPKG=1 -DMega3rdPartyDir=${VCPKGPATH} -DCMAKE_PREFIX_PATH=${MEGAQTPATH} ${CMAKE_EXTRA} -S ../contrib/cmake
         cmake --build ./ --target MEGAsync -j`sysctl -n hw.ncpu`
         cmake --build ./ --target MEGAupdater -j`sysctl -n hw.ncpu`
         MSYNC_PREFIX=""
         MUPDATER_PREFIX=""
     else
+        # crosscompilation detection should be managed detecting the qmake taget and host arch in the project files.
         [ ! -f src/MEGASync/mega/include/mega/config.h ] && cp ../src/MEGASync/mega/contrib/official_build_configs/macos/config.h ../src/MEGASync/mega/include/mega/config.h
         ${MEGAQTPATH}/bin/lrelease ../src/MEGASync/MEGASync.pro
-        ${MEGAQTPATH}/bin/qmake "CONFIG += FULLREQUIREMENTS" "THIRDPARTY_VCPKG_BASE_PATH=${VCPKGPATH}" -r ../src -spec macx-clang CONFIG+=release CONFIG+=x86_64 -nocache
+        ${MEGAQTPATH}/bin/qmake "CONFIG += FULLREQUIREMENTS" "THIRDPARTY_VCPKG_BASE_PATH=${VCPKGPATH}" -r ../src -spec macx-clang CONFIG+=release -nocache
         make -j`sysctl -n hw.ncpu`
     fi
 
@@ -190,20 +225,25 @@ if [ ${build} -eq 1 -o ${build_cmake} -eq 1 ]; then
     xcodebuild clean build CODE_SIGN_IDENTITY="-" CODE_SIGNING_REQUIRED=NO -jobs "$(sysctl -n hw.ncpu)" -configuration Release -target MEGAShellExtFinder -project ../src/MEGAShellExtFinder/MEGAFinderSync.xcodeproj/
     cp -a ../src/MEGAShellExtFinder/build/Release/MEGAShellExtFinder.appex $APP_NAME.app/Contents/Plugins/
     cd ..
+
+    build_time=`expr $(date +%s) - $build_time_start`
 fi
 
 if [ "$sign" = "1" ]; then
-	cd Release_x64
+    sign_time_start=`date +%s`
+	cd Release_${target_arch}
 	cp -R $APP_NAME.app ${APP_NAME}_unsigned.app
 	echo "Signing 'APPBUNDLE'"
 	codesign --force --verify --verbose --preserve-metadata=entitlements --options runtime --sign "Developer ID Application: Mega Limited" --deep $APP_NAME.app
 	echo "Checking signature"
 	spctl -vv -a $APP_NAME.app
 	cd ..
+    sign_time=`expr $(date +%s) - $sign_time_start`
 fi
 
 if [ "$createdmg" = "1" ]; then
-	cd Release_x64
+    dmg_time_start=`date +%s`
+	cd Release_${target_arch}
 	[ -f $APP_NAME.dmg ] && rm $APP_NAME.dmg
 	echo "DMG CREATION PROCESS..."
 	echo "Creating temporary Disk Image (1/7)"
@@ -237,11 +277,12 @@ if [ "$createdmg" = "1" ]; then
 	rm $APP_NAME-tmp.dmg
 	rmdir $MOUNTDIR
 	cd ..
+    dmg_time=`expr $(date +%s) - $dmg_time_start`
 fi
 
 if [ "$notarize" = "1" ]; then
-
-	cd Release_x64
+    notarize_time_start=`date +%s`
+	cd Release_${target_arch}
 	if [ ! -f $APP_NAME.dmg ];then
 		echo ""
 		echo "There is no dmg to be notarized."
@@ -310,6 +351,13 @@ if [ "$notarize" = "1" ]; then
 		fi
 	fi
 	cd ..
+    notarize_time=`expr $(date +%s) - $notarize_time_start`
 fi
 
-echo "DONE"
+echo ""
+if [ ${build} -eq 1 -o ${build_cmake} -eq 1 ]; then echo "Build:        ${build_time} s"; fi
+if [ ${sign} -eq 1 ]; then echo "Sign:         ${sign_time} s"; fi
+if [ ${createdmg} -eq 1 ]; then echo "dmg:          ${dmg_time} s"; fi
+if [ ${notarize} -eq 1 ]; then echo "Notarization: ${notarize_time} s"; fi
+echo ""
+echo "DONE in       "`expr ${build_time} + ${sign_time} + ${dmg_time} + ${notarize_time}`" s"

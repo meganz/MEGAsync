@@ -251,7 +251,7 @@ void TransferThread::onTransferFinish(MegaApi*, MegaTransfer *transfer, MegaErro
 
                 if(transfer->getState() == MegaTransfer::STATE_FAILED)
                 {
-                    mTransfersCount.failedUploads++;
+                    transfer->isSyncTransfer() ? mTransfersCount.failedSyncUploads++ : mTransfersCount.failedUploads++;
                 }
             }
             else
@@ -261,7 +261,7 @@ void TransferThread::onTransferFinish(MegaApi*, MegaTransfer *transfer, MegaErro
 
                 if(transfer->getState() == MegaTransfer::STATE_FAILED)
                 {
-                    mTransfersCount.failedDownloads++;
+                    transfer->isSyncTransfer() ? mTransfersCount.failedSyncDownloads++ : mTransfersCount.failedDownloads++;
                 }
             }
         }
@@ -332,9 +332,9 @@ void TransferThread::resetCompletedUploads(QList<QExplicitlySharedDataPointer<Tr
             mTransfersCount.transfersByType[transfer->mFileType]--;
             mTransfersCount.transfersFinishedByType[transfer->mFileType]--;
 
-            if(transfer->hasFailed())
+            if(transfer->isFailed())
             {
-                mTransfersCount.failedUploads--;
+                transfer->isSyncTransfer() ? mTransfersCount.failedSyncUploads-- : mTransfersCount.failedUploads--;
                 transfer->removeFailedTransfer();
             }
         }
@@ -355,9 +355,9 @@ void TransferThread::resetCompletedDownloads(QList<QExplicitlySharedDataPointer<
             mTransfersCount.transfersByType[transfer->mFileType]--;
             mTransfersCount.transfersFinishedByType[transfer->mFileType]--;
 
-            if(transfer->hasFailed())
+            if(transfer->isFailed())
             {
-                mTransfersCount.failedDownloads--;
+                transfer->isSyncTransfer() ? mTransfersCount.failedSyncDownloads-- : mTransfersCount.failedDownloads--;
                 transfer->removeFailedTransfer();
             }
         }
@@ -1620,6 +1620,12 @@ QMimeData* TransfersModel::mimeData(const QModelIndexList& indexes) const
 
     QMimeData* data = new QMimeData();
     data->setData(QString::fromUtf8("application/x-qabstractitemmodeldatalist"), byteArray);
+
+    emit internalMoveStarted();
+
+    connect(data, &QMimeData::destroyed, this, [this](){
+        emit internalMoveFinished();
+    });
 
     return data;
 }

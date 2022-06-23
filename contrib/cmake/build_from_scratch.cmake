@@ -210,43 +210,25 @@ if(WIN32)
         )
     endforeach()
 else()
-    # if(VCPKG_CMAKE_SYSTEM_NAME STREQUAL "iOS")
-        # LIST(APPEND _extra_cmake_args -DHAVE_FFMPEG=0 -DENABLE_SYNC=0)
-        # include(${_3rdparty_vcpkg_dir}/scripts/toolchains/ios.cmake)
-        # if(NOT CMAKE_OSX_SYSROOT)
-            #Probably should figure out why vcpkg doesn't set this var for arm64 ios,
-            #this is what controls cross-compiling for apple targets
-            # set(CMAKE_OSX_SYSROOT "iphoneos")
-        # endif()
-        # set(_toolchain_cross_compile_args
-            # "-DCMAKE_SYSTEM_PROCESSOR=${CMAKE_SYSTEM_PROCESSOR}"
-            # "-DCMAKE_OSX_ARCHITECTURES=${CMAKE_OSX_ARCHITECTURES}"
-            # "-DCMAKE_SYSTEM_NAME=${CMAKE_SYSTEM_NAME}"
-            # "-DCMAKE_OSX_SYSROOT=${CMAKE_OSX_SYSROOT}"
-        # )
-    # endif()
 
-    #Are we building for OSX?
-    # if (VCPKG_CMAKE_SYSTEM_NAME STREQUAL "Darwin")
-        #Determine the host's architecture.
-        # execute_process(
-            # COMMAND uname -m
-            # OUTPUT_VARIABLE HOST_ARCHITECTURE
-            # OUTPUT_STRIP_TRAILING_WHITESPACE)
+    # Are we building for OSX?
+    if (VCPKG_CMAKE_SYSTEM_NAME STREQUAL "Darwin")
+        # Determine the host's architecture.
+        execute_process(
+            COMMAND uname -m
+            OUTPUT_VARIABLE HOST_ARCHITECTURE
+            OUTPUT_STRIP_TRAILING_WHITESPACE)
 
-        #Are we building on Apple Silicon?
-        # if (HOST_ARCHITECTURE STREQUAL "arm64")
-            #Are we building for x86_64?
-            # if (VCPKG_OSX_ARCHITECTURES STREQUAL "x86_64")
-                #Then make sure we build using the correct toolchain.
-                # set(_toolchain_cross_compile_args
-                    # "-DCMAKE_OSX_ARCHITECTURES=${VCPKG_OSX_ARCHITECTURES}")
-            # endif ()
-        # endif ()
+        # Are we crosscompiling? Compare against the triplet value
+        if (NOT HOST_ARCHITECTURE STREQUAL VCPKG_OSX_ARCHITECTURES)
+            set(_toolchain_cross_compile_args
+                "-DCMAKE_OSX_ARCHITECTURES=${VCPKG_OSX_ARCHITECTURES}")
+                message(STATUS "Cross compiling for arch ${VCPKG_OSX_ARCHITECTURES} in ${HOST_ARCHITECTURE} system.")
+        endif ()
 
-        #Clean up after ourselves.
-        # unset(HOST_ARCHITECTURE)
-    # endif ()
+        # Clean up after ourselves.
+        unset(HOST_ARCHITECTURE)
+    endif ()
 
     foreach(_config "Debug" "Release")
         set(_build_dir "${_app_dir}/build-${_triplet}-${_config}")
@@ -254,12 +236,11 @@ else()
 
         execute_checked_command(
             COMMAND ${_cmake}
-			    ${_common_cmake_args}
-               -B ${_build_dir}
+                -B ${_build_dir}
                 "-DCMAKE_BUILD_TYPE=${_config}"
-                #${_common_cmake_args}
+                ${_common_cmake_args}
                 ${_extra_cmake_args}
-                #${_toolchain_cross_compile_args}
+                ${_toolchain_cross_compile_args}
         )
 
         execute_checked_command(

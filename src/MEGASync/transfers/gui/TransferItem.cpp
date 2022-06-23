@@ -220,7 +220,7 @@ bool TransferData::isCompleted() const
     return mState & TRANSFER_COMPLETED;
 }
 
-bool TransferData::hasFailed() const
+bool TransferData::isFailed() const
 {
     return mState & TRANSFER_FAILED;
 }

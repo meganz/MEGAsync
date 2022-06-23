@@ -7,7 +7,7 @@
 #include <QMutexLocker>
 #include <QElapsedTimer>
 #include <QRunnable>
-
+#include <QTimer>
 
 TransfersManagerSortFilterProxyModel::TransfersManagerSortFilterProxyModel(QObject* parent)
     : TransfersSortFilterProxyBaseModel(parent),
@@ -113,10 +113,6 @@ void TransfersManagerSortFilterProxyModel::onModelSortedFiltered()
         sourceM->pauseModelProcessing(false);
     }
 
-    emit cancelableTransfersChanged(!mNoSyncTransfers.isEmpty() || !mCompletedTransfers.isEmpty());
-    emit activeTransfersChanged(!mActiveTransfers.isEmpty());
-    emit pausedTransfersChanged(!mPausedTransfers.isEmpty());
-
     emit modelChanged();
     emit searchNumbersChanged();
 }
@@ -176,13 +172,10 @@ void TransfersManagerSortFilterProxyModel::resetAllCounters()
 void TransfersManagerSortFilterProxyModel::resetTransfersStateCounters()
 {
     mNoSyncTransfers.clear();
+    mCancelableTransfers.clear();
     mActiveTransfers.clear();
     mPausedTransfers.clear();
     mCompletedTransfers.clear();
-
-    emit cancelableTransfersChanged(false);
-    emit activeTransfersChanged(true);
-    emit pausedTransfersChanged(true);
 }
 
 TransferBaseDelegateWidget *TransfersManagerSortFilterProxyModel::createTransferManagerItem(QWidget*)
@@ -247,6 +240,22 @@ bool TransfersManagerSortFilterProxyModel::filterAcceptsRow(int sourceRow, const
                 }
             }
 
+            if(accept && d->isCancelable() && !mCancelableTransfers.contains(d->mTag))
+            {
+                auto wasEmpty(mCancelableTransfers.isEmpty());
+
+                mCancelableTransfers.insert(d->mTag);
+
+                if(wasEmpty)
+                {
+                    emitSignalWithDelay(&TransfersManagerSortFilterProxyModel::cancelableTransfersChanged);
+                }
+            }
+            else if(!d->isCancelable() && mCancelableTransfers.contains(d->mTag))
+            {
+                removeCancelableTransferFromCounter(d->mTag);
+            }
+
             //Not needed to add the logic when the d is a sync transfer, as the sync state is permanent
             if(accept && !d->isSyncTransfer() && !mNoSyncTransfers.contains(d->mTag))
             {
@@ -256,7 +265,7 @@ bool TransfersManagerSortFilterProxyModel::filterAcceptsRow(int sourceRow, const
 
                 if(wasEmpty)
                 {
-                    emit cancelableTransfersChanged(true);
+                     emitSignalWithDelay(&TransfersManagerSortFilterProxyModel::nonSyncTransfersChanged);
                 }
             }
 
@@ -271,7 +280,7 @@ bool TransfersManagerSortFilterProxyModel::filterAcceptsRow(int sourceRow, const
 
                     if(wasEmpty)
                     {
-                        emit activeTransfersChanged(true);
+                        emitSignalWithDelay(&TransfersManagerSortFilterProxyModel::activeTransfersChanged);
                     }
                 }
             }
@@ -290,7 +299,7 @@ bool TransfersManagerSortFilterProxyModel::filterAcceptsRow(int sourceRow, const
 
                     if(wasEmpty)
                     {
-                        emit pausedTransfersChanged(true);
+                        emitSignalWithDelay(&TransfersManagerSortFilterProxyModel::pausedTransfersChanged);
                     }
                 }
             }
@@ -299,18 +308,13 @@ bool TransfersManagerSortFilterProxyModel::filterAcceptsRow(int sourceRow, const
                 removePausedTransferFromCounter(d->mTag);
             }
 
-            if(accept && d->isCompleted())
+            if(accept && (d->isCompleted() && !d->isFailed()))
             {
                 if(!mCompletedTransfers.contains(d->mTag))
                 {
-                    bool wasEmpty(mCompletedTransfers.isEmpty());
-
                     mCompletedTransfers.insert(d->mTag);
 
-                    if(wasEmpty)
-                    {
-                        emit cancelableTransfersChanged(true);
-                    }
+                    emitSignalWithDelay(&TransfersManagerSortFilterProxyModel::completedTransfersChanged);
                 }
             }
             else
@@ -356,13 +360,15 @@ void TransfersManagerSortFilterProxyModel::onRowsAboutToBeRemoved(const QModelIn
            {
               removeNonSyncedTransferFromCounter(d->mTag);
            }
-           else if(d->isFinished())
+
+           if(d->isFinished())
            {
                removeCompletedTransferFromCounter(d->mTag);
            }
 
            removeActiveTransferFromCounter(d->mTag);
            removePausedTransferFromCounter(d->mTag);
+           removeCancelableTransferFromCounter(d->mTag);
        }
    }
 
@@ -382,7 +388,7 @@ void TransfersManagerSortFilterProxyModel::removeActiveTransferFromCounter(Trans
 
         if(!wasEmpty && mActiveTransfers.isEmpty())
         {
-            emit activeTransfersChanged(false);
+            emitSignalWithDelay(&TransfersManagerSortFilterProxyModel::activeTransfersChanged);
         }
     }
 }
@@ -397,7 +403,7 @@ void TransfersManagerSortFilterProxyModel::removePausedTransferFromCounter(Trans
 
         if(!wasEmpty && mPausedTransfers.isEmpty())
         {
-            emit pausedTransfersChanged(false);
+            emitSignalWithDelay(&TransfersManagerSortFilterProxyModel::pausedTransfersChanged);
         }
     }
 }
@@ -412,7 +418,22 @@ void TransfersManagerSortFilterProxyModel::removeNonSyncedTransferFromCounter(Tr
 
         if(!wasEmpty && mNoSyncTransfers.isEmpty())
         {
-            emit cancelableTransfersChanged(false);
+            emitSignalWithDelay(&TransfersManagerSortFilterProxyModel::nonSyncTransfersChanged);
+        }
+    }
+}
+
+void TransfersManagerSortFilterProxyModel::removeCancelableTransferFromCounter(TransferTag tag) const
+{
+    if(mCancelableTransfers.contains(tag))
+    {
+        auto wasEmpty(mCancelableTransfers.isEmpty());
+
+        mCancelableTransfers.remove(tag);
+
+        if(!wasEmpty && mCancelableTransfers.isEmpty())
+        {
+            emitSignalWithDelay(&TransfersManagerSortFilterProxyModel::cancelableTransfersChanged);
         }
     }
 }
@@ -425,11 +446,21 @@ void TransfersManagerSortFilterProxyModel::removeCompletedTransferFromCounter(Tr
 
         mCompletedTransfers.remove(tag);
 
+        //When there are not completed transfers
         if(!wasEmpty && mCompletedTransfers.isEmpty())
         {
-            emit cancelableTransfersChanged(false);
+            emitSignalWithDelay(&TransfersManagerSortFilterProxyModel::completedTransfersChanged);
         }
     }
+}
+
+//These signals can be sent from the filterAcceptsRow method, then it is better to delay the signal to
+//allow the proxy model to accept the row
+void TransfersManagerSortFilterProxyModel::emitSignalWithDelay(signalToEmit signal) const
+{
+    QTimer::singleShot(15, [this, signal](){
+        emit (this->*signal)();
+    });
 }
 
 bool TransfersManagerSortFilterProxyModel::lessThan(const QModelIndex &left, const QModelIndex &right) const
@@ -504,7 +535,7 @@ bool TransfersManagerSortFilterProxyModel::isAnyPaused() const
 
 bool TransfersManagerSortFilterProxyModel::isAnyCancelable() const
 {
-    return !mNoSyncTransfers.isEmpty();
+    return !mCancelableTransfers.isEmpty();
 }
 
 bool TransfersManagerSortFilterProxyModel::isAnyActive() const
@@ -515,6 +546,21 @@ bool TransfersManagerSortFilterProxyModel::isAnyActive() const
 bool TransfersManagerSortFilterProxyModel::areAllActive() const
 {
     return mActiveTransfers.size() == rowCount();
+}
+
+bool TransfersManagerSortFilterProxyModel::areAllSync() const
+{
+    return rowCount() != 0 && mNoSyncTransfers.isEmpty();
+}
+
+bool TransfersManagerSortFilterProxyModel::areAllCompleted() const
+{
+    return mCompletedTransfers.size() == rowCount();
+}
+
+bool TransfersManagerSortFilterProxyModel::isAnyCompleted() const
+{
+    return !mCompletedTransfers.isEmpty();
 }
 
 bool TransfersManagerSortFilterProxyModel::isModelProcessing() const
