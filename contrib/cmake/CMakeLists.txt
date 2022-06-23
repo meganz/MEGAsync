@@ -202,6 +202,7 @@ set (MOC_INPUT
     ${MEGAsyncDir}/ScaleFactorManager.h
     ${MEGAsyncDir}/CommonMessages.h
     ${MEGAsyncDir}/ScanStageController.h
+    ${MEGAsyncDir}/EventUpdater.h
     ${MEGAsyncDir}/control/ConnectivityChecker.h
     ${MEGAsyncDir}/control/CrashHandler.h
     ${MEGAsyncDir}/control/EncryptedSettings.h
@@ -373,6 +374,7 @@ set (SRCS
     ${MEGAsyncDir}/ScaleFactorManager.cpp
     ${MEGAsyncDir}/CommonMessages.cpp
     ${MEGAsyncDir}/ScanStageController.cpp
+    ${MEGAsyncDir}/EventUpdater.cpp
     ${MEGAsyncDir}/model/Model.cpp
     ${MEGAsyncDir}/model/SyncSettings.cpp
     ${MEGAsyncDir}/transfers/model/TransfersManagerSortFilterProxyModel.cpp
