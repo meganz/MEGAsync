@@ -170,7 +170,7 @@ set (FORMS
     ${MEGAsyncDir}/gui/${UiDir}/OverQuotaDialog.ui
     ${MEGAsyncDir}/gui/${UiDir}/ProxySettings.ui
     ${MEGAsyncDir}/gui/${UiDir}/BandwidthSettings.ui
-    ${MEGAsyncDir}/gui/${UiDir}/NewFolderDialog.ui
+    ${MEGAsyncDir}/gui/${UiDir}/FileFolderNameSetterDialog.ui
     )
 
 

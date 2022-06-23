@@ -3,6 +3,7 @@ QT       += network
 SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/BalloonToolTip.cpp \
     $$PWD/MegaItemDelegates.cpp \
+    $$PWD/FileFolderNameSetterDialog.cpp \
     $$PWD/EventHelper.cpp \
     $$PWD/InfoDialog.cpp \
     $$PWD/MegaItemProxyModel.cpp \
@@ -84,6 +85,7 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/AutoResizeStackedWidget.h \
     $$PWD/BalloonToolTip.h \
     $$PWD/MegaItemDelegates.h \
+    $$PWD/FileFolderNameSetterDialog.h \
     $$PWD/EventHelper.h \
     $$PWD/InfoDialog.h \
     $$PWD/MegaItemProxyModel.h \
@@ -217,7 +219,7 @@ win32 {
                 $$PWD/win/OverQuotaDialog.ui \
                 $$PWD/win/ProxySettings.ui \
                 $$PWD/win/BandwidthSettings.ui \
-                $$PWD/win/NewFolderDialog.ui \
+                $$PWD/win/FileFolderNameSetterDialog.ui \
                 $$PWD/win/NotificationsSettings.ui
 }
 
@@ -273,7 +275,7 @@ macx {
                 $$PWD/macx/OverQuotaDialog.ui \
                 $$PWD/macx/ProxySettings.ui \
                 $$PWD/macx/BandwidthSettings.ui \
-                $$PWD/macx/NewFolderDialog.ui \
+                $$PWD/macx/FileFolderNameSetterDialog.ui \
                 $$PWD/macx/NotificationsSettings.ui
 
     #Asset catalog need to load SF symbol images of toolbar items for custom NSToolbar
@@ -352,7 +354,7 @@ unix:!macx {
                 $$PWD/linux/OverQuotaDialog.ui \
                 $$PWD/linux/ProxySettings.ui \
                 $$PWD/linux/BandwidthSettings.ui \
-                $$PWD/linux/NewFolderDialog.ui \
+                $$PWD/linux/FileFolderNameSetterDialog.ui \
                 $$PWD/linux/NotificationsSettings.ui
 
     HEADERS += $$PWD/PermissionsDialog.h \
