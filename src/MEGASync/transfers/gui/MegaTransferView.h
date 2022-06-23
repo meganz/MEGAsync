@@ -102,7 +102,7 @@ private:
     void cancelAndClearAllTransfers(bool cancel, bool clear);
 
     QModelIndexList getTransfers(bool onlyVisible, TransferData::TransferStates state = TransferData::TRANSFER_NONE);
-    bool isSingleTransfer(bool onlyVisible, TransferData::TransferStates state = TransferData::TRANSFER_NONE);
+    int getTransferCount(bool onlyVisible, TransferData::TransferStates state = TransferData::TRANSFER_NONE);
     QModelIndexList getSelectedTransfers();
     bool isSingleSelectedTransfers();
 };

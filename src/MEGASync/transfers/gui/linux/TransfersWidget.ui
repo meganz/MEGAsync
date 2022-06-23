@@ -408,6 +408,9 @@ TransferWidgetHeaderItem  QLabel
                <property name="toolTip">
                 <string>Pause or resume all selected transfers</string>
                </property>
+               <property name="text">
+                <string notr="true"/>
+               </property>
                <property name="icon">
                 <iconset resource="../../../gui/Resources_linux.qrc">
                  <normaloff>:/images/transfer_manager/transfers_actions/lists_pause_all_ico_default.png</normaloff>:/images/transfer_manager/transfers_actions/lists_pause_all_ico_default.png</iconset>
@@ -495,6 +498,9 @@ TransferWidgetHeaderItem  QLabel
                </property>
                <property name="toolTip">
                 <string>Cancel all selected transfers</string>
+               </property>
+               <property name="text">
+                <string notr="true"/>
                </property>
                <property name="icon">
                 <iconset resource="../../../gui/Resources_linux.qrc">
@@ -709,7 +715,8 @@ QMenu::item:default
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="../../../gui/Resources_linux.qrc"/>
+  <include location="../../../gui/Resources_macx.qrc"/>
+  <include location="../../../gui/Resources_macx.qrc"/>
  </resources>
  <connections/>
 </ui>

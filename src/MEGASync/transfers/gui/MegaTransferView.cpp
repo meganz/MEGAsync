@@ -91,7 +91,7 @@ QModelIndexList MegaTransferView::getTransfers(bool onlyVisible, TransferData::T
     return indexes;
 }
 
-bool MegaTransferView::isSingleTransfer(bool onlyVisible, TransferData::TransferStates state)
+int MegaTransferView::getTransferCount(bool onlyVisible, TransferData::TransferStates state)
 {
     QModelIndexList indexes;
     auto proxy(qobject_cast<QSortFilterProxyModel*>(model()));
@@ -106,15 +106,10 @@ bool MegaTransferView::isSingleTransfer(bool onlyVisible, TransferData::Transfer
         if(state == TransferData::TRANSFER_NONE || (d && d->mState & state))
         {
             indexes.push_back(index);
-
-            if(indexes.size() > 1)
-            {
-                return false;
-            }
         }
     }
 
-    return true;
+    return indexes.size();
 }
 
 QModelIndexList MegaTransferView::getSelectedTransfers()
@@ -223,14 +218,14 @@ void MegaTransferView::onPauseResumeSelection(bool pauseState)
 
 void MegaTransferView::onCancelVisibleTransfers()
 {
-    bool singleTransfer = isSingleTransfer(true);
+    int transferCount = getTransferCount(true);
 
     QPointer<MegaTransferView> dialog = QPointer<MegaTransferView>(this);
 
     QString action = getVisibleAction();
 
     if (QMegaMessageBox::warning(this, QString::fromUtf8("MEGAsync"),
-                             tr("%1 transfer(s)?", "", !singleTransfer).arg(action),
+                             tr("%1 transfer(s)?", "", transferCount).arg(action),
                              QMessageBox::Yes | QMessageBox::No, QMessageBox::No)
             == QMessageBox::Yes
             && dialog)
@@ -267,12 +262,12 @@ void MegaTransferView::onCancelClearSelectedTransfers()
 bool MegaTransferView::onCancelAllTransfers()
 {
     bool result(false);
-    bool singleTransfer = isSingleTransfer(true);
+    int transferCount = getTransferCount(true);
 
     QPointer<MegaTransferView> dialog = QPointer<MegaTransferView>(this);
 
     if (QMegaMessageBox::warning(this, QString::fromUtf8("MEGAsync"),
-                             tr("Cancel transfer(s)?", "", !singleTransfer),
+                             tr("Cancel transfer(s)?", "", transferCount),
                              QMessageBox::Yes | QMessageBox::No, QMessageBox::No)
             == QMessageBox::Yes
             && dialog)
@@ -286,12 +281,12 @@ bool MegaTransferView::onCancelAllTransfers()
 
 void MegaTransferView::onClearAllTransfers()
 {
-    bool singleTransfer = isSingleTransfer(true);
+    int transferCount = getTransferCount(true);
 
     QPointer<MegaTransferView> dialog = QPointer<MegaTransferView>(this);
 
     if (QMegaMessageBox::warning(this, QString::fromUtf8("MEGAsync"),
-                             tr("Clear transfer(s)?", "", !singleTransfer),
+                             tr("Clear transfer(s)?", "", transferCount),
                              QMessageBox::Yes | QMessageBox::No, QMessageBox::No)
             == QMessageBox::Yes
             && dialog)
@@ -303,12 +298,12 @@ void MegaTransferView::onClearAllTransfers()
 bool MegaTransferView::onCancelAndClearAllTransfers()
 {
     bool result(false);
-    bool singleTransfer = isSingleTransfer(true);
+    int transferCount = getTransferCount(true);
 
     QPointer<MegaTransferView> dialog = QPointer<MegaTransferView>(this);
 
     if (QMegaMessageBox::warning(this, QString::fromUtf8("MEGAsync"),
-                             tr("Cancel and clear transfer(s)?", "", !singleTransfer),
+                             tr("Cancel and clear transfer(s)?", "", transferCount),
                              QMessageBox::Yes | QMessageBox::No, QMessageBox::No)
             == QMessageBox::Yes
             && dialog)
@@ -322,14 +317,14 @@ bool MegaTransferView::onCancelAndClearAllTransfers()
 
 void MegaTransferView::onCancelAndClearVisibleTransfers()
 {
-    bool singleTransfer = isSingleTransfer(true);
+    int transferCount = getTransferCount(true);
 
     QString action = getVisibleAction();
 
     QPointer<MegaTransferView> dialog = QPointer<MegaTransferView>(this);
 
     if (QMegaMessageBox::warning(this, QString::fromUtf8("MEGAsync"),
-                             tr("%1 transfer(s)?", "", !singleTransfer).arg(action),
+                             tr("%1 transfer(s)?", "", transferCount).arg(action),
                              QMessageBox::Yes | QMessageBox::No, QMessageBox::No)
             == QMessageBox::Yes
             && dialog)
@@ -382,12 +377,12 @@ void MegaTransferView::onClearCompletedVisibleTransfers()
     auto proxy (qobject_cast<QSortFilterProxyModel*>(model()));
     auto sourceModel(qobject_cast<TransfersModel*>(proxy->sourceModel()));
 
-    bool singleTransfer = isSingleTransfer(true, TransferData::FINISHED_STATES_MASK);
+    int transferCount = getTransferCount(true, TransferData::FINISHED_STATES_MASK);
 
     QPointer<MegaTransferView> dialog = QPointer<MegaTransferView>(this);
 
     if (QMegaMessageBox::warning(this, QString::fromUtf8("MEGAsync"),
-                                 tr("Clear transfer(s)?", "", !singleTransfer),
+                                 tr("Clear transfer(s)?", "", transferCount),
                                  QMessageBox::Yes | QMessageBox::No, QMessageBox::No)
             == QMessageBox::Yes
             && dialog)
@@ -399,12 +394,12 @@ void MegaTransferView::onClearCompletedVisibleTransfers()
 
 void MegaTransferView::onRetryVisibleTransfers()
 {
-    bool singleTransfer = isSingleTransfer(true, TransferData::TRANSFER_FAILED);
+    int transferCount = getTransferCount(true, TransferData::TRANSFER_FAILED);
 
     QPointer<MegaTransferView> dialog = QPointer<MegaTransferView>(this);
 
     if (QMegaMessageBox::warning(this, QString::fromUtf8("MEGAsync"),
-                                 tr("Retry transfer(s)?", "", !singleTransfer),
+                                 tr("Retry transfer(s)?", "", transferCount),
                                  QMessageBox::Yes | QMessageBox::No, QMessageBox::No)
             == QMessageBox::Yes
             && dialog)
