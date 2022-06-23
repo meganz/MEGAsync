@@ -518,6 +518,28 @@ set (SRCS
     ${MEGAsyncDir}/transfers/gui/TransferBaseDelegateWidget.cpp
     ${MEGAsyncDir}/transfers/gui/InfoDialogTransferDelegateWidget.cpp
     ${MEGAsyncDir}/transfers/gui/TransferManagerDelegateWidget.cpp
+    ${MEGAsyncDir}/transfers/gui/SomeIssuesOccurredMessage.cpp
+
+    ${MEGAsyncDir}/stalled_issues/model/StalledIssue.cpp
+    ${MEGAsyncDir}/stalled_issues/model/StalledIssuesModel.cpp
+    ${MEGAsyncDir}/stalled_issues/model/StalledIssuesProxyModel.cpp
+    ${MEGAsyncDir}/stalled_issues/model/StalledIssuesUtilities.cpp
+    ${MEGAsyncDir}/stalled_issues/gui/StalledIssueChooseWidget.cpp
+    ${MEGAsyncDir}/stalled_issues/gui/StalledIssueActionTitle.cpp
+    ${MEGAsyncDir}/stalled_issues/gui/StalledIssueFilePath.cpp
+    ${MEGAsyncDir}/stalled_issues/gui/StalledIssueHeader.cpp
+    ${MEGAsyncDir}/stalled_issues/gui/StalledIssueLoadingItem.cpp
+    ${MEGAsyncDir}/stalled_issues/gui/StalledIssuesDialog.cpp
+    ${MEGAsyncDir}/stalled_issues/gui/StalledIssueTab.cpp
+    ${MEGAsyncDir}/stalled_issues/gui/StalledIssueBaseDelegateWidget.cpp
+    ${MEGAsyncDir}/stalled_issues/gui/StalledIssuesView.cpp
+    ${MEGAsyncDir}/stalled_issues/gui/StalledIssueDelegate.cpp
+    ${MEGAsyncDir}/stalled_issues/gui/StalledIssuesDelegateWidgetsCache.cpp
+    ${MEGAsyncDir}/stalled_issues/gui/stalled_issues_cases/NameConflict.cpp
+    ${MEGAsyncDir}/stalled_issues/gui/stalled_issues_cases/LocalAndRemoteDifferentWidget.cpp
+    ${MEGAsyncDir}/stalled_issues/gui/stalled_issues_cases/LocalAndRemoteNameConflicts.cpp
+    ${MEGAsyncDir}/stalled_issues/gui/stalled_issues_cases/OtherSideMissingOrBlocked.cpp
+    ${MEGAsyncDir}/stalled_issues/gui/stalled_issues_cases/StalledIssuesCaseHeaders.cpp
 
     ${MEGAsyncDir}/mega/bindings/qt/QTMegaRequestListener.cpp
     ${MEGAsyncDir}/mega/bindings/qt/QTMegaTransferListener.cpp
