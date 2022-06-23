@@ -20,13 +20,9 @@ UpgradeDialog::UpgradeDialog(mega::MegaApi* megaApi, std::shared_ptr<mega::MegaP
       mCurrency (currency),
       mFinishTime (0ll)
 {
-    mUi->setupUi(this);
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
 
-    delete mUi->wPlans->layout();
-    mPlansLayout = new QHBoxLayout(mUi->wPlans);
-    mPlansLayout->setContentsMargins(0, 0, 0, 0);
-    mPlansLayout->setSpacing(8);
+    mUi->setupUi(this);
 
     updatePlans();
     configureAnimation();
@@ -150,7 +146,7 @@ void UpgradeDialog::updatePlans()
                 }
 
                 PlanWidget* card (new PlanWidget(data, userAgent, this));
-                mPlansLayout->addWidget(card);
+                mUi->wPlansLayout->addWidget(card);
                 mUi->lPriceEstimation->setVisible(!isBillingCurrency);
                 cards.append(card);
                 minPriceFontSize = std::min(minPriceFontSize, card->getPriceFontSizePx());
@@ -163,15 +159,13 @@ void UpgradeDialog::updatePlans()
         {
             card->setPriceFontSizePx(minPriceFontSize);
         }
-
-        mUi->wPlans->adjustSize();
-        adjustSize();
+        show();
     }
 }
 
 void UpgradeDialog::clearPlans()
 {
-    while (QLayoutItem* item = mPlansLayout->takeAt(0))
+    while (QLayoutItem* item = mUi->wPlansLayout->takeAt(0))
     {
         if (QWidget* widget = item->widget())
         {

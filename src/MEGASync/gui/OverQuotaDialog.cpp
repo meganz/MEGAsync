@@ -2,6 +2,8 @@
 #include "ui_OverQuotaDialog.h"
 #include "mega/types.h"
 #include "Utilities.h"
+#include "Preferences.h"
+
 #include <QtConcurrent/QtConcurrent>
 #include <QDesktopServices>
 
@@ -27,9 +29,90 @@ OverQuotaDialog::~OverQuotaDialog()
     delete ui;
 }
 
-std::unique_ptr<OverQuotaDialog> OverQuotaDialog::createDialog(OverQuotaDialogType type)
+std::unique_ptr<OverQuotaDialog> OverQuotaDialog::createDialog(OverQuotaDialogType type, QWidget* parent)
 {
-    return mega::make_unique<OverQuotaDialog>(type);
+    return mega::make_unique<OverQuotaDialog>(type, parent);
+}
+
+bool OverQuotaDialog::showDialog(OverQuotaDialogType type, QWidget *parent)
+{
+    bool showDialog(false);
+    std::unique_ptr<OverQuotaDialog> dialog;
+    switch(type)
+    {
+    case OverQuotaDialogType::STORAGE_SYNCS:
+    {
+       const std::chrono::system_clock::time_point notShowUntilTime = Preferences::instance()->getStorageOverQuotaSyncsDialogLastExecution()
+                                                                        + Preferences::OVER_QUOTA_ACTION_DIALOGS_DISABLE_TIME;
+       if(std::chrono::system_clock::now() >= notShowUntilTime)
+       {
+            Preferences::instance()->setStorageOverQuotaSyncsDialogLastExecution(std::chrono::system_clock::now());
+            showDialog = true;
+       }
+       break;
+    }
+    case OverQuotaDialogType::BANDWIDTH_DOWNLOAD:
+    {
+       const std::chrono::system_clock::time_point notShowUntilTime = Preferences::instance()->getTransferOverQuotaDownloadsDialogLastExecution()
+                                                                        + Preferences::OVER_QUOTA_ACTION_DIALOGS_DISABLE_TIME;
+       if(std::chrono::system_clock::now() >= notShowUntilTime)
+       {
+            Preferences::instance()->setTransferOverQuotaDownloadsDialogLastExecution(std::chrono::system_clock::now());
+            showDialog = true;
+       }
+       break;
+    }
+    case OverQuotaDialogType::BANDWIDTH_IMPORT_LINK:
+    {
+       const std::chrono::system_clock::time_point notShowUntilTime = Preferences::instance()->getTransferOverQuotaImportLinksDialogLastExecution()
+                                                                        + Preferences::OVER_QUOTA_ACTION_DIALOGS_DISABLE_TIME;
+       if(std::chrono::system_clock::now() >= notShowUntilTime)
+       {
+            Preferences::instance()->setTransferOverQuotaImportLinksDialogLastExecution(std::chrono::system_clock::now());
+            showDialog = true;
+       }
+       break;
+    }
+    case OverQuotaDialogType::BANDWIDTH_STREAM:
+    {
+       const std::chrono::system_clock::time_point notShowUntilTime = Preferences::instance()->getTransferOverQuotaStreamDialogLastExecution()
+                                                                        + Preferences::OVER_QUOTA_ACTION_DIALOGS_DISABLE_TIME;
+       if(std::chrono::system_clock::now() >= notShowUntilTime)
+       {
+            Preferences::instance()->setTransferOverQuotaStreamDialogLastExecution(std::chrono::system_clock::now());
+            showDialog = true;
+       }
+       break;
+    }
+    case OverQuotaDialogType::BANDWITH_SYNC:
+    {
+       const std::chrono::system_clock::time_point notShowUntilTime = Preferences::instance()->getTransferOverQuotaSyncDialogLastExecution()
+                                                                        + Preferences::OVER_QUOTA_ACTION_DIALOGS_DISABLE_TIME;
+       if(std::chrono::system_clock::now() >= notShowUntilTime)
+       {
+            Preferences::instance()->setTransferOverQuotaSyncDialogLastExecution(std::chrono::system_clock::now());
+            showDialog = true;
+       }
+       break;
+    }
+    case OverQuotaDialogType::STORAGE_UPLOAD:
+    {
+       const std::chrono::system_clock::time_point notShowUntilTime = Preferences::instance()->getStorageOverQuotaUploadsDialogLastExecution()
+                                                                        + Preferences::OVER_QUOTA_ACTION_DIALOGS_DISABLE_TIME;
+       if(std::chrono::system_clock::now() >= notShowUntilTime)
+       {
+            Preferences::instance()->setStorageOverQuotaUploadsDialogLastExecution(std::chrono::system_clock::now());
+            showDialog = true;
+       }
+       break;
+    }
+    }
+
+    if(showDialog)
+    {
+        return createDialog(type, parent)->exec();
+    }
+    return QDialog::Rejected;
 }
 
 void OverQuotaDialog::configureDialog(OverQuotaDialogType type)

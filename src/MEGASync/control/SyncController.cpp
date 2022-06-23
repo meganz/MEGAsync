@@ -327,7 +327,6 @@ void SyncController::onRequestFinish(MegaApi *api, MegaRequest *req, MegaError *
     }
     case MegaRequest::TYPE_SET_MY_BACKUPS:
     {
-        int errorCode (e->getErrorCode());
         QString errorMsg;
         if (errorCode == MegaError::API_OK)
         {
@@ -346,7 +345,6 @@ void SyncController::onRequestFinish(MegaApi *api, MegaRequest *req, MegaError *
     }
     case MegaRequest::TYPE_SET_ATTR_USER:
     {
-        int errorCode (e->getErrorCode());
         QString errorMsg;
 
         int subCommand (req->getParamType());
@@ -371,8 +369,6 @@ void SyncController::onRequestFinish(MegaApi *api, MegaRequest *req, MegaError *
     }
     case MegaRequest::TYPE_GET_ATTR_USER:
     {
-        int errorCode (e->getErrorCode());
-
         int subCommand (req->getParamType());
         if (subCommand == MegaApi::USER_ATTR_MY_BACKUPS_FOLDER)
         {

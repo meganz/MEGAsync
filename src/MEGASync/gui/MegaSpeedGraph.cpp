@@ -86,6 +86,7 @@ void MegaSpeedGraph::paintEvent(QPaintEvent *)
 
     const float h = static_cast<float>(height() - 1);
     const float w = static_cast<float>(width() - 1);
+    const float maxH = static_cast<float>(max);
 
     // Calculate graph points if needed
     if (polygon.isEmpty())
@@ -97,7 +98,7 @@ void MegaSpeedGraph::paintEvent(QPaintEvent *)
             float y = h;
             if (max)
             {
-                y -= (static_cast<float>(values[i] / max) * h);
+                y -= ((values[i] / maxH) * h);
             }
             polygon.push_back(QPointF(x, y));
             x += xStep;

@@ -12,7 +12,9 @@ class StatusInfo : public QWidget
 {
     Q_OBJECT
 
-    enum {
+public:
+    enum class TRANSFERS_STATES
+    {
         STATE_STARTING,
         STATE_PAUSED,
         STATE_WAITING,
@@ -20,14 +22,17 @@ class StatusInfo : public QWidget
         STATE_UPDATED,
         STATE_SYNCING,
         STATE_TRANSFERRING,
+        STATE_FAILED,
     };
 
-public:
     explicit StatusInfo(QWidget *parent = 0);
     ~StatusInfo();
 
-    void setState(int state);
+    void setState(TRANSFERS_STATES state);
+    TRANSFERS_STATES getState();
     void setOverQuotaState(bool oq);
+
+    static QIcon scanningIcon(int &index);
 
 protected:
     void changeEvent(QEvent * event);
@@ -37,10 +42,10 @@ private slots:
 
 private:
     Ui::StatusInfo *ui;
-    int state;
-    bool isOverQuota;
-    QTimer scanningTimer;
-    int scanningAnimationIndex;
+    TRANSFERS_STATES mState;
+    bool mIsOverQuota;
+    QTimer mScanningTimer;
+    int mScanningAnimationIndex;
 };
 
 #endif // STATUSINFO_H

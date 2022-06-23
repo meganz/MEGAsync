@@ -195,7 +195,7 @@ class ThreadPoolSingleton
         {
             if (instance == nullptr)
             {
-                instance.reset(new ThreadPool(1));
+                instance.reset(new ThreadPool(5));
             }
 
             return instance.get();
@@ -279,8 +279,29 @@ protected:
 class Utilities
 {
 public:
+    enum class FileType
+    {
+        TYPE_OTHER    = 0x01,
+        TYPE_AUDIO    = 0x02,
+        TYPE_VIDEO    = 0x04,
+        TYPE_ARCHIVE  = 0x08,
+        TYPE_DOCUMENT = 0x10,
+        TYPE_IMAGE    = 0x20,
+    };
+    Q_DECLARE_FLAGS(FileTypes, FileType)
+
     static QString getSizeString(unsigned long long bytes);
     static QString getSizeString(long long bytes);
+    static QString getSizeStringWithoutUnits(unsigned long long bytes);
+    static QString getSizeStringWithoutUnits(long long bytes);
+    struct ProgressSize
+    {
+        QString transferredBytes;
+        QString totalBytes;
+        QString units;
+    };
+    static ProgressSize getProgressSizes(unsigned long long transferredBytes, unsigned long long totalBytes);
+
     static QString getTimeString(long long secs, bool secondPrecision = true, bool color = true);
     static QString getQuantityString(unsigned long long quantity);
     static QString getFinishedTimeString(long long secs);
@@ -314,8 +335,10 @@ public:
 private:
     Utilities() {}
     static QHash<QString, QString> extensionIcons;
+    static QHash<QString, FileType> fileTypes;
     static QHash<QString, QString> languageNames;
     static void initializeExtensions();
+    static void initializeFileTypes();
     static QString getExtensionPixmapNameSmall(QString fileName);
     static QString getExtensionPixmapNameMedium(QString fileName);
 
@@ -335,14 +358,18 @@ public:
     static QIcon getExtensionPixmapSmall(QString fileName);
     static QIcon getExtensionPixmapMedium(QString fileName);
     static QString getExtensionPixmapName(QString fileName, QString prefix);
+    static FileType getFileType(QString fileName, QString prefix);
 
     static long long getSystemsAvailableMemory();
 
     static void sleepMilliseconds(unsigned int milliseconds);
 
     // Compute the part per <ref> of <part> from <total>. Defaults to %
-    static int partPer(long long  part, long long total, uint ref = 100);
+    static int partPer(unsigned long long part, unsigned long long total, uint ref = 100);
 };
+
+Q_DECLARE_METATYPE(Utilities::FileType)
+Q_DECLARE_OPERATORS_FOR_FLAGS(Utilities::FileTypes)
 
 
 
@@ -351,7 +378,7 @@ public:
 class WrappedNode
 {
 public:
-    // Enum used to record origin of trqnsfer
+    // Enum used to record origin of transfer
     enum TransferOrigin {
         FROM_UNKNOWN   = 0,
         FROM_APP       = 1,
@@ -361,7 +388,7 @@ public:
     // Constructor with origin and pointer to MEGA node. Default to unknown/nullptr
     WrappedNode(TransferOrigin from = WrappedNode::TransferOrigin::FROM_UNKNOWN,
                 mega::MegaNode* node = nullptr)
-        : mTransfersFrom(from), mNode(node){}
+        : mTransfersFrom(from), mNode(node) {}
 
     // Destructor
     ~WrappedNode()
@@ -370,7 +397,7 @@ public:
         delete mNode;
     }
 
-    // Get the transfer orgigin
+    // Get the transfer origin
     WrappedNode::TransferOrigin getTransferOrigin()
     {
         return mTransfersFrom;

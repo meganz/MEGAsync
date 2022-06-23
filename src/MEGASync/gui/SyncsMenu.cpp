@@ -171,13 +171,11 @@ void SyncsMenu::refresh()
         {
             if (!mDevNameAction)
             {
-                // Display device name before folders (click opens backups wizard)
+                // Display device name before folders
                 mDevNameAction.reset(new MenuItemAction(QString(), QIcon(DEVICE_ICON), true));
-                mMenu->insertAction(firstBackup, mDevNameAction.get());
                 // Insert the action in the menu to make sure it is here when the
                 // set device name slot is called.
-                connect(mDevNameAction.get(), &MenuItemAction::triggered,
-                        this, &SyncsMenu::onAddSync, Qt::QueuedConnection);
+                mMenu->insertAction(firstBackup, mDevNameAction.get());
                 mSyncController.getDeviceName();
             }
             else
@@ -212,6 +210,11 @@ void SyncsMenu::callMenu(const QPoint& p)
     {
         mMenu->popup(p);
     }
+}
+
+void SyncsMenu::setEnabled(bool state)
+{
+    mAddAction->setEnabled(state);
 }
 
 bool SyncsMenu::eventFilter(QObject* obj, QEvent* e)
