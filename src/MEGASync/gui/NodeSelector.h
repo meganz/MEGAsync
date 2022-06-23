@@ -2,6 +2,7 @@
 #define NODESELECTOR_H
 
 #include "QTMegaRequestListener.h"
+#include "FileFolderNameSetterDialog.h"
 
 #include <QDialog>
 #include <QItemSelection>
@@ -15,7 +16,6 @@ class MegaItemModel;
 
 namespace Ui {
 class NodeSelector;
-class NewFolderDialog;
 }
 
 class NodeSelector : public QDialog, public mega::MegaRequestListener
@@ -103,17 +103,12 @@ private:
     Navigation mNavInShares;
 
     Ui::NodeSelector *ui;
-    Ui::NewFolderDialog *mNewFolderUi;
-    QDialog *mNewFolder;
-    QTimer mNewFolderErrorTimer;
     int mSelectMode;
 
     mega::MegaApi* mMegaApi;
     std::unique_ptr<mega::QTMegaRequestListener> mDelegateListener;
     std::unique_ptr<MegaItemModel> mModel;
     std::unique_ptr<MegaItemProxyModel> mProxyModel;
-
-    void setupNewFolderDialog();
 };
 
 #endif // NODESELECTOR_H
