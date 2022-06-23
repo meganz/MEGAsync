@@ -19,14 +19,12 @@ public:
     explicit TransferManagerDelegateWidget(QWidget* parent = 0);
     ~TransferManagerDelegateWidget();
 
-
     ActionHoverType mouseHoverTransfer(bool isHover, const QPoint &pos) override;
 
     void render(const QStyleOptionViewItem &option, QPainter *painter, const QRegion &sourceRegion) override;
 
 protected:
     void mouseDoubleClickEvent(QMouseEvent *event) override;
-    void resizeEvent(QResizeEvent *) override;
     bool eventFilter(QObject* watched, QEvent* event) override;
 
 signals:

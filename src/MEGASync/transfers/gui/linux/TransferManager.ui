@@ -1952,7 +1952,7 @@ QToolButton
            </spacer>
           </item>
           <item>
-           <widget class="QToolButton" name="bCancelClearAll">
+           <widget class="QToolButton" name="bCancelAll">
             <property name="enabled">
              <bool>true</bool>
             </property>
@@ -1960,7 +1960,7 @@ QToolButton
              <cursorShape>PointingHandCursor</cursorShape>
             </property>
             <property name="toolTip">
-             <string>Cancel and clear all</string>
+             <string>Cancel all transfers</string>
             </property>
             <property name="icon">
              <iconset resource="../../../gui/Resources_linux.qrc">

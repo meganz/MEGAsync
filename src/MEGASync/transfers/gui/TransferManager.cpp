@@ -185,6 +185,26 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
             &TransfersManagerSortFilterProxyModel::searchNumbersChanged,
             this, &TransferManager::refreshSearchStats);
 
+    connect(mUi->wTransfers->getProxyModel(),
+            &TransfersManagerSortFilterProxyModel::searchNumbersChanged,
+            this, &TransferManager::refreshSearchStats);
+
+    connect(mUi->wTransfers->getProxyModel(),
+            &TransfersManagerSortFilterProxyModel::modelChanged,
+            this, &TransferManager::onCheckCancelClearButton);
+
+    connect(mUi->wTransfers->getProxyModel(),
+            &TransfersManagerSortFilterProxyModel::nonSyncTransfersChanged,
+            this, &TransferManager::onCheckCancelClearButton);
+
+    connect(mUi->wTransfers->getProxyModel(),
+            &TransfersManagerSortFilterProxyModel::cancelableTransfersChanged,
+            this, &TransferManager::onCheckCancelClearButton);
+
+    connect(mUi->wTransfers->getProxyModel(),
+            &TransfersManagerSortFilterProxyModel::completedTransfersChanged,
+            this, &TransferManager::onCheckCancelClearButton);
+
     connect(mUi->wTransfers, &TransfersWidget::pauseResumeVisibleRows,
                 this, &TransferManager::onPauseResumeVisibleRows);
 
@@ -193,6 +213,7 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
 
     connect(mUi->wTransfers, &TransfersWidget::cancelClearVisibleRows,
                 this, &TransferManager::onCancelVisibleRows);
+
 
     connect(mUi->wTransfers,
             &TransfersWidget::disableTransferManager,[this](bool state){
@@ -450,7 +471,7 @@ void TransferManager::onCancelVisibleRows()
     {
         if(mCurrentTab == ALL_TRANSFERS_TAB)
         {
-            onCancelAllClicked();
+            on_bCancelAll_clicked();
         }
         else if(mCurrentTab == COMPLETED_TAB)
         {
@@ -503,7 +524,7 @@ void TransferManager::refreshStateStats()
     // The check Failed states -----------------------------------------------------------------
     countLabel = mNumberLabelsGroup[FAILED_TAB];
 
-    long long failedNumber(mTransfersCount.failedUploads + mTransfersCount.failedDownloads);
+    long long failedNumber(mTransfersCount.totalFailedTransfers());
     countLabelText = failedNumber > 0 ? QString::number(failedNumber) : QString();
 
     // Update if the value changed
@@ -822,16 +843,11 @@ void TransferManager::disableGetLink(bool disable)
 
 void TransferManager::on_tActionButton_clicked()
 {
-    if(mCurrentTab != FAILED_TAB)
-    {
-        emit clearCompletedTransfers();
-    }
-    else
+    if(mCurrentTab == FAILED_TAB)
     {
         emit retryAllTransfers();
+        checkActionAndMediaVisibility();
     }
-
-    checkActionAndMediaVisibility();
 }
 
 void TransferManager::on_tSeePlans_clicked()
@@ -990,6 +1006,42 @@ void TransferManager::on_bOther_clicked()
     onFileTypeButtonClicked(TYPE_OTHER_TAB, Utilities::FileType::TYPE_OTHER, tr("Other"));
 }
 
+void TransferManager::onCheckCancelClearButton()
+{
+    TransfersWidget::CancelClearButtonInfo cancelClearInfo;
+
+    auto proxyModel(mUi->wTransfers->getProxyModel());
+    cancelClearInfo.visible = !proxyModel->areAllSync() || proxyModel->areAllCompleted();
+
+    QString cancelBase(tr("Cancel "));
+
+    if (mCurrentTab == COMPLETED_TAB)
+    {
+        cancelClearInfo.clearAction = true;
+        cancelBase = tr("Clear ");
+    }
+    else if ((mCurrentTab > TYPES_TAB_BASE && mCurrentTab < TYPES_LAST) || mCurrentTab == SEARCH_TAB)
+    {
+        bool allCompleted(proxyModel->areAllCompleted());
+        bool isAnyCompleted(proxyModel->isAnyCompleted());
+
+        if(allCompleted)
+        {
+            cancelBase = tr("Clear ");
+        }
+        else if(isAnyCompleted)
+        {
+            cancelBase = tr("Cancel and clear ");
+        }
+        //else -> cancelBase = tr("Cancel ");
+
+        cancelClearInfo.clearAction = allCompleted;
+    }
+
+    cancelClearInfo.cancelClearTooltip = cancelBase + mTooltipNameByTab[mCurrentTab];
+    mUi->wTransfers->updateCancelClearButtonInfo(cancelClearInfo);
+}
+
 void TransferManager::onFileTypeButtonClicked(TM_TAB tab, Utilities::FileType fileType, const QString& tabLabel)
 {
   if (mCurrentTab != tab)
@@ -1020,22 +1072,7 @@ void TransferManager::on_bUpload_clicked()
     qobject_cast<MegaApplication*>(qApp)->uploadActionClickedFromWindow(this);
 }
 
-void TransferManager::on_bCancelClearAll_clicked()
-{
-    auto transfersView = findChild<MegaTransferView*>();
-    if(transfersView)
-    {
-        if(transfersView->onCancelAndClearAllTransfers())
-        {
-            on_tAllTransfers_clicked();
-
-            //Use to repaint and update the transfers state
-            transfersView->update();
-        }
-    }
-}
-
-void TransferManager::onCancelAllClicked()
+void TransferManager::on_bCancelAll_clicked()
 {
     auto transfersView = findChild<MegaTransferView*>();
     if(transfersView)
@@ -1047,7 +1084,7 @@ void TransferManager::onCancelAllClicked()
             //Use to repaint and update the transfers state
             transfersView->update();
         }
-    }
+    };
 }
 
 void TransferManager::on_leSearchField_returnPressed()
@@ -1086,8 +1123,6 @@ void TransferManager::toggleTab(TM_TAB newTab)
         TransfersWidget::HeaderInfo headerInfo;
         auto proxyModel(mUi->wTransfers->getProxyModel());
 
-        QString cancelBase(tr("Cancel "));
-
         // Show pause button on tab except completed tab,
         // and set Clear All button string,
         // Emit wether we are showing completed or not
@@ -1103,8 +1138,6 @@ void TransferManager::toggleTab(TM_TAB newTab)
                 mUi->tActionButton->setText(tr("Clear All"));
                 headerInfo.headerTime = tr("Time completed");
                 headerInfo.headerSpeed = tr("Avg. speed");
-
-                cancelBase = tr("Clear ");
             }
             else if (newTab == FAILED_TAB)
             {
@@ -1118,8 +1151,6 @@ void TransferManager::toggleTab(TM_TAB newTab)
                 headerInfo.headerSpeed = tr("Speed");
 
                 mUi->tActionButton->setText(tr("Clear completed"));
-
-                cancelBase = proxyModel->isAnyCancelable() ? tr("Cancel and clear ") : tr("Clear ");
             }
             //UPLOAD // DOWNLOAD
             else
@@ -1129,7 +1160,6 @@ void TransferManager::toggleTab(TM_TAB newTab)
             }
         }
 
-        headerInfo.cancelClearTooltip = cancelBase + mTooltipNameByTab[newTab];
         headerInfo.pauseTooltip = tr("Pause ") + mTooltipNameByTab[newTab];
         headerInfo.resumeTooltip = tr("Resume ") + mTooltipNameByTab[newTab];
 
@@ -1148,7 +1178,7 @@ void TransferManager::toggleTab(TM_TAB newTab)
             }
             else if(mCurrentTab == FAILED_TAB)
             {
-                transfers = mTransfersCount.failedUploads + mTransfersCount.failedDownloads;
+                transfers = mTransfersCount.totalFailedTransfers();
             }
             else
             {
@@ -1165,6 +1195,7 @@ void TransferManager::toggleTab(TM_TAB newTab)
                 }
             }
         }
+
 
         // Set current header widget: search or not
         if (newTab == SEARCH_TAB)
@@ -1213,13 +1244,11 @@ void TransferManager::checkActionAndMediaVisibility()
 {
     auto completedTransfers = mTransfersCount.completedDownloads() + mTransfersCount.completedUploads();
     auto allTransfers = mTransfersCount.pendingDownloads + mTransfersCount.pendingUploads;
-    auto failedTransfers = mTransfersCount.failedDownloads + mTransfersCount.failedUploads;
+    auto failedTransfers = mTransfersCount.totalFailedTransfers();
 
     // Show "Clear All/Completed" if there are any completed transfers
     // (only for completed tab and individual media tabs)
-    if ((mCurrentTab == COMPLETED_TAB && completedTransfers > 0) || (mCurrentTab == FAILED_TAB && failedTransfers > 0)
-            || (mCurrentTab >= TYPES_TAB_BASE && mModel->getNumberOfFinishedForFileType(
-                    static_cast<Utilities::FileType>(mCurrentTab - TYPES_TAB_BASE))))
+    if (mCurrentTab == FAILED_TAB && failedTransfers > 0)
     {
         mUi->tActionButton->show();
     }

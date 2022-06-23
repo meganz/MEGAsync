@@ -151,11 +151,11 @@ QString MegaTransferView::getVisibleAction()
     QString action;
     if(isAnyActive)
     {
-        action = areAllActive ? tr("cancel") : tr("cancel and clear");
+        action = areAllActive ? tr("Cancel") : tr("Cancel and clear");
     }
     else
     {
-        action = tr("clear");
+        action = tr("Clear");
     }
 
     return action;
@@ -187,11 +187,11 @@ QString MegaTransferView::getSelectedAction()
     QString action;
     if(isAnyActive)
     {
-        action = areAllActive ? tr("cancel") : tr("cancel and clear");
+        action = areAllActive ? tr("Cancel") : tr("Cancel and clear");
     }
     else
     {
-        action = tr("clear");
+        action = tr("Clear");
     }
 
     return action;
@@ -230,7 +230,7 @@ void MegaTransferView::onCancelVisibleTransfers()
     QString action = getVisibleAction();
 
     if (QMegaMessageBox::warning(this, QString::fromUtf8("MEGAsync"),
-                             tr("Are you sure you want to %1 this(these) transfer(s)?", "", !singleTransfer).arg(action),
+                             tr("%1 transfer(s)?", "", !singleTransfer).arg(action),
                              QMessageBox::Yes | QMessageBox::No, QMessageBox::No)
             == QMessageBox::Yes
             && dialog)
@@ -251,7 +251,7 @@ void MegaTransferView::onCancelClearSelectedTransfers()
     QPointer<MegaTransferView> dialog = QPointer<MegaTransferView>(this);
 
     if (QMegaMessageBox::warning(this, QString::fromUtf8("MEGAsync"),
-                             tr("Are you sure you want to %1 this(these) transfer(s)?", "", !singleTransfer).arg(action),
+                             tr("%1 transfer(s)?", "", !singleTransfer).arg(action),
                              QMessageBox::Yes | QMessageBox::No, QMessageBox::No)
             == QMessageBox::Yes
             && dialog)
@@ -272,7 +272,7 @@ bool MegaTransferView::onCancelAllTransfers()
     QPointer<MegaTransferView> dialog = QPointer<MegaTransferView>(this);
 
     if (QMegaMessageBox::warning(this, QString::fromUtf8("MEGAsync"),
-                             tr("Are you sure you want to cancel this(these) transfer(s)?", "", !singleTransfer),
+                             tr("Cancel transfer(s)?", "", !singleTransfer),
                              QMessageBox::Yes | QMessageBox::No, QMessageBox::No)
             == QMessageBox::Yes
             && dialog)
@@ -291,7 +291,7 @@ void MegaTransferView::onClearAllTransfers()
     QPointer<MegaTransferView> dialog = QPointer<MegaTransferView>(this);
 
     if (QMegaMessageBox::warning(this, QString::fromUtf8("MEGAsync"),
-                             tr("Are you sure you want to clear this(these) transfer(s)?", "", !singleTransfer),
+                             tr("Clear transfer(s)?", "", !singleTransfer),
                              QMessageBox::Yes | QMessageBox::No, QMessageBox::No)
             == QMessageBox::Yes
             && dialog)
@@ -308,7 +308,7 @@ bool MegaTransferView::onCancelAndClearAllTransfers()
     QPointer<MegaTransferView> dialog = QPointer<MegaTransferView>(this);
 
     if (QMegaMessageBox::warning(this, QString::fromUtf8("MEGAsync"),
-                             tr("Are you sure you want to cancel and clear this(these) transfer(s)?", "", !singleTransfer),
+                             tr("Cancel and clear transfer(s)?", "", !singleTransfer),
                              QMessageBox::Yes | QMessageBox::No, QMessageBox::No)
             == QMessageBox::Yes
             && dialog)
@@ -329,7 +329,7 @@ void MegaTransferView::onCancelAndClearVisibleTransfers()
     QPointer<MegaTransferView> dialog = QPointer<MegaTransferView>(this);
 
     if (QMegaMessageBox::warning(this, QString::fromUtf8("MEGAsync"),
-                             tr("Are you sure you want to %1 this(these) transfer(s)?", "", !singleTransfer).arg(action),
+                             tr("%1 transfer(s)?", "", !singleTransfer).arg(action),
                              QMessageBox::Yes | QMessageBox::No, QMessageBox::No)
             == QMessageBox::Yes
             && dialog)
@@ -387,7 +387,7 @@ void MegaTransferView::onClearCompletedVisibleTransfers()
     QPointer<MegaTransferView> dialog = QPointer<MegaTransferView>(this);
 
     if (QMegaMessageBox::warning(this, QString::fromUtf8("MEGAsync"),
-                                 tr("Are you sure you want to clear this(these) transfer(s)?", "", !singleTransfer),
+                                 tr("Clear transfer(s)?", "", !singleTransfer),
                                  QMessageBox::Yes | QMessageBox::No, QMessageBox::No)
             == QMessageBox::Yes
             && dialog)
@@ -404,7 +404,7 @@ void MegaTransferView::onRetryVisibleTransfers()
     QPointer<MegaTransferView> dialog = QPointer<MegaTransferView>(this);
 
     if (QMegaMessageBox::warning(this, QString::fromUtf8("MEGAsync"),
-                                 tr("Are you sure you want to retry this(these) transfer(s)?", "", !singleTransfer),
+                                 tr("Retry transfer(s)?", "", !singleTransfer),
                                  QMessageBox::Yes | QMessageBox::No, QMessageBox::No)
             == QMessageBox::Yes
             && dialog)
@@ -616,10 +616,10 @@ void MegaTransferView::updateContextMenu(bool enablePause, bool enableResume, bo
     bool showOpen (false);
     bool showShowInFolder (false);
 
+    auto d (qvariant_cast<TransferItem>(indexes.first().data()).getTransferData());
+
     if (onlyOneAndClear)
     {
-        auto d (qvariant_cast<TransferItem>(indexes.first().data()).getTransferData());
-
         auto state (d->mState);
         auto type ((d->mType & TransferData::TRANSFER_UPLOAD) ?
                        TransferData::TRANSFER_UPLOAD
@@ -639,6 +639,26 @@ void MegaTransferView::updateContextMenu(bool enablePause, bool enableResume, bo
         else if (type == TransferData::TRANSFER_DOWNLOAD)
         {
             showLink = true;
+        }
+    }
+
+    if(onlyOneSelected)
+    {
+        if(d->mType & TransferData::TRANSFER_SYNC)
+        {
+            //Check if the file exists on local drive. Otherwise, show the OpenInMEGAACtion (as it is on the remote drive)
+            auto path = d->path();
+            QFileInfo file(path);
+
+            if(file.exists())
+            {
+                showOpen = true;
+                showShowInFolder = true;
+            }
+            else
+            {
+                showLink = true;
+            }
         }
     }
 

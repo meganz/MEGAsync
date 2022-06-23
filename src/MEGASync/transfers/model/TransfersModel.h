@@ -26,6 +26,9 @@ struct TransfersCount
     int failedUploads;
     int failedDownloads;
 
+    int failedSyncUploads;
+    int failedSyncDownloads;
+
     long long completedUploadBytes;
     long long completedDownloadBytes;
 
@@ -42,14 +45,18 @@ struct TransfersCount
         pendingDownloads(0),
         failedUploads(0),
         failedDownloads(0),
+        failedSyncUploads(0),
+        failedSyncDownloads(0),
         completedUploadBytes(0),
         completedDownloadBytes(0),
         totalUploadBytes(0),
         totalDownloadBytes(0)
     {}
 
-    int completedDownloads(){return totalDownloads - pendingDownloads - failedDownloads;}
-    int completedUploads(){return totalUploads - pendingUploads - failedUploads;}
+    int completedDownloads()const {return totalDownloads - pendingDownloads - failedDownloads;}
+    int completedUploads() const {return totalUploads - pendingUploads - failedUploads;}
+
+    long long totalFailedTransfers() const {return failedUploads + failedSyncUploads + failedDownloads + failedSyncDownloads;}
 
     void clear()
     {
