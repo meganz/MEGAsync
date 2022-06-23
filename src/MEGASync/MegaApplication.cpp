@@ -6133,12 +6133,13 @@ void MegaApplication::createTrayIconMenus()
         initialTrayMenu->insertAction(guestSettingsAction, showStatusAction);
     }
 
-#ifdef _WIN32
-    //The following should not be required, but
-    //prevents it from being truncated on the first display
-    initialTrayMenu->show();
-    initialTrayMenu->hide();
-#endif
+// Commenting this code because it causes MEGAsync to grab focus on startup, interrupting the user.  SNC-2175. Leaving it here commented in case menus start misbehaving again.
+//#ifdef _WIN32
+//    //The following should not be required, but
+//    //prevents it from being truncated on the first display
+//    initialTrayMenu->show();
+//    initialTrayMenu->hide();
+//#endif
 }
 
 void MegaApplication::createInfoDialogMenus()
@@ -6253,10 +6254,11 @@ void MegaApplication::createInfoDialogMenus()
     windowsMenu->addSeparator();
     windowsMenu->addAction(windowsExitAction);
 
-    //The following should not be required, but
-    //prevents it from being truncated on the first display
-    windowsMenu->show();
-    windowsMenu->hide();
+    // Commenting this code because it causes MEGAsync to grab focus on startup, interrupting the user.  SNC-2175. Leaving it here commented in case menus start misbehaving again.
+    ////The following should not be required, but
+    ////prevents it from being truncated on the first display
+    //windowsMenu->show();
+    //windowsMenu->hide();
 
 #endif
 
@@ -6502,13 +6504,14 @@ void MegaApplication::createInfoDialogMenus()
                                    | Qt::FramelessWindowHint
                                    | Qt::NoDropShadowWindowHint);
 #endif
-#ifdef Q_OS_WINDOWS
-    //The following should not be required, but
-    //prevents it from being truncated on the first display
-    infoDialogMenu->show();
-    infoDialogMenu->hide();
 
-#endif
+// Commenting this code because it causes MEGAsync to grab focus on startup, interrupting the user.  SNC-2175. Leaving it here commented in case menus start misbehaving again.
+//#ifdef Q_OS_WINDOWS
+//    //The following should not be required, but
+//    //prevents it from being truncated on the first display
+//    infoDialogMenu->show();
+//    infoDialogMenu->hide();
+//#endif
 }
 
 void MegaApplication::createGuestMenu()
@@ -6587,10 +6590,12 @@ void MegaApplication::createGuestMenu()
     guestMenu->setWindowFlags(guestMenu->windowFlags()
                                    | Qt::FramelessWindowHint
                                    | Qt::NoDropShadowWindowHint);
-    //The following should not be required, but
-    //prevents it from being truncated on the first display
-    guestMenu->show();
-    guestMenu->hide();
+
+    // Commenting this code because it causes MEGAsync to grab focus on startup, interrupting the user.  SNC-2175. Leaving it here commented in case menus start misbehaving again.
+    ////The following should not be required, but
+    ////prevents it from being truncated on the first display
+    //guestMenu->show();
+    //guestMenu->hide();
 #endif
 
 }
