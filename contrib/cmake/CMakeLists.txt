@@ -836,3 +836,30 @@ if(CMAKE_HOST_WIN32)
     set_property(TARGET MEGAShellExt PROPERTY MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
     set_target_properties(MEGAShellExt  PROPERTIES LINK_FLAGS_RELEASE " /DEBUG " )
 endif()
+
+
+#-------------- MEGA Sync unit tests --------------------
+add_library(catch INTERFACE)
+target_include_directories(catch INTERFACE "${RepoDir}/tests/3rdparty/catch")
+add_library(trompeloeil INTERFACE)
+target_include_directories(catch INTERFACE "${RepoDir}/tests/3rdparty/trompeloeil")
+
+set(MEGASyncUnitTestsDir "${RepoDir}/tests/MEGASyncUnitTests")
+set(UNIT_TEST_FILES
+    ${MEGASyncUnitTestsDir}/GuestWidgetTest.cpp
+    ${MEGASyncUnitTestsDir}/control/TransferRemainingTime.Test.cpp
+    ${MEGASyncUnitTestsDir}/Utilities.test.cpp
+    ${MEGASyncUnitTestsDir}/ScaleFactorManager.Test.cpp
+    ${MEGASyncUnitTestsDir}/main.cpp
+    )
+add_executable(MEGASync_unit_tests ${UNIT_TEST_FILES} ${SRCS} ${QM_FILES})
+
+target_link_libraries(MEGASync_unit_tests
+    catch
+    trompeloeil
+    Mega
+    ${MEGA_QT_LINK_LIBRARIES}
+    ${TARGET_LINK_LIBRARIES_PLATFORM}
+    )
+
+target_include_directories(MEGASync_unit_tests PRIVATE ${MEGAsyncDir} ${MEGAsyncDir}/google_breakpad )
