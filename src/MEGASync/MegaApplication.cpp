@@ -7,6 +7,7 @@
 #include "control/Utilities.h"
 #include "control/CrashHandler.h"
 #include "control/ExportProcessor.h"
+#include "EventUpdater.h"
 #include "platform/Platform.h"
 #include "OverQuotaDialog.h"
 #include "ConnectivityChecker.h"
@@ -1573,6 +1574,8 @@ void MegaApplication::processUploadQueue(MegaHandle nodeHandle)
 
     auto batch = std::shared_ptr<TransferBatch>(new TransferBatch());
 
+    EventUpdater updater(uploadQueue.size());
+
     //Process the upload queue using the MegaUploader object
     while (!uploadQueue.isEmpty())
     {
@@ -1605,6 +1608,8 @@ void MegaApplication::processUploadQueue(MegaHandle nodeHandle)
             startingUpload();
             batch->add(filePathInfo.isDir());
         }
+
+        updater.update(uploadQueue.size());
     }
 
     if (!batch->isEmpty())
