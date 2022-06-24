@@ -57,7 +57,7 @@ BackupsWizard::BackupsWizard(QWidget* parent) :
 
     // React on item check/uncheck
     connect(mFoldersModel, &QStandardItemModel::itemChanged,
-            this, &BackupsWizard::refreshNextButtonState);
+            this, &BackupsWizard::onItemChanged);
 
     connect(&mSyncController, &SyncController::setMyBackupsStatus,
             this, &BackupsWizard::onSetMyBackupsDirRequestStatus);
@@ -175,8 +175,15 @@ void BackupsWizard::showMore()
     resize(width(), FINAL_STEP_MIN_SIZE.height() + nHeight);
 }
 
-void BackupsWizard::refreshNextButtonState()
+void BackupsWizard::onItemChanged(QStandardItem *item)
 {
+    if(item)
+    {
+        if(item->checkState() == Qt::Checked && isFolderAlreadySynced(item->data(Qt::UserRole).toString(), true, true))
+        {
+            item->setData(Qt::Unchecked, Qt::CheckStateRole);
+        }
+    }
     bool enable (false);
     //step1
     if(mUi->sSteps->currentWidget() == mUi->pStep1)
@@ -193,7 +200,7 @@ void BackupsWizard::setupStep1()
     mFoldersProxyModel->showOnlyChecked(false);
 
     qDebug("Backups Wizard: step 1 Init");
-    refreshNextButtonState();
+    onItemChanged();
     setCurrentWidgetsSteps(mUi->pStep1);
     mUi->sButtons->setCurrentWidget(mUi->pStepButtons);
     mUi->bCancel->setEnabled(true);
@@ -262,7 +269,7 @@ void BackupsWizard::setupStep2()
 {
     mFoldersProxyModel->showOnlyChecked(true);
     qDebug("Backups Wizard: step 2 Init");
-    refreshNextButtonState();
+    onItemChanged();
     setCurrentWidgetsSteps(mUi->pStep2);
     mUi->bNext->setText(tr("Setup"));
     mUi->bBack->show();
@@ -307,13 +314,8 @@ void BackupsWizard::setupError()
 {
     mUi->bShowMore->setVisible(mErrList.size() > SHOW_MORE_VISIBILITY);
 
-    bool show_singular = mErrList.size() < 2;
-
-    mUi->lErrorTextSingular->setVisible(show_singular);
-    mUi->lErrorTitleSingular->setVisible(show_singular);
-
-    mUi->lErrorTextPlural->setVisible(!show_singular);
-    mUi->lErrorTitlePlural->setVisible(!show_singular);
+    mUi->lErrorTitle->setText(tr("Problem backing up folder", "", mErrList.size()));
+    mUi->lErrorText->setText(tr("This folder wasn't backed up. Try again.", "", mErrList.size()));
 
     QTextDocument* doc = mUi->tTextEdit->document();
     doc->setDocumentMargin(0);
@@ -334,7 +336,7 @@ void BackupsWizard::setupError()
 void BackupsWizard::setupFinalize()
 {
     qDebug("Backups Wizard: finalize");
-    refreshNextButtonState();
+    onItemChanged();
     mUi->bCancel->setEnabled(false);
     mUi->bBack->hide();
 
@@ -408,36 +410,12 @@ void BackupsWizard::processNextBackupSetup()
 // Special case for backups: if the exact path is already backed up, handle it later.
 // Returns true if folder is already synced or backed up (backup: except exact path),
 // false if not.
-bool BackupsWizard::isFolderAlreadySynced(const QString& path, bool displayWarning)
+bool BackupsWizard::isFolderAlreadySynced(const QString& path, bool displayWarning, bool fromCheckAction)
 {
     auto cleanInputPath (QDir::cleanPath(QDir(path).canonicalPath()));
-    QString message;
+    QString message = mSyncController.getIsFolderAlreadySyncedMsg(path, mega::MegaSync::TYPE_BACKUP);
 
-    // Gather all synced or backed-up dirs
-    QStringList localFolders (SyncModel::instance()->getLocalFolders(SyncModel::AllHandledSyncTypes));
-
-    // First check existing syncs
-    auto lf (localFolders.cbegin());
-    while (message.isEmpty() && lf != localFolders.cend())
-    {        
-        QString c = QDir::cleanPath(*lf);
-
-        if (cleanInputPath.startsWith(c)
-                && (c.size() == cleanInputPath.size()
-                    || cleanInputPath[c.size()] == QDir::separator()))
-        {
-            message = tr("The selected local folder is already synced");
-        }
-        else if (c.startsWith(cleanInputPath)
-                 && (c[cleanInputPath.size()] == QDir::separator()
-                 || cleanInputPath == QDir(*lf).rootPath()))
-        {
-            message = tr("A synced folder cannot be inside a backup folder");
-        }
-        lf++;
-    }
-
-    // Then check current list
+    // Check current list
     if (message.isEmpty())
     {
         // Check for path and name collision.
@@ -447,23 +425,23 @@ bool BackupsWizard::isFolderAlreadySynced(const QString& path, bool displayWarni
         while (message.isEmpty() && row < nbBackups)
         {
             QString c (QDir::cleanPath(mFoldersModel->item(row)->data(Qt::UserRole).toString()));
-            bool sameSize (cleanInputPath.size() == c.size());
 
             // Do not consider unchecked items
             if (mFoldersModel->item(row)->checkState() == Qt::Checked)
             {
                 // Handle same path another way later: by selecting the row in the view.
-                if (cleanInputPath.startsWith(c) && !sameSize
-                        && (c.size() == cleanInputPath.size()
-                            || cleanInputPath[c.size()] == QDir::separator()))
+                // Check collisions between rows and not only with already saved ones
+                if(!fromCheckAction && cleanInputPath == c)
                 {
-                    message = tr("The selected local folder is already backed up");
+                    message = tr("Folder is already backed up. Select a different folder.");
                 }
-                else if (lf != localFolders.cend() && c.startsWith(cleanInputPath) && !sameSize
-                         && (c[cleanInputPath.size()] == QDir::separator()
-                             || cleanInputPath == QDir(*lf).rootPath()))
+                else if (cleanInputPath.startsWith(c) && cleanInputPath.size() != c.size())
                 {
-                    message = tr("A backed up folder cannot be inside a backup folder");
+                    message = tr("You can't backup child folders that are inside backed up folders.");
+                }
+                else if (c.startsWith(cleanInputPath) && cleanInputPath.size() != c.size())
+                {
+                    message = tr("You can't backup folders that contain backed up folders.");
                 }
             }
             row++;
@@ -482,7 +460,7 @@ bool BackupsWizard::isFolderAlreadySynced(const QString& path, bool displayWarni
 void BackupsWizard::nextStep(const Steps &step)
 {
     qDebug("Backups Wizard: next step");
-    refreshNextButtonState();
+    onItemChanged();
     mUi->fFoldersStep1->setMinimumHeight(0);
     mUi->fFoldersStep2->setMinimumHeight(0);
 
@@ -532,7 +510,7 @@ void BackupsWizard::nextStep(const Steps &step)
         default:
             break;
     }
-    refreshNextButtonState();
+    onItemChanged();
 }
 
 void BackupsWizard::setCurrentWidgetsSteps(QWidget *widget)
@@ -629,7 +607,8 @@ void BackupsWizard::on_bMoreFolders_clicked()
         // Jump to item in list
         auto idx = mFoldersModel->indexFromItem(item);
         mUi->lvFoldersStep1->scrollTo(idx,QAbstractItemView::PositionAtCenter);
-        refreshNextButtonState();
+
+        onItemChanged();
         qDebug() << QString::fromUtf8("Backups Wizard: add folder \"%1\"").arg(path);
     }
 }
@@ -684,10 +663,7 @@ void BackupsWizard::setupComplete()
         qDebug("Backups Wizard: setup completed successfully");
         // We are now done, exit
         // No error: show success message!
-        bool show_singular = mBackupsStatus.size() < 2;
-
-        mUi->lSuccessTextSingular->setVisible(show_singular);
-        mUi->lSuccessTextPlural->setVisible(!show_singular);
+        mUi->lSuccessText->setText(tr("We're backing up your folder. The time this takes depends on the files in this folder.","", mBackupsStatus.size()));
         setCurrentWidgetsSteps(mUi->pSuccessfull);
 
         mUi->sButtons->setCurrentWidget(mUi->pSuccessButtons);
@@ -708,7 +684,7 @@ void BackupsWizard::onDeviceNameSet(QString deviceName)
 {
     mUi->lDeviceNameStep1->setText(deviceName);
     mUi->lDeviceNameStep2->setText(deviceName);
-    refreshNextButtonState();
+    onItemChanged();
 }
 
 void BackupsWizard::onBackupsDirSet(mega::MegaHandle backupsDirHandle)
@@ -722,7 +698,7 @@ void BackupsWizard::onBackupsDirSet(mega::MegaHandle backupsDirHandle)
 
     // Update path display
     mUi->leBackupTo->setText(backupsDirPath + QLatin1Char('/') + mUi->lDeviceNameStep1->text());
-    refreshNextButtonState();
+    onItemChanged();
 }
 
 void BackupsWizard::onSetMyBackupsDirRequestStatus(int errorCode, const QString& errorMsg)

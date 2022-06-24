@@ -403,6 +403,21 @@ QStringList SyncModel::getLocalFolders(const QVector<SyncType>& types)
     return value;
 }
 
+QMap<QString, SyncModel::SyncType> SyncModel::getLocalFoldersAndTypeMap()
+{
+    QMutexLocker qm(&syncMutex);
+    QMap<QString, SyncType> ret;
+
+    for (auto type : SyncModel::AllHandledSyncTypes)
+    {
+        for (auto &cs : configuredSyncs[type])
+        {
+            ret.insert(configuredSyncsMap[cs]->getLocalFolder(), type);
+        }
+    }
+    return ret;
+}
+
 QList<MegaHandle> SyncModel::getMegaFolderHandles(const QVector<SyncType>& types)
 {
     QMutexLocker qm(&syncMutex);

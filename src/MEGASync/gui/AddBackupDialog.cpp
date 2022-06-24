@@ -1,5 +1,6 @@
 #include "AddBackupDialog.h"
 #include "ui_AddBackupDialog.h"
+#include "QMegaMessageBox.h"
 
 #include <QFileDialog>
 
@@ -52,9 +53,17 @@ void AddBackupDialog::on_changeButton_clicked()
     if(folderPath.isEmpty())
         return;
 
-    mSelectedFolder = folderPath;
-    mUi->folderLineEdit->setText(mSelectedFolder.path());
-    mUi->addButton->setEnabled(true);
+    QString warningMessage;
+    if(mSyncController.isFolderAlreadySynced(folderPath, mega::MegaSync::TYPE_BACKUP, warningMessage))
+    {
+        QMegaMessageBox::warning(nullptr, tr("Error"), warningMessage, QMessageBox::Ok);
+    }
+    else
+    {
+        mSelectedFolder = folderPath;
+        mUi->folderLineEdit->setText(mSelectedFolder.path());
+        mUi->addButton->setEnabled(true);
+    }
 }
 
 void AddBackupDialog::onDeviceNameSet(const QString &devName)
