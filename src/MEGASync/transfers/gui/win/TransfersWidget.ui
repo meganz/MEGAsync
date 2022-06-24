@@ -85,8 +85,8 @@
       </size>
      </property>
      <property name="currentIndex">
-        <number>0</number>
-       </property>
+      <number>0</number>
+     </property>
      <widget class="QWidget" name="pTransfers">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">

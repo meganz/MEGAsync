@@ -919,12 +919,4 @@ target_link_libraries(MEGASync_unit_tests
     ${TARGET_LINK_LIBRARIES_PLATFORM}
     )
 
-target_include_directories(MEGASync_unit_tests PRIVATE
-                                               ${MEGAsyncDir}
-                                               ${MEGAsyncDir}/transfers
-                                               ${MEGAsyncDir}/transfers/gui
-                                               ${MEGAsyncDir}/transfers/model
-                                               ${MEGAsyncDir}/google_breakpad
-                                               )
-target_compile_features(MEGASync_unit_tests PRIVATE cxx_std_14)
-
+target_include_directories(MEGASync_unit_tests PRIVATE ${MEGAsyncDir} ${MEGAsyncDir}/google_breakpad )

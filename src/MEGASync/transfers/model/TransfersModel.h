@@ -160,7 +160,7 @@ public:
     bool dropMimeData(const QMimeData* data, Qt::DropAction action, int destRow,
                                                 int column, const QModelIndex& parent);
     bool hasChildren(const QModelIndex& parent) const;
-    int rowCount(const QModelIndex& parent) const;
+    int rowCount(const QModelIndex& parent = QModelIndex()) const;
     int columnCount(const QModelIndex& parent = QModelIndex()) const;
     QVariant data(const QModelIndex& index, int role) const;
     QModelIndex parent(const QModelIndex& index) const;
@@ -179,6 +179,8 @@ public:
     void retryTransfers(QModelIndexList indexes);
     void setResetMode();
     void cancelTransfers(const QModelIndexList& indexes, QWidget *canceledFrom);
+    void cancelAllTransfers(QWidget *canceledFrom);
+    void clearAllTransfers();
     void clearTransfers(const QModelIndexList& indexes);
     void clearTransfers(const QMap<QModelIndex,QExplicitlySharedDataPointer<TransferData>> uploads,
                         const QMap<QModelIndex,QExplicitlySharedDataPointer<TransferData>> downloads);
