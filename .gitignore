@@ -4,6 +4,7 @@ vcredist_x64.exe
 MegaSyncSetup*.exe
 Release_x32
 Release_x64
+Release_arm64
 installer_mac.sh
 MEGA.pro.user
 
