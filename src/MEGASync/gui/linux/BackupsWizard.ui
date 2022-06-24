@@ -10,7 +10,7 @@
     <x>0</x>
     <y>0</y>
     <width>600</width>
-    <height>368</height>
+    <height>367</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -952,7 +952,7 @@ color:#333333;
 }</string>
            </property>
            <property name="text">
-            <string>Backup Created</string>
+            <string>Backup created</string>
            </property>
           </widget>
          </item>
@@ -962,29 +962,14 @@ color:#333333;
             <number>0</number>
            </property>
            <item>
-            <widget class="QLabel" name="lSuccessTextPlural">
+            <widget class="QLabel" name="lSuccessText">
              <property name="styleSheet">
               <string notr="true">*{
 color: #666666;
 }</string>
              </property>
              <property name="text">
-              <string>We're backing up your folders. The time this takes depends on the files in these folders.</string>
-             </property>
-             <property name="wordWrap">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QLabel" name="lSuccessTextSingular">
-             <property name="styleSheet">
-              <string notr="true">*{
-color: #666666;
-}</string>
-             </property>
-             <property name="text">
-              <string>We're backing up your folder. The time this takes depends on the files in this folder.</string>
+              <string>Backing up folder text</string>
              </property>
              <property name="wordWrap">
               <bool>true</bool>
@@ -1040,21 +1025,15 @@ color: #666666;
         </widget>
        </item>
        <item>
-        <layout class="QVBoxLayout" name="verticalLayout_4" stretch="0,0,0,0,0,0,0,0">
+        <layout class="QVBoxLayout" name="verticalLayout_4" stretch="0,0,0,0,0,0">
          <property name="spacing">
           <number>4</number>
          </property>
          <property name="bottomMargin">
           <number>0</number>
          </property>
-         <item alignment="Qt::AlignLeft|Qt::AlignTop">
-          <widget class="QLabel" name="lErrorTitlePlural">
-           <property name="font">
-            <font>
-             <family>Lato</family>
-             <pointsize>-1</pointsize>
-            </font>
-           </property>
+         <item>
+          <widget class="QLabel" name="lErrorTitle">
            <property name="styleSheet">
             <string notr="true">*{
 font-size:16px;
@@ -1062,50 +1041,19 @@ color:#333333;
 }</string>
            </property>
            <property name="text">
-            <string>Problem backing up folders</string>
+            <string>Ttitle</string>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="QLabel" name="lErrorTitleSingular">
-           <property name="styleSheet">
-            <string notr="true">*{
-font-size:16px;
-color:#333333;
-}</string>
-           </property>
-           <property name="text">
-            <string>Problem backing up folder</string>
-           </property>
-          </widget>
-         </item>
-         <item alignment="Qt::AlignLeft|Qt::AlignTop">
-          <widget class="QLabel" name="lErrorTextPlural">
-           <property name="font">
-            <font>
-             <family>Lato</family>
-             <pointsize>-1</pointsize>
-            </font>
-           </property>
+          <widget class="QLabel" name="lErrorText">
            <property name="styleSheet">
             <string notr="true">*{
 color:#666666;
 }</string>
            </property>
            <property name="text">
-            <string>These folders were not backed up. Would you like to try again?</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLabel" name="lErrorTextSingular">
-           <property name="styleSheet">
-            <string notr="true">*{
-color:#666666;
-}</string>
-           </property>
-           <property name="text">
-            <string>This folder was not backed up. Would you like to try again?</string>
+            <string>Body</string>
            </property>
           </widget>
          </item>

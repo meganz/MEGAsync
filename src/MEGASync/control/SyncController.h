@@ -38,6 +38,8 @@ public:
 
     void setDeviceName(const QString& name);
     void getDeviceName();
+    QString getIsFolderAlreadySyncedMsg(const QString& path, const mega::MegaSync::SyncType& syncType);
+    bool isFolderAlreadySynced(const QString& path, const mega::MegaSync::SyncType& syncType, QString& message);
 
     static const char* DEFAULT_BACKUPS_ROOT_DIRNAME;
 

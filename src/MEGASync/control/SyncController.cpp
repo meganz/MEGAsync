@@ -125,6 +125,71 @@ void SyncController::getDeviceName()
     ensureDeviceNameIsSetOnRemote();
 }
 
+
+// Checks if a path belongs is in an existing sync or backup tree; and if the selected
+// folder has a sync or backup in its tree.
+QString SyncController::getIsFolderAlreadySyncedMsg(const QString& path,const MegaSync::SyncType& syncType)
+{
+    auto cleanInputPath (QDir::cleanPath(QDir(path).canonicalPath()));
+    QString message;
+
+    // Gather all synced or backed-up dirs
+    QMap<QString, MegaSync::SyncType> localFolders = SyncModel::instance()->getLocalFoldersAndTypeMap();
+
+    // First check existing syncs
+    foreach(auto& lf, localFolders.keys())
+    {
+        QString c = QDir::cleanPath(lf);
+        if(cleanInputPath == c)
+        {
+            if(syncType == MegaSync::SyncType::TYPE_BACKUP)
+            {
+                message = localFolders.value(lf) == MegaSync::SyncType::TYPE_TWOWAY ?
+                            tr("You can't sync this folder as it's already synced.") : tr("Folder is already backed up. Select a different one.");
+            }
+            else
+            {
+                message = localFolders.value(lf) == MegaSync::SyncType::TYPE_TWOWAY ?
+                            tr("You can't sync this folder as it's already synced.") : tr("You can't sync this folder as it's backed up.");
+            }
+        }
+        else if (cleanInputPath.startsWith(c))
+        {
+            if(syncType == MegaSync::SyncType::TYPE_BACKUP)
+            {
+                message = localFolders.value(lf) == MegaSync::SyncType::TYPE_TWOWAY ?
+                            tr("You can't backup this folder as it's already inside a synced folder.") : tr("You can't backup this folder as it's already inside a backed up folder.");
+            }
+            else
+            {
+                message = localFolders.value(lf) == MegaSync::SyncType::TYPE_TWOWAY ?
+                            tr("You can't sync folders that are inside synced folders.") : tr("You can't sync folders that are inside backed up folders. ");
+            }
+        }
+        else if (c.startsWith(cleanInputPath))
+        {
+            if(syncType == MegaSync::SyncType::TYPE_BACKUP)
+            {
+                message = localFolders.value(lf) == MegaSync::SyncType::TYPE_TWOWAY ?
+                            tr("You can't backup this folder as it contains synced folders.") : tr("You can't backup this folder as it contains backed up folders.");
+            }
+            else
+            {
+                message = localFolders.value(lf) == MegaSync::SyncType::TYPE_TWOWAY ?
+                            tr("You can't sync folders that contain synced folders.") : tr("You can't sync folders that contain backed up folders.  ");
+            }
+        }
+    }
+
+    return message;
+}
+
+bool SyncController::isFolderAlreadySynced(const QString &path, const MegaSync::SyncType &syncType, QString& message)
+{
+    message = getIsFolderAlreadySyncedMsg(path, syncType);
+    return (!message.isEmpty());
+}
+
 void SyncController::ensureDeviceNameIsSetOnRemote()
 {
     if (!mIsDeviceNameSetOnRemote && !mForceSetDeviceName)

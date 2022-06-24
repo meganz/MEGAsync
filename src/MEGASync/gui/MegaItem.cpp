@@ -395,7 +395,7 @@ void MegaItem::calculateSyncStatus(const QStringList &folders)
     std::shared_ptr<MegaNode> n = mNode;
     parentFolders.append(QLatin1Char('/'));
     parentFolders.append(QString::fromUtf8(n->getName()));
-    while(n->getParentHandle () != INVALID_HANDLE)
+    while(n && n->getParentHandle () != INVALID_HANDLE)
     {
         n = std::shared_ptr<MegaNode>(mMegaApi->getNodeByHandle(n->getParentHandle()));
         if(n->getType() != MegaNode::TYPE_ROOT)

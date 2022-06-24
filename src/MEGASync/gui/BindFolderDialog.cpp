@@ -70,6 +70,7 @@ QString BindFolderDialog::getSyncName()
 
 void BindFolderDialog::on_bOK_clicked()
 {
+    SyncController controller;
     QString localFolderPath = ui->wBinder->selectedLocalFolder();
     MegaApi *megaApi = app->getMegaApi();
     MegaHandle handle = ui->wBinder->selectedMegaFolder();
@@ -94,27 +95,11 @@ void BindFolderDialog::on_bOK_clicked()
         return;
     }
 
-    for (int i = 0; i < localFolders.size(); i++)
+    QString warningMessage;
+    if(controller.isFolderAlreadySynced(localFolderPath, MegaSync::TYPE_TWOWAY, warningMessage))
     {
-        QString c = QDir::toNativeSeparators(QDir(localFolders[i]).canonicalPath());
-        if (!c.size())
-        {
-            continue;
-        }
-
-        if (localFolderPath.startsWith(c)
-                && ((c.size() == localFolderPath.size())
-                    || (localFolderPath[c.size()] == QDir::separator())))
-        {
-            QMegaMessageBox::warning(nullptr, tr("Error"), tr("The selected local folder is already synced"), QMessageBox::Ok);
-            return;
-        }
-        else if (c.startsWith(localFolderPath)
-                 && c[localFolderPath.size()] == QDir::separator())
-        {
-            QMegaMessageBox::warning(nullptr, tr("Error"), tr("A synced folder cannot be inside another synced folder"), QMessageBox::Ok);
-            return;
-        }
+        QMegaMessageBox::warning(nullptr, tr("Error"), warningMessage, QMessageBox::Ok);
+        return;
     }
 
     for (int i = 0; i < megaFolderPaths.size(); i++)

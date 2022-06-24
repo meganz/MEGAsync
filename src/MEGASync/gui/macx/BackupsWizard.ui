@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>620</width>
-    <height>375</height>
+    <width>600</width>
+    <height>364</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -955,7 +955,7 @@ color:#333333;
 }</string>
            </property>
            <property name="text">
-            <string>Backup Created</string>
+            <string>Backup created</string>
            </property>
           </widget>
          </item>
@@ -965,7 +965,22 @@ color:#333333;
             <number>0</number>
            </property>
            <item>
-            <widget class="QWidget" name="wSuccessMessages" native="true">
+            <widget class="QLabel" name="lSuccessText">
+             <property name="styleSheet">
+              <string notr="true">*{
+color: #666666;
+}</string>
+             </property>
+             <property name="text">
+              <string>Backing up folder text</string>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="label_2">
              <property name="minimumSize">
               <size>
                <width>420</width>
@@ -1082,14 +1097,8 @@ color: #666666;
          <property name="bottomMargin">
           <number>0</number>
          </property>
-         <item alignment="Qt::AlignLeft|Qt::AlignTop">
-          <widget class="QLabel" name="lErrorTitlePlural">
-           <property name="font">
-            <font>
-             <family>Lato</family>
-             <pointsize>-1</pointsize>
-            </font>
-           </property>
+         <item>
+          <widget class="QLabel" name="lErrorTitle">
            <property name="styleSheet">
             <string notr="true">*{
 font-size:16px;
@@ -1097,65 +1106,19 @@ color:#333333;
 }</string>
            </property>
            <property name="text">
-            <string>Problem backing up folders</string>
+            <string>Title</string>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="QLabel" name="lErrorTitleSingular">
-           <property name="styleSheet">
-            <string notr="true">*{
-font-size:16px;
-color:#333333;
-}</string>
-           </property>
-           <property name="text">
-            <string>Problem backing up folder</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <spacer name="verticalSpacer">
-           <property name="orientation">
-            <enum>Qt::Vertical</enum>
-           </property>
-           <property name="sizeType">
-            <enum>QSizePolicy::Fixed</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>20</width>
-             <height>4</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-         <item alignment="Qt::AlignLeft|Qt::AlignTop">
-          <widget class="QLabel" name="lErrorTextPlural">
-           <property name="font">
-            <font>
-             <family>Lato</family>
-            </font>
-           </property>
+          <widget class="QLabel" name="lErrorText">
            <property name="styleSheet">
             <string notr="true">*{
 color:#666666;
 }</string>
            </property>
            <property name="text">
-            <string>These folders were not backed up. Would you like to try again?</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLabel" name="lErrorTextSingular">
-           <property name="styleSheet">
-            <string notr="true">*{
-color:#666666;
-}</string>
-           </property>
-           <property name="text">
-            <string>This folder was not backed up. Would you like to try again?</string>
+            <string>Body</string>
            </property>
           </widget>
          </item>
