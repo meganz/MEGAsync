@@ -57,7 +57,6 @@ void InfoDialogTransfersWidget::configureTransferView()
     mUi->tView->setDragDropMode(QAbstractItemView::InternalMove);
     mUi->tView->setModel(mProxyModel);
     mUi->tView->setFocusPolicy(Qt::NoFocus);
-    mUi->tView->disableContextMenus(true);
 
     mViewHoverManager.setView(mUi->tView);
 }
