@@ -4,7 +4,7 @@
 #include "MegaApplication.h"
 #include "mega/user.h"
 #include "Platform.h"
-#include "UserAttributesRequests.h"
+#include "UserAttributesRequests/FullName.h"
 
 #include <QCoreApplication>
 #include <QtConcurrent/QtConcurrent>
@@ -157,11 +157,11 @@ void DesktopNotifications::addUserAlertList(mega::MegaUserAlertList *alertList)
 
             if(!userEmail.isEmpty())
             {
-                auto fullNameUserAttributes = UserAttributes::FullNameAttributeRequest::requestFullName(alert->getEmail());
+                auto fullNameUserAttributes = UserAttributes::FullName::requestFullName(alert->getEmail());
                 if(fullNameUserAttributes && !mUserAttributes.contains(userEmail))
                 {
                     mUserAttributes.insert(userEmail, fullNameUserAttributes);
-                    connect(fullNameUserAttributes.get(), &UserAttributes::FullNameAttributeRequest::attributeReady,
+                    connect(fullNameUserAttributes.get(), &UserAttributes::FullName::attributeReady,
                             this, &DesktopNotifications::OnUserAttributesReady, Qt::UniqueConnection);
                 }
 
@@ -188,10 +188,10 @@ void DesktopNotifications::processAlert(mega::MegaUserAlert* alert)
     QString email = QString::fromUtf8(alert->getEmail());
     if (!email.isEmpty())
     {
-        auto fullNameRequest = mUserAttributes.value(email);
-        if (fullNameRequest)
+        auto FullNameRequest = mUserAttributes.value(email);
+        if (FullNameRequest)
         {
-            fullName = fullNameRequest->getFullName();
+            fullName = FullNameRequest->getFullName();
         }
     }
 
@@ -740,7 +740,7 @@ void DesktopNotifications::viewOnInfoDialogNotifications(MegaNotification::Actio
 
 void DesktopNotifications::OnUserAttributesReady()
 {
-    auto UserAttribute = dynamic_cast<UserAttributes::FullNameAttributeRequest*>(sender());
+    auto UserAttribute = dynamic_cast<UserAttributes::FullName*>(sender());
     if(UserAttribute)
     {
         auto pendingAlerts = mPendingUserAlerts.values(UserAttribute->getEmail());
@@ -754,7 +754,7 @@ void DesktopNotifications::OnUserAttributesReady()
 
         //After processing the alerts, disconnect the full name attribute request as it still lives
         //in attributes manager
-        disconnect(UserAttribute, &UserAttributes::FullNameAttributeRequest::attributeReady,
+        disconnect(UserAttribute, &UserAttributes::FullName::attributeReady,
                 this, &DesktopNotifications::OnUserAttributesReady);
     }
 }

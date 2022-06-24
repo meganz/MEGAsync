@@ -8,7 +8,7 @@
 #include <memory>
 
 namespace UserAttributes{
-   class AvatarAttributeRequest;
+   class Avatar;
 }
 
 class AvatarWidget : public QWidget
@@ -32,7 +32,7 @@ protected:
     void mousePressEvent(QMouseEvent* event);
 
 private:
-    std::shared_ptr<const UserAttributes::AvatarAttributeRequest> mAvatarRequest;
+    std::shared_ptr<const UserAttributes::Avatar> mAvatarRequest;
     QMetaObject::Connection mAvatarConnection;
 };
 

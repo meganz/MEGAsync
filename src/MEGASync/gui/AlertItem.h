@@ -11,7 +11,7 @@ class AlertItem;
 }
 
 namespace UserAttributes{
-class FullNameAttributeRequest;
+class FullName;
 }
 
 class AlertItem : public QWidget
@@ -52,7 +52,7 @@ private:
     QString mNotificationHeading;
     std::unique_ptr<mega::MegaNode> mAlertNode;
     std::unique_ptr<mega::MegaUserAlert> mAlertUser;
-    std::shared_ptr<const UserAttributes::FullNameAttributeRequest> mFullNameAttributes;
+    std::shared_ptr<const UserAttributes::FullName> mFullNameAttributes;
     QFutureWatcher<mega::MegaNode*> mAlertNodeWatcher;
 };
 
