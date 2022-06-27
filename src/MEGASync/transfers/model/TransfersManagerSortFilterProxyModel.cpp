@@ -257,8 +257,6 @@ bool TransfersManagerSortFilterProxyModel::filterAcceptsRow(int sourceRow, const
             //Not needed to add the logic when the d is a sync transfer, as the sync state is permanent
             if(accept && !d->isSyncTransfer() && !mNoSyncTransfers.contains(d->mTag))
             {
-                auto wasEmpty(mNoSyncTransfers.isEmpty());
-
                 mNoSyncTransfers.insert(d->mTag);
             }
 
@@ -267,8 +265,6 @@ bool TransfersManagerSortFilterProxyModel::filterAcceptsRow(int sourceRow, const
             {
                 if(!mActiveTransfers.contains(d->mTag))
                 {
-                    auto wasEmpty(mActiveTransfers.isEmpty());
-
                     mActiveTransfers.insert(d->mTag);
                 }
             }
@@ -281,8 +277,6 @@ bool TransfersManagerSortFilterProxyModel::filterAcceptsRow(int sourceRow, const
             {
                 if(!mPausedTransfers.contains(d->mTag))
                 {
-                    bool wasEmpty(mPausedTransfers.isEmpty());
-
                     mPausedTransfers.insert(d->mTag);
                 }
             }
@@ -491,11 +485,6 @@ bool TransfersManagerSortFilterProxyModel::moveRows(const QModelIndex &proxyPare
 {
     bool moveOk(true);
     int row(proxyRow);
-
-    for(int row = 0; row < rowCount(); ++row)
-    {
-        auto sourceIndex(mapToSource(index(row, 0)));
-    }
 
     while (moveOk && row < (proxyRow+count))
     {

@@ -288,7 +288,7 @@ void NodeSelector::onRequestFinish(mega::MegaApi*, mega::MegaRequest* request, m
         return;
     }
 
-    if (request->getType() == MegaRequest::TYPE_REMOVE || request->getType() == MegaRequest::TYPE_MOVE)
+    if (type == MegaRequest::TYPE_REMOVE || type == MegaRequest::TYPE_MOVE)
     {
         if (e->getErrorCode() == MegaError::API_OK)
         {
