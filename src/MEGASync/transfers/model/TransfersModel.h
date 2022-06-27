@@ -205,6 +205,8 @@ public:
 
     bool areAllPaused() const;
 
+     QExplicitlySharedDataPointer<TransferData> getTransferByTag(int tag) const;
+
 signals:
     void pauseStateChanged(bool pauseState);
     void transferPauseStateChanged();
@@ -212,11 +214,13 @@ signals:
     void processTransferInThread();
     void pauseStateChangedByTransferResume();
     void blockUi();
-    void unblockUi();
+    void unblockUiAndFilter();
     void modelProcessingFinished();
     void transferFinished(const QModelIndex& index);
     void internalMoveStarted() const;
     void internalMoveFinished() const;
+    void canceledTransfers(QSet<int> tags);
+    void uiThreadProcessing(bool);
 
 public slots:
     void pauseResumeAllTransfers(bool state);
@@ -225,7 +229,7 @@ private slots:
     void onPauseStateChanged();
     void processStartTransfers(QList<QExplicitlySharedDataPointer<TransferData>>& transfersToStart);
     void processUpdateTransfers();
-    void processCancelTransfers();
+    QSet<int> processCancelTransfers();
     void processFailedTransfers();
     void onProcessTransfers();
 
@@ -238,6 +242,9 @@ private:
 
     bool isFailingModeActive() const ;
     void setFailingMode(bool state);
+
+    bool isStartingModeActive() const ;
+    void setStartingMode(bool state);
 
     bool isCancelingModeActive() const ;
     void setCancelingMode(bool state);
@@ -258,9 +265,11 @@ private:
     QList<QExplicitlySharedDataPointer<TransferData>> mTransfers;
 
     TransferThread::TransfersToProcess mTransfersToProcess;
+    QFutureWatcher<QSet<int>> mCancelWatcher;
 
     uint8_t mCancelingMode;
     uint8_t mFailingMode;
+    uint8_t mStartingMode;
 
     QHash<TransferTag, int> mTagByOrder;
     mutable QMutex mModelMutex;
@@ -272,5 +281,6 @@ private:
 Q_DECLARE_METATYPE(QAbstractItemModel::LayoutChangeHint)
 Q_DECLARE_METATYPE(QList<QPersistentModelIndex>)
 Q_DECLARE_METATYPE(QVector<int>)
+Q_DECLARE_METATYPE(QSet<int>)
 
 #endif // TRANSFERSMODEL_H

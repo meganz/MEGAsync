@@ -69,7 +69,7 @@ void TransfersWidget::setupTransfers()
     connect(mProxyModel, &TransfersManagerSortFilterProxyModel::transferCancelClear, this, &TransfersWidget::onCancelClearButtonPressedOnDelegate);
     connect(mProxyModel, &TransfersManagerSortFilterProxyModel::transferRetry, this, &TransfersWidget::onRetryButtonPressedOnDelegate);
     connect(app->getTransfersModel(), &TransfersModel::blockUi, this, &TransfersWidget::onUiBlocked);
-    connect(app->getTransfersModel(), &TransfersModel::unblockUi, this, &TransfersWidget::onUiUnblocked);
+    connect(app->getTransfersModel(), &TransfersModel::unblockUiAndFilter, this, &TransfersWidget::onUiUnblockedAndFilter);
 
     configureTransferView();
 }
@@ -296,6 +296,17 @@ TransfersWidget::TM_TAB TransfersWidget::getCurrentTab()
     return mCurrentTab;
 }
 
+void TransfersWidget::updateHeaders()
+{
+    updateTimersState();
+
+    //Now, you can check the buttons as the filter is finished
+    updateHeaderItems();
+
+    onCheckCancelClearButton();
+    onCheckPauseResumeButton();
+}
+
 void TransfersWidget::updateHeaderItems()
 {
     // Show pause button on tab except completed tab,
@@ -351,30 +362,49 @@ void TransfersWidget::changeEvent(QEvent *event)
     QWidget::changeEvent(event);
 }
 
-void TransfersWidget::hideEvent(QHideEvent *event)
+void TransfersWidget::hideEvent(QHideEvent *)
 {
     //Do not check buttons while it is closed
     mCheckCancelClearButtonTimer.stop();
     mCheckPauseResumeButtonTimer.stop();
 }
 
-void TransfersWidget::showEvent(QShowEvent *event)
+void TransfersWidget::showEvent(QShowEvent *)
 {
-    onModelChanged();
+    updateHeaders();
+}
+
+void TransfersWidget::setScanningWidgetVisible(bool state)
+{
+    if(!state && mLoadingScene.isLoadingViewSet())
+    {
+        emit disableTransferManager(true);
+    }
+    else if(state && mLoadingScene.isLoadingViewSet())
+    {
+        emit disableTransferManager(false);
+    }
 }
 
 void TransfersWidget::onUiBlocked()
 {
     mLoadingScene.setLoadingScene(true);
 
-    emit disableTransferManager(true);
+    if(isVisible())
+    {
+        emit disableTransferManager(true);
+    }
 }
 
 void TransfersWidget::onUiUnblocked()
 {
     mLoadingScene.setLoadingScene(false);
-
     emit disableTransferManager(false);
+}
+
+void TransfersWidget::onUiUnblockedAndFilter()
+{
+    textFilterChanged(QString());
 }
 
 void TransfersWidget::onModelAboutToBeChanged()
@@ -390,13 +420,7 @@ void TransfersWidget::onModelChanged()
 {
     onUiUnblocked();
 
-    updateTimersState();
-
-    //Now, you can check the buttons as the filter is finished
-    updateHeaderItems();
-
-    onCheckCancelClearButton();
-    onCheckPauseResumeButton();
+    updateHeaders();
 }
 
 void TransfersWidget::updateTimersState()

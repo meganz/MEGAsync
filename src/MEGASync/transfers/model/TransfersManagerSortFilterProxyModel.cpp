@@ -18,7 +18,8 @@ TransfersManagerSortFilterProxyModel::TransfersManagerSortFilterProxyModel(QObje
       mNextTransferTypes (mTransferTypes),
       mNextFileTypes (mFileTypes),
       mSortCriterion (SortCriterion::PRIORITY),
-      mThreadPool (ThreadPoolSingleton::getInstance())
+      mThreadPool (ThreadPoolSingleton::getInstance()),
+      mAllowUiThreadProcessing(false)
 {
     connect(&mFilterWatcher, &QFutureWatcher<void>::finished,
             this, &TransfersManagerSortFilterProxyModel::onModelSortedFiltered);
@@ -66,8 +67,13 @@ void TransfersManagerSortFilterProxyModel::setSourceModel(QAbstractItemModel *so
 
     if(auto transferModel = dynamic_cast<TransfersModel*>(sourceModel))
     {
-        connect(transferModel, &TransfersModel::unblockUi,
-                this, &TransfersManagerSortFilterProxyModel::onModelUnblockedRequest, Qt::DirectConnection);
+        connect(transferModel, &TransfersModel::canceledTransfers,
+                this, &TransfersManagerSortFilterProxyModel::onCanceledTransfers);
+        connect(transferModel, &TransfersModel::uiThreadProcessing,
+                this, [this](bool state)
+        {
+            mAllowUiThreadProcessing = state;
+        });
     }
 
     QSortFilterProxyModel::setSourceModel(sourceModel);
@@ -130,13 +136,6 @@ void TransfersManagerSortFilterProxyModel::onModelSortedFiltered()
 
     emit modelChanged();
     emit searchNumbersChanged();
-}
-
-//When the central model request an ui unblock, it´s because an action in other thread has finished completely (canceling or failing)
-//We invalidate the proxy model to refresh it, as the action in the other thread has the signals blocked to speed up things.
-void TransfersManagerSortFilterProxyModel::onModelUnblockedRequest()
-{
-    invalidate();
 }
 
 void TransfersManagerSortFilterProxyModel::setFilters(const TransferData::TransferTypes transferTypes,
@@ -223,6 +222,11 @@ void TransfersManagerSortFilterProxyModel::updateFilters()
 
 bool TransfersManagerSortFilterProxyModel::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const
 {
+    if(!mAllowUiThreadProcessing && (QThread::currentThread() == MegaSyncApp->thread()))
+    {
+        return false;
+    }
+
     QModelIndex index = sourceModel()->index(sourceRow, 0, sourceParent);
 
     const auto d (qvariant_cast<TransferItem>(index.data()).getTransferData());
@@ -257,8 +261,6 @@ bool TransfersManagerSortFilterProxyModel::filterAcceptsRow(int sourceRow, const
             //Not needed to add the logic when the d is a sync transfer, as the sync state is permanent
             if(accept && !d->isSyncTransfer() && !mNoSyncTransfers.contains(d->mTag))
             {
-                auto wasEmpty(mNoSyncTransfers.isEmpty());
-
                 mNoSyncTransfers.insert(d->mTag);
             }
 
@@ -267,8 +269,6 @@ bool TransfersManagerSortFilterProxyModel::filterAcceptsRow(int sourceRow, const
             {
                 if(!mActiveTransfers.contains(d->mTag))
                 {
-                    auto wasEmpty(mActiveTransfers.isEmpty());
-
                     mActiveTransfers.insert(d->mTag);
                 }
             }
@@ -281,8 +281,6 @@ bool TransfersManagerSortFilterProxyModel::filterAcceptsRow(int sourceRow, const
             {
                 if(!mPausedTransfers.contains(d->mTag))
                 {
-                    bool wasEmpty(mPausedTransfers.isEmpty());
-
                     mPausedTransfers.insert(d->mTag);
                 }
             }
@@ -323,32 +321,7 @@ void TransfersManagerSortFilterProxyModel::onRowsAboutToBeRemoved(const QModelIn
 
        if(d && d->mTag >= 0)
        {
-           if(!mFilterText.isEmpty())
-           {
-               if (d->mType & TransferData::TRANSFER_UPLOAD)
-               {
-                   mUlNumber.remove(d->mTag);
-               }
-               else
-               {
-                   mDlNumber.remove(d->mTag);
-               }
-
-               searchRowsRemoved = true;
-           }
-
-           if(!d->isSyncTransfer())
-           {
-              removeNonSyncedTransferFromCounter(d->mTag);
-           }
-
-           if(d->isFinished())
-           {
-               removeCompletedTransferFromCounter(d->mTag);
-           }
-
-           removeActiveTransferFromCounter(d->mTag);
-           removePausedTransferFromCounter(d->mTag);
+           searchRowsRemoved |= updateTransfersCounterFromTag(d);
        }
    }
 
@@ -357,6 +330,70 @@ void TransfersManagerSortFilterProxyModel::onRowsAboutToBeRemoved(const QModelIn
        searchNumbersChanged();
    }
 }
+
+bool TransfersManagerSortFilterProxyModel::onCanceledTransfers(QSet<int> tags)
+{
+    bool searchRowsRemoved(false);
+
+    auto sourceM = qobject_cast<TransfersModel*>(sourceModel());
+    if(sourceM)
+    {
+        foreach(auto tag, tags)
+        {
+            if(!mFilterText.isEmpty())
+            {
+                mUlNumber.remove(tag);
+                searchRowsRemoved = true;
+            }
+
+            removeNonSyncedTransferFromCounter(tag);
+            removeActiveTransferFromCounter(tag);
+            removePausedTransferFromCounter(tag);
+        }
+
+        if(searchRowsRemoved)
+        {
+            searchNumbersChanged();
+        }
+    }
+
+    return searchRowsRemoved;
+}
+
+bool TransfersManagerSortFilterProxyModel::updateTransfersCounterFromTag(QExplicitlySharedDataPointer<TransferData> transfer) const
+{
+    bool searchRowsRemoved(false);
+
+    if(!mFilterText.isEmpty())
+    {
+        if (transfer->mType & TransferData::TRANSFER_UPLOAD)
+        {
+            mUlNumber.remove(transfer->mTag);
+        }
+        else
+        {
+            mDlNumber.remove(transfer->mTag);
+        }
+
+        searchRowsRemoved = true;
+    }
+
+    if(!transfer->isSyncTransfer())
+    {
+       removeNonSyncedTransferFromCounter(transfer->mTag);
+    }
+
+    if(transfer->isFinished())
+    {
+        removeCompletedTransferFromCounter(transfer->mTag);
+    }
+
+    removeActiveTransferFromCounter(transfer->mTag);
+    removePausedTransferFromCounter(transfer->mTag);
+
+    return searchRowsRemoved;
+}
+
 
 void TransfersManagerSortFilterProxyModel::removeActiveTransferFromCounter(TransferTag tag) const
 {
@@ -392,6 +429,11 @@ void TransfersManagerSortFilterProxyModel::removeCompletedTransferFromCounter(Tr
 
 bool TransfersManagerSortFilterProxyModel::lessThan(const QModelIndex &left, const QModelIndex &right) const
 {
+    if(!mAllowUiThreadProcessing && (QThread::currentThread() == MegaSyncApp->thread()))
+    {
+        return left.row() < right.row();
+    }
+
     const auto leftItem (qvariant_cast<TransferItem>(left.data()).getTransferData());
     const auto rightItem (qvariant_cast<TransferItem>(right.data()).getTransferData());
 
@@ -492,18 +534,22 @@ bool TransfersManagerSortFilterProxyModel::moveRows(const QModelIndex &proxyPare
     bool moveOk(true);
     int row(proxyRow);
 
-    for(int row = 0; row < rowCount(); ++row)
+    auto totalRows(rowCount());
+
+    for(int row = 0; row < totalRows; ++row)
     {
         auto sourceIndex(mapToSource(index(row, 0)));
     }
+
+    auto sourceTotalRows(sourceModel()->rowCount());
 
     while (moveOk && row < (proxyRow+count))
     {
         auto sourceIndex(mapToSource(index(proxyRow, 0, proxyParent)));
         int destRow;
-        if (destinationChild == rowCount())
+        if (destinationChild == totalRows)
         {
-            destRow = sourceModel()->rowCount();
+            destRow = sourceTotalRows;
         }
         else
         {

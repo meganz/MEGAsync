@@ -15,6 +15,7 @@ static const QModelIndex DEFAULT_IDX = QModelIndex();
 
 const int MAX_TRANSFERS = 2000;
 const int CANCEL_THRESHOLD_THREAD = 100;
+const int START_THRESHOLD_THREAD = 100;
 
 //LISTENER THREAD
 TransferThread::TransferThread()
@@ -377,11 +378,13 @@ TransfersModel::TransfersModel(QObject *parent) :
     mPreferences (Preferences::instance()),
     mCancelingMode(0),
     mFailingMode(0),
+    mStartingMode(0),
     mModelReset(false)
 {
     qRegisterMetaType<QList<QPersistentModelIndex>>("QList<QPersistentModelIndex>");
     qRegisterMetaType<QAbstractItemModel::LayoutChangeHint>("QAbstractItemModel::LayoutChangeHint");
     qRegisterMetaType<QVector<int>>("QVector<int>");
+    qRegisterMetaType<QVector<int>>("QSet<int>");
 
     mAreAllPaused = mPreferences->getGlobalPaused();
     mMegaApi->pauseTransfers(mAreAllPaused);
@@ -401,6 +404,12 @@ TransfersModel::TransfersModel(QObject *parent) :
     mTimer.start();
 
     mTransferEventThread->start();
+
+    connect(&mCancelWatcher, &QFutureWatcher<QSet<int>>::finished,
+            this, [this]()
+    {
+        emit canceledTransfers(mCancelWatcher.result());
+    });
 }
 
 TransfersModel::~TransfersModel()
@@ -504,17 +513,24 @@ void TransfersModel::onProcessTransfers()
             {
                 setCancelingMode(true);
 
-                QtConcurrent::run([this](){
+                QFuture<QSet<int>> cancelsFinished = QtConcurrent::run([this]() -> QSet<int>
+                {
+                    QSet<int> canceledTags;
                     if(mModelMutex.tryLock())
                     {
                         blockSignals(true);
-                        processCancelTransfers();
+                        canceledTags = processCancelTransfers();
                         blockSignals(false);
+
                         updateTransfersCount();
 
                         mModelMutex.unlock();
+
                     }
+                    return canceledTags;
                 });
+
+                mCancelWatcher.setFuture(cancelsFinished);
             }
             else
             {
@@ -557,25 +573,58 @@ void TransfersModel::onProcessTransfers()
 
             if(containsTransfersToStart > 0)
             {
-                QtConcurrent::run([this](){
-                //Do not add new transfers while items are being cancelled
-                if(mModelMutex.tryLock())
+                if(containsTransfersToCancel > START_THRESHOLD_THREAD)
                 {
-                    processStartTransfers(mTransfersToProcess.startTransfersByTag);
-                    processUpdateTransfers();
-                    updateTransfersCount();
+                    setStartingMode(true);
 
-                    mModelMutex.unlock();
-                }});
+                    QtConcurrent::run([this](){
+                        //Do not add new transfers while items are being cancelled
+                        if(mModelMutex.tryLock())
+                        {
+                            blockSignals(true);
+                            processStartTransfers(mTransfersToProcess.startTransfersByTag);
+                            processUpdateTransfers();
+                            blockSignals(false);
+
+                            updateTransfersCount();
+
+                            mModelMutex.unlock();
+                        }});
+                }
+                else
+                {
+                    if(mModelMutex.tryLock())
+                    {
+                        emit uiThreadProcessing(true);
+                        processStartTransfers(mTransfersToProcess.startTransfersByTag);
+                        processUpdateTransfers();
+                        emit uiThreadProcessing(false);
+                        updateTransfersCount();
+
+                        mModelMutex.unlock();
+                    }
+                }
             }
             else if(containsTransfersToUpdate > 0)
             {
+                if(isStartingModeActive())
+                {
+                    setStartingMode(false);
+                }
+
                 if(mModelMutex.tryLock())
                 {
                     processUpdateTransfers();
                     updateTransfersCount();
 
                     mModelMutex.unlock();
+                }
+            }
+            else
+            {
+                if(isStartingModeActive())
+                {
+                    setStartingMode(false);
                 }
             }
         }
@@ -590,6 +639,11 @@ void TransfersModel::onProcessTransfers()
         if(isFailingModeActive())
         {
             setFailingMode(false);
+        }
+
+        if(isStartingModeActive())
+        {
+            setStartingMode(false);
         }
     }
 }
@@ -708,8 +762,10 @@ void TransfersModel::processFailedTransfers()
     }
 }
 
-void TransfersModel::processCancelTransfers()
+QSet<int> TransfersModel::processCancelTransfers()
 {
+    QSet<int> canceledTags;
+
     if(mTransfersToProcess.canceledTransfersByTag.size() > 0)
     {
         QModelIndexList indexesToCancel;
@@ -722,11 +778,15 @@ void TransfersModel::processCancelTransfers()
                 indexesToCancel.append(index(row,0, DEFAULT_IDX));
             }
 
+            canceledTags.insert((*it)->mTag);
+
             mTransfersToProcess.canceledTransfersByTag.erase(it++);
         }
 
         removeRows(indexesToCancel);
     }
+
+    return canceledTags;
 }
 
 void TransfersModel::getLinks(QList<int>& rows)
@@ -1402,10 +1462,15 @@ QExplicitlySharedDataPointer<TransferData> TransfersModel::getTransfer(int row) 
     {
         auto transfer = mTransfers.at(row);
         return transfer;
-
     }
 
     return QExplicitlySharedDataPointer<TransferData>();
+}
+
+QExplicitlySharedDataPointer<TransferData> TransfersModel::getTransferByTag(int tag) const
+{
+    auto row = mTagByOrder.value(tag);
+    return getTransfer(row);
 }
 
 void TransfersModel::removeTransfer(int row)
@@ -1428,7 +1493,7 @@ void TransfersModel::setFailingMode(bool state)
 {
     if(state)
     {
-        if(mFailingMode == 0)
+        if(mFailingMode > 0)
         {
             emit blockUi();
         }
@@ -1441,7 +1506,34 @@ void TransfersModel::setFailingMode(bool state)
 
         if(mFailingMode == 0 && !isCancelingModeActive())
         {
-            emit unblockUi();
+            emit unblockUiAndFilter();
+        }
+    }
+}
+
+bool TransfersModel::isStartingModeActive() const
+{
+    return mStartingMode > 0;
+}
+
+void TransfersModel::setStartingMode(bool state)
+{
+    if(state)
+    {
+        if(mStartingMode > 0)
+        {
+            emit blockUi();
+        }
+
+        mStartingMode = RESET_AFTER_EMPTY_RECEIVES;
+    }
+    else if(!state && mStartingMode != 0)
+    {
+        mStartingMode--;
+
+        if(mStartingMode == 0 && !isStartingModeActive())
+        {
+            emit unblockUiAndFilter();
         }
     }
 }
@@ -1455,7 +1547,7 @@ void TransfersModel::setCancelingMode(bool state)
 {
     if(state)
     {
-        if(mCancelingMode == 0)
+        if(mCancelingMode > 0)
         {
             emit blockUi();
         }
@@ -1473,7 +1565,7 @@ void TransfersModel::setCancelingMode(bool state)
                 clearTransfers(QModelIndexList());
             }
 
-            emit unblockUi();
+            emit unblockUiAndFilter();
         }
     }
 }
@@ -1598,6 +1690,7 @@ void TransfersModel::resetModel()
      mTransfersToProcess.clear();
      mCancelingMode = 0;
      mFailingMode = 0;
+     mStartingMode = 0;
      mTagByOrder.clear();
 
      endResetModel();

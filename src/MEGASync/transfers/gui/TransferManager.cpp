@@ -166,10 +166,6 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
             &TransfersManagerSortFilterProxyModel::searchNumbersChanged,
             this, &TransferManager::refreshSearchStats);
 
-    connect(mUi->wTransfers->getProxyModel(),
-            &TransfersManagerSortFilterProxyModel::searchNumbersChanged,
-            this, &TransferManager::refreshSearchStats);
-
     connect(mUi->wTransfers, &TransfersWidget::pauseResumeVisibleRows,
                 this, &TransferManager::onPauseResumeVisibleRows);
 
@@ -247,6 +243,7 @@ void TransferManager::pauseModel(bool value)
 
 void TransferManager::enterBlockingState()
 {
+    mUi->wTransfers->setScanningWidgetVisible(true);
     enableUserActions(false);
     mTransferScanCancelUi->show();
 }
@@ -255,6 +252,7 @@ void TransferManager::leaveBlockingState()
 {
     enableUserActions(true);
     mTransferScanCancelUi->hide();
+    mUi->wTransfers->setScanningWidgetVisible(false);
 }
 
 void TransferManager::disableCancelling()
@@ -1071,20 +1069,19 @@ void TransferManager::refreshView()
 {
     if (mUi->wTransfers->getCurrentTab() != TransfersWidget::NO_TAB)
     {
-        QWidget* widgetToShow (mUi->wTransfers);
-
         if(mUi->wTransfers->getCurrentTab() != TransfersWidget::SEARCH_TAB)
         {
+            QWidget* widgetToShow (mUi->wTransfers);
             auto countLabel = mNumberLabelsGroup[mUi->wTransfers->getCurrentTab()];
 
             if (countLabel->text().isEmpty())
             {
                 widgetToShow = mTabNoItem[mUi->wTransfers->getCurrentTab()];
             }
-        }
 
-        updateTransferWidget(widgetToShow);
-        checkActionAndMediaVisibility();
+            updateTransferWidget(widgetToShow);
+            checkActionAndMediaVisibility();
+        }
     }
 }
 

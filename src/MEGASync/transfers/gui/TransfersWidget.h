@@ -57,6 +57,7 @@ public:
     void mouseRelease(const QPoint& point);
     void setCurrentTab(TM_TAB);
     TM_TAB getCurrentTab();
+    void setScanningWidgetVisible(bool state);
 
     struct CancelClearButtonInfo
     {
@@ -78,7 +79,7 @@ public:
         QString resumeTooltip;
     };
 
-    void updateHeaderItems();
+    void updateHeaders();
 
     TransfersModel* getModel();
     TransfersManagerSortFilterProxyModel* getProxyModel() {return mProxyModel;}
@@ -97,6 +98,7 @@ protected:
 private slots:
     void onUiBlocked();
     void onUiUnblocked();
+    void onUiUnblockedAndFilter();
     void onModelChanged();
     void onModelAboutToBeChanged();
     void onPauseResumeTransfer(bool pause);
@@ -126,6 +128,7 @@ private:
     void configureTransferView();
     void clearOrCancel(const QList<QExplicitlySharedDataPointer<TransferData>>& pool, int state, int firstRow);
     void updateTimersState();
+    void updateHeaderItems();
 
     QTimer mCheckPauseResumeButtonTimer;
     QTimer mCheckCancelClearButtonTimer;
