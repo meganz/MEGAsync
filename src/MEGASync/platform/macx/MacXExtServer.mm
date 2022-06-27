@@ -50,8 +50,8 @@ void MacXExtServer::acceptConnection()
             continue;
         }
 
-        connect(client, SIGNAL(dataReady()), this, SLOT(onClientData()));
-        connect(client, SIGNAL(disconnected()), this, SLOT(onClientDisconnected()));
+        connect(client, &MacXLocalSocket::dataReady, this, &MacXExtServer::onClientData);
+        connect(client, &MacXLocalSocket::disconnected, this, &MacXExtServer::onClientDisconnected);
         m_clients.append(client);
 
         // send the list of current synced folders to the new client

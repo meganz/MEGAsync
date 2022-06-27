@@ -221,7 +221,11 @@ string getDistroVersion()
         {
             #if defined(__APPLE__)
                 ucontext_t* uc = (ucontext_t*) secret;
-                pnt = (void *)uc->uc_mcontext->__ss.__rip;
+                #if defined(__arm64__)
+                    pnt = (void *)uc->uc_mcontext->__ss.__pc;
+                #else
+                    pnt = (void *)uc->uc_mcontext->__ss.__rip;
+                #endif
             #elif defined(__x86_64__)
                 ucontext_t* uc = (ucontext_t*) secret;
                 pnt = (void*) uc->uc_mcontext.gregs[REG_RIP] ;

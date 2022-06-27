@@ -20,13 +20,11 @@ public:
     MegaTransferView(QWidget* parent = 0);
     void setup();
     void setup(TransfersWidget* tw);
-    void disableGetLink(bool disable);
-    void disableContextMenus(bool option);
+    void enableContextMenu();
 
     void onPauseResumeVisibleRows(bool isPaused);
     bool onCancelAllTransfers();
     void onClearAllTransfers();
-    bool onCancelAndClearAllTransfers();
     void onCancelAndClearVisibleTransfers();
 
     int getVerticalScrollBarWidth() const;
@@ -37,13 +35,13 @@ public:
 public slots:
     void onPauseResumeSelection(bool pauseState);
     void onCancelVisibleTransfers();
-    void onCancelClearSelectedTransfers();
-    void onClearCompletedVisibleTransfers();
+    void onCancelSelectedTransfers();
     void onRetryVisibleTransfers();
     void onCancelClearSelection(bool isClear);
 
 signals:
     void verticalScrollBarVisibilityChanged(bool status);
+    void pauseResumeTransfersByContextMenu(bool pause);
 
 protected:
     virtual void mouseReleaseEvent(QMouseEvent* event) override;
@@ -69,13 +67,14 @@ private slots:
     void clearSelectedClicked();
     void pauseSelectedClicked();
     void resumeSelectedClicked();
+    void onInternalMoveStarted();
+    void onInternalMoveFinished();
 
 private:
     friend class TransferManagerDelegateWidget;
 
 
     bool mDisableLink;
-    bool mDisableMenus;
     bool mKeyNavigation;
 
     TransfersWidget* mParentTransferWidget;
@@ -100,7 +99,6 @@ private:
     void cancelAndClearAllTransfers(bool cancel, bool clear);
 
     QModelIndexList getTransfers(bool onlyVisible, TransferData::TransferStates state = TransferData::TRANSFER_NONE);
-    bool isSingleTransfer(bool onlyVisible, TransferData::TransferStates state = TransferData::TRANSFER_NONE);
     QModelIndexList getSelectedTransfers();
     bool isSingleSelectedTransfers();
 };

@@ -45,17 +45,17 @@ void InfoDialog::pauseResumeClicked()
 
 void InfoDialog::generalAreaClicked()
 {
-    app->transferManagerActionClicked(TransferManager::ALL_TRANSFERS_TAB);
+    app->transferManagerActionClicked(TransfersWidget::ALL_TRANSFERS_TAB);
 }
 
 void InfoDialog::dlAreaClicked()
 {
-    app->transferManagerActionClicked(TransferManager::DOWNLOADS_TAB);
+    app->transferManagerActionClicked(TransfersWidget::DOWNLOADS_TAB);
 }
 
 void InfoDialog::upAreaClicked()
 {
-    app->transferManagerActionClicked(TransferManager::UPLOADS_TAB);
+    app->transferManagerActionClicked(TransfersWidget::UPLOADS_TAB);
 }
 
 void InfoDialog::pauseResumeHovered(QMouseEvent *event)

@@ -3,7 +3,6 @@
 
 #include <QWidget>
 #include "MegaTransferDelegate.h"
-#include "TransfersStateInfoWidget.h"
 #include "TransfersManagerSortFilterProxyModel.h"
 #include "MegaDelegateHoverManager.h"
 #include "TransferManagerLoadingItem.h"
@@ -25,12 +24,29 @@ class TransfersWidget : public QWidget
     Q_OBJECT
 
 public:
+    enum TM_TAB
+    {
+        NO_TAB            = -1,
+        ALL_TRANSFERS_TAB = 0,
+        DOWNLOADS_TAB     = 1,
+        UPLOADS_TAB       = 2,
+        COMPLETED_TAB     = 3,
+        FAILED_TAB        = 4,
+        SEARCH_TAB        = 5,
+        TYPES_TAB_BASE    = 6,
+        TYPE_OTHER_TAB    = TYPES_TAB_BASE + toInt(Utilities::FileType::TYPE_OTHER),
+        TYPE_AUDIO_TAB    = TYPES_TAB_BASE + toInt(Utilities::FileType::TYPE_AUDIO),
+        TYPE_VIDEO_TAB    = TYPES_TAB_BASE + toInt(Utilities::FileType::TYPE_VIDEO),
+        TYPE_ARCHIVE_TAB  = TYPES_TAB_BASE + toInt(Utilities::FileType::TYPE_ARCHIVE),
+        TYPE_DOCUMENT_TAB = TYPES_TAB_BASE + toInt(Utilities::FileType::TYPE_DOCUMENT),
+        TYPE_IMAGE_TAB    = TYPES_TAB_BASE + toInt(Utilities::FileType::TYPE_IMAGE),
+        TYPES_LAST
+    };
+    Q_ENUM(TM_TAB)
+
     explicit TransfersWidget(QWidget *parent = 0);
 
     void setupTransfers();
-    void refreshTransferItems();
-    void pausedTransfers(bool paused);
-    void disableGetLink(bool disable);
 
     void textFilterChanged(const QString& pattern);
     void textFilterTypeChanged(const TransferData::TransferTypes transferTypes);
@@ -39,18 +55,30 @@ public:
                         const Utilities::FileTypes fileTypes);
     void transferFilterReset();
     void mouseRelease(const QPoint& point);
+    void setCurrentTab(TM_TAB);
+    TM_TAB getCurrentTab();
+
+    struct CancelClearButtonInfo
+    {
+         bool    visible;
+         bool    clearAction;
+         QString cancelClearTooltip;
+
+         CancelClearButtonInfo():clearAction(false), visible(true){}
+
+         bool isInit(){return !cancelClearTooltip.isEmpty();}
+    };
 
     struct HeaderInfo
     {
         QString headerTime;
-        QString cancelClearTooltip;
-        QString headerSpeed;
 
+        QString headerSpeed;
         QString pauseTooltip;
         QString resumeTooltip;
     };
 
-    void updateHeaderItems(const HeaderInfo& info);
+    void updateHeaderItems();
 
     TransfersModel* getModel();
     TransfersManagerSortFilterProxyModel* getProxyModel() {return mProxyModel;}
@@ -60,23 +88,23 @@ public slots:
     void onHeaderItemClicked(int sortBy, Qt::SortOrder order);
     void on_tPauseResumeVisible_toggled(bool state);
     void on_tCancelClearVisible_clicked();
-    void onPauseStateChanged(bool pauseState);
 
 protected:
     void changeEvent(QEvent *event) override;
+    void hideEvent(QHideEvent *event) override;
+    void showEvent(QShowEvent *event) override;
 
 private slots:
     void onUiBlocked();
     void onUiUnblocked();
     void onModelChanged();
     void onModelAboutToBeChanged();
-    void onPauseResumeButtonCheckedOnDelegate(bool pause);
+    void onPauseResumeTransfer(bool pause);
     void onCancelClearButtonPressedOnDelegate();
     void onRetryButtonPressedOnDelegate();
-    void onCheckCancelButtonVisibility(bool state);
-    void onActiveTransferCounterChanged(bool state);
-    void onPausedTransferCounterChanged(bool state);
     void onVerticalScrollBarVisibilityChanged(bool state);
+    void onCheckPauseResumeButton();
+    void onCheckCancelClearButton();
 
 private:
     Ui::TransfersWidget *ui;
@@ -87,13 +115,20 @@ private:
     MegaDelegateHoverManager mDelegateHoverManager;
     bool mClearMode;
     MegaApplication *app;
+    TM_TAB mCurrentTab;
+    QMap<TransfersWidget::TM_TAB, QString> mTooltipNameByTab;
 
     HeaderInfo mHeaderInfo;
+    CancelClearButtonInfo mCancelClearInfo;
 
     ButtonIconManager mButtonIconManager;
 
     void configureTransferView();
     void clearOrCancel(const QList<QExplicitlySharedDataPointer<TransferData>>& pool, int state, int firstRow);
+    void updateTimersState();
+
+    QTimer mCheckPauseResumeButtonTimer;
+    QTimer mCheckCancelClearButtonTimer;
 
 signals:
     void clearTransfers(int firstRow, int amount);
@@ -102,6 +137,7 @@ signals:
     void pauseResumeVisibleRows(bool state);
     void transferPauseResumeStateChanged(bool isPaused);
     void cancelClearVisibleRows();
+    void changeToAllTransfersTab();
 
     void disableTransferManager(bool);
 

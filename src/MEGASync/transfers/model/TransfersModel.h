@@ -26,6 +26,9 @@ struct TransfersCount
     int failedUploads;
     int failedDownloads;
 
+    int failedSyncUploads;
+    int failedSyncDownloads;
+
     long long completedUploadBytes;
     long long completedDownloadBytes;
 
@@ -42,14 +45,18 @@ struct TransfersCount
         pendingDownloads(0),
         failedUploads(0),
         failedDownloads(0),
+        failedSyncUploads(0),
+        failedSyncDownloads(0),
         completedUploadBytes(0),
         completedDownloadBytes(0),
         totalUploadBytes(0),
         totalDownloadBytes(0)
     {}
 
-    int completedDownloads(){return totalDownloads - pendingDownloads - failedDownloads;}
-    int completedUploads(){return totalUploads - pendingUploads - failedUploads;}
+    int completedDownloads()const {return totalDownloads - pendingDownloads - failedDownloads;}
+    int completedUploads() const {return totalUploads - pendingUploads - failedUploads;}
+
+    long long totalFailedTransfers() const {return failedUploads + failedSyncUploads + failedDownloads + failedSyncDownloads;}
 
     void clear()
     {
@@ -150,10 +157,10 @@ public:
     virtual Qt::ItemFlags flags(const QModelIndex& index) const;
     virtual Qt::DropActions supportedDropActions() const;
     virtual QMimeData* mimeData(const QModelIndexList& indexes) const;
-    virtual bool dropMimeData(const QMimeData* data, Qt::DropAction action, int destRow,
+    bool dropMimeData(const QMimeData* data, Qt::DropAction action, int destRow,
                                                 int column, const QModelIndex& parent);
     bool hasChildren(const QModelIndex& parent) const;
-    int rowCount(const QModelIndex& parent) const;
+    int rowCount(const QModelIndex& parent = QModelIndex()) const;
     int columnCount(const QModelIndex& parent = QModelIndex()) const;
     QVariant data(const QModelIndex& index, int role) const;
     QModelIndex parent(const QModelIndex& index) const;
@@ -172,6 +179,8 @@ public:
     void retryTransfers(QModelIndexList indexes);
     void setResetMode();
     void cancelTransfers(const QModelIndexList& indexes, QWidget *canceledFrom);
+    void cancelAllTransfers(QWidget *canceledFrom);
+    void clearAllTransfers();
     void clearTransfers(const QModelIndexList& indexes);
     void clearTransfers(const QMap<QModelIndex,QExplicitlySharedDataPointer<TransferData>> uploads,
                         const QMap<QModelIndex,QExplicitlySharedDataPointer<TransferData>> downloads);
@@ -206,6 +215,8 @@ signals:
     void unblockUi();
     void modelProcessingFinished();
     void transferFinished(const QModelIndex& index);
+    void internalMoveStarted() const;
+    void internalMoveFinished() const;
 
 public slots:
     void pauseResumeAllTransfers(bool state);

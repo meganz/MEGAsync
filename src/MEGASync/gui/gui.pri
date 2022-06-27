@@ -9,6 +9,7 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/BlurredShadowEffect.cpp \
     $$PWD/ButtonIconManager.cpp \
     $$PWD/MegaItemDelegates.cpp \
+    $$PWD/FileFolderNameSetterDialog.cpp \
     $$PWD/EventHelper.cpp \
     $$PWD/InfoDialog.cpp \
     $$PWD/MegaDelegateHoverManager.cpp \
@@ -88,6 +89,7 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/ButtonIconManager.h \
     $$PWD/DialogGeometryRetainer.h \
     $$PWD/MegaItemDelegates.h \
+    $$PWD/FileFolderNameSetterDialog.h \
     $$PWD/EventHelper.h \
     $$PWD/InfoDialog.h \
     $$PWD/MegaDelegateHoverManager.h \
@@ -205,10 +207,9 @@ win32 {
                 $$PWD/win/BandwidthSettings.ui \
                 $$PWD/win/BackupsWizard.ui \
                 $$PWD/win/BackupSetupSuccessDialog.ui \
-                $$PWD/win/NewFolderDialog.ui \
-                $$PWD/win/NotificationsSettings.ui \
                 $$PWD/win/ScanningWidget.ui \
                 $$PWD/win/CancelConfirmWidget.ui \
+                $$PWD/win/FileFolderNameSetterDialog.ui \
                 $$PWD/win/NotificationsSettings.ui \
                 $$PWD/win/AddBackupDialog.ui \
                 $$PWD/win/RemoveBackupDialog.ui
@@ -258,10 +259,9 @@ macx {
                 $$PWD/macx/BandwidthSettings.ui \
                 $$PWD/macx/BackupsWizard.ui \
                 $$PWD/macx/BackupSetupSuccessDialog.ui \
-                $$PWD/macx/NewFolderDialog.ui \
-                $$PWD/macx/NotificationsSettings.ui \
                 $$PWD/macx/ScanningWidget.ui \
                 $$PWD/macx/CancelConfirmWidget.ui \
+                $$PWD/macx/FileFolderNameSetterDialog.ui \
                 $$PWD/macx/AddBackupDialog.ui \
                 $$PWD/macx/RemoveBackupDialog.ui
 
@@ -332,10 +332,10 @@ unix:!macx {
                 $$PWD/linux/OverQuotaDialog.ui \
                 $$PWD/linux/ProxySettings.ui \
                 $$PWD/linux/BandwidthSettings.ui \
-                $$PWD/linux/NewFolderDialog.ui \
-                $$PWD/linux/NotificationsSettings.ui \
                 $$PWD/linux/CancelConfirmWidget.ui \
                 $$PWD/linux/ScanningWidget.ui \
+                $$PWD/linux/FileFolderNameSetterDialog.ui \
+                $$PWD/linux/NotificationsSettings.ui \
                 $$PWD/linux/BackupSetupSuccessDialog.ui \
                 $$PWD/linux/AddBackupDialog.ui \
                 $$PWD/linux/RemoveBackupDialog.ui

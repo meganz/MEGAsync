@@ -37,22 +37,20 @@ public:
 
         int  getPausedTransfers() const;
         bool areAllPaused() const;
-        bool isAnyPaused() const;
-        bool isAnyCancelable() const;
         bool isAnyActive() const;
         bool areAllActive() const;
+        bool areAllSync() const;
+        bool areAllCompleted() const;
+        bool isAnyCompleted() const;
 
         bool isModelProcessing() const;
 signals:
         void modelAboutToBeChanged();
         void modelChanged();
         void searchNumbersChanged();
-        void transferPauseResume(bool);
+        void pauseResumeTransfer(bool);
         void transferRetry();
         void transferCancelClear();
-        void cancelableTransfersChanged(bool) const;
-        void activeTransfersChanged(bool) const;
-        void pausedTransfersChanged(bool) const;
 
 protected slots:
         void onCancelClearTransfer();

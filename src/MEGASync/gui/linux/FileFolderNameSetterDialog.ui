@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>NewFolderDialog</class>
- <widget class="QDialog" name="NewFolderDialog">
+ <class>FileFolderNameSetterDialog</class>
+ <widget class="QDialog" name="FileFolderNameSetterDialog">
   <property name="windowTitle">
    <string>New folder</string>
   </property>

@@ -9,6 +9,7 @@
 #include "TransferItem.h"
 #include "TransfersModel.h"
 #include "TransferQuota.h"
+#include "TransfersWidget.h"
 #include "StatusInfo.h"
 #include "ButtonIconManager.h"
 
@@ -34,29 +35,8 @@ class TransferManager : public QDialog
     Q_OBJECT
 
 public:
-    enum TM_TAB
-    {
-        NO_TAB            = -1,
-        ALL_TRANSFERS_TAB = 0,
-        DOWNLOADS_TAB     = 1,
-        UPLOADS_TAB       = 2,
-        COMPLETED_TAB     = 3,
-        FAILED_TAB        = 4,
-        SEARCH_TAB        = 5,
-        TYPES_TAB_BASE    = 6,
-        TYPE_OTHER_TAB    = TYPES_TAB_BASE + toInt(Utilities::FileType::TYPE_OTHER),
-        TYPE_AUDIO_TAB    = TYPES_TAB_BASE + toInt(Utilities::FileType::TYPE_AUDIO),
-        TYPE_VIDEO_TAB    = TYPES_TAB_BASE + toInt(Utilities::FileType::TYPE_VIDEO),
-        TYPE_ARCHIVE_TAB  = TYPES_TAB_BASE + toInt(Utilities::FileType::TYPE_ARCHIVE),
-        TYPE_DOCUMENT_TAB = TYPES_TAB_BASE + toInt(Utilities::FileType::TYPE_DOCUMENT),
-        TYPE_IMAGE_TAB    = TYPES_TAB_BASE + toInt(Utilities::FileType::TYPE_IMAGE),
-        TYPES_LAST
-    };
-    Q_ENUM(TM_TAB)
-
     explicit TransferManager(mega::MegaApi *megaApi, QWidget *parent = 0);
     void setActiveTab(int t);
-    void disableGetLink(bool disable);
     ~TransferManager();
 
     void pauseModel(bool state);
@@ -75,7 +55,6 @@ signals:
     void completedTransfersTabActive(bool);
     void userActivity();
     void showCompleted(bool showCompleted);
-    void clearCompletedTransfers();
     void cancelScanning();
     void retryAllTransfers();
     void aboutToClose();
@@ -101,17 +80,15 @@ private:
 
     std::shared_ptr<Preferences> mPreferences;
     QPoint mDragPosition;
-    QMap<TM_TAB, QFrame*> mTabFramesToggleGroup;
-    QMap<TM_TAB, QLabel*> mNumberLabelsGroup;
-    QMap<TM_TAB, QWidget*> mTabNoItem;
-    QMap<TM_TAB, QString> mTooltipNameByTab;
+    QMap<TransfersWidget::TM_TAB, QFrame*> mTabFramesToggleGroup;
+    QMap<TransfersWidget::TM_TAB, QLabel*> mNumberLabelsGroup;
+    QMap<TransfersWidget::TM_TAB, QWidget*> mTabNoItem;
 
     TransfersModel* mModel;
     TransfersCount mTransfersCount;
 
     bool mSearchFieldReturnPressed;
 
-    TM_TAB mCurrentTab;
     QGraphicsDropShadowEffect* mShadowTab;
     QSet<Utilities::FileType> mFileTypesFilter;
     QTimer* mSpeedRefreshTimer;
@@ -126,14 +103,14 @@ private:
 
     ButtonIconManager mButtonIconManager;
 
-    void toggleTab(TM_TAB newTab);
+    void toggleTab(TransfersWidget::TM_TAB newTab);
     void refreshStateStats();
     void refreshTypeStats();
     void refreshFileTypesStats();
     void applyTextSearch(const QString& text);
     void enableUserActions(bool enabled);
     void checkActionAndMediaVisibility();
-    void onFileTypeButtonClicked(TM_TAB tab, Utilities::FileType fileType, const QString& tabLabel);
+    void onFileTypeButtonClicked(TransfersWidget::TM_TAB tab, Utilities::FileType fileType, const QString& tabLabel);
     void checkPauseButtonVisibilityIfPossible();
 
 private slots:
@@ -160,8 +137,7 @@ private slots:
     void on_tCogWheel_clicked();
     void on_bDownload_clicked();
     void on_bUpload_clicked();
-    void on_bCancelClearAll_clicked();
-    void onCancelAllClicked();
+    void on_bCancelAll_clicked();
     void on_leSearchField_returnPressed();
 
     void on_bArchives_clicked();
@@ -175,7 +151,6 @@ private slots:
     void onPauseStateChangedByTransferResume();
     void onPauseResumeVisibleRows(bool isPaused);
     void showQuotaStorageDialogs(bool isPaused);
-    void onCancelVisibleRows();
 
     void onTransfersDataUpdated();
     void refreshSearchStats();

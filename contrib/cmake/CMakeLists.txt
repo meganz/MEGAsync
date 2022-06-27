@@ -1,4 +1,3 @@
-
 cmake_minimum_required(VERSION 3.15)
 cmake_policy(SET CMP0091 NEW)
 
@@ -6,11 +5,29 @@ set(MEGA_PROJECT_NAME "MEGAsync-desktop-" CACHE STRING "Project name, SDK will d
 set(CMAKE_VERBOSE_MAKEFILE TRUE CACHE BOOL "Verbose output")
 
 #add a target to have all files within qtcreator projects view
-FILE(GLOB_RECURSE ui_files "${RepoDir}/src/MEGASync/gui/*.h" "${RepoDir}/src/MEGASync/gui/*/*.ui" "${RepoDir}/src/MEGASync/transfers/gui/*/*.ui" "${RepoDir}/src/MEGASync/gui/*.qrc")
+FILE(GLOB_RECURSE ui_files "${RepoDir}/src/MEGASync/gui/*.h" "${RepoDir}/src/MEGASync/gui/*/*.ui" "${RepoDir}/src/MEGASync/gui/*.qrc")
 add_custom_target(ui_assets SOURCES ${ui_files})
 
 if(CMAKE_HOST_APPLE)
-    set(CMAKE_OSX_DEPLOYMENT_TARGET "10.12" CACHE STRING "Minimum OS X deployment version")
+
+    # Minimum deployment target differs if we are building for intel or arm64 targets
+    # CMAKE_SYSTEM_PROCESSOR and CMAKE_HOST_SYSTEM_PROCESSOR are only available after project()
+    execute_process(
+        COMMAND uname -m
+        OUTPUT_VARIABLE HOST_ARCHITECTURE
+        OUTPUT_STRIP_TRAILING_WHITESPACE)
+
+    # Setup CMAKE_OSX_DEPLOYMENT_TARGET before project()
+    if(CMAKE_OSX_ARCHITECTURES STREQUAL "arm64" OR (NOT CMAKE_OSX_ARCHITECTURES AND HOST_ARCHITECTURE STREQUAL "arm64"))
+        set(CMAKE_OSX_DEPLOYMENT_TARGET "11.1" CACHE STRING "Minimum OS X deployment version")
+    else()
+        set(CMAKE_OSX_DEPLOYMENT_TARGET "10.12" CACHE STRING "Minimum OS X deployment version")
+    endif()
+
+    message(STATUS "Minimum OS X deployment version is set to ${CMAKE_OSX_DEPLOYMENT_TARGET}")
+
+    unset(HOST_ARCHITECTURE)
+
 endif()
 
 PROJECT(${MEGA_PROJECT_NAME})
@@ -161,7 +178,7 @@ set (FORMS
     ${MEGAsyncDir}/gui/${UiDir}/OverQuotaDialog.ui
     ${MEGAsyncDir}/gui/${UiDir}/ProxySettings.ui
     ${MEGAsyncDir}/gui/${UiDir}/BandwidthSettings.ui
-    ${MEGAsyncDir}/gui/${UiDir}/NewFolderDialog.ui
+    ${MEGAsyncDir}/gui/${UiDir}/FileFolderNameSetterDialog.ui
     ${MEGAsyncDir}/gui/${UiDir}/ScanningWidget.ui
     ${MEGAsyncDir}/gui/${UiDir}/CancelConfirmWidget.ui
     ${MEGAsyncDir}/gui/${UiDir}/BackupsWizard.ui
@@ -174,7 +191,6 @@ set (FORMS
     ${MEGAsyncDir}/transfers/gui/${UiDir}/TransferManager.ui
     ${MEGAsyncDir}/transfers/gui/${UiDir}/TransferManagerDragBackDrop.ui
     ${MEGAsyncDir}/transfers/gui/${UiDir}/TransfersWidget.ui
-    ${MEGAsyncDir}/transfers/gui/${UiDir}/TransfersStateInfoWidget.ui
     ${MEGAsyncDir}/transfers/gui/${UiDir}/TransfersStatusWidget.ui
     ${MEGAsyncDir}/transfers/gui/${UiDir}/TransfersSummaryWidget.ui
     ${MEGAsyncDir}/transfers/gui/${UiDir}/TransferManagerDelegateWidget.ui
@@ -219,14 +235,9 @@ set (MOC_INPUT
     ${MEGAsyncDir}/control/UpdateTask.h
     ${MEGAsyncDir}/control/ThreadPool.h
     ${MEGAsyncDir}/control/MegaController.h
-    ${MEGAsyncDir}/control/TransferBatch.h
     ${MEGAsyncDir}/control/SyncController.h    
     ${MEGAsyncDir}/control/UserAttributesManager.h
     ${MEGAsyncDir}/model/SyncSettings.h
-    ${MEGAsyncDir}/transfers/model/TransfersManagerSortFilterProxyModel.h
-    ${MEGAsyncDir}/transfers/model/TransfersSortFilterProxyBaseModel.h
-    ${MEGAsyncDir}/transfers/model/TransfersModel.h
-    ${MEGAsyncDir}/transfers/model/InfoDialogTransfersProxyModel.h
     ${MEGAsyncDir}/model/SyncModel.h
     ${MEGAsyncDir}/gui/AlertItem.h
     ${MEGAsyncDir}/gui/AlertFilterType.h
@@ -268,8 +279,6 @@ set (MOC_INPUT
     ${MEGAsyncDir}/gui/QAlertsModel.h
     ${MEGAsyncDir}/gui/MegaItemModel.h
     ${MEGAsyncDir}/gui/SettingsDialog.h
-    ${MEGAsyncDir}/gui/NotificationsSettings.h
-    ${MEGAsyncDir}/gui/CancelConfirmWidget.h	
     ${MEGAsyncDir}/gui/SetupWizard.h
     ${MEGAsyncDir}/gui/NotificationsSettings.h
     ${MEGAsyncDir}/gui/StatusInfo.h
@@ -305,15 +314,24 @@ set (MOC_INPUT
     ${MEGAsyncDir}/gui/BlurredShadowEffect.h
     ${MEGAsyncDir}/gui/ButtonIconManager.h
     ${MEGAsyncDir}/gui/DialogGeometryRetainer.h
+    ${MEGAsyncDir}/gui/FileFolderNameSetterDialog.h
+    ${MEGAsyncDir}/gui/CancelConfirmWidget.h	
+
     ${MEGAsyncDir}/platform/notificator.h
+    
     ${MEGAsyncDir}/mega/bindings/qt/QTMegaGlobalListener.h
     ${MEGAsyncDir}/mega/bindings/qt/QTMegaListener.h
     ${MEGAsyncDir}/mega/bindings/qt/QTMegaRequestListener.h
     ${MEGAsyncDir}/mega/bindings/qt/QTMegaTransferListener.h
-
+    
+    ${MEGAsyncDir}/control/TransferBatch.h    
+    
+    ${MEGAsyncDir}/transfers/model/TransfersManagerSortFilterProxyModel.h
+    ${MEGAsyncDir}/transfers/model/TransfersSortFilterProxyBaseModel.h
+    ${MEGAsyncDir}/transfers/model/TransfersModel.h
+    ${MEGAsyncDir}/transfers/model/InfoDialogTransfersProxyModel.h
     ${MEGAsyncDir}/transfers/gui/TransferItem.h
     ${MEGAsyncDir}/transfers/gui/TransferManager.h
-    ${MEGAsyncDir}/transfers/gui/TransfersStateInfoWidget.h
     ${MEGAsyncDir}/transfers/gui/TransfersWidget.h
     ${MEGAsyncDir}/transfers/gui/TransfersStatusWidget.h
     ${MEGAsyncDir}/transfers/gui/TransfersSummaryWidget.h
@@ -386,14 +404,6 @@ set (SRCS
     ${MEGAsyncDir}/ScaleFactorManager.cpp
     ${MEGAsyncDir}/CommonMessages.cpp
     ${MEGAsyncDir}/ScanStageController.cpp
-    ${MEGAsyncDir}/transfers/model/TransfersManagerSortFilterProxyModel.cpp
-    ${MEGAsyncDir}/transfers/model/TransfersModel.cpp
-    ${MEGAsyncDir}/transfers/model/InfoDialogTransfersProxyModel.cpp
-    ${MEGAsyncDir}/transfers/gui/TransferBaseDelegateWidget.cpp
-    ${MEGAsyncDir}/transfers/gui/InfoDialogTransferDelegateWidget.cpp
-    ${MEGAsyncDir}/transfers/gui/TransferManagerDelegateWidget.cpp
-    ${MEGAsyncDir}/gui/MegaDelegateHoverManager.cpp
-    ${MEGAsyncDir}/transfers/gui/TransferManagerLoadingItem.cpp
 
     ${FORMS}
     ${MOC_INPUT}
@@ -405,10 +415,10 @@ set (SRCS
     ${MEGAsyncDir}/gui/CircularUsageProgressBar.cpp
     ${MEGAsyncDir}/gui/FilterAlertWidget.cpp
     ${MEGAsyncDir}/gui/MegaAlertDelegate.cpp
+    ${MEGAsyncDir}/gui/NotificationsSettings.cpp
     ${MEGAsyncDir}/gui/QAlertsModel.cpp
     ${MEGAsyncDir}/gui/QFilterAlertsModel.cpp
     ${MEGAsyncDir}/gui/SettingsDialog.cpp
-    ${MEGAsyncDir}/gui/NotificationsSettings.cpp
     ${MEGAsyncDir}/gui/BalloonToolTip.cpp
     ${MEGAsyncDir}/gui/InfoDialog.cpp
     ${MEGAsyncDir}/gui/QtPositioningBugFixer.cpp
@@ -460,10 +470,17 @@ set (SRCS
     ${MEGAsyncDir}/gui/GuiUtilities.cpp
     ${MEGAsyncDir}/gui/UserAttributesRequests.cpp
     ${MEGAsyncDir}/gui/ButtonIconManager.cpp
+    ${MEGAsyncDir}/gui/EventHelper.cpp
+    ${MEGAsyncDir}/gui/GuiUtilities.cpp
+    ${MEGAsyncDir}/gui/ScanningWidget.cpp
+    ${MEGAsyncDir}/gui/BlurredShadowEffect.cpp
+    ${MEGAsyncDir}/gui/CancelConfirmWidget.cpp
+    ${MEGAsyncDir}/gui/MegaDelegateHoverManager.cpp
+    ${MEGAsyncDir}/gui/FileFolderNameSetterDialog.cpp
+
     ${MEGAsyncDir}/transfers/gui/TransfersStatusWidget.cpp
     ${MEGAsyncDir}/transfers/gui/TransferItem.cpp
     ${MEGAsyncDir}/transfers/gui/InfoDialogTransfersWidget.cpp
-    ${MEGAsyncDir}/transfers/gui/TransfersStateInfoWidget.cpp
     ${MEGAsyncDir}/transfers/gui/TransferManager.cpp
     ${MEGAsyncDir}/transfers/gui/TransfersWidget.cpp
     ${MEGAsyncDir}/transfers/gui/MegaTransferDelegate.cpp
@@ -472,11 +489,13 @@ set (SRCS
     ${MEGAsyncDir}/transfers/gui/TransfersSummaryWidget.cpp
     ${MEGAsyncDir}/transfers/gui/TransferWidgetHeaderItem.cpp
     ${MEGAsyncDir}/transfers/gui/TransferScanCancelUi.cpp
-    ${MEGAsyncDir}/gui/EventHelper.cpp
-    ${MEGAsyncDir}/gui/GuiUtilities.cpp
-    ${MEGAsyncDir}/gui/ScanningWidget.cpp
-    ${MEGAsyncDir}/gui/BlurredShadowEffect.cpp
-    ${MEGAsyncDir}/gui/CancelConfirmWidget.cpp
+    ${MEGAsyncDir}/transfers/gui/TransferManagerLoadingItem.cpp
+    ${MEGAsyncDir}/transfers/model/TransfersManagerSortFilterProxyModel.cpp
+    ${MEGAsyncDir}/transfers/model/TransfersModel.cpp
+    ${MEGAsyncDir}/transfers/model/InfoDialogTransfersProxyModel.cpp
+    ${MEGAsyncDir}/transfers/gui/TransferBaseDelegateWidget.cpp
+    ${MEGAsyncDir}/transfers/gui/InfoDialogTransferDelegateWidget.cpp
+    ${MEGAsyncDir}/transfers/gui/TransferManagerDelegateWidget.cpp
 
     ${MEGAsyncDir}/mega/bindings/qt/QTMegaRequestListener.cpp
     ${MEGAsyncDir}/mega/bindings/qt/QTMegaTransferListener.cpp
@@ -502,6 +521,7 @@ set (SRCS
     ${MEGAsyncDir}/control/TransferBatch.cpp
     ${MEGAsyncDir}/control/SyncController.cpp    
     ${MEGAsyncDir}/control/UserAttributesManager.cpp
+
     ${MEGAsyncDir}/model/SyncSettings.cpp
     ${MEGAsyncDir}/model/SyncModel.cpp
     ${MEGAsyncDir}/gui/BackupItemModel.cpp
@@ -513,6 +533,7 @@ set (SRCS
     ${MEGAsyncDir}/gui/AddBackupDialog.cpp
     ${MEGAsyncDir}/gui/RemoveBackupDialog.cpp
     ${MEGAsyncDir}/platform/notificator.cpp
+
     ${MEGAsyncDir}/qtlockedfile/qtlockedfile.cpp
 )
 
@@ -739,13 +760,6 @@ if (CMAKE_HOST_APPLE)
             COMMAND echo "APPL????" > \"$<TARGET_FILE_DIR:MEGAsync>/../PkgInfo\"
             COMMENT "Adding PkgInfo file to app bundle..."
             )
-			
-    add_custom_command(
-            TARGET MEGAsync
-            POST_BUILD
-            COMMAND /usr/libexec/PlistBuddy -c \"Set :CFBundleShortVersionString ${MEGASYNC_VERSION}\" \"$<TARGET_FILE_DIR:MEGAsync>/../Info.plist\"
-            COMMENT "Setting version to Info.plist..."
-            )
 
     execute_process(
         COMMAND bash "-c" "grep \"const QString Preferences::VERSION_STRING\" ${MEGAsyncDir}/control/Preferences.cpp | awk -F '\"' '{print $2}'"
@@ -753,7 +767,12 @@ if (CMAKE_HOST_APPLE)
         OUTPUT_STRIP_TRAILING_WHITESPACE)
 
     message("MEGAsync version = ${MEGASYNC_VERSION}")
-    #set_target_properties(MEGAsync PROPERTIES MACOSX_BUNDLE_SHORT_VERSION_STRING "${MEGASYNC_VERSION}")
+    add_custom_command(
+            TARGET MEGAsync
+            POST_BUILD
+            COMMAND /usr/libexec/PlistBuddy -c \"Set :CFBundleShortVersionString ${MEGASYNC_VERSION}\" \"$<TARGET_FILE_DIR:MEGAsync>/../Info.plist\"
+            COMMENT "Setting version to Info.plist..."
+            )
 endif()
 
 set(FULLREQUIREMENTS TRUE CACHE BOOL "Verbose output")
@@ -860,11 +879,4 @@ target_link_libraries(MEGASync_unit_tests
     ${TARGET_LINK_LIBRARIES_PLATFORM}
     )
 
-target_include_directories(MEGASync_unit_tests PRIVATE
-                                               ${MEGAsyncDir}
-                                               ${MEGAsyncDir}/transfers
-                                               ${MEGAsyncDir}/transfers/gui
-                                               ${MEGAsyncDir}/transfers/model
-                                               ${MEGAsyncDir}/google_breakpad
-                                               )
-#target_compile_features(MEGASync_unit_tests PRIVATE cxx_std_14)
+target_include_directories(MEGASync_unit_tests PRIVATE ${MEGAsyncDir} ${MEGAsyncDir}/google_breakpad )

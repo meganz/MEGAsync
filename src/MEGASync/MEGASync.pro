@@ -12,7 +12,17 @@ win32 {
     contains(QMAKE_TARGET.arch, x86_64):VCPKG_TRIPLET = x64-windows-mega
     !contains(QMAKE_TARGET.arch, x86_64):VCPKG_TRIPLET = x86-windows-mega
 }
-macx:VCPKG_TRIPLET = x64-osx-mega
+
+macx{
+    isEmpty(VCPKG_TRIPLET){
+        contains(QT_ARCH, x86_64):VCPKG_TRIPLET = x64-osx-mega
+        contains(QT_ARCH, arm64):VCPKG_TRIPLET = arm64-osx-mega
+    }
+    contains(VCPKG_TRIPLET, arm64-osx-mega):contains(QMAKE_HOST.arch, arm64):QMAKE_APPLE_DEVICE_ARCHS=arm64
+
+    message("Building for macOS $$QT_ARCH in a $$QMAKE_HOST.arch host.")
+}
+
 unix:!macx:VCPKG_TRIPLET = x64-linux
 
 message("THIRDPARTY_VCPKG_BASE_PATH: $$THIRDPARTY_VCPKG_BASE_PATH")
@@ -195,7 +205,9 @@ macx {
 
     QMAKE_INFO_PLIST = Info_MEGA.plist
 
-    QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.12
+    contains(QT_ARCH, arm64):QMAKE_MACOSX_DEPLOYMENT_TARGET = 11.0
+    else:QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.12
+
     QMAKE_CXXFLAGS += -fvisibility=hidden -fvisibility-inlines-hidden
     QMAKE_LFLAGS += -F /System/Library/Frameworks/Security.framework/
     QMAKE_LFLAGS += -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk

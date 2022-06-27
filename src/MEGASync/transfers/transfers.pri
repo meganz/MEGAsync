@@ -15,7 +15,6 @@ SOURCES += $$PWD/model/TransfersModel.cpp \
            $$PWD/gui/TransferManager.cpp \
            $$PWD/gui/TransferManagerDelegateWidget.cpp \
            $$PWD/gui/TransferManagerLoadingItem.cpp \
-           $$PWD/gui/TransfersStateInfoWidget.cpp \
            $$PWD/gui/TransfersStatusWidget.cpp \
            $$PWD/gui/TransfersSummaryWidget.cpp \
            $$PWD/gui/TransferScanCancelUi.cpp \
@@ -35,7 +34,6 @@ HEADERS += $$PWD/model/InfoDialogTransfersProxyModel.h \
            $$PWD/gui/TransferManager.h \
            $$PWD/gui/TransferManagerDelegateWidget.h \
            $$PWD/gui/TransferManagerLoadingItem.h \
-           $$PWD/gui/TransfersStateInfoWidget.h \
            $$PWD/gui/TransfersStatusWidget.h \
            $$PWD/gui/TransfersSummaryWidget.h \
            $$PWD/gui/TransferScanCancelUi.h \
@@ -49,7 +47,6 @@ win32 {
                 $$PWD/gui/win/TransferManagerDelegateWidget.ui \
                 $$PWD/gui/win/TransferManager.ui \
                 $$PWD/gui/win/TransfersWidget.ui \
-                $$PWD/gui/win/TransfersStateInfoWidget.ui \
                 $$PWD/gui/win/TransferManagerLoadingItem.ui \
                 $$PWD/gui/win/TransferManagerDragBackDrop.ui \
                 $$PWD/gui/win/InfoDialogTransfersWidget.ui \
@@ -65,7 +62,6 @@ macx {
                 $$PWD/gui/macx/TransferManagerDelegateWidget.ui \
                 $$PWD/gui/macx/TransferManager.ui \
                 $$PWD/gui/macx/TransfersWidget.ui \
-                $$PWD/gui/macx/TransfersStateInfoWidget.ui \
                 $$PWD/gui/macx/TransferManagerLoadingItem.ui \
                 $$PWD/gui/macx/TransferManagerDragBackDrop.ui \
                 $$PWD/gui/macx/InfoDialogTransfersWidget.ui \
@@ -81,7 +77,6 @@ unix:!macx {
                 $$PWD/gui/linux/TransferManagerDelegateWidget.ui \
                 $$PWD/gui/linux/TransferManager.ui \
                 $$PWD/gui/linux/TransfersWidget.ui \
-                $$PWD/gui/linux/TransfersStateInfoWidget.ui \
                 $$PWD/gui/linux/TransferManagerLoadingItem.ui \
                 $$PWD/gui/linux/TransferManagerDragBackDrop.ui \
                 $$PWD/gui/linux/InfoDialogTransfersWidget.ui \
