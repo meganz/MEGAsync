@@ -89,7 +89,6 @@ private:
         mutable QMutex mMutex;
         QFutureWatcher<void> mFilterWatcher;
         QString mFilterText;
-        bool mAllowUiThreadProcessing;
 
         void removeActiveTransferFromCounter(TransferTag tag) const;
         void removePausedTransferFromCounter(TransferTag tag) const;

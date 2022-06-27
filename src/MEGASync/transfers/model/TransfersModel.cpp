@@ -573,7 +573,7 @@ void TransfersModel::onProcessTransfers()
 
             if(containsTransfersToStart > 0)
             {
-                if(containsTransfersToCancel > START_THRESHOLD_THREAD)
+                if(containsTransfersToStart > START_THRESHOLD_THREAD)
                 {
                     setStartingMode(true);
 
@@ -595,10 +595,8 @@ void TransfersModel::onProcessTransfers()
                 {
                     if(mModelMutex.tryLock())
                     {
-                        emit uiThreadProcessing(true);
                         processStartTransfers(mTransfersToProcess.startTransfersByTag);
                         processUpdateTransfers();
-                        emit uiThreadProcessing(false);
                         updateTransfersCount();
 
                         mModelMutex.unlock();
@@ -1628,6 +1626,8 @@ bool TransfersModel::removeRows(int row, int count, const QModelIndex& parent)
 bool TransfersModel::moveRows(const QModelIndex &sourceParent, int sourceRow, int count,
                               const QModelIndex &destinationParent, int destinationChild)
 {
+    bool result(false);
+
     //TODO MOVE TO TOP THE SECOND ITEM
     int lastRow (sourceRow + count - 1);
 
@@ -1675,9 +1675,10 @@ bool TransfersModel::moveRows(const QModelIndex &sourceParent, int sourceRow, in
             }
         }
 
-        return true;
+        result = true;
     }
-    return false;
+
+    return result;
 }
 
 void TransfersModel::resetModel()

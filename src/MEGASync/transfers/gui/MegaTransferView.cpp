@@ -705,7 +705,8 @@ void MegaTransferView::onCustomContextMenu(const QPoint& point)
         {
             isTopIndex = true;
         }
-        else if(index.row() == (model()->rowCount() -1))
+
+        if(index.row() == (model()->rowCount() -1))
         {
             isBottomIndex = true;
         }

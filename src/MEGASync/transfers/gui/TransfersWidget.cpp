@@ -91,11 +91,7 @@ void TransfersWidget::configureTransferView()
     tDelegate = new MegaTransferDelegate(mProxyModel, ui->tvTransfers);
     ui->tvTransfers->setup(this);
     ui->tvTransfers->setItemDelegate(tDelegate);
-
-    onCheckPauseResumeButton();
-
     ui->tvTransfers->setModel(mProxyModel);
-
     ui->tvTransfers->setDragEnabled(true);
     ui->tvTransfers->viewport()->setAcceptDrops(true);
     ui->tvTransfers->setDropIndicatorShown(true);
@@ -362,16 +358,17 @@ void TransfersWidget::changeEvent(QEvent *event)
     QWidget::changeEvent(event);
 }
 
-void TransfersWidget::hideEvent(QHideEvent *)
+void TransfersWidget::onDialogHidden()
 {
-    //Do not check buttons while it is closed
+    //Do not check buttons while it is hidden
     mCheckCancelClearButtonTimer.stop();
     mCheckPauseResumeButtonTimer.stop();
 }
 
-void TransfersWidget::showEvent(QShowEvent *)
+void TransfersWidget::onDialogShown()
 {
-    updateHeaders();
+    //Check buttons while it is visible
+    updateTimersState();
 }
 
 void TransfersWidget::setScanningWidgetVisible(bool state)
@@ -385,6 +382,7 @@ void TransfersWidget::setScanningWidgetVisible(bool state)
         emit disableTransferManager(false);
     }
 }
+
 
 void TransfersWidget::onUiBlocked()
 {

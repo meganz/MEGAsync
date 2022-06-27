@@ -220,7 +220,6 @@ signals:
     void internalMoveStarted() const;
     void internalMoveFinished() const;
     void canceledTransfers(QSet<int> tags);
-    void uiThreadProcessing(bool);
 
 public slots:
     void pauseResumeAllTransfers(bool state);

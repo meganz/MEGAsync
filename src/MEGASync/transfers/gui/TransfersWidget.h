@@ -59,6 +59,9 @@ public:
     TM_TAB getCurrentTab();
     void setScanningWidgetVisible(bool state);
 
+    void onDialogHidden();
+    void onDialogShown();
+
     struct CancelClearButtonInfo
     {
          bool    visible;
@@ -92,8 +95,6 @@ public slots:
 
 protected:
     void changeEvent(QEvent *event) override;
-    void hideEvent(QHideEvent *event) override;
-    void showEvent(QShowEvent *event) override;
 
 private slots:
     void onUiBlocked();

@@ -18,8 +18,7 @@ TransfersManagerSortFilterProxyModel::TransfersManagerSortFilterProxyModel(QObje
       mNextTransferTypes (mTransferTypes),
       mNextFileTypes (mFileTypes),
       mSortCriterion (SortCriterion::PRIORITY),
-      mThreadPool (ThreadPoolSingleton::getInstance()),
-      mAllowUiThreadProcessing(false)
+      mThreadPool (ThreadPoolSingleton::getInstance())
 {
     connect(&mFilterWatcher, &QFutureWatcher<void>::finished,
             this, &TransfersManagerSortFilterProxyModel::onModelSortedFiltered);
@@ -69,11 +68,6 @@ void TransfersManagerSortFilterProxyModel::setSourceModel(QAbstractItemModel *so
     {
         connect(transferModel, &TransfersModel::canceledTransfers,
                 this, &TransfersManagerSortFilterProxyModel::onCanceledTransfers);
-        connect(transferModel, &TransfersModel::uiThreadProcessing,
-                this, [this](bool state)
-        {
-            mAllowUiThreadProcessing = state;
-        });
     }
 
     QSortFilterProxyModel::setSourceModel(sourceModel);
@@ -222,11 +216,6 @@ void TransfersManagerSortFilterProxyModel::updateFilters()
 
 bool TransfersManagerSortFilterProxyModel::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const
 {
-    if(!mAllowUiThreadProcessing && (QThread::currentThread() == MegaSyncApp->thread()))
-    {
-        return false;
-    }
-
     QModelIndex index = sourceModel()->index(sourceRow, 0, sourceParent);
 
     const auto d (qvariant_cast<TransferItem>(index.data()).getTransferData());
@@ -429,11 +418,6 @@ void TransfersManagerSortFilterProxyModel::removeCompletedTransferFromCounter(Tr
 
 bool TransfersManagerSortFilterProxyModel::lessThan(const QModelIndex &left, const QModelIndex &right) const
 {
-    if(!mAllowUiThreadProcessing && (QThread::currentThread() == MegaSyncApp->thread()))
-    {
-        return left.row() < right.row();
-    }
-
     const auto leftItem (qvariant_cast<TransferItem>(left.data()).getTransferData());
     const auto rightItem (qvariant_cast<TransferItem>(right.data()).getTransferData());
 
@@ -533,13 +517,7 @@ bool TransfersManagerSortFilterProxyModel::moveRows(const QModelIndex &proxyPare
 {
     bool moveOk(true);
     int row(proxyRow);
-
     auto totalRows(rowCount());
-
-    for(int row = 0; row < totalRows; ++row)
-    {
-        auto sourceIndex(mapToSource(index(row, 0)));
-    }
 
     auto sourceTotalRows(sourceModel()->rowCount());
 
@@ -559,6 +537,7 @@ bool TransfersManagerSortFilterProxyModel::moveRows(const QModelIndex &proxyPare
                                          sourceIndex.parent(), destRow);
         row++;
     }
+
     return moveOk;
 }
 

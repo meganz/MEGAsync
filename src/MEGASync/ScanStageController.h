@@ -20,6 +20,8 @@ public:
     void startDelayedScanStage();
     void stopDelayedScanStage();
 
+    bool isInScanningState() const;
+
 signals:
     void enableTransferActions(bool enable);
 

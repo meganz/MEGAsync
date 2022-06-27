@@ -1181,6 +1181,16 @@ void TransferManager::mouseReleaseEvent(QMouseEvent *event)
     QDialog::mouseReleaseEvent(event);
 }
 
+void TransferManager::showEvent(QShowEvent *)
+{
+    mUi->wTransfers->onDialogShown();
+}
+
+void TransferManager::hideEvent(QHideEvent *)
+{
+    mUi->wTransfers->onDialogHidden();
+}
+
 void TransferManager::setTransferState(const StatusInfo::TRANSFERS_STATES &transferState)
 {
     if(transferState == StatusInfo::TRANSFERS_STATES::STATE_INDEXING)
