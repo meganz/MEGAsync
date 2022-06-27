@@ -95,7 +95,6 @@ void TransfersWidget::configureTransferView()
 
     ui->tvTransfers->setModel(mProxyModel);
     ui->tvTransfers->setItemDelegate(tDelegate);
-    onPauseStateChanged(mProxyModel->isAnyPaused());
     ui->tvTransfers->setDragEnabled(true);
     ui->tvTransfers->viewport()->setAcceptDrops(true);
     ui->tvTransfers->setDropIndicatorShown(true);
