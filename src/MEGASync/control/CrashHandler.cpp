@@ -396,6 +396,11 @@ void CrashHandlerPrivate::InitCrashHandler(const QString& dumpPath)
         sigaction(SIGILL, &sa, NULL);
         sigaction(SIGFPE, &sa, NULL);
         sigaction(SIGABRT, &sa, NULL);
+// sigaction SIGTRAP for arm64 arch on macOS because in some cases such signal is emmited to indicate
+// unhandled exceptions in the program (e.g seg fault)
+#if defined(__APPLE__) && defined(__arm64__)
+        sigaction(SIGTRAP, &sa, NULL);
+#endif
         std::set_new_handler(mega_new_handler);
     #endif
 #endif
