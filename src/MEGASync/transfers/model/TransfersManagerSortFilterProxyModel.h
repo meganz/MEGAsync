@@ -82,7 +82,7 @@ protected:
 private slots:
         void onRowsAboutToBeRemoved(const QModelIndex& parent, int first, int last);
         void onModelSortedFiltered();
-        void onModelUnblockedRequest();
+        bool onCanceledTransfers(QSet<int> tags);
 
 private:
         ThreadPool* mThreadPool;
@@ -94,6 +94,7 @@ private:
         void removePausedTransferFromCounter(TransferTag tag) const;
         void removeNonSyncedTransferFromCounter(TransferTag tag) const;
         void removeCompletedTransferFromCounter(TransferTag tag) const;
+        bool updateTransfersCounterFromTag(QExplicitlySharedDataPointer<TransferData> transfer) const;
 
         void resetAllCounters();
         void resetTransfersStateCounters();

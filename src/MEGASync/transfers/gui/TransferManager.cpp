@@ -170,10 +170,6 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
             &TransfersManagerSortFilterProxyModel::searchNumbersChanged,
             this, &TransferManager::refreshSearchStats);
 
-    connect(mUi->wTransfers->getProxyModel(),
-            &TransfersManagerSortFilterProxyModel::searchNumbersChanged,
-            this, &TransferManager::refreshSearchStats);
-
     connect(mUi->wTransfers, &TransfersWidget::pauseResumeVisibleRows,
                 this, &TransferManager::onPauseResumeVisibleRows);
 
@@ -192,6 +188,8 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
             mUi->leSearchField->setFocus();
             mSearchFieldReturnPressed = false;
         }
+
+        refreshView();
     });
 
     mFoundStalledIssues = MegaSyncApp->getStalledIssuesModel()->hasStalledIssues();
@@ -259,6 +257,7 @@ void TransferManager::pauseModel(bool value)
 
 void TransferManager::enterBlockingState()
 {
+    mUi->wTransfers->setScanningWidgetVisible(true);
     enableUserActions(false);
     mTransferScanCancelUi->show();
 }
@@ -267,6 +266,7 @@ void TransferManager::leaveBlockingState()
 {
     enableUserActions(true);
     mTransferScanCancelUi->hide();
+    mUi->wTransfers->setScanningWidgetVisible(false);
 }
 
 void TransferManager::disableCancelling()
@@ -1051,7 +1051,6 @@ void TransferManager::toggleTab(TransfersWidget::TM_TAB newTab)
             else if(mUi->wTransfers->getCurrentTab() == TransfersWidget::FAILED_TAB)
             {
                 transfers = mTransfersCount.totalFailedTransfers();
-                mUi->tActionButton->setText(tr("Retry all"));
             }
             else
             {
@@ -1095,20 +1094,21 @@ void TransferManager::refreshView()
 {
     if (mUi->wTransfers->getCurrentTab() != TransfersWidget::NO_TAB)
     {
-        QWidget* widgetToShow (mUi->wTransfers);
-
         if(mUi->wTransfers->getCurrentTab() != TransfersWidget::SEARCH_TAB)
         {
-            auto countLabel = mNumberLabelsGroup[mUi->wTransfers->getCurrentTab()];
+            QWidget* widgetToShow (mUi->wTransfers);
 
-            if (countLabel->text().isEmpty())
+            if(!mUi->wTransfers->isLoadingViewSet())
             {
-                widgetToShow = mTabNoItem[mUi->wTransfers->getCurrentTab()];
+                if(mUi->wTransfers->getProxyModel()->rowCount() == 0)
+                {
+                    widgetToShow = mTabNoItem[mUi->wTransfers->getCurrentTab()];
+                }
             }
-        }
 
-        updateTransferWidget(widgetToShow);
-        checkActionAndMediaVisibility();
+            updateTransferWidget(widgetToShow);
+            checkActionAndMediaVisibility();
+        }
     }
 }
 
@@ -1206,6 +1206,16 @@ void TransferManager::mouseReleaseEvent(QMouseEvent *event)
     mUi->wTransfers->mouseRelease(event->globalPos());
 
     QDialog::mouseReleaseEvent(event);
+}
+
+void TransferManager::showEvent(QShowEvent *)
+{
+    mUi->wTransfers->onDialogShown();
+}
+
+void TransferManager::hideEvent(QHideEvent *)
+{
+    mUi->wTransfers->onDialogHidden();
 }
 
 void TransferManager::setTransferState(const StatusInfo::TRANSFERS_STATES &transferState)

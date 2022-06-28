@@ -1239,5 +1239,8 @@
         <file>images/transfer_manager/transfers_actions/lists_minus_ico_hover.png</file>
         <file>images/transfer_manager/transfers_actions/lists_minus_ico_hover@2x.png</file>
         <file>images/transfer_manager/transfers_actions/lists_minus_ico_hover@3x.png</file>
+        <file>images/transfer_manager/transfers_states/download_item_ico.png</file>
+        <file>images/transfer_manager/transfers_states/download_item_ico@2x.png</file>
+        <file>images/transfer_manager/transfers_states/download_item_ico@3x.png</file>
     </qresource>
 </RCC>

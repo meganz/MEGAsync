@@ -22,13 +22,11 @@ void TransferBaseDelegateWidget::updateUi(const QExplicitlySharedDataPointer<Tra
     setType();
     setFileNameAndType();
     updateTransferState();
-
-    mPreviousState = mData->mState;
 }
 
 bool TransferBaseDelegateWidget::stateHasChanged()
 {
-    return (mData && mData->mState != mPreviousState);
+    return (mData && mData->stateHasChanged());
 }
 
 QExplicitlySharedDataPointer<TransferData> TransferBaseDelegateWidget::getData()

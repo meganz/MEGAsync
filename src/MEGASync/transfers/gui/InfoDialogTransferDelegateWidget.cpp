@@ -40,7 +40,7 @@ void InfoDialogTransferDelegateWidget::updateTransferState()
 {
     if(stateHasChanged())
     {
-        if (getData()->mState & (TransferData::TransferState::TRANSFER_COMPLETED
+        if (getData()->getState() & (TransferData::TransferState::TRANSFER_COMPLETED
                                   | TransferData::TransferState::TRANSFER_FAILED))
         {
             mUi->sTransferState->setCurrentWidget(mUi->completedTransfer);
@@ -51,7 +51,7 @@ void InfoDialogTransferDelegateWidget::updateTransferState()
         }
     }
 
-    switch (getData()->mState)
+    switch (getData()->getState())
     {
         case TransferData::TransferState::TRANSFER_COMPLETED:
         case TransferData::TransferState::TRANSFER_FAILED:
@@ -320,7 +320,7 @@ TransferBaseDelegateWidget::ActionHoverType InfoDialogTransferDelegateWidget::mo
 
 bool InfoDialogTransferDelegateWidget::mouseHoverRetryingLabel(QPoint pos)
 {
-    return (getData()->mState == TransferData::TransferState::TRANSFER_RETRYING
+    return (getData()->getState() == TransferData::TransferState::TRANSFER_RETRYING
                 && mUi->lSpeed->rect().contains(mUi->lSpeed->mapFrom(this, pos)));
 }
 

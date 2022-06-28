@@ -110,3 +110,8 @@ void ScanStageController::onMinimumDisplayTimeElapsed()
         setUiInNormalStage();
     }
 }
+
+bool ScanStageController::isInScanningState() const
+{
+    return mIsInScanningState;
+}

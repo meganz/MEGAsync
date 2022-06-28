@@ -1581,6 +1581,7 @@ void MegaApplication::processUploadQueue(MegaHandle nodeHandle)
     preferences->setOverStorageDismissExecution(0);
 
     auto batch = std::shared_ptr<TransferBatch>(new TransferBatch());
+    mBlockingBatch.add(batch);
 
     //Process the upload queue using the MegaUploader object
     while (!uploadQueue.isEmpty())
@@ -1618,9 +1619,12 @@ void MegaApplication::processUploadQueue(MegaHandle nodeHandle)
 
     if (!batch->isEmpty())
     {
-        mBlockingBatch.add(batch);
         QString logMessage = QString::fromUtf8("Added batch upload");
         MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, logMessage.toUtf8().constData());
+    }
+    else
+    {
+        mBlockingBatch.removeBatch();
     }
 
 
@@ -1729,7 +1733,7 @@ void MegaApplication::createTransferManagerDialog()
         connect(transferQuota.get(), &TransferQuota::sendState,
                 mTransferManager, &TransferManager::onTransferQuotaStateChanged);
         connect(mTransferManager, SIGNAL(cancelScanning()), this, SLOT(cancelScanningStage()));
-        if (inScanningStage)
+        if (scanStageController.isInScanningState())
         {
             mTransferManager->enterBlockingState();
         }

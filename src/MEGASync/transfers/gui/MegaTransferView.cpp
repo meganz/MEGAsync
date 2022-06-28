@@ -64,7 +64,7 @@ QModelIndexList MegaTransferView::getTransfers(bool onlyVisible, TransferData::T
     {
         auto index (model()->index(row, 0, QModelIndex()));
         auto d (qvariant_cast<TransferItem>(index.data()).getTransferData());
-        if(state == TransferData::TRANSFER_NONE || (d && d->mState & state))
+        if(state == TransferData::TRANSFER_NONE || (d && d->getState() & state))
         {
             if (proxy)
             {
@@ -133,7 +133,7 @@ QString MegaTransferView::getSelectedAction()
         auto transfer (qvariant_cast<TransferItem>(index.data()).getTransferData());
         if(transfer)
         {
-            if(transfer->isActive())
+            if(transfer->isActive() || transfer->isFailed())
             {
                 isAnyActive = true;
             }
@@ -197,7 +197,7 @@ void MegaTransferView::onCancelVisibleTransfers()
 
         auto proxy (qobject_cast<TransfersManagerSortFilterProxyModel*>(model()));
         auto sourceModel(qobject_cast<TransfersModel*>(proxy->sourceModel()));
-        sourceModel->cancelTransfers(indexes, this);
+        sourceModel->cancelAndClearTransfers(indexes, this);
     }
 }
 
@@ -218,7 +218,7 @@ void MegaTransferView::onCancelSelectedTransfers()
 
         auto proxy (qobject_cast<QSortFilterProxyModel*>(model()));
         auto sourceModel(qobject_cast<TransfersModel*>(proxy->sourceModel()));
-        sourceModel->cancelTransfers(indexes, this);
+        sourceModel->cancelAndClearTransfers(indexes, this);
     }
 }
 
@@ -277,7 +277,7 @@ void MegaTransferView::onCancelAndClearVisibleTransfers()
 
         //Cancel transfers
         auto cancelIndexes = getTransfers(true);
-        sourceModel->cancelTransfers(cancelIndexes, this);
+        sourceModel->cancelAndClearTransfers(cancelIndexes, this);
     }
 }
 
@@ -335,7 +335,7 @@ void MegaTransferView::onCancelClearSelection(bool isClear)
     QModelIndexList indexes = getSelectedTransfers();
     auto proxy (qobject_cast<QSortFilterProxyModel*>(model()));
     auto sourceModel(qobject_cast<TransfersModel*>(proxy->sourceModel()));
-    isClear ? sourceModel->clearTransfers(indexes) : sourceModel->cancelTransfers(indexes, this);
+    isClear ? sourceModel->clearTransfers(indexes) : sourceModel->cancelAndClearTransfers(indexes, this);
 }
 
 void MegaTransferView::enableContextMenu()
@@ -535,7 +535,7 @@ void MegaTransferView::updateContextMenu(bool enablePause, bool enableResume, bo
 
     if (onlyOneSelected)
     {
-        auto state (d->mState);
+        auto state (d->getState());
         auto type ((d->mType & TransferData::TRANSFER_UPLOAD) ?
                        TransferData::TRANSFER_UPLOAD
                      : TransferData::TRANSFER_DOWNLOAD);
@@ -705,13 +705,14 @@ void MegaTransferView::onCustomContextMenu(const QPoint& point)
         {
             isTopIndex = true;
         }
-        else if(index.row() == (model()->rowCount() -1))
+
+        if(index.row() == (model()->rowCount() -1))
         {
             isBottomIndex = true;
         }
 
         auto d (qvariant_cast<TransferItem>(index.data()).getTransferData());
-        switch (d->mState)
+        switch (d->getState())
         {
             case TransferData::TRANSFER_ACTIVE:
             case TransferData::TRANSFER_QUEUED:
