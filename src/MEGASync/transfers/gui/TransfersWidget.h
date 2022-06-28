@@ -62,6 +62,8 @@ public:
     void onDialogHidden();
     void onDialogShown();
 
+    bool isLoadingViewSet();
+
     struct CancelClearButtonInfo
     {
          bool    visible;
@@ -72,7 +74,6 @@ public:
 
          bool isInit(){return !cancelClearTooltip.isEmpty();}
     };
-
     struct HeaderInfo
     {
         QString headerTime;
@@ -81,7 +82,6 @@ public:
         QString pauseTooltip;
         QString resumeTooltip;
     };
-
     void updateHeaders();
 
     TransfersModel* getModel();
@@ -92,13 +92,13 @@ public slots:
     void onHeaderItemClicked(int sortBy, Qt::SortOrder order);
     void on_tPauseResumeVisible_toggled(bool state);
     void on_tCancelClearVisible_clicked();
+    void onUiBlocked();
+    void onUiUnblocked();
 
 protected:
     void changeEvent(QEvent *event) override;
 
 private slots:
-    void onUiBlocked();
-    void onUiUnblocked();
     void onUiUnblockedAndFilter();
     void onModelChanged();
     void onModelAboutToBeChanged();
@@ -107,11 +107,12 @@ private slots:
     void onRetryButtonPressedOnDelegate();
     void onVerticalScrollBarVisibilityChanged(bool state);
     void onCheckPauseResumeButton();
+    void togglePauseResumeButton(bool state);
     void onCheckCancelClearButton();
 
 private:
     Ui::TransfersWidget *ui;
-    TransfersModel *model;
+    TransfersModel *mModel;
     TransfersManagerSortFilterProxyModel *mProxyModel;
     MegaTransferDelegate *tDelegate;
     ViewLoadingScene<TransferManagerLoadingItem> mLoadingScene;
@@ -120,6 +121,7 @@ private:
     MegaApplication *app;
     TM_TAB mCurrentTab;
     QMap<TransfersWidget::TM_TAB, QString> mTooltipNameByTab;
+    bool mScanningIsActive;
 
     HeaderInfo mHeaderInfo;
     CancelClearButtonInfo mCancelClearInfo;

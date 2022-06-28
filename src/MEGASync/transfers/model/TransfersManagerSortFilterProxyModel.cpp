@@ -222,7 +222,7 @@ bool TransfersManagerSortFilterProxyModel::filterAcceptsRow(int sourceRow, const
 
     if(d && d->mTag >= 0)
     {
-        auto accept = (d->mState & mTransferStates)
+        auto accept = (d->getState() & mTransferStates)
                  && (d->mType & mTransferTypes)
                  && (toInt(d->mFileType) & mFileTypes);
 
@@ -247,47 +247,50 @@ bool TransfersManagerSortFilterProxyModel::filterAcceptsRow(int sourceRow, const
                 }
             }
 
-            //Not needed to add the logic when the d is a sync transfer, as the sync state is permanent
-            if(accept && !d->isSyncTransfer() && !mNoSyncTransfers.contains(d->mTag))
+            if(d->stateHasChanged())
             {
-                mNoSyncTransfers.insert(d->mTag);
-            }
-
-            //As the active state can change in time, add both logics to add or remove
-            if(accept && d->isActive())
-            {
-                if(!mActiveTransfers.contains(d->mTag))
+                //Not needed to add the logic when the d is a sync transfer, as the sync state is permanent
+                if(accept && !d->isSyncTransfer() && !mNoSyncTransfers.contains(d->mTag))
                 {
-                    mActiveTransfers.insert(d->mTag);
+                    mNoSyncTransfers.insert(d->mTag);
                 }
-            }
-            else
-            {
-                removeActiveTransferFromCounter(d->mTag);
-            }
 
-            if(accept && d->isPaused())
-            {
-                if(!mPausedTransfers.contains(d->mTag))
+                //As the active state can change in time, add both logics to add or remove
+                if(accept && (d->isActive() && !d->isCompleting()))
                 {
-                    mPausedTransfers.insert(d->mTag);
+                    if(!mActiveTransfers.contains(d->mTag))
+                    {
+                        mActiveTransfers.insert(d->mTag);
+                    }
                 }
-            }
-            else
-            {
-                removePausedTransferFromCounter(d->mTag);
-            }
+                else
+                {
+                    removeActiveTransferFromCounter(d->mTag);
+                }
 
-            if(accept && (d->isCompleted() && !d->isFailed()))
-            {
-                if(!mCompletedTransfers.contains(d->mTag))
+                if(accept && d->isPaused())
                 {
-                    mCompletedTransfers.insert(d->mTag);
+                    if(!mPausedTransfers.contains(d->mTag))
+                    {
+                        mPausedTransfers.insert(d->mTag);
+                    }
                 }
-            }
-            else
-            {
-                removeCompletedTransferFromCounter(d->mTag);
+                else
+                {
+                    removePausedTransferFromCounter(d->mTag);
+                }
+
+                if(accept && ((d->isCompleted() && !d->isFailed())))
+                {
+                    if(!mCompletedTransfers.contains(d->mTag))
+                    {
+                        mCompletedTransfers.insert(d->mTag);
+                    }
+                }
+                else
+                {
+                    removeCompletedTransferFromCounter(d->mTag);
+                }
             }
         }
 
@@ -479,7 +482,7 @@ int TransfersManagerSortFilterProxyModel::getPausedTransfers() const
 bool TransfersManagerSortFilterProxyModel::areAllPaused() const
 {
     //A completed transfers is also "paused"
-    return (mPausedTransfers.size() + mCompletedTransfers.size()) == rowCount();
+    return mPausedTransfers.size() == mActiveTransfers.size();
 }
 
 bool TransfersManagerSortFilterProxyModel::isAnyActive() const
@@ -559,7 +562,7 @@ void TransfersManagerSortFilterProxyModel::onPauseResumeTransfer()
 
     if(delegateWidget && sourModel)
     {
-        auto pause = delegateWidget->getData()->mState != TransferData::TransferState::TRANSFER_PAUSED;
+        auto pause = delegateWidget->getData()->getState() != TransferData::TransferState::TRANSFER_PAUSED;
         emit pauseResumeTransfer(pause);
     }
 }
@@ -589,7 +592,7 @@ void TransfersManagerSortFilterProxyModel::onOpenTransfer()
             //If the transfer is an upload (already on the local drive)
             //Or if it is an download but already finished
             if(data->mType & TransferData::TRANSFER_UPLOAD
-                    || data->mState & TransferData::FINISHED_STATES_MASK)
+                    || data->getState() & TransferData::FINISHED_STATES_MASK)
             {
                 sourModel->openFolderByTag(tag);
             }

@@ -58,7 +58,7 @@ public:
     ~TransferData(){}
 
     TransferData(TransferData const* dr) :
-        mType(dr->mType), mErrorCode(dr->mErrorCode),  mState(dr->mState), mTag(dr->mTag),
+        mType(dr->mType), mErrorCode(dr->mErrorCode),  mState(dr->mState), mPreviousState(dr->mPreviousState), mTag(dr->mTag),
         mErrorValue(dr->mErrorValue), mTemporaryError(dr->mTemporaryError),
         mRemainingTime(dr->mRemainingTime),
         mTotalSize(dr->mTotalSize), mPriority(dr->mPriority), mSpeed(dr->mSpeed),
@@ -73,11 +73,11 @@ public:
 
     void update(mega::MegaTransfer* transfer);
     bool hasChanged(QExplicitlySharedDataPointer<TransferData> data);
+    bool stateHasChanged();
     void removeFailedTransfer();
 
     TransferTypes                       mType;
     int                                 mErrorCode;
-    TransferState                       mState;
     int                                 mTag;
     long long                           mErrorValue;
     bool                                mTemporaryError;
@@ -95,6 +95,10 @@ public:
     QString                             mFilename;
     int                                 mNodeAccess;
 
+    void setState(const TransferState& state);
+    void setPreviousState(const TransferState& state);
+    TransferState getState() const;
+
     QString path() const;
     bool isPublicNode() const;
     bool isCancelable() const;
@@ -105,6 +109,7 @@ public:
     bool isPaused() const;
     bool isProcessing() const;
     bool isCompleted() const;
+    bool isCompleting() const;
     bool isFailed() const;
     int64_t getRawFinishedTime() const;
     int64_t getFinishedTime() const;
@@ -113,6 +118,8 @@ public:
 private:
     QString   mPath;
     int64_t   mFinishedTime;
+    TransferState                       mState;
+    TransferState                       mPreviousState;
 
 };
 Q_DECLARE_TYPEINFO(TransferData, Q_MOVABLE_TYPE);

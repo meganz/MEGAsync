@@ -132,10 +132,10 @@ bool InfoDialogTransfersProxyModel::filterAcceptsRow(int sourceRow, const QModel
        const auto d (qvariant_cast<TransferItem>(index.data()).getTransferData());
        if(d)
        {
-           accept = (d->mState & TransferData::TransferState::TRANSFER_COMPLETED
-                     || d->mState & TransferData::TransferState::TRANSFER_COMPLETING
-                     || d->mState & TransferData::TransferState::TRANSFER_ACTIVE
-                     || d->mState & TransferData::TransferState::TRANSFER_FAILED);
+           accept = (d->getState() & TransferData::TransferState::TRANSFER_COMPLETED
+                     || d->getState() & TransferData::TransferState::TRANSFER_COMPLETING
+                     || d->getState() & TransferData::TransferState::TRANSFER_ACTIVE
+                     || d->getState() & TransferData::TransferState::TRANSFER_FAILED);
 
            //Show next transfer to process
            if(!accept)

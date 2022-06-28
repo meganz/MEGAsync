@@ -184,6 +184,8 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
             mUi->leSearchField->setFocus();
             mSearchFieldReturnPressed = false;
         }
+
+        refreshView();
     });
 
     mScanningTimer.setInterval(60);
@@ -1024,7 +1026,6 @@ void TransferManager::toggleTab(TransfersWidget::TM_TAB newTab)
             else if(mUi->wTransfers->getCurrentTab() == TransfersWidget::FAILED_TAB)
             {
                 transfers = mTransfersCount.totalFailedTransfers();
-                mUi->tActionButton->setText(tr("Retry all"));
             }
             else
             {
@@ -1072,11 +1073,13 @@ void TransferManager::refreshView()
         if(mUi->wTransfers->getCurrentTab() != TransfersWidget::SEARCH_TAB)
         {
             QWidget* widgetToShow (mUi->wTransfers);
-            auto countLabel = mNumberLabelsGroup[mUi->wTransfers->getCurrentTab()];
 
-            if (countLabel->text().isEmpty())
+            if(!mUi->wTransfers->isLoadingViewSet())
             {
-                widgetToShow = mTabNoItem[mUi->wTransfers->getCurrentTab()];
+                if(mUi->wTransfers->getProxyModel()->rowCount() == 0)
+                {
+                    widgetToShow = mTabNoItem[mUi->wTransfers->getCurrentTab()];
+                }
             }
 
             updateTransferWidget(widgetToShow);

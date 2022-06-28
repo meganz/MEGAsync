@@ -12,7 +12,8 @@ TransfersWidget::TransfersWidget(QWidget* parent) :
     ui (new Ui::TransfersWidget),
     tDelegate (nullptr),
     app (qobject_cast<MegaApplication*>(qApp)),
-    mCurrentTab(NO_TAB)
+    mCurrentTab(NO_TAB),
+    mScanningIsActive(false)
 {
     ui->setupUi(this);
 
@@ -24,7 +25,7 @@ TransfersWidget::TransfersWidget(QWidget* parent) :
     connect(ui->statusColumn, &TransferWidgetHeaderItem::toggled, this, &TransfersWidget::onHeaderItemClicked);
     connect(ui->timeColumn, &TransferWidgetHeaderItem::toggled, this, &TransfersWidget::onHeaderItemClicked);
 
-    model = app->getTransfersModel();
+    mModel = app->getTransfersModel();
 
     //Align header pause/cancel buttons to view pause/cancel button
     connect(ui->tvTransfers, &MegaTransferView::verticalScrollBarVisibilityChanged, this, &TransfersWidget::onVerticalScrollBarVisibilityChanged);
@@ -69,6 +70,7 @@ void TransfersWidget::setupTransfers()
     connect(mProxyModel, &TransfersManagerSortFilterProxyModel::transferCancelClear, this, &TransfersWidget::onCancelClearButtonPressedOnDelegate);
     connect(mProxyModel, &TransfersManagerSortFilterProxyModel::transferRetry, this, &TransfersWidget::onRetryButtonPressedOnDelegate);
     connect(app->getTransfersModel(), &TransfersModel::blockUi, this, &TransfersWidget::onUiBlocked);
+    connect(app->getTransfersModel(), &TransfersModel::unblockUi, this, &TransfersWidget::onUiUnblocked);
     connect(app->getTransfersModel(), &TransfersModel::unblockUiAndFilter, this, &TransfersWidget::onUiUnblockedAndFilter);
 
     configureTransferView();
@@ -83,7 +85,7 @@ TransfersWidget::~TransfersWidget()
 
 void TransfersWidget::configureTransferView()
 {
-    if (!model)
+    if (!mModel)
     {
         return;
     }
@@ -149,18 +151,23 @@ void TransfersWidget::onCheckPauseResumeButton()
         auto pauseState(mProxyModel->areAllPaused());
         if(ui->tPauseResumeVisible->isChecked() != pauseState)
         {
-            ui->tPauseResumeVisible->blockSignals(true);
-            ui->tPauseResumeVisible->setChecked(pauseState);
-            ui->tPauseResumeVisible->blockSignals(false);
-
-            ui->tPauseResumeVisible->setToolTip(pauseState ?
-                                                    mHeaderInfo.resumeTooltip
-                                                  : mHeaderInfo.pauseTooltip);
-
-            //Use to repaint and update the transfers state
-            ui->tvTransfers->update();
+            togglePauseResumeButton(pauseState);
         }
     }
+}
+
+void TransfersWidget::togglePauseResumeButton(bool state)
+{
+    ui->tPauseResumeVisible->blockSignals(true);
+    ui->tPauseResumeVisible->setChecked(state);
+    ui->tPauseResumeVisible->blockSignals(false);
+
+    ui->tPauseResumeVisible->setToolTip(state ?
+                                            mHeaderInfo.resumeTooltip
+                                          : mHeaderInfo.pauseTooltip);
+
+    //Use to repaint and update the transfers state
+    ui->tvTransfers->update();
 }
 
 void TransfersWidget::onCheckCancelClearButton()
@@ -371,8 +378,15 @@ void TransfersWidget::onDialogShown()
     updateTimersState();
 }
 
+bool TransfersWidget::isLoadingViewSet()
+{
+    return mLoadingScene.isLoadingViewSet();
+}
+
 void TransfersWidget::setScanningWidgetVisible(bool state)
 {
+    mScanningIsActive = state;
+
     if(!state && mLoadingScene.isLoadingViewSet())
     {
         emit disableTransferManager(true);
@@ -388,7 +402,7 @@ void TransfersWidget::onUiBlocked()
 {
     mLoadingScene.setLoadingScene(true);
 
-    if(isVisible())
+    if(!mScanningIsActive)
     {
         emit disableTransferManager(true);
     }
@@ -472,7 +486,7 @@ void TransfersWidget::onCancelClearButtonPressedOnDelegate()
         return;
     }
 
-    getModel()->cancelTransfers(sourceSelectionIndexes, this);
+    getModel()->cancelAndClearTransfers(sourceSelectionIndexes, this);
 }
 
 void TransfersWidget::onRetryButtonPressedOnDelegate()
@@ -497,7 +511,11 @@ void TransfersWidget::onRetryButtonPressedOnDelegate()
 
 void TransfersWidget::on_tPauseResumeVisible_toggled(bool state)
 {
+    mCheckPauseResumeButtonTimer.stop();
+
     emit pauseResumeVisibleRows(state);
+
+    updateTimersState();
 }
 
 void TransfersWidget::onVerticalScrollBarVisibilityChanged(bool state)

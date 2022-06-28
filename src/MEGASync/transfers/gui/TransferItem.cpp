@@ -62,6 +62,7 @@ void TransferData::update(mega::MegaTransfer* transfer)
 
         mFileType = Utilities::getFileType(mFilename, QString());
 
+        mState = TransferData::TRANSFER_NONE;
         mState = static_cast<TransferData::TransferState>(1 << transfer->getState());
         mNotificationNumber = transfer->getNotificationNumber();
         mErrorCode = MegaError::API_OK;
@@ -134,9 +135,30 @@ bool TransferData::hasChanged(QExplicitlySharedDataPointer<TransferData> data)
     return result;
 }
 
+bool TransferData::stateHasChanged()
+{
+    return mPreviousState != mState;
+}
+
 void TransferData::removeFailedTransfer()
 {
     mFailedTransfer.reset();
+}
+
+void TransferData::setState(const TransferState &state)
+{
+    mPreviousState = mState;
+    mState = state;
+}
+
+void TransferData::setPreviousState(const TransferState &state)
+{
+    mPreviousState = state;
+}
+
+TransferData::TransferState TransferData::getState() const
+{
+    return mState;
 }
 
 int64_t TransferData::getRawFinishedTime() const
@@ -218,6 +240,11 @@ bool TransferData::isProcessing() const
 bool TransferData::isCompleted() const
 {
     return mState & TRANSFER_COMPLETED;
+}
+
+bool TransferData::isCompleting() const
+{
+    return mState & TRANSFER_COMPLETING;
 }
 
 bool TransferData::isFailed() const
