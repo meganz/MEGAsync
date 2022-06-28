@@ -3315,6 +3315,7 @@ void MegaApplication::logBatchStatus(const char* tag)
 void MegaApplication::enableTransferActions(bool enable)
 {
 #ifdef _WIN32
+    windowsUpdateAction->setEnabled(enable);
     windowsSettingsAction->setEnabled(enable);
     windowsImportLinksAction->setEnabled(enable);
     windowsUploadAction->setEnabled(enable);
