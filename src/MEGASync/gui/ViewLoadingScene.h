@@ -57,7 +57,6 @@ protected:
 private slots:
     void onLoadingTimerTimeout()
     {
-
         if(mView)
         {
             if(mOpacity < MIN_OPACITY)
@@ -75,9 +74,8 @@ private slots:
                 mOpacity += mOpacitySteps;
             }
 
-            mView->update();
+            mView->viewport()->update();
         }
-
     }
 
 private:
@@ -224,6 +222,7 @@ public:
         if(!mLoadingModel)
         {
             mLoadingView = new QTreeView();
+            mLoadingView->setObjectName(QString::fromStdString("Loading View"));
             mLoadingView->setContentsMargins(mView->contentsMargins());
             mLoadingView->setStyleSheet(mView->styleSheet());
             mLoadingView->header()->setStretchLastSection(true);
