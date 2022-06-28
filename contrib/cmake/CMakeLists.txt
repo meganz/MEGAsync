@@ -95,7 +95,10 @@ set(3RDPARTY_RUNTIME_PATH "PATH=%PATH%" "${Mega3rdPartyDir}/vcpkg/installed/${VC
 
 set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
-set(CMAKE_AUTOUIC_SEARCH_PATHS "${MEGAsyncDir}/gui/${UiDir}" "${MEGAsyncDir}/transfers/gui/${UiDir}" "${MEGAsyncDir}/stalled_issues/gui/${UiDir}" "${MEGAsyncDir}/stalled_issues/gui/stalled_issues_cases/${UiDir}")
+set(CMAKE_AUTOUIC_SEARCH_PATHS "${MEGAsyncDir}/gui/${UiDir}"
+                               "${MEGAsyncDir}/transfers/gui/${UiDir}"
+                               "${MEGAsyncDir}/stalled_issues/gui/${UiDir}"
+                               "${MEGAsyncDir}/stalled_issues/gui/stalled_issues_cases/${UiDir}")
 
 #AUTOMOC
 set(CMAKE_AUTOMOC ON)
@@ -116,6 +119,7 @@ include_directories( "${MEGAsyncDir}/stalled_issues/gui" )
 include_directories( "${MEGAsyncDir}/stalled_issues/gui/${UiDir}" )
 include_directories( "${MEGAsyncDir}/platform" )
 include_directories( "${MEGAsyncDir}/gui/${UiDir}" )
+include_directories( "${MEGAsyncDir}/transfers/model" )
 include_directories( "${MEGAsyncDir}/transfers/gui" )
 include_directories( "${MEGAsyncDir}/transfers/gui/${UiDir}" )
 
@@ -732,7 +736,9 @@ if(CMAKE_HOST_APPLE)
 
     set_source_files_properties(${MAC_RESOURCES} PROPERTIES MACOSX_PACKAGE_LOCATION "Resources")
     add_executable(MEGAsync MACOSX_BUNDLE ${MAC_RESOURCES} ${MEGAsyncDir}/main.cpp ${SRCS} ${QM_FILES})
-    set_target_properties(MEGAsync PROPERTIES MACOSX_BUNDLE_INFO_PLIST "${MEGAsyncDir}/Info_MEGA.plist")
+    set_target_properties(MEGAsync PROPERTIES
+                                   MACOSX_BUNDLE_INFO_PLIST "${MEGAsyncDir}/Info_MEGA.plist"
+                                   MACOSX_BUNDLE_SHORT_VERSION "${MEGASYNC_VERSION}")
 elseif(CMAKE_HOST_WIN32)
     add_executable(MEGAsync WIN32 ${MEGAsyncDir}/main.cpp ${SRCS} ${QM_FILES})
     set_property(TARGET MEGAsync PROPERTY MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>DLL")
@@ -807,12 +813,6 @@ if (CMAKE_HOST_APPLE)
         OUTPUT_STRIP_TRAILING_WHITESPACE)
 
     message("MEGAsync version = ${MEGASYNC_VERSION}")
-    add_custom_command(
-            TARGET MEGAsync
-            POST_BUILD
-            COMMAND /usr/libexec/PlistBuddy -c \"Set :CFBundleShortVersionString ${MEGASYNC_VERSION}\" \"$<TARGET_FILE_DIR:MEGAsync>/../Info.plist\"
-            COMMENT "Setting version to Info.plist..."
-            )
 endif()
 
 set(FULLREQUIREMENTS TRUE CACHE BOOL "Verbose output")
@@ -919,4 +919,10 @@ target_link_libraries(MEGASync_unit_tests
     ${TARGET_LINK_LIBRARIES_PLATFORM}
     )
 
-target_include_directories(MEGASync_unit_tests PRIVATE ${MEGAsyncDir} ${MEGAsyncDir}/google_breakpad )
+target_compile_features(MEGASync_unit_tests PRIVATE cxx_std_14)
+
+target_include_directories(MEGASync_unit_tests PRIVATE ${MEGAsyncDir}
+                                                       ${MEGAsyncDir}/transfers
+                                                       ${MEGAsyncDir}/transfers/gui
+                                                       ${MEGAsyncDir}/transfers/model
+                                                       ${MEGAsyncDir}/google_breakpad )
