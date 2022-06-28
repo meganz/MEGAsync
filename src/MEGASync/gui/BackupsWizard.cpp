@@ -1,6 +1,5 @@
 #include "BackupsWizard.h"
 #include "ui_BackupsWizard.h"
-#include "ui_BackupSetupSuccessDialog.h"
 #include "MegaApplication.h"
 #include "megaapi.h"
 #include "QMegaMessageBox.h"
@@ -282,14 +281,7 @@ void BackupsWizard::setupStep2()
     int nbSelectedFolders = mFoldersProxyModel->rowCount();
 
     // Set folders number
-    if (nbSelectedFolders == 1)
-    {
-        mUi->lFoldersNumber->setText(tr("1 folder"));
-    }
-    else
-    {
-        mUi->lFoldersNumber->setText(tr("%1 folders").arg(nbSelectedFolders));
-    }
+    mUi->lFoldersNumber->setText(tr("%n folder", "", nbSelectedFolders));
 
     int listHeight = (std::max(HEIGHT_ROW_STEP_2,
                              std::min(HEIGHT_ROW_STEP_2 * MAX_ROWS_STEP_2,

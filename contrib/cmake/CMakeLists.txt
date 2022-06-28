@@ -182,7 +182,6 @@ set (FORMS
     ${MEGAsyncDir}/gui/${UiDir}/ScanningWidget.ui
     ${MEGAsyncDir}/gui/${UiDir}/CancelConfirmWidget.ui
     ${MEGAsyncDir}/gui/${UiDir}/BackupsWizard.ui
-    ${MEGAsyncDir}/gui/${UiDir}/BackupSetupSuccessDialog.ui
     ${MEGAsyncDir}/gui/${UiDir}/AddBackupDialog.ui
     ${MEGAsyncDir}/gui/${UiDir}/RemoveBackupDialog.ui
     ${MEGAsyncDir}/transfers/gui/${UiDir}/InfoDialogTransfersWidget.ui
@@ -235,7 +234,8 @@ set (MOC_INPUT
     ${MEGAsyncDir}/control/UpdateTask.h
     ${MEGAsyncDir}/control/ThreadPool.h
     ${MEGAsyncDir}/control/MegaController.h
-    ${MEGAsyncDir}/control/SyncController.h    
+    ${MEGAsyncDir}/control/TransferBatch.h
+    ${MEGAsyncDir}/control/SyncController.h
     ${MEGAsyncDir}/control/UserAttributesManager.h
     ${MEGAsyncDir}/model/SyncSettings.h
     ${MEGAsyncDir}/model/SyncModel.h
@@ -463,6 +463,10 @@ set (SRCS
     ${MEGAsyncDir}/gui/OverQuotaDialog.cpp
     ${MEGAsyncDir}/gui/ProxySettings.cpp
     ${MEGAsyncDir}/gui/BandwidthSettings.cpp
+    ${MEGAsyncDir}/gui/BackupsWizard.cpp
+    ${MEGAsyncDir}/gui/SyncsMenu.cpp
+    ${MEGAsyncDir}/gui/AddBackupDialog.cpp
+    ${MEGAsyncDir}/gui/RemoveBackupDialog.cpp
     ${MEGAsyncDir}/gui/SwitchButton.cpp
     ${MEGAsyncDir}/gui/MegaItemDelegates.cpp
     ${MEGAsyncDir}/gui/MegaItemProxyModel.cpp
@@ -519,7 +523,7 @@ set (SRCS
     ${MEGAsyncDir}/control/TransferRemainingTime.cpp
     ${MEGAsyncDir}/control/MegaController.cpp
     ${MEGAsyncDir}/control/TransferBatch.cpp
-    ${MEGAsyncDir}/control/SyncController.cpp    
+    ${MEGAsyncDir}/control/SyncController.cpp
     ${MEGAsyncDir}/control/UserAttributesManager.cpp
 
     ${MEGAsyncDir}/model/SyncSettings.cpp
