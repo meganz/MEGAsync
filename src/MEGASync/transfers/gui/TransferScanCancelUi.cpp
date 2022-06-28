@@ -82,7 +82,9 @@ const char* TransferScanCancelUi::getControlStyles()
                             "   color: #333333;"
                             "}"
                             "QPushButton:pressed { background-color : rgb(238, 238, 236); }"
+                            "QPushButton:disabled { background-color : rgb(218, 218, 216); }"
                             "QPushButton#pProceed { background-color: #00BFA5; color: #FFFFFF; border-color: #00AC94}"
-                            "QPushButton#pProceed:pressed { background-color: rgb(0, 179, 155);}";
+                            "QPushButton#pProceed:pressed { background-color: rgb(0, 179, 155);}"
+                            "QPushButton#pProceed:disabled { background-color: rgb(70, 159, 135);}";
     return styles;
 }
