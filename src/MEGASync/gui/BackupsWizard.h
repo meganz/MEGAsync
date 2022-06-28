@@ -17,7 +17,6 @@
 
 namespace Ui {
 class BackupsWizard;
-class BackupSetupSuccessDialog;
 }
 
 class ProxyModel : public QSortFilterProxyModel

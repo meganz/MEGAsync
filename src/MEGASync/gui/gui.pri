@@ -206,7 +206,7 @@ win32 {
                 $$PWD/win/ProxySettings.ui \
                 $$PWD/win/BandwidthSettings.ui \
                 $$PWD/win/BackupsWizard.ui \
-                $$PWD/win/BackupSetupSuccessDialog.ui \
+                $$PWD/win/NotificationsSettings.ui \
                 $$PWD/win/ScanningWidget.ui \
                 $$PWD/win/CancelConfirmWidget.ui \
                 $$PWD/win/FileFolderNameSetterDialog.ui \
@@ -258,7 +258,7 @@ macx {
                 $$PWD/macx/ProxySettings.ui \
                 $$PWD/macx/BandwidthSettings.ui \
                 $$PWD/macx/BackupsWizard.ui \
-                $$PWD/macx/BackupSetupSuccessDialog.ui \
+                $$PWD/macx/NotificationsSettings.ui \
                 $$PWD/macx/ScanningWidget.ui \
                 $$PWD/macx/CancelConfirmWidget.ui \
                 $$PWD/macx/FileFolderNameSetterDialog.ui \
@@ -336,7 +336,6 @@ unix:!macx {
                 $$PWD/linux/ScanningWidget.ui \
                 $$PWD/linux/FileFolderNameSetterDialog.ui \
                 $$PWD/linux/NotificationsSettings.ui \
-                $$PWD/linux/BackupSetupSuccessDialog.ui \
                 $$PWD/linux/AddBackupDialog.ui \
                 $$PWD/linux/RemoveBackupDialog.ui
 
