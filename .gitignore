@@ -2,7 +2,7 @@ Thumbs.db
 vcredist_x86.exe
 vcredist_x64.exe
 MegaSyncSetup*.exe
-Release_x32
+Release_x86_64
 Release_x64
 Release_arm64
 installer_mac.sh
