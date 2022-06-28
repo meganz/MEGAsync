@@ -31,6 +31,8 @@ public:
 
     std::shared_ptr<mega::MegaCancelToken> getCancelToken();
 
+    int getFolderCount();
+
 private:
     int mFiles = 0;
     int mFolders = 0;
@@ -61,6 +63,8 @@ public:
 
     bool hasCancelToken();
     bool isValid() const ;
+
+    bool hasFolders() const;
 
     std::shared_ptr<mega::MegaCancelToken> getCancelToken();
 

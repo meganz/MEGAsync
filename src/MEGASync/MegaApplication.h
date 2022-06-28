@@ -617,6 +617,8 @@ private:
 
     void processUploads(const QStringList& uploads);
 
+    void updateMetadata(TransferMetaData* data, const QString& filePath);
+
     template <class Func>
     void recreateMenuAction(MenuItemAction** action, const QString& actionName,
                             const char* iconPath, Func slotFunc)

@@ -36,6 +36,8 @@ bool MegaDownloader::processDownloadQueue(QQueue<WrappedNode*>* downloadQueue, B
 
     auto batch = std::shared_ptr<TransferBatch>(new TransferBatch());
 
+    downloadBatches.add(batch);
+
     EventUpdater updater(downloadQueue->size());
 
     // Process all nodes in the download queue
@@ -73,9 +75,9 @@ bool MegaDownloader::processDownloadQueue(QQueue<WrappedNode*>* downloadQueue, B
         updater.update(downloadQueue->size());
     }
 
-    if (!batch->isEmpty())
+    if (batch->isEmpty())
     {
-        downloadBatches.add(batch);
+        downloadBatches.removeBatch();
     }
 
     pathMap.clear();

@@ -1574,6 +1574,8 @@ void MegaApplication::processUploadQueue(MegaHandle nodeHandle)
 
     auto batch = std::shared_ptr<TransferBatch>(new TransferBatch());
 
+    mBlockingBatch.add(batch);
+
     EventUpdater updater(uploadQueue.size());
 
     //Process the upload queue using the MegaUploader object
@@ -1582,41 +1584,30 @@ void MegaApplication::processUploadQueue(MegaHandle nodeHandle)
         QString filePath = uploadQueue.dequeue();
         QFileInfo filePathInfo(filePath);
 
-        // Load parent folder to provide "Show in Folder" option
-        if (data->localPath.isEmpty())
-        {
-            QDir uploadPath(filePath);
-            if (data->totalTransfers > 1)
-            {
-                uploadPath.cdUp();
-            }
-            data->localPath = uploadPath.path();
-        }
+        std::cout << "\tfilePath : " << filePath.toUtf8().constData() << std::endl;
 
-        if (filePathInfo.isDir())
-        {
-            data->totalFolders++;
-        }
-        else
-        {
-            data->totalFiles++;
-        }
+        updateMetadata(data, filePath);
 
         bool startedTransfer = uploader->upload(filePath, node, transferId, batch->getCancelTokenPtr());
         if (startedTransfer)
         {
-            startingUpload();
+            std::cout << "\t\tadding to batch" << std::endl;
             batch->add(filePathInfo.isDir());
+
+            startingUpload();
         }
 
         updater.update(uploadQueue.size());
     }
 
-    if (!batch->isEmpty())
+    std::cout << "uploadQueue OUT" << std::endl;
+
+    if (batch->isEmpty())
     {
-        mBlockingBatch.add(batch);
-        QString logMessage = QString::fromUtf8("Added batch upload");
-        MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, logMessage.toUtf8().constData());
+
+        mBlockingBatch.removeBatch();
+        //QString logMessage = QString::fromUtf8("Added batch upload");
+        //MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, logMessage.toUtf8().constData());
     }
 
 
@@ -3373,7 +3364,7 @@ void MegaApplication::updateFreedCancelToken(MegaTransfer* transfer)
 
 void MegaApplication::startingUpload()
 {
-    if (noUploadedStarted)
+    if (noUploadedStarted && mBlockingBatch.hasFolders())
     {
         noUploadedStarted = false;
         scanStageController.startDelayedScanStage();
@@ -3490,6 +3481,34 @@ void MegaApplication::processUploads(const QStringList &uploads)
 {
     uploadQueue.append(uploads);
     processUploadQueue(folderUploadTarget);
+}
+
+void MegaApplication::updateMetadata(TransferMetaData *data, const QString &filePath)
+{
+    // Load parent folder to provide "Show in Folder" option
+    if (data->localPath.isEmpty())
+    {
+        QDir uploadPath(filePath);
+        if (data->totalTransfers > 1)
+        {
+            uploadPath.cdUp();
+        }
+        data->localPath = uploadPath.path();
+    }
+
+    QFileInfo filePathInfo(filePath);
+    if (filePathInfo.isDir())
+    {
+        data->totalFolders++;
+    }
+    else
+    {
+        data->totalFiles++;
+    }
+
+    std::cout << "\t\tdata files : " << data->totalFiles;
+    std::cout << " - folders : " << data->totalFolders;
+    std::cout << " - localPath : " << data->localPath.toUtf8().constData() << std::endl;
 }
 
 void MegaApplication::setupWizardFinished(int result)
