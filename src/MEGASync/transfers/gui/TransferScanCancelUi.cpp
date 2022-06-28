@@ -1,7 +1,7 @@
 #include "TransferScanCancelUi.h"
 
-TransferScanCancelUi::TransferScanCancelUi(QStackedWidget* _container)
-    : mContainer(_container)
+TransferScanCancelUi::TransferScanCancelUi(QStackedWidget* _container, QWidget *_finishedWidget)
+    : mContainer(_container), mFinishedWidget(_finishedWidget)
 {
     mBlockingWidget = new ScanningWidget(mContainer);
     mConfirmWidget = new CancelConfirmWidget(mContainer);
@@ -24,9 +24,10 @@ void TransferScanCancelUi::show()
     mBlockingWidget->show();
 }
 
-void TransferScanCancelUi::hide()
+void TransferScanCancelUi::hide(bool fromCancellation)
 {
-    mContainer->setCurrentWidget(mLastSelectedWidget);
+    QWidget* widget = fromCancellation ? mLastSelectedWidget : mFinishedWidget;
+    mContainer->setCurrentWidget(widget);
 }
 
 void TransferScanCancelUi::disableCancelling()

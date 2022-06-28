@@ -30,8 +30,9 @@ void ScanStageController::startDelayedScanStage()
     }
 }
 
-void ScanStageController::stopDelayedScanStage()
+void ScanStageController::stopDelayedScanStage(bool fromCancellation)
 {
+    mLastScanCancelled = fromCancellation;
     if (mScanStageTimer.isActive())
     {
         mScanStageTimer.stop();
@@ -86,12 +87,12 @@ void ScanStageController::setUiInNormalStage()
 
     if (mTransferManager)
     {
-        mTransferManager->leaveBlockingState();
+        mTransferManager->leaveBlockingState(mLastScanCancelled);
     }
 
     if (mInfoDialog)
     {
-        mInfoDialog->leaveBlockingState();
+        mInfoDialog->leaveBlockingState(mLastScanCancelled);
     }
 }
 

@@ -585,8 +585,8 @@ private:
     void updateTransferNodesStage(mega::MegaTransfer* transfer);
 
     void updateFileTransferBatchesAndUi(BlockingBatch& batch);
-    void updateFolderTransferBatchesAndUi(BlockingBatch& batch);
-    void updateIfBlockingStageFinished(BlockingBatch &batch);
+    void updateFolderTransferBatchesAndUi(BlockingBatch& batch, bool fromCancellation);
+    void updateIfBlockingStageFinished(BlockingBatch &batch, bool fromCancellation);
     void unblockBatch(BlockingBatch &batch);
 
     void logBatchStatus(const char* tag);

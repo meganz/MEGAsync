@@ -18,7 +18,7 @@ public:
     void updateReference(TransferManager* _transferManager);
 
     void startDelayedScanStage();
-    void stopDelayedScanStage();
+    void stopDelayedScanStage(bool fromCancellation);
 
     bool IsInScanningState();
 
@@ -39,6 +39,7 @@ private:
     QTimer mScanStageTimer;
     bool mIsInScanningState = false;
     bool mIsInScanningStateInMinimumTime = false;
+    bool mLastScanCancelled = false;
     const int mDelayToShowDialogInMs = 800;
     const int mMinimumDialogDisplayTimeInMs = 1200;
 };

@@ -250,7 +250,7 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
         w->style()->polish(w);
     }
 
-    mTransferScanCancelUi = new TransferScanCancelUi(mUi->sTransfers);
+    mTransferScanCancelUi = new TransferScanCancelUi(mUi->sTransfers, mTabNoItem[ALL_TRANSFERS_TAB]);
     connect(mTransferScanCancelUi, &TransferScanCancelUi::cancelTransfers,
             this, &TransferManager::cancelScanning);
 }
@@ -266,10 +266,10 @@ void TransferManager::enterBlockingState()
     mTransferScanCancelUi->show();
 }
 
-void TransferManager::leaveBlockingState()
+void TransferManager::leaveBlockingState(bool fromCancellation)
 {
     enableUserActions(true);
-    mTransferScanCancelUi->hide();
+    mTransferScanCancelUi->hide(fromCancellation);
 }
 
 void TransferManager::disableCancelling()

@@ -3268,11 +3268,11 @@ void MegaApplication::updateFileTransferBatchesAndUi(BlockingBatch &batch)
         MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, message.toUtf8().constData());
 
         batch.onFileScanCompleted();
-        updateIfBlockingStageFinished(batch);
+        updateIfBlockingStageFinished(batch, false);
     }
 }
 
-void MegaApplication::updateFolderTransferBatchesAndUi(BlockingBatch &batch)
+void MegaApplication::updateFolderTransferBatchesAndUi(BlockingBatch &batch, bool fromCancellation)
 {
     if(batch.isValid())
     {
@@ -3280,15 +3280,15 @@ void MegaApplication::updateFolderTransferBatchesAndUi(BlockingBatch &batch)
         MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, message.toUtf8().constData());
 
         batch.onFolderScanCompleted();
-        updateIfBlockingStageFinished(batch);
+        updateIfBlockingStageFinished(batch, fromCancellation);
     }
 }
 
-void MegaApplication::updateIfBlockingStageFinished(BlockingBatch &batch)
+void MegaApplication::updateIfBlockingStageFinished(BlockingBatch &batch, bool fromCancellation)
 {
     if (batch.isBlockingStageFinished())
     {
-        scanStageController.stopDelayedScanStage();
+        scanStageController.stopDelayedScanStage(fromCancellation);
         unblockBatch(batch);
     }
 }
@@ -7781,7 +7781,7 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
             if(mBlockingBatch.isValid())
             {
                 mBlockingBatch.onTransferFinished(isFolderTransfer);
-                updateIfBlockingStageFinished(mBlockingBatch);
+                updateIfBlockingStageFinished(mBlockingBatch, isOnScanStage);
                 updateFreedCancelToken(transfer);
             }
 
@@ -7947,7 +7947,7 @@ void MegaApplication::onTransferUpdate(MegaApi*, MegaTransfer* transfer)
     {
         if (transfer->getStage() >= MegaTransfer::STAGE_TRANSFERRING_FILES)
         {
-            updateFolderTransferBatchesAndUi(mBlockingBatch);
+            updateFolderTransferBatchesAndUi(mBlockingBatch, false);
             logBatchStatus("onTransferUpdate");
         }
     }

@@ -284,7 +284,7 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
 
     adjustSize();
 
-    mTransferScanCancelUi = new TransferScanCancelUi(ui->sTabs);
+    mTransferScanCancelUi = new TransferScanCancelUi(ui->sTabs, ui->pTransfersTab);
     connect(mTransferScanCancelUi, &TransferScanCancelUi::cancelTransfers,
             this, &InfoDialog::cancelScanning);
 }
@@ -1315,11 +1315,11 @@ void InfoDialog::enterBlockingState()
     mTransferScanCancelUi->show();
 }
 
-void InfoDialog::leaveBlockingState()
+void InfoDialog::leaveBlockingState(bool fromCancellation)
 {
     enableUserActions(true);
     ui->wTabOptions->setVisible(true);
-    mTransferScanCancelUi->hide();
+    mTransferScanCancelUi->hide(fromCancellation);
 }
 
 void InfoDialog::disableCancelling()
