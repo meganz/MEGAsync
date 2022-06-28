@@ -1584,32 +1584,22 @@ void MegaApplication::processUploadQueue(MegaHandle nodeHandle)
         QString filePath = uploadQueue.dequeue();
         QFileInfo filePathInfo(filePath);
 
-        std::cout << "\tfilePath : " << filePath.toUtf8().constData() << std::endl;
-
         updateMetadata(data, filePath);
 
         bool startedTransfer = uploader->upload(filePath, node, transferId, batch->getCancelTokenPtr());
         if (startedTransfer)
         {
-            std::cout << "\t\tadding to batch" << std::endl;
             batch->add(filePathInfo.isDir());
-
             startingUpload();
         }
 
         updater.update(uploadQueue.size());
     }
 
-    std::cout << "uploadQueue OUT" << std::endl;
-
     if (batch->isEmpty())
     {
-
         mBlockingBatch.removeBatch();
-        //QString logMessage = QString::fromUtf8("Added batch upload");
-        //MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, logMessage.toUtf8().constData());
     }
-
 
     delete node;
 }
@@ -3505,10 +3495,6 @@ void MegaApplication::updateMetadata(TransferMetaData *data, const QString &file
     {
         data->totalFiles++;
     }
-
-    std::cout << "\t\tdata files : " << data->totalFiles;
-    std::cout << " - folders : " << data->totalFolders;
-    std::cout << " - localPath : " << data->localPath.toUtf8().constData() << std::endl;
 }
 
 void MegaApplication::setupWizardFinished(int result)
