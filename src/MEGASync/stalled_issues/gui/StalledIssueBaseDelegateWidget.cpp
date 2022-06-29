@@ -22,7 +22,7 @@ void StalledIssueBaseDelegateWidget::render(const QStyleOptionViewItem &,
 }
 void StalledIssueBaseDelegateWidget::updateUi(const QModelIndex& index, const StalledIssueVariant &data)
 {
-    mCurrentIndex = index;
+    mCurrentIndex = QPersistentModelIndex(index);
     mData = data;
 
     refreshUi();

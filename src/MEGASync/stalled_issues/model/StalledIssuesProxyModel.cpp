@@ -31,12 +31,12 @@ void StalledIssuesProxyModel::filter(StalledIssueFilterCriterion filterCriterion
         sourceM->blockUi();
 
         //Test if it is worth it, because there is not sorting and the sort takes longer than filtering.
-         QtConcurrent::run([this, sourceM](){
-            sourceM->lockModelMutex(true);
+         //QtConcurrent::run([this, sourceM](){
+            //sourceM->lockModelMutex(true);
             invalidateFilter();
-            sourceM->lockModelMutex(false);
+            //sourceM->lockModelMutex(false);
             sourceM->unBlockUi();
-        });
+        //});
     }
 }
 

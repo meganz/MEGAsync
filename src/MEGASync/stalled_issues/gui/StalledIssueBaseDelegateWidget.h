@@ -39,7 +39,7 @@ private:
     virtual void refreshUi() = 0;
 
     StalledIssueVariant mData;
-    QModelIndex mCurrentIndex;
+    QPersistentModelIndex mCurrentIndex;
     bool mKeepEditor;
 };
 
