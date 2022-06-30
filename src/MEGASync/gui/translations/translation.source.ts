@@ -3155,14 +3155,6 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translation>Select a MEGA folder</translation>
     </message>
     <message numerus="yes">
-        <source>Item selection removed. To reselect, close this window and try again.</source>
-        <translatorcomment>Error message shown while the user is trying to download an file or folder but it is removed using another client</translatorcomment>
-        <translation>
-            <numerusform>Item selection removed. To reselect, close this window and try again.</numerusform>
-            <numerusform>Items selection removed. To reselect, close this window and try again.</numerusform>
-        </translation>
-    </message>
-    <message numerus="yes">
         <source>You no longer have access to this item. Ask the owner to share again.</source>
         <translatorcomment>Error message shown when the user is trying to download an file or folder from an incoming share and the owner stops sharing/removes all items</translatorcomment>
         <translation>
@@ -3179,6 +3171,23 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <source>Incoming shares</source>
         <translatorcomment>Node selector button Text. Switch the view to show only the incoming shares nodes (files and folders)</translatorcomment>
         <translation>Incoming shares</translation>
+    </message>
+    <message>
+        <source>Error:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message numerus="yes">
+        <source>The item you selected has been removed. To reselect, close this window and try again.</source>
+        <translatorcomment>Error message shown while the user is trying to download an file or folder but all selected nodes were removed</translatorcomment>
+        <translation type="unfinished">
+            <numerusform>The item you selected has been removed. To reselect, close this window and try again.</numerusform>
+            <numerusform>The items you selected have been removed. To reselect, close this window and try again.</numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>%1 of the %2 items you selected has been removed. To reselect, close this window and try again.</source>
+        <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
