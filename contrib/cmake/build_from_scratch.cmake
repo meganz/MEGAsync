@@ -16,6 +16,18 @@
         "-DTARGET=target1;target2"
     If provided, the script will build only the targets specified. If not, the script will build the 
     whole project in a manner equivalent to calling `make all`.
+
+    For getting started debugging on Mac x86, these steps work.  Note that some dependencies for generating image/video thumbnails are skipped.
+    Paths/versions etc need to be adjusted for your setup
+
+         [edit preferred-ports to avoid building pdfium, ffmpeg, freeimage, etc]
+         /Applications/CMake.app/Contents/bin/cmake -DTRIPLET=x64-osx-mega -DEXTRA_ARGS="-DUSE_PDFIUM=0;-DUSE_FREEIMAGE=0;-DUSE_MEDIAINFO=0;-DUSE_FFMPEG=0;-DHAVE_FFMPEG=0;-DUSE_LIBRAW=0;-DFULLREQUIREMENTS=0;-DMEGA_QT_VERSION=5.12.12" -P build_from_scratch.cmake
+         [cd to build directory, eg ../../build-x64-osx-mega-Debug]
+         make MEGAsync  
+         /Users/Shared/Qt/5.12.12/clang_64/bin/macdeployqt ./MEGAsync.app
+         set DYLD_LIBRARY_PATH=/Users/Shared/Qt/5.12.12/clang_64/bin/;/Users/[YOU]/repos/megasync_build/3rdparty_desktop/vcpkg/installed/x64-osx-mega/debug/lib/
+         ./MEGAsync.app/Contents/MacOS/MEGAsync
+
 ]]
 
 function(usage_exit err_msg)
