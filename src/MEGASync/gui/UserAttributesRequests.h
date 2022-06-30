@@ -19,12 +19,19 @@ public:
     void updateAttributes(mega::MegaUser* user) override;
 
     QString getFullName() const;
+
+    //In order to use in Rich Text labels (otherwise some characters may be interpreted as HMTL)
+    QString getRichFullName() const;
+
     bool isAttributeReady() const override;
     const QString& getFirstName() const;
     const QString& getLastName() const;
 
 signals:
     void attributeReady(const QString&);
+
+    //In order to use in Rich Text labels (otherwise some characters may be interpreted as HMTL)
+    void attributeReadyRichText(const QString&);
 
 private:
     void requestFirstNameAttribute();
