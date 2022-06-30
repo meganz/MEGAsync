@@ -269,7 +269,7 @@ void NodeSelector::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *e
     if (e->getErrorCode() != MegaError::API_OK)
     {
         ui->tMegaFolders->setEnabled(true);
-        QMegaMessageBox::critical(nullptr, QLatin1String("MEGAsync"), tr("Error") + QLatin1String(": ") + QCoreApplication::translate("MegaError", e->getErrorString()));
+        QMegaMessageBox::critical(nullptr, QLatin1String("MEGAsync"), tr("Error:") + QLatin1String(" ") + QCoreApplication::translate("MegaError", e->getErrorString()));
         return;
     }
 
@@ -511,17 +511,22 @@ void NodeSelector::onbOkClicked()
             }
         }
 
-        if(wrongNodes > 0)
+        if(wrongNodes == nodes.size())
         {
             correctNodeSelected = false;
             if(isCloudDrive())
             {
-                QMegaMessageBox::warning(nullptr, tr("Error"), tr("Item selection removed. To reselect, close this window and try again.", "", wrongNodes), QMessageBox::Ok);
+                QMegaMessageBox::warning(nullptr, tr("Error"), tr("The item you selected has been removed. To reselect, close this window and try again.", "", wrongNodes), QMessageBox::Ok);
             }
             else
             {
                 QMegaMessageBox::warning(nullptr, tr("Error"), tr("You no longer have access to this item. Ask the owner to share again.", "", wrongNodes), QMessageBox::Ok);
             }
+        }
+        else if(wrongNodes > 0)
+        {
+            correctNodeSelected = false;
+            QMegaMessageBox::warning(nullptr, tr("Error"), tr("%1 of the %2 items you selected has been removed. To reselect, close this window and try again.", "").arg(wrongNodes).arg(nodes.size()), QMessageBox::Ok);
         }
     }
     else
@@ -529,7 +534,7 @@ void NodeSelector::onbOkClicked()
         auto node = std::unique_ptr<MegaNode>(mMegaApi->getNodeByHandle(getSelectedNodeHandle()));
         if (!node)
         {
-            QMegaMessageBox::warning(nullptr, tr("Error"), tr("Item selection removed. To reselect, close this window and try again."),
+            QMegaMessageBox::warning(nullptr, tr("Error"), tr("The item you selected has been removed. To reselect, close this window and try again."),
                                                  QMessageBox::Ok);
             correctNodeSelected = false;
         }
