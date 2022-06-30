@@ -237,9 +237,9 @@ void AlertItem::setAlertHeading(MegaUserAlert *alert)
             ui->sIconWidget->show();
             mNotificationHeading = QString::fromUtf8(mAlertNode ? mAlertNode->getName() : alert->getName());
 
-            if (mNotificationHeading == QString::fromLatin1("NO_KEY"))
+            if (mNotificationHeading == QLatin1String("NO_KEY"))
             {
-                mNotificationHeading = tr("Decryption error");
+                mNotificationHeading = QCoreApplication::translate("MegaError", "Decryption error");
             }
             else if (mNotificationHeading.isEmpty())
             {

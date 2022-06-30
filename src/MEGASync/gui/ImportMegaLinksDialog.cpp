@@ -208,9 +208,9 @@ void ImportMegaLinksDialog::onLinkInfoAvailable(int id)
     if (node && (e == MegaError::API_OK))
     {
         QString name = QString::fromUtf8(node->getName());
-        if (!name.compare(QString::fromAscii("NO_KEY")) || !name.compare(QString::fromAscii("CRYPTO_ERROR")))
+        if (!name.compare(QLatin1String("NO_KEY")) || !name.compare(QLatin1String("CRYPTO_ERROR")))
         {
-            item->setData(tr("Decryption error"), ImportListWidgetItem::WARNING, mMegaApi->getSize(node.get()), !(node->getType() == MegaNode::TYPE_FILE));
+            item->setData(QCoreApplication::translate("MegaError", "Decryption error"), ImportListWidgetItem::WARNING, mMegaApi->getSize(node.get()), !(node->getType() == MegaNode::TYPE_FILE));
         }
         else
         {
