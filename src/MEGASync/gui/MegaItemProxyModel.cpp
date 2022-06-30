@@ -7,7 +7,9 @@
 MegaItemProxyModel::MegaItemProxyModel(QObject* parent) :
     QSortFilterProxyModel(parent)
 {
-    setSortCaseSensitivity(Qt::CaseInsensitive);
+    mCollator.setCaseSensitivity(Qt::CaseInsensitive);
+    mCollator.setNumericMode(true);
+    mCollator.setIgnorePunctuation(false);
 }
 
 void MegaItemProxyModel::showOnlyCloudDrive()
@@ -165,16 +167,9 @@ bool MegaItemProxyModel::lessThan(const QModelIndex &left, const QModelIndex &ri
         return lStatus < rStatus;
       }
     }
-    bool leftToIntOK = false;
-    bool rightToIntOK = false;
-    int leftInt = left.data(Qt::DisplayRole).toInt(&leftToIntOK);
-    int rightInt = right.data(Qt::DisplayRole).toInt(&rightToIntOK);
-    if(leftToIntOK && rightToIntOK)
-    {
-        return leftInt < rightInt;
-    }
 
-    return QSortFilterProxyModel::lessThan(left, right);
+    return mCollator.compare(left.data(Qt::DisplayRole).toString(),
+                             right.data(Qt::DisplayRole).toString())<0;
 }
 
 
