@@ -36,17 +36,17 @@
     <message>
         <source>Cloud drive</source>
         <translatorcomment>Label for Cloud drive space used. Maintain capital letter in first word.(Max 18 characters)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Nuvem de arquivos</translation>
     </message>
     <message>
         <source>Rubbish bin</source>
         <translatorcomment>Label for Rubbish bin space used. Maintain capital letter in first word.(Max 18 characters)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Lixeira</translation>
     </message>
     <message>
         <source>Available storage</source>
         <translatorcomment>Label for Available storage space used. Maintain capital letter in first word.(Max 18 characters)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Armazenamento disponível</translation>
     </message>
 </context>
 <context>
@@ -388,12 +388,12 @@
     <message numerus="yes">
         <source>[A] added %n item</source>
         <translatorcomment>Label to indicate that [A] has added %n items to a shared folder. Placeholder [A] will be replaced by email of the user that made the additions and %n with the number of added items.</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>[A] adicionou %n item</numerusform><numerusform>[A] adicionou %n de itens</numerusform><numerusform>[A] adicionou %n itens</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>[A] removed %n item</source>
         <translatorcomment>Label to indicate that [A] has removed %n items from a shared folder. Placeholder [A] will be replaced by email of the user that made the deletion and %n with the number of removed items.</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>[A] eliminou %n item</numerusform><numerusform>[A] eliminou %n de itens</numerusform><numerusform>[A] eliminou %n itens</numerusform></translation>
     </message>
     <message>
         <source>Decryption error</source>
@@ -403,7 +403,7 @@
     <message>
         <source>New shared folder from [A]</source>
         <translatorcomment>Label to indicate that [A] shared a folder with current user. Placeholder will be replaced by email of sharer user.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Nova pasta compartilhada por [A]</translation>
     </message>
 </context>
 <context>
@@ -1066,12 +1066,12 @@ Estes arquivos podem conter detalhes sobre os seus dados, como nomes de arquivos
     <message numerus="yes">
         <source>[A] added %n item</source>
         <translatorcomment>Label to indicate that [A] has added %n items to a shared folder. Placeholder [A] will be replaced by email of the user that made the additions and %n with the number of added items.</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>[A] adicionou %n item</numerusform><numerusform>[A] adicionou %n de itens</numerusform><numerusform>[A] adicionou %n itens</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>You have %n day left to save your data</source>
         <translatorcomment>Notification content to inform the days the user have to save the date before possible deletion. %n will be replaced with remaining days amount.</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Você tem %n dia para proteger os seus arquivos</numerusform><numerusform>Você tem %n de dias para proteger os seus arquivos</numerusform><numerusform>Você tem %n dias para proteger os seus arquivos</numerusform></translation>
     </message>
     <message>
         <source>Upgrade now to a Pro account.</source>
@@ -1081,12 +1081,12 @@ Estes arquivos podem conter detalhes sobre os seus dados, como nomes de arquivos
     <message>
         <source>Get Pro</source>
         <translatorcomment>Notification button to redirect the user to upgrade account.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Faça upgrade a Pro</translation>
     </message>
     <message>
         <source>New shared folder from [A]</source>
         <translatorcomment>Label to indicate that [A] shared a folder with current user. Placeholder will be replaced by email of sharer user.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Nova pasta compartilhada por [A]</translation>
     </message>
 </context>
 <context>
@@ -1194,12 +1194,12 @@ Estes arquivos podem conter detalhes sobre os seus dados, como nomes de arquivos
     <message numerus="yes">
         <source>%n file</source>
         <translatorcomment>Context menu option label to indicate the user has selected %n number of files</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%n arquivo</numerusform><numerusform>%n de arquivos</numerusform><numerusform>%n arquivos</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n folder</source>
         <translatorcomment>Context menu option label to indicate the user has selected %n number of folders</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%n pasta</numerusform><numerusform>%n de pastas</numerusform><numerusform>%n pastas</numerusform></translation>
     </message>
 </context>
 <context>
@@ -1736,17 +1736,17 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message numerus="yes">
         <source>We have contacted you by email to [A] on [B] but you still have %n file taking up [D] in your MEGA account, which requires you to have [E].</source>
         <translatorcomment>Informative label about account status regarding over quota storage. Placeholders will be replaced: [A] - user email, [B] - localized date list of emails sent to inform the user about the situation,  %n - amount of files in the current account, [D] - amount of storage used and [E] - min PRO plan needed to fix the situation.</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Enviamos um email de notificação a [A] em [B], mas você ainda tem %n arquivo ocupando [D] na sua conta do MEGA, o que requer que você tenha um plano [E].</numerusform><numerusform>Enviamos um email de notificação a [A] em [B], mas você ainda tem %n de arquivos ocupando [D] na sua conta do MEGA, o que requer que você tenha um plano [E].</numerusform><numerusform>Enviamos um email de notificação a [A] em [B], mas você ainda tem %n arquivos ocupando [D] na sua conta do MEGA, o que requer que você tenha um plano [E].</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>You have [A]%n day[/A] left to upgrade. After that, your data is subject to deletion.</source>
         <translatorcomment>Label to inform about the deadline time to upgrade. Otherwise, data is subject to deletion. Placeholder info: [A][/A] - needed to format and apply text style, %n- number of days left to upgrade.</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Você tem [A]%n dia[/A] para fazer o upgrade. Se você não fizer o upgrade neste período, os seus arquivos serão deletados.</numerusform><numerusform>Você tem [A]%n de dias[/A] para fazer o upgrade. Se você não fizer o upgrade neste período, os seus arquivos serão deletados.</numerusform><numerusform>Você tem [A]%n dias[/A] para fazer o upgrade. Se você não fizer o upgrade neste período, os seus arquivos serão deletados.</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>You have [A]%n hour[/A] left to upgrade. After that, your data is subject to deletion.</source>
         <translatorcomment>Label to inform about the deadline time to upgrade. Otherwise, data is subject to deletion. Placeholder info: [A][/A] - needed to format and apply text style, %n- number of hours left to upgrade.</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Você tem [A]%n hora[/A] para fazer o upgrade. Se você não fizer o upgrade neste período, os seus arquivos serão deletados.</numerusform><numerusform>Você tem [A]%n de horas[/A] para fazer o upgrade. Se você não fizer o upgrade neste período, os seus arquivos serão deletados.</numerusform><numerusform>Você tem [A]%n horas[/A] para fazer o upgrade. Se você não fizer o upgrade neste período, os seus arquivos serão deletados.</numerusform></translation>
     </message>
 </context>
 <context>
@@ -1777,7 +1777,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>You need to log into MEGA account to use the MEGA desktop app.</source>
         <translatorcomment>Description label to indicate the user needs to log in in order to fully use MEGA desktop app.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Você precisa fazer login na sua conta do MEGA para usar o aplicativo do MEGA para desktop.</translation>
     </message>
     <message>
         <source>Create account</source>
@@ -2384,42 +2384,42 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Thank you for your collaboration</source>
         <translatorcomment>Informative message shown when a user makes a report to thank for his help.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Obrigado pela sua colaboração</translation>
     </message>
     <message numerus="yes">
         <source>%n file</source>
         <translatorcomment>File count, where %n is the number of files. Used to build the &quot;Files and folders successfully uploaded/downloaded&quot; string.</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%n arquivo</numerusform><numerusform>%n de arquivos</numerusform><numerusform>%n arquivos</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n folder</source>
         <translatorcomment>Folder count, where %n is the number of folders. Used to build the &quot;Files and folders successfully uploaded/downloaded&quot; string.</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%n pasta</numerusform><numerusform>%n de pastas</numerusform><numerusform>%n pastas</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n file was successfully uploaded</source>
         <translatorcomment>System notification to inform the user that %1 files were successfully uploaded</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Foi feito o upload de %n arquivo</numerusform><numerusform>Foi feito o upload de %n de arquivos</numerusform><numerusform>Foi feito o upload de %n arquivos</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n file was successfully downloaded</source>
         <translatorcomment>System notification to inform the user that %1 files were successfully downloaded</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Foi feito o download de %n arquivo</numerusform><numerusform>Foi feito o download de %n de arquivos</numerusform><numerusform>Foi feito o download de %n arquivos</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n folder was successfully uploaded</source>
         <translatorcomment>System notification to inform the user that %n folders were successfully uploaded</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Foi feito o upload de %n pasta</numerusform><numerusform>Foi feito o upload de %n de pastas</numerusform><numerusform>Foi feito o upload de %n pastas</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n folder was successfully downloaded</source>
         <translatorcomment>System notification to inform the user that %n folders were successfully downloaded</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Foi feito o download de %n pasta</numerusform><numerusform>Foi feito o download de %n de pastas</numerusform><numerusform>Foi feito o download de %n pastas</numerusform></translation>
     </message>
     <message>
         <source>A new version of MEGAsync is available. Click on this message to install it</source>
         <translatorcomment>System notification to inform the user that there is a new version of MEGAsync available for update. Windows version.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Uma nova versão do MEGAsync está disponível. Clique nesta mensagem para instalar</translation>
     </message>
     <message>
         <source>A new version of MEGAsync is available</source>
@@ -2429,12 +2429,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>%1 and %2 were successfully uploaded</source>
         <translatorcomment>System notification to inform the user that %1 files and %2 folders were successfully uploaded. The %1 is a sentence part for files and %2 for folders.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Foi feito o upload de %1 e %2</translation>
     </message>
     <message>
         <source>%1 and %2 were successfully downloaded</source>
         <translatorcomment>System notification to inform the user that %1 files and %2 folders were successfully downloaded. The %1 is a sentence part for files and %2 for folders.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Foi feito o download de %1 e %2</translation>
     </message>
 </context>
 <context>
@@ -2585,7 +2585,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Not accessible due to ToS/AUP violation</source>
         <translatorcomment>Error shown when import a link that has violated ToS/AUP.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Não acessível por infringir os Termos de serviço</translation>
     </message>
     <message>
         <source>Upload produces recursivity</source>
@@ -2631,12 +2631,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Folder already synced</source>
         <translatorcomment>Tooltip text to notify the user that this folder is already synced.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Pasta já sincronizada</translation>
     </message>
     <message>
         <source>Folder contents already synced</source>
         <translatorcomment>Tooltip text to notify the user that some folder inside the folder that he is hovering with mouse is already synced.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Conteúdo da pasta já sincronizado</translation>
     </message>
     <message>
         <source>Name</source>
@@ -2646,37 +2646,37 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Sort by status</source>
         <translatorcomment>First column title tooltip(this column title doesn´t contains text, it shows an icon). Sorts the order of the column by node status, for example synced folders first or last.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Ordenar por status</translation>
     </message>
     <message>
         <source>Sort by owner name</source>
         <translatorcomment>Owner column title tooltip. Sorts the order of the column by owner name alphabetically.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Ordenar por nome do proprietário</translation>
     </message>
     <message>
         <source>Sort by date</source>
         <translatorcomment>Recently used column title tooltip. Sorts the order of the column by date.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Ordenar por data</translation>
     </message>
     <message>
         <source>Sort by name</source>
         <translatorcomment>Node name column title tooltip. Sorts the order of the column by date.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Ordenar por nome</translation>
     </message>
     <message>
         <source>Today at %1</source>
         <translatorcomment>Text that appears on &quot;Recently Used&quot; column if the last change was happened today. %1 represents the hour</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Hoje às %1</translation>
     </message>
     <message>
         <source>Yesterday at %1</source>
         <translatorcomment>Text that appears on &quot;Recently Used&quot; column if the last change was happened yesterday. %1 represents the hour</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Ontem às %1</translation>
     </message>
     <message>
         <source>%1 at %2</source>
         <translatorcomment>Text that appears on &quot;Recently Used&quot; column if the last change was previously to yesterday. %1 represents the date (day month and year), while %2 represents the hour)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>%1 às %2</translation>
     </message>
     <message>
         <source>Recently used</source>
@@ -2868,7 +2868,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>You can&apos;t run MEGA Desktop App from this location. Move it into the Applications folder then run it.</source>
         <translatorcomment>Error message shown when the user is trying to run MEGA Desktop App from a path different than Applications. Only affects to macOS.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Você não pode executar o aplicativo do MEGA para desktop neste local. Mova-o para a pasta Aplicativos e para poder executá-lo.</translation>
     </message>
 </context>
 <context>
@@ -3095,7 +3095,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Select a MEGA folder</source>
         <translatorcomment>Node selector dialog title</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Selecione uma pasta no MEGA</translation>
     </message>
     <message numerus="yes">
         <source>Item selection removed. To reselect, close this window and try again.</source>
@@ -3105,7 +3105,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message numerus="yes">
         <source>You no longer have access to this item. Ask the owner to share again.</source>
         <translatorcomment>Error message shown when the user is trying to download an file or folder from an incoming share and the owner stops sharing/removes all items</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Você já não tem acesso a este item - o proprietário deve compartilhá-lo novamente.</numerusform><numerusform>Você já não tem acesso a estes itens - o proprietário deve compartilhá-los novamente.</numerusform><numerusform>Você já não tem acesso a estes itens - o proprietário deve compartilhá-los novamente.</numerusform></translation>
     </message>
     <message>
         <source>Cloud drive</source>
@@ -3115,7 +3115,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Incoming shares</source>
         <translatorcomment>Node selector button Text. Switch the view to show only the incoming shares nodes (files and folders)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Compartilhado comigo</translation>
     </message>
 </context>
 <context>
@@ -3188,7 +3188,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>System notifications:</source>
         <translatorcomment>Title of a checkbox for disconnectig all notifications</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Notificações do sistema:</translation>
     </message>
     <message>
         <source>Info notifications</source>
@@ -3321,12 +3321,12 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Show password</source>
         <translatorcomment>Password box eye icon tooltip</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Mostrar senha</translation>
     </message>
     <message>
         <source>Hide password</source>
         <translatorcomment>Password box eye icon tooltip</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Ocultar senha</translation>
     </message>
 </context>
 <context>
@@ -3497,7 +3497,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message numerus="yes">
         <source>minimum %n user</source>
         <translatorcomment>Label to inform about the minimum number of users for a business plan. %1 will be replaced with the minimum number of users.</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>mínimo de %n usuário</numerusform><numerusform>mínimo de %n de usuários</numerusform><numerusform>mínimo de %n usuários</numerusform></translation>
     </message>
 </context>
 <context>
@@ -4700,7 +4700,7 @@ Do you want to restart MEGAsync now?</source>
     <message numerus="yes">
         <source>day</source>
         <translatorcomment>Suffix text label for number of days to keep files in local cache.</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>dia</numerusform><numerusform>de dias</numerusform><numerusform>dias</numerusform></translation>
     </message>
 </context>
 <context>
@@ -5116,12 +5116,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message numerus="yes">
         <source>%n file</source>
         <translatorcomment>Label to indicate file count. Keep %n code because it will be filled with the number of files at runtime.</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%n arquivo</numerusform><numerusform>%n de arquivos</numerusform><numerusform>%n arquivos</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n folder</source>
         <translatorcomment>Label to indicate folder count. Keep %n code because it will be filled with the number of folders at runtime.</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%n pasta</numerusform><numerusform>%n de pastas</numerusform><numerusform>%n pastas</numerusform></translation>
     </message>
 </context>
 <context>
@@ -5611,32 +5611,32 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message numerus="yes">
         <source>%n second ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n seconds ago</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>há %n segundo</numerusform><numerusform>há %n de segundos</numerusform><numerusform>há %n segundos</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n minute ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n minutes ago</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>há %n minuto</numerusform><numerusform>há %n de minutos</numerusform><numerusform>há %n minutos</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n hour ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n hours ago</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>há %n hora</numerusform><numerusform>há %n de horas</numerusform><numerusform>há %n horas</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n day ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n days ago</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>há %n dia</numerusform><numerusform>há %n de dias</numerusform><numerusform>há %n dias</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n month ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n months ago</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>há %n mês</numerusform><numerusform>há %n de meses</numerusform><numerusform>há %n meses</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n year ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n years ago</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>há %n ano</numerusform><numerusform>há %n de anos</numerusform><numerusform>há %n anos</numerusform></translation>
     </message>
 </context>
 <context>

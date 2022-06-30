@@ -431,7 +431,7 @@
     <message>
         <source>KB/s</source>
         <translatorcomment>Rate unit of Kilo bytes per second.</translatorcomment>
-        <translation>Ko/s</translation>
+        <translation>ko/s</translation>
     </message>
     <message>
         <source>Auto</source>
@@ -3979,7 +3979,7 @@ Voulez-vous le supprimer quand même ?</translation>
     <message>
         <source>%1 KB</source>
         <translatorcomment>File size measured in kilobytes</translatorcomment>
-        <translation>%1 Ko</translation>
+        <translation>%1 ko</translation>
     </message>
     <message>
         <source>%1 bytes</source>
@@ -4563,7 +4563,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>KB</source>
         <translatorcomment>Kilo-Bytes unit of measurement for file exclusion by size, displayed in a drop-down in Folders pane.</translatorcomment>
-        <translation>Ko</translation>
+        <translation>ko</translation>
     </message>
     <message>
         <source>MB</source>
@@ -5584,7 +5584,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>KB</source>
         <translatorcomment>Label to indicate Kilo byte unit.</translatorcomment>
-        <translation>Ko</translation>
+        <translation>ko</translation>
     </message>
     <message>
         <source>Bytes</source>
