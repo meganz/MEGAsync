@@ -28,7 +28,7 @@
          [if using XCode you still need to run macdeplyqt as below, but in subdirectory Debug]
          [cd to build directory, eg ../../build-x64-osx-mega-Debug]
          make MEGAsync
-         /Users/Shared/Qt/5.12.12/clang_64/bin/macdeployqt ./MEGAsync.app
+         /Users/Shared/Qt/5.12.12/clang_64/bin/macdeployqt ./MEGAsync.app -no-strip
          set DYLD_LIBRARY_PATH=/Users/Shared/Qt/5.12.12/clang_64/bin/;/Users/[YOU]/repos/megasync_build/3rdparty_desktop/vcpkg/installed/x64-osx-mega/debug/lib/
          ./MEGAsync.app/Contents/MacOS/MEGAsync
 ]]

@@ -45,9 +45,9 @@ VIAddVersionKey "ProductVersion" "5.0.0.0"
 ; To be defined depending on your working environment
 
 !ifdef BUILD_X64_VERSION
-!define QT_PATH "C:\Qt\5.12.11\msvc2017_64"
+!define QT_PATH "C:\Qt\5.12.12\msvc2017_64"
 !else
-!define QT_PATH "C:\Qt\5.12.11\msvc2017"
+!define QT_PATH "C:\Qt\5.12.12\msvc2017"
 !endif
 
 !define BUILDPATH_X64 "build-MEGA-Desktop_Qt_5_12_8_MSVC2017_64bit-Release"
