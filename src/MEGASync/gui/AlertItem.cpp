@@ -496,11 +496,11 @@ void AlertItem::changeEvent(QEvent *event)
 
 QString AlertItem::formatRichString(QString str)
 {
-    return QString::fromUtf8("<span style='color:#333333; font-family: Lato; font-size: 14px; font-weight: bold; text-decoration:none;'><bold>%1</bold></span>")
+    return QString::fromUtf8("<span style='color:#333333; font-family: Lato; font-size: 14px; font-weight: bold; text-decoration:none;'>%1</span>")
             .arg(str);
 }
 
 QString AlertItem::getUserFullName(MegaUserAlert *alert)
 {
-    return mFullNameAttributes ? mFullNameAttributes->getFullName() : QString::fromUtf8(alert->getEmail());
+    return mFullNameAttributes ? mFullNameAttributes->getRichFullName() : QString::fromUtf8(alert->getEmail());
 }
