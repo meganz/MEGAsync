@@ -21,13 +21,16 @@
     Paths/versions etc need to be adjusted for your setup
 
          [edit preferred-ports to avoid building pdfium, ffmpeg, freeimage, etc]
+         [to build and debug in xcode, add -DCMAKEGENERATOR=Xcode to the next line]
          /Applications/CMake.app/Contents/bin/cmake -DTRIPLET=x64-osx-mega -DEXTRA_ARGS="-DUSE_PDFIUM=0;-DUSE_FREEIMAGE=0;-DUSE_MEDIAINFO=0;-DUSE_FFMPEG=0;-DHAVE_FFMPEG=0;-DUSE_LIBRAW=0;-DFULLREQUIREMENTS=0;-DMEGA_QT_VERSION=5.12.12" -P build_from_scratch.cmake
+
+         [if not using XCode, you can run direct from the command line like this]
+         [if using XCode you still need to run macdeplyqt as below, but in subdirectory Debug]
          [cd to build directory, eg ../../build-x64-osx-mega-Debug]
-         make MEGAsync  
+         make MEGAsync
          /Users/Shared/Qt/5.12.12/clang_64/bin/macdeployqt ./MEGAsync.app
          set DYLD_LIBRARY_PATH=/Users/Shared/Qt/5.12.12/clang_64/bin/;/Users/[YOU]/repos/megasync_build/3rdparty_desktop/vcpkg/installed/x64-osx-mega/debug/lib/
          ./MEGAsync.app/Contents/MacOS/MEGAsync
-
 ]]
 
 function(usage_exit err_msg)
@@ -185,6 +188,15 @@ if(TARGET)
     #set(_cmake_target_args --target ${TARGETS})
 endif()
 
+set(_generator "")
+if(WIN32)
+    set(_generator "-G Visual Studio 16 2019")
+else()
+    if (CMAKEGENERATOR)
+        set(_generator "-G ${CMAKEGENERATOR}")
+    endif()
+endif()
+
 if(WIN32)
     if(_triplet MATCHES "staticdev$")
         list(APPEND _extra_cmake_args -DMEGA_LINK_DYNAMIC_CRT=0 -DUNCHECKED_ITERATORS=1)
@@ -203,7 +215,7 @@ if(WIN32)
 
     execute_checked_command(
         COMMAND ${_cmake}
-            -G "Visual Studio 16 2019"
+            ${_generator}
             -A ${_arch}
             # Could also pass -T VCPKG_PLATFORM_TOOLSET
             -B ${_build_dir}
@@ -248,6 +260,7 @@ else()
 
         execute_checked_command(
             COMMAND ${_cmake}
+                ${_generator}
                 -B ${_build_dir}
                 "-DCMAKE_BUILD_TYPE=${_config}"
                 ${_common_cmake_args}
