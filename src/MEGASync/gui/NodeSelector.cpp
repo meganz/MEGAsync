@@ -526,7 +526,9 @@ void NodeSelector::onbOkClicked()
         else if(wrongNodes > 0)
         {
             correctNodeSelected = false;
-            QMegaMessageBox::warning(nullptr, tr("Error"), tr("%1 of the %2 items you selected has been removed. To reselect, close this window and try again.", "").arg(wrongNodes).arg(nodes.size()), QMessageBox::Ok);
+            QString warningMsg1 = tr("%1 item selected", "", nodes.size()).arg(nodes.size());
+            QString warningMsg = tr("%1. %2 has been removed. To reselect, close this window and try again.", "", nodes.size()).arg(warningMsg1).arg(wrongNodes);
+            QMegaMessageBox::warning(nullptr, tr("Error"), warningMsg, QMessageBox::Ok);
         }
     }
     else
