@@ -241,50 +241,47 @@ bool TransfersManagerSortFilterProxyModel::filterAcceptsRow(int sourceRow, const
                 }
             }
 
-            if(d->stateHasChanged())
+            //Not needed to add the logic when the d is a sync transfer, as the sync state is permanent
+            if(accept && !d->isSyncTransfer() && !mNoSyncTransfers.contains(d->mTag))
             {
-                //Not needed to add the logic when the d is a sync transfer, as the sync state is permanent
-                if(accept && !d->isSyncTransfer() && !mNoSyncTransfers.contains(d->mTag))
-                {
-                    mNoSyncTransfers.insert(d->mTag);
-                }
+                mNoSyncTransfers.insert(d->mTag);
+            }
 
-                //As the active state can change in time, add both logics to add or remove
-                if(accept && (d->isActive() && !d->isCompleting()))
+            //As the active state can change in time, add both logics to add or remove
+            if(accept && (d->isActive() && !d->isCompleting()))
+            {
+                if(!mActiveTransfers.contains(d->mTag))
                 {
-                    if(!mActiveTransfers.contains(d->mTag))
-                    {
-                        mActiveTransfers.insert(d->mTag);
-                    }
+                    mActiveTransfers.insert(d->mTag);
                 }
-                else
-                {
-                    removeActiveTransferFromCounter(d->mTag);
-                }
+            }
+            else
+            {
+                removeActiveTransferFromCounter(d->mTag);
+            }
 
-                if(accept && d->isPaused())
+            if(accept && d->isPaused())
+            {
+                if(!mPausedTransfers.contains(d->mTag))
                 {
-                    if(!mPausedTransfers.contains(d->mTag))
-                    {
-                        mPausedTransfers.insert(d->mTag);
-                    }
+                    mPausedTransfers.insert(d->mTag);
                 }
-                else
-                {
-                    removePausedTransferFromCounter(d->mTag);
-                }
+            }
+            else
+            {
+                removePausedTransferFromCounter(d->mTag);
+            }
 
-                if(accept && ((d->isCompleted() && !d->isFailed())))
+            if(accept && ((d->isCompleted() && !d->isFailed())))
+            {
+                if(!mCompletedTransfers.contains(d->mTag))
                 {
-                    if(!mCompletedTransfers.contains(d->mTag))
-                    {
-                        mCompletedTransfers.insert(d->mTag);
-                    }
+                    mCompletedTransfers.insert(d->mTag);
                 }
-                else
-                {
-                    removeCompletedTransferFromCounter(d->mTag);
-                }
+            }
+            else
+            {
+                removeCompletedTransferFromCounter(d->mTag);
             }
         }
 

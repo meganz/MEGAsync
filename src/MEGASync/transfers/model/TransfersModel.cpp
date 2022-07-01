@@ -590,7 +590,6 @@ void TransfersModel::onProcessTransfers()
 
                     mModelMutex.unlock();
                 }
-
             }
             else if(containsTransfersToUpdate > 0)
             {
@@ -688,41 +687,49 @@ void TransfersModel::processUpdateTransfers()
         auto row = mTagByOrder.value(tag).row();
         auto d  = getTransfer(row);
 
-        if(d && d->hasChanged(*it))
+
+        if(d && !d->checkState((*it)->getState()))
         {
+
             (*it)->setPreviousState(d->getState());
 
             if((!isCancelingModeActive() && !isFailingModeActive())
                     && ((*it)->isFinished() || (*it)->isProcessing()))
             {
-                if(d->getState() != (*it)->getState())
-                {
-                    transfersFinished.append((*it));
-                    rowsToRemove.append(index(row,0));
-                }
-                else
-                {
+                //if(d->getState() != (*it)->getState())
+                //{
+                    //transfersFinished.append((*it));
+                    //rowsToRemove.append(index(row,0));
+                //}
+                //else
+                //{
                     updateTransferPriority((*it));
                     mTransfers[row] = (*it);
                     sendDataChanged(row);
-                }
+                //}
             }
             else
             {
                 mTransfers[row] = (*it);
                 sendDataChanged(row);
             }
+
+
         }
 
         mTransfersToProcess.updateTransfersByTag.erase(it++);
     }
 
-    if(!transfersFinished.isEmpty())
-    {
-        removeRows(rowsToRemove);
+//    if(!transfersFinished.isEmpty())
+//    {
+//        removeRows(rowsToRemove);
 
-        processStartTransfers(transfersFinished);
-    }
+//        times.append(timer.nsecsElapsed()/1000000.0);
+
+//        processStartTransfers(transfersFinished);
+
+//        times.append(timer.nsecsElapsed()/1000000.0);
+//    }
 }
 
 void TransfersModel::processFailedTransfers()
@@ -774,8 +781,6 @@ void TransfersModel::processCancelTransfers()
 
         mRowsToCancel.clear();
 
-        QElapsedTimer timer;
-        timer.start();
         removeRows(indexesToCancel);
     }
 }
@@ -1363,7 +1368,7 @@ void TransfersModel::pauseResumeTransferByTag(TransferTag tag, bool pauseState)
             if(d->getState() & TransferData::PAUSABLE_STATES_MASK)
             {
                 bool wasProcessing (d->isProcessing());
-                d->setState(TransferData::TRANSFER_PAUSED);
+                d->setPauseResume(true);
 
                 if(wasProcessing)
                 {
@@ -1373,7 +1378,7 @@ void TransfersModel::pauseResumeTransferByTag(TransferTag tag, bool pauseState)
         }
         else
         {
-            d->setState(TransferData::TRANSFER_QUEUED);
+            d->setPauseResume(false);
         }
 
         sendDataChanged(row);
@@ -1698,9 +1703,9 @@ bool TransfersModel::removeRows(int row, int count, const QModelIndex& parent)
 
         for (auto i (0); i < count; ++i)
         {
-            auto transfer = getTransfer(row);
             removeTransfer(row);
         }
+
         endRemoveRows();
 
         return true;

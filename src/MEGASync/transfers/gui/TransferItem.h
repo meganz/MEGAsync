@@ -68,13 +68,17 @@ public:
         mFileType(dr->mFileType),
         mParentHandle (dr->mParentHandle), mNodeHandle (dr->mNodeHandle), mFailedTransfer(dr->mFailedTransfer),
         mFilename(dr->mFilename), mNodeAccess(mega::MegaShare::ACCESS_UNKNOWN),
-        mPath(dr->mPath), mFinishedTime(dr->mFinishedTime)
+        mPath(dr->mPath), mFinishedTime(dr->mFinishedTime), mIgnorePauseQueueState(dr->mIgnorePauseQueueState)
     {}
 
     void update(mega::MegaTransfer* transfer);
     bool hasChanged(QExplicitlySharedDataPointer<TransferData> data);
     bool stateHasChanged();
     void removeFailedTransfer();
+
+    void setPauseResume(bool isPaused);
+    bool checkState(const TransferState &state);
+    void resetIgnoreUpdateUntilSameState();
 
     TransferTypes                       mType;
     int                                 mErrorCode;
@@ -116,10 +120,11 @@ public:
     QString getFormattedFinishedTime() const;
 
 private:
-    QString   mPath;
-    int64_t   mFinishedTime;
-    TransferState                       mState;
-    TransferState                       mPreviousState;
+    QString         mPath;
+    int64_t         mFinishedTime;
+    TransferState   mState;
+    TransferState   mPreviousState;
+    bool            mIgnorePauseQueueState;
 
 };
 Q_DECLARE_TYPEINFO(TransferData, Q_MOVABLE_TYPE);

@@ -62,7 +62,7 @@ void TransferData::update(mega::MegaTransfer* transfer)
 
         mFileType = Utilities::getFileType(mFilename, QString());
 
-        mState = TransferData::TRANSFER_NONE;
+        mPreviousState = mState;
         mState = static_cast<TransferData::TransferState>(1 << transfer->getState());
         mNotificationNumber = transfer->getNotificationNumber();
         mErrorCode = MegaError::API_OK;
@@ -72,6 +72,7 @@ void TransferData::update(mega::MegaTransfer* transfer)
         mPriority = transfer->getPriority();
         mTransferredBytes = static_cast<unsigned long long>(transfer->getTransferredBytes());
         mTotalSize = static_cast<unsigned long long>(transfer->getTotalBytes());
+        mIgnorePauseQueueState = false;
 
         if(mState & TransferData::FINISHED_STATES_MASK)
         {
@@ -143,6 +144,42 @@ bool TransferData::stateHasChanged()
 void TransferData::removeFailedTransfer()
 {
     mFailedTransfer.reset();
+}
+
+void TransferData::setPauseResume(bool isPaused)
+{
+    if(isPaused)
+    {
+        setState(TransferData::TRANSFER_PAUSED);
+    }
+    else
+    {
+        setState(TransferData::TRANSFER_QUEUED);
+    }
+
+    mIgnorePauseQueueState = true;
+}
+
+bool TransferData::checkState(const TransferState& state)
+{
+    if(mIgnorePauseQueueState)
+    {
+        if(mState == state)
+        {
+            mIgnorePauseQueueState = false;
+        }
+        else if(state != TransferData::TRANSFER_PAUSED && state != TransferData::TRANSFER_QUEUED)
+        {
+            mIgnorePauseQueueState = false;
+        }
+    }
+
+    return mIgnorePauseQueueState;
+}
+
+void TransferData::resetIgnoreUpdateUntilSameState()
+{
+    mIgnorePauseQueueState = false;
 }
 
 void TransferData::setState(const TransferState &state)

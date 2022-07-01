@@ -5,7 +5,7 @@
 
 TransferBaseDelegateWidget::TransferBaseDelegateWidget(QWidget *parent)
     : QWidget(parent),
-      mStateHasChanged(false)
+      mPreviousState(TransferData::TransferState::TRANSFER_NONE)
 {
 
 }
@@ -14,11 +14,7 @@ void TransferBaseDelegateWidget::updateUi(const QExplicitlySharedDataPointer<Tra
 {
     if(!mData || mData->mTag != transferData->mTag)
     {
-        mStateHasChanged = true;
-    }
-    else
-    {
-        mStateHasChanged = mData->getState() != transferData->getState();
+        mPreviousState = TransferData::TransferState::TRANSFER_NONE;
     }
 
     mData = transferData;
@@ -26,11 +22,13 @@ void TransferBaseDelegateWidget::updateUi(const QExplicitlySharedDataPointer<Tra
     setType();
     setFileNameAndType();
     updateTransferState();
+
+    mPreviousState = mData->getState();
 }
 
 bool TransferBaseDelegateWidget::stateHasChanged()
 {
-    return mStateHasChanged;
+    return mPreviousState != mData->getState();
 }
 
 QExplicitlySharedDataPointer<TransferData> TransferBaseDelegateWidget::getData()

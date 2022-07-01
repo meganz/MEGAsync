@@ -54,7 +54,7 @@ private:
     QExplicitlySharedDataPointer<TransferData> mData;
     QModelIndex mCurrentIndex;
     QHash<QWidget*, QString> mLastActionTransferIconName;
-    bool mStateHasChanged;
+    TransferData::TransferState mPreviousState;
 };
 
 #endif // TRANSFERBASEDELEGATEWIDGET
