@@ -82,7 +82,6 @@ protected:
 private slots:
         void onRowsAboutToBeRemoved(const QModelIndex& parent, int first, int last);
         void onModelSortedFiltered();
-        bool onCanceledTransfers(QSet<int> tags);
 
 private:
         ThreadPool* mThreadPool;

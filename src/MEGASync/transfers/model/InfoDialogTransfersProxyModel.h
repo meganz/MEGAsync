@@ -18,10 +18,6 @@ public:
 
     void setSourceModel(QAbstractItemModel* sourceModel) override;
 
-    int rowCount(const QModelIndex &parent) const override;
-
-    void invalidate();
-
 protected slots:
     void onCopyTransferLinkRequested();
     void onOpenTransferFolderRequested();
@@ -31,10 +27,11 @@ protected:
     bool lessThan(const QModelIndex &left, const QModelIndex &right) const override;
     bool filterAcceptsRow(int sourceRow, const QModelIndex& sourceParent) const override;
 
+private slots:
+    void onUpdateMostPriorityTransfer(int tag);
+
 private:
-    mutable unsigned long long mNextTransferPriority;
     mutable int mNextTransferSourceRow;
-    mutable bool mInvalidating;
 
 };
 

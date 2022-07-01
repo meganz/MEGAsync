@@ -106,6 +106,7 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
     connect(app, &MegaApplication::avatarReady, this, &InfoDialog::setAvatar);
 
     connect(app->getTransfersModel(), &TransfersModel::transfersCountUpdated, this, &InfoDialog::updateTransfersCount);
+    connect(app->getTransfersModel(), &TransfersModel::transfersProcessChanged, this, &InfoDialog::onTransfersStateChanged);
 
     //Set window properties
 #ifdef Q_OS_LINUX
@@ -287,6 +288,10 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
     mTransferScanCancelUi = new TransferScanCancelUi(ui->sTabs);
     connect(mTransferScanCancelUi, &TransferScanCancelUi::cancelTransfers,
             this, &InfoDialog::cancelScanning);
+
+    mResetTransferSummaryWidget.setInterval(2000);
+    mResetTransferSummaryWidget.setSingleShot(true);
+    connect(&mResetTransferSummaryWidget, &QTimer::timeout, this, &InfoDialog::onResetTransfersSummaryWidget);
 }
 
 InfoDialog::~InfoDialog()
@@ -566,40 +571,52 @@ void InfoDialog::setUsage()
 
 void InfoDialog::updateTransfersCount()
 {
-    auto TransfersCountUpdated = app->getTransfersModel()->getTransfersCount();
+    auto transfersCountUpdated = app->getTransfersModel()->getTransfersCount();
 
-    ui->bTransferManager->setDownloads(TransfersCountUpdated.completedDownloads(), TransfersCountUpdated.totalDownloads);
-    ui->bTransferManager->setUploads(TransfersCountUpdated.completedUploads(), TransfersCountUpdated.totalUploads);
+    ui->bTransferManager->setDownloads(transfersCountUpdated.completedDownloads(), transfersCountUpdated.totalDownloads);
+    ui->bTransferManager->setUploads(transfersCountUpdated.completedUploads(), transfersCountUpdated.totalUploads);
 
     double percentUploads(0.0);
-    if(TransfersCountUpdated.totalUploadBytes != 0)
+    if(transfersCountUpdated.totalUploadBytes != 0)
     {
-        percentUploads = static_cast<double>(TransfersCountUpdated.completedUploadBytes) / static_cast<double>(TransfersCountUpdated.totalUploadBytes);
+        percentUploads = static_cast<double>(transfersCountUpdated.completedUploadBytes) / static_cast<double>(transfersCountUpdated.totalUploadBytes);
     }
 
     double percentDownloads(0.0);
-    if(TransfersCountUpdated.totalDownloadBytes != 0)
+    if(transfersCountUpdated.totalDownloadBytes != 0)
     {
-        percentDownloads = static_cast<double>(TransfersCountUpdated.completedDownloadBytes)/ static_cast<double>(TransfersCountUpdated.totalDownloadBytes);
+        percentDownloads = static_cast<double>(transfersCountUpdated.completedDownloadBytes)/ static_cast<double>(transfersCountUpdated.totalDownloadBytes);
     }
 
     ui->bTransferManager->setPercentUploads(percentUploads);
     ui->bTransferManager->setPercentDownloads(percentDownloads);
+}
 
-    if (!TransfersCountUpdated.pendingDownloads && !TransfersCountUpdated.pendingUploads
-            && TransfersCountUpdated.totalUploadBytes == TransfersCountUpdated.completedUploadBytes
-            && TransfersCountUpdated.totalDownloadBytes == TransfersCountUpdated.completedDownloadBytes
-            && (TransfersCountUpdated.totalUploads != 0 || TransfersCountUpdated.totalDownloads != 0))
+void InfoDialog::onTransfersStateChanged()
+{
+    auto transfersCountUpdated = app->getTransfersModel()->getTransfersCount();
+
+    if (!transfersCountUpdated.pendingDownloads && !transfersCountUpdated.pendingUploads
+            && transfersCountUpdated.totalUploadBytes == transfersCountUpdated.completedUploadBytes
+            && transfersCountUpdated.totalDownloadBytes == transfersCountUpdated.completedDownloadBytes
+            && (transfersCountUpdated.totalUploads != 0 || transfersCountUpdated.totalDownloads != 0))
     {
         if (!overQuotaState && (ui->sActiveTransfers->currentWidget() != ui->pUpdated))
         {
             updateDialogState();
         }
 
-        QTimer::singleShot(2000, [this](){
-            ui->bTransferManager->reset();
-        });
+        mResetTransferSummaryWidget.start();
     }
+    else
+    {
+        mResetTransferSummaryWidget.stop();
+    }
+}
+
+void InfoDialog::onResetTransfersSummaryWidget()
+{
+    ui->bTransferManager->reset();
 }
 
 void InfoDialog::setIndexing(bool indexing)
@@ -1311,6 +1328,7 @@ void InfoDialog::setPSAannouncement(int id, QString title, QString text, QString
 void InfoDialog::enterBlockingState()
 {
     enableUserActions(false);
+    ui->bTransferManager->setPauseEnabled(false);
     ui->wTabOptions->setVisible(false);
     mTransferScanCancelUi->show();
 }
@@ -1318,6 +1336,7 @@ void InfoDialog::enterBlockingState()
 void InfoDialog::leaveBlockingState()
 {
     enableUserActions(true);
+    ui->bTransferManager->setPauseEnabled(true);
     ui->wTabOptions->setVisible(true);
     mTransferScanCancelUi->hide();
 }

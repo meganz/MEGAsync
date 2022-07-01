@@ -76,7 +76,7 @@ void Utilities::initializeExtensions()
                             extensionIcons[QString::fromAscii("tga")]  = QString::fromAscii("image.png");
 
     extensionIcons[QString::fromAscii("ai")] = extensionIcons[QString::fromAscii("ait")] = QString::fromAscii("illustrator.png");
-    extensionIcons[QString::fromAscii("jpg")] = extensionIcons[QString::fromAscii("jpeg")] = QString::fromAscii("image.png");
+    extensionIcons[QString::fromAscii("jpg")] = extensionIcons[QString::fromAscii("jpeg")] = extensionIcons[QString::fromAscii("heic")] = QString::fromAscii("image.png");
     extensionIcons[QString::fromAscii("indd")] = QString::fromAscii("indesign.png");
 
     extensionIcons[QString::fromAscii("jar")] = extensionIcons[QString::fromAscii("java")]  = extensionIcons[QString::fromAscii("class")]  = QString::fromAscii("web_data.png");
@@ -98,7 +98,7 @@ void Utilities::initializeExtensions()
                             extensionIcons[QString::fromAscii("orf")] = extensionIcons[QString::fromAscii("rwl")]  =
                             extensionIcons[QString::fromAscii("ari")] = extensionIcons[QString::fromAscii("braw")]  =
                             extensionIcons[QString::fromAscii("crw")] = extensionIcons[QString::fromAscii("cr3")]  =
-                            extensionIcons[QString::fromAscii("cap")] = extensionIcons[QString::fromAscii("data")]  =
+                            extensionIcons[QString::fromAscii("cap")] =
                             extensionIcons[QString::fromAscii("dcs")] = extensionIcons[QString::fromAscii("drf")]  =
                             extensionIcons[QString::fromAscii("eip")] = extensionIcons[QString::fromAscii("erf")]  =
                             extensionIcons[QString::fromAscii("gpr")] = extensionIcons[QString::fromAscii("iiq")]  =
@@ -120,7 +120,7 @@ void Utilities::initializeExtensions()
     extensionIcons[QString::fromAscii("dmg")] = QString::fromAscii("dmg.png");
 
     extensionIcons[QString::fromAscii("txt")] = extensionIcons[QString::fromAscii("rtf")]  = extensionIcons[QString::fromAscii("ans")]  =
-                            extensionIcons[QString::fromAscii("ascii")]  = extensionIcons[QString::fromAscii("log")] =
+                            extensionIcons[QString::fromAscii("ascii")] =
                             extensionIcons[QString::fromAscii("odt")] = extensionIcons[QString::fromAscii("wpd")]  =
                             QString::fromAscii("text.png");
 

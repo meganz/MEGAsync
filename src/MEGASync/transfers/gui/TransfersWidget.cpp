@@ -31,11 +31,8 @@ TransfersWidget::TransfersWidget(QWidget* parent) :
     connect(ui->tvTransfers, &MegaTransferView::verticalScrollBarVisibilityChanged, this, &TransfersWidget::onVerticalScrollBarVisibilityChanged);
     connect(ui->tvTransfers, &MegaTransferView::pauseResumeTransfersByContextMenu, this, &TransfersWidget::onPauseResumeTransfer);
 
-    mCheckPauseResumeButtonTimer.setInterval(100);
-    mCheckCancelClearButtonTimer.setInterval(100);
-
-    connect(&mCheckPauseResumeButtonTimer, &QTimer::timeout, this, &TransfersWidget::onCheckPauseResumeButton);
-    connect(&mCheckCancelClearButtonTimer, &QTimer::timeout, this, &TransfersWidget::onCheckCancelClearButton);
+    connect(mModel, &TransfersModel::transfersProcessChanged, this, &TransfersWidget::onCheckPauseResumeButton);
+    connect(mModel, &TransfersModel::transfersProcessChanged, this, &TransfersWidget::onCheckCancelClearButton);
 
     auto leftPaneButtons = ui->wTableHeader->findChildren<QAbstractButton*>();
     foreach(auto& button, leftPaneButtons)
@@ -301,8 +298,6 @@ TransfersWidget::TM_TAB TransfersWidget::getCurrentTab()
 
 void TransfersWidget::updateHeaders()
 {
-    updateTimersState();
-
     //Now, you can check the buttons as the filter is finished
     updateHeaderItems();
 
@@ -365,19 +360,6 @@ void TransfersWidget::changeEvent(QEvent *event)
     QWidget::changeEvent(event);
 }
 
-void TransfersWidget::onDialogHidden()
-{
-    //Do not check buttons while it is hidden
-    mCheckCancelClearButtonTimer.stop();
-    mCheckPauseResumeButtonTimer.stop();
-}
-
-void TransfersWidget::onDialogShown()
-{
-    //Check buttons while it is visible
-    updateTimersState();
-}
-
 bool TransfersWidget::isLoadingViewSet()
 {
     return mLoadingScene.isLoadingViewSet();
@@ -421,10 +403,6 @@ void TransfersWidget::onUiUnblockedAndFilter()
 
 void TransfersWidget::onModelAboutToBeChanged()
 {
-    //Do not update any
-    mCheckCancelClearButtonTimer.stop();
-    mCheckPauseResumeButtonTimer.stop();
-
     onUiBlocked();
 }
 
@@ -433,31 +411,6 @@ void TransfersWidget::onModelChanged()
     onUiUnblocked();
 
     updateHeaders();
-}
-
-void TransfersWidget::updateTimersState()
-{
-    //In Completed, pauseResume always hidden and cancelClear button always shows clear icon
-    //In Failed, pauseResume always shows play button, and cancelClear  button always show cancel icon
-    if (mCurrentTab == TransfersWidget::COMPLETED_TAB || mCurrentTab == TransfersWidget::FAILED_TAB)
-    {
-        mCheckCancelClearButtonTimer.stop();
-        mCheckPauseResumeButtonTimer.stop();
-    }
-    else if ((mCurrentTab > TransfersWidget::TYPES_TAB_BASE && mCurrentTab < TransfersWidget::TYPES_LAST)
-             || mCurrentTab == TransfersWidget::SEARCH_TAB)
-    {
-        mCheckCancelClearButtonTimer.start();
-        mCheckPauseResumeButtonTimer.start();
-    }
-    //UPLOAD // DOWNLOAD // ALL_TRANSFERS
-    //cancelClear button always shows cancel icon
-    else
-    {
-        mCheckCancelClearButtonTimer.stop();
-        mCheckPauseResumeButtonTimer.start();
-    }
-
 }
 
 void TransfersWidget::onPauseResumeTransfer(bool pause)
@@ -473,7 +426,7 @@ void TransfersWidget::onCancelClearButtonPressedOnDelegate()
     auto sourceSelection= mProxyModel->mapSelectionToSource(selection);
     auto sourceSelectionIndexes = sourceSelection.indexes();
 
-    auto action = ui->tvTransfers->getSelectedAction();
+    auto action = ui->tvTransfers->getSelectedCancelOrClearText();
 
     QPointer<TransfersWidget> dialog = QPointer<TransfersWidget>(this);
 
@@ -511,11 +464,7 @@ void TransfersWidget::onRetryButtonPressedOnDelegate()
 
 void TransfersWidget::on_tPauseResumeVisible_toggled(bool state)
 {
-    mCheckPauseResumeButtonTimer.stop();
-
     emit pauseResumeVisibleRows(state);
-
-    updateTimersState();
 }
 
 void TransfersWidget::onVerticalScrollBarVisibilityChanged(bool state)

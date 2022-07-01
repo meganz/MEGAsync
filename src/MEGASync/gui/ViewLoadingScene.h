@@ -74,7 +74,7 @@ private slots:
                 mOpacity += mOpacitySteps;
             }
 
-            mView->update();
+            mView->viewport()->update();
         }
     }
 

@@ -155,6 +155,9 @@ private slots:
 
     void updateTransfersCount();
 
+    void onResetTransfersSummaryWidget();
+    void onTransfersStateChanged();
+
 signals:
     void openTransferManager(int tab);
     void dismissStorageOverquota(bool oq);
@@ -240,6 +243,7 @@ protected:
     QTimer downloadsFinishedTimer;
     QTimer uploadsFinishedTimer;
     QTimer transfersFinishedTimer;
+    QTimer mResetTransferSummaryWidget;
     MegaApplication *app;
     std::shared_ptr<Preferences> preferences;
     Model *model;

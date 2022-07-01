@@ -64,12 +64,6 @@ void TransfersManagerSortFilterProxyModel::setSourceModel(QAbstractItemModel *so
     connect(sourceModel, &QAbstractItemModel::rowsAboutToBeRemoved,
             this, &TransfersManagerSortFilterProxyModel::onRowsAboutToBeRemoved, Qt::DirectConnection);
 
-    if(auto transferModel = dynamic_cast<TransfersModel*>(sourceModel))
-    {
-        connect(transferModel, &TransfersModel::canceledTransfers,
-                this, &TransfersManagerSortFilterProxyModel::onCanceledTransfers);
-    }
-
     QSortFilterProxyModel::setSourceModel(sourceModel);
 }
 
@@ -321,35 +315,6 @@ void TransfersManagerSortFilterProxyModel::onRowsAboutToBeRemoved(const QModelIn
    {
        searchNumbersChanged();
    }
-}
-
-bool TransfersManagerSortFilterProxyModel::onCanceledTransfers(QSet<int> tags)
-{
-    bool searchRowsRemoved(false);
-
-    auto sourceM = qobject_cast<TransfersModel*>(sourceModel());
-    if(sourceM)
-    {
-        foreach(auto tag, tags)
-        {
-            if(!mFilterText.isEmpty())
-            {
-                mUlNumber.remove(tag);
-                searchRowsRemoved = true;
-            }
-
-            removeNonSyncedTransferFromCounter(tag);
-            removeActiveTransferFromCounter(tag);
-            removePausedTransferFromCounter(tag);
-        }
-
-        if(searchRowsRemoved)
-        {
-            searchNumbersChanged();
-        }
-    }
-
-    return searchRowsRemoved;
 }
 
 bool TransfersManagerSortFilterProxyModel::updateTransfersCounterFromTag(QExplicitlySharedDataPointer<TransferData> transfer) const

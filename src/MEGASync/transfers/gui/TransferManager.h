@@ -67,8 +67,6 @@ protected:
     void dragLeaveEvent(QDragLeaveEvent* event) override;
     void dropEvent(QDropEvent *event) override;
     void mouseReleaseEvent(QMouseEvent *event) override;
-    void showEvent(QShowEvent*) override;
-    void hideEvent(QHideEvent*) override;
 
 private:
     static const int SPEED_REFRESH_PERIOD_MS = 700;

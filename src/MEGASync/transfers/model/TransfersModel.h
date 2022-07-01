@@ -210,6 +210,7 @@ public:
     bool areAllPaused() const;
 
      QExplicitlySharedDataPointer<TransferData> getTransferByTag(int tag) const;
+     void sendDataChangedByTag(int tag);
 
 signals:
     void pauseStateChanged(bool pauseState);
@@ -224,10 +225,12 @@ signals:
     void transferFinished(const QModelIndex& index);
     void internalMoveStarted() const;
     void internalMoveFinished() const;
-    void canceledTransfers(QSet<int> tags);
+    void mostPriorityTransferUpdate(int tag);
+    void transfersProcessChanged();
 
 public slots:
     void pauseResumeAllTransfers(bool state);
+    void askForMostPriorityTransfer();
 
 private slots:
     void processStartTransfers(QList<QExplicitlySharedDataPointer<TransferData>>& transfersToStart);
@@ -254,6 +257,9 @@ private:
     bool isCancelingModeActive() const ;
     void setCancelingMode(bool state);
 
+    void modelHasChanged(bool state);
+
+    void mostPriorityTransferMayChanged(bool state);
     void updateTransferPriority(QExplicitlySharedDataPointer<TransferData> transfer);
 
 private:
@@ -270,6 +276,9 @@ private:
     TransferThread::TransfersToProcess mTransfersToProcess;
     QFutureWatcher<void> mCancelWatcher;
 
+    uint8_t mTransfersProcessChanged;
+
+    uint8_t mUpdateMostPriorityTransfer;
     uint8_t mCancelingMode;
     uint8_t mFailingMode;
     uint8_t mStartingMode;
@@ -277,6 +286,7 @@ private:
     QHash<TransferTag, QPersistentModelIndex> mTagByOrder;
     QList<TransferTag> mRowsToCancel;
     mutable QMutex mModelMutex;
+    QTimer mMostPriorityTransferTimer;
 
     bool mAreAllPaused;
     bool mModelReset;

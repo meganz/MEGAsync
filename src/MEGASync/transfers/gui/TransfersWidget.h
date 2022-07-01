@@ -59,9 +59,6 @@ public:
     TM_TAB getCurrentTab();
     void setScanningWidgetVisible(bool state);
 
-    void onDialogHidden();
-    void onDialogShown();
-
     bool isLoadingViewSet();
 
     struct CancelClearButtonInfo
@@ -130,11 +127,7 @@ private:
 
     void configureTransferView();
     void clearOrCancel(const QList<QExplicitlySharedDataPointer<TransferData>>& pool, int state, int firstRow);
-    void updateTimersState();
     void updateHeaderItems();
-
-    QTimer mCheckPauseResumeButtonTimer;
-    QTimer mCheckCancelClearButtonTimer;
 
 signals:
     void clearTransfers(int firstRow, int amount);
