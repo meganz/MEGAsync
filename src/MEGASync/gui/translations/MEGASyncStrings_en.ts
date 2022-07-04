@@ -396,11 +396,6 @@
         <translation><numerusform>[A] removed %n item</numerusform><numerusform>[A] removed %n items</numerusform></translation>
     </message>
     <message>
-        <source>Decryption error</source>
-        <translatorcomment>Label to indicate a decryption error for a folder name. Replacement for old NO_KEY term.</translatorcomment>
-        <translation>Decryption error</translation>
-    </message>
-    <message>
         <source>New shared folder from [A]</source>
         <translatorcomment>Label to indicate that [A] shared a folder with current user. Placeholder will be replaced by email of sharer user.</translatorcomment>
         <translation>New shared folder from [A]</translation>
@@ -1481,11 +1476,6 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <source>Select local folder</source>
         <translatorcomment>Title of the dialog in which the user select the local default folder.for downloads.</translatorcomment>
         <translation>Select local folder</translation>
-    </message>
-    <message>
-        <source>Decryption error</source>
-        <translatorcomment>Label to indicate a Decryption error due to a problem with the KEYS</translatorcomment>
-        <translation>Decryption error</translation>
     </message>
     <message>
         <source>Not found</source>
@@ -2597,6 +2587,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translatorcomment>Error label to indicate a situation of storage quota exceeded and the user needs to upgrade now in order to continue working with the account.</translatorcomment>
         <translation>Storage Quota Exceeded. Please upgrade now</translation>
     </message>
+    <message>
+        <source>Decryption error</source>
+        <translatorcomment>String shown when a file/folder name can not be decrypted.</translatorcomment>
+        <translation>Decryption error</translation>
+    </message>
 </context>
 <context>
     <name>MegaInfoMessage</name>
@@ -3098,11 +3093,6 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translation>Select a MEGA folder</translation>
     </message>
     <message numerus="yes">
-        <source>Item selection removed. To reselect, close this window and try again.</source>
-        <translatorcomment>Error message shown while the user is trying to download an file or folder but it is removed using another client</translatorcomment>
-        <translation><numerusform>Item selection removed. To reselect, close this window and try again.</numerusform><numerusform>Items selection removed. To reselect, close this window and try again.</numerusform></translation>
-    </message>
-    <message numerus="yes">
         <source>You no longer have access to this item. Ask the owner to share again.</source>
         <translatorcomment>Error message shown when the user is trying to download an file or folder from an incoming share and the owner stops sharing/removes all items</translatorcomment>
         <translation><numerusform>You no longer have access to this item. Ask the owner to share again.</numerusform><numerusform>You no longer have access to these items. Ask the owner to share again.</numerusform></translation>
@@ -3116,6 +3106,27 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <source>Incoming shares</source>
         <translatorcomment>Node selector button Text. Switch the view to show only the incoming shares nodes (files and folders)</translatorcomment>
         <translation>Incoming shares</translation>
+    </message>
+    <message>
+        <source>Error:</source>
+        <translation>Error:</translation>
+    </message>
+    <message numerus="yes">
+        <source>The item you selected has been removed. To reselect, close this window and try again.</source>
+        <translatorcomment>Error message shown while the user is trying to download an file or folder but all selected nodes were removed</translatorcomment>
+        <translation><numerusform>The item you selected has been removed. To reselect, close this window and try again.</numerusform><numerusform>The items you selected have been removed. To reselect, close this window and try again.</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>%1 item selected</source>
+        <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
+                           First part of string for multi plural support. Full string looks like: 5 items selected. 2 have been removed. To reselect, close this window and try again. </translatorcomment>
+        <translation><numerusform>%1 item selected</numerusform><numerusform>%1 items selected</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>%1. %2 has been removed. To reselect, close this window and try again.</source>
+        <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
+                           Second and last part of string for multi plural support. Full string looks like: 5 items selected. 2 have been removed. To reselect, close this window and try again. </translatorcomment>
+        <translation><numerusform>%1. %2 has been removed. To reselect, close this window and try again.</numerusform><numerusform>%1. %2 have been removed. To reselect, close this window and try again.</numerusform></translation>
     </message>
 </context>
 <context>

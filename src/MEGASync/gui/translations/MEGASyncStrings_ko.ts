@@ -396,11 +396,6 @@
         <translation><numerusform>[A]님이 %n개 항목 삭제</numerusform></translation>
     </message>
     <message>
-        <source>Decryption error</source>
-        <translatorcomment>Label to indicate a decryption error for a folder name. Replacement for old NO_KEY term.</translatorcomment>
-        <translation>복호화 오류</translation>
-    </message>
-    <message>
         <source>New shared folder from [A]</source>
         <translatorcomment>Label to indicate that [A] shared a folder with current user. Placeholder will be replaced by email of sharer user.</translatorcomment>
         <translation>[A]님의 새 공유 폴더</translation>
@@ -1482,11 +1477,6 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <source>Select local folder</source>
         <translatorcomment>Title of the dialog in which the user select the local default folder.for downloads.</translatorcomment>
         <translation>로컬 폴더 선택</translation>
-    </message>
-    <message>
-        <source>Decryption error</source>
-        <translatorcomment>Label to indicate a Decryption error due to a problem with the KEYS</translatorcomment>
-        <translation>복호화 오류</translation>
     </message>
     <message>
         <source>Not found</source>
@@ -2598,6 +2588,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translatorcomment>Error label to indicate a situation of storage quota exceeded and the user needs to upgrade now in order to continue working with the account.</translatorcomment>
         <translation>저장소 할당량 초과. 지금 업그레이드 하세요</translation>
     </message>
+    <message>
+        <source>Decryption error</source>
+        <translatorcomment>String shown when a file/folder name can not be decrypted.</translatorcomment>
+        <translation>복호화 오류</translation>
+    </message>
 </context>
 <context>
     <name>MegaInfoMessage</name>
@@ -3099,11 +3094,6 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translation>MEGA 폴더 선택</translation>
     </message>
     <message numerus="yes">
-        <source>Item selection removed. To reselect, close this window and try again.</source>
-        <translatorcomment>Error message shown while the user is trying to download an file or folder but it is removed using another client</translatorcomment>
-        <translation><numerusform>항목 선택이 제거되었습니다. 다시 선택하려면, 이 창을 닫고 다시 시도하세요.</numerusform></translation>
-    </message>
-    <message numerus="yes">
         <source>You no longer have access to this item. Ask the owner to share again.</source>
         <translatorcomment>Error message shown when the user is trying to download an file or folder from an incoming share and the owner stops sharing/removes all items</translatorcomment>
         <translation><numerusform>이 항목에 더 이상 접근할 수 없습니다. 소유자에게 다시 공유를 요청하세요.</numerusform></translation>
@@ -3117,6 +3107,27 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <source>Incoming shares</source>
         <translatorcomment>Node selector button Text. Switch the view to show only the incoming shares nodes (files and folders)</translatorcomment>
         <translation>들어오는 공유</translation>
+    </message>
+    <message>
+        <source>Error:</source>
+        <translation>오류: </translation>
+    </message>
+    <message numerus="yes">
+        <source>The item you selected has been removed. To reselect, close this window and try again.</source>
+        <translatorcomment>Error message shown while the user is trying to download an file or folder but all selected nodes were removed</translatorcomment>
+        <translation><numerusform>선택한 항목이 제거되었습니다. 다시 선택하려면, 이 창을 닫고 다시 시도하세요.</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>%1 item selected</source>
+        <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
+                           First part of string for multi plural support. Full string looks like: 5 items selected. 2 have been removed. To reselect, close this window and try again. </translatorcomment>
+        <translation><numerusform>%1개 항목이 선택되었습니다</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>%1. %2 has been removed. To reselect, close this window and try again.</source>
+        <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
+                           Second and last part of string for multi plural support. Full string looks like: 5 items selected. 2 have been removed. To reselect, close this window and try again. </translatorcomment>
+        <translation><numerusform>%1. %2 제거되었습니다. 다시 선택하려면, 이 창을 닫고 다시 시도하세요.</numerusform></translation>
     </message>
 </context>
 <context>
@@ -3876,7 +3887,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Shortcut</source>
         <translatorcomment>Label for shourcut in all other platforms</translatorcomment>
-        <translation>바로 가기</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Unknown</source>
@@ -3941,7 +3952,7 @@ Please verify the correct directory name was given.</source>
         <source>%1 already exists.
 Do you want to replace it?</source>
         <translatorcomment>Warning message thrown when the file alredy exists when saving</translatorcomment>
-        <translation>%1이/가 이미 존재합니다.
+        <translation>%1 파일은 이미 존재합니다.
 바꾸시겠습니까?</translation>
     </message>
     <message>
@@ -4615,7 +4626,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Saving Sync settings</source>
         <translatorcomment>Not used currently. Might get removed in a future refactoring.</translatorcomment>
-        <translation>동기화 설정 저장 중</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Restart MEGAsync</source>

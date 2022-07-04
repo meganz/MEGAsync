@@ -396,11 +396,6 @@
         <translation><numerusform>[A] a supprimé %n élément</numerusform><numerusform>[A] a supprimé %n d’éléments</numerusform><numerusform>[A] a supprimé %n éléments</numerusform></translation>
     </message>
     <message>
-        <source>Decryption error</source>
-        <translatorcomment>Label to indicate a decryption error for a folder name. Replacement for old NO_KEY term.</translatorcomment>
-        <translation>Erreur de déchiffrement</translation>
-    </message>
-    <message>
         <source>New shared folder from [A]</source>
         <translatorcomment>Label to indicate that [A] shared a folder with current user. Placeholder will be replaced by email of sharer user.</translatorcomment>
         <translation>Nouveau dossier partagé de [A]</translation>
@@ -1483,11 +1478,6 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation>Sélectionner un dossier local</translation>
     </message>
     <message>
-        <source>Decryption error</source>
-        <translatorcomment>Label to indicate a Decryption error due to a problem with the KEYS</translatorcomment>
-        <translation>Erreur de déchiffrement</translation>
-    </message>
-    <message>
         <source>Not found</source>
         <translatorcomment>Label to indicate that an imported link can&apos;t be found.</translatorcomment>
         <translation>Introuvable</translation>
@@ -2477,7 +2467,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Out of range</source>
         <translatorcomment>Label to show that an error of Out of range occurs during a SDK operation.</translatorcomment>
-        <translation>Hors échelle</translation>
+        <translation>Hors limite</translation>
     </message>
     <message>
         <source>Expired</source>
@@ -2596,6 +2586,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Storage Quota Exceeded. Upgrade now</source>
         <translatorcomment>Error label to indicate a situation of storage quota exceeded and the user needs to upgrade now in order to continue working with the account.</translatorcomment>
         <translation>Le quota d’espace de stockage a été dépassé. Veuillez surclasser votre compte maintenant</translation>
+    </message>
+    <message>
+        <source>Decryption error</source>
+        <translatorcomment>String shown when a file/folder name can not be decrypted.</translatorcomment>
+        <translation>Erreur de déchiffrement</translation>
     </message>
 </context>
 <context>
@@ -3098,11 +3093,6 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translation>Sélectionner un dossier MEGA</translation>
     </message>
     <message numerus="yes">
-        <source>Item selection removed. To reselect, close this window and try again.</source>
-        <translatorcomment>Error message shown while the user is trying to download an file or folder but it is removed using another client</translatorcomment>
-        <translation><numerusform>L’éléments a été dessélectionné. Pour en resélectionner, fermez cette fenêtre et réessayez.</numerusform><numerusform>Les éléments ont été dessélectionnés. Pour en resélectionner, fermez cette fenêtre et réessayez.</numerusform><numerusform>Les éléments ont été dessélectionnés. Pour en resélectionner, fermez cette fenêtre et réessayez.</numerusform></translation>
-    </message>
-    <message numerus="yes">
         <source>You no longer have access to this item. Ask the owner to share again.</source>
         <translatorcomment>Error message shown when the user is trying to download an file or folder from an incoming share and the owner stops sharing/removes all items</translatorcomment>
         <translation><numerusform>Vous n’avez plus accès à cet élément. Demandez au propriétaire de le partager de nouveau.</numerusform><numerusform>Vous n’avez plus accès à ces éléments. Demandez au propriétaire de les partager de nouveau.</numerusform><numerusform>Vous n’avez plus accès à ces éléments. Demandez au propriétaire de les partager de nouveau.</numerusform></translation>
@@ -3116,6 +3106,27 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <source>Incoming shares</source>
         <translatorcomment>Node selector button Text. Switch the view to show only the incoming shares nodes (files and folders)</translatorcomment>
         <translation>Partages entrants</translation>
+    </message>
+    <message>
+        <source>Error:</source>
+        <translation>Erreur :</translation>
+    </message>
+    <message numerus="yes">
+        <source>The item you selected has been removed. To reselect, close this window and try again.</source>
+        <translatorcomment>Error message shown while the user is trying to download an file or folder but all selected nodes were removed</translatorcomment>
+        <translation><numerusform>L’élément que vous avez sélectionné a été supprimé. Pour resélectionner, fermez cette fenêtre et réessayez.</numerusform><numerusform>Les éléments que vous avez sélectionnés ont été supprimés. Pour resélectionner, fermez cette fenêtre et réessayez.</numerusform><numerusform>Les éléments que vous avez sélectionnés ont été supprimés. Pour resélectionner, fermez cette fenêtre et réessayez.</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>%1 item selected</source>
+        <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
+                           First part of string for multi plural support. Full string looks like: 5 items selected. 2 have been removed. To reselect, close this window and try again. </translatorcomment>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>%1. %2 has been removed. To reselect, close this window and try again.</source>
+        <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
+                           Second and last part of string for multi plural support. Full string looks like: 5 items selected. 2 have been removed. To reselect, close this window and try again. </translatorcomment>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
 </context>
 <context>

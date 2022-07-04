@@ -396,11 +396,6 @@
         <translation><numerusform>[A]heeft %n item verwijderd</numerusform><numerusform>[A]heeft %n items verwijderd</numerusform></translation>
     </message>
     <message>
-        <source>Decryption error</source>
-        <translatorcomment>Label to indicate a decryption error for a folder name. Replacement for old NO_KEY term.</translatorcomment>
-        <translation>Decoderingsfout</translation>
-    </message>
-    <message>
         <source>New shared folder from [A]</source>
         <translatorcomment>Label to indicate that [A] shared a folder with current user. Placeholder will be replaced by email of sharer user.</translatorcomment>
         <translation>Nieuwe gedeelde map van [A]</translation>
@@ -1483,11 +1478,6 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation>Selecteer lokale map</translation>
     </message>
     <message>
-        <source>Decryption error</source>
-        <translatorcomment>Label to indicate a Decryption error due to a problem with the KEYS</translatorcomment>
-        <translation>Decoderingsfout</translation>
-    </message>
-    <message>
         <source>Not found</source>
         <translatorcomment>Label to indicate that an imported link can&apos;t be found.</translatorcomment>
         <translation>Niet gevonden</translation>
@@ -1721,7 +1711,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Open Preferences</source>
         <translatorcomment>Button label to open MEGAsync preferences dialog (MacOS).</translatorcomment>
-        <translation>Open voorkeuren</translation>
+        <translation>Voorkeuren openen</translation>
     </message>
     <message>
         <source>Open Settings</source>
@@ -2359,12 +2349,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>One or more syncs have been disabled. Go to preferences to enable them again.</source>
         <translatorcomment>Warning message shown when logging into MEGAsync to inform the user that some syncs have been disabled and need to go to settings to enable them again (macOS)</translatorcomment>
-        <translation>Een of meer synchronisaties zijn uitgeschakeld. Ga naar voorkeuren om ze weer in te schakelen.</translation>
+        <translation>Een of meer synchronisaties zijn uitgeschakeld. Ga naar Voorkeuren om ze weer in te schakelen.</translation>
     </message>
     <message>
         <source>Open Preferences</source>
         <translatorcomment>Button label to open MEGAsync preferences dialog (MacOS).</translatorcomment>
-        <translation>Voorkeuren Openen</translation>
+        <translation>Voorkeuren openen</translation>
     </message>
     <message>
         <source>Open Settings</source>
@@ -2596,6 +2586,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Storage Quota Exceeded. Upgrade now</source>
         <translatorcomment>Error label to indicate a situation of storage quota exceeded and the user needs to upgrade now in order to continue working with the account.</translatorcomment>
         <translation>Opslag Tegoed Overschreden. A.u.b upgrade nu</translation>
+    </message>
+    <message>
+        <source>Decryption error</source>
+        <translatorcomment>String shown when a file/folder name can not be decrypted.</translatorcomment>
+        <translation>Decoderingsfout</translation>
     </message>
 </context>
 <context>
@@ -3098,11 +3093,6 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translation>Selecteer een MEGA map</translation>
     </message>
     <message numerus="yes">
-        <source>Item selection removed. To reselect, close this window and try again.</source>
-        <translatorcomment>Error message shown while the user is trying to download an file or folder but it is removed using another client</translatorcomment>
-        <translation><numerusform>Itemselectie verwijderd. Om te herselecteren, sluit dit venster en probeer nogmaals.</numerusform><numerusform>Itemselectie verwijderd. Om te herselecteren, sluit dit venster en probeer nogmaals.</numerusform></translation>
-    </message>
-    <message numerus="yes">
         <source>You no longer have access to this item. Ask the owner to share again.</source>
         <translatorcomment>Error message shown when the user is trying to download an file or folder from an incoming share and the owner stops sharing/removes all items</translatorcomment>
         <translation><numerusform>U heeft niet langer toegang tot dit item. Vraag de eigenaar om het opnieuw te delen</numerusform><numerusform>U heeft niet langer toegang tot deze items. Vraag de eigenaar om het opnieuw te delen</numerusform></translation>
@@ -3116,6 +3106,27 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <source>Incoming shares</source>
         <translatorcomment>Node selector button Text. Switch the view to show only the incoming shares nodes (files and folders)</translatorcomment>
         <translation>Binnenkomende delingen</translation>
+    </message>
+    <message>
+        <source>Error:</source>
+        <translation>Fout:</translation>
+    </message>
+    <message numerus="yes">
+        <source>The item you selected has been removed. To reselect, close this window and try again.</source>
+        <translatorcomment>Error message shown while the user is trying to download an file or folder but all selected nodes were removed</translatorcomment>
+        <translation><numerusform>Het item die u had geselecteed was verwijderd. Om te herselecteren, sluit dit venster en probeer nogmaals.</numerusform><numerusform>De items die u had selecteerd zijn verwijderd. Om te herselecteren, sluit dit venster en probeer nogmaals.</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>%1 item selected</source>
+        <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
+                           First part of string for multi plural support. Full string looks like: 5 items selected. 2 have been removed. To reselect, close this window and try again. </translatorcomment>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>%1. %2 has been removed. To reselect, close this window and try again.</source>
+        <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
+                           Second and last part of string for multi plural support. Full string looks like: 5 items selected. 2 have been removed. To reselect, close this window and try again. </translatorcomment>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
 </context>
 <context>

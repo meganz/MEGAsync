@@ -396,11 +396,6 @@
         <translation><numerusform>[A] eliminou %n item</numerusform><numerusform>[A] eliminou %n de itens</numerusform><numerusform>[A] eliminou %n itens</numerusform></translation>
     </message>
     <message>
-        <source>Decryption error</source>
-        <translatorcomment>Label to indicate a decryption error for a folder name. Replacement for old NO_KEY term.</translatorcomment>
-        <translation>Erro de decodificação</translation>
-    </message>
-    <message>
         <source>New shared folder from [A]</source>
         <translatorcomment>Label to indicate that [A] shared a folder with current user. Placeholder will be replaced by email of sharer user.</translatorcomment>
         <translation>Nova pasta compartilhada por [A]</translation>
@@ -1481,11 +1476,6 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <source>Select local folder</source>
         <translatorcomment>Title of the dialog in which the user select the local default folder.for downloads.</translatorcomment>
         <translation>Selecionar pasta local</translation>
-    </message>
-    <message>
-        <source>Decryption error</source>
-        <translatorcomment>Label to indicate a Decryption error due to a problem with the KEYS</translatorcomment>
-        <translation>Erro de decodificação</translation>
     </message>
     <message>
         <source>Not found</source>
@@ -2597,6 +2587,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translatorcomment>Error label to indicate a situation of storage quota exceeded and the user needs to upgrade now in order to continue working with the account.</translatorcomment>
         <translation>Cota de armazenamento excedida. Por favor, faça um upgrade</translation>
     </message>
+    <message>
+        <source>Decryption error</source>
+        <translatorcomment>String shown when a file/folder name can not be decrypted.</translatorcomment>
+        <translation>Erro de decodificação</translation>
+    </message>
 </context>
 <context>
     <name>MegaInfoMessage</name>
@@ -3098,11 +3093,6 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translation>Selecione uma pasta no MEGA</translation>
     </message>
     <message numerus="yes">
-        <source>Item selection removed. To reselect, close this window and try again.</source>
-        <translatorcomment>Error message shown while the user is trying to download an file or folder but it is removed using another client</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
-    </message>
-    <message numerus="yes">
         <source>You no longer have access to this item. Ask the owner to share again.</source>
         <translatorcomment>Error message shown when the user is trying to download an file or folder from an incoming share and the owner stops sharing/removes all items</translatorcomment>
         <translation><numerusform>Você já não tem acesso a este item - o proprietário deve compartilhá-lo novamente.</numerusform><numerusform>Você já não tem acesso a estes itens - o proprietário deve compartilhá-los novamente.</numerusform><numerusform>Você já não tem acesso a estes itens - o proprietário deve compartilhá-los novamente.</numerusform></translation>
@@ -3116,6 +3106,27 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <source>Incoming shares</source>
         <translatorcomment>Node selector button Text. Switch the view to show only the incoming shares nodes (files and folders)</translatorcomment>
         <translation>Compartilhado comigo</translation>
+    </message>
+    <message>
+        <source>Error:</source>
+        <translation>Erro:</translation>
+    </message>
+    <message numerus="yes">
+        <source>The item you selected has been removed. To reselect, close this window and try again.</source>
+        <translatorcomment>Error message shown while the user is trying to download an file or folder but all selected nodes were removed</translatorcomment>
+        <translation><numerusform>O item que você selecionou foi eliminado. Para selecionar outra vez, feche esta janela e tente novamente.</numerusform><numerusform>Os itens que você selecionou foram eliminados. Para selecionar outra vez, feche esta janela e tente novamente.</numerusform><numerusform>Os itens que você selecionou foram eliminados. Para selecionar outra vez, feche esta janela e tente novamente.</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>%1 item selected</source>
+        <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
+                           First part of string for multi plural support. Full string looks like: 5 items selected. 2 have been removed. To reselect, close this window and try again. </translatorcomment>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>%1. %2 has been removed. To reselect, close this window and try again.</source>
+        <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
+                           Second and last part of string for multi plural support. Full string looks like: 5 items selected. 2 have been removed. To reselect, close this window and try again. </translatorcomment>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
 </context>
 <context>
@@ -3193,7 +3204,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Info notifications</source>
         <translatorcomment>Title of a checkbox for disconnectig secondary info notifications</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Notificações informativas</translation>
     </message>
 </context>
 <context>
@@ -3209,7 +3220,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message numerus="yes">
         <source>[A] removed %n item</source>
         <translatorcomment>Label to indicate that [A] has removed %n items from a shared folder. Placeholder [A] will be replaced by email of the user that made the deletion and %n with the number of removed items.</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>[A] eliminou %n item</numerusform><numerusform>[A] eliminou %n de itens</numerusform><numerusform>[A] eliminou %n itens</numerusform></translation>
     </message>
 </context>
 <context>
@@ -3547,7 +3558,11 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 - Fixed detected crashes on Windows, Linux and macOS.
 </source>
         <translatorcomment>Changelog for version 4.6.7</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>- Novo design do seletor de arquivos remoto.
+- Resolução de problemas de tradução.
+- Outras pequenas correções e ajustes na interface do usuário.
+- Correção de falhas detectadas em Windows, Linux e macOS.
+</translation>
     </message>
 </context>
 <context>
@@ -4695,7 +4710,7 @@ Do you want to restart MEGAsync now?</source>
     <message numerus="yes">
         <source>Used quota for the last %n hour:</source>
         <translatorcomment>Informative text shown in Account pane for Free account type. Indicates the used quota in the last %n specified number of hours. Keep the %n subsitution argument.</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Cota usada na última hora:</numerusform><numerusform>Cota usada nos últimos %n de horas:</numerusform><numerusform>Cota usada nas últimas %n horas:</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>day</source>
@@ -5058,12 +5073,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Enjoy MEGAsync</source>
         <translatorcomment>Label displayed when user completes the setup wizard</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Aproveite o MEGAsync</translation>
     </message>
     <message>
         <source>We are all done</source>
         <translatorcomment>Label shown when the user completes the initial setup wizard</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Terminamos</translation>
     </message>
 </context>
 <context>
@@ -5365,7 +5380,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Syncs aren&apos;t affected by this action.</source>
         <translatorcomment>Description label for warning dialog indicating that syncs are not going to be affected by accepting this dialog</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>As sincronizações não serão afetadas por esta ação.</translation>
     </message>
 </context>
 <context>
