@@ -1786,7 +1786,7 @@ void MegaApplication::exitApplication(bool force)
             trayIcon->hide();
             closeDialogs();
 
-            QApplication::exit();
+                QApplication::exit();
         }
         else if (gCrashableForTesting)
         {
@@ -2188,6 +2188,14 @@ void MegaApplication::cleanAll()
     removeAllFinishedTransfers();
     clearViewedTransfers();
 
+    if(mBlockingBatch.isValid())
+    {
+        mBlockingBatch.cancelTransfer();
+    }
+
+    delete mTransfersModel;
+    mTransfersModel = nullptr;
+
     delete storageOverquotaDialog;
     storageOverquotaDialog = NULL;
     delete infoWizard;
@@ -2228,9 +2236,6 @@ void MegaApplication::cleanAll()
     // that may try to access megaApi after
     // their deletion
     QApplication::processEvents();
-
-    delete mTransfersModel;
-    mTransfersModel = nullptr;
 
     delete megaApi;
     megaApi = NULL;

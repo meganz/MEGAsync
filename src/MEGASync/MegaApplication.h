@@ -546,7 +546,7 @@ protected:
     QMutex mMutexOpenUrls;
     QMap<QString, std::chrono::system_clock::time_point> mOpenUrlsClusterTs;
 
-    TransfersModel* mTransfersModel;
+    QPointer<TransfersModel> mTransfersModel;
 
     ScanStageController scanStageController;
     DialogGeometryRetainer<TransferManager> mTransferManagerGeometryRetainer;

@@ -571,46 +571,52 @@ void InfoDialog::setUsage()
 
 void InfoDialog::updateTransfersCount()
 {
-    auto transfersCountUpdated = app->getTransfersModel()->getTransfersCount();
-
-    ui->bTransferManager->setDownloads(transfersCountUpdated.completedDownloads(), transfersCountUpdated.totalDownloads);
-    ui->bTransferManager->setUploads(transfersCountUpdated.completedUploads(), transfersCountUpdated.totalUploads);
-
-    double percentUploads(0.0);
-    if(transfersCountUpdated.totalUploadBytes != 0)
+    if(app->getTransfersModel())
     {
-        percentUploads = static_cast<double>(transfersCountUpdated.completedUploadBytes) / static_cast<double>(transfersCountUpdated.totalUploadBytes);
-    }
+        auto transfersCountUpdated = app->getTransfersModel()->getTransfersCount();
 
-    double percentDownloads(0.0);
-    if(transfersCountUpdated.totalDownloadBytes != 0)
-    {
-        percentDownloads = static_cast<double>(transfersCountUpdated.completedDownloadBytes)/ static_cast<double>(transfersCountUpdated.totalDownloadBytes);
-    }
+        ui->bTransferManager->setDownloads(transfersCountUpdated.completedDownloads(), transfersCountUpdated.totalDownloads);
+        ui->bTransferManager->setUploads(transfersCountUpdated.completedUploads(), transfersCountUpdated.totalUploads);
 
-    ui->bTransferManager->setPercentUploads(percentUploads);
-    ui->bTransferManager->setPercentDownloads(percentDownloads);
+        double percentUploads(0.0);
+        if(transfersCountUpdated.totalUploadBytes != 0)
+        {
+            percentUploads = static_cast<double>(transfersCountUpdated.completedUploadBytes) / static_cast<double>(transfersCountUpdated.totalUploadBytes);
+        }
+
+        double percentDownloads(0.0);
+        if(transfersCountUpdated.totalDownloadBytes != 0)
+        {
+            percentDownloads = static_cast<double>(transfersCountUpdated.completedDownloadBytes)/ static_cast<double>(transfersCountUpdated.totalDownloadBytes);
+        }
+
+        ui->bTransferManager->setPercentUploads(percentUploads);
+        ui->bTransferManager->setPercentDownloads(percentDownloads);
+    }
 }
 
 void InfoDialog::onTransfersStateChanged()
 {
-    auto transfersCountUpdated = app->getTransfersModel()->getTransfersCount();
-
-    if (!transfersCountUpdated.pendingDownloads && !transfersCountUpdated.pendingUploads
-            && transfersCountUpdated.totalUploadBytes == transfersCountUpdated.completedUploadBytes
-            && transfersCountUpdated.totalDownloadBytes == transfersCountUpdated.completedDownloadBytes
-            && (transfersCountUpdated.totalUploads != 0 || transfersCountUpdated.totalDownloads != 0))
+    if(app->getTransfersModel())
     {
-        if (!overQuotaState && (ui->sActiveTransfers->currentWidget() != ui->pUpdated))
+        auto transfersCountUpdated = app->getTransfersModel()->getTransfersCount();
+
+        if (!transfersCountUpdated.pendingDownloads && !transfersCountUpdated.pendingUploads
+                && transfersCountUpdated.totalUploadBytes == transfersCountUpdated.completedUploadBytes
+                && transfersCountUpdated.totalDownloadBytes == transfersCountUpdated.completedDownloadBytes
+                && (transfersCountUpdated.totalUploads != 0 || transfersCountUpdated.totalDownloads != 0))
         {
-            updateDialogState();
-        }
+            if (!overQuotaState && (ui->sActiveTransfers->currentWidget() != ui->pUpdated))
+            {
+                updateDialogState();
+            }
 
-        mResetTransferSummaryWidget.start();
-    }
-    else
-    {
-        mResetTransferSummaryWidget.stop();
+            mResetTransferSummaryWidget.start();
+        }
+        else
+        {
+            mResetTransferSummaryWidget.stop();
+        }
     }
 }
 
@@ -820,7 +826,7 @@ bool InfoDialog::checkFailedState()
 {
     auto isFailed(false);
 
-    if(app->getTransfersModel()->hasFailedTransfers())
+    if(app->getTransfersModel() && app->getTransfersModel()->hasFailedTransfers())
     {
         if(mState != StatusInfo::TRANSFERS_STATES::STATE_FAILED)
         {
@@ -971,26 +977,29 @@ void InfoDialog::updateDialogState()
     }
     else
     {
-        auto transfersCount = app->getTransfersModel()->getTransfersCount();
+        if(app->getTransfersModel())
+        {
+            auto transfersCount = app->getTransfersModel()->getTransfersCount();
 
-        if (transfersCount.totalDownloads || transfersCount.totalUploads
-                || ui->wPSA->isPSAready())
-        {
-            overlay->setVisible(false);
-            ui->sActiveTransfers->setCurrentWidget(ui->pTransfers);
-            ui->wPSA->showPSA();
-        }
-        else
-        {
-            ui->wPSA->hidePSA();
-            ui->sActiveTransfers->setCurrentWidget(ui->pUpdated);
-            if (!waiting && !indexing)
+            if (transfersCount.totalDownloads || transfersCount.totalUploads
+                    || ui->wPSA->isPSAready())
             {
-                overlay->setVisible(true);
+                overlay->setVisible(false);
+                ui->sActiveTransfers->setCurrentWidget(ui->pTransfers);
+                ui->wPSA->showPSA();
             }
             else
             {
-                overlay->setVisible(false);
+                ui->wPSA->hidePSA();
+                ui->sActiveTransfers->setCurrentWidget(ui->pUpdated);
+                if (!waiting && !indexing)
+                {
+                    overlay->setVisible(true);
+                }
+                else
+                {
+                    overlay->setVisible(false);
+                }
             }
         }
     }
