@@ -93,6 +93,11 @@ void TransfersManagerSortFilterProxyModel::textSearchTypeChanged()
 
 void TransfersManagerSortFilterProxyModel::invalidateModel()
 {
+    if(!dynamicSortFilter())
+    {
+        setDynamicSortFilter(true);
+    }
+
     QFuture<void> filtered = QtConcurrent::run([this](){
         auto sourceM = qobject_cast<TransfersModel*>(sourceModel());
         sourceM->lockModelMutex(true);
@@ -101,10 +106,6 @@ void TransfersManagerSortFilterProxyModel::invalidateModel()
         mIsFiltering = true;
         invalidate();
         QSortFilterProxyModel::sort(0, mSortOrder);
-        if(!dynamicSortFilter())
-        {
-            setDynamicSortFilter(true);
-        }
         mIsFiltering = false;
         sourceM->lockModelMutex(false);
         sourceM->blockSignals(false);

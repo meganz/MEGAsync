@@ -18,8 +18,8 @@ const int MAX_TRANSFERS = 2000;
 const int CANCEL_THRESHOLD_THREAD = 100;
 const int START_THRESHOLD_THREAD = 50;
 const int FAILED_THRESHOLD_THREAD = 100;
-const int PAUSE_RESUME_THRESHOLD_THREAD = 2000;
-const int CLEAR_THRESHOLD_THREAD = 2000;
+const int PAUSE_RESUME_THRESHOLD_THREAD = 1000;
+const int CLEAR_THRESHOLD_THREAD = 1000;
 
 //LISTENER THREAD
 TransferThread::TransferThread() : mMaxTransfersToProcess(MAX_TRANSFERS)
@@ -1295,8 +1295,6 @@ void TransfersModel::pauseResumeAllTransfers(bool state)
     //The final count can be +- 30 transfers
     if(activeTransfers > PAUSE_RESUME_THRESHOLD_THREAD)
     {
-        qDebug() << "IN OTHER THREAD";
-
         QtConcurrent::run([this, activeTransfers]()
         {
             blockSignals(true);
@@ -1438,7 +1436,6 @@ long long TransfersModel::getNumberOfFinishedForFileType(Utilities::FileType fil
 void TransfersModel::updateTransfersCount()
 {    
     mTransfersCount = mTransferEventWorker->getTransfersCount();
-
     emit transfersCountUpdated();
 }
 
