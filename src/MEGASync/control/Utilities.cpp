@@ -120,7 +120,7 @@ void Utilities::initializeExtensions()
     extensionIcons[QString::fromAscii("dmg")] = QString::fromAscii("dmg.png");
 
     extensionIcons[QString::fromAscii("txt")] = extensionIcons[QString::fromAscii("rtf")]  = extensionIcons[QString::fromAscii("ans")]  =
-                            extensionIcons[QString::fromAscii("ascii")] =
+                            extensionIcons[QString::fromAscii("ascii")]  = extensionIcons[QString::fromAscii("log")] =
                             extensionIcons[QString::fromAscii("odt")] = extensionIcons[QString::fromAscii("wpd")]  =
                             QString::fromAscii("text.png");
 

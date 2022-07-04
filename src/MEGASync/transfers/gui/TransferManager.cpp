@@ -797,6 +797,8 @@ void TransferManager::on_bPause_toggled()
 
 void TransferManager::pauseResumeTransfers(bool isPaused)
 {
+    auto proxy (mUi->wTransfers->getProxyModel());
+
     mModel->pauseResumeAllTransfers(isPaused);
     onUpdatePauseState(isPaused);
 

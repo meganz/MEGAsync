@@ -231,7 +231,7 @@ signals:
     void transfersProcessChanged();
 
 public slots:
-    void pauseResumeAllTransfers(bool state, int activeTransfers = 0);
+    void pauseResumeAllTransfers(bool state);
     void askForMostPriorityTransfer();
 
 private slots:
@@ -262,6 +262,9 @@ private:
 
     void mostPriorityTransferMayChanged(bool state);
     void updateTransferPriority(QExplicitlySharedDataPointer<TransferData> transfer);
+
+    int performPauseResumeAllTransfers(int activeTransfers, bool useEventUpdater);
+    int performPauseResumeVisibleTransfers(const QModelIndexList& indexes, bool pauseState, bool useEventUpdater);
 
 private:
     mega::MegaApi* mMegaApi;

@@ -24,11 +24,18 @@ TransfersManagerSortFilterProxyModel::TransfersManagerSortFilterProxyModel(QObje
     connect(&mFilterWatcher, &QFutureWatcher<void>::finished,
             this, &TransfersManagerSortFilterProxyModel::onModelSortedFiltered);
 
+    setDynamicSortFilter(false);
     setFilterCaseSensitivity(Qt::CaseInsensitive);
 }
 
 TransfersManagerSortFilterProxyModel::~TransfersManagerSortFilterProxyModel()
 {
+}
+
+void TransfersManagerSortFilterProxyModel::initProxyModel(SortCriterion sortCriterion, Qt::SortOrder order)
+{
+    mSortOrder = order;
+    mSortCriterion = static_cast<SortCriterion>(sortCriterion);
 }
 
 void TransfersManagerSortFilterProxyModel::sort(int sortCriterion, Qt::SortOrder order)
@@ -45,8 +52,10 @@ void TransfersManagerSortFilterProxyModel::sort(int sortCriterion, Qt::SortOrder
         mSortCriterion = static_cast<SortCriterion>(sortCriterion);
     }
 
+    mSortOrder = order;
+
     resetTransfersStateCounters();
-    invalidateModel(order);
+    invalidateModel();
 }
 
 void TransfersManagerSortFilterProxyModel::setSourceModel(QAbstractItemModel *sourceModel)
@@ -70,7 +79,7 @@ void TransfersManagerSortFilterProxyModel::refreshFilterFixedString()
     resetAllCounters();
     emit modelAboutToBeChanged();
 
-    invalidateModel(sortOrder());
+    invalidateModel();
 }
 
 void TransfersManagerSortFilterProxyModel::textSearchTypeChanged()
@@ -79,19 +88,23 @@ void TransfersManagerSortFilterProxyModel::textSearchTypeChanged()
     resetTransfersStateCounters();
     emit modelAboutToBeChanged();
 
-    invalidateModel(sortOrder());
+    invalidateModel();
 }
 
-void TransfersManagerSortFilterProxyModel::invalidateModel(Qt::SortOrder sortOrder)
+void TransfersManagerSortFilterProxyModel::invalidateModel()
 {
-    QFuture<void> filtered = QtConcurrent::run([this, sortOrder](){
+    QFuture<void> filtered = QtConcurrent::run([this](){
         auto sourceM = qobject_cast<TransfersModel*>(sourceModel());
         sourceM->lockModelMutex(true);
         sourceM->blockSignals(true);
         blockSignals(true);
         mIsFiltering = true;
         invalidate();
-        QSortFilterProxyModel::sort(0, sortOrder);
+        QSortFilterProxyModel::sort(0, mSortOrder);
+        if(!dynamicSortFilter())
+        {
+            setDynamicSortFilter(true);
+        }
         mIsFiltering = false;
         sourceM->lockModelMutex(false);
         sourceM->blockSignals(false);

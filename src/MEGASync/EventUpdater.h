@@ -11,8 +11,8 @@ public:
     bool update(int currentSize);
 
 private:
-    int totalSize;
-    int updateThreshold;
+    int mTotalSize;
+    int mUpdateThreshold;
 };
 
 #endif // EVENTUPDATER_H

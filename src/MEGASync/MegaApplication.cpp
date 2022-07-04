@@ -5346,13 +5346,19 @@ void MegaApplication::processUploads()
         {
             settingsDialog->updateUploadFolder(); //this could be done via observer
         }
+
+        //Do not use deleteLater to remove the delegate listener at the moment
+        delete uploadFolderSelector;
+
         processUploadQueue(nodeHandle);
     }
     //If the dialog is rejected, cancel uploads
-    else uploadQueue.clear();
+    else
+    {
+        delete uploadFolderSelector;
+        uploadQueue.clear();
+    }
 
-    delete uploadFolderSelector;
-    uploadFolderSelector = NULL;
     return;
 
 }
@@ -5460,10 +5466,13 @@ void MegaApplication::processDownloads()
             showInfoDialog();
         }
 
+        delete downloadFolderSelector;
         processDownloadQueue(path);
     }
     else
     {
+        delete downloadFolderSelector;
+
         QQueue<WrappedNode *>::iterator it;
         for (it = downloadQueue.begin(); it != downloadQueue.end(); ++it)
         {
@@ -5475,8 +5484,6 @@ void MegaApplication::processDownloads()
         downloadQueue.clear();
     }
 
-    delete downloadFolderSelector;
-    downloadFolderSelector = NULL;
     return;
 }
 

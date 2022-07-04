@@ -434,8 +434,8 @@ protected:
     HTTPServer *httpServer;
     HTTPServer *httpsServer;
     long long lastTsConnectionError = 0;
-    UploadToMegaDialog *uploadFolderSelector;
-    DownloadFromMegaDialog *downloadFolderSelector;
+    QPointer<UploadToMegaDialog> uploadFolderSelector;
+    QPointer<DownloadFromMegaDialog> downloadFolderSelector;
     mega::MegaHandle fileUploadTarget;
     QFileDialog *fileUploadSelector;
     mega::MegaHandle folderUploadTarget;

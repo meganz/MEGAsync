@@ -3,17 +3,20 @@
 #include <QApplication>
 
 EventUpdater::EventUpdater(int _totalSize, int threshold)
-    : totalSize(_totalSize)
+    : mTotalSize(_totalSize)
 {
-    updateThreshold = (totalSize < threshold) ? totalSize : threshold;
+    mUpdateThreshold = (mTotalSize < threshold) ? mTotalSize : threshold;
 }
 
 bool EventUpdater::update(int currentSize)
 {
-    if (currentSize % updateThreshold == 0)
+    if(mUpdateThreshold > 0)
     {
-        QApplication::processEvents();
-        return true;
+        if (currentSize % mUpdateThreshold == 0)
+        {
+            QApplication::processEvents();
+            return true;
+        }
     }
 
     return false;

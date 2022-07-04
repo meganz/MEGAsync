@@ -57,9 +57,7 @@ void TransfersWidget::setupTransfers()
 {
     mProxyModel = new TransfersManagerSortFilterProxyModel(ui->tvTransfers);
     mProxyModel->setSourceModel(app->getTransfersModel());
-    mProxyModel->sort(static_cast<int>(SortCriterion::PRIORITY), Qt::DescendingOrder);
-    mProxyModel->setDynamicSortFilter(true);
-
+    mProxyModel->initProxyModel(SortCriterion::PRIORITY, Qt::DescendingOrder);
 
     connect(mProxyModel, &TransfersManagerSortFilterProxyModel::modelAboutToBeChanged, this, &TransfersWidget::onModelAboutToBeChanged);
     connect(mProxyModel, &TransfersManagerSortFilterProxyModel::modelChanged, this, &TransfersWidget::onModelChanged);

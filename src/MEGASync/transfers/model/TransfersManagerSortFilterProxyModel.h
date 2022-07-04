@@ -20,6 +20,8 @@ public:
         TransfersManagerSortFilterProxyModel(QObject *parent = nullptr);
         ~TransfersManagerSortFilterProxyModel();
 
+        void initProxyModel(SortCriterion sortCriterion, Qt::SortOrder order);
+
         bool moveRows(const QModelIndex& proxyParent, int proxyRow, int count,
                       const QModelIndex& destinationParent, int destinationChild) override;
         void sort(int column, Qt::SortOrder order = Qt::AscendingOrder) override;
@@ -74,6 +76,7 @@ protected:
         TransferData::TransferTypes mNextTransferTypes;
         Utilities::FileTypes mNextFileTypes;
         SortCriterion mSortCriterion;
+        Qt::SortOrder mSortOrder;
 
         mutable QSet<int> mDlNumber;
         mutable QSet<int> mUlNumber;
@@ -81,11 +84,6 @@ protected:
         mutable QSet<int> mActiveTransfers;
         mutable QSet<int> mPausedTransfers;
         mutable QSet<int> mCompletedTransfers;
-
-        mutable uint32_t mNoSyncTransfersCounter;
-        mutable uint32_t mActiveTransfersCounter;
-        mutable uint32_t mPausedTransfersCounter;
-        mutable uint32_t mCompletedTransfersCounter;
 
 private slots:
         void onRowsAboutToBeRemoved(const QModelIndex& parent, int first, int last);
@@ -104,7 +102,7 @@ private:
         void removeCompletedTransferFromCounter(TransferTag tag) const;
         bool updateTransfersCounterFromTag(QExplicitlySharedDataPointer<TransferData> transfer) const;
 
-        void invalidateModel(Qt::SortOrder sortOrder);
+        void invalidateModel();
 
         void resetAllCounters();
         void resetTransfersStateCounters();
