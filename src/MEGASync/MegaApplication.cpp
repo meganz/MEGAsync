@@ -3341,6 +3341,7 @@ void MegaApplication::enableTransferActions(bool enable)
     downloadAction->setEnabled(enable);
     streamAction->setEnabled(enable);
     settingsAction->setEnabled(enable);
+    myCloudAction->setEnabled(enable);
 
     if (syncsMenu)
     {

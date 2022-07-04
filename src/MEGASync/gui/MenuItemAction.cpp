@@ -108,13 +108,16 @@ void MenuItemAction::setHoverIcon(const QIcon icon)
 
 void MenuItemAction::setHighlight(bool highlight)
 {
-    if (highlight)
+    if(isEnabled())
     {
-        title->setStyleSheet(QString::fromAscii("color: %1;").arg(Colors::Highlight));
-    }
-    else
-    {
-        title->setStyleSheet(QString::fromAscii("color: %1;").arg(getColor()));
+        if (highlight)
+        {
+            title->setStyleSheet(QString::fromAscii("color: %1;").arg(Colors::Highlight));
+        }
+        else
+        {
+            title->setStyleSheet(QString::fromAscii("color: %1;").arg(getColor()));
+        }
     }
 }
 
@@ -167,7 +170,7 @@ QString MenuItemAction::getColor()
 
 bool MenuItemAction::eventFilter(QObject *obj, QEvent *event)
 {
-    if (!value)
+    if (!value && isEnabled())
     {
         if (event->type() == QEvent::Enter)
         {
