@@ -9,8 +9,8 @@
 #include <memory>
 
 namespace UserAttributes{
-class FullNameAttributeRequest;
-class AvatarAttributeRequest;
+class FullName;
+class Avatar;
 }
 
 class MegaItem : public QObject
@@ -78,8 +78,8 @@ private slots:
 private:
     void calculateSyncStatus(const QStringList& folders);
     std::unique_ptr<mega::QTMegaRequestListener> mDelegateListener;
-    std::shared_ptr<const UserAttributes::FullNameAttributeRequest> mFullNameAttribute;
-    std::shared_ptr<const UserAttributes::AvatarAttributeRequest> mAvatarAttribute;
+    std::shared_ptr<const UserAttributes::FullName> mFullNameAttribute;
+    std::shared_ptr<const UserAttributes::Avatar> mAvatarAttribute;
 
 };
 

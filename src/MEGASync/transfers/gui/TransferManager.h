@@ -30,8 +30,6 @@ class TransferManager : public QDialog
 {
     Q_OBJECT
 
-    static const char* ITS_ON;
-
 public:
     explicit TransferManager(mega::MegaApi *megaApi, QWidget *parent = 0);
     void setActiveTab(int t);
@@ -39,7 +37,7 @@ public:
 
     void pauseModel(bool state);
     void enterBlockingState();
-    void leaveBlockingState();
+    void leaveBlockingState(bool fromCancellation);
     void disableCancelling();
 
     void setTransferState(const StatusInfo::TRANSFERS_STATES &transferState);
@@ -65,8 +63,6 @@ protected:
     void dragLeaveEvent(QDragLeaveEvent* event) override;
     void dropEvent(QDropEvent *event) override;
     void mouseReleaseEvent(QMouseEvent *event) override;
-    void showEvent(QShowEvent*) override;
-    void hideEvent(QHideEvent*) override;
 
 private:
     static const int SPEED_REFRESH_PERIOD_MS = 700;

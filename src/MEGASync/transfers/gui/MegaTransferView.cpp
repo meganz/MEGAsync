@@ -101,7 +101,7 @@ bool MegaTransferView::isSingleSelectedTransfers()
     return !(selection.size() > 1);
 }
 
-QString MegaTransferView::getVisibleAction()
+QString MegaTransferView::getVisibleCancelOrClearText()
 {
     auto proxy (qobject_cast<TransfersManagerSortFilterProxyModel*>(model()));
 
@@ -111,17 +111,17 @@ QString MegaTransferView::getVisibleAction()
     QString action;
     if(isAnyActive)
     {
-        action = areAllActive ? tr("Cancel") : tr("Cancel and clear");
+        action = areAllActive ? tr("Cancel transfer(s)?") : tr("Cancel and clear transfer(s)?");
     }
     else
     {
-        action = tr("Clear");
+        action = tr("Clear transfer(s)?");
     }
 
     return action;
 }
 
-QString MegaTransferView::getSelectedAction()
+QString MegaTransferView::getSelectedCancelOrClearText()
 {
     auto indexes = getSelectedTransfers();
 
@@ -147,11 +147,11 @@ QString MegaTransferView::getSelectedAction()
     QString action;
     if(isAnyActive)
     {
-        action = areAllActive ? tr("Cancel") : tr("Cancel and clear");
+        action = areAllActive ? tr("Cancel transfer(s)?") : tr("Cancel and clear transfer(s)?");
     }
     else
     {
-        action = tr("Clear");
+        action = tr("Clear transfer(s)?");
     }
 
     return action;
@@ -185,10 +185,10 @@ void MegaTransferView::onCancelVisibleTransfers()
 {
     QPointer<MegaTransferView> dialog = QPointer<MegaTransferView>(this);
 
-    QString action = getVisibleAction();
+    QString action = getVisibleCancelOrClearText();
 
     if (QMegaMessageBox::warning(this, QString::fromUtf8("MEGAsync"),
-                             tr("%1 transfer(s)?", "", model()->rowCount()).arg(action),
+                             tr("%1?", "", model()->rowCount()).arg(action),
                              QMessageBox::Yes | QMessageBox::No, QMessageBox::No)
             == QMessageBox::Yes
             && dialog)
@@ -204,12 +204,12 @@ void MegaTransferView::onCancelVisibleTransfers()
 void MegaTransferView::onCancelSelectedTransfers()
 {
     bool singleTransfer = isSingleSelectedTransfers();
-    auto action = getSelectedAction();
+    auto action = getSelectedCancelOrClearText();
 
     QPointer<MegaTransferView> dialog = QPointer<MegaTransferView>(this);
 
     if (QMegaMessageBox::warning(this, QString::fromUtf8("MEGAsync"),
-                             tr("%1 transfer(s)?", "", !singleTransfer).arg(action),
+                             tr("%1", "", !singleTransfer).arg(action),
                              QMessageBox::Yes | QMessageBox::No, QMessageBox::No)
             == QMessageBox::Yes
             && dialog)
@@ -228,15 +228,18 @@ bool MegaTransferView::onCancelAllTransfers()
     auto proxy (qobject_cast<QSortFilterProxyModel*>(model()));
     auto sourceModel(qobject_cast<TransfersModel*>(proxy->sourceModel()));
 
+    auto action = getVisibleCancelOrClearText();
+
     QPointer<MegaTransferView> dialog = QPointer<MegaTransferView>(this);
+    auto rows = sourceModel->rowCount();
 
     if (QMegaMessageBox::warning(this, QString::fromUtf8("MEGAsync"),
-                             tr("Cancel transfer(s)?", "", sourceModel->rowCount()),
+                             tr("%1", "", rows).arg(action),
                              QMessageBox::Yes | QMessageBox::No, QMessageBox::No)
             == QMessageBox::Yes
             && dialog)
     {
-        cancelAndClearAllTransfers(true, false);
+        cancelAllTransfers();
         result = true;
     }
 
@@ -253,18 +256,18 @@ void MegaTransferView::onClearAllTransfers()
             == QMessageBox::Yes
             && dialog)
     {
-        cancelAndClearAllTransfers(false, true);
+        clearAllTransfers();
     }
 }
 
 void MegaTransferView::onCancelAndClearVisibleTransfers()
 {
-    QString action = getVisibleAction();
+    QString action = getVisibleCancelOrClearText();
 
     QPointer<MegaTransferView> dialog = QPointer<MegaTransferView>(this);
 
     if (QMegaMessageBox::warning(this, QString::fromUtf8("MEGAsync"),
-                             tr("%1 transfer(s)?", "", model()->rowCount()).arg(action),
+                             tr("%1?", "", model()->rowCount()).arg(action),
                              QMessageBox::Yes | QMessageBox::No, QMessageBox::No)
             == QMessageBox::Yes
             && dialog)
@@ -281,30 +284,24 @@ void MegaTransferView::onCancelAndClearVisibleTransfers()
     }
 }
 
-void MegaTransferView::cancelAndClearAllTransfers(bool cancel, bool clear)
+void MegaTransferView::clearAllTransfers()
+{    
+    auto proxy(qobject_cast<QSortFilterProxyModel*>(model()));
+    auto sourceModel(qobject_cast<TransfersModel*>(proxy->sourceModel()));
+
+    sourceModel->pauseModelProcessing(true);
+    sourceModel->clearAllTransfers();
+    sourceModel->pauseModelProcessing(false);
+}
+
+void MegaTransferView::cancelAllTransfers()
 {
-    if(cancel | clear)
-    {
-        auto proxy(qobject_cast<QSortFilterProxyModel*>(model()));
-        auto sourceModel(qobject_cast<TransfersModel*>(proxy->sourceModel()));
-        if(cancel && clear)
-        {
-            sourceModel->setResetMode();
-        }
+    auto proxy(qobject_cast<QSortFilterProxyModel*>(model()));
+    auto sourceModel(qobject_cast<TransfersModel*>(proxy->sourceModel()));
 
-        sourceModel->pauseModelProcessing(true);
-
-        if(clear)
-        {
-            sourceModel->clearAllTransfers();
-        }
-        if(cancel)
-        {
-            sourceModel->cancelAllTransfers(this);
-        }
-
-        sourceModel->pauseModelProcessing(false);
-    }
+    sourceModel->pauseModelProcessing(true);
+    sourceModel->cancelAllTransfers(this);
+    sourceModel->pauseModelProcessing(false);
 }
 
 int MegaTransferView::getVerticalScrollBarWidth() const
@@ -1012,12 +1009,12 @@ void MegaTransferView::showInMegaClicked()
 
 void MegaTransferView::cancelSelectedClicked()
 {
-    onCancelClearSelection(false);
+    onCancelSelectedTransfers();
 }
 
 void MegaTransferView::clearSelectedClicked()
 {
-    onCancelClearSelection(true);
+    onCancelSelectedTransfers();
 }
 
 void MegaTransferView::pauseSelectedClicked()

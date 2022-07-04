@@ -1,7 +1,7 @@
 #include "AvatarWidget.h"
 #include "control/Utilities.h"
 #include "MegaApplication.h"
-#include "UserAttributesRequests.h"
+#include "UserAttributesRequests/Avatar.h"
 
 #include <math.h>
 
@@ -25,10 +25,10 @@ AvatarWidget::AvatarWidget(QWidget* parent) :
 
 void AvatarWidget::setUserEmail(const char* userEmail)
 {
-    mAvatarRequest = UserAttributes::AvatarAttributeRequest::requestAvatar(userEmail);
+    mAvatarRequest = UserAttributes::Avatar::requestAvatar(userEmail);
     if(mAvatarRequest)
     {
-        mAvatarConnection = connect(mAvatarRequest.get(), &UserAttributes::AvatarAttributeRequest::attributeReady, this, [this](){
+        mAvatarConnection = connect(mAvatarRequest.get(), &UserAttributes::Avatar::attributeReady, this, [this](){
             emit avatarUpdated();
             update();
         });

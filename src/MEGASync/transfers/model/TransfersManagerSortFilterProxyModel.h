@@ -20,11 +20,14 @@ public:
         TransfersManagerSortFilterProxyModel(QObject *parent = nullptr);
         ~TransfersManagerSortFilterProxyModel();
 
+        void initProxyModel(SortCriterion sortCriterion, Qt::SortOrder order);
+
         bool moveRows(const QModelIndex& proxyParent, int proxyRow, int count,
                       const QModelIndex& destinationParent, int destinationChild) override;
         void sort(int column, Qt::SortOrder order = Qt::AscendingOrder) override;
         void setSourceModel(QAbstractItemModel *sourceModel) override;
         void setFilterFixedString(const QString &pattern);
+        void refreshFilterFixedString();
         void textSearchTypeChanged();
         void setFilters(const TransferData::TransferTypes transferTypes,
                         const TransferData::TransferStates transferStates,
@@ -42,6 +45,8 @@ public:
         bool areAllSync() const;
         bool areAllCompleted() const;
         bool isAnyCompleted() const;
+
+        int  activeTransfers() const;
 
         bool isModelProcessing() const;
 signals:
@@ -71,6 +76,7 @@ protected:
         TransferData::TransferTypes mNextTransferTypes;
         Utilities::FileTypes mNextFileTypes;
         SortCriterion mSortCriterion;
+        Qt::SortOrder mSortOrder;
 
         mutable QSet<int> mDlNumber;
         mutable QSet<int> mUlNumber;
@@ -82,19 +88,21 @@ protected:
 private slots:
         void onRowsAboutToBeRemoved(const QModelIndex& parent, int first, int last);
         void onModelSortedFiltered();
-        bool onCanceledTransfers(QSet<int> tags);
 
 private:
         ThreadPool* mThreadPool;
         mutable QMutex mMutex;
         QFutureWatcher<void> mFilterWatcher;
         QString mFilterText;
+        bool mIsFiltering;
 
         void removeActiveTransferFromCounter(TransferTag tag) const;
         void removePausedTransferFromCounter(TransferTag tag) const;
         void removeNonSyncedTransferFromCounter(TransferTag tag) const;
         void removeCompletedTransferFromCounter(TransferTag tag) const;
         bool updateTransfersCounterFromTag(QExplicitlySharedDataPointer<TransferData> transfer) const;
+
+        void invalidateModel();
 
         void resetAllCounters();
         void resetTransfersStateCounters();

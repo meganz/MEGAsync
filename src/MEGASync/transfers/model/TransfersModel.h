@@ -107,6 +107,8 @@ public:
     void resetCompletedDownloads(QList<QExplicitlySharedDataPointer<TransferData>> transfersToReset);
     void resetCompletedTransfers();
 
+    void setMaxTransfersToProcess(uint16_t max);
+
     TransfersToProcess processTransfers();
     void clear();
 
@@ -143,6 +145,7 @@ private:
     QMutex mCacheMutex;
     QMutex mCountersMutex;
     TransfersCount mTransfersCount;
+    std::atomic_int16_t mMaxTransfersToProcess;
 };
 
 
@@ -177,7 +180,6 @@ public:
     void openFolderByTag(TransferTag tag);
     void retryTransferByIndex(const QModelIndex& index);
     void retryTransfers(QModelIndexList indexes);
-    void setResetMode();
     void cancelAndClearTransfers(const QModelIndexList& indexes, QWidget *canceledFrom);
     void cancelAllTransfers(QWidget *canceledFrom);
     void clearAllTransfers();
@@ -210,6 +212,7 @@ public:
     bool areAllPaused() const;
 
      QExplicitlySharedDataPointer<TransferData> getTransferByTag(int tag) const;
+     void sendDataChangedByTag(int tag);
 
 signals:
     void pauseStateChanged(bool pauseState);
@@ -224,10 +227,12 @@ signals:
     void transferFinished(const QModelIndex& index);
     void internalMoveStarted() const;
     void internalMoveFinished() const;
-    void canceledTransfers(QSet<int> tags);
+    void mostPriorityTransferUpdate(int tag);
+    void transfersProcessChanged();
 
 public slots:
     void pauseResumeAllTransfers(bool state);
+    void askForMostPriorityTransfer();
 
 private slots:
     void processStartTransfers(QList<QExplicitlySharedDataPointer<TransferData>>& transfersToStart);
@@ -245,16 +250,21 @@ private:
     void removeTransfer(int row);
     void sendDataChanged(int row);
 
-    bool isFailingModeActive() const ;
-    void setFailingMode(bool state);
+    bool isUiBlockedModeActive() const ;
+    void setUiBlockedMode(bool state);
 
-    bool isStartingModeActive() const ;
-    void setStartingMode(bool state);
+    void setUiBlockedModeByCounter(uint32_t transferCount);
+    void updateUiBlockedByCounter(uint16_t updates);
+    bool isUiBlockedByCounter() const;
+    void setUiBlockedByCounterMode(bool state);
 
-    bool isCancelingModeActive() const ;
-    void setCancelingMode(bool state);
+    void modelHasChanged(bool state);
 
+    void mostPriorityTransferMayChanged(bool state);
     void updateTransferPriority(QExplicitlySharedDataPointer<TransferData> transfer);
+
+    int performPauseResumeAllTransfers(int activeTransfers, bool useEventUpdater);
+    int performPauseResumeVisibleTransfers(const QModelIndexList& indexes, bool pauseState, bool useEventUpdater);
 
 private:
     mega::MegaApi* mMegaApi;
@@ -270,16 +280,19 @@ private:
     TransferThread::TransfersToProcess mTransfersToProcess;
     QFutureWatcher<void> mCancelWatcher;
 
-    uint8_t mCancelingMode;
-    uint8_t mFailingMode;
-    uint8_t mStartingMode;
+    uint8_t mTransfersProcessChanged;
+    uint8_t mUpdateMostPriorityTransfer;
+    uint8_t mUiBlockedCounter;
+
+    uint32_t mUiBlockedByCounter;
+    uint8_t  mUiBlockedByCounterSafety;
 
     QHash<TransferTag, QPersistentModelIndex> mTagByOrder;
     QList<TransferTag> mRowsToCancel;
     mutable QMutex mModelMutex;
+    QTimer mMostPriorityTransferTimer;
 
     bool mAreAllPaused;
-    bool mModelReset;
 };
 
 Q_DECLARE_METATYPE(QAbstractItemModel::LayoutChangeHint)

@@ -16,6 +16,8 @@ public:
     static const QColor UPLOAD_DRAG_COLOR;
     static const QColor DOWNLOAD_DRAG_COLOR;
 
+    static const int CANCEL_MESSAGE_THRESHOLD;
+
 
     MegaTransferView(QWidget* parent = 0);
     void setup();
@@ -29,8 +31,8 @@ public:
 
     int getVerticalScrollBarWidth() const;
 
-    QString getVisibleAction();
-    QString getSelectedAction();
+    QString getVisibleCancelOrClearText();
+    QString getSelectedCancelOrClearText();
 
 public slots:
     void onPauseResumeSelection(bool pauseState);
@@ -96,7 +98,8 @@ private:
     void createContextMenu();
     void updateContextMenu(bool enablePause, bool enableResume, bool enableMove, bool enableClear,
                            bool enableCancel, bool isTopIndex, bool isBottomIndex);
-    void cancelAndClearAllTransfers(bool cancel, bool clear);
+    void clearAllTransfers();
+    void cancelAllTransfers();
 
     QModelIndexList getTransfers(bool onlyVisible, TransferData::TransferStates state = TransferData::TRANSFER_NONE);
     QModelIndexList getSelectedTransfers();

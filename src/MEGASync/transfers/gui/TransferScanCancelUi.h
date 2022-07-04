@@ -11,11 +11,12 @@ class TransferScanCancelUi : public QObject
     Q_OBJECT
 
 public:
-    TransferScanCancelUi(QStackedWidget* _container);
+    TransferScanCancelUi(QStackedWidget* _container,
+                         QWidget* _finishedWidget);
     ~TransferScanCancelUi() = default;
 
     void show();
-    void hide();
+    void hide(bool fromCancellation);
     void disableCancelling();
     void update();
     bool isActive();
@@ -32,6 +33,7 @@ private:
     ScanningWidget* mBlockingWidget = nullptr;
     CancelConfirmWidget* mConfirmWidget = nullptr;
     QWidget* mLastSelectedWidget = nullptr;
+    QWidget* mFinishedWidget;
 
     static const char* getControlStyles();
 };

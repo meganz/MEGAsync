@@ -8,7 +8,6 @@
 #include <QImageReader>
 #include <QtConcurrent/QtConcurrent>
 
-
 using namespace mega;
 
 const QRect InfoDialogTransferDelegateWidget::FullRect = QRect(0,0,400,60);

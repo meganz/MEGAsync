@@ -1,7 +1,7 @@
 #include "TransferScanCancelUi.h"
 
-TransferScanCancelUi::TransferScanCancelUi(QStackedWidget* _container)
-    : mContainer(_container)
+TransferScanCancelUi::TransferScanCancelUi(QStackedWidget* _container, QWidget *_finishedWidget)
+    : mContainer(_container), mFinishedWidget(_finishedWidget)
 {
     mBlockingWidget = new ScanningWidget(mContainer);
     mConfirmWidget = new CancelConfirmWidget(mContainer);
@@ -24,9 +24,10 @@ void TransferScanCancelUi::show()
     mBlockingWidget->show();
 }
 
-void TransferScanCancelUi::hide()
+void TransferScanCancelUi::hide(bool fromCancellation)
 {
-    mContainer->setCurrentWidget(mLastSelectedWidget);
+    QWidget* widget = fromCancellation ? mLastSelectedWidget : mFinishedWidget;
+    mContainer->setCurrentWidget(widget);
 }
 
 void TransferScanCancelUi::disableCancelling()
@@ -81,7 +82,9 @@ const char* TransferScanCancelUi::getControlStyles()
                             "   color: #333333;"
                             "}"
                             "QPushButton:pressed { background-color : rgb(238, 238, 236); }"
+                            "QPushButton:disabled { background-color : rgb(218, 218, 216); }"
                             "QPushButton#pProceed { background-color: #00BFA5; color: #FFFFFF; border-color: #00AC94}"
-                            "QPushButton#pProceed:pressed { background-color: rgb(0, 179, 155);}";
+                            "QPushButton#pProceed:pressed { background-color: rgb(0, 179, 155);}"
+                            "QPushButton#pProceed:disabled { background-color: rgb(70, 159, 135);}";
     return styles;
 }

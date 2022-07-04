@@ -77,7 +77,7 @@ public:
     void reset();
 
     void enterBlockingState();
-    void leaveBlockingState();
+    void leaveBlockingState(bool fromCancellation);
     void disableCancelling();
 
 #ifdef __APPLE__
@@ -163,6 +163,9 @@ private slots:
     void setAvatar();
 
     void updateTransfersCount();
+
+    void onResetTransfersSummaryWidget();
+    void onTransfersStateChanged();
 
 signals:
     void triggerShowSyncProblems(QString s);
@@ -250,6 +253,7 @@ protected:
     QTimer downloadsFinishedTimer;
     QTimer uploadsFinishedTimer;
     QTimer transfersFinishedTimer;
+    QTimer mResetTransferSummaryWidget;
     MegaApplication *app;
     std::shared_ptr<Preferences> preferences;
     Model *model;

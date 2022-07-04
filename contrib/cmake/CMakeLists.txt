@@ -239,6 +239,7 @@ set (MOC_INPUT
     ${MEGAsyncDir}/ScaleFactorManager.h
     ${MEGAsyncDir}/CommonMessages.h
     ${MEGAsyncDir}/ScanStageController.h
+    ${MEGAsyncDir}/EventUpdater.h
     ${MEGAsyncDir}/control/ConnectivityChecker.h
     ${MEGAsyncDir}/control/CrashHandler.h
     ${MEGAsyncDir}/control/EncryptedSettings.h
@@ -319,7 +320,8 @@ set (MOC_INPUT
     ${MEGAsyncDir}/gui/MegaItemDelegates.h
     ${MEGAsyncDir}/gui/GuiUtilities.h
     ${MEGAsyncDir}/gui/EventHelper.h
-    ${MEGAsyncDir}/gui/UserAttributesRequests.h
+    ${MEGAsyncDir}/gui/UserAttributesRequests/FullName.h
+    ${MEGAsyncDir}/gui/UserAttributesRequests/Avatar.h
     ${MEGAsyncDir}/gui/AutoResizeStackedWidget.h
     ${MEGAsyncDir}/gui/ViewLoadingScene.h
     ${MEGAsyncDir}/gui/ScanningWidget.h
@@ -428,6 +430,7 @@ set (SRCS
     ${MEGAsyncDir}/ScaleFactorManager.cpp
     ${MEGAsyncDir}/CommonMessages.cpp
     ${MEGAsyncDir}/ScanStageController.cpp
+    ${MEGAsyncDir}/EventUpdater.cpp
 
     ${FORMS}
     ${MOC_INPUT}
@@ -494,7 +497,8 @@ set (SRCS
     ${MEGAsyncDir}/gui/MegaItemProxyModel.cpp
     ${MEGAsyncDir}/gui/MegaItemTreeView.cpp
     ${MEGAsyncDir}/gui/GuiUtilities.cpp
-    ${MEGAsyncDir}/gui/UserAttributesRequests.cpp
+    ${MEGAsyncDir}/gui/UserAttributesRequests/FullName.cpp
+    ${MEGAsyncDir}/gui/UserAttributesRequests/Avatar.cpp
     ${MEGAsyncDir}/gui/ButtonIconManager.cpp
     ${MEGAsyncDir}/gui/EventHelper.cpp
     ${MEGAsyncDir}/gui/GuiUtilities.cpp

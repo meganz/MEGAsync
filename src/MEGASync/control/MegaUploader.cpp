@@ -68,8 +68,6 @@ bool MegaUploader::upload(QFileInfo info, MegaNode *parent, unsigned long long a
 {
     QPointer<MegaUploader> safePointer = this;
 
-    QApplication::processEvents(); // Necessary for proper transfer graph updates
-
     if (!safePointer)
     {
         return false;

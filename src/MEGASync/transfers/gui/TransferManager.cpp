@@ -21,7 +21,8 @@ const int TransferManager::SPEED_REFRESH_PERIOD_MS;
 const int TransferManager::STATS_REFRESH_PERIOD_MS;
 
 const char* LABEL_NUMBER = "NUMBER";
-const char* TransferManager::ITS_ON = "itsOn";
+const char* ITS_ON = "itsOn";
+const char* SEARCH_TEXT = "searchText";
 
 TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
     QDialog(parent),
@@ -245,7 +246,7 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
         w->style()->polish(w);
     }
 
-    mTransferScanCancelUi = new TransferScanCancelUi(mUi->sTransfers);
+    mTransferScanCancelUi = new TransferScanCancelUi(mUi->sTransfers, mTabNoItem[TransfersWidget::ALL_TRANSFERS_TAB]);
     connect(mTransferScanCancelUi, &TransferScanCancelUi::cancelTransfers,
             this, &TransferManager::cancelScanning);
 }
@@ -262,11 +263,11 @@ void TransferManager::enterBlockingState()
     mTransferScanCancelUi->show();
 }
 
-void TransferManager::leaveBlockingState()
+void TransferManager::leaveBlockingState(bool fromCancellation)
 {
     enableUserActions(true);
-    mTransferScanCancelUi->hide();
     mUi->wTransfers->setScanningWidgetVisible(false);
+    mTransferScanCancelUi->hide(fromCancellation);
 }
 
 void TransferManager::disableCancelling()
@@ -808,6 +809,8 @@ void TransferManager::on_bPause_toggled()
 
 void TransferManager::pauseResumeTransfers(bool isPaused)
 {
+    auto proxy (mUi->wTransfers->getProxyModel());
+
     mModel->pauseResumeAllTransfers(isPaused);
     onUpdatePauseState(isPaused);
 }
@@ -858,6 +861,7 @@ void TransferManager::on_tSearchIcon_clicked()
                                     .elidedText(pattern,
                                                 Qt::ElideMiddle,
                                                 mUi->bSearchString->width()));
+        mUi->bSearchString->setProperty(SEARCH_TEXT, pattern);
         applyTextSearch(pattern);
     }
 
@@ -877,6 +881,7 @@ void TransferManager::applyTextSearch(const QString& text)
     mUi->wSearch->show();
 
     mUi->wTransfers->transferFilterReset();
+
     //It is important to call it after resetting the filter, as the reset removes the text
     //search
     mUi->wTransfers->textFilterChanged(text);
@@ -892,7 +897,7 @@ void TransferManager::enableUserActions(bool enabled)
 
 void TransferManager::on_bSearchString_clicked()
 {
-    applyTextSearch(mUi->lTextSearch->text());
+    applyTextSearch(mUi->bSearchString->property(SEARCH_TEXT).toString());
 }
 
 void TransferManager::on_tSearchCancel_clicked()
@@ -1206,16 +1211,6 @@ void TransferManager::mouseReleaseEvent(QMouseEvent *event)
     mUi->wTransfers->mouseRelease(event->globalPos());
 
     QDialog::mouseReleaseEvent(event);
-}
-
-void TransferManager::showEvent(QShowEvent *)
-{
-    mUi->wTransfers->onDialogShown();
-}
-
-void TransferManager::hideEvent(QHideEvent *)
-{
-    mUi->wTransfers->onDialogHidden();
 }
 
 void TransferManager::setTransferState(const StatusInfo::TRANSFERS_STATES &transferState)
