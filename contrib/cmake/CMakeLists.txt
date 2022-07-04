@@ -299,7 +299,8 @@ set (MOC_INPUT
     ${MEGAsyncDir}/gui/MegaItemDelegates.h
     ${MEGAsyncDir}/gui/GuiUtilities.h
     ${MEGAsyncDir}/gui/EventHelper.h
-    ${MEGAsyncDir}/gui/UserAttributesRequests.h
+    ${MEGAsyncDir}/gui/UserAttributesRequests/FullName.h
+    ${MEGAsyncDir}/gui/UserAttributesRequests/Avatar.h
     ${MEGAsyncDir}/gui/AutoResizeStackedWidget.h
     ${MEGAsyncDir}/gui/ViewLoadingScene.h
     ${MEGAsyncDir}/gui/ScanningWidget.h
@@ -462,7 +463,8 @@ set (SRCS
     ${MEGAsyncDir}/gui/MegaItemProxyModel.cpp
     ${MEGAsyncDir}/gui/MegaItemTreeView.cpp
     ${MEGAsyncDir}/gui/GuiUtilities.cpp
-    ${MEGAsyncDir}/gui/UserAttributesRequests.cpp
+    ${MEGAsyncDir}/gui/UserAttributesRequests/FullName.cpp
+    ${MEGAsyncDir}/gui/UserAttributesRequests/Avatar.cpp
     ${MEGAsyncDir}/gui/ButtonIconManager.cpp
     ${MEGAsyncDir}/gui/EventHelper.cpp
     ${MEGAsyncDir}/gui/GuiUtilities.cpp

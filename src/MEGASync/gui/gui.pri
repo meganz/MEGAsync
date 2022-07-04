@@ -60,7 +60,8 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/FilterAlertWidget.cpp \
     $$PWD/AlertFilterType.cpp \
     $$PWD/BugReportDialog.cpp \
-    $$PWD/UserAttributesRequests.cpp \
+    $$PWD/UserAttributesRequests/FullName.cpp \
+    $$PWD/UserAttributesRequests/Avatar.cpp \
     $$PWD/VerifyLockMessage.cpp \
     $$PWD/MegaInfoMessage.cpp \
     $$PWD/WaitingSpinnerWidget.cpp \
@@ -132,7 +133,8 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/FilterAlertWidget.h \
     $$PWD/AlertFilterType.h \
     $$PWD/BugReportDialog.h \
-    $$PWD/UserAttributesRequests.h \
+    $$PWD/UserAttributesRequests/FullName.h \
+    $$PWD/UserAttributesRequests/Avatar.h \
     $$PWD/VerifyLockMessage.h \
     $$PWD/ViewLoadingScene.h \
     $$PWD/MegaInfoMessage.h \
