@@ -107,6 +107,8 @@ public:
     void resetCompletedDownloads(QList<QExplicitlySharedDataPointer<TransferData>> transfersToReset);
     void resetCompletedTransfers();
 
+    void setMaxTransfersToProcess(uint16_t max);
+
     TransfersToProcess processTransfers();
     void clear();
 
@@ -143,6 +145,7 @@ private:
     QMutex mCacheMutex;
     QMutex mCountersMutex;
     TransfersCount mTransfersCount;
+    std::atomic_int16_t mMaxTransfersToProcess;
 };
 
 
@@ -177,7 +180,6 @@ public:
     void openFolderByTag(TransferTag tag);
     void retryTransferByIndex(const QModelIndex& index);
     void retryTransfers(QModelIndexList indexes);
-    void setResetMode();
     void cancelAndClearTransfers(const QModelIndexList& indexes, QWidget *canceledFrom);
     void cancelAllTransfers(QWidget *canceledFrom);
     void clearAllTransfers();
@@ -229,7 +231,7 @@ signals:
     void transfersProcessChanged();
 
 public slots:
-    void pauseResumeAllTransfers(bool state);
+    void pauseResumeAllTransfers(bool state, int activeTransfers = 0);
     void askForMostPriorityTransfer();
 
 private slots:
@@ -248,14 +250,13 @@ private:
     void removeTransfer(int row);
     void sendDataChanged(int row);
 
-    bool isFailingModeActive() const ;
-    void setFailingMode(bool state);
+    bool isUiBlockedModeActive() const ;
+    void setUiBlockedMode(bool state);
 
-    bool isStartingModeActive() const ;
-    void setStartingMode(bool state);
-
-    bool isCancelingModeActive() const ;
-    void setCancelingMode(bool state);
+    void setUiBlockedModeByCounter(uint32_t transferCount);
+    void updateUiBlockedByCounter(uint16_t updates);
+    bool isUiBlockedByCounter() const;
+    void setUiBlockedByCounterMode(bool state);
 
     void modelHasChanged(bool state);
 
@@ -277,11 +278,11 @@ private:
     QFutureWatcher<void> mCancelWatcher;
 
     uint8_t mTransfersProcessChanged;
-
     uint8_t mUpdateMostPriorityTransfer;
-    uint8_t mCancelingMode;
-    uint8_t mFailingMode;
-    uint8_t mStartingMode;
+    uint8_t mUiBlockedCounter;
+
+    uint32_t mUiBlockedByCounter;
+    uint8_t  mUiBlockedByCounterSafety;
 
     QHash<TransferTag, QPersistentModelIndex> mTagByOrder;
     QList<TransferTag> mRowsToCancel;
@@ -289,7 +290,6 @@ private:
     QTimer mMostPriorityTransferTimer;
 
     bool mAreAllPaused;
-    bool mModelReset;
 };
 
 Q_DECLARE_METATYPE(QAbstractItemModel::LayoutChangeHint)

@@ -539,7 +539,6 @@ protected:
     int blockState;
     bool blockStateSet = false;
     bool whyamiblockedPeriodicPetition = false;
-    bool inScanningStage = false;
     friend class DeferPreferencesSyncForScope;
     std::unique_ptr<TransferQuota> transferQuota;
     bool transferOverQuotaWaitTimeExpiredReceived;
@@ -586,8 +585,8 @@ private:
     void updateTransferNodesStage(mega::MegaTransfer* transfer);
 
     void updateFileTransferBatchesAndUi(BlockingBatch& batch);
-    void updateFolderTransferBatchesAndUi(BlockingBatch& batch);
-    void updateIfBlockingStageFinished(BlockingBatch &batch);
+    void updateFolderTransferBatchesAndUi(BlockingBatch& batch, bool fromCancellation);
+    void updateIfBlockingStageFinished(BlockingBatch &batch, bool fromCancellation);
     void unblockBatch(BlockingBatch &batch);
 
     void logBatchStatus(const char* tag);
@@ -607,6 +606,18 @@ private:
     static void logInfoDialogCoordinates(const char* message, const QRect& screenGeometry, const QString& otherInformation);
 
     void destroyInfoDialogMenus();
+
+    struct NodeCount
+    {
+        int files;
+        int folders;
+    };
+
+    static NodeCount countFilesAndFolders(const QStringList& paths);
+
+    void processUploads(const QStringList& uploads);
+
+    void updateMetadata(TransferMetaData* data, const QString& filePath);
 
     template <class Func>
     void recreateMenuAction(MenuItemAction** action, const QString& actionName,

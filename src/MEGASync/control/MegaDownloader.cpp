@@ -1,5 +1,6 @@
 #include "MegaDownloader.h"
 
+#include "EventUpdater.h"
 #include "MegaApplication.h"
 #include "Utilities.h"
 #include "TransferBatch.h"
@@ -35,10 +36,9 @@ bool MegaDownloader::processDownloadQueue(QQueue<WrappedNode*>* downloadQueue, B
 
     auto batch = std::shared_ptr<TransferBatch>(new TransferBatch());
 
-    //Add now the batch in case the transfers are started from the Webclient
-    //In the transfers are started from the webclient, the onTransferStart are received before
-    //the while finishes, and the batch counters are not correctly updated
     downloadBatches.add(batch);
+
+    EventUpdater updater(downloadQueue->size());
 
     // Process all nodes in the download queue
     while (!downloadQueue->isEmpty())
@@ -66,11 +66,13 @@ bool MegaDownloader::processDownloadQueue(QQueue<WrappedNode*>* downloadQueue, B
 
         // We now have all the necessary info to effectively download.
         bool transferStarted = download(wNode, currentPath, appData, batch->getCancelTokenPtr());
-        if (transferStarted && (wNode->getTransferOrigin() != WrappedNode::FROM_WEBSERVER || node->isFile()))
+        if (transferStarted && wNode->getTransferOrigin() == WrappedNode::FROM_APP)
         {
             batch->add(node->getType() != MegaNode::TYPE_FILE);
         }
         delete wNode;
+
+        updater.update(downloadQueue->size());
     }
 
     if (batch->isEmpty())
@@ -86,7 +88,6 @@ bool MegaDownloader::download(WrappedNode* parent, QFileInfo info, QString appDa
 {
     QPointer<MegaDownloader> safePointer = this;
 
-    QApplication::processEvents();
     if (!safePointer)
     {
         return false;
@@ -104,17 +105,19 @@ bool MegaDownloader::download(WrappedNode* parent, QFileInfo info, QString appDa
     bool isForeignDir = node->getType() != MegaNode::TYPE_FILE && node->isForeign();
     if (!isForeignDir)
     {
-        if (mNoTransferStarted)
+        bool isTransferFromApp = (parent->getTransferOrigin() == WrappedNode::FROM_APP);
+        MegaCancelToken* tokenToUse = (isTransferFromApp) ? cancelToken : nullptr;
+        if (mNoTransferStarted && isTransferFromApp)
         {
             emit startingTransfers();
             mNoTransferStarted = false;
         }
-        startDownload(parent, appData, currentPathWithSep, cancelToken);
+        startDownload(parent, appData, currentPathWithSep, tokenToUse);
         return true;
     }
     else
     {
-        downloadForeignDir(node, currentPathWithSep, appData);
+        downloadForeignDir(node, appData, currentPathWithSep);
         return false;
     }
 }

@@ -58,8 +58,8 @@ void TransfersWidget::setupTransfers()
     mProxyModel = new TransfersManagerSortFilterProxyModel(ui->tvTransfers);
     mProxyModel->setSourceModel(app->getTransfersModel());
     mProxyModel->sort(static_cast<int>(SortCriterion::PRIORITY), Qt::DescendingOrder);
-
     mProxyModel->setDynamicSortFilter(true);
+
 
     connect(mProxyModel, &TransfersManagerSortFilterProxyModel::modelAboutToBeChanged, this, &TransfersWidget::onModelAboutToBeChanged);
     connect(mProxyModel, &TransfersManagerSortFilterProxyModel::modelChanged, this, &TransfersWidget::onModelChanged);
@@ -379,7 +379,6 @@ void TransfersWidget::setScanningWidgetVisible(bool state)
     }
 }
 
-
 void TransfersWidget::onUiBlocked()
 {
     mLoadingScene.setLoadingScene(true);
@@ -398,7 +397,10 @@ void TransfersWidget::onUiUnblocked()
 
 void TransfersWidget::onUiUnblockedAndFilter()
 {
-    textFilterChanged(QString());
+    if(mLoadingScene.isLoadingViewSet())
+    {
+        mProxyModel->refreshFilterFixedString();
+    }
 }
 
 void TransfersWidget::onModelAboutToBeChanged()

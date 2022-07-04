@@ -68,7 +68,7 @@ public:
     void reset();
 
     void enterBlockingState();
-    void leaveBlockingState();
+    void leaveBlockingState(bool fromCancellation);
     void disableCancelling();
 
 #ifdef __APPLE__

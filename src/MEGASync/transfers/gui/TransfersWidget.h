@@ -132,7 +132,6 @@ private:
 signals:
     void clearTransfers(int firstRow, int amount);
     void updateSearchFilter(const QString& pattern);
-    void applyFilter();
     void pauseResumeVisibleRows(bool state);
     void transferPauseResumeStateChanged(bool isPaused);
     void cancelClearVisibleRows();

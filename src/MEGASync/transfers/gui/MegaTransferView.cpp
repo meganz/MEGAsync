@@ -14,8 +14,6 @@ using namespace mega;
 const QColor MegaTransferView::UPLOAD_DRAG_COLOR = QColor("#2BA6DE");
 const QColor MegaTransferView::DOWNLOAD_DRAG_COLOR = QColor("#31B500");
 
-const int MegaTransferView::CANCEL_MESSAGE_THRESHOLD = 50000;
-
 MegaTransferView::MegaTransferView(QWidget* parent) :
     QTreeView(parent),
     mDisableLink(false),
@@ -120,11 +118,6 @@ QString MegaTransferView::getVisibleCancelOrClearText()
         action = tr("Clear transfer(s)?");
     }
 
-    if(proxy->rowCount() > CANCEL_MESSAGE_THRESHOLD)
-    {
-        action.append(tr("\nThis will take a few seconds."));
-    }
-
     return action;
 }
 
@@ -159,11 +152,6 @@ QString MegaTransferView::getSelectedCancelOrClearText()
     else
     {
         action = tr("Clear transfer(s)?");
-    }
-
-    if(indexes.size() > CANCEL_MESSAGE_THRESHOLD)
-    {
-        action.append(tr("\nThis will take a few seconds."));
     }
 
     return action;
@@ -251,7 +239,7 @@ bool MegaTransferView::onCancelAllTransfers()
             == QMessageBox::Yes
             && dialog)
     {
-        cancelAndClearAllTransfers(true, false);
+        cancelAllTransfers();
         result = true;
     }
 
@@ -268,7 +256,7 @@ void MegaTransferView::onClearAllTransfers()
             == QMessageBox::Yes
             && dialog)
     {
-        cancelAndClearAllTransfers(false, true);
+        clearAllTransfers();
     }
 }
 
@@ -296,30 +284,24 @@ void MegaTransferView::onCancelAndClearVisibleTransfers()
     }
 }
 
-void MegaTransferView::cancelAndClearAllTransfers(bool cancel, bool clear)
+void MegaTransferView::clearAllTransfers()
+{    
+    auto proxy(qobject_cast<QSortFilterProxyModel*>(model()));
+    auto sourceModel(qobject_cast<TransfersModel*>(proxy->sourceModel()));
+
+    sourceModel->pauseModelProcessing(true);
+    sourceModel->clearAllTransfers();
+    sourceModel->pauseModelProcessing(false);
+}
+
+void MegaTransferView::cancelAllTransfers()
 {
-    if(cancel | clear)
-    {
-        auto proxy(qobject_cast<QSortFilterProxyModel*>(model()));
-        auto sourceModel(qobject_cast<TransfersModel*>(proxy->sourceModel()));
-        if(cancel && clear)
-        {
-            sourceModel->setResetMode();
-        }
+    auto proxy(qobject_cast<QSortFilterProxyModel*>(model()));
+    auto sourceModel(qobject_cast<TransfersModel*>(proxy->sourceModel()));
 
-        sourceModel->pauseModelProcessing(true);
-
-        if(clear)
-        {
-            sourceModel->clearAllTransfers();
-        }
-        if(cancel)
-        {
-            sourceModel->cancelAllTransfers(this);
-        }
-
-        sourceModel->pauseModelProcessing(false);
-    }
+    sourceModel->pauseModelProcessing(true);
+    sourceModel->cancelAllTransfers(this);
+    sourceModel->pauseModelProcessing(false);
 }
 
 int MegaTransferView::getVerticalScrollBarWidth() const

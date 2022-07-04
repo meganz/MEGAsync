@@ -103,7 +103,7 @@ bool InfoDialogTransfersProxyModel::lessThan(const QModelIndex &left, const QMod
         }
         else
         {
-            return leftItem->getFinishedTime() < rightItem->getFinishedTime();
+            return leftItem->getRawFinishedTime() > rightItem->getRawFinishedTime();
         }
     }
     else

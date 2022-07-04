@@ -50,7 +50,7 @@ void TransferManagerDelegateWidget::updateTransferState()
         {
             if(stateHasChanged())
             {
-                if (!getData()->mTransferredBytes)
+                if (getData()->mTransferredBytes == 0)
                 {
                     statusString = QString::fromUtf8("%1%2").arg(tr("starting"), QString::fromUtf8("…"));
                 }

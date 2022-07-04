@@ -25,6 +25,7 @@ public:
         void sort(int column, Qt::SortOrder order = Qt::AscendingOrder) override;
         void setSourceModel(QAbstractItemModel *sourceModel) override;
         void setFilterFixedString(const QString &pattern);
+        void refreshFilterFixedString();
         void textSearchTypeChanged();
         void setFilters(const TransferData::TransferTypes transferTypes,
                         const TransferData::TransferStates transferStates,
@@ -42,6 +43,8 @@ public:
         bool areAllSync() const;
         bool areAllCompleted() const;
         bool isAnyCompleted() const;
+
+        int  activeTransfers() const;
 
         bool isModelProcessing() const;
 signals:
@@ -79,6 +82,11 @@ protected:
         mutable QSet<int> mPausedTransfers;
         mutable QSet<int> mCompletedTransfers;
 
+        mutable uint32_t mNoSyncTransfersCounter;
+        mutable uint32_t mActiveTransfersCounter;
+        mutable uint32_t mPausedTransfersCounter;
+        mutable uint32_t mCompletedTransfersCounter;
+
 private slots:
         void onRowsAboutToBeRemoved(const QModelIndex& parent, int first, int last);
         void onModelSortedFiltered();
@@ -88,12 +96,15 @@ private:
         mutable QMutex mMutex;
         QFutureWatcher<void> mFilterWatcher;
         QString mFilterText;
+        bool mIsFiltering;
 
         void removeActiveTransferFromCounter(TransferTag tag) const;
         void removePausedTransferFromCounter(TransferTag tag) const;
         void removeNonSyncedTransferFromCounter(TransferTag tag) const;
         void removeCompletedTransferFromCounter(TransferTag tag) const;
         bool updateTransfersCounterFromTag(QExplicitlySharedDataPointer<TransferData> transfer) const;
+
+        void invalidateModel(Qt::SortOrder sortOrder);
 
         void resetAllCounters();
         void resetTransfersStateCounters();

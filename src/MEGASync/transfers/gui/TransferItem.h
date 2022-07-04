@@ -50,6 +50,7 @@ public:
     static const TransferStates PAUSABLE_STATES_MASK;
     static const TransferStates CANCELABLE_STATES_MASK;
     static const TransferStates ACTIVE_STATES_MASK;
+    static const TransferStates PROCESSING_STATES_MASK;
     static const TransferStates STATE_MASK;
 
     static const TransferTypes TYPE_MASK;
@@ -58,7 +59,7 @@ public:
     ~TransferData(){}
 
     TransferData(TransferData const* dr) :
-        mType(dr->mType), mErrorCode(dr->mErrorCode),  mState(dr->mState), mPreviousState(dr->mPreviousState), mTag(dr->mTag),
+        mType(dr->mType), mErrorCode(dr->mErrorCode),  mState(dr->mState), mTag(dr->mTag),
         mErrorValue(dr->mErrorValue), mTemporaryError(dr->mTemporaryError),
         mRemainingTime(dr->mRemainingTime),
         mTotalSize(dr->mTotalSize), mPriority(dr->mPriority), mSpeed(dr->mSpeed),
@@ -73,45 +74,50 @@ public:
 
     void update(mega::MegaTransfer* transfer);
     bool hasChanged(QExplicitlySharedDataPointer<TransferData> data);
-    bool stateHasChanged();
     void removeFailedTransfer();
 
     void setPauseResume(bool isPaused);
-    bool checkState(const TransferState &state);
+    bool ignoreUpdate(const TransferState &state);
     void resetIgnoreUpdateUntilSameState();
 
     TransferTypes                       mType;
-    int                                 mErrorCode;
-    int                                 mTag;
-    long long                           mErrorValue;
-    bool                                mTemporaryError;
-    int64_t                             mRemainingTime;
-    unsigned long long                  mTotalSize;
-    unsigned long long                  mPriority;
-    unsigned long long                  mSpeed;
-    unsigned long long                  mMeanSpeed;
-    unsigned long long                  mTransferredBytes;
-    long long                           mNotificationNumber;
-    Utilities::FileType                 mFileType;
-    mega::MegaHandle                    mParentHandle;
-    mega::MegaHandle                    mNodeHandle;
+    int                                 mErrorCode = 0;
+    int                                 mTag = 0;
+    long long                           mErrorValue = 0;
+    bool                                mTemporaryError = false;
+    int64_t                             mRemainingTime = 0;
+    unsigned long long                  mTotalSize = 0;
+    unsigned long long                  mPriority = 0;
+    unsigned long long                  mSpeed = 0;
+    unsigned long long                  mMeanSpeed = 0;
+    unsigned long long                  mTransferredBytes = 0;
+    long long                           mNotificationNumber = 0;
+    Utilities::FileType                 mFileType = Utilities::FileType::TYPE_OTHER;
+    mega::MegaHandle                    mParentHandle = 0;
+    mega::MegaHandle                    mNodeHandle = 0;
     std::shared_ptr<mega::MegaTransfer> mFailedTransfer;
     QString                             mFilename;
-    int                                 mNodeAccess;
+    int                                 mNodeAccess = 0;
 
     void setState(const TransferState& state);
     void setPreviousState(const TransferState& state);
     TransferState getState() const;
+    TransferState getPreviousState() const;
+    void resetStateHasChanged();
+    bool stateHasChanged() const;
 
     QString path() const;
     bool isPublicNode() const;
     bool isCancelable() const;
     bool isFinished() const;
+    bool wasFinished() const;
     bool isUpload() const;
     bool isSyncTransfer() const;
     bool isActive() const;
     bool isPaused() const;
+    bool wasPaused() const;
     bool isProcessing() const;
+    bool wasProcessing() const;
     bool isCompleted() const;
     bool isCompleting() const;
     bool isFailed() const;
@@ -121,9 +127,9 @@ public:
 
 private:
     QString         mPath;
-    int64_t         mFinishedTime;
-    TransferState   mState;
-    TransferState   mPreviousState;
+    int64_t         mFinishedTime = 0;
+    TransferState   mState = TransferState::TRANSFER_NONE;
+    TransferState   mPreviousState = TransferState::TRANSFER_NONE;
     bool            mIgnorePauseQueueState;
 
 };
