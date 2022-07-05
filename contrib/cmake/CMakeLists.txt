@@ -634,7 +634,8 @@ endif()
 
 
 add_definitions( -DQT_DISABLE_DEPRECATED_BEFORE=0x000000 -DQT_NO_CAST_FROM_ASCII -DQT_NO_CAST_TO_ASCII -DUNICODE )
-add_definitions( "$<$<CONFIG:Debug>:-DSHOW_LOGS>" -DMEGA_QT_LOGGING -DQT_GUI_LIB -DQT_NETWORK_LIB -DQT_CORE_LIB -DQT_WIDGETS_LIB )
+add_compile_definitions( "$<$<CONFIG:Debug>:SHOW_LOGS>" )
+add_definitions( -DMEGA_QT_LOGGING -DQT_GUI_LIB -DQT_NETWORK_LIB -DQT_CORE_LIB -DQT_WIDGETS_LIB )
  #TODO: remove UNICODE (in config.h) and use the WIN32 definition accordingly only for Windows
 
 if (ENABLE_LOG_PERFORMANCE)
