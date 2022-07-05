@@ -100,6 +100,9 @@ public:
     int getNumSyncedFolders(SyncType type)
         {return getNumSyncedFolders(QVector<SyncType>({type}));}
 
+    bool syncWithErrorExist(const QVector<SyncType>& types);
+    bool syncWithErrorExist(SyncType type)
+        {return syncWithErrorExist(QVector<SyncType>({type}));}
     bool hasUnattendedDisabledSyncs(const QVector<SyncType>& types) const;
     bool hasUnattendedDisabledSyncs(SyncType type) const
         {return hasUnattendedDisabledSyncs(QVector<SyncType>({type}));}

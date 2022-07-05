@@ -346,6 +346,22 @@ int SyncModel::getNumSyncedFolders(const QVector<SyncType>& types)
     return value;
 }
 
+bool SyncModel::syncWithErrorExist(const QVector<SyncType> &types)
+{
+    QMutexLocker qm(&syncMutex);
+    for(auto type : types)
+    {
+        for (auto &cs : configuredSyncs[type])
+        {
+            if(configuredSyncsMap[cs]->getError())
+            {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 QStringList SyncModel::getSyncNames(const QVector<SyncType>& types)
 {
     QMutexLocker qm(&syncMutex);

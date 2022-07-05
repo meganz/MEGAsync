@@ -101,7 +101,6 @@ SettingsDialog::SettingsDialog(MegaApplication* app, bool proxyOnly, QWidget* pa
     mCacheSize (-1),
     mRemoteCacheSize (-1),
     mDebugCounter (0),
-    mAreSyncsDisabled (false),
     mBackupRootHandle(mega::INVALID_HANDLE),
     mCreateBackupRootDir (true),
     mPendingBackup()
@@ -225,7 +224,8 @@ SettingsDialog::SettingsDialog(MegaApplication* app, bool proxyOnly, QWidget* pa
     connect(mApp, &MegaApplication::storageStateChanged, this, &SettingsDialog::storageStateChanged);
     storageStateChanged(app->getAppliedStorageState());
 
-    syncsStateInformation(SyncStateInformation::NO_SAVING_SYNCS);
+    syncsStateInformation(SyncStateInformation::SAVING_SYNCS_FINISHED);
+    syncsStateInformation(SyncStateInformation::SAVING_BACKUPS_FINISHED);
 
     connectSyncHandlers();
 
@@ -698,12 +698,21 @@ void SettingsDialog::onRemoteCacheSizeAvailable()
     onCacheSizeAvailable();
 }
 
-void SettingsDialog::onSavingSyncsCompleted()
+void SettingsDialog::onSavingSyncsCompleted(SyncStateInformation value)
 {
+    qint64 startTime(0);
+    if(value == SyncStateInformation::SAVING_SYNCS_FINISHED)
+    {
+       startTime =  mUi->wSpinningIndicatorSyncs->getStartTime();
+    }
+    else if(value == SyncStateInformation::SAVING_BACKUPS_FINISHED)
+    {
+        startTime =  mUi->wSpinningIndicatorBackups->getStartTime();
+    }
     auto closeDelay = std::max(0ll, 350ll - (QDateTime::currentMSecsSinceEpoch()
-                                                 - mUi->wSpinningIndicator->getStartTime()));
-    QTimer::singleShot(closeDelay, this, [this] () {
-        syncsStateInformation(SyncStateInformation::NO_SAVING_SYNCS);
+                                                 - startTime));
+    QTimer::singleShot(closeDelay, this, [this, value] () {
+        syncsStateInformation(value);
     });
 }
 
@@ -1378,14 +1387,14 @@ void SettingsDialog::connectSyncHandlers()
     {
         if (errorCode != MegaError::API_OK)
         {
-            onSavingSyncsCompleted();
+            onSavingSyncsCompleted(SAVING_SYNCS_FINISHED);
             QMegaMessageBox::critical(nullptr, tr("Error adding sync"), errorMsg);
         }
     }, Qt::QueuedConnection);
 
     connect(&mSyncController, &SyncController::syncRemoveError, this, [this](std::shared_ptr<SyncSetting> sync)
     {
-        onSavingSyncsCompleted();
+        onSavingSyncsCompleted(SAVING_SYNCS_FINISHED);
         QMegaMessageBox::critical(nullptr, tr("Error removing sync"),
                                   tr("Your sync \"%1\" can't be removed. Reason: %2")
                                   .arg(sync->name())
@@ -1395,7 +1404,7 @@ void SettingsDialog::connectSyncHandlers()
 
     connect(&mSyncController, &SyncController::syncEnableError, this, [this](std::shared_ptr<SyncSetting> sync)
     {
-        onSavingSyncsCompleted();
+        onSavingSyncsCompleted(SAVING_SYNCS_FINISHED);
         QMegaMessageBox::critical(nullptr, tr("Error enabling sync"),
                                   tr("Your sync \"%1\" can't be enabled. Reason: %2")
                                   .arg(sync->name())
@@ -1405,7 +1414,7 @@ void SettingsDialog::connectSyncHandlers()
 
     connect(&mSyncController, &SyncController::syncDisableError, this, [this](std::shared_ptr<SyncSetting> sync)
     {
-        onSavingSyncsCompleted();
+        onSavingSyncsCompleted(SAVING_SYNCS_FINISHED);
         QMegaMessageBox::critical(nullptr, tr("Error disabling sync"),
                                   tr("Your sync \"%1\" can't be disabled. Reason: %2")
                                   .arg(sync->name())
@@ -1428,9 +1437,12 @@ void SettingsDialog::loadSyncSettings()
         syncsStateInformation(SyncStateInformation::SAVING_SYNCS);
         mSyncController.disableSync(sync);
     });
-    connect(model, &SyncItemModel::syncUpdateFinished, this, [this]()
+    connect(model, &SyncItemModel::syncUpdateFinished, this, [this](std::shared_ptr<SyncSetting> syncSetting)
     {
-        onSavingSyncsCompleted();
+        if(syncSetting->getType() == mega::MegaSync::SyncType::TYPE_TWOWAY)
+        {
+            onSavingSyncsCompleted(SAVING_SYNCS_FINISHED);
+        }
     });
 
     SyncItemSortModel *sortModel = new SyncItemSortModel(mUi->syncTableView);
@@ -1534,52 +1546,76 @@ void SettingsDialog::on_bDeleteSync_clicked()
     }
 }
 
-void SettingsDialog::syncsStateInformation(int state)
+void SettingsDialog::syncsStateInformation(SyncStateInformation state)
 {
     switch (state)
     {
         case SAVING_SYNCS:
             setEnabled(false);
             //if we are on sync tab
-            mUi->wSpinningIndicator->start();
+            mUi->wSpinningIndicatorSyncs->start();
             mUi->sSyncsState->setCurrentWidget(mUi->pSavingSyncs);
-            mUi->wSpinningIndicatorBackups->start();
-            mUi->wSaveBackups->setVisible(true);
+
             break;
-        default:
-        {
+        case SAVING_BACKUPS:
+            setEnabled(false);
+            mUi->wSpinningIndicatorBackups->start();
+            mUi->sBackupsState->setCurrentWidget(mUi->pSavingBackups);
+            break;
+        case SAVING_SYNCS_FINISHED:
             setEnabled(true);
-            mUi->wSpinningIndicator->stop();
+            mUi->wSpinningIndicatorSyncs->stop();
             // If any sync is disabled, shows warning message
-            if (mAreSyncsDisabled)
+            if (mModel->syncWithErrorExist(mega::MegaSync::SyncType::TYPE_TWOWAY))
             {
                 mUi->sSyncsState->setCurrentWidget(mUi->pSyncsDisabled);
 
-#ifdef Q_OS_MACOS
+    #ifdef Q_OS_MACOS
                 QString syncs(QString::fromUtf8("settings-syncs-error"));
                 mToolBar->customizeIconToolBarItem(bSyncs.get(), syncs);
-#else
+    #else
                mUi->bSyncs->setIcon(QIcon(QString::fromUtf8(":/images/settings-syncs-warn.png")));
-#endif
+    #endif
              }
              else
              {
-                 mUi->sSyncsState->setCurrentWidget(mUi->pNoErrors);
+                 mUi->sSyncsState->setCurrentWidget(mUi->pNoErrorsSyncs);
 
-#ifdef Q_OS_MACOS
+    #ifdef Q_OS_MACOS
                 QString syncs(QString::fromUtf8("settings-syncs"));
                 mToolBar->customizeIconToolBarItem(bSyncs.get(), syncs);
-#else
+    #else
                  mUi->bSyncs->setIcon(QIcon(QString::fromUtf8(":/images/settings-syncs.png")));
-#endif
+    #endif
              }
-
-             mUi->wSpinningIndicatorBackups->stop();
-             mUi->wSaveBackups->setVisible(false);
-
-        }
             break;
-    }
+    case SAVING_BACKUPS_FINISHED:
+        setEnabled(true);
+        mUi->wSpinningIndicatorBackups->stop();
+        // If any sync is disabled, shows warning message
+        if (mModel->syncWithErrorExist(mega::MegaSync::SyncType::TYPE_BACKUP))
+        {
+            mUi->sBackupsState->setCurrentWidget(mUi->pBackupsDisabled);
+
+#ifdef Q_OS_MACOS
+            QString backup(QString::fromUtf8("settings-backup"));
+            mToolBar->customizeIconToolBarItem(bBackup.get(), backup);
+#else
+            mUi->bBackup->setIcon(QIcon(QString::fromUtf8(":/images/settings-backups-warn.png")));
+#endif
+         }
+         else
+         {
+            mUi->sBackupsState->setCurrentWidget(mUi->pNoErrorsBackups);
+
+#ifdef Q_OS_MACOS
+            QString backup(QString::fromUtf8("settings-backup"));
+            mToolBar->customizeIconToolBarItem(bBackup.get(), backup);
+#else
+            mUi->bBackup->setIcon(QIcon(QString::fromUtf8(":/images/settings-backup.png")));
+#endif
+         }
+        }
 }
 
 // Backup ----------------------------------------------------------------------------------------
@@ -1609,7 +1645,7 @@ void SettingsDialog::connectBackupHandlers()
     {
         if (errorCode != mega::MegaError::API_OK)
         {
-            onSavingSyncsCompleted();
+            onSavingSyncsCompleted(SyncStateInformation::SAVING_BACKUPS_FINISHED);
             QMegaMessageBox::critical(nullptr, tr("Backup Error"), tr("Error creating Backups root folder: %2") .arg(errorMsg));
         }
     });
@@ -1618,14 +1654,14 @@ void SettingsDialog::connectBackupHandlers()
     {
         if (errorCode != MegaError::API_OK)
         {
-            onSavingSyncsCompleted();
+            onSavingSyncsCompleted(SyncStateInformation::SAVING_BACKUPS_FINISHED);
             QMegaMessageBox::warning(nullptr, tr("Error adding backup %1").arg(name), errorMsg);
         }
     });
 
     connect(&mBackupController, &SyncController::syncRemoveError, this, [this](std::shared_ptr<SyncSetting> sync)
     {
-        onSavingSyncsCompleted();
+        onSavingSyncsCompleted(SyncStateInformation::SAVING_BACKUPS_FINISHED);
         QMegaMessageBox::warning(nullptr, tr("Error removing backup"),
                                   tr("Your backup \"%1\" can't be removed. Reason: %2")
                                   .arg(sync->name())
@@ -1635,7 +1671,7 @@ void SettingsDialog::connectBackupHandlers()
 
     connect(&mBackupController, &SyncController::syncEnableError, this, [this](std::shared_ptr<SyncSetting> sync)
     {
-        onSavingSyncsCompleted();
+        onSavingSyncsCompleted(SyncStateInformation::SAVING_BACKUPS_FINISHED);
         QMegaMessageBox::warning(nullptr, tr("Error enabling backup"),
                                   tr("Your backup \"%1\" can't be enabled. Reason: %2")
                                   .arg(sync->name())
@@ -1645,7 +1681,7 @@ void SettingsDialog::connectBackupHandlers()
 
     connect(&mBackupController, &SyncController::syncDisableError, this, [this](std::shared_ptr<SyncSetting> sync)
     {
-        onSavingSyncsCompleted();
+        onSavingSyncsCompleted(SyncStateInformation::SAVING_BACKUPS_FINISHED);
         QMegaMessageBox::warning(nullptr, tr("Error disabling backup"),
                                   tr("Your sync \"%1\" can't be disabled. Reason: %2")
                                   .arg(sync->name())
@@ -1660,17 +1696,20 @@ void SettingsDialog::loadBackupSettings()
     model->fillData();
     connect(model, &BackupItemModel::enableSync, this, [this](std::shared_ptr<SyncSetting> sync)
     {
-        syncsStateInformation(SyncStateInformation::SAVING_SYNCS);
+        syncsStateInformation(SyncStateInformation::SAVING_BACKUPS);
         mBackupController.enableSync(sync);
     });
     connect(model, &BackupItemModel::disableSync, this, [this](std::shared_ptr<SyncSetting> sync)
     {
-        syncsStateInformation(SyncStateInformation::SAVING_SYNCS);
+        syncsStateInformation(SyncStateInformation::SAVING_BACKUPS);
         mBackupController.disableSync(sync);
     });
-    connect(model, &BackupItemModel::syncUpdateFinished, this, [this]()
+    connect(model, &BackupItemModel::syncUpdateFinished, this, [this](std::shared_ptr<SyncSetting> syncSetting)
     {
-        onSavingSyncsCompleted();
+        if(syncSetting->getType() == mega::MegaSync::SyncType::TYPE_BACKUP)
+        {
+            onSavingSyncsCompleted(SAVING_BACKUPS_FINISHED);
+        }
     });
     SyncItemSortModel *sortModel = new SyncItemSortModel(mUi->syncTableView);
     sortModel->setSourceModel(model);

@@ -164,32 +164,10 @@ MenuItemDelegate::~MenuItemDelegate()
 
 void MenuItemDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
-    painter->save();
-    QStyledItemDelegate::paint(painter, option, index);
-    QIcon icon = qvariant_cast<QIcon>(index.data(Qt::DecorationRole));
-    Qt::Alignment alignment = index.data(Qt::TextAlignmentRole).value<Qt::Alignment>();
-    painter->setPen(QColor(Qt::white));
-    painter->setBrush(QColor(Qt::white));
-    QIcon::Mode mode = QIcon::Mode::Normal;
-    if(option.state & QStyle::State_Selected)
-    {
-        mode = QIcon::Mode::Selected;
-        painter->setPen(QColor::fromRgb(0, 120, 215, 204));
-        painter->setBrush(QColor::fromRgb(0, 120, 215, 204));
-    }
-    QRect rectToDraw = option.rect;
-    painter->setPen(Qt::NoPen);
-    painter->drawRect(rectToDraw);
-
-    icon.paint(painter, option.rect, alignment, mode);
-    painter->restore();
-}
-
-void MenuItemDelegate::initStyleOption(QStyleOptionViewItem *option, const QModelIndex &index) const
-{
-    QStyledItemDelegate::initStyleOption(option, index);
-    option->icon = QIcon();
-    option->state.setFlag(QStyle::State_Selected, false);
+    QStyleOptionViewItem opt(option);
+    opt.decorationAlignment = index.data(Qt::TextAlignmentRole).value<Qt::Alignment>();
+    opt.decorationPosition = QStyleOptionViewItem::Top;
+    QStyledItemDelegate::paint(painter, opt, index);
 }
 
 SelectionIconNoChangeOnDisable::SelectionIconNoChangeOnDisable(QObject *parent) : QStyledItemDelegate(parent)
