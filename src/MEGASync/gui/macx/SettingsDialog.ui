@@ -2397,7 +2397,6 @@ border: 1px solid #D8D8D8;
 QTableView::item
 {
 border: none;
-border-right:1px solid #dadada;
 padding-left:4px;
 }
 
@@ -2416,62 +2415,62 @@ padding-top: 2px;
 QHeaderView::section {
 background: #FFFFFF;
 color: #4A607A;
-border-right:1px solid #dadada;
 padding-left:6px;
 border-top:0 px;
 border-bottom:0px;
 border-left:0px;
+border-right:0px;
 }
 
 QHeaderView::section:last {
 border-right:0px;
 }</string>
-           </property>
-           <property name="frameShape">
-            <enum>QFrame::NoFrame</enum>
-           </property>
-           <property name="horizontalScrollBarPolicy">
-            <enum>Qt::ScrollBarAsNeeded</enum>
-           </property>
-           <property name="editTriggers">
-            <set>QAbstractItemView::DoubleClicked|QAbstractItemView::EditKeyPressed|QAbstractItemView::SelectedClicked</set>
-           </property>
-           <property name="alternatingRowColors">
-            <bool>false</bool>
-           </property>
-           <property name="selectionMode">
-            <enum>QAbstractItemView::SingleSelection</enum>
-           </property>
-           <property name="selectionBehavior">
-            <enum>QAbstractItemView::SelectRows</enum>
-           </property>
-           <property name="textElideMode">
-            <enum>Qt::ElideMiddle</enum>
-           </property>
-           <property name="showGrid">
-            <bool>false</bool>
-           </property>
-           <property name="sortingEnabled">
-            <bool>true</bool>
-           </property>
-           <property name="cornerButtonEnabled">
-            <bool>false</bool>
-           </property>
-           <attribute name="horizontalHeaderMinimumSectionSize">
-            <number>24</number>
-           </attribute>
-           <attribute name="horizontalHeaderHighlightSections">
-            <bool>false</bool>
-           </attribute>
-           <attribute name="verticalHeaderVisible">
-            <bool>false</bool>
-           </attribute>
-           <attribute name="verticalHeaderMinimumSectionSize">
-            <number>24</number>
-           </attribute>
-           <attribute name="verticalHeaderDefaultSectionSize">
-            <number>24</number>
-           </attribute>
+               </property>
+               <property name="frameShape">
+                <enum>QFrame::NoFrame</enum>
+               </property>
+               <property name="horizontalScrollBarPolicy">
+                <enum>Qt::ScrollBarAsNeeded</enum>
+               </property>
+               <property name="editTriggers">
+                <set>QAbstractItemView::DoubleClicked|QAbstractItemView::EditKeyPressed|QAbstractItemView::SelectedClicked</set>
+               </property>
+               <property name="alternatingRowColors">
+                <bool>false</bool>
+               </property>
+               <property name="selectionMode">
+                <enum>QAbstractItemView::SingleSelection</enum>
+               </property>
+               <property name="selectionBehavior">
+                <enum>QAbstractItemView::SelectRows</enum>
+               </property>
+               <property name="textElideMode">
+                <enum>Qt::ElideMiddle</enum>
+               </property>
+               <property name="showGrid">
+                <bool>false</bool>
+               </property>
+               <property name="sortingEnabled">
+                <bool>true</bool>
+               </property>
+               <property name="cornerButtonEnabled">
+                <bool>false</bool>
+               </property>
+               <attribute name="horizontalHeaderMinimumSectionSize">
+                <number>24</number>
+               </attribute>
+               <attribute name="horizontalHeaderHighlightSections">
+                <bool>false</bool>
+               </attribute>
+               <attribute name="verticalHeaderVisible">
+                <bool>false</bool>
+               </attribute>
+               <attribute name="verticalHeaderMinimumSectionSize">
+                <number>24</number>
+               </attribute>
+               <attribute name="verticalHeaderDefaultSectionSize">
+                <number>24</number>
+               </attribute>
               </widget>
              </item>
              <item>
@@ -2803,7 +2802,7 @@ border-right:0px;
                         <height>16</height>
                        </size>
                       </property>
-                      <widget class="QMacSpinningProgressIndicator" name="wSpinningIndicator" native="true">
+                      <widget class="QMacSpinningProgressIndicator" name="wSpinningIndicatorSyncs" native="true">
                        <property name="geometry">
                         <rect>
                          <x>0</x>
@@ -2923,7 +2922,7 @@ border-right:0px;
                  </item>
                 </layout>
                </widget>
-               <widget class="QWidget" name="pNoErrors"/>
+               <widget class="QWidget" name="pNoErrorsSyncs"/>
               </widget>
              </item>
             </layout>
@@ -2935,21 +2934,18 @@ border-right:0px;
       </layout>
      </widget>
      <widget class="QWidget" name="pBackup">
-      <layout class="QVBoxLayout" name="verticalLayout_44">
-       <property name="spacing">
-        <number>18</number>
-       </property>
+      <layout class="QVBoxLayout" name="verticalLayout_50">
        <property name="leftMargin">
         <number>25</number>
        </property>
        <property name="topMargin">
-        <number>12</number>
+        <number>5</number>
        </property>
        <property name="rightMargin">
         <number>25</number>
        </property>
        <property name="bottomMargin">
-        <number>25</number>
+        <number>0</number>
        </property>
        <item>
         <widget class="QWidget" name="wBackupItems" native="true">
@@ -3049,6 +3045,11 @@ QTableView::item
 border: none;
 padding-left: 3px;
 }
+
+QTableView::item::selected
+{
+color:white;
+}
 </string>
                </property>
                <property name="alternatingRowColors">
@@ -3072,8 +3073,17 @@ padding-left: 3px;
                <property name="cornerButtonEnabled">
                 <bool>false</bool>
                </property>
+               <attribute name="horizontalHeaderMinimumSectionSize">
+                <number>24</number>
+               </attribute>
                <attribute name="verticalHeaderVisible">
                 <bool>false</bool>
+               </attribute>
+               <attribute name="verticalHeaderMinimumSectionSize">
+                <number>24</number>
+               </attribute>
+               <attribute name="verticalHeaderDefaultSectionSize">
+                <number>24</number>
                </attribute>
               </widget>
              </item>
@@ -3178,32 +3188,49 @@ padding-left: 3px;
          </layout>
         </widget>
        </item>
-       <item alignment="Qt::AlignHCenter">
-        <widget class="QWidget" name="wSaveBackups" native="true">
-         <layout class="QHBoxLayout" name="horizontalLayout_21">
-          <item>
-           <widget class="QWidget" name="wContainerSpinningBackups" native="true">
-            <property name="minimumSize">
-             <size>
-              <width>16</width>
-              <height>16</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>16</width>
-              <height>16</height>
-             </size>
-            </property>
-            <widget class="QMacSpinningProgressIndicator" name="wSpinningIndicatorBackups" native="true">
-             <property name="geometry">
-              <rect>
-               <x>0</x>
-               <y>0</y>
-               <width>16</width>
-               <height>16</height>
-              </rect>
+       <item>
+        <widget class="QStackedWidget" name="sBackupsState">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="currentIndex">
+          <number>1</number>
+         </property>
+         <widget class="QWidget" name="pSavingBackups">
+          <layout class="QHBoxLayout" name="horizontalLayout_35">
+           <property name="spacing">
+            <number>4</number>
+           </property>
+           <property name="leftMargin">
+            <number>0</number>
+           </property>
+           <property name="topMargin">
+            <number>0</number>
+           </property>
+           <property name="rightMargin">
+            <number>0</number>
+           </property>
+           <property name="bottomMargin">
+            <number>0</number>
+           </property>
+           <item>
+            <spacer name="horizontalSpacer_15">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
              </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>0</width>
+               <height>0</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item>
+            <widget class="WaitingSpinnerWidget" name="wSpinningIndicatorBackups" native="true">
              <property name="minimumSize">
               <size>
                <width>16</width>
@@ -3216,26 +3243,69 @@ padding-left: 3px;
                <height>16</height>
               </size>
              </property>
-             <property name="styleSheet">
-              <string notr="true"/>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="lSavingBackups">
+             <property name="text">
+              <string>Saving backups…</string>
              </property>
             </widget>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLabel" name="lSavingBackups">
-            <property name="maximumSize">
-             <size>
-              <width>16777215</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="text">
-             <string>Saving backups…</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
+           </item>
+           <item>
+            <spacer name="horizontalSpacer_16">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>0</width>
+               <height>0</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+          </layout>
+         </widget>
+         <widget class="QWidget" name="pBackupsDisabled">
+          <layout class="QVBoxLayout" name="verticalLayout_44">
+           <property name="spacing">
+            <number>0</number>
+           </property>
+           <property name="leftMargin">
+            <number>0</number>
+           </property>
+           <property name="topMargin">
+            <number>0</number>
+           </property>
+           <property name="rightMargin">
+            <number>0</number>
+           </property>
+           <property name="bottomMargin">
+            <number>0</number>
+           </property>
+           <item>
+            <widget class="QGroupBox" name="groupBox_2">
+             <layout class="QVBoxLayout" name="verticalLayout_49">
+              <property name="spacing">
+               <number>0</number>
+              </property>
+              <item>
+               <widget class="QLabel" name="lDisabledBackups">
+                <property name="text">
+                 <string>Some folders have not synchronised. For more information please hover over the yellow warning icon.</string>
+                </property>
+                <property name="wordWrap">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+         <widget class="QWidget" name="pNoErrorsBackups"/>
         </widget>
        </item>
       </layout>
@@ -4953,7 +5023,25 @@ margin-right: 32px;</string>
   <customwidget>
    <class>NotificationsSettings</class>
    <extends>QWidget</extends>
-   <header location="global">NotificationsSettings.h</header>
+   <header>notificationssettings.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>SyncTableView</class>
+   <extends>QTableView</extends>
+   <header>SyncTableView.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>BackupTableView</class>
+   <extends>QTableView</extends>
+   <header>BackupTableView.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>WaitingSpinnerWidget</class>
+   <extends>QWidget</extends>
+   <header location="global">WaitingSpinnerWidget.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
@@ -4965,16 +5053,7 @@ margin-right: 32px;</string>
   <customwidget>
    <class>QSegmentedControl</class>
    <extends>QWidget</extends>
-   <header location="global">QSegmentedControl.h</header>
-   <container>1</container>
-   <class>SyncTableView</class>
-   <extends>QTableView</extends>
-   <header>SyncTableView.h</header>
-  </customwidget>
-  <customwidget>
-   <class>BackupTableView</class>
-   <extends>QTableView</extends>
-   <header>BackupTableView.h</header>
+   <header>qsegmentedcontrol.h</header>
   </customwidget>
  </customwidgets>
  <tabstops>

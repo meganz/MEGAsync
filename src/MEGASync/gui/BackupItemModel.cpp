@@ -68,8 +68,7 @@ QVariant BackupItemModel::data(const QModelIndex &index, int role) const
             QIcon syncIcon;
             if(sync->getError())
             {
-                syncIcon.addFile(QLatin1String(":/images/icons/folder/folder-warning-rest.png"), QSize(ICON_SIZE, ICON_SIZE), QIcon::Normal);
-                syncIcon.addFile(QLatin1String(":/images/icons/folder/folder-warning-hover.png"), QSize(ICON_SIZE, ICON_SIZE), QIcon::Selected);
+                syncIcon.addFile(QLatin1String(":/images/ic_sync_warning.png"), QSize(ICON_SIZE, ICON_SIZE), QIcon::Normal);
             }
             else
             {

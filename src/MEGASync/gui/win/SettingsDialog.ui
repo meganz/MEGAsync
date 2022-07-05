@@ -1460,7 +1460,6 @@ border: 1px solid #D8D8D8;
 QTableView::item
 {
 border: none;
-border-right:1px solid #dadada;		
 padding-left:4px;	
 }
 
@@ -1479,7 +1478,7 @@ padding-top: 2px;
 QHeaderView::section {
 background: #FFFFFF;
 color: #4A607A;
-border-right:1px solid #dadada;			
+border-right:0px;			
 padding-left:6px;
 border-top:0 px;
 border-bottom:0px;		
@@ -1683,7 +1682,7 @@ border-right:0px;
             </spacer>
            </item>
            <item>
-            <widget class="WaitingSpinnerWidget" name="wSpinningIndicator" native="true">
+            <widget class="WaitingSpinnerWidget" name="wSpinningIndicatorSyncs" native="true">
              <property name="minimumSize">
               <size>
                <width>16</width>
@@ -1758,7 +1757,7 @@ border-right:0px;
            </item>
           </layout>
          </widget>
-         <widget class="QWidget" name="pNoErrors"/>
+         <widget class="QWidget" name="pNoErrorsSyncs"/>
         </widget>
        </item>
        <item>
@@ -1994,36 +1993,130 @@ padding-top: 2px;
          </layout>
         </widget>
        </item>
-       <item alignment="Qt::AlignHCenter">
-        <widget class="QWidget" name="wSaveBackups" native="true">
-         <layout class="QHBoxLayout" name="horizontalLayout_3">
-          <property name="spacing">
-           <number>5</number>
-          </property>
-          <item>
-           <widget class="WaitingSpinnerWidget" name="wSpinningIndicatorBackups" native="true">
-            <property name="minimumSize">
-             <size>
-              <width>16</width>
-              <height>16</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>16</width>
-              <height>16</height>
-             </size>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLabel" name="lSavingBackups">
-            <property name="text">
-             <string>Saving backups…</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
+       <item>
+        <widget class="AutoResizeStackedWidget" name="sBackupsState">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="currentIndex">
+          <number>0</number>
+         </property>
+         <widget class="QWidget" name="pNoErrorsBackups"/>
+         <widget class="QWidget" name="pSavingBackups">
+          <layout class="QVBoxLayout" name="verticalLayout_2">
+           <item>
+            <widget class="QWidget" name="wSaveBackups" native="true">
+             <layout class="QHBoxLayout" name="horizontalLayout_3">
+              <property name="spacing">
+               <number>5</number>
+              </property>
+              <item>
+               <spacer name="horizontalSpacer_6">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>40</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+              <item alignment="Qt::AlignHCenter">
+               <widget class="WaitingSpinnerWidget" name="wSpinningIndicatorBackups" native="true">
+                <property name="minimumSize">
+                 <size>
+                  <width>16</width>
+                  <height>16</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>16</width>
+                  <height>16</height>
+                 </size>
+                </property>
+               </widget>
+              </item>
+              <item alignment="Qt::AlignHCenter|Qt::AlignVCenter">
+               <widget class="QLabel" name="lSavingBackups">
+                <property name="text">
+                 <string>Saving backups…</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <spacer name="horizontalSpacer_9">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>40</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+             </layout>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+         <widget class="QWidget" name="pBackupsDisabled">
+          <layout class="QVBoxLayout" name="verticalLayout_3">
+           <property name="spacing">
+            <number>0</number>
+           </property>
+           <property name="leftMargin">
+            <number>0</number>
+           </property>
+           <property name="topMargin">
+            <number>0</number>
+           </property>
+           <property name="rightMargin">
+            <number>0</number>
+           </property>
+           <property name="bottomMargin">
+            <number>0</number>
+           </property>
+           <item>
+            <widget class="QGroupBox" name="groupBox_4">
+             <layout class="QVBoxLayout" name="verticalLayout_92">
+              <property name="spacing">
+               <number>0</number>
+              </property>
+              <property name="leftMargin">
+               <number>6</number>
+              </property>
+              <property name="topMargin">
+               <number>6</number>
+              </property>
+              <property name="rightMargin">
+               <number>6</number>
+              </property>
+              <property name="bottomMargin">
+               <number>6</number>
+              </property>
+              <item alignment="Qt::AlignVCenter">
+               <widget class="QLabel" name="lDisabledBackups">
+                <property name="text">
+                 <string>Some folders have not synchronised. For more information please hover over the yellow warning icon.</string>
+                </property>
+                <property name="wordWrap">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+          </layout>
+         </widget>
         </widget>
        </item>
        <item>
@@ -3224,6 +3317,12 @@ color: grey;
    <class>WaitingSpinnerWidget</class>
    <extends>QWidget</extends>
    <header location="global">WaitingSpinnerWidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>AutoResizeStackedWidget</class>
+   <extends>QStackedWidget</extends>
+   <header>AutoResizeStackedWidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

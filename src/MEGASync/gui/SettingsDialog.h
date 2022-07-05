@@ -65,7 +65,13 @@ public:
     void updateAccountElements() override;
 
     // Syncs
-    enum SyncStateInformation {NO_SAVING_SYNCS = 0, SAVING_SYNCS = 1};
+    enum SyncStateInformation
+    {
+        SAVING_SYNCS = 0,
+        SAVING_BACKUPS,
+        SAVING_SYNCS_FINISHED,
+        SAVING_BACKUPS_FINISHED,
+    };
     void addSyncFolder(mega::MegaHandle megaFolderHandle = mega::INVALID_HANDLE);
 
     // Folders
@@ -138,7 +144,7 @@ private slots:
 #endif
 
     // FIXME: Re-evaluate the Saving Syncs progress code
-    void onSavingSyncsCompleted();
+    void onSavingSyncsCompleted(SyncStateInformation value);
 
     // Backup
     void on_bBackup_clicked();
@@ -200,7 +206,7 @@ private:
     void updateCacheSchedulerDaysLabel();
 
     // FIXME: Re-evaluate the Saving Syncs progress code
-    void syncsStateInformation(int state);
+    void syncsStateInformation(SyncStateInformation state);
 
 #ifdef Q_OS_MACOS
     void reloadToolBarItemNames();
@@ -240,7 +246,6 @@ private:
     long long mRemoteCacheSize;
     int mDebugCounter; // Easter Egg
     QStringList mSyncNames;
-    bool mAreSyncsDisabled; //Check if there are any sync disabled by any kind of error
     std::unique_ptr<ProgressHelper> mSaveSyncsProgress;
     bool mHasDefaultUploadOption;
     bool mHasDefaultDownloadOption;
