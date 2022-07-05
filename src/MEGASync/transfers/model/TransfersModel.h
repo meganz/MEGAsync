@@ -261,7 +261,6 @@ private:
     void modelHasChanged(bool state);
 
     void mostPriorityTransferMayChanged(bool state);
-    void updateTransferPriority(QExplicitlySharedDataPointer<TransferData> transfer);
 
     int performPauseResumeAllTransfers(int activeTransfers, bool useEventUpdater);
     int performPauseResumeVisibleTransfers(const QModelIndexList& indexes, bool pauseState, bool useEventUpdater);

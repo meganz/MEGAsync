@@ -188,7 +188,7 @@ void MegaTransferView::onCancelVisibleTransfers()
     QString action = getVisibleCancelOrClearText();
 
     if (QMegaMessageBox::warning(this, QString::fromUtf8("MEGAsync"),
-                             tr("%1?", "", model()->rowCount()).arg(action),
+                             tr("%1", "", model()->rowCount()).arg(action),
                              QMessageBox::Yes | QMessageBox::No, QMessageBox::No)
             == QMessageBox::Yes
             && dialog)
@@ -267,7 +267,7 @@ void MegaTransferView::onCancelAndClearVisibleTransfers()
     QPointer<MegaTransferView> dialog = QPointer<MegaTransferView>(this);
 
     if (QMegaMessageBox::warning(this, QString::fromUtf8("MEGAsync"),
-                             tr("%1?", "", model()->rowCount()).arg(action),
+                             tr("%1", "", model()->rowCount()).arg(action),
                              QMessageBox::Yes | QMessageBox::No, QMessageBox::No)
             == QMessageBox::Yes
             && dialog)

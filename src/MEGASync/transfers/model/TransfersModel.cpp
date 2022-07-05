@@ -1697,20 +1697,6 @@ void TransfersModel::askForMostPriorityTransfer()
     });
 }
 
-void TransfersModel::updateTransferPriority(QExplicitlySharedDataPointer<TransferData> transfer)
-{
-//    //The larger, the less priority, used to place the transfer on the bottom
-//    if(transfer->isFinished())
-//    {
-//        transfer->mPriority += COMPLETED_PRIORITY_OFFSET;
-//    }
-//    //The lower, the more priority, used to place the transfer on the top
-//    else if(transfer->isProcessing())
-//    {
-//        transfer->mPriority -= ACTIVE_PRIORITY_OFFSET;
-    //    }
-}
-
 bool TransfersModel::removeRows(int row, int count, const QModelIndex& parent)
 {
     if (parent == DEFAULT_IDX && count > 0 && row >= 0)
