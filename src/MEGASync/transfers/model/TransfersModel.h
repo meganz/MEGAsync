@@ -83,17 +83,20 @@ public:
     {
         QList<QExplicitlySharedDataPointer<TransferData>> updateTransfersByTag;
         QList<QExplicitlySharedDataPointer<TransferData>> startTransfersByTag;
+        QList<QExplicitlySharedDataPointer<TransferData>> startSyncTransfersByTag;
         QList<QExplicitlySharedDataPointer<TransferData>> canceledTransfersByTag;
         QList<QExplicitlySharedDataPointer<TransferData>> failedTransfersByTag;
 
         bool isEmpty(){return updateTransfersByTag.isEmpty()
                               && startTransfersByTag.isEmpty()
+                              && startSyncTransfersByTag.isEmpty()
                               && canceledTransfersByTag.isEmpty()
                               && failedTransfersByTag.isEmpty();}
 
         void clear(){
             updateTransfersByTag.clear();
             startTransfersByTag.clear();
+            startSyncTransfersByTag.clear();
             canceledTransfersByTag.clear();
             failedTransfersByTag.clear();
         }
@@ -129,12 +132,14 @@ private:
     {
         QMap<TransferTag, QExplicitlySharedDataPointer<TransferData>> updateTransfersByTag;
         QMap<TransferTag, QExplicitlySharedDataPointer<TransferData>> startTransfersByTag;
+        QMap<TransferTag, QExplicitlySharedDataPointer<TransferData>> startSyncTransfersByTag;
         QMap<TransferTag, QExplicitlySharedDataPointer<TransferData>> canceledTransfersByTag;
         QMap<TransferTag, QExplicitlySharedDataPointer<TransferData>> failedTransfersByTag;
 
         void clear()
         {
             updateTransfersByTag.clear();
+            startTransfersByTag.clear();
             startTransfersByTag.clear();
             canceledTransfersByTag.clear();
             failedTransfersByTag.clear();
