@@ -87,6 +87,7 @@ class BackupsWizard : public QDialog
         bool isFolderAlreadySynced(const QString& path, bool displayWarning = false, bool fromCheckAction = false);
         void nextStep(const Steps& step);
         void setCurrentWidgetsSteps(QWidget* widget);
+        void updateSize();
 
         Ui::BackupsWizard* mUi;
         HighDpiResize mHighDpiResize;

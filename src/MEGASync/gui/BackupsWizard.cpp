@@ -11,22 +11,19 @@
 #include <QDebug>
 #include <QTimer>
 
+// Consts used to implement the resizing of the window
+// in function of the number of lines in the tables
 const int HEIGHT_ROW_STEP_1 (40);
-const int MARGIN_LV_STEP_1 (50);
 const int MAX_ROWS_STEP_1 (3);
 const int HEIGHT_MAX_STEP_1 (413);
-const int HEIGHT_MIN_STEP_1 (HEIGHT_MAX_STEP_1 - HEIGHT_ROW_STEP_1 * MAX_ROWS_STEP_1);
 const int HEIGHT_ROW_STEP_2 (32);
-const int MARGIN_LV_STEP_2 (36);
 const int MAX_ROWS_STEP_2 (5);
-const int HEIGHT_MIN_STEP_2 (260);
-const int HEIGHT_MAX_STEP_2 (HEIGHT_MIN_STEP_2 + HEIGHT_ROW_STEP_2 * MAX_ROWS_STEP_2 + 47); //+47 is the height of the wBackupTo widget in step 2.
+const int HEIGHT_MAX_STEP_2 (455);
 const QSize FINAL_STEP_MIN_SIZE (QSize(520, 230));
-const QSize SIZE_STEP_1 (QSize(600, 370));
 const int SHOW_MORE_VISIBILITY (2);
 
-const int ICON_POSITION_S1(50);
-const int ICON_POSITION_S2(3);
+const int ICON_POSITION_STEP_1(50);
+const int ICON_POSITION_STEP_2(3);
 
 const int TEXT_MARGIN(12);
 
@@ -45,7 +42,6 @@ BackupsWizard::BackupsWizard(QWidget* parent) :
 {
     setWindowFlags((windowFlags() | Qt::WindowCloseButtonHint) & ~Qt::WindowContextHelpButtonHint);
     mUi->setupUi(this);
-
     mHighDpiResize.init(this);
 
     connect(&mSyncController, &SyncController::deviceName,
@@ -166,10 +162,8 @@ void BackupsWizard::showMore()
 
     QFontMetrics fm (mUi->tTextEdit->font());
     QMargins margins = mUi->tTextEdit->contentsMargins ();
-    int nHeight = fm.lineSpacing () * ((mErrList.size() > 5? 6 : mErrList.size()) -1) +
-        (mUi->tTextEdit->frameWidth ()) * 2 +
-        margins.top () + margins.bottom ();
-
+    int nHeight = fm.lineSpacing () * ((mErrList.size() > 5 ? 6 : mErrList.size()) - 1)
+            + (mUi->tTextEdit->frameWidth ()) * 2 + margins.top () + margins.bottom ();
     setMinimumHeight(FINAL_STEP_MIN_SIZE.height() + nHeight);
     resize(width(), FINAL_STEP_MIN_SIZE.height() + nHeight);
 }
@@ -186,10 +180,13 @@ void BackupsWizard::onItemChanged(QStandardItem *item)
     bool enable (false);
     //step1
     if(mUi->sSteps->currentWidget() == mUi->pStep1)
+    {
         enable = (isSomethingChecked() && !mUi->lDeviceNameStep1->text().isEmpty());
+    }
     else //step2
+    {
         enable = mHaveBackupsDir;
-
+    }
     mUi->bNext->setEnabled(enable);
 }
 
@@ -200,67 +197,52 @@ void BackupsWizard::setupStep1()
 
     qDebug("Backups Wizard: step 1 Init");
     onItemChanged();
+    mUi->lAllFoldersSynced->hide();
     setCurrentWidgetsSteps(mUi->pStep1);
     mUi->sButtons->setCurrentWidget(mUi->pStepButtons);
+
+#ifdef _WIN32
+    QFontMetrics fm(mUi->lSubtitleStep1->font());
+    QRect boundingRect = fm.boundingRect(QRect(0,0,mUi->fFoldersStep1->width(),0), Qt::TextWordWrap, mUi->lSubtitleStep1->text());
+    mUi->lSubtitleStep1->setFixedHeight(boundingRect.height() + fm.lineSpacing() + 2); //+2 is for an extra margin of safety
+#endif
+
     mUi->bCancel->setEnabled(true);
     mUi->bNext->setText(tr("Next"));
     mUi->bBack->hide();
-    int dialogHeight (HEIGHT_MAX_STEP_1);
 
     // Get device name
     mSyncController.getDeviceName();
 
-    if (SyncModel::instance()->isRemoteRootSynced())
+    // Check if we need to refresh the lists
+    if (mFoldersModel->rowCount() == 0)
     {
-        mUi->sMoreFolders->setCurrentWidget(mUi->pAllFoldersSynced);
-        mUi->sFolders->setCurrentWidget(mUi->pNoFolders);
-        // Remove the unused widget to avoid geometry interference
-        mUi->sFolders->removeWidget(mUi->pFolders);
-    }
-    else
-    {
-        mUi->sMoreFolders->setCurrentWidget(mUi->pMoreFolders);
-        mUi->sFolders->setCurrentWidget(mUi->pFolders);
+        QIcon folderIcon (QIcon(QLatin1String("://images/icons/folder/folder-mono_24.png")));
 
-        // Check if we need to refresh the lists
-        if (mFoldersModel->rowCount() == 0)
+        for (auto type : {
+             QStandardPaths::DocumentsLocation,
+             //QStandardPaths::MusicLocation,
+             QStandardPaths::MoviesLocation,
+             QStandardPaths::PicturesLocation,
+             //QStandardPaths::DownloadLocation,
+    })
         {
-            QIcon folderIcon (QIcon(QLatin1String("://images/icons/folder/folder-mono_24.png")));
-
-            for (auto type : {
-                 QStandardPaths::DocumentsLocation,
-                 //QStandardPaths::MusicLocation,
-                 QStandardPaths::MoviesLocation,
-                 QStandardPaths::PicturesLocation,
-                 //QStandardPaths::DownloadLocation,
-        })
+            const auto standardPaths (QStandardPaths::standardLocations(type));
+            QDir dir (standardPaths.first());
+            if (dir.exists() && dir != QDir::home() && !isFolderAlreadySynced(dir.canonicalPath()))
             {
-                const auto standardPaths (QStandardPaths::standardLocations(type));
-                QDir dir (standardPaths.first());
-                if (dir.exists() && dir != QDir::home() && !isFolderAlreadySynced(dir.canonicalPath()))
-                {
-                    QStandardItem* item (new QStandardItem(dir.dirName()));
-                    item->setFlags(item->flags() | Qt::ItemIsUserCheckable);
-                    item->setData(QDir::toNativeSeparators(dir.canonicalPath()), Qt::ToolTipRole);
-                    item->setData(QDir::toNativeSeparators(dir.canonicalPath()), Qt::UserRole);
-                    item->setData(folderIcon, Qt::DecorationRole);
-                    item->setData(Qt::Unchecked, Qt::CheckStateRole);
-
-                    mFoldersModel->appendRow(item);
-                }
+                QStandardItem* item (new QStandardItem(dir.dirName()));
+                item->setFlags(item->flags() | Qt::ItemIsUserCheckable);
+                item->setData(QDir::toNativeSeparators(dir.canonicalPath()), Qt::ToolTipRole);
+                item->setData(QDir::toNativeSeparators(dir.canonicalPath()), Qt::UserRole);
+                item->setData(folderIcon, Qt::DecorationRole);
+                item->setData(Qt::Unchecked, Qt::CheckStateRole);
+                mFoldersModel->appendRow(item);
             }
         }
-
-        int listHeight = (std::max(HEIGHT_ROW_STEP_1,
-                                 std::min(HEIGHT_ROW_STEP_1 * MAX_ROWS_STEP_1,
-                                          mFoldersModel->rowCount() * HEIGHT_ROW_STEP_1))) + MARGIN_LV_STEP_1;
-
-        dialogHeight = std::min(HEIGHT_MAX_STEP_1, HEIGHT_MIN_STEP_1 + listHeight);
-        mUi->fFoldersStep1->setMinimumHeight(listHeight);
-        setMinimumHeight(dialogHeight);
-
-        resize(SIZE_STEP_1.width(), dialogHeight);
     }
+    updateSize();
+
     qDebug("Backups Wizard: step 1");
 }
 
@@ -283,22 +265,7 @@ void BackupsWizard::setupStep2()
     // Set folders number
     mUi->lFoldersNumber->setText(tr("%n folder", "", nbSelectedFolders));
 
-    int listHeight = (std::max(HEIGHT_ROW_STEP_2,
-                             std::min(HEIGHT_ROW_STEP_2 * MAX_ROWS_STEP_2,
-                                      nbSelectedFolders * HEIGHT_ROW_STEP_2))) + MARGIN_LV_STEP_2;
-    int dialogHeight (std::min(HEIGHT_MAX_STEP_2,
-                               HEIGHT_MIN_STEP_2 + listHeight));
-
-#ifndef Q_OS_MAC
-    mUi->fFoldersStep2->setMinimumHeight(listHeight);
-#else
-    mUi->fFoldersStep2->setFixedHeight(listHeight);
-#endif
-
-
-    setMinimumHeight(dialogHeight);
-    resize(width(), dialogHeight);
-
+    updateSize();
     qDebug("Backups Wizard: step 2");
 }
 
@@ -452,9 +419,6 @@ bool BackupsWizard::isFolderAlreadySynced(const QString& path, bool displayWarni
 void BackupsWizard::nextStep(const Steps &step)
 {
     qDebug("Backups Wizard: next step");
-    onItemChanged();
-    mUi->fFoldersStep1->setMinimumHeight(0);
-    mUi->fFoldersStep2->setMinimumHeight(0);
 
     switch (step)
     {
@@ -502,12 +466,11 @@ void BackupsWizard::nextStep(const Steps &step)
         default:
             break;
     }
-    onItemChanged();
 }
 
 void BackupsWizard::setCurrentWidgetsSteps(QWidget *widget)
 {
-    foreach(auto& widget_child, mUi->sSteps->findChildren<QWidget*>())
+    foreach (auto& widget_child, mUi->sSteps->findChildren<QWidget*>())
     {
         mUi->sSteps->removeWidget(widget_child);
     }
@@ -515,13 +478,50 @@ void BackupsWizard::setCurrentWidgetsSteps(QWidget *widget)
     mUi->sSteps->setCurrentWidget(widget);
 }
 
+void BackupsWizard::updateSize()
+{
+    if (mUi->sSteps->currentWidget() == mUi->pStep1)
+    {
+        int nbRows = mFoldersModel->rowCount();
+        int listHeight = (std::max(HEIGHT_ROW_STEP_1,
+                                   std::min(HEIGHT_ROW_STEP_1 * MAX_ROWS_STEP_1,
+                                            nbRows * HEIGHT_ROW_STEP_1)));
+        mUi->lvFoldersStep1->setFixedHeight(listHeight);
+
+        bool haveFolders (nbRows);
+        mUi->lNoAvailableFolder->setVisible(!haveFolders);
+        mUi->lvFoldersStep1->setVisible(haveFolders);
+
+        int dialogHeight = std::min(HEIGHT_MAX_STEP_1, HEIGHT_MAX_STEP_1
+                - (MAX_ROWS_STEP_1 - mFoldersModel->rowCount()) * HEIGHT_ROW_STEP_1
+                + !haveFolders * mUi->lNoAvailableFolder->height());
+        setFixedHeight(dialogHeight);
+    }
+    else if (mUi->sSteps->currentWidget() == mUi->pStep2)
+    {
+        int nbRows = mFoldersProxyModel->rowCount();
+        int listHeight = (std::max(HEIGHT_ROW_STEP_2,
+                                 std::min(HEIGHT_ROW_STEP_2 * MAX_ROWS_STEP_2,
+                                          nbRows * HEIGHT_ROW_STEP_2)));// + MARGIN_LV_STEP_2;
+        mUi->lvFoldersStep2->setFixedHeight(listHeight);
+
+        int dialogHeight = std::min(HEIGHT_MAX_STEP_2, HEIGHT_MAX_STEP_2
+                - (MAX_ROWS_STEP_2 - nbRows) * HEIGHT_ROW_STEP_2);
+        setFixedHeight(dialogHeight);
+    }
+}
+
 void BackupsWizard::on_bNext_clicked()
 {
     qDebug("Backups Wizard: next clicked");
-    if(mUi->sSteps->currentWidget() == mUi->pStep1)
+    if (mUi->sSteps->currentWidget() == mUi->pStep1)
+    {
         nextStep(STEP_2_INIT);
+    }
     else
+    {
         nextStep(FINALIZE);
+    }
 }
 
 void BackupsWizard::on_bCancel_clicked()
@@ -549,13 +549,13 @@ void BackupsWizard::on_bCancel_clicked()
 void BackupsWizard::on_bMoreFolders_clicked()
 {
     const auto homePaths (QStandardPaths::standardLocations(QStandardPaths::HomeLocation));
-    QString d (QFileDialog::getExistingDirectory(this,
+    QString existingDir (QFileDialog::getExistingDirectory(this,
                                                  tr("Choose Directory"),
                                                  homePaths.first(),
                                                  QFileDialog::ShowDirsOnly
                                                  | QFileDialog::DontResolveSymlinks));
-    QDir dir (d);
-    if (!d.isEmpty() && dir.exists() && !isFolderAlreadySynced(dir.canonicalPath(), true))
+    QDir dir (existingDir);
+    if (!existingDir.isEmpty() && dir.exists() && !isFolderAlreadySynced(dir.canonicalPath(), true))
     {
         QString path (QDir::toNativeSeparators(dir.canonicalPath()));
         QStandardItem* existingBackup (nullptr);
@@ -602,6 +602,7 @@ void BackupsWizard::on_bMoreFolders_clicked()
 
         onItemChanged();
         qDebug() << QString::fromUtf8("Backups Wizard: add folder \"%1\"").arg(path);
+        updateSize();
     }
 }
 
@@ -856,7 +857,7 @@ void WizardDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option
     QStyleOptionViewItem optCopy(option);
     bool isS1(option.widget->objectName() == QLatin1String("lvFoldersStep1"));
 
-    //draw the checkbox
+    // draw the checkbox
     if(isS1 && index.flags().testFlag(Qt::ItemIsUserCheckable))
     {
         optCopy.features |= QStyleOptionViewItem::HasCheckIndicator;
@@ -868,7 +869,6 @@ void WizardDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option
         QRect checkBoxRect = QApplication::style()->subElementRect(QStyle::SE_ViewItemCheckIndicator, &optCopy, optCopy.widget);
         optCopy.rect = checkBoxRect;
         QApplication::style()->drawPrimitive(QStyle::PE_IndicatorViewItemCheck, &optCopy, painter, optCopy.widget);
-
     }
 
     // draw the icon
@@ -885,7 +885,7 @@ void WizardDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option
     }
     optCopy.icon = icon;
     QRect iconRect = QApplication::style()->subElementRect(QStyle::SE_ItemViewItemDecoration, &optCopy, optCopy.widget);
-    int offset = isS1 ? ICON_POSITION_S1 : ICON_POSITION_S2;
+    int offset = isS1 ? ICON_POSITION_STEP_1 : ICON_POSITION_STEP_2;
     iconRect.moveTo(QPoint(offset, iconRect.y()));
     optCopy.rect = iconRect;
     optCopy.icon.paint(painter, optCopy.rect, optCopy.decorationAlignment, mode, state);
