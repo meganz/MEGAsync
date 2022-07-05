@@ -3120,13 +3120,13 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <source>%1 item selected</source>
         <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
                            First part of string for multi plural support. Full string looks like: 5 items selected. 2 have been removed. To reselect, close this window and try again. </translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%1 Element ausgewählt</numerusform><numerusform>%1 Elemente ausgewählt</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%1. %2 has been removed. To reselect, close this window and try again.</source>
         <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
                            Second and last part of string for multi plural support. Full string looks like: 5 items selected. 2 have been removed. To reselect, close this window and try again. </translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%1. %2 wurde entfernt. Zum erneuten Auswählen schließen Sie dieses Fenster und wiederholen Sie den Vorgang.</numerusform><numerusform>%1. %2 wurden entfernt. Zum erneuten Auswählen schließen Sie dieses Fenster und wiederholen Sie den Vorgang.</numerusform></translation>
     </message>
 </context>
 <context>

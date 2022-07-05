@@ -2864,7 +2864,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>You can&apos;t run MEGA Desktop App from this location. Move it into the Applications folder then run it.</source>
         <translatorcomment>Error message shown when the user is trying to run MEGA Desktop App from a path different than Applications. Only affects to macOS.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>No es posible ejecutar la aplicación de escritorio de MEGA desde esta ubicación. Muévela a la carpeta Aplicaciones para ejecutarla. </translation>
     </message>
 </context>
 <context>
@@ -3121,13 +3121,13 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <source>%1 item selected</source>
         <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
                            First part of string for multi plural support. Full string looks like: 5 items selected. 2 have been removed. To reselect, close this window and try again. </translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%1 elemento seleccionado</numerusform><numerusform>%1 de elementos seleccionados</numerusform><numerusform>%1 elementos seleccionados</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%1. %2 has been removed. To reselect, close this window and try again.</source>
         <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
                            Second and last part of string for multi plural support. Full string looks like: 5 items selected. 2 have been removed. To reselect, close this window and try again. </translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%1. %2 ha sido eliminado. Para volver a seleccionar, cierra esta ventana y vuelve a intentarlo.</numerusform><numerusform>%1. %2 han sido eliminados. Para volver a seleccionar, cierra esta ventana y vuelve a intentarlo.</numerusform><numerusform>%1. %2 han sido eliminados. Para volver a seleccionar, cierra esta ventana y vuelve a intentarlo.</numerusform></translation>
     </message>
 </context>
 <context>
@@ -3559,7 +3559,11 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 - Fixed detected crashes on Windows, Linux and macOS.
 </source>
         <translatorcomment>Changelog for version 4.6.7</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>- Rediseño completo del selector de archivos remoto.
+- Solucionados los problemas de traducción.
+- Otras correcciones y ajustes menores de la interfaz de usuario.
+- Solucionados los crashes detectados en Windows, Linux y macOS.
+</translation>
     </message>
 </context>
 <context>
