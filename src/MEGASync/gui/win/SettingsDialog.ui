@@ -2883,16 +2883,6 @@ color: #0078D7;
           <property name="bottomMargin">
            <number>0</number>
           </property>
-          <item>
-           <widget class="QPushButton" name="bFullCheck">
-            <property name="text">
-             <string>Force a Full Scan</string>
-            </property>
-            <property name="autoDefault">
-             <bool>false</bool>
-            </property>
-           </widget>
-          </item>
          </layout>
         </widget>
         <widget class="QWidget" name="wAccountFooter">
@@ -2938,6 +2928,16 @@ color: #0078D7;
           <property name="bottomMargin">
            <number>0</number>
           </property>
+          <item>
+           <widget class="QPushButton" name="bFullCheck">
+            <property name="text">
+             <string>Force a Full Scan</string>
+            </property>
+            <property name="autoDefault">
+             <bool>false</bool>
+            </property>
+           </widget>
+          </item>
          </layout>
         </widget>
         <widget class="QWidget" name="wSecurityFooter">
