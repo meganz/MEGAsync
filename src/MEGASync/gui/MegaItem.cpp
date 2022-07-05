@@ -5,7 +5,8 @@
 #include "model/SyncModel.h"
 #include "MegaApplication.h"
 #include "mega/utils.h"
-#include "UserAttributesRequests.h"
+#include "UserAttributesRequests/FullName.h"
+#include "UserAttributesRequests/Avatar.h"
 
 #include <QByteArray>
 
@@ -128,19 +129,19 @@ void MegaItem::setOwner(std::unique_ptr<mega::MegaUser> user)
 {
     mOwner = std::move(user);
     mOwnerEmail = QString::fromUtf8(mOwner->getEmail());
-    mFullNameAttribute = UserAttributes::FullNameAttributeRequest::requestFullName(mOwner->getEmail());
+    mFullNameAttribute = UserAttributes::FullName::requestFullName(mOwner->getEmail());
     if(mFullNameAttribute)
     {
-        connect(mFullNameAttribute.get(), &UserAttributes::FullNameAttributeRequest::attributeReady, this, &MegaItem::onFullNameAttributeReady);
+        connect(mFullNameAttribute.get(), &UserAttributes::FullName::attributeReady, this, &MegaItem::onFullNameAttributeReady);
         if(mFullNameAttribute->isAttributeReady())
         {
             onFullNameAttributeReady();
         }
     }
-    mAvatarAttribute = UserAttributes::AvatarAttributeRequest::requestAvatar(mOwner->getEmail());
+    mAvatarAttribute = UserAttributes::Avatar::requestAvatar(mOwner->getEmail());
     if(mAvatarAttribute)
     {
-        connect(mAvatarAttribute.get(), &UserAttributes::AvatarAttributeRequest::attributeReady, this, &MegaItem::onAvatarAttributeReady);
+        connect(mAvatarAttribute.get(), &UserAttributes::Avatar::attributeReady, this, &MegaItem::onAvatarAttributeReady);
         if(mAvatarAttribute->isAttributeReady())
         {
             onAvatarAttributeReady();

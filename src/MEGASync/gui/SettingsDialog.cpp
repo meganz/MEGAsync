@@ -9,10 +9,10 @@
 #include "gui/BugReportDialog.h"
 #include "gui/ProxySettings.h"
 #include "gui/BandwidthSettings.h"
+#include "UserAttributesRequests/FullName.h"
 #include "gui/BackupsWizard.h"
 #include "gui/AddBackupDialog.h"
 #include "gui/RemoveBackupDialog.h"
-#include "UserAttributesRequests.h"
 
 #include <QApplication>
 #include <QDesktopServices>
@@ -571,8 +571,8 @@ void SettingsDialog::loadSettings()
     mUi->lName->setText(fullName);
 
     //Update name in case it changes
-    auto fullNameRequest = UserAttributes::FullNameAttributeRequest::requestFullName(mPreferences->email().toStdString().c_str());
-    connect(fullNameRequest.get(), &UserAttributes::FullNameAttributeRequest::attributeReady, this, [this](const QString& fullName){
+    auto FullNameRequest = UserAttributes::FullName::requestFullName(mPreferences->email().toStdString().c_str());
+    connect(FullNameRequest.get(), &UserAttributes::FullName::attributeReady, this, [this](const QString& fullName){
         mUi->lName->setText(fullName);
     });
 

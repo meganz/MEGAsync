@@ -19,6 +19,7 @@ const int TransferManager::STATS_REFRESH_PERIOD_MS;
 
 const char* LABEL_NUMBER = "NUMBER";
 const char* ITS_ON = "itsOn";
+const char* SEARCH_TEXT = "searchText";
 
 TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
     QDialog(parent),
@@ -166,10 +167,6 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
             &TransfersManagerSortFilterProxyModel::searchNumbersChanged,
             this, &TransferManager::refreshSearchStats);
 
-    connect(mUi->wTransfers->getProxyModel(),
-            &TransfersManagerSortFilterProxyModel::searchNumbersChanged,
-            this, &TransferManager::refreshSearchStats);
-
     connect(mUi->wTransfers, &TransfersWidget::pauseResumeVisibleRows,
                 this, &TransferManager::onPauseResumeVisibleRows);
 
@@ -188,6 +185,8 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
             mUi->leSearchField->setFocus();
             mSearchFieldReturnPressed = false;
         }
+
+        refreshView();
     });
 
     mScanningTimer.setInterval(60);
@@ -235,7 +234,7 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
         w->style()->polish(w);
     }
 
-    mTransferScanCancelUi = new TransferScanCancelUi(mUi->sTransfers);
+    mTransferScanCancelUi = new TransferScanCancelUi(mUi->sTransfers, mTabNoItem[TransfersWidget::ALL_TRANSFERS_TAB]);
     connect(mTransferScanCancelUi, &TransferScanCancelUi::cancelTransfers,
             this, &TransferManager::cancelScanning);
 }
@@ -247,14 +246,18 @@ void TransferManager::pauseModel(bool value)
 
 void TransferManager::enterBlockingState()
 {
+    mUi->wTransfers->setScanningWidgetVisible(true);
     enableUserActions(false);
     mTransferScanCancelUi->show();
 }
 
-void TransferManager::leaveBlockingState()
+void TransferManager::leaveBlockingState(bool fromCancellation)
 {
     enableUserActions(true);
-    mTransferScanCancelUi->hide();
+    mUi->wTransfers->setScanningWidgetVisible(false);
+    mTransferScanCancelUi->hide(fromCancellation);
+
+    refreshView();
 }
 
 void TransferManager::disableCancelling()
@@ -833,6 +836,7 @@ void TransferManager::on_tSearchIcon_clicked()
                                     .elidedText(pattern,
                                                 Qt::ElideMiddle,
                                                 mUi->bSearchString->width()));
+        mUi->bSearchString->setProperty(SEARCH_TEXT, pattern);
         applyTextSearch(pattern);
     }
 
@@ -852,6 +856,7 @@ void TransferManager::applyTextSearch(const QString& text)
     mUi->wSearch->show();
 
     mUi->wTransfers->transferFilterReset();
+
     //It is important to call it after resetting the filter, as the reset removes the text
     //search
     mUi->wTransfers->textFilterChanged(text);
@@ -867,7 +872,7 @@ void TransferManager::enableUserActions(bool enabled)
 
 void TransferManager::on_bSearchString_clicked()
 {
-    applyTextSearch(mUi->lTextSearch->text());
+    applyTextSearch(mUi->bSearchString->property(SEARCH_TEXT).toString());
 }
 
 void TransferManager::on_tSearchCancel_clicked()
@@ -1026,7 +1031,6 @@ void TransferManager::toggleTab(TransfersWidget::TM_TAB newTab)
             else if(mUi->wTransfers->getCurrentTab() == TransfersWidget::FAILED_TAB)
             {
                 transfers = mTransfersCount.totalFailedTransfers();
-                mUi->tActionButton->setText(tr("Retry all"));
             }
             else
             {
@@ -1071,20 +1075,21 @@ void TransferManager::refreshView()
 {
     if (mUi->wTransfers->getCurrentTab() != TransfersWidget::NO_TAB)
     {
-        QWidget* widgetToShow (mUi->wTransfers);
-
         if(mUi->wTransfers->getCurrentTab() != TransfersWidget::SEARCH_TAB)
         {
-            auto countLabel = mNumberLabelsGroup[mUi->wTransfers->getCurrentTab()];
+            QWidget* widgetToShow (mUi->wTransfers);
 
-            if (countLabel->text().isEmpty())
+            if(!mUi->wTransfers->isLoadingViewSet())
             {
-                widgetToShow = mTabNoItem[mUi->wTransfers->getCurrentTab()];
+                if(mUi->wTransfers->getProxyModel()->rowCount() == 0)
+                {
+                    widgetToShow = mTabNoItem[mUi->wTransfers->getCurrentTab()];
+                }
             }
-        }
 
-        updateTransferWidget(widgetToShow);
-        checkActionAndMediaVisibility();
+            updateTransferWidget(widgetToShow);
+            checkActionAndMediaVisibility();
+        }
     }
 }
 

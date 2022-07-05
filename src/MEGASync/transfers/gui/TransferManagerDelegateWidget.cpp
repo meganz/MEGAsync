@@ -41,7 +41,7 @@ void TransferManagerDelegateWidget::updateTransferState()
     QString timeString;
     QString statusString;
 
-    auto state = getData()->mState;
+    auto state = getData()->getState();
 
     // Set values according to transfer state
     switch (state)
@@ -50,7 +50,7 @@ void TransferManagerDelegateWidget::updateTransferState()
         {
             if(stateHasChanged())
             {
-                if (!getData()->mTransferredBytes)
+                if (getData()->mTransferredBytes == 0)
                 {
                     statusString = QString::fromUtf8("%1%2").arg(tr("starting"), QString::fromUtf8("…"));
                 }
@@ -240,7 +240,7 @@ void TransferManagerDelegateWidget::updateTransferState()
 
         // Cancel/Clear Button
         if ((getData()->mType & TransferData::TRANSFER_SYNC)
-                && !(getData()->mState & (TransferData::TRANSFER_FAILED | TransferData::TRANSFER_COMPLETED)))
+                && !(getData()->getState() & (TransferData::TRANSFER_FAILED | TransferData::TRANSFER_COMPLETED)))
         {
             showTCancelClear = false;
         }
@@ -250,7 +250,7 @@ void TransferManagerDelegateWidget::updateTransferState()
         }
         mUi->tCancelClearTransfer->setVisible(showTCancelClear);
 
-        mUi->lDone->setVisible(!(getData()->mState & TransferData::FINISHED_STATES_MASK));
+        mUi->lDone->setVisible(!(getData()->getState() & TransferData::FINISHED_STATES_MASK));
 
         //Update action icons (for example, when the transfer changes from active to completed)
         mouseHoverTransfer(false, QPoint(0,0));
@@ -268,7 +268,7 @@ void TransferManagerDelegateWidget::updateTransferState()
     mUi->lTotal->setText(sizes.totalBytes + QLatin1Literal(" ") + sizes.units);
 
     // Progress bar
-    int permil = getData()->mState & (TransferData::TRANSFER_COMPLETED | TransferData::TRANSFER_COMPLETING) ?
+    int permil = getData()->getState() & (TransferData::TRANSFER_COMPLETED | TransferData::TRANSFER_COMPLETING) ?
                      PB_PRECISION
                    : totalB > 0 ? Utilities::partPer(transferedB, totalB, PB_PRECISION)
                                 : 0;
@@ -351,7 +351,7 @@ TransferBaseDelegateWidget::ActionHoverType TransferManagerDelegateWidget::mouse
 
         if(getData())
         {
-            auto hoverPauseResume = getData()->mState == TransferData::TransferState::TRANSFER_PAUSED ? QString::fromLatin1("://images/transfer_manager/transfers_actions/lists_pause_ico_hover_selected.png") :
+            auto hoverPauseResume = getData()->getState() == TransferData::TransferState::TRANSFER_PAUSED ? QString::fromLatin1("://images/transfer_manager/transfers_actions/lists_pause_ico_hover_selected.png") :
                                                                                                     QString::fromLatin1("://images/transfer_manager/transfers_actions/lists_pause_ico_hover.png");
             update |= setActionTransferIcon(mUi->tPauseResumeTransfer, inPauseResume ? hoverPauseResume
                                                                 : mPauseResumeTransferDefaultIconName);

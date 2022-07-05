@@ -25,7 +25,7 @@ public:
     explicit TransferBaseDelegateWidget(QWidget* parent = nullptr);
     ~TransferBaseDelegateWidget(){}
 
-    void updateUi(const QExplicitlySharedDataPointer<TransferData> data, int);
+    void updateUi(const QExplicitlySharedDataPointer<TransferData> transferData, int);
     virtual ActionHoverType mouseHoverTransfer(bool, const QPoint&){return ActionHoverType::NONE;}
 
     bool stateHasChanged();
@@ -52,9 +52,9 @@ protected:
 private:
     Preferences* mPreferences;
     QExplicitlySharedDataPointer<TransferData> mData;
-    TransferData::TransferState mPreviousState;
     QModelIndex mCurrentIndex;
     QHash<QWidget*, QString> mLastActionTransferIconName;
+    TransferData::TransferState mPreviousState;
 };
 
 #endif // TRANSFERBASEDELEGATEWIDGET

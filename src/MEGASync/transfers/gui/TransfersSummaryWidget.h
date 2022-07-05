@@ -54,6 +54,7 @@ public:
 
     void showAnimated();
     void setPaused(bool value);
+    void setPauseEnabled(bool value);
 
     void setPercentUploads(const qreal &value);
     void setPercentDownloads(const qreal &value);

@@ -74,7 +74,7 @@ private slots:
                 mOpacity += mOpacitySteps;
             }
 
-            mView->update();
+            mView->viewport()->update();
         }
     }
 
@@ -202,6 +202,15 @@ public:
             return;
         }
 
+        if(state && isLoadingViewSet())
+        {
+            return;
+        }
+        else if(!state && !isLoadingViewSet())
+        {
+            return;
+        }
+
         if(!mLoadingModel)
         {
             mLoadingModel = new QStandardItemModel(mView);
@@ -210,27 +219,32 @@ public:
 
         if(state)
         {
-            int delegateHeight(mLoadingDelegate->sizeHint(QStyleOptionViewItem(), QModelIndex()).height());
+            int visibleRows(0);
 
-            mView->updateGeometry();
-            int visibleRows = mView->size().height()/delegateHeight;
-
-            //If the rowCount is higher than the visible rows, the vertical header is visible
-            if(mViewModel)
+            if(mView->isVisible())
             {
-                auto rows = mViewModel->rowCount();
+                int delegateHeight(mLoadingDelegate->sizeHint(QStyleOptionViewItem(), QModelIndex()).height());
 
-                if(rows > visibleRows)
+                mView->updateGeometry();
+                visibleRows = mView->size().height()/delegateHeight;
+
+                //If the rowCount is higher than the visible rows, the vertical header is visible
+                if(mViewModel)
                 {
-                    visibleRows++;
+                    auto rows = mViewModel->rowCount();
+
+                    if(rows > visibleRows)
+                    {
+                        visibleRows++;
+                    }
                 }
-                else if(rows != 0 && mViewModel->rowCount() < visibleRows)
+
+                if(visibleRows > MAX_LOADING_ROWS)
                 {
-                    visibleRows = mViewModel->rowCount();
+                    visibleRows = MAX_LOADING_ROWS;
                 }
             }
-
-            if(visibleRows > MAX_LOADING_ROWS || visibleRows < 0)
+            else
             {
                 visibleRows = MAX_LOADING_ROWS;
             }

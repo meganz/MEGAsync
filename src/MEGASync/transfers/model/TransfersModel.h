@@ -83,17 +83,20 @@ public:
     {
         QList<QExplicitlySharedDataPointer<TransferData>> updateTransfersByTag;
         QList<QExplicitlySharedDataPointer<TransferData>> startTransfersByTag;
+        QList<QExplicitlySharedDataPointer<TransferData>> startSyncTransfersByTag;
         QList<QExplicitlySharedDataPointer<TransferData>> canceledTransfersByTag;
         QList<QExplicitlySharedDataPointer<TransferData>> failedTransfersByTag;
 
         bool isEmpty(){return updateTransfersByTag.isEmpty()
                               && startTransfersByTag.isEmpty()
+                              && startSyncTransfersByTag.isEmpty()
                               && canceledTransfersByTag.isEmpty()
                               && failedTransfersByTag.isEmpty();}
 
         void clear(){
             updateTransfersByTag.clear();
             startTransfersByTag.clear();
+            startSyncTransfersByTag.clear();
             canceledTransfersByTag.clear();
             failedTransfersByTag.clear();
         }
@@ -106,6 +109,8 @@ public:
     void resetCompletedUploads(QList<QExplicitlySharedDataPointer<TransferData> > transfersToReset);
     void resetCompletedDownloads(QList<QExplicitlySharedDataPointer<TransferData>> transfersToReset);
     void resetCompletedTransfers();
+
+    void setMaxTransfersToProcess(uint16_t max);
 
     TransfersToProcess processTransfers();
     void clear();
@@ -127,12 +132,14 @@ private:
     {
         QMap<TransferTag, QExplicitlySharedDataPointer<TransferData>> updateTransfersByTag;
         QMap<TransferTag, QExplicitlySharedDataPointer<TransferData>> startTransfersByTag;
+        QMap<TransferTag, QExplicitlySharedDataPointer<TransferData>> startSyncTransfersByTag;
         QMap<TransferTag, QExplicitlySharedDataPointer<TransferData>> canceledTransfersByTag;
         QMap<TransferTag, QExplicitlySharedDataPointer<TransferData>> failedTransfersByTag;
 
         void clear()
         {
             updateTransfersByTag.clear();
+            startTransfersByTag.clear();
             startTransfersByTag.clear();
             canceledTransfersByTag.clear();
             failedTransfersByTag.clear();
@@ -143,6 +150,7 @@ private:
     QMutex mCacheMutex;
     QMutex mCountersMutex;
     TransfersCount mTransfersCount;
+    std::atomic_int16_t mMaxTransfersToProcess;
 };
 
 
@@ -177,14 +185,17 @@ public:
     void openFolderByTag(TransferTag tag);
     void retryTransferByIndex(const QModelIndex& index);
     void retryTransfers(QModelIndexList indexes);
-    void setResetMode();
-    void cancelTransfers(const QModelIndexList& indexes, QWidget *canceledFrom);
+    void cancelAndClearTransfers(const QModelIndexList& indexes, QWidget *canceledFrom);
     void cancelAllTransfers(QWidget *canceledFrom);
     void clearAllTransfers();
     void clearTransfers(const QModelIndexList& indexes);
+    void clearFailedTransfers(const QModelIndexList& indexes);
     void clearTransfers(const QMap<QModelIndex,QExplicitlySharedDataPointer<TransferData>> uploads,
                         const QMap<QModelIndex,QExplicitlySharedDataPointer<TransferData>> downloads);
-    void classifyUploadOrDownloadTransfers(QMap<QModelIndex, QExplicitlySharedDataPointer<TransferData> > &uploads,
+    void classifyUploadOrDownloadCompletedTransfers(QMap<QModelIndex, QExplicitlySharedDataPointer<TransferData> > &uploads,
+                        QMap<QModelIndex, QExplicitlySharedDataPointer<TransferData> > &downloads,
+                                           const QModelIndex &index);
+    void classifyUploadOrDownloadFailedTransfers(QMap<QModelIndex, QExplicitlySharedDataPointer<TransferData> > &uploads,
                         QMap<QModelIndex, QExplicitlySharedDataPointer<TransferData> > &downloads,
                                            const QModelIndex &index);
     void pauseTransfers(const QModelIndexList& indexes, bool pauseState);
@@ -205,6 +216,9 @@ public:
 
     bool areAllPaused() const;
 
+     QExplicitlySharedDataPointer<TransferData> getTransferByTag(int tag) const;
+     void sendDataChangedByTag(int tag);
+
 signals:
     void pauseStateChanged(bool pauseState);
     void transferPauseStateChanged();
@@ -213,38 +227,48 @@ signals:
     void pauseStateChangedByTransferResume();
     void blockUi();
     void unblockUi();
+    void unblockUiAndFilter();
     void modelProcessingFinished();
     void transferFinished(const QModelIndex& index);
     void internalMoveStarted() const;
     void internalMoveFinished() const;
+    void mostPriorityTransferUpdate(int tag);
+    void transfersProcessChanged();
 
 public slots:
     void pauseResumeAllTransfers(bool state);
+    void askForMostPriorityTransfer();
 
 private slots:
-    void onPauseStateChanged();
     void processStartTransfers(QList<QExplicitlySharedDataPointer<TransferData>>& transfersToStart);
     void processUpdateTransfers();
     void processCancelTransfers();
+    void cacheCancelTransfersTags();
     void processFailedTransfers();
     void onProcessTransfers();
+    void updateTransfersCount();
 
 private:
-    void updateTransfersCount();
     void removeRows(QModelIndexList &indexesToRemove);
     QExplicitlySharedDataPointer<TransferData> getTransfer(int row) const;
+    void addTransfer(QExplicitlySharedDataPointer<TransferData>);
     void removeTransfer(int row);
     void sendDataChanged(int row);
 
-    bool isFailingModeActive() const ;
-    void setFailingMode(bool state);
+    bool isUiBlockedModeActive() const ;
+    void setUiBlockedMode(bool state);
 
-    bool isCancelingModeActive() const ;
-    void setCancelingMode(bool state);
+    void setUiBlockedModeByCounter(uint32_t transferCount);
+    void updateUiBlockedByCounter(uint16_t updates);
+    bool isUiBlockedByCounter() const;
+    void setUiBlockedByCounterMode(bool state);
 
-    void updateTagsByOrder();
+    void modelHasChanged(bool state);
 
-    void updateTransferPriority(QExplicitlySharedDataPointer<TransferData> transfer);
+    void mostPriorityTransferMayChanged(bool state);
+
+    int performPauseResumeAllTransfers(int activeTransfers, bool useEventUpdater);
+    int performPauseResumeVisibleTransfers(const QModelIndexList& indexes, bool pauseState, bool useEventUpdater);
 
 private:
     mega::MegaApi* mMegaApi;
@@ -258,19 +282,26 @@ private:
     QList<QExplicitlySharedDataPointer<TransferData>> mTransfers;
 
     TransferThread::TransfersToProcess mTransfersToProcess;
+    QFutureWatcher<void> mUpdateTransferWatcher;
 
-    uint8_t mCancelingMode;
-    uint8_t mFailingMode;
+    uint8_t mTransfersProcessChanged;
+    uint8_t mUpdateMostPriorityTransfer;
+    uint8_t mUiBlockedCounter;
 
-    QHash<TransferTag, int> mTagByOrder;
+    uint32_t mUiBlockedByCounter;
+    uint8_t  mUiBlockedByCounterSafety;
+
+    QHash<TransferTag, QPersistentModelIndex> mTagByOrder;
+    QList<TransferTag> mRowsToCancel;
     mutable QMutex mModelMutex;
+    QTimer mMostPriorityTransferTimer;
 
     bool mAreAllPaused;
-    bool mModelReset;
 };
 
 Q_DECLARE_METATYPE(QAbstractItemModel::LayoutChangeHint)
 Q_DECLARE_METATYPE(QList<QPersistentModelIndex>)
 Q_DECLARE_METATYPE(QVector<int>)
+Q_DECLARE_METATYPE(QSet<int>)
 
 #endif // TRANSFERSMODEL_H

@@ -127,7 +127,7 @@ void MenuItemAction::setupActionWidget(const QSize& iconSize)
 
 bool MenuItemAction::eventFilter(QObject *obj, QEvent *event)
 {
-    if (!mValue)
+    if (!mValue && isEnabled())
     {
         if (event->type() == QEvent::Enter)
         {

@@ -60,6 +60,11 @@ std::shared_ptr<mega::MegaCancelToken> TransferBatch::getCancelToken()
     return mCancelToken;
 }
 
+int TransferBatch::getFolderCount()
+{
+    return mFolders;
+}
+
 /*************************/
 /*** BlockingBatch *******/
 /*************************/
@@ -137,6 +142,11 @@ bool BlockingBatch::hasCancelToken()
 bool BlockingBatch::isValid() const
 {
     return mBatch != nullptr;
+}
+
+bool BlockingBatch::hasFolders() const
+{
+    return (isValid()) ? mBatch->getFolderCount() > 0 : false;
 }
 
 std::shared_ptr<mega::MegaCancelToken> BlockingBatch::getCancelToken()

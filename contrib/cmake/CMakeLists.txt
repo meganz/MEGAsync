@@ -95,7 +95,8 @@ set(3RDPARTY_RUNTIME_PATH "PATH=%PATH%" "${Mega3rdPartyDir}/vcpkg/installed/${VC
 
 set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
-set(CMAKE_AUTOUIC_SEARCH_PATHS "${MEGAsyncDir}/gui/${UiDir}" "${MEGAsyncDir}/transfers/gui/${UiDir}")
+set(CMAKE_AUTOUIC_SEARCH_PATHS "${MEGAsyncDir}/gui/${UiDir}"
+                               "${MEGAsyncDir}/transfers/gui/${UiDir}")
 
 #AUTOMOC
 set(CMAKE_AUTOMOC ON)
@@ -113,6 +114,8 @@ include_directories( "${MEGAsyncDir}/model" )
 include_directories( "${MEGAsyncDir}/gui" )
 include_directories( "${MEGAsyncDir}/platform" )
 include_directories( "${MEGAsyncDir}/gui/${UiDir}" )
+include_directories( "${MEGAsyncDir}/transfers/model" )
+include_directories( "${MEGAsyncDir}/transfers/gui" )
 include_directories( "${MEGAsyncDir}/transfers/gui/${UiDir}" )
 
 
@@ -220,6 +223,7 @@ set (MOC_INPUT
     ${MEGAsyncDir}/ScaleFactorManager.h
     ${MEGAsyncDir}/CommonMessages.h
     ${MEGAsyncDir}/ScanStageController.h
+    ${MEGAsyncDir}/EventUpdater.h
     ${MEGAsyncDir}/control/ConnectivityChecker.h
     ${MEGAsyncDir}/control/CrashHandler.h
     ${MEGAsyncDir}/control/EncryptedSettings.h
@@ -234,7 +238,6 @@ set (MOC_INPUT
     ${MEGAsyncDir}/control/UpdateTask.h
     ${MEGAsyncDir}/control/ThreadPool.h
     ${MEGAsyncDir}/control/MegaController.h
-    ${MEGAsyncDir}/control/TransferBatch.h
     ${MEGAsyncDir}/control/SyncController.h
     ${MEGAsyncDir}/control/UserAttributesManager.h
     ${MEGAsyncDir}/model/SyncSettings.h
@@ -303,7 +306,8 @@ set (MOC_INPUT
     ${MEGAsyncDir}/gui/SwitchButton.h
     ${MEGAsyncDir}/gui/GuiUtilities.h
     ${MEGAsyncDir}/gui/EventHelper.h
-    ${MEGAsyncDir}/gui/UserAttributesRequests.h
+    ${MEGAsyncDir}/gui/UserAttributesRequests/FullName.h
+    ${MEGAsyncDir}/gui/UserAttributesRequests/Avatar.h
     ${MEGAsyncDir}/gui/BackupItemModel.h
     ${MEGAsyncDir}/gui/SyncItemModel.h
     ${MEGAsyncDir}/gui/SyncTableView.h
@@ -404,6 +408,7 @@ set (SRCS
     ${MEGAsyncDir}/ScaleFactorManager.cpp
     ${MEGAsyncDir}/CommonMessages.cpp
     ${MEGAsyncDir}/ScanStageController.cpp
+    ${MEGAsyncDir}/EventUpdater.cpp
 
     ${FORMS}
     ${MOC_INPUT}
@@ -472,7 +477,8 @@ set (SRCS
     ${MEGAsyncDir}/gui/MegaItemProxyModel.cpp
     ${MEGAsyncDir}/gui/MegaItemTreeView.cpp
     ${MEGAsyncDir}/gui/GuiUtilities.cpp
-    ${MEGAsyncDir}/gui/UserAttributesRequests.cpp
+    ${MEGAsyncDir}/gui/UserAttributesRequests/FullName.cpp
+    ${MEGAsyncDir}/gui/UserAttributesRequests/Avatar.cpp
     ${MEGAsyncDir}/gui/ButtonIconManager.cpp
     ${MEGAsyncDir}/gui/EventHelper.cpp
     ${MEGAsyncDir}/gui/GuiUtilities.cpp
@@ -696,7 +702,9 @@ if(CMAKE_HOST_APPLE)
 
     set_source_files_properties(${MAC_RESOURCES} PROPERTIES MACOSX_PACKAGE_LOCATION "Resources")
     add_executable(MEGAsync MACOSX_BUNDLE ${MAC_RESOURCES} ${MEGAsyncDir}/main.cpp ${SRCS} ${QM_FILES})
-    set_target_properties(MEGAsync PROPERTIES MACOSX_BUNDLE_INFO_PLIST "${MEGAsyncDir}/Info_MEGA.plist")
+    set_target_properties(MEGAsync PROPERTIES
+                                   MACOSX_BUNDLE_INFO_PLIST "${MEGAsyncDir}/Info_MEGA.plist"
+                                   MACOSX_BUNDLE_SHORT_VERSION "${MEGASYNC_VERSION}")
 elseif(CMAKE_HOST_WIN32)
     add_executable(MEGAsync WIN32 ${MEGAsyncDir}/main.cpp ${SRCS} ${QM_FILES})
     set_property(TARGET MEGAsync PROPERTY MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>DLL")
@@ -771,12 +779,6 @@ if (CMAKE_HOST_APPLE)
         OUTPUT_STRIP_TRAILING_WHITESPACE)
 
     message("MEGAsync version = ${MEGASYNC_VERSION}")
-    add_custom_command(
-            TARGET MEGAsync
-            POST_BUILD
-            COMMAND /usr/libexec/PlistBuddy -c \"Set :CFBundleShortVersionString ${MEGASYNC_VERSION}\" \"$<TARGET_FILE_DIR:MEGAsync>/../Info.plist\"
-            COMMENT "Setting version to Info.plist..."
-            )
 endif()
 
 set(FULLREQUIREMENTS TRUE CACHE BOOL "Verbose output")
@@ -883,4 +885,10 @@ target_link_libraries(MEGASync_unit_tests
     ${TARGET_LINK_LIBRARIES_PLATFORM}
     )
 
-target_include_directories(MEGASync_unit_tests PRIVATE ${MEGAsyncDir} ${MEGAsyncDir}/google_breakpad )
+target_compile_features(MEGASync_unit_tests PRIVATE cxx_std_14)
+
+target_include_directories(MEGASync_unit_tests PRIVATE ${MEGAsyncDir}
+                                                       ${MEGAsyncDir}/transfers
+                                                       ${MEGAsyncDir}/transfers/gui
+                                                       ${MEGAsyncDir}/transfers/model
+                                                       ${MEGAsyncDir}/google_breakpad )

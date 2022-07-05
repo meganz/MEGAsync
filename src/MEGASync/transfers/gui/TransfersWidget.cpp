@@ -12,7 +12,8 @@ TransfersWidget::TransfersWidget(QWidget* parent) :
     ui (new Ui::TransfersWidget),
     tDelegate (nullptr),
     app (qobject_cast<MegaApplication*>(qApp)),
-    mCurrentTab(NO_TAB)
+    mCurrentTab(NO_TAB),
+    mScanningIsActive(false)
 {
     ui->setupUi(this);
 
@@ -24,17 +25,14 @@ TransfersWidget::TransfersWidget(QWidget* parent) :
     connect(ui->statusColumn, &TransferWidgetHeaderItem::toggled, this, &TransfersWidget::onHeaderItemClicked);
     connect(ui->timeColumn, &TransferWidgetHeaderItem::toggled, this, &TransfersWidget::onHeaderItemClicked);
 
-    model = app->getTransfersModel();
+    mModel = app->getTransfersModel();
 
     //Align header pause/cancel buttons to view pause/cancel button
     connect(ui->tvTransfers, &MegaTransferView::verticalScrollBarVisibilityChanged, this, &TransfersWidget::onVerticalScrollBarVisibilityChanged);
     connect(ui->tvTransfers, &MegaTransferView::pauseResumeTransfersByContextMenu, this, &TransfersWidget::onPauseResumeTransfer);
 
-    mCheckPauseResumeButtonTimer.setInterval(100);
-    mCheckCancelClearButtonTimer.setInterval(100);
-
-    connect(&mCheckPauseResumeButtonTimer, &QTimer::timeout, this, &TransfersWidget::onCheckPauseResumeButton);
-    connect(&mCheckCancelClearButtonTimer, &QTimer::timeout, this, &TransfersWidget::onCheckCancelClearButton);
+    connect(mModel, &TransfersModel::transfersProcessChanged, this, &TransfersWidget::onCheckPauseResumeButton);
+    connect(mModel, &TransfersModel::transfersProcessChanged, this, &TransfersWidget::onCheckCancelClearButton);
 
     auto leftPaneButtons = ui->wTableHeader->findChildren<QAbstractButton*>();
     foreach(auto& button, leftPaneButtons)
@@ -59,9 +57,7 @@ void TransfersWidget::setupTransfers()
 {
     mProxyModel = new TransfersManagerSortFilterProxyModel(ui->tvTransfers);
     mProxyModel->setSourceModel(app->getTransfersModel());
-    mProxyModel->sort(static_cast<int>(SortCriterion::PRIORITY), Qt::DescendingOrder);
-
-    mProxyModel->setDynamicSortFilter(true);
+    mProxyModel->initProxyModel(SortCriterion::PRIORITY, Qt::DescendingOrder);
 
     connect(mProxyModel, &TransfersManagerSortFilterProxyModel::modelAboutToBeChanged, this, &TransfersWidget::onModelAboutToBeChanged);
     connect(mProxyModel, &TransfersManagerSortFilterProxyModel::modelChanged, this, &TransfersWidget::onModelChanged);
@@ -70,6 +66,7 @@ void TransfersWidget::setupTransfers()
     connect(mProxyModel, &TransfersManagerSortFilterProxyModel::transferRetry, this, &TransfersWidget::onRetryButtonPressedOnDelegate);
     connect(app->getTransfersModel(), &TransfersModel::blockUi, this, &TransfersWidget::onUiBlocked);
     connect(app->getTransfersModel(), &TransfersModel::unblockUi, this, &TransfersWidget::onUiUnblocked);
+    connect(app->getTransfersModel(), &TransfersModel::unblockUiAndFilter, this, &TransfersWidget::onUiUnblockedAndFilter);
 
     configureTransferView();
 }
@@ -83,7 +80,7 @@ TransfersWidget::~TransfersWidget()
 
 void TransfersWidget::configureTransferView()
 {
-    if (!model)
+    if (!mModel)
     {
         return;
     }
@@ -91,11 +88,7 @@ void TransfersWidget::configureTransferView()
     tDelegate = new MegaTransferDelegate(mProxyModel, ui->tvTransfers);
     ui->tvTransfers->setup(this);
     ui->tvTransfers->setItemDelegate(tDelegate);
-
-    onCheckPauseResumeButton();
-
     ui->tvTransfers->setModel(mProxyModel);
-
     ui->tvTransfers->setDragEnabled(true);
     ui->tvTransfers->viewport()->setAcceptDrops(true);
     ui->tvTransfers->setDropIndicatorShown(true);
@@ -153,18 +146,23 @@ void TransfersWidget::onCheckPauseResumeButton()
         auto pauseState(mProxyModel->areAllPaused());
         if(ui->tPauseResumeVisible->isChecked() != pauseState)
         {
-            ui->tPauseResumeVisible->blockSignals(true);
-            ui->tPauseResumeVisible->setChecked(pauseState);
-            ui->tPauseResumeVisible->blockSignals(false);
-
-            ui->tPauseResumeVisible->setToolTip(pauseState ?
-                                                    mHeaderInfo.resumeTooltip
-                                                  : mHeaderInfo.pauseTooltip);
-
-            //Use to repaint and update the transfers state
-            ui->tvTransfers->update();
+            togglePauseResumeButton(pauseState);
         }
     }
+}
+
+void TransfersWidget::togglePauseResumeButton(bool state)
+{
+    ui->tPauseResumeVisible->blockSignals(true);
+    ui->tPauseResumeVisible->setChecked(state);
+    ui->tPauseResumeVisible->blockSignals(false);
+
+    ui->tPauseResumeVisible->setToolTip(state ?
+                                            mHeaderInfo.resumeTooltip
+                                          : mHeaderInfo.pauseTooltip);
+
+    //Use to repaint and update the transfers state
+    ui->tvTransfers->update();
 }
 
 void TransfersWidget::onCheckCancelClearButton()
@@ -296,6 +294,15 @@ TransfersWidget::TM_TAB TransfersWidget::getCurrentTab()
     return mCurrentTab;
 }
 
+void TransfersWidget::updateHeaders()
+{
+    //Now, you can check the buttons as the filter is finished
+    updateHeaderItems();
+
+    onCheckCancelClearButton();
+    onCheckPauseResumeButton();
+}
+
 void TransfersWidget::updateHeaderItems()
 {
     // Show pause button on tab except completed tab,
@@ -351,38 +358,51 @@ void TransfersWidget::changeEvent(QEvent *event)
     QWidget::changeEvent(event);
 }
 
-void TransfersWidget::hideEvent(QHideEvent *event)
+bool TransfersWidget::isLoadingViewSet()
 {
-    //Do not check buttons while it is closed
-    mCheckCancelClearButtonTimer.stop();
-    mCheckPauseResumeButtonTimer.stop();
+    return mLoadingScene.isLoadingViewSet();
 }
 
-void TransfersWidget::showEvent(QShowEvent *event)
+void TransfersWidget::setScanningWidgetVisible(bool state)
 {
-    onModelChanged();
+    mScanningIsActive = state;
+
+    if(!state && mLoadingScene.isLoadingViewSet())
+    {
+        emit disableTransferManager(true);
+    }
+    else if(state && mLoadingScene.isLoadingViewSet())
+    {
+        emit disableTransferManager(false);
+    }
 }
 
 void TransfersWidget::onUiBlocked()
 {
     mLoadingScene.setLoadingScene(true);
 
-    emit disableTransferManager(true);
+    if(!mScanningIsActive)
+    {
+        emit disableTransferManager(true);
+    }
 }
 
 void TransfersWidget::onUiUnblocked()
 {
     mLoadingScene.setLoadingScene(false);
-
     emit disableTransferManager(false);
+}
+
+void TransfersWidget::onUiUnblockedAndFilter()
+{
+    if(mLoadingScene.isLoadingViewSet())
+    {
+        mProxyModel->refreshFilterFixedString();
+    }
 }
 
 void TransfersWidget::onModelAboutToBeChanged()
 {
-    //Do not update any
-    mCheckCancelClearButtonTimer.stop();
-    mCheckPauseResumeButtonTimer.stop();
-
     onUiBlocked();
 }
 
@@ -390,38 +410,7 @@ void TransfersWidget::onModelChanged()
 {
     onUiUnblocked();
 
-    updateTimersState();
-
-    //Now, you can check the buttons as the filter is finished
-    updateHeaderItems();
-
-    onCheckCancelClearButton();
-    onCheckPauseResumeButton();
-}
-
-void TransfersWidget::updateTimersState()
-{
-    //In Completed, pauseResume always hidden and cancelClear button always shows clear icon
-    //In Failed, pauseResume always shows play button, and cancelClear  button always show cancel icon
-    if (mCurrentTab == TransfersWidget::COMPLETED_TAB || mCurrentTab == TransfersWidget::FAILED_TAB)
-    {
-        mCheckCancelClearButtonTimer.stop();
-        mCheckPauseResumeButtonTimer.stop();
-    }
-    else if ((mCurrentTab > TransfersWidget::TYPES_TAB_BASE && mCurrentTab < TransfersWidget::TYPES_LAST)
-             || mCurrentTab == TransfersWidget::SEARCH_TAB)
-    {
-        mCheckCancelClearButtonTimer.start();
-        mCheckPauseResumeButtonTimer.start();
-    }
-    //UPLOAD // DOWNLOAD // ALL_TRANSFERS
-    //cancelClear button always shows cancel icon
-    else
-    {
-        mCheckCancelClearButtonTimer.stop();
-        mCheckPauseResumeButtonTimer.start();
-    }
-
+    updateHeaders();
 }
 
 void TransfersWidget::onPauseResumeTransfer(bool pause)
@@ -437,7 +426,7 @@ void TransfersWidget::onCancelClearButtonPressedOnDelegate()
     auto sourceSelection= mProxyModel->mapSelectionToSource(selection);
     auto sourceSelectionIndexes = sourceSelection.indexes();
 
-    auto action = ui->tvTransfers->getSelectedAction();
+    auto action = ui->tvTransfers->getSelectedCancelOrClearText();
 
     QPointer<TransfersWidget> dialog = QPointer<TransfersWidget>(this);
 
@@ -450,7 +439,7 @@ void TransfersWidget::onCancelClearButtonPressedOnDelegate()
         return;
     }
 
-    getModel()->cancelTransfers(sourceSelectionIndexes, this);
+    getModel()->cancelAndClearTransfers(sourceSelectionIndexes, this);
 }
 
 void TransfersWidget::onRetryButtonPressedOnDelegate()

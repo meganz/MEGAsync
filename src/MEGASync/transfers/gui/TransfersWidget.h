@@ -57,6 +57,9 @@ public:
     void mouseRelease(const QPoint& point);
     void setCurrentTab(TM_TAB);
     TM_TAB getCurrentTab();
+    void setScanningWidgetVisible(bool state);
+
+    bool isLoadingViewSet();
 
     struct CancelClearButtonInfo
     {
@@ -68,7 +71,6 @@ public:
 
          bool isInit(){return !cancelClearTooltip.isEmpty();}
     };
-
     struct HeaderInfo
     {
         QString headerTime;
@@ -77,8 +79,7 @@ public:
         QString pauseTooltip;
         QString resumeTooltip;
     };
-
-    void updateHeaderItems();
+    void updateHeaders();
 
     TransfersModel* getModel();
     TransfersManagerSortFilterProxyModel* getProxyModel() {return mProxyModel;}
@@ -88,15 +89,14 @@ public slots:
     void onHeaderItemClicked(int sortBy, Qt::SortOrder order);
     void on_tPauseResumeVisible_toggled(bool state);
     void on_tCancelClearVisible_clicked();
+    void onUiBlocked();
+    void onUiUnblocked();
 
 protected:
     void changeEvent(QEvent *event) override;
-    void hideEvent(QHideEvent *event) override;
-    void showEvent(QShowEvent *event) override;
 
 private slots:
-    void onUiBlocked();
-    void onUiUnblocked();
+    void onUiUnblockedAndFilter();
     void onModelChanged();
     void onModelAboutToBeChanged();
     void onPauseResumeTransfer(bool pause);
@@ -104,11 +104,12 @@ private slots:
     void onRetryButtonPressedOnDelegate();
     void onVerticalScrollBarVisibilityChanged(bool state);
     void onCheckPauseResumeButton();
+    void togglePauseResumeButton(bool state);
     void onCheckCancelClearButton();
 
 private:
     Ui::TransfersWidget *ui;
-    TransfersModel *model;
+    TransfersModel *mModel;
     TransfersManagerSortFilterProxyModel *mProxyModel;
     MegaTransferDelegate *tDelegate;
     ViewLoadingScene<TransferManagerLoadingItem> mLoadingScene;
@@ -117,6 +118,7 @@ private:
     MegaApplication *app;
     TM_TAB mCurrentTab;
     QMap<TransfersWidget::TM_TAB, QString> mTooltipNameByTab;
+    bool mScanningIsActive;
 
     HeaderInfo mHeaderInfo;
     CancelClearButtonInfo mCancelClearInfo;
@@ -125,15 +127,11 @@ private:
 
     void configureTransferView();
     void clearOrCancel(const QList<QExplicitlySharedDataPointer<TransferData>>& pool, int state, int firstRow);
-    void updateTimersState();
-
-    QTimer mCheckPauseResumeButtonTimer;
-    QTimer mCheckCancelClearButtonTimer;
+    void updateHeaderItems();
 
 signals:
     void clearTransfers(int firstRow, int amount);
     void updateSearchFilter(const QString& pattern);
-    void applyFilter();
     void pauseResumeVisibleRows(bool state);
     void transferPauseResumeStateChanged(bool isPaused);
     void cancelClearVisibleRows();

@@ -118,6 +118,7 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
     connect(app, &MegaApplication::avatarReady, this, &InfoDialog::setAvatar);
 
     connect(app->getTransfersModel(), &TransfersModel::transfersCountUpdated, this, &InfoDialog::updateTransfersCount);
+    connect(app->getTransfersModel(), &TransfersModel::transfersProcessChanged, this, &InfoDialog::onTransfersStateChanged);
 
     //Set window properties
 #ifdef Q_OS_LINUX
@@ -311,9 +312,13 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
 
     adjustSize();
 
-    mTransferScanCancelUi = new TransferScanCancelUi(ui->sTabs);
+    mTransferScanCancelUi = new TransferScanCancelUi(ui->sTabs, ui->pTransfersTab);
     connect(mTransferScanCancelUi, &TransferScanCancelUi::cancelTransfers,
             this, &InfoDialog::cancelScanning);
+
+    mResetTransferSummaryWidget.setInterval(2000);
+    mResetTransferSummaryWidget.setSingleShot(true);
+    connect(&mResetTransferSummaryWidget, &QTimer::timeout, this, &InfoDialog::onResetTransfersSummaryWidget);
 }
 
 InfoDialog::~InfoDialog()
@@ -584,40 +589,58 @@ void InfoDialog::setUsage()
 
 void InfoDialog::updateTransfersCount()
 {
-    auto TransfersCountUpdated = app->getTransfersModel()->getTransfersCount();
-
-    ui->bTransferManager->setDownloads(TransfersCountUpdated.completedDownloads(), TransfersCountUpdated.totalDownloads);
-    ui->bTransferManager->setUploads(TransfersCountUpdated.completedUploads(), TransfersCountUpdated.totalUploads);
-
-    double percentUploads(0.0);
-    if(TransfersCountUpdated.totalUploadBytes != 0)
+    if(app->getTransfersModel())
     {
-        percentUploads = static_cast<double>(TransfersCountUpdated.completedUploadBytes) / static_cast<double>(TransfersCountUpdated.totalUploadBytes);
-    }
+        auto transfersCountUpdated = app->getTransfersModel()->getTransfersCount();
 
-    double percentDownloads(0.0);
-    if(TransfersCountUpdated.totalDownloadBytes != 0)
-    {
-        percentDownloads = static_cast<double>(TransfersCountUpdated.completedDownloadBytes)/ static_cast<double>(TransfersCountUpdated.totalDownloadBytes);
-    }
+        ui->bTransferManager->setDownloads(transfersCountUpdated.completedDownloads(), transfersCountUpdated.totalDownloads);
+        ui->bTransferManager->setUploads(transfersCountUpdated.completedUploads(), transfersCountUpdated.totalUploads);
 
-    ui->bTransferManager->setPercentUploads(percentUploads);
-    ui->bTransferManager->setPercentDownloads(percentDownloads);
-
-    if (!TransfersCountUpdated.pendingDownloads && !TransfersCountUpdated.pendingUploads
-            && TransfersCountUpdated.totalUploadBytes == TransfersCountUpdated.completedUploadBytes
-            && TransfersCountUpdated.totalDownloadBytes == TransfersCountUpdated.completedDownloadBytes
-            && (TransfersCountUpdated.totalUploads != 0 || TransfersCountUpdated.totalDownloads != 0))
-    {
-        if (!overQuotaState && (ui->sActiveTransfers->currentWidget() != ui->pUpdated))
+        double percentUploads(0.0);
+        if(transfersCountUpdated.totalUploadBytes != 0)
         {
-            updateDialogState();
+            percentUploads = static_cast<double>(transfersCountUpdated.completedUploadBytes) / static_cast<double>(transfersCountUpdated.totalUploadBytes);
         }
 
-        QTimer::singleShot(2000, [this](){
-            ui->bTransferManager->reset();
-        });
+        double percentDownloads(0.0);
+        if(transfersCountUpdated.totalDownloadBytes != 0)
+        {
+            percentDownloads = static_cast<double>(transfersCountUpdated.completedDownloadBytes)/ static_cast<double>(transfersCountUpdated.totalDownloadBytes);
+        }
+
+        ui->bTransferManager->setPercentUploads(percentUploads);
+        ui->bTransferManager->setPercentDownloads(percentDownloads);
     }
+}
+
+void InfoDialog::onTransfersStateChanged()
+{
+    if(app->getTransfersModel())
+    {
+        auto transfersCountUpdated = app->getTransfersModel()->getTransfersCount();
+
+        if (!transfersCountUpdated.pendingDownloads && !transfersCountUpdated.pendingUploads
+                && transfersCountUpdated.totalUploadBytes == transfersCountUpdated.completedUploadBytes
+                && transfersCountUpdated.totalDownloadBytes == transfersCountUpdated.completedDownloadBytes
+                && (transfersCountUpdated.totalUploads != 0 || transfersCountUpdated.totalDownloads != 0))
+        {
+            if (!overQuotaState && (ui->sActiveTransfers->currentWidget() != ui->pUpdated))
+            {
+                updateDialogState();
+            }
+
+            mResetTransferSummaryWidget.start();
+        }
+        else
+        {
+            mResetTransferSummaryWidget.stop();
+        }
+    }
+}
+
+void InfoDialog::onResetTransfersSummaryWidget()
+{
+    ui->bTransferManager->reset();
 }
 
 void InfoDialog::setIndexing(bool indexing)
@@ -820,7 +843,7 @@ bool InfoDialog::checkFailedState()
 {
     auto isFailed(false);
 
-    if(app->getTransfersModel()->hasFailedTransfers())
+    if(app->getTransfersModel() && app->getTransfersModel()->hasFailedTransfers())
     {
         if(mState != StatusInfo::TRANSFERS_STATES::STATE_FAILED)
         {
@@ -1019,26 +1042,29 @@ void InfoDialog::updateDialogState()
     }
     else
     {
-        auto transfersCount = app->getTransfersModel()->getTransfersCount();
+        if(app->getTransfersModel())
+        {
+            auto transfersCount = app->getTransfersModel()->getTransfersCount();
 
-        if (transfersCount.totalDownloads || transfersCount.totalUploads
-                || ui->wPSA->isPSAready())
-        {
-            overlay->setVisible(false);
-            ui->sActiveTransfers->setCurrentWidget(ui->pTransfers);
-            ui->wPSA->showPSA();
-        }
-        else
-        {
-            ui->wPSA->hidePSA();
-            ui->sActiveTransfers->setCurrentWidget(ui->pUpdated);
-            if (!waiting && !indexing)
+            if (transfersCount.totalDownloads || transfersCount.totalUploads
+                    || ui->wPSA->isPSAready())
             {
-                overlay->setVisible(true);
+                overlay->setVisible(false);
+                ui->sActiveTransfers->setCurrentWidget(ui->pTransfers);
+                ui->wPSA->showPSA();
             }
             else
             {
-                overlay->setVisible(false);
+                ui->wPSA->hidePSA();
+                ui->sActiveTransfers->setCurrentWidget(ui->pUpdated);
+                if (!waiting && !indexing)
+                {
+                    overlay->setVisible(true);
+                }
+                else
+                {
+                    overlay->setVisible(false);
+                }
             }
         }
     }
@@ -1324,15 +1350,17 @@ void InfoDialog::setPSAannouncement(int id, QString title, QString text, QString
 void InfoDialog::enterBlockingState()
 {
     enableUserActions(false);
+    ui->bTransferManager->setPauseEnabled(false);
     ui->wTabOptions->setVisible(false);
     mTransferScanCancelUi->show();
 }
 
-void InfoDialog::leaveBlockingState()
+void InfoDialog::leaveBlockingState(bool fromCancellation)
 {
     enableUserActions(true);
+    ui->bTransferManager->setPauseEnabled(true);
     ui->wTabOptions->setVisible(true);
-    mTransferScanCancelUi->hide();
+    mTransferScanCancelUi->hide(fromCancellation);
 }
 
 void InfoDialog::disableCancelling()

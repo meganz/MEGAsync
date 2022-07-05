@@ -5,6 +5,8 @@
 #include <QtMath>
 #include <QPainterPath>
 #include <QTimer>
+#include <QGraphicsOpacityEffect>
+
 #include "Utilities.h"
 
 TransfersSummaryWidget::TransfersSummaryWidget(QWidget *parent) :
@@ -61,10 +63,27 @@ void TransfersSummaryWidget::setPaused(bool value)
         const char* iconFile = (paused) ? ":/images/resume.png" : ":/images/pause.png";
         const int iconSize = static_cast<int>(minwidth / 28.0 * 20);
 
-        QIcon icon;
-        icon.addFile(QString::fromUtf8(iconFile), QSize(), QIcon::Normal, QIcon::Off);
+        QIcon icon(QString::fromLatin1(iconFile));
+
         ui->bpause->setIcon(icon);
         ui->bpause->setIconSize(QSize(iconSize, iconSize));
+    }
+}
+
+void TransfersSummaryWidget::setPauseEnabled(bool value)
+{
+    ui->bpause->setEnabled(value);
+
+    if(!value)
+    {
+        auto effect = new QGraphicsOpacityEffect(ui->bpause);
+        effect->setOpacity(0.5);
+        ui->bpause->setGraphicsEffect(effect);
+        ui->bpause->setAutoFillBackground(true);
+    }
+    else
+    {
+        ui->bpause->setGraphicsEffect(nullptr);
     }
 }
 
@@ -746,5 +765,4 @@ void TransfersSummaryWidget::updateSizes()
 
     lastwidth = this->width();
     lastheigth = this->height();
-
 }

@@ -434,8 +434,8 @@ protected:
     HTTPServer *httpServer;
     HTTPServer *httpsServer;
     long long lastTsConnectionError = 0;
-    UploadToMegaDialog *uploadFolderSelector;
-    DownloadFromMegaDialog *downloadFolderSelector;
+    QPointer<UploadToMegaDialog> uploadFolderSelector;
+    QPointer<DownloadFromMegaDialog> downloadFolderSelector;
     mega::MegaHandle fileUploadTarget;
     QFileDialog *fileUploadSelector;
     mega::MegaHandle folderUploadTarget;
@@ -539,7 +539,6 @@ protected:
     int blockState;
     bool blockStateSet = false;
     bool whyamiblockedPeriodicPetition = false;
-    bool inScanningStage = false;
     friend class DeferPreferencesSyncForScope;
     std::unique_ptr<TransferQuota> transferQuota;
     bool transferOverQuotaWaitTimeExpiredReceived;
@@ -548,7 +547,7 @@ protected:
     QMap<QString, std::chrono::system_clock::time_point> mOpenUrlsClusterTs;
     std::unique_ptr<SyncController> mSyncController;
 
-    TransfersModel* mTransfersModel;
+    QPointer<TransfersModel> mTransfersModel;
 
     ScanStageController scanStageController;
     DialogGeometryRetainer<TransferManager> mTransferManagerGeometryRetainer;
@@ -587,8 +586,8 @@ private:
     void updateTransferNodesStage(mega::MegaTransfer* transfer);
 
     void updateFileTransferBatchesAndUi(BlockingBatch& batch);
-    void updateFolderTransferBatchesAndUi(BlockingBatch& batch);
-    void updateIfBlockingStageFinished(BlockingBatch &batch);
+    void updateFolderTransferBatchesAndUi(BlockingBatch& batch, bool fromCancellation);
+    void updateIfBlockingStageFinished(BlockingBatch &batch, bool fromCancellation);
     void unblockBatch(BlockingBatch &batch);
 
     void logBatchStatus(const char* tag);
@@ -606,6 +605,18 @@ private:
     void fixMultiscreenResizeBug(int& posX, int& posY);
 
     static void logInfoDialogCoordinates(const char* message, const QRect& screenGeometry, const QString& otherInformation);
+
+    struct NodeCount
+    {
+        int files;
+        int folders;
+    };
+
+    static NodeCount countFilesAndFolders(const QStringList& paths);
+
+    void processUploads(const QStringList& uploads);
+
+    void updateMetadata(TransferMetaData* data, const QString& filePath);
 
     template <class Func>
     void recreateMenuAction(MenuItemAction** action, const QString& actionName,

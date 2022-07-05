@@ -41,7 +41,7 @@ public:
 
     void pauseModel(bool state);
     void enterBlockingState();
-    void leaveBlockingState();
+    void leaveBlockingState(bool fromCancellation);
     void disableCancelling();
 
     void setTransferState(const StatusInfo::TRANSFERS_STATES &transferState);

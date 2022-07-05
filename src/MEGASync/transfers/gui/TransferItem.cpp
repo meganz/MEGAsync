@@ -5,6 +5,9 @@
 
 using namespace mega;
 
+const unsigned long long ACTIVE_PRIORITY_OFFSET = 100000000000000;
+const unsigned long long COMPLETED_PRIORITY_OFFSET = 200000000000000;
+
 const TransferData::TransferStates TransferData::STATE_MASK = TransferData::TransferStates (
         TransferData::TransferState::TRANSFER_QUEUED |
         TransferData::TransferState::TRANSFER_ACTIVE |
@@ -44,6 +47,12 @@ const TransferData::TransferStates TransferData::ACTIVE_STATES_MASK = TransferDa
     TransferData::TransferState::TRANSFER_RETRYING
 );
 
+const TransferData::TransferStates TransferData::PROCESSING_STATES_MASK = TransferData::TransferStates (
+            TransferData::TransferState::TRANSFER_ACTIVE |
+            TransferData::TransferState::TRANSFER_COMPLETING |
+            TransferData::TransferState::TRANSFER_QUEUED |
+            TransferData::TransferState::TRANSFER_RETRYING);
+
 void TransferData::update(mega::MegaTransfer* transfer)
 {
     auto megaApi = MegaSyncApp->getMegaApi();
@@ -62,15 +71,18 @@ void TransferData::update(mega::MegaTransfer* transfer)
 
         mFileType = Utilities::getFileType(mFilename, QString());
 
-        mState = static_cast<TransferData::TransferState>(1 << transfer->getState());
+        //Update priority before setState as the setState changes the priority
+        mPriority = transfer->getPriority();
+
+        setState(static_cast<TransferData::TransferState>(1 << transfer->getState()));
         mNotificationNumber = transfer->getNotificationNumber();
         mErrorCode = MegaError::API_OK;
         mErrorValue = 0LL;
         mTemporaryError = false;
         mFailedTransfer = nullptr;
-        mPriority = transfer->getPriority();
         mTransferredBytes = static_cast<unsigned long long>(transfer->getTransferredBytes());
         mTotalSize = static_cast<unsigned long long>(transfer->getTotalBytes());
+        mIgnorePauseQueueState = false;
 
         if(mState & TransferData::FINISHED_STATES_MASK)
         {
@@ -137,6 +149,91 @@ bool TransferData::hasChanged(QExplicitlySharedDataPointer<TransferData> data)
 void TransferData::removeFailedTransfer()
 {
     mFailedTransfer.reset();
+}
+
+void TransferData::setPauseResume(bool isPaused)
+{
+    if(isPaused)
+    {
+        setState(TransferData::TRANSFER_PAUSED);
+    }
+    else
+    {
+        setState(TransferData::TRANSFER_QUEUED);
+    }
+
+    mIgnorePauseQueueState = true;
+}
+
+bool TransferData::ignoreUpdate(const TransferState& state)
+{
+    if(mIgnorePauseQueueState)
+    {
+        if(mState == state)
+        {
+            mIgnorePauseQueueState = false;
+        }
+        else if(state != TransferData::TRANSFER_PAUSED && state != TransferData::TRANSFER_QUEUED)
+        {
+            mIgnorePauseQueueState = false;
+        }
+    }
+
+    return mIgnorePauseQueueState;
+}
+
+void TransferData::resetIgnoreUpdateUntilSameState()
+{
+    mIgnorePauseQueueState = false;
+}
+
+void TransferData::setState(const TransferState &state)
+{
+    if(mState != state)
+    {
+        auto wasProcessing(isProcessing());
+
+        mPreviousState = mState;
+        mState = state;
+
+        if(isFinished())
+        {
+            mPriority += COMPLETED_PRIORITY_OFFSET;
+        }
+        else if(isPaused() && wasProcessing)
+        {
+            mPriority += ACTIVE_PRIORITY_OFFSET;
+        }
+        else if(isProcessing())
+        {
+            mPriority -= ACTIVE_PRIORITY_OFFSET;
+        }
+    }
+}
+
+void TransferData::setPreviousState(const TransferState &state)
+{
+    mPreviousState = state;
+}
+
+TransferData::TransferState TransferData::getState() const
+{
+    return mState;
+}
+
+TransferData::TransferState TransferData::getPreviousState() const
+{
+    return mPreviousState;
+}
+
+void TransferData::resetStateHasChanged()
+{
+    mPreviousState = mState;
+}
+
+bool TransferData::stateHasChanged() const
+{
+    return mState != mPreviousState;
 }
 
 int64_t TransferData::getRawFinishedTime() const
@@ -210,14 +307,29 @@ bool TransferData::isPaused() const
     return mState & TRANSFER_PAUSED;
 }
 
+bool TransferData::wasPaused() const
+{
+    return mPreviousState & TRANSFER_PAUSED;
+}
+
 bool TransferData::isProcessing() const
 {
-    return mState & (TRANSFER_ACTIVE | TRANSFER_COMPLETING);
+    return mState & PROCESSING_STATES_MASK;
+}
+
+bool TransferData::wasProcessing() const
+{
+    return mPreviousState & PROCESSING_STATES_MASK;
 }
 
 bool TransferData::isCompleted() const
 {
     return mState & TRANSFER_COMPLETED;
+}
+
+bool TransferData::isCompleting() const
+{
+    return mState & TRANSFER_COMPLETING;
 }
 
 bool TransferData::isFailed() const
@@ -228,4 +340,9 @@ bool TransferData::isFailed() const
 bool TransferData::isFinished() const
 {
     return mState & FINISHED_STATES_MASK;
+}
+
+bool TransferData::wasFinished() const
+{
+    return mPreviousState & FINISHED_STATES_MASK;
 }

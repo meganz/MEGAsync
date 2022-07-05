@@ -2407,7 +2407,7 @@ QGroupBox::title
                 <cursorShape>PointingHandCursor</cursorShape>
                </property>
                <property name="text">
-                <string>Clear Completed</string>
+                <string>Retry all</string>
                </property>
               </widget>
              </item>
