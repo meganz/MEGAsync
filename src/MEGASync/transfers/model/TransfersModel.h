@@ -241,9 +241,9 @@ private slots:
     void cacheCancelTransfersTags();
     void processFailedTransfers();
     void onProcessTransfers();
+    void updateTransfersCount();
 
 private:
-    void updateTransfersCount();
     void removeRows(QModelIndexList &indexesToRemove);
     QExplicitlySharedDataPointer<TransferData> getTransfer(int row) const;
     void addTransfer(QExplicitlySharedDataPointer<TransferData>);
@@ -277,7 +277,7 @@ private:
     QList<QExplicitlySharedDataPointer<TransferData>> mTransfers;
 
     TransferThread::TransfersToProcess mTransfersToProcess;
-    QFutureWatcher<void> mCancelWatcher;
+    QFutureWatcher<void> mUpdateTransferWatcher;
 
     uint8_t mTransfersProcessChanged;
     uint8_t mUpdateMostPriorityTransfer;

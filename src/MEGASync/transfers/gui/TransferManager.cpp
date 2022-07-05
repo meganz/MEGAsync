@@ -256,6 +256,8 @@ void TransferManager::leaveBlockingState(bool fromCancellation)
     enableUserActions(true);
     mUi->wTransfers->setScanningWidgetVisible(false);
     mTransferScanCancelUi->hide(fromCancellation);
+
+    refreshView();
 }
 
 void TransferManager::disableCancelling()
