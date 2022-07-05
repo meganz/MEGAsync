@@ -41,6 +41,9 @@ TransferThread::TransfersToProcess TransferThread::processTransfers()
        transfers.startTransfersByTag = extractFromCache(mTransfersToProcess.startTransfersByTag, spaceForTransfers);
        spaceForTransfers -= transfers.startTransfersByTag.size();
 
+       transfers.startSyncTransfersByTag = extractFromCache(mTransfersToProcess.startSyncTransfersByTag, spaceForTransfers);
+       spaceForTransfers -= transfers.startSyncTransfersByTag.size();
+
        transfers.updateTransfersByTag = extractFromCache(mTransfersToProcess.updateTransfersByTag, spaceForTransfers);
 
        mCacheMutex.unlock();
@@ -139,6 +142,11 @@ QExplicitlySharedDataPointer<TransferData> TransferThread::onTransferEvent(MegaT
 
     if(!result)
     {
+        result = checkIfRepeatedAndSubstitute(mTransfersToProcess.startSyncTransfersByTag, transfer);
+    }
+
+    if(!result)
+    {
         result = checkIfRepeatedAndSubstitute(mTransfersToProcess.canceledTransfersByTag, transfer);
     }
 
@@ -190,7 +198,14 @@ void TransferThread::onTransferStart(MegaApi *, MegaTransfer *transfer)
 
         if(data)
         {
-            mTransfersToProcess.startTransfersByTag.insert(transfer->getTag(), data);
+            if(transfer->isSyncTransfer())
+            {
+                mTransfersToProcess.startSyncTransfersByTag.insert(transfer->getTag(), data);
+            }
+            else
+            {
+                mTransfersToProcess.startTransfersByTag.insert(transfer->getTag(), data);
+            }
         }
     }
 }
@@ -513,6 +528,7 @@ void TransfersModel::onProcessTransfers()
         mostPriorityTransferMayChanged(true);
 
         int containsTransfersToStart(mTransfersToProcess.startTransfersByTag.size());
+        int containsSyncTransfersToStart(mTransfersToProcess.startSyncTransfersByTag.size());
         int containsTransfersToUpdate(mTransfersToProcess.updateTransfersByTag.size());
         int containsTransfersToCancel(mTransfersToProcess.canceledTransfersByTag.size());
         int containsTransfersFailed(mTransfersToProcess.failedTransfersByTag.size());
@@ -568,7 +584,7 @@ void TransfersModel::onProcessTransfers()
         }
         else
         {
-            if(containsTransfersToStart > 0)
+            if(containsTransfersToStart > 0 || containsSyncTransfersToStart > 0)
             {
                 if(isUiBlockedModeActive() || containsTransfersToStart > START_THRESHOLD_THREAD)
                 {
@@ -583,6 +599,7 @@ void TransfersModel::onProcessTransfers()
                     }
 
                     processStartTransfers(mTransfersToProcess.startTransfersByTag);
+                    processStartTransfers(mTransfersToProcess.startSyncTransfersByTag);
 
                     processUpdateTransfers();
 
