@@ -391,8 +391,6 @@ void TransferManager::onPauseResumeVisibleRows(bool isPaused)
     showQuotaStorageDialogs(isPaused);
 
     auto transfersView = findChild<MegaTransferView*>();
-    auto proxy (mUi->wTransfers->getProxyModel());
-
     if(mUi->wTransfers->getCurrentTab() == TransfersWidget::ALL_TRANSFERS_TAB)
     {
         mModel->pauseResumeAllTransfers(isPaused);
@@ -799,8 +797,6 @@ void TransferManager::on_bPause_toggled()
 
 void TransferManager::pauseResumeTransfers(bool isPaused)
 {
-    auto proxy (mUi->wTransfers->getProxyModel());
-
     mModel->pauseResumeAllTransfers(isPaused);
     onUpdatePauseState(isPaused);
 
