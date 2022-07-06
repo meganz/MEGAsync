@@ -6,7 +6,7 @@
 
 #include <MegaApplication.h>
 #include <StalledIssuesModel.h>
-//#include "RenameDialog.h"
+#include "NodeNameSetterDialog/RenameNodeDialog.h"
 #include "QMegaMessageBox.h"
 
 #include <QDialogButtonBox>
@@ -123,34 +123,44 @@ void NameConflict::onActionClicked(int actionId)
 
         if(actionId == RENAME_ID)
         {
-//            QPointer<NameConflict> currentWidget = QPointer<NameConflict>(this);
+            QPointer<NameConflict> currentWidget = QPointer<NameConflict>(this);
 
-//            RenameDialog dialog;
-//            dialog.init(mData.data->isCloud(), info.filePath());
-//            auto result = dialog.exec();
+            QString newName;
+            bool result(QDialog::Rejected);
 
-//            if(result == QDialog::Accepted)
-//            {
-//                auto newName(dialog.newName());
+            if(mData.isCloud)
+            {
+                RenameRemoteNodeDialog dialog(info.filePath(), nullptr);
+                result = dialog.show();
+                newName = dialog.getName();
+            }
+            else
+            {
+                RenameLocalNodeDialog dialog(info.filePath(), nullptr);
+                result = dialog.show();
+                newName = dialog.getName();
+            }
 
-//                if(mData.isCloud)
-//                {
-//                    MegaSyncApp->getStalledIssuesModel()->solveCloudConflictedNameByRename(chooseTitle->title()
-//                                                                                           , newName, delegateWidget->getCurrentIndex());
-//                }
-//                else
-//                {
-//                    MegaSyncApp->getStalledIssuesModel()->solveLocalConflictedNameByRename(chooseTitle->title()
-//                                                                                           , newName, delegateWidget->getCurrentIndex());
-//                }
+            if(result == QDialog::Accepted)
+            {
+                if(mData.isCloud)
+                {
+                    MegaSyncApp->getStalledIssuesModel()->solveCloudConflictedNameByRename(chooseTitle->title()
+                                                                                           , newName, delegateWidget->getCurrentIndex());
+                }
+                else
+                {
+                    MegaSyncApp->getStalledIssuesModel()->solveLocalConflictedNameByRename(chooseTitle->title()
+                                                                                           , newName, delegateWidget->getCurrentIndex());
+                }
 
-//                chooseTitle->setDisabled(true);
-//            }
+                chooseTitle->setDisabled(true);
+            }
 
-//            if(!currentWidget)
-//            {
-//                return;
-//            }
+            if(!currentWidget)
+            {
+                return;
+            }
         }
         else if(actionId == REMOVE_ID)
         {
