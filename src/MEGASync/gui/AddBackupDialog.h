@@ -19,7 +19,7 @@ public:
     ~AddBackupDialog();
 
     void setMyBackupsFolder(const QString& folder);
-    QDir getSelectedFolder();
+    QString getSelectedFolder();
 
 public slots:
     void on_changeButton_clicked();
@@ -27,7 +27,7 @@ public slots:
 
 private:
     Ui::AddBackupDialog *mUi;
-    QDir mSelectedFolder;
+    QString mSelectedFolder;
     QString mMyBackupsFolder;
     SyncController mSyncController;
     QString mDeviceName;

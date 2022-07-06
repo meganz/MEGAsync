@@ -25,27 +25,21 @@ SyncController::~SyncController()
     delete mDelegateListener;
 }
 
-void SyncController::addBackup(const QString &localFolder)
+void SyncController::addBackup(const QString& localFolder)
 {
     QDir dirToBackup(localFolder);
     addBackup(dirToBackup);
 }
 
-void SyncController::addBackup(const QDir &dirToBackup)
+void SyncController::addBackup(const QDir& dirToBackup)
 {
-    addSync(QDir::toNativeSeparators(dirToBackup.canonicalPath()), mega::INVALID_HANDLE,
+    addSync(QDir::toNativeSeparators(dirToBackup.absolutePath()), mega::INVALID_HANDLE,
             dirToBackup.dirName(), mega::MegaSync::TYPE_BACKUP);
 }
 
-void SyncController::addSync(const QString &localFolder, const MegaHandle &remoteHandle,
+void SyncController::addSync(const QString& localFolder, const MegaHandle& remoteHandle,
                              const QString& syncName, MegaSync::SyncType type)
 {
-    if (localFolder.isEmpty() && syncName.isEmpty())
-    {
-        MegaApi::log(MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Adding invalid sync \"%1\"")
-                     .arg(localFolder).toUtf8().constData());
-        return;
-    }
 
     MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("Adding sync \"%1\" for path \"%2\"")
                  .arg(syncName, localFolder).toUtf8().constData());
@@ -128,59 +122,56 @@ void SyncController::getDeviceName()
 
 // Checks if a path belongs is in an existing sync or backup tree; and if the selected
 // folder has a sync or backup in its tree.
-QString SyncController::getIsFolderAlreadySyncedMsg(const QString& path,const MegaSync::SyncType& syncType)
+QString SyncController::getIsFolderAlreadySyncedMsg(const QString& path, const MegaSync::SyncType& syncType)
 {
-    auto cleanInputPath (QDir::cleanPath(QDir(path).canonicalPath()));
+    QString inputPath (QDir(path).absolutePath());
     QString message;
 
     // Gather all synced or backed-up dirs
     QMap<QString, MegaSync::SyncType> localFolders = SyncModel::instance()->getLocalFoldersAndTypeMap();
 
     // First check existing syncs
-    foreach (auto& lf, localFolders.keys())
+    foreach (auto& existingPath, localFolders.keys())
     {
-        QString c = QDir::cleanPath(lf);
-        if (cleanInputPath == c)
+        if (inputPath == existingPath)
         {
             if (syncType == MegaSync::SyncType::TYPE_BACKUP)
             {
-                message = localFolders.value(lf) == MegaSync::SyncType::TYPE_TWOWAY ?
+                message = localFolders.value(existingPath) == MegaSync::SyncType::TYPE_TWOWAY ?
                               tr("You can't sync this folder as it's already synced.")
                             : tr("Folder is already backed up. Select a different one.");
             }
             else
             {
-                message = localFolders.value(lf) == MegaSync::SyncType::TYPE_TWOWAY ?
+                message = localFolders.value(existingPath) == MegaSync::SyncType::TYPE_TWOWAY ?
                               tr("You can't sync this folder as it's already synced.")
                             : tr("You can't sync this folder as it's backed up.");
             }
         }
-        else if (cleanInputPath.startsWith(c) && (cleanInputPath[c.size()] == QDir::separator()))
+        else if (inputPath.startsWith(existingPath)
+                 && inputPath[existingPath.size()] == QDir::separator())
         {
             if (syncType == MegaSync::SyncType::TYPE_BACKUP)
             {
-                message = localFolders.value(lf) == MegaSync::SyncType::TYPE_TWOWAY ?
+                message = localFolders.value(existingPath) == MegaSync::SyncType::TYPE_TWOWAY ?
                               tr("You can't backup this folder as it's already inside a synced folder.")
                             : tr("You can't backup this folder as it's already inside a backed up folder.");
             }
             else
             {
-                message = localFolders.value(lf) == MegaSync::SyncType::TYPE_TWOWAY ?
+                message = localFolders.value(existingPath) == MegaSync::SyncType::TYPE_TWOWAY ?
                               tr("You can't sync folders that are inside synced folders.")
                             : tr("You can't sync folders that are inside backed up folders. ");
             }
-        }
-        else if (c.startsWith(cleanInputPath) && (c[cleanInputPath.size()] == QDir::separator()))
-        {
             if (syncType == MegaSync::SyncType::TYPE_BACKUP)
             {
-                message = localFolders.value(lf) == MegaSync::SyncType::TYPE_TWOWAY ?
+                message = localFolders.value(existingPath) == MegaSync::SyncType::TYPE_TWOWAY ?
                               tr("You can't backup this folder as it contains synced folders.")
                             : tr("You can't backup this folder as it contains backed up folders.");
             }
             else
             {
-                message = localFolders.value(lf) == MegaSync::SyncType::TYPE_TWOWAY ?
+                message = localFolders.value(existingPath) == MegaSync::SyncType::TYPE_TWOWAY ?
                               tr("You can't sync folders that contain synced folders.")
                             : tr("You can't sync folders that contain backed up folders.  ");
             }

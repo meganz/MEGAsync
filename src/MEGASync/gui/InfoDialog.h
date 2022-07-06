@@ -10,7 +10,6 @@
 #include "SettingsDialog.h"
 #include "MenuItemAction.h"
 #include "control/Preferences.h"
-#include "control/MegaController.h"
 #include "model/SyncModel.h"
 #include <QGraphicsOpacityEffect>
 #include "TransferScanCancelUi.h"
@@ -223,6 +222,7 @@ private:
 
     QPointer<BackupsWizard> mBackupsWizard;
     QPointer<AddBackupDialog> mAddBackupDialog;
+    QPointer<BindFolderDialog> mAddSyncDialog;
 
 #ifdef Q_OS_LINUX
     bool doNotActAsPopup;
@@ -257,7 +257,6 @@ protected:
     MegaApplication *app;
     std::shared_ptr<Preferences> preferences;
     SyncModel *model;
-    Controller *controller;
     mega::MegaApi *megaApi;
     mega::MegaTransfer *activeDownload;
     mega::MegaTransfer *activeUpload;

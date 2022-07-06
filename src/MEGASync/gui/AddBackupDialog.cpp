@@ -7,7 +7,7 @@
 AddBackupDialog::AddBackupDialog(QWidget *parent) :
     QDialog(parent),
     mUi(new Ui::AddBackupDialog),
-    mSelectedFolder(QDir::home()),
+    mSelectedFolder(),
     mMyBackupsFolder(),
     mSyncController(),
     mDeviceName()
@@ -40,7 +40,7 @@ void AddBackupDialog::setMyBackupsFolder(const QString& folder)
     mUi->backupToLabel->setText(mMyBackupsFolder + mDeviceName);
 }
 
-QDir AddBackupDialog::getSelectedFolder()
+QString AddBackupDialog::getSelectedFolder()
 {
     return mSelectedFolder;
 }
@@ -50,18 +50,20 @@ void AddBackupDialog::on_changeButton_clicked()
     QString folderPath = QFileDialog::getExistingDirectory(this, tr("Choose Folder"),
                                                     QDir::home().path(),
                                                     QFileDialog::DontResolveSymlinks);
-    if(folderPath.isEmpty())
+    if (folderPath.isEmpty())
         return;
 
     QString warningMessage;
-    if(mSyncController.isFolderAlreadySynced(folderPath, mega::MegaSync::TYPE_BACKUP, warningMessage))
+    QString candidateDir (QDir::toNativeSeparators(QDir(folderPath).canonicalPath()));
+
+    if (mSyncController.isFolderAlreadySynced(candidateDir, mega::MegaSync::TYPE_BACKUP, warningMessage))
     {
         QMegaMessageBox::warning(nullptr, tr("Error"), warningMessage, QMessageBox::Ok);
     }
     else
     {
-        mSelectedFolder = folderPath;
-        mUi->folderLineEdit->setText(mSelectedFolder.path());
+        mSelectedFolder = candidateDir;
+        mUi->folderLineEdit->setText(folderPath);
         mUi->addButton->setEnabled(true);
     }
 }

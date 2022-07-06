@@ -5,7 +5,6 @@
 #include <QHash>
 #include <QPixmap>
 #include <QProgressDialog>
-#include <control/MegaController.h>
 
 #include <QDir>
 #include <QIcon>
@@ -328,10 +327,6 @@ public:
     // Note: remainingHours and remaininDays represent the same value.
     // i.e. for 1 day & 3 hours remaining, remainingHours will be 27, not 3.
     static void getDaysAndHoursToTimestamp(int64_t secsTimestamps, int64_t &remaininDays, int64_t &remainingHours);
-
-    // shows a ProgressDialog while some progress goes on. it returns a copy of the object,
-    // but the object will be deleted when the progress closes
-    static QProgressDialog *showProgressDialog(ProgressHelper *progressHelper, QWidget *parent = nullptr);
 
 private:
     Utilities() {}

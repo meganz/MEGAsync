@@ -237,7 +237,6 @@ set (MOC_INPUT
     ${MEGAsyncDir}/control/TransferRemainingTime.h
     ${MEGAsyncDir}/control/UpdateTask.h
     ${MEGAsyncDir}/control/ThreadPool.h
-    ${MEGAsyncDir}/control/MegaController.h
     ${MEGAsyncDir}/control/SyncController.h
     ${MEGAsyncDir}/control/UserAttributesManager.h
     ${MEGAsyncDir}/control/TextDecorator.h
@@ -528,7 +527,6 @@ set (SRCS
     ${MEGAsyncDir}/control/MegaSyncLogger.cpp
     ${MEGAsyncDir}/control/ConnectivityChecker.cpp
     ${MEGAsyncDir}/control/TransferRemainingTime.cpp
-    ${MEGAsyncDir}/control/MegaController.cpp
     ${MEGAsyncDir}/control/TransferBatch.cpp
     ${MEGAsyncDir}/control/SyncController.cpp
     ${MEGAsyncDir}/control/UserAttributesManager.cpp

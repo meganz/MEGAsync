@@ -616,7 +616,8 @@ void SetupWizard::on_bCancel_clicked()
             return;
         }
 
-        mPreconfiguredSyncs.append(PreConfiguredSync(ui->eLocalFolder->text(), selectedMegaFolderHandle, syncName));
+        QString localPath (QDir::toNativeSeparators(QDir(ui->eLocalFolder->text()).canonicalPath()));
+        mPreconfiguredSyncs.append(PreConfiguredSync(localPath, selectedMegaFolderHandle, syncName));
         done(QDialog::Accepted);
     }
     else

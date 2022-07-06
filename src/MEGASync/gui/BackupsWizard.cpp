@@ -68,11 +68,14 @@ BackupsWizard::BackupsWizard(QWidget* parent) :
     mUi->lvFoldersStep2->setItemDelegate(new WizardDelegate(this));
 
     QString titleStep1 = tr("1. [B]Select[/B] folders to backup");
-    titleStep1.replace(QString::fromUtf8("[B]"), QString::fromUtf8("<b>"));
-    titleStep1.replace(QString::fromUtf8("[/B]"), QString::fromUtf8("</b>"));
+
+    Text::Bold boldText;
+    Text::Decorator tc(&boldText);
+    tc.process(titleStep1);
+
     QString titleStep2 = tr("2. [B]Confirm[/B] backup settings");
-    titleStep2.replace(QString::fromUtf8("[B]"), QString::fromUtf8("<b>"));
-    titleStep2.replace(QString::fromUtf8("[/B]"), QString::fromUtf8("</b>"));
+    tc.process(titleStep2);
+
     mUi->lTitleStep1->setText(titleStep1);
     mUi->lTitleStep2->setText(titleStep2);
     // Go to Step 1
@@ -219,29 +222,30 @@ void BackupsWizard::setupStep1()
     if (mFoldersModel->rowCount() == 0)
     {
         QIcon folderIcon (QIcon(QLatin1String("://images/icons/folder/folder-mono_24.png")));
-
         for (auto type : {
              QStandardPaths::DocumentsLocation,
-             //QStandardPaths::MusicLocation,
              QStandardPaths::MoviesLocation,
              QStandardPaths::PicturesLocation,
+             //QStandardPaths::MusicLocation,
              //QStandardPaths::DownloadLocation,
     })
         {
             const auto standardPaths (QStandardPaths::standardLocations(type));
-            QDir dir (standardPaths.first());
-            if (dir.exists() && dir != QDir::home() && !isFolderAlreadySynced(dir.canonicalPath()))
+            QDir dir (QDir::cleanPath(standardPaths.first()));
+            QString path (QDir::toNativeSeparators(dir.canonicalPath()));
+            if (dir.exists() && dir != QDir::home() && !isFolderAlreadySynced(path))
             {
                 QStandardItem* item (new QStandardItem(dir.dirName()));
                 item->setFlags(item->flags() | Qt::ItemIsUserCheckable);
-                item->setData(QDir::toNativeSeparators(dir.canonicalPath()), Qt::ToolTipRole);
-                item->setData(QDir::toNativeSeparators(dir.canonicalPath()), Qt::UserRole);
+                item->setData(path, Qt::ToolTipRole);
+                item->setData(path, Qt::UserRole);
                 item->setData(folderIcon, Qt::DecorationRole);
                 item->setData(Qt::Unchecked, Qt::CheckStateRole);
                 mFoldersModel->appendRow(item);
             }
         }
     }
+
     updateSize();
 
     qDebug("Backups Wizard: step 1");
@@ -351,7 +355,7 @@ void BackupsWizard::processNextBackupSetup()
     for(auto it = mBackupsStatus.begin(); it != mBackupsStatus.end(); ++it)
     {
         if(it.value().status == QUEUED)
-        {
+        {            
             // Create backup
             mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_INFO,
                                QString::fromUtf8("Backups Wizard: setup backup \"%1\" to \"%2\"")
@@ -365,15 +369,15 @@ void BackupsWizard::processNextBackupSetup()
     }
 }
 
-// Checks if a path belongs is in an existing sync or backup tree; and if the selected
-// folder has a sync or backup in its tree.
-// Special case for backups: if the exact path is already backed up, handle it later.
-// Returns true if folder is already synced or backed up (backup: except exact path),
-// false if not.
+// Checks if a path belongs to an existing sync or backup tree (including pending folders);
+// and if the selected folder has a sync or backup in its tree.
+// Path is considered to be canonical.
 bool BackupsWizard::isFolderAlreadySynced(const QString& path, bool displayWarning, bool fromCheckAction)
 {
-    auto cleanInputPath (QDir::cleanPath(QDir(path).canonicalPath()));
-    QString message = mSyncController.getIsFolderAlreadySyncedMsg(path, mega::MegaSync::TYPE_BACKUP);
+    QString inputPath (QDir(path).absolutePath());
+
+    // Check existing syncs
+    QString message = mSyncController.getIsFolderAlreadySyncedMsg(inputPath, mega::MegaSync::TYPE_BACKUP);
 
     // Check current list
     if (message.isEmpty())
@@ -384,24 +388,25 @@ bool BackupsWizard::isFolderAlreadySynced(const QString& path, bool displayWarni
 
         while (message.isEmpty() && row < nbBackups)
         {
-            QString c (QDir::cleanPath(mFoldersModel->item(row)->data(Qt::UserRole).toString()));
+            QString existingPath (mFoldersModel->item(row)->data(Qt::UserRole).toString());
 
             // Do not consider unchecked items
             if (mFoldersModel->item(row)->checkState() == Qt::Checked)
             {
                 // Handle same path another way later: by selecting the row in the view.
-                // Check collisions between rows and not only with already saved ones
-                if(!fromCheckAction && cleanInputPath == c)
+                if(!fromCheckAction && inputPath == existingPath)
                 {
-                    message = tr("Folder is already backed up. Select a different folder.");
+                    message = tr("Folder is already selected. Select a different folder.");
                 }
-                else if (cleanInputPath.startsWith(c) && cleanInputPath.size() != c.size())
+                else if (inputPath.startsWith(existingPath)
+                         && inputPath[existingPath.size()] == QDir::separator())
                 {
-                    message = tr("You can't backup child folders that are inside backed up folders.");
+                    message = tr("You can't backup this folder as it's already inside a backed up folder.");
                 }
-                else if (c.startsWith(cleanInputPath) && cleanInputPath.size() != c.size())
+                else if (existingPath.startsWith(inputPath)
+                         && existingPath[inputPath.size()] == QDir::separator())
                 {
-                    message = tr("You can't backup folders that contain backed up folders.");
+                    message = tr("You can't backup this folder as it contains backed up folders.");
                 }
             }
             row++;
@@ -550,17 +555,17 @@ void BackupsWizard::on_bCancel_clicked()
 void BackupsWizard::on_bMoreFolders_clicked()
 {
     const auto homePaths (QStandardPaths::standardLocations(QStandardPaths::HomeLocation));
-    QString existingDir (QFileDialog::getExistingDirectory(this,
+    QString d (QFileDialog::getExistingDirectory(this,
                                                  tr("Choose Directory"),
                                                  homePaths.first(),
                                                  QFileDialog::ShowDirsOnly
                                                  | QFileDialog::DontResolveSymlinks));
-    QDir dir (existingDir);
-    if (!existingDir.isEmpty() && dir.exists() && !isFolderAlreadySynced(dir.canonicalPath(), true))
+    QDir dir (QDir::cleanPath(d));
+    QString path (QDir::toNativeSeparators(dir.canonicalPath()));
+
+    if (!d.isEmpty() && dir.exists() && !isFolderAlreadySynced(path, true))
     {
-        QString path (QDir::toNativeSeparators(dir.canonicalPath()));
         QStandardItem* existingBackup (nullptr);
-        QString displayName (dir.dirName());
 
         // Check for path and name collision.
         int nbBackups (mFoldersModel->rowCount());
@@ -569,12 +574,10 @@ void BackupsWizard::on_bMoreFolders_clicked()
         while (existingBackup == nullptr && row < nbBackups)
         {
             auto currItem = mFoldersModel->itemData(mFoldersModel->index(row, 0));
-            QString name (currItem[Qt::DisplayRole].toString());
             if (path == currItem[Qt::UserRole].toString())
             {
-                // If folder is already backed up, set pointer and take existing name
+                // If folder is already backed up, set pointer
                 existingBackup = mFoldersModel->item(row);
-                displayName = name;
             }
             row++;
         }
@@ -588,7 +591,7 @@ void BackupsWizard::on_bMoreFolders_clicked()
         else
         {
             QIcon icon (QIcon(QLatin1String("://images/icons/folder/folder-mono_24.png")));
-            item = new QStandardItem(displayName);
+            item = new QStandardItem(dir.dirName());
             item->setFlags(item->flags() | Qt::ItemIsUserCheckable);
             item->setData(path, Qt::ToolTipRole);
             item->setData(path, Qt::UserRole);
@@ -599,7 +602,7 @@ void BackupsWizard::on_bMoreFolders_clicked()
 
         // Jump to item in list
         auto idx = mFoldersModel->indexFromItem(item);
-        mUi->lvFoldersStep1->scrollTo(idx,QAbstractItemView::PositionAtCenter);
+        mUi->lvFoldersStep1->scrollTo(idx, QAbstractItemView::PositionAtCenter);
 
         onItemChanged();
         qDebug() << QString::fromUtf8("Backups Wizard: add folder \"%1\"").arg(path);
