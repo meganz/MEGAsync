@@ -75,7 +75,7 @@ void StalledIssueChooseWidget::setData(StalledIssueDataPtr data)
             ui->chooseTitle->hideActionButton(BUTTON_ID);
             if(data->isSolved())
             {
-                ui->chooseTitle->addMessage(tr("Choosed"));
+                ui->chooseTitle->addMessage(tr("Choosen"));
             }
         }
     }
