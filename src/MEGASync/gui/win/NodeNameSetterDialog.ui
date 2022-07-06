@@ -1,7 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>FileFolderNameSetterDialog</class>
- <widget class="QDialog" name="FileFolderNameSetterDialog">
+ <class>NodeNameSetterDialog</class>
+ <widget class="QDialog" name="NodeNameSetterDialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>258</width>
+    <height>122</height>
+   </rect>
+  </property>
   <property name="windowTitle">
    <string>New folder</string>
   </property>
@@ -18,7 +26,7 @@ font-size: 13px;
 }</string>
      </property>
      <property name="text">
-      <string>Enter the new folder name:</string>
+      <string/>
      </property>
     </widget>
    </item>

@@ -3070,6 +3070,34 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
 </context>
 <context>
+    <name>NewFolderDialog</name>
+    <message>
+        <source>Enter the new folder name:</source>
+        <translatorcomment>Label to inform the user about entering a new folder name because the name provided does contain forbidden characters.</translatorcomment>
+        <translation>Enter the new folder name:</translation>
+    </message>
+</context>
+<context>
+    <name>NodeNameSetterDialog</name>
+    <message>
+        <source>New folder</source>
+		<translatorcomment>Title of the new folder dialog</translatorcomment>
+        <translation type="unfinished">New folder</translation>
+    </message>
+    <message>
+        <source>Enter the new folder name:</source>
+        <translatorcomment>Title of the rename dialog</translatorcomment>
+		<translation type="unfinished">Enter the new folder name:</translation>
+    </message>
+    <message>
+        <source>The following characters are not allowed:
+%1</source>
+        <translatorcomment>Message shown when the user has entered a not allowed character</translatorcomment>
+        <translation type="unfinished">The following characters are not allowed:
+%1</translation>
+    </message>
+</context>
+<context>
     <name>NodeSelector</name>
     <message>
         <source>Folder Selection</source>
@@ -4124,6 +4152,28 @@ Do you want to delete it anyway?</translation>
     </message>
     <message>
         <source>Cancel Transfers</source>
+    <name>RenameLocalNodeDialog</name>
+    <message>
+        <source>Error renaming file to %1</source>
+		<translatorcomment>Error message shown when a file renaming has failed. %1 is the name of the file</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error renaming folder to %1</source>
+		<translatorcomment>Error message shown when a folder renaming has failed. %1 is the name of the folder</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>RenameNodeDialog</name>
+    <message>
+        <source>Enter new file name</source>
+		<translatorcomment>Title of the rename file dialog </translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enter new folder name</source>
+		<translatorcomment>Title of the rename folder dialog </translatorcomment>
         <translation type="unfinished"></translation>
     </message>
 </context>

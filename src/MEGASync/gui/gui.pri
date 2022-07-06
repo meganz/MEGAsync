@@ -5,7 +5,6 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/BlurredShadowEffect.cpp \
     $$PWD/ButtonIconManager.cpp \
     $$PWD/MegaItemDelegates.cpp \
-    $$PWD/FileFolderNameSetterDialog.cpp \
     $$PWD/EventHelper.cpp \
     $$PWD/InfoDialog.cpp \
     $$PWD/MegaDelegateHoverManager.cpp \
@@ -69,7 +68,10 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/BandwidthSettings.cpp \
     $$PWD/SwitchButton.cpp \
     $$PWD/GuiUtilities.cpp \
-    $$PWD/CancelConfirmWidget.cpp
+    $$PWD/CancelConfirmWidget.cpp \
+    $$PWD/NodeNameSetterDialog/NodeNameSetterDialog.cpp \
+    $$PWD/NodeNameSetterDialog/NewFolderDialog.cpp \
+    $$PWD/NodeNameSetterDialog/RenameNodeDialog.cpp
 
 HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/AutoResizeStackedWidget.h \
@@ -78,7 +80,6 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/ButtonIconManager.h \
     $$PWD/DialogGeometryRetainer.h \
     $$PWD/MegaItemDelegates.h \
-    $$PWD/FileFolderNameSetterDialog.h \
     $$PWD/EventHelper.h \
     $$PWD/InfoDialog.h \
     $$PWD/MegaDelegateHoverManager.h \
@@ -143,7 +144,10 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/BandwidthSettings.h \
     $$PWD/SwitchButton.h \
     $$PWD/GuiUtilities.h \
-    $$PWD/CancelConfirmWidget.h
+    $$PWD/CancelConfirmWidget.h \
+    $$PWD/NodeNameSetterDialog/NodeNameSetterDialog.h \
+    $$PWD/NodeNameSetterDialog/NewFolderDialog.h \
+    $$PWD/NodeNameSetterDialog/RenameNodeDialog.h
 
 INCLUDEPATH += $$PWD
 
@@ -194,7 +198,7 @@ win32 {
                 $$PWD/win/BandwidthSettings.ui \
                 $$PWD/win/ScanningWidget.ui \
                 $$PWD/win/CancelConfirmWidget.ui \
-                $$PWD/win/FileFolderNameSetterDialog.ui \
+                $$PWD/win/NodeNameSetterDialog.ui \
                 $$PWD/win/NotificationsSettings.ui
 }
 
@@ -243,7 +247,7 @@ macx {
                 $$PWD/macx/BandwidthSettings.ui \
                 $$PWD/macx/ScanningWidget.ui \
                 $$PWD/macx/CancelConfirmWidget.ui \
-                $$PWD/macx/FileFolderNameSetterDialog.ui \
+                $$PWD/macx/NodeNameSetterDialog.ui \
                 $$PWD/macx/NotificationsSettings.ui
 
     #Asset catalog need to load SF symbol images of toolbar items for custom NSToolbar
@@ -315,7 +319,7 @@ unix:!macx {
                 $$PWD/linux/BandwidthSettings.ui \
                 $$PWD/linux/CancelConfirmWidget.ui \
                 $$PWD/linux/ScanningWidget.ui \
-                $$PWD/linux/FileFolderNameSetterDialog.ui \
+                $$PWD/linux/NodeNameSetterDialog.ui \
                 $$PWD/linux/NotificationsSettings.ui
 
     HEADERS += $$PWD/PermissionsDialog.h \

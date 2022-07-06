@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/develop
 cmake_minimum_required(VERSION 3.15)
 cmake_policy(SET CMP0091 NEW)
 
@@ -187,7 +191,7 @@ set (FORMS
     ${MEGAsyncDir}/gui/${UiDir}/OverQuotaDialog.ui
     ${MEGAsyncDir}/gui/${UiDir}/ProxySettings.ui
     ${MEGAsyncDir}/gui/${UiDir}/BandwidthSettings.ui
-    ${MEGAsyncDir}/gui/${UiDir}/FileFolderNameSetterDialog.ui
+    ${MEGAsyncDir}/gui/${UiDir}/NodeNameSetterDialog.ui
     ${MEGAsyncDir}/gui/${UiDir}/ScanningWidget.ui
     ${MEGAsyncDir}/gui/${UiDir}/CancelConfirmWidget.ui
     ${MEGAsyncDir}/transfers/gui/${UiDir}/InfoDialogTransfersWidget.ui
@@ -328,7 +332,9 @@ set (MOC_INPUT
     ${MEGAsyncDir}/gui/BlurredShadowEffect.h
     ${MEGAsyncDir}/gui/ButtonIconManager.h
     ${MEGAsyncDir}/gui/DialogGeometryRetainer.h
-    ${MEGAsyncDir}/gui/FileFolderNameSetterDialog.h
+    ${MEGAsyncDir}/gui/NodeNameSetterDialog/NodeNameSetterDialog.cpp
+    ${MEGAsyncDir}/gui/NodeNameSetterDialog/NewFolderDialog.cpp
+    ${MEGAsyncDir}/gui/NodeNameSetterDialog/RenameNodeDialog.cpp
     ${MEGAsyncDir}/gui/CancelConfirmWidget.h	
 
     ${MEGAsyncDir}/platform/notificator.h
@@ -506,7 +512,9 @@ set (SRCS
     ${MEGAsyncDir}/gui/BlurredShadowEffect.cpp
     ${MEGAsyncDir}/gui/CancelConfirmWidget.cpp
     ${MEGAsyncDir}/gui/MegaDelegateHoverManager.cpp
-    ${MEGAsyncDir}/gui/FileFolderNameSetterDialog.cpp
+    ${MEGAsyncDir}/gui/NodeNameSetterDialog/NodeNameSetterDialog.cpp 
+    ${MEGAsyncDir}/gui/NodeNameSetterDialog/NewFolderDialog.cpp 
+    ${MEGAsyncDir}/gui/NodeNameSetterDialog/RenameNodeDialog.cpp
 
     ${MEGAsyncDir}/transfers/gui/TransfersStatusWidget.cpp
     ${MEGAsyncDir}/transfers/gui/TransferItem.cpp
