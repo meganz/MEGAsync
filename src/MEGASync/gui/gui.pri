@@ -3,7 +3,6 @@ QT       += network
 SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/BalloonToolTip.cpp \
     $$PWD/MegaItemDelegates.cpp \
-    $$PWD/FileFolderNameSetterDialog.cpp \
     $$PWD/EventHelper.cpp \
     $$PWD/InfoDialog.cpp \
     $$PWD/MegaItemProxyModel.cpp \
@@ -80,13 +79,15 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/ProxySettings.cpp \
     $$PWD/BandwidthSettings.cpp \
     $$PWD/SwitchButton.cpp \
-    $$PWD/GuiUtilities.cpp
+    $$PWD/GuiUtilities.cpp \
+    $$PWD/NodeNameSetterDialog/NodeNameSetterDialog.cpp \
+    $$PWD/NodeNameSetterDialog/NewFolderDialog.cpp \
+    $$PWD/NodeNameSetterDialog/RenameNodeDialog.cpp
 
 HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/AutoResizeStackedWidget.h \
     $$PWD/BalloonToolTip.h \
     $$PWD/MegaItemDelegates.h \
-    $$PWD/FileFolderNameSetterDialog.h \
     $$PWD/EventHelper.h \
     $$PWD/InfoDialog.h \
     $$PWD/MegaItemProxyModel.h \
@@ -163,7 +164,10 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/ProxySettings.h \
     $$PWD/BandwidthSettings.h \
     $$PWD/SwitchButton.h \
-    $$PWD/GuiUtilities.h
+    $$PWD/GuiUtilities.h \
+    $$PWD/NodeNameSetterDialog/NodeNameSetterDialog.h \
+    $$PWD/NodeNameSetterDialog/NewFolderDialog.h \
+    $$PWD/NodeNameSetterDialog/RenameNodeDialog.h
 
 INCLUDEPATH += $$PWD
 
@@ -221,7 +225,7 @@ win32 {
                 $$PWD/win/OverQuotaDialog.ui \
                 $$PWD/win/ProxySettings.ui \
                 $$PWD/win/BandwidthSettings.ui \
-                $$PWD/win/FileFolderNameSetterDialog.ui \
+                $$PWD/win/NodeNameSetterDialog.ui \
                 $$PWD/win/NotificationsSettings.ui
 }
 
@@ -277,7 +281,7 @@ macx {
                 $$PWD/macx/OverQuotaDialog.ui \
                 $$PWD/macx/ProxySettings.ui \
                 $$PWD/macx/BandwidthSettings.ui \
-                $$PWD/macx/FileFolderNameSetterDialog.ui \
+                $$PWD/macx/NodeNameSetterDialog.ui \
                 $$PWD/macx/NotificationsSettings.ui
 
     #Asset catalog need to load SF symbol images of toolbar items for custom NSToolbar
@@ -356,7 +360,7 @@ unix:!macx {
                 $$PWD/linux/OverQuotaDialog.ui \
                 $$PWD/linux/ProxySettings.ui \
                 $$PWD/linux/BandwidthSettings.ui \
-                $$PWD/linux/FileFolderNameSetterDialog.ui \
+                $$PWD/linux/NodeNameSetterDialog.ui \
                 $$PWD/linux/NotificationsSettings.ui
 
     HEADERS += $$PWD/PermissionsDialog.h \

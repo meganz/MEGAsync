@@ -3061,20 +3061,28 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
 <context>
     <name>NewFolderDialog</name>
     <message>
-        <source>New folder</source>
-        <translatorcomment>Title of the dialog to create a folder in your cloud drive.</translatorcomment>
-        <translation>New folder</translation>
-    </message>
-    <message>
         <source>Enter the new folder name:</source>
         <translatorcomment>Label to inform the user about entering a new folder name because the name provided does contain forbidden characters.</translatorcomment>
         <translation>Enter the new folder name:</translation>
     </message>
+</context>
+<context>
+    <name>NodeNameSetterDialog</name>
+    <message>
+        <source>New folder</source>
+		<translatorcomment>Title of the new folder dialog</translatorcomment>
+        <translation type="unfinished">New folder</translation>
+    </message>
+    <message>
+        <source>Enter the new folder name:</source>
+        <translatorcomment>Title of the rename dialog</translatorcomment>
+		<translation type="unfinished">Enter the new folder name:</translation>
+    </message>
     <message>
         <source>The following characters are not allowed:
 %1</source>
-        <translatorcomment>Warning error shown when a user is trying to create a folder with a name that contains not allowed characters. %1 placeholder will be replaced by the list of forbidden charset.</translatorcomment>
-        <translation>The following characters are not allowed:
+        <translatorcomment>Message shown when the user has entered a not allowed character</translatorcomment>
+        <translation type="unfinished">The following characters are not allowed:
 %1</translation>
     </message>
 </context>
@@ -3610,20 +3618,9 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Added support to stream file links from a folder link.
-- Fixed translation issues.
-- Improved the user experience.
-- Added a new notifications panel in the settings dialog.
-- Other minor UI fixes and adjustments.
-- Fixed detected crashes on Windows, Linux and macOS.
+        <source>- Bug fixes and performance improvements.
 </source>
-        <translation>- Added support to stream file links from a folder link.
-- Fixed translation issues.
-- Improved the user experience.
-- Added a new notifications panel in the settings dialog.
-- Other minor UI fixes and adjustments.
-- Fixed detected crashes on Windows, Linux and macOS.
-</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4122,6 +4119,32 @@ Do you want to delete it anyway?</translation>
     <message>
         <source>Cancel</source>
         <translation>Cancel</translation>
+    </message>
+</context>
+<context>
+    <name>RenameLocalNodeDialog</name>
+    <message>
+        <source>Error renaming file to %1</source>
+		<translatorcomment>Error message shown when a file renaming has failed. %1 is the name of the file</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error renaming folder to %1</source>
+		<translatorcomment>Error message shown when a folder renaming has failed. %1 is the name of the folder</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>RenameNodeDialog</name>
+    <message>
+        <source>Enter new file name</source>
+		<translatorcomment>Title of the rename file dialog </translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enter new folder name</source>
+		<translatorcomment>Title of the rename folder dialog </translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
