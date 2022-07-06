@@ -13,6 +13,7 @@
 #include "ConnectivityChecker.h"
 #include "TransferMetadata.h"
 #include "SyncsMenu.h"
+#include "TextDecorator.h"
 
 #include <QTranslator>
 #include <QClipboard>
@@ -468,10 +469,6 @@ void MegaApplication::initialize()
     megaApi->log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("Establishing max payload log size: %1").arg(newPayLoadLogSize).toUtf8().constData());
     megaApi->setMaxPayloadLogSize(newPayLoadLogSize);
     megaApiFolders->setMaxPayloadLogSize(newPayLoadLogSize);
-
-
-    controller = Controller::instance();
-    controller->setApi(this->megaApi);
 
     QString stagingPath = QDir(dataPath).filePath(QString::fromUtf8("megasync.staging"));
     QFile fstagingPath(stagingPath);
@@ -1269,6 +1266,20 @@ void MegaApplication::loggedIn(bool fromWizard)
     mSyncController.reset(new SyncController());
     mSyncController->getDeviceName();
 
+    connect(mSyncController.get(), &SyncController::syncAddStatus, this, [](const int errorCode, const QString errorMsg, QString name)
+    {
+        if (errorCode != MegaError::API_OK)
+        {
+            QString msg = errorMsg;
+            Text::Link link(Utilities::SUPPORT_URL);
+            Text::Decorator tc(&link);
+            tc.process(msg);
+            QMegaMessageBox::warning(nullptr, tr("Error"), tr("Error adding %1:").arg(name)
+                                     + QString::fromLatin1("\n")
+                                     + msg, QMessageBox::Ok, QMessageBox::NoButton, Qt::RichText);
+        }
+    });
+
     //Check business status in case we need to alert the user
     if (megaApi->isBusinessAccount())
     {
@@ -1459,39 +1470,9 @@ void MegaApplication::startSyncs(QList<PreConfiguredSync> syncs)
     // add syncs from setupWizard
     for (auto & ps : syncs)
     {
-        MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("Adding sync %1 from SetupWizard: ").arg(ps.localFolder()).toUtf8().constData());
         QString localFolderPath = ps.localFolder();
-
-        ActionProgress *addSyncStep = new ActionProgress(true, QString::fromUtf8("Adding sync: %1")
-                                                         .arg(localFolderPath));
-
-        //Connect failing signals
-        connect(addSyncStep, &ActionProgress::failed, this, [localFolderPath](int errorCode)
-        {
-            static_cast<MegaApplication *>(qApp)->showAddSyncError(errorCode, localFolderPath);
-        }, Qt::QueuedConnection);
-        connect(addSyncStep, &ActionProgress::failedRequest, this, [this, localFolderPath](MegaRequest *request, MegaError *error)
-        {
-            if (error->getErrorCode())
-            {
-                auto reqCopy = request->copy();
-                auto errCopy = error->copy();
-
-                QObject temporary;
-                QObject::connect(&temporary, &QObject::destroyed, this, [reqCopy, errCopy, localFolderPath](){
-
-                    // we might want to handle this separately (i.e: indicate errors in SyncSettings engine)
-                    static_cast<MegaApplication *>(qApp)->showAddSyncError(reqCopy, errCopy, localFolderPath);
-
-                    delete reqCopy;
-                    delete errCopy;
-                    //(syncSettings might have some old values), that's why we don't use syncSetting->getError.
-                }, Qt::QueuedConnection);
-            }
-        }, Qt::DirectConnection); //Note, we need direct connection to use request & error
-
-
-        controller->addSync(ps.localFolder(), ps.megaFolderHandle(), ps.syncName(), addSyncStep);
+        MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromLatin1("Adding sync %1 from SetupWizard: ").arg(localFolderPath).toUtf8().constData());
+        mSyncController->addSync(localFolderPath, ps.megaFolderHandle(), ps.syncName(), MegaSync::TYPE_TWOWAY);
     }
 }
 
@@ -5728,7 +5709,7 @@ void MegaApplication::externalFileUpload(qlonglong targetFolder)
 #endif
     fileUploadSelector->setDirectory(defaultFolderPath);
 
-    Platform::execBackgroundWindow(fileUploadSelector);
+    fileUploadSelector->exec();
     if (!fileUploadSelector)
     {
         return;
@@ -5802,7 +5783,7 @@ void MegaApplication::externalFolderUpload(qlonglong targetFolder)
 #endif
     folderUploadSelector->setDirectory(defaultFolderPath);
 
-    Platform::execBackgroundWindow(folderUploadSelector);
+    folderUploadSelector->exec();
     if (!folderUploadSelector)
     {
         return;

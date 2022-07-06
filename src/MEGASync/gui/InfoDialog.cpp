@@ -21,9 +21,7 @@
 #include "assert.h"
 #include "BackupsWizard.h"
 #include "QMegaMessageBox.h"
-
-// TODO: remove
-#include "control/MegaController.h"
+#include "TextDecorator.h"
 
 #ifdef _WIN32    
 #include <chrono>
@@ -83,6 +81,7 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
     mTransferManager(nullptr),
     mBackupsWizard (nullptr),
     mAddBackupDialog (nullptr),
+    mAddSyncDialog (nullptr),
     mSyncController (new SyncController()),
     qtBugFixer(this)
 {
@@ -223,7 +222,6 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
     megaApi = app->getMegaApi();
     preferences = Preferences::instance();
     model = SyncModel::instance();
-    controller = Controller::instance();
 
     actualAccountType = -1;
 
@@ -276,7 +274,13 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
     {
         if (errorCode != MegaError::API_OK)
         {
-            QMegaMessageBox::warning(nullptr, tr("Error adding backup %1").arg(name), errorMsg);
+            QString msg = errorMsg;
+            Text::Link link(Utilities::SUPPORT_URL);
+            Text::Decorator tc(&link);
+            tc.process(msg);
+            QMegaMessageBox::warning(nullptr, tr("Error"), tr("Error adding %1:").arg(name)
+                                     + QString::fromLatin1("\n")
+                                     + msg, QMessageBox::Ok, QMessageBox::NoButton, Qt::RichText);
         }
     });
 
@@ -1115,77 +1119,43 @@ void InfoDialog::openFolder(QString path)
 
 void InfoDialog::addSync(MegaHandle h)
 {
-    static QPointer<BindFolderDialog> dialog = NULL;
-    if (dialog)
+    if (mAddSyncDialog)
     {
         if (h != mega::INVALID_HANDLE)
         {
-            dialog->setMegaFolder(h);
+            mAddSyncDialog->setMegaFolder(h);
         }
 
-        dialog->activateWindow();
-        dialog->raise();
-        dialog->setFocus();
+        mAddSyncDialog->activateWindow();
+        mAddSyncDialog->raise();
+        mAddSyncDialog->setFocus();
         return;
     }
 
-    dialog = new BindFolderDialog(app);
+    mAddSyncDialog = new BindFolderDialog(app);
     if (h != mega::INVALID_HANDLE)
     {
-        dialog->setMegaFolder(h);
+        mAddSyncDialog->setMegaFolder(h);
     }
-
-    Platform::execBackgroundWindow(dialog);
-    if (!dialog)
+    mAddSyncDialog->exec();
+    if (!mAddSyncDialog)
     {
         return;
     }
 
-    if (dialog->result() != QDialog::Accepted)
+    if (mAddSyncDialog->result() != QDialog::Accepted)
     {
-        delete dialog;
-        dialog = NULL;
+        delete mAddSyncDialog;
         return;
     }
 
-    QString localFolderPath = QDir::toNativeSeparators(QDir(dialog->getLocalFolder()).canonicalPath());
-    MegaHandle handle = dialog->getMegaFolder();
-    QString syncName = dialog->getSyncName();
-    delete dialog;
-    dialog = NULL;
+    QString localFolderPath = QDir::toNativeSeparators(QDir(mAddSyncDialog->getLocalFolder()).canonicalPath());
+    MegaHandle handle = mAddSyncDialog->getMegaFolder();
+    QString syncName = mAddSyncDialog->getSyncName();
+    delete mAddSyncDialog;
 
-
-   MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromAscii("Adding sync %1 from addSync: ").arg(localFolderPath).toUtf8().constData());
-
-   ActionProgress *addSyncStep = new ActionProgress(true, QString::fromUtf8("Adding sync: %1")
-                                                    .arg(localFolderPath));
-
-   //Connect failing signals
-   connect(addSyncStep, &ActionProgress::failed, this, [localFolderPath](int errorCode)
-   {
-       static_cast<MegaApplication *>(qApp)->showAddSyncError(errorCode, localFolderPath);
-   }, Qt::QueuedConnection);
-   connect(addSyncStep, &ActionProgress::failedRequest, this, [this, localFolderPath](MegaRequest *request, MegaError *error)
-   {
-       if (error->getErrorCode())
-       {
-           auto reqCopy = request->copy();
-           auto errCopy = error->copy();
-
-           QObject temporary;
-           QObject::connect(&temporary, &QObject::destroyed, this, [reqCopy, errCopy, localFolderPath](){
-
-               // we might want to handle this separately (i.e: indicate errors in SyncSettings engine)
-               static_cast<MegaApplication *>(qApp)->showAddSyncError(reqCopy, errCopy, localFolderPath);
-
-               delete reqCopy;
-               delete errCopy;
-               //(syncSettings might have some old values), that's why we don't use syncSetting->getError.
-           }, Qt::QueuedConnection);
-       }
-   }, Qt::DirectConnection); //Note, we need direct connection to use request & error
-
-   controller->addSync(localFolderPath, handle, syncName, addSyncStep);
+    MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromLatin1("Adding sync %1 from addSync: ").arg(localFolderPath).toUtf8().constData());
+    mSyncController->addSync(localFolderPath, handle, syncName, mega::MegaSync::TYPE_TWOWAY);
 }
 
 void InfoDialog::addBackup()
@@ -1213,10 +1183,8 @@ void InfoDialog::addBackup()
             {
                 if(mAddBackupDialog)
                 {
-                    QDir dirToBackup (mAddBackupDialog->getSelectedFolder());
-                    mSyncController->addSync(QDir::toNativeSeparators(dirToBackup.canonicalPath()),
-                                             mega::INVALID_HANDLE, dirToBackup.dirName(),
-                                             MegaSync::TYPE_BACKUP);
+                    QString dirToBackup (mAddBackupDialog->getSelectedFolder());
+                    mSyncController->addBackup(dirToBackup);
                 }
             });
             mAddBackupDialog->show();

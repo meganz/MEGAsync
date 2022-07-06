@@ -26,6 +26,7 @@ Link::Link(const QString &link, QObject *parent) :
 {
 }
 
+//Use [A] for url replacement
 void Link::process(QString &input)
 {
     Decorator::process(input);
@@ -49,10 +50,11 @@ Bold::Bold(QObject *parent) : Decorator(parent)
 {
 }
 
+//Use [B] for bold tags replacement
 void Bold::process(QString &input)
 {
     Decorator::process(input);
-    input.insert(0, QLatin1String("<b>"));
-    input.append(QLatin1String("</b>"));
+    input.replace(QLatin1String("[B]"), QLatin1String("<b>"));
+    input.replace(QLatin1String("[/B]"), QLatin1String("</b>"));
 }
 }

@@ -34,7 +34,6 @@
 #include "control/UpdateTask.h"
 #include "control/MegaSyncLogger.h"
 #include "control/ThreadPool.h"
-#include "control/MegaController.h"
 #include "control/Utilities.h"
 #include "model/SyncModel.h"
 #include "control/SyncController.h"
@@ -422,7 +421,6 @@ protected:
     InfoDialog *infoDialog;
     std::shared_ptr<Preferences> preferences;
     SyncModel *model;
-    Controller *controller;
     mega::MegaApi *megaApi;
     mega::MegaApi *megaApiFolders;
     QFilterAlertsModel *notificationsProxyModel;

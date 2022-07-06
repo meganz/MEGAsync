@@ -11,9 +11,8 @@
 #include "SyncItemModel.h"
 #include "BackupItemModel.h"
 
-#include "MegaController.h"
 #include "SyncController.h"
-#include "../model/SyncModel.h"
+#include "model/SyncModel.h"
 #include "megaapi.h"
 
 #include <QDialog>
@@ -229,7 +228,6 @@ private:
     Ui::SettingsDialog* mUi;
     MegaApplication* mApp;
     std::shared_ptr<Preferences> mPreferences;
-    Controller* mController;
     SyncController mSyncController;
     SyncController mBackupController;
     SyncModel* mModel;
@@ -246,12 +244,11 @@ private:
     long long mRemoteCacheSize;
     int mDebugCounter; // Easter Egg
     QStringList mSyncNames;
-    std::unique_ptr<ProgressHelper> mSaveSyncsProgress;
     bool mHasDefaultUploadOption;
     bool mHasDefaultDownloadOption;
     QPointer<ProxySettings> mProxySettingsDialog;
     mega::MegaHandle mBackupRootHandle;
     bool mCreateBackupRootDir;
-    QDir mPendingBackup;
+    QString mPendingBackup;
 };
 #endif // SETTINGSDIALOG_H
