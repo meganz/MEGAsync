@@ -2590,7 +2590,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Decryption error</source>
         <translatorcomment>String shown when a file/folder name can not be decrypted.</translatorcomment>
-        <translation>ข้อผิดพลาดในการถอดรหัสลับ</translation>
+        <translation>เกิดข้อผิดพลาดในการถอดรหัส</translation>
     </message>
 </context>
 <context>
@@ -3109,24 +3109,24 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
     <message>
         <source>Error:</source>
-        <translation type="unfinished"></translation>
+        <translation>ผิดพลาด:</translation>
     </message>
     <message numerus="yes">
         <source>The item you selected has been removed. To reselect, close this window and try again.</source>
         <translatorcomment>Error message shown while the user is trying to download an file or folder but all selected nodes were removed</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>รายการที่คุณเลือกถูกลบออกแล้ว หากต้องการเลือกใหม่ ให้ปิดหน้าต่างนี้แล้วลองอีกครั้ง</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%1 item selected</source>
         <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
                            First part of string for multi plural support. Full string looks like: 5 items selected. 2 have been removed. To reselect, close this window and try again. </translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>เลือกแล้ว %1 รายการ</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%1. %2 has been removed. To reselect, close this window and try again.</source>
         <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
                            Second and last part of string for multi plural support. Full string looks like: 5 items selected. 2 have been removed. To reselect, close this window and try again. </translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>%1 มี %2 รายการที่ถูกลบออก หากต้องการเลือกใหม่ ให้ปิดหน้าต่างนี้แล้วลองอีกครั้ง</numerusform></translation>
     </message>
 </context>
 <context>
@@ -4535,7 +4535,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Your account security depends on the strength of your password. Passwords should be unique and impossible to guess. We recommend using a password manager.</source>
         <translatorcomment>Informative text with password best practice for the user.</translatorcomment>
-        <translation>ความปลอดภัยของบัญชีของคุณขึ้นอยู่กับความแข็งแกร่งของรหัสผ่านที่คุณตั้งไว้ รหัสผ่านต้องไม่ซ้ำกันและคาดเดาไม่ได้ เราแนะนำให้คุณใช้ตัวจัดการรหัสผ่านจะดีกว่า</translation>
+        <translation>ความปลอดภัยบัญชีของคุณขึ้นอยู่กับความแน่นหนาของการตั้งรหัสผ่าน ต้องเป็นรหัสผ่านที่ไม่ใช้ซ้ำกันและคาดเดาไม่ได้ เราแนะนำให้คุณใช้ตัวจัดการรหัสผ่านจะดีกว่า</translation>
     </message>
     <message>
         <source>Excluded file and folder names:</source>
@@ -4590,7 +4590,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Install Update</source>
         <translatorcomment>Button label text shown in General pane when there is an update available. Keep as short as possible.</translatorcomment>
-        <translation>ติดตั้ง</translation>
+        <translation>ติดตั้งการอัปเดต</translation>
     </message>
     <message>
         <source>Free</source>

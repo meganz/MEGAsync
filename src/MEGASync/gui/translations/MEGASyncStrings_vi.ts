@@ -1883,7 +1883,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>MEGAsync is now running. Click here to open the status window.</source>
         <translatorcomment>Notification message that MEGAsync is actually running.</translatorcomment>
-        <translation>MEGAsync hiện đang chạy. Clíck vào đây để theo dõi trạng thái.</translation>
+        <translation>MEGAsync hiện đang chạy. Click vào đây để theo dõi trạng thái.</translation>
     </message>
     <message>
         <source>Error: Invalid destination folder. The upload has been cancelled</source>
@@ -2409,7 +2409,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>A new version of MEGAsync is available. Click on this message to install it</source>
         <translatorcomment>System notification to inform the user that there is a new version of MEGAsync available for update. Windows version.</translatorcomment>
-        <translation>MEGAsync hiện có một bản cập nhật mới. Clíck vào tin nhắn này để cài đặt</translation>
+        <translation>MEGAsync hiện có một bản cập nhật mới. Click vào tin nhắn này để cài đặt</translation>
     </message>
     <message>
         <source>A new version of MEGAsync is available</source>
@@ -2988,7 +2988,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>You are syncing a local folder formatted with a FAT filesystem. That filesystem has deficiencies managing big files and modification times that can cause synchronization problems (e.g. when daylight saving changes), so it&apos;s strongly recommended that you only sync folders formatted with more reliable filesystems like NTFS (more information [A]here[/A]).</source>
         <translatorcomment>Informative message shown when a user is trying to sync using a FAT filesystem.</translatorcomment>
-        <translation>Bạn đang cố đồng bộ hóa một thư mục nội bộ được định dạng với filesystem FAT. Hệ thống tệp này có thiếu sót trong việc quản lý và đánh dấu thời gian với các tệp lớn, có thể gây ra sự cố khi đồng bộ hóa (ví dụ: việc thay đồi giờ theo mùa ở một số quốc gia), vì vậy chỉ nên đồng bộ hóa các thư mục được định dạng với hệ thống tệp đáng tin cậy hơn như NTFS (để biết thêm [A]clíck vào đây[/A]).</translation>
+        <translation>Bạn đang cố đồng bộ hóa một thư mục nội bộ được định dạng với filesystem FAT. Hệ thống tệp này có thiếu sót trong việc quản lý và đánh dấu thời gian với các tệp lớn, có thể gây ra sự cố khi đồng bộ hóa (ví dụ: việc thay đồi giờ theo mùa ở một số quốc gia), vì vậy chỉ nên đồng bộ hóa các thư mục được định dạng với hệ thống tệp đáng tin cậy hơn như NTFS (để biết thêm [A]click vào đây[/A]).</translation>
     </message>
     <message>
         <source>You are syncing a local folder shared with VMWare. Those folders do not support filesystem notifications so MEGAsync will have to be continuously scanning to detect changes in your files and folders. Please use a different folder if possible to reduce the CPU usage.</source>
