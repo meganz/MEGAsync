@@ -4,6 +4,7 @@
 #include "megaapi.h"
 #include "QMegaMessageBox.h"
 #include "EventHelper.h"
+#include "TextDecorator.h"
 
 #include <QStandardPaths>
 #include <QStyleOption>
@@ -764,10 +765,15 @@ void BackupsWizard::onSyncAddRequestStatus(int errorCode, const QString& errorMs
                 }
                 if(it.value().status == ERR)
                 {
+                    QString msg = errorMsg;
+                    Text::ClearLink clink;
+                    Text::Decorator tc(&clink);
+                    tc.process(msg);
+
                     mErrList.append(it.value().folderName);
                     QIcon   warnIcon (QIcon(QLatin1String("://images/icons/folder/folder-mono-with-warning_24.png")));
                     QString tooltipMsg (item->data(Qt::UserRole).toString() + QLatin1Char('\n')
-                                        + tr("Error: ") + errorMsg);
+                                        + tr("Error: ") + msg);
                     item->setData(warnIcon, Qt::DecorationRole);
                     item->setData(tooltipMsg, Qt::ToolTipRole);
                     item->setData(Qt::Unchecked, Qt::CheckStateRole);

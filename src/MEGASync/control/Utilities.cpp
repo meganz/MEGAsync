@@ -29,6 +29,7 @@ QHash<QString, QString> Utilities::languageNames;
 
 std::unique_ptr<ThreadPool> ThreadPoolSingleton::instance = nullptr;
 
+const QString Utilities::SUPPORT_URL = QString::fromUtf8("https://mega.nz/contact");
 const unsigned long long KB = 1024;
 const unsigned long long MB = 1024 * KB;
 const unsigned long long GB = 1024 * MB;

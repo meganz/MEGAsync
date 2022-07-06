@@ -13,6 +13,7 @@
 #include "gui/BackupsWizard.h"
 #include "gui/AddBackupDialog.h"
 #include "gui/RemoveBackupDialog.h"
+#include "TextDecorator.h"
 
 #include <QApplication>
 #include <QDesktopServices>
@@ -1387,8 +1388,12 @@ void SettingsDialog::connectSyncHandlers()
     {
         if (errorCode != MegaError::API_OK)
         {
-            onSavingSyncsCompleted(SAVING_SYNCS_FINISHED);
-            QMegaMessageBox::critical(nullptr, tr("Error adding sync"), errorMsg);
+            onSavingSyncsCompleted(SyncStateInformation::SAVING_SYNCS_FINISHED);
+            Text::Link link(Utilities::SUPPORT_URL);
+            Text::Decorator dec(&link);
+            QString msg = errorMsg;
+            dec.process(msg);
+            QMegaMessageBox::critical(nullptr, tr("Error adding sync"), errorMsg, QMessageBox::Ok, QMessageBox::NoButton, Qt::RichText);
         }
     }, Qt::QueuedConnection);
 
@@ -1655,6 +1660,10 @@ void SettingsDialog::connectBackupHandlers()
         if (errorCode != MegaError::API_OK)
         {
             onSavingSyncsCompleted(SyncStateInformation::SAVING_BACKUPS_FINISHED);
+            Text::Link link(Utilities::SUPPORT_URL);
+            Text::Decorator dec(&link);
+            QString msg = errorMsg;
+            dec.process(msg);
             QMegaMessageBox::warning(nullptr, tr("Error adding backup %1").arg(name), errorMsg);
         }
     });
