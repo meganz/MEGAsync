@@ -21,6 +21,7 @@ SOURCES += $$PWD/HTTPServer.cpp \
     $$PWD/MegaSyncLogger.cpp \
     $$PWD/ConnectivityChecker.cpp \
     $$PWD/TransferBatch.cpp \
+    $$PWD/TextDecorator.cpp \
     $$PWD/qrcodegen.c \
 
 HEADERS  +=  $$PWD/HTTPServer.h \
@@ -42,5 +43,6 @@ HEADERS  +=  $$PWD/HTTPServer.h \
     $$PWD/MegaSyncLogger.h \
     $$PWD/ConnectivityChecker.h \
     $$PWD/TransferBatch.h \
+    $$PWD/TextDecorator.h \
     $$PWD/qrcodegen.h \
     $$PWD/gzjoin.h

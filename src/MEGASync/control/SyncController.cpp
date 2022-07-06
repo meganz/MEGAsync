@@ -209,20 +209,25 @@ QString SyncController::getSyncAPIErrorMsg(int megaError)
 {
     switch (megaError)
     {
-        // FIXME: The following 5 strings need to be validated/reworded
         case MegaError::API_EARGS:
-            return tr("Local folder not set");
+            return tr("Unable to create backup as selected folder is not valid. Try again.");
+        break;
         case MegaError::API_EACCESS:
-            return tr("Error with the folder set as root for the backups");
-        case MegaError::API_EINTERNAL:
-            return tr("The user attribute for the backup root folder does not have a record containing the handle");
-        case MegaError::API_ENOENT:
-            return tr("The handle of the backup root folder stored in the user attribute was invalid, or the node could not be found.");
+            return tr("Unable to create backup. Try again and if issue continues, contact [A]Support[/A].");
+        break;
         case MegaError::API_EINCOMPLETE:
-            return tr("Device id not set or invalid device name");
+            return tr("Unable to create backup as the device you're backing up from doesn't have a name. "
+                     "Give your device a name and then try again. If issue continues, contact [A]Support[/A].");
+        case MegaError::API_EINTERNAL:
+        // Fallthrough
+        case MegaError::API_ENOENT:
+        // Fallthrough
+        case MegaError::API_EEXIST:
+            return tr("Unable to create backup. For further information, contact [A]Support[/A].");
         default:
-            return QString();
+            break;
     }
+    return QString();
 }
 
 void SyncController::setMyBackupsDirName()
@@ -276,6 +281,7 @@ void SyncController::onRequestFinish(MegaApi *api, MegaRequest *req, MegaError *
     {
         int syncErrorCode (req->getNumDetails());
         QString errorMsg;
+
         bool error = false;
 
         if (syncErrorCode != MegaSync::NO_SYNC_ERROR)

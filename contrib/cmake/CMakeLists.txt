@@ -240,6 +240,7 @@ set (MOC_INPUT
     ${MEGAsyncDir}/control/MegaController.h
     ${MEGAsyncDir}/control/SyncController.h
     ${MEGAsyncDir}/control/UserAttributesManager.h
+    ${MEGAsyncDir}/control/TextDecorator.h
     ${MEGAsyncDir}/model/SyncSettings.h
     ${MEGAsyncDir}/model/SyncModel.h
     ${MEGAsyncDir}/gui/AlertItem.h
@@ -531,6 +532,7 @@ set (SRCS
     ${MEGAsyncDir}/control/TransferBatch.cpp
     ${MEGAsyncDir}/control/SyncController.cpp
     ${MEGAsyncDir}/control/UserAttributesManager.cpp
+    ${MEGAsyncDir}/control/TextDecorator.cpp
 
     ${MEGAsyncDir}/model/SyncSettings.cpp
     ${MEGAsyncDir}/model/SyncModel.cpp
@@ -539,7 +541,6 @@ set (SRCS
     ${MEGAsyncDir}/gui/SyncTableView.cpp
     ${MEGAsyncDir}/gui/BackupTableView.cpp
     ${MEGAsyncDir}/gui/BackupsWizard.cpp
-    ${MEGAsyncDir}/gui/SyncsMenu.cpp
     ${MEGAsyncDir}/gui/AddBackupDialog.cpp
     ${MEGAsyncDir}/gui/RemoveBackupDialog.cpp
     ${MEGAsyncDir}/platform/notificator.cpp
