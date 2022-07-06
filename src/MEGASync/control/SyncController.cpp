@@ -124,7 +124,7 @@ void SyncController::getDeviceName()
 // folder has a sync or backup in its tree.
 QString SyncController::getIsFolderAlreadySyncedMsg(const QString& path, const MegaSync::SyncType& syncType)
 {
-    QString inputPath (QDir(path).absolutePath());
+    QString inputPath (QDir::toNativeSeparators(QDir(path).absolutePath()));
     QString message;
 
     // Gather all synced or backed-up dirs
@@ -138,14 +138,14 @@ QString SyncController::getIsFolderAlreadySyncedMsg(const QString& path, const M
             if (syncType == MegaSync::SyncType::TYPE_BACKUP)
             {
                 message = localFolders.value(existingPath) == MegaSync::SyncType::TYPE_TWOWAY ?
-                              tr("You can't sync this folder as it's already synced.")
-                            : tr("Folder is already backed up. Select a different one.");
+                            tr("You can't sync this folder as it's already synced.")
+                          : tr("Folder is already backed up. Select a different one.");
             }
             else
             {
                 message = localFolders.value(existingPath) == MegaSync::SyncType::TYPE_TWOWAY ?
-                              tr("You can't sync this folder as it's already synced.")
-                            : tr("You can't sync this folder as it's backed up.");
+                            tr("You can't sync this folder as it's already synced.")
+                          : tr("You can't sync this folder as it's backed up.");
             }
         }
         else if (inputPath.startsWith(existingPath)
@@ -154,26 +154,30 @@ QString SyncController::getIsFolderAlreadySyncedMsg(const QString& path, const M
             if (syncType == MegaSync::SyncType::TYPE_BACKUP)
             {
                 message = localFolders.value(existingPath) == MegaSync::SyncType::TYPE_TWOWAY ?
-                              tr("You can't backup this folder as it's already inside a synced folder.")
-                            : tr("You can't backup this folder as it's already inside a backed up folder.");
+                            tr("You can't backup this folder as it's already inside a synced folder.")
+                          : tr("You can't backup this folder as it's already inside a backed up folder.");
             }
             else
             {
                 message = localFolders.value(existingPath) == MegaSync::SyncType::TYPE_TWOWAY ?
-                              tr("You can't sync folders that are inside synced folders.")
-                            : tr("You can't sync folders that are inside backed up folders. ");
+                            tr("You can't sync folders that are inside synced folders.")
+                          : tr("You can't sync folders that are inside backed up folders. ");
             }
+        }
+        else if (existingPath.startsWith(inputPath)
+                 && existingPath[inputPath.size()] == QDir::separator())
+        {
             if (syncType == MegaSync::SyncType::TYPE_BACKUP)
             {
                 message = localFolders.value(existingPath) == MegaSync::SyncType::TYPE_TWOWAY ?
-                              tr("You can't backup this folder as it contains synced folders.")
-                            : tr("You can't backup this folder as it contains backed up folders.");
+                            tr("You can't backup this folder as it contains synced folders.")
+                          : tr("You can't backup this folder as it contains backed up folders.");
             }
             else
             {
                 message = localFolders.value(existingPath) == MegaSync::SyncType::TYPE_TWOWAY ?
-                              tr("You can't sync folders that contain synced folders.")
-                            : tr("You can't sync folders that contain backed up folders.  ");
+                            tr("You can't sync folders that contain synced folders.")
+                          : tr("You can't sync folders that contain backed up folders.  ");
             }
         }
     }

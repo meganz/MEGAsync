@@ -374,7 +374,7 @@ void BackupsWizard::processNextBackupSetup()
 // Path is considered to be canonical.
 bool BackupsWizard::isFolderAlreadySynced(const QString& path, bool displayWarning, bool fromCheckAction)
 {
-    QString inputPath (QDir(path).absolutePath());
+    QString inputPath (QDir::toNativeSeparators(QDir(path).absolutePath()));
 
     // Check existing syncs
     QString message = mSyncController.getIsFolderAlreadySyncedMsg(inputPath, mega::MegaSync::TYPE_BACKUP);
