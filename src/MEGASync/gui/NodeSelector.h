@@ -2,7 +2,7 @@
 #define NODESELECTOR_H
 
 #include "QTMegaRequestListener.h"
-#include "FileFolderNameSetterDialog.h"
+#include "NodeNameSetterDialog/NewFolderDialog.h"
 
 #include <QDialog>
 #include <QItemSelection>
