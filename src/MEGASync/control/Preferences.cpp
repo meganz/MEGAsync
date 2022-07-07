@@ -16,7 +16,7 @@ const char Preferences::USER_AGENT[] = "MEGAsync/4.6.7.0";
 const int Preferences::VERSION_CODE = 4607;
 const int Preferences::BUILD_ID = 0;
 // Do not change the location of VERSION_STRING, create_tarball.sh parses this file
-const QString Preferences::VERSION_STRING = QString::fromAscii("Backups-preview 10");
+const QString Preferences::VERSION_STRING = QString::fromAscii("4.6.7-Backups-preview 10");
 QString Preferences::SDK_ID = QString::fromAscii("b08ab62");
 const QString Preferences::CHANGELOG = QString::fromUtf8(QT_TR_NOOP(                                                             
 "- Bug fixes and performance improvements.\n"));
