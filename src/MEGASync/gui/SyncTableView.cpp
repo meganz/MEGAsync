@@ -136,7 +136,7 @@ void SyncTableView::showContextMenu(const QPoint &pos, const QModelIndex index)
     connect(delAction, &MenuItemAction::triggered, this, [this, index]()
     {
         auto sync = index.data(Qt::UserRole).value<std::shared_ptr<SyncSetting>>();
-        mSyncController.removeSync(index.data(Qt::UserRole).value<std::shared_ptr<SyncSetting>>());
+        emit removeSync(sync);
     });
 
 

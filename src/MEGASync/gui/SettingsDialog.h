@@ -150,6 +150,7 @@ private slots:
     void on_bAddBackup_clicked();
     void on_bDeleteBackup_clicked();
     void removeBackup(std::shared_ptr<SyncSetting> backup);
+    void removeSync(std::shared_ptr<SyncSetting> sync);
     void on_bOpenBackupFolder_clicked();
     void openMEGAHandleInExplorer(mega::MegaHandle handle);
     void on_bBackupCenter_clicked();
