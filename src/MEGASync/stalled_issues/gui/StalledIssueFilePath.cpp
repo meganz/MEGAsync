@@ -374,7 +374,7 @@ QString StalledIssueFilePath::getSyncPathProblemString(mega::MegaSyncStall::Sync
             return tr("Name too long for filesystem.");
             break;
         }
-        case mega::MegaSyncStall::CannotFingrprintFile:
+        case mega::MegaSyncStall::CannotFingerprintFile:
         {
             return tr("Cannot fingerprint file.");
             break;
