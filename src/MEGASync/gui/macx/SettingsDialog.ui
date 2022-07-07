@@ -2436,7 +2436,7 @@ border-right:0px;
                 <set>QAbstractItemView::DoubleClicked|QAbstractItemView::EditKeyPressed|QAbstractItemView::SelectedClicked</set>
                </property>
                <property name="alternatingRowColors">
-                <bool>false</bool>
+                <bool>true</bool>
                </property>
                <property name="selectionMode">
                 <enum>QAbstractItemView::SingleSelection</enum>
