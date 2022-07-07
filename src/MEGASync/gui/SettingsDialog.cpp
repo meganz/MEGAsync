@@ -1384,6 +1384,7 @@ void SettingsDialog::setAvatar()
 void SettingsDialog::connectSyncHandlers()
 {
 
+    connect(mUi->syncTableView, &BackupTableView::removeSync, this, &SettingsDialog::removeSync);
     connect(&mSyncController, &SyncController::syncAddStatus, this, [this](int errorCode, const QString errorMsg)
     {
         if (errorCode != MegaError::API_OK)
@@ -1481,6 +1482,7 @@ void SettingsDialog::addSyncFolder(MegaHandle megaFolderHandle)
         return;
     }
 
+    syncsStateInformation(SyncStateInformation::SAVING_SYNCS);
     mSyncController.addSync(localFolderPath, dialog->getMegaFolder(), dialog->getSyncName());
 
     delete dialog;
@@ -1547,7 +1549,7 @@ void SettingsDialog::on_bDeleteSync_clicked()
     if(mUi->syncTableView->selectionModel()->hasSelection())
     {
         QModelIndex index = mUi->syncTableView->selectionModel()->selectedRows().first();
-        mSyncController.removeSync(index.data(Qt::UserRole).value<std::shared_ptr<SyncSetting>>());
+        removeSync(index.data(Qt::UserRole).value<std::shared_ptr<SyncSetting>>());
     }
 }
 
@@ -1730,7 +1732,8 @@ void SettingsDialog::processPendingBackup()
 {
     if (!mPendingBackup.isEmpty() && mBackupRootHandle != mega::INVALID_HANDLE)
     {
-        mSyncController.addBackup(mPendingBackup);
+        syncsStateInformation(SyncStateInformation::SAVING_BACKUPS);
+        mBackupController.addBackup(mPendingBackup);
         mPendingBackup.clear();
     }
 }
@@ -1797,8 +1800,15 @@ void SettingsDialog::removeBackup(std::shared_ptr<SyncSetting> backup)
 
     connect(dialog, &RemoveBackupDialog::accepted, this, [this, dialog]()
     {
+        syncsStateInformation(SyncStateInformation::SAVING_BACKUPS);
         mBackupController.removeSync(dialog->backupToRemove(), dialog->targetFolder());
     });
+}
+
+void SettingsDialog::removeSync(std::shared_ptr<SyncSetting> sync)
+{
+    syncsStateInformation(SyncStateInformation::SAVING_SYNCS);
+    mSyncController.removeSync(sync);
 }
 
 void SettingsDialog::on_bOpenBackupFolder_clicked()

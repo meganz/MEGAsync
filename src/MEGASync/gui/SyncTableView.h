@@ -20,6 +20,9 @@ protected:
     void showEvent(QShowEvent *event) override;
     virtual void initTable();
 
+signals:
+    void removeSync(std::shared_ptr<SyncSetting> sync);
+
 private slots:
     virtual void onCustomContextMenuRequested(const QPoint& pos);
     virtual void onCellClicked(const QModelIndex &index);
