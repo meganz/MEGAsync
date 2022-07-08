@@ -502,5 +502,9 @@ QString AlertItem::formatRichString(QString str)
 
 QString AlertItem::getUserFullName(MegaUserAlert *alert)
 {
-    return mFullNameAttributes ? mFullNameAttributes->getRichFullName() : QString::fromUtf8(alert->getEmail());
+    if(mFullNameAttributes && mFullNameAttributes->isAttributeReady())
+    {
+        return mFullNameAttributes->getRichFullName();
+    }
+    return QString::fromUtf8(alert->getEmail());
 }

@@ -641,9 +641,13 @@ void NodeSelector::onSelectionChanged(const QItemSelection& selected, const QIte
         if(item)
         {
             if(mSelectMode == NodeSelector::STREAM_SELECT)
+            {
                 ui->bOk->setEnabled(item->getNode()->isFile());
+            }
             else if(mSelectMode == NodeSelector::SYNC_SELECT)
+            {
                 ui->bOk->setEnabled(item->isSyncable());
+            }
         }
     }
 }
@@ -803,7 +807,11 @@ void NodeSelector::setRootIndex(const QModelIndex& proxy_idx)
     {
         QString nodeName = QString::fromUtf8(node->getName());
         QFontMetrics fm = ui->lFolderName->fontMetrics();
-        ui->lFolderName->setText(nodeName);
+
+        if(nodeName == QLatin1String("NO_KEY") || nodeName == QLatin1String("CRYPTO_ERROR"))
+        {
+            nodeName = QCoreApplication::translate("MegaError", "Decryption error");
+        }
 
         QString elidedText = fm.elidedText(nodeName, Qt::ElideMiddle, ui->tMegaFolders->width() - LABEL_ELIDE_MARGIN);
         ui->lFolderName->setText(elidedText);
