@@ -67,8 +67,11 @@ set (USE_QT 1 CACHE STRING "")
 set (ENABLE_LOG_PERFORMANCE 1 CACHE STRING "")
 set (NO_READLINE 1 CACHE STRING "")
 set (USE_DRIVE_NOTIFICATIONS 1 CACHE STRING "")
-
-set (MEGA_LINK_DYNAMIC_CRT 1)  # since we are linking with QT official DLLs
+if (WIN32)
+    set (MEGA_LINK_DYNAMIC_CRT 1)  # since we are linking with QT official DLLs
+else()
+    set(USE_PTHREAD 1 CACHE STRING "")
+endif()
 
 set(RepoDir "${CMAKE_CURRENT_LIST_DIR}/../.."  CACHE STRING "")
 set(MEGAsyncDir "${RepoDir}/src/MEGASync")
@@ -635,8 +638,8 @@ else()
 endif()
 
 
-add_definitions( -DQT_DISABLE_DEPRECATED_BEFORE=0x000000 -DQT_NO_CAST_FROM_ASCII -DQT_NO_CAST_TO_ASCII -DUNICODE -DQT_WIDGETS_LIB )
-add_definitions( -DSHOW_LOGS -D_CRT_SECURE_NO_WARNINGS -DMEGA_QT_LOGGING -DQT_NO_CAST_FROM_ASCII -DPSAPI_VERSION=1 -DQT_WINEXTRAS_LIB -DQT_GUI_LIB -DQT_NETWORK_LIB -DQT_CORE_LIB )
+add_definitions( -DQT_DISABLE_DEPRECATED_BEFORE=0x000000 -DQT_NO_CAST_FROM_ASCII -DQT_NO_CAST_TO_ASCII -DUNICODE )
+add_definitions( -DMEGA_QT_LOGGING -DQT_GUI_LIB -DQT_NETWORK_LIB -DQT_CORE_LIB -DQT_WIDGETS_LIB )
  #TODO: remove UNICODE (in config.h) and use the WIN32 definition accordingly only for Windows
 
 if (ENABLE_LOG_PERFORMANCE)
@@ -645,12 +648,14 @@ endif()
 
 if(WIN32)
     add_definitions( -DUNICODE -D_UNICODE )  # needed for visual studio projects to use the unicode runtime libraries
-
+    add_definitions( -D_CRT_SECURE_NO_WARNINGS -DPSAPI_VERSION=1 -DQT_WINEXTRAS_LIB )
     #supported windows version: 7 and beyond
     add_definitions( -DNTDDI_VERSION=NTDDI_WIN7 )
     add_definitions( -D_WIN32_WINNT=0x0601 ) # 0601: windows 7
+elseif(CMAKE_HOST_APPLE)
+    set(CMAKE_CXX_VISIBILITY_PRESET hidden)
+    set(CMAKE_VISIBILITY_INLINES_HIDDEN 1)
 endif()
-
 
 set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DCREATE_COMPATIBLE_MINIDUMPS -DLOG_TO_STDOUT -DLOG_TO_LOGGER")
 
@@ -676,11 +681,9 @@ if (CMAKE_HOST_WIN32)
     set_target_properties(MEGAsync  PROPERTIES LINK_FLAGS_DEBUG "/SUBSYSTEM:WINDOWS /ENTRY:mainCRTStartup /LARGEADDRESSAWARE /SAFESEH:NO /DEBUG " )
     set_target_properties(MEGAsync  PROPERTIES LINK_FLAGS_RELEASE "/SUBSYSTEM:WINDOWS /ENTRY:mainCRTStartup /LARGEADDRESSAWARE /SAFESEH:NO /DEBUG " )
 else()
-
-if (CMAKE_HOST_APPLE)
-    set_source_files_properties(app.icns folder.icns folder_yosemite.icns appicon32.tiff PROPERTIES MACOSX_PACKAGE_LOCATION "Resources")
+    if (CMAKE_HOST_APPLE)
+        set_source_files_properties(app.icns folder.icns folder_yosemite.icns appicon32.tiff PROPERTIES MACOSX_PACKAGE_LOCATION "Resources")
     endif()
-
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC")
 endif()
 

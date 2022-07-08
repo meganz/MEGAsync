@@ -165,14 +165,14 @@ if [ ${build} -eq 1 -o ${build_cmake} -eq 1 ]; then
             CMAKE_EXTRA="-DCMAKE_OSX_ARCHITECTURES=${target_arch}"
         fi
 
-        cmake -DUSE_THIRDPARTY_FROM_VCPKG=1 -DMega3rdPartyDir=${VCPKGPATH} -DCMAKE_PREFIX_PATH=${MEGAQTPATH} ${CMAKE_EXTRA} -S ../contrib/cmake
+        cmake -DUSE_THIRDPARTY_FROM_VCPKG=1 -DMega3rdPartyDir=${VCPKGPATH} -DCMAKE_PREFIX_PATH=${MEGAQTPATH} -DCMAKE_BUILD_TYPE=RelWithDebInfo ${CMAKE_EXTRA} -S ../contrib/cmake
         cmake --build ./ --target MEGAsync -j`sysctl -n hw.ncpu`
         cmake --build ./ --target MEGAupdater -j`sysctl -n hw.ncpu`
         MSYNC_PREFIX=""
         MUPDATER_PREFIX=""
     else
         # crosscompilation detection should be managed detecting the qmake taget and host arch in the project files.
-        [ ! -f src/MEGASync/mega/include/mega/config.h ] && cp ../src/MEGASync/mega/contrib/official_build_configs/macos/config.h ../src/MEGASync/mega/include/mega/config.h
+        cp ../src/MEGASync/mega/contrib/official_build_configs/macos/config.h ../src/MEGASync/mega/include/mega/config.h
         ${MEGAQTPATH}/bin/lrelease ../src/MEGASync/MEGASync.pro
         ${MEGAQTPATH}/bin/qmake "CONFIG += FULLREQUIREMENTS" "THIRDPARTY_VCPKG_BASE_PATH=${VCPKGPATH}" -r ../src -spec macx-clang CONFIG+=release -nocache
         make -j`sysctl -n hw.ncpu`
