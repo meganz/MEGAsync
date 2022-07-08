@@ -3887,7 +3887,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Shortcut</source>
         <translatorcomment>Label for shourcut in all other platforms</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>바로 가기</translation>
     </message>
     <message>
         <source>Unknown</source>

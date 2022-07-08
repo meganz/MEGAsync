@@ -2590,7 +2590,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Decryption error</source>
         <translatorcomment>String shown when a file/folder name can not be decrypted.</translatorcomment>
-        <translation>Errore di decrittazione</translation>
+        <translation>Errore di decriptazione</translation>
     </message>
 </context>
 <context>
@@ -3109,24 +3109,24 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
     <message>
         <source>Error:</source>
-        <translation type="unfinished"></translation>
+        <translation>Errore:</translation>
     </message>
     <message numerus="yes">
         <source>The item you selected has been removed. To reselect, close this window and try again.</source>
         <translatorcomment>Error message shown while the user is trying to download an file or folder but all selected nodes were removed</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>L&apos;elemento che hai selezionato è stato rimosso. Per selezionare nuovamente, chiudi questa finestra e riprova.</numerusform><numerusform>Gli elementi che hai selezionato sono stati rimossi. Per selezionare nuovamente, chiudi questa finestra e riprova.</numerusform><numerusform>Gli elementi che hai selezionato sono stati rimossi. Per selezionare nuovamente, chiudi questa finestra e riprova.</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%1 item selected</source>
         <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
                            First part of string for multi plural support. Full string looks like: 5 items selected. 2 have been removed. To reselect, close this window and try again. </translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%1 oggetto selezionato</numerusform><numerusform>%1 di oggetti selezionati</numerusform><numerusform>%1 oggetti selezionati</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%1. %2 has been removed. To reselect, close this window and try again.</source>
         <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
                            Second and last part of string for multi plural support. Full string looks like: 5 items selected. 2 have been removed. To reselect, close this window and try again. </translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%1. %2 è stato rimosso. Per selezionare nuovamente, chiudi questa finestra e riprova.</numerusform><numerusform>%1. %2 sono stati rimossi. Per selezionare nuovamente, chiudi questa finestra e riprova.</numerusform><numerusform>%1. %2 sono stati rimossi. Per selezionare nuovamente, chiudi questa finestra e riprova.</numerusform></translation>
     </message>
 </context>
 <context>
