@@ -527,7 +527,7 @@ void NodeSelector::onbOkClicked()
         {
             correctNodeSelected = false;
             QString warningMsg1 = tr("%1 item selected", "", nodes.size()).arg(nodes.size());
-            QString warningMsg = tr("%1. %2 has been removed. To reselect, close this window and try again.", "", nodes.size()).arg(warningMsg1).arg(wrongNodes);
+            QString warningMsg = tr("%1. %2 has been removed. To reselect, close this window and try again.", "", wrongNodes).arg(warningMsg1).arg(wrongNodes);
             QMegaMessageBox::warning(nullptr, tr("Error"), warningMsg, QMessageBox::Ok);
         }
     }
