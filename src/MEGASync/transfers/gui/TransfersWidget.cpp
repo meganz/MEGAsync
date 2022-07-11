@@ -73,6 +73,7 @@ void TransfersWidget::setupTransfers()
 
 TransfersWidget::~TransfersWidget()
 {
+    mLoadingScene.setLoadingScene(false);
     delete ui;
     if (tDelegate) delete tDelegate;
     if (mProxyModel) delete mProxyModel;
@@ -125,7 +126,14 @@ void TransfersWidget::on_tCancelClearVisible_clicked()
     else if((getCurrentTab() > TransfersWidget::TYPES_TAB_BASE && getCurrentTab() < TransfersWidget::TYPES_LAST)
             || getCurrentTab() == TransfersWidget::SEARCH_TAB)
     {
-        ui->tvTransfers->onCancelAndClearVisibleTransfers();
+        if(mProxyModel->areAllSync())
+        {
+            ui->tvTransfers->onClearVisibleTransfers();
+        }
+        else
+        {
+            ui->tvTransfers->onCancelAndClearVisibleTransfers();
+        }
     }
     else
     {
@@ -170,8 +178,10 @@ void TransfersWidget::onCheckCancelClearButton()
     bool changeIcon(false);
 
     bool areAllTransfersCompleted(mProxyModel->areAllCompleted());
+    bool areAllSync(mProxyModel->areAllSync());
+    bool isAnyTransferCompleted(mProxyModel->isAnyCompleted());
 
-    auto buttonVisible(!mProxyModel->areAllSync() || areAllTransfersCompleted);
+    auto buttonVisible(!areAllSync || areAllTransfersCompleted || isAnyTransferCompleted);
     if(mCancelClearInfo.visible != buttonVisible)
     {
         mCancelClearInfo.visible = buttonVisible;
@@ -192,13 +202,8 @@ void TransfersWidget::onCheckCancelClearButton()
     }
     else if ((mCurrentTab > TransfersWidget::TYPES_TAB_BASE && mCurrentTab < TransfersWidget::TYPES_LAST) || mCurrentTab == TransfersWidget::SEARCH_TAB)
     {        
-        if(mCancelClearInfo.clearAction != areAllTransfersCompleted)
-        {
-            changeIcon = true;
-        }
-
-        mCancelClearInfo.clearAction = areAllTransfersCompleted;
         bool isAnyCompleted(mProxyModel->isAnyCompleted());
+        bool newIconState(areAllTransfersCompleted);
 
         if(areAllTransfersCompleted)
         {
@@ -206,11 +211,25 @@ void TransfersWidget::onCheckCancelClearButton()
         }
         else if(isAnyCompleted)
         {
-            cancelBase = tr("Cancel and clear ");
+            if(areAllSync)
+            {
+                newIconState = true;
+                cancelBase = tr("Clear ");
+            }
+            else
+            {
+                cancelBase = tr("Cancel and clear ");
+            }
         }
         else
         {
             cancelBase = tr("Cancel ");
+        }
+
+        if(mCancelClearInfo.clearAction != newIconState)
+        {
+            mCancelClearInfo.clearAction = newIconState;
+            changeIcon = true;
         }
     }
     else
@@ -431,7 +450,7 @@ void TransfersWidget::onCancelClearButtonPressedOnDelegate()
     QPointer<TransfersWidget> dialog = QPointer<TransfersWidget>(this);
 
     if (QMegaMessageBox::warning(this, QString::fromUtf8("MEGAsync"),
-                             tr("%1 transfer(s)?", "", sourceSelectionIndexes.size()).arg(action),
+                             tr("%1", "", sourceSelectionIndexes.size()).arg(action),
                              QMessageBox::Yes | QMessageBox::No, QMessageBox::No)
             != QMessageBox::Yes
             || !dialog)

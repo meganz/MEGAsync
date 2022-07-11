@@ -286,6 +286,7 @@ public slots:
     void cleanAll();
     void onDupplicateLink(QString link, QString name, mega::MegaHandle handle);
     void onInstallUpdateClicked();
+    void onAboutClicked();
     void showInfoDialog();
     void showInfoDialogNotifications();
     void triggerInstallUpdate();
@@ -374,6 +375,7 @@ protected:
     QPointer<QMenu> windowsMenu;
     QAction *windowsExitAction;
     QAction *windowsUpdateAction;
+    QAction *windowsAboutAction;
     QAction *windowsImportLinksAction;
     QAction *windowsUploadAction;
     QAction *windowsDownloadAction;
@@ -399,6 +401,7 @@ protected:
     MenuItemAction *addSyncAction;
 
     MenuItemAction *updateAction;
+    MenuItemAction *aboutAction;
     QAction *showStatusAction;
 
     MenuItemAction *exitActionGuest;

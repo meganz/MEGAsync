@@ -241,7 +241,7 @@ void TransferManagerDelegateWidget::updateTransferState()
 
         // Cancel/Clear Button
         if ((getData()->mType & TransferData::TRANSFER_SYNC)
-                && !(getData()->getState() & (TransferData::TRANSFER_FAILED | TransferData::TRANSFER_COMPLETED)))
+                && !(getData()->getState() & TransferData::TRANSFER_COMPLETED))
         {
             showTCancelClear = false;
         }

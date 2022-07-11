@@ -57,7 +57,9 @@ protected:
 private slots:
     void onLoadingTimerTimeout()
     {
-        if(mView)
+        QPointer<LoadingSceneDelegateBase> currentClass(this);
+
+        if(currentClass && mView)
         {
             if(mOpacity < MIN_OPACITY)
             {
@@ -181,6 +183,7 @@ public:
 
     ~ViewLoadingScene()
     {
+        mLoadingDelegate->setLoading(false);
         mLoadingDelegate->deleteLater();
         mLoadingModel->deleteLater();
     }
