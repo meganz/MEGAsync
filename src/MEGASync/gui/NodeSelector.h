@@ -70,6 +70,7 @@ private slots:
     void onbShowCloudDriveClicked();
     void onTabSelected(int index);
     void onSelectionChanged(const QItemSelection& selected, const QItemSelection& deselected);
+    void onSectionResized();
 
 private:
 
@@ -109,6 +110,7 @@ private:
     std::unique_ptr<mega::QTMegaRequestListener> mDelegateListener;
     std::unique_ptr<MegaItemModel> mModel;
     std::unique_ptr<MegaItemProxyModel> mProxyModel;
+    bool mManuallyResizedColumn;
 };
 
 #endif // NODESELECTOR_H
