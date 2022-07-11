@@ -73,6 +73,7 @@ void TransfersWidget::setupTransfers()
 
 TransfersWidget::~TransfersWidget()
 {
+    mLoadingScene.setLoadingScene(false);
     delete ui;
     if (tDelegate) delete tDelegate;
     if (mProxyModel) delete mProxyModel;

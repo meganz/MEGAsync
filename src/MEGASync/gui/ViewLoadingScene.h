@@ -57,7 +57,7 @@ private slots:
     {
         QPointer<LoadingSceneDelegateBase> currentClass(this);
 
-        if(currentClass)
+        if(currentClass && mView)
         {
             if(mOpacity < MIN_OPACITY)
             {
@@ -80,7 +80,7 @@ private slots:
 
 private:
     QTimer mTimer;
-    QAbstractItemView* mView;
+    QPointer<QAbstractItemView> mView;
     double mOpacitySteps;
     double mOpacity;
 };
@@ -179,6 +179,7 @@ public:
 
     ~ViewLoadingScene()
     {
+        mLoadingDelegate->setLoading(false);
         mLoadingDelegate->deleteLater();
         mLoadingModel->deleteLater();
     }

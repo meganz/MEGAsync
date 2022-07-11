@@ -233,6 +233,7 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     windowsMenu = nullptr;
     windowsExitAction = NULL;
     windowsUpdateAction = NULL;
+    windowsAboutAction = nullptr;
     windowsImportLinksAction = NULL;
     windowsUploadAction = NULL;
     windowsDownloadAction = NULL;
@@ -278,6 +279,7 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     transferring = false;
     checkupdate = false;
     updateAction = NULL;
+    aboutAction = nullptr;
     updateActionGuest = NULL;
     showStatusAction = NULL;
     pasteMegaLinksDialog = NULL;
@@ -2298,10 +2300,16 @@ void MegaApplication::onInstallUpdateClicked()
         showInfoMessage(tr("Installing update..."));
         emit installUpdate();
     }
-    else
+}
+
+void MegaApplication::onAboutClicked()
+{
+    if (appfinished)
     {
-        showChangeLog();
+        return;
     }
+
+    showChangeLog();
 }
 
 void MegaApplication::repositionInfoDialog()
@@ -3326,7 +3334,10 @@ void MegaApplication::logBatchStatus(const char* tag)
 void MegaApplication::enableTransferActions(bool enable)
 {
 #ifdef _WIN32
-    windowsUpdateAction->setEnabled(enable);
+    if(updateAvailable && windowsUpdateAction)
+    {
+        windowsUpdateAction->setEnabled(enable);
+    }
     windowsSettingsAction->setEnabled(enable);
     windowsImportLinksAction->setEnabled(enable);
     windowsUploadAction->setEnabled(enable);
@@ -3334,7 +3345,10 @@ void MegaApplication::enableTransferActions(bool enable)
     windowsStreamAction->setEnabled(enable);
 #endif
 
-    updateAction->setEnabled(enable);
+    if(updateAvailable && updateAction)
+    {
+        updateAction->setEnabled(enable);
+    }
     guestSettingsAction->setEnabled(enable);
     importLinksAction->setEnabled(enable);
     uploadAction->setEnabled(enable);
@@ -6419,19 +6433,29 @@ void MegaApplication::createInfoDialogMenus()
         windowsUpdateAction = NULL;
     }
 
+    if(windowsAboutAction)
+    {
+        windowsAboutAction->deleteLater();
+        windowsAboutAction = NULL;
+    }
+
     if (updateAvailable)
     {
         windowsUpdateAction = new QAction(tr("Install update"), this);
         windowsUpdateAction->setEnabled(windowsUpdateActionEnabled);
+
+        windowsMenu->addAction(windowsUpdateAction);
+
+        connect(windowsUpdateAction, &QAction::triggered, this, &MegaApplication::onInstallUpdateClicked);
     }
     else
     {
-        windowsUpdateAction = new QAction(tr("About"), this);
+        windowsAboutAction = new QAction(tr("About"), this);
+
+        windowsMenu->addAction(windowsAboutAction);
+        connect(windowsAboutAction, &QAction::triggered, this, &MegaApplication::onAboutClicked);
     }
 
-    connect(windowsUpdateAction, &QAction::triggered, this, &MegaApplication::onInstallUpdateClicked);
-
-    windowsMenu->addAction(windowsUpdateAction);
     windowsMenu->addSeparator();
     windowsMenu->addAction(windowsImportLinksAction);
     windowsMenu->addAction(windowsUploadAction);
@@ -6621,19 +6645,29 @@ void MegaApplication::createInfoDialogMenus()
         updateAction = NULL;
     }
 
+    if(aboutAction)
+    {
+        aboutAction->deleteLater();
+        aboutAction = NULL;
+    }
+
     if (updateAvailable)
     {
         updateAction = new MenuItemAction(tr("Install update"), QIcon(QString::fromUtf8("://images/ico_about_MEGA.png")), true);
         updateAction->setEnabled(previousEnabledState);
+        connect(updateAction, &QAction::triggered, this, &MegaApplication::onInstallUpdateClicked, Qt::QueuedConnection);
+
+        infoDialogMenu->addAction(updateAction);
     }
     else
     {
-        updateAction = new MenuItemAction(tr("About MEGAsync"), QIcon(QString::fromUtf8("://images/ico_about_MEGA.png")), true);
+        aboutAction = new MenuItemAction(tr("About MEGAsync"), QIcon(QString::fromUtf8("://images/ico_about_MEGA.png")), true);
+        connect(aboutAction, &QAction::triggered, this, &MegaApplication::onAboutClicked, Qt::QueuedConnection);
+
+        infoDialogMenu->addAction(aboutAction);
     }
 
-    connect(updateAction, &QAction::triggered, this, &MegaApplication::onInstallUpdateClicked, Qt::QueuedConnection);
 
-    infoDialogMenu->addAction(updateAction);
     infoDialogMenu->addAction(myCloudAction);
     infoDialogMenu->addSeparator();
     infoDialogMenu->addAction(addSyncAction);
