@@ -37,7 +37,8 @@ NodeSelector::NodeSelector(int selectMode, QWidget *parent) :
     mSelectMode(selectMode),
     mMegaApi(MegaSyncApp->getMegaApi()),
     mDelegateListener(mega::make_unique<QTMegaRequestListener>(mMegaApi, this)),
-    mModel(nullptr)
+    mModel(nullptr),
+    mManuallyResizedColumn(false)
 {
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
 
@@ -83,6 +84,7 @@ NodeSelector::NodeSelector(int selectMode, QWidget *parent) :
     connect(ui->tMegaFolders, &QTreeView::doubleClicked, this, &NodeSelector::onItemDoubleClick);
     connect(ui->bForward, &QPushButton::clicked, this, &NodeSelector::onGoForwardClicked);
     connect(ui->bBack, &QPushButton::clicked, this, &NodeSelector::onGoBackClicked);
+    connect(ui->tMegaFolders->header(), &QHeaderView::sectionResized, this, &NodeSelector::onSectionResized);
     connect(ui->bNewFolder, &QPushButton::clicked, this, &NodeSelector::onbNewFolderClicked);
     connect(ui->bOk, &QPushButton::clicked, this, &NodeSelector::onbOkClicked);
     connect(ui->bCancel, &QPushButton::clicked, this, &QDialog::reject);
@@ -155,7 +157,10 @@ void NodeSelector::showEvent(QShowEvent* )
 
 void NodeSelector::resizeEvent(QResizeEvent *)
 {
-    ui->tMegaFolders->setColumnWidth(MegaItemModel::COLUMN::NODE, qRound(ui->tMegaFolders->width() * 0.57));
+    if(!mManuallyResizedColumn)
+    {
+        ui->tMegaFolders->setColumnWidth(MegaItemModel::COLUMN::NODE, qRound(ui->tMegaFolders->width() * 0.57));
+    }
 }
 
 void NodeSelector::mousePressEvent(QMouseEvent *event)
@@ -645,6 +650,15 @@ void NodeSelector::onSelectionChanged(const QItemSelection& selected, const QIte
             else if(mSelectMode == NodeSelector::SYNC_SELECT)
                 ui->bOk->setEnabled(item->isSyncable());
         }
+    }
+}
+
+void NodeSelector::onSectionResized()
+{
+    if(!mManuallyResizedColumn
+            && ui->tMegaFolders->header()->rect().contains(ui->tMegaFolders->mapFromGlobal(QCursor::pos())))
+    {
+        mManuallyResizedColumn = true;
     }
 }
 
