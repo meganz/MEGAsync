@@ -18,8 +18,8 @@ const int MAX_TRANSFERS = 2000;
 const int CANCEL_THRESHOLD_THREAD = 100;
 const int START_THRESHOLD_THREAD = 50;
 const int FAILED_THRESHOLD_THREAD = 100;
-const int PAUSE_RESUME_THRESHOLD_THREAD = 1000;
-const int CLEAR_THRESHOLD_THREAD = 1000;
+const int PAUSE_RESUME_THRESHOLD_THREAD = 300;
+const int CLEAR_THRESHOLD_THREAD = 300;
 
 //LISTENER THREAD
 TransferThread::TransferThread() : mMaxTransfersToProcess(MAX_TRANSFERS)
@@ -266,7 +266,6 @@ void TransferThread::onTransferFinish(MegaApi*, MegaTransfer *transfer, MegaErro
             mTransfersCount.transfersFinishedByType[fileType]++;
             if(transfer->getType() == MegaTransfer::TYPE_UPLOAD)
             {
-                mTransfersCount.completedUploadBytes += transfer->getDeltaSize();
                 mTransfersCount.pendingUploads--;
 
                 if(transfer->getState() == MegaTransfer::STATE_FAILED)
@@ -276,7 +275,6 @@ void TransferThread::onTransferFinish(MegaApi*, MegaTransfer *transfer, MegaErro
             }
             else
             {
-                mTransfersCount.completedDownloadBytes += transfer->getDeltaSize();
                 mTransfersCount.pendingDownloads--;
 
                 if(transfer->getState() == MegaTransfer::STATE_FAILED)
@@ -347,7 +345,7 @@ void TransferThread::resetCompletedUploads(QList<QExplicitlySharedDataPointer<Tr
         if(mTransfersCount.totalUploads > 0)
         {
             mTransfersCount.totalUploads--;
-            mTransfersCount.completedUploadBytes -= transfer->isCompleted() ? transfer->mTotalSize : transfer->mTransferredBytes;
+            mTransfersCount.completedUploadBytes -= transfer->mTransferredBytes;
             mTransfersCount.totalUploadBytes -= transfer->mTotalSize;
             mTransfersCount.transfersByType[transfer->mFileType]--;
             mTransfersCount.transfersFinishedByType[transfer->mFileType]--;
@@ -370,7 +368,7 @@ void TransferThread::resetCompletedDownloads(QList<QExplicitlySharedDataPointer<
         if(mTransfersCount.totalDownloads > 0)
         {
             mTransfersCount.totalDownloads--;
-            mTransfersCount.completedDownloadBytes -= transfer->isCompleted() ? transfer->mTotalSize : transfer->mTransferredBytes;
+            mTransfersCount.completedDownloadBytes -= transfer->mTransferredBytes;
             mTransfersCount.totalDownloadBytes -= transfer->mTotalSize;
             mTransfersCount.transfersByType[transfer->mFileType]--;
             mTransfersCount.transfersFinishedByType[transfer->mFileType]--;
@@ -878,24 +876,24 @@ void TransfersModel::openInMEGA(QList<int> &rows)
 
 void TransfersModel::openFolderByIndex(const QModelIndex& index)
 {
-    QtConcurrent::run([=]
-    {
-        QMutexLocker lock(&mModelMutex);
+    QMutexLocker lock(&mModelMutex);
 
-        const auto transferItem (
-                    qvariant_cast<TransferItem>(index.data(Qt::DisplayRole)));
-        auto d (transferItem.getTransferData());
-        auto path = d->path();
-        if (d && !path.isEmpty())
+    const auto transferItem (
+                qvariant_cast<TransferItem>(index.data(Qt::DisplayRole)));
+    auto d (transferItem.getTransferData());
+    auto path = d->path();
+    if (d && !path.isEmpty())
+    {
+        QtConcurrent::run([path]
         {
             Platform::showInFolder(path);
-        }
-    });
+        });
+    }
 }
 
 void TransfersModel::retryTransferByIndex(const QModelIndex& index)
 {
-    QMutexLocker lock(&mModelMutex);
+    mModelMutex.lock();
 
     const auto transferItem (
                 qvariant_cast<TransferItem>(index.data(Qt::DisplayRole)));
@@ -904,25 +902,36 @@ void TransfersModel::retryTransferByIndex(const QModelIndex& index)
     if(d && d->mFailedTransfer)
     {
         auto failedTransferCopy = d->mFailedTransfer->copy();
+        mModelMutex.unlock();
+
+        QModelIndexList indexToRemove;
+        indexToRemove.append(index);
+        clearFailedTransfers(indexToRemove);
 
         QtConcurrent::run([&failedTransferCopy, this](){
             mMegaApi->retryTransfer(failedTransferCopy);
             delete failedTransferCopy;
         });
 
-        QModelIndexList indexToRemove;
-        indexToRemove.append(index);
-        clearFailedTransfers(indexToRemove);
+    }
+    else
+    {
+        mModelMutex.unlock();
     }
 }
 
 void TransfersModel::retryTransfers(QModelIndexList indexes)
 {
-    emit blockUi();
+    if(indexes.size() > FAILED_THRESHOLD_THREAD)
+    {
+        setUiBlockedMode(true);
+    }
 
     std::sort(indexes.begin(), indexes.end(),[](QModelIndex index1, QModelIndex index2){
         return index1.row() > index2.row();
     });
+
+    clearFailedTransfers(indexes);
 
     //Try to add more threads to speed up
     auto threadsToUse(1);
@@ -936,7 +945,7 @@ void TransfersModel::retryTransfers(QModelIndexList indexes)
     QList<mega::MegaTransfer*> transfersToRetry;
     auto indexPerThread = (indexes.size() >= threadsToUse) ? (indexes.size() / threadsToUse) : indexes.size();
 
-    QMutexLocker lock(&mModelMutex);
+    mModelMutex.lock();
 
     auto counter = 0;
     foreach(auto index, indexes)
@@ -967,6 +976,8 @@ void TransfersModel::retryTransfers(QModelIndexList indexes)
         counter++;
     }
 
+    mModelMutex.unlock();
+
     QtConcurrent::run([transfersToRetry, this](){
         foreach(auto& failedTransferCopy, transfersToRetry)
         {
@@ -974,8 +985,6 @@ void TransfersModel::retryTransfers(QModelIndexList indexes)
             delete failedTransferCopy;
         }
     });
-
-    clearFailedTransfers(indexes);
 }
 
 void TransfersModel::openFolderByTag(TransferTag tag)
@@ -1220,47 +1229,55 @@ void TransfersModel::clearTransfers(const QMap<QModelIndex, QExplicitlySharedDat
 {
     if(!uploads.isEmpty() || !downloads.isEmpty())
     {
-        auto future = QtConcurrent::run([this, uploads, downloads]()
+        auto totalTransfersToClear(uploads.size() + downloads.size());
+        if(totalTransfersToClear > CLEAR_THRESHOLD_THREAD)
         {
-            auto totalTransfersToClear(uploads.size() + downloads.size());
-            if(totalTransfersToClear > CLEAR_THRESHOLD_THREAD)
+            auto future = QtConcurrent::run([this, uploads, downloads]()
             {
                 emit blockUi();
                 blockSignals(true);
-            }
 
-            QModelIndexList itemsToRemove;
+                performClearTransfers(uploads, downloads);
 
-            if(!uploads.isEmpty())
-            {
-                mTransferEventWorker->resetCompletedUploads(uploads.values());
-
-                itemsToRemove.append(uploads.keys());
-            }
-
-            if(!downloads.isEmpty())
-            {
-                mTransferEventWorker->resetCompletedDownloads(downloads.values());
-
-                itemsToRemove.append(downloads.keys());
-            }
-
-            //About to remove transfers, be careful with the other threads
-            mModelMutex.lock();
-            removeRows(itemsToRemove);
-            mModelMutex.unlock();
-
-            if(totalTransfersToClear > CLEAR_THRESHOLD_THREAD)
-            {
                 blockSignals(false);
                 emit unblockUiAndFilter();
-            }
-
-            //The clear transfer is the only action which does not receive a SDK request
-            emit transfersProcessChanged();
-        });
-        mUpdateTransferWatcher.setFuture(future);
+            });
+            mUpdateTransferWatcher.setFuture(future);
+        }
+        else
+        {
+            performClearTransfers(uploads, downloads);
+            updateTransfersCount();
+        }
     }
+}
+
+void TransfersModel::performClearTransfers(const QMap<QModelIndex, QExplicitlySharedDataPointer<TransferData> > uploads,
+                                           const QMap<QModelIndex, QExplicitlySharedDataPointer<TransferData> > downloads)
+{
+    QModelIndexList itemsToRemove;
+
+    if(!uploads.isEmpty())
+    {
+        mTransferEventWorker->resetCompletedUploads(uploads.values());
+
+        itemsToRemove.append(uploads.keys());
+    }
+
+    if(!downloads.isEmpty())
+    {
+        mTransferEventWorker->resetCompletedDownloads(downloads.values());
+
+        itemsToRemove.append(downloads.keys());
+    }
+
+    //About to remove transfers, be careful with the other threads
+    mModelMutex.lock();
+    removeRows(itemsToRemove);
+    mModelMutex.unlock();
+
+    //The clear transfer is the only action which does not receive a SDK request
+    emit transfersProcessChanged();
 }
 
 void TransfersModel::pauseTransfers(const QModelIndexList& indexes, bool pauseState)
