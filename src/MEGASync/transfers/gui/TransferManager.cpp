@@ -526,8 +526,6 @@ void TransferManager::refreshStateStats()
         }
     }
 
-
-
     if(leftFooterWidget && leftFooterWidget != mUi->sStatus->currentWidget())
     {
         mUi->sStatus->setCurrentWidget(leftFooterWidget);

@@ -249,6 +249,7 @@ private slots:
     void processFailedTransfers();
     void onProcessTransfers();
     void updateTransfersCount();
+    void onClearTransfersFinished();
 
 private:
     void removeRows(QModelIndexList &indexesToRemove);
@@ -285,6 +286,7 @@ private:
 
     TransferThread::TransfersToProcess mTransfersToProcess;
     QFutureWatcher<void> mUpdateTransferWatcher;
+    QFutureWatcher<void> mClearTransferWatcher;
 
     uint8_t mTransfersProcessChanged;
     uint8_t mUpdateMostPriorityTransfer;

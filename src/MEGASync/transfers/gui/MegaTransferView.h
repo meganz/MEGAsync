@@ -28,6 +28,7 @@ public:
     bool onCancelAllTransfers();
     void onClearAllTransfers();
     void onCancelAndClearVisibleTransfers();
+    void onClearVisibleTransfers();
 
     int getVerticalScrollBarWidth() const;
 

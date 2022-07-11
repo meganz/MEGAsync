@@ -431,6 +431,7 @@ TransfersModel::TransfersModel(QObject *parent) :
     QObject::connect(&mMostPriorityTransferTimer, &QTimer::timeout, this, &TransfersModel::askForMostPriorityTransfer);
 
     connect(&mUpdateTransferWatcher, &QFutureWatcher<void>::finished, this, &TransfersModel::updateTransfersCount);
+    connect(&mClearTransferWatcher, &QFutureWatcher<void>::finished, this, &TransfersModel::onClearTransfersFinished);
 }
 
 TransfersModel::~TransfersModel()
@@ -931,8 +932,6 @@ void TransfersModel::retryTransfers(QModelIndexList indexes)
         return index1.row() > index2.row();
     });
 
-    clearFailedTransfers(indexes);
-
     //Try to add more threads to speed up
     auto threadsToUse(1);
 
@@ -970,9 +969,7 @@ void TransfersModel::retryTransfers(QModelIndexList indexes)
             });
 
             transfersToRetry.clear();
-
         }
-
         counter++;
     }
 
@@ -985,6 +982,8 @@ void TransfersModel::retryTransfers(QModelIndexList indexes)
             delete failedTransferCopy;
         }
     });
+
+    clearFailedTransfers(indexes);
 }
 
 void TransfersModel::openFolderByTag(TransferTag tag)
@@ -1220,8 +1219,6 @@ void TransfersModel::clearFailedTransfers(const QModelIndexList &indexes)
     }
 
     clearTransfers(uploadToClear, downloadToClear);
-
-    updateTransfersCount();
 }
 
 void TransfersModel::clearTransfers(const QMap<QModelIndex, QExplicitlySharedDataPointer<TransferData> > uploads,
@@ -1242,14 +1239,25 @@ void TransfersModel::clearTransfers(const QMap<QModelIndex, QExplicitlySharedDat
                 blockSignals(false);
                 emit unblockUiAndFilter();
             });
-            mUpdateTransferWatcher.setFuture(future);
+            mClearTransferWatcher.setFuture(future);
         }
         else
         {
             performClearTransfers(uploads, downloads);
             updateTransfersCount();
+
+            //The clear transfer is the only action which does not receive a SDK request
+            emit transfersProcessChanged();
         }
     }
+}
+
+void TransfersModel::onClearTransfersFinished()
+{
+    //The clear transfer is the only action which does not receive a SDK request
+    emit transfersProcessChanged();
+
+    updateTransfersCount();
 }
 
 void TransfersModel::performClearTransfers(const QMap<QModelIndex, QExplicitlySharedDataPointer<TransferData> > uploads,
