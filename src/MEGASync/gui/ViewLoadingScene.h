@@ -11,6 +11,7 @@
 #include <QPointer>
 #include <QLayout>
 #include <QHeaderView>
+#include <QScrollBar>
 
 class LoadingSceneDelegateBase : public QStyledItemDelegate
 {
@@ -254,15 +255,10 @@ public:
                 mView->updateGeometry();
                 visibleRows = mView->size().height()/delegateHeight;
 
-                //If the rowCount is higher than the visible rows, the vertical header is visible
-                if(mViewModel)
+                //If the vertical header is visible, add one row to the loading model to show the vertical scroll
+                if(mViewModel && mView->verticalScrollBar()->isVisible())
                 {
-                    auto rows = mViewModel->rowCount();
-
-                    if(rows > visibleRows)
-                    {
-                        visibleRows++;
-                    }
+                    visibleRows++;
                 }
 
                 if(visibleRows > MAX_LOADING_ROWS)

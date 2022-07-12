@@ -147,7 +147,7 @@ void TransfersWidget::on_tCancelClearVisible_clicked()
 void TransfersWidget::onCheckPauseResumeButton()
 {
     //SHow when there is at least one active or there are no transfers (at the beginning)
-    ui->tPauseResumeVisible->setVisible(mProxyModel->isAnyActive() || mProxyModel->rowCount() == 0);
+    ui->tPauseResumeVisible->setVisible(mProxyModel->isAnyActive());
 
     if(ui->tPauseResumeVisible->isVisible())
     {

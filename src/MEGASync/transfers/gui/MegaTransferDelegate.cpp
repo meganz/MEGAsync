@@ -33,10 +33,9 @@ MegaTransferDelegate::MegaTransferDelegate(TransfersSortFilterProxyBaseModel* mo
 
 void MegaTransferDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {   
-    auto rowCount (index.model()->rowCount());
     auto row (index.row());
 
-    if (index.isValid() && row < rowCount)
+    if (index.isValid())
     {
         auto pos (option.rect.topLeft());
         auto height (option.rect.height());
