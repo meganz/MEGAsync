@@ -117,27 +117,29 @@ bool MegaTransferDelegate::event(QEvent *event)
 
 TransferBaseDelegateWidget *MegaTransferDelegate::getTransferItemWidget(const QModelIndex& index, const QSize& size) const
 { 
-    auto nbRowsMaxInView(1);
-    if(size.height() > 0)
-    {
-        nbRowsMaxInView = mView->height() / size.height() + 1;
-    }
-    auto row (index.row() % nbRowsMaxInView);
-
     TransferBaseDelegateWidget* item(nullptr);
-
-    if(row >= mTransferItems.size())
+    if(index.isValid())
     {
-       item = mProxyModel->createTransferManagerItem(mView);
-       mTransferItems.append(item);
-    }
-    else
-    {
-        item = mTransferItems.at(row);
-    }
+        auto nbRowsMaxInView(1);
+        if(size.height() > 0)
+        {
+            nbRowsMaxInView = mView->height() / size.height() + 1;
+        }
+        auto row (index.row() % nbRowsMaxInView);
 
-    item->setCurrentIndex(index);
 
+        if(row >= mTransferItems.size())
+        {
+            item = mProxyModel->createTransferManagerItem(mView);
+            mTransferItems.append(item);
+        }
+        else
+        {
+            item = mTransferItems.at(row);
+        }
+
+        item->setCurrentIndex(index);
+    }
     return item;
 }
 

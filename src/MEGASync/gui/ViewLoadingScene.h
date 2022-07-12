@@ -280,6 +280,7 @@ public:
                 mLoadingModel->appendRow(new QStandardItem());
             }
 
+            mView->setModel(nullptr);
             mView->hide();
             mLoadingView->show();
         }
@@ -288,6 +289,7 @@ public:
             mLoadingModel->setRowCount(0);
             mLoadingView->hide();
 
+            mView->setModel(mViewModel);
             mView->show();
         }
 

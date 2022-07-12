@@ -101,9 +101,13 @@ void TransfersManagerSortFilterProxyModel::invalidateModel()
     QFuture<void> filtered = QtConcurrent::run([this](){
         auto sourceM = qobject_cast<TransfersModel*>(sourceModel());
         sourceM->lockModelMutex(true);
+        sourceM->blockSignals(true);
+        blockSignals(true);
         mIsFiltering = true;
         invalidate();
         QSortFilterProxyModel::sort(0, mSortOrder);
+        blockSignals(false);
+        sourceM->blockSignals(false);
         mIsFiltering = false;
         sourceM->lockModelMutex(false);
     });
