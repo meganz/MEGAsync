@@ -400,11 +400,9 @@ bool TransfersManagerSortFilterProxyModel::updateTransfersCounterFromTag(QExplic
     {
         removeFailedTransferFromCounter(transfer->mTag);
     }
-    else
-    {
-        removeActiveTransferFromCounter(transfer->mTag);
-        removePausedTransferFromCounter(transfer->mTag);
-    }
+
+    removeActiveTransferFromCounter(transfer->mTag);
+    removePausedTransferFromCounter(transfer->mTag);
 
     return searchRowsRemoved;
 }

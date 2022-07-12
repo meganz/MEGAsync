@@ -156,11 +156,12 @@ void InfoDialogTransfersProxyModel::onUpdateMostPriorityTransfer(int tag)
     else
     {
         if(!transferModel->getTransferByTag(tag))
-    {
-        invalidate();
-    }
-    else
-    {
-        transferModel->sendDataChangedByTag(tag);
+        {
+            invalidate();
+        }
+        else
+        {
+            transferModel->sendDataChangedByTag(tag);
+        }
     }
 }

@@ -26,9 +26,6 @@ struct TransfersCount
     int failedUploads;
     int failedDownloads;
 
-    int failedSyncUploads;
-    int failedSyncDownloads;
-
     long long completedUploadBytes;
     long long completedDownloadBytes;
 
@@ -45,8 +42,6 @@ struct TransfersCount
         pendingDownloads(0),
         failedUploads(0),
         failedDownloads(0),
-        failedSyncUploads(0),
-        failedSyncDownloads(0),
         completedUploadBytes(0),
         completedDownloadBytes(0),
         totalUploadBytes(0),
@@ -56,7 +51,7 @@ struct TransfersCount
     int completedDownloads()const {return totalDownloads - pendingDownloads - failedDownloads;}
     int completedUploads() const {return totalUploads - pendingUploads - failedUploads;}
 
-    long long totalFailedTransfers() const {return failedUploads + failedSyncUploads + failedDownloads + failedSyncDownloads;}
+    long long totalFailedTransfers() const {return failedUploads + failedDownloads;}
 
     void clear()
     {
@@ -245,6 +240,7 @@ private slots:
     void processStartTransfers(QList<QExplicitlySharedDataPointer<TransferData>>& transfersToStart);
     void processUpdateTransfers();
     void processCancelTransfers();
+    void processSyncFailedTransfers();
     void cacheCancelTransfersTags();
     void processFailedTransfers();
     void onProcessTransfers();
@@ -297,6 +293,7 @@ private:
 
     QHash<TransferTag, QPersistentModelIndex> mTagByOrder;
     QList<TransferTag> mRowsToCancel;
+    QList<TransferTag> mFailedTransferToClear;
     mutable QMutex mModelMutex;
     QTimer mMostPriorityTransferTimer;
 
