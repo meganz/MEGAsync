@@ -1078,7 +1078,7 @@ void TransferManager::refreshView()
 
             if(!mUi->wTransfers->isLoadingViewSet())
             {
-                if(mUi->wTransfers->getProxyModel()->rowCount() == 0)
+                if(mUi->wTransfers->getProxyModel()->isEmpty())
                 {
                     widgetToShow = mTabNoItem[mUi->wTransfers->getCurrentTab()];
                 }

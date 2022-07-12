@@ -172,7 +172,7 @@ void TransferManagerDelegateWidget::updateTransferState()
                 mUi->sStatus->setCurrentWidget(mUi->pFailed);
                 mUi->tItemRetry->setVisible(!getData()->mTemporaryError);
                 mUi->wProgressBar->setVisible(false);
-                cancelClearTooltip = tr("Clear transfer");
+                cancelClearTooltip = tr("Cancel transfer");
                 mUi->lItemFailed->setToolTip(tr(MegaError::getErrorString(getData()->mErrorCode)));
                 showTPauseResume = false;
             }

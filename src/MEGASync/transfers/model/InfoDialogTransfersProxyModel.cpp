@@ -153,7 +153,9 @@ void InfoDialogTransfersProxyModel::onUpdateMostPriorityTransfer(int tag)
             transferModel->sendDataChangedByTag(d->mTag);
         }
     }
-    else if(rowCount() == 0)
+    else
+    {
+        if(!transferModel->getTransferByTag(tag))
     {
         invalidate();
     }
