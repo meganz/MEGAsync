@@ -1605,7 +1605,7 @@ void SettingsDialog::syncsStateInformation(SyncStateInformation state)
             mUi->sBackupsState->setCurrentWidget(mUi->pBackupsDisabled);
 
 #ifdef Q_OS_MACOS
-            QString backup(QString::fromUtf8("settings-backup"));
+            QString backup(QString::fromUtf8("settings-backups-error"));
             mToolBar->customizeIconToolBarItem(bBackup.get(), backup);
 #else
             mUi->bBackup->setIcon(QIcon(QString::fromUtf8(":/images/settings-backups-warn.png")));
