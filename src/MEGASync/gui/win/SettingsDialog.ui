@@ -1200,7 +1200,11 @@ font-weight: bold;
               <widget class="QLabel" name="lEmail"/>
              </item>
              <item row="0" column="0" colspan="3">
-              <widget class="QLabel" name="lName"/>
+              <widget class="QLabel" name="lName">
+               <property name="textFormat">
+                <enum>Qt::PlainText</enum>
+               </property>
+              </widget>
              </item>
             </layout>
            </widget>

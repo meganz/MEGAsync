@@ -156,7 +156,7 @@ void StreamingFromMegaDialog::onLinkInfoAvailable()
     if (mSelectedMegaNode)
     {
         QString name = QString::fromUtf8(mSelectedMegaNode->getName());
-        if (!name.compare(QString::fromAscii("NO_KEY")) || !name.compare(QString::fromAscii("CRYPTO_ERROR")))
+        if (!name.compare(QLatin1String("NO_KEY")) || !name.compare(QLatin1String("CRYPTO_ERROR")))
         {
             updateFileInfo(tr("Decryption error"), LinkStatus::WARNING);
             streamURL.clear();
