@@ -18,6 +18,7 @@ void NewFolderDialog::onDialogAccepted()
     auto node = std::unique_ptr<mega::MegaNode>(MegaSyncApp->getMegaApi()->getNodeByPath(newFolderName.toUtf8().constData(), mParentNode.get()));
     if (!node || node->isFile())
     {
+        setEnabled(false);
         MegaSyncApp->getMegaApi()->createFolder(newFolderName.toUtf8().constData(), mParentNode.get(), mDelegateListener.get());
     }
     //Folder already exists
