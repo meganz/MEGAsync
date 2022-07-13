@@ -80,6 +80,8 @@ private:
     void updateAnimation(TransferData *td);
 
     void changeEvent(QEvent *event);
+
+    void updateTransfersContainerStyleSheet(int whichStyleSheet, const char *backgroundColor);
 };
 
 #endif // ACTIVETRANSFERSWIDGET_H

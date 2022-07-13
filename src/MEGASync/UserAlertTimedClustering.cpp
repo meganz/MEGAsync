@@ -19,7 +19,7 @@ UserAlertTimedClustering::~UserAlertTimedClustering()
     }
 }
 
-void UserAlertTimedClustering::addUserAlert(mega::MegaUserAlert *alert)
+void UserAlertTimedClustering::addUserAlert(mega::MegaUserAlert *alert, const QString& userName)
 {
     std::lock_guard<std::mutex> lock(mUserAlertMutex);
     if(mUserAlert)
@@ -27,25 +27,18 @@ void UserAlertTimedClustering::addUserAlert(mega::MegaUserAlert *alert)
         delete mUserAlert;
     }
     mUserAlert = alert->copy();
+    mUserName = userName;
     if(!mClusteringTimer.isActive())
     {
         mClusteringTimer.start(clusterMaxTime);
     }
 }
 
-QString getRemovedItemsMessage(int64_t removedItems, const QString& email)
+QString getRemovedItemsMessage(int64_t removedItems, const QString& userName)
 {
-    if (removedItems == 1)
-    {
-        return QCoreApplication::translate("OsNotifications", "[A] removed 1 item")
-                .replace(QString::fromUtf8("[A]"), email);
-    }
-    else
-    {
-         return QCoreApplication::translate("OsNotifications", "[A] removed [B] items")
-                 .replace(QString::fromUtf8("[A]"), email)
-                 .replace(QString::fromUtf8("[B]"), QString::number(removedItems));
-    }
+    const int removedItemsAsInt = static_cast<int>(removedItems);
+    return QCoreApplication::translate("OsNotifications", "[A] removed %n item", "", removedItemsAsInt)
+            .replace(QString::fromUtf8("[A]"), userName);
 }
 
 void UserAlertTimedClustering::onClusterTimerTimeout()
@@ -55,6 +48,6 @@ void UserAlertTimedClustering::onClusterTimerTimeout()
     const auto currentRemovedItems = totalRemovedItems - mPreviousTotalRemovedItems;
     mPreviousTotalRemovedItems = totalRemovedItems;
     const QString email{QString::fromUtf8(mUserAlert->getEmail())};
-    const QString message{getRemovedItemsMessage(currentRemovedItems, email)};
+    const QString message{getRemovedItemsMessage(currentRemovedItems, mUserName)};
     emit sendUserAlert(mUserAlert, message);
 }

@@ -1,6 +1,7 @@
 #include "AvatarWidget.h"
 #include "control/Utilities.h"
 #include "MegaApplication.h"
+#include "UserAttributesRequests.h"
 
 #include <math.h>
 
@@ -9,105 +10,35 @@
 #include <QWindow>
 #include <QMouseEvent>
 
-static constexpr int AVATAR_DIAMETER (36);
-static constexpr int AVATAR_RADIUS (AVATAR_DIAMETER / 2);
-static constexpr int AVATAR_LETTER_SIZE_PT_FULL (14);
-static constexpr int AVATAR_LETTER_SIZE_PT_SMALL (12);
+static const int AVATAR_DIAMETER (60);
+static const int AVATAR_RADIUS (AVATAR_DIAMETER / 2);
+static const int AVATAR_LETTER_SIZE_PT_FULL (60);
+static const int LETTER_PIXMAP_SIZE (150);
+static const int LATO_FONT_ADJUST_SHADOW (6);
+static const int LATO_FONT_ADJUST (-4);
+
 
 AvatarWidget::AvatarWidget(QWidget* parent) :
-    QWidget(parent),
-    mGradient(-AVATAR_RADIUS, AVATAR_RADIUS, AVATAR_RADIUS, -AVATAR_RADIUS),
-    mLetter(),
-    mLetterShadow(new QGraphicsDropShadowEffect(&mLetter))
+    QWidget(parent)
 {
-    mLetterShadow->setBlurRadius(12.0);
-    mLetterShadow->setOffset(0., 1.);
-    mLetterShadow->setEnabled(true);
-    mLetter.setGraphicsEffect(mLetterShadow);
-    mLetter.setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
-    mLetter.setStyleSheet(QString::fromUtf8("QLabel {"
-                                             "font-family: Lato Semibold;"
-                                             "background: transparent;"
-                                             "color: white;"
-                                             "border: none;"
-                                             "margin: 0px;"
-                                             "padding: 0px;}"));
-    clearData();
 }
 
-void AvatarWidget::setAvatarLetter(QChar letter, const QColor& color)
+void AvatarWidget::setUserEmail(const char* userEmail)
 {
-    mLetter.setText(letter);
-    mLetterShadow->setColor(color.darker(145));
-    mGradient.setColorAt(1.0, color.lighter(130));
-    mGradient.setColorAt(0.0, color);
-    update();
-}
-
-void AvatarWidget::setAvatarImage(const QString& pathToFile)
-{
-    mPathToFile = pathToFile;
-    update();
-}
-
-void AvatarWidget::drawAvatarFromEmail(const QString& email)
-{
-    mega::MegaApi *megaApi = ((MegaApplication *)qApp)->getMegaApi();
-    if (!megaApi)
+    mAvatarRequest = UserAttributes::AvatarAttributeRequest::requestAvatar(userEmail);
+    if(mAvatarRequest)
     {
-        return;
-    }
-
-    QString avatarsPath = Utilities::getAvatarPath(email);
-    QFileInfo avatar(avatarsPath);
-    if (avatar.exists())
-    {
-        setAvatarImage(Utilities::getAvatarPath(email));
-    }
-    else
-    {
-        QColor color (217, 0, 7);
-        const char* userHandle = megaApi->getMyUserHandle();
-        if (userHandle)
-        {
-            const char* avatarColor = megaApi->getUserAvatarColor(userHandle);
-            if (avatarColor)
-            {
-                color = QColor(avatarColor);
-                delete [] avatarColor;
-            }
-            delete [] userHandle;
-        }
-
-        Preferences* preferences = Preferences::instance();
-        QString fullname = (preferences->firstName() + preferences->lastName()).trimmed();
-        if (fullname.isEmpty())
-        {
-            char* apiEmail = megaApi->getMyEmail();
-            if (apiEmail)
-            {
-                fullname = QString::fromUtf8(apiEmail);
-                delete [] apiEmail;
-            }
-            else
-            {
-                fullname = preferences->email();
-            }
-
-            if (fullname.isEmpty())
-            {
-                fullname = QString::fromUtf8(" ");
-            }
-        }
-
-        setAvatarLetter(fullname.at(0).toUpper(), color);
+        mAvatarConnection = connect(mAvatarRequest.get(), &UserAttributes::AvatarAttributeRequest::attributeReady, this, [this](){
+            emit avatarUpdated();
+            update();
+        });
     }
 }
 
 void AvatarWidget::clearData()
 {
-    mLetter.setText(QString());
-    mPathToFile = QString();
+    disconnect(mAvatarConnection);
+    mAvatarRequest.reset();
 }
 
 QSize AvatarWidget::minimumSizeHint() const
@@ -124,7 +55,7 @@ void AvatarWidget::paintEvent(QPaintEvent *event)
 {
     Q_UNUSED(event)
 
-    if (mLetter.text().isNull() && mPathToFile.isNull())
+    if (!mAvatarRequest)
     {
         return;
     }
@@ -137,29 +68,7 @@ void AvatarWidget::paintEvent(QPaintEvent *event)
     painter.translate(width / 2, height() / 2);
     QRect rect (-width / 2, -width / 2, width, width);
 
-    if (QFileInfo::exists(mPathToFile))
-    {
-        //Apply avatar
-        painter.drawPixmap(rect, mask_image(mPathToFile, width));
-    }
-    else
-    {
-        // Draw background
-        painter.setPen(Qt::NoPen);
-        painter.setBrush(QBrush(mGradient));
-        painter.drawEllipse(rect);
-
-        // Draw letter
-        QFont font (mLetter.font());
-        mGradient.setStart(-width / 2.0, width / 2.0);
-        mGradient.setFinalStop(width / 2.0, -width / 2.0);
-        font.setPointSize(width == AVATAR_DIAMETER ?
-                              AVATAR_LETTER_SIZE_PT_FULL
-                            : AVATAR_LETTER_SIZE_PT_SMALL);
-        mLetter.setFont(font);
-        mLetter.resize(width, width);
-        painter.drawPixmap(rect, mLetter.grab());
-    }
+    painter.drawPixmap(rect, mAvatarRequest->getPixmap(width));
 }
 
 void AvatarWidget::mousePressEvent(QMouseEvent *event)
@@ -170,13 +79,12 @@ void AvatarWidget::mousePressEvent(QMouseEvent *event)
     }
 }
 
-QPixmap AvatarWidget::mask_image(const QString& pathToFile, int size)
+QPixmap AvatarPixmap::maskFromImagePath(const QString &pathToFile, int size)
 {
     // Return a QPixmap from image loaded from pathToFile masked with a smooth circle.
     // The returned image will have a size of size × size pixels.
     // Load image and convert to 32-bit ARGB (adds an alpha channel):
     // Snipped based on Stefan scherfke code
-
     if (!QFileInfo::exists(pathToFile))
     {
         return QPixmap();
@@ -215,6 +123,47 @@ QPixmap AvatarWidget::mask_image(const QString& pathToFile, int size)
     // account to get a sharp image on retina displays:
     qreal pr = QWindow().devicePixelRatio();
     pm = QPixmap::fromImage(out_img);
+    pm.setDevicePixelRatio(pr);
+    size = qRound (pr * size);
+    pm = pm.scaled(size, size, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+
+    return pm;
+}
+
+QPixmap AvatarPixmap::createFromLetter(const QChar& letter, const QColor& color, int size)
+{
+    QPixmap pm(QSize(LETTER_PIXMAP_SIZE, LETTER_PIXMAP_SIZE));
+    QRect rect = pm.rect();
+
+    // Setup background gradient: dark to light, bottom left to top right
+    QLinearGradient gradient(size, size, size, size);
+    gradient.setColorAt(1.0, color.lighter(111));
+    gradient.setColorAt(0.0, color);
+    gradient.setStart(-size / 2.0, size / 2.0);
+    gradient.setFinalStop(size / 2.0, -size / 2.0);
+
+    // Draw background
+    pm.fill(Qt::transparent);
+    QPainter painter(&pm);
+    painter.setRenderHints(QPainter::Antialiasing | QPainter::TextAntialiasing );
+    painter.setPen(Qt::NoPen);
+    painter.setBrush(QBrush(gradient));
+    painter.drawEllipse(rect);
+
+    // Draw letter with drop shadow (using background base color, but darker)
+    QFont font = painter.font();
+    font.setPointSize(AVATAR_LETTER_SIZE_PT_FULL);
+    font.setFamily(QLatin1String("Lato Semibold"));
+    painter.setFont(font);
+    painter.setPen(color.darker(110));
+    painter.drawText(rect.adjusted(0, LATO_FONT_ADJUST_SHADOW, 10, 0), letter, QTextOption(Qt::AlignCenter));
+    painter.setPen(Qt::white);
+    painter.drawText(rect.adjusted(0, LATO_FONT_ADJUST, 0, 0), letter, QTextOption(Qt::AlignCenter));
+
+    painter.end();
+    // Convert the image to a pixmap and rescale it.  Take pixel ratio into
+    // account to get a sharp image on retina displays:
+    qreal pr = QWindow().devicePixelRatio();
     pm.setDevicePixelRatio(pr);
     size = qRound (pr * size);
     pm = pm.scaled(size, size, Qt::KeepAspectRatio, Qt::SmoothTransformation);

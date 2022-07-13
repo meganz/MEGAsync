@@ -9,6 +9,7 @@
 #include <deque>
 #include <memory>
 #include "Utilities.h"
+#include <QCoreApplication>
 
 struct TransferCachedData {
     //Fixme: Once initialization is completed, you can get rid off all cached data except tag and priority
@@ -38,7 +39,6 @@ public:
         if (transfer)
         {
             data.type = transfer->getType();
-            data.filename = QString::fromUtf8(transfer->getFileName());
             data.isSyncTransfer = transfer->isSyncTransfer();
             data.errorCode = transfer->getLastError().getErrorCode();
             data.errorValue = transfer->getLastErrorExtended() ? transfer->getLastErrorExtended()->getValue() : 0;
@@ -51,6 +51,13 @@ public:
             data.meanSpeed = transfer->getMeanSpeed();
             data.transferredBytes = transfer->getTransferredBytes();
             data.updateTime = transfer->getUpdateTime();
+
+            QString fileName = QString::fromUtf8(transfer->getFileName());
+            if(fileName == QLatin1String("NO_KEY") || fileName == QLatin1String("CRYPTO_ERROR"))
+            {
+               fileName = QCoreApplication::translate("MegaError", "Decryption error");
+            }
+            data.filename = fileName;
 
             std::unique_ptr<mega::MegaNode>publicNode(transfer->getPublicMegaNode());
             data.publicNode = publicNode ? true : false;

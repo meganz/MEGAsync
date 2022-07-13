@@ -234,7 +234,6 @@ signals:
     void startUpdaterThread();
     void tryUpdate();
     void installUpdate();
-    void unityFixSignal();
     void clearAllFinishedTransfers();
     void clearFinishedTransfer(int transferTag);
     void fetchNodesAfterBlock();
@@ -358,7 +357,6 @@ protected:
     void applyStorageState(int state, bool doNotAskForUserStats = false);
     void processUploadQueue(mega::MegaHandle nodeHandle);
     void processDownloadQueue(QString path);
-    void unityFix();
     void disableSyncs();
     void restoreSyncs();
     void closeDialogs(bool bwoverquota = false);
@@ -430,7 +428,7 @@ protected:
     SetupWizard *setupWizard;
     SettingsDialog *settingsDialog;
     InfoDialog *infoDialog;
-    Preferences *preferences;
+    std::shared_ptr<Preferences> preferences;
     Model *model;
     Controller *controller;
     mega::MegaApi *megaApi;
@@ -438,7 +436,7 @@ protected:
     QFilterAlertsModel *notificationsProxyModel;
     QAlertsModel *notificationsModel;
     MegaAlertDelegate *notificationsDelegate;
-    std::unique_ptr<QObject> context{new QObject};
+    QObject *context;
     QString crashReportFilePath;
 
     HTTPServer *httpServer;
@@ -561,6 +559,7 @@ private:
 #endif
     void loadSyncExclusionRules(QString email = QString());
 
+    static std::pair<QString,QString> buildFinishedTransferTitleAndMessage(const TransferMetaData *data);
     static long long computeExclusionSizeLimit(const long long sizeLimitValue, const int unit);
 
     QList<QNetworkInterface> findNewNetworkInterfaces();
@@ -582,6 +581,16 @@ private:
 
     void reconnectIfNecessary(const bool disconnected, const QList<QNetworkInterface>& newNetworkInterfaces);
     bool isIdleForTooLong() const;
+
+    void ConnectServerSignals(HTTPServer* server);
+
+    static QString RectToString(const QRect& rect);
+
+    void fixMultiscreenResizeBug(int& posX, int& posY);
+
+    static void logInfoDialogCoordinates(const char* message, const QRect& screenGeometry, const QString& otherInformation);
+
+    void destroyInfoDialogMenus();
 };
 
 class DeferPreferencesSyncForScope

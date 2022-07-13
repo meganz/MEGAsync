@@ -994,7 +994,7 @@ margin-right: 32px;</string>
                   <string notr="true">font-style: normal;</string>
                  </property>
                  <property name="text">
-                  <string>days</string>
+                  <string notr="true">days</string>
                  </property>
                  <property name="alignment">
                   <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
@@ -1830,6 +1830,9 @@ margin-right: 32px;</string>
                  </property>
                  <property name="styleSheet">
                   <string notr="true"/>
+                 </property>
+                 <property name="textFormat">
+                  <enum>Qt::PlainText</enum>
                  </property>
                 </widget>
                </item>

@@ -29,8 +29,11 @@ AccountDetailsDialog::AccountDetailsDialog(QWidget *parent) :
     // Set transfer quota progress bar color to blue
     mUi->wCircularTransfer->setProgressBarGradient(QColor(96, 209, 254), QColor(88, 185, 243));
 
+    QIcon icon;
+    icon.addFile(QString::fromUtf8(":/images/account_details/versions.png"));
+    mUi->lVersionIcon->setPixmap(icon.pixmap(24, 24));
     // Get fresh data
-    refresh(Preferences::instance());
+    refresh();
 
     // Init HiDPI
     mHighDpiResize.init(this);
@@ -45,8 +48,9 @@ AccountDetailsDialog::~AccountDetailsDialog()
     delete mUi;
 }
 
-void AccountDetailsDialog::refresh(Preferences* preferences)
+void AccountDetailsDialog::refresh()
 {
+    auto preferences = Preferences::instance();
     // Get account type
     auto accType(preferences->accountType());
 
@@ -118,7 +122,8 @@ void AccountDetailsDialog::refresh(Preferences* preferences)
         }
 
         mUi->lUsedStorage->setText(Utilities::getSizeString(usedStorage));
-
+        long long availableStorage = totalStorage - usedStorage;
+        mUi->lAvailableStorage->setText(Utilities::getSizeString(availableStorage));
         // ---------- Process transfer usage
 
         // Get useful data
@@ -245,5 +250,5 @@ void AccountDetailsDialog::updateStorageElements()
     // Prevent other updates of these fields (due to events) after the first one
     MegaSyncApp->dettachStorageObserver(*this);
 
-    refresh(Preferences::instance());
+    refresh();
 }

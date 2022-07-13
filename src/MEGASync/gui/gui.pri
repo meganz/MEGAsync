@@ -2,10 +2,15 @@ QT       += network
 
 SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/BalloonToolTip.cpp \
+    $$PWD/MegaItemDelegates.cpp \
     $$PWD/EventHelper.cpp \
     $$PWD/InfoDialog.cpp \
+    $$PWD/MegaItemProxyModel.cpp \
+    $$PWD/MegaItemTreeView.cpp \
     $$PWD/NotificationsSettings.cpp \
     $$PWD/OverQuotaDialog.cpp \
+    $$PWD/QtPositioningBugFixer.cpp \
+    $$PWD/PasswordLineEdit.cpp \
     $$PWD/SetupWizard.cpp \
     $$PWD/NodeSelector.cpp \
     $$PWD/FolderBinder.cpp \
@@ -19,8 +24,7 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/MegaProxyStyle.cpp \
     $$PWD/AccountDetailsDialog.cpp \
     $$PWD/DownloadFromMegaDialog.cpp \
-    $$PWD/UsageWidget.cpp \
-    $$PWD/QMegaModel.cpp \
+    $$PWD/MegaItemModel.cpp \
     $$PWD/MegaItem.cpp \
     $$PWD/ChangeLogDialog.cpp \
     $$PWD/GuestWidget.cpp \
@@ -67,6 +71,7 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/FilterAlertWidget.cpp \
     $$PWD/AlertFilterType.cpp \
     $$PWD/BugReportDialog.cpp \
+    $$PWD/UserAttributesRequests.cpp \
     $$PWD/VerifyLockMessage.cpp \
     $$PWD/MegaInfoMessage.cpp \
     $$PWD/WaitingSpinnerWidget.cpp \
@@ -76,11 +81,17 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/GuiUtilities.cpp
 
 HEADERS  += $$PWD/SettingsDialog.h \
+    $$PWD/AutoResizeStackedWidget.h \
     $$PWD/BalloonToolTip.h \
+    $$PWD/MegaItemDelegates.h \
     $$PWD/EventHelper.h \
     $$PWD/InfoDialog.h \
+    $$PWD/MegaItemProxyModel.h \
+    $$PWD/MegaItemTreeView.h \
     $$PWD/NotificationsSettings.h \
     $$PWD/OverQuotaDialog.h \
+    $$PWD/QtPositioningBugFixer.h \
+    $$PWD/PasswordLineEdit.h \
     $$PWD/SetupWizard.h \
     $$PWD/NodeSelector.h \
     $$PWD/FolderBinder.h \
@@ -94,8 +105,7 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/MegaProxyStyle.h \
     $$PWD/AccountDetailsDialog.h \
     $$PWD/DownloadFromMegaDialog.h \
-    $$PWD/UsageWidget.h \
-    $$PWD/QMegaModel.h \
+    $$PWD/MegaItemModel.h \
     $$PWD/MegaItem.h \
     $$PWD/ChangeLogDialog.h \
     $$PWD/GuestWidget.h \
@@ -142,6 +152,7 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/FilterAlertWidget.h \
     $$PWD/AlertFilterType.h \
     $$PWD/BugReportDialog.h \
+    $$PWD/UserAttributesRequests.h \
     $$PWD/VerifyLockMessage.h \
     $$PWD/MegaInfoMessage.h \
     $$PWD/WaitingSpinnerWidget.h \

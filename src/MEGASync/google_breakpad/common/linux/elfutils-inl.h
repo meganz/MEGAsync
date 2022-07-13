@@ -54,7 +54,7 @@ const typename ElfClass::Shdr* FindElfSectionByName(
   assert(sections != NULL);
   assert(nsection > 0);
 
-  int name_len = my_strlen(name);
+  char name_len = static_cast<char>(my_strlen(name));
   if (name_len == 0)
     return NULL;
 

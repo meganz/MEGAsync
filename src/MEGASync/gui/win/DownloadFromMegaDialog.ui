@@ -25,6 +25,13 @@
   <property name="windowTitle">
    <string>Download from MEGA</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">QWidget
+{
+font-size: 11px;
+}
+</string>
+  </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <property name="spacing">
     <number>0</number>
@@ -109,12 +116,6 @@
       </item>
       <item>
        <widget class="QPushButton" name="bChange">
-        <property name="minimumSize">
-         <size>
-          <width>0</width>
-          <height>0</height>
-         </size>
-        </property>
         <property name="text">
          <string>Choose</string>
         </property>
@@ -181,12 +182,6 @@
       </item>
       <item>
        <widget class="QPushButton" name="bOK">
-        <property name="minimumSize">
-         <size>
-          <width>0</width>
-          <height>0</height>
-         </size>
-        </property>
         <property name="text">
          <string>OK</string>
         </property>
@@ -194,12 +189,6 @@
       </item>
       <item>
        <widget class="QPushButton" name="bCancel">
-        <property name="minimumSize">
-         <size>
-          <width>0</width>
-          <height>0</height>
-         </size>
-        </property>
         <property name="text">
          <string>Cancel</string>
         </property>

@@ -29,8 +29,8 @@ ID_BUNDLE=mega.mac
 MOUNTDIR=tmp
 RESOURCES=installer/resourcesDMG
 MSYNC_PREFIX=MEGASync/
-MLOADER_PREFIX=MEGALoader/
 MUPDATER_PREFIX=MEGAUpdater/
+MLOADER_PREFIX=MEGALoader/
 
 full_pkg=0
 full_pkg_cmake=0

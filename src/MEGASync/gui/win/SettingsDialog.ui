@@ -22,13 +22,6 @@
 font-size: 12px;
 }
 
-QPushButton
-{
-padding-left: 10px;
-padding-right: 10px;
-min-height: 22px;
-}
-
 QComboBox
 {
 min-height: 24px;
@@ -823,7 +816,7 @@ font-weight: bold;
              <string notr="true">font-style: normal;</string>
             </property>
             <property name="text">
-             <string>days</string>
+             <string notr="true">days</string>
             </property>
             <property name="alignment">
              <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
@@ -1207,7 +1200,11 @@ font-weight: bold;
               <widget class="QLabel" name="lEmail"/>
              </item>
              <item row="0" column="0" colspan="3">
-              <widget class="QLabel" name="lName"/>
+              <widget class="QLabel" name="lName">
+               <property name="textFormat">
+                <enum>Qt::PlainText</enum>
+               </property>
+              </widget>
              </item>
             </layout>
            </widget>
@@ -3017,12 +3014,6 @@ color: #0078D7;
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>
   <customwidget>
-   <class>WaitingSpinnerWidget</class>
-   <extends>QWidget</extends>
-   <header location="global">WaitingSpinnerWidget.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
    <class>AvatarWidget</class>
    <extends>QWidget</extends>
    <header>AvatarWidget.h</header>
@@ -3032,6 +3023,12 @@ color: #0078D7;
    <class>NotificationsSettings</class>
    <extends>QWidget</extends>
    <header location="global">NotificationsSettings.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>WaitingSpinnerWidget</class>
+   <extends>QWidget</extends>
+   <header location="global">WaitingSpinnerWidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

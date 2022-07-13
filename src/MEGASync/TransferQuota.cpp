@@ -4,12 +4,10 @@
 #include "platform/Platform.h"
 #include "OverQuotaDialog.h"
 
-TransferQuota::TransferQuota(mega::MegaApi* megaApi,
-                                       Preferences *preferences,
-                                       std::shared_ptr<DesktopNotifications> desktopNotifications)
-    :mMegaApi{megaApi},
+TransferQuota::TransferQuota(std::shared_ptr<DesktopNotifications> desktopNotifications)
+    : mMegaApi(MegaSyncApp->getMegaApi()),
       mPricing(nullptr),
-      mPreferences{preferences},
+      mPreferences(Preferences::instance()),
       mOsNotifications{std::move(desktopNotifications)},
       mUpgradeDialog{nullptr},
       mQuotaState{QuotaState::OK},
@@ -122,7 +120,7 @@ void TransferQuota::checkExecuteDialog()
         {
             mUpgradeDialog = new UpgradeDialog(mMegaApi, mPricing, mCurrency);
             QObject::connect(mUpgradeDialog, &UpgradeDialog::finished, this, &TransferQuota::upgradeDialogFinished);
-            Platform::activateBackgroundWindow(mUpgradeDialog);
+            mUpgradeDialog->activateWindow();
             mUpgradeDialog->show();
         }
         else if (!mUpgradeDialog->isVisible())

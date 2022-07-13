@@ -67,13 +67,13 @@ class PageAllocator {
     FreeAll();
   }
 
-  void *Alloc(unsigned bytes) {
+  void *Alloc(unsigned long bytes) {
     if (!bytes)
       return NULL;
 
     if (current_page_ && page_size_ - page_offset_ >= bytes) {
       uint8_t *const ret = current_page_ + page_offset_;
-      page_offset_ += bytes;
+      page_offset_ += static_cast<unsigned>(bytes);
       if (page_offset_ == page_size_) {
         page_offset_ = 0;
         current_page_ = NULL;
@@ -82,15 +82,16 @@ class PageAllocator {
       return ret;
     }
 
-    const unsigned pages =
+    const unsigned long pages =
         (bytes + sizeof(PageHeader) + page_size_ - 1) / page_size_;
-    uint8_t *const ret = GetNPages(pages);
+    uint8_t *const ret = GetNPages(static_cast<unsigned>(pages));
     if (!ret)
       return NULL;
 
-    page_offset_ =
+    unsigned long longPageOffset =
         (page_size_ - (page_size_ * pages - (bytes + sizeof(PageHeader)))) %
         page_size_;
+    page_offset_ = static_cast<unsigned>(longPageOffset);
     current_page_ = page_offset_ ? ret + page_size_ * (pages - 1) : NULL;
 
     return ret + sizeof(PageHeader);

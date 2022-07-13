@@ -44,7 +44,7 @@ private:
     Model();
 
     ///////////////// SYNCS ///////////////////////
-    Preferences *preferences;
+    std::shared_ptr<Preferences> preferences;
     bool isFirstSyncDone = false;
     ///////////// END OF SYNCS ////////////////////
 
@@ -109,6 +109,7 @@ public:
     QStringList getSyncNames();
     QStringList getSyncIDs();
     QStringList getMegaFolders();
+    QString getMegaFolderByHandle(const mega::MegaHandle& handle);
     QStringList getLocalFolders();
     QList<mega::MegaHandle> getMegaFolderHandles();
 

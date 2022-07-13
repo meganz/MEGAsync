@@ -116,7 +116,7 @@ void MegaTransferDelegate::paint(QPainter *painter, const QStyleOptionViewItem &
             }
         }
 
-        Preferences *preferences = Preferences::instance();
+        auto preferences = Preferences::instance();
         if (ti->getType() == MegaTransfer::TYPE_DOWNLOAD)
         {
             if (preferences->getDownloadsPaused())

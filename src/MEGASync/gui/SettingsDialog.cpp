@@ -10,6 +10,7 @@
 #include "gui/QSyncItemWidget.h"
 #include "gui/ProxySettings.h"
 #include "gui/BandwidthSettings.h"
+#include "UserAttributesRequests.h"
 
 #include <QApplication>
 #include <QDesktopServices>
@@ -468,6 +469,7 @@ void SettingsDialog::loadSettings()
     mUi->cCacheSchedulerEnabled->setChecked(mPreferences->cleanerDaysLimit());
     mUi->sCacheSchedulerDays->setEnabled(mPreferences->cleanerDaysLimit());
     mUi->sCacheSchedulerDays->setValue(mPreferences->cleanerDaysLimitValue());
+    updateCacheSchedulerDaysLabel();
 
     if (!mPreferences->canUpdate(MegaApplication::applicationFilePath()))
     {
@@ -543,6 +545,12 @@ void SettingsDialog::loadSettings()
                 + mPreferences->lastName()).trimmed());
     mUi->lName->setText(fullName);
 
+    //Update name in case it changes
+    auto fullNameRequest = UserAttributes::FullNameAttributeRequest::requestFullName(mPreferences->email().toStdString().c_str());
+    connect(fullNameRequest.get(), &UserAttributes::FullNameAttributeRequest::attributeReady, this, [this](const QString& fullName){
+        mUi->lName->setText(fullName);
+    });
+
     // account type and details
     updateAccountElements();
     updateStorageElements();
@@ -550,7 +558,7 @@ void SettingsDialog::loadSettings()
 
     if (mAccountDetailsDialog)
     {
-        mAccountDetailsDialog->refresh(mPreferences);
+        mAccountDetailsDialog->refresh();
     }
 
     updateUploadFolder();
@@ -944,6 +952,7 @@ void SettingsDialog::on_sCacheSchedulerDays_valueChanged(int i)
     if(mUi->cCacheSchedulerEnabled->isChecked())
     {
         mPreferences->setCleanerDaysLimitValue(i);
+        updateCacheSchedulerDaysLabel();
         mApp->cleanLocalCaches();
     }
 }
@@ -985,6 +994,7 @@ void SettingsDialog::on_cLanguage_currentIndexChanged(int index)
     {
         mPreferences->setLanguage(selectedLanguage);
         mApp->changeLanguage(selectedLanguage);
+        updateCacheSchedulerDaysLabel();
         QString currentLanguage = mApp->getCurrentLanguageCode();
         mThreadPool->push([=]()
         {
@@ -1160,8 +1170,7 @@ void SettingsDialog::updateBandwidthElements()
 
     if (accountType == Preferences::ACCOUNT_TYPE_FREE)
     {
-        mUi->lBandwidth->setText(tr("Used quota for the last %1 hours:")
-                                .arg(mPreferences->bandwidthInterval()));
+        mUi->lBandwidth->setText(tr("Used quota for the last %n hour:", "", mPreferences->bandwidthInterval()));
         mUi->lBandwidthFree->show();
         mUi->lBandwidthFree->setText(Utilities::getSizeString(usedBandwidth));
     }
@@ -1335,7 +1344,7 @@ void SettingsDialog::setAvatar()
     const char* email = mMegaApi->getMyEmail();
     if (email)
     {
-        mUi->wAvatar->drawAvatarFromEmail(QString::fromUtf8(email));
+        mUi->wAvatar->setUserEmail(email);
         delete [] email;
     }
 }
@@ -2220,13 +2229,12 @@ void SettingsDialog::on_bFolders_clicked()
 
 void SettingsDialog::on_bUploadFolder_clicked()
 {
-    QPointer<NodeSelector> nodeSelector = new NodeSelector(mMegaApi,
-                                                           NodeSelector::UPLOAD_SELECT, this);
+    QPointer<NodeSelector> nodeSelector = new NodeSelector(NodeSelector::UPLOAD_SELECT, this);
     MegaNode* defaultNode = mMegaApi->getNodeByPath(mUi->eUploadFolder->text()
                                                     .toUtf8().constData());
     if (defaultNode)
     {
-        nodeSelector->setSelectedFolderHandle(defaultNode->getHandle());
+        nodeSelector->setSelectedNodeHandle(defaultNode->getHandle());
         delete defaultNode;
     }
 
@@ -2239,7 +2247,7 @@ void SettingsDialog::on_bUploadFolder_clicked()
         return;
     }
 
-    MegaHandle selectedMegaFolderHandle = nodeSelector->getSelectedFolderHandle();
+    MegaHandle selectedMegaFolderHandle = nodeSelector->getSelectedNodeHandle();
     MegaNode* node = mMegaApi->getNodeByHandle(selectedMegaFolderHandle);
     if (!node)
     {
@@ -2575,10 +2583,15 @@ void SettingsDialog::updateNetworkTab()
 void SettingsDialog::setShortCutsForToolBarItems()
 {
     // Provide quick access shortcuts for Settings panes via Ctrl+1,2,3..
-    // Ctrl is automagically translated to CMD key by Qt on macOS
+    // Ctrl is auto-magically translated to CMD key by Qt on macOS
     for (int i = 0; i < mUi->wStack->count(); ++i)
     {
         QShortcut *scGeneral = new QShortcut(QKeySequence(QString::fromLatin1("Ctrl+%1").arg(i+1)), this);
         QObject::connect(scGeneral, &QShortcut::activated, this, [=](){ openSettingsTab(i); });
     }
+}
+
+void SettingsDialog::updateCacheSchedulerDaysLabel()
+{
+    mUi->lCacheSchedulerSuffix->setText(tr("day", "", mPreferences->cleanerDaysLimitValue()));
 }

@@ -9,6 +9,8 @@
 #include "HighDpiResize.h"
 
 #include <QCloseEvent>
+#include <QInputDialog>
+
 
 #if QT_VERSION >= 0x050000
 #include <QtConcurrent/QtConcurrent>
@@ -96,13 +98,17 @@ void StreamingFromMegaDialog::closeEvent(QCloseEvent *event)
 
 void StreamingFromMegaDialog::on_bFromCloud_clicked()
 {
-    const unique_ptr<NodeSelector> nodeSelector{::mega::make_unique<NodeSelector>(megaApi, NodeSelector::STREAM_SELECT, this->parentWidget())};
+    const unique_ptr<NodeSelector> nodeSelector{::mega::make_unique<NodeSelector>(NodeSelector::STREAM_SELECT, this->parentWidget())};
+    if (mSelectedMegaNode)
+    {
+        nodeSelector->setSelectedNodeHandle(mSelectedMegaNode->getHandle());
+    }
     int result = nodeSelector->exec();
     if (!nodeSelector || result != QDialog::Accepted)
     {
         return;
     }
-    MegaNode *node = megaApi->getNodeByHandle(nodeSelector->getSelectedFolderHandle());
+    MegaNode *node = megaApi->getNodeByHandle(nodeSelector->getSelectedNodeHandle());
     updateFileInfoFromNode(node);
 }
 
@@ -150,7 +156,7 @@ void StreamingFromMegaDialog::onLinkInfoAvailable()
     if (mSelectedMegaNode)
     {
         QString name = QString::fromUtf8(mSelectedMegaNode->getName());
-        if (!name.compare(QString::fromAscii("NO_KEY")) || !name.compare(QString::fromAscii("CRYPTO_ERROR")))
+        if (!name.compare(QLatin1String("NO_KEY")) || !name.compare(QLatin1String("CRYPTO_ERROR")))
         {
             updateFileInfo(tr("Decryption error"), LinkStatus::WARNING);
             streamURL.clear();
@@ -218,7 +224,7 @@ void StreamingFromMegaDialog::on_bOpenOther_clicked()
 {
     QString defaultPath;
 
-    Preferences *preferences = Preferences::instance();
+    auto preferences = Preferences::instance();
     QString lastPath = preferences->lastCustomStreamingApp();
     QFileInfo lastFile(lastPath);
     if (!lastPath.size() || !lastFile.exists())
