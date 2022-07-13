@@ -318,6 +318,7 @@ private:
     static void initializeExtensions();
     static QString getExtensionPixmapNameSmall(QString fileName);
     static QString getExtensionPixmapNameMedium(QString fileName);
+    static double toDoubleInUnit(unsigned long long bytes, unsigned long long unit);
 
 //Platform dependent functions
 public:
