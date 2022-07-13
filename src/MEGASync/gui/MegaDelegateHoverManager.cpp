@@ -18,27 +18,6 @@ void MegaDelegateHoverManager::setView(QAbstractItemView *view)
     mView = view;
     mView->setMouseTracking(true);
     mView->viewport()->installEventFilter(this);
-
-    connect(mView->model(), &QAbstractItemModel::modelAboutToBeReset,this, [this](){
-        mCurrentIndex = QModelIndex();
-    });
-
-    connect(mView->model(), &QAbstractItemModel::layoutChanged,this, [this](){
-        mCurrentIndex = QModelIndex();
-    });
-
-    connect(mView->model(), &QAbstractItemModel::rowsAboutToBeRemoved,this, [this](const QModelIndex &parent, int first, int last){
-        for(int index = first; index <= last; ++index)
-        {
-            auto modelIndex = mView->model()->index(index,0,parent);
-            if(mCurrentIndex.row() != modelIndex.row()
-                    || mCurrentIndex.parent() != modelIndex.parent())
-            {
-                mCurrentIndex = QModelIndex();
-                break;
-            }
-        }
-    });
 }
 
 bool MegaDelegateHoverManager::eventFilter(QObject *watched, QEvent *event)
