@@ -299,6 +299,13 @@ QString Utilities::getExtensionPixmapNameMedium(QString fileName)
     return getExtensionPixmapName(fileName, QString::fromAscii(":/images/drag_"));
 }
 
+double Utilities::toDoubleInUnit(unsigned long long bytes, unsigned long long unit)
+{
+    double decimalMultiplier = 100.0;
+    double multipliedValue = decimalMultiplier * static_cast<double>(bytes);
+    return static_cast<int>(multipliedValue / static_cast<double>(unit)) / decimalMultiplier;
+}
+
 QIcon Utilities::getCachedPixmap(QString fileName)
 {
     return gIconCache.getDirect(fileName);
@@ -559,25 +566,25 @@ QString Utilities::getSizeString(unsigned long long bytes)
     QLocale locale(language);
     if (bytes >= TB)
     {
-        return locale.toString( ((int)((10 * bytes) / TB))/10.0) + QString::fromAscii(" ")
+        return locale.toString(toDoubleInUnit(bytes, TB)) + QString::fromAscii(" ")
                 + QCoreApplication::translate("Utilities", "TB");
     }
 
     if (bytes >= GB)
     {
-        return locale.toString( ((int)((10 * bytes) / GB))/10.0) + QString::fromAscii(" ")
+        return locale.toString(toDoubleInUnit(bytes, GB)) + QString::fromAscii(" ")
                 + QCoreApplication::translate("Utilities", "GB");
     }
 
     if (bytes >= MB)
     {
-        return locale.toString( ((int)((10 * bytes) / MB))/10.0) + QString::fromAscii(" ")
+        return locale.toString(toDoubleInUnit(bytes, MB)) + QString::fromAscii(" ")
                 + QCoreApplication::translate("Utilities", "MB");
     }
 
     if (bytes >= KB)
     {
-        return locale.toString( ((int)((10 * bytes) / KB))/10.0) + QString::fromAscii(" ")
+        return locale.toString(toDoubleInUnit(bytes, KB)) + QString::fromAscii(" ")
                 + QCoreApplication::translate("Utilities", "KB");
     }
 
@@ -596,7 +603,6 @@ QString Utilities::getSizeString(long long bytes)
     return locale.toString(bytes) + QStringLiteral(" ")
             + QCoreApplication::translate("Utilities", "Bytes");
 }
-
 
 QString Utilities::extractJSONString(QString json, QString name)
 {
