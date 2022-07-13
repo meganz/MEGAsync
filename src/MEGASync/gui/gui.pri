@@ -71,14 +71,18 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/FilterAlertWidget.cpp \
     $$PWD/AlertFilterType.cpp \
     $$PWD/BugReportDialog.cpp \
-    $$PWD/UserAttributesRequests.cpp \
+    $$PWD/UserAttributesRequests/FullName.cpp \
+    $$PWD/UserAttributesRequests/Avatar.cpp \
     $$PWD/VerifyLockMessage.cpp \
     $$PWD/MegaInfoMessage.cpp \
     $$PWD/WaitingSpinnerWidget.cpp \
     $$PWD/ProxySettings.cpp \
     $$PWD/BandwidthSettings.cpp \
     $$PWD/SwitchButton.cpp \
-    $$PWD/GuiUtilities.cpp
+    $$PWD/GuiUtilities.cpp \
+    $$PWD/NodeNameSetterDialog/NodeNameSetterDialog.cpp \
+    $$PWD/NodeNameSetterDialog/NewFolderDialog.cpp \
+    $$PWD/NodeNameSetterDialog/RenameNodeDialog.cpp
 
 HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/AutoResizeStackedWidget.h \
@@ -152,14 +156,18 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/FilterAlertWidget.h \
     $$PWD/AlertFilterType.h \
     $$PWD/BugReportDialog.h \
-    $$PWD/UserAttributesRequests.h \
+    $$PWD/UserAttributesRequests/FullName.h \
+    $$PWD/UserAttributesRequests/Avatar.h \
     $$PWD/VerifyLockMessage.h \
     $$PWD/MegaInfoMessage.h \
     $$PWD/WaitingSpinnerWidget.h \
     $$PWD/ProxySettings.h \
     $$PWD/BandwidthSettings.h \
     $$PWD/SwitchButton.h \
-    $$PWD/GuiUtilities.h
+    $$PWD/GuiUtilities.h \
+    $$PWD/NodeNameSetterDialog/NodeNameSetterDialog.h \
+    $$PWD/NodeNameSetterDialog/NewFolderDialog.h \
+    $$PWD/NodeNameSetterDialog/RenameNodeDialog.h
 
 INCLUDEPATH += $$PWD
 
@@ -217,7 +225,7 @@ win32 {
                 $$PWD/win/OverQuotaDialog.ui \
                 $$PWD/win/ProxySettings.ui \
                 $$PWD/win/BandwidthSettings.ui \
-                $$PWD/win/NewFolderDialog.ui \
+                $$PWD/win/NodeNameSetterDialog.ui \
                 $$PWD/win/NotificationsSettings.ui
 }
 
@@ -273,7 +281,7 @@ macx {
                 $$PWD/macx/OverQuotaDialog.ui \
                 $$PWD/macx/ProxySettings.ui \
                 $$PWD/macx/BandwidthSettings.ui \
-                $$PWD/macx/NewFolderDialog.ui \
+                $$PWD/macx/NodeNameSetterDialog.ui \
                 $$PWD/macx/NotificationsSettings.ui
 
     #Asset catalog need to load SF symbol images of toolbar items for custom NSToolbar
@@ -352,7 +360,7 @@ unix:!macx {
                 $$PWD/linux/OverQuotaDialog.ui \
                 $$PWD/linux/ProxySettings.ui \
                 $$PWD/linux/BandwidthSettings.ui \
-                $$PWD/linux/NewFolderDialog.ui \
+                $$PWD/linux/NodeNameSetterDialog.ui \
                 $$PWD/linux/NotificationsSettings.ui
 
     HEADERS += $$PWD/PermissionsDialog.h \

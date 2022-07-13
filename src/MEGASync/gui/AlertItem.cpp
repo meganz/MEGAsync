@@ -3,7 +3,7 @@
 #include "CommonMessages.h"
 #include <QDateTime>
 #include "MegaApplication.h"
-#include "UserAttributesRequests.h"
+#include "UserAttributesRequests/FullName.h"
 #include <QFutureWatcher>
 #include <QFuture>
 
@@ -50,11 +50,11 @@ void AlertItem::setAlertData(MegaUserAlert *alert)
     //Alerts from your own user come without email (like Payment reminders)
     if(alert->getEmail())
     {
-        mFullNameAttributes = UserAttributes::FullNameAttributeRequest::requestFullName(alert->getEmail());
+        mFullNameAttributes = UserAttributes::FullName::requestFullName(alert->getEmail());
 
         if(mFullNameAttributes)
         {
-            connect(mFullNameAttributes.get(), &UserAttributes::FullNameAttributeRequest::attributeReady, this, &AlertItem::onAttributesReady);
+            connect(mFullNameAttributes.get(), &UserAttributes::FullName::attributeReady, this, &AlertItem::onAttributesReady);
         }
 
         ui->wAvatarContact->setUserEmail(alert->getEmail());
