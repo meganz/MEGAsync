@@ -37,12 +37,14 @@ void FullName::onRequestFinish(mega::MegaApi*, mega::MegaRequest* incoming_reque
             if(isAttributeReady())
             {
                 emit attributeReady(getFullName());
+                emit attributeReadyRichText(getRichFullName());
             }
         }
         else
         {
             //If you get an error getting the full name, at least show the email
             emit attributeReady(getFullName());
+            emit attributeReadyRichText(getRichFullName());
         }
     }
 }
@@ -94,6 +96,18 @@ QString FullName::getFullName() const
     }
 
     return QString(QString::fromUtf8("%1 %2")).arg(mFirstName).arg(mLastName);
+}
+
+QString FullName::getRichFullName() const
+{
+    auto text = QString::fromUtf8("%1 %2").arg(mFirstName).arg(mLastName);
+
+    text = text.replace(QString::fromUtf8("&"), QString::fromUtf8("&amp;"));
+    text = text.replace(QString::fromUtf8("\""), QString::fromUtf8("&quot;"));
+    text = text.replace(QString::fromUtf8("<"), QString::fromUtf8("&lt;"));
+    text = text.replace(QString::fromUtf8(">"), QString::fromUtf8("&gt;"));
+
+    return text;
 }
 
 bool FullName::isAttributeReady() const
