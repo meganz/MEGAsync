@@ -729,7 +729,7 @@ QProgressBar::chunk
            <item alignment="Qt::AlignLeft">
             <widget class="QLabel" name="lItemPausedQueued_2">
              <property name="text">
-              <string>(In queue)</string>
+              <string>(in queue)</string>
              </property>
             </widget>
            </item>

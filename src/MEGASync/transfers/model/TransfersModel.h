@@ -216,6 +216,8 @@ public:
      QExplicitlySharedDataPointer<TransferData> getTransferByTag(int tag) const;
      void sendDataChangedByTag(int tag);
 
+     void blockModelSignals(bool state);
+
 signals:
     void pauseStateChanged(bool pauseState);
     void transferPauseStateChanged();

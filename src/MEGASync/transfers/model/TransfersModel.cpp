@@ -560,9 +560,10 @@ void TransfersModel::onProcessTransfers()
                 auto future = QtConcurrent::run([this](){
                     if(mModelMutex.tryLock())
                     {
-                        blockSignals(true);
+                        blockModelSignals(true);
                         processFailedTransfers();
-                        blockSignals(false);
+                        blockModelSignals(false);
+
                         mModelMutex.unlock();
                     }
 
@@ -594,7 +595,7 @@ void TransfersModel::onProcessTransfers()
                 {
                     if(isUiBlockedModeActive())
                     {
-                        blockSignals(true);
+                        blockModelSignals(true);
                     }
 
                     processStartTransfers(mTransfersToProcess.startTransfersByTag);
@@ -604,7 +605,7 @@ void TransfersModel::onProcessTransfers()
 
                     if(isUiBlockedModeActive())
                     {
-                        blockSignals(false);
+                        blockModelSignals(false);
                     }
 
                     mModelMutex.unlock();
@@ -620,9 +621,9 @@ void TransfersModel::onProcessTransfers()
                     auto future = QtConcurrent::run([this, containsTransfersToUpdate](){
                         if(mModelMutex.tryLock())
                         {
-                            blockSignals(true);
+                            blockModelSignals(true);
                             processUpdateTransfers();
-                            blockSignals(false);
+                            blockModelSignals(false);
 
                             updateUiBlockedByCounter(containsTransfersToUpdate);
                             mModelMutex.unlock();
@@ -1209,8 +1210,6 @@ void TransfersModel::clearAllTransfers()
     }
 
     clearTransfers(uploadToClear, downloadToClear);
-
-    updateTransfersCount();
 }
 
 void TransfersModel::clearTransfers(const QModelIndexList& indexes)
@@ -1262,12 +1261,10 @@ void TransfersModel::clearTransfers(const QMap<QModelIndex, QExplicitlySharedDat
             auto future = QtConcurrent::run([this, uploads, downloads]()
             {
                 emit blockUi();
-                blockSignals(true);
 
+                blockModelSignals(true);
                 performClearTransfers(uploads, downloads);
-
-                blockSignals(false);
-                emit unblockUiAndFilter();
+                blockModelSignals(false);
             });
             mClearTransferWatcher.setFuture(future);
         }
@@ -1288,6 +1285,8 @@ void TransfersModel::onClearTransfersFinished()
     emit transfersProcessChanged();
 
     updateTransfersCount();
+
+    emit unblockUiAndFilter();
 }
 
 void TransfersModel::performClearTransfers(const QMap<QModelIndex, QExplicitlySharedDataPointer<TransferData> > uploads,
@@ -1328,9 +1327,9 @@ void TransfersModel::pauseTransfers(const QModelIndexList& indexes, bool pauseSt
         {
             QtConcurrent::run([this, indexes, pauseState]()
             {
-                blockSignals(true);
+                blockModelSignals(true);
                 performPauseResumeVisibleTransfers(indexes, pauseState, false);
-                blockSignals(false);
+                blockModelSignals(false);
 
                 emit pauseStateChanged(mAreAllPaused);
             });
@@ -1369,6 +1368,10 @@ int TransfersModel::performPauseResumeVisibleTransfers(const QModelIndexList& in
     return tagsUpdated;
 }
 
+void TransfersModel::blockModelSignals(bool state)
+{
+    blockSignals(state);
+}
 
 void TransfersModel::pauseResumeAllTransfers(bool state)
 {
@@ -1381,9 +1384,9 @@ void TransfersModel::pauseResumeAllTransfers(bool state)
     {
         QtConcurrent::run([this, activeTransfers]()
         {
-            blockSignals(true);
+            blockModelSignals(true);
             auto tagsUpdated = performPauseResumeAllTransfers(activeTransfers, false);
-            blockSignals(false);
+            blockModelSignals(false);
 
             setUiBlockedModeByCounter(tagsUpdated);
             emit pauseStateChanged(mAreAllPaused);
@@ -1642,10 +1645,11 @@ void TransfersModel::setUiBlockedMode(bool state)
                 {
                     if(mModelMutex.tryLock())
                     {
-                        blockSignals(true);
+                        blockModelSignals(true);
                         processCancelTransfers();
                         processSyncFailedTransfers();
-                        blockSignals(false);
+                        blockModelSignals(false);
+
                         mModelMutex.unlock();
                     }
 
