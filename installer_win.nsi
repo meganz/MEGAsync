@@ -325,12 +325,15 @@ Function showHiDpi
         StrCpy $0 72
     ${EndIf}
 
-    strCpy $BITMAP_WELCOME "installer\left_banner\left_banner$0.bmp"
 
+    strCpy $BITMAP_WELCOME "$INSTDIR\leftbanner\left_banner$0.bmp"
+	
     ${NSD_SetImage} $mui.WelcomePage.Image $BITMAP_WELCOME  $mui.WelcomePage.Image.Bitmap
     ${NSD_SetImage} $mui.FinishPage.Image $BITMAP_WELCOME $mui.FinishPage.Image.Bitmap
 
 FunctionEnd
+
+Var PREVIOUS_OUTPATH
 
 Function .onInit
   setRebootFlag false
@@ -353,6 +356,12 @@ Function .onInit
      ;continue:
   ${EndIf}
 
+  
+  strCpy $PREVIOUS_OUTPATH GetOutPath
+  SetOutPath "$INSTDIR\leftbanner"
+  File "installer\leftbanner\*"
+  SetOutPath $PREVIOUS_OUTPATH
+  
   !insertmacro MULTIUSER_INIT
   StrCpy $APP_NAME "${PRODUCT_NAME} ${PRODUCT_VERSION}"
 
@@ -743,7 +752,7 @@ modeselected:
   File "${SRCDIR_MEGASYNC}\swresample-3.dll"
   AccessControl::SetFileOwner "$INSTDIR\swresample-3.dll" "$USERNAME"
   AccessControl::GrantOnFile "$INSTDIR\swresample-3.dll" "$USERNAME" "GenericRead + GenericWrite"
-
+  
   ;remove old DLLs that we no longer use (some became static; some have later version number)
   Delete "$INSTDIR\avcodec-57.dll"
   Delete "$INSTDIR\avformat-57.dll"
@@ -939,6 +948,7 @@ Section Uninstall
   Delete "$INSTDIR\styles\qwindowsvistastyle.dll"
   Delete "$INSTDIR\bearer\qgenericbearer.dll"
   Delete "$INSTDIR\bearer\qnativewifibearer.dll"
+  Delete "$INSTDIR\leftbanner\*"
 
   ;VC++ Redistributable
   Delete "$INSTDIR\vcruntime140.dll"
@@ -1058,6 +1068,7 @@ Section Uninstall
   Delete "$1\MEGAsync.lnk"
   RMDir "$SMPROGRAMS\$ICONS_GROUP"
   RMDir "$INSTDIR\imageformats"
+  RMDir "$INSTDIR\leftbanner"
   RMDir "$INSTDIR\iconengines"
   RMDir "$INSTDIR\platforms"
   RMDir "$INSTDIR\bearer"
@@ -1074,8 +1085,9 @@ Section Uninstall
   Delete "$1\MEGAsync.lnk"
   RMDir "$SMPROGRAMS\$ICONS_GROUP"
   RMDir "$INSTDIR\imageformats"
+  RMDir "$INSTDIR\leftbanner"
   RMDir "$INSTDIR\iconengines"
-  RmDir "$INSTDIR\accessible"
+  RMDir "$INSTDIR\accessible"
   RMDir "$INSTDIR\platforms"
   RMDir "$INSTDIR\bearer"
   RMDir "$INSTDIR\styles"
