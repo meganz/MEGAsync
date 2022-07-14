@@ -12,6 +12,7 @@
 #include <time.h>
 #include <iostream>
 #include <dpapi.h>
+#include <QDebug>
 
 #if QT_VERSION >= 0x050200
 #include <QtWin>
@@ -707,17 +708,17 @@ bool WindowsPlatform::isStartOnStartupActive()
     return false;
 }
 
-void WindowsPlatform::showInFolder(QString pathIn)
+bool WindowsPlatform::showInFolder(QString pathIn)
 {
     if (!QFile(pathIn).exists())
     {
-        return;
+        return false;
     }
 
     QString param;
     param = QString::fromUtf8("/select,");
     param += QString::fromAscii("\"\"") + QDir::toNativeSeparators(QDir(pathIn).canonicalPath()) + QString::fromAscii("\"\"");
-    QProcess::startDetached(QString::fromAscii("explorer ") + param);
+    return QProcess::startDetached(QString::fromAscii("explorer ") + param);
 }
 
 void WindowsPlatform::startShellDispatcher(MegaApplication *receiver)

@@ -157,6 +157,7 @@ private slots:
 
     void onResetTransfersSummaryWidget();
     void onTransfersStateChanged();
+    void onShowInFolderFinished(bool);
 
 signals:
     void openTransferManager(int tab);

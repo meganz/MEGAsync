@@ -36,7 +36,7 @@ public:
     static bool startOnStartup(bool value);
     static bool isStartOnStartupActive();
     static bool isTilingWindowManager();
-    static void showInFolder(QString pathIn);
+    static bool showInFolder(QString pathIn);
     static void startShellDispatcher(MegaApplication *receiver);
     static void stopShellDispatcher();
     static void syncFolderAdded(QString syncPath, QString syncName, QString syncID);

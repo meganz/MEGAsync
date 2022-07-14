@@ -11,7 +11,7 @@ public:
     MegaDelegateHoverEvent(QEvent::Type type):QEvent(type) {}
 
     QModelIndex index() const{return mIndex;}
-    void setIndex(const QModelIndex &index){ mIndex = index;}
+    void setIndex(const QPersistentModelIndex &index){ mIndex = index;}
 
     QRect rect() const {return mRect;}
     void setRect(const QRect &rect) {mRect = rect;}
@@ -20,7 +20,7 @@ public:
     void setMousePos(const QPoint &mousePos) {mMousePos = mousePos;}
 
 private:
-    QModelIndex mIndex;
+    QPersistentModelIndex mIndex;
     QRect mRect;
     QPoint mMousePos;
 };

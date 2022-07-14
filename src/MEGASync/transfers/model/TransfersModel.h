@@ -233,6 +233,7 @@ signals:
     void internalMoveFinished() const;
     void mostPriorityTransferUpdate(int tag);
     void transfersProcessChanged();
+    void showInFolderFinished(bool);
 
 public slots:
     void pauseResumeAllTransfers(bool state);
