@@ -852,7 +852,7 @@ QVariant ProxyModel::data(const QModelIndex &index, int role) const
 
 Qt::ItemFlags ProxyModel::flags(const QModelIndex &index) const
 {
-    return QSortFilterProxyModel::flags(index)  & ~Qt::ItemIsSelectable;
+    return QSortFilterProxyModel::flags(index)  & ~Qt::ItemIsSelectable & ~Qt::ItemIsEditable;
 }
 
 WizardDelegate::WizardDelegate(QObject *parent) : QStyledItemDelegate(parent)
