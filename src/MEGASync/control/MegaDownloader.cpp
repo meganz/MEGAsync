@@ -129,9 +129,13 @@ void MegaDownloader::download(WrappedNode *parent, QFileInfo info, QString appDa
             case WrappedNode::TransferOrigin::FROM_WEBSERVER :
             {
                 // Downloads initiated through http server get top priority
-                megaApi->startDownloadWithTopPriority(node,
-                                                      currentPathWithSep.toUtf8().constData(),
-                                                      appData.toUtf8().constData());
+                megaApi->startDownload(node,
+                                       currentPathWithSep.toUtf8().constData(),
+                                       nullptr, // no customName
+                                       appData.toUtf8().constData(),
+                                       true, // top priority: goes to the front of the queue
+                                       nullptr, // no cancelToken
+                                       nullptr); // no listener
                 break;
             }
             case WrappedNode::TransferOrigin::FROM_APP :
@@ -139,9 +143,13 @@ void MegaDownloader::download(WrappedNode *parent, QFileInfo info, QString appDa
             default:
             {
                 // For other downloads, use normal priority call
-                megaApi->startDownloadWithData(node,
-                                               currentPathWithSep.toUtf8().constData(),
-                                               appData.toUtf8().constData());
+                megaApi->startDownload(node,
+                                       currentPathWithSep.toUtf8().constData(),
+                                       nullptr, // no customName
+                                       appData.toUtf8().constData(),
+                                       false, // normal queueing
+                                       nullptr, // no cancelToken
+                                       nullptr); // no listener
             }
         }
     }

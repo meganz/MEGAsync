@@ -106,7 +106,15 @@ bool MegaUploader::uploadRecursivelyIntoASyncedLocation(QFileInfo srcFileInfo, Q
     {
         //start upload to parent
         MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Recursive upload uploading non syncable path: %1").arg(srcPath).toUtf8().constData());
-        megaApi->startUploadWithData(srcPath.toUtf8().constData(), parent, (QString::number(appDataID) + QString::fromUtf8("*")).toUtf8().constData());
+        megaApi->startUpload(srcPath.toUtf8().constData(),
+                             parent,
+                             nullptr,  // not overriding fileName,
+                             MegaApi::INVALID_CUSTOM_MOD_TIME, // not overriding mtime
+                             (QString::number(appDataID) + QString::fromUtf8("*")).toUtf8().constData(), // appData
+                             false,   // do not delete file when done
+                             false,   // normal queueing
+                             nullptr, // no custom cancel
+                             nullptr); // no custom listener
         return true;
     }
 
@@ -232,6 +240,14 @@ void MegaUploader::upload(QFileInfo info, MegaNode *parent, unsigned long long a
     }
     else if (info.isFile() || info.isDir())
     {
-        megaApi->startUploadWithData(currentPath.toUtf8().constData(), parent, (QString::number(appDataID) + QString::fromUtf8("*")).toUtf8().constData());
+        megaApi->startUpload(currentPath.toUtf8().constData(),
+                             parent,
+                             nullptr,  // not overriding fileName,
+                             MegaApi::INVALID_CUSTOM_MOD_TIME, // not overriding mtime
+                             (QString::number(appDataID) + QString::fromUtf8("*")).toUtf8().constData(), // appData,
+                             false,   // do not delete file when done
+                             false,   // normal queueing
+                             nullptr, // no custom cancel
+                             nullptr); // no custom listener
     }
 }
