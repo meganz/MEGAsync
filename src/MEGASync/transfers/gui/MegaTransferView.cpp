@@ -11,9 +11,6 @@
 
 using namespace mega;
 
-const QColor MegaTransferView::UPLOAD_DRAG_COLOR = QColor("#2BA6DE");
-const QColor MegaTransferView::DOWNLOAD_DRAG_COLOR = QColor("#31B500");
-
 MegaTransferView::MegaTransferView(QWidget* parent) :
     QTreeView(parent),
     mDisableLink(false),

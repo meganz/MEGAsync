@@ -18,6 +18,9 @@ enum class SortCriterion
     LAST       = 5
 };
 
+static const QColor UPLOAD_TRANSFER_COLOR = QColor("#2BA6DE");
+static const QColor DOWNLOAD_TRANSFER_COLOR = QColor("#31B500");
+
 typedef int TransferTag;
 
 class TransferData : public QSharedData

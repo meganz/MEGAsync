@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string notr="true"/>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
@@ -45,7 +45,7 @@
      <item>
       <widget class="QLabel" name="lAnimation">
        <property name="text">
-        <string>AnimationLabel</string>
+        <string/>
        </property>
       </widget>
      </item>

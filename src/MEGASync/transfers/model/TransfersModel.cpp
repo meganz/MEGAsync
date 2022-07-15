@@ -1964,24 +1964,28 @@ bool TransfersModel::dropMimeData(const QMimeData* data, Qt::DropAction action, 
 
     if (destRow >= 0 && destRow <= rowCount(DEFAULT_IDX) && action == Qt::MoveAction)
     {
-        QList<int> rows;
-        for (auto tag : qAsConst(tags))
+        auto d = getTransfer(destRow);
+        if(!d->isProcessing())
         {
-            rows.push_back(mTagByOrder.value(tag).row());
-        }
+            QList<int> rows;
+            for (auto tag : qAsConst(tags))
+            {
+                rows.push_back(mTagByOrder.value(tag).row());
+            }
 
-        if (destRow == 0)
-        {
-            std::sort(rows.rbegin(), rows.rend());
-        }
-        else
-        {
-            std::sort(rows.begin(), rows.end());
-        }
+            if (destRow == 0)
+            {
+                std::sort(rows.rbegin(), rows.rend());
+            }
+            else
+            {
+                std::sort(rows.begin(), rows.end());
+            }
 
-        for (auto row : qAsConst(rows))
-        {
-            moveRows(parent, row, 1, parent, destRow);
+            for (auto row : qAsConst(rows))
+            {
+                moveRows(parent, row, 1, parent, destRow);
+            }
         }
     }
 
