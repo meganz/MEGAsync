@@ -294,7 +294,13 @@ void LinkProcessor::downloadLinks(QString localPath)
     {
         if (linkNode[i] && linkSelected[i])
         {
-            megaApi->startDownload(linkNode[i].get(), (localPath + QDir::separator()).toUtf8().constData());
+            megaApi->startDownload(linkNode[i].get(),
+                                   (localPath + QDir::separator()).toUtf8().constData(),
+                                   nullptr, // no customName
+                                   nullptr, // no appdata
+                                   false, // normal queueing
+                                   nullptr, // no cancelToken
+                                   nullptr); // no listener
         }
     }
 }

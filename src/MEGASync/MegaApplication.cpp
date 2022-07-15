@@ -454,21 +454,16 @@ void MegaApplication::initialize()
 
     megaApiFolders = new MegaApi(Preferences::CLIENT_KEY, basePath.toUtf8().constData(), Preferences::USER_AGENT);
 
-    //Set payload max size to be logged: a 10th of system's memory
-    long long availMemory = Utilities::getSystemsAvailableMemory();
-    auto newPayLoadLogSize = availMemory / 10 ;
-    if (newPayLoadLogSize < 10240)
-    {
-        newPayLoadLogSize = 10240;
-    }
+    // Set maximum log line size to 10k (same as SDK default)
+    // Otherwise network logging can cause large glitches when logging hundreds of MB
+    // On Mac it is particularly apparent, causing the beachball to appear often
+    long long newPayLoadLogSize = 10240;
     megaApi->log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("Establishing max payload log size: %1").arg(newPayLoadLogSize).toUtf8().constData());
     megaApi->setMaxPayloadLogSize(newPayLoadLogSize);
     megaApiFolders->setMaxPayloadLogSize(newPayLoadLogSize);
 
-
     controller = Controller::instance();
     controller->setApi(this->megaApi);
-
 
     QString stagingPath = QDir(dataPath).filePath(QString::fromUtf8("megasync.staging"));
     QFile fstagingPath(stagingPath);
@@ -5468,16 +5463,25 @@ void MegaApplication::externalFileUpload(qlonglong targetFolder)
     if (fileUploadSelector->result() == QDialog::Accepted)
     {
         QStringList paths = fileUploadSelector->selectedFiles();
-        MegaNode *target = megaApi->getNodeByHandle(fileUploadTarget);
-        int files = 0;
-        for (int i = 0; i < paths.size(); i++)
+        if (MegaNode *target = megaApi->getNodeByHandle(fileUploadTarget))
         {
-            files++;
-            megaApi->startUpload(QDir::toNativeSeparators(paths[i]).toUtf8().constData(), target);
+            int files = 0;
+            for (int i = 0; i < paths.size(); i++)
+            {
+                files++;
+                megaApi->startUpload(QDir::toNativeSeparators(paths[i]).toUtf8().constData(),
+                                     target,
+                                     nullptr,  // not overriding fileName,
+                                     MegaApi::INVALID_CUSTOM_MOD_TIME, // not overriding mtime
+                                     nullptr, // no appData,
+                                     false,   // do not delete file when done
+                                     false,   // normal queueing
+                                     nullptr, // no custom cancel
+                                     nullptr); // no custom listener
+            }
+            delete target;
+            HTTPServer::onUploadSelectionAccepted(files, 0);
         }
-        delete target;
-
-        HTTPServer::onUploadSelectionAccepted(files, 0);
     }
     else
     {
@@ -5542,30 +5546,40 @@ void MegaApplication::externalFolderUpload(qlonglong targetFolder)
     if (folderUploadSelector->result() == QDialog::Accepted)
     {
         QStringList paths = folderUploadSelector->selectedFiles();
-        MegaNode *target = megaApi->getNodeByHandle(folderUploadTarget);
-        int files = 0;
-        int folders = 0;
-        for (int i = 0; i < paths.size(); i++)
+        if (MegaNode *target = megaApi->getNodeByHandle(folderUploadTarget))
         {
-            folders++;
-            QDirIterator it (paths[i], QDir::AllEntries | QDir::Hidden | QDir::System | QDir::NoDotAndDotDot, QDirIterator::Subdirectories);
-            while (it.hasNext())
+            int files = 0;
+            int folders = 0;
+            for (int i = 0; i < paths.size(); i++)
             {
-                it.next();
-                if (it.fileInfo().isDir())
+                folders++;
+                QDirIterator it (paths[i], QDir::AllEntries | QDir::Hidden | QDir::System | QDir::NoDotAndDotDot, QDirIterator::Subdirectories);
+                while (it.hasNext())
                 {
-                    folders++;
+                    it.next();
+                    if (it.fileInfo().isDir())
+                    {
+                        folders++;
+                    }
+                    else if (it.fileInfo().isFile())
+                    {
+                        files++;
+                    }
                 }
-                else if (it.fileInfo().isFile())
-                {
-                    files++;
-                }
+                megaApi->startUpload(QDir::toNativeSeparators(paths[i]).toUtf8().constData(),
+                                        target,
+                                        nullptr,  // not overriding fileName,
+                                        MegaApi::INVALID_CUSTOM_MOD_TIME, // not overriding mtime
+                                        nullptr, // no appData,
+                                        false,   // do not delete file when done
+                                        false,   // normal queueing
+                                        nullptr, // no custom cancel
+                                        nullptr); // no custom listener
             }
-            megaApi->startUpload(QDir::toNativeSeparators(paths[i]).toUtf8().constData(), target);
-        }
-        delete target;
+            delete target;
 
-        HTTPServer::onUploadSelectionAccepted(files, folders);
+            HTTPServer::onUploadSelectionAccepted(files, folders);
+        }
     }
     else
     {
@@ -8311,8 +8325,6 @@ void MegaApplication::onSyncFileStateChanged(MegaApi *, MegaSync *, string *loca
     {
         return;
     }
-
-    DeferPreferencesSyncForScope deferrer(this);
 
 #ifdef _WIN32
     if (!mShellNotifier)
