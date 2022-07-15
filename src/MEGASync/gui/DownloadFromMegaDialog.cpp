@@ -16,11 +16,6 @@ DownloadFromMegaDialog::DownloadFromMegaDialog(QString defaultPath, QWidget *par
     ui->setupUi(this);
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
 
-    if(!parent)
-    {
-        setWindowFlags(windowFlags() & Qt::WindowStaysOnTopHint);
-    }
-
     QString defaultDownloadPath;
 
     if (!defaultPath.size() || !QFile(defaultPath).exists())

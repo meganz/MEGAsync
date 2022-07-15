@@ -335,6 +335,16 @@ TransfersCount TransferThread::getTransfersCount()
     return mTransfersCount;
 }
 
+bool TransfersModel::hasActiveTransfers() const
+{
+    return mHasActiveTransfers;
+}
+
+void TransfersModel::setHasActiveTransfers(bool newHasActiveTransfers)
+{
+    mHasActiveTransfers = newHasActiveTransfers;
+}
+
 void TransferThread::resetCompletedUploads(QList<QExplicitlySharedDataPointer<TransferData>> transfersToReset)
 {
     QMutexLocker lock(&mCountersMutex);

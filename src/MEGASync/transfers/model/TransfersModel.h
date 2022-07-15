@@ -218,6 +218,9 @@ public:
 
      void blockModelSignals(bool state);
 
+     bool hasActiveTransfers() const;
+     void setHasActiveTransfers(bool newHasActiveTransfers);
+
 signals:
     void pauseStateChanged(bool pauseState);
     void transferPauseStateChanged();
@@ -301,6 +304,7 @@ private:
     QTimer mMostPriorityTransferTimer;
 
     bool mAreAllPaused;
+    bool mHasActiveTransfers;
 };
 
 Q_DECLARE_METATYPE(QAbstractItemModel::LayoutChangeHint)

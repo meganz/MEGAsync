@@ -12,7 +12,6 @@
 #include <time.h>
 #include <iostream>
 #include <dpapi.h>
-#include <QDebug>
 
 #if QT_VERSION >= 0x050200
 #include <QtWin>
@@ -1291,27 +1290,6 @@ bool WindowsPlatform::registerUpdateJob()
     return success;
 }
 
-void WindowsPlatform::execBackgroundWindow(QDialog *window)
-{
-    DWORD currentThreadId = GetCurrentThreadId();
-    DWORD foregroundThreadId = 0;
-    HWND foregroundWindow;
-    bool threadAttached = false;
-
-    if (QGuiApplication::applicationState() != Qt::ApplicationActive
-        && (foregroundWindow = GetForegroundWindow())
-        && (foregroundThreadId = GetWindowThreadProcessId(foregroundWindow, NULL))
-        && (foregroundThreadId != currentThreadId))
-    {
-        threadAttached = AttachThreadInput(foregroundThreadId, currentThreadId, TRUE);
-    }
-    window->exec();
-    if (threadAttached)
-    {
-        AttachThreadInput(foregroundThreadId, currentThreadId, FALSE);
-    }
-}
-
 void WindowsPlatform::uninstall()
 {
     removeAllSyncsFromLeftPane();
@@ -1448,7 +1426,20 @@ bool WindowsPlatform::isUserActive()
     return true;
 }
 
+void WindowsPlatform::showBackgroundWindow(QDialog *window)
+{
+    Q_ASSERT(!window->parent());
+    //Recreate the minimized state in case the dialog is lost behind desktop windows
+    window->showMinimized();
+    window->showNormal();
+}
 
+void WindowsPlatform::execBackgroundWindow(QDialog *window)
+{
+    showBackgroundWindow(window);
+    window->activateWindow();
+    window->exec();
+}
 
 ShellNotifier::~ShellNotifier()
 {

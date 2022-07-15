@@ -55,6 +55,7 @@ public:
     static QString getWindowManagerName();
     static void enableDialogBlur(QDialog *dialog);
     static void execBackgroundWindow(QDialog *window);
+    static void showBackgroundWindow(QDialog *window);
     static bool registerUpdateJob();
     static void uninstall();
     static bool shouldRunHttpServer();

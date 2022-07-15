@@ -369,6 +369,11 @@ void LinuxPlatform::execBackgroundWindow(QDialog* window)
     window->exec();
 }
 
+void LinuxPlatform::showBackgroundWindow(QDialog *window)
+{
+    window->show();
+}
+
 bool LinuxPlatform::registerUpdateJob()
 {
     return true;

@@ -5314,8 +5314,7 @@ void MegaApplication::processUploads()
     //Files will be uploaded when the user selects the upload folder
     if (uploadFolderSelector)
     {
-        uploadFolderSelector->activateWindow();
-        uploadFolderSelector->raise();
+        Platform::showBackgroundWindow(uploadFolderSelector);
         return;
     }
 
@@ -5344,8 +5343,7 @@ void MegaApplication::processUploads()
     }
     uploadFolderSelector = new UploadToMegaDialog(megaApi);
     uploadFolderSelector->setDefaultFolder(preferences->uploadFolder());
-    uploadFolderSelector->activateWindow();
-    uploadFolderSelector->exec();
+    Platform::execBackgroundWindow(uploadFolderSelector);
     if (!uploadFolderSelector)
     {
         return;
@@ -5413,13 +5411,7 @@ void MegaApplication::processDownloads()
 
     if (downloadFolderSelector)
     {
-        if(mTransferManager)
-        {
-            mTransferManagerGeometryRetainer.showDialog(mTransferManager);
-        }
-
-        downloadFolderSelector->activateWindow();
-        downloadFolderSelector->raise();
+        Platform::showBackgroundWindow(downloadFolderSelector);
         return;
     }
 
@@ -5449,16 +5441,8 @@ void MegaApplication::processDownloads()
     }
 
     downloadFolderSelector = new DownloadFromMegaDialog(preferences->downloadFolder());
-    downloadFolderSelector->activateWindow();
-    downloadFolderSelector->raise();
+    Platform::execBackgroundWindow(downloadFolderSelector);
 
-    //If you don´t show the Transfer Manager, the DownlaodFromDialog is not visible
-    if(mTransferManager)
-    {
-        mTransferManagerGeometryRetainer.showDialog(mTransferManager);
-    }
-
-    downloadFolderSelector->exec();
     if (!downloadFolderSelector)
     {
         return;
@@ -5695,16 +5679,14 @@ void MegaApplication::externalFileUpload(qlonglong targetFolder)
 
     if (folderUploadSelector)
     {
-        folderUploadSelector->activateWindow();
-        folderUploadSelector->raise();
+        Platform::showBackgroundWindow(folderUploadSelector);
         return;
     }
 
     fileUploadTarget = targetFolder;
     if (fileUploadSelector)
     {
-        fileUploadSelector->activateWindow();
-        fileUploadSelector->raise();
+        Platform::showBackgroundWindow(fileUploadSelector);
         return;
     }
 

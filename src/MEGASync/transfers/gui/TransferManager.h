@@ -35,7 +35,7 @@ class TransferManager : public QDialog
     Q_OBJECT
 
 public:
-    explicit TransferManager(mega::MegaApi *megaApi, QWidget *parent = 0);
+    explicit TransferManager(mega::MegaApi *megaApi);
     void setActiveTab(int t);
     ~TransferManager();
 

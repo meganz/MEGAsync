@@ -21,8 +21,8 @@ const char* LABEL_NUMBER = "NUMBER";
 const char* ITS_ON = "itsOn";
 const char* SEARCH_TEXT = "searchText";
 
-TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
-    QDialog(parent),
+TransferManager::TransferManager(MegaApi *megaApi) :
+    QDialog(nullptr),
     mUi(new Ui::TransferManager),
     mMegaApi(megaApi),
     mScanningAnimationIndex(1),
