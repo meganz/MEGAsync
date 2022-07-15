@@ -25,9 +25,10 @@ ImportMegaLinksDialog::ImportMegaLinksDialog(LinkProcessor *processor, QWidget *
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
     ui->setupUi(this);
 
-    static const int SLOT_HEIGHT = 35;
+    static const int MAX_ITEMS_DISPLAYED = 8;
+    const int nbItems (mLinkProcessor->size());
 
-    for (int i = 0; i < mLinkProcessor->size(); i++)
+    for (int i = 0; i < nbItems; i++)
     {
         ImportListWidgetItem *customItem = new ImportListWidgetItem(mLinkProcessor->getLink(i), i, ui->linkList);
         connect(customItem, SIGNAL(stateChanged(int,int)), this, SLOT(onLinkStateChanged(int, int)));
@@ -37,16 +38,12 @@ ImportMegaLinksDialog::ImportMegaLinksDialog(LinkProcessor *processor, QWidget *
         ui->linkList->setItemWidget(item, customItem);
     }
 
-    int extraSlots = mLinkProcessor->size() - 1;
-    if (extraSlots > 7)
-    {
-        extraSlots = 7;
-    }
-    ui->linkList->setMinimumHeight(ui->linkList->minimumHeight() + SLOT_HEIGHT * extraSlots);
-    this->setMinimumHeight(this->minimumHeight() + SLOT_HEIGHT * extraSlots);
+    int extraSlots = std::min(MAX_ITEMS_DISPLAYED, nbItems) - 1;
+    ui->linkList->setFixedHeight(ui->linkList->minimumHeight() + ui->linkList->sizeHintForRow(0) * extraSlots);
+    adjustSize();
+    setFixedHeight(height());
 
     ui->linkList->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    this->setMaximumHeight(this->minimumHeight());
 
     QString defaultFolderPath;
     QString downloadFolder = QDir::toNativeSeparators(mPreferences->downloadFolder());
@@ -211,9 +208,9 @@ void ImportMegaLinksDialog::onLinkInfoAvailable(int id)
     if (node && (e == MegaError::API_OK))
     {
         QString name = QString::fromUtf8(node->getName());
-        if (!name.compare(QString::fromAscii("NO_KEY")) || !name.compare(QString::fromAscii("CRYPTO_ERROR")))
+        if (!name.compare(QLatin1String("NO_KEY")) || !name.compare(QLatin1String("CRYPTO_ERROR")))
         {
-            item->setData(tr("Decryption error"), ImportListWidgetItem::WARNING, mMegaApi->getSize(node.get()), !(node->getType() == MegaNode::TYPE_FILE));
+            item->setData(QCoreApplication::translate("MegaError", "Decryption error"), ImportListWidgetItem::WARNING, mMegaApi->getSize(node.get()), !(node->getType() == MegaNode::TYPE_FILE));
         }
         else
         {

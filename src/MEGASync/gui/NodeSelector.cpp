@@ -260,7 +260,7 @@ void NodeSelector::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *e
     if (e->getErrorCode() != MegaError::API_OK)
     {
         ui->tMegaFolders->setEnabled(true);
-        QMegaMessageBox::critical(nullptr, QLatin1String("MEGAsync"), tr("Error") + QLatin1String(": ") + QCoreApplication::translate("MegaError", e->getErrorString()));
+        QMegaMessageBox::critical(nullptr, QLatin1String("MEGAsync"), tr("Error:") + QLatin1String(" ") + QCoreApplication::translate("MegaError", e->getErrorString()));
         return;
     }
 
@@ -468,17 +468,24 @@ void NodeSelector::onbOkClicked()
             }
         }
 
-        if(wrongNodes > 0)
+        if(wrongNodes == nodes.size())
         {
             correctNodeSelected = false;
             if(isCloudDrive())
             {
-                QMegaMessageBox::warning(nullptr, tr("Error"), tr("Item selection removed. To reselect, close this window and try again.", "", wrongNodes), QMessageBox::Ok);
+                QMegaMessageBox::warning(nullptr, tr("Error"), tr("The item you selected has been removed. To reselect, close this window and try again.", "", wrongNodes), QMessageBox::Ok);
             }
             else
             {
                 QMegaMessageBox::warning(nullptr, tr("Error"), tr("You no longer have access to this item. Ask the owner to share again.", "", wrongNodes), QMessageBox::Ok);
             }
+        }
+        else if(wrongNodes > 0)
+        {
+            correctNodeSelected = false;
+            QString warningMsg1 = tr("%1 item selected", "", nodes.size()).arg(nodes.size());
+            QString warningMsg = tr("%1. %2 has been removed. To reselect, close this window and try again.", "", wrongNodes).arg(warningMsg1).arg(wrongNodes);
+            QMegaMessageBox::warning(nullptr, tr("Error"), warningMsg, QMessageBox::Ok);
         }
     }
     else
@@ -486,7 +493,7 @@ void NodeSelector::onbOkClicked()
         auto node = std::unique_ptr<MegaNode>(mMegaApi->getNodeByHandle(getSelectedNodeHandle()));
         if (!node)
         {
-            QMegaMessageBox::warning(nullptr, tr("Error"), tr("Item selection removed. To reselect, close this window and try again."),
+            QMegaMessageBox::warning(nullptr, tr("Error"), tr("The item you selected has been removed. To reselect, close this window and try again."),
                                                  QMessageBox::Ok);
             correctNodeSelected = false;
         }
@@ -591,9 +598,13 @@ void NodeSelector::onSelectionChanged(const QItemSelection& selected, const QIte
         if(item)
         {
             if(mSelectMode == NodeSelector::STREAM_SELECT)
+            {
                 ui->bOk->setEnabled(item->getNode()->isFile());
+            }
             else if(mSelectMode == NodeSelector::SYNC_SELECT)
+            {
                 ui->bOk->setEnabled(item->isSyncable());
+            }
         }
     }
 }
@@ -762,7 +773,11 @@ void NodeSelector::setRootIndex(const QModelIndex& proxy_idx)
     {
         QString nodeName = QString::fromUtf8(node->getName());
         QFontMetrics fm = ui->lFolderName->fontMetrics();
-        ui->lFolderName->setText(nodeName);
+
+        if(nodeName == QLatin1String("NO_KEY") || nodeName == QLatin1String("CRYPTO_ERROR"))
+        {
+            nodeName = QCoreApplication::translate("MegaError", "Decryption error");
+        }
 
         QString elidedText = fm.elidedText(nodeName, Qt::ElideMiddle, ui->tMegaFolders->width() - LABEL_ELIDE_MARGIN);
         ui->lFolderName->setText(elidedText);

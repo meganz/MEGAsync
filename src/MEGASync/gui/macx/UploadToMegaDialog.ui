@@ -28,7 +28,7 @@
   <property name="styleSheet">
    <string notr="true">QWidget
 {
-font-size: 11px;
+font-size: 13px;
 }
 
 QCheckBox::indicator {

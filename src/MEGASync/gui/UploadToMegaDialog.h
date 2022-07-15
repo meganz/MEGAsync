@@ -15,6 +15,10 @@ class UploadToMegaDialog : public QDialog, public mega::MegaRequestListener
     Q_OBJECT
 
 public:
+
+    static const char* NODE_PATH_PROPERTY;
+    static const QString DEFAULT_PATH;
+
     explicit UploadToMegaDialog(mega::MegaApi *megaApi, QWidget *parent = 0);
     ~UploadToMegaDialog();
     mega::MegaHandle getSelectedHandle();
