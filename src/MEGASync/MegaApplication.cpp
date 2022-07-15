@@ -3258,7 +3258,7 @@ bool MegaApplication::isIdleForTooLong() const
 
 void MegaApplication::startUpload(const QString& rawLocalPath, MegaNode* target, MegaCancelToken* cancelToken)
 {
-    const char* localPath = QDir::toNativeSeparators(rawLocalPath).toUtf8().constData();
+    auto localPathArray = QDir::toNativeSeparators(rawLocalPath).toUtf8();
     const char* appData = nullptr;
     const char* fileName = nullptr;
     const bool startFirst = false;
@@ -3266,7 +3266,7 @@ void MegaApplication::startUpload(const QString& rawLocalPath, MegaNode* target,
     int64_t mtime = ::mega::MegaApi::INVALID_CUSTOM_MOD_TIME;
     MegaTransferListener* listener = nullptr;
 
-    megaApi->startUpload(localPath, target, fileName, mtime, appData, isSrcTemporary, startFirst, cancelToken, listener);
+    megaApi->startUpload(localPathArray.constData(), target, fileName, mtime, appData, isSrcTemporary, startFirst, cancelToken, listener);
 }
 
 void MegaApplication::cancelScanningStage()
