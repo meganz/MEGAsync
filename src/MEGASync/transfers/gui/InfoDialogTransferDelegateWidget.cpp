@@ -273,6 +273,7 @@ TransferBaseDelegateWidget::ActionHoverType InfoDialogTransferDelegateWidget::mo
                 else
                 {
                     mUi->lActionTransfer->hide();
+                    inAction = true;
                 }
 
                 mUi->lShowInFolder->show();

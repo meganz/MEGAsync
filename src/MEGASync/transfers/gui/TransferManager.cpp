@@ -167,6 +167,10 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
             &TransfersManagerSortFilterProxyModel::searchNumbersChanged,
             this, &TransferManager::refreshSearchStats);
 
+    connect(mUi->wTransfers->getProxyModel(),
+            &TransfersManagerSortFilterProxyModel::modelChanged,
+            this, &TransferManager::refreshView);
+
     connect(mUi->wTransfers, &TransfersWidget::pauseResumeVisibleRows,
                 this, &TransferManager::onPauseResumeVisibleRows);
 
@@ -185,8 +189,6 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
             mUi->leSearchField->setFocus();
             mSearchFieldReturnPressed = false;
         }
-
-        refreshView();
     });
 
     mScanningTimer.setInterval(60);
@@ -1060,8 +1062,6 @@ void TransferManager::toggleTab(TransfersWidget::TM_TAB newTab)
         }
 
         mUi->wTransfers->setCurrentTab(newTab);
-
-        refreshView();
 
         // Reload QSS because it is glitchy
         mUi->wLeftPane->setStyleSheet(mUi->wLeftPane->styleSheet());

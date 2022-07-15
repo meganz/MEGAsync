@@ -37,6 +37,8 @@ MegaTransferView::MegaTransferView(QWidget* parent) :
     setAutoScroll(false);
 
     verticalScrollBar()->installEventFilter(this);
+
+    connect(&mOpenUrlWatcher, &QFutureWatcher<bool>::finished, this, &MegaTransferView::onOpenUrlFinished);
 }
 
 void MegaTransferView::setup()
@@ -991,7 +993,8 @@ void MegaTransferView::openItemClicked()
             auto path = d->path();
             if (!path.isEmpty())
             {
-                QtConcurrent::run(QDesktopServices::openUrl, QUrl::fromLocalFile(path));
+                auto openUrlTask = QtConcurrent::run(QDesktopServices::openUrl, QUrl::fromLocalFile(path));
+                mOpenUrlWatcher.setFuture(openUrlTask);
             }
         }
     }
@@ -1057,5 +1060,14 @@ void MegaTransferView::onInternalMoveStarted()
 
 void MegaTransferView::onInternalMoveFinished()
 {
-     setAutoScroll(false);
+    setAutoScroll(false);
+}
+
+void MegaTransferView::onOpenUrlFinished()
+{
+    auto result = mOpenUrlWatcher.result();
+    if(!result)
+    {
+        QMegaMessageBox::warning(nullptr, tr("Error"), tr("Error opening file"), QMessageBox::Ok);
+    }
 }

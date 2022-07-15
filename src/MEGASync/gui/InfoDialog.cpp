@@ -626,7 +626,7 @@ void InfoDialog::onShowInFolderFinished(bool state)
 {
     if(!state)
     {
-        QMegaMessageBox::warning(nullptr, tr("Error"), tr("Error showing file"), QMessageBox::Ok);
+        QMegaMessageBox::warning(nullptr, tr("Error"), tr("Error opening folder"), QMessageBox::Ok);
     }
 }
 

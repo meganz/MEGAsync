@@ -178,6 +178,7 @@ void TransfersManagerSortFilterProxyModel::resetTransfersStateCounters()
     mActiveTransfers.clear();
     mPausedTransfers.clear();
     mCompletedTransfers.clear();
+    mFailedTransfers.clear();
 }
 
 TransferBaseDelegateWidget *TransfersManagerSortFilterProxyModel::createTransferManagerItem(QWidget*)

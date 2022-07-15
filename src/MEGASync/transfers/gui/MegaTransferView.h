@@ -7,6 +7,7 @@
 #include <QTreeView>
 #include <QMenu>
 #include <QMouseEvent>
+#include <QFutureWatcher>
 
 class MegaTransferView : public QTreeView
 {
@@ -72,10 +73,10 @@ private slots:
     void resumeSelectedClicked();
     void onInternalMoveStarted();
     void onInternalMoveFinished();
+    void onOpenUrlFinished();
 
 private:
     friend class TransferManagerDelegateWidget;
-
 
     bool mDisableLink;
     bool mKeyNavigation;
@@ -95,6 +96,8 @@ private:
     QAction* mOpenItemAction;
     QAction* mShowInFolderAction;
     QAction* mClearAction;
+
+    QFutureWatcher<bool> mOpenUrlWatcher;
 
     void createContextMenu();
     void updateContextMenu(bool enablePause, bool enableResume, bool enableMove, bool enableClear,
