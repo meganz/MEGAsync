@@ -71,7 +71,11 @@ void MegaTransferDelegate::paint(QPainter *painter, const QStyleOptionViewItem &
             w->resize(width, height);
         }
 
-        w->updateUi(data, row);
+        if(data)
+        {
+            w->updateUi(data, row);
+        }
+
         painter->save();
         painter->translate(pos);
         w->render(option, painter, QRegion(0, 0, width, height));
