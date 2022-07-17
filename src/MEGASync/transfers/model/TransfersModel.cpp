@@ -5,6 +5,7 @@
 #include "TransferItem.h"
 #include "QMegaMessageBox.h"
 #include "EventUpdater.h"
+#include "SettingsDialog.h"
 
 #include <QSharedData>
 
@@ -345,6 +346,11 @@ void TransfersModel::setHasActiveTransfers(bool newHasActiveTransfers)
     mHasActiveTransfers = newHasActiveTransfers;
 }
 
+void TransfersModel::uiUnblocked()
+{
+    showSyncCancelledWarning();
+}
+
 void TransferThread::resetCompletedUploads(QList<QExplicitlySharedDataPointer<TransferData>> transfersToReset)
 {
     QMutexLocker lock(&mCountersMutex);
@@ -409,7 +415,9 @@ TransfersModel::TransfersModel(QObject *parent) :
     mTransfersProcessChanged(0),
     mUpdateMostPriorityTransfer(0),
     mUiBlockedCounter(0),
-    mUiBlockedByCounter(0)
+    mUiBlockedByCounter(0),
+    mSyncsInRowsToCancel(false),
+    mCancelledFrom(nullptr)
 {
     qRegisterMetaType<QList<QPersistentModelIndex>>("QList<QPersistentModelIndex>");
     qRegisterMetaType<QAbstractItemModel::LayoutChangeHint>("QAbstractItemModel::LayoutChangeHint");
@@ -554,6 +562,7 @@ void TransfersModel::onProcessTransfers()
                 if(mModelMutex.tryLock())
                 {
                     processCancelTransfers();
+                    showSyncCancelledWarning();
                     mModelMutex.unlock();
                 }
             }
@@ -768,6 +777,16 @@ void TransfersModel::processFailedTransfers()
     }
 }
 
+void TransfersModel::cacheCancelTransfersTags()
+{
+    for (auto it = mTransfersToProcess.canceledTransfersByTag.begin(); it != mTransfersToProcess.canceledTransfersByTag.end();)
+    {
+        mRowsToCancel.append((*it)->mTag);
+
+        mTransfersToProcess.canceledTransfersByTag.erase(it++);
+    }
+}
+
 void TransfersModel::processCancelTransfers()
 {
     if(mRowsToCancel.size() > 0)
@@ -807,16 +826,6 @@ void TransfersModel::processSyncFailedTransfers()
         mFailedTransferToClear.clear();
 
         removeRows(indexesToClear);
-    }
-}
-
-void TransfersModel::cacheCancelTransfersTags()
-{
-    for (auto it = mTransfersToProcess.canceledTransfersByTag.begin(); it != mTransfersToProcess.canceledTransfersByTag.end();)
-    {
-        mRowsToCancel.append((*it)->mTag);
-
-        mTransfersToProcess.canceledTransfersByTag.erase(it++);
     }
 }
 
@@ -1160,6 +1169,39 @@ void TransfersModel::cancelAndClearTransfers(const QModelIndexList& indexes, QWi
     }
 
     updateTransfersCount();
+}
+
+void TransfersModel::showSyncCancelledWarning()
+{
+    if(syncsInRowsToCancel())
+    {
+        QPointer<QMessageBox> removeSync = new QMessageBox(QMessageBox::Warning, QLatin1Literal("MEGAsync"),
+                                                           tr("Sync transfers cannot be cancelled individually.\n"
+                                                                                          "Please delete the folder sync from settings to cancel them."),
+                                                           QMessageBox::No | QMessageBox::Yes, mCancelledFrom);
+        removeSync->setButtonText(QMessageBox::No, tr("Dismiss"));
+        removeSync->setButtonText(QMessageBox::Yes, tr("Open settings"));
+
+        auto result = removeSync->exec();
+
+        if(result == QMessageBox::Yes)
+        {
+            MegaSyncApp->openSettings(SettingsDialog::SYNCS_TAB);
+        }
+
+        resetSyncInRowsToCancel();
+    }
+}
+
+bool TransfersModel::syncsInRowsToCancel() const
+{
+    return mSyncsInRowsToCancel;
+}
+
+void TransfersModel::resetSyncInRowsToCancel()
+{
+    mSyncsInRowsToCancel = false;
+    mCancelledFrom = nullptr;
 }
 
 void TransfersModel::classifyUploadOrDownloadCompletedTransfers(QMap<QModelIndex, QExplicitlySharedDataPointer<TransferData>>& uploads,

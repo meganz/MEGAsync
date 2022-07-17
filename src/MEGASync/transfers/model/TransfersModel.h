@@ -221,6 +221,13 @@ public:
      bool hasActiveTransfers() const;
      void setHasActiveTransfers(bool newHasActiveTransfers);
 
+     void uiUnblocked();
+
+     bool syncsInRowsToCancel() const;
+     QWidget *cancelledFrom() const;
+     void resetSyncInRowsToCancel();
+     void showSyncCancelledWarning();
+
 signals:
     void pauseStateChanged(bool pauseState);
     void transferPauseStateChanged();
@@ -299,6 +306,9 @@ private:
 
     QHash<TransferTag, QPersistentModelIndex> mTagByOrder;
     QList<TransferTag> mRowsToCancel;
+    QWidget* mCancelledFrom;
+    bool mSyncsInRowsToCancel;
+
     QList<TransferTag> mFailedTransferToClear;
     mutable QMutex mModelMutex;
     QTimer mMostPriorityTransferTimer;
