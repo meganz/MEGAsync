@@ -410,6 +410,8 @@ void TransfersWidget::onUiUnblocked()
 {
     mLoadingScene.setLoadingScene(false);
     emit disableTransferManager(false);
+
+    mModel->uiUnblocked();
 }
 
 void TransfersWidget::onUiUnblockedAndFilter()
@@ -445,12 +447,12 @@ void TransfersWidget::onCancelClearButtonPressedOnDelegate()
     auto sourceSelection= mProxyModel->mapSelectionToSource(selection);
     auto sourceSelectionIndexes = sourceSelection.indexes();
 
-    auto action = ui->tvTransfers->getSelectedCancelOrClearText();
+    auto info = ui->tvTransfers->getSelectedCancelOrClearInfo();
 
     QPointer<TransfersWidget> dialog = QPointer<TransfersWidget>(this);
 
     if (QMegaMessageBox::warning(this, QString::fromUtf8("MEGAsync"),
-                             tr("%1", "", sourceSelectionIndexes.size()).arg(action),
+                             tr("%1", "", sourceSelectionIndexes.size()).arg(info.actionText),
                              QMessageBox::Yes | QMessageBox::No, QMessageBox::No)
             != QMessageBox::Yes
             || !dialog)

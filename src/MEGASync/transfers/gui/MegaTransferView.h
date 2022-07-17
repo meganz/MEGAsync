@@ -13,6 +13,16 @@ class MegaTransferView : public QTreeView
 {
     Q_OBJECT
 
+    struct SelectedIndexesInfo
+    {
+        QString actionText;
+        bool isAnyActive;
+        bool areAllActive;
+        bool areAllSync;
+
+        SelectedIndexesInfo():isAnyActive(false), areAllActive(true),areAllSync(true){}
+    };
+
 public:
     static const int CANCEL_MESSAGE_THRESHOLD;
 
@@ -29,8 +39,8 @@ public:
 
     int getVerticalScrollBarWidth() const;
 
-    QString getVisibleCancelOrClearText();
-    QString getSelectedCancelOrClearText();
+    SelectedIndexesInfo getVisibleCancelOrClearInfo();
+    SelectedIndexesInfo getSelectedCancelOrClearInfo();
 
 public slots:
     void onPauseResumeSelection(bool pauseState);
