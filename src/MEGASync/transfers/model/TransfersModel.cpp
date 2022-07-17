@@ -1053,8 +1053,6 @@ bool TransfersModel::hasFailedTransfers()
 
 void TransfersModel::cancelAllTransfers(QWidget* canceledFrom)
 {
-    bool hasSyncTransfer(false);
-
     auto count = rowCount(DEFAULT_IDX);
 
     mModelMutex.lock();
@@ -1065,18 +1063,12 @@ void TransfersModel::cancelAllTransfers(QWidget* canceledFrom)
         // Clear (remove rows of) finished transfers
         if (d && d->isSyncTransfer())
         {
-            hasSyncTransfer = true;
+            mSyncsInRowsToCancel = true;
+            mCancelledFrom = canceledFrom;
             break;
         }
     }
     mModelMutex.unlock();
-
-    if(hasSyncTransfer)
-    {
-        QMegaMessageBox::warning(canceledFrom, QString::fromUtf8("MEGAsync"),
-                                 tr("Sync transfers cannot be cancelled.\nPlease remove the sync from settings to remove these transfers."),
-                                 QMessageBox::Ok);
-    }
 
     //Cancel little by little??? CAnceling everythin blocks the SDK
     mMegaApi->cancelTransfers(MegaTransfer::TYPE_UPLOAD);
@@ -1096,8 +1088,6 @@ void TransfersModel::cancelAndClearTransfers(const QModelIndexList& indexes, QWi
     QMap<QModelIndex, QExplicitlySharedDataPointer<TransferData>> downloadToClear;
 
     QList<TransferTag> toCancel;
-
-    int syncTransferCannotBeCancellable(0);
 
     // First clear finished transfers (remove rows), then cancel the others.
     // This way, there is no risk of messing up the rows order with cancel requests.
@@ -1126,7 +1116,8 @@ void TransfersModel::cancelAndClearTransfers(const QModelIndexList& indexes, QWi
                 {
                     if(d->isSyncTransfer())
                     {
-                        syncTransferCannotBeCancellable++;
+                        mSyncsInRowsToCancel = true;
+                        mCancelledFrom = canceledFrom;
                     }
                 }
             }
@@ -1158,14 +1149,6 @@ void TransfersModel::cancelAndClearTransfers(const QModelIndexList& indexes, QWi
                 MegaSyncApp->processEvents();
             }
         }
-    }
-
-    //Clear is not empty and some transfers cannot be cleared
-    if(syncTransferCannotBeCancellable > 0)
-    {
-        QMegaMessageBox::warning(canceledFrom, QString::fromUtf8("MEGAsync"),
-                                 tr("Sync transfer(s) cannot be cancelled.\nPlease remove the sync from settings to remove this(these) transfer(s).", "", syncTransferCannotBeCancellable),
-                                 QMessageBox::Ok);
     }
 
     updateTransfersCount();
