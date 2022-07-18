@@ -106,13 +106,13 @@ MegaTransferView::SelectedIndexesInfo MegaTransferView::getVisibleCancelOrClearI
 
     SelectedIndexesInfo info;
 
-    info.isAnyActive = proxy->isAnyActive();
-    info.areAllActive = proxy->areAllActive();
+    info.isAnyCancellable = proxy->isAnyCancellable();
+    info.areAllCancellable = proxy->areAllCancellable();
     info.areAllSync = proxy->areAllSync();
 
-    if(info.isAnyActive)
+    if(info.isAnyCancellable)
     {
-        info.actionText = info.areAllActive ? tr("Cancel transfer(s)?") : tr("Cancel and clear transfer(s)?");
+        info.actionText = info.areAllCancellable ? tr("Cancel transfer(s)?") : tr("Cancel and clear transfer(s)?");
     }
     else
     {
@@ -140,18 +140,18 @@ MegaTransferView::SelectedIndexesInfo MegaTransferView::getSelectedCancelOrClear
 
             if(transfer->isActive() || transfer->isFailed())
             {
-                info.isAnyActive = true;
+                info.isAnyCancellable = true;
             }
             else
             {
-                info.areAllActive = false;
+                info.areAllCancellable = false;
             }
         }
     }
 
-    if(info.isAnyActive)
+    if(info.isAnyCancellable)
     {
-        info.actionText = info.areAllActive ? tr("Cancel transfer(s)?") : tr("Cancel and clear transfer(s)?");
+        info.actionText = info.areAllCancellable ? tr("Cancel transfer(s)?") : tr("Cancel and clear transfer(s)?");
     }
     else
     {

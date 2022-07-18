@@ -151,9 +151,10 @@ void TransferManagerDelegateWidget::updateTransferState()
         }
         case TransferData::TRANSFER_COMPLETING:
         {
+            statusString = tr("Completing");
+
             if(stateHasChanged())
             {
-                statusString = tr("Completing");
                 showTPauseResume = false;
                 showTCancelClear = false;
                 mUi->wProgressBar->setVisible(true);
@@ -185,9 +186,10 @@ void TransferManagerDelegateWidget::updateTransferState()
         }
         case TransferData::TRANSFER_RETRYING:
         {
+            statusString = tr("Retrying");
+
             if(stateHasChanged())
             {
-                statusString = tr("Retrying");
                 mPauseResumeTransferDefaultIconName = QLatin1Literal(":images/transfer_manager/transfers_actions/lists_pause_ico_default.png");
                 pauseResumeTooltip = tr("Pause transfer");
                 cancelClearTooltip = tr("Cancel transfer");
@@ -206,9 +208,10 @@ void TransferManagerDelegateWidget::updateTransferState()
         }
         case TransferData::TRANSFER_COMPLETED:
         {
+            statusString = tr("Completed");
+
             if(stateHasChanged())
             {
-                statusString = tr("Completed");
                 cancelClearTooltip = tr("Clear transfer");
                 showTPauseResume = false;
                 mUi->wProgressBar->setVisible(false);
@@ -226,10 +229,6 @@ void TransferManagerDelegateWidget::updateTransferState()
 
     if(stateHasChanged())
     {
-        // Status string
-        mUi->lItemStatus->setText(statusString);
-        mUi->lItemStatus->setToolTip(statusString);
-
         // Pause/Resume button
         if (showTPauseResume)
         {
@@ -257,7 +256,9 @@ void TransferManagerDelegateWidget::updateTransferState()
         mouseHoverTransfer(false, QPoint(0,0));
     }
 
-    // Total size
+    //Status
+    mUi->lItemStatus->setText(statusString);
+    mUi->lItemStatus->setToolTip(statusString);
 
     // Done label
     auto transferedB (getData()->mTransferredBytes);

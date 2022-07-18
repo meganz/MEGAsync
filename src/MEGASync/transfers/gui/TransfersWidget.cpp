@@ -34,6 +34,8 @@ TransfersWidget::TransfersWidget(QWidget* parent) :
     connect(mModel, &TransfersModel::transfersProcessChanged, this, &TransfersWidget::onCheckPauseResumeButton);
     connect(mModel, &TransfersModel::transfersProcessChanged, this, &TransfersWidget::onCheckCancelClearButton);
 
+    ui->tCancelClearVisible->installEventFilter(this);
+
     auto leftPaneButtons = ui->wTableHeader->findChildren<QAbstractButton*>();
     foreach(auto& button, leftPaneButtons)
     {
@@ -175,78 +177,50 @@ void TransfersWidget::togglePauseResumeButton(bool state)
 
 void TransfersWidget::onCheckCancelClearButton()
 {
-    bool changeIcon(false);
-
     bool areAllTransfersCompleted(mProxyModel->areAllCompleted());
     bool areAllSync(mProxyModel->areAllSync());
     bool isAnyTransferCompleted(mProxyModel->isAnyCompleted());
+    bool isAnyTransferActive(mProxyModel->isAnyCancellable());
 
-    auto buttonVisible(!areAllSync || areAllTransfersCompleted || isAnyTransferCompleted);
+    auto buttonVisible((isAnyTransferActive && !areAllSync) || areAllTransfersCompleted || isAnyTransferCompleted);
     if(mCancelClearInfo.visible != buttonVisible)
     {
         mCancelClearInfo.visible = buttonVisible;
         ui->tCancelClearVisible->setVisible(mCancelClearInfo.visible);
     }
 
-    QString cancelBase;
     if (mCurrentTab == TransfersWidget::COMPLETED_TAB)
     {        
-        if(!mCancelClearInfo.clearAction)
-        {
-            changeIcon = true;
-        }
-
         mCancelClearInfo.clearAction = true;
-        cancelBase = tr("Clear ");
 
     }
     else if ((mCurrentTab > TransfersWidget::TYPES_TAB_BASE && mCurrentTab < TransfersWidget::TYPES_LAST) || mCurrentTab == TransfersWidget::SEARCH_TAB)
     {        
-        bool isAnyCompleted(mProxyModel->isAnyCompleted());
-        bool newIconState(areAllTransfersCompleted);
+        bool showClear(false);
 
         if(areAllTransfersCompleted)
         {
-            cancelBase = tr("Clear ");
+            showClear = true;
         }
-        else if(isAnyCompleted)
+        else if(isAnyTransferCompleted)
         {
-            if(areAllSync)
+            if(areAllSync || !isAnyTransferActive)
             {
-                newIconState = true;
-                cancelBase = tr("Clear ");
+                showClear = true;
             }
-            else
-            {
-                cancelBase = tr("Cancel and clear ");
-            }
-        }
-        else
-        {
-            cancelBase = tr("Cancel ");
         }
 
-        if(mCancelClearInfo.clearAction != newIconState)
+        if(mCancelClearInfo.clearAction != showClear)
         {
-            mCancelClearInfo.clearAction = newIconState;
-            changeIcon = true;
+            mCancelClearInfo.clearAction = showClear;
         }
     }
     else
     {
-        if(mCancelClearInfo.clearAction)
-        {
-            changeIcon = true;
-        }
-
         mCancelClearInfo.clearAction = false;
-        cancelBase = tr("Cancel ");
     }
 
-    mCancelClearInfo.cancelClearTooltip = cancelBase + mTooltipNameByTab[mCurrentTab];
-    ui->tCancelClearVisible->setToolTip(mCancelClearInfo.cancelClearTooltip);
-
-    if(mCancelClearInfo.visible && changeIcon)
+    if(mCancelClearInfo.visible)
     {
         if(mCancelClearInfo.clearAction)
         {
@@ -259,6 +233,50 @@ void TransfersWidget::onCheckCancelClearButton()
                                                  QString::fromStdString("qrc:/images/transfer_manager/transfers_actions/lists_cancel_all_ico_default.png"));
         }
     }
+}
+
+void TransfersWidget::updateCancelClearButtonTooltip()
+{
+    bool areAllTransfersCompleted(mProxyModel->areAllCompleted());
+    bool areAllSync(mProxyModel->areAllSync());
+    bool isAnyTransferCompleted(mProxyModel->isAnyCompleted());
+    bool isAnyTransferActive(mProxyModel->isAnyCancellable());
+
+    QString cancelBase;
+    if (mCurrentTab == TransfersWidget::COMPLETED_TAB)
+    {
+        cancelBase = tr("Clear ");
+
+    }
+    else if ((mCurrentTab > TransfersWidget::TYPES_TAB_BASE && mCurrentTab < TransfersWidget::TYPES_LAST) || mCurrentTab == TransfersWidget::SEARCH_TAB)
+    {
+        if(areAllTransfersCompleted)
+        {
+            cancelBase = tr("Clear ");
+        }
+        else if(isAnyTransferCompleted)
+        {
+            if(areAllSync || !isAnyTransferActive)
+            {
+                cancelBase = tr("Clear ");
+            }
+            else
+            {
+                cancelBase = tr("Cancel and clear ");
+            }
+        }
+        else
+        {
+            cancelBase = tr("Cancel ");
+        }
+    }
+    else
+    {
+        cancelBase = tr("Cancel ");
+    }
+
+    mCancelClearInfo.cancelClearTooltip = cancelBase + mTooltipNameByTab[mCurrentTab];
+    ui->tCancelClearVisible->setToolTip(mCancelClearInfo.cancelClearTooltip);
 }
 
 void TransfersWidget::textFilterChanged(const QString& pattern)
@@ -374,7 +392,18 @@ void TransfersWidget::changeEvent(QEvent *event)
     {
         ui->retranslateUi(this);
     }
+
     QWidget::changeEvent(event);
+}
+
+bool TransfersWidget::eventFilter(QObject *watched, QEvent *event)
+{
+    if(watched == ui->tCancelClearVisible && event->type() == QEvent::ToolTip)
+    {
+        updateCancelClearButtonTooltip();
+    }
+
+    return QWidget::eventFilter(watched, event);
 }
 
 bool TransfersWidget::isLoadingViewSet()

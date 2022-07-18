@@ -16,11 +16,11 @@ class MegaTransferView : public QTreeView
     struct SelectedIndexesInfo
     {
         QString actionText;
-        bool isAnyActive;
-        bool areAllActive;
+        bool isAnyCancellable;
+        bool areAllCancellable;
         bool areAllSync;
 
-        SelectedIndexesInfo():isAnyActive(false), areAllActive(true),areAllSync(true){}
+        SelectedIndexesInfo():isAnyCancellable(false), areAllCancellable(true),areAllSync(true){}
     };
 
 public:

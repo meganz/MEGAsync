@@ -94,6 +94,7 @@ public slots:
 
 protected:
     void changeEvent(QEvent *event) override;
+    bool eventFilter(QObject *watched, QEvent *event) override;
 
 private slots:
     void onUiUnblockedAndFilter();
@@ -106,6 +107,7 @@ private slots:
     void onCheckPauseResumeButton();
     void togglePauseResumeButton(bool state);
     void onCheckCancelClearButton();
+    void updateCancelClearButtonTooltip();
 
 private:
     Ui::TransfersWidget *ui;

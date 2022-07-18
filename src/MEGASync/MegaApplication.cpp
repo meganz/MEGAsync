@@ -1572,8 +1572,6 @@ void MegaApplication::processUploadQueue(MegaHandle nodeHandle)
     auto batch = std::shared_ptr<TransferBatch>(new TransferBatch());
     mBlockingBatch.add(batch);
 
-    mBlockingBatch.add(batch);
-
     EventUpdater updater(uploadQueue.size());
 
     //Process the upload queue using the MegaUploader object

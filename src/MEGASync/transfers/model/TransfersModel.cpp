@@ -269,6 +269,12 @@ void TransferThread::onTransferFinish(MegaApi*, MegaTransfer *transfer, MegaErro
             if(transfer->getType() == MegaTransfer::TYPE_UPLOAD)
             {
                 mTransfersCount.pendingUploads--;
+
+                if(transfer->getTransferredBytes() < transfer->getTotalBytes())
+                {
+                    mTransfersCount.completedUploadBytes += transfer->getDeltaSize();
+                }
+
                 if(transfer->getState() == MegaTransfer::STATE_FAILED && !transfer->isSyncTransfer())
                 {
                     mTransfersCount.failedUploads++;
@@ -277,6 +283,12 @@ void TransferThread::onTransferFinish(MegaApi*, MegaTransfer *transfer, MegaErro
             else
             {
                 mTransfersCount.pendingDownloads--;
+
+                if(transfer->getTransferredBytes() < transfer->getTotalBytes())
+                {
+                    mTransfersCount.completedDownloadBytes += transfer->getDeltaSize();
+                }
+
                 if(transfer->getState() == MegaTransfer::STATE_FAILED && !transfer->isSyncTransfer())
                 {
                     mTransfersCount.failedDownloads++;
@@ -540,7 +552,6 @@ void TransfersModel::onProcessTransfers()
 
     if(!mTransfersToProcess.isEmpty())
     {
-        modelHasChanged(true);
         mostPriorityTransferMayChanged(true);
 
         int containsTransfersToStart(mTransfersToProcess.startTransfersByTag.size());
@@ -566,8 +577,6 @@ void TransfersModel::onProcessTransfers()
                     mModelMutex.unlock();
                 }
             }
-
-            updateTransfersCount();
         }
 
         if(containsTransfersFailed > 0)
@@ -598,7 +607,6 @@ void TransfersModel::onProcessTransfers()
                 }
 
                 processSyncFailedTransfers();
-                updateTransfersCount();
             }
         }
         else
@@ -620,8 +628,6 @@ void TransfersModel::onProcessTransfers()
                     processStartTransfers(mTransfersToProcess.startTransfersByTag);
                     processStartTransfers(mTransfersToProcess.startSyncTransfersByTag);
 
-                    processUpdateTransfers();
-
                     if(isUiBlockedModeActive())
                     {
                         blockModelSignals(false);
@@ -629,9 +635,6 @@ void TransfersModel::onProcessTransfers()
 
                     mModelMutex.unlock();
                 }
-
-                updateTransfersCount();
-
             }
             else if(containsTransfersToUpdate > 0)
             {
@@ -658,8 +661,6 @@ void TransfersModel::onProcessTransfers()
                         updateUiBlockedByCounter(containsTransfersToUpdate);
                         mModelMutex.unlock();
                     }
-
-                    updateTransfersCount();
                 }
             }
             else
@@ -671,10 +672,14 @@ void TransfersModel::onProcessTransfers()
             }
         }
 
+        updateTransfersCount();
+
         if(isUiBlockedModeActive())
         {
             setUiBlockedMode(false);
         }
+
+        modelHasChanged(true);
     }
     else
     {
@@ -1063,9 +1068,12 @@ void TransfersModel::cancelAllTransfers(QWidget* canceledFrom)
         // Clear (remove rows of) finished transfers
         if (d && d->isSyncTransfer())
         {
-            mSyncsInRowsToCancel = true;
-            mCancelledFrom = canceledFrom;
-            break;
+            if(!mSyncsInRowsToCancel)
+            {
+                mSyncsInRowsToCancel = true;
+                mCancelledFrom = canceledFrom;
+                break;
+            }
         }
     }
     mModelMutex.unlock();
@@ -1073,8 +1081,6 @@ void TransfersModel::cancelAllTransfers(QWidget* canceledFrom)
     //Cancel little by little??? CAnceling everythin blocks the SDK
     mMegaApi->cancelTransfers(MegaTransfer::TYPE_UPLOAD);
     mMegaApi->cancelTransfers(MegaTransfer::TYPE_DOWNLOAD);
-
-    updateTransfersCount();
 }
 
 void TransfersModel::cancelAndClearTransfers(const QModelIndexList& indexes, QWidget* canceledFrom)
@@ -1150,8 +1156,6 @@ void TransfersModel::cancelAndClearTransfers(const QModelIndexList& indexes, QWi
             }
         }
     }
-
-    updateTransfersCount();
 }
 
 void TransfersModel::showSyncCancelledWarning()
@@ -1263,8 +1267,6 @@ void TransfersModel::clearTransfers(const QModelIndexList& indexes)
     }
 
     clearTransfers(uploadToClear, downloadToClear);
-
-    updateTransfersCount();
 }
 
 void TransfersModel::clearFailedTransfers(const QModelIndexList &indexes)
@@ -1316,11 +1318,10 @@ void TransfersModel::clearTransfers(const QMap<QModelIndex, QExplicitlySharedDat
 
 void TransfersModel::onClearTransfersFinished()
 {
-    //The clear transfer is the only action which does not receive a SDK request
-    emit transfersProcessChanged();
-
     updateTransfersCount();
 
+    //The clear transfer is the only action which does not receive a SDK request
+    emit transfersProcessChanged();
     emit unblockUiAndFilter();
 }
 
@@ -1674,6 +1675,8 @@ void TransfersModel::setUiBlockedMode(bool state)
 
         if(mUiBlockedCounter == 0)
         {
+            updateTransfersCount();
+
             if(!mRowsToCancel.isEmpty() || !mFailedTransferToClear.isEmpty())
             {
                 auto task = QtConcurrent::run([this]()
