@@ -94,12 +94,6 @@ QModelIndexList MegaTransferView::getSelectedTransfers()
     return indexes;
 }
 
-bool MegaTransferView::isSingleSelectedTransfers()
-{
-    auto selection = selectionModel()->selection();
-    return !(selection.size() > 1);
-}
-
 MegaTransferView::SelectedIndexesInfo MegaTransferView::getVisibleCancelOrClearInfo()
 {
     auto proxy (qobject_cast<TransfersManagerSortFilterProxyModel*>(model()));
@@ -112,11 +106,11 @@ MegaTransferView::SelectedIndexesInfo MegaTransferView::getVisibleCancelOrClearI
 
     if(info.isAnyCancellable)
     {
-        info.actionText = info.areAllCancellable ? tr("Cancel transfer(s)?") : tr("Cancel and clear transfer(s)?");
+        info.actionText = info.areAllCancellable ? tr("Cancel transfer(s)?", "", proxy->transfersCount()) : tr("Cancel and clear transfer(s)?", "", proxy->transfersCount());
     }
     else
     {
-        info.actionText = tr("Clear transfer(s)?");
+        info.actionText = tr("Clear transfer(s)?", "", proxy->transfersCount());
     }
 
     return info;
@@ -151,11 +145,11 @@ MegaTransferView::SelectedIndexesInfo MegaTransferView::getSelectedCancelOrClear
 
     if(info.isAnyCancellable)
     {
-        info.actionText = info.areAllCancellable ? tr("Cancel transfer(s)?") : tr("Cancel and clear transfer(s)?");
+        info.actionText = info.areAllCancellable ? tr("Cancel transfer(s)?") : tr("Cancel and clear transfer(s)?","", indexes.size());
     }
     else
     {
-        info.actionText = tr("Clear transfer(s)?");
+        info.actionText = tr("Clear transfer(s)?", "", indexes.size());
     }
 
     return info;
@@ -194,7 +188,7 @@ void MegaTransferView::onCancelVisibleTransfers()
     if(!info.areAllSync)
     {
         if (QMegaMessageBox::warning(this, QString::fromUtf8("MEGAsync"),
-                                     tr("%1", "", model()->rowCount()).arg(info.actionText),
+                                     info.actionText,
                                      QMessageBox::Yes | QMessageBox::No, QMessageBox::No)
                 == QMessageBox::Yes
                 && dialog)
@@ -210,7 +204,6 @@ void MegaTransferView::onCancelVisibleTransfers()
 
 void MegaTransferView::onCancelSelectedTransfers()
 {
-    bool singleTransfer = isSingleSelectedTransfers();
     auto info = getSelectedCancelOrClearInfo();
 
     if(!info.areAllSync)
@@ -218,7 +211,7 @@ void MegaTransferView::onCancelSelectedTransfers()
         QPointer<MegaTransferView> dialog = QPointer<MegaTransferView>(this);
 
         if (QMegaMessageBox::warning(this, QString::fromUtf8("MEGAsync"),
-                                     tr("%1", "", !singleTransfer).arg(info.actionText),
+                                     info.actionText,
                                      QMessageBox::Yes | QMessageBox::No, QMessageBox::No)
                 == QMessageBox::Yes
                 && dialog)
@@ -275,7 +268,7 @@ void MegaTransferView::onCancelAndClearVisibleTransfers()
     QPointer<MegaTransferView> dialog = QPointer<MegaTransferView>(this);
 
     if (QMegaMessageBox::warning(this, QString::fromUtf8("MEGAsync"),
-                             tr("%1", "", model()->rowCount()).arg(info.actionText),
+                             info.actionText,
                              QMessageBox::Yes | QMessageBox::No, QMessageBox::No)
             == QMessageBox::Yes
             && dialog)

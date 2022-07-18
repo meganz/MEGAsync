@@ -8,7 +8,7 @@ const char* ButtonIconManager::ICON_PREFIX = "default_icon";
 const char* ButtonIconManager::HOVER_SELECTED_FLAG = "hover_selected";
 const char* ButtonIconManager::CHECK_STATE = "check_state";
 const char* ButtonIconManager::IGNORE_BUTTON = "ignore_button_manager";
-const QString QRC_PREFIX = QLatin1Literal(":qrc");
+const QString QRC_PREFIX = QLatin1Literal("qrc");
 
 const char* ButtonIconManager::DISABLE_UNCHECK_ON_CLICK = "disable_uncheck_on_click";
 
@@ -194,8 +194,6 @@ ButtonIconManager::IconInfo ButtonIconManager::splitIconPath(const QString &icon
 {
     IconInfo info;
 
-    QUrl pathUrl(iconPath);
-
     QFileInfo pathInfo(iconPath);
     info.extension = pathInfo.completeSuffix();
     info.iconPath = pathInfo.path();
@@ -233,17 +231,14 @@ bool ButtonIconManager::cleanIconName(IconInfo& info, const QString& separator)
 void ButtonIconManager::fillIcon(const IconInfo& info, QIcon& icon)
 {
     QString result;
-    QString init(QString::fromLatin1(":"));
     QString separator(QString::fromLatin1("/"));
     QString pointSeparator(QString::fromLatin1("."));
-    result.reserve(init.length()
-                   + info.iconPath.length()
+    result.reserve(info.iconPath.length()
                    + separator.length()
                    + info.iconName.length()
                    + pointSeparator.length()
                    + info.extension.length());
 
-    result.append(init);
     result.append(info.iconPath);
     result.append(separator);
     result.append(info.iconName);

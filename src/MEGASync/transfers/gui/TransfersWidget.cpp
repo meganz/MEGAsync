@@ -481,7 +481,7 @@ void TransfersWidget::onCancelClearButtonPressedOnDelegate()
     QPointer<TransfersWidget> dialog = QPointer<TransfersWidget>(this);
 
     if (QMegaMessageBox::warning(this, QString::fromUtf8("MEGAsync"),
-                             tr("%1", "", sourceSelectionIndexes.size()).arg(info.actionText),
+                             info.actionText,
                              QMessageBox::Yes | QMessageBox::No, QMessageBox::No)
             != QMessageBox::Yes
             || !dialog)

@@ -49,6 +49,7 @@ public:
         bool isAnyActive() const;
 
         bool isEmpty() const;
+        int  transfersCount() const;
 
         bool isModelProcessing() const;
 signals:

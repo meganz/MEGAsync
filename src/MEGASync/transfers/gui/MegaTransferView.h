@@ -113,7 +113,6 @@ private:
 
     QModelIndexList getTransfers(bool onlyVisible, TransferData::TransferStates state = TransferData::TRANSFER_NONE);
     QModelIndexList getSelectedTransfers();
-    bool isSingleSelectedTransfers();
 };
 
 #endif // MEGATRANSFERVIEW_H

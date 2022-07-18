@@ -525,6 +525,11 @@ bool TransfersManagerSortFilterProxyModel::isEmpty() const
     return mCompletedTransfers.isEmpty() && mPausedTransfers.isEmpty() && mActiveTransfers.isEmpty() && mFailedTransfers.isEmpty() && mCompletingTransfers.isEmpty();
 }
 
+int TransfersManagerSortFilterProxyModel::transfersCount() const
+{
+    return mCompletedTransfers.size() + mActiveTransfers.size() + mFailedTransfers.size() + mCompletingTransfers.size();
+}
+
 int TransfersManagerSortFilterProxyModel::activeTransfers() const
 {
     return mActiveTransfers.size();
