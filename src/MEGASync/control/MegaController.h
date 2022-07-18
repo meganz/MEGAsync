@@ -11,6 +11,7 @@
 
 class ProgressStep;
 class ActionProgress;
+class MegaApplication;
 
 /**
  * @brief Controller class
@@ -35,11 +36,15 @@ public:
     void setSyncRunState(mega::MegaSync::SyncRunningState, std::shared_ptr<SyncSetting> syncSetting, ActionProgress *progress = nullptr);
 
     static Controller *instance();
+
     void setApi(mega::MegaApi *value);
+    void setApplication(MegaApplication *application);
 
 private:
 
-    mega::MegaApi *api;
+    mega::MegaApi *api = nullptr;
+    MegaApplication *app = nullptr;
+
     static Controller *controller;
 };
 

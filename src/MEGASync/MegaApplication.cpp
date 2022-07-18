@@ -469,10 +469,9 @@ void MegaApplication::initialize()
     megaApi->setMaxPayloadLogSize(newPayLoadLogSize);
     megaApiFolders->setMaxPayloadLogSize(newPayLoadLogSize);
 
-
     controller = Controller::instance();
     controller->setApi(this->megaApi);
-
+    controller->setApplication(this);
 
     QString stagingPath = QDir(dataPath).filePath(QString::fromUtf8("megasync.staging"));
     QFile fstagingPath(stagingPath);
