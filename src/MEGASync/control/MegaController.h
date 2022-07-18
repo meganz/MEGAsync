@@ -11,6 +11,7 @@
 
 class ProgressStep;
 class ActionProgress;
+class MegaApplication;
 
 /**
  * @brief Controller class
@@ -30,16 +31,23 @@ class Controller
 {
 public:
 
-    void addSync(const QString &localFolder, mega::MegaHandle remoteHandle, QString syncName = QString(), ActionProgress *progress = nullptr);
+    void addSync(const QString &localFolder,
+                 mega::MegaHandle remoteHandle,
+                 const QString &appDataPath,
+                 QString syncName = QString(),
+                 ActionProgress *progress = nullptr);
+
     void removeSync(std::shared_ptr<SyncSetting> syncSetting, ActionProgress *progress = nullptr);
     void setSyncRunState(mega::MegaSync::SyncRunningState, std::shared_ptr<SyncSetting> syncSetting, ActionProgress *progress = nullptr);
 
     static Controller *instance();
+
     void setApi(mega::MegaApi *value);
 
 private:
 
-    mega::MegaApi *api;
+    mega::MegaApi *api = nullptr;
+
     static Controller *controller;
 };
 

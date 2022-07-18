@@ -7,7 +7,11 @@ using namespace mega;
 
 Controller *Controller::controller = NULL;
 
-void Controller::addSync(const QString &localFolder, MegaHandle remoteHandle, QString syncName, ActionProgress *progress)
+void Controller::addSync(const QString &localFolder,
+                         MegaHandle remoteHandle,
+                         const QString &appDataPath,
+                         QString syncName,
+                         ActionProgress *progress)
 {
     assert(api);
 
@@ -23,7 +27,7 @@ void Controller::addSync(const QString &localFolder, MegaHandle remoteHandle, QS
     api->syncFolder(MegaSync::TYPE_TWOWAY, localFolder.toUtf8().constData(), syncName.toUtf8().constData(), remoteHandle,
         nullptr, new ProgressFuncExecuterListener(progress,  true, [](MegaApi*, MegaRequest*, MegaError*){
                         ///// onRequestFinish Management: ////
-                    }));
+                    }), appDataPath.toUtf8().constData());
 }
 
 void Controller::removeSync(std::shared_ptr<SyncSetting> syncSetting, ActionProgress *progress)
