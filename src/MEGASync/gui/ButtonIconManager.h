@@ -52,7 +52,7 @@ protected:
 private:
     void fillIcon(const IconInfo& info, QIcon& icon);
     void changeButtonTextColor(QAbstractButton* button, double alpha);
-    IconInfo splitIconPath(const QUrl& iconPath);
+    IconInfo splitIconPath(const QString& iconPath);
     bool cleanIconName(IconInfo& info, const QString& separator);
 
     void setDefaultIcon(QAbstractButton* button);

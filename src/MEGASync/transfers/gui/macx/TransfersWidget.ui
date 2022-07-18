@@ -456,9 +456,7 @@ TransferWidgetHeaderItem  QLabel
                 <bool>true</bool>
                </property>
                <property name="default_icon" stdset="0">
-                <url>
-                 <string>qrc:/images/transfer_manager/transfers_actions/lists_pause_all_ico_default.png</string>
-                </url>
+                 <string notr="true">qrc:/images/transfer_manager/transfers_actions/lists_pause_all_ico_default.png</string>
                </property>
               </widget>
              </item>
@@ -535,9 +533,7 @@ TransferWidgetHeaderItem  QLabel
                 </size>
                </property>
                <property name="default_icon" stdset="0">
-                <url>
-                 <string>qrc:/images/transfer_manager/transfers_actions/lists_cancel_all_ico_default.png</string>
-                </url>
+                 <string notr="true">qrc:/images/transfer_manager/transfers_actions/lists_cancel_all_ico_default.png</string>
                </property>
               </widget>
              </item>

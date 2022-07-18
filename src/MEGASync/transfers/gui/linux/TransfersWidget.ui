@@ -428,9 +428,7 @@ TransferWidgetHeaderItem  QLabel
                 <bool>true</bool>
                </property>
                <property name="default_icon" stdset="0">
-                <url>
-                 <string>qrc:/images/transfer_manager/transfers_actions/lists_pause_all_ico_default.png</string>
-                </url>
+                 <string notr="true">qrc:/images/transfer_manager/transfers_actions/lists_pause_all_ico_default.png</string>
                </property>
               </widget>
              </item>
@@ -516,9 +514,7 @@ TransferWidgetHeaderItem  QLabel
                 <bool>false</bool>
                </property>
                <property name="default_icon" stdset="0">
-                <url>
-                 <string>qrc:/images/transfer_manager/transfers_actions/lists_cancel_all_ico_default.png</string>
-                </url>
+                 <string notr="true">qrc:/images/transfer_manager/transfers_actions/lists_cancel_all_ico_default.png</string>
                </property>
               </widget>
              </item>
@@ -715,8 +711,7 @@ QMenu::item:default
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="../../../gui/Resources_macx.qrc"/>
-  <include location="../../../gui/Resources_macx.qrc"/>
+  <include location="../../../gui/Resources_linux.qrc"/>
  </resources>
  <connections/>
 </ui>
