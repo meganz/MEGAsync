@@ -1081,7 +1081,11 @@ void InfoDialog::addSync(MegaHandle h)
        }
    }, Qt::DirectConnection); //Note, we need direct connection to use request & error
 
-   controller->addSync(localFolderPath, handle, syncName, addSyncStep);
+   controller->addSync(localFolderPath,
+                       handle,
+                       app->applicationDataPath(),
+                       syncName,
+                       addSyncStep);
 }
 
 #ifdef __APPLE__

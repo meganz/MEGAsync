@@ -471,7 +471,6 @@ void MegaApplication::initialize()
 
     controller = Controller::instance();
     controller->setApi(this->megaApi);
-    controller->setApplication(this);
 
     QString stagingPath = QDir(dataPath).filePath(QString::fromUtf8("megasync.staging"));
     QFile fstagingPath(stagingPath);
@@ -1480,7 +1479,11 @@ void MegaApplication::startSyncs(QList<PreConfiguredSync> syncs)
         }, Qt::DirectConnection); //Note, we need direct connection to use request & error
 
 
-        controller->addSync(ps.localFolder(), ps.megaFolderHandle(), ps.syncName(), addSyncStep);
+        controller->addSync(ps.localFolder(),
+                            ps.megaFolderHandle(),
+                            applicationDataPath(),
+                            ps.syncName(),
+                            addSyncStep);
     }
 }
 

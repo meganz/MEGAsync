@@ -1448,7 +1448,11 @@ void SettingsDialog::addSyncFolder(MegaHandle megaFolderHandle)
                 showUnexpectedSyncError(tr("Unexpected error adding sync"));
         }, Qt::DirectConnection);
 
-    mController->addSync(localFolderPath, dialog->megaPathHandle, dialog->getSyncName(), action);
+    mController->addSync(localFolderPath,
+                         dialog->megaPathHandle,
+                         mApp->applicationDataPath(),
+                         dialog->getSyncName(),
+                         action);
 
     delete dialog;
 }
