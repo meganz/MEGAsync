@@ -515,7 +515,7 @@ bool TransfersManagerSortFilterProxyModel::isAnyCompleted() const
     return !mCompletedTransfers.isEmpty();
 }
 
-void TransfersManagerSortFilterProxyModel::isAnyActive() const
+bool TransfersManagerSortFilterProxyModel::isAnyActive() const
 {
     return !mActiveTransfers.isEmpty();
 }

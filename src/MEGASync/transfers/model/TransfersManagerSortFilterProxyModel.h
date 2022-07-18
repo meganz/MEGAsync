@@ -46,7 +46,7 @@ public:
         bool areAllSync() const;
         bool areAllCompleted() const;
         bool isAnyCompleted() const;
-        void isAnyActive() const;
+        bool isAnyActive() const;
 
         bool isEmpty() const;
 
