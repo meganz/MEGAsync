@@ -196,13 +196,13 @@ TransferManager::TransferManager(MegaApi *megaApi) :
     connect(mSpeedRefreshTimer, &QTimer::timeout,
             this, &TransferManager::refreshSpeed);
 
-    auto sizePolicy = mUi->bDownSpeed->sizePolicy();
+    auto sizePolicy = mUi->wDownSpeed->sizePolicy();
     sizePolicy.setRetainSizeWhenHidden(true);
-    mUi->bDownSpeed->setSizePolicy(sizePolicy);
+    mUi->wDownSpeed->setSizePolicy(sizePolicy);
 
-    sizePolicy = mUi->bUpSpeed->sizePolicy();
+    sizePolicy = mUi->wUpSpeed->sizePolicy();
     sizePolicy.setRetainSizeWhenHidden(true);
-    mUi->bUpSpeed->setSizePolicy(sizePolicy);
+    mUi->wUpSpeed->setSizePolicy(sizePolicy);
 
     // Connect to storage quota signals
     connect(qobject_cast<MegaApplication*>(qApp), &MegaApplication::storageStateChanged,
@@ -703,18 +703,18 @@ void TransferManager::checkPauseButtonVisibilityIfPossible()
 
 void TransferManager::refreshSpeed()
 {
-    mUi->bUpSpeed->setVisible(mTransfersCount.pendingUploads);
+    mUi->wUpSpeed->setVisible(mTransfersCount.pendingUploads);
     if(mTransfersCount.pendingUploads)
     {
         auto upSpeed (static_cast<unsigned long long>(mMegaApi->getCurrentUploadSpeed()));
-        mUi->bUpSpeed->setText(Utilities::getSizeString(upSpeed) + QLatin1Literal("/s"));
+        mUi->lUpSpeed->setText(Utilities::getSizeString(upSpeed) + QLatin1Literal("/s"));
     }
 
-    mUi->bDownSpeed->setVisible(mTransfersCount.pendingDownloads);
+    mUi->wDownSpeed->setVisible(mTransfersCount.pendingDownloads);
     if(mTransfersCount.pendingDownloads)
     {
         auto dlSpeed (static_cast<unsigned long long>(mMegaApi->getCurrentDownloadSpeed()));
-        mUi->bDownSpeed->setText(Utilities::getSizeString(dlSpeed) + QLatin1Literal("/s"));
+        mUi->lDownSpeed->setText(Utilities::getSizeString(dlSpeed) + QLatin1Literal("/s"));
     }
 }
 

@@ -235,17 +235,18 @@ QGroupBox::title
     text-align: left;
 }
 
-#pSpeedAndClear QPushButton
+#wDownSpeed, #wUpSpeed
 {
     border-radius: 12px;
     background-color: #ECECEC;
+}
+
+#wDownSpeed QLabel, #wUpSpeed QLabel
+{
     color: #333333;
     font-size: 10px;
     font-weight: bold;
-    qProperty-iconSize: 16px;
-    text-align: left;
-	padding-right: 8px;
-	padding-left: 4px;
+    text-align: right;
 }
 
 #bClearAll
@@ -1873,9 +1874,9 @@ QGroupBox::title
          <number>0</number>
         </property>
         <widget class="QWidget" name="pSpeedAndClear">
-         <layout class="QHBoxLayout" name="pSpeedAndClearLayout" stretch="1,0,1">
+         <layout class="QHBoxLayout" name="pSpeedAndClearLayout" stretch="1,0,1,0">
           <property name="spacing">
-           <number>5</number>
+           <number>0</number>
           </property>
           <property name="leftMargin">
            <number>12</number>
@@ -1884,50 +1885,112 @@ QGroupBox::title
            <number>0</number>
           </property>
           <property name="rightMargin">
-           <number>6</number>
+           <number>0</number>
           </property>
           <property name="bottomMargin">
            <number>0</number>
           </property>
           <item>
-           <widget class="QPushButton" name="bDownSpeed">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
+           <widget class="QWidget" name="wDownSpeed" native="true">
             <property name="minimumSize">
              <size>
-              <width>0</width>
+              <width>88</width>
               <height>24</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
-              <width>16777215</width>
+              <width>88</width>
               <height>24</height>
              </size>
             </property>
-            <property name="text">
-             <string notr="true"/>
+            <layout class="QHBoxLayout" name="horizontalLayout_16">
+             <property name="spacing">
+              <number>0</number>
             </property>
-            <property name="icon">
-             <iconset resource="../../../gui/Resources_win.qrc">
-              <normaloff>:/images/transfer_manager/transfers_states/arrow_download_ico.png</normaloff>:/images/transfer_manager/transfers_states/arrow_download_ico.png</iconset>
+             <property name="leftMargin">
+              <number>4</number>
             </property>
-            <property name="iconSize">
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>4</number>
+             </property>
+             <property name="bottomMargin">
+              <number>0</number>
+             </property>
+             <item alignment="Qt::AlignLeft|Qt::AlignVCenter">
+              <widget class="QPushButton" name="lDownSpeedIcon">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="minimumSize">
              <size>
-              <width>16</width>
-              <height>16</height>
+                 <width>16</width>
+                 <height>16</height>
              </size>
             </property>
+               <property name="maximumSize">
+                <size>
+                 <width>16</width>
+                 <height>16</height>
+                </size>
+               </property>
+               <property name="focusPolicy">
+                <enum>Qt::NoFocus</enum>
+               </property>
+               <property name="toolTip">
+                <string notr="true"/>
+               </property>
+               <property name="text">
+                <string notr="true"/>
+               </property>
+               <property name="icon">
+                <iconset>
+                 <normalon>:/images/transfer_manager/transfers_states/arrow_download_ico.png</normalon>
+                </iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>16</width>
+                 <height>16</height>
+                </size>
+               </property>
+               <property name="flat">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="lDownSpeed">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
+            </layout>
            </widget>
           </item>
           <item>
            <spacer name="horizontalSpacer_14">
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeType">
+             <enum>QSizePolicy::Fixed</enum>
             </property>
             <property name="sizeHint" stdset="0">
              <size>
@@ -1938,39 +2001,108 @@ QGroupBox::title
            </spacer>
           </item>
           <item>
-           <widget class="QPushButton" name="bUpSpeed">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
+           <widget class="QWidget" name="wUpSpeed" native="true">
             <property name="minimumSize">
              <size>
-              <width>0</width>
+              <width>88</width>
               <height>24</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
-              <width>16777215</width>
+              <width>88</width>
               <height>24</height>
              </size>
             </property>
-            <property name="text">
-             <string notr="true"/>
+            <layout class="QHBoxLayout" name="horizontalLayout_17">
+             <property name="spacing">
+              <number>0</number>
             </property>
-            <property name="icon">
-             <iconset resource="../../../gui/Resources_win.qrc">
-              <normaloff>:/images/transfer_manager/transfers_states/arrow_upload_ico.png</normaloff>:/images/transfer_manager/transfers_states/arrow_upload_ico.png</iconset>
+             <property name="leftMargin">
+              <number>4</number>
             </property>
-            <property name="iconSize">
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>4</number>
+             </property>
+             <property name="bottomMargin">
+              <number>0</number>
+             </property>
+             <item alignment="Qt::AlignLeft|Qt::AlignVCenter">
+              <widget class="QPushButton" name="lUpSpeedIcon">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>16</width>
+                 <height>16</height>
+                </size>
+               </property>
+               <property name="maximumSize">
              <size>
               <width>16</width>
               <height>16</height>
              </size>
             </property>
+               <property name="focusPolicy">
+                <enum>Qt::NoFocus</enum>
+               </property>
+               <property name="text">
+                <string notr="true"/>
+               </property>
+               <property name="icon">
+                <iconset>
+                 <normalon>:/images/transfer_manager/transfers_states/arrow_upload_ico.png</normalon>
+                </iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>16</width>
+                 <height>16</height>
+                </size>
+               </property>
+               <property name="flat">
+                <bool>true</bool>
+               </property>
            </widget>
+          </item>
+             <item>
+              <widget class="QLabel" name="lUpSpeed">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer_16">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>0</width>
+              <height>0</height>
+             </size>
+            </property>
+           </spacer>
           </item>
          </layout>
         </widget>
