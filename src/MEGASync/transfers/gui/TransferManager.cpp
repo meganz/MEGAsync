@@ -966,21 +966,6 @@ void TransferManager::on_bUpload_clicked()
     qobject_cast<MegaApplication*>(qApp)->uploadActionClickedFromWindow(this);
 }
 
-void TransferManager::on_bCancelAll_clicked()
-{
-    auto transfersView = findChild<MegaTransferView*>();
-    if(transfersView)
-    {
-        if(transfersView->onCancelAllTransfers())
-        {
-            on_tAllTransfers_clicked();
-
-            //Use to repaint and update the transfers state
-            transfersView->update();
-        }
-    };
-}
-
 void TransferManager::on_leSearchField_returnPressed()
 {
     emit mUi->tSearchIcon->clicked();

@@ -125,7 +125,7 @@ public:
     bool isCompleting() const;
     bool isFailed() const;
     int64_t getRawFinishedTime() const;
-    int64_t getFinishedTime() const;
+    int64_t getSecondsSinceFinished() const;
     QString getFormattedFinishedTime() const;
 
 private:

@@ -137,7 +137,6 @@ private slots:
     void on_tCogWheel_clicked();
     void on_bDownload_clicked();
     void on_bUpload_clicked();
-    void on_bCancelAll_clicked();
     void on_leSearchField_returnPressed();
 
     void on_bArchives_clicked();

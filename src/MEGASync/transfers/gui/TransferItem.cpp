@@ -86,9 +86,7 @@ void TransferData::update(mega::MegaTransfer* transfer)
 
         if(mState & TransferData::FINISHED_STATES_MASK)
         {
-            mFinishedTime = QDateTime::currentSecsSinceEpoch();
-            mFinishedTime += (transfer->getUpdateTime() - transfer->getStartTime());
-
+            mFinishedTime = transfer->getUpdateTime();
             mSpeed = transfer->getMeanSpeed() != 0 ?  static_cast<unsigned long long>(transfer->getMeanSpeed()) : mTotalSize;
         }
         else
@@ -241,16 +239,18 @@ int64_t TransferData::getRawFinishedTime() const
     return mFinishedTime;
 }
 
-int64_t TransferData::getFinishedTime() const
+int64_t TransferData::getSecondsSinceFinished() const
 {
-    QDateTime now = QDateTime::currentDateTime();
-    int64_t  result(now.toSecsSinceEpoch() - mFinishedTime);
-    return result;
+    auto preferences = Preferences::instance();
+    return ((QDateTime::currentMSecsSinceEpoch()/ 100) - (preferences->getMsDiffTimeWithSDK() + mFinishedTime))/10;
 }
 
 QString TransferData::getFormattedFinishedTime() const
 {
-    return QDateTime::fromTime_t(static_cast<uint>(mFinishedTime)).toLocalTime().toString(QString::fromLatin1("hh:mm"));
+    auto preferences = Preferences::instance();
+    qint64 secs = (preferences->getMsDiffTimeWithSDK() + mFinishedTime)/10;
+
+    return QDateTime::fromTime_t(static_cast<uint>(secs)).toLocalTime().toString(QString::fromLatin1("hh:mm"));
 }
 
 QString TransferData::path() const

@@ -356,7 +356,7 @@ void InfoDialogTransferDelegateWidget::finishTransfer()
 
 void InfoDialogTransferDelegateWidget::updateFinishedTime()
 {
-    auto finishedTime = getData()->getFinishedTime();
+    auto finishedTime = getData()->getSecondsSinceFinished();
 
     if (!finishedTime || getData()->mErrorCode < 0)
     {
