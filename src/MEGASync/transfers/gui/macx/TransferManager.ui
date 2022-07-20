@@ -1796,7 +1796,7 @@ QToolButton
             </property>
             <layout class="QHBoxLayout" name="horizontalLayout_16">
              <property name="spacing">
-              <number>5</number>
+              <number>0</number>
              </property>
              <property name="leftMargin">
               <number>4</number>
@@ -1805,7 +1805,7 @@ QToolButton
               <number>0</number>
              </property>
              <property name="rightMargin">
-              <number>0</number>
+              <number>4</number>
              </property>
              <property name="bottomMargin">
               <number>0</number>
@@ -1903,7 +1903,7 @@ QToolButton
             </property>
             <layout class="QHBoxLayout" name="horizontalLayout_17">
              <property name="spacing">
-              <number>5</number>
+              <number>0</number>
              </property>
              <property name="leftMargin">
               <number>4</number>
@@ -1912,7 +1912,7 @@ QToolButton
               <number>0</number>
              </property>
              <property name="rightMargin">
-              <number>0</number>
+              <number>4</number>
              </property>
              <property name="bottomMargin">
               <number>0</number>
