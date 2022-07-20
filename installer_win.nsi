@@ -325,7 +325,6 @@ Function showHiDpi
         StrCpy $0 72
     ${EndIf}
 
-
     strCpy $BITMAP_WELCOME "$INSTDIR\leftbanner\left_banner$0.bmp"
 	
     ${NSD_SetImage} $mui.WelcomePage.Image $BITMAP_WELCOME  $mui.WelcomePage.Image.Bitmap
@@ -356,6 +355,11 @@ Function .onInit
      ;continue:
   ${EndIf}
 
+  
+  strCpy $PREVIOUS_OUTPATH GetOutPath
+  SetOutPath "$INSTDIR\leftbanner"
+  File "installer\leftbanner\*"
+  SetOutPath $PREVIOUS_OUTPATH
   
   strCpy $PREVIOUS_OUTPATH GetOutPath
   SetOutPath "$INSTDIR\leftbanner"

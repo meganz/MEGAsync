@@ -16,13 +16,10 @@ const char Preferences::USER_AGENT[] = "MEGAsync/4.6.8.0";
 const int Preferences::VERSION_CODE = 4608;
 const int Preferences::BUILD_ID = 2;
 // Do not change the location of VERSION_STRING, create_tarball.sh parses this file
-const QString Preferences::VERSION_STRING = QString::fromAscii("4.6.8");
-QString Preferences::SDK_ID = QString::fromAscii("1ef93bb");
+const QString Preferences::VERSION_STRING = QString::fromAscii("4.6.8-TransferManager-preview-7");
+QString Preferences::SDK_ID = QString::fromAscii("716dd1687");
 const QString Preferences::CHANGELOG = QString::fromUtf8(QT_TR_NOOP(                                                             
-"- Full redesign of remote file picker.\n"
-"- Fixed translation issues.\n"
-"- Other minor UI fixes and adjustments.\n"
-"- Fixed detected crashes on Windows, Linux and macOS.\n"));
+"- Some errors fixed in Folder Controler and performance fixes.\n"));
 
 const QString Preferences::TRANSLATION_FOLDER = QString::fromAscii("://translations/");
 const QString Preferences::TRANSLATION_PREFIX = QString::fromAscii("MEGASyncStrings_");
@@ -307,8 +304,6 @@ const QString Preferences::upperSizeLimitKey        = QString::fromAscii("upperS
 const QString Preferences::lowerSizeLimitKey        = QString::fromAscii("lowerSizeLimit");
 
 const QString Preferences::lastCustomStreamingAppKey    = QString::fromAscii("lastCustomStreamingApp");
-const QString Preferences::transferDownloadMethodKey    = QString::fromAscii("transferDownloadMethod");
-const QString Preferences::transferUploadMethodKey      = QString::fromAscii("transferUploadMethod");
 
 const QString Preferences::upperSizeLimitValueKey       = QString::fromAscii("upperSizeLimitValue");
 const QString Preferences::lowerSizeLimitValueKey       = QString::fromAscii("lowerSizeLimitValue");
@@ -404,8 +399,6 @@ const long long Preferences::defaultTimeStamp       = 0;
 const unsigned long long  Preferences::defaultTransferIdentifier   = 0;
 const int  Preferences::defaultParallelUploadConnections      = 3;
 const int  Preferences::defaultParallelDownloadConnections    = 4;
-const int Preferences::defaultTransferDownloadMethod      = MegaApi::TRANSFER_METHOD_AUTO;
-const int Preferences::defaultTransferUploadMethod        = MegaApi::TRANSFER_METHOD_AUTO;
 const long long  Preferences::defaultUpperSizeLimitValue              = 1; //Input UI range 1-9999. Use 1 as default value
 const long long  Preferences::defaultLowerSizeLimitValue              = 1; //Input UI range 1-9999. Use 1 as default value
 const int  Preferences::defaultCleanerDaysLimitValue            = 30;
@@ -1417,26 +1410,6 @@ void Preferences::setSSLcertificateException(bool value)
     }
     mSettings->sync();
     mutex.unlock();
-}
-
-int Preferences::transferDownloadMethod()
-{
-    return getValueConcurrent<int>(transferDownloadMethodKey, defaultTransferDownloadMethod);
-}
-
-void Preferences::setTransferDownloadMethod(int value)
-{
-    setValueAndSyncConcurrent(transferDownloadMethodKey, value);
-}
-
-int Preferences::transferUploadMethod()
-{
-    return getValueConcurrent<int>(transferUploadMethodKey, defaultTransferUploadMethod);
-}
-
-void Preferences::setTransferUploadMethod(int value)
-{
-    setValueAndSyncConcurrent(transferUploadMethodKey, value);
 }
 
 QString Preferences::language()

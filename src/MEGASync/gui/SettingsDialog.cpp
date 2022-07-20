@@ -2013,7 +2013,7 @@ void SettingsDialog::addSyncRow(int row, const QString& name, const QString& lPa
 #ifdef Q_OS_MACOS
     //Set fixed size to avoid misplaced of checkbox for sync row items
     hl->setContentsMargins(0, 0, 11, 0);
-    c->setFixedSize(16, 16);
+    //c->setFixedSize(16, 16);
 #else
     hl->setContentsMargins(0, 0, 0, 0);
 #endif

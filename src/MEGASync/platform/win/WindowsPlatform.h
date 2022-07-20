@@ -37,7 +37,7 @@ public:
     static void notifyItemChange(std::string *localPath, int newState, std::shared_ptr<ShellNotifier> notifier = nullptr);
     static bool startOnStartup(bool value);
     static bool isStartOnStartupActive();
-    static void showInFolder(QString pathIn);
+    static bool showInFolder(QString pathIn);
     static void startShellDispatcher(MegaApplication *receiver);
     static void stopShellDispatcher();
     static void syncFolderAdded(QString syncPath, QString syncName, QString syncID);
@@ -52,6 +52,7 @@ public:
     static void enableDialogBlur(QDialog *dialog);
     static bool registerUpdateJob();
     static void execBackgroundWindow(QDialog *window);
+    static void showBackgroundWindow(QDialog* window);
     static void uninstall();
     static bool shouldRunHttpServer();
     static bool shouldRunHttpsServer();

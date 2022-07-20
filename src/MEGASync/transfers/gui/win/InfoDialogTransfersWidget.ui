@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>InfoDialogTransfersWidget</class>
+ <widget class="QWidget" name="InfoDialogTransfersWidget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>400</width>
+    <height>300</height>
+   </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>400</width>
+    <height>0</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>400</width>
+    <height>16777215</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string notr="true"/>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">border:none;</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <property name="spacing">
+    <number>0</number>
+   </property>
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
+    <number>0</number>
+   </property>
+   <item>
+    <widget class="MegaTransferView" name="tView">
+     <property name="minimumSize">
+      <size>
+       <width>400</width>
+       <height>0</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>400</width>
+       <height>16777215</height>
+      </size>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QScrollBar:vertical
+{
+    background: #f6f6f6;
+    width: 15px;
+    border-left: 1px solid #E4E4E4;
+}
+
+QScrollBar::sub-line:vertical, QScrollBar::add-line:vertical
+{
+    border: none;
+    background: none;
+    width:0px;
+    height:0px;
+}
+
+QScrollBar::handle:vertical
+{
+    background: #c0c0c0;
+    min-height: 20px;
+    border-radius: 4px;
+    margin: 3px 4px 3px 2px;
+}
+
+QMenu
+{
+    border: 1px solid #B8B8B8;
+   border-radius: 8px;
+    background: #ffffff;
+    padding-top: 16px;
+    padding-bottom: 16px;
+    padding-left: 8px;
+    padding-right: 8px;
+}
+
+QMenu::item
+{
+  font-size: 14px;
+  color: #333333;
+background: transparent;
+margin-top: 3px;
+margin-bottom: 3px;
+    padding-left: 16px;
+    padding-right: 16px;
+    margin-left: 16px;
+    margin-right: 16px;
+}
+
+QMenu::item:selected
+{
+     font-weight: bold;  
+}
+
+QMenu::separator
+{
+    height: 1px;
+	width: 164px;
+	min-width: 164px;
+	max-width: 164px;
+    background-color: #EEEEEE;
+    margin-top: 9px;
+    margin-bottom: 9px;
+}
+
+QMenu::item:disabled
+{
+    background-color: #ffffff;
+    color: rgba(119,119,119,0.3);
+}
+
+QMenu::item:default
+{
+  color: #F46265;
+}</string>
+     </property>
+     <property name="verticalScrollBarPolicy">
+      <enum>Qt::ScrollBarAsNeeded</enum>
+     </property>
+     <property name="horizontalScrollBarPolicy">
+      <enum>Qt::ScrollBarAlwaysOff</enum>
+     </property>
+     <property name="rootIsDecorated">
+      <bool>false</bool>
+     </property>
+     <property name="uniformRowHeights">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>MegaTransferView</class>
+   <extends>QTreeView</extends>
+   <header>MegaTransferView.h</header>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>

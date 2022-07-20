@@ -43,7 +43,7 @@ else()
 endif()
 
 if(NOT MEGA_QT_VERSION)
-    set(MEGA_QT_VERSION 5.12.11)
+    set(MEGA_QT_VERSION 5.12.12)
 endif()
 
 set(_triplet ${TRIPLET})
@@ -168,6 +168,9 @@ set(_common_cmake_args
 
 if(TARGET)
     set(_cmake_target_args "--target" ${TARGET})
+    #set(_cmake_target_args --target ${TARGET})
+#elseif(TARGETS) # allow TARGETS as a synonym for TARGET :)
+    #set(_cmake_target_args --target ${TARGETS})
 endif()
 
 if(WIN32)
@@ -196,7 +199,8 @@ if(WIN32)
             ${_extra_cmake_args}
     )
 
-    foreach(_config "Debug" "Release")
+    #foreach(_config "Release" "Debug")
+	foreach(_config "Debug" "Release")
         execute_checked_command(
             COMMAND ${_cmake}
                 --build ${_build_dir}

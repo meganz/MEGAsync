@@ -288,19 +288,13 @@ MegaHandle LinkProcessor::getImportParentFolder()
     return importParentFolder;
 }
 
-void LinkProcessor::downloadLinks(QString localPath)
+void LinkProcessor::downloadLinks(const QString& localPath)
 {
     for (int i = 0; i < linkList.size(); i++)
     {
         if (linkNode[i] && linkSelected[i])
         {
-            megaApi->startDownload(linkNode[i].get(),
-                                   (localPath + QDir::separator()).toUtf8().constData(),
-                                   nullptr, // no customName
-                                   nullptr, // no appdata
-                                   false, // normal queueing
-                                   nullptr, // no cancelToken
-                                   nullptr); // no listener
+            startDownload(linkNode[i].get(), localPath);
         }
     }
 }
@@ -336,4 +330,15 @@ bool LinkProcessor::atLeastOneLinkValidAndSelected() const
         }
     }
     return false;
+}
+
+void LinkProcessor::startDownload(mega::MegaNode* linkNode, const QString &localPath)
+{
+    const bool startFirst = false;
+    QByteArray path = (localPath + QDir::separator()).toUtf8();
+    const char* name = nullptr;
+    const char* appData = nullptr;
+    MegaCancelToken* cancelToken = nullptr; // No cancellation possible
+    MegaTransferListener* listener = nullptr;
+    megaApi->startDownload(linkNode, path.constData(), name, appData, startFirst, cancelToken, listener);
 }

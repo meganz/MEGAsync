@@ -250,42 +250,30 @@ void TransferQuota::checkQuotaAndAlerts()
 
 bool TransferQuota::checkImportLinksAlertDismissed()
 {
-    bool dismissed{true};
-    const auto disabledUntil = mPreferences->getTransferOverQuotaImportLinksDialogLastExecution() + Preferences::OVER_QUOTA_ACTION_DIALOGS_DISABLE_TIME;
-    const bool dialogEnabled{std::chrono::system_clock::now() >= disabledUntil};
-    if(isOverQuota() && dialogEnabled)
+    bool dismissed(true);
+    if(isOverQuota())
     {
-        mPreferences->setTransferOverQuotaImportLinksDialogLastExecution(std::chrono::system_clock::now());
-        const auto bandwidthFullDialog = OverQuotaDialog::createDialog(OverQuotaDialogType::BANDWIDTH_IMPORT_LINK);
-        dismissed = (bandwidthFullDialog->exec() == QDialog::Rejected);
+        dismissed = OverQuotaDialog::showDialog(OverQuotaDialogType::BANDWIDTH_IMPORT_LINK);
     }
     return dismissed;
 }
 
 bool TransferQuota::checkDownloadAlertDismissed()
 {
-    bool dismissed{true};
-    const auto disabledUntil = mPreferences->getTransferOverQuotaDownloadsDialogLastExecution() + Preferences::OVER_QUOTA_ACTION_DIALOGS_DISABLE_TIME;
-    const bool dialogEnabled{std::chrono::system_clock::now() >= disabledUntil};
-    if(isOverQuota() && dialogEnabled)
+    bool dismissed(true);
+    if(isOverQuota())
     {
-        mPreferences->setTransferOverQuotaDownloadsDialogLastExecution(std::chrono::system_clock::now());
-        const auto bandwidthFullDialog = OverQuotaDialog::createDialog(OverQuotaDialogType::BANDWIDTH_DOWNLOAD);
-        dismissed = (bandwidthFullDialog->exec() == QDialog::Rejected);
+        dismissed = OverQuotaDialog::showDialog(OverQuotaDialogType::BANDWIDTH_DOWNLOAD);
     }
     return dismissed;
 }
 
 bool TransferQuota::checkStreamingAlertDismissed()
 {
-    bool dismissed{true};
-    const auto disabledUntil = mPreferences->getTransferOverQuotaStreamDialogLastExecution() + Preferences::OVER_QUOTA_ACTION_DIALOGS_DISABLE_TIME;
-    const bool dialogEnabled{std::chrono::system_clock::now() >= disabledUntil};
-    if(isOverQuota() && dialogEnabled)
+    bool dismissed(true);
+    if(isOverQuota())
     {
-        mPreferences->setTransferOverQuotaStreamDialogLastExecution(std::chrono::system_clock::now());
-        const auto bandwidthFullDialog = OverQuotaDialog::createDialog(OverQuotaDialogType::BANDWIDTH_STREAM);
-        dismissed = (bandwidthFullDialog->exec() == QDialog::Rejected);
+        dismissed = OverQuotaDialog::showDialog(OverQuotaDialogType::BANDWIDTH_STREAM);
     }
     return dismissed;
 }
