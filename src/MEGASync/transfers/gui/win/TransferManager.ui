@@ -504,9 +504,30 @@ QGroupBox::title
            </spacer>
           </item>
           <item>
-           <widget class="QToolButton" name="bPause">
+           <widget class="QPushButton" name="bPause">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>36</width>
+              <height>36</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>36</width>
+              <height>36</height>
+             </size>
+            </property>
             <property name="cursor">
              <cursorShape>PointingHandCursor</cursorShape>
+            </property>
+            <property name="focusPolicy">
+             <enum>Qt::StrongFocus</enum>
             </property>
             <property name="icon">
              <iconset resource="../../../gui/Resources_win.qrc">
@@ -530,9 +551,24 @@ QGroupBox::title
            </widget>
           </item>
           <item>
-           <widget class="QToolButton" name="bSearch">
+           <widget class="QPushButton" name="bSearch">
+            <property name="minimumSize">
+             <size>
+              <width>36</width>
+              <height>36</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>36</width>
+              <height>36</height>
+             </size>
+            </property>
             <property name="cursor">
              <cursorShape>PointingHandCursor</cursorShape>
+            </property>
+            <property name="focusPolicy">
+             <enum>Qt::StrongFocus</enum>
             </property>
             <property name="toolTip">
              <string>Search</string>
@@ -1776,10 +1812,10 @@ QGroupBox::title
             <layout class="QHBoxLayout" name="horizontalLayout_16">
              <property name="spacing">
               <number>0</number>
-            </property>
+             </property>
              <property name="leftMargin">
               <number>4</number>
-            </property>
+             </property>
              <property name="topMargin">
               <number>0</number>
              </property>
@@ -1798,11 +1834,11 @@ QGroupBox::title
                 </sizepolicy>
                </property>
                <property name="minimumSize">
-             <size>
+                <size>
                  <width>16</width>
                  <height>16</height>
-             </size>
-            </property>
+                </size>
+               </property>
                <property name="maximumSize">
                 <size>
                  <width>16</width>
@@ -1886,10 +1922,10 @@ QGroupBox::title
             <layout class="QHBoxLayout" name="horizontalLayout_17">
              <property name="spacing">
               <number>0</number>
-            </property>
+             </property>
              <property name="leftMargin">
               <number>4</number>
-            </property>
+             </property>
              <property name="topMargin">
               <number>0</number>
              </property>
@@ -1914,11 +1950,11 @@ QGroupBox::title
                 </size>
                </property>
                <property name="maximumSize">
-             <size>
-              <width>16</width>
-              <height>16</height>
-             </size>
-            </property>
+                <size>
+                 <width>16</width>
+                 <height>16</height>
+                </size>
+               </property>
                <property name="focusPolicy">
                 <enum>Qt::NoFocus</enum>
                </property>
@@ -1939,8 +1975,8 @@ QGroupBox::title
                <property name="flat">
                 <bool>true</bool>
                </property>
-           </widget>
-          </item>
+              </widget>
+             </item>
              <item>
               <widget class="QLabel" name="lUpSpeed">
                <property name="sizePolicy">
@@ -2520,6 +2556,9 @@ QGroupBox::title
                     <height>32</height>
                    </size>
                   </property>
+                  <property name="focusPolicy">
+                   <enum>Qt::NoFocus</enum>
+                  </property>
                   <property name="text">
                    <string/>
                   </property>
@@ -2680,16 +2719,19 @@ QGroupBox::title
                   <property name="cursor">
                    <cursorShape>PointingHandCursor</cursorShape>
                   </property>
+                  <property name="focusPolicy">
+                   <enum>Qt::StrongFocus</enum>
+                  </property>
                   <layout class="QHBoxLayout" name="horizontalLayout_18">
                    <property name="spacing">
                     <number>12</number>
-                  </property>
+                   </property>
                    <property name="leftMargin">
                     <number>12</number>
-                  </property>
+                   </property>
                    <property name="topMargin">
                     <number>0</number>
-                  </property>
+                   </property>
                    <property name="rightMargin">
                     <number>12</number>
                    </property>
@@ -2698,18 +2740,21 @@ QGroupBox::title
                    </property>
                    <item alignment="Qt::AlignLeft">
                     <widget class="QLabel" name="lAllResults">
+                     <property name="focusPolicy">
+                      <enum>Qt::NoFocus</enum>
+                     </property>
                      <property name="text">
                       <string>All</string>
-                  </property>
+                     </property>
                     </widget>
                    </item>
                    <item>
                     <widget class="QLabel" name="lAllResultsCounter">
                      <property name="text">
                       <string/>
-                  </property>
-                 </widget>
-                </item>
+                     </property>
+                    </widget>
+                   </item>
                   </layout>
                  </widget>
                 </item>
@@ -2736,19 +2781,22 @@ QGroupBox::title
                   <property name="cursor">
                    <cursorShape>PointingHandCursor</cursorShape>
                   </property>
+                  <property name="focusPolicy">
+                   <enum>Qt::StrongFocus</enum>
+                  </property>
                   <layout class="QHBoxLayout" name="horizontalLayout_19">
                    <property name="spacing">
                     <number>12</number>
-                  </property>
+                   </property>
                    <property name="leftMargin">
                     <number>12</number>
-                  </property>
+                   </property>
                    <property name="topMargin">
                     <number>0</number>
                    </property>
                    <property name="rightMargin">
                     <number>12</number>
-                  </property>
+                   </property>
                    <property name="bottomMargin">
                     <number>0</number>
                    </property>
@@ -2763,9 +2811,9 @@ QGroupBox::title
                     <widget class="QLabel" name="lDlResultsCounter">
                      <property name="text">
                       <string/>
-                  </property>
-                 </widget>
-                </item>
+                     </property>
+                    </widget>
+                   </item>
                   </layout>
                  </widget>
                 </item>
@@ -2792,19 +2840,22 @@ QGroupBox::title
                   <property name="cursor">
                    <cursorShape>PointingHandCursor</cursorShape>
                   </property>
+                  <property name="focusPolicy">
+                   <enum>Qt::StrongFocus</enum>
+                  </property>
                   <layout class="QHBoxLayout" name="horizontalLayout_20">
                    <property name="spacing">
                     <number>12</number>
-                  </property>
+                   </property>
                    <property name="leftMargin">
                     <number>12</number>
-                  </property>
+                   </property>
                    <property name="topMargin">
                     <number>0</number>
-                  </property>
+                   </property>
                    <property name="rightMargin">
                     <number>12</number>
-                  </property>
+                   </property>
                    <property name="bottomMargin">
                     <number>0</number>
                    </property>
@@ -2962,7 +3013,7 @@ QGroupBox::title
       <item>
        <widget class="QStackedWidget" name="sTransfers">
         <property name="currentIndex">
-         <number>0</number>
+         <number>2</number>
         </property>
         <widget class="TransfersWidget" name="wTransfers">
          <property name="sizePolicy">
@@ -3293,6 +3344,44 @@ QGroupBox::title
    <container>1</container>
   </customwidget>
  </customwidgets>
+ <tabstops>
+  <tabstop>bPause</tabstop>
+  <tabstop>bSearch</tabstop>
+  <tabstop>tAllTransfers</tabstop>
+  <tabstop>tDownloads</tabstop>
+  <tabstop>tUploads</tabstop>
+  <tabstop>tCompleted</tabstop>
+  <tabstop>tFailed</tabstop>
+  <tabstop>bArchives</tabstop>
+  <tabstop>bDocuments</tabstop>
+  <tabstop>bImages</tabstop>
+  <tabstop>bVideos</tabstop>
+  <tabstop>bAudio</tabstop>
+  <tabstop>bOther</tabstop>
+  <tabstop>bOpenLinks</tabstop>
+  <tabstop>bUpload</tabstop>
+  <tabstop>bDownload</tabstop>
+  <tabstop>tCogWheel</tabstop>
+  <tabstop>wAllResults</tabstop>
+  <tabstop>wDlResults</tabstop>
+  <tabstop>wUlResults</tabstop>
+  <tabstop>tNoDownloads</tabstop>
+  <tabstop>tActionButton</tabstop>
+  <tabstop>tSeePlans</tabstop>
+  <tabstop>bSearchString</tabstop>
+  <tabstop>tClearSearchResult</tabstop>
+  <tabstop>bScanning</tabstop>
+  <tabstop>bUpToDate</tabstop>
+  <tabstop>tSearchIcon</tabstop>
+  <tabstop>tNoUploads</tabstop>
+  <tabstop>tSearchCancel</tabstop>
+  <tabstop>tNoTransfers</tabstop>
+  <tabstop>tNoResults</tabstop>
+  <tabstop>tNoFinished</tabstop>
+  <tabstop>fSearchString</tabstop>
+  <tabstop>bSomeIssues</tabstop>
+  <tabstop>leSearchField</tabstop>
+ </tabstops>
  <resources>
   <include location="../../../gui/Resources_win.qrc"/>
   <include location="../../../gui/Resources_win.qrc"/>

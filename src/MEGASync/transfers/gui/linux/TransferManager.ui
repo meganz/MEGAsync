@@ -505,9 +505,24 @@ QToolButton
            </spacer>
           </item>
           <item>
-           <widget class="QToolButton" name="bPause">
+           <widget class="QPushButton" name="bPause">
+            <property name="minimumSize">
+             <size>
+              <width>32</width>
+              <height>32</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>32</width>
+              <height>32</height>
+             </size>
+            </property>
             <property name="cursor">
              <cursorShape>PointingHandCursor</cursorShape>
+            </property>
+            <property name="focusPolicy">
+             <enum>Qt::StrongFocus</enum>
             </property>
             <property name="icon">
              <iconset resource="../../../gui/Resources_linux.qrc">
@@ -531,7 +546,19 @@ QToolButton
            </widget>
           </item>
           <item>
-           <widget class="QToolButton" name="bSearch">
+           <widget class="QPushButton" name="bSearch">
+            <property name="minimumSize">
+             <size>
+              <width>32</width>
+              <height>32</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>32</width>
+              <height>32</height>
+             </size>
+            </property>
             <property name="cursor">
              <cursorShape>PointingHandCursor</cursorShape>
             </property>
@@ -2207,7 +2234,7 @@ QToolButton
              </widget>
             </item>
             <item>
-             <widget class="QToolButton" name="tCogWheel">
+             <widget class="QPushButton" name="tCogWheel">
               <property name="cursor">
                <cursorShape>PointingHandCursor</cursorShape>
               </property>
@@ -2323,6 +2350,9 @@ QToolButton
                     <width>32</width>
                     <height>32</height>
                    </size>
+                  </property>
+                  <property name="focusPolicy">
+                   <enum>Qt::NoFocus</enum>
                   </property>
                   <property name="text">
                    <string/>
@@ -2469,6 +2499,12 @@ QToolButton
                 </property>
                 <item>
                  <widget class="QWidget" name="wAllResults" native="true">
+                  <property name="cursor">
+                   <cursorShape>PointingHandCursor</cursorShape>
+                  </property>
+                  <property name="focusPolicy">
+                   <enum>Qt::StrongFocus</enum>
+                  </property>
                   <layout class="QHBoxLayout" name="horizontalLayout_18">
                    <property name="spacing">
                     <number>12</number>
@@ -2504,6 +2540,12 @@ QToolButton
                 </item>
                 <item>
                  <widget class="QWidget" name="wDlResults" native="true">
+                  <property name="cursor">
+                   <cursorShape>PointingHandCursor</cursorShape>
+                  </property>
+                  <property name="focusPolicy">
+                   <enum>Qt::StrongFocus</enum>
+                  </property>
                   <layout class="QHBoxLayout" name="horizontalLayout_19">
                    <property name="spacing">
                     <number>12</number>
@@ -2539,6 +2581,12 @@ QToolButton
                 </item>
                 <item>
                  <widget class="QWidget" name="wUlResults" native="true">
+                  <property name="cursor">
+                   <cursorShape>PointingHandCursor</cursorShape>
+                  </property>
+                  <property name="focusPolicy">
+                   <enum>Qt::StrongFocus</enum>
+                  </property>
                   <layout class="QHBoxLayout" name="horizontalLayout_20">
                    <property name="spacing">
                     <number>12</number>
@@ -3147,6 +3195,44 @@ QToolButton
    <container>1</container>
   </customwidget>
  </customwidgets>
+ <tabstops>
+  <tabstop>bPause</tabstop>
+  <tabstop>bSearch</tabstop>
+  <tabstop>tAllTransfers</tabstop>
+  <tabstop>tDownloads</tabstop>
+  <tabstop>tUploads</tabstop>
+  <tabstop>tCompleted</tabstop>
+  <tabstop>tFailed</tabstop>
+  <tabstop>bArchives</tabstop>
+  <tabstop>bDocuments</tabstop>
+  <tabstop>bImages</tabstop>
+  <tabstop>bVideos</tabstop>
+  <tabstop>bAudio</tabstop>
+  <tabstop>bOther</tabstop>
+  <tabstop>bOpenLinks</tabstop>
+  <tabstop>bUpload</tabstop>
+  <tabstop>bDownload</tabstop>
+  <tabstop>tCogWheel</tabstop>
+  <tabstop>wAllResults</tabstop>
+  <tabstop>wDlResults</tabstop>
+  <tabstop>wUlResults</tabstop>
+  <tabstop>tNoUploads</tabstop>
+  <tabstop>tActionButton</tabstop>
+  <tabstop>tSeePlans</tabstop>
+  <tabstop>fSearchString</tabstop>
+  <tabstop>tClearSearchResult</tabstop>
+  <tabstop>bScanning</tabstop>
+  <tabstop>bUpToDate</tabstop>
+  <tabstop>tNoDownloads</tabstop>
+  <tabstop>tNoTransfers</tabstop>
+  <tabstop>tNoResults</tabstop>
+  <tabstop>tNoFinished</tabstop>
+  <tabstop>bSearchString</tabstop>
+  <tabstop>bSomeIssues</tabstop>
+  <tabstop>tSearchIcon</tabstop>
+  <tabstop>leSearchField</tabstop>
+  <tabstop>tSearchCancel</tabstop>
+ </tabstops>
  <resources>
   <include location="../../../gui/Resources_linux.qrc"/>
  </resources>

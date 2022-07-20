@@ -11,6 +11,8 @@
 #include <QMouseEvent>
 #include <QScrollBar>
 #include <QPalette>
+#include <QStyleOptionFocusRect>
+#include <QPainter>
 
 using namespace mega;
 
@@ -1164,17 +1166,57 @@ bool TransferManager::eventFilter(QObject *obj, QEvent *event)
             mSearchFieldReturnPressed = true;
         }
     }
-    else if(obj == mUi->wAllResults && event->type() == QEvent::MouseButtonRelease)
+    else if(obj == mUi->wAllResults || obj == mUi->wDlResults || obj == mUi->wUlResults)
     {
-        on_tAllResults_clicked();
-    }
-    else if(obj == mUi->wDlResults && event->type() == QEvent::MouseButtonRelease)
-    {
-        on_tDlResults_clicked();
-    }
-    else if(obj == mUi->wUlResults && event->type() == QEvent::MouseButtonRelease)
-    {
-        on_tUlResults_clicked();
+        if(event->type() == QEvent::MouseButtonRelease)
+        {
+            if(obj == mUi->wAllResults)
+            {
+                on_tAllResults_clicked();
+            }
+            else if(obj == mUi->wDlResults)
+            {
+
+                on_tDlResults_clicked();
+            }
+            else if(obj == mUi->wUlResults)
+            {
+                on_tUlResults_clicked();
+            }
+        }
+        else if(event->type() == QEvent::KeyRelease)
+        {
+            auto widget = dynamic_cast<QWidget*>(obj);
+            if(widget)
+            {
+                auto keyEvent = dynamic_cast<QKeyEvent*>(event);
+                if(keyEvent && widget->hasFocus())
+                {
+                    if(keyEvent->key() == Qt::Key_Space)
+                    {
+                        QApplication::postEvent(widget, new QEvent(QEvent::MouseButtonRelease));
+                    }
+                }
+            }
+        }
+        else if(event->type() == QEvent::Paint)
+        {
+            auto widget = dynamic_cast<QWidget*>(obj);
+            if(widget && widget->hasFocus())
+            {
+                QPainter painter(widget);
+                QStyleOptionFocusRect option;
+                if(option.state |= QStyle::State_KeyboardFocusChange)
+                {
+                    option.init(widget);
+                    option.backgroundColor = palette().color(QPalette::Window);
+
+                    style()->drawPrimitive(QStyle::PE_FrameFocusRect, &option, &painter,
+                                           this);
+                    return true;
+                }
+            }
+        }
     }
 
     return QDialog::eventFilter(obj, event);
