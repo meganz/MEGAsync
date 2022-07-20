@@ -105,9 +105,6 @@ QGroupBox::title
 
 #wTransferring QPushButton
 {
-    width: 200px;
-    min-width: 180px;
-    max-width: 200px;
     font-size: 14px;
     color: #15191F;
     border: none;
@@ -118,9 +115,6 @@ QGroupBox::title
 
 #wMediaType QPushButton, #wSearch QPushButton
 {
-    width: 200px;
-    min-width: 180px;
-    max-width: 200px;
     font-size: 14px;
     color: #15191F;
     border: none;
@@ -353,24 +347,6 @@ QGroupBox::title
 #tSeePlans
 {
   background-color: #3ACC86;
-}
-
-#pSearchHeaderInfo QToolButton
-{
-  height: 24px;
-  border-radius: 12px;
-  font-size: 12px;
-  background-color: #EEEEEE;
-	padding-left: 12px;
-	padding-right: 12px;
-  color: #777777;
-    font-weight: bold;
-}
-
-#pSearchHeaderInfo  QToolButton:checked
-{
-  background-color: #2BA6DE;
-  color: #FFFFFF;
 }
 
 #wNoDownloads QLabel, #wNoUploads QLabel,  #wNoTransfers QLabel, #wNoFinished QLabel, #wNoResults QLabel
@@ -706,7 +682,7 @@ QGroupBox::title
             <property name="bottomMargin">
              <number>0</number>
             </property>
-            <item alignment="Qt::AlignLeft">
+            <item>
              <widget class="QPushButton" name="tAllTransfers">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
@@ -716,7 +692,7 @@ QGroupBox::title
               </property>
               <property name="maximumSize">
                <size>
-                <width>200</width>
+                <width>16777215</width>
                 <height>16777215</height>
                </size>
               </property>
@@ -751,20 +727,7 @@ QGroupBox::title
               </property>
              </widget>
             </item>
-            <item>
-             <spacer name="horizontalSpacer_2">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>40</width>
-                <height>20</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-            <item>
+            <item alignment="Qt::AlignRight">
              <widget class="QLabel" name="lAllTransfers">
               <property name="enabled">
                <bool>true</bool>
@@ -823,7 +786,7 @@ QGroupBox::title
             <item>
              <widget class="QPushButton" name="tDownloads">
               <property name="sizePolicy">
-               <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
@@ -856,20 +819,7 @@ QGroupBox::title
               </property>
              </widget>
             </item>
-            <item>
-             <spacer name="horizontalSpacer_3">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>40</width>
-                <height>20</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-            <item>
+            <item alignment="Qt::AlignRight">
              <widget class="QLabel" name="lDownloads">
               <property name="enabled">
                <bool>true</bool>
@@ -921,7 +871,7 @@ QGroupBox::title
             <item>
              <widget class="QPushButton" name="tUploads">
               <property name="sizePolicy">
-               <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
@@ -954,20 +904,7 @@ QGroupBox::title
               </property>
              </widget>
             </item>
-            <item>
-             <spacer name="horizontalSpacer_4">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>40</width>
-                <height>20</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-            <item>
+            <item alignment="Qt::AlignRight">
              <widget class="QLabel" name="lUploads">
               <property name="enabled">
                <bool>true</bool>
@@ -1022,7 +959,7 @@ QGroupBox::title
                <bool>true</bool>
               </property>
               <property name="sizePolicy">
-               <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
@@ -1055,20 +992,7 @@ QGroupBox::title
               </property>
              </widget>
             </item>
-            <item>
-             <spacer name="horizontalSpacer_5">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>40</width>
-                <height>20</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-            <item>
+            <item alignment="Qt::AlignRight">
              <widget class="QLabel" name="lCompleted">
               <property name="enabled">
                <bool>true</bool>
@@ -1123,7 +1047,7 @@ QGroupBox::title
                <bool>true</bool>
               </property>
               <property name="sizePolicy">
-               <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
@@ -1156,20 +1080,7 @@ QGroupBox::title
               </property>
              </widget>
             </item>
-            <item>
-             <spacer name="horizontalSpacer_failed_2">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>40</width>
-                <height>20</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-            <item>
+            <item alignment="Qt::AlignRight">
              <widget class="QLabel" name="lFailed">
               <property name="enabled">
                <bool>true</bool>
@@ -1250,6 +1161,12 @@ QGroupBox::title
             </property>
             <item>
              <widget class="QPushButton" name="bArchives">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
               <property name="cursor">
                <cursorShape>PointingHandCursor</cursorShape>
               </property>
@@ -1271,20 +1188,7 @@ QGroupBox::title
               </property>
              </widget>
             </item>
-            <item>
-             <spacer name="horizontalSpacer_7">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>40</width>
-                <height>20</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-            <item>
+            <item alignment="Qt::AlignRight">
              <widget class="QLabel" name="lArchivesNb">
               <property name="enabled">
                <bool>true</bool>
@@ -1341,6 +1245,12 @@ QGroupBox::title
             </property>
             <item>
              <widget class="QPushButton" name="bDocuments">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
               <property name="cursor">
                <cursorShape>PointingHandCursor</cursorShape>
               </property>
@@ -1362,20 +1272,7 @@ QGroupBox::title
               </property>
              </widget>
             </item>
-            <item>
-             <spacer name="horizontalSpacer_8">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>40</width>
-                <height>20</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-            <item>
+            <item alignment="Qt::AlignRight">
              <widget class="QLabel" name="lDocumentsNb">
               <property name="sizePolicy">
                <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
@@ -1429,6 +1326,12 @@ QGroupBox::title
             </property>
             <item>
              <widget class="QPushButton" name="bImages">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
               <property name="cursor">
                <cursorShape>PointingHandCursor</cursorShape>
               </property>
@@ -1450,20 +1353,7 @@ QGroupBox::title
               </property>
              </widget>
             </item>
-            <item>
-             <spacer name="horizontalSpacer_9">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>40</width>
-                <height>20</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-            <item>
+            <item alignment="Qt::AlignRight">
              <widget class="QLabel" name="lImagesNb">
               <property name="sizePolicy">
                <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
@@ -1517,6 +1407,12 @@ QGroupBox::title
             </property>
             <item>
              <widget class="QPushButton" name="bVideos">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
               <property name="cursor">
                <cursorShape>PointingHandCursor</cursorShape>
               </property>
@@ -1538,20 +1434,7 @@ QGroupBox::title
               </property>
              </widget>
             </item>
-            <item>
-             <spacer name="horizontalSpacer_10">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>40</width>
-                <height>20</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-            <item>
+            <item alignment="Qt::AlignRight">
              <widget class="QLabel" name="lVideosNb">
               <property name="sizePolicy">
                <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
@@ -1605,6 +1488,12 @@ QGroupBox::title
             </property>
             <item>
              <widget class="QPushButton" name="bAudio">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
               <property name="cursor">
                <cursorShape>PointingHandCursor</cursorShape>
               </property>
@@ -1626,20 +1515,7 @@ QGroupBox::title
               </property>
              </widget>
             </item>
-            <item>
-             <spacer name="horizontalSpacer_11">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>40</width>
-                <height>20</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-            <item>
+            <item alignment="Qt::AlignRight">
              <widget class="QLabel" name="lAudioNb">
               <property name="sizePolicy">
                <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
@@ -1693,6 +1569,12 @@ QGroupBox::title
             </property>
             <item>
              <widget class="QPushButton" name="bOther">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
               <property name="cursor">
                <cursorShape>PointingHandCursor</cursorShape>
               </property>
@@ -1714,20 +1596,7 @@ QGroupBox::title
               </property>
              </widget>
             </item>
-            <item>
-             <spacer name="horizontalSpacer_12">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>40</width>
-                <height>20</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-            <item>
+            <item alignment="Qt::AlignRight">
              <widget class="QLabel" name="lOtherNb">
               <property name="sizePolicy">
                <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
@@ -2693,6 +2562,33 @@ QGroupBox::title
             </layout>
            </widget>
            <widget class="QWidget" name="pSearchHeaderInfo">
+            <property name="styleSheet">
+             <string notr="true">#wAllResults, #wDlResults, #wUlResults
+{
+   height: 24px;
+   border-radius: 12px;
+   background-color: #EEEEEE;
+}
+
+#wAllResults QLabel, #wDlResults QLabel, #wUlResults QLabel
+{
+   font-size: 12px;  
+   color: #777777;
+   font-weight: bold;
+}
+
+#wAllResults[selected = true], #wDlResults[selected=true], #wUlResults[selected=true]
+{
+  height: 24px;
+  border-radius: 12px;
+  background-color: #2BA6DE;
+}
+
+#wAllResults[selected = true] QLabel, #wDlResults[selected=true] QLabel, #wUlResults[selected=true] QLabel
+{
+  color: #FFFFFF;
+}</string>
+            </property>
             <layout class="QVBoxLayout" name="verticalLayout_4">
              <property name="spacing">
               <number>4</number>
@@ -2762,63 +2658,171 @@ QGroupBox::title
                  <number>0</number>
                 </property>
                 <item>
-                 <widget class="QToolButton" name="tAllResults">
+                 <widget class="QWidget" name="wAllResults" native="true">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="minimumSize">
+                   <size>
+                    <width>0</width>
+                    <height>24</height>
+                   </size>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>16777215</width>
+                    <height>24</height>
+                   </size>
+                  </property>
                   <property name="cursor">
                    <cursorShape>PointingHandCursor</cursorShape>
                   </property>
-                  <property name="text">
-                   <string>All</string>
+                  <layout class="QHBoxLayout" name="horizontalLayout_18">
+                   <property name="spacing">
+                    <number>12</number>
                   </property>
-                  <property name="checkable">
-                   <bool>true</bool>
+                   <property name="leftMargin">
+                    <number>12</number>
                   </property>
-                  <property name="checked">
-                   <bool>true</bool>
+                   <property name="topMargin">
+                    <number>0</number>
                   </property>
-                  <property name="autoExclusive">
-                   <bool>true</bool>
+                   <property name="rightMargin">
+                    <number>12</number>
+                   </property>
+                   <property name="bottomMargin">
+                    <number>0</number>
+                   </property>
+                   <item alignment="Qt::AlignLeft">
+                    <widget class="QLabel" name="lAllResults">
+                     <property name="text">
+                      <string>All</string>
                   </property>
-                  <property name="toolButtonStyle">
-                   <enum>Qt::ToolButtonTextOnly</enum>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="lAllResultsCounter">
+                     <property name="text">
+                      <string/>
                   </property>
                  </widget>
                 </item>
-                <item>
-                 <widget class="QToolButton" name="tDlResults">
-                  <property name="cursor">
-                   <cursorShape>PointingHandCursor</cursorShape>
-                  </property>
-                  <property name="text">
-                   <string>Downloads</string>
-                  </property>
-                  <property name="checkable">
-                   <bool>true</bool>
-                  </property>
-                  <property name="autoExclusive">
-                   <bool>true</bool>
-                  </property>
-                  <property name="toolButtonStyle">
-                   <enum>Qt::ToolButtonTextOnly</enum>
-                  </property>
+                  </layout>
                  </widget>
                 </item>
                 <item>
-                 <widget class="QToolButton" name="tUlResults">
+                 <widget class="QWidget" name="wDlResults" native="true">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="minimumSize">
+                   <size>
+                    <width>0</width>
+                    <height>24</height>
+                   </size>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>16777215</width>
+                    <height>24</height>
+                   </size>
+                  </property>
                   <property name="cursor">
                    <cursorShape>PointingHandCursor</cursorShape>
                   </property>
-                  <property name="text">
-                   <string>Uploads</string>
+                  <layout class="QHBoxLayout" name="horizontalLayout_19">
+                   <property name="spacing">
+                    <number>12</number>
                   </property>
-                  <property name="checkable">
-                   <bool>true</bool>
+                   <property name="leftMargin">
+                    <number>12</number>
                   </property>
-                  <property name="autoExclusive">
-                   <bool>true</bool>
+                   <property name="topMargin">
+                    <number>0</number>
+                   </property>
+                   <property name="rightMargin">
+                    <number>12</number>
                   </property>
-                  <property name="toolButtonStyle">
-                   <enum>Qt::ToolButtonTextOnly</enum>
+                   <property name="bottomMargin">
+                    <number>0</number>
+                   </property>
+                   <item alignment="Qt::AlignLeft">
+                    <widget class="QLabel" name="lDlResults">
+                     <property name="text">
+                      <string>Downloads</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="lDlResultsCounter">
+                     <property name="text">
+                      <string/>
                   </property>
+                 </widget>
+                </item>
+                  </layout>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QWidget" name="wUlResults" native="true">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="minimumSize">
+                   <size>
+                    <width>0</width>
+                    <height>24</height>
+                   </size>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>16777215</width>
+                    <height>24</height>
+                   </size>
+                  </property>
+                  <property name="cursor">
+                   <cursorShape>PointingHandCursor</cursorShape>
+                  </property>
+                  <layout class="QHBoxLayout" name="horizontalLayout_20">
+                   <property name="spacing">
+                    <number>12</number>
+                  </property>
+                   <property name="leftMargin">
+                    <number>12</number>
+                  </property>
+                   <property name="topMargin">
+                    <number>0</number>
+                  </property>
+                   <property name="rightMargin">
+                    <number>12</number>
+                  </property>
+                   <property name="bottomMargin">
+                    <number>0</number>
+                   </property>
+                   <item alignment="Qt::AlignLeft">
+                    <widget class="QLabel" name="lUlResults">
+                     <property name="text">
+                      <string>Uploads</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="lUlResultsCounter">
+                     <property name="text">
+                      <string/>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
                  </widget>
                 </item>
                 <item>

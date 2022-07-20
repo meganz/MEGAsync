@@ -20,6 +20,7 @@ const int TransferManager::STATS_REFRESH_PERIOD_MS;
 const char* LABEL_NUMBER = "NUMBER";
 const char* ITS_ON = "itsOn";
 const char* SEARCH_TEXT = "searchText";
+const char* SEARCH_BUTTON_SELECTED = "selected";
 
 TransferManager::TransferManager(MegaApi *megaApi) :
     QDialog(nullptr),
@@ -237,6 +238,10 @@ TransferManager::TransferManager(MegaApi *megaApi) :
     mTransferScanCancelUi = new TransferScanCancelUi(mUi->sTransfers, mTabNoItem[TransfersWidget::ALL_TRANSFERS_TAB]);
     connect(mTransferScanCancelUi, &TransferScanCancelUi::cancelTransfers,
             this, &TransferManager::cancelScanning);
+
+    mUi->wAllResults->installEventFilter(this);
+    mUi->wDlResults->installEventFilter(this);
+    mUi->wUlResults->installEventFilter(this);
 }
 
 void TransferManager::pauseModel(bool value)
@@ -728,23 +733,17 @@ void TransferManager::refreshSearchStats()
         int nbUl (proxy->getNumberOfItems(TransferData::TRANSFER_UPLOAD));
         int nbAll (nbDl + nbUl);
 
-        if(mUi->tDlResults->property(LABEL_NUMBER).toLongLong() != nbDl)
+        if(mUi->lDlResultsCounter->text().toLongLong() != nbDl)
         {
-            QString downloadText(tr("Downloads"));
-            mUi->tDlResults->setText(QString(downloadText + QString::fromUtf8("\t\t\t\t") + QString::number(nbDl)));
-            mUi->tDlResults->setProperty(LABEL_NUMBER, nbDl);
+            mUi->lDlResultsCounter->setText(QString::number(nbDl));
         }
 
-        if(mUi->tUlResults->property(LABEL_NUMBER).toLongLong() != nbUl)
+        if(mUi->lUlResultsCounter->text().toLongLong() != nbUl)
         {
-            QString uploadText(tr("Uploads"));
-            mUi->tUlResults->setText(QString(uploadText + QString::fromUtf8("\t\t\t\t") + QString::number(nbUl)));
-            mUi->tUlResults->setProperty(LABEL_NUMBER, nbUl);
+            mUi->lUlResultsCounter->setText(QString::number(nbUl));
         }
 
-
-        QString allText(tr("All"));
-        mUi->tAllResults->setText(allText + QString::fromUtf8("\t\t\t\t") + QString::number(nbAll));
+        mUi->lAllResultsCounter->setText(QString::number(nbAll));
 
         if(nbDl != 0 && nbUl != 0)
         {
@@ -763,9 +762,9 @@ void TransferManager::refreshSearchStats()
         }
 
         bool showTypeFilters (mUi->wTransfers->getCurrentTab() == TransfersWidget::SEARCH_TAB);
-        mUi->tDlResults->setVisible(showTypeFilters);
-        mUi->tUlResults->setVisible(showTypeFilters);
-        mUi->tAllResults->setVisible(showTypeFilters);
+        mUi->wDlResults->setVisible(showTypeFilters);
+        mUi->wUlResults->setVisible(showTypeFilters);
+        mUi->wAllResults->setVisible(showTypeFilters);
 
         QWidget* widgetToShow (mUi->wTransfers);
 
@@ -855,11 +854,17 @@ void TransferManager::applyTextSearch(const QString& text)
                                           Qt::ElideMiddle,
                                           mUi->lTextSearch->width()));
     // Add number of found results
-    mUi->tAllResults->setChecked(true);
-    mUi->tAllResults->hide();
-    mUi->tDlResults->hide();
-    mUi->tUlResults->hide();
+    mUi->wAllResults->setProperty(SEARCH_BUTTON_SELECTED, true);
+    mUi->wDlResults->setProperty(SEARCH_BUTTON_SELECTED, false);
+    mUi->wUlResults->setProperty(SEARCH_BUTTON_SELECTED, false);
+
+    mUi->wAllResults->hide();
+    mUi->wDlResults->hide();
+    mUi->wUlResults->hide();
     mUi->wSearch->show();
+
+    //This is done to refresh the stylesheet as depends on the object properties
+    mUi->pSearchHeaderInfo->setStyleSheet(mUi->pSearchHeaderInfo->styleSheet());
 
     mUi->wTransfers->transferFilterReset();
 
@@ -901,17 +906,35 @@ void TransferManager::on_tClearSearchResult_clicked()
 
 void TransferManager::on_tAllResults_clicked()
 {
+    mUi->wAllResults->setProperty(SEARCH_BUTTON_SELECTED, true);
+    mUi->wDlResults->setProperty(SEARCH_BUTTON_SELECTED, false);
+    mUi->wUlResults->setProperty(SEARCH_BUTTON_SELECTED, false);
+
+    mUi->pSearchHeaderInfo->setStyleSheet(mUi->pSearchHeaderInfo->styleSheet());
+
     mUi->wTransfers->textFilterTypeChanged({});
 }
 
 void TransferManager::on_tDlResults_clicked()
 {
+    mUi->wAllResults->setProperty(SEARCH_BUTTON_SELECTED, false);
+    mUi->wDlResults->setProperty(SEARCH_BUTTON_SELECTED, true);
+    mUi->wUlResults->setProperty(SEARCH_BUTTON_SELECTED, false);
+
+    mUi->pSearchHeaderInfo->setStyleSheet(mUi->pSearchHeaderInfo->styleSheet());
+
     mUi->wTransfers->textFilterTypeChanged(TransferData::TRANSFER_DOWNLOAD
                                     | TransferData::TRANSFER_LTCPDOWNLOAD);
 }
 
 void TransferManager::on_tUlResults_clicked()
 {
+    mUi->wAllResults->setProperty(SEARCH_BUTTON_SELECTED, false);
+    mUi->wDlResults->setProperty(SEARCH_BUTTON_SELECTED, false);
+    mUi->wUlResults->setProperty(SEARCH_BUTTON_SELECTED, true);
+
+    mUi->pSearchHeaderInfo->setStyleSheet(mUi->pSearchHeaderInfo->styleSheet());
+
     mUi->wTransfers->textFilterTypeChanged(TransferData::TRANSFER_UPLOAD);
 }
 
@@ -1141,6 +1164,19 @@ bool TransferManager::eventFilter(QObject *obj, QEvent *event)
             mSearchFieldReturnPressed = true;
         }
     }
+    else if(obj == mUi->wAllResults && event->type() == QEvent::MouseButtonRelease)
+    {
+        on_tAllResults_clicked();
+    }
+    else if(obj == mUi->wDlResults && event->type() == QEvent::MouseButtonRelease)
+    {
+        on_tDlResults_clicked();
+    }
+    else if(obj == mUi->wUlResults && event->type() == QEvent::MouseButtonRelease)
+    {
+        on_tUlResults_clicked();
+    }
+
     return QDialog::eventFilter(obj, event);
 }
 

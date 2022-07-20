@@ -223,25 +223,24 @@ bool TransfersManagerSortFilterProxyModel::filterAcceptsRow(int sourceRow, const
                  && (d->mType & mTransferTypes)
                  && (toInt(d->mFileType) & mFileTypes);
 
-        if (accept)
+        if(!mFilterText.isEmpty())
         {
-            if(!mFilterText.isEmpty())
-            {
-                accept = d->mFilename.contains(mFilterText,Qt::CaseInsensitive);
+            auto containsText = d->mFilename.contains(mFilterText,Qt::CaseInsensitive);
+            accept &= containsText;
 
-                if (accept)
+            if(containsText)
+            {
+                if (d->mType & TransferData::TRANSFER_UPLOAD && !mUlNumber.contains(d->mTag))
                 {
-                    if (d->mType & TransferData::TRANSFER_UPLOAD && !mUlNumber.contains(d->mTag))
-                    {
-                        mUlNumber.insert(d->mTag);
-                    }
-                    else if (d->mType & TransferData::TRANSFER_DOWNLOAD && !mDlNumber.contains(d->mTag))
-                    {
-                        mDlNumber.insert(d->mTag);
-                    }
+                    mUlNumber.insert(d->mTag);
+                }
+                else if (d->mType & TransferData::TRANSFER_DOWNLOAD && !mDlNumber.contains(d->mTag))
+                {
+                    mDlNumber.insert(d->mTag);
                 }
             }
         }
+
 
         //Not needed to add the logic when the d is a sync transfer, as the sync state is permanent
         if(accept && !d->isSyncTransfer() && !mNoSyncTransfers.contains(d->mTag))
