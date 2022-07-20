@@ -2980,7 +2980,7 @@ QGroupBox::title
              </widget>
             </item>
             <item>
-             <widget class="QToolButton" name="tCogWheel">
+             <widget class="QPushButton" name="tCogWheel">
               <property name="cursor">
                <cursorShape>PointingHandCursor</cursorShape>
               </property>
