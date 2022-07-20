@@ -5,7 +5,9 @@
 #include <QFileInfo>
 #include <QDebug>
 
-#define ICON_SIZE 24
+const int SyncItemModel::ICON_SIZE = 24;
+const int SyncItemModel::WARNING_ICON_SIZE = 18;
+
 
 SyncItemModel::SyncItemModel(QObject *parent)
     : QAbstractItemModel(parent),
@@ -110,7 +112,7 @@ QVariant SyncItemModel::data(const QModelIndex &index, int role) const
             QIcon syncIcon;
             if(sync->getError())
             {
-                syncIcon.addFile(QLatin1String(":/images/ic_sync_warning.png"), QSize(ICON_SIZE, ICON_SIZE), QIcon::Normal);
+                syncIcon.addFile(QLatin1String(":/images/ic_sync_warning.png"), QSize(WARNING_ICON_SIZE, WARNING_ICON_SIZE), QIcon::Normal);
             }
             else
             {

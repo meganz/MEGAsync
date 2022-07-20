@@ -58,8 +58,8 @@ void SyncTableView::showEvent(QShowEvent *event)
 
 void SyncTableView::initTable()
 {
-    setItemDelegate(new SelectionIconNoChangeOnDisable(this));
     setItemDelegateForColumn(SyncItemModel::Column::MENU, new MenuItemDelegate(this));
+    setItemDelegateForColumn(SyncItemModel::Column::LNAME, new IconMiddleDelegate(this));
 
     horizontalHeader()->resizeSection(SyncItemModel::Column::ENABLED, FIXED_COLUMN_WIDTH);
     horizontalHeader()->resizeSection(SyncItemModel::Column::MENU, FIXED_COLUMN_WIDTH);
@@ -167,24 +167,61 @@ void MenuItemDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opti
     QStyleOptionViewItem opt(option);
     opt.decorationAlignment = index.data(Qt::TextAlignmentRole).value<Qt::Alignment>();
     opt.decorationPosition = QStyleOptionViewItem::Top;
+    if(!opt.state.testFlag(QStyle::State_Enabled) && opt.state.testFlag(QStyle::State_Selected))
+    {
+        opt.state.setFlag(QStyle::State_Enabled, true);
+    }
     QStyledItemDelegate::paint(painter, opt, index);
 }
 
-SelectionIconNoChangeOnDisable::SelectionIconNoChangeOnDisable(QObject *parent) : QStyledItemDelegate(parent)
+IconMiddleDelegate::IconMiddleDelegate(QObject* parent) :
+    QStyledItemDelegate(parent)
 {
+}
+
+IconMiddleDelegate::~IconMiddleDelegate()
+{
+}
+
+
+void IconMiddleDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
+{
+    QStyledItemDelegate::paint(painter, option, index);
+    QStyleOptionViewItem opt(option);
+    opt.decorationAlignment = Qt::AlignVCenter | Qt::AlignHCenter;
+    opt.decorationPosition = QStyleOptionViewItem::Top;
+    QRect rect = option.rect;
+    rect.setRight(60);
+    QIcon icon = index.data(Qt::DecorationRole).value<QIcon>();
+
+    QIcon::Mode iconMode = QIcon::Normal;
+    if(option.state & QStyle::State_Selected)
+    {
+        iconMode = QIcon::Selected;
+    }
+    icon.paint(painter, rect, Qt::AlignVCenter | Qt::AlignHCenter, iconMode);
+    QString text = index.data(Qt::DisplayRole).toString();
+    QRect textRect = option.rect;
+    textRect.setLeft(60);
+    QTextOption textOption;
+    textOption.setAlignment(Qt::AlignVCenter);
+
+    QPalette::ColorGroup cg = option.state & QStyle::State_Enabled
+                          ? QPalette::Normal : QPalette::Disabled;
+
+    if (option.state & QStyle::State_Selected) {
+        painter->setPen(option.palette.color(cg, QPalette::HighlightedText));
+    } else {
+        painter->setPen(option.palette.color(cg, QPalette::Text));
+    }
+
+    painter->drawText(textRect, text, textOption);
 
 }
 
-SelectionIconNoChangeOnDisable::~SelectionIconNoChangeOnDisable()
-{
-
-}
-
-void SelectionIconNoChangeOnDisable::initStyleOption(QStyleOptionViewItem *option, const QModelIndex &index) const
+void IconMiddleDelegate::initStyleOption(QStyleOptionViewItem *option, const QModelIndex &index) const
 {
     QStyledItemDelegate::initStyleOption(option, index);
-    if(!option->state.testFlag(QStyle::State_Enabled) && option->state.testFlag(QStyle::State_Selected))
-    {
-        option->state.setFlag(QStyle::State_Enabled, true);
-    }
+    option->icon = QIcon();
+    option->text = QString();
 }

@@ -4,7 +4,6 @@
 #include <QIcon>
 #include <QFileInfo>
 
-#define ICON_SIZE 24
 
 BackupItemModel::BackupItemModel(QObject *parent)
     : SyncItemModel(parent)
@@ -68,7 +67,7 @@ QVariant BackupItemModel::data(const QModelIndex &index, int role) const
             QIcon syncIcon;
             if(sync->getError())
             {
-                syncIcon.addFile(QLatin1String(":/images/ic_sync_warning.png"), QSize(ICON_SIZE, ICON_SIZE), QIcon::Normal);
+                syncIcon.addFile(QLatin1String(":/images/ic_sync_warning.png"), QSize(WARNING_ICON_SIZE, WARNING_ICON_SIZE), QIcon::Normal);
             }
             else
             {

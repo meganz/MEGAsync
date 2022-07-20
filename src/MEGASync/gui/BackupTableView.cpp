@@ -14,8 +14,8 @@ BackupTableView::BackupTableView(QWidget *parent)
 
 void BackupTableView::initTable()
 {
-    setItemDelegate(new SelectionIconNoChangeOnDisable(this));
     setItemDelegateForColumn(BackupItemModel::Column::MENU, new MenuItemDelegate(this));
+    setItemDelegateForColumn(SyncItemModel::Column::LNAME, new IconMiddleDelegate(this));
     horizontalHeader()->setSortIndicator(-1, Qt::AscendingOrder);
     horizontalHeader()->resizeSection(BackupItemModel::Column::ENABLED, FIXED_COLUMN_WIDTH);
     horizontalHeader()->resizeSection(BackupItemModel::Column::MENU, FIXED_COLUMN_WIDTH);
