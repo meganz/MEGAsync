@@ -25,6 +25,9 @@ public:
     } Column;
     const unsigned int kColumns = 4;
 
+    static const int ICON_SIZE;
+    static const int WARNING_ICON_SIZE;
+
     explicit SyncItemModel(QObject *parent = nullptr);
 
     // Header

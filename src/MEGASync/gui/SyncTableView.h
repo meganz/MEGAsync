@@ -44,14 +44,16 @@ public:
                const QModelIndex& index) const override;
 };
 
-class SelectionIconNoChangeOnDisable : public QStyledItemDelegate
+class IconMiddleDelegate : public QStyledItemDelegate
 {
 public:
-    explicit SelectionIconNoChangeOnDisable(QObject *parent = nullptr);
-    ~SelectionIconNoChangeOnDisable();
+    explicit IconMiddleDelegate(QObject *parent = nullptr);
+    ~IconMiddleDelegate();
 
-private:
-    void initStyleOption(QStyleOptionViewItem *option, const QModelIndex &index) const override;
+    void paint(QPainter* painter, const QStyleOptionViewItem& option,
+               const QModelIndex& index) const override;
+    void initStyleOption(QStyleOptionViewItem *option,
+                                const QModelIndex &index) const override;
 };
 
 

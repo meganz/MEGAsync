@@ -1895,12 +1895,18 @@ height: 16px;
               <property name="text">
                <string>Add</string>
               </property>
+              <property name="autoDefault">
+               <bool>false</bool>
+              </property>
              </widget>
             </item>
             <item>
              <widget class="QPushButton" name="bDeleteBackup">
               <property name="text">
                <string>Delete</string>
+              </property>
+              <property name="autoDefault">
+               <bool>false</bool>
               </property>
              </widget>
             </item>
@@ -1946,6 +1952,9 @@ height: 16px;
              <widget class="QPushButton" name="bOpenBackupFolder">
               <property name="text">
                <string>View in MEGA</string>
+              </property>
+              <property name="autoDefault">
+               <bool>false</bool>
               </property>
              </widget>
             </item>
@@ -2066,7 +2075,7 @@ height: 16px;
               <item alignment="Qt::AlignVCenter">
                <widget class="QLabel" name="lDisabledBackups">
                 <property name="text">
-                 <string>Some folders have not synchronised. For more information please hover over the yellow warning icon.</string>
+                 <string>Some folders have not backed up. For more information please hover over the yellow warning icon.</string>
                 </property>
                 <property name="wordWrap">
                  <bool>true</bool>

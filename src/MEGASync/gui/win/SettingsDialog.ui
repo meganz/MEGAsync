@@ -1738,6 +1738,12 @@ border-right:0px;
            </property>
            <item>
             <widget class="QGroupBox" name="groupBox">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
              <layout class="QVBoxLayout" name="verticalLayout_91">
               <property name="spacing">
                <number>0</number>
@@ -1994,15 +2000,21 @@ padding-top: 2px;
         </widget>
        </item>
        <item>
-        <widget class="AutoResizeStackedWidget" name="sBackupsState">
+        <widget class="QStackedWidget" name="sBackupsState">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>0</height>
+          </size>
+         </property>
          <property name="currentIndex">
-          <number>0</number>
+          <number>2</number>
          </property>
          <widget class="QWidget" name="pNoErrorsBackups"/>
          <widget class="QWidget" name="pSavingBackups">
@@ -2086,6 +2098,12 @@ padding-top: 2px;
            </property>
            <item>
             <widget class="QGroupBox" name="groupBox_4">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
              <layout class="QVBoxLayout" name="verticalLayout_92">
               <property name="spacing">
                <number>0</number>
@@ -2105,7 +2123,7 @@ padding-top: 2px;
               <item alignment="Qt::AlignVCenter">
                <widget class="QLabel" name="lDisabledBackups">
                 <property name="text">
-                 <string>Some folders have not synchronised. For more information please hover over the yellow warning icon.</string>
+                 <string>Some folders have not backed up. For more information please hover over the yellow warning icon.</string>
                 </property>
                 <property name="wordWrap">
                  <bool>true</bool>
@@ -2123,6 +2141,9 @@ padding-top: 2px;
         <spacer name="verticalSpacer_2">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeType">
+          <enum>QSizePolicy::Maximum</enum>
          </property>
          <property name="sizeHint" stdset="0">
           <size>
@@ -3311,18 +3332,6 @@ color: grey;
    <class>BackupTableView</class>
    <extends>QTableView</extends>
    <header>BackupTableView.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>WaitingSpinnerWidget</class>
-   <extends>QWidget</extends>
-   <header location="global">WaitingSpinnerWidget.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>AutoResizeStackedWidget</class>
-   <extends>QStackedWidget</extends>
-   <header>AutoResizeStackedWidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
