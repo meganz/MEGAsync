@@ -5607,11 +5607,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel all transfers</source>
-        <translatorcomment>Tooltip of the Cancel all button</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Scanning</source>
         <translatorcomment>State of the Transfers: Message which shows that a folder is being scanned</translatorcomment>
         <translation type="unfinished">Scanning</translation>
