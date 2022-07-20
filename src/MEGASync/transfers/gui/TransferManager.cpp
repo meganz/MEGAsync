@@ -742,16 +742,25 @@ void TransferManager::refreshSearchStats()
             mUi->tUlResults->setProperty(LABEL_NUMBER, nbUl);
         }
 
-        int intNbAll = static_cast<int>(nbAll);
-        mUi->lNbResults->setText(QString(tr("%1 result(s) found","", intNbAll)).arg(nbAll));
-        mUi->lNbResults->setProperty("results", static_cast<bool>(nbAll));
-        mUi->lNbResults->style()->unpolish(mUi->lNbResults);
-        mUi->lNbResults->style()->polish(mUi->lNbResults);
 
         QString allText(tr("All"));
         mUi->tAllResults->setText(allText + QString::fromUtf8("\t\t\t\t") + QString::number(nbAll));
 
-        mUi->searchByTextTypeSelector->setVisible(nbDl != 0 && nbUl != 0);
+        if(nbDl != 0 && nbUl != 0)
+        {
+            mUi->searchByTextTypeSelector->setVisible(true);
+            mUi->lNbResults->setVisible(false);
+        }
+        else
+        {
+            int intNbAll = static_cast<int>(nbAll);
+            mUi->lNbResults->setText(QString(tr("%1 result(s) found","", intNbAll)).arg(nbAll));
+            mUi->lNbResults->setProperty("results", static_cast<bool>(nbAll));
+            mUi->lNbResults->style()->unpolish(mUi->lNbResults);
+            mUi->lNbResults->style()->polish(mUi->lNbResults);
+            mUi->lNbResults->setVisible(true);
+            mUi->searchByTextTypeSelector->setVisible(false);
+        }
 
         bool showTypeFilters (mUi->wTransfers->getCurrentTab() == TransfersWidget::SEARCH_TAB);
         mUi->tDlResults->setVisible(showTypeFilters);

@@ -67,7 +67,7 @@ public:
          bool    clearAction;
          QString cancelClearTooltip;
 
-         CancelClearButtonInfo():clearAction(false), visible(true){}
+         CancelClearButtonInfo():visible(true),clearAction(false){}
 
          bool isInit(){return !cancelClearTooltip.isEmpty();}
     };

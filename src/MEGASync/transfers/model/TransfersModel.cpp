@@ -428,8 +428,8 @@ TransfersModel::TransfersModel(QObject *parent) :
     mUpdateMostPriorityTransfer(0),
     mUiBlockedCounter(0),
     mUiBlockedByCounter(0),
-    mSyncsInRowsToCancel(false),
-    mCancelledFrom(nullptr)
+    mCancelledFrom(nullptr),
+    mSyncsInRowsToCancel(false)
 {
     qRegisterMetaType<QList<QPersistentModelIndex>>("QList<QPersistentModelIndex>");
     qRegisterMetaType<QAbstractItemModel::LayoutChangeHint>("QAbstractItemModel::LayoutChangeHint");
@@ -1662,10 +1662,7 @@ void TransfersModel::setUiBlockedMode(bool state)
 {
     if(state)
     {
-        if(mUiBlockedCounter >= 0)
-        {
-            emit blockUi();
-        }
+        emit blockUi();
 
         mUiBlockedCounter = RESET_AFTER_EMPTY_RECEIVES;
     }
@@ -1718,7 +1715,7 @@ void TransfersModel::setUiBlockedModeByCounter(uint32_t transferCount)
     }
 }
 
-void TransfersModel::updateUiBlockedByCounter(uint16_t updates)
+void TransfersModel::updateUiBlockedByCounter(int updates)
 {
     if(updates > 0 && mUiBlockedByCounter > 0)
     {
