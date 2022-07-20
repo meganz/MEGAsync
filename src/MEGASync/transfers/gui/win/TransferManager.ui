@@ -186,12 +186,12 @@ QGroupBox::title
 
 #bPause, #bSearch
 {
-    height: 36px;
-    width: 36px;
-    min-height: 36px;
-    min-width: 36px;
-    max-height: 36px;
-    max-width: 36px;
+    height: 32px;
+    width: 32px;
+    min-height: 32px;
+    min-width: 32px;
+    max-height: 32px;
+    max-width: 32px;
     qProperty-iconSize: 32px;
     padding: 0px;
     margin: 0px;
@@ -241,17 +241,6 @@ QGroupBox::title
     font-size: 10px;
     font-weight: bold;
     text-align: right;
-}
-
-#bClearAll
-{
-    min-height: 36px;
-    min-width: 36px;
-    max-height: 36px;
-    max-width: 36px;
-    height: 36px;
-    width: 36px;
-    qProperty-iconSize: 36px;
 }
  
 #wLeftPane QToolButton, #wRightPane QToolButton
@@ -513,14 +502,14 @@ QGroupBox::title
             </property>
             <property name="minimumSize">
              <size>
-              <width>36</width>
-              <height>36</height>
+              <width>32</width>
+              <height>32</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
-              <width>36</width>
-              <height>36</height>
+              <width>32</width>
+              <height>32</height>
              </size>
             </property>
             <property name="cursor">
@@ -554,14 +543,14 @@ QGroupBox::title
            <widget class="QPushButton" name="bSearch">
             <property name="minimumSize">
              <size>
-              <width>36</width>
-              <height>36</height>
+              <width>32</width>
+              <height>32</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
-              <width>36</width>
-              <height>36</height>
+              <width>32</width>
+              <height>32</height>
              </size>
             </property>
             <property name="cursor">

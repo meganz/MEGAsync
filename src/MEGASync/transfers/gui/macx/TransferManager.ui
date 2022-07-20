@@ -192,12 +192,12 @@ QGroupBox::title
 
 #bPause, #bSearch
 {
-    height: 36px;
-    width: 36px;
-    min-height: 36px;
-    min-width: 36px;
-    max-height: 36px;
-    max-width: 36px;
+    height: 32px;
+    width: 32px;
+    min-height: 32px;
+    min-width: 32px;
+    max-height: 32px;
+    max-width: 32px;
     qProperty-iconSize: 32px;
     padding: 0px;
     margin: 0px;
@@ -248,17 +248,6 @@ QGroupBox::title
     font-size: 10px;
     font-weight: bold;
     text-align: right;
-}
-
-#bClearAll
-{
-    min-height: 36px;
-    min-width: 36px;
-    max-height: 36px;
-    max-width: 36px;
-    height: 36px;
-    width: 36px;
-    qProperty-iconSize: 36px;
 }
  
 QToolButton
@@ -560,7 +549,7 @@ QToolButton
              <bool>true</bool>
             </property>
             <property name="default_icon" stdset="0">
-              <string notr="true">qrc:/images/transfer_manager/sidebar/sidebar_pause_ico_default.png</string>
+             <string notr="true">qrc:/images/transfer_manager/sidebar/sidebar_pause_ico_default.png</string>
             </property>
             <property name="hover_selected" stdset="0">
              <bool>true</bool>
@@ -598,7 +587,7 @@ QToolButton
              </size>
             </property>
             <property name="default_icon" stdset="0">
-              <string notr="true">qrc:/images/transfer_manager/sidebar/sidebar_search_ico_default.png</string>
+             <string notr="true">qrc:/images/transfer_manager/sidebar/sidebar_search_ico_default.png</string>
             </property>
            </widget>
           </item>
@@ -688,7 +677,7 @@ QToolButton
              </size>
             </property>
             <property name="default_icon" stdset="0">
-              <string notr="true">qrc:/images/transfer_manager/sidebar/delete_search_ico_default.png</string>
+             <string notr="true">qrc:/images/transfer_manager/sidebar/delete_search_ico_default.png</string>
             </property>
            </widget>
           </item>
@@ -778,7 +767,7 @@ QToolButton
                <bool>false</bool>
               </property>
               <property name="default_icon" stdset="0">
-                <string notr="true">qrc:/images/transfer_manager/sidebar/all_transfers_ico_default.png</string>
+               <string notr="true">qrc:/images/transfer_manager/sidebar/all_transfers_ico_default.png</string>
               </property>
              </widget>
             </item>
@@ -856,7 +845,7 @@ QToolButton
                <bool>false</bool>
               </property>
               <property name="default_icon" stdset="0">
-                <string notr="true">qrc:/images/transfer_manager/sidebar/downloads_ico_default.png</string>
+               <string notr="true">qrc:/images/transfer_manager/sidebar/downloads_ico_default.png</string>
               </property>
              </widget>
             </item>
@@ -934,7 +923,7 @@ QToolButton
                <bool>false</bool>
               </property>
               <property name="default_icon" stdset="0">
-                <string notr="true">qrc:/images/transfer_manager/sidebar/uploads_ico_default.png</string>
+               <string notr="true">qrc:/images/transfer_manager/sidebar/uploads_ico_default.png</string>
               </property>
              </widget>
             </item>
@@ -1015,7 +1004,7 @@ QToolButton
                <bool>false</bool>
               </property>
               <property name="default_icon" stdset="0">
-                <string notr="true">qrc:/images/transfer_manager/sidebar/finished_ico_default.png</string>
+               <string notr="true">qrc:/images/transfer_manager/sidebar/finished_ico_default.png</string>
               </property>
              </widget>
             </item>
@@ -1096,7 +1085,7 @@ QToolButton
                <bool>false</bool>
               </property>
               <property name="default_icon" stdset="0">
-                <string notr="true">qrc:/images/transfer_manager/sidebar/sidebar_failed_ico_default.png</string>
+               <string notr="true">qrc:/images/transfer_manager/sidebar/sidebar_failed_ico_default.png</string>
               </property>
              </widget>
             </item>
@@ -1204,7 +1193,7 @@ QToolButton
                <bool>false</bool>
               </property>
               <property name="default_icon" stdset="0">
-                <string notr="true">qrc:/images/transfer_manager/sidebar/compressed_default.png</string>
+               <string notr="true">qrc:/images/transfer_manager/sidebar/compressed_default.png</string>
               </property>
              </widget>
             </item>
@@ -1288,7 +1277,7 @@ QToolButton
                <bool>false</bool>
               </property>
               <property name="default_icon" stdset="0">
-                <string notr="true">qrc:/images/transfer_manager/sidebar/text_default.png</string>
+               <string notr="true">qrc:/images/transfer_manager/sidebar/text_default.png</string>
               </property>
              </widget>
             </item>
@@ -1369,7 +1358,7 @@ QToolButton
                <bool>false</bool>
               </property>
               <property name="default_icon" stdset="0">
-                <string notr="true">qrc:/images/transfer_manager/sidebar/image_default.png</string>
+               <string notr="true">qrc:/images/transfer_manager/sidebar/image_default.png</string>
               </property>
              </widget>
             </item>
@@ -1450,7 +1439,7 @@ QToolButton
                <bool>false</bool>
               </property>
               <property name="default_icon" stdset="0">
-                <string notr="true">qrc:/images/transfer_manager/sidebar/video_default.png</string>
+               <string notr="true">qrc:/images/transfer_manager/sidebar/video_default.png</string>
               </property>
              </widget>
             </item>
@@ -1531,7 +1520,7 @@ QToolButton
                <bool>false</bool>
               </property>
               <property name="default_icon" stdset="0">
-                <string notr="true">qrc:/images/transfer_manager/sidebar/audio_default.png</string>
+               <string notr="true">qrc:/images/transfer_manager/sidebar/audio_default.png</string>
               </property>
              </widget>
             </item>
@@ -1612,7 +1601,7 @@ QToolButton
                <bool>false</bool>
               </property>
               <property name="default_icon" stdset="0">
-                <string notr="true">qrc:/images/transfer_manager/sidebar/generic_default.png</string>
+               <string notr="true">qrc:/images/transfer_manager/sidebar/generic_default.png</string>
               </property>
              </widget>
             </item>
@@ -1714,7 +1703,7 @@ QToolButton
                <bool>false</bool>
               </property>
               <property name="default_icon" stdset="0">
-                <string notr="true">qrc:/images/transfer_manager/sidebar/search_result_default.png</string>
+               <string notr="true">qrc:/images/transfer_manager/sidebar/search_result_default.png</string>
               </property>
              </widget>
             </item>
@@ -1743,7 +1732,7 @@ QToolButton
                 <normaloff>:/images/transfer_manager/sidebar/delete_search_result_default.png</normaloff>:/images/transfer_manager/sidebar/delete_search_result_default.png</iconset>
               </property>
               <property name="default_icon" stdset="0">
-                <string notr="true">qrc:/images/transfer_manager/sidebar/delete_search_result_default.png</string>
+               <string notr="true">qrc:/images/transfer_manager/sidebar/delete_search_result_default.png</string>
               </property>
              </widget>
             </item>
@@ -1808,10 +1797,10 @@ QToolButton
             <layout class="QHBoxLayout" name="horizontalLayout_16">
              <property name="spacing">
               <number>5</number>
-            </property>
+             </property>
              <property name="leftMargin">
               <number>4</number>
-            </property>
+             </property>
              <property name="topMargin">
               <number>0</number>
              </property>
@@ -1830,11 +1819,11 @@ QToolButton
                 </sizepolicy>
                </property>
                <property name="minimumSize">
-             <size>
+                <size>
                  <width>16</width>
                  <height>16</height>
-             </size>
-            </property>
+                </size>
+               </property>
                <property name="maximumSize">
                 <size>
                  <width>16</width>
@@ -1861,9 +1850,9 @@ QToolButton
                <property name="flat">
                 <bool>true</bool>
                </property>
-           </widget>
-          </item>
-          <item>
+              </widget>
+             </item>
+             <item>
               <widget class="QLabel" name="lDownSpeed">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
@@ -1918,7 +1907,7 @@ QToolButton
              </property>
              <property name="leftMargin">
               <number>4</number>
-            </property>
+             </property>
              <property name="topMargin">
               <number>0</number>
              </property>
@@ -1936,24 +1925,24 @@ QToolButton
                  <verstretch>0</verstretch>
                 </sizepolicy>
                </property>
-            <property name="minimumSize">
-             <size>
+               <property name="minimumSize">
+                <size>
                  <width>16</width>
                  <height>16</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
                  <width>16</width>
                  <height>16</height>
-             </size>
-            </property>
+                </size>
+               </property>
                <property name="focusPolicy">
                 <enum>Qt::NoFocus</enum>
                </property>
-            <property name="text">
+               <property name="text">
                 <string notr="true"/>
-            </property>
+               </property>
                <property name="icon">
                 <iconset>
                  <normalon>:/images/transfer_manager/transfers_states/arrow_upload_ico.png</normalon>
@@ -1967,7 +1956,7 @@ QToolButton
                </property>
                <property name="flat">
                 <bool>true</bool>
-            </property>
+               </property>
               </widget>
              </item>
              <item>
@@ -2673,6 +2662,18 @@ QToolButton
                 </property>
                 <item>
                  <widget class="QWidget" name="wAllResults" native="true">
+                  <property name="minimumSize">
+                   <size>
+                    <width>0</width>
+                    <height>24</height>
+                   </size>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>16777215</width>
+                    <height>24</height>
+                   </size>
+                  </property>
                   <property name="cursor">
                    <cursorShape>PointingHandCursor</cursorShape>
                   </property>
@@ -2682,26 +2683,26 @@ QToolButton
                   <layout class="QHBoxLayout" name="horizontalLayout_18">
                    <property name="spacing">
                     <number>12</number>
-                  </property>
+                   </property>
                    <property name="leftMargin">
                     <number>12</number>
-                  </property>
+                   </property>
                    <property name="topMargin">
                     <number>0</number>
-                  </property>
+                   </property>
                    <property name="rightMargin">
                     <number>12</number>
-                  </property>
+                   </property>
                    <property name="bottomMargin">
                     <number>0</number>
-                  </property>
+                   </property>
                    <item alignment="Qt::AlignLeft">
                     <widget class="QLabel" name="lAllResults">
                      <property name="text">
                       <string>All</string>
-                  </property>
-                 </widget>
-                </item>
+                     </property>
+                    </widget>
+                   </item>
                    <item alignment="Qt::AlignRight">
                     <widget class="QLabel" name="lAllResultsCounter">
                      <property name="text">
@@ -2714,6 +2715,18 @@ QToolButton
                 </item>
                 <item>
                  <widget class="QWidget" name="wDlResults" native="true">
+                  <property name="minimumSize">
+                   <size>
+                    <width>0</width>
+                    <height>24</height>
+                   </size>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>16777215</width>
+                    <height>24</height>
+                   </size>
+                  </property>
                   <property name="cursor">
                    <cursorShape>PointingHandCursor</cursorShape>
                   </property>
@@ -2723,16 +2736,16 @@ QToolButton
                   <layout class="QHBoxLayout" name="horizontalLayout_19">
                    <property name="spacing">
                     <number>12</number>
-                  </property>
+                   </property>
                    <property name="leftMargin">
                     <number>12</number>
-                  </property>
+                   </property>
                    <property name="topMargin">
                     <number>0</number>
-                  </property>
+                   </property>
                    <property name="rightMargin">
                     <number>12</number>
-                  </property>
+                   </property>
                    <property name="bottomMargin">
                     <number>0</number>
                    </property>
@@ -2747,14 +2760,26 @@ QToolButton
                     <widget class="QLabel" name="lDlResultsCounter">
                      <property name="text">
                       <string/>
-                  </property>
-                 </widget>
-                </item>
+                     </property>
+                    </widget>
+                   </item>
                   </layout>
                  </widget>
                 </item>
                 <item>
                  <widget class="QWidget" name="wUlResults" native="true">
+                  <property name="minimumSize">
+                   <size>
+                    <width>0</width>
+                    <height>24</height>
+                   </size>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>16777215</width>
+                    <height>24</height>
+                   </size>
+                  </property>
                   <property name="cursor">
                    <cursorShape>PointingHandCursor</cursorShape>
                   </property>
@@ -2764,16 +2789,16 @@ QToolButton
                   <layout class="QHBoxLayout" name="horizontalLayout_20">
                    <property name="spacing">
                     <number>12</number>
-                  </property>
+                   </property>
                    <property name="leftMargin">
                     <number>12</number>
-                  </property>
+                   </property>
                    <property name="topMargin">
                     <number>0</number>
-                  </property>
+                   </property>
                    <property name="rightMargin">
                     <number>12</number>
-                  </property>
+                   </property>
                    <property name="bottomMargin">
                     <number>0</number>
                    </property>
@@ -2781,9 +2806,9 @@ QToolButton
                     <widget class="QLabel" name="lUlResults">
                      <property name="text">
                       <string>Uploads</string>
-                  </property>
-                 </widget>
-                </item>
+                     </property>
+                    </widget>
+                   </item>
                    <item alignment="Qt::AlignRight">
                     <widget class="QLabel" name="lUlResultsCounter">
                      <property name="text">
@@ -2858,7 +2883,7 @@ QToolButton
                 <normaloff>:/images/transfer_manager/toolbar/import_toolbar_ico_default.png</normaloff>:/images/transfer_manager/toolbar/import_toolbar_ico_default.png</iconset>
               </property>
               <property name="default_icon" stdset="0">
-                <string notr="true">qrc:/images/transfer_manager/toolbar/import_toolbar_ico_default.png</string>
+               <string notr="true">qrc:/images/transfer_manager/toolbar/import_toolbar_ico_default.png</string>
               </property>
              </widget>
             </item>
@@ -2875,7 +2900,7 @@ QToolButton
                 <normaloff>:/images/transfer_manager/toolbar/upload_toolbar_ico_default.png</normaloff>:/images/transfer_manager/toolbar/upload_toolbar_ico_default.png</iconset>
               </property>
               <property name="default_icon" stdset="0">
-                <string notr="true">qrc:/images/transfer_manager/toolbar/upload_toolbar_ico_default.png</string>
+               <string notr="true">qrc:/images/transfer_manager/toolbar/upload_toolbar_ico_default.png</string>
               </property>
              </widget>
             </item>
@@ -2892,7 +2917,7 @@ QToolButton
                 <normaloff>:/images/transfer_manager/toolbar/download_toolbar_ico_default.png</normaloff>:/images/transfer_manager/toolbar/download_toolbar_ico_default.png</iconset>
               </property>
               <property name="default_icon" stdset="0">
-                <string notr="true">qrc:/images/transfer_manager/toolbar/download_toolbar_ico_default.png</string>
+               <string notr="true">qrc:/images/transfer_manager/toolbar/download_toolbar_ico_default.png</string>
               </property>
              </widget>
             </item>
@@ -2906,7 +2931,7 @@ QToolButton
                 <normaloff>:/images/transfer_manager/toolbar/preferences_toolbar_ico_default.png</normaloff>:/images/transfer_manager/toolbar/preferences_toolbar_ico_default.png</iconset>
               </property>
               <property name="default_icon" stdset="0">
-                <string notr="true">qrc:/images/transfer_manager/toolbar/preferences_toolbar_ico_default.png</string>
+               <string notr="true">qrc:/images/transfer_manager/toolbar/preferences_toolbar_ico_default.png</string>
               </property>
              </widget>
             </item>
