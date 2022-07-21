@@ -24,10 +24,9 @@ public:
     SyncController(QObject* parent = nullptr);
     ~SyncController();
 
-    void addBackup(const QString& localFolder);
-    void addBackup(const QDir& dirToBackup);
+    void addBackup(const QString& localFolder, const QString& syncName = QString());
     void addSync(const QString &localFolder, const mega::MegaHandle &remoteHandle,
-                 const QString& syncName, mega::MegaSync::SyncType type = mega::MegaSync::TYPE_TWOWAY);
+                 const QString& syncName = QString(), mega::MegaSync::SyncType type = mega::MegaSync::TYPE_TWOWAY);
     void removeSync(std::shared_ptr<SyncSetting> syncSetting, const mega::MegaHandle& remoteHandle = mega::INVALID_HANDLE);
     void enableSync(std::shared_ptr<SyncSetting> syncSetting);
     void disableSync(std::shared_ptr<SyncSetting> syncSetting);
@@ -38,8 +37,18 @@ public:
 
     void setDeviceName(const QString& name);
     void getDeviceName();
-    QString getIsFolderAlreadySyncedMsg(const QString& path, const mega::MegaSync::SyncType& syncType);
-    bool isFolderAlreadySynced(const QString& path, const mega::MegaSync::SyncType& syncType, QString& message);
+
+    QString getIsLocalFolderAlreadySyncedMsg(const QString& path, const mega::MegaSync::SyncType& syncType);
+    bool isLocalFolderAlreadySynced(const QString& path, const mega::MegaSync::SyncType& syncType, QString& message);
+    static QString getIsLocalPathAllowedForSyncMsg(const QString& path, const mega::MegaSync::SyncType& syncType);
+    static bool isLocalPathAllowedForSync(const QString& path, const mega::MegaSync::SyncType& syncType, QString& message);
+    bool isLocalFolderSyncable(const QString& path, const mega::MegaSync::SyncType& syncType, QString& message);
+
+    static QString getSyncNameFromPath(const QString& path);
+
+//    QString getIsRemoteFolderAlreadySyncedMsg(const QString& path);
+//    bool isRemoteFolderAlreadySynced(const QString& path, QString& message);
+//    bool isRemoteFolderSyncable(const QString& path, QString& message);
 
     static const char* DEFAULT_BACKUPS_ROOT_DIRNAME;
 

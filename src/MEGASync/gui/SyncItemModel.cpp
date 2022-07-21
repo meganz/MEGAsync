@@ -135,7 +135,7 @@ QVariant SyncItemModel::data(const QModelIndex &index, int role) const
         break;
     case Column::RNAME:
         if(role == Qt::DisplayRole)
-            return QFileInfo(sync->getMegaFolder()).fileName();
+            return sync->getMegaFolder();
         else if(role == Qt::ToolTipRole)
             return sync->getMegaFolder();
         break;
@@ -254,7 +254,6 @@ mega::MegaSync::SyncType SyncItemModel::getMode()
 {
     return mSyncType;
 }
-
 
 SyncItemSortModel::SyncItemSortModel(QObject *parent) : QSortFilterProxyModel(parent)
 {

@@ -538,9 +538,10 @@ void SetupWizard::on_bNext_clicked()
         }
 
         QString localFolderPath = ui->eLocalFolder->text();
-        if (!Utilities::verifySyncedFolderLimits(localFolderPath))
+        QString warningMessage;
+        if (!SyncController::isLocalPathAllowedForSync(localFolderPath, MegaSync::TYPE_TWOWAY, warningMessage))
         {
-            QMegaMessageBox::warning(nullptr, tr("Warning"), tr("You are trying to sync an extremely large folder.\nTo prevent the syncing of entire boot volumes, which is inefficient and dangerous,\nwe ask you to start with a smaller folder and add more data while MEGAsync is running."), QMessageBox::Ok);
+            QMegaMessageBox::warning(nullptr, tr("Warning"), warningMessage, QMessageBox::Ok);
             return;
         }
 
@@ -600,7 +601,6 @@ void SetupWizard::on_bCancel_clicked()
     if (ui->sPages->currentWidget() == ui->pWelcome)
     {
         setupPreferences();
-        QString syncName;
         auto rootNode = ((MegaApplication*)qApp)->getRootNode();
 
         if (!rootNode)
@@ -617,6 +617,7 @@ void SetupWizard::on_bCancel_clicked()
         }
 
         QString localPath (QDir::toNativeSeparators(QDir(ui->eLocalFolder->text()).canonicalPath()));
+        QString syncName (SyncController::getSyncNameFromPath(localPath));
         mPreconfiguredSyncs.append(PreConfiguredSync(localPath, selectedMegaFolderHandle, syncName));
         done(QDialog::Accepted);
     }

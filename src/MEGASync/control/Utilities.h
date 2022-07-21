@@ -305,7 +305,6 @@ public:
     static QString getTimeString(long long secs, bool secondPrecision = true, bool color = true);
     static QString getQuantityString(unsigned long long quantity);
     static QString getFinishedTimeString(long long secs);
-    static bool verifySyncedFolderLimits(QString path);
     static QString extractJSONString(QString json, QString name);
     static long long extractJSONNumber(QString json, QString name);
     static QString getDefaultBasePath();

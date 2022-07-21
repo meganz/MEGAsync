@@ -108,11 +108,6 @@ void FolderBinder::on_bLocalFolder_clicked()
         }
 
         path = QDir::toNativeSeparators(path);
-        if (!Utilities::verifySyncedFolderLimits(path))
-        {
-            QMegaMessageBox::warning(nullptr, tr("Warning"), tr("You are trying to sync an extremely large folder.\nTo prevent the syncing of entire boot volumes, which is inefficient and dangerous,\nwe ask you to start with a smaller folder and add more data while MEGAsync is running."), QMessageBox::Ok);
-            return;
-        }
 
         QTemporaryFile test(path + QDir::separator());
         if (test.open()|| QMegaMessageBox::warning(nullptr,

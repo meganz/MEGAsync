@@ -39,7 +39,7 @@ class BackupsWizard : public QDialog
         Q_OBJECT
 
     public:
-        enum Steps
+        enum Step
         {
             STEP_1_INIT = 0,
             STEP_1,
@@ -62,8 +62,8 @@ class BackupsWizard : public QDialog
 
         struct BackupInfo
         {
-           QString folderName;
-           Status status;
+            Status  status;
+            QString syncName;
         };
 
         explicit BackupsWizard(QWidget* parent = nullptr);
@@ -82,10 +82,10 @@ class BackupsWizard : public QDialog
         void setupMyBackupsDir();
         void setupBackups();
         void setupComplete();
-        bool isSomethingChecked();
+        bool atLeastOneFolderChecked();
         void processNextBackupSetup();
-        bool isFolderAlreadySynced(const QString& path, bool displayWarning = false, bool fromCheckAction = false);
-        void nextStep(const Steps& step);
+        bool isFolderSyncable(const QString& path, bool displayWarning = false, bool fromCheckAction = false);
+        void nextStep(const Step& step);
         void setCurrentWidgetsSteps(QWidget* widget);
         void updateSize();
 
@@ -102,6 +102,7 @@ class BackupsWizard : public QDialog
         QMap<QString, BackupInfo> mBackupsStatus;
         QStringList mErrList;
         QWidget* mLoadingWindow;
+        Step mCurrentStep;
 
     private slots:
         void on_bNext_clicked();

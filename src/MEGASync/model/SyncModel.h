@@ -115,13 +115,13 @@ public:
 
     QStringList getSyncNames(const QVector<SyncType>& types);
     QStringList getSyncNames(SyncType type)
-        {return getSyncNames(QVector<SyncType>(type));}
+        {return getSyncNames(QVector<SyncType>({type}));}
     QStringList getSyncIDs(const QVector<SyncType>& types);
     QStringList getSyncIDs(SyncType type)
-        {return getSyncIDs(QVector<SyncType>(type));}
+        {return getSyncIDs(QVector<SyncType>({type}));}
     QStringList getMegaFolders(const QVector<SyncType>& types);
     QStringList getMegaFolders(SyncType type)
-        {return getMegaFolders(QVector<SyncType>(type));}
+        {return getMegaFolders(QVector<SyncType>({type}));}
     QStringList getLocalFolders(const QVector<SyncType>& types);
     QStringList getLocalFolders(SyncType type)
         {return getLocalFolders(QVector<SyncType>({type}));}

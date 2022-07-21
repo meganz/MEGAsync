@@ -2,6 +2,9 @@
 #include "MegaApplication.h"
 #include "Platform.h"
 
+#include <QInputDialog>
+#include <QStorageInfo>
+
 using namespace mega;
 
 const char* SyncController::DEFAULT_BACKUPS_ROOT_DIRNAME = "My backups";
@@ -25,27 +28,22 @@ SyncController::~SyncController()
     delete mDelegateListener;
 }
 
-void SyncController::addBackup(const QString& localFolder)
+void SyncController::addBackup(const QString& localFolder, const QString& syncName)
 {
-    QDir dirToBackup(localFolder);
-    addBackup(dirToBackup);
-}
-
-void SyncController::addBackup(const QDir& dirToBackup)
-{
-    addSync(QDir::toNativeSeparators(dirToBackup.absolutePath()), mega::INVALID_HANDLE,
-            dirToBackup.dirName(), mega::MegaSync::TYPE_BACKUP);
+    addSync(QDir::toNativeSeparators(localFolder), mega::INVALID_HANDLE,
+            syncName.isEmpty() ? getSyncNameFromPath(localFolder) : syncName,
+            mega::MegaSync::TYPE_BACKUP);
 }
 
 void SyncController::addSync(const QString& localFolder, const MegaHandle& remoteHandle,
                              const QString& syncName, MegaSync::SyncType type)
 {
-
     MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("Adding sync \"%1\" for path \"%2\"")
                  .arg(syncName, localFolder).toUtf8().constData());
 
     mApi->syncFolder(type, localFolder.toUtf8().constData(),
-                     syncName.toUtf8().constData(), remoteHandle, nullptr, mDelegateListener);
+                     syncName.isEmpty() ? nullptr : syncName.toUtf8().constData(),
+                     remoteHandle, nullptr, mDelegateListener);
 }
 
 void SyncController::removeSync(std::shared_ptr<SyncSetting> syncSetting, const MegaHandle& remoteHandle)
@@ -119,10 +117,9 @@ void SyncController::getDeviceName()
     ensureDeviceNameIsSetOnRemote();
 }
 
-
 // Checks if a path belongs is in an existing sync or backup tree; and if the selected
 // folder has a sync or backup in its tree.
-QString SyncController::getIsFolderAlreadySyncedMsg(const QString& path, const MegaSync::SyncType& syncType)
+QString SyncController::getIsLocalFolderAlreadySyncedMsg(const QString& path, const MegaSync::SyncType& syncType)
 {
     QString inputPath (QDir::toNativeSeparators(QDir(path).absolutePath()));
     QString message;
@@ -185,11 +182,151 @@ QString SyncController::getIsFolderAlreadySyncedMsg(const QString& path, const M
     return message;
 }
 
-bool SyncController::isFolderAlreadySynced(const QString &path, const MegaSync::SyncType &syncType, QString& message)
+bool SyncController::isLocalFolderAlreadySynced(const QString& path, const MegaSync::SyncType &syncType, QString& message)
 {
-    message = getIsFolderAlreadySyncedMsg(path, syncType);
+    message = getIsLocalFolderAlreadySyncedMsg(path, syncType);
     return (!message.isEmpty());
 }
+
+QString SyncController::getIsLocalPathAllowedForSyncMsg(const QString& path, const MegaSync::SyncType& syncType)
+{
+    QString inputPath (path);
+    QString message;
+
+#ifdef WIN32
+    if (inputPath.startsWith(QString::fromLatin1("\\\\?\\")))
+    {
+        inputPath = inputPath.mid(4);
+    }
+#endif
+
+    // Use canonicalPath() to resolve links
+    inputPath = QDir(inputPath).canonicalPath();
+
+    if (inputPath == QDir::rootPath())
+    {
+        if (syncType == MegaSync::SyncType::TYPE_BACKUP)
+        {
+            message = tr("You are trying to backup an extremely large folder.\n"
+                         "To prevent the backup of entire boot volumes,"
+                         " which is inefficient and dangerous,\n"
+                         "we ask you to start with a smaller folder"
+                         " and add more data while MEGAsync is running.");
+        }
+        else
+        {
+            message = tr("You are trying to sync an extremely large folder.\n"
+                         "To prevent the syncing of entire boot volumes,"
+                         " which is inefficient and dangerous,\n"
+                         "we ask you to start with a smaller folder"
+                         " and add more data while MEGAsync is running.");
+        }
+    }
+    return message;
+}
+
+bool SyncController::isLocalPathAllowedForSync(const QString& path, const MegaSync::SyncType &syncType, QString& message)
+{
+    message = getIsLocalPathAllowedForSyncMsg(path, syncType);
+    return (message.isEmpty());
+}
+
+bool SyncController::isLocalFolderSyncable(const QString& path, const mega::MegaSync::SyncType& syncType, QString& message)
+{
+    // First check if the path is allowed
+    message = getIsLocalPathAllowedForSyncMsg(path, syncType);
+
+    if (message.isEmpty())
+    {
+        // The check if it is not synced already
+        message = getIsLocalFolderAlreadySyncedMsg(path, syncType);
+    }
+    return (message.isEmpty());
+}
+
+QString SyncController::getSyncNameFromPath(const QString& path)
+{
+    QDir dir (path);
+    QString syncName;
+
+    // Handle fs root case
+    if (dir.isRoot())
+    {
+        // Cleanup the path (in Windows: get "F:" from "F:\")
+        QString cleanPath (QDir::toNativeSeparators(dir.absolutePath()).remove(QDir::separator()));
+        // Try to get the volume label
+        QStorageInfo storage(dir);
+        QString label (QString::fromUtf8(storage.subvolume()));
+        if (label.isEmpty())
+        {
+            label = storage.name();
+        }
+        // If we have no label, fallback to the cleaned path
+        syncName = label.isEmpty() ? cleanPath
+                                   : QString::fromUtf8("%1 (%2)").arg(label, cleanPath);
+    }
+    else
+    {
+        // Take the folder name as sync name
+        syncName = dir.dirName();
+    }
+
+    return syncName;
+}
+
+
+//QString SyncController::getIsRemoteFolderAlreadySyncedMsg(const QString& path)
+//{
+//    QString message;
+//    // This is only for TWO_WAY syncs
+//    const auto megaFolderPaths (mSyncModel->getMegaFolders(MegaSync::TYPE_TWOWAY));
+
+//    auto syncedPath (megaFolderPaths.cbegin());
+
+//    int pSize (path.size());
+//    while (message.isEmpty() && syncedPath != megaFolderPaths.cend())
+//    {
+//        int spSize (syncedPath->size());
+//        if (path.startsWith(*syncedPath) && (spSize == pSize || spSize == 1 || path[spSize] == QChar::fromLatin1('/')))
+//        {
+//            message = tr("The selected MEGA folder is already synced");
+//        }
+//        else if (syncedPath->startsWith(path) && (spSize == pSize || pSize == 1 || syncedPath[pSize] == QChar::fromLatin1('/')))
+//        {
+//            message = tr("A synced folder cannot be inside another synced folder");
+//        }
+//        syncedPath++;
+//    }
+
+////    for (int i = 0; i < megaFolderPaths.size(); i++)
+////    {
+////        QString p = megaFolderPaths.at(i);
+
+////        if (megaPath.startsWith(p) && ((p.size() == megaPath.size()) || p.size() == 1 || megaPath[p.size()] == QChar::fromAscii('/')))
+////        {
+////            QMegaMessageBox::warning(nullptr, tr("Error"), tr("The selected MEGA folder is already synced"), QMessageBox::Ok);
+////            return;
+////        }
+////        else if (p.startsWith(megaPath) && ((p.size() == megaPath.size()) || megaPath.size() == 1 || p[megaPath.size()] == QChar::fromAscii('/')))
+////        {
+////            QMegaMessageBox::warning(nullptr, tr("Error"), tr("A synced folder cannot be inside another synced folder"), QMessageBox::Ok);
+////            return;
+////        }
+////    }
+//    return message;
+//}
+
+//bool SyncController::isRemoteFolderAlreadySynced(const QString& path, QString& message)
+//{
+//    message = getIsRemoteFolderAlreadySyncedMsg(path);
+//    return (!message.isEmpty());
+//}
+
+//bool SyncController::isRemoteFolderSyncable(const QString& path, QString& message)
+//{
+//    message = getIsRemoteFolderAlreadySyncedMsg(path);
+//    return (!message.isEmpty());
+//}
 
 void SyncController::ensureDeviceNameIsSetOnRemote()
 {
