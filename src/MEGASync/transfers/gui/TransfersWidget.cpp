@@ -501,7 +501,7 @@ void TransfersWidget::onRetryButtonPressedOnDelegate()
     QPointer<TransfersWidget> dialog = QPointer<TransfersWidget>(this);
 
     if (QMegaMessageBox::warning(this, QString::fromUtf8("MEGAsync"),
-                             tr("Retry transfer(s)?", "", sourceSelectionIndexes.size()),
+                             tr("Retry transfer?", "", sourceSelectionIndexes.size()),
                              QMessageBox::Yes | QMessageBox::No, QMessageBox::No)
             != QMessageBox::Yes
             || !dialog)

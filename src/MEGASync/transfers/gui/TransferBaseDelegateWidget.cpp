@@ -85,7 +85,7 @@ void TransferBaseDelegateWidget::onRetryTransfer()
 {
     QPointer<TransferBaseDelegateWidget> dialog = QPointer<TransferBaseDelegateWidget>(this);
 
-    auto message = tr("Retry transfer?");
+    auto message = tr("Retry transfer?" , "", 1);
 
     if (QMegaMessageBox::warning(nullptr, QString::fromUtf8("MEGAsync"),
                              message,

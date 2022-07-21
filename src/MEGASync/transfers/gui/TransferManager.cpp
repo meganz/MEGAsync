@@ -755,7 +755,7 @@ void TransferManager::refreshSearchStats()
         else
         {
             int intNbAll = static_cast<int>(nbAll);
-            mUi->lNbResults->setText(QString(tr("%1 result(s) found","", intNbAll)).arg(nbAll));
+            mUi->lNbResults->setText(QString(tr("%1 result found","", intNbAll)).arg(nbAll));
             mUi->lNbResults->setProperty("results", static_cast<bool>(nbAll));
             mUi->lNbResults->style()->unpolish(mUi->lNbResults);
             mUi->lNbResults->style()->polish(mUi->lNbResults);

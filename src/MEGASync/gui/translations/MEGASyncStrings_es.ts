@@ -388,7 +388,7 @@
     <message numerus="yes">
         <source>[A] added %n item</source>
         <translatorcomment>Label to indicate that [A] has added %n items to a shared folder. Placeholder [A] will be replaced by email of the user that made the additions and %n with the number of added items.</translatorcomment>
-        <translation><numerusform>[A] ha añadido%n elemento</numerusform><numerusform>[A] ha añadido%n de elementos</numerusform><numerusform>[A] ha añadido%n elementos</numerusform></translation>
+        <translation><numerusform>[A] ha añadido %n elemento</numerusform><numerusform>[A] ha añadido %n de elementos</numerusform><numerusform>[A] ha añadido %n elementos</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>[A] removed %n item</source>
@@ -1061,7 +1061,7 @@ En algunos casos podría contener detalles como nombres de archivo o carpeta.</t
     <message numerus="yes">
         <source>[A] added %n item</source>
         <translatorcomment>Label to indicate that [A] has added %n items to a shared folder. Placeholder [A] will be replaced by email of the user that made the additions and %n with the number of added items.</translatorcomment>
-        <translation><numerusform>[A] ha añadido %n elemento</numerusform><numerusform>[A]ha añadido %n elementos</numerusform><numerusform>[A] ha añadido%n elementos</numerusform></translation>
+        <translation><numerusform>[A] ha añadido %n elemento</numerusform><numerusform>[A]ha añadido %n elementos</numerusform><numerusform>[A] ha añadido %n elementos</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>You have %n day left to save your data</source>
