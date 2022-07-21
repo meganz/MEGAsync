@@ -78,8 +78,8 @@ void TransferManagerDelegateWidget::updateTransferState()
             if(stateHasChanged())
             {
                 mPauseResumeTransferDefaultIconName = QLatin1Literal(":images/transfer_manager/transfers_actions/lists_pause_ico_default.png");
-                pauseResumeTooltip = tr("Pause transfer");
-                cancelClearTooltip = tr("Cancel transfer");
+                pauseResumeTooltip = tr("Pause transfer", "" , 1); //Use singular form
+                cancelClearTooltip = tr("Cancel transfer", "" , 1); //Use singular form
                 mUi->wProgressBar->setVisible(true);
                 mUi->sStatus->setCurrentWidget(mUi->pActive);
             }
@@ -105,8 +105,8 @@ void TransferManagerDelegateWidget::updateTransferState()
             if(stateHasChanged())
             {
                 mPauseResumeTransferDefaultIconName = QLatin1Literal(":images/transfer_manager/transfers_actions/lists_pause_ico_selected.png");
-                pauseResumeTooltip = tr("Resume transfer");
-                cancelClearTooltip = tr("Cancel transfer");
+                pauseResumeTooltip = tr("Resume transfer", "" , 1); //Use singular form
+                cancelClearTooltip = tr("Cancel transfer", "" , 1); //Use singular form
                 mUi->wProgressBar->setVisible(true);
 
                 if(getData()->mTransferredBytes != 0)
@@ -128,8 +128,8 @@ void TransferManagerDelegateWidget::updateTransferState()
             if(stateHasChanged())
             {
                 mPauseResumeTransferDefaultIconName = QLatin1Literal(":images/transfer_manager/transfers_actions/lists_pause_ico_default.png");
-                pauseResumeTooltip = tr("Pause transfer");
-                cancelClearTooltip = tr("Cancel transfer");
+                pauseResumeTooltip = tr("Pause transfer", "", 1); //Use singular form
+                cancelClearTooltip = tr("Cancel transfer", "", 1); //Use singular form
                 mUi->wProgressBar->setVisible(true);
                 mUi->sStatus->setCurrentWidget(mUi->pQueued);
 
@@ -174,7 +174,7 @@ void TransferManagerDelegateWidget::updateTransferState()
                 mUi->sStatus->setCurrentWidget(mUi->pFailed);
                 mUi->tItemRetry->setVisible(!getData()->mTemporaryError);
                 mUi->wProgressBar->setVisible(false);
-                cancelClearTooltip = tr("Cancel transfer");
+                cancelClearTooltip = tr("Cancel transfer", "" , 1); //Use singular form
                 mUi->lItemFailed->setToolTip(tr(MegaError::getErrorString(getData()->mErrorCode)));
                 showTPauseResume = false;
             }
@@ -191,8 +191,8 @@ void TransferManagerDelegateWidget::updateTransferState()
             if(stateHasChanged())
             {
                 mPauseResumeTransferDefaultIconName = QLatin1Literal(":images/transfer_manager/transfers_actions/lists_pause_ico_default.png");
-                pauseResumeTooltip = tr("Pause transfer");
-                cancelClearTooltip = tr("Cancel transfer");
+                pauseResumeTooltip = tr("Pause transfer", "" , 1); //Use singular form
+                cancelClearTooltip = tr("Cancel transfer", "" , 1); //Use singular form
                 mUi->lItemStatus->setToolTip(tr(MegaError::getErrorString(getData()->mErrorCode)));
                 mUi->sStatus->setCurrentWidget(mUi->pActive);
             }
@@ -212,7 +212,7 @@ void TransferManagerDelegateWidget::updateTransferState()
 
             if(stateHasChanged())
             {
-                cancelClearTooltip = tr("Clear transfer");
+                cancelClearTooltip = tr("Clear transfer", "" , 1); //Use singular form
                 showTPauseResume = false;
                 mUi->wProgressBar->setVisible(false);
                 mPauseResumeTransferDefaultIconName.clear();

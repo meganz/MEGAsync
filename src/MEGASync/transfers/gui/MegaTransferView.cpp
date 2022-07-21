@@ -106,11 +106,11 @@ MegaTransferView::SelectedIndexesInfo MegaTransferView::getVisibleCancelOrClearI
 
     if(info.isAnyCancellable)
     {
-        info.actionText = info.areAllCancellable ? tr("Cancel transfer(s)?", "", proxy->transfersCount()) : tr("Cancel and clear transfer(s)?", "", proxy->transfersCount());
+        info.actionText = info.areAllCancellable ? tr("Cancel transfer?", "", proxy->transfersCount()) : tr("Cancel and clear transfer?", "", proxy->transfersCount());
     }
     else
     {
-        info.actionText = tr("Clear transfer(s)?", "", proxy->transfersCount());
+        info.actionText = tr("Clear transfer?", "", proxy->transfersCount());
     }
 
     return info;
@@ -145,11 +145,11 @@ MegaTransferView::SelectedIndexesInfo MegaTransferView::getSelectedCancelOrClear
 
     if(info.isAnyCancellable)
     {
-        info.actionText = info.areAllCancellable ? tr("Cancel transfer(s)?") : tr("Cancel and clear transfer(s)?","", indexes.size());
+        info.actionText = info.areAllCancellable ? tr("Cancel transfer?") : tr("Cancel and clear transfer?","", indexes.size());
     }
     else
     {
-        info.actionText = tr("Clear transfer(s)?", "", indexes.size());
+        info.actionText = tr("Clear transfer?", "", indexes.size());
     }
 
     return info;
@@ -235,7 +235,7 @@ bool MegaTransferView::onCancelAllTransfers()
     auto rows = sourceModel->rowCount();
 
     if (QMegaMessageBox::warning(this, QString::fromUtf8("MEGAsync"),
-                             tr("Cancel all transfer(s)?", "", rows),
+                             tr("Cancel all transfer?", "", rows),
                              QMessageBox::Yes | QMessageBox::No, QMessageBox::No)
             == QMessageBox::Yes
             && dialog)
@@ -252,7 +252,7 @@ void MegaTransferView::onClearAllTransfers()
     QPointer<MegaTransferView> dialog = QPointer<MegaTransferView>(this);
 
     if (QMegaMessageBox::warning(this, QString::fromUtf8("MEGAsync"),
-                             tr("Clear transfer(s)?", "", model()->rowCount()),
+                             tr("Clear transfer?", "", model()->rowCount()),
                              QMessageBox::Yes | QMessageBox::No, QMessageBox::No)
             == QMessageBox::Yes
             && dialog)
@@ -290,7 +290,7 @@ void MegaTransferView::onClearVisibleTransfers()
     QPointer<MegaTransferView> dialog = QPointer<MegaTransferView>(this);
 
     if (QMegaMessageBox::warning(this, QString::fromUtf8("MEGAsync"),
-                             tr("Clear transfer(s)?", "", model()->rowCount()),
+                             tr("Clear transfer?", "", model()->rowCount()),
                              QMessageBox::Yes | QMessageBox::No, QMessageBox::No)
             == QMessageBox::Yes
             && dialog)
@@ -333,7 +333,7 @@ void MegaTransferView::onRetryVisibleTransfers()
     QPointer<MegaTransferView> dialog = QPointer<MegaTransferView>(this);
 
     if (QMegaMessageBox::warning(this, QString::fromUtf8("MEGAsync"),
-                                 tr("Retry transfer(s)?", "", model()->rowCount()),
+                                 tr("Retry transfer?", "", model()->rowCount()),
                                  QMessageBox::Yes | QMessageBox::No, QMessageBox::No)
             == QMessageBox::Yes
             && dialog)
@@ -386,7 +386,7 @@ void MegaTransferView::createContextMenu()
     auto indexes = selectedIndexes();
 
     mPauseAction = new QAction(QIcon(QLatin1String(":/images/transfer_manager/context_menu/pause_ico.png")),
-                                     tr("Pause Transfer(s)","", indexes.size()), this);
+                                     tr("Pause transfer","", indexes.size()), this);
     connect(mPauseAction, &QAction::triggered,
             this, &MegaTransferView::pauseSelectedClicked);
 
@@ -397,7 +397,7 @@ void MegaTransferView::createContextMenu()
     }
 
     mResumeAction = new QAction(QIcon(QLatin1String(":/images/transfer_manager/context_menu/resume_ico.png")),
-                                      tr("Resume Transfer(s)", "", indexes.size()), this);
+                                      tr("Resume transfer", "", indexes.size()), this);
     connect(mResumeAction, &QAction::triggered,
             this, &MegaTransferView::resumeSelectedClicked);
 
@@ -448,7 +448,7 @@ void MegaTransferView::createContextMenu()
     }
 
     mCancelAction = new QAction(QIcon(QLatin1String(":/images/transfer_manager/context_menu/cancel_transfer_ico.png")),
-                                      tr("Cancel Transfer(s)", "", indexes.size()), this);
+                                      tr("Cancel transfer", "", indexes.size()), this);
     connect(mCancelAction, &QAction::triggered,
             this, &MegaTransferView::cancelSelectedClicked);
 
