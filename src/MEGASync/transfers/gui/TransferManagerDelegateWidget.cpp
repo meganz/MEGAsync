@@ -22,7 +22,7 @@ TransferManagerDelegateWidget::TransferManagerDelegateWidget(QWidget *parent) :
 {
     mUi->setupUi(this);
     mUi->pbTransfer->setMaximum(PB_PRECISION);
-    mUi->wName->installEventFilter(this);
+    mUi->lTransferName->installEventFilter(this);
 }
 
 TransferManagerDelegateWidget::~TransferManagerDelegateWidget()
@@ -280,6 +280,14 @@ void TransferManagerDelegateWidget::updateTransferState()
     mUi->bItemSpeed->setText(speedString);
     // Remaining time
     mUi->lItemTime->setText(timeString);
+
+
+    mUi->lSyncIcon->setVisible(getData()->isSyncTransfer());
+    if(getData()->isSyncTransfer())
+    {
+        auto syncIcon = Utilities::getCachedPixmap(QLatin1Literal(":/images/transfer_manager/transfers_states/synching_ico.png"));
+        mUi->lSyncIcon->setPixmap(syncIcon.pixmap(mUi->lSyncIcon->size()));
+    }
 }
 
 void TransferManagerDelegateWidget::setFileNameAndType()
@@ -294,9 +302,7 @@ void TransferManagerDelegateWidget::setFileNameAndType()
     // File name
     QString localPath = getData()->path();
     mUi->lTransferName->setToolTip(getData()->mFilename);
-    mUi->lTransferName->setText(mUi->lTransferName->fontMetrics()
-                                .elidedText(getData()->mFilename, Qt::ElideMiddle,
-                                            mUi->wName->contentsRect().width() - 12));
+    mUi->lTransferName->setText(getData()->mFilename);
 }
 
 void TransferManagerDelegateWidget::setType()
@@ -305,11 +311,7 @@ void TransferManagerDelegateWidget::setType()
 
     auto transferType = getData()->mType;
 
-    if(transferType & TransferData::TRANSFER_SYNC)
-    {
-        icon = Utilities::getCachedPixmap(QLatin1Literal(":/images/transfer_manager/transfers_states/synching_ico.png"));
-    }
-    else if(transferType & TransferData::TRANSFER_DOWNLOAD || transferType & TransferData::TRANSFER_LTCPDOWNLOAD)
+    if(transferType & TransferData::TRANSFER_DOWNLOAD || transferType & TransferData::TRANSFER_LTCPDOWNLOAD)
     {
         icon = Utilities::getCachedPixmap(QLatin1Literal(":/images/transfer_manager/transfers_states/arrow_download_ico.png"));
     }
@@ -459,11 +461,11 @@ void TransferManagerDelegateWidget::mouseDoubleClickEvent(QMouseEvent *event)
 
 bool TransferManagerDelegateWidget::eventFilter(QObject *watched, QEvent *event)
 {
-    if(watched == mUi->wName && event->type() == QEvent::Resize)
+    if(watched == mUi->lTransferName && event->type() == QEvent::Resize)
     {
         mUi->lTransferName->setText(mUi->lTransferName->fontMetrics()
                                     .elidedText(getData()->mFilename, Qt::ElideMiddle,
-                                                mUi->wName->contentsRect().width() - 12));
+                                                mUi->lTransferName->contentsRect().width()));
     }
 
     return TransferBaseDelegateWidget::eventFilter(watched, event);
