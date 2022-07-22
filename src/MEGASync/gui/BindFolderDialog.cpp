@@ -15,7 +15,7 @@ BindFolderDialog::BindFolderDialog(MegaApplication *app, QWidget *parent) :
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
     this->app = app;
     ui->bOK->setDefault(true);
-    highDpiResize.init(this);
+    mHighDpiResize.init(this);
 }
 
 BindFolderDialog::~BindFolderDialog()
@@ -40,7 +40,7 @@ QString BindFolderDialog::getLocalFolder()
 
 QString BindFolderDialog::getSyncName()
 {
-    return syncName;
+    return mSyncName;
 }
 
 void BindFolderDialog::on_bOK_clicked()
@@ -58,7 +58,7 @@ void BindFolderDialog::on_bOK_clicked()
     }
 
     std::unique_ptr<const char []> cPath{megaApi->getNodePath(node.get())};
-    megaPath = QString::fromUtf8(cPath.get());
+    mMegaPath = QString::fromUtf8(cPath.get());
 
     localFolderPath = QDir::toNativeSeparators(QDir(localFolderPath).canonicalPath());
     if (localFolderPath.isEmpty())
@@ -69,25 +69,36 @@ void BindFolderDialog::on_bOK_clicked()
 
     // Check that we can sync the selected folder
     QString warningMessage;
-    if(!controller.isLocalFolderSyncable(localFolderPath, MegaSync::TYPE_TWOWAY, warningMessage))
+    auto syncability (controller.isLocalFolderSyncable(localFolderPath, mega::MegaSync::TYPE_TWOWAY, warningMessage));
+
+    if (syncability == SyncController::CANT_SYNC)
     {
         QMegaMessageBox::warning(nullptr, tr("Error"), warningMessage, QMessageBox::Ok);
         return;
     }
+    else if (syncability == SyncController::WARN_SYNC
+             && (QMegaMessageBox::warning(nullptr, tr("Warning"), warningMessage
+                                         + QLatin1Char('/')
+                                         + tr("Do you want to continue?"),
+                                         QMessageBox::Yes | QMessageBox::No, QMessageBox::No)
+             == QMessageBox::No))
+    {
+        return;
+    }
 
     // Set the sync name
-    syncName = SyncController::getSyncNameFromPath(localFolderPath);
+    mSyncName = SyncController::getSyncNameFromPath(localFolderPath);
 
     // We want the syncname to be unique, so prompt the user while it is not
     const auto syncNames (SyncModel::instance()->getSyncNames(MegaSync::TYPE_TWOWAY));
-    while (syncNames.contains(syncName))
+    while (syncNames.contains(mSyncName))
     {
         QPointer<QInputDialog> id = new QInputDialog(this);
         id->setWindowFlags(id->windowFlags() & ~Qt::WindowContextHelpButtonHint);
         id->setWindowTitle(tr("Sync name"));
         id->setLabelText(tr("The name \"%1\" is already in use for another sync\n"
-                            "Please enter a different name to identify this synced folder:").arg(syncName));
-        id->setTextValue(syncName);
+                            "Please enter a different name to identify this synced folder:").arg(mSyncName));
+        id->setTextValue(mSyncName);
         int result = id->exec();
 
         if (!id || !result)
@@ -103,7 +114,7 @@ void BindFolderDialog::on_bOK_clicked()
         {
             return;
         }
-        syncName = text;
+        mSyncName = text;
     }
 
     accept();
@@ -120,5 +131,5 @@ void BindFolderDialog::changeEvent(QEvent *event)
 
 QString BindFolderDialog::getMegaPath() const
 {
-    return megaPath;
+    return mMegaPath;
 }

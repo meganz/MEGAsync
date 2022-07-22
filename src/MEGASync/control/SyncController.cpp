@@ -4,6 +4,7 @@
 
 #include <QInputDialog>
 #include <QStorageInfo>
+#include <QTemporaryFile>
 
 using namespace mega;
 
@@ -56,8 +57,6 @@ void SyncController::removeSync(std::shared_ptr<SyncSetting> syncSetting, const 
 
     MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("Removing sync \"%1\"")
                  .arg(syncSetting->name()).toUtf8().constData());
-
-    std::shared_ptr<MegaNode> node(mApi->getNodeByHandle(syncSetting->getMegaHandle()));
 
     mApi->removeSync(syncSetting->backupId(), remoteHandle, mDelegateListener);
     // FIXME: There is a bug in SyncModel class handling that persists the saved Backup entry after SDK delete
@@ -127,7 +126,7 @@ QString SyncController::getIsLocalFolderAlreadySyncedMsg(const QString& path, co
     // Gather all synced or backed-up dirs
     QMap<QString, MegaSync::SyncType> localFolders = SyncModel::instance()->getLocalFoldersAndTypeMap();
 
-    // First check existing syncs
+    // Check if the path is already synced or part of a sync
     foreach (auto& existingPath, localFolders.keys())
     {
         if (inputPath == existingPath)
@@ -146,7 +145,7 @@ QString SyncController::getIsLocalFolderAlreadySyncedMsg(const QString& path, co
             }
         }
         else if (inputPath.startsWith(existingPath)
-                 && inputPath[existingPath.size()] == QDir::separator())
+                 && inputPath[existingPath.size() - QDir(existingPath).isRoot()] == QDir::separator())
         {
             if (syncType == MegaSync::SyncType::TYPE_BACKUP)
             {
@@ -162,7 +161,7 @@ QString SyncController::getIsLocalFolderAlreadySyncedMsg(const QString& path, co
             }
         }
         else if (existingPath.startsWith(inputPath)
-                 && existingPath[inputPath.size()] == QDir::separator())
+                 && existingPath[inputPath.size() - QDir(inputPath).isRoot()] == QDir::separator())
         {
             if (syncType == MegaSync::SyncType::TYPE_BACKUP)
             {
@@ -178,14 +177,13 @@ QString SyncController::getIsLocalFolderAlreadySyncedMsg(const QString& path, co
             }
         }
     }
-
     return message;
 }
 
-bool SyncController::isLocalFolderAlreadySynced(const QString& path, const MegaSync::SyncType &syncType, QString& message)
+SyncController::Syncability SyncController::isLocalFolderAlreadySynced(const QString& path, const MegaSync::SyncType &syncType, QString& message)
 {
     message = getIsLocalFolderAlreadySyncedMsg(path, syncType);
-    return (!message.isEmpty());
+    return (message.isEmpty() ? Syncability::CAN_SYNC : Syncability::CANT_SYNC);
 }
 
 QString SyncController::getIsLocalPathAllowedForSyncMsg(const QString& path, const MegaSync::SyncType& syncType)
@@ -225,23 +223,60 @@ QString SyncController::getIsLocalPathAllowedForSyncMsg(const QString& path, con
     return message;
 }
 
-bool SyncController::isLocalPathAllowedForSync(const QString& path, const MegaSync::SyncType &syncType, QString& message)
+SyncController::Syncability SyncController::isLocalPathAllowedForSync(const QString& path, const MegaSync::SyncType &syncType, QString& message)
 {
     message = getIsLocalPathAllowedForSyncMsg(path, syncType);
-    return (message.isEmpty());
+    return (message.isEmpty() ? Syncability::CAN_SYNC : Syncability::CANT_SYNC);
 }
 
-bool SyncController::isLocalFolderSyncable(const QString& path, const mega::MegaSync::SyncType& syncType, QString& message)
+QString SyncController::getAreLocalFolderAccessRightsOkMsg(const QString& path, const mega::MegaSync::SyncType& syncType)
 {
-    // First check if the path is allowed
-    message = getIsLocalPathAllowedForSyncMsg(path, syncType);
+    QString message;
 
-    if (message.isEmpty())
+    // We only check rw rights for two-way syncs
+    if (syncType == MegaSync::TYPE_TWOWAY)
     {
-        // The check if it is not synced already
-        message = getIsLocalFolderAlreadySyncedMsg(path, syncType);
+        QTemporaryFile test (path + QDir::separator());
+        if (!test.open())
+        {
+            message = tr("You don't have write permissions in this local folder.")
+                    + QChar::fromLatin1('\n')
+                    + tr("MEGAsync won't be able to download anything here.");
+        }
     }
-    return (message.isEmpty());
+    return message;
+}
+
+SyncController::Syncability SyncController::areLocalFolderAccessRightsOk(const QString& path, const mega::MegaSync::SyncType& syncType, QString& message)
+{
+    message = getAreLocalFolderAccessRightsOkMsg(path, syncType);
+    return (message.isEmpty() ? Syncability::CAN_SYNC : Syncability::WARN_SYNC);
+}
+
+// Returns wether the path is syncable.
+// The message to display to the user is stored in <message>.
+// The first error encountered is returned.
+// Errors trump warnings
+SyncController::Syncability SyncController::isLocalFolderSyncable(const QString& path, const mega::MegaSync::SyncType& syncType, QString& message)
+{
+    Syncability syncability (Syncability::CAN_SYNC);
+
+    // First check if the path is allowed
+    syncability = isLocalPathAllowedForSync(path, syncType, message);
+
+    // Then check that we have rw rights for this path
+    if (syncability != Syncability::CANT_SYNC)
+    {
+        syncability = areLocalFolderAccessRightsOk(path, syncType, message);
+    }
+
+    // The check if it is not synced already
+    if (syncability != Syncability::CANT_SYNC)
+    {
+        syncability = isLocalFolderAlreadySynced(path, syncType, message);
+    }
+
+    return (syncability);
 }
 
 QString SyncController::getSyncNameFromPath(const QString& path)
@@ -273,60 +308,6 @@ QString SyncController::getSyncNameFromPath(const QString& path)
 
     return syncName;
 }
-
-
-//QString SyncController::getIsRemoteFolderAlreadySyncedMsg(const QString& path)
-//{
-//    QString message;
-//    // This is only for TWO_WAY syncs
-//    const auto megaFolderPaths (mSyncModel->getMegaFolders(MegaSync::TYPE_TWOWAY));
-
-//    auto syncedPath (megaFolderPaths.cbegin());
-
-//    int pSize (path.size());
-//    while (message.isEmpty() && syncedPath != megaFolderPaths.cend())
-//    {
-//        int spSize (syncedPath->size());
-//        if (path.startsWith(*syncedPath) && (spSize == pSize || spSize == 1 || path[spSize] == QChar::fromLatin1('/')))
-//        {
-//            message = tr("The selected MEGA folder is already synced");
-//        }
-//        else if (syncedPath->startsWith(path) && (spSize == pSize || pSize == 1 || syncedPath[pSize] == QChar::fromLatin1('/')))
-//        {
-//            message = tr("A synced folder cannot be inside another synced folder");
-//        }
-//        syncedPath++;
-//    }
-
-////    for (int i = 0; i < megaFolderPaths.size(); i++)
-////    {
-////        QString p = megaFolderPaths.at(i);
-
-////        if (megaPath.startsWith(p) && ((p.size() == megaPath.size()) || p.size() == 1 || megaPath[p.size()] == QChar::fromAscii('/')))
-////        {
-////            QMegaMessageBox::warning(nullptr, tr("Error"), tr("The selected MEGA folder is already synced"), QMessageBox::Ok);
-////            return;
-////        }
-////        else if (p.startsWith(megaPath) && ((p.size() == megaPath.size()) || megaPath.size() == 1 || p[megaPath.size()] == QChar::fromAscii('/')))
-////        {
-////            QMegaMessageBox::warning(nullptr, tr("Error"), tr("A synced folder cannot be inside another synced folder"), QMessageBox::Ok);
-////            return;
-////        }
-////    }
-//    return message;
-//}
-
-//bool SyncController::isRemoteFolderAlreadySynced(const QString& path, QString& message)
-//{
-//    message = getIsRemoteFolderAlreadySyncedMsg(path);
-//    return (!message.isEmpty());
-//}
-
-//bool SyncController::isRemoteFolderSyncable(const QString& path, QString& message)
-//{
-//    message = getIsRemoteFolderAlreadySyncedMsg(path);
-//    return (!message.isEmpty());
-//}
 
 void SyncController::ensureDeviceNameIsSetOnRemote()
 {

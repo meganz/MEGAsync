@@ -135,7 +135,10 @@ QVariant SyncItemModel::data(const QModelIndex &index, int role) const
         break;
     case Column::RNAME:
         if(role == Qt::DisplayRole)
-            return sync->getMegaFolder();
+        {
+            QString megaFolder (sync->getMegaFolder());
+            return megaFolder.size() == 1 ? megaFolder : QFileInfo(megaFolder).fileName();
+        }
         else if(role == Qt::ToolTipRole)
             return sync->getMegaFolder();
         break;

@@ -38,12 +38,9 @@ protected:
 private:
     Ui::BindFolderDialog *ui;
     MegaApplication *app;
-    QString syncName;
-    QString megaPath;
-
-    QStringList localFolders;
-
-    HighDpiResize highDpiResize;
+    QString mSyncName;
+    QString mMegaPath;
+    HighDpiResize mHighDpiResize;
 };
 
 #endif // BINDFOLDERDIALOG_H

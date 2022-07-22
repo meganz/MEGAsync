@@ -394,49 +394,64 @@ bool BackupsWizard::isFolderSyncable(const QString& path, bool displayWarning, b
 
     // Check syncability
     QString message;
-    bool isSyncable (mSyncController.isLocalFolderSyncable(inputPath, mega::MegaSync::TYPE_BACKUP, message));
+    auto syncability (mSyncController.isLocalFolderSyncable(inputPath, mega::MegaSync::TYPE_BACKUP, message));
 
     // Check current list
-    if (isSyncable)
+    if (syncability != SyncController::CANT_SYNC)
     {
-        // Check for path and name collision.
+        // Check for path collision
         int nbBackups (mFoldersModel->rowCount());
         int row (0);
 
-        while (isSyncable && row < nbBackups)
+        while (syncability != SyncController::CANT_SYNC && row < nbBackups)
         {
             QString existingPath (mFoldersModel->item(row)->data(Qt::UserRole).toString());
 
-            // Do not consider unchecked items
+            // Only take checked items into account
             if (mFoldersModel->item(row)->checkState() == Qt::Checked)
             {
                 // Handle same path another way later: by selecting the row in the view.
                 if (!fromCheckAction && inputPath == existingPath)
                 {
                     message = tr("Folder is already selected. Select a different folder.");
+                    syncability = SyncController::CANT_SYNC;
                 }
                 else if (inputPath.startsWith(existingPath)
                          && inputPath[existingPath.size()] == QDir::separator())
                 {
                     message = tr("You can't backup this folder as it's already inside a backed up folder.");
+                    syncability = SyncController::CANT_SYNC;
                 }
                 else if (existingPath.startsWith(inputPath)
                          && existingPath[inputPath.size()] == QDir::separator())
                 {
                     message = tr("You can't backup this folder as it contains backed up folders.");
+                    syncability = SyncController::CANT_SYNC;
                 }
-                isSyncable = message.isEmpty();
             }
             row++;
         }
     }
 
-    if (displayWarning && !isSyncable)
+    if (displayWarning) // Do not display warning when silenced
     {
-        QMegaMessageBox::warning(nullptr, tr("Error"), message, QMessageBox::Ok);
+        if (syncability == SyncController::CANT_SYNC)
+        {
+            QMegaMessageBox::warning(nullptr, tr("Error"), message, QMessageBox::Ok);
+        }
+        else if (syncability == SyncController::WARN_SYNC
+                 && fromCheckAction // Display warning on check action only (also called when creating)
+                 && (QMegaMessageBox::warning(nullptr, tr("Warning"), message
+                                              + QLatin1Char('/')
+                                              + tr("Do you want to continue?"),
+                                              QMessageBox::Yes | QMessageBox::No, QMessageBox::No)
+                     == QMessageBox::Yes))
+        {
+            syncability = SyncController::CANT_SYNC;
+        }
     }
 
-    return isSyncable;
+    return (syncability != SyncController::CANT_SYNC);
 }
 
 // State machine orchestrator

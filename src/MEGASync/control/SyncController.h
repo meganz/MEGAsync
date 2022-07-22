@@ -21,6 +21,15 @@ class SyncController: public QObject, public mega::MegaRequestListener
     Q_OBJECT
 
 public:
+
+    enum Syncability
+    {
+       CAN_SYNC = 0,
+       WARN_SYNC,
+       CANT_SYNC,
+    };
+
+
     SyncController(QObject* parent = nullptr);
     ~SyncController();
 
@@ -39,16 +48,14 @@ public:
     void getDeviceName();
 
     QString getIsLocalFolderAlreadySyncedMsg(const QString& path, const mega::MegaSync::SyncType& syncType);
-    bool isLocalFolderAlreadySynced(const QString& path, const mega::MegaSync::SyncType& syncType, QString& message);
+    Syncability isLocalFolderAlreadySynced(const QString& path, const mega::MegaSync::SyncType& syncType, QString& message);
     static QString getIsLocalPathAllowedForSyncMsg(const QString& path, const mega::MegaSync::SyncType& syncType);
-    static bool isLocalPathAllowedForSync(const QString& path, const mega::MegaSync::SyncType& syncType, QString& message);
-    bool isLocalFolderSyncable(const QString& path, const mega::MegaSync::SyncType& syncType, QString& message);
+    static Syncability isLocalPathAllowedForSync(const QString& path, const mega::MegaSync::SyncType& syncType, QString& message);
+    static QString getAreLocalFolderAccessRightsOkMsg(const QString& path, const mega::MegaSync::SyncType& syncType);
+    static Syncability areLocalFolderAccessRightsOk(const QString& path, const mega::MegaSync::SyncType& syncType, QString& message);
+    Syncability isLocalFolderSyncable(const QString& path, const mega::MegaSync::SyncType& syncType, QString& message);
 
     static QString getSyncNameFromPath(const QString& path);
-
-//    QString getIsRemoteFolderAlreadySyncedMsg(const QString& path);
-//    bool isRemoteFolderAlreadySynced(const QString& path, QString& message);
-//    bool isRemoteFolderSyncable(const QString& path, QString& message);
 
     static const char* DEFAULT_BACKUPS_ROOT_DIRNAME;
 

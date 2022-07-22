@@ -153,7 +153,8 @@ void SyncModel::activateSync(std::shared_ptr<SyncSetting> syncSetting)
     }
     isFirstSyncDone = true;
 
-    if ( !preferences->isFatWarningShown() && syncSetting->getError() == MegaSync::Warning::LOCAL_IS_FAT)
+    // TODO: extract the QMegaMessageBoxes from the model, use signal to send message
+    if (!preferences->isFatWarningShown() && syncSetting->getError() == MegaSync::Warning::LOCAL_IS_FAT)
     {
         QMegaMessageBox::warning(nullptr, tr("MEGAsync"),
          tr("You are syncing a local folder formatted with a FAT filesystem. That filesystem has deficiencies managing big files and modification times that can cause synchronization problems (e.g. when daylight saving changes), so it's strongly recommended that you only sync folders formatted with more reliable filesystems like NTFS (more information [A]here[/A]).")
