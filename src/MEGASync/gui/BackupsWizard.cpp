@@ -71,6 +71,8 @@ BackupsWizard::BackupsWizard(QWidget* parent) :
     mUi->lvFoldersStep2->setModel(mFoldersProxyModel);
     mUi->lvFoldersStep1->setItemDelegate(new WizardDelegate(this));
     mUi->lvFoldersStep2->setItemDelegate(new WizardDelegate(this));
+    mUi->lvFoldersStep1->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    mUi->lvFoldersStep2->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
     QString titleStep1 = tr("1. [B]Select[/B] folders to backup");
 
@@ -919,8 +921,10 @@ void WizardDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option
         painter->setPen(optCopy.palette.color(cg, QPalette::Text));
         QRect textRect = QApplication::style()->subElementRect(QStyle::SE_ItemViewItemText, &optCopy, optCopy.widget);
         textRect.moveTo(iconRect.right() + TEXT_MARGIN, textRect.y());
+        textRect.setRight(option.rect.right());
+        QString elidedText = painter->fontMetrics().elidedText(optCopy.text, Qt::ElideMiddle, textRect.width() - TEXT_MARGIN);
+        painter->drawText(textRect, elidedText, QTextOption(Qt::AlignVCenter | Qt::AlignLeft));
 
-        painter->drawText(textRect, optCopy.text, QTextOption(Qt::AlignVCenter | Qt::AlignLeft));
     }
 
   painter->restore();
