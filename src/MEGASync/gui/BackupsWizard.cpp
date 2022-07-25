@@ -42,6 +42,11 @@ BackupsWizard::BackupsWizard(QWidget* parent) :
     mFoldersProxyModel (new ProxyModel(this))
 {
     setWindowFlags((windowFlags() | Qt::WindowCloseButtonHint) & ~Qt::WindowContextHelpButtonHint);
+
+#ifdef _WIN32
+    setWindowFlags(windowFlags() | Qt::MSWindowsFixedSizeDialogHint);
+#endif
+
     mUi->setupUi(this);
     mHighDpiResize.init(this);
 
