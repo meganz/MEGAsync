@@ -28,6 +28,8 @@ int NodeNameSetterDialog::show()
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
     mUi->setupUi(this);
 
+    title();
+
     // The dialog doesn't get resized on error
     mUi->textLabel->setMinimumSize(mUi->errorLabel->sizeHint());
 

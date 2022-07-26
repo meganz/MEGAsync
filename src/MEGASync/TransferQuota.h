@@ -43,6 +43,7 @@ public:
     bool checkImportLinksAlertDismissed();
     bool checkDownloadAlertDismissed();
     bool checkStreamingAlertDismissed();
+    QTime getTransferQuotaDeadline();
     void reset();
 
 private:

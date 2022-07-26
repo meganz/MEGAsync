@@ -20,10 +20,9 @@ protected:
 
     QString enterNewFileNameText() const;
     QString enterNewFolderNameText() const;
+    void title() override;
 
     virtual bool isFile() = 0;
-
-
 };
 
 class RenameRemoteNodeDialog : public RenameNodeDialog

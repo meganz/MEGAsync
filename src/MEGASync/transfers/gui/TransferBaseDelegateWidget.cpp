@@ -1,7 +1,23 @@
 #include "TransferBaseDelegateWidget.h"
 #include "QMegaMessageBox.h"
+#include <MegaTransferView.h>
 
 #include <QPointer>
+
+const QString TransferBaseDelegateWidget::STATE_STARTING = QString::fromUtf8(QT_TR_NOOP("Starting…"));
+const QString TransferBaseDelegateWidget::STATE_RETRYING = QLatin1String(QT_TR_NOOP("Retrying"));
+const QString TransferBaseDelegateWidget::STATE_UPLOADING = QString::fromUtf8(QT_TR_NOOP("Uploading…"));
+const QString TransferBaseDelegateWidget::STATE_DOWNLOADING = QString::fromUtf8(QT_TR_NOOP("Downloading…"));
+const QString TransferBaseDelegateWidget::STATE_SYNCING = QString::fromUtf8(QT_TR_NOOP("Syncing…"));
+const QString TransferBaseDelegateWidget::STATE_COMPLETING = QLatin1String(QT_TR_NOOP("Completing"));
+const QString TransferBaseDelegateWidget::STATE_COMPLETED = QLatin1String(QT_TR_NOOP("Completed"));
+const QString TransferBaseDelegateWidget::STATE_PAUSED = QLatin1String(QT_TR_NOOP("Paused"));
+const QString TransferBaseDelegateWidget::STATE_FAILED = QLatin1String(QT_TR_NOOP("Failed"));
+const QString TransferBaseDelegateWidget::STATE_INQUEUE = QLatin1String(QT_TR_NOOP("In queue"));
+const QString TransferBaseDelegateWidget::STATE_INQUEUE_PARENTHESIS = QLatin1String(QT_TR_NOOP("(in queue)"));
+const QString TransferBaseDelegateWidget::STATE_RETRY = QLatin1String(QT_TR_NOOP("Retry"));
+const QString TransferBaseDelegateWidget::STATE_OUT_OF_STORAGE_SPACE = QLatin1String(QT_TR_NOOP("Out of storage space"));
+const QString TransferBaseDelegateWidget::STATE_OUT_OF_TRANSFER_QUOTA = QLatin1String(QT_TR_NOOP("Out of transfer quota"));
 
 TransferBaseDelegateWidget::TransferBaseDelegateWidget(QWidget *parent)
     : QWidget(parent),
@@ -85,10 +101,8 @@ void TransferBaseDelegateWidget::onRetryTransfer()
 {
     QPointer<TransferBaseDelegateWidget> dialog = QPointer<TransferBaseDelegateWidget>(this);
 
-    auto message = tr("Retry transfer?" , "", 1);
-
     if (QMegaMessageBox::warning(nullptr, QString::fromUtf8("MEGAsync"),
-                             message,
+                             MegaTransferView::retryAskActionText(1),
                              QMessageBox::Yes | QMessageBox::No, QMessageBox::No)
             != QMessageBox::Yes
             || !dialog)

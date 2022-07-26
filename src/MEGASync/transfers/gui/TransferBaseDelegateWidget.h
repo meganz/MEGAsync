@@ -41,6 +41,21 @@ signals:
     void retryTransfer();
 
 protected:
+    static const QString STATE_COMPLETING;
+    static const QString STATE_RETRYING;
+    static const QString STATE_STARTING;
+    static const QString STATE_UPLOADING;
+    static const QString STATE_DOWNLOADING;
+    static const QString STATE_SYNCING;
+    static const QString STATE_COMPLETED;
+    static const QString STATE_PAUSED;
+    static const QString STATE_FAILED;
+    static const QString STATE_INQUEUE_PARENTHESIS;
+    static const QString STATE_INQUEUE;
+    static const QString STATE_RETRY;
+    static const QString STATE_OUT_OF_TRANSFER_QUOTA;
+    static const QString STATE_OUT_OF_STORAGE_SPACE;
+
     bool setActionTransferIcon(QToolButton* button, const QString& iconName);
     bool isMouseHoverInAction(QToolButton* button, const QPoint &mousePos);
     void onRetryTransfer();

@@ -41,19 +41,6 @@ TransfersWidget::TransfersWidget(QWidget* parent) :
     {
         mButtonIconManager.addButton(button);
     }
-
-    mTooltipNameByTab[ALL_TRANSFERS_TAB] = tr("all transfers");
-    mTooltipNameByTab[DOWNLOADS_TAB]     = tr("all downloads");
-    mTooltipNameByTab[UPLOADS_TAB]       = tr("all uploads");
-    mTooltipNameByTab[COMPLETED_TAB]     = tr("all completed");
-    mTooltipNameByTab[FAILED_TAB]        = tr("all failed");
-    mTooltipNameByTab[SEARCH_TAB]        = tr("all search results");
-    mTooltipNameByTab[TYPE_OTHER_TAB]    = tr("all transfers");
-    mTooltipNameByTab[TYPE_AUDIO_TAB]    = tr("all audios");
-    mTooltipNameByTab[TYPE_VIDEO_TAB]    = tr("all videos");
-    mTooltipNameByTab[TYPE_ARCHIVE_TAB]  = tr("all archives");
-    mTooltipNameByTab[TYPE_DOCUMENT_TAB] = tr("all documents");
-    mTooltipNameByTab[TYPE_IMAGE_TAB]    = tr("all images");
 }
 void TransfersWidget::setupTransfers()
 {
@@ -242,40 +229,38 @@ void TransfersWidget::updateCancelClearButtonTooltip()
     bool isAnyTransferCompleted(mProxyModel->isAnyCompleted());
     bool isAnyTransferActive(mProxyModel->isAnyCancellable());
 
-    QString cancelBase;
     if (mCurrentTab == TransfersWidget::COMPLETED_TAB)
     {
-        cancelBase = tr("Clear ");
-
+        mCancelClearInfo.cancelClearTooltip = getClearTooltip(mCurrentTab);
     }
     else if ((mCurrentTab > TransfersWidget::TYPES_TAB_BASE && mCurrentTab < TransfersWidget::TYPES_LAST) || mCurrentTab == TransfersWidget::SEARCH_TAB)
     {
         if(areAllTransfersCompleted)
         {
-            cancelBase = tr("Clear ");
+            mCancelClearInfo.cancelClearTooltip = getClearTooltip(mCurrentTab);
         }
         else if(isAnyTransferCompleted)
         {
             if(areAllSync || !isAnyTransferActive)
             {
-                cancelBase = tr("Clear ");
+                mCancelClearInfo.cancelClearTooltip = getClearTooltip(mCurrentTab);
             }
             else
             {
-                cancelBase = tr("Cancel and clear ");
+                mCancelClearInfo.cancelClearTooltip = getCancelAndClearTooltip(mCurrentTab);
             }
         }
         else
         {
-            cancelBase = tr("Cancel ");
+            mCancelClearInfo.cancelClearTooltip = getCancelTooltip(mCurrentTab);
         }
     }
+    //For example, FAILED TRANSFERS
     else
     {
-        cancelBase = tr("Cancel ");
+        mCancelClearInfo.cancelClearTooltip = getCancelTooltip(mCurrentTab);
     }
 
-    mCancelClearInfo.cancelClearTooltip = cancelBase + mTooltipNameByTab[mCurrentTab];
     ui->tCancelClearVisible->setToolTip(mCancelClearInfo.cancelClearTooltip);
 }
 
@@ -375,8 +360,8 @@ void TransfersWidget::updateHeaderItems()
         }
     }
 
-    mHeaderInfo.pauseTooltip = tr("Pause ") + mTooltipNameByTab[mCurrentTab];
-    mHeaderInfo.resumeTooltip = tr("Resume ") + mTooltipNameByTab[mCurrentTab];
+    mHeaderInfo.pauseTooltip = getPauseTooltip(mCurrentTab);
+    mHeaderInfo.resumeTooltip = getResumeTooltip(mCurrentTab);
 
     ui->timeColumn->setTitle(mHeaderInfo.headerTime);
     ui->speedColumn->setTitle(mHeaderInfo.headerSpeed);
@@ -501,7 +486,7 @@ void TransfersWidget::onRetryButtonPressedOnDelegate()
     QPointer<TransfersWidget> dialog = QPointer<TransfersWidget>(this);
 
     if (QMegaMessageBox::warning(this, QString::fromUtf8("MEGAsync"),
-                             tr("Retry transfer?", "", sourceSelectionIndexes.size()),
+                             MegaTransferView::retryAskActionText(sourceSelectionIndexes.size()),
                              QMessageBox::Yes | QMessageBox::No, QMessageBox::No)
             != QMessageBox::Yes
             || !dialog)
@@ -532,5 +517,300 @@ void TransfersWidget::onVerticalScrollBarVisibilityChanged(bool state)
     if(ui->wTableHeaderLayout)
     {
         ui->wTableHeaderLayout->invalidate();
+    }
+}
+
+QString TransfersWidget::getClearTooltip(TM_TAB tab)
+{
+    switch(tab)
+    {
+        case DOWNLOADS_TAB:
+        {
+            return tr("Clear all downloads");
+            break;
+        }
+        case UPLOADS_TAB:
+        {
+            return tr("Clear all uploads");
+            break;
+        }
+        case COMPLETED_TAB:
+        {
+            return tr("Clear all completed");
+            break;
+        }
+        case SEARCH_TAB:
+        {
+            return tr("Clear all search results");
+            break;
+        }
+        case TYPE_AUDIO_TAB:
+        {
+            return tr("Clear all audios");
+            break;
+        }
+        case TYPE_VIDEO_TAB:
+        {
+            return tr("Clear all videos");
+            break;
+        }
+        case TYPE_ARCHIVE_TAB:
+        {
+            return tr("Clear all archives");
+            break;
+        }
+        case TYPE_DOCUMENT_TAB:
+        {
+            return tr("Clear all documents");
+            break;
+        }
+        case TYPE_IMAGE_TAB:
+        {
+            return tr("Clear all images");
+            break;
+        }
+        default:
+        {
+            return tr("Clear all transfers");
+            break;
+        }
+    }
+}
+
+QString TransfersWidget::getCancelTooltip(TM_TAB tab)
+{
+    switch(tab)
+    {
+        case DOWNLOADS_TAB:
+        {
+            return tr("Cancel all downloads");
+            break;
+        }
+        case UPLOADS_TAB:
+        {
+            return tr("Cancel all uploads");
+            break;
+        }
+        case COMPLETED_TAB:
+        {
+            return tr("Cancel all completed");
+            break;
+        }
+        case FAILED_TAB:
+        {
+            return tr("Cancel all failed");
+            break;
+        }
+        case SEARCH_TAB:
+        {
+            return tr("Cancel all search results");
+            break;
+        }
+        case TYPE_AUDIO_TAB:
+        {
+            return tr("Cancel all audios");
+            break;
+        }
+        case TYPE_VIDEO_TAB:
+        {
+            return tr("Cancel all videos");
+            break;
+        }
+        case TYPE_ARCHIVE_TAB:
+        {
+            return tr("Cancel all archives");
+            break;
+        }
+        case TYPE_DOCUMENT_TAB:
+        {
+            return tr("Cancel all documents");
+            break;
+        }
+        case TYPE_IMAGE_TAB:
+        {
+            return tr("Cancel all images");
+            break;
+        }
+        default:
+        {
+            return tr("Cancel all transfers");
+            break;
+        }
+    }
+}
+
+QString TransfersWidget::getCancelAndClearTooltip(TM_TAB tab)
+{
+    switch(tab)
+    {
+        case DOWNLOADS_TAB:
+        {
+            return tr("Cancel and clear all downloads");
+            break;
+        }
+        case UPLOADS_TAB:
+        {
+            return tr("Cancel and clear all uploads");
+            break;
+        }
+        case COMPLETED_TAB:
+        {
+            return tr("Cancel and clear all completed");
+            break;
+        }
+        case SEARCH_TAB:
+        {
+            return tr("Cancel and clear all search results");
+            break;
+        }
+        case TYPE_AUDIO_TAB:
+        {
+            return tr("Cancel and clear all audios");
+            break;
+        }
+        case TYPE_VIDEO_TAB:
+        {
+            return tr("Cancel and clear all videos");
+            break;
+        }
+        case TYPE_ARCHIVE_TAB:
+        {
+            return tr("Cancel and clear all archives");
+            break;
+        }
+        case TYPE_DOCUMENT_TAB:
+        {
+            return tr("Cancel and clear all documents");
+            break;
+        }
+        case TYPE_IMAGE_TAB:
+        {
+            return tr("Cancel and clear all images");
+            break;
+        }
+        default:
+        {
+            return tr("Cancel and clear all transfers");
+            break;
+        }
+    }
+}
+
+QString TransfersWidget::getResumeTooltip(TM_TAB tab)
+{
+    switch(tab)
+    {
+        case DOWNLOADS_TAB:
+        {
+            return tr("Resume all downloads");
+            break;
+        }
+        case UPLOADS_TAB:
+        {
+            return tr("Resume all uploads");
+            break;
+        }
+        case COMPLETED_TAB:
+        {
+            return tr("Resume all completed");
+            break;
+        }
+        case FAILED_TAB:
+        {
+            return tr("Resume all failed");
+            break;
+        }
+        case SEARCH_TAB:
+        {
+            return tr("Resume all search results");
+            break;
+        }
+        case TYPE_AUDIO_TAB:
+        {
+            return tr("Resume all audios");
+            break;
+        }
+        case TYPE_VIDEO_TAB:
+        {
+            return tr("Resume all videos");
+            break;
+        }
+        case TYPE_ARCHIVE_TAB:
+        {
+            return tr("Resume all archives");
+            break;
+        }
+        case TYPE_DOCUMENT_TAB:
+        {
+            return tr("Resume all documents");
+            break;
+        }
+        case TYPE_IMAGE_TAB:
+        {
+            return tr("Resume all images");
+            break;
+        }
+        default:
+        {
+            return tr("Resume all transfers");
+            break;
+        }
+    }
+}
+
+QString TransfersWidget::getPauseTooltip(TM_TAB tab)
+{
+    switch(tab)
+    {
+        case DOWNLOADS_TAB:
+        {
+            return tr("Pause all downloads");
+            break;
+        }
+        case UPLOADS_TAB:
+        {
+            return tr("Pause all uploads");
+            break;
+        }
+        case COMPLETED_TAB:
+        {
+            return tr("Pause all completed");
+            break;
+        }
+        case SEARCH_TAB:
+        {
+            return tr("Pause all search results");
+            break;
+        }
+        case TYPE_AUDIO_TAB:
+        {
+            return tr("Pause all audios");
+            break;
+        }
+        case TYPE_VIDEO_TAB:
+        {
+            return tr("Pause all videos");
+            break;
+        }
+        case TYPE_ARCHIVE_TAB:
+        {
+            return tr("Pause all archives");
+            break;
+        }
+        case TYPE_DOCUMENT_TAB:
+        {
+            return tr("Pause all documents");
+            break;
+        }
+        case TYPE_IMAGE_TAB:
+        {
+            return tr("Pause all images");
+            break;
+        }
+        default:
+        {
+            return tr("Pause all transfers");
+            break;
+        }
     }
 }

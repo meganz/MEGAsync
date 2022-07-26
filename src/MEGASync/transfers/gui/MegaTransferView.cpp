@@ -11,6 +11,48 @@
 
 using namespace mega;
 
+//Static messages for messagebox
+QString MegaTransferView::retryAskActionText(int count)
+{
+    return tr("Retry transfer?" , "", count);
+}
+
+QString MegaTransferView::cancelAskActionText(int count)
+{
+    return cancelActionText(count) + QString::fromLatin1("?");
+}
+
+QString MegaTransferView::clearAskActionText(int count)
+{
+    return clearActionText(count) + QString::fromLatin1("?");
+}
+
+QString MegaTransferView::clearAndCancelAskActionText(int count)
+{
+    return tr("Cancel and clear transfer?" , "", count);
+}
+
+QString MegaTransferView::pauseActionText(int count)
+{
+    return tr("Pause transfer" , "", count);
+}
+
+QString MegaTransferView::resumeActionText(int count)
+{
+    return tr("Resume transfer" , "", count);
+}
+
+QString MegaTransferView::cancelActionText(int count)
+{
+    return tr("Cancel transfer" , "", count);
+}
+
+QString MegaTransferView::clearActionText(int count)
+{
+    return tr("Clear transfer" , "", count);
+}
+
+//Mega transfer view
 MegaTransferView::MegaTransferView(QWidget* parent) :
     QTreeView(parent),
     mDisableLink(false),
@@ -103,14 +145,22 @@ MegaTransferView::SelectedIndexesInfo MegaTransferView::getVisibleCancelOrClearI
     info.isAnyCancellable = proxy->isAnyCancellable();
     info.areAllCancellable = proxy->areAllCancellable();
     info.areAllSync = proxy->areAllSync();
+    auto isAnyCompleted = proxy->isAnyCompleted();
 
     if(info.isAnyCancellable)
     {
-        info.actionText = info.areAllCancellable ? tr("Cancel transfer?", "", proxy->transfersCount()) : tr("Cancel and clear transfer?", "", proxy->transfersCount());
+        if(info.areAllCancellable || !isAnyCompleted)
+        {
+            info.actionText = cancelAskActionText(proxy->transfersCount());
+        }
+        else
+        {
+            info.actionText = clearAndCancelAskActionText(proxy->transfersCount());
+        }
     }
     else
     {
-        info.actionText = tr("Clear transfer?", "", proxy->transfersCount());
+        info.actionText = clearAskActionText(proxy->transfersCount());
     }
 
     return info;
@@ -145,11 +195,12 @@ MegaTransferView::SelectedIndexesInfo MegaTransferView::getSelectedCancelOrClear
 
     if(info.isAnyCancellable)
     {
-        info.actionText = info.areAllCancellable ? tr("Cancel transfer?") : tr("Cancel and clear transfer?","", indexes.size());
+        info.actionText = info.areAllCancellable ? cancelAskActionText(indexes.size())
+                                                 : clearAndCancelAskActionText(indexes.size());
     }
     else
     {
-        info.actionText = tr("Clear transfer?", "", indexes.size());
+        info.actionText = clearAskActionText(indexes.size());
     }
 
     return info;
@@ -252,7 +303,7 @@ void MegaTransferView::onClearAllTransfers()
     QPointer<MegaTransferView> dialog = QPointer<MegaTransferView>(this);
 
     if (QMegaMessageBox::warning(this, QString::fromUtf8("MEGAsync"),
-                             tr("Clear transfer?", "", model()->rowCount()),
+                             clearAskActionText(model()->rowCount()),
                              QMessageBox::Yes | QMessageBox::No, QMessageBox::No)
             == QMessageBox::Yes
             && dialog)
@@ -290,7 +341,7 @@ void MegaTransferView::onClearVisibleTransfers()
     QPointer<MegaTransferView> dialog = QPointer<MegaTransferView>(this);
 
     if (QMegaMessageBox::warning(this, QString::fromUtf8("MEGAsync"),
-                             tr("Clear transfer?", "", model()->rowCount()),
+                             clearAskActionText(model()->rowCount()),
                              QMessageBox::Yes | QMessageBox::No, QMessageBox::No)
             == QMessageBox::Yes
             && dialog)
@@ -333,7 +384,7 @@ void MegaTransferView::onRetryVisibleTransfers()
     QPointer<MegaTransferView> dialog = QPointer<MegaTransferView>(this);
 
     if (QMegaMessageBox::warning(this, QString::fromUtf8("MEGAsync"),
-                                 tr("Retry transfer?", "", model()->rowCount()),
+                                 retryAskActionText(model()->rowCount()),
                                  QMessageBox::Yes | QMessageBox::No, QMessageBox::No)
             == QMessageBox::Yes
             && dialog)
@@ -386,7 +437,7 @@ void MegaTransferView::createContextMenu()
     auto indexes = selectedIndexes();
 
     mPauseAction = new QAction(QIcon(QLatin1String(":/images/transfer_manager/context_menu/pause_ico.png")),
-                                     tr("Pause transfer","", indexes.size()), this);
+                                     pauseActionText(indexes.size()), this);
     connect(mPauseAction, &QAction::triggered,
             this, &MegaTransferView::pauseSelectedClicked);
 
@@ -397,7 +448,7 @@ void MegaTransferView::createContextMenu()
     }
 
     mResumeAction = new QAction(QIcon(QLatin1String(":/images/transfer_manager/context_menu/resume_ico.png")),
-                                      tr("Resume transfer", "", indexes.size()), this);
+                                      resumeActionText(indexes.size()), this);
     connect(mResumeAction, &QAction::triggered,
             this, &MegaTransferView::resumeSelectedClicked);
 
@@ -448,7 +499,7 @@ void MegaTransferView::createContextMenu()
     }
 
     mCancelAction = new QAction(QIcon(QLatin1String(":/images/transfer_manager/context_menu/cancel_transfer_ico.png")),
-                                      tr("Cancel transfer", "", indexes.size()), this);
+                                      cancelActionText(indexes.size()), this);
     connect(mCancelAction, &QAction::triggered,
             this, &MegaTransferView::cancelSelectedClicked);
 
@@ -987,8 +1038,16 @@ void MegaTransferView::openItemClicked()
             auto path = d->path();
             if (!path.isEmpty())
             {
-                auto openUrlTask = QtConcurrent::run(QDesktopServices::openUrl, QUrl::fromLocalFile(path));
-                mOpenUrlWatcher.setFuture(openUrlTask);
+                QFileInfo info(path);
+                if(info.exists())
+                {
+                    auto openUrlTask = QtConcurrent::run(QDesktopServices::openUrl, QUrl::fromLocalFile(path));
+                    mOpenUrlWatcher.setFuture(openUrlTask);
+                }
+                else
+                {
+                    showOpeningFileError();
+                }
             }
         }
     }
@@ -1062,6 +1121,12 @@ void MegaTransferView::onOpenUrlFinished()
     auto result = mOpenUrlWatcher.result();
     if(!result)
     {
-        QMegaMessageBox::warning(nullptr, tr("Error"), tr("Error opening file"), QMessageBox::Ok);
+        showOpeningFileError();
     }
 }
+
+void MegaTransferView::showOpeningFileError()
+{
+    QMegaMessageBox::warning(nullptr, tr("Error"), tr("Error opening file"), QMessageBox::Ok);
+}
+

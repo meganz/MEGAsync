@@ -208,6 +208,8 @@ public:
     std::shared_ptr<mega::MegaPricing> getPricing() const;
 
     QuotaState getTransferQuotaState() const;
+    std::shared_ptr<TransferQuota> getTransferQuota() const;
+
     int getAppliedStorageState() const;
     bool isAppliedStorageOverquota() const;
     void reloadSyncsInSettings();
@@ -543,7 +545,7 @@ protected:
     bool blockStateSet = false;
     bool whyamiblockedPeriodicPetition = false;
     friend class DeferPreferencesSyncForScope;
-    std::unique_ptr<TransferQuota> transferQuota;
+    std::shared_ptr<TransferQuota> transferQuota;
     bool transferOverQuotaWaitTimeExpiredReceived;
     std::shared_ptr<DesktopNotifications> mOsNotifications;
     QMutex mMutexOpenUrls;

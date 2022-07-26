@@ -940,10 +940,18 @@ void TransfersModel::openFolderByIndex(const QModelIndex& index)
     auto path = d->path();
     if (d && !path.isEmpty())
     {
-        QtConcurrent::run([this, path]
+        QFileInfo fileInfo(path);
+        if(fileInfo.exists())
         {
-            emit showInFolderFinished(Platform::showInFolder(path));
-        });
+            QtConcurrent::run([this, path]
+            {
+                emit showInFolderFinished(Platform::showInFolder(path));
+            });
+        }
+        else
+        {
+            emit showInFolderFinished(false);
+        }
     }
 }
 
