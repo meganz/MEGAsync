@@ -2387,7 +2387,7 @@ QGroupBox::title
                 <cursorShape>PointingHandCursor</cursorShape>
                </property>
                <property name="toolTip">
-                <string>See Plans</string>
+                <string notr="true"/>
                </property>
                <property name="text">
                 <string>Upgrade now</string>

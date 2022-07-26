@@ -2303,6 +2303,9 @@ QToolButton
                <property name="cursor">
                 <cursorShape>PointingHandCursor</cursorShape>
                </property>
+               <property name="toolTip">
+                <string notr="true"/>
+               </property>
                <property name="text">
                 <string>Upgrade now</string>
                </property>

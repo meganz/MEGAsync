@@ -325,7 +325,7 @@ void TransferManager::on_tCompleted_clicked()
     {
         emit userActivity();
         mUi->wTransfers->filtersChanged({}, TransferData::TRANSFER_COMPLETED, {});
-        mUi->lCurrentContent->setText(tr("Finished"));
+        mUi->lCurrentContent->setText(tr("Completed"));
         toggleTab(TransfersWidget::COMPLETED_TAB);
     }
 }

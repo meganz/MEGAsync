@@ -83,7 +83,7 @@
    <item>
     <widget class="QLabel" name="lScanning">
      <property name="text">
-      <string>Scanning...</string>
+      <string>Scanning…</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>
