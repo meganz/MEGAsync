@@ -539,7 +539,7 @@ void SetupWizard::on_bNext_clicked()
 
         QString localFolderPath = ui->eLocalFolder->text();
         QString warningMessage;
-        auto syncability (SyncController::isLocalPathAllowedForSync(localFolderPath, MegaSync::TYPE_TWOWAY, warningMessage));
+        auto syncability (SyncController::isLocalFolderAllowedForSync(localFolderPath, MegaSync::TYPE_TWOWAY, warningMessage));
         if (syncability != SyncController::CANT_SYNC)
         {
             syncability = SyncController::areLocalFolderAccessRightsOk(localFolderPath, MegaSync::TYPE_TWOWAY, warningMessage);
@@ -733,7 +733,7 @@ void SetupWizard::on_bLocalFolder_clicked()
     }
 
     QString warningMessage;
-    auto syncability (SyncController::isLocalPathAllowedForSync(path, MegaSync::TYPE_TWOWAY, warningMessage));
+    auto syncability (SyncController::isLocalFolderAllowedForSync(path, MegaSync::TYPE_TWOWAY, warningMessage));
     if (syncability != SyncController::CANT_SYNC)
     {
         syncability = SyncController::areLocalFolderAccessRightsOk(path, MegaSync::TYPE_TWOWAY, warningMessage);

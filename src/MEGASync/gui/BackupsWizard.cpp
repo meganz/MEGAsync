@@ -263,9 +263,7 @@ void BackupsWizard::setupStep1()
         }
     }
 
-    mCurrentStep = STEP_1;
-    qDebug("Backups Wizard: step 1");
-
+    nextStep(STEP_1);
     updateSize();
 }
 
@@ -288,9 +286,7 @@ void BackupsWizard::setupStep2()
     // Set folders number
     mUi->lFoldersNumber->setText(tr("%n folder", "", nbSelectedFolders));
 
-    mCurrentStep = STEP_2;
-    qDebug("Backups Wizard: step 2");
-
+    nextStep(STEP_2);
     updateSize();
 }
 
@@ -441,7 +437,7 @@ bool BackupsWizard::isFolderSyncable(const QString& path, bool displayWarning, b
         }
         else if (syncability == SyncController::WARN_SYNC
                  && fromCheckAction // Display warning on check action only (also called when creating)
-                 && (QMegaMessageBox::warning(nullptr, tr("Warning"), message
+                 && (QMegaMessageBox::warning(nullptr, QString(), message
                                               + QLatin1Char('/')
                                               + tr("Do you want to continue?"),
                                               QMessageBox::Yes | QMessageBox::No, QMessageBox::No)
@@ -467,9 +463,19 @@ void BackupsWizard::nextStep(const Step &step)
             setupStep1();
             break;
         }
+        case Step::STEP_1:
+        {
+            // Wait for user interaction
+            break;
+        }
         case Step::STEP_2_INIT:
         {
             setupStep2();
+            break;
+        }
+        case Step::STEP_2:
+        {
+            // Wait for user interaction
             break;
         }
         case Step::FINALIZE:
@@ -571,9 +577,8 @@ void BackupsWizard::on_bCancel_clicked()
     // If the user has made any modification, warn them before exiting.
     if (atLeastOneFolderChecked())
     {
-        QString title (tr("Warning"));
         QString content (tr("Are you sure you want to cancel? All changes will be lost."));
-        userWantsToCancel = QMessageBox::warning(this, title, content,
+        userWantsToCancel = QMessageBox::warning(this, QString(), content,
                                                  QMessageBox::Yes,
                                                  QMessageBox::No);
     }
@@ -741,7 +746,7 @@ void BackupsWizard::onSetMyBackupsDirRequestStatus(int errorCode, const QString&
     }
     else
     {
-        QMegaMessageBox::critical(nullptr, tr("Error"),
+        QMegaMessageBox::critical(nullptr, QString(),
                                   tr("Creating or setting folder \"%1\" as backups root failed.\nReason: %2")
                                   .arg(mSyncController.getMyBackupsLocalizedPath(), errorMsg));
     }

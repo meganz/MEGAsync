@@ -54,15 +54,15 @@ void AddBackupDialog::on_changeButton_clicked()
     {
         QString candidateDir (QDir::toNativeSeparators(QDir(folderPath).canonicalPath()));
         QString warningMessage;
-        auto syncability (mSyncController.isLocalFolderSyncable(candidateDir,mega::MegaSync::TYPE_BACKUP, warningMessage));
+        auto syncability (mSyncController.isLocalFolderSyncable(candidateDir, mega::MegaSync::TYPE_BACKUP, warningMessage));
 
         if (syncability == SyncController::CANT_SYNC)
         {
-            QMegaMessageBox::warning(nullptr, tr("Error"), warningMessage, QMessageBox::Ok);
+            QMegaMessageBox::warning(nullptr, QString(), warningMessage, QMessageBox::Ok);
         }
         else if (syncability == SyncController::CAN_SYNC
                  || (syncability == SyncController::WARN_SYNC
-                     && QMegaMessageBox::warning(nullptr, tr("Warning"), warningMessage
+                     && QMegaMessageBox::warning(nullptr, QString(), warningMessage
                                                  + QLatin1Char('/')
                                                  + tr("Do you want to continue?"),
                                                  QMessageBox::Yes | QMessageBox::No, QMessageBox::No)

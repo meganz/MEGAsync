@@ -2,7 +2,6 @@
 #include "MegaApplication.h"
 #include "Platform.h"
 
-#include <QInputDialog>
 #include <QStorageInfo>
 #include <QTemporaryFile>
 
@@ -186,7 +185,7 @@ SyncController::Syncability SyncController::isLocalFolderAlreadySynced(const QSt
     return (message.isEmpty() ? Syncability::CAN_SYNC : Syncability::CANT_SYNC);
 }
 
-QString SyncController::getIsLocalPathAllowedForSyncMsg(const QString& path, const MegaSync::SyncType& syncType)
+QString SyncController::getIsLocalFolderAllowedForSyncMsg(const QString& path, const MegaSync::SyncType& syncType)
 {
     QString inputPath (path);
     QString message;
@@ -223,9 +222,9 @@ QString SyncController::getIsLocalPathAllowedForSyncMsg(const QString& path, con
     return message;
 }
 
-SyncController::Syncability SyncController::isLocalPathAllowedForSync(const QString& path, const MegaSync::SyncType &syncType, QString& message)
+SyncController::Syncability SyncController::isLocalFolderAllowedForSync(const QString& path, const MegaSync::SyncType &syncType, QString& message)
 {
-    message = getIsLocalPathAllowedForSyncMsg(path, syncType);
+    message = getIsLocalFolderAllowedForSyncMsg(path, syncType);
     return (message.isEmpty() ? Syncability::CAN_SYNC : Syncability::CANT_SYNC);
 }
 
@@ -257,23 +256,24 @@ SyncController::Syncability SyncController::areLocalFolderAccessRightsOk(const Q
 // The message to display to the user is stored in <message>.
 // The first error encountered is returned.
 // Errors trump warnings
+// In case of several warnings, only the last one is returned.
 SyncController::Syncability SyncController::isLocalFolderSyncable(const QString& path, const mega::MegaSync::SyncType& syncType, QString& message)
 {
     Syncability syncability (Syncability::CAN_SYNC);
 
     // First check if the path is allowed
-    syncability = isLocalPathAllowedForSync(path, syncType, message);
-
-    // Then check that we have rw rights for this path
-    if (syncability != Syncability::CANT_SYNC)
-    {
-        syncability = areLocalFolderAccessRightsOk(path, syncType, message);
-    }
+    syncability = isLocalFolderAllowedForSync(path, syncType, message);
 
     // The check if it is not synced already
     if (syncability != Syncability::CANT_SYNC)
     {
-        syncability = isLocalFolderAlreadySynced(path, syncType, message);
+        syncability = std::max(isLocalFolderAlreadySynced(path, syncType, message), syncability);
+    }
+
+    // Then check that we have rw rights for this path
+    if (syncability != Syncability::CANT_SYNC)
+    {
+        syncability = std::max(areLocalFolderAccessRightsOk(path, syncType, message), syncability);
     }
 
     return (syncability);
