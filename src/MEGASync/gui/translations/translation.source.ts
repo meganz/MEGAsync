@@ -2989,6 +2989,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message numerus="yes">
         <source>Clear transfer</source>
+        <translatorcomment>Messagebox text to confirm if the user wants to clear the completed transfers</translatorcomment>
         <translation type="unfinished">
             <numerusform>Clear transfer</numerusform>
             <numerusform>Clear transfers</numerusform>
