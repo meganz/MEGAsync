@@ -471,16 +471,6 @@
         <translation>Uploads:</translation>
     </message>
     <message>
-        <source>Don&apos;t use HTTP</source>
-        <translatorcomment>Checkbox label to set the option to not use http for connections.</translatorcomment>
-        <translation>Don’t use HTTP</translation>
-    </message>
-    <message>
-        <source>Enable this option only if your transfers don&apos;t start. Under normal circumstances, HTTP is satisfactory as all transfers are already encrypted by MEGA.</source>
-        <translatorcomment>Description label about the option &quot;Don&apos;t use HTTP&quot; checkbox.</translatorcomment>
-        <translation>Enable this option only if your transfers don’t start. Under normal circumstances, HTTP is satisfactory as all transfers are already encrypted by MEGA.</translation>
-    </message>
-    <message>
         <source>Cancel</source>
         <translatorcomment>Button label for cancel dialog.</translatorcomment>
         <translation>Cancel</translation>
@@ -509,6 +499,16 @@
         <source>Update</source>
         <translatorcomment>Button label for apply and confirm the bandwidth changes (macOS)</translatorcomment>
         <translation>Update</translation>
+    </message>
+    <message>
+        <source>Use HTTPS for transfers that don&apos;t start</source>
+        <translatorcomment>Checkbox label to set the option to use https for transfer connections.</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Only enable this option if tranfers don&apos;t start. Under all other circumstances, using HTTP is satisfactory as MEGA already encrypts all data.</source>
+        <translatorcomment>Description label about the option Use HTTPS for transfers that don&amp;apos;t start checkbox.</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
