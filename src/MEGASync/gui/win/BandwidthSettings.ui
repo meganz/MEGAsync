@@ -552,7 +552,7 @@
       <item>
        <widget class="QCheckBox" name="cbUseHttps">
         <property name="text">
-         <string>Don't use HTTP</string>
+         <string>Use HTTPS for transfers that don't start</string>
         </property>
        </widget>
       </item>
@@ -565,7 +565,7 @@
          </sizepolicy>
         </property>
         <property name="text">
-         <string>Enable this option only if your transfers don't start. Under normal circumstances, HTTP is satisfactory as all transfers are already encrypted by MEGA.</string>
+         <string>Only enable this option if tranfers don't start. Under all other circumstances, using HTTP is satisfactory as MEGA already encrypts all data.</string>
         </property>
         <property name="wordWrap">
          <bool>true</bool>
