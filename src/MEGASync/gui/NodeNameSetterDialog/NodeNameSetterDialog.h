@@ -27,6 +27,7 @@ protected:
     virtual void onDialogAccepted() = 0;
     virtual void onRequestFinish(mega::MegaApi*, mega::MegaRequest*, mega::MegaError* ){}
     virtual QString dialogText() = 0;
+    virtual void title() = 0;
     virtual QString lineEditText(){return QString();}
 
     struct LineEditSelection

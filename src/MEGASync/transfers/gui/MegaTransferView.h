@@ -42,6 +42,16 @@ public:
     SelectedIndexesInfo getVisibleCancelOrClearInfo();
     SelectedIndexesInfo getSelectedCancelOrClearInfo();
 
+    //Static messages for messageboxes
+    static QString retryAskActionText(int count);
+    static QString cancelAskActionText(int count);
+    static QString clearAskActionText(int count);
+    static QString clearAndCancelAskActionText(int count);
+    static QString pauseActionText(int count);
+    static QString resumeActionText(int count);
+    static QString cancelActionText(int count);
+    static QString clearActionText(int count);
+
 public slots:
     void onPauseResumeSelection(bool pauseState);
     void onCancelVisibleTransfers();
@@ -113,6 +123,8 @@ private:
 
     QModelIndexList getTransfers(bool onlyVisible, TransferData::TransferStates state = TransferData::TRANSFER_NONE);
     QModelIndexList getSelectedTransfers();
+
+    void showOpeningFileError();
 };
 
 #endif // MEGATRANSFERVIEW_H

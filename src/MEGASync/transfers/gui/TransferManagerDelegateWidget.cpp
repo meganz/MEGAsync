@@ -50,7 +50,7 @@ void TransferManagerDelegateWidget::updateTransferState()
         {
             if (getData()->mTransferredBytes == 0)
             {
-                statusString = tr("Starting…");
+                statusString = STATE_STARTING;
             }
             else
             {
@@ -59,17 +59,17 @@ void TransferManagerDelegateWidget::updateTransferState()
                     case TransferData::TRANSFER_DOWNLOAD:
                     case TransferData::TRANSFER_LTCPDOWNLOAD:
                     {
-                        statusString = tr("Downloading…");
+                        statusString = STATE_DOWNLOADING;
                         break;
                     }
                     case TransferData::TRANSFER_UPLOAD:
                     {
-                        statusString = tr("Uploading…");
+                        statusString = STATE_UPLOADING;
                         break;
                     }
                     default:
                     {
-                        statusString = tr("Syncing…");
+                        statusString = STATE_SYNCING;
                         break;
                     }
                 }
@@ -78,8 +78,8 @@ void TransferManagerDelegateWidget::updateTransferState()
             if(stateHasChanged())
             {
                 mPauseResumeTransferDefaultIconName = QLatin1Literal(":images/transfer_manager/transfers_actions/lists_pause_ico_default.png");
-                pauseResumeTooltip = tr("Pause transfer", "" , 1); //Use singular form
-                cancelClearTooltip = tr("Cancel transfer", "" , 1); //Use singular form
+                pauseResumeTooltip = MegaTransferView::pauseActionText(1); //Use singular form
+                cancelClearTooltip = MegaTransferView::cancelActionText(1); //Use singular form
                 mUi->wProgressBar->setVisible(true);
                 mUi->sStatus->setCurrentWidget(mUi->pActive);
             }
@@ -105,16 +105,19 @@ void TransferManagerDelegateWidget::updateTransferState()
             if(stateHasChanged())
             {
                 mPauseResumeTransferDefaultIconName = QLatin1Literal(":images/transfer_manager/transfers_actions/lists_pause_ico_selected.png");
-                pauseResumeTooltip = tr("Resume transfer", "" , 1); //Use singular form
-                cancelClearTooltip = tr("Cancel transfer", "" , 1); //Use singular form
+                pauseResumeTooltip = MegaTransferView::resumeActionText(1); //Use singular form
+                cancelClearTooltip = MegaTransferView::cancelActionText(1); //Use singular form
                 mUi->wProgressBar->setVisible(true);
 
                 if(getData()->mTransferredBytes != 0)
                 {
+                    mUi->lItemPaused->setText(STATE_PAUSED);
                     mUi->sStatus->setCurrentWidget(mUi->pPaused);
                 }
                 else
                 {
+                    mUi->lItemPausedQueued_1->setText(STATE_PAUSED);
+                    mUi->lItemPausedQueued_2->setText(STATE_INQUEUE_PARENTHESIS);
                     mUi->sStatus->setCurrentWidget(mUi->pPausedQueued);
                 }
             }
@@ -128,17 +131,21 @@ void TransferManagerDelegateWidget::updateTransferState()
             if(stateHasChanged())
             {
                 mPauseResumeTransferDefaultIconName = QLatin1Literal(":images/transfer_manager/transfers_actions/lists_pause_ico_default.png");
-                pauseResumeTooltip = tr("Pause transfer", "", 1); //Use singular form
-                cancelClearTooltip = tr("Cancel transfer", "", 1); //Use singular form
+                pauseResumeTooltip = MegaTransferView::pauseActionText(1); //Use singular form
+                cancelClearTooltip = MegaTransferView::cancelActionText(1); //Use singular form
                 mUi->wProgressBar->setVisible(true);
                 mUi->sStatus->setCurrentWidget(mUi->pQueued);
 
                 if(getData()->mErrorCode == MegaError::API_EOVERQUOTA)
                 {
-                    QString retryMsg (getData()->mErrorValue ? tr("Out of transfer quota")
-                                                        : tr("Out of storage space"));
+                    QString retryMsg (getData()->mErrorValue ? STATE_OUT_OF_TRANSFER_QUOTA
+                                                        : STATE_OUT_OF_STORAGE_SPACE);
                     mUi->lRetryMsg->setText(retryMsg);
                     mUi->sStatus->setCurrentWidget(mUi->pRetry);
+                }
+                else
+                {
+                    mUi->lRetryMsg->setText(STATE_RETRY);
                 }
             }
 
@@ -151,7 +158,7 @@ void TransferManagerDelegateWidget::updateTransferState()
         }
         case TransferData::TRANSFER_COMPLETING:
         {
-            statusString = tr("Completing");
+            statusString = STATE_COMPLETING;
 
             if(stateHasChanged())
             {
@@ -173,8 +180,10 @@ void TransferManagerDelegateWidget::updateTransferState()
                 mPauseResumeTransferDefaultIconName.clear();
                 mUi->sStatus->setCurrentWidget(mUi->pFailed);
                 mUi->tItemRetry->setVisible(!getData()->mTemporaryError);
+                mUi->tItemRetry->setText(STATE_RETRY);
                 mUi->wProgressBar->setVisible(false);
-                cancelClearTooltip = tr("Cancel transfer", "" , 1); //Use singular form
+                cancelClearTooltip = MegaTransferView::cancelActionText(1); //Use singular form
+                mUi->lItemFailed->setText(STATE_FAILED);
                 mUi->lItemFailed->setToolTip(tr(MegaError::getErrorString(getData()->mErrorCode)));
                 showTPauseResume = false;
             }
@@ -186,21 +195,21 @@ void TransferManagerDelegateWidget::updateTransferState()
         }
         case TransferData::TRANSFER_RETRYING:
         {
-            statusString = tr("Retrying");
+            statusString = STATE_RETRYING;
 
             if(stateHasChanged())
             {
                 mPauseResumeTransferDefaultIconName = QLatin1Literal(":images/transfer_manager/transfers_actions/lists_pause_ico_default.png");
-                pauseResumeTooltip = tr("Pause transfer", "" , 1); //Use singular form
-                cancelClearTooltip = tr("Cancel transfer", "" , 1); //Use singular form
+                pauseResumeTooltip = MegaTransferView::pauseActionText(1); //Use singular form
+                cancelClearTooltip = MegaTransferView::cancelActionText(1); //Use singular form
                 mUi->lItemStatus->setToolTip(tr(MegaError::getErrorString(getData()->mErrorCode)));
                 mUi->sStatus->setCurrentWidget(mUi->pActive);
             }
 
             if(getData()->mErrorCode == MegaError::API_EOVERQUOTA)
             {
-                QString retryMsg (getData()->mErrorValue ? tr("Out of transfer quota")
-                                                    : tr("Out of storage space"));
+                QString retryMsg (getData()->mErrorValue ? STATE_OUT_OF_TRANSFER_QUOTA
+                                                    : STATE_OUT_OF_STORAGE_SPACE);
                 mUi->lRetryMsg->setText(retryMsg);
                 mUi->sStatus->setCurrentWidget(mUi->pRetry);
             }
@@ -208,11 +217,11 @@ void TransferManagerDelegateWidget::updateTransferState()
         }
         case TransferData::TRANSFER_COMPLETED:
         {
-            statusString = tr("Completed");
+            statusString = STATE_COMPLETED;
 
             if(stateHasChanged())
             {
-                cancelClearTooltip = tr("Clear transfer", "" , 1); //Use singular form
+                cancelClearTooltip = MegaTransferView::clearActionText(1); //Use singular form
                 showTPauseResume = false;
                 mUi->wProgressBar->setVisible(false);
                 mPauseResumeTransferDefaultIconName.clear();

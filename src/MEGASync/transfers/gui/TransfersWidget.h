@@ -119,7 +119,6 @@ private:
     bool mClearMode;
     MegaApplication *app;
     TM_TAB mCurrentTab;
-    QMap<TransfersWidget::TM_TAB, QString> mTooltipNameByTab;
     bool mScanningIsActive;
 
     HeaderInfo mHeaderInfo;
@@ -130,6 +129,12 @@ private:
     void configureTransferView();
     void clearOrCancel(const QList<QExplicitlySharedDataPointer<TransferData>>& pool, int state, int firstRow);
     void updateHeaderItems();
+
+    QString getClearTooltip(TM_TAB tab);
+    QString getCancelTooltip(TM_TAB tab);
+    QString getCancelAndClearTooltip(TM_TAB tab);
+    QString getResumeTooltip(TM_TAB tab);
+    QString getPauseTooltip(TM_TAB tab);
 
 signals:
     void clearTransfers(int firstRow, int amount);

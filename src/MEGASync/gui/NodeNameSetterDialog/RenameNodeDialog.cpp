@@ -46,6 +46,11 @@ QString RenameNodeDialog::enterNewFolderNameText() const
     return tr("Enter new folder name");
 }
 
+void RenameNodeDialog::title()
+{
+    isFile() ? setWindowTitle(tr("Rename file")) : setWindowTitle(tr("Rename folder"));
+}
+
 ///RENAME REMOTE FILE/FOLDER REIMPLMENETATION
 RenameRemoteNodeDialog::RenameRemoteNodeDialog(const QString &nodePath, QWidget *parent)
     : RenameNodeDialog(parent)

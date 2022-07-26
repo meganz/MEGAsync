@@ -74,7 +74,7 @@ void InfoDialogTransferDelegateWidget::updateTransferState()
 
             if (!getData()->mTransferredBytes)
             {
-                downloadString = QString::fromUtf8("%1%2").arg(tr("starting"), QString::fromUtf8("…"));
+                downloadString = STATE_STARTING;
             }
             else
             {
@@ -86,30 +86,40 @@ void InfoDialogTransferDelegateWidget::updateTransferState()
             break;
         }
         case TransferData::TransferState::TRANSFER_PAUSED:
-            updateTransferControlsOnHold(tr("PAUSED"));
+        {
+            if(getData()->mTransferredBytes != 0)
+            {
+                updateTransferControlsOnHold(STATE_PAUSED);
+            }
+            else
+            {
+                QString pausedInQueue(QString::fromLatin1("%1 %2").arg(STATE_PAUSED,STATE_INQUEUE_PARENTHESIS));
+                updateTransferControlsOnHold(pausedInQueue);
+            }
             break;
+        }
         case TransferData::TransferState::TRANSFER_QUEUED:
-            updateTransferControlsOnHold(tr("queued"));
+            updateTransferControlsOnHold(STATE_INQUEUE);
             break;
         case TransferData::TransferState::TRANSFER_RETRYING:
             if (getData()->mErrorCode == MegaError::API_EOVERQUOTA)
             {
                 if (getData()->mErrorValue)
                 {
-                    updateTransferControlsOnHold(tr("Transfer quota exceeded"));
+                    updateTransferControlsOnHold(STATE_OUT_OF_TRANSFER_QUOTA);
                 }
                 else
                 {
-                    updateTransferControlsOnHold(tr("Out of storage space"));
+                    updateTransferControlsOnHold(STATE_OUT_OF_STORAGE_SPACE);
                 }
             }
             else
             {
-                updateTransferControlsOnHold(tr("retrying..."));
+                updateTransferControlsOnHold(STATE_RETRYING);
             }
             break;
         case TransferData::TransferState::TRANSFER_COMPLETING:
-            updateTransferControlsOnHold(tr("completing..."));
+            updateTransferControlsOnHold(STATE_COMPLETING);
             break;
         default:
             updateTransferControlsOnHold(QString());
@@ -347,7 +357,7 @@ void InfoDialogTransferDelegateWidget::finishTransfer()
             MegaSyncApp->removeFinishedBlockedTransfer(getData()->mTag);
         }
 
-        mUi->lElapsedTime->setText(tr("failed:") + QStringLiteral(" ") + QCoreApplication::translate("MegaError",
+        mUi->lElapsedTime->setText(STATE_FAILED + QStringLiteral(": ") + QCoreApplication::translate("MegaError",
                                                                                                        MegaError::getErrorString(getData()->mErrorCode,
                                                                                                                                  getData()->mType == TransferData::TransferType::TRANSFER_DOWNLOAD && !blockedTransfer
                                                                                                                                  ? MegaError::API_EC_DOWNLOAD : MegaError::API_EC_DEFAULT)));

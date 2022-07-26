@@ -26,7 +26,8 @@ public:
 
     bool eventFilter(QObject *watched, QEvent *event) override
     {
-        if(watched == currentWidget() && event->type() == QEvent::Resize)
+        //With the LayoutRequest event we get all the changes inside the widget, like hidding some widget inside it
+        if(watched == currentWidget() && event->type() == QEvent::LayoutRequest)
         {
             onUpdateHeight();
         }

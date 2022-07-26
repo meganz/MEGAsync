@@ -1717,41 +1717,6 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation type="unfinished">Show in folder</translation>
     </message>
     <message>
-        <source>starting</source>
-        <translatorcomment>Show the state &quot;starting&quot; in the transfer</translatorcomment>
-        <translation type="unfinished">starting</translation>
-    </message>
-    <message>
-        <source>PAUSED</source>
-        <translatorcomment>Transfers are paused</translatorcomment>
-        <translation type="unfinished">PAUSED</translation>
-    </message>
-    <message>
-        <source>queued</source>
-        <translatorcomment>A transfer is in the queue</translatorcomment>
-        <translation type="unfinished">queued</translation>
-    </message>
-    <message>
-        <source>Transfer quota exceeded</source>
-        <translatorcomment>Message shown when a transfer is stopped because a transfer quota is exceeded</translatorcomment>
-        <translation type="unfinished">Transfer quota exceeded</translation>
-    </message>
-    <message>
-        <source>Out of storage space</source>
-        <translatorcomment>Message shown when a transfer is stopped because the account storage space is exceeded</translatorcomment>
-        <translation type="unfinished">Out of storage space</translation>
-    </message>
-    <message>
-        <source>retrying...</source>
-        <translatorcomment>A new transfer is starting agains after a failure</translatorcomment>
-        <translation type="unfinished">retrying…</translation>
-    </message>
-    <message>
-        <source>completing...</source>
-        <translatorcomment>The transfers is almost finished</translatorcomment>
-        <translation type="unfinished">completing…</translation>
-    </message>
-    <message>
         <source>Retry</source>
         <translatorcomment>Tooltip for retry failed transfer</translatorcomment>
         <translation type="unfinished">Retry</translation>
@@ -1765,11 +1730,6 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <source>Copy link to file</source>
         <translatorcomment>Tooltip for copy linr</translatorcomment>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>failed:</source>
-        <translatorcomment>The transfers has failed</translatorcomment>
-        <translation type="unfinished">failed:</translation>
     </message>
     <message>
         <source>Added [A]</source>
@@ -3004,27 +2964,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         </translation>
     </message>
     <message numerus="yes">
-        <source>Cancel transfer?</source>
-        <translatorcomment>Messagebox text to confirm if the user wants to cancel the transfers</translatorcomment>
-        <translation type="unfinished">
-            <numerusform>Cancel transfer?</numerusform>
-            <numerusform>Cancel transfers?</numerusform>
-        </translation>
-    </message>
-    <message numerus="yes">
         <source>Cancel and clear transfer?</source>
         <translatorcomment>Messagebox text to confirm if the user wants to cancel all transfers and clear all the completed transfers</translatorcomment>
         <translation type="unfinished">
             <numerusform>Cancel and clear transfer?</numerusform>
             <numerusform>Cancel and clear transfers?</numerusform>
-        </translation>
-    </message>
-    <message numerus="yes">
-        <source>Clear transfer?</source>
-        <translatorcomment>Messagebox text to confirm if the user wants to clear the completed transfers</translatorcomment>
-        <translation type="unfinished">
-            <numerusform>Clear transfer?</numerusform>
-            <numerusform>Clear transfers?</numerusform>
         </translation>
     </message>
     <message numerus="yes">
@@ -3041,6 +2985,14 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation type="unfinished">
             <numerusform>Retry transfer?</numerusform>
             <numerusform>Retry transfers?</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>Clear transfer</source>
+        <translatorcomment>Messagebox text to confirm if the user wants to clear the completed transfers</translatorcomment>
+        <translation type="unfinished">
+            <numerusform>Clear transfer</numerusform>
+            <numerusform>Clear transfers</numerusform>
         </translation>
     </message>
 </context>
@@ -3076,6 +3028,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Enter the new folder name:</source>
         <translatorcomment>Label to inform the user about entering a new folder name because the name provided does contain forbidden characters.</translatorcomment>
         <translation>Enter the new folder name:</translation>
+    </message>
+    <message>
+        <source>New Folder</source>
+        <translatorcomment>Dialog title</translatorcomment>
+        <translation type="unfinished">New Folder</translation>
     </message>
 </context>
 <context>
@@ -4186,6 +4143,16 @@ Do you want to delete it anyway?</translation>
     <message>
         <source>Enter new folder name</source>
         <translatorcomment>Title of the rename folder dialog </translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rename file</source>
+        <translatorcomment>Dialog title for file renaming</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rename folder</source>
+        <translatorcomment>Dialog title for folder renaming</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -5461,13 +5428,75 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
 </context>
 <context>
     <name>TransferBaseDelegateWidget</name>
-    <message numerus="yes">
-        <source>Retry transfer?</source>
-        <translatorcomment>Warning message to confirm if the user wants to retry a failed transfer</translatorcomment>
-        <translation type="unfinished">
-            <numerusform>Retry transfer?</numerusform>
-            <numerusform>Retry transfers?</numerusform>
-        </translation>
+    <message>
+        <source>Starting…</source>
+        <translatorcomment>Transfer is being started but no bytes have been transferred yet</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Retrying</source>
+        <translatorcomment>Transfer is starting again after failure</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Uploading…</source>
+        <translatorcomment>Transfer is being uploaded</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Downloading…</source>
+        <translatorcomment>Transfer is being downloaded</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Syncing…</source>
+        <translatorcomment>Transfer is being synced</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Completing</source>
+        <translatorcomment>Transfer is being completed</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Completed</source>
+        <translatorcomment>Transfer is completed</translatorcomment>
+        <translation type="unfinished">Completed</translation>
+    </message>
+    <message>
+        <source>Paused</source>
+        <translatorcomment>Transfer is paused</translatorcomment>
+        <translation type="unfinished">Paused</translation>
+    </message>
+    <message>
+        <source>Failed</source>
+        <translatorcomment>Transfer has failed</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>In queue</source>
+        <translatorcomment>Transfer is active but not being processed yet</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>(in queue)</source>
+        <translatorcomment>Transfer is paused and no bytes have been transferred yet</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Retry</source>
+        <translatorcomment>Retry button text</translatorcomment>
+        <translation type="unfinished">Retry</translation>
+    </message>
+    <message>
+        <source>Out of storage space</source>
+        <translatorcomment>Transfer is paused for out of storage space</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Out of transfer quota</source>
+        <translatorcomment>Transfer is paused for out of transfer quota</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5586,21 +5615,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Depleted Transfer Quota</source>
-        <translatorcomment>Subtitle Depleted Transfer Quota state</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Your queued downloads exceeds the current quota available for your IP address.</source>
-        <translatorcomment>Message which shows that the user reachs the overquota</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Account is full</source>
-        <translatorcomment>Message when the user exceeds the account storage space</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>All</source>
         <translatorcomment>Title for all searched transfers by text</translatorcomment>
         <translation type="unfinished"></translation>
@@ -5613,11 +5627,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Retry all</source>
         <translatorcomment>Button text for retry all button in Failed category</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>See plans</source>
-        <translatorcomment>When the user exceeds the transfer quota or Storage, button to go to plans website</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -5667,115 +5676,37 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message numerus="yes">
         <source>%1 result found</source>
+        <translatorcomment>Message shown with search results,when there are only uploads or downloads, but not both at the same time</translatorcomment>
         <translation type="unfinished">
             <numerusform>%1 result found</numerusform>
             <numerusform>%1 results found</numerusform>
         </translation>
     </message>
-</context>
-<context>
-    <name>TransferManagerDelegateWidget</name>
     <message>
-        <source>In queue</source>
-        <translatorcomment>Transfer is active but not being processed yet</translatorcomment>
+        <source>Your MEGA account is full</source>
+        <translatorcomment>Message shown when the MEGA account is full</translatorcomment>
+        <translation type="unfinished">Your MEGA account is full.</translation>
+    </message>
+    <message>
+        <source>Upgrade now</source>
+        <translatorcomment>Button to open web explorer to see MEGA paid plans</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Paused</source>
-        <translatorcomment>Transfer is paused</translatorcomment>
-        <translation type="unfinished">Paused</translation>
+        <source>Transfer quota exceeded</source>
+        <translatorcomment>Subtitle Transfer Quota exceeded state message</translatorcomment>
+        <translation type="unfinished">Transfer quota exceeded</translation>
     </message>
     <message>
-        <source>(in queue)</source>
-        <translatorcomment>Transfer is paused and not being processed yet</translatorcomment>
+        <source>You can&apos;t continue downloading as you don&apos;t have enough transfer quota left for this IP address.
+To get more quota, upgrade to a Pro account or wait for [A] until more free quota becomes available on your IP address.</source>
+        <translatorcomment>Message which shows that the user reachs the overquota. [A] is the time to wait until the quota is reset in hh:mm:ss</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Failed</source>
-        <translatorcomment>Transfer has failed</translatorcomment>
+        <source>More about transfer quota</source>
+		<translatorcomment>Link button to send the user to the transfer quota information blog website</translatorcomment>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Retry</source>
-        <translatorcomment>Retry button text</translatorcomment>
-        <translation type="unfinished">Retry</translation>
-    </message>
-    <message>
-        <source>Starting…</source>
-        <translatorcomment>Transfer is being started but no bytes have been transferred yet</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Downloading…</source>
-        <translatorcomment>Transfer is being downloaded</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Uploading…</source>
-        <translatorcomment>Transfer is being uploaded</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Syncing…</source>
-        <translatorcomment>Transfer is being synced</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message numerus="yes">
-        <source>Pause transfer</source>
-        <translatorcomment>Tooltip for the pause/resume button</translatorcomment>
-        <translation type="unfinished">
-            <numerusform>Pause transfer</numerusform>
-            <numerusform>Pause transfers</numerusform>
-        </translation>
-    </message>
-    <message numerus="yes">
-        <source>Cancel transfer</source>
-        <translatorcomment>Tooltip for the cancel button</translatorcomment>
-        <translation type="unfinished">
-            <numerusform>Cancel transfer</numerusform>
-            <numerusform>Cancel transfers</numerusform>
-        </translation>
-    </message>
-    <message numerus="yes">
-        <source>Resume transfer</source>
-        <translatorcomment>Tooltip for the pause/resume button</translatorcomment>
-        <translation type="unfinished">
-            <numerusform>Resume transfer</numerusform>
-            <numerusform>Resume transfers</numerusform>
-        </translation>
-    </message>
-    <message>
-        <source>Out of transfer quota</source>
-        <translatorcomment>Transfer is paused for out of transfer quota</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Out of storage space</source>
-        <translatorcomment>Transfer is paused for out of storage space</translatorcomment>
-        <translation type="unfinished">Out of storage space</translation>
-    </message>
-    <message>
-        <source>Completing</source>
-        <translatorcomment>Transfer is being completed</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Retrying</source>
-        <translatorcomment>Transfer is starting again after failure</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Completed</source>
-        <translatorcomment>Transfer is completed</translatorcomment>
-        <translation type="unfinished">Completed</translation>
-    </message>
-    <message numerus="yes">
-        <source>Clear transfer</source>
-        <translatorcomment>Tooltip for the clear button</translatorcomment>
-        <translation type="unfinished">
-            <numerusform>Clear transfer</numerusform>
-            <numerusform>Clear transfers</numerusform>
-        </translation>
     </message>
 </context>
 <context>
@@ -5841,91 +5772,6 @@ Please delete the folder sync from settings to cancel them.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Time Left</source>
-        <translatorcomment>Table header text</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pause or resume all selected transfers</source>
-        <translatorcomment>Tooltip for the pause/resume all selected transfers button</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel all selected transfers</source>
-        <translatorcomment>Tooltip for the cancel all selected transfers button</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>all transfers</source>
-        <translatorcomment>Second part of the pause/resume or cancel button tooltip. For all transfers category</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>all downloads</source>
-        <translatorcomment>Second part of the pause/resume or cancel button tooltip. For downloads category</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>all uploads</source>
-        <translatorcomment>Second part of the pause/resume or cancel button tooltip. For uploads category</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>all completed</source>
-        <translatorcomment>Second part of the pause/resume or cancel button tooltip. For finished category</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>all failed</source>
-        <translatorcomment>Second part of the pause/resume or cancel button tooltip. For failed category</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>all search results</source>
-        <translatorcomment>Second part of the pause/resume or cancel button tooltip. For text search category</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>all audios</source>
-        <translatorcomment>Second part of the pause/resume or cancel button tooltip. For audio category</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>all videos</source>
-        <translatorcomment>Second part of the pause/resume or cancel button tooltip. For video category</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>all archives</source>
-        <translatorcomment>Second part of the pause/resume or cancel button tooltip. For archives category</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>all documents</source>
-        <translatorcomment>Second part of the pause/resume or cancel button tooltip. For documents category</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>all images</source>
-        <translatorcomment>Second part of the pause/resume or cancel button tooltip. For images category</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Clear </source>
-        <translatorcomment>First part of the clear button tooltip</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel and clear </source>
-        <translatorcomment>First part of the cancel and clear button tooltip</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel </source>
-        <translatorcomment>First part of the cancel button tooltip</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Time left</source>
         <translatorcomment>Time table header column name for all transfers categories</translatorcomment>
         <translation type="unfinished"></translation>
@@ -5946,22 +5792,264 @@ Please delete the folder sync from settings to cancel them.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Pause </source>
-        <translatorcomment>First part of the pause button tooltip</translatorcomment>
+        <source>Clear all downloads</source>
+        <translatorcomment>Tooltip for clear all downloads button</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Resume </source>
-        <translatorcomment>First part of the resume button tooltip</translatorcomment>
+        <source>Clear all uploads</source>
+        <translatorcomment>Tooltip for clear all uploads button</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
-    <message numerus="yes">
-        <source>Retry transfer?</source>
-        <translatorcomment>Warning message to confirm if the user wants to retry failed transfers</translatorcomment>
-        <translation type="unfinished">
-            <numerusform>Retry transfer?</numerusform>
-            <numerusform>Retry transfers?</numerusform>
-        </translation>
+    <message>
+        <source>Clear all completed</source>
+        <translatorcomment>Tooltip for clear all completed button</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Clear all search results</source>
+        <translatorcomment>Tooltip for clear all search results button</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Clear all audios</source>
+        <translatorcomment>Tooltip for clear all audios button</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Clear all videos</source>
+        <translatorcomment>Tooltip for clear all videos button</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Clear all archives</source>
+        <translatorcomment>Tooltip for clear all archives button</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Clear all documents</source>
+        <translatorcomment>Tooltip for clear all documents button</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Clear all images</source>
+        <translatorcomment>Tooltip for clear all images button</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Clear all transfers</source>
+        <translatorcomment>Tooltip for clear all transfers button</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel all downloads</source>
+        <translatorcomment>Tooltip for cancel all downloads button</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel all uploads</source>
+        <translatorcomment>Tooltip for cancel all uploads button</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel all completed</source>
+        <translatorcomment>Tooltip for cancel all completed button</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel all failed</source>
+        <translatorcomment>Tooltip for cancel all failed button</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel all search results</source>
+        <translatorcomment>Tooltip for cancel all search button</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel all audios</source>
+        <translatorcomment>Tooltip for cancel all audios button</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel all videos</source>
+        <translatorcomment>Tooltip for cancel all videos button</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel all archives</source>
+        <translatorcomment>Tooltip for cancel all archives button</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel all documents</source>
+        <translatorcomment>Tooltip for cancel all documents button</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel all images</source>
+        <translatorcomment>Tooltip for cancel all images button</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel all transfers</source>
+        <translatorcomment>Tooltip for cancel all transfers button</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel and clear all downloads</source>
+        <translatorcomment>Tooltip for cancel and clear all downloads button</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel and clear all uploads</source>
+        <translatorcomment>Tooltip for cancel and clear all uploads button</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel and clear all completed</source>
+        <translatorcomment>Tooltip for cancel and clear all completed button</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel and clear all search results</source>
+        <translatorcomment>Tooltip for cancel and clear all search button</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel and clear all audios</source>
+        <translatorcomment>Tooltip for cancel and clear all audios button</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel and clear all videos</source>
+        <translatorcomment>Tooltip for cancel and clear all videos button</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel and clear all archives</source>
+        <translatorcomment>Tooltip for cancel and clear all archives button</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel and clear all documents</source>
+        <translatorcomment>Tooltip for cancel and clear all documents button</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel and clear all images</source>
+        <translatorcomment>Tooltip for cancel and clear all images button</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel and clear all transfers</source>
+        <translatorcomment>Tooltip for cancel and clear all transfers button</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Resume all downloads</source>
+        <translatorcomment>Tooltip for cancel and clear all downloads button</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Resume all uploads</source>
+        <translatorcomment>Tooltip for cancel and clear all uploads button</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Resume all completed</source>
+        <translatorcomment>Tooltip for cancel and clear all completed button</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Resume all failed</source>
+        <translatorcomment>Tooltip for cancel and clear all failed button</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Resume all search results</source>
+        <translatorcomment>Tooltip for cancel and clear all search results button</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Resume all audios</source>
+        <translatorcomment>Tooltip for cancel and clear all audios button</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Resume all videos</source>
+        <translatorcomment>Tooltip for cancel and clear all videos button</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Resume all archives</source>
+        <translatorcomment>Tooltip for cancel and clear all archives button</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Resume all documents</source>
+        <translatorcomment>Tooltip for cancel and clear all documents button</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Resume all images</source>
+        <translatorcomment>Tooltip for cancel and clear all images button</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Resume all transfers</source>
+        <translatorcomment>Tooltip for cancel and clear all transfers button</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pause all downloads</source>
+        <translatorcomment>Tooltip for pause and clear all downloads button</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pause all uploads</source>
+        <translatorcomment>Tooltip for pause and clear all uploads button</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pause all completed</source>
+        <translatorcomment>Tooltip for pause and clear all completed button</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pause all search results</source>
+        <translatorcomment>Tooltip for pause and clear all search results button</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pause all audios</source>
+        <translatorcomment>Tooltip for pause and clear all audios button</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pause all videos</source>
+        <translatorcomment>Tooltip for pause and clear all videos button</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pause all archives</source>
+        <translatorcomment>Tooltip for pause and clear all archives button</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pause all documents</source>
+        <translatorcomment>Tooltip for pause and clear all documents button</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pause all images</source>
+        <translatorcomment>Tooltip for pause and clear all images button</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pause all transfers</source>
+        <translatorcomment>Tooltip for pause and clear all transfers button</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

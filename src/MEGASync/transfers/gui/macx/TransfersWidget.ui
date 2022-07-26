@@ -317,7 +317,7 @@ TransferWidgetHeaderItem  QLabel
              <number>2</number>
             </property>
             <property name="title" stdset="0">
-             <string>Speed</string>
+             <string notr="true"/>
             </property>
            </widget>
           </item>
@@ -373,7 +373,7 @@ TransferWidgetHeaderItem  QLabel
              <number>4</number>
             </property>
             <property name="title" stdset="0">
-             <string>Time Left</string>
+             <string notr="true"/>
             </property>
            </widget>
           </item>
@@ -431,7 +431,7 @@ TransferWidgetHeaderItem  QLabel
                 <cursorShape>PointingHandCursor</cursorShape>
                </property>
                <property name="toolTip">
-                <string>Pause or resume all selected transfers</string>
+                <string notr="true"/>
                </property>
                <property name="text">
                 <string notr="true"/>
@@ -456,7 +456,7 @@ TransferWidgetHeaderItem  QLabel
                 <bool>true</bool>
                </property>
                <property name="default_icon" stdset="0">
-                 <string notr="true">qrc:/images/transfer_manager/transfers_actions/lists_pause_all_ico_default.png</string>
+                <string notr="true">qrc:/images/transfer_manager/transfers_actions/lists_pause_all_ico_default.png</string>
                </property>
               </widget>
              </item>
@@ -517,7 +517,7 @@ TransferWidgetHeaderItem  QLabel
                 <cursorShape>PointingHandCursor</cursorShape>
                </property>
                <property name="toolTip">
-                <string>Cancel all selected transfers</string>
+                <string notr="true"/>
                </property>
                <property name="text">
                 <string notr="true"/>
@@ -533,7 +533,7 @@ TransferWidgetHeaderItem  QLabel
                 </size>
                </property>
                <property name="default_icon" stdset="0">
-                 <string notr="true">qrc:/images/transfer_manager/transfers_actions/lists_cancel_all_ico_default.png</string>
+                <string notr="true">qrc:/images/transfer_manager/transfers_actions/lists_cancel_all_ico_default.png</string>
                </property>
               </widget>
              </item>

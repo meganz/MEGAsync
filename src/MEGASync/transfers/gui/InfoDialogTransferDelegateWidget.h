@@ -41,8 +41,8 @@ public:
     void loadDefaultTransferIcon() {}
     void updateAnimation() {}
 
-    QSize minimumSizeHint() const;
-    QSize sizeHint() const;
+    QSize minimumSizeHint() const override;
+    QSize sizeHint() const override;
 
 signals:
     void copyTransferLink();

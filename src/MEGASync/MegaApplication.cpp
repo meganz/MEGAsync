@@ -605,7 +605,7 @@ void MegaApplication::initialize()
         }
     }
 
-    transferQuota = ::mega::make_unique<TransferQuota>(mOsNotifications);
+    transferQuota = std::make_shared<TransferQuota>(mOsNotifications);
     connect(transferQuota.get(), &TransferQuota::waitTimeIsOver, this, &MegaApplication::updateStatesAfterTransferOverQuotaTimeHasExpired);
 
     periodicTasksTimer = new QTimer(this);
@@ -2703,6 +2703,10 @@ QuotaState MegaApplication::getTransferQuotaState() const
      return quotaState;
 }
 
+std::shared_ptr<TransferQuota> MegaApplication::getTransferQuota() const
+{
+    return transferQuota;
+}
 
 int MegaApplication::getAppliedStorageState() const
 {

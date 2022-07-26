@@ -24,6 +24,10 @@ const char* ITS_ON = "itsOn";
 const char* SEARCH_TEXT = "searchText";
 const char* SEARCH_BUTTON_SELECTED = "selected";
 
+const QString TransferManager::TRANSFER_QUOTA_WARNING = QString::fromUtf8(QT_TR_NOOP("You can't continue downloading as you don't have enough transfer quota left for this IP address."
+                                                                                 "\nTo get more quota, upgrade to a Pro account or wait for [A] until more free quota becomes available on your IP address."));
+const QString TransferManager::TRANSFER_QUOTA_MORE_ABOUT = QLatin1String(QT_TR_NOOP("More about transfer quota"));
+
 TransferManager::TransferManager(MegaApi *megaApi) :
     QDialog(nullptr),
     mUi(new Ui::TransferManager),
@@ -221,6 +225,10 @@ TransferManager::TransferManager(MegaApi *megaApi) :
     auto transferQuotaState = MegaSyncApp->getTransferQuotaState();
     onStorageStateChanged(storageState);
     onTransferQuotaStateChanged(transferQuotaState);
+    mTransferQuotaTimer.setInterval(1000);
+    connect(&mTransferQuotaTimer, &QTimer::timeout, this, &TransferManager::onTransferQuotaExceededUpdate);
+    QString moreAboutLink(QLatin1String("<a href=\"https://help.mega.io/plans-storage/space-storage/transfer-quota\"><font color=#333333>%1</font></a>"));
+    mUi->lTransferOverQuotaMoreAbout->setText(moreAboutLink.arg(TRANSFER_QUOTA_MORE_ABOUT));
 
     setActiveTab(TransfersWidget::ALL_TRANSFERS_TAB);
     //Update stats
@@ -256,6 +264,8 @@ void TransferManager::enterBlockingState()
     mUi->wTransfers->setScanningWidgetVisible(true);
     enableUserActions(false);
     mTransferScanCancelUi->show();
+
+    mScanningTimer.start();
 }
 
 void TransferManager::leaveBlockingState(bool fromCancellation)
@@ -263,6 +273,9 @@ void TransferManager::leaveBlockingState(bool fromCancellation)
     enableUserActions(true);
     mUi->wTransfers->setScanningWidgetVisible(false);
     mTransferScanCancelUi->hide(fromCancellation);
+
+    mScanningTimer.stop();
+    mScanningAnimationIndex = 1;
 
     refreshView();
 }
@@ -514,10 +527,21 @@ void TransferManager::refreshStateStats()
             }
         }
 
-        if(processedNumber != 0)
+        if(mTransferScanCancelUi && mTransferScanCancelUi->isActive())
+        {
+            leftFooterWidget = mUi->pScanning;
+        }
+        else if(failedNumber != 0)
+        {
+            leftFooterWidget = mUi->pSomeIssues;
+        }
+        else if(processedNumber != 0)
         {
             leftFooterWidget = mUi->pSpeedAndClear;
+        }
 
+        if(processedNumber != 0)
+        {
             countLabel->show();
             countLabel->setText(countLabelText);
         }
@@ -525,11 +549,6 @@ void TransferManager::refreshStateStats()
         {
             countLabel->hide();
             countLabel->clear();
-        }
-
-        if(failedNumber != 0)
-        {
-            leftFooterWidget = mUi->pSomeIssues;
         }
     }
 
@@ -685,7 +704,7 @@ void TransferManager::onTransferQuotaStateChanged(QuotaState transferQuotaState)
         case QuotaState::OVERQUOTA:
         {
             mUi->tSeePlans->show();
-            mUi->pTransferOverQuota->setVisible(mStorageQuotaState != MegaApi::STORAGE_STATE_PAYWALL
+            showTransferQuotaBanner(mStorageQuotaState != MegaApi::STORAGE_STATE_PAYWALL
                                                 && mStorageQuotaState != MegaApi::STORAGE_STATE_RED);
             break;
         }
@@ -694,7 +713,7 @@ void TransferManager::onTransferQuotaStateChanged(QuotaState transferQuotaState)
         default:
         {
             mUi->pTransferOverQuota->hide();
-            mUi->tSeePlans->setVisible(mStorageQuotaState == MegaApi::STORAGE_STATE_PAYWALL
+            showTransferQuotaBanner(mStorageQuotaState == MegaApi::STORAGE_STATE_PAYWALL
                                        || mStorageQuotaState == MegaApi::STORAGE_STATE_RED);
             break;
         }
@@ -707,6 +726,35 @@ void TransferManager::checkPauseButtonVisibilityIfPossible()
 {
     mUi->lPaused->setVisible(mModel->areAllPaused() && !mUi->lStorageOverQuota->isVisible() && !mUi->pTransferOverQuota->isVisible());
 }
+
+void TransferManager::showTransferQuotaBanner(bool state)
+{
+    mUi->pTransferOverQuota->setVisible(state);
+
+    if(Preferences::instance()->accountType() != Preferences::ACCOUNT_TYPE_FREE)
+    {
+        mUi->lTransferOverQuotaInfo->hide();
+        mUi->lTransferOverQuotaMoreAbout->hide();
+    }
+
+    if(state)
+    {
+        mTransferQuotaTimer.start();
+        onTransferQuotaExceededUpdate();
+    }
+    else
+    {
+        mTransferQuotaTimer.stop();
+    }
+}
+
+void TransferManager::onTransferQuotaExceededUpdate()
+{
+    QString bannerText(TRANSFER_QUOTA_WARNING);
+    auto text = bannerText.replace(QString(QLatin1String("[A]")), MegaSyncApp->getTransferQuota()->getTransferQuotaDeadline().toString(QLatin1String("hh:mm:ss")));
+    mUi->lTransferOverQuotaInfo->setText(text);
+}
+
 
 void TransferManager::refreshSpeed()
 {
@@ -906,7 +954,7 @@ void TransferManager::on_tClearSearchResult_clicked()
     }
 }
 
-void TransferManager::on_tAllResults_clicked()
+void TransferManager::showAllResults()
 {
     mUi->wAllResults->setProperty(SEARCH_BUTTON_SELECTED, true);
     mUi->wDlResults->setProperty(SEARCH_BUTTON_SELECTED, false);
@@ -917,7 +965,7 @@ void TransferManager::on_tAllResults_clicked()
     mUi->wTransfers->textFilterTypeChanged({});
 }
 
-void TransferManager::on_tDlResults_clicked()
+void TransferManager::showDownloadResults()
 {
     mUi->wAllResults->setProperty(SEARCH_BUTTON_SELECTED, false);
     mUi->wDlResults->setProperty(SEARCH_BUTTON_SELECTED, true);
@@ -929,7 +977,7 @@ void TransferManager::on_tDlResults_clicked()
                                     | TransferData::TRANSFER_LTCPDOWNLOAD);
 }
 
-void TransferManager::on_tUlResults_clicked()
+void TransferManager::showUploadResults()
 {
     mUi->wAllResults->setProperty(SEARCH_BUTTON_SELECTED, false);
     mUi->wDlResults->setProperty(SEARCH_BUTTON_SELECTED, false);
@@ -1172,16 +1220,16 @@ bool TransferManager::eventFilter(QObject *obj, QEvent *event)
         {
             if(obj == mUi->wAllResults)
             {
-                on_tAllResults_clicked();
+                showAllResults();
             }
             else if(obj == mUi->wDlResults)
             {
 
-                on_tDlResults_clicked();
+                showDownloadResults();
             }
             else if(obj == mUi->wUlResults)
             {
-                on_tUlResults_clicked();
+                showUploadResults();
             }
         }
         else if(event->type() == QEvent::KeyRelease)
@@ -1263,7 +1311,6 @@ void TransferManager::setTransferState(const StatusInfo::TRANSFERS_STATES &trans
     if(transferState == StatusInfo::TRANSFERS_STATES::STATE_INDEXING)
     {
         mScanningTimer.start();
-        mUi->sStatus->setCurrentWidget(mUi->pScanning);
     }
     else
     {
