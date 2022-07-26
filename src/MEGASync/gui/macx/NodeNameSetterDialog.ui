@@ -3,7 +3,7 @@
  <class>NodeNameSetterDialog</class>
  <widget class="QDialog" name="NodeNameSetterDialog">
   <property name="windowTitle">
-   <string>New folder</string>
+   <string notr="true"/>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <property name="sizeConstraint">
@@ -18,7 +18,7 @@ font-size: 13px;
 }</string>
      </property>
      <property name="text">
-      <string>Enter the new folder name:</string>
+      <string/>
      </property>
     </widget>
    </item>

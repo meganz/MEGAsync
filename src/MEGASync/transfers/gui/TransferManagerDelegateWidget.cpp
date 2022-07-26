@@ -145,6 +145,7 @@ void TransferManagerDelegateWidget::updateTransferState()
                 }
                 else
                 {
+                    mUi->lItemQueued->setText(STATE_INQUEUE);
                     mUi->lRetryMsg->setText(STATE_RETRY);
                 }
             }

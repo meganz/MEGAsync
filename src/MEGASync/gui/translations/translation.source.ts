@@ -3025,28 +3025,18 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
 <context>
     <name>NewFolderDialog</name>
     <message>
-        <source>Enter the new folder name:</source>
-        <translatorcomment>Label to inform the user about entering a new folder name because the name provided does contain forbidden characters.</translatorcomment>
-        <translation>Enter the new folder name:</translation>
+        <source>Enter the new folder name</source>
+        <translatorcomment>Dialog text to ask the user to enter a new name for the folder</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>New Folder</source>
-        <translatorcomment>Dialog title</translatorcomment>
-        <translation type="unfinished">New Folder</translation>
+        <source>New folder</source>
+        <translatorcomment>Title of the new folder dialog</translatorcomment>
+        <translation type="unfinished">New folder</translation>
     </message>
 </context>
 <context>
     <name>NodeNameSetterDialog</name>
-    <message>
-        <source>New folder</source>
-        <translatorcomment>Title of the new folder dialog</translatorcomment>
-        <translation>New folder</translation>
-    </message>
-    <message>
-        <source>Enter the new folder name:</source>
-        <translatorcomment>Title of the rename dialog</translatorcomment>
-        <translation>Enter the new folder name:</translation>
-    </message>
     <message>
         <source>The following characters are not allowed:
 %1</source>
@@ -4159,11 +4149,6 @@ Do you want to delete it anyway?</translation>
 <context>
     <name>ScanningWidget</name>
     <message>
-        <source>Scanning...</source>
-        <translatorcomment>Text to let the user know that the app is scanning a folder</translatorcomment>
-        <translation>Scanning...</translation>
-    </message>
-    <message>
         <source>Please do not close the application</source>
         <translatorcomment>Text below the GIF to askt he user not to close the app while it is scanning a folder</translatorcomment>
         <translation>Please do not close the application</translation>
@@ -4172,6 +4157,11 @@ Do you want to delete it anyway?</translation>
         <source>Cancel transfers</source>
         <translatorcomment>Button text to cancel the scanning of transfers</translatorcomment>
         <translation>Cancel transfers</translation>
+    </message>
+    <message>
+        <source>Scanning…</source>
+        <translatorcomment>Text to let the user know that the app is scanning a folder</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5655,16 +5645,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>No completed transfers</translation>
     </message>
     <message>
-        <source>See Plans</source>
-        <translatorcomment>Button to show the available MEGA paid plans</translatorcomment>
-        <translation>See Plans</translation>
-    </message>
-    <message>
-        <source>Finished</source>
-        <translatorcomment>Category for finished transfers </translatorcomment>
-        <translation>Finished</translation>
-    </message>
-    <message>
         <source>Resume all transfers</source>
         <translatorcomment>Global pause button tooltip</translatorcomment>
         <translation>Resume all transfers</translation>
@@ -6000,7 +5980,7 @@ Please delete the folder sync from settings to cancel them.</translation>
     <message>
         <source>Resume all transfers</source>
         <translatorcomment>Tooltip for cancel and clear all transfers button</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Resume all transfers</translation>
     </message>
     <message>
         <source>Pause all downloads</source>
@@ -6050,7 +6030,7 @@ Please delete the folder sync from settings to cancel them.</translation>
     <message>
         <source>Pause all transfers</source>
         <translatorcomment>Tooltip for pause and clear all transfers button</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Pause all transfers</translation>
     </message>
 </context>
 <context>

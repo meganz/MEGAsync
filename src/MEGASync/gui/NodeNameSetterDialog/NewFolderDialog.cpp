@@ -50,12 +50,12 @@ void NewFolderDialog::onRequestFinish(mega::MegaApi *, mega::MegaRequest *reques
 
 QString NewFolderDialog::dialogText()
 {
-    return tr("Enter the new folder name:");
+    return tr("Enter the new folder name");
 }
 
 void NewFolderDialog::title()
 {
-    setWindowTitle(tr("New Folder"));
+    setWindowTitle(tr("New folder"));
 }
 
 std::unique_ptr<mega::MegaNode> NewFolderDialog::getNewNode()
