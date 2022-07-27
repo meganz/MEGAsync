@@ -207,8 +207,14 @@ void BackupsWizard::setupStep1()
 
 #ifdef _WIN32
     QFontMetrics fm(mUi->lSubtitleStep1->font());
-    QRect boundingRect = fm.boundingRect(QRect(0,0,mUi->fFoldersStep1->width(),0), Qt::TextWordWrap, mUi->lSubtitleStep1->text());
-    mUi->lSubtitleStep1->setFixedHeight(boundingRect.height() + fm.lineSpacing() + 2); //+2 is for an extra margin of safety
+    QRect boundingRect = fm.boundingRect(QRect(0,0, mUi->fFoldersStep1->width()
+                                               - mUi->lSubtitleStep1->contentsMargins().left()
+                                               - mUi->lSubtitleStep1->contentsMargins().right()
+                                               ,0), Qt::TextWordWrap, mUi->lSubtitleStep1->toPlainText());
+    int bottomMargin = mUi->lSubtitleStep1->contentsMargins().bottom();
+    mUi->lSubtitleStep1->setFixedHeight(boundingRect.height() + bottomMargin + mUi->lSubtitleStep1->document()->documentMargin());
+    mUi->lSubtitleStep1->viewport()->setCursor(Qt::ArrowCursor);
+
 #endif
 
     mUi->bCancel->setEnabled(true);
