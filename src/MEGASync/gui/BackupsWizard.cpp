@@ -233,9 +233,9 @@ void BackupsWizard::setupStep1()
              QStandardPaths::DocumentsLocation,
              QStandardPaths::MoviesLocation,
              QStandardPaths::PicturesLocation,
-             //QStandardPaths::MusicLocation,
-             //QStandardPaths::DownloadLocation,
-    })
+             QStandardPaths::MusicLocation,
+             QStandardPaths::DownloadLocation,
+             QStandardPaths::DesktopLocation})
         {
             const auto standardPaths (QStandardPaths::standardLocations(type));
             QDir dir (QDir::cleanPath(standardPaths.first()));
@@ -250,7 +250,22 @@ void BackupsWizard::setupStep1()
                 item->setData(Qt::Unchecked, Qt::CheckStateRole);
                 mFoldersModel->appendRow(item);
             }
+            if(mFoldersModel->rowCount() >= MAX_ROWS_STEP_1)
+            {
+                break;
+            }
         }
+    }
+
+    if(mFoldersModel->rowCount() == 0)
+    {
+        mUi->bMoreFolders->setText(tr("Add folders"));
+        mUi->wDeviceNameStep1->setStyleSheet(QLatin1String("border-bottom-right-radius: 6px;"
+                                                           "border-bottom-left-radius: 6px;"));
+    }
+    else
+    {
+        mUi->bMoreFolders->setText(tr("More folders"));
     }
 
     updateSize();
@@ -502,12 +517,16 @@ void BackupsWizard::updateSize()
         mUi->lvFoldersStep1->setFixedHeight(listHeight);
 
         bool haveFolders (nbRows);
-        mUi->lNoAvailableFolder->setVisible(!haveFolders);
+
+        //TODO: Remove mUi->lNoAvailableFolder when the final decision with this issue is taken.
+        //We can show this label when all disks are synced but we do not allow it as root disk is unsyncable.
+        //so currently we do not display this lavel never. If this doesn´t change we have to remove this label.
+        mUi->lNoAvailableFolder->setVisible(false/*!haveFolders*/);
         mUi->lvFoldersStep1->setVisible(haveFolders);
 
         int dialogHeight = std::min(HEIGHT_MAX_STEP_1, HEIGHT_MAX_STEP_1
                 - (MAX_ROWS_STEP_1 - mFoldersModel->rowCount()) * HEIGHT_ROW_STEP_1
-                + !haveFolders * mUi->lNoAvailableFolder->height());
+                /*+ !haveFolders * mUi->lNoAvailableFolder->height()*/);
         setFixedHeight(dialogHeight);
     }
     else if (mUi->sSteps->currentWidget() == mUi->pStep2)
@@ -610,7 +629,9 @@ void BackupsWizard::on_bMoreFolders_clicked()
         // Jump to item in list
         auto idx = mFoldersModel->indexFromItem(item);
         mUi->lvFoldersStep1->scrollTo(idx, QAbstractItemView::PositionAtCenter);
-
+        mUi->bMoreFolders->setText(tr("More folders"));
+        mUi->wDeviceNameStep1->setStyleSheet(QLatin1String("border-bottom-right-radius: 0px;"
+                                                           "border-bottom-left-radius: 0px;"));
         onItemChanged();
         qDebug() << QString::fromUtf8("Backups Wizard: add folder \"%1\"").arg(path);
         updateSize();
