@@ -508,7 +508,7 @@ margin: 4px;
              </size>
             </property>
             <property name="text">
-             <string>No available folder</string>
+             <string>No folders available</string>
             </property>
            </widget>
           </item>
