@@ -207,6 +207,8 @@ public:
     std::shared_ptr<mega::MegaPricing> getPricing() const;
 
     QuotaState getTransferQuotaState() const;
+    std::shared_ptr<TransferQuota> getTransferQuota() const;
+
     int getAppliedStorageState() const;
     bool isAppliedStorageOverquota() const;
     void reloadSyncsInSettings();
@@ -287,6 +289,7 @@ public slots:
     void cleanAll();
     void onDupplicateLink(QString link, QString name, mega::MegaHandle handle);
     void onInstallUpdateClicked();
+    void onAboutClicked();
     void showInfoDialog();
     void showInfoDialogNotifications();
     void triggerInstallUpdate();
@@ -377,6 +380,7 @@ protected:
     QPointer<QMenu> windowsMenu;
     QAction *windowsExitAction;
     QAction *windowsUpdateAction;
+    QAction *windowsAboutAction;
     QAction *windowsImportLinksAction;
     QAction *windowsUploadAction;
     QAction *windowsDownloadAction;
@@ -398,6 +402,7 @@ protected:
     MenuItemAction *streamAction;
     MenuItemAction *myCloudAction;
     MenuItemAction *updateAction;
+    MenuItemAction *aboutAction;
     QAction *showStatusAction;
     QPointer<SyncsMenu> mSyncs2waysMenu;
     QPointer<SyncsMenu> mBackupsMenu;
@@ -538,7 +543,7 @@ protected:
     bool blockStateSet = false;
     bool whyamiblockedPeriodicPetition = false;
     friend class DeferPreferencesSyncForScope;
-    std::unique_ptr<TransferQuota> transferQuota;
+    std::shared_ptr<TransferQuota> transferQuota;
     bool transferOverQuotaWaitTimeExpiredReceived;
     std::shared_ptr<DesktopNotifications> mOsNotifications;
     QMutex mMutexOpenUrls;

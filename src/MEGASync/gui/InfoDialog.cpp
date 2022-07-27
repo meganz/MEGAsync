@@ -118,6 +118,7 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
 
     connect(app->getTransfersModel(), &TransfersModel::transfersCountUpdated, this, &InfoDialog::updateTransfersCount);
     connect(app->getTransfersModel(), &TransfersModel::transfersProcessChanged, this, &InfoDialog::onTransfersStateChanged);
+    connect(app->getTransfersModel(), &TransfersModel::showInFolderFinished, this, &InfoDialog::onShowInFolderFinished);
 
     //Set window properties
 #ifdef Q_OS_LINUX
@@ -362,9 +363,7 @@ void InfoDialog::showEvent(QShowEvent *event)
 
 void InfoDialog::moveEvent(QMoveEvent*)
 {
-#ifdef __linux__
     qtBugFixer.onEndMove();
-#endif
 }
 
 void InfoDialog::setBandwidthOverquotaState(QuotaState state)
@@ -639,6 +638,14 @@ void InfoDialog::onTransfersStateChanged()
         {
             mResetTransferSummaryWidget.stop();
         }
+    }
+}
+
+void InfoDialog::onShowInFolderFinished(bool state)
+{
+    if(!state)
+    {
+        QMegaMessageBox::warning(nullptr, tr("Error"), tr("Error opening folder"), QMessageBox::Ok);
     }
 }
 
@@ -1866,9 +1873,7 @@ void InfoDialog::showNotifications()
 
 void InfoDialog::move(int x, int y)
 {
-#ifdef __linux__
    qtBugFixer.onStartMove();
-#endif
    QDialog::move(x, y);
 }
 

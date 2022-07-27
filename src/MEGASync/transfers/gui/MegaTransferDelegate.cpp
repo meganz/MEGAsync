@@ -32,10 +32,9 @@ MegaTransferDelegate::MegaTransferDelegate(TransfersSortFilterProxyBaseModel* mo
 
 void MegaTransferDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {   
-    auto rowCount (index.model()->rowCount());
     auto row (index.row());
 
-    if (index.isValid() && row < rowCount)
+    if (index.isValid())
     {
         auto pos (option.rect.topLeft());
         auto height (option.rect.height());
@@ -72,7 +71,11 @@ void MegaTransferDelegate::paint(QPainter *painter, const QStyleOptionViewItem &
             w->resize(width, height);
         }
 
-        w->updateUi(data, row);
+        if(data)
+        {
+            w->updateUi(data, row);
+        }
+
         painter->save();
         painter->translate(pos);
         w->render(option, painter, QRegion(0, 0, width, height));
@@ -116,26 +119,30 @@ bool MegaTransferDelegate::event(QEvent *event)
 
 TransferBaseDelegateWidget *MegaTransferDelegate::getTransferItemWidget(const QModelIndex& index, const QSize& size) const
 { 
-    auto nbRowsMaxInView(1);
-    if(size.height() > 0)
-    {
-        nbRowsMaxInView = mView->height() / size.height() + 1;
-    }
-    auto row (index.row() % nbRowsMaxInView);
-
     TransferBaseDelegateWidget* item(nullptr);
 
-    if(row >= mTransferItems.size())
+    if(index.isValid())
     {
-       item = mProxyModel->createTransferManagerItem(mView);
-       mTransferItems.append(item);
-    }
-    else
-    {
-        item = mTransferItems.at(row);
-    }
+        auto nbRowsMaxInView(1);
+        if(size.height() > 0)
+        {
+            nbRowsMaxInView = mView->height() / size.height() + 1;
+        }
+        auto row (index.row() % nbRowsMaxInView);
 
-    item->setCurrentIndex(index);
+
+        if(row >= mTransferItems.size())
+        {
+            item = mProxyModel->createTransferManagerItem(mView);
+            mTransferItems.append(item);
+        }
+        else
+        {
+            item = mTransferItems.at(row);
+        }
+
+        item->setCurrentIndex(index);
+    }
 
     return item;
 }

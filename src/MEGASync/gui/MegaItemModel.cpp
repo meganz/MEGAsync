@@ -381,9 +381,18 @@ QVariant MegaItemModel::getText(const QModelIndex &index, MegaItem *item) const
                 return QCoreApplication::translate("MegaNodeNames", "Backups");
 
             if(item->isRoot())
+            {
                 return QApplication::translate("MegaNodeNames", item->getNode()->getName());
-                
-            return QVariant(QString::fromUtf8(item->getNode()->getName()));
+            }
+
+            QString nodeName = QString::fromUtf8(item->getNode()->getName());
+
+            if(nodeName == QLatin1String("NO_KEY") || nodeName == QLatin1String("CRYPTO_ERROR"))
+            {
+                nodeName = QCoreApplication::translate("MegaError", "Decryption error");
+            }
+
+            return QVariant(nodeName);
         }
         case COLUMN::DATE:
         {

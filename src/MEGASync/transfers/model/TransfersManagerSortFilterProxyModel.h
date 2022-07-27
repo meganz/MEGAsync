@@ -40,13 +40,16 @@ public:
 
         int  getPausedTransfers() const;
         bool areAllPaused() const;
-        bool isAnyActive() const;
-        bool areAllActive() const;
+        bool isAnyCancellable() const;
+        int  activeTransfers() const;
+        bool areAllCancellable() const;
         bool areAllSync() const;
         bool areAllCompleted() const;
         bool isAnyCompleted() const;
+        bool isAnyActive() const;
 
-        int  activeTransfers() const;
+        bool isEmpty() const;
+        int  transfersCount() const;
 
         bool isModelProcessing() const;
 signals:
@@ -84,6 +87,8 @@ protected:
         mutable QSet<int> mActiveTransfers;
         mutable QSet<int> mPausedTransfers;
         mutable QSet<int> mCompletedTransfers;
+        mutable QSet<int> mCompletingTransfers;
+        mutable QSet<int> mFailedTransfers;
 
 private slots:
         void onRowsAboutToBeRemoved(const QModelIndex& parent, int first, int last);
@@ -91,7 +96,6 @@ private slots:
 
 private:
         ThreadPool* mThreadPool;
-        mutable QMutex mMutex;
         QFutureWatcher<void> mFilterWatcher;
         QString mFilterText;
         bool mIsFiltering;
@@ -100,6 +104,8 @@ private:
         void removePausedTransferFromCounter(TransferTag tag) const;
         void removeNonSyncedTransferFromCounter(TransferTag tag) const;
         void removeCompletedTransferFromCounter(TransferTag tag) const;
+        void removeFailedTransferFromCounter(TransferTag tag) const;
+        void removeCompletingTransferFromCounter(TransferTag tag) const;
         bool updateTransfersCounterFromTag(QExplicitlySharedDataPointer<TransferData> transfer) const;
 
         void invalidateModel();

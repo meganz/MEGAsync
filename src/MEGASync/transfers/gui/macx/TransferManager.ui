@@ -111,9 +111,6 @@ QGroupBox::title
 
 #wTransferring QPushButton
 {
-    width: 200px;
-    min-width: 180px;
-    max-width: 200px;
     font-size: 14px;
     color: #15191F;
     border: none;
@@ -124,9 +121,6 @@ QGroupBox::title
 
 #wMediaType QPushButton, #wSearch QPushButton
 {
-    width: 200px;
-    min-width: 180px;
-    max-width: 200px;
     font-size: 14px;
     color: #15191F;
     border: none;
@@ -198,12 +192,12 @@ QGroupBox::title
 
 #bPause, #bSearch
 {
-    height: 36px;
-    width: 36px;
-    min-height: 36px;
-    min-width: 36px;
-    max-height: 36px;
-    max-width: 36px;
+    height: 32px;
+    width: 32px;
+    min-height: 32px;
+    min-width: 32px;
+    max-height: 32px;
+    max-width: 32px;
     qProperty-iconSize: 32px;
     padding: 0px;
     margin: 0px;
@@ -242,28 +236,18 @@ QGroupBox::title
     text-align: left;
 }
 
-#pSpeedAndClear QPushButton
+#wDownSpeed, #wUpSpeed
 {
     border-radius: 12px;
     background-color: #ECECEC;
+}
+
+#wDownSpeed QLabel, #wUpSpeed QLabel
+{
     color: #333333;
     font-size: 10px;
     font-weight: bold;
-    qProperty-iconSize: 16px;
-    text-align: left;
-	padding-right: 8px;
-	padding-left: 4px;
-}
-
-#bClearAll
-{
-    min-height: 36px;
-    min-width: 36px;
-    max-height: 36px;
-    max-width: 36px;
-    height: 36px;
-    width: 36px;
-    qProperty-iconSize: 36px;
+    text-align: right;
 }
  
 QToolButton
@@ -294,6 +278,14 @@ QToolButton
   font-size: 12px;
   font-weight: bold;
   padding-left: 14px;
+}
+
+#lTransferOverQuotaMoreAbout
+{
+  color: #333333;
+  font-size: 12px;
+  font-weight: 400;
+  padding-left: 2px;
 }
 
 #lNbResults[results=true]
@@ -532,17 +524,17 @@ QToolButton
            </spacer>
           </item>
           <item>
-           <widget class="QToolButton" name="bPause">
+           <widget class="QPushButton" name="bPause">
             <property name="minimumSize">
              <size>
-              <width>36</width>
-              <height>36</height>
+              <width>32</width>
+              <height>32</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
-              <width>36</width>
-              <height>36</height>
+              <width>32</width>
+              <height>32</height>
              </size>
             </property>
             <property name="cursor">
@@ -565,9 +557,7 @@ QToolButton
              <bool>true</bool>
             </property>
             <property name="default_icon" stdset="0">
-             <url>
-              <string>qrc:/images/transfer_manager/sidebar/sidebar_pause_ico_default.png</string>
-             </url>
+             <string notr="true">qrc:/images/transfer_manager/sidebar/sidebar_pause_ico_default.png</string>
             </property>
             <property name="hover_selected" stdset="0">
              <bool>true</bool>
@@ -575,7 +565,19 @@ QToolButton
            </widget>
           </item>
           <item>
-           <widget class="QToolButton" name="bSearch">
+           <widget class="QPushButton" name="bSearch">
+            <property name="minimumSize">
+             <size>
+              <width>32</width>
+              <height>32</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>32</width>
+              <height>32</height>
+             </size>
+            </property>
             <property name="cursor">
              <cursorShape>PointingHandCursor</cursorShape>
             </property>
@@ -593,9 +595,7 @@ QToolButton
              </size>
             </property>
             <property name="default_icon" stdset="0">
-             <url>
-              <string>qrc:/images/transfer_manager/sidebar/sidebar_search_ico_default.png</string>
-             </url>
+             <string notr="true">qrc:/images/transfer_manager/sidebar/sidebar_search_ico_default.png</string>
             </property>
            </widget>
           </item>
@@ -685,9 +685,7 @@ QToolButton
              </size>
             </property>
             <property name="default_icon" stdset="0">
-             <url>
-              <string>qrc:/images/transfer_manager/sidebar/delete_search_ico_default.png</string>
-             </url>
+             <string notr="true">qrc:/images/transfer_manager/sidebar/delete_search_ico_default.png</string>
             </property>
            </widget>
           </item>
@@ -752,7 +750,7 @@ QToolButton
             <item>
              <widget class="QPushButton" name="tAllTransfers">
               <property name="sizePolicy">
-               <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
@@ -777,26 +775,11 @@ QToolButton
                <bool>false</bool>
               </property>
               <property name="default_icon" stdset="0">
-               <url>
-                <string>qrc:/images/transfer_manager/sidebar/all_transfers_ico_default.png</string>
-               </url>
+               <string notr="true">qrc:/images/transfer_manager/sidebar/all_transfers_ico_default.png</string>
               </property>
              </widget>
             </item>
-            <item>
-             <spacer name="horizontalSpacer_2">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>40</width>
-                <height>20</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-            <item>
+            <item alignment="Qt::AlignRight">
              <widget class="QLabel" name="lAllTransfers">
               <property name="enabled">
                <bool>true</bool>
@@ -848,7 +831,7 @@ QToolButton
             <item>
              <widget class="QPushButton" name="tDownloads">
               <property name="sizePolicy">
-               <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
@@ -870,26 +853,11 @@ QToolButton
                <bool>false</bool>
               </property>
               <property name="default_icon" stdset="0">
-               <url>
-                <string>qrc:/images/transfer_manager/sidebar/downloads_ico_default.png</string>
-               </url>
+               <string notr="true">qrc:/images/transfer_manager/sidebar/downloads_ico_default.png</string>
               </property>
              </widget>
             </item>
-            <item>
-             <spacer name="horizontalSpacer_3">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>40</width>
-                <height>20</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-            <item>
+            <item alignment="Qt::AlignRight">
              <widget class="QLabel" name="lDownloads">
               <property name="enabled">
                <bool>true</bool>
@@ -941,7 +909,7 @@ QToolButton
             <item>
              <widget class="QPushButton" name="tUploads">
               <property name="sizePolicy">
-               <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
@@ -963,26 +931,11 @@ QToolButton
                <bool>false</bool>
               </property>
               <property name="default_icon" stdset="0">
-               <url>
-                <string>qrc:/images/transfer_manager/sidebar/uploads_ico_default.png</string>
-               </url>
+               <string notr="true">qrc:/images/transfer_manager/sidebar/uploads_ico_default.png</string>
               </property>
              </widget>
             </item>
-            <item>
-             <spacer name="horizontalSpacer_4">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>40</width>
-                <height>20</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-            <item>
+            <item alignment="Qt::AlignRight">
              <widget class="QLabel" name="lUploads">
               <property name="enabled">
                <bool>true</bool>
@@ -1037,7 +990,7 @@ QToolButton
                <bool>true</bool>
               </property>
               <property name="sizePolicy">
-               <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
@@ -1059,26 +1012,11 @@ QToolButton
                <bool>false</bool>
               </property>
               <property name="default_icon" stdset="0">
-               <url>
-                <string>qrc:/images/transfer_manager/sidebar/finished_ico_default.png</string>
-               </url>
+               <string notr="true">qrc:/images/transfer_manager/sidebar/finished_ico_default.png</string>
               </property>
              </widget>
             </item>
-            <item>
-             <spacer name="horizontalSpacer_5">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>40</width>
-                <height>20</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-            <item>
+            <item alignment="Qt::AlignRight">
              <widget class="QLabel" name="lCompleted">
               <property name="enabled">
                <bool>true</bool>
@@ -1133,7 +1071,7 @@ QToolButton
                <bool>true</bool>
               </property>
               <property name="sizePolicy">
-               <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
@@ -1155,26 +1093,11 @@ QToolButton
                <bool>false</bool>
               </property>
               <property name="default_icon" stdset="0">
-               <url>
-                <string>qrc:/images/transfer_manager/sidebar/sidebar_failed_ico_default.png</string>
-               </url>
+               <string notr="true">qrc:/images/transfer_manager/sidebar/sidebar_failed_ico_default.png</string>
               </property>
              </widget>
             </item>
-            <item>
-             <spacer name="horizontalSpacer_failed_2">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>40</width>
-                <height>20</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-            <item>
+            <item alignment="Qt::AlignRight">
              <widget class="QLabel" name="lFailed">
               <property name="enabled">
                <bool>true</bool>
@@ -1255,6 +1178,12 @@ QToolButton
             </property>
             <item>
              <widget class="QPushButton" name="bArchives">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
               <property name="cursor">
                <cursorShape>PointingHandCursor</cursorShape>
               </property>
@@ -1272,26 +1201,11 @@ QToolButton
                <bool>false</bool>
               </property>
               <property name="default_icon" stdset="0">
-               <url>
-                <string>qrc:/images/transfer_manager/sidebar/compressed_default.png</string>
-               </url>
+               <string notr="true">qrc:/images/transfer_manager/sidebar/compressed_default.png</string>
               </property>
              </widget>
             </item>
-            <item>
-             <spacer name="horizontalSpacer_7">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>40</width>
-                <height>20</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-            <item>
+            <item alignment="Qt::AlignRight">
              <widget class="QLabel" name="lArchivesNb">
               <property name="enabled">
                <bool>true</bool>
@@ -1348,6 +1262,12 @@ QToolButton
             </property>
             <item>
              <widget class="QPushButton" name="bDocuments">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
               <property name="cursor">
                <cursorShape>PointingHandCursor</cursorShape>
               </property>
@@ -1365,26 +1285,11 @@ QToolButton
                <bool>false</bool>
               </property>
               <property name="default_icon" stdset="0">
-               <url>
-                <string>qrc:/images/transfer_manager/sidebar/text_default.png</string>
-               </url>
+               <string notr="true">qrc:/images/transfer_manager/sidebar/text_default.png</string>
               </property>
              </widget>
             </item>
-            <item>
-             <spacer name="horizontalSpacer_8">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>40</width>
-                <height>20</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-            <item>
+            <item alignment="Qt::AlignRight">
              <widget class="QLabel" name="lDocumentsNb">
               <property name="sizePolicy">
                <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
@@ -1438,6 +1343,12 @@ QToolButton
             </property>
             <item>
              <widget class="QPushButton" name="bImages">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
               <property name="cursor">
                <cursorShape>PointingHandCursor</cursorShape>
               </property>
@@ -1455,26 +1366,11 @@ QToolButton
                <bool>false</bool>
               </property>
               <property name="default_icon" stdset="0">
-               <url>
-                <string>qrc:/images/transfer_manager/sidebar/image_default.png</string>
-               </url>
+               <string notr="true">qrc:/images/transfer_manager/sidebar/image_default.png</string>
               </property>
              </widget>
             </item>
-            <item>
-             <spacer name="horizontalSpacer_9">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>40</width>
-                <height>20</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-            <item>
+            <item alignment="Qt::AlignRight">
              <widget class="QLabel" name="lImagesNb">
               <property name="sizePolicy">
                <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
@@ -1528,6 +1424,12 @@ QToolButton
             </property>
             <item>
              <widget class="QPushButton" name="bVideos">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
               <property name="cursor">
                <cursorShape>PointingHandCursor</cursorShape>
               </property>
@@ -1545,26 +1447,11 @@ QToolButton
                <bool>false</bool>
               </property>
               <property name="default_icon" stdset="0">
-               <url>
-                <string>qrc:/images/transfer_manager/sidebar/video_default.png</string>
-               </url>
+               <string notr="true">qrc:/images/transfer_manager/sidebar/video_default.png</string>
               </property>
              </widget>
             </item>
-            <item>
-             <spacer name="horizontalSpacer_10">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>40</width>
-                <height>20</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-            <item>
+            <item alignment="Qt::AlignRight">
              <widget class="QLabel" name="lVideosNb">
               <property name="sizePolicy">
                <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
@@ -1618,6 +1505,12 @@ QToolButton
             </property>
             <item>
              <widget class="QPushButton" name="bAudio">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
               <property name="cursor">
                <cursorShape>PointingHandCursor</cursorShape>
               </property>
@@ -1635,26 +1528,11 @@ QToolButton
                <bool>false</bool>
               </property>
               <property name="default_icon" stdset="0">
-               <url>
-                <string>qrc:/images/transfer_manager/sidebar/audio_default.png</string>
-               </url>
+               <string notr="true">qrc:/images/transfer_manager/sidebar/audio_default.png</string>
               </property>
              </widget>
             </item>
-            <item>
-             <spacer name="horizontalSpacer_11">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>40</width>
-                <height>20</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-            <item>
+            <item alignment="Qt::AlignRight">
              <widget class="QLabel" name="lAudioNb">
               <property name="sizePolicy">
                <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
@@ -1708,6 +1586,12 @@ QToolButton
             </property>
             <item>
              <widget class="QPushButton" name="bOther">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
               <property name="cursor">
                <cursorShape>PointingHandCursor</cursorShape>
               </property>
@@ -1725,26 +1609,11 @@ QToolButton
                <bool>false</bool>
               </property>
               <property name="default_icon" stdset="0">
-               <url>
-                <string>qrc:/images/transfer_manager/sidebar/generic_default.png</string>
-               </url>
+               <string notr="true">qrc:/images/transfer_manager/sidebar/generic_default.png</string>
               </property>
              </widget>
             </item>
-            <item>
-             <spacer name="horizontalSpacer_12">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>40</width>
-                <height>20</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-            <item>
+            <item alignment="Qt::AlignRight">
              <widget class="QLabel" name="lOtherNb">
               <property name="sizePolicy">
                <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
@@ -1842,9 +1711,7 @@ QToolButton
                <bool>false</bool>
               </property>
               <property name="default_icon" stdset="0">
-               <url>
-                <string>qrc:/images/transfer_manager/sidebar/search_result_default.png</string>
-               </url>
+               <string notr="true">qrc:/images/transfer_manager/sidebar/search_result_default.png</string>
               </property>
              </widget>
             </item>
@@ -1873,9 +1740,7 @@ QToolButton
                 <normaloff>:/images/transfer_manager/sidebar/delete_search_result_default.png</normaloff>:/images/transfer_manager/sidebar/delete_search_result_default.png</iconset>
               </property>
               <property name="default_icon" stdset="0">
-               <url>
-                <string>qrc:/images/transfer_manager/sidebar/delete_search_result_default.png</string>
-               </url>
+               <string notr="true">qrc:/images/transfer_manager/sidebar/delete_search_result_default.png</string>
               </property>
              </widget>
             </item>
@@ -1907,9 +1772,9 @@ QToolButton
          <number>0</number>
         </property>
         <widget class="QWidget" name="pSpeedAndClear">
-         <layout class="QHBoxLayout" name="pSpeedAndClearLayout" stretch="1,1,0,0">
+         <layout class="QHBoxLayout" name="pSpeedAndClearLayout" stretch="0,0,0,0">
           <property name="spacing">
-           <number>5</number>
+           <number>0</number>
           </property>
           <property name="leftMargin">
            <number>12</number>
@@ -1918,79 +1783,207 @@ QToolButton
            <number>0</number>
           </property>
           <property name="rightMargin">
-           <number>6</number>
+           <number>0</number>
           </property>
           <property name="bottomMargin">
            <number>0</number>
           </property>
           <item>
-           <widget class="QPushButton" name="bDownSpeed">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
+           <widget class="QWidget" name="wDownSpeed" native="true">
             <property name="minimumSize">
              <size>
-              <width>0</width>
+              <width>88</width>
               <height>24</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
-              <width>16777215</width>
+              <width>88</width>
               <height>24</height>
              </size>
             </property>
-            <property name="text">
-             <string notr="true"/>
-            </property>
-            <property name="icon">
-             <iconset resource="../../../gui/Resources_macx.qrc">
-              <normaloff>:/images/transfer_manager/transfers_states/arrow_download_ico.png</normaloff>:/images/transfer_manager/transfers_states/arrow_download_ico.png</iconset>
-            </property>
-            <property name="iconSize">
-             <size>
-              <width>16</width>
-              <height>16</height>
-             </size>
-            </property>
+            <layout class="QHBoxLayout" name="horizontalLayout_16">
+             <property name="spacing">
+              <number>0</number>
+             </property>
+             <property name="leftMargin">
+              <number>4</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>4</number>
+             </property>
+             <property name="bottomMargin">
+              <number>0</number>
+             </property>
+             <item>
+              <widget class="QPushButton" name="lDownSpeedIcon">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>16</width>
+                 <height>16</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>16</width>
+                 <height>16</height>
+                </size>
+               </property>
+               <property name="focusPolicy">
+                <enum>Qt::NoFocus</enum>
+               </property>
+               <property name="text">
+                <string notr="true"/>
+               </property>
+               <property name="icon">
+                <iconset>
+                 <normalon>:/images/transfer_manager/transfers_states/arrow_download_ico.png</normalon>
+                </iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>16</width>
+                 <height>16</height>
+                </size>
+               </property>
+               <property name="flat">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="lDownSpeed">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
+            </layout>
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="bUpSpeed">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
+           <spacer name="horizontalSpacer_16">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
             </property>
+            <property name="sizeType">
+             <enum>QSizePolicy::Fixed</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>12</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QWidget" name="wUpSpeed" native="true">
             <property name="minimumSize">
              <size>
-              <width>0</width>
+              <width>88</width>
               <height>24</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
-              <width>16777215</width>
+              <width>88</width>
               <height>24</height>
              </size>
             </property>
-            <property name="text">
-             <string notr="true"/>
-            </property>
-            <property name="icon">
-             <iconset resource="../../../gui/Resources_macx.qrc">
-              <normaloff>:/images/transfer_manager/transfers_states/arrow_upload_ico.png</normaloff>:/images/transfer_manager/transfers_states/arrow_upload_ico.png</iconset>
-            </property>
-            <property name="iconSize">
-             <size>
-              <width>16</width>
-              <height>16</height>
-             </size>
-            </property>
+            <layout class="QHBoxLayout" name="horizontalLayout_17">
+             <property name="spacing">
+              <number>0</number>
+             </property>
+             <property name="leftMargin">
+              <number>4</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>4</number>
+             </property>
+             <property name="bottomMargin">
+              <number>0</number>
+             </property>
+             <item>
+              <widget class="QPushButton" name="lUpSpeedIcon">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>16</width>
+                 <height>16</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>16</width>
+                 <height>16</height>
+                </size>
+               </property>
+               <property name="focusPolicy">
+                <enum>Qt::NoFocus</enum>
+               </property>
+               <property name="text">
+                <string notr="true"/>
+               </property>
+               <property name="icon">
+                <iconset>
+                 <normalon>:/images/transfer_manager/transfers_states/arrow_upload_ico.png</normalon>
+                </iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>16</width>
+                 <height>16</height>
+                </size>
+               </property>
+               <property name="flat">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="lUpSpeed">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
+            </layout>
            </widget>
           </item>
           <item>
@@ -2000,39 +1993,11 @@ QToolButton
             </property>
             <property name="sizeHint" stdset="0">
              <size>
-              <width>10</width>
+              <width>12</width>
               <height>20</height>
              </size>
             </property>
            </spacer>
-          </item>
-          <item>
-           <widget class="QToolButton" name="bCancelAll">
-            <property name="enabled">
-             <bool>true</bool>
-            </property>
-            <property name="cursor">
-             <cursorShape>PointingHandCursor</cursorShape>
-            </property>
-            <property name="toolTip">
-             <string>Cancel all transfers</string>
-            </property>
-            <property name="icon">
-             <iconset resource="../../../gui/Resources_macx.qrc">
-              <normaloff>:/images/transfer_manager/sidebar/cancel_all_ico_default.png</normaloff>:/images/transfer_manager/sidebar/cancel_all_ico_default.png</iconset>
-            </property>
-            <property name="iconSize">
-             <size>
-              <width>24</width>
-              <height>24</height>
-             </size>
-            </property>
-            <property name="default_icon" stdset="0">
-             <url>
-              <string>qrc:/images/transfer_manager/sidebar/cancel_all_ico_default.png</string>
-             </url>
-            </property>
-           </widget>
           </item>
          </layout>
         </widget>
@@ -2223,22 +2188,6 @@ QToolButton
          <property name="verticalSpacing">
           <number>5</number>
          </property>
-         <item row="0" column="3">
-          <spacer name="wRightPanelScrollMargin">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeType">
-            <enum>QSizePolicy::Fixed</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>0</width>
-             <height>20</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
          <item row="0" column="0" alignment="Qt::AlignTop">
           <widget class="QStackedWidget" name="sCurrentContent">
            <property name="sizePolicy">
@@ -2431,10 +2380,10 @@ QToolButton
                 <cursorShape>PointingHandCursor</cursorShape>
                </property>
                <property name="toolTip">
-                <string>See Plans</string>
+                <string notr="true"/>
                </property>
                <property name="text">
-                <string>See plans</string>
+                <string>Upgrade now</string>
                </property>
               </widget>
              </item>
@@ -2469,285 +2418,6 @@ QToolButton
                 </size>
                </property>
               </spacer>
-             </item>
-            </layout>
-           </widget>
-          </widget>
-         </item>
-         <item row="1" column="0" colspan="3" alignment="Qt::AlignTop">
-          <widget class="AutoResizeStackedWidget" name="sCurrentContentInfo">
-           <property name="minimumSize">
-            <size>
-             <width>0</width>
-             <height>20</height>
-            </size>
-           </property>
-           <property name="currentIndex">
-            <number>0</number>
-           </property>
-           <widget class="QWidget" name="pStatusHeaderInfo">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <layout class="QVBoxLayout" name="verticalLayout_3">
-             <property name="spacing">
-              <number>0</number>
-             </property>
-             <property name="sizeConstraint">
-              <enum>QLayout::SetMinimumSize</enum>
-             </property>
-             <property name="leftMargin">
-              <number>8</number>
-             </property>
-             <property name="topMargin">
-              <number>0</number>
-             </property>
-             <property name="rightMargin">
-              <number>0</number>
-             </property>
-             <property name="bottomMargin">
-              <number>5</number>
-             </property>
-             <item alignment="Qt::AlignTop">
-              <widget class="QLabel" name="lPaused">
-               <property name="text">
-                <string>All paused</string>
-               </property>
-              </widget>
-             </item>
-             <item alignment="Qt::AlignTop">
-              <widget class="QWidget" name="pTransferOverQuota" native="true">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <layout class="QGridLayout" name="gridLayout_4">
-                <property name="sizeConstraint">
-                 <enum>QLayout::SetMinimumSize</enum>
-                </property>
-                <property name="leftMargin">
-                 <number>10</number>
-                </property>
-                <property name="topMargin">
-                 <number>0</number>
-                </property>
-                <property name="rightMargin">
-                 <number>0</number>
-                </property>
-                <property name="bottomMargin">
-                 <number>5</number>
-                </property>
-                <property name="spacing">
-                 <number>2</number>
-                </property>
-                <item row="0" column="1">
-                 <widget class="QLabel" name="lTransferOverQuota">
-                  <property name="text">
-                   <string>Depleted Transfer Quota</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="0" column="0" rowspan="3" alignment="Qt::AlignTop">
-                 <widget class="QPushButton" name="ITransferOverQuotaIcon">
-                  <property name="sizePolicy">
-                   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                    <horstretch>0</horstretch>
-                    <verstretch>0</verstretch>
-                   </sizepolicy>
-                  </property>
-                  <property name="minimumSize">
-                   <size>
-                    <width>32</width>
-                    <height>32</height>
-                   </size>
-                  </property>
-                  <property name="maximumSize">
-                   <size>
-                    <width>32</width>
-                    <height>32</height>
-                   </size>
-                  </property>
-                  <property name="text">
-                   <string/>
-                  </property>
-                  <property name="icon">
-                   <iconset>
-                    <normalon>:/images/transfer_empty_64.png</normalon>
-                   </iconset>
-                  </property>
-                  <property name="iconSize">
-                   <size>
-                    <width>24</width>
-                    <height>24</height>
-                   </size>
-                  </property>
-                 </widget>
-                </item>
-                <item row="1" column="1" alignment="Qt::AlignTop">
-                 <widget class="QLabel" name="lTransferOverQuotaInfo">
-                  <property name="text">
-                   <string>Your queued downloads exceeds the current quota available for your IP address.</string>
-                  </property>
-                 </widget>
-                </item>
-               </layout>
-              </widget>
-             </item>
-             <item alignment="Qt::AlignTop">
-              <widget class="QLabel" name="lStorageOverQuota">
-               <property name="text">
-                <string>Account is full</string>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </widget>
-           <widget class="QWidget" name="pSearchHeaderInfo">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <layout class="QVBoxLayout" name="verticalLayout_4">
-             <property name="spacing">
-              <number>4</number>
-             </property>
-             <property name="sizeConstraint">
-              <enum>QLayout::SetMinimumSize</enum>
-             </property>
-             <property name="leftMargin">
-              <number>8</number>
-             </property>
-             <property name="topMargin">
-              <number>0</number>
-             </property>
-             <property name="rightMargin">
-              <number>0</number>
-             </property>
-             <property name="bottomMargin">
-              <number>5</number>
-             </property>
-             <item alignment="Qt::AlignTop">
-              <widget class="QLabel" name="lNbResults">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="text">
-                <string/>
-               </property>
-              </widget>
-             </item>
-             <item alignment="Qt::AlignTop">
-              <widget class="QWidget" name="searchByTextTypeSelector" native="true">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <layout class="QHBoxLayout" name="searchByTypeLayout">
-                <property name="spacing">
-                 <number>8</number>
-                </property>
-                <property name="sizeConstraint">
-                 <enum>QLayout::SetMinimumSize</enum>
-                </property>
-                <property name="leftMargin">
-                 <number>18</number>
-                </property>
-                <property name="topMargin">
-                 <number>0</number>
-                </property>
-                <property name="rightMargin">
-                 <number>0</number>
-                </property>
-                <property name="bottomMargin">
-                 <number>0</number>
-                </property>
-                <item>
-                 <widget class="QToolButton" name="tAllResults">
-                  <property name="cursor">
-                   <cursorShape>PointingHandCursor</cursorShape>
-                  </property>
-                  <property name="text">
-                   <string>All</string>
-                  </property>
-                  <property name="checkable">
-                   <bool>true</bool>
-                  </property>
-                  <property name="checked">
-                   <bool>true</bool>
-                  </property>
-                  <property name="autoExclusive">
-                   <bool>true</bool>
-                  </property>
-                  <property name="toolButtonStyle">
-                   <enum>Qt::ToolButtonTextOnly</enum>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QToolButton" name="tDlResults">
-                  <property name="cursor">
-                   <cursorShape>PointingHandCursor</cursorShape>
-                  </property>
-                  <property name="text">
-                   <string>Downloads</string>
-                  </property>
-                  <property name="checkable">
-                   <bool>true</bool>
-                  </property>
-                  <property name="autoExclusive">
-                   <bool>true</bool>
-                  </property>
-                  <property name="toolButtonStyle">
-                   <enum>Qt::ToolButtonTextOnly</enum>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QToolButton" name="tUlResults">
-                  <property name="cursor">
-                   <cursorShape>PointingHandCursor</cursorShape>
-                  </property>
-                  <property name="text">
-                   <string>Uploads</string>
-                  </property>
-                  <property name="checkable">
-                   <bool>true</bool>
-                  </property>
-                  <property name="autoExclusive">
-                   <bool>true</bool>
-                  </property>
-                  <property name="toolButtonStyle">
-                   <enum>Qt::ToolButtonTextOnly</enum>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <spacer name="horizontalSpacer_15">
-                  <property name="orientation">
-                   <enum>Qt::Horizontal</enum>
-                  </property>
-                  <property name="sizeHint" stdset="0">
-                   <size>
-                    <width>40</width>
-                    <height>20</height>
-                   </size>
-                  </property>
-                 </spacer>
-                </item>
-               </layout>
-              </widget>
              </item>
             </layout>
            </widget>
@@ -2797,9 +2467,7 @@ QToolButton
                 <normaloff>:/images/transfer_manager/toolbar/import_toolbar_ico_default.png</normaloff>:/images/transfer_manager/toolbar/import_toolbar_ico_default.png</iconset>
               </property>
               <property name="default_icon" stdset="0">
-               <url>
-                <string>qrc:/images/transfer_manager/toolbar/import_toolbar_ico_default.png</string>
-               </url>
+               <string notr="true">qrc:/images/transfer_manager/toolbar/import_toolbar_ico_default.png</string>
               </property>
              </widget>
             </item>
@@ -2816,9 +2484,7 @@ QToolButton
                 <normaloff>:/images/transfer_manager/toolbar/upload_toolbar_ico_default.png</normaloff>:/images/transfer_manager/toolbar/upload_toolbar_ico_default.png</iconset>
               </property>
               <property name="default_icon" stdset="0">
-               <url>
-                <string>qrc:/images/transfer_manager/toolbar/upload_toolbar_ico_default.png</string>
-               </url>
+               <string notr="true">qrc:/images/transfer_manager/toolbar/upload_toolbar_ico_default.png</string>
               </property>
              </widget>
             </item>
@@ -2835,14 +2501,12 @@ QToolButton
                 <normaloff>:/images/transfer_manager/toolbar/download_toolbar_ico_default.png</normaloff>:/images/transfer_manager/toolbar/download_toolbar_ico_default.png</iconset>
               </property>
               <property name="default_icon" stdset="0">
-               <url>
-                <string>qrc:/images/transfer_manager/toolbar/download_toolbar_ico_default.png</string>
-               </url>
+               <string notr="true">qrc:/images/transfer_manager/toolbar/download_toolbar_ico_default.png</string>
               </property>
              </widget>
             </item>
             <item>
-             <widget class="QToolButton" name="tCogWheel">
+             <widget class="QPushButton" name="tCogWheel">
               <property name="cursor">
                <cursorShape>PointingHandCursor</cursorShape>
               </property>
@@ -2851,13 +2515,423 @@ QToolButton
                 <normaloff>:/images/transfer_manager/toolbar/preferences_toolbar_ico_default.png</normaloff>:/images/transfer_manager/toolbar/preferences_toolbar_ico_default.png</iconset>
               </property>
               <property name="default_icon" stdset="0">
-               <url>
-                <string>qrc:/images/transfer_manager/toolbar/preferences_toolbar_ico_default.png</string>
-               </url>
+               <string notr="true">qrc:/images/transfer_manager/toolbar/preferences_toolbar_ico_default.png</string>
               </property>
              </widget>
             </item>
            </layout>
+          </widget>
+         </item>
+         <item row="0" column="3">
+          <spacer name="wRightPanelScrollMargin">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeType">
+            <enum>QSizePolicy::Fixed</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>0</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+		 <item row="1" column="0" colspan="3" alignment="Qt::AlignTop">
+          <widget class="AutoResizeStackedWidget" name="sCurrentContentInfo">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>20</height>
+            </size>
+           </property>
+           <property name="currentIndex">
+            <number>0</number>
+           </property>
+           <widget class="QWidget" name="pStatusHeaderInfo">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <layout class="QVBoxLayout" name="verticalLayout_3">
+             <property name="spacing">
+              <number>0</number>
+             </property>
+             <property name="sizeConstraint">
+              <enum>QLayout::SetMinimumSize</enum>
+             </property>
+             <property name="leftMargin">
+              <number>8</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
+              <number>5</number>
+             </property>
+             <item alignment="Qt::AlignTop">
+              <widget class="QLabel" name="lPaused">
+               <property name="text">
+                <string>All paused</string>
+               </property>
+              </widget>
+             </item>
+             <item alignment="Qt::AlignTop">
+              <widget class="QWidget" name="pTransferOverQuota" native="true">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <layout class="QVBoxLayout" name="verticalLayout_5">
+                <property name="spacing">
+                 <number>5</number>
+                </property>
+                <property name="sizeConstraint">
+                 <enum>QLayout::SetMinimumSize</enum>
+                </property>
+                <property name="leftMargin">
+                 <number>10</number>
+                </property>
+                <property name="topMargin">
+                 <number>0</number>
+                </property>
+                <property name="rightMargin">
+                 <number>0</number>
+                </property>
+                <property name="bottomMargin">
+                 <number>5</number>
+                </property>
+                <item>
+                 <widget class="QLabel" name="lTransferOverQuota">
+                  <property name="text">
+                   <string>Transfer quota exceeded</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QLabel" name="lTransferOverQuotaInfo">
+                  <property name="text">
+                   <string/>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QLabel" name="lTransferOverQuotaMoreAbout">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="minimumSize">
+                   <size>
+                    <width>0</width>
+                    <height>20</height>
+                   </size>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <family>Lato</family>
+                    <pointsize>-1</pointsize>
+                    <bold>false</bold>
+                    <underline>true</underline>
+                   </font>
+                  </property>
+                  <property name="openExternalLinks">
+                   <bool>true</bool>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </widget>
+             </item>
+             <item alignment="Qt::AlignTop">
+              <widget class="QLabel" name="lStorageOverQuota">
+               <property name="text">
+                <string>Your MEGA account is full</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+           <widget class="QWidget" name="pSearchHeaderInfo">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">#wAllResults, #wDlResults, #wUlResults
+{
+   height: 24px;
+   border-radius: 12px;
+   background-color: #EEEEEE;
+}
+
+#wAllResults QLabel, #wDlResults QLabel, #wUlResults QLabel
+{
+   font-size: 12px;  
+   color: #777777;
+   font-weight: bold;
+}
+
+#wAllResults[selected = true], #wDlResults[selected=true], #wUlResults[selected=true]
+{
+  height: 24px;
+  border-radius: 12px;
+  background-color: #2BA6DE;
+}
+
+#wAllResults[selected = true] QLabel, #wDlResults[selected=true] QLabel, #wUlResults[selected=true] QLabel
+{
+  color: #FFFFFF;
+}</string>
+            </property>
+            <layout class="QVBoxLayout" name="verticalLayout_4">
+             <property name="spacing">
+              <number>4</number>
+             </property>
+             <property name="sizeConstraint">
+              <enum>QLayout::SetMinimumSize</enum>
+             </property>
+             <property name="leftMargin">
+              <number>8</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
+              <number>5</number>
+             </property>
+             <item alignment="Qt::AlignTop">
+              <widget class="QLabel" name="lNbResults">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+              </widget>
+             </item>
+             <item alignment="Qt::AlignTop">
+              <widget class="QWidget" name="searchByTextTypeSelector" native="true">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <layout class="QHBoxLayout" name="searchByTypeLayout">
+                <property name="spacing">
+                 <number>8</number>
+                </property>
+                <property name="sizeConstraint">
+                 <enum>QLayout::SetMinimumSize</enum>
+                </property>
+                <property name="leftMargin">
+                 <number>18</number>
+                </property>
+                <property name="topMargin">
+                 <number>10</number>
+                </property>
+                <property name="rightMargin">
+                 <number>0</number>
+                </property>
+                <property name="bottomMargin">
+                 <number>10</number>
+                </property>
+                <item>
+                 <widget class="QWidget" name="wAllResults" native="true">
+                  <property name="minimumSize">
+                   <size>
+                    <width>0</width>
+                    <height>24</height>
+                   </size>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>16777215</width>
+                    <height>24</height>
+                   </size>
+                  </property>
+                  <property name="cursor">
+                   <cursorShape>PointingHandCursor</cursorShape>
+                  </property>
+                  <property name="focusPolicy">
+                   <enum>Qt::StrongFocus</enum>
+                  </property>
+                  <layout class="QHBoxLayout" name="horizontalLayout_18">
+                   <property name="spacing">
+                    <number>12</number>
+                   </property>
+                   <property name="leftMargin">
+                    <number>12</number>
+                   </property>
+                   <property name="topMargin">
+                    <number>0</number>
+                   </property>
+                   <property name="rightMargin">
+                    <number>12</number>
+                   </property>
+                   <property name="bottomMargin">
+                    <number>0</number>
+                   </property>
+                   <item alignment="Qt::AlignLeft">
+                    <widget class="QLabel" name="lAllResults">
+                     <property name="text">
+                      <string>All</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item alignment="Qt::AlignRight">
+                    <widget class="QLabel" name="lAllResultsCounter">
+                     <property name="text">
+                      <string/>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QWidget" name="wDlResults" native="true">
+                  <property name="minimumSize">
+                   <size>
+                    <width>0</width>
+                    <height>24</height>
+                   </size>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>16777215</width>
+                    <height>24</height>
+                   </size>
+                  </property>
+                  <property name="cursor">
+                   <cursorShape>PointingHandCursor</cursorShape>
+                  </property>
+                  <property name="focusPolicy">
+                   <enum>Qt::StrongFocus</enum>
+                  </property>
+                  <layout class="QHBoxLayout" name="horizontalLayout_19">
+                   <property name="spacing">
+                    <number>12</number>
+                   </property>
+                   <property name="leftMargin">
+                    <number>12</number>
+                   </property>
+                   <property name="topMargin">
+                    <number>0</number>
+                   </property>
+                   <property name="rightMargin">
+                    <number>12</number>
+                   </property>
+                   <property name="bottomMargin">
+                    <number>0</number>
+                   </property>
+                   <item alignment="Qt::AlignLeft">
+                    <widget class="QLabel" name="lDlResults">
+                     <property name="text">
+                      <string>Downloads</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item alignment="Qt::AlignRight">
+                    <widget class="QLabel" name="lDlResultsCounter">
+                     <property name="text">
+                      <string/>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QWidget" name="wUlResults" native="true">
+                  <property name="minimumSize">
+                   <size>
+                    <width>0</width>
+                    <height>24</height>
+                   </size>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>16777215</width>
+                    <height>24</height>
+                   </size>
+                  </property>
+                  <property name="cursor">
+                   <cursorShape>PointingHandCursor</cursorShape>
+                  </property>
+                  <property name="focusPolicy">
+                   <enum>Qt::StrongFocus</enum>
+                  </property>
+                  <layout class="QHBoxLayout" name="horizontalLayout_20">
+                   <property name="spacing">
+                    <number>12</number>
+                   </property>
+                   <property name="leftMargin">
+                    <number>12</number>
+                   </property>
+                   <property name="topMargin">
+                    <number>0</number>
+                   </property>
+                   <property name="rightMargin">
+                    <number>12</number>
+                   </property>
+                   <property name="bottomMargin">
+                    <number>0</number>
+                   </property>
+                   <item alignment="Qt::AlignLeft">
+                    <widget class="QLabel" name="lUlResults">
+                     <property name="text">
+                      <string>Uploads</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item alignment="Qt::AlignRight">
+                    <widget class="QLabel" name="lUlResultsCounter">
+                     <property name="text">
+                      <string/>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </widget>
+                </item>
+                <item>
+                 <spacer name="horizontalSpacer_15">
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>40</width>
+                    <height>20</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+               </layout>
+              </widget>
+             </item>
+            </layout>
+           </widget>
           </widget>
          </item>
         </layout>
@@ -3194,6 +3268,44 @@ QToolButton
    <container>1</container>
   </customwidget>
  </customwidgets>
+ <tabstops>
+  <tabstop>bPause</tabstop>
+  <tabstop>bSearch</tabstop>
+  <tabstop>tAllTransfers</tabstop>
+  <tabstop>tDownloads</tabstop>
+  <tabstop>tUploads</tabstop>
+  <tabstop>tCompleted</tabstop>
+  <tabstop>tFailed</tabstop>
+  <tabstop>bArchives</tabstop>
+  <tabstop>bDocuments</tabstop>
+  <tabstop>bImages</tabstop>
+  <tabstop>bVideos</tabstop>
+  <tabstop>bAudio</tabstop>
+  <tabstop>bOther</tabstop>
+  <tabstop>bOpenLinks</tabstop>
+  <tabstop>bUpload</tabstop>
+  <tabstop>bDownload</tabstop>
+  <tabstop>tCogWheel</tabstop>
+  <tabstop>wAllResults</tabstop>
+  <tabstop>wDlResults</tabstop>
+  <tabstop>wUlResults</tabstop>
+  <tabstop>tNoUploads</tabstop>
+  <tabstop>tActionButton</tabstop>
+  <tabstop>tSeePlans</tabstop>
+  <tabstop>bSearchString</tabstop>
+  <tabstop>tClearSearchResult</tabstop>
+  <tabstop>bScanning</tabstop>
+  <tabstop>bUpToDate</tabstop>
+  <tabstop>tNoDownloads</tabstop>
+  <tabstop>tNoTransfers</tabstop>
+  <tabstop>tNoResults</tabstop>
+  <tabstop>tNoFinished</tabstop>
+  <tabstop>bSomeIssues</tabstop>
+  <tabstop>tSearchIcon</tabstop>
+  <tabstop>leSearchField</tabstop>
+  <tabstop>fSearchString</tabstop>
+  <tabstop>tSearchCancel</tabstop>
+ </tabstops>
  <resources>
   <include location="../../../gui/Resources_macx.qrc"/>
  </resources>

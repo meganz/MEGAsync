@@ -2,30 +2,16 @@
 <ui version="4.0">
  <class>ImportMegaLinksDialog</class>
  <widget class="QDialog" name="ImportMegaLinksDialog">
-  <property name="geometry">
-   <rect>
-    <x>0</x>
-    <y>0</y>
-    <width>445</width>
-    <height>200</height>
-   </rect>
-  </property>
-  <property name="sizePolicy">
-   <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-    <horstretch>0</horstretch>
-    <verstretch>0</verstretch>
-   </sizepolicy>
-  </property>
   <property name="minimumSize">
    <size>
     <width>445</width>
-    <height>200</height>
+    <height>0</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
     <width>445</width>
-    <height>430</height>
+    <height>16777215</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -75,35 +61,11 @@ spacing: 10px;
    </property>
    <item>
     <widget class="QListWidget" name="linkList">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
      <property name="minimumSize">
       <size>
        <width>0</width>
-       <height>35</height>
+       <height>36</height>
       </size>
-     </property>
-     <property name="maximumSize">
-      <size>
-       <width>16777215</width>
-       <height>16777215</height>
-      </size>
-     </property>
-     <property name="sizeIncrement">
-      <size>
-       <width>0</width>
-       <height>0</height>
-      </size>
-     </property>
-     <property name="focusPolicy">
-      <enum>Qt::NoFocus</enum>
-     </property>
-     <property name="selectionMode">
-      <enum>QAbstractItemView::NoSelection</enum>
      </property>
     </widget>
    </item>

@@ -9,11 +9,6 @@
         <translation>Detail pemakaian akun</translation>
     </message>
     <message>
-        <source>Cloud Drive</source>
-        <translatorcomment>Label for Cloud Drive space used. Maintain capital letters in each word.(Max 18 characters)</translatorcomment>
-        <translation>Penyimpanan Cloud</translation>
-    </message>
-    <message>
         <source>Inbox</source>
         <translatorcomment>Label for Inbox space used. Maintain capital letters in each word.(Max 18 characters)</translatorcomment>
         <translation>Kotak Masuk</translation>
@@ -34,14 +29,24 @@
         <translation>Transfer</translation>
     </message>
     <message>
-        <source>Bin</source>
-        <translatorcomment>Label for Bin space used. Maintain capital letter.</translatorcomment>
-        <translation>Sampah</translation>
-    </message>
-    <message>
         <source>Of that, size taken up by file versions:</source>
         <translatorcomment>Label to indicate the amount of size occupied by file versions.</translatorcomment>
         <translation>Ukuran diambil oleh versi file</translation>
+    </message>
+    <message>
+        <source>Cloud drive</source>
+        <translatorcomment>Label for Cloud drive space used. Maintain capital letter in first word.(Max 18 characters)</translatorcomment>
+        <translation>Penyimpanan cloud</translation>
+    </message>
+    <message>
+        <source>Rubbish bin</source>
+        <translatorcomment>Label for Rubbish bin space used. Maintain capital letter in first word.(Max 18 characters)</translatorcomment>
+        <translation>Tempat sampah</translation>
+    </message>
+    <message>
+        <source>Available storage</source>
+        <translatorcomment>Label for Available storage space used. Maintain capital letter in first word.(Max 18 characters)</translatorcomment>
+        <translation>Penyimpanan tersedia</translation>
     </message>
 </context>
 <context>
@@ -52,11 +57,6 @@
         <translation>Tidak ada transfer</translation>
     </message>
     <message>
-        <source>Remaining Downloads</source>
-        <translatorcomment>Label to indicate the number of remaining downloads</translatorcomment>
-        <translation>Unduhan yang tersisa</translation>
-    </message>
-    <message>
         <source>download speed</source>
         <translatorcomment>Label to indicate the actual current download speed</translatorcomment>
         <translation>kecepatan download</translation>
@@ -65,11 +65,6 @@
         <source>No Downloads</source>
         <translatorcomment>Label to indicate that there are no active downloads at current time</translatorcomment>
         <translation>Tidak ada download</translation>
-    </message>
-    <message>
-        <source>Remaining Uploads</source>
-        <translatorcomment>Label to indicate the number of remaining uploads</translatorcomment>
-        <translation>Unggahan yang tersisa</translation>
     </message>
     <message>
         <source>upload speed</source>
@@ -91,15 +86,15 @@
         <translatorcomment>Warning message shown when an user try to cancel the selected transfer</translatorcomment>
         <translation>Anda yakin ingin membatalkan transfer ini?</translation>
     </message>
-    <message>
-        <source>Remaining Download</source>
-        <translatorcomment>Label when there is only one remaining download (singular)</translatorcomment>
-        <translation>Unduhan yang tersisa</translation>
+    <message numerus="yes">
+        <source>Remaining upload</source>
+        <translatorcomment>Label to indicate the remaining upload(s)</translatorcomment>
+        <translation><numerusform>Unggahan tersisa</numerusform></translation>
     </message>
-    <message>
-        <source>Remaining Upload</source>
-        <translatorcomment>Label when there is only one remaining upload (singular)</translatorcomment>
-        <translation>Unggahan yang tersisa</translation>
+    <message numerus="yes">
+        <source>Remaining download</source>
+        <translatorcomment>Label to indicate the remaining download(s)</translatorcomment>
+        <translation><numerusform>Unduhan tersisa</numerusform></translation>
     </message>
 </context>
 <context>
@@ -288,7 +283,7 @@
     <message>
         <source>[A] has been deleted/deactivated</source>
         <translatorcomment>Label to indicate that [A] has been deleted from your contacts. Placeholder will be replaced by email of user deleted</translatorcomment>
-        <translation>[A] telah dihapus / dinonaktifkan</translation>
+        <translation>[A] telah dihapus atau dinonaktifkan</translation>
     </message>
     <message>
         <source>[A] established you as a contact</source>
@@ -331,26 +326,6 @@
         <translation>[A] telah meninggalkan folder bersama</translation>
     </message>
     <message>
-        <source>[A] added 1 item</source>
-        <translatorcomment>Label to indicate that [A] has added 1 item to a shared folder. Placeholder will be replaced by email of the user that made the addition.</translatorcomment>
-        <translation>[A] menambahkan 1 item</translation>
-    </message>
-    <message>
-        <source>[A] added [B] items</source>
-        <translatorcomment>Label to indicate that [A] has added [B] items to a shared folder. Placeholder [A] will be replaced by email of the user that made the additions and [B] with the number of added items.</translatorcomment>
-        <translation>[A] menambahkan item [B]</translation>
-    </message>
-    <message>
-        <source>[A] removed 1 item</source>
-        <translatorcomment>Label to indicate that [A] has removed 1 item from a shared folder. Placeholder will be replaced by email of the user that made the deletion.</translatorcomment>
-        <translation>[A] menghapus 1 item</translation>
-    </message>
-    <message>
-        <source>[A] removed [B] items</source>
-        <translatorcomment>Label to indicate that [A] has removed [B] items from a shared folder. Placeholder [A] will be replaced by email of the user that made the deletion and [B] with the number of removed items.</translatorcomment>
-        <translation>[A] menghapus item [B]</translation>
-    </message>
-    <message>
         <source>Your payment for the [A] plan was received</source>
         <translatorcomment>Label to indicate that the user has paid for a [A] PRO plan. Placeholder will be replaced by the PRO plan name</translatorcomment>
         <translation>Pembayaran anda untuk paket [A] telah diterima</translation>
@@ -359,31 +334,6 @@
         <source>Your payment for the [A] plan was unsuccessful</source>
         <translatorcomment>Label to indicate that the the payment for a [A] PRO plan has failed. Placeholder will be replaced by the PRO plan name</translatorcomment>
         <translation>Pembayaran anda untuk paket [A] tidak berhasil</translation>
-    </message>
-    <message>
-        <source>Your PRO membership plan will expire in 1 day</source>
-        <translatorcomment>Label to indicate that the PRO membership will expire in 1 day.</translatorcomment>
-        <translation>Paket keanggotaan Pro anda akan kedaluwarsa dalam 1 hari</translation>
-    </message>
-    <message>
-        <source>Your PRO membership plan will expire in [A] days</source>
-        <translatorcomment>Label to indicate that the PRO membership will expire in [A] days. Placeholder will be replaced by the remaining days until plan will expire.</translatorcomment>
-        <translation>Paket keanggotaan Pro anda akan kedaluwarsa dalam [A] hari</translation>
-    </message>
-    <message>
-        <source>PRO membership plan expiring soon</source>
-        <translatorcomment>Label to indicate that the PRO membership will expire soon.</translatorcomment>
-        <translation>Membership Pro akan habis dalam waktu dekat</translation>
-    </message>
-    <message>
-        <source>Your PRO membership plan expired 1 day ago</source>
-        <translatorcomment>Label to indicate that the PRO membership expired 1 day ago.</translatorcomment>
-        <translation>Paket keanggotaan Pro anda kedaluwarsa 1 hari yang lalu</translation>
-    </message>
-    <message>
-        <source>Your PRO membership plan expired [A] days ago</source>
-        <translatorcomment>Label to indicate that the PRO membership expired [A] days ago. Placeholder will be replaced by the days from the expiration of the PRO membership.</translatorcomment>
-        <translation>Paket keanggotaan Pro anda kedaluwarsa [A] hari yang lalu</translation>
     </message>
     <message>
         <source>Your publicly shared has been taken down</source>
@@ -404,11 +354,6 @@
         <source>Access to shared folder was removed by [A]</source>
         <translatorcomment>Label to indicate that the access for a shared folder has been removed by [A]. Keep placeholder. It will be replaced at runtime with specific email.</translatorcomment>
         <translation>Akses ke folder bersama telah dihapus oleh [A]</translation>
-    </message>
-    <message>
-        <source>New Shared folder from [X]</source>
-        <translatorcomment>Label to indicate that [X] shared a folder with current user. Placeholder will be replaced by email of sharer user.</translatorcomment>
-        <translation>Folder berbagi baru dari [X]</translation>
     </message>
     <message>
         <source>Shared Folder Activity</source>
@@ -439,6 +384,21 @@
         <source>Your publicly shared folder ([A]) has been reinstated</source>
         <translatorcomment>Label to indicate that public shared folder has been reinstated. Placeholder [A] will be replaced by the name of the folder.</translatorcomment>
         <translation>Folder anda yang dibagikan secara publik ([A]) telah dipulihkan</translation>
+    </message>
+    <message numerus="yes">
+        <source>[A] added %n item</source>
+        <translatorcomment>Label to indicate that [A] has added %n items to a shared folder. Placeholder [A] will be replaced by email of the user that made the additions and %n with the number of added items.</translatorcomment>
+        <translation><numerusform>[A] menambahkan %n barang</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>[A] removed %n item</source>
+        <translatorcomment>Label to indicate that [A] has removed %n items from a shared folder. Placeholder [A] will be replaced by email of the user that made the deletion and %n with the number of removed items.</translatorcomment>
+        <translation><numerusform>[A] menghapus %n barang</numerusform></translation>
+    </message>
+    <message>
+        <source>New shared folder from [A]</source>
+        <translatorcomment>Label to indicate that [A] shared a folder with current user. Placeholder will be replaced by email of sharer user.</translatorcomment>
+        <translation>Folder bersama baru dari [A]</translation>
     </message>
 </context>
 <context>
@@ -570,7 +530,7 @@
         <source>The name &quot;%1&quot; is already in use for another sync
 Please enter a different name to identify this synced folder:</source>
         <translatorcomment>Detailed message displayed when a user is using a name for a local folder that is already used. Preserve &quot;%1&quot; code because is used to indicate the local folder at runtime.</translatorcomment>
-        <translation>Nama &#8220;%1&#8221; sudah dipakai untuk sync yang lain. Harap masukan nama yang lain untuk mengidentifikasi folder sync ini:</translation>
+        <translation>Nama &quot;%1&quot; sudah dipakai untuk sync yang lain. Harap masukan nama yang lain untuk mengidentifikasi folder sync ini:</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -797,6 +757,24 @@ Please enter a different name to identify this synced folder:</source>
     </message>
 </context>
 <context>
+    <name>CommonMessages</name>
+    <message numerus="yes">
+        <source>Your Pro membership plan will expire in %n day</source>
+        <translatorcomment>Label to indicate that the PRO membership will expire in %n days. Placeholder will be replaced by the remaining days until plan will expire.</translatorcomment>
+        <translation><numerusform>Paket keanggotaan Pro anda akan kedaluwarsa dalam %n hari</numerusform></translation>
+    </message>
+    <message>
+        <source>Pro membership plan expiring soon</source>
+        <translatorcomment>Label to indicate that the PRO membership will expire soon.</translatorcomment>
+        <translation>Membership Pro akan habis dalam waktu dekat</translation>
+    </message>
+    <message numerus="yes">
+        <source>Your Pro membership plan expired %n day ago</source>
+        <translatorcomment>Label to indicate that the PRO membership expired %n days ago. Placeholder will be replaced by the days from the expiration of the PRO membership.</translatorcomment>
+        <translation><numerusform>Paket keanggotaan Pro anda kedaluwarsa %n hari lalu</numerusform></translation>
+    </message>
+</context>
+<context>
     <name>CrashReportDialog</name>
     <message>
         <source>Error report</source>
@@ -881,41 +859,6 @@ Dalam beberapa kasus, mereka mungkin berisi detail tentang data anda, seperti na
 <context>
     <name>DesktopNotifications</name>
     <message>
-        <source>[A] added 1 item</source>
-        <translatorcomment>Label to indicate that [A] has added 1 item to a shared folder. Placeholder will be replaced by email of the user that made the addition.</translatorcomment>
-        <translation>[A] menambahkan 1 item</translation>
-    </message>
-    <message>
-        <source>[A] added [B] items</source>
-        <translatorcomment>Label to indicate that [A] has added [B] items to a shared folder. Placeholder [A] will be replaced by email of the user that made the additions and [B] with the number of added items.</translatorcomment>
-        <translation>[A] menambahkan item [B]</translation>
-    </message>
-    <message>
-        <source>Your PRO membership plan will expire in 1 day</source>
-        <translatorcomment>Label to indicate that the PRO membership will expire in 1 day.</translatorcomment>
-        <translation>Paket keanggotaan Pro anda akan kedaluwarsa dalam 1 hari</translation>
-    </message>
-    <message>
-        <source>Your PRO membership plan will expire in [A] days</source>
-        <translatorcomment>Label to indicate that the PRO membership will expire in [A] days. Placeholder will be replaced by the remaining days until plan will expire.</translatorcomment>
-        <translation>Paket keanggotaan Pro anda akan kedaluwarsa dalam [A] hari</translation>
-    </message>
-    <message>
-        <source>PRO membership plan expiring soon</source>
-        <translatorcomment>Label to indicate that the PRO membership will expire soon.</translatorcomment>
-        <translation>Membership Pro akan habis dalam waktu dekat</translation>
-    </message>
-    <message>
-        <source>Your PRO membership plan expired 1 day ago</source>
-        <translatorcomment>Label to indicate that the PRO membership expired 1 day ago.</translatorcomment>
-        <translation>Paket keanggotaan Pro anda kedaluwarsa 1 hari yang lalu</translation>
-    </message>
-    <message>
-        <source>Your PRO membership plan expired [A] days ago</source>
-        <translatorcomment>Label to indicate that the PRO membership expired [A] days ago. Placeholder will be replaced by the days from the expiration of the PRO membership.</translatorcomment>
-        <translation>Paket keanggotaan Pro anda kedaluwarsa [A] hari yang lalu</translation>
-    </message>
-    <message>
         <source>[A] has left the shared folder</source>
         <translatorcomment>Label to indicate that [A] has left a shared folder. Placeholder will be replaced by email of the user that left the folder.</translatorcomment>
         <translation>[A] telah meninggalkan folder bersama</translation>
@@ -984,11 +927,6 @@ Dalam beberapa kasus, mereka mungkin berisi detail tentang data anda, seperti na
         <source>Shared Folder Received</source>
         <translatorcomment>Title of the notification when a shared folder has been received</translatorcomment>
         <translation>Folder Bersama Diterima</translation>
-    </message>
-    <message>
-        <source>New shared folder from [X]</source>
-        <translatorcomment>Label to indicate that [X] shared a folder with current user. Placeholder will be replaced by email of sharer user.</translatorcomment>
-        <translation>Folder Berbagi baru dari [X]</translation>
     </message>
     <message>
         <source>Shared Folder Removed</source>
@@ -1071,16 +1009,6 @@ Dalam beberapa kasus, mereka mungkin berisi detail tentang data anda, seperti na
         <translation>Akun anda hampir penuh.</translation>
     </message>
     <message>
-        <source>Upgrade now to a PRO account.</source>
-        <translatorcomment>Notification message shown to encourage the user to upgrade his account</translatorcomment>
-        <translation>Tingkatkan sekarang ke akun Pro.</translation>
-    </message>
-    <message>
-        <source>Get PRO</source>
-        <translatorcomment>Notification button to redirect the user to upgrade account.</translatorcomment>
-        <translation>Dapatkan PRO</translation>
-    </message>
-    <message>
         <source>Your account is full.</source>
         <translatorcomment>Title of the system notification when the account is full.</translatorcomment>
         <translation>Akun anda sudah penuh.</translation>
@@ -1089,11 +1017,6 @@ Dalam beberapa kasus, mereka mungkin berisi detail tentang data anda, seperti na
         <source>Your data is at risk</source>
         <translatorcomment>System notification title to indicate that your data is at risk due to the current account is in over quota storage state for long time without fixing the situation.</translatorcomment>
         <translation>Data anda berisiko</translation>
-    </message>
-    <message>
-        <source>You have [A] days left to save your data</source>
-        <translatorcomment>Notification content to inform the days the user have to save the date before possible deletion. [A] will be replace with remaining days amount.</translatorcomment>
-        <translation>Anda memiliki [A] hari lagi untuk menyimpan data anda</translation>
     </message>
     <message>
         <source>Show in folder</source>
@@ -1134,6 +1057,31 @@ Dalam beberapa kasus, mereka mungkin berisi detail tentang data anda, seperti na
         <source>Contact your business account administrator to resolve the issue and activate your account.</source>
         <translatorcomment>Notification text to inform the user to contact his master business account to resolve the issue and reactivate the account.</translatorcomment>
         <translation>Hubungi administrator akun bisnis anda untuk menyelesaikan masalah dan mengaktifkan akun anda.</translation>
+    </message>
+    <message numerus="yes">
+        <source>[A] added %n item</source>
+        <translatorcomment>Label to indicate that [A] has added %n items to a shared folder. Placeholder [A] will be replaced by email of the user that made the additions and %n with the number of added items.</translatorcomment>
+        <translation><numerusform>[A] menambahkan %n barang</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>You have %n day left to save your data</source>
+        <translatorcomment>Notification content to inform the days the user have to save the date before possible deletion. %n will be replaced with remaining days amount.</translatorcomment>
+        <translation><numerusform>Anda memiliki sisa %n hari untuk menyimpan data anda</numerusform></translation>
+    </message>
+    <message>
+        <source>Upgrade now to a Pro account.</source>
+        <translatorcomment>Notification message shown to encourage the user to upgrade his account</translatorcomment>
+        <translation>Tingkatkan sekarang ke akun Pro.</translation>
+    </message>
+    <message>
+        <source>Get Pro</source>
+        <translatorcomment>Notification button to redirect the user to upgrade account.</translatorcomment>
+        <translation>Dapatkan Pro</translation>
+    </message>
+    <message>
+        <source>New shared folder from [A]</source>
+        <translatorcomment>Label to indicate that [A] shared a folder with current user. Placeholder will be replaced by email of sharer user.</translatorcomment>
+        <translation>Folder bersama baru dari [A]</translation>
     </message>
 </context>
 <context>
@@ -1235,28 +1183,18 @@ Dalam beberapa kasus, mereka mungkin berisi detail tentang data anda, seperti na
         <translation>Klik item toolbar untuk sebuah menu.</translation>
     </message>
     <message>
-        <source>1 file</source>
-        <translatorcomment>Context menu option label to indicate the user has selected a file</translatorcomment>
-        <translation>1 file</translation>
-    </message>
-    <message>
-        <source>%i files</source>
-        <translatorcomment>Context menu option label to indicate the user has selected %i number of files</translatorcomment>
-        <translation>%i files</translation>
-    </message>
-    <message>
-        <source>1 folder</source>
-        <translatorcomment>Context menu option label to indicate the user has selected a folder</translatorcomment>
-        <translation>1 folder</translation>
-    </message>
-    <message>
-        <source>%i folders</source>
-        <translatorcomment>Context menu option label to indicate the user has selected %i number of folders</translatorcomment>
-        <translation>%i folders</translation>
-    </message>
-    <message>
         <source>View previous versions</source>
         <translation>Lihat versi sebelumnya</translation>
+    </message>
+    <message numerus="yes">
+        <source>%n file</source>
+        <translatorcomment>Context menu option label to indicate the user has selected %n number of files</translatorcomment>
+        <translation><numerusform>%n berkas</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>%n folder</source>
+        <translatorcomment>Context menu option label to indicate the user has selected %n number of folders</translatorcomment>
+        <translation><numerusform>%n folder</numerusform></translation>
     </message>
 </context>
 <context>
@@ -1334,11 +1272,6 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <source>Create account</source>
         <translatorcomment>Button label to start the creation of an account process. (String as short as possible)</translatorcomment>
         <translation>Buat akun</translation>
-    </message>
-    <message>
-        <source>Login to MEGA</source>
-        <translatorcomment>Label shown at main dialog before logging in</translatorcomment>
-        <translation>Masuk ke MEGA</translation>
     </message>
     <message>
         <source>Email address</source>
@@ -1490,6 +1423,16 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translatorcomment>Label with hyperlink to recovery website when user is entering incorrect 2FA code during login stage</translatorcomment>
         <translation>[A]Kehilangan perangkat autentikator anda?[/A]</translation>
     </message>
+    <message>
+        <source>Log into MEGA</source>
+        <translatorcomment>Label shown at login dialog where the user can introduce his user and password</translatorcomment>
+        <translation>Masuk ke MEGA</translation>
+    </message>
+    <message>
+        <source>Our SSL key can&apos;t be verified. You could be affected by a man-in-the-middle attack or your antivirus software could be intercepting your communications and causing this problem. Please disable it and try again.</source>
+        <translatorcomment>Error message shown when the program detects an issues with SSL key verification.</translatorcomment>
+        <translation>Kunci SSL kami tidak dapat diverifikasi. Anda bisa terpengaruh oleh serangan man-in-the-middle atau perangkat lunak antivirus anda bisa mencegat komunikasi anda dan menyebabkan masalah ini. Nonaktifkan dan coba lagi.</translation>
+    </message>
 </context>
 <context>
     <name>HTTPServer</name>
@@ -1533,11 +1476,6 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <source>Select local folder</source>
         <translatorcomment>Title of the dialog in which the user select the local default folder.for downloads.</translatorcomment>
         <translation>Pilih folder lokal</translation>
-    </message>
-    <message>
-        <source>Decryption error</source>
-        <translatorcomment>Label to indicate a Decryption error due to a problem with the KEYS</translatorcomment>
-        <translation>Decryption error</translation>
     </message>
     <message>
         <source>Not found</source>
@@ -1726,21 +1664,6 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation>%1 digunakan</translation>
     </message>
     <message>
-        <source>Your data is at risk!</source>
-        <translatorcomment>Label to indicate that your data is at risk due to the current account is in over quota storage state for long time without fixing the situation.</translatorcomment>
-        <translation>Data anda berisiko!</translation>
-    </message>
-    <message>
-        <source>We have contacted you by email to [A] on [B] but you still have [C] files taking up [D] in your MEGA account, which requires you to have [E].</source>
-        <translatorcomment>Informative label about account status regarding over quota storage. Placeholders will be replaced: [A] - user email, [B] - localized date list of emails sent to inform the user about the situation,  [C] - amount of files in the current account, [D] - amount of storage used and [E] - min PRO plan needed to fix the situation.</translatorcomment>
-        <translation>Kami telah menghubungi anda melalui email ke [A] pada [B], tetapi anda masih memiliki [C] file yang menggunakan [D] di akun MEGA anda, yang mengharuskan anda memiliki [E].</translation>
-    </message>
-    <message>
-        <source>You have [A][B] days[/A] left to upgrade. After that, your data is subject to deletion.</source>
-        <translatorcomment>Label to informa about the deadline time to upgrade. Otherwise, data is subject to deletion. Placeholder info: [A][/A] - needed to format and apply text style, [B]- number of days left to upgrade.</translatorcomment>
-        <translation>Anda memiliki [A][B] hari [/A] tersisa untuk meningkatkan. Setelah itu, data anda dapat dihapus.</translation>
-    </message>
-    <message>
         <source>Upgrade account</source>
         <translatorcomment>Button label to forward the user to the webclient for upgrade the current account.</translatorcomment>
         <translation>Upgrade akun</translation>
@@ -1776,11 +1699,6 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation>Transfer yang anda antri melebihi kuota saat ini yang tersedia untuk alamat IP anda dan karenanya dapat terganggu.</translation>
     </message>
     <message>
-        <source>You have [A][B] hours[/A] left to upgrade. After that, your data is subject to deletion.</source>
-        <translatorcomment>Label to inform about the deadline time to upgrade. Otherwise, data is subject to deletion. Placeholder info: [A][/A] - needed to format and apply text style, [B]- number of hours left to upgrade.</translatorcomment>
-        <translation>Anda memiliki [A][B] jam[/A] tersisa untuk meningkatkan. Setelah itu, data anda akan dihapus.</translation>
-    </message>
-    <message>
         <source>One or more syncs have been disabled</source>
         <translatorcomment>Label to indicate that some syncs have been disable due to some error.</translatorcomment>
         <translation>Satu atau lebih sinkronisasi telah dinonaktifkan</translation>
@@ -1799,6 +1717,26 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <source>Open Settings</source>
         <translatorcomment>Button label to open MEGAsync preferences dialog (Linux and Windows).</translatorcomment>
         <translation>Buka Pengaturan</translation>
+    </message>
+    <message>
+        <source>Your data is at risk</source>
+        <translatorcomment>Label to indicate that your data is at risk due to the current account is in over quota storage state for long time without fixing the situation.</translatorcomment>
+        <translation>Data anda berisiko</translation>
+    </message>
+    <message numerus="yes">
+        <source>We have contacted you by email to [A] on [B] but you still have %n file taking up [D] in your MEGA account, which requires you to have [E].</source>
+        <translatorcomment>Informative label about account status regarding over quota storage. Placeholders will be replaced: [A] - user email, [B] - localized date list of emails sent to inform the user about the situation,  %n - amount of files in the current account, [D] - amount of storage used and [E] - min PRO plan needed to fix the situation.</translatorcomment>
+        <translation><numerusform>Kami telah menghubungi anda melalui email ke [A] pada [B]tapi anda masih punya  %n berkas sebesar [D] dalam akun MEGA anda, yang mengharuskan anda memiliki [E].</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>You have [A]%n day[/A] left to upgrade. After that, your data is subject to deletion.</source>
+        <translatorcomment>Label to inform about the deadline time to upgrade. Otherwise, data is subject to deletion. Placeholder info: [A][/A] - needed to format and apply text style, %n- number of days left to upgrade.</translatorcomment>
+        <translation><numerusform>Anda memiliki [A]%n hari [/A] sisa untuk meningkatkan. Setelah itu, data anda dapat dihapus.</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>You have [A]%n hour[/A] left to upgrade. After that, your data is subject to deletion.</source>
+        <translatorcomment>Label to inform about the deadline time to upgrade. Otherwise, data is subject to deletion. Placeholder info: [A][/A] - needed to format and apply text style, %n- number of hours left to upgrade.</translatorcomment>
+        <translation><numerusform>Anda memiliki [A]%n jam[/A] sisa untuk meningkatkan. Setelah itu, data anda dapat dihapus.</numerusform></translation>
     </message>
 </context>
 <context>
@@ -1827,9 +1765,9 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation>Masuk atau buat akun untuk mulai menggunakan Aplikasi MEGA Desktop.</translation>
     </message>
     <message>
-        <source>You need to login MEGA account to run MEGA desktop app.</source>
-        <translatorcomment>Description label to indicate the user needs to login in order to run and fully use MEGA desktop app.</translatorcomment>
-        <translation>Anda harus masuk ke akun MEGA anda untuk menjalankan Aplikasi MEGA Desktop.</translation>
+        <source>You need to log into MEGA account to use the MEGA desktop app.</source>
+        <translatorcomment>Description label to indicate the user needs to log in in order to fully use MEGA desktop app.</translatorcomment>
+        <translation>Anda harus masuk ke akun MEGA untuk menggunakan aplikasi desktop MEGA.</translation>
     </message>
     <message>
         <source>Create account</source>
@@ -2033,20 +1971,10 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation>Install update</translation>
     </message>
     <message>
-        <source>A new version of MEGAsync is available! Click on this message to install it</source>
-        <translatorcomment>Notification message launched to inform the user that there is an available update .</translatorcomment>
-        <translation>Versi terbaru MEGAsync telah tersedia! Klik pesan ini untuk menginstall</translation>
-    </message>
-    <message>
         <source>There was a problem installing the update. Please try again later or download the last version from:
 https://mega.co.nz/#sync</source>
         <translatorcomment>Notification message launched when a problem occurs during the installation of an update. Keep &quot;\n&quot; codes.</translatorcomment>
         <translation>Terjadi masalah saat memasang pembaruan. Silakan coba lagi nanti atau unduh versi terbaru dari: https://mega.nz/sync</translation>
-    </message>
-    <message>
-        <source>Thank you for your collaboration!</source>
-        <translatorcomment>Message displayed to thank when a user send a crash report report to MEGA.</translatorcomment>
-        <translation>Terima kasih atas kerja sama anda!</translation>
     </message>
     <message>
         <source>Update available. Downloading...</source>
@@ -2080,11 +2008,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>MEGAsync sedang berjalan. Klik ikon system tray untuk membuka jendela status.</translation>
     </message>
     <message>
-        <source>A new version of MEGAsync is available!</source>
-        <translatorcomment>Notification message launched when an update is available.</translatorcomment>
-        <translation>Versi baru MEGAsync telah tersedia</translation>
-    </message>
-    <message>
         <source>MEGAsync is now running. Click the menu bar icon to open the status window.</source>
         <translatorcomment>Notification message launched when an user logged in succesfully. String as short as possible.</translatorcomment>
         <translation>MEGAsync sedang berjalan. Klik menu bar ikon untuk membuka status window.</translation>
@@ -2112,12 +2035,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the remote folder doesn&apos;t exist</source>
         <translatorcomment>Notification message launched checking  remote synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.</translatorcomment>
-        <translation>Sync &#8220;%1&#8221; anda telah dinon-aktifkan karena remote folder tidak tersedia</translation>
+        <translation>Sync &quot;%1&quot; anda telah dinon-aktifkan karena remote folder tidak tersedia</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</source>
         <translatorcomment>Notification message launched checking  local synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.</translatorcomment>
-        <translation>Sync &#8220;%1&#8221; anda telah di non-aktifkan karena folder lokal tidak ditemukan</translation>
+        <translation>Sync &quot;%1&quot; anda telah di non-aktifkan karena folder lokal tidak ditemukan</translation>
     </message>
     <message>
         <source>Your account has been blocked. Please contact support@mega.co.nz</source>
@@ -2142,17 +2065,17 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the remote folder is in the rubbish bin</source>
         <translatorcomment>Notification message launched when a sync is disabled due to the remote folder has been deleted. Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
-        <translation>Sync anda &#8220;%1&#8221; telah dibatalkan karena remote folder di dalam rubbish bin</translation>
+        <translation>Sync anda &quot;%1&quot; telah dibatalkan karena remote folder di dalam rubbish bin</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the local folder has changed</source>
         <translatorcomment>Notification message launched when a sync is disabled due to the local folder has changed(moved/deleted/...). Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
-        <translation>Sync &#8220;%1&#8221; anda telah di non-aktifkan karena folder lokal telah berubah</translation>
+        <translation>Sync &quot;%1&quot; anda telah di non-aktifkan karena folder lokal telah berubah</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&apos;t have full access</source>
         <translatorcomment>Notification message launched when a sync is disabled due to the access problems. Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
-        <translation>Sync &#8220;%1&#8221; anda telah berhasil di non-aktifkan. Remote folder (atau sebagian dari itu) tidak memiliki akses penuh</translation>
+        <translation>Sync &quot;%1&quot; anda telah berhasil di non-aktifkan. Remote folder (atau sebagian dari itu) tidak memiliki akses penuh</translation>
     </message>
     <message>
         <source>Over quota</source>
@@ -2162,7 +2085,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the synchronization of VirtualBox shared folders is not supported due to deficiencies in that filesystem.</source>
         <translatorcomment>Notification message launched when an user is trying to sync a non valid VirtualBox shared folder . Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
-        <translation>Sync anda &#8220;%1&#8221; telah dibatalkan karena sinkronisasi folder berbagi VirtualBox tidak didukung karena defisiensi pada filesystem tersebut.</translation>
+        <translation>Sync anda &quot;%1&quot; telah dibatalkan karena sinkronisasi folder berbagi VirtualBox tidak didukung karena defisiensi pada filesystem tersebut.</translation>
     </message>
     <message>
         <source>Error getting link information</source>
@@ -2269,39 +2192,9 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>Kata sandi anda telah dirubah.</translation>
     </message>
     <message>
-        <source>1 file and 1 folder were successfully uploaded</source>
-        <translatorcomment>System notification to inform the user that 1 files and 1 folder were successfully uploaded</translatorcomment>
-        <translation>1 file dan 1 folder berhasil diunggah</translation>
-    </message>
-    <message>
-        <source>%1 files and 1 folder were successfully uploaded</source>
-        <translatorcomment>System notification to inform the user that %1 files and 1 folder were successfully uploaded</translatorcomment>
-        <translation>%1 file dan 1 folder berhasil diunggah</translation>
-    </message>
-    <message>
-        <source>1 file and %1 folders were successfully uploaded</source>
-        <translatorcomment>System notification to inform the user that 1 files and %1 folders were successfully uploaded</translatorcomment>
-        <translation>1 file dan %1 folder berhasil diunggah</translation>
-    </message>
-    <message>
-        <source>%1 files and %2 folders were successfully uploaded</source>
-        <translatorcomment>System notification to inform the user that %1 files and %2 folder were successfully uploaded</translatorcomment>
-        <translation>%1 file dan %2 folder berhasil diunggah</translation>
-    </message>
-    <message>
         <source>Folder Upload</source>
         <translatorcomment>Title of system notifications related to a folder upload</translatorcomment>
         <translation>Unggah folder</translation>
-    </message>
-    <message>
-        <source>1 folder was successfully uploaded</source>
-        <translatorcomment>System notification to inform the user that 1 folder was successfully uploaded</translatorcomment>
-        <translation>1 folder berhasil diunggah</translation>
-    </message>
-    <message>
-        <source>%1 folders were successfully uploaded</source>
-        <translatorcomment>System notification to inform the user that %1 folders were successfully uploaded</translatorcomment>
-        <translation>%1 folder berhasil diunggah</translation>
     </message>
     <message>
         <source>File Upload</source>
@@ -2309,64 +2202,14 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>Unggah Berkas</translation>
     </message>
     <message>
-        <source>1 file was successfully uploaded</source>
-        <translatorcomment>System notification to inform the user that 1 file was successfully uploaded</translatorcomment>
-        <translation>1 file berhasil diunggah</translation>
-    </message>
-    <message>
-        <source>%1 files were successfully uploaded</source>
-        <translatorcomment>System notification to inform the user that %1 files were successfully uploaded</translatorcomment>
-        <translation>%1 file berhasil diunggah</translation>
-    </message>
-    <message>
-        <source>1 file and 1 folder were successfully downloaded</source>
-        <translatorcomment>System notification to inform the user that 1 files and 1 folder were successfully downloaded</translatorcomment>
-        <translation>1 file dan 1 folder berhasil diunduh</translation>
-    </message>
-    <message>
-        <source>%1 files and 1 folder were successfully downloaded</source>
-        <translatorcomment>System notification to inform the user that %1 files and 1 folder were successfully downloaded</translatorcomment>
-        <translation>%1 file dan 1 folder berhasil diunduh</translation>
-    </message>
-    <message>
-        <source>1 file and %1 folders were successfully downloaded</source>
-        <translatorcomment>System notification to inform the user that 1 files and %1 folders were successfully downloaded</translatorcomment>
-        <translation>1 file dan %1 folder berhasil diunduh</translation>
-    </message>
-    <message>
-        <source>%1 files and %2 folders were successfully downloaded</source>
-        <translatorcomment>System notification to inform the user that %1 files and %2 folder were successfully downloaded</translatorcomment>
-        <translation>%1 file dan %2 folder berhasil diunduh</translation>
-    </message>
-    <message>
         <source>Folder Download</source>
         <translatorcomment>Title of system notifications related to a folder download</translatorcomment>
         <translation>Unduh Folder</translation>
     </message>
     <message>
-        <source>1 folder was successfully downloaded</source>
-        <translatorcomment>System notification to inform the user that 1 folder was successfully downloaded</translatorcomment>
-        <translation>1 folder berhasil diunduh</translation>
-    </message>
-    <message>
-        <source>%1 folders were successfully downloaded</source>
-        <translatorcomment>System notification to inform the user that %1 folders were successfully downloaded</translatorcomment>
-        <translation>%1 folder berhasil diunduh</translation>
-    </message>
-    <message>
         <source>File Download</source>
         <translatorcomment>Title of system notifications related to a file download</translatorcomment>
         <translation>Unduh File</translation>
-    </message>
-    <message>
-        <source>1 file was successfully downloaded</source>
-        <translatorcomment>System notification to inform the user that 1 file was successfully downloaded</translatorcomment>
-        <translation>1 file berhasil diunduh</translation>
-    </message>
-    <message>
-        <source>%1 files were successfully downloaded</source>
-        <translatorcomment>System notification to inform the user that %1 files were successfully downloaded</translatorcomment>
-        <translation>%1 file berhasil diunduh</translation>
     </message>
     <message>
         <source>Add Sync</source>
@@ -2528,6 +2371,61 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translatorcomment>Notification message launched when your syncs have been disabled.</translatorcomment>
         <translation>Sinkronisasi anda telah dinonaktifkan</translation>
     </message>
+    <message>
+        <source>Thank you for your collaboration</source>
+        <translatorcomment>Informative message shown when a user makes a report to thank for his help.</translatorcomment>
+        <translation>Terima kasih atas kerjasama anda</translation>
+    </message>
+    <message numerus="yes">
+        <source>%n file</source>
+        <translatorcomment>File count, where %n is the number of files. Used to build the &quot;Files and folders successfully uploaded/downloaded&quot; string.</translatorcomment>
+        <translation><numerusform>%n berkas</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>%n folder</source>
+        <translatorcomment>Folder count, where %n is the number of folders. Used to build the &quot;Files and folders successfully uploaded/downloaded&quot; string.</translatorcomment>
+        <translation><numerusform>%n folder</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>%n file was successfully uploaded</source>
+        <translatorcomment>System notification to inform the user that %1 files were successfully uploaded</translatorcomment>
+        <translation><numerusform>%n file berhasil diunggah </numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>%n file was successfully downloaded</source>
+        <translatorcomment>System notification to inform the user that %1 files were successfully downloaded</translatorcomment>
+        <translation><numerusform>%n file berhasil diunduh </numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>%n folder was successfully uploaded</source>
+        <translatorcomment>System notification to inform the user that %n folders were successfully uploaded</translatorcomment>
+        <translation><numerusform>%n folder berhasil diunggah </numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>%n folder was successfully downloaded</source>
+        <translatorcomment>System notification to inform the user that %n folders were successfully downloaded</translatorcomment>
+        <translation><numerusform>%n folder berhasil diunduh </numerusform></translation>
+    </message>
+    <message>
+        <source>A new version of MEGAsync is available. Click on this message to install it</source>
+        <translatorcomment>System notification to inform the user that there is a new version of MEGAsync available for update. Windows version.</translatorcomment>
+        <translation>Versi baru MEGAsync telah tersedia. Klik pesan ini untuk menginstalnya</translation>
+    </message>
+    <message>
+        <source>A new version of MEGAsync is available</source>
+        <translatorcomment>System notification to inform the user that there is a new version of MEGAsync available for update. macOS version cannot be installed making click so, a new string is provided</translatorcomment>
+        <translation>Versi baru MEGAsync telah tersedia</translation>
+    </message>
+    <message>
+        <source>%1 and %2 were successfully uploaded</source>
+        <translatorcomment>System notification to inform the user that %1 files and %2 folders were successfully uploaded. The %1 is a sentence part for files and %2 for folders.</translatorcomment>
+        <translation>%1 dan %2 berhasil diunggah </translation>
+    </message>
+    <message>
+        <source>%1 and %2 were successfully downloaded</source>
+        <translatorcomment>System notification to inform the user that %1 files and %2 folders were successfully downloaded. The %1 is a sentence part for files and %2 for folders.</translatorcomment>
+        <translation>%1 dan %2 berhasil diunduh </translation>
+    </message>
 </context>
 <context>
     <name>MegaError</name>
@@ -2677,7 +2575,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Not accessible due to ToS/AUP violation</source>
         <translatorcomment>Error shown when import a link that has violated ToS/AUP.</translatorcomment>
-        <translation>Tidak dapat diakses karena pelanggaran ToS / AUP</translation>
+        <translation>Tidak dapat diakses karena pelanggaran ToS/AUP</translation>
     </message>
     <message>
         <source>Upload produces recursivity</source>
@@ -2688,6 +2586,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Storage Quota Exceeded. Upgrade now</source>
         <translatorcomment>Error label to indicate a situation of storage quota exceeded and the user needs to upgrade now in order to continue working with the account.</translatorcomment>
         <translation>Kuota Penyimpanan Terlampaui. Harap tingkatkan sekarang</translation>
+    </message>
+    <message>
+        <source>Decryption error</source>
+        <translatorcomment>String shown when a file/folder name can not be decrypted.</translatorcomment>
+        <translation>Kesalahan dekripsi</translation>
     </message>
 </context>
 <context>
@@ -2716,6 +2619,77 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account.</source>
         <translatorcomment>Description label to indicate the user that his password may be leaked and needs to perform email verification to continue.</translatorcomment>
         <translation>Kata sandi anda bocor dan sekarang digunakan oleh aktor jahat untuk masuk ke akun anda, termasuk, namun tidak terbatas pada, akun MEGA anda.</translation>
+    </message>
+</context>
+<context>
+    <name>MegaItemModel</name>
+    <message>
+        <source>Folder already synced</source>
+        <translatorcomment>Tooltip text to notify the user that this folder is already synced.</translatorcomment>
+        <translation>Folder sudah disinkronkan</translation>
+    </message>
+    <message>
+        <source>Folder contents already synced</source>
+        <translatorcomment>Tooltip text to notify the user that some folder inside the folder that he is hovering with mouse is already synced.</translatorcomment>
+        <translation>Isi folder sudah disinkronkan</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translatorcomment>Column title. This column shows the name of a file or folder.</translatorcomment>
+        <translation>Nama</translation>
+    </message>
+    <message>
+        <source>Sort by status</source>
+        <translatorcomment>First column title tooltip(this column title doesn´t contains text, it shows an icon). Sorts the order of the column by node status, for example synced folders first or last.</translatorcomment>
+        <translation>Urutkan berdasarkan status</translation>
+    </message>
+    <message>
+        <source>Sort by owner name</source>
+        <translatorcomment>Owner column title tooltip. Sorts the order of the column by owner name alphabetically.</translatorcomment>
+        <translation>Urutkan berdasarkan nama pemilik</translation>
+    </message>
+    <message>
+        <source>Sort by date</source>
+        <translatorcomment>Recently used column title tooltip. Sorts the order of the column by date.</translatorcomment>
+        <translation>Urutkan berdasarkan tanggal</translation>
+    </message>
+    <message>
+        <source>Sort by name</source>
+        <translatorcomment>Node name column title tooltip. Sorts the order of the column by date.</translatorcomment>
+        <translation>Diurutkan berdasarkan nama</translation>
+    </message>
+    <message>
+        <source>Today at %1</source>
+        <translatorcomment>Text that appears on &quot;Recently Used&quot; column if the last change was happened today. %1 represents the hour</translatorcomment>
+        <translation>Hari ini di %1</translation>
+    </message>
+    <message>
+        <source>Yesterday at %1</source>
+        <translatorcomment>Text that appears on &quot;Recently Used&quot; column if the last change was happened yesterday. %1 represents the hour</translatorcomment>
+        <translation>Kemarin di %1</translation>
+    </message>
+    <message>
+        <source>%1 at %2</source>
+        <translatorcomment>Text that appears on &quot;Recently Used&quot; column if the last change was previously to yesterday. %1 represents the date (day month and year), while %2 represents the hour)</translatorcomment>
+        <translation>%1 di %2</translation>
+    </message>
+    <message>
+        <source>Recently used</source>
+        <translatorcomment>Column title. This column shows when this file or folder was changed.</translatorcomment>
+        <translation>Terakhir diubah</translation>
+    </message>
+</context>
+<context>
+    <name>MegaItemTreeView</name>
+    <message>
+        <source>Get MEGA link</source>
+        <translatorcomment>Contextual menu text that appears when we right click on a folder/file on node selector. It creates an MEGA link and copy to Clipboard.</translatorcomment>
+        <translation>Dapatkan link MEGA</translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translatorcomment>Contextual menu text that appears when we right click on a folder/file on node selector. It removes the node (file or folder).</translatorcomment>
+        <translation>Hapus</translation>
     </message>
 </context>
 <context>
@@ -2885,6 +2859,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Undefined error</source>
         <translatorcomment>Label to show that an undefined error occurs during a SDK operation.</translatorcomment>
         <translation>Kesalahan tak terdefinisi</translation>
+    </message>
+    <message>
+        <source>You can&apos;t run MEGA Desktop App from this location. Move it into the Applications folder then run it.</source>
+        <translatorcomment>Error message shown when the user is trying to run MEGA Desktop App from a path different than Applications. Only affects to macOS.</translatorcomment>
+        <translation>Anda tidak dapat menjalankan Aplikasi Desktop MEGA dari lokasi ini. Pindahkan ke folder Aplikasi lalu jalankan.</translation>
     </message>
 </context>
 <context>
@@ -3100,10 +3079,6 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translation>Apakah anda yakin ingin menghapus “%1”?</translation>
     </message>
     <message>
-        <source>Delete</source>
-        <translation>Hapus</translation>
-    </message>
-    <message>
         <source>Only files can be used for streaming.</source>
         <translatorcomment>Warning message when users try to select a folder for streaming</translatorcomment>
         <translation>Hanya file dapat digunakan untuk streaming.</translation>
@@ -3113,21 +3088,49 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translation>Pilih item</translation>
     </message>
     <message>
-        <source>Select just one file.</source>
-        <translation>Pilih hanya satu file</translation>
+        <source>Select a MEGA folder</source>
+        <translatorcomment>Node selector dialog title</translatorcomment>
+        <translation>Pilih folder MEGA</translation>
+    </message>
+    <message numerus="yes">
+        <source>You no longer have access to this item. Ask the owner to share again.</source>
+        <translatorcomment>Error message shown when the user is trying to download an file or folder from an incoming share and the owner stops sharing/removes all items</translatorcomment>
+        <translation><numerusform>Anda tidak lagi memiliki akses ke item ini. Minta pemilik untuk berbagi lagi.</numerusform></translation>
     </message>
     <message>
-        <source>Get MEGA link</source>
-        <translation>Dapatkan link MEGA</translation>
+        <source>Cloud drive</source>
+        <translatorcomment>Node selector button Text. Switch the view to show only the cloud drive nodes (files and folders)</translatorcomment>
+        <translation>Penyimpanan Cloud</translation>
+    </message>
+    <message>
+        <source>Incoming shares</source>
+        <translatorcomment>Node selector button Text. Switch the view to show only the incoming shares nodes (files and folders)</translatorcomment>
+        <translation>Berbagi masuk</translation>
+    </message>
+    <message>
+        <source>Error:</source>
+        <translation>Kesalahan:</translation>
+    </message>
+    <message numerus="yes">
+        <source>The item you selected has been removed. To reselect, close this window and try again.</source>
+        <translatorcomment>Error message shown while the user is trying to download an file or folder but all selected nodes were removed</translatorcomment>
+        <translation><numerusform>Item yang anda pilih telah dihapus. Untuk memilih ulang, tutup jendela ini dan coba lagi.</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>%1 item selected</source>
+        <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
+                           First part of string for multi plural support. Full string looks like: 5 items selected. 2 have been removed. To reselect, close this window and try again. </translatorcomment>
+        <translation><numerusform>%1 barang dipilih</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>%1. %2 has been removed. To reselect, close this window and try again.</source>
+        <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
+                           Second and last part of string for multi plural support. Full string looks like: 5 items selected. 2 have been removed. To reselect, close this window and try again. </translatorcomment>
+        <translation><numerusform>%1. %2 telah dihapus. Untuk memilih ulang, tutup jendela ini dan coba lagi. </numerusform></translation>
     </message>
 </context>
 <context>
     <name>NotificationsSettings</name>
-    <message>
-        <source>Account notifications:</source>
-        <translatorcomment>Title for notifications setting pane</translatorcomment>
-        <translation>Notifikasi akun:</translation>
-    </message>
     <message>
         <source>Shares</source>
         <translatorcomment>Notification category for shared folders and nodes</translatorcomment>
@@ -3174,11 +3177,6 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translation>Info</translation>
     </message>
     <message>
-        <source>Desktop notifications</source>
-        <translatorcomment>Title of a checkbox for disconnectig notifications</translatorcomment>
-        <translation>Pemberitahuan desktop</translation>
-    </message>
-    <message>
         <source>Someone accepted your contact request</source>
         <translatorcomment>Title of a checkbox for disconnectig notifications</translatorcomment>
         <translation>Seseorang menerima permintaan kontak anda</translation>
@@ -3198,6 +3196,16 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translatorcomment>Notification category for non-critical info notifications (macx)</translatorcomment>
         <translation>Berbagi:</translation>
     </message>
+    <message>
+        <source>System notifications:</source>
+        <translatorcomment>Title of a checkbox for disconnectig all notifications</translatorcomment>
+        <translation>Pemberitahuan sistem:</translation>
+    </message>
+    <message>
+        <source>Info notifications</source>
+        <translatorcomment>Title of a checkbox for disconnectig secondary info notifications</translatorcomment>
+        <translation>Pemberitahuan info</translation>
+    </message>
 </context>
 <context>
     <name>Notificator</name>
@@ -3209,15 +3217,10 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 </context>
 <context>
     <name>OsNotifications</name>
-    <message>
-        <source>[A] removed 1 item</source>
-        <translatorcomment>Label to indicate that [A] has removed 1 item from a shared folder. Placeholder will be replaced by email of the user that made the deletion.</translatorcomment>
-        <translation>[A] menghapus 1 item</translation>
-    </message>
-    <message>
-        <source>[A] removed [B] items</source>
-        <translatorcomment>Label to indicate that [A] has removed [B] items from a shared folder. Placeholder [A] will be replaced by email of the user that made the deletion and [B] with the number of removed items.</translatorcomment>
-        <translation>[A] menghapus item [B]</translation>
+    <message numerus="yes">
+        <source>[A] removed %n item</source>
+        <translatorcomment>Label to indicate that [A] has removed %n items from a shared folder. Placeholder [A] will be replaced by email of the user that made the deletion and %n with the number of removed items.</translatorcomment>
+        <translation><numerusform>[A] menghapus %n barang</numerusform></translation>
     </message>
 </context>
 <context>
@@ -3322,6 +3325,19 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <source>Dismiss</source>
         <translatorcomment>Button label to dismiss and hide a PSA announcement</translatorcomment>
         <translation>Hilangkan</translation>
+    </message>
+</context>
+<context>
+    <name>PasswordLineEdit</name>
+    <message>
+        <source>Show password</source>
+        <translatorcomment>Password box eye icon tooltip</translatorcomment>
+        <translation>Tampilkan kata sandi</translation>
+    </message>
+    <message>
+        <source>Hide password</source>
+        <translatorcomment>Password box eye icon tooltip</translatorcomment>
+        <translation>Sembunyikan kata sandi</translation>
     </message>
 </context>
 <context>
@@ -3445,11 +3461,6 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translation>%1 per pengguna</translation>
     </message>
     <message>
-        <source>minimum %1 users</source>
-        <translatorcomment>Label to inform about the minimun number of users for a business plan. %1 will be replaced with the minimum number of users.</translatorcomment>
-        <translation>minimum %1 pengguna</translation>
-    </message>
-    <message>
         <source>storage</source>
         <translatorcomment>Label to indicate the specific storage of a pro plan.</translatorcomment>
         <translation>penyimpanan</translation>
@@ -3494,6 +3505,11 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translatorcomment>Balloon tooltip to inform users that additional transfer quota for business plan will be charged at %1 price per %2 TB. %1 reflect price and %2 storage unit.</translatorcomment>
         <translation>Tambahan kuota transfer dikenakan biaya sebesar %1 per %2TB.</translation>
     </message>
+    <message numerus="yes">
+        <source>minimum %n user</source>
+        <translatorcomment>Label to inform about the minimum number of users for a business plan. %1 will be replaced with the minimum number of users.</translatorcomment>
+        <translation><numerusform>minimum %n pengguna</numerusform></translation>
+    </message>
 </context>
 <context>
     <name>Platform</name>
@@ -3536,19 +3552,17 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Added support to stream file links from a folder link.
+        <source>- Full redesign of remote file picker.
 - Fixed translation issues.
-- Improved the user experience.
-- Added a new notifications panel in the settings dialog.
 - Other minor UI fixes and adjustments.
 - Fixed detected crashes on Windows, Linux and macOS.
 </source>
-        <translation>- Menambahkan dukungan untuk mengalirkan tautan file dari tautan folder.
+        <translatorcomment>Changelog for version 4.6.7</translatorcomment>
+        <translation>- Desain ulang penuh pemilih file jarak jauh.
 - Memperbaiki masalah terjemahan.
-- Meningkatkan pengalaman pengguna.
-- Menambahkan panel notifikasi baru di dialog pengaturan.
 - Perbaikan dan penyesuaian UI kecil lainnya.
-- Memperbaiki kerusakan yang terdeteksi di Windows, Linux, dan macOS.</translation>
+- Memperbaiki kerusakan yang terdeteksi di Windows, Linux, dan macOS.
+</translation>
     </message>
 </context>
 <context>
@@ -4025,11 +4039,6 @@ Apakah anda tetap ingin menghapusnya?</translation>
         <translation>Komputer</translation>
     </message>
     <message>
-        <source>%1 byte(s)</source>
-        <translatorcomment>File size measured in bytes</translatorcomment>
-        <translation>%1 byte(s)</translation>
-    </message>
-    <message>
         <source>&lt;b&gt;The name &quot;%1&quot; cannot be used.&lt;/b&gt;&lt;p&gt;Try using another name, with fewer characters or no punctuation marks.</source>
         <translatorcomment>Alert message when file name is incorrect</translatorcomment>
         <translation>&lt;b&gt;Nama “%1” tidak dapat digunakan.&lt;/b&gt;&lt;p&gt;Coba gunakan nama lain, dengan lebih sedikit karakter atau tanpa tanda baca.</translation>
@@ -4364,11 +4373,6 @@ Do you want to restart MEGAsync now?</source>
         <translation>Hapus file lebih lama dari</translation>
     </message>
     <message>
-        <source>days</source>
-        <translatorcomment>Suffix text label for number of days to keep files in local cache.</translatorcomment>
-        <translation>hari</translation>
-    </message>
-    <message>
         <source>SyncDebris (remote cache)</source>
         <translatorcomment>Section label name for remote cache summary and clear action.</translatorcomment>
         <translation>SyncDebris (cache terpencil)</translation>
@@ -4589,11 +4593,6 @@ Do you want to restart MEGAsync now?</source>
         <translation>Install update</translation>
     </message>
     <message>
-        <source>Used quota for the last %1 hours:</source>
-        <translatorcomment>Informative text shown in Account pane for Free account type. Indicates the used quota in the last %1 specified number of hours. Keep the %1 subsitution argument.</translatorcomment>
-        <translation>Kuota yang digunakan untuk yang terakhir %1 jam:</translation>
-    </message>
-    <message>
         <source>Free</source>
         <translatorcomment>Text label indicating the Free tier of account type in Account pane, next to the shield icon indicating also the type of account.</translatorcomment>
         <translation>Gratis</translation>
@@ -4708,6 +4707,16 @@ Do you want to restart MEGAsync now?</source>
         <translatorcomment>Label to let the user start MEGAsync on login with a checkbox.</translatorcomment>
         <translation>Luncurkan saat masuk</translation>
     </message>
+    <message numerus="yes">
+        <source>Used quota for the last %n hour:</source>
+        <translatorcomment>Informative text shown in Account pane for Free account type. Indicates the used quota in the last %n specified number of hours. Keep the %n subsitution argument.</translatorcomment>
+        <translation><numerusform>Kuota yang digunakan untuk yang terakhir %n jam:</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>day</source>
+        <translatorcomment>Suffix text label for number of days to keep files in local cache.</translatorcomment>
+        <translation><numerusform>hari</numerusform></translation>
+    </message>
 </context>
 <context>
     <name>SetupWizard</name>
@@ -4732,11 +4741,6 @@ Do you want to restart MEGAsync now?</source>
         <translation>Ulangi password:</translation>
     </message>
     <message>
-        <source>I agree with the MEGA &lt;a href=&quot;https://mega.co.nz/#terms&quot;&gt;Terms of Service&lt;/a&gt;</source>
-        <translatorcomment>Label to aggre with the Terms of use.  Keep code &lt;a href=&quot;https://mega.co.nz/#terms&quot;&gt;Terms of Service&lt;/a&gt; .String as short as possible.</translatorcomment>
-        <translation>Saya setuju dengan &lt;a href=&#8221;https://mega.nz/terms&#8221;&gt;Kebijakan Pelayanan&lt;/a&gt; MEGA</translation>
-    </message>
-    <message>
         <source>Log in to your MEGA account</source>
         <translatorcomment>Label to let the user login with his credentials.</translatorcomment>
         <translation>Masuk ke akun MEGA anda</translation>
@@ -4745,11 +4749,6 @@ Do you want to restart MEGAsync now?</source>
         <source>Please verify your account using the confirmation link that we have sent to your email account</source>
         <translatorcomment>Label displayed at last step of creation account process to inform the user to verify the new created account.</translatorcomment>
         <translation>Harap verifikasi akun anda dengan link konfirmasi yang telah kami kirim ke email anda</translation>
-    </message>
-    <message>
-        <source>Logging in ...</source>
-        <translatorcomment>Label displayed while logging process.</translatorcomment>
-        <translation>Masuk…</translation>
     </message>
     <message>
         <source>Choose install type</source>
@@ -5027,11 +5026,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>Sync selektif</translation>
     </message>
     <message>
-        <source>Enjoy MEGAsync!</source>
-        <translatorcomment>Label displayed when user completes the setup wizard</translatorcomment>
-        <translation>Selamat menikmati MEGAsync!</translation>
-    </message>
-    <message>
         <source>Please, enter your last name</source>
         <translatorcomment>Label displayed when the user has not filled the last name field.</translatorcomment>
         <translation>Silakan masukkan nama belakang anda</translation>
@@ -5067,14 +5061,24 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>Seluruh Cloud Drive anda akan disinkronkan dengan folder lokal.</translation>
     </message>
     <message>
-        <source>We are all done!</source>
-        <translatorcomment>Label shown when the user completes the initial setup wizard</translatorcomment>
-        <translation>Kita semua selesai!</translation>
-    </message>
-    <message>
         <source>Log in</source>
         <translatorcomment>Button label to open Login form</translatorcomment>
         <translation>Masuk</translation>
+    </message>
+    <message>
+        <source>I agree with the MEGA [A]Terms of Service[/A]</source>
+        <translatorcomment>Label to agree with the Terms of use. Keep the [A] and [/A] tags, they are used for HTML code insertion. Keep the string as short as possible.</translatorcomment>
+        <translation>Saya menerima [A]Ketentuan Penggunaan[/A] MEGA</translation>
+    </message>
+    <message>
+        <source>Enjoy MEGAsync</source>
+        <translatorcomment>Label displayed when user completes the setup wizard</translatorcomment>
+        <translation>Nikmati MEGAsync</translation>
+    </message>
+    <message>
+        <source>We are all done</source>
+        <translatorcomment>Label shown when the user completes the initial setup wizard</translatorcomment>
+        <translation>Kita semua sudah selesai</translation>
     </message>
 </context>
 <context>
@@ -5100,26 +5104,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>Kirim ke pengguna MEGA</translation>
     </message>
     <message>
-        <source>1 file</source>
-        <translatorcomment>Label to indicate one file.</translatorcomment>
-        <translation>1 file</translation>
-    </message>
-    <message>
-        <source>%1 files</source>
-        <translatorcomment>Label to indicate several file. Keep %1 code because it will be filled with the number of files at runtime.</translatorcomment>
-        <translation>%1 file</translation>
-    </message>
-    <message>
-        <source>1 folder</source>
-        <translatorcomment>Label to indicate one folder.</translatorcomment>
-        <translation>1 folder</translation>
-    </message>
-    <message>
-        <source>%1 folders</source>
-        <translatorcomment>Label to indicate several folders. Keep %1 code because it will be filled with the number of folders at runtime.</translatorcomment>
-        <translation>%1 folder</translation>
-    </message>
-    <message>
         <source>%1 (%2, %3)</source>
         <translatorcomment>Keep %1 (%2, %3) code because it will be filled with the number of folders at runtime. It will generate strings like: Upload to MEGA (5 files, 3 folders)</translatorcomment>
         <translation>%1 (%2, %3)</translation>
@@ -5143,6 +5127,16 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>View previous versions</source>
         <translatorcomment>Context menu option to view previous versions of a file through web browser within your MEGA account</translatorcomment>
         <translation>Lihat versi sebelumnya</translation>
+    </message>
+    <message numerus="yes">
+        <source>%n file</source>
+        <translatorcomment>Label to indicate file count. Keep %n code because it will be filled with the number of files at runtime.</translatorcomment>
+        <translation><numerusform>%n berkas</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>%n folder</source>
+        <translatorcomment>Label to indicate folder count. Keep %n code because it will be filled with the number of folders at runtime.</translatorcomment>
+        <translation><numerusform>%n folder</numerusform></translation>
     </message>
 </context>
 <context>
@@ -5388,16 +5382,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translatorcomment>Description label for warning dialog indicating that syncs are not going to be affected by accepting this dialog</translatorcomment>
         <translation>Sinkronisasi tidak terpengaruh oleh tindakan ini.</translation>
     </message>
-    <message>
-        <source>Continue transfers</source>
-        <translatorcomment>Button label that indicates that no one of active transfers will be cancelled (Cancel button on dialog)</translatorcomment>
-        <translation>Lanjutkan transfer</translation>
-    </message>
-    <message>
-        <source>Cancel all transfers</source>
-        <translatorcomment>Button label that indicates that all active transfers will be cancelled (Accept button on dialog)</translatorcomment>
-        <translation>Batalkan semua transfer</translation>
-    </message>
 </context>
 <context>
     <name>TransferManagerItem</name>
@@ -5588,93 +5572,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
 </context>
 <context>
-    <name>UsageWidget</name>
-    <message>
-        <source>Cloud Drive</source>
-        <translation>Cloud Drive</translation>
-    </message>
-    <message>
-        <source>Rubbish Bin</source>
-        <translation>Tempat Sampah</translation>
-    </message>
-    <message>
-        <source>Incoming Shares</source>
-        <translation>Berbagi Masuk</translation>
-    </message>
-    <message>
-        <source>Inbox</source>
-        <translation>Kotak Masuk</translation>
-    </message>
-    <message>
-        <source>Used</source>
-        <translation>Terpakai</translation>
-    </message>
-    <message>
-        <source>Available</source>
-        <translation>Tersedia</translation>
-    </message>
-</context>
-<context>
     <name>Utilities</name>
     <message>
         <source>just now</source>
         <translatorcomment>Label to indicate that a transfer has finished right now</translatorcomment>
         <translation>sekarang</translation>
-    </message>
-    <message>
-        <source>%1 seconds ago</source>
-        <translatorcomment>Label to indicate that a transfer has finished %1 seconds ago</translatorcomment>
-        <translation>%1 detik yang lalu</translation>
-    </message>
-    <message>
-        <source>1 minute ago</source>
-        <translatorcomment>Label to indicate that a transfer has finished 1 minute ago</translatorcomment>
-        <translation>1 menit yang lalu</translation>
-    </message>
-    <message>
-        <source>%1 minutes ago</source>
-        <translatorcomment>Label to indicate that a transfer has finished %1 minutes ago</translatorcomment>
-        <translation>%1 menit yang lalu</translation>
-    </message>
-    <message>
-        <source>1 hour ago</source>
-        <translatorcomment>Label to indicate that a transfer has finished 1 hour ago</translatorcomment>
-        <translation>1 jam yang lalu</translation>
-    </message>
-    <message>
-        <source>%1 hours ago</source>
-        <translatorcomment>Label to indicate that a transfer has finished %1 hours ago</translatorcomment>
-        <translation>%1 jam yang lalu</translation>
-    </message>
-    <message>
-        <source>1 day ago</source>
-        <translatorcomment>Label to indicate that a transfer has finished 1 day ago</translatorcomment>
-        <translation>1 hari yang lalu</translation>
-    </message>
-    <message>
-        <source>%1 days ago</source>
-        <translatorcomment>Label to indicate that a transfer has finished %1 days ago</translatorcomment>
-        <translation>%1 hari yang lalu</translation>
-    </message>
-    <message>
-        <source>1 month ago</source>
-        <translatorcomment>Label to indicate that a transfer has finished %1 month ago</translatorcomment>
-        <translation>1 bulan yang lalu</translation>
-    </message>
-    <message>
-        <source>%1 months ago</source>
-        <translatorcomment>Label to indicate that a transfer has finished %1 months ago</translatorcomment>
-        <translation>%1 bulan yang lalu</translation>
-    </message>
-    <message>
-        <source>1 year ago</source>
-        <translatorcomment>Label to indicate that a transfer has finished %1 year ago</translatorcomment>
-        <translation>1 tahun yang lalu</translation>
-    </message>
-    <message>
-        <source>%1 years ago</source>
-        <translatorcomment>Label to indicate that a transfer has finished %1 years ago</translatorcomment>
-        <translation>%1 tahun yang lalu</translation>
     </message>
     <message>
         <source>TB</source>
@@ -5720,6 +5622,36 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Pro III</source>
         <translatorcomment>Label to refer Pro III tier</translatorcomment>
         <translation>Pro III</translation>
+    </message>
+    <message numerus="yes">
+        <source>%n second ago</source>
+        <translatorcomment>Label to indicate that a transfer has finished %n seconds ago</translatorcomment>
+        <translation><numerusform>%n beberapa detik lalu </numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>%n minute ago</source>
+        <translatorcomment>Label to indicate that a transfer has finished %n minutes ago</translatorcomment>
+        <translation><numerusform>%n beberapa menit lalu</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>%n hour ago</source>
+        <translatorcomment>Label to indicate that a transfer has finished %n hours ago</translatorcomment>
+        <translation><numerusform>%n beberapa jam lalu</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>%n day ago</source>
+        <translatorcomment>Label to indicate that a transfer has finished %n days ago</translatorcomment>
+        <translation><numerusform>%n beberapa hari lalu</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>%n month ago</source>
+        <translatorcomment>Label to indicate that a transfer has finished %n months ago</translatorcomment>
+        <translation><numerusform>%n beberapa bulan lalu</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>%n year ago</source>
+        <translatorcomment>Label to indicate that a transfer has finished %n years ago</translatorcomment>
+        <translation><numerusform>%n beberapa jam lalu</numerusform></translation>
     </message>
 </context>
 <context>

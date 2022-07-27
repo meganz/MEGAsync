@@ -101,14 +101,14 @@ void TransfersManagerSortFilterProxyModel::invalidateModel()
     QFuture<void> filtered = QtConcurrent::run([this](){
         auto sourceM = qobject_cast<TransfersModel*>(sourceModel());
         sourceM->lockModelMutex(true);
-        sourceM->blockSignals(true);
+        sourceM->blockModelSignals(true);
         blockSignals(true);
         mIsFiltering = true;
         invalidate();
         QSortFilterProxyModel::sort(0, mSortOrder);
         mIsFiltering = false;
         sourceM->lockModelMutex(false);
-        sourceM->blockSignals(false);
+        sourceM->blockModelSignals(false);
         blockSignals(false);
         emit layoutChanged();
     });
@@ -178,6 +178,7 @@ void TransfersManagerSortFilterProxyModel::resetTransfersStateCounters()
     mActiveTransfers.clear();
     mPausedTransfers.clear();
     mCompletedTransfers.clear();
+    mFailedTransfers.clear();
 }
 
 TransferBaseDelegateWidget *TransfersManagerSortFilterProxyModel::createTransferManagerItem(QWidget*)
@@ -211,37 +212,35 @@ void TransfersManagerSortFilterProxyModel::updateFilters()
 
 bool TransfersManagerSortFilterProxyModel::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const
 {
-    QModelIndex index = sourceModel()->index(sourceRow, 0, sourceParent);
+    bool accept(false);
 
+    QModelIndex index = sourceModel()->index(sourceRow, 0, sourceParent);
     const auto d (qvariant_cast<TransferItem>(index.data()).getTransferData());
 
     if(d && d->mTag >= 0)
     {
-        auto accept = (d->getState() & mTransferStates)
+        accept = (d->getState() & mTransferStates)
                  && (d->mType & mTransferTypes)
                  && (toInt(d->mFileType) & mFileTypes);
 
-        QMutexLocker lock(&mMutex);
-
-        if (accept)
+        if(!mFilterText.isEmpty())
         {
-            if(!mFilterText.isEmpty())
-            {
-                accept = d->mFilename.contains(mFilterText,Qt::CaseInsensitive);
+            auto containsText = d->mFilename.contains(mFilterText,Qt::CaseInsensitive);
+            accept &= containsText;
 
-                if (accept)
+            if(containsText)
+            {
+                if (d->mType & TransferData::TRANSFER_UPLOAD && !mUlNumber.contains(d->mTag))
                 {
-                    if (d->mType & TransferData::TRANSFER_UPLOAD && !mUlNumber.contains(d->mTag))
-                    {
-                        mUlNumber.insert(d->mTag);
-                    }
-                    else if (d->mType & TransferData::TRANSFER_DOWNLOAD && !mDlNumber.contains(d->mTag))
-                    {
-                        mDlNumber.insert(d->mTag);
-                    }
+                    mUlNumber.insert(d->mTag);
+                }
+                else if (d->mType & TransferData::TRANSFER_DOWNLOAD && !mDlNumber.contains(d->mTag))
+                {
+                    mDlNumber.insert(d->mTag);
                 }
             }
         }
+
 
         //Not needed to add the logic when the d is a sync transfer, as the sync state is permanent
         if(accept && !d->isSyncTransfer() && !mNoSyncTransfers.contains(d->mTag))
@@ -260,6 +259,18 @@ bool TransfersManagerSortFilterProxyModel::filterAcceptsRow(int sourceRow, const
         else
         {
             removeActiveTransferFromCounter(d->mTag);
+        }
+
+        if(accept && (d->isActive() && d->isCompleting()))
+        {
+            if(!mCompletingTransfers.contains(d->mTag))
+            {
+                mCompletingTransfers.insert(d->mTag);
+            }
+        }
+        else
+        {
+            removeCompletingTransferFromCounter(d->mTag);
         }
 
         if(accept && d->isPaused())
@@ -286,11 +297,66 @@ bool TransfersManagerSortFilterProxyModel::filterAcceptsRow(int sourceRow, const
             removeCompletedTransferFromCounter(d->mTag);
         }
 
-        return accept;
+        if(accept && d->isFailed())
+        {
+            if(!mFailedTransfers.contains(d->mTag))
+            {
+                mFailedTransfers.insert(d->mTag);
+            }
+        }
+        else
+        {
+            removeFailedTransferFromCounter(d->mTag);
+        }
     }
 
-    return false;
+    return accept;
 }
+
+bool TransfersManagerSortFilterProxyModel::lessThan(const QModelIndex &left, const QModelIndex &right) const
+{
+    const auto leftItem (qvariant_cast<TransferItem>(left.data()).getTransferData());
+    const auto rightItem (qvariant_cast<TransferItem>(right.data()).getTransferData());
+
+    if(leftItem && rightItem)
+    {
+        switch (mSortCriterion)
+        {
+        case SortCriterion::PRIORITY:
+        {
+            return leftItem->mPriority > rightItem->mPriority;
+        }
+        case SortCriterion::TOTAL_SIZE:
+        {
+            return leftItem->mTotalSize < rightItem->mTotalSize;
+        }
+        case SortCriterion::NAME:
+        {
+            return QString::compare(leftItem->mFilename, rightItem->mFilename, Qt::CaseInsensitive) < 0;
+        }
+        case SortCriterion::SPEED:
+        {
+            return leftItem->mSpeed < rightItem->mSpeed;
+        }
+        case SortCriterion::TIME:
+        {
+            if(leftItem->isProcessing() || rightItem->isProcessing())
+            {
+                return leftItem->mRemainingTime < rightItem->mRemainingTime;
+            }
+            else if(leftItem->isFinished() && rightItem->isFinished())
+            {
+                return leftItem->getRawFinishedTime() < rightItem->getRawFinishedTime();
+            }
+        }
+        default:
+            break;
+        }
+    }
+
+    return QSortFilterProxyModel::lessThan(left, right);
+}
+
 
 //It is called from a QtConcurrent thread
 void TransfersManagerSortFilterProxyModel::onRowsAboutToBeRemoved(const QModelIndex &parent, int first, int last)
@@ -338,13 +404,18 @@ bool TransfersManagerSortFilterProxyModel::updateTransfersCounterFromTag(QExplic
        removeNonSyncedTransferFromCounter(transfer->mTag);
     }
 
-    if(transfer->isFinished())
+    if(transfer->isCompleted())
     {
         removeCompletedTransferFromCounter(transfer->mTag);
+    }
+    else if(transfer->isFailed())
+    {
+        removeFailedTransferFromCounter(transfer->mTag);
     }
 
     removeActiveTransferFromCounter(transfer->mTag);
     removePausedTransferFromCounter(transfer->mTag);
+    removeCompletingTransferFromCounter(transfer->mTag);
 
     return searchRowsRemoved;
 }
@@ -381,48 +452,20 @@ void TransfersManagerSortFilterProxyModel::removeCompletedTransferFromCounter(Tr
     }
 }
 
-bool TransfersManagerSortFilterProxyModel::lessThan(const QModelIndex &left, const QModelIndex &right) const
+void TransfersManagerSortFilterProxyModel::removeFailedTransferFromCounter(TransferTag tag) const
 {
-    const auto leftItem (qvariant_cast<TransferItem>(left.data()).getTransferData());
-    const auto rightItem (qvariant_cast<TransferItem>(right.data()).getTransferData());
-
-    if(leftItem && rightItem)
+    if(mFailedTransfers.contains(tag))
     {
-        switch (mSortCriterion)
-        {
-        case SortCriterion::PRIORITY:
-        {
-            return leftItem->mPriority > rightItem->mPriority;
-        }
-        case SortCriterion::TOTAL_SIZE:
-        {
-            return leftItem->mTotalSize < rightItem->mTotalSize;
-        }
-        case SortCriterion::NAME:
-        {
-            return QString::compare(leftItem->mFilename, rightItem->mFilename, Qt::CaseInsensitive) < 0;
-        }
-        case SortCriterion::SPEED:
-        {
-            return leftItem->mSpeed < rightItem->mSpeed;
-        }
-        case SortCriterion::TIME:
-        {
-            if(leftItem->isProcessing() || rightItem->isProcessing())
-            {
-                return leftItem->mRemainingTime < rightItem->mRemainingTime;
-            }
-            else if(leftItem->isFinished() && rightItem->isFinished())
-            {
-                return leftItem->getRawFinishedTime() < rightItem->getRawFinishedTime();
-            }
-        }
-        default:
-            break;
-        }
+        mFailedTransfers.remove(tag);
     }
+}
 
-    return QSortFilterProxyModel::lessThan(left, right);
+void TransfersManagerSortFilterProxyModel::removeCompletingTransferFromCounter(TransferTag tag) const
+{
+    if(mCompletingTransfers.contains(tag))
+    {
+        mCompletingTransfers.remove(tag);
+    }
 }
 
 QMimeData *TransfersManagerSortFilterProxyModel::mimeData(const QModelIndexList &indexes) const
@@ -446,29 +489,44 @@ bool TransfersManagerSortFilterProxyModel::areAllPaused() const
     return mPausedTransfers.size() == mActiveTransfers.size();
 }
 
-bool TransfersManagerSortFilterProxyModel::isAnyActive() const
+bool TransfersManagerSortFilterProxyModel::isAnyCancellable() const
 {
-    return !mActiveTransfers.isEmpty() ;
+    return (!mActiveTransfers.isEmpty() || !mFailedTransfers.isEmpty());
 }
 
-bool TransfersManagerSortFilterProxyModel::areAllActive() const
+bool TransfersManagerSortFilterProxyModel::areAllCancellable() const
 {
-    return mActiveTransfers.size() == rowCount();
+    return (mActiveTransfers.size() > 0 ||  mFailedTransfers.size() > 0) && (mPausedTransfers.isEmpty() && mCompletedTransfers.isEmpty());
 }
 
 bool TransfersManagerSortFilterProxyModel::areAllSync() const
 {
-    return rowCount() != 0 && mNoSyncTransfers.isEmpty();
+    return !isEmpty() && mNoSyncTransfers.isEmpty();
 }
 
 bool TransfersManagerSortFilterProxyModel::areAllCompleted() const
 {
-    return mCompletedTransfers.size() == rowCount();
+    return mCompletedTransfers.size() > 0 && (mPausedTransfers.isEmpty() && mActiveTransfers.isEmpty() && mFailedTransfers.isEmpty());
 }
 
 bool TransfersManagerSortFilterProxyModel::isAnyCompleted() const
 {
     return !mCompletedTransfers.isEmpty();
+}
+
+bool TransfersManagerSortFilterProxyModel::isAnyActive() const
+{
+    return !mActiveTransfers.isEmpty();
+}
+
+bool TransfersManagerSortFilterProxyModel::isEmpty() const
+{
+    return mCompletedTransfers.isEmpty() && mPausedTransfers.isEmpty() && mActiveTransfers.isEmpty() && mFailedTransfers.isEmpty() && mCompletingTransfers.isEmpty();
+}
+
+int TransfersManagerSortFilterProxyModel::transfersCount() const
+{
+    return mCompletedTransfers.size() + mActiveTransfers.size() + mFailedTransfers.size() + mCompletingTransfers.size();
 }
 
 int TransfersManagerSortFilterProxyModel::activeTransfers() const

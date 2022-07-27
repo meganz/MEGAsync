@@ -4,7 +4,7 @@
 #include <MegaApplication.h>
 #include <mega/types.h>
 
-///NEW FOLDER REIMPLMENETATION
+///NEW FOLDER REIMPLEMENTATION
 NewFolderDialog::NewFolderDialog(std::shared_ptr<mega::MegaNode> parentNode, QWidget *parent)
     :NodeNameSetterDialog(parent)
     , mParentNode(parentNode)
@@ -50,7 +50,12 @@ void NewFolderDialog::onRequestFinish(mega::MegaApi *, mega::MegaRequest *reques
 
 QString NewFolderDialog::dialogText()
 {
-    return tr("Enter the new folder name:");
+    return tr("Enter the new folder name");
+}
+
+void NewFolderDialog::title()
+{
+    setWindowTitle(tr("New folder"));
 }
 
 std::unique_ptr<mega::MegaNode> NewFolderDialog::getNewNode()

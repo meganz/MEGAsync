@@ -378,6 +378,13 @@ QString Utilities::getExtensionPixmapNameMedium(QString fileName)
     return getExtensionPixmapName(fileName, QString::fromAscii(":/images/drag_"));
 }
 
+double Utilities::toDoubleInUnit(unsigned long long bytes, unsigned long long unit)
+{
+    double decimalMultiplier = 100.0;
+    double multipliedValue = decimalMultiplier * static_cast<double>(bytes);
+    return static_cast<int>(multipliedValue / static_cast<double>(unit)) / decimalMultiplier;
+}
+
 QIcon Utilities::getCachedPixmap(QString fileName)
 {
     return gIconCache.getDirect(fileName);
@@ -617,34 +624,35 @@ QString Utilities::getFinishedTimeString(long long secs)
 
 QString Utilities::getSizeString(unsigned long long bytes)
 {
-    auto size = getSizeStringWithoutUnits(bytes);
-
+    QString language = ((MegaApplication*)qApp)->getCurrentLanguageCode();
+    QLocale locale(language);
+    
     if (bytes >= TB)
     {
-        return size + QString::fromAscii(" ")
+        return locale.toString(toDoubleInUnit(bytes, TB)) + QString::fromAscii(" ")
                 + QCoreApplication::translate("Utilities", "TB");
     }
 
     if (bytes >= GB)
     {
-        return size + QString::fromAscii(" ")
+        return locale.toString(toDoubleInUnit(bytes, GB)) + QString::fromAscii(" ")
                 + QCoreApplication::translate("Utilities", "GB");
     }
 
     if (bytes >= MB)
     {
-        return size + QString::fromAscii(" ")
+        return locale.toString(toDoubleInUnit(bytes, MB)) + QString::fromAscii(" ")
                 + QCoreApplication::translate("Utilities", "MB");
     }
 
     if (bytes >= KB)
     {
-        return size + QString::fromAscii(" ")
+        return locale.toString(toDoubleInUnit(bytes, KB)) + QString::fromAscii(" ")
                 + QCoreApplication::translate("Utilities", "KB");
     }
 
-    return size + QStringLiteral(" ")
-            + QCoreApplication::translate("Utilities", "Bytes");
+    return locale.toString(toDoubleInUnit(bytes, 1)) + QString::fromAscii(" ")
+                    + QCoreApplication::translate("Utilities", "Bytes");
 }
 
 QString Utilities::getSizeString(long long bytes)
@@ -657,43 +665,6 @@ QString Utilities::getSizeString(long long bytes)
     QLocale locale(language);
     return locale.toString(bytes) + QStringLiteral(" ")
             + QCoreApplication::translate("Utilities", "Bytes");
-}
-
-QString Utilities::getSizeStringWithoutUnits(unsigned long long bytes)
-{
-    QString language = ((MegaApplication*)qApp)->getCurrentLanguageCode();
-    QLocale locale(language);
-    if (bytes >= TB)
-    {
-        return locale.toString( ((int)((10 * bytes) / TB))/10.0);
-    }
-
-    if (bytes >= GB)
-    {
-        return locale.toString( ((int)((10 * bytes) / GB))/10.0);
-    }
-
-    if (bytes >= MB)
-    {
-        return locale.toString( ((int)((10 * bytes) / MB))/10.0);
-    }
-
-    if (bytes >= KB)
-    {
-        return locale.toString( ((int)((10 * bytes) / KB))/10.0);
-    }
-
-    return locale.toString(bytes);
-}
-
-QString Utilities::getSizeStringWithoutUnits(long long bytes)
-{
-    if (bytes >= 0)
-    {
-        return getSizeStringWithoutUnits(static_cast<unsigned long long>(bytes));
-    }
-
-    return QString();
 }
 
 Utilities::ProgressSize Utilities::getProgressSizes(unsigned long long transferredBytes, unsigned long long totalBytes)

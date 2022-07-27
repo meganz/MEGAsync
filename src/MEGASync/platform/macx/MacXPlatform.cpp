@@ -121,7 +121,7 @@ void MacXPlatform::enableFinderExtension(bool value)
     QProcess::startDetached(QString::fromUtf8("pluginkit"), scriptArgs);
 }
 
-void MacXPlatform::showInFolder(QString pathIn)
+bool MacXPlatform::showInFolder(QString pathIn)
 {
 
     //Escape possible double quotes from osascript command to avoid syntax errors and stop parsing arguments
@@ -134,7 +134,7 @@ void MacXPlatform::showInFolder(QString pathIn)
     scriptArgs.clear();
     scriptArgs << QString::fromUtf8("-e")
                << QString::fromUtf8("tell application \"Finder\" to activate");
-    QProcess::startDetached(QString::fromAscii("osascript"), scriptArgs);
+    return QProcess::startDetached(QString::fromAscii("osascript"), scriptArgs);
 }
 
 void MacXPlatform::startShellDispatcher(MegaApplication *receiver)
@@ -244,6 +244,16 @@ void MacXPlatform::enableDialogBlur(QDialog *dialog)
 bool MacXPlatform::registerUpdateJob()
 {
     return registerUpdateDaemon();
+}
+
+void MacXPlatform::execBackgroundWindow(QDialog *window)
+{
+    window->exec();
+}
+
+void MacXPlatform::showBackgroundWindow(QDialog *window)
+{
+    window->show();
 }
 
 void MacXPlatform::uninstall()

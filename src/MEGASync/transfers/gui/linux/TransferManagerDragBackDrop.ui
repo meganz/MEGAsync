@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string notr="true"/>
   </property>
   <property name="styleSheet">
    <string notr="true">background-color: rgba(255, 255, 255, 229);</string>
@@ -161,7 +161,7 @@ font-size: 16px;
   </layout>
  </widget>
  <resources>
-  <include location="../../../Resources_linux.qrc"/>
+  <include location="../../../gui/Resources_linux.qrc"/>
  </resources>
  <connections/>
 </ui>

@@ -3,6 +3,7 @@
 #include "NodeSelector.h"
 
 #include <QSortFilterProxyModel>
+#include <QCollator>
 
 
 namespace mega{
@@ -59,6 +60,7 @@ private:
     QVector<QModelIndex> forEach(std::shared_ptr<mega::MegaNodeList> parentNodeList, QModelIndex parent = QModelIndex());
     MegaItemModel* getMegaModel();
     Filter mFilter;
+    QCollator mCollator;
 };
 
 #endif // MEGAITEMPROXYMODEL_H

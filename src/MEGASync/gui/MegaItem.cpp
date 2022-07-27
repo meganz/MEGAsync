@@ -1,7 +1,6 @@
 #include "MegaItem.h"
 #include "QMegaMessageBox.h"
 #include "MegaApplication.h"
-#include "AvatarWidget.h"
 #include "model/SyncModel.h"
 #include "MegaApplication.h"
 #include "mega/utils.h"
@@ -27,7 +26,7 @@ MegaItem::MegaItem(std::unique_ptr<MegaNode> node, MegaItem *parentItem, bool sh
     mOwner(nullptr),
     mMegaApi(MegaSyncApp->getMegaApi())
 { 
-    if(isRoot() || mNode->isFile() || mNode->isInShare())
+    if(mNode->isFile() || mNode->isInShare())
     {
         mStatus = STATUS::NONE;
         return;
@@ -49,7 +48,7 @@ MegaItem::MegaItem(std::unique_ptr<MegaNode> node, MegaItem *parentItem, bool sh
     }
     if(parent_item && parent_item->getNode()->isInShare())
     {
-        foreach(const QString& folder, SyncModel::instance()->getMegaFolders(SyncModel::AllHandledSyncTypes))
+        foreach(const QString& folder, SyncModel::instance()->getCloudDriveSyncMegaFolders(false))
         {
             if(folder.startsWith(parent_item->getOwnerEmail()))
             {
@@ -61,7 +60,13 @@ MegaItem::MegaItem(std::unique_ptr<MegaNode> node, MegaItem *parentItem, bool sh
     ////////////
     else
     {
-        calculateSyncStatus(SyncModel::instance()->getMegaFolders(SyncModel::AllHandledSyncTypes));
+        QStringList syncList = SyncModel::instance()->getCloudDriveSyncMegaFolders(true);
+        if(isRoot() && !syncList.isEmpty())
+        {
+            mStatus = STATUS::SYNC_PARENT;
+            return;
+        }
+        calculateSyncStatus(syncList);
     }
 }
 
@@ -411,10 +416,12 @@ void MegaItem::calculateSyncStatus(const QStringList &folders)
         if(syncFolder.startsWith(parentFolders))
         {
             mStatus = STATUS::SYNC_PARENT;
+            return;
         }
         else if(parentFolders.startsWith(syncFolder))
         {
             mStatus = STATUS::SYNC_CHILD;
+            return;
         }
     }
 }

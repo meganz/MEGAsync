@@ -129,6 +129,8 @@ public:
     QList<mega::MegaHandle> getMegaFolderHandles(const QVector<SyncType>& types);
     QList<mega::MegaHandle> getMegaFolderHandles(SyncType type)
         {return getMegaFolderHandles(QVector<SyncType>({type}));}
+    //cloudDrive = true: only cloud drive mega folders. If false will return only inshare syncs.
+    QStringList getCloudDriveSyncMegaFolders(bool cloudDrive = true);
 
     bool isRemoteRootSynced();
 

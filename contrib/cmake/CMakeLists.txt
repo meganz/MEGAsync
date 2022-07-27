@@ -66,8 +66,11 @@ set (USE_QT 1 CACHE STRING "")
 set (ENABLE_LOG_PERFORMANCE 1 CACHE STRING "")
 set (NO_READLINE 1 CACHE STRING "")
 set (USE_DRIVE_NOTIFICATIONS 1 CACHE STRING "")
-
-set (MEGA_LINK_DYNAMIC_CRT 1)  # since we are linking with QT official DLLs
+if (WIN32)
+    set (MEGA_LINK_DYNAMIC_CRT 1)  # since we are linking with QT official DLLs
+else()
+    set(USE_PTHREAD 1 CACHE STRING "")
+endif()
 
 set(RepoDir "${CMAKE_CURRENT_LIST_DIR}/../.."  CACHE STRING "")
 set(MEGAsyncDir "${RepoDir}/src/MEGASync")
@@ -168,7 +171,6 @@ set (FORMS
     ${MEGAsyncDir}/gui/${UiDir}/PlanWidget.ui
     ${MEGAsyncDir}/gui/${UiDir}/UpgradeDialog.ui
     ${MEGAsyncDir}/gui/${UiDir}/InfoWizard.ui
-    ${MEGAsyncDir}/gui/${UiDir}/MegaSpeedGraph.ui
     ${MEGAsyncDir}/gui/${UiDir}/AddExclusionDialog.ui
     ${MEGAsyncDir}/gui/${UiDir}/StatusInfo.ui
     ${MEGAsyncDir}/gui/${UiDir}/PSAwidget.ui
@@ -272,7 +274,6 @@ set (MOC_INPUT
     ${MEGAsyncDir}/gui/InfoWizard.h
     ${MEGAsyncDir}/gui/Login2FA.h
     ${MEGAsyncDir}/gui/MegaProxyStyle.h
-    ${MEGAsyncDir}/gui/MegaSpeedGraph.h
     ${MEGAsyncDir}/gui/MultiQFileDialog.h
     ${MEGAsyncDir}/gui/NodeSelector.h
     ${MEGAsyncDir}/gui/PasteMegaLinksDialog.h
@@ -303,16 +304,15 @@ set (MOC_INPUT
     ${MEGAsyncDir}/gui/SyncsMenu.h
     ${MEGAsyncDir}/gui/AddBackupDialog.h
     ${MEGAsyncDir}/gui/RemoveBackupDialog.h
-    ${MEGAsyncDir}/gui/SwitchButton.h
     ${MEGAsyncDir}/gui/GuiUtilities.h
     ${MEGAsyncDir}/gui/EventHelper.h
+    ${MEGAsyncDir}/gui/AutoResizeStackedWidget.h
     ${MEGAsyncDir}/gui/UserAttributesRequests/FullName.h
     ${MEGAsyncDir}/gui/UserAttributesRequests/Avatar.h
     ${MEGAsyncDir}/gui/BackupItemModel.h
     ${MEGAsyncDir}/gui/SyncItemModel.h
     ${MEGAsyncDir}/gui/SyncTableView.h
     ${MEGAsyncDir}/gui/BackupTableView.h
-    ${MEGAsyncDir}/gui/AutoResizeStackedWidget.h
     ${MEGAsyncDir}/gui/ViewLoadingScene.h
     ${MEGAsyncDir}/gui/ScanningWidget.h
     ${MEGAsyncDir}/gui/BlurredShadowEffect.h
@@ -453,7 +453,6 @@ set (SRCS
     ${MEGAsyncDir}/gui/PlanWidget.cpp
     ${MEGAsyncDir}/gui/InfoWizard.cpp
     ${MEGAsyncDir}/gui/QMegaMessageBox.cpp
-    ${MEGAsyncDir}/gui/MegaSpeedGraph.cpp
     ${MEGAsyncDir}/gui/AvatarWidget.cpp
     ${MEGAsyncDir}/gui/MenuItemAction.cpp
     ${MEGAsyncDir}/gui/AddExclusionDialog.cpp
@@ -534,7 +533,6 @@ set (SRCS
     ${MEGAsyncDir}/control/TransferBatch.cpp
     ${MEGAsyncDir}/control/SyncController.cpp
     ${MEGAsyncDir}/control/UserAttributesManager.cpp
-    ${MEGAsyncDir}/control/TextDecorator.cpp
 
     ${MEGAsyncDir}/model/SyncSettings.cpp
     ${MEGAsyncDir}/model/SyncModel.cpp

@@ -697,6 +697,7 @@ int main(int argc, char *argv[])
     QT_TRANSLATE_NOOP("MegaError", "Your account has been suspended due to multiple breaches of MEGA’s Terms of Service. Please check your email inbox.");
     QT_TRANSLATE_NOOP("MegaError", "Your account was terminated due to breach of Mega’s Terms of Service, such as abuse of rights of others; sharing and/or importing illegal data; or system abuse.");
     QT_TRANSLATE_NOOP("MegaError", "Storage Quota Exceeded. Upgrade now");
+    QT_TRANSLATE_NOOP("MegaError", "Decryption error");
     QT_TRANSLATE_NOOP("FinderExtensionApp", "Get MEGA link");
     QT_TRANSLATE_NOOP("FinderExtensionApp", "View on MEGA");
     QT_TRANSLATE_NOOP("FinderExtensionApp", "No options available");

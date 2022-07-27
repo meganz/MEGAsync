@@ -27,9 +27,6 @@ struct TransfersCount
     int failedUploads;
     int failedDownloads;
 
-    int failedSyncUploads;
-    int failedSyncDownloads;
-
     long long completedUploadBytes;
     long long completedDownloadBytes;
 
@@ -46,8 +43,6 @@ struct TransfersCount
         pendingDownloads(0),
         failedUploads(0),
         failedDownloads(0),
-        failedSyncUploads(0),
-        failedSyncDownloads(0),
         completedUploadBytes(0),
         completedDownloadBytes(0),
         totalUploadBytes(0),
@@ -57,7 +52,7 @@ struct TransfersCount
     int completedDownloads()const {return totalDownloads - pendingDownloads - failedDownloads;}
     int completedUploads() const {return totalUploads - pendingUploads - failedUploads;}
 
-    long long totalFailedTransfers() const {return failedUploads + failedSyncUploads + failedDownloads + failedSyncDownloads;}
+    long long totalFailedTransfers() const {return failedUploads + failedDownloads;}
 
     void clear()
     {
@@ -193,6 +188,8 @@ public:
     void clearFailedTransfers(const QModelIndexList& indexes);
     void clearTransfers(const QMap<QModelIndex,QExplicitlySharedDataPointer<TransferData>> uploads,
                         const QMap<QModelIndex,QExplicitlySharedDataPointer<TransferData>> downloads);
+    void performClearTransfers(const QMap<QModelIndex,QExplicitlySharedDataPointer<TransferData>> uploads,
+                        const QMap<QModelIndex,QExplicitlySharedDataPointer<TransferData>> downloads);
     void classifyUploadOrDownloadCompletedTransfers(QMap<QModelIndex, QExplicitlySharedDataPointer<TransferData> > &uploads,
                         QMap<QModelIndex, QExplicitlySharedDataPointer<TransferData> > &downloads,
                                            const QModelIndex &index);
@@ -220,6 +217,18 @@ public:
      QExplicitlySharedDataPointer<TransferData> getTransferByTag(int tag) const;
      void sendDataChangedByTag(int tag);
 
+     void blockModelSignals(bool state);
+
+     bool hasActiveTransfers() const;
+     void setHasActiveTransfers(bool newHasActiveTransfers);
+
+     void uiUnblocked();
+
+     bool syncsInRowsToCancel() const;
+     QWidget *cancelledFrom() const;
+     void resetSyncInRowsToCancel();
+     void showSyncCancelledWarning();
+
 signals:
     void pauseStateChanged(bool pauseState);
     void transferPauseStateChanged();
@@ -235,6 +244,7 @@ signals:
     void internalMoveFinished() const;
     void mostPriorityTransferUpdate(int tag);
     void transfersProcessChanged();
+    void showInFolderFinished(bool);
 
 public slots:
     void pauseResumeAllTransfers(bool state);
@@ -244,10 +254,12 @@ private slots:
     void processStartTransfers(QList<QExplicitlySharedDataPointer<TransferData>>& transfersToStart);
     void processUpdateTransfers();
     void processCancelTransfers();
+    void processSyncFailedTransfers();
     void cacheCancelTransfersTags();
     void processFailedTransfers();
     void onProcessTransfers();
     void updateTransfersCount();
+    void onClearTransfersFinished();
 
 private:
     void removeRows(QModelIndexList &indexesToRemove);
@@ -260,7 +272,7 @@ private:
     void setUiBlockedMode(bool state);
 
     void setUiBlockedModeByCounter(uint32_t transferCount);
-    void updateUiBlockedByCounter(uint16_t updates);
+    void updateUiBlockedByCounter(int updates);
     bool isUiBlockedByCounter() const;
     void setUiBlockedByCounterMode(bool state);
 
@@ -284,20 +296,26 @@ private:
 
     TransferThread::TransfersToProcess mTransfersToProcess;
     QFutureWatcher<void> mUpdateTransferWatcher;
+    QFutureWatcher<void> mClearTransferWatcher;
 
     uint8_t mTransfersProcessChanged;
     uint8_t mUpdateMostPriorityTransfer;
     uint8_t mUiBlockedCounter;
 
-    uint32_t mUiBlockedByCounter;
+    int mUiBlockedByCounter;
     uint8_t  mUiBlockedByCounterSafety;
 
     QHash<TransferTag, QPersistentModelIndex> mTagByOrder;
     QList<TransferTag> mRowsToCancel;
+    QWidget* mCancelledFrom;
+    bool mSyncsInRowsToCancel;
+
+    QList<TransferTag> mFailedTransferToClear;
     mutable QMutex mModelMutex;
     QTimer mMostPriorityTransferTimer;
 
     bool mAreAllPaused;
+    bool mHasActiveTransfers;
 };
 
 Q_DECLARE_METATYPE(QAbstractItemModel::LayoutChangeHint)

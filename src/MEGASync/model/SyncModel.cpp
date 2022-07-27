@@ -391,6 +391,33 @@ QStringList SyncModel::getSyncIDs(const QVector<SyncType>& types)
     return value;
 }
 
+QStringList SyncModel::getCloudDriveSyncMegaFolders(bool cloudDrive)
+{
+    QMutexLocker qm(&syncMutex);
+    QStringList value;
+    for (auto type : AllHandledSyncTypes)
+    {
+        for (auto &cs : configuredSyncs[type])
+        {
+            QString megaFolder = configuredSyncsMap[cs]->getMegaFolder();
+            mega::MegaApi* megaApi = MegaSyncApp->getMegaApi();
+
+            auto parent_node = std::unique_ptr<MegaNode>(megaApi->getNodeByPath(megaFolder.toStdString().data()));
+            while(parent_node && parent_node->getParentHandle() != INVALID_HANDLE)
+            {
+                parent_node = std::unique_ptr<MegaNode>(megaApi->getNodeByHandle(parent_node->getParentHandle()));
+            }
+
+            if((parent_node->isInShare() && !cloudDrive)
+                    || (megaApi->getRootNode()->getHandle() == parent_node->getHandle() && cloudDrive))
+            {
+                value.append(megaFolder.append(QLatin1Char('/')));
+            }
+        }
+    }
+    return value;
+}
+
 QStringList SyncModel::getMegaFolders(const QVector<SyncType>& types)
 {
     QMutexLocker qm(&syncMutex);

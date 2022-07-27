@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string notr="true"/>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
@@ -101,7 +101,7 @@
      <item>
       <widget class="QLabel" name="lCancelTransfers">
        <property name="text">
-        <string>Cancel Transfers</string>
+        <string>Cancel transfers</string>
        </property>
        <property name="role" stdset="0">
         <string notr="true">title</string>
