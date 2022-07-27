@@ -1461,8 +1461,7 @@ void SettingsDialog::addSyncFolder(MegaHandle megaFolderHandle)
     if(!mApp->showSyncOverquotaDialog())
         return;
 
-    QPointer<BindFolderDialog> dialog = new BindFolderDialog(mApp, mSyncNames, mModel->getLocalFolders(SyncModel::AllHandledSyncTypes),
-                                                             mModel->getMegaFolders(SyncModel::AllHandledSyncTypes), this);
+    QPointer<BindFolderDialog> dialog = new BindFolderDialog(mApp, this);
     dialog->setMegaFolder(megaFolderHandle);
 
     int result = dialog->exec();
@@ -1483,7 +1482,7 @@ void SettingsDialog::addSyncFolder(MegaHandle megaFolderHandle)
     }
 
     syncsStateInformation(SyncStateInformation::SAVING_SYNCS);
-    mSyncController.addSync(localFolderPath, dialog->getMegaFolder(), dialog->getSyncName());
+    mSyncController.addSync(localFolderPath, dialog->getMegaFolder(), dialog->getSyncName(), MegaSync::TYPE_TWOWAY);
 
     delete dialog;
 }

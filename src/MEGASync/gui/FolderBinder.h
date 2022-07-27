@@ -1,14 +1,14 @@
 #ifndef FOLDERBINDER_H
 #define FOLDERBINDER_H
 
+#include <megaapi.h>
+
 #include <QWidget>
 #include <QApplication>
 #include <QDialog>
 #include <QMessageBox>
 #include <QFileDialog>
 #include <QDesktopServices>
-
-#include "NodeSelector.h"
 
 namespace Ui {
 class FolderBinder;
@@ -29,7 +29,6 @@ public:
 
 private slots:
     void on_bLocalFolder_clicked();
-
     void on_bMegaFolder_clicked();
 
 protected:
@@ -40,7 +39,6 @@ private:
     MegaApplication *app;
     mega::MegaApi *megaApi;
     mega::MegaHandle selectedMegaFolderHandle;
-
 };
 
 #endif // FOLDERBINDER_H

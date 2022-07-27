@@ -471,23 +471,6 @@ void Utilities::copyRecursively(QString srcPath, QString dstPath)
     }
 }
 
-bool Utilities::verifySyncedFolderLimits(QString path)
-{
-#ifdef WIN32
-    if (path.startsWith(QString::fromAscii("\\\\?\\")))
-    {
-        path = path.mid(4);
-    }
-#endif
-
-    QString rootPath = QDir::toNativeSeparators(QDir::rootPath());
-    if (rootPath == path)
-    {
-        return false;
-    }
-    return true;
-}
-
 void replaceLeadingZeroCharacterWithSpace(QString& string)
 {
     if(!string.isEmpty() && string.at(0) == QLatin1Char('0'))

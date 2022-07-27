@@ -2,7 +2,6 @@
 #include "ui_BindFolderDialog.h"
 #include "MegaApplication.h"
 #include "QMegaMessageBox.h"
-#include "control/Utilities.h"
 
 #include <QInputDialog>
 
@@ -14,33 +13,9 @@ BindFolderDialog::BindFolderDialog(MegaApplication *app, QWidget *parent) :
 {
     ui->setupUi(this);
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
-
     this->app = app;
-    SyncModel *model = SyncModel::instance();
-
-    syncNames = model->getSyncNames(SyncModel::AllHandledSyncTypes);
-    localFolders = model->getLocalFolders(SyncModel::AllHandledSyncTypes); //notice: this also takes into account !active ones
-    megaFolderPaths = model->getMegaFolders(SyncModel::AllHandledSyncTypes);
     ui->bOK->setDefault(true);
-    highDpiResize.init(this);
-}
-
-BindFolderDialog::BindFolderDialog(MegaApplication *app, QStringList syncNames,
-                                   QStringList localFolders,
-                                   QStringList megaFolderPaths,
-                                   QWidget *parent) :
-    QDialog(parent),
-    ui(new Ui::BindFolderDialog)
-{
-    ui->setupUi(this);
-    setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
-
-    this->app = app;
-    this->syncNames = syncNames;
-    this->localFolders = localFolders;
-    this->megaFolderPaths = megaFolderPaths;
-    ui->bOK->setDefault(true);
-    highDpiResize.init(this);
+    mHighDpiResize.init(this);
 }
 
 BindFolderDialog::~BindFolderDialog()
@@ -65,12 +40,11 @@ QString BindFolderDialog::getLocalFolder()
 
 QString BindFolderDialog::getSyncName()
 {
-    return syncName;
+    return mSyncName;
 }
 
 void BindFolderDialog::on_bOK_clicked()
 {
-    SyncController controller;
     QString localFolderPath = ui->wBinder->selectedLocalFolder();
     MegaApi *megaApi = app->getMegaApi();
     MegaHandle handle = ui->wBinder->selectedMegaFolder();
@@ -78,90 +52,71 @@ void BindFolderDialog::on_bOK_clicked()
     std::unique_ptr<MegaNode> node {megaApi->getNodeByHandle(handle)};
     if (!localFolderPath.length() || !node)
     {
-        QMegaMessageBox::warning(nullptr, tr("Error"), tr("Please select a local folder and a MEGA folder"), QMessageBox::Ok);
+        QMegaMessageBox::warning(nullptr, QString(), tr("Please select a local folder and a MEGA folder"), QMessageBox::Ok);
         return;
     }
 
-    std::unique_ptr<const char []> cPath{megaApi->getNodePath(node.get()) };
-    if (cPath)
-    {
-        megaPath = QString::fromUtf8(cPath.get());
-    }
+    std::unique_ptr<const char []> cPath{megaApi->getNodePath(node.get())};
+    mMegaPath = QString::fromUtf8(cPath.get());
 
     localFolderPath = QDir::toNativeSeparators(QDir(localFolderPath).canonicalPath());
-    if (!localFolderPath.size())
+    if (localFolderPath.isEmpty())
     {
         accept();
         return;
     }
 
+    // Check that we can sync the selected folder
     QString warningMessage;
-    if(controller.isFolderAlreadySynced(localFolderPath, MegaSync::TYPE_TWOWAY, warningMessage))
+    auto syncability (SyncController::isLocalFolderSyncable(localFolderPath, mega::MegaSync::TYPE_TWOWAY, warningMessage));
+
+    if (syncability == SyncController::CANT_SYNC)
     {
-        QMegaMessageBox::warning(nullptr, tr("Error"), warningMessage, QMessageBox::Ok);
+        QMegaMessageBox::warning(nullptr, QString(), warningMessage, QMessageBox::Ok);
+        return;
+    }
+    else if (syncability == SyncController::WARN_SYNC
+             && (QMegaMessageBox::warning(nullptr, QString(), warningMessage
+                                         + QLatin1Char('\n')
+                                         + tr("Do you want to continue?"),
+                                         QMessageBox::Yes | QMessageBox::No, QMessageBox::No)
+             == QMessageBox::No))
+    {
         return;
     }
 
-    for (int i = 0; i < megaFolderPaths.size(); i++)
-    {
-        QString p = megaFolderPaths.at(i);
+    // Set the sync name
+    mSyncName = SyncController::getSyncNameFromPath(localFolderPath);
 
-        if (megaPath.startsWith(p) && ((p.size() == megaPath.size()) || p.size() == 1 || megaPath[p.size()] == QChar::fromAscii('/')))
+    // We want the syncname to be unique, so prompt the user while it is not
+    const auto syncNames (SyncModel::instance()->getSyncNames(MegaSync::TYPE_TWOWAY));
+    while (syncNames.contains(mSyncName))
+    {
+        QPointer<QInputDialog> id = new QInputDialog(this);
+        id->setWindowFlags(id->windowFlags() & ~Qt::WindowContextHelpButtonHint);
+        id->setWindowTitle(tr("Sync name"));
+        id->setLabelText(tr("The name \"%1\" is already in use for another sync\n"
+                            "Please enter a different name to identify this synced folder:").arg(mSyncName));
+        id->setTextValue(mSyncName);
+        int result = id->exec();
+
+        if (!id || !result)
         {
-            QMegaMessageBox::warning(nullptr, tr("Error"), tr("The selected MEGA folder is already synced"), QMessageBox::Ok);
+            delete id;
             return;
         }
-        else if (p.startsWith(megaPath) && ((p.size() == megaPath.size()) || megaPath.size() == 1 || p[megaPath.size()] == QChar::fromAscii('/')))
+
+        QString text = id->textValue().trimmed();
+        delete id;
+
+        if (text.isEmpty())
         {
-            QMegaMessageBox::warning(nullptr, tr("Error"), tr("A synced folder cannot be inside another synced folder"), QMessageBox::Ok);
             return;
         }
+        mSyncName = text;
     }
 
-   bool repeated;
-   syncName = QFileInfo(localFolderPath).fileName();
-   if (syncName.isEmpty())
-   {
-       syncName = QDir::toNativeSeparators(localFolderPath);
-   }
-   syncName.remove(QDir::separator());
-
-   do
-   {
-       repeated = false;
-       for (int i = 0; i < syncNames.size(); i++)
-       {
-           if (!syncName.compare(syncNames[i]))
-           {
-                repeated = true;
-
-                QPointer<QInputDialog> id = new QInputDialog(this);
-                id->setWindowFlags(id->windowFlags() & ~Qt::WindowContextHelpButtonHint);
-                id->setWindowTitle(tr("Sync name"));
-                id->setLabelText(tr("The name \"%1\" is already in use for another sync\n"
-                                    "Please enter a different name to identify this synced folder:").arg(syncName));
-                int result = id->exec();
-
-                if (!id || !result)
-                {
-                    delete id;
-                    return;
-                }
-
-                QString text = id->textValue();
-                text = text.trimmed();
-                delete id;
-
-                if (text.isEmpty())
-                {
-                    return;
-                }
-                syncName = text;
-           }
-       }
-   } while (repeated);
-
-   accept();
+    accept();
 }
 
 void BindFolderDialog::changeEvent(QEvent *event)
@@ -175,5 +130,5 @@ void BindFolderDialog::changeEvent(QEvent *event)
 
 QString BindFolderDialog::getMegaPath() const
 {
-    return megaPath;
+    return mMegaPath;
 }

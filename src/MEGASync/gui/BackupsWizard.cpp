@@ -39,7 +39,8 @@ BackupsWizard::BackupsWizard(QWidget* parent) :
     mError (false),
     mUserCancelled (false),
     mFoldersModel (new QStandardItemModel(this)),
-    mFoldersProxyModel (new ProxyModel(this))
+    mFoldersProxyModel (new ProxyModel(this)),
+    mCurrentStep (STEP_1_INIT)
 {
     setWindowFlags((windowFlags() | Qt::WindowCloseButtonHint) & ~Qt::WindowContextHelpButtonHint);
 
@@ -56,42 +57,39 @@ BackupsWizard::BackupsWizard(QWidget* parent) :
     connect(&mSyncController, &SyncController::myBackupsHandle,
             this, &BackupsWizard::onBackupsDirSet);
 
-    // React on item check/uncheck
-    connect(mFoldersModel, &QStandardItemModel::itemChanged,
-            this, &BackupsWizard::onItemChanged);
-
     connect(&mSyncController, &SyncController::setMyBackupsStatus,
             this, &BackupsWizard::onSetMyBackupsDirRequestStatus);
 
     connect(&mSyncController, &SyncController::syncAddStatus,
             this, &BackupsWizard::onSyncAddRequestStatus);
 
+    connect(mFoldersModel, &QStandardItemModel::itemChanged,
+            this, &BackupsWizard::onItemChanged);
+
+    // Setup tables
     mFoldersProxyModel->setSourceModel(mFoldersModel);
     mUi->lvFoldersStep1->setModel(mFoldersProxyModel);
-    mUi->lvFoldersStep2->setModel(mFoldersProxyModel);
     mUi->lvFoldersStep1->setItemDelegate(new WizardDelegate(this));
+    mUi->lvFoldersStep2->setModel(mFoldersProxyModel);
     mUi->lvFoldersStep2->setItemDelegate(new WizardDelegate(this));
     mUi->lvFoldersStep1->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     mUi->lvFoldersStep2->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
-    QString titleStep1 = tr("1. [B]Select[/B] folders to backup");
-
+    // Format header text
     Text::Bold boldText;
     Text::Decorator tc(&boldText);
+
+    QString titleStep1 = tr("1. [B]Select[/B] folders to backup");
     tc.process(titleStep1);
+    mUi->lTitleStep1->setText(titleStep1);
 
     QString titleStep2 = tr("2. [B]Confirm[/B] backup settings");
     tc.process(titleStep2);
-
-    mUi->lTitleStep1->setText(titleStep1);
     mUi->lTitleStep2->setText(titleStep2);
-    // Go to Step 1
-    setupStep1();
-
-    mLoadingWindow  = new QWidget(this);
-    mLoadingWindow->hide();
 
     //Setting up the spining window.
+    mLoadingWindow  = new QWidget(this);
+    mLoadingWindow->hide();
     mLoadingWindow->setAutoFillBackground(true);
     QColor color(Qt::white);
     color.setAlpha(180);
@@ -108,6 +106,9 @@ BackupsWizard::BackupsWizard(QWidget* parent) :
     lbl->setMovie(mv);
     ly->addWidget(lbl);
     mLoadingWindow->setLayout(ly);
+
+    // Go to Step 1
+    setupStep1();
 }
 
 BackupsWizard::~BackupsWizard()
@@ -123,7 +124,7 @@ void BackupsWizard::changeEvent(QEvent* event)
 
         // mUi->retranslateUi sets text to tr("Next"), so we have
         // to change it if we are not in step 1
-        if(mUi->sSteps->currentWidget() != mUi->pStep1)
+        if (mCurrentStep > STEP_1)
         {
             mUi->bNext->setText(tr("Setup"));
         }
@@ -146,6 +147,7 @@ void BackupsWizard::changeEvent(QEvent* event)
 
 void BackupsWizard::showLess()
 {
+    // TODO: use updateSize()
     QFontMetrics fm (mUi->tTextEdit->font());
     QMargins margins = mUi->tTextEdit->contentsMargins ();
     int nHeight = (fm.lineSpacing () * SHOW_MORE_VISIBILITY) +
@@ -164,6 +166,7 @@ void BackupsWizard::showLess()
 
 void BackupsWizard::showMore()
 {
+    // TODO: use updateSize()
     mUi->line1->show();
     mUi->line2->show();
     mUi->bShowMore->setText(tr("Collapse"));
@@ -181,22 +184,35 @@ void BackupsWizard::showMore()
 
 void BackupsWizard::onItemChanged(QStandardItem *item)
 {
-    if(item)
+    if (item)
     {
-        if(item->checkState() == Qt::Checked && isFolderAlreadySynced(item->data(Qt::UserRole).toString(), true, true))
+        QString path (item->data(Qt::UserRole).toString());
+        if(item->checkState() == Qt::Checked
+                && !isFolderSyncable(path, true, true))
         {
             item->setData(Qt::Unchecked, Qt::CheckStateRole);
         }
     }
     bool enable (false);
-    //step1
-    if(mUi->sSteps->currentWidget() == mUi->pStep1)
+
+    switch (mCurrentStep)
     {
-        enable = (isSomethingChecked() && !mUi->lDeviceNameStep1->text().isEmpty());
-    }
-    else //step2
-    {
-        enable = mHaveBackupsDir;
+        case STEP_1:
+        {
+            enable = atLeastOneFolderChecked() && !mUi->lDeviceNameStep1->text().isEmpty();
+            break;
+        }
+        case STEP_2_INIT:
+        case STEP_2:
+        {
+            enable = mHaveBackupsDir;
+            break;
+        }
+        default:
+        {
+            enable = false;
+            break;
+        }
     }
     mUi->bNext->setEnabled(enable);
 }
@@ -234,6 +250,7 @@ void BackupsWizard::setupStep1()
     // Check if we need to refresh the lists
     if (mFoldersModel->rowCount() == 0)
     {
+        // Populate with standard locations
         QIcon folderIcon (QIcon(QLatin1String("://images/icons/folder/folder-mono_24.png")));
         for (auto type : {
              QStandardPaths::DocumentsLocation,
@@ -246,9 +263,9 @@ void BackupsWizard::setupStep1()
             const auto standardPaths (QStandardPaths::standardLocations(type));
             QDir dir (QDir::cleanPath(standardPaths.first()));
             QString path (QDir::toNativeSeparators(dir.canonicalPath()));
-            if (dir.exists() && dir != QDir::home() && !isFolderAlreadySynced(path))
+            if (dir.exists() && dir != QDir::home() && isFolderSyncable(path))
             {
-                QStandardItem* item (new QStandardItem(dir.dirName()));
+                QStandardItem* item (new QStandardItem(SyncController::getSyncNameFromPath(path)));
                 item->setFlags(item->flags() | Qt::ItemIsUserCheckable);
                 item->setData(path, Qt::ToolTipRole);
                 item->setData(path, Qt::UserRole);
@@ -274,9 +291,8 @@ void BackupsWizard::setupStep1()
         mUi->bMoreFolders->setText(tr("More folders"));
     }
 
+    nextStep(STEP_1);
     updateSize();
-
-    qDebug("Backups Wizard: step 1");
 }
 
 void BackupsWizard::setupStep2()
@@ -298,8 +314,8 @@ void BackupsWizard::setupStep2()
     // Set folders number
     mUi->lFoldersNumber->setText(tr("%n folder", "", nbSelectedFolders));
 
+    nextStep(STEP_2);
     updateSize();
-    qDebug("Backups Wizard: step 2");
 }
 
 void BackupsWizard::setupError()
@@ -355,22 +371,21 @@ void BackupsWizard::setupMyBackupsDir()
 
 void BackupsWizard::setupBackups()
 {
-    for(int i=0; i < mFoldersProxyModel->rowCount(); ++i)
+    for (int i = 0; i < mFoldersProxyModel->rowCount(); ++i)
     {
-        BackupInfo backupInfo;
-        backupInfo.folderName = mFoldersProxyModel->index(i, 0).data(Qt::DisplayRole).toString();
-        backupInfo.status = QUEUED;
-        mBackupsStatus.insert(mFoldersProxyModel->index(i, 0).data(Qt::UserRole).toString(), backupInfo);
+        QString path (mFoldersProxyModel->index(i, 0).data(Qt::UserRole).toString());
+        QString syncName (mFoldersProxyModel->index(i, 0).data(Qt::DisplayRole).toString());
+        mBackupsStatus.insert(path, {QUEUED, syncName});
     }
     processNextBackupSetup();
 }
 
 // Indicates if something is checked
-bool BackupsWizard::isSomethingChecked()
+bool BackupsWizard::atLeastOneFolderChecked()
 {
     for (int i = 0; i < mFoldersModel->rowCount(); ++i)
     {
-        if(mFoldersModel->data(mFoldersModel->index(i, 0), Qt::CheckStateRole) == Qt::Checked)
+        if (mFoldersModel->data(mFoldersModel->index(i, 0), Qt::CheckStateRole) == Qt::Checked)
             return true;
     }
     return false;
@@ -380,119 +395,144 @@ void BackupsWizard::processNextBackupSetup()
 {
     mLoadingWindow->resize(this->size());
     mLoadingWindow->show();
-    for(auto it = mBackupsStatus.begin(); it != mBackupsStatus.end(); ++it)
+    for (auto it = mBackupsStatus.begin(); it != mBackupsStatus.end(); ++it)
     {
-        if(it.value().status == QUEUED)
+        if (it.value().status == QUEUED)
         {            
             // Create backup
             mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_INFO,
-                               QString::fromUtf8("Backups Wizard: setup backup \"%1\" to \"%2\"")
-                               .arg(it.value().folderName,
-                                    mUi->leBackupTo->text() + QLatin1Char('/')
-                                    + it.key()).toUtf8().constData());
+                               QString::fromUtf8("Backups Wizard: setup backup \"%1\" from \"%2\"")
+                               .arg(it.value().syncName, it.key()).toUtf8().constData());
 
-            mSyncController.addBackup(it.key());
+            mSyncController.addBackup(it.key(), it.value().syncName);
             return;
         }
     }
 }
 
-// Checks if a path belongs to an existing sync or backup tree (including pending folders);
-// and if the selected folder has a sync or backup in its tree.
+// Checks if a path is syncable.
 // Path is considered to be canonical.
-bool BackupsWizard::isFolderAlreadySynced(const QString& path, bool displayWarning, bool fromCheckAction)
+bool BackupsWizard::isFolderSyncable(const QString& path, bool displayWarning, bool fromCheckAction)
 {
     QString inputPath (QDir::toNativeSeparators(QDir(path).absolutePath()));
 
-    // Check existing syncs
-    QString message = mSyncController.getIsFolderAlreadySyncedMsg(inputPath, mega::MegaSync::TYPE_BACKUP);
+    // Check syncability
+    QString message;
+    auto syncability (SyncController::isLocalFolderSyncable(inputPath, mega::MegaSync::TYPE_BACKUP, message));
 
     // Check current list
-    if (message.isEmpty())
+    if (syncability != SyncController::CANT_SYNC)
     {
-        // Check for path and name collision.
+        // Check for path collision
         int nbBackups (mFoldersModel->rowCount());
         int row (0);
 
-        while (message.isEmpty() && row < nbBackups)
+        while (syncability != SyncController::CANT_SYNC && row < nbBackups)
         {
             QString existingPath (mFoldersModel->item(row)->data(Qt::UserRole).toString());
 
-            // Do not consider unchecked items
+            // Only take checked items into account
             if (mFoldersModel->item(row)->checkState() == Qt::Checked)
             {
                 // Handle same path another way later: by selecting the row in the view.
-                if(!fromCheckAction && inputPath == existingPath)
+                if (!fromCheckAction && inputPath == existingPath)
                 {
                     message = tr("Folder is already selected. Select a different folder.");
+                    syncability = SyncController::CANT_SYNC;
                 }
                 else if (inputPath.startsWith(existingPath)
                          && inputPath[existingPath.size()] == QDir::separator())
                 {
                     message = tr("You can't backup this folder as it's already inside a backed up folder.");
+                    syncability = SyncController::CANT_SYNC;
                 }
                 else if (existingPath.startsWith(inputPath)
                          && existingPath[inputPath.size()] == QDir::separator())
                 {
                     message = tr("You can't backup this folder as it contains backed up folders.");
+                    syncability = SyncController::CANT_SYNC;
                 }
             }
             row++;
         }
     }
 
-    if (displayWarning && !message.isEmpty())
+    if (displayWarning) // Do not display warning when silenced
     {
-        QMegaMessageBox::warning(nullptr, tr("Error"), message, QMessageBox::Ok);
+        if (syncability == SyncController::CANT_SYNC)
+        {
+            QMegaMessageBox::warning(nullptr, QString(), message, QMessageBox::Ok);
+        }
+        else if (syncability == SyncController::WARN_SYNC
+                 && fromCheckAction // Display warning on check action only (also called when creating)
+                 && (QMegaMessageBox::warning(nullptr, QString(), message
+                                              + QLatin1Char('/')
+                                              + tr("Do you want to continue?"),
+                                              QMessageBox::Yes | QMessageBox::No, QMessageBox::No)
+                     == QMessageBox::Yes))
+        {
+            syncability = SyncController::CANT_SYNC;
+        }
     }
 
-    return (!message.isEmpty());
+    return (syncability != SyncController::CANT_SYNC);
 }
 
 // State machine orchestrator
-void BackupsWizard::nextStep(const Steps &step)
+void BackupsWizard::nextStep(const Step &step)
 {
-    qDebug("Backups Wizard: next step");
+    qDebug(QString::fromLatin1("Backups Wizard: next step: Step %1").arg(static_cast<int>(step)).toLatin1().constData());
+    mCurrentStep = step;
 
     switch (step)
     {
-        case Steps::STEP_1_INIT:
+        case Step::STEP_1_INIT:
         {
             setupStep1();
             break;
         }
-        case Steps::STEP_2_INIT:
+        case Step::STEP_1:
+        {
+            // Wait for user interaction
+            break;
+        }
+        case Step::STEP_2_INIT:
         {
             setupStep2();
             break;
         }
-        case Steps::FINALIZE:
+        case Step::STEP_2:
+        {
+            // Wait for user interaction
+            break;
+        }
+        case Step::FINALIZE:
         {
             setupFinalize();
             break;
         }
-        case Steps::SETUP_MYBACKUPS_DIR:
+        case Step::SETUP_MYBACKUPS_DIR:
         {
             setupMyBackupsDir();
             break;
         }
-        case Steps::SETUP_BACKUPS:
+        case Step::SETUP_BACKUPS:
         {
             setupBackups();
             break;
         }
-        case Steps::DONE:
+        case Step::DONE:
         {
             setupComplete();
             break;
         }
-        case Steps::EXIT:
+        case Step::EXIT:
         {
             qDebug("Backups Wizard: exit");
             mUserCancelled ? reject() : accept();
             break;
         }
-        case Steps::ERROR_FOUND:
+        case Step::ERROR_FOUND:
         {
             setupError();
             break;
@@ -514,7 +554,7 @@ void BackupsWizard::setCurrentWidgetsSteps(QWidget *widget)
 
 void BackupsWizard::updateSize()
 {
-    if (mUi->sSteps->currentWidget() == mUi->pStep1)
+    if (mCurrentStep == STEP_1)
     {
         int nbRows = mFoldersModel->rowCount();
         int listHeight = (std::max(HEIGHT_ROW_STEP_1,
@@ -535,7 +575,7 @@ void BackupsWizard::updateSize()
                 /*+ !haveFolders * mUi->lNoAvailableFolder->height()*/);
         setFixedHeight(dialogHeight);
     }
-    else if (mUi->sSteps->currentWidget() == mUi->pStep2)
+    else if (mCurrentStep == STEP_2)
     {
         int nbRows = mFoldersProxyModel->rowCount();
         int listHeight = (std::max(HEIGHT_ROW_STEP_2,
@@ -552,7 +592,7 @@ void BackupsWizard::updateSize()
 void BackupsWizard::on_bNext_clicked()
 {
     qDebug("Backups Wizard: next clicked");
-    if (mUi->sSteps->currentWidget() == mUi->pStep1)
+    if (mCurrentStep == STEP_1)
     {
         nextStep(STEP_2_INIT);
     }
@@ -567,11 +607,10 @@ void BackupsWizard::on_bCancel_clicked()
     int userWantsToCancel (QMessageBox::Yes);
 
     // If the user has made any modification, warn them before exiting.
-    if (isSomethingChecked())
+    if (atLeastOneFolderChecked())
     {
-        QString title (tr("Warning"));
         QString content (tr("Are you sure you want to cancel? All changes will be lost."));
-        userWantsToCancel = QMessageBox::warning(this, title, content,
+        userWantsToCancel = QMessageBox::warning(this, QString(), content,
                                                  QMessageBox::Yes,
                                                  QMessageBox::No);
     }
@@ -595,7 +634,7 @@ void BackupsWizard::on_bMoreFolders_clicked()
     QDir dir (QDir::cleanPath(d));
     QString path (QDir::toNativeSeparators(dir.canonicalPath()));
 
-    if (!d.isEmpty() && dir.exists() && !isFolderAlreadySynced(path, true))
+    if (!d.isEmpty() && dir.exists() && isFolderSyncable(path, true))
     {
         QStandardItem* existingBackup (nullptr);
 
@@ -623,7 +662,7 @@ void BackupsWizard::on_bMoreFolders_clicked()
         else
         {
             QIcon icon (QIcon(QLatin1String("://images/icons/folder/folder-mono_24.png")));
-            item = new QStandardItem(dir.dirName());
+            item = new QStandardItem(SyncController::getSyncNameFromPath(path));
             item->setFlags(item->flags() | Qt::ItemIsUserCheckable);
             item->setData(path, Qt::ToolTipRole);
             item->setData(path, Qt::UserRole);
@@ -677,7 +716,7 @@ void BackupsWizard::on_bCancelErr_clicked()
 
 void BackupsWizard::on_bShowMore_clicked()
 {
-    if(mUi->tTextEdit->maximumHeight() == QWIDGETSIZE_MAX)
+    if (mUi->tTextEdit->maximumHeight() == QWIDGETSIZE_MAX)
     {
         showLess();
     }
@@ -741,7 +780,7 @@ void BackupsWizard::onSetMyBackupsDirRequestStatus(int errorCode, const QString&
     }
     else
     {
-        QMegaMessageBox::critical(nullptr, tr("Error"),
+        QMegaMessageBox::critical(nullptr, QString(),
                                   tr("Creating or setting folder \"%1\" as backups root failed.\nReason: %2")
                                   .arg(mSyncController.getMyBackupsLocalizedPath(), errorMsg));
     }
@@ -749,27 +788,25 @@ void BackupsWizard::onSetMyBackupsDirRequestStatus(int errorCode, const QString&
 
 void BackupsWizard::onSyncAddRequestStatus(int errorCode, const QString& errorMsg, const QString& name)
 {
-    // Update tooltip and icon according to result
+    // Update BackupInfo
+    BackupInfo info = mBackupsStatus.value(name);
     if (errorCode == mega::MegaError::API_OK)
     {
-        BackupInfo info = mBackupsStatus.value(name);
         info.status = OK;
-        mBackupsStatus.insert(name, info);
     }
     else
     {
         mError = true;
-        BackupInfo info = mBackupsStatus.value(name);
         info.status = ERR;
-        mBackupsStatus.insert(name, info);
     }
+    mBackupsStatus.insert(name, info);
 
     //Check if the process is completed or there are still pending requests
     bool finished(true);
     bool errorsExists(false);
-    for(auto it = mBackupsStatus.begin(); it != mBackupsStatus.end(); ++it)
+    for (auto it = mBackupsStatus.begin(); it != mBackupsStatus.end(); ++it)
     {
-        if(it.value().status == QUEUED)
+        if (it.value().status == QUEUED)
         {
           finished = false;
           break;
@@ -783,39 +820,41 @@ void BackupsWizard::onSyncAddRequestStatus(int errorCode, const QString& errorMs
             break;
     }
 
-    if(finished)
+    if (finished)
     {
-        if(!errorsExists)
+        if (!errorsExists)
         {
             nextStep(DONE);
         }
         else
         {
+            // Update tooltip and icon according to result
             mErrList.clear();
-            for(auto it = mBackupsStatus.begin(); it != mBackupsStatus.end(); ++it)
+            for (auto it = mBackupsStatus.begin(); it != mBackupsStatus.end(); ++it)
             {
                 QModelIndex index = mFoldersProxyModel->getIndexByPath(it.key());
                 QStandardItem* item = mFoldersModel->itemFromIndex(index);
-                if(!item)
+                if (!item)
                 {
                     return;
                 }
-                if(it.value().status == ERR)
+                // Uncheck the item whatever the status is
+                item->setData(Qt::Unchecked, Qt::CheckStateRole);
+                if (it.value().status == ERR)
                 {
                     QString msg = errorMsg;
                     Text::ClearLink clink;
                     Text::Decorator tc(&clink);
                     tc.process(msg);
 
-                    mErrList.append(it.value().folderName);
+                    mErrList.append(it.value().syncName);
                     QIcon   warnIcon (QIcon(QLatin1String("://images/icons/folder/folder-mono-with-warning_24.png")));
                     QString tooltipMsg (item->data(Qt::UserRole).toString() + QLatin1Char('\n')
                                         + tr("Error: ") + msg);
                     item->setData(warnIcon, Qt::DecorationRole);
                     item->setData(tooltipMsg, Qt::ToolTipRole);
-                    item->setData(Qt::Unchecked, Qt::CheckStateRole);
                 }
-                else if(it.value().status == OK)
+                else if (it.value().status == OK)
                 {
                     QIcon folderIcon (QIcon(QLatin1String("://images/icons/folder/folder-mono_24.png")));
                     QString tooltipMsg (item->data(Qt::UserRole).toString());
@@ -826,7 +865,6 @@ void BackupsWizard::onSyncAddRequestStatus(int errorCode, const QString& errorMs
             }
             nextStep(ERROR_FOUND);
         }
-
         mLoadingWindow->hide();
     }
     else

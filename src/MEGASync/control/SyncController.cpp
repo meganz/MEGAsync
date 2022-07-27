@@ -2,6 +2,9 @@
 #include "MegaApplication.h"
 #include "Platform.h"
 
+#include <QStorageInfo>
+#include <QTemporaryFile>
+
 using namespace mega;
 
 const char* SyncController::DEFAULT_BACKUPS_ROOT_DIRNAME = "My backups";
@@ -25,27 +28,22 @@ SyncController::~SyncController()
     delete mDelegateListener;
 }
 
-void SyncController::addBackup(const QString& localFolder)
+void SyncController::addBackup(const QString& localFolder, const QString& syncName)
 {
-    QDir dirToBackup(localFolder);
-    addBackup(dirToBackup);
-}
-
-void SyncController::addBackup(const QDir& dirToBackup)
-{
-    addSync(QDir::toNativeSeparators(dirToBackup.absolutePath()), mega::INVALID_HANDLE,
-            dirToBackup.dirName(), mega::MegaSync::TYPE_BACKUP);
+    addSync(QDir::toNativeSeparators(localFolder), mega::INVALID_HANDLE,
+            syncName.isEmpty() ? getSyncNameFromPath(localFolder) : syncName,
+            mega::MegaSync::TYPE_BACKUP);
 }
 
 void SyncController::addSync(const QString& localFolder, const MegaHandle& remoteHandle,
                              const QString& syncName, MegaSync::SyncType type)
 {
-
-    MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("Adding sync \"%1\" for path \"%2\"")
-                 .arg(syncName, localFolder).toUtf8().constData());
+    MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("Adding sync (%1) \"%2\" for path \"%3\"")
+                 .arg(getSyncTypeString(type), syncName, localFolder).toUtf8().constData());
 
     mApi->syncFolder(type, localFolder.toUtf8().constData(),
-                     syncName.toUtf8().constData(), remoteHandle, nullptr, mDelegateListener);
+                     syncName.isEmpty() ? nullptr : syncName.toUtf8().constData(),
+                     remoteHandle, nullptr, mDelegateListener);
 }
 
 void SyncController::removeSync(std::shared_ptr<SyncSetting> syncSetting, const MegaHandle& remoteHandle)
@@ -56,10 +54,8 @@ void SyncController::removeSync(std::shared_ptr<SyncSetting> syncSetting, const 
         return;
     }
 
-    MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("Removing sync \"%1\"")
-                 .arg(syncSetting->name()).toUtf8().constData());
-
-    std::shared_ptr<MegaNode> node(mApi->getNodeByHandle(syncSetting->getMegaHandle()));
+    MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("Removing sync (%1) \"%2\"")
+                 .arg(getSyncTypeString(syncSetting->getType()), syncSetting->name()).toUtf8().constData());
 
     mApi->removeSync(syncSetting->backupId(), remoteHandle, mDelegateListener);
     // FIXME: There is a bug in SyncModel class handling that persists the saved Backup entry after SDK delete
@@ -73,8 +69,8 @@ void SyncController::enableSync(std::shared_ptr<SyncSetting> syncSetting)
         return;
     }
 
-    MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("Enabling sync \"%1\" to \"%2\"")
-                 .arg(syncSetting->getLocalFolder(), syncSetting->getMegaFolder())
+    MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("Enabling sync (%1) \"%2\" to \"%3\"")
+                 .arg(getSyncTypeString(syncSetting->getType()), syncSetting->getLocalFolder(), syncSetting->getMegaFolder())
                  .toUtf8().constData());
 
     mApi->enableSync(syncSetting->backupId(), mDelegateListener);
@@ -88,8 +84,8 @@ void SyncController::disableSync(std::shared_ptr<SyncSetting> syncSetting)
         return;
     }
 
-    MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("Disabling sync \"%1\" to \"%2\"")
-                 .arg(syncSetting->getLocalFolder(), syncSetting->getMegaFolder())
+    MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("Disabling sync (%1) \"%2\" to \"%3\"")
+                 .arg(getSyncTypeString(syncSetting->getType()), syncSetting->getLocalFolder(), syncSetting->getMegaFolder())
                  .toUtf8().constData());
 
     mApi->disableSync(syncSetting->backupId(), mDelegateListener);
@@ -119,10 +115,9 @@ void SyncController::getDeviceName()
     ensureDeviceNameIsSetOnRemote();
 }
 
-
 // Checks if a path belongs is in an existing sync or backup tree; and if the selected
 // folder has a sync or backup in its tree.
-QString SyncController::getIsFolderAlreadySyncedMsg(const QString& path, const MegaSync::SyncType& syncType)
+QString SyncController::getIsLocalFolderAlreadySyncedMsg(const QString& path, const MegaSync::SyncType& syncType)
 {
     QString inputPath (QDir::toNativeSeparators(QDir(path).absolutePath()));
     QString message;
@@ -130,7 +125,7 @@ QString SyncController::getIsFolderAlreadySyncedMsg(const QString& path, const M
     // Gather all synced or backed-up dirs
     QMap<QString, MegaSync::SyncType> localFolders = SyncModel::instance()->getLocalFoldersAndTypeMap();
 
-    // First check existing syncs
+    // Check if the path is already synced or part of a sync
     foreach (auto& existingPath, localFolders.keys())
     {
         if (inputPath == existingPath)
@@ -149,7 +144,7 @@ QString SyncController::getIsFolderAlreadySyncedMsg(const QString& path, const M
             }
         }
         else if (inputPath.startsWith(existingPath)
-                 && inputPath[existingPath.size()] == QDir::separator())
+                 && inputPath[existingPath.size() - QDir(existingPath).isRoot()] == QDir::separator())
         {
             if (syncType == MegaSync::SyncType::TYPE_BACKUP)
             {
@@ -165,7 +160,7 @@ QString SyncController::getIsFolderAlreadySyncedMsg(const QString& path, const M
             }
         }
         else if (existingPath.startsWith(inputPath)
-                 && existingPath[inputPath.size()] == QDir::separator())
+                 && existingPath[inputPath.size() - QDir(inputPath).isRoot()] == QDir::separator())
         {
             if (syncType == MegaSync::SyncType::TYPE_BACKUP)
             {
@@ -181,14 +176,137 @@ QString SyncController::getIsFolderAlreadySyncedMsg(const QString& path, const M
             }
         }
     }
-
     return message;
 }
 
-bool SyncController::isFolderAlreadySynced(const QString &path, const MegaSync::SyncType &syncType, QString& message)
+SyncController::Syncability SyncController::isLocalFolderAlreadySynced(const QString& path, const MegaSync::SyncType &syncType, QString& message)
 {
-    message = getIsFolderAlreadySyncedMsg(path, syncType);
-    return (!message.isEmpty());
+    message = getIsLocalFolderAlreadySyncedMsg(path, syncType);
+    return (message.isEmpty() ? Syncability::CAN_SYNC : Syncability::CANT_SYNC);
+}
+
+QString SyncController::getIsLocalFolderAllowedForSyncMsg(const QString& path, const MegaSync::SyncType& syncType)
+{
+    QString inputPath (path);
+    QString message;
+
+#ifdef WIN32
+    if (inputPath.startsWith(QString::fromLatin1("\\\\?\\")))
+    {
+        inputPath = inputPath.mid(4);
+    }
+#endif
+
+    // Use canonicalPath() to resolve links
+    inputPath = QDir(inputPath).canonicalPath();
+
+    if (inputPath == QDir::rootPath())
+    {
+        if (syncType == MegaSync::SyncType::TYPE_BACKUP)
+        {
+            message = tr("You are trying to backup an extremely large folder.\n"
+                         "To prevent the backup of entire boot volumes,"
+                         " which is inefficient and dangerous,\n"
+                         "we ask you to start with a smaller folder"
+                         " and add more data while MEGAsync is running.");
+        }
+        else
+        {
+            message = tr("You are trying to sync an extremely large folder.\n"
+                         "To prevent the syncing of entire boot volumes,"
+                         " which is inefficient and dangerous,\n"
+                         "we ask you to start with a smaller folder"
+                         " and add more data while MEGAsync is running.");
+        }
+    }
+    return message;
+}
+
+SyncController::Syncability SyncController::isLocalFolderAllowedForSync(const QString& path, const MegaSync::SyncType &syncType, QString& message)
+{
+    message = getIsLocalFolderAllowedForSyncMsg(path, syncType);
+    return (message.isEmpty() ? Syncability::CAN_SYNC : Syncability::CANT_SYNC);
+}
+
+QString SyncController::getAreLocalFolderAccessRightsOkMsg(const QString& path, const mega::MegaSync::SyncType& syncType)
+{
+    QString message;
+
+    // We only check rw rights for two-way syncs
+    if (syncType == MegaSync::TYPE_TWOWAY)
+    {
+        QTemporaryFile test (path + QDir::separator());
+        if (!test.open())
+        {
+            message = tr("You don't have write permissions in this local folder.")
+                    + QChar::fromLatin1('\n')
+                    + tr("MEGAsync won't be able to download anything here.");
+        }
+    }
+    return message;
+}
+
+SyncController::Syncability SyncController::areLocalFolderAccessRightsOk(const QString& path, const mega::MegaSync::SyncType& syncType, QString& message)
+{
+    message = getAreLocalFolderAccessRightsOkMsg(path, syncType);
+    return (message.isEmpty() ? Syncability::CAN_SYNC : Syncability::WARN_SYNC);
+}
+
+// Returns wether the path is syncable.
+// The message to display to the user is stored in <message>.
+// The first error encountered is returned.
+// Errors trump warnings
+// In case of several warnings, only the last one is returned.
+SyncController::Syncability SyncController::isLocalFolderSyncable(const QString& path, const mega::MegaSync::SyncType& syncType, QString& message)
+{
+    Syncability syncability (Syncability::CAN_SYNC);
+
+    // First check if the path is allowed
+    syncability = isLocalFolderAllowedForSync(path, syncType, message);
+
+    // The check if it is not synced already
+    if (syncability != Syncability::CANT_SYNC)
+    {
+        syncability = std::max(isLocalFolderAlreadySynced(path, syncType, message), syncability);
+    }
+
+    // Then check that we have rw rights for this path
+    if (syncability != Syncability::CANT_SYNC)
+    {
+        syncability = std::max(areLocalFolderAccessRightsOk(path, syncType, message), syncability);
+    }
+
+    return (syncability);
+}
+
+QString SyncController::getSyncNameFromPath(const QString& path)
+{
+    QDir dir (path);
+    QString syncName;
+
+    // Handle fs root case
+    if (dir.isRoot())
+    {
+        // Cleanup the path (in Windows: get "F:" from "F:\")
+        QString cleanPath (QDir::toNativeSeparators(dir.absolutePath()).remove(QDir::separator()));
+        // Try to get the volume label
+        QStorageInfo storage(dir);
+        QString label (QString::fromUtf8(storage.subvolume()));
+        if (label.isEmpty())
+        {
+            label = storage.name();
+        }
+        // If we have no label, fallback to the cleaned path
+        syncName = label.isEmpty() ? cleanPath
+                                   : QString::fromUtf8("%1 (%2)").arg(label, cleanPath);
+    }
+    else
+    {
+        // Take the folder name as sync name
+        syncName = dir.dirName();
+    }
+
+    return syncName;
 }
 
 void SyncController::ensureDeviceNameIsSetOnRemote()
@@ -223,6 +341,41 @@ QString SyncController::getSyncAPIErrorMsg(int megaError)
             break;
     }
     return QString();
+}
+
+QString SyncController::getSyncTypeString(const mega::MegaSync::SyncType& syncType)
+{
+    QString typeString;
+    switch (syncType)
+    {
+        case MegaSync::SyncType::TYPE_TWOWAY:
+        {
+            typeString = QLatin1String("Two-way");
+            break;
+        }
+        case MegaSync::SyncType::TYPE_BACKUP:
+        {
+            typeString = QLatin1String("Backup");
+            break;
+        }
+        case MegaSync::SyncType::TYPE_UP:
+        {
+            typeString = QLatin1String("One-way: up");
+            break;
+        }
+        case MegaSync::SyncType::TYPE_DOWN:
+        {
+            typeString = QLatin1String("One-way: down");
+            break;
+        }
+        case MegaSync::SyncType::TYPE_UNKNOWN:
+        default:
+        {
+            typeString = QLatin1String("Unknown");
+            break;
+        }
+    }
+    return typeString;
 }
 
 void SyncController::setMyBackupsDirName()
@@ -295,7 +448,8 @@ void SyncController::onRequestFinish(MegaApi *api, MegaRequest *req, MegaError *
         if(error)
         {
             std::shared_ptr<MegaNode> remoteNode(api->getNodeByHandle(req->getNodeHandle()));
-            QString logMsg = QString::fromUtf8("Error adding sync \"%1\" for \"%2\" to \"%3\" (request error): %4").arg(
+            QString logMsg = QString::fromUtf8("Error adding sync (%1) \"%2\" for \"%3\" to \"%4\" (request error): %5").arg(
+                             getSyncTypeString(static_cast<MegaSync::SyncType>(req->getParamType())),
                              QString::fromUtf8(req->getName()),
                              QString::fromUtf8(req->getFile()),
                              QString::fromUtf8(api->getNodePath(remoteNode.get())),
@@ -313,9 +467,11 @@ void SyncController::onRequestFinish(MegaApi *api, MegaRequest *req, MegaError *
             if(errorMsg.isEmpty())
                 errorMsg = QCoreApplication::translate("MegaError", e->getErrorString());
 
-            MegaApi::log(MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Error removing sync (request error): %1")
-                         .arg(errorMsg).toUtf8().constData());
             std::shared_ptr<SyncSetting> sync = mSyncModel->getSyncSettingByTag(req->getParentHandle());
+            QString logMsg = QString::fromUtf8("Error removing sync (%1) (request error): %2").arg(
+                                 getSyncTypeString(sync ? sync->getType() : MegaSync::SyncType::TYPE_UNKNOWN),
+                                 errorMsg);
+            MegaApi::log(MegaApi::LOG_LEVEL_ERROR, logMsg.toUtf8().constData());
             if(sync)
                 emit syncRemoveError(sync);
         }
@@ -331,7 +487,8 @@ void SyncController::onRequestFinish(MegaApi *api, MegaRequest *req, MegaError *
 
         if (sync && (syncErrorCode != MegaSync::NO_SYNC_ERROR))
         {
-            QString errorMsg = QString::fromUtf8("Error disabling sync \"%1\" for \"%2\" to \"%3\": %4").arg(
+            QString errorMsg = QString::fromUtf8("Error disabling sync (%1) \"%2\" for \"%3\" to \"%4\": %5").arg(
+                        getSyncTypeString(sync->getType()),
                         sync->name(),
                         sync->getLocalFolder(),
                         sync->getMegaFolder(),
@@ -345,8 +502,11 @@ void SyncController::onRequestFinish(MegaApi *api, MegaRequest *req, MegaError *
             QString errorMsg = getSyncAPIErrorMsg(errorCode);
             if(errorMsg.isEmpty())
                 errorMsg = QCoreApplication::translate("MegaError", e->getErrorString());
-            MegaApi::log(MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Error disabling sync (request error): %1")
-                         .arg(errorMsg).toUtf8().constData());
+
+            QString logMsg = QString::fromUtf8("Error disabling sync (%1) (request error): %2").arg(
+                                 getSyncTypeString(sync ? sync->getType() : MegaSync::SyncType::TYPE_UNKNOWN),
+                                 errorMsg);
+            MegaApi::log(MegaApi::LOG_LEVEL_ERROR, logMsg.toUtf8().constData());
         }
         break;
     }
@@ -360,7 +520,8 @@ void SyncController::onRequestFinish(MegaApi *api, MegaRequest *req, MegaError *
 
         if (sync && (syncErrorCode != MegaSync::NO_SYNC_ERROR))
         {
-            QString errorMsg = QString::fromUtf8("Error enabling sync \"%1\" for \"%2\" to \"%3\": %4").arg(
+            QString errorMsg = QString::fromUtf8("Error enabling sync (%1) \"%2\" for \"%3\" to \"%4\": %5").arg(
+                        getSyncTypeString(sync->getType()),
                         sync->name(),
                         sync->getLocalFolder(),
                         sync->getMegaFolder(),
@@ -374,8 +535,11 @@ void SyncController::onRequestFinish(MegaApi *api, MegaRequest *req, MegaError *
             QString errorMsg = getSyncAPIErrorMsg(errorCode);
             if(errorMsg.isEmpty())
                 errorMsg = QCoreApplication::translate("MegaError", e->getErrorString());
-            MegaApi::log(MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Error enabling sync (request reason): %1")
-                         .arg(errorMsg).toUtf8().constData());
+
+            QString logMsg = QString::fromUtf8("Error enabling sync (%1) (request reason): %2").arg(
+                                 getSyncTypeString(sync ? sync->getType() : MegaSync::SyncType::TYPE_UNKNOWN),
+                                 errorMsg);
+            MegaApi::log(MegaApi::LOG_LEVEL_ERROR, logMsg.toUtf8().constData());
         }
 
         // TODO: Evaluate if I'm needed

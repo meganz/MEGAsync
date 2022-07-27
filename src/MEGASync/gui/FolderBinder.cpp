@@ -99,31 +99,10 @@ void FolderBinder::on_bLocalFolder_clicked()
 #endif
 
     MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Folder selector closed. Result: %1").arg(path).toUtf8().constData());
-    if (path.length())
-    {        
-        QDir dir(path);
-        if (!dir.exists() && !dir.mkpath(QString::fromAscii(".")))
-        {
-            return;
-        }
-
+    if (QDir(path).exists())
+    {
         path = QDir::toNativeSeparators(path);
-        if (!Utilities::verifySyncedFolderLimits(path))
-        {
-            QMegaMessageBox::warning(nullptr, tr("Warning"), tr("You are trying to sync an extremely large folder.\nTo prevent the syncing of entire boot volumes, which is inefficient and dangerous,\nwe ask you to start with a smaller folder and add more data while MEGAsync is running."), QMessageBox::Ok);
-            return;
-        }
-
-        QTemporaryFile test(path + QDir::separator());
-        if (test.open()|| QMegaMessageBox::warning(nullptr,
-                                        tr("Warning"),
-                                        tr("You don't have write permissions in this local folder.")
-                                        + QString::fromUtf8("\n") + tr("MEGAsync won't be able to download anything here.")
-                                        + QString::fromUtf8("\n") + tr("Do you want to continue?"),
-                                        QMessageBox::Yes | QMessageBox::No, QMessageBox::No) == QMessageBox::Yes)
-        {
-            ui->eLocalFolder->setText(path);
-        }
+        ui->eLocalFolder->setText(path);
     }
 }
 

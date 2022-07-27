@@ -538,9 +538,24 @@ void SetupWizard::on_bNext_clicked()
         }
 
         QString localFolderPath = ui->eLocalFolder->text();
-        if (!Utilities::verifySyncedFolderLimits(localFolderPath))
+        QString warningMessage;
+        auto syncability (SyncController::isLocalFolderAllowedForSync(localFolderPath, MegaSync::TYPE_TWOWAY, warningMessage));
+        if (syncability != SyncController::CANT_SYNC)
         {
-            QMegaMessageBox::warning(nullptr, tr("Warning"), tr("You are trying to sync an extremely large folder.\nTo prevent the syncing of entire boot volumes, which is inefficient and dangerous,\nwe ask you to start with a smaller folder and add more data while MEGAsync is running."), QMessageBox::Ok);
+            syncability = SyncController::areLocalFolderAccessRightsOk(localFolderPath, MegaSync::TYPE_TWOWAY, warningMessage);
+        }
+        if (syncability == SyncController::CANT_SYNC)
+        {
+            QMegaMessageBox::warning(nullptr, tr("Warning"), warningMessage, QMessageBox::Ok);
+            return;
+        }
+        else if (syncability == SyncController::WARN_SYNC
+                 && (QMegaMessageBox::warning(nullptr, tr("Warning"), warningMessage
+                                              + QLatin1Char('/')
+                                              + tr("Do you want to continue?"),
+                                              QMessageBox::Yes | QMessageBox::No, QMessageBox::No)
+                  == QMessageBox::No))
+        {
             return;
         }
 
@@ -600,7 +615,6 @@ void SetupWizard::on_bCancel_clicked()
     if (ui->sPages->currentWidget() == ui->pWelcome)
     {
         setupPreferences();
-        QString syncName;
         auto rootNode = ((MegaApplication*)qApp)->getRootNode();
 
         if (!rootNode)
@@ -617,6 +631,7 @@ void SetupWizard::on_bCancel_clicked()
         }
 
         QString localPath (QDir::toNativeSeparators(QDir(ui->eLocalFolder->text()).canonicalPath()));
+        QString syncName (SyncController::getSyncNameFromPath(localPath));
         mPreconfiguredSyncs.append(PreConfiguredSync(localPath, selectedMegaFolderHandle, syncName));
         done(QDialog::Accepted);
     }
@@ -711,22 +726,30 @@ void SetupWizard::on_bLocalFolder_clicked()
     path = QDir::toNativeSeparators(path);
 
 #endif
-
-    if (path.length())
+    QDir dir(path);
+    if (!dir.exists())
     {
-        QDir dir(path);
-        if (!dir.exists() && !dir.mkpath(QString::fromUtf8(".")))
-        {
-            return;
-        }
+        return;
+    }
 
-        QTemporaryFile test(path + QDir::separator());
-        if (test.open() || QMegaMessageBox::warning(nullptr, tr("Warning"), tr("You don't have write permissions in this local folder.") +
-                    QString::fromUtf8("\n") + tr("MEGAsync won't be able to download anything here.") + QString::fromUtf8("\n") + tr("Do you want to continue?"),
-                    QMessageBox::Yes | QMessageBox::No, QMessageBox::No) == QMessageBox::Yes)
-        {
-            ui->eLocalFolder->setText(path);
-        }
+    QString warningMessage;
+    auto syncability (SyncController::isLocalFolderAllowedForSync(path, MegaSync::TYPE_TWOWAY, warningMessage));
+    if (syncability != SyncController::CANT_SYNC)
+    {
+        syncability = SyncController::areLocalFolderAccessRightsOk(path, MegaSync::TYPE_TWOWAY, warningMessage);
+    }
+    if (syncability == SyncController::CANT_SYNC)
+    {
+        QMegaMessageBox::warning(nullptr, tr("Warning"), warningMessage, QMessageBox::Ok);
+    }
+    else if (syncability == SyncController::WARN_SYNC
+             && (QMegaMessageBox::warning(nullptr, tr("Warning"), warningMessage
+                                          + QLatin1Char('/')
+                                          + tr("Do you want to continue?"),
+                                          QMessageBox::Yes | QMessageBox::No, QMessageBox::No)
+                 == QMessageBox::Yes))
+    {
+        ui->eLocalFolder->setText(path);
     }
 }
 

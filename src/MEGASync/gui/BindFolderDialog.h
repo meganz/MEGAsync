@@ -1,10 +1,11 @@
 #ifndef BINDFOLDERDIALOG_H
 #define BINDFOLDERDIALOG_H
 
+#include "HighDpiResize.h"
+#include <megaapi.h>
+
 #include <QDialog>
 
-#include "FolderBinder.h"
-#include "HighDpiResize.h"
 
 class MegaApplication;
 
@@ -18,10 +19,7 @@ class BindFolderDialog : public QDialog
 
 public:
     explicit BindFolderDialog(MegaApplication *app, QWidget *parent = 0);
-    BindFolderDialog(MegaApplication *app, QStringList syncNames,
-                                       QStringList localFolders,
-                                       QStringList megaFolderPaths,
-                                       QWidget *parent = 0);
+
     ~BindFolderDialog();
 
     mega::MegaHandle getMegaFolder();
@@ -40,14 +38,9 @@ protected:
 private:
     Ui::BindFolderDialog *ui;
     MegaApplication *app;
-    QString syncName;
-    QString megaPath;
-
-    QStringList syncNames;
-    QStringList localFolders;
-    QStringList megaFolderPaths;
-
-    HighDpiResize highDpiResize;
+    QString mSyncName;
+    QString mMegaPath;
+    HighDpiResize mHighDpiResize;
 };
 
 #endif // BINDFOLDERDIALOG_H

@@ -48,23 +48,30 @@ QString AddBackupDialog::getSelectedFolder()
 void AddBackupDialog::on_changeButton_clicked()
 {
     QString folderPath = QFileDialog::getExistingDirectory(this, tr("Choose Folder"),
-                                                    QDir::home().path(),
-                                                    QFileDialog::DontResolveSymlinks);
-    if (folderPath.isEmpty())
-        return;
-
-    QString warningMessage;
-    QString candidateDir (QDir::toNativeSeparators(QDir(folderPath).canonicalPath()));
-
-    if (mSyncController.isFolderAlreadySynced(candidateDir, mega::MegaSync::TYPE_BACKUP, warningMessage))
+                                                           QDir::home().path(),
+                                                           QFileDialog::DontResolveSymlinks);
+    if (!folderPath.isEmpty())
     {
-        QMegaMessageBox::warning(nullptr, tr("Error"), warningMessage, QMessageBox::Ok);
-    }
-    else
-    {
-        mSelectedFolder = candidateDir;
-        mUi->folderLineEdit->setText(folderPath);
-        mUi->addButton->setEnabled(true);
+        QString candidateDir (QDir::toNativeSeparators(QDir(folderPath).canonicalPath()));
+        QString warningMessage;
+        auto syncability (SyncController::isLocalFolderSyncable(candidateDir, mega::MegaSync::TYPE_BACKUP, warningMessage));
+
+        if (syncability == SyncController::CANT_SYNC)
+        {
+            QMegaMessageBox::warning(nullptr, QString(), warningMessage, QMessageBox::Ok);
+        }
+        else if (syncability == SyncController::CAN_SYNC
+                 || (syncability == SyncController::WARN_SYNC
+                     && QMegaMessageBox::warning(nullptr, QString(), warningMessage
+                                                 + QLatin1Char('/')
+                                                 + tr("Do you want to continue?"),
+                                                 QMessageBox::Yes | QMessageBox::No, QMessageBox::No)
+                     == QMessageBox::Yes))
+        {
+            mSelectedFolder = candidateDir;
+            mUi->folderLineEdit->setText(folderPath);
+            mUi->addButton->setEnabled(true);
+        }
     }
 }
 
