@@ -589,8 +589,8 @@ private:
 
     void updateTransferNodesStage(mega::MegaTransfer* transfer);
 
-    void updateFileTransferBatchesAndUi(BlockingBatch& batch);
-    void updateFolderTransferBatchesAndUi(BlockingBatch& batch, bool fromCancellation);
+    void updateFileTransferBatchesAndUi(const QString &nodePath, BlockingBatch& batch);
+    void updateFolderTransferBatchesAndUi(const QString &nodePath, BlockingBatch& batch, bool fromCancellation);
     void updateIfBlockingStageFinished(BlockingBatch &batch, bool fromCancellation);
     void unblockBatch(BlockingBatch &batch);
 
@@ -601,6 +601,7 @@ private:
     void updateFreedCancelToken(mega::MegaTransfer* transfer);
 
     bool noUploadedStarted = true;
+    bool mProcessingUploadQueue = false;
 
     void ConnectServerSignals(HTTPServer* server);
 
@@ -623,6 +624,10 @@ private:
     void processUploads(const QStringList& uploads);
 
     void updateMetadata(TransferMetaData* data, const QString& filePath);
+
+    bool isQueueProcessingOngoing();
+
+    static QString getNodePath(mega::MegaTransfer* transfer);
 
     template <class Func>
     void recreateMenuAction(MenuItemAction** action, const QString& actionName,
