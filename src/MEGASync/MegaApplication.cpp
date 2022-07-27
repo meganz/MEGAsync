@@ -1573,19 +1573,19 @@ void MegaApplication::processUploadQueue(MegaHandle nodeHandle)
     mBlockingBatch.add(batch);
 
     EventUpdater updater(uploadQueue.size());
+    mProcessingUploadQueue = true;
 
     //Process the upload queue using the MegaUploader object
     while (!uploadQueue.isEmpty())
     {
         QString filePath = uploadQueue.dequeue();
-        QFileInfo filePathInfo(filePath);
 
         updateMetadata(data, filePath);
 
         bool startedTransfer = uploader->upload(filePath, node, transferId, batch->getCancelTokenPtr());
         if (startedTransfer)
         {
-            batch->add(filePathInfo.isDir());
+            batch->add(filePath);
             startingUpload();
         }
 
@@ -1602,6 +1602,7 @@ void MegaApplication::processUploadQueue(MegaHandle nodeHandle)
         mBlockingBatch.removeBatch();
     }
 
+    mProcessingUploadQueue = false;
     delete node;
 }
 
@@ -3276,33 +3277,33 @@ void MegaApplication::cancelScanningStage()
     mBlockingBatch.cancelTransfer();
 }
 
-void MegaApplication::updateFileTransferBatchesAndUi(BlockingBatch &batch)
+void MegaApplication::updateFileTransferBatchesAndUi(const QString& nodePath, BlockingBatch &batch)
 {
     if(batch.isValid())
     {
         QString message = QString::fromUtf8("updateFileTransferBatchesAndUi");
         MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, message.toUtf8().constData());
 
-        batch.onFileScanCompleted();
+        batch.onScanCompleted(nodePath);
         updateIfBlockingStageFinished(batch, false);
     }
 }
 
-void MegaApplication::updateFolderTransferBatchesAndUi(BlockingBatch &batch, bool fromCancellation)
+void MegaApplication::updateFolderTransferBatchesAndUi(const QString& nodePath, BlockingBatch &batch, bool fromCancellation)
 {
     if(batch.isValid())
     {
         QString message = QString::fromUtf8("updateFolderTransferBatchesAndUi");
         MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, message.toUtf8().constData());
 
-        batch.onFolderScanCompleted();
+        batch.onScanCompleted(nodePath);
         updateIfBlockingStageFinished(batch, fromCancellation);
     }
 }
 
 void MegaApplication::updateIfBlockingStageFinished(BlockingBatch &batch, bool fromCancellation)
 {
-    if (batch.isBlockingStageFinished())
+    if (batch.isBlockingStageFinished() && (batch.isCancelled() || !isQueueProcessingOngoing()))
     {
         scanStageController.stopDelayedScanStage(fromCancellation);
         unblockBatch(batch);
@@ -3379,7 +3380,7 @@ void MegaApplication::updateFreedCancelToken(MegaTransfer* transfer)
 
 void MegaApplication::startingUpload()
 {
-    if (noUploadedStarted && mBlockingBatch.hasFolders())
+    if (noUploadedStarted && mBlockingBatch.hasNodes())
     {
         noUploadedStarted = false;
         scanStageController.startDelayedScanStage();
@@ -3520,6 +3521,20 @@ void MegaApplication::updateMetadata(TransferMetaData *data, const QString &file
     {
         data->totalFiles++;
     }
+}
+
+bool MegaApplication::isQueueProcessingOngoing()
+{
+    return mProcessingUploadQueue || downloader->isQueueProcessingOngoing();
+}
+
+QString MegaApplication::getNodePath(MegaTransfer* transfer)
+{
+    if (transfer->getPath() != nullptr)
+    {
+        return QString::fromUtf8(transfer->getPath());
+    }
+    return QString::fromUtf8(transfer->getParentPath()) + QString::fromUtf8(transfer->getFileName());
 }
 
 void MegaApplication::setupWizardFinished(int result)
@@ -7799,7 +7814,7 @@ void MegaApplication::onTransferStart(MegaApi *api, MegaTransfer *transfer)
 
     if(!transfer->isSyncTransfer() && !transfer->isBackupTransfer())
     {
-        updateFileTransferBatchesAndUi(mBlockingBatch);
+        updateFileTransferBatchesAndUi(getNodePath(transfer), mBlockingBatch);
         logBatchStatus("onTransferStart");
     }
 
@@ -7841,7 +7856,7 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
         {
             if(mBlockingBatch.isValid())
             {
-                mBlockingBatch.onTransferFinished(isFolderTransfer);
+                mBlockingBatch.onTransferFinished(getNodePath(transfer));
                 updateIfBlockingStageFinished(mBlockingBatch, isOnScanStage);
                 updateFreedCancelToken(transfer);
             }
@@ -8008,7 +8023,7 @@ void MegaApplication::onTransferUpdate(MegaApi*, MegaTransfer* transfer)
     {
         if (transfer->getStage() >= MegaTransfer::STAGE_TRANSFERRING_FILES)
         {
-            updateFolderTransferBatchesAndUi(mBlockingBatch, false);
+            updateFolderTransferBatchesAndUi(getNodePath(transfer), mBlockingBatch, false);
             logBatchStatus("onTransferUpdate");
         }
     }

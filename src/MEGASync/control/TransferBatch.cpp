@@ -1,5 +1,7 @@
 #include "TransferBatch.h"
 
+#include <QDir>
+
 /*************************/
 /*** TransferBatch *******/
 /*************************/
@@ -11,12 +13,12 @@ TransferBatch::TransferBatch()
 
 bool TransferBatch::isEmpty()
 {
-    return (mFiles == 0 && mFolders == 0);
+    return mPendingNodes.isEmpty();
 }
 
-void TransferBatch::add(bool isDir)
+void TransferBatch::add(const QString &nodePath)
 {
-    isDir ? ++mFolders : ++mFiles;
+    mPendingNodes.push_back(QDir::toNativeSeparators(nodePath));
 }
 
 void TransferBatch::cancel()
@@ -24,30 +26,19 @@ void TransferBatch::cancel()
     mCancelToken->cancel();
 }
 
-void TransferBatch::onFileScanCompleted()
+void TransferBatch::onScanCompleted(const QString& nodePath)
 {
-    if (mFiles > 0)
+    QString convertedNodePath = QDir::toNativeSeparators(nodePath);
+    auto it = std::find(mPendingNodes.begin(), mPendingNodes.end(), convertedNodePath);
+    if (it != mPendingNodes.end())
     {
-        --mFiles;
+        mPendingNodes.erase(it);
     }
-}
-
-void TransferBatch::onFolderScanCompleted()
-{
-    if (mFolders > 0)
-    {
-        --mFolders;
-    }
-}
-
-void TransferBatch::onTransferFinished(bool isDir)
-{
-    isDir ? --mFolders : --mFiles;
 }
 
 QString TransferBatch::description()
 {
-    return QString::fromLatin1("%2 files, %3 folders").arg(mFiles).arg(mFolders);
+    return QString::fromLatin1("%1 nodes").arg(mPendingNodes.size());
 }
 
 mega::MegaCancelToken* TransferBatch::getCancelTokenPtr()
@@ -58,11 +49,6 @@ mega::MegaCancelToken* TransferBatch::getCancelTokenPtr()
 std::shared_ptr<mega::MegaCancelToken> TransferBatch::getCancelToken()
 {
     return mCancelToken;
-}
-
-int TransferBatch::getFolderCount()
-{
-    return mFolders;
 }
 
 /*************************/
@@ -89,22 +75,15 @@ void BlockingBatch::cancelTransfer()
     if (mBatch)
     {
         mBatch->cancel();
+        cancelled = true;
     }
 }
 
-void BlockingBatch::onFileScanCompleted()
+void BlockingBatch::onScanCompleted(const QString& nodePath)
 {
     if (mBatch)
     {
-        mBatch->onFileScanCompleted();
-    }
-}
-
-void BlockingBatch::onFolderScanCompleted()
-{
-    if (mBatch)
-    {
-        mBatch->onFolderScanCompleted();
+        mBatch->onScanCompleted(nodePath);
     }
 }
 
@@ -122,11 +101,11 @@ void BlockingBatch::setAsUnblocked()
     clearBatch();
 }
 
-void BlockingBatch::onTransferFinished(bool isFolderTransfer)
+void BlockingBatch::onTransferFinished(const QString& nodePath)
 {
     if (mBatch)
     {
-        mBatch->onTransferFinished(isFolderTransfer);
+        mBatch->onScanCompleted(nodePath);
         if (mBatch->isEmpty())
         {
             clearBatch();
@@ -144,9 +123,14 @@ bool BlockingBatch::isValid() const
     return mBatch != nullptr;
 }
 
-bool BlockingBatch::hasFolders() const
+bool BlockingBatch::isCancelled() const
 {
-    return (isValid()) ? mBatch->getFolderCount() > 0 : false;
+    return cancelled;
+}
+
+bool BlockingBatch::hasNodes() const
+{
+    return (isValid()) ? !mBatch->isEmpty() : false;
 }
 
 std::shared_ptr<mega::MegaCancelToken> BlockingBatch::getCancelToken()
@@ -170,4 +154,5 @@ QString BlockingBatch::description()
 void BlockingBatch::clearBatch()
 {
    mBatch = nullptr;
+   cancelled = false;
 }

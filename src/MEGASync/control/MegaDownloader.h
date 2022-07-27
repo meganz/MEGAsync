@@ -25,6 +25,7 @@ public:
     virtual ~MegaDownloader() = default;
     bool processDownloadQueue(QQueue<WrappedNode*>* downloadQueue, BlockingBatch& downloadBatches,
                               const QString &path, unsigned long long appDataId);
+    bool isQueueProcessingOngoing();
 
 protected:
     bool download(WrappedNode *parent, QFileInfo info, QString appData, mega::MegaCancelToken *cancelToken);
@@ -47,6 +48,7 @@ private:
     void update(TransferMetaData* dataToUpdate, QString& appData, mega::MegaNode* node, const QString& path);
 
     bool mNoTransferStarted = true;
+    bool mProcessingTransferQueue = false;
 };
 
 #endif // MEGADOWNLOADER_H
