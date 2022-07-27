@@ -99,7 +99,7 @@ bool MegaUploader::uploadRecursivelyIntoASyncedLocation(QFileInfo srcFileInfo, Q
     {
         //start upload to parent
         MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Recursive upload uploading non syncable path: %1").arg(srcPath).toUtf8().constData());
-        startUpload(srcPath, parent, cancelToken);
+        startUpload(srcPath, appDataID, parent, cancelToken);
         return true;
     }
 
@@ -227,20 +227,20 @@ bool MegaUploader::upload(QFileInfo info, MegaNode *parent, unsigned long long a
     {
         QString msg = QString::fromLatin1("Starting upload : '%1' - '%2' - '%3'").arg(info.fileName(), currentPath).arg(appDataID);
         megaApi->log(MegaApi::LOG_LEVEL_DEBUG, msg.toUtf8().constData());
-        startUpload(currentPath, parent, cancelToken);
+        startUpload(currentPath, appDataID, parent, cancelToken);
         return true;
     }
     return false;
 }
 
-void MegaUploader::startUpload(const QString& localPath, MegaNode* parent, MegaCancelToken* cancelToken)
+void MegaUploader::startUpload(const QString& localPath, unsigned long long appDataID, MegaNode* parent, MegaCancelToken* cancelToken)
 {
     const bool startFirst = false;
     QByteArray localPathArray = localPath.toUtf8();
-    const char* appData = nullptr;
+    QByteArray appData = (QString::number(appDataID) + QString::fromUtf8("*")).toUtf8();
     const char* filename = nullptr;
     const int64_t mtime = ::mega::MegaApi::INVALID_CUSTOM_MOD_TIME;
     const bool isSrcTemporary = false;
     MegaTransferListener* listener = nullptr;
-    megaApi->startUpload(localPathArray.constData(), parent, filename, mtime, appData, isSrcTemporary, startFirst, cancelToken, listener);
+    megaApi->startUpload(localPathArray.constData(), parent, filename, mtime, appData.constData(), isSrcTemporary, startFirst, cancelToken, listener);
 }
