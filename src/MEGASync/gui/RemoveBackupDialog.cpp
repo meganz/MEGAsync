@@ -14,7 +14,7 @@ RemoveBackupDialog::RemoveBackupDialog(std::shared_ptr<SyncSetting> backup, QWid
 {
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
     mUi->setupUi(this);
-
+    mUi->lTarget->setReadOnly(true);
     connect(mUi->bConfirm, &QPushButton::clicked, this, &QDialog::accept);
     connect(mUi->bCancel, &QPushButton::clicked, this, &QDialog::reject);
     connect(mUi->rMoveFolder, &QRadioButton::toggled, this, &RemoveBackupDialog::OnMoveSelected);
