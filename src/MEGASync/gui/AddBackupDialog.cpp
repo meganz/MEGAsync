@@ -54,7 +54,7 @@ void AddBackupDialog::on_changeButton_clicked()
     {
         QString candidateDir (QDir::toNativeSeparators(QDir(folderPath).canonicalPath()));
         QString warningMessage;
-        auto syncability (mSyncController.isLocalFolderSyncable(candidateDir, mega::MegaSync::TYPE_BACKUP, warningMessage));
+        auto syncability (SyncController::isLocalFolderSyncable(candidateDir, mega::MegaSync::TYPE_BACKUP, warningMessage));
 
         if (syncability == SyncController::CANT_SYNC)
         {

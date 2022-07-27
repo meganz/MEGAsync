@@ -418,7 +418,7 @@ bool BackupsWizard::isFolderSyncable(const QString& path, bool displayWarning, b
 
     // Check syncability
     QString message;
-    auto syncability (mSyncController.isLocalFolderSyncable(inputPath, mega::MegaSync::TYPE_BACKUP, message));
+    auto syncability (SyncController::isLocalFolderSyncable(inputPath, mega::MegaSync::TYPE_BACKUP, message));
 
     // Check current list
     if (syncability != SyncController::CANT_SYNC)

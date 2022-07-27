@@ -45,7 +45,6 @@ QString BindFolderDialog::getSyncName()
 
 void BindFolderDialog::on_bOK_clicked()
 {
-    SyncController controller;
     QString localFolderPath = ui->wBinder->selectedLocalFolder();
     MegaApi *megaApi = app->getMegaApi();
     MegaHandle handle = ui->wBinder->selectedMegaFolder();
@@ -69,11 +68,11 @@ void BindFolderDialog::on_bOK_clicked()
 
     // Check that we can sync the selected folder
     QString warningMessage;
-    auto syncability (controller.isLocalFolderSyncable(localFolderPath, mega::MegaSync::TYPE_TWOWAY, warningMessage));
+    auto syncability (SyncController::isLocalFolderSyncable(localFolderPath, mega::MegaSync::TYPE_TWOWAY, warningMessage));
 
     if (syncability == SyncController::CANT_SYNC)
     {
-        QMegaMessageBox::warning(nullptr, tr("Error"), warningMessage, QMessageBox::Ok);
+        QMegaMessageBox::warning(nullptr, QString(), warningMessage, QMessageBox::Ok);
         return;
     }
     else if (syncability == SyncController::WARN_SYNC
