@@ -43,6 +43,11 @@ BackupsWizard::BackupsWizard(QWidget* parent) :
     mCurrentStep (STEP_1_INIT)
 {
     setWindowFlags((windowFlags() | Qt::WindowCloseButtonHint) & ~Qt::WindowContextHelpButtonHint);
+
+#ifdef _WIN32
+    setWindowFlags(windowFlags() | Qt::MSWindowsFixedSizeDialogHint);
+#endif
+
     mUi->setupUi(this);
     mHighDpiResize.init(this);
 
@@ -67,6 +72,8 @@ BackupsWizard::BackupsWizard(QWidget* parent) :
     mUi->lvFoldersStep1->setItemDelegate(new WizardDelegate(this));
     mUi->lvFoldersStep2->setModel(mFoldersProxyModel);
     mUi->lvFoldersStep2->setItemDelegate(new WizardDelegate(this));
+    mUi->lvFoldersStep1->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    mUi->lvFoldersStep2->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
     // Format header text
     Text::Bold boldText;
@@ -223,8 +230,14 @@ void BackupsWizard::setupStep1()
 
 #ifdef _WIN32
     QFontMetrics fm(mUi->lSubtitleStep1->font());
-    QRect boundingRect = fm.boundingRect(QRect(0,0,mUi->fFoldersStep1->width(),0), Qt::TextWordWrap, mUi->lSubtitleStep1->text());
-    mUi->lSubtitleStep1->setFixedHeight(boundingRect.height() + fm.lineSpacing() + 2); //+2 is for an extra margin of safety
+    QRect boundingRect = fm.boundingRect(QRect(0,0, mUi->fFoldersStep1->width()
+                                               - mUi->lSubtitleStep1->contentsMargins().left()
+                                               - mUi->lSubtitleStep1->contentsMargins().right()
+                                               ,0), Qt::TextWordWrap, mUi->lSubtitleStep1->toPlainText());
+    int bottomMargin = mUi->lSubtitleStep1->contentsMargins().bottom();
+    mUi->lSubtitleStep1->setFixedHeight(boundingRect.height() + bottomMargin + mUi->lSubtitleStep1->document()->documentMargin());
+    mUi->lSubtitleStep1->viewport()->setCursor(Qt::ArrowCursor);
+
 #endif
 
     mUi->bCancel->setEnabled(true);
@@ -243,9 +256,9 @@ void BackupsWizard::setupStep1()
              QStandardPaths::DocumentsLocation,
              QStandardPaths::MoviesLocation,
              QStandardPaths::PicturesLocation,
-             //QStandardPaths::MusicLocation,
-             //QStandardPaths::DownloadLocation,
-    })
+             QStandardPaths::MusicLocation,
+             QStandardPaths::DownloadLocation,
+             QStandardPaths::DesktopLocation})
         {
             const auto standardPaths (QStandardPaths::standardLocations(type));
             QDir dir (QDir::cleanPath(standardPaths.first()));
@@ -260,7 +273,22 @@ void BackupsWizard::setupStep1()
                 item->setData(Qt::Unchecked, Qt::CheckStateRole);
                 mFoldersModel->appendRow(item);
             }
+            if(mFoldersModel->rowCount() >= MAX_ROWS_STEP_1)
+            {
+                break;
+            }
         }
+    }
+
+    if(mFoldersModel->rowCount() == 0)
+    {
+        mUi->bMoreFolders->setText(tr("Add folders"));
+        mUi->wDeviceNameStep1->setStyleSheet(QLatin1String("border-bottom-right-radius: 6px;"
+                                                           "border-bottom-left-radius: 6px;"));
+    }
+    else
+    {
+        mUi->bMoreFolders->setText(tr("More folders"));
     }
 
     nextStep(STEP_1);
@@ -535,12 +563,16 @@ void BackupsWizard::updateSize()
         mUi->lvFoldersStep1->setFixedHeight(listHeight);
 
         bool haveFolders (nbRows);
-        mUi->lNoAvailableFolder->setVisible(!haveFolders);
+
+        //TODO: Remove mUi->lNoAvailableFolder when the final decision with this issue is taken.
+        //We can show this label when all disks are synced but we do not allow it as root disk is unsyncable.
+        //so currently we do not display this lavel never. If this doesn´t change we have to remove this label.
+        mUi->lNoAvailableFolder->setVisible(false/*!haveFolders*/);
         mUi->lvFoldersStep1->setVisible(haveFolders);
 
         int dialogHeight = std::min(HEIGHT_MAX_STEP_1, HEIGHT_MAX_STEP_1
                 - (MAX_ROWS_STEP_1 - mFoldersModel->rowCount()) * HEIGHT_ROW_STEP_1
-                + !haveFolders * mUi->lNoAvailableFolder->height());
+                /*+ !haveFolders * mUi->lNoAvailableFolder->height()*/);
         setFixedHeight(dialogHeight);
     }
     else if (mCurrentStep == STEP_2)
@@ -554,7 +586,7 @@ void BackupsWizard::updateSize()
         int dialogHeight = std::min(HEIGHT_MAX_STEP_2, HEIGHT_MAX_STEP_2
                 - (MAX_ROWS_STEP_2 - nbRows) * HEIGHT_ROW_STEP_2);
         setFixedHeight(dialogHeight);
-    }        
+    }
 }
 
 void BackupsWizard::on_bNext_clicked()
@@ -642,7 +674,9 @@ void BackupsWizard::on_bMoreFolders_clicked()
         // Jump to item in list
         auto idx = mFoldersModel->indexFromItem(item);
         mUi->lvFoldersStep1->scrollTo(idx, QAbstractItemView::PositionAtCenter);
-
+        mUi->bMoreFolders->setText(tr("More folders"));
+        mUi->wDeviceNameStep1->setStyleSheet(QLatin1String("border-bottom-right-radius: 0px;"
+                                                           "border-bottom-left-radius: 0px;"));
         onItemChanged();
         qDebug() << QString::fromUtf8("Backups Wizard: add folder \"%1\"").arg(path);
         updateSize();
@@ -952,8 +986,10 @@ void WizardDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option
         painter->setPen(optCopy.palette.color(cg, QPalette::Text));
         QRect textRect = QApplication::style()->subElementRect(QStyle::SE_ItemViewItemText, &optCopy, optCopy.widget);
         textRect.moveTo(iconRect.right() + TEXT_MARGIN, textRect.y());
+        textRect.setRight(option.rect.right());
+        QString elidedText = painter->fontMetrics().elidedText(optCopy.text, Qt::ElideMiddle, textRect.width() - TEXT_MARGIN);
+        painter->drawText(textRect, elidedText, QTextOption(Qt::AlignVCenter | Qt::AlignLeft));
 
-        painter->drawText(textRect, optCopy.text, QTextOption(Qt::AlignVCenter | Qt::AlignLeft));
     }
 
   painter->restore();

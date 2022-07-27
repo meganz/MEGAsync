@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>662</width>
-    <height>788</height>
+    <height>660</height>
    </rect>
   </property>
   <property name="contextMenuPolicy">
@@ -1707,6 +1707,12 @@ border-right:0px;
            </property>
            <item>
             <widget class="QGroupBox" name="groupBox">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
              <layout class="QVBoxLayout" name="verticalLayout_9">
               <property name="spacing">
                <number>0</number>
@@ -1964,7 +1970,7 @@ height: 16px;
         </widget>
        </item>
        <item>
-        <widget class="AutoResizeStackedWidget" name="sBackupsState">
+        <widget class="QStackedWidget" name="sBackupsState">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
            <horstretch>0</horstretch>
@@ -2056,6 +2062,12 @@ height: 16px;
            </property>
            <item>
             <widget class="QGroupBox" name="groupBox_4">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
              <layout class="QVBoxLayout" name="verticalLayout_92">
               <property name="spacing">
                <number>0</number>
@@ -3235,13 +3247,7 @@ color: grey;
   <customwidget>
    <class>WaitingSpinnerWidget</class>
    <extends>QWidget</extends>
-   <header location="global">WaitingSpinnerWidget.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>AutoResizeStackedWidget</class>
-   <extends>QStackedWidget</extends>
-   <header>AutoResizeStackedWidget.h</header>
+   <header>WaitingSpinnerWidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
