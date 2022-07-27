@@ -79,6 +79,7 @@ private:
     void ensureDeviceNameIsSetOnRemote();
     void setMyBackupsHandle(mega::MegaHandle handle);
     QString getSyncAPIErrorMsg(int megaError);
+    QString getSyncTypeString(const mega::MegaSync::SyncType& syncType);
 
     mega::MegaApi* mApi;
     mega::QTMegaRequestListener* mDelegateListener;

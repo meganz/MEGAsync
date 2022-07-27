@@ -53,7 +53,7 @@ void BindFolderDialog::on_bOK_clicked()
     std::unique_ptr<MegaNode> node {megaApi->getNodeByHandle(handle)};
     if (!localFolderPath.length() || !node)
     {
-        QMegaMessageBox::warning(nullptr, tr("Error"), tr("Please select a local folder and a MEGA folder"), QMessageBox::Ok);
+        QMegaMessageBox::warning(nullptr, QString(), tr("Please select a local folder and a MEGA folder"), QMessageBox::Ok);
         return;
     }
 
@@ -77,8 +77,8 @@ void BindFolderDialog::on_bOK_clicked()
         return;
     }
     else if (syncability == SyncController::WARN_SYNC
-             && (QMegaMessageBox::warning(nullptr, tr("Warning"), warningMessage
-                                         + QLatin1Char('/')
+             && (QMegaMessageBox::warning(nullptr, QString(), warningMessage
+                                         + QLatin1Char('\n')
                                          + tr("Do you want to continue?"),
                                          QMessageBox::Yes | QMessageBox::No, QMessageBox::No)
              == QMessageBox::No))

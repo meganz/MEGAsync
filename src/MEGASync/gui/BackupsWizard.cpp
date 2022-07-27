@@ -461,7 +461,7 @@ bool BackupsWizard::isFolderSyncable(const QString& path, bool displayWarning, b
     {
         if (syncability == SyncController::CANT_SYNC)
         {
-            QMegaMessageBox::warning(nullptr, tr("Error"), message, QMessageBox::Ok);
+            QMegaMessageBox::warning(nullptr, QString(), message, QMessageBox::Ok);
         }
         else if (syncability == SyncController::WARN_SYNC
                  && fromCheckAction // Display warning on check action only (also called when creating)
@@ -481,7 +481,7 @@ bool BackupsWizard::isFolderSyncable(const QString& path, bool displayWarning, b
 // State machine orchestrator
 void BackupsWizard::nextStep(const Step &step)
 {
-    qDebug("Backups Wizard: next step");
+    qDebug(QString::fromLatin1("Backups Wizard: next step: Step %1").arg(static_cast<int>(step)).toLatin1().constData());
     mCurrentStep = step;
 
     switch (step)
