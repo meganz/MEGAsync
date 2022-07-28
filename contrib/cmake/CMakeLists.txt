@@ -533,6 +533,7 @@ set (SRCS
     ${MEGAsyncDir}/control/TransferBatch.cpp
     ${MEGAsyncDir}/control/SyncController.cpp
     ${MEGAsyncDir}/control/UserAttributesManager.cpp
+    ${MEGAsyncDir}/control/TextDecorator.cpp
 
     ${MEGAsyncDir}/model/SyncSettings.cpp
     ${MEGAsyncDir}/model/SyncModel.cpp
