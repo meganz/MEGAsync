@@ -1356,9 +1356,35 @@ void SettingsDialog::on_bStorageDetails_clicked()
 void SettingsDialog::on_bLogout_clicked()
 {
     QPointer<SettingsDialog> currentDialog = this;
-    if (QMegaMessageBox::question(nullptr, tr("Log out"),
-                                  tr("Synchronization will stop working. Are you sure?"),
-                                  QMessageBox::Yes|QMessageBox::No)
+    QString text;
+    bool haveSyncs (false);
+    bool haveBackups (false);
+
+    // Check if we have syncs and backups
+    if (mModel)
+    {
+        haveSyncs = !mModel->getSyncSettingsByType(mega::MegaSync::TYPE_TWOWAY).isEmpty();
+        haveBackups = !mModel->getSyncSettingsByType(mega::MegaSync::TYPE_BACKUP).isEmpty();
+    }
+
+    // Set text according to situation
+    if (haveSyncs && haveBackups)
+    {
+        text = tr("Synchronizations and backups will stop working.");
+    }
+    else if (haveBackups)
+    {
+        text = tr("Backups will stop working.");
+    }
+    else if (haveSyncs)
+    {
+        text = tr("Synchronizations will stop working.");
+    }
+
+    // Display the message if it has been set
+    if (text.isEmpty() || QMegaMessageBox::question(nullptr, tr("Log out"),
+                                                    text + QLatin1Char(' ') + tr("Are you sure?"),
+                                                    QMessageBox::Yes | QMessageBox::No)
             == QMessageBox::Yes)
     {
         if (currentDialog)
@@ -1383,7 +1409,6 @@ void SettingsDialog::setAvatar()
 
 void SettingsDialog::connectSyncHandlers()
 {
-
     connect(mUi->syncTableView, &BackupTableView::removeSync, this, &SettingsDialog::removeSync);
     connect(&mSyncController, &SyncController::syncAddStatus, this, [this](int errorCode, const QString errorMsg)
     {
@@ -1561,7 +1586,6 @@ void SettingsDialog::syncsStateInformation(SyncStateInformation state)
             //if we are on sync tab
             mUi->wSpinningIndicatorSyncs->start();
             mUi->sSyncsState->setCurrentWidget(mUi->pSavingSyncs);
-
             break;
         case SAVING_BACKUPS:
             setEnabled(false);
