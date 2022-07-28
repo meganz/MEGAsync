@@ -1,13 +1,16 @@
 #ifndef MEGAITEMMODEL_H
 #define MEGAITEMMODEL_H
 
-#include "MegaItem.h"
 #include <megaapi.h>
+
+#include "MegaItem.h"
 #include "Utilities.h"
+#include "SyncController.h"
 
 #include <QAbstractItemModel>
 #include <QList>
 #include <QIcon>
+#include <QPointer>
 
 #include <memory>
 
@@ -76,7 +79,8 @@ protected:
     int mRequiredRights;
     bool mDisplayFiles;
     bool mSyncSetupMode;
-    bool mDisableBackups;
+    QPointer<SyncController> mSyncController;
+    mega::MegaHandle mMyBackupsHandle;
 
 private:
     int insertPosition(const std::unique_ptr<mega::MegaNode>& node);

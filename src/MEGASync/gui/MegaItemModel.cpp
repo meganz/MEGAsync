@@ -17,6 +17,8 @@ MegaItemModel::MegaItemModel(QObject *parent) :
     mRequiredRights(MegaShare::ACCESS_READ),
     mDisplayFiles(false),
     mSyncSetupMode(false),
+    mSyncController(nullptr),
+    mMyBackupsHandle(mega::INVALID_HANDLE),
     mMegaApi(MegaSyncApp->getMegaApi()),
     mDelegateListener(mega::make_unique<QTMegaRequestListener>(mMegaApi, this))
 {
@@ -39,7 +41,21 @@ MegaItemModel::MegaItemModel(QObject *parent) :
 
    //backups vault
    if(auto vaultNode = std::unique_ptr<MegaNode>(mMegaApi->getVaultNode()))
+   {
        mRootItems.append(new MegaItem(move(vaultNode)));
+
+       // Get "My Backups" handle to localize the name
+       mSyncController = new SyncController(this);
+       if (mSyncController)
+       {
+           // Connect to sync controller backup handle signal
+           connect(mSyncController, &SyncController::myBackupsHandle, this, [this](mega::MegaHandle h)
+           {
+               mMyBackupsHandle = h;
+           });
+           mSyncController->getMyBackupsHandle();
+       }
+   }
 
    mMegaApi->getCameraUploadsFolder(mDelegateListener.get());
    mMegaApi->getCameraUploadsFolderSecondary(mDelegateListener.get());
@@ -371,7 +387,6 @@ QVariant MegaItemModel::getIcon(const QModelIndex &index, MegaItem* item) const
 
 QVariant MegaItemModel::getText(const QModelIndex &index, MegaItem *item) const
 {
-
     switch(index.column())
     {
         case COLUMN::NODE:
@@ -383,6 +398,11 @@ QVariant MegaItemModel::getText(const QModelIndex &index, MegaItem *item) const
             if(item->isRoot())
             {
                 return QApplication::translate("MegaNodeNames", item->getNode()->getName());
+            }
+
+            if (item->getNode()->getHandle() == mMyBackupsHandle)
+            {
+                return QApplication::translate("MegaNodeNames", SyncController::DEFAULT_BACKUPS_ROOT_DIRNAME);
             }
 
             QString nodeName = QString::fromUtf8(item->getNode()->getName());

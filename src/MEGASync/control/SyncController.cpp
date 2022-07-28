@@ -380,7 +380,7 @@ QString SyncController::getSyncTypeString(const mega::MegaSync::SyncType& syncTy
 
 void SyncController::setMyBackupsDirName()
 {
-    QString name = tr(SyncController::DEFAULT_BACKUPS_ROOT_DIRNAME);
+    QString name = QApplication::translate("MegaNodeNames", SyncController::DEFAULT_BACKUPS_ROOT_DIRNAME);
     mApi->setMyBackupsFolder(name.toUtf8().constData(), mDelegateListener);
 }
 
@@ -398,25 +398,12 @@ void SyncController::setMyBackupsHandle(MegaHandle handle)
     emit myBackupsHandle(mMyBackupsHandle);
 }
 
-// For now the path looks like "/My backups", without the "/Backups" root
+// The path looks like "/My backups" (but translated), without the "/Backups" root
+// Note: if the node exists, its name is ignored and we always display the localized version,
+// as per requirements.
 QString SyncController::getMyBackupsLocalizedPath()
 {
-    QString backupsDirPath = QString::fromLatin1("/");
-
-    if (mMyBackupsHandle != INVALID_HANDLE)
-    {
-        // If the node exists, it's very easy: get the path from there
-        auto backupsRootNode = std::unique_ptr<MegaNode> (mApi->getNodeByHandle(mMyBackupsHandle));
-        backupsDirPath += QString::fromUtf8(backupsRootNode->getName());
-    }
-    else
-    {
-        backupsDirPath += tr(SyncController::DEFAULT_BACKUPS_ROOT_DIRNAME);
-    }
-
-    qDebug() << QString::fromUtf8("SyncController: Backups root dir: \"%1\"").arg(backupsDirPath);
-
-    return backupsDirPath;
+    return QLatin1Char('/') + QApplication::translate("MegaNodeNames", SyncController::DEFAULT_BACKUPS_ROOT_DIRNAME);
 }
 
 void SyncController::onRequestFinish(MegaApi *api, MegaRequest *req, MegaError *e)
