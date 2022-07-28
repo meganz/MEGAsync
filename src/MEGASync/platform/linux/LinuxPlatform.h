@@ -66,6 +66,8 @@ public:
     static void initMenu(QMenu* m);
 
     static const char* settingsString;
+    static const char* openSettingsString;
+    static const char* goToSettingsToEnableSyncsString;
     static const char* exitString;
     static const char* fileExplorerString;
 };

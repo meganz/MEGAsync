@@ -352,5 +352,7 @@ void MacXPlatform::initMenu(QMenu* m)
 
 // Platform-specific strings
 const char* MacXPlatform::settingsString {QT_TRANSLATE_NOOP("Platform", "Preferences")};
+const char* MacXPlatform::openSettingsString {QT_TRANSLATE_NOOP("Platform", "Open preferences")};
+const char* MacXPlatform::goToSettingsToEnableSyncsString {QT_TRANSLATE_NOOP("Platform", "Go to preferences to enable them again.")};
 const char* MacXPlatform::exitString {QT_TRANSLATE_NOOP("Platform", "Quit")};
 const char* MacXPlatform::fileExplorerString {QT_TRANSLATE_NOOP("Platform","Show in Finder")};

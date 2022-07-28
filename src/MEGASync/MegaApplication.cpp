@@ -1362,32 +1362,62 @@ if (!preferences->lastExecutionTime())
     infoDialog->setUsage();
     infoDialog->setAccountType(preferences->accountType());
 
+    model->setUnattendedDisabledSyncs(preferences->getDisabledSyncTags());
 
     if (preferences->getNotifyDisabledSyncsOnLogin())
     {
+        auto settingsTabToOpen = SettingsDialog::SYNCS_TAB;
+        QString message;
+        QVector<MegaSync::SyncType> syncsTypesToDismiss;
 
-#ifdef __APPLE__
-        QMessageBox msg(QMessageBox::Warning, QCoreApplication::applicationName(),
-                        tr("One or more syncs have been disabled. Go to preferences to enable them again."));
-        QPushButton *openPreferences = msg.addButton(tr("Open Preferences"), QMessageBox::YesRole);
-#else
-        QMessageBox msg(QMessageBox::Warning, QCoreApplication::applicationName(),
-                        tr("One or more syncs have been disabled. Go to settings to enable them again."));
-        QPushButton *openPreferences = msg.addButton(tr("Open Settings"), QMessageBox::YesRole);
-#endif
-        msg.addButton(tr("Dismiss"), QMessageBox::NoRole);
-        msg.setDefaultButton(openPreferences);
-        msg.exec();
-        if (msg.clickedButton() == openPreferences)
+        bool haveSyncs (false);
+        bool haveBackups (false);
+
+        // Check if we have syncs and backups
+        if (model)
         {
-            openSettings(SettingsDialog::SYNCS_TAB);
+            haveSyncs = model->hasUnattendedDisabledSyncs(MegaSync::TYPE_TWOWAY);
+            haveBackups = model->hasUnattendedDisabledSyncs(MegaSync::TYPE_BACKUP);
+        }
+
+        // Set text according to situation
+        if (haveSyncs && haveBackups)
+        {
+            syncsTypesToDismiss = {MegaSync::TYPE_TWOWAY, MegaSync::TYPE_BACKUP};
+            message = tr("Some syncs and backups have been disabled.");
+        }
+        else if (haveBackups)
+        {
+            settingsTabToOpen = SettingsDialog::BACKUP_TAB;
+            syncsTypesToDismiss = {MegaSync::TYPE_BACKUP};
+            message = tr("One or more backups have been disabled.");
+        }
+        else if (haveSyncs)
+        {
+            syncsTypesToDismiss = {MegaSync::TYPE_TWOWAY};
+            message = tr("One or more syncs have been disabled.");
+        }
+
+        // Display the message if it has been set
+        if (!message.isEmpty())
+        {
+            message += QLatin1Char(' ') + QCoreApplication::translate("Platform", Platform::goToSettingsToEnableSyncsString);
+            QMessageBox msgBox (QMessageBox::Warning, QCoreApplication::applicationName(), message);
+            QString buttonText (QCoreApplication::translate("Platform", Platform::openSettingsString));
+            QPushButton *openPreferences = msgBox.addButton(buttonText, QMessageBox::YesRole);
+
+            msgBox.addButton(tr("Dismiss"), QMessageBox::NoRole);
+            msgBox.setDefaultButton(openPreferences);
+            msgBox.exec();
+            if (msgBox.clickedButton() == openPreferences)
+            {
+                openSettings(settingsTabToOpen);
+            }
         }
 
         preferences->setNotifyDisabledSyncsOnLogin(false);
-        model->dismissUnattendedDisabledSyncs(MegaSync::TYPE_TWOWAY);
+        model->dismissUnattendedDisabledSyncs(syncsTypesToDismiss);
     }
-
-    model->setUnattendedDisabledSyncs(preferences->getDisabledSyncTags());
 
     createAppMenus();
 
@@ -8270,12 +8300,12 @@ void MegaApplication::onSyncDisabled(std::shared_ptr<SyncSetting> syncSetting)
         {
             switch(errorCode)
             {
-		case MegaSync::Error::NO_SYNC_ERROR:
-		{
-		    assert(false && "unexpected no error after onSyncAdded failed");
-		    return;
-		}	                
-		case MegaSync::Error::LOCAL_PATH_UNAVAILABLE:
+                case MegaSync::Error::NO_SYNC_ERROR:
+                {
+                    assert(false && "unexpected no error after onSyncAdded failed");
+                    return;
+                }
+                case MegaSync::Error::LOCAL_PATH_UNAVAILABLE:
                 {
                     showErrorMessage(tr("Your sync \"%1\" has been disabled because the local folder doesn't exist")
                                      .arg(syncName));
@@ -8340,11 +8370,11 @@ void MegaApplication::onSyncDisabled(std::shared_ptr<SyncSetting> syncSetting)
         {
             switch(errorCode)
             {
-		case MegaSync::Error::NO_SYNC_ERROR:
-		{
-		    assert(false && "unexpected no error after onSyncAdded failed");
-		    return;
-		}
+                case MegaSync::Error::NO_SYNC_ERROR:
+                {
+                    assert(false && "unexpected no error after onSyncAdded failed");
+                    return;
+                }
                 case MegaSync::Error::LOCAL_PATH_UNAVAILABLE:
                 {
                     showErrorMessage(tr("Your backup \"%1\" has been disabled because the local folder doesn't exist")
