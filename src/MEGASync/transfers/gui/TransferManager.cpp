@@ -523,7 +523,7 @@ void TransferManager::refreshStateStats()
         {
             if(!mSpeedRefreshTimer->isActive())
             {
-                mSpeedRefreshTimer->start(std::chrono::milliseconds(SPEED_REFRESH_PERIOD_MS));
+                mSpeedRefreshTimer->start(SPEED_REFRESH_PERIOD_MS);
             }
         }
 

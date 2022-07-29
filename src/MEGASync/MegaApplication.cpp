@@ -12,6 +12,7 @@
 #include "OverQuotaDialog.h"
 #include "ConnectivityChecker.h"
 #include "TransferMetadata.h"
+#include "DuplicatedNodeDialogs/DuplicatedNodeDialog.h"
 
 #include <QTranslator>
 #include <QClipboard>
@@ -1551,14 +1552,13 @@ void MegaApplication::processUploadQueue(MegaHandle nodeHandle)
         return;
     }
 
-    MegaNode *node = megaApi->getNodeByHandle(nodeHandle);
+    std::shared_ptr<MegaNode> node(megaApi->getNodeByHandle(nodeHandle));
 
     //If the destination node doesn't exist in the current filesystem, clear the queue and show an error message
     if (!node || node->isFile())
     {
         uploadQueue.clear();
         showErrorMessage(tr("Error: Invalid destination folder. The upload has been cancelled"));
-        delete node;
         return;
     }
 
@@ -1569,27 +1569,40 @@ void MegaApplication::processUploadQueue(MegaHandle nodeHandle)
     transferAppData.insert(transferId, data);
     preferences->setOverStorageDismissExecution(0);
 
+    DuplicatedNodeDialog checkDialog;
+    HighDpiResize hDpiResizer(&checkDialog);
+
+    while (!uploadQueue.isEmpty())
+    {
+        QString nodePath = uploadQueue.dequeue();
+        checkDialog.checkUpload(nodePath, node);
+    }
+
+    QList<std::shared_ptr<DuplicatedNodeInfo>> uploads = checkDialog.show();
+
     auto batch = std::shared_ptr<TransferBatch>(new TransferBatch());
     mBlockingBatch.add(batch);
 
-    EventUpdater updater(uploadQueue.size());
+    EventUpdater updater(uploads.size());
     mProcessingUploadQueue = true;
 
-    //Process the upload queue using the MegaUploader object
-    while (!uploadQueue.isEmpty())
+    auto counter(0);
+    foreach(auto uploadInfo, uploads)
     {
-        QString filePath = uploadQueue.dequeue();
+        QString filePath = uploadInfo->getLocalPath();
 
         updateMetadata(data, filePath);
 
-        bool startedTransfer = uploader->upload(filePath, node, transferId, batch->getCancelTokenPtr());
+        bool startedTransfer = uploader->upload(filePath, uploadInfo->getNewName(), node.get(), transferId, batch->getCancelTokenPtr());
         if (startedTransfer)
         {
             batch->add(filePath);
             startingUpload();
         }
 
-        updater.update(uploadQueue.size());
+        updater.update(counter);
+
+        counter++;
     }
 
     if (!batch->isEmpty())
@@ -1603,7 +1616,6 @@ void MegaApplication::processUploadQueue(MegaHandle nodeHandle)
     }
 
     mProcessingUploadQueue = false;
-    delete node;
 }
 
 void MegaApplication::processDownloadQueue(QString path)
