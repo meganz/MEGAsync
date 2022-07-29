@@ -1754,31 +1754,25 @@ void MegaApplication::rebootApplication(bool update)
 
 int* testCrashPtr = nullptr;
 
-void MegaApplication::exitApplication(bool force)
+void MegaApplication::tryExitApplication(bool force)
 {
     if (appfinished)
     {
         return;
     }
 
-#ifndef __APPLE__
-    if (force || !megaApi->isLoggedIn())
+    if (dontAskForExitConfirmation(force))
     {
-#endif
-        reboot = false;
-        trayIcon->hide();
-        closeDialogs();
-
-        QApplication::exit();
-        return;
-#ifndef __APPLE__
+        exitApplication();
     }
-#endif
-
-    if (!exitDialog)
+    else if (!exitDialog)
     {
+        auto transfersStats = mTransfersModel->getTransfersCount();
         exitDialog = new QMessageBox(QMessageBox::Question, tr("MEGAsync"),
-                                     tr("Are you sure you want to exit?"), QMessageBox::Yes|QMessageBox::No);
+                                     tr("There is an active transfer. Exit the app?\nIf you exit, all transfers will be cancelled", "", transfersStats.pendingTransfers()),
+                                     QMessageBox::Yes|QMessageBox::No);
+        exitDialog->button(QMessageBox::Yes)->setText(tr("Exit app"));
+        exitDialog->button(QMessageBox::No)->setText(tr("Stay in app"));
         HighDpiResize hDpiResizer(exitDialog);
         int button = exitDialog->exec();
         if (!exitDialog)
@@ -1790,11 +1784,7 @@ void MegaApplication::exitApplication(bool force)
         exitDialog = NULL;
         if (button == QMessageBox::Yes)
         {
-            reboot = false;
-            trayIcon->hide();
-            closeDialogs();
-
-                QApplication::exit();
+            exitApplication();
         }
         else if (gCrashableForTesting)
         {
@@ -3477,6 +3467,20 @@ void MegaApplication::destroyInfoDialogMenus()
         menuSignalMapper->deleteLater();
         menuSignalMapper = nullptr;
     }
+}
+
+bool MegaApplication::dontAskForExitConfirmation(bool force)
+{
+    auto transfersStats = mTransfersModel->getTransfersCount();
+    return force || !megaApi->isLoggedIn() || transfersStats.pendingTransfers() == 0;
+}
+
+void MegaApplication::exitApplication()
+{
+    reboot = false;
+    trayIcon->hide();
+    closeDialogs();
+    QApplication::exit();
 }
 
 MegaApplication::NodeCount MegaApplication::countFilesAndFolders(const QStringList& paths)
@@ -6361,7 +6365,7 @@ void MegaApplication::createTrayIconMenus()
 
     // When triggered, open "Settings" window. As the user is not logged in, it
     // will only show proxy settings.
-    connect(guestSettingsAction, SIGNAL(triggered()), this, SLOT(openSettings()));
+    connect(guestSettingsAction, &QAction::triggered, this, &MegaApplication::openSettings);
 
     if (initialExitAction)
     {
@@ -6369,7 +6373,7 @@ void MegaApplication::createTrayIconMenus()
         initialExitAction = nullptr;
     }
     initialExitAction = new QAction(QCoreApplication::translate("Platform", Platform::exitString), this);
-    connect(initialExitAction, SIGNAL(triggered()), this, SLOT(exitApplication()));
+    connect(initialExitAction, &QAction::triggered, this, &MegaApplication::tryExitApplication);
 
     initialTrayMenu->addAction(guestSettingsAction);
     initialTrayMenu->addAction(initialExitAction);
@@ -6421,7 +6425,7 @@ void MegaApplication::createInfoDialogMenus()
     }
 
     recreateAction(&windowsExitAction, QCoreApplication::translate("Platform", Platform::exitString),
-                   &MegaApplication::exitApplication);
+                   &MegaApplication::tryExitApplication);
     recreateAction(&windowsSettingsAction, QCoreApplication::translate("Platform", Platform::settingsString),
                    &MegaApplication::openSettings);
     recreateAction(&windowsImportLinksAction, tr("Open links"), &MegaApplication::importLinks);
@@ -6508,7 +6512,7 @@ void MegaApplication::createInfoDialogMenus()
     }
 
     recreateMenuAction(&exitAction, QCoreApplication::translate("Platform", Platform::exitString),
-                       "://images/ico_quit.png", &MegaApplication::exitApplication);
+                       "://images/ico_quit.png", &MegaApplication::tryExitApplication);
     recreateMenuAction(&settingsAction, QCoreApplication::translate("Platform", Platform::settingsString),
                        "://images/ico_preferences.png", &MegaApplication::openSettings);
     recreateMenuAction(&myCloudAction, tr("Cloud drive"), "://images/ico-cloud-drive.png", &MegaApplication::goToMyCloud);
@@ -6740,7 +6744,7 @@ void MegaApplication::createGuestMenu()
 
     exitActionGuest = new MenuItemAction(QCoreApplication::translate("Platform", Platform::exitString), QIcon(QString::fromUtf8("://images/ico_quit.png")));
 
-    connect(exitActionGuest, SIGNAL(triggered()), this, SLOT(exitApplication()));
+    connect(exitActionGuest, &QAction::triggered, this, &MegaApplication::tryExitApplication);
 
     if (updateActionGuest)
     {

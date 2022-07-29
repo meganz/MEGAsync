@@ -277,7 +277,7 @@ public slots:
     void onUpdateNotFound(bool requested);
     void onUpdateError();
     void rebootApplication(bool update = true);
-    void exitApplication(bool force = false);
+    void tryExitApplication(bool force = false);
     void highLightMenuEntry(QAction* action);
     void pauseTransfers(bool pause);
     void checkNetworkInterfaces();
@@ -612,6 +612,8 @@ private:
     static void logInfoDialogCoordinates(const char* message, const QRect& screenGeometry, const QString& otherInformation);
 
     void destroyInfoDialogMenus();
+    bool dontAskForExitConfirmation(bool force);
+    void exitApplication();
 
     struct NodeCount
     {
