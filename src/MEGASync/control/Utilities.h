@@ -331,6 +331,8 @@ public:
     // but the object will be deleted when the progress closes
     static QProgressDialog *showProgressDialog(ProgressHelper *progressHelper, QWidget *parent = nullptr);
 
+    static QPair<QString, QString> getFilenameBasenameAndSuffix(const QString& fileName);
+
 private:
     Utilities() {}
     static QHash<QString, QString> extensionIcons;

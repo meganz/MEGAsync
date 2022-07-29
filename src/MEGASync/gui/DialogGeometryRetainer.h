@@ -1,6 +1,8 @@
 #ifndef DIALOGGEOMETRYRETAINER_H
 #define DIALOGGEOMETRYRETAINER_H
 
+#include <HighDpiResize.h>
+
 #include <QString>
 #include <QDialog>
 #include <QPointer>
@@ -44,6 +46,10 @@ public:
         if(mDialog)
         {
             Q_ASSERT(mDialog == dialog);
+        }
+        else
+        {
+            mHighDPI.init(dialog);
         }
 
         mDialog = dialog;
@@ -93,6 +99,7 @@ private:
     bool mMaximized;
     QRect mDialogGeometry;
     QString mDialogClassName;
+    HighDpiResize mHighDPI;
 
     QPointer<DialogClass> mDialog;
 };
