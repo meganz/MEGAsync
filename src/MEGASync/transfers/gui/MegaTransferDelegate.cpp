@@ -72,7 +72,11 @@ void MegaTransferDelegate::paint(QPainter *painter, const QStyleOptionViewItem &
             w->resize(width, height);
         }
 
-        w->updateUi(data, row);
+        if(data)
+        {
+            w->updateUi(data, row);
+        }
+
         painter->save();
         painter->translate(pos);
         w->render(option, painter, QRegion(0, 0, width, height));
@@ -117,6 +121,7 @@ bool MegaTransferDelegate::event(QEvent *event)
 TransferBaseDelegateWidget *MegaTransferDelegate::getTransferItemWidget(const QModelIndex& index, const QSize& size) const
 { 
     TransferBaseDelegateWidget* item(nullptr);
+    
     if(index.isValid())
     {
         auto nbRowsMaxInView(1);
@@ -125,7 +130,6 @@ TransferBaseDelegateWidget *MegaTransferDelegate::getTransferItemWidget(const QM
             nbRowsMaxInView = mView->height() / size.height() + 1;
         }
         auto row (index.row() % nbRowsMaxInView);
-
 
         if(row >= mTransferItems.size())
         {
@@ -139,6 +143,7 @@ TransferBaseDelegateWidget *MegaTransferDelegate::getTransferItemWidget(const QM
 
         item->setCurrentIndex(index);
     }
+    
     return item;
 }
 

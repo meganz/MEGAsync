@@ -46,6 +46,11 @@ QString RenameNodeDialog::enterNewFolderNameText() const
     return tr("Enter new folder name");
 }
 
+void RenameNodeDialog::title()
+{
+    isFile() ? setWindowTitle(tr("Rename file")) : setWindowTitle(tr("Rename folder"));
+}
+
 ///RENAME REMOTE FILE/FOLDER REIMPLMENETATION
 RenameRemoteNodeDialog::RenameRemoteNodeDialog(const QString &nodePath, QWidget *parent)
     : RenameNodeDialog(parent)
@@ -55,7 +60,7 @@ RenameRemoteNodeDialog::RenameRemoteNodeDialog(const QString &nodePath, QWidget 
 }
 
 RenameRemoteNodeDialog::RenameRemoteNodeDialog(std::unique_ptr<mega::MegaNode> node, QWidget* parent)
-    : mNodeToRename(std::move(node)), RenameNodeDialog(parent)
+    : RenameNodeDialog(parent),mNodeToRename(std::move(node))
 {
     mNodeName = QString::fromUtf8(mNodeToRename->getName());
 }
@@ -108,7 +113,7 @@ QString RenameRemoteNodeDialog::lineEditText()
 
 ///RENAME LOCAL FILE/FOLDER
 RenameLocalNodeDialog::RenameLocalNodeDialog(const QString& path, QWidget *parent)
-    :mNodePath(path), RenameNodeDialog(parent)
+    :RenameNodeDialog(parent), mNodePath(path)
 {
 }
 

@@ -371,16 +371,10 @@ QProgressBar::chunk
            <number>8</number>
           </property>
           <item>
-           <widget class="QLabel" name="lTransferName">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
+           <widget class="QWidget" name="wTransferName" native="true">
             <property name="minimumSize">
              <size>
-              <width>105</width>
+              <width>0</width>
               <height>20</height>
              </size>
             </property>
@@ -390,9 +384,83 @@ QProgressBar::chunk
               <height>20</height>
              </size>
             </property>
-            <property name="text">
-             <string/>
-            </property>
+            <layout class="QHBoxLayout" name="horizontalLayout_4" stretch="0,0,0">
+             <property name="spacing">
+              <number>5</number>
+             </property>
+             <property name="leftMargin">
+              <number>0</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
+              <number>0</number>
+             </property>
+             <item>
+              <widget class="QLabel" name="lTransferName">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>16777215</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="lSyncIcon">
+               <property name="minimumSize">
+                <size>
+                 <width>16</width>
+                 <height>16</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>16</width>
+                 <height>16</height>
+                </size>
+               </property>
+               <property name="text">
+                <string notr="true"/>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <spacer name="horizontalSpacer_5">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeType">
+                <enum>QSizePolicy::MinimumExpanding</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>0</width>
+                 <height>0</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+            </layout>
            </widget>
           </item>
           <item>
@@ -638,7 +706,7 @@ QProgressBar::chunk
             </rect>
            </property>
            <property name="text">
-            <string>In queue</string>
+            <string/>
            </property>
           </widget>
          </widget>
@@ -683,7 +751,7 @@ QProgressBar::chunk
             </rect>
            </property>
            <property name="text">
-            <string>Paused</string>
+            <string/>
            </property>
           </widget>
          </widget>
@@ -707,14 +775,14 @@ QProgressBar::chunk
            <item>
             <widget class="QLabel" name="lItemPausedQueued_1">
              <property name="text">
-              <string>Paused</string>
+              <string/>
              </property>
             </widget>
            </item>
            <item>
             <widget class="QLabel" name="lItemPausedQueued_2">
              <property name="text">
-              <string>(In queue)</string>
+              <string/>
              </property>
             </widget>
            </item>
@@ -765,7 +833,7 @@ QProgressBar::chunk
               </size>
              </property>
              <property name="text">
-              <string>Failed</string>
+              <string/>
              </property>
             </widget>
            </item>
@@ -790,7 +858,7 @@ QProgressBar::chunk
               </size>
              </property>
              <property name="text">
-              <string>Retry</string>
+              <string/>
              </property>
             </widget>
            </item>

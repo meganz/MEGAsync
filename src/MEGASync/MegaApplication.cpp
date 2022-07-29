@@ -458,13 +458,10 @@ void MegaApplication::initialize()
 
     megaApiFolders = new MegaApi(Preferences::CLIENT_KEY, basePath.toUtf8().constData(), Preferences::USER_AGENT);
 
-    //Set payload max size to be logged: a 10th of system's memory
-    long long availMemory = Utilities::getSystemsAvailableMemory();
-    auto newPayLoadLogSize = availMemory / 10 ;
-    if (newPayLoadLogSize < 10240)
-    {
-        newPayLoadLogSize = 10240;
-    }
+    // Set maximum log line size to 10k (same as SDK default)
+    // Otherwise network logging can cause large glitches when logging hundreds of MB
+    // On Mac it is particularly apparent, causing the beachball to appear often
+    long long newPayLoadLogSize = 10240;
     megaApi->log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("Establishing max payload log size: %1").arg(newPayLoadLogSize).toUtf8().constData());
     megaApi->setMaxPayloadLogSize(newPayLoadLogSize);
     megaApiFolders->setMaxPayloadLogSize(newPayLoadLogSize);
@@ -490,7 +487,7 @@ void MegaApplication::initialize()
             QMegaMessageBox::warning(nullptr, QString::fromUtf8("MEGAsync"), QString::fromUtf8("base URL changed to ") + Preferences::BASE_URL);
         }
 
-        gCrashableForTesting = settings.value(QString::fromUtf8("crashable"), Preferences::BASE_URL).toBool();
+        gCrashableForTesting = settings.value(QString::fromUtf8("crashable"), false).toBool();
 
         Preferences::overridePreferences(settings);
         Preferences::SDK_ID.append(QString::fromUtf8(" - STAGING"));
@@ -611,7 +608,7 @@ void MegaApplication::initialize()
         }
     }
 
-    transferQuota = ::mega::make_unique<TransferQuota>(mOsNotifications);
+    transferQuota = std::make_shared<TransferQuota>(mOsNotifications);
     connect(transferQuota.get(), &TransferQuota::waitTimeIsOver, this, &MegaApplication::updateStatesAfterTransferOverQuotaTimeHasExpired);
 
     periodicTasksTimer = new QTimer(this);
@@ -1588,22 +1585,20 @@ void MegaApplication::processUploadQueue(MegaHandle nodeHandle)
     auto batch = std::shared_ptr<TransferBatch>(new TransferBatch());
     mBlockingBatch.add(batch);
 
-    mBlockingBatch.add(batch);
-
     EventUpdater updater(uploadQueue.size());
+    mProcessingUploadQueue = true;
 
     //Process the upload queue using the MegaUploader object
     while (!uploadQueue.isEmpty())
     {
         QString filePath = uploadQueue.dequeue();
-        QFileInfo filePathInfo(filePath);
 
         updateMetadata(data, filePath);
 
         bool startedTransfer = uploader->upload(filePath, node, transferId, batch->getCancelTokenPtr());
         if (startedTransfer)
         {
-            batch->add(filePathInfo.isDir());
+            batch->add(filePath);
             startingUpload();
         }
 
@@ -1620,6 +1615,7 @@ void MegaApplication::processUploadQueue(MegaHandle nodeHandle)
         mBlockingBatch.removeBatch();
     }
 
+    mProcessingUploadQueue = false;
     delete node;
 }
 
@@ -2724,6 +2720,10 @@ QuotaState MegaApplication::getTransferQuotaState() const
      return quotaState;
 }
 
+std::shared_ptr<TransferQuota> MegaApplication::getTransferQuota() const
+{
+    return transferQuota;
+}
 
 int MegaApplication::getAppliedStorageState() const
 {
@@ -3277,7 +3277,7 @@ bool MegaApplication::isIdleForTooLong() const
 
 void MegaApplication::startUpload(const QString& rawLocalPath, MegaNode* target, MegaCancelToken* cancelToken)
 {
-    const char* localPath = QDir::toNativeSeparators(rawLocalPath).toUtf8().constData();
+    auto localPathArray = QDir::toNativeSeparators(rawLocalPath).toUtf8();
     const char* appData = nullptr;
     const char* fileName = nullptr;
     const bool startFirst = false;
@@ -3285,7 +3285,7 @@ void MegaApplication::startUpload(const QString& rawLocalPath, MegaNode* target,
     int64_t mtime = ::mega::MegaApi::INVALID_CUSTOM_MOD_TIME;
     MegaTransferListener* listener = nullptr;
 
-    megaApi->startUpload(localPath, target, fileName, mtime, appData, isSrcTemporary, startFirst, cancelToken, listener);
+    megaApi->startUpload(localPathArray.constData(), target, fileName, mtime, appData, isSrcTemporary, startFirst, cancelToken, listener);
 }
 
 void MegaApplication::cancelScanningStage()
@@ -3293,33 +3293,33 @@ void MegaApplication::cancelScanningStage()
     mBlockingBatch.cancelTransfer();
 }
 
-void MegaApplication::updateFileTransferBatchesAndUi(BlockingBatch &batch)
+void MegaApplication::updateFileTransferBatchesAndUi(const QString& nodePath, BlockingBatch &batch)
 {
     if(batch.isValid())
     {
         QString message = QString::fromUtf8("updateFileTransferBatchesAndUi");
         MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, message.toUtf8().constData());
 
-        batch.onFileScanCompleted();
+        batch.onScanCompleted(nodePath);
         updateIfBlockingStageFinished(batch, false);
     }
 }
 
-void MegaApplication::updateFolderTransferBatchesAndUi(BlockingBatch &batch, bool fromCancellation)
+void MegaApplication::updateFolderTransferBatchesAndUi(const QString& nodePath, BlockingBatch &batch, bool fromCancellation)
 {
     if(batch.isValid())
     {
         QString message = QString::fromUtf8("updateFolderTransferBatchesAndUi");
         MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, message.toUtf8().constData());
 
-        batch.onFolderScanCompleted();
+        batch.onScanCompleted(nodePath);
         updateIfBlockingStageFinished(batch, fromCancellation);
     }
 }
 
 void MegaApplication::updateIfBlockingStageFinished(BlockingBatch &batch, bool fromCancellation)
 {
-    if (batch.isBlockingStageFinished())
+    if (batch.isBlockingStageFinished() && (batch.isCancelled() || !isQueueProcessingOngoing()))
     {
         scanStageController.stopDelayedScanStage(fromCancellation);
         unblockBatch(batch);
@@ -3396,7 +3396,7 @@ void MegaApplication::updateFreedCancelToken(MegaTransfer* transfer)
 
 void MegaApplication::startingUpload()
 {
-    if (noUploadedStarted && mBlockingBatch.hasFolders())
+    if (noUploadedStarted && mBlockingBatch.hasNodes())
     {
         noUploadedStarted = false;
         scanStageController.startDelayedScanStage();
@@ -3537,6 +3537,20 @@ void MegaApplication::updateMetadata(TransferMetaData *data, const QString &file
     {
         data->totalFiles++;
     }
+}
+
+bool MegaApplication::isQueueProcessingOngoing()
+{
+    return mProcessingUploadQueue || downloader->isQueueProcessingOngoing();
+}
+
+QString MegaApplication::getNodePath(MegaTransfer* transfer)
+{
+    if (transfer->getPath() != nullptr)
+    {
+        return QString::fromUtf8(transfer->getPath());
+    }
+    return QString::fromUtf8(transfer->getParentPath()) + QString::fromUtf8(transfer->getFileName());
 }
 
 void MegaApplication::setupWizardFinished(int result)
@@ -5336,8 +5350,7 @@ void MegaApplication::processUploads()
     //Files will be uploaded when the user selects the upload folder
     if (uploadFolderSelector)
     {
-        uploadFolderSelector->activateWindow();
-        uploadFolderSelector->raise();
+        Platform::showBackgroundWindow(uploadFolderSelector);
         return;
     }
 
@@ -5366,8 +5379,7 @@ void MegaApplication::processUploads()
     }
     uploadFolderSelector = new UploadToMegaDialog(megaApi);
     uploadFolderSelector->setDefaultFolder(preferences->uploadFolder());
-    uploadFolderSelector->activateWindow();
-    uploadFolderSelector->exec();
+    Platform::execBackgroundWindow(uploadFolderSelector);
     if (!uploadFolderSelector)
     {
         return;
@@ -5435,13 +5447,7 @@ void MegaApplication::processDownloads()
 
     if (downloadFolderSelector)
     {
-        if(mTransferManager)
-        {
-            mTransferManagerGeometryRetainer.showDialog(mTransferManager);
-        }
-
-        downloadFolderSelector->activateWindow();
-        downloadFolderSelector->raise();
+        Platform::showBackgroundWindow(downloadFolderSelector);
         return;
     }
 
@@ -5471,16 +5477,8 @@ void MegaApplication::processDownloads()
     }
 
     downloadFolderSelector = new DownloadFromMegaDialog(preferences->downloadFolder());
-    downloadFolderSelector->activateWindow();
-    downloadFolderSelector->raise();
+    Platform::execBackgroundWindow(downloadFolderSelector);
 
-    //If you don´t show the Transfer Manager, the DownlaodFromDialog is not visible
-    if(mTransferManager)
-    {
-        mTransferManagerGeometryRetainer.showDialog(mTransferManager);
-    }
-
-    downloadFolderSelector->exec();
     if (!downloadFolderSelector)
     {
         return;
@@ -5717,16 +5715,14 @@ void MegaApplication::externalFileUpload(qlonglong targetFolder)
 
     if (folderUploadSelector)
     {
-        folderUploadSelector->activateWindow();
-        folderUploadSelector->raise();
+        Platform::showBackgroundWindow(folderUploadSelector);
         return;
     }
 
     fileUploadTarget = targetFolder;
     if (fileUploadSelector)
     {
-        fileUploadSelector->activateWindow();
-        fileUploadSelector->raise();
+        Platform::showBackgroundWindow(fileUploadSelector);
         return;
     }
 
@@ -5762,8 +5758,8 @@ void MegaApplication::externalFileUpload(qlonglong targetFolder)
             files++;
             startUpload(path, target, nullptr);
         }
-        delete target;
 
+        delete target;
         HTTPServer::onUploadSelectionAccepted(files, 0);
     }
     else
@@ -7832,7 +7828,7 @@ void MegaApplication::onTransferStart(MegaApi *api, MegaTransfer *transfer)
 
     if(!transfer->isSyncTransfer() && !transfer->isBackupTransfer())
     {
-        updateFileTransferBatchesAndUi(mBlockingBatch);
+        updateFileTransferBatchesAndUi(getNodePath(transfer), mBlockingBatch);
         logBatchStatus("onTransferStart");
     }
 
@@ -7874,7 +7870,7 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
         {
             if(mBlockingBatch.isValid())
             {
-                mBlockingBatch.onTransferFinished(isFolderTransfer);
+                mBlockingBatch.onTransferFinished(getNodePath(transfer));
                 updateIfBlockingStageFinished(mBlockingBatch, isOnScanStage);
                 updateFreedCancelToken(transfer);
             }
@@ -8041,7 +8037,7 @@ void MegaApplication::onTransferUpdate(MegaApi*, MegaTransfer* transfer)
     {
         if (transfer->getStage() >= MegaTransfer::STAGE_TRANSFERRING_FILES)
         {
-            updateFolderTransferBatchesAndUi(mBlockingBatch, false);
+            updateFolderTransferBatchesAndUi(getNodePath(transfer), mBlockingBatch, false);
             logBatchStatus("onTransferUpdate");
         }
     }
@@ -8513,8 +8509,6 @@ void MegaApplication::onSyncFileStateChanged(MegaApi *, MegaSync *, string *loca
     {
         return;
     }
-
-    DeferPreferencesSyncForScope deferrer(this);
 
 #ifdef _WIN32
     if (!mShellNotifier)

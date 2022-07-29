@@ -30,8 +30,11 @@ class TransferManager : public QDialog
 {
     Q_OBJECT
 
+    static const QString TRANSFER_QUOTA_WARNING;
+    static const QString TRANSFER_QUOTA_MORE_ABOUT;
+
 public:
-    explicit TransferManager(mega::MegaApi *megaApi, QWidget *parent = 0);
+    explicit TransferManager(mega::MegaApi *megaApi);
     void setActiveTab(int t);
     ~TransferManager();
 
@@ -74,6 +77,8 @@ private:
     QTimer mScanningTimer;
     int mScanningAnimationIndex;
 
+    QTimer mTransferQuotaTimer;
+
     std::shared_ptr<Preferences> mPreferences;
     QPoint mDragPosition;
     QMap<TransfersWidget::TM_TAB, QFrame*> mTabFramesToggleGroup;
@@ -109,6 +114,11 @@ private:
     void checkActionAndMediaVisibility();
     void onFileTypeButtonClicked(TransfersWidget::TM_TAB tab, Utilities::FileType fileType, const QString& tabLabel);
     void checkPauseButtonVisibilityIfPossible();
+    void showTransferQuotaBanner(bool state);
+
+    void showAllResults();
+    void showDownloadResults();
+    void showUploadResults();
 
 private slots:
     void on_tCompleted_clicked();
@@ -124,9 +134,6 @@ private slots:
     void on_bSearchString_clicked();
     void on_tSearchCancel_clicked();
     void on_tClearSearchResult_clicked();
-    void on_tAllResults_clicked();
-    void on_tDlResults_clicked();
-    void on_tUlResults_clicked();
     void on_bPause_toggled();
     void pauseResumeTransfers(bool isPaused);
 
@@ -136,7 +143,6 @@ private slots:
     void on_tCogWheel_clicked();
     void on_bDownload_clicked();
     void on_bUpload_clicked();
-    void on_bCancelAll_clicked();
     void on_leSearchField_returnPressed();
 
     void on_bArchives_clicked();
@@ -161,6 +167,8 @@ private slots:
 
     void updateTransferWidget(QWidget* widgetToShow);
     void onScanningAnimationUpdate();
+
+    void onTransferQuotaExceededUpdate();
 };
 
 #endif // TRANSFERMANAGER_H

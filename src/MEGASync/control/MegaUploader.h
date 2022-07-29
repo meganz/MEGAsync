@@ -24,7 +24,7 @@ protected:
     bool upload(QFileInfo info, mega::MegaNode *parent, unsigned long long appDataID, mega::MegaCancelToken *cancelToken);
 
 private:
-    void startUpload(const QString& localPath, mega::MegaNode* parent, mega::MegaCancelToken *cancelToken);
+    void startUpload(const QString& localPath, unsigned long long appDataID, mega::MegaNode* parent, mega::MegaCancelToken *cancelToken);
 
     mega::MegaApi *megaApi;
 };

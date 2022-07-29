@@ -360,7 +360,7 @@ QMenu::item:default
              <number>2</number>
             </property>
             <property name="title" stdset="0">
-             <string>Speed</string>
+             <string notr="true"/>
             </property>
            </widget>
           </item>
@@ -416,7 +416,7 @@ QMenu::item:default
              <number>4</number>
             </property>
             <property name="title" stdset="0">
-             <string>Time Left</string>
+             <string notr="true"/>
             </property>
            </widget>
           </item>
@@ -474,7 +474,7 @@ QMenu::item:default
                 <cursorShape>PointingHandCursor</cursorShape>
                </property>
                <property name="toolTip">
-                <string>Pause or resume all selected transfers</string>
+                <string notr="true"/>
                </property>
                <property name="icon">
                 <iconset resource="../../../gui/Resources_win.qrc">
@@ -490,9 +490,7 @@ QMenu::item:default
                 <bool>true</bool>
                </property>
                <property name="default_icon" stdset="0">
-                <url>
-                 <string>qrc:/images/transfer_manager/transfers_actions/lists_pause_all_ico_default.png</string>
-                </url>
+                <string notr="true">qrc:/images/transfer_manager/transfers_actions/lists_pause_all_ico_default.png</string>
                </property>
                <property name="hover_selected" stdset="0">
                 <bool>true</bool>
@@ -556,7 +554,7 @@ QMenu::item:default
                 <cursorShape>PointingHandCursor</cursorShape>
                </property>
                <property name="toolTip">
-                <string>Cancel all selected transfers</string>
+                <string notr="true"/>
                </property>
                <property name="icon">
                 <iconset resource="../../../gui/Resources_win.qrc">
@@ -569,9 +567,7 @@ QMenu::item:default
                 </size>
                </property>
                <property name="default_icon" stdset="0">
-                <url>
-                 <string>qrc:/images/transfer_manager/transfers_actions/lists_cancel_all_ico_default.png</string>
-                </url>
+                <string notr="true">qrc:/images/transfer_manager/transfers_actions/lists_cancel_all_ico_default.png</string>
                </property>
               </widget>
              </item>

@@ -14,6 +14,8 @@
 #include <QMouseEvent>
 #include <QScrollBar>
 #include <QPalette>
+#include <QStyleOptionFocusRect>
+#include <QPainter>
 
 using namespace mega;
 
@@ -23,9 +25,14 @@ const int TransferManager::STATS_REFRESH_PERIOD_MS;
 const char* LABEL_NUMBER = "NUMBER";
 const char* ITS_ON = "itsOn";
 const char* SEARCH_TEXT = "searchText";
+const char* SEARCH_BUTTON_SELECTED = "selected";
 
-TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
-    QDialog(parent),
+const QString TransferManager::TRANSFER_QUOTA_WARNING = QString::fromUtf8(QT_TR_NOOP("You can't continue downloading as you don't have enough transfer quota left for this IP address."
+                                                                                 "\nTo get more quota, upgrade to a Pro account or wait for [A] until more free quota becomes available on your IP address."));
+const QString TransferManager::TRANSFER_QUOTA_MORE_ABOUT = QLatin1String(QT_TR_NOOP("More about transfer quota"));
+
+TransferManager::TransferManager(MegaApi *megaApi) :
+    QDialog(nullptr),
     mUi(new Ui::TransferManager),
     mMegaApi(megaApi),
     mScanningAnimationIndex(1),
@@ -208,13 +215,13 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
     connect(mSpeedRefreshTimer, &QTimer::timeout,
             this, &TransferManager::refreshSpeed);
 
-    auto sizePolicy = mUi->bDownSpeed->sizePolicy();
+    auto sizePolicy = mUi->wDownSpeed->sizePolicy();
     sizePolicy.setRetainSizeWhenHidden(true);
-    mUi->bDownSpeed->setSizePolicy(sizePolicy);
+    mUi->wDownSpeed->setSizePolicy(sizePolicy);
 
-    sizePolicy = mUi->bUpSpeed->sizePolicy();
+    sizePolicy = mUi->wUpSpeed->sizePolicy();
     sizePolicy.setRetainSizeWhenHidden(true);
-    mUi->bUpSpeed->setSizePolicy(sizePolicy);
+    mUi->wUpSpeed->setSizePolicy(sizePolicy);
 
     // Connect to storage quota signals
     connect(MegaSyncApp, &MegaApplication::storageStateChanged,
@@ -230,6 +237,10 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
     auto transferQuotaState = MegaSyncApp->getTransferQuotaState();
     onStorageStateChanged(storageState);
     onTransferQuotaStateChanged(transferQuotaState);
+    mTransferQuotaTimer.setInterval(1000);
+    connect(&mTransferQuotaTimer, &QTimer::timeout, this, &TransferManager::onTransferQuotaExceededUpdate);
+    QString moreAboutLink(QLatin1String("<a href=\"https://help.mega.io/plans-storage/space-storage/transfer-quota\"><font color=#333333>%1</font></a>"));
+    mUi->lTransferOverQuotaMoreAbout->setText(moreAboutLink.arg(TRANSFER_QUOTA_MORE_ABOUT));
 
     setActiveTab(TransfersWidget::ALL_TRANSFERS_TAB);
     //Update stats
@@ -249,6 +260,10 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
     mTransferScanCancelUi = new TransferScanCancelUi(mUi->sTransfers, mTabNoItem[TransfersWidget::ALL_TRANSFERS_TAB]);
     connect(mTransferScanCancelUi, &TransferScanCancelUi::cancelTransfers,
             this, &TransferManager::cancelScanning);
+
+    mUi->wAllResults->installEventFilter(this);
+    mUi->wDlResults->installEventFilter(this);
+    mUi->wUlResults->installEventFilter(this);
 }
 
 void TransferManager::pauseModel(bool value)
@@ -261,6 +276,8 @@ void TransferManager::enterBlockingState()
     mUi->wTransfers->setScanningWidgetVisible(true);
     enableUserActions(false);
     mTransferScanCancelUi->show();
+
+    mScanningTimer.start();
 }
 
 void TransferManager::leaveBlockingState(bool fromCancellation)
@@ -268,6 +285,9 @@ void TransferManager::leaveBlockingState(bool fromCancellation)
     enableUserActions(true);
     mUi->wTransfers->setScanningWidgetVisible(false);
     mTransferScanCancelUi->hide(fromCancellation);
+
+    mScanningTimer.stop();
+    mScanningAnimationIndex = 1;
 
     refreshView();
 }
@@ -317,7 +337,7 @@ void TransferManager::on_tCompleted_clicked()
     {
         emit userActivity();
         mUi->wTransfers->filtersChanged({}, TransferData::TRANSFER_COMPLETED, {});
-        mUi->lCurrentContent->setText(tr("Finished"));
+        mUi->lCurrentContent->setText(tr("Completed"));
         toggleTab(TransfersWidget::COMPLETED_TAB);
     }
 }
@@ -520,10 +540,21 @@ void TransferManager::refreshStateStats()
             }
         }
 
-        if(processedNumber != 0)
+        if(mTransferScanCancelUi && mTransferScanCancelUi->isActive())
+        {
+            leftFooterWidget = mUi->pScanning;
+        }
+        else if(failedNumber != 0 || MegaSyncApp->getStalledIssuesModel()->hasStalledIssues())
+        {
+            leftFooterWidget = mUi->pSomeIssues;
+        }
+        else if(processedNumber != 0)
         {
             leftFooterWidget = mUi->pSpeedAndClear;
+        }
 
+        if(processedNumber != 0)
+        {
             countLabel->show();
             countLabel->setText(countLabelText);
         }
@@ -531,11 +562,6 @@ void TransferManager::refreshStateStats()
         {
             countLabel->hide();
             countLabel->clear();
-        }
-
-        if(failedNumber != 0 || MegaSyncApp->getStalledIssuesModel()->hasStalledIssues())
-        {
-            leftFooterWidget = mUi->pSomeIssues;
         }
     }
 
@@ -691,7 +717,7 @@ void TransferManager::onTransferQuotaStateChanged(QuotaState transferQuotaState)
         case QuotaState::OVERQUOTA:
         {
             mUi->tSeePlans->show();
-            mUi->pTransferOverQuota->setVisible(mStorageQuotaState != MegaApi::STORAGE_STATE_PAYWALL
+            showTransferQuotaBanner(mStorageQuotaState != MegaApi::STORAGE_STATE_PAYWALL
                                                 && mStorageQuotaState != MegaApi::STORAGE_STATE_RED);
             break;
         }
@@ -700,7 +726,7 @@ void TransferManager::onTransferQuotaStateChanged(QuotaState transferQuotaState)
         default:
         {
             mUi->pTransferOverQuota->hide();
-            mUi->tSeePlans->setVisible(mStorageQuotaState == MegaApi::STORAGE_STATE_PAYWALL
+            showTransferQuotaBanner(mStorageQuotaState == MegaApi::STORAGE_STATE_PAYWALL
                                        || mStorageQuotaState == MegaApi::STORAGE_STATE_RED);
             break;
         }
@@ -714,20 +740,49 @@ void TransferManager::checkPauseButtonVisibilityIfPossible()
     mUi->lPaused->setVisible(mModel->areAllPaused() && !mUi->lStorageOverQuota->isVisible() && !mUi->pTransferOverQuota->isVisible());
 }
 
+void TransferManager::showTransferQuotaBanner(bool state)
+{
+    mUi->pTransferOverQuota->setVisible(state);
+
+    if(Preferences::instance()->accountType() != Preferences::ACCOUNT_TYPE_FREE)
+    {
+        mUi->lTransferOverQuotaInfo->hide();
+        mUi->lTransferOverQuotaMoreAbout->hide();
+    }
+
+    if(state)
+    {
+        mTransferQuotaTimer.start();
+        onTransferQuotaExceededUpdate();
+    }
+    else
+    {
+        mTransferQuotaTimer.stop();
+    }
+}
+
+void TransferManager::onTransferQuotaExceededUpdate()
+{
+    QString bannerText(TRANSFER_QUOTA_WARNING);
+    auto text = bannerText.replace(QString(QLatin1String("[A]")), MegaSyncApp->getTransferQuota()->getTransferQuotaDeadline().toString(QLatin1String("hh:mm:ss")));
+    mUi->lTransferOverQuotaInfo->setText(text);
+}
+
+
 void TransferManager::refreshSpeed()
 {
-    mUi->bUpSpeed->setVisible(mTransfersCount.pendingUploads);
+    mUi->wUpSpeed->setVisible(mTransfersCount.pendingUploads);
     if(mTransfersCount.pendingUploads)
     {
         auto upSpeed (static_cast<unsigned long long>(mMegaApi->getCurrentUploadSpeed()));
-        mUi->bUpSpeed->setText(Utilities::getSizeString(upSpeed) + QLatin1Literal("/s"));
+        mUi->lUpSpeed->setText(Utilities::getSizeString(upSpeed) + QLatin1Literal("/s"));
     }
 
-    mUi->bDownSpeed->setVisible(mTransfersCount.pendingDownloads);
+    mUi->wDownSpeed->setVisible(mTransfersCount.pendingDownloads);
     if(mTransfersCount.pendingDownloads)
     {
         auto dlSpeed (static_cast<unsigned long long>(mMegaApi->getCurrentDownloadSpeed()));
-        mUi->bDownSpeed->setText(Utilities::getSizeString(dlSpeed) + QLatin1Literal("/s"));
+        mUi->lDownSpeed->setText(Utilities::getSizeString(dlSpeed) + QLatin1Literal("/s"));
     }
 }
 
@@ -741,35 +796,38 @@ void TransferManager::refreshSearchStats()
         int nbUl (proxy->getNumberOfItems(TransferData::TRANSFER_UPLOAD));
         int nbAll (nbDl + nbUl);
 
-        if(mUi->tDlResults->property(LABEL_NUMBER).toLongLong() != nbDl)
+        if(mUi->lDlResultsCounter->text().toLongLong() != nbDl)
         {
-            QString downloadText(tr("Downloads"));
-            mUi->tDlResults->setText(QString(downloadText + QString::fromUtf8("\t\t\t\t") + QString::number(nbDl)));
-            mUi->tDlResults->setProperty(LABEL_NUMBER, nbDl);
+            mUi->lDlResultsCounter->setText(QString::number(nbDl));
         }
 
-        if(mUi->tUlResults->property(LABEL_NUMBER).toLongLong() != nbUl)
+        if(mUi->lUlResultsCounter->text().toLongLong() != nbUl)
         {
-            QString uploadText(tr("Uploads"));
-            mUi->tUlResults->setText(QString(uploadText + QString::fromUtf8("\t\t\t\t") + QString::number(nbUl)));
-            mUi->tUlResults->setProperty(LABEL_NUMBER, nbUl);
+            mUi->lUlResultsCounter->setText(QString::number(nbUl));
         }
 
-        int intNbAll = static_cast<int>(nbAll);
-        mUi->lNbResults->setText(QString(tr("%1 result(s) found","", intNbAll)).arg(nbAll));
-        mUi->lNbResults->setProperty("results", static_cast<bool>(nbAll));
-        mUi->lNbResults->style()->unpolish(mUi->lNbResults);
-        mUi->lNbResults->style()->polish(mUi->lNbResults);
+        mUi->lAllResultsCounter->setText(QString::number(nbAll));
 
-        QString allText(tr("All"));
-        mUi->tAllResults->setText(allText + QString::fromUtf8("\t\t\t\t") + QString::number(nbAll));
-
-        mUi->searchByTextTypeSelector->setVisible(nbDl != 0 && nbUl != 0);
+        if(nbDl != 0 && nbUl != 0)
+        {
+            mUi->searchByTextTypeSelector->setVisible(true);
+            mUi->lNbResults->setVisible(false);
+        }
+        else
+        {
+            int intNbAll = static_cast<int>(nbAll);
+            mUi->lNbResults->setText(QString(tr("%1 result found","", intNbAll)).arg(nbAll));
+            mUi->lNbResults->setProperty("results", static_cast<bool>(nbAll));
+            mUi->lNbResults->style()->unpolish(mUi->lNbResults);
+            mUi->lNbResults->style()->polish(mUi->lNbResults);
+            mUi->lNbResults->setVisible(true);
+            mUi->searchByTextTypeSelector->setVisible(false);
+        }
 
         bool showTypeFilters (mUi->wTransfers->getCurrentTab() == TransfersWidget::SEARCH_TAB);
-        mUi->tDlResults->setVisible(showTypeFilters);
-        mUi->tUlResults->setVisible(showTypeFilters);
-        mUi->tAllResults->setVisible(showTypeFilters);
+        mUi->wDlResults->setVisible(showTypeFilters);
+        mUi->wUlResults->setVisible(showTypeFilters);
+        mUi->wAllResults->setVisible(showTypeFilters);
 
         QWidget* widgetToShow (mUi->wTransfers);
 
@@ -871,11 +929,17 @@ void TransferManager::applyTextSearch(const QString& text)
                                           Qt::ElideMiddle,
                                           mUi->lTextSearch->width()));
     // Add number of found results
-    mUi->tAllResults->setChecked(true);
-    mUi->tAllResults->hide();
-    mUi->tDlResults->hide();
-    mUi->tUlResults->hide();
+    mUi->wAllResults->setProperty(SEARCH_BUTTON_SELECTED, true);
+    mUi->wDlResults->setProperty(SEARCH_BUTTON_SELECTED, false);
+    mUi->wUlResults->setProperty(SEARCH_BUTTON_SELECTED, false);
+
+    mUi->wAllResults->hide();
+    mUi->wDlResults->hide();
+    mUi->wUlResults->hide();
     mUi->wSearch->show();
+
+    //This is done to refresh the stylesheet as depends on the object properties
+    mUi->pSearchHeaderInfo->setStyleSheet(mUi->pSearchHeaderInfo->styleSheet());
 
     mUi->wTransfers->transferFilterReset();
 
@@ -915,19 +979,37 @@ void TransferManager::on_tClearSearchResult_clicked()
     }
 }
 
-void TransferManager::on_tAllResults_clicked()
+void TransferManager::showAllResults()
 {
+    mUi->wAllResults->setProperty(SEARCH_BUTTON_SELECTED, true);
+    mUi->wDlResults->setProperty(SEARCH_BUTTON_SELECTED, false);
+    mUi->wUlResults->setProperty(SEARCH_BUTTON_SELECTED, false);
+
+    mUi->pSearchHeaderInfo->setStyleSheet(mUi->pSearchHeaderInfo->styleSheet());
+
     mUi->wTransfers->textFilterTypeChanged({});
 }
 
-void TransferManager::on_tDlResults_clicked()
+void TransferManager::showDownloadResults()
 {
+    mUi->wAllResults->setProperty(SEARCH_BUTTON_SELECTED, false);
+    mUi->wDlResults->setProperty(SEARCH_BUTTON_SELECTED, true);
+    mUi->wUlResults->setProperty(SEARCH_BUTTON_SELECTED, false);
+
+    mUi->pSearchHeaderInfo->setStyleSheet(mUi->pSearchHeaderInfo->styleSheet());
+
     mUi->wTransfers->textFilterTypeChanged(TransferData::TRANSFER_DOWNLOAD
                                     | TransferData::TRANSFER_LTCPDOWNLOAD);
 }
 
-void TransferManager::on_tUlResults_clicked()
+void TransferManager::showUploadResults()
 {
+    mUi->wAllResults->setProperty(SEARCH_BUTTON_SELECTED, false);
+    mUi->wDlResults->setProperty(SEARCH_BUTTON_SELECTED, false);
+    mUi->wUlResults->setProperty(SEARCH_BUTTON_SELECTED, true);
+
+    mUi->pSearchHeaderInfo->setStyleSheet(mUi->pSearchHeaderInfo->styleSheet());
+
     mUi->wTransfers->textFilterTypeChanged(TransferData::TRANSFER_UPLOAD);
 }
 
@@ -989,21 +1071,6 @@ void TransferManager::on_bDownload_clicked()
 void TransferManager::on_bUpload_clicked()
 {
     qobject_cast<MegaApplication*>(qApp)->uploadActionClickedFromWindow(this);
-}
-
-void TransferManager::on_bCancelAll_clicked()
-{
-    auto transfersView = findChild<MegaTransferView*>();
-    if(transfersView)
-    {
-        if(transfersView->onCancelAllTransfers())
-        {
-            on_tAllTransfers_clicked();
-
-            //Use to repaint and update the transfers state
-            transfersView->update();
-        }
-    };
 }
 
 void TransferManager::on_leSearchField_returnPressed()
@@ -1171,6 +1238,59 @@ bool TransferManager::eventFilter(QObject *obj, QEvent *event)
             mSearchFieldReturnPressed = true;
         }
     }
+    else if(obj == mUi->wAllResults || obj == mUi->wDlResults || obj == mUi->wUlResults)
+    {
+        if(event->type() == QEvent::MouseButtonRelease)
+        {
+            if(obj == mUi->wAllResults)
+            {
+                showAllResults();
+            }
+            else if(obj == mUi->wDlResults)
+            {
+
+                showDownloadResults();
+            }
+            else if(obj == mUi->wUlResults)
+            {
+                showUploadResults();
+            }
+        }
+        else if(event->type() == QEvent::KeyRelease)
+        {
+            auto widget = dynamic_cast<QWidget*>(obj);
+            if(widget)
+            {
+                auto keyEvent = dynamic_cast<QKeyEvent*>(event);
+                if(keyEvent && widget->hasFocus())
+                {
+                    if(keyEvent->key() == Qt::Key_Space)
+                    {
+                        QApplication::postEvent(widget, new QEvent(QEvent::MouseButtonRelease));
+                    }
+                }
+            }
+        }
+        else if(event->type() == QEvent::Paint)
+        {
+            auto widget = dynamic_cast<QWidget*>(obj);
+            if(widget && widget->hasFocus())
+            {
+                QPainter painter(widget);
+                QStyleOptionFocusRect option;
+                if(option.state |= QStyle::State_KeyboardFocusChange)
+                {
+                    option.init(widget);
+                    option.backgroundColor = palette().color(QPalette::Window);
+
+                    style()->drawPrimitive(QStyle::PE_FrameFocusRect, &option, &painter,
+                                           this);
+                    return true;
+                }
+            }
+        }
+    }
+
     return QDialog::eventFilter(obj, event);
 }
 
@@ -1215,7 +1335,6 @@ void TransferManager::setTransferState(const StatusInfo::TRANSFERS_STATES &trans
     if(transferState == StatusInfo::TRANSFERS_STATES::STATE_INDEXING)
     {
         mScanningTimer.start();
-        mUi->sStatus->setCurrentWidget(mUi->pScanning);
     }
     else
     {

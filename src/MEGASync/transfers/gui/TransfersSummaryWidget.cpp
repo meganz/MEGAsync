@@ -7,6 +7,7 @@
 #include <QTimer>
 #include <QGraphicsOpacityEffect>
 
+#include "TransferItem.h"
 #include "Utilities.h"
 
 TransfersSummaryWidget::TransfersSummaryWidget(QWidget *parent) :
@@ -27,8 +28,8 @@ TransfersSummaryWidget::TransfersSummaryWidget(QWidget *parent) :
     fontUploads.setBold(true);
     fontDownloads.setBold(true);
 
-    brushspeedUp = QBrush(QColor(QString::fromUtf8("#2BA6DE")));
-    brushspeedDown = QBrush(QColor(QString::fromUtf8("#31B500")));
+    brushspeedUp = QBrush(UPLOAD_TRANSFER_COLOR);
+    brushspeedDown = QBrush(DOWNLOAD_TRANSFER_COLOR);
     brushwhitebackground = QBrush(QColor(QString::fromUtf8("#FFFFFF")));
     pentext = QPen(QColor("#FFFFFF"));
 

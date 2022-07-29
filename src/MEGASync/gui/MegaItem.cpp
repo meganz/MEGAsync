@@ -25,7 +25,7 @@ MegaItem::MegaItem(std::unique_ptr<MegaNode> node, MegaItem *parentItem, bool sh
     mNode(std::move(node)),
     mOwner(nullptr)
 { 
-    if(isRoot() || mNode->isFile() || mNode->isInShare())
+    if(mNode->isFile() || mNode->isInShare())
     {
         mStatus = STATUS::NONE;
         return;
@@ -42,7 +42,7 @@ MegaItem::MegaItem(std::unique_ptr<MegaNode> node, MegaItem *parentItem, bool sh
     QStringList folderList;
     if(parent_item && parent_item->getNode()->isInShare())
     {
-        foreach(const QString& folder, Model::instance()->getMegaFolders())
+        foreach(const QString& folder, Model::instance()->getCloudDriveSyncMegaFolders(false))
         {
             if(folder.startsWith(parent_item->getOwnerEmail()))
             {
@@ -54,7 +54,13 @@ MegaItem::MegaItem(std::unique_ptr<MegaNode> node, MegaItem *parentItem, bool sh
     ////////////
     else
     {
-        calculateSyncStatus(Model::instance()->getMegaFolders());
+        QStringList syncList = Model::instance()->getCloudDriveSyncMegaFolders(true);
+        if(isRoot() && !syncList.isEmpty())
+        {
+            mStatus = STATUS::SYNC_PARENT;
+            return;
+        }
+        calculateSyncStatus(syncList);
     }
 }
 
@@ -368,10 +374,12 @@ void MegaItem::calculateSyncStatus(const QStringList &folders)
         if(syncFolder.startsWith(parentFolders))
         {
             mStatus = STATUS::SYNC_PARENT;
+            return;
         }
         else if(parentFolders.startsWith(syncFolder))
         {
             mStatus = STATUS::SYNC_CHILD;
+            return;
         }
     }
 }

@@ -18,6 +18,9 @@ enum class SortCriterion
     LAST       = 5
 };
 
+static const QColor UPLOAD_TRANSFER_COLOR = QColor("#2BA6DE");
+static const QColor DOWNLOAD_TRANSFER_COLOR = QColor("#31B500");
+
 typedef int TransferTag;
 
 class TransferData : public QSharedData
@@ -59,7 +62,7 @@ public:
     ~TransferData(){}
 
     TransferData(TransferData const* dr) :
-        mType(dr->mType), mErrorCode(dr->mErrorCode),  mState(dr->mState), mTag(dr->mTag),
+        mType(dr->mType), mErrorCode(dr->mErrorCode), mTag(dr->mTag),
         mErrorValue(dr->mErrorValue), mTemporaryError(dr->mTemporaryError),
         mRemainingTime(dr->mRemainingTime),
         mTotalSize(dr->mTotalSize), mPriority(dr->mPriority), mSpeed(dr->mSpeed),
@@ -69,7 +72,7 @@ public:
         mFileType(dr->mFileType),
         mParentHandle (dr->mParentHandle), mNodeHandle (dr->mNodeHandle), mFailedTransfer(dr->mFailedTransfer),
         mFilename(dr->mFilename), mNodeAccess(mega::MegaShare::ACCESS_UNKNOWN),
-        mPath(dr->mPath), mFinishedTime(dr->mFinishedTime), mIgnorePauseQueueState(dr->mIgnorePauseQueueState)
+        mPath(dr->mPath), mFinishedTime(dr->mFinishedTime),mState(dr->mState), mIgnorePauseQueueState(dr->mIgnorePauseQueueState)
     {}
 
     void update(mega::MegaTransfer* transfer);
@@ -122,7 +125,7 @@ public:
     bool isCompleting() const;
     bool isFailed() const;
     int64_t getRawFinishedTime() const;
-    int64_t getFinishedTime() const;
+    int64_t getSecondsSinceFinished() const;
     QString getFormattedFinishedTime() const;
 
 private:

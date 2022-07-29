@@ -19,6 +19,7 @@ protected:
     void onDialogAccepted() override;
     void onRequestFinish(mega::MegaApi* api, mega::MegaRequest *request, mega::MegaError* e) override;
     QString dialogText() override;
+    void title() override;
 
 private:
     std::unique_ptr<mega::MegaNode> mNewNode;

@@ -4,7 +4,7 @@
 #include <MegaApplication.h>
 #include <mega/types.h>
 
-///NEW FOLDER REIMPLMENETATION
+///NEW FOLDER REIMPLEMENTATION
 NewFolderDialog::NewFolderDialog(std::shared_ptr<mega::MegaNode> parentNode, QWidget *parent)
     :NodeNameSetterDialog(parent)
     , mParentNode(parentNode)
@@ -18,6 +18,7 @@ void NewFolderDialog::onDialogAccepted()
     auto node = std::unique_ptr<mega::MegaNode>(MegaSyncApp->getMegaApi()->getNodeByPath(newFolderName.toUtf8().constData(), mParentNode.get()));
     if (!node || node->isFile())
     {
+        setEnabled(false);
         MegaSyncApp->getMegaApi()->createFolder(newFolderName.toUtf8().constData(), mParentNode.get(), mDelegateListener.get());
     }
     //Folder already exists
@@ -49,7 +50,12 @@ void NewFolderDialog::onRequestFinish(mega::MegaApi *, mega::MegaRequest *reques
 
 QString NewFolderDialog::dialogText()
 {
-    return tr("Enter the new folder name:");
+    return tr("Enter the new folder name");
+}
+
+void NewFolderDialog::title()
+{
+    setWindowTitle(tr("New folder"));
 }
 
 std::unique_ptr<mega::MegaNode> NewFolderDialog::getNewNode()

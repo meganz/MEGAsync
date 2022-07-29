@@ -128,6 +128,12 @@ bool InfoDialogTransfersProxyModel::filterAcceptsRow(int sourceRow, const QModel
                      || d->getState() & TransferData::TransferState::TRANSFER_ACTIVE
                      || d->getState() & TransferData::TransferState::TRANSFER_FAILED);
 
+           auto transferModel = dynamic_cast<TransfersModel*>(sourceModel());
+           if(accept && (d->isProcessing() && !transferModel->hasActiveTransfers()))
+           {
+               transferModel->setHasActiveTransfers(true);
+           }
+
            if(!accept && d->mTag == mNextTransferSourceRow)
            {
                accept = true;
@@ -162,6 +168,16 @@ void InfoDialogTransfersProxyModel::onUpdateMostPriorityTransfer(int tag)
         else
         {
             transferModel->sendDataChangedByTag(tag);
+        }
+    }
+
+    firstIndex = index(0,0);
+    if(firstIndex.isValid())
+    {
+        const auto d (qvariant_cast<TransferItem>(firstIndex.data()).getTransferData());
+        if(d)
+        {
+            transferModel->setHasActiveTransfers(d->isProcessing());
         }
     }
 }

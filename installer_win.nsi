@@ -48,23 +48,18 @@ VIAddVersionKey "ProductVersion" "5.0.0.0"
 !define QT_PATH "C:\Qt\5.12.12\msvc2017_64"
 !else
 !define QT_PATH "C:\Qt\5.12.12\msvc2017"
-!endif
-
-!define BUILDPATH_X64 "build-MEGA-Desktop_Qt_5_12_8_MSVC2017_64bit-Release"
-!ifndef BUILD_X64_VERSION
-!define BUILDPATH_X86 "build-MEGA-Desktop_Qt_5_12_8_MSVC2017_32bit-Release"
-!endif
+ !endif
 
 !ifdef BUILD_X64_VERSION
-!define SRCDIR_MEGASYNC "${BUILDPATH_X64}\..\built64"
-!define SRCDIR_UPDATER "${BUILDPATH_X64}\..\built64"
+!define SRCDIR_MEGASYNC "built64"
+!define SRCDIR_UPDATER "built64"
 !else
-!define SRCDIR_MEGASYNC "${BUILDPATH_X86}\..\built32"
-!define SRCDIR_UPDATER "${BUILDPATH_X86}\..\built32"
+!define SRCDIR_MEGASYNC "built32"
+!define SRCDIR_UPDATER "built32"
 !endif
 
-!define SRCDIR_MEGASHELLEXT_X32 "${BUILDPATH_X86}\..\built32"
-!define SRCDIR_MEGASHELLEXT_X64 "${BUILDPATH_X64}\..\built64"
+!define SRCDIR_MEGASHELLEXT_X32 "built32"
+!define SRCDIR_MEGASHELLEXT_X64 "built64"
 !define MULTIUSER_MUI
 !define MULTIUSER_INSTALLMODE_COMMANDLINE
 !define MULTIUSER_EXECUTIONLEVEL Standard
@@ -316,6 +311,7 @@ FunctionEnd
 
 Var BITMAP_WELCOME
 
+Var BANNER_PATH
 Function showHiDpi
     System::Call USER32::GetDpiForSystem()i.r0
     ${If} $0 U<= 0
@@ -323,19 +319,21 @@ Function showHiDpi
         System::Call GDI32::GetDeviceCaps(ir1,i88)i.r0
         System::Call USER32::ReleaseDC(i0,ir1)
     ${EndIf}
-    
+
     ${if} $0 > 288
         StrCpy $0 288
     ${ElseIf} $0 < 72
         StrCpy $0 72
     ${EndIf}
 
-    strCpy $BITMAP_WELCOME "installer\left_banner\left_banner$0.bmp"
-    
+    strCpy $BITMAP_WELCOME "$BANNER_PATH\leftbanner\left_banner$0.bmp"
+	
     ${NSD_SetImage} $mui.WelcomePage.Image $BITMAP_WELCOME  $mui.WelcomePage.Image.Bitmap
     ${NSD_SetImage} $mui.FinishPage.Image $BITMAP_WELCOME $mui.FinishPage.Image.Bitmap
-    
+
 FunctionEnd
+
+Var PREVIOUS_OUTPATH
 
 Function .onInit
   setRebootFlag false
@@ -365,7 +363,7 @@ Function .onInit
          WriteUninstaller "$EXEDIR\${UNINSTALLER_NAME}"
          Quit
   !endif
-  
+
   !ifdef BUILD_X64_VERSION
   ${If} ${RunningX64}
   ${Else}
@@ -391,13 +389,23 @@ Function .onInit
     !insertmacro CheckUserToRunElevated
   ${EndIf}
   
+  System::Call 'shell32::SHGetSpecialFolderPath(i $HWNDPARENT, t .r1, i ${CSIDL_LOCALAPPDATA}, i0)i.r0'
+  strCpy $BANNER_PATH $1
+  #${UAC.CallFunctionAsUser} GetPaths
+  StrCpy $BANNER_PATH "$BANNER_PATH\MEGAsync"
+  
+  strCpy $PREVIOUS_OUTPATH GetOutPath
+  SetOutPath "$BANNER_PATH\leftbanner"
+  File "installer\leftbanner\*"
+  SetOutPath $PREVIOUS_OUTPATH
+
   ;MessageBox mb_IconInformation|mb_TopMost|mb_SetForeground "CAUTION: This is a private BETA version and will expire on Jan 20, 2014, 23:59. If you encounter a bug, malfunction or design flaw, please let us know by sending an e-mail to beta@mega.co.nz.$\r$\n$\r$\nIn this version, the scope of the sync engine is limited. Please bear in mind that:$\r$\n$\r$\n1. Deletions are only executed on the other side if they occur while the sync is live. Do not delete items from synced folders while this app is not running!$\r$\n2. Windows filenames are case insensitive. Do not place items a MEGA folder whose names would clash on the client. Loss of data would occur.$\r$\n3. Local filesystem items must not be exposed to the sync subsystem more than once. Any dupes, whether by nesting syncs or through filesystem links, will lead to unexpected results and loss of data.$\r$\n$\r$\nLimitiations in the current version that will be rectified in the future:$\r$\n$\r$\n1. No locking: Concurrent creation of identically named files and folders on different clients can result in server-side dupes and unexpected results.$\r$\n2. No in-place versioning: Deleted remote files can be found in the MEGA rubbish bin (SyncDebris folder), deleted local files in your computer's recycle bin.$\r$\n3. No delta writes: Changed files are always overwritten as a whole, which means that it is not a good idea to sync e.g. live database files.$\r$\n4. No direct peer-to-peer syncing: Even two machines in the same local subnet will still sync via the remote MEGA infrastructure.$\r$\n$\r$\nThank you for betatesting MEGAsync. We appreciate your pioneering spirit!"
   ;!insertmacro MUI_UNGETLANGUAGE
   !insertmacro MUI_LANGDLL_DISPLAY
 FunctionEnd
 
 Function GetPaths
-  
+
   #Get DEFAULT VALUES
   System::Call 'shell32::SHGetSpecialFolderPath(i $HWNDPARENT, t .r1, i ${CSIDL_COMMON_APPDATA}, i0)i.r0'
   strCpy $ALL_USERS_INSTDIR $1
@@ -406,7 +414,7 @@ Function GetPaths
   strCpy $USERNAME $0
   System::Call 'shell32::SHGetSpecialFolderPath(i $HWNDPARENT, t .r1, i ${CSIDL_LOCALAPPDATA}, i0)i.r0'
   strCpy $CURRENT_USER_INSTDIR $1
-  
+
   #If Silent, ALL_USERS and INSTDIR are the value selected by the user
   ;${If} ${Silent}
      ;${IfNot} $SILENT_USER_INSTDIR == ""
@@ -748,7 +756,7 @@ modeselected:
   File "${SRCDIR_MEGASYNC}\swresample-3.dll"
   AccessControl::SetFileOwner "$INSTDIR\swresample-3.dll" "$USERNAME"
   AccessControl::GrantOnFile "$INSTDIR\swresample-3.dll" "$USERNAME" "GenericRead + GenericWrite"
-
+  
   ;remove old DLLs that we no longer use (some became static; some have later version number)
   Delete "$INSTDIR\avcodec-57.dll"
   Delete "$INSTDIR\avformat-57.dll"
@@ -806,7 +814,7 @@ modeselected:
         AccessControl::GrantOnFile "$INSTDIR\ShellExtX64.dll" "$USERNAME" "GenericRead + GenericWrite"
   ${EndIf}
   ${UAC.CallFunctionAsUser} RunExplorer
-  
+
 #  !insertmacro DEBUG_MSG "Adding firewall rule"
 #  liteFirewall::RemoveRule "$INSTDIR\MEGAsync.exe" "MEGAsync"
 #  Pop $0
@@ -944,6 +952,7 @@ Section Uninstall
   Delete "$INSTDIR\styles\qwindowsvistastyle.dll"
   Delete "$INSTDIR\bearer\qgenericbearer.dll"
   Delete "$INSTDIR\bearer\qnativewifibearer.dll"
+  Delete "$INSTDIR\leftbanner\*"
 
   ;VC++ Redistributable
   Delete "$INSTDIR\vcruntime140.dll"
@@ -1062,12 +1071,7 @@ Section Uninstall
   System::Call 'shell32::SHGetSpecialFolderPath(i $HWNDPARENT, t .r1, i ${CSIDL_STARTUP}, i0)i.r0'
   Delete "$1\MEGAsync.lnk"
   RMDir "$SMPROGRAMS\$ICONS_GROUP"
-  RMDir "$INSTDIR\imageformats"
-  RMDir "$INSTDIR\iconengines"
-  RMDir "$INSTDIR\platforms"
-  RMDir "$INSTDIR\bearer"
-  RMDir "$INSTDIR\styles"
-  RMDir "$INSTDIR"
+  RMDir /r "$INSTDIR"
 
   SetShellVarContext all
   Delete "$SMPROGRAMS\$ICONS_GROUP\Uninstall.lnk"
@@ -1078,13 +1082,7 @@ Section Uninstall
   System::Call 'shell32::SHGetSpecialFolderPath(i $HWNDPARENT, t .r1, i ${CSIDL_STARTUP}, i0)i.r0'
   Delete "$1\MEGAsync.lnk"
   RMDir "$SMPROGRAMS\$ICONS_GROUP"
-  RMDir "$INSTDIR\imageformats"
-  RMDir "$INSTDIR\iconengines"
-  RmDir "$INSTDIR\accessible"
-  RMDir "$INSTDIR\platforms"
-  RMDir "$INSTDIR\bearer"
-  RMDir "$INSTDIR\styles"
-  RMDir "$INSTDIR"
+  RMDir /r "$INSTDIR"
 
   DeleteRegKey ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}"
   DeleteRegKey HKLM "${PRODUCT_DIR_REGKEY}"

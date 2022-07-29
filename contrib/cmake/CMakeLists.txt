@@ -66,8 +66,11 @@ set (USE_QT 1 CACHE STRING "")
 set (ENABLE_LOG_PERFORMANCE 1 CACHE STRING "")
 set (NO_READLINE 1 CACHE STRING "")
 set (USE_DRIVE_NOTIFICATIONS 1 CACHE STRING "")
-
+if (WIN32)
 set (MEGA_LINK_DYNAMIC_CRT 1)  # since we are linking with QT official DLLs
+else()
+    set(USE_PTHREAD 1 CACHE STRING "")
+endif()
 
 set(RepoDir "${CMAKE_CURRENT_LIST_DIR}/../.."  CACHE STRING "")
 set(MEGAsyncDir "${RepoDir}/src/MEGASync")
@@ -173,7 +176,6 @@ set (FORMS
     ${MEGAsyncDir}/gui/${UiDir}/PlanWidget.ui
     ${MEGAsyncDir}/gui/${UiDir}/UpgradeDialog.ui
     ${MEGAsyncDir}/gui/${UiDir}/InfoWizard.ui
-    ${MEGAsyncDir}/gui/${UiDir}/MegaSpeedGraph.ui
     ${MEGAsyncDir}/gui/${UiDir}/AddExclusionDialog.ui
     ${MEGAsyncDir}/gui/${UiDir}/StatusInfo.ui
     ${MEGAsyncDir}/gui/${UiDir}/PSAwidget.ui
@@ -254,12 +256,9 @@ set (MOC_INPUT
     ${MEGAsyncDir}/control/UpdateTask.h
     ${MEGAsyncDir}/control/ThreadPool.h
     ${MEGAsyncDir}/control/MegaController.h
-    ${MEGAsyncDir}/control/TransferBatch.h
     ${MEGAsyncDir}/control/UserAttributesManager.h
-
     ${MEGAsyncDir}/model/SyncSettings.h
     ${MEGAsyncDir}/model/Model.h
-
     ${MEGAsyncDir}/gui/AlertItem.h
     ${MEGAsyncDir}/gui/AlertFilterType.h
     ${MEGAsyncDir}/gui/BugReportDialog.h
@@ -290,7 +289,6 @@ set (MOC_INPUT
     ${MEGAsyncDir}/gui/InfoWizard.h
     ${MEGAsyncDir}/gui/Login2FA.h
     ${MEGAsyncDir}/gui/MegaProxyStyle.h
-    ${MEGAsyncDir}/gui/MegaSpeedGraph.h
     ${MEGAsyncDir}/gui/MultiQFileDialog.h
     ${MEGAsyncDir}/gui/NodeSelector.h
     ${MEGAsyncDir}/gui/PasteMegaLinksDialog.h
@@ -320,9 +318,9 @@ set (MOC_INPUT
     ${MEGAsyncDir}/gui/MegaItemDelegates.h
     ${MEGAsyncDir}/gui/GuiUtilities.h
     ${MEGAsyncDir}/gui/EventHelper.h
+    ${MEGAsyncDir}/gui/AutoResizeStackedWidget.h
     ${MEGAsyncDir}/gui/UserAttributesRequests/FullName.h
     ${MEGAsyncDir}/gui/UserAttributesRequests/Avatar.h
-    ${MEGAsyncDir}/gui/AutoResizeStackedWidget.h
     ${MEGAsyncDir}/gui/ViewLoadingScene.h
     ${MEGAsyncDir}/gui/ScanningWidget.h
     ${MEGAsyncDir}/gui/BlurredShadowEffect.h
@@ -339,6 +337,8 @@ set (MOC_INPUT
     ${MEGAsyncDir}/mega/bindings/qt/QTMegaListener.h
     ${MEGAsyncDir}/mega/bindings/qt/QTMegaRequestListener.h
     ${MEGAsyncDir}/mega/bindings/qt/QTMegaTransferListener.h
+
+    ${MEGAsyncDir}/control/TransferBatch.h    
     
     ${MEGAsyncDir}/transfers/model/TransfersManagerSortFilterProxyModel.h
     ${MEGAsyncDir}/transfers/model/TransfersSortFilterProxyBaseModel.h
@@ -353,9 +353,8 @@ set (MOC_INPUT
     ${MEGAsyncDir}/transfers/gui/MegaTransferDelegate.h
     ${MEGAsyncDir}/transfers/gui/MegaTransferView.h
     ${MEGAsyncDir}/transfers/gui/TransferWidgetHeaderItem.h
-    ${MEGAsyncDir}/transfers/gui/SomeIssuesOccurredMessage.h
     ${MEGAsyncDir}/transfers/gui/TransferScanCancelUi.h
-
+    ${MEGAsyncDir}/transfers/gui/SomeIssuesOccurredMessage.h
     ${MEGAsyncDir}/stalled_issues/gui/StalledIssueChooseWidget.h
 	${MEGAsyncDir}/stalled_issues/gui/StalledIssueActionTitle.h
     ${MEGAsyncDir}/stalled_issues/gui/StalledIssueFilePath.h
@@ -441,7 +440,6 @@ set (SRCS
     ${MEGAsyncDir}/gui/AlertItem.cpp
     ${MEGAsyncDir}/gui/AlertFilterType.cpp
     ${MEGAsyncDir}/gui/BugReportDialog.cpp
-    ${MEGAsyncDir}/gui/BlurredShadowEffect.cpp
     ${MEGAsyncDir}/gui/CircularUsageProgressBar.cpp
     ${MEGAsyncDir}/gui/FilterAlertWidget.cpp
     ${MEGAsyncDir}/gui/MegaAlertDelegate.cpp
@@ -477,7 +475,6 @@ set (SRCS
     ${MEGAsyncDir}/gui/InfoWizard.cpp
     ${MEGAsyncDir}/gui/QSyncItemWidget.cpp
     ${MEGAsyncDir}/gui/QMegaMessageBox.cpp
-    ${MEGAsyncDir}/gui/MegaSpeedGraph.cpp
     ${MEGAsyncDir}/gui/AvatarWidget.cpp
     ${MEGAsyncDir}/gui/MenuItemAction.cpp
     ${MEGAsyncDir}/gui/AddExclusionDialog.cpp

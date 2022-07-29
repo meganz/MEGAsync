@@ -27,7 +27,8 @@ NodeSelector::NodeSelector(int selectMode, QWidget *parent) :
     mSelectMode(selectMode),
     mMegaApi(MegaSyncApp->getMegaApi()),
     mDelegateListener(mega::make_unique<QTMegaRequestListener>(mMegaApi, this)),
-    mModel(nullptr)
+    mModel(nullptr),
+    mManuallyResizedColumn(false)
 {
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
 
@@ -73,6 +74,7 @@ NodeSelector::NodeSelector(int selectMode, QWidget *parent) :
     connect(ui->tMegaFolders, &QTreeView::doubleClicked, this, &NodeSelector::onItemDoubleClick);
     connect(ui->bForward, &QPushButton::clicked, this, &NodeSelector::onGoForwardClicked);
     connect(ui->bBack, &QPushButton::clicked, this, &NodeSelector::onGoBackClicked);
+    connect(ui->tMegaFolders->header(), &QHeaderView::sectionResized, this, &NodeSelector::onSectionResized);
     connect(ui->bNewFolder, &QPushButton::clicked, this, &NodeSelector::onbNewFolderClicked);
     connect(ui->bOk, &QPushButton::clicked, this, &NodeSelector::onbOkClicked);
     connect(ui->bCancel, &QPushButton::clicked, this, &QDialog::reject);
@@ -141,7 +143,10 @@ void NodeSelector::showEvent(QShowEvent* )
 
 void NodeSelector::resizeEvent(QResizeEvent *)
 {
-    ui->tMegaFolders->setColumnWidth(MegaItemModel::COLUMN::NODE, qRound(ui->tMegaFolders->width() * 0.57));
+    if(!mManuallyResizedColumn)
+    {
+        ui->tMegaFolders->setColumnWidth(MegaItemModel::COLUMN::NODE, qRound(ui->tMegaFolders->width() * 0.57));
+    }
 }
 
 void NodeSelector::mousePressEvent(QMouseEvent *event)
@@ -255,7 +260,7 @@ void NodeSelector::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *e
     if (e->getErrorCode() != MegaError::API_OK)
     {
         ui->tMegaFolders->setEnabled(true);
-        QMegaMessageBox::critical(nullptr, QLatin1String("MEGAsync"), tr("Error") + QLatin1String(": ") + QCoreApplication::translate("MegaError", e->getErrorString()));
+        QMegaMessageBox::critical(nullptr, QLatin1String("MEGAsync"), tr("Error:") + QLatin1String(" ") + QCoreApplication::translate("MegaError", e->getErrorString()));
         return;
     }
 
@@ -463,17 +468,24 @@ void NodeSelector::onbOkClicked()
             }
         }
 
-        if(wrongNodes > 0)
+        if(wrongNodes == nodes.size())
         {
             correctNodeSelected = false;
             if(isCloudDrive())
             {
-                QMegaMessageBox::warning(nullptr, tr("Error"), tr("Item selection removed. To reselect, close this window and try again.", "", wrongNodes), QMessageBox::Ok);
+                QMegaMessageBox::warning(nullptr, tr("Error"), tr("The item you selected has been removed. To reselect, close this window and try again.", "", wrongNodes), QMessageBox::Ok);
             }
             else
             {
                 QMegaMessageBox::warning(nullptr, tr("Error"), tr("You no longer have access to this item. Ask the owner to share again.", "", wrongNodes), QMessageBox::Ok);
             }
+        }
+        else if(wrongNodes > 0)
+        {
+            correctNodeSelected = false;
+            QString warningMsg1 = tr("%1 item selected", "", nodes.size()).arg(nodes.size());
+            QString warningMsg = tr("%1. %2 has been removed. To reselect, close this window and try again.", "", wrongNodes).arg(warningMsg1).arg(wrongNodes);
+            QMegaMessageBox::warning(nullptr, tr("Error"), warningMsg, QMessageBox::Ok);
         }
     }
     else
@@ -481,7 +493,7 @@ void NodeSelector::onbOkClicked()
         auto node = std::unique_ptr<MegaNode>(mMegaApi->getNodeByHandle(getSelectedNodeHandle()));
         if (!node)
         {
-            QMegaMessageBox::warning(nullptr, tr("Error"), tr("Item selection removed. To reselect, close this window and try again."),
+            QMegaMessageBox::warning(nullptr, tr("Error"), tr("The item you selected has been removed. To reselect, close this window and try again."),
                                                  QMessageBox::Ok);
             correctNodeSelected = false;
         }
@@ -586,10 +598,23 @@ void NodeSelector::onSelectionChanged(const QItemSelection& selected, const QIte
         if(item)
         {
             if(mSelectMode == NodeSelector::STREAM_SELECT)
+            {
                 ui->bOk->setEnabled(item->getNode()->isFile());
+            }
             else if(mSelectMode == NodeSelector::SYNC_SELECT)
+            {
                 ui->bOk->setEnabled(item->isSyncable());
+            }
         }
+    }
+}
+
+void NodeSelector::onSectionResized()
+{
+    if(!mManuallyResizedColumn
+            && ui->tMegaFolders->header()->rect().contains(ui->tMegaFolders->mapFromGlobal(QCursor::pos())))
+    {
+        mManuallyResizedColumn = true;
     }
 }
 
@@ -748,7 +773,11 @@ void NodeSelector::setRootIndex(const QModelIndex& proxy_idx)
     {
         QString nodeName = QString::fromUtf8(node->getName());
         QFontMetrics fm = ui->lFolderName->fontMetrics();
-        ui->lFolderName->setText(nodeName);
+
+        if(nodeName == QLatin1String("NO_KEY") || nodeName == QLatin1String("CRYPTO_ERROR"))
+        {
+            nodeName = QCoreApplication::translate("MegaError", "Decryption error");
+        }
 
         QString elidedText = fm.elidedText(nodeName, Qt::ElideMiddle, ui->tMegaFolders->width() - LABEL_ELIDE_MARGIN);
         ui->lFolderName->setText(elidedText);

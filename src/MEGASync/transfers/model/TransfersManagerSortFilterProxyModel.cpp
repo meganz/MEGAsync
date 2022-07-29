@@ -101,15 +101,16 @@ void TransfersManagerSortFilterProxyModel::invalidateModel()
     QFuture<void> filtered = QtConcurrent::run([this](){
         auto sourceM = qobject_cast<TransfersModel*>(sourceModel());
         sourceM->lockModelMutex(true);
-        sourceM->blockSignals(true);
+        sourceM->blockModelSignals(true);
         blockSignals(true);
         mIsFiltering = true;
         invalidate();
         QSortFilterProxyModel::sort(0, mSortOrder);
-        blockSignals(false);
-        sourceM->blockSignals(false);
         mIsFiltering = false;
         sourceM->lockModelMutex(false);
+        sourceM->blockModelSignals(false);
+        blockSignals(false);
+        emit layoutChanged();
     });
     mFilterWatcher.setFuture(filtered);
 }
@@ -177,6 +178,7 @@ void TransfersManagerSortFilterProxyModel::resetTransfersStateCounters()
     mActiveTransfers.clear();
     mPausedTransfers.clear();
     mCompletedTransfers.clear();
+    mFailedTransfers.clear();
 }
 
 TransferBaseDelegateWidget *TransfersManagerSortFilterProxyModel::createTransferManagerItem(QWidget*)
@@ -221,25 +223,24 @@ bool TransfersManagerSortFilterProxyModel::filterAcceptsRow(int sourceRow, const
                  && (d->mType & mTransferTypes)
                  && (toInt(d->mFileType) & mFileTypes);
 
-        if (accept)
+        if(!mFilterText.isEmpty())
         {
-            if(!mFilterText.isEmpty())
-            {
-                accept = d->mFilename.contains(mFilterText,Qt::CaseInsensitive);
+            auto containsText = d->mFilename.contains(mFilterText,Qt::CaseInsensitive);
+            accept &= containsText;
 
-                if (accept)
+            if(containsText)
+            {
+                if (d->mType & TransferData::TRANSFER_UPLOAD && !mUlNumber.contains(d->mTag))
                 {
-                    if (d->mType & TransferData::TRANSFER_UPLOAD && !mUlNumber.contains(d->mTag))
-                    {
-                        mUlNumber.insert(d->mTag);
-                    }
-                    else if (d->mType & TransferData::TRANSFER_DOWNLOAD && !mDlNumber.contains(d->mTag))
-                    {
-                        mDlNumber.insert(d->mTag);
-                    }
+                    mUlNumber.insert(d->mTag);
+                }
+                else if (d->mType & TransferData::TRANSFER_DOWNLOAD && !mDlNumber.contains(d->mTag))
+                {
+                    mDlNumber.insert(d->mTag);
                 }
             }
         }
+
 
         //Not needed to add the logic when the d is a sync transfer, as the sync state is permanent
         if(accept && !d->isSyncTransfer() && !mNoSyncTransfers.contains(d->mTag))
@@ -258,6 +259,18 @@ bool TransfersManagerSortFilterProxyModel::filterAcceptsRow(int sourceRow, const
         else
         {
             removeActiveTransferFromCounter(d->mTag);
+        }
+
+        if(accept && (d->isActive() && d->isCompleting()))
+        {
+            if(!mCompletingTransfers.contains(d->mTag))
+            {
+                mCompletingTransfers.insert(d->mTag);
+            }
+        }
+        else
+        {
+            removeCompletingTransferFromCounter(d->mTag);
         }
 
         if(accept && d->isPaused())
@@ -399,11 +412,10 @@ bool TransfersManagerSortFilterProxyModel::updateTransfersCounterFromTag(QExplic
     {
         removeFailedTransferFromCounter(transfer->mTag);
     }
-    else
-    {
-        removeActiveTransferFromCounter(transfer->mTag);
-        removePausedTransferFromCounter(transfer->mTag);
-    }
+
+    removeActiveTransferFromCounter(transfer->mTag);
+    removePausedTransferFromCounter(transfer->mTag);
+    removeCompletingTransferFromCounter(transfer->mTag);
 
     return searchRowsRemoved;
 }
@@ -448,6 +460,14 @@ void TransfersManagerSortFilterProxyModel::removeFailedTransferFromCounter(Trans
     }
 }
 
+void TransfersManagerSortFilterProxyModel::removeCompletingTransferFromCounter(TransferTag tag) const
+{
+    if(mCompletingTransfers.contains(tag))
+    {
+        mCompletingTransfers.remove(tag);
+    }
+}
+
 QMimeData *TransfersManagerSortFilterProxyModel::mimeData(const QModelIndexList &indexes) const
 {
     //sorted in inverse order to guarantee that the original order is preserved
@@ -469,14 +489,14 @@ bool TransfersManagerSortFilterProxyModel::areAllPaused() const
     return mPausedTransfers.size() == mActiveTransfers.size();
 }
 
-bool TransfersManagerSortFilterProxyModel::isAnyActive() const
+bool TransfersManagerSortFilterProxyModel::isAnyCancellable() const
 {
-    return !mActiveTransfers.isEmpty() ;
+    return (!mActiveTransfers.isEmpty() || !mFailedTransfers.isEmpty());
 }
 
-bool TransfersManagerSortFilterProxyModel::areAllActive() const
+bool TransfersManagerSortFilterProxyModel::areAllCancellable() const
 {
-    return mActiveTransfers.size() > 0 && (mPausedTransfers.isEmpty() && mCompletedTransfers.isEmpty() && mFailedTransfers.isEmpty());
+    return (mActiveTransfers.size() > 0 ||  mFailedTransfers.size() > 0) && (mPausedTransfers.isEmpty() && mCompletedTransfers.isEmpty());
 }
 
 bool TransfersManagerSortFilterProxyModel::areAllSync() const
@@ -494,9 +514,19 @@ bool TransfersManagerSortFilterProxyModel::isAnyCompleted() const
     return !mCompletedTransfers.isEmpty();
 }
 
+bool TransfersManagerSortFilterProxyModel::isAnyActive() const
+{
+    return !mActiveTransfers.isEmpty();
+}
+
 bool TransfersManagerSortFilterProxyModel::isEmpty() const
 {
-    return mCompletedTransfers.isEmpty() && mPausedTransfers.isEmpty() && mActiveTransfers.isEmpty() && mFailedTransfers.isEmpty();
+    return mCompletedTransfers.isEmpty() && mPausedTransfers.isEmpty() && mActiveTransfers.isEmpty() && mFailedTransfers.isEmpty() && mCompletingTransfers.isEmpty();
+}
+
+int TransfersManagerSortFilterProxyModel::transfersCount() const
+{
+    return mCompletedTransfers.size() + mActiveTransfers.size() + mFailedTransfers.size() + mCompletingTransfers.size();
 }
 
 int TransfersManagerSortFilterProxyModel::activeTransfers() const

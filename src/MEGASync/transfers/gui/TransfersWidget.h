@@ -67,7 +67,7 @@ public:
          bool    clearAction;
          QString cancelClearTooltip;
 
-         CancelClearButtonInfo():clearAction(false), visible(true){}
+         CancelClearButtonInfo():visible(true),clearAction(false){}
 
          bool isInit(){return !cancelClearTooltip.isEmpty();}
     };
@@ -94,6 +94,7 @@ public slots:
 
 protected:
     void changeEvent(QEvent *event) override;
+    bool eventFilter(QObject *watched, QEvent *event) override;
 
 private slots:
     void onUiUnblockedAndFilter();
@@ -106,6 +107,7 @@ private slots:
     void onCheckPauseResumeButton();
     void togglePauseResumeButton(bool state);
     void onCheckCancelClearButton();
+    void updateCancelClearButtonTooltip();
 
 private:
     Ui::TransfersWidget *ui;
@@ -117,7 +119,6 @@ private:
     bool mClearMode;
     MegaApplication *app;
     TM_TAB mCurrentTab;
-    QMap<TransfersWidget::TM_TAB, QString> mTooltipNameByTab;
     bool mScanningIsActive;
 
     HeaderInfo mHeaderInfo;
@@ -128,6 +129,12 @@ private:
     void configureTransferView();
     void clearOrCancel(const QList<QExplicitlySharedDataPointer<TransferData>>& pool, int state, int firstRow);
     void updateHeaderItems();
+
+    QString getClearTooltip(TM_TAB tab);
+    QString getCancelTooltip(TM_TAB tab);
+    QString getCancelAndClearTooltip(TM_TAB tab);
+    QString getResumeTooltip(TM_TAB tab);
+    QString getPauseTooltip(TM_TAB tab);
 
 signals:
     void clearTransfers(int firstRow, int amount);

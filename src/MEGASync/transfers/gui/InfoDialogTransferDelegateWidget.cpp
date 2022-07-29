@@ -28,6 +28,9 @@ InfoDialogTransferDelegateWidget::InfoDialogTransferDelegateWidget(QWidget *pare
     mUi->lShowInFolder->hide();
 
     mUi->lTransferType->installEventFilter(this);
+
+    mUi->lFileNameCompleted->installEventFilter(this);
+    mUi->lFileName->installEventFilter(this);
 }
 
 InfoDialogTransferDelegateWidget::~InfoDialogTransferDelegateWidget()
@@ -71,7 +74,7 @@ void InfoDialogTransferDelegateWidget::updateTransferState()
 
             if (!getData()->mTransferredBytes)
             {
-                downloadString = QString::fromUtf8("%1%2").arg(tr("starting"), QString::fromUtf8("…"));
+                downloadString = STATE_STARTING;
             }
             else
             {
@@ -83,30 +86,40 @@ void InfoDialogTransferDelegateWidget::updateTransferState()
             break;
         }
         case TransferData::TransferState::TRANSFER_PAUSED:
-            updateTransferControlsOnHold(tr("PAUSED"));
+        {
+            if(getData()->mTransferredBytes != 0)
+            {
+                updateTransferControlsOnHold(STATE_PAUSED);
+            }
+            else
+            {
+                QString pausedInQueue(QString::fromLatin1("%1 %2").arg(STATE_PAUSED,STATE_INQUEUE_PARENTHESIS));
+                updateTransferControlsOnHold(pausedInQueue);
+            }
             break;
+        }
         case TransferData::TransferState::TRANSFER_QUEUED:
-            updateTransferControlsOnHold(tr("queued"));
+            updateTransferControlsOnHold(STATE_INQUEUE);
             break;
         case TransferData::TransferState::TRANSFER_RETRYING:
             if (getData()->mErrorCode == MegaError::API_EOVERQUOTA)
             {
                 if (getData()->mErrorValue)
                 {
-                    updateTransferControlsOnHold(tr("Transfer quota exceeded"));
+                    updateTransferControlsOnHold(STATE_OUT_OF_TRANSFER_QUOTA);
                 }
                 else
                 {
-                    updateTransferControlsOnHold(tr("Out of storage space"));
+                    updateTransferControlsOnHold(STATE_OUT_OF_STORAGE_SPACE);
                 }
             }
             else
             {
-                updateTransferControlsOnHold(tr("retrying..."));
+                updateTransferControlsOnHold(STATE_RETRYING);
             }
             break;
         case TransferData::TransferState::TRANSFER_COMPLETING:
-            updateTransferControlsOnHold(tr("completing..."));
+            updateTransferControlsOnHold(STATE_COMPLETING);
             break;
         default:
             updateTransferControlsOnHold(QString());
@@ -131,15 +144,14 @@ void InfoDialogTransferDelegateWidget::updateTransferControlsOnHold(const QStrin
 void InfoDialogTransferDelegateWidget::setFileNameAndType()
 {
     mUi->lFileName->ensurePolished();
-    mUi->lFileName->setText(mUi->lFileName->fontMetrics()
-                            .elidedText(getData()->mFilename, Qt::ElideMiddle, mUi->lFileName->width()));
+    mUi->lFileName->setText(getData()->mFilename);
     mUi->lFileName->setToolTip(getData()->mFilename);
+    mUi->lFileName->adjustSize();
 
     mUi->lFileNameCompleted->ensurePolished();
-    mUi->lFileNameCompleted->setText(mUi->lFileNameCompleted->fontMetrics()
-                                     .elidedText(getData()->mFilename, Qt::ElideMiddle,
-                                                 mUi->lFileNameCompleted->width()));
+    mUi->lFileNameCompleted->setText(getData()->mFilename);
     mUi->lFileNameCompleted->setToolTip(getData()->mFilename);
+    mUi->lFileNameCompleted->adjustSize();
 
     QIcon icon = Utilities::getExtensionPixmapMedium(getData()->mFilename);
     mUi->lFileType->setIcon(icon);
@@ -154,26 +166,28 @@ void InfoDialogTransferDelegateWidget::setType()
 
     auto transferType = getData()->mType;
 
-    if(transferType & TransferData::TRANSFER_SYNC)
-    {
-        icon = Utilities::getCachedPixmap(QString::fromLatin1(":/images/transfer_manager/transfers_states/synching_ico.png"));
-        mUi->pbTransfer->setStyleSheet(QString::fromLatin1("QProgressBar#pbTransfer{background-color: transparent;}"
-                                                        "QProgressBar#pbTransfer::chunk {background-color: #31b500;}"));
-    }
-    else if(transferType & TransferData::TRANSFER_DOWNLOAD || transferType & TransferData::TRANSFER_LTCPDOWNLOAD)
+    if(transferType & TransferData::TRANSFER_DOWNLOAD || transferType & TransferData::TRANSFER_LTCPDOWNLOAD)
     {
         icon = Utilities::getCachedPixmap(QString::fromLatin1(":/images/transfer_manager/transfers_states/download_item_ico.png"));
         mUi->pbTransfer->setStyleSheet(QString::fromLatin1("QProgressBar#pbTransfer{background-color: transparent;}"
-                                                        "QProgressBar#pbTransfer::chunk {background-color: #31b500;}"));
+                                                        "QProgressBar#pbTransfer::chunk {background-color: %1;}").arg(DOWNLOAD_TRANSFER_COLOR.name()));
     }
     else if(transferType & TransferData::TRANSFER_UPLOAD)
     {
         icon = Utilities::getCachedPixmap(QString::fromLatin1(":/images/transfer_manager/transfers_states/upload_item_ico.png"));
         mUi->pbTransfer->setStyleSheet(QString::fromLatin1("QProgressBar#pbTransfer{background-color: transparent;}"
-                                                        "QProgressBar#pbTransfer::chunk {background-color: #2ba6de;}"));
+                                                        "QProgressBar#pbTransfer::chunk {background-color: %1;}").arg(UPLOAD_TRANSFER_COLOR.name()));
     }
 
     mUi->lTransferType->setPixmap(icon.pixmap(mUi->lTransferType->size()));
+
+    mUi->lSyncIcon->setVisible(getData()->isSyncTransfer());
+
+    if(getData()->isSyncTransfer())
+    {
+        auto sync_icon = Utilities::getCachedPixmap(QString::fromLatin1(":/images/transfer_manager/transfers_states/synching_ico.png"));
+        mUi->lSyncIcon->setPixmap(sync_icon.pixmap(mUi->lSyncIcon->size()));
+    }
 }
 
 QString InfoDialogTransferDelegateWidget::getTransferName()
@@ -185,11 +199,7 @@ void InfoDialogTransferDelegateWidget::updateFinishedIco(int transferType, int e
 {
     QIcon iconCompleted;
 
-    if(transferType & TransferData::TRANSFER_SYNC)
-    {
-        iconCompleted = Utilities::getCachedPixmap(QLatin1Literal(":/images/transfer_manager/transfers_states/synching_ico.png"));
-    }
-    else if(transferType & TransferData::TRANSFER_DOWNLOAD || transferType & TransferData::TRANSFER_LTCPDOWNLOAD)
+    if(transferType & TransferData::TRANSFER_DOWNLOAD || transferType & TransferData::TRANSFER_LTCPDOWNLOAD)
     {
         iconCompleted = Utilities::getCachedPixmap(errorCode < 0 ? QString::fromLatin1(":/images/transfer_manager/transfers_states/download_fail_item_ico.png")
                                                                   : QString::fromLatin1(":/images/transfer_manager/transfers_states/downloaded_item_ico.png"));
@@ -201,6 +211,13 @@ void InfoDialogTransferDelegateWidget::updateFinishedIco(int transferType, int e
     }
 
     mUi->lTransferTypeCompleted->setPixmap(iconCompleted.pixmap(mUi->lTransferTypeCompleted->size()));
+    mUi->lSyncIconCompleted->setVisible(getData()->isSyncTransfer());
+
+    if(getData()->isSyncTransfer())
+    {
+        auto sync_icon = Utilities::getCachedPixmap(QString::fromLatin1(":/images/transfer_manager/transfers_states/synching_ico.png"));
+        mUi->lSyncIconCompleted->setPixmap(sync_icon.pixmap(mUi->lSyncIconCompleted->size()));
+    }
 }
 
 TransferBaseDelegateWidget::ActionHoverType InfoDialogTransferDelegateWidget::mouseHoverTransfer(bool isHover, const QPoint &pos)
@@ -273,6 +290,7 @@ TransferBaseDelegateWidget::ActionHoverType InfoDialogTransferDelegateWidget::mo
                 else
                 {
                     mUi->lActionTransfer->hide();
+                    inAction = true;
                 }
 
                 mUi->lShowInFolder->show();
@@ -339,7 +357,7 @@ void InfoDialogTransferDelegateWidget::finishTransfer()
             MegaSyncApp->removeFinishedBlockedTransfer(getData()->mTag);
         }
 
-        mUi->lElapsedTime->setText(tr("failed:") + QStringLiteral(" ") + QCoreApplication::translate("MegaError",
+        mUi->lElapsedTime->setText(STATE_FAILED + QStringLiteral(": ") + QCoreApplication::translate("MegaError",
                                                                                                        MegaError::getErrorString(getData()->mErrorCode,
                                                                                                                                  getData()->mType == TransferData::TransferType::TRANSFER_DOWNLOAD && !blockedTransfer
                                                                                                                                  ? MegaError::API_EC_DOWNLOAD : MegaError::API_EC_DEFAULT)));
@@ -355,9 +373,9 @@ void InfoDialogTransferDelegateWidget::finishTransfer()
 
 void InfoDialogTransferDelegateWidget::updateFinishedTime()
 {
-    auto finishedTime = getData()->getFinishedTime();
+    auto finishedTime = getData()->getSecondsSinceFinished();
 
-    if (!finishedTime || getData()->mErrorCode < 0)
+    if (finishedTime < 0 || getData()->mErrorCode < 0)
     {
         return;
     }
@@ -380,6 +398,17 @@ bool InfoDialogTransferDelegateWidget::eventFilter(QObject *watched, QEvent *eve
     if(watched == mUi->lTransferType && event->type() == QEvent::Resize)
     {
         setType();
+    }
+
+    if((watched == mUi->lFileName || watched == mUi->lFileNameCompleted) && event->type() == QEvent::Resize)
+    {
+        auto nameLabel = dynamic_cast<QLabel*>(watched);
+        if(nameLabel)
+        {
+            nameLabel->setText(nameLabel->fontMetrics()
+                                             .elidedText(getData()->mFilename, Qt::ElideMiddle,
+                                                         nameLabel->contentsRect().width()));
+        }
     }
 
     return TransferBaseDelegateWidget::eventFilter(watched, event);

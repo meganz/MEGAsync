@@ -20,7 +20,10 @@ public:
     void onEndMove();
 
 private:
+    bool isFixApplied();
+
     QDialog* dialogToFix;
+    bool applyFix;
     Qt::WindowFlags originalFlags;
 };
 

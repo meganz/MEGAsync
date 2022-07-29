@@ -15,15 +15,11 @@ public:
 
     bool isEmpty();
 
-    void add(bool isDir);
+    void add(const QString& nodePath);
 
     void cancel();
 
-    void onFileScanCompleted();
-
-    void onFolderScanCompleted();
-
-    void onTransferFinished(bool isDir);
+    void onScanCompleted(const QString& nodePath);
 
     QString description();
 
@@ -31,11 +27,8 @@ public:
 
     std::shared_ptr<mega::MegaCancelToken> getCancelToken();
 
-    int getFolderCount();
-
 private:
-    int mFiles = 0;
-    int mFolders = 0;
+    QStringList mPendingNodes;
     std::shared_ptr<mega::MegaCancelToken> mCancelToken;
 };
 
@@ -51,20 +44,19 @@ public:
 
     void cancelTransfer();
 
-    void onFileScanCompleted();
-
-    void onFolderScanCompleted();
+    void onScanCompleted(const QString& nodePath);
 
     bool isBlockingStageFinished();
 
     void setAsUnblocked();
 
-    void onTransferFinished(bool isFolderTransfer);
+    void onTransferFinished(const QString& nodePath);
 
     bool hasCancelToken();
     bool isValid() const ;
+    bool isCancelled() const;
 
-    bool hasFolders() const;
+    bool hasNodes() const;
 
     std::shared_ptr<mega::MegaCancelToken> getCancelToken();
 
@@ -74,6 +66,7 @@ private:
 
    void clearBatch();
 
+   bool cancelled = false;
    std::shared_ptr<TransferBatch> mBatch;
 };
 

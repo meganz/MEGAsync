@@ -166,6 +166,7 @@ private slots:
 
     void onResetTransfersSummaryWidget();
     void onTransfersStateChanged();
+    void onShowInFolderFinished(bool);
 
 signals:
     void triggerShowSyncProblems(QString s);

@@ -7,17 +7,24 @@
 #include <QTreeView>
 #include <QMenu>
 #include <QMouseEvent>
+#include <QFutureWatcher>
 
 class MegaTransferView : public QTreeView
 {
     Q_OBJECT
 
+    struct SelectedIndexesInfo
+    {
+        QString actionText;
+        bool isAnyCancellable;
+        bool areAllCancellable;
+        bool areAllSync;
+
+        SelectedIndexesInfo():isAnyCancellable(false), areAllCancellable(true),areAllSync(true){}
+    };
+
 public:
-    static const QColor UPLOAD_DRAG_COLOR;
-    static const QColor DOWNLOAD_DRAG_COLOR;
-
     static const int CANCEL_MESSAGE_THRESHOLD;
-
 
     MegaTransferView(QWidget* parent = 0);
     void setup();
@@ -32,8 +39,18 @@ public:
 
     int getVerticalScrollBarWidth() const;
 
-    QString getVisibleCancelOrClearText();
-    QString getSelectedCancelOrClearText();
+    SelectedIndexesInfo getVisibleCancelOrClearInfo();
+    SelectedIndexesInfo getSelectedCancelOrClearInfo();
+
+    //Static messages for messageboxes
+    static QString retryAskActionText(int count);
+    static QString cancelAskActionText(int count);
+    static QString clearAskActionText(int count);
+    static QString clearAndCancelAskActionText(int count);
+    static QString pauseActionText(int count);
+    static QString resumeActionText(int count);
+    static QString cancelActionText(int count);
+    static QString clearActionText(int count);
 
 public slots:
     void onPauseResumeSelection(bool pauseState);
@@ -72,10 +89,10 @@ private slots:
     void resumeSelectedClicked();
     void onInternalMoveStarted();
     void onInternalMoveFinished();
+    void onOpenUrlFinished();
 
 private:
     friend class TransferManagerDelegateWidget;
-
 
     bool mDisableLink;
     bool mKeyNavigation;
@@ -96,6 +113,8 @@ private:
     QAction* mShowInFolderAction;
     QAction* mClearAction;
 
+    QFutureWatcher<bool> mOpenUrlWatcher;
+
     void createContextMenu();
     void updateContextMenu(bool enablePause, bool enableResume, bool enableMove, bool enableClear,
                            bool enableCancel, bool isTopIndex, bool isBottomIndex);
@@ -104,7 +123,8 @@ private:
 
     QModelIndexList getTransfers(bool onlyVisible, TransferData::TransferStates state = TransferData::TRANSFER_NONE);
     QModelIndexList getSelectedTransfers();
-    bool isSingleSelectedTransfers();
+
+    void showOpeningFileError();
 };
 
 #endif // MEGATRANSFERVIEW_H
