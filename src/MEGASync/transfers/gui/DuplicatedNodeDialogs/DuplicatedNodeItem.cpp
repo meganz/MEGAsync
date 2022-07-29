@@ -199,8 +199,8 @@ QDateTime DuplicatedRemoteItem::getModifiedTime()
 
 qint64 DuplicatedRemoteItem::getNodeSize()
 {
-    auto nodeSize = mInfo->getRemoteConflictNode()->getSize();
-    return std::max(nodeSize, 0L);
+    auto nodeSize = static_cast<qint64>(mInfo->getRemoteConflictNode()->getSize());
+    return std::max(nodeSize, 0LL);
 }
 
 bool DuplicatedRemoteItem::isFile() const
