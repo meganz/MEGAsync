@@ -39,6 +39,7 @@ bool MegaDownloader::processDownloadQueue(QQueue<WrappedNode*>* downloadQueue, B
     downloadBatches.add(batch);
 
     EventUpdater updater(downloadQueue->size());
+    mProcessingTransferQueue = true;
 
     // Process all nodes in the download queue
     while (!downloadQueue->isEmpty())
@@ -68,7 +69,8 @@ bool MegaDownloader::processDownloadQueue(QQueue<WrappedNode*>* downloadQueue, B
         bool transferStarted = download(wNode, currentPath, appData, batch->getCancelTokenPtr());
         if (transferStarted && wNode->getTransferOrigin() == WrappedNode::FROM_APP)
         {
-            batch->add(node->getType() != MegaNode::TYPE_FILE);
+            QString nodePath = currentPath + QString::fromLatin1("/") + QString::fromUtf8(node->getName());
+            batch->add(nodePath);
         }
         delete wNode;
 
@@ -81,7 +83,13 @@ bool MegaDownloader::processDownloadQueue(QQueue<WrappedNode*>* downloadQueue, B
     }
 
     pathMap.clear();
+    mProcessingTransferQueue = false;
     return true;
+}
+
+bool MegaDownloader::isQueueProcessingOngoing()
+{
+    return mProcessingTransferQueue;
 }
 
 bool MegaDownloader::download(WrappedNode* parent, QFileInfo info, QString appData, MegaCancelToken* cancelToken)

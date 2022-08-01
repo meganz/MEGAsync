@@ -278,7 +278,7 @@ public slots:
     void onUpdateNotFound(bool requested);
     void onUpdateError();
     void rebootApplication(bool update = true);
-    void exitApplication(bool force = false);
+    void tryExitApplication(bool force = false);
     void highLightMenuEntry(QAction* action);
     void pauseTransfers(bool pause);
     void checkNetworkInterfaces();
@@ -588,8 +588,8 @@ private:
 
     void updateTransferNodesStage(mega::MegaTransfer* transfer);
 
-    void updateFileTransferBatchesAndUi(BlockingBatch& batch);
-    void updateFolderTransferBatchesAndUi(BlockingBatch& batch, bool fromCancellation);
+    void updateFileTransferBatchesAndUi(const QString &nodePath, BlockingBatch& batch);
+    void updateFolderTransferBatchesAndUi(const QString &nodePath, BlockingBatch& batch, bool fromCancellation);
     void updateIfBlockingStageFinished(BlockingBatch &batch, bool fromCancellation);
     void unblockBatch(BlockingBatch &batch);
 
@@ -600,6 +600,7 @@ private:
     void updateFreedCancelToken(mega::MegaTransfer* transfer);
 
     bool noUploadedStarted = true;
+    bool mProcessingUploadQueue = false;
 
     void ConnectServerSignals(HTTPServer* server);
 
@@ -608,6 +609,9 @@ private:
     void fixMultiscreenResizeBug(int& posX, int& posY);
 
     static void logInfoDialogCoordinates(const char* message, const QRect& screenGeometry, const QString& otherInformation);
+
+    bool dontAskForExitConfirmation(bool force);
+    void exitApplication();
 
     struct NodeCount
     {
@@ -620,6 +624,10 @@ private:
     void processUploads(const QStringList& uploads);
 
     void updateMetadata(TransferMetaData* data, const QString& filePath);
+
+    bool isQueueProcessingOngoing();
+
+    static QString getNodePath(mega::MegaTransfer* transfer);
 
     template <class Func>
     void recreateMenuAction(MenuItemAction** action, const QString& actionName,

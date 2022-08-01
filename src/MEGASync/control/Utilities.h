@@ -326,6 +326,8 @@ public:
     // i.e. for 1 day & 3 hours remaining, remainingHours will be 27, not 3.
     static void getDaysAndHoursToTimestamp(int64_t secsTimestamps, int64_t &remaininDays, int64_t &remainingHours);
 
+    static QPair<QString, QString> getFilenameBasenameAndSuffix(const QString& fileName);
+
 private:
     Utilities() {}
     static QHash<QString, QString> extensionIcons;

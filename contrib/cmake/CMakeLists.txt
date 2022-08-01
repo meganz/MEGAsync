@@ -99,7 +99,8 @@ set(3RDPARTY_RUNTIME_PATH "PATH=%PATH%" "${Mega3rdPartyDir}/vcpkg/installed/${VC
 set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOUIC_SEARCH_PATHS "${MEGAsyncDir}/gui/${UiDir}"
-                               "${MEGAsyncDir}/transfers/gui/${UiDir}")
+                               "${MEGAsyncDir}/transfers/gui/${UiDir}"
+                               "${MEGAsyncDir}/transfers/gui/DuplicatedNodeDialogs/${UiDir}")
 
 #AUTOMOC
 set(CMAKE_AUTOMOC ON)
@@ -120,6 +121,8 @@ include_directories( "${MEGAsyncDir}/gui/${UiDir}" )
 include_directories( "${MEGAsyncDir}/transfers/model" )
 include_directories( "${MEGAsyncDir}/transfers/gui" )
 include_directories( "${MEGAsyncDir}/transfers/gui/${UiDir}" )
+include_directories( "${MEGAsyncDir}/transfers/gui/DuplicatedNodeDialogs" )
+include_directories( "${MEGAsyncDir}/transfers/gui/DuplicatedNodeDialogs/${UiDir}" )
 
 
 set (TS_FILES
@@ -199,6 +202,8 @@ set (FORMS
     ${MEGAsyncDir}/transfers/gui/${UiDir}/TransfersSummaryWidget.ui
     ${MEGAsyncDir}/transfers/gui/${UiDir}/TransferManagerDelegateWidget.ui
     ${MEGAsyncDir}/transfers/gui/${UiDir}/TransferManagerLoadingItem.ui
+    ${MEGAsyncDir}/transfers/gui/DuplicatedNodeDialogs/${UiDir}/DuplicatedNodeDialog.ui
+    ${MEGAsyncDir}/transfers/gui/DuplicatedNodeDialogs/${UiDir}/DuplicatedNodeItem.ui
     )
 
 
@@ -346,6 +351,10 @@ set (MOC_INPUT
     ${MEGAsyncDir}/transfers/gui/MegaTransferView.h
     ${MEGAsyncDir}/transfers/gui/TransferWidgetHeaderItem.h
     ${MEGAsyncDir}/transfers/gui/TransferScanCancelUi.h
+    ${MEGAsyncDir}/transfers/gui/DuplicatedNodeDialogs/DuplicatedNodeDialog.h
+    ${MEGAsyncDir}/transfers/gui/DuplicatedNodeDialogs/DuplicatedNodeInfo.h
+    ${MEGAsyncDir}/transfers/gui/DuplicatedNodeDialogs/DuplicatedNodeItem.h
+    ${MEGAsyncDir}/transfers/gui/DuplicatedNodeDialogs/DuplicatedUploadChecker.h
 )
 
 if (NOT CMAKE_HOST_APPLE)
@@ -509,6 +518,10 @@ set (SRCS
     ${MEGAsyncDir}/transfers/gui/TransferBaseDelegateWidget.cpp
     ${MEGAsyncDir}/transfers/gui/InfoDialogTransferDelegateWidget.cpp
     ${MEGAsyncDir}/transfers/gui/TransferManagerDelegateWidget.cpp
+    ${MEGAsyncDir}/transfers/gui/DuplicatedNodeDialogs/DuplicatedNodeDialog.cpp
+    ${MEGAsyncDir}/transfers/gui/DuplicatedNodeDialogs/DuplicatedNodeInfo.cpp
+    ${MEGAsyncDir}/transfers/gui/DuplicatedNodeDialogs/DuplicatedNodeItem.cpp
+    ${MEGAsyncDir}/transfers/gui/DuplicatedNodeDialogs/DuplicatedUploadChecker.cpp
 
     ${MEGAsyncDir}/mega/bindings/qt/QTMegaRequestListener.cpp
     ${MEGAsyncDir}/mega/bindings/qt/QTMegaTransferListener.cpp
@@ -530,8 +543,8 @@ set (SRCS
     ${MEGAsyncDir}/control/MegaSyncLogger.cpp
     ${MEGAsyncDir}/control/ConnectivityChecker.cpp
     ${MEGAsyncDir}/control/TransferRemainingTime.cpp
-    ${MEGAsyncDir}/control/TransferBatch.cpp
     ${MEGAsyncDir}/control/SyncController.cpp
+    ${MEGAsyncDir}/control/TransferBatch.cpp    
     ${MEGAsyncDir}/control/UserAttributesManager.cpp
     ${MEGAsyncDir}/control/TextDecorator.cpp
 

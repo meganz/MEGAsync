@@ -76,8 +76,6 @@ public:
         QString headerTime;
 
         QString headerSpeed;
-        QString pauseTooltip;
-        QString resumeTooltip;
     };
     void updateHeaders();
 
@@ -108,6 +106,7 @@ private slots:
     void togglePauseResumeButton(bool state);
     void onCheckCancelClearButton();
     void updateCancelClearButtonTooltip();
+    void updatePauseResumeButtonTooltip();
 
 private:
     Ui::TransfersWidget *ui;

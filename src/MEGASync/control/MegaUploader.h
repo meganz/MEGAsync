@@ -17,15 +17,15 @@ public:
     MegaUploader(mega::MegaApi *megaApi);
     virtual ~MegaUploader();
 
-    bool upload(QString path, mega::MegaNode *parent, unsigned long long appDataID, mega::MegaCancelToken *cancelToken);
+    bool upload(QString path, const QString &nodeName, mega::MegaNode *parent, unsigned long long appDataID, mega::MegaCancelToken *cancelToken);
     bool filesdiffer(QFileInfo &source, QFileInfo &destination);
     bool uploadRecursivelyIntoASyncedLocation(QFileInfo srcPath, QString destPath, mega::MegaNode *parent, unsigned long long appDataID, mega::MegaCancelToken *cancelToken);
 
 protected:
-    bool upload(QFileInfo info, mega::MegaNode *parent, unsigned long long appDataID, mega::MegaCancelToken *cancelToken);
+    bool upload(QFileInfo info, const QString& nodeName, mega::MegaNode *parent, unsigned long long appDataID, mega::MegaCancelToken *cancelToken);
 
 private:
-    void startUpload(const QString& localPath, mega::MegaNode* parent, mega::MegaCancelToken *cancelToken);
+    void startUpload(const QString& localPath, const QString& nodeName, unsigned long long appDataID, mega::MegaNode* parent, mega::MegaCancelToken *cancelToken);
 
     mega::MegaApi *megaApi;
 };

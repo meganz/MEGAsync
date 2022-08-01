@@ -12,7 +12,7 @@ bool EventUpdater::update(int currentSize)
 {
     if(mUpdateThreshold > 0)
     {
-        if (currentSize % mUpdateThreshold == 0)
+        if (currentSize > 0 && currentSize % mUpdateThreshold == 0)
         {
             QApplication::processEvents();
             return true;

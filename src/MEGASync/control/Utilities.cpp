@@ -1136,6 +1136,31 @@ void Utilities::getDaysAndHoursToTimestamp(int64_t secsTimestamps, int64_t &rema
     remainDays  = remainHours / 24;
 }
 
+QPair<QString, QString> Utilities::getFilenameBasenameAndSuffix(const QString& fileName)
+{
+    QMimeDatabase db;
+    int length = fileName.length();
+    QList <QPair <int, QMimeType> > list;
+    for (int index = length; index > -1; index--)
+    {
+        QList<QMimeType> mimes = db.mimeTypesForFileName(fileName.section(QLatin1String(""), index, length));
+        QMimeType mime = mimes.isEmpty() ? QMimeType() : mimes.last();
+        if (mime.isValid() && (list.isEmpty() || list.last().second != mime))
+        {
+            list.push_back(qMakePair(index, mime));
+        }
+    }
+
+    QPair<QString, QString> result;
+
+    if (!list.isEmpty())
+    {
+        result = qMakePair<QString, QString>(fileName.left(list.last().first - 1), fileName.mid(list.last().first - 1));
+    }
+
+    return result;
+}
+
 long long Utilities::getSystemsAvailableMemory()
 {
     long long availMemory = 0;
