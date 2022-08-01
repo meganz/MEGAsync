@@ -28,6 +28,8 @@ public:
 
     void expand(bool state) override;
 
+    void showIgnoreFile();
+
     void showAction(const QString& actionButtonText);
     void hideAction();
 
@@ -46,14 +48,13 @@ protected:
 
 protected slots:
     virtual void on_actionButton_clicked(){}
+    virtual void on_ignoreFileButton_clicked();
 
 private:
     bool eventFilter(QObject *watched, QEvent *event) override;
 
     Ui::StalledIssueHeader *ui;
     void refreshUi() override;
-
-    QFutureWatcher<void> mIgnoreWatcher;
 };
 
 #endif // STALLEDISSUEHEADER_H

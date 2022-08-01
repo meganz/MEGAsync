@@ -121,9 +121,6 @@ public:
 
 protected:
     void refreshCaseUi() override;
-
-protected slots:
-    void on_actionButton_clicked() override;
 };
 
 

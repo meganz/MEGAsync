@@ -3,6 +3,7 @@
 #include <Utilities.h>
 #include <Preferences.h>
 #include <MegaApplication.h>
+
 #include <StalledIssuesModel.h>
 
 #include <QDebug>
@@ -138,7 +139,8 @@ void CannotPerformDeletionHeader::refreshCaseUi()
 SyncItemExceedsSupoortedTreeDepthHeader::SyncItemExceedsSupoortedTreeDepthHeader(QWidget *parent)
     : StalledIssueHeader(parent)
 {
-    showAction(tr("Ignore"));
+    //This won´t be necessary, as the MegaSyncStall object will tell us whether or not to display the Ignore button
+    showIgnoreFile();
 }
 
 void SyncItemExceedsSupoortedTreeDepthHeader::refreshCaseUi()
@@ -146,25 +148,8 @@ void SyncItemExceedsSupoortedTreeDepthHeader::refreshCaseUi()
     setLeftTitleText(tr("Unable to sync"));
     addFileName();
     setTitleDescriptionText(tr("Target is too deep on your folder structure.\nPlease move it to a location that is less than 64 folders deep."));
-
-    if(mIsSolved != getData().consultData()->isSolved())
-    {
-        hideAction();
-        showMessage(tr("Ignored"));
-        mIsSolved = true;
-    }
 }
 
-void SyncItemExceedsSupoortedTreeDepthHeader::on_actionButton_clicked()
-{
-    auto data = getData().consultData()->consultLocalData();
-    if(data)
-    {
-        mUtilities.ignoreFile(data->getNativeFilePath());
-        MegaSyncApp->getStalledIssuesModel()->solveIssue(false,getCurrentIndex());
-        refreshCaseUi();
-    }
-}
 
 ////MoveTargetNameTooLongHeader
 //CreateFolderNameTooLongHeader::CreateFolderNameTooLongHeader(QWidget *parent)
@@ -242,3 +227,4 @@ void NameConflictsHeader::refreshCaseUi()
     setTitleDescriptionText(tr("These folders contain multiple names on one side, that would all become the same single name on the other side of the sync."
                                "\nThis may be due to syncing to case insensitive local filesystems, or the effects of escaped characters."));
 }
+

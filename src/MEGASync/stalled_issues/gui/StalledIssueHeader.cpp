@@ -1,5 +1,8 @@
 #include "StalledIssueHeader.h"
 
+#include <stalled_issues/model/StalledIssuesModel.h>
+#include <stalled_issues_cases/StalledIssuesOptionsByReason.h>
+
 #include <MegaApplication.h>
 #include <Preferences.h>
 
@@ -22,6 +25,16 @@ StalledIssueHeader::StalledIssueHeader(QWidget *parent) :
 
     ui->actionButton->hide();
     ui->actionMessage->hide();
+
+    //The MegaSyncStall object will tell us whether or not to display the Ignore button
+//    if(SOME CONDITION)
+//    {
+//        showIgnoreFile();
+//    }
+//    else
+//    {
+//        ui->ignoreFileButton->hide();
+//    }
 }
 
 StalledIssueHeader::~StalledIssueHeader()
@@ -33,6 +46,11 @@ void StalledIssueHeader::expand(bool state)
 {
     auto arrowIcon = Utilities::getCachedPixmap(state ? QLatin1Literal(":/images/node_selector/Icon-Small-Arrow-Down.png") :  QLatin1Literal(":/images/node_selector/Icon-Small-Arrow-Left.png"));
     ui->arrow->setPixmap(arrowIcon.pixmap(ui->arrow->size()));
+}
+
+void StalledIssueHeader::showIgnoreFile()
+{
+    ui->ignoreFileButton->show();
 }
 
 void StalledIssueHeader::showAction(const QString &actionButtonText)
@@ -76,6 +94,21 @@ void StalledIssueHeader::setTitleDescriptionText(const QString &text)
 QString StalledIssueHeader::fileName()
 {
     return QString();
+}
+
+void StalledIssueHeader::on_ignoreFileButton_clicked()
+{
+    auto data = getData().consultData()->consultLocalData();
+    if(data)
+    {
+        mUtilities.ignoreFile(data->getNativeFilePath());
+        MegaSyncApp->getStalledIssuesModel()->solveIssue(false,getCurrentIndex());
+
+        ui->ignoreFileButton->hide();
+        showMessage(tr("Ignored"));
+        mIsSolved = true;
+
+    }
 }
 
 bool StalledIssueHeader::eventFilter(QObject *watched, QEvent *event)

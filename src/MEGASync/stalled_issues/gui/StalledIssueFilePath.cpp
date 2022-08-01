@@ -406,7 +406,7 @@ QString StalledIssueFilePath::getSyncPathProblemString(mega::MegaSyncStall::Sync
         }
         case mega::MegaSyncStall::IgnoreFileMalformed:
         {
-            return tr("Ingore file malformed.");
+            return tr("Ignore file malformed.");
             break;
         }
         case mega::MegaSyncStall::FilesystemErrorListingFolder:
