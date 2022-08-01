@@ -4,6 +4,10 @@ INCLUDEPATH += $$PWD/model
 INCLUDEPATH += $$PWD/gui
 
 SOURCES += $$PWD/model/TransfersModel.cpp \
+           $$PWD/gui/DuplicatedNodeDialogs/DuplicatedNodeDialog.cpp \
+           $$PWD/gui/DuplicatedNodeDialogs/DuplicatedNodeInfo.cpp \
+           $$PWD/gui/DuplicatedNodeDialogs/DuplicatedNodeItem.cpp \
+           $$PWD/gui/DuplicatedNodeDialogs/DuplicatedUploadChecker.cpp \
            $$PWD/model/InfoDialogTransfersProxyModel.cpp \
            $$PWD/model/TransfersManagerSortFilterProxyModel.cpp \
            $$PWD/gui/SomeIssuesOccurredMessage.cpp \
@@ -23,6 +27,10 @@ SOURCES += $$PWD/model/TransfersModel.cpp \
            $$PWD/gui/TransfersWidget.cpp
 
 HEADERS += $$PWD/model/InfoDialogTransfersProxyModel.h \
+           $$PWD/gui/DuplicatedNodeDialogs/DuplicatedNodeDialog.h \
+           $$PWD/gui/DuplicatedNodeDialogs/DuplicatedNodeInfo.h \
+           $$PWD/gui/DuplicatedNodeDialogs/DuplicatedNodeItem.h \
+           $$PWD/gui/DuplicatedNodeDialogs/DuplicatedUploadChecker.h \
            $$PWD/model/TransfersManagerSortFilterProxyModel.h \
            $$PWD/model/TransfersSortFilterProxyBaseModel.h \
            $$PWD/model/TransfersModel.h \
@@ -55,7 +63,9 @@ win32 {
                 $$PWD/gui/win/InfoDialogTransferDelegateWidget.ui \
                 $$PWD/gui/win/TransfersStatusWidget.ui \
                 $$PWD/gui/win/TransfersSummaryWidget.ui \
-                $$PWD/gui/win/SomeIssuesOccurredMessage.ui
+                $$PWD/gui/win/SomeIssuesOccurredMessage.ui \
+                $$PWD/gui/DuplicatedNodeDialogs/win/DuplicatedNodeDialog.ui \
+                $$PWD/gui/DuplicatedNodeDialogs/win/DuplicatedNodeItem.ui
 }
 
 macx {
@@ -71,7 +81,9 @@ macx {
                 $$PWD/gui/macx/InfoDialogTransferDelegateWidget.ui \
                 $$PWD/gui/macx/TransfersStatusWidget.ui \
                 $$PWD/gui/macx/TransfersSummaryWidget.ui \
-                $$PWD/gui/macx/SomeIssuesOccurredMessage.ui
+                $$PWD/gui/macx/SomeIssuesOccurredMessage.ui \
+                $$PWD/gui/DuplicatedNodeDialogs/macx/DuplicatedNodeDialog.ui \
+                $$PWD/gui/DuplicatedNodeDialogs/macx/DuplicatedNodeItem.ui
 }
 
 unix:!macx {
@@ -87,5 +99,7 @@ unix:!macx {
                 $$PWD/gui/linux/InfoDialogTransferDelegateWidget.ui \
                 $$PWD/gui/linux/TransfersStatusWidget.ui \
                 $$PWD/gui/linux/TransfersSummaryWidget.ui \
-                $$PWD/gui/linux/SomeIssuesOccurredMessage.ui
+                $$PWD/gui/linux/SomeIssuesOccurredMessage.ui \
+                $$PWD/gui/DuplicatedNodeDialogs/linux/DuplicatedNodeDialog.ui \
+                $$PWD/gui/DuplicatedNodeDialogs/linux/DuplicatedNodeItem.ui
 }

@@ -1373,7 +1373,7 @@ bool InfoDialog::eventFilter(QObject *obj, QEvent *e)
         if (obj == this && e->type() == QEvent::Close)
         {
             e->ignore(); //This prevents the dialog from closing
-            app->exitApplication();
+            app->tryExitApplication();
             return true;
         }
     }

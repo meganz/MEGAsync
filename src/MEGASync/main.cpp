@@ -91,7 +91,7 @@ void LinuxSignalHandler(int signum)
 
         if (theapp)
         {
-            theapp->exitApplication(true);
+            theapp->tryExitApplication(true);
         }
     }
 }

@@ -101,13 +101,7 @@ QString FullName::getFullName() const
 QString FullName::getRichFullName() const
 {
     auto text = QString::fromUtf8("%1 %2").arg(mFirstName).arg(mLastName);
-
-    text = text.replace(QString::fromUtf8("&"), QString::fromUtf8("&amp;"));
-    text = text.replace(QString::fromUtf8("\""), QString::fromUtf8("&quot;"));
-    text = text.replace(QString::fromUtf8("<"), QString::fromUtf8("&lt;"));
-    text = text.replace(QString::fromUtf8(">"), QString::fromUtf8("&gt;"));
-
-    return text;
+    return text.toHtmlEscaped();
 }
 
 bool FullName::isAttributeReady() const
