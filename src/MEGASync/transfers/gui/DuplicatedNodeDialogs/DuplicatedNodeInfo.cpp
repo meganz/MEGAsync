@@ -124,11 +124,8 @@ const QDateTime &DuplicatedNodeInfo::getLocalModifiedTime() const
 
 void DuplicatedNodeInfo::setLocalModifiedTime(const QDateTime &newLocalModifiedTime)
 {
-    if(mLocalModifiedTime != newLocalModifiedTime)
-    {
-        mLocalModifiedTime = newLocalModifiedTime;
-        emit localModifiedDateUpdated();
-    }
+    mLocalModifiedTime = newLocalModifiedTime;
+    emit localModifiedDateUpdated();
 }
 
 bool DuplicatedNodeInfo::haveDifferentType() const

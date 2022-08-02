@@ -1810,9 +1810,8 @@ void MegaApplication::tryExitApplication(bool force)
     }
     else if (!exitDialog)
     {
-        auto transfersStats = mTransfersModel->getTransfersCount();
         exitDialog = new QMessageBox(QMessageBox::Question, tr("MEGAsync"),
-                                     tr("There is an active transfer. Exit the app?\nIf you exit, all transfers will be cancelled", "", transfersStats.pendingTransfers()),
+                                     tr("There is an active transfer. Want to exit?", "", mTransfersModel->hasActiveTransfers()),
                                      QMessageBox::Yes|QMessageBox::No);
         exitDialog->button(QMessageBox::Yes)->setText(tr("Exit app"));
         exitDialog->button(QMessageBox::No)->setText(tr("Stay in app"));
@@ -3507,8 +3506,7 @@ void MegaApplication::logInfoDialogCoordinates(const char *message, const QRect 
 
 bool MegaApplication::dontAskForExitConfirmation(bool force)
 {
-    auto transfersStats = mTransfersModel->getTransfersCount();
-    return force || !megaApi->isLoggedIn() || transfersStats.pendingTransfers() == 0;
+    return force || !megaApi->isLoggedIn() || mTransfersModel->hasActiveTransfers() == 0;
 }
 
 void MegaApplication::exitApplication()
@@ -6645,12 +6643,14 @@ void MegaApplication::createGuestMenu()
     if (updateAvailable)
     {
         updateActionGuest = new MenuItemAction(tr("Install update"), QIcon(QString::fromUtf8("://images/ico_about_MEGA.png")));
+        connect(updateActionGuest, &QAction::triggered, this, &MegaApplication::onInstallUpdateClicked);
     }
     else
     {
         updateActionGuest = new MenuItemAction(tr("About MEGAsync"), QIcon(QString::fromUtf8("://images/ico_about_MEGA.png")));
+        connect(updateActionGuest, &QAction::triggered, this, &MegaApplication::onAboutClicked);
     }
-    connect(updateActionGuest, SIGNAL(triggered()), this, SLOT(onInstallUpdateClicked()));
+
 
     if (settingsActionGuest)
     {
@@ -6659,7 +6659,7 @@ void MegaApplication::createGuestMenu()
     }
     settingsActionGuest = new MenuItemAction(QCoreApplication::translate("Platform", Platform::settingsString), QIcon(QString::fromUtf8("://images/ico_preferences.png")));
 
-    connect(settingsActionGuest, SIGNAL(triggered()), this, SLOT(openSettings()));
+    connect(settingsActionGuest, &QAction::triggered, this, &MegaApplication::openSettings);
 
     guestMenu->addAction(updateActionGuest);
     guestMenu->addSeparator();
