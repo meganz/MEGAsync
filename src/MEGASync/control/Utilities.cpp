@@ -1201,7 +1201,11 @@ QPair<QString, QString> Utilities::getFilenameBasenameAndSuffix(const QString& f
 
     if (!list.isEmpty())
     {
+#ifdef Q_OS_LINUX
+        result = qMakePair<QString, QString>(fileName.left(list.last().first), fileName.mid(list.last().first));
+#else
         result = qMakePair<QString, QString>(fileName.left(list.last().first - 1), fileName.mid(list.last().first - 1));
+#endif
     }
 
     return result;

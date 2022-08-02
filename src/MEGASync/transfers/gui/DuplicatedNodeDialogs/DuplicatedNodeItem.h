@@ -4,6 +4,8 @@
 #include <megaapi.h>
 #include <DuplicatedNodeDialogs/DuplicatedNodeInfo.h>
 
+#include <QTMegaRequestListener.h>
+
 #include <memory>
 
 #include <QWidget>
@@ -38,17 +40,20 @@ signals:
 protected:
     NodeItemType mType;
     std::shared_ptr<DuplicatedNodeInfo> mInfo;
+    qint64 mNodeSize;
+    QFutureWatcher<qint64> mFolderSizeFuture;
 
     void fillUi();
     virtual QString getNodeName() = 0;
     virtual QDateTime getModifiedTime() = 0;
-    virtual bool isModifiedTimeVisible() const = 0;
     virtual qint64 getNodeSize() = 0;
     virtual bool isFile() const = 0;
 
+    bool isModifiedTimeVisible();
+    void setModifiedTimeVisible(bool state);
+
     bool isValid() const;
 
-    QString getFilesAndFolders(int folders, int files);
     void updateSize();
     void updateModificationTime();
 
@@ -56,9 +61,11 @@ protected:
 
 protected slots:
     void on_bAction_clicked();
+    void onNodeSizeFinished();
 
 private:
     Ui::DuplicatedNodeItem *ui;
+    bool mModifiedTimeVisible;
 
     void setActionAndTitle(const QString& text);
 };
@@ -67,12 +74,12 @@ private:
  * REMOTE IMPLEMENTATION CLASS
  * USE TO SHOW THE REMOTE NODE INFO
 */
-class DuplicatedRemoteItem : public DuplicatedNodeItem
+class DuplicatedRemoteItem : public DuplicatedNodeItem, public mega::MegaRequestListener
 {
     Q_OBJECT
 public:
     DuplicatedRemoteItem(QWidget *parent = nullptr);
-    ~DuplicatedRemoteItem() = default;
+    ~DuplicatedRemoteItem();
 
     std::shared_ptr<mega::MegaNode> getNode();
 
@@ -81,7 +88,11 @@ protected:
     QDateTime getModifiedTime() override;
     qint64 getNodeSize() override;
     bool isFile() const override;
-    bool isModifiedTimeVisible() const override;
+    void onRequestFinish(mega::MegaApi *api, mega::MegaRequest *request, mega::MegaError *e) override;
+
+private:
+    qint64 getFolderSize(mega::MegaNode *node, qint64 size);
+    mega::QTMegaRequestListener* mListener;
 };
 
 /*
@@ -102,25 +113,20 @@ protected:
     QString getNodeName() override;
 
     QDateTime getModifiedTime() override;
-    bool isModifiedTimeVisible() const override;
     qint64 getNodeSize() override;
     bool isFile() const override;
 
 private slots:
-    void onNodeSizeFinished();
     void onNodeModificationTimeFinished();
 
 private:
-    void getFolderSize(const QString& path);
-    void getFolderModifiedDate(const QString& path);
+    qint64 getFolderSize(const QString& path, qint64 size);
+
+    QDateTime getFolderModifiedDate(const QString& path, const QDateTime& date);
     QString getFullFileName(const QString& path, const QString& fileName);
 
-    qint64 mNodeSize;
-    bool mValidModificationTime;
     QDateTime mModificationTime;
-
-    QFutureWatcher<void> mFolderSizeFuture;
-    QFutureWatcher<void> mFolderModificationTimeFuture;
+    QFutureWatcher<QDateTime> mFolderModificationTimeFuture;
 };
 
 /*
