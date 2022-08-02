@@ -24,6 +24,7 @@ public:
 
     void setTitle(const QString& title);
     QString title() const;
+    void setTitleFont(const QFont& font);
 
     void addActionButton(const QIcon& icon, const QString& text, int id);
     void hideActionButton(int id);

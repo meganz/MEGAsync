@@ -54,7 +54,7 @@
       <string>Please select which version you want to keep</string>
      </property>
      <property name="indent">
-      <number>11</number>
+      <number>0</number>
      </property>
     </widget>
    </item>
@@ -74,11 +74,21 @@
      </property>
     </spacer>
    </item>
-   <item alignment="Qt::AlignTop">
-    <widget class="StalledIssueChooseWidget" name="chooseLocalCopy" native="true"/>
-   </item>
-   <item alignment="Qt::AlignTop">
-    <widget class="StalledIssueChooseWidget" name="chooseRemoteCopy" native="true"/>
+   <item>
+    <layout class="QVBoxLayout" name="chooseLayout">
+     <property name="spacing">
+      <number>0</number>
+     </property>
+     <property name="bottomMargin">
+      <number>0</number>
+     </property>
+     <item>
+      <widget class="StalledIssueChooseWidget" name="chooseRemoteCopy" native="true"/>
+     </item>
+     <item>
+      <widget class="StalledIssueChooseWidget" name="chooseLocalCopy" native="true"/>
+     </item>
+    </layout>
    </item>
   </layout>
  </widget>

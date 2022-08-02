@@ -2,7 +2,6 @@
 #include "ui_NameConflict.h"
 
 #include "StalledIssueHeader.h"
-#include "StalledIssueActionTitle.h"
 
 #include <MegaApplication.h>
 #include <StalledIssuesModel.h>
@@ -14,12 +13,35 @@
 static const int RENAME_ID = 0;
 static const int REMOVE_ID = 1;
 
+//NAME CONFLICT TITLE
+//THINK ABOUT ANOTHER WAY TO RESUSE THE STALLED ISSUE ACTION TITLE OR CREATE ONE FOR THE NAME CONFLICT
+NameConflictTitle::NameConflictTitle(QWidget *parent)
+    : StalledIssueActionTitle(parent)
+{
+    initTitle();
+}
+
+void NameConflictTitle::initTitle()
+{
+    QFont titleFont;
+    titleFont.setFamily(QLatin1String("Lato"));
+    titleFont.setBold(true);
+    titleFont.setPixelSize(13);
+    setTitleFont(titleFont);
+
+    setRoundedCorners(StalledIssueActionTitle::RoundedCorners::ALL_CORNERS);
+    QIcon renameIcon(QString::fromUtf8("://images/StalledIssues/rename_node_default.png"));
+    QIcon removeIcon(QString::fromUtf8("://images/StalledIssues/remove_default.png"));
+    addActionButton(renameIcon, tr("Rename"), RENAME_ID);
+    addActionButton(removeIcon, QString(), REMOVE_ID);
+}
+
+//NAME CONFLICT
 NameConflict::NameConflict(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::NameConflict)
 {
     ui->setupUi(this);
-    ui->path->setIndent(StalledIssueHeader::GROUPBOX_CONTENTS_INDENT);
 }
 
 NameConflict::~NameConflict()
@@ -52,13 +74,7 @@ void NameConflict::updateUi(NameConflictedStalledIssue::NameConflictData data)
         }
         else
         {
-            title = new StalledIssueActionTitle(this);
-            title->setRoundedCorners(StalledIssueActionTitle::RoundedCorners::ALL_CORNERS);
-            QIcon renameIcon(QString::fromUtf8("://images/StalledIssues/rename_node_default.png"));
-            QIcon removeIcon(QString::fromUtf8("://images/StalledIssues/remove_default.png"));
-            title->addActionButton(renameIcon, tr("Rename"), RENAME_ID);
-            title->addActionButton(removeIcon, QString(), REMOVE_ID);
-
+            title = new NameConflictTitle(this);
             connect(title, &StalledIssueActionTitle::actionClicked, this, &NameConflict::onActionClicked);
 
             ui->nameConflictsLayout->addWidget(title);

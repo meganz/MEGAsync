@@ -16,12 +16,14 @@ StalledIssueChooseWidget::StalledIssueChooseWidget(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    ui->path->setIndent(StalledIssueHeader::GROUPBOX_CONTENTS_INDENT);
+    ui->path->setIndent(StalledIssueHeader::ICON_INDENT);
     auto layoutMargins = ui->fileNameContainer->contentsMargins();
-    layoutMargins.setLeft(StalledIssueHeader::StalledIssueHeader::GROUPBOX_CONTENTS_INDENT);
+    layoutMargins.setLeft(StalledIssueHeader::ICON_INDENT);
     ui->fileNameContainer->setContentsMargins(layoutMargins);
 
     ui->chooseTitle->installEventFilter(this);
+    ui->chooseTitle->setIndent(StalledIssueHeader::ICON_INDENT);
+
     ui->fileNameText->installEventFilter(this);
 
     ui->chooseTitle->addActionButton(QIcon(), tr("Choose"), BUTTON_ID);
@@ -86,11 +88,6 @@ void StalledIssueChooseWidget::setData(StalledIssueDataPtr data)
 const StalledIssueDataPtr &StalledIssueChooseWidget::data()
 {
     return mData;
-}
-
-void StalledIssueChooseWidget::setIndent()
-{
-
 }
 
 bool StalledIssueChooseWidget::eventFilter(QObject *watched, QEvent *event)

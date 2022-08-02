@@ -4,10 +4,22 @@
 #include <StalledIssueBaseDelegateWidget.h>
 #include <StalledIssue.h>
 #include <StalledIssuesUtilities.h>
+#include "StalledIssueActionTitle.h"
 
 namespace Ui {
 class NameConflict;
 }
+
+class NameConflictTitle : public StalledIssueActionTitle
+{
+    Q_OBJECT
+
+public:
+    explicit NameConflictTitle(QWidget* parent = nullptr);
+    ~NameConflictTitle() = default;
+
+    void initTitle();
+};
 
 class NameConflict : public QWidget
 {

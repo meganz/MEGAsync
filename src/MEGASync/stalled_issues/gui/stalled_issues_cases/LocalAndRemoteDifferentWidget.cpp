@@ -18,9 +18,11 @@ LocalAndRemoteDifferentWidget::LocalAndRemoteDifferentWidget(QWidget *parent) :
     connect(ui->chooseLocalCopy, &StalledIssueChooseWidget::chooseButtonClicked, this, &LocalAndRemoteDifferentWidget::onLocalButtonClicked);
     connect(ui->chooseRemoteCopy, &StalledIssueChooseWidget::chooseButtonClicked, this, &LocalAndRemoteDifferentWidget::onRemoteButtonClicked);
 
-    auto margins = ui->verticalLayout->contentsMargins();
-    margins.setLeft(StalledIssueHeader::GROUPBOX_INDENT);
-    ui->verticalLayout->setContentsMargins(margins);
+    auto margins = ui->chooseLayout->contentsMargins();
+    margins.setLeft(StalledIssueHeader::ARROW_INDENT);
+    ui->chooseLayout->setContentsMargins(margins);
+
+    ui->selectLabel->setIndent(StalledIssueHeader::BODY_INDENT);
 }
 
 LocalAndRemoteDifferentWidget::~LocalAndRemoteDifferentWidget()

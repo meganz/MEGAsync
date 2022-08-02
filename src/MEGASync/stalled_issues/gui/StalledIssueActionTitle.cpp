@@ -37,6 +37,12 @@ QString StalledIssueActionTitle::title() const
     return mTitle;
 }
 
+void StalledIssueActionTitle::setTitleFont(const QFont &font)
+{
+    ui->titleLabel->setStyleSheet(QString());
+    ui->titleLabel->setFont(font);
+}
+
 void StalledIssueActionTitle::addActionButton(const QIcon& icon,const QString &text, int id)
 {
     auto button = new QPushButton(icon, text, this);

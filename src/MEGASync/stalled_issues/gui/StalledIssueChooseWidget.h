@@ -20,8 +20,6 @@ public:
     void setData(StalledIssueDataPtr data);
     const StalledIssueDataPtr& data();
 
-    void setIndent();
-
     void setIssueSolved(bool newIssueSolved);
 
 signals:

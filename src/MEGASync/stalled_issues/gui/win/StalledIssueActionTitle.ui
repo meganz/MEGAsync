@@ -26,26 +26,20 @@
    <string>Form</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">#titleLabel
-{
-   font-family: Lato;
-   font-size: 13px;
-   line-height: 16px;
-   color: #333333;
-}</string>
+   <string notr="true"/>
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout">
    <property name="spacing">
     <number>8</number>
    </property>
    <property name="leftMargin">
-    <number>9</number>
+    <number>0</number>
    </property>
    <property name="topMargin">
     <number>0</number>
    </property>
    <property name="rightMargin">
-    <number>15</number>
+    <number>5</number>
    </property>
    <property name="bottomMargin">
     <number>0</number>
@@ -81,8 +75,16 @@
       <font>
        <family>Lato</family>
        <pointsize>-1</pointsize>
-       <bold>true</bold>
+       <bold>false</bold>
       </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">*{   
+font-family: Lato;
+font-size: 16px;
+line-height: 19px;
+color: #333333;
+}</string>
      </property>
      <property name="text">
       <string/>

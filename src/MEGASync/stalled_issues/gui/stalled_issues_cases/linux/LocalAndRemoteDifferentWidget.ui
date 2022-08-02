@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>336</width>
-    <height>81</height>
+    <width>288</width>
+    <height>85</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -74,11 +74,21 @@
      </property>
     </spacer>
    </item>
-   <item alignment="Qt::AlignTop">
-    <widget class="StalledIssueChooseWidget" name="chooseLocalCopy" native="true"/>
-   </item>
-   <item alignment="Qt::AlignTop">
-    <widget class="StalledIssueChooseWidget" name="chooseRemoteCopy" native="true"/>
+   <item>
+    <layout class="QVBoxLayout" name="chooseLayout">
+     <property name="spacing">
+      <number>0</number>
+     </property>
+     <property name="bottomMargin">
+      <number>0</number>
+     </property>
+     <item>
+      <widget class="StalledIssueChooseWidget" name="chooseRemoteCopy" native="true"/>
+     </item>
+     <item>
+      <widget class="StalledIssueChooseWidget" name="chooseLocalCopy" native="true"/>
+     </item>
+    </layout>
    </item>
   </layout>
  </widget>
