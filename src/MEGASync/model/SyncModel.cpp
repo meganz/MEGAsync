@@ -40,38 +40,16 @@ bool SyncModel::hasUnattendedDisabledSyncs(const QVector<SyncType>& types) const
     return std::any_of(types.cbegin(), types.cend(), [this](SyncType t){return !unattendedDisabledSyncs[t].isEmpty();});
 }
 
-void SyncModel::removeSyncedFolder(int num, SyncType type)
-{
-    assert(num <= configuredSyncs[type].size()
-           && configuredSyncsMap.contains(configuredSyncs[type].at(num)));
-    QMutexLocker qm(&syncMutex);
-    auto cs = configuredSyncsMap[configuredSyncs[type].at(num)];
-    if (cs->isActive())
-    {
-        deactivateSync(cs);
-    }
-
-    auto backupId = cs->backupId();
-
-    assert(preferences->logged());
-    preferences->removeSyncSetting(cs);
-    configuredSyncsMap.remove(configuredSyncs[type].at(num));
-    configuredSyncs[type].removeAt(num);
-
-    removeUnattendedDisabledSync(backupId, type);
-
-    emit syncRemoved(cs);
-}
-
 void SyncModel::removeSyncedFolderByBackupId(MegaHandle backupId)
 {
     QMutexLocker qm(&syncMutex);
-    if (!configuredSyncsMap.contains(backupId))
+
+    auto cs = configuredSyncsMap.value(backupId, nullptr);
+
+    if (!cs)
     {
         return;
     }
-
-    auto cs = configuredSyncsMap[backupId];
 
     if (cs->isActive())
     {
@@ -395,23 +373,22 @@ QStringList SyncModel::getCloudDriveSyncMegaFolders(bool cloudDrive)
 {
     QMutexLocker qm(&syncMutex);
     QStringList value;
+    mega::MegaApi* megaApi = MegaSyncApp->getMegaApi();
+
     for (auto type : AllHandledSyncTypes)
     {
         for (auto &cs : configuredSyncs[type])
         {
             QString megaFolder = configuredSyncsMap[cs]->getMegaFolder();
-            mega::MegaApi* megaApi = MegaSyncApp->getMegaApi();
-
-            auto parent_node = std::unique_ptr<MegaNode>(megaApi->getNodeByPath(megaFolder.toStdString().data()));
-            while(parent_node && parent_node->getParentHandle() != INVALID_HANDLE)
+            auto node = std::unique_ptr<MegaNode>(megaApi->getNodeByPath(megaFolder.toUtf8().constData()));
+            auto rootNode = std::unique_ptr<MegaNode>(megaApi->getRootNode(node.get()));
+            if (rootNode)
             {
-                parent_node = std::unique_ptr<MegaNode>(megaApi->getNodeByHandle(parent_node->getParentHandle()));
-            }
-
-            if((parent_node->isInShare() && !cloudDrive)
-                    || (megaApi->getRootNode()->getHandle() == parent_node->getHandle() && cloudDrive))
-            {
-                value.append(megaFolder.append(QLatin1Char('/')));
+                if ((!cloudDrive && rootNode->isInShare())
+                        || (cloudDrive && MegaSyncApp->getRootNode()->getHandle() == rootNode->getHandle()))
+                {
+                    value.append(megaFolder.append(QLatin1Char('/')));
+                }
             }
         }
     }
@@ -554,9 +531,4 @@ void SyncModel::dismissUnattendedDisabledSyncs(const QVector<SyncType>& types)
     }
     saveUnattendedDisabledSyncs();
     emit syncDisabledListUpdated();
-}
-
-bool SyncModel::isRemoteRootSynced()
-{
-    return getMegaFolders(SyncType::TYPE_TWOWAY) == QStringList(QLatin1String("/"));
 }
