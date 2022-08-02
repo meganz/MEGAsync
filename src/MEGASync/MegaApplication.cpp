@@ -6755,12 +6755,14 @@ void MegaApplication::createGuestMenu()
     if (updateAvailable)
     {
         updateActionGuest = new MenuItemAction(tr("Install update"), QIcon(QString::fromUtf8("://images/ico_about_MEGA.png")));
+        connect(updateActionGuest, &QAction::triggered, this, &MegaApplication::onInstallUpdateClicked);
     }
     else
     {
         updateActionGuest = new MenuItemAction(tr("About MEGAsync"), QIcon(QString::fromUtf8("://images/ico_about_MEGA.png")));
+        connect(updateActionGuest, &QAction::triggered, this, &MegaApplication::onAboutClicked);
     }
-    connect(updateActionGuest, SIGNAL(triggered()), this, SLOT(onInstallUpdateClicked()));
+
 
     if (settingsActionGuest)
     {
@@ -6769,7 +6771,7 @@ void MegaApplication::createGuestMenu()
     }
     settingsActionGuest = new MenuItemAction(QCoreApplication::translate("Platform", Platform::settingsString), QIcon(QString::fromUtf8("://images/ico_preferences.png")));
 
-    connect(settingsActionGuest, SIGNAL(triggered()), this, SLOT(openSettings()));
+    connect(settingsActionGuest, &QAction::triggered, this, &MegaApplication::openSettings);
 
     guestMenu->addAction(updateActionGuest);
     guestMenu->addSeparator();
