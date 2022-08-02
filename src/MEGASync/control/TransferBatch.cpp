@@ -1,5 +1,7 @@
 #include "TransferBatch.h"
 
+#include <MegaApplication.h>
+
 #include <QDir>
 
 /*************************/
@@ -28,7 +30,10 @@ void TransferBatch::cancel()
 
 void TransferBatch::onScanCompleted(const QString& nodePath)
 {
-    QString convertedNodePath = QDir::toNativeSeparators(nodePath);
+    std::string nodePathCopy = nodePath.toStdString();
+    auto escapedChar = MegaSyncApp->getMegaApi()->unescapeFsIncompatible(nodePathCopy.c_str());
+    QString convertedNodePath = QDir::toNativeSeparators(QString::fromUtf8(escapedChar));
+
     auto it = std::find(mPendingNodes.begin(), mPendingNodes.end(), convertedNodePath);
     if (it != mPendingNodes.end())
     {
