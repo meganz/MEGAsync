@@ -4,6 +4,8 @@
 #include <StalledIssuesDialog.h>
 #include <Platform.h>
 
+QPointer<StalledIssuesDialog> SomeIssuesOccurredMessage::mStalledIssuesDialog = nullptr;
+
 SomeIssuesOccurredMessage::SomeIssuesOccurredMessage(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::SomeIssuesOccurredMessage)

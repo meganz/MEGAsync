@@ -877,16 +877,8 @@ void TransferManager::onStalledIssuesStateChanged(bool state)
 }
 
 void TransferManager::showStalledIssuesInfo()
-{
-    if(mFoundStalledIssues && (mUi->wTransfers->getCurrentTab() != TransfersWidget::SEARCH_TAB
-                               && mUi->wTransfers->getCurrentTab() != TransfersWidget::COMPLETED_TAB))
-    {
-        mUi->sCurrentContentInfo->setCurrentWidget(mUi->pStalledIssuesHeaderInfo);
-    }
-    else
-    {
-         mUi->sCurrentContentInfo->setCurrentWidget(mUi->pStatusHeaderInfo);
-    }
+{    
+    mUi->sCurrentContentInfo->setCurrentWidget(mUi->pStalledIssuesHeaderInfo);
 }
 
 void TransferManager::on_bSearch_clicked()

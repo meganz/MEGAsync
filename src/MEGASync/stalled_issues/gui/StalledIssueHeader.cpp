@@ -24,6 +24,7 @@ StalledIssueHeader::StalledIssueHeader(QWidget *parent) :
 
     ui->actionButton->hide();
     ui->actionMessage->hide();
+    ui->ignoreFileButton->hide();
 
     //The MegaSyncStall object will tell us whether or not to display the Ignore button
 //    if(SOME CONDITION)
@@ -32,7 +33,6 @@ StalledIssueHeader::StalledIssueHeader(QWidget *parent) :
 //    }
 //    else
 //    {
-//        ui->ignoreFileButton->hide();
 //    }
 }
 
@@ -97,10 +97,10 @@ QString StalledIssueHeader::fileName()
 
 void StalledIssueHeader::on_ignoreFileButton_clicked()
 {
-    auto data = getData().consultData()->consultLocalData();
-    if(data)
+    auto info = getData().consultData()->consultLocalData();
+    if(info)
     {
-        mUtilities.ignoreFile(data->getNativeFilePath());
+        mUtilities.ignoreFile(info->getNativeFilePath());
         MegaSyncApp->getStalledIssuesModel()->solveIssue(false,getCurrentIndex());
 
         ui->ignoreFileButton->hide();
@@ -139,7 +139,7 @@ void StalledIssueHeader::refreshUi()
         fileInfo.setFile(getData().consultData()->consultCloudData()->getNativeFilePath());
     }
 
-    if(!fileInfo.completeSuffix().isEmpty())
+    if(getData().consultData()->hasFiles() > 0)
     {
         fileTypeIcon = Utilities::getCachedPixmap(Utilities::getExtensionPixmapName(
                                                       getData().consultData()->getFileName(), QLatin1Literal(":/images/drag_")));

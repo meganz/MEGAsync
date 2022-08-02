@@ -26,7 +26,7 @@ private slots:
 
 private:
     Ui::SomeIssuesOccurredMessage *ui;
-    QPointer<StalledIssuesDialog> mStalledIssuesDialog;
+    static QPointer<StalledIssuesDialog> mStalledIssuesDialog;
     DialogGeometryRetainer<StalledIssuesDialog> mStalledIssuesGeometryRetainer;
     bool mFoundStalledIssues;
 };

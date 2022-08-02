@@ -95,6 +95,9 @@ public:
 
     bool mDetectedMEGASide = false;
 
+    uint8_t hasFiles() const;
+    uint8_t hasFolders() const;
+
 protected:
     bool initCloudIssue();
     const QExplicitlySharedDataPointer<StalledIssueData>& getLocalData() const;
@@ -104,10 +107,14 @@ protected:
     const QExplicitlySharedDataPointer<StalledIssueData>& getCloudData() const;
     QExplicitlySharedDataPointer<StalledIssueData> mCloudData;
 
+    void setIsFile(const QString& path, bool isLocal);
+
     virtual void fillIssue(const mega::MegaSyncStall *stall);
 
     mega::MegaSyncStall::SyncStallReason mReason = mega::MegaSyncStall::SyncStallReason::NoReason;
     bool mIsSolved = false;
+    uint8_t mFiles = 0;
+    uint8_t mFolders = 0;
 };
 
 Q_DECLARE_METATYPE(StalledIssue)

@@ -39,8 +39,7 @@
 }</string>
      </property>
      <property name="text">
-      <string>Renaming or removing files can resolve this issue,
-or click the Folders below to make adjustments in the local filesystem or in MEGA</string>
+      <string notr="true"/>
      </property>
      <property name="indent">
       <number>11</number>
@@ -75,7 +74,7 @@ or click the Folders below to make adjustments in the local filesystem or in MEG
   <customwidget>
    <class>NameConflict</class>
    <extends>QWidget</extends>
-   <header>NameConflict.h</header>
+   <header>stalled_issues_cases/NameConflict.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

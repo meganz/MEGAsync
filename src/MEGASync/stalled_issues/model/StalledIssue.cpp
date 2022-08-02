@@ -192,6 +192,8 @@ void StalledIssue::fillIssue(const mega::MegaSyncStall *stall)
         initLocalIssue();
         getLocalData()->mPath.path = localSourcePath;
         getLocalData()->mPath.mPathProblem = localSourcePathProblem;
+
+        setIsFile(localSourcePath, true);
     }
 
     if(localTargetPathProblem != mega::MegaSyncStall::SyncPathProblem::NoProblem || !localTargetPath.isEmpty())
@@ -199,6 +201,8 @@ void StalledIssue::fillIssue(const mega::MegaSyncStall *stall)
         initLocalIssue();
         getLocalData()->mMovePath.path = localTargetPath;
         getLocalData()->mMovePath.mPathProblem = localTargetPathProblem;
+
+        setIsFile(localTargetPath, true);
     }
 
     auto cloudSourcePathProblem = static_cast<mega::MegaSyncStall::SyncPathProblem>(stall->pathProblem(true,0));
@@ -212,6 +216,8 @@ void StalledIssue::fillIssue(const mega::MegaSyncStall *stall)
         initCloudIssue();
         getCloudData()->mPath.path = cloudSourcePath;
         getCloudData()->mPath.mPathProblem = cloudSourcePathProblem;
+
+        setIsFile(cloudSourcePath, false);
     }
 
     if(cloudTargetPathProblem != mega::MegaSyncStall::SyncPathProblem::NoProblem || !cloudTargetPath.isEmpty())
@@ -219,7 +225,19 @@ void StalledIssue::fillIssue(const mega::MegaSyncStall *stall)
         initCloudIssue();
         getCloudData()->mMovePath.path = cloudTargetPath;
         getCloudData()->mMovePath.mPathProblem = cloudTargetPathProblem;
+
+        setIsFile(cloudTargetPath, false);
     }
+}
+
+uint8_t StalledIssue::hasFiles() const
+{
+    return mFiles;
+}
+
+uint8_t StalledIssue::hasFolders() const
+{
+    return mFolders;
 }
 
 bool StalledIssue::isSolved() const
@@ -259,6 +277,20 @@ const QExplicitlySharedDataPointer<StalledIssueData> &StalledIssue::getLocalData
 const QExplicitlySharedDataPointer<StalledIssueData> &StalledIssue::getCloudData() const
 {
     return mCloudData;
+}
+
+void StalledIssue::setIsFile(const QString &path, bool isLocal)
+{
+    if(isLocal)
+    {
+        QFileInfo fileInfo(path);
+        fileInfo.isFile() ? mFiles++ : mFolders++;
+    }
+    else
+    {
+        std::unique_ptr<mega::MegaNode> node(MegaSyncApp->getMegaApi()->getNodeByPath(path.toStdString().c_str()));
+        node->isFile()  ? mFiles++ : mFolders++;
+    }
 }
 
 mega::MegaSyncStall::SyncStallReason StalledIssue::getReason() const
@@ -368,6 +400,8 @@ void NameConflictedStalledIssue::fillIssue(const mega::MegaSyncStall *stall)
             {
                 getLocalData()->mPath.path = localPath.filePath();
             }
+
+            setIsFile(localPath.filePath(), true);
         }
     }
 
@@ -388,6 +422,8 @@ void NameConflictedStalledIssue::fillIssue(const mega::MegaSyncStall *stall)
             {
                 getCloudData()->mPath.path = cloudPath.filePath();
             }
+
+            setIsFile(cloudPath.filePath(), false);
         }
     }
 }

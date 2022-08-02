@@ -9,6 +9,10 @@ class LocalAndRemoteNameConflicts;
 
 class LocalAndRemoteNameConflicts : public StalledIssueBaseDelegateWidget
 {
+    static const QString FILES_DESCRIPTION;
+    static const QString FOLDERS_DESCRIPTION;
+    static const QString FILES_AND_FOLDERS_DESCRIPTION;
+
     Q_OBJECT
 
 public:
