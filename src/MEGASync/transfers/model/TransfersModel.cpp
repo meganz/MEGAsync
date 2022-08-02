@@ -348,14 +348,31 @@ TransfersCount TransferThread::getTransfersCount()
     return mTransfersCount;
 }
 
-bool TransfersModel::hasActiveTransfers() const
+int TransfersModel::hasActiveTransfers() const
 {
-    return mHasActiveTransfers;
+    return mActiveTransfers.size();
 }
 
-void TransfersModel::setHasActiveTransfers(bool newHasActiveTransfers)
+void TransfersModel::setActiveTransfer(TransferTag tag)
 {
-    mHasActiveTransfers = newHasActiveTransfers;
+    mActiveTransfers.insert(tag);
+}
+
+void TransfersModel::unsetActiveTransfer(TransferTag tag)
+{
+    mActiveTransfers.remove(tag);
+}
+
+void TransfersModel::checkActiveTransfer(TransferTag tag, bool isActive)
+{
+    if(isActive)
+    {
+        setActiveTransfer(tag);
+    }
+    else
+    {
+        unsetActiveTransfer(tag);
+    }
 }
 
 void TransfersModel::uiUnblocked()
@@ -735,6 +752,13 @@ void TransfersModel::startTransfer(QExplicitlySharedDataPointer<TransferData> tr
     }
 }
 
+void TransfersModel::updateTransfer(QExplicitlySharedDataPointer<TransferData> transfer, int row)
+{
+    checkActiveTransfer(transfer->mTag, transfer->isActive());
+
+    mTransfers[row] = transfer;
+}
+
 void TransfersModel::processUpdateTransfers()
 {
     for (auto it = mTransfersToProcess.updateTransfersByTag.begin(); it != mTransfersToProcess.updateTransfersByTag.end();)
@@ -744,7 +768,7 @@ void TransfersModel::processUpdateTransfers()
         if(d && !d->ignoreUpdate((*it)->getState()))
         {
             (*it)->setPreviousState(d->getState());
-            mTransfers[row] = (*it);
+            updateTransfer((*it), row);
             sendDataChanged(row);
             (*it)->resetStateHasChanged();
         }
@@ -764,7 +788,7 @@ void TransfersModel::processFailedTransfers()
         if(d)
         {
             (*it)->setPreviousState(d->getState());
-            mTransfers[row] = (*it);
+            updateTransfer((*it), row);
 
             if(d->isSyncTransfer())
             {
@@ -805,6 +829,9 @@ void TransfersModel::processCancelTransfers()
             {
                 indexesToCancel.append(index(row,0, DEFAULT_IDX));
             }
+
+            auto transfer = getTransferByTag(tag);
+            checkActiveTransfer(tag, false);
         }
 
         mRowsToCancel.clear();

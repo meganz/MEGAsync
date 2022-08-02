@@ -52,8 +52,9 @@ public:
     static const TransferStates FINISHED_STATES_MASK;
     static const TransferStates PAUSABLE_STATES_MASK;
     static const TransferStates CANCELABLE_STATES_MASK;
-    static const TransferStates ACTIVE_STATES_MASK;
     static const TransferStates PROCESSING_STATES_MASK;
+    static const TransferStates PENDING_STATES_MASK;
+    static const TransferStates ACTIVE_STATES_MASK;
     static const TransferStates STATE_MASK;
 
     static const TransferTypes TYPE_MASK;
@@ -116,7 +117,10 @@ public:
     bool wasFinished() const;
     bool isUpload() const;
     bool isSyncTransfer() const;
+    bool isActiveOrPending() const;
+    bool wasActiveOrPending() const;
     bool isActive() const;
+    bool wasActive() const;
     bool isPaused() const;
     bool wasPaused() const;
     bool isProcessing() const;

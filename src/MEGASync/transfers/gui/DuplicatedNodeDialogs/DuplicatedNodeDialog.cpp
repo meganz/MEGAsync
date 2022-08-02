@@ -95,26 +95,31 @@ void DuplicatedNodeDialog::fillDialog(const QList<std::shared_ptr<DuplicatedNode
     {
         checker->fillUi(this, (*conflictIt));
         adjustSize();
-        exec();
+        auto result = exec();
+
+        if(result == QDialog::Rejected)
+        {
+            break;
+        }
 
         if(ui->cbApplyToAll->isChecked())
         {
-             for(auto it = conflictIt; it != conflicts.end(); ++it)
-             {
-                 (*it)->setSolution((*conflictIt)->getSolution());
-                 if((*it)->getSolution() != NodeItemType::DONT_UPLOAD)
-                 {
-                     mUploads.append((*it));
-                 }
-             }
+            for(auto it = conflictIt; it != conflicts.end(); ++it)
+            {
+                (*it)->setSolution((*conflictIt)->getSolution());
+                if((*it)->getSolution() != NodeItemType::DONT_UPLOAD)
+                {
+                    mUploads.append((*it));
+                }
+            }
 
-             break;
+            break;
         }
         else
         {
             if((*conflictIt)->getSolution() != NodeItemType::DONT_UPLOAD)
             {
-                 mUploads.append((*conflictIt));
+                mUploads.append((*conflictIt));
             }
         }
 

@@ -39,19 +39,22 @@ const TransferData::TransferStates TransferData::CANCELABLE_STATES_MASK = Transf
         | TransferData::TransferState::TRANSFER_PAUSED
         | TransferData::TransferState::TRANSFER_RETRYING);
 
-const TransferData::TransferStates TransferData::ACTIVE_STATES_MASK = TransferData::TransferStates (
-    TransferData::TransferState::TRANSFER_ACTIVE |
-    TransferData::TransferState::TRANSFER_PAUSED |
-    TransferData::TransferState::TRANSFER_COMPLETING |
-    TransferData::TransferState::TRANSFER_QUEUED |
-    TransferData::TransferState::TRANSFER_RETRYING
-);
+const TransferData::TransferStates TransferData::PENDING_STATES_MASK = TransferData::TransferStates (
+            TransferData::TransferState::TRANSFER_ACTIVE |
+            TransferData::TransferState::TRANSFER_PAUSED |
+            TransferData::TransferState::TRANSFER_COMPLETING |
+            TransferData::TransferState::TRANSFER_QUEUED |
+            TransferData::TransferState::TRANSFER_RETRYING);
 
 const TransferData::TransferStates TransferData::PROCESSING_STATES_MASK = TransferData::TransferStates (
             TransferData::TransferState::TRANSFER_ACTIVE |
             TransferData::TransferState::TRANSFER_COMPLETING |
             TransferData::TransferState::TRANSFER_QUEUED |
             TransferData::TransferState::TRANSFER_RETRYING);
+
+const TransferData::TransferStates TransferData::ACTIVE_STATES_MASK = TransferData::TransferStates (
+            TransferData::TransferState::TRANSFER_ACTIVE |
+            TransferData::TransferState::TRANSFER_COMPLETING);
 
 void TransferData::update(mega::MegaTransfer* transfer)
 {
@@ -297,9 +300,24 @@ bool TransferData::isSyncTransfer() const
     return mType & TRANSFER_SYNC;
 }
 
+bool TransferData::isActiveOrPending() const
+{
+    return mState & PENDING_STATES_MASK;
+}
+
+bool TransferData::wasActiveOrPending() const
+{
+    return mPreviousState & PENDING_STATES_MASK;
+}
+
 bool TransferData::isActive() const
 {
     return mState & ACTIVE_STATES_MASK;
+}
+
+bool TransferData::wasActive() const
+{
+    return mPreviousState & ACTIVE_STATES_MASK;
 }
 
 bool TransferData::isPaused() const

@@ -10,10 +10,14 @@
 DuplicatedNodeItem::DuplicatedNodeItem(QWidget *parent) :
     QWidget(parent),
     mInfo(nullptr),
-    ui(new Ui::DuplicatedNodeItem)
+    mNodeSize(-1),
+    ui(new Ui::DuplicatedNodeItem),
+    mModifiedTimeVisible(true)
 {
     ui->setupUi(this);
     ui->lNodeName->installEventFilter(this);
+
+    connect(&mFolderSizeFuture, &QFutureWatcher<qint64>::finished, this, &DuplicatedLocalItem::onNodeSizeFinished);
 }
 
 DuplicatedNodeItem::~DuplicatedNodeItem()
@@ -24,7 +28,6 @@ DuplicatedNodeItem::~DuplicatedNodeItem()
 void DuplicatedNodeItem::setInfo(std::shared_ptr<DuplicatedNodeInfo>info, NodeItemType type)
 {
     mInfo = info;
-
     connect(mInfo.get(), &DuplicatedNodeInfo::localModifiedDateUpdated, this, &DuplicatedNodeItem::updateModificationTime);
 
     mType = type;
@@ -81,6 +84,16 @@ void DuplicatedNodeItem::fillUi()
     updateModificationTime();
 }
 
+bool DuplicatedNodeItem::isModifiedTimeVisible()
+{
+    return mModifiedTimeVisible;
+}
+
+void DuplicatedNodeItem::setModifiedTimeVisible(bool state)
+{
+    mModifiedTimeVisible = state;
+}
+
 bool DuplicatedNodeItem::isValid() const
 {
     return mInfo != nullptr;
@@ -90,29 +103,6 @@ void DuplicatedNodeItem::setActionAndTitle(const QString &text)
 {
     ui->bAction->setText(text);
     ui->lTitle->setText(text);
-}
-
-QString DuplicatedNodeItem::getFilesAndFolders(int folders, int files)
-{
-    QString foldersText(tr("%1 folder", "", folders).arg(folders));
-    QString filesText(tr("%1 file", "", files).arg(files));
-
-    QString folderContains;
-
-    if(!foldersText.isEmpty() && !filesText.isEmpty())
-    {
-        folderContains = QString::fromLatin1("%1·%2").arg(foldersText, filesText);
-    }
-    else if(!foldersText.isEmpty())
-    {
-        folderContains = foldersText;
-    }
-    else if(!filesText.isEmpty())
-    {
-        folderContains = filesText;
-    }
-
-    return folderContains;
 }
 
 void DuplicatedNodeItem::updateSize()
@@ -153,6 +143,7 @@ void DuplicatedNodeItem::updateModificationTime()
 
         ui->lDate->setText(dateString);
     }
+
     ui->lDate->setVisible(visible);
     ui->point->setVisible(visible);
 }
@@ -174,13 +165,26 @@ void DuplicatedNodeItem::on_bAction_clicked()
     emit actionClicked();
 }
 
+void DuplicatedNodeItem::onNodeSizeFinished()
+{
+    mNodeSize = mFolderSizeFuture.result();
+    updateSize();
+}
+
 /*
  * REMOTE IMPLEMENTATION CLASS
  * USE TO SHOW THE REMOTE NODE INFO
 */
 DuplicatedRemoteItem::DuplicatedRemoteItem(QWidget *parent)
     : DuplicatedNodeItem(parent)
-{}
+{
+    mListener = new mega::QTMegaRequestListener(MegaSyncApp->getMegaApi(), this);
+}
+
+DuplicatedRemoteItem::~DuplicatedRemoteItem()
+{
+    delete mListener;
+}
 
 std::shared_ptr<mega::MegaNode> DuplicatedRemoteItem::getNode()
 {
@@ -199,8 +203,20 @@ QDateTime DuplicatedRemoteItem::getModifiedTime()
 
 qint64 DuplicatedRemoteItem::getNodeSize()
 {
-    auto nodeSize = static_cast<qint64>(mInfo->getRemoteConflictNode()->getSize());
-    return std::max(nodeSize, 0LL);
+    if(mInfo->isRemoteFile())
+    {
+        auto nodeSize = static_cast<qint64>(mInfo->getRemoteConflictNode()->getSize());
+        return std::max(nodeSize, 0LL);
+    }
+    else
+    {
+        if(mNodeSize < 0)
+        {
+            MegaSyncApp->getMegaApi()->getFolderInfo(mInfo->getRemoteConflictNode().get(),mListener);
+        }
+
+        return mNodeSize;
+    }
 }
 
 bool DuplicatedRemoteItem::isFile() const
@@ -208,9 +224,36 @@ bool DuplicatedRemoteItem::isFile() const
     return mInfo->isRemoteFile();
 }
 
-bool DuplicatedRemoteItem::isModifiedTimeVisible() const
+void DuplicatedRemoteItem::onRequestFinish(mega::MegaApi *api, mega::MegaRequest *request, mega::MegaError *e)
 {
-    return true;
+    mega::MegaRequestListener::onRequestFinish(api, request, e);
+
+    if (request->getType() == mega::MegaRequest::TYPE_FOLDER_INFO
+            && e->getErrorCode() == mega::MegaError::API_OK)
+    {
+        auto folderInfo = request->getMegaFolderInfo();
+        mNodeSize = folderInfo->getCurrentSize();
+        updateSize();
+    }
+}
+
+qint64 DuplicatedRemoteItem::getFolderSize(mega::MegaNode* node, qint64 size)
+{
+    auto newSize(size);
+
+    auto nodes = std::unique_ptr<mega::MegaChildrenLists>(MegaSyncApp->getMegaApi()->getFileFolderChildren(node));
+
+    for(int index = 0; index < nodes->getFileList()->size(); ++index)
+    {
+        newSize += nodes->getFileList()->get(index)->getSize();
+    }
+
+    for(int index = 0; index < nodes->getFolderList()->size(); ++index)
+    {
+        newSize = getFolderSize(nodes->getFolderList()->get(index),newSize);
+    }
+
+    return newSize;
 }
 
 /*
@@ -218,10 +261,9 @@ bool DuplicatedRemoteItem::isModifiedTimeVisible() const
  * USE TO SHOW THE LOCAL NODE INFO
 */
 DuplicatedLocalItem::DuplicatedLocalItem(QWidget *parent)
-    : DuplicatedNodeItem(parent), mNodeSize(-1),mValidModificationTime(false)
+    : DuplicatedNodeItem(parent)
 {
-    connect(&mFolderSizeFuture, &QFutureWatcher<void>::finished, this, &DuplicatedLocalItem::onNodeSizeFinished);
-    connect(&mFolderModificationTimeFuture, &QFutureWatcher<void>::finished, this, &DuplicatedLocalItem::onNodeModificationTimeFinished);
+    connect(&mFolderModificationTimeFuture, &QFutureWatcher<QDateTime>::finished, this, &DuplicatedLocalItem::onNodeModificationTimeFinished);
 }
 
 const QString &DuplicatedLocalItem::getLocalPath()
@@ -245,32 +287,25 @@ QString DuplicatedLocalItem::getNodeName()
 
 QDateTime DuplicatedLocalItem::getModifiedTime()
 {
-    if(mModificationTime.isValid())
+    if(!mModificationTime.isValid())
     {
-        return mModificationTime;
+        if(mInfo->isLocalFile())
+        {
+            QFileInfo localNode(mInfo->getLocalPath());
+            mModificationTime = localNode.lastModified();
+            mInfo->setLocalModifiedTime(mModificationTime);
+        }
+        //Is local folder
+        else
+        {
+            auto future = QtConcurrent::run([this]() -> QDateTime{
+                return getFolderModifiedDate(mInfo->getLocalPath(), mModificationTime);
+            });
+            mFolderModificationTimeFuture.setFuture(future);
+        }
     }
 
-    if(mInfo->isLocalFile())
-    {
-        QFileInfo localNode(mInfo->getLocalPath());
-        mModificationTime = localNode.lastModified();
-        onNodeModificationTimeFinished();
-        return mModificationTime;
-    }
-    else
-    {
-        auto future = QtConcurrent::run([this](){
-            getFolderModifiedDate(mInfo->getLocalPath());
-        });
-        mFolderModificationTimeFuture.setFuture(future);
-        return QDateTime();
-    }
-
-}
-
-bool DuplicatedLocalItem::isModifiedTimeVisible() const
-{
-    return mValidModificationTime;
+    return mModificationTime;
 }
 
 qint64 DuplicatedLocalItem::getNodeSize()
@@ -278,23 +313,21 @@ qint64 DuplicatedLocalItem::getNodeSize()
     if(mInfo->isLocalFile())
     {
         QFileInfo localNode(mInfo->getLocalPath());
-        return localNode.size();
+        mNodeSize = localNode.size();
     }
     else
     {
         if(mNodeSize < 0)
         {
-            auto future = QtConcurrent::run([this](){
-                getFolderSize(mInfo->getLocalPath());
+            auto future = QtConcurrent::run([this]() -> qint64{
+                qint64 size = getFolderSize(mInfo->getLocalPath(), mNodeSize);
+                return std::max(size, 0LL);
             });
             mFolderSizeFuture.setFuture(future);
-            return mNodeSize;
-        }
-        else
-        {
-            return mNodeSize;
         }
     }
+
+    return mNodeSize;
 }
 
 bool DuplicatedLocalItem::isFile() const
@@ -302,8 +335,10 @@ bool DuplicatedLocalItem::isFile() const
     return mInfo->isLocalFile();
 }
 
-void DuplicatedLocalItem::getFolderSize(const QString &path)
+qint64 DuplicatedLocalItem::getFolderSize(const QString &path, qint64 size)
 {
+    auto newSize(size);
+
     QDir folder(path);
     folder.setFilter(QDir::Files | QDir::NoDotAndDotDot | QDir::NoSymLinks);
 
@@ -312,7 +347,7 @@ void DuplicatedLocalItem::getFolderSize(const QString &path)
     {
         QString filePath = getFullFileName(folder.absolutePath(), fileList.at(i));
         QFileInfo fileInfo(filePath);
-        mNodeSize += fileInfo.size();
+        newSize += fileInfo.size();
     }
 
     folder.setFilter(QDir::AllDirs | QDir::NoDotAndDotDot | QDir::NoSymLinks);
@@ -320,12 +355,16 @@ void DuplicatedLocalItem::getFolderSize(const QString &path)
     for (int i=0; i < dirList.size(); ++i)
     {
         QString newPath = getFullFileName(folder.absolutePath(), dirList.at(i));
-        getFolderSize(newPath);
+        newSize = getFolderSize(newPath, newSize);
     }
+
+    return newSize;
 }
 
-void DuplicatedLocalItem::getFolderModifiedDate(const QString &path)
+QDateTime DuplicatedLocalItem::getFolderModifiedDate(const QString &path, const QDateTime& date)
 {
+    QDateTime newDate(date);
+
     QDir folder(path);
     folder.setFilter(QDir::Files | QDir::NoDotAndDotDot | QDir::NoSymLinks);
 
@@ -335,9 +374,10 @@ void DuplicatedLocalItem::getFolderModifiedDate(const QString &path)
     {
         QString filePath = getFullFileName(folder.absolutePath(), fileList.at(i));
         QFileInfo fileInfo(filePath);
-        if(fileInfo.lastModified() > mModificationTime)
+
+        if(fileInfo.lastModified() > newDate)
         {
-            mModificationTime = fileInfo.lastModified();
+            newDate = fileInfo.lastModified();
         }
     }
 
@@ -346,8 +386,15 @@ void DuplicatedLocalItem::getFolderModifiedDate(const QString &path)
     for (int i=0; i < dirList.size(); ++i)
     {
         QString newPath = getFullFileName(folder.absolutePath(),dirList.at(i));
-        getFolderModifiedDate(newPath);
+        newDate = getFolderModifiedDate(newPath, newDate);
     }
+
+    if(!newDate.isValid() && fileList.isEmpty() && dirList.isEmpty())
+    {
+        setModifiedTimeVisible(false);
+    }
+
+    return newDate;
 }
 
 QString DuplicatedLocalItem::getFullFileName(const QString &path, const QString &fileName)
@@ -355,14 +402,9 @@ QString DuplicatedLocalItem::getFullFileName(const QString &path, const QString 
     return QString(QString::fromUtf8("%1/%2")).arg(path, fileName);
 }
 
-void DuplicatedLocalItem::onNodeSizeFinished()
-{
-    updateSize();
-}
-
 void DuplicatedLocalItem::onNodeModificationTimeFinished()
 {
-    mValidModificationTime = mModificationTime.isValid();
+    mModificationTime = mFolderModificationTimeFuture.result();
     mInfo->setLocalModifiedTime(mModificationTime);
 }
 
@@ -373,6 +415,7 @@ void DuplicatedLocalItem::onNodeModificationTimeFinished()
 DuplicatedRenameItem::DuplicatedRenameItem(QWidget *parent)
     :DuplicatedLocalItem(parent)
 {
+    setModifiedTimeVisible(false);
 }
 
 void DuplicatedRenameItem::setInfo(std::shared_ptr<DuplicatedNodeInfo> conflict)

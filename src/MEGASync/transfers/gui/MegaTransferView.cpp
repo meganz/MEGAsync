@@ -182,7 +182,7 @@ MegaTransferView::SelectedIndexesInfo MegaTransferView::getSelectedCancelOrClear
                 info.areAllSync = false;
             }
 
-            if(transfer->isActive() || transfer->isFailed())
+            if(transfer->isActiveOrPending() || transfer->isFailed())
             {
                 info.isAnyCancellable = true;
             }

@@ -89,15 +89,15 @@ bool InfoDialogTransfersProxyModel::lessThan(const QModelIndex &left, const QMod
 
     if(leftItem && rightItem)
     {
-        if(leftItem->isActive() && !rightItem->isActive())
+        if(leftItem->isActiveOrPending() && !rightItem->isActiveOrPending())
         {
             return true;
         }
-        else if(rightItem->isActive() && !leftItem->isActive())
+        else if(rightItem->isActiveOrPending() && !leftItem->isActiveOrPending())
         {
             return false;
         }
-        else if(leftItem->isActive() && rightItem->isActive())
+        else if(leftItem->isActiveOrPending() && rightItem->isActiveOrPending())
         {
             return leftItem->mPriority < rightItem->mPriority;
         }
@@ -127,12 +127,6 @@ bool InfoDialogTransfersProxyModel::filterAcceptsRow(int sourceRow, const QModel
                      || d->getState() & TransferData::TransferState::TRANSFER_COMPLETING
                      || d->getState() & TransferData::TransferState::TRANSFER_ACTIVE
                      || d->getState() & TransferData::TransferState::TRANSFER_FAILED);
-
-           auto transferModel = dynamic_cast<TransfersModel*>(sourceModel());
-           if(accept && (d->isProcessing() && !transferModel->hasActiveTransfers()))
-           {
-               transferModel->setHasActiveTransfers(true);
-           }
 
            if(!accept && d->mTag == mNextTransferSourceRow)
            {
@@ -168,16 +162,6 @@ void InfoDialogTransfersProxyModel::onUpdateMostPriorityTransfer(int tag)
         else
         {
             transferModel->sendDataChangedByTag(tag);
-        }
-    }
-
-    firstIndex = index(0,0);
-    if(firstIndex.isValid())
-    {
-        const auto d (qvariant_cast<TransferItem>(firstIndex.data()).getTransferData());
-        if(d)
-        {
-            transferModel->setHasActiveTransfers(d->isProcessing());
         }
     }
 }
