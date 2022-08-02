@@ -60,7 +60,6 @@ MegaItemModel::MegaItemModel(QObject *parent) :
    mMegaApi->getCameraUploadsFolder(mDelegateListener.get());
    mMegaApi->getCameraUploadsFolderSecondary(mDelegateListener.get());
    mMegaApi->getMyChatFilesFolder(mDelegateListener.get());
-
 }
 
 int MegaItemModel::columnCount(const QModelIndex &) const

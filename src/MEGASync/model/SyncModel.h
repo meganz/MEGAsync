@@ -83,7 +83,6 @@ public:
     void pickInfoFromOldSync(const SyncData &osd, mega::MegaHandle backupId, bool loadedFromPreviousSessions);
 
     // remove syncs from model
-    void removeSyncedFolder(int num, SyncType type);
     void removeSyncedFolderByBackupId(mega::MegaHandle backupId);
     void removeAllFolders();
 
@@ -131,8 +130,6 @@ public:
         {return getMegaFolderHandles(QVector<SyncType>({type}));}
     //cloudDrive = true: only cloud drive mega folders. If false will return only inshare syncs.
     QStringList getCloudDriveSyncMegaFolders(bool cloudDrive = true);
-
-    bool isRemoteRootSynced();
 
     void updateMegaFolder(QString newRemotePath, std::shared_ptr<SyncSetting> cs);
 };

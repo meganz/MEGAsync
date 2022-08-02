@@ -131,8 +131,8 @@ void SyncsMenu::refresh()
             }
         }
 
-        // Display "Add <type>" only if the whole remote / is not synced...
-        if (activeFolders && !model->isRemoteRootSynced())
+        // Display "Add <type>" at the end of the list
+        if (activeFolders)
         {
             static const QIcon iconAdd (QLatin1String("://images/icons/ico_add_sync.png"));
             mAddAction->setIcon(iconAdd);
