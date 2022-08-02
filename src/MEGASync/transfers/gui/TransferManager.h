@@ -138,7 +138,7 @@ private slots:
     void pauseResumeTransfers(bool isPaused);
 
     void onStalledIssuesStateChanged(bool state);
-    void showStalledIssuesInfo();
+    void checkContentInfo();
     void on_bOpenLinks_clicked();
     void on_tCogWheel_clicked();
     void on_bDownload_clicked();

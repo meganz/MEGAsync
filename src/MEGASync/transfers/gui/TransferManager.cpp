@@ -201,7 +201,7 @@ TransferManager::TransferManager(MegaApi *megaApi) :
     });
 
     mFoundStalledIssues = MegaSyncApp->getStalledIssuesModel()->hasStalledIssues();
-    showStalledIssuesInfo();
+    checkContentInfo();
     connect(MegaSyncApp->getStalledIssuesModel(),
             &StalledIssuesModel::globalSyncStateChanged,
             this, &TransferManager::onStalledIssuesStateChanged);
@@ -386,7 +386,7 @@ void TransferManager::on_tFailed_clicked()
         mUi->wTransfers->filtersChanged({}, TransferData::TRANSFER_FAILED, {});
         mUi->lCurrentContent->setText(tr("Failed"));
 
-        showStalledIssuesInfo();
+        checkContentInfo();
         toggleTab(TransfersWidget::FAILED_TAB);
     }
 }
@@ -873,12 +873,19 @@ void TransferManager::pauseResumeTransfers(bool isPaused)
 void TransferManager::onStalledIssuesStateChanged(bool state)
 {
     mFoundStalledIssues = state;
-    showStalledIssuesInfo();
+    checkContentInfo();
 }
 
-void TransferManager::showStalledIssuesInfo()
+void TransferManager::checkContentInfo()
 {    
-    mUi->sCurrentContentInfo->setCurrentWidget(mUi->pStalledIssuesHeaderInfo);
+    if(mFoundStalledIssues)
+    {
+        mUi->sCurrentContentInfo->setCurrentWidget(mUi->pStalledIssuesHeaderInfo);
+    }
+    else
+    {
+        mUi->sCurrentContentInfo->setCurrentWidget(mUi->pStatusHeaderInfo);
+    }
 }
 
 void TransferManager::on_bSearch_clicked()
@@ -966,7 +973,7 @@ void TransferManager::on_tClearSearchResult_clicked()
     if (mUi->wTransfers->getCurrentTab() == TransfersWidget::SEARCH_TAB)
     {
         mUi->sCurrentContent->setCurrentWidget(mUi->pStatusHeader);
-        showStalledIssuesInfo();
+        checkContentInfo();
         on_tAllTransfers_clicked();
     }
 }
@@ -1138,7 +1145,7 @@ void TransferManager::toggleTab(TransfersWidget::TM_TAB newTab)
         else
         {
             mUi->sCurrentContent->setCurrentWidget(mUi->pStatusHeader);
-            showStalledIssuesInfo();
+            checkContentInfo();
             mUi->wTransfers->textFilterChanged(QString());
         }
 
