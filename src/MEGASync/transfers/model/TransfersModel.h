@@ -208,7 +208,7 @@ public:
     bool hasFailedTransfers();
 
     void startTransfer(QExplicitlySharedDataPointer<TransferData> transfer);
-    void updateTransfer(QExplicitlySharedDataPointer<TransferData> transfer);
+    void updateTransfer(QExplicitlySharedDataPointer<TransferData> transfer, int row);
 
     void pauseModelProcessing(bool value);
 
@@ -219,8 +219,10 @@ public:
 
      void blockModelSignals(bool state);
 
-     bool hasActiveTransfers() const;
-     void setHasActiveTransfers(bool newHasActiveTransfers);
+     int hasActiveTransfers() const;
+     void setActiveTransfer(TransferTag tag);
+     void unsetActiveTransfer(TransferTag tag);
+     void checkActiveTransfer(TransferTag tag, bool isActive);
 
      void uiUnblocked();
 
@@ -316,6 +318,7 @@ private:
 
     bool mAreAllPaused;
     bool mHasActiveTransfers;
+    QSet<TransferTag> mActiveTransfers;
 };
 
 Q_DECLARE_METATYPE(QAbstractItemModel::LayoutChangeHint)

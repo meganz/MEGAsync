@@ -249,7 +249,7 @@ bool TransfersManagerSortFilterProxyModel::filterAcceptsRow(int sourceRow, const
         }
 
         //As the active state can change in time, add both logics to add or remove
-        if(accept && (d->isActive() && !d->isCompleting()))
+        if(accept && (d->isActiveOrPending() && !d->isCompleting()))
         {
             if(!mActiveTransfers.contains(d->mTag))
             {
@@ -261,7 +261,7 @@ bool TransfersManagerSortFilterProxyModel::filterAcceptsRow(int sourceRow, const
             removeActiveTransferFromCounter(d->mTag);
         }
 
-        if(accept && (d->isActive() && d->isCompleting()))
+        if(accept && (d->isActiveOrPending() && d->isCompleting()))
         {
             if(!mCompletingTransfers.contains(d->mTag))
             {

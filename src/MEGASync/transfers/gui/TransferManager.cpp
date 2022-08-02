@@ -337,7 +337,7 @@ void TransferManager::on_tDownloads_clicked()
         emit userActivity();
         mUi->wTransfers->filtersChanged((TransferData::TRANSFER_DOWNLOAD
                                          | TransferData::TRANSFER_LTCPDOWNLOAD),
-                                        TransferData::ACTIVE_STATES_MASK, {});
+                                        TransferData::PENDING_STATES_MASK, {});
         mUi->lCurrentContent->setText(tr("Downloads"));
         toggleTab(TransfersWidget::DOWNLOADS_TAB);
     }
@@ -348,7 +348,7 @@ void TransferManager::on_tUploads_clicked()
     if (mUi->wTransfers->getCurrentTab() != TransfersWidget::UPLOADS_TAB)
     {
         emit userActivity();
-        mUi->wTransfers->filtersChanged(TransferData::TRANSFER_UPLOAD, TransferData::ACTIVE_STATES_MASK, {});
+        mUi->wTransfers->filtersChanged(TransferData::TRANSFER_UPLOAD, TransferData::PENDING_STATES_MASK, {});
         mUi->lCurrentContent->setText(tr("Uploads"));
         toggleTab(TransfersWidget::UPLOADS_TAB);
     }
@@ -359,7 +359,7 @@ void TransferManager::on_tAllTransfers_clicked()
     if (mUi->wTransfers->getCurrentTab() != TransfersWidget::ALL_TRANSFERS_TAB)
     {
         emit userActivity();
-        mUi->wTransfers->filtersChanged({}, TransferData::ACTIVE_STATES_MASK, {});
+        mUi->wTransfers->filtersChanged({}, TransferData::PENDING_STATES_MASK, {});
         mUi->lCurrentContent->setText(tr("All transfers"));
 
         toggleTab(TransfersWidget::ALL_TRANSFERS_TAB);

@@ -1767,9 +1767,8 @@ void MegaApplication::tryExitApplication(bool force)
     }
     else if (!exitDialog)
     {
-        auto transfersStats = mTransfersModel->getTransfersCount();
         exitDialog = new QMessageBox(QMessageBox::Question, tr("MEGAsync"),
-                                     tr("There is an active transfer. Exit the app?\nIf you exit, all transfers will be cancelled", "", transfersStats.pendingTransfers()),
+                                     tr("There is an active transfer. Want to exit?", "", mTransfersModel->hasActiveTransfers()),
                                      QMessageBox::Yes|QMessageBox::No);
         exitDialog->button(QMessageBox::Yes)->setText(tr("Exit app"));
         exitDialog->button(QMessageBox::No)->setText(tr("Stay in app"));
@@ -3471,8 +3470,7 @@ void MegaApplication::destroyInfoDialogMenus()
 
 bool MegaApplication::dontAskForExitConfirmation(bool force)
 {
-    auto transfersStats = mTransfersModel->getTransfersCount();
-    return force || !megaApi->isLoggedIn() || transfersStats.pendingTransfers() == 0;
+    return force || !megaApi->isLoggedIn() || mTransfersModel->hasActiveTransfers() == 0;
 }
 
 void MegaApplication::exitApplication()
