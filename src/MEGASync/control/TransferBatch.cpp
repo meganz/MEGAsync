@@ -77,7 +77,7 @@ void BlockingBatch::removeBatch()
 
 void BlockingBatch::cancelTransfer()
 {
-    if (mBatch)
+    if (isValid())
     {
         mBatch->cancel();
         cancelled = true;
@@ -86,7 +86,7 @@ void BlockingBatch::cancelTransfer()
 
 void BlockingBatch::onScanCompleted(const QString& nodePath)
 {
-    if (mBatch)
+    if (isValid())
     {
         mBatch->onScanCompleted(nodePath);
     }
@@ -94,7 +94,7 @@ void BlockingBatch::onScanCompleted(const QString& nodePath)
 
 bool BlockingBatch::isBlockingStageFinished()
 {
-    if (mBatch)
+    if (isValid())
     {
         return mBatch->isEmpty();
     }
@@ -108,7 +108,7 @@ void BlockingBatch::setAsUnblocked()
 
 void BlockingBatch::onTransferFinished(const QString& nodePath)
 {
-    if (mBatch)
+    if (isValid())
     {
         mBatch->onScanCompleted(nodePath);
         if (mBatch->isEmpty())
@@ -140,7 +140,7 @@ bool BlockingBatch::hasNodes() const
 
 std::shared_ptr<mega::MegaCancelToken> BlockingBatch::getCancelToken()
 {
-    if (mBatch)
+    if (isValid())
     {
         return mBatch->getCancelToken();
     }
@@ -149,7 +149,7 @@ std::shared_ptr<mega::MegaCancelToken> BlockingBatch::getCancelToken()
 
 QString BlockingBatch::description()
 {
-    if (mBatch)
+    if (isValid())
     {
         return mBatch->description();
     }
