@@ -46,8 +46,7 @@ public:
     int getStatus();
     bool isSyncable();
     bool isRoot();
-    int insertPosition(const std::unique_ptr<mega::MegaNode> &node);
-    void insertNode(std::unique_ptr<mega::MegaNode> node, int index);
+    void addNode(std::unique_ptr<mega::MegaNode> node);
     void removeNode(std::shared_ptr<mega::MegaNode> node);
     void displayFiles(bool enable);
     void setCameraFolder();
