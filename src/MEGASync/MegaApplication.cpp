@@ -669,7 +669,7 @@ void MegaApplication::initialize()
 
     mTransfersModel = new TransfersModel(nullptr);
 
-    connect(mTransfersModel, &TransfersModel::transfersCountUpdated, this, &MegaApplication::onTransfersModelUpdate);
+    connect(mTransfersModel.data(), &TransfersModel::transfersCountUpdated, this, &MegaApplication::onTransfersModelUpdate);
 }
 
 QString MegaApplication::applicationFilePath()
@@ -1715,10 +1715,10 @@ void MegaApplication::createTransferManagerDialog()
 
         // Signal/slot to notify the tracking of unseen completed transfers of Transfer Manager. If Completed tab is
         // active, tracking is disabled
-        connect(mTransferManager, &TransferManager::userActivity, this, &MegaApplication::registerUserActivity);
+        connect(mTransferManager.data() , &TransferManager::userActivity, this, &MegaApplication::registerUserActivity);
         connect(transferQuota.get(), &TransferQuota::sendState,
-                mTransferManager, &TransferManager::onTransferQuotaStateChanged);
-        connect(mTransferManager, SIGNAL(cancelScanning()), this, SLOT(cancelScanningStage()));
+                mTransferManager.data(), &TransferManager::onTransferQuotaStateChanged);
+        connect(mTransferManager.data(), SIGNAL(cancelScanning()), this, SLOT(cancelScanningStage()));
         if (scanStageController.isInScanningState())
         {
             mTransferManager->enterBlockingState();

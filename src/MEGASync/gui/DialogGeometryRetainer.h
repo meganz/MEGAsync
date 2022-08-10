@@ -9,6 +9,7 @@
 #include <QEvent>
 
 #include <type_traits>
+#include <typeinfo>
 
 class DialogGeometryRetainerBase : public QObject
 {
