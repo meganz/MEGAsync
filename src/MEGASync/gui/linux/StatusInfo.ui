@@ -46,7 +46,7 @@ font-size: 13px;
 border: none;
 }</string>
   </property>
-  <layout class="QHBoxLayout" name="horizontalLayout">
+  <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,1">
    <property name="spacing">
     <number>6</number>
    </property>
@@ -64,16 +64,22 @@ border: none;
    </property>
    <item>
     <widget class="QPushButton" name="bIconState">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
      <property name="minimumSize">
       <size>
-       <width>24</width>
-       <height>24</height>
+       <width>0</width>
+       <height>0</height>
       </size>
      </property>
      <property name="maximumSize">
       <size>
-       <width>24</width>
-       <height>24</height>
+       <width>16777215</width>
+       <height>16777215</height>
       </size>
      </property>
      <property name="mouseTracking">
