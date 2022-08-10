@@ -50,6 +50,7 @@ public:
     QModelIndex index(int row, int column, const QModelIndex & parent = QModelIndex()) const override;
     QModelIndex parent(const QModelIndex & index) const override;
     int rowCount(const QModelIndex & parent = QModelIndex()) const override;
+    bool hasChildren(const QModelIndex &parent = QModelIndex()) const override;
 
     QVariant headerData(int section, Qt::Orientation orientation,
                                     int role = Qt::DisplayRole) const override;
@@ -57,7 +58,7 @@ public:
     void setDisableFolders(bool option);
     void setSyncSetupMode(bool value);
     void showFiles(bool show);
-    QModelIndex insertNode(std::unique_ptr<mega::MegaNode> node, const QModelIndex &parent);
+    void addNode(std::unique_ptr<mega::MegaNode> node, const QModelIndex &parent);
     void removeNode(const QModelIndex &item);
 
     std::shared_ptr<mega::MegaNode> getNode(const QModelIndex &index) const;
