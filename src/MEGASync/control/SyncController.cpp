@@ -236,7 +236,7 @@ QString SyncController::getAreLocalFolderAccessRightsOkMsg(const QString& path, 
     if (syncType == MegaSync::TYPE_TWOWAY)
     {
         QTemporaryFile test (path + QDir::separator());
-        if (!test.open())
+        if (!QDir(path).mkpath(QString::fromLatin1(".")) && !test.open())
         {
             message = tr("You don't have write permissions in this local folder.")
                     + QChar::fromLatin1('\n')

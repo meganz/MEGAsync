@@ -727,27 +727,7 @@ void SetupWizard::on_bLocalFolder_clicked()
 
 #endif
     QDir dir(path);
-    if (!dir.exists())
-    {
-        return;
-    }
-
-    QString warningMessage;
-    auto syncability (SyncController::isLocalFolderAllowedForSync(path, MegaSync::TYPE_TWOWAY, warningMessage));
-    if (syncability != SyncController::CANT_SYNC)
-    {
-        syncability = SyncController::areLocalFolderAccessRightsOk(path, MegaSync::TYPE_TWOWAY, warningMessage);
-    }
-    if (syncability == SyncController::CANT_SYNC)
-    {
-        QMegaMessageBox::warning(nullptr, tr("Warning"), warningMessage, QMessageBox::Ok);
-    }
-    else if (syncability == SyncController::WARN_SYNC
-             && (QMegaMessageBox::warning(nullptr, tr("Warning"), warningMessage
-                                          + QLatin1Char('/')
-                                          + tr("Do you want to continue?"),
-                                          QMessageBox::Yes | QMessageBox::No, QMessageBox::No)
-                 == QMessageBox::Yes))
+    if (dir.mkpath(QString::fromLatin1(".")))
     {
         ui->eLocalFolder->setText(path);
     }
