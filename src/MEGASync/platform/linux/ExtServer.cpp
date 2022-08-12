@@ -10,6 +10,12 @@ using namespace mega;
 using namespace std;
 
 constexpr char ASCII_FILE_SEP = 0x1C;
+constexpr int  BUFSIZE = 1024;
+constexpr char RESPONSE_DEFAULT[] = "9";
+constexpr char RESPONSE_ERROR[]   = "0";
+constexpr char RESPONSE_SYNCED[]  = "1";
+constexpr char RESPONSE_PENDING[] = "2";
+constexpr char RESPONSE_SYNCING[] = "3";
 
 ExtServer::ExtServer(MegaApplication *app): QObject(),
     m_localServer(0)
@@ -92,7 +98,7 @@ void ExtServer::onClientData()
         return;
     }
 
-    static thread_local char buf[1024] = {'\0'};
+    static thread_local char buf[BUFSIZE] = {'\0'};
     qint64 count;
     do
     {
@@ -109,12 +115,6 @@ void ExtServer::onClientData()
     } while (count > 0);
 }
 
-#define BUFSIZE 1024
-#define RESPONSE_DEFAULT    "9"
-#define RESPONSE_ERROR      "0"
-#define RESPONSE_SYNCED     "1"
-#define RESPONSE_PENDING    "2"
-#define RESPONSE_SYNCING    "3"
 // parse incoming request and send response back to client
 const char *ExtServer::GetAnswerToRequest(const char *buf)
 {
@@ -181,9 +181,9 @@ const char *ExtServer::GetAnswerToRequest(const char *buf)
             int state = MegaApi::STATE_NONE;
             string scontent(content);
 
-            // ASCII_FILE_SEP is used to separate the file name and an optional '1'
+            // ASCII_FILE_SEP is used to separate the file name and an optional '1' or '0'
             // which is used to force-get the state (get link for instance)
-            // The overlay icon requests do not have it.
+            // The overlay icon 'P' requests sometimes do not have it (coming from Dolphin for instance).
             size_t possep = scontent.find(ASCII_FILE_SEP);
             bool forceGetState = possep != string::npos
                                  && (possep + 1) < scontent.size()
