@@ -9,6 +9,8 @@
 using namespace mega;
 using namespace std;
 
+constexpr char ASCII_FILE_SEP = 0x1C;
+
 ExtServer::ExtServer(MegaApplication *app): QObject(),
     m_localServer(0)
 {
@@ -90,14 +92,21 @@ void ExtServer::onClientData()
         return;
     }
 
-    char buf[1024];
-    while (client->readLine(buf, sizeof(buf)) > 0) {
-        const char *out = GetAnswerToRequest(buf);
-        if (out) {
-            client->write(out);
-            client->write("\n");
+    static thread_local char buf[1024] = {'\0'};
+    qint64 count;
+    do
+    {
+        count = client->readLine(buf, sizeof(buf));
+        if (count > 0)
+        {
+            const char *out = GetAnswerToRequest(buf);
+            if (out) {
+                client->write(out);
+                client->write("\n");
+            }
+            std::fill_n(buf, count, '\0');
         }
-    }
+    } while (count > 0);
 }
 
 #define BUFSIZE 1024
@@ -171,13 +180,25 @@ const char *ExtServer::GetAnswerToRequest(const char *buf)
         {
             int state = MegaApi::STATE_NONE;
             string scontent(content);
-            size_t possep = scontent.find((char)0x1C);
-            bool forceGetState = (possep != string::npos) && ((possep + 1) < scontent.size()) && scontent.at(possep+1) == '1';
 
-            if (forceGetState || !Preferences::instance()->overlayIconsDisabled() )
+            // ASCII_FILE_SEP is used to separate the file name and an optional '1'
+            // which is used to force-get the state (get link for instance)
+            // The overlay icon requests do not have it.
+            size_t possep = scontent.find(ASCII_FILE_SEP);
+            bool forceGetState = possep != string::npos
+                                 && (possep + 1) < scontent.size()
+                                 && scontent.at(possep + 1) == '1';
+
+            if (forceGetState || !Preferences::instance()->overlayIconsDisabled())
             {
-                string tmpPath = scontent.substr(0,possep);
-                state = ((MegaApplication *)qApp)->getMegaApi()->syncPathState(&tmpPath);
+                if (possep != string::npos)
+                {
+                    scontent.resize(possep);
+                }
+                if (!scontent.empty())
+                {
+                    state = MegaSyncApp->getMegaApi()->syncPathState(&scontent);
+                }
             }
 
             switch(state)
