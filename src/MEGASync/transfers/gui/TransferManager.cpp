@@ -712,9 +712,7 @@ void TransferManager::onTransferQuotaStateChanged(QuotaState transferQuotaState)
         case QuotaState::WARNING:
         default:
         {
-            mUi->pTransferOverQuota->hide();
-            showTransferQuotaBanner(mStorageQuotaState == MegaApi::STORAGE_STATE_PAYWALL
-                                       || mStorageQuotaState == MegaApi::STORAGE_STATE_RED);
+            showTransferQuotaBanner(false);
             break;
         }
     }
