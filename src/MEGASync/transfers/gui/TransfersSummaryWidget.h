@@ -170,8 +170,8 @@ private:
     long long mResetTotalUploads;
     long long mResetTotalDownloads;
 
-    long long mActualTotalUploadsBytes;
-    long long mActualTotalDownloadsBytes;
+    long long mActualCompletedUploadsBytes;
+    long long mActualCompletedDownloadsBytes;
 
     long long mResetTotalUploadsBytes;
     long long mResetTotalDownloadsBytes;
