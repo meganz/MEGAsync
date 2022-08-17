@@ -146,7 +146,7 @@ private:
     QMutex mCacheMutex;
     QMutex mCountersMutex;
     TransfersCount mTransfersCount;
-    std::atomic_int16_t mMaxTransfersToProcess;
+    std::atomic<int16_t> mMaxTransfersToProcess;
 };
 
 
