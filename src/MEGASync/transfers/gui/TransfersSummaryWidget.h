@@ -56,8 +56,8 @@ public:
     void setPaused(bool value);
     void setPauseEnabled(bool value);
 
-    void setPercentUploads(const qreal &value);
-    void setPercentDownloads(const qreal &value);
+    void setPercentUploads(long long completedBytes, long long totalBytes);
+    void setPercentDownloads(long long completedBytes, long long totalBytes);
 
     bool alwaysAnimateOnShow = false;
     bool neverPainted = true;
@@ -87,6 +87,8 @@ private:
     void updateUploads();
     void updateDownloads();
 
+    void resetDownloads();
+    void resetUploads();
 
     void drawEllipse(int x, int y,  int diam, int width, QPainter *painter);
 
@@ -161,6 +163,18 @@ private:
     long long currentUpload;
     long long totalDownloads;
     long long currentDownload;
+
+    long long mActualTotalUploads;
+    long long mActualTotalDownloads;
+
+    long long mResetTotalUploads;
+    long long mResetTotalDownloads;
+
+    long long mActualTotalUploadsBytes;
+    long long mActualTotalDownloadsBytes;
+
+    long long mResetTotalUploadsBytes;
+    long long mResetTotalDownloadsBytes;
 
     QFont fontUploads;
     QFont fontDownloads;

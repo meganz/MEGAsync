@@ -578,20 +578,8 @@ void InfoDialog::updateTransfersCount()
         ui->bTransferManager->setDownloads(transfersCountUpdated.completedDownloads(), transfersCountUpdated.totalDownloads);
         ui->bTransferManager->setUploads(transfersCountUpdated.completedUploads(), transfersCountUpdated.totalUploads);
 
-        double percentUploads(0.0);
-        if(transfersCountUpdated.totalUploadBytes != 0)
-        {
-            percentUploads = static_cast<double>(transfersCountUpdated.completedUploadBytes) / static_cast<double>(transfersCountUpdated.totalUploadBytes);
-        }
-
-        double percentDownloads(0.0);
-        if(transfersCountUpdated.totalDownloadBytes != 0)
-        {
-            percentDownloads = static_cast<double>(transfersCountUpdated.completedDownloadBytes)/ static_cast<double>(transfersCountUpdated.totalDownloadBytes);
-        }
-
-        ui->bTransferManager->setPercentUploads(percentUploads);
-        ui->bTransferManager->setPercentDownloads(percentDownloads);
+        ui->bTransferManager->setPercentUploads(transfersCountUpdated.completedUploadBytes, transfersCountUpdated.totalUploadBytes);
+        ui->bTransferManager->setPercentDownloads(transfersCountUpdated.completedDownloadBytes, transfersCountUpdated.totalDownloadBytes);
     }
 }
 
