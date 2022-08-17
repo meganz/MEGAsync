@@ -389,7 +389,7 @@ void TransferThread::resetCompletedUploads(QList<QExplicitlySharedDataPointer<Tr
         if(mTransfersCount.totalUploads > 0)
         {
             mTransfersCount.totalUploads--;
-            mTransfersCount.completedUploadBytes -= transfer->mTransferredBytes;
+            mTransfersCount.completedUploadBytes -= transfer->mTotalSize;
             mTransfersCount.totalUploadBytes -= transfer->mTotalSize;
             mTransfersCount.transfersByType[transfer->mFileType]--;
             mTransfersCount.transfersFinishedByType[transfer->mFileType]--;
@@ -412,7 +412,7 @@ void TransferThread::resetCompletedDownloads(QList<QExplicitlySharedDataPointer<
         if(mTransfersCount.totalDownloads > 0)
         {
             mTransfersCount.totalDownloads--;
-            mTransfersCount.completedDownloadBytes -= transfer->mTransferredBytes;
+            mTransfersCount.completedDownloadBytes -= transfer->mTotalSize;
             mTransfersCount.totalDownloadBytes -= transfer->mTotalSize;
             mTransfersCount.transfersByType[transfer->mFileType]--;
             mTransfersCount.transfersFinishedByType[transfer->mFileType]--;
