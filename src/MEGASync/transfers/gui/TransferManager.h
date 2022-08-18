@@ -105,6 +105,7 @@ private:
 
     int mStorageQuotaState;
     QuotaState mTransferQuotaState;
+    bool hasOverQuotaErrors();
 
     ButtonIconManager mButtonIconManager;
 
