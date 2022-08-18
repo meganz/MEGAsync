@@ -98,26 +98,11 @@ private:
     bool mKeyNavigation;
 
     TransfersWidget* mParentTransferWidget;
-
-    QMenu* mContextMenu;
-    QAction* mPauseAction;
-    QAction* mResumeAction;
-    QAction* mMoveToTopAction;
-    QAction* mMoveUpAction;
-    QAction* mMoveDownAction;
-    QAction* mMoveToBottomAction;
-    QAction* mCancelAction;
-    QAction* mOpenInMEGAAction;
-    QAction* mGetLinkAction;
-    QAction* mOpenItemAction;
-    QAction* mShowInFolderAction;
-    QAction* mClearAction;
-
     QFutureWatcher<bool> mOpenUrlWatcher;
 
-    void createContextMenu();
-    void updateContextMenu(bool enablePause, bool enableResume, bool enableMove, bool enableClear,
-                           bool enableCancel, bool isTopIndex, bool isBottomIndex);
+    QMenu *createContextMenu();
+    void addSeparatorToContextMenu(bool& addSeparator, QMenu* contextMenu);
+
     void clearAllTransfers();
     void cancelAllTransfers();
 
