@@ -1927,7 +1927,6 @@ bool TransfersModel::moveRows(const QModelIndex &sourceParent, const QList<int>&
                 for (auto tag : tagsToMove)
                 {
                     auto d  = getTransfer(getRowByTransferTag(tag));
-                    auto tag(d->mTag);
 
                     if(destinationChild < 0)
                     {
