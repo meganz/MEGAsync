@@ -169,7 +169,6 @@ QModelIndex MegaItemModel::index(int row, int column, const QModelIndex &parent)
             auto children = std::shared_ptr<MegaNodeList>(mMegaApi->getChildren(item->getNode().get()));
             item->setChildren(children);
         }
-
         return createIndex(row, column, item->getChild(row));
     }
     else
@@ -209,8 +208,26 @@ int MegaItemModel::rowCount(const QModelIndex &parent) const
         }
         return item->getNumChildren();
     }
-
     return mRootItems.size();
+}
+
+bool MegaItemModel::hasChildren(const QModelIndex &parent) const
+{
+    /////FROM MODEL TESTER:
+    // Column 0                | Column 1    |
+    // QModelIndex()           |             |
+    //    \- topIndex          | topIndex1   |
+    //         \- childIndex   | childIndex1 |
+
+    // Common error test #3, the second column should NOT have the same children
+    // as the first column in a row.
+    // Usually the second column shouldn't have children.
+
+    if(parent.isValid() && parent.column() != NODE)
+    {
+        return false;
+    }
+    return QAbstractItemModel::hasChildren(parent);
 }
 
 QVariant MegaItemModel::headerData(int section, Qt::Orientation orientation, int role) const
@@ -293,26 +310,13 @@ void MegaItemModel::showFiles(bool show)
     }
 }
 
-QModelIndex MegaItemModel::insertNode(std::unique_ptr<MegaNode> node, const QModelIndex &parent)
+void MegaItemModel::addNode(std::unique_ptr<MegaNode> node, const QModelIndex &parent)
 {
-    if(!parent.isValid())
-    {
-        int index = insertPosition(node);
-        MegaItem *item = new MegaItem(move(node));
-        beginInsertRows(QModelIndex(), index, index);
-        mRootItems.insert(index, item);
-        endInsertRows();
-
-        return this->index(index, 0, QModelIndex());
-    }
-
     MegaItem *parentItem = static_cast<MegaItem*>(parent.internalPointer());
-    int index = parentItem->insertPosition(node);
-    beginInsertRows(parent, index, index);
-    parentItem->insertNode(move(node), index);
+    int numchildren = parentItem->getNumChildren();
+    beginInsertRows(parent, numchildren, numchildren);
+    parentItem->addNode(move(node));
     endInsertRows();
-
-    return this->index(index, 0, parent);
 }
 
 void MegaItemModel::removeNode(const QModelIndex &item)

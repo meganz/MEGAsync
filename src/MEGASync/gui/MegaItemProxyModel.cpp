@@ -118,14 +118,12 @@ std::shared_ptr<mega::MegaNode> MegaItemProxyModel::getNode(const QModelIndex &i
     return item->getNode();
 }
 
-QModelIndex MegaItemProxyModel::insertNode(std::unique_ptr<mega::MegaNode> node, const QModelIndex &parent)
+void MegaItemProxyModel::addNode(std::unique_ptr<mega::MegaNode> node, const QModelIndex &parent)
 {
     if(MegaItemModel* megaModel = getMegaModel())
     {
-        QModelIndex source_idx = megaModel->insertNode(move(node), mapToSource(parent));
-        return mapFromSource(source_idx);
+        megaModel->addNode(move(node), mapToSource(parent));
     }
-    return QModelIndex();
 }
 
 void MegaItemProxyModel::removeNode(const QModelIndex& item)

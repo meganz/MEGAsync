@@ -312,32 +312,9 @@ bool MegaItem::isSyncable()
             && mStatus != BACKUP;
 }
 
-int MegaItem::insertPosition(const std::unique_ptr<MegaNode>& node)
+void MegaItem::addNode(std::unique_ptr<MegaNode>node)
 {
-    int type = node->getType();
-
-    int i;
-    for (i = 0; i < mChildItems.size(); i++)
-    {
-        std::shared_ptr<MegaNode> n = mChildItems.at(i)->getNode();
-        int nodeType = n->getType();
-        if (type < nodeType)
-        {
-            continue;
-        }
-
-        if (qstricmp(node->getName(), n->getName()) <= 0)
-        {
-            break;
-        }
-    }
-
-    return i;
-}
-
-void MegaItem::insertNode(std::unique_ptr<MegaNode>node, int index)
-{
-    mChildItems.insert(index, new MegaItem(move(node), this, mShowFiles));
+    mChildItems.append(new MegaItem(move(node), this, mShowFiles));
 }
 
 void MegaItem::removeNode(std::shared_ptr<MegaNode> node)

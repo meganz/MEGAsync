@@ -41,7 +41,7 @@ public:
 
     mega::MegaHandle getHandle(const QModelIndex &index);
     std::shared_ptr<mega::MegaNode> getNode(const QModelIndex& index);
-    QModelIndex insertNode(std::unique_ptr<mega::MegaNode> node, const QModelIndex& parent);
+    void addNode(std::unique_ptr<mega::MegaNode> node, const QModelIndex& parent);
     QModelIndex getIndexFromSource(const QModelIndex& index);
     QModelIndex getIndexFromHandle(const mega::MegaHandle& handle);
     QModelIndex getIndexFromNode(const std::shared_ptr<mega::MegaNode> node);

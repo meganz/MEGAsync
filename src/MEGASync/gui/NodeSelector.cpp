@@ -448,7 +448,6 @@ void NodeSelector::onbNewFolderClicked()
 
     auto result = dialog.show();
     auto newNode = dialog.getNewNode();
-
     //IF the dialog return a node, there are two scenarios:
     //1) The dialog has been accepted, a new folder has been created
     //2) The dialog has been rejected because the folder already exists. If so, select the existing folder
@@ -463,8 +462,7 @@ void NodeSelector::onbNewFolderClicked()
             {
                 idx = mProxyModel->getIndexFromNode(MegaSyncApp->getRootNode());
             }
-
-            mProxyModel->insertNode(std::move(newNode), idx);
+            mProxyModel->addNode(std::move(newNode), idx);
         }
 
         setSelectedNodeHandle(handle);
@@ -834,12 +832,12 @@ NodeSelector::TabItem NodeSelector::getSelectedTab()
 
 void NodeSelector::setRootIndex(const QModelIndex &proxy_idx)
 {
-    //In case the idx is coming from a potentially hidden column, we always take the STATUS column
-    //If you set a hidden column, the view does not accept it even if the column is visible at this point
-    auto status_column_idx = proxy_idx.sibling(proxy_idx.row(), MegaItemModel::COLUMN::STATUS);
+    //In case the idx is coming from a potentially hidden column, we always take the NODE column
+    //As it is the only one that have childrens
+    auto node_column_idx = proxy_idx.sibling(proxy_idx.row(), MegaItemModel::COLUMN::NODE);
 
-    ui->tMegaFolders->setRootIndex(status_column_idx);
-    if(!status_column_idx.isValid())
+    ui->tMegaFolders->setRootIndex(node_column_idx);
+    if(!node_column_idx.isValid())
     {
         switch(getSelectedTab())
         {
@@ -874,7 +872,7 @@ void NodeSelector::setRootIndex(const QModelIndex &proxy_idx)
         return;
     }
 
-    auto source_idx = mProxyModel->getIndexFromSource(status_column_idx);
+    auto source_idx = mProxyModel->getIndexFromSource(node_column_idx);
     if(!source_idx.isValid())
     {
         ui->lOwnerIcon->setPixmap(QPixmap());
@@ -883,7 +881,8 @@ void NodeSelector::setRootIndex(const QModelIndex &proxy_idx)
     }
 
     //Taking the sync icon
-    QIcon syncIcon = qvariant_cast<QIcon>(source_idx.data(Qt::DecorationRole));
+    auto status_column_idx = proxy_idx.sibling(proxy_idx.row(), MegaItemModel::COLUMN::STATUS);
+    QIcon syncIcon = qvariant_cast<QIcon>(status_column_idx.data(Qt::DecorationRole));
 
     MegaItem *item = static_cast<MegaItem*>(source_idx.internalPointer());
     if(!item)
