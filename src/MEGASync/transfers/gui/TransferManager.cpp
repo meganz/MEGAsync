@@ -534,6 +534,7 @@ void TransferManager::refreshStateStats()
         else if(failedNumber != 0)
         {
             leftFooterWidget = mUi->pSomeIssues;
+            mUi->bSomeIssues->setText(tr("Transfer failed", "", failedNumber));
         }
         else if(processedNumber != 0)
         {

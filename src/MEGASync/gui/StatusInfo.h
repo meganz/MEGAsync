@@ -29,6 +29,8 @@ public:
     ~StatusInfo();
 
     void setState(TRANSFERS_STATES state);
+    void update();
+
     TRANSFERS_STATES getState();
     void setOverQuotaState(bool oq);
 
@@ -41,6 +43,8 @@ private slots:
     void scanningAnimationStep();
 
 private:
+    void setFailedText();
+
     Ui::StatusInfo *ui;
     TRANSFERS_STATES mState;
     bool mIsOverQuota;

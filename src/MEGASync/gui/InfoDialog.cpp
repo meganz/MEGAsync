@@ -605,6 +605,8 @@ void InfoDialog::onTransfersStateChanged()
         {
             mResetTransferSummaryWidget.stop();
         }
+
+        ui->wStatus->update();
     }
 }
 
@@ -822,7 +824,7 @@ bool InfoDialog::checkFailedState()
 {
     auto isFailed(false);
 
-    if(app->getTransfersModel() && app->getTransfersModel()->hasFailedTransfers())
+    if(app->getTransfersModel() && app->getTransfersModel()->failedTransfers())
     {
         if(mState != StatusInfo::TRANSFERS_STATES::STATE_FAILED)
         {

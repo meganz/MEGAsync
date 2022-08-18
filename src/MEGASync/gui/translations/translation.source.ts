@@ -3103,14 +3103,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         </translation>
     </message>
     <message numerus="yes">
-        <source>Retry transfer?</source>
-        <translatorcomment>Messagebox text to confirm if the user wants to retry all transfers</translatorcomment>
-        <translation>
-            <numerusform>Retry transfer?</numerusform>
-            <numerusform>Retry transfers?</numerusform>
-        </translation>
-    </message>
-    <message numerus="yes">
         <source>Clear transfer</source>
         <translatorcomment>Messagebox text to confirm if the user wants to clear the completed transfers</translatorcomment>
         <translation>
@@ -5709,11 +5701,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>Up to date</translation>
     </message>
     <message>
-        <source>Some issues occurred</source>
-        <translatorcomment>Message shown when there are some failed transfers</translatorcomment>
-        <translation>Some issues occurred</translation>
-    </message>
-    <message>
         <source>Scanning</source>
         <translatorcomment>State of the Transfers: Message which shows that a folder is being scanned</translatorcomment>
         <translation>Scanning</translation>
@@ -5807,6 +5794,14 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
         <source>More about transfer quota</source>
         <translatorcomment>Link button to send the user to the transfer quota information blog website</translatorcomment>
         <translation>More about transfer quota</translation>
+    </message>
+    <message numerus="yes">
+        <source>Transfer failed</source>
+		<translatorcomment>Message shown when there are some failed transfers</translatorcomment>
+        <translation type="unfinished">
+            <numerusform>Transfer failed</numerusform>
+            <numerusform>Some transfers failed</numerusform>
+        </translation>
     </message>
 </context>
 <context>

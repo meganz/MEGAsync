@@ -11,12 +11,6 @@
 
 using namespace mega;
 
-//Static messages for messagebox
-QString MegaTransferView::retryAskActionText(int count)
-{
-    return tr("Retry transfer?" , "", count);
-}
-
 QString MegaTransferView::cancelAskActionText(int count)
 {
     return cancelActionText(count) + QString::fromLatin1("?");
@@ -381,20 +375,11 @@ int MegaTransferView::getVerticalScrollBarWidth() const
 
 void MegaTransferView::onRetryVisibleTransfers()
 {
-    QPointer<MegaTransferView> dialog = QPointer<MegaTransferView>(this);
+    QModelIndexList indexes = getTransfers(true, TransferData::TRANSFER_FAILED);
 
-    if (QMegaMessageBox::warning(this, QString::fromUtf8("MEGAsync"),
-                                 retryAskActionText(model()->rowCount()),
-                                 QMessageBox::Yes | QMessageBox::No, QMessageBox::No)
-            == QMessageBox::Yes
-            && dialog)
-    {
-        QModelIndexList indexes = getTransfers(true, TransferData::TRANSFER_FAILED);
-
-        auto proxy (qobject_cast<QSortFilterProxyModel*>(model()));
-        auto sourceModel(qobject_cast<TransfersModel*>(proxy->sourceModel()));
-        sourceModel->retryTransfers(indexes);
-    }
+    auto proxy (qobject_cast<QSortFilterProxyModel*>(model()));
+    auto sourceModel(qobject_cast<TransfersModel*>(proxy->sourceModel()));
+    sourceModel->retryTransfers(indexes);
 }
 
 void MegaTransferView::onCancelClearSelection(bool isClear)

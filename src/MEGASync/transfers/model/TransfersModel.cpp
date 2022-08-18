@@ -1086,9 +1086,9 @@ void TransfersModel::openFolderByTag(TransferTag tag)
     }
 }
 
-bool TransfersModel::hasFailedTransfers()
+long long TransfersModel::failedTransfers()
 {
-    return mTransfersCount.failedDownloads != 0 || mTransfersCount.failedUploads != 0;
+    return mTransfersCount.totalFailedTransfers();
 }
 
 void TransfersModel::cancelAllTransfers(QWidget* canceledFrom)

@@ -1,6 +1,7 @@
 #include "StatusInfo.h"
 #include "ui_StatusInfo.h"
 #include "Utilities.h"
+#include <MegaApplication.h>
 
 StatusInfo::StatusInfo(QWidget *parent) :
     QWidget(parent),
@@ -126,15 +127,27 @@ void StatusInfo::setState(TRANSFERS_STATES state)
                 mScanningTimer.stop();
             }
 
-            const QString statusText{QCoreApplication::translate("TransferManager","Some issues occurred")};
-            ui->lStatusDesc->setToolTip(statusText);
-            ui->lStatusDesc->setText(statusText);
+            setFailedText();
             ui->bIconState->setIcon(Utilities::getCachedPixmap(QString::fromUtf8(":/images/transfer_manager/sidebar/cancel_all_ico_default.png")));
             ui->bIconState->setIconSize(QSize(24, 24));
             break;
         }
         default:
             break;
+    }
+}
+
+void StatusInfo::update()
+{
+    switch (this->mState)
+    {
+    case TRANSFERS_STATES::STATE_FAILED:
+    {
+        setFailedText();
+        break;
+    }
+    default:
+        break;
     }
 }
 
@@ -161,6 +174,15 @@ void StatusInfo::scanningAnimationStep()
 {
     ui->bIconState->setIcon(scanningIcon(mScanningAnimationIndex));
     ui->bIconState->setIconSize(QSize(24, 24));
+}
+
+void StatusInfo::setFailedText()
+{
+    long long transfersFailed(MegaSyncApp->getTransfersModel() ? MegaSyncApp->getTransfersModel()->failedTransfers() : 0);
+
+    const QString statusText{QCoreApplication::translate("TransferManager","Transfer failed", "", transfersFailed)};
+    ui->lStatusDesc->setToolTip(statusText);
+    ui->lStatusDesc->setText(statusText);
 }
 
 void StatusInfo::changeEvent(QEvent *event)
