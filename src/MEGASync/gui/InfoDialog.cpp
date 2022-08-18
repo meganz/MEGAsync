@@ -612,7 +612,7 @@ void InfoDialog::onShowInFolderFinished(bool state)
 {
     if(!state)
     {
-        QMegaMessageBox::warning(nullptr, tr("Error"), tr("Error opening folder"), QMessageBox::Ok);
+        QMegaMessageBox::warning(nullptr, tr("Error"), tr("Folder can't be opened. Check that the folder in your local drive hasn't been deleted or moved."), QMessageBox::Ok);
     }
 }
 

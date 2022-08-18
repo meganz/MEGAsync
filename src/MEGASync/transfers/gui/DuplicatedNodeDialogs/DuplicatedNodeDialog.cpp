@@ -70,7 +70,7 @@ void DuplicatedNodeDialog::setConflictItems(int count)
 {
     if(count > 1)
     {
-        QString checkBoxText(tr("Apply this option on the next %1 conflict", "", count).arg(count));
+        QString checkBoxText(tr("Apply to all %1 duplicates", "", count).arg(count));
         ui->cbApplyToAll->setText(checkBoxText);
         ui->cbApplyToAll->show();
     }

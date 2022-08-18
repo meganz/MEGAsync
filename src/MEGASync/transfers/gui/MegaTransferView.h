@@ -43,7 +43,6 @@ public:
     SelectedIndexesInfo getSelectedCancelOrClearInfo();
 
     //Static messages for messageboxes
-    static QString retryAskActionText(int count);
     static QString cancelAskActionText(int count);
     static QString clearAskActionText(int count);
     static QString clearAndCancelAskActionText(int count);

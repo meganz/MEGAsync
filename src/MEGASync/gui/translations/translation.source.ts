@@ -1084,14 +1084,6 @@ In some cases they may contain details about your data, such as file or folder n
 </context>
 <context>
     <name>DuplicatedNodeDialog</name>
-    <message numerus="yes">
-        <source>Apply this option on the next %1 conflict</source>
-        <translatorcomment>Checkbox text to apply the action to all the following conflicts. %1 is the number of conflicts</translatorcomment>
-        <translation>
-            <numerusform>Apply this option on the next %1 conflict</numerusform>
-            <numerusform>Apply this option on the next %1 conflicts</numerusform>
-        </translation>
-    </message>
     <message>
         <source>A folder named [A] already exists at this destination</source>
         <translatorcomment>Dialog text shown when a folder with the same name has been found on the cloud. [A] folder name</translatorcomment>
@@ -1146,6 +1138,14 @@ In some cases they may contain details about your data, such as file or folder n
         <source>File already exists</source>
         <translatorcomment>Dialog title when a file with the same name has been found on the cloud</translatorcomment>
         <translation>File already exists</translation>
+    </message>
+    <message numerus="yes">
+        <source>Apply to all %1 duplicates</source>
+        <translatorcomment>Checkbox text to apply the action to all the following conflicts. %1 is the number of conflicts</translatorcomment>
+        <translation>
+            <numerusform>Apply to the other duplicate</numerusform>
+            <numerusform>Apply to all %1 duplicates</numerusform>
+        </translation>
     </message>
 </context>
 <context>
@@ -1813,9 +1813,9 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation>Error</translation>
     </message>
     <message>
-        <source>Error opening folder</source>
+        <source>Folder can&apos;t be opened. Check that the folder in your local drive hasn&apos;t been deleted or moved.</source>
         <translatorcomment>Warning message text to let the user know that the local folder could not be opened</translatorcomment>
-        <translation>Error opening folder</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2550,7 +2550,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message numerus="yes">
         <source>There is an active transfer. Want to exit?</source>
         <translatorcomment>Messagebox text to let the user know that there are active transfers when closing the app. The user will be able to exit and pause them, or stop the exit action.</translatorcomment>
-        <translation type="unfinished">
+        <translation>
             <numerusform>There is an active transfer. Want to exit?</numerusform>
             <numerusform>There are active transfers. Want to exit?</numerusform>
         </translation>
@@ -3722,17 +3722,15 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Full redesign of remote file picker.
-- Fixed translation issues.
-- Other minor UI fixes and adjustments.
-- Fixed detected crashes on Windows, Linux and macOS.
+        <source>- There is now a new transfer manager.
+- Transfer management was enhanced and reliability of downloads and uploads improved. 
+- Detected crashes on Windows, Linux, and macOS fixed.
+- Translation issues fixed.
+- Performance improved.
+- UI fixed and adjusted.
 </source>
-        <translatorcomment>Changelog for version 4.6.7</translatorcomment>
-        <translation>- Full redesign of remote file picker.
-- Fixed translation issues.
-- Other minor UI fixes and adjustments.
-- Fixed detected crashes on Windows, Linux and macOS.
-</translation>
+        <translatorcomment>Changelog for version v4.7.0</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4236,14 +4234,12 @@ Do you want to delete it anyway?</translation>
 <context>
     <name>RenameLocalNodeDialog</name>
     <message>
-        <source>Error renaming file to %1</source>
-        <translatorcomment>Error message shown when a file renaming has failed. %1 is the name of the file</translatorcomment>
-        <translation>Error renaming file to %1</translation>
+        <source>File can’t be renamed to %1</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Error renaming folder to %1</source>
-        <translatorcomment>Error message shown when a folder renaming has failed. %1 is the name of the folder</translatorcomment>
-        <translation>Error renaming folder to %1</translation>
+        <source>Folder can’t be renamed to %1</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

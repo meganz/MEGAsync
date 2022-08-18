@@ -19,12 +19,12 @@ const int Preferences::BUILD_ID = 0;
 const QString Preferences::VERSION_STRING = QString::fromAscii("4.7.0");
 QString Preferences::SDK_ID = QString::fromAscii("abfeb3d");
 const QString Preferences::CHANGELOG = QString::fromUtf8(QT_TR_NOOP(
-"- New transfer manager.\n"
-"- Enhancements to transfer management and improved reliability of downloads and uploads.\n"
-"- Fixed translation issues.\n"
-"- Performance improvements.\n"
-"- Other minor UI fixes and adjustments.\n"
-"- Fixed detected crashes on Windows, Linux and macOS.\n"));
+"- There is now a new transfer manager.\n"
+"- Transfer management was enhanced and reliability of downloads and uploads improved. \n"
+"- Detected crashes on Windows, Linux, and macOS fixed.\n"
+"- Translation issues fixed.\n"
+"- Performance improved.\n"
+"- UI fixed and adjusted.\n"));
 
 const QString Preferences::TRANSLATION_FOLDER = QString::fromAscii("://translations/");
 const QString Preferences::TRANSLATION_PREFIX = QString::fromAscii("MEGASyncStrings_");
