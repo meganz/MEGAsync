@@ -763,7 +763,7 @@ void TransfersModel::processUpdateTransfers()
 {
     for (auto it = mTransfersToProcess.updateTransfersByTag.begin(); it != mTransfersToProcess.updateTransfersByTag.end();)
     {   
-        auto row = mTagByOrder.value((*it)->mTag).row();
+        auto row(getRowByTransferTag((*it)->mTag));
         auto d  = getTransfer(row);
         if(d && !d->ignoreUpdate((*it)->getState()))
         {
@@ -783,7 +783,7 @@ void TransfersModel::processFailedTransfers()
     {
         TransferTag tag ((*it)->mTag);
 
-        auto row = mTagByOrder.value(tag).row();
+        auto row(getRowByTransferTag((*it)->mTag));
         auto d  = getTransfer(row);
         if(d)
         {
@@ -824,7 +824,7 @@ void TransfersModel::processCancelTransfers()
 
         foreach(auto tag, mRowsToCancel)
         {
-            auto row = mTagByOrder.value(tag).row();
+            auto row = getRowByTransferTag(tag);
             if(row >= 0)
             {
                 indexesToCancel.append(index(row,0, DEFAULT_IDX));
@@ -848,7 +848,7 @@ void TransfersModel::processSyncFailedTransfers()
 
         foreach(auto tag, mFailedTransferToClear)
         {
-            auto row = mTagByOrder.value(tag).row();
+            auto row = getRowByTransferTag(tag);
             if(row >= 0)
             {
                 indexesToClear.append(index(row,0, DEFAULT_IDX));
@@ -1078,8 +1078,7 @@ void TransfersModel::retryTransfers(QModelIndexList indexes)
 
 void TransfersModel::openFolderByTag(TransferTag tag)
 {
-    auto row = mTagByOrder.value(tag).row();
-    auto indexToOpen = index(row, 0);
+    auto indexToOpen = index(getRowByTransferTag(tag), 0);
     if(indexToOpen.isValid())
     {
         openFolderByIndex(indexToOpen);
@@ -1525,7 +1524,7 @@ int TransfersModel::performPauseResumeAllTransfers(int activeTransfers, bool use
 
 void TransfersModel::pauseResumeTransferByTag(TransferTag tag, bool pauseState)
 {
-    auto row = mTagByOrder.value(tag).row();
+    auto row(getRowByTransferTag(tag));
     auto d  = getTransfer(row);
 
     if(d)
@@ -1664,7 +1663,12 @@ void TransfersModel::addTransfer(QExplicitlySharedDataPointer<TransferData> tran
 
 QExplicitlySharedDataPointer<TransferData> TransfersModel::getTransferByTag(int tag) const
 {
-    return getTransfer(mTagByOrder.value(tag).row());
+    return getTransfer(getRowByTransferTag(tag));
+}
+
+int TransfersModel::getRowByTransferTag(int tag) const
+{
+    return mTagByOrder.value(tag).row();
 }
 
 void TransfersModel::removeTransfer(int row)
@@ -1675,8 +1679,7 @@ void TransfersModel::removeTransfer(int row)
 
 void TransfersModel::sendDataChangedByTag(int tag)
 {
-    auto row = mTagByOrder.value(tag).row();
-    sendDataChanged(row);
+    sendDataChanged(getRowByTransferTag(tag));
 }
 
 void TransfersModel::sendDataChanged(int row)
@@ -1880,61 +1883,78 @@ bool TransfersModel::removeRows(int row, int count, const QModelIndex& parent)
     }
 }
 
-bool TransfersModel::moveRows(const QModelIndex &sourceParent, int sourceRow, int count,
+bool TransfersModel::moveRows(const QModelIndex &sourceParent, const QList<int>& rows,
                               const QModelIndex &destinationParent, int destinationChild)
 {
     bool result(false);
 
-    //TODO MOVE TO TOP THE SECOND ITEM
-    int lastRow (sourceRow + count - 1);
-
-    if (sourceParent == destinationParent
-            && (destinationChild < sourceRow || destinationChild > lastRow))
+    if(!rows.isEmpty())
     {
-        // To keep order, do from first to last if destination is before first,
-        // and from last to first if destination is after last.
-        bool ascending (destinationChild < sourceRow ? false : true);
+        TransferTag tagMoved(-1);
 
-        QList<TransferTag> tagsToMove;
-
-        auto rows (rowCount(DEFAULT_IDX));
-
-        QMutexLocker lock(&mModelMutex);
-
-        for (auto row (sourceRow); row <= lastRow; ++row)
+        foreach(auto sourceRow, rows)
         {
-            if (ascending)
+            //TODO MOVE TO TOP THE SECOND ITEM
+            int lastRow (sourceRow);
+
+            if (sourceParent == destinationParent
+                    && (destinationChild < sourceRow || destinationChild > lastRow))
             {
-                tagsToMove.push_back(getTransfer(row)->mTag);
-            }
-            else
-            {
-                tagsToMove.push_front(getTransfer(row)->mTag);
+                // To keep order, do from first to last if destination is before first,
+                // and from last to first if destination is after last.
+                bool ascending (destinationChild < sourceRow ? false : true);
+
+                QList<TransferTag> tagsToMove;
+
+                auto rows (rowCount(DEFAULT_IDX));
+
+                QMutexLocker lock(&mModelMutex);
+
+                for (auto row (sourceRow); row <= lastRow; ++row)
+                {
+                    auto tag(getTransfer(row)->mTag);
+
+                    if (ascending)
+                    {
+                        tagsToMove.push_back(tag);
+                    }
+                    else
+                    {
+                        tagsToMove.push_front(tag);
+                    }
+                }
+
+                for (auto tag : tagsToMove)
+                {
+                    auto d  = getTransfer(getRowByTransferTag(tag));
+                    auto tag(d->mTag);
+
+                    if(destinationChild < 0)
+                    {
+                        mMegaApi->moveTransferToFirstByTag(tag);
+                    }
+                    else if (destinationChild == rows)
+                    {
+                        mMegaApi->moveTransferToLastByTag(tag);
+                    }
+                    else
+                    {
+                        // Get target
+                        auto target (getTransfer(destinationChild));
+
+                        mMegaApi->moveTransferBeforeByTag(tag, target->mTag);
+                    }
+
+                    if(tagMoved < 0)
+                    {
+                        emit rowsAboutToBeMoved(tag);
+                        tagMoved = tag;
+                    }
+                }
+
+                result = true;
             }
         }
-
-        for (auto tag : tagsToMove)
-        {
-            auto row = mTagByOrder.value(tag).row();
-            auto d  = getTransfer(row);
-            if(destinationChild < 0)
-            {
-                mMegaApi->moveTransferToFirstByTag(d->mTag);
-            }
-            else if (destinationChild == rows)
-            {
-                mMegaApi->moveTransferToLastByTag(d->mTag);
-            }
-            else
-            {
-                // Get target
-                auto target (getTransfer(destinationChild));
-
-                mMegaApi->moveTransferBeforeByTag(d->mTag, target->mTag);
-            }
-        }
-
-        result = true;
     }
 
     return result;
@@ -2027,7 +2047,7 @@ bool TransfersModel::dropMimeData(const QMimeData* data, Qt::DropAction action, 
         QList<int> rows;
         for (auto tag : qAsConst(tags))
         {
-            rows.push_back(mTagByOrder.value(tag).row());
+            rows.push_back(getRowByTransferTag(tag));
         }
 
         if (destRow == 0)
@@ -2039,10 +2059,7 @@ bool TransfersModel::dropMimeData(const QMimeData* data, Qt::DropAction action, 
             std::sort(rows.begin(), rows.end());
         }
 
-        for (auto row : qAsConst(rows))
-        {
-            moveRows(parent, row, 1, parent, destRow);
-        }
+        moveRows(parent, rows, parent, destRow);
     }
 
     // Return false to avoid row deletion...dirty!

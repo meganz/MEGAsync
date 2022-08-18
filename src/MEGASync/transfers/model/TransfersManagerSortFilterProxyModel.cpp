@@ -58,6 +58,11 @@ void TransfersManagerSortFilterProxyModel::sort(int sortCriterion, Qt::SortOrder
     invalidateModel();
 }
 
+int TransfersManagerSortFilterProxyModel::getSortCriterion() const
+{
+    return static_cast<int>(mSortCriterion);
+}
+
 void TransfersManagerSortFilterProxyModel::setSourceModel(QAbstractItemModel *sourceModel)
 {
     connect(sourceModel, &QAbstractItemModel::rowsAboutToBeRemoved,
@@ -546,7 +551,8 @@ bool TransfersManagerSortFilterProxyModel::moveRows(const QModelIndex &proxyPare
     int row(proxyRow);
     auto totalRows(rowCount());
 
-    auto sourceTotalRows(sourceModel()->rowCount());
+    auto sourModel = dynamic_cast<TransfersModel*>(sourceModel());
+    auto sourceTotalRows(sourModel->rowCount());
 
     while (moveOk && row < (proxyRow+count))
     {
@@ -560,7 +566,8 @@ bool TransfersManagerSortFilterProxyModel::moveRows(const QModelIndex &proxyPare
         {
             destRow = mapToSource(index(destinationChild, 0, destinationParent)).row();
         }
-        moveOk = sourceModel()->moveRows(sourceIndex.parent(), sourceIndex.row(), 1,
+
+        moveOk = sourModel->moveRows(sourceIndex.parent(), QList<int>() << sourceIndex.row(),
                                          sourceIndex.parent(), destRow);
         row++;
     }

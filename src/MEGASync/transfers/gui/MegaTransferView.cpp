@@ -831,6 +831,9 @@ void MegaTransferView::moveToTopClicked()
     auto indexes = selectionModel()->selectedRows();
     if(!indexes.isEmpty())
     {
+        auto proxy(qobject_cast<QSortFilterProxyModel*>(model()));
+        auto sourceModel(qobject_cast<TransfersModel*>(proxy->sourceModel()));
+
         // Sort to keep items in the same order
         std::sort(indexes.begin(), indexes.end(),[](QModelIndex check1, QModelIndex check2){
            return check1.row() < check2.row();
@@ -843,18 +846,22 @@ void MegaTransferView::moveToTopClicked()
             return;
         }
 
-        auto rowTarget = -1;
+        auto proxyTargetIndex = proxy->index(-1,0);
+        auto sourceTargetIndex = proxy->mapToSource(proxyTargetIndex);
+        auto rowTarget = sourceTargetIndex.row();
 
         for (int item = 0; item < indexes.size(); ++item)
         {
             auto index = indexes.at(item);
+            auto sourceIndex = proxy->mapToSource(index);
 
             if(item == 1)
             {
-                rowTarget = indexes.at(item-1).row();
+                sourceTargetIndex = proxy->mapToSource(indexes.at(item-1));
+                rowTarget = sourceTargetIndex.row();
             }
 
-            model()->moveRows(QModelIndex(), index.row(), 1, QModelIndex(), rowTarget);
+            sourceModel->moveRows(QModelIndex(), QList<int>() << sourceIndex.row(), QModelIndex(), rowTarget);
         }
     }
 
@@ -866,6 +873,9 @@ void MegaTransferView::moveUpClicked()
     auto indexes = selectionModel()->selectedRows();
     if(!indexes.isEmpty())
     {
+        auto proxy(qobject_cast<QSortFilterProxyModel*>(model()));
+        auto sourceModel(qobject_cast<TransfersModel*>(proxy->sourceModel()));
+
         // Sort to keep items in the same order
         std::sort(indexes.begin(), indexes.end(),[](QModelIndex check1, QModelIndex check2){
            return check1.row() < check2.row();
@@ -878,22 +888,28 @@ void MegaTransferView::moveUpClicked()
             return;
         }
 
-        auto rowTarget = indexes.first().row() - 1;
+        auto proxyTargetIndex = proxy->index(indexes.first().row() - 1,0);
+        auto sourceTargetIndex = proxy->mapToSource(proxyTargetIndex);
+        auto rowTarget = sourceTargetIndex.row();
 
         for (int item = 0; item < indexes.size(); ++item)
         {
             auto index = indexes.at(item);
+            auto sourceIndex = proxy->mapToSource(index);
+
             if(item != 0)
             {
                 auto previousIndex = indexes.at(item-1);
 
                 if(index.row() - previousIndex.row() != 1)
                 {
-                    rowTarget = index.row() - 1;
+                    proxyTargetIndex = proxy->index(index.row()-1,0);
+                    sourceTargetIndex = proxy->mapToSource(proxyTargetIndex);
+                    rowTarget = sourceTargetIndex.row();
                 }
             }
 
-            model()->moveRows(QModelIndex(), index.row(), 1, QModelIndex(), rowTarget);
+            sourceModel->moveRows(QModelIndex(), QList<int>() << sourceIndex.row(), QModelIndex(), rowTarget);
         }
     }
     clearSelection();
@@ -904,6 +920,9 @@ void MegaTransferView::moveDownClicked()
     auto indexes = selectionModel()->selectedRows();
     if(!indexes.isEmpty())
     {
+        auto proxy(qobject_cast<QSortFilterProxyModel*>(model()));
+        auto sourceModel(qobject_cast<TransfersModel*>(proxy->sourceModel()));
+
         // Sort to keep items in the same order
         std::sort(indexes.begin(), indexes.end(),[](QModelIndex check1, QModelIndex check2){
            return check1.row() > check2.row();
@@ -916,22 +935,28 @@ void MegaTransferView::moveDownClicked()
             return;
         }
 
-        auto rowTarget = indexes.first().row() + 1;
+        auto proxyTargetIndex = proxy->index(indexes.first().row() + 1,0);
+        auto sourceTargetIndex = proxy->mapToSource(proxyTargetIndex);
+        auto rowTarget = sourceTargetIndex.row();
 
         for (int item = 0; item < indexes.size(); ++item)
         {
             auto index = indexes.at(item);
+            auto sourceIndex = proxy->mapToSource(index);
+
             if(item != 0)
             {
                 auto previousIndex = indexes.at(item-1);
 
                 if(previousIndex.row() - index.row() != 1)
                 {
-                    rowTarget = index.row() + 1;
+                    proxyTargetIndex = proxy->index(index.row() + 1,0);
+                    sourceTargetIndex = proxy->mapToSource(proxyTargetIndex);
+                    rowTarget = sourceTargetIndex.row();
                 }
             }
 
-            model()->moveRows(QModelIndex(), rowTarget, 1, QModelIndex(), index.row());
+            sourceModel->moveRows(QModelIndex(), QList<int>() << rowTarget, QModelIndex(), sourceIndex.row());
         }
     }
 
@@ -943,6 +968,9 @@ void MegaTransferView::moveToBottomClicked()
     auto indexes = selectionModel()->selectedRows();
     if(!indexes.isEmpty())
     {
+        auto proxy(qobject_cast<QSortFilterProxyModel*>(model()));
+        auto sourceModel(qobject_cast<TransfersModel*>(proxy->sourceModel()));
+
         // Sort to keep items in the same order
         std::sort(indexes.begin(), indexes.end(),[](QModelIndex check1, QModelIndex check2){
            return check1.row() < check2.row();
@@ -955,18 +983,22 @@ void MegaTransferView::moveToBottomClicked()
             return;
         }
 
-        auto rowTarget = model()->rowCount();
+        auto proxyTargetIndex = proxy->index(model()->rowCount(),0);
+        auto sourceTargetIndex = proxy->mapToSource(proxyTargetIndex);
+        auto rowTarget = sourceTargetIndex.row();
 
         for (int item = 0; item < indexes.size(); ++item)
         {
             auto index = indexes.at(item);
+            auto sourceIndex = proxy->mapToSource(index);
 
             if(item == 1)
             {
-                rowTarget = indexes.at(item-1).row();
+                sourceTargetIndex = proxy->mapToSource(indexes.at(item-1));
+                rowTarget = sourceTargetIndex.row();
             }
 
-            model()->moveRows(QModelIndex(), index.row(), 1, QModelIndex(), rowTarget);
+            sourceModel->moveRows(QModelIndex(), QList<int>() << sourceIndex.row(), QModelIndex(), rowTarget);
         }
     }
 
