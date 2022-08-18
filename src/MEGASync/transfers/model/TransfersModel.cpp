@@ -999,7 +999,7 @@ void TransfersModel::retryTransferByIndex(const QModelIndex& index)
         indexToRemove.append(index);
         clearFailedTransfers(indexToRemove);
 
-        QtConcurrent::run([&failedTransferCopy, this](){
+        QtConcurrent::run([failedTransferCopy, this](){
             mMegaApi->retryTransfer(failedTransferCopy);
             delete failedTransferCopy;
         });
