@@ -1767,9 +1767,11 @@ void MegaApplication::tryExitApplication(bool force)
     }
     else if (!exitDialog)
     {
-        exitDialog = new QMessageBox(QMessageBox::Question, tr("MEGAsync"),
-                                     tr("There is an active transfer. Want to exit?", "", mTransfersModel->hasActiveTransfers()),
-                                     QMessageBox::Yes|QMessageBox::No);
+        QString exitMessage = tr("There is an active transfer. Exit the app?\n"
+                                 "Transfer will automatically resume when you re-open the app.",
+                                 "",
+                                 mTransfersModel->hasActiveTransfers());
+        exitDialog = new QMessageBox(QMessageBox::Question, tr("MEGAsync"), exitMessage, QMessageBox::Yes|QMessageBox::No);
         exitDialog->button(QMessageBox::Yes)->setText(tr("Exit app"));
         exitDialog->button(QMessageBox::No)->setText(tr("Stay in app"));
         HighDpiResize hDpiResizer(exitDialog);
