@@ -13,7 +13,8 @@ TransfersWidget::TransfersWidget(QWidget* parent) :
     tDelegate (nullptr),
     app (qobject_cast<MegaApplication*>(qApp)),
     mCurrentTab(NO_TAB),
-    mScanningIsActive(false)
+    mScanningIsActive(false),
+    mScrollToAfterMovingRow(-1)
 {
     ui->setupUi(this);
 
@@ -57,6 +58,7 @@ void TransfersWidget::setupTransfers()
     connect(app->getTransfersModel(), &TransfersModel::blockUi, this, &TransfersWidget::onUiBlocked);
     connect(app->getTransfersModel(), &TransfersModel::unblockUi, this, &TransfersWidget::onUiUnblocked);
     connect(app->getTransfersModel(), &TransfersModel::unblockUiAndFilter, this, &TransfersWidget::onUiUnblockedAndFilter);
+    connect(app->getTransfersModel(), &TransfersModel::rowsAboutToBeMoved, this, &TransfersWidget::onRowsAboutToBeMoved);
 
     configureTransferView();
 }
@@ -442,11 +444,54 @@ void TransfersWidget::onModelAboutToBeChanged()
     onUiBlocked();
 }
 
+
 void TransfersWidget::onModelChanged()
 {
     onUiUnblocked();
-
     updateHeaders();
+
+    selectAndScrollToMovedTransfer();
+}
+
+void TransfersWidget::onRowsAboutToBeMoved(int scrollTo)
+{
+    mScrollToAfterMovingRow = scrollTo;
+
+    if(mProxyModel->getSortCriterion() != static_cast<int>(SortCriterion::PRIORITY))
+    {
+        ui->statusColumn->forceClick();
+    }
+    else
+    {
+        selectAndScrollToMovedTransfer(QAbstractItemView::EnsureVisible);
+    }
+}
+
+void TransfersWidget::selectAndScrollToMovedTransfer(QAbstractItemView::ScrollHint scrollHint)
+{
+    QTimer::singleShot(200, [this, scrollHint]()
+    {
+        if(mScrollToAfterMovingRow >= 0)
+        {
+            auto d = app->getTransfersModel()->getTransferByTag(mScrollToAfterMovingRow);
+            if(d)
+            {
+                auto rowIndex = app->getTransfersModel()->index(app->getTransfersModel()->getRowByTransferTag(d->mTag),0);
+                if(rowIndex.isValid())
+                {
+                    auto proxyIndex = mProxyModel->mapFromSource(rowIndex);
+                    ui->tvTransfers->selectionModel()->select(proxyIndex, QItemSelectionModel::SelectionFlag::Select);
+                    auto selectedRows(ui->tvTransfers->selectionModel()->selectedRows());
+                    if(!selectedRows.isEmpty())
+                    {
+                        ui->tvTransfers->scrollTo(selectedRows.first(), scrollHint);
+                    }
+                }
+            }
+
+            mScrollToAfterMovingRow = -1;
+        }
+    });
 }
 
 void TransfersWidget::onPauseResumeTransfer(bool pause)

@@ -27,6 +27,8 @@ public:
     void setSortOrder(Qt::SortOrder order);
     void turnOffSorting();
 
+    void forceClick();
+
 signals:
     void toggled(int, Qt::SortOrder);
 
