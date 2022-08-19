@@ -60,6 +60,7 @@ void SyncTableView::initTable()
 {
     setItemDelegateForColumn(SyncItemModel::Column::MENU, new MenuItemDelegate(this));
     setItemDelegateForColumn(SyncItemModel::Column::LNAME, new IconMiddleDelegate(this));
+    setItemDelegateForColumn(SyncItemModel::Column::RNAME, new ElideMiddleDelegate(this));
 
     horizontalHeader()->resizeSection(SyncItemModel::Column::ENABLED, FIXED_COLUMN_WIDTH);
     horizontalHeader()->resizeSection(SyncItemModel::Column::MENU, FIXED_COLUMN_WIDTH);
@@ -215,7 +216,9 @@ void IconMiddleDelegate::paint(QPainter *painter, const QStyleOptionViewItem &op
         painter->setPen(option.palette.color(cg, QPalette::Text));
     }
 
-    painter->drawText(textRect, text, textOption);
+    QString elidedText = option.fontMetrics.elidedText(text, Qt::ElideMiddle, textRect.width());
+
+    painter->drawText(textRect, elidedText, textOption);
 
 }
 
@@ -223,5 +226,35 @@ void IconMiddleDelegate::initStyleOption(QStyleOptionViewItem *option, const QMo
 {
     QStyledItemDelegate::initStyleOption(option, index);
     option->icon = QIcon();
+    option->text = QString();
+}
+
+ElideMiddleDelegate::ElideMiddleDelegate(QObject *parent) :
+    QStyledItemDelegate(parent)
+{
+
+}
+
+ElideMiddleDelegate::~ElideMiddleDelegate()
+{
+
+}
+
+void ElideMiddleDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
+{
+    QStyledItemDelegate::paint(painter, option, index);
+
+    QString elidedText = option.fontMetrics.elidedText(index.data(Qt::DisplayRole).toString(), Qt::ElideMiddle, option.rect.width());
+
+    QTextOption textAlign;
+    textAlign.setAlignment(Qt::AlignVCenter);
+    QRect textRect = option.rect;
+    textRect.setLeft(option.rect.left() + 6);
+    painter->drawText(textRect, elidedText, textAlign);
+}
+
+void ElideMiddleDelegate::initStyleOption(QStyleOptionViewItem *option, const QModelIndex &index) const
+{
+    QStyledItemDelegate::initStyleOption(option, index);
     option->text = QString();
 }
