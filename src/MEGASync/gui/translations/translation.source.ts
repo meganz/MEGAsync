@@ -1088,7 +1088,7 @@ In some cases they may contain details about your data, such as file or folder n
         <source>Apply this option on the next %1 conflict</source>
         <translatorcomment>Checkbox text to apply the action to all the following conflicts. %1 is the number of conflicts</translatorcomment>
         <translation>
-            <numerusform>Apply this option on the next %1 conflict</numerusform>
+            <numerusform>Apply this option on the next conflict</numerusform>
             <numerusform>Apply this option on the next %1 conflicts</numerusform>
         </translation>
     </message>
@@ -1101,11 +1101,6 @@ In some cases they may contain details about your data, such as file or folder n
         <source>The new folder will be merged with the folder at this destination.</source>
         <translatorcomment>Text explaining the result of the folder merge action</translatorcomment>
         <translation>The new folder will be merged with the folder at this destination.</translation>
-    </message>
-    <message>
-        <source>The folder will be renamed as:</source>
-        <translatorcomment>Text explaining the result of the folder rename action</translatorcomment>
-        <translation>The folder will be renamed as:</translation>
     </message>
     <message>
         <source>The folder at this destination will be maintained.</source>
@@ -1121,11 +1116,6 @@ In some cases they may contain details about your data, such as file or folder n
         <source>The file at this destination will be replaced with the new file.</source>
         <translatorcomment>Text explaining the result of the file upload and replace action</translatorcomment>
         <translation>The file at this destination will be replaced with the new file.</translation>
-    </message>
-    <message>
-        <source>The file will be updated with version history:</source>
-        <translatorcomment>Text explaining the result of the file upload and update action</translatorcomment>
-        <translation>The file will be updated with version history:</translation>
     </message>
     <message>
         <source>The file will be renamed as:</source>
@@ -1146,6 +1136,11 @@ In some cases they may contain details about your data, such as file or folder n
         <source>File already exists</source>
         <translatorcomment>Dialog title when a file with the same name has been found on the cloud</translatorcomment>
         <translation>File already exists</translation>
+    </message>
+    <message>
+        <source>The file will be updated with version history.</source>
+        <translatorcomment>Text explaining the result of the file upload and update action</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1194,6 +1189,11 @@ In some cases they may contain details about your data, such as file or folder n
         <source>loading size…</source>
         <translatorcomment>Text shown while the local file/folder size is calculated</translatorcomment>
         <translation>loading size…</translation>
+    </message>
+    <message>
+        <source>Learn more</source>
+        <translatorcomment>Underline link label to open a help.mega.io article</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

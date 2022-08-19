@@ -33,6 +33,7 @@ public:
     void setType(NodeItemType type);
 
     void setDescription(const QString& description);
+    void showLearnMore(const QString& url);
 
 signals:
     void actionClicked();

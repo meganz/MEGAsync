@@ -59,16 +59,6 @@ std::shared_ptr<mega::MegaNode> DuplicatedNodeInfo::checkNameNode(const QString 
     auto node = std::shared_ptr<mega::MegaNode>(MegaSyncApp->getMegaApi()->getChildNodeOfType(parentNode.get(), nodeName.toStdString().c_str(),
                                                               isLocalFile() ? mega::MegaNode::TYPE_FILE : mega::MegaNode::TYPE_FOLDER));
 
-//    TODO -> asked if this feature should be added or not
-//    if(!node)
-//    {
-//        node = std::shared_ptr<mega::MegaNode>(MegaSyncApp->getMegaApi()->getChildNode(parentNode.get(), nodeName.toStdString().c_str()));
-//        if(node)
-//        {
-//            mHaveDifferentType = true;
-//        }
-//    }
-
     return node;
 }
 
@@ -150,8 +140,7 @@ void DuplicatedNodeInfo::initNewName()
         }
         else
         {
-            nodeName = fileInfo.baseName();
-            suffix = fileInfo.suffix();
+            nodeName = fileInfo.fileName();
         }
     }
     else
@@ -166,7 +155,7 @@ void DuplicatedNodeInfo::initNewName()
         QString repeatedName = nodeName + QString(QLatin1Literal("(%1)")).arg(QString::number(counter));
         if(mRemoteConflictNode)
         {
-            if(mRemoteConflictNode->isFile())
+            if(mRemoteConflictNode->isFile() && !suffix.isEmpty())
             {
                 repeatedName.append(suffix);
             }

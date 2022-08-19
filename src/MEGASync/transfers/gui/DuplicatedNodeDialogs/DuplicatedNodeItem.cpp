@@ -16,6 +16,7 @@ DuplicatedNodeItem::DuplicatedNodeItem(QWidget *parent) :
 {
     ui->setupUi(this);
     ui->lNodeName->installEventFilter(this);
+    ui->lLearnMore->hide();
 
     connect(&mFolderSizeFuture, &QFutureWatcher<qint64>::finished, this, &DuplicatedLocalItem::onNodeSizeFinished);
 }
@@ -38,6 +39,13 @@ void DuplicatedNodeItem::setInfo(std::shared_ptr<DuplicatedNodeInfo>info, NodeIt
 void DuplicatedNodeItem::setDescription(const QString &description)
 {
     ui->lDescription->setText(description);
+}
+
+void DuplicatedNodeItem::showLearnMore(const QString& url)
+{
+    QString moreAboutLink(QLatin1String("<a href=\"%1\"><font color=#333333>%2</font></a>"));
+    ui->lLearnMore->setText(moreAboutLink.arg(url,tr("Learn more")));
+    ui->lLearnMore->show();
 }
 
 void DuplicatedNodeItem::fillUi()
@@ -155,6 +163,11 @@ bool DuplicatedNodeItem::eventFilter(QObject *watched, QEvent *event)
         auto nodeName(getNodeName());
         auto elidedName = ui->lDescription->fontMetrics().elidedText(nodeName, Qt::ElideMiddle, ui->lNodeName->width());
         ui->lNodeName->setText(elidedName);
+
+        if (elidedName != nodeName)
+        {
+            ui->lNodeName->setToolTip(nodeName);
+        }
     }
 
     return QWidget::eventFilter(watched, event);
