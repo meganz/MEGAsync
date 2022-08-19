@@ -197,6 +197,7 @@ void BackupsWizard::onItemChanged(QStandardItem *item)
 
     switch (mCurrentStep)
     {
+        case STEP_1_INIT:
         case STEP_1:
         {
             enable = atLeastOneFolderChecked() && !mUi->lDeviceNameStep1->text().isEmpty();
