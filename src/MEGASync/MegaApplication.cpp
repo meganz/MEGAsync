@@ -3024,6 +3024,7 @@ std::pair<QString,QString> MegaApplication::buildFinishedTransferTitleAndMessage
             message = tr("%n folder was successfully downloaded", "", data->transfersFolderOK);
         }
     }
+
     return std::make_pair(title,message);
 }
 
@@ -7878,7 +7879,6 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
     int folderTransferTag = transfer->getFolderTransferTag();
     bool isFileTransfer = (folderTransferTag == 0);
     bool isFolderTransfer = (folderTransferTag == -1);
-    bool isOnScanStage = mBlockingBatch.hasCancelToken();
     if (isFileTransfer || isFolderTransfer)
     {
 
@@ -7887,7 +7887,7 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
             if(mBlockingBatch.isValid())
             {
                 mBlockingBatch.onTransferFinished(getNodePath(transfer));
-                updateIfBlockingStageFinished(mBlockingBatch, isOnScanStage);
+                updateIfBlockingStageFinished(mBlockingBatch, mBlockingBatch.hasCancelToken());
                 updateFreedCancelToken(transfer);
             }
 
@@ -7936,7 +7936,7 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
         }
     }
 
-    if (transfer->isFolderTransfer() && !isOnScanStage)
+    if (transfer->isFolderTransfer() && !mBlockingBatch.hasCancelToken())
     {
         if (e->getErrorCode() != MegaError::API_OK)
         {
