@@ -69,7 +69,7 @@
    color: #333333;
 }
 
-#lDescription
+#lDescription, #lLearnMore
 {
    font-family: Lato;
    line-height: 16px;
@@ -78,7 +78,7 @@
    color: #333333;
 }
 
-#titleContainer, #lDescription, #lTitle
+#titleContainer, #titleContainer QLabel
 {
    background-color: #F7F8F9;
 }
@@ -107,7 +107,7 @@
        <widget class="QWidget" name="titleContainer" native="true">
         <layout class="QVBoxLayout" name="verticalLayout_3">
          <property name="spacing">
-          <number>5</number>
+          <number>8</number>
          </property>
          <property name="leftMargin">
           <number>10</number>
@@ -132,6 +132,28 @@
           <widget class="QLabel" name="lDescription">
            <property name="text">
             <string/>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="lLearnMore">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>15</height>
+            </size>
+           </property>
+           <property name="text">
+            <string notr="true"/>
+           </property>
+           <property name="openExternalLinks">
+            <bool>true</bool>
            </property>
           </widget>
          </item>

@@ -32,7 +32,7 @@
    <string notr="true"/>
   </property>
   <property name="styleSheet">
-   <string notr="true">*{
+   <string notr="true">#DuplicatedNodeDialog{
 background-color: white;
 }
 
