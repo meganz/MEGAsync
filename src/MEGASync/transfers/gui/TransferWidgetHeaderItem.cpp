@@ -55,6 +55,12 @@ void TransferWidgetHeaderItem::turnOffSorting()
     ui->chevron->setVisible(false);
 }
 
+void TransferWidgetHeaderItem::forceClick()
+{
+    auto releaseEvent = new QMouseEvent(QEvent::MouseButtonRelease,QPointF(), Qt::LeftButton, Qt::NoButton, Qt::KeyboardModifier::NoModifier);
+    QApplication::postEvent(this, releaseEvent);
+}
+
 void TransferWidgetHeaderItem::mouseReleaseEvent(QMouseEvent *event)
 {
     if(event->button() == Qt::LeftButton)

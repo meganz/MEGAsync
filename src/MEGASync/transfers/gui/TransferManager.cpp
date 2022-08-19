@@ -219,7 +219,6 @@ TransferManager::TransferManager(MegaApi *megaApi) :
     setAcceptDrops(true);
 
     // Init state
-    onUpdatePauseState(mPreferences->getGlobalPaused());
 
     auto storageState = MegaSyncApp->getAppliedStorageState();
     auto transferQuotaState = MegaSyncApp->getTransferQuotaState();
@@ -229,6 +228,8 @@ TransferManager::TransferManager(MegaApi *megaApi) :
     connect(&mTransferQuotaTimer, &QTimer::timeout, this, &TransferManager::onTransferQuotaExceededUpdate);
     QString moreAboutLink(QLatin1String("<a href=\"https://help.mega.io/plans-storage/space-storage/transfer-quota\"><font color=#333333>%1</font></a>"));
     mUi->lTransferOverQuotaMoreAbout->setText(moreAboutLink.arg(TRANSFER_QUOTA_MORE_ABOUT));
+
+    onUpdatePauseState(mPreferences->getGlobalPaused());
 
     setActiveTab(TransfersWidget::ALL_TRANSFERS_TAB);
     //Update stats
@@ -403,7 +404,7 @@ void TransferManager::onUpdatePauseState(bool isPaused)
         }
     }
 
-    mUi->lPaused->setVisible(isPaused && !mUi->lStorageOverQuota->isVisible() && !mUi->pTransferOverQuota->isVisible());
+    checkPauseButtonVisibilityIfPossible();
 }
 
 void TransferManager::onPauseResumeVisibleRows(bool isPaused)
@@ -433,9 +434,7 @@ void TransferManager::onPauseResumeVisibleRows(bool isPaused)
 
 void TransferManager::showQuotaStorageDialogs(bool isPaused)
 {
-    if(!isPaused && (mTransferQuotaState == QuotaState::FULL || mTransferQuotaState == QuotaState::OVERQUOTA
-            || (mStorageQuotaState == MegaApi::STORAGE_STATE_PAYWALL
-            || mStorageQuotaState == MegaApi::STORAGE_STATE_RED)))
+    if(!isPaused && hasOverQuotaErrors())
     {
         if(mStorageQuotaState == MegaApi::STORAGE_STATE_PAYWALL
           || mStorageQuotaState == MegaApi::STORAGE_STATE_RED)
@@ -723,7 +722,7 @@ void TransferManager::onTransferQuotaStateChanged(QuotaState transferQuotaState)
 
 void TransferManager::checkPauseButtonVisibilityIfPossible()
 {
-    mUi->lPaused->setVisible(mModel->areAllPaused() && !mUi->lStorageOverQuota->isVisible() && !mUi->pTransferOverQuota->isVisible());
+    mUi->lPaused->setVisible(mModel->areAllPaused() && !hasOverQuotaErrors());
 }
 
 void TransferManager::showTransferQuotaBanner(bool state)
@@ -1303,6 +1302,13 @@ void TransferManager::mouseReleaseEvent(QMouseEvent *event)
     mUi->wTransfers->mouseRelease(event->globalPos());
 
     QDialog::mouseReleaseEvent(event);
+}
+
+bool TransferManager::hasOverQuotaErrors()
+{
+    return (mTransferQuotaState == QuotaState::FULL || mTransferQuotaState == QuotaState::OVERQUOTA
+            || (mStorageQuotaState == MegaApi::STORAGE_STATE_PAYWALL
+            || mStorageQuotaState == MegaApi::STORAGE_STATE_RED));
 }
 
 void TransferManager::setTransferState(const StatusInfo::TRANSFERS_STATES &transferState)

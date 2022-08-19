@@ -170,7 +170,7 @@ public:
     QModelIndex parent(const QModelIndex& index) const;
     QModelIndex index(int row, int column, const QModelIndex& parent = QModelIndex()) const;
     bool removeRows(int row, int count, const QModelIndex& parent = QModelIndex());
-    bool moveRows(const QModelIndex& sourceParent, int sourceRow, int count,
+    bool moveRows(const QModelIndex& sourceParent, const QList<int>& rows,
                   const QModelIndex& destinationParent, int destinationChild);
 
     void resetModel();
@@ -214,22 +214,23 @@ public:
 
     bool areAllPaused() const;
 
-     QExplicitlySharedDataPointer<TransferData> getTransferByTag(int tag) const;
-     void sendDataChangedByTag(int tag);
+    QExplicitlySharedDataPointer<TransferData> getTransferByTag(int tag) const;
+    int getRowByTransferTag(int tag) const;
+    void sendDataChangedByTag(int tag);
 
-     void blockModelSignals(bool state);
+    void blockModelSignals(bool state);
 
-     int hasActiveTransfers() const;
-     void setActiveTransfer(TransferTag tag);
-     void unsetActiveTransfer(TransferTag tag);
-     void checkActiveTransfer(TransferTag tag, bool isActive);
+    int hasActiveTransfers() const;
+    void setActiveTransfer(TransferTag tag);
+    void unsetActiveTransfer(TransferTag tag);
+    void checkActiveTransfer(TransferTag tag, bool isActive);
 
-     void uiUnblocked();
+    void uiUnblocked();
 
-     bool syncsInRowsToCancel() const;
-     QWidget *cancelledFrom() const;
-     void resetSyncInRowsToCancel();
-     void showSyncCancelledWarning();
+    bool syncsInRowsToCancel() const;
+    QWidget *cancelledFrom() const;
+    void resetSyncInRowsToCancel();
+    void showSyncCancelledWarning();
 
 signals:
     void pauseStateChanged(bool pauseState);
@@ -247,6 +248,7 @@ signals:
     void mostPriorityTransferUpdate(int tag);
     void transfersProcessChanged();
     void showInFolderFinished(bool);
+    void rowsAboutToBeMoved(int firstRowTag);
 
 public slots:
     void pauseResumeAllTransfers(bool state);

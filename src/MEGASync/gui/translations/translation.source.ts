@@ -2547,14 +2547,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translatorcomment>System notification to inform the user that %1 files and %2 folders were successfully downloaded. The %1 is a sentence part for files and %2 for folders.</translatorcomment>
         <translation>%1 and %2 were successfully downloaded</translation>
     </message>
-    <message numerus="yes">
-        <source>There is an active transfer. Want to exit?</source>
-        <translatorcomment>Messagebox text to let the user know that there are active transfers when closing the app. The user will be able to exit and pause them, or stop the exit action.</translatorcomment>
-        <translation>
-            <numerusform>There is an active transfer. Want to exit?</numerusform>
-            <numerusform>There are active transfers. Want to exit?</numerusform>
-        </translation>
-    </message>
     <message>
         <source>Exit app</source>
         <translatorcomment>One of the messagebox options: Close the app and pause the active transfers</translatorcomment>
@@ -2564,6 +2556,17 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Stay in app</source>
         <translatorcomment>One of the messagebox options: Keep the app open and continue with the active transfers</translatorcomment>
         <translation type="unfinished"></translation>
+    </message>
+    <message numerus="yes">
+        <source>There is an active transfer. Exit the app?
+Transfer will automatically resume when you re-open the app.</source>
+        <translatorcomment>Messagebox text to let the user know that there are active transfers when closing the app. The user will be able to exit and pause them, or stop the exit action.</translatorcomment>
+        <translation type="unfinished">
+            <numerusform>There is an active transfer. Exit the app?
+Transfer will automatically resume when you re-open the app.</numerusform>
+            <numerusform>There are active transfers. Exit the app?
+Transfers will automatically resume when you re-open the app.</numerusform>
+        </translation>
     </message>
 </context>
 <context>
