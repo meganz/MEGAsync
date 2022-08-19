@@ -5796,11 +5796,11 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
         <translation>More about transfer quota</translation>
     </message>
     <message numerus="yes">
-        <source>Transfer failed</source>
-		<translatorcomment>Message shown when there are some failed transfers</translatorcomment>
+        <source>Issue found</source>
+        <translatorcomment>Message shown when there are some failed transfers/syncs/backups</translatorcomment>
         <translation type="unfinished">
-            <numerusform>Transfer failed</numerusform>
-            <numerusform>Some transfers failed</numerusform>
+            <numerusform>Issue found</numerusform>
+            <numerusform>Issues found</numerusform>
         </translation>
     </message>
 </context>

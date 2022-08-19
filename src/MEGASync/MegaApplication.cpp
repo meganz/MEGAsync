@@ -862,7 +862,7 @@ void MegaApplication::updateTrayIcon()
 
         if(transfersFailed > 0)
         {
-            tooltipState = QCoreApplication::translate("TransferManager","Transfer failed", "", transfersFailed);
+            tooltipState = QCoreApplication::translate("TransferManager","Issue found", "", transfersFailed);
             icon = icons["someissues"];
         }
         else
@@ -913,7 +913,7 @@ void MegaApplication::updateTrayIcon()
 
         if(transfersFailed > 0)
         {
-            tooltipState = QCoreApplication::translate("TransferManager","Transfer failed", "", transfersFailed);
+            tooltipState = QCoreApplication::translate("TransferManager","Issue found", "", transfersFailed);
             icon = icons["someissues"];
         }
         else
