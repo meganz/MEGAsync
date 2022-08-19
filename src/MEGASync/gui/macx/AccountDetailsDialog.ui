@@ -78,7 +78,7 @@ QLabel
     min-height: 32px;
 }
 
-#wCloudDrive, #wRubbish, #wVault, QProgressBar, #lUsedCloudDrive, #lUsedInbox,  #lUsedRubbish, #lUsedByVersions, #lAvailableStorage
+#wCloudDrive, #wRubbish, #wVault, QProgressBar, #lUsedCloudDrive, #lUsedInbox,  #lUsedRubbish, #lUsedByVersions, #lAvailableStorage, #lUsedVault
 {
     margin-right: 24px;
 }
@@ -111,7 +111,7 @@ QProgressBar
   padding-right: 4px;
 }
 
-#lUsedCloudDrive, #lUsedInbox, #lUsedRubbish
+#lUsedCloudDrive, #lUsedInbox, #lUsedRubbish, #lUsedVault
 {
     qproperty-alignment: 'AlignRight | AlignBottom';
 }
