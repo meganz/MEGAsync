@@ -11,19 +11,108 @@
 
 using namespace mega;
 
-QString MegaTransferView::cancelAskActionText(int count)
+QString MegaTransferView::cancelAllAskActionText()
 {
-    return cancelActionText(count) + QString::fromLatin1("?");
+    return tr("Cancel transfers?\n"
+              "All your transfers will be cancelled.");
 }
 
-QString MegaTransferView::clearAskActionText(int count)
+QString MegaTransferView::cancelAndClearAskActionText()
 {
-    return clearActionText(count) + QString::fromLatin1("?");
+    return tr("Cancel transfers?\n"
+              "All your transfers in this category will be cancelled and cleared.");
 }
 
-QString MegaTransferView::clearAndCancelAskActionText(int count)
+QString MegaTransferView::cancelAskActionText()
 {
-    return tr("Cancel and clear transfer?" , "", count);
+    return tr("Cancel transfers?\n"
+              "All your transfers in this category will be cancelled.");
+}
+
+QString MegaTransferView::cancelWithSyncAskActionText()
+{
+    return tr("Cancel transfers?\n"
+              "Your incomplete sync transfers won't be cancelled.");
+}
+
+QString MegaTransferView::cancelAndClearWithSyncAskActionText(bool haveCancellable)
+{
+    if(haveCancellable)
+    {
+        return tr("Cancel transfers?\n"
+                  "Your incomplete sync transfers won't be cancelled\n"
+                  "All the other transfers will be cancelled and cleared.");
+    }
+    else
+    {
+        return tr("Cancel transfers?\n"
+                  "Your incomplete sync transfers won't be cancelled\n"
+                  "but your completed transfers will be cleared.");
+    }
+}
+
+QString MegaTransferView::clearAllCompletedAskActionText()
+{
+    return tr("Clear transfers?\n"
+              "All your completed transfers will be cleared.");
+}
+
+QString MegaTransferView::clearCompletedAskActionText()
+{
+    return tr("Clear transfers?\n"
+              "All your completed transfers in this category will be cleared.");
+}
+
+//Multiple seletion
+QString MegaTransferView::cancelSelectedAskActionText()
+{
+    return tr("Cancel transfers?\n"
+              "All your selected transfers will be cancelled.");
+}
+
+QString MegaTransferView::cancelAndClearSelectedAskActionText()
+{
+    return tr("Cancel transfers?\n"
+              "All your selected transfers will be cancelled and cleared.");
+}
+
+QString MegaTransferView::cancelSelectedWithSyncAskActionText()
+{
+    return tr("Cancel transfers?\n"
+              "Your incomplete selected sync transfers won't be cancelled.");
+}
+
+QString MegaTransferView::cancelAndClearSelectedWithSyncAskActionText(bool haveCancellable)
+{
+    if(haveCancellable)
+    {
+        return tr("Cancel transfers?\n"
+                  "Your selected incomplete sync transfers won't be cancelled\n"
+                  "All the other selected transfers will be cancelled and cleared.");
+    }
+    else
+    {
+        return tr("Cancel transfers?\n"
+                  "Your selectedincomplete sync transfers won't be cancelled\n"
+                  "but your selected completed transfers will be cleared.");
+    }
+}
+
+QString MegaTransferView::clearSelectedCompletedAskActionText()
+{
+    return tr("Clear transfers?\n"
+              "All your completed transfers in this category will be cleared.");
+}
+
+//Single seletion
+QString MegaTransferView::cancelSingleActionText()
+{
+    return (tr("Cancel transfer?"));
+}
+
+QString MegaTransferView::clearSingleActionText()
+{
+    return (tr("Clear transfer?"));
 }
 
 //Static messages for context menu
@@ -46,6 +135,10 @@ QString MegaTransferView::clearActionText(int count)
 {
     return tr("Clear transfer" , "", count);
 }
+
+static QMap<QMessageBox::StandardButton, QString> CANCEL_BUTTONS_TEXT{{QMessageBox::Yes, QString::fromLatin1(QT_TR_NOOP("Yes, cancel"))}, {QMessageBox::No, QString::fromLatin1(QT_TR_NOOP("No, continue"))}};
+static QMap<QMessageBox::StandardButton, QString> CLEAR_BUTTONS_TEXT{{QMessageBox::Yes, QString::fromLatin1(QT_TR_NOOP("Yes, clear"))}, {QMessageBox::No, QString::fromLatin1(QT_TR_NOOP("No, continue"))}};
+
 
 //Mega transfer view
 MegaTransferView::MegaTransferView(QWidget* parent) :
@@ -127,22 +220,40 @@ MegaTransferView::SelectedIndexesInfo MegaTransferView::getVisibleCancelOrClearI
     info.isAnyCancellable = proxy->isAnyCancellable();
     info.areAllCancellable = proxy->areAllCancellable();
     info.areAllSync = proxy->areAllSync();
+    auto isAnySync = proxy->isAnySync();
     auto isAnyCompleted = proxy->isAnyCompleted();
 
     if(info.isAnyCancellable)
     {
-        if(info.areAllCancellable || !isAnyCompleted)
+        info.buttonsText = CANCEL_BUTTONS_TEXT;
+
+        if(!isAnySync)
         {
-            info.actionText = cancelAskActionText(proxy->transfersCount());
+            if(info.areAllCancellable || !isAnyCompleted)
+            {
+                info.actionText = cancelAskActionText();
+            }
+            else
+            {
+                info.actionText = cancelAndClearAskActionText();
+            }
         }
         else
         {
-            info.actionText = clearAndCancelAskActionText(proxy->transfersCount());
+            if(isAnyCompleted)
+            {
+                info.actionText = cancelAndClearWithSyncAskActionText(info.isAnyCancellable);
+            }
+            else
+            {
+                info.actionText = cancelWithSyncAskActionText();
+            }
         }
     }
     else
     {
-        info.actionText = clearAskActionText(proxy->transfersCount());
+        info.actionText = clearCompletedAskActionText();
+        info.buttonsText = CLEAR_BUTTONS_TEXT;
     }
 
     return info;
@@ -153,6 +264,8 @@ MegaTransferView::SelectedIndexesInfo MegaTransferView::getSelectedCancelOrClear
     auto indexes = getSelectedTransfers();
 
     SelectedIndexesInfo info;
+    bool isAnyActiveSync(false);
+    bool isAnyCompleted(false);
 
     foreach(auto& index, indexes)
     {
@@ -162,28 +275,77 @@ MegaTransferView::SelectedIndexesInfo MegaTransferView::getSelectedCancelOrClear
             if(!transfer->isSyncTransfer())
             {
                 info.areAllSync = false;
+
+                if(transfer->isActiveOrPending() || transfer->isFailed())
+                {
+                    info.isAnyCancellable = true;
+                }
+                else
+                {
+                    info.areAllCancellable = false;
+                }
+            }
+            else if(!transfer->isCompleted())
+            {
+                isAnyActiveSync = true;
+                info.areAllCancellable = false;
             }
 
-            if(transfer->isActiveOrPending() || transfer->isFailed())
+            if(transfer->isCompleted())
             {
-                info.isAnyCancellable = true;
-            }
-            else
-            {
-                info.areAllCancellable = false;
+                isAnyCompleted = true;
             }
         }
     }
 
-    if(info.isAnyCancellable)
+
+    if(indexes.size() > 1)
     {
-        info.actionText = info.areAllCancellable ? cancelAskActionText(indexes.size())
-                                                 : clearAndCancelAskActionText(indexes.size());
+        info.buttonsText = CANCEL_BUTTONS_TEXT;
+        if(isAnyActiveSync)
+        {
+            if(isAnyCompleted)
+            {
+                info.actionText = cancelAndClearSelectedWithSyncAskActionText(info.isAnyCancellable);
+            }
+            else if(info.isAnyCancellable)
+            {
+                info.actionText = cancelSelectedWithSyncAskActionText();
+            }
+
+        }
+        else
+        {
+            if(isAnyCompleted)
+            {
+                if(info.isAnyCancellable)
+                {
+                    info.actionText = cancelAndClearSelectedAskActionText();
+                }
+                else
+                {
+                    info.actionText = clearSelectedCompletedAskActionText();
+                    info.buttonsText = CLEAR_BUTTONS_TEXT;
+                }
+            }
+            else if(info.isAnyCancellable)
+            {
+                info.actionText = cancelSelectedAskActionText();
+            }
+        }
     }
     else
     {
-        info.actionText = clearAskActionText(indexes.size());
+        if(info.isAnyCancellable)
+        {
+            info.actionText = cancelSingleActionText();
+        }
+        else
+        {
+            info.actionText = clearSingleActionText();
+        }
     }
+
 
     return info;
 }
@@ -222,7 +384,7 @@ void MegaTransferView::onCancelVisibleTransfers()
     {
         if (QMegaMessageBox::warning(this, QString::fromUtf8("MEGAsync"),
                                      info.actionText,
-                                     QMessageBox::Yes | QMessageBox::No, QMessageBox::No)
+                                     QMessageBox::Yes | QMessageBox::No, QMessageBox::No, info.buttonsText)
                 == QMessageBox::Yes
                 && dialog)
         {
@@ -245,7 +407,7 @@ void MegaTransferView::onCancelSelectedTransfers()
 
         if (QMegaMessageBox::warning(this, QString::fromUtf8("MEGAsync"),
                                      info.actionText,
-                                     QMessageBox::Yes | QMessageBox::No, QMessageBox::No)
+                                     QMessageBox::Yes | QMessageBox::No, QMessageBox::No, info.buttonsText)
                 == QMessageBox::Yes
                 && dialog)
         {
@@ -261,15 +423,13 @@ void MegaTransferView::onCancelSelectedTransfers()
 bool MegaTransferView::onCancelAllTransfers()
 {
     bool result(false);
-    auto proxy (qobject_cast<QSortFilterProxyModel*>(model()));
-    auto sourceModel(qobject_cast<TransfersModel*>(proxy->sourceModel()));
+    auto proxy (qobject_cast<TransfersManagerSortFilterProxyModel*>(model()));
 
     QPointer<MegaTransferView> dialog = QPointer<MegaTransferView>(this);
-    auto rows = sourceModel->rowCount();
 
     if (QMegaMessageBox::warning(this, QString::fromUtf8("MEGAsync"),
-                             tr("Cancel all transfer?", "", rows),
-                             QMessageBox::Yes | QMessageBox::No, QMessageBox::No)
+                             proxy->isAnySync() ?  cancelWithSyncAskActionText() : cancelAllAskActionText(),
+                             QMessageBox::Yes | QMessageBox::No, QMessageBox::No, CANCEL_BUTTONS_TEXT)
             == QMessageBox::Yes
             && dialog)
     {
@@ -285,8 +445,8 @@ void MegaTransferView::onClearAllTransfers()
     QPointer<MegaTransferView> dialog = QPointer<MegaTransferView>(this);
 
     if (QMegaMessageBox::warning(this, QString::fromUtf8("MEGAsync"),
-                             clearAskActionText(model()->rowCount()),
-                             QMessageBox::Yes | QMessageBox::No, QMessageBox::No)
+                             clearAllCompletedAskActionText(),
+                             QMessageBox::Yes | QMessageBox::No, QMessageBox::No, CLEAR_BUTTONS_TEXT)
             == QMessageBox::Yes
             && dialog)
     {
@@ -302,7 +462,7 @@ void MegaTransferView::onCancelAndClearVisibleTransfers()
 
     if (QMegaMessageBox::warning(this, QString::fromUtf8("MEGAsync"),
                              info.actionText,
-                             QMessageBox::Yes | QMessageBox::No, QMessageBox::No)
+                             QMessageBox::Yes | QMessageBox::No, QMessageBox::No, info.buttonsText)
             == QMessageBox::Yes
             && dialog)
     {
@@ -323,8 +483,8 @@ void MegaTransferView::onClearVisibleTransfers()
     QPointer<MegaTransferView> dialog = QPointer<MegaTransferView>(this);
 
     if (QMegaMessageBox::warning(this, QString::fromUtf8("MEGAsync"),
-                             clearAskActionText(model()->rowCount()),
-                             QMessageBox::Yes | QMessageBox::No, QMessageBox::No)
+                             clearCompletedAskActionText(),
+                             QMessageBox::Yes | QMessageBox::No, QMessageBox::No, CLEAR_BUTTONS_TEXT)
             == QMessageBox::Yes
             && dialog)
     {
@@ -424,18 +584,21 @@ QMenu* MegaTransferView::createContextMenu()
             {
                 enablePause = true;
                 enableMove = true;
-                enableCancel = !(d->mType & TransferData::TRANSFER_SYNC);
+                enableCancel |= !(d->mType & TransferData::TRANSFER_SYNC);
                 break;
             }
             case TransferData::TRANSFER_PAUSED:
             {
                 enableResume = true;
                 enableMove = true;
-                enableCancel = !(d->mType & TransferData::TRANSFER_SYNC);
+                enableCancel |= !(d->mType & TransferData::TRANSFER_SYNC);
                 break;
             }
-            case TransferData::TRANSFER_CANCELLED:
             case TransferData::TRANSFER_FAILED:
+            {
+                enableCancel |= !(d->mType & TransferData::TRANSFER_SYNC);
+            }
+            case TransferData::TRANSFER_CANCELLED:
             case TransferData::TRANSFER_COMPLETED:
             {
                 enableClear = true;
@@ -612,8 +775,7 @@ QMenu* MegaTransferView::createContextMenu()
         // Set default action to have it painted red
         contextMenu->setDefaultAction(cancelAction);
     }
-
-    if(enableClear)
+    else if(enableClear)
     {
         auto clearAction = new QAction(QIcon(QLatin1String(":/images/transfer_manager/context_menu/ico_clear.png")),
                                    tr("Clear"), this);

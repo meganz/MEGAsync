@@ -8,6 +8,7 @@
 #include <QMenu>
 #include <QMouseEvent>
 #include <QFutureWatcher>
+#include <QMessageBox>
 
 class MegaTransferView : public QTreeView
 {
@@ -19,6 +20,7 @@ class MegaTransferView : public QTreeView
         bool isAnyCancellable;
         bool areAllCancellable;
         bool areAllSync;
+        QMap<QMessageBox::StandardButton, QString> buttonsText;
 
         SelectedIndexesInfo():isAnyCancellable(false), areAllCancellable(true),areAllSync(true){}
     };
@@ -43,13 +45,27 @@ public:
     SelectedIndexesInfo getSelectedCancelOrClearInfo();
 
     //Static messages for messageboxes
-    static QString cancelAskActionText(int count);
-    static QString clearAskActionText(int count);
-    static QString clearAndCancelAskActionText(int count);
+    static QString cancelAllAskActionText();
+    static QString cancelAndClearAskActionText();
+    static QString cancelAskActionText();
+    static QString cancelWithSyncAskActionText();
+    static QString cancelAndClearWithSyncAskActionText(bool haveCancellable);
+    static QString clearAllCompletedAskActionText();
+    static QString clearCompletedAskActionText();
+
+    static QString cancelSelectedAskActionText();
+    static QString cancelAndClearSelectedAskActionText();
+    static QString cancelSelectedWithSyncAskActionText();
+    static QString cancelAndClearSelectedWithSyncAskActionText(bool haveCancellable);
+    static QString clearSelectedCompletedAskActionText();
+
     static QString pauseActionText(int count);
     static QString resumeActionText(int count);
     static QString cancelActionText(int count);
     static QString clearActionText(int count);
+
+    static QString cancelSingleActionText();
+    static QString clearSingleActionText();
 
 public slots:
     void onPauseResumeSelection(bool pauseState);

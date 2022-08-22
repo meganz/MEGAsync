@@ -3098,19 +3098,40 @@ Transfers will automatically resume when you re-open the app.</numerusform>
         </translation>
     </message>
     <message numerus="yes">
-        <source>Cancel all transfer?</source>
-        <translatorcomment>Messagebox text to confirm if the user wants to cancel all transfers</translatorcomment>
-        <translation>
-            <numerusform>Cancel all transfer?</numerusform>
-            <numerusform>Cancel all transfers?</numerusform>
-        </translation>
-    </message>
-    <message numerus="yes">
         <source>Clear transfer</source>
-        <translatorcomment>Messagebox text to confirm if the user wants to clear the completed transfers</translatorcomment>
+        <translatorcomment>Tooltip for the clear button in a transfer row</translatorcomment>
         <translation>
             <numerusform>Clear transfer</numerusform>
             <numerusform>Clear transfers</numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>Transfers not yet processed will be cancelled.</source>
+        <translatorcomment>Cancel transfers messagebox second line text to let the user known that maybe not all transfers will be cancelled.</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message numerus="yes">
+        <source>Clear transfer?</source>
+        <translatorcomment>Messagebox text to confirm if the user wants to clear the completed transfers</translatorcomment>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>Cancel transfers?</source>
+		<translatorcomment>Messagebox text to confirm if the user wants to cancel all transfers in a category</translatorcomment>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>Cancel all transfers?</source>
+		<translatorcomment>Messagebox text to confirm if the user wants to cancel all transfers</translatorcomment>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
         </translation>
     </message>
 </context>

@@ -45,6 +45,7 @@ public:
         int  activeTransfers() const;
         bool areAllCancellable() const;
         bool areAllSync() const;
+        bool isAnySync() const;
         bool areAllCompleted() const;
         bool isAnyCompleted() const;
         bool isAnyActive() const;
