@@ -496,7 +496,7 @@ bool TransfersManagerSortFilterProxyModel::areAllPaused() const
 
 bool TransfersManagerSortFilterProxyModel::isAnyCancellable() const
 {
-    return (!mActiveTransfers.isEmpty() || !mFailedTransfers.isEmpty());
+    return !areAllSync() && !areAllCompleted() && isAnyActive();
 }
 
 bool TransfersManagerSortFilterProxyModel::areAllCancellable() const

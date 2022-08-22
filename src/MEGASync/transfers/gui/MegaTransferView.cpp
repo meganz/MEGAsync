@@ -35,20 +35,11 @@ QString MegaTransferView::cancelWithSyncAskActionText()
               "Your incomplete sync transfers won't be cancelled.");
 }
 
-QString MegaTransferView::cancelAndClearWithSyncAskActionText(bool haveCancellable)
+QString MegaTransferView::cancelAndClearWithSyncAskActionText()
 {
-    if(haveCancellable)
-    {
-        return tr("Cancel transfers?\n"
-                  "Your incomplete sync transfers won't be cancelled\n"
-                  "All the other transfers will be cancelled and cleared.");
-    }
-    else
-    {
-        return tr("Cancel transfers?\n"
-                  "Your incomplete sync transfers won't be cancelled\n"
-                  "but your completed transfers will be cleared.");
-    }
+    return tr("Cancel transfers?\n"
+              "Your incomplete sync transfers won't be cancelled\n"
+              "All the other transfers will be cancelled and cleared.");
 }
 
 QString MegaTransferView::clearAllCompletedAskActionText()
@@ -79,29 +70,20 @@ QString MegaTransferView::cancelAndClearSelectedAskActionText()
 QString MegaTransferView::cancelSelectedWithSyncAskActionText()
 {
     return tr("Cancel transfers?\n"
-              "Your incomplete selected sync transfers won't be cancelled.");
+              "Your selected incomplete sync transfers won't be cancelled.");
 }
 
-QString MegaTransferView::cancelAndClearSelectedWithSyncAskActionText(bool haveCancellable)
+QString MegaTransferView::cancelAndClearSelectedWithSyncAskActionText()
 {
-    if(haveCancellable)
-    {
-        return tr("Cancel transfers?\n"
-                  "Your selected incomplete sync transfers won't be cancelled\n"
-                  "All the other selected transfers will be cancelled and cleared.");
-    }
-    else
-    {
-        return tr("Cancel transfers?\n"
-                  "Your selectedincomplete sync transfers won't be cancelled\n"
-                  "but your selected completed transfers will be cleared.");
-    }
+    return tr("Cancel transfers?\n"
+              "Your selected incomplete sync transfers won't be cancelled\n"
+              "All the other selected transfers will be cancelled and cleared.");
 }
 
 QString MegaTransferView::clearSelectedCompletedAskActionText()
 {
     return tr("Clear transfers?\n"
-              "All your completed transfers in this category will be cleared.");
+              "All the selected completed transfers in this category will be cleared.");
 }
 
 //Single seletion
@@ -242,7 +224,7 @@ MegaTransferView::SelectedIndexesInfo MegaTransferView::getVisibleCancelOrClearI
         {
             if(isAnyCompleted)
             {
-                info.actionText = cancelAndClearWithSyncAskActionText(info.isAnyCancellable);
+                info.actionText = cancelAndClearWithSyncAskActionText();
             }
             else
             {
@@ -306,7 +288,7 @@ MegaTransferView::SelectedIndexesInfo MegaTransferView::getSelectedCancelOrClear
         {
             if(isAnyCompleted)
             {
-                info.actionText = cancelAndClearSelectedWithSyncAskActionText(info.isAnyCancellable);
+                info.actionText = info.isAnyCancellable ? cancelAndClearSelectedWithSyncAskActionText() : clearSelectedCompletedAskActionText();
             }
             else if(info.isAnyCancellable)
             {
