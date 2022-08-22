@@ -359,9 +359,15 @@ QStringList Model::getCloudDriveSyncMegaFolders(bool cloudDrive)
         mega::MegaApi* megaApi = MegaSyncApp->getMegaApi();
 
         auto parent_node = std::unique_ptr<MegaNode>(megaApi->getNodeByPath(megaFolder.toStdString().data()));
+
         while(parent_node && parent_node->getParentHandle() != INVALID_HANDLE)
         {
             parent_node = std::unique_ptr<MegaNode>(megaApi->getNodeByHandle(parent_node->getParentHandle()));
+        }
+
+        if(!parent_node)
+        {
+          continue;
         }
 
         if((parent_node->isInShare() && !cloudDrive)
