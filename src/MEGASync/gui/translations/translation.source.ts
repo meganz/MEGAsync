@@ -2547,16 +2547,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translatorcomment>System notification to inform the user that %1 files and %2 folders were successfully downloaded. The %1 is a sentence part for files and %2 for folders.</translatorcomment>
         <translation>%1 and %2 were successfully downloaded</translation>
     </message>
-    <message>
-        <source>Exit app</source>
-        <translatorcomment>One of the messagebox options: Close the app and pause the active transfers</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Stay in app</source>
-        <translatorcomment>One of the messagebox options: Keep the app open and continue with the active transfers</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
     <message numerus="yes">
         <source>There is an active transfer. Exit the app?
 Transfer will automatically resume when you re-open the app.</source>
@@ -2567,6 +2557,16 @@ Transfer will automatically resume when you re-open the app.</numerusform>
             <numerusform>There are active transfers. Exit the app?
 Transfers will automatically resume when you re-open the app.</numerusform>
         </translation>
+    </message>
+    <message>
+        <source>Exit app</source>
+        <translatorcomment>One of the messagebox options: Close the app and pause the active transfers</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Stay in app</source>
+        <translatorcomment>One of the messagebox options: Keep the app open and continue with the active transfers</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3098,11 +3098,6 @@ Transfers will automatically resume when you re-open the app.</numerusform>
         </translation>
     </message>
     <message>
-        <source>Clear transfer?</source>
-        <translatorcomment>Messagebox text to confirm if the user wants to clear a single selected completed transfer</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Cancel transfers?
 All your transfers will be cancelled.</source>
         <translatorcomment>Messagebox text to confirm if the user wants to cancel all the transfers in the all transfers category</translatorcomment>
@@ -3187,6 +3182,11 @@ but your selected completed transfers will be cleared.</source>
     <message>
         <source>Cancel transfer?</source>
         <translatorcomment>Messagebox text to confirm if the user wants to cancel a single transfer</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Clear transfer?</source>
+        <translatorcomment>Messagebox text to confirm if the user wants to clear a single selected completed transfer</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
 </context>
