@@ -3105,7 +3105,7 @@ Transfers will automatically resume when you re-open the app.</numerusform>
     <message>
         <source>Cancel transfers?
 All your transfers will be cancelled.</source>
-		<translatorcomment>Messagebox text to confirm if the user wants to cancel all the transfers in the all transfers category</translatorcomment>
+        <translatorcomment>Messagebox text to confirm if the user wants to cancel all the transfers in the all transfers category</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
