@@ -605,6 +605,8 @@ void InfoDialog::onTransfersStateChanged()
         {
             mResetTransferSummaryWidget.stop();
         }
+
+        ui->wStatus->update();
     }
 }
 
@@ -612,7 +614,7 @@ void InfoDialog::onShowInFolderFinished(bool state)
 {
     if(!state)
     {
-        QMegaMessageBox::warning(nullptr, tr("Error"), tr("Error opening folder"), QMessageBox::Ok);
+        QMegaMessageBox::warning(nullptr, tr("Error"), tr("Folder can't be opened. Check that the folder in your local drive hasn't been deleted or moved."), QMessageBox::Ok);
     }
 }
 
@@ -822,7 +824,7 @@ bool InfoDialog::checkFailedState()
 {
     auto isFailed(false);
 
-    if(app->getTransfersModel() && app->getTransfersModel()->hasFailedTransfers())
+    if(app->getTransfersModel() && app->getTransfersModel()->failedTransfers())
     {
         if(mState != StatusInfo::TRANSFERS_STATES::STATE_FAILED)
         {

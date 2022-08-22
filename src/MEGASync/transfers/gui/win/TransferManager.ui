@@ -2085,7 +2085,7 @@ QGroupBox::title
              </size>
             </property>
             <property name="text">
-             <string>Some issues occurred</string>
+             <string/>
             </property>
             <property name="icon">
              <iconset resource="../../../gui/Resources_win.qrc">

@@ -99,16 +99,5 @@ bool TransferBaseDelegateWidget::isMouseHoverInAction(QToolButton *button, const
 
 void TransferBaseDelegateWidget::onRetryTransfer()
 {
-    QPointer<TransferBaseDelegateWidget> dialog = QPointer<TransferBaseDelegateWidget>(this);
-
-    if (QMegaMessageBox::warning(nullptr, QString::fromUtf8("MEGAsync"),
-                             MegaTransferView::retryAskActionText(1),
-                             QMessageBox::Yes | QMessageBox::No, QMessageBox::No)
-            != QMessageBox::Yes
-            || !dialog)
-    {
-        return;
-    }
-
     emit retryTransfer();
 }

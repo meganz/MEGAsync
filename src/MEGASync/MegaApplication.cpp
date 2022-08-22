@@ -858,9 +858,11 @@ void MegaApplication::updateTrayIcon()
     }
     else if (paused)
     {
-        if(mTransfersModel && mTransfersModel->hasFailedTransfers())
+        long long transfersFailed(mTransfersModel ? mTransfersModel->failedTransfers() : 0);
+
+        if(transfersFailed > 0)
         {
-            tooltipState = QCoreApplication::translate("TransferManager","Some issues occurred");
+            tooltipState = QCoreApplication::translate("TransferManager","Issue found", "", transfersFailed);
             icon = icons["someissues"];
         }
         else
@@ -907,9 +909,11 @@ void MegaApplication::updateTrayIcon()
     }
     else
     {
-        if(mTransfersModel && mTransfersModel->hasFailedTransfers())
+        long long transfersFailed(mTransfersModel ? mTransfersModel->failedTransfers() : 0);
+
+        if(transfersFailed > 0)
         {
-            tooltipState = QCoreApplication::translate("TransferManager","Some issues occurred");
+            tooltipState = QCoreApplication::translate("TransferManager","Issue found", "", transfersFailed);
             icon = icons["someissues"];
         }
         else

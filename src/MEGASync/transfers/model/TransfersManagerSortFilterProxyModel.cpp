@@ -509,6 +509,11 @@ bool TransfersManagerSortFilterProxyModel::areAllSync() const
     return !isEmpty() && mNoSyncTransfers.isEmpty();
 }
 
+bool TransfersManagerSortFilterProxyModel::isAnySync() const
+{
+    return mNoSyncTransfers.size() != transfersCount();
+}
+
 bool TransfersManagerSortFilterProxyModel::areAllCompleted() const
 {
     return mCompletedTransfers.size() > 0 && (mPausedTransfers.isEmpty() && mActiveTransfers.isEmpty() && mFailedTransfers.isEmpty());

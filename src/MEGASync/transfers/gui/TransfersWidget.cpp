@@ -529,17 +529,6 @@ void TransfersWidget::onRetryButtonPressedOnDelegate()
     auto sourceSelection= mProxyModel->mapSelectionToSource(selection);
     auto sourceSelectionIndexes = sourceSelection.indexes();
 
-    QPointer<TransfersWidget> dialog = QPointer<TransfersWidget>(this);
-
-    if (QMegaMessageBox::warning(this, QString::fromUtf8("MEGAsync"),
-                             MegaTransferView::retryAskActionText(sourceSelectionIndexes.size()),
-                             QMessageBox::Yes | QMessageBox::No, QMessageBox::No)
-            != QMessageBox::Yes
-            || !dialog)
-    {
-        return;
-    }
-
     getModel()->retryTransfers(sourceSelectionIndexes);
 }
 
