@@ -3129,13 +3129,6 @@ All the other transfers will be cancelled and cleared.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel transfers?
-Your incomplete sync transfers won&apos;t be cancelled
-but your completed transfers will be cleared.</source>
-        <translatorcomment>Messagebox text to confirm if the user wants to clear all the transfers in a category other than all transfers category but there are sync transfers(they cannot be cancelled)</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Clear transfers?
 All your completed transfers will be cleared.</source>
         <translatorcomment>Messagebox text to confirm if the user wants to clear all the transfers in the completed category</translatorcomment>
@@ -3161,27 +3154,26 @@ All your selected transfers will be cancelled and cleared.</source>
     </message>
     <message>
         <source>Cancel transfers?
-Your incomplete selected sync transfers won&apos;t be cancelled.</source>
-        <translatorcomment>Messagebox text to confirm if the user wants to cancel all the selected transfers but there are sync transfers in the selection (they cannot be cancelled)</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel transfers?
 Your selected incomplete sync transfers won&apos;t be cancelled
 All the other selected transfers will be cancelled and cleared.</source>
         <translatorcomment>Messagebox text to confirm if the user wants to cancel and clear all the selected transfers but there are sync transfers in the selection (they cannot be cancelled)</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel transfers?
-Your selectedincomplete sync transfers won&apos;t be cancelled
-but your selected completed transfers will be cleared.</source>
-        <translatorcomment>Messagebox text to confirm if the user wants to clear all the selected transfers but there are sync transfers in the selection (they cannot be cancelled)</translatorcomment>
+        <source>Cancel transfer?</source>
+        <translatorcomment>Messagebox text to confirm if the user wants to cancel a single transfer</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel transfer?</source>
-        <translatorcomment>Messagebox text to confirm if the user wants to cancel a single transfer</translatorcomment>
+        <source>Clear transfers?
+All the selected completed transfers in this category will be cleared.</source>
+        <translatorcomment>Messagebox text to confirm if the user wants to clear the selected completed transfer</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel transfers?
+Your selected incomplete sync transfers won&apos;t be cancelled.</source>
+        <translatorcomment>Messagebox text to confirm if the user wants to cancel all the selected transfers but there are sync transfers in the selection (they cannot be cancelled)</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>

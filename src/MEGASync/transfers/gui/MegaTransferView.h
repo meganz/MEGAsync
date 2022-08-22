@@ -49,14 +49,14 @@ public:
     static QString cancelAndClearAskActionText();
     static QString cancelAskActionText();
     static QString cancelWithSyncAskActionText();
-    static QString cancelAndClearWithSyncAskActionText(bool haveCancellable);
+    static QString cancelAndClearWithSyncAskActionText();
     static QString clearAllCompletedAskActionText();
     static QString clearCompletedAskActionText();
 
     static QString cancelSelectedAskActionText();
     static QString cancelAndClearSelectedAskActionText();
     static QString cancelSelectedWithSyncAskActionText();
-    static QString cancelAndClearSelectedWithSyncAskActionText(bool haveCancellable);
+    static QString cancelAndClearSelectedWithSyncAskActionText();
     static QString clearSelectedCompletedAskActionText();
 
     static QString pauseActionText(int count);
