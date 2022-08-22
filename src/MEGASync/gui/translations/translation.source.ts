@@ -1095,11 +1095,6 @@ In some cases they may contain details about your data, such as file or folder n
         <translation>The new folder will be merged with the folder at this destination.</translation>
     </message>
     <message>
-        <source>The folder will be renamed as:</source>
-        <translatorcomment>Text explaining the result of the folder rename action</translatorcomment>
-        <translation>The folder will be renamed as:</translation>
-    </message>
-    <message>
         <source>The folder at this destination will be maintained.</source>
         <translatorcomment>Text explaining the result of the folder skip action</translatorcomment>
         <translation>The folder at this destination will be maintained.</translation>
@@ -1113,11 +1108,6 @@ In some cases they may contain details about your data, such as file or folder n
         <source>The file at this destination will be replaced with the new file.</source>
         <translatorcomment>Text explaining the result of the file upload and replace action</translatorcomment>
         <translation>The file at this destination will be replaced with the new file.</translation>
-    </message>
-    <message>
-        <source>The file will be updated with version history:</source>
-        <translatorcomment>Text explaining the result of the file upload and update action</translatorcomment>
-        <translation>The file will be updated with version history:</translation>
     </message>
     <message>
         <source>The file will be renamed as:</source>
@@ -1146,6 +1136,11 @@ In some cases they may contain details about your data, such as file or folder n
             <numerusform>Apply to the other duplicate</numerusform>
             <numerusform>Apply to all %1 duplicates</numerusform>
         </translation>
+    </message>
+    <message>
+        <source>The file will be updated with version history.</source>
+        <translatorcomment>Text explaining the result of the file upload and update action</translatorcomment>
+        <translation>The file will be updated with version history.</translation>
     </message>
 </context>
 <context>
@@ -1194,6 +1189,11 @@ In some cases they may contain details about your data, such as file or folder n
         <source>loading size…</source>
         <translatorcomment>Text shown while the local file/folder size is calculated</translatorcomment>
         <translation>loading size…</translation>
+    </message>
+    <message>
+        <source>Learn more</source>
+        <translatorcomment>Underline link label to open a help.mega.io article</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
