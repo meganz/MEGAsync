@@ -586,9 +586,11 @@ void NodeSelector::onSelectionChanged(const QItemSelection& selected, const QIte
     Q_UNUSED(deselected)
     if(mSelectMode == UPLOAD_SELECT || mSelectMode == DOWNLOAD_SELECT)
     {
-        ui->bOk->setEnabled(true);
+        ui->bOk->setEnabled(!selected.indexes().isEmpty());
         return;
     }
+
+    ui->bOk->setEnabled(false);
     foreach(auto& index, selected.indexes())
     {
         auto source_idx = mProxyModel->getIndexFromSource(index);
