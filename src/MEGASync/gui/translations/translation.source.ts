@@ -3184,7 +3184,7 @@ Your selected incomplete sync transfers won&apos;t be cancelled.</source>
     <message numerus="yes">
         <source>Cancel and clear transfer</source>
         <translatorcomment>Context menu action to resume cancel the active transfers and clear the completed transfers (multiple transfers selected)</translatorcomment>
-		<translation type="unfinished">
+        <translation type="unfinished">
             <numerusform>Cancel and clear transfer</numerusform>
             <numerusform>Cancel and clear transfers</numerusform>
         </translation>
