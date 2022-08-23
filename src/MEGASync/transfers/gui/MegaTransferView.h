@@ -63,6 +63,7 @@ public:
     static QString resumeActionText(int count);
     static QString cancelActionText(int count);
     static QString clearActionText(int count);
+    static QString cancelAndClearActionText(int count);
 
     static QString cancelSingleActionText();
     static QString clearSingleActionText();
