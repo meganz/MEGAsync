@@ -352,7 +352,7 @@ void TransfersWidget::updateHeaderItems()
             mHeaderInfo.headerTime = tr("Time completed");
             mHeaderInfo.headerSpeed = tr("Avg. speed");
         }
-        else if (mCurrentTab > TransfersWidget::TYPES_TAB_BASE && mCurrentTab < TransfersWidget::TYPES_LAST)
+        else if (mCurrentTab == TransfersWidget::SEARCH_TAB || (mCurrentTab > TransfersWidget::TYPES_TAB_BASE && mCurrentTab < TransfersWidget::TYPES_LAST))
         {
             mHeaderInfo.headerTime = tr("Time");
             mHeaderInfo.headerSpeed = tr("Speed");
@@ -513,7 +513,7 @@ void TransfersWidget::onCancelClearButtonPressedOnDelegate()
 
     if (QMegaMessageBox::warning(this, QString::fromUtf8("MEGAsync"),
                              info.actionText,
-                             QMessageBox::Yes | QMessageBox::No, QMessageBox::No)
+                             QMessageBox::Yes | QMessageBox::No, QMessageBox::No, info.buttonsText)
             != QMessageBox::Yes
             || !dialog)
     {

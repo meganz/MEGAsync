@@ -118,6 +118,11 @@ QString MegaTransferView::clearActionText(int count)
     return tr("Clear transfer" , "", count);
 }
 
+QString MegaTransferView::cancelAndClearActionText(int count)
+{
+    return tr("Cancel and clear transfer" , "", count);
+}
+
 static QMap<QMessageBox::StandardButton, QString> CANCEL_BUTTONS_TEXT{{QMessageBox::Yes, QString::fromLatin1(QT_TR_NOOP("Yes, cancel"))}, {QMessageBox::No, QString::fromLatin1(QT_TR_NOOP("No, continue"))}};
 static QMap<QMessageBox::StandardButton, QString> CLEAR_BUTTONS_TEXT{{QMessageBox::Yes, QString::fromLatin1(QT_TR_NOOP("Yes, clear"))}, {QMessageBox::No, QString::fromLatin1(QT_TR_NOOP("No, continue"))}};
 
@@ -748,7 +753,7 @@ QMenu* MegaTransferView::createContextMenu()
     if(enableCancel)
     {
         auto cancelAction = new QAction(QIcon(QLatin1String(":/images/transfer_manager/context_menu/cancel_transfer_ico.png")),
-                                        cancelActionText(indexes.size()), this);
+                                         enableClear ? cancelAndClearActionText(indexes.size()) : cancelActionText(indexes.size()), this);
         connect(cancelAction, &QAction::triggered,
                 this, &MegaTransferView::cancelSelectedClicked);
 

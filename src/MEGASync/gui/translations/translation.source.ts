@@ -1832,7 +1832,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>Failed: %1</source>
-        <translatorcomment>Tooltip for show transfer failed reason</translatorcomment>
+        <translatorcomment>Tooltip for show transfer failed reason. %1 is a placeholder for the SDK error reason.</translatorcomment>
         <translation>Failed: %1</translation>
     </message>
     <message>
@@ -3180,6 +3180,14 @@ Your selected incomplete sync transfers won&apos;t be cancelled.</source>
         <source>Clear transfer?</source>
         <translatorcomment>Messagebox text to confirm if the user wants to clear a single selected completed transfer</translatorcomment>
         <translation type="unfinished"></translation>
+    </message>
+    <message numerus="yes">
+        <source>Cancel and clear transfer</source>
+        <translatorcomment>Context menu action to resume cancel the active transfers and clear the completed transfers (multiple transfers selected)</translatorcomment>
+		<translation type="unfinished">
+            <numerusform>Cancel and clear transfer</numerusform>
+            <numerusform>Cancel and clear transfers</numerusform>
+        </translation>
     </message>
 </context>
 <context>
@@ -5940,7 +5948,7 @@ Please delete the folder sync from settings to cancel them.</translation>
     </message>
     <message>
         <source>Time left</source>
-        <translatorcomment>Time table header column name for all transfers categories</translatorcomment>
+        <translatorcomment>Time table header column name for all transfers, downloads, uploads categories (where there are only active transfers)</translatorcomment>
         <translation>Time left</translation>
     </message>
     <message>
@@ -5955,7 +5963,7 @@ Please delete the folder sync from settings to cancel them.</translation>
     </message>
     <message>
         <source>Time</source>
-        <translatorcomment>Time table header column name for the rest of the transfers categories</translatorcomment>
+        <translatorcomment>Time table header column name for media types and search categories</translatorcomment>
         <translation>Time</translation>
     </message>
     <message>

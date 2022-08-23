@@ -246,22 +246,30 @@ bool TransfersManagerSortFilterProxyModel::filterAcceptsRow(int sourceRow, const
             }
         }
 
+        bool isActive(false);
 
         //Not needed to add the logic when the d is a sync transfer, as the sync state is permanent
-        if(accept && !d->isSyncTransfer() && !mNoSyncTransfers.contains(d->mTag))
+        if(accept && (!d->isCompleted() && !d->isCompleting()))
         {
-            mNoSyncTransfers.insert(d->mTag);
-        }
-
-        //As the active state can change in time, add both logics to add or remove
-        if(accept && (d->isActiveOrPending() && !d->isCompleting()))
-        {
-            if(!mActiveTransfers.contains(d->mTag))
+            //As the active state can change in time, add both logics to add or remove
+            if(d->isActiveOrPending())
             {
-                mActiveTransfers.insert(d->mTag);
+                if(!mActiveTransfers.contains(d->mTag))
+                {
+                    mActiveTransfers.insert(d->mTag);
+                }
+
+                isActive = true;
+            }
+
+            //As the No sync does not change in time, the remove logic is not added
+            if(!d->isSyncTransfer() && !mNoSyncTransfers.contains(d->mTag))
+            {
+                mNoSyncTransfers.insert(d->mTag);
             }
         }
-        else
+
+        if(!isActive)
         {
             removeActiveTransferFromCounter(d->mTag);
         }
