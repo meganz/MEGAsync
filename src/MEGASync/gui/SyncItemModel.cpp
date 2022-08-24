@@ -198,9 +198,7 @@ void SyncItemModel::insertSync(std::shared_ptr<SyncSetting> sync)
             if((*it) == sync)
             {
                 int pos = it - mList.cbegin();
-                emit dataChanged(index(pos, Column::ENABLED, QModelIndex()),
-                                 index(pos, Column::ENABLED, QModelIndex()),
-                                 QVector<int>(Qt::CheckStateRole));
+                sendDataChanged(pos);
                 break;
             }
         }
@@ -234,6 +232,13 @@ void SyncItemModel::removeSync(std::shared_ptr<SyncSetting> sync)
         }
     }
     emit syncUpdateFinished(sync);
+}
+
+void SyncItemModel::sendDataChanged(int row)
+{
+    emit dataChanged(index(row, Column::ENABLED, QModelIndex()),
+                     index(row, Column::MENU, QModelIndex()),
+                     QVector<int>()<< Qt::CheckStateRole << Qt::DecorationRole << Qt::ToolTipRole);
 }
 
 

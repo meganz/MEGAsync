@@ -65,6 +65,8 @@ private:
     SyncModel* mSyncModel;
     QList<std::shared_ptr<SyncSetting>> mList;
     mega::MegaSync::SyncType mSyncType;
+
+    virtual void sendDataChanged(int row);
 };
 
 

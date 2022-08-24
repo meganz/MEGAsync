@@ -27,6 +27,9 @@ public:
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
     void fillData() override;
 
+private:
+    void sendDataChanged(int pos) override;
+
 };
 
 #endif // BACKUPITEMMODEL_H

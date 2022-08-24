@@ -43,6 +43,13 @@ void BackupItemModel::fillData()
     setMode(mega::MegaSync::SyncType::TYPE_BACKUP);
 }
 
+void BackupItemModel::sendDataChanged(int row)
+{
+    emit dataChanged(index(row, Column::ENABLED, QModelIndex()),
+                     index(row, Column::MENU, QModelIndex()),
+                     QVector<int>()<< Qt::CheckStateRole << Qt::DecorationRole << Qt::ToolTipRole);
+}
+
 QVariant BackupItemModel::data(const QModelIndex &index, int role) const
 {
     if (!index.isValid())
