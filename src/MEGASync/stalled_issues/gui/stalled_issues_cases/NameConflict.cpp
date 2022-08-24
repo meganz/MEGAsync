@@ -23,17 +23,11 @@ NameConflictTitle::NameConflictTitle(QWidget *parent)
 
 void NameConflictTitle::initTitle()
 {
-    QFont titleFont;
-    titleFont.setFamily(QLatin1String("Lato"));
-    titleFont.setBold(true);
-    titleFont.setPixelSize(13);
-    setTitleFont(titleFont);
-
     setRoundedCorners(StalledIssueActionTitle::RoundedCorners::ALL_CORNERS);
     QIcon renameIcon(QString::fromUtf8("://images/StalledIssues/rename_node_default.png"));
     QIcon removeIcon(QString::fromUtf8("://images/StalledIssues/remove_default.png"));
-    addActionButton(renameIcon, tr("Rename"), RENAME_ID);
-    addActionButton(removeIcon, QString(), REMOVE_ID);
+    addActionButton(renameIcon, tr("Rename"), RENAME_ID, false);
+    addActionButton(removeIcon, QString(), REMOVE_ID, false);
 }
 
 //NAME CONFLICT

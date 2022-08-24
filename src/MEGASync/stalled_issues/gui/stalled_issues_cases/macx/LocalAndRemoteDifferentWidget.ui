@@ -77,7 +77,7 @@
    <item>
     <layout class="QVBoxLayout" name="chooseLayout">
      <property name="spacing">
-      <number>0</number>
+      <number>28</number>
      </property>
      <property name="bottomMargin">
       <number>0</number>

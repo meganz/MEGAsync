@@ -10,10 +10,12 @@
 
 const char* BUTTON_ID = "button_id";
 const char* ONLY_ICON = "onlyIcon";
+const char* MAIN_BUTTON = "main";
 
 StalledIssueActionTitle::StalledIssueActionTitle(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::StalledIssueChooseTitle),
+    mIsCloud(false),
     mRoundedCorners(RoundedCorners::TOP_CORNERS)
 {
     ui->setupUi(this);
@@ -37,18 +39,13 @@ QString StalledIssueActionTitle::title() const
     return mTitle;
 }
 
-void StalledIssueActionTitle::setTitleFont(const QFont &font)
-{
-    ui->titleLabel->setStyleSheet(QString());
-    ui->titleLabel->setFont(font);
-}
-
-void StalledIssueActionTitle::addActionButton(const QIcon& icon,const QString &text, int id)
+void StalledIssueActionTitle::addActionButton(const QIcon& icon,const QString &text, int id, bool mainButton)
 {
     auto button = new QPushButton(icon, text, this);
 
     button->setProperty(BUTTON_ID, id);
     button->setProperty(ONLY_ICON, false);
+    button->setProperty(MAIN_BUTTON,mainButton);
     button->setCursor(Qt::PointingHandCursor);
     connect(button, &QPushButton::clicked, this, [this]()
     {
@@ -64,9 +61,10 @@ void StalledIssueActionTitle::addActionButton(const QIcon& icon,const QString &t
         if(text.isEmpty())
         {
             button->setProperty(ONLY_ICON, true);
-            ui->actionContainer->setStyleSheet(ui->actionContainer->styleSheet());
         }
     }
+
+    ui->actionContainer->setStyleSheet(ui->actionContainer->styleSheet());
 }
 
 void StalledIssueActionTitle::hideActionButton(int id)
@@ -100,10 +98,25 @@ void StalledIssueActionTitle::showIcon()
     ui->icon->show();
 }
 
-void StalledIssueActionTitle::addMessage(const QString &message)
+void StalledIssueActionTitle::addMessage(const QString &message, const QPixmap& pixmap)
 {
-    auto messageLabel = new QLabel(message);
-    ui->actionLayout->addWidget(messageLabel);
+    QWidget* labelContainer= new QWidget(this);
+    QHBoxLayout* labelContainerLayout = new QHBoxLayout(this);
+    labelContainerLayout->setContentsMargins(0,0,10,0);
+    labelContainer->setLayout(labelContainerLayout);
+
+    if(!pixmap.isNull())
+    {
+        auto iconLabel = new QLabel(this);
+        iconLabel->setPixmap(pixmap);
+        labelContainerLayout->addWidget(iconLabel);
+    }
+
+    auto messageLabel = new QLabel(message,this);
+    messageLabel->setText(message);
+    labelContainerLayout->addWidget(messageLabel);
+
+    ui->actionLayout->addWidget(labelContainer);
 }
 
 void StalledIssueActionTitle::setIndent(int indent)
@@ -117,6 +130,16 @@ void StalledIssueActionTitle::setRoundedCorners(RoundedCorners type)
 {
     mRoundedCorners = type;
     update();
+}
+
+void StalledIssueActionTitle::setDisabled(bool state)
+{
+    ui->titleContainer->setDisabled(state);
+}
+
+void StalledIssueActionTitle::setIsCloud(bool state)
+{
+    mIsCloud = state;
 }
 
 void StalledIssueActionTitle::paintEvent(QPaintEvent*)

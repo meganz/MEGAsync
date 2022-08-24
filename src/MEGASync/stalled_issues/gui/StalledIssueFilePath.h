@@ -22,6 +22,7 @@ public:
     void setIndent(int indent);
     void updateUi(StalledIssueDataPtr data);
     void showFullPath();
+    void hideLocalOrRemoteTitle();
 
 protected:
     bool eventFilter(QObject *watched, QEvent *event) override;

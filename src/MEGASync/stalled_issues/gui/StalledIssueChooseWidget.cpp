@@ -16,17 +16,18 @@ StalledIssueChooseWidget::StalledIssueChooseWidget(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    ui->path->setIndent(StalledIssueHeader::ICON_INDENT);
+    ui->path->setIndent(StalledIssueHeader::GROUPBOX_CONTENTS_INDENT);
+    ui->path->hideLocalOrRemoteTitle();
     auto layoutMargins = ui->fileNameContainer->contentsMargins();
-    layoutMargins.setLeft(StalledIssueHeader::ICON_INDENT);
+    layoutMargins.setLeft(StalledIssueHeader::GROUPBOX_CONTENTS_INDENT);
     ui->fileNameContainer->setContentsMargins(layoutMargins);
 
     ui->chooseTitle->installEventFilter(this);
-    ui->chooseTitle->setIndent(StalledIssueHeader::ICON_INDENT);
+    ui->chooseTitle->setIndent(StalledIssueHeader::GROUPBOX_CONTENTS_INDENT);
 
     ui->fileNameText->installEventFilter(this);
 
-    ui->chooseTitle->addActionButton(QIcon(), tr("Choose"), BUTTON_ID);
+    ui->chooseTitle->addActionButton(QIcon(), tr("Choose"), BUTTON_ID, true);
     connect(ui->chooseTitle, &StalledIssueActionTitle::actionClicked, this, &StalledIssueChooseWidget::onActionClicked);
 }
 
@@ -40,6 +41,9 @@ void StalledIssueChooseWidget::setData(StalledIssueDataPtr data)
     auto fileName = data->getFileName();
 
     ui->chooseTitle->setTitle(data->isCloud() ? tr("Remote Copy") : tr("Local Copy"));
+    ui->chooseTitle->setIsCloud(data->isCloud());
+    ui->chooseTitle->showIcon();
+
     ui->fileNameText->setText(fileName);
 
     auto fileTypeIcon = Utilities::getCachedPixmap(Utilities::getExtensionPixmapName(
@@ -75,9 +79,17 @@ void StalledIssueChooseWidget::setData(StalledIssueDataPtr data)
         {
             ui->chooseTitle->setDisabled(true);
             ui->chooseTitle->hideActionButton(BUTTON_ID);
+
+            QIcon icon;
             if(data->isSolved())
             {
-                ui->chooseTitle->addMessage(tr("Chosen"));
+                icon.addFile(QString::fromUtf8(":/images/StalledIssues/check_default.png"));
+                ui->chooseTitle->addMessage(tr("Chosen"), icon.pixmap(24,24));
+            }
+            else
+            {
+                icon.addFile(QString::fromUtf8(":/images/StalledIssues/remove_default.png"));
+                ui->chooseTitle->addMessage(tr("Moved to bin"), icon.pixmap(16,16));
             }
         }
     }

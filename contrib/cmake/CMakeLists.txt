@@ -365,6 +365,7 @@ set (MOC_INPUT
     ${MEGAsyncDir}/transfers/gui/DuplicatedNodeDialogs/DuplicatedUploadChecker.h
     ${MEGAsyncDir}/transfers/gui/SomeIssuesOccurredMessage.h
     ${MEGAsyncDir}/stalled_issues/gui/StalledIssueChooseWidget.h
+	${MEGAsyncDir}/stalled_issues/gui/StalledIssueChooseTitle.h
 	${MEGAsyncDir}/stalled_issues/gui/StalledIssueActionTitle.h
     ${MEGAsyncDir}/stalled_issues/gui/StalledIssueFilePath.h
     ${MEGAsyncDir}/stalled_issues/gui/StalledIssueHeader.h
@@ -548,6 +549,7 @@ set (SRCS
     ${MEGAsyncDir}/stalled_issues/model/StalledIssuesUtilities.cpp
     ${MEGAsyncDir}/stalled_issues/gui/StalledIssueChooseWidget.cpp
     ${MEGAsyncDir}/stalled_issues/gui/StalledIssueActionTitle.cpp
+    ${MEGAsyncDir}/stalled_issues/gui/StalledIssueChooseTitle.cpp
     ${MEGAsyncDir}/stalled_issues/gui/StalledIssueFilePath.cpp
     ${MEGAsyncDir}/stalled_issues/gui/StalledIssueHeader.cpp
     ${MEGAsyncDir}/stalled_issues/gui/StalledIssueLoadingItem.cpp

@@ -4,6 +4,7 @@ INCLUDEPATH += $$PWD/gui
 INCLUDEPATH += $$PWD/model
 
 SOURCES +=  \
+    $$PWD/gui/StalledIssueChooseTitle.cpp \
     $$PWD/gui/StalledIssueActionTitle.cpp \
     $$PWD/gui/StalledIssueLoadingItem.cpp \
     $$PWD/gui/StalledIssueTab.cpp \
@@ -26,6 +27,7 @@ SOURCES +=  \
     $$PWD/model/StalledIssuesProxyModel.cpp
 
 HEADERS  +=   \
+    $$PWD/gui/StalledIssueChooseTitle.h \
     $$PWD/gui/StalledIssueActionTitle.h \
     $$PWD/gui/StalledIssueLoadingItem.h \
     $$PWD/gui/StalledIssueTab.h \

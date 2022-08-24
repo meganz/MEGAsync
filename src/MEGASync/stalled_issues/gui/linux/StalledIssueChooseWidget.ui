@@ -75,7 +75,7 @@
        <number>0</number>
       </property>
       <item>
-       <widget class="StalledIssueActionTitle" name="chooseTitle" native="true">
+       <widget class="StalledIssueChooseTitle" name="chooseTitle" native="true">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
           <horstretch>0</horstretch>
@@ -95,7 +95,7 @@
          </size>
         </property>
         <property name="styleSheet">
-         <string notr="true">background-color: #F5F5F5;</string>
+         <string notr="true"/>
         </property>
        </widget>
       </item>
@@ -123,10 +123,13 @@
           <number>6</number>
          </property>
          <property name="leftMargin">
-          <number>0</number>
+          <number>4</number>
          </property>
          <property name="rightMargin">
           <number>9</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
          </property>
          <item alignment="Qt::AlignLeft">
           <widget class="QLabel" name="fileTypeIcon">
@@ -206,23 +209,10 @@
        </widget>
       </item>
       <item>
-       <spacer name="verticalSpacer">
-        <property name="orientation">
-         <enum>Qt::Vertical</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>0</width>
-          <height>2</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-      <item>
        <widget class="QWidget" name="pathContainer" native="true">
         <layout class="QHBoxLayout" name="horizontalLayout">
          <property name="leftMargin">
-          <number>0</number>
+          <number>4</number>
          </property>
          <property name="topMargin">
           <number>0</number>
@@ -252,9 +242,9 @@
    <container>1</container>
   </customwidget>
   <customwidget>
-   <class>StalledIssueActionTitle</class>
+   <class>StalledIssueChooseTitle</class>
    <extends>QWidget</extends>
-   <header>StalledIssueActionTitle.h</header>
+   <header>StalledIssueChooseTitle.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

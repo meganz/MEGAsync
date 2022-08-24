@@ -77,6 +77,12 @@ void StalledIssueFilePath::showFullPath()
     mShowFullPath = true;
 }
 
+void StalledIssueFilePath::hideLocalOrRemoteTitle()
+{
+    ui->LocalOrRemoteIcon->hide();
+    ui->LocalOrRemoteText->hide();
+}
+
 void StalledIssueFilePath::fillFilePath()
 {
     if(!mData->getPath().isEmpty())

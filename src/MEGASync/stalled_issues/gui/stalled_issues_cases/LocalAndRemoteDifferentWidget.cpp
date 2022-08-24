@@ -19,7 +19,7 @@ LocalAndRemoteDifferentWidget::LocalAndRemoteDifferentWidget(QWidget *parent) :
     connect(ui->chooseRemoteCopy, &StalledIssueChooseWidget::chooseButtonClicked, this, &LocalAndRemoteDifferentWidget::onRemoteButtonClicked);
 
     auto margins = ui->chooseLayout->contentsMargins();
-    margins.setLeft(StalledIssueHeader::ARROW_INDENT);
+    margins.setLeft(StalledIssueHeader::GROUPBOX_INDENT);
     ui->chooseLayout->setContentsMargins(margins);
 
     ui->selectLabel->setIndent(StalledIssueHeader::BODY_INDENT);
