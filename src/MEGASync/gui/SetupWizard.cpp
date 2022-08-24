@@ -1180,7 +1180,7 @@ void SetupWizard::on_lTermsLink_linkActivated(const QString& /*link*/)
 
 void SetupWizard::on_bLearMore_clicked()
 {
-    QString helpUrl = Preferences::BASE_URL + QString::fromAscii("/help/client/megasync/syncing/how-to-setup-sync-client-can-i-specify-which-folder-s-to-sync-576c80e2886688e6028b4591\\");
+    QString helpUrl = QString::fromAscii("https://help.mega.io/installs-apps/desktop-syncing");
     QtConcurrent::run(QDesktopServices::openUrl, QUrl(helpUrl));
 }
 
