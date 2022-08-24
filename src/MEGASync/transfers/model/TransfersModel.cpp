@@ -6,6 +6,7 @@
 #include "QMegaMessageBox.h"
 #include "EventUpdater.h"
 #include "SettingsDialog.h"
+#include "PlatformStrings.h"
 
 #include <QSharedData>
 
@@ -1201,7 +1202,7 @@ void TransfersModel::showSyncCancelledWarning()
                                                                                           "Please delete the folder sync from settings to cancel them."),
                                                            QMessageBox::No | QMessageBox::Yes, mCancelledFrom);
         removeSync->setButtonText(QMessageBox::No, tr("Dismiss"));
-        removeSync->setButtonText(QMessageBox::Yes, tr("Open settings"));
+        removeSync->setButtonText(QMessageBox::Yes, PlatformStrings::openSettings());
 
         auto result = removeSync->exec();
 
@@ -1891,6 +1892,7 @@ bool TransfersModel::moveRows(const QModelIndex &sourceParent, const QList<int>&
     if(!rows.isEmpty())
     {
         TransferTag tagMoved(-1);
+        auto totalRows (rowCount(DEFAULT_IDX));
 
         foreach(auto sourceRow, rows)
         {
@@ -1905,8 +1907,6 @@ bool TransfersModel::moveRows(const QModelIndex &sourceParent, const QList<int>&
                 bool ascending (destinationChild < sourceRow ? false : true);
 
                 QList<TransferTag> tagsToMove;
-
-                auto rows (rowCount(DEFAULT_IDX));
 
                 QMutexLocker lock(&mModelMutex);
 
@@ -1932,7 +1932,7 @@ bool TransfersModel::moveRows(const QModelIndex &sourceParent, const QList<int>&
                     {
                         mMegaApi->moveTransferToFirstByTag(tag);
                     }
-                    else if (destinationChild == rows)
+                    else if (destinationChild == totalRows)
                     {
                         mMegaApi->moveTransferToLastByTag(tag);
                     }
