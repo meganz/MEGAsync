@@ -176,11 +176,11 @@ QString RenameLocalNodeDialog::errorText(const QString& newFileName) const
     {
         if(localNode.isFile())
         {
-            return tr("File can’t be renamed to %1").arg(newFileName);
+            return tr("File can’t be renamed to \"%1\"").arg(newFileName);
         }
         else
         {
-            return tr("Folder can’t be renamed to %1").arg(newFileName);
+            return tr("Folder can’t be renamed to \"%1\"").arg(newFileName);
         }
     }
 

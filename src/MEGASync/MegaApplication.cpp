@@ -13,6 +13,7 @@
 #include "ConnectivityChecker.h"
 #include "TransferMetadata.h"
 #include "DuplicatedNodeDialogs/DuplicatedNodeDialog.h"
+#include "PlatformStrings.h"
 
 #include <QTranslator>
 #include <QClipboard>
@@ -1327,16 +1328,10 @@ if (!preferences->lastExecutionTime())
 
     if (preferences->getNotifyDisabledSyncsOnLogin())
     {
+        QMessageBox msg(QMessageBox::Warning, QCoreApplication::applicationName(),
+                       PlatformStrings::syncsDisableWarning());
 
-#ifdef __APPLE__
-        QMessageBox msg(QMessageBox::Warning, QCoreApplication::applicationName(),
-                        tr("One or more syncs have been disabled. Go to preferences to enable them again."));
-        QPushButton *openPreferences = msg.addButton(tr("Open Preferences"), QMessageBox::YesRole);
-#else
-        QMessageBox msg(QMessageBox::Warning, QCoreApplication::applicationName(),
-                        tr("One or more syncs have been disabled. Go to settings to enable them again."));
-        QPushButton *openPreferences = msg.addButton(tr("Open Settings"), QMessageBox::YesRole);
-#endif
+        auto openPreferences = msg.addButton(PlatformStrings::openSettings(), QMessageBox::YesRole);
         msg.addButton(tr("Dismiss"), QMessageBox::NoRole);
         msg.setDefaultButton(openPreferences);
         msg.exec();
