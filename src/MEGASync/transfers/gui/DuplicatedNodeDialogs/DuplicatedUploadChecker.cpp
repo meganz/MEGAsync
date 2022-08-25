@@ -70,7 +70,7 @@ void DuplicatedUploadFile::fillUi(DuplicatedNodeDialog *dialog, std::shared_ptr<
         else
         {
             uploadItem->setInfo(conflict, NodeItemType::FILE_UPLOAD_AND_UPDATE);
-            uploadItem->setDescription(DuplicatedNodeDialog::tr("The file will be updated with version history."));
+            uploadItem->setDescription(DuplicatedNodeDialog::tr("The file at this destination will be updated with a new version."));
             uploadItem->showLearnMore(QLatin1String("https://help.mega.io/files-folders/restore-delete/file-version-history"));
         }
 
