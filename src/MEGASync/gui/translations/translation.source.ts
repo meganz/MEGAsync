@@ -1138,9 +1138,9 @@ In some cases they may contain details about your data, such as file or folder n
         </translation>
     </message>
     <message>
-        <source>The file will be updated with version history.</source>
-        <translatorcomment>Text explaining the result of the file upload and update action</translatorcomment>
-        <translation>The file will be updated with version history.</translation>
+        <source>The file at this destination will be updated with a new version.</source>
+	<translatorcomment>Text explaining the result of the file upload and update action</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
