@@ -125,7 +125,7 @@ void StalledIssueChooseWidget::setSolved(bool state)
 {
     ui->chooseTitle->setSolved(state);
 
-    if(state)
+    if(state && !ui->fileNameContainer->graphicsEffect() && !ui->pathContainer->graphicsEffect())
     {
         auto fileNameEffect = new QGraphicsOpacityEffect(this);
         fileNameEffect->setOpacity(0.30);

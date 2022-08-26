@@ -134,9 +134,12 @@ void NameConflict::removeConflictedNameWidget(QWidget* widget)
 
 void NameConflict::setSolved()
 {
-    auto effect = new QGraphicsOpacityEffect(this);
-    effect->setOpacity(0.30);
-    ui->pathContainer->setGraphicsEffect(effect);
+    if(!ui->pathContainer->graphicsEffect())
+    {
+        auto effect = new QGraphicsOpacityEffect(this);
+        effect->setOpacity(0.30);
+        ui->pathContainer->setGraphicsEffect(effect);
+    }
 }
 
 void NameConflict::onActionClicked(int actionId)

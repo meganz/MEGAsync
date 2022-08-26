@@ -128,7 +128,7 @@ void StalledIssueActionTitle::setSolved(bool state)
     ui->contents->setProperty(DISCARDED,state);
     setStyleSheet(styleSheet());
 
-    if(state)
+    if(state && !ui->titleContainer->graphicsEffect())
     {
         auto effect = new QGraphicsOpacityEffect(this);
         effect->setOpacity(0.30);

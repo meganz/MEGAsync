@@ -31,8 +31,10 @@ public:
     void reset();
 
 private:
-    mutable QMap<int, QPointer<StalledIssueHeader>> mStalledIssueHeaderWidgets;
+    mutable QMap<int,QPointer<StalledIssueHeader>> mStalledIssueHeaderWidgets;
     mutable QMap<int, QMap<int, QPointer<StalledIssueBaseDelegateWidget>>> mStalledIssueWidgets;
+
+    int getMaxCacheRow(int row) const;
 
     StalledIssueBaseDelegateWidget* createBodyWidget(const QModelIndex& index, QWidget *parent, const StalledIssueVariant &issue) const;
     StalledIssueHeader* createHeaderWidget(const QModelIndex& index, QWidget *parent, const StalledIssueVariant &issue) const;

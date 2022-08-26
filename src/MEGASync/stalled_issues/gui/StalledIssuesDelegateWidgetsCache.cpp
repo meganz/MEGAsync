@@ -26,16 +26,24 @@ void StalledIssuesDelegateWidgetsCache::reset()
     }
 }
 
+int StalledIssuesDelegateWidgetsCache::getMaxCacheRow(int row) const
+{
+    auto nbRowsMaxInView(30);
+    return row % nbRowsMaxInView;
+}
+
 StalledIssueHeader *StalledIssuesDelegateWidgetsCache::getStalledIssueHeaderWidget(const QModelIndex &index, QWidget *parent, const StalledIssueVariant &issue) const
 {
-    auto row = index.row() % 10;
+    StalledIssueHeader* header(nullptr);
 
-    auto header = mStalledIssueHeaderWidgets[row];
+    auto row = getMaxCacheRow(index.row());
+    header = mStalledIssueHeaderWidgets.value(row);
 
     if(!header)
     {
         header = createHeaderWidget(index, parent, issue);
         header->hide();
+        mStalledIssueHeaderWidgets.insert(row, header);
     }
     else
     {
@@ -47,11 +55,11 @@ StalledIssueHeader *StalledIssuesDelegateWidgetsCache::getStalledIssueHeaderWidg
 
 StalledIssueBaseDelegateWidget *StalledIssuesDelegateWidgetsCache::getStalledIssueInfoWidget(const QModelIndex &index, QWidget *parent, const StalledIssueVariant &issue) const
 {
-    auto row = index.parent().row() % 10;
+    auto row = getMaxCacheRow(index.row());
 
     auto reason = issue.consultData()->getReason();
     auto& itemsByRowMap = mStalledIssueWidgets[toInt(reason)];
-    auto item = itemsByRowMap[row];
+    auto& item = itemsByRowMap[row];
 
     if(!item)
     {
@@ -122,7 +130,6 @@ StalledIssueBaseDelegateWidget *StalledIssuesDelegateWidgetsCache::createBodyWid
     return item;
 }
 
-
 bool StalledIssuesDelegateWidgetsCache::adaptativeHeight(mega::MegaSyncStall::SyncStallReason reason)
 {
     switch(reason)
@@ -146,8 +153,6 @@ bool StalledIssuesDelegateWidgetsCache::adaptativeHeight(mega::MegaSyncStall::Sy
         default:
             return false;
     }
-
-    return false;
 }
 
 StalledIssueHeader *StalledIssuesDelegateWidgetsCache::createHeaderWidget(const QModelIndex &index, QWidget *parent, const StalledIssueVariant &issue) const

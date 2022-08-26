@@ -53,6 +53,13 @@ void StalledIssueHeader::issueIgnored()
     ui->ignoreFileButton->hide();
     QIcon icon(QString::fromUtf8(":/images/StalledIssues/check_default.png"));
     showMessage(tr("Ignored"), icon.pixmap(24,24));
+
+    if(!ui->titleContainer->graphicsEffect())
+    {
+        auto fileNameEffect = new QGraphicsOpacityEffect(this);
+        fileNameEffect->setOpacity(0.30);
+        ui->titleContainer->setGraphicsEffect(fileNameEffect);
+    }
 }
 
 void StalledIssueHeader::showAction(const QString &actionButtonText)
