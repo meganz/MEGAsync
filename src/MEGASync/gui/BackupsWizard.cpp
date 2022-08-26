@@ -628,7 +628,7 @@ void BackupsWizard::on_bMoreFolders_clicked()
 {
     const auto homePaths (QStandardPaths::standardLocations(QStandardPaths::HomeLocation));
     QString d (QFileDialog::getExistingDirectory(this,
-                                                 tr("Choose Directory"),
+                                                 tr("Choose directory"),
                                                  homePaths.first(),
                                                  QFileDialog::ShowDirsOnly
                                                  | QFileDialog::DontResolveSymlinks));
@@ -734,6 +734,7 @@ void BackupsWizard::setupComplete()
         qDebug("Backups Wizard: setup completed successfully");
         // We are now done, exit
         // No error: show success message!
+        mUi->lTitle->setText(tr("Backup created","", mBackupsStatus.size()));
         mUi->lSuccessText->setText(tr("We're backing up your folder. The time this takes depends on the files in this folder.","", mBackupsStatus.size()));
         setCurrentWidgetsSteps(mUi->pSuccessfull);
 
@@ -851,7 +852,7 @@ void BackupsWizard::onSyncAddRequestStatus(int errorCode, const QString& errorMs
                     mErrList.append(it.value().syncName);
                     QIcon   warnIcon (QIcon(QLatin1String("://images/icons/folder/folder-mono-with-warning_24.png")));
                     QString tooltipMsg (item->data(Qt::UserRole).toString() + QLatin1Char('\n')
-                                        + tr("Error: ") + msg);
+                                        + tr("Error: %1").arg(msg));
                     item->setData(warnIcon, Qt::DecorationRole);
                     item->setData(tooltipMsg, Qt::ToolTipRole);
                 }

@@ -855,7 +855,7 @@ color:#333333;
 }</string>
            </property>
            <property name="text">
-            <string>Backup created</string>
+            <string notr="true">Success Title</string>
            </property>
           </widget>
          </item>
@@ -944,7 +944,7 @@ color:#333333;
 }</string>
            </property>
            <property name="text">
-            <string>Title</string>
+            <string notr="true">Title</string>
            </property>
           </widget>
          </item>
@@ -956,7 +956,7 @@ color:#666666;
 }</string>
            </property>
            <property name="text">
-            <string>Body</string>
+            <string notr="true">Body</string>
            </property>
           </widget>
          </item>

@@ -164,7 +164,7 @@ padding-left:20px;
 }</string>
             </property>
             <property name="text">
-             <string>Move this folder from the Vault to another location in your Cloud Drive to get full access to your data. This folder will stop being backed up.</string>
+             <string>Move this folder from backups to another location in your Cloud Drive to get full access to your data. This folder will stop being backed up.</string>
             </property>
             <property name="wordWrap">
              <bool>true</bool>

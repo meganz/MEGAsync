@@ -133,14 +133,14 @@ QString SyncController::getIsLocalFolderAlreadySyncedMsg(const QString& path, co
             if (syncType == MegaSync::SyncType::TYPE_BACKUP)
             {
                 message = localFolders.value(existingPath) == MegaSync::SyncType::TYPE_TWOWAY ?
-                            tr("You can't sync this folder as it's already synced.")
+                            tr("You can't backup this folder as it's already synced.")
                           : tr("Folder is already backed up. Select a different one.");
             }
             else
             {
                 message = localFolders.value(existingPath) == MegaSync::SyncType::TYPE_TWOWAY ?
                             tr("You can't sync this folder as it's already synced.")
-                          : tr("You can't sync this folder as it's backed up.");
+                          : tr("You can't sync this folder as it's already backed up.");
             }
         }
         else if (inputPath.startsWith(existingPath)
@@ -156,7 +156,7 @@ QString SyncController::getIsLocalFolderAlreadySyncedMsg(const QString& path, co
             {
                 message = localFolders.value(existingPath) == MegaSync::SyncType::TYPE_TWOWAY ?
                             tr("You can't sync folders that are inside synced folders.")
-                          : tr("You can't sync folders that are inside backed up folders. ");
+                          : tr("You can't sync folders that are inside backed up folders.");
             }
         }
         else if (existingPath.startsWith(inputPath)
@@ -172,7 +172,7 @@ QString SyncController::getIsLocalFolderAlreadySyncedMsg(const QString& path, co
             {
                 message = localFolders.value(existingPath) == MegaSync::SyncType::TYPE_TWOWAY ?
                             tr("You can't sync folders that contain synced folders.")
-                          : tr("You can't sync folders that contain backed up folders.  ");
+                          : tr("You can't sync folders that contain backed up folders.");
             }
         }
     }

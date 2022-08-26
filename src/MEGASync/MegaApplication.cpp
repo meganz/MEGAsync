@@ -6809,8 +6809,22 @@ void MegaApplication::onEvent(MegaApi*, MegaEvent* event)
     }
     else if (event->getType() == MegaEvent::EVENT_SYNCS_DISABLED && event->getNumber() != MegaSync::Error::LOGGED_OUT)
     {
-        showErrorMessage(tr("Your syncs have been disabled").append(QString::fromUtf8(": "))
-                         .append(QCoreApplication::translate("MegaSyncError", MegaSync::getMegaSyncErrorCode(eventNumber))));
+        if (model->hasUnattendedDisabledSyncs(MegaSync::TYPE_TWOWAY)
+            && model->hasUnattendedDisabledSyncs(MegaSync::TYPE_BACKUP))
+        {
+            showErrorMessage(tr("Your syncs and backups have been disabled").append(QString::fromUtf8(": "))
+                             .append(QCoreApplication::translate("MegaSyncError", MegaSync::getMegaSyncErrorCode(eventNumber))));
+        }
+        else if (model->hasUnattendedDisabledSyncs(MegaSync::TYPE_BACKUP))
+        {
+            showErrorMessage(tr("Your backups have been disabled").append(QString::fromUtf8(": "))
+                             .append(QCoreApplication::translate("MegaSyncError", MegaSync::getMegaSyncErrorCode(eventNumber))));
+        }
+        else
+        {
+            showErrorMessage(tr("Your syncs have been disabled").append(QString::fromUtf8(": "))
+                             .append(QCoreApplication::translate("MegaSyncError", MegaSync::getMegaSyncErrorCode(eventNumber))));
+        }
     }
     else if (event->getType() == MegaEvent::EVENT_ACCOUNT_BLOCKED)
     {
