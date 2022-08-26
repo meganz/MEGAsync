@@ -15,6 +15,7 @@
 {
     border-radius: 6px;
     border: 1px solid #D6D6D6;
+    background-color: #FFFFFF;
 }</string>
   </property>
   <property name="frameShape">

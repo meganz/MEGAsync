@@ -93,7 +93,7 @@ void StalledIssueChooseWidget::setData(StalledIssueDataPtr data)
         }
     }
 
-    discard(discardItem);
+    setSolved(discardItem);
 
     update();
 
@@ -121,19 +121,19 @@ void StalledIssueChooseWidget::onActionClicked(int button_id)
     emit chooseButtonClicked(button_id);
 }
 
-void StalledIssueChooseWidget::discard(bool state)
+void StalledIssueChooseWidget::setSolved(bool state)
 {
-    ui->chooseTitle->discard(state);
+    ui->chooseTitle->setSolved(state);
 
     if(state)
     {
-        auto effect = new QGraphicsOpacityEffect(this);
-        effect->setOpacity(0.30);
-        ui->fileNameContainer->setGraphicsEffect(effect);
+        auto fileNameEffect = new QGraphicsOpacityEffect(this);
+        fileNameEffect->setOpacity(0.30);
+        ui->fileNameContainer->setGraphicsEffect(fileNameEffect);
 
-        auto effect2 = new QGraphicsOpacityEffect(this);
-        effect2->setOpacity(0.30);
-        ui->pathContainer->setGraphicsEffect(effect2);
+        auto pathEffect = new QGraphicsOpacityEffect(this);
+        pathEffect->setOpacity(0.30);
+        ui->pathContainer->setGraphicsEffect(pathEffect);
     }
 }
 

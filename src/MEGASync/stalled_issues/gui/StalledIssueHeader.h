@@ -29,12 +29,11 @@ public:
     void expand(bool state) override;
     virtual bool adaptativeHeight();
 
-    void showIgnoreFile();
 
     void showAction(const QString& actionButtonText);
     void hideAction();
 
-    void showMessage(const QString& message);
+    void showMessage(const QString& message, const QPixmap &pixmap);
 
     void setLeftTitleText(const QString& text);
     void addFileName();
@@ -44,6 +43,7 @@ public:
 
 protected:
     virtual void refreshCaseUi() = 0;
+    bool eventFilter(QObject *watched, QEvent *event) override;
 
     QString fileName();
 
@@ -52,7 +52,8 @@ protected slots:
     virtual void on_ignoreFileButton_clicked();
 
 private:
-    bool eventFilter(QObject *watched, QEvent *event) override;
+    void showIgnoreFile();
+    void issueIgnored();
 
     Ui::StalledIssueHeader *ui;
     void refreshUi() override;

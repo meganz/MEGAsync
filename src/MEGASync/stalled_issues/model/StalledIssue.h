@@ -93,6 +93,9 @@ public:
     bool isSolved() const;
     void setIsSolved(bool isCloud);
 
+    bool canBeIgnored() const;
+    QStringList getIgnoredFiles() const;
+
     bool mDetectedMEGASide = false;
 
     uint8_t hasFiles() const;
@@ -115,6 +118,7 @@ protected:
     bool mIsSolved = false;
     uint8_t mFiles = 0;
     uint8_t mFolders = 0;
+    QStringList mIgnoredPaths;
 };
 
 Q_DECLARE_METATYPE(StalledIssue)

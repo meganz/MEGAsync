@@ -75,20 +75,31 @@
     </spacer>
    </item>
    <item>
-    <layout class="QVBoxLayout" name="chooseLayout">
-     <property name="spacing">
-      <number>28</number>
-     </property>
-     <property name="topMargin">
-      <number>0</number>
-     </property>
-     <item>
-      <widget class="StalledIssueChooseWidget" name="chooseRemoteCopy" native="true"/>
-     </item>
-     <item>
-      <widget class="StalledIssueChooseWidget" name="chooseLocalCopy" native="true"/>
-     </item>
-    </layout>
+    <widget class="QWidget" name="chooseContainer" native="true">
+     <layout class="QVBoxLayout" name="chooseLayout">
+      <property name="spacing">
+       <number>28</number>
+      </property>
+      <property name="leftMargin">
+       <number>1</number>
+      </property>
+      <property name="topMargin">
+       <number>1</number>
+      </property>
+      <property name="rightMargin">
+       <number>1</number>
+      </property>
+      <property name="bottomMargin">
+       <number>1</number>
+      </property>
+      <item>
+       <widget class="StalledIssueChooseWidget" name="chooseRemoteCopy" native="true"/>
+      </item>
+      <item>
+       <widget class="StalledIssueChooseWidget" name="chooseLocalCopy" native="true"/>
+      </item>
+     </layout>
+    </widget>
    </item>
   </layout>
  </widget>

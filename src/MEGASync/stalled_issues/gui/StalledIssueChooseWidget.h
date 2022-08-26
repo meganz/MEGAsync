@@ -34,7 +34,7 @@ private slots:
     void onActionClicked(int button_id);
 
 private:
-    void discard(bool state);
+    void setSolved(bool state);
 
     Ui::StalledIssueChooseWidget *ui;
     StalledIssueDataPtr mData;

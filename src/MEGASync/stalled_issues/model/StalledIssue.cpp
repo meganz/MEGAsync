@@ -193,6 +193,11 @@ void StalledIssue::fillIssue(const mega::MegaSyncStall *stall)
         getLocalData()->mPath.path = localSourcePath;
         getLocalData()->mPath.mPathProblem = localSourcePathProblem;
 
+        if(stall->couldSuggestIgnoreThisPath(false, 0))
+        {
+            mIgnoredPaths.append(getLocalData()->getNativeFilePath());
+        }
+
         setIsFile(localSourcePath, true);
     }
 
@@ -201,6 +206,11 @@ void StalledIssue::fillIssue(const mega::MegaSyncStall *stall)
         initLocalIssue();
         getLocalData()->mMovePath.path = localTargetPath;
         getLocalData()->mMovePath.mPathProblem = localTargetPathProblem;
+
+        if(stall->couldSuggestIgnoreThisPath(false, 1))
+        {
+            mIgnoredPaths.append(getLocalData()->getNativeMoveFilePath());
+        }
 
         setIsFile(localTargetPath, true);
     }
@@ -217,6 +227,11 @@ void StalledIssue::fillIssue(const mega::MegaSyncStall *stall)
         getCloudData()->mPath.path = cloudSourcePath;
         getCloudData()->mPath.mPathProblem = cloudSourcePathProblem;
 
+        if(stall->couldSuggestIgnoreThisPath(true, 0))
+        {
+            mIgnoredPaths.append(cloudSourcePath);
+        }
+
         setIsFile(cloudSourcePath, false);
     }
 
@@ -225,6 +240,11 @@ void StalledIssue::fillIssue(const mega::MegaSyncStall *stall)
         initCloudIssue();
         getCloudData()->mMovePath.path = cloudTargetPath;
         getCloudData()->mMovePath.mPathProblem = cloudTargetPathProblem;
+
+        if(stall->couldSuggestIgnoreThisPath(true, 1))
+        {
+            mIgnoredPaths.append(cloudTargetPath);
+        }
 
         setIsFile(cloudTargetPath, false);
     }
@@ -257,6 +277,16 @@ void StalledIssue::setIsSolved(bool isCloud)
     {
         getCloudData()->setIsSolved(true);
     }
+}
+
+bool StalledIssue::canBeIgnored() const
+{
+    return !mIgnoredPaths.isEmpty();
+}
+
+QStringList StalledIssue::getIgnoredFiles() const
+{
+    return mIgnoredPaths;
 }
 
 const StalledIssueDataPtr StalledIssue::consultLocalData() const

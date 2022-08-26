@@ -40,6 +40,7 @@ private slots:
 
 private:
     void removeConflictedNameWidget(QWidget *widget);
+    void setSolved();
 
     Ui::NameConflict *ui;
     NameConflictedStalledIssue::NameConflictData mData;

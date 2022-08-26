@@ -23,17 +23,8 @@ StalledIssueHeader::StalledIssueHeader(QWidget *parent) :
     ui->setupUi(this);
 
     ui->actionButton->hide();
-    ui->actionMessage->hide();
+    ui->actionMessageContainer->hide();
     ui->ignoreFileButton->hide();
-
-    //The MegaSyncStall object will tell us whether or not to display the Ignore button
-//    if(SOME CONDITION)
-//    {
-//        showIgnoreFile();
-//    }
-//    else
-//    {
-//    }
 }
 
 StalledIssueHeader::~StalledIssueHeader()
@@ -57,6 +48,13 @@ void StalledIssueHeader::showIgnoreFile()
     ui->ignoreFileButton->show();
 }
 
+void StalledIssueHeader::issueIgnored()
+{
+    ui->ignoreFileButton->hide();
+    QIcon icon(QString::fromUtf8(":/images/StalledIssues/check_default.png"));
+    showMessage(tr("Ignored"), icon.pixmap(24,24));
+}
+
 void StalledIssueHeader::showAction(const QString &actionButtonText)
 {
     ui->actionButton->setVisible(true);
@@ -68,10 +66,15 @@ void StalledIssueHeader::hideAction()
     ui->actionButton->setVisible(false);
 }
 
-void StalledIssueHeader::showMessage(const QString &message)
+void StalledIssueHeader::showMessage(const QString &message, const QPixmap& pixmap)
 {
-    ui->actionMessage->setVisible(true);
+    ui->actionMessageContainer->setVisible(true);
     ui->actionMessage->setText(message);
+
+    if(!pixmap.isNull())
+    {
+        ui->actionMessageIcon->setPixmap(pixmap);
+    }
 }
 
 void StalledIssueHeader::setLeftTitleText(const QString &text)
@@ -102,14 +105,17 @@ QString StalledIssueHeader::fileName()
 
 void StalledIssueHeader::on_ignoreFileButton_clicked()
 {
-    auto info = getData().consultData()->consultLocalData();
+    auto info = getData().consultData();
     if(info)
     {
-        mUtilities.ignoreFile(info->getNativeFilePath());
-        MegaSyncApp->getStalledIssuesModel()->solveIssue(false,getCurrentIndex());
+        auto ignoredFiles = info->getIgnoredFiles();
 
-        ui->ignoreFileButton->hide();
-        showMessage(tr("Ignored"));
+        foreach(auto file, ignoredFiles)
+        {
+            mUtilities.ignoreFile(file);
+        }
+
+        MegaSyncApp->getStalledIssuesModel()->solveIssue(false,getCurrentIndex());
         mIsSolved = true;
     }
 }
@@ -154,6 +160,11 @@ void StalledIssueHeader::refreshUi()
     }
 
     ui->fileTypeIcon->setPixmap(fileTypeIcon.pixmap(ui->fileTypeIcon->size()));
+
+    if(getData().consultData()->canBeIgnored())
+    {
+        getData().consultData()->isSolved() ? issueIgnored() : showIgnoreFile();
+    }
 
     refreshCaseUi();
 }

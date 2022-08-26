@@ -105,7 +105,7 @@ void StalledIssueActionTitle::showIcon()
 void StalledIssueActionTitle::addMessage(const QString &message, const QPixmap& pixmap)
 {
     QWidget* labelContainer= new QWidget(this);
-    QHBoxLayout* labelContainerLayout = new QHBoxLayout(this);
+    QHBoxLayout* labelContainerLayout = new QHBoxLayout();
     labelContainerLayout->setContentsMargins(0,0,10,0);
     labelContainer->setLayout(labelContainerLayout);
 
@@ -123,7 +123,7 @@ void StalledIssueActionTitle::addMessage(const QString &message, const QPixmap& 
     ui->actionLayout->addWidget(labelContainer);
 }
 
-void StalledIssueActionTitle::discard(bool state)
+void StalledIssueActionTitle::setSolved(bool state)
 {
     ui->contents->setProperty(DISCARDED,state);
     setStyleSheet(styleSheet());

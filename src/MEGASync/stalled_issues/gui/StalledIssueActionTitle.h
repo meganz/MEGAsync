@@ -24,7 +24,7 @@ public:
     virtual void showIcon();
     void addMessage(const QString& message, const QPixmap &pixmap = QPixmap());
 
-    void discard(bool state);
+    void setSolved(bool state);
     void setIsCloud(bool state);
 
 signals:

@@ -57,6 +57,8 @@ void NameConflict::updateUi(NameConflictedStalledIssue::NameConflictData data)
     auto nameConflictWidgets = ui->nameConflicts->findChildren<StalledIssueActionTitle*>();
     auto totalUpdate(nameConflictWidgets.size() >= conflictedNames.size());
 
+    bool allSolved(true);
+
     for(int index = 0; index < conflictedNames.size(); ++index)
     {
         StalledIssueActionTitle* title(nullptr);
@@ -68,7 +70,7 @@ void NameConflict::updateUi(NameConflictedStalledIssue::NameConflictData data)
         else
         {
             title = new NameConflictTitle(this);
-            title->discard(false);
+            title->setSolved(false);
             connect(title, &StalledIssueActionTitle::actionClicked, this, &NameConflict::onActionClicked);
 
             ui->nameConflictsLayout->addWidget(title);
@@ -83,22 +85,36 @@ void NameConflict::updateUi(NameConflictedStalledIssue::NameConflictData data)
                  && (data.conflictedNames.at(index).isSolved() != mData.conflictedNames.at(index).isSolved()))))
         {
             bool isSolved(conflictedNames.at(index).isSolved());
-            title->setDisabled(isSolved);
+            title->setSolved(isSolved);
             if(isSolved)
             {
                 title->hideActionButton(RENAME_ID);
                 title->hideActionButton(REMOVE_ID);
 
+                QIcon icon;
+                QString titleText;
+
                 if(conflictedNames.at(index).solved ==  NameConflictedStalledIssue::ConflictedNameInfo::SolvedType::REMOVE)
                 {
-                    title->addMessage(tr("REMOVED"));
+                    icon.addFile(QString::fromUtf8(":/images/StalledIssues/remove_default.png"));
+                    titleText = tr("Removed");
                 }
                 else
                 {
-                    title->addMessage(tr("RENAME TO %1").arg(conflictedNames.at(index).renameTo));
+                    icon.addFile(QString::fromUtf8(":/images/StalledIssues/check_default.png"));
+                    titleText = tr("Renamed to \"%1\"").arg(conflictedNames.at(index).renameTo);
                 }
+
+                title->addMessage(titleText, icon.pixmap(24,24));
             }
         }
+
+        allSolved &= conflictedNames.at(index).isSolved();
+    }
+
+    if(allSolved)
+    {
+        setSolved();
     }
 
     //No longer exist conflicts
@@ -114,6 +130,13 @@ void NameConflict::removeConflictedNameWidget(QWidget* widget)
 {
     ui->nameConflictsLayout->removeWidget(widget);
     widget->deleteLater();
+}
+
+void NameConflict::setSolved()
+{
+    auto effect = new QGraphicsOpacityEffect(this);
+    effect->setOpacity(0.30);
+    ui->pathContainer->setGraphicsEffect(effect);
 }
 
 void NameConflict::onActionClicked(int actionId)

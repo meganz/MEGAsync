@@ -140,8 +140,6 @@ void CannotPerformDeletionHeader::refreshCaseUi()
 SyncItemExceedsSupoortedTreeDepthHeader::SyncItemExceedsSupoortedTreeDepthHeader(QWidget *parent)
     : StalledIssueHeader(parent)
 {
-    //This won´t be necessary, as the MegaSyncStall object will tell us whether or not to display the Ignore button
-    showIgnoreFile();
 }
 
 void SyncItemExceedsSupoortedTreeDepthHeader::refreshCaseUi()
