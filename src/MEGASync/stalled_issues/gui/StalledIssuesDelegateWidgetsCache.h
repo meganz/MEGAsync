@@ -24,6 +24,8 @@ public:
     StalledIssueHeader* getNonCacheStalledIssueHeaderWidget(const QModelIndex &index, QWidget *parent, const StalledIssueVariant &issue) const;
     StalledIssueBaseDelegateWidget* getNonCacheStalledIssueInfoWidget(const QModelIndex& index, QWidget *parent, const StalledIssueVariant &issue) const;
 
+    static bool adaptativeHeight(mega::MegaSyncStall::SyncStallReason reason);
+
     void setProxyModel(StalledIssuesProxyModel *proxyModel);
 
     void reset();

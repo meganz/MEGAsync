@@ -4,6 +4,8 @@
 #include "StalledIssueBaseDelegateWidget.h"
 
 #include <QWidget>
+#include <QGraphicsOpacityEffect>
+#include <QPointer>
 
 namespace Ui {
 class StalledIssueChooseWidget;
@@ -32,10 +34,13 @@ private slots:
     void onActionClicked(int button_id);
 
 private:
+    void discard(bool state);
+
     Ui::StalledIssueChooseWidget *ui;
     StalledIssueDataPtr mData;
     bool mIsSolved;
     bool mPreviousSolveState;
+    QPointer<QGraphicsOpacityEffect> mDisableEffect;
 };
 
 #endif // STALLEDISSUECHOOSEWIDGET_H

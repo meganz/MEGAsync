@@ -1,9 +1,9 @@
 #include "StalledIssuesModel.h"
 
 #include "MegaApplication.h"
+#include <StalledIssuesDelegateWidgetsCache.h>
 
 #include <QSortFilterProxyModel>
-
 #include <QDebug>
 
 StalledIssuesReceiver::StalledIssuesReceiver(QObject *parent) : QObject(parent), mega::MegaRequestListener()
@@ -124,6 +124,8 @@ void StalledIssuesReceiver::onRequestFinish(mega::MegaApi*, mega::MegaRequest *r
         processStalledIssues();
     }
 }
+
+const int StalledIssuesModel::ADAPTATIVE_HEIGHT_ROLE = Qt::UserRole;
 
 StalledIssuesModel::StalledIssuesModel(QObject *parent)
     : QAbstractItemModel(parent),
@@ -301,6 +303,11 @@ QVariant StalledIssuesModel::data(const QModelIndex &index, int role) const
         {
             return QVariant::fromValue(StalledIssueVariant(*(mStalledIssues.at(index.row()).get())));
         }
+    }
+    else if(role == ADAPTATIVE_HEIGHT_ROLE)
+    {
+        auto issue = mStalledIssues.at(index.row());
+        return StalledIssuesDelegateWidgetsCache::adaptativeHeight(issue->getData()->getReason());
     }
 
     return QVariant();

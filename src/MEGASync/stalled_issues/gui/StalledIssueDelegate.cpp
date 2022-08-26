@@ -32,11 +32,14 @@ StalledIssueDelegate::~StalledIssueDelegate()
 
 QSize StalledIssueDelegate::sizeHint(const QStyleOptionViewItem& option, const QModelIndex& index) const
 {
+    bool adaptativeHeight(true);
+
     if(!index.parent().isValid())
     {
-        return QSize(200,StalledIssueHeader::HEIGHT);
+       adaptativeHeight = index.data(StalledIssuesModel::ADAPTATIVE_HEIGHT_ROLE).toBool();
     }
-    else
+
+    if(adaptativeHeight)
     {
         auto stalledIssueItem (qvariant_cast<StalledIssueVariant>(index.data(Qt::DisplayRole)));
         StalledIssueBaseDelegateWidget* w (getStalledIssueItemWidget(index, stalledIssueItem));
@@ -44,6 +47,10 @@ QSize StalledIssueDelegate::sizeHint(const QStyleOptionViewItem& option, const Q
         {
             return w->sizeHint();
         }
+    }
+    else
+    {
+        return QSize(200,StalledIssueHeader::HEIGHT);
     }
 
     return QStyledItemDelegate::sizeHint(option, index);
@@ -61,30 +68,13 @@ void StalledIssueDelegate::paint(QPainter *painter, const QStyleOptionViewItem &
 
     if (index.isValid() && row < rowCount)
     {
+        bool isExpanded(mView->isExpanded(index));
+
         auto pos (option.rect.topLeft());
 
-        QColor rowColor;
-
-        if(index.parent().isValid())
-        {
-            rowColor = Qt::white;
-        }
-        else
-        {
-            if(index.row()%2 == 0)
-            {
-                rowColor = Qt::white;
-            }
-            else
-            {
-                rowColor.setRed(0);
-                rowColor.setGreen(0);
-                rowColor.setBlue(0);
-                rowColor.setAlphaF(0.05);
-            }
-        }
-
-        painter->fillRect(option.rect, rowColor);
+        QColor rowColor = getRowColor(index.parent().isValid() ? index.parent() : index);
+        auto backgroundRect = isExpanded ? option.rect : option.rect.adjusted(0,0,0,-1);
+        painter->fillRect(backgroundRect, rowColor);
 
         painter->save();
         painter->translate(pos);
@@ -107,9 +97,15 @@ void StalledIssueDelegate::paint(QPainter *painter, const QStyleOptionViewItem &
                 return;
             }
 
-            w->expand(mView->isExpanded(index));
+            painter->save();
+
+            w->expand(isExpanded);
             w->setGeometry(option.rect);
-            w->render(option, painter, QRegion(0, 0, option.rect.width(), option.rect.height()));
+
+            auto pixmap = w->grab();
+            painter->drawPixmap(0,0,w->width(), w->height(),pixmap);
+
+            painter->restore();
         }
 
         bool drawBottomLine(false);
@@ -128,12 +124,10 @@ void StalledIssueDelegate::paint(QPainter *painter, const QStyleOptionViewItem &
 
         if(drawBottomLine)
         {
-            QPen pen = painter->pen();
-            pen.setWidth(1);
-            pen.setColor(Qt::black);
-            painter->setPen(pen);
-            painter->setOpacity(0.08);
-            painter->drawLine(QPoint(0 - option.rect.x(), option.rect.height() -1),QPoint(mView->width(),option.rect.height() -1));
+            painter->setRenderHint(QPainter::Antialiasing, false);
+            painter->setPen(QPen(Qt::black, 1));
+            painter->setOpacity(0.2);
+            painter->drawLine(QPoint(0 - option.rect.x(), option.rect.height()-1),QPoint(mView->width(),option.rect.height()-1));
         }
 
         painter->restore();
@@ -259,27 +253,31 @@ void StalledIssueDelegate::onHoverLeave(const QModelIndex& index)
     }
 }
 
-void StalledIssueDelegate::onIssueFixed()
-{
-   auto senderWidget = dynamic_cast<StalledIssueBaseDelegateWidget*>(sender());
-   if(senderWidget)
-   {
-       auto proxyIndex = senderWidget->getCurrentIndex();
-       QModelIndex sourceIndex = proxyIndex.parent().isValid() ? mProxyModel->mapToSource(proxyIndex.parent()) : mProxyModel->mapToSource(proxyIndex);
-
-       if(sourceIndex.isValid())
-       {
-           //mSourceModel->finishStalledIssues(QModelIndexList() << sourceIndex);
-       }
-   }
-}
-
 void StalledIssueDelegate::onEditorKeepStateChanged(bool newKeepState)
 {
    if(mEditor && !newKeepState)
    {
        onHoverLeave(mEditor->getCurrentIndex());
    }
+}
+
+QColor StalledIssueDelegate::getRowColor(const QModelIndex &index) const
+{
+    QColor rowColor;
+
+    if(index.row()%2 == 0)
+    {
+        rowColor = Qt::white;
+    }
+    else
+    {
+        rowColor.setRed(0);
+        rowColor.setGreen(0);
+        rowColor.setBlue(0);
+        rowColor.setAlphaF(0.05);
+    }
+
+    return rowColor;
 }
 
 StalledIssueBaseDelegateWidget *StalledIssueDelegate::getStalledIssueItemWidget(const QModelIndex &index, const StalledIssueVariant& data) const

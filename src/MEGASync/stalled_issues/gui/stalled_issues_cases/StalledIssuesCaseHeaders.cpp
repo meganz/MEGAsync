@@ -36,9 +36,9 @@ FileIssueHeader::FileIssueHeader(QWidget *parent)
 
 void FileIssueHeader::refreshCaseUi()
 {
-    setLeftTitleText(tr("File Issue text"));
+    setLeftTitleText(tr("Can´t sync"));
     addFileName();
-    setTitleDescriptionText(tr("Example text."));
+    setTitleDescriptionText(tr("A single file had an issue that needs a user decision to solve"));
 }
 
 //Local folder not scannable

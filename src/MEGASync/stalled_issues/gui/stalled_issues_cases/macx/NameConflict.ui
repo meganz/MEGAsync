@@ -13,7 +13,7 @@
   <property name="styleSheet">
    <string notr="true">#frame 
 {
-    border-radius: 6px;
+    border-radius: 8px;
     border: 1px solid  #D6D6D6;
 }</string>
   </property>
@@ -46,10 +46,10 @@
        <number>0</number>
       </property>
       <property name="leftMargin">
-       <number>5</number>
+       <number>0</number>
       </property>
       <property name="topMargin">
-       <number>5</number>
+       <number>4</number>
       </property>
       <property name="rightMargin">
        <number>5</number>
@@ -58,13 +58,42 @@
        <number>0</number>
       </property>
       <item>
+       <widget class="QWidget" name="nameConflicts" native="true">
+        <property name="styleSheet">
+         <string notr="true">StalledIssueActionTitle
+{
+    min-height: 40 px;
+    max-height: 40 px;
+    background-color: #F5F5F5;
+}</string>
+        </property>
+        <layout class="QVBoxLayout" name="nameConflictsLayout">
+         <property name="spacing">
+          <number>4</number>
+         </property>
+         <property name="leftMargin">
+          <number>4</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>4</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
+        </layout>
+       </widget>
+      </item>
+      <item>
        <widget class="QWidget" name="pathContainer" native="true">
         <layout class="QHBoxLayout" name="horizontalLayout">
          <property name="spacing">
           <number>0</number>
          </property>
          <property name="leftMargin">
-          <number>5</number>
+          <number>8</number>
          </property>
          <property name="topMargin">
           <number>0</number>
@@ -78,35 +107,6 @@
          <item>
           <widget class="StalledIssueFilePath" name="path" native="true"/>
          </item>
-        </layout>
-       </widget>
-      </item>
-      <item>
-       <widget class="QWidget" name="nameConflicts" native="true">
-        <property name="styleSheet">
-         <string notr="true">StalledIssueActionTitle
-{
-    min-height: 40 px;
-    max-height: 40 px;
-    background-color: #F5F5F5;
-}</string>
-        </property>
-        <layout class="QVBoxLayout" name="nameConflictsLayout">
-         <property name="spacing">
-          <number>3</number>
-         </property>
-         <property name="leftMargin">
-          <number>0</number>
-         </property>
-         <property name="topMargin">
-          <number>0</number>
-         </property>
-         <property name="rightMargin">
-          <number>0</number>
-         </property>
-         <property name="bottomMargin">
-          <number>0</number>
-         </property>
         </layout>
        </widget>
       </item>

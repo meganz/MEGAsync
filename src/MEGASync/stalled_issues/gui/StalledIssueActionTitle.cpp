@@ -7,20 +7,24 @@
 #include <QPainter>
 #include <QPainterPath>
 #include <QFileInfo>
+#include <QDebug>
 
 const char* BUTTON_ID = "button_id";
 const char* ONLY_ICON = "onlyIcon";
 const char* MAIN_BUTTON = "main";
+const char* DISCARDED = "discarded";
+
+#include <QGraphicsOpacityEffect>
 
 StalledIssueActionTitle::StalledIssueActionTitle(QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::StalledIssueChooseTitle),
-    mIsCloud(false),
-    mRoundedCorners(RoundedCorners::TOP_CORNERS)
+    ui(new Ui::StalledIssueActionTitle),
+    mIsCloud(false)
 {
     ui->setupUi(this);
-    ui->titleLabel->installEventFilter(this);
     ui->icon->hide();
+
+    ui->titleLabel->installEventFilter(this);
 }
 
 StalledIssueActionTitle::~StalledIssueActionTitle()
@@ -119,49 +123,22 @@ void StalledIssueActionTitle::addMessage(const QString &message, const QPixmap& 
     ui->actionLayout->addWidget(labelContainer);
 }
 
-void StalledIssueActionTitle::setIndent(int indent)
+void StalledIssueActionTitle::discard(bool state)
 {
-    auto chooseMargins = contentsMargins();
-    chooseMargins.setLeft(indent);
-    setContentsMargins(chooseMargins);
-}
+    ui->contents->setProperty(DISCARDED,state);
+    setStyleSheet(styleSheet());
 
-void StalledIssueActionTitle::setRoundedCorners(RoundedCorners type)
-{
-    mRoundedCorners = type;
-    update();
-}
-
-void StalledIssueActionTitle::setDisabled(bool state)
-{
-    ui->titleContainer->setDisabled(state);
+    if(state)
+    {
+        auto effect = new QGraphicsOpacityEffect(this);
+        effect->setOpacity(0.30);
+        ui->titleContainer->setGraphicsEffect(effect);
+    }
 }
 
 void StalledIssueActionTitle::setIsCloud(bool state)
 {
     mIsCloud = state;
-}
-
-void StalledIssueActionTitle::paintEvent(QPaintEvent*)
-{
-    QPainter painter(this);
-    QColor backgroundColor = palette().color(isEnabled() ? QPalette::ColorGroup::Active : QPalette::ColorGroup::Disabled, QPalette::ColorRole::Background);
-    painter.setBrush(backgroundColor);
-    painter.setPen(Qt::NoPen);
-    QPainterPath path;
-    path.setFillRule(Qt::WindingFill);
-
-    if(mRoundedCorners == RoundedCorners::ALL_CORNERS)
-    {
-        path.addRoundedRect( QRect(0,0, width(), height()), 6, 6);
-    }
-    else if(mRoundedCorners == RoundedCorners::TOP_CORNERS)
-    {
-        path.addRoundedRect( QRect(0,0, width(), 6), 6, 6);
-        path.addRect(QRect( 0, 3, width(), height() -3)); // Top right corner not rounded
-    }
-
-    painter.drawPath(path.simplified());
 }
 
 bool StalledIssueActionTitle::eventFilter(QObject *watched, QEvent *event)
@@ -173,7 +150,6 @@ bool StalledIssueActionTitle::eventFilter(QObject *watched, QEvent *event)
     }
 
     return QWidget::eventFilter(watched, event);
-
 }
 
 

@@ -36,10 +36,11 @@ protected slots:
     void onHoverLeave(const QModelIndex&index);
 
 private slots:
-    void onIssueFixed();
     void onEditorKeepStateChanged(bool newKeepState);
 
 private:
+    QColor getRowColor(const QModelIndex& index) const;
+
     StalledIssueBaseDelegateWidget *getStalledIssueItemWidget(const QModelIndex &index, const StalledIssueVariant &data) const;
     StalledIssueBaseDelegateWidget *getNonCacheStalledIssueItemWidget(const QModelIndex &index, QWidget *parent, const StalledIssueVariant& data) const;
 

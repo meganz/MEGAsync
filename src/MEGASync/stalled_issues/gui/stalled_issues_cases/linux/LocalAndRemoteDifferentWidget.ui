@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>288</width>
-    <height>85</height>
+    <width>336</width>
+    <height>86</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -24,13 +24,13 @@
     <number>0</number>
    </property>
    <property name="topMargin">
-    <number>10</number>
+    <number>0</number>
    </property>
    <property name="rightMargin">
-    <number>7</number>
+    <number>11</number>
    </property>
    <property name="bottomMargin">
-    <number>15</number>
+    <number>11</number>
    </property>
    <item alignment="Qt::AlignTop">
     <widget class="QLabel" name="selectLabel">
@@ -79,7 +79,7 @@
      <property name="spacing">
       <number>28</number>
      </property>
-     <property name="bottomMargin">
+     <property name="topMargin">
       <number>0</number>
      </property>
      <item>

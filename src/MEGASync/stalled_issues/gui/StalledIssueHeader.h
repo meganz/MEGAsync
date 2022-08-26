@@ -27,6 +27,7 @@ public:
     ~StalledIssueHeader();
 
     void expand(bool state) override;
+    virtual bool adaptativeHeight();
 
     void showIgnoreFile();
 

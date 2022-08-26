@@ -23,7 +23,6 @@ NameConflictTitle::NameConflictTitle(QWidget *parent)
 
 void NameConflictTitle::initTitle()
 {
-    setRoundedCorners(StalledIssueActionTitle::RoundedCorners::ALL_CORNERS);
     QIcon renameIcon(QString::fromUtf8("://images/StalledIssues/rename_node_default.png"));
     QIcon removeIcon(QString::fromUtf8("://images/StalledIssues/remove_default.png"));
     addActionButton(renameIcon, tr("Rename"), RENAME_ID, false);
@@ -69,6 +68,7 @@ void NameConflict::updateUi(NameConflictedStalledIssue::NameConflictData data)
         else
         {
             title = new NameConflictTitle(this);
+            title->discard(false);
             connect(title, &StalledIssueActionTitle::actionClicked, this, &NameConflict::onActionClicked);
 
             ui->nameConflictsLayout->addWidget(title);

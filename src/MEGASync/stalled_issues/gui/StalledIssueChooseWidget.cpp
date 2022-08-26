@@ -22,14 +22,10 @@ StalledIssueChooseWidget::StalledIssueChooseWidget(QWidget *parent) :
     layoutMargins.setLeft(StalledIssueHeader::GROUPBOX_CONTENTS_INDENT);
     ui->fileNameContainer->setContentsMargins(layoutMargins);
 
-    ui->chooseTitle->installEventFilter(this);
-    ui->chooseTitle->setIndent(StalledIssueHeader::GROUPBOX_CONTENTS_INDENT);
-
     ui->fileNameText->installEventFilter(this);
 
     ui->chooseTitle->addActionButton(QIcon(), tr("Choose"), BUTTON_ID, true);
-    connect(ui->chooseTitle, &StalledIssueActionTitle::actionClicked, this, &StalledIssueChooseWidget::onActionClicked);
-}
+    connect(ui->chooseTitle, &StalledIssueActionTitle::actionClicked, this, &StalledIssueChooseWidget::onActionClicked); }
 
 StalledIssueChooseWidget::~StalledIssueChooseWidget()
 {
@@ -71,13 +67,14 @@ void StalledIssueChooseWidget::setData(StalledIssueDataPtr data)
         }
     }
 
+    bool discardItem(false);
+
     if(mPreviousSolveState != mIsSolved)
     {
         mPreviousSolveState = mIsSolved;
 
         if(mIsSolved)
         {
-            ui->chooseTitle->setDisabled(true);
             ui->chooseTitle->hideActionButton(BUTTON_ID);
 
             QIcon icon;
@@ -91,8 +88,14 @@ void StalledIssueChooseWidget::setData(StalledIssueDataPtr data)
                 icon.addFile(QString::fromUtf8(":/images/StalledIssues/remove_default.png"));
                 ui->chooseTitle->addMessage(tr("Moved to bin"), icon.pixmap(16,16));
             }
+
+            discardItem = !data->isSolved();
         }
     }
+
+    discard(discardItem);
+
+    update();
 
     mData = data;
 }
@@ -116,6 +119,22 @@ bool StalledIssueChooseWidget::eventFilter(QObject *watched, QEvent *event)
 void StalledIssueChooseWidget::onActionClicked(int button_id)
 {
     emit chooseButtonClicked(button_id);
+}
+
+void StalledIssueChooseWidget::discard(bool state)
+{
+    ui->chooseTitle->discard(state);
+
+    if(state)
+    {
+        auto effect = new QGraphicsOpacityEffect(this);
+        effect->setOpacity(0.30);
+        ui->fileNameContainer->setGraphicsEffect(effect);
+
+        auto effect2 = new QGraphicsOpacityEffect(this);
+        effect2->setOpacity(0.30);
+        ui->pathContainer->setGraphicsEffect(effect2);
+    }
 }
 
 void StalledIssueChooseWidget::setIssueSolved(bool newIssueSolved)

@@ -221,60 +221,63 @@ bool StalledIssueFilePath::eventFilter(QObject *watched, QEvent *event)
     }
     else if(event->type() == QEvent::Resize)
     {
-        if(watched == ui->filePath || watched == ui->moveFilePath)
+        if(mData)
         {
-            auto label = dynamic_cast<QLabel*>(watched);
-            if(label)
+            if(watched == ui->filePath || watched == ui->moveFilePath)
             {
-                QString fullPath;
+                auto label = dynamic_cast<QLabel*>(watched);
+                if(label)
+                {
+                    QString fullPath;
 
-                if(watched == ui->filePath)
-                {
-                    fullPath = getFilePath();
-                }
-                else if(watched == ui->moveFilePath)
-                {
-                    fullPath = getMoveFilePath();
-                }
+                    if(watched == ui->filePath)
+                    {
+                        fullPath = getFilePath();
+                    }
+                    else if(watched == ui->moveFilePath)
+                    {
+                        fullPath = getMoveFilePath();
+                    }
 
-                if(!fullPath.isEmpty())
-                {
-                    label->setText(label->fontMetrics().elidedText(fullPath, Qt::ElideMiddle,label->width()));
+                    if(!fullPath.isEmpty())
+                    {
+                        label->setText(label->fontMetrics().elidedText(fullPath, Qt::ElideMiddle,label->width()));
+                    }
                 }
             }
-        }
-        else if(watched == ui->lines)
-        {
-            auto hasProblem(mData->getPath().mPathProblem != mega::MegaSyncStall::SyncPathProblem::NoProblem);
-            if(hasProblem)
+            else if(watched == ui->lines)
             {
-                auto fileTypeIcon = Utilities::getCachedPixmap(QLatin1Literal(":/images/StalledIssues/tree_link_end_default.png"));
-                ui->lines->setPixmap(fileTypeIcon.pixmap(ui->lines->size()));
+                auto hasProblem(mData->getPath().mPathProblem != mega::MegaSyncStall::SyncPathProblem::NoProblem);
+                if(hasProblem)
+                {
+                    auto fileTypeIcon = Utilities::getCachedPixmap(QLatin1Literal(":/images/StalledIssues/tree_link_end_default.png"));
+                    ui->lines->setPixmap(fileTypeIcon.pixmap(ui->lines->size()));
+                }
+                else
+                {
+                    auto fileTypeIcon = Utilities::getCachedPixmap(QLatin1Literal(":/images/StalledIssues/tree_end_default.png"));
+                    ui->lines->setPixmap(fileTypeIcon.pixmap(ui->lines->size()));
+                }
             }
-            else
+            else if(watched == ui->movePathProblemLines)
             {
-                auto fileTypeIcon = Utilities::getCachedPixmap(QLatin1Literal(":/images/StalledIssues/tree_end_default.png"));
-                ui->lines->setPixmap(fileTypeIcon.pixmap(ui->lines->size()));
+                auto hasProblem(mData->getMovePath().mPathProblem != mega::MegaSyncStall::SyncPathProblem::NoProblem);
+                if(hasProblem)
+                {
+                    auto fileTypeIcon = Utilities::getCachedPixmap(QLatin1Literal(":/images/StalledIssues/tree_double_link_default.png"));
+                    //TODO avoid using a fixed size
+                    ui->movePathProblemLines->setPixmap(fileTypeIcon.pixmap(QSize(24,24)));
+                }
+                else
+                {
+                    ui->movePathProblemLines->setPixmap(QPixmap());
+                }
             }
-        }
-        else if(watched == ui->movePathProblemLines)
-        {
-            auto hasProblem(mData->getMovePath().mPathProblem != mega::MegaSyncStall::SyncPathProblem::NoProblem);
-            if(hasProblem)
+            else if(watched == ui->moveLines)
             {
-                auto fileTypeIcon = Utilities::getCachedPixmap(QLatin1Literal(":/images/StalledIssues/tree_double_link_default.png"));
-                //TODO avoid using a fixed size
-                ui->movePathProblemLines->setPixmap(fileTypeIcon.pixmap(QSize(24,24)));
+                auto fileTypeIcon = Utilities::getCachedPixmap(QLatin1Literal(":/images/StalledIssues/tree_link_default.png"));
+                ui->moveLines->setPixmap(fileTypeIcon.pixmap(ui->moveLines->size()));
             }
-            else
-            {
-                ui->movePathProblemLines->setPixmap(QPixmap());
-            }
-        }
-        else if(watched == ui->moveLines)
-        {
-            auto fileTypeIcon = Utilities::getCachedPixmap(QLatin1Literal(":/images/StalledIssues/tree_link_default.png"));
-            ui->moveLines->setPixmap(fileTypeIcon.pixmap(ui->moveLines->size()));
         }
     }
 

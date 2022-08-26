@@ -289,7 +289,10 @@ void StalledIssue::setIsFile(const QString &path, bool isLocal)
     else
     {
         std::unique_ptr<mega::MegaNode> node(MegaSyncApp->getMegaApi()->getNodeByPath(path.toStdString().c_str()));
-        node->isFile()  ? mFiles++ : mFolders++;
+        if(node)
+        {
+            node->isFile()  ? mFiles++ : mFolders++;
+        }
     }
 }
 

@@ -14,7 +14,7 @@ const int StalledIssueHeader::ICON_INDENT = 8 + 48; // fileIcon + spacer;
 const int StalledIssueHeader::BODY_INDENT = StalledIssueHeader::ARROW_INDENT + StalledIssueHeader::ICON_INDENT; // full indent;
 const int StalledIssueHeader::GROUPBOX_INDENT = BODY_INDENT - 9;// Following the InVision mockups
 const int StalledIssueHeader::GROUPBOX_CONTENTS_INDENT = 9;// Following the InVision mockups
-const int StalledIssueHeader::HEIGHT = 64;
+const int StalledIssueHeader::HEIGHT = 60;
 
 StalledIssueHeader::StalledIssueHeader(QWidget *parent) :
     StalledIssueBaseDelegateWidget(parent),
@@ -45,6 +45,11 @@ void StalledIssueHeader::expand(bool state)
 {
     auto arrowIcon = Utilities::getCachedPixmap(state ? QLatin1Literal(":/images/node_selector/Icon-Small-Arrow-Down.png") :  QLatin1Literal(":/images/node_selector/Icon-Small-Arrow-Left.png"));
     ui->arrow->setPixmap(arrowIcon.pixmap(ui->arrow->size()));
+}
+
+bool StalledIssueHeader::adaptativeHeight()
+{
+    return false;
 }
 
 void StalledIssueHeader::showIgnoreFile()
@@ -106,7 +111,6 @@ void StalledIssueHeader::on_ignoreFileButton_clicked()
         ui->ignoreFileButton->hide();
         showMessage(tr("Ignored"));
         mIsSolved = true;
-
     }
 }
 

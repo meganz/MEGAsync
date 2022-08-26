@@ -76,7 +76,7 @@ StalledIssueHeader *StalledIssuesDelegateWidgetsCache::getNonCacheStalledIssueHe
 
 StalledIssueBaseDelegateWidget *StalledIssuesDelegateWidgetsCache::getNonCacheStalledIssueInfoWidget(const QModelIndex &index, QWidget *parent, const StalledIssueVariant& issue) const
 {
-   return createBodyWidget(index, parent, issue);
+    return createBodyWidget(index, parent, issue);
 }
 
 StalledIssueBaseDelegateWidget *StalledIssuesDelegateWidgetsCache::createBodyWidget(const QModelIndex &index, QWidget *parent, const StalledIssueVariant &issue) const
@@ -120,6 +120,34 @@ StalledIssueBaseDelegateWidget *StalledIssuesDelegateWidgetsCache::createBodyWid
     }
 
     return item;
+}
+
+
+bool StalledIssuesDelegateWidgetsCache::adaptativeHeight(mega::MegaSyncStall::SyncStallReason reason)
+{
+    switch(reason)
+    {
+        case mega::MegaSyncStall::SyncStallReason::NamesWouldClashWhenSynced:
+        {
+            return true;
+        }
+        case mega::MegaSyncStall::SyncStallReason::FileIssue:
+        case mega::MegaSyncStall::SyncStallReason::MoveOrRenameCannotOccur:
+        case mega::MegaSyncStall::SyncStallReason::DeleteOrMoveWaitingOnScanning:
+        case mega::MegaSyncStall::SyncStallReason::DeleteWaitingOnMoves:
+        case mega::MegaSyncStall::SyncStallReason::UploadIssue:
+        case mega::MegaSyncStall::SyncStallReason::DownloadIssue:
+        case mega::MegaSyncStall::SyncStallReason::CannotCreateFolder:
+        case mega::MegaSyncStall::SyncStallReason::CannotPerformDeletion:
+        case mega::MegaSyncStall::SyncStallReason::FolderMatchedAgainstFile:
+        case mega::MegaSyncStall::SyncStallReason::SyncItemExceedsSupportedTreeDepth:
+        case mega::MegaSyncStall::SyncStallReason::LocalAndRemoteChangedSinceLastSyncedState_userMustChoose:
+        case mega::MegaSyncStall::SyncStallReason::LocalAndRemotePreviouslyUnsyncedDiffer_userMustChoose:
+        default:
+            return false;
+    }
+
+    return false;
 }
 
 StalledIssueHeader *StalledIssuesDelegateWidgetsCache::createHeaderWidget(const QModelIndex &index, QWidget *parent, const StalledIssueVariant &issue) const
