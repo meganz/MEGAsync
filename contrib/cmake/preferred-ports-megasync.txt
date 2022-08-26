@@ -44,8 +44,8 @@ opengl/7375bb408f2278d2f1875c259beef93332697ba7
 # pdfium libraries, specific version for build stability  (preview/thumbnail generation for pdfs)
 # (see 3rdParty_deps.txt on instructions on how to get source)
 # also, no v8 (javascript execution) etc
-pdfium/3710
-pdfium-freetype/2-8-73
+pdfium/5247
+pdfium-freetype/2-12-1
 
 # dependencies of pdfium
 icu/979a5197b3389cfdf91d0ac5d98b6066ce73fd7a
