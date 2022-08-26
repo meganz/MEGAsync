@@ -280,7 +280,7 @@ padding-left:15px;
 }</string>
        </property>
        <property name="text">
-        <string>Folder will be deleted from MEGA. It won`t be deleted from your computer. This action cannot be undone.</string>
+        <string>Folder will be deleted from MEGA. It won't be deleted from your computer. This action cannot be undone.</string>
        </property>
        <property name="wordWrap">
         <bool>true</bool>

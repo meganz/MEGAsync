@@ -47,7 +47,7 @@ QString AddBackupDialog::getSelectedFolder()
 
 void AddBackupDialog::on_changeButton_clicked()
 {
-    QString folderPath = QFileDialog::getExistingDirectory(this, tr("Choose Folder"),
+    QString folderPath = QFileDialog::getExistingDirectory(this, tr("Choose folder"),
                                                            QDir::home().path(),
                                                            QFileDialog::DontResolveSymlinks);
     if (!folderPath.isEmpty())
