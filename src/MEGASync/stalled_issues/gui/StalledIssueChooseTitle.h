@@ -1,7 +1,7 @@
 #ifndef STALLEDISSUECHOOSETITLE_H
 #define STALLEDISSUECHOOSETITLE_H
 
-#include "gui/StalledIssueActionTitle.h"
+#include "StalledIssueActionTitle.h"
 
 class StalledIssueChooseTitle : public StalledIssueActionTitle
 {
