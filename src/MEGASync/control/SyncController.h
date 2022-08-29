@@ -47,6 +47,7 @@ public:
     void setDeviceName(const QString& name);
     void getDeviceName();
 
+    // Local folder checks
     static QString getIsLocalFolderAlreadySyncedMsg(const QString& path, const mega::MegaSync::SyncType& syncType);
     static Syncability isLocalFolderAlreadySynced(const QString& path, const mega::MegaSync::SyncType& syncType, QString& message);
     static QString getIsLocalFolderAllowedForSyncMsg(const QString& path, const mega::MegaSync::SyncType& syncType);
@@ -54,6 +55,15 @@ public:
     static QString getAreLocalFolderAccessRightsOkMsg(const QString& path, const mega::MegaSync::SyncType& syncType);
     static Syncability areLocalFolderAccessRightsOk(const QString& path, const mega::MegaSync::SyncType& syncType, QString& message);
     static Syncability isLocalFolderSyncable(const QString& path, const mega::MegaSync::SyncType& syncType, QString& message);
+
+    // Remote folder checks
+    static QString getIsRemoteFolderAlreadySyncedMsg(std::shared_ptr<mega::MegaNode> node);
+    static Syncability isRemoteFolderAlreadySynced(std::shared_ptr<mega::MegaNode> node, QString& message);
+    static QString getIsRemoteFolderAllowedForSyncMsg(std::shared_ptr<mega::MegaNode> node);
+    static Syncability isRemoteFolderAllowedForSync(std::shared_ptr<mega::MegaNode> node, QString& message);
+    static QString getAreRemoteFolderAccessRightsOkMsg(std::shared_ptr<mega::MegaNode> node);
+    static Syncability areRemoteFolderAccessRightsOk(std::shared_ptr<mega::MegaNode> node, QString& message);
+    static Syncability isRemoteFolderSyncable(std::shared_ptr<mega::MegaNode> node, QString& message);
 
     static QString getSyncNameFromPath(const QString& path);
 
