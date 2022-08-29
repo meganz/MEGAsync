@@ -1139,7 +1139,7 @@ In some cases they may contain details about your data, such as file or folder n
     </message>
     <message>
         <source>The file at this destination will be updated with a new version.</source>
-	<translatorcomment>Text explaining the result of the file upload and update action</translatorcomment>
+        <translatorcomment>Text explaining the result of the file upload and update action</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3789,22 +3789,22 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Open settings</source>
         <translatorcomment>Button label to open MEGAsync preferences dialog (Linux and Windows).</translatorcomment>
-        <translation type="unfinished">Open settings</translation>
+        <translation>Open settings</translation>
     </message>
     <message>
         <source>One or more syncs have been disabled. Go to settings to enable them again.</source>
         <translatorcomment>Warning message shown when logging into MEGAsync to inform the user that some syncs have been disabled and need to go to settings to enable them again (Windows and Linux)</translatorcomment>
-        <translation type="unfinished">One or more syncs have been disabled. Go to settings to enable them again.</translation>
+        <translation>One or more syncs have been disabled. Go to settings to enable them again.</translation>
     </message>
     <message>
         <source>Open preferences</source>
         <translatorcomment>Button label to open MEGAsync preferences dialog (MacOS).</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Open preferences</translation>
     </message>
     <message>
         <source>One or more syncs have been disabled. Go to preferences to enable them again.</source>
         <translatorcomment>Warning message shown when logging into MEGAsync to inform the user that some syncs have been disabled and need to go to settings to enable them again (macOS)</translatorcomment>
-        <translation type="unfinished">One or more syncs have been disabled. Go to preferences to enable them again.</translation>
+        <translation>One or more syncs have been disabled. Go to preferences to enable them again.</translation>
     </message>
 </context>
 <context>
@@ -4330,12 +4330,12 @@ Do you want to delete it anyway?</translation>
     <message>
         <source>File can’t be renamed to &quot;%1&quot;</source>
         <translatorcomment>Error warning shown when a file can´t be renamed due to an error.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>File can’t be renamed to &quot;%1&quot;</translation>
     </message>
     <message>
         <source>Folder can’t be renamed to &quot;%1&quot;</source>
         <translatorcomment>Error warning shown when a folder can´t be renamed due to an error.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Folder can’t be renamed to &quot;%1&quot;</translation>
     </message>
 </context>
 <context>
