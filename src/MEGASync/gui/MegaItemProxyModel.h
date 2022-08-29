@@ -21,6 +21,7 @@ public:
         bool showReadOnly = true;
         bool showReadWriteFolders = true;
         bool showOwnerColumn = true;
+        QString textFilter;
         Filter() : showInShares(false), showCloudDrive(true), showReadOnly(true),
                     showReadWriteFolders(true){};
         void showOnlyCloudDrive(){showInShares=false; showCloudDrive = true;}
@@ -35,6 +36,7 @@ public:
     void showReadOnlyFolders(bool value);
     void showReadWriteFolders(bool value);
     void showOwnerColumn(bool value);
+    void setTextFilter(const QString& textFilter);
 
     mega::MegaHandle getHandle(const QModelIndex &index);
     std::shared_ptr<mega::MegaNode> getNode(const QModelIndex& index);
@@ -47,6 +49,7 @@ public:
     bool isShowOnlyInShares();
     bool isShowOnlyCloudDrive();
     bool lessThan(const QModelIndex &left, const QModelIndex &right) const override;
+
 
 protected:
     bool filterAcceptsRow(int sourceRow, const QModelIndex& sourceParent) const override;

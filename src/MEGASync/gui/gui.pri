@@ -10,6 +10,7 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/MegaDelegateHoverManager.cpp \
     $$PWD/MegaItemProxyModel.cpp \
     $$PWD/MegaItemTreeView.cpp \
+    $$PWD/NodeSelectorTreeViewWidget.cpp \
     $$PWD/NotificationsSettings.cpp \
     $$PWD/OverQuotaDialog.cpp \
     $$PWD/ScanningWidget.cpp \
@@ -84,6 +85,7 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/MegaDelegateHoverManager.h \
     $$PWD/MegaItemProxyModel.h \
     $$PWD/MegaItemTreeView.h \
+    $$PWD/NodeSelectorTreeViewWidget.h \
     $$PWD/NotificationsSettings.h \
     $$PWD/OverQuotaDialog.h \
     $$PWD/ScanningWidget.h \
@@ -322,3 +324,6 @@ unix:!macx {
     SOURCES += $$PWD/PermissionsDialog.cpp \
                $$PWD/PermissionsWidget.cpp
 }
+
+FORMS += \
+    $$PWD/NodeSelectorTreeViewWidget.ui

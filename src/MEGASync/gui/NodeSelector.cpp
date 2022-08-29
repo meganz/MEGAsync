@@ -49,35 +49,11 @@ NodeSelector::NodeSelector(int selectMode, QWidget *parent) :
 #endif
 
     nodesReady();
-
-    ui->tMegaFolders->setContextMenuPolicy(Qt::DefaultContextMenu);
-    ui->tMegaFolders->setExpandsOnDoubleClick(false);
-    ui->tMegaFolders->setSortingEnabled(true);
-    ui->tMegaFolders->setHeader(new MegaItemHeaderView(Qt::Horizontal));
-    ui->tMegaFolders->header()->setFixedHeight(MegaItemModel::ROW_HEIGHT);
-    ui->tMegaFolders->header()->moveSection(MegaItemModel::STATUS, MegaItemModel::NODE);
-    ui->tMegaFolders->header()->setProperty("HeaderIconCenter", true);
-    ui->tMegaFolders->setColumnWidth(MegaItemModel::COLUMN::STATUS, MegaItemModel::ROW_HEIGHT * 2);
-    ui->tMegaFolders->setItemDelegate(new  NodeRowDelegate(ui->tMegaFolders));
-    ui->tMegaFolders->setItemDelegateForColumn(MegaItemModel::STATUS, new IconDelegate(ui->tMegaFolders));
-    ui->tMegaFolders->setItemDelegateForColumn(MegaItemModel::USER, new IconDelegate(ui->tMegaFolders));
-    ui->tMegaFolders->setExpanded(mProxyModel->getIndexFromHandle(MegaSyncApp->getRootNode()->getHandle()),true);
-    ui->tMegaFolders->setTextElideMode(Qt::ElideMiddle);
-    ui->tMegaFolders->sortByColumn(MegaItemModel::NODE, Qt::AscendingOrder);
     ui->bOk->setEnabled(false);
-
-    ui->lFolderName->setText(tr("Cloud drive"));
-
-    connect(ui->tMegaFolders->selectionModel(), &QItemSelectionModel::selectionChanged, this, &NodeSelector::onSelectionChanged);
-    connect(ui->tMegaFolders, &MegaItemTreeView::removeNodeClicked, this, &NodeSelector::onDeleteClicked);
-    connect(ui->tMegaFolders, &MegaItemTreeView::getMegaLinkClicked, this, &NodeSelector::onGenMEGALinkClicked);
-    connect(ui->tMegaFolders, &QTreeView::doubleClicked, this, &NodeSelector::onItemDoubleClick);
-    connect(ui->bForward, &QPushButton::clicked, this, &NodeSelector::onGoForwardClicked);
-    connect(ui->bBack, &QPushButton::clicked, this, &NodeSelector::onGoBackClicked);
-    connect(ui->tMegaFolders->header(), &QHeaderView::sectionResized, this, &NodeSelector::onSectionResized);
     connect(ui->bNewFolder, &QPushButton::clicked, this, &NodeSelector::onbNewFolderClicked);
     connect(ui->bOk, &QPushButton::clicked, this, &NodeSelector::onbOkClicked);
     connect(ui->bCancel, &QPushButton::clicked, this, &QDialog::reject);
+    connect(ui->leSearch, &QLineEdit::textEdited, this, &NodeSelector::onSearchBoxEdited);
 
 
     // Provide quick access shortcuts for the two panes via Ctrl+1,2
@@ -581,31 +557,7 @@ void NodeSelector::onTabSelected(int index)
     }
 }
 
-void NodeSelector::onSelectionChanged(const QItemSelection& selected, const QItemSelection& deselected)
-{
-    Q_UNUSED(deselected)
-    if(mSelectMode == UPLOAD_SELECT || mSelectMode == DOWNLOAD_SELECT)
-    {
-        ui->bOk->setEnabled(true);
-        return;
-    }
-    foreach(auto& index, selected.indexes())
-    {
-        auto source_idx = mProxyModel->getIndexFromSource(index);
-        MegaItem *item = static_cast<MegaItem*>(source_idx.internalPointer());
-        if(item)
-        {
-            if(mSelectMode == NodeSelector::STREAM_SELECT)
-            {
-                ui->bOk->setEnabled(item->getNode()->isFile());
-            }
-            else if(mSelectMode == NodeSelector::SYNC_SELECT)
-            {
-                ui->bOk->setEnabled(item->isSyncable());
-            }
-        }
-    }
-}
+
 
 void NodeSelector::onSectionResized()
 {
@@ -614,6 +566,12 @@ void NodeSelector::onSectionResized()
     {
         mManuallyResizedColumn = true;
     }
+}
+
+void NodeSelector::onSearchBoxEdited(const QString &text)
+{
+    mProxyModel->setTextFilter(text);
+
 }
 
 void NodeSelector::saveExpandedItems()

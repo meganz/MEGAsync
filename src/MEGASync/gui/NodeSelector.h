@@ -71,6 +71,7 @@ private slots:
     void onTabSelected(int index);
     void onSelectionChanged(const QItemSelection& selected, const QItemSelection& deselected);
     void onSectionResized();
+    void onSearchBoxEdited(const QString& text);
 
 private:
 

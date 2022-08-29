@@ -10,6 +10,7 @@ MegaItemProxyModel::MegaItemProxyModel(QObject* parent) :
     mCollator.setCaseSensitivity(Qt::CaseInsensitive);
     mCollator.setNumericMode(true);
     mCollator.setIgnorePunctuation(false);
+   // setRecursiveFilteringEnabled(true);
 }
 
 void MegaItemProxyModel::showOnlyCloudDrive()
@@ -39,6 +40,12 @@ void MegaItemProxyModel::showReadWriteFolders(bool value)
 void MegaItemProxyModel::showOwnerColumn(bool value)
 {
     mFilter.showOwnerColumn = value;
+    invalidateFilter();
+}
+
+void MegaItemProxyModel::setTextFilter(const QString &textFilter)
+{
+    mFilter.textFilter = textFilter;
     invalidateFilter();
 }
 
@@ -174,6 +181,7 @@ bool MegaItemProxyModel::lessThan(const QModelIndex &left, const QModelIndex &ri
 bool MegaItemProxyModel::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const
 {
     QModelIndex index = sourceModel()->index(sourceRow, 0, sourceParent);
+
     if(index.isValid())
     {
         if(MegaItem* megaItem = static_cast<MegaItem*>(index.internalPointer()))
@@ -181,9 +189,9 @@ bool MegaItemProxyModel::filterAcceptsRow(int sourceRow, const QModelIndex &sour
             if(std::shared_ptr<mega::MegaNode> node = megaItem->getNode())
             {
                QModelIndex parentIndex = index.parent();
-               if(parentIndex.isValid())
+               if(parentIndex.isValid() && mFilter.textFilter.isEmpty())
                {
-                   return filterAcceptsRow(index.row(), index);
+                  return filterAcceptsRow(index.row(), index);
                }
                mega::MegaApi* megaApi = MegaSyncApp->getMegaApi();
                int accs = megaApi->getAccess(node.get());
@@ -195,8 +203,16 @@ bool MegaItemProxyModel::filterAcceptsRow(int sourceRow, const QModelIndex &sour
                         return false;
                     }
                }
-               return ((node->isInShare() && mFilter.showInShares)
-                       || (!node->isInShare() && mFilter.showCloudDrive));
+
+               bool accept = ((node->isInShare() && mFilter.showInShares)
+                              || (!node->isInShare() && mFilter.showCloudDrive));
+
+               if(accept && !mFilter.textFilter.isEmpty() && !megaItem->isRoot())
+               {
+                  accept = QString::fromUtf8(node->getName()).contains(mFilter.textFilter, Qt::CaseInsensitive);
+               }
+
+               return accept;
             }
         }
     }
