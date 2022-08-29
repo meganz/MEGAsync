@@ -49,7 +49,7 @@ void BindFolderDialog::on_bOK_clicked()
     MegaApi *megaApi = app->getMegaApi();
     MegaHandle handle = ui->wBinder->selectedMegaFolder();
 
-    std::unique_ptr<MegaNode> node {megaApi->getNodeByHandle(handle)};
+    std::shared_ptr<MegaNode> node {megaApi->getNodeByHandle(handle)};
     if (!localFolderPath.length() || !node)
     {
         QMegaMessageBox::warning(nullptr, QString(), tr("Please select a local folder and a MEGA folder"), QMessageBox::Ok);
@@ -66,10 +66,17 @@ void BindFolderDialog::on_bOK_clicked()
         return;
     }
 
-    // Check that we can sync the selected folder
+    // Check that we can sync the selected local folder
     QString warningMessage;
     auto syncability (SyncController::isLocalFolderSyncable(localFolderPath, mega::MegaSync::TYPE_TWOWAY, warningMessage));
 
+    // If OK, check that we can sync the selected remote folder
+    if (syncability != SyncController::CANT_SYNC)
+    {
+        syncability = std::max(SyncController::isRemoteFolderSyncable(node, warningMessage), syncability);
+    }
+
+    // Display warning if needed
     if (syncability == SyncController::CANT_SYNC)
     {
         QMegaMessageBox::warning(nullptr, QString(), warningMessage, QMessageBox::Ok);

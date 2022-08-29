@@ -544,50 +544,57 @@ void SetupWizard::on_bNext_clicked()
         {
             syncability = SyncController::areLocalFolderAccessRightsOk(localFolderPath, MegaSync::TYPE_TWOWAY, warningMessage);
         }
+
+        // If OK, check that we can sync the selected remote folder
+        QString remoteFolderPath = ui->eMegaFolder->text();
+        std::shared_ptr<MegaNode> node (megaApi->getNodeByPath(remoteFolderPath.toUtf8().constData()));
+
+        if (syncability != SyncController::CANT_SYNC)
+        {
+            syncability = std::max(SyncController::isRemoteFolderSyncable(node, warningMessage), syncability);
+        }
+
         if (syncability == SyncController::CANT_SYNC)
         {
-            QMegaMessageBox::warning(nullptr, tr("Warning"), warningMessage, QMessageBox::Ok);
-            return;
-        }
-        else if (syncability == SyncController::WARN_SYNC
-                 && (QMegaMessageBox::warning(nullptr, tr("Warning"), warningMessage
-                                              + QLatin1Char('/')
-                                              + tr("Do you want to continue?"),
-                                              QMessageBox::Yes | QMessageBox::No, QMessageBox::No)
-                  == QMessageBox::No))
-        {
-            return;
-        }
-
-        MegaNode *node = megaApi->getNodeByPath(ui->eMegaFolder->text().toUtf8().constData());
-        if (!node)
-        {
-            auto rootNode = ((MegaApplication*)qApp)->getRootNode();
-            if (!rootNode)
+            // If can't sync because remote node does not exist, try to create it
+            if (!node)
             {
-                page_login();
-                QMegaMessageBox::warning(nullptr, tr("Error"), tr("Unable to get the filesystem.\n"
-                                    "Please, try again. If the problem persists "
-                                    "please contact bug@mega.co.nz"));
+                auto rootNode = MegaSyncApp->getRootNode();
+                if (!rootNode)
+                {
+                    page_login();
+                    QMegaMessageBox::warning(nullptr, tr("Error"), tr("Unable to get the filesystem.\n"
+                                                                      "Please, try again. If the problem persists "
+                                                                      "please contact bug@mega.co.nz"));
+                    done(QDialog::Rejected);
+                    preferences->setCrashed(true);
+                    app->rebootApplication(false);
+                }
+                else
+                {
+                    ui->eMegaFolder->setText(QString::fromLatin1("/MEGAsync"));
+                    megaApi->createFolder("MEGAsync", rootNode.get());
+                    creatingDefaultSyncFolder = true;
 
-                done(QDialog::Rejected);
-                preferences->setCrashed(true);
-                app->rebootApplication(false);
-                return;
+                    ui->lProgress->setText(tr("Creating folder…"));
+                    page_progress();
+                }
             }
-
-            ui->eMegaFolder->setText(QString::fromUtf8("/MEGAsync"));
-            megaApi->createFolder("MEGAsync", rootNode.get());
-            creatingDefaultSyncFolder = true;
-
-            ui->lProgress->setText(tr("Creating folder..."));
-            page_progress();
+            else
+            {
+                QMegaMessageBox::warning(nullptr, tr("Warning"), warningMessage, QMessageBox::Ok);
+            }
         }
-        else
+        else if (syncability == SyncController::CAN_SYNC
+                 || (syncability == SyncController::WARN_SYNC
+                     && QMegaMessageBox::warning(nullptr, tr("Warning"), warningMessage
+                                                 + QLatin1Char('\n')
+                                                 + tr("Do you want to continue?"),
+                                                 QMessageBox::Yes | QMessageBox::No, QMessageBox::No)
+                     == QMessageBox::Yes))
         {
             selectedMegaFolderHandle = node->getHandle();
             page_welcome();
-            delete node;
         }
     }
 }
