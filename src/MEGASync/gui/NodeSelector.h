@@ -43,15 +43,7 @@ public:
     ~NodeSelector();
     void showDefaultUploadOption(bool show = true);
     void setDefaultUploadOption(bool value);
-    mega::MegaHandle getSelectedNodeHandle();
-    QList<mega::MegaHandle> getMultiSelectionNodeHandle();
-    void setSelectedNodeHandle(mega::MegaHandle selectedHandle);
     bool getDefaultUploadOption();
-
-public slots:
-    void onRequestFinish(mega::MegaApi* api, mega::MegaRequest *request, mega::MegaError* e) override;
-    void onDeleteClicked();
-    void onGenMEGALinkClicked();
 
 protected:
     void changeEvent(QEvent * event) override;
@@ -71,46 +63,16 @@ private slots:
     void onTabSelected(int index);
     void onSelectionChanged(const QItemSelection& selected, const QItemSelection& deselected);
     void onSectionResized();
-    void onSearchBoxEdited(const QString& text);
 
 private:
 
-    struct Navigation{
-      QList<mega::MegaHandle> expandedHandles = QList<mega::MegaHandle>();
-      mega::MegaHandle rootHandle = mega::INVALID_HANDLE;
-      QList<mega::MegaHandle> forwardHandles = QList<mega::MegaHandle>();
-      QList<mega::MegaHandle> backwardHandles = QList<mega::MegaHandle>();
-
-      void removeFromForward(const mega::MegaHandle& handle);
-      void remove(const mega::MegaHandle& handle);
-
-      void appendToBackward(const mega::MegaHandle& handle);
-      void appendToForward(const mega::MegaHandle& handle);
-    };
-
-    void checkBackForwardButtons();
-    void checkNewFolderButtonVisibility();
-    void saveExpandedItems();
-    void iterateForSaveExpanded(QList<mega::MegaHandle>& saveList, const QModelIndex& parent = QModelIndex());
-    void restoreExpandedItems();
-    void iterateForRestore(const QList<mega::MegaHandle> &list, const QModelIndex& parent = QModelIndex());
-    bool isAllowedToEnterInIndex(const QModelIndex & idx);
     bool isCloudDrive();
-    void setRootIndex(const QModelIndex& proxy_idx);
-    mega::MegaHandle getHandleByIndex(const QModelIndex& idx);
-    QModelIndex getIndexFromHandle(const mega::MegaHandle& handle);
-    QModelIndex getSelectedIndex();
     QModelIndex getParentIncomingShareByIndex(QModelIndex idx);
-    Navigation mNavCloudDrive;
-    Navigation mNavInShares;
 
     Ui::NodeSelector *ui;
     int mSelectMode;
 
     mega::MegaApi* mMegaApi;
-    std::unique_ptr<mega::QTMegaRequestListener> mDelegateListener;
-    std::unique_ptr<MegaItemModel> mModel;
-    std::unique_ptr<MegaItemProxyModel> mProxyModel;
     bool mManuallyResizedColumn;
 };
 

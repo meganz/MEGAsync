@@ -15,6 +15,9 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
+    <widget class="QLineEdit" name="leSearch"/>
+   </item>
+   <item>
     <layout class="QHBoxLayout" name="horizontalLayout_3">
      <property name="spacing">
       <number>0</number>

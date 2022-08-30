@@ -177,9 +177,6 @@ QPushButton:!checked {
     </layout>
    </item>
    <item>
-    <widget class="QLineEdit" name="leSearch"/>
-   </item>
-   <item>
     <widget class="QStackedWidget" name="stackedWidget">
      <property name="currentIndex">
       <number>1</number>
