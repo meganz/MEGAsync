@@ -14,6 +14,8 @@ TransferWidgetHeaderItem::TransferWidgetHeaderItem(QWidget *parent) :
     lineSizePolicy.setRetainSizeWhenHidden(true);
     ui->line->setSizePolicy(lineSizePolicy);
     ui->line->hide();
+
+    ui->columnTitle->installEventFilter(this);
 }
 
 TransferWidgetHeaderItem::~TransferWidgetHeaderItem()
@@ -93,6 +95,16 @@ void TransferWidgetHeaderItem::leaveEvent(QEvent *event)
 {
     ui->line->hide();
     QWidget::leaveEvent(event);
+}
+
+bool TransferWidgetHeaderItem::eventFilter(QObject *watched, QEvent *event)
+{
+    if(watched == ui->columnTitle && event->type() == QEvent::Resize)
+    {
+        ui->columnTitle->setText(ui->columnTitle->fontMetrics().elidedText(mTitle, Qt::ElideMiddle,ui->columnTitle->width()));
+    }
+
+    return QWidget::eventFilter(watched, event);
 }
 
 void TransferWidgetHeaderItem::updateChevronIcon()

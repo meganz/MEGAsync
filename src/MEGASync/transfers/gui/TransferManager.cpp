@@ -316,6 +316,9 @@ void TransferManager::setActiveTab(int t)
 
 TransferManager::~TransferManager()
 {
+    disconnect(findChild<MegaTransferView*>(), &MegaTransferView::verticalScrollBarVisibilityChanged,
+            this, &TransferManager::onVerticalScrollBarVisibilityChanged);
+
     delete mUi;
     delete mTransferScanCancelUi;
 }
@@ -1383,6 +1386,12 @@ void TransferManager::updateTransferWidget(QWidget* widgetToShow)
         if (mUi->sTransfers->currentWidget() != widgetToShow)
         {
             mUi->sTransfers->setCurrentWidget(widgetToShow);
+
+            //Update the headers and the pause/resume and cancel/clear buttons
+            if(widgetToShow == mUi->wTransfers)
+            {
+                mUi->wTransfers->updateHeaders();
+            }
         }
     }
 }

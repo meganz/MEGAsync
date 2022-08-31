@@ -9,6 +9,7 @@ class PlatformStrings : public QObject
 public:
     static QString openSettings();
     static QString syncsDisableWarning();
+    static QString cancelSyncsWarning();
 };
 
 #endif // PLATFORMSTRINGS_H

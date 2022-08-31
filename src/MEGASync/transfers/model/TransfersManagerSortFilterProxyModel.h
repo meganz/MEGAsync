@@ -49,6 +49,7 @@ public:
         bool areAllCompleted() const;
         bool isAnyCompleted() const;
         bool isAnyActive() const;
+        bool isAnyFailed() const;
 
         bool isEmpty() const;
         int  transfersCount() const;
@@ -72,6 +73,8 @@ protected:
         bool filterAcceptsRow(int sourceRow, const QModelIndex& sourceParent) const override;
         bool lessThan(const QModelIndex& left, const QModelIndex& right) const override;
         QMimeData* mimeData(const QModelIndexList &indexes) const override;
+        bool dropMimeData(const QMimeData* data, Qt::DropAction action, int destRow,
+                                          int column, const QModelIndex& parent);
 
 protected:
         TransferData::TransferStates mTransferStates;

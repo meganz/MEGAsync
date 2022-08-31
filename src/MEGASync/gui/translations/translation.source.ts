@@ -3806,6 +3806,20 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translatorcomment>Warning message shown when logging into MEGAsync to inform the user that some syncs have been disabled and need to go to settings to enable them again (macOS)</translatorcomment>
         <translation>One or more syncs have been disabled. Go to preferences to enable them again.</translation>
     </message>
+    <message>
+        <source>Sync transfers cannot be cancelled individually.
+Please delete the folder sync from settings to cancel them.</source>
+        <translatorcomment>Explains that the sync transfers cannot be cancelled individually. (for windows and linux)</translatorcomment>
+        <translation>Sync transfers cannot be cancelled individually.
+Please delete the folder sync from settings to cancel them.</translation>
+    </message>
+    <message>
+        <source>Sync transfers cannot be cancelled individually.
+Please delete the folder sync from preferences to cancel them.</source>
+        <translatorcomment>Explains that the sync transfers cannot be cancelled individually. (for macOS)</translatorcomment>
+        <translation>Sync transfers cannot be cancelled individually.
+Please delete the folder sync from preferences to cancel them.</translation>
+    </message>
 </context>
 <context>
     <name>Preferences</name>
@@ -5931,13 +5945,6 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
 </context>
 <context>
     <name>TransfersModel</name>
-    <message>
-        <source>Sync transfers cannot be cancelled individually.
-Please delete the folder sync from settings to cancel them.</source>
-        <translatorcomment>Explains that the sync transfers cannot be cancelled individually.</translatorcomment>
-        <translation>Sync transfers cannot be cancelled individually.
-Please delete the folder sync from settings to cancel them.</translation>
-    </message>
     <message>
         <source>Dismiss</source>
         <translatorcomment>Option to close the dialog without taking any action</translatorcomment>

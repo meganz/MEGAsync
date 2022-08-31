@@ -250,6 +250,8 @@ public:
     void resetSyncInRowsToCancel();
     void showSyncCancelledWarning();
 
+    QList<int> getDragAndDropRows(const QMimeData* data, int destRows);
+
 signals:
     void pauseStateChanged(bool pauseState);
     void transferPauseStateChanged();
