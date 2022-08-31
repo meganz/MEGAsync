@@ -123,7 +123,7 @@ void AccountDetailsDialog::refresh()
 
         mUi->lUsedStorage->setText(Utilities::getSizeString(usedStorage));
         long long availableStorage = totalStorage - usedStorage;
-        mUi->lAvailableStorage->setText(Utilities::getSizeString(availableStorage));
+        mUi->lAvailableStorage->setText(Utilities::getSizeString(availableStorage < 0 ? 0 : availableStorage));
         // ---------- Process transfer usage
 
         // Get useful data
