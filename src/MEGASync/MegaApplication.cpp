@@ -15,6 +15,7 @@
 #include "DuplicatedNodeDialogs/DuplicatedNodeDialog.h"
 #include "SyncsMenu.h"
 #include "TextDecorator.h"
+#include "UserAttributesManager.h"
 
 #include <QTranslator>
 #include <QClipboard>
@@ -1271,10 +1272,7 @@ void MegaApplication::loggedIn(bool fromWizard)
         crashReportFilePath.clear();
     }
 
-    // Ensure device name is set
     mSyncController.reset(new SyncController());
-    mSyncController->getDeviceName();
-
     connect(mSyncController.get(), &SyncController::syncAddStatus, this, [](const int errorCode, const QString errorMsg, QString name)
     {
         if (errorCode != MegaError::API_OK)
@@ -2225,6 +2223,8 @@ void MegaApplication::cleanAll()
     }
 
     mSyncController.reset();
+
+    UserAttributes::UserAttributesManager::instance().reset();
 
     closeDialogs();
     removeAllFinishedTransfers();
@@ -4125,6 +4125,8 @@ void MegaApplication::clearUserAttributes()
     {
         QFile::remove(pathToAvatar);
     }
+
+    UserAttributes::UserAttributesManager::instance().reset();
 }
 
 void MegaApplication::clearViewedTransfers()

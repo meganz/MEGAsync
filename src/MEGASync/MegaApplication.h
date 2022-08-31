@@ -548,6 +548,7 @@ protected:
     std::shared_ptr<DesktopNotifications> mOsNotifications;
     QMutex mMutexOpenUrls;
     QMap<QString, std::chrono::system_clock::time_point> mOpenUrlsClusterTs;
+
     std::unique_ptr<SyncController> mSyncController;
 
     QPointer<TransfersModel> mTransfersModel;

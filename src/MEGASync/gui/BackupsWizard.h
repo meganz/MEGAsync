@@ -19,6 +19,11 @@ namespace Ui {
 class BackupsWizard;
 }
 
+namespace UserAttributes
+{
+    class DeviceName;
+}
+
 class ProxyModel : public QSortFilterProxyModel
 {
 public:
@@ -91,9 +96,9 @@ class BackupsWizard : public QDialog
 
         Ui::BackupsWizard* mUi;
         HighDpiResize mHighDpiResize;
+        std::shared_ptr<UserAttributes::DeviceName> mDeviceNameRequest;
         SyncController mSyncController;
         bool mCreateBackupsDir;
-        mega::MegaHandle mDeviceDirHandle;
         bool mHaveBackupsDir;
         bool mError;
         bool mUserCancelled;

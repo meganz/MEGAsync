@@ -82,7 +82,7 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
     mBackupsWizard (nullptr),
     mAddBackupDialog (nullptr),
     mAddSyncDialog (nullptr),
-    mSyncController (new SyncController()),
+    mSyncController (nullptr),
     qtBugFixer(this)
 {
     ui->setupUi(this);
@@ -259,31 +259,6 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
     overlay->show();
     connect(overlay, SIGNAL(clicked()), this, SLOT(onOverlayClicked()));
     connect(this, SIGNAL(openTransferManager(int)), app, SLOT(externalOpenTransferManager(int)));
-
-    // Connect sync controller signals
-    connect(mSyncController.get(), &SyncController::myBackupsHandle, this, [this](mega::MegaHandle h)
-    {
-        if (h == mega::INVALID_HANDLE)
-            return;
-
-        if (mAddBackupDialog)
-        {
-            mAddBackupDialog->setMyBackupsFolder(mSyncController->getMyBackupsLocalizedPath() + QLatin1Char('/'));
-        }
-    });
-    connect(mSyncController.get(), &SyncController::syncAddStatus, this, [](const int errorCode, const QString errorMsg, QString name)
-    {
-        if (errorCode != MegaError::API_OK)
-        {
-            QString msg = errorMsg;
-            Text::Link link(Utilities::SUPPORT_URL);
-            Text::Decorator tc(&link);
-            tc.process(msg);
-            QMegaMessageBox::warning(nullptr, tr("Error"), tr("Error adding %1:").arg(name)
-                                     + QString::fromLatin1("\n")
-                                     + msg, QMessageBox::Ok, QMessageBox::NoButton, Qt::RichText);
-        }
-    });
 
     if (preferences->logged())
     {
@@ -1162,6 +1137,8 @@ void InfoDialog::addSync(MegaHandle h)
     delete mAddSyncDialog;
 
     MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromLatin1("Adding sync %1 from addSync: ").arg(localFolderPath).toUtf8().constData());
+
+    setupSyncController();
     mSyncController->addSync(localFolderPath, handle, syncName, mega::MegaSync::TYPE_TWOWAY);
 }
 
@@ -1180,6 +1157,8 @@ void InfoDialog::addBackup()
         }
         else
         {
+            setupSyncController();
+
             mAddBackupDialog = new AddBackupDialog();
             mSyncController->getMyBackupsHandle();
 
@@ -1315,6 +1294,8 @@ void InfoDialog::reset()
     transferOverquotaAlertEnabled = false;
     transferAlmostOverquotaAlertEnabled = false;
     transferQuotaState = QuotaState::OK;
+
+    mSyncController.reset();
 }
 
 void InfoDialog::setPSAannouncement(int id, QString title, QString text, QString urlImage, QString textButton, QString linkButton)
@@ -1956,4 +1937,37 @@ void InfoDialog::setTransferManager(TransferManager *transferManager)
 {
     mTransferManager = transferManager;
     mTransferManager->setTransferState(mState);
+}
+
+void InfoDialog::setupSyncController()
+{
+    if (!mSyncController)
+    {
+        mSyncController.reset(new SyncController());
+
+        // Connect sync controller signals
+        connect(mSyncController.get(), &SyncController::myBackupsHandle, this, [this](mega::MegaHandle h)
+        {
+            if (h == mega::INVALID_HANDLE)
+                return;
+
+            if (mAddBackupDialog)
+            {
+                mAddBackupDialog->setMyBackupsFolder(mSyncController->getMyBackupsLocalizedPath() + QLatin1Char('/'));
+            }
+        });
+        connect(mSyncController.get(), &SyncController::syncAddStatus, this, [](const int errorCode, const QString errorMsg, QString name)
+        {
+            if (errorCode != MegaError::API_OK)
+            {
+                QString msg = errorMsg;
+                Text::Link link(Utilities::SUPPORT_URL);
+                Text::Decorator tc(&link);
+                tc.process(msg);
+                QMegaMessageBox::warning(nullptr, tr("Error"), tr("Error adding %1:").arg(name)
+                                         + QString::fromLatin1("\n")
+                                         + msg, QMessageBox::Ok, QMessageBox::NoButton, Qt::RichText);
+            }
+        });
+    }
 }

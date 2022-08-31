@@ -11,6 +11,11 @@
 
 #include <memory>
 
+namespace UserAttributes
+{
+    class DeviceName;
+}
+
 class SyncsMenu : public QObject
 {
     Q_OBJECT
@@ -37,7 +42,7 @@ private:
     void refresh();
     void highLightMenuEntry(QAction *action);
 
-    SyncController mSyncController;
+    std::shared_ptr<UserAttributes::DeviceName> mDeviceNameRequest;
     mega::MegaSync::SyncType mType;
     std::shared_ptr<QMenu> mMenu;
     std::shared_ptr<MenuItemAction> mAddAction;

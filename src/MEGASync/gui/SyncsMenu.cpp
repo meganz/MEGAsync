@@ -4,6 +4,7 @@
 #include "Preferences.h"
 #include "model/SyncModel.h"
 #include "Platform.h"
+#include "UserAttributesRequests/DeviceName.h"
 
 #include <QtConcurrent/QtConcurrent>
 
@@ -17,6 +18,7 @@ const QLatin1String DEVICE_ICON ("://images/icons/pc/pc-linux_24.png");
 #endif
 
 SyncsMenu::SyncsMenu(mega::MegaSync::SyncType type, QObject *parent) : QObject(parent),
+    mDeviceNameRequest (nullptr),
     mType (type),
     mMenu (new QMenu()),
     mAddAction (new MenuItemAction(QString(), QIcon(), true)),
@@ -42,7 +44,8 @@ SyncsMenu::SyncsMenu(mega::MegaSync::SyncType type, QObject *parent) : QObject(p
             textAdd = tr("Add Backups");
             textMenu = tr("Backups");
             iconMenu = QIcon(QLatin1String("://images/icons/ico_backup.png"));
-            connect(&mSyncController, &SyncController::deviceName,
+            mDeviceNameRequest = UserAttributes::DeviceName::requestDeviceName();
+            connect(mDeviceNameRequest.get(), &UserAttributes::DeviceName::attributeReady,
                     this, &SyncsMenu::onDeviceNameSet);
             break;
         }
@@ -176,7 +179,7 @@ void SyncsMenu::refresh()
                 // Insert the action in the menu to make sure it is here when the
                 // set device name slot is called.
                 mMenu->insertAction(firstBackup, mDevNameAction.get());
-                mSyncController.getDeviceName();
+                onDeviceNameSet(mDeviceNameRequest->getDeviceName());
             }
             else
             {

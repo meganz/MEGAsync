@@ -266,6 +266,7 @@ protected:
  private:
     static double computeRatio(long long completed, long long remaining);
     void enableUserActions(bool value);
+    void setupSyncController();
 
     TransferScanCancelUi* mTransferScanCancelUi = nullptr;
     QtPositioningBugFixer qtBugFixer;

@@ -87,7 +87,6 @@ void FullName::requestLastNameAttribute()
     MegaSyncApp->getMegaApi()->getUserAttribute(mUserEmail.toUtf8().constData(),mega::ATTR_LASTNAME);
 }
 
-
 QString FullName::getFullName() const
 {
     if(!isAttributeReady())

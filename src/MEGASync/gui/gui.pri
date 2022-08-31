@@ -65,6 +65,7 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/FilterAlertWidget.cpp \
     $$PWD/AlertFilterType.cpp \
     $$PWD/BugReportDialog.cpp \
+    $$PWD/UserAttributesRequests/DeviceName.cpp \
     $$PWD/UserAttributesRequests/FullName.cpp \
     $$PWD/UserAttributesRequests/Avatar.cpp \
     $$PWD/VerifyLockMessage.cpp \
@@ -147,6 +148,7 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/FilterAlertWidget.h \
     $$PWD/AlertFilterType.h \
     $$PWD/BugReportDialog.h \
+    $$PWD/UserAttributesRequests/DeviceName.h \
     $$PWD/UserAttributesRequests/FullName.h \
     $$PWD/UserAttributesRequests/Avatar.h \
     $$PWD/VerifyLockMessage.h \

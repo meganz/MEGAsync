@@ -79,10 +79,22 @@ void AlertItem::onAttributesReady()
 {
     MegaHandle handle = mAlertUser->getNodeHandle();
 
-    mAlertNodeWatcher.setFuture(QtConcurrent::run([=]()
+    if (handle != INVALID_HANDLE)
     {
-        return megaApi ? megaApi->getNodeByHandle(handle) : nullptr;
-    }));
+        mAlertNodeWatcher.setFuture(QtConcurrent::run([=]()
+        {
+            return megaApi ? megaApi->getNodeByHandle(handle) : nullptr;
+        }));
+    }
+    else
+    {
+        setAlertType(mAlertUser->getType());
+        setAlertHeading(mAlertUser.get());
+        setAlertContent(mAlertUser.get());
+        setAlertTimeStamp(mAlertUser->getTimestamp(0));
+        mAlertUser->getSeen() ? ui->lNew->hide() : ui->lNew->show();
+        emit refreshAlertItem(mAlertUser->getId());
+    }
 }
 
 void AlertItem::setAlertType(int type)
