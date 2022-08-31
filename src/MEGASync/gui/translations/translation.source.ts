@@ -1140,7 +1140,7 @@ In some cases they may contain details about your data, such as file or folder n
     <message>
         <source>The file at this destination will be updated with a new version.</source>
         <translatorcomment>Text explaining the result of the file upload and update action</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>The file at this destination will be updated with a new version.</translation>
     </message>
 </context>
 <context>
@@ -3810,15 +3810,14 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <source>Sync transfers cannot be cancelled individually.
 Please delete the folder sync from settings to cancel them.</source>
         <translatorcomment>Explains that the sync transfers cannot be cancelled individually. (for windows and linux)</translatorcomment>
-        <translation>Sync transfers cannot be cancelled individually.
+        <translation type="unfinished">Sync transfers cannot be cancelled individually.
 Please delete the folder sync from settings to cancel them.</translation>
     </message>
     <message>
         <source>Sync transfers cannot be cancelled individually.
 Please delete the folder sync from preferences to cancel them.</source>
         <translatorcomment>Explains that the sync transfers cannot be cancelled individually. (for macOS)</translatorcomment>
-        <translation>Sync transfers cannot be cancelled individually.
-Please delete the folder sync from preferences to cancel them.</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
