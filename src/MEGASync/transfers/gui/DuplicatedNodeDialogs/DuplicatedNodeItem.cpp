@@ -250,25 +250,6 @@ void DuplicatedRemoteItem::onRequestFinish(mega::MegaApi *api, mega::MegaRequest
     }
 }
 
-qint64 DuplicatedRemoteItem::getFolderSize(mega::MegaNode* node, qint64 size)
-{
-    auto newSize(size);
-
-    auto nodes = std::unique_ptr<mega::MegaChildrenLists>(MegaSyncApp->getMegaApi()->getFileFolderChildren(node));
-
-    for(int index = 0; index < nodes->getFileList()->size(); ++index)
-    {
-        newSize += nodes->getFileList()->get(index)->getSize();
-    }
-
-    for(int index = 0; index < nodes->getFolderList()->size(); ++index)
-    {
-        newSize = getFolderSize(nodes->getFolderList()->get(index),newSize);
-    }
-
-    return newSize;
-}
-
 /*
  * LOCAL IMPLEMENTATION CLASS
  * USE TO SHOW THE LOCAL NODE INFO

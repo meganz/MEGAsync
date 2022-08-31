@@ -185,6 +185,11 @@ void TransferThread::onTransferStart(MegaApi *, MegaTransfer *transfer)
             mTransfersCount.pendingUploads++;
             mTransfersCount.totalUploadBytes += transfer->getTotalBytes();
             mTransfersCount.completedUploadBytes += transfer->getTransferredBytes();
+
+            mLastTransfersCount.totalUploads++;
+            mLastTransfersCount.pendingUploads++;
+            mLastTransfersCount.totalUploadBytes += transfer->getTotalBytes();
+            mLastTransfersCount.completedUploadBytes += transfer->getTransferredBytes();
         }
         else
         {
@@ -192,6 +197,11 @@ void TransferThread::onTransferStart(MegaApi *, MegaTransfer *transfer)
             mTransfersCount.pendingDownloads++;
             mTransfersCount.totalDownloadBytes += transfer->getTotalBytes();
             mTransfersCount.completedDownloadBytes += transfer->getTransferredBytes();
+
+            mLastTransfersCount.totalDownloads++;
+            mLastTransfersCount.pendingDownloads++;
+            mLastTransfersCount.totalDownloadBytes += transfer->getTotalBytes();
+            mLastTransfersCount.completedDownloadBytes += transfer->getTransferredBytes();
         }
 
         QMutexLocker cacheLock(&mCacheMutex);
@@ -221,10 +231,13 @@ void TransferThread::onTransferUpdate(MegaApi *, MegaTransfer *transfer)
         if(transfer->getType() == MegaTransfer::TYPE_UPLOAD)
         {
             mTransfersCount.completedUploadBytes += transfer->getDeltaSize();
+
+            mLastTransfersCount.completedUploadBytes += transfer->getDeltaSize();
         }
         else
         {
             mTransfersCount.completedDownloadBytes += transfer->getDeltaSize();
+            mLastTransfersCount.completedDownloadBytes += transfer->getDeltaSize();
         }
 
         QMutexLocker cacheLock(&mCacheMutex);
@@ -255,6 +268,11 @@ void TransferThread::onTransferFinish(MegaApi*, MegaTransfer *transfer, MegaErro
                 mTransfersCount.totalUploadBytes -= transfer->getTotalBytes();
                 mTransfersCount.pendingUploads--;
                 mTransfersCount.totalUploads--;
+
+                mLastTransfersCount.completedUploadBytes -= transfer->getTransferredBytes();
+                mLastTransfersCount.totalUploadBytes -= transfer->getTotalBytes();
+                mLastTransfersCount.pendingUploads--;
+                mLastTransfersCount.totalUploads--;
             }
             else
             {
@@ -262,6 +280,16 @@ void TransferThread::onTransferFinish(MegaApi*, MegaTransfer *transfer, MegaErro
                 mTransfersCount.totalDownloadBytes -= transfer->getTotalBytes();
                 mTransfersCount.pendingDownloads--;
                 mTransfersCount.totalDownloads--;
+
+                mLastTransfersCount.completedDownloadBytes -= transfer->getTransferredBytes();
+                mLastTransfersCount.totalDownloadBytes -= transfer->getTotalBytes();
+                mLastTransfersCount.pendingDownloads--;
+                mLastTransfersCount.totalDownloads--;
+            }
+
+            if(mTransfersCount.pendingTransfers() == 0)
+            {
+                mLastTransfersCount.clear();
             }
         }
         else
@@ -270,30 +298,43 @@ void TransferThread::onTransferFinish(MegaApi*, MegaTransfer *transfer, MegaErro
             if(transfer->getType() == MegaTransfer::TYPE_UPLOAD)
             {
                 mTransfersCount.pendingUploads--;
+                mLastTransfersCount.pendingUploads--;
 
                 if(transfer->getTransferredBytes() < transfer->getTotalBytes())
                 {
                     mTransfersCount.completedUploadBytes += transfer->getDeltaSize();
+                    mLastTransfersCount.completedUploadBytes += transfer->getDeltaSize();
                 }
 
                 if(transfer->getState() == MegaTransfer::STATE_FAILED && !transfer->isSyncTransfer())
                 {
                     mTransfersCount.failedUploads++;
                 }
+
+                mLastTransfersCount.completedUploadsByTag.insert(transfer->getTag());
             }
             else
             {
                 mTransfersCount.pendingDownloads--;
+                mLastTransfersCount.pendingDownloads--;
 
                 if(transfer->getTransferredBytes() < transfer->getTotalBytes())
                 {
                     mTransfersCount.completedDownloadBytes += transfer->getDeltaSize();
+                    mLastTransfersCount.completedDownloadBytes += transfer->getDeltaSize();
                 }
 
                 if(transfer->getState() == MegaTransfer::STATE_FAILED && !transfer->isSyncTransfer())
                 {
                     mTransfersCount.failedDownloads++;
                 }
+
+                mLastTransfersCount.completedDownloadsByTag.insert(transfer->getTag());
+            }
+
+            if(mTransfersCount.pendingTransfers() == 0)
+            {
+                mLastTransfersCount.clear();
             }
         }
 
@@ -327,10 +368,12 @@ void TransferThread::onTransferTemporaryError(MegaApi*, MegaTransfer *transfer, 
         if(transfer->getType() == MegaTransfer::TYPE_UPLOAD)
         {
             mTransfersCount.completedUploadBytes += transfer->getDeltaSize();
+            mLastTransfersCount.completedUploadBytes += transfer->getDeltaSize();
         }
         else
         {
             mTransfersCount.completedDownloadBytes += transfer->getDeltaSize();
+            mLastTransfersCount.completedDownloadBytes += transfer->getDeltaSize();
         }
 
         QMutexLocker cacheLock(&mCacheMutex);
@@ -347,6 +390,12 @@ TransfersCount TransferThread::getTransfersCount()
 {
     QMutexLocker lock(&mCountersMutex);
     return mTransfersCount;
+}
+
+LastTransfersCount TransferThread::getLastTransfersCount()
+{
+    QMutexLocker lock(&mCountersMutex);
+    return mLastTransfersCount;
 }
 
 int TransfersModel::hasActiveTransfers() const
@@ -401,6 +450,21 @@ void TransferThread::resetCompletedUploads(QList<QExplicitlySharedDataPointer<Tr
                 transfer->removeFailedTransfer();
             }
         }
+
+        if(mLastTransfersCount.completedUploadsByTag.contains(transfer->mTag))
+        {
+            mLastTransfersCount.completedUploadsByTag.remove(transfer->mTag);
+            mLastTransfersCount.totalUploads--;
+            mLastTransfersCount.completedUploadBytes -= transfer->mTotalSize;
+            mLastTransfersCount.totalUploadBytes -= transfer->mTotalSize;
+            mLastTransfersCount.transfersByType[transfer->mFileType]--;
+            mLastTransfersCount.transfersFinishedByType[transfer->mFileType]--;
+
+            if(transfer->isFailed() && !transfer->isSyncTransfer())
+            {
+                mLastTransfersCount.failedUploads--;
+            }
+        }
     }
 }
 
@@ -422,6 +486,21 @@ void TransferThread::resetCompletedDownloads(QList<QExplicitlySharedDataPointer<
             {
                 mTransfersCount.failedDownloads--;
                 transfer->removeFailedTransfer();
+            }
+        }
+
+        if(mLastTransfersCount.completedDownloadsByTag.contains(transfer->mTag))
+        {
+            mLastTransfersCount.completedDownloadsByTag.remove(transfer->mTag);
+            mLastTransfersCount.totalDownloads--;
+            mLastTransfersCount.completedDownloadBytes -= transfer->mTotalSize;
+            mLastTransfersCount.totalDownloadBytes -= transfer->mTotalSize;
+            mLastTransfersCount.transfersByType[transfer->mFileType]--;
+            mLastTransfersCount.transfersFinishedByType[transfer->mFileType]--;
+
+            if(transfer->isFailed() && !transfer->isSyncTransfer())
+            {
+                mLastTransfersCount.failedDownloads--;
             }
         }
     }
@@ -1592,9 +1671,15 @@ TransfersCount TransfersModel::getTransfersCount()
     return mTransfersCount;
 }
 
+TransfersCount TransfersModel::getLastTransfersCount()
+{
+    return mLastTransfersCount;
+}
+
 void TransfersModel::updateTransfersCount()
 {    
     mTransfersCount = mTransferEventWorker->getTransfersCount();
+    mLastTransfersCount = mTransferEventWorker->getLastTransfersCount();
 
     emit transfersCountUpdated();
 }

@@ -164,18 +164,6 @@ private:
     long long totalDownloads;
     long long currentDownload;
 
-    long long mActualTotalUploads;
-    long long mActualTotalDownloads;
-
-    long long mResetTotalUploads;
-    long long mResetTotalDownloads;
-
-    long long mActualCompletedUploadsBytes;
-    long long mActualCompletedDownloadsBytes;
-
-    long long mResetTotalUploadsBytes;
-    long long mResetTotalDownloadsBytes;
-
     QFont fontUploads;
     QFont fontDownloads;
     QString uploadsText;

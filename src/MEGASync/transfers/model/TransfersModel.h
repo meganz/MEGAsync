@@ -71,6 +71,20 @@ struct TransfersCount
     }
 };
 
+struct LastTransfersCount : public TransfersCount
+{
+    QSet<int> completedUploadsByTag;
+    QSet<int> completedDownloadsByTag;
+
+    void clear()
+    {
+        TransfersCount::clear();
+        completedUploadsByTag.clear();
+        completedDownloadsByTag.clear();
+    }
+
+};
+
 class TransferThread :  public QObject,public mega::MegaTransferListener
 {
     Q_OBJECT
@@ -102,6 +116,8 @@ public:
     ~TransferThread(){}
 
     TransfersCount getTransfersCount();
+    LastTransfersCount getLastTransfersCount();
+
     void resetCompletedUploads(QList<QExplicitlySharedDataPointer<TransferData> > transfersToReset);
     void resetCompletedDownloads(QList<QExplicitlySharedDataPointer<TransferData>> transfersToReset);
     void resetCompletedTransfers();
@@ -146,6 +162,7 @@ private:
     QMutex mCacheMutex;
     QMutex mCountersMutex;
     TransfersCount mTransfersCount;
+    LastTransfersCount mLastTransfersCount;
     std::atomic<int16_t> mMaxTransfersToProcess;
 };
 
@@ -205,6 +222,7 @@ public:
     long long  getNumberOfTransfersForFileType(Utilities::FileType fileType) const;
     long long  getNumberOfFinishedForFileType(Utilities::FileType fileType) const;
     TransfersCount getTransfersCount();
+    TransfersCount getLastTransfersCount();
     long long failedTransfers();
 
     void startTransfer(QExplicitlySharedDataPointer<TransferData> transfer);
@@ -295,6 +313,7 @@ private:
     mega::QTMegaTransferListener *mDelegateListener;
     QTimer mTimer;
     TransfersCount mTransfersCount;
+    LastTransfersCount mLastTransfersCount;
 
     QList<QExplicitlySharedDataPointer<TransferData>> mTransfers;
 
