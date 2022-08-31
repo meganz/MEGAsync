@@ -38,18 +38,6 @@ TransfersSummaryWidget::TransfersSummaryWidget(QWidget *parent) :
     totalUploads = 0;
     totalDownloads = 0;
 
-    mActualTotalUploads = totalUploads;
-    mActualTotalDownloads = totalDownloads;
-
-    mResetTotalUploads = totalUploads;
-    mResetTotalDownloads = totalDownloads;
-
-    mActualCompletedUploadsBytes = 0;
-    mActualCompletedDownloadsBytes = 0;
-
-    mResetTotalUploadsBytes = mActualCompletedUploadsBytes;
-    mResetTotalDownloadsBytes = mActualCompletedDownloadsBytes;
-
     upArrowPixmapOrig = QIcon(QString::fromLatin1(":/images/transfer_manager/transfers_states/upload_item_ico_white.png")).pixmap(12.0, 12.0);
     dlArrowPixmapOrig = QIcon(QString::fromLatin1(":/images/transfer_manager/transfers_states/download_item_ico_white.png")).pixmap(12.0, 12.0);
 
@@ -183,50 +171,24 @@ void TransfersSummaryWidget::paintEvent(QPaintEvent*)
 
 void TransfersSummaryWidget::setPercentUploads(long long completedBytes, long long totalBytes)
 {
-    double percentUploads(0.0);
-
-    if(completedBytes == 0)
+    if(totalBytes == 0)
     {
-        mActualCompletedUploadsBytes = 0;
-        mResetTotalUploadsBytes = 0;
-    }
-    else if(completedBytes < mActualCompletedUploadsBytes && mResetTotalUploadsBytes > 0)
-    {
-        mResetTotalUploadsBytes -= mActualCompletedUploadsBytes - completedBytes;
+        return;
     }
 
-    mActualCompletedUploadsBytes = completedBytes;
-    auto currentUploadBytes(totalBytes - mResetTotalUploadsBytes);
-
-    if(currentUploadBytes != 0)
-    {
-        percentUploads = static_cast<double>(completedBytes - mResetTotalUploadsBytes) / static_cast<double>(currentUploadBytes);
-    }
+    double percentUploads = static_cast<double>(completedBytes/* - mResetTotalUploadsBytes*/) / static_cast<double>(totalBytes);
 
     ui->bTransfersStatus->setPercentInnerCircle(percentUploads);
 }
 
 void TransfersSummaryWidget::setPercentDownloads(long long completedBytes, long long totalBytes)
 {
-    double percentDownloads(0.0);
-
-    if(completedBytes == 0)
+    if(totalBytes == 0)
     {
-        mActualCompletedDownloadsBytes = 0;
-        mResetTotalDownloadsBytes = 0;
-    }
-    else if(completedBytes < mActualCompletedDownloadsBytes && mResetTotalDownloadsBytes > 0)
-    {
-        mResetTotalDownloadsBytes -= mActualCompletedDownloadsBytes - completedBytes;
+        return;
     }
 
-    mActualCompletedDownloadsBytes = completedBytes;
-    auto currentDownloads(totalBytes - mResetTotalDownloadsBytes);
-
-    if(currentDownloads != 0)
-    {
-        percentDownloads = static_cast<double>(completedBytes - mResetTotalDownloadsBytes)/ static_cast<double>(currentDownloads);
-    }
+    double percentDownloads = static_cast<double>(completedBytes/* - mResetTotalDownloadsBytes*/)/ static_cast<double>(totalBytes);
 
     ui->bTransfersStatus->setPercentOuterCircle(percentDownloads);
 }
@@ -255,12 +217,6 @@ void TransfersSummaryWidget::initialize()
 
 void TransfersSummaryWidget::reset()
 {
-    mResetTotalUploads = mActualTotalUploads;
-    mResetTotalDownloads = mActualTotalDownloads;
-
-    mResetTotalUploadsBytes = mActualCompletedUploadsBytes;
-    mResetTotalDownloadsBytes = mActualCompletedDownloadsBytes;
-
     resetDownloads();
     resetUploads();
 
@@ -662,80 +618,28 @@ void TransfersSummaryWidget::updateDownloads()
 
 void TransfersSummaryWidget::setUploads(long long completed, long long total)
 {
-    long long currentTransfer(0);
-
     if(total == 0)
     {
-        mActualTotalUploads = 0;
-        mResetTotalUploads = 0;
-
-        currentUpload = 0;
-        totalUploads = 0;
+        resetUploads();
+        return;
     }
-    else
-    {
-        if(total < mActualTotalUploads && mResetTotalUploads > 0)
-        {
-            mResetTotalUploads -= mActualTotalUploads - total;
-        }
 
-        mActualTotalUploads = total;
-
-        long long adaptedCompleted(completed - mResetTotalUploads);
-        long long adaptedUploads(total - mResetTotalUploads);
-
-        currentTransfer = adaptedCompleted != adaptedUploads ? adaptedCompleted + 1 : adaptedUploads;
-
-        if (currentUpload != currentTransfer)
-        {
-            currentUpload = currentTransfer;
-        }
-
-        if (totalUploads != adaptedUploads)
-        {
-            totalUploads = adaptedUploads;
-        }
-    }
+    currentUpload = completed < total ? (completed + 1) : completed;
+    totalUploads = total;
 
     updateUploads();
 }
 
 void TransfersSummaryWidget::setDownloads(long long completed, long long total)
 {
-    long long currentTransfer(0);
-
     if(total == 0)
     {
-        mActualTotalDownloads = 0;
-        mResetTotalDownloads = 0;
-
-        currentDownload = 0;
-        totalDownloads = 0;
+        resetDownloads();
+        return;
     }
-    else
-    {
-        if(total < mActualTotalDownloads && mResetTotalDownloads > 0)
-        {
-            mResetTotalDownloads -= mActualTotalDownloads - total;
-        }
 
-        mActualTotalDownloads = total;
-
-        long long adaptedCompleted(completed - mResetTotalDownloads);
-        long long adaptedDownloads(total - mResetTotalDownloads);
-
-        currentTransfer = adaptedCompleted != adaptedDownloads ? adaptedCompleted + 1 : adaptedDownloads;
-
-        if (currentDownload != currentTransfer)
-        {
-            currentDownload = currentTransfer;
-        }
-
-        if (totalDownloads != adaptedDownloads)
-        {
-            totalDownloads = adaptedDownloads;
-        }
-    }
+    currentDownload = completed < total ? (completed + 1) : completed;
+    totalDownloads = total;
 
     updateDownloads();
 }

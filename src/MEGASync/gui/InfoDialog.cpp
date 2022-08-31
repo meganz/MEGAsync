@@ -573,7 +573,7 @@ void InfoDialog::updateTransfersCount()
 {
     if(app->getTransfersModel())
     {
-        auto transfersCountUpdated = app->getTransfersModel()->getTransfersCount();
+        auto transfersCountUpdated = app->getTransfersModel()->getLastTransfersCount();
 
         ui->bTransferManager->setDownloads(transfersCountUpdated.completedDownloads(), transfersCountUpdated.totalDownloads);
         ui->bTransferManager->setUploads(transfersCountUpdated.completedUploads(), transfersCountUpdated.totalUploads);
@@ -587,12 +587,9 @@ void InfoDialog::onTransfersStateChanged()
 {
     if(app->getTransfersModel())
     {
-        auto transfersCountUpdated = app->getTransfersModel()->getTransfersCount();
+        auto transfersCountUpdated = app->getTransfersModel()->getLastTransfersCount();
 
-        if (!transfersCountUpdated.pendingDownloads && !transfersCountUpdated.pendingUploads
-                && transfersCountUpdated.totalUploadBytes == transfersCountUpdated.completedUploadBytes
-                && transfersCountUpdated.totalDownloadBytes == transfersCountUpdated.completedDownloadBytes
-                && (transfersCountUpdated.totalUploads != 0 || transfersCountUpdated.totalDownloads != 0))
+        if(transfersCountUpdated.pendingTransfers() == 0)
         {
             if (!overQuotaState && (ui->sActiveTransfers->currentWidget() != ui->pUpdated))
             {

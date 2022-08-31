@@ -92,7 +92,6 @@ protected:
     void onRequestFinish(mega::MegaApi *api, mega::MegaRequest *request, mega::MegaError *e) override;
 
 private:
-    qint64 getFolderSize(mega::MegaNode *node, qint64 size);
     mega::QTMegaRequestListener* mListener;
 };
 
