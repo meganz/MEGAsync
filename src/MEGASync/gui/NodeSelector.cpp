@@ -325,5 +325,42 @@ void NodeSelector::onTabSelected(int index)
 
 bool NodeSelector::getDefaultUploadOption()
 {
-   return ui->cbAlwaysUploadToLocation->isChecked();
+    return ui->cbAlwaysUploadToLocation->isChecked();
+}
+
+MegaHandle NodeSelector::getSelectedNodeHandle()
+{
+    auto tree_view = static_cast<NodeSelectorTreeViewWidget*>(ui->stackedWidget->currentWidget());
+    return tree_view->getSelectedNodeHandle();
+}
+
+QList<MegaHandle> NodeSelector::getMultiSelectionNodeHandle()
+{
+    auto tree_view = static_cast<NodeSelectorTreeViewWidget*>(ui->stackedWidget->currentWidget());
+    return tree_view->getMultiSelectionNodeHandle();
+}
+
+void NodeSelector::setSelectedNodeHandle(const mega::MegaHandle &handle)
+{
+    auto parent_node = std::unique_ptr<MegaNode>(mMegaApi->getNodeByHandle(handle));
+    while(parent_node && parent_node->getParentHandle() != INVALID_HANDLE)
+    {
+        parent_node = std::unique_ptr<MegaNode>(mMegaApi->getNodeByHandle(parent_node->getParentHandle()));
+    }
+
+    if(!parent_node)
+    {
+        return;
+    }
+    //TODO EKA:
+    if(parent_node->isInShare())
+    {
+        //openInshare
+    }
+    else
+    {
+        //open cloud drive
+    }
+    auto tree_view_widget = static_cast<NodeSelectorTreeViewWidget*>(ui->stackedWidget->widget(0));
+    tree_view_widget->setSelectedNodeHandle(handle);
 }

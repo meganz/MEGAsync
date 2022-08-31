@@ -44,7 +44,7 @@ public:
     QModelIndex getIndexFromSource(const QModelIndex& index);
     QModelIndex getIndexFromHandle(const mega::MegaHandle& handle);
     QModelIndex getIndexFromNode(const std::shared_ptr<mega::MegaNode> node);
-    QVector<QModelIndex> getRelatedModelIndexes(const std::shared_ptr<mega::MegaNode> node, bool isInShare);
+    QVector<QModelIndex> getRelatedModelIndexes(const std::shared_ptr<mega::MegaNode> node/*, bool isInShare*/);
     void removeNode(const QModelIndex &item);
     bool isShowOnlyInShares();
     bool isShowOnlyCloudDrive();

@@ -343,29 +343,13 @@ void NodeSelectorTreeViewWidget::onRequestFinish(MegaApi *, MegaRequest *request
     ui->tMegaFolders->setEnabled(true);
 }
 
-void NodeSelectorTreeViewWidget::setSelectedNodeHandle(MegaHandle selectedHandle)
+void NodeSelectorTreeViewWidget::setSelectedNodeHandle(const MegaHandle& selectedHandle)
 {
     auto node = std::shared_ptr<MegaNode>(mMegaApi->getNodeByHandle(selectedHandle));
     if (!node)
         return;
 
-    auto root_p_node = node;
-    auto p_node = std::unique_ptr<MegaNode>(mMegaApi->getParentNode(root_p_node.get()));
-    while(p_node)
-    {
-        root_p_node = std::move(p_node);
-        p_node.reset(mMegaApi->getParentNode(root_p_node.get()));
-    }
-
-    bool isInShare = false;
-    if(root_p_node && root_p_node->isInShare())
-    {
-        isInShare=true;
-        //TODO: CHANGE TAB DEPENDING THE NODE TYPE
-        //onTabSelected(SHARES);
-    }
-
-    QVector<QModelIndex> modelIndexList = mProxyModel->getRelatedModelIndexes(node, isInShare);
+    QVector<QModelIndex> modelIndexList = mProxyModel->getRelatedModelIndexes(node/*, isInShare*/);
 
     if(modelIndexList.size() > 1)
     {

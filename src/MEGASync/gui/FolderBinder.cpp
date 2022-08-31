@@ -143,7 +143,6 @@ void FolderBinder::on_bMegaFolder_clicked()
         delete nodeSelector;
         return;
     }
-
     MegaHandle selectedFolder = nodeSelector->getSelectedNodeHandle();
     setSelectedMegaFolder(selectedFolder);
     delete nodeSelector;

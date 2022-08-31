@@ -38,7 +38,7 @@ public:
     ~NodeSelectorTreeViewWidget();
     mega::MegaHandle getSelectedNodeHandle();
     QList<mega::MegaHandle> getMultiSelectionNodeHandle();
-    void setSelectedNodeHandle(mega::MegaHandle selectedHandle);
+    void setSelectedNodeHandle(const mega::MegaHandle &selectedHandle);
     void newFolderClicked();
 
 public slots:

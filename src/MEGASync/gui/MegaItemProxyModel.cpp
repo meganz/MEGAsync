@@ -73,7 +73,7 @@ QModelIndex MegaItemProxyModel::getIndexFromHandle(const mega::MegaHandle& handl
     return ret;
 }
 
-QVector<QModelIndex> MegaItemProxyModel::getRelatedModelIndexes(const std::shared_ptr<mega::MegaNode> node, bool isInShare)
+QVector<QModelIndex> MegaItemProxyModel::getRelatedModelIndexes(const std::shared_ptr<mega::MegaNode> node/*, bool isInShare*/)
 {
     QVector<QModelIndex> ret;
 
@@ -90,7 +90,7 @@ QVector<QModelIndex> MegaItemProxyModel::getRelatedModelIndexes(const std::share
     while(this_node)
     {
         this_node.reset(megaApi->getParentNode(this_node.get()));
-        if(this_node && (!isInShare || this_node->getHandle() != rootNodeHandle))
+        if(this_node && (/*!isInShare ||*/ this_node->getHandle() != rootNodeHandle))
         {
             parentNodeList->addNode(this_node.get());
         }
@@ -282,7 +282,7 @@ QModelIndex MegaItemProxyModel::getIndexFromNode(const std::shared_ptr<mega::Meg
         p_node.reset(megaApi->getParentNode(root_p_node.get()));
     }
 
-    QVector<QModelIndex> indexList = getRelatedModelIndexes(node, root_p_node->isInShare());
+    QVector<QModelIndex> indexList = getRelatedModelIndexes(node/*, root_p_node->isInShare()*/);
     if(!indexList.isEmpty())
     {
         return indexList.last();
