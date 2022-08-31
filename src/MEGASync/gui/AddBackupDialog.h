@@ -10,6 +10,11 @@ namespace Ui {
 class AddBackupDialog;
 }
 
+namespace UserAttributes
+{
+    class DeviceName;
+}
+
 class AddBackupDialog : public QDialog
 {
     Q_OBJECT
@@ -29,8 +34,7 @@ private:
     Ui::AddBackupDialog *mUi;
     QString mSelectedFolder;
     QString mMyBackupsFolder;
-    SyncController mSyncController;
-    QString mDeviceName;
+    std::shared_ptr<UserAttributes::DeviceName> mDeviceNameRequest;
 };
 
 #endif // ADDBACKUPDIALOG_H

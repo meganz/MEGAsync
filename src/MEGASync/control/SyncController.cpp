@@ -14,9 +14,7 @@ SyncController::SyncController(QObject* parent)
       mApi(MegaSyncApp->getMegaApi()),
       mDelegateListener (new QTMegaRequestListener(mApi, this)),
       mSyncModel(SyncModel::instance()),
-      mMyBackupsHandle(INVALID_HANDLE),
-      mIsDeviceNameSetOnRemote(false),
-      mForceSetDeviceName(false)
+      mMyBackupsHandle(INVALID_HANDLE)
 {
     // The controller shouldn't ever be instantiated before we have an API and a SyncModel available
     assert(mApi);
@@ -89,30 +87,6 @@ void SyncController::disableSync(std::shared_ptr<SyncSetting> syncSetting)
                  .toUtf8().constData());
 
     mApi->disableSync(syncSetting->backupId(), mDelegateListener);
-}
-
-void SyncController::setDeviceName(const QString& name)
-{
-    if (!mIsDeviceNameSetOnRemote)
-    {
-        MegaApi::log(MegaApi::LOG_LEVEL_INFO,
-                     QString::fromUtf8("Setting device name to \"%1\" on remote")
-                     .arg(name).toUtf8().constData());
-        mApi->setDeviceName(name.toUtf8().constData(), mDelegateListener);
-    }
-    else
-    {
-        MegaApi::log(MegaApi::LOG_LEVEL_INFO,
-                     QString::fromUtf8("Set device name on remote: already set")
-                     .toUtf8().constData());
-        emit setDeviceDirStatus(MegaError::API_OK, QString());
-    }
-}
-
-void SyncController::getDeviceName()
-{
-    MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Request device name");
-    ensureDeviceNameIsSetOnRemote();
 }
 
 // Checks if a path belongs is in an existing sync or backup tree; and if the selected
@@ -439,15 +413,6 @@ QString SyncController::getSyncNameFromPath(const QString& path)
     return syncName;
 }
 
-void SyncController::ensureDeviceNameIsSetOnRemote()
-{
-    if (!mIsDeviceNameSetOnRemote && !mForceSetDeviceName)
-    {
-        mForceSetDeviceName = true;
-        mApi->getDeviceName(mDelegateListener);
-    }
-}
-
 QString SyncController::getSyncAPIErrorMsg(int megaError)
 {
     switch (megaError)
@@ -696,30 +661,6 @@ void SyncController::onRequestFinish(MegaApi *api, MegaRequest *req, MegaError *
         emit setMyBackupsStatus(errorCode, errorMsg);
         break;
     }
-    case MegaRequest::TYPE_SET_ATTR_USER:
-    {
-        QString errorMsg;
-
-        int subCommand (req->getParamType());
-        if (subCommand == MegaApi::USER_ATTR_DEVICE_NAMES)
-        {
-            if (errorCode == MegaError::API_OK)
-            {
-                MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Device name set successfully on remote");
-                mIsDeviceNameSetOnRemote = true;
-                emit deviceName(QString::fromUtf8(req->getName()));
-            }
-            else //if (errorCode == MegaError::API_ENOENT)
-            {
-                errorMsg = QString::fromUtf8(e->getErrorString());
-                QString logMsg (QString::fromUtf8("Error setting device folder: \"%1\"").arg(errorMsg));
-                MegaApi::log(MegaApi::LOG_LEVEL_ERROR, logMsg.toUtf8().constData());
-                errorMsg = QCoreApplication::translate("MegaError", errorMsg.toUtf8().constData());
-            }
-            emit setDeviceDirStatus(errorCode, errorMsg);
-        }
-        break;
-    }
     case MegaRequest::TYPE_GET_ATTR_USER:
     {
         int subCommand (req->getParamType());
@@ -739,47 +680,6 @@ void SyncController::onRequestFinish(MegaApi *api, MegaRequest *req, MegaError *
                              .toUtf8().constData());
             }
             setMyBackupsHandle(handle);
-        }
-        else if (subCommand == MegaApi::USER_ATTR_DEVICE_NAMES)
-        {
-            QString devName;
-            if (errorCode == MegaError::API_OK)
-            {
-                mIsDeviceNameSetOnRemote = true;
-                devName = QString::fromUtf8(req->getName());
-                MegaApi::log(MegaApi::LOG_LEVEL_INFO,
-                             QString::fromUtf8("Got device name from remote: \"%1\"").arg(devName)
-                             .toUtf8().constData());
-                emit deviceName(devName);
-            }
-            else //if (errorCode == MegaError::API_ENOENT)
-            {
-                MegaApi::log(MegaApi::LOG_LEVEL_INFO,
-                             QString::fromUtf8("Error getting device name: %1")
-                             .arg(QString::fromUtf8(e->getErrorString()))
-                             .toUtf8().constData());
-                // If we still don't have one, get it from the Platform
-                devName = Platform::getDeviceName();
-                MegaApi::log(MegaApi::LOG_LEVEL_INFO,
-                             QString::fromUtf8("Got device name from platform: \"%1\"").arg(devName)
-                             .toUtf8().constData());
-
-                // If nothing, use generic one.
-                if (devName.isNull())
-                {
-                    devName = tr("Your computer");
-                    MegaApi::log(MegaApi::LOG_LEVEL_INFO,
-                                 QString::fromUtf8("Using dummy device name: \"%1\"").arg(devName)
-                                 .toUtf8().constData());
-                }
-
-                if (mForceSetDeviceName)
-                {
-                    MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, "Force setting device name on remote");
-                    mForceSetDeviceName = false;
-                    setDeviceName(devName);
-                }
-            }
         }
         break;
     }

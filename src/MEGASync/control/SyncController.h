@@ -29,7 +29,6 @@ public:
        CANT_SYNC,
     };
 
-
     SyncController(QObject* parent = nullptr);
     ~SyncController();
 
@@ -43,9 +42,6 @@ public:
     void setMyBackupsDirName();
     void getMyBackupsHandle();
     QString getMyBackupsLocalizedPath();
-
-    void setDeviceName(const QString& name);
-    void getDeviceName();
 
     // Local folder checks
     static QString getIsLocalFolderAlreadySyncedMsg(const QString& path, const mega::MegaSync::SyncType& syncType);
@@ -78,15 +74,11 @@ signals:
     void setMyBackupsStatus(int errorCode, QString errorMsg);
     void myBackupsHandle(mega::MegaHandle handle);
 
-    void setDeviceDirStatus(int errorCode, QString errorMsg);
-    void deviceName(QString deviceName);
-
 protected:
     // override from MegaRequestListener
     void onRequestFinish(mega::MegaApi* api, mega::MegaRequest* req, mega::MegaError* e) override;
 
 private:
-    void ensureDeviceNameIsSetOnRemote();
     void setMyBackupsHandle(mega::MegaHandle handle);
     QString getSyncAPIErrorMsg(int megaError);
     QString getSyncTypeString(const mega::MegaSync::SyncType& syncType);
@@ -95,6 +87,4 @@ private:
     mega::QTMegaRequestListener* mDelegateListener;
     SyncModel* mSyncModel;
     mega::MegaHandle mMyBackupsHandle;
-    bool mIsDeviceNameSetOnRemote;
-    bool mForceSetDeviceName;
 };

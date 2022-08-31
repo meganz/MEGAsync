@@ -5,6 +5,7 @@
 #include "QMegaMessageBox.h"
 #include "EventHelper.h"
 #include "TextDecorator.h"
+#include "UserAttributesRequests/DeviceName.h"
 
 #include <QStandardPaths>
 #include <QStyleOption>
@@ -32,9 +33,9 @@ const int TEXT_MARGIN(12);
 BackupsWizard::BackupsWizard(QWidget* parent) :
     QDialog(parent),
     mUi (new Ui::BackupsWizard),
+    mDeviceNameRequest (UserAttributes::DeviceName::requestDeviceName()),
     mSyncController(),
     mCreateBackupsDir (false),
-    mDeviceDirHandle (mega::INVALID_HANDLE),
     mHaveBackupsDir (false),
     mError (false),
     mUserCancelled (false),
@@ -51,7 +52,7 @@ BackupsWizard::BackupsWizard(QWidget* parent) :
     mUi->setupUi(this);
     mHighDpiResize.init(this);
 
-    connect(&mSyncController, &SyncController::deviceName,
+    connect(mDeviceNameRequest.get(), &UserAttributes::DeviceName::attributeReady,
             this, &BackupsWizard::onDeviceNameSet);
 
     connect(&mSyncController, &SyncController::myBackupsHandle,
@@ -246,7 +247,7 @@ void BackupsWizard::setupStep1()
     mUi->bBack->hide();
 
     // Get device name
-    mSyncController.getDeviceName();
+    onDeviceNameSet(mDeviceNameRequest->getDeviceName());
 
     // Check if we need to refresh the lists
     if (mFoldersModel->rowCount() == 0)

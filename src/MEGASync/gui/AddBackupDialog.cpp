@@ -1,6 +1,7 @@
 #include "AddBackupDialog.h"
 #include "ui_AddBackupDialog.h"
 #include "QMegaMessageBox.h"
+#include "UserAttributesRequests/DeviceName.h"
 
 #include <QFileDialog>
 
@@ -9,16 +10,14 @@ AddBackupDialog::AddBackupDialog(QWidget *parent) :
     mUi(new Ui::AddBackupDialog),
     mSelectedFolder(),
     mMyBackupsFolder(),
-    mSyncController(),
-    mDeviceName()
+    mDeviceNameRequest (UserAttributes::DeviceName::requestDeviceName())
 {
-    setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
     mUi->setupUi(this);
+    setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
 
-    connect(&mSyncController, &SyncController::deviceName,
+    connect(mDeviceNameRequest.get(), &UserAttributes::DeviceName::attributeReady,
             this, &AddBackupDialog::onDeviceNameSet);
-
-    mSyncController.getDeviceName();
+    onDeviceNameSet(mDeviceNameRequest->getDeviceName());
 
 #ifdef Q_OS_MACOS
     // Display our modal dialog embedded title label when parent is set
@@ -37,7 +36,7 @@ AddBackupDialog::~AddBackupDialog()
 void AddBackupDialog::setMyBackupsFolder(const QString& folder)
 {
     mMyBackupsFolder = folder;
-    mUi->backupToLabel->setText(mMyBackupsFolder + mDeviceName);
+    mUi->backupToLabel->setText(mMyBackupsFolder + mDeviceNameRequest->getDeviceName());
 }
 
 QString AddBackupDialog::getSelectedFolder()
@@ -77,6 +76,5 @@ void AddBackupDialog::on_changeButton_clicked()
 
 void AddBackupDialog::onDeviceNameSet(const QString &devName)
 {
-    mDeviceName = devName;
-    mUi->backupToLabel->setText(mMyBackupsFolder + mDeviceName);
+    mUi->backupToLabel->setText(mMyBackupsFolder + devName);
 }

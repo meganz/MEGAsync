@@ -566,13 +566,15 @@ void SettingsDialog::loadSettings()
     mUi->cLanguage->setCurrentIndex(currentIndex);
 
     //Account
-    mUi->lEmail->setText(mPreferences->email());
+    std::unique_ptr<char[]> currentUserEmail (MegaSyncApp->getMegaApi()->getMyEmail());
+    QString userEmail = QString::fromUtf8(currentUserEmail.get());
+    mUi->lEmail->setText(userEmail);
     auto fullName ((mPreferences->firstName() + QStringLiteral(" ")
                 + mPreferences->lastName()).trimmed());
     mUi->lName->setText(fullName);
 
     //Update name in case it changes
-    auto FullNameRequest = UserAttributes::FullName::requestFullName(mPreferences->email().toStdString().c_str());
+    auto FullNameRequest = UserAttributes::FullName::requestFullName(userEmail.toStdString().c_str());
     connect(FullNameRequest.get(), &UserAttributes::FullName::attributeReady, this, [this](const QString& fullName){
         mUi->lName->setText(fullName);
     });
