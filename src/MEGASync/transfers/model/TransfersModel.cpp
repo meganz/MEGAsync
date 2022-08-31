@@ -802,17 +802,31 @@ void TransfersModel::processStartTransfers(QList<QExplicitlySharedDataPointer<Tr
     if (!transfersToStart.isEmpty())
     {
         auto totalRows = rowCount(DEFAULT_IDX);
-        auto rowsToBeInserted(static_cast<int>(transfersToStart.size()));
 
-        beginInsertRows(DEFAULT_IDX, totalRows, totalRows + rowsToBeInserted - 1);
-
-        for (auto it = transfersToStart.begin(); it != transfersToStart.end();)
+        // Remove repetead transfers
+        QMutableListIterator<QExplicitlySharedDataPointer<TransferData>> checkIt(transfersToStart);
+        while (checkIt.hasNext())
         {
-            startTransfer((*it));
-            transfersToStart.erase(it++);
+            if (mTagByOrder.contains(checkIt.next()->mTag))
+            {
+                checkIt.remove();
+            }
         }
 
-        endInsertRows();
+        if(!transfersToStart.isEmpty())
+        {
+            auto rowsToBeInserted(static_cast<int>(transfersToStart.size()));
+
+            beginInsertRows(DEFAULT_IDX, totalRows, totalRows + rowsToBeInserted - 1);
+
+            for (auto it = transfersToStart.begin(); it != transfersToStart.end();)
+            {
+                startTransfer((*it));
+                transfersToStart.erase(it++);
+            }
+
+            endInsertRows();
+        }
     }
 }
 
@@ -1277,8 +1291,7 @@ void TransfersModel::showSyncCancelledWarning()
     if(syncsInRowsToCancel())
     {
         QPointer<QMessageBox> removeSync = new QMessageBox(QMessageBox::Warning, QLatin1Literal("MEGAsync"),
-                                                           tr("Sync transfers cannot be cancelled individually.\n"
-                                                                                          "Please delete the folder sync from settings to cancel them."),
+                                                          PlatformStrings::cancelSyncsWarning(),
                                                            QMessageBox::No | QMessageBox::Yes, mCancelledFrom);
         removeSync->setButtonText(QMessageBox::No, tr("Dismiss"));
         removeSync->setButtonText(QMessageBox::Yes, PlatformStrings::openSettings());
@@ -1977,7 +1990,6 @@ bool TransfersModel::moveRows(const QModelIndex &sourceParent, const QList<int>&
     if(!rows.isEmpty())
     {
         TransferTag tagMoved(-1);
-        auto totalRows (rowCount(DEFAULT_IDX));
 
         foreach(auto sourceRow, rows)
         {
@@ -2013,11 +2025,11 @@ bool TransfersModel::moveRows(const QModelIndex &sourceParent, const QList<int>&
                 {
                     auto d  = getTransfer(getRowByTransferTag(tag));
 
-                    if(destinationChild < 0)
+                    if(destinationChild == -1)
                     {
                         mMegaApi->moveTransferToFirstByTag(tag);
                     }
-                    else if (destinationChild == totalRows)
+                    else if (destinationChild == -2)
                     {
                         mMegaApi->moveTransferToLastByTag(tag);
                     }
@@ -2121,31 +2133,30 @@ bool TransfersModel::dropMimeData(const QMimeData* data, Qt::DropAction action, 
                                   int column, const QModelIndex& parent)
 {
     Q_UNUSED(column)
-    QByteArray byteArray (data->data(QString::fromUtf8("application/x-qabstractitemmodeldatalist")));
-    QDataStream stream (&byteArray, QIODevice::ReadOnly);
-    QList<TransferTag> tags;
-    stream >> tags;
 
     if (destRow >= 0 && destRow <= rowCount(DEFAULT_IDX) && action == Qt::MoveAction)
     {
-        QList<int> rows;
-        for (auto tag : qAsConst(tags))
-        {
-            rows.push_back(getRowByTransferTag(tag));
-        }
-
-        if (destRow == 0)
-        {
-            std::sort(rows.rbegin(), rows.rend());
-        }
-        else
-        {
-            std::sort(rows.begin(), rows.end());
-        }
+        QList<int> rows = getDragAndDropRows(data, destRow);
 
         moveRows(parent, rows, parent, destRow);
     }
 
     // Return false to avoid row deletion...dirty!
     return false;
+}
+
+QList<int> TransfersModel::getDragAndDropRows(const QMimeData *data, int destRow)
+{
+    QByteArray byteArray (data->data(QString::fromUtf8("application/x-qabstractitemmodeldatalist")));
+    QDataStream stream (&byteArray, QIODevice::ReadOnly);
+    QList<TransferTag> tags;
+    stream >> tags;
+
+    QList<int> rows;
+    for (auto tag : qAsConst(tags))
+    {
+        rows.push_back(getRowByTransferTag(tag));
+    }
+
+    return rows;
 }

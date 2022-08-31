@@ -295,7 +295,6 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     updateThread = NULL;
     updateTask = NULL;
     multiUploadFileDialog = NULL;
-    exitDialog = NULL;
     downloadNodeSelector = NULL;
     mPricing.reset();
     mCurrency.reset();
@@ -1764,24 +1763,25 @@ void MegaApplication::tryExitApplication(bool force)
     {
         exitApplication();
     }
-    else if (!exitDialog)
+    else
     {
         QString exitMessage = tr("There is an active transfer. Exit the app?\n"
                                  "Transfer will automatically resume when you re-open the app.",
                                  "",
                                  mTransfersModel->hasActiveTransfers());
-        exitDialog = new QMessageBox(QMessageBox::Question, tr("MEGAsync"), exitMessage, QMessageBox::Yes|QMessageBox::No);
+        auto exitDialog = new QMessageBox(QMessageBox::Question, tr("MEGAsync"), exitMessage, QMessageBox::Yes|QMessageBox::No);
+        exitDialog->setAttribute(Qt::WA_DeleteOnClose);
         exitDialog->button(QMessageBox::Yes)->setText(tr("Exit app"));
         exitDialog->button(QMessageBox::No)->setText(tr("Stay in app"));
         HighDpiResize hDpiResizer(exitDialog);
         int button = exitDialog->exec();
-        if (!exitDialog)
+
+        QPointer<MegaApplication> currentMegaApp(this);
+        if (!currentMegaApp)
         {
             return;
         }
 
-        exitDialog->deleteLater();
-        exitDialog = NULL;
         if (button == QMessageBox::Yes)
         {
             exitApplication();
@@ -1790,11 +1790,6 @@ void MegaApplication::tryExitApplication(bool force)
         {
             *testCrashPtr = 0;
         }
-    }
-    else
-    {
-        exitDialog->activateWindow();
-        exitDialog->raise();
     }
 }
 

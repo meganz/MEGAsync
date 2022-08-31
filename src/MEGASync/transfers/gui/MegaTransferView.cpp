@@ -894,7 +894,7 @@ void MegaTransferView::moveToTopClicked()
 
         // Sort to keep items in the same order
         std::sort(indexes.begin(), indexes.end(),[](QModelIndex check1, QModelIndex check2){
-           return check1.row() < check2.row();
+           return check1.row() > check2.row();
         });
 
         auto firstToMove = indexes.first();
@@ -904,22 +904,12 @@ void MegaTransferView::moveToTopClicked()
             return;
         }
 
-        auto proxyTargetIndex = proxy->index(-1,0);
-        auto sourceTargetIndex = proxy->mapToSource(proxyTargetIndex);
-        auto rowTarget = sourceTargetIndex.row();
-
         for (int item = 0; item < indexes.size(); ++item)
         {
             auto index = indexes.at(item);
             auto sourceIndex = proxy->mapToSource(index);
 
-            if(item == 1)
-            {
-                sourceTargetIndex = proxy->mapToSource(indexes.at(item-1));
-                rowTarget = sourceTargetIndex.row();
-            }
-
-            sourceModel->moveRows(QModelIndex(), QList<int>() << sourceIndex.row(), QModelIndex(), rowTarget);
+            sourceModel->moveRows(QModelIndex(), QList<int>() << sourceIndex.row(), QModelIndex(), -1);
         }
     }
 
@@ -1013,7 +1003,6 @@ void MegaTransferView::moveDownClicked()
                     rowTarget = sourceTargetIndex.row();
                 }
             }
-
             sourceModel->moveRows(QModelIndex(), QList<int>() << rowTarget, QModelIndex(), sourceIndex.row());
         }
     }
@@ -1041,14 +1030,12 @@ void MegaTransferView::moveToBottomClicked()
             return;
         }
 
-        auto rowTarget = proxy->rowCount();
-
         for (int item = 0; item < indexes.size(); ++item)
         {
             auto index = indexes.at(item);
             auto sourceIndex = proxy->mapToSource(index);
 
-            sourceModel->moveRows(QModelIndex(), QList<int>() << sourceIndex.row(), QModelIndex(), rowTarget);
+            sourceModel->moveRows(QModelIndex(), QList<int>() << sourceIndex.row(), QModelIndex(), -2);
         }
     }
 
