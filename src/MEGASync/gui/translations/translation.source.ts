@@ -3183,6 +3183,21 @@ Your selected incomplete sync transfers won&apos;t be cancelled.</translation>
             <numerusform>Cancel and clear transfers</numerusform>
         </translation>
     </message>
+    <message>
+        <source>Yes, cancel</source>
+        <translatorcomment>Dialog button to do the proposed actions (cancel the transfers)</translatorcomment>
+        <translation type="unfinished">Yes, cancel</translation>
+    </message>
+    <message>
+        <source>No, continue</source>
+        <translatorcomment>Dialog button to abort the proposed action</translatorcomment>
+        <translation type="unfinished">No, continue</translation>
+    </message>
+    <message>
+        <source>Yes, clear</source>
+        <translatorcomment>Dialog button to do the proposed actions (clear the transfers)</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MegaUploader</name>

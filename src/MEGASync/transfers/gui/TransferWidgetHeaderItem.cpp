@@ -15,7 +15,7 @@ TransferWidgetHeaderItem::TransferWidgetHeaderItem(QWidget *parent) :
     ui->line->setSizePolicy(lineSizePolicy);
     ui->line->hide();
 
-    ui->columnTitle->installEventFilter(this);
+    ui->cTitle->installEventFilter(this);
 }
 
 TransferWidgetHeaderItem::~TransferWidgetHeaderItem()
@@ -31,7 +31,7 @@ QString TransferWidgetHeaderItem::title() const
 void TransferWidgetHeaderItem::setTitle(const QString &title)
 {
     mTitle = title;
-    ui->columnTitle->setText(title);
+    updateElidedText();
 }
 
 int TransferWidgetHeaderItem::sortCriterion() const
@@ -99,9 +99,9 @@ void TransferWidgetHeaderItem::leaveEvent(QEvent *event)
 
 bool TransferWidgetHeaderItem::eventFilter(QObject *watched, QEvent *event)
 {
-    if(watched == ui->columnTitle && event->type() == QEvent::Resize)
+    if(watched == ui->cTitle && event->type() == QEvent::Resize)
     {
-        ui->columnTitle->setText(ui->columnTitle->fontMetrics().elidedText(mTitle, Qt::ElideMiddle,ui->columnTitle->width()));
+        updateElidedText();
     }
 
     return QWidget::eventFilter(watched, event);
@@ -131,4 +131,9 @@ void TransferWidgetHeaderItem::turnOffSiblings()
 bool TransferWidgetHeaderItem::isTurnedOff()
 {
     return !ui->chevron->isVisible();
+}
+
+void TransferWidgetHeaderItem::updateElidedText()
+{
+    ui->columnTitle->setText(ui->columnTitle->fontMetrics().elidedText(mTitle, Qt::ElideMiddle,ui->cTitle->width()));
 }

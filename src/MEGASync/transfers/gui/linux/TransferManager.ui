@@ -480,6 +480,9 @@ QToolButton
           </property>
           <item>
            <widget class="QLabel" name="lTransfers">
+            <property name="toolTip">
+             <string>Transfers</string>
+            </property>
             <property name="text">
              <string>Transfers</string>
             </property>

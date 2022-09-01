@@ -253,6 +253,8 @@ TransferManager::TransferManager(MegaApi *megaApi) :
     mUi->wAllResults->installEventFilter(this);
     mUi->wDlResults->installEventFilter(this);
     mUi->wUlResults->installEventFilter(this);
+
+    mUi->lTransfers->installEventFilter(this);
 }
 
 void TransferManager::pauseModel(bool value)
@@ -1199,6 +1201,13 @@ bool TransferManager::eventFilter(QObject *obj, QEvent *event)
                                   .elidedText(mUi->leSearchField->text(),
                                               Qt::ElideMiddle,
                                               newWidth - 24));
+    }
+    else if(obj == mUi->lTransfers && event->type() == QEvent::Resize)
+    {
+        mUi->lTransfers->setText(mUi->lTransfers->fontMetrics()
+                                    .elidedText(mUi->lTransfers->text(),
+                                                Qt::ElideMiddle,
+                                                mUi->lTransfers->width()));
     }
     else if(obj == mUi->leSearchField && event->type() == QEvent::KeyPress)
     {
