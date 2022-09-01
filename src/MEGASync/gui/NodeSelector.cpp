@@ -143,14 +143,15 @@ void NodeSelector::onbOkClicked()
         if(wrongNodes == nodes.size())
         {
             correctNodeSelected = false;
-            if(isCloudDrive())
-            {
-                QMegaMessageBox::warning(nullptr, tr("Error"), tr("The item you selected has been removed. To reselect, close this window and try again.", "", wrongNodes), QMessageBox::Ok);
-            }
-            else
-            {
-                QMegaMessageBox::warning(nullptr, tr("Error"), tr("You no longer have access to this item. Ask the owner to share again.", "", wrongNodes), QMessageBox::Ok);
-            }
+            //TODO EKA: fix this message as isclouddrive is not available anymore
+//            if(isCloudDrive())
+//            {
+//                QMegaMessageBox::warning(nullptr, tr("Error"), tr("The item you selected has been removed. To reselect, close this window and try again.", "", wrongNodes), QMessageBox::Ok);
+//            }
+//            else
+//            {
+//                QMegaMessageBox::warning(nullptr, tr("Error"), tr("You no longer have access to this item. Ask the owner to share again.", "", wrongNodes), QMessageBox::Ok);
+//            }
         }
         else if(wrongNodes > 0)
         {

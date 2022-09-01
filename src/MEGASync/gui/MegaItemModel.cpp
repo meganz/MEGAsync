@@ -16,28 +16,9 @@ MegaItemModel::MegaItemModel(QObject *parent) :
     QAbstractItemModel(parent),
     mRequiredRights(MegaShare::ACCESS_READ),
     mDisplayFiles(false),
-    mSyncSetupMode(false),
-    mDelegateListener(mega::make_unique<QTMegaRequestListener>(MegaSyncApp->getMegaApi(), this))
+    mSyncSetupMode(false)
 {
-   MegaApi* megaApi = MegaSyncApp->getMegaApi();
-   auto root = std::unique_ptr<MegaNode>(megaApi->getRootNode());
-   mRootItems.append(new MegaItem(move(root)));
-   auto folders = std::unique_ptr<MegaNodeList>(megaApi->getInShares());
 
-   //incoming shares
-   for (int j = 0; j < folders->size(); j++)
-   {
-       auto folder = std::unique_ptr<MegaNode>(folders->get(j)->copy());
-       auto user = std::unique_ptr<MegaUser>(megaApi->getUserFromInShare(folder.get()));
-       MegaItem* item = new MegaItem(move(folder));
-       item->setOwner(move(user));
-       connect(item, &MegaItem::infoUpdated, this, &MegaItemModel::onItemInfoUpdated);
-       mRootItems.append(item);
-   }
-
-   megaApi->getCameraUploadsFolder(mDelegateListener.get());
-   megaApi->getCameraUploadsFolderSecondary(mDelegateListener.get());
-   megaApi->getMyChatFilesFolder(mDelegateListener.get());
 }
 
 int MegaItemModel::columnCount(const QModelIndex &) const
@@ -153,7 +134,7 @@ QModelIndex MegaItemModel::index(int row, int column, const QModelIndex &parent)
     }
     else
     {
-        return createIndex(row, column, mRootItems.at(row));
+        return createIndex(row, column, getRootItems().at(row));
     }
 }
 
@@ -169,9 +150,9 @@ QModelIndex MegaItemModel::parent(const QModelIndex &index) const
     {
         return QModelIndex();
     }
-    if(mRootItems.contains(parent))
+    if(getRootItems().contains(parent))
     {
-        return createIndex(mRootItems.indexOf(parent), 0, parent);
+        return createIndex(getRootItems().indexOf(parent), 0, parent);
     }
     return createIndex(parent->row(), 0, parent);
 }
@@ -189,7 +170,7 @@ int MegaItemModel::rowCount(const QModelIndex &parent) const
         }
         return item->getNumChildren();
     }
-    return mRootItems.size();
+    return getRootItems().size();
 }
 
 bool MegaItemModel::hasChildren(const QModelIndex &parent) const
@@ -279,11 +260,11 @@ void MegaItemModel::setSyncSetupMode(bool value)
 void MegaItemModel::showFiles(bool show)
 {
     mDisplayFiles = show;
-    for(QList<MegaItem*>::iterator it = mRootItems.begin(); it != mRootItems.end();)
+    for(QList<MegaItem*>::iterator it = getRootItems().begin(); it != getRootItems().end();)
     {
         if((*it)->getNode()->isFile() && !show)
         {
-            mRootItems.removeOne(*it);
+            getRootItems().removeOne(*it);
             continue;
         }
         (*it)->displayFiles(show);
@@ -322,7 +303,7 @@ void MegaItemModel::removeNode(const QModelIndex &item)
     {
         int index = item.row();
         beginRemoveRows(item.parent(), index, index);
-        mRootItems.removeOne(static_cast<MegaItem*>(item.internalPointer()));
+        getRootItems().removeOne(static_cast<MegaItem*>(item.internalPointer()));
     }
 
     endRemoveRows();
@@ -427,78 +408,17 @@ QVariant MegaItemModel::getText(const QModelIndex &index, MegaItem *item) const
     return QVariant(QLatin1String(""));
 }
 
-void MegaItemModel::onRequestFinish(mega::MegaApi *api, mega::MegaRequest *request, mega::MegaError *e)
-{
-    Q_UNUSED(api);
-    if (e->getErrorCode() != MegaError::API_OK)
-    {
-        return;
-    }
-    if(request->getType() == mega::MegaRequest::TYPE_GET_ATTR_USER)
-    {
-        switch(request->getParamType())
-        {
-        case mega::MegaApi::USER_ATTR_CAMERA_UPLOADS_FOLDER:
-        case mega::MegaApi::USER_ATTR_MY_CHAT_FILES_FOLDER:
-        {
-            QModelIndex idx = findItemByNodeHandle(request->getNodeHandle(), index(0, 0));
-            if(idx.isValid())
-            {
-                if(MegaItem* item = static_cast<MegaItem*>(idx.internalPointer()))
-                {
-                    request->getParamType() == mega::MegaApi::USER_ATTR_CAMERA_UPLOADS_FOLDER
-                            ? item->setCameraFolder() : item->setChatFilesFolder();
-                }
-            }
-
-            QVector<int> roles;
-            roles.append(Qt::DecorationRole);
-            emit dataChanged(idx, idx, roles);
-            return;
-        }
-        default:
-            break;
-        }
-    }
-}
-
 MegaItemModel::~MegaItemModel()
 {
-    qDeleteAll(mRootItems);
-    mRootItems.clear();
-}
-
-void MegaItemModel::onItemInfoUpdated(int role)
-{
-    if(MegaItem* item = static_cast<MegaItem*>(sender()))
-    {
-        for(int i = 0; i < rowCount(); ++i)
-        {
-            QModelIndex idx = index(i, COLUMN::USER); //we only update this column because we retrieve the data in async mode
-            if(idx.isValid())                         //so it is possible that we doesn´t have the information from the start
-            {
-                if(MegaItem* chkItem = static_cast<MegaItem*>(idx.internalPointer()))
-                {
-                    if(chkItem == item)
-                    {
-                        QVector<int> roles;
-                        roles.append(role);
-                        emit dataChanged(idx, idx, roles);
-                        return;
-                    }
-                }
-            }
-        }
-    }
 }
 
 int MegaItemModel::insertPosition(const std::unique_ptr<MegaNode>& node)
 {
     int type = node->getType();
     int i;
-    for (i = 0; i < mRootItems.size(); ++i)
+    for (i = 0; i < getRootItems().size(); ++i)
     {
-        std::shared_ptr<MegaNode> otherNode = mRootItems.at(i)->getNode();
+        std::shared_ptr<MegaNode> otherNode = getRootItems().at(i)->getNode();
         int otherNodeType = otherNode->getType();
         if (type >= otherNodeType && qstricmp(node->getName(), otherNode->getName()) <= 0)
         {
@@ -538,4 +458,117 @@ QModelIndex MegaItemModel::findItemByNodeHandle(const mega::MegaHandle& handle, 
         }
     }
     return QModelIndex();
+}
+
+MegaItemModelCloudDrive::MegaItemModelCloudDrive(QObject *parent)
+    : MegaItemModel(parent)
+    , mDelegateListener(mega::make_unique<QTMegaRequestListener>(MegaSyncApp->getMegaApi(), this))
+{
+    MegaApi* megaApi = MegaSyncApp->getMegaApi();
+    auto root = std::unique_ptr<MegaNode>(megaApi->getRootNode());
+    mRootItems.append(new MegaItem(move(root)));
+
+    megaApi->getCameraUploadsFolder(mDelegateListener.get());
+    megaApi->getCameraUploadsFolderSecondary(mDelegateListener.get());
+    megaApi->getMyChatFilesFolder(mDelegateListener.get());
+}
+
+MegaItemModelCloudDrive::~MegaItemModelCloudDrive()
+{
+    qDeleteAll(mRootItems);
+    mRootItems.clear();
+}
+
+void MegaItemModelCloudDrive::onRequestFinish(mega::MegaApi *api, mega::MegaRequest *request, mega::MegaError *e)
+{
+    Q_UNUSED(api);
+    if (e->getErrorCode() != MegaError::API_OK)
+    {
+        return;
+    }
+    if(request->getType() == mega::MegaRequest::TYPE_GET_ATTR_USER)
+    {
+        switch(request->getParamType())
+        {
+        case mega::MegaApi::USER_ATTR_CAMERA_UPLOADS_FOLDER:
+        case mega::MegaApi::USER_ATTR_MY_CHAT_FILES_FOLDER:
+        {
+            QModelIndex idx = findItemByNodeHandle(request->getNodeHandle(), index(0, 0));
+            if(idx.isValid())
+            {
+                if(MegaItem* item = static_cast<MegaItem*>(idx.internalPointer()))
+                {
+                    request->getParamType() == mega::MegaApi::USER_ATTR_CAMERA_UPLOADS_FOLDER
+                            ? item->setCameraFolder() : item->setChatFilesFolder();
+                }
+            }
+
+            QVector<int> roles;
+            roles.append(Qt::DecorationRole);
+            emit dataChanged(idx, idx, roles);
+            return;
+        }
+        default:
+            break;
+        }
+    }
+}
+
+QList<MegaItem *> MegaItemModelCloudDrive::getRootItems() const
+{
+    return mRootItems;
+}
+
+MegaItemModelIncomingShares::MegaItemModelIncomingShares(QObject *parent)
+    : MegaItemModel(parent)
+{
+    MegaApi* megaApi = MegaSyncApp->getMegaApi();
+
+    auto folders = std::unique_ptr<MegaNodeList>(megaApi->getInShares());
+
+    //incoming shares
+    for (int j = 0; j < folders->size(); j++)
+    {
+        auto folder = std::unique_ptr<MegaNode>(folders->get(j)->copy());
+        auto user = std::unique_ptr<MegaUser>(megaApi->getUserFromInShare(folder.get()));
+        MegaItem* item = new MegaItem(move(folder));
+        item->setOwner(move(user));
+        connect(item, &MegaItem::infoUpdated, this, &MegaItemModelIncomingShares::onItemInfoUpdated);
+        mRootItems.append(item);
+    }
+}
+
+void MegaItemModelIncomingShares::onItemInfoUpdated(int role)
+{
+    if(MegaItem* item = static_cast<MegaItem*>(sender()))
+    {
+        for(int i = 0; i < rowCount(); ++i)
+        {
+            QModelIndex idx = index(i, COLUMN::USER); //we only update this column because we retrieve the data in async mode
+            if(idx.isValid())                         //so it is possible that we doesn´t have the information from the start
+            {
+                if(MegaItem* chkItem = static_cast<MegaItem*>(idx.internalPointer()))
+                {
+                    if(chkItem == item)
+                    {
+                        QVector<int> roles;
+                        roles.append(role);
+                        emit dataChanged(idx, idx, roles);
+                        return;
+                    }
+                }
+            }
+        }
+    }
+}
+
+MegaItemModelIncomingShares::~MegaItemModelIncomingShares()
+{
+    qDeleteAll(mRootItems);
+    mRootItems.clear();
+}
+
+QList<MegaItem *> MegaItemModelIncomingShares::getRootItems() const
+{
+    return mRootItems;
 }

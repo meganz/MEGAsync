@@ -27,7 +27,7 @@ enum class NodeRowDelegateRoles
     last
 };
 
-class MegaItemModel : public QAbstractItemModel, public mega::MegaRequestListener
+class MegaItemModel : public QAbstractItemModel
 {
     Q_OBJECT
 
@@ -64,25 +64,51 @@ public:
     std::shared_ptr<mega::MegaNode> getNode(const QModelIndex &index) const;
     QVariant getIcon(const QModelIndex &index, MegaItem* item) const;
     QVariant getText(const QModelIndex &index, MegaItem* item) const;
-
-    void onRequestFinish(mega::MegaApi* api, mega::MegaRequest *request, mega::MegaError* e) override;
-
     virtual ~MegaItemModel();
 
-private slots:
-    void onItemInfoUpdated(int role);
-
 protected:
-    QList<MegaItem *> mRootItems;
+    QModelIndex findItemByNodeHandle(const mega::MegaHandle &handle, const QModelIndex& parent);
     int mRequiredRights;
     bool mDisplayFiles;
     bool mSyncSetupMode;
 
 private:
     int insertPosition(const std::unique_ptr<mega::MegaNode>& node);
-    QModelIndex findItemByNodeHandle(const mega::MegaHandle &handle, const QModelIndex& parent);
-    std::unique_ptr<mega::QTMegaRequestListener> mDelegateListener;
+    virtual QList<MegaItem*> getRootItems() const = 0;
 
+};
+
+class MegaItemModelCloudDrive : public MegaItemModel , public mega::MegaRequestListener
+{
+    Q_OBJECT
+
+public:
+    explicit MegaItemModelCloudDrive(QObject *parent = 0);
+    virtual ~MegaItemModelCloudDrive();
+
+    void onRequestFinish(mega::MegaApi* api, mega::MegaRequest *request, mega::MegaError* e) override;
+    QList<MegaItem*> getRootItems() const override;
+
+private:
+    QList<MegaItem*> mRootItems;
+    std::unique_ptr<mega::QTMegaRequestListener> mDelegateListener;
+};
+
+class MegaItemModelIncomingShares : public MegaItemModel
+{
+    Q_OBJECT
+
+public:
+    explicit MegaItemModelIncomingShares(QObject *parent = 0);
+    virtual ~MegaItemModelIncomingShares();
+
+    QList<MegaItem*> getRootItems() const override;
+
+private slots:
+    void onItemInfoUpdated(int role);
+
+private:
+    QList<MegaItem*> mRootItems;
 
 };
 

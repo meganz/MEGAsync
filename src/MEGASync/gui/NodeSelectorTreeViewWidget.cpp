@@ -74,7 +74,7 @@ bool NodeSelectorTreeViewWidget::eventFilter(QObject *o, QEvent *e)
     {
         mProxyModel = mega::make_unique<MegaItemProxyModel>(this);
 
-        mModel = mega::make_unique<MegaItemModel>(this);
+        mModel = getModel();
 
         mProxyModel->setSourceModel(mModel.get());
 
@@ -406,7 +406,7 @@ void NodeSelectorTreeViewWidget::setRootIndex(const QModelIndex &proxy_idx)
     if(!node_column_idx.isValid())
     {
         //TODO: IF IDX IS INVALID WE ARE IN ROOT
-        ui->lFolderName->setText(tr(IN_SHARES));
+        ui->lFolderName->setText(getRootText());
 
         QModelIndexList selectedIndexes = ui->tMegaFolders->selectionModel()->selectedIndexes();
         mProxyModel->showOwnerColumn(true);
@@ -576,4 +576,36 @@ void NodeSelectorTreeViewWidget::Navigation::appendToForward(const mega::MegaHan
 {
     if(!forwardHandles.contains(handle))
         forwardHandles.append(handle);
+}
+
+NodeSelectorTreeViewWidgetCloudDrive::NodeSelectorTreeViewWidgetCloudDrive(QWidget *parent)
+    : NodeSelectorTreeViewWidget(parent)
+{
+
+}
+
+QString NodeSelectorTreeViewWidgetCloudDrive::getRootText()
+{
+    return tr(CLD_DRIVE);
+}
+
+std::unique_ptr<MegaItemModel> NodeSelectorTreeViewWidgetCloudDrive::getModel()
+{
+    return mega::make_unique<MegaItemModelCloudDrive>(this);
+}
+
+NodeSelectorTreeViewWidgetIncomingShares::NodeSelectorTreeViewWidgetIncomingShares(QWidget *parent)
+    : NodeSelectorTreeViewWidget(parent)
+{
+
+}
+
+QString NodeSelectorTreeViewWidgetIncomingShares::getRootText()
+{
+    return tr(IN_SHARES);
+}
+
+std::unique_ptr<MegaItemModel> NodeSelectorTreeViewWidgetIncomingShares::getModel()
+{
+    return mega::make_unique<MegaItemModelIncomingShares>(this);
 }

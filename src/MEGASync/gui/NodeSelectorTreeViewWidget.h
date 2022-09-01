@@ -100,6 +100,32 @@ private:
     void checkNewFolderButtonVisibility();
     QModelIndex getParentIncomingShareByIndex(QModelIndex idx);
     bool isCloudDrive(){return true;}
+    virtual QString getRootText() = 0;
+    virtual std::unique_ptr<MegaItemModel> getModel() = 0;
 };
 
+class NodeSelectorTreeViewWidgetCloudDrive : public NodeSelectorTreeViewWidget
+{
+    Q_OBJECT
+
+public:
+    explicit NodeSelectorTreeViewWidgetCloudDrive(QWidget *parent = nullptr);
+
+private:
+    QString getRootText() override;
+    std::unique_ptr<MegaItemModel> getModel() override;
+};
+
+class NodeSelectorTreeViewWidgetIncomingShares : public NodeSelectorTreeViewWidget
+{
+    Q_OBJECT
+
+public:
+    explicit NodeSelectorTreeViewWidgetIncomingShares(QWidget *parent = nullptr);
+
+private:
+    QString getRootText() override;
+    std::unique_ptr<MegaItemModel> getModel() override;
+};
 #endif // NODESELECTORTREEVIEWWIDGET_H
+

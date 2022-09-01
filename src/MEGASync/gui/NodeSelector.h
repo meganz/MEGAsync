@@ -51,25 +51,15 @@ public:
 protected:
     void changeEvent(QEvent * event) override;
     void nodesReady();
-    void showEvent(QShowEvent* ) override;
-    void resizeEvent(QResizeEvent* ) override;
-    void mousePressEvent(QMouseEvent* event) override;
 
 private slots:
-    void onItemDoubleClick(const QModelIndex &index);
-    void onGoBackClicked();
-    void onGoForwardClicked();
     void onbNewFolderClicked();
     void onbOkClicked();
     void onbShowIncomingSharesClicked();
     void onbShowCloudDriveClicked();
     void onTabSelected(int index);
-    void onSelectionChanged(const QItemSelection& selected, const QItemSelection& deselected);
-    void onSectionResized();
 
 private:
-
-    bool isCloudDrive();
     QModelIndex getParentIncomingShareByIndex(QModelIndex idx);
 
     Ui::NodeSelector *ui;
