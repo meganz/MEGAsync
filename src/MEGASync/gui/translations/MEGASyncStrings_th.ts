@@ -3110,6 +3110,21 @@ Your selected incomplete sync transfers won&apos;t be cancelled.</source>
         <translatorcomment>Context menu action to resume cancel the active transfers and clear the completed transfers (multiple transfers selected)</translatorcomment>
         <translation><numerusform>ยกเลิกและล้างการถ่ายโอน</numerusform></translation>
     </message>
+    <message>
+        <source>Yes, cancel</source>
+        <translatorcomment>Dialog button to do the proposed actions (cancel the transfers)</translatorcomment>
+        <translation>ใช่ ยกเลิกเลย</translation>
+    </message>
+    <message>
+        <source>No, continue</source>
+        <translatorcomment>Dialog button to abort the proposed action</translatorcomment>
+        <translation>ไม่ ดำเนินการต่อ</translation>
+    </message>
+    <message>
+        <source>Yes, clear</source>
+        <translatorcomment>Dialog button to do the proposed actions (clear the transfers)</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MegaUploader</name>
@@ -3714,6 +3729,18 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <source>One or more syncs have been disabled. Go to preferences to enable them again.</source>
         <translatorcomment>Warning message shown when logging into MEGAsync to inform the user that some syncs have been disabled and need to go to settings to enable them again (macOS)</translatorcomment>
         <translation>รายการซิงค์บางอย่างถูกปิดใช้งาน ไปที่การกำหนดลักษณะเพื่อเปิดใช้งานอีกครั้ง</translation>
+    </message>
+    <message>
+        <source>Sync transfers cannot be cancelled individually.
+Please delete the folder sync from settings to cancel them.</source>
+        <translatorcomment>Explains that the sync transfers cannot be cancelled individually. (for windows and linux)</translatorcomment>
+        <translation>รายการซิงค์ที่กำลังถ่ายโอนไม่สามารถยกเลิกทีละรายการได้ กรุณาลบโฟลเดอร์สำหรับซิงค์ออกจากหน้าการตั้งค่าก่อนถึงจะสามารถยกเลิกได้</translation>
+    </message>
+    <message>
+        <source>Sync transfers cannot be cancelled individually.
+Please delete the folder sync from preferences to cancel them.</source>
+        <translatorcomment>Explains that the sync transfers cannot be cancelled individually. (for macOS)</translatorcomment>
+        <translation>รายการซิงค์ที่กำลังถ่ายโอนไม่สามารถยกเลิกทีละรายการได้ กรุณาลบโฟลเดอร์สำหรับซิงค์ออกจากหน้าการกำหนดลักษณะก่อนถึงจะสามารถยกเลิกได้</translation>
     </message>
 </context>
 <context>
@@ -5823,12 +5850,6 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
 <context>
     <name>TransfersModel</name>
     <message>
-        <source>Sync transfers cannot be cancelled individually.
-Please delete the folder sync from settings to cancel them.</source>
-        <translatorcomment>Explains that the sync transfers cannot be cancelled individually.</translatorcomment>
-        <translation>รายการซิงค์ที่กำลังถ่ายโอนไม่สามารถยกเลิกได้ หากต้องการลบการซิงค์ ให้ไปที่การตั้งค่าคุณลักษณะหรือการตั้งค่าในแอปเดสก์ท็อปแล้วลบโฟลเดอร์ที่ซิงค์ออก</translation>
-    </message>
-    <message>
         <source>Dismiss</source>
         <translatorcomment>Option to close the dialog without taking any action</translatorcomment>
         <translation>ละทิ้ง</translation>
@@ -6165,7 +6186,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Choose annual billing and get 12 months for the price of 10</source>
         <translatorcomment>Informative label to inform the user about offer purchasing one-year Pro plan within upgrade dialog when user reaches over storage state.</translatorcomment>
-        <translation>เลือกการเรียกเก็บเงินรายปีและรับ 12 เดือนในราคา 10</translation>
+        <translation>เลือกการเรียกเก็บเงินรายปีและรับ 12 เดือนในราคาของ 10 เดือน</translation>
     </message>
 </context>
 <context>

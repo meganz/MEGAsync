@@ -3112,6 +3112,21 @@ No se cancelarán tus transferencias seleccionadas sin completar relacionadas a 
         <translatorcomment>Context menu action to resume cancel the active transfers and clear the completed transfers (multiple transfers selected)</translatorcomment>
         <translation><numerusform>Cancelar y limpiar la transferencia</numerusform><numerusform>Cancelar y limpiar las transferencias</numerusform></translation>
     </message>
+    <message>
+        <source>Yes, cancel</source>
+        <translatorcomment>Dialog button to do the proposed actions (cancel the transfers)</translatorcomment>
+        <translation>Sí, cancelar</translation>
+    </message>
+    <message>
+        <source>No, continue</source>
+        <translatorcomment>Dialog button to abort the proposed action</translatorcomment>
+        <translation>No, continuar</translation>
+    </message>
+    <message>
+        <source>Yes, clear</source>
+        <translatorcomment>Dialog button to do the proposed actions (clear the transfers)</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MegaUploader</name>
@@ -3716,6 +3731,18 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <source>One or more syncs have been disabled. Go to preferences to enable them again.</source>
         <translatorcomment>Warning message shown when logging into MEGAsync to inform the user that some syncs have been disabled and need to go to settings to enable them again (macOS)</translatorcomment>
         <translation>Se han desactivado una o más sincronizaciones. Ve a Preferencias para activarlas de nuevo.</translation>
+    </message>
+    <message>
+        <source>Sync transfers cannot be cancelled individually.
+Please delete the folder sync from settings to cancel them.</source>
+        <translatorcomment>Explains that the sync transfers cannot be cancelled individually. (for windows and linux)</translatorcomment>
+        <translation>No se pueden cancelar las transferencias relacionadas a sincronizaciones. Para dejar de sincronizar, accede a Ajustes en la aplicación de escritorio y elimina la carpeta sincronizada.</translation>
+    </message>
+    <message>
+        <source>Sync transfers cannot be cancelled individually.
+Please delete the folder sync from preferences to cancel them.</source>
+        <translatorcomment>Explains that the sync transfers cannot be cancelled individually. (for macOS)</translatorcomment>
+        <translation>No se pueden cancelar las transferencias relacionadas a sincronizaciones. Para dejar de sincronizar, accede a Preferencias en la aplicación de escritorio y elimina la carpeta sincronizada.</translation>
     </message>
 </context>
 <context>
@@ -5825,13 +5852,6 @@ Para obtener más cuota, actualiza a una cuenta Pro o espera [A] hasta que haya 
 </context>
 <context>
     <name>TransfersModel</name>
-    <message>
-        <source>Sync transfers cannot be cancelled individually.
-Please delete the folder sync from settings to cancel them.</source>
-        <translatorcomment>Explains that the sync transfers cannot be cancelled individually.</translatorcomment>
-        <translation>No se pueden cancelar las transferencias relacionadas a sincronizaciones.
-Para dejar de sincronizar, accede a Preferencias o Ajustes en la aplicación de escritorio y elimina la carpeta sincronizada.</translation>
-    </message>
     <message>
         <source>Dismiss</source>
         <translatorcomment>Option to close the dialog without taking any action</translatorcomment>

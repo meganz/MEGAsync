@@ -3186,17 +3186,17 @@ Your selected incomplete sync transfers won&apos;t be cancelled.</translation>
     <message>
         <source>Yes, cancel</source>
         <translatorcomment>Dialog button to do the proposed actions (cancel the transfers)</translatorcomment>
-        <translation type="unfinished">Yes, cancel</translation>
+        <translation>Yes, cancel</translation>
     </message>
     <message>
         <source>No, continue</source>
         <translatorcomment>Dialog button to abort the proposed action</translatorcomment>
-        <translation type="unfinished">No, continue</translation>
+        <translation>No, continue</translation>
     </message>
     <message>
         <source>Yes, clear</source>
         <translatorcomment>Dialog button to do the proposed actions (clear the transfers)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Yes, clear</translation>
     </message>
 </context>
 <context>
@@ -3825,14 +3825,15 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <source>Sync transfers cannot be cancelled individually.
 Please delete the folder sync from settings to cancel them.</source>
         <translatorcomment>Explains that the sync transfers cannot be cancelled individually. (for windows and linux)</translatorcomment>
-        <translation type="unfinished">Sync transfers cannot be cancelled individually.
+        <translation>Sync transfers cannot be cancelled individually.
 Please delete the folder sync from settings to cancel them.</translation>
     </message>
     <message>
         <source>Sync transfers cannot be cancelled individually.
 Please delete the folder sync from preferences to cancel them.</source>
         <translatorcomment>Explains that the sync transfers cannot be cancelled individually. (for macOS)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Sync transfers cannot be cancelled individually.
+Please delete the folder sync from preferences to cancel them.</translation>
     </message>
 </context>
 <context>

@@ -160,7 +160,7 @@
     <message>
         <source>Takedown notice</source>
         <translatorcomment>Label title for Takedown category of a notification</translatorcomment>
-        <translation>Bericht van takedown</translation>
+        <translation>Takedown melding</translation>
     </message>
     <message>
         <source>New Contact Request</source>
@@ -185,7 +185,7 @@
     <message>
         <source>Contact Updated</source>
         <translatorcomment>Notification label that indicates that the user has ignored, accept or denied a contact request.</translatorcomment>
-        <translation>Contat verzoek geupdate</translation>
+        <translation>Contactverzoek bijgewerkt</translation>
     </message>
     <message>
         <source>Contact Accepted</source>
@@ -250,17 +250,17 @@
     <message>
         <source>You ignored a contact request</source>
         <translatorcomment>Label to indicate that the user has ignored a contact request.</translatorcomment>
-        <translation>U hebt een contactverzoek genegeerd</translation>
+        <translation>U heeft een contactverzoek genegeerd</translation>
     </message>
     <message>
         <source>You accepted a contact request</source>
         <translatorcomment>Label to indicate that the user has accepted a contact request.</translatorcomment>
-        <translation>U hebt een contact verzoek geaccepteerd</translation>
+        <translation>U heeft een contact verzoek geaccepteerd</translation>
     </message>
     <message>
         <source>You denied a contact request</source>
         <translatorcomment>Label to indicate that the user has denied a contact request.</translatorcomment>
-        <translation>U hebt een contact verzoek afgewezen</translation>
+        <translation>U heeft een contact verzoek afgewezen</translation>
     </message>
     <message>
         <source>[A] accepted your contact request</source>
@@ -482,7 +482,7 @@
         <source>The name &quot;%1&quot; is already in use for another sync
 Please enter a different name to identify this synced folder:</source>
         <translatorcomment>Detailed message displayed when a user is using a name for a local folder that is already used. Preserve &quot;%1&quot; code because is used to indicate the local folder at runtime.</translatorcomment>
-        <translation>De naam &quot;%1&quot; is al in gebruik voor een andere synchronisatie. Voer een andere naam in om deze gesynchroniseerde map te identificeren:</translation>
+        <translation>De naam “%1”  is al in gebruik voor een andere synchronisatie. Voer een andere naam in om deze gesynchroniseerde map te identificeren:</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -671,7 +671,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>[A]This software uses Qt ([C] 2018 The Qt Company Ltd) which is covered by GNU LESSER GENERAL PUBLIC LICENSE Version 3[/A]</source>
         <translatorcomment>QT copyright notice shown at changelog dialog. [A][/A] placeholders used to provide ui style and [C] placeholder will be replaced by copyright symbol.</translatorcomment>
-        <translation>[A]Deze software gebruikt Qt ([C] 2018 The Qt Company Ltd) dat wordt gedekt door GNU Lesser General Public License versie 3 [/A]</translation>
+        <translation>[A]Deze software gebruikt Qt ([C] 2018 The Qt Company Ltd) dat wordt gedekt door GNU Lesser General Public License Versie 3 [/A]</translation>
     </message>
 </context>
 <context>
@@ -1119,7 +1119,7 @@ In sommige gevallen kunnen ze details over uw gegevens bevatten, zoals bestands-
     <message>
         <source>The file at this destination will be updated with a new version.</source>
         <translatorcomment>Text explaining the result of the file upload and update action</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Het bestand op deze lokatie wordt bijgewerkt met een nieuwe versie.</translation>
     </message>
 </context>
 <context>
@@ -1871,7 +1871,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Select whether you want to install $(^NameDA) for yourself only or for all users of this computer. $(^ClickNext)</source>
         <translatorcomment>Label to indicate the type of installation. Preserve $(^NameDA)  and $(^ClickNext) codes.</translatorcomment>
-        <translation>Selecteer of u $(^NameDA) voor uzelf of voor alle gebruikers van deze computer wilt installeren. $ (^ClickNext)</translation>
+        <translation>Selecteer of u $(^NameDA) voor uzelf of voor alle gebruikers van deze computer wilt installeren. $(^ClickNext)</translation>
     </message>
     <message>
         <source>Install for anyone using this computer</source>
@@ -2106,12 +2106,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the remote folder doesn&apos;t exist</source>
         <translatorcomment>Notification message launched checking  remote synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.</translatorcomment>
-        <translation>Uw synchronisatie &quot;%1&quot; is gestopt omdat de externe map niet bestaat</translation>
+        <translation>Uw synchronisatie “%1”  is gestopt omdat de externe map niet bestaat</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</source>
         <translatorcomment>Notification message launched checking  local synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.</translatorcomment>
-        <translation>Uw sync &quot;%1&quot; is uitgeschakeld omdat de lokale map niet bestaat</translation>
+        <translation>Uw sync “%1” is uitgeschakeld omdat de lokale map niet bestaat</translation>
     </message>
     <message>
         <source>Your account has been blocked. Please contact support@mega.co.nz</source>
@@ -2141,12 +2141,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the local folder has changed</source>
         <translatorcomment>Notification message launched when a sync is disabled due to the local folder has changed(moved/deleted/...). Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
-        <translation>Uw sync &quot;%1&quot; is uitgeschakeld omdat de lokale map is veranderd</translation>
+        <translation>Uw sync “%1” is uitgeschakeld omdat de lokale map is veranderd</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&apos;t have full access</source>
         <translatorcomment>Notification message launched when a sync is disabled due to the access problems. Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
-        <translation>Uw sync &quot;%1&quot; is uitgeschakeld. De externe map (of een deel ervan) heeft geen volledige toegang</translation>
+        <translation>Uw sync “%1” is uitgeschakeld. De externe map (of een deel ervan) heeft geen volledige toegang</translation>
     </message>
     <message>
         <source>Over quota</source>
@@ -2936,7 +2936,7 @@ Overdrachten worden automatisch hervat wanneer u de applicatie heropend.</numeru
     <message>
         <source>Move to top</source>
         <translatorcomment>Label of context menu option to move selected transfer to top of the list and give it highest priority</translatorcomment>
-        <translation>verplaats bovenaan</translation>
+        <translation>Verplaats bovenaan</translation>
     </message>
     <message>
         <source>Move up</source>
@@ -3111,6 +3111,21 @@ All de andere geselecteerde overdrachten worden geannuleerd en gewist.</translat
         <translatorcomment>Context menu action to resume cancel the active transfers and clear the completed transfers (multiple transfers selected)</translatorcomment>
         <translation><numerusform>Annuleer en wis overdracht</numerusform><numerusform>Annuleer en alle overdrachten wissen</numerusform></translation>
     </message>
+    <message>
+        <source>Yes, cancel</source>
+        <translatorcomment>Dialog button to do the proposed actions (cancel the transfers)</translatorcomment>
+        <translation>Ja, annuleren</translation>
+    </message>
+    <message>
+        <source>No, continue</source>
+        <translatorcomment>Dialog button to abort the proposed action</translatorcomment>
+        <translation>Nee, doorgaan</translation>
+    </message>
+    <message>
+        <source>Yes, clear</source>
+        <translatorcomment>Dialog button to do the proposed actions (clear the transfers)</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MegaUploader</name>
@@ -3221,7 +3236,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
     <message>
         <source>Are you sure that you want to delete &quot;%1&quot;?</source>
-        <translation>Weet u zeker dat u &quot;%1&quot; wilt verwijderen?</translation>
+        <translation>Weet u zeker dat u “%1” wilt verwijderen?</translation>
     </message>
     <message>
         <source>Only files can be used for streaming.</source>
@@ -3716,6 +3731,20 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translatorcomment>Warning message shown when logging into MEGAsync to inform the user that some syncs have been disabled and need to go to settings to enable them again (macOS)</translatorcomment>
         <translation>Één of meer synchronisaties zijn uitgeschakeld. Ga naar Voorkeuren om ze weer in te schakelen.</translation>
     </message>
+    <message>
+        <source>Sync transfers cannot be cancelled individually.
+Please delete the folder sync from settings to cancel them.</source>
+        <translatorcomment>Explains that the sync transfers cannot be cancelled individually. (for windows and linux)</translatorcomment>
+        <translation>Synchronisatie overdrachten kunnen niet individueel geannuleerd worden.
+Verwijder de mapsynchronisatie vanuit instellingen om ze te annuleren.</translation>
+    </message>
+    <message>
+        <source>Sync transfers cannot be cancelled individually.
+Please delete the folder sync from preferences to cancel them.</source>
+        <translatorcomment>Explains that the sync transfers cannot be cancelled individually. (for macOS)</translatorcomment>
+        <translation>Synchronisatie overdrachten kunnen niet individueel geannuleerd worden.
+Verwijder de mapsynchronisatie vanuit voorkeuren om ze te annuleren.</translation>
+    </message>
 </context>
 <context>
     <name>Preferences</name>
@@ -3835,7 +3864,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>&amp;Yes</source>
         <translatorcomment>Label for confirm button. Keep capital letter.</translatorcomment>
-        <translation>&amp;Yes</translation>
+        <translation>&amp;Ja</translation>
     </message>
     <message>
         <source>&amp;No</source>
@@ -3893,12 +3922,12 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Parent Directory</source>
         <translatorcomment>Button to move to the parent directory</translatorcomment>
-        <translation>Bovenliggende Directory</translation>
+        <translation>Bovenliggende Map</translation>
     </message>
     <message>
         <source>Go to the parent directory</source>
         <translatorcomment>Parent directory button message used by assistive technologies (such as screen readers)</translatorcomment>
-        <translation>Ga naar de bovenliggende locaties</translation>
+        <translation>Ga naar de bovenliggende map</translation>
     </message>
     <message>
         <source>Alt+Up</source>
@@ -3923,7 +3952,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Change to list view mode</source>
         <translatorcomment>Change to list view mode button message used by assistive technologies (such as screen readers)</translatorcomment>
-        <translation>Ga naar de lijstweergavemodus</translation>
+        <translation>Wijzigen naar lijstweergave</translation>
     </message>
     <message>
         <source>Detail View</source>
@@ -3933,7 +3962,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Change to detail view mode</source>
         <translatorcomment>Change to detail view mode button message used by assistive technologies (such as screen readers)</translatorcomment>
-        <translation>Ga naar de detailweergave</translation>
+        <translation>Wijzigen naar detailweergave</translation>
     </message>
     <message>
         <source>Sidebar</source>
@@ -3958,7 +3987,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Find Directory</source>
         <translatorcomment>Window title when opening a directory</translatorcomment>
-        <translation>Vind Locatie</translation>
+        <translation>Zoek Map</translation>
     </message>
     <message>
         <source>Open</source>
@@ -3973,7 +4002,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Directory:</source>
         <translatorcomment>Selected directory text box label when choosing a directory</translatorcomment>
-        <translation>Lokatie:</translation>
+        <translation>Map:</translation>
     </message>
     <message>
         <source>All Files (*)</source>
@@ -4220,7 +4249,7 @@ Wilt u deze toch verwijderen?</translation>
     <name>QPlatformTheme</name>
     <message>
         <source>&amp;Yes</source>
-        <translation>&amp;Yes</translation>
+        <translation>&amp;Ja</translation>
     </message>
     <message>
         <source>&amp;No</source>
@@ -4586,7 +4615,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>%1 (local cache)</source>
         <translatorcomment>Section label name for local cache summary and actions. Keep %1 placeholder, which is used to fill in the platform specific name for local sync cache (debris).</translatorcomment>
-        <translation>%1(locale cashe)</translation>
+        <translation>%1(lokale cashe)</translation>
     </message>
     <message>
         <source>Space used:</source>
@@ -4691,7 +4720,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Restart MEGA Desktop App to apply changes.</source>
         <translatorcomment>Informative text shown in Folders pane, letting the user know that an application restart is required to apply the changes he just made.</translatorcomment>
-        <translation>Herstart de MEGA Desktop App om de wijzigingen toe te passen.</translation>
+        <translation>Herstart de MEGA Desktop Applicatie om de wijzigingen toe te passen.</translation>
     </message>
     <message>
         <source>Change Settings…</source>
@@ -4751,7 +4780,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Transfer quota:</source>
         <translatorcomment>Label for account transfer quota details.(macOS)</translatorcomment>
-        <translation>Overdracht tegoed:</translation>
+        <translation>Overdrachtstegoed:</translation>
     </message>
     <message>
         <source>Your MEGA account is full. Uploads are disabled and folder synchronisation is paused.</source>
@@ -4906,17 +4935,17 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Pro I</source>
         <translatorcomment>Text label indicating the Pro I tier of account type in Account pane, next to the shield icon indicating also the type of account.</translatorcomment>
-        <translation>Pro-I</translation>
+        <translation>Pro I</translation>
     </message>
     <message>
         <source>Pro II</source>
         <translatorcomment>Text label indicating the Pro II tier of account type in Account pane, next to the shield icon indicating also the type of account.</translatorcomment>
-        <translation>Pro-II</translation>
+        <translation>Pro II</translation>
     </message>
     <message>
         <source>Pro III</source>
         <translatorcomment>Text label indicating the Pro III tier of account type in Account pane, next to the shield icon indicating also the type of account.</translatorcomment>
-        <translation>Pro-III</translation>
+        <translation>Pro III</translation>
     </message>
     <message>
         <source>Export Key</source>
@@ -5463,7 +5492,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Are you sure that you want to stop the streaming?</source>
         <translatorcomment>Warning message shown when the dialog to stream files from MEGA is going to be closed and there is a file selected for streaming</translatorcomment>
-        <translation>Weet u zeker dat u de streaming wilt stoppen?</translation>
+        <translation>Weet u zeker dat u het streamen wilt stoppen?</translation>
     </message>
     <message>
         <source>Error</source>
@@ -5824,13 +5853,6 @@ Om meer tegoed te krijgen, upgrade naar een Pro-account of wacht [A] tot er meer
 <context>
     <name>TransfersModel</name>
     <message>
-        <source>Sync transfers cannot be cancelled individually.
-Please delete the folder sync from settings to cancel them.</source>
-        <translatorcomment>Explains that the sync transfers cannot be cancelled individually.</translatorcomment>
-        <translation>Synchronisatie overdracht kan niet individueel geannuleerd worden.
-Verwijder de mapsynchronisatie vanuit de instellingen om ze te annuleren.</translation>
-    </message>
-    <message>
         <source>Dismiss</source>
         <translatorcomment>Option to close the dialog without taking any action</translatorcomment>
         <translation>Sluiten</translation>
@@ -6091,7 +6113,7 @@ Verwijder de mapsynchronisatie vanuit de instellingen om ze te annuleren.</trans
     <message>
         <source>Pause all transfers</source>
         <translatorcomment>Tooltip for Pause button when the user is in the all transfers category</translatorcomment>
-        <translation>Pauzeer alle transfers</translation>
+        <translation>Pauzeer alle overdrachten</translation>
     </message>
 </context>
 <context>
@@ -6243,22 +6265,22 @@ Verwijder de mapsynchronisatie vanuit de instellingen om ze te annuleren.</trans
     <message>
         <source>Pro Lite</source>
         <translatorcomment>Label to refer Pro Lite tier</translatorcomment>
-        <translation>Pro-Lite</translation>
+        <translation>Pro Lite</translation>
     </message>
     <message>
         <source>Pro I</source>
         <translatorcomment>Label to refer Pro I tier</translatorcomment>
-        <translation>Pro-I</translation>
+        <translation>Pro I</translation>
     </message>
     <message>
         <source>Pro II</source>
         <translatorcomment>Label to refer Pro II tier</translatorcomment>
-        <translation>Pro-II</translation>
+        <translation>Pro II</translation>
     </message>
     <message>
         <source>Pro III</source>
         <translatorcomment>Label to refer Pro III tier</translatorcomment>
-        <translation>Pro-III</translation>
+        <translation>Pro III</translation>
     </message>
     <message numerus="yes">
         <source>%n second ago</source>
