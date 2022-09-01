@@ -4,21 +4,6 @@
 
 #include <QPointer>
 
-const QString TransferBaseDelegateWidget::STATE_STARTING = QString::fromUtf8(QT_TR_NOOP("Starting…"));
-const QString TransferBaseDelegateWidget::STATE_RETRYING = QLatin1String(QT_TR_NOOP("Retrying"));
-const QString TransferBaseDelegateWidget::STATE_UPLOADING = QString::fromUtf8(QT_TR_NOOP("Uploading…"));
-const QString TransferBaseDelegateWidget::STATE_DOWNLOADING = QString::fromUtf8(QT_TR_NOOP("Downloading…"));
-const QString TransferBaseDelegateWidget::STATE_SYNCING = QString::fromUtf8(QT_TR_NOOP("Syncing…"));
-const QString TransferBaseDelegateWidget::STATE_COMPLETING = QLatin1String(QT_TR_NOOP("Completing"));
-const QString TransferBaseDelegateWidget::STATE_COMPLETED = QLatin1String(QT_TR_NOOP("Completed"));
-const QString TransferBaseDelegateWidget::STATE_PAUSED = QLatin1String(QT_TR_NOOP("Paused"));
-const QString TransferBaseDelegateWidget::STATE_FAILED = QLatin1String(QT_TR_NOOP("Failed"));
-const QString TransferBaseDelegateWidget::STATE_INQUEUE = QLatin1String(QT_TR_NOOP("In queue"));
-const QString TransferBaseDelegateWidget::STATE_INQUEUE_PARENTHESIS = QLatin1String(QT_TR_NOOP("(in queue)"));
-const QString TransferBaseDelegateWidget::STATE_RETRY = QLatin1String(QT_TR_NOOP("Retry"));
-const QString TransferBaseDelegateWidget::STATE_OUT_OF_STORAGE_SPACE = QLatin1String(QT_TR_NOOP("Out of storage space"));
-const QString TransferBaseDelegateWidget::STATE_OUT_OF_TRANSFER_QUOTA = QLatin1String(QT_TR_NOOP("Out of transfer quota"));
-
 TransferBaseDelegateWidget::TransferBaseDelegateWidget(QWidget *parent)
     : QWidget(parent),
       mPreviousState(TransferData::TransferState::TRANSFER_NONE)
@@ -100,4 +85,78 @@ bool TransferBaseDelegateWidget::isMouseHoverInAction(QToolButton *button, const
 void TransferBaseDelegateWidget::onRetryTransfer()
 {
     emit retryTransfer();
+}
+
+QString TransferBaseDelegateWidget::getState(TRANSFER_STATES state)
+{
+    switch(state)
+    {
+        case TRANSFER_STATES::STATE_STARTING:
+        {
+            return tr("Starting…");
+        }
+        case TRANSFER_STATES::STATE_RETRYING:
+        {
+            return tr("Retrying");
+        }
+        case TRANSFER_STATES::STATE_UPLOADING:
+        {
+            return tr("Uploading…");
+        }
+        case TRANSFER_STATES::STATE_DOWNLOADING:
+        {
+            return tr("Downloading…");
+        }
+        case TRANSFER_STATES::STATE_SYNCING:
+        {
+            return tr("Syncing…");
+        }
+        case TRANSFER_STATES::STATE_COMPLETING:
+        {
+            return tr("Completing");
+        }
+        case TRANSFER_STATES::STATE_COMPLETED:
+        {
+            return tr("Completed");
+        }
+        case TRANSFER_STATES::STATE_PAUSED:
+        {
+            return tr("Paused");
+        }
+        case TRANSFER_STATES::STATE_FAILED:
+        {
+            return tr("Failed");
+        }
+        case TRANSFER_STATES::STATE_INQUEUE:
+        {
+            return tr("In queue");
+        }
+        case TRANSFER_STATES::STATE_INQUEUE_PARENTHESIS:
+        {
+            return tr("(in queue)");
+        }
+        case TRANSFER_STATES::STATE_RETRY:
+        {
+            return tr("Retry");
+        }
+        case TRANSFER_STATES::STATE_OUT_OF_STORAGE_SPACE:
+        {
+            return tr("Out of storage space");
+        }
+        case TRANSFER_STATES::STATE_OUT_OF_TRANSFER_QUOTA:
+        {
+            return tr("Out of transfer quota");
+        }
+    }
+}
+
+void TransferBaseDelegateWidget::changeEvent(QEvent* event)
+{
+    if(event->type() == QEvent::LanguageChange)
+    {
+        //Reset to allow the delegate to repaint all items
+        mPreviousState = TransferData::TransferState::TRANSFER_NONE;
+    }
+
+    QWidget::changeEvent(event);
 }

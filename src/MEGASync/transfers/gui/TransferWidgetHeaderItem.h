@@ -47,6 +47,7 @@ private:
     void updateChevronIcon();
     void turnOffSiblings();
     bool isTurnedOff();
+    void updateElidedText();
 };
 
 #endif // TRANSFERWIDGETHEADERITEM_H

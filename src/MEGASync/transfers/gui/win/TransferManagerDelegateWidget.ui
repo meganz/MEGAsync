@@ -56,12 +56,6 @@ TransferManagerDelegateWidget
 	margin-right: 24px;
 }
 
-#sStatus, #sStatus QWidget
-{
-    padding: 0;
-    margin: 0;
-}
-
 #tFileType
 {
     qProperty-iconSize: 48px;
@@ -140,7 +134,7 @@ QProgressBar::chunk
     max-height: 63px;
 }
 
-#lItemStatus, #lItemQueued, #lItemPaused, #lRetryMsg
+#pRetry, #pQueued, #pPausedQueued, #pPaused, #pFailed, #pActive
 {
 	width: 125px;
     min-width: 125px;
@@ -200,6 +194,8 @@ QProgressBar::chunk
     color: #333333;
     font-size: 12px;
     font-weight: bold;
+    padding-left: 3px;;
+    padding-right: 3px;
 }
 
 #tPauseResumeTransfer, #tCancelClearTransfer
@@ -584,7 +580,7 @@ QProgressBar::chunk
           <property name="bottomMargin">
            <number>12</number>
           </property>
-          <item alignment="Qt::AlignRight|Qt::AlignVCenter">
+          <item alignment="Qt::AlignVCenter">
            <widget class="QLabel" name="lDone">
             <property name="minimumSize">
              <size>
@@ -603,7 +599,7 @@ QProgressBar::chunk
             </property>
            </widget>
           </item>
-          <item alignment="Qt::AlignLeft|Qt::AlignVCenter">
+          <item alignment="Qt::AlignVCenter">
            <widget class="QLabel" name="lTotal">
             <property name="minimumSize">
              <size>
@@ -639,7 +635,7 @@ QProgressBar::chunk
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="bItemSpeed">
+        <widget class="QWidget" name="cSpeedITem" native="true">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
            <horstretch>0</horstretch>
@@ -658,15 +654,54 @@ QProgressBar::chunk
            <height>63</height>
           </size>
          </property>
-         <property name="text">
-          <string/>
-         </property>
-         <property name="iconSize">
-          <size>
-           <width>16</width>
-           <height>16</height>
-          </size>
-         </property>
+         <layout class="QHBoxLayout" name="horizontalLayout_6">
+          <property name="spacing">
+           <number>0</number>
+          </property>
+          <property name="leftMargin">
+           <number>0</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>10</number>
+          </property>
+          <property name="bottomMargin">
+           <number>0</number>
+          </property>
+          <item>
+           <widget class="QPushButton" name="bItemSpeed">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>16</width>
+              <height>16</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+         </layout>
         </widget>
        </item>
        <item>
@@ -687,84 +722,9 @@ QProgressBar::chunk
           <number>4</number>
          </property>
          <widget class="QWidget" name="pActive">
-          <widget class="QLabel" name="lItemStatus">
-           <property name="geometry">
-            <rect>
-             <x>0</x>
-             <y>0</y>
-             <width>125</width>
-             <height>63</height>
-            </rect>
-           </property>
-           <property name="wordWrap">
-            <bool>true</bool>
-           </property>
-          </widget>
-         </widget>
-         <widget class="QWidget" name="pQueued">
-          <widget class="QLabel" name="lItemQueued">
-           <property name="geometry">
-            <rect>
-             <x>0</x>
-             <y>0</y>
-             <width>125</width>
-             <height>63</height>
-            </rect>
-           </property>
-           <property name="text">
-            <string notr="true"/>
-           </property>
-          </widget>
-         </widget>
-         <widget class="QWidget" name="pRetry">
-          <widget class="QLabel" name="lRetryMsg">
-           <property name="geometry">
-            <rect>
-             <x>0</x>
-             <y>0</y>
-             <width>125</width>
-             <height>63</height>
-            </rect>
-           </property>
-           <property name="minimumSize">
-            <size>
-             <width>125</width>
-             <height>63</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>125</width>
-             <height>63</height>
-            </size>
-           </property>
-           <property name="text">
-            <string/>
-           </property>
-           <property name="wordWrap">
-            <bool>true</bool>
-           </property>
-          </widget>
-         </widget>
-         <widget class="QWidget" name="pPaused">
-          <widget class="QLabel" name="lItemPaused">
-           <property name="geometry">
-            <rect>
-             <x>0</x>
-             <y>0</y>
-             <width>125</width>
-             <height>63</height>
-            </rect>
-           </property>
-           <property name="text">
-            <string notr="true"/>
-           </property>
-          </widget>
-         </widget>
-         <widget class="QWidget" name="pPausedQueued">
-          <layout class="QHBoxLayout" name="horizontalLayout_3">
+          <layout class="QHBoxLayout" name="horizontalLayout_7">
            <property name="spacing">
-            <number>5</number>
+            <number>0</number>
            </property>
            <property name="leftMargin">
             <number>0</number>
@@ -773,13 +733,65 @@ QProgressBar::chunk
             <number>0</number>
            </property>
            <property name="rightMargin">
-            <number>0</number>
+            <number>10</number>
            </property>
            <property name="bottomMargin">
             <number>0</number>
            </property>
-           <item alignment="Qt::AlignLeft">
-            <widget class="QLabel" name="lItemPausedQueued_1">
+           <item>
+            <widget class="QLabel" name="lItemStatus">
+             <property name="wordWrap">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+         <widget class="QWidget" name="pQueued">
+          <layout class="QHBoxLayout" name="horizontalLayout_10">
+           <property name="spacing">
+            <number>0</number>
+           </property>
+           <property name="leftMargin">
+            <number>0</number>
+           </property>
+           <property name="topMargin">
+            <number>0</number>
+           </property>
+           <property name="rightMargin">
+            <number>10</number>
+           </property>
+           <property name="bottomMargin">
+            <number>0</number>
+           </property>
+           <item>
+            <widget class="QLabel" name="lItemQueued">
+             <property name="text">
+              <string notr="true"/>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+         <widget class="QWidget" name="pRetry">
+          <layout class="QHBoxLayout" name="horizontalLayout_11">
+           <property name="spacing">
+            <number>0</number>
+           </property>
+           <property name="leftMargin">
+            <number>0</number>
+           </property>
+           <property name="topMargin">
+            <number>0</number>
+           </property>
+           <property name="rightMargin">
+            <number>10</number>
+           </property>
+           <property name="bottomMargin">
+            <number>0</number>
+           </property>
+           <item>
+            <widget class="QLabel" name="lRetryMsg">
              <property name="minimumSize">
               <size>
                <width>0</width>
@@ -793,36 +805,19 @@ QProgressBar::chunk
               </size>
              </property>
              <property name="text">
-              <string notr="true"/>
+              <string/>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
              </property>
             </widget>
-           </item>
-           <item alignment="Qt::AlignLeft">
-            <widget class="QLabel" name="lItemPausedQueued_2">
-             <property name="text">
-              <string notr="true"/>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <spacer name="horizontalSpacer_4">
-             <property name="orientation">
-              <enum>Qt::Horizontal</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>40</width>
-               <height>20</height>
-              </size>
-             </property>
-            </spacer>
            </item>
           </layout>
          </widget>
-         <widget class="QWidget" name="pFailed">
-          <layout class="QHBoxLayout" name="pFailedLayout" stretch="0,1,0">
+         <widget class="QWidget" name="pPaused">
+          <layout class="QHBoxLayout" name="horizontalLayout_8">
            <property name="spacing">
-            <number>8</number>
+            <number>0</number>
            </property>
            <property name="leftMargin">
             <number>0</number>
@@ -831,59 +826,217 @@ QProgressBar::chunk
             <number>0</number>
            </property>
            <property name="rightMargin">
-            <number>0</number>
+            <number>10</number>
            </property>
            <property name="bottomMargin">
             <number>0</number>
            </property>
            <item>
-            <widget class="QLabel" name="lItemFailed">
-             <property name="minimumSize">
-              <size>
-               <width>0</width>
-               <height>63</height>
-              </size>
-             </property>
-             <property name="maximumSize">
-              <size>
-               <width>16777215</width>
-               <height>63</height>
-              </size>
-             </property>
+            <widget class="QLabel" name="lItemPaused">
              <property name="text">
               <string notr="true"/>
              </property>
             </widget>
            </item>
+          </layout>
+         </widget>
+         <widget class="QWidget" name="pPausedQueued">
+          <layout class="QHBoxLayout" name="horizontalLayout_3" stretch="1,0">
+           <property name="spacing">
+            <number>0</number>
+           </property>
+           <property name="leftMargin">
+            <number>0</number>
+           </property>
+           <property name="topMargin">
+            <number>0</number>
+           </property>
+           <property name="rightMargin">
+            <number>10</number>
+           </property>
+           <property name="bottomMargin">
+            <number>0</number>
+           </property>
            <item>
-            <widget class="QToolButton" name="tItemRetry">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
+            <widget class="QWidget" name="cPausedQueued" native="true">
+             <layout class="QHBoxLayout" name="horizontalLayout_9">
+              <property name="spacing">
+               <number>5</number>
+              </property>
+              <property name="leftMargin">
+               <number>0</number>
+              </property>
+              <property name="topMargin">
+               <number>0</number>
+              </property>
+              <property name="rightMargin">
+               <number>0</number>
+              </property>
+              <property name="bottomMargin">
+               <number>0</number>
+              </property>
+              <item>
+               <widget class="QLabel" name="lItemPausedQueued_1">
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>16777215</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string notr="true"/>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="lItemPausedQueued_2">
+                <property name="text">
+                 <string notr="true"/>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <spacer name="horizontalSpacer_4">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>88</width>
+                  <height>0</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item>
+            <spacer name="horizontalSpacer_7">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
              </property>
-             <property name="minimumSize">
-              <size>
-               <width>50</width>
-               <height>24</height>
-              </size>
-             </property>
-             <property name="maximumSize">
-              <size>
-               <width>50</width>
-               <height>24</height>
-              </size>
-             </property>
-             <property name="text">
-              <string notr="true"/>
-             </property>
-             <property name="iconSize">
+             <property name="sizeHint" stdset="0">
               <size>
                <width>0</width>
                <height>0</height>
               </size>
              </property>
+            </spacer>
+           </item>
+          </layout>
+         </widget>
+         <widget class="QWidget" name="pFailed">
+          <layout class="QHBoxLayout" name="pFailedLayout" stretch="1,0">
+           <property name="spacing">
+            <number>0</number>
+           </property>
+           <property name="leftMargin">
+            <number>0</number>
+           </property>
+           <property name="topMargin">
+            <number>0</number>
+           </property>
+           <property name="rightMargin">
+            <number>10</number>
+           </property>
+           <property name="bottomMargin">
+            <number>0</number>
+           </property>
+           <item>
+            <widget class="QWidget" name="cFailed" native="true">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <layout class="QHBoxLayout" name="horizontalLayout_5">
+              <property name="spacing">
+               <number>5</number>
+              </property>
+              <property name="leftMargin">
+               <number>0</number>
+              </property>
+              <property name="topMargin">
+               <number>0</number>
+              </property>
+              <property name="rightMargin">
+               <number>0</number>
+              </property>
+              <property name="bottomMargin">
+               <number>0</number>
+              </property>
+              <item>
+               <widget class="QLabel" name="lItemFailed">
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>63</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>16777215</width>
+                  <height>63</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string notr="true"/>
+                </property>
+               </widget>
+              </item>
+              <item>
+            <widget class="QToolButton" name="tItemRetry">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>24</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>16777215</width>
+                  <height>24</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string notr="true"/>
+                </property>
+                <property name="iconSize">
+                 <size>
+                  <width>0</width>
+                  <height>0</height>
+                 </size>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <spacer name="horizontalSpacer_6">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>0</width>
+                  <height>0</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+             </layout>
             </widget>
            </item>
            <item>

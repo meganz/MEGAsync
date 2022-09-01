@@ -68,6 +68,9 @@ public:
     static QString cancelSingleActionText();
     static QString clearSingleActionText();
 
+    static QMap<QMessageBox::StandardButton, QString> getCancelDialogButtons();
+    static QMap<QMessageBox::StandardButton, QString> getClearDialogButtons();
+
 public slots:
     void onPauseResumeSelection(bool pauseState);
     void onCancelVisibleTransfers();

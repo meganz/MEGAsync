@@ -123,9 +123,15 @@ QString MegaTransferView::cancelAndClearActionText(int count)
     return tr("Cancel and clear transfer" , "", count);
 }
 
-static QMap<QMessageBox::StandardButton, QString> CANCEL_BUTTONS_TEXT{{QMessageBox::Yes, QString::fromLatin1(QT_TR_NOOP("Yes, cancel"))}, {QMessageBox::No, QString::fromLatin1(QT_TR_NOOP("No, continue"))}};
-static QMap<QMessageBox::StandardButton, QString> CLEAR_BUTTONS_TEXT{{QMessageBox::Yes, QString::fromLatin1(QT_TR_NOOP("Yes, clear"))}, {QMessageBox::No, QString::fromLatin1(QT_TR_NOOP("No, continue"))}};
+QMap<QMessageBox::StandardButton, QString> MegaTransferView::getCancelDialogButtons()
+{
+    return  QMap<QMessageBox::StandardButton, QString>{{QMessageBox::Yes, tr("Yes, cancel")}, {QMessageBox::No, tr("No, continue")}};
+}
 
+QMap<QMessageBox::StandardButton, QString> MegaTransferView::getClearDialogButtons()
+{
+    return  QMap<QMessageBox::StandardButton, QString>{{QMessageBox::Yes,tr("Yes, clear")}, {QMessageBox::No, tr("No, continue")}};
+}
 
 //Mega transfer view
 MegaTransferView::MegaTransferView(QWidget* parent) :
@@ -212,7 +218,7 @@ MegaTransferView::SelectedIndexesInfo MegaTransferView::getVisibleCancelOrClearI
 
     if(info.isAnyCancellable)
     {
-        info.buttonsText = CANCEL_BUTTONS_TEXT;
+        info.buttonsText = getCancelDialogButtons();
 
         if(!isAnySync)
         {
@@ -240,7 +246,7 @@ MegaTransferView::SelectedIndexesInfo MegaTransferView::getVisibleCancelOrClearI
     else
     {
         info.actionText = clearCompletedAskActionText();
-        info.buttonsText = CLEAR_BUTTONS_TEXT;
+        info.buttonsText = getClearDialogButtons();
     }
 
     return info;
@@ -288,7 +294,7 @@ MegaTransferView::SelectedIndexesInfo MegaTransferView::getSelectedCancelOrClear
 
     if(indexes.size() > 1)
     {
-        info.buttonsText = CANCEL_BUTTONS_TEXT;
+        info.buttonsText = getCancelDialogButtons();
         if(isAnyActiveSync)
         {
             if(isAnyCompleted)
@@ -312,7 +318,7 @@ MegaTransferView::SelectedIndexesInfo MegaTransferView::getSelectedCancelOrClear
                 else
                 {
                     info.actionText = clearSelectedCompletedAskActionText();
-                    info.buttonsText = CLEAR_BUTTONS_TEXT;
+                    info.buttonsText = getClearDialogButtons();
                 }
             }
             else if(info.isAnyCancellable)
@@ -416,7 +422,7 @@ bool MegaTransferView::onCancelAllTransfers()
 
     if (QMegaMessageBox::warning(this, QString::fromUtf8("MEGAsync"),
                              proxy->isAnySync() ?  cancelWithSyncAskActionText() : cancelAllAskActionText(),
-                             QMessageBox::Yes | QMessageBox::No, QMessageBox::No, CANCEL_BUTTONS_TEXT)
+                             QMessageBox::Yes | QMessageBox::No, QMessageBox::No, getCancelDialogButtons())
             == QMessageBox::Yes
             && dialog)
     {
@@ -433,7 +439,7 @@ void MegaTransferView::onClearAllTransfers()
 
     if (QMegaMessageBox::warning(this, QString::fromUtf8("MEGAsync"),
                              clearAllCompletedAskActionText(),
-                             QMessageBox::Yes | QMessageBox::No, QMessageBox::No, CLEAR_BUTTONS_TEXT)
+                             QMessageBox::Yes | QMessageBox::No, QMessageBox::No, getClearDialogButtons())
             == QMessageBox::Yes
             && dialog)
     {
@@ -471,7 +477,7 @@ void MegaTransferView::onClearVisibleTransfers()
 
     if (QMegaMessageBox::warning(this, QString::fromUtf8("MEGAsync"),
                              clearCompletedAskActionText(),
-                             QMessageBox::Yes | QMessageBox::No, QMessageBox::No, CLEAR_BUTTONS_TEXT)
+                             QMessageBox::Yes | QMessageBox::No, QMessageBox::No, getClearDialogButtons())
             == QMessageBox::Yes
             && dialog)
     {
@@ -807,6 +813,11 @@ void MegaTransferView::mouseMoveEvent(QMouseEvent *event)
 
 void MegaTransferView::changeEvent(QEvent* event)
 {
+    if(event->type() == QEvent::LanguageChange)
+    {
+        viewport()->update();
+    }
+
     QTreeView::changeEvent(event);
 }
 
