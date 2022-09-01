@@ -556,6 +556,8 @@ protected:
     ScanStageController scanStageController;
     DialogGeometryRetainer<TransferManager> mTransferManagerGeometryRetainer;
 
+    bool mDisableGfx;
+
 private:
 #ifdef _WIN32
     std::shared_ptr<ShellNotifier> mShellNotifier;
