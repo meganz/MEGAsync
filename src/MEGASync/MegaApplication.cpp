@@ -13,6 +13,7 @@
 #include "ConnectivityChecker.h"
 #include "TransferMetadata.h"
 #include "DuplicatedNodeDialogs/DuplicatedNodeDialog.h"
+#include "UserAttributesRequests/Avatar.h"
 
 #include <QTranslator>
 #include <QClipboard>
@@ -1175,17 +1176,15 @@ void MegaApplication::requestUserData()
 
     mThreadPool->push([=]()
     {//thread pool function
-        const char *email = megaApi->getMyEmail();
+        std::shared_ptr<char[]> email(megaApi->getMyEmail());
 
         Utilities::queueFunctionInAppThread([=]()
         {//queued function
             if (email)
             {
-                megaApi->getUserAvatar(Utilities::getAvatarPath(QString::fromUtf8(email)).toUtf8().constData());
-                delete [] email;
+                UserAttributes::Avatar::requestAvatar(email.get());
             }
         });//end of queued function
-
     });// end of thread pool function
 }
 
@@ -8258,16 +8257,6 @@ void MegaApplication::onUsersUpdate(MegaApi *, MegaUserList *userList)
             if (user->hasChanged(MegaUser::CHANGE_TYPE_LASTNAME))
             {
                 megaApi->getUserAttribute(MegaApi::USER_ATTR_LASTNAME);
-            }
-
-            if (user->hasChanged(MegaUser::CHANGE_TYPE_AVATAR))
-            {
-                const char* email = megaApi->getMyEmail();
-                if (email)
-                {
-                    megaApi->getUserAvatar(Utilities::getAvatarPath(QString::fromUtf8(email)).toUtf8().constData());
-                    delete [] email;
-                }
             }
 
             if (user->hasChanged(MegaUser::CHANGE_TYPE_DISABLE_VERSIONS))
