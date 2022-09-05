@@ -38,7 +38,14 @@ void FileIssueHeader::refreshCaseUi()
 {
     setLeftTitleText(tr("Can´t sync"));
     addFileName();
-    setTitleDescriptionText(tr("A single file had an issue that needs a user decision to solve"));
+    if(getData().consultData()->hasFiles() > 0)
+    {
+        setTitleDescriptionText(tr("A single file had an issue that needs a user decision to solve"));
+    }
+    else if(getData().consultData()->hasFolders() > 0)
+    {
+        setTitleDescriptionText(tr("A single folder had an issue that needs a user decision to solve."));
+    }
 }
 
 //Local folder not scannable

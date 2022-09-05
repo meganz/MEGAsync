@@ -1221,5 +1221,8 @@
         <file>images/transfer_manager/transfers_actions/lists_minus_ico_hover.png</file>
         <file>images/transfer_manager/transfers_actions/lists_minus_ico_hover@2x.png</file>
         <file>images/transfer_manager/transfers_actions/lists_minus_ico_hover@3x.png</file>
+        <file>images/StalledIssues/megaignore.png</file>
+        <file>images/StalledIssues/megaignore@2x.png</file>
+        <file>images/StalledIssues/megaignore@3x.png</file>
     </qresource>
 </RCC>

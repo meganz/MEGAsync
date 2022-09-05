@@ -1621,6 +1621,13 @@ void SettingsDialog::onCellClicked(int row, int column)
                                               QIcon(QString::fromUtf8("://images/ico_open_MEGA.png"))));
     connect(showRemoteAction, &MenuItemAction::triggered,
             this, &SettingsDialog::showInMegaClicked);
+
+    // Open megaIgnore
+    auto openIgnoreAction (new MenuItemAction(tr("Create exclusions"),
+                                              QIcon(QString::fromUtf8("://images/StalledIssues/megaignore.png"))));
+    connect(openIgnoreAction, &MenuItemAction::triggered,
+            this, &SettingsDialog::openMegaIgnore);
+
     // Delete Sync action
     auto delAction (new MenuItemAction(tr("Remove synced folder"),
                                        QIcon(QString::fromUtf8("://images/ico_Delete.png"))));
@@ -1651,6 +1658,8 @@ void SettingsDialog::onCellClicked(int row, int column)
 
     menu->addAction(showLocalAction);
     menu->addAction(showRemoteAction);
+    menu->addSeparator();
+    menu->addAction(openIgnoreAction);
     menu->addSeparator();
     menu->addAction(delAction);
 
@@ -1763,6 +1772,16 @@ void SettingsDialog::showInMegaClicked()
     Model::instance()->updateMegaFolder(np ? QString::fromUtf8(np.get())
                                            : QString(),
                                         syncSetting);
+}
+
+void SettingsDialog::openMegaIgnore()
+{
+    auto syncSetting = Model::instance()->getSyncSetting(mSelectedSyncRow);
+    if(syncSetting)
+    {
+        QString ignore(syncSetting->getLocalFolder() + QDir::separator() + QString::fromUtf8(".megaignore"));
+        QtConcurrent::run(QDesktopServices::openUrl, QUrl::fromLocalFile(ignore));
+    }
 }
 
 void SettingsDialog::onDeleteSync()

@@ -138,6 +138,7 @@ private slots:
     void onCellClicked(int row, int column);
     void showInFolderClicked();
     void showInMegaClicked();
+    void openMegaIgnore();
     void onDeleteSync();
 
     void setSyncToRun();

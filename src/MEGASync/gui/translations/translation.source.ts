@@ -648,6 +648,28 @@ Please enter a different name to identify this synced folder:</source>
     </message>
 </context>
 <context>
+    <name>CannotCreateFolderHeader</name>
+    <message>
+        <source>Cannot create</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Filesystem error preventing folder access.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>CannotPerformDeletionHeader</name>
+    <message>
+        <source>Cannot perform deletion</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Filesystem error preventing folder access.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ChangeLogDialog</name>
     <message>
         <source>Terms of Service</source>
@@ -793,6 +815,39 @@ Please enter a different name to identify this synced folder:</source>
         <translatorcomment>Checkbox to let the user attach diagnostic log files for analysis when an application crash occurs. Keep [Br] place holder.</translatorcomment>
         <translation>Attach diagnostic log files to assist with debugging.
 In some cases they may contain details about your data, such as file or folder names.</translation>
+    </message>
+</context>
+<context>
+    <name>DefaultHeader</name>
+    <message>
+        <source>Error detected with</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reason not found.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>DeleteOrMoveWaitingOnScanningHeader</name>
+    <message>
+        <source>Can´t find</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Waiting to finish scan to see if the file was moved or deleted.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>DeleteWaitingOnMovesHeader</name>
+    <message>
+        <source>Waiting to move</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Waiting for other processes to complete.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1083,6 +1138,21 @@ In some cases they may contain details about your data, such as file or folder n
     </message>
 </context>
 <context>
+    <name>DownloadIssueHeader</name>
+    <message>
+        <source>Can´t download</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>to the selected location</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot reach the destination folder.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>DuplicatedNodeDialog</name>
     <message numerus="yes">
         <source>Apply this option on the next %1 conflict</source>
@@ -1194,6 +1264,21 @@ In some cases they may contain details about your data, such as file or folder n
         <source>loading size…</source>
         <translatorcomment>Text shown while the local file/folder size is calculated</translatorcomment>
         <translation>loading size…</translation>
+    </message>
+</context>
+<context>
+    <name>FileIssueHeader</name>
+    <message>
+        <source>Can´t sync</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A single file had an issue that needs a user decision to solve</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A single folder had an issue that needs a user decision to solve.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1324,6 +1409,17 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <source>Select</source>
         <translatorcomment>Button label to select the folders (local and remote) for a synchronization (String as short as possible) (Win and Linux)</translatorcomment>
         <translation>Select</translation>
+    </message>
+</context>
+<context>
+    <name>FolderMatchedAgainstFileHeader</name>
+    <message>
+        <source>Cannot sync</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot sync folders against files.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1585,11 +1681,6 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation>Settings</translation>
     </message>
     <message>
-        <source>Blocked file: %1</source>
-        <translatorcomment>Label to show the blocked file that has stopped the synchronization engine</translatorcomment>
-        <translation>Blocked file: %1</translation>
-    </message>
-    <message>
         <source>Upgrade to PRO</source>
         <translatorcomment>Button label to start the process of upgrading an account (String as short as possible)</translatorcomment>
         <translation>Upgrade account</translation>
@@ -1603,10 +1694,6 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <source>Show MEGAsync options</source>
         <translatorcomment>Tooltip for the button that opens MEGAsync options menu</translatorcomment>
         <translation>Show MEGAsync options</translation>
-    </message>
-    <message>
-        <source>The process is taking longer than expected. Please wait...</source>
-        <translation>This process is taking longer than expected. Please wait.</translation>
     </message>
     <message>
         <source>Upload to MEGA now</source>
@@ -1918,6 +2005,57 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <source>Install just for me</source>
         <translatorcomment>Label to indicate that MEGAsync installation on Windows is just for the current user.</translatorcomment>
         <translation>Install just for me</translation>
+    </message>
+</context>
+<context>
+    <name>LocalAndRemoteChangedSinceLastSyncedStateHeader</name>
+    <message>
+        <source>Can´t sync</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This file has changed since it it was last synced.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>LocalAndRemoteDifferentWidget</name>
+    <message>
+        <source>Please select which version you want to keep</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>LocalAndRemoteNameConflicts</name>
+    <message>
+        <source>Form</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Renaming or removing files can resolve this issue,
+or click the Folders below to make adjustments in the local filesystem or in MEGA</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Renaming or removing folders can resolve this issue,
+or click the Folders below to make adjustments in the local filesystem or in MEGA</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Renaming or removing files or folders can resolve this issue,
+or click the Folders below to make adjustments in the local filesystem or in MEGA</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>LocalAndRemotePreviouslyUnsyncedDifferHeader</name>
+    <message>
+        <source>Can´t sync</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This file has conflicting copies</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2440,11 +2578,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>Your sync “%1” has been disabled. Reason: %2</translation>
     </message>
     <message>
-        <source>Your sync &quot;%1&quot; has been enabled</source>
-        <translatorcomment>Notificaton message shown when %1 sync has been enable. %1 will be replaced with sync name at runtime.</translatorcomment>
-        <translation>Your sync “%1” has been enabled</translation>
-    </message>
-    <message>
         <source>MEGAsync will continue to work, however updates will no longer be supported for versions prior to OS X Yosemite soon.</source>
         <translatorcomment>Informative message box shown if user is running an old OSX version (previous than Yosemite), informing that app updates for such systems will cease soon.</translatorcomment>
         <translation>MEGAsync will continue to work, however updates will no longer be supported for versions prior to OS X Yosemite soon.</translation>
@@ -2563,6 +2696,42 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Stay in app</source>
         <translatorcomment>One of the messagebox options: Keep the app open and continue with the active transfers</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Stalled</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Your sync &quot;%1&quot; has been temporarily suspended</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Your sync &quot;%1&quot; has been suspended because the local folder doesn&apos;t exist</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Your sync &quot;%1&quot; has been suspended because the remote folder doesn&apos;t exist</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Your sync &quot;%1&quot; has been suspended because the synchronization of VirtualBox shared folders is not supported due to deficiencies in that filesystem.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Your sync &quot;%1&quot; has been suspended because the remote folder is in the rubbish bin</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Your sync &quot;%1&quot; has been suspended. The remote folder (or part of it) doesn&apos;t have full access</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Your sync &quot;%1&quot; has been suspended because the local folder has changed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Your sync &quot;%1&quot; has been suspended. Reason: %2</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3120,29 +3289,78 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
 </context>
 <context>
-    <name>MegaUploader</name>
+    <name>MoveOrRenameCannotOccurHeader</name>
     <message>
-        <source>Upload failed</source>
-        <translatorcomment>Informative message shown to the user when an upload has failed</translatorcomment>
-        <translation>Upload failed</translation>
+        <source>Cannot move or rename</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A move or rename was detected in MEGA, but could not be replicated in the local filesystem.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A move or rename was detected in the local filesystem, but could not be replicated in MEGA.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
-    <name>Model</name>
+    <name>NameConflict</name>
     <message>
-        <source>MEGAsync</source>
-        <translatorcomment>Label used for title of a system message box.</translatorcomment>
-        <translation>MEGAsync</translation>
+        <source>Removed</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>You are syncing a local folder formatted with a FAT filesystem. That filesystem has deficiencies managing big files and modification times that can cause synchronization problems (e.g. when daylight saving changes), so it&apos;s strongly recommended that you only sync folders formatted with more reliable filesystems like NTFS (more information [A]here[/A]).</source>
-        <translatorcomment>Informative message shown when a user is trying to sync using a FAT filesystem.</translatorcomment>
-        <translation>You are syncing a local folder formatted with a FAT filesystem. That filesystem has deficiencies managing big files and modification times that can cause synchronization problems (e.g. when daylight saving changes), so it’s strongly recommended that you only sync folders formatted with more reliable filesystems like NTFS (more information [A]here[/A]).</translation>
+        <source>Renamed to &quot;%1&quot;</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>You are syncing a local folder shared with VMWare. Those folders do not support filesystem notifications so MEGAsync will have to be continuously scanning to detect changes in your files and folders. Please use a different folder if possible to reduce the CPU usage.</source>
-        <translatorcomment>Informative message shown when a user is trying to sync using a local folder shared with VMWare third party app.</translatorcomment>
-        <translation>You are syncing a local folder shared with VMWare. Those folders do not support filesystem notifications so MEGAsync will have to be continuously scanning to detect changes in your files and folders. Please use a different folder if possible to reduce the CPU usage.</translation>
+        <source>Are you sure you want to remove the %1 %2 %3?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>remote</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>local</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>folder</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>NameConflictTitle</name>
+    <message>
+        <source>Rename</source>
+        <translation type="unfinished">Rename</translation>
+    </message>
+</context>
+<context>
+    <name>NameConflictsHeader</name>
+    <message>
+        <source>Name Conflicts:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>These files and folders contain multiple names on one side, that would all become the same single name on the other side of the sync.
+This may be due to syncing to case insensitive local filesystems, or the effects of escaped characters.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>These files contain multiple names on one side, that would all become the same single name on the other side of the sync.
+This may be due to syncing to case insensitive local filesystems, or the effects of escaped characters.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>These folders contain multiple names on one side, that would all become the same single name on the other side of the sync.
+This may be due to syncing to case insensitive local filesystems, or the effects of escaped characters.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3722,17 +3940,14 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Full redesign of remote file picker.
+        <source>- Added support to stream file links from a folder link.
 - Fixed translation issues.
+- Improved the user experience.
+- Added a new notifications panel in the settings dialog.
 - Other minor UI fixes and adjustments.
 - Fixed detected crashes on Windows, Linux and macOS.
 </source>
-        <translatorcomment>Changelog for version 4.6.7</translatorcomment>
-        <translation>- Full redesign of remote file picker.
-- Fixed translation issues.
-- Other minor UI fixes and adjustments.
-- Fixed detected crashes on Windows, Linux and macOS.
-</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4345,16 +4560,6 @@ Do you want to delete it anyway?</translation>
         <translation>Add</translation>
     </message>
     <message>
-        <source>Local Folder</source>
-        <translatorcomment>Label to indicate the local folder column for sync table. String as short as possible.</translatorcomment>
-        <translation>Local Folder</translation>
-    </message>
-    <message>
-        <source>MEGA folder</source>
-        <translatorcomment>Label to indicate the MEGA folder column for sync table. String as short as possible.</translatorcomment>
-        <translation>MEGA folder</translation>
-    </message>
-    <message>
         <source>Auto</source>
         <translatorcomment>Label to indicate that management of rate upload limit is automatic.</translatorcomment>
         <translation>Auto</translation>
@@ -4385,18 +4590,6 @@ Do you want to delete it anyway?</translation>
         <translation>Clear</translation>
     </message>
     <message>
-        <source>Full scan</source>
-        <translatorcomment>Title of the message dialog for Full scan operation.</translatorcomment>
-        <translation>Full scan</translation>
-    </message>
-    <message>
-        <source>MEGAsync will perform a full scan of your synced folders when it starts.
-
-Do you want to restart MEGAsync now?</source>
-        <translatorcomment>Message displayed asking for confirmation to the user to restart the application for a Full scan operation.</translatorcomment>
-        <translation>MEGAsync will perform a full scan of your synced folders when it starts. Do you want to restart MEGAsync now?</translation>
-    </message>
-    <message>
         <source>Choose</source>
         <translatorcomment>Button label to choose a local/remote folder for downloads and uploads.</translatorcomment>
         <translation>Choose</translation>
@@ -4415,11 +4608,6 @@ Do you want to restart MEGAsync now?</source>
         <source>Downloads:</source>
         <translatorcomment>Label to indicate the default folder for downloads.</translatorcomment>
         <translation>Downloads:</translation>
-    </message>
-    <message>
-        <source>Enable / disable</source>
-        <translatorcomment>Tooltip for checkbox to let the user enable/disable a specific synchronization.</translatorcomment>
-        <translation>Enable / disable</translation>
     </message>
     <message>
         <source>You don&apos;t have write permissions in this local folder.</source>
@@ -4465,11 +4653,6 @@ Do you want to restart MEGAsync now?</source>
         <source>Backups of the previous versions of your synced files in MEGA will be permanently deleted. Please, check your [A] folder in the Rubbish Bin of your MEGA account to see if you need to rescue something before continuing.</source>
         <translatorcomment>Message shown to inform the user about the deletion of the remote cache and its consequences. Keep [A] substitution placeholder.</translatorcomment>
         <translation>Backups of the previous versions of your synced files in MEGA will be permanently deleted. Please check your [A] folder in the Rubbish Bin of your MEGA account to see if you need to rescue something before continuing.</translation>
-    </message>
-    <message>
-        <source>Do you want to restart MEGAsync now?</source>
-        <translatorcomment>Message shown when clicking on restart MEGAsync button in Settings.</translatorcomment>
-        <translation>Do you want to restart MEGAsync now?</translation>
     </message>
     <message>
         <source>Permissions</source>
@@ -4847,16 +5030,6 @@ Do you want to restart MEGAsync now?</source>
         <translation>Remove synced folder</translation>
     </message>
     <message>
-        <source>Saving Sync settings</source>
-        <translatorcomment>Not used currently. Might get removed in a future refactoring.</translatorcomment>
-        <translation>Saving Sync settings</translation>
-    </message>
-    <message>
-        <source>Restart MEGAsync</source>
-        <translatorcomment>Title text of dialog shown when clicking on Restart application button. Keep as short as possible.</translatorcomment>
-        <translation>Restart MEGAsync</translation>
-    </message>
-    <message>
         <source>No limit</source>
         <translatorcomment>Text label shown when there is no limit set for Upload and Download rate limits in Network pane.</translatorcomment>
         <translation>No limit</translation>
@@ -4885,11 +5058,6 @@ Do you want to restart MEGAsync now?</source>
         <source>Issue report</source>
         <translatorcomment>Section title label for Issue reporting in General pane.</translatorcomment>
         <translation>Issue report</translation>
-    </message>
-    <message>
-        <source>MEGA Folder</source>
-        <translatorcomment>Label to indicate the MEGA folder column for sync table. String as short as possible.</translatorcomment>
-        <translation>MEGA Folder</translation>
     </message>
     <message>
         <source>Choose which files or folders you want to exclude from synchronisation.</source>
@@ -4946,6 +5114,58 @@ Do you want to restart MEGAsync now?</source>
             <numerusform>day</numerusform>
             <numerusform>days</numerusform>
         </translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation type="unfinished">Name</translation>
+    </message>
+    <message>
+        <source>Run State</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unexpected error adding sync</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Create exclusions</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Run</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pause</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Suspend</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Disable</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unexpected error running sync</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unexpected error pausing sync</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unexpected error suspending sync</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unexpected error disabling sync</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unexpected error removing sync</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5376,6 +5596,185 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
 </context>
 <context>
+    <name>SomeIssuesOccurredMessage</name>
+    <message>
+        <source>Some issues ocurred.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>View...</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>StalledIssueChooseWidget</name>
+    <message>
+        <source>Choose</source>
+        <translation type="unfinished">Choose</translation>
+    </message>
+    <message>
+        <source>Remote Copy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Local Copy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Chosen</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Moved to bin</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>StalledIssueFilePath</name>
+    <message>
+        <source>move</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>on MEGA:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Local:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>File is being frequently changing.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ignore rules unknown.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hard link detected.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Detected Sym link.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Detected special file.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Different file or folder is already present.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Parent folder does not exist.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Filesystem error during operation.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Name too long for filesystem.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot fingerprint file.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Destination path is in an unresolved area.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>MAC verification failure.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Deleted or moved by user.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Deleted by user.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Move to debris folder failed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ignore file malformed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error Listing folder in filesystem.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error identifying folder content in filesystem.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cloud node undecrypted.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error not detected</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>StalledIssueHeader</name>
+    <message>
+        <source>Ignore</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ignored</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>StalledIssuesDialog</name>
+    <message>
+        <source>Stalled Issues</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sync issues</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>All issues:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Name conflicts:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Item type conflicts:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Other:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Refresh</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation type="unfinished">Close</translation>
+    </message>
+</context>
+<context>
     <name>StatusInfo</name>
     <message>
         <source>Starting</source>
@@ -5537,6 +5936,18 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Off</source>
         <translatorcomment>Unchecked state of a swith button</translatorcomment>
         <translation>Off</translation>
+    </message>
+</context>
+<context>
+    <name>SyncItemExceedsSupoortedTreeDepthHeader</name>
+    <message>
+        <source>Unable to sync</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Target is too deep on your folder structure.
+Please move it to a location that is less than 64 folders deep.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -6186,6 +6597,21 @@ Please delete the folder sync from settings to cancel them.</translation>
         <source>Choose annual billing and get 12 months for the price of 10</source>
         <translatorcomment>Informative label to inform the user about offer purchasing one-year Pro plan within upgrade dialog when user reaches over storage state.</translatorcomment>
         <translation>Choose annual billing and get 12 months for the price of 10</translation>
+    </message>
+</context>
+<context>
+    <name>UploadIssueHeader</name>
+    <message>
+        <source>Can´t upload</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>to the selected location</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot reach the destination folder.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
