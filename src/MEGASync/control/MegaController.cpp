@@ -71,6 +71,36 @@ void Controller::setSyncRunState(mega::MegaSync::SyncRunningState newState, std:
                     }));
 }
 
+QString Controller::getSyncNameFromPath(const QString& path)
+{
+    QDir dir (path);
+    QString syncName;
+
+    // Handle fs root case
+    if (dir.isRoot())
+    {
+        // Cleanup the path (in Windows: get "F:" from "F:\")
+        QString cleanPath (QDir::toNativeSeparators(dir.absolutePath()).remove(QDir::separator()));
+        // Try to get the volume label
+        QStorageInfo storage(dir);
+        QString label (QString::fromUtf8(storage.subvolume()));
+        if (label.isEmpty())
+        {
+            label = storage.name();
+        }
+        // If we have no label, fallback to the cleaned path
+        syncName = label.isEmpty() ? cleanPath
+                                   : QString::fromUtf8("%1 (%2)").arg(label, cleanPath);
+    }
+    else
+    {
+        // Take the folder name as sync name
+        syncName = dir.dirName();
+    }
+
+    return syncName;
+}
+
 Controller *Controller::instance()
 {
     if (!controller)

@@ -1,6 +1,7 @@
 #include "MacXLocalSocket.h"
 #include "MacXLocalSocketPrivate.h"
 #include "megaapi.h"
+#include "MacXFunctions.h"
 #import <Cocoa/Cocoa.h>
 
 using namespace mega;
@@ -86,12 +87,12 @@ qint64 MacXLocalSocket::readCommand(QByteArray *data)
     return data->size();
 }
 
-qint64 MacXLocalSocket::writeData(const char *data, qint64 len)
+bool MacXLocalSocket::writeData(const char *data, qint64 len)
 {
     if (!len)
     {
         MegaApi::log(MegaApi::LOG_LEVEL_WARNING, "Skipping write of zero bytes");
-        return -1;
+        return true;
     }
 
     @try
@@ -99,11 +100,11 @@ qint64 MacXLocalSocket::writeData(const char *data, qint64 len)
         MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Sending data to shell ext: %1")
                      .arg(QString::fromUtf8(data, len)).toUtf8().constData());
         [socketPrivate->extClient send:[NSData dataWithBytes:(const void *)data length:sizeof(unsigned char)*len]];
-        return len;
+        return true;
     }
     @catch(NSException *e)
     {
-        emit disconnected();
-        return -1;
+        MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("writeData to socket failed: %1").arg(fromNSString([e reason])).toUtf8().constData());
+        return false;
     }
 }

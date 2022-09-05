@@ -49,7 +49,7 @@ pdfium/3710
 pdfium-freetype/2-8-73
 
 # dependencies of pdfium
-icu/979a5197b3389cfdf91d0ac5d98b6066ce73fd7a
+icu/cb91b416cb8f85f0a55853baad23fb18d306148a
 lcms/c303dd024e2dc03a0665ddffbb12a1077933e649
 libjpeg-turbo/7375bb408f2278d2f1875c259beef93332697ba7
 openjpeg/7375bb408f2278d2f1875c259beef93332697ba7

@@ -51,7 +51,6 @@ void MacXExtServer::acceptConnection()
         }
 
         connect(client, &MacXLocalSocket::dataReady, this, &MacXExtServer::onClientData);
-        connect(client, &MacXLocalSocket::disconnected, this, &MacXExtServer::onClientDisconnected);
         m_clients.append(client);
 
         // send the list of current synced folders to the new client
@@ -68,7 +67,11 @@ void MacXExtServer::acceptConnection()
 
             QString message = QString::fromUtf8("A:") + syncPath
                     + QChar::fromAscii(':') + syncSetting->name(true);
-            client->writeData(message.toUtf8().constData(), message.length());
+            if(!client->writeData(message.toUtf8().constData(), message.length()))
+            {
+                clientDisconnected(client);
+            }
+
         }        
     }
 }
@@ -96,16 +99,18 @@ void MacXExtServer::onClientData()
         {
             buf.append(':');
             buf.append(response);
-            client->writeData(buf.constData(), buf.size());
+            if(!client->writeData(buf.constData(), buf.size()))
+            {
+                clientDisconnected(client);
+            }
         }
         buf.clear();
         response.clear();
     }
 }
 
-void MacXExtServer::onClientDisconnected()
+void MacXExtServer::clientDisconnected(QPointer<MacXLocalSocket> client)
 {
-    MacXLocalSocket *client = qobject_cast<MacXLocalSocket *>(sender());
     if (!client)
     {
         return;
@@ -302,12 +307,14 @@ bool MacXExtServer::GetAnswerToRequest(const char *buf, QByteArray *response)
 
 void MacXExtServer::doSendToAll(QByteArray str)
 {
-    for (int i = 0; i < m_clients.size(); i++)
+    foreach(auto client, m_clients)
     {
-        MacXLocalSocket *socket = m_clients[i];
-        if (socket)
+        if (client)
         {
-            socket->writeData(str.constData(), str.size());
+            if(!client->writeData(str.constData(), str.size()))
+            {
+                clientDisconnected(client);
+            }
         }
     }
 }

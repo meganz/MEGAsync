@@ -233,7 +233,6 @@ SettingsDialog::SettingsDialog(MegaApplication* app, bool proxyOnly, QWidget* pa
     mApp->attachBandwidthObserver(*this);
     mApp->attachAccountObserver(*this);
 
-    connect(mApp, &MegaApplication::avatarReady, this, &SettingsDialog::setAvatar);
     setAvatar();
 
     connect(mApp, &MegaApplication::storageStateChanged, this, &SettingsDialog::storageStateChanged);
@@ -1335,12 +1334,7 @@ void SettingsDialog::on_bLogout_clicked()
 
 void SettingsDialog::setAvatar()
 {
-    const char* email = mMegaApi->getMyEmail();
-    if (email)
-    {
-        mUi->wAvatar->setUserEmail(email);
-        delete [] email;
-    }
+    mUi->wAvatar->setUserEmail(mPreferences->email().toUtf8().constData());
 }
 
 // Syncs -------------------------------------------------------------------------------------------
