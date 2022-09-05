@@ -2,9 +2,11 @@
 #define USERATTRIBUTESMANAGER_H
 
 #include <QObject>
+#include <QMultiMap>
 
 #include <QTMegaListener.h>
-#include <MegaApplication.h>
+
+#include <memory>
 
 namespace UserAttributes
 {
