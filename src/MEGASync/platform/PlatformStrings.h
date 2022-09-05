@@ -4,8 +4,9 @@
 #include <QObject>
 #include <QString>
 
-class PlatformStrings : public QObject
+class PlatformStrings : QObject
 {
+    Q_OBJECT
 public:
     static QString openSettings();
     static QString syncsDisableWarning();
