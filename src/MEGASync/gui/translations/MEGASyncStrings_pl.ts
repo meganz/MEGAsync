@@ -3126,7 +3126,7 @@ Wybrane niekompletne transfery nie zostaną anulowane. Wszystkie pozostałe wybr
     <message>
         <source>Yes, clear</source>
         <translatorcomment>Dialog button to do the proposed actions (clear the transfers)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Tak, usuń</translation>
     </message>
 </context>
 <context>

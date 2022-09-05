@@ -5616,7 +5616,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Retry</source>
         <translatorcomment>Retry button text</translatorcomment>
-        <translation>Tentar novamente</translation>
+        <translation>Tentar</translation>
     </message>
     <message>
         <source>Out of storage space</source>

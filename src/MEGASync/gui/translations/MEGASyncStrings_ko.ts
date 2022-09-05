@@ -1119,7 +1119,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>The file at this destination will be updated with a new version.</source>
         <translatorcomment>Text explaining the result of the file upload and update action</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>대상 위치 파일이 새 버전으로 교체됩니다.</translation>
     </message>
 </context>
 <context>
@@ -3126,7 +3126,7 @@ Your selected incomplete sync transfers won&apos;t be cancelled.</source>
     <message>
         <source>Yes, clear</source>
         <translatorcomment>Dialog button to do the proposed actions (clear the transfers)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>네, 삭제합니다.</translation>
     </message>
 </context>
 <context>
@@ -3737,13 +3737,13 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <source>Sync transfers cannot be cancelled individually.
 Please delete the folder sync from settings to cancel them.</source>
         <translatorcomment>Explains that the sync transfers cannot be cancelled individually. (for windows and linux)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>동기화 전송은 취소할 수 없습니다. 동기화를 제거하려면, 데스크톱 앱의 설정으로 가서 동기화된 폴더를 삭제하세요.</translation>
     </message>
     <message>
         <source>Sync transfers cannot be cancelled individually.
 Please delete the folder sync from preferences to cancel them.</source>
         <translatorcomment>Explains that the sync transfers cannot be cancelled individually. (for macOS)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>동기화 전송은 취소할 수 없습니다. 동기화를 제거하려면, 데스크톱 앱의 설정으로 가서 동기화된 폴더를 삭제하세요.</translation>
     </message>
 </context>
 <context>

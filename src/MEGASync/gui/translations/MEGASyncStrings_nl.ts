@@ -3124,7 +3124,7 @@ All de andere geselecteerde overdrachten worden geannuleerd en gewist.</translat
     <message>
         <source>Yes, clear</source>
         <translatorcomment>Dialog button to do the proposed actions (clear the transfers)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Ja, wissen</translation>
     </message>
 </context>
 <context>

@@ -3734,7 +3734,8 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <source>Sync transfers cannot be cancelled individually.
 Please delete the folder sync from settings to cancel them.</source>
         <translatorcomment>Explains that the sync transfers cannot be cancelled individually. (for windows and linux)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Các phiên đồng bộ không thể hủy bằng cách riêng rẽ được.
+Xin xóa đi thư mục đồng bộ trong trang thiết đặt đẻ có thể hủy bỏ.</translation>
     </message>
     <message>
         <source>Sync transfers cannot be cancelled individually.

@@ -565,7 +565,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Bug report success!</source>
         <translatorcomment>Confirmation message shown when a bug report is successfully uploaded.</translatorcomment>
-        <translation>La tua segnalazione è stata inviata correttamente.</translation>
+        <translation>La tua segnalazione è stata inviata con successo.</translation>
     </message>
     <message>
         <source>Your bug report has been submitted, a confirmation email will sent to you accordingly.</source>
@@ -1119,7 +1119,7 @@ In alcuni casi potrebbero contenere dettagli riguardo i tuoi dati, come ad esemp
     <message>
         <source>The file at this destination will be updated with a new version.</source>
         <translatorcomment>Text explaining the result of the file upload and update action</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Il file in questa destinazione verrà aggiornato con una nuova versione.</translation>
     </message>
 </context>
 <context>
@@ -3109,7 +3109,7 @@ I trasferimenti selezionati ed incompleti non saranno annullati.</translation>
     <message numerus="yes">
         <source>Cancel and clear transfer</source>
         <translatorcomment>Context menu action to resume cancel the active transfers and clear the completed transfers (multiple transfers selected)</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Annulla e pulisci il trasferimento</numerusform><numerusform>Annulla e pulisci i trasferimenti</numerusform></translation>
     </message>
     <message>
         <source>Yes, cancel</source>
@@ -3124,7 +3124,7 @@ I trasferimenti selezionati ed incompleti non saranno annullati.</translation>
     <message>
         <source>Yes, clear</source>
         <translatorcomment>Dialog button to do the proposed actions (clear the transfers)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Sì, pulisci</translation>
     </message>
 </context>
 <context>
@@ -3735,13 +3735,15 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <source>Sync transfers cannot be cancelled individually.
 Please delete the folder sync from settings to cancel them.</source>
         <translatorcomment>Explains that the sync transfers cannot be cancelled individually. (for windows and linux)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>La sincronizzazioni non possono essere annullate individualmente.
+Per favore, elimina la cartella di sincronizzazione dalle Impostazioni per annullarle.</translation>
     </message>
     <message>
         <source>Sync transfers cannot be cancelled individually.
 Please delete the folder sync from preferences to cancel them.</source>
         <translatorcomment>Explains that the sync transfers cannot be cancelled individually. (for macOS)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Le sincronizzazioni non possono essere annullate singolarmente.
+Per favore, elimina la cartella di sincronizzazione dalle Preferenze per annullarle.</translation>
     </message>
 </context>
 <context>
@@ -5901,12 +5903,12 @@ Per ottenere maggior banda, effettua l&apos;upgrade ad un account Pro o attendi 
     <message>
         <source>Clear all completed</source>
         <translatorcomment>Tooltip for clear button when the user is in the completed category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Pulisci tutti i completati</translation>
     </message>
     <message>
         <source>Clear all search results</source>
         <translatorcomment>Tooltip for clear button when the user is in the search category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Pulisci tutti i risultati delle ricerche</translation>
     </message>
     <message>
         <source>Clear all audios</source>
@@ -5956,7 +5958,7 @@ Per ottenere maggior banda, effettua l&apos;upgrade ad un account Pro o attendi 
     <message>
         <source>Cancel all search results</source>
         <translatorcomment>Tooltip for cancel button when the user is in the search category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Elimina tutti i risultati delle ricerche</translation>
     </message>
     <message>
         <source>Cancel all audios</source>

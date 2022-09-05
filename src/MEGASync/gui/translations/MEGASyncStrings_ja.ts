@@ -3122,7 +3122,7 @@ Your selected incomplete sync transfers won&apos;t be cancelled.</source>
     <message>
         <source>Yes, clear</source>
         <translatorcomment>Dialog button to do the proposed actions (clear the transfers)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>はい、クリアします</translation>
     </message>
 </context>
 <context>
