@@ -18,12 +18,4 @@
     }
 }
 
-- (void)connectionHasDied:(NSNotification*)notification
-{
-    if (_socketPrivate)
-    {
-        emit _socketPrivate->socket->disconnected();
-    }
-}
-
 @end
