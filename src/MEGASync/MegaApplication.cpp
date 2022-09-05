@@ -13,6 +13,7 @@
 #include "ConnectivityChecker.h"
 #include "TransferMetadata.h"
 #include "DuplicatedNodeDialogs/DuplicatedNodeDialog.h"
+#include "UserAttributesRequests/FullName.h"
 #include "UserAttributesRequests/Avatar.h"
 
 #include <QTranslator>
@@ -1169,8 +1170,6 @@ void MegaApplication::requestUserData()
     }
 
     megaApi->getPricing();
-    megaApi->getUserAttribute(MegaApi::USER_ATTR_FIRSTNAME);
-    megaApi->getUserAttribute(MegaApi::USER_ATTR_LASTNAME);
     megaApi->getFileVersionsOption();
     megaApi->getPSA();
 
@@ -1182,6 +1181,7 @@ void MegaApplication::requestUserData()
         {//queued function
             if (email)
             {
+                UserAttributes::FullName::requestFullName(email.get());
                 UserAttributes::Avatar::requestAvatar(email.get());
             }
         });//end of queued function
@@ -1430,6 +1430,8 @@ if (!preferences->lastExecutionTime())
 
         whyAmIBlocked();// lets query again, to trigger transition and restoreSyncs
     }
+
+    preferences->monitorUserAttributes();
 }
 
 void MegaApplication::startSyncs(QList<PreConfiguredSync> syncs)
@@ -7157,25 +7159,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
             break;
         }
 
-        if (request->getParamType() == MegaApi::USER_ATTR_FIRSTNAME)
-        {
-            QString firstname(QString::fromUtf8(""));
-            if (e->getErrorCode() == MegaError::API_OK && request->getText())
-            {
-                firstname = QString::fromUtf8(request->getText());
-            }
-            preferences->setFirstName(firstname);
-        }
-        else if (request->getParamType() == MegaApi::USER_ATTR_LASTNAME)
-        {
-            QString lastName(QString::fromUtf8(""));
-            if (e->getErrorCode() == MegaError::API_OK && request->getText())
-            {
-                lastName = QString::fromUtf8(request->getText());
-            }
-            preferences->setLastName(lastName);
-        }
-        else if (request->getParamType() == MegaApi::USER_ATTR_DISABLE_VERSIONS)
+        if (request->getParamType() == MegaApi::USER_ATTR_DISABLE_VERSIONS)
         {
             if (e->getErrorCode() == MegaError::API_OK
                     || e->getErrorCode() == MegaError::API_ENOENT)
@@ -7281,7 +7265,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
                 QMegaMessageBox::information(nullptr, QString::fromUtf8("MEGAsync"), tr("You have been logged out because of this error: %1")
                                          .arg(QCoreApplication::translate("MegaError", e->getErrorString())));
             }
-            unlink();            
+            unlink();
         }
 
         //Check for any sync disabled by logout to warn user on next login with user&password
@@ -8235,16 +8219,6 @@ void MegaApplication::onUsersUpdate(MegaApi *, MegaUserList *userList)
         MegaUser *user = userList->get(i);
         if (!user->isOwnChange() && user->getHandle() == myHandle)
         {
-            if (user->hasChanged(MegaUser::CHANGE_TYPE_FIRSTNAME))
-            {
-                megaApi->getUserAttribute(MegaApi::USER_ATTR_FIRSTNAME);
-            }
-
-            if (user->hasChanged(MegaUser::CHANGE_TYPE_LASTNAME))
-            {
-                megaApi->getUserAttribute(MegaApi::USER_ATTR_LASTNAME);
-            }
-
             if (user->hasChanged(MegaUser::CHANGE_TYPE_DISABLE_VERSIONS))
             {
                 megaApi->getFileVersionsOption();
