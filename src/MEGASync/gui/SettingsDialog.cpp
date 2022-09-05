@@ -246,6 +246,9 @@ SettingsDialog::SettingsDialog(MegaApplication* app, bool proxyOnly, QWidget* pa
 
     connect(mUi->tSyncs->selectionModel(), &QItemSelectionModel::selectionChanged,
             this, &SettingsDialog::onSyncSelected);
+
+    connect(&mOpenUrlWatcher, &QFutureWatcher<bool>::finished, this, &SettingsDialog::onOpenMegaIgnoreFinished);
+
     mUi->tSyncs->setMouseTracking(true);
     syncsStateInformation(SyncStateInformation::NO_SAVING_SYNCS);
 }
@@ -1774,8 +1777,23 @@ void SettingsDialog::openMegaIgnore()
     if(syncSetting)
     {
         QString ignore(syncSetting->getLocalFolder() + QDir::separator() + QString::fromUtf8(".megaignore"));
-        QtConcurrent::run(QDesktopServices::openUrl, QUrl::fromLocalFile(ignore));
+        auto future = QtConcurrent::run(QDesktopServices::openUrl, QUrl::fromLocalFile(ignore));
+        mOpenUrlWatcher.setFuture(future);
     }
+}
+
+void SettingsDialog::onOpenMegaIgnoreFinished()
+{
+    auto result = mOpenUrlWatcher.result();
+    if(!result)
+    {
+        showOpenMegaIgnoreError();
+    }
+}
+
+void SettingsDialog::showOpenMegaIgnoreError()
+{
+    QMegaMessageBox::warning(nullptr, tr("Error"), tr("Error opening megaignore file"), QMessageBox::Ok);
 }
 
 void SettingsDialog::onDeleteSync()

@@ -146,6 +146,9 @@ private slots:
     void setSyncToSuspend();
     void setSyncToDisabled();
 
+    void onOpenMegaIgnoreFinished();
+    void showOpenMegaIgnoreError();
+
 #ifndef WIN32
     void on_bPermissions_clicked();
 #endif
@@ -254,5 +257,6 @@ private:
     bool mHasDefaultUploadOption;
     bool mHasDefaultDownloadOption;
     QPointer<ProxySettings> mProxySettingsDialog;
+    QFutureWatcher<bool> mOpenUrlWatcher;
 };
 #endif // SETTINGSDIALOG_H

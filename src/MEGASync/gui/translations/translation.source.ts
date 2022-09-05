@@ -5167,6 +5167,10 @@ Do you want to delete it anyway?</translation>
         <source>Unexpected error removing sync</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Error opening megaignore file</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SetupWizard</name>
