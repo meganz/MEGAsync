@@ -13,6 +13,7 @@
 #include "ConnectivityChecker.h"
 #include "TransferMetadata.h"
 #include "DuplicatedNodeDialogs/DuplicatedNodeDialog.h"
+#include "UserAttributesManager.h"
 #include "UserAttributesRequests/FullName.h"
 #include "UserAttributesRequests/Avatar.h"
 
@@ -2194,6 +2195,8 @@ void MegaApplication::cleanAll()
         notifyItemChange(syncSetting->getLocalFolder(), MegaApi::STATE_NONE);
     }
 
+    UserAttributes::UserAttributesManager::instance().reset();
+
     closeDialogs();
     removeAllFinishedTransfers();
     clearViewedTransfers();
@@ -4103,6 +4106,8 @@ void MegaApplication::clearUserAttributes()
     {
         QFile::remove(pathToAvatar);
     }
+
+    UserAttributes::UserAttributesManager::instance().reset();
 }
 
 void MegaApplication::clearViewedTransfers()
