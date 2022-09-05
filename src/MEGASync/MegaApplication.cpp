@@ -1176,7 +1176,7 @@ void MegaApplication::requestUserData()
 
     mThreadPool->push([=]()
     {//thread pool function
-        std::shared_ptr<char[]> email(megaApi->getMyEmail());
+        std::shared_ptr<char> email(megaApi->getMyEmail(), std::default_delete<char[]>());
 
         Utilities::queueFunctionInAppThread([=]()
         {//queued function
@@ -7174,20 +7174,6 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
                 lastName = QString::fromUtf8(request->getText());
             }
             preferences->setLastName(lastName);
-        }
-        else if (request->getParamType() == MegaApi::USER_ATTR_AVATAR)
-        {
-            if (e->getErrorCode() == MegaError::API_ENOENT)
-            {
-
-                const char *email = megaApi->getMyEmail();
-                if (email)
-                {
-                    QFile::remove(Utilities::getAvatarPath(QString::fromUtf8(email)));
-                    delete [] email;
-                }
-            }
-            emit avatarReady();
         }
         else if (request->getParamType() == MegaApi::USER_ATTR_DISABLE_VERSIONS)
         {

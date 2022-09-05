@@ -230,7 +230,6 @@ signals:
     void nodeAttributesChanged(mega::MegaHandle handle);
     void blocked();
     void storageStateChanged(int);
-    void avatarReady();
     void pauseStateChanged();
 
 public slots:

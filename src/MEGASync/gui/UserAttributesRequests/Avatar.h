@@ -3,6 +3,8 @@
 
 #include <control/UserAttributesManager.h>
 
+#include <QColor>
+#include <QPixmap>
 
 namespace UserAttributes
 {
