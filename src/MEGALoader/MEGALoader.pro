@@ -1,8 +1,0 @@
-CONFIG -= qt
-
-TARGET = MEGAloader
-TEMPLATE = app
-
-SOURCES += MEGALoader.cpp
-
-QMAKE_CXXFLAGS+=-g
