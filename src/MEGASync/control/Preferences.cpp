@@ -14,10 +14,10 @@ extern Q_CORE_EXPORT int qt_ntfs_permission_lookup;
 const char Preferences::CLIENT_KEY[] = "FhMgXbqb";
 const char Preferences::USER_AGENT[] = "MEGAsync/4.7.0.0";
 const int Preferences::VERSION_CODE = 4700;
-const int Preferences::BUILD_ID = 1;
+const int Preferences::BUILD_ID = 2;
 // Do not change the location of VERSION_STRING, create_tarball.sh parses this file
 const QString Preferences::VERSION_STRING = QString::fromAscii("4.7.0");
-QString Preferences::SDK_ID = QString::fromAscii("5308507");
+QString Preferences::SDK_ID = QString::fromAscii("063fd87");
 const QString Preferences::CHANGELOG = QString::fromUtf8(QT_TR_NOOP(
 "- There is now a new transfer manager.\n"
 "- Transfer management was enhanced and reliability of downloads and uploads improved. \n"
