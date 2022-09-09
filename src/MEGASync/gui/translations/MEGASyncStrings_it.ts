@@ -5888,7 +5888,7 @@ Per ottenere maggior banda, effettua l&apos;upgrade ad un account Pro o attendi 
     <message>
         <source>Time completed</source>
         <translatorcomment>Time table header column name for completed transfers categories</translatorcomment>
-        <translation>Tempo passato</translation>
+        <translation>Orario di completamento</translation>
     </message>
     <message>
         <source>Avg. speed</source>

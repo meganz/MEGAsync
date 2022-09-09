@@ -3124,7 +3124,7 @@ As suas transferências incompletas referentes a sincronizações não serão ca
     <message>
         <source>Yes, clear</source>
         <translatorcomment>Dialog button to do the proposed actions (clear the transfers)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Sim, eliminar</translation>
     </message>
 </context>
 <context>

@@ -5467,7 +5467,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Nothing selected</source>
         <translatorcomment>Text shown when no files have been selected for streaming yet</translatorcomment>
-        <translation>Nada seleccionado</translation>
+        <translation>No hay nada seleccionado</translation>
     </message>
     <message>
         <source>Open with:</source>
@@ -5512,7 +5512,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Enter a MEGA file link:</source>
         <translatorcomment>Text of the dialog to enter a MEGA file link for streaming</translatorcomment>
-        <translation>Introduce un enlace de MEGA:</translation>
+        <translation>Introduce un enlace de archivo de MEGA:</translation>
     </message>
     <message>
         <source>The link has been copied to the clipboard</source>
@@ -5568,7 +5568,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Retrying</source>
         <translatorcomment>Transfer is starting again after failure</translatorcomment>
-        <translation>Reintentando</translation>
+        <translation>Reintentando…</translation>
     </message>
     <message>
         <source>Uploading…</source>
@@ -5603,7 +5603,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Failed</source>
         <translatorcomment>Transfer has failed</translatorcomment>
-        <translation>Error</translation>
+        <translation>Fallida</translation>
     </message>
     <message>
         <source>In queue</source>
@@ -5651,7 +5651,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Completed</source>
         <translatorcomment>Label of tab to access all completed transfers</translatorcomment>
-        <translation>Completado</translation>
+        <translation>Completadas</translation>
     </message>
     <message>
         <source>Upload</source>
@@ -5689,12 +5689,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Failed</source>
         <translatorcomment>Title for Failed transfers category</translatorcomment>
-        <translation>Error</translation>
+        <translation>Transferencias fallidas</translation>
     </message>
     <message>
         <source>Media type</source>
         <translatorcomment>Title of the groupbox which contains all the media categories</translatorcomment>
-        <translation>Tipo</translation>
+        <translation>Categorías</translation>
     </message>
     <message>
         <source>Archives</source>
@@ -5714,7 +5714,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Videos</source>
         <translatorcomment>Categories for video type transfers</translatorcomment>
-        <translation>Videos</translation>
+        <translation>Vídeos</translation>
     </message>
     <message>
         <source>Audio</source>
@@ -5816,7 +5816,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
 To get more quota, upgrade to a Pro account or wait for [A] until more free quota becomes available on your IP address.</source>
         <translatorcomment>Message which shows that the user reachs the overquota. [A] is the time to wait until the quota is reset in hh:mm:ss</translatorcomment>
         <translation>No puedes continuar con la descarga porque no hay suficiente cuota de transferencia para esta dirección IP.
-Para obtener más cuota, actualiza a una cuenta Pro o espera [A] hasta que haya más cuota gratuita disponible para tu dirección IP.</translation>
+Para obtener más cuota, amplia tu cuenta a Pro o espera [A] hasta que haya más cuota gratuita disponible para tu dirección IP.</translation>
     </message>
     <message>
         <source>More about transfer quota</source>
@@ -5903,7 +5903,7 @@ Para obtener más cuota, actualiza a una cuenta Pro o espera [A] hasta que haya 
     <message>
         <source>Clear all completed</source>
         <translatorcomment>Tooltip for clear button when the user is in the completed category</translatorcomment>
-        <translation>Limpiar todas las completadas</translation>
+        <translation>Limpiar todas las transferencias completadas</translation>
     </message>
     <message>
         <source>Clear all search results</source>
@@ -5953,7 +5953,7 @@ Para obtener más cuota, actualiza a una cuenta Pro o espera [A] hasta que haya 
     <message>
         <source>Cancel all failed</source>
         <translatorcomment>Tooltip for cancel button when the user is in the failed category</translatorcomment>
-        <translation>Cancelar todas las fallidas</translation>
+        <translation>Cancelar todas las transferencias fallidas</translation>
     </message>
     <message>
         <source>Cancel all search results</source>
