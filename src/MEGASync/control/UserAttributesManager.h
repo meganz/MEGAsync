@@ -37,6 +37,8 @@ public:
         return instance;
     }
 
+    void reset();
+
     template <typename AttributeClass>
     std::shared_ptr<AttributeClass> requestAttribute(const char* user_email)
     {
