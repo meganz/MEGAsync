@@ -39,15 +39,21 @@ StalledIssueHeader *StalledIssuesDelegateWidgetsCache::getStalledIssueHeaderWidg
     auto row = getMaxCacheRow(index.row());
     header = mStalledIssueHeaderWidgets.value(row);
 
-    if(!header)
+    if(header && header->getHeaderReason() == issue.consultData()->getReason())
     {
+        header->updateUi(index, issue);
+    }
+    else if(!header || (header && header->getHeaderReason() != issue.consultData()->getReason()))
+    {
+        if(header)
+        {
+            header->deleteLater();
+        }
+
+        //Create new header
         header = createHeaderWidget(index, parent, issue);
         header->hide();
         mStalledIssueHeaderWidgets.insert(row, header);
-    }
-    else
-    {
-        header->updateUi(index, issue);
     }
 
     return header;
@@ -234,6 +240,7 @@ StalledIssueHeader *StalledIssuesDelegateWidgetsCache::createHeaderWidget(const 
 
     if(header)
     {
+        header->setHeaderReason(issue.consultData()->getReason());
         header->updateUi(index, issue);
     }
 
