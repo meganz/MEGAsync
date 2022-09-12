@@ -14,6 +14,11 @@ UserAttributesManager::UserAttributesManager() :
     MegaSyncApp->getMegaApi()->addListener(mDelegateListener.get());
 }
 
+void UserAttributesManager::reset()
+{
+    mRequests.clear();
+}
+
 void UserAttributesManager::onRequestFinish(mega::MegaApi *api, mega::MegaRequest *incoming_request, mega::MegaError *e)
 {
     if(incoming_request->getType() == mega::MegaRequest::TYPE_GET_ATTR_USER)

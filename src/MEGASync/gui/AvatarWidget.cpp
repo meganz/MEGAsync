@@ -130,7 +130,7 @@ QPixmap AvatarPixmap::maskFromImagePath(const QString &pathToFile, int size)
     return pm;
 }
 
-QPixmap AvatarPixmap::createFromLetter(const QChar& letter, const QColor& color, int size)
+QPixmap AvatarPixmap::createFromLetter(const QString& letter, const QColor& color, int size)
 {
     QPixmap pm(QSize(LETTER_PIXMAP_SIZE, LETTER_PIXMAP_SIZE));
     QRect rect = pm.rect();

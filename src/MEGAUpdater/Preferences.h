@@ -11,7 +11,11 @@ const char USER_AGENT[] = "MEGA/MEGAUpdaterTask";
         const char UPDATE_CHECK_URL[]  = "http://g.static.mega.co.nz/eupd/wsync/v.txt";
     #endif
 #else
-const char UPDATE_CHECK_URL[]  = "http://g.static.mega.co.nz/eupd/msync/v.txt";
+#if defined(__arm64__)
+    const char UPDATE_CHECK_URL[] = "http://g.static.mega.co.nz/eupd/msyncarm64/v.txt";
+#else
+    const char UPDATE_CHECK_URL[] = "http://g.static.mega.co.nz/eupd/msyncv2/v.txt"; //Using msyncv2 to serve new updates and avoid keeping loader leftovers
+#endif
 const char APP_DIR_BUNDLE[] = "/Applications/MEGAsync.app/";
 #endif
 
