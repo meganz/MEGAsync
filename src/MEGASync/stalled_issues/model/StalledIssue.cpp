@@ -514,11 +514,21 @@ bool NameConflictedStalledIssue::solveLocalConflictedName(const QString &name, C
         if((*it).conflictedName == name)
         {
             (*it).solved = type;
-            return true;
         }
     }
 
-    return false;
+    auto result = areLocalAllConflictedNamesSolved();
+    if(result)
+    {
+        for (auto it = mCloudConflictedNames.begin(); it != mCloudConflictedNames.end(); ++it)
+        {
+            if(!(*it).isSolved())
+            {
+                (*it).solved = NameConflictedStalledIssue::ConflictedNameInfo::SolvedType::SOLVED_BY_OTHER_SIDE;
+            }
+        }
+    }
+    return result;
 }
 
 bool NameConflictedStalledIssue::solveCloudConflictedName(const QString &name, NameConflictedStalledIssue::ConflictedNameInfo::SolvedType type)
@@ -528,11 +538,22 @@ bool NameConflictedStalledIssue::solveCloudConflictedName(const QString &name, N
         if((*it).conflictedName == name)
         {
             (*it).solved = type;
-            return true;
         }
     }
 
-    return false;
+    auto result = areCloudAllConflictedNamesSolved();
+    if(result)
+    {
+        for (auto it = mLocalConflictedNames.begin(); it != mLocalConflictedNames.end(); ++it)
+        {
+            if(!(*it).isSolved())
+            {
+                (*it).solved = NameConflictedStalledIssue::ConflictedNameInfo::SolvedType::SOLVED_BY_OTHER_SIDE;
+            }
+        }
+    }
+
+    return result;
 }
 
 bool NameConflictedStalledIssue::solveLocalConflictedNameByRename(const QString &name, const QString &renameTo)
@@ -543,11 +564,21 @@ bool NameConflictedStalledIssue::solveLocalConflictedNameByRename(const QString 
         {
             (*it).solved = NameConflictedStalledIssue::ConflictedNameInfo::SolvedType::RENAME;;
             (*it).renameTo = renameTo;
-            return true;
         }
     }
 
-    return false;
+    auto result = areLocalAllConflictedNamesSolved();
+    if(result)
+    {
+        for (auto it = mCloudConflictedNames.begin(); it != mCloudConflictedNames.end(); ++it)
+        {
+            if(!(*it).isSolved())
+            {
+                (*it).solved = NameConflictedStalledIssue::ConflictedNameInfo::SolvedType::SOLVED_BY_OTHER_SIDE;
+            }
+        }
+    }
+    return result;
 }
 
 bool NameConflictedStalledIssue::solveCloudConflictedNameByRename(const QString &name, const QString &renameTo)
@@ -558,9 +589,44 @@ bool NameConflictedStalledIssue::solveCloudConflictedNameByRename(const QString 
         {
             (*it).solved = NameConflictedStalledIssue::ConflictedNameInfo::SolvedType::RENAME;
             (*it).renameTo = renameTo;
-            return true;
         }
     }
 
-    return false;
+    auto result = areCloudAllConflictedNamesSolved();
+    if(result)
+    {
+        for (auto it = mLocalConflictedNames.begin(); it != mLocalConflictedNames.end(); ++it)
+        {
+            if(!(*it).isSolved())
+            {
+                (*it).solved = NameConflictedStalledIssue::ConflictedNameInfo::SolvedType::SOLVED_BY_OTHER_SIDE;
+            }
+        }
+    }
+
+    return result;
+}
+
+bool NameConflictedStalledIssue::areLocalAllConflictedNamesSolved()
+{
+    auto allSolved(true);
+
+    for (auto it = mLocalConflictedNames.begin(); it != mLocalConflictedNames.end(); ++it)
+    {
+        allSolved &= (*it).isSolved();
+    }
+
+    return allSolved;
+}
+
+bool NameConflictedStalledIssue::areCloudAllConflictedNamesSolved()
+{
+    auto allSolved(true);
+
+    for (auto it = mCloudConflictedNames.begin(); it != mCloudConflictedNames.end(); ++it)
+    {
+        allSolved &= (*it).isSolved();
+    }
+
+    return allSolved;
 }

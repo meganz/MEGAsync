@@ -99,10 +99,15 @@ void NameConflict::updateUi(NameConflictedStalledIssue::NameConflictData data)
                     icon.addFile(QString::fromUtf8(":/images/StalledIssues/remove_default.png"));
                     titleText = tr("Removed");
                 }
-                else
+                else if(conflictedNames.at(index).solved ==  NameConflictedStalledIssue::ConflictedNameInfo::SolvedType::RENAME)
                 {
                     icon.addFile(QString::fromUtf8(":/images/StalledIssues/check_default.png"));
                     titleText = tr("Renamed to \"%1\"").arg(conflictedNames.at(index).renameTo);
+                }
+                else
+                {
+                    icon.addFile(QString::fromUtf8(":/images/StalledIssues/check_default.png"));
+                    titleText = tr("No action needed");
                 }
 
                 title->addMessage(titleText, icon.pixmap(24,24));
@@ -151,12 +156,6 @@ void NameConflict::onActionClicked(int actionId)
 
         auto delegateWidget = dynamic_cast<StalledIssueBaseDelegateWidget*>(parentWidget());
 
-        //As a dialog will be shown, avoid removing the editor while the dialog is open
-        if(delegateWidget)
-        {
-            delegateWidget->setKeepEditor(true);
-        }
-
         if(actionId == RENAME_ID)
         {
             QPointer<NameConflict> currentWidget = QPointer<NameConflict>(this);
@@ -179,18 +178,29 @@ void NameConflict::onActionClicked(int actionId)
 
             if(result == QDialog::Accepted)
             {
+                bool areAllSolved(false);
+
                 if(mData.isCloud)
                 {
-                    MegaSyncApp->getStalledIssuesModel()->solveCloudConflictedNameByRename(chooseTitle->title()
+                   areAllSolved = MegaSyncApp->getStalledIssuesModel()->solveCloudConflictedNameByRename(chooseTitle->title()
                                                                                            , newName, delegateWidget->getCurrentIndex());
                 }
                 else
                 {
-                    MegaSyncApp->getStalledIssuesModel()->solveLocalConflictedNameByRename(chooseTitle->title()
+                    areAllSolved = MegaSyncApp->getStalledIssuesModel()->solveLocalConflictedNameByRename(chooseTitle->title()
                                                                                            , newName, delegateWidget->getCurrentIndex());
                 }
 
+                if(areAllSolved)
+                {
+                    emit allSolved();
+                }
+
                 chooseTitle->setDisabled(true);
+            }
+            else
+            {
+                QMegaMessageBox::warning(nullptr, QString::fromUtf8("MEGAsync"), QString::fromUtf8("File %1 does not longer exist or rename has failed.").arg(chooseTitle->title()));
             }
 
             if(!currentWidget)
@@ -211,24 +221,30 @@ void NameConflict::onActionClicked(int actionId)
                     == QMessageBox::Yes
                     && currentWidget)
             {
+                bool areAllSolved(false);
+
                 if(mData.isCloud)
                 {
                     mUtilities.removeRemoteFile(info.filePath());
-                    MegaSyncApp->getStalledIssuesModel()->solveCloudConflictedNameByRemove(chooseTitle->title(), delegateWidget->getCurrentIndex());
+                    areAllSolved = MegaSyncApp->getStalledIssuesModel()->solveCloudConflictedNameByRemove(chooseTitle->title(), delegateWidget->getCurrentIndex());
                 }
                 else
                 {
                     mUtilities.removeLocalFile(QDir::toNativeSeparators(info.filePath()));
-                    MegaSyncApp->getStalledIssuesModel()->solveLocalConflictedNameByRemove(chooseTitle->title(), delegateWidget->getCurrentIndex());
+                    areAllSolved = MegaSyncApp->getStalledIssuesModel()->solveLocalConflictedNameByRemove(chooseTitle->title(), delegateWidget->getCurrentIndex());
+                }
+
+                if(areAllSolved)
+                {
+                    emit allSolved();
                 }
             }
         }
 
-        //Now, close the editor beacuse the action has been finished
+        //Now, close the editor because the action has been finished
         if(delegateWidget)
         {
             emit refreshUi();
-            delegateWidget->setKeepEditor(false);
         }
     }
 }

@@ -231,7 +231,7 @@ bool Preferences::HTTPS_ORIGIN_CHECK_ENABLED = true;
     #if defined(__arm64__)
         const QString Preferences::UPDATE_CHECK_URL                 = QString::fromUtf8("http://g.static.mega.co.nz/upd/msyncarm64/v.txt");
     #else
-        const QString Preferences::UPDATE_CHECK_URL                 = QString::fromUtf8("http://g.static.mega.co.nz/upd/msync/v.txt");
+        const QString Preferences::UPDATE_CHECK_URL                 = QString::fromUtf8("http://g.static.mega.co.nz/upd/msyncv2/v.txt"); //Using msyncv2 to serve new updates and avoid keeping loader leftovers
     #endif
 #endif
 

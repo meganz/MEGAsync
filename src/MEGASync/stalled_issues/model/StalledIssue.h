@@ -132,6 +132,7 @@ public:
         {
             REMOVE = 0,
             RENAME,
+            SOLVED_BY_OTHER_SIDE,
             UNSOLVED
         };
 
@@ -171,6 +172,9 @@ public:
 
     bool solveLocalConflictedNameByRename(const QString& name, const QString& renameTo);
     bool solveCloudConflictedNameByRename(const QString& name, const QString& renameTo);
+
+    bool areLocalAllConflictedNamesSolved();
+    bool areCloudAllConflictedNamesSolved();
 
     static QStringList convertConflictedNames(bool cloud, const mega::MegaSyncStall *stall);
 

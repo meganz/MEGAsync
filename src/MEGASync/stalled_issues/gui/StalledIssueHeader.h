@@ -29,7 +29,6 @@ public:
     void expand(bool state) override;
     virtual bool adaptativeHeight();
 
-
     void showAction(const QString& actionButtonText);
     void hideAction();
 
