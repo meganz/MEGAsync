@@ -134,7 +134,7 @@ QModelIndex MegaItemModel::index(int row, int column, const QModelIndex &parent)
     }
     else
     {
-        return createIndex(row, column, getRootItems().at(row));
+        return createIndex(row, column, mRootItems.at(row));
     }
 }
 
@@ -150,9 +150,9 @@ QModelIndex MegaItemModel::parent(const QModelIndex &index) const
     {
         return QModelIndex();
     }
-    if(getRootItems().contains(parent))
+    if(mRootItems.contains(parent))
     {
-        return createIndex(getRootItems().indexOf(parent), 0, parent);
+        return createIndex(mRootItems.indexOf(parent), 0, parent);
     }
     return createIndex(parent->row(), 0, parent);
 }
@@ -168,9 +168,10 @@ int MegaItemModel::rowCount(const QModelIndex &parent) const
             auto children = std::shared_ptr<MegaNodeList>(megaApi->getChildren(item->getNode().get()));
             item->setChildren(children);
         }
-        return item->getNumChildren();
+        int childrenNum = item->getNumChildren();
+        return childrenNum;
     }
-    return getRootItems().size();
+    return mRootItems.size();
 }
 
 bool MegaItemModel::hasChildren(const QModelIndex &parent) const
@@ -260,11 +261,11 @@ void MegaItemModel::setSyncSetupMode(bool value)
 void MegaItemModel::showFiles(bool show)
 {
     mDisplayFiles = show;
-    for(QList<MegaItem*>::iterator it = getRootItems().begin(); it != getRootItems().end();)
+    for(QList<MegaItem*>::iterator it = mRootItems.begin(); it != mRootItems.end();)
     {
         if((*it)->getNode()->isFile() && !show)
         {
-            getRootItems().removeOne(*it);
+            mRootItems.removeOne(*it);
             continue;
         }
         (*it)->displayFiles(show);
@@ -303,7 +304,7 @@ void MegaItemModel::removeNode(const QModelIndex &item)
     {
         int index = item.row();
         beginRemoveRows(item.parent(), index, index);
-        getRootItems().removeOne(static_cast<MegaItem*>(item.internalPointer()));
+        mRootItems.removeOne(static_cast<MegaItem*>(item.internalPointer()));
     }
 
     endRemoveRows();
@@ -408,6 +409,11 @@ QVariant MegaItemModel::getText(const QModelIndex &index, MegaItem *item) const
     return QVariant(QLatin1String(""));
 }
 
+void MegaItemModel::fillRootItems()
+{
+    mRootItems = getRootItems();
+}
+
 MegaItemModel::~MegaItemModel()
 {
 }
@@ -416,9 +422,9 @@ int MegaItemModel::insertPosition(const std::unique_ptr<MegaNode>& node)
 {
     int type = node->getType();
     int i;
-    for (i = 0; i < getRootItems().size(); ++i)
+    for (i = 0; i < mRootItems.size(); ++i)
     {
-        std::shared_ptr<MegaNode> otherNode = getRootItems().at(i)->getNode();
+        std::shared_ptr<MegaNode> otherNode = mRootItems.at(i)->getNode();
         int otherNodeType = otherNode->getType();
         if (type >= otherNodeType && qstricmp(node->getName(), otherNode->getName()) <= 0)
         {

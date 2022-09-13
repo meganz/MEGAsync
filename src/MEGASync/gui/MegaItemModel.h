@@ -64,6 +64,7 @@ public:
     std::shared_ptr<mega::MegaNode> getNode(const QModelIndex &index) const;
     QVariant getIcon(const QModelIndex &index, MegaItem* item) const;
     QVariant getText(const QModelIndex &index, MegaItem* item) const;
+    void fillRootItems();
     virtual ~MegaItemModel();
 
 protected:
@@ -75,6 +76,8 @@ protected:
 private:
     int insertPosition(const std::unique_ptr<mega::MegaNode>& node);
     virtual QList<MegaItem*> getRootItems() const = 0;
+    //virtual void fillRootItems(QList<MegaItem*> &toFill) const = 0;
+    QList<MegaItem*> mRootItems;
 
 };
 

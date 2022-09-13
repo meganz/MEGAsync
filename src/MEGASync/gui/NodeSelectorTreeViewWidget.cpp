@@ -75,7 +75,7 @@ bool NodeSelectorTreeViewWidget::eventFilter(QObject *o, QEvent *e)
         mProxyModel = mega::make_unique<MegaItemProxyModel>(this);
 
         mModel = getModel();
-
+        mModel->fillRootItems();
         mProxyModel->setSourceModel(mModel.get());
 
         mSelectMode = parent()->property("SelectionMode").toInt();
@@ -591,7 +591,7 @@ QString NodeSelectorTreeViewWidgetCloudDrive::getRootText()
 
 std::unique_ptr<MegaItemModel> NodeSelectorTreeViewWidgetCloudDrive::getModel()
 {
-    return mega::make_unique<MegaItemModelCloudDrive>(this);
+    return std::move(mega::make_unique<MegaItemModelCloudDrive>(this));
 }
 
 NodeSelectorTreeViewWidgetIncomingShares::NodeSelectorTreeViewWidgetIncomingShares(QWidget *parent)
@@ -607,5 +607,5 @@ QString NodeSelectorTreeViewWidgetIncomingShares::getRootText()
 
 std::unique_ptr<MegaItemModel> NodeSelectorTreeViewWidgetIncomingShares::getModel()
 {
-    return mega::make_unique<MegaItemModelIncomingShares>(this);
+    return std::move(mega::make_unique<MegaItemModelIncomingShares>(this));
 }
