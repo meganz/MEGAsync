@@ -40,7 +40,7 @@ std::chrono::seconds TransferRemainingTime::calculateRemainingTimeSeconds(unsign
 {
     // If the speed is positive, compute real remaining time value. Otherwise, set remaining time to
     // current remaining time.
-    unsigned long long remTime (static_cast<unsigned long long>(mRemainingSeconds.count()));
+    unsigned long long remTime (static_cast<unsigned long long>(std::chrono::seconds::max().count()));
     if (speedBytesSecond > 0)
     {
         remTime = remainingBytes / speedBytesSecond;
