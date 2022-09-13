@@ -138,7 +138,6 @@ void RenameLocalNodeDialog::onDialogAccepted()
     }
 
     showError(errorText(newFileName));
-    done(QDialog::Rejected);
 }
 
 bool RenameLocalNodeDialog::isFile()
@@ -183,6 +182,9 @@ QString RenameLocalNodeDialog::errorText(const QString& newFileName) const
             return tr("Error renaming folder to %1").arg(newFileName);
         }
     }
+    else
+    {
+        return tr("Error renaming to %1").arg(newFileName);
+    }
 
-    return QString();
 }

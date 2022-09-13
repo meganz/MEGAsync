@@ -81,13 +81,6 @@ void StalledIssueDelegate::paint(QPainter *painter, const QStyleOptionViewItem &
 
         bool renderDelegate(!mEditor || mEditor->getCurrentIndex() != index);
 
-#ifdef __APPLE__
-        if(mEditor)
-        {
-            renderDelegate |= mEditor->keepEditor();
-        }
-#endif
-
         if(renderDelegate)
         {
             auto stalledIssueItem (qvariant_cast<StalledIssueVariant>(index.data(Qt::DisplayRole)));

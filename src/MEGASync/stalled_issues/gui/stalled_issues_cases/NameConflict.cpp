@@ -198,10 +198,6 @@ void NameConflict::onActionClicked(int actionId)
 
                 chooseTitle->setDisabled(true);
             }
-            else
-            {
-                QMegaMessageBox::warning(nullptr, QString::fromUtf8("MEGAsync"), QString::fromUtf8("File %1 does not longer exist or rename has failed.").arg(chooseTitle->title()));
-            }
 
             if(!currentWidget)
             {
