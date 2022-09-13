@@ -549,6 +549,7 @@ void MegaApplication::initialize()
 
     if (preferences->isCrashed())
     {
+        MegaApi::log(MegaApi::LOG_LEVEL_WARNING, QString::fromUtf8("Force reloading (isCrashed true)").toUtf8().constData());
         preferences->setCrashed(false);
         QDirIterator di(dataPath, QDir::Files | QDir::NoDotAndDotDot);
         while (di.hasNext())
@@ -561,6 +562,7 @@ void MegaApplication::initialize()
                     || fi.fileName().endsWith(QString::fromUtf8(".db-wal"))
                     || fi.fileName().endsWith(QString::fromUtf8(".db-shm"))))
             {
+                MegaApi::log(MegaApi::LOG_LEVEL_WARNING, QString::fromUtf8("Deleting local cache: %1").arg(di.filePath()).toUtf8().constData());
                 QFile::remove(di.filePath());
             }
         }
@@ -7402,6 +7404,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
                                                        "please contact bug@mega.co.nz"), QMessageBox::Ok);
 
                 setupWizardFinished(QDialog::Rejected);
+                MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, "Setting isCrashed true: !mRootNode (fetch node callback)");
                 preferences->setCrashed(true);
                 rebootApplication(false);
                 break;
@@ -7482,6 +7485,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
         if (!root || !inbox || !rubbish)
         {
             preferences->setCrashed(true);
+            MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, "Setting isCrashed true: !root || !inbox || !rubbish (account details callback)");
             break;
         }
 
@@ -7494,6 +7498,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
 
         if (!inShares)
         {
+            MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, "Setting isCrashed true: !inShares (account details callback)");
             preferences->setCrashed(true);
             return;
         }
@@ -8301,6 +8306,7 @@ void MegaApplication::onReloadNeeded(MegaApi*)
     //Don't reload the filesystem here because it's unsafe
     //and the most probable cause for this callback is a false positive.
     //Simply set the crashed flag to force a filesystem reload in the next execution.
+    MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, "Setting isCrashed true: onReloadNeeded");
     preferences->setCrashed(true);
 }
 

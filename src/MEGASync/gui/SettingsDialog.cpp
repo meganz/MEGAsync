@@ -1077,6 +1077,7 @@ void SettingsDialog::on_bUpdate_clicked()
 
 void SettingsDialog::on_bFullCheck_clicked()
 {
+    MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, "Setting isCrashed true: full re-scan requested");
     mPreferences->setCrashed(true);
     QPointer<SettingsDialog> currentDialog = this;
     if (QMegaMessageBox::warning(nullptr, tr("Full scan"),
@@ -2364,6 +2365,7 @@ void SettingsDialog::on_cExcludeUpperThan_clicked()
     if (mLoadingSettings) return;
     bool enable (mUi->cExcludeUpperThan->isChecked());
     mPreferences->setUpperSizeLimit(enable);
+    MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, "Setting isCrashed true: exclusions updated (upper than toggled)");
     mPreferences->setCrashed(true);
     mUi->eUpperThan->setEnabled(enable);
     mUi->cbExcludeUpperUnit->setEnabled(enable);
@@ -2376,6 +2378,7 @@ void SettingsDialog::on_cExcludeLowerThan_clicked()
     if (mLoadingSettings) return;
     bool enable (mUi->cExcludeLowerThan->isChecked());
     mPreferences->setLowerSizeLimit(enable);
+    MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, "Setting isCrashed true: exclusions updated (lower than toggled)");
     mPreferences->setCrashed(true);
     mUi->eLowerThan->setEnabled(enable);
     mUi->cbExcludeLowerUnit->setEnabled(enable);
@@ -2387,6 +2390,7 @@ void SettingsDialog::on_eUpperThan_valueChanged(int i)
 {
     if (mLoadingSettings) return;
     mPreferences->setUpperSizeLimitValue(i);
+    MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, "Setting isCrashed true: exclusions updated (upper than updated)");
     mPreferences->setCrashed(true);
     mUi->gExcludedFilesInfo->show();
     mUi->bRestart->show();
@@ -2396,6 +2400,7 @@ void SettingsDialog::on_eLowerThan_valueChanged(int i)
 {
     if (mLoadingSettings) return;
     mPreferences->setLowerSizeLimitValue(i);
+    MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, "Setting isCrashed true: exclusions updated (lower than updated)");
     mPreferences->setCrashed(true);
     mUi->gExcludedFilesInfo->show();
     mUi->bRestart->show();
@@ -2405,6 +2410,7 @@ void SettingsDialog::on_cbExcludeUpperUnit_currentIndexChanged(int index)
 {
     if (mLoadingSettings) return;
     mPreferences->setUpperSizeLimitUnit(index);
+    MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, "Setting isCrashed true: exclusions updated (upper unit updated)");
     mPreferences->setCrashed(true);
     mUi->gExcludedFilesInfo->show();
     mUi->bRestart->show();
@@ -2414,6 +2420,7 @@ void SettingsDialog::on_cbExcludeLowerUnit_currentIndexChanged(int index)
 {
     if (mLoadingSettings) return;
     mPreferences->setLowerSizeLimitUnit(index);
+    MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, "Setting isCrashed true: exclusions updated (lower unit updated)");
     mPreferences->setCrashed(true);
     mUi->gExcludedFilesInfo->show();
     mUi->bRestart->show();
@@ -2437,6 +2444,7 @@ void SettingsDialog::saveExcludeSyncNames()
 
     mPreferences->setExcludedSyncNames(excludedNames);
     mPreferences->setExcludedSyncPaths(excludedPaths);
+    MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, "Setting isCrashed true: exclusions updated (names)");
     mPreferences->setCrashed(true);
 
     mUi->gExcludedFilesInfo->show();
