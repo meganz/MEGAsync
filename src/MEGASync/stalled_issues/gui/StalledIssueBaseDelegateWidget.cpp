@@ -9,8 +9,7 @@
 
 StalledIssueBaseDelegateWidget::StalledIssueBaseDelegateWidget(QWidget *parent)
     : QWidget(parent),
-      mIsSolved(false),
-      mKeepEditor(false)
+      mIsSolved(false)
 {
 }
 
@@ -36,18 +35,4 @@ QModelIndex StalledIssueBaseDelegateWidget::getCurrentIndex() const
 const StalledIssueVariant& StalledIssueBaseDelegateWidget::getData() const
 {
     return mData;
-}
-
-bool StalledIssueBaseDelegateWidget::keepEditor() const
-{
-    return mKeepEditor;
-}
-
-void StalledIssueBaseDelegateWidget::setKeepEditor(bool newKeepEditor)
-{
-    if(mKeepEditor != newKeepEditor)
-    {
-        mKeepEditor = newKeepEditor;
-        emit editorKeepStateChanged(mKeepEditor);
-    }
 }

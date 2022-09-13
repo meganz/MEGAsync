@@ -33,10 +33,6 @@ protected:
 
 protected slots:
     void onHoverEnter(const QModelIndex& index);
-    void onHoverLeave(const QModelIndex&index);
-
-private slots:
-    void onEditorKeepStateChanged(bool newKeepState);
 
 private:
     QColor getRowColor(const QModelIndex& index) const;

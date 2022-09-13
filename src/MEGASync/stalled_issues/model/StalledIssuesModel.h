@@ -82,11 +82,11 @@ public:
     void unBlockUi();
 
     //Methods to modify data
-    void solveLocalConflictedNameByRemove(const QString& name, const QModelIndex& index);
-    void solveLocalConflictedNameByRename(const QString& name, const QString& renameTo, const QModelIndex& index);
+    bool solveLocalConflictedNameByRemove(const QString& name, const QModelIndex& index);
+    bool solveLocalConflictedNameByRename(const QString& name, const QString& renameTo, const QModelIndex& index);
 
-    void solveCloudConflictedNameByRemove(const QString& name, const QModelIndex& index);
-    void solveCloudConflictedNameByRename(const QString& name, const QString &renameTo, const QModelIndex& index);
+    bool solveCloudConflictedNameByRemove(const QString& name, const QModelIndex& index);
+    bool solveCloudConflictedNameByRename(const QString& name, const QString &renameTo, const QModelIndex& index);
 
     void solveIssue(bool isCloud, const QModelIndex& index);
 

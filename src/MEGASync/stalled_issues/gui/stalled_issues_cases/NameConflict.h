@@ -30,17 +30,17 @@ public:
     ~NameConflict();
 
     void updateUi(NameConflictedStalledIssue::NameConflictData data);
+    void setSolved();
 
 signals:
     void refreshUi();
-    void conflictSolved();
+    void allSolved();
 
 private slots:
     void onActionClicked(int actionId);
 
 private:
     void removeConflictedNameWidget(QWidget *widget);
-    void setSolved();
 
     Ui::NameConflict *ui;
     NameConflictedStalledIssue::NameConflictData mData;

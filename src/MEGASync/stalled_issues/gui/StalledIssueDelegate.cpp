@@ -170,10 +170,6 @@ bool StalledIssueDelegate::event(QEvent *event)
         {
             onHoverEnter(hoverEvent->index());
         }
-        else if(hoverEvent->type() == QEvent::Leave)
-        {
-            onHoverLeave(hoverEvent->index());
-        }
         else if(hoverEvent->type() == QEvent::MouseMove)
         {
             onHoverEnter(hoverEvent->index());
@@ -222,43 +218,28 @@ bool StalledIssueDelegate::eventFilter(QObject *object, QEvent *event)
             }
         }
     }
-    else if(event->type() == QEvent::FocusOut)
-    {
-        return true;
-    }
 
     return QStyledItemDelegate::eventFilter(object, event);
 }
 
 void StalledIssueDelegate::onHoverEnter(const QModelIndex &index)
 {
-    if(!mEditor)
-    {
-        mView->setCurrentIndex(index);
-        mView->edit(index);
-    }
-}
-
-void StalledIssueDelegate::onHoverLeave(const QModelIndex& index)
-{
-    if(mEditor && !mEditor->keepEditor())
+    if(mEditor && mEditor->getCurrentIndex() != index)
     {
         //Small hack to avoid blinks when changing from editor to delegate paint
         //Set the editor to nullptr and update the view -> Then the delegate paints the base widget
         //before the editor is removed
-        auto editor = mEditor.data();
+        auto editorIndex = mEditor->getCurrentIndex();
         mEditor = nullptr;
         mView->update(index);
-        mView->closeEditor(editor, QAbstractItemDelegate::NoHint);
+        mView->closePersistentEditor(editorIndex);
     }
-}
 
-void StalledIssueDelegate::onEditorKeepStateChanged(bool newKeepState)
-{
-   if(mEditor && !newKeepState)
-   {
-       onHoverLeave(mEditor->getCurrentIndex());
-   }
+    if(!mEditor)
+    {
+        mView->setCurrentIndex(index);
+        mView->openPersistentEditor(index);
+    }
 }
 
 QColor StalledIssueDelegate::getRowColor(const QModelIndex &index) const
@@ -308,8 +289,6 @@ StalledIssueBaseDelegateWidget *StalledIssueDelegate::getNonCacheStalledIssueIte
     {
         item = mCacheManager.getNonCacheStalledIssueHeaderWidget(index,parent, data);
     }
-
-    connect(item, &StalledIssueBaseDelegateWidget::editorKeepStateChanged, this, &StalledIssueDelegate::onEditorKeepStateChanged);
 
     return item;
 }

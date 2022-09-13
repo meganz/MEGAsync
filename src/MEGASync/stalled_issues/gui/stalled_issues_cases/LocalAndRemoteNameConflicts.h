@@ -22,6 +22,9 @@ public:
 public slots:
     void refreshUi() override;
 
+private slots:
+    void onNameConflictSolved();
+
 private:
     Ui::LocalAndRemoteNameConflicts *ui;
 };

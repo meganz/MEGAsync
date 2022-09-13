@@ -22,6 +22,9 @@ LocalAndRemoteNameConflicts::LocalAndRemoteNameConflicts(QWidget *parent) :
 
     connect(ui->cloudConflictNames, &NameConflict::refreshUi, this, &LocalAndRemoteNameConflicts::refreshUi);
     connect(ui->localConflictNames, &NameConflict::refreshUi, this, &LocalAndRemoteNameConflicts::refreshUi);
+
+    connect(ui->cloudConflictNames, &NameConflict::allSolved, this, &LocalAndRemoteNameConflicts::onNameConflictSolved);
+    connect(ui->localConflictNames, &NameConflict::allSolved, this, &LocalAndRemoteNameConflicts::onNameConflictSolved);
 }
 
 LocalAndRemoteNameConflicts::~LocalAndRemoteNameConflicts()
@@ -70,4 +73,10 @@ void LocalAndRemoteNameConflicts::refreshUi()
 
         update();
     }
+}
+
+void LocalAndRemoteNameConflicts::onNameConflictSolved()
+{
+    ui->cloudConflictNames->setSolved();
+    ui->localConflictNames->setSolved();
 }

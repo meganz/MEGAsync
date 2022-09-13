@@ -39,11 +39,11 @@ StalledIssueHeader *StalledIssuesDelegateWidgetsCache::getStalledIssueHeaderWidg
     auto row = getMaxCacheRow(index.row());
     header = mStalledIssueHeaderWidgets.value(row);
 
-    if(header && header->getHeaderReason() == issue.consultData()->getReason())
+    if(header && header->getData().consultData()->getReason() == issue.consultData()->getReason())
     {
         header->updateUi(index, issue);
     }
-    else if(!header || (header && header->getHeaderReason() != issue.consultData()->getReason()))
+    else if(!header || (header && header->getData().consultData()->getReason() != issue.consultData()->getReason()))
     {
         if(header)
         {
@@ -61,23 +61,28 @@ StalledIssueHeader *StalledIssuesDelegateWidgetsCache::getStalledIssueHeaderWidg
 
 StalledIssueBaseDelegateWidget *StalledIssuesDelegateWidgetsCache::getStalledIssueInfoWidget(const QModelIndex &index, QWidget *parent, const StalledIssueVariant &issue) const
 {
-    auto row = getMaxCacheRow(index.row());
+    auto row = getMaxCacheRow(index.parent().row());
 
     auto reason = issue.consultData()->getReason();
     auto& itemsByRowMap = mStalledIssueWidgets[toInt(reason)];
     auto& item = itemsByRowMap[row];
 
-    if(!item)
+    if(item && item->getData().consultData()->getReason() == issue.consultData()->getReason())
     {
+        item->updateUi(index, issue);
+    }
+    else if(!item || (item && item->getData().consultData()->getReason() != issue.consultData()->getReason()))
+    {
+        if(item)
+        {
+            item->deleteLater();
+        }
+
         item = createBodyWidget(index, parent, issue);
         item->setAttribute(Qt::WA_WState_ExplicitShowHide, false);
         item->setAttribute(Qt::WA_WState_Hidden , true);
 
         itemsByRowMap.insert(row, item);
-    }
-    else
-    {
-        item->updateUi(index, issue);
     }
 
     return item;
@@ -240,7 +245,6 @@ StalledIssueHeader *StalledIssuesDelegateWidgetsCache::createHeaderWidget(const 
 
     if(header)
     {
-        header->setHeaderReason(issue.consultData()->getReason());
         header->updateUi(index, issue);
     }
 

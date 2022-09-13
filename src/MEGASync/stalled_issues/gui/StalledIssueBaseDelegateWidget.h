@@ -25,9 +25,6 @@ public:
     QModelIndex getCurrentIndex() const;
     const StalledIssueVariant &getData() const;
 
-    bool keepEditor() const;
-    void setKeepEditor(bool newKeepEditor);
-
 signals:
     void editorKeepStateChanged(bool state);
 
@@ -40,7 +37,6 @@ private:
 
     StalledIssueVariant mData;
     QPersistentModelIndex mCurrentIndex;
-    bool mKeepEditor;
 };
 
 #endif // STALLEDISSUEBASEDELEGATEWIDGET_H

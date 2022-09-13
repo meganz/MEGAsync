@@ -18,8 +18,7 @@ const int StalledIssueHeader::HEIGHT = 60;
 
 StalledIssueHeader::StalledIssueHeader(QWidget *parent) :
     StalledIssueBaseDelegateWidget(parent),
-    ui(new Ui::StalledIssueHeader),
-    mHeaderReason(mega::MegaSyncStall::SyncStallReason::NoReason)
+    ui(new Ui::StalledIssueHeader)
 {
     ui->setupUi(this);
 
@@ -175,14 +174,4 @@ void StalledIssueHeader::refreshUi()
     }
 
     refreshCaseUi();
-}
-
-mega::MegaSyncStall::SyncStallReason StalledIssueHeader::getHeaderReason() const
-{
-    return mHeaderReason;
-}
-
-void StalledIssueHeader::setHeaderReason(mega::MegaSyncStall::SyncStallReason newHeaderReason)
-{
-    mHeaderReason = newHeaderReason;
 }

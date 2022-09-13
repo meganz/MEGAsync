@@ -29,7 +29,6 @@ public:
     void expand(bool state) override;
     virtual bool adaptativeHeight();
 
-
     void showAction(const QString& actionButtonText);
     void hideAction();
 
@@ -40,9 +39,6 @@ public:
     void setRightTitleText(const QString& text);
 
     void setTitleDescriptionText(const QString& text);
-
-    mega::MegaSyncStall::SyncStallReason getHeaderReason() const;
-    void setHeaderReason(mega::MegaSyncStall::SyncStallReason newHeaderReason);
 
 protected:
     virtual void refreshCaseUi() = 0;
@@ -60,8 +56,6 @@ private:
 
     Ui::StalledIssueHeader *ui;
     void refreshUi() override;
-
-    mega::MegaSyncStall::SyncStallReason mHeaderReason;
 };
 
 #endif // STALLEDISSUEHEADER_H
