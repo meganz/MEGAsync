@@ -3734,7 +3734,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <source>Sync transfers cannot be cancelled individually.
 Please delete the folder sync from settings to cancel them.</source>
         <translatorcomment>Explains that the sync transfers cannot be cancelled individually. (for windows and linux)</translatorcomment>
-        <translation>无法取消同步传输。要移除同步，请前往桌面应用程序中的偏好或设置以删除同步文件夹。</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Sync transfers cannot be cancelled individually.

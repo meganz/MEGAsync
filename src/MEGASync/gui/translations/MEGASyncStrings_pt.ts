@@ -2512,7 +2512,7 @@ As transferências serão retomadas automaticamente quando você abrir o aplicat
     <message>
         <source>Request failed, retrying</source>
         <translatorcomment>Label to show that a request error occurs during a SDK operation.</translatorcomment>
-        <translation>Solicitação falhou, tentando novamente</translation>
+        <translation>Erro na solicitação, tentando novamente</translation>
     </message>
     <message>
         <source>Rate limit exceeded</source>
@@ -2522,7 +2522,7 @@ As transferências serão retomadas automaticamente quando você abrir o aplicat
     <message>
         <source>Failed permanently</source>
         <translatorcomment>Label to show that a SDK operation has failed permanently.</translatorcomment>
-        <translation>Falhou permanentemente</translation>
+        <translation>Erro permanente</translation>
     </message>
     <message>
         <source>Too many concurrent connections or transfers</source>
@@ -2625,7 +2625,7 @@ As transferências serão retomadas automaticamente quando você abrir o aplicat
     <message>
         <source>SSL verification failed</source>
         <translatorcomment>Error shown when SSL check has failed</translatorcomment>
-        <translation>Falha na verificação SSL</translation>
+        <translation>Erro na verificação SSL</translation>
     </message>
     <message>
         <source>Not enough quota</source>
@@ -2808,7 +2808,7 @@ As transferências serão retomadas automaticamente quando você abrir o aplicat
     <message>
         <source>Initial scan failed</source>
         <translatorcomment>Label to show that initial scan of a sync failed during a SDK operation.</translatorcomment>
-        <translation>A varredura inicial falhou</translation>
+        <translation>Erro na varredura inicial</translation>
     </message>
     <message>
         <source>Local path temporarily unavailable</source>
@@ -5601,7 +5601,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Failed</source>
         <translatorcomment>Transfer has failed</translatorcomment>
-        <translation>Cancelado</translation>
+        <translation>Erro</translation>
     </message>
     <message>
         <source>In queue</source>
@@ -5687,7 +5687,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Failed</source>
         <translatorcomment>Title for Failed transfers category</translatorcomment>
-        <translation>Cancelado</translation>
+        <translation>Erro</translation>
     </message>
     <message>
         <source>Media type</source>
@@ -5951,7 +5951,7 @@ Para obter mais cota, faça o upgrade a uma conta Pro ou espere [A] para que mai
     <message>
         <source>Cancel all failed</source>
         <translatorcomment>Tooltip for cancel button when the user is in the failed category</translatorcomment>
-        <translation>Cancelar todas as transferências em Cancelado</translation>
+        <translation>Cancelar todas as transferências em Erro</translation>
     </message>
     <message>
         <source>Cancel all search results</source>

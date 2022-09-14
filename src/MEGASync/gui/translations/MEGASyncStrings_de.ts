@@ -1119,7 +1119,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>The file at this destination will be updated with a new version.</source>
         <translatorcomment>Text explaining the result of the file upload and update action</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Die Datei am Zielort wird mit einer neuen Version aktualisiert.</translation>
     </message>
 </context>
 <context>
@@ -3124,7 +3124,7 @@ Die ausgewählten unvollständigen Synchronisierungstransfers werden nicht abgeb
     <message>
         <source>Yes, clear</source>
         <translatorcomment>Dialog button to do the proposed actions (clear the transfers)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Ja, entfernen</translation>
     </message>
 </context>
 <context>

@@ -3123,7 +3123,7 @@ Your selected incomplete sync transfers won&apos;t be cancelled.</source>
     <message>
         <source>Yes, clear</source>
         <translatorcomment>Dialog button to do the proposed actions (clear the transfers)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>是，清除</translation>
     </message>
 </context>
 <context>
@@ -3734,14 +3734,13 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <source>Sync transfers cannot be cancelled individually.
 Please delete the folder sync from settings to cancel them.</source>
         <translatorcomment>Explains that the sync transfers cannot be cancelled individually. (for windows and linux)</translatorcomment>
-        <translation>同步傳輸無法取消。
-要移除同步的話，請至偏好或桌面應用程式中的設定來刪除同步資料夾。</translation>
+        <translation>無法取消同步傳輸。若要取消同步，請前往桌面應用程式中的設定刪除同步資料夾。</translation>
     </message>
     <message>
         <source>Sync transfers cannot be cancelled individually.
 Please delete the folder sync from preferences to cancel them.</source>
         <translatorcomment>Explains that the sync transfers cannot be cancelled individually. (for macOS)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>無法取消同步傳輸。若要取消同步，請前往桌面應用程式中的設定刪除同步資料夾。</translation>
     </message>
 </context>
 <context>

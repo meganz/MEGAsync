@@ -3736,14 +3736,14 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 Please delete the folder sync from settings to cancel them.</source>
         <translatorcomment>Explains that the sync transfers cannot be cancelled individually. (for windows and linux)</translatorcomment>
         <translation>Synchronisatie overdrachten kunnen niet individueel geannuleerd worden.
-Verwijder de mapsynchronisatie vanuit instellingen om ze te annuleren.</translation>
+Verwijder de mapsynchronisatie vanuit Instellingen om ze te annuleren.</translation>
     </message>
     <message>
         <source>Sync transfers cannot be cancelled individually.
 Please delete the folder sync from preferences to cancel them.</source>
         <translatorcomment>Explains that the sync transfers cannot be cancelled individually. (for macOS)</translatorcomment>
         <translation>Synchronisatie overdrachten kunnen niet individueel geannuleerd worden.
-Verwijder de mapsynchronisatie vanuit voorkeuren om ze te annuleren.</translation>
+Verwijder de mapsynchronisatie vanuit Voorkeuren om ze te annuleren.</translation>
     </message>
 </context>
 <context>

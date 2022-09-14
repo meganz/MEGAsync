@@ -3125,7 +3125,7 @@ Tous les autres transferts sélectionnés seront annulés.</translation>
     <message>
         <source>Yes, clear</source>
         <translatorcomment>Dialog button to do the proposed actions (clear the transfers)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Oui, effacer</translation>
     </message>
 </context>
 <context>

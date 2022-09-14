@@ -94,7 +94,7 @@
     <message>
         <source>Please enter a valid file name or absolute path.</source>
         <translatorcomment>Information message shown when the user selects an invalid file name or path for the exclusion</translatorcomment>
-        <translation>กรุณากรอกชื่อไฟล์ที่ถูกต้องหรือเส้นทางแบบเต็ม</translation>
+        <translation>กรุณากรอกชื่อไฟล์หรือเส้นทางแบบเต็มที่ถูกต้อง</translation>
     </message>
     <message>
         <source>Select the file or folder you want to exclude</source>
@@ -610,7 +610,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>There is an ongoing report being uploaded.</source>
         <translatorcomment>Informative message shown when user is trying to upload a bug report while there is an ongoing upload.</translatorcomment>
-        <translation>ขณะนี้มีปัญหาอื่นที่รายงานกำลังมีการอัปโหลดอยู่</translation>
+        <translation>ขณะนี้กำลังอัปโหลดการรายงานปัญหาอื่นอยู่</translation>
     </message>
     <message>
         <source>Please wait until the current upload is completed.</source>
@@ -3734,13 +3734,13 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <source>Sync transfers cannot be cancelled individually.
 Please delete the folder sync from settings to cancel them.</source>
         <translatorcomment>Explains that the sync transfers cannot be cancelled individually. (for windows and linux)</translatorcomment>
-        <translation>รายการซิงค์ที่กำลังถ่ายโอนไม่สามารถยกเลิกทีละรายการได้ กรุณาลบโฟลเดอร์สำหรับซิงค์ออกจากหน้าการตั้งค่าก่อนถึงจะสามารถยกเลิกได้</translation>
+        <translation>รายการซิงค์ที่กำลังถ่ายโอนอยู่ไม่สามารถยกเลิกได้ หากต้องการลบการซิงค์นี้ออก ให้ไปที่การตั้งค่าในแอปเดสก์ท็อปแล้วลบโฟลเดอร์ที่ซิงค์แทน</translation>
     </message>
     <message>
         <source>Sync transfers cannot be cancelled individually.
 Please delete the folder sync from preferences to cancel them.</source>
         <translatorcomment>Explains that the sync transfers cannot be cancelled individually. (for macOS)</translatorcomment>
-        <translation>รายการซิงค์ที่กำลังถ่ายโอนไม่สามารถยกเลิกทีละรายการได้ กรุณาลบโฟลเดอร์สำหรับซิงค์ออกจากหน้าการกำหนดลักษณะก่อนถึงจะสามารถยกเลิกได้</translation>
+        <translation>รายการซิงค์ที่กำลังถ่ายโอนอยู่ไม่สามารถยกเลิกได้ หากต้องการลบการซิงค์นี้ออก ให้ไปที่การกำหนดลักษณะในแอปเดสก์ท็อปแล้วลบโฟลเดอร์ที่ซิงค์แทน</translation>
     </message>
 </context>
 <context>
