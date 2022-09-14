@@ -187,6 +187,9 @@ public:
     QModelIndex parent(const QModelIndex& index) const;
     QModelIndex index(int row, int column, const QModelIndex& parent = QModelIndex()) const;
     bool removeRows(int row, int count, const QModelIndex& parent = QModelIndex());
+
+    void ignoreMoveRowsSignal(bool state);
+    void inverseMoveRowsSignal(bool state);
     bool moveRows(const QModelIndex& sourceParent, const QList<int>& rows,
                   const QModelIndex& destinationParent, int destinationChild);
 
@@ -268,7 +271,7 @@ signals:
     void mostPriorityTransferUpdate(int tag);
     void transfersProcessChanged();
     void showInFolderFinished(bool);
-    void rowsAboutToBeMoved(int firstRowTag);
+    void rowsAboutToBeMoved(TransferTag firstRowTag);
 
 public slots:
     void pauseResumeAllTransfers(bool state);
@@ -342,6 +345,9 @@ private:
     bool mAreAllPaused;
     bool mHasActiveTransfers;
     QSet<TransferTag> mActiveTransfers;
+
+    bool mIgnoreMoveSignal;
+    bool mInverseMoveSignal;
 };
 
 Q_DECLARE_METATYPE(QAbstractItemModel::LayoutChangeHint)

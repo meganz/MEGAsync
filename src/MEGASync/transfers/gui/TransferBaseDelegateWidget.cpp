@@ -147,6 +147,10 @@ QString TransferBaseDelegateWidget::getState(TRANSFER_STATES state)
         {
             return tr("Out of transfer quota");
         }
+        default:
+        {
+            return QString();
+        }
     }
 }
 

@@ -120,7 +120,7 @@ private:
     MegaApplication *app;
     TM_TAB mCurrentTab;
     bool mScanningIsActive;
-    int mScrollToAfterMovingRow;
+    QList<int> mScrollToAfterMovingRow;
 
     HeaderInfo mHeaderInfo;
     CancelClearButtonInfo mCancelClearInfo;
