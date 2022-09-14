@@ -13,8 +13,7 @@ TransfersWidget::TransfersWidget(QWidget* parent) :
     tDelegate (nullptr),
     app (qobject_cast<MegaApplication*>(qApp)),
     mCurrentTab(NO_TAB),
-    mScanningIsActive(false),
-    mScrollToAfterMovingRow(-1)
+    mScanningIsActive(false)
 {
     ui->setupUi(this);
 
@@ -456,7 +455,7 @@ void TransfersWidget::onModelChanged()
 
 void TransfersWidget::onRowsAboutToBeMoved(int scrollTo)
 {
-    mScrollToAfterMovingRow = scrollTo;
+    mScrollToAfterMovingRow.append(scrollTo);
 
     if(mProxyModel->getSortCriterion() != static_cast<int>(SortCriterion::PRIORITY))
     {
@@ -472,25 +471,24 @@ void TransfersWidget::selectAndScrollToMovedTransfer(QAbstractItemView::ScrollHi
 {
     QTimer::singleShot(200, [this, scrollHint]()
     {
-        if(mScrollToAfterMovingRow >= 0)
+        if(!mScrollToAfterMovingRow.isEmpty())
         {
-            auto d = app->getTransfersModel()->getTransferByTag(mScrollToAfterMovingRow);
-            if(d)
+            foreach(auto row, mScrollToAfterMovingRow)
             {
-                auto rowIndex = app->getTransfersModel()->index(app->getTransfersModel()->getRowByTransferTag(d->mTag),0);
-                if(rowIndex.isValid())
+                auto d = app->getTransfersModel()->getTransferByTag(row);
+                if(d)
                 {
-                    auto proxyIndex = mProxyModel->mapFromSource(rowIndex);
-                    ui->tvTransfers->selectionModel()->select(proxyIndex, QItemSelectionModel::SelectionFlag::Select);
-                    auto selectedRows(ui->tvTransfers->selectionModel()->selectedRows());
-                    if(!selectedRows.isEmpty())
+                    auto rowIndex = app->getTransfersModel()->index(app->getTransfersModel()->getRowByTransferTag(d->mTag),0);
+                    if(rowIndex.isValid())
                     {
-                        ui->tvTransfers->scrollTo(selectedRows.first(), scrollHint);
+                        auto proxyIndex = mProxyModel->mapFromSource(rowIndex);
+                        ui->tvTransfers->selectionModel()->select(proxyIndex, QItemSelectionModel::SelectionFlag::Select);
+                        ui->tvTransfers->scrollTo(proxyIndex, scrollHint);
                     }
                 }
             }
 
-            mScrollToAfterMovingRow = -1;
+            mScrollToAfterMovingRow.clear();
         }
     });
 }

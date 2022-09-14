@@ -175,48 +175,51 @@ void TransferThread::onTransferStart(MegaApi *, MegaTransfer *transfer)
     if (!transfer->isStreamingTransfer()
             && !transfer->isFolderTransfer())
     {
-        QMutexLocker counterLock(&mCountersMutex);
-        auto fileType = Utilities::getFileType(QString::fromStdString(transfer->getFileName()), QString());
-        mTransfersCount.transfersByType[fileType]++;
-
-        if(transfer->getType() == MegaTransfer::TYPE_UPLOAD)
         {
-            mTransfersCount.totalUploads++;
-            mTransfersCount.pendingUploads++;
-            mTransfersCount.totalUploadBytes += transfer->getTotalBytes();
-            mTransfersCount.completedUploadBytes += transfer->getTransferredBytes();
+            QMutexLocker counterLock(&mCountersMutex);
+            auto fileType = Utilities::getFileType(QString::fromStdString(transfer->getFileName()), QString());
+            mTransfersCount.transfersByType[fileType]++;
 
-            mLastTransfersCount.totalUploads++;
-            mLastTransfersCount.pendingUploads++;
-            mLastTransfersCount.totalUploadBytes += transfer->getTotalBytes();
-            mLastTransfersCount.completedUploadBytes += transfer->getTransferredBytes();
-        }
-        else
-        {
-            mTransfersCount.totalDownloads++;
-            mTransfersCount.pendingDownloads++;
-            mTransfersCount.totalDownloadBytes += transfer->getTotalBytes();
-            mTransfersCount.completedDownloadBytes += transfer->getTransferredBytes();
-
-            mLastTransfersCount.totalDownloads++;
-            mLastTransfersCount.pendingDownloads++;
-            mLastTransfersCount.totalDownloadBytes += transfer->getTotalBytes();
-            mLastTransfersCount.completedDownloadBytes += transfer->getTransferredBytes();
-        }
-
-        QMutexLocker cacheLock(&mCacheMutex);
-
-        auto data = onTransferEvent(transfer);
-
-        if(data)
-        {
-            if(transfer->isSyncTransfer())
+            if(transfer->getType() == MegaTransfer::TYPE_UPLOAD)
             {
-                mTransfersToProcess.startSyncTransfersByTag.insert(transfer->getTag(), data);
+                mTransfersCount.totalUploads++;
+                mTransfersCount.pendingUploads++;
+                mTransfersCount.totalUploadBytes += transfer->getTotalBytes();
+                mTransfersCount.completedUploadBytes += transfer->getTransferredBytes();
+
+                mLastTransfersCount.totalUploads++;
+                mLastTransfersCount.pendingUploads++;
+                mLastTransfersCount.totalUploadBytes += transfer->getTotalBytes();
+                mLastTransfersCount.completedUploadBytes += transfer->getTransferredBytes();
             }
             else
             {
-                mTransfersToProcess.startTransfersByTag.insert(transfer->getTag(), data);
+                mTransfersCount.totalDownloads++;
+                mTransfersCount.pendingDownloads++;
+                mTransfersCount.totalDownloadBytes += transfer->getTotalBytes();
+                mTransfersCount.completedDownloadBytes += transfer->getTransferredBytes();
+
+                mLastTransfersCount.totalDownloads++;
+                mLastTransfersCount.pendingDownloads++;
+                mLastTransfersCount.totalDownloadBytes += transfer->getTotalBytes();
+                mLastTransfersCount.completedDownloadBytes += transfer->getTransferredBytes();
+            }
+        }
+
+        {
+            QMutexLocker cacheLock(&mCacheMutex);
+            auto data = onTransferEvent(transfer);
+
+            if(data)
+            {
+                if(transfer->isSyncTransfer())
+                {
+                    mTransfersToProcess.startSyncTransfersByTag.insert(transfer->getTag(), data);
+                }
+                else
+                {
+                    mTransfersToProcess.startTransfersByTag.insert(transfer->getTag(), data);
+                }
             }
         }
     }
@@ -227,25 +230,29 @@ void TransferThread::onTransferUpdate(MegaApi *, MegaTransfer *transfer)
     if (!transfer->isStreamingTransfer()
             && !transfer->isFolderTransfer())
     {
-        QMutexLocker counterLock(&mCountersMutex);
-        if(transfer->getType() == MegaTransfer::TYPE_UPLOAD)
         {
-            mTransfersCount.completedUploadBytes += transfer->getDeltaSize();
+            QMutexLocker counterLock(&mCountersMutex);
+            if(transfer->getType() == MegaTransfer::TYPE_UPLOAD)
+            {
+                mTransfersCount.completedUploadBytes += transfer->getDeltaSize();
 
-            mLastTransfersCount.completedUploadBytes += transfer->getDeltaSize();
+                mLastTransfersCount.completedUploadBytes += transfer->getDeltaSize();
+            }
+            else
+            {
+                mTransfersCount.completedDownloadBytes += transfer->getDeltaSize();
+                mLastTransfersCount.completedDownloadBytes += transfer->getDeltaSize();
+            }
         }
-        else
-        {
-            mTransfersCount.completedDownloadBytes += transfer->getDeltaSize();
-            mLastTransfersCount.completedDownloadBytes += transfer->getDeltaSize();
-        }
 
-        QMutexLocker cacheLock(&mCacheMutex);
-        auto data = onTransferEvent(transfer);
-
-        if(data)
         {
-            mTransfersToProcess.updateTransfersByTag.insert(transfer->getTag(), data);
+            QMutexLocker cacheLock(&mCacheMutex);
+            auto data = onTransferEvent(transfer);
+
+            if(data)
+            {
+                mTransfersToProcess.updateTransfersByTag.insert(transfer->getTag(), data);
+            }
         }
     }
 }
@@ -255,104 +262,108 @@ void TransferThread::onTransferFinish(MegaApi*, MegaTransfer *transfer, MegaErro
     if (!transfer->isStreamingTransfer()
             && !transfer->isFolderTransfer())
     {
-        QMutexLocker counterLock(&mCountersMutex);
-        auto fileType = Utilities::getFileType(QString::fromStdString(transfer->getFileName()), QString());
-        if(transfer->getState() == MegaTransfer::STATE_CANCELLED || (transfer->getState() == MegaTransfer::STATE_FAILED
-                                                                     && transfer->isSyncTransfer()))
         {
-            mTransfersCount.transfersByType[fileType]--;
-
-            if(transfer->getType() == MegaTransfer::TYPE_UPLOAD)
+            QMutexLocker counterLock(&mCountersMutex);
+            auto fileType = Utilities::getFileType(QString::fromStdString(transfer->getFileName()), QString());
+            if(transfer->getState() == MegaTransfer::STATE_CANCELLED || (transfer->getState() == MegaTransfer::STATE_FAILED
+                                                                         && transfer->isSyncTransfer()))
             {
-                mTransfersCount.completedUploadBytes -= transfer->getTransferredBytes();
-                mTransfersCount.totalUploadBytes -= transfer->getTotalBytes();
-                mTransfersCount.pendingUploads--;
-                mTransfersCount.totalUploads--;
+                mTransfersCount.transfersByType[fileType]--;
 
-                mLastTransfersCount.completedUploadBytes -= transfer->getTransferredBytes();
-                mLastTransfersCount.totalUploadBytes -= transfer->getTotalBytes();
-                mLastTransfersCount.pendingUploads--;
-                mLastTransfersCount.totalUploads--;
+                if(transfer->getType() == MegaTransfer::TYPE_UPLOAD)
+                {
+                    mTransfersCount.completedUploadBytes -= transfer->getTransferredBytes();
+                    mTransfersCount.totalUploadBytes -= transfer->getTotalBytes();
+                    mTransfersCount.pendingUploads--;
+                    mTransfersCount.totalUploads--;
+
+                    mLastTransfersCount.completedUploadBytes -= transfer->getTransferredBytes();
+                    mLastTransfersCount.totalUploadBytes -= transfer->getTotalBytes();
+                    mLastTransfersCount.pendingUploads--;
+                    mLastTransfersCount.totalUploads--;
+                }
+                else
+                {
+                    mTransfersCount.completedDownloadBytes -= transfer->getTransferredBytes();
+                    mTransfersCount.totalDownloadBytes -= transfer->getTotalBytes();
+                    mTransfersCount.pendingDownloads--;
+                    mTransfersCount.totalDownloads--;
+
+                    mLastTransfersCount.completedDownloadBytes -= transfer->getTransferredBytes();
+                    mLastTransfersCount.totalDownloadBytes -= transfer->getTotalBytes();
+                    mLastTransfersCount.pendingDownloads--;
+                    mLastTransfersCount.totalDownloads--;
+                }
+
+                if(mTransfersCount.pendingTransfers() == 0)
+                {
+                    mLastTransfersCount.clear();
+                }
             }
             else
             {
-                mTransfersCount.completedDownloadBytes -= transfer->getTransferredBytes();
-                mTransfersCount.totalDownloadBytes -= transfer->getTotalBytes();
-                mTransfersCount.pendingDownloads--;
-                mTransfersCount.totalDownloads--;
+                mTransfersCount.transfersFinishedByType[fileType]++;
+                if(transfer->getType() == MegaTransfer::TYPE_UPLOAD)
+                {
+                    mTransfersCount.pendingUploads--;
+                    mLastTransfersCount.pendingUploads--;
 
-                mLastTransfersCount.completedDownloadBytes -= transfer->getTransferredBytes();
-                mLastTransfersCount.totalDownloadBytes -= transfer->getTotalBytes();
-                mLastTransfersCount.pendingDownloads--;
-                mLastTransfersCount.totalDownloads--;
-            }
+                    if(transfer->getTransferredBytes() < transfer->getTotalBytes())
+                    {
+                        mTransfersCount.completedUploadBytes += transfer->getDeltaSize();
+                        mLastTransfersCount.completedUploadBytes += transfer->getDeltaSize();
+                    }
 
-            if(mTransfersCount.pendingTransfers() == 0)
-            {
-                mLastTransfersCount.clear();
+                    if(transfer->getState() == MegaTransfer::STATE_FAILED && !transfer->isSyncTransfer())
+                    {
+                        mTransfersCount.failedUploads++;
+                    }
+
+                    mLastTransfersCount.completedUploadsByTag.insert(transfer->getTag());
+                }
+                else
+                {
+                    mTransfersCount.pendingDownloads--;
+                    mLastTransfersCount.pendingDownloads--;
+
+                    if(transfer->getTransferredBytes() < transfer->getTotalBytes())
+                    {
+                        mTransfersCount.completedDownloadBytes += transfer->getDeltaSize();
+                        mLastTransfersCount.completedDownloadBytes += transfer->getDeltaSize();
+                    }
+
+                    if(transfer->getState() == MegaTransfer::STATE_FAILED && !transfer->isSyncTransfer())
+                    {
+                        mTransfersCount.failedDownloads++;
+                    }
+
+                    mLastTransfersCount.completedDownloadsByTag.insert(transfer->getTag());
+                }
+
+                if(mTransfersCount.pendingTransfers() == 0)
+                {
+                    mLastTransfersCount.clear();
+                }
             }
         }
-        else
+
         {
-            mTransfersCount.transfersFinishedByType[fileType]++;
-            if(transfer->getType() == MegaTransfer::TYPE_UPLOAD)
+            QMutexLocker cacheLock(&mCacheMutex);
+            auto data = onTransferEvent(transfer);
+            if(data)
             {
-                mTransfersCount.pendingUploads--;
-                mLastTransfersCount.pendingUploads--;
-
-                if(transfer->getTransferredBytes() < transfer->getTotalBytes())
+                if(transfer->getState() == MegaTransfer::STATE_CANCELLED)
                 {
-                    mTransfersCount.completedUploadBytes += transfer->getDeltaSize();
-                    mLastTransfersCount.completedUploadBytes += transfer->getDeltaSize();
+                    mTransfersToProcess.canceledTransfersByTag.insert(transfer->getTag(), data);
                 }
-
-                if(transfer->getState() == MegaTransfer::STATE_FAILED && !transfer->isSyncTransfer())
+                else if(transfer->getState() == MegaTransfer::STATE_FAILED)
                 {
-                    mTransfersCount.failedUploads++;
+                    mTransfersToProcess.failedTransfersByTag.insert(transfer->getTag(), data);
                 }
-
-                mLastTransfersCount.completedUploadsByTag.insert(transfer->getTag());
-            }
-            else
-            {
-                mTransfersCount.pendingDownloads--;
-                mLastTransfersCount.pendingDownloads--;
-
-                if(transfer->getTransferredBytes() < transfer->getTotalBytes())
+                else
                 {
-                    mTransfersCount.completedDownloadBytes += transfer->getDeltaSize();
-                    mLastTransfersCount.completedDownloadBytes += transfer->getDeltaSize();
+                    mTransfersToProcess.updateTransfersByTag.insert(transfer->getTag(), data);
                 }
-
-                if(transfer->getState() == MegaTransfer::STATE_FAILED && !transfer->isSyncTransfer())
-                {
-                    mTransfersCount.failedDownloads++;
-                }
-
-                mLastTransfersCount.completedDownloadsByTag.insert(transfer->getTag());
-            }
-
-            if(mTransfersCount.pendingTransfers() == 0)
-            {
-                mLastTransfersCount.clear();
-            }
-        }
-
-        QMutexLocker cacheLock(&mCacheMutex);
-        auto data = onTransferEvent(transfer);
-        if(data)
-        {
-            if(transfer->getState() == MegaTransfer::STATE_CANCELLED)
-            {
-                mTransfersToProcess.canceledTransfersByTag.insert(transfer->getTag(), data);
-            }
-            else if(transfer->getState() == MegaTransfer::STATE_FAILED)
-            {
-                mTransfersToProcess.failedTransfersByTag.insert(transfer->getTag(), data);
-            }
-            else
-            {
-                mTransfersToProcess.updateTransfersByTag.insert(transfer->getTag(), data);
             }
         }
     }
@@ -364,24 +375,28 @@ void TransferThread::onTransferTemporaryError(MegaApi*, MegaTransfer *transfer, 
     if (!transfer->isStreamingTransfer()
             && !transfer->isFolderTransfer())
     {
-        QMutexLocker counterLock(&mCountersMutex);
-        if(transfer->getType() == MegaTransfer::TYPE_UPLOAD)
         {
-            mTransfersCount.completedUploadBytes += transfer->getDeltaSize();
-            mLastTransfersCount.completedUploadBytes += transfer->getDeltaSize();
-        }
-        else
-        {
-            mTransfersCount.completedDownloadBytes += transfer->getDeltaSize();
-            mLastTransfersCount.completedDownloadBytes += transfer->getDeltaSize();
+            QMutexLocker counterLock(&mCountersMutex);
+            if(transfer->getType() == MegaTransfer::TYPE_UPLOAD)
+            {
+                mTransfersCount.completedUploadBytes += transfer->getDeltaSize();
+                mLastTransfersCount.completedUploadBytes += transfer->getDeltaSize();
+            }
+            else
+            {
+                mTransfersCount.completedDownloadBytes += transfer->getDeltaSize();
+                mLastTransfersCount.completedDownloadBytes += transfer->getDeltaSize();
+            }
         }
 
-        QMutexLocker cacheLock(&mCacheMutex);
-        auto data = onTransferEvent(transfer);
-        if(data)
         {
-            mTransfersToProcess.updateTransfersByTag.insert(transfer->getTag(), data);
-            data->mTemporaryError = true;
+            QMutexLocker cacheLock(&mCacheMutex);
+            auto data = onTransferEvent(transfer);
+            if(data)
+            {
+                mTransfersToProcess.updateTransfersByTag.insert(transfer->getTag(), data);
+                data->mTemporaryError = true;
+            }
         }
     }
 }
@@ -526,7 +541,9 @@ TransfersModel::TransfersModel(QObject *parent) :
     mUiBlockedCounter(0),
     mUiBlockedByCounter(0),
     mCancelledFrom(nullptr),
-    mSyncsInRowsToCancel(false)
+    mSyncsInRowsToCancel(false),
+    mIgnoreMoveSignal(false),
+    mInverseMoveSignal(false)
 {
     qRegisterMetaType<QList<QPersistentModelIndex>>("QList<QPersistentModelIndex>");
     qRegisterMetaType<QAbstractItemModel::LayoutChangeHint>("QAbstractItemModel::LayoutChangeHint");
@@ -1982,6 +1999,16 @@ bool TransfersModel::removeRows(int row, int count, const QModelIndex& parent)
     }
 }
 
+void TransfersModel::ignoreMoveRowsSignal(bool state)
+{
+    mIgnoreMoveSignal = state;
+}
+
+void TransfersModel::inverseMoveRowsSignal(bool state)
+{
+    mInverseMoveSignal = state;
+}
+
 bool TransfersModel::moveRows(const QModelIndex &sourceParent, const QList<int>& rows,
                               const QModelIndex &destinationParent, int destinationChild)
 {
@@ -1989,8 +2016,6 @@ bool TransfersModel::moveRows(const QModelIndex &sourceParent, const QList<int>&
 
     if(!rows.isEmpty())
     {
-        TransferTag tagMoved(-1);
-
         foreach(auto sourceRow, rows)
         {
             //TODO MOVE TO TOP THE SECOND ITEM
@@ -2011,20 +2036,21 @@ bool TransfersModel::moveRows(const QModelIndex &sourceParent, const QList<int>&
                 {
                     auto tag(getTransfer(row)->mTag);
 
-                    if (ascending)
+                    if(tag)
                     {
-                        tagsToMove.push_back(tag);
-                    }
-                    else
-                    {
-                        tagsToMove.push_front(tag);
+                        if (ascending)
+                        {
+                            tagsToMove.push_back(tag);
+                        }
+                        else
+                        {
+                            tagsToMove.push_front(tag);
+                        }
                     }
                 }
 
                 for (auto tag : tagsToMove)
                 {
-                    auto d  = getTransfer(getRowByTransferTag(tag));
-
                     if(destinationChild == -1)
                     {
                         mMegaApi->moveTransferToFirstByTag(tag);
@@ -2038,13 +2064,20 @@ bool TransfersModel::moveRows(const QModelIndex &sourceParent, const QList<int>&
                         // Get target
                         auto target (getTransfer(destinationChild));
 
-                        mMegaApi->moveTransferBeforeByTag(tag, target->mTag);
+                        if(target)
+                        {
+                            mMegaApi->moveTransferBeforeByTag(tag, target->mTag);
+
+                            if(!mIgnoreMoveSignal && mInverseMoveSignal)
+                            {
+                                emit rowsAboutToBeMoved(target->mTag);
+                            }
+                        }
                     }
 
-                    if(tagMoved < 0)
-                    {
+                    if(!mIgnoreMoveSignal && !mInverseMoveSignal)
+                    {  
                         emit rowsAboutToBeMoved(tag);
-                        tagMoved = tag;
                     }
                 }
 

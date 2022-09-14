@@ -496,23 +496,39 @@ bool TransfersManagerSortFilterProxyModel::dropMimeData(const QMimeData *data, Q
 {
     if (destRow >= 0 && destRow <= rowCount() && action == Qt::MoveAction)
     {
+        auto sourceM = dynamic_cast<TransfersModel*>(sourceModel());
+        auto rows = sourceM->getDragAndDropRows(data, destRow);
+
         if(destRow == rowCount())
         {
-            auto sourceM = dynamic_cast<TransfersModel*>(sourceModel());
-            auto rows = sourceM->getDragAndDropRows(data, destRow);
-
             //Move the rows to the second to last, and then move the last to the first tag moved (there is not a method for that on the SDK)
             destRow--;
             QModelIndex proxyIndex = index(destRow, column,parent);
             auto sourceIndex = mapToSource(proxyIndex);
+
             sourceM->moveRows(parent,rows,parent, sourceIndex.row());
+
+            sourceM->ignoreMoveRowsSignal(true);
             sourceM->moveRows(parent, QList<int>() << sourceIndex.row(), parent, rows.first());
+            sourceM->ignoreMoveRowsSignal(false);
+        }
+        else if(destRow == 0)
+        {
+            QModelIndex proxyIndex = index(destRow, column,parent);
+            auto sourceIndex = mapToSource(proxyIndex);
+            sourceM->moveRows(parent, rows , parent, sourceIndex.row());
         }
         else
         {
             QModelIndex proxyIndex = index(destRow, column,parent);
             auto sourceIndex = mapToSource(proxyIndex);
-            TransfersSortFilterProxyBaseModel::dropMimeData(data, action, sourceIndex.row(), column, parent);
+            sourceM->moveRows(parent, rows , parent, sourceIndex.row());
+
+            sourceM->ignoreMoveRowsSignal(true);
+            auto previousProxyIndex = index(destRow -1, column, parent);
+            auto previousSourceIndex = mapToSource(previousProxyIndex);
+            sourceM->moveRows(parent, QList<int>() << previousSourceIndex.row() , parent, rows.first());
+            sourceM->ignoreMoveRowsSignal(false);
         }
     }
 

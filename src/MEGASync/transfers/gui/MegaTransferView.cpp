@@ -998,6 +998,8 @@ void MegaTransferView::moveDownClicked()
         auto sourceTargetIndex = proxy->mapToSource(proxyTargetIndex);
         auto rowTarget = sourceTargetIndex.row();
 
+        sourceModel->inverseMoveRowsSignal(true);
+
         for (int item = 0; item < indexes.size(); ++item)
         {
             auto index = indexes.at(item);
@@ -1016,6 +1018,8 @@ void MegaTransferView::moveDownClicked()
             }
             sourceModel->moveRows(QModelIndex(), QList<int>() << rowTarget, QModelIndex(), sourceIndex.row());
         }
+
+        sourceModel->inverseMoveRowsSignal(false);
     }
 
     clearSelection();
