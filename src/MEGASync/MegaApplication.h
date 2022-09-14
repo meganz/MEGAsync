@@ -441,11 +441,11 @@ protected:
     QPointer<UploadToMegaDialog> uploadFolderSelector;
     QPointer<DownloadFromMegaDialog> downloadFolderSelector;
     mega::MegaHandle fileUploadTarget;
-    QFileDialog *fileUploadSelector;
+    QPointer<QFileDialog> fileUploadSelector;
     mega::MegaHandle folderUploadTarget;
-    QFileDialog *folderUploadSelector;
+    QPointer<QFileDialog> folderUploadSelector;
     QPointer<StreamingFromMegaDialog> streamSelector;
-    MultiQFileDialog *multiUploadFileDialog;
+    QPointer<MultiQFileDialog> multiUploadFileDialog;
 
     QQueue<QString> uploadQueue;
     QQueue<WrappedNode *> downloadQueue;
@@ -490,7 +490,8 @@ protected:
     PasteMegaLinksDialog *pasteMegaLinksDialog;
     ChangeLogDialog *changeLogDialog;
     ImportMegaLinksDialog *importDialog;
-    NodeSelector *downloadNodeSelector;
+    QMessageBox *exitDialog;
+    QPointer<NodeSelector> downloadNodeSelector;
     QString lastTrayMessage;
     QStringList extraLinks;
     QString currentLanguageCode;

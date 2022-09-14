@@ -4986,9 +4986,7 @@ void MegaApplication::uploadActionClickedFromWindow(QWidget* openFrom)
 
     if (multiUploadFileDialog)
     {
-        multiUploadFileDialog->activateWindow();
-        multiUploadFileDialog->raise();
-        return;
+        delete multiUploadFileDialog;
     }
 
     QString  defaultFolderPath;
@@ -5007,6 +5005,8 @@ void MegaApplication::uploadActionClickedFromWindow(QWidget* openFrom)
         return;
     }
 
+    multiUploadFileDialog->deleteLater();
+
     if (multiUploadFileDialog->exec() == QDialog::Accepted)
     {
         QStringList files = multiUploadFileDialog->selectedFiles();
@@ -5020,9 +5020,6 @@ void MegaApplication::uploadActionClickedFromWindow(QWidget* openFrom)
             shellUpload(qFiles);
         }
     }
-
-    delete multiUploadFileDialog;
-    multiUploadFileDialog = nullptr;
 }
 
 bool MegaApplication::showSyncOverquotaDialog()
@@ -5071,28 +5068,26 @@ void MegaApplication::downloadActionClicked()
 
     if (downloadNodeSelector)
     {
-        downloadNodeSelector->activateWindow();
-        downloadNodeSelector->raise();
-        return;
+        delete downloadNodeSelector;
     }
 
     downloadNodeSelector = new NodeSelector(NodeSelector::DOWNLOAD_SELECT, NULL);
     int result = downloadNodeSelector->exec();
+
     if (!downloadNodeSelector)
     {
         return;
     }
 
+    downloadNodeSelector->deleteLater();
+
     if (result != QDialog::Accepted)
     {
-        delete downloadNodeSelector;
-        downloadNodeSelector = NULL;
         return;
     }
 
     QList<MegaHandle> selectedMegaFolderHandles = downloadNodeSelector->getMultiSelectionNodeHandle();
-    delete downloadNodeSelector;
-    downloadNodeSelector = nullptr;
+
     foreach(auto& selectedMegaFolderHandle, selectedMegaFolderHandles)
     {
         MegaNode *selectedNode = megaApi->getNodeByHandle(selectedMegaFolderHandle);
@@ -5362,8 +5357,7 @@ void MegaApplication::processUploads()
     //Files will be uploaded when the user selects the upload folder
     if (uploadFolderSelector)
     {
-        Platform::showBackgroundWindow(uploadFolderSelector);
-        return;
+        delete uploadFolderSelector;
     }
 
     //If there is a default upload folder in the preferences
@@ -5397,6 +5391,8 @@ void MegaApplication::processUploads()
         return;
     }
 
+    uploadFolderSelector->deleteLater();
+
     if (uploadFolderSelector->result()==QDialog::Accepted)
     {
         //If the dialog is accepted, get the destination node
@@ -5408,15 +5404,11 @@ void MegaApplication::processUploads()
             settingsDialog->updateUploadFolder(); //this could be done via observer
         }
 
-        //Do not use deleteLater to remove the delegate listener at the moment
-        delete uploadFolderSelector;
-
         processUploadQueue(nodeHandle);
     }
     //If the dialog is rejected, cancel uploads
     else
     {
-        delete uploadFolderSelector;
         uploadQueue.clear();
     }
 
@@ -5459,8 +5451,7 @@ void MegaApplication::processDownloads()
 
     if (downloadFolderSelector)
     {
-        Platform::showBackgroundWindow(downloadFolderSelector);
-        return;
+        delete downloadFolderSelector;
     }
 
     QString defaultPath = preferences->downloadFolder();
@@ -5496,6 +5487,8 @@ void MegaApplication::processDownloads()
         return;
     }
 
+    downloadFolderSelector->deleteLater();
+
     if (downloadFolderSelector->result()==QDialog::Accepted)
     {
         //If the dialog is accepted, get the destination node
@@ -5513,13 +5506,10 @@ void MegaApplication::processDownloads()
             showInfoDialog();
         }
 
-        delete downloadFolderSelector;
         processDownloadQueue(path);
     }
     else
     {
-        delete downloadFolderSelector;
-
         QQueue<WrappedNode *>::iterator it;
         for (it = downloadQueue.begin(); it != downloadQueue.end(); ++it)
         {
@@ -5530,8 +5520,6 @@ void MegaApplication::processDownloads()
         qDeleteAll(downloadQueue);
         downloadQueue.clear();
     }
-
-    return;
 }
 
 void MegaApplication::logoutActionClicked()
@@ -5727,15 +5715,14 @@ void MegaApplication::externalFileUpload(qlonglong targetFolder)
 
     if (folderUploadSelector)
     {
-        Platform::showBackgroundWindow(folderUploadSelector);
-        return;
+        delete folderUploadSelector;
+        folderUploadSelector = nullptr;
     }
 
     fileUploadTarget = targetFolder;
     if (fileUploadSelector)
     {
-        Platform::showBackgroundWindow(fileUploadSelector);
-        return;
+        delete fileUploadSelector;
     }
 
     fileUploadSelector = new QFileDialog();
@@ -5760,6 +5747,8 @@ void MegaApplication::externalFileUpload(qlonglong targetFolder)
         return;
     }
 
+    fileUploadSelector->deleteLater();
+
     if (fileUploadSelector->result() == QDialog::Accepted)
     {
         QStringList paths = fileUploadSelector->selectedFiles();
@@ -5778,10 +5767,6 @@ void MegaApplication::externalFileUpload(qlonglong targetFolder)
     {
         HTTPServer::onUploadSelectionDiscarded();
     }
-
-    delete fileUploadSelector;
-    fileUploadSelector = NULL;
-    return;
 }
 
 void MegaApplication::externalFolderUpload(qlonglong targetFolder)
@@ -5799,17 +5784,14 @@ void MegaApplication::externalFolderUpload(qlonglong targetFolder)
 
     if (fileUploadSelector)
     {
-        fileUploadSelector->activateWindow();
-        fileUploadSelector->raise();
-        return;
+       delete fileUploadSelector;
+       fileUploadSelector = nullptr;
     }
 
     folderUploadTarget = targetFolder;
     if (folderUploadSelector)
     {
-        folderUploadSelector->activateWindow();
-        folderUploadSelector->raise();
-        return;
+        delete folderUploadSelector;
     }
 
     folderUploadSelector = new QFileDialog();
@@ -5834,6 +5816,8 @@ void MegaApplication::externalFolderUpload(qlonglong targetFolder)
         return;
     }
 
+    folderUploadSelector->deleteLater();
+
     if (folderUploadSelector->result() == QDialog::Accepted)
     {
         QStringList paths = folderUploadSelector->selectedFiles();
@@ -5846,10 +5830,6 @@ void MegaApplication::externalFolderUpload(qlonglong targetFolder)
     {
         HTTPServer::onUploadSelectionDiscarded();
     }
-
-    delete folderUploadSelector;
-    folderUploadSelector = NULL;
-    return;
 }
 
 void MegaApplication::externalFolderSync(qlonglong targetFolder)
