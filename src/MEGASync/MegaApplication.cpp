@@ -5116,7 +5116,7 @@ void MegaApplication::transferManagerActionClicked(int tab)
     }
 
     createTransferManagerDialog();
-    mTransferManager->setActiveTab(tab);
+    mTransferManager->toggleTab(tab);
 
     mTransferManagerGeometryRetainer.showDialog(mTransferManager);
 }

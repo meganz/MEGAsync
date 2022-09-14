@@ -650,7 +650,7 @@ QToolButton
              </sizepolicy>
             </property>
             <property name="text">
-             <string/>
+             <string notr="true"/>
             </property>
             <property name="frame">
              <bool>false</bool>
@@ -2291,7 +2291,7 @@ QToolButton
                   </size>
                  </property>
                  <property name="text">
-                  <string/>
+                  <string notr="true"/>
                  </property>
                 </widget>
                </item>
@@ -2804,7 +2804,7 @@ QToolButton
                    <item alignment="Qt::AlignRight">
                     <widget class="QLabel" name="lAllResultsCounter">
                      <property name="text">
-                      <string/>
+                      <string notr="true"/>
                      </property>
                     </widget>
                    </item>
@@ -2857,7 +2857,7 @@ QToolButton
                    <item alignment="Qt::AlignRight">
                     <widget class="QLabel" name="lDlResultsCounter">
                      <property name="text">
-                      <string/>
+                      <string notr="true"/>
                      </property>
                     </widget>
                    </item>
@@ -2910,7 +2910,7 @@ QToolButton
                    <item alignment="Qt::AlignRight">
                     <widget class="QLabel" name="lUlResultsCounter">
                      <property name="text">
-                      <string/>
+                      <string notr="true"/>
                      </property>
                     </widget>
                    </item>

@@ -636,7 +636,7 @@ QGroupBox::title
              </sizepolicy>
             </property>
             <property name="text">
-             <string/>
+             <string notr="true"/>
             </property>
             <property name="frame">
              <bool>false</bool>
@@ -2298,7 +2298,7 @@ QGroupBox::title
                   </size>
                  </property>
                  <property name="text">
-                  <string/>
+                  <string notr="true"/>
                  </property>
                 </widget>
                </item>
@@ -2838,7 +2838,7 @@ QGroupBox::title
                    <item>
                     <widget class="QLabel" name="lAllResultsCounter">
                      <property name="text">
-                      <string/>
+                      <string notr="true"/>
                      </property>
                     </widget>
                    </item>
@@ -2897,7 +2897,7 @@ QGroupBox::title
                    <item>
                     <widget class="QLabel" name="lDlResultsCounter">
                      <property name="text">
-                      <string/>
+                      <string notr="true"/>
                      </property>
                     </widget>
                    </item>
@@ -2956,7 +2956,7 @@ QGroupBox::title
                    <item>
                     <widget class="QLabel" name="lUlResultsCounter">
                      <property name="text">
-                      <string/>
+                      <string notr="true"/>
                      </property>
                     </widget>
                    </item>
