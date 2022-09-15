@@ -21,7 +21,7 @@
     <message>
         <source>Storage</source>
         <translatorcomment>Label to indicate the section of used storage of the current account.</translatorcomment>
-        <translation>Хранилище</translation>
+        <translation>Хранилище данных</translation>
     </message>
     <message>
         <source>Transfer</source>
@@ -1649,7 +1649,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Transfer</source>
         <translatorcomment>Label to indicate the transfer quota section of current account</translatorcomment>
-        <translation>Передача</translation>
+        <translation>Передача данных</translation>
     </message>
     <message>
         <source>Open notification settings</source>

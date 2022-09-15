@@ -3055,8 +3055,8 @@ Tất cả các phiên truyền tải đã hoàn tất của bạn sẽ bị d�
         <source>Clear transfers?
 All your completed transfers in this category will be cleared.</source>
         <translatorcomment>Messagebox text to confirm if the user wants to clear all the transfers in a category other than the completed category</translatorcomment>
-        <translation>Hủy các phiên truyền tải?
-Tất cả các phiên truyền tải đã hoàn tất trong loại này sẽ bị dọn dẹp.</translation>
+        <translation>Dọn dẹp các phiên truyền tải?
+Tất cả các phiên truyền tải đã hoàn tất trong loại này sẽ bị dọn đi.</translation>
     </message>
     <message>
         <source>Cancel transfers?
@@ -3123,7 +3123,7 @@ Các phiên truyền tải đồng bộ chưa có hoàn tất bạn đã chọn 
     <message>
         <source>Yes, clear</source>
         <translatorcomment>Dialog button to do the proposed actions (clear the transfers)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>OK, dọn</translation>
     </message>
 </context>
 <context>
@@ -3675,7 +3675,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Preferences</source>
         <translatorcomment>Label to indicate the Preferences option for the application (MacOS)</translatorcomment>
-        <translation>Tùy chỉnh</translation>
+        <translation>Tùy Chỉnh</translation>
     </message>
     <message>
         <source>Quit</source>
@@ -3741,7 +3741,8 @@ Xin xóa đi thư mục đồng bộ trong trang thiết đặt đẻ có thể 
         <source>Sync transfers cannot be cancelled individually.
 Please delete the folder sync from preferences to cancel them.</source>
         <translatorcomment>Explains that the sync transfers cannot be cancelled individually. (for macOS)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Các phiên đồng bộ không thể hủy bằng cách riêng rẽ được.
+Xin xóa đi thư mục đồng bộ trong trang tùy chỉnh đẻ có thể hủy bỏ.</translation>
     </message>
 </context>
 <context>
