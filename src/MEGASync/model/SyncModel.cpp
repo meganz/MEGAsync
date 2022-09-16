@@ -380,15 +380,22 @@ QStringList SyncModel::getCloudDriveSyncMegaFolders(bool cloudDrive)
         for (auto &cs : configuredSyncs[type])
         {
             QString megaFolder = configuredSyncsMap[cs]->getMegaFolder();
-            auto node = std::unique_ptr<MegaNode>(megaApi->getNodeByPath(megaFolder.toUtf8().constData()));
-            auto rootNode = std::unique_ptr<MegaNode>(megaApi->getRootNode(node.get()));
-            if (rootNode)
+            auto parent_node = std::unique_ptr<MegaNode>(megaApi->getNodeByPath(megaFolder.toStdString().data()));
+
+            while(parent_node && parent_node->getParentHandle() != INVALID_HANDLE)
             {
-                if ((!cloudDrive && rootNode->isInShare())
-                        || (cloudDrive && MegaSyncApp->getRootNode()->getHandle() == rootNode->getHandle()))
-                {
-                    value.append(megaFolder.append(QLatin1Char('/')));
-                }
+                parent_node = std::unique_ptr<MegaNode>(megaApi->getNodeByHandle(parent_node->getParentHandle()));
+            }
+
+            if(!parent_node)
+            {
+                continue;
+            }
+
+            if((parent_node->isInShare() && !cloudDrive)
+                    || (megaApi->getRootNode()->getHandle() == parent_node->getHandle() && cloudDrive))
+            {
+                value.append(megaFolder.append(QLatin1Char('/')));
             }
         }
     }

@@ -229,7 +229,6 @@ signals:
     void nodeAttributesChanged(mega::MegaHandle handle);
     void blocked();
     void storageStateChanged(int);
-    void avatarReady();
     void pauseStateChanged();
     void addBackup();
 
@@ -555,6 +554,8 @@ protected:
 
     ScanStageController scanStageController;
     DialogGeometryRetainer<TransferManager> mTransferManagerGeometryRetainer;
+
+    bool mDisableGfx;
 
 private:
 #ifdef _WIN32

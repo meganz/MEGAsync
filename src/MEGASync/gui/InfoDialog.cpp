@@ -114,7 +114,6 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
     connect(ui->bTransferManager, SIGNAL(dlAreaHovered(QMouseEvent *)), this, SLOT(dlAreaHovered(QMouseEvent *)));
 
     connect(ui->wSortNotifications, SIGNAL(clicked()), this, SLOT(onActualFilterClicked()));
-    connect(app, &MegaApplication::avatarReady, this, &InfoDialog::setAvatar);
 
     connect(app->getTransfersModel(), &TransfersModel::transfersCountUpdated, this, &InfoDialog::updateTransfersCount);
     connect(app->getTransfersModel(), &TransfersModel::transfersProcessChanged, this, &InfoDialog::onTransfersStateChanged);
@@ -262,6 +261,7 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
 
     if (preferences->logged())
     {
+        setAvatar();
         setUsage();
     }
     else
@@ -400,12 +400,7 @@ void InfoDialog::hideEvent(QHideEvent *event)
 
 void InfoDialog::setAvatar()
 {
-    const char *email = megaApi->getMyEmail();
-    if (email)
-    {
-        ui->bAvatar->setUserEmail(email);
-        delete [] email;
-    }
+    ui->bAvatar->setUserEmail(preferences->email().toUtf8().constData());
 }
 
 void InfoDialog::setUsage()

@@ -91,18 +91,23 @@ void Avatar::onFullNameAttributeReady()
 
 void Avatar::fillLetterInfo()
 {
-    if(mFullName && mFullName->isAttributeReady())
+    if (mFullName)
     {
-        auto name = mFullName->getFirstName();
+        auto name = mFullName->getFullName();
         if(!name.isEmpty())
         {
-            mLetterAvatarInfo.letter = name.toUpper().at(0);
+            auto c (name.cbegin());
+            mLetterAvatarInfo.letter = c->toUpper();
+            if (c->isHighSurrogate() && ++c != name.cend() && c->isLowSurrogate())
+            {
+                mLetterAvatarInfo.letter += *c;
+            }
         }
     }
 
     if(mLetterAvatarInfo.isEmpty())
     {
-        mLetterAvatarInfo.letter = getEmail().toUpper().at(0);
+        mLetterAvatarInfo.letter = getEmail().at(0).toUpper();
     }
 }
 

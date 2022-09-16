@@ -60,18 +60,14 @@ void FullName::updateAttributes(mega::MegaUser *user)
     bool hasFirstnameChanged = user->hasChanged(mega::MegaUser::CHANGE_TYPE_FIRSTNAME);
     bool hasLastnameChanged = user->hasChanged(mega::MegaUser::CHANGE_TYPE_LASTNAME);
 
-    if(hasFirstnameChanged || hasLastnameChanged)
+    if (hasFirstnameChanged)
     {
-        if (hasFirstnameChanged)
-        {
-            requestFirstNameAttribute();
+        requestFirstNameAttribute();
+    }
 
-        }
-
-        if(hasLastnameChanged)
-        {
-            requestLastNameAttribute();
-        }
+    if(hasLastnameChanged)
+    {
+        requestLastNameAttribute();
     }
 }
 

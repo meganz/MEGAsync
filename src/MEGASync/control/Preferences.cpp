@@ -1,6 +1,7 @@
 #include "model/SyncModel.h"
 #include "Preferences.h"
 #include "platform/Platform.h"
+#include "UserAttributesRequests/FullName.h"
 
 #include <QDesktopServices>
 #include <assert.h>
@@ -228,7 +229,7 @@ bool Preferences::HTTPS_ORIGIN_CHECK_ENABLED = true;
     #if defined(__arm64__)
         const QString Preferences::UPDATE_CHECK_URL                 = QString::fromUtf8("http://g.static.mega.co.nz/upd/msyncarm64/v.txt");
     #else
-        const QString Preferences::UPDATE_CHECK_URL                 = QString::fromUtf8("http://g.static.mega.co.nz/upd/msync/v.txt");
+        const QString Preferences::UPDATE_CHECK_URL                 = QString::fromUtf8("http://g.static.mega.co.nz/upd/msyncv2/v.txt"); //Using msyncv2 to serve new updates and avoid keeping loader leftovers
     #endif
 #endif
 
@@ -2792,6 +2793,13 @@ void Preferences::setEmailAndGeneralSettings(const QString &email)
     this->setProxyPassword(proxyPassword);
 }
 
+void Preferences::monitorUserAttributes()
+{
+    assert(logged());
+    // Setup FIRST_NAME and LAST_NAME monitoring
+    updateFullName();
+}
+
 void Preferences::login(QString account)
 {
     mutex.lock();
@@ -3221,4 +3229,26 @@ void Preferences::overridePreferences(const QSettings &settings)
     overridePreference(settings, QString::fromUtf8("MUTEX_STEALER_MS"), Preferences::MUTEX_STEALER_MS);
     overridePreference(settings, QString::fromUtf8("MUTEX_STEALER_PERIOD_MS"), Preferences::MUTEX_STEALER_PERIOD_MS);
     overridePreference(settings, QString::fromUtf8("MUTEX_STEALER_PERIOD_ONLY_ONCE"), Preferences::MUTEX_STEALER_PERIOD_ONLY_ONCE);
+}
+
+void Preferences::updateFullName(QString)
+{
+    auto fullNameRequest (UserAttributes::UserAttributesManager::instance()
+                      .requestAttribute<UserAttributes::FullName>(email().toUtf8().constData()));
+    connect(fullNameRequest.get(), &UserAttributes::FullName::attributeReady,
+            this, &Preferences::updateFullName, Qt::UniqueConnection);
+
+    if (fullNameRequest->isAttributeReady())
+    {
+        auto newFirstName (fullNameRequest->getFirstName());
+        auto newLastName (fullNameRequest->getLastName());
+        if (newFirstName != firstName())
+        {
+            setFirstName(newFirstName);
+        }
+        if (newLastName != lastName())
+        {
+            setLastName(newLastName);
+        }
+    }
 }

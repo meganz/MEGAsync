@@ -1,5 +1,8 @@
 #include "UserAttributesManager.h"
 
+#include "MegaApplication.h"
+#include "Utilities.h"
+
 #include "megaapi.h"
 #include "mega/types.h"
 
