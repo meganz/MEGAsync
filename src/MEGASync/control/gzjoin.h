@@ -483,17 +483,13 @@ local void gzcopy(GZJOIN_PATH_CHAR_T *name, int clr, unsigned long *crc, unsigne
             /* even -- append 1, 2, or 3 empty fixed blocks */
             switch (pos) {
             case 6:
-            {
                 putc(last | 8, out);
                 last = 0;
-                break;
-            }
+            // fall through
             case 4:
-            {
                 putc(last | 0x20, out);
                 last = 0;
-                break;
-            }
+                // fall through
             case 2:
                 putc(last | 0x80, out);
                 putc(0, out);
