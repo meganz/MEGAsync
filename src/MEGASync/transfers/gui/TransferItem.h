@@ -128,6 +128,7 @@ public:
     bool isCompleted() const;
     bool isCompleting() const;
     bool isFailed() const;
+    bool isCancelled() const;
     int64_t getRawFinishedTime() const;
     int64_t getSecondsSinceFinished() const;
     QString getFormattedFinishedTime() const;
