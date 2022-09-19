@@ -443,12 +443,12 @@
     <message>
         <source>Use HTTPS for transfers that don&apos;t start</source>
         <translatorcomment>Checkbox label to set the option to use https for transfer connections.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Gunakan HTTPS untuk transfer yang tidak dimulai</translation>
     </message>
     <message>
         <source>Only enable this option if tranfers don&apos;t start. Under all other circumstances, using HTTP is satisfactory as MEGA already encrypts all data.</source>
         <translatorcomment>Description label about the option Use HTTPS for transfers that don&amp;apos;t start checkbox.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Hanya aktifkan opsi ini jika transfer tidak dimulai. Dalam semua keadaan lain, menggunakan HTTP memuaskan karena MEGA sudah mengenkripsi semua data.</translation>
     </message>
 </context>
 <context>
@@ -623,7 +623,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Cancel transfers?</source>
         <translatorcomment>Dialog main text</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Batalkan transfer?</translation>
     </message>
     <message>
         <source>Transfers not yet processed will be cancelled.</source>
@@ -1069,7 +1069,7 @@ Dalam beberapa kasus, mereka mungkin berisi detail tentang data anda, seperti na
     <message>
         <source>A folder named [A] already exists at this destination</source>
         <translatorcomment>Dialog text shown when a folder with the same name has been found on the cloud. [A] folder name</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Folder bernama [A] sudah ada di tujuan ini </translation>
     </message>
     <message>
         <source>The new folder will be merged with the folder at this destination.</source>
@@ -1079,12 +1079,12 @@ Dalam beberapa kasus, mereka mungkin berisi detail tentang data anda, seperti na
     <message>
         <source>The folder at this destination will be maintained.</source>
         <translatorcomment>Text explaining the result of the folder skip action</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Folder di tujuan ini akan dipertahankan.</translation>
     </message>
     <message>
         <source>A file named [A] already exists at this destination</source>
         <translatorcomment>Dialog text shown when a file with the same name has been found on the cloud. [A] file name</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Sebuah file bernama [A]sudah ada di tujuan ini </translation>
     </message>
     <message>
         <source>The file at this destination will be replaced with the new file.</source>
@@ -1099,7 +1099,7 @@ Dalam beberapa kasus, mereka mungkin berisi detail tentang data anda, seperti na
     <message>
         <source>The file at this destination will be maintained.</source>
         <translatorcomment>Text explaining the result of the fileip action</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>File di tujuan ini akan dipertahankan.</translation>
     </message>
     <message>
         <source>Folder already exists</source>
@@ -1114,12 +1114,12 @@ Dalam beberapa kasus, mereka mungkin berisi detail tentang data anda, seperti na
     <message numerus="yes">
         <source>Apply to all %1 duplicates</source>
         <translatorcomment>Checkbox text to apply the action to all the following conflicts. %1 is the number of conflicts</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>Terapkan ke semua %1 duplikat</numerusform></translation>
     </message>
     <message>
         <source>The file at this destination will be updated with a new version.</source>
         <translatorcomment>Text explaining the result of the file upload and update action</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>File di tujuan ini akan diperbarui dengan versi baru.</translation>
     </message>
 </context>
 <context>
@@ -1162,12 +1162,12 @@ Dalam beberapa kasus, mereka mungkin berisi detail tentang data anda, seperti na
     <message>
         <source>loading time…</source>
         <translatorcomment>Text shown while the local file/folder modified time is calculated</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>memuat waktu…</translation>
     </message>
     <message>
         <source>loading size…</source>
         <translatorcomment>Text shown while the local file/folder size is calculated</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>memuat ukuran…</translation>
     </message>
     <message>
         <source>Learn more</source>
@@ -1779,7 +1779,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Folder can&apos;t be opened. Check that the folder in your local drive hasn&apos;t been deleted or moved.</source>
         <translatorcomment>Warning message text to let the user know that the local folder could not be opened</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Folder tidak dapat dibuka. Periksa apakah folder di drive lokal anda belum dihapus atau dipindahkan.</translation>
     </message>
 </context>
 <context>
@@ -1797,12 +1797,12 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Failed: %1</source>
         <translatorcomment>Tooltip for show transfer failed reason. %1 is a placeholder for the SDK error reason.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Gagal: %1</translation>
     </message>
     <message>
         <source>Copy link to file</source>
         <translatorcomment>Tooltip for copy linr</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Salin tautan ke file</translation>
     </message>
     <message>
         <source>Added [A]</source>
@@ -2477,17 +2477,18 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>There is an active transfer. Exit the app?
 Transfer will automatically resume when you re-open the app.</source>
         <translatorcomment>Messagebox text to let the user know that there are active transfers when closing the app. The user will be able to exit and pause them, or stop the exit action.</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>Ada transfer aktif. Keluar dari aplikasi?
+Transfer akan dilanjutkan secara otomatis saat anda membuka kembali aplikasi.</numerusform></translation>
     </message>
     <message>
         <source>Exit app</source>
         <translatorcomment>One of the messagebox options: Close the app and pause the active transfers</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Keluar dari aplikasi</translation>
     </message>
     <message>
         <source>Stay in app</source>
         <translatorcomment>One of the messagebox options: Keep the app open and continue with the active transfers</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Tetap di aplikasi</translation>
     </message>
 </context>
 <context>
@@ -2984,76 +2985,85 @@ Transfer will automatically resume when you re-open the app.</source>
     <message>
         <source>Error opening file</source>
         <translatorcomment>Text on an error messagebox because a local file could not be opened</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Kesalahan membuka file</translation>
     </message>
     <message numerus="yes">
         <source>Pause transfer</source>
         <translatorcomment>Context menu action to pause transfer</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>Jeda transfer</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Resume transfer</source>
         <translatorcomment>Context menu action to resume transfer</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>Lanjutkan transfer</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Cancel transfer</source>
         <translatorcomment>Context menu action to cancel transfer</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>Batalkan transfer</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Clear transfer</source>
         <translatorcomment>Tooltip for the clear button in a transfer row</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>Hapus transfer</numerusform></translation>
     </message>
     <message>
         <source>Cancel transfers?
 All your transfers will be cancelled.</source>
         <translatorcomment>Messagebox text to confirm if the user wants to cancel all the transfers in the all transfers category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Batalkan transfer?
+Semua transfer anda akan dibatalkan.</translation>
     </message>
     <message>
         <source>Cancel transfers?
 All your transfers in this category will be cancelled and cleared.</source>
         <translatorcomment>Messagebox text to confirm if the user wants to cancel and clear all the transfers in a category other than all transfers category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Batalkan transfer?
+Semua transfer anda dalam kategori ini akan dibatalkan dan dihapus.</translation>
     </message>
     <message>
         <source>Cancel transfers?
 All your transfers in this category will be cancelled.</source>
         <translatorcomment>Messagebox text to confirm if the user wants to cancel all the transfers in a category other than all transfers category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Batalkan transfer?
+Semua transfer anda dalam kategori ini akan dibatalkan.</translation>
     </message>
     <message>
         <source>Cancel transfers?
 Your incomplete sync transfers won&apos;t be cancelled.</source>
         <translatorcomment>Messagebox text to confirm if the user wants to cancel all the transfers in a category other than all transfers category but there are sync transfers(they cannot be cancelled)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Batalkan transfer?
+Transfer sinkronisasi anda yang tidak lengkap tidak akan dibatalkan.</translation>
     </message>
     <message>
         <source>Cancel transfers?
 Your incomplete sync transfers won't be cancelled
 All the other transfers will be cancelled and cleared.</source>
         <translatorcomment>Messagebox text to confirm if the user wants to cancel and clear all the transfers in a category other than all transfers category but there are sync transfers(they cannot be cancelled)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Batalkan transfer?
+Transfer sinkronisasi anda yang tidak lengkap tidak akan dibatalkan
+Semua transfer lainnya akan dibatalkan dan dibersihkan.</translation>
     </message>
     <message>
         <source>Clear transfers?
 All your completed transfers will be cleared.</source>
         <translatorcomment>Messagebox text to confirm if the user wants to clear all the transfers in the completed category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Hapus transfer?
+Semua transfer anda yang telah selesai akan dihapus.</translation>
     </message>
     <message>
         <source>Clear transfers?
 All your completed transfers in this category will be cleared.</source>
         <translatorcomment>Messagebox text to confirm if the user wants to clear all the transfers in a category other than the completed category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Hapus transfer?
+Semua transfer anda yang telah selesai dalam kategori ini akan dihapus.</translation>
     </message>
     <message>
         <source>Cancel transfers?
 All your selected transfers will be cancelled.</source>
         <translatorcomment>Messagebox text to confirm if the user wants to cancel all the selected transfers</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Batalkan transfer?
+Semua transfer yang anda pilih akan dibatalkan.</translation>
     </message>
     <message>
         <source>Cancel transfers?

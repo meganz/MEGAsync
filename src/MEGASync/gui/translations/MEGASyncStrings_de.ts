@@ -5722,7 +5722,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Other</source>
         <translatorcomment>Categories for other type transfers</translatorcomment>
-        <translation>andere</translation>
+        <translation>Andere</translation>
     </message>
     <message>
         <source>Up to date</source>
