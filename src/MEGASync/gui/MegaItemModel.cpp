@@ -411,7 +411,9 @@ QVariant MegaItemModel::getText(const QModelIndex &index, MegaItem *item) const
 
 void MegaItemModel::fillRootItems()
 {
+    beginResetModel();
     mRootItems = getRootItems();
+    endResetModel();
 }
 
 MegaItemModel::~MegaItemModel()
@@ -471,9 +473,6 @@ MegaItemModelCloudDrive::MegaItemModelCloudDrive(QObject *parent)
     , mDelegateListener(mega::make_unique<QTMegaRequestListener>(MegaSyncApp->getMegaApi(), this))
 {
     MegaApi* megaApi = MegaSyncApp->getMegaApi();
-    auto root = std::unique_ptr<MegaNode>(megaApi->getRootNode());
-    mRootItems.append(new MegaItem(move(root)));
-
     megaApi->getCameraUploadsFolder(mDelegateListener.get());
     megaApi->getCameraUploadsFolderSecondary(mDelegateListener.get());
     megaApi->getMyChatFilesFolder(mDelegateListener.get());
@@ -481,8 +480,6 @@ MegaItemModelCloudDrive::MegaItemModelCloudDrive(QObject *parent)
 
 MegaItemModelCloudDrive::~MegaItemModelCloudDrive()
 {
-    qDeleteAll(mRootItems);
-    mRootItems.clear();
 }
 
 void MegaItemModelCloudDrive::onRequestFinish(mega::MegaApi *api, mega::MegaRequest *request, mega::MegaError *e)
@@ -522,26 +519,16 @@ void MegaItemModelCloudDrive::onRequestFinish(mega::MegaApi *api, mega::MegaRequ
 
 QList<MegaItem *> MegaItemModelCloudDrive::getRootItems() const
 {
-    return mRootItems;
+    MegaApi* megaApi = MegaSyncApp->getMegaApi();
+    auto root = std::unique_ptr<MegaNode>(megaApi->getRootNode());
+    QList<MegaItem*> rootItems;
+    rootItems.append(new MegaItem(move(root)));
+    return rootItems;
 }
 
 MegaItemModelIncomingShares::MegaItemModelIncomingShares(QObject *parent)
     : MegaItemModel(parent)
 {
-    MegaApi* megaApi = MegaSyncApp->getMegaApi();
-
-    auto folders = std::unique_ptr<MegaNodeList>(megaApi->getInShares());
-
-    //incoming shares
-    for (int j = 0; j < folders->size(); j++)
-    {
-        auto folder = std::unique_ptr<MegaNode>(folders->get(j)->copy());
-        auto user = std::unique_ptr<MegaUser>(megaApi->getUserFromInShare(folder.get()));
-        MegaItem* item = new MegaItem(move(folder));
-        item->setOwner(move(user));
-        connect(item, &MegaItem::infoUpdated, this, &MegaItemModelIncomingShares::onItemInfoUpdated);
-        mRootItems.append(item);
-    }
 }
 
 void MegaItemModelIncomingShares::onItemInfoUpdated(int role)
@@ -570,11 +557,24 @@ void MegaItemModelIncomingShares::onItemInfoUpdated(int role)
 
 MegaItemModelIncomingShares::~MegaItemModelIncomingShares()
 {
-    qDeleteAll(mRootItems);
-    mRootItems.clear();
 }
 
 QList<MegaItem *> MegaItemModelIncomingShares::getRootItems() const
 {
-    return mRootItems;
+    MegaApi* megaApi = MegaSyncApp->getMegaApi();
+
+    auto folders = std::unique_ptr<MegaNodeList>(megaApi->getInShares());
+
+    //incoming shares
+    QList<MegaItem*> rootItems;
+    for (int j = 0; j < folders->size(); j++)
+    {
+        auto folder = std::unique_ptr<MegaNode>(folders->get(j)->copy());
+        auto user = std::unique_ptr<MegaUser>(megaApi->getUserFromInShare(folder.get()));
+        MegaItem* item = new MegaItem(move(folder));
+        item->setOwner(move(user));
+        connect(item, &MegaItem::infoUpdated, this, &MegaItemModelIncomingShares::onItemInfoUpdated);
+        rootItems.append(item);
+    }
+    return rootItems;
 }

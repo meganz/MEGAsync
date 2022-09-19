@@ -10,19 +10,7 @@ MegaItemProxyModel::MegaItemProxyModel(QObject* parent) :
     mCollator.setCaseSensitivity(Qt::CaseInsensitive);
     mCollator.setNumericMode(true);
     mCollator.setIgnorePunctuation(false);
-   // setRecursiveFilteringEnabled(true);
-}
-
-void MegaItemProxyModel::showOnlyCloudDrive()
-{
-    mFilter.showOnlyCloudDrive();
-    invalidateFilter();
-}
-
-void MegaItemProxyModel::showOnlyInShares(bool isSyncSelect)
-{
-    mFilter.showOnlyInShares(isSyncSelect);
-    invalidateFilter();
+    setRecursiveFilteringEnabled(true);
 }
 
 void MegaItemProxyModel::showReadOnlyFolders(bool value)
@@ -39,8 +27,11 @@ void MegaItemProxyModel::showReadWriteFolders(bool value)
 
 void MegaItemProxyModel::showOwnerColumn(bool value)
 {
-    mFilter.showOwnerColumn = value;
-    invalidateFilter();
+    if(mFilter.showOwnerColumn != value)
+    {
+        mFilter.showOwnerColumn = value;
+        invalidateFilter();
+    }
 }
 
 void MegaItemProxyModel::setTextFilter(const QString &textFilter)
@@ -135,16 +126,6 @@ void MegaItemProxyModel::removeNode(const QModelIndex& item)
     }
 }
 
-bool MegaItemProxyModel::isShowOnlyInShares()
-{
-    return mFilter.isShowOnlyInShares();
-}
-
-bool MegaItemProxyModel::isShowOnlyCloudDrive()
-{
-    return mFilter.isShowOnlyCloudDrive();
-}
-
 bool MegaItemProxyModel::lessThan(const QModelIndex &left, const QModelIndex &right) const
 {
     bool lIsFile = left.data(toInt(MegaItemModelRoles::IS_FILE_ROLE)).toBool();
@@ -204,10 +185,9 @@ bool MegaItemProxyModel::filterAcceptsRow(int sourceRow, const QModelIndex &sour
                     }
                }
 
-               bool accept = ((node->isInShare() && mFilter.showInShares)
-                              || (!node->isInShare() && mFilter.showCloudDrive));
+               bool accept = true;
 
-               if(accept && !mFilter.textFilter.isEmpty() && !megaItem->isRoot())
+               if(accept && !mFilter.textFilter.isEmpty())
                {
                   accept = QString::fromUtf8(node->getName()).contains(mFilter.textFilter, Qt::CaseInsensitive);
                }
@@ -229,7 +209,7 @@ bool MegaItemProxyModel::filterAcceptsColumn(int sourceColumn, const QModelIndex
     case MegaItemModel::COLUMN::DATE:
         return true;
     case MegaItemModel::COLUMN::USER:
-        return mFilter.showInShares && mFilter.showOwnerColumn;
+        return  mFilter.showOwnerColumn;
     }
     return false;
 }

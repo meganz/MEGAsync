@@ -55,6 +55,12 @@ protected:
     void mousePressEvent(QMouseEvent* event) override;
     void changeEvent(QEvent* event) override;
     bool eventFilter(QObject *o, QEvent *e) override;
+    void setTitle(const QString& title);
+    QModelIndex getParentIncomingShareByIndex(QModelIndex idx);
+
+    Ui::NodeSelectorTreeViewWidget *ui;
+    std::unique_ptr<MegaItemProxyModel> mProxyModel;
+
 
 private slots:
     void onSelectionChanged(const QItemSelection& selected, const QItemSelection& deselected);
@@ -82,24 +88,21 @@ private:
       void appendToForward(const mega::MegaHandle& handle);
     };
 
-    Ui::NodeSelectorTreeViewWidget *ui;
     int mSelectMode;
     mega::MegaApi* mMegaApi;
     bool mManuallyResizedColumn;
     Navigation mNavigationInfo;
     std::unique_ptr<mega::QTMegaRequestListener> mDelegateListener;
-    std::unique_ptr<MegaItemProxyModel> mProxyModel;
     std::unique_ptr<MegaItemModel> mModel;
 
     bool isAllowedToEnterInIndex(const QModelIndex &idx);
     QModelIndex getSelectedIndex();
     void checkBackForwardButtons();
     void setRootIndex(const QModelIndex& proxy_idx);
+    virtual void setRootIndex_Reimplementation(const QModelIndex& source_idx){Q_UNUSED(source_idx)};
     mega::MegaHandle getHandleByIndex(const QModelIndex& idx);
     QModelIndex getIndexFromHandle(const mega::MegaHandle &handle);
     void checkNewFolderButtonVisibility();
-    QModelIndex getParentIncomingShareByIndex(QModelIndex idx);
-    bool isCloudDrive(){return true;}
     virtual QString getRootText() = 0;
     virtual std::unique_ptr<MegaItemModel> getModel() = 0;
 };
@@ -114,6 +117,7 @@ public:
 private:
     QString getRootText() override;
     std::unique_ptr<MegaItemModel> getModel() override;
+    void setRootIndex_Reimplementation(const QModelIndex& source_idx) override;
 };
 
 class NodeSelectorTreeViewWidgetIncomingShares : public NodeSelectorTreeViewWidget
@@ -126,6 +130,7 @@ public:
 private:
     QString getRootText() override;
     std::unique_ptr<MegaItemModel> getModel() override;
+    void setRootIndex_Reimplementation(const QModelIndex& source_idx) override;
 };
 #endif // NODESELECTORTREEVIEWWIDGET_H
 

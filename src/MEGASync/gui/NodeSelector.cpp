@@ -58,6 +58,7 @@ NodeSelector::NodeSelector(int selectMode, QWidget *parent) :
         QShortcut *shortcut = new QShortcut(QKeySequence(QString::fromLatin1("Ctrl+%1").arg(i+1)), this);
         QObject::connect(shortcut, &QShortcut::activated, this, [=](){ onTabSelected(i); });
     }
+    onbShowCloudDriveClicked();
 }
 
 NodeSelector::~NodeSelector()
@@ -74,7 +75,6 @@ void NodeSelector::nodesReady()
         return;
     }
 
-    ui->stackedWidget->setProperty("SelectionMode", mSelectMode);
     switch(mSelectMode)
     {
     case NodeSelector::SYNC_SELECT:
@@ -211,27 +211,11 @@ void NodeSelector::onbOkClicked()
 void NodeSelector::onbShowIncomingSharesClicked()
 {
     ui->stackedWidget->setCurrentIndex(SHARES);
-//    if(mProxyModel)
-//    {
-//        saveExpandedItems();
-//        mProxyModel->showOnlyInShares(mSelectMode == NodeSelector::SYNC_SELECT);
-//        restoreExpandedItems();
-//        checkNewFolderButtonVisibility();
-//        checkBackForwardButtons();
-//    }
 }
 
 void NodeSelector::onbShowCloudDriveClicked()
 {
     ui->stackedWidget->setCurrentIndex(CLOUD_DRIVE);
-//    if(mProxyModel)
-//    {
-//        saveExpandedItems();
-//        mProxyModel->showOnlyCloudDrive();
-//        restoreExpandedItems();
-//        checkNewFolderButtonVisibility();
-//        checkBackForwardButtons();
-//    }
 }
 
 void NodeSelector::onTabSelected(int index)
@@ -258,71 +242,6 @@ void NodeSelector::onTabSelected(int index)
             break;
     }
 }
-
-//REQUIRED WITH NEW ARCHITECTURE?
-//void NodeSelector::saveExpandedItems()
-//{
-//    auto node = mProxyModel->getNode(ui->tMegaFolders->rootIndex());
-
-//    if(isCloudDrive())
-//    {
-//        mNavCloudDrive.rootHandle = node? node->getHandle() : INVALID_HANDLE;
-//        iterateForSaveExpanded(mNavCloudDrive.expandedHandles);
-//    }
-//    else
-//    {
-//        mNavInShares.rootHandle  = node? node->getHandle() : INVALID_HANDLE;
-//        iterateForSaveExpanded(mNavInShares.expandedHandles);
-//    }
-//}
-
-//REQUIRED WITH NEW ARCHITECTURE?
-//void NodeSelector::iterateForSaveExpanded(QList<MegaHandle> &saveList, const QModelIndex& parent)
-//{
-//    for(int i=0; i < mProxyModel->rowCount(parent); ++i)
-//    {
-//        auto idx = mProxyModel->index(i, 0, parent);
-//        if(idx.isValid() && ui->tMegaFolders->isExpanded(idx))
-//        {
-//            saveList.append(mProxyModel->getNode(idx)->getHandle());
-//            iterateForSaveExpanded(saveList, idx);
-//        }
-//    }
-//}
-
-//void NodeSelector::restoreExpandedItems()
-//{
-//    if(isCloudDrive())
-//    {
-//        auto idx = mProxyModel->getIndexFromHandle(mNavCloudDrive.rootHandle);
-//        setRootIndex(idx);
-//        iterateForRestore(mNavCloudDrive.expandedHandles);
-//        mNavCloudDrive.expandedHandles.clear();
-//    }
-//    else
-//    {
-//        auto idx = mProxyModel->getIndexFromHandle(mNavInShares.rootHandle);
-//        setRootIndex(idx);
-//        iterateForRestore(mNavInShares.expandedHandles);
-//        mNavInShares.expandedHandles.clear();
-//    }
-//}
-
-//void NodeSelector::iterateForRestore(const QList<MegaHandle> &list, const QModelIndex &parent)
-//{
-//    if(list.isEmpty())
-//        return;
-
-//    for(int i=0; i < mProxyModel->rowCount(parent); ++i)
-//    {
-//        auto idx = mProxyModel->index(i, 0, parent);
-//        if(idx.isValid() && list.contains(mProxyModel->getNode(idx)->getHandle()))
-//        {
-//           ui->tMegaFolders->expand(idx);
-//           iterateForRestore(list, idx);
-//        }
-//    }
-//}
 
 bool NodeSelector::getDefaultUploadOption()
 {

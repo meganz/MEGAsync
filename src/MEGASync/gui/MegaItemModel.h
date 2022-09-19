@@ -93,7 +93,6 @@ public:
     QList<MegaItem*> getRootItems() const override;
 
 private:
-    QList<MegaItem*> mRootItems;
     std::unique_ptr<mega::QTMegaRequestListener> mDelegateListener;
 };
 
@@ -111,7 +110,6 @@ private slots:
     void onItemInfoUpdated(int role);
 
 private:
-    QList<MegaItem*> mRootItems;
 
 };
 

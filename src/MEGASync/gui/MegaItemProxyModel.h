@@ -16,23 +16,15 @@ class MegaItemProxyModel : public QSortFilterProxyModel
 
 public:
     struct Filter{
-        bool showInShares = false;
-        bool showCloudDrive = true;
         bool showReadOnly = true;
         bool showReadWriteFolders = true;
         bool showOwnerColumn = true;
         QString textFilter;
-        Filter() : showInShares(false), showCloudDrive(true), showReadOnly(true),
+        Filter() : showReadOnly(true),
                     showReadWriteFolders(true){};
-        void showOnlyCloudDrive(){showInShares=false; showCloudDrive = true;}
-        void showOnlyInShares(bool isSyncSelect = true){showInShares = true; showCloudDrive = false; showReadWriteFolders = !isSyncSelect;}
-        bool isShowOnlyInShares(){return showInShares && !showCloudDrive;}
-        bool isShowOnlyCloudDrive(){return !showInShares && showCloudDrive;}
     };
 
     explicit MegaItemProxyModel(QObject* parent = nullptr);
-    void showOnlyCloudDrive();
-    void showOnlyInShares(bool isSyncSelect = true);
     void showReadOnlyFolders(bool value);
     void showReadWriteFolders(bool value);
     void showOwnerColumn(bool value);
@@ -46,8 +38,6 @@ public:
     QModelIndex getIndexFromNode(const std::shared_ptr<mega::MegaNode> node);
     QVector<QModelIndex> getRelatedModelIndexes(const std::shared_ptr<mega::MegaNode> node/*, bool isInShare*/);
     void removeNode(const QModelIndex &item);
-    bool isShowOnlyInShares();
-    bool isShowOnlyCloudDrive();
     bool lessThan(const QModelIndex &left, const QModelIndex &right) const override;
 
 
