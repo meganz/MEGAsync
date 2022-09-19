@@ -106,6 +106,28 @@ QExplicitlySharedDataPointer<TransferData> TransferThread::createData(MegaTransf
     return d;
 }
 
+bool TransferThread::checkIfRepeatedAndSubstituteInStartTransfers(MegaTransfer* transfer)
+{
+    auto result(false);
+
+    if(mTransfersToProcess.startTransfersByTag.contains(transfer->getTag()))
+    {
+        auto item = mTransfersToProcess.startTransfersByTag.value(transfer->getTag());
+        if(transfer->getState() == mega::MegaTransfer::STATE_CANCELLED)
+        {
+            mTransfersToProcess.startTransfersByTag.remove(transfer->getTag());
+        }
+        else if(item->mNotificationNumber < transfer->getNotificationNumber())
+        {
+            mTransfersToProcess.startTransfersByTag[transfer->getTag()] = createData(transfer);
+        }
+
+        result = true;
+    }
+
+    return result;
+}
+
 bool TransferThread::checkIfRepeatedAndSubstitute(QMap<int, QExplicitlySharedDataPointer<TransferData>>& dataMap, MegaTransfer* transfer)
 {
     auto result(false);
@@ -140,7 +162,7 @@ bool TransferThread::checkIfRepeatedAndRemove(QMap<int, QExplicitlySharedDataPoi
 
 QExplicitlySharedDataPointer<TransferData> TransferThread::onTransferEvent(MegaTransfer *transfer)
 {
-    auto result = checkIfRepeatedAndSubstitute(mTransfersToProcess.startTransfersByTag, transfer);
+    auto result = checkIfRepeatedAndSubstituteInStartTransfers(transfer);
 
     if(!result)
     {
