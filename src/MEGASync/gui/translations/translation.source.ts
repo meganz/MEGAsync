@@ -358,6 +358,21 @@
         <translatorcomment>Label to indicate that [A] shared a folder with current user. Placeholder will be replaced by email of sharer user.</translatorcomment>
         <translation>New shared folder from [A]</translation>
     </message>
+    <message>
+        <source>[WEEKDAY] [MONTHDAY] [MONTH] [TIME]</source>
+	<translatorcomment>String used to display date and time in notifications when date is in the same week as today. [WEEKDAY], [MONTHDAY], [MONTH] and [TIME] will be replaced by their respective localized values.</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>[MONTHDAY] [MONTH] [TIME]</source>
+	<translatorcomment>String used to display date and time in notifications when date is in the same year as today, but not the same week. [MONTHDAY], [MONTH] and [TIME] will be replaced by their respective localized values.</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>[MONTHDAY] [MONTH] [YEAR] [TIME]</source>
+	<translatorcomment>String used to display date and time in notifications when date is in a different year as today.  [MONTHDAY], [MONTH], [YEAR] and [TIME] will be replaced by their respective localized values.</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>BandwidthSettings</name>
