@@ -2689,14 +2689,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>Unknown error</translation>
     </message>
     <message>
-        <source>Your account has been suspended due to multiple breaches of MEGA’s Terms of Service. Please check your email inbox.</source>
-        <translation>Your account has been suspended due to multiple breaches of MEGA’s Terms of Service. Please check your email inbox.</translation>
-    </message>
-    <message>
-        <source>Your account was terminated due to breach of Mega’s Terms of Service, such as abuse of rights of others; sharing and/or importing illegal data; or system abuse.</source>
-        <translation>Your account was terminated due to a breach of MEGA’s Terms of Service, such as abuse of rights of others; sharing and/or importing illegal data; or system abuse.</translation>
-    </message>
-    <message>
         <source>SSL verification failed</source>
         <translatorcomment>Error shown when SSL check has failed</translatorcomment>
         <translation>SSL verification failed</translation>
@@ -2730,6 +2722,16 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Decryption error</source>
         <translatorcomment>String shown when a file/folder name can not be decrypted.</translatorcomment>
         <translation>Decryption error</translation>
+    </message>
+    <message>
+        <source>Your account has been suspended due to copyright violations. Please check your email inbox.</source>
+        <translatorcomment>Error triggered by SDK when an account has been suspended due to copyright violations.</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Your account was terminated due to a breach of MEGA&apos;s Terms of Service, such as abuse of rights of others; sharing and/or importing illegal data; or system abuse.</source>
+        <translatorcomment>Error triggered by SDK when an account has been terminated due to a breach of MEGA&apos;s terms of Service.</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
