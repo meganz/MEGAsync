@@ -7,7 +7,7 @@
 
 using namespace mega;
 
-const char* SyncController::DEFAULT_BACKUPS_ROOT_DIRNAME = "My backups";
+const char* SyncController::DEFAULT_BACKUPS_ROOT_DIRNAME = "Backups";
 
 SyncController::SyncController(QObject* parent)
     : QObject(parent),
@@ -493,7 +493,7 @@ void SyncController::setMyBackupsHandle(MegaHandle handle)
     emit myBackupsHandle(mMyBackupsHandle);
 }
 
-// The path looks like "/My backups" (but translated), without the "/Backups" root
+// The path looks like "/Backups" (but translated), without the "/Vault" root
 // Note: if the node exists, its name is ignored and we always display the localized version,
 // as per requirements.
 QString SyncController::getMyBackupsLocalizedPath()
