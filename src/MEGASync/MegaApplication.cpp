@@ -1336,6 +1336,7 @@ if (!preferences->lastExecutionTime())
         }
     }
     infoDialog->setUsage();
+    infoDialog->setAvatar();
     infoDialog->setAccountType(preferences->accountType());
 
 
