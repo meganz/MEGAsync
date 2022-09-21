@@ -216,6 +216,17 @@ public:
 
     void raiseInfoDialog();
 
+    void checkAndCloseOpenDialogs();
+    template <class DialogType>
+    void removeDialog(DialogType& dialog)
+    {
+        if(dialog)
+        {
+            delete dialog;
+            dialog = nullptr;
+        }
+    }
+
 signals:
     void startUpdaterThread();
     void tryUpdate();

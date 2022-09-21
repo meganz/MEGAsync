@@ -72,6 +72,8 @@ public:
     void leaveBlockingState(bool fromCancellation);
     void disableCancelling();
 
+    void checkAndCloseOpenDialogs();
+
 #ifdef __APPLE__
     void moveArrow(QPoint p);
 #endif
@@ -255,6 +257,8 @@ protected:
  private:
     static double computeRatio(long long completed, long long remaining);
     void enableUserActions(bool value);
+
+    QPointer<BindFolderDialog> mAddSyncDialog;
 
     TransferScanCancelUi* mTransferScanCancelUi = nullptr;
     QtPositioningBugFixer qtBugFixer;

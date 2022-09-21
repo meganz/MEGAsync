@@ -75,6 +75,7 @@ void InfoDialog::upAreaHovered(QMouseEvent *event)
 InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddialog) :
     QDialog(parent),
     ui(new Ui::InfoDialog),
+    mAddSyncDialog(nullptr),
     mTransferManager(nullptr),
     qtBugFixer(this)
 {
@@ -314,6 +315,8 @@ InfoDialog::~InfoDialog()
         syncsMenu->deleteLater();
         syncsMenu.release();
     }
+
+    MegaSyncApp->removeDialog(mAddSyncDialog);
 }
 
 PSA_info *InfoDialog::getPSAdata()
@@ -1040,44 +1043,32 @@ void InfoDialog::openFolder(QString path)
 
 void InfoDialog::addSync(MegaHandle h)
 {
-    static QPointer<BindFolderDialog> dialog = NULL;
-    if (dialog)
-    {
-        if (h != mega::INVALID_HANDLE)
-        {
-            dialog->setMegaFolder(h);
-        }
+    MegaSyncApp->checkAndCloseOpenDialogs();
+    checkAndCloseOpenDialogs();
 
-        dialog->activateWindow();
-        dialog->raise();
-        dialog->setFocus();
-        return;
-    }
-
-    dialog = new BindFolderDialog(app);
+    mAddSyncDialog = new BindFolderDialog(app);
     if (h != mega::INVALID_HANDLE)
     {
-        dialog->setMegaFolder(h);
+        mAddSyncDialog->setMegaFolder(h);
     }
 
-    Platform::execBackgroundWindow(dialog);
-    if (!dialog)
+    Platform::execBackgroundWindow(mAddSyncDialog);
+    if (!mAddSyncDialog)
     {
         return;
     }
 
-    if (dialog->result() != QDialog::Accepted)
+    if (mAddSyncDialog->result() != QDialog::Accepted)
     {
-        delete dialog;
-        dialog = NULL;
+        MegaSyncApp->removeDialog(mAddSyncDialog);
         return;
     }
 
-    QString localFolderPath = QDir::toNativeSeparators(QDir(dialog->getLocalFolder()).canonicalPath());
-    MegaHandle handle = dialog->getMegaFolder();
-    QString syncName = dialog->getSyncName();
-    delete dialog;
-    dialog = NULL;
+    QString localFolderPath = QDir::toNativeSeparators(QDir(mAddSyncDialog->getLocalFolder()).canonicalPath());
+    MegaHandle handle = mAddSyncDialog->getMegaFolder();
+    QString syncName = mAddSyncDialog->getSyncName();
+
+    MegaSyncApp->removeDialog(mAddSyncDialog);
 
 
    MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromAscii("Adding sync %1 from addSync: ").arg(localFolderPath).toUtf8().constData());
@@ -1343,6 +1334,11 @@ void InfoDialog::leaveBlockingState(bool fromCancellation)
 void InfoDialog::disableCancelling()
 {
     mTransferScanCancelUi->disableCancelling();
+}
+
+void InfoDialog::checkAndCloseOpenDialogs()
+{
+    MegaSyncApp->removeDialog(mAddSyncDialog);
 }
 
 void InfoDialog::changeEvent(QEvent *event)

@@ -1523,11 +1523,7 @@ void MegaApplication::applyStorageState(int state, bool doNotAskForUserStats)
                     }
                 }
 
-                if (settingsDialog)
-                {
-                    delete settingsDialog;
-                    settingsDialog = nullptr;
-                }
+                removeDialog(settingsDialog);
             }
             else if (storageState == MegaApi::STORAGE_STATE_PAYWALL)
             {
@@ -1671,52 +1667,18 @@ void MegaApplication::processDownloadQueue(QString path)
 
 void MegaApplication::closeDialogs(bool/* bwoverquota*/)
 {
-    delete mTransferManager;
-    mTransferManager = nullptr;
+    checkAndCloseOpenDialogs();
 
-    delete setupWizard;
-    setupWizard = NULL;
-
-    delete settingsDialog;
-    settingsDialog = nullptr;
-
-    delete streamSelector;
-    streamSelector = NULL;
-
-    delete uploadFolderSelector;
-    uploadFolderSelector = NULL;
-
-    delete downloadFolderSelector;
-    downloadFolderSelector = NULL;
-
-    delete multiUploadFileDialog;
-    multiUploadFileDialog = NULL;
-
-    delete fileUploadSelector;
-    fileUploadSelector = NULL;
-
-    delete folderUploadSelector;
-    folderUploadSelector = NULL;
-
-    delete pasteMegaLinksDialog;
-    pasteMegaLinksDialog = NULL;
-
-    delete changeLogDialog;
-    changeLogDialog = NULL;
-
-    delete importDialog;
-    importDialog = NULL;
-
-    delete downloadNodeSelector;
-    downloadNodeSelector = NULL;
+    removeDialog(mTransferManager);
+    removeDialog(setupWizard);
+    removeDialog(settingsDialog);
+    removeDialog(changeLogDialog);
+    removeDialog(storageOverquotaDialog);
 
     if(transferQuota)
     {
         transferQuota->closeDialogs();
     }
-
-    delete storageOverquotaDialog;
-    storageOverquotaDialog = NULL;
 
     verifyEmail.reset(nullptr);
 }
@@ -2205,11 +2167,6 @@ void MegaApplication::cleanAll()
         mBlockingBatch.cancelTransfer();
     }
 
-    delete mTransfersModel;
-    mTransfersModel = nullptr;
-
-    delete storageOverquotaDialog;
-    storageOverquotaDialog = NULL;
     delete infoWizard;
     infoWizard = NULL;
     delete infoDialog;
@@ -3287,6 +3244,23 @@ void MegaApplication::startUpload(const QString& rawLocalPath, MegaNode* target,
     MegaTransferListener* listener = nullptr;
 
     megaApi->startUpload(localPathArray.constData(), target, fileName, mtime, appData, isSrcTemporary, startFirst, cancelToken, listener);
+}
+
+void MegaApplication::checkAndCloseOpenDialogs()
+{
+    removeDialog(downloadNodeSelector);
+    removeDialog(multiUploadFileDialog);
+    removeDialog(folderUploadSelector);
+    removeDialog(streamSelector);
+    removeDialog(downloadFolderSelector);
+    removeDialog(uploadFolderSelector);
+    removeDialog(pasteMegaLinksDialog);
+    removeDialog(importDialog);
+
+    if(infoDialog)
+    {
+        infoDialog->checkAndCloseOpenDialogs();
+    }
 }
 
 void MegaApplication::cancelScanningStage()
@@ -4840,19 +4814,7 @@ void MegaApplication::importLinks()
         return;
     }
 
-    if (pasteMegaLinksDialog)
-    {
-        pasteMegaLinksDialog->activateWindow();
-        pasteMegaLinksDialog->raise();
-        return;
-    }
-
-    if (importDialog)
-    {
-        importDialog->activateWindow();
-        importDialog->raise();
-        return;
-    }
+    checkAndCloseOpenDialogs();
 
     //Show the dialog to paste public links
     pasteMegaLinksDialog = new PasteMegaLinksDialog();
@@ -4865,15 +4827,13 @@ void MegaApplication::importLinks()
     //If the dialog isn't accepted, return
     if (pasteMegaLinksDialog->result()!=QDialog::Accepted)
     {
-        delete pasteMegaLinksDialog;
-        pasteMegaLinksDialog = NULL;
+        removeDialog(pasteMegaLinksDialog);
         return;
     }
 
     //Get the list of links from the dialog
     QStringList linkList = pasteMegaLinksDialog->getLinks();
-    delete pasteMegaLinksDialog;
-    pasteMegaLinksDialog = NULL;
+    removeDialog(pasteMegaLinksDialog);
 
     //Send links to the link processor
     LinkProcessor *linkProcessor = new LinkProcessor(linkList, megaApi, megaApiFolders);
@@ -4888,8 +4848,7 @@ void MegaApplication::importLinks()
 
     if (importDialog->result() != QDialog::Accepted)
     {
-        delete importDialog;
-        importDialog = NULL;
+        removeDialog(importDialog);
         return;
     }
 
@@ -4920,8 +4879,7 @@ void MegaApplication::importLinks()
         delete linkProcessor;
     }
 
-    delete importDialog;
-    importDialog = NULL;
+    removeDialog(importDialog);
 }
 
 void MegaApplication::showChangeLog()
@@ -4984,10 +4942,7 @@ void MegaApplication::uploadActionClickedFromWindow(QWidget* openFrom)
         return;
     #endif
 
-    if (multiUploadFileDialog)
-    {
-        delete multiUploadFileDialog;
-    }
+    checkAndCloseOpenDialogs();
 
     QString  defaultFolderPath;
     QStringList paths = QStandardPaths::standardLocations(QStandardPaths::HomeLocation);
@@ -5005,8 +4960,6 @@ void MegaApplication::uploadActionClickedFromWindow(QWidget* openFrom)
         return;
     }
 
-    multiUploadFileDialog->deleteLater();
-
     if (multiUploadFileDialog->exec() == QDialog::Accepted)
     {
         QStringList files = multiUploadFileDialog->selectedFiles();
@@ -5020,6 +4973,8 @@ void MegaApplication::uploadActionClickedFromWindow(QWidget* openFrom)
             shellUpload(qFiles);
         }
     }
+
+    multiUploadFileDialog->deleteLater();
 }
 
 bool MegaApplication::showSyncOverquotaDialog()
@@ -5066,13 +5021,11 @@ void MegaApplication::downloadActionClicked()
         return;
     }
 
-    if (downloadNodeSelector)
-    {
-        delete downloadNodeSelector;
-    }
+    checkAndCloseOpenDialogs();
 
-    downloadNodeSelector = new NodeSelector(NodeSelector::DOWNLOAD_SELECT, NULL);
-    int result = downloadNodeSelector->exec();
+    downloadNodeSelector = new NodeSelector(NodeSelector::DOWNLOAD_SELECT, infoDialog);
+    downloadNodeSelector->exec();
+    //Platform::execBackgroundWindow(downloadNodeSelector);
 
     if (!downloadNodeSelector)
     {
@@ -5081,7 +5034,7 @@ void MegaApplication::downloadActionClicked()
 
     downloadNodeSelector->deleteLater();
 
-    if (result != QDialog::Accepted)
+    if (downloadNodeSelector->result() != QDialog::Accepted)
     {
         return;
     }
@@ -5111,13 +5064,7 @@ void MegaApplication::streamActionClicked()
         return;
     }
 
-    if (streamSelector)
-    {
-        streamSelector->showNormal();
-        streamSelector->activateWindow();
-        streamSelector->raise();
-        return;
-    }
+    checkAndCloseOpenDialogs();
 
     streamSelector = new StreamingFromMegaDialog(megaApi, megaApiFolders);
     connect(transferQuota.get(), &TransferQuota::waitTimeIsOver, streamSelector.data(), &StreamingFromMegaDialog::updateStreamingState);
@@ -5353,12 +5300,7 @@ void MegaApplication::processUploads()
         return;
     }
 
-    //If the dialog to select the upload folder is active, return.
-    //Files will be uploaded when the user selects the upload folder
-    if (uploadFolderSelector)
-    {
-        delete uploadFolderSelector;
-    }
+    checkAndCloseOpenDialogs();
 
     //If there is a default upload folder in the preferences
     MegaNode *node = megaApi->getNodeByHandle(preferences->uploadFolder());
@@ -5449,10 +5391,7 @@ void MegaApplication::processDownloads()
         return;
     }
 
-    if (downloadFolderSelector)
-    {
-        delete downloadFolderSelector;
-    }
+    checkAndCloseOpenDialogs();
 
     QString defaultPath = preferences->downloadFolder();
     if (preferences->hasDefaultDownloadFolder()
@@ -5713,17 +5652,9 @@ void MegaApplication::externalFileUpload(qlonglong targetFolder)
         return;
     }
 
-    if (folderUploadSelector)
-    {
-        delete folderUploadSelector;
-        folderUploadSelector = nullptr;
-    }
+    checkAndCloseOpenDialogs();
 
     fileUploadTarget = targetFolder;
-    if (fileUploadSelector)
-    {
-        delete fileUploadSelector;
-    }
 
     fileUploadSelector = new QFileDialog();
     fileUploadSelector->setFileMode(QFileDialog::ExistingFiles);
@@ -5782,17 +5713,9 @@ void MegaApplication::externalFolderUpload(qlonglong targetFolder)
         return;
     }
 
-    if (fileUploadSelector)
-    {
-       delete fileUploadSelector;
-       fileUploadSelector = nullptr;
-    }
+    checkAndCloseOpenDialogs();
 
     folderUploadTarget = targetFolder;
-    if (folderUploadSelector)
-    {
-        delete folderUploadSelector;
-    }
 
     folderUploadSelector = new QFileDialog();
     folderUploadSelector->setFileMode(QFileDialog::Directory);
@@ -6286,8 +6209,7 @@ void MegaApplication::openSettings(int tab)
         }
 
         //Otherwise, delete it
-        delete settingsDialog;
-        settingsDialog = nullptr;
+        removeDialog(settingsDialog);
     }
 
     //Show a new settings dialog
