@@ -16,7 +16,7 @@
     <message>
         <source>Loading...</source>
         <translatorcomment>Label to show when an account detail request is waiting for the server response.</translatorcomment>
-        <translation>載入中…</translation>
+        <translation>載入中⋯</translation>
     </message>
     <message>
         <source>Storage</source>
@@ -47,54 +47,6 @@
         <source>Available storage</source>
         <translatorcomment>Label for Available storage space used. Maintain capital letter in first word.(Max 18 characters)</translatorcomment>
         <translation>可用的儲存空間</translation>
-    </message>
-</context>
-<context>
-    <name>ActiveTransfersWidget</name>
-    <message>
-        <source>No Transfers</source>
-        <translatorcomment>Label to indicate that there are no active transfers at current time</translatorcomment>
-        <translation>沒有傳輸</translation>
-    </message>
-    <message>
-        <source>download speed</source>
-        <translatorcomment>Label to indicate the actual current download speed</translatorcomment>
-        <translation>下載速度</translation>
-    </message>
-    <message>
-        <source>No Downloads</source>
-        <translatorcomment>Label to indicate that there are no active downloads at current time</translatorcomment>
-        <translation>沒有下載</translation>
-    </message>
-    <message>
-        <source>upload speed</source>
-        <translatorcomment>Label to indicate the actual current upload speed</translatorcomment>
-        <translation>上傳速度</translation>
-    </message>
-    <message>
-        <source>No Uploads</source>
-        <translatorcomment>Label to indicate that there are no active uploads at current time</translatorcomment>
-        <translation>沒有上傳</translation>
-    </message>
-    <message>
-        <source>PAUSED</source>
-        <translatorcomment>Label to indicate a global Pause state for all active transfers</translatorcomment>
-        <translation>暫停</translation>
-    </message>
-    <message>
-        <source>Are you sure you want to cancel this transfer?</source>
-        <translatorcomment>Warning message shown when an user try to cancel the selected transfer</translatorcomment>
-        <translation>您確定要取消此傳輸嗎？</translation>
-    </message>
-    <message numerus="yes">
-        <source>Remaining upload</source>
-        <translatorcomment>Label to indicate the remaining upload(s)</translatorcomment>
-        <translation><numerusform>剩餘上傳</numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>Remaining download</source>
-        <translatorcomment>Label to indicate the remaining download(s)</translatorcomment>
-        <translation><numerusform>剩餘下載</numerusform></translation>
     </message>
 </context>
 <context>
@@ -459,16 +411,6 @@
         <translation>上傳：</translation>
     </message>
     <message>
-        <source>Don&apos;t use HTTP</source>
-        <translatorcomment>Checkbox label to set the option to not use http for connections.</translatorcomment>
-        <translation>不使用HTTP</translation>
-    </message>
-    <message>
-        <source>Enable this option only if your transfers don&apos;t start. Under normal circumstances, HTTP is satisfactory as all transfers are already encrypted by MEGA.</source>
-        <translatorcomment>Description label about the option &quot;Don&apos;t use HTTP&quot; checkbox.</translatorcomment>
-        <translation>僅於您的傳輸未開始時才啟用此選項。正常情況下，所有傳輸都已經由MEGA加密，HTTP選項可正常運作。</translation>
-    </message>
-    <message>
         <source>Cancel</source>
         <translatorcomment>Button label for cancel dialog.</translatorcomment>
         <translation>取消</translation>
@@ -497,6 +439,16 @@
         <source>Update</source>
         <translatorcomment>Button label for apply and confirm the bandwidth changes (macOS)</translatorcomment>
         <translation>更新</translation>
+    </message>
+    <message>
+        <source>Use HTTPS for transfers that don&apos;t start</source>
+        <translatorcomment>Checkbox label to set the option to use https for transfer connections.</translatorcomment>
+        <translation>對未啟動的傳輸使用HTTPS</translation>
+    </message>
+    <message>
+        <source>Only enable this option if tranfers don&apos;t start. Under all other circumstances, using HTTP is satisfactory as MEGA already encrypts all data.</source>
+        <translatorcomment>Description label about the option Use HTTPS for transfers that don&amp;apos;t start checkbox.</translatorcomment>
+        <translation>僅於您的傳輸未啟動時才啟用此選項。在其它情況下，由於MEGA已將所有資料進行加密，HTTP選項的安全性已令人滿意。</translation>
     </message>
 </context>
 <context>
@@ -667,6 +619,29 @@ Please enter a different name to identify this synced folder:</source>
     </message>
 </context>
 <context>
+    <name>CancelConfirmWidget</name>
+    <message>
+        <source>Cancel transfers?</source>
+        <translatorcomment>Dialog main text</translatorcomment>
+        <translation>取消傳輸？</translation>
+    </message>
+    <message>
+        <source>Transfers not yet processed will be cancelled.</source>
+        <translatorcomment>Dialog messages which warns the user about the potential problems of cancelling the folder scanning</translatorcomment>
+        <translation>所有您目前上傳或下載佇列中的傳輸將被取消。</translation>
+    </message>
+    <message>
+        <source>No, continue</source>
+        <translatorcomment>Button to continue folder scanning cancellation</translatorcomment>
+        <translation>否，繼續</translation>
+    </message>
+    <message>
+        <source>Yes, cancel</source>
+        <translatorcomment>Button to abort a folder scanning</translatorcomment>
+        <translation>是，取消</translation>
+    </message>
+</context>
+<context>
     <name>ChangeLogDialog</name>
     <message>
         <source>Terms of Service</source>
@@ -806,54 +781,6 @@ Please enter a different name to identify this synced folder:</source>
         <translatorcomment>Checkbox to let the user attach diagnostic log files for analysis when an application crash occurs. Keep [Br] place holder.</translatorcomment>
         <translation>附加診斷日誌記錄檔案以協助除錯。
 在某些情況下，它們可能包含與您資料有關的詳細資訊，例如檔案或資料夾名稱。</translation>
-    </message>
-</context>
-<context>
-    <name>CustomTransferItem</name>
-    <message>
-        <source>failed:</source>
-        <translatorcomment>Label to indicate that the transfer failed. The reason will be appended after colon symbol.</translatorcomment>
-        <translation>失敗原因：</translation>
-    </message>
-    <message>
-        <source>starting...</source>
-        <translatorcomment>Label to indicate that a transfer is starting.</translatorcomment>
-        <translation>開始中…</translation>
-    </message>
-    <message>
-        <source>PAUSED</source>
-        <translatorcomment>Label to indicate that a transfer is paused. Keep uppercase.</translatorcomment>
-        <translation>暫停</translation>
-    </message>
-    <message>
-        <source>queued</source>
-        <translatorcomment>Label to indicate that a transfer is queued.</translatorcomment>
-        <translation>已排程</translation>
-    </message>
-    <message>
-        <source>retrying...</source>
-        <translatorcomment>Label to indicate that a transfer is being retried.</translatorcomment>
-        <translation>重試中…</translation>
-    </message>
-    <message>
-        <source>completing...</source>
-        <translatorcomment>Label to indicate that a transfer is being completed.</translatorcomment>
-        <translation>完成中…</translation>
-    </message>
-    <message>
-        <source>Added [A]</source>
-        <translatorcomment>Label to indicate that a transfer finished (added to the list of recently finished transfers) [A] time ago. [A] will be updated with the time since the transfer finished.</translatorcomment>
-        <translation>已加入[A]</translation>
-    </message>
-    <message>
-        <source>Out of storage space</source>
-        <translatorcomment>Label to indicate that a transfer is halted due to the account is out of storage space</translatorcomment>
-        <translation>儲存空間不足</translation>
-    </message>
-    <message>
-        <source>Transfer quota exceeded</source>
-        <translatorcomment>Label to indicate that a transfer is halted due to the account is out of transfer quota</translatorcomment>
-        <translation>已超過傳輸配額</translation>
     </message>
 </context>
 <context>
@@ -1138,6 +1065,117 @@ Please enter a different name to identify this synced folder:</source>
     </message>
 </context>
 <context>
+    <name>DuplicatedNodeDialog</name>
+    <message>
+        <source>A folder named [A] already exists at this destination</source>
+        <translatorcomment>Dialog text shown when a folder with the same name has been found on the cloud. [A] folder name</translatorcomment>
+        <translation>此目的地已存在名為[A]的資料夾</translation>
+    </message>
+    <message>
+        <source>The new folder will be merged with the folder at this destination.</source>
+        <translatorcomment>Text explaining the result of the folder merge action</translatorcomment>
+        <translation>新資料夾將與此目的地的資料夾合併。</translation>
+    </message>
+    <message>
+        <source>The folder at this destination will be maintained.</source>
+        <translatorcomment>Text explaining the result of the folder skip action</translatorcomment>
+        <translation>將保留此目的地的資料夾。</translation>
+    </message>
+    <message>
+        <source>A file named [A] already exists at this destination</source>
+        <translatorcomment>Dialog text shown when a file with the same name has been found on the cloud. [A] file name</translatorcomment>
+        <translation>此目的地已存在名為[A]的檔案</translation>
+    </message>
+    <message>
+        <source>The file at this destination will be replaced with the new file.</source>
+        <translatorcomment>Text explaining the result of the file upload and replace action</translatorcomment>
+        <translation>此目的地的檔案將被新檔案取代。</translation>
+    </message>
+    <message>
+        <source>The file will be renamed as:</source>
+        <translatorcomment>Text explaining the result of the file rename action</translatorcomment>
+        <translation>檔案將被重新命名為：</translation>
+    </message>
+    <message>
+        <source>The file at this destination will be maintained.</source>
+        <translatorcomment>Text explaining the result of the fileip action</translatorcomment>
+        <translation>將保留此目的地的檔案。</translation>
+    </message>
+    <message>
+        <source>Folder already exists</source>
+        <translatorcomment>Dialog title when a folder with the same name has been found on the cloud</translatorcomment>
+        <translation>資料夾已存在</translation>
+    </message>
+    <message>
+        <source>File already exists</source>
+        <translatorcomment>Dialog title when a file with the same name has been found on the cloud</translatorcomment>
+        <translation>檔案已存在</translation>
+    </message>
+    <message numerus="yes">
+        <source>Apply to all %1 duplicates</source>
+        <translatorcomment>Checkbox text to apply the action to all the following conflicts. %1 is the number of conflicts</translatorcomment>
+        <translation><numerusform>套用全部%1個重複項目</numerusform></translation>
+    </message>
+    <message>
+        <source>The file at this destination will be updated with a new version.</source>
+        <translatorcomment>Text explaining the result of the file upload and update action</translatorcomment>
+        <translation>此目的地的檔案將更新為新的版本。</translation>
+    </message>
+</context>
+<context>
+    <name>DuplicatedNodeItem</name>
+    <message>
+        <source>Skip</source>
+        <translatorcomment>Action title for the skip action</translatorcomment>
+        <translation>跳過</translation>
+    </message>
+    <message>
+        <source>Skip this file</source>
+        <translatorcomment>Button text for the skip action for files</translatorcomment>
+        <translation>跳過這個檔案</translation>
+    </message>
+    <message>
+        <source>Skip this folder</source>
+        <translatorcomment>Button text for the skip action for folders</translatorcomment>
+        <translation>跳過這個資料夾</translation>
+    </message>
+    <message>
+        <source>Merge</source>
+        <translatorcomment>Action title and button text for the Merge action for folders</translatorcomment>
+        <translation>合併</translation>
+    </message>
+    <message>
+        <source>Rename</source>
+        <translatorcomment>Action title and button text for the Rename action for folders/files</translatorcomment>
+        <translation>重新命名</translation>
+    </message>
+    <message>
+        <source>Replace</source>
+        <translatorcomment>Action title and button text for the Replace action for folders/files</translatorcomment>
+        <translation>取代</translation>
+    </message>
+    <message>
+        <source>Update</source>
+        <translatorcomment>Action title and button text for the Update action for files</translatorcomment>
+        <translation>更新</translation>
+    </message>
+    <message>
+        <source>loading time…</source>
+        <translatorcomment>Text shown while the local file/folder modified time is calculated</translatorcomment>
+        <translation>加載時間⋯</translation>
+    </message>
+    <message>
+        <source>loading size…</source>
+        <translatorcomment>Text shown while the local file/folder size is calculated</translatorcomment>
+        <translation>加載大小⋯</translation>
+    </message>
+    <message>
+        <source>Learn more</source>
+        <translatorcomment>Underline link label to open a help.mega.io article</translatorcomment>
+        <translation>瞭解更多</translation>
+    </message>
+</context>
+<context>
     <name>FilterAlertWidget</name>
     <message>
         <source>All notifications</source>
@@ -1296,17 +1334,17 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Setting up your account...</source>
         <translatorcomment>Label shown at main dialog during the initial setup of synced folders.</translatorcomment>
-        <translation>正在設定您的帳戶…</translation>
+        <translation>正在設定您的帳戶⋯</translation>
     </message>
     <message>
         <source>Logging in...</source>
         <translatorcomment>Label shown at main dialog to show the current operation. In this case logging in.</translatorcomment>
-        <translation>正在登入中…</translation>
+        <translation>正在登入中⋯</translation>
     </message>
     <message>
         <source>Fetching file list...</source>
         <translatorcomment>Label shown at main dialog to show the current operation. In this case fetching file information from servers.</translatorcomment>
-        <translation>取得檔案列表…</translation>
+        <translation>取得檔案列表⋯</translation>
     </message>
     <message>
         <source>Error</source>
@@ -1351,7 +1389,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Logging out...</source>
         <translatorcomment>Label shown at main dialog to show the current operation. In this case logging out from the account.</translatorcomment>
-        <translation>正在登出中…</translation>
+        <translation>正在登出中⋯</translation>
     </message>
     <message>
         <source>Locked Account</source>
@@ -1381,7 +1419,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Creating account...</source>
         <translatorcomment>Informative label during creation of an account using MEGAsync</translatorcomment>
-        <translation>帳戶建立中…</translation>
+        <translation>帳戶建立中⋯</translation>
     </message>
     <message>
         <source>Why am I seeing this?</source>
@@ -1447,7 +1485,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Please wait...</source>
         <translatorcomment>Label to indicate the user that needs to wait until MEGAsync fetches link information from the server</translatorcomment>
-        <translation>請等待…</translation>
+        <translation>請等待⋯</translation>
     </message>
 </context>
 <context>
@@ -1508,11 +1546,6 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <source>Syncs</source>
         <translatorcomment>Button label to show all synchronizations that the user has stablish (String as short as possible).</translatorcomment>
         <translation>同步</translation>
-    </message>
-    <message>
-        <source>All transfers have been completed</source>
-        <translatorcomment>Label to indicate that all pending transfers are already completed</translatorcomment>
-        <translation>所有傳輸已完成</translation>
     </message>
     <message>
         <source>Add Sync</source>
@@ -1738,6 +1771,44 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translatorcomment>Label to inform about the deadline time to upgrade. Otherwise, data is subject to deletion. Placeholder info: [A][/A] - needed to format and apply text style, %n- number of hours left to upgrade.</translatorcomment>
         <translation><numerusform>您還有[A]%n小時[/A]的升級時間。在此之後，您的資料可能會被刪除。</numerusform></translation>
     </message>
+    <message>
+        <source>Error</source>
+        <translatorcomment>Title of the dialog</translatorcomment>
+        <translation>錯誤</translation>
+    </message>
+    <message>
+        <source>Folder can&apos;t be opened. Check that the folder in your local drive hasn&apos;t been deleted or moved.</source>
+        <translatorcomment>Warning message text to let the user know that the local folder could not be opened</translatorcomment>
+        <translation>無法開啟資料夾。請檢查您本機磁碟的資料夾是否未被刪除或移動。</translation>
+    </message>
+</context>
+<context>
+    <name>InfoDialogTransferDelegateWidget</name>
+    <message>
+        <source>Show in folder</source>
+        <translatorcomment>Tooltip for show transfer in folder</translatorcomment>
+        <translation>在資料夾中顯示</translation>
+    </message>
+    <message>
+        <source>Retry</source>
+        <translatorcomment>Tooltip for retry failed transfer</translatorcomment>
+        <translation>重試</translation>
+    </message>
+    <message>
+        <source>Failed: %1</source>
+        <translatorcomment>Tooltip for show transfer failed reason. %1 is a placeholder for the SDK error reason.</translatorcomment>
+        <translation>失敗：%1</translation>
+    </message>
+    <message>
+        <source>Copy link to file</source>
+        <translatorcomment>Tooltip for copy linr</translatorcomment>
+        <translation>複製連結到剪貼簿</translation>
+    </message>
+    <message>
+        <source>Added [A]</source>
+        <translatorcomment>Message shown when the transfer has finished. [A] place holder stands for elapsed time since the transfer finished</translatorcomment>
+        <translation>已加入[A]</translation>
+    </message>
 </context>
 <context>
     <name>InfoWizard</name>
@@ -1908,7 +1979,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Logging in...</source>
         <translatorcomment>Notification message showing a Logging in state. Keep capital letters.</translatorcomment>
-        <translation>正在登入中…</translation>
+        <translation>正在登入中⋯</translation>
     </message>
     <message>
         <source>About</source>
@@ -1958,12 +2029,12 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Installing update...</source>
         <translatorcomment>Notification message launched when an update is being installed.</translatorcomment>
-        <translation>安裝更新…</translation>
+        <translation>安裝更新⋯</translation>
     </message>
     <message>
         <source>Checking for updates...</source>
         <translatorcomment>Notification message launched when the user wants to check if there are any available update at the moment.</translatorcomment>
-        <translation>檢查更新…</translation>
+        <translation>檢查更新⋯</translation>
     </message>
     <message>
         <source>Install update</source>
@@ -1979,7 +2050,7 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>Update available. Downloading...</source>
         <translatorcomment>Notification message launched when an update for MEGAsync is being downloaded.</translatorcomment>
-        <translation>有可用的更新。下載中…</translation>
+        <translation>有可用的更新。下載中⋯</translation>
     </message>
     <message>
         <source>No update available at this time</source>
@@ -2119,7 +2190,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Fetching file list...</source>
-        <translation>取得檔案列表…</translation>
+        <translation>取得檔案列表⋯</translation>
     </message>
     <message>
         <source>Transfer canceled</source>
@@ -2128,10 +2199,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>You are not logged in</source>
         <translation>您未登入</translation>
-    </message>
-    <message>
-        <source>Are you sure you want to exit?</source>
-        <translation>您確定要離開嗎？</translation>
     </message>
     <message>
         <source>Transfer manager</source>
@@ -2279,7 +2346,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your upload(s) cannot proceed because %1&apos;s account is full</source>
         <translatorcomment>Informative message shown when a user is trying to upload data to a inshare that is in overquota state. %1 will be replaced with sharer account to inform the user.</translatorcomment>
-        <translation>您的上傳(多個)無法繼續，因為%1的帳戶空間已滿。</translation>
+        <translation>您的上傳（多個）無法繼續，因為%1的帳戶空間已滿。</translation>
     </message>
     <message>
         <source>contact</source>
@@ -2347,26 +2414,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>MEGAsync將可繼續運作，但OS X Yosemite之前的版本將不再支援更新。</translation>
     </message>
     <message>
-        <source>One or more syncs have been disabled. Go to preferences to enable them again.</source>
-        <translatorcomment>Warning message shown when logging into MEGAsync to inform the user that some syncs have been disabled and need to go to settings to enable them again (macOS)</translatorcomment>
-        <translation>一個或多個同步已停用。請至偏好設定裡再次啟用它們。</translation>
-    </message>
-    <message>
-        <source>Open Preferences</source>
-        <translatorcomment>Button label to open MEGAsync preferences dialog (MacOS).</translatorcomment>
-        <translation>開啟偏好設定</translation>
-    </message>
-    <message>
-        <source>Open Settings</source>
-        <translatorcomment>Button label to open MEGAsync preferences dialog (Linux and Windows).</translatorcomment>
-        <translation>開啟設定</translation>
-    </message>
-    <message>
-        <source>One or more syncs have been disabled. Go to settings to enable them again.</source>
-        <translatorcomment>Warning message shown when logging into MEGAsync to inform the user that some syncs have been disabled and need to go to settings to enable them again (Windows and Linux)</translatorcomment>
-        <translation>一個或多個同步已停用。請至設定裡再次啟用它們。</translation>
-    </message>
-    <message>
         <source>Your syncs have been disabled</source>
         <translatorcomment>Notification message launched when your syncs have been disabled.</translatorcomment>
         <translation>您的同步已停用</translation>
@@ -2425,6 +2472,23 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>%1 and %2 were successfully downloaded</source>
         <translatorcomment>System notification to inform the user that %1 files and %2 folders were successfully downloaded. The %1 is a sentence part for files and %2 for folders.</translatorcomment>
         <translation>%1和%2已成功下載</translation>
+    </message>
+    <message numerus="yes">
+        <source>There is an active transfer. Exit the app?
+Transfer will automatically resume when you re-open the app.</source>
+        <translatorcomment>Messagebox text to let the user know that there are active transfers when closing the app. The user will be able to exit and pause them, or stop the exit action.</translatorcomment>
+        <translation><numerusform>有正在進行中的傳輸。要退出應用程式嗎？
+當您重新打開應用程式時將自動恢復傳輸。</numerusform></translation>
+    </message>
+    <message>
+        <source>Exit app</source>
+        <translatorcomment>One of the messagebox options: Close the app and pause the active transfers</translatorcomment>
+        <translation>退出應用程式</translation>
+    </message>
+    <message>
+        <source>Stay in app</source>
+        <translatorcomment>One of the messagebox options: Keep the app open and continue with the active transfers</translatorcomment>
+        <translation>留在應用程式中</translation>
     </message>
 </context>
 <context>
@@ -2710,7 +2774,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Please wait...</source>
         <translatorcomment>Message shown when a proxy task is being processed</translatorcomment>
-        <translation>請等待…</translation>
+        <translation>請等待⋯</translation>
     </message>
 </context>
 <context>
@@ -2867,45 +2931,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
 </context>
 <context>
-    <name>MegaTransferDelegate</name>
-    <message>
-        <source>Are you sure you want to cancel this transfer?</source>
-        <translatorcomment>Description label for warning dialog before a transfer cancellation</translatorcomment>
-        <translation>您確定要取消這個傳輸嗎？</translation>
-    </message>
-    <message>
-        <source>paused</source>
-        <translatorcomment>Label to indicate that selected transfer is at paused state</translatorcomment>
-        <translation>已暫停</translation>
-    </message>
-    <message>
-        <source>PAUSED</source>
-        <translatorcomment>Label to indicate that the current transfer is paused. Keep capital letters.</translatorcomment>
-        <translation>已暫停</translation>
-    </message>
-    <message>
-        <source>Get link</source>
-        <translatorcomment>Tooltip shown when the mouse is over the &quot;Get link&quot; button related to a completed transfer</translatorcomment>
-        <translation>取得連結</translation>
-    </message>
-    <message>
-        <source>Retry</source>
-        <translatorcomment>Tooltip shown when the mouse is over the &quot;Retry&quot; button related to a failed transfer</translatorcomment>
-        <translation>重試</translation>
-    </message>
-    <message>
-        <source>Show in folder</source>
-        <translatorcomment>Tooltip shown when the mouse is over the &quot;Show in folder&quot; button related to a transfer</translatorcomment>
-        <translation>在資料夾中顯示</translation>
-    </message>
-</context>
-<context>
     <name>MegaTransferView</name>
-    <message>
-        <source>Pause Transfer</source>
-        <translatorcomment>Label of context menu option to pause selected transfer</translatorcomment>
-        <translation>暫停傳輸</translation>
-    </message>
     <message>
         <source>Move to top</source>
         <translatorcomment>Label of context menu option to move selected transfer to top of the list and give it highest priority</translatorcomment>
@@ -2927,16 +2953,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>移至底部</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translatorcomment>Label of context menu option to cancel selected transfer</translatorcomment>
-        <translation>取消</translation>
-    </message>
-    <message>
-        <source>Get MEGA link</source>
-        <translatorcomment>Label of context menu option to generate a public link of selected completed transfer</translatorcomment>
-        <translation>取得MEGA連結</translation>
-    </message>
-    <message>
         <source>Open</source>
         <translatorcomment>Label of context menu option to open selected completed transfer</translatorcomment>
         <translation>開啟</translation>
@@ -2952,22 +2968,162 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>清除</translation>
     </message>
     <message>
-        <source>Clear All</source>
-        <translatorcomment>Label of context menu option to clear all transfer items of completed view</translatorcomment>
-        <translation>全部清除</translation>
+        <source>Get link</source>
+        <translatorcomment>Context menu action to get transfer link</translatorcomment>
+        <translation>取得連結</translation>
     </message>
     <message>
-        <source>Resume Transfer</source>
-        <translatorcomment>Label of context menu option to resume selected transfer</translatorcomment>
-        <translation>恢復傳輸</translation>
+        <source>Open in MEGA</source>
+        <translatorcomment>Context menu action to open the transfer in MEGA webclient</translatorcomment>
+        <translation>在MEGA中開啟</translation>
     </message>
     <message>
-        <source>Are you sure you want to cancel this transfer?</source>
-        <translation>您確定要取消這個傳輸嗎？</translation>
+        <source>Error</source>
+        <translatorcomment>Error messagebox title</translatorcomment>
+        <translation>錯誤</translation>
     </message>
     <message>
-        <source>View on MEGA</source>
-        <translation>在MEGA上檢視</translation>
+        <source>Error opening file</source>
+        <translatorcomment>Text on an error messagebox because a local file could not be opened</translatorcomment>
+        <translation>無法開啟檔案。請檢查您本機磁碟中的檔案是否未被刪除或移動。</translation>
+    </message>
+    <message numerus="yes">
+        <source>Pause transfer</source>
+        <translatorcomment>Context menu action to pause transfer</translatorcomment>
+        <translation><numerusform>暫停傳輸</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>Resume transfer</source>
+        <translatorcomment>Context menu action to resume transfer</translatorcomment>
+        <translation><numerusform>恢復傳輸</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>Cancel transfer</source>
+        <translatorcomment>Context menu action to cancel transfer</translatorcomment>
+        <translation><numerusform>取消傳輸</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>Clear transfer</source>
+        <translatorcomment>Tooltip for the clear button in a transfer row</translatorcomment>
+        <translation><numerusform>清除傳輸</numerusform></translation>
+    </message>
+    <message>
+        <source>Cancel transfers?
+All your transfers will be cancelled.</source>
+        <translatorcomment>Messagebox text to confirm if the user wants to cancel all the transfers in the all transfers category</translatorcomment>
+        <translation>取消傳輸？
+您的所有傳輸將被取消。</translation>
+    </message>
+    <message>
+        <source>Cancel transfers?
+All your transfers in this category will be cancelled and cleared.</source>
+        <translatorcomment>Messagebox text to confirm if the user wants to cancel and clear all the transfers in a category other than all transfers category</translatorcomment>
+        <translation>取消傳輸？
+您在此類別中的所有傳輸將被取消和清除。</translation>
+    </message>
+    <message>
+        <source>Cancel transfers?
+All your transfers in this category will be cancelled.</source>
+        <translatorcomment>Messagebox text to confirm if the user wants to cancel all the transfers in a category other than all transfers category</translatorcomment>
+        <translation>取消傳輸？
+您在此類別中的所有傳輸將被取消。</translation>
+    </message>
+    <message>
+        <source>Cancel transfers?
+Your incomplete sync transfers won&apos;t be cancelled.</source>
+        <translatorcomment>Messagebox text to confirm if the user wants to cancel all the transfers in a category other than all transfers category but there are sync transfers(they cannot be cancelled)</translatorcomment>
+        <translation>取消傳輸？
+您未完成的同步傳輸將不會被取消。所有其它傳輸將被取消。</translation>
+    </message>
+    <message>
+        <source>Cancel transfers?
+Your incomplete sync transfers won't be cancelled
+All the other transfers will be cancelled and cleared.</source>
+        <translatorcomment>Messagebox text to confirm if the user wants to cancel and clear all the transfers in a category other than all transfers category but there are sync transfers(they cannot be cancelled)</translatorcomment>
+        <translation>取消傳輸？
+您未完成的同步傳輸將不會被取消。
+所有其它傳輸將被取消和清除。</translation>
+    </message>
+    <message>
+        <source>Clear transfers?
+All your completed transfers will be cleared.</source>
+        <translatorcomment>Messagebox text to confirm if the user wants to clear all the transfers in the completed category</translatorcomment>
+        <translation>取消傳輸？
+您所有已完成的傳輸將被清除。</translation>
+    </message>
+    <message>
+        <source>Clear transfers?
+All your completed transfers in this category will be cleared.</source>
+        <translatorcomment>Messagebox text to confirm if the user wants to clear all the transfers in a category other than the completed category</translatorcomment>
+        <translation>取消傳輸？
+您在此類別中的所有已完成傳輸將被清除。</translation>
+    </message>
+    <message>
+        <source>Cancel transfers?
+All your selected transfers will be cancelled.</source>
+        <translatorcomment>Messagebox text to confirm if the user wants to cancel all the selected transfers</translatorcomment>
+        <translation>取消傳輸？
+所有您選取的傳輸將被取消。</translation>
+    </message>
+    <message>
+        <source>Cancel transfers?
+All your selected transfers will be cancelled and cleared.</source>
+        <translatorcomment>Messagebox text to confirm if the user wants to cancel and clear all the selected transfers</translatorcomment>
+        <translation>取消傳輸？
+所有您選取的傳輸將被取消和清除。</translation>
+    </message>
+    <message>
+        <source>Cancel transfers?
+Your selected incomplete sync transfers won't be cancelled
+All the other selected transfers will be cancelled and cleared.</source>
+        <translatorcomment>Messagebox text to confirm if the user wants to cancel and clear all the selected transfers but there are sync transfers in the selection (they cannot be cancelled)</translatorcomment>
+        <translation>取消傳輸？
+您選取的未完成同步傳輸將不會被取消
+所有其它選取的傳輸將被取消和清除。</translation>
+    </message>
+    <message>
+        <source>Cancel transfer?</source>
+        <translatorcomment>Messagebox text to confirm if the user wants to cancel a single transfer</translatorcomment>
+        <translation>取消傳輸？</translation>
+    </message>
+    <message>
+        <source>Clear transfers?
+All the selected completed transfers in this category will be cleared.</source>
+        <translatorcomment>Messagebox text to confirm if the user wants to clear the selected completed transfer</translatorcomment>
+        <translation>清除傳輸？
+在此類別中所有選取的已完成傳輸將被清除。</translation>
+    </message>
+    <message>
+        <source>Cancel transfers?
+Your selected incomplete sync transfers won&apos;t be cancelled.</source>
+        <translatorcomment>Messagebox text to confirm if the user wants to cancel all the selected transfers but there are sync transfers in the selection (they cannot be cancelled)</translatorcomment>
+        <translation>取消傳輸？
+您選取的未完成同步傳輸將不會被取消。所有其它選取的傳輸將被取消。</translation>
+    </message>
+    <message>
+        <source>Clear transfer?</source>
+        <translatorcomment>Messagebox text to confirm if the user wants to clear a single selected completed transfer</translatorcomment>
+        <translation>清除傳輸？</translation>
+    </message>
+    <message numerus="yes">
+        <source>Cancel and clear transfer</source>
+        <translatorcomment>Context menu action to resume cancel the active transfers and clear the completed transfers (multiple transfers selected)</translatorcomment>
+        <translation><numerusform>取消和清除傳輸</numerusform></translation>
+    </message>
+    <message>
+        <source>Yes, cancel</source>
+        <translatorcomment>Dialog button to do the proposed actions (cancel the transfers)</translatorcomment>
+        <translation>是，取消</translation>
+    </message>
+    <message>
+        <source>No, continue</source>
+        <translatorcomment>Dialog button to abort the proposed action</translatorcomment>
+        <translation>否，繼續</translation>
+    </message>
+    <message>
+        <source>Yes, clear</source>
+        <translatorcomment>Dialog button to do the proposed actions (clear the transfers)</translatorcomment>
+        <translation>是，清除</translation>
     </message>
 </context>
 <context>
@@ -2999,19 +3155,22 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
 <context>
     <name>NewFolderDialog</name>
     <message>
-        <source>New folder</source>
-        <translatorcomment>Title of the dialog to create a folder in your cloud drive.</translatorcomment>
-        <translation>新資料夾</translation>
+        <source>Enter the new folder name</source>
+        <translatorcomment>Dialog text to ask the user to enter a new name for the folder</translatorcomment>
+        <translation>輸入新的資料夾名稱</translation>
     </message>
     <message>
-        <source>Enter the new folder name:</source>
-        <translatorcomment>Label to inform the user about entering a new folder name because the name provided does contain forbidden characters.</translatorcomment>
-        <translation>輸入新資料夾名稱：</translation>
+        <source>New folder</source>
+        <translatorcomment>Title of the new folder dialog</translatorcomment>
+        <translation>新資料夾</translation>
     </message>
+</context>
+<context>
+    <name>NodeNameSetterDialog</name>
     <message>
         <source>The following characters are not allowed:
 %1</source>
-        <translatorcomment>Warning error shown when a user is trying to create a folder with a name that contains not allowed characters. %1 placeholder will be replaced by the list of forbidden charset.</translatorcomment>
+        <translatorcomment>Message shown when the user has entered a not allowed character</translatorcomment>
         <translation>不允許使用以下字元：
 %1</translation>
     </message>
@@ -3550,18 +3709,57 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
 </context>
 <context>
+    <name>PlatformStrings</name>
+    <message>
+        <source>Open settings</source>
+        <translatorcomment>Button label to open MEGAsync preferences dialog (Linux and Windows).</translatorcomment>
+        <translation>開啟設定</translation>
+    </message>
+    <message>
+        <source>One or more syncs have been disabled. Go to settings to enable them again.</source>
+        <translatorcomment>Warning message shown when logging into MEGAsync to inform the user that some syncs have been disabled and need to go to settings to enable them again (Windows and Linux)</translatorcomment>
+        <translation>一個或多個同步已停用。請至設定裡重新啟用它們。</translation>
+    </message>
+    <message>
+        <source>Open preferences</source>
+        <translatorcomment>Button label to open MEGAsync preferences dialog (MacOS).</translatorcomment>
+        <translation>開啟偏好設定</translation>
+    </message>
+    <message>
+        <source>One or more syncs have been disabled. Go to preferences to enable them again.</source>
+        <translatorcomment>Warning message shown when logging into MEGAsync to inform the user that some syncs have been disabled and need to go to settings to enable them again (macOS)</translatorcomment>
+        <translation>一個或多個同步已停用。請至偏好設定裡重新啟用它們。</translation>
+    </message>
+    <message>
+        <source>Sync transfers cannot be cancelled individually.
+Please delete the folder sync from settings to cancel them.</source>
+        <translatorcomment>Explains that the sync transfers cannot be cancelled individually. (for windows and linux)</translatorcomment>
+        <translation>無法取消同步傳輸。若要取消同步，請前往桌面應用程式中的設定刪除同步資料夾。</translation>
+    </message>
+    <message>
+        <source>Sync transfers cannot be cancelled individually.
+Please delete the folder sync from preferences to cancel them.</source>
+        <translatorcomment>Explains that the sync transfers cannot be cancelled individually. (for macOS)</translatorcomment>
+        <translation>無法取消同步傳輸。若要取消同步，請前往桌面應用程式中的設定刪除同步資料夾。</translation>
+    </message>
+</context>
+<context>
     <name>Preferences</name>
     <message>
-        <source>- Full redesign of remote file picker.
-- Fixed translation issues.
-- Other minor UI fixes and adjustments.
-- Fixed detected crashes on Windows, Linux and macOS.
+        <source>- There is now a new transfer manager.
+- Transfer management was enhanced and reliability of downloads and uploads improved. 
+- Detected crashes on Windows, Linux, and macOS fixed.
+- Translation issues fixed.
+- Performance improved.
+- UI fixed and adjusted.
 </source>
-        <translatorcomment>Changelog for version 4.6.7</translatorcomment>
-        <translation>- 重新設計的遠端檔案選取介面。
-- 修復了翻譯問題。
-- 用戶介面其它小地方的修復和調整。
-- 修復在Windows、Linus和macOS上檢測到的崩潰問題。
+        <translatorcomment>Changelog for version v4.7.0</translatorcomment>
+        <translation>- 現在有新的傳輸管理員。
+- 加強傳輸管理，改善下載和上傳的可靠性。
+- 修復在Windows、Linux和macOS上偵測到的崩潰問題。
+- 修正翻譯問題。
+- 性能改善。
+- 介面修復和調整。
 </translation>
     </message>
 </context>
@@ -3806,7 +4004,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>All Files (*)</source>
         <translatorcomment>File of type option for not filtering files by extension</translatorcomment>
-        <translation>所有檔案(*)</translation>
+        <translation>所有檔案（*）</translation>
     </message>
     <message>
         <source>Show </source>
@@ -3816,7 +4014,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>All files (*)</source>
         <translatorcomment>File of type option for not filtering files by extension</translatorcomment>
-        <translation>所有檔案(*)</translation>
+        <translation>所有檔案（*）</translation>
     </message>
     <message>
         <source>Directories</source>
@@ -3976,27 +4174,27 @@ Do you want to delete it anyway?</source>
     <message>
         <source>%1 TB</source>
         <translatorcomment>File size measured in terabytes</translatorcomment>
-        <translation>%1 TB</translation>
+        <translation>%1 TB</translation>
     </message>
     <message>
         <source>%1 GB</source>
         <translatorcomment>File size measured in gigabytes</translatorcomment>
-        <translation>%1 GB</translation>
+        <translation>%1 GB</translation>
     </message>
     <message>
         <source>%1 MB</source>
         <translatorcomment>File size measured in megabytes</translatorcomment>
-        <translation>%1 MB</translation>
+        <translation>%1 MB</translation>
     </message>
     <message>
         <source>%1 KB</source>
         <translatorcomment>File size measured in kilobytes</translatorcomment>
-        <translation>%1 KB</translation>
+        <translation>%1 KB</translation>
     </message>
     <message>
         <source>%1 bytes</source>
         <translatorcomment>File size measured in bytes</translatorcomment>
-        <translation>%1 bytes</translation>
+        <translation>%1 bytes</translation>
     </message>
     <message>
         <source>Invalid filename</source>
@@ -4061,6 +4259,60 @@ Do you want to delete it anyway?</source>
     <message>
         <source>Cancel</source>
         <translation>取消</translation>
+    </message>
+</context>
+<context>
+    <name>RenameLocalNodeDialog</name>
+    <message>
+        <source>File can’t be renamed to &quot;%1&quot;</source>
+        <translatorcomment>Error warning shown when a file can´t be renamed due to an error.</translatorcomment>
+        <translation>檔案無法重新命名為「%1」</translation>
+    </message>
+    <message>
+        <source>Folder can’t be renamed to &quot;%1&quot;</source>
+        <translatorcomment>Error warning shown when a folder can´t be renamed due to an error.</translatorcomment>
+        <translation>資料夾無法重新命名為「%1」</translation>
+    </message>
+</context>
+<context>
+    <name>RenameNodeDialog</name>
+    <message>
+        <source>Enter new file name</source>
+        <translatorcomment>Title of the rename file dialog </translatorcomment>
+        <translation>輸入新的檔案名稱</translation>
+    </message>
+    <message>
+        <source>Enter new folder name</source>
+        <translatorcomment>Title of the rename folder dialog </translatorcomment>
+        <translation>輸入新的資料夾名稱</translation>
+    </message>
+    <message>
+        <source>Rename file</source>
+        <translatorcomment>Dialog title for file renaming</translatorcomment>
+        <translation>重新命名檔案</translation>
+    </message>
+    <message>
+        <source>Rename folder</source>
+        <translatorcomment>Dialog title for folder renaming</translatorcomment>
+        <translation>重新命名資料夾</translation>
+    </message>
+</context>
+<context>
+    <name>ScanningWidget</name>
+    <message>
+        <source>Cancel transfers</source>
+        <translatorcomment>Button text to cancel the scanning of transfers</translatorcomment>
+        <translation>取消</translation>
+    </message>
+    <message>
+        <source>Scanning…</source>
+        <translatorcomment>Text to let the user know that the app is scanning a folder</translatorcomment>
+        <translation>正在掃描⋯</translation>
+    </message>
+    <message>
+        <source>Don´t exit the app</source>
+        <translatorcomment>Text below the GIF to askt he user not to close the app while it is scanning a folder</translatorcomment>
+        <translation>不要退出應用程式</translation>
     </message>
 </context>
 <context>
@@ -4143,7 +4395,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>%1 (%2%) of %3 used</source>
         <translatorcomment>Label to indicate the amount and percentage of used and total space available. Keep %1 (%2%) and %3 substitution placeholders because they will be filled with the required amounts of storage space dynamically.</translatorcomment>
-        <translation>已使用%1 (%2%) / %3 </translation>
+        <translation>已使用%1 （%2%） / %3 </translation>
     </message>
     <message>
         <source>Warning</source>
@@ -4450,7 +4702,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Move…</source>
         <translatorcomment>Button label text allowing the user to change the default Uploads or Downloads folders for the app.</translatorcomment>
-        <translation>移動…</translation>
+        <translation>移動⋯</translation>
     </message>
     <message>
         <source>Exclude files smaller than</source>
@@ -4470,7 +4722,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Change Settings…</source>
         <translatorcomment>Button label text for Bandwidth and Proxy settings in Network pane.</translatorcomment>
-        <translation>變更設定…</translation>
+        <translation>變更設定⋯</translation>
     </message>
     <message>
         <source>Proxies</source>
@@ -4675,7 +4927,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Saving synchronised folders…</source>
         <translatorcomment>Temporary text label shown while saving changes to Synchronized folders on Windows\Linux. Keep the 3 suspense periods, indicating to the user that the action is in in progress.</translatorcomment>
-        <translation>儲存同步資料夾…</translation>
+        <translation>儲存同步資料夾⋯</translation>
     </message>
     <message>
         <source>Pro I</source>
@@ -4808,7 +5060,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Fetching file list...</source>
         <translatorcomment>Label displayed while the application is retrieving all file list from the server.</translatorcomment>
-        <translation>取得檔案列表…</translation>
+        <translation>取得檔案列表⋯</translation>
     </message>
     <message>
         <source>Incorrect email and/or password.</source>
@@ -4863,7 +5115,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Creating account...</source>
         <translatorcomment>Label displayed when the account is being created.</translatorcomment>
-        <translation>帳戶建立中…</translation>
+        <translation>帳戶建立中⋯</translation>
     </message>
     <message>
         <source>Warning</source>
@@ -4888,7 +5140,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Logging in...</source>
         <translatorcomment>Label displayed when the user is logging in.</translatorcomment>
-        <translation>正在登入中…</translation>
+        <translation>正在登入中⋯</translation>
     </message>
     <message>
         <source>You are trying to sync an extremely large folder.
@@ -4955,12 +5207,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Creating folder...</source>
         <translatorcomment>Label shown when an user is creating a remote folder.</translatorcomment>
-        <translation>資料夾建立中…</translation>
+        <translation>資料夾建立中⋯</translation>
     </message>
     <message>
         <source>Logging out...</source>
         <translatorcomment>Label shown when an user is logging out from his account.</translatorcomment>
-        <translation>正在登出中…</translation>
+        <translation>正在登出中⋯</translation>
     </message>
     <message>
         <source>Very Weak</source>
@@ -5106,12 +5358,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>%1 (%2, %3)</source>
         <translatorcomment>Keep %1 (%2, %3) code because it will be filled with the number of folders at runtime. It will generate strings like: Upload to MEGA (5 files, 3 folders)</translatorcomment>
-        <translation>%1 (%2, %3)</translation>
+        <translation>%1 （%2, %3）</translation>
     </message>
     <message>
         <source>%1 (%2)</source>
         <translatorcomment>Keep %1 (%2) code because it will be filled with the number of folders at runtime. It will generate strings like: Upload to MEGA (5 files)</translatorcomment>
-        <translation>%1 (%2)</translation>
+        <translation>%1 （%2）</translation>
     </message>
     <message>
         <source>Remove from left pane</source>
@@ -5192,7 +5444,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Select media from...</source>
         <translatorcomment>Label just above of the buttons to select files for streaming</translatorcomment>
-        <translation>從…選擇媒體</translation>
+        <translation>從⋯選擇媒體</translation>
     </message>
     <message>
         <source>Cloud Drive</source>
@@ -5287,7 +5539,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Please wait...</source>
         <translatorcomment>Message shown while waiting for the server request with the file info to stream</translatorcomment>
-        <translation>請等待…</translation>
+        <translation>請等待⋯</translation>
     </message>
 </context>
 <context>
@@ -5304,16 +5556,84 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
 </context>
 <context>
+    <name>TransferBaseDelegateWidget</name>
+    <message>
+        <source>Starting…</source>
+        <translatorcomment>Transfer is being started but no bytes have been transferred yet</translatorcomment>
+        <translation>正在開始⋯</translation>
+    </message>
+    <message>
+        <source>Retrying</source>
+        <translatorcomment>Transfer is starting again after failure</translatorcomment>
+        <translation>正在重試⋯</translation>
+    </message>
+    <message>
+        <source>Uploading…</source>
+        <translatorcomment>Transfer is being uploaded</translatorcomment>
+        <translation>正在上傳⋯</translation>
+    </message>
+    <message>
+        <source>Downloading…</source>
+        <translatorcomment>Transfer is being downloaded</translatorcomment>
+        <translation>正在下載⋯</translation>
+    </message>
+    <message>
+        <source>Syncing…</source>
+        <translatorcomment>Transfer is being synced</translatorcomment>
+        <translation>正在同步⋯</translation>
+    </message>
+    <message>
+        <source>Completing</source>
+        <translatorcomment>Transfer is being completed</translatorcomment>
+        <translation>正在完成⋯</translation>
+    </message>
+    <message>
+        <source>Completed</source>
+        <translatorcomment>Transfer is completed</translatorcomment>
+        <translation>完成</translation>
+    </message>
+    <message>
+        <source>Paused</source>
+        <translatorcomment>Transfer is paused</translatorcomment>
+        <translation>暫停</translation>
+    </message>
+    <message>
+        <source>Failed</source>
+        <translatorcomment>Transfer has failed</translatorcomment>
+        <translation>失敗</translation>
+    </message>
+    <message>
+        <source>In queue</source>
+        <translatorcomment>Transfer is active but not being processed yet</translatorcomment>
+        <translation>佇列中</translation>
+    </message>
+    <message>
+        <source>(in queue)</source>
+        <translatorcomment>Transfer is paused and no bytes have been transferred yet</translatorcomment>
+        <translation>（佇列中）</translation>
+    </message>
+    <message>
+        <source>Retry</source>
+        <translatorcomment>Retry button text</translatorcomment>
+        <translation>重試</translation>
+    </message>
+    <message>
+        <source>Out of storage space</source>
+        <translatorcomment>Transfer is paused for out of storage space</translatorcomment>
+        <translation>已超出空間配額</translation>
+    </message>
+    <message>
+        <source>Out of transfer quota</source>
+        <translatorcomment>Transfer is paused for out of transfer quota</translatorcomment>
+        <translation>已超出傳輸配額</translation>
+    </message>
+</context>
+<context>
     <name>TransferManager</name>
     <message>
         <source>Transfer Manager</source>
         <translatorcomment>Title of the dialog of Transfer Manager</translatorcomment>
         <translation>傳輸管理員</translation>
-    </message>
-    <message>
-        <source>Add...</source>
-        <translatorcomment>Button label to add transfers items (uploads/downloads/public links) to the dialog (String as short as possible)</translatorcomment>
-        <translation>新增…</translation>
     </message>
     <message>
         <source>Downloads</source>
@@ -5331,35 +5651,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>完成</translation>
     </message>
     <message>
-        <source>Pause</source>
-        <translatorcomment>Button label to pause visible transfers</translatorcomment>
-        <translation>暫停</translation>
-    </message>
-    <message>
-        <source>Clear all</source>
-        <translatorcomment>Button label to clear all items of completed transfers view</translatorcomment>
-        <translation>全部清除</translation>
-    </message>
-    <message>
-        <source>Close</source>
-        <translatorcomment>Button label to close transfer manager dialog</translatorcomment>
-        <translation>關閉</translation>
-    </message>
-    <message>
-        <source>Cancel all</source>
-        <translatorcomment>Button label to cancel all items of active transfers view</translatorcomment>
-        <translation>全部取消</translation>
-    </message>
-    <message>
-        <source>Resume</source>
-        <translation>恢復</translation>
-    </message>
-    <message>
-        <source>Active Transfers</source>
-        <translatorcomment>Label of tab to access all active transfers</translatorcomment>
-        <translation>進行中的傳輸</translation>
-    </message>
-    <message>
         <source>Upload</source>
         <translation>上傳</translation>
     </message>
@@ -5373,57 +5664,174 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>開啟連結</translation>
     </message>
     <message>
-        <source>Do you want to cancel all transfers?</source>
-        <translatorcomment>Description label for warning dialog before a transfer cancellation</translatorcomment>
-        <translation>您要取消所有傳輸嗎？</translation>
+        <source>Transfers</source>
+        <translatorcomment>Transfer manager title</translatorcomment>
+        <translation>傳輸</translation>
     </message>
     <message>
-        <source>Syncs aren&apos;t affected by this action.</source>
-        <translatorcomment>Description label for warning dialog indicating that syncs are not going to be affected by accepting this dialog</translatorcomment>
-        <translation>同步不受此操作影響。</translation>
-    </message>
-</context>
-<context>
-    <name>TransferManagerItem</name>
-    <message>
-        <source>starting</source>
-        <translatorcomment>Label to indicate that a transfer is starting</translatorcomment>
-        <translation>開始中</translation>
+        <source>Search</source>
+        <translatorcomment>Title for text search window</translatorcomment>
+        <translation>搜尋</translation>
     </message>
     <message>
-        <source>paused</source>
-        <translatorcomment>Label to indicate that a transfer is paused</translatorcomment>
-        <translation>已暫停</translation>
+        <source>Transferring</source>
+        <translatorcomment>Label to indicate that MEGA Desktop App is in a transferring state (ongoing transfers are running)</translatorcomment>
+        <translation>傳輸中</translation>
     </message>
     <message>
-        <source>queued</source>
-        <translatorcomment>Label to indicate that a transfer is queued</translatorcomment>
-        <translation>已入佇列</translation>
+        <source>All transfers</source>
+        <translatorcomment>Title for All transfers category</translatorcomment>
+        <translation>所有傳輸</translation>
     </message>
     <message>
-        <source>retrying</source>
-        <translatorcomment>Label to indicate that a transfer is being retried</translatorcomment>
-        <translation>正在重試</translation>
+        <source>Failed</source>
+        <translatorcomment>Title for Failed transfers category</translatorcomment>
+        <translation>失敗</translation>
     </message>
     <message>
-        <source>completing</source>
-        <translatorcomment>Label to indicate that a transfer is being completed</translatorcomment>
-        <translation>完成中</translation>
+        <source>Media type</source>
+        <translatorcomment>Title of the groupbox which contains all the media categories</translatorcomment>
+        <translation>媒體類型</translation>
     </message>
     <message>
-        <source>Out of storage space</source>
-        <translatorcomment>Label to indicate that a transfer is halted due to the account is out of storage space</translatorcomment>
-        <translation>儲存空間不足</translation>
+        <source>Archives</source>
+        <translatorcomment>Categories for archive type transfers</translatorcomment>
+        <translation>壓縮</translation>
+    </message>
+    <message>
+        <source>Documents</source>
+        <translatorcomment>Categories for document type transfers</translatorcomment>
+        <translation>文件</translation>
+    </message>
+    <message>
+        <source>Images</source>
+        <translatorcomment>Categories for image type transfers</translatorcomment>
+        <translation>圖片</translation>
+    </message>
+    <message>
+        <source>Videos</source>
+        <translatorcomment>Categories for video type transfers</translatorcomment>
+        <translation>影片</translation>
+    </message>
+    <message>
+        <source>Audio</source>
+        <translatorcomment>Categories for audio type transfers</translatorcomment>
+        <translation>音訊</translation>
+    </message>
+    <message>
+        <source>Other</source>
+        <translatorcomment>Categories for other type transfers</translatorcomment>
+        <translation>其它</translation>
+    </message>
+    <message>
+        <source>Up to date</source>
+        <translatorcomment>All transfers have been finished</translatorcomment>
+        <translation>最新的</translation>
+    </message>
+    <message>
+        <source>Scanning</source>
+        <translatorcomment>State of the Transfers: Message which shows that a folder is being scanned</translatorcomment>
+        <translation>掃描中</translation>
+    </message>
+    <message>
+        <source>All paused</source>
+        <translatorcomment>Message which shows that the global pause is set</translatorcomment>
+        <translation>全部暫停</translation>
+    </message>
+    <message>
+        <source>All</source>
+        <translatorcomment>Title for all searched transfers by text</translatorcomment>
+        <translation>全部</translation>
+    </message>
+    <message>
+        <source>Search:</source>
+        <translatorcomment>Title to show the text used to search</translatorcomment>
+        <translation>搜尋：</translation>
+    </message>
+    <message>
+        <source>Retry all</source>
+        <translatorcomment>Button text for retry all button in Failed category</translatorcomment>
+        <translation>全部重試</translation>
+    </message>
+    <message>
+        <source>No uploads</source>
+        <translatorcomment>Empty window message for upload category</translatorcomment>
+        <translation>沒有上傳</translation>
+    </message>
+    <message>
+        <source>No downloads</source>
+        <translatorcomment>Empty window message for download category</translatorcomment>
+        <translation>沒有下載</translation>
+    </message>
+    <message>
+        <source>No transfers</source>
+        <translatorcomment>Empty window message for generic categories</translatorcomment>
+        <translation>沒有傳輸</translation>
+    </message>
+    <message>
+        <source>No search results</source>
+        <translatorcomment>Empty window message for search category</translatorcomment>
+        <translation>沒有搜尋結果</translation>
+    </message>
+    <message>
+        <source>No completed transfers</source>
+        <translatorcomment>Empty window message for completed category</translatorcomment>
+        <translation>沒有完成的傳輸</translation>
+    </message>
+    <message>
+        <source>Resume all transfers</source>
+        <translatorcomment>Global pause button tooltip</translatorcomment>
+        <translation>恢復所有傳輸</translation>
+    </message>
+    <message>
+        <source>Pause all transfers</source>
+        <translatorcomment>Global resume button tooltip</translatorcomment>
+        <translation>暫停所有傳輸</translation>
+    </message>
+    <message numerus="yes">
+        <source>%1 result found</source>
+        <translatorcomment>Message shown with search results,when there are only uploads or downloads, but not both at the same time</translatorcomment>
+        <translation><numerusform>找到%1個結果</numerusform></translation>
+    </message>
+    <message>
+        <source>Upgrade now</source>
+        <translatorcomment>Button to open web explorer to see MEGA paid plans</translatorcomment>
+        <translation>立刻升級</translation>
     </message>
     <message>
         <source>Transfer quota exceeded</source>
-        <translatorcomment>Label to indicate that a transfer is halted due to the account is out of transfer quota</translatorcomment>
+        <translatorcomment>Subtitle Transfer Quota exceeded state message</translatorcomment>
         <translation>已超過傳輸配額</translation>
     </message>
     <message>
-        <source>%1 of %2</source>
-        <translatorcomment>Label to keep the count of used and total storage. Preserve %1 and %2 codes beacuse they are used to include the amount of used and total storage by actual account.</translatorcomment>
-        <translation>%2之%1</translation>
+        <source>Your MEGA account is full</source>
+        <translatorcomment>Message shown when the MEGA account is full</translatorcomment>
+        <translation>您的MEGA帳戶已滿。</translation>
+    </message>
+    <message>
+        <source>You can&apos;t continue downloading as you don&apos;t have enough transfer quota left for this IP address.
+To get more quota, upgrade to a Pro account or wait for [A] until more free quota becomes available on your IP address.</source>
+        <translatorcomment>Message which shows that the user reachs the overquota. [A] is the time to wait until the quota is reset in hh:mm:ss</translatorcomment>
+        <translation>您無法繼續下載，因為此IP位址剩餘的傳輸配額不足。
+若要獲得更多傳輸配額，請升級到Pro帳戶或等待[A]直到您的IP位址有更多免費的配額可用。</translation>
+    </message>
+    <message>
+        <source>More about transfer quota</source>
+        <translatorcomment>Link button to send the user to the transfer quota information blog website</translatorcomment>
+        <translation>關於傳輸配額更多資訊</translation>
+    </message>
+    <message numerus="yes">
+        <source>Issue found</source>
+        <translatorcomment>Message shown when there are some failed transfers/syncs/backups</translatorcomment>
+        <translation><numerusform>發現問題</numerusform></translation>
+    </message>
+</context>
+<context>
+    <name>TransferManagerDragBackDrop</name>
+    <message>
+        <source>Drop to Upload</source>
+        <translatorcomment>Let the user know that files can be dropped there</translatorcomment>
+        <translation>拖放上傳</translation>
     </message>
 </context>
 <context>
@@ -5440,21 +5848,269 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
 </context>
 <context>
-    <name>TransfersStateInfoWidget</name>
+    <name>TransfersModel</name>
     <message>
-        <source>No Downloads</source>
-        <translatorcomment>Label to indicate that there are no active downloads</translatorcomment>
-        <translation>沒有下載</translation>
+        <source>Dismiss</source>
+        <translatorcomment>Option to close the dialog without taking any action</translatorcomment>
+        <translation>忽略</translation>
+    </message>
+</context>
+<context>
+    <name>TransfersWidget</name>
+    <message>
+        <source>Name</source>
+        <translatorcomment>Name of the file to transfer</translatorcomment>
+        <translation>名稱</translation>
     </message>
     <message>
-        <source>No Uploads</source>
-        <translatorcomment>Label to indicate that there are no active uploads</translatorcomment>
-        <translation>沒有上傳</translation>
+        <source>Size</source>
+        <translatorcomment>Size of the file to transfer</translatorcomment>
+        <translation>大小</translation>
     </message>
     <message>
-        <source>Paused Transfers</source>
-        <translatorcomment>Label to indicate that active transfers are paused</translatorcomment>
-        <translation>傳輸暫停</translation>
+        <source>Speed</source>
+        <translatorcomment>speed table header column name of the file to transfer in All transfers and uploads/downloads categories</translatorcomment>
+        <translation>速度</translation>
+    </message>
+    <message>
+        <source>Status</source>
+        <translatorcomment>Status (paused, completed, queue...) of the file to transfer</translatorcomment>
+        <translation>狀態</translation>
+    </message>
+    <message>
+        <source>Time left</source>
+        <translatorcomment>Time table header column name for all transfers, downloads, uploads categories (where there are only active transfers)</translatorcomment>
+        <translation>剩餘時間</translation>
+    </message>
+    <message>
+        <source>Time completed</source>
+        <translatorcomment>Time table header column name for completed transfers categories</translatorcomment>
+        <translation>完成時間</translation>
+    </message>
+    <message>
+        <source>Avg. speed</source>
+        <translatorcomment>speed table header column name for completed and failed transfers categories</translatorcomment>
+        <translation>平均速度</translation>
+    </message>
+    <message>
+        <source>Time</source>
+        <translatorcomment>Time table header column name for media types and search categories</translatorcomment>
+        <translation>時間</translation>
+    </message>
+    <message>
+        <source>Clear all completed</source>
+        <translatorcomment>Tooltip for clear button when the user is in the completed category</translatorcomment>
+        <translation>清除所有已完成的</translation>
+    </message>
+    <message>
+        <source>Clear all search results</source>
+        <translatorcomment>Tooltip for clear button when the user is in the search category</translatorcomment>
+        <translation>清除所有搜尋結果</translation>
+    </message>
+    <message>
+        <source>Clear all audios</source>
+        <translatorcomment>Tooltip for clear button when the user is in the audios category</translatorcomment>
+        <translation>清除音訊中的所有傳輸</translation>
+    </message>
+    <message>
+        <source>Clear all videos</source>
+        <translatorcomment>Tooltip for clear button when the user is in the videos category</translatorcomment>
+        <translation>清除影片中的所有傳輸</translation>
+    </message>
+    <message>
+        <source>Clear all archives</source>
+        <translatorcomment>Tooltip for clear button when the user is in the archives category</translatorcomment>
+        <translation>清除壓縮中的所有傳輸</translation>
+    </message>
+    <message>
+        <source>Clear all documents</source>
+        <translatorcomment>Tooltip for clear button when the user is in the documents category</translatorcomment>
+        <translation>清除文件中的所有傳輸</translation>
+    </message>
+    <message>
+        <source>Clear all images</source>
+        <translatorcomment>Tooltip for clear button when the user is in the images category</translatorcomment>
+        <translation>清除圖片中的所有傳輸</translation>
+    </message>
+    <message>
+        <source>Clear all transfers</source>
+        <translatorcomment>Tooltip for clear button when the user is in the others category</translatorcomment>
+        <translation>清除所有傳輸</translation>
+    </message>
+    <message>
+        <source>Cancel all downloads</source>
+        <translatorcomment>Tooltip for cancel button when the user is in the downloads category</translatorcomment>
+        <translation>取消下載中的所有傳輸</translation>
+    </message>
+    <message>
+        <source>Cancel all uploads</source>
+        <translatorcomment>Tooltip for cancel button when the user is in the uploads category</translatorcomment>
+        <translation>取消上傳中的所有傳輸</translation>
+    </message>
+    <message>
+        <source>Cancel all failed</source>
+        <translatorcomment>Tooltip for cancel button when the user is in the failed category</translatorcomment>
+        <translation>取消失敗中的所有傳輸</translation>
+    </message>
+    <message>
+        <source>Cancel all search results</source>
+        <translatorcomment>Tooltip for cancel button when the user is in the search category</translatorcomment>
+        <translation>取消所有搜尋結果</translation>
+    </message>
+    <message>
+        <source>Cancel all audios</source>
+        <translatorcomment>Tooltip for cancel button when the user is in the audios category</translatorcomment>
+        <translation>取消音訊中的所有傳輸</translation>
+    </message>
+    <message>
+        <source>Cancel all videos</source>
+        <translatorcomment>Tooltip for cancel button when the user is in the videos category</translatorcomment>
+        <translation>取消影片中的所有傳輸</translation>
+    </message>
+    <message>
+        <source>Cancel all archives</source>
+        <translatorcomment>Tooltip for cancel button when the user is in the archives category</translatorcomment>
+        <translation>取消壓縮中的所有傳輸</translation>
+    </message>
+    <message>
+        <source>Cancel all documents</source>
+        <translatorcomment>Tooltip for cancel button when the user is in the documents category</translatorcomment>
+        <translation>取消文件中的所有傳輸</translation>
+    </message>
+    <message>
+        <source>Cancel all images</source>
+        <translatorcomment>Tooltip for cancel button when the user is in the images category</translatorcomment>
+        <translation>取消圖片中的所有傳輸</translation>
+    </message>
+    <message>
+        <source>Cancel all transfers</source>
+        <translatorcomment>Tooltip for cancel button when the user is in the all transfers category</translatorcomment>
+        <translation>取消所有傳輸</translation>
+    </message>
+    <message>
+        <source>Cancel and clear all search results</source>
+        <translatorcomment>Tooltip for cancel button when the user is in the search category and there are completed transfers</translatorcomment>
+        <translation>取消並清除所有搜尋結果</translation>
+    </message>
+    <message>
+        <source>Cancel and clear all audios</source>
+        <translatorcomment>Tooltip for cancel button when the user is in the audios category and there are completed transfers</translatorcomment>
+        <translation>取消並清除所有音訊</translation>
+    </message>
+    <message>
+        <source>Cancel and clear all videos</source>
+        <translatorcomment>Tooltip for cancel button when the user is in the videos category and there are completed transfers</translatorcomment>
+        <translation>取消並清除所有影片</translation>
+    </message>
+    <message>
+        <source>Cancel and clear all archives</source>
+        <translatorcomment>Tooltip for cancel button when the user is in the archives category and there are completed transfers</translatorcomment>
+        <translation>取消並清除所有壓縮</translation>
+    </message>
+    <message>
+        <source>Cancel and clear all documents</source>
+        <translatorcomment>Tooltip for cancel button when the user is in the documents category and there are completed transfers</translatorcomment>
+        <translation>取消並清除所有文件</translation>
+    </message>
+    <message>
+        <source>Cancel and clear all images</source>
+        <translatorcomment>Tooltip for cancel button when the user is in the images category and there are completed transfers</translatorcomment>
+        <translation>取消並清除所有圖片</translation>
+    </message>
+    <message>
+        <source>Cancel and clear all transfers</source>
+        <translatorcomment>Tooltip for cancel button when the user is in the all transfers category and there are completed transfers</translatorcomment>
+        <translation>取消並清除所有傳輸</translation>
+    </message>
+    <message>
+        <source>Resume all downloads</source>
+        <translatorcomment>Tooltip for Resume button when the user is in the downloads category</translatorcomment>
+        <translation>恢復所有下載</translation>
+    </message>
+    <message>
+        <source>Resume all uploads</source>
+        <translatorcomment>Tooltip for Resume button when the user is in the uploads category</translatorcomment>
+        <translation>恢復所有上傳</translation>
+    </message>
+    <message>
+        <source>Resume all search results</source>
+        <translatorcomment>Tooltip for Resume button when the user is in the search category</translatorcomment>
+        <translation>恢復所有搜尋結果</translation>
+    </message>
+    <message>
+        <source>Resume all audios</source>
+        <translatorcomment>Tooltip for Resume button when the user is in the audios category</translatorcomment>
+        <translation>恢復所有音訊</translation>
+    </message>
+    <message>
+        <source>Resume all videos</source>
+        <translatorcomment>Tooltip for Resume button when the user is in the videos category</translatorcomment>
+        <translation>恢復所有影片</translation>
+    </message>
+    <message>
+        <source>Resume all archives</source>
+        <translatorcomment>Tooltip for Resume button when the user is in the archives category</translatorcomment>
+        <translation>恢復所有壓縮</translation>
+    </message>
+    <message>
+        <source>Resume all documents</source>
+        <translatorcomment>Tooltip for Resume button when the user is in the documents category</translatorcomment>
+        <translation>恢復所有文件</translation>
+    </message>
+    <message>
+        <source>Resume all images</source>
+        <translatorcomment>Tooltip for Resume button when the user is in the images category</translatorcomment>
+        <translation>恢復所有圖片</translation>
+    </message>
+    <message>
+        <source>Resume all transfers</source>
+        <translatorcomment>Tooltip for Resume button when the user is in the all transfers category</translatorcomment>
+        <translation>恢復所有傳輸</translation>
+    </message>
+    <message>
+        <source>Pause all downloads</source>
+        <translatorcomment>Tooltip for Pause button when the user is in the downloads category</translatorcomment>
+        <translation>暫停所有下載</translation>
+    </message>
+    <message>
+        <source>Pause all uploads</source>
+        <translatorcomment>Tooltip for Pause button when the user is in the uploads category</translatorcomment>
+        <translation>暫停所有上傳</translation>
+    </message>
+    <message>
+        <source>Pause all search results</source>
+        <translatorcomment>Tooltip for Pause button when the user is in the search category</translatorcomment>
+        <translation>暫停所有搜尋結果</translation>
+    </message>
+    <message>
+        <source>Pause all audios</source>
+        <translatorcomment>Tooltip for Pause button when the user is in the audios category</translatorcomment>
+        <translation>暫停所有音訊</translation>
+    </message>
+    <message>
+        <source>Pause all videos</source>
+        <translatorcomment>Tooltip for Pause button when the user is in the videos category</translatorcomment>
+        <translation>暫停所有影片</translation>
+    </message>
+    <message>
+        <source>Pause all archives</source>
+        <translatorcomment>Tooltip for Pause button when the user is in the archives category</translatorcomment>
+        <translation>暫停所有壓縮</translation>
+    </message>
+    <message>
+        <source>Pause all documents</source>
+        <translatorcomment>Tooltip for Pause button when the user is in the documents category</translatorcomment>
+        <translation>暫停所有文件</translation>
+    </message>
+    <message>
+        <source>Pause all images</source>
+        <translatorcomment>Tooltip for Pause button when the user is in the images category</translatorcomment>
+        <translation>暫停所有圖片</translation>
+    </message>
+    <message>
+        <source>Pause all transfers</source>
+        <translatorcomment>Tooltip for Pause button when the user is in the all transfers category</translatorcomment>
+        <translation>暫停所有傳輸</translation>
     </message>
 </context>
 <context>
@@ -5477,7 +6133,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>* The local currency price is an estimate only. All transactions shown charged in Euros.</source>
         <translatorcomment>Informative label to inform users about billing currency used for non Euro payments.</translatorcomment>
-        <translation>* 當地貨幣價格僅為估計值。所有交易均以歐元計價。</translation>
+        <translation>* 當地貨幣估算價格僅供參考。所有交易均以歐元計價。</translation>
     </message>
     <message>
         <source>Your download could not proceed because it exceeds your free transfer allowance.</source>
@@ -5520,7 +6176,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>* The local currency price is an estimate only. All transactions shown charged in Euros.</source>
         <translatorcomment>Informative label to inform users about billing currency used for non Euro payments.</translatorcomment>
-        <translation>* 當地貨幣價格僅為估計值。所有交易均以歐元計價。</translation>
+        <translation>* 當地貨幣估算價格僅供參考。所有交易均以歐元計價。</translation>
     </message>
     <message>
         <source>100% of the %1 available used on your account.</source>

@@ -2,7 +2,7 @@
 FMEDIAINFO := $(shell dpkg -l | grep mediainfo >/dev/null && echo "-i" || echo " ")
 FCRYPTOPP := $(shell cat /etc/issue | grep "Ubuntu 1[4-8]\|Ubuntu 19.04\|Debian.* [89]" >/dev/null && echo "" || echo "-q")
 DPKGXZ := $(shell cat /etc/issue | grep "Ubuntu 22\|Jammy Jellyfish\|Ubuntu 21.10" >/dev/null && echo "-- -Zxz" || echo "")
-EXTRAQMAKE := $(shell cat /etc/issue | grep "Ubuntu 1[2345679]\|Debian.* [78]\|Ubuntu 18.10\|Ubuntu 20.10" >/dev/null && echo "DEFINES+=MEGASYNC_DEPRECATED_OS" || echo "")
+EXTRAQMAKE := $(shell cat /etc/issue | grep "Ubuntu 1[2345679]\|Ubuntu 18.10\|Ubuntu 20.10\|Ubuntu 21\|Debian.* [789]" >/dev/null && echo "DEFINES+=MEGASYNC_DEPRECATED_OS" || echo "")
 FULLREQS := $(shell cat /etc/issue | grep "Ubuntu 12.04" >/dev/null && echo "" || echo '"CONFIG += FULLREQUIREMENTS"')
 INSTALL3RD := $(shell dpkg --print-architecture | grep -i "i386\|arm" >/dev/null && echo "" || echo 'install3rd')
 EXTRAQMAKEFREEIMAGE := $(shell dpkg --print-architecture | grep -i "i386\|arm" >/dev/null && echo "" || echo 'QMAKE_RPATHDIR="/opt/mega/lib"')

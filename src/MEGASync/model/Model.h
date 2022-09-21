@@ -109,6 +109,9 @@ public:
     QStringList getSyncNames();
     QStringList getSyncIDs();
     QStringList getMegaFolders();
+
+    //cloudDrive = true: only cloud drive mega folders. If false will return only inshare syncs.
+    QStringList getCloudDriveSyncMegaFolders(bool cloudDrive = true);
     QString getMegaFolderByHandle(const mega::MegaHandle& handle);
     QStringList getLocalFolders();
     QList<mega::MegaHandle> getMegaFolderHandles();

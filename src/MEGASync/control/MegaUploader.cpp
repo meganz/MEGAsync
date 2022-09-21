@@ -22,17 +22,15 @@ using namespace std;
 MegaUploader::MegaUploader(MegaApi *megaApi)
 {
     this->megaApi = megaApi;
-
 }
 
 MegaUploader::~MegaUploader()
 {
-
 }
 
-void MegaUploader::upload(QString path, MegaNode *parent, unsigned long long appDataID)
+bool MegaUploader::upload(QString path, const QString& nodeName, MegaNode *parent, unsigned long long appDataID, MegaCancelToken *cancelToken)
 {
-    return upload(QFileInfo(path), parent, appDataID);
+    return upload(QFileInfo(path), nodeName, parent, appDataID, cancelToken);
 }
 
 bool MegaUploader::filesdiffer(QFileInfo &source, QFileInfo &destination)
@@ -74,7 +72,7 @@ bool MegaUploader::filesdiffer(QFileInfo &source, QFileInfo &destination)
  * @param appDataID
  * @return false if something failed
  */
-bool MegaUploader::uploadRecursivelyIntoASyncedLocation(QFileInfo srcFileInfo, QString destPath, MegaNode *parent, unsigned long long appDataID)
+bool MegaUploader::uploadRecursivelyIntoASyncedLocation(QFileInfo srcFileInfo, QString destPath, MegaNode *parent, unsigned long long appDataID, MegaCancelToken* cancelToken)
 {
     bool toret = true;
     if (!srcFileInfo.exists())
@@ -91,11 +89,6 @@ bool MegaUploader::uploadRecursivelyIntoASyncedLocation(QFileInfo srcFileInfo, Q
         return false;
     }
 
-//    if (srcPath == destPath) // returning here would discard uploading excluded files. e.g: I want to force a remote folder to have the same as in local (regardless of exclusions), by uploading into it's remote parent
-//    {
-//        return;
-//    }
-
     if (srcFileInfo.isSymLink() || (!srcFileInfo.isFile() && !srcFileInfo.isDir()) ) //review if ever symlinks are supported
     {
         MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Recursive upload skipping non file/folder: %1").arg(srcPath).toUtf8().constData());
@@ -106,7 +99,7 @@ bool MegaUploader::uploadRecursivelyIntoASyncedLocation(QFileInfo srcFileInfo, Q
     {
         //start upload to parent
         MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Recursive upload uploading non syncable path: %1").arg(srcPath).toUtf8().constData());
-        megaApi->startUploadWithData(srcPath.toUtf8().constData(), parent, (QString::number(appDataID) + QString::fromUtf8("*")).toUtf8().constData());
+        startUpload(srcPath, QString(), appDataID, parent, cancelToken);
         return true;
     }
 
@@ -173,7 +166,7 @@ bool MegaUploader::uploadRecursivelyIntoASyncedLocation(QFileInfo srcFileInfo, Q
             {
                 if (newParent)
                 {
-                    bool r = uploadRecursivelyIntoASyncedLocation(di.fileInfo(), QDir::toNativeSeparators(destPath + QDir::separator() + di.fileName()), newParent.get(), appDataID);
+                    bool r = uploadRecursivelyIntoASyncedLocation(di.fileInfo(), QDir::toNativeSeparators(destPath + QDir::separator() + di.fileName()), newParent.get(), appDataID, cancelToken);
                     toret = r && toret;
                 }
             }
@@ -182,13 +175,13 @@ bool MegaUploader::uploadRecursivelyIntoASyncedLocation(QFileInfo srcFileInfo, Q
     return  toret;
 }
 
-void MegaUploader::upload(QFileInfo info, MegaNode *parent, unsigned long long appDataID)
+bool MegaUploader::upload(QFileInfo info, const QString &nodeName, MegaNode *parent, unsigned long long appDataID, MegaCancelToken* cancelToken)
 {
     QPointer<MegaUploader> safePointer = this;
-    QApplication::processEvents();
+
     if (!safePointer)
     {
-        return;
+        return false;
     }
 
     QString fileName = info.fileName();
@@ -221,17 +214,41 @@ void MegaUploader::upload(QFileInfo info, MegaNode *parent, unsigned long long a
     {
         if (!destPath.startsWith(QFileInfo(currentPath).canonicalFilePath()))//to avoid recurses //note: destPath should have been cannonicalized already
         {
-            QtConcurrent::run(this, &MegaUploader::uploadRecursivelyIntoASyncedLocation, QFileInfo(currentPath), destPath, parent->copy(), appDataID);
+            QtConcurrent::run(this, &MegaUploader::uploadRecursivelyIntoASyncedLocation, QFileInfo(currentPath), destPath, parent->copy(), appDataID, cancelToken);
         }
         else
         {
-            MegaApi::log(MegaApi::LOG_LEVEL_WARNING, QString::fromUtf8("Skiping local recursive copy to self contained path %1 to %2").arg(currentPath).arg(destPath).toUtf8().constData());
+            MegaApi::log(MegaApi::LOG_LEVEL_WARNING, QString::fromUtf8("Skiping local recursive copy to self contained path %1 to %2").arg(currentPath, destPath).toUtf8().constData());
             ((MegaApplication*)qApp)->showErrorMessage(tr("Upload failed") + QString::fromUtf8(": ") + QString::fromUtf8("Cannot upload to location synced with a descendant") );
         }
 
     }
     else if (info.isFile() || info.isDir())
     {
-        megaApi->startUploadWithData(currentPath.toUtf8().constData(), parent, (QString::number(appDataID) + QString::fromUtf8("*")).toUtf8().constData());
+        QString msg = QString::fromLatin1("Starting upload : '%1' - '%2' - '%3'").arg(info.fileName(), currentPath).arg(appDataID);
+        megaApi->log(MegaApi::LOG_LEVEL_DEBUG, msg.toUtf8().constData());
+        startUpload(currentPath, nodeName, appDataID, parent, cancelToken);
+        return true;
     }
+    return false;
+}
+
+void MegaUploader::startUpload(const QString& localPath, const QString &nodeName, unsigned long long appDataID, MegaNode* parent, MegaCancelToken* cancelToken)
+{
+    const bool startFirst = false;
+    QByteArray localPathArray = localPath.toUtf8();
+
+    const char* fileName = nullptr;
+    QByteArray fileNameArray;
+    if(!nodeName.isEmpty())
+    {
+        fileNameArray = nodeName.toUtf8();
+        fileName = fileNameArray.constData();
+    }
+
+    QByteArray appData = (QString::number(appDataID) + QString::fromUtf8("*")).toUtf8();
+    const int64_t mtime = ::mega::MegaApi::INVALID_CUSTOM_MOD_TIME;
+    const bool isSrcTemporary = false;
+    MegaTransferListener* listener = nullptr;
+    megaApi->startUpload(localPathArray.constData(), parent, fileName, mtime, appData.constData(), isSrcTemporary, startFirst, cancelToken, listener);
 }

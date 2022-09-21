@@ -43,7 +43,7 @@ else()
 endif()
 
 if(NOT MEGA_QT_VERSION)
-    set(MEGA_QT_VERSION 5.12.11)
+    set(MEGA_QT_VERSION 5.12.12)
 endif()
 
 set(_triplet ${TRIPLET})
@@ -168,6 +168,9 @@ set(_common_cmake_args
 
 if(TARGET)
     set(_cmake_target_args "--target" ${TARGET})
+    #set(_cmake_target_args --target ${TARGET})
+#elseif(TARGETS) # allow TARGETS as a synonym for TARGET :)
+    #set(_cmake_target_args --target ${TARGETS})
 endif()
 
 if(WIN32)
@@ -196,7 +199,8 @@ if(WIN32)
             ${_extra_cmake_args}
     )
 
-    foreach(_config "Debug" "Release")
+    #foreach(_config "Release" "Debug")
+	foreach(_config "Debug" "Release")
         execute_checked_command(
             COMMAND ${_cmake}
                 --build ${_build_dir}
@@ -206,16 +210,37 @@ if(WIN32)
         )
     endforeach()
 else()
+
+    # Are we building for OSX?
+    if (VCPKG_CMAKE_SYSTEM_NAME STREQUAL "Darwin")
+        # Determine the host's architecture.
+        execute_process(
+            COMMAND uname -m
+            OUTPUT_VARIABLE HOST_ARCHITECTURE
+            OUTPUT_STRIP_TRAILING_WHITESPACE)
+
+        # Are we crosscompiling? Compare against the triplet value
+        if (NOT HOST_ARCHITECTURE STREQUAL VCPKG_OSX_ARCHITECTURES)
+            set(_toolchain_cross_compile_args
+                "-DCMAKE_OSX_ARCHITECTURES=${VCPKG_OSX_ARCHITECTURES}")
+                message(STATUS "Cross compiling for arch ${VCPKG_OSX_ARCHITECTURES} in ${HOST_ARCHITECTURE} system.")
+        endif ()
+
+        # Clean up after ourselves.
+        unset(HOST_ARCHITECTURE)
+    endif ()
+
     foreach(_config "Debug" "Release")
         set(_build_dir "${_app_dir}/build-${_triplet}-${_config}")
         file(MAKE_DIRECTORY ${_build_dir})
 
         execute_checked_command(
             COMMAND ${_cmake}
-                ${_common_cmake_args}
                 -B ${_build_dir}
                 "-DCMAKE_BUILD_TYPE=${_config}"
+                ${_common_cmake_args}
                 ${_extra_cmake_args}
+                ${_toolchain_cross_compile_args}
         )
 
         execute_checked_command(

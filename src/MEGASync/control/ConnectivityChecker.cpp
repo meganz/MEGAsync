@@ -19,7 +19,7 @@ ConnectivityChecker::ConnectivityChecker(QString testURL, QObject *parent) :
     this->method = METHOD_GET;
     this->testURL = testURL;
     this->reply = NULL;
-    timeoutms = 10000;
+    timeoutms = 1000000;
 }
 
 void ConnectivityChecker::setProxy(QNetworkProxy proxy)

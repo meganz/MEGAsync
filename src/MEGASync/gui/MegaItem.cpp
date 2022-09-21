@@ -4,7 +4,8 @@
 #include "model/Model.h"
 #include "MegaApplication.h"
 #include "mega/utils.h"
-#include "UserAttributesRequests.h"
+#include "UserAttributesRequests/FullName.h"
+#include "UserAttributesRequests/Avatar.h"
 
 #include <QByteArray>
 
@@ -24,7 +25,7 @@ MegaItem::MegaItem(std::unique_ptr<MegaNode> node, MegaItem *parentItem, bool sh
     mNode(std::move(node)),
     mOwner(nullptr)
 { 
-    if(isRoot() || mNode->isFile() || mNode->isInShare())
+    if(mNode->isFile() || mNode->isInShare())
     {
         mStatus = STATUS::NONE;
         return;
@@ -41,7 +42,7 @@ MegaItem::MegaItem(std::unique_ptr<MegaNode> node, MegaItem *parentItem, bool sh
     QStringList folderList;
     if(parent_item && parent_item->getNode()->isInShare())
     {
-        foreach(const QString& folder, Model::instance()->getMegaFolders())
+        foreach(const QString& folder, Model::instance()->getCloudDriveSyncMegaFolders(false))
         {
             if(folder.startsWith(parent_item->getOwnerEmail()))
             {
@@ -53,7 +54,13 @@ MegaItem::MegaItem(std::unique_ptr<MegaNode> node, MegaItem *parentItem, bool sh
     ////////////
     else
     {
-        calculateSyncStatus(Model::instance()->getMegaFolders());
+        QStringList syncList = Model::instance()->getCloudDriveSyncMegaFolders(true);
+        if(isRoot() && !syncList.isEmpty())
+        {
+            mStatus = STATUS::SYNC_PARENT;
+            return;
+        }
+        calculateSyncStatus(syncList);
     }
 }
 
@@ -121,19 +128,19 @@ void MegaItem::setOwner(std::unique_ptr<mega::MegaUser> user)
 {
     mOwner = std::move(user);
     mOwnerEmail = QString::fromUtf8(mOwner->getEmail());
-    mFullNameAttribute = UserAttributes::FullNameAttributeRequest::requestFullName(mOwner->getEmail());
+    mFullNameAttribute = UserAttributes::FullName::requestFullName(mOwner->getEmail());
     if(mFullNameAttribute)
     {
-        connect(mFullNameAttribute.get(), &UserAttributes::FullNameAttributeRequest::attributeReady, this, &MegaItem::onFullNameAttributeReady);
+        connect(mFullNameAttribute.get(), &UserAttributes::FullName::attributeReady, this, &MegaItem::onFullNameAttributeReady);
         if(mFullNameAttribute->isAttributeReady())
         {
             onFullNameAttributeReady();
         }
     }
-    mAvatarAttribute = UserAttributes::AvatarAttributeRequest::requestAvatar(mOwner->getEmail());
+    mAvatarAttribute = UserAttributes::Avatar::requestAvatar(mOwner->getEmail());
     if(mAvatarAttribute)
     {
-        connect(mAvatarAttribute.get(), &UserAttributes::AvatarAttributeRequest::attributeReady, this, &MegaItem::onAvatarAttributeReady);
+        connect(mAvatarAttribute.get(), &UserAttributes::Avatar::attributeReady, this, &MegaItem::onAvatarAttributeReady);
         if(mAvatarAttribute->isAttributeReady())
         {
             onAvatarAttributeReady();
@@ -262,32 +269,9 @@ bool MegaItem::isSyncable()
             && mStatus != SYNC_CHILD;
 }
 
-int MegaItem::insertPosition(const std::unique_ptr<MegaNode>& node)
+void MegaItem::addNode(std::unique_ptr<MegaNode>node)
 {
-    int type = node->getType();
-
-    int i;
-    for (i = 0; i < mChildItems.size(); i++)
-    {
-        std::shared_ptr<MegaNode> n = mChildItems.at(i)->getNode();
-        int nodeType = n->getType();
-        if (type < nodeType)
-        {
-            continue;
-        }
-
-        if (qstricmp(node->getName(), n->getName()) <= 0)
-        {
-            break;
-        }
-    }
-
-    return i;
-}
-
-void MegaItem::insertNode(std::unique_ptr<MegaNode>node, int index)
-{
-    mChildItems.insert(index, new MegaItem(move(node), this, mShowFiles));
+    mChildItems.append(new MegaItem(move(node), this, mShowFiles));
 }
 
 void MegaItem::removeNode(std::shared_ptr<MegaNode> node)
@@ -367,10 +351,12 @@ void MegaItem::calculateSyncStatus(const QStringList &folders)
         if(syncFolder.startsWith(parentFolders))
         {
             mStatus = STATUS::SYNC_PARENT;
+            return;
         }
         else if(parentFolders.startsWith(syncFolder))
         {
             mStatus = STATUS::SYNC_CHILD;
+            return;
         }
     }
 }

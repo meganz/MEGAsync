@@ -3,7 +3,6 @@
 #include "MegaApplication.h"
 #include <QDateTime>
 #include <QPointer>
-#include <QDebug>
 using namespace mega;
 
 Controller *Controller::controller = NULL;

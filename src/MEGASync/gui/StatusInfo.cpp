@@ -1,6 +1,7 @@
 #include "StatusInfo.h"
 #include "ui_StatusInfo.h"
 #include "Utilities.h"
+#include <MegaApplication.h>
 
 StatusInfo::StatusInfo(QWidget *parent) :
     QWidget(parent),
@@ -8,12 +9,12 @@ StatusInfo::StatusInfo(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    isOverQuota = false;
+    mIsOverQuota = false;
 
-    scanningTimer.setSingleShot(false);
-    scanningTimer.setInterval(60);
-    scanningAnimationIndex = 1;
-    connect(&scanningTimer, SIGNAL(timeout()), this, SLOT(scanningAnimationStep()));
+    mScanningTimer.setSingleShot(false);
+    mScanningTimer.setInterval(60);
+    mScanningAnimationIndex = 1;
+    connect(&mScanningTimer, SIGNAL(timeout()), this, SLOT(scanningAnimationStep()));
 }
 
 StatusInfo::~StatusInfo()
@@ -21,17 +22,17 @@ StatusInfo::~StatusInfo()
     delete ui;
 }
 
-void StatusInfo::setState(int state)
+void StatusInfo::setState(TRANSFERS_STATES state)
 {
-    this->state = state;
+    this->mState = state;
 
-    switch (this->state)
+    switch (this->mState)
     {
-        case STATE_PAUSED:
+        case TRANSFERS_STATES::STATE_PAUSED:
         {
-            if (scanningTimer.isActive())
+            if (mScanningTimer.isActive())
             {
-                scanningTimer.stop();
+                mScanningTimer.stop();
             }
 
             const QString statusText{tr("Paused")};
@@ -41,14 +42,14 @@ void StatusInfo::setState(int state)
             ui->bIconState->setIconSize(QSize(24, 24));
             break;
         }
-        case STATE_UPDATED:
+        case TRANSFERS_STATES::STATE_UPDATED:
         {
-            if (scanningTimer.isActive())
+            if (mScanningTimer.isActive())
             {
-                scanningTimer.stop();
+                mScanningTimer.stop();
             }
 
-            if (isOverQuota)
+            if (mIsOverQuota)
             {
                 const QString statusText{tr("Account full")};
                 ui->lStatusDesc->setToolTip(statusText);
@@ -67,12 +68,12 @@ void StatusInfo::setState(int state)
 
             break;
         }
-        case STATE_SYNCING:
+        case TRANSFERS_STATES::STATE_SYNCING:
         {
-            if (!scanningTimer.isActive())
+            if (!mScanningTimer.isActive())
             {
-                scanningAnimationIndex = 1;
-                scanningTimer.start();
+                mScanningAnimationIndex = 1;
+                mScanningTimer.start();
             }
 
             const QString statusText{tr("Syncing")+QString::fromUtf8("...")};
@@ -80,12 +81,12 @@ void StatusInfo::setState(int state)
             ui->lStatusDesc->setText(statusText);
             break;
         }
-        case STATE_WAITING:
+        case TRANSFERS_STATES::STATE_WAITING:
         {
-            if (!scanningTimer.isActive())
+            if (!mScanningTimer.isActive())
             {
-                scanningAnimationIndex = 1;
-                scanningTimer.start();
+                mScanningAnimationIndex = 1;
+                mScanningTimer.start();
             }
 
             const QString statusText{tr("Waiting")+QString::fromUtf8("...")};
@@ -93,12 +94,12 @@ void StatusInfo::setState(int state)
             ui->lStatusDesc->setText(statusText);
             break;
         }
-        case STATE_INDEXING:
+        case TRANSFERS_STATES::STATE_INDEXING:
         {
-            if (!scanningTimer.isActive())
+            if (!mScanningTimer.isActive())
             {
-                scanningAnimationIndex = 1;
-                scanningTimer.start();
+                mScanningAnimationIndex = 1;
+                mScanningTimer.start();
             }
 
             const QString statusText{tr("Scanning")+QString::fromUtf8("...")};
@@ -106,12 +107,12 @@ void StatusInfo::setState(int state)
             ui->lStatusDesc->setText(statusText);
             break;
         }
-        case STATE_TRANSFERRING:
+        case TRANSFERS_STATES::STATE_TRANSFERRING:
         {
-            if (!scanningTimer.isActive())
+            if (!mScanningTimer.isActive())
             {
-                scanningAnimationIndex = 1;
-                scanningTimer.start();
+                mScanningAnimationIndex = 1;
+                mScanningTimer.start();
             }
 
             const QString statusText{tr("Transferring")+QString::fromUtf8("...")};
@@ -119,24 +120,69 @@ void StatusInfo::setState(int state)
             ui->lStatusDesc->setText(statusText);
             break;
         }
+        case TRANSFERS_STATES::STATE_FAILED:
+        {
+            if (mScanningTimer.isActive())
+            {
+                mScanningTimer.stop();
+            }
+
+            setFailedText();
+            ui->bIconState->setIcon(Utilities::getCachedPixmap(QString::fromUtf8(":/images/transfer_manager/sidebar/cancel_all_ico_default.png")));
+            ui->bIconState->setIconSize(QSize(24, 24));
+            break;
+        }
         default:
             break;
     }
 }
 
+void StatusInfo::update()
+{
+    switch (this->mState)
+    {
+    case TRANSFERS_STATES::STATE_FAILED:
+    {
+        setFailedText();
+        break;
+    }
+    default:
+        break;
+    }
+}
+
+StatusInfo::TRANSFERS_STATES StatusInfo::getState()
+{
+    return mState;
+}
+
 void StatusInfo::setOverQuotaState(bool oq)
 {
-    isOverQuota = oq;
-    setState(state);
+    mIsOverQuota = oq;
+    setState(mState);
+}
+
+QIcon StatusInfo::scanningIcon(int& index)
+{
+    index = index%12;
+    index++;
+    return Utilities::getCachedPixmap(
+                                QString::fromUtf8(":/images/ico_menu_scanning_%1.png").arg(index));
 }
 
 void StatusInfo::scanningAnimationStep()
 {
-    scanningAnimationIndex = scanningAnimationIndex%12;
-    scanningAnimationIndex++;
-    ui->bIconState->setIcon(Utilities::getCachedPixmap(
-                                QString::fromUtf8(":/images/ico_menu_scanning_%1.png").arg(scanningAnimationIndex)));
+    ui->bIconState->setIcon(scanningIcon(mScanningAnimationIndex));
     ui->bIconState->setIconSize(QSize(24, 24));
+}
+
+void StatusInfo::setFailedText()
+{
+    long long transfersFailed(MegaSyncApp->getTransfersModel() ? MegaSyncApp->getTransfersModel()->failedTransfers() : 0);
+
+    const QString statusText{QCoreApplication::translate("TransferManager","Issue found", "", transfersFailed)};
+    ui->lStatusDesc->setToolTip(statusText);
+    ui->lStatusDesc->setText(statusText);
 }
 
 void StatusInfo::changeEvent(QEvent *event)
@@ -144,7 +190,7 @@ void StatusInfo::changeEvent(QEvent *event)
     if (event->type() == QEvent::LanguageChange)
     {
         ui->retranslateUi(this);
-        setState(state);
+        setState(mState);
     }
     QWidget::changeEvent(event);
 }

@@ -50,54 +50,6 @@
     </message>
 </context>
 <context>
-    <name>ActiveTransfersWidget</name>
-    <message>
-        <source>No Transfers</source>
-        <translatorcomment>Label to indicate that there are no active transfers at current time</translatorcomment>
-        <translation>Aucun transfert</translation>
-    </message>
-    <message>
-        <source>download speed</source>
-        <translatorcomment>Label to indicate the actual current download speed</translatorcomment>
-        <translation>vitesse de téléchargement</translation>
-    </message>
-    <message>
-        <source>No Downloads</source>
-        <translatorcomment>Label to indicate that there are no active downloads at current time</translatorcomment>
-        <translation>Aucun téléchargement</translation>
-    </message>
-    <message>
-        <source>upload speed</source>
-        <translatorcomment>Label to indicate the actual current upload speed</translatorcomment>
-        <translation>vitesse de téléversement</translation>
-    </message>
-    <message>
-        <source>No Uploads</source>
-        <translatorcomment>Label to indicate that there are no active uploads at current time</translatorcomment>
-        <translation>Aucun téléversement</translation>
-    </message>
-    <message>
-        <source>PAUSED</source>
-        <translatorcomment>Label to indicate a global Pause state for all active transfers</translatorcomment>
-        <translation>EN PAUSE</translation>
-    </message>
-    <message>
-        <source>Are you sure you want to cancel this transfer?</source>
-        <translatorcomment>Warning message shown when an user try to cancel the selected transfer</translatorcomment>
-        <translation>Voulez-vous vraiment annuler ce transfert ?</translation>
-    </message>
-    <message numerus="yes">
-        <source>Remaining upload</source>
-        <translatorcomment>Label to indicate the remaining upload(s)</translatorcomment>
-        <translation><numerusform>Téléversement restant</numerusform><numerusform>Téléversements restants</numerusform><numerusform>Téléversements restants</numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>Remaining download</source>
-        <translatorcomment>Label to indicate the remaining download(s)</translatorcomment>
-        <translation><numerusform>Téléchargement restant</numerusform><numerusform>Téléchargements restants</numerusform><numerusform>Téléchargements restants</numerusform></translation>
-    </message>
-</context>
-<context>
     <name>AddExclusionDialog</name>
     <message>
         <source>Add exclusion</source>
@@ -388,12 +340,12 @@
     <message numerus="yes">
         <source>[A] added %n item</source>
         <translatorcomment>Label to indicate that [A] has added %n items to a shared folder. Placeholder [A] will be replaced by email of the user that made the additions and %n with the number of added items.</translatorcomment>
-        <translation><numerusform>[A] a ajouté %n élément</numerusform><numerusform>[A] a ajouté %n d’éléments</numerusform><numerusform>[A] a ajouté %n éléments</numerusform></translation>
+        <translation><numerusform>[A] a ajouté %n élément</numerusform><numerusform>[A] a ajouté %n éléments</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>[A] removed %n item</source>
         <translatorcomment>Label to indicate that [A] has removed %n items from a shared folder. Placeholder [A] will be replaced by email of the user that made the deletion and %n with the number of removed items.</translatorcomment>
-        <translation><numerusform>[A] a supprimé %n élément</numerusform><numerusform>[A] a supprimé %n d’éléments</numerusform><numerusform>[A] a supprimé %n éléments</numerusform></translation>
+        <translation><numerusform>[A] a supprimé %n élément</numerusform><numerusform>[A] a supprimé %n éléments</numerusform></translation>
     </message>
     <message>
         <source>New shared folder from [A]</source>
@@ -459,16 +411,6 @@
         <translation>Téléversements :</translation>
     </message>
     <message>
-        <source>Don&apos;t use HTTP</source>
-        <translatorcomment>Checkbox label to set the option to not use http for connections.</translatorcomment>
-        <translation>Ne pas utiliser HTTP</translation>
-    </message>
-    <message>
-        <source>Enable this option only if your transfers don&apos;t start. Under normal circumstances, HTTP is satisfactory as all transfers are already encrypted by MEGA.</source>
-        <translatorcomment>Description label about the option &quot;Don&apos;t use HTTP&quot; checkbox.</translatorcomment>
-        <translation>N’activez cette option que si vos transferts ne démarrent pas. Dans des conditions normales, HTTP est adéquat, car tous les transferts sont déjà chiffrés par MEGA.</translation>
-    </message>
-    <message>
         <source>Cancel</source>
         <translatorcomment>Button label for cancel dialog.</translatorcomment>
         <translation>Annuler</translation>
@@ -497,6 +439,16 @@
         <source>Update</source>
         <translatorcomment>Button label for apply and confirm the bandwidth changes (macOS)</translatorcomment>
         <translation>Mettre à jour</translation>
+    </message>
+    <message>
+        <source>Use HTTPS for transfers that don&apos;t start</source>
+        <translatorcomment>Checkbox label to set the option to use https for transfer connections.</translatorcomment>
+        <translation>Utiliser HTTPS pour les transferts qui ne démarrent pas</translation>
+    </message>
+    <message>
+        <source>Only enable this option if tranfers don&apos;t start. Under all other circumstances, using HTTP is satisfactory as MEGA already encrypts all data.</source>
+        <translatorcomment>Description label about the option Use HTTPS for transfers that don&amp;apos;t start checkbox.</translatorcomment>
+        <translation>N’activez cette option que si vos transferts ne démarrent pas. Dans tous les autres cas, HTTP est adéquat, car MEGA chiffre déjà toutes les données.</translation>
     </message>
 </context>
 <context>
@@ -667,6 +619,29 @@ Please enter a different name to identify this synced folder:</source>
     </message>
 </context>
 <context>
+    <name>CancelConfirmWidget</name>
+    <message>
+        <source>Cancel transfers?</source>
+        <translatorcomment>Dialog main text</translatorcomment>
+        <translation>Annuler les transferts ?</translation>
+    </message>
+    <message>
+        <source>Transfers not yet processed will be cancelled.</source>
+        <translatorcomment>Dialog messages which warns the user about the potential problems of cancelling the folder scanning</translatorcomment>
+        <translation>Les transferts non traités seront annulés.</translation>
+    </message>
+    <message>
+        <source>No, continue</source>
+        <translatorcomment>Button to continue folder scanning cancellation</translatorcomment>
+        <translation>Non, poursuivre</translation>
+    </message>
+    <message>
+        <source>Yes, cancel</source>
+        <translatorcomment>Button to abort a folder scanning</translatorcomment>
+        <translation>Oui, annuler</translation>
+    </message>
+</context>
+<context>
     <name>ChangeLogDialog</name>
     <message>
         <source>Terms of Service</source>
@@ -761,7 +736,7 @@ Please enter a different name to identify this synced folder:</source>
     <message numerus="yes">
         <source>Your Pro membership plan will expire in %n day</source>
         <translatorcomment>Label to indicate that the PRO membership will expire in %n days. Placeholder will be replaced by the remaining days until plan will expire.</translatorcomment>
-        <translation><numerusform>Votre abonnement Pro arrivera à expiration dans %n jour</numerusform><numerusform>Votre abonnement Pro arrivera à expiration dans %n de jours</numerusform><numerusform>Votre abonnement Pro arrivera à expiration dans %n jours</numerusform></translation>
+        <translation><numerusform>Votre abonnement Pro arrivera à expiration dans %n jour</numerusform><numerusform>Votre abonnement Pro arrivera à expiration dans %n jours</numerusform></translation>
     </message>
     <message>
         <source>Pro membership plan expiring soon</source>
@@ -771,7 +746,7 @@ Please enter a different name to identify this synced folder:</source>
     <message numerus="yes">
         <source>Your Pro membership plan expired %n day ago</source>
         <translatorcomment>Label to indicate that the PRO membership expired %n days ago. Placeholder will be replaced by the days from the expiration of the PRO membership.</translatorcomment>
-        <translation><numerusform>Votre abonnement Pro a expiré il y a %n jour</numerusform><numerusform>Votre abonnement Pro a expiré il y a %n de jours</numerusform><numerusform>Votre abonnement Pro a expiré il y a %n jours</numerusform></translation>
+        <translation><numerusform>Votre abonnement Pro a expiré il y a %n jour</numerusform><numerusform>Votre abonnement Pro a expiré il y a %n jours</numerusform></translation>
     </message>
 </context>
 <context>
@@ -806,54 +781,6 @@ Please enter a different name to identify this synced folder:</source>
         <translatorcomment>Checkbox to let the user attach diagnostic log files for analysis when an application crash occurs. Keep [Br] place holder.</translatorcomment>
         <translation>Joindre des fichiers journaux de diagnostic pour faciliter le débogage.
 Dans certains cas, ils pourraient comprendre des détails sur vos données, tels que des noms de fichier ou de dossier.</translation>
-    </message>
-</context>
-<context>
-    <name>CustomTransferItem</name>
-    <message>
-        <source>failed:</source>
-        <translatorcomment>Label to indicate that the transfer failed. The reason will be appended after colon symbol.</translatorcomment>
-        <translation>échec :</translation>
-    </message>
-    <message>
-        <source>starting...</source>
-        <translatorcomment>Label to indicate that a transfer is starting.</translatorcomment>
-        <translation>démarrage…</translation>
-    </message>
-    <message>
-        <source>PAUSED</source>
-        <translatorcomment>Label to indicate that a transfer is paused. Keep uppercase.</translatorcomment>
-        <translation>EN PAUSE</translation>
-    </message>
-    <message>
-        <source>queued</source>
-        <translatorcomment>Label to indicate that a transfer is queued.</translatorcomment>
-        <translation>en attente</translation>
-    </message>
-    <message>
-        <source>retrying...</source>
-        <translatorcomment>Label to indicate that a transfer is being retried.</translatorcomment>
-        <translation>nouvel essai…</translation>
-    </message>
-    <message>
-        <source>completing...</source>
-        <translatorcomment>Label to indicate that a transfer is being completed.</translatorcomment>
-        <translation>achèvement…</translation>
-    </message>
-    <message>
-        <source>Added [A]</source>
-        <translatorcomment>Label to indicate that a transfer finished (added to the list of recently finished transfers) [A] time ago. [A] will be updated with the time since the transfer finished.</translatorcomment>
-        <translation>Ajouté [A]</translation>
-    </message>
-    <message>
-        <source>Out of storage space</source>
-        <translatorcomment>Label to indicate that a transfer is halted due to the account is out of storage space</translatorcomment>
-        <translation>L’espace de stockage est épuisé</translation>
-    </message>
-    <message>
-        <source>Transfer quota exceeded</source>
-        <translatorcomment>Label to indicate that a transfer is halted due to the account is out of transfer quota</translatorcomment>
-        <translation>Le quota de transfert a été dépassé</translation>
     </message>
 </context>
 <context>
@@ -1061,12 +988,12 @@ Dans certains cas, ils pourraient comprendre des détails sur vos données, tels
     <message numerus="yes">
         <source>[A] added %n item</source>
         <translatorcomment>Label to indicate that [A] has added %n items to a shared folder. Placeholder [A] will be replaced by email of the user that made the additions and %n with the number of added items.</translatorcomment>
-        <translation><numerusform>[A] a ajouté %n élément</numerusform><numerusform>[A] a ajouté %n d’éléments1</numerusform><numerusform>[A] a ajouté %n éléments</numerusform></translation>
+        <translation><numerusform>[A] a ajouté %n élément</numerusform><numerusform>[A] a ajouté %n éléments</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>You have %n day left to save your data</source>
         <translatorcomment>Notification content to inform the days the user have to save the date before possible deletion. %n will be replaced with remaining days amount.</translatorcomment>
-        <translation><numerusform>Il vous reste %n jour pour sauver vos données</numerusform><numerusform>Il vous reste %n de jours pour sauver vos données</numerusform><numerusform>Il vous reste %n jours pour sauver vos données</numerusform></translation>
+        <translation><numerusform>Il vous reste %n jour pour sauver vos données</numerusform><numerusform>Il vous reste %n jours pour sauver vos données</numerusform></translation>
     </message>
     <message>
         <source>Upgrade now to a Pro account.</source>
@@ -1138,6 +1065,117 @@ Dans certains cas, ils pourraient comprendre des détails sur vos données, tels
     </message>
 </context>
 <context>
+    <name>DuplicatedNodeDialog</name>
+    <message>
+        <source>A folder named [A] already exists at this destination</source>
+        <translatorcomment>Dialog text shown when a folder with the same name has been found on the cloud. [A] folder name</translatorcomment>
+        <translation>Un dossier du même nom « [A] » existe déjà dans cette destination.</translation>
+    </message>
+    <message>
+        <source>The new folder will be merged with the folder at this destination.</source>
+        <translatorcomment>Text explaining the result of the folder merge action</translatorcomment>
+        <translation>Le nouveau dossier sera fusionné avec le dossier dans cette destination.</translation>
+    </message>
+    <message>
+        <source>The folder at this destination will be maintained.</source>
+        <translatorcomment>Text explaining the result of the folder skip action</translatorcomment>
+        <translation>Le dossier dans cette destination sera conservé.</translation>
+    </message>
+    <message>
+        <source>A file named [A] already exists at this destination</source>
+        <translatorcomment>Dialog text shown when a file with the same name has been found on the cloud. [A] file name</translatorcomment>
+        <translation>Un fichier du même nom « [A] » existe déjà dans cette destination.</translation>
+    </message>
+    <message>
+        <source>The file at this destination will be replaced with the new file.</source>
+        <translatorcomment>Text explaining the result of the file upload and replace action</translatorcomment>
+        <translation>Le fichier dans cette destination sera remplacé par le nouveau fichier.</translation>
+    </message>
+    <message>
+        <source>The file will be renamed as:</source>
+        <translatorcomment>Text explaining the result of the file rename action</translatorcomment>
+        <translation>Le fichier sera renommé :</translation>
+    </message>
+    <message>
+        <source>The file at this destination will be maintained.</source>
+        <translatorcomment>Text explaining the result of the fileip action</translatorcomment>
+        <translation>Le fichier dans cette destination sera conservé.</translation>
+    </message>
+    <message>
+        <source>Folder already exists</source>
+        <translatorcomment>Dialog title when a folder with the same name has been found on the cloud</translatorcomment>
+        <translation>Le dossier existe déjà</translation>
+    </message>
+    <message>
+        <source>File already exists</source>
+        <translatorcomment>Dialog title when a file with the same name has been found on the cloud</translatorcomment>
+        <translation>Le fichier existe déjà</translation>
+    </message>
+    <message numerus="yes">
+        <source>Apply to all %1 duplicates</source>
+        <translatorcomment>Checkbox text to apply the action to all the following conflicts. %1 is the number of conflicts</translatorcomment>
+        <translation><numerusform>Appliquer à l’autre doublon</numerusform><numerusform>Appliquer à tous les %1 doublons</numerusform></translation>
+    </message>
+    <message>
+        <source>The file at this destination will be updated with a new version.</source>
+        <translatorcomment>Text explaining the result of the file upload and update action</translatorcomment>
+        <translation>Le fichier dans cette destination sera remplacé par un nouvelle version.</translation>
+    </message>
+</context>
+<context>
+    <name>DuplicatedNodeItem</name>
+    <message>
+        <source>Skip</source>
+        <translatorcomment>Action title for the skip action</translatorcomment>
+        <translation>Ignorer</translation>
+    </message>
+    <message>
+        <source>Skip this file</source>
+        <translatorcomment>Button text for the skip action for files</translatorcomment>
+        <translation>Ignorer ce fichier</translation>
+    </message>
+    <message>
+        <source>Skip this folder</source>
+        <translatorcomment>Button text for the skip action for folders</translatorcomment>
+        <translation>Ignorer ce dossier</translation>
+    </message>
+    <message>
+        <source>Merge</source>
+        <translatorcomment>Action title and button text for the Merge action for folders</translatorcomment>
+        <translation>Fusionner</translation>
+    </message>
+    <message>
+        <source>Rename</source>
+        <translatorcomment>Action title and button text for the Rename action for folders/files</translatorcomment>
+        <translation>Renommer</translation>
+    </message>
+    <message>
+        <source>Replace</source>
+        <translatorcomment>Action title and button text for the Replace action for folders/files</translatorcomment>
+        <translation>Remplacer</translation>
+    </message>
+    <message>
+        <source>Update</source>
+        <translatorcomment>Action title and button text for the Update action for files</translatorcomment>
+        <translation>Mettre à jour</translation>
+    </message>
+    <message>
+        <source>loading time…</source>
+        <translatorcomment>Text shown while the local file/folder modified time is calculated</translatorcomment>
+        <translation>Calcul du temps…</translation>
+    </message>
+    <message>
+        <source>loading size…</source>
+        <translatorcomment>Text shown while the local file/folder size is calculated</translatorcomment>
+        <translation>Calcul de la taille…</translation>
+    </message>
+    <message>
+        <source>Learn more</source>
+        <translatorcomment>Underline link label to open a help.mega.io article</translatorcomment>
+        <translation>En apprendre davantage</translation>
+    </message>
+</context>
+<context>
     <name>FilterAlertWidget</name>
     <message>
         <source>All notifications</source>
@@ -1189,12 +1227,12 @@ Dans certains cas, ils pourraient comprendre des détails sur vos données, tels
     <message numerus="yes">
         <source>%n file</source>
         <translatorcomment>Context menu option label to indicate the user has selected %n number of files</translatorcomment>
-        <translation><numerusform>%n fichier</numerusform><numerusform>%n de fichiers</numerusform><numerusform>%n fichiers</numerusform></translation>
+        <translation><numerusform>%n fichier</numerusform><numerusform>%n fichiers</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n folder</source>
         <translatorcomment>Context menu option label to indicate the user has selected %n number of folders</translatorcomment>
-        <translation><numerusform>%n dossier</numerusform><numerusform>%n de dossiers</numerusform><numerusform>%n dossiers</numerusform></translation>
+        <translation><numerusform>%n dossier</numerusform><numerusform>%n dossiers</numerusform></translation>
     </message>
 </context>
 <context>
@@ -1510,11 +1548,6 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation>Synchros</translation>
     </message>
     <message>
-        <source>All transfers have been completed</source>
-        <translatorcomment>Label to indicate that all pending transfers are already completed</translatorcomment>
-        <translation>Tous les transferts sont terminés</translation>
-    </message>
-    <message>
         <source>Add Sync</source>
         <translatorcomment>Button label to add a new synchronization (String as short as possible)</translatorcomment>
         <translation>Ajouter une synchronisation</translation>
@@ -1576,7 +1609,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Your MEGA account is full.</source>
         <translatorcomment>Label shown to inform the user that the actual account is over storage.</translatorcomment>
-        <translation>L’espace de stockage de votre compte MEGA est saturé.</translation>
+        <translation>Votre compte MEGA est saturé.</translation>
     </message>
     <message>
         <source>All file uploads are currently disabled.</source>
@@ -1726,17 +1759,55 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message numerus="yes">
         <source>We have contacted you by email to [A] on [B] but you still have %n file taking up [D] in your MEGA account, which requires you to have [E].</source>
         <translatorcomment>Informative label about account status regarding over quota storage. Placeholders will be replaced: [A] - user email, [B] - localized date list of emails sent to inform the user about the situation,  %n - amount of files in the current account, [D] - amount of storage used and [E] - min PRO plan needed to fix the situation.</translatorcomment>
-        <translation><numerusform>Nous vous avons contacté par courriel à l’adresse [A] le [B], mais vous avez encore %n fichier qui occupe [D] dans votre compte MEGA, ce qui vous demande d’avoir un abonnement [E].</numerusform><numerusform>Nous vous avons contacté par courriel à l’adresse [A] le [B], mais vous avez encore %n fichiers qui occupent [D] dans votre compte MEGA, ce qui vous demande d’avoir un abonnement [E].</numerusform><numerusform>Nous vous avons contacté par courriel à l’adresse [A] le [B], mais vous avez encore %n fichiers qui occupent [D] dans votre compte MEGA, ce qui vous demande d’avoir un abonnement [E].</numerusform></translation>
+        <translation><numerusform>Nous vous avons contacté par courriel à l’adresse [A] le [B], mais vous avez encore %n fichier qui occupe [D] dans votre compte MEGA, ce qui vous demande d’avoir un abonnement [E].</numerusform><numerusform>Nous vous avons contacté par courriel à l’adresse [A] le [B], mais vous avez encore %n fichiers qui occupent [D] dans votre compte MEGA, ce qui vous demande d’avoir un abonnement [E].</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>You have [A]%n day[/A] left to upgrade. After that, your data is subject to deletion.</source>
         <translatorcomment>Label to inform about the deadline time to upgrade. Otherwise, data is subject to deletion. Placeholder info: [A][/A] - needed to format and apply text style, %n- number of days left to upgrade.</translatorcomment>
-        <translation><numerusform>Il vous reste [A]%n jour[/A] pour surclasser votre compte. Ce délai révolu, vos données pourraient être supprimées.</numerusform><numerusform>Il vous reste [A]%n jours[/A] pour surclasser votre compte. Ce délai révolu, vos données pourraient être supprimées.</numerusform><numerusform>Il vous reste [A]%n jours[/A] pour surclasser votre compte. Ce délai révolu, vos données pourraient être supprimées.</numerusform></translation>
+        <translation><numerusform>Il vous reste [A]%n jour[/A] pour surclasser votre compte. Ce délai révolu, vos données pourraient être supprimées.</numerusform><numerusform>Il vous reste [A]%n jours[/A] pour surclasser votre compte. Ce délai révolu, vos données pourraient être supprimées.</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>You have [A]%n hour[/A] left to upgrade. After that, your data is subject to deletion.</source>
         <translatorcomment>Label to inform about the deadline time to upgrade. Otherwise, data is subject to deletion. Placeholder info: [A][/A] - needed to format and apply text style, %n- number of hours left to upgrade.</translatorcomment>
-        <translation><numerusform>Il vous reste [A]%n heure[/A] pour surclasser votre compte. Ce délai révolu, vos données pourraient être supprimées.</numerusform><numerusform>Il vous reste [A]%n heures[/A] pour surclasser votre compte. Ce délai révolu, vos données pourraient être supprimées.</numerusform><numerusform>Il vous reste [A]%n heures[/A] pour surclasser votre compte. Ce délai révolu, vos données pourraient être supprimées.</numerusform></translation>
+        <translation><numerusform>Il vous reste [A]%n heure[/A] pour surclasser votre compte. Ce délai révolu, vos données pourraient être supprimées.</numerusform><numerusform>Il vous reste [A]%n heures[/A] pour surclasser votre compte. Ce délai révolu, vos données pourraient être supprimées.</numerusform></translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translatorcomment>Title of the dialog</translatorcomment>
+        <translation>Erreur</translation>
+    </message>
+    <message>
+        <source>Folder can&apos;t be opened. Check that the folder in your local drive hasn&apos;t been deleted or moved.</source>
+        <translatorcomment>Warning message text to let the user know that the local folder could not be opened</translatorcomment>
+        <translation>Impossible d’ouvrir le dossier. Vérifiez que le dossier sur votre disque local n’a pas été supprimé ou déplacé.</translation>
+    </message>
+</context>
+<context>
+    <name>InfoDialogTransferDelegateWidget</name>
+    <message>
+        <source>Show in folder</source>
+        <translatorcomment>Tooltip for show transfer in folder</translatorcomment>
+        <translation>Afficher dans le dossier</translation>
+    </message>
+    <message>
+        <source>Retry</source>
+        <translatorcomment>Tooltip for retry failed transfer</translatorcomment>
+        <translation>Réessayer</translation>
+    </message>
+    <message>
+        <source>Failed: %1</source>
+        <translatorcomment>Tooltip for show transfer failed reason. %1 is a placeholder for the SDK error reason.</translatorcomment>
+        <translation>Échec : %1</translation>
+    </message>
+    <message>
+        <source>Copy link to file</source>
+        <translatorcomment>Tooltip for copy linr</translatorcomment>
+        <translation>Copier le lien vers le presse-papiers</translation>
+    </message>
+    <message>
+        <source>Added [A]</source>
+        <translatorcomment>Message shown when the transfer has finished. [A] place holder stands for elapsed time since the transfer finished</translatorcomment>
+        <translation>Ajouté [A]</translation>
     </message>
 </context>
 <context>
@@ -2130,10 +2201,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>Vous n’êtes pas connecté</translation>
     </message>
     <message>
-        <source>Are you sure you want to exit?</source>
-        <translation>Voulez-vous vraiment fermer MEGAsync ?</translation>
-    </message>
-    <message>
         <source>Transfer manager</source>
         <translation>Gestionnaire de transferts</translation>
     </message>
@@ -2347,26 +2414,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>MEGAsync continuera à fonctionner, cependant les mises à jour ne seront bientôt plus prises en charge pour les versions antérieures à OS X Yosemite.</translation>
     </message>
     <message>
-        <source>One or more syncs have been disabled. Go to preferences to enable them again.</source>
-        <translatorcomment>Warning message shown when logging into MEGAsync to inform the user that some syncs have been disabled and need to go to settings to enable them again (macOS)</translatorcomment>
-        <translation>Une ou plusieurs synchronisations ont été désactivées. Accédez aux Préférences pour les réactiver.</translation>
-    </message>
-    <message>
-        <source>Open Preferences</source>
-        <translatorcomment>Button label to open MEGAsync preferences dialog (MacOS).</translatorcomment>
-        <translation>Ouvrir Préférences</translation>
-    </message>
-    <message>
-        <source>Open Settings</source>
-        <translatorcomment>Button label to open MEGAsync preferences dialog (Linux and Windows).</translatorcomment>
-        <translation>Ouvrir les paramètres</translation>
-    </message>
-    <message>
-        <source>One or more syncs have been disabled. Go to settings to enable them again.</source>
-        <translatorcomment>Warning message shown when logging into MEGAsync to inform the user that some syncs have been disabled and need to go to settings to enable them again (Windows and Linux)</translatorcomment>
-        <translation>Une ou plusieurs synchronisations ont été désactivées. Accédez aux Paramètres pour les réactiver.</translation>
-    </message>
-    <message>
         <source>Your syncs have been disabled</source>
         <translatorcomment>Notification message launched when your syncs have been disabled.</translatorcomment>
         <translation>Vos synchronisations ont été désactivées</translation>
@@ -2379,32 +2426,32 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message numerus="yes">
         <source>%n file</source>
         <translatorcomment>File count, where %n is the number of files. Used to build the &quot;Files and folders successfully uploaded/downloaded&quot; string.</translatorcomment>
-        <translation><numerusform>%n fichier</numerusform><numerusform>%n de fichiers</numerusform><numerusform>%n fichiers</numerusform></translation>
+        <translation><numerusform>%n fichier</numerusform><numerusform>%n fichiers</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n folder</source>
         <translatorcomment>Folder count, where %n is the number of folders. Used to build the &quot;Files and folders successfully uploaded/downloaded&quot; string.</translatorcomment>
-        <translation><numerusform>%n dossier</numerusform><numerusform>%n de dossiers</numerusform><numerusform>%n dossiers</numerusform></translation>
+        <translation><numerusform>%n dossier</numerusform><numerusform>%n dossiers</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n file was successfully uploaded</source>
         <translatorcomment>System notification to inform the user that %1 files were successfully uploaded</translatorcomment>
-        <translation><numerusform>%n fichier a été téléversé avec succès</numerusform><numerusform>%n de fichiers ont été téléversés avec succès</numerusform><numerusform>%n fichiers ont été téléversés avec succès</numerusform></translation>
+        <translation><numerusform>%n fichier a été téléversé avec succès</numerusform><numerusform>%n fichiers ont été téléversés avec succès</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n file was successfully downloaded</source>
         <translatorcomment>System notification to inform the user that %1 files were successfully downloaded</translatorcomment>
-        <translation><numerusform>%n fichier a été téléchargé avec succès</numerusform><numerusform>%n de fichiers ont été téléchargés avec succès</numerusform><numerusform>%n fichiers ont été téléchargés avec succès</numerusform></translation>
+        <translation><numerusform>%n fichier a été téléchargé avec succès</numerusform><numerusform>%n fichiers ont été téléchargés avec succès</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n folder was successfully uploaded</source>
         <translatorcomment>System notification to inform the user that %n folders were successfully uploaded</translatorcomment>
-        <translation><numerusform>%n dossier a été téléversé avec succès</numerusform><numerusform>%n de dossiers ont été téléversés avec succès</numerusform><numerusform>%n dossiers ont été téléversés avec succès</numerusform></translation>
+        <translation><numerusform>%n dossier a été téléversé avec succès</numerusform><numerusform>%n dossiers ont été téléversés avec succès</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n folder was successfully downloaded</source>
         <translatorcomment>System notification to inform the user that %n folders were successfully downloaded</translatorcomment>
-        <translation><numerusform>%n dossier a été téléchargé avec succès</numerusform><numerusform>%n de dossiers ont été téléchargés avec succès</numerusform><numerusform>%n dossiers ont été téléchargés avec succès</numerusform></translation>
+        <translation><numerusform>%n dossier a été téléchargé avec succès</numerusform><numerusform>%n dossiers ont été téléchargés avec succès</numerusform></translation>
     </message>
     <message>
         <source>A new version of MEGAsync is available. Click on this message to install it</source>
@@ -2425,6 +2472,24 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>%1 and %2 were successfully downloaded</source>
         <translatorcomment>System notification to inform the user that %1 files and %2 folders were successfully downloaded. The %1 is a sentence part for files and %2 for folders.</translatorcomment>
         <translation>%1 et %2 ont été téléchargés</translation>
+    </message>
+    <message numerus="yes">
+        <source>There is an active transfer. Exit the app?
+Transfer will automatically resume when you re-open the app.</source>
+        <translatorcomment>Messagebox text to let the user know that there are active transfers when closing the app. The user will be able to exit and pause them, or stop the exit action.</translatorcomment>
+        <translation><numerusform>Un transfert est actif. Fermer l’appli ?
+Le transfert reprendra automatiquement quand vous rouvrirez l’appli.</numerusform><numerusform>Des transferts sont actifs. Fermer l’appli ?
+Les transferts reprendront automatiquement quand vous rouvrirez l’appli.</numerusform></translation>
+    </message>
+    <message>
+        <source>Exit app</source>
+        <translatorcomment>One of the messagebox options: Close the app and pause the active transfers</translatorcomment>
+        <translation>Fermer l’appli</translation>
+    </message>
+    <message>
+        <source>Stay in app</source>
+        <translatorcomment>One of the messagebox options: Keep the app open and continue with the active transfers</translatorcomment>
+        <translation>Rester dans l’appli</translation>
     </message>
 </context>
 <context>
@@ -2867,45 +2932,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
 </context>
 <context>
-    <name>MegaTransferDelegate</name>
-    <message>
-        <source>Are you sure you want to cancel this transfer?</source>
-        <translatorcomment>Description label for warning dialog before a transfer cancellation</translatorcomment>
-        <translation>Voulez-vous vraiment annuler ce transfert ?</translation>
-    </message>
-    <message>
-        <source>paused</source>
-        <translatorcomment>Label to indicate that selected transfer is at paused state</translatorcomment>
-        <translation>en pause</translation>
-    </message>
-    <message>
-        <source>PAUSED</source>
-        <translatorcomment>Label to indicate that the current transfer is paused. Keep capital letters.</translatorcomment>
-        <translation>EN PAUSE</translation>
-    </message>
-    <message>
-        <source>Get link</source>
-        <translatorcomment>Tooltip shown when the mouse is over the &quot;Get link&quot; button related to a completed transfer</translatorcomment>
-        <translation>Obtenir le lien</translation>
-    </message>
-    <message>
-        <source>Retry</source>
-        <translatorcomment>Tooltip shown when the mouse is over the &quot;Retry&quot; button related to a failed transfer</translatorcomment>
-        <translation>Réessayer</translation>
-    </message>
-    <message>
-        <source>Show in folder</source>
-        <translatorcomment>Tooltip shown when the mouse is over the &quot;Show in folder&quot; button related to a transfer</translatorcomment>
-        <translation>Afficher dans le dossier</translation>
-    </message>
-</context>
-<context>
     <name>MegaTransferView</name>
-    <message>
-        <source>Pause Transfer</source>
-        <translatorcomment>Label of context menu option to pause selected transfer</translatorcomment>
-        <translation>Mettre le transfert en pause</translation>
-    </message>
     <message>
         <source>Move to top</source>
         <translatorcomment>Label of context menu option to move selected transfer to top of the list and give it highest priority</translatorcomment>
@@ -2927,16 +2954,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>En dernier</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translatorcomment>Label of context menu option to cancel selected transfer</translatorcomment>
-        <translation>Annuler</translation>
-    </message>
-    <message>
-        <source>Get MEGA link</source>
-        <translatorcomment>Label of context menu option to generate a public link of selected completed transfer</translatorcomment>
-        <translation>Obtenir le lien MEGA</translation>
-    </message>
-    <message>
         <source>Open</source>
         <translatorcomment>Label of context menu option to open selected completed transfer</translatorcomment>
         <translation>Ouvrir</translation>
@@ -2952,22 +2969,163 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>Effacer</translation>
     </message>
     <message>
-        <source>Clear All</source>
-        <translatorcomment>Label of context menu option to clear all transfer items of completed view</translatorcomment>
-        <translation>Tout effacer</translation>
+        <source>Get link</source>
+        <translatorcomment>Context menu action to get transfer link</translatorcomment>
+        <translation>Obtenir le lien</translation>
     </message>
     <message>
-        <source>Resume Transfer</source>
-        <translatorcomment>Label of context menu option to resume selected transfer</translatorcomment>
-        <translation>Reprendre le transfert</translation>
+        <source>Open in MEGA</source>
+        <translatorcomment>Context menu action to open the transfer in MEGA webclient</translatorcomment>
+        <translation>Ouvrir dans MEGA</translation>
     </message>
     <message>
-        <source>Are you sure you want to cancel this transfer?</source>
-        <translation>Voulez-vous vraiment annuler ce transfert ?</translation>
+        <source>Error</source>
+        <translatorcomment>Error messagebox title</translatorcomment>
+        <translation>Erreur</translation>
     </message>
     <message>
-        <source>View on MEGA</source>
-        <translation>Visualiser sur MEGA</translation>
+        <source>Error opening file</source>
+        <translatorcomment>Text on an error messagebox because a local file could not be opened</translatorcomment>
+        <translation>Impossible d’ouvrir le fichier. Vérifier que le fichier sur votre disque local n’a pas été supprimé ou déplacé.</translation>
+    </message>
+    <message numerus="yes">
+        <source>Pause transfer</source>
+        <translatorcomment>Context menu action to pause transfer</translatorcomment>
+        <translation><numerusform>Mettre le transfert en pause</numerusform><numerusform>Mettre les transferts en pause</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>Resume transfer</source>
+        <translatorcomment>Context menu action to resume transfer</translatorcomment>
+        <translation><numerusform>Reprendre le transfert</numerusform><numerusform>Reprendre les transferts</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>Cancel transfer</source>
+        <translatorcomment>Context menu action to cancel transfer</translatorcomment>
+        <translation><numerusform>Annuler le transfert</numerusform><numerusform>Annuler les transferts</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>Clear transfer</source>
+        <translatorcomment>Tooltip for the clear button in a transfer row</translatorcomment>
+        <translation><numerusform>Effacer le transfert</numerusform><numerusform>Effacer les transferts</numerusform></translation>
+    </message>
+    <message>
+        <source>Cancel transfers?
+All your transfers will be cancelled.</source>
+        <translatorcomment>Messagebox text to confirm if the user wants to cancel all the transfers in the all transfers category</translatorcomment>
+        <translation>Annuler les transferts ?
+Tous les transferts seront annulés.</translation>
+    </message>
+    <message>
+        <source>Cancel transfers?
+All your transfers in this category will be cancelled and cleared.</source>
+        <translatorcomment>Messagebox text to confirm if the user wants to cancel and clear all the transfers in a category other than all transfers category</translatorcomment>
+        <translation>Annuler les transferts?
+Tous les transferts dans cette catégorie seront annulés et effacés.</translation>
+    </message>
+    <message>
+        <source>Cancel transfers?
+All your transfers in this category will be cancelled.</source>
+        <translatorcomment>Messagebox text to confirm if the user wants to cancel all the transfers in a category other than all transfers category</translatorcomment>
+        <translation>Annuler les transferts?
+Tous vos transferts dans cette catégorie seront annulés.</translation>
+    </message>
+    <message>
+        <source>Cancel transfers?
+Your incomplete sync transfers won&apos;t be cancelled.</source>
+        <translatorcomment>Messagebox text to confirm if the user wants to cancel all the transfers in a category other than all transfers category but there are sync transfers(they cannot be cancelled)</translatorcomment>
+        <translation>Annuler les transferts ?
+Vos transferts de synchronisation non terminés ne seront pas annulés. Tous les autres transferts seront annulés.</translation>
+    </message>
+    <message>
+        <source>Cancel transfers?
+Your incomplete sync transfers won't be cancelled
+All the other transfers will be cancelled and cleared.</source>
+        <translatorcomment>Messagebox text to confirm if the user wants to cancel and clear all the transfers in a category other than all transfers category but there are sync transfers(they cannot be cancelled)</translatorcomment>
+        <translation>Annuler les transferts ?
+Vos transferts de synchronisation non terminés ne seront pas annulés.
+Tous les autres transferts seront annulés et effacés.</translation>
+    </message>
+    <message>
+        <source>Clear transfers?
+All your completed transfers will be cleared.</source>
+        <translatorcomment>Messagebox text to confirm if the user wants to clear all the transfers in the completed category</translatorcomment>
+        <translation>Effacer les transferts ?
+Tous vos transferts sélectionnés seront effacés.</translation>
+    </message>
+    <message>
+        <source>Clear transfers?
+All your completed transfers in this category will be cleared.</source>
+        <translatorcomment>Messagebox text to confirm if the user wants to clear all the transfers in a category other than the completed category</translatorcomment>
+        <translation>Effacer les transferts ?
+Tous vos transferts terminés dans cette catégorie seront effacés.</translation>
+    </message>
+    <message>
+        <source>Cancel transfers?
+All your selected transfers will be cancelled.</source>
+        <translatorcomment>Messagebox text to confirm if the user wants to cancel all the selected transfers</translatorcomment>
+        <translation>Annuler tous les transferts ?
+Tous vos transferts sélectionnés seront annulés.</translation>
+    </message>
+    <message>
+        <source>Cancel transfers?
+All your selected transfers will be cancelled and cleared.</source>
+        <translatorcomment>Messagebox text to confirm if the user wants to cancel and clear all the selected transfers</translatorcomment>
+        <translation>Annuler tous les transferts ?
+Tous vos transferts sélectionnés seront annulés et effacés.</translation>
+    </message>
+    <message>
+        <source>Cancel transfers?
+Your selected incomplete sync transfers won't be cancelled
+All the other selected transfers will be cancelled and cleared.</source>
+        <translatorcomment>Messagebox text to confirm if the user wants to cancel and clear all the selected transfers but there are sync transfers in the selection (they cannot be cancelled)</translatorcomment>
+        <translation>Annuler tous les transferts ?
+Vos transferts de synchronisation non terminés ne seront pas annulés.
+Tous les autres transferts sélectionnés seront annulés et effacés.</translation>
+    </message>
+    <message>
+        <source>Cancel transfer?</source>
+        <translatorcomment>Messagebox text to confirm if the user wants to cancel a single transfer</translatorcomment>
+        <translation>Annuler le transfert ?</translation>
+    </message>
+    <message>
+        <source>Clear transfers?
+All the selected completed transfers in this category will be cleared.</source>
+        <translatorcomment>Messagebox text to confirm if the user wants to clear the selected completed transfer</translatorcomment>
+        <translation>Effacer les transferts ?
+Tous les transferts sélectionnés terminés dans cette catégorie seront effacés.</translation>
+    </message>
+    <message>
+        <source>Cancel transfers?
+Your selected incomplete sync transfers won&apos;t be cancelled.</source>
+        <translatorcomment>Messagebox text to confirm if the user wants to cancel all the selected transfers but there are sync transfers in the selection (they cannot be cancelled)</translatorcomment>
+        <translation>Annuler tous les transferts ?
+Vos transferts de synchronisation non terminés ne seront pas annulés.
+Tous les autres transferts sélectionnés seront annulés.</translation>
+    </message>
+    <message>
+        <source>Clear transfer?</source>
+        <translatorcomment>Messagebox text to confirm if the user wants to clear a single selected completed transfer</translatorcomment>
+        <translation>Effacer le transfert ?</translation>
+    </message>
+    <message numerus="yes">
+        <source>Cancel and clear transfer</source>
+        <translatorcomment>Context menu action to resume cancel the active transfers and clear the completed transfers (multiple transfers selected)</translatorcomment>
+        <translation><numerusform>Annuler et effacer le transfert</numerusform><numerusform>Annuler et effacer les transferts</numerusform></translation>
+    </message>
+    <message>
+        <source>Yes, cancel</source>
+        <translatorcomment>Dialog button to do the proposed actions (cancel the transfers)</translatorcomment>
+        <translation>Oui, annuler</translation>
+    </message>
+    <message>
+        <source>No, continue</source>
+        <translatorcomment>Dialog button to abort the proposed action</translatorcomment>
+        <translation>Non, poursuivre</translation>
+    </message>
+    <message>
+        <source>Yes, clear</source>
+        <translatorcomment>Dialog button to do the proposed actions (clear the transfers)</translatorcomment>
+        <translation>Oui, effacer</translation>
     </message>
 </context>
 <context>
@@ -2999,21 +3157,24 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
 <context>
     <name>NewFolderDialog</name>
     <message>
-        <source>New folder</source>
-        <translatorcomment>Title of the dialog to create a folder in your cloud drive.</translatorcomment>
-        <translation>Nouveau dossier</translation>
+        <source>Enter the new folder name</source>
+        <translatorcomment>Dialog text to ask the user to enter a new name for the folder</translatorcomment>
+        <translation>Saisir le nouveau nom de dossier</translation>
     </message>
     <message>
-        <source>Enter the new folder name:</source>
-        <translatorcomment>Label to inform the user about entering a new folder name because the name provided does contain forbidden characters.</translatorcomment>
-        <translation>Saisir le nouveau nom de dossier :</translation>
+        <source>New folder</source>
+        <translatorcomment>Title of the new folder dialog</translatorcomment>
+        <translation>Nouveau dossier</translation>
     </message>
+</context>
+<context>
+    <name>NodeNameSetterDialog</name>
     <message>
         <source>The following characters are not allowed:
 %1</source>
-        <translatorcomment>Warning error shown when a user is trying to create a folder with a name that contains not allowed characters. %1 placeholder will be replaced by the list of forbidden charset.</translatorcomment>
+        <translatorcomment>Message shown when the user has entered a not allowed character</translatorcomment>
         <translation>Les caractères suivants ne sont pas autorisés :
-%1</translation>
+%1 </translation>
     </message>
 </context>
 <context>
@@ -3095,7 +3256,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message numerus="yes">
         <source>You no longer have access to this item. Ask the owner to share again.</source>
         <translatorcomment>Error message shown when the user is trying to download an file or folder from an incoming share and the owner stops sharing/removes all items</translatorcomment>
-        <translation><numerusform>Vous n’avez plus accès à cet élément. Demandez au propriétaire de le partager de nouveau.</numerusform><numerusform>Vous n’avez plus accès à ces éléments. Demandez au propriétaire de les partager de nouveau.</numerusform><numerusform>Vous n’avez plus accès à ces éléments. Demandez au propriétaire de les partager de nouveau.</numerusform></translation>
+        <translation><numerusform>Vous n’avez plus accès à cet élément. Demandez au propriétaire de le partager de nouveau.</numerusform><numerusform>Vous n’avez plus accès à ces éléments. Demandez au propriétaire de les partager de nouveau.</numerusform></translation>
     </message>
     <message>
         <source>Cloud drive</source>
@@ -3114,19 +3275,19 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message numerus="yes">
         <source>The item you selected has been removed. To reselect, close this window and try again.</source>
         <translatorcomment>Error message shown while the user is trying to download an file or folder but all selected nodes were removed</translatorcomment>
-        <translation><numerusform>L’élément que vous avez sélectionné a été supprimé. Pour resélectionner, fermez cette fenêtre et réessayez.</numerusform><numerusform>Les éléments que vous avez sélectionnés ont été supprimés. Pour resélectionner, fermez cette fenêtre et réessayez.</numerusform><numerusform>Les éléments que vous avez sélectionnés ont été supprimés. Pour resélectionner, fermez cette fenêtre et réessayez.</numerusform></translation>
+        <translation><numerusform>L’élément que vous avez sélectionné a été supprimé. Pour resélectionner, fermez cette fenêtre et réessayez.</numerusform><numerusform>Les éléments que vous avez sélectionnés ont été supprimés. Pour resélectionner, fermez cette fenêtre et réessayez.</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%1 item selected</source>
         <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
                            First part of string for multi plural support. Full string looks like: 5 items selected. 2 have been removed. To reselect, close this window and try again. </translatorcomment>
-        <translation><numerusform>%1 élément sélectionné</numerusform><numerusform>%1 d’éléments sélectionnés</numerusform><numerusform>%1 éléments sélectionnés</numerusform></translation>
+        <translation><numerusform>%1 élément sélectionné</numerusform><numerusform>%1 éléments sélectionnés</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%1. %2 has been removed. To reselect, close this window and try again.</source>
         <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
                            Second and last part of string for multi plural support. Full string looks like: 5 items selected. 2 have been removed. To reselect, close this window and try again. </translatorcomment>
-        <translation><numerusform>%1. %2 a été supprimé. Pour resélectionner, fermez cette fenêtre et réessayez.</numerusform><numerusform>%1. %2 ont été supprimés. Pour resélectionner, fermez cette fenêtre et réessayez.</numerusform><numerusform>%1. %2 ont été supprimés. Pour resélectionner, fermez cette fenêtre et réessayez.</numerusform></translation>
+        <translation><numerusform>%1. %2 a été supprimé. Pour resélectionner, fermez cette fenêtre et réessayez.</numerusform><numerusform>%1. %2 ont été supprimés. Pour resélectionner, fermez cette fenêtre et réessayez.</numerusform></translation>
     </message>
 </context>
 <context>
@@ -3220,7 +3381,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message numerus="yes">
         <source>[A] removed %n item</source>
         <translatorcomment>Label to indicate that [A] has removed %n items from a shared folder. Placeholder [A] will be replaced by email of the user that made the deletion and %n with the number of removed items.</translatorcomment>
-        <translation><numerusform>[A] a supprimé %n élément</numerusform><numerusform>[A] a supprimé %n d’éléments</numerusform><numerusform>[A] a supprimé %n éléments</numerusform></translation>
+        <translation><numerusform>[A] a supprimé %n élément</numerusform><numerusform>[A] a supprimé %n éléments</numerusform></translation>
     </message>
 </context>
 <context>
@@ -3508,7 +3669,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message numerus="yes">
         <source>minimum %n user</source>
         <translatorcomment>Label to inform about the minimum number of users for a business plan. %1 will be replaced with the minimum number of users.</translatorcomment>
-        <translation><numerusform>Minimum de %n utilisateur</numerusform><numerusform>Minimum de %n d’utilisateurs</numerusform><numerusform>Minimum de %n utilisateurs</numerusform></translation>
+        <translation><numerusform>Minimum de %n utilisateur</numerusform><numerusform>Minimum de %n utilisateurs</numerusform></translation>
     </message>
 </context>
 <context>
@@ -3550,18 +3711,57 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
 </context>
 <context>
+    <name>PlatformStrings</name>
+    <message>
+        <source>Open settings</source>
+        <translatorcomment>Button label to open MEGAsync preferences dialog (Linux and Windows).</translatorcomment>
+        <translation>Ouvrir Paramètres</translation>
+    </message>
+    <message>
+        <source>One or more syncs have been disabled. Go to settings to enable them again.</source>
+        <translatorcomment>Warning message shown when logging into MEGAsync to inform the user that some syncs have been disabled and need to go to settings to enable them again (Windows and Linux)</translatorcomment>
+        <translation>Une ou plusieurs synchronisations ont été désactivées. Accédez aux Paramètres pour les réactiver.</translation>
+    </message>
+    <message>
+        <source>Open preferences</source>
+        <translatorcomment>Button label to open MEGAsync preferences dialog (MacOS).</translatorcomment>
+        <translation>Ouvrir Préférences</translation>
+    </message>
+    <message>
+        <source>One or more syncs have been disabled. Go to preferences to enable them again.</source>
+        <translatorcomment>Warning message shown when logging into MEGAsync to inform the user that some syncs have been disabled and need to go to settings to enable them again (macOS)</translatorcomment>
+        <translation>Une ou plusieurs synchronisations ont été désactivées. Accédez aux Préférences pour les réactiver.</translation>
+    </message>
+    <message>
+        <source>Sync transfers cannot be cancelled individually.
+Please delete the folder sync from settings to cancel them.</source>
+        <translatorcomment>Explains that the sync transfers cannot be cancelled individually. (for windows and linux)</translatorcomment>
+        <translation>Les transferts de synchronisation ne peuvent pas être annulés individuellement. Pour supprimer la synchronisation, accédez aux Paramètres de l’appli pour ordinateur et supprimez le dossier synchronisé.</translation>
+    </message>
+    <message>
+        <source>Sync transfers cannot be cancelled individually.
+Please delete the folder sync from preferences to cancel them.</source>
+        <translatorcomment>Explains that the sync transfers cannot be cancelled individually. (for macOS)</translatorcomment>
+        <translation>Les transferts de synchronisation ne peuvent pas être annulés individuellement. Pour supprimer la synchronisation, accédez aux Préférences de l’appli pour ordinateur et supprimez le dossier synchronisé.</translation>
+    </message>
+</context>
+<context>
     <name>Preferences</name>
     <message>
-        <source>- Full redesign of remote file picker.
-- Fixed translation issues.
-- Other minor UI fixes and adjustments.
-- Fixed detected crashes on Windows, Linux and macOS.
+        <source>- There is now a new transfer manager.
+- Transfer management was enhanced and reliability of downloads and uploads improved. 
+- Detected crashes on Windows, Linux, and macOS fixed.
+- Translation issues fixed.
+- Performance improved.
+- UI fixed and adjusted.
 </source>
-        <translatorcomment>Changelog for version 4.6.7</translatorcomment>
-        <translation>– Refonte complète du sélectionneur de fichiers distants.
-– Correctif de problèmes de traduction.
-– Autres correctifs mineurs de l’IU.
-– Correctif de plantages détectés sous Windows, Linux et macOS.</translation>
+        <translatorcomment>Changelog for version v4.7.0</translatorcomment>
+        <translation>– Un nouveau gestionnaire de transferts est à l’œuvre.
+– La gestion des transferts a été améliorée pour une meilleure fiabilité des téléchargements et téléversements.
+– Les plantages détectés sous Windows, Linux et macOS ont été corrigés.
+– Des problèmes de traduction ont été corrigés.
+– Amélioration des performances.
+– Peaufinage de l’interface utilisateur.</translation>
     </message>
 </context>
 <context>
@@ -4060,6 +4260,60 @@ Voulez-vous le supprimer quand même ?</translation>
     <message>
         <source>Cancel</source>
         <translation>Annuler</translation>
+    </message>
+</context>
+<context>
+    <name>RenameLocalNodeDialog</name>
+    <message>
+        <source>File can’t be renamed to &quot;%1&quot;</source>
+        <translatorcomment>Error warning shown when a file can´t be renamed due to an error.</translatorcomment>
+        <translation>Le fichier ne peut pas être renommé « %1 »</translation>
+    </message>
+    <message>
+        <source>Folder can’t be renamed to &quot;%1&quot;</source>
+        <translatorcomment>Error warning shown when a folder can´t be renamed due to an error.</translatorcomment>
+        <translation>Le dossier ne peut pas être renommé « %1 »</translation>
+    </message>
+</context>
+<context>
+    <name>RenameNodeDialog</name>
+    <message>
+        <source>Enter new file name</source>
+        <translatorcomment>Title of the rename file dialog </translatorcomment>
+        <translation>Saisir le nouveau nom de fichier</translation>
+    </message>
+    <message>
+        <source>Enter new folder name</source>
+        <translatorcomment>Title of the rename folder dialog </translatorcomment>
+        <translation>Saisir le nouveau nom de dossier</translation>
+    </message>
+    <message>
+        <source>Rename file</source>
+        <translatorcomment>Dialog title for file renaming</translatorcomment>
+        <translation>Renommer le fichier</translation>
+    </message>
+    <message>
+        <source>Rename folder</source>
+        <translatorcomment>Dialog title for folder renaming</translatorcomment>
+        <translation>Renommer le dossier</translation>
+    </message>
+</context>
+<context>
+    <name>ScanningWidget</name>
+    <message>
+        <source>Cancel transfers</source>
+        <translatorcomment>Button text to cancel the scanning of transfers</translatorcomment>
+        <translation>Annuler les transferts</translation>
+    </message>
+    <message>
+        <source>Scanning…</source>
+        <translatorcomment>Text to let the user know that the app is scanning a folder</translatorcomment>
+        <translation>Analyse…</translation>
+    </message>
+    <message>
+        <source>Don´t exit the app</source>
+        <translatorcomment>Text below the GIF to askt he user not to close the app while it is scanning a folder</translatorcomment>
+        <translation>Ne pas fermer l’appli</translation>
     </message>
 </context>
 <context>
@@ -4709,12 +4963,12 @@ Do you want to restart MEGAsync now?</source>
     <message numerus="yes">
         <source>Used quota for the last %n hour:</source>
         <translatorcomment>Informative text shown in Account pane for Free account type. Indicates the used quota in the last %n specified number of hours. Keep the %n subsitution argument.</translatorcomment>
-        <translation><numerusform>Quota utilisé durant la dernière heures :</numerusform><numerusform>Quota utilisé durant les %n dernières heures :</numerusform><numerusform>Quota utilisé durant les %n dernières heures :</numerusform></translation>
+        <translation><numerusform>Quota utilisé durant la dernière heures :</numerusform><numerusform>Quota utilisé durant les %n dernières heures :</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>day</source>
         <translatorcomment>Suffix text label for number of days to keep files in local cache.</translatorcomment>
-        <translation><numerusform>jour</numerusform><numerusform>de jours</numerusform><numerusform>jours</numerusform></translation>
+        <translation><numerusform>jour</numerusform><numerusform>jours</numerusform></translation>
     </message>
 </context>
 <context>
@@ -5130,12 +5384,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message numerus="yes">
         <source>%n file</source>
         <translatorcomment>Label to indicate file count. Keep %n code because it will be filled with the number of files at runtime.</translatorcomment>
-        <translation><numerusform>%n fichier</numerusform><numerusform>%n de fichiers</numerusform><numerusform>%n fichiers</numerusform></translation>
+        <translation><numerusform>%n fichier</numerusform><numerusform>%n fichiers</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n folder</source>
         <translatorcomment>Label to indicate folder count. Keep %n code because it will be filled with the number of folders at runtime.</translatorcomment>
-        <translation><numerusform>%n dossier</numerusform><numerusform>%n de dossiers</numerusform><numerusform>%n dossiers</numerusform></translation>
+        <translation><numerusform>%n dossier</numerusform><numerusform>%n dossiers</numerusform></translation>
     </message>
 </context>
 <context>
@@ -5303,16 +5557,84 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
 </context>
 <context>
+    <name>TransferBaseDelegateWidget</name>
+    <message>
+        <source>Starting…</source>
+        <translatorcomment>Transfer is being started but no bytes have been transferred yet</translatorcomment>
+        <translation>Démarrage…</translation>
+    </message>
+    <message>
+        <source>Retrying</source>
+        <translatorcomment>Transfer is starting again after failure</translatorcomment>
+        <translation>Nouvel essai…</translation>
+    </message>
+    <message>
+        <source>Uploading…</source>
+        <translatorcomment>Transfer is being uploaded</translatorcomment>
+        <translation>Téléversement…</translation>
+    </message>
+    <message>
+        <source>Downloading…</source>
+        <translatorcomment>Transfer is being downloaded</translatorcomment>
+        <translation>Téléchargement…</translation>
+    </message>
+    <message>
+        <source>Syncing…</source>
+        <translatorcomment>Transfer is being synced</translatorcomment>
+        <translation>Synchronisation…</translation>
+    </message>
+    <message>
+        <source>Completing</source>
+        <translatorcomment>Transfer is being completed</translatorcomment>
+        <translation>Finalisation…</translation>
+    </message>
+    <message>
+        <source>Completed</source>
+        <translatorcomment>Transfer is completed</translatorcomment>
+        <translation>Terminé</translation>
+    </message>
+    <message>
+        <source>Paused</source>
+        <translatorcomment>Transfer is paused</translatorcomment>
+        <translation>En pause</translation>
+    </message>
+    <message>
+        <source>Failed</source>
+        <translatorcomment>Transfer has failed</translatorcomment>
+        <translation>Échec</translation>
+    </message>
+    <message>
+        <source>In queue</source>
+        <translatorcomment>Transfer is active but not being processed yet</translatorcomment>
+        <translation>En attente</translation>
+    </message>
+    <message>
+        <source>(in queue)</source>
+        <translatorcomment>Transfer is paused and no bytes have been transferred yet</translatorcomment>
+        <translation>(en attente)</translation>
+    </message>
+    <message>
+        <source>Retry</source>
+        <translatorcomment>Retry button text</translatorcomment>
+        <translation>Réessayer</translation>
+    </message>
+    <message>
+        <source>Out of storage space</source>
+        <translatorcomment>Transfer is paused for out of storage space</translatorcomment>
+        <translation>Le quota d’espace de stockage a été dépassé</translation>
+    </message>
+    <message>
+        <source>Out of transfer quota</source>
+        <translatorcomment>Transfer is paused for out of transfer quota</translatorcomment>
+        <translation>Le quota de transfert a été dépassé</translation>
+    </message>
+</context>
+<context>
     <name>TransferManager</name>
     <message>
         <source>Transfer Manager</source>
         <translatorcomment>Title of the dialog of Transfer Manager</translatorcomment>
         <translation>Gestionnaire de transferts</translation>
-    </message>
-    <message>
-        <source>Add...</source>
-        <translatorcomment>Button label to add transfers items (uploads/downloads/public links) to the dialog (String as short as possible)</translatorcomment>
-        <translation>Ajouter…</translation>
     </message>
     <message>
         <source>Downloads</source>
@@ -5330,35 +5652,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>Terminés</translation>
     </message>
     <message>
-        <source>Pause</source>
-        <translatorcomment>Button label to pause visible transfers</translatorcomment>
-        <translation>Mettre en pause</translation>
-    </message>
-    <message>
-        <source>Clear all</source>
-        <translatorcomment>Button label to clear all items of completed transfers view</translatorcomment>
-        <translation>Tout effacer</translation>
-    </message>
-    <message>
-        <source>Close</source>
-        <translatorcomment>Button label to close transfer manager dialog</translatorcomment>
-        <translation>Fermer</translation>
-    </message>
-    <message>
-        <source>Cancel all</source>
-        <translatorcomment>Button label to cancel all items of active transfers view</translatorcomment>
-        <translation>Tout annuler</translation>
-    </message>
-    <message>
-        <source>Resume</source>
-        <translation>Reprendre</translation>
-    </message>
-    <message>
-        <source>Active Transfers</source>
-        <translatorcomment>Label of tab to access all active transfers</translatorcomment>
-        <translation>Transferts actifs</translation>
-    </message>
-    <message>
         <source>Upload</source>
         <translation>Téléverser</translation>
     </message>
@@ -5372,57 +5665,174 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>Ouvrir des liens</translation>
     </message>
     <message>
-        <source>Do you want to cancel all transfers?</source>
-        <translatorcomment>Description label for warning dialog before a transfer cancellation</translatorcomment>
-        <translation>Voulez-vous annuler tous les transferts ?</translation>
+        <source>Transfers</source>
+        <translatorcomment>Transfer manager title</translatorcomment>
+        <translation>Transferts</translation>
     </message>
     <message>
-        <source>Syncs aren&apos;t affected by this action.</source>
-        <translatorcomment>Description label for warning dialog indicating that syncs are not going to be affected by accepting this dialog</translatorcomment>
-        <translation>Les synchronisations ne sont pas affectées par cette action.</translation>
-    </message>
-</context>
-<context>
-    <name>TransferManagerItem</name>
-    <message>
-        <source>starting</source>
-        <translatorcomment>Label to indicate that a transfer is starting</translatorcomment>
-        <translation>démarrage</translation>
+        <source>Search</source>
+        <translatorcomment>Title for text search window</translatorcomment>
+        <translation>Recherche</translation>
     </message>
     <message>
-        <source>paused</source>
-        <translatorcomment>Label to indicate that a transfer is paused</translatorcomment>
-        <translation>en pause</translation>
+        <source>Transferring</source>
+        <translatorcomment>Label to indicate that MEGA Desktop App is in a transferring state (ongoing transfers are running)</translatorcomment>
+        <translation>Transfert</translation>
     </message>
     <message>
-        <source>queued</source>
-        <translatorcomment>Label to indicate that a transfer is queued</translatorcomment>
-        <translation>en attente</translation>
+        <source>All transfers</source>
+        <translatorcomment>Title for All transfers category</translatorcomment>
+        <translation>Tous les transferts</translation>
     </message>
     <message>
-        <source>retrying</source>
-        <translatorcomment>Label to indicate that a transfer is being retried</translatorcomment>
-        <translation>nouvel essai</translation>
+        <source>Failed</source>
+        <translatorcomment>Title for Failed transfers category</translatorcomment>
+        <translation>Échec</translation>
     </message>
     <message>
-        <source>completing</source>
-        <translatorcomment>Label to indicate that a transfer is being completed</translatorcomment>
-        <translation>se termine</translation>
+        <source>Media type</source>
+        <translatorcomment>Title of the groupbox which contains all the media categories</translatorcomment>
+        <translation>Type de médias</translation>
     </message>
     <message>
-        <source>Out of storage space</source>
-        <translatorcomment>Label to indicate that a transfer is halted due to the account is out of storage space</translatorcomment>
-        <translation>L’espace de stockage est épuisé</translation>
+        <source>Archives</source>
+        <translatorcomment>Categories for archive type transfers</translatorcomment>
+        <translation>Fichiers compressés</translation>
+    </message>
+    <message>
+        <source>Documents</source>
+        <translatorcomment>Categories for document type transfers</translatorcomment>
+        <translation>Documents</translation>
+    </message>
+    <message>
+        <source>Images</source>
+        <translatorcomment>Categories for image type transfers</translatorcomment>
+        <translation>Images</translation>
+    </message>
+    <message>
+        <source>Videos</source>
+        <translatorcomment>Categories for video type transfers</translatorcomment>
+        <translation>Vidéos</translation>
+    </message>
+    <message>
+        <source>Audio</source>
+        <translatorcomment>Categories for audio type transfers</translatorcomment>
+        <translation>Sons</translation>
+    </message>
+    <message>
+        <source>Other</source>
+        <translatorcomment>Categories for other type transfers</translatorcomment>
+        <translation>Autres</translation>
+    </message>
+    <message>
+        <source>Up to date</source>
+        <translatorcomment>All transfers have been finished</translatorcomment>
+        <translation>À jour</translation>
+    </message>
+    <message>
+        <source>Scanning</source>
+        <translatorcomment>State of the Transfers: Message which shows that a folder is being scanned</translatorcomment>
+        <translation>Analyse…</translation>
+    </message>
+    <message>
+        <source>All paused</source>
+        <translatorcomment>Message which shows that the global pause is set</translatorcomment>
+        <translation>Tout est en pause</translation>
+    </message>
+    <message>
+        <source>All</source>
+        <translatorcomment>Title for all searched transfers by text</translatorcomment>
+        <translation>Tout</translation>
+    </message>
+    <message>
+        <source>Search:</source>
+        <translatorcomment>Title to show the text used to search</translatorcomment>
+        <translation>Cherché :</translation>
+    </message>
+    <message>
+        <source>Retry all</source>
+        <translatorcomment>Button text for retry all button in Failed category</translatorcomment>
+        <translation>Tout réessayer</translation>
+    </message>
+    <message>
+        <source>No uploads</source>
+        <translatorcomment>Empty window message for upload category</translatorcomment>
+        <translation>Aucun téléversement</translation>
+    </message>
+    <message>
+        <source>No downloads</source>
+        <translatorcomment>Empty window message for download category</translatorcomment>
+        <translation>Aucun téléchargement</translation>
+    </message>
+    <message>
+        <source>No transfers</source>
+        <translatorcomment>Empty window message for generic categories</translatorcomment>
+        <translation>Aucun transfert</translation>
+    </message>
+    <message>
+        <source>No search results</source>
+        <translatorcomment>Empty window message for search category</translatorcomment>
+        <translation>Aucun résultat de recherche</translation>
+    </message>
+    <message>
+        <source>No completed transfers</source>
+        <translatorcomment>Empty window message for completed category</translatorcomment>
+        <translation>Aucun transfert terminé</translation>
+    </message>
+    <message>
+        <source>Resume all transfers</source>
+        <translatorcomment>Global pause button tooltip</translatorcomment>
+        <translation>Reprendre tous les transferts</translation>
+    </message>
+    <message>
+        <source>Pause all transfers</source>
+        <translatorcomment>Global resume button tooltip</translatorcomment>
+        <translation>Mettre tous les transferts en pause</translation>
+    </message>
+    <message numerus="yes">
+        <source>%1 result found</source>
+        <translatorcomment>Message shown with search results,when there are only uploads or downloads, but not both at the same time</translatorcomment>
+        <translation><numerusform>%1 résultat a été trouvé</numerusform><numerusform>%1 résultats ont été trouvés</numerusform></translation>
+    </message>
+    <message>
+        <source>Upgrade now</source>
+        <translatorcomment>Button to open web explorer to see MEGA paid plans</translatorcomment>
+        <translation>Surclasser le compte maintenant</translation>
     </message>
     <message>
         <source>Transfer quota exceeded</source>
-        <translatorcomment>Label to indicate that a transfer is halted due to the account is out of transfer quota</translatorcomment>
+        <translatorcomment>Subtitle Transfer Quota exceeded state message</translatorcomment>
         <translation>Le quota de transfert a été dépassé</translation>
     </message>
     <message>
-        <source>%1 of %2</source>
-        <translatorcomment>Label to keep the count of used and total storage. Preserve %1 and %2 codes beacuse they are used to include the amount of used and total storage by actual account.</translatorcomment>
-        <translation>%1 sur %2</translation>
+        <source>Your MEGA account is full</source>
+        <translatorcomment>Message shown when the MEGA account is full</translatorcomment>
+        <translation>Votre compte MEGA est saturé.</translation>
+    </message>
+    <message>
+        <source>You can&apos;t continue downloading as you don&apos;t have enough transfer quota left for this IP address.
+To get more quota, upgrade to a Pro account or wait for [A] until more free quota becomes available on your IP address.</source>
+        <translatorcomment>Message which shows that the user reachs the overquota. [A] is the time to wait until the quota is reset in hh:mm:ss</translatorcomment>
+        <translation>Le téléchargement ne peut pas se poursuivre, car il ne reste pas assez de quota de transfert pour cette adresse IP.
+Pour en obtenir davantage, passez à un compte Pro ou attendez [A] pour qu’un quota gratuit soit attribué à votre adresse IP.</translation>
+    </message>
+    <message>
+        <source>More about transfer quota</source>
+        <translatorcomment>Link button to send the user to the transfer quota information blog website</translatorcomment>
+        <translation>En apprendre davantage sur le quota de transfert</translation>
+    </message>
+    <message numerus="yes">
+        <source>Issue found</source>
+        <translatorcomment>Message shown when there are some failed transfers/syncs/backups</translatorcomment>
+        <translation><numerusform>Un problème a été trouvé</numerusform><numerusform>Des problèmes ont été trouvés</numerusform></translation>
+    </message>
+</context>
+<context>
+    <name>TransferManagerDragBackDrop</name>
+    <message>
+        <source>Drop to Upload</source>
+        <translatorcomment>Let the user know that files can be dropped there</translatorcomment>
+        <translation>Déposer pour téléverser</translation>
     </message>
 </context>
 <context>
@@ -5439,21 +5849,269 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
 </context>
 <context>
-    <name>TransfersStateInfoWidget</name>
+    <name>TransfersModel</name>
     <message>
-        <source>No Downloads</source>
-        <translatorcomment>Label to indicate that there are no active downloads</translatorcomment>
-        <translation>Aucun téléchargement</translation>
+        <source>Dismiss</source>
+        <translatorcomment>Option to close the dialog without taking any action</translatorcomment>
+        <translation>Fermer</translation>
+    </message>
+</context>
+<context>
+    <name>TransfersWidget</name>
+    <message>
+        <source>Name</source>
+        <translatorcomment>Name of the file to transfer</translatorcomment>
+        <translation>Nom</translation>
     </message>
     <message>
-        <source>No Uploads</source>
-        <translatorcomment>Label to indicate that there are no active uploads</translatorcomment>
-        <translation>Aucun téléversement</translation>
+        <source>Size</source>
+        <translatorcomment>Size of the file to transfer</translatorcomment>
+        <translation>Taille</translation>
     </message>
     <message>
-        <source>Paused Transfers</source>
-        <translatorcomment>Label to indicate that active transfers are paused</translatorcomment>
-        <translation>Transferts en pause</translation>
+        <source>Speed</source>
+        <translatorcomment>speed table header column name of the file to transfer in All transfers and uploads/downloads categories</translatorcomment>
+        <translation>Vitesse</translation>
+    </message>
+    <message>
+        <source>Status</source>
+        <translatorcomment>Status (paused, completed, queue...) of the file to transfer</translatorcomment>
+        <translation>État</translation>
+    </message>
+    <message>
+        <source>Time left</source>
+        <translatorcomment>Time table header column name for all transfers, downloads, uploads categories (where there are only active transfers)</translatorcomment>
+        <translation>Temps restant</translation>
+    </message>
+    <message>
+        <source>Time completed</source>
+        <translatorcomment>Time table header column name for completed transfers categories</translatorcomment>
+        <translation>Heure de fin</translation>
+    </message>
+    <message>
+        <source>Avg. speed</source>
+        <translatorcomment>speed table header column name for completed and failed transfers categories</translatorcomment>
+        <translation>Vitesse moy.</translation>
+    </message>
+    <message>
+        <source>Time</source>
+        <translatorcomment>Time table header column name for media types and search categories</translatorcomment>
+        <translation>Heure</translation>
+    </message>
+    <message>
+        <source>Clear all completed</source>
+        <translatorcomment>Tooltip for clear button when the user is in the completed category</translatorcomment>
+        <translation>Effacer tous les terminés</translation>
+    </message>
+    <message>
+        <source>Clear all search results</source>
+        <translatorcomment>Tooltip for clear button when the user is in the search category</translatorcomment>
+        <translation>Effacer tous les résultats de recherche</translation>
+    </message>
+    <message>
+        <source>Clear all audios</source>
+        <translatorcomment>Tooltip for clear button when the user is in the audios category</translatorcomment>
+        <translation>Effacer tous les transferts dans Sons</translation>
+    </message>
+    <message>
+        <source>Clear all videos</source>
+        <translatorcomment>Tooltip for clear button when the user is in the videos category</translatorcomment>
+        <translation>Effacer tous les transferts dans Vidéos</translation>
+    </message>
+    <message>
+        <source>Clear all archives</source>
+        <translatorcomment>Tooltip for clear button when the user is in the archives category</translatorcomment>
+        <translation>Effacer tous les transferts dans Fichiers compressés</translation>
+    </message>
+    <message>
+        <source>Clear all documents</source>
+        <translatorcomment>Tooltip for clear button when the user is in the documents category</translatorcomment>
+        <translation>Effacer tous les transferts dans Documents</translation>
+    </message>
+    <message>
+        <source>Clear all images</source>
+        <translatorcomment>Tooltip for clear button when the user is in the images category</translatorcomment>
+        <translation>Effacer tous les transferts dans Images</translation>
+    </message>
+    <message>
+        <source>Clear all transfers</source>
+        <translatorcomment>Tooltip for clear button when the user is in the others category</translatorcomment>
+        <translation>Effacer tous les transferts</translation>
+    </message>
+    <message>
+        <source>Cancel all downloads</source>
+        <translatorcomment>Tooltip for cancel button when the user is in the downloads category</translatorcomment>
+        <translation>Annuler tous les transferts dans Téléchargements</translation>
+    </message>
+    <message>
+        <source>Cancel all uploads</source>
+        <translatorcomment>Tooltip for cancel button when the user is in the uploads category</translatorcomment>
+        <translation>Annuler tous les transferts dans Téléversements</translation>
+    </message>
+    <message>
+        <source>Cancel all failed</source>
+        <translatorcomment>Tooltip for cancel button when the user is in the failed category</translatorcomment>
+        <translation>Annuler tous les transferts dans Échec</translation>
+    </message>
+    <message>
+        <source>Cancel all search results</source>
+        <translatorcomment>Tooltip for cancel button when the user is in the search category</translatorcomment>
+        <translation>Annuler tous les résultats de recherche</translation>
+    </message>
+    <message>
+        <source>Cancel all audios</source>
+        <translatorcomment>Tooltip for cancel button when the user is in the audios category</translatorcomment>
+        <translation>Annuler tous les transferts dans Sons</translation>
+    </message>
+    <message>
+        <source>Cancel all videos</source>
+        <translatorcomment>Tooltip for cancel button when the user is in the videos category</translatorcomment>
+        <translation>Annuler tous les transferts dans Vidéos</translation>
+    </message>
+    <message>
+        <source>Cancel all archives</source>
+        <translatorcomment>Tooltip for cancel button when the user is in the archives category</translatorcomment>
+        <translation>Annuler tous les transferts dans Fichiers compressés</translation>
+    </message>
+    <message>
+        <source>Cancel all documents</source>
+        <translatorcomment>Tooltip for cancel button when the user is in the documents category</translatorcomment>
+        <translation>Annuler tous les transferts dans Documents</translation>
+    </message>
+    <message>
+        <source>Cancel all images</source>
+        <translatorcomment>Tooltip for cancel button when the user is in the images category</translatorcomment>
+        <translation>Annuler tous les transferts dans Images</translation>
+    </message>
+    <message>
+        <source>Cancel all transfers</source>
+        <translatorcomment>Tooltip for cancel button when the user is in the all transfers category</translatorcomment>
+        <translation>Annuler tous les transferts</translation>
+    </message>
+    <message>
+        <source>Cancel and clear all search results</source>
+        <translatorcomment>Tooltip for cancel button when the user is in the search category and there are completed transfers</translatorcomment>
+        <translation>Annuler et effacer tous les résultats de recherche</translation>
+    </message>
+    <message>
+        <source>Cancel and clear all audios</source>
+        <translatorcomment>Tooltip for cancel button when the user is in the audios category and there are completed transfers</translatorcomment>
+        <translation>Annuler effacer tous les sons</translation>
+    </message>
+    <message>
+        <source>Cancel and clear all videos</source>
+        <translatorcomment>Tooltip for cancel button when the user is in the videos category and there are completed transfers</translatorcomment>
+        <translation>Annuler et effacer toutes les vidéos</translation>
+    </message>
+    <message>
+        <source>Cancel and clear all archives</source>
+        <translatorcomment>Tooltip for cancel button when the user is in the archives category and there are completed transfers</translatorcomment>
+        <translation>Annuler et effacer tous les fichiers compressés</translation>
+    </message>
+    <message>
+        <source>Cancel and clear all documents</source>
+        <translatorcomment>Tooltip for cancel button when the user is in the documents category and there are completed transfers</translatorcomment>
+        <translation>Annuler et effacer tous les documents</translation>
+    </message>
+    <message>
+        <source>Cancel and clear all images</source>
+        <translatorcomment>Tooltip for cancel button when the user is in the images category and there are completed transfers</translatorcomment>
+        <translation>Annuler et effacer toutes les images</translation>
+    </message>
+    <message>
+        <source>Cancel and clear all transfers</source>
+        <translatorcomment>Tooltip for cancel button when the user is in the all transfers category and there are completed transfers</translatorcomment>
+        <translation>Annuler et effacer tous les transferts</translation>
+    </message>
+    <message>
+        <source>Resume all downloads</source>
+        <translatorcomment>Tooltip for Resume button when the user is in the downloads category</translatorcomment>
+        <translation>Reprendre tous les téléchargements</translation>
+    </message>
+    <message>
+        <source>Resume all uploads</source>
+        <translatorcomment>Tooltip for Resume button when the user is in the uploads category</translatorcomment>
+        <translation>Reprendre tous les téléversements</translation>
+    </message>
+    <message>
+        <source>Resume all search results</source>
+        <translatorcomment>Tooltip for Resume button when the user is in the search category</translatorcomment>
+        <translation>Reprendre tous les résultats de recherche</translation>
+    </message>
+    <message>
+        <source>Resume all audios</source>
+        <translatorcomment>Tooltip for Resume button when the user is in the audios category</translatorcomment>
+        <translation>Reprendre tous les sons</translation>
+    </message>
+    <message>
+        <source>Resume all videos</source>
+        <translatorcomment>Tooltip for Resume button when the user is in the videos category</translatorcomment>
+        <translation>Reprendre toutes les vidéos</translation>
+    </message>
+    <message>
+        <source>Resume all archives</source>
+        <translatorcomment>Tooltip for Resume button when the user is in the archives category</translatorcomment>
+        <translation>Reprendre tous les fichiers compressés</translation>
+    </message>
+    <message>
+        <source>Resume all documents</source>
+        <translatorcomment>Tooltip for Resume button when the user is in the documents category</translatorcomment>
+        <translation>Reprendre tous les documents</translation>
+    </message>
+    <message>
+        <source>Resume all images</source>
+        <translatorcomment>Tooltip for Resume button when the user is in the images category</translatorcomment>
+        <translation>Reprendre toutes les images</translation>
+    </message>
+    <message>
+        <source>Resume all transfers</source>
+        <translatorcomment>Tooltip for Resume button when the user is in the all transfers category</translatorcomment>
+        <translation>Reprendre tous les transferts</translation>
+    </message>
+    <message>
+        <source>Pause all downloads</source>
+        <translatorcomment>Tooltip for Pause button when the user is in the downloads category</translatorcomment>
+        <translation>Reprendre tous les téléchargements</translation>
+    </message>
+    <message>
+        <source>Pause all uploads</source>
+        <translatorcomment>Tooltip for Pause button when the user is in the uploads category</translatorcomment>
+        <translation>Reprendre tous les téléversements</translation>
+    </message>
+    <message>
+        <source>Pause all search results</source>
+        <translatorcomment>Tooltip for Pause button when the user is in the search category</translatorcomment>
+        <translation>Mettre tous les résultats de recherche en pause</translation>
+    </message>
+    <message>
+        <source>Pause all audios</source>
+        <translatorcomment>Tooltip for Pause button when the user is in the audios category</translatorcomment>
+        <translation>Mettre tous les sons en pause</translation>
+    </message>
+    <message>
+        <source>Pause all videos</source>
+        <translatorcomment>Tooltip for Pause button when the user is in the videos category</translatorcomment>
+        <translation>Mettre toutes les vidéos en pause</translation>
+    </message>
+    <message>
+        <source>Pause all archives</source>
+        <translatorcomment>Tooltip for Pause button when the user is in the archives category</translatorcomment>
+        <translation>Mettre tous les fichiers compressés en pause</translation>
+    </message>
+    <message>
+        <source>Pause all documents</source>
+        <translatorcomment>Tooltip for Pause button when the user is in the documents category</translatorcomment>
+        <translation>Mettre tous les documents en pause</translation>
+    </message>
+    <message>
+        <source>Pause all images</source>
+        <translatorcomment>Tooltip for Pause button when the user is in the images category</translatorcomment>
+        <translation>Mettre toutes les images en pause</translation>
+    </message>
+    <message>
+        <source>Pause all transfers</source>
+        <translatorcomment>Tooltip for Pause button when the user is in the all transfers category</translatorcomment>
+        <translation>Mettre tous les transferts en pause</translation>
     </message>
 </context>
 <context>
@@ -5625,32 +6283,32 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message numerus="yes">
         <source>%n second ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n seconds ago</translatorcomment>
-        <translation><numerusform>il y a %n seconde</numerusform><numerusform>il y a %n de secondes</numerusform><numerusform>il y a %n secondes</numerusform></translation>
+        <translation><numerusform>il y a %n seconde</numerusform><numerusform>il y a %n secondes</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n minute ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n minutes ago</translatorcomment>
-        <translation><numerusform>il y a %n minute</numerusform><numerusform>il y a %n de minutes</numerusform><numerusform>il y a %n minutes</numerusform></translation>
+        <translation><numerusform>il y a %n minute</numerusform><numerusform>il y a %n minutes</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n hour ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n hours ago</translatorcomment>
-        <translation><numerusform>il y a %n heure</numerusform><numerusform>il y a %n de heures</numerusform><numerusform>il y a %n heures</numerusform></translation>
+        <translation><numerusform>il y a %n heure</numerusform><numerusform>il y a %n heures</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n day ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n days ago</translatorcomment>
-        <translation><numerusform>il y a %n jour</numerusform><numerusform>il y a %n de  jours</numerusform><numerusform>il y a %n jours</numerusform></translation>
+        <translation><numerusform>il y a %n jour</numerusform><numerusform>il y a %n jours</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n month ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n months ago</translatorcomment>
-        <translation><numerusform>il y a %n mois</numerusform><numerusform>il y a %n de mois</numerusform><numerusform>il y a %n mois</numerusform></translation>
+        <translation><numerusform>il y a %n mois</numerusform><numerusform>il y a %n mois</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n year ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n years ago</translatorcomment>
-        <translation><numerusform>il y a %n ans</numerusform><numerusform>il y a %n d’ans</numerusform><numerusform>il y a %n années</numerusform></translation>
+        <translation><numerusform>il y a %n ans</numerusform><numerusform>il y a %n années</numerusform></translation>
     </message>
 </context>
 <context>

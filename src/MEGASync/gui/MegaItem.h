@@ -9,8 +9,8 @@
 #include <memory>
 
 namespace UserAttributes{
-class FullNameAttributeRequest;
-class AvatarAttributeRequest;
+class FullName;
+class Avatar;
 }
 
 class MegaItem : public QObject
@@ -46,8 +46,7 @@ public:
     int getStatus();
     bool isSyncable();
     bool isRoot();
-    int insertPosition(const std::unique_ptr<mega::MegaNode> &node);
-    void insertNode(std::unique_ptr<mega::MegaNode> node, int index);
+    void addNode(std::unique_ptr<mega::MegaNode> node);
     void removeNode(std::shared_ptr<mega::MegaNode> node);
     void displayFiles(bool enable);
     void setCameraFolder();
@@ -78,8 +77,8 @@ private slots:
 private:
     void calculateSyncStatus(const QStringList& folders);
     std::unique_ptr<mega::QTMegaRequestListener> mDelegateListener;
-    std::shared_ptr<const UserAttributes::FullNameAttributeRequest> mFullNameAttribute;
-    std::shared_ptr<const UserAttributes::AvatarAttributeRequest> mAvatarAttribute;
+    std::shared_ptr<const UserAttributes::FullName> mFullNameAttribute;
+    std::shared_ptr<const UserAttributes::Avatar> mAvatarAttribute;
 
 };
 

@@ -12,17 +12,19 @@ extern Q_CORE_EXPORT int qt_ntfs_permission_lookup;
 #endif
 
 const char Preferences::CLIENT_KEY[] = "FhMgXbqb";
-const char Preferences::USER_AGENT[] = "MEGAsync/4.6.8.0";
-const int Preferences::VERSION_CODE = 4608;
-const int Preferences::BUILD_ID = 2;
+const char Preferences::USER_AGENT[] = "MEGAsync/4.7.0.0";
+const int Preferences::VERSION_CODE = 4700;
+const int Preferences::BUILD_ID = 4;
 // Do not change the location of VERSION_STRING, create_tarball.sh parses this file
-const QString Preferences::VERSION_STRING = QString::fromAscii("4.6.8");
-QString Preferences::SDK_ID = QString::fromAscii("1ef93bb");
-const QString Preferences::CHANGELOG = QString::fromUtf8(QT_TR_NOOP(                                                             
-"- Full redesign of remote file picker.\n"
-"- Fixed translation issues.\n"
-"- Other minor UI fixes and adjustments.\n"
-"- Fixed detected crashes on Windows, Linux and macOS.\n"));
+const QString Preferences::VERSION_STRING = QString::fromAscii("4.7.0");
+QString Preferences::SDK_ID = QString::fromAscii("063fd87");
+const QString Preferences::CHANGELOG = QString::fromUtf8(QT_TR_NOOP(
+"- There is now a new transfer manager.\n"
+"- Transfer management was enhanced and reliability of downloads and uploads improved. \n"
+"- Detected crashes on Windows, Linux, and macOS fixed.\n"
+"- Translation issues fixed.\n"
+"- Performance improved.\n"
+"- UI fixed and adjusted.\n"));
 
 const QString Preferences::TRANSLATION_FOLDER = QString::fromAscii("://translations/");
 const QString Preferences::TRANSLATION_PREFIX = QString::fromAscii("MEGASyncStrings_");
@@ -225,7 +227,11 @@ bool Preferences::HTTPS_ORIGIN_CHECK_ENABLED = true;
         const QString Preferences::UPDATE_CHECK_URL             = QString::fromUtf8("http://g.static.mega.co.nz/upd/wsync/v.txt");
     #endif
 #else
-    const QString Preferences::UPDATE_CHECK_URL                 = QString::fromUtf8("http://g.static.mega.co.nz/upd/msync/v.txt");
+    #if defined(__arm64__)
+        const QString Preferences::UPDATE_CHECK_URL                 = QString::fromUtf8("http://g.static.mega.co.nz/upd/msyncarm64/v.txt");
+    #else
+        const QString Preferences::UPDATE_CHECK_URL                 = QString::fromUtf8("http://g.static.mega.co.nz/upd/msyncv2/v.txt"); //Using msyncv2 to serve new updates and avoid keeping loader leftovers
+    #endif
 #endif
 
 const char Preferences::UPDATE_PUBLIC_KEY[] = "EACTzXPE8fdMhm6LizLe1FxV2DncybVh2cXpW3momTb8tpzRNT833r1RfySz5uHe8gdoXN1W0eM5Bk8X-LefygYYDS9RyXrRZ8qXrr9ITJ4r8ATnFIEThO5vqaCpGWTVi5pOPI5FUTJuhghVKTyAels2SpYT5CmfSQIkMKv7YVldaV7A-kY060GfrNg4--ETyIzhvaSZ_jyw-gmzYl_dwfT9kSzrrWy1vQG8JPNjKVPC4MCTZJx9SNvp1fVi77hhgT-Mc5PLcDIfjustlJkDBHtmGEjyaDnaWQf49rGq94q23mLc56MSjKpjOR1TtpsCY31d1Oy2fEXFgghM0R-1UkKswVuWhEEd8nO2PimJOl4u9ZJ2PWtJL1Ro0Hlw9OemJ12klIAxtGV-61Z60XoErbqThwWT5Uu3D2gjK9e6rL9dufSoqjC7UA2C0h7KNtfUcUHw0UWzahlR8XBNFXaLWx9Z8fRtA_a4seZcr0AhIA7JdQG5i8tOZo966KcFnkU77pfQTSprnJhCfEmYbWm9EZA122LJBWq2UrSQQN3pKc9goNaaNxy5PYU1yXyiAfMVsBDmDonhRWQh2XhdV-FWJ3rOGMe25zOwV4z1XkNBuW4T1JF2FgqGR6_q74B2ccFC8vrNGvlTEcs3MSxTI_EKLXQvBYy7hxG8EPUkrMVCaWzzTQAFEQ";
@@ -303,8 +309,6 @@ const QString Preferences::upperSizeLimitKey        = QString::fromAscii("upperS
 const QString Preferences::lowerSizeLimitKey        = QString::fromAscii("lowerSizeLimit");
 
 const QString Preferences::lastCustomStreamingAppKey    = QString::fromAscii("lastCustomStreamingApp");
-const QString Preferences::transferDownloadMethodKey    = QString::fromAscii("transferDownloadMethod");
-const QString Preferences::transferUploadMethodKey      = QString::fromAscii("transferUploadMethod");
 
 const QString Preferences::upperSizeLimitValueKey       = QString::fromAscii("upperSizeLimitValue");
 const QString Preferences::lowerSizeLimitValueKey       = QString::fromAscii("lowerSizeLimitValue");
@@ -400,8 +404,6 @@ const long long Preferences::defaultTimeStamp       = 0;
 const unsigned long long  Preferences::defaultTransferIdentifier   = 0;
 const int  Preferences::defaultParallelUploadConnections      = 3;
 const int  Preferences::defaultParallelDownloadConnections    = 4;
-const int Preferences::defaultTransferDownloadMethod      = MegaApi::TRANSFER_METHOD_AUTO;
-const int Preferences::defaultTransferUploadMethod        = MegaApi::TRANSFER_METHOD_AUTO;
 const long long  Preferences::defaultUpperSizeLimitValue              = 1; //Input UI range 1-9999. Use 1 as default value
 const long long  Preferences::defaultLowerSizeLimitValue              = 1; //Input UI range 1-9999. Use 1 as default value
 const int  Preferences::defaultCleanerDaysLimitValue            = 30;
@@ -1413,26 +1415,6 @@ void Preferences::setSSLcertificateException(bool value)
     }
     mSettings->sync();
     mutex.unlock();
-}
-
-int Preferences::transferDownloadMethod()
-{
-    return getValueConcurrent<int>(transferDownloadMethodKey, defaultTransferDownloadMethod);
-}
-
-void Preferences::setTransferDownloadMethod(int value)
-{
-    setValueAndSyncConcurrent(transferDownloadMethodKey, value);
-}
-
-int Preferences::transferUploadMethod()
-{
-    return getValueConcurrent<int>(transferUploadMethodKey, defaultTransferUploadMethod);
-}
-
-void Preferences::setTransferUploadMethod(int value)
-{
-    setValueAndSyncConcurrent(transferUploadMethodKey, value);
 }
 
 QString Preferences::language()

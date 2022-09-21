@@ -12,38 +12,30 @@
 #include "control/Preferences.h"
 #include "control/MegaController.h"
 #include "model/Model.h"
-#include "QCustomTransfersModel.h"
 #include <QGraphicsOpacityEffect>
+#include "TransferScanCancelUi.h"
 #include "HighDpiResize.h"
 #include "Utilities.h"
 #include "FilterAlertWidget.h"
 #include "QtPositioningBugFixer.h"
 #include "TransferQuota.h"
+#include "StatusInfo.h"
 #include <memory>
 #ifdef _WIN32
 #include <chrono>
 #endif
+
 
 namespace Ui {
 class InfoDialog;
 }
 
 class MegaApplication;
+class TransferManager;
+
 class InfoDialog : public QDialog, public mega::MegaTransferListener
 {
     Q_OBJECT
-
-    enum {
-        STATE_STARTING,
-        STATE_PAUSED,
-        STATE_WAITING,
-        STATE_INDEXING,
-        STATE_UPDATED,
-        STATE_SYNCING,
-        STATE_TRANSFERRING,
-    };
-
-
 
 public:
 
@@ -60,9 +52,6 @@ public:
 
     PSA_info* getPSAdata();
     void setUsage();
-    void setTransfer(mega::MegaTransfer *transfer);
-    void refreshTransferItems();
-    void transferFinished(int error);
     void setIndexing(bool indexing);
     void setWaiting(bool waiting);
     void setSyncing(bool value);
@@ -78,11 +67,9 @@ public:
 
     void reset();
 
-    QCustomTransfersModel *stealModel();
-
-    void onTransferFinish(mega::MegaApi* api, mega::MegaTransfer *transfer, mega::MegaError* e) override;
-    void onTransferStart(mega::MegaApi *api, mega::MegaTransfer *transfer) override;
-    void onTransferUpdate(mega::MegaApi *api, mega::MegaTransfer *transfer) override;
+    void enterBlockingState();
+    void leaveBlockingState(bool fromCancellation);
+    void disableCancelling();
 
 #ifdef __APPLE__
     void moveArrow(QPoint p);
@@ -104,10 +91,11 @@ public:
 
     void move(int x, int y);
 
+    void setTransferManager(TransferManager *transferManager);
+
 private:
     InfoDialog() = default;
     void animateStates(bool opt);
-    void updateTransfersCount();
     void hideEvent(QHideEvent *event) override;
     void showEvent(QShowEvent *event) override;
     void moveEvent(QMoveEvent *) override;
@@ -125,9 +113,6 @@ public slots:
     void upAreaHovered(QMouseEvent *event);
 
    void addSync();
-   void onAllUploadsFinished();
-   void onAllDownloadsFinished();
-   void onAllTransfersFinished();
    void updateDialogState();
 
    void enableTransferOverquotaAlert();
@@ -149,7 +134,7 @@ private slots:
 
     void on_tTransfers_clicked();
     void on_tNotifications_clicked();
-    void on_bActualFilter_clicked();
+    void onActualFilterClicked();
     void applyFilterOption(int opt);
     void on_bNotificationsSettings_clicked();
 
@@ -168,6 +153,12 @@ private slots:
 
     void setAvatar();
 
+    void updateTransfersCount();
+
+    void onResetTransfersSummaryWidget();
+    void onTransfersStateChanged();
+    void onShowInFolderFinished(bool);
+
 signals:
     void openTransferManager(int tab);
     void dismissStorageOverquota(bool oq);
@@ -178,6 +169,7 @@ signals:
     // parameter messageShown is true when alert is enabled, false when dismissed
     void almostTransferOverquotaMsgVisibilityChange(bool messageShown);
     void userActivity();
+    void cancelScanning();
 
 private:
     Ui::InfoDialog *ui;
@@ -195,25 +187,16 @@ private:
     MenuItemAction *rubbishItem;
 
     int activeDownloadState, activeUploadState;
-    int remainingUploads, remainingDownloads;
-    bool remainingUploadsTimerRunning = false;
-    bool remainingDownloadsTimerRunning = false;
-    int totalUploads, totalDownloads;
-    long long leftUploadBytes, completedUploadBytes;
-    long long leftDownloadBytes, completedDownloadBytes;
-    long long currentUploadBytes, currentCompletedUploadBytes;
-    long long currentDownloadBytes, currentCompletedDownloadBytes;
+    bool pendingUploadsTimerRunning = false;
+    bool pendingDownloadsTimerRunning = false;
     bool circlesShowAllActiveTransfersProgress;
-    unsigned long long uploadActiveTransferPriority, downloadActiveTransferPriority;
-    int uploadActiveTransferTag, downloadActiveTransferTag;
-    int uploadActiveTransferState, downloadActiveTransferState;
 
     bool indexing; //scanning
     bool waiting;
     bool syncing; //if any sync is in syncing state
     bool transferring; // if there are ongoing regular transfers
     GuestWidget *gWidget;
-    int state;
+    StatusInfo::TRANSFERS_STATES mState;
     bool overQuotaState;
     bool transferOverquotaAlertEnabled;
     bool transferAlmostOverquotaAlertEnabled;
@@ -226,6 +209,8 @@ private:
     long long unseenNotifications = 0;
 
     AccountDetailsDialog* accountDetailsDialog;
+
+    QPointer<TransferManager> mTransferManager;
 
 #ifdef Q_OS_LINUX
     bool doNotActAsPopup;
@@ -249,6 +234,7 @@ protected:
     void setBlockedStateLabel(QString state);
     void updateBlockedState();
     void updateState();
+    bool checkFailedState();
     void changeEvent(QEvent * event) override;
     bool eventFilter(QObject *obj, QEvent *e) override;
     void paintEvent( QPaintEvent * e) override;
@@ -258,6 +244,7 @@ protected:
     QTimer downloadsFinishedTimer;
     QTimer uploadsFinishedTimer;
     QTimer transfersFinishedTimer;
+    QTimer mResetTransferSummaryWidget;
     MegaApplication *app;
     std::shared_ptr<Preferences> preferences;
     Model *model;
@@ -268,7 +255,9 @@ protected:
 
  private:
     static double computeRatio(long long completed, long long remaining);
+    void enableUserActions(bool value);
 
+    TransferScanCancelUi* mTransferScanCancelUi = nullptr;
     QtPositioningBugFixer qtBugFixer;
 };
 

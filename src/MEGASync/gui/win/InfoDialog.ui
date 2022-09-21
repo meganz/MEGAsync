@@ -347,7 +347,7 @@ border: none;
                   <string/>
                  </property>
                  <property name="icon">
-                  <iconset resource="../Resources_win.qrc">
+                  <iconset resource="../Resources_linux.qrc">
                    <normaloff>:/images/ico_add_sync_folder.png</normaloff>:/images/ico_add_sync_folder.png</iconset>
                  </property>
                  <property name="iconSize">
@@ -389,7 +389,7 @@ border: none;
                   <string/>
                  </property>
                  <property name="icon">
-                  <iconset resource="../Resources_win.qrc">
+                  <iconset resource="../Resources_linux.qrc">
                    <normaloff>:/images/ico_upload.png</normaloff>:/images/ico_upload.png</iconset>
                  </property>
                  <property name="iconSize">
@@ -431,7 +431,7 @@ border: none;
                   <string/>
                  </property>
                  <property name="icon">
-                  <iconset resource="../Resources_win.qrc">
+                  <iconset resource="../Resources_linux.qrc">
                    <normaloff>:/images/ico_download.png</normaloff>:/images/ico_download.png</iconset>
                  </property>
                  <property name="iconSize">
@@ -479,7 +479,7 @@ border: none;
                   <string/>
                  </property>
                  <property name="icon">
-                  <iconset resource="../Resources_win.qrc">
+                  <iconset resource="../Resources_linux.qrc">
                    <normaloff>:/images/more_settings.png</normaloff>:/images/more_settings.png</iconset>
                  </property>
                  <property name="iconSize">
@@ -864,7 +864,7 @@ max-height: 14px;
                   </size>
                  </property>
                  <property name="currentIndex">
-                  <number>1</number>
+                  <number>0</number>
                  </property>
                  <widget class="QWidget" name="pTransfersTab">
                   <property name="sizePolicy">
@@ -1379,7 +1379,7 @@ background-color: transparent;
 }</string>
                         </property>
                         <property name="currentIndex">
-                         <number>0</number>
+                         <number>2</number>
                         </property>
                         <widget class="QWidget" name="pUpdated">
                          <property name="sizePolicy">
@@ -1449,7 +1449,7 @@ background-color: transparent;
                                <string/>
                               </property>
                               <property name="icon">
-                               <iconset resource="../Resources_win.qrc">
+                               <iconset resource="../Resources_linux.qrc">
                                 <normaloff>:/images/upload_to_mega.png</normaloff>:/images/upload_to_mega.png</iconset>
                               </property>
                               <property name="iconSize">
@@ -3306,7 +3306,7 @@ border: none;
   <tabstop>bSettings</tabstop>
  </tabstops>
  <resources>
-  <include location="../Resources_win.qrc"/>
+  <include location="../Resources_linux.qrc"/>
  </resources>
  <connections/>
 </ui>

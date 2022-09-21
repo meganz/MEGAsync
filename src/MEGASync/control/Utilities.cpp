@@ -24,6 +24,7 @@ using namespace std;
 using namespace mega;
 
 QHash<QString, QString> Utilities::extensionIcons;
+QHash<QString, Utilities::FileType> Utilities::fileTypes;
 QHash<QString, QString> Utilities::languageNames;
 
 std::unique_ptr<ThreadPool> ThreadPoolSingleton::instance = nullptr;
@@ -42,7 +43,7 @@ void Utilities::initializeExtensions()
 
     extensionIcons[QString::fromAscii("mp3")] = extensionIcons[QString::fromAscii("wav")]  = extensionIcons[QString::fromAscii("3ga")]  =
                             extensionIcons[QString::fromAscii("aif")]  = extensionIcons[QString::fromAscii("aiff")] =
-                            extensionIcons[QString::fromAscii("flac")] = extensionIcons[QString::fromAscii("iff")]  =
+                            extensionIcons[QString::fromAscii("flac")] = extensionIcons[QString::fromAscii("iff")]  = extensionIcons[QString::fromAscii("ogg")] =
                             extensionIcons[QString::fromAscii("m4a")]  = extensionIcons[QString::fromAscii("wma")]  =  QString::fromAscii("audio.png");
 
     extensionIcons[QString::fromAscii("dxf")] = extensionIcons[QString::fromAscii("dwg")] =  QString::fromAscii("cad.png");
@@ -75,7 +76,7 @@ void Utilities::initializeExtensions()
                             extensionIcons[QString::fromAscii("tga")]  = QString::fromAscii("image.png");
 
     extensionIcons[QString::fromAscii("ai")] = extensionIcons[QString::fromAscii("ait")] = QString::fromAscii("illustrator.png");
-    extensionIcons[QString::fromAscii("jpg")] = extensionIcons[QString::fromAscii("jpeg")] = QString::fromAscii("image.png");
+    extensionIcons[QString::fromAscii("jpg")] = extensionIcons[QString::fromAscii("jpeg")] = extensionIcons[QString::fromAscii("heic")] = QString::fromAscii("image.png");
     extensionIcons[QString::fromAscii("indd")] = QString::fromAscii("indesign.png");
 
     extensionIcons[QString::fromAscii("jar")] = extensionIcons[QString::fromAscii("java")]  = extensionIcons[QString::fromAscii("class")]  = QString::fromAscii("web_data.png");
@@ -95,6 +96,20 @@ void Utilities::initializeExtensions()
                             extensionIcons[QString::fromAscii("nef")] = extensionIcons[QString::fromAscii("pef")]  =
                             extensionIcons[QString::fromAscii("rw2")] = extensionIcons[QString::fromAscii("srf")]  =
                             extensionIcons[QString::fromAscii("orf")] = extensionIcons[QString::fromAscii("rwl")]  =
+                            extensionIcons[QString::fromAscii("ari")] = extensionIcons[QString::fromAscii("braw")]  =
+                            extensionIcons[QString::fromAscii("crw")] = extensionIcons[QString::fromAscii("cr3")]  =
+                            extensionIcons[QString::fromAscii("cap")] =
+                            extensionIcons[QString::fromAscii("dcs")] = extensionIcons[QString::fromAscii("drf")]  =
+                            extensionIcons[QString::fromAscii("eip")] = extensionIcons[QString::fromAscii("erf")]  =
+                            extensionIcons[QString::fromAscii("gpr")] = extensionIcons[QString::fromAscii("iiq")]  =
+                            extensionIcons[QString::fromAscii("k25")] = extensionIcons[QString::fromAscii("kdc")]  =
+                            extensionIcons[QString::fromAscii("mdc")] = extensionIcons[QString::fromAscii("mos")]  =
+                            extensionIcons[QString::fromAscii("nrw")] = extensionIcons[QString::fromAscii("obm")]  =
+                            extensionIcons[QString::fromAscii("ptx")] = extensionIcons[QString::fromAscii("pxn")]  =
+                            extensionIcons[QString::fromAscii("r3d")] = extensionIcons[QString::fromAscii("raf")]  =
+                            extensionIcons[QString::fromAscii("raw")] = extensionIcons[QString::fromAscii("rwz")]  =
+                            extensionIcons[QString::fromAscii("sr2")] = extensionIcons[QString::fromAscii("srw")]  =
+                            extensionIcons[QString::fromAscii("tif")] = extensionIcons[QString::fromAscii("x3f")]  =
                             QString::fromAscii("raw.png");
 
     extensionIcons[QString::fromAscii("ods")]  = extensionIcons[QString::fromAscii("ots")]  =
@@ -146,6 +161,62 @@ void Utilities::initializeExtensions()
      extensionIcons[QString::fromAscii("key")] = QString::fromAscii("keynote.png");
 }
 
+void Utilities::initializeFileTypes()
+{
+    fileTypes[getExtensionPixmapName(QLatin1Literal("a.wav"), QString())]
+            = FileType::TYPE_AUDIO;
+    fileTypes[getExtensionPixmapName(QLatin1Literal("a.mkv"), QString())]
+            = FileType::TYPE_VIDEO;
+    fileTypes[getExtensionPixmapName(QLatin1Literal("a.tar"), QString())]
+            = FileType::TYPE_ARCHIVE;
+    fileTypes[getExtensionPixmapName(QLatin1Literal("a.torrent"), QString())]
+            = FileType::TYPE_ARCHIVE;
+    fileTypes[getExtensionPixmapName(QLatin1Literal("a.dmg"), QString())]
+            = FileType::TYPE_ARCHIVE;
+    fileTypes[getExtensionPixmapName(QLatin1Literal("a.xd"), QString())]
+            = FileType::TYPE_ARCHIVE;
+    fileTypes[getExtensionPixmapName(QLatin1Literal("a.sketch"), QString())]
+            = FileType::TYPE_ARCHIVE;
+    fileTypes[getExtensionPixmapName(QLatin1Literal("a.txt"), QString())]
+            = FileType::TYPE_DOCUMENT;
+    fileTypes[getExtensionPixmapName(QLatin1Literal("a.odt"), QString())]
+            = FileType::TYPE_DOCUMENT;
+    fileTypes[getExtensionPixmapName(QLatin1Literal("a.pdf"), QString())]
+            = FileType::TYPE_DOCUMENT;
+    fileTypes[getExtensionPixmapName(QLatin1Literal("a.doc"), QString())]
+            = FileType::TYPE_DOCUMENT;
+    fileTypes[getExtensionPixmapName(QLatin1Literal("a.ods"), QString())]
+            = FileType::TYPE_DOCUMENT;
+    fileTypes[getExtensionPixmapName(QLatin1Literal("a.odt"), QString())]
+            = FileType::TYPE_DOCUMENT;
+    fileTypes[getExtensionPixmapName(QLatin1Literal("a.ppt"), QString())]
+            = FileType::TYPE_DOCUMENT;
+    fileTypes[getExtensionPixmapName(QLatin1Literal("a.pages"), QString())]
+            = FileType::TYPE_DOCUMENT;
+    fileTypes[getExtensionPixmapName(QLatin1Literal("a.numbers"), QString())]
+            = FileType::TYPE_DOCUMENT;
+    fileTypes[getExtensionPixmapName(QLatin1Literal("a.key"), QString())]
+            = FileType::TYPE_DOCUMENT;
+    fileTypes[getExtensionPixmapName(QLatin1Literal("a.xml"), QString())]
+            = FileType::TYPE_DOCUMENT;
+    fileTypes[getExtensionPixmapName(QLatin1Literal("a.xls"), QString())]
+            = FileType::TYPE_DOCUMENT;
+    fileTypes[getExtensionPixmapName(QLatin1Literal("a.png"), QString())]
+            = FileType::TYPE_IMAGE;
+    fileTypes[getExtensionPixmapName(QLatin1Literal("a.jpg"), QString())]
+            = FileType::TYPE_IMAGE;
+    fileTypes[getExtensionPixmapName(QLatin1Literal("a.ai"), QString())]
+            = FileType::TYPE_IMAGE;
+    fileTypes[getExtensionPixmapName(QLatin1Literal("a.abr"), QString())]
+            = FileType::TYPE_IMAGE;
+    fileTypes[getExtensionPixmapName(QLatin1Literal("a.3fr"), QString())]
+            = FileType::TYPE_IMAGE;
+    fileTypes[getExtensionPixmapName(QLatin1Literal("a.svg"), QString())]
+            = FileType::TYPE_IMAGE;
+    fileTypes[getExtensionPixmapName(QLatin1Literal("a.bin"), QString())]
+            = FileType::TYPE_OTHER;
+}
+
 
 void Utilities::queueFunctionInAppThread(std::function<void()> fun) {
    QObject temporary;
@@ -189,6 +260,7 @@ QString Utilities::getExtensionPixmapName(QString fileName, QString prefix)
     if (extensionIcons.isEmpty())
     {
         initializeExtensions();
+        initializeFileTypes();
     }
 
     QFileInfo f(fileName);
@@ -200,6 +272,12 @@ QString Utilities::getExtensionPixmapName(QString fileName, QString prefix)
     {
         return prefix + QString::fromAscii("generic.png");
     }
+}
+
+Utilities::FileType Utilities::getFileType(QString fileName, QString prefix)
+{
+    auto extensionPixmapName = getExtensionPixmapName(fileName, prefix);
+    return fileTypes.value(extensionPixmapName,FileType::TYPE_OTHER);
 }
 
 QString Utilities::languageCodeToString(QString code)
@@ -297,6 +375,13 @@ QString Utilities::getExtensionPixmapNameSmall(QString fileName)
 QString Utilities::getExtensionPixmapNameMedium(QString fileName)
 {
     return getExtensionPixmapName(fileName, QString::fromAscii(":/images/drag_"));
+}
+
+double Utilities::toDoubleInUnit(unsigned long long bytes, unsigned long long unit)
+{
+    double decimalMultiplier = 100.0;
+    double multipliedValue = decimalMultiplier * static_cast<double>(bytes);
+    return static_cast<int>(multipliedValue / static_cast<double>(unit)) / decimalMultiplier;
 }
 
 QIcon Utilities::getCachedPixmap(QString fileName)
@@ -557,32 +642,33 @@ QString Utilities::getSizeString(unsigned long long bytes)
 {
     QString language = ((MegaApplication*)qApp)->getCurrentLanguageCode();
     QLocale locale(language);
+    
     if (bytes >= TB)
     {
-        return locale.toString( ((int)((10 * bytes) / TB))/10.0) + QString::fromAscii(" ")
+        return locale.toString(toDoubleInUnit(bytes, TB)) + QString::fromAscii(" ")
                 + QCoreApplication::translate("Utilities", "TB");
     }
 
     if (bytes >= GB)
     {
-        return locale.toString( ((int)((10 * bytes) / GB))/10.0) + QString::fromAscii(" ")
+        return locale.toString(toDoubleInUnit(bytes, GB)) + QString::fromAscii(" ")
                 + QCoreApplication::translate("Utilities", "GB");
     }
 
     if (bytes >= MB)
     {
-        return locale.toString( ((int)((10 * bytes) / MB))/10.0) + QString::fromAscii(" ")
+        return locale.toString(toDoubleInUnit(bytes, MB)) + QString::fromAscii(" ")
                 + QCoreApplication::translate("Utilities", "MB");
     }
 
     if (bytes >= KB)
     {
-        return locale.toString( ((int)((10 * bytes) / KB))/10.0) + QString::fromAscii(" ")
+        return locale.toString(toDoubleInUnit(bytes, KB)) + QString::fromAscii(" ")
                 + QCoreApplication::translate("Utilities", "KB");
     }
 
-    return locale.toString(bytes) + QStringLiteral(" ")
-            + QCoreApplication::translate("Utilities", "Bytes");
+    return locale.toString(toDoubleInUnit(bytes, 1)) + QString::fromAscii(" ")
+                    + QCoreApplication::translate("Utilities", "Bytes");
 }
 
 QString Utilities::getSizeString(long long bytes)
@@ -597,6 +683,53 @@ QString Utilities::getSizeString(long long bytes)
             + QCoreApplication::translate("Utilities", "Bytes");
 }
 
+Utilities::ProgressSize Utilities::getProgressSizes(unsigned long long transferredBytes, unsigned long long totalBytes)
+{
+    ProgressSize sizes;
+    Q_ASSERT(totalBytes >= transferredBytes);
+
+    if (transferredBytes >= 0 && totalBytes >= 0)
+    {    
+        QString language = ((MegaApplication*)qApp)->getCurrentLanguageCode();
+        QLocale locale(language);
+
+        //Init on 1 for Bytes
+        unsigned long long sizeToCompare(0);
+        QString Units;
+
+        if (totalBytes >= TB)
+        {
+            sizeToCompare = TB;
+            Units = QCoreApplication::translate("Utilities", "TB");
+        }
+        else if (totalBytes >= GB)
+        {
+            sizeToCompare = GB;
+            Units = QCoreApplication::translate("Utilities", "GB");
+        }
+        else if (totalBytes >= MB)
+        {
+            sizeToCompare = MB;
+            Units = QCoreApplication::translate("Utilities", "MB");
+        }
+        else if (totalBytes >= KB)
+        {
+            sizeToCompare = KB;
+            Units = QCoreApplication::translate("Utilities", "KB");
+        }
+        else
+        {
+            sizeToCompare = 1;
+            Units = QCoreApplication::translate("Utilities", "Bytes");
+        }
+
+        sizes.transferredBytes = locale.toString( ((int)((10 * transferredBytes) / sizeToCompare))/10.0);
+        sizes.totalBytes = locale.toString( ((int)((10 * totalBytes) / sizeToCompare))/10.0);
+        sizes.units = QStringLiteral(" ") + Units;
+    }
+
+    return sizes;
+}
 
 QString Utilities::extractJSONString(QString json, QString name)
 {
@@ -1048,6 +1181,35 @@ QProgressDialog *Utilities::showProgressDialog(ProgressHelper *progressHelper, Q
     return progressDialog;
 }
 
+QPair<QString, QString> Utilities::getFilenameBasenameAndSuffix(const QString& fileName)
+{
+    QMimeDatabase db;
+    int length = fileName.length();
+    QList <QPair <int, QMimeType> > list;
+    for (int index = length; index > -1; index--)
+    {
+        QList<QMimeType> mimes = db.mimeTypesForFileName(fileName.section(QLatin1String(""), index, length));
+        QMimeType mime = mimes.isEmpty() ? QMimeType() : mimes.last();
+        if (mime.isValid() && (list.isEmpty() || list.last().second != mime))
+        {
+            list.push_back(qMakePair(index, mime));
+        }
+    }
+
+    QPair<QString, QString> result;
+
+    if (!list.isEmpty())
+    {
+#ifdef Q_OS_LINUX
+        result = qMakePair<QString, QString>(fileName.left(list.last().first), fileName.mid(list.last().first));
+#else
+        result = qMakePair<QString, QString>(fileName.left(list.last().first - 1), fileName.mid(list.last().first - 1));
+#endif
+    }
+
+    return result;
+}
+
 long long Utilities::getSystemsAvailableMemory()
 {
     long long availMemory = 0;
@@ -1091,7 +1253,7 @@ void Utilities::sleepMilliseconds(unsigned int milliseconds)
 #endif
 }
 
-int Utilities::partPer(long long  part, long long total, uint ref)
+int Utilities::partPer(unsigned long long  part, unsigned long long total, uint ref)
 {
     // Use maximum precision
     long double partd(part);

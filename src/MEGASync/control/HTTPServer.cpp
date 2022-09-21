@@ -4,6 +4,8 @@
 #include "Utilities.h"
 #include "MegaApplication.h"
 
+#include <QtConcurrent/QtConcurrent>
+
 #include <iostream>
 
 
@@ -46,6 +48,10 @@ HTTPServer::HTTPServer(MegaApi *megaApi, quint16 port, bool sslEnabled)
     this->megaApi = megaApi;
     this->sslEnabled = sslEnabled;
     listen(QHostAddress::LocalHost, port);
+
+
+    connect(&mVersionCommandWatcher, &QFutureWatcher<VersionCommandAnswer>::finished,
+            this, &HTTPServer::onVersionCommandFinished);
 }
 
 HTTPServer::~HTTPServer()
@@ -307,15 +313,13 @@ void HTTPServer::processRequest(QAbstractSocket *socket, HTTPRequest request)
 {
     QString response;
 
-    QPointer<QAbstractSocket> safeSocket = socket;
-    QPointer<HTTPServer> safeServer = this;
-
     MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Webclient request received: %1").arg(request.data).toUtf8().constData());
     switch(GetRequestType(request))
     {
     case VERSION_COMMAND:
-        versionCommand(response);
-        break;
+        //Version command is taken using QtConcurrent, this is why the case is broken, as the response is received later
+        versionCommand(request, socket);
+        return;
     case OPEN_LINK_REQUEST_START:
         openLinkRequest(response, request);
         break;
@@ -351,6 +355,14 @@ void HTTPServer::processRequest(QAbstractSocket *socket, HTTPRequest request)
         MegaApi::log(MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Unknown webclient request: %1").arg(request.data).toUtf8().constData());
         break;
     }
+
+    endProcessRequest(socket,request, response);
+}
+
+void HTTPServer::endProcessRequest(QAbstractSocket* socket,const HTTPRequest& request, QString response)
+{
+    QPointer<QAbstractSocket> safeSocket = socket;
+    QPointer<HTTPServer> safeServer = this;
 
     if (!response.size())
     {
@@ -399,21 +411,41 @@ void HTTPServer::peerVerifyError(const QSslError &)
 {
 }
 
-void HTTPServer::versionCommand(QString &response)
+void HTTPServer::versionCommand(const HTTPRequest& request, QAbstractSocket *socket)
 {
-    MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, "GetVersion command received from the webclient");
-    char *myHandle = megaApi->getMyUserHandle();
-    if (!myHandle)
+    auto future = QtConcurrent::run([this, socket, request]() -> VersionCommandAnswer
     {
-        response = QString::fromUtf8("{\"v\":\"%1\"}").arg(Preferences::VERSION_STRING);
-    }
-    else
-    {
-        response = QString::fromUtf8("{\"v\":\"%1\",\"u\":\"%2\"}")
-                .arg(Preferences::VERSION_STRING)
-                .arg(QString::fromUtf8(myHandle));
-        delete [] myHandle;
-    }
+        VersionCommandAnswer answer;
+
+        MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, "GetVersion command received from the webclient");
+        char *myHandle = megaApi->getMyUserHandle();
+        if (!myHandle)
+        {
+            answer.response = QString::fromUtf8("{\"v\":\"%1\"}").arg(Preferences::VERSION_STRING);
+        }
+        else
+        {
+            answer.response = QString::fromUtf8("{\"v\":\"%1\",\"u\":\"%2\"}")
+                    .arg(Preferences::VERSION_STRING)
+                    .arg(QString::fromUtf8(myHandle));
+            delete [] myHandle;
+        }
+
+
+        answer.request = request;
+        answer.socket = socket;
+
+        return answer;
+    });
+
+    mVersionCommandWatcher.setFuture(future);
+}
+
+void HTTPServer::onVersionCommandFinished()
+{
+    auto answer = mVersionCommandWatcher.result();
+
+    endProcessRequest(answer.socket, answer.request, answer.response);
 }
 
 void HTTPServer::openLinkRequest(QString &response, const HTTPRequest& request)

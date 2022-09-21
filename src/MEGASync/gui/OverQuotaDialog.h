@@ -34,9 +34,10 @@ class OverQuotaDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit OverQuotaDialog(OverQuotaDialogType type, QWidget *parent = nullptr);
+    explicit OverQuotaDialog(OverQuotaDialogType type, QWidget* parent = nullptr);
     ~OverQuotaDialog();
-    static std::unique_ptr<OverQuotaDialog> createDialog(OverQuotaDialogType type);
+    static std::unique_ptr<OverQuotaDialog> createDialog(OverQuotaDialogType type, QWidget* parent = nullptr);
+    static bool showDialog(OverQuotaDialogType type, QWidget* parent = nullptr);
 
 private:
     Ui::OverquotaFullDialog *ui;

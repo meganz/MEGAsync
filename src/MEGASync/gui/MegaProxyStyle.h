@@ -28,11 +28,21 @@ public:
     int pixelMetric(PixelMetric metric, const QStyleOption * option,
                     const QWidget * widget = 0) const override;
 
+    int styleHint(StyleHint hint, const QStyleOption *option, const QWidget *widget, QStyleHintReturn *returnData) const override;
+
     QIcon standardIcon(QStyle::StandardPixmap standardIcon, const QStyleOption *option,
                        const QWidget *widget) const override;
 
     using QProxyStyle::polish;
     void polish(QWidget *widget) override;
+    void polish(QPalette &pal) override;
+    void polish(QApplication *app) override;
+
+    void unpolish(QWidget *widget) override;
+    void unpolish(QApplication *app) override;
+
+protected:
+    bool event(QEvent *e) override;
 };
 
 #endif // MEGAPROXYSTYLE_H

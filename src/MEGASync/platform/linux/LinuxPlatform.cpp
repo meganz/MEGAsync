@@ -107,14 +107,14 @@ bool LinuxPlatform::isTilingWindowManager()
            || tiling_wms.contains(getWindowManagerName());
 }
 
-void LinuxPlatform::showInFolder(QString pathIn)
+bool LinuxPlatform::showInFolder(QString pathIn)
 {
     QString filebrowser = getDefaultFileBrowserApp();
     // Nautilus on Gnome, does not open the directory if argument is given without surrounding double-quotes;
     // Path is passed through QUrl which properly escapes special chars in native platform URIs
     // which takes care of path names also containing double-quotes withing, which will stop
     // Nautilus from parsing the argument string all-together
-    QProcess::startDetached(filebrowser + QString::fromLatin1(" \"")
+    return QProcess::startDetached(filebrowser + QString::fromLatin1(" \"")
                             + QUrl::fromLocalFile(pathIn).toString() + QString::fromLatin1("\""));
 }
 
@@ -367,6 +367,11 @@ void LinuxPlatform::enableDialogBlur(QDialog*)
 void LinuxPlatform::execBackgroundWindow(QDialog* window)
 {
     window->exec();
+}
+
+void LinuxPlatform::showBackgroundWindow(QDialog *window)
+{
+    window->show();
 }
 
 bool LinuxPlatform::registerUpdateJob()

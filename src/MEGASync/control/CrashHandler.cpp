@@ -221,7 +221,11 @@ string getDistroVersion()
         {
             #if defined(__APPLE__)
                 ucontext_t* uc = (ucontext_t*) secret;
-                pnt = (void *)uc->uc_mcontext->__ss.__rip;
+                #if defined(__arm64__)
+                    pnt = (void *)uc->uc_mcontext->__ss.__pc;
+                #else
+                    pnt = (void *)uc->uc_mcontext->__ss.__rip;
+                #endif
             #elif defined(__x86_64__)
                 ucontext_t* uc = (ucontext_t*) secret;
                 pnt = (void*) uc->uc_mcontext.gregs[REG_RIP] ;
@@ -392,6 +396,11 @@ void CrashHandlerPrivate::InitCrashHandler(const QString& dumpPath)
         sigaction(SIGILL, &sa, NULL);
         sigaction(SIGFPE, &sa, NULL);
         sigaction(SIGABRT, &sa, NULL);
+// sigaction SIGTRAP for arm64 arch on macOS because in some cases such signal is emmited to indicate
+// unhandled exceptions in the program (e.g seg fault)
+#if defined(__APPLE__) && defined(__arm64__)
+        sigaction(SIGTRAP, &sa, NULL);
+#endif
         std::set_new_handler(mega_new_handler);
     #endif
 #endif
@@ -409,6 +418,7 @@ CrashHandler* CrashHandler::instance()
 void CrashHandler::tryReboot()
 {
     auto preferences = Preferences::instance();
+    MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, "Setting isCrashed true: tryReboot (CrashHandler)");
     preferences->setCrashed(true);
 
     if ((QDateTime::currentMSecsSinceEpoch()-preferences->getLastReboot()) > Preferences::MIN_REBOOT_INTERVAL_MS)

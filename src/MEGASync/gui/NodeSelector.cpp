@@ -1,6 +1,5 @@
 #include "NodeSelector.h"
 #include "ui_NodeSelector.h"
-#include "ui_NewFolderDialog.h"
 #include "MegaApplication.h"
 #include "QMegaMessageBox.h"
 #include "control/Utilities.h"
@@ -16,13 +15,6 @@
 
 using namespace mega;
 
-// Human-friendly list of forbidden chars for New Remote Folder
-static const QString forbidden(QLatin1String("\\ / : \" * < > \? |"));
-// Forbidden chars PCRE using a capture list: [\\/:"\*<>?|]
-static const QRegularExpression forbiddenRx(QLatin1String("[\\\\/:\"*<>\?|]"));
-// Time to show the new remote folder input error
-static int newFolderErrorDisplayTime = 10000; //10s in milliseconds
-
 const int NodeSelector::LABEL_ELIDE_MARGIN = 100;
 
 const char* NodeSelector::IN_SHARES = "Incoming shares";
@@ -32,8 +24,6 @@ const char* NodeSelector::CLD_DRIVE = "Cloud drive";
 NodeSelector::NodeSelector(int selectMode, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::NodeSelector),
-    mNewFolderUi(new Ui::NewFolderDialog),
-    mNewFolder(new QDialog(this)),
     mSelectMode(selectMode),
     mMegaApi(MegaSyncApp->getMegaApi()),
     mDelegateListener(mega::make_unique<QTMegaRequestListener>(mMegaApi, this)),
@@ -97,15 +87,11 @@ NodeSelector::NodeSelector(int selectMode, QWidget *parent) :
         QShortcut *shortcut = new QShortcut(QKeySequence(QString::fromLatin1("Ctrl+%1").arg(i+1)), this);
         QObject::connect(shortcut, &QShortcut::activated, this, [=](){ onTabSelected(i); });
     }
-
-    setupNewFolderDialog();
 }
 
 NodeSelector::~NodeSelector()
 {
     delete ui;
-    delete mNewFolderUi;
-    delete mNewFolder;
 }
 
 void NodeSelector::nodesReady()
@@ -278,26 +264,7 @@ void NodeSelector::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *e
         return;
     }
 
-    if(request->getType() == MegaRequest::TYPE_CREATE_FOLDER)
-    {
-        if (e->getErrorCode() == MegaError::API_OK)
-        {
-            auto node = mMegaApi->getNodeByHandle(request->getNodeHandle());
-            auto nodeUnique = std::unique_ptr<MegaNode>(node);
-            if (nodeUnique)
-            {
-                QModelIndex idx = ui->tMegaFolders->rootIndex();
-                if(!idx.isValid())
-                {
-                    idx = mProxyModel->getIndexFromNode(MegaSyncApp->getRootNode());
-                }
-                QModelIndex row = mProxyModel->insertNode(std::move(nodeUnique), idx);
-                ui->tMegaFolders->selectionModel()->select(row, QItemSelectionModel::ClearAndSelect | QItemSelectionModel::Rows);
-                ui->tMegaFolders->selectionModel()->setCurrentIndex(row, QItemSelectionModel::ClearAndSelect | QItemSelectionModel::Rows);
-            }
-        }
-    }
-    else if (request->getType() == MegaRequest::TYPE_REMOVE || request->getType() == MegaRequest::TYPE_MOVE)
+    if (request->getType() == MegaRequest::TYPE_REMOVE || request->getType() == MegaRequest::TYPE_MOVE)
     {
         if (e->getErrorCode() == MegaError::API_OK)
         {
@@ -374,8 +341,6 @@ void NodeSelector::changeEvent(QEvent *event)
     if (event->type() == QEvent::LanguageChange)
     {
         ui->retranslateUi(this);
-        mNewFolderUi->retranslateUi(mNewFolder);
-        mNewFolderUi->errorLabel->setText(mNewFolderUi->errorLabel->text().arg(forbidden));
 
         if(!ui->tMegaFolders->rootIndex().isValid())
         {
@@ -451,17 +416,6 @@ void NodeSelector::onGoForwardClicked()
 
 void NodeSelector::onbNewFolderClicked()
 {
-    mNewFolderUi->errorLabel->hide();
-    mNewFolderUi->textLabel->show();
-    mNewFolderUi->lineEdit->clear();
-    mNewFolderUi->lineEdit->setFocus();
-    if (!mNewFolder->exec())
-    {
-        //dialog rejected, cancel New Folder operation
-        return;
-    }
-
-    QString newFolderName = mNewFolderUi->lineEdit->text().trimmed();
     auto parentNode = mProxyModel->getNode(ui->tMegaFolders->rootIndex());
     if (!parentNode)
     {
@@ -470,32 +424,28 @@ void NodeSelector::onbNewFolderClicked()
             return;
     }
 
-    auto node = std::unique_ptr<MegaNode>(mMegaApi->getNodeByPath(newFolderName.toUtf8().constData(), parentNode.get()));
-    if (!node || node->isFile())
-    {
-        ui->bNewFolder->setEnabled(false);
-        ui->bOk->setEnabled(false);
-        ui->tMegaFolders->setEnabled(false);
-        ui->bBack->setEnabled(false);
-        ui->bForward->setEnabled(false);
-        mMegaApi->createFolder(newFolderName.toUtf8().constData(), parentNode.get(), mDelegateListener.get());
-    }
-    else
-    {
-        auto modelIndex = mProxyModel->getIndexFromNode(parentNode);
-        for (int i = 0; i < mProxyModel->rowCount(modelIndex); i++)
-        {
-            QModelIndex row = mProxyModel->index(i, 0, modelIndex);
-            auto nodeI = mProxyModel->getNode(row);
+    NewFolderDialog dialog(parentNode, this);
 
-            if (nodeI && newFolderName.compare(QString::fromUtf8(nodeI->getName())) == 0)
+    auto result = dialog.show();
+    auto newNode = dialog.getNewNode();
+    //IF the dialog return a node, there are two scenarios:
+    //1) The dialog has been accepted, a new folder has been created
+    //2) The dialog has been rejected because the folder already exists. If so, select the existing folder
+    if(newNode)
+    {
+        mega::MegaHandle handle = newNode->getHandle();
+
+        if(result == QDialog::Accepted)
+        {
+            QModelIndex idx = ui->tMegaFolders->rootIndex();
+            if(!idx.isValid())
             {
-                setSelectedNodeHandle(nodeI->getHandle());
-                ui->tMegaFolders->selectionModel()->select(row, QItemSelectionModel::ClearAndSelect | QItemSelectionModel::Rows);
-                ui->tMegaFolders->selectionModel()->setCurrentIndex(row, QItemSelectionModel::ClearAndSelect | QItemSelectionModel::Rows);
-                break;
+                idx = mProxyModel->getIndexFromNode(MegaSyncApp->getRootNode());
             }
+            mProxyModel->addNode(std::move(newNode), idx);
         }
+
+        setSelectedNodeHandle(handle);
     }
 }
 
@@ -636,9 +586,11 @@ void NodeSelector::onSelectionChanged(const QItemSelection& selected, const QIte
     Q_UNUSED(deselected)
     if(mSelectMode == UPLOAD_SELECT || mSelectMode == DOWNLOAD_SELECT)
     {
-        ui->bOk->setEnabled(true);
+        ui->bOk->setEnabled(!selected.indexes().isEmpty());
         return;
     }
+
+    ui->bOk->setEnabled(false);
     foreach(auto& index, selected.indexes())
     {
         auto source_idx = mProxyModel->getIndexFromSource(index);
@@ -752,12 +704,12 @@ bool NodeSelector::isCloudDrive()
 
 void NodeSelector::setRootIndex(const QModelIndex& proxy_idx)
 {
-    //In case the idx is coming from a potentially hidden column, we always take the STATUS column
-    //If you set a hidden column, the view does not accept it even if the column is visible at this point
-    auto status_column_idx = proxy_idx.sibling(proxy_idx.row(), MegaItemModel::COLUMN::STATUS);
+    //In case the idx is coming from a potentially hidden column, we always take the NODE column
+    //As it is the only one that have childrens
+    auto node_column_idx = proxy_idx.sibling(proxy_idx.row(), MegaItemModel::COLUMN::NODE);
 
-    ui->tMegaFolders->setRootIndex(status_column_idx);
-    if(!status_column_idx.isValid())
+    ui->tMegaFolders->setRootIndex(node_column_idx);
+    if(!node_column_idx.isValid())
     {
         if(isCloudDrive())
             ui->lFolderName->setText(tr(CLD_DRIVE));
@@ -778,7 +730,7 @@ void NodeSelector::setRootIndex(const QModelIndex& proxy_idx)
         return;
     }
 
-    auto source_idx = mProxyModel->getIndexFromSource(status_column_idx);
+    auto source_idx = mProxyModel->getIndexFromSource(node_column_idx);
     if(!source_idx.isValid())
     {
         ui->lOwnerIcon->setPixmap(QPixmap());
@@ -787,7 +739,8 @@ void NodeSelector::setRootIndex(const QModelIndex& proxy_idx)
     }
 
     //Taking the sync icon
-    QIcon syncIcon = qvariant_cast<QIcon>(source_idx.data(Qt::DecorationRole));
+    auto status_column_idx = proxy_idx.sibling(proxy_idx.row(), MegaItemModel::COLUMN::STATUS);
+    QIcon syncIcon = qvariant_cast<QIcon>(status_column_idx.data(Qt::DecorationRole));
 
     MegaItem *item = static_cast<MegaItem*>(source_idx.internalPointer());
     if(!item)
@@ -872,57 +825,6 @@ void NodeSelector::checkNewFolderButtonVisibility()
         auto sourceIndex = mProxyModel->getIndexFromSource(ui->tMegaFolders->rootIndex());
         ui->bNewFolder->setVisible(sourceIndex.isValid() || isCloudDrive());
     }
-}
-
-void NodeSelector::setupNewFolderDialog()
-{
-    // Initialize the mNewFolder input Dialog
-    mNewFolder->setWindowFlags(mNewFolder->windowFlags() & ~Qt::WindowContextHelpButtonHint);
-    mNewFolderUi->setupUi(mNewFolder);
-
-    mNewFolderUi->errorLabel->setText(mNewFolderUi->errorLabel->text().arg(forbidden));
-    // The dialog doesn't get resized on error
-    mNewFolderUi->textLabel->setMinimumSize(mNewFolderUi->errorLabel->sizeHint());
-
-    connect(mNewFolderUi->buttonBox, &QDialogButtonBox::rejected, mNewFolder, &QDialog::reject);
-    QPushButton *okButton = mNewFolderUi->buttonBox->button(QDialogButtonBox::Ok);
-    //only enabled when there's input, guards against empty folder name
-    okButton->setEnabled(false);
-    connect(mNewFolderUi->lineEdit, &QLineEdit::textChanged, this, [this, okButton]()
-    {
-        bool hasText = !mNewFolderUi->lineEdit->text().trimmed().isEmpty();
-        okButton->setEnabled(hasText);
-    });
-
-    mNewFolderErrorTimer.setSingleShot(true);
-    connect(&mNewFolderErrorTimer, &QTimer::timeout, this, [this]()
-    {
-        Utilities::animateFadeout(mNewFolderUi->errorLabel);
-        // after animation is finished, hide the error label and show the original text
-        // 700 magic number is how long Utilities::animateFadeout takes
-        QTimer::singleShot(700, this, [this]()
-        {
-            mNewFolderUi->errorLabel->hide();
-            mNewFolderUi->textLabel->show();
-        });
-    });
-    connect(mNewFolderUi->buttonBox, &QDialogButtonBox::accepted, this, [this]
-    {
-        if(mNewFolderUi->lineEdit->text().trimmed().contains(forbiddenRx))
-        {
-            // show error label, dialog stays open
-            mNewFolderUi->textLabel->hide();
-            mNewFolderUi->errorLabel->show();
-            Utilities::animateFadein(mNewFolderUi->errorLabel);
-            mNewFolderErrorTimer.start(newFolderErrorDisplayTime); //(re)start timer
-            mNewFolderUi->lineEdit->setFocus();
-        }
-        else
-        {
-            //dialog accepted, execute New Folder operation
-            mNewFolder->accept();
-        }
-    });
 }
 
 bool NodeSelector::getDefaultUploadOption()

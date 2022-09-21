@@ -1,3 +1,99 @@
+megasync (4.6.8) stable; urgency=low
+
+  * Full redesign of remote file picker.
+  * Fixed translation issues.
+  * Other minor UI fixes and adjustments.
+  * Fixed detected crashes on Windows, Linux and macOS.
+
+ -- MEGA Team <linux@mega.co.nz>  Wed, 20 Jul 2022 18:40:09 +0200
+
+megasync (4.6.7) stable; urgency=low
+
+  * Bug fixes and performance improvements.
+
+ -- MEGA Team <linux@mega.co.nz>  Tue, 21 Jun 2022 14:47:30 +0200
+
+megasync (4.6.6) stable; urgency=low
+
+  * Added support to stream file links from a folder link.
+  * Fixed translation issues.
+  * Improved the user experience.
+  * Added a new notifications panel in the settings dialog.
+  * Other minor UI fixes and adjustments.
+  * Fixed detected crashes on Windows, Linux and macOS.
+
+ -- MEGA Team <linux@mega.co.nz>  Mon, 18 Apr 2022 19:51:45 +0200
+
+megasync (4.6.5) stable; urgency=low
+
+  * Addressed MEGA Desktop App compatibility issues with newer web browser.
+
+ -- MEGA Team <linux@mega.co.nz>  Fri, 04 Mar 2022 14:23:07 +0100
+
+megasync (4.6.3) stable; urgency=low
+
+  * Strengthen cryptographic security on Linux repositories.
+  * Fix memory issues with problematic PDF files.
+
+ -- MEGA Team <linux@mega.co.nz>  Tue, 15 Feb 2022 15:17:28 +0100
+
+megasync (4.6.1) stable; urgency=low
+
+  * Full redesign of settings with a new look and feel.
+  * No longer supporting macOS versions below 10.12.
+  * Multi-currency support added for upgrade options.
+  * High DPI support for Windows platform improved.
+  * Crashes previously detected on Windows, Linux and macOS now fixed.
+  * Other performance improvements and adjustments.
+  * Other UI fixes and adjustments.
+
+ -- MEGA Team <linux@mega.co.nz>  Wed, 17 Nov 2021 17:56:48 +0100
+
+megasync (4.5.3) stable; urgency=low
+
+  * New improvements for the management of the syncs.
+  * Improved user experience when syncs are disabled.
+  * Enhanced system notifications to notify various account events.
+  * Improved user experience while working with huge number of transfers and syncs.
+  * Fixed issues of high CPU usage of gnome-shell when running on Ubuntu.
+  * Fixed detected crashes on Windows and Linux.
+  * Other performance improvements and adjustments.
+  * Other UI fixes and adjustments.
+
+ -- MEGA Team <linux@mega.co.nz>  Mon, 19 Jul 2021 18:32:42 +0200
+
+megasync (4.4.0) stable; urgency=low
+
+  * Fixed detected crashes on Windows and Linux.
+
+ -- MEGA Team <linux@mega.co.nz>  Thu, 28 Jan 2021 13:15:53 +0100
+
+megasync (4.3.8) stable; urgency=low
+
+  * Fixed decryption errors for downloads during integrity verification.
+
+ -- MEGA Team <linux@mega.co.nz>  Mon, 23 Nov 2020 20:45:39 +0100
+
+megasync (4.3.7) stable; urgency=low
+
+  * Fixed issue verifying downloads integrity.
+
+ -- MEGA Team <linux@mega.co.nz>  Mon, 09 Nov 2020 20:53:48 +0100
+
+megasync (4.3.3) stable; urgency=low
+
+  * New customized message boxes.
+  * Clean retroactive logs when logout.
+  * Fixed issues that disable Finder extension under some circumstances.
+  * Email verification for locked accounts.
+  * SMS verification for locked accounts.
+  * Support for affiliate program.
+  * Included option to send logs from crash report dialog.
+  * Other UI fixes and adjustments.
+  * Other performance improvements and adjustments.
+
+ -- MEGA Team <linux@mega.co.nz>  Mon, 22 Jun 2020 19:45:02 +0200
+
 megasync (4.3.1) stable; urgency=low
 
   * Performance improvements for the sync engine.
