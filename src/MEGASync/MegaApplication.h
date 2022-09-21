@@ -230,7 +230,6 @@ signals:
     void nodeAttributesChanged(mega::MegaHandle handle);
     void blocked();
     void storageStateChanged(int);
-    void avatarReady();
     void pauseStateChanged();
 
 public slots:
@@ -554,6 +553,8 @@ protected:
 
     ScanStageController scanStageController;
     DialogGeometryRetainer<TransferManager> mTransferManagerGeometryRetainer;
+
+    bool mDisableGfx;
 
 private:
 #ifdef _WIN32

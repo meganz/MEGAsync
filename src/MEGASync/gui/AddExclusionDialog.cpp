@@ -35,7 +35,9 @@ QString AddExclusionDialog::textValue()
 void AddExclusionDialog::on_bOk_clicked()
 {
     QString text = textValue();
-    if (text.isEmpty() || !QRegExp(text, Qt::CaseInsensitive, QRegExp::Wildcard).isValid())
+    if (text.isEmpty() ||
+        (!QFileInfo::exists(text) && !QRegExp(text, Qt::CaseInsensitive, QRegExp::Wildcard).isValid())
+       )
     {
         QMegaMessageBox::warning(this, tr("Warning"), tr("Please enter a valid file name or absolute path."));
         return;

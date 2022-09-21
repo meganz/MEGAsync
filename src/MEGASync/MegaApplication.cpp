@@ -14,6 +14,9 @@
 #include "TransferMetadata.h"
 #include "DuplicatedNodeDialogs/DuplicatedNodeDialog.h"
 #include "PlatformStrings.h"
+#include "UserAttributesManager.h"
+#include "UserAttributesRequests/FullName.h"
+#include "UserAttributesRequests/Avatar.h"
 
 #include <QTranslator>
 #include <QClipboard>
@@ -86,7 +89,8 @@ void MegaApplication::loadDataPath()
 
 MegaApplication::MegaApplication(int &argc, char **argv) :
     QApplication(argc, argv),
-    scanStageController(this)
+    scanStageController(this),
+    mDisableGfx (false)
 {
 
 #if defined Q_OS_MACX && !defined QT_DEBUG
@@ -108,22 +112,24 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
 #if defined(LOG_TO_STDOUT)
     logToStdout = true;
 #endif
+    // Collect program arguments
+    QStringList args;
+    for (int i=0; i < argc; ++i)
+    {
+        args += QString::fromUtf8(argv[i]);
+    }
 
 #ifdef Q_OS_LINUX
-    if (argc == 2)
-    {
-         if (!strcmp("--debug", argv[1]))
-         {
-             logToStdout = true;
-         }
-         else if (!strcmp("--version", argv[1]))
-         {
-            QTextStream(stdout) << "MEGAsync" << " v" << Preferences::VERSION_STRING << " (" << Preferences::SDK_ID << ")" << endl;
-            ::exit(0);
-         }
-    }
-#endif
 
+    if (args.contains(QLatin1String("--version")))
+    {
+        QTextStream(stdout) << "MEGAsync" << " v" << Preferences::VERSION_STRING << " (" << Preferences::SDK_ID << ")" << endl;
+        ::exit(0);
+    }
+
+    logToStdout |= args.contains(QLatin1String("--debug"));
+
+#endif
 
     connect(this, SIGNAL(blocked()), this, SLOT(onBlocked()));
     connect(this, SIGNAL(unblocked()), this, SLOT(onUnblocked()));
@@ -330,6 +336,8 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     scanningTimer = NULL;
 #endif
 
+    mDisableGfx = args.contains(QLatin1String("--nogfx")) || args.contains(QLatin1String("/nogfx"));
+
     connect(&scanStageController, &ScanStageController::enableTransferActions,
             this, &MegaApplication::enableTransferActions);
 }
@@ -453,8 +461,15 @@ void MegaApplication::initialize()
 
     QString basePath = QDir::toNativeSeparators(dataPath + QString::fromUtf8("/"));
     megaApi = new MegaApi(Preferences::CLIENT_KEY, basePath.toUtf8().constData(), Preferences::USER_AGENT);
+    megaApi->disableGfxFeatures(mDisableGfx);
 
     megaApiFolders = new MegaApi(Preferences::CLIENT_KEY, basePath.toUtf8().constData(), Preferences::USER_AGENT);
+    megaApiFolders->disableGfxFeatures(mDisableGfx);
+
+    MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromLatin1("Graphics processing %1")
+                 .arg(mDisableGfx ? QLatin1String("disabled")
+                                  : QLatin1String("enabled"))
+                 .toUtf8().constData());
 
     // Set maximum log line size to 10k (same as SDK default)
     // Otherwise network logging can cause large glitches when logging hundreds of MB
@@ -1162,24 +1177,21 @@ void MegaApplication::requestUserData()
     }
 
     megaApi->getPricing();
-    megaApi->getUserAttribute(MegaApi::USER_ATTR_FIRSTNAME);
-    megaApi->getUserAttribute(MegaApi::USER_ATTR_LASTNAME);
     megaApi->getFileVersionsOption();
     megaApi->getPSA();
 
     mThreadPool->push([=]()
     {//thread pool function
-        const char *email = megaApi->getMyEmail();
+        std::shared_ptr<char> email(megaApi->getMyEmail(), std::default_delete<char[]>());
 
         Utilities::queueFunctionInAppThread([=]()
         {//queued function
             if (email)
             {
-                megaApi->getUserAvatar(Utilities::getAvatarPath(QString::fromUtf8(email)).toUtf8().constData());
-                delete [] email;
+                UserAttributes::FullName::requestFullName(email.get());
+                UserAttributes::Avatar::requestAvatar(email.get());
             }
         });//end of queued function
-
     });// end of thread pool function
 }
 
@@ -1419,6 +1431,8 @@ if (!preferences->lastExecutionTime())
 
         whyAmIBlocked();// lets query again, to trigger transition and restoreSyncs
     }
+
+    preferences->monitorUserAttributes();
 }
 
 void MegaApplication::startSyncs(QList<PreConfiguredSync> syncs)
@@ -2178,6 +2192,8 @@ void MegaApplication::cleanAll()
         auto syncSetting = model->getSyncSetting(i);
         notifyItemChange(syncSetting->getLocalFolder(), MegaApi::STATE_NONE);
     }
+
+    UserAttributes::UserAttributesManager::instance().reset();
 
     closeDialogs();
     removeAllFinishedTransfers();
@@ -4087,6 +4103,8 @@ void MegaApplication::clearUserAttributes()
     {
         QFile::remove(pathToAvatar);
     }
+
+    UserAttributes::UserAttributesManager::instance().reset();
 }
 
 void MegaApplication::clearViewedTransfers()
@@ -7143,39 +7161,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
             break;
         }
 
-        if (request->getParamType() == MegaApi::USER_ATTR_FIRSTNAME)
-        {
-            QString firstname(QString::fromUtf8(""));
-            if (e->getErrorCode() == MegaError::API_OK && request->getText())
-            {
-                firstname = QString::fromUtf8(request->getText());
-            }
-            preferences->setFirstName(firstname);
-        }
-        else if (request->getParamType() == MegaApi::USER_ATTR_LASTNAME)
-        {
-            QString lastName(QString::fromUtf8(""));
-            if (e->getErrorCode() == MegaError::API_OK && request->getText())
-            {
-                lastName = QString::fromUtf8(request->getText());
-            }
-            preferences->setLastName(lastName);
-        }
-        else if (request->getParamType() == MegaApi::USER_ATTR_AVATAR)
-        {
-            if (e->getErrorCode() == MegaError::API_ENOENT)
-            {
-
-                const char *email = megaApi->getMyEmail();
-                if (email)
-                {
-                    QFile::remove(Utilities::getAvatarPath(QString::fromUtf8(email)));
-                    delete [] email;
-                }
-            }
-            emit avatarReady();
-        }
-        else if (request->getParamType() == MegaApi::USER_ATTR_DISABLE_VERSIONS)
+        if (request->getParamType() == MegaApi::USER_ATTR_DISABLE_VERSIONS)
         {
             if (e->getErrorCode() == MegaError::API_OK
                     || e->getErrorCode() == MegaError::API_ENOENT)
@@ -7281,7 +7267,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
                 QMegaMessageBox::information(nullptr, QString::fromUtf8("MEGAsync"), tr("You have been logged out because of this error: %1")
                                          .arg(QCoreApplication::translate("MegaError", e->getErrorString())));
             }
-            unlink();            
+            unlink();
         }
 
         //Check for any sync disabled by logout to warn user on next login with user&password
@@ -8238,26 +8224,6 @@ void MegaApplication::onUsersUpdate(MegaApi *, MegaUserList *userList)
         MegaUser *user = userList->get(i);
         if (!user->isOwnChange() && user->getHandle() == myHandle)
         {
-            if (user->hasChanged(MegaUser::CHANGE_TYPE_FIRSTNAME))
-            {
-                megaApi->getUserAttribute(MegaApi::USER_ATTR_FIRSTNAME);
-            }
-
-            if (user->hasChanged(MegaUser::CHANGE_TYPE_LASTNAME))
-            {
-                megaApi->getUserAttribute(MegaApi::USER_ATTR_LASTNAME);
-            }
-
-            if (user->hasChanged(MegaUser::CHANGE_TYPE_AVATAR))
-            {
-                const char* email = megaApi->getMyEmail();
-                if (email)
-                {
-                    megaApi->getUserAvatar(Utilities::getAvatarPath(QString::fromUtf8(email)).toUtf8().constData());
-                    delete [] email;
-                }
-            }
-
             if (user->hasChanged(MegaUser::CHANGE_TYPE_DISABLE_VERSIONS))
             {
                 megaApi->getFileVersionsOption();

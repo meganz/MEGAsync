@@ -3,6 +3,8 @@
 
 #include <control/UserAttributesManager.h>
 
+#include <QColor>
+#include <QPixmap>
 
 namespace UserAttributes
 {
@@ -37,13 +39,13 @@ private slots:
 private:
     struct LetterInfo
     {
-        QChar letter;
+        QString letter;
         QColor color;
 
         bool isEmpty() const {return letter.isNull();}
         void clear()
         {
-            letter = QChar();
+            letter.clear();
             color = QColor();
         }
     };

@@ -40,7 +40,7 @@ class AvatarPixmap
 {
 public:
     static QPixmap maskFromImagePath(const QString& pathToFile, int size);
-    static QPixmap createFromLetter(const QChar& letter, const QColor& color, int size);
+    static QPixmap createFromLetter(const QString& letter, const QColor& color, int size);
 };
 
 #endif // AVATARWIDGET_H
