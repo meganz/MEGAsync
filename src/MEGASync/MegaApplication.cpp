@@ -1300,7 +1300,7 @@ void MegaApplication::loggedIn(bool fromWizard)
             tc.process(msg);
             QMegaMessageBox::warning(nullptr, tr("Error"), tr("Error adding %1:").arg(name)
                                      + QString::fromLatin1("\n")
-                                     + msg, QMessageBox::Ok, QMessageBox::NoButton, Qt::RichText);
+                                     + msg, QMessageBox::Ok, QMessageBox::NoButton, QMap<QMessageBox::StandardButton, QString>(), Qt::RichText);
         }
     });
 
