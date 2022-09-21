@@ -2,7 +2,7 @@
 #define NAMECONFLICT_H
 
 #include <StalledIssueBaseDelegateWidget.h>
-#include <StalledIssue.h>
+#include <NameConflictStalledIssue.h>
 #include <StalledIssuesUtilities.h>
 #include "StalledIssueActionTitle.h"
 
@@ -15,10 +15,14 @@ class NameConflictTitle : public StalledIssueActionTitle
     Q_OBJECT
 
 public:
-    explicit NameConflictTitle(QWidget* parent = nullptr);
+    explicit NameConflictTitle(int index, QWidget* parent = nullptr);
     ~NameConflictTitle() = default;
 
     void initTitle();
+    int getIndex() const;
+
+private:
+    int mIndex;
 };
 
 class NameConflict : public QWidget

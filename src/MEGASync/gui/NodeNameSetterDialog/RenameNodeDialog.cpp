@@ -56,7 +56,10 @@ RenameRemoteNodeDialog::RenameRemoteNodeDialog(const QString &nodePath, QWidget 
     : RenameNodeDialog(parent)
 {
     mNodeToRename = std::unique_ptr<mega::MegaNode>(MegaSyncApp->getMegaApi()->getNodeByPath(nodePath.toStdString().c_str()));
-    mNodeName = QString::fromUtf8(mNodeToRename->getName());
+    if(mNodeToRename)
+    {
+        mNodeName = QString::fromUtf8(mNodeToRename->getName());
+    }
 }
 
 RenameRemoteNodeDialog::RenameRemoteNodeDialog(std::unique_ptr<mega::MegaNode> node, QWidget* parent)

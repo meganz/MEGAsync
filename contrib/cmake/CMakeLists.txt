@@ -364,6 +364,13 @@ set (MOC_INPUT
     ${MEGAsyncDir}/transfers/gui/DuplicatedNodeDialogs/DuplicatedNodeItem.h
     ${MEGAsyncDir}/transfers/gui/DuplicatedNodeDialogs/DuplicatedUploadChecker.h
     ${MEGAsyncDir}/transfers/gui/SomeIssuesOccurredMessage.h
+
+    ${MEGAsyncDir}/stalled_issues/model/StalledIssue.h
+    ${MEGAsyncDir}/stalled_issues/model/NameConflictStalledIssue.h
+    ${MEGAsyncDir}/stalled_issues/model/StalledIssuesModel.h
+    ${MEGAsyncDir}/stalled_issues/model/StalledIssuesProxyModel.h
+    ${MEGAsyncDir}/stalled_issues/model/StalledIssuesUtilities.h
+
     ${MEGAsyncDir}/stalled_issues/gui/StalledIssueChooseWidget.h
 	${MEGAsyncDir}/stalled_issues/gui/StalledIssueChooseTitle.h
 	${MEGAsyncDir}/stalled_issues/gui/StalledIssueActionTitle.h
@@ -544,9 +551,11 @@ set (SRCS
     ${MEGAsyncDir}/transfers/gui/SomeIssuesOccurredMessage.cpp
 
     ${MEGAsyncDir}/stalled_issues/model/StalledIssue.cpp
+    ${MEGAsyncDir}/stalled_issues/model/NameConflictStalledIssue.cpp
     ${MEGAsyncDir}/stalled_issues/model/StalledIssuesModel.cpp
     ${MEGAsyncDir}/stalled_issues/model/StalledIssuesProxyModel.cpp
     ${MEGAsyncDir}/stalled_issues/model/StalledIssuesUtilities.cpp
+
     ${MEGAsyncDir}/stalled_issues/gui/StalledIssueChooseWidget.cpp
     ${MEGAsyncDir}/stalled_issues/gui/StalledIssueActionTitle.cpp
     ${MEGAsyncDir}/stalled_issues/gui/StalledIssueChooseTitle.cpp
@@ -559,6 +568,7 @@ set (SRCS
     ${MEGAsyncDir}/stalled_issues/gui/StalledIssuesView.cpp
     ${MEGAsyncDir}/stalled_issues/gui/StalledIssueDelegate.cpp
     ${MEGAsyncDir}/stalled_issues/gui/StalledIssuesDelegateWidgetsCache.cpp
+    
     ${MEGAsyncDir}/stalled_issues/gui/stalled_issues_cases/NameConflict.cpp
     ${MEGAsyncDir}/stalled_issues/gui/stalled_issues_cases/LocalAndRemoteDifferentWidget.cpp
     ${MEGAsyncDir}/stalled_issues/gui/stalled_issues_cases/LocalAndRemoteNameConflicts.cpp

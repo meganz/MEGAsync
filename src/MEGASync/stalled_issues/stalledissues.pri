@@ -21,6 +21,7 @@ SOURCES +=  \
     $$PWD/gui/stalled_issues_cases/NameConflict.cpp \
     $$PWD/gui/stalled_issues_cases/OtherSideMissingOrBlocked.cpp \
     $$PWD/gui/stalled_issues_cases/StalledIssuesCaseHeaders.cpp \
+    $$PWD/model/NameConflictStalledIssue.cpp \
     $$PWD/model/StalledIssuesUtilities.cpp \
     $$PWD/model/StalledIssue.cpp \
     $$PWD/model/StalledIssuesModel.cpp \
@@ -44,6 +45,7 @@ HEADERS  +=   \
     $$PWD/gui/stalled_issues_cases/NameConflict.h \
     $$PWD/gui/stalled_issues_cases/OtherSideMissingOrBlocked.h \
     $$PWD/gui/stalled_issues_cases/StalledIssuesCaseHeaders.h \
+    $$PWD/model/NameConflictStalledIssue.h \
     $$PWD/model/StalledIssuesUtilities.h \
     $$PWD/model/StalledIssuesModel.h \
     $$PWD/model/StalledIssue.h \

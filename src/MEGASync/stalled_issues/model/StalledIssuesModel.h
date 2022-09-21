@@ -35,7 +35,7 @@ public:
     bool setCurrentStalledIssuesToCompare(const StalledIssuesVariantList &currentIssues);
 
 signals:
-    void stalledIssuesReady(StalledIssuesReceived);
+    void stalledIssuesReady(StalledIssuesReceiver::StalledIssuesReceived);
 
 protected:
     void onRequestFinish(::mega::MegaApi*, ::mega::MegaRequest *request, ::mega::MegaError*);
@@ -82,11 +82,11 @@ public:
     void unBlockUi();
 
     //Methods to modify data
-    bool solveLocalConflictedNameByRemove(const QString& name, const QModelIndex& index);
-    bool solveLocalConflictedNameByRename(const QString& name, const QString& renameTo, const QModelIndex& index);
+    bool solveLocalConflictedNameByRemove(const QString& name, int conflictIndex, const QModelIndex& index);
+    bool solveLocalConflictedNameByRename(const QString& name, const QString& renameTo, int conflictIndex, const QModelIndex& index);
 
-    bool solveCloudConflictedNameByRemove(const QString& name, const QModelIndex& index);
-    bool solveCloudConflictedNameByRename(const QString& name, const QString &renameTo, const QModelIndex& index);
+    bool solveCloudConflictedNameByRemove(const QString& name, int conflictIndex, const QModelIndex& index);
+    bool solveCloudConflictedNameByRename(const QString& name, const QString &renameTo, int conflictIndex, const QModelIndex& index);
 
     void solveIssue(bool isCloud, const QModelIndex& index);
 
