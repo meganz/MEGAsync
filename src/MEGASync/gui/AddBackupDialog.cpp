@@ -2,6 +2,7 @@
 #include "ui_AddBackupDialog.h"
 #include "QMegaMessageBox.h"
 #include "UserAttributesRequests/DeviceName.h"
+#include "Utilities.h"
 
 #include <QFileDialog>
 
@@ -47,7 +48,7 @@ QString AddBackupDialog::getSelectedFolder()
 void AddBackupDialog::on_changeButton_clicked()
 {
     QString folderPath = QFileDialog::getExistingDirectory(this, tr("Choose folder"),
-                                                           QDir::home().path(),
+                                                           Utilities::getDefaultBasePath(),
                                                            QFileDialog::DontResolveSymlinks);
     if (!folderPath.isEmpty())
     {
