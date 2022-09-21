@@ -485,7 +485,7 @@ local void gzcopy(GZJOIN_PATH_CHAR_T *name, int clr, unsigned long *crc, unsigne
             case 6:
                 putc(last | 8, out);
                 last = 0;
-            // fall through
+                // fall through
             case 4:
                 putc(last | 0x20, out);
                 last = 0;

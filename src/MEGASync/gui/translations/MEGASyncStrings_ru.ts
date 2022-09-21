@@ -21,7 +21,7 @@
     <message>
         <source>Storage</source>
         <translatorcomment>Label to indicate the section of used storage of the current account.</translatorcomment>
-        <translation>Хранилище</translation>
+        <translation>Хранилище данных</translation>
     </message>
     <message>
         <source>Transfer</source>
@@ -443,12 +443,12 @@
     <message>
         <source>Use HTTPS for transfers that don&apos;t start</source>
         <translatorcomment>Checkbox label to set the option to use https for transfer connections.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Использовать HTTPS для передач, которые не запускаются</translation>
     </message>
     <message>
         <source>Only enable this option if tranfers don&apos;t start. Under all other circumstances, using HTTP is satisfactory as MEGA already encrypts all data.</source>
         <translatorcomment>Description label about the option Use HTTPS for transfers that don&amp;apos;t start checkbox.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Включайте эту опцию только если передача не начинается. При всех других обстоятельствах HTTP достаточно, поскольку MEGA уже шифрует все данные.</translation>
     </message>
 </context>
 <context>
@@ -621,29 +621,24 @@ Please enter a different name to identify this synced folder:</source>
 <context>
     <name>CancelConfirmWidget</name>
     <message>
-        <source>Cancel Transfers</source>
+        <source>Cancel transfers?</source>
         <translatorcomment>Dialog main text</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Отменить передачи?</translation>
     </message>
     <message>
-        <source>Interrupting the transfer progress will render some of the items incomplete.</source>
+        <source>Transfers not yet processed will be cancelled.</source>
         <translatorcomment>Dialog messages which warns the user about the potential problems of cancelling the folder scanning</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Ещё не обработанные передачи будут отменены.</translation>
     </message>
     <message>
-        <source>Dismiss</source>
-        <translatorcomment>Button to abort a folder scanning</translatorcomment>
-        <translation>Отклонить</translation>
-    </message>
-    <message>
-        <source>Proceed</source>
+        <source>No, continue</source>
         <translatorcomment>Button to continue folder scanning cancellation</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Нет, продолжить</translation>
     </message>
     <message>
-        <source>Cancel transfers</source>
-        <translatorcomment>Label to indicate about the process of cancelling transfers</translatorcomment>
-        <translation type="unfinished"></translation>
+        <source>Yes, cancel</source>
+        <translatorcomment>Button to abort a folder scanning</translatorcomment>
+        <translation>Да, отменить</translation>
     </message>
 </context>
 <context>
@@ -1071,65 +1066,60 @@ Please enter a different name to identify this synced folder:</source>
 </context>
 <context>
     <name>DuplicatedNodeDialog</name>
-    <message numerus="yes">
-        <source>Apply this option on the next %1 conflict</source>
-        <translatorcomment>Checkbox text to apply the action to all the following conflicts. %1 is the number of conflicts</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
-    </message>
     <message>
         <source>A folder named [A] already exists at this destination</source>
         <translatorcomment>Dialog text shown when a folder with the same name has been found on the cloud. [A] folder name</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>В этой папке уже существует папка «[A]»</translation>
     </message>
     <message>
         <source>The new folder will be merged with the folder at this destination.</source>
         <translatorcomment>Text explaining the result of the folder merge action</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>The folder will be renamed as:</source>
-        <translatorcomment>Text explaining the result of the folder rename action</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Новая папка будет объединена с папкой в этом расположении.</translation>
     </message>
     <message>
         <source>The folder at this destination will be maintained.</source>
         <translatorcomment>Text explaining the result of the folder skip action</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Папка в этом расположении останется.</translation>
     </message>
     <message>
         <source>A file named [A] already exists at this destination</source>
         <translatorcomment>Dialog text shown when a file with the same name has been found on the cloud. [A] file name</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>В этой папке уже существует файл «[A]»</translation>
     </message>
     <message>
         <source>The file at this destination will be replaced with the new file.</source>
         <translatorcomment>Text explaining the result of the file upload and replace action</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>The file will be updated with version history:</source>
-        <translatorcomment>Text explaining the result of the file upload and update action</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Файл в этом расположении будет заменён новым файлом.</translation>
     </message>
     <message>
         <source>The file will be renamed as:</source>
         <translatorcomment>Text explaining the result of the file rename action</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Этот файл будет переименован в:</translation>
     </message>
     <message>
         <source>The file at this destination will be maintained.</source>
         <translatorcomment>Text explaining the result of the fileip action</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Файл в этом расположении останется.</translation>
     </message>
     <message>
         <source>Folder already exists</source>
         <translatorcomment>Dialog title when a folder with the same name has been found on the cloud</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Папка уже существует</translation>
     </message>
     <message>
         <source>File already exists</source>
         <translatorcomment>Dialog title when a file with the same name has been found on the cloud</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Файл уже существует</translation>
+    </message>
+    <message numerus="yes">
+        <source>Apply to all %1 duplicates</source>
+        <translatorcomment>Checkbox text to apply the action to all the following conflicts. %1 is the number of conflicts</translatorcomment>
+        <translation><numerusform>Применить к одному дубликату</numerusform><numerusform>Применить ко всем %1 дубликатам</numerusform><numerusform>Применить ко всем %1 дубликатам</numerusform><numerusform>Применить ко всем %1 дубликатам</numerusform></translation>
+    </message>
+    <message>
+        <source>The file at this destination will be updated with a new version.</source>
+        <translatorcomment>Text explaining the result of the file upload and update action</translatorcomment>
+        <translation>Файл в этом расположении будет обновлён новой версией.</translation>
     </message>
 </context>
 <context>
@@ -1142,52 +1132,47 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Skip this file</source>
         <translatorcomment>Button text for the skip action for files</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Пропустить этот файл</translation>
     </message>
     <message>
         <source>Skip this folder</source>
         <translatorcomment>Button text for the skip action for folders</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Пропустить эту папку</translation>
     </message>
     <message>
         <source>Merge</source>
         <translatorcomment>Action title and button text for the Merge action for folders</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Объединить</translation>
     </message>
     <message>
         <source>Rename</source>
         <translatorcomment>Action title and button text for the Rename action for folders/files</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Переименовать</translation>
     </message>
     <message>
         <source>Replace</source>
         <translatorcomment>Action title and button text for the Replace action for folders/files</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Заменить</translation>
     </message>
     <message>
         <source>Update</source>
         <translatorcomment>Action title and button text for the Update action for files</translatorcomment>
-        <translation>Изменить</translation>
-    </message>
-    <message numerus="yes">
-        <source>%1 folder</source>
-        <translatorcomment>Info label with the number of folders in a folder to upload</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>%1 file</source>
-        <translatorcomment>Info label with the number of files in a folder to upload</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation>Обновить</translation>
     </message>
     <message>
         <source>loading time…</source>
         <translatorcomment>Text shown while the local file/folder modified time is calculated</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Вычисление даты и времени…</translation>
     </message>
     <message>
         <source>loading size…</source>
         <translatorcomment>Text shown while the local file/folder size is calculated</translatorcomment>
-		<translation type="unfinished"></translation>
+        <translation>Вычисление размера…</translation>
+    </message>
+    <message>
+        <source>Learn more</source>
+        <translatorcomment>Underline link label to open a help.mega.io article</translatorcomment>
+        <translation>Узнать больше</translation>
     </message>
 </context>
 <context>
@@ -1664,7 +1649,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Transfer</source>
         <translatorcomment>Label to indicate the transfer quota section of current account</translatorcomment>
-        <translation>Передача</translation>
+        <translation>Передача данных</translation>
     </message>
     <message>
         <source>Open notification settings</source>
@@ -1759,12 +1744,12 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Open Preferences</source>
         <translatorcomment>Button label to open MEGAsync preferences dialog (MacOS).</translatorcomment>
-        <translation>Открыть настройки</translation>
+        <translation>Открыть «Hастройки»</translation>
     </message>
     <message>
         <source>Open Settings</source>
         <translatorcomment>Button label to open MEGAsync preferences dialog (Linux and Windows).</translatorcomment>
-        <translation>Открыть настройки</translation>
+        <translation>Открыть «Hастройки»</translation>
     </message>
     <message>
         <source>Your data is at risk</source>
@@ -1792,9 +1777,9 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation>Ошибка</translation>
     </message>
     <message>
-        <source>Error opening folder</source>
+        <source>Folder can&apos;t be opened. Check that the folder in your local drive hasn&apos;t been deleted or moved.</source>
         <translatorcomment>Warning message text to let the user know that the local folder could not be opened</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Папка не открывается. Убедитесь, что папка на вашем локальном диске не была удалена или перемещена.</translation>
     </message>
 </context>
 <context>
@@ -1811,13 +1796,13 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>Failed: %1</source>
-        <translatorcomment>Tooltip for show transfer failed reason</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Tooltip for show transfer failed reason. %1 is a placeholder for the SDK error reason.</translatorcomment>
+        <translation>Не удалось: %1</translation>
     </message>
     <message>
         <source>Copy link to file</source>
         <translatorcomment>Tooltip for copy linr</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Копировать ссылку на файл</translation>
     </message>
     <message>
         <source>Added [A]</source>
@@ -2065,7 +2050,7 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>Update available. Downloading...</source>
         <translatorcomment>Notification message launched when an update for MEGAsync is being downloaded.</translatorcomment>
-        <translation>Доступно обновление. Загрузка…</translation>
+        <translation>Доступно обновление. Скачивание…</translation>
     </message>
     <message>
         <source>No update available at this time</source>
@@ -2171,7 +2156,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the synchronization of VirtualBox shared folders is not supported due to deficiencies in that filesystem.</source>
         <translatorcomment>Notification message launched when an user is trying to sync a non valid VirtualBox shared folder . Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
-        <translation>Ваша синхронизация «%1» была отключена, так как синхронизация общих папок VirtualBox не поддерживается из-за недостатков этой файловой системы.</translation>
+        <translation>Синхронизация «%1» была отключена, так как синхронизация общих папок VirtualBox не поддерживается из-за недостатков этой файловой системы.</translation>
     </message>
     <message>
         <source>Error getting link information</source>
@@ -2214,10 +2199,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>You are not logged in</source>
         <translation>Вы не авторизованы</translation>
-    </message>
-    <message>
-        <source>Are you sure you want to exit?</source>
-        <translation>Действительно выйти?</translation>
     </message>
     <message>
         <source>Transfer manager</source>
@@ -2433,26 +2414,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>MEGAsync продолжит работать, однако обновления для версий до OS X Yosemite больше не будут выпускаться.</translation>
     </message>
     <message>
-        <source>One or more syncs have been disabled. Go to preferences to enable them again.</source>
-        <translatorcomment>Warning message shown when logging into MEGAsync to inform the user that some syncs have been disabled and need to go to settings to enable them again (macOS)</translatorcomment>
-        <translation>Одна или несколько синхронизаций отключены. Перейдите в настройки, чтобы включить их снова.</translation>
-    </message>
-    <message>
-        <source>Open Preferences</source>
-        <translatorcomment>Button label to open MEGAsync preferences dialog (MacOS).</translatorcomment>
-        <translation>Открыть настройки</translation>
-    </message>
-    <message>
-        <source>Open Settings</source>
-        <translatorcomment>Button label to open MEGAsync preferences dialog (Linux and Windows).</translatorcomment>
-        <translation>Открыть настройки</translation>
-    </message>
-    <message>
-        <source>One or more syncs have been disabled. Go to settings to enable them again.</source>
-        <translatorcomment>Warning message shown when logging into MEGAsync to inform the user that some syncs have been disabled and need to go to settings to enable them again (Windows and Linux)</translatorcomment>
-        <translation>Одна или несколько синхронизаций отключены. Перейдите в настройки, чтобы снова включить их.</translation>
-    </message>
-    <message>
         <source>Your syncs have been disabled</source>
         <translatorcomment>Notification message launched when your syncs have been disabled.</translatorcomment>
         <translation>Ваши синхронизации отключены</translation>
@@ -2511,6 +2472,26 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>%1 and %2 were successfully downloaded</source>
         <translatorcomment>System notification to inform the user that %1 files and %2 folders were successfully downloaded. The %1 is a sentence part for files and %2 for folders.</translatorcomment>
         <translation>Скачаны %1 и %2</translation>
+    </message>
+    <message numerus="yes">
+        <source>There is an active transfer. Exit the app?
+Transfer will automatically resume when you re-open the app.</source>
+        <translatorcomment>Messagebox text to let the user know that there are active transfers when closing the app. The user will be able to exit and pause them, or stop the exit action.</translatorcomment>
+        <translation><numerusform>Есть активная передача. Выйти из приложения?
+Передача автоматически возобновится, когда вы снова откроете приложение.</numerusform><numerusform>Есть активные передачи. Выйти из приложения?
+Передачи автоматически возобновятся, когда вы снова откроете приложение.</numerusform><numerusform>Есть активные передачи. Выйти из приложения?
+Передачи автоматически возобновятся, когда вы снова откроете приложение.</numerusform><numerusform>Есть активные передачи. Выйти из приложения?
+Передачи автоматически возобновятся, когда вы снова откроете приложение.</numerusform></translation>
+    </message>
+    <message>
+        <source>Exit app</source>
+        <translatorcomment>One of the messagebox options: Close the app and pause the active transfers</translatorcomment>
+        <translation>Выйти</translation>
+    </message>
+    <message>
+        <source>Stay in app</source>
+        <translatorcomment>One of the messagebox options: Keep the app open and continue with the active transfers</translatorcomment>
+        <translation>Остаться</translation>
     </message>
 </context>
 <context>
@@ -2671,7 +2652,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Storage Quota Exceeded. Upgrade now</source>
         <translatorcomment>Error label to indicate a situation of storage quota exceeded and the user needs to upgrade now in order to continue working with the account.</translatorcomment>
-        <translation>Превышена квота на хранение. Пожалуйста, улучшите аккаунт</translation>
+        <translation>Превышен лимит хранения данных. Пожалуйста, улучшите аккаунт</translation>
     </message>
     <message>
         <source>Decryption error</source>
@@ -2849,7 +2830,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Reached storage quota limit</source>
         <translatorcomment>Label to show that the account reached storage limit during a SDK operation.</translatorcomment>
-        <translation>Превышена квота хранения</translation>
+        <translation>Превышен лимит хранения данных</translation>
     </message>
     <message>
         <source>Business account expired</source>
@@ -3007,42 +2988,145 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Error opening file</source>
         <translatorcomment>Text on an error messagebox because a local file could not be opened</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Ошибка открытия файла</translation>
     </message>
     <message numerus="yes">
         <source>Pause transfer</source>
         <translatorcomment>Context menu action to pause transfer</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Приостановить передачу</numerusform><numerusform>Приостановить передачи</numerusform><numerusform>Приостановить передачи</numerusform><numerusform>Приостановить передачи</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Resume transfer</source>
         <translatorcomment>Context menu action to resume transfer</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Возобновить передачу</numerusform><numerusform>Возобновить передачи</numerusform><numerusform>Возобновить передачи</numerusform><numerusform>Возобновить передачи</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Cancel transfer</source>
         <translatorcomment>Context menu action to cancel transfer</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>Cancel and clear transfer?</source>
-        <translatorcomment>Messagebox text to confirm if the user wants to cancel all transfers and clear all the completed transfers</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>Cancel all transfer?</source>
-        <translatorcomment>Messagebox text to confirm if the user wants to cancel all transfers</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>Retry transfer?</source>
-        <translatorcomment>Messagebox text to confirm if the user wants to retry all transfers</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Отменить передачу</numerusform><numerusform>Отменить передачи</numerusform><numerusform>Отменить передачи</numerusform><numerusform>Отменить передачи</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Clear transfer</source>
-        <translatorcomment>Messagebox text to confirm if the user wants to clear the completed transfers</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translatorcomment>Tooltip for the clear button in a transfer row</translatorcomment>
+        <translation><numerusform>Удалить передачу</numerusform><numerusform>Удалить передачи</numerusform><numerusform>Удалить передачи</numerusform><numerusform>Удалить передачи</numerusform></translation>
+    </message>
+    <message>
+        <source>Cancel transfers?
+All your transfers will be cancelled.</source>
+        <translatorcomment>Messagebox text to confirm if the user wants to cancel all the transfers in the all transfers category</translatorcomment>
+        <translation>Отменить передачи?
+Все передачи будут отменены.</translation>
+    </message>
+    <message>
+        <source>Cancel transfers?
+All your transfers in this category will be cancelled and cleared.</source>
+        <translatorcomment>Messagebox text to confirm if the user wants to cancel and clear all the transfers in a category other than all transfers category</translatorcomment>
+        <translation>Отменить передачи?
+Все передачи в этой категории будут отменены и удалены.</translation>
+    </message>
+    <message>
+        <source>Cancel transfers?
+All your transfers in this category will be cancelled.</source>
+        <translatorcomment>Messagebox text to confirm if the user wants to cancel all the transfers in a category other than all transfers category</translatorcomment>
+        <translation>Отменить передачи?
+Все передачи в этой категории будут отменены.</translation>
+    </message>
+    <message>
+        <source>Cancel transfers?
+Your incomplete sync transfers won&apos;t be cancelled.</source>
+        <translatorcomment>Messagebox text to confirm if the user wants to cancel all the transfers in a category other than all transfers category but there are sync transfers(they cannot be cancelled)</translatorcomment>
+        <translation>Отменить передачи?
+Незавершённые передачи синхронизации не будут отменены.</translation>
+    </message>
+    <message>
+        <source>Cancel transfers?
+Your incomplete sync transfers won't be cancelled
+All the other transfers will be cancelled and cleared.</source>
+        <translatorcomment>Messagebox text to confirm if the user wants to cancel and clear all the transfers in a category other than all transfers category but there are sync transfers(they cannot be cancelled)</translatorcomment>
+        <translation>Отменить передачи?
+Незавершённые передачи синхронизации не будут отменены.
+Все остальные передачи будут отменены и удалены.</translation>
+    </message>
+    <message>
+        <source>Clear transfers?
+All your completed transfers will be cleared.</source>
+        <translatorcomment>Messagebox text to confirm if the user wants to clear all the transfers in the completed category</translatorcomment>
+        <translation>Отменить передачи?
+Все завершённые передачи будут удалены.</translation>
+    </message>
+    <message>
+        <source>Clear transfers?
+All your completed transfers in this category will be cleared.</source>
+        <translatorcomment>Messagebox text to confirm if the user wants to clear all the transfers in a category other than the completed category</translatorcomment>
+        <translation>Отменить передачи?
+Все завершённые передачи в этой категории будут удалены.</translation>
+    </message>
+    <message>
+        <source>Cancel transfers?
+All your selected transfers will be cancelled.</source>
+        <translatorcomment>Messagebox text to confirm if the user wants to cancel all the selected transfers</translatorcomment>
+        <translation>Отменить передачи?
+Все выбранные передачи будут отменены.</translation>
+    </message>
+    <message>
+        <source>Cancel transfers?
+All your selected transfers will be cancelled and cleared.</source>
+        <translatorcomment>Messagebox text to confirm if the user wants to cancel and clear all the selected transfers</translatorcomment>
+        <translation>Отменить передачи?
+Все выбранные передачи будут отменены и удалены.</translation>
+    </message>
+    <message>
+        <source>Cancel transfers?
+Your selected incomplete sync transfers won't be cancelled
+All the other selected transfers will be cancelled and cleared.</source>
+        <translatorcomment>Messagebox text to confirm if the user wants to cancel and clear all the selected transfers but there are sync transfers in the selection (they cannot be cancelled)</translatorcomment>
+        <translation>Отменить передачи?
+Выбранные незавершённые передачи синхронизации не будут отменены.
+Все остальные выбранные передачи будут отменены и удалены.</translation>
+    </message>
+    <message>
+        <source>Cancel transfer?</source>
+        <translatorcomment>Messagebox text to confirm if the user wants to cancel a single transfer</translatorcomment>
+        <translation>Отменить передачу?</translation>
+    </message>
+    <message>
+        <source>Clear transfers?
+All the selected completed transfers in this category will be cleared.</source>
+        <translatorcomment>Messagebox text to confirm if the user wants to clear the selected completed transfer</translatorcomment>
+        <translation>Отменить передачи?
+Все выбранные завершённые передачи в этой категории будут удалены.</translation>
+    </message>
+    <message>
+        <source>Cancel transfers?
+Your selected incomplete sync transfers won&apos;t be cancelled.</source>
+        <translatorcomment>Messagebox text to confirm if the user wants to cancel all the selected transfers but there are sync transfers in the selection (they cannot be cancelled)</translatorcomment>
+        <translation>Отменить передачи?
+Выбранные незавершённые передачи синхронизации не будут отменены.</translation>
+    </message>
+    <message>
+        <source>Clear transfer?</source>
+        <translatorcomment>Messagebox text to confirm if the user wants to clear a single selected completed transfer</translatorcomment>
+        <translation>Удалить передачу?</translation>
+    </message>
+    <message numerus="yes">
+        <source>Cancel and clear transfer</source>
+        <translatorcomment>Context menu action to resume cancel the active transfers and clear the completed transfers (multiple transfers selected)</translatorcomment>
+        <translation><numerusform>Отменить и удалить передачу</numerusform><numerusform>Отменить и удалить передачи</numerusform><numerusform>Отменить и удалить передачи</numerusform><numerusform>Отменить и удалить передачи</numerusform></translation>
+    </message>
+    <message>
+        <source>Yes, cancel</source>
+        <translatorcomment>Dialog button to do the proposed actions (cancel the transfers)</translatorcomment>
+        <translation>Да, отменить</translation>
+    </message>
+    <message>
+        <source>No, continue</source>
+        <translatorcomment>Dialog button to abort the proposed action</translatorcomment>
+        <translation>Нет, продолжить</translation>
+    </message>
+    <message>
+        <source>Yes, clear</source>
+        <translatorcomment>Dialog button to do the proposed actions (clear the transfers)</translatorcomment>
+        <translation>Да, очистить</translation>
     </message>
 </context>
 <context>
@@ -3076,7 +3160,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Enter the new folder name</source>
         <translatorcomment>Dialog text to ask the user to enter a new name for the folder</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Введите новое название папки</translation>
     </message>
     <message>
         <source>New folder</source>
@@ -3628,18 +3712,57 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
 </context>
 <context>
+    <name>PlatformStrings</name>
+    <message>
+        <source>Open settings</source>
+        <translatorcomment>Button label to open MEGAsync preferences dialog (Linux and Windows).</translatorcomment>
+        <translation>Открыть «Hастройки»</translation>
+    </message>
+    <message>
+        <source>One or more syncs have been disabled. Go to settings to enable them again.</source>
+        <translatorcomment>Warning message shown when logging into MEGAsync to inform the user that some syncs have been disabled and need to go to settings to enable them again (Windows and Linux)</translatorcomment>
+        <translation>Одна или несколько синхронизаций отключены. Перейдите в «Hастройки», чтобы снова включить их.</translation>
+    </message>
+    <message>
+        <source>Open preferences</source>
+        <translatorcomment>Button label to open MEGAsync preferences dialog (MacOS).</translatorcomment>
+        <translation>Открыть «Hастройки»</translation>
+    </message>
+    <message>
+        <source>One or more syncs have been disabled. Go to preferences to enable them again.</source>
+        <translatorcomment>Warning message shown when logging into MEGAsync to inform the user that some syncs have been disabled and need to go to settings to enable them again (macOS)</translatorcomment>
+        <translation>Одна или несколько синхронизаций отключены. Перейдите в «Hастройки», чтобы снова включить их.</translation>
+    </message>
+    <message>
+        <source>Sync transfers cannot be cancelled individually.
+Please delete the folder sync from settings to cancel them.</source>
+        <translatorcomment>Explains that the sync transfers cannot be cancelled individually. (for windows and linux)</translatorcomment>
+        <translation>Передачи синхронизации нельзя отменить по отдельности. Чтобы удалить синхронизацию, перейдите в «Hастройки» в настольном приложении и удалите синхронизируемую папку.</translation>
+    </message>
+    <message>
+        <source>Sync transfers cannot be cancelled individually.
+Please delete the folder sync from preferences to cancel them.</source>
+        <translatorcomment>Explains that the sync transfers cannot be cancelled individually. (for macOS)</translatorcomment>
+        <translation>Передачи синхронизации нельзя отменить по отдельности. Чтобы удалить синхронизацию, перейдите в «Hастройки» в настольном приложении и удалите синхронизируемую папку.</translation>
+    </message>
+</context>
+<context>
     <name>Preferences</name>
     <message>
-        <source>- Full redesign of remote file picker.
-- Fixed translation issues.
-- Other minor UI fixes and adjustments.
-- Fixed detected crashes on Windows, Linux and macOS.
+        <source>- There is now a new transfer manager.
+- Transfer management was enhanced and reliability of downloads and uploads improved. 
+- Detected crashes on Windows, Linux, and macOS fixed.
+- Translation issues fixed.
+- Performance improved.
+- UI fixed and adjusted.
 </source>
-        <translatorcomment>Changelog for version 4.6.7</translatorcomment>
-        <translation>- Полный редизайн средства выбора файлов в облаке.
-- Исправлены ошибки перевода.
-- Другие мелкие исправления и корректировки пользовательского интерфейса.
+        <translatorcomment>Changelog for version v4.7.0</translatorcomment>
+        <translation>- Новый менеджер передач.
+- Улучшено управление передачами и повышена надёжность загрузки и скачивания. 
 - Исправлены обнаруженные сбои в Windows, Linux и macOS.
+- Исправлены ошибки перевода.
+- Улучшена производительность.
+- Исправлен пользовательский интерфейс.
 </translation>
     </message>
 </context>
@@ -4054,27 +4177,27 @@ Do you want to delete it anyway?</source>
     <message>
         <source>%1 TB</source>
         <translatorcomment>File size measured in terabytes</translatorcomment>
-        <translation>%1 ТБ</translation>
+        <translation>%1 ТБ</translation>
     </message>
     <message>
         <source>%1 GB</source>
         <translatorcomment>File size measured in gigabytes</translatorcomment>
-        <translation>%1 ГБ</translation>
+        <translation>%1 ГБ</translation>
     </message>
     <message>
         <source>%1 MB</source>
         <translatorcomment>File size measured in megabytes</translatorcomment>
-        <translation>%1 МБ</translation>
+        <translation>%1 МБ</translation>
     </message>
     <message>
         <source>%1 KB</source>
         <translatorcomment>File size measured in kilobytes</translatorcomment>
-        <translation>%1 КБ</translation>
+        <translation>%1 КБ</translation>
     </message>
     <message>
         <source>%1 bytes</source>
         <translatorcomment>File size measured in bytes</translatorcomment>
-        <translation>%1 Б</translation>
+        <translation>%1 Б</translation>
     </message>
     <message>
         <source>Invalid filename</source>
@@ -4144,14 +4267,14 @@ Do you want to delete it anyway?</source>
 <context>
     <name>RenameLocalNodeDialog</name>
     <message>
-        <source>Error renaming file to %1</source>
-        <translatorcomment>Error message shown when a file renaming has failed. %1 is the name of the file</translatorcomment>
-        <translation type="unfinished"></translation>
+        <source>File can’t be renamed to &quot;%1&quot;</source>
+        <translatorcomment>Error warning shown when a file can´t be renamed due to an error.</translatorcomment>
+        <translation>Файл нельзя переименовать в «%1»</translation>
     </message>
     <message>
-        <source>Error renaming folder to %1</source>
-        <translatorcomment>Error message shown when a folder renaming has failed. %1 is the name of the folder</translatorcomment>
-        <translation type="unfinished"></translation>
+        <source>Folder can’t be renamed to &quot;%1&quot;</source>
+        <translatorcomment>Error warning shown when a folder can´t be renamed due to an error.</translatorcomment>
+        <translation>Папку нельзя переименовать в «%1»</translation>
     </message>
 </context>
 <context>
@@ -4159,40 +4282,40 @@ Do you want to delete it anyway?</source>
     <message>
         <source>Enter new file name</source>
         <translatorcomment>Title of the rename file dialog </translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Введите новое название файла</translation>
     </message>
     <message>
         <source>Enter new folder name</source>
         <translatorcomment>Title of the rename folder dialog </translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Введите новое название папки</translation>
     </message>
     <message>
         <source>Rename file</source>
         <translatorcomment>Dialog title for file renaming</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Переименование файла</translation>
     </message>
     <message>
         <source>Rename folder</source>
         <translatorcomment>Dialog title for folder renaming</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Переименование папки</translation>
     </message>
 </context>
 <context>
     <name>ScanningWidget</name>
     <message>
-        <source>Please do not close the application</source>
-        <translatorcomment>Text below the GIF to askt he user not to close the app while it is scanning a folder</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Cancel transfers</source>
         <translatorcomment>Button text to cancel the scanning of transfers</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Отменить передачи</translation>
     </message>
     <message>
         <source>Scanning…</source>
         <translatorcomment>Text to let the user know that the app is scanning a folder</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Сканирование…</translation>
+    </message>
+    <message>
+        <source>Don´t exit the app</source>
+        <translatorcomment>Text below the GIF to askt he user not to close the app while it is scanning a folder</translatorcomment>
+        <translation>Не закрывайте приложение</translation>
     </message>
 </context>
 <context>
@@ -4537,7 +4660,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Transfer Quota</source>
         <translatorcomment>Section title for account transfer quota details.</translatorcomment>
-        <translation>Квота на передачу</translation>
+        <translation>Допустимый объём передачи данных</translation>
     </message>
     <message>
         <source>Synced folders</source>
@@ -4657,7 +4780,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Transfer quota:</source>
         <translatorcomment>Label for account transfer quota details.(macOS)</translatorcomment>
-        <translation>Квота на передачу:</translation>
+        <translation>Допустимый объём передачи данных:</translation>
     </message>
     <message>
         <source>Your MEGA account is full. Uploads are disabled and folder synchronisation is paused.</source>
@@ -5414,7 +5537,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Stream error: transfer overquota</source>
         <translatorcomment>Informative label to indicate the user that there is a stream error because of transfer overquota situation.</translatorcomment>
-        <translation>Ошибка трансляции: превышена квота передач</translation>
+        <translation>Ошибка трансляции: превышен лимит передачи данных</translation>
     </message>
     <message>
         <source>Please wait...</source>
@@ -5440,32 +5563,32 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Starting…</source>
         <translatorcomment>Transfer is being started but no bytes have been transferred yet</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Запуск…</translation>
     </message>
     <message>
         <source>Retrying</source>
         <translatorcomment>Transfer is starting again after failure</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Повторная попытка</translation>
     </message>
     <message>
         <source>Uploading…</source>
         <translatorcomment>Transfer is being uploaded</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Загрузка…</translation>
     </message>
     <message>
         <source>Downloading…</source>
         <translatorcomment>Transfer is being downloaded</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Скачивание…</translation>
     </message>
     <message>
         <source>Syncing…</source>
         <translatorcomment>Transfer is being synced</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Синхронизация…</translation>
     </message>
     <message>
         <source>Completing</source>
         <translatorcomment>Transfer is being completed</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Завершение</translation>
     </message>
     <message>
         <source>Completed</source>
@@ -5475,22 +5598,22 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Paused</source>
         <translatorcomment>Transfer is paused</translatorcomment>
-        <translation>На паузе</translation>
+        <translation>Приостановлено</translation>
     </message>
     <message>
         <source>Failed</source>
         <translatorcomment>Transfer has failed</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Не удалось</translation>
     </message>
     <message>
         <source>In queue</source>
         <translatorcomment>Transfer is active but not being processed yet</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>В очереди</translation>
     </message>
     <message>
         <source>(in queue)</source>
         <translatorcomment>Transfer is paused and no bytes have been transferred yet</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>(в очереди)</translation>
     </message>
     <message>
         <source>Retry</source>
@@ -5500,12 +5623,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Out of storage space</source>
         <translatorcomment>Transfer is paused for out of storage space</translatorcomment>
-        <translation>Недостаточно места для хранения</translation>
+        <translation>Превышен лимит хранения данных</translation>
     </message>
     <message>
         <source>Out of transfer quota</source>
         <translatorcomment>Transfer is paused for out of transfer quota</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Превышен лимит передачи данных</translation>
     </message>
 </context>
 <context>
@@ -5551,67 +5674,62 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Search</source>
         <translatorcomment>Title for text search window</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Поиск</translation>
     </message>
     <message>
         <source>Transferring</source>
         <translatorcomment>Label to indicate that MEGA Desktop App is in a transferring state (ongoing transfers are running)</translatorcomment>
-        <translation>Передача</translation>
+        <translation>Выполняются передачи</translation>
     </message>
     <message>
         <source>All transfers</source>
         <translatorcomment>Title for All transfers category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Все передачи</translation>
     </message>
     <message>
         <source>Failed</source>
         <translatorcomment>Title for Failed transfers category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Неудавшиеся</translation>
     </message>
     <message>
         <source>Media type</source>
         <translatorcomment>Title of the groupbox which contains all the media categories</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Тип медиа</translation>
     </message>
     <message>
         <source>Archives</source>
         <translatorcomment>Categories for archive type transfers</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Архивы</translation>
     </message>
     <message>
         <source>Documents</source>
         <translatorcomment>Categories for document type transfers</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Документы</translation>
     </message>
     <message>
         <source>Images</source>
         <translatorcomment>Categories for image type transfers</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Изображения</translation>
     </message>
     <message>
         <source>Videos</source>
         <translatorcomment>Categories for video type transfers</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Видео</translation>
     </message>
     <message>
         <source>Audio</source>
         <translatorcomment>Categories for audio type transfers</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Аудио</translation>
     </message>
     <message>
         <source>Other</source>
         <translatorcomment>Categories for other type transfers</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Другое</translation>
     </message>
     <message>
         <source>Up to date</source>
         <translatorcomment>All transfers have been finished</translatorcomment>
         <translation>Синхронизировано</translation>
-    </message>
-    <message>
-        <source>Some issues occurred</source>
-        <translatorcomment>Message shown when there are some failed transfers</translatorcomment>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Scanning</source>
@@ -5621,72 +5739,72 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>All paused</source>
         <translatorcomment>Message which shows that the global pause is set</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Все приостановлены</translation>
     </message>
     <message>
         <source>All</source>
         <translatorcomment>Title for all searched transfers by text</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Все</translation>
     </message>
     <message>
         <source>Search:</source>
         <translatorcomment>Title to show the text used to search</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Поиск:</translation>
     </message>
     <message>
         <source>Retry all</source>
         <translatorcomment>Button text for retry all button in Failed category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Повторить все</translation>
     </message>
     <message>
         <source>No uploads</source>
         <translatorcomment>Empty window message for upload category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Нет загрузок</translation>
     </message>
     <message>
         <source>No downloads</source>
         <translatorcomment>Empty window message for download category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Нет скачиваний</translation>
     </message>
     <message>
         <source>No transfers</source>
         <translatorcomment>Empty window message for generic categories</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Нет передач</translation>
     </message>
     <message>
         <source>No search results</source>
         <translatorcomment>Empty window message for search category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Нет результатов поиска</translation>
     </message>
     <message>
         <source>No completed transfers</source>
         <translatorcomment>Empty window message for completed category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Нет завершённых передач</translation>
     </message>
     <message>
         <source>Resume all transfers</source>
         <translatorcomment>Global pause button tooltip</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Возобновить все передачи</translation>
     </message>
     <message>
         <source>Pause all transfers</source>
         <translatorcomment>Global resume button tooltip</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Приостановить все передачи</translation>
     </message>
     <message numerus="yes">
         <source>%1 result found</source>
         <translatorcomment>Message shown with search results,when there are only uploads or downloads, but not both at the same time</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Найден %1 результат</numerusform><numerusform>Найдено %1 результата</numerusform><numerusform>Найдено %1 результатов</numerusform><numerusform>Найдено %1 результата</numerusform></translation>
     </message>
     <message>
         <source>Upgrade now</source>
         <translatorcomment>Button to open web explorer to see MEGA paid plans</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Улучшить аккаунт</translation>
     </message>
     <message>
         <source>Transfer quota exceeded</source>
         <translatorcomment>Subtitle Transfer Quota exceeded state message</translatorcomment>
-        <translation>Квота на передачу превышена</translation>
+        <translation>Превышен лимит передачи данных</translation>
     </message>
     <message>
         <source>Your MEGA account is full</source>
@@ -5697,12 +5815,18 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>You can&apos;t continue downloading as you don&apos;t have enough transfer quota left for this IP address.
 To get more quota, upgrade to a Pro account or wait for [A] until more free quota becomes available on your IP address.</source>
         <translatorcomment>Message which shows that the user reachs the overquota. [A] is the time to wait until the quota is reset in hh:mm:ss</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Вы не можете продолжить скачивание, так как у вас недостаточно квоты на передачу для этого IP-адреса.
+Чтобы получить больше квоты, перейдите на Pro-аккаунт или подождите [A], пока на вашем IP-адресе не восстановится бесплатная квота.</translation>
     </message>
     <message>
         <source>More about transfer quota</source>
         <translatorcomment>Link button to send the user to the transfer quota information blog website</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Подробнее о квоте на передачу</translation>
+    </message>
+    <message numerus="yes">
+        <source>Issue found</source>
+        <translatorcomment>Message shown when there are some failed transfers/syncs/backups</translatorcomment>
+        <translation><numerusform>Обнаружены ошибки</numerusform><numerusform>Обнаружены ошибки</numerusform><numerusform>Обнаружены ошибки</numerusform><numerusform>Обнаружены ошибки</numerusform></translation>
     </message>
 </context>
 <context>
@@ -5710,7 +5834,7 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
     <message>
         <source>Drop to Upload</source>
         <translatorcomment>Let the user know that files can be dropped there</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Перетяните, чтобы загрузить</translation>
     </message>
 </context>
 <context>
@@ -5729,20 +5853,9 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
 <context>
     <name>TransfersModel</name>
     <message>
-        <source>Sync transfers cannot be cancelled individually.
-Please delete the folder sync from settings to cancel them.</source>
-        <translatorcomment>Explains that the sync transfers cannot be cancelled individually.</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Dismiss</source>
         <translatorcomment>Option to close the dialog without taking any action</translatorcomment>
         <translation>Отклонить</translation>
-    </message>
-    <message>
-        <source>Open settings</source>
-        <translatorcomment>Close the dialog and open the settings dialog</translatorcomment>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5760,117 +5873,117 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Speed</source>
         <translatorcomment>speed table header column name of the file to transfer in All transfers and uploads/downloads categories</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Скорость</translation>
     </message>
     <message>
         <source>Status</source>
         <translatorcomment>Status (paused, completed, queue...) of the file to transfer</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Статус</translation>
     </message>
     <message>
         <source>Time left</source>
-        <translatorcomment>Time table header column name for all transfers categories</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Time table header column name for all transfers, downloads, uploads categories (where there are only active transfers)</translatorcomment>
+        <translation>Осталось времени</translation>
     </message>
     <message>
         <source>Time completed</source>
         <translatorcomment>Time table header column name for completed transfers categories</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Время завершения</translation>
     </message>
     <message>
         <source>Avg. speed</source>
         <translatorcomment>speed table header column name for completed and failed transfers categories</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Ср. скорость</translation>
     </message>
     <message>
         <source>Time</source>
-        <translatorcomment>Time table header column name for the rest of the transfers categories</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Time table header column name for media types and search categories</translatorcomment>
+        <translation>Время</translation>
     </message>
     <message>
         <source>Clear all completed</source>
         <translatorcomment>Tooltip for clear button when the user is in the completed category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Удалить все завершённые</translation>
     </message>
     <message>
         <source>Clear all search results</source>
         <translatorcomment>Tooltip for clear button when the user is in the search category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Удалить все результаты поиска</translation>
     </message>
     <message>
         <source>Clear all audios</source>
         <translatorcomment>Tooltip for clear button when the user is in the audios category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Удалить все аудио</translation>
     </message>
     <message>
         <source>Clear all videos</source>
         <translatorcomment>Tooltip for clear button when the user is in the videos category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Удалить все видео</translation>
     </message>
     <message>
         <source>Clear all archives</source>
         <translatorcomment>Tooltip for clear button when the user is in the archives category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Удалить все архивы</translation>
     </message>
     <message>
         <source>Clear all documents</source>
         <translatorcomment>Tooltip for clear button when the user is in the documents category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Удалить все документы</translation>
     </message>
     <message>
         <source>Clear all images</source>
         <translatorcomment>Tooltip for clear button when the user is in the images category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Удалить все изображения</translation>
     </message>
     <message>
         <source>Clear all transfers</source>
         <translatorcomment>Tooltip for clear button when the user is in the others category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Удалить все передачи</translation>
     </message>
     <message>
         <source>Cancel all downloads</source>
         <translatorcomment>Tooltip for cancel button when the user is in the downloads category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Отменить все скачивания</translation>
     </message>
     <message>
         <source>Cancel all uploads</source>
         <translatorcomment>Tooltip for cancel button when the user is in the uploads category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Отменить все загрузки</translation>
     </message>
     <message>
         <source>Cancel all failed</source>
         <translatorcomment>Tooltip for cancel button when the user is in the failed category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Отменить все неудавшиеся</translation>
     </message>
     <message>
         <source>Cancel all search results</source>
         <translatorcomment>Tooltip for cancel button when the user is in the search category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Отменить все результаты поиска</translation>
     </message>
     <message>
         <source>Cancel all audios</source>
         <translatorcomment>Tooltip for cancel button when the user is in the audios category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Отменить все аудио</translation>
     </message>
     <message>
         <source>Cancel all videos</source>
         <translatorcomment>Tooltip for cancel button when the user is in the videos category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Отменить все видео</translation>
     </message>
     <message>
         <source>Cancel all archives</source>
         <translatorcomment>Tooltip for cancel button when the user is in the archives category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Отменить все архивы</translation>
     </message>
     <message>
         <source>Cancel all documents</source>
         <translatorcomment>Tooltip for cancel button when the user is in the documents category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Отменить все документы</translation>
     </message>
     <message>
         <source>Cancel all images</source>
         <translatorcomment>Tooltip for cancel button when the user is in the images category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Отменить все изображения</translation>
     </message>
     <message>
         <source>Cancel all transfers</source>
@@ -5880,127 +5993,127 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Cancel and clear all search results</source>
         <translatorcomment>Tooltip for cancel button when the user is in the search category and there are completed transfers</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Отменить и удалить все результаты поиска</translation>
     </message>
     <message>
         <source>Cancel and clear all audios</source>
         <translatorcomment>Tooltip for cancel button when the user is in the audios category and there are completed transfers</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Отменить и удалить все аудио</translation>
     </message>
     <message>
         <source>Cancel and clear all videos</source>
         <translatorcomment>Tooltip for cancel button when the user is in the videos category and there are completed transfers</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Отменить и удалить все видео</translation>
     </message>
     <message>
         <source>Cancel and clear all archives</source>
         <translatorcomment>Tooltip for cancel button when the user is in the archives category and there are completed transfers</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Отменить и удалить все архивы</translation>
     </message>
     <message>
         <source>Cancel and clear all documents</source>
         <translatorcomment>Tooltip for cancel button when the user is in the documents category and there are completed transfers</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Отменить и удалить все документы</translation>
     </message>
     <message>
         <source>Cancel and clear all images</source>
         <translatorcomment>Tooltip for cancel button when the user is in the images category and there are completed transfers</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Отменить и удалить все изображения</translation>
     </message>
     <message>
         <source>Cancel and clear all transfers</source>
         <translatorcomment>Tooltip for cancel button when the user is in the all transfers category and there are completed transfers</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Отменить и удалить все передачи</translation>
     </message>
     <message>
         <source>Resume all downloads</source>
         <translatorcomment>Tooltip for Resume button when the user is in the downloads category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Возобновить все скачивания</translation>
     </message>
     <message>
         <source>Resume all uploads</source>
         <translatorcomment>Tooltip for Resume button when the user is in the uploads category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Возобновить все загрузки</translation>
     </message>
     <message>
         <source>Resume all search results</source>
         <translatorcomment>Tooltip for Resume button when the user is in the search category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Возобновить все результаты поиска</translation>
     </message>
     <message>
         <source>Resume all audios</source>
         <translatorcomment>Tooltip for Resume button when the user is in the audios category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Возобновить все аудио</translation>
     </message>
     <message>
         <source>Resume all videos</source>
         <translatorcomment>Tooltip for Resume button when the user is in the videos category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Возобновить все видео</translation>
     </message>
     <message>
         <source>Resume all archives</source>
         <translatorcomment>Tooltip for Resume button when the user is in the archives category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Возобновить все архивы</translation>
     </message>
     <message>
         <source>Resume all documents</source>
         <translatorcomment>Tooltip for Resume button when the user is in the documents category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Возобновить все документы</translation>
     </message>
     <message>
         <source>Resume all images</source>
         <translatorcomment>Tooltip for Resume button when the user is in the images category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Возобновить все изображения</translation>
     </message>
     <message>
         <source>Resume all transfers</source>
         <translatorcomment>Tooltip for Resume button when the user is in the all transfers category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Возобновить все передачи</translation>
     </message>
     <message>
         <source>Pause all downloads</source>
         <translatorcomment>Tooltip for Pause button when the user is in the downloads category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Приостановить все скачивания</translation>
     </message>
     <message>
         <source>Pause all uploads</source>
         <translatorcomment>Tooltip for Pause button when the user is in the uploads category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Приостановить все загрузки</translation>
     </message>
     <message>
         <source>Pause all search results</source>
         <translatorcomment>Tooltip for Pause button when the user is in the search category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Приостановить все результаты поиска</translation>
     </message>
     <message>
         <source>Pause all audios</source>
         <translatorcomment>Tooltip for Pause button when the user is in the audios category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Приостановить все аудио</translation>
     </message>
     <message>
         <source>Pause all videos</source>
         <translatorcomment>Tooltip for Pause button when the user is in the videos category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Приостановить все видео</translation>
     </message>
     <message>
         <source>Pause all archives</source>
         <translatorcomment>Tooltip for Pause button when the user is in the archives category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Приостановить все архивы</translation>
     </message>
     <message>
         <source>Pause all documents</source>
         <translatorcomment>Tooltip for Pause button when the user is in the documents category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Приостановить все документы</translation>
     </message>
     <message>
         <source>Pause all images</source>
         <translatorcomment>Tooltip for Pause button when the user is in the images category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Приостановить все изображения</translation>
     </message>
     <message>
         <source>Pause all transfers</source>
         <translatorcomment>Tooltip for Pause button when the user is in the all transfers category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Приостановить все передачи</translation>
     </message>
 </context>
 <context>
@@ -6038,7 +6151,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Transfer quota exceeded</source>
         <translatorcomment>Label shown to inform the user about over transfer quota situation.</translatorcomment>
-        <translation>Квота на передачу превышена</translation>
+        <translation>Превышен лимит передачи данных</translation>
     </message>
 </context>
 <context>

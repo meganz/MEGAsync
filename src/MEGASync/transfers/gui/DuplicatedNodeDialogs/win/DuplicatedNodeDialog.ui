@@ -32,7 +32,7 @@
    <string notr="true"/>
   </property>
   <property name="styleSheet">
-   <string notr="true">*{
+   <string notr="true">#DuplicatedNodeDialog{
 background-color: white;
 }
 
@@ -222,6 +222,9 @@ background-color: white;
         </property>
         <property name="text">
          <string/>
+        </property>
+        <property name="checked">
+         <bool>true</bool>
         </property>
        </widget>
       </item>

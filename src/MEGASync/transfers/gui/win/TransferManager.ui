@@ -479,6 +479,9 @@ QGroupBox::title
           </property>
           <item>
            <widget class="QLabel" name="lTransfers">
+            <property name="toolTip">
+             <string>Transfers</string>
+            </property>
             <property name="text">
              <string>Transfers</string>
             </property>
@@ -633,7 +636,7 @@ QGroupBox::title
              </sizepolicy>
             </property>
             <property name="text">
-             <string/>
+             <string notr="true"/>
             </property>
             <property name="frame">
              <bool>false</bool>
@@ -2085,7 +2088,7 @@ QGroupBox::title
              </size>
             </property>
             <property name="text">
-             <string>Some issues occurred</string>
+             <string/>
             </property>
             <property name="icon">
              <iconset resource="../../../gui/Resources_win.qrc">
@@ -2295,7 +2298,7 @@ QGroupBox::title
                   </size>
                  </property>
                  <property name="text">
-                  <string/>
+                  <string notr="true"/>
                  </property>
                 </widget>
                </item>
@@ -2835,7 +2838,7 @@ QGroupBox::title
                    <item>
                     <widget class="QLabel" name="lAllResultsCounter">
                      <property name="text">
-                      <string/>
+                      <string notr="true"/>
                      </property>
                     </widget>
                    </item>
@@ -2894,7 +2897,7 @@ QGroupBox::title
                    <item>
                     <widget class="QLabel" name="lDlResultsCounter">
                      <property name="text">
-                      <string/>
+                      <string notr="true"/>
                      </property>
                     </widget>
                    </item>
@@ -2953,7 +2956,7 @@ QGroupBox::title
                    <item>
                     <widget class="QLabel" name="lUlResultsCounter">
                      <property name="text">
-                      <string/>
+                      <string notr="true"/>
                      </property>
                     </widget>
                    </item>

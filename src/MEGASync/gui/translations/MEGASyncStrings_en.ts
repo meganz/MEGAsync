@@ -621,29 +621,24 @@ Please enter a different name to identify this synced folder:</source>
 <context>
     <name>CancelConfirmWidget</name>
     <message>
-        <source>Cancel Transfers</source>
+        <source>Cancel transfers?</source>
         <translatorcomment>Dialog main text</translatorcomment>
-        <translation>Cancel Transfers</translation>
+        <translation>Cancel transfers?</translation>
     </message>
     <message>
-        <source>Interrupting the transfer progress will render some of the items incomplete.</source>
+        <source>Transfers not yet processed will be cancelled.</source>
         <translatorcomment>Dialog messages which warns the user about the potential problems of cancelling the folder scanning</translatorcomment>
-        <translation>Interrupting the transfer progress will render some of the items incomplete.</translation>
+        <translation>Transfers not yet processed will be cancelled.</translation>
     </message>
     <message>
-        <source>Dismiss</source>
-        <translatorcomment>Button to abort a folder scanning</translatorcomment>
-        <translation>Dismiss</translation>
-    </message>
-    <message>
-        <source>Proceed</source>
+        <source>No, continue</source>
         <translatorcomment>Button to continue folder scanning cancellation</translatorcomment>
-        <translation>Proceed</translation>
+        <translation>No, continue</translation>
     </message>
     <message>
-        <source>Cancel transfers</source>
-        <translatorcomment>Label to indicate about the process of cancelling transfers</translatorcomment>
-        <translation>Cancel transfers</translation>
+        <source>Yes, cancel</source>
+        <translatorcomment>Button to abort a folder scanning</translatorcomment>
+        <translation>Yes, cancel</translation>
     </message>
 </context>
 <context>
@@ -1071,11 +1066,6 @@ In some cases they may contain details about your data, such as file or folder n
 </context>
 <context>
     <name>DuplicatedNodeDialog</name>
-    <message numerus="yes">
-        <source>Apply this option on the next %1 conflict</source>
-        <translatorcomment>Checkbox text to apply the action to all the following conflicts. %1 is the number of conflicts</translatorcomment>
-        <translation><numerusform>Apply this option on the next %1 conflict</numerusform><numerusform>Apply this option on the next %1 conflict</numerusform></translation>
-    </message>
     <message>
         <source>A folder named [A] already exists at this destination</source>
         <translatorcomment>Dialog text shown when a folder with the same name has been found on the cloud. [A] folder name</translatorcomment>
@@ -1085,11 +1075,6 @@ In some cases they may contain details about your data, such as file or folder n
         <source>The new folder will be merged with the folder at this destination.</source>
         <translatorcomment>Text explaining the result of the folder merge action</translatorcomment>
         <translation>The new folder will be merged with the folder at this destination.</translation>
-    </message>
-    <message>
-        <source>The folder will be renamed as:</source>
-        <translatorcomment>Text explaining the result of the folder rename action</translatorcomment>
-        <translation>The folder will be renamed as:</translation>
     </message>
     <message>
         <source>The folder at this destination will be maintained.</source>
@@ -1105,11 +1090,6 @@ In some cases they may contain details about your data, such as file or folder n
         <source>The file at this destination will be replaced with the new file.</source>
         <translatorcomment>Text explaining the result of the file upload and replace action</translatorcomment>
         <translation>The file at this destination will be replaced with the new file.</translation>
-    </message>
-    <message>
-        <source>The file will be updated with version history:</source>
-        <translatorcomment>Text explaining the result of the file upload and update action</translatorcomment>
-        <translation>The file will be updated with version history:</translation>
     </message>
     <message>
         <source>The file will be renamed as:</source>
@@ -1130,6 +1110,16 @@ In some cases they may contain details about your data, such as file or folder n
         <source>File already exists</source>
         <translatorcomment>Dialog title when a file with the same name has been found on the cloud</translatorcomment>
         <translation>File already exists</translation>
+    </message>
+    <message numerus="yes">
+        <source>Apply to all %1 duplicates</source>
+        <translatorcomment>Checkbox text to apply the action to all the following conflicts. %1 is the number of conflicts</translatorcomment>
+        <translation><numerusform>Apply to the other duplicate</numerusform><numerusform>Apply to all %1 duplicates</numerusform></translation>
+    </message>
+    <message>
+        <source>The file at this destination will be updated with a new version.</source>
+        <translatorcomment>Text explaining the result of the file upload and update action</translatorcomment>
+        <translation>The file at this destination will be updated with a new version.</translation>
     </message>
 </context>
 <context>
@@ -1169,16 +1159,6 @@ In some cases they may contain details about your data, such as file or folder n
         <translatorcomment>Action title and button text for the Update action for files</translatorcomment>
         <translation>Update</translation>
     </message>
-    <message numerus="yes">
-        <source>%1 folder</source>
-        <translatorcomment>Info label with the number of folders in a folder to upload</translatorcomment>
-        <translation><numerusform>%1 folder</numerusform><numerusform>%1 folder</numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>%1 file</source>
-        <translatorcomment>Info label with the number of files in a folder to upload</translatorcomment>
-        <translation><numerusform>%1 file</numerusform><numerusform>%1 file</numerusform></translation>
-    </message>
     <message>
         <source>loading time…</source>
         <translatorcomment>Text shown while the local file/folder modified time is calculated</translatorcomment>
@@ -1187,7 +1167,12 @@ In some cases they may contain details about your data, such as file or folder n
     <message>
         <source>loading size…</source>
         <translatorcomment>Text shown while the local file/folder size is calculated</translatorcomment>
-		<translation>loading size…</translation>
+        <translation>loading size…</translation>
+    </message>
+    <message>
+        <source>Learn more</source>
+        <translatorcomment>Underline link label to open a help.mega.io article</translatorcomment>
+        <translation>Learn more</translation>
     </message>
 </context>
 <context>
@@ -1792,9 +1777,9 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation>Error</translation>
     </message>
     <message>
-        <source>Error opening folder</source>
+        <source>Folder can&apos;t be opened. Check that the folder in your local drive hasn&apos;t been deleted or moved.</source>
         <translatorcomment>Warning message text to let the user know that the local folder could not be opened</translatorcomment>
-        <translation>Error opening folder</translation>
+        <translation>Folder can&apos;t be opened. Check that the folder in your local drive hasn&apos;t been deleted or moved.</translation>
     </message>
 </context>
 <context>
@@ -1811,7 +1796,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>Failed: %1</source>
-        <translatorcomment>Tooltip for show transfer failed reason</translatorcomment>
+        <translatorcomment>Tooltip for show transfer failed reason. %1 is a placeholder for the SDK error reason.</translatorcomment>
         <translation>Failed: %1</translation>
     </message>
     <message>
@@ -2216,10 +2201,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>You are not logged in</translation>
     </message>
     <message>
-        <source>Are you sure you want to exit?</source>
-        <translation>Are you sure you want to exit?</translation>
-    </message>
-    <message>
         <source>Transfer manager</source>
         <translation>Transfer manager</translation>
     </message>
@@ -2433,26 +2414,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>MEGAsync will continue to work, however updates will no longer be supported for versions prior to OS X Yosemite soon.</translation>
     </message>
     <message>
-        <source>One or more syncs have been disabled. Go to preferences to enable them again.</source>
-        <translatorcomment>Warning message shown when logging into MEGAsync to inform the user that some syncs have been disabled and need to go to settings to enable them again (macOS)</translatorcomment>
-        <translation>One or more syncs have been disabled. Go to preferences to enable them again.</translation>
-    </message>
-    <message>
-        <source>Open Preferences</source>
-        <translatorcomment>Button label to open MEGAsync preferences dialog (MacOS).</translatorcomment>
-        <translation>Open Preferences</translation>
-    </message>
-    <message>
-        <source>Open Settings</source>
-        <translatorcomment>Button label to open MEGAsync preferences dialog (Linux and Windows).</translatorcomment>
-        <translation>Open Settings</translation>
-    </message>
-    <message>
-        <source>One or more syncs have been disabled. Go to settings to enable them again.</source>
-        <translatorcomment>Warning message shown when logging into MEGAsync to inform the user that some syncs have been disabled and need to go to settings to enable them again (Windows and Linux)</translatorcomment>
-        <translation>One or more syncs have been disabled. Go to settings to enable them again.</translation>
-    </message>
-    <message>
         <source>Your syncs have been disabled</source>
         <translatorcomment>Notification message launched when your syncs have been disabled.</translatorcomment>
         <translation>Your syncs have been disabled</translation>
@@ -2511,6 +2472,24 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>%1 and %2 were successfully downloaded</source>
         <translatorcomment>System notification to inform the user that %1 files and %2 folders were successfully downloaded. The %1 is a sentence part for files and %2 for folders.</translatorcomment>
         <translation>%1 and %2 were successfully downloaded</translation>
+    </message>
+    <message numerus="yes">
+        <source>There is an active transfer. Exit the app?
+Transfer will automatically resume when you re-open the app.</source>
+        <translatorcomment>Messagebox text to let the user know that there are active transfers when closing the app. The user will be able to exit and pause them, or stop the exit action.</translatorcomment>
+        <translation><numerusform>There is an active transfer. Exit the app?
+Transfer will automatically resume when you re-open the app.</numerusform><numerusform>There are active transfers. Exit the app?
+Transfers will automatically resume when you re-open the app.</numerusform></translation>
+    </message>
+    <message>
+        <source>Exit app</source>
+        <translatorcomment>One of the messagebox options: Close the app and pause the active transfers</translatorcomment>
+        <translation>Exit app</translation>
+    </message>
+    <message>
+        <source>Stay in app</source>
+        <translatorcomment>One of the messagebox options: Keep the app open and continue with the active transfers</translatorcomment>
+        <translation>Stay in app</translation>
     </message>
 </context>
 <context>
@@ -3025,24 +3004,127 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation><numerusform>Cancel transfer</numerusform><numerusform>Cancel transfers</numerusform></translation>
     </message>
     <message numerus="yes">
-        <source>Cancel and clear transfer?</source>
-        <translatorcomment>Messagebox text to confirm if the user wants to cancel all transfers and clear all the completed transfers</translatorcomment>
-        <translation><numerusform>Cancel and clear transfer?</numerusform><numerusform>Cancel and clear transfers?</numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>Cancel all transfer?</source>
-        <translatorcomment>Messagebox text to confirm if the user wants to cancel all transfers</translatorcomment>
-        <translation><numerusform>Cancel all transfer?</numerusform><numerusform>Cancel all transfers?</numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>Retry transfer?</source>
-        <translatorcomment>Messagebox text to confirm if the user wants to retry all transfers</translatorcomment>
-        <translation><numerusform>Retry transfer?</numerusform><numerusform>Retry transfers?</numerusform></translation>
-    </message>
-    <message numerus="yes">
         <source>Clear transfer</source>
-        <translatorcomment>Messagebox text to confirm if the user wants to clear the completed transfers</translatorcomment>
+        <translatorcomment>Tooltip for the clear button in a transfer row</translatorcomment>
         <translation><numerusform>Clear transfer</numerusform><numerusform>Clear transfers</numerusform></translation>
+    </message>
+    <message>
+        <source>Cancel transfers?
+All your transfers will be cancelled.</source>
+        <translatorcomment>Messagebox text to confirm if the user wants to cancel all the transfers in the all transfers category</translatorcomment>
+        <translation>Cancel transfers?
+All your transfers will be cancelled.</translation>
+    </message>
+    <message>
+        <source>Cancel transfers?
+All your transfers in this category will be cancelled and cleared.</source>
+        <translatorcomment>Messagebox text to confirm if the user wants to cancel and clear all the transfers in a category other than all transfers category</translatorcomment>
+        <translation>Cancel transfers?
+All your transfers in this category will be cancelled and cleared.</translation>
+    </message>
+    <message>
+        <source>Cancel transfers?
+All your transfers in this category will be cancelled.</source>
+        <translatorcomment>Messagebox text to confirm if the user wants to cancel all the transfers in a category other than all transfers category</translatorcomment>
+        <translation>Cancel transfers?
+All your transfers in this category will be cancelled.</translation>
+    </message>
+    <message>
+        <source>Cancel transfers?
+Your incomplete sync transfers won&apos;t be cancelled.</source>
+        <translatorcomment>Messagebox text to confirm if the user wants to cancel all the transfers in a category other than all transfers category but there are sync transfers(they cannot be cancelled)</translatorcomment>
+        <translation>Cancel transfers?
+Your incomplete sync transfers won&apos;t be cancelled.</translation>
+    </message>
+    <message>
+        <source>Cancel transfers?
+Your incomplete sync transfers won't be cancelled
+All the other transfers will be cancelled and cleared.</source>
+        <translatorcomment>Messagebox text to confirm if the user wants to cancel and clear all the transfers in a category other than all transfers category but there are sync transfers(they cannot be cancelled)</translatorcomment>
+        <translation>Cancel transfers?
+Your incomplete sync transfers won&apos;t be cancelled
+All the other transfers will be cancelled and cleared.</translation>
+    </message>
+    <message>
+        <source>Clear transfers?
+All your completed transfers will be cleared.</source>
+        <translatorcomment>Messagebox text to confirm if the user wants to clear all the transfers in the completed category</translatorcomment>
+        <translation>Clear transfers?
+All your completed transfers will be cleared.</translation>
+    </message>
+    <message>
+        <source>Clear transfers?
+All your completed transfers in this category will be cleared.</source>
+        <translatorcomment>Messagebox text to confirm if the user wants to clear all the transfers in a category other than the completed category</translatorcomment>
+        <translation>Clear transfers?
+All your completed transfers in this category will be cleared.</translation>
+    </message>
+    <message>
+        <source>Cancel transfers?
+All your selected transfers will be cancelled.</source>
+        <translatorcomment>Messagebox text to confirm if the user wants to cancel all the selected transfers</translatorcomment>
+        <translation>Cancel transfers?
+All your selected transfers will be cancelled.</translation>
+    </message>
+    <message>
+        <source>Cancel transfers?
+All your selected transfers will be cancelled and cleared.</source>
+        <translatorcomment>Messagebox text to confirm if the user wants to cancel and clear all the selected transfers</translatorcomment>
+        <translation>Cancel transfers?
+All your selected transfers will be cancelled and cleared.</translation>
+    </message>
+    <message>
+        <source>Cancel transfers?
+Your selected incomplete sync transfers won't be cancelled
+All the other selected transfers will be cancelled and cleared.</source>
+        <translatorcomment>Messagebox text to confirm if the user wants to cancel and clear all the selected transfers but there are sync transfers in the selection (they cannot be cancelled)</translatorcomment>
+        <translation>Cancel transfers?
+Your selected incomplete sync transfers won&apos;t be cancelled
+All the other selected transfers will be cancelled and cleared.</translation>
+    </message>
+    <message>
+        <source>Cancel transfer?</source>
+        <translatorcomment>Messagebox text to confirm if the user wants to cancel a single transfer</translatorcomment>
+        <translation>Cancel transfer?</translation>
+    </message>
+    <message>
+        <source>Clear transfers?
+All the selected completed transfers in this category will be cleared.</source>
+        <translatorcomment>Messagebox text to confirm if the user wants to clear the selected completed transfer</translatorcomment>
+        <translation>Clear transfers?
+All the selected completed transfers in this category will be cleared.</translation>
+    </message>
+    <message>
+        <source>Cancel transfers?
+Your selected incomplete sync transfers won&apos;t be cancelled.</source>
+        <translatorcomment>Messagebox text to confirm if the user wants to cancel all the selected transfers but there are sync transfers in the selection (they cannot be cancelled)</translatorcomment>
+        <translation>Cancel transfers?
+Your selected incomplete sync transfers won&apos;t be cancelled.</translation>
+    </message>
+    <message>
+        <source>Clear transfer?</source>
+        <translatorcomment>Messagebox text to confirm if the user wants to clear a single selected completed transfer</translatorcomment>
+        <translation>Clear transfer?</translation>
+    </message>
+    <message numerus="yes">
+        <source>Cancel and clear transfer</source>
+        <translatorcomment>Context menu action to resume cancel the active transfers and clear the completed transfers (multiple transfers selected)</translatorcomment>
+        <translation><numerusform>Cancel and clear transfer</numerusform><numerusform>Cancel and clear transfers</numerusform></translation>
+    </message>
+    <message>
+        <source>Yes, cancel</source>
+        <translatorcomment>Dialog button to do the proposed actions (cancel the transfers)</translatorcomment>
+        <translation>Yes, cancel</translation>
+    </message>
+    <message>
+        <source>No, continue</source>
+        <translatorcomment>Dialog button to abort the proposed action</translatorcomment>
+        <translation>No, continue</translation>
+    </message>
+    <message>
+        <source>Yes, clear</source>
+        <translatorcomment>Dialog button to do the proposed actions (clear the transfers)</translatorcomment>
+        <translation>Yes, clear</translation>
     </message>
 </context>
 <context>
@@ -3628,18 +3710,59 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
 </context>
 <context>
+    <name>PlatformStrings</name>
+    <message>
+        <source>Open settings</source>
+        <translatorcomment>Button label to open MEGAsync preferences dialog (Linux and Windows).</translatorcomment>
+        <translation>Open settings</translation>
+    </message>
+    <message>
+        <source>One or more syncs have been disabled. Go to settings to enable them again.</source>
+        <translatorcomment>Warning message shown when logging into MEGAsync to inform the user that some syncs have been disabled and need to go to settings to enable them again (Windows and Linux)</translatorcomment>
+        <translation>One or more syncs have been disabled. Go to settings to enable them again.</translation>
+    </message>
+    <message>
+        <source>Open preferences</source>
+        <translatorcomment>Button label to open MEGAsync preferences dialog (MacOS).</translatorcomment>
+        <translation>Open preferences</translation>
+    </message>
+    <message>
+        <source>One or more syncs have been disabled. Go to preferences to enable them again.</source>
+        <translatorcomment>Warning message shown when logging into MEGAsync to inform the user that some syncs have been disabled and need to go to settings to enable them again (macOS)</translatorcomment>
+        <translation>One or more syncs have been disabled. Go to preferences to enable them again.</translation>
+    </message>
+    <message>
+        <source>Sync transfers cannot be cancelled individually.
+Please delete the folder sync from settings to cancel them.</source>
+        <translatorcomment>Explains that the sync transfers cannot be cancelled individually. (for windows and linux)</translatorcomment>
+        <translation>Sync transfers cannot be cancelled individually.
+Please delete the folder sync from settings to cancel them.</translation>
+    </message>
+    <message>
+        <source>Sync transfers cannot be cancelled individually.
+Please delete the folder sync from preferences to cancel them.</source>
+        <translatorcomment>Explains that the sync transfers cannot be cancelled individually. (for macOS)</translatorcomment>
+        <translation>Sync transfers cannot be cancelled individually.
+Please delete the folder sync from preferences to cancel them.</translation>
+    </message>
+</context>
+<context>
     <name>Preferences</name>
     <message>
-        <source>- Full redesign of remote file picker.
-- Fixed translation issues.
-- Other minor UI fixes and adjustments.
-- Fixed detected crashes on Windows, Linux and macOS.
+        <source>- There is now a new transfer manager.
+- Transfer management was enhanced and reliability of downloads and uploads improved. 
+- Detected crashes on Windows, Linux, and macOS fixed.
+- Translation issues fixed.
+- Performance improved.
+- UI fixed and adjusted.
 </source>
-        <translatorcomment>Changelog for version 4.6.7</translatorcomment>
-        <translation>- Full redesign of remote file picker.
-- Fixed translation issues.
-- Other minor UI fixes and adjustments.
-- Fixed detected crashes on Windows, Linux and macOS.
+        <translatorcomment>Changelog for version v4.7.0</translatorcomment>
+        <translation>- There is now a new transfer manager.
+- Transfer management was enhanced and reliability of downloads and uploads improved. 
+- Detected crashes on Windows, Linux, and macOS fixed.
+- Translation issues fixed.
+- Performance improved.
+- UI fixed and adjusted.
 </translation>
     </message>
 </context>
@@ -4144,14 +4267,14 @@ Do you want to delete it anyway?</translation>
 <context>
     <name>RenameLocalNodeDialog</name>
     <message>
-        <source>Error renaming file to %1</source>
-        <translatorcomment>Error message shown when a file renaming has failed. %1 is the name of the file</translatorcomment>
-        <translation>Error renaming file to %1</translation>
+        <source>File can’t be renamed to &quot;%1&quot;</source>
+        <translatorcomment>Error warning shown when a file can´t be renamed due to an error.</translatorcomment>
+        <translation>File can’t be renamed to &quot;%1&quot;</translation>
     </message>
     <message>
-        <source>Error renaming folder to %1</source>
-        <translatorcomment>Error message shown when a folder renaming has failed. %1 is the name of the folder</translatorcomment>
-        <translation>Error renaming folder to %1</translation>
+        <source>Folder can’t be renamed to &quot;%1&quot;</source>
+        <translatorcomment>Error warning shown when a folder can´t be renamed due to an error.</translatorcomment>
+        <translation>Folder can’t be renamed to &quot;%1&quot;</translation>
     </message>
 </context>
 <context>
@@ -4180,11 +4303,6 @@ Do you want to delete it anyway?</translation>
 <context>
     <name>ScanningWidget</name>
     <message>
-        <source>Please do not close the application</source>
-        <translatorcomment>Text below the GIF to askt he user not to close the app while it is scanning a folder</translatorcomment>
-        <translation>Please do not close the application</translation>
-    </message>
-    <message>
         <source>Cancel transfers</source>
         <translatorcomment>Button text to cancel the scanning of transfers</translatorcomment>
         <translation>Cancel transfers</translation>
@@ -4193,6 +4311,11 @@ Do you want to delete it anyway?</translation>
         <source>Scanning…</source>
         <translatorcomment>Text to let the user know that the app is scanning a folder</translatorcomment>
         <translation>Scanning…</translation>
+    </message>
+    <message>
+        <source>Don´t exit the app</source>
+        <translatorcomment>Text below the GIF to askt he user not to close the app while it is scanning a folder</translatorcomment>
+        <translation>Don´t exit the app</translation>
     </message>
 </context>
 <context>
@@ -5609,11 +5732,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>Up to date</translation>
     </message>
     <message>
-        <source>Some issues occurred</source>
-        <translatorcomment>Message shown when there are some failed transfers</translatorcomment>
-        <translation>Some issues occurred</translation>
-    </message>
-    <message>
         <source>Scanning</source>
         <translatorcomment>State of the Transfers: Message which shows that a folder is being scanned</translatorcomment>
         <translation>Scanning</translation>
@@ -5705,6 +5823,11 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
         <translatorcomment>Link button to send the user to the transfer quota information blog website</translatorcomment>
         <translation>More about transfer quota</translation>
     </message>
+    <message numerus="yes">
+        <source>Issue found</source>
+        <translatorcomment>Message shown when there are some failed transfers/syncs/backups</translatorcomment>
+        <translation><numerusform>Issue found</numerusform><numerusform>Issues found</numerusform></translation>
+    </message>
 </context>
 <context>
     <name>TransferManagerDragBackDrop</name>
@@ -5730,21 +5853,9 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
 <context>
     <name>TransfersModel</name>
     <message>
-        <source>Sync transfers cannot be cancelled individually.
-Please delete the folder sync from settings to cancel them.</source>
-        <translatorcomment>Explains that the sync transfers cannot be cancelled individually.</translatorcomment>
-        <translation>Sync transfers cannot be cancelled individually.
-Please delete the folder sync from settings to cancel them.</translation>
-    </message>
-    <message>
         <source>Dismiss</source>
         <translatorcomment>Option to close the dialog without taking any action</translatorcomment>
         <translation>Dismiss</translation>
-    </message>
-    <message>
-        <source>Open settings</source>
-        <translatorcomment>Close the dialog and open the settings dialog</translatorcomment>
-        <translation>Open settings</translation>
     </message>
 </context>
 <context>
@@ -5771,7 +5882,7 @@ Please delete the folder sync from settings to cancel them.</translation>
     </message>
     <message>
         <source>Time left</source>
-        <translatorcomment>Time table header column name for all transfers categories</translatorcomment>
+        <translatorcomment>Time table header column name for all transfers, downloads, uploads categories (where there are only active transfers)</translatorcomment>
         <translation>Time left</translation>
     </message>
     <message>
@@ -5786,7 +5897,7 @@ Please delete the folder sync from settings to cancel them.</translation>
     </message>
     <message>
         <source>Time</source>
-        <translatorcomment>Time table header column name for the rest of the transfers categories</translatorcomment>
+        <translatorcomment>Time table header column name for media types and search categories</translatorcomment>
         <translation>Time</translation>
     </message>
     <message>

@@ -15,6 +15,7 @@ DuplicatedNodeDialog::DuplicatedNodeDialog(QWidget *parent) :
 #ifdef Q_OS_WINDOWS
     setWindowFlags(Qt::Dialog | Qt::MSWindowsFixedSizeDialogHint);
 #endif
+    setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
 
     connect(&mFolderCheck, &DuplicatedUploadBase::selectionDone, this, [this](){
         done(QDialog::Accepted);
@@ -68,9 +69,9 @@ void DuplicatedNodeDialog::cleanUi()
 
 void DuplicatedNodeDialog::setConflictItems(int count)
 {
-    if(count > 1)
+    if(count > 0)
     {
-        QString checkBoxText(tr("Apply this option on the next %1 conflict", "", count).arg(count));
+        QString checkBoxText(tr("Apply to all %1 duplicates", "", count).arg(count));
         ui->cbApplyToAll->setText(checkBoxText);
         ui->cbApplyToAll->show();
     }
@@ -88,7 +89,7 @@ void DuplicatedNodeDialog::setHeader(const QString& baseText, const QString& nod
 
 void DuplicatedNodeDialog::fillDialog(const QList<std::shared_ptr<DuplicatedNodeInfo> > &conflicts, DuplicatedUploadBase *checker)
 {
-    auto conflictNumber(conflicts.size());
+    auto conflictNumber(conflicts.size()-1);
     setConflictItems(conflictNumber);
 
     for(auto conflictIt = conflicts.begin(); conflictIt != conflicts.end(); ++conflictIt)
@@ -176,6 +177,11 @@ bool DuplicatedNodeDialog::eventFilter(QObject* watched, QEvent* event)
         headerText = headerText.replace(placeholder, boldName);
 
         ui->lDescription->setText(headerText);
+
+        if (elidedName != mCurrentNodeName)
+        {
+            ui->lDescription->setToolTip(mCurrentNodeName);
+        }
     }
 
     return QDialog::eventFilter(watched, event);

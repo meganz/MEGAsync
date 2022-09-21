@@ -94,7 +94,7 @@
     <message>
         <source>Please enter a valid file name or absolute path.</source>
         <translatorcomment>Information message shown when the user selects an invalid file name or path for the exclusion</translatorcomment>
-        <translation>กรุณากรอกชื่อไฟล์ที่ถูกต้องหรือเส้นทางแบบเต็ม</translation>
+        <translation>กรุณากรอกชื่อไฟล์หรือเส้นทางแบบเต็มที่ถูกต้อง</translation>
     </message>
     <message>
         <source>Select the file or folder you want to exclude</source>
@@ -443,12 +443,12 @@
     <message>
         <source>Use HTTPS for transfers that don&apos;t start</source>
         <translatorcomment>Checkbox label to set the option to use https for transfer connections.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ใช้ HTTPS ในกรณีที่ยังไม่เริ่มการถ่ายโอน</translation>
     </message>
     <message>
         <source>Only enable this option if tranfers don&apos;t start. Under all other circumstances, using HTTP is satisfactory as MEGA already encrypts all data.</source>
         <translatorcomment>Description label about the option Use HTTPS for transfers that don&amp;apos;t start checkbox.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>เปิดใช้งานตัวเลือกนี้ในกรณีที่ยังไม่เริ่มการถ่ายโอนเท่านั้น ส่วนสถานการณ์อื่น ๆ การใช้ HTTP นั้นเป็นที่น่าพอใจแล้ว เนื่องจาก MEGA เข้ารหัสข้อมูลทั้งหมดอยู่แล้ว</translation>
     </message>
 </context>
 <context>
@@ -610,7 +610,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>There is an ongoing report being uploaded.</source>
         <translatorcomment>Informative message shown when user is trying to upload a bug report while there is an ongoing upload.</translatorcomment>
-        <translation>ขณะนี้มีปัญหาอื่นที่รายงานกำลังมีการอัปโหลดอยู่</translation>
+        <translation>ขณะนี้กำลังอัปโหลดการรายงานปัญหาอื่นอยู่</translation>
     </message>
     <message>
         <source>Please wait until the current upload is completed.</source>
@@ -621,29 +621,24 @@ Please enter a different name to identify this synced folder:</source>
 <context>
     <name>CancelConfirmWidget</name>
     <message>
-        <source>Cancel Transfers</source>
+        <source>Cancel transfers?</source>
         <translatorcomment>Dialog main text</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ยกเลิกการถ่ายโอนหรือไม่</translation>
     </message>
     <message>
-        <source>Interrupting the transfer progress will render some of the items incomplete.</source>
+        <source>Transfers not yet processed will be cancelled.</source>
         <translatorcomment>Dialog messages which warns the user about the potential problems of cancelling the folder scanning</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>การถ่ายโอนที่ยังไม่ได้ดำเนินการจะถูกยกเลิก</translation>
     </message>
     <message>
-        <source>Dismiss</source>
-        <translatorcomment>Button to abort a folder scanning</translatorcomment>
-        <translation>ละทิ้ง</translation>
-    </message>
-    <message>
-        <source>Proceed</source>
+        <source>No, continue</source>
         <translatorcomment>Button to continue folder scanning cancellation</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ไม่ ดำเนินการต่อ</translation>
     </message>
     <message>
-        <source>Cancel transfers</source>
-        <translatorcomment>Label to indicate about the process of cancelling transfers</translatorcomment>
-        <translation type="unfinished"></translation>
+        <source>Yes, cancel</source>
+        <translatorcomment>Button to abort a folder scanning</translatorcomment>
+        <translation>ใช่ ยกเลิกเลย</translation>
     </message>
 </context>
 <context>
@@ -1071,65 +1066,60 @@ Please enter a different name to identify this synced folder:</source>
 </context>
 <context>
     <name>DuplicatedNodeDialog</name>
-    <message numerus="yes">
-        <source>Apply this option on the next %1 conflict</source>
-        <translatorcomment>Checkbox text to apply the action to all the following conflicts. %1 is the number of conflicts</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
-    </message>
     <message>
         <source>A folder named [A] already exists at this destination</source>
         <translatorcomment>Dialog text shown when a folder with the same name has been found on the cloud. [A] folder name</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ปลายทางมีโฟลเดอร์ชื่อ [A] อยู่แล้ว</translation>
     </message>
     <message>
         <source>The new folder will be merged with the folder at this destination.</source>
         <translatorcomment>Text explaining the result of the folder merge action</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>The folder will be renamed as:</source>
-        <translatorcomment>Text explaining the result of the folder rename action</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>โฟลเดอร์ใหม่จะถูกรวมเข้ากับโฟลเดอร์ที่ปลายทางนี้</translation>
     </message>
     <message>
         <source>The folder at this destination will be maintained.</source>
         <translatorcomment>Text explaining the result of the folder skip action</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>โฟลเดอร์ที่ปลายทางนี้จะยังอยู่เหมือนเดิม</translation>
     </message>
     <message>
         <source>A file named [A] already exists at this destination</source>
         <translatorcomment>Dialog text shown when a file with the same name has been found on the cloud. [A] file name</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ปลายทางมีไฟล์ชื่อ [A] อยู่แล้ว</translation>
     </message>
     <message>
         <source>The file at this destination will be replaced with the new file.</source>
         <translatorcomment>Text explaining the result of the file upload and replace action</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>The file will be updated with version history:</source>
-        <translatorcomment>Text explaining the result of the file upload and update action</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ไฟล์ที่ปลายทางนี้จะถูกแทนที่ด้วยไฟล์ใหม่</translation>
     </message>
     <message>
         <source>The file will be renamed as:</source>
         <translatorcomment>Text explaining the result of the file rename action</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ไฟล์จะถูกเปลี่ยนชื่อเป็น:</translation>
     </message>
     <message>
         <source>The file at this destination will be maintained.</source>
         <translatorcomment>Text explaining the result of the fileip action</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ไฟล์ที่ปลายทางนี้จะยังอยู่เหมือนเดิม</translation>
     </message>
     <message>
         <source>Folder already exists</source>
         <translatorcomment>Dialog title when a folder with the same name has been found on the cloud</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>โฟลเดอร์นี้มีการใช้งานแล้ว</translation>
     </message>
     <message>
         <source>File already exists</source>
         <translatorcomment>Dialog title when a file with the same name has been found on the cloud</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>มีไฟล์นี้อยู่แล้ว</translation>
+    </message>
+    <message numerus="yes">
+        <source>Apply to all %1 duplicates</source>
+        <translatorcomment>Checkbox text to apply the action to all the following conflicts. %1 is the number of conflicts</translatorcomment>
+        <translation><numerusform>นำไปใช้กับรายการที่ซ้ำกันทั้งหมด %1 รายการ</numerusform></translation>
+    </message>
+    <message>
+        <source>The file at this destination will be updated with a new version.</source>
+        <translatorcomment>Text explaining the result of the file upload and update action</translatorcomment>
+        <translation>ไฟล์ที่ปลายทางนี้จะได้รับการอัปเดตเป็นเวอร์ชันใหม่</translation>
     </message>
 </context>
 <context>
@@ -1142,52 +1132,47 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Skip this file</source>
         <translatorcomment>Button text for the skip action for files</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ข้ามไฟล์นี้</translation>
     </message>
     <message>
         <source>Skip this folder</source>
         <translatorcomment>Button text for the skip action for folders</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ข้ามโฟลเดอร์นี้</translation>
     </message>
     <message>
         <source>Merge</source>
         <translatorcomment>Action title and button text for the Merge action for folders</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>รวม</translation>
     </message>
     <message>
         <source>Rename</source>
         <translatorcomment>Action title and button text for the Rename action for folders/files</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>เปลี่ยนชื่อ</translation>
     </message>
     <message>
         <source>Replace</source>
         <translatorcomment>Action title and button text for the Replace action for folders/files</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>แทนที่</translation>
     </message>
     <message>
         <source>Update</source>
         <translatorcomment>Action title and button text for the Update action for files</translatorcomment>
         <translation>อัปเดต</translation>
     </message>
-    <message numerus="yes">
-        <source>%1 folder</source>
-        <translatorcomment>Info label with the number of folders in a folder to upload</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>%1 file</source>
-        <translatorcomment>Info label with the number of files in a folder to upload</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
-    </message>
     <message>
         <source>loading time…</source>
         <translatorcomment>Text shown while the local file/folder modified time is calculated</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>กำลังคำนวณเวลา…</translation>
     </message>
     <message>
         <source>loading size…</source>
         <translatorcomment>Text shown while the local file/folder size is calculated</translatorcomment>
-		<translation type="unfinished"></translation>
+        <translation>กำลังคำนวณขนาด…</translation>
+    </message>
+    <message>
+        <source>Learn more</source>
+        <translatorcomment>Underline link label to open a help.mega.io article</translatorcomment>
+        <translation>เรียนรู้เพิ่มเติม</translation>
     </message>
 </context>
 <context>
@@ -1297,7 +1282,7 @@ Please enter a different name to identify this synced folder:</source>
 To prevent the syncing of entire boot volumes, which is inefficient and dangerous,
 we ask you to start with a smaller folder and add more data while MEGAsync is running.</source>
         <translatorcomment>Label to inform a user about the fact of syncing a extremely large folder and the possible drawbacks that could arise.</translatorcomment>
-        <translation>คุณกำลังพยายามซิงค์โฟลเดอร์ที่มีขนาดใหญ่มาก เพื่อป้องกันการซิงค์วอลุ่มสำหรับบูตทั้งหมดซึ่งไม่ได้ผลและเป็นอันตรายนั้น เราขอให้คุณเริ่มต้นด้วยโฟลเดอร์เล็ก ๆ และเพิ่มข้อมูลมากขึ้นในขณะที่ MEGAsync กำลังทำงานอยู่</translation>
+        <translation>โฟลเดอร์ที่คุณพยายามซิงค์มีขนาดใหญ่เกินไป เพื่อหลีกเลี่ยงการซิงโครไนซ์บูทโวลุ่มทั้งหมดที่ไม่มีประสิทธิภาพและมีความเสี่ยง ให้เริ่มต้นด้วยโฟลเดอร์ขนาดเล็กและขอให้เพิ่มข้อมูลในขณะที่ MEGAsync กำลังทำงานอยู่</translation>
     </message>
     <message>
         <source>Error</source>
@@ -1792,9 +1777,9 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation>ผิดพลาด</translation>
     </message>
     <message>
-        <source>Error opening folder</source>
+        <source>Folder can&apos;t be opened. Check that the folder in your local drive hasn&apos;t been deleted or moved.</source>
         <translatorcomment>Warning message text to let the user know that the local folder could not be opened</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ไม่สามารถเปิดโฟลเดอร์ได้ ตรวจสอบว่าโฟลเดอร์ในไดรฟ์บนเครื่องของคุณไม่ได้ถูกลบหรือย้ายออก</translation>
     </message>
 </context>
 <context>
@@ -1811,13 +1796,13 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>Failed: %1</source>
-        <translatorcomment>Tooltip for show transfer failed reason</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Tooltip for show transfer failed reason. %1 is a placeholder for the SDK error reason.</translatorcomment>
+        <translation>ล้มเหลว: %1</translation>
     </message>
     <message>
         <source>Copy link to file</source>
         <translatorcomment>Tooltip for copy linr</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>คัดลอกลิงก์ไปยังคลิปบอร์ด</translation>
     </message>
     <message>
         <source>Added [A]</source>
@@ -2216,10 +2201,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>คุณยังไม่ได้เข้าสู่ระบบ</translation>
     </message>
     <message>
-        <source>Are you sure you want to exit?</source>
-        <translation>คุณแน่ใจหรือไม่ว่าต้องการออก</translation>
-    </message>
-    <message>
         <source>Transfer manager</source>
         <translation>จัดการถ่ายโอน</translation>
     </message>
@@ -2433,26 +2414,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>MEGAsync จะยังคงทำงานต่อไปได้ แต่ถึงอย่างนั้นก็จะไม่สนับสนุนการอัปเดตเวอร์ชันที่เก่ากว่า OS X Yosemite ในเร็ว ๆ นี้</translation>
     </message>
     <message>
-        <source>One or more syncs have been disabled. Go to preferences to enable them again.</source>
-        <translatorcomment>Warning message shown when logging into MEGAsync to inform the user that some syncs have been disabled and need to go to settings to enable them again (macOS)</translatorcomment>
-        <translation>รายการซิงค์บางอย่างถูกปิดใช้งาน ไปที่การกำหนดลักษณะเพื่อเปิดใช้งานอีกครั้ง</translation>
-    </message>
-    <message>
-        <source>Open Preferences</source>
-        <translatorcomment>Button label to open MEGAsync preferences dialog (MacOS).</translatorcomment>
-        <translation>เปิดการกำหนดลักษณะ</translation>
-    </message>
-    <message>
-        <source>Open Settings</source>
-        <translatorcomment>Button label to open MEGAsync preferences dialog (Linux and Windows).</translatorcomment>
-        <translation>เปิดการตั้งค่า</translation>
-    </message>
-    <message>
-        <source>One or more syncs have been disabled. Go to settings to enable them again.</source>
-        <translatorcomment>Warning message shown when logging into MEGAsync to inform the user that some syncs have been disabled and need to go to settings to enable them again (Windows and Linux)</translatorcomment>
-        <translation>การซิงค์อย่างน้อยหนึ่งอย่างถูกปิดใช้งาน ไปที่การตั้งค่าเพื่อเปิดใช้งานอีกครั้ง</translation>
-    </message>
-    <message>
         <source>Your syncs have been disabled</source>
         <translatorcomment>Notification message launched when your syncs have been disabled.</translatorcomment>
         <translation>การซิงค์ของคุณถูกปิดใช้งาน</translation>
@@ -2511,6 +2472,23 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>%1 and %2 were successfully downloaded</source>
         <translatorcomment>System notification to inform the user that %1 files and %2 folders were successfully downloaded. The %1 is a sentence part for files and %2 for folders.</translatorcomment>
         <translation>ดาวน์โหลด %1 และ %2 เรียบร้อยแล้ว</translation>
+    </message>
+    <message numerus="yes">
+        <source>There is an active transfer. Exit the app?
+Transfer will automatically resume when you re-open the app.</source>
+        <translatorcomment>Messagebox text to let the user know that there are active transfers when closing the app. The user will be able to exit and pause them, or stop the exit action.</translatorcomment>
+        <translation><numerusform>ยังมีการถ่ายโอนอยู่ ออกจากแอปหรือไม่
+การถ่ายโอนจะดำเนินการต่อโดยอัตโนมัติเมื่อคุณเปิดแอปอีกครั้ง</numerusform></translation>
+    </message>
+    <message>
+        <source>Exit app</source>
+        <translatorcomment>One of the messagebox options: Close the app and pause the active transfers</translatorcomment>
+        <translation>ออกจากแอป</translation>
+    </message>
+    <message>
+        <source>Stay in app</source>
+        <translatorcomment>One of the messagebox options: Keep the app open and continue with the active transfers</translatorcomment>
+        <translation>อยู่ในแอปต่อ</translation>
     </message>
 </context>
 <context>
@@ -2849,7 +2827,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Reached storage quota limit</source>
         <translatorcomment>Label to show that the account reached storage limit during a SDK operation.</translatorcomment>
-        <translation>เกินโควต้าพื้นที่เก็บข้อมูลแล้ว</translation>
+        <translation> เกินโควต้าพื้นที่จัดเก็บ </translation>
     </message>
     <message>
         <source>Business account expired</source>
@@ -3007,42 +2985,145 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Error opening file</source>
         <translatorcomment>Text on an error messagebox because a local file could not be opened</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>เปิดไฟล์ไม่ได้ ตรวจสอบว่าไฟล์ในไดรฟ์บนเครื่องของคุณไม่ได้ถูกลบหรือย้ายออก</translation>
     </message>
     <message numerus="yes">
         <source>Pause transfer</source>
         <translatorcomment>Context menu action to pause transfer</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>หยุดการถ่ายโอนชั่วคราว</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Resume transfer</source>
         <translatorcomment>Context menu action to resume transfer</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>ดำเนินการถ่ายโอนต่อ</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Cancel transfer</source>
         <translatorcomment>Context menu action to cancel transfer</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>Cancel and clear transfer?</source>
-        <translatorcomment>Messagebox text to confirm if the user wants to cancel all transfers and clear all the completed transfers</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>Cancel all transfer?</source>
-        <translatorcomment>Messagebox text to confirm if the user wants to cancel all transfers</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>Retry transfer?</source>
-        <translatorcomment>Messagebox text to confirm if the user wants to retry all transfers</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>ยกเลิกการถ่ายโอน</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Clear transfer</source>
-        <translatorcomment>Messagebox text to confirm if the user wants to clear the completed transfers</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translatorcomment>Tooltip for the clear button in a transfer row</translatorcomment>
+        <translation><numerusform>ล้างการถ่ายโอน</numerusform></translation>
+    </message>
+    <message>
+        <source>Cancel transfers?
+All your transfers will be cancelled.</source>
+        <translatorcomment>Messagebox text to confirm if the user wants to cancel all the transfers in the all transfers category</translatorcomment>
+        <translation>ยกเลิกการถ่ายโอนหรือไม่
+การถ่ายโอนทั้งหมดของคุณจะถูกยกเลิก</translation>
+    </message>
+    <message>
+        <source>Cancel transfers?
+All your transfers in this category will be cancelled and cleared.</source>
+        <translatorcomment>Messagebox text to confirm if the user wants to cancel and clear all the transfers in a category other than all transfers category</translatorcomment>
+        <translation>ยกเลิกการถ่ายโอนหรือไม่
+การถ่ายโอนทั้งหมดในประเภทนี้จะถูกยกเลิกและล้างออก</translation>
+    </message>
+    <message>
+        <source>Cancel transfers?
+All your transfers in this category will be cancelled.</source>
+        <translatorcomment>Messagebox text to confirm if the user wants to cancel all the transfers in a category other than all transfers category</translatorcomment>
+        <translation>ยกเลิกการถ่ายโอนหรือไม่
+การถ่ายโอนทั้งหมดในประเภทนี้จะถูกยกเลิก</translation>
+    </message>
+    <message>
+        <source>Cancel transfers?
+Your incomplete sync transfers won&apos;t be cancelled.</source>
+        <translatorcomment>Messagebox text to confirm if the user wants to cancel all the transfers in a category other than all transfers category but there are sync transfers(they cannot be cancelled)</translatorcomment>
+        <translation>ยกเลิกการถ่ายโอนหรือไม่
+รายการซิงค์ที่ยังถ่ายโอนไม่เสร็จสมบูรณ์จะไม่ถูกยกเลิก การถ่ายโอนอื่น ๆ ทั้งหมดจะถูกยกเลิก</translation>
+    </message>
+    <message>
+        <source>Cancel transfers?
+Your incomplete sync transfers won't be cancelled
+All the other transfers will be cancelled and cleared.</source>
+        <translatorcomment>Messagebox text to confirm if the user wants to cancel and clear all the transfers in a category other than all transfers category but there are sync transfers(they cannot be cancelled)</translatorcomment>
+        <translation>ยกเลิกการถ่ายโอนหรือไม่
+รายการซิงค์ที่ยังถ่ายโอนไม่เสร็จสมบูรณ์จะไม่ถูกยกเลิก
+การถ่ายโอนอื่น ๆ ทั้งหมดจะถูกยกเลิกและล้างออก</translation>
+    </message>
+    <message>
+        <source>Clear transfers?
+All your completed transfers will be cleared.</source>
+        <translatorcomment>Messagebox text to confirm if the user wants to clear all the transfers in the completed category</translatorcomment>
+        <translation>ล้างการถ่ายโอนหรือไม่
+การถ่ายโอนที่เสร็จสมบูรณ์ทั้งหมดของคุณจะถูกล้างออก</translation>
+    </message>
+    <message>
+        <source>Clear transfers?
+All your completed transfers in this category will be cleared.</source>
+        <translatorcomment>Messagebox text to confirm if the user wants to clear all the transfers in a category other than the completed category</translatorcomment>
+        <translation>ล้างการถ่ายโอนหรือไม่
+การถ่ายโอนที่เสร็จสมบูรณ์ทั้งหมดในประเภทนี้จะถูกล้างออก</translation>
+    </message>
+    <message>
+        <source>Cancel transfers?
+All your selected transfers will be cancelled.</source>
+        <translatorcomment>Messagebox text to confirm if the user wants to cancel all the selected transfers</translatorcomment>
+        <translation>ยกเลิกการถ่ายโอนหรือไม่
+การถ่ายโอนที่คุณเลือกทั้งหมดจะถูกยกเลิก</translation>
+    </message>
+    <message>
+        <source>Cancel transfers?
+All your selected transfers will be cancelled and cleared.</source>
+        <translatorcomment>Messagebox text to confirm if the user wants to cancel and clear all the selected transfers</translatorcomment>
+        <translation>ยกเลิกการถ่ายโอนหรือไม่
+การถ่ายโอนที่คุณเลือกทั้งหมดจะถูกยกเลิกและล้างออก</translation>
+    </message>
+    <message>
+        <source>Cancel transfers?
+Your selected incomplete sync transfers won't be cancelled
+All the other selected transfers will be cancelled and cleared.</source>
+        <translatorcomment>Messagebox text to confirm if the user wants to cancel and clear all the selected transfers but there are sync transfers in the selection (they cannot be cancelled)</translatorcomment>
+        <translation>ยกเลิกการถ่ายโอนหรือไม่
+รายการซิงค์ที่ยังถ่ายโอนไม่เสร็จสมบูรณ์ที่คุณเลือกจะไม่ถูกยกเลิก 
+การถ่ายโอนอื่น ๆ ทั้งหมดจะถูกยกเลิกและล้างออก</translation>
+    </message>
+    <message>
+        <source>Cancel transfer?</source>
+        <translatorcomment>Messagebox text to confirm if the user wants to cancel a single transfer</translatorcomment>
+        <translation>ยกเลิกการถ่ายโอนหรือไม่</translation>
+    </message>
+    <message>
+        <source>Clear transfers?
+All the selected completed transfers in this category will be cleared.</source>
+        <translatorcomment>Messagebox text to confirm if the user wants to clear the selected completed transfer</translatorcomment>
+        <translation>ล้างการถ่ายโอนหรือไม่
+การถ่ายโอนที่เสร็จสมบูรณ์ที่เลือกทั้งหมดในประเภทนี้จะถูกล้างออก</translation>
+    </message>
+    <message>
+        <source>Cancel transfers?
+Your selected incomplete sync transfers won&apos;t be cancelled.</source>
+        <translatorcomment>Messagebox text to confirm if the user wants to cancel all the selected transfers but there are sync transfers in the selection (they cannot be cancelled)</translatorcomment>
+        <translation>ยกเลิกการถ่ายโอนหรือไม่
+รายการซิงค์ที่ยังถ่ายโอนไม่เสร็จสมบูรณ์ที่คุณเลือกจะไม่ถูกยกเลิก การถ่ายโอนอื่น ๆ ทั้งหมดจะถูกยกเลิก</translation>
+    </message>
+    <message>
+        <source>Clear transfer?</source>
+        <translatorcomment>Messagebox text to confirm if the user wants to clear a single selected completed transfer</translatorcomment>
+        <translation>ล้างการถ่ายโอนหรือไม่</translation>
+    </message>
+    <message numerus="yes">
+        <source>Cancel and clear transfer</source>
+        <translatorcomment>Context menu action to resume cancel the active transfers and clear the completed transfers (multiple transfers selected)</translatorcomment>
+        <translation><numerusform>ยกเลิกและล้างการถ่ายโอน</numerusform></translation>
+    </message>
+    <message>
+        <source>Yes, cancel</source>
+        <translatorcomment>Dialog button to do the proposed actions (cancel the transfers)</translatorcomment>
+        <translation>ใช่ ยกเลิกเลย</translation>
+    </message>
+    <message>
+        <source>No, continue</source>
+        <translatorcomment>Dialog button to abort the proposed action</translatorcomment>
+        <translation>ไม่ ดำเนินการต่อ</translation>
+    </message>
+    <message>
+        <source>Yes, clear</source>
+        <translatorcomment>Dialog button to do the proposed actions (clear the transfers)</translatorcomment>
+        <translation>ใช่ ล้างเลย</translation>
     </message>
 </context>
 <context>
@@ -3076,7 +3157,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Enter the new folder name</source>
         <translatorcomment>Dialog text to ask the user to enter a new name for the folder</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>กรอกชื่อโฟลเดอร์ใหม่</translation>
     </message>
     <message>
         <source>New folder</source>
@@ -3581,7 +3662,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Additional transfer quota charged at %1 per %2TB.</source>
         <translatorcomment>Balloon tooltip to inform users that additional transfer quota for business plan will be charged at %1 price per %2 TB. %1 reflect price and %2 storage unit.</translatorcomment>
-        <translation>โควต้าถ่ายโอนข้อมูลเพิ่มเติม คิดค่าบริการ %1 ต่อ %2 TB</translation>
+        <translation>โควต้าการถ่ายโอนข้อมูลเพิ่มเติม คิดค่าบริการ %1 ต่อ %2 TB</translation>
     </message>
     <message numerus="yes">
         <source>minimum %n user</source>
@@ -3628,18 +3709,57 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
 </context>
 <context>
+    <name>PlatformStrings</name>
+    <message>
+        <source>Open settings</source>
+        <translatorcomment>Button label to open MEGAsync preferences dialog (Linux and Windows).</translatorcomment>
+        <translation>เปิดการตั้งค่า</translation>
+    </message>
+    <message>
+        <source>One or more syncs have been disabled. Go to settings to enable them again.</source>
+        <translatorcomment>Warning message shown when logging into MEGAsync to inform the user that some syncs have been disabled and need to go to settings to enable them again (Windows and Linux)</translatorcomment>
+        <translation>การซิงค์อย่างน้อยหนึ่งอย่างถูกปิดใช้งาน ไปที่การตั้งค่าเพื่อเปิดใช้งานอีกครั้ง</translation>
+    </message>
+    <message>
+        <source>Open preferences</source>
+        <translatorcomment>Button label to open MEGAsync preferences dialog (MacOS).</translatorcomment>
+        <translation>เปิดการกำหนดลักษณะ</translation>
+    </message>
+    <message>
+        <source>One or more syncs have been disabled. Go to preferences to enable them again.</source>
+        <translatorcomment>Warning message shown when logging into MEGAsync to inform the user that some syncs have been disabled and need to go to settings to enable them again (macOS)</translatorcomment>
+        <translation>รายการซิงค์บางอย่างถูกปิดใช้งาน ไปที่การกำหนดลักษณะเพื่อเปิดใช้งานอีกครั้ง</translation>
+    </message>
+    <message>
+        <source>Sync transfers cannot be cancelled individually.
+Please delete the folder sync from settings to cancel them.</source>
+        <translatorcomment>Explains that the sync transfers cannot be cancelled individually. (for windows and linux)</translatorcomment>
+        <translation>รายการซิงค์ที่กำลังถ่ายโอนอยู่ไม่สามารถยกเลิกได้ หากต้องการลบการซิงค์นี้ออก ให้ไปที่การตั้งค่าในแอปเดสก์ท็อปแล้วลบโฟลเดอร์ที่ซิงค์แทน</translation>
+    </message>
+    <message>
+        <source>Sync transfers cannot be cancelled individually.
+Please delete the folder sync from preferences to cancel them.</source>
+        <translatorcomment>Explains that the sync transfers cannot be cancelled individually. (for macOS)</translatorcomment>
+        <translation>รายการซิงค์ที่กำลังถ่ายโอนอยู่ไม่สามารถยกเลิกได้ หากต้องการลบการซิงค์นี้ออก ให้ไปที่การกำหนดลักษณะในแอปเดสก์ท็อปแล้วลบโฟลเดอร์ที่ซิงค์แทน</translation>
+    </message>
+</context>
+<context>
     <name>Preferences</name>
     <message>
-        <source>- Full redesign of remote file picker.
-- Fixed translation issues.
-- Other minor UI fixes and adjustments.
-- Fixed detected crashes on Windows, Linux and macOS.
+        <source>- There is now a new transfer manager.
+- Transfer management was enhanced and reliability of downloads and uploads improved. 
+- Detected crashes on Windows, Linux, and macOS fixed.
+- Translation issues fixed.
+- Performance improved.
+- UI fixed and adjusted.
 </source>
-        <translatorcomment>Changelog for version 4.6.7</translatorcomment>
-        <translation>- ออกแบบดีไซน์การเลือกไฟล์จากระยะไกลใหม่ทั้งหมด
-- แก้ไขข้อผิดพลาดในการแปลบางจุด
-- แก้ไขและปรับแต่ง UI เล็กน้อย
-- แก้ไขข้อผิดพลาดที่ตรวจพบบน Windows Linux และ macOS
+        <translatorcomment>Changelog for version v4.7.0</translatorcomment>
+        <translation>- ตอนนี้มีตัวจัดการการถ่ายโอนใหม่แล้ว
+- ตัวจัดการการถ่ายโอนได้รับการเพิ่มประสิทธิภาพและความน่าเชื่อถือการดาวน์โหลดและอัปโหลดได้รับการปรับปรุงเช่นเดียวกัน 
+- ตรวจพบและแก้ไขข้อขัดข้องใน Windows, Linux และ macOS แล้ว
+- ปรับปรุงการแปลภาษาแล้ว
+- ปรับปรุงประสิทธิภาพการทำงานทั่วไป
+- แก้ไขและปรับปรุง UI แล้ว
 </translation>
     </message>
 </context>
@@ -4054,27 +4174,27 @@ Do you want to delete it anyway?</source>
     <message>
         <source>%1 TB</source>
         <translatorcomment>File size measured in terabytes</translatorcomment>
-        <translation>%1 TB</translation>
+        <translation>%1 TB</translation>
     </message>
     <message>
         <source>%1 GB</source>
         <translatorcomment>File size measured in gigabytes</translatorcomment>
-        <translation>%1 GB</translation>
+        <translation>%1 GB</translation>
     </message>
     <message>
         <source>%1 MB</source>
         <translatorcomment>File size measured in megabytes</translatorcomment>
-        <translation>%1 MB</translation>
+        <translation>%1 MB</translation>
     </message>
     <message>
         <source>%1 KB</source>
         <translatorcomment>File size measured in kilobytes</translatorcomment>
-        <translation>%1 KB</translation>
+        <translation>%1 KB</translation>
     </message>
     <message>
         <source>%1 bytes</source>
         <translatorcomment>File size measured in bytes</translatorcomment>
-        <translation>%1 ไบต์</translation>
+        <translation>%1 ไบต์</translation>
     </message>
     <message>
         <source>Invalid filename</source>
@@ -4144,14 +4264,14 @@ Do you want to delete it anyway?</source>
 <context>
     <name>RenameLocalNodeDialog</name>
     <message>
-        <source>Error renaming file to %1</source>
-        <translatorcomment>Error message shown when a file renaming has failed. %1 is the name of the file</translatorcomment>
-        <translation type="unfinished"></translation>
+        <source>File can’t be renamed to &quot;%1&quot;</source>
+        <translatorcomment>Error warning shown when a file can´t be renamed due to an error.</translatorcomment>
+        <translation>ไม่สามารถเปลี่ยนชื่อไฟล์เป็น &quot;%1&quot;</translation>
     </message>
     <message>
-        <source>Error renaming folder to %1</source>
-        <translatorcomment>Error message shown when a folder renaming has failed. %1 is the name of the folder</translatorcomment>
-        <translation type="unfinished"></translation>
+        <source>Folder can’t be renamed to &quot;%1&quot;</source>
+        <translatorcomment>Error warning shown when a folder can´t be renamed due to an error.</translatorcomment>
+        <translation>ไม่สามารถเปลี่ยนชื่อโฟลเดอร์เป็น &quot;%1&quot;</translation>
     </message>
 </context>
 <context>
@@ -4159,40 +4279,40 @@ Do you want to delete it anyway?</source>
     <message>
         <source>Enter new file name</source>
         <translatorcomment>Title of the rename file dialog </translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>กรอกชื่อไฟล์ใหม่</translation>
     </message>
     <message>
         <source>Enter new folder name</source>
         <translatorcomment>Title of the rename folder dialog </translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>กรอกชื่อโฟลเดอร์ใหม่</translation>
     </message>
     <message>
         <source>Rename file</source>
         <translatorcomment>Dialog title for file renaming</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>เปลี่ยนชื่อไฟล์</translation>
     </message>
     <message>
         <source>Rename folder</source>
         <translatorcomment>Dialog title for folder renaming</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>เปลี่ยนชื่อโฟล์เดอร์</translation>
     </message>
 </context>
 <context>
     <name>ScanningWidget</name>
     <message>
-        <source>Please do not close the application</source>
-        <translatorcomment>Text below the GIF to askt he user not to close the app while it is scanning a folder</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Cancel transfers</source>
         <translatorcomment>Button text to cancel the scanning of transfers</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ยกเลิกการถ่ายโอน</translation>
     </message>
     <message>
         <source>Scanning…</source>
         <translatorcomment>Text to let the user know that the app is scanning a folder</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>กำลังสแกน…</translation>
+    </message>
+    <message>
+        <source>Don´t exit the app</source>
+        <translatorcomment>Text below the GIF to askt he user not to close the app while it is scanning a folder</translatorcomment>
+        <translation>อย่าปิดแอป</translation>
     </message>
 </context>
 <context>
@@ -4657,7 +4777,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Transfer quota:</source>
         <translatorcomment>Label for account transfer quota details.(macOS)</translatorcomment>
-        <translation>โควต้าถ่ายโอน:</translation>
+        <translation>โควต้าการถ่ายโอน:</translation>
     </message>
     <message>
         <source>Your MEGA account is full. Uploads are disabled and folder synchronisation is paused.</source>
@@ -5440,32 +5560,32 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Starting…</source>
         <translatorcomment>Transfer is being started but no bytes have been transferred yet</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>กำลังเริ่ม…</translation>
     </message>
     <message>
         <source>Retrying</source>
         <translatorcomment>Transfer is starting again after failure</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>กำลังลองใหม่</translation>
     </message>
     <message>
         <source>Uploading…</source>
         <translatorcomment>Transfer is being uploaded</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>กำลังอัปโหลด…</translation>
     </message>
     <message>
         <source>Downloading…</source>
         <translatorcomment>Transfer is being downloaded</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>กำลังดาวน์โหลด…</translation>
     </message>
     <message>
         <source>Syncing…</source>
         <translatorcomment>Transfer is being synced</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>กำลังซิงค์…</translation>
     </message>
     <message>
         <source>Completing</source>
         <translatorcomment>Transfer is being completed</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>กำลังดำเนินการให้เสร็จสิ้น</translation>
     </message>
     <message>
         <source>Completed</source>
@@ -5480,17 +5600,17 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Failed</source>
         <translatorcomment>Transfer has failed</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ล้มเหลว</translation>
     </message>
     <message>
         <source>In queue</source>
         <translatorcomment>Transfer is active but not being processed yet</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>อยู่ในคิว</translation>
     </message>
     <message>
         <source>(in queue)</source>
         <translatorcomment>Transfer is paused and no bytes have been transferred yet</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>(อยู่ในคิว)</translation>
     </message>
     <message>
         <source>Retry</source>
@@ -5500,12 +5620,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Out of storage space</source>
         <translatorcomment>Transfer is paused for out of storage space</translatorcomment>
-        <translation>พื้นที่จัดเก็บไม่เพียงพอ</translation>
+        <translation>เกินโควต้าพื้นที่จัดเก็บ</translation>
     </message>
     <message>
         <source>Out of transfer quota</source>
         <translatorcomment>Transfer is paused for out of transfer quota</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>เกินโควต้าการถ่ายโอนแล้ว</translation>
     </message>
 </context>
 <context>
@@ -5551,7 +5671,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Search</source>
         <translatorcomment>Title for text search window</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ค้นหา</translation>
     </message>
     <message>
         <source>Transferring</source>
@@ -5561,57 +5681,52 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>All transfers</source>
         <translatorcomment>Title for All transfers category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ถ่ายโอนทั้งหมด</translation>
     </message>
     <message>
         <source>Failed</source>
         <translatorcomment>Title for Failed transfers category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ล้มเหลว</translation>
     </message>
     <message>
         <source>Media type</source>
         <translatorcomment>Title of the groupbox which contains all the media categories</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ประเภทสื่อ</translation>
     </message>
     <message>
         <source>Archives</source>
         <translatorcomment>Categories for archive type transfers</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>บีบอัด</translation>
     </message>
     <message>
         <source>Documents</source>
         <translatorcomment>Categories for document type transfers</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>เอกสาร</translation>
     </message>
     <message>
         <source>Images</source>
         <translatorcomment>Categories for image type transfers</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>รูปภาพ</translation>
     </message>
     <message>
         <source>Videos</source>
         <translatorcomment>Categories for video type transfers</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>วิดีโอ</translation>
     </message>
     <message>
         <source>Audio</source>
         <translatorcomment>Categories for audio type transfers</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>เสียง</translation>
     </message>
     <message>
         <source>Other</source>
         <translatorcomment>Categories for other type transfers</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>อื่น ๆ</translation>
     </message>
     <message>
         <source>Up to date</source>
         <translatorcomment>All transfers have been finished</translatorcomment>
         <translation>ล่าสุดแล้ว</translation>
-    </message>
-    <message>
-        <source>Some issues occurred</source>
-        <translatorcomment>Message shown when there are some failed transfers</translatorcomment>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Scanning</source>
@@ -5621,67 +5736,67 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>All paused</source>
         <translatorcomment>Message which shows that the global pause is set</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>หยุดชั่วคราวทั้งหมดแล้ว</translation>
     </message>
     <message>
         <source>All</source>
         <translatorcomment>Title for all searched transfers by text</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ทั้งหมด</translation>
     </message>
     <message>
         <source>Search:</source>
         <translatorcomment>Title to show the text used to search</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ค้นหา:</translation>
     </message>
     <message>
         <source>Retry all</source>
         <translatorcomment>Button text for retry all button in Failed category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ลองใหม่ทั้งหมด</translation>
     </message>
     <message>
         <source>No uploads</source>
         <translatorcomment>Empty window message for upload category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ไม่มีการอัปโหลด</translation>
     </message>
     <message>
         <source>No downloads</source>
         <translatorcomment>Empty window message for download category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ไม่มีการดาวน์โหลด</translation>
     </message>
     <message>
         <source>No transfers</source>
         <translatorcomment>Empty window message for generic categories</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ยังไม่มีการถ่ายโอน</translation>
     </message>
     <message>
         <source>No search results</source>
         <translatorcomment>Empty window message for search category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ไม่พบผลลัพธ์การค้นหา</translation>
     </message>
     <message>
         <source>No completed transfers</source>
         <translatorcomment>Empty window message for completed category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ไม่มีรายการถ่ายโอน</translation>
     </message>
     <message>
         <source>Resume all transfers</source>
         <translatorcomment>Global pause button tooltip</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ดำเนินการถ่ายโอนต่อทั้งหมด</translation>
     </message>
     <message>
         <source>Pause all transfers</source>
         <translatorcomment>Global resume button tooltip</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>หยุดการถ่ายโอนทั้งหมดชั่วคราว</translation>
     </message>
     <message numerus="yes">
         <source>%1 result found</source>
         <translatorcomment>Message shown with search results,when there are only uploads or downloads, but not both at the same time</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>พบ %1 ผลลัพธ์</numerusform></translation>
     </message>
     <message>
         <source>Upgrade now</source>
         <translatorcomment>Button to open web explorer to see MEGA paid plans</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>อัปเกรดตอนนี้</translation>
     </message>
     <message>
         <source>Transfer quota exceeded</source>
@@ -5697,12 +5812,18 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>You can&apos;t continue downloading as you don&apos;t have enough transfer quota left for this IP address.
 To get more quota, upgrade to a Pro account or wait for [A] until more free quota becomes available on your IP address.</source>
         <translatorcomment>Message which shows that the user reachs the overquota. [A] is the time to wait until the quota is reset in hh:mm:ss</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>คุณไม่สามารถดาวน์โหลดต่อได้ เนื่องจากที่อยู่ IP นี้มีโควต้าการถ่ายโอนไม่เพียงพอ
+หากต้องการรับโควต้ามากขึ้น ให้อัปเกรดเป็นบัญชี Pro หรือรอ [A] จนกว่าที่อยู่ IP ของคุณจะมีโควต้าฟรีเพิ่มขึ้น</translation>
     </message>
     <message>
         <source>More about transfer quota</source>
         <translatorcomment>Link button to send the user to the transfer quota information blog website</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>รายละเอียดเพิ่มเติมเกี่ยวกับโควต้าการถ่ายโอน</translation>
+    </message>
+    <message numerus="yes">
+        <source>Issue found</source>
+        <translatorcomment>Message shown when there are some failed transfers/syncs/backups</translatorcomment>
+        <translation><numerusform>พบปัญหา</numerusform></translation>
     </message>
 </context>
 <context>
@@ -5710,7 +5831,7 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
     <message>
         <source>Drop to Upload</source>
         <translatorcomment>Let the user know that files can be dropped there</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>วางเพื่ออัปโหลด</translation>
     </message>
 </context>
 <context>
@@ -5729,20 +5850,9 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
 <context>
     <name>TransfersModel</name>
     <message>
-        <source>Sync transfers cannot be cancelled individually.
-Please delete the folder sync from settings to cancel them.</source>
-        <translatorcomment>Explains that the sync transfers cannot be cancelled individually.</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Dismiss</source>
         <translatorcomment>Option to close the dialog without taking any action</translatorcomment>
         <translation>ละทิ้ง</translation>
-    </message>
-    <message>
-        <source>Open settings</source>
-        <translatorcomment>Close the dialog and open the settings dialog</translatorcomment>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5760,117 +5870,117 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Speed</source>
         <translatorcomment>speed table header column name of the file to transfer in All transfers and uploads/downloads categories</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ความเร็ว</translation>
     </message>
     <message>
         <source>Status</source>
         <translatorcomment>Status (paused, completed, queue...) of the file to transfer</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>สถานะ</translation>
     </message>
     <message>
         <source>Time left</source>
-        <translatorcomment>Time table header column name for all transfers categories</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Time table header column name for all transfers, downloads, uploads categories (where there are only active transfers)</translatorcomment>
+        <translation>เวลาที่เหลือ</translation>
     </message>
     <message>
         <source>Time completed</source>
         <translatorcomment>Time table header column name for completed transfers categories</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>เวลาที่เสร็จสมบูรณ์</translation>
     </message>
     <message>
         <source>Avg. speed</source>
         <translatorcomment>speed table header column name for completed and failed transfers categories</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ความเร็วเฉลี่ย</translation>
     </message>
     <message>
         <source>Time</source>
-        <translatorcomment>Time table header column name for the rest of the transfers categories</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Time table header column name for media types and search categories</translatorcomment>
+        <translation>เวลา</translation>
     </message>
     <message>
         <source>Clear all completed</source>
         <translatorcomment>Tooltip for clear button when the user is in the completed category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ล้างรายการที่เสร็จแล้วออกทั้งหมด</translation>
     </message>
     <message>
         <source>Clear all search results</source>
         <translatorcomment>Tooltip for clear button when the user is in the search category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ล้างผลการค้นหาทั้งหมด</translation>
     </message>
     <message>
         <source>Clear all audios</source>
         <translatorcomment>Tooltip for clear button when the user is in the audios category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ล้างการถ่ายโอนทั้งหมดในประเภทเสียง</translation>
     </message>
     <message>
         <source>Clear all videos</source>
         <translatorcomment>Tooltip for clear button when the user is in the videos category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ล้างการถ่ายโอนทั้งหมดในประเภทวิดีโอ</translation>
     </message>
     <message>
         <source>Clear all archives</source>
         <translatorcomment>Tooltip for clear button when the user is in the archives category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ล้างการถ่ายโอนทั้งหมดในประเภทบีบอัด</translation>
     </message>
     <message>
         <source>Clear all documents</source>
         <translatorcomment>Tooltip for clear button when the user is in the documents category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ล้างการถ่ายโอนทั้งหมดในประเภทเอกสาร</translation>
     </message>
     <message>
         <source>Clear all images</source>
         <translatorcomment>Tooltip for clear button when the user is in the images category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ล้างการถ่ายโอนทั้งหมดในประเภทรูปภาพ</translation>
     </message>
     <message>
         <source>Clear all transfers</source>
         <translatorcomment>Tooltip for clear button when the user is in the others category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ล้างการถ่ายโอนทั้งหมด</translation>
     </message>
     <message>
         <source>Cancel all downloads</source>
         <translatorcomment>Tooltip for cancel button when the user is in the downloads category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ยกเลิกการถ่ายโอนทั้งหมดในประเภทดาวน์โหลด</translation>
     </message>
     <message>
         <source>Cancel all uploads</source>
         <translatorcomment>Tooltip for cancel button when the user is in the uploads category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ยกเลิกการถ่ายโอนทั้งหมดในประเภทอัปโหลด</translation>
     </message>
     <message>
         <source>Cancel all failed</source>
         <translatorcomment>Tooltip for cancel button when the user is in the failed category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ยกเลิกการถ่ายโอนทั้งหมดในประเภทล้มเหลว</translation>
     </message>
     <message>
         <source>Cancel all search results</source>
         <translatorcomment>Tooltip for cancel button when the user is in the search category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ยกเลิกผลการค้นหาทั้งหมด</translation>
     </message>
     <message>
         <source>Cancel all audios</source>
         <translatorcomment>Tooltip for cancel button when the user is in the audios category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ยกเลิกการถ่ายโอนทั้งหมดในประเภทเสียง</translation>
     </message>
     <message>
         <source>Cancel all videos</source>
         <translatorcomment>Tooltip for cancel button when the user is in the videos category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ยกเลิกการถ่ายโอนทั้งหมดในประเภทวิดีโอ</translation>
     </message>
     <message>
         <source>Cancel all archives</source>
         <translatorcomment>Tooltip for cancel button when the user is in the archives category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ยกเลิกการถ่ายโอนทั้งหมดในประเภทบีบอัด</translation>
     </message>
     <message>
         <source>Cancel all documents</source>
         <translatorcomment>Tooltip for cancel button when the user is in the documents category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ยกเลิกการถ่ายโอนทั้งหมดในประเภทเอกสาร</translation>
     </message>
     <message>
         <source>Cancel all images</source>
         <translatorcomment>Tooltip for cancel button when the user is in the images category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ยกเลิกการถ่ายโอนทั้งหมดในประเภทรูปภาพ</translation>
     </message>
     <message>
         <source>Cancel all transfers</source>
@@ -5880,127 +5990,127 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Cancel and clear all search results</source>
         <translatorcomment>Tooltip for cancel button when the user is in the search category and there are completed transfers</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ยกเลิกและล้างผลการค้นหาทั้งหมด</translation>
     </message>
     <message>
         <source>Cancel and clear all audios</source>
         <translatorcomment>Tooltip for cancel button when the user is in the audios category and there are completed transfers</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ยกเลิกและล้างประเภทเสียงทั้งหมด</translation>
     </message>
     <message>
         <source>Cancel and clear all videos</source>
         <translatorcomment>Tooltip for cancel button when the user is in the videos category and there are completed transfers</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ยกเลิกและล้างประเภทวิดีโอทั้งหมด</translation>
     </message>
     <message>
         <source>Cancel and clear all archives</source>
         <translatorcomment>Tooltip for cancel button when the user is in the archives category and there are completed transfers</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ยกเลิกและล้างประเภทบีบอัดทั้งหมด</translation>
     </message>
     <message>
         <source>Cancel and clear all documents</source>
         <translatorcomment>Tooltip for cancel button when the user is in the documents category and there are completed transfers</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ยกเลิกและล้างประเภทเอกสารทั้งหมด</translation>
     </message>
     <message>
         <source>Cancel and clear all images</source>
         <translatorcomment>Tooltip for cancel button when the user is in the images category and there are completed transfers</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ยกเลิกและล้างประเภทรูปภาพทั้งหมด</translation>
     </message>
     <message>
         <source>Cancel and clear all transfers</source>
         <translatorcomment>Tooltip for cancel button when the user is in the all transfers category and there are completed transfers</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ยกเลิกและล้างการถ่ายโอนทั้งหมด</translation>
     </message>
     <message>
         <source>Resume all downloads</source>
         <translatorcomment>Tooltip for Resume button when the user is in the downloads category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ดาวน์โหลดต่อทั้งหมด</translation>
     </message>
     <message>
         <source>Resume all uploads</source>
         <translatorcomment>Tooltip for Resume button when the user is in the uploads category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>อัปโหลดต่อทั้งหมด</translation>
     </message>
     <message>
         <source>Resume all search results</source>
         <translatorcomment>Tooltip for Resume button when the user is in the search category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ดำเนินการต่อผลการค้นหาทั้งหมด</translation>
     </message>
     <message>
         <source>Resume all audios</source>
         <translatorcomment>Tooltip for Resume button when the user is in the audios category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ดำเนินการต่อประเภทเสียงทั้งหมด</translation>
     </message>
     <message>
         <source>Resume all videos</source>
         <translatorcomment>Tooltip for Resume button when the user is in the videos category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ดำเนินการต่อประเภทวิดีโอทั้งหมด</translation>
     </message>
     <message>
         <source>Resume all archives</source>
         <translatorcomment>Tooltip for Resume button when the user is in the archives category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ดำเนินการต่อประเภทบีบอัดทั้งหมด</translation>
     </message>
     <message>
         <source>Resume all documents</source>
         <translatorcomment>Tooltip for Resume button when the user is in the documents category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ดำเนินการต่อประเภทเอกสารทั้งหมด</translation>
     </message>
     <message>
         <source>Resume all images</source>
         <translatorcomment>Tooltip for Resume button when the user is in the images category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ดำเนินการต่อประเภทรูปภาพทั้งหมด</translation>
     </message>
     <message>
         <source>Resume all transfers</source>
         <translatorcomment>Tooltip for Resume button when the user is in the all transfers category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ดำเนินการถ่ายโอนต่อทั้งหมด</translation>
     </message>
     <message>
         <source>Pause all downloads</source>
         <translatorcomment>Tooltip for Pause button when the user is in the downloads category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>หยุดดาวน์โหลดทั้งหมดชั่วคราว</translation>
     </message>
     <message>
         <source>Pause all uploads</source>
         <translatorcomment>Tooltip for Pause button when the user is in the uploads category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>หยุดอัปโหลดทั้งหมดชั่วคราว</translation>
     </message>
     <message>
         <source>Pause all search results</source>
         <translatorcomment>Tooltip for Pause button when the user is in the search category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>หยุดผลการค้นหาทั้งหมดชั่วคราว</translation>
     </message>
     <message>
         <source>Pause all audios</source>
         <translatorcomment>Tooltip for Pause button when the user is in the audios category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>หยุดดำเนินการประเภทเสียงทั้งหมดชั่วคราว</translation>
     </message>
     <message>
         <source>Pause all videos</source>
         <translatorcomment>Tooltip for Pause button when the user is in the videos category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>หยุดดำเนินการประเภทวิดีโอทั้งหมดชั่วคราว</translation>
     </message>
     <message>
         <source>Pause all archives</source>
         <translatorcomment>Tooltip for Pause button when the user is in the archives category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>หยุดดำเนินการประเภทบีบอัดทั้งหมดชั่วคราว</translation>
     </message>
     <message>
         <source>Pause all documents</source>
         <translatorcomment>Tooltip for Pause button when the user is in the documents category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>หยุดดำเนินการประเภทเอกสารทั้งหมดชั่วคราว</translation>
     </message>
     <message>
         <source>Pause all images</source>
         <translatorcomment>Tooltip for Pause button when the user is in the images category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>หยุดดำเนินการประเภทรูปภาพทั้งหมดชั่วคราว</translation>
     </message>
     <message>
         <source>Pause all transfers</source>
         <translatorcomment>Tooltip for Pause button when the user is in the all transfers category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>หยุดการถ่ายโอนทั้งหมดชั่วคราว</translation>
     </message>
 </context>
 <context>
@@ -6071,12 +6181,12 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>100% of the %1 available used on your account.</source>
         <translatorcomment>Informative message for the user when it is in over storage situation, letting know about the %1 space used and reaching the 100% limit of his current storage amount.</translatorcomment>
-        <translation>100% ของ %1 ที่ใช้ได้ในบัญชีของคุณ</translation>
+        <translation>บัญชีของคุณมีการใช้พื้นที่เก็บข้อมูลครบ 100% จาก %1 แล้ว</translation>
     </message>
     <message>
         <source>Choose annual billing and get 12 months for the price of 10</source>
         <translatorcomment>Informative label to inform the user about offer purchasing one-year Pro plan within upgrade dialog when user reaches over storage state.</translatorcomment>
-        <translation>เลือกการเรียกเก็บเงินรายปีและรับ 12 เดือนในราคา 10</translation>
+        <translation>เลือกการเรียกเก็บเงินรายปีและรับ 12 เดือนในราคาของ 10 เดือน</translation>
     </message>
 </context>
 <context>

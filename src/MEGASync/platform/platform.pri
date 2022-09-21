@@ -2,13 +2,16 @@ DEPENDPATH += $$PWD
 INCLUDEPATH += $$PWD
 
 SOURCES += $$PWD/notificator.cpp
-HEADERS +=  $$PWD/Platform.h $$PWD/notificator.h
+HEADERS +=  $$PWD/Platform.h \
+            $$PWD/notificator.h \
+            $$PWD/PlatformStrings.h
 
 win32 {
     SOURCES +=	$$PWD/win/WindowsPlatform.cpp \
 		$$PWD/win/WinShellDispatcherTask.cpp \
                 $$PWD/win/WinTrayReceiver.cpp \
-                $$PWD/win/wintoastlib.cpp
+                $$PWD/win/wintoastlib.cpp \
+                $$PWD/win/PlatformStrings.cpp
 
     HEADERS  += $$PWD/win/WindowsPlatform.h \
 		$$PWD/win/WinShellDispatcherTask.h \
@@ -42,7 +45,8 @@ unix:!macx {
     QT += dbus
     SOURCES += $$PWD/linux/LinuxPlatform.cpp \
         $$PWD/linux/ExtServer.cpp \
-        $$PWD/linux/NotifyServer.cpp
+        $$PWD/linux/NotifyServer.cpp \
+        $$PWD/linux/PlatformStrings.cpp
     HEADERS += $$PWD/linux/LinuxPlatform.h \
         $$PWD/linux/ExtServer.h \
         $$PWD/linux/NotifyServer.h
@@ -141,7 +145,8 @@ unix:!macx {
 
 macx {
     SOURCES += $$PWD/macx/MacXPlatform.cpp \
-        $$PWD/macx/MacXExtServerService.cpp
+        $$PWD/macx/MacXExtServerService.cpp \
+        $$PWD/macx/PlatformStrings.cpp
 
     HEADERS += $$PWD/macx/MacXPlatform.h \
         $$PWD/macx/MacXFunctions.h \

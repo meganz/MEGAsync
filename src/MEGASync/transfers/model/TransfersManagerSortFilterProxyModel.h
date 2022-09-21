@@ -25,6 +25,7 @@ public:
         bool moveRows(const QModelIndex& proxyParent, int proxyRow, int count,
                       const QModelIndex& destinationParent, int destinationChild) override;
         void sort(int column, Qt::SortOrder order = Qt::AscendingOrder) override;
+        int getSortCriterion() const;
         void setSourceModel(QAbstractItemModel *sourceModel) override;
         void setFilterFixedString(const QString &pattern);
         void refreshFilterFixedString();
@@ -44,9 +45,11 @@ public:
         int  activeTransfers() const;
         bool areAllCancellable() const;
         bool areAllSync() const;
+        bool isAnySync() const;
         bool areAllCompleted() const;
         bool isAnyCompleted() const;
         bool isAnyActive() const;
+        bool isAnyFailed() const;
 
         bool isEmpty() const;
         int  transfersCount() const;
@@ -70,6 +73,8 @@ protected:
         bool filterAcceptsRow(int sourceRow, const QModelIndex& sourceParent) const override;
         bool lessThan(const QModelIndex& left, const QModelIndex& right) const override;
         QMimeData* mimeData(const QModelIndexList &indexes) const override;
+        bool dropMimeData(const QMimeData* data, Qt::DropAction action, int destRow,
+                                          int column, const QModelIndex& parent);
 
 protected:
         TransferData::TransferStates mTransferStates;
