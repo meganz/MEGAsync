@@ -1245,5 +1245,8 @@
         <file>images/StalledIssues/megaignore.png</file>
         <file>images/StalledIssues/megaignore@2x.png</file>
         <file>images/StalledIssues/megaignore@3x.png</file>
+        <file>images/StalledIssues/rotate_cw_default.png</file>
+        <file>images/StalledIssues/rotate_cw_default@2x.png</file>
+        <file>images/StalledIssues/rotate_cw_default@3x.png</file>
     </qresource>
 </RCC>

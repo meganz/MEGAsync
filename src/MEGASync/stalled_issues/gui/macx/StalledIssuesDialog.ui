@@ -38,7 +38,52 @@
    background-color: transparent;
 }
 
-</string>
+#footer
+{
+    background-color: #F7F8F9;
+}
+
+#footer QPushButton
+{
+    font-family: Lato;
+    font-size: 14px;
+    border-radius: 3px;
+    border: 1px solid rgba(0,0,0, 0.15);
+}
+
+#doneButton
+{
+    background-color: #FCFCFC;
+    color: #333333;
+}
+
+#updateButton
+{
+    padding-left: 6px;
+    padding-right: 10px;
+    color: #FFFFFF;
+    spacing: 5px;
+}
+
+#updateButton:enabled
+{
+    background-color: #AAAAAA;
+}
+
+#updateButton:hover:enabled
+{
+    background-color: #BDBDBD;
+}
+
+#updateButton:pressed:enabled
+{
+    background-color: #C6C6C6;
+}
+
+#updateButton:disabled
+{
+    background-color: #AAAAAA4D;
+}</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <property name="spacing">
@@ -515,26 +560,7 @@ QMenu::item:default
       </size>
      </property>
      <property name="styleSheet">
-      <string notr="true">#footer
-{
-    background-color: #F7F8F9;
-}
-
-QPushButton
-{
-    font-family: Lato;
-    font-size: 14px;
-    color: #333333;
-    background-color: #FCFCFC;
-    border-radius: 3px;
-    border: 1px solid rgba(0,0,0, 0.15);
-}
-
-#updateButton
-{
-    padding-left: 6px;
-    padding-right: 10px;
-}</string>
+      <string notr="true"/>
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout_2">
       <property name="spacing">
@@ -574,12 +600,12 @@ QPushButton
         </property>
         <property name="icon">
          <iconset resource="../../../gui/Resources_macx.qrc">
-          <normaloff>:/images/rotate-cw.png</normaloff>:/images/rotate-cw.png</iconset>
+          <normaloff>:/images/StalledIssues/rotate_cw_default.png</normaloff>:/images/StalledIssues/rotate_cw_default.png</iconset>
         </property>
         <property name="iconSize">
          <size>
-          <width>24</width>
-          <height>24</height>
+          <width>16</width>
+          <height>16</height>
          </size>
         </property>
        </widget>
