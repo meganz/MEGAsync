@@ -755,27 +755,9 @@ long long Utilities::extractJSONNumber(QString json, QString name)
 
 QString Utilities::getDefaultBasePath()
 {
+        QStringList defaultPaths;
 #ifdef WIN32
-    #if QT_VERSION < 0x050000
-        QString defaultPath = QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation);
-        if (!defaultPath.isEmpty())
-        {
-            return defaultPath;
-        }
-
-        defaultPath = QDesktopServices::storageLocation(QDesktopServices::HomeLocation);
-        if (!defaultPath.isEmpty())
-        {
-            return defaultPath;
-        }
-
-        defaultPath = QDesktopServices::storageLocation(QDesktopServices::DesktopLocation);
-        if (!defaultPath.isEmpty())
-        {
-            return defaultPath;
-        }
-    #else
-        QStringList defaultPaths = QStandardPaths::standardLocations(QStandardPaths::DocumentsLocation);
+        defaultPaths = QStandardPaths::standardLocations(QStandardPaths::DocumentsLocation);
         if (defaultPaths.size())
         {
             return defaultPaths.at(0);
@@ -786,40 +768,8 @@ QString Utilities::getDefaultBasePath()
         {
             return defaultPaths.at(0);
         }
-
-        defaultPaths = QStandardPaths::standardLocations(QStandardPaths::DesktopLocation);
-        if (defaultPaths.size())
-        {
-            return defaultPaths.at(0);
-        }
-
-        defaultPaths = QStandardPaths::standardLocations(QStandardPaths::DownloadLocation);
-        if (defaultPaths.size())
-        {
-            return defaultPaths.at(0);
-        }
-    #endif
 #else
-    #if QT_VERSION < 0x050000
-        QString defaultPath = QDesktopServices::storageLocation(QDesktopServices::HomeLocation);
-        if (!defaultPath.isEmpty())
-        {
-            return defaultPath;
-        }
-
-        defaultPath = QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation);
-        if (!defaultPath.isEmpty())
-        {
-            return defaultPath;
-        }
-
-        defaultPath = QDesktopServices::storageLocation(QDesktopServices::DesktopLocation);
-        if (!defaultPath.isEmpty())
-        {
-            return defaultPath;
-        }
-    #else
-        QStringList defaultPaths = QStandardPaths::standardLocations(QStandardPaths::HomeLocation);
+        defaultPaths = QStandardPaths::standardLocations(QStandardPaths::HomeLocation);
         if (defaultPaths.size())
         {
             return defaultPaths.at(0);
@@ -830,7 +780,7 @@ QString Utilities::getDefaultBasePath()
         {
             return defaultPaths.at(0);
         }
-
+#endif
         defaultPaths = QStandardPaths::standardLocations(QStandardPaths::DesktopLocation);
         if (defaultPaths.size())
         {
@@ -842,8 +792,6 @@ QString Utilities::getDefaultBasePath()
         {
             return defaultPaths.at(0);
         }
-    #endif
-#endif
 
     QDir dataDir = QDir(Preferences::instance()->getDataPath());
     QString rootPath = QDir::toNativeSeparators(dataDir.rootPath());

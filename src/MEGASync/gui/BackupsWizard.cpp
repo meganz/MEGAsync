@@ -627,10 +627,9 @@ void BackupsWizard::on_bCancel_clicked()
 
 void BackupsWizard::on_bMoreFolders_clicked()
 {
-    const auto homePaths (QStandardPaths::standardLocations(QStandardPaths::HomeLocation));
     QString d (QFileDialog::getExistingDirectory(this,
                                                  tr("Choose directory"),
-                                                 homePaths.first(),
+                                                 Utilities::getDefaultBasePath(),
                                                  QFileDialog::ShowDirsOnly
                                                  | QFileDialog::DontResolveSymlinks));
     QDir dir (QDir::cleanPath(d));
