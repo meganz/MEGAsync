@@ -564,25 +564,13 @@ void InfoDialog::updateTransfersCount()
 {
     if(app->getTransfersModel())
     {
-        auto transfersCountUpdated = app->getTransfersModel()->getTransfersCount();
+        auto transfersCountUpdated = app->getTransfersModel()->getLastTransfersCount();
 
         ui->bTransferManager->setDownloads(transfersCountUpdated.completedDownloads(), transfersCountUpdated.totalDownloads);
         ui->bTransferManager->setUploads(transfersCountUpdated.completedUploads(), transfersCountUpdated.totalUploads);
 
-        double percentUploads(0.0);
-        if(transfersCountUpdated.totalUploadBytes != 0)
-        {
-            percentUploads = static_cast<double>(transfersCountUpdated.completedUploadBytes) / static_cast<double>(transfersCountUpdated.totalUploadBytes);
-        }
-
-        double percentDownloads(0.0);
-        if(transfersCountUpdated.totalDownloadBytes != 0)
-        {
-            percentDownloads = static_cast<double>(transfersCountUpdated.completedDownloadBytes)/ static_cast<double>(transfersCountUpdated.totalDownloadBytes);
-        }
-
-        ui->bTransferManager->setPercentUploads(percentUploads);
-        ui->bTransferManager->setPercentDownloads(percentDownloads);
+        ui->bTransferManager->setPercentUploads(transfersCountUpdated.completedUploadBytes, transfersCountUpdated.totalUploadBytes);
+        ui->bTransferManager->setPercentDownloads(transfersCountUpdated.completedDownloadBytes, transfersCountUpdated.totalDownloadBytes);
     }
 }
 
@@ -590,12 +578,9 @@ void InfoDialog::onTransfersStateChanged()
 {
     if(app->getTransfersModel())
     {
-        auto transfersCountUpdated = app->getTransfersModel()->getTransfersCount();
+        auto transfersCountUpdated = app->getTransfersModel()->getLastTransfersCount();
 
-        if (!transfersCountUpdated.pendingDownloads && !transfersCountUpdated.pendingUploads
-                && transfersCountUpdated.totalUploadBytes == transfersCountUpdated.completedUploadBytes
-                && transfersCountUpdated.totalDownloadBytes == transfersCountUpdated.completedDownloadBytes
-                && (transfersCountUpdated.totalUploads != 0 || transfersCountUpdated.totalDownloads != 0))
+        if(transfersCountUpdated.pendingTransfers() == 0)
         {
             if (!overQuotaState && (ui->sActiveTransfers->currentWidget() != ui->pUpdated))
             {
@@ -608,6 +593,8 @@ void InfoDialog::onTransfersStateChanged()
         {
             mResetTransferSummaryWidget.stop();
         }
+
+        ui->wStatus->update();
     }
 }
 
@@ -615,7 +602,7 @@ void InfoDialog::onShowInFolderFinished(bool state)
 {
     if(!state)
     {
-        QMegaMessageBox::warning(nullptr, tr("Error"), tr("Error opening folder"), QMessageBox::Ok);
+        QMegaMessageBox::warning(nullptr, tr("Error"), tr("Folder can't be opened. Check that the folder in your local drive hasn't been deleted or moved."), QMessageBox::Ok);
     }
 }
 
@@ -824,7 +811,7 @@ bool InfoDialog::checkFailedState()
 {
     auto isFailed(false);
 
-    if(app->getTransfersModel() && app->getTransfersModel()->hasFailedTransfers())
+    if(app->getTransfersModel() && app->getTransfersModel()->failedTransfers())
     {
         if(mState != StatusInfo::TRANSFERS_STATES::STATE_FAILED)
         {

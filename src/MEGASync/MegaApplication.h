@@ -488,7 +488,6 @@ protected:
     PasteMegaLinksDialog *pasteMegaLinksDialog;
     ChangeLogDialog *changeLogDialog;
     ImportMegaLinksDialog *importDialog;
-    QMessageBox *exitDialog;
     NodeSelector *downloadNodeSelector;
     QString lastTrayMessage;
     QStringList extraLinks;

@@ -388,7 +388,7 @@
     <message>
         <source>(Max. 90% of available bandwidth)</source>
         <translatorcomment>Label to indicate that auto rate option will take a maximum of 90% of the available bandwidth.</translatorcomment>
-        <translation>（利用可能な帯域幅の最大90%）</translation>
+        <translation>（利用可能な帯域幅の最大90 %）</translation>
     </message>
     <message>
         <source>Download rate limit</source>
@@ -443,12 +443,12 @@
     <message>
         <source>Use HTTPS for transfers that don&apos;t start</source>
         <translatorcomment>Checkbox label to set the option to use https for transfer connections.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>開始しない転送にHTTPSを使用する</translation>
     </message>
     <message>
         <source>Only enable this option if tranfers don&apos;t start. Under all other circumstances, using HTTP is satisfactory as MEGA already encrypts all data.</source>
         <translatorcomment>Description label about the option Use HTTPS for transfers that don&amp;apos;t start checkbox.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>転送が開始されない場合にのみ、このオプションを有効にしてください。他のすべての状況では、MEGAはすべてのデータをすでに暗号化しているため、HTTPを使用するだけで十分です。</translation>
     </message>
 </context>
 <context>
@@ -621,29 +621,24 @@ Please enter a different name to identify this synced folder:</source>
 <context>
     <name>CancelConfirmWidget</name>
     <message>
-        <source>Cancel Transfers</source>
+        <source>Cancel transfers?</source>
         <translatorcomment>Dialog main text</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>転送をキャンセルしますか？</translation>
     </message>
     <message>
-        <source>Interrupting the transfer progress will render some of the items incomplete.</source>
+        <source>Transfers not yet processed will be cancelled.</source>
         <translatorcomment>Dialog messages which warns the user about the potential problems of cancelling the folder scanning</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>まだ処理されていない転送はキャンセルされます。</translation>
     </message>
     <message>
-        <source>Dismiss</source>
-        <translatorcomment>Button to abort a folder scanning</translatorcomment>
-        <translation>却下</translation>
-    </message>
-    <message>
-        <source>Proceed</source>
+        <source>No, continue</source>
         <translatorcomment>Button to continue folder scanning cancellation</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>いいえ、続けます</translation>
     </message>
     <message>
-        <source>Cancel transfers</source>
-        <translatorcomment>Label to indicate about the process of cancelling transfers</translatorcomment>
-        <translation type="unfinished"></translation>
+        <source>Yes, cancel</source>
+        <translatorcomment>Button to abort a folder scanning</translatorcomment>
+        <translation>はい、キャンセル</translation>
     </message>
 </context>
 <context>
@@ -733,7 +728,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>[A]%</source>
         <translatorcomment>Percent sign style. Form and spacing between digit and sign is different in each language.</translatorcomment>
-        <translation>[A]%</translation>
+        <translation>[A] %</translation>
     </message>
 </context>
 <context>
@@ -1070,65 +1065,60 @@ Please enter a different name to identify this synced folder:</source>
 </context>
 <context>
     <name>DuplicatedNodeDialog</name>
-    <message numerus="yes">
-        <source>Apply this option on the next %1 conflict</source>
-        <translatorcomment>Checkbox text to apply the action to all the following conflicts. %1 is the number of conflicts</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
-    </message>
     <message>
         <source>A folder named [A] already exists at this destination</source>
         <translatorcomment>Dialog text shown when a folder with the same name has been found on the cloud. [A] folder name</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>[A]という名前のフォルダは、この場所にすでに存在しています</translation>
     </message>
     <message>
         <source>The new folder will be merged with the folder at this destination.</source>
         <translatorcomment>Text explaining the result of the folder merge action</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>The folder will be renamed as:</source>
-        <translatorcomment>Text explaining the result of the folder rename action</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>新しいフォルダは、この場所のフォルダとマージされます。</translation>
     </message>
     <message>
         <source>The folder at this destination will be maintained.</source>
         <translatorcomment>Text explaining the result of the folder skip action</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>この場所のフォルダは維持されます。</translation>
     </message>
     <message>
         <source>A file named [A] already exists at this destination</source>
         <translatorcomment>Dialog text shown when a file with the same name has been found on the cloud. [A] file name</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>[A]という名前のフォルダは、この場所にすでに存在しています</translation>
     </message>
     <message>
         <source>The file at this destination will be replaced with the new file.</source>
         <translatorcomment>Text explaining the result of the file upload and replace action</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>The file will be updated with version history:</source>
-        <translatorcomment>Text explaining the result of the file upload and update action</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>この場所のファイルは、新しいファイルに置き換わります。</translation>
     </message>
     <message>
         <source>The file will be renamed as:</source>
         <translatorcomment>Text explaining the result of the file rename action</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>このファイル名は以下に変更されます：</translation>
     </message>
     <message>
         <source>The file at this destination will be maintained.</source>
         <translatorcomment>Text explaining the result of the fileip action</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>この場所のファイルは維持されます。</translation>
     </message>
     <message>
         <source>Folder already exists</source>
         <translatorcomment>Dialog title when a folder with the same name has been found on the cloud</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>フォルダがすでに存在しています</translation>
     </message>
     <message>
         <source>File already exists</source>
         <translatorcomment>Dialog title when a file with the same name has been found on the cloud</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ファイルがすでに存在します</translation>
+    </message>
+    <message numerus="yes">
+        <source>Apply to all %1 duplicates</source>
+        <translatorcomment>Checkbox text to apply the action to all the following conflicts. %1 is the number of conflicts</translatorcomment>
+        <translation><numerusform>%1個の重複すべてに適用する</numerusform></translation>
+    </message>
+    <message>
+        <source>The file at this destination will be updated with a new version.</source>
+        <translatorcomment>Text explaining the result of the file upload and update action</translatorcomment>
+        <translation>この場所のファイルは、新しいファイルで更新されます。</translation>
     </message>
 </context>
 <context>
@@ -1141,52 +1131,47 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Skip this file</source>
         <translatorcomment>Button text for the skip action for files</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>このファイルをスキップ</translation>
     </message>
     <message>
         <source>Skip this folder</source>
         <translatorcomment>Button text for the skip action for folders</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>このフォルダをスキップ</translation>
     </message>
     <message>
         <source>Merge</source>
         <translatorcomment>Action title and button text for the Merge action for folders</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>マージ</translation>
     </message>
     <message>
         <source>Rename</source>
         <translatorcomment>Action title and button text for the Rename action for folders/files</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>名前を変更</translation>
     </message>
     <message>
         <source>Replace</source>
         <translatorcomment>Action title and button text for the Replace action for folders/files</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>置換</translation>
     </message>
     <message>
         <source>Update</source>
         <translatorcomment>Action title and button text for the Update action for files</translatorcomment>
         <translation>更新</translation>
     </message>
-    <message numerus="yes">
-        <source>%1 folder</source>
-        <translatorcomment>Info label with the number of folders in a folder to upload</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>%1 file</source>
-        <translatorcomment>Info label with the number of files in a folder to upload</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
-    </message>
     <message>
         <source>loading time…</source>
         <translatorcomment>Text shown while the local file/folder modified time is calculated</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>時間を読み込んでいます...</translation>
     </message>
     <message>
         <source>loading size…</source>
         <translatorcomment>Text shown while the local file/folder size is calculated</translatorcomment>
-		<translation type="unfinished"></translation>
+        <translation>サイズを読み込んでいます...</translation>
+    </message>
+    <message>
+        <source>Learn more</source>
+        <translatorcomment>Underline link label to open a help.mega.io article</translatorcomment>
+        <translation>さらに詳しく</translation>
     </message>
 </context>
 <context>
@@ -1791,9 +1776,9 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation>エラー</translation>
     </message>
     <message>
-        <source>Error opening folder</source>
+        <source>Folder can&apos;t be opened. Check that the folder in your local drive hasn&apos;t been deleted or moved.</source>
         <translatorcomment>Warning message text to let the user know that the local folder could not be opened</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>フォルダを開けません。ローカルドライブのフォルダが削除または移動されていないことを確認してください。</translation>
     </message>
 </context>
 <context>
@@ -1810,13 +1795,13 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>Failed: %1</source>
-        <translatorcomment>Tooltip for show transfer failed reason</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Tooltip for show transfer failed reason. %1 is a placeholder for the SDK error reason.</translatorcomment>
+        <translation>失敗しました：%1</translation>
     </message>
     <message>
         <source>Copy link to file</source>
         <translatorcomment>Tooltip for copy linr</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ファイルへのリンクをコピー</translation>
     </message>
     <message>
         <source>Added [A]</source>
@@ -2215,10 +2200,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>ログインしていません</translation>
     </message>
     <message>
-        <source>Are you sure you want to exit?</source>
-        <translation>終了してもよろしいですか？</translation>
-    </message>
-    <message>
         <source>Transfer manager</source>
         <translation>転送マネージャー</translation>
     </message>
@@ -2432,26 +2413,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>MEGAsyncは引き続き動作しますが、OS X Yosemiteより前のバージョンについては、アップデートは間もなくサポートされなくなります。</translation>
     </message>
     <message>
-        <source>One or more syncs have been disabled. Go to preferences to enable them again.</source>
-        <translatorcomment>Warning message shown when logging into MEGAsync to inform the user that some syncs have been disabled and need to go to settings to enable them again (macOS)</translatorcomment>
-        <translation>1つ以上の同期が無効になっています。環境設定に移動して、再度有効にします。</translation>
-    </message>
-    <message>
-        <source>Open Preferences</source>
-        <translatorcomment>Button label to open MEGAsync preferences dialog (MacOS).</translatorcomment>
-        <translation>環境設定を開く</translation>
-    </message>
-    <message>
-        <source>Open Settings</source>
-        <translatorcomment>Button label to open MEGAsync preferences dialog (Linux and Windows).</translatorcomment>
-        <translation>設定を開く</translation>
-    </message>
-    <message>
-        <source>One or more syncs have been disabled. Go to settings to enable them again.</source>
-        <translatorcomment>Warning message shown when logging into MEGAsync to inform the user that some syncs have been disabled and need to go to settings to enable them again (Windows and Linux)</translatorcomment>
-        <translation>1つ以上の同期が無効になっています。設定に移動して、再度有効にします。</translation>
-    </message>
-    <message>
         <source>Your syncs have been disabled</source>
         <translatorcomment>Notification message launched when your syncs have been disabled.</translatorcomment>
         <translation>同期は無効にされました</translation>
@@ -2510,6 +2471,23 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>%1 and %2 were successfully downloaded</source>
         <translatorcomment>System notification to inform the user that %1 files and %2 folders were successfully downloaded. The %1 is a sentence part for files and %2 for folders.</translatorcomment>
         <translation>%1と%2がダウンロードされました</translation>
+    </message>
+    <message numerus="yes">
+        <source>There is an active transfer. Exit the app?
+Transfer will automatically resume when you re-open the app.</source>
+        <translatorcomment>Messagebox text to let the user know that there are active transfers when closing the app. The user will be able to exit and pause them, or stop the exit action.</translatorcomment>
+        <translation><numerusform>アクティブな転送があります。アプリを終了しますか？
+アプリを再度開くと、転送は自動的に再開されます。</numerusform></translation>
+    </message>
+    <message>
+        <source>Exit app</source>
+        <translatorcomment>One of the messagebox options: Close the app and pause the active transfers</translatorcomment>
+        <translation>アプリを終了</translation>
+    </message>
+    <message>
+        <source>Stay in app</source>
+        <translatorcomment>One of the messagebox options: Keep the app open and continue with the active transfers</translatorcomment>
+        <translation>アプリにとどまる</translation>
     </message>
 </context>
 <context>
@@ -3006,42 +2984,145 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Error opening file</source>
         <translatorcomment>Text on an error messagebox because a local file could not be opened</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ファイルを開く際にエラーが発生しました。ローカルドライブ内のファイルが削除または移動されていないことを確認してください。</translation>
     </message>
     <message numerus="yes">
         <source>Pause transfer</source>
         <translatorcomment>Context menu action to pause transfer</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>転送を一時停止</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Resume transfer</source>
         <translatorcomment>Context menu action to resume transfer</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>転送を再開</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Cancel transfer</source>
         <translatorcomment>Context menu action to cancel transfer</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>Cancel and clear transfer?</source>
-        <translatorcomment>Messagebox text to confirm if the user wants to cancel all transfers and clear all the completed transfers</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>Cancel all transfer?</source>
-        <translatorcomment>Messagebox text to confirm if the user wants to cancel all transfers</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>Retry transfer?</source>
-        <translatorcomment>Messagebox text to confirm if the user wants to retry all transfers</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>転送をキャンセル</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Clear transfer</source>
-        <translatorcomment>Messagebox text to confirm if the user wants to clear the completed transfers</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translatorcomment>Tooltip for the clear button in a transfer row</translatorcomment>
+        <translation><numerusform>転送をクリア</numerusform></translation>
+    </message>
+    <message>
+        <source>Cancel transfers?
+All your transfers will be cancelled.</source>
+        <translatorcomment>Messagebox text to confirm if the user wants to cancel all the transfers in the all transfers category</translatorcomment>
+        <translation>転送をキャンセルしますか？
+すべての転送がキャンセルされます。</translation>
+    </message>
+    <message>
+        <source>Cancel transfers?
+All your transfers in this category will be cancelled and cleared.</source>
+        <translatorcomment>Messagebox text to confirm if the user wants to cancel and clear all the transfers in a category other than all transfers category</translatorcomment>
+        <translation>転送をキャンセルしますか？
+このカテゴリのすべての転送はキャンセルされ、クリアされます。</translation>
+    </message>
+    <message>
+        <source>Cancel transfers?
+All your transfers in this category will be cancelled.</source>
+        <translatorcomment>Messagebox text to confirm if the user wants to cancel all the transfers in a category other than all transfers category</translatorcomment>
+        <translation>転送をキャンセルしますか？
+このカテゴリのすべての転送はキャンセルされます。</translation>
+    </message>
+    <message>
+        <source>Cancel transfers?
+Your incomplete sync transfers won&apos;t be cancelled.</source>
+        <translatorcomment>Messagebox text to confirm if the user wants to cancel all the transfers in a category other than all transfers category but there are sync transfers(they cannot be cancelled)</translatorcomment>
+        <translation>転送をキャンセルしますか？
+不完全な同期転送はキャンセルされません。他のすべての転送はキャンセルされます。</translation>
+    </message>
+    <message>
+        <source>Cancel transfers?
+Your incomplete sync transfers won't be cancelled
+All the other transfers will be cancelled and cleared.</source>
+        <translatorcomment>Messagebox text to confirm if the user wants to cancel and clear all the transfers in a category other than all transfers category but there are sync transfers(they cannot be cancelled)</translatorcomment>
+        <translation>転送をキャンセルしますか？
+不完全な同期転送はキャンセルされません。
+他のすべての転送はキャンセルされ、クリアされます。</translation>
+    </message>
+    <message>
+        <source>Clear transfers?
+All your completed transfers will be cleared.</source>
+        <translatorcomment>Messagebox text to confirm if the user wants to clear all the transfers in the completed category</translatorcomment>
+        <translation>転送をクリアしますか？
+完了した転送はすべてクリアされます。</translation>
+    </message>
+    <message>
+        <source>Clear transfers?
+All your completed transfers in this category will be cleared.</source>
+        <translatorcomment>Messagebox text to confirm if the user wants to clear all the transfers in a category other than the completed category</translatorcomment>
+        <translation>転送をクリアしますか？
+このカテゴリで完了したすべての転送がクリアされます。</translation>
+    </message>
+    <message>
+        <source>Cancel transfers?
+All your selected transfers will be cancelled.</source>
+        <translatorcomment>Messagebox text to confirm if the user wants to cancel all the selected transfers</translatorcomment>
+        <translation>転送をキャンセルしますか？
+選択したすべての転送がキャンセルされます。</translation>
+    </message>
+    <message>
+        <source>Cancel transfers?
+All your selected transfers will be cancelled and cleared.</source>
+        <translatorcomment>Messagebox text to confirm if the user wants to cancel and clear all the selected transfers</translatorcomment>
+        <translation>転送をキャンセルしますか？
+選択したすべての転送がキャンセルされ、クリアされます。</translation>
+    </message>
+    <message>
+        <source>Cancel transfers?
+Your selected incomplete sync transfers won't be cancelled
+All the other selected transfers will be cancelled and cleared.</source>
+        <translatorcomment>Messagebox text to confirm if the user wants to cancel and clear all the selected transfers but there are sync transfers in the selection (they cannot be cancelled)</translatorcomment>
+        <translation>転送をキャンセルしますか？
+選択した不完全な同期転送はキャンセルされません
+選択した他のすべての転送はキャンセルされ、クリアされます。</translation>
+    </message>
+    <message>
+        <source>Cancel transfer?</source>
+        <translatorcomment>Messagebox text to confirm if the user wants to cancel a single transfer</translatorcomment>
+        <translation>転送をキャンセルしますか？</translation>
+    </message>
+    <message>
+        <source>Clear transfers?
+All the selected completed transfers in this category will be cleared.</source>
+        <translatorcomment>Messagebox text to confirm if the user wants to clear the selected completed transfer</translatorcomment>
+        <translation>転送をクリアしますか？
+このカテゴリで選択した完了した転送はすべてクリアされます。</translation>
+    </message>
+    <message>
+        <source>Cancel transfers?
+Your selected incomplete sync transfers won&apos;t be cancelled.</source>
+        <translatorcomment>Messagebox text to confirm if the user wants to cancel all the selected transfers but there are sync transfers in the selection (they cannot be cancelled)</translatorcomment>
+        <translation>転送をキャンセルしますか？
+選択した不完全な同期転送はキャンセルされません。選択した他のすべての転送はキャンセルされます。</translation>
+    </message>
+    <message>
+        <source>Clear transfer?</source>
+        <translatorcomment>Messagebox text to confirm if the user wants to clear a single selected completed transfer</translatorcomment>
+        <translation>転送をクリアしますか？</translation>
+    </message>
+    <message numerus="yes">
+        <source>Cancel and clear transfer</source>
+        <translatorcomment>Context menu action to resume cancel the active transfers and clear the completed transfers (multiple transfers selected)</translatorcomment>
+        <translation><numerusform>転送のキャンセルとクリア</numerusform></translation>
+    </message>
+    <message>
+        <source>Yes, cancel</source>
+        <translatorcomment>Dialog button to do the proposed actions (cancel the transfers)</translatorcomment>
+        <translation>はい、キャンセル</translation>
+    </message>
+    <message>
+        <source>No, continue</source>
+        <translatorcomment>Dialog button to abort the proposed action</translatorcomment>
+        <translation>いいえ、続けます</translation>
+    </message>
+    <message>
+        <source>Yes, clear</source>
+        <translatorcomment>Dialog button to do the proposed actions (clear the transfers)</translatorcomment>
+        <translation>はい、クリアします</translation>
     </message>
 </context>
 <context>
@@ -3075,7 +3156,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Enter the new folder name</source>
         <translatorcomment>Dialog text to ask the user to enter a new name for the folder</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>新しいフォルダ名を入力</translation>
     </message>
     <message>
         <source>New folder</source>
@@ -3626,18 +3707,57 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
 </context>
 <context>
+    <name>PlatformStrings</name>
+    <message>
+        <source>Open settings</source>
+        <translatorcomment>Button label to open MEGAsync preferences dialog (Linux and Windows).</translatorcomment>
+        <translation>設定を開く</translation>
+    </message>
+    <message>
+        <source>One or more syncs have been disabled. Go to settings to enable them again.</source>
+        <translatorcomment>Warning message shown when logging into MEGAsync to inform the user that some syncs have been disabled and need to go to settings to enable them again (Windows and Linux)</translatorcomment>
+        <translation>1つ以上の同期が無効になっています。設定に移動して、再度有効にします。</translation>
+    </message>
+    <message>
+        <source>Open preferences</source>
+        <translatorcomment>Button label to open MEGAsync preferences dialog (MacOS).</translatorcomment>
+        <translation>環境設定を開く</translation>
+    </message>
+    <message>
+        <source>One or more syncs have been disabled. Go to preferences to enable them again.</source>
+        <translatorcomment>Warning message shown when logging into MEGAsync to inform the user that some syncs have been disabled and need to go to settings to enable them again (macOS)</translatorcomment>
+        <translation>1つ以上の同期が無効になっています。環境設定に移動して、再度有効にします。</translation>
+    </message>
+    <message>
+        <source>Sync transfers cannot be cancelled individually.
+Please delete the folder sync from settings to cancel them.</source>
+        <translatorcomment>Explains that the sync transfers cannot be cancelled individually. (for windows and linux)</translatorcomment>
+        <translation>同期転送は個別にキャンセルできません。同期を削除するには、デスクトップアプリの「設定」に移動し、同期されたフォルダを削除します。</translation>
+    </message>
+    <message>
+        <source>Sync transfers cannot be cancelled individually.
+Please delete the folder sync from preferences to cancel them.</source>
+        <translatorcomment>Explains that the sync transfers cannot be cancelled individually. (for macOS)</translatorcomment>
+        <translation>同期転送は個別にキャンセルできません。同期を削除するには、デスクトップアプリの「環境設定」に移動し、同期されたフォルダを削除します。</translation>
+    </message>
+</context>
+<context>
     <name>Preferences</name>
     <message>
-        <source>- Full redesign of remote file picker.
-- Fixed translation issues.
-- Other minor UI fixes and adjustments.
-- Fixed detected crashes on Windows, Linux and macOS.
+        <source>- There is now a new transfer manager.
+- Transfer management was enhanced and reliability of downloads and uploads improved. 
+- Detected crashes on Windows, Linux, and macOS fixed.
+- Translation issues fixed.
+- Performance improved.
+- UI fixed and adjusted.
 </source>
-        <translatorcomment>Changelog for version 4.6.7</translatorcomment>
-        <translation>－リモートファイルピッカーのフルモデルチェンジ。
-－翻訳の不具合を修正。
-－その他、細かなUIの修正と調整。
-－Windows、Linux、macOSで検出されたクラッシュを修正。
+        <translatorcomment>Changelog for version v4.7.0</translatorcomment>
+        <translation>－ 新しい転送マネージャーが追加されました。
+－転送管理が強化され、ダウンロードとアップロードの信頼性が向上しました。
+－Windows、Linux、および macOSで検出されたクラッシュが修正されました。
+－翻訳の問題が修正されました。
+－パフォーマンスが向上しました。
+－UIを修正・調整しました。
 </translation>
     </message>
 </context>
@@ -4052,27 +4172,27 @@ Do you want to delete it anyway?</source>
     <message>
         <source>%1 TB</source>
         <translatorcomment>File size measured in terabytes</translatorcomment>
-        <translation>%1 TB</translation>
+        <translation>%1 TB</translation>
     </message>
     <message>
         <source>%1 GB</source>
         <translatorcomment>File size measured in gigabytes</translatorcomment>
-        <translation>%1 GB</translation>
+        <translation>%1 GB</translation>
     </message>
     <message>
         <source>%1 MB</source>
         <translatorcomment>File size measured in megabytes</translatorcomment>
-        <translation>%1 MB</translation>
+        <translation>%1 MB</translation>
     </message>
     <message>
         <source>%1 KB</source>
         <translatorcomment>File size measured in kilobytes</translatorcomment>
-        <translation>%1 KB</translation>
+        <translation>%1 KB</translation>
     </message>
     <message>
         <source>%1 bytes</source>
         <translatorcomment>File size measured in bytes</translatorcomment>
-        <translation>%1 バイト</translation>
+        <translation>%1 バイト</translation>
     </message>
     <message>
         <source>Invalid filename</source>
@@ -4142,14 +4262,14 @@ Do you want to delete it anyway?</source>
 <context>
     <name>RenameLocalNodeDialog</name>
     <message>
-        <source>Error renaming file to %1</source>
-        <translatorcomment>Error message shown when a file renaming has failed. %1 is the name of the file</translatorcomment>
-        <translation type="unfinished"></translation>
+        <source>File can’t be renamed to &quot;%1&quot;</source>
+        <translatorcomment>Error warning shown when a file can´t be renamed due to an error.</translatorcomment>
+        <translation>ファイルの名前を「%1」に変更できません</translation>
     </message>
     <message>
-        <source>Error renaming folder to %1</source>
-        <translatorcomment>Error message shown when a folder renaming has failed. %1 is the name of the folder</translatorcomment>
-        <translation type="unfinished"></translation>
+        <source>Folder can’t be renamed to &quot;%1&quot;</source>
+        <translatorcomment>Error warning shown when a folder can´t be renamed due to an error.</translatorcomment>
+        <translation>フォルダの名前を「%1」に変更できません</translation>
     </message>
 </context>
 <context>
@@ -4157,40 +4277,40 @@ Do you want to delete it anyway?</source>
     <message>
         <source>Enter new file name</source>
         <translatorcomment>Title of the rename file dialog </translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>新しいファイル名を入力</translation>
     </message>
     <message>
         <source>Enter new folder name</source>
         <translatorcomment>Title of the rename folder dialog </translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>新しいフォルダ名を入力</translation>
     </message>
     <message>
         <source>Rename file</source>
         <translatorcomment>Dialog title for file renaming</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ファイル名を変更</translation>
     </message>
     <message>
         <source>Rename folder</source>
         <translatorcomment>Dialog title for folder renaming</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>フォルダ名を変更</translation>
     </message>
 </context>
 <context>
     <name>ScanningWidget</name>
     <message>
-        <source>Please do not close the application</source>
-        <translatorcomment>Text below the GIF to askt he user not to close the app while it is scanning a folder</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Cancel transfers</source>
         <translatorcomment>Button text to cancel the scanning of transfers</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>転送をキャンセル</translation>
     </message>
     <message>
         <source>Scanning…</source>
         <translatorcomment>Text to let the user know that the app is scanning a folder</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>スキャン中…</translation>
+    </message>
+    <message>
+        <source>Don´t exit the app</source>
+        <translatorcomment>Text below the GIF to askt he user not to close the app while it is scanning a folder</translatorcomment>
+        <translation>アプリを終了しないでください</translation>
     </message>
 </context>
 <context>
@@ -4273,7 +4393,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>%1 (%2%) of %3 used</source>
         <translatorcomment>Label to indicate the amount and percentage of used and total space available. Keep %1 (%2%) and %3 substitution placeholders because they will be filled with the required amounts of storage space dynamically.</translatorcomment>
-        <translation>%1 (%2%) / %3 使用済み</translation>
+        <translation>%1 (%2 %) / %3 使用済み</translation>
     </message>
     <message>
         <source>Warning</source>
@@ -5438,32 +5558,32 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Starting…</source>
         <translatorcomment>Transfer is being started but no bytes have been transferred yet</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>開始中…</translation>
     </message>
     <message>
         <source>Retrying</source>
         <translatorcomment>Transfer is starting again after failure</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>再試行中</translation>
     </message>
     <message>
         <source>Uploading…</source>
         <translatorcomment>Transfer is being uploaded</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>アップロード中…</translation>
     </message>
     <message>
         <source>Downloading…</source>
         <translatorcomment>Transfer is being downloaded</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ダウンロード中…</translation>
     </message>
     <message>
         <source>Syncing…</source>
         <translatorcomment>Transfer is being synced</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>同期中…</translation>
     </message>
     <message>
         <source>Completing</source>
         <translatorcomment>Transfer is being completed</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>完了中</translation>
     </message>
     <message>
         <source>Completed</source>
@@ -5478,17 +5598,17 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Failed</source>
         <translatorcomment>Transfer has failed</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>失敗しました</translation>
     </message>
     <message>
         <source>In queue</source>
         <translatorcomment>Transfer is active but not being processed yet</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>順番待ちです</translation>
     </message>
     <message>
         <source>(in queue)</source>
         <translatorcomment>Transfer is paused and no bytes have been transferred yet</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>（順番待ち）</translation>
     </message>
     <message>
         <source>Retry</source>
@@ -5498,12 +5618,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Out of storage space</source>
         <translatorcomment>Transfer is paused for out of storage space</translatorcomment>
-        <translation>ストレージ容量不足です</translation>
+        <translation>ストレージ容量が超過しました</translation>
     </message>
     <message>
         <source>Out of transfer quota</source>
         <translatorcomment>Transfer is paused for out of transfer quota</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>転送容量を超えました</translation>
     </message>
 </context>
 <context>
@@ -5549,7 +5669,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Search</source>
         <translatorcomment>Title for text search window</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>検索</translation>
     </message>
     <message>
         <source>Transferring</source>
@@ -5559,57 +5679,52 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>All transfers</source>
         <translatorcomment>Title for All transfers category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>全ての転送</translation>
     </message>
     <message>
         <source>Failed</source>
         <translatorcomment>Title for Failed transfers category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>失敗しました</translation>
     </message>
     <message>
         <source>Media type</source>
         <translatorcomment>Title of the groupbox which contains all the media categories</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>メディアタイプ</translation>
     </message>
     <message>
         <source>Archives</source>
         <translatorcomment>Categories for archive type transfers</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>アーカイブ</translation>
     </message>
     <message>
         <source>Documents</source>
         <translatorcomment>Categories for document type transfers</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ドキュメント</translation>
     </message>
     <message>
         <source>Images</source>
         <translatorcomment>Categories for image type transfers</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>画像</translation>
     </message>
     <message>
         <source>Videos</source>
         <translatorcomment>Categories for video type transfers</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>動画</translation>
     </message>
     <message>
         <source>Audio</source>
         <translatorcomment>Categories for audio type transfers</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>音声</translation>
     </message>
     <message>
         <source>Other</source>
         <translatorcomment>Categories for other type transfers</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>その他</translation>
     </message>
     <message>
         <source>Up to date</source>
         <translatorcomment>All transfers have been finished</translatorcomment>
         <translation>最新版</translation>
-    </message>
-    <message>
-        <source>Some issues occurred</source>
-        <translatorcomment>Message shown when there are some failed transfers</translatorcomment>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Scanning</source>
@@ -5619,67 +5734,67 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>All paused</source>
         <translatorcomment>Message which shows that the global pause is set</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>すべて一時停止</translation>
     </message>
     <message>
         <source>All</source>
         <translatorcomment>Title for all searched transfers by text</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>すべて</translation>
     </message>
     <message>
         <source>Search:</source>
         <translatorcomment>Title to show the text used to search</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>検索：</translation>
     </message>
     <message>
         <source>Retry all</source>
         <translatorcomment>Button text for retry all button in Failed category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>すべて再試行</translation>
     </message>
     <message>
         <source>No uploads</source>
         <translatorcomment>Empty window message for upload category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>アップロードがありません</translation>
     </message>
     <message>
         <source>No downloads</source>
         <translatorcomment>Empty window message for download category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ダウンロードがありません</translation>
     </message>
     <message>
         <source>No transfers</source>
         <translatorcomment>Empty window message for generic categories</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>転送がありません</translation>
     </message>
     <message>
         <source>No search results</source>
         <translatorcomment>Empty window message for search category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>検索結果がありません</translation>
     </message>
     <message>
         <source>No completed transfers</source>
         <translatorcomment>Empty window message for completed category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>完了した転送はありません</translation>
     </message>
     <message>
         <source>Resume all transfers</source>
         <translatorcomment>Global pause button tooltip</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>すべての転送を再開</translation>
     </message>
     <message>
         <source>Pause all transfers</source>
         <translatorcomment>Global resume button tooltip</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>すべての転送を一時停止</translation>
     </message>
     <message numerus="yes">
         <source>%1 result found</source>
         <translatorcomment>Message shown with search results,when there are only uploads or downloads, but not both at the same time</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>%1件の結果が見つかりました</numerusform></translation>
     </message>
     <message>
         <source>Upgrade now</source>
         <translatorcomment>Button to open web explorer to see MEGA paid plans</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>今すぐアップグレード</translation>
     </message>
     <message>
         <source>Transfer quota exceeded</source>
@@ -5695,12 +5810,18 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>You can&apos;t continue downloading as you don&apos;t have enough transfer quota left for this IP address.
 To get more quota, upgrade to a Pro account or wait for [A] until more free quota becomes available on your IP address.</source>
         <translatorcomment>Message which shows that the user reachs the overquota. [A] is the time to wait until the quota is reset in hh:mm:ss</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>このIPアドレスに十分な転送容量が残っていないため、ダウンロードを続行できません。
+より多くの容量を取得するには、Proアカウントにアップグレードするか、IPアドレスでより多くの無料容量が利用可能になるまで[A]お待ちください。</translation>
     </message>
     <message>
         <source>More about transfer quota</source>
         <translatorcomment>Link button to send the user to the transfer quota information blog website</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>転送容量の詳細</translation>
+    </message>
+    <message numerus="yes">
+        <source>Issue found</source>
+        <translatorcomment>Message shown when there are some failed transfers/syncs/backups</translatorcomment>
+        <translation><numerusform>問題が見つかりました</numerusform></translation>
     </message>
 </context>
 <context>
@@ -5708,7 +5829,7 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
     <message>
         <source>Drop to Upload</source>
         <translatorcomment>Let the user know that files can be dropped there</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ドロップしてアップロード</translation>
     </message>
 </context>
 <context>
@@ -5727,20 +5848,9 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
 <context>
     <name>TransfersModel</name>
     <message>
-        <source>Sync transfers cannot be cancelled individually.
-Please delete the folder sync from settings to cancel them.</source>
-        <translatorcomment>Explains that the sync transfers cannot be cancelled individually.</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Dismiss</source>
         <translatorcomment>Option to close the dialog without taking any action</translatorcomment>
         <translation>却下</translation>
-    </message>
-    <message>
-        <source>Open settings</source>
-        <translatorcomment>Close the dialog and open the settings dialog</translatorcomment>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5758,117 +5868,117 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Speed</source>
         <translatorcomment>speed table header column name of the file to transfer in All transfers and uploads/downloads categories</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>速度</translation>
     </message>
     <message>
         <source>Status</source>
         <translatorcomment>Status (paused, completed, queue...) of the file to transfer</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ステータス</translation>
     </message>
     <message>
         <source>Time left</source>
-        <translatorcomment>Time table header column name for all transfers categories</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Time table header column name for all transfers, downloads, uploads categories (where there are only active transfers)</translatorcomment>
+        <translation>残り時間</translation>
     </message>
     <message>
         <source>Time completed</source>
         <translatorcomment>Time table header column name for completed transfers categories</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>完了時間</translation>
     </message>
     <message>
         <source>Avg. speed</source>
         <translatorcomment>speed table header column name for completed and failed transfers categories</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>平均速度</translation>
     </message>
     <message>
         <source>Time</source>
-        <translatorcomment>Time table header column name for the rest of the transfers categories</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Time table header column name for media types and search categories</translatorcomment>
+        <translation>時間</translation>
     </message>
     <message>
         <source>Clear all completed</source>
         <translatorcomment>Tooltip for clear button when the user is in the completed category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>完了したものをすべてクリア</translation>
     </message>
     <message>
         <source>Clear all search results</source>
         <translatorcomment>Tooltip for clear button when the user is in the search category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>すべての検索結果をクリア</translation>
     </message>
     <message>
         <source>Clear all audios</source>
         <translatorcomment>Tooltip for clear button when the user is in the audios category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>すべての音声をクリア</translation>
     </message>
     <message>
         <source>Clear all videos</source>
         <translatorcomment>Tooltip for clear button when the user is in the videos category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>すべての動画をクリア</translation>
     </message>
     <message>
         <source>Clear all archives</source>
         <translatorcomment>Tooltip for clear button when the user is in the archives category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>すべてのアーカイブをクリア</translation>
     </message>
     <message>
         <source>Clear all documents</source>
         <translatorcomment>Tooltip for clear button when the user is in the documents category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>すべてのドキュメントをクリア</translation>
     </message>
     <message>
         <source>Clear all images</source>
         <translatorcomment>Tooltip for clear button when the user is in the images category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>すべての画像をクリア</translation>
     </message>
     <message>
         <source>Clear all transfers</source>
         <translatorcomment>Tooltip for clear button when the user is in the others category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>転送をすべてクリアする</translation>
     </message>
     <message>
         <source>Cancel all downloads</source>
         <translatorcomment>Tooltip for cancel button when the user is in the downloads category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>すべてのダウンロードをキャンセル</translation>
     </message>
     <message>
         <source>Cancel all uploads</source>
         <translatorcomment>Tooltip for cancel button when the user is in the uploads category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>すべてのアップロードをキャンセル</translation>
     </message>
     <message>
         <source>Cancel all failed</source>
         <translatorcomment>Tooltip for cancel button when the user is in the failed category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>失敗したものをすべてキャンセル</translation>
     </message>
     <message>
         <source>Cancel all search results</source>
         <translatorcomment>Tooltip for cancel button when the user is in the search category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>すべての検索結果をキャンセル</translation>
     </message>
     <message>
         <source>Cancel all audios</source>
         <translatorcomment>Tooltip for cancel button when the user is in the audios category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>すべての音声をキャンセル</translation>
     </message>
     <message>
         <source>Cancel all videos</source>
         <translatorcomment>Tooltip for cancel button when the user is in the videos category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>すべての動画をキャンセル</translation>
     </message>
     <message>
         <source>Cancel all archives</source>
         <translatorcomment>Tooltip for cancel button when the user is in the archives category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>すべてのアーカイブをキャンセル</translation>
     </message>
     <message>
         <source>Cancel all documents</source>
         <translatorcomment>Tooltip for cancel button when the user is in the documents category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>すべてのドキュメントをキャンセル</translation>
     </message>
     <message>
         <source>Cancel all images</source>
         <translatorcomment>Tooltip for cancel button when the user is in the images category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>すべての画像をキャンセル</translation>
     </message>
     <message>
         <source>Cancel all transfers</source>
@@ -5878,127 +5988,127 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Cancel and clear all search results</source>
         <translatorcomment>Tooltip for cancel button when the user is in the search category and there are completed transfers</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>すべての検索結果をキャンセルしてクリアする</translation>
     </message>
     <message>
         <source>Cancel and clear all audios</source>
         <translatorcomment>Tooltip for cancel button when the user is in the audios category and there are completed transfers</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>すべての音声をキャンセルしてクリアする</translation>
     </message>
     <message>
         <source>Cancel and clear all videos</source>
         <translatorcomment>Tooltip for cancel button when the user is in the videos category and there are completed transfers</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>すべての動画をキャンセルしてクリアする</translation>
     </message>
     <message>
         <source>Cancel and clear all archives</source>
         <translatorcomment>Tooltip for cancel button when the user is in the archives category and there are completed transfers</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>すべてのアーカイブをキャンセルしてクリアする</translation>
     </message>
     <message>
         <source>Cancel and clear all documents</source>
         <translatorcomment>Tooltip for cancel button when the user is in the documents category and there are completed transfers</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>すべてのドキュメントをキャンセルしてクリアする</translation>
     </message>
     <message>
         <source>Cancel and clear all images</source>
         <translatorcomment>Tooltip for cancel button when the user is in the images category and there are completed transfers</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>すべての画像をキャンセルしてクリアする</translation>
     </message>
     <message>
         <source>Cancel and clear all transfers</source>
         <translatorcomment>Tooltip for cancel button when the user is in the all transfers category and there are completed transfers</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>すべての転送をキャンセルしてクリアする</translation>
     </message>
     <message>
         <source>Resume all downloads</source>
         <translatorcomment>Tooltip for Resume button when the user is in the downloads category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>すべてのダウンロードを再開</translation>
     </message>
     <message>
         <source>Resume all uploads</source>
         <translatorcomment>Tooltip for Resume button when the user is in the uploads category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>すべてのアップロードを再開</translation>
     </message>
     <message>
         <source>Resume all search results</source>
         <translatorcomment>Tooltip for Resume button when the user is in the search category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>すべての検索結果を再開</translation>
     </message>
     <message>
         <source>Resume all audios</source>
         <translatorcomment>Tooltip for Resume button when the user is in the audios category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>すべての音声を再開</translation>
     </message>
     <message>
         <source>Resume all videos</source>
         <translatorcomment>Tooltip for Resume button when the user is in the videos category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>すべての動画を再開</translation>
     </message>
     <message>
         <source>Resume all archives</source>
         <translatorcomment>Tooltip for Resume button when the user is in the archives category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>すべてのアーカイブを再開</translation>
     </message>
     <message>
         <source>Resume all documents</source>
         <translatorcomment>Tooltip for Resume button when the user is in the documents category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>すべてのドキュメントを再開</translation>
     </message>
     <message>
         <source>Resume all images</source>
         <translatorcomment>Tooltip for Resume button when the user is in the images category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>すべての画像を再開</translation>
     </message>
     <message>
         <source>Resume all transfers</source>
         <translatorcomment>Tooltip for Resume button when the user is in the all transfers category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>すべての転送を再開</translation>
     </message>
     <message>
         <source>Pause all downloads</source>
         <translatorcomment>Tooltip for Pause button when the user is in the downloads category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>すべてのダウンロードを一時停止</translation>
     </message>
     <message>
         <source>Pause all uploads</source>
         <translatorcomment>Tooltip for Pause button when the user is in the uploads category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>すべてのアップロードを一時停止</translation>
     </message>
     <message>
         <source>Pause all search results</source>
         <translatorcomment>Tooltip for Pause button when the user is in the search category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>すべての検索結果を一時停止</translation>
     </message>
     <message>
         <source>Pause all audios</source>
         <translatorcomment>Tooltip for Pause button when the user is in the audios category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>すべての音声を一時停止</translation>
     </message>
     <message>
         <source>Pause all videos</source>
         <translatorcomment>Tooltip for Pause button when the user is in the videos category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>すべての動画を一時停止</translation>
     </message>
     <message>
         <source>Pause all archives</source>
         <translatorcomment>Tooltip for Pause button when the user is in the archives category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>すべてのアーカイブを一時停止</translation>
     </message>
     <message>
         <source>Pause all documents</source>
         <translatorcomment>Tooltip for Pause button when the user is in the documents category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>すべてのドキュメントを一時停止</translation>
     </message>
     <message>
         <source>Pause all images</source>
         <translatorcomment>Tooltip for Pause button when the user is in the images category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>すべての画像を一時停止</translation>
     </message>
     <message>
         <source>Pause all transfers</source>
         <translatorcomment>Tooltip for Pause button when the user is in the all transfers category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>すべての転送を一時停止</translation>
     </message>
 </context>
 <context>
@@ -6069,7 +6179,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>100% of the %1 available used on your account.</source>
         <translatorcomment>Informative message for the user when it is in over storage situation, letting know about the %1 space used and reaching the 100% limit of his current storage amount.</translatorcomment>
-        <translation>お客様のアカウントでご使用可能な%1中100%を使用しました。</translation>
+        <translation>お客様のアカウントでご使用可能な%1中100 %を使用しました。</translation>
     </message>
     <message>
         <source>Choose annual billing and get 12 months for the price of 10</source>

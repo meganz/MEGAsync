@@ -72,6 +72,20 @@ struct TransfersCount
     }
 };
 
+struct LastTransfersCount : public TransfersCount
+{
+    QSet<int> completedUploadsByTag;
+    QSet<int> completedDownloadsByTag;
+
+    void clear()
+    {
+        TransfersCount::clear();
+        completedUploadsByTag.clear();
+        completedDownloadsByTag.clear();
+    }
+
+};
+
 class TransferThread :  public QObject,public mega::MegaTransferListener
 {
     Q_OBJECT
@@ -103,6 +117,8 @@ public:
     ~TransferThread(){}
 
     TransfersCount getTransfersCount();
+    LastTransfersCount getLastTransfersCount();
+
     void resetCompletedUploads(QList<QExplicitlySharedDataPointer<TransferData> > transfersToReset);
     void resetCompletedDownloads(QList<QExplicitlySharedDataPointer<TransferData>> transfersToReset);
     void resetCompletedTransfers();
@@ -124,6 +140,7 @@ private:
     QList<QExplicitlySharedDataPointer<TransferData>> extractFromCache(QMap<int, QExplicitlySharedDataPointer<TransferData>>& dataMap, int spaceForTransfers);
     bool checkIfRepeatedAndRemove(QMap<int, QExplicitlySharedDataPointer<TransferData>>& dataMap, mega::MegaTransfer *transfer);
     bool checkIfRepeatedAndSubstitute(QMap<int, QExplicitlySharedDataPointer<TransferData>>& dataMap, mega::MegaTransfer *transfer);
+    bool checkIfRepeatedAndSubstituteInStartTransfers(mega::MegaTransfer *transfer);
 
     struct cacheTransfers
     {
@@ -147,7 +164,8 @@ private:
     QMutex mCacheMutex;
     QMutex mCountersMutex;
     TransfersCount mTransfersCount;
-    std::atomic_int16_t mMaxTransfersToProcess;
+    LastTransfersCount mLastTransfersCount;
+    std::atomic<int16_t> mMaxTransfersToProcess;
 };
 
 
@@ -171,7 +189,10 @@ public:
     QModelIndex parent(const QModelIndex& index) const;
     QModelIndex index(int row, int column, const QModelIndex& parent = QModelIndex()) const;
     bool removeRows(int row, int count, const QModelIndex& parent = QModelIndex());
-    bool moveRows(const QModelIndex& sourceParent, int sourceRow, int count,
+
+    void ignoreMoveRowsSignal(bool state);
+    void inverseMoveRowsSignal(bool state);
+    bool moveRows(const QModelIndex& sourceParent, const QList<int>& rows,
                   const QModelIndex& destinationParent, int destinationChild);
 
     void resetModel();
@@ -206,7 +227,8 @@ public:
     long long  getNumberOfTransfersForFileType(Utilities::FileType fileType) const;
     long long  getNumberOfFinishedForFileType(Utilities::FileType fileType) const;
     TransfersCount getTransfersCount();
-    bool hasFailedTransfers();
+    TransfersCount getLastTransfersCount();
+    long long failedTransfers();
 
     void startTransfer(QExplicitlySharedDataPointer<TransferData> transfer);
     void updateTransfer(QExplicitlySharedDataPointer<TransferData> transfer, int row);
@@ -215,22 +237,25 @@ public:
 
     bool areAllPaused() const;
 
-     QExplicitlySharedDataPointer<TransferData> getTransferByTag(int tag) const;
-     void sendDataChangedByTag(int tag);
+    QExplicitlySharedDataPointer<TransferData> getTransferByTag(int tag) const;
+    int getRowByTransferTag(int tag) const;
+    void sendDataChangedByTag(int tag);
 
-     void blockModelSignals(bool state);
+    void blockModelSignals(bool state);
 
-     int hasActiveTransfers() const;
-     void setActiveTransfer(TransferTag tag);
-     void unsetActiveTransfer(TransferTag tag);
-     void checkActiveTransfer(TransferTag tag, bool isActive);
+    int hasActiveTransfers() const;
+    void setActiveTransfer(TransferTag tag);
+    void unsetActiveTransfer(TransferTag tag);
+    void checkActiveTransfer(TransferTag tag, bool isActive);
 
-     void uiUnblocked();
+    void uiUnblocked();
 
-     bool syncsInRowsToCancel() const;
-     QWidget *cancelledFrom() const;
-     void resetSyncInRowsToCancel();
-     void showSyncCancelledWarning();
+    bool syncsInRowsToCancel() const;
+    QWidget *cancelledFrom() const;
+    void resetSyncInRowsToCancel();
+    void showSyncCancelledWarning();
+
+    QList<int> getDragAndDropRows(const QMimeData* data, int destRows);
 
 signals:
     void pauseStateChanged(bool pauseState);
@@ -248,6 +273,7 @@ signals:
     void mostPriorityTransferUpdate(int tag);
     void transfersProcessChanged();
     void showInFolderFinished(bool);
+    void rowsAboutToBeMoved(TransferTag firstRowTag);
 
 public slots:
     void pauseResumeAllTransfers(bool state);
@@ -294,6 +320,7 @@ private:
     mega::QTMegaTransferListener *mDelegateListener;
     QTimer mTimer;
     TransfersCount mTransfersCount;
+    LastTransfersCount mLastTransfersCount;
 
     QList<QExplicitlySharedDataPointer<TransferData>> mTransfers;
 
@@ -320,6 +347,9 @@ private:
     bool mAreAllPaused;
     bool mHasActiveTransfers;
     QSet<TransferTag> mActiveTransfers;
+
+    bool mIgnoreMoveSignal;
+    bool mInverseMoveSignal;
 };
 
 Q_DECLARE_METATYPE(QAbstractItemModel::LayoutChangeHint)

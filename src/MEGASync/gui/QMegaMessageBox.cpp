@@ -4,34 +4,34 @@
 
 QMessageBox::StandardButton QMegaMessageBox::information(QWidget *parent, const QString &title,
     const QString &text, QMessageBox::StandardButtons buttons,
-                                  QMessageBox::StandardButton defaultButton, Qt::TextFormat format)
+                                  QMessageBox::StandardButton defaultButton, QMap<StandardButton, QString> textByButton, Qt::TextFormat format)
 {
-    return showNewMessageBox(parent, Information, title, text, buttons, defaultButton, format);
+    return showNewMessageBox(parent, Information, title, text, buttons, defaultButton, textByButton, format);
 }
 
 QMessageBox::StandardButton QMegaMessageBox::warning(QWidget *parent, const QString &title,
     const QString &text, QMessageBox::StandardButtons buttons,
-                                  QMessageBox::StandardButton defaultButton, Qt::TextFormat format)
+                                  QMessageBox::StandardButton defaultButton, QMap<StandardButton, QString> textByButton, Qt::TextFormat format)
 {
-    return showNewMessageBox(parent, Warning, title, text, buttons, defaultButton, format);
+    return showNewMessageBox(parent, Warning, title, text, buttons, defaultButton, textByButton, format);
 }
 
 QMessageBox::StandardButton QMegaMessageBox::question(QWidget *parent, const QString &title,
     const QString &text, QMessageBox::StandardButtons buttons,
-                                  QMessageBox::StandardButton defaultButton, Qt::TextFormat format)
+                                  QMessageBox::StandardButton defaultButton, QMap<StandardButton, QString> textByButton, Qt::TextFormat format)
 {
-    return showNewMessageBox(parent, Question, title, text, buttons, defaultButton, format);
+    return showNewMessageBox(parent, Question, title, text, buttons, defaultButton, textByButton, format);
 }
 
 QMessageBox::StandardButton QMegaMessageBox::critical(QWidget *parent, const QString &title,
     const QString &text,  QMessageBox::StandardButtons buttons,
-                                  QMessageBox::StandardButton defaultButton, Qt::TextFormat format)
+                                  QMessageBox::StandardButton defaultButton, QMap<StandardButton, QString> textByButton, Qt::TextFormat format)
 {
-    return showNewMessageBox(parent, Critical, title, text, buttons, defaultButton, format);
+    return showNewMessageBox(parent, Critical, title, text, buttons, defaultButton, textByButton, format);
 }
 
 QMessageBox::StandardButton QMegaMessageBox::showNewMessageBox(QWidget *parent, QMessageBox::Icon icon,
-    const QString &title, const QString &text, QMessageBox::StandardButtons buttons, QMessageBox::StandardButton defaultButton, Qt::TextFormat format)
+    const QString &title, const QString &text, QMessageBox::StandardButtons buttons, QMessageBox::StandardButton defaultButton, QMap<QMessageBox::StandardButton, QString> textByButton, Qt::TextFormat format)
 {
     QMessageBox msgBox(icon, title, text, QMessageBox::NoButton, parent);
     msgBox.setTextFormat(format);
@@ -46,13 +46,23 @@ QMessageBox::StandardButton QMegaMessageBox::showNewMessageBox(QWidget *parent, 
      mask <<= 1;
      if (!sb)
          continue;
-     QPushButton *button = msgBox.addButton((QMessageBox::StandardButton)sb);
+     QMessageBox::StandardButton buttonType = static_cast<QMessageBox::StandardButton>(sb);
+     QPushButton *button = msgBox.addButton(buttonType);
+
+     //Change button text if needed
+     if(textByButton.contains(buttonType))
+     {
+         msgBox.setButtonText(buttonType, textByButton.value((QMessageBox::StandardButton)sb));
+     }
+
      // Choose the first accept role as the default
      if (msgBox.defaultButton())
          continue;
      if ((defaultButton == QMessageBox::NoButton && buttonBox && buttonBox->buttonRole((QAbstractButton*)button) == QDialogButtonBox::AcceptRole)
-         || (defaultButton != QMessageBox::NoButton && sb == uint(defaultButton)))
+             || (defaultButton != QMessageBox::NoButton && sb == uint(defaultButton)))
+     {
          msgBox.setDefaultButton(button);
+     }
     }
     if (msgBox.exec() == -1)
     return QMessageBox::Cancel;

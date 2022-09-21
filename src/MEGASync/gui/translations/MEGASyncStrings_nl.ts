@@ -160,7 +160,7 @@
     <message>
         <source>Takedown notice</source>
         <translatorcomment>Label title for Takedown category of a notification</translatorcomment>
-        <translation>Bericht van takedown</translation>
+        <translation>Takedown melding</translation>
     </message>
     <message>
         <source>New Contact Request</source>
@@ -185,7 +185,7 @@
     <message>
         <source>Contact Updated</source>
         <translatorcomment>Notification label that indicates that the user has ignored, accept or denied a contact request.</translatorcomment>
-        <translation>Contat verzoek geupdate</translation>
+        <translation>Contactverzoek bijgewerkt</translation>
     </message>
     <message>
         <source>Contact Accepted</source>
@@ -250,17 +250,17 @@
     <message>
         <source>You ignored a contact request</source>
         <translatorcomment>Label to indicate that the user has ignored a contact request.</translatorcomment>
-        <translation>U hebt een contactverzoek genegeerd</translation>
+        <translation>U heeft een contactverzoek genegeerd</translation>
     </message>
     <message>
         <source>You accepted a contact request</source>
         <translatorcomment>Label to indicate that the user has accepted a contact request.</translatorcomment>
-        <translation>U hebt een contact verzoek geaccepteerd</translation>
+        <translation>U heeft een contact verzoek geaccepteerd</translation>
     </message>
     <message>
         <source>You denied a contact request</source>
         <translatorcomment>Label to indicate that the user has denied a contact request.</translatorcomment>
-        <translation>U hebt een contact verzoek afgewezen</translation>
+        <translation>U heeft een contact verzoek afgewezen</translation>
     </message>
     <message>
         <source>[A] accepted your contact request</source>
@@ -443,12 +443,12 @@
     <message>
         <source>Use HTTPS for transfers that don&apos;t start</source>
         <translatorcomment>Checkbox label to set the option to use https for transfer connections.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Gebruik HTTPS voor overdrachten die niet starten</translation>
     </message>
     <message>
         <source>Only enable this option if tranfers don&apos;t start. Under all other circumstances, using HTTP is satisfactory as MEGA already encrypts all data.</source>
         <translatorcomment>Description label about the option Use HTTPS for transfers that don&amp;apos;t start checkbox.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Schakel deze optie alleen in als overdrachten niet starten. Onder alle andere omstandigheden is het gebruik van HTTP bevredigend, aangezien MEGA alle gegevens al versleutelt.</translation>
     </message>
 </context>
 <context>
@@ -482,7 +482,7 @@
         <source>The name &quot;%1&quot; is already in use for another sync
 Please enter a different name to identify this synced folder:</source>
         <translatorcomment>Detailed message displayed when a user is using a name for a local folder that is already used. Preserve &quot;%1&quot; code because is used to indicate the local folder at runtime.</translatorcomment>
-        <translation>De naam &quot;%1&quot; is al in gebruik voor een andere synchronisatie. Voer een andere naam in om deze gesynchroniseerde map te identificeren:</translation>
+        <translation>De naam “%1”  is al in gebruik voor een andere synchronisatie. Voer een andere naam in om deze gesynchroniseerde map te identificeren:</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -621,29 +621,24 @@ Please enter a different name to identify this synced folder:</source>
 <context>
     <name>CancelConfirmWidget</name>
     <message>
-        <source>Cancel Transfers</source>
+        <source>Cancel transfers?</source>
         <translatorcomment>Dialog main text</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Overdrachten annuleren?</translation>
     </message>
     <message>
-        <source>Interrupting the transfer progress will render some of the items incomplete.</source>
+        <source>Transfers not yet processed will be cancelled.</source>
         <translatorcomment>Dialog messages which warns the user about the potential problems of cancelling the folder scanning</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Overdrachten die nog niet zijn verwerkt, worden geannuleerd.</translation>
     </message>
     <message>
-        <source>Dismiss</source>
-        <translatorcomment>Button to abort a folder scanning</translatorcomment>
-        <translation>Sluiten</translation>
-    </message>
-    <message>
-        <source>Proceed</source>
+        <source>No, continue</source>
         <translatorcomment>Button to continue folder scanning cancellation</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Nee, doorgaan</translation>
     </message>
     <message>
-        <source>Cancel transfers</source>
-        <translatorcomment>Label to indicate about the process of cancelling transfers</translatorcomment>
-        <translation type="unfinished"></translation>
+        <source>Yes, cancel</source>
+        <translatorcomment>Button to abort a folder scanning</translatorcomment>
+        <translation>Ja, annuleren</translation>
     </message>
 </context>
 <context>
@@ -676,7 +671,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>[A]This software uses Qt ([C] 2018 The Qt Company Ltd) which is covered by GNU LESSER GENERAL PUBLIC LICENSE Version 3[/A]</source>
         <translatorcomment>QT copyright notice shown at changelog dialog. [A][/A] placeholders used to provide ui style and [C] placeholder will be replaced by copyright symbol.</translatorcomment>
-        <translation>[A]Deze software gebruikt Qt ([C] 2018 The Qt Company Ltd) dat wordt gedekt door GNU Lesser General Public License versie 3 [/A]</translation>
+        <translation>[A]Deze software gebruikt Qt ([C] 2018 The Qt Company Ltd) dat wordt gedekt door GNU Lesser General Public License Versie 3 [/A]</translation>
     </message>
 </context>
 <context>
@@ -1071,65 +1066,60 @@ In sommige gevallen kunnen ze details over uw gegevens bevatten, zoals bestands-
 </context>
 <context>
     <name>DuplicatedNodeDialog</name>
-    <message numerus="yes">
-        <source>Apply this option on the next %1 conflict</source>
-        <translatorcomment>Checkbox text to apply the action to all the following conflicts. %1 is the number of conflicts</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
-    </message>
     <message>
         <source>A folder named [A] already exists at this destination</source>
         <translatorcomment>Dialog text shown when a folder with the same name has been found on the cloud. [A] folder name</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Er bestaat al een map met de naam[A] op deze bestemming</translation>
     </message>
     <message>
         <source>The new folder will be merged with the folder at this destination.</source>
         <translatorcomment>Text explaining the result of the folder merge action</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>The folder will be renamed as:</source>
-        <translatorcomment>Text explaining the result of the folder rename action</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>De nieuwe map wordt samengevoegd met de map op deze locatie.</translation>
     </message>
     <message>
         <source>The folder at this destination will be maintained.</source>
         <translatorcomment>Text explaining the result of the folder skip action</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>De map op deze bestemming blijft behouden.</translation>
     </message>
     <message>
         <source>A file named [A] already exists at this destination</source>
         <translatorcomment>Dialog text shown when a file with the same name has been found on the cloud. [A] file name</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Er bestaat al een bestand[A] met de naam op deze bestemming</translation>
     </message>
     <message>
         <source>The file at this destination will be replaced with the new file.</source>
         <translatorcomment>Text explaining the result of the file upload and replace action</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>The file will be updated with version history:</source>
-        <translatorcomment>Text explaining the result of the file upload and update action</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Het bestand op deze locatie wordt vervangen met het nieuwe bestand.</translation>
     </message>
     <message>
         <source>The file will be renamed as:</source>
         <translatorcomment>Text explaining the result of the file rename action</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Het bestand wordt hernoemd als:</translation>
     </message>
     <message>
         <source>The file at this destination will be maintained.</source>
         <translatorcomment>Text explaining the result of the fileip action</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Het bestand op deze bestemming blijft behouden.</translation>
     </message>
     <message>
         <source>Folder already exists</source>
         <translatorcomment>Dialog title when a folder with the same name has been found on the cloud</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Map bestaat al</translation>
     </message>
     <message>
         <source>File already exists</source>
         <translatorcomment>Dialog title when a file with the same name has been found on the cloud</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Bestand bestaat al</translation>
+    </message>
+    <message numerus="yes">
+        <source>Apply to all %1 duplicates</source>
+        <translatorcomment>Checkbox text to apply the action to all the following conflicts. %1 is the number of conflicts</translatorcomment>
+        <translation><numerusform>Toepassen op de andere duplicaat</numerusform><numerusform>Toepassen op alle %1 duplicaten</numerusform></translation>
+    </message>
+    <message>
+        <source>The file at this destination will be updated with a new version.</source>
+        <translatorcomment>Text explaining the result of the file upload and update action</translatorcomment>
+        <translation>Het bestand op deze lokatie wordt bijgewerkt met een nieuwe versie.</translation>
     </message>
 </context>
 <context>
@@ -1142,52 +1132,47 @@ In sommige gevallen kunnen ze details over uw gegevens bevatten, zoals bestands-
     <message>
         <source>Skip this file</source>
         <translatorcomment>Button text for the skip action for files</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Dit bestand overslaan</translation>
     </message>
     <message>
         <source>Skip this folder</source>
         <translatorcomment>Button text for the skip action for folders</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Deze map overslaan</translation>
     </message>
     <message>
         <source>Merge</source>
         <translatorcomment>Action title and button text for the Merge action for folders</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Samenvoegen</translation>
     </message>
     <message>
         <source>Rename</source>
         <translatorcomment>Action title and button text for the Rename action for folders/files</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Hernoemen</translation>
     </message>
     <message>
         <source>Replace</source>
         <translatorcomment>Action title and button text for the Replace action for folders/files</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Vervangen</translation>
     </message>
     <message>
         <source>Update</source>
         <translatorcomment>Action title and button text for the Update action for files</translatorcomment>
         <translation>Bijwerken</translation>
     </message>
-    <message numerus="yes">
-        <source>%1 folder</source>
-        <translatorcomment>Info label with the number of folders in a folder to upload</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>%1 file</source>
-        <translatorcomment>Info label with the number of files in a folder to upload</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
-    </message>
     <message>
         <source>loading time…</source>
         <translatorcomment>Text shown while the local file/folder modified time is calculated</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Laadtijd...</translation>
     </message>
     <message>
         <source>loading size…</source>
         <translatorcomment>Text shown while the local file/folder size is calculated</translatorcomment>
-		<translation type="unfinished"></translation>
+        <translation>Laadgrootte...</translation>
+    </message>
+    <message>
+        <source>Learn more</source>
+        <translatorcomment>Underline link label to open a help.mega.io article</translatorcomment>
+        <translation>Meer leren</translation>
     </message>
 </context>
 <context>
@@ -1764,7 +1749,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Open Settings</source>
         <translatorcomment>Button label to open MEGAsync preferences dialog (Linux and Windows).</translatorcomment>
-        <translation>Instellingen Openen</translation>
+        <translation>Instellingen openen</translation>
     </message>
     <message>
         <source>Your data is at risk</source>
@@ -1792,9 +1777,9 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation>Fout</translation>
     </message>
     <message>
-        <source>Error opening folder</source>
+        <source>Folder can&apos;t be opened. Check that the folder in your local drive hasn&apos;t been deleted or moved.</source>
         <translatorcomment>Warning message text to let the user know that the local folder could not be opened</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Map kan niet worden geopend. Controleer of de map op uw lokale schijf niet is verwijderd of verplaatst.</translation>
     </message>
 </context>
 <context>
@@ -1811,13 +1796,13 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>Failed: %1</source>
-        <translatorcomment>Tooltip for show transfer failed reason</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Tooltip for show transfer failed reason. %1 is a placeholder for the SDK error reason.</translatorcomment>
+        <translation>Mislukt: %1</translation>
     </message>
     <message>
         <source>Copy link to file</source>
         <translatorcomment>Tooltip for copy linr</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Link kopiëren naar bestand</translation>
     </message>
     <message>
         <source>Added [A]</source>
@@ -1886,7 +1871,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Select whether you want to install $(^NameDA) for yourself only or for all users of this computer. $(^ClickNext)</source>
         <translatorcomment>Label to indicate the type of installation. Preserve $(^NameDA)  and $(^ClickNext) codes.</translatorcomment>
-        <translation>Selecteer of u $(^NameDA) voor uzelf of voor alle gebruikers van deze computer wilt installeren. $ (^ClickNext)</translation>
+        <translation>Selecteer of u $(^NameDA) voor uzelf of voor alle gebruikers van deze computer wilt installeren. $(^ClickNext)</translation>
     </message>
     <message>
         <source>Install for anyone using this computer</source>
@@ -2121,12 +2106,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the remote folder doesn&apos;t exist</source>
         <translatorcomment>Notification message launched checking  remote synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.</translatorcomment>
-        <translation>Uw synchronisatie &quot;%1&quot; is gestopt omdat de externe map niet bestaat</translation>
+        <translation>Uw synchronisatie “%1”  is gestopt omdat de externe map niet bestaat</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</source>
         <translatorcomment>Notification message launched checking  local synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.</translatorcomment>
-        <translation>Uw sync &quot;%1&quot; is uitgeschakeld omdat de lokale map niet bestaat</translation>
+        <translation>Uw sync “%1” is uitgeschakeld omdat de lokale map niet bestaat</translation>
     </message>
     <message>
         <source>Your account has been blocked. Please contact support@mega.co.nz</source>
@@ -2156,12 +2141,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the local folder has changed</source>
         <translatorcomment>Notification message launched when a sync is disabled due to the local folder has changed(moved/deleted/...). Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
-        <translation>Uw sync &quot;%1&quot; is uitgeschakeld omdat de lokale map is veranderd</translation>
+        <translation>Uw sync “%1” is uitgeschakeld omdat de lokale map is veranderd</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&apos;t have full access</source>
         <translatorcomment>Notification message launched when a sync is disabled due to the access problems. Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
-        <translation>Uw sync &quot;%1&quot; is uitgeschakeld. De externe map (of een deel ervan) heeft geen volledige toegang</translation>
+        <translation>Uw sync “%1” is uitgeschakeld. De externe map (of een deel ervan) heeft geen volledige toegang</translation>
     </message>
     <message>
         <source>Over quota</source>
@@ -2214,10 +2199,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>You are not logged in</source>
         <translation>U bent niet ingelogd</translation>
-    </message>
-    <message>
-        <source>Are you sure you want to exit?</source>
-        <translation>Weet u zeker dat u wilt verlaten?</translation>
     </message>
     <message>
         <source>Transfer manager</source>
@@ -2433,26 +2414,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>MEGAsync zal blijven werken, maar updates worden binnenkort niet langer ondersteund voor versies vóór OS X Yosemite.</translation>
     </message>
     <message>
-        <source>One or more syncs have been disabled. Go to preferences to enable them again.</source>
-        <translatorcomment>Warning message shown when logging into MEGAsync to inform the user that some syncs have been disabled and need to go to settings to enable them again (macOS)</translatorcomment>
-        <translation>Een of meer synchronisaties zijn uitgeschakeld. Ga naar Voorkeuren om ze weer in te schakelen.</translation>
-    </message>
-    <message>
-        <source>Open Preferences</source>
-        <translatorcomment>Button label to open MEGAsync preferences dialog (MacOS).</translatorcomment>
-        <translation>Voorkeuren openen</translation>
-    </message>
-    <message>
-        <source>Open Settings</source>
-        <translatorcomment>Button label to open MEGAsync preferences dialog (Linux and Windows).</translatorcomment>
-        <translation>Instellingen Openen</translation>
-    </message>
-    <message>
-        <source>One or more syncs have been disabled. Go to settings to enable them again.</source>
-        <translatorcomment>Warning message shown when logging into MEGAsync to inform the user that some syncs have been disabled and need to go to settings to enable them again (Windows and Linux)</translatorcomment>
-        <translation>Een of meer synchronisaties zijn uitgeschakeld. Ga naar instellingen om ze weer in te schakelen.</translation>
-    </message>
-    <message>
         <source>Your syncs have been disabled</source>
         <translatorcomment>Notification message launched when your syncs have been disabled.</translatorcomment>
         <translation>Uw synchronisaties zijn uitgeschakeld</translation>
@@ -2511,6 +2472,24 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>%1 and %2 were successfully downloaded</source>
         <translatorcomment>System notification to inform the user that %1 files and %2 folders were successfully downloaded. The %1 is a sentence part for files and %2 for folders.</translatorcomment>
         <translation>%1 en %2 waren succesvol gedownload</translation>
+    </message>
+    <message numerus="yes">
+        <source>There is an active transfer. Exit the app?
+Transfer will automatically resume when you re-open the app.</source>
+        <translatorcomment>Messagebox text to let the user know that there are active transfers when closing the app. The user will be able to exit and pause them, or stop the exit action.</translatorcomment>
+        <translation><numerusform>Er is een actieve overdracht. Wilt u de applicatie verlaten?
+Overdrachten worden automatisch hervat wanneer u de applicatie heropend.</numerusform><numerusform>Er zijn actieve overdrachten. Wilt u de applicatie verlaten?
+Overdrachten worden automatisch hervat wanneer u de applicatie heropend.</numerusform></translation>
+    </message>
+    <message>
+        <source>Exit app</source>
+        <translatorcomment>One of the messagebox options: Close the app and pause the active transfers</translatorcomment>
+        <translation>Applicatie verlaten</translation>
+    </message>
+    <message>
+        <source>Stay in app</source>
+        <translatorcomment>One of the messagebox options: Keep the app open and continue with the active transfers</translatorcomment>
+        <translation>Blijf in de applicatie</translation>
     </message>
 </context>
 <context>
@@ -2957,7 +2936,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Move to top</source>
         <translatorcomment>Label of context menu option to move selected transfer to top of the list and give it highest priority</translatorcomment>
-        <translation>verplaats bovenaan</translation>
+        <translation>Verplaats bovenaan</translation>
     </message>
     <message>
         <source>Move up</source>
@@ -3007,42 +2986,145 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Error opening file</source>
         <translatorcomment>Text on an error messagebox because a local file could not be opened</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Fout bij openen bestand</translation>
     </message>
     <message numerus="yes">
         <source>Pause transfer</source>
         <translatorcomment>Context menu action to pause transfer</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Overdracht pauzeren</numerusform><numerusform>Overdrachten pauzeren</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Resume transfer</source>
         <translatorcomment>Context menu action to resume transfer</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Overdracht hervatten</numerusform><numerusform>Overdrachten hervatten</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Cancel transfer</source>
         <translatorcomment>Context menu action to cancel transfer</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>Cancel and clear transfer?</source>
-        <translatorcomment>Messagebox text to confirm if the user wants to cancel all transfers and clear all the completed transfers</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>Cancel all transfer?</source>
-        <translatorcomment>Messagebox text to confirm if the user wants to cancel all transfers</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>Retry transfer?</source>
-        <translatorcomment>Messagebox text to confirm if the user wants to retry all transfers</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Overdracht annuleren</numerusform><numerusform>Overdrachten annuleren</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Clear transfer</source>
-        <translatorcomment>Messagebox text to confirm if the user wants to clear the completed transfers</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translatorcomment>Tooltip for the clear button in a transfer row</translatorcomment>
+        <translation><numerusform>Overdracht wissen</numerusform><numerusform>Overdrachten wissen</numerusform></translation>
+    </message>
+    <message>
+        <source>Cancel transfers?
+All your transfers will be cancelled.</source>
+        <translatorcomment>Messagebox text to confirm if the user wants to cancel all the transfers in the all transfers category</translatorcomment>
+        <translation>Overdracht annuleren?
+All uw overdrachten worden geannueleerd.</translation>
+    </message>
+    <message>
+        <source>Cancel transfers?
+All your transfers in this category will be cancelled and cleared.</source>
+        <translatorcomment>Messagebox text to confirm if the user wants to cancel and clear all the transfers in a category other than all transfers category</translatorcomment>
+        <translation>Overdrachten annuleren? All uw overdrachten in deze categorie worden geannuleerd en gewist.</translation>
+    </message>
+    <message>
+        <source>Cancel transfers?
+All your transfers in this category will be cancelled.</source>
+        <translatorcomment>Messagebox text to confirm if the user wants to cancel all the transfers in a category other than all transfers category</translatorcomment>
+        <translation>Overdrachten annuleren?
+All uw overdrachten in deze category worden geannulleerd.</translation>
+    </message>
+    <message>
+        <source>Cancel transfers?
+Your incomplete sync transfers won&apos;t be cancelled.</source>
+        <translatorcomment>Messagebox text to confirm if the user wants to cancel all the transfers in a category other than all transfers category but there are sync transfers(they cannot be cancelled)</translatorcomment>
+        <translation>Overdrachten annuleren?
+Uw incomplete gesynchroniseerde overdrachten worden niet geannuleerd.</translation>
+    </message>
+    <message>
+        <source>Cancel transfers?
+Your incomplete sync transfers won't be cancelled
+All the other transfers will be cancelled and cleared.</source>
+        <translatorcomment>Messagebox text to confirm if the user wants to cancel and clear all the transfers in a category other than all transfers category but there are sync transfers(they cannot be cancelled)</translatorcomment>
+        <translation>Overdrachten annuleren?
+Uw incomplete gesynchroniseerde overdrachten worden niet geannuleerd.
+All de andere overdrachten worden geannuleerd en gewist.</translation>
+    </message>
+    <message>
+        <source>Clear transfers?
+All your completed transfers will be cleared.</source>
+        <translatorcomment>Messagebox text to confirm if the user wants to clear all the transfers in the completed category</translatorcomment>
+        <translation>Overdrachten wissen?
+All uw voltooide overdrachten worden gewist.</translation>
+    </message>
+    <message>
+        <source>Clear transfers?
+All your completed transfers in this category will be cleared.</source>
+        <translatorcomment>Messagebox text to confirm if the user wants to clear all the transfers in a category other than the completed category</translatorcomment>
+        <translation>Overdrachten wissen?
+All uw voltooide overdrachten in deze category worden gewist.</translation>
+    </message>
+    <message>
+        <source>Cancel transfers?
+All your selected transfers will be cancelled.</source>
+        <translatorcomment>Messagebox text to confirm if the user wants to cancel all the selected transfers</translatorcomment>
+        <translation>Overdrachten annuleren?
+All uw geselecteerde overdrachten worden geannuleerd.</translation>
+    </message>
+    <message>
+        <source>Cancel transfers?
+All your selected transfers will be cancelled and cleared.</source>
+        <translatorcomment>Messagebox text to confirm if the user wants to cancel and clear all the selected transfers</translatorcomment>
+        <translation>Overdrachten annuleren?
+All uw geselecteerde overdrachten worden geannuleerd en gewist.</translation>
+    </message>
+    <message>
+        <source>Cancel transfers?
+Your selected incomplete sync transfers won't be cancelled
+All the other selected transfers will be cancelled and cleared.</source>
+        <translatorcomment>Messagebox text to confirm if the user wants to cancel and clear all the selected transfers but there are sync transfers in the selection (they cannot be cancelled)</translatorcomment>
+        <translation>Overdrachten annuleren?
+Uw geselecteerde incomplete gesynchroniseerde overdrachten worden niet geannuleerd
+All de andere geselecteerde overdrachten worden geannuleerd en gewist.</translation>
+    </message>
+    <message>
+        <source>Cancel transfer?</source>
+        <translatorcomment>Messagebox text to confirm if the user wants to cancel a single transfer</translatorcomment>
+        <translation>Overdracht annuleren?</translation>
+    </message>
+    <message>
+        <source>Clear transfers?
+All the selected completed transfers in this category will be cleared.</source>
+        <translatorcomment>Messagebox text to confirm if the user wants to clear the selected completed transfer</translatorcomment>
+        <translation>Overdrachten wissen?
+Alle geselecteerde voltooide overdrachten in deze category worden gewist.</translation>
+    </message>
+    <message>
+        <source>Cancel transfers?
+Your selected incomplete sync transfers won&apos;t be cancelled.</source>
+        <translatorcomment>Messagebox text to confirm if the user wants to cancel all the selected transfers but there are sync transfers in the selection (they cannot be cancelled)</translatorcomment>
+        <translation>Overdrachten annuleren?
+Uw geselecteerde incomplete gesynchroniseerde overdrachten worden niet geannuleerd
+All de andere geselecteerde overdrachten worden geannuleerd en gewist.</translation>
+    </message>
+    <message>
+        <source>Clear transfer?</source>
+        <translatorcomment>Messagebox text to confirm if the user wants to clear a single selected completed transfer</translatorcomment>
+        <translation>Overdracht wissen?</translation>
+    </message>
+    <message numerus="yes">
+        <source>Cancel and clear transfer</source>
+        <translatorcomment>Context menu action to resume cancel the active transfers and clear the completed transfers (multiple transfers selected)</translatorcomment>
+        <translation><numerusform>Annuleer en wis overdracht</numerusform><numerusform>Annuleer en alle overdrachten wissen</numerusform></translation>
+    </message>
+    <message>
+        <source>Yes, cancel</source>
+        <translatorcomment>Dialog button to do the proposed actions (cancel the transfers)</translatorcomment>
+        <translation>Ja, annuleren</translation>
+    </message>
+    <message>
+        <source>No, continue</source>
+        <translatorcomment>Dialog button to abort the proposed action</translatorcomment>
+        <translation>Nee, doorgaan</translation>
+    </message>
+    <message>
+        <source>Yes, clear</source>
+        <translatorcomment>Dialog button to do the proposed actions (clear the transfers)</translatorcomment>
+        <translation>Ja, wissen</translation>
     </message>
 </context>
 <context>
@@ -3076,7 +3158,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Enter the new folder name</source>
         <translatorcomment>Dialog text to ask the user to enter a new name for the folder</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Voer de nieuwe mapnaam in</translation>
     </message>
     <message>
         <source>New folder</source>
@@ -3154,7 +3236,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
     <message>
         <source>Are you sure that you want to delete &quot;%1&quot;?</source>
-        <translation>Weet u zeker dat u &quot;%1&quot; wilt verwijderen?</translation>
+        <translation>Weet u zeker dat u “%1” wilt verwijderen?</translation>
     </message>
     <message>
         <source>Only files can be used for streaming.</source>
@@ -3628,18 +3710,59 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
 </context>
 <context>
+    <name>PlatformStrings</name>
+    <message>
+        <source>Open settings</source>
+        <translatorcomment>Button label to open MEGAsync preferences dialog (Linux and Windows).</translatorcomment>
+        <translation>Instellingen openen</translation>
+    </message>
+    <message>
+        <source>One or more syncs have been disabled. Go to settings to enable them again.</source>
+        <translatorcomment>Warning message shown when logging into MEGAsync to inform the user that some syncs have been disabled and need to go to settings to enable them again (Windows and Linux)</translatorcomment>
+        <translation>Één of meer synchronisaties zijn uitgeschakeld. Ga naar instellingen om ze weer in te schakelen.</translation>
+    </message>
+    <message>
+        <source>Open preferences</source>
+        <translatorcomment>Button label to open MEGAsync preferences dialog (MacOS).</translatorcomment>
+        <translation>Voorkeuren openen</translation>
+    </message>
+    <message>
+        <source>One or more syncs have been disabled. Go to preferences to enable them again.</source>
+        <translatorcomment>Warning message shown when logging into MEGAsync to inform the user that some syncs have been disabled and need to go to settings to enable them again (macOS)</translatorcomment>
+        <translation>Één of meer synchronisaties zijn uitgeschakeld. Ga naar Voorkeuren om ze weer in te schakelen.</translation>
+    </message>
+    <message>
+        <source>Sync transfers cannot be cancelled individually.
+Please delete the folder sync from settings to cancel them.</source>
+        <translatorcomment>Explains that the sync transfers cannot be cancelled individually. (for windows and linux)</translatorcomment>
+        <translation>Synchronisatie overdrachten kunnen niet individueel geannuleerd worden.
+Verwijder de mapsynchronisatie vanuit Instellingen om ze te annuleren.</translation>
+    </message>
+    <message>
+        <source>Sync transfers cannot be cancelled individually.
+Please delete the folder sync from preferences to cancel them.</source>
+        <translatorcomment>Explains that the sync transfers cannot be cancelled individually. (for macOS)</translatorcomment>
+        <translation>Synchronisatie overdrachten kunnen niet individueel geannuleerd worden.
+Verwijder de mapsynchronisatie vanuit Voorkeuren om ze te annuleren.</translation>
+    </message>
+</context>
+<context>
     <name>Preferences</name>
     <message>
-        <source>- Full redesign of remote file picker.
-- Fixed translation issues.
-- Other minor UI fixes and adjustments.
-- Fixed detected crashes on Windows, Linux and macOS.
+        <source>- There is now a new transfer manager.
+- Transfer management was enhanced and reliability of downloads and uploads improved. 
+- Detected crashes on Windows, Linux, and macOS fixed.
+- Translation issues fixed.
+- Performance improved.
+- UI fixed and adjusted.
 </source>
-        <translatorcomment>Changelog for version 4.6.7</translatorcomment>
-        <translation>- Volledig herontwerp van externe bestandskiezer.
- - Vertaalproblemen opgelost.
- - Andere kleine UI-fixes en aanpassingen.
- - Vaste gedetecteerde crashes op Windows, Linux en macOS opgelost.
+        <translatorcomment>Changelog for version v4.7.0</translatorcomment>
+        <translation>- Er is nu een nieuwe transfermanager.
+- Het overdrachtsbeheer is verbeterd en de betrouwbaarheid van downloads en uploads is verbeterd.
+- Gedetecteerde crashes op Windows, Linux en macOS opgelost.
+- Vertaalproblemen opgelost.
+- Prestaties verbeterd.
+- UI vast en aangepast.
 </translation>
     </message>
 </context>
@@ -3741,7 +3864,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>&amp;Yes</source>
         <translatorcomment>Label for confirm button. Keep capital letter.</translatorcomment>
-        <translation>&amp;Yes</translation>
+        <translation>&amp;Ja</translation>
     </message>
     <message>
         <source>&amp;No</source>
@@ -3799,12 +3922,12 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Parent Directory</source>
         <translatorcomment>Button to move to the parent directory</translatorcomment>
-        <translation>Bovenliggende Directory</translation>
+        <translation>Bovenliggende Map</translation>
     </message>
     <message>
         <source>Go to the parent directory</source>
         <translatorcomment>Parent directory button message used by assistive technologies (such as screen readers)</translatorcomment>
-        <translation>Ga naar de bovenliggende locaties</translation>
+        <translation>Ga naar de bovenliggende map</translation>
     </message>
     <message>
         <source>Alt+Up</source>
@@ -3829,7 +3952,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Change to list view mode</source>
         <translatorcomment>Change to list view mode button message used by assistive technologies (such as screen readers)</translatorcomment>
-        <translation>Ga naar de lijstweergavemodus</translation>
+        <translation>Wijzigen naar lijstweergave</translation>
     </message>
     <message>
         <source>Detail View</source>
@@ -3839,7 +3962,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Change to detail view mode</source>
         <translatorcomment>Change to detail view mode button message used by assistive technologies (such as screen readers)</translatorcomment>
-        <translation>Ga naar de detailweergave</translation>
+        <translation>Wijzigen naar detailweergave</translation>
     </message>
     <message>
         <source>Sidebar</source>
@@ -3864,7 +3987,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Find Directory</source>
         <translatorcomment>Window title when opening a directory</translatorcomment>
-        <translation>Vind Locatie</translation>
+        <translation>Zoek Map</translation>
     </message>
     <message>
         <source>Open</source>
@@ -3879,7 +4002,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Directory:</source>
         <translatorcomment>Selected directory text box label when choosing a directory</translatorcomment>
-        <translation>Lokatie:</translation>
+        <translation>Map:</translation>
     </message>
     <message>
         <source>All Files (*)</source>
@@ -4054,27 +4177,27 @@ Wilt u deze toch verwijderen?</translation>
     <message>
         <source>%1 TB</source>
         <translatorcomment>File size measured in terabytes</translatorcomment>
-        <translation>%1 TB</translation>
+        <translation>%1 TB</translation>
     </message>
     <message>
         <source>%1 GB</source>
         <translatorcomment>File size measured in gigabytes</translatorcomment>
-        <translation>%1 GB</translation>
+        <translation>%1 GB</translation>
     </message>
     <message>
         <source>%1 MB</source>
         <translatorcomment>File size measured in megabytes</translatorcomment>
-        <translation>%1 MB</translation>
+        <translation>%1 MB</translation>
     </message>
     <message>
         <source>%1 KB</source>
         <translatorcomment>File size measured in kilobytes</translatorcomment>
-        <translation>%1 KB</translation>
+        <translation>%1 KB</translation>
     </message>
     <message>
         <source>%1 bytes</source>
         <translatorcomment>File size measured in bytes</translatorcomment>
-        <translation>%1 bytes</translation>
+        <translation>%1 bytes</translation>
     </message>
     <message>
         <source>Invalid filename</source>
@@ -4126,7 +4249,7 @@ Wilt u deze toch verwijderen?</translation>
     <name>QPlatformTheme</name>
     <message>
         <source>&amp;Yes</source>
-        <translation>&amp;Yes</translation>
+        <translation>&amp;Ja</translation>
     </message>
     <message>
         <source>&amp;No</source>
@@ -4144,14 +4267,14 @@ Wilt u deze toch verwijderen?</translation>
 <context>
     <name>RenameLocalNodeDialog</name>
     <message>
-        <source>Error renaming file to %1</source>
-        <translatorcomment>Error message shown when a file renaming has failed. %1 is the name of the file</translatorcomment>
-        <translation type="unfinished"></translation>
+        <source>File can’t be renamed to &quot;%1&quot;</source>
+        <translatorcomment>Error warning shown when a file can´t be renamed due to an error.</translatorcomment>
+        <translation>Bestand kan niet hernoemd worden naar &quot;%1&quot;</translation>
     </message>
     <message>
-        <source>Error renaming folder to %1</source>
-        <translatorcomment>Error message shown when a folder renaming has failed. %1 is the name of the folder</translatorcomment>
-        <translation type="unfinished"></translation>
+        <source>Folder can’t be renamed to &quot;%1&quot;</source>
+        <translatorcomment>Error warning shown when a folder can´t be renamed due to an error.</translatorcomment>
+        <translation>Map kan niet hernoemd worden naar &quot;%1&quot;</translation>
     </message>
 </context>
 <context>
@@ -4159,40 +4282,40 @@ Wilt u deze toch verwijderen?</translation>
     <message>
         <source>Enter new file name</source>
         <translatorcomment>Title of the rename file dialog </translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Voer nieuwe bestandsnaam in</translation>
     </message>
     <message>
         <source>Enter new folder name</source>
         <translatorcomment>Title of the rename folder dialog </translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Voer de nieuwe mapnaam in</translation>
     </message>
     <message>
         <source>Rename file</source>
         <translatorcomment>Dialog title for file renaming</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Hernoem bestand</translation>
     </message>
     <message>
         <source>Rename folder</source>
         <translatorcomment>Dialog title for folder renaming</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Hernoem bestand</translation>
     </message>
 </context>
 <context>
     <name>ScanningWidget</name>
     <message>
-        <source>Please do not close the application</source>
-        <translatorcomment>Text below the GIF to askt he user not to close the app while it is scanning a folder</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Cancel transfers</source>
         <translatorcomment>Button text to cancel the scanning of transfers</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Overdrachten annuleren</translation>
     </message>
     <message>
         <source>Scanning…</source>
         <translatorcomment>Text to let the user know that the app is scanning a folder</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Scannen…</translation>
+    </message>
+    <message>
+        <source>Don´t exit the app</source>
+        <translatorcomment>Text below the GIF to askt he user not to close the app while it is scanning a folder</translatorcomment>
+        <translation>Verlaat de applicatie niet</translation>
     </message>
 </context>
 <context>
@@ -4492,7 +4615,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>%1 (local cache)</source>
         <translatorcomment>Section label name for local cache summary and actions. Keep %1 placeholder, which is used to fill in the platform specific name for local sync cache (debris).</translatorcomment>
-        <translation>%1(locale cashe)</translation>
+        <translation>%1(lokale cashe)</translation>
     </message>
     <message>
         <source>Space used:</source>
@@ -4597,7 +4720,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Restart MEGA Desktop App to apply changes.</source>
         <translatorcomment>Informative text shown in Folders pane, letting the user know that an application restart is required to apply the changes he just made.</translatorcomment>
-        <translation>Herstart de MEGA Desktop App om de wijzigingen toe te passen.</translation>
+        <translation>Herstart de MEGA Desktop Applicatie om de wijzigingen toe te passen.</translation>
     </message>
     <message>
         <source>Change Settings…</source>
@@ -4657,7 +4780,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Transfer quota:</source>
         <translatorcomment>Label for account transfer quota details.(macOS)</translatorcomment>
-        <translation>Overdracht tegoed:</translation>
+        <translation>Overdrachtstegoed:</translation>
     </message>
     <message>
         <source>Your MEGA account is full. Uploads are disabled and folder synchronisation is paused.</source>
@@ -4812,17 +4935,17 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Pro I</source>
         <translatorcomment>Text label indicating the Pro I tier of account type in Account pane, next to the shield icon indicating also the type of account.</translatorcomment>
-        <translation>Pro-I</translation>
+        <translation>Pro I</translation>
     </message>
     <message>
         <source>Pro II</source>
         <translatorcomment>Text label indicating the Pro II tier of account type in Account pane, next to the shield icon indicating also the type of account.</translatorcomment>
-        <translation>Pro-II</translation>
+        <translation>Pro II</translation>
     </message>
     <message>
         <source>Pro III</source>
         <translatorcomment>Text label indicating the Pro III tier of account type in Account pane, next to the shield icon indicating also the type of account.</translatorcomment>
-        <translation>Pro-III</translation>
+        <translation>Pro III</translation>
     </message>
     <message>
         <source>Export Key</source>
@@ -5369,7 +5492,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Are you sure that you want to stop the streaming?</source>
         <translatorcomment>Warning message shown when the dialog to stream files from MEGA is going to be closed and there is a file selected for streaming</translatorcomment>
-        <translation>Weet u zeker dat u de streaming wilt stoppen?</translation>
+        <translation>Weet u zeker dat u het streamen wilt stoppen?</translation>
     </message>
     <message>
         <source>Error</source>
@@ -5440,32 +5563,32 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Starting…</source>
         <translatorcomment>Transfer is being started but no bytes have been transferred yet</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Opstarten…</translation>
     </message>
     <message>
         <source>Retrying</source>
         <translatorcomment>Transfer is starting again after failure</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Opnieuw Proberen</translation>
     </message>
     <message>
         <source>Uploading…</source>
         <translatorcomment>Transfer is being uploaded</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Uploaden…</translation>
     </message>
     <message>
         <source>Downloading…</source>
         <translatorcomment>Transfer is being downloaded</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Downloaden...</translation>
     </message>
     <message>
         <source>Syncing…</source>
         <translatorcomment>Transfer is being synced</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Synchroniseren...</translation>
     </message>
     <message>
         <source>Completing</source>
         <translatorcomment>Transfer is being completed</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Voltooien</translation>
     </message>
     <message>
         <source>Completed</source>
@@ -5480,17 +5603,17 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Failed</source>
         <translatorcomment>Transfer has failed</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Mislukt</translation>
     </message>
     <message>
         <source>In queue</source>
         <translatorcomment>Transfer is active but not being processed yet</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>In wachtrij</translation>
     </message>
     <message>
         <source>(in queue)</source>
         <translatorcomment>Transfer is paused and no bytes have been transferred yet</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>(in wachtrij)</translation>
     </message>
     <message>
         <source>Retry</source>
@@ -5500,12 +5623,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Out of storage space</source>
         <translatorcomment>Transfer is paused for out of storage space</translatorcomment>
-        <translation>Geen opslag ruimte meer</translation>
+        <translation>Opslag tegoed overschreden</translation>
     </message>
     <message>
         <source>Out of transfer quota</source>
         <translatorcomment>Transfer is paused for out of transfer quota</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Overdracht tegoed overschreden</translation>
     </message>
 </context>
 <context>
@@ -5551,7 +5674,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Search</source>
         <translatorcomment>Title for text search window</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Zoeken</translation>
     </message>
     <message>
         <source>Transferring</source>
@@ -5561,47 +5684,47 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>All transfers</source>
         <translatorcomment>Title for All transfers category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Alle overdrachten</translation>
     </message>
     <message>
         <source>Failed</source>
         <translatorcomment>Title for Failed transfers category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Mislukt</translation>
     </message>
     <message>
         <source>Media type</source>
         <translatorcomment>Title of the groupbox which contains all the media categories</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Mediatype</translation>
     </message>
     <message>
         <source>Archives</source>
         <translatorcomment>Categories for archive type transfers</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Archieven</translation>
     </message>
     <message>
         <source>Documents</source>
         <translatorcomment>Categories for document type transfers</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Documenten</translation>
     </message>
     <message>
         <source>Images</source>
         <translatorcomment>Categories for image type transfers</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Afbeeldingen</translation>
     </message>
     <message>
         <source>Videos</source>
         <translatorcomment>Categories for video type transfers</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Video’s</translation>
     </message>
     <message>
         <source>Audio</source>
         <translatorcomment>Categories for audio type transfers</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Audio</translation>
     </message>
     <message>
         <source>Other</source>
         <translatorcomment>Categories for other type transfers</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Overig</translation>
     </message>
     <message>
         <source>Up to date</source>
@@ -5609,79 +5732,74 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>Bijgewerkt</translation>
     </message>
     <message>
-        <source>Some issues occurred</source>
-        <translatorcomment>Message shown when there are some failed transfers</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Scanning</source>
         <translatorcomment>State of the Transfers: Message which shows that a folder is being scanned</translatorcomment>
-        <translation>Aan het scannen</translation>
+        <translation>Scannen</translation>
     </message>
     <message>
         <source>All paused</source>
         <translatorcomment>Message which shows that the global pause is set</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Alles gepauzeerd</translation>
     </message>
     <message>
         <source>All</source>
         <translatorcomment>Title for all searched transfers by text</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Alle</translation>
     </message>
     <message>
         <source>Search:</source>
         <translatorcomment>Title to show the text used to search</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Zoeken:</translation>
     </message>
     <message>
         <source>Retry all</source>
         <translatorcomment>Button text for retry all button in Failed category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Alles herproberen</translation>
     </message>
     <message>
         <source>No uploads</source>
         <translatorcomment>Empty window message for upload category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Geen uploads</translation>
     </message>
     <message>
         <source>No downloads</source>
         <translatorcomment>Empty window message for download category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Geen downloads</translation>
     </message>
     <message>
         <source>No transfers</source>
         <translatorcomment>Empty window message for generic categories</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Geen overdrachten</translation>
     </message>
     <message>
         <source>No search results</source>
         <translatorcomment>Empty window message for search category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Geen zoek resultaten</translation>
     </message>
     <message>
         <source>No completed transfers</source>
         <translatorcomment>Empty window message for completed category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Geen voltooide overdrachten</translation>
     </message>
     <message>
         <source>Resume all transfers</source>
         <translatorcomment>Global pause button tooltip</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Alle overdrachten hervatten</translation>
     </message>
     <message>
         <source>Pause all transfers</source>
         <translatorcomment>Global resume button tooltip</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Pauzeer alle transfers</translation>
     </message>
     <message numerus="yes">
         <source>%1 result found</source>
         <translatorcomment>Message shown with search results,when there are only uploads or downloads, but not both at the same time</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%1 resultaat gevonden</numerusform><numerusform>%1 resultaten gevonden</numerusform></translation>
     </message>
     <message>
         <source>Upgrade now</source>
         <translatorcomment>Button to open web explorer to see MEGA paid plans</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Nu upgraden</translation>
     </message>
     <message>
         <source>Transfer quota exceeded</source>
@@ -5697,12 +5815,18 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>You can&apos;t continue downloading as you don&apos;t have enough transfer quota left for this IP address.
 To get more quota, upgrade to a Pro account or wait for [A] until more free quota becomes available on your IP address.</source>
         <translatorcomment>Message which shows that the user reachs the overquota. [A] is the time to wait until the quota is reset in hh:mm:ss</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>U kunt niet doorgaan met downloaden omdat u niet genoeg overdrachtstegoed over hebt voor dit IP-adres.
+Om meer tegoed te krijgen, upgrade naar een Pro-account of wacht [A] tot er meer gratis tegoed beschikbaar komt op uw IP-adres.</translation>
     </message>
     <message>
         <source>More about transfer quota</source>
         <translatorcomment>Link button to send the user to the transfer quota information blog website</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Meer over overdrachtstegoed</translation>
+    </message>
+    <message numerus="yes">
+        <source>Issue found</source>
+        <translatorcomment>Message shown when there are some failed transfers/syncs/backups</translatorcomment>
+        <translation><numerusform>Probleem gevonden</numerusform><numerusform>Problemen gevonden</numerusform></translation>
     </message>
 </context>
 <context>
@@ -5710,7 +5834,7 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
     <message>
         <source>Drop to Upload</source>
         <translatorcomment>Let the user know that files can be dropped there</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Zet neer om te uploaden</translation>
     </message>
 </context>
 <context>
@@ -5729,20 +5853,9 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
 <context>
     <name>TransfersModel</name>
     <message>
-        <source>Sync transfers cannot be cancelled individually.
-Please delete the folder sync from settings to cancel them.</source>
-        <translatorcomment>Explains that the sync transfers cannot be cancelled individually.</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Dismiss</source>
         <translatorcomment>Option to close the dialog without taking any action</translatorcomment>
         <translation>Sluiten</translation>
-    </message>
-    <message>
-        <source>Open settings</source>
-        <translatorcomment>Close the dialog and open the settings dialog</translatorcomment>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5760,117 +5873,117 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Speed</source>
         <translatorcomment>speed table header column name of the file to transfer in All transfers and uploads/downloads categories</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Snelheid</translation>
     </message>
     <message>
         <source>Status</source>
         <translatorcomment>Status (paused, completed, queue...) of the file to transfer</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Status</translation>
     </message>
     <message>
         <source>Time left</source>
-        <translatorcomment>Time table header column name for all transfers categories</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Time table header column name for all transfers, downloads, uploads categories (where there are only active transfers)</translatorcomment>
+        <translation>Tijd over</translation>
     </message>
     <message>
         <source>Time completed</source>
         <translatorcomment>Time table header column name for completed transfers categories</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Tijd voltooid</translation>
     </message>
     <message>
         <source>Avg. speed</source>
         <translatorcomment>speed table header column name for completed and failed transfers categories</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Gemiddelde snelheid</translation>
     </message>
     <message>
         <source>Time</source>
-        <translatorcomment>Time table header column name for the rest of the transfers categories</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Time table header column name for media types and search categories</translatorcomment>
+        <translation>Tijd</translation>
     </message>
     <message>
         <source>Clear all completed</source>
         <translatorcomment>Tooltip for clear button when the user is in the completed category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Alles wissen voltooid</translation>
     </message>
     <message>
         <source>Clear all search results</source>
         <translatorcomment>Tooltip for clear button when the user is in the search category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Alle zoekresultaten wissen</translation>
     </message>
     <message>
         <source>Clear all audios</source>
         <translatorcomment>Tooltip for clear button when the user is in the audios category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Alle audios wissen</translation>
     </message>
     <message>
         <source>Clear all videos</source>
         <translatorcomment>Tooltip for clear button when the user is in the videos category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Alle video&apos;s wissen</translation>
     </message>
     <message>
         <source>Clear all archives</source>
         <translatorcomment>Tooltip for clear button when the user is in the archives category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Alle archieven wissen</translation>
     </message>
     <message>
         <source>Clear all documents</source>
         <translatorcomment>Tooltip for clear button when the user is in the documents category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Alle documenten wissen</translation>
     </message>
     <message>
         <source>Clear all images</source>
         <translatorcomment>Tooltip for clear button when the user is in the images category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Alle afbeeldingen wissen</translation>
     </message>
     <message>
         <source>Clear all transfers</source>
         <translatorcomment>Tooltip for clear button when the user is in the others category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Alle overdrachten wissen</translation>
     </message>
     <message>
         <source>Cancel all downloads</source>
         <translatorcomment>Tooltip for cancel button when the user is in the downloads category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Alle downloads annuleren</translation>
     </message>
     <message>
         <source>Cancel all uploads</source>
         <translatorcomment>Tooltip for cancel button when the user is in the uploads category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Alle uploads annuleren</translation>
     </message>
     <message>
         <source>Cancel all failed</source>
         <translatorcomment>Tooltip for cancel button when the user is in the failed category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Alle mislukte annuleren</translation>
     </message>
     <message>
         <source>Cancel all search results</source>
         <translatorcomment>Tooltip for cancel button when the user is in the search category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Alle zoekresultaten annuleren</translation>
     </message>
     <message>
         <source>Cancel all audios</source>
         <translatorcomment>Tooltip for cancel button when the user is in the audios category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Alle audio&apos;s annuleren</translation>
     </message>
     <message>
         <source>Cancel all videos</source>
         <translatorcomment>Tooltip for cancel button when the user is in the videos category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Alle video&apos;s annuleren</translation>
     </message>
     <message>
         <source>Cancel all archives</source>
         <translatorcomment>Tooltip for cancel button when the user is in the archives category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Alle archieven annuleren</translation>
     </message>
     <message>
         <source>Cancel all documents</source>
         <translatorcomment>Tooltip for cancel button when the user is in the documents category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Alle documenten annuleren</translation>
     </message>
     <message>
         <source>Cancel all images</source>
         <translatorcomment>Tooltip for cancel button when the user is in the images category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Alle afbeeldingen annuleren</translation>
     </message>
     <message>
         <source>Cancel all transfers</source>
@@ -5880,127 +5993,127 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Cancel and clear all search results</source>
         <translatorcomment>Tooltip for cancel button when the user is in the search category and there are completed transfers</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Annuleer en wis alle zoekresultaten</translation>
     </message>
     <message>
         <source>Cancel and clear all audios</source>
         <translatorcomment>Tooltip for cancel button when the user is in the audios category and there are completed transfers</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Annuleer en wis alle audio&apos;s</translation>
     </message>
     <message>
         <source>Cancel and clear all videos</source>
         <translatorcomment>Tooltip for cancel button when the user is in the videos category and there are completed transfers</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Annuleer en wis alle video&apos;s</translation>
     </message>
     <message>
         <source>Cancel and clear all archives</source>
         <translatorcomment>Tooltip for cancel button when the user is in the archives category and there are completed transfers</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Annuleer en wis alle archieven</translation>
     </message>
     <message>
         <source>Cancel and clear all documents</source>
         <translatorcomment>Tooltip for cancel button when the user is in the documents category and there are completed transfers</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Annuleer en wis alle documenten</translation>
     </message>
     <message>
         <source>Cancel and clear all images</source>
         <translatorcomment>Tooltip for cancel button when the user is in the images category and there are completed transfers</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Annuleer en wis alle afbeeldingen</translation>
     </message>
     <message>
         <source>Cancel and clear all transfers</source>
         <translatorcomment>Tooltip for cancel button when the user is in the all transfers category and there are completed transfers</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Annuleer en wis alle overdrachten</translation>
     </message>
     <message>
         <source>Resume all downloads</source>
         <translatorcomment>Tooltip for Resume button when the user is in the downloads category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Alle downloads hervatten</translation>
     </message>
     <message>
         <source>Resume all uploads</source>
         <translatorcomment>Tooltip for Resume button when the user is in the uploads category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Alle uploads hervatten</translation>
     </message>
     <message>
         <source>Resume all search results</source>
         <translatorcomment>Tooltip for Resume button when the user is in the search category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Alle zoekresultaten hervatten</translation>
     </message>
     <message>
         <source>Resume all audios</source>
         <translatorcomment>Tooltip for Resume button when the user is in the audios category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Alle audio&apos;s hervatten</translation>
     </message>
     <message>
         <source>Resume all videos</source>
         <translatorcomment>Tooltip for Resume button when the user is in the videos category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Alle video&apos;s hervatten</translation>
     </message>
     <message>
         <source>Resume all archives</source>
         <translatorcomment>Tooltip for Resume button when the user is in the archives category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Alle archieven hervatten</translation>
     </message>
     <message>
         <source>Resume all documents</source>
         <translatorcomment>Tooltip for Resume button when the user is in the documents category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Alle documenten hervatten</translation>
     </message>
     <message>
         <source>Resume all images</source>
         <translatorcomment>Tooltip for Resume button when the user is in the images category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Alle afbeeldingen hervatten</translation>
     </message>
     <message>
         <source>Resume all transfers</source>
         <translatorcomment>Tooltip for Resume button when the user is in the all transfers category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Alle overdrachten hervatten</translation>
     </message>
     <message>
         <source>Pause all downloads</source>
         <translatorcomment>Tooltip for Pause button when the user is in the downloads category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Alle downloads pauzeren</translation>
     </message>
     <message>
         <source>Pause all uploads</source>
         <translatorcomment>Tooltip for Pause button when the user is in the uploads category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Alle uploads pauzeren</translation>
     </message>
     <message>
         <source>Pause all search results</source>
         <translatorcomment>Tooltip for Pause button when the user is in the search category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Pauzeer alle zoekresultaten</translation>
     </message>
     <message>
         <source>Pause all audios</source>
         <translatorcomment>Tooltip for Pause button when the user is in the audios category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Alle audio&apos;s pauzeren</translation>
     </message>
     <message>
         <source>Pause all videos</source>
         <translatorcomment>Tooltip for Pause button when the user is in the videos category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Alle video&apos;s pauzeren</translation>
     </message>
     <message>
         <source>Pause all archives</source>
         <translatorcomment>Tooltip for Pause button when the user is in the archives category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Alle archieven pauzeren</translation>
     </message>
     <message>
         <source>Pause all documents</source>
         <translatorcomment>Tooltip for Pause button when the user is in the documents category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Alle documenten pauzeren</translation>
     </message>
     <message>
         <source>Pause all images</source>
         <translatorcomment>Tooltip for Pause button when the user is in the images category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Alle afbeeldingen pauzeren</translation>
     </message>
     <message>
         <source>Pause all transfers</source>
         <translatorcomment>Tooltip for Pause button when the user is in the all transfers category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Pauzeer alle overdrachten</translation>
     </message>
 </context>
 <context>
@@ -6152,22 +6265,22 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Pro Lite</source>
         <translatorcomment>Label to refer Pro Lite tier</translatorcomment>
-        <translation>Pro-Lite</translation>
+        <translation>Pro Lite</translation>
     </message>
     <message>
         <source>Pro I</source>
         <translatorcomment>Label to refer Pro I tier</translatorcomment>
-        <translation>Pro-I</translation>
+        <translation>Pro I</translation>
     </message>
     <message>
         <source>Pro II</source>
         <translatorcomment>Label to refer Pro II tier</translatorcomment>
-        <translation>Pro-II</translation>
+        <translation>Pro II</translation>
     </message>
     <message>
         <source>Pro III</source>
         <translatorcomment>Label to refer Pro III tier</translatorcomment>
-        <translation>Pro-III</translation>
+        <translation>Pro III</translation>
     </message>
     <message numerus="yes">
         <source>%n second ago</source>

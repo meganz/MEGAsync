@@ -57,6 +57,7 @@ void TransfersWidget::setupTransfers()
     connect(app->getTransfersModel(), &TransfersModel::blockUi, this, &TransfersWidget::onUiBlocked);
     connect(app->getTransfersModel(), &TransfersModel::unblockUi, this, &TransfersWidget::onUiUnblocked);
     connect(app->getTransfersModel(), &TransfersModel::unblockUiAndFilter, this, &TransfersWidget::onUiUnblockedAndFilter);
+    connect(app->getTransfersModel(), &TransfersModel::rowsAboutToBeMoved, this, &TransfersWidget::onRowsAboutToBeMoved);
 
     configureTransferView();
 }
@@ -350,7 +351,7 @@ void TransfersWidget::updateHeaderItems()
             mHeaderInfo.headerTime = tr("Time completed");
             mHeaderInfo.headerSpeed = tr("Avg. speed");
         }
-        else if (mCurrentTab > TransfersWidget::TYPES_TAB_BASE && mCurrentTab < TransfersWidget::TYPES_LAST)
+        else if (mCurrentTab == TransfersWidget::SEARCH_TAB || (mCurrentTab > TransfersWidget::TYPES_TAB_BASE && mCurrentTab < TransfersWidget::TYPES_LAST))
         {
             mHeaderInfo.headerTime = tr("Time");
             mHeaderInfo.headerSpeed = tr("Speed");
@@ -372,6 +373,7 @@ void TransfersWidget::changeEvent(QEvent *event)
     if (event->type() == QEvent::LanguageChange)
     {
         ui->retranslateUi(this);
+        updateHeaderItems();
     }
 
     QWidget::changeEvent(event);
@@ -442,11 +444,53 @@ void TransfersWidget::onModelAboutToBeChanged()
     onUiBlocked();
 }
 
+
 void TransfersWidget::onModelChanged()
 {
     onUiUnblocked();
-
     updateHeaders();
+
+    selectAndScrollToMovedTransfer();
+}
+
+void TransfersWidget::onRowsAboutToBeMoved(int scrollTo)
+{
+    mScrollToAfterMovingRow.append(scrollTo);
+
+    if(mProxyModel->getSortCriterion() != static_cast<int>(SortCriterion::PRIORITY))
+    {
+        ui->statusColumn->forceClick();
+    }
+    else
+    {
+        selectAndScrollToMovedTransfer(QAbstractItemView::EnsureVisible);
+    }
+}
+
+void TransfersWidget::selectAndScrollToMovedTransfer(QAbstractItemView::ScrollHint scrollHint)
+{
+    QTimer::singleShot(200, [this, scrollHint]()
+    {
+        if(!mScrollToAfterMovingRow.isEmpty())
+        {
+            foreach(auto row, mScrollToAfterMovingRow)
+            {
+                auto d = app->getTransfersModel()->getTransferByTag(row);
+                if(d)
+                {
+                    auto rowIndex = app->getTransfersModel()->index(app->getTransfersModel()->getRowByTransferTag(d->mTag),0);
+                    if(rowIndex.isValid())
+                    {
+                        auto proxyIndex = mProxyModel->mapFromSource(rowIndex);
+                        ui->tvTransfers->selectionModel()->select(proxyIndex, QItemSelectionModel::SelectionFlag::Select);
+                        ui->tvTransfers->scrollTo(proxyIndex, scrollHint);
+                    }
+                }
+            }
+
+            mScrollToAfterMovingRow.clear();
+        }
+    });
 }
 
 void TransfersWidget::onPauseResumeTransfer(bool pause)
@@ -468,7 +512,7 @@ void TransfersWidget::onCancelClearButtonPressedOnDelegate()
 
     if (QMegaMessageBox::warning(this, QString::fromUtf8("MEGAsync"),
                              info.actionText,
-                             QMessageBox::Yes | QMessageBox::No, QMessageBox::No)
+                             QMessageBox::Yes | QMessageBox::No, QMessageBox::No, info.buttonsText)
             != QMessageBox::Yes
             || !dialog)
     {
@@ -483,17 +527,6 @@ void TransfersWidget::onRetryButtonPressedOnDelegate()
     auto selection = ui->tvTransfers->selectionModel()->selection();
     auto sourceSelection= mProxyModel->mapSelectionToSource(selection);
     auto sourceSelectionIndexes = sourceSelection.indexes();
-
-    QPointer<TransfersWidget> dialog = QPointer<TransfersWidget>(this);
-
-    if (QMegaMessageBox::warning(this, QString::fromUtf8("MEGAsync"),
-                             MegaTransferView::retryAskActionText(sourceSelectionIndexes.size()),
-                             QMessageBox::Yes | QMessageBox::No, QMessageBox::No)
-            != QMessageBox::Yes
-            || !dialog)
-    {
-        return;
-    }
 
     getModel()->retryTransfers(sourceSelectionIndexes);
 }

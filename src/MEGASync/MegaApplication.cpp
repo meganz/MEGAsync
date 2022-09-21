@@ -13,6 +13,7 @@
 #include "ConnectivityChecker.h"
 #include "TransferMetadata.h"
 #include "DuplicatedNodeDialogs/DuplicatedNodeDialog.h"
+#include "PlatformStrings.h"
 #include "UserAttributesManager.h"
 #include "UserAttributesRequests/FullName.h"
 #include "UserAttributesRequests/Avatar.h"
@@ -318,7 +319,6 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     updateThread = NULL;
     updateTask = NULL;
     multiUploadFileDialog = NULL;
-    exitDialog = NULL;
     downloadNodeSelector = NULL;
     mPricing.reset();
     mCurrency.reset();
@@ -576,6 +576,7 @@ void MegaApplication::initialize()
 
     if (preferences->isCrashed())
     {
+        MegaApi::log(MegaApi::LOG_LEVEL_WARNING, QString::fromUtf8("Force reloading (isCrashed true)").toUtf8().constData());
         preferences->setCrashed(false);
         QDirIterator di(dataPath, QDir::Files | QDir::NoDotAndDotDot);
         while (di.hasNext())
@@ -588,6 +589,7 @@ void MegaApplication::initialize()
                     || fi.fileName().endsWith(QString::fromUtf8(".db-wal"))
                     || fi.fileName().endsWith(QString::fromUtf8(".db-shm"))))
             {
+                MegaApi::log(MegaApi::LOG_LEVEL_WARNING, QString::fromUtf8("Deleting local cache: %1").arg(di.filePath()).toUtf8().constData());
                 QFile::remove(di.filePath());
             }
         }
@@ -696,7 +698,7 @@ void MegaApplication::initialize()
 
     mTransfersModel = new TransfersModel(nullptr);
 
-    connect(mTransfersModel, &TransfersModel::transfersCountUpdated, this, &MegaApplication::onTransfersModelUpdate);
+    connect(mTransfersModel.data(), &TransfersModel::transfersCountUpdated, this, &MegaApplication::onTransfersModelUpdate);
 }
 
 QString MegaApplication::applicationFilePath()
@@ -897,9 +899,11 @@ void MegaApplication::updateTrayIcon()
     }
     else if (paused)
     {
-        if(mTransfersModel && mTransfersModel->hasFailedTransfers())
+        long long transfersFailed(mTransfersModel ? mTransfersModel->failedTransfers() : 0);
+
+        if(transfersFailed > 0)
         {
-            tooltipState = QCoreApplication::translate("TransferManager","Some issues occurred");
+            tooltipState = QCoreApplication::translate("TransferManager","Issue found", "", transfersFailed);
             icon = icons["someissues"];
         }
         else
@@ -946,9 +950,11 @@ void MegaApplication::updateTrayIcon()
     }
     else
     {
-        if(mTransfersModel && mTransfersModel->hasFailedTransfers())
+        long long transfersFailed(mTransfersModel ? mTransfersModel->failedTransfers() : 0);
+
+        if(transfersFailed > 0)
         {
-            tooltipState = QCoreApplication::translate("TransferManager","Some issues occurred");
+            tooltipState = QCoreApplication::translate("TransferManager","Issue found", "", transfersFailed);
             icon = icons["someissues"];
         }
         else
@@ -1370,6 +1376,7 @@ if (!preferences->lastExecutionTime())
         }
     }
     infoDialog->setUsage();
+    infoDialog->setAvatar();
     infoDialog->setAccountType(preferences->accountType());
 
     model->setUnattendedDisabledSyncs(preferences->getDisabledSyncTags());
@@ -1769,10 +1776,10 @@ void MegaApplication::createTransferManagerDialog()
 
         // Signal/slot to notify the tracking of unseen completed transfers of Transfer Manager. If Completed tab is
         // active, tracking is disabled
-        connect(mTransferManager, &TransferManager::userActivity, this, &MegaApplication::registerUserActivity);
+        connect(mTransferManager.data() , &TransferManager::userActivity, this, &MegaApplication::registerUserActivity);
         connect(transferQuota.get(), &TransferQuota::sendState,
-                mTransferManager, &TransferManager::onTransferQuotaStateChanged);
-        connect(mTransferManager, SIGNAL(cancelScanning()), this, SLOT(cancelScanningStage()));
+                mTransferManager.data(), &TransferManager::onTransferQuotaStateChanged);
+        connect(mTransferManager.data(), SIGNAL(cancelScanning()), this, SLOT(cancelScanningStage()));
         if (scanStageController.isInScanningState())
         {
             mTransferManager->enterBlockingState();
@@ -1819,22 +1826,25 @@ void MegaApplication::tryExitApplication(bool force)
     {
         exitApplication();
     }
-    else if (!exitDialog)
+    else
     {
-        exitDialog = new QMessageBox(QMessageBox::Question, tr("MEGAsync"),
-                                     tr("There is an active transfer. Want to exit?", "", mTransfersModel->hasActiveTransfers()),
-                                     QMessageBox::Yes|QMessageBox::No);
+        QString exitMessage = tr("There is an active transfer. Exit the app?\n"
+                                 "Transfer will automatically resume when you re-open the app.",
+                                 "",
+                                 mTransfersModel->hasActiveTransfers());
+        auto exitDialog = new QMessageBox(QMessageBox::Question, tr("MEGAsync"), exitMessage, QMessageBox::Yes|QMessageBox::No);
+        exitDialog->setAttribute(Qt::WA_DeleteOnClose);
         exitDialog->button(QMessageBox::Yes)->setText(tr("Exit app"));
         exitDialog->button(QMessageBox::No)->setText(tr("Stay in app"));
         HighDpiResize hDpiResizer(exitDialog);
         int button = exitDialog->exec();
-        if (!exitDialog)
+
+        QPointer<MegaApplication> currentMegaApp(this);
+        if (!currentMegaApp)
         {
             return;
         }
 
-        exitDialog->deleteLater();
-        exitDialog = NULL;
         if (button == QMessageBox::Yes)
         {
             exitApplication();
@@ -1843,11 +1853,6 @@ void MegaApplication::tryExitApplication(bool force)
         {
             *testCrashPtr = 0;
         }
-    }
-    else
-    {
-        exitDialog->activateWindow();
-        exitDialog->raise();
     }
 }
 
@@ -3412,7 +3417,6 @@ void MegaApplication::enableTransferActions(bool enable)
     downloadAction->setEnabled(enable);
     streamAction->setEnabled(enable);
     settingsAction->setEnabled(enable);
-    myCloudAction->setEnabled(enable);
 
     if (mSyncs2waysMenu)
     {
@@ -5171,7 +5175,7 @@ void MegaApplication::transferManagerActionClicked(int tab)
     }
 
     createTransferManagerDialog();
-    mTransferManager->setActiveTab(tab);
+    mTransferManager->toggleTab(tab);
 
     mTransferManagerGeometryRetainer.showDialog(mTransferManager);
 }
@@ -7278,6 +7282,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
                                                        "please contact bug@mega.co.nz"), QMessageBox::Ok);
 
                 setupWizardFinished(QDialog::Rejected);
+                MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, "Setting isCrashed true: !mRootNode (fetch node callback)");
                 preferences->setCrashed(true);
                 rebootApplication(false);
                 break;
@@ -7358,6 +7363,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
         if (!root || !vault || !rubbish)
         {
             preferences->setCrashed(true);
+            MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, "Setting isCrashed true: !root || !inbox || !rubbish (account details callback)");
             break;
         }
 
@@ -7370,6 +7376,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
 
         if (!inShares)
         {
+            MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, "Setting isCrashed true: !inShares (account details callback)");
             preferences->setCrashed(true);
             return;
         }
@@ -8157,6 +8164,7 @@ void MegaApplication::onReloadNeeded(MegaApi*)
     //Don't reload the filesystem here because it's unsafe
     //and the most probable cause for this callback is a false positive.
     //Simply set the crashed flag to force a filesystem reload in the next execution.
+    MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, "Setting isCrashed true: onReloadNeeded");
     preferences->setCrashed(true);
 }
 
