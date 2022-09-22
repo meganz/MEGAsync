@@ -2,6 +2,8 @@
 #include "MegaApplication.h"
 #include "Platform.h"
 
+#include "mega/types.h"
+
 #include <QStorageInfo>
 #include <QTemporaryFile>
 
@@ -253,133 +255,64 @@ SyncController::Syncability SyncController::isLocalFolderSyncable(const QString&
     return (syncability);
 }
 
-// Checks if a path belongs is in an existing sync or backup tree; and if the selected
-// folder has a sync in its tree.
-// This method only considers two-way syncs.
-QString SyncController::getIsRemoteFolderAlreadySyncedMsg(std::shared_ptr<mega::MegaNode> node)
-{
-    QString message;
-    QChar pathSep (QLatin1Char('/'));
-    auto api (MegaSyncApp->getMegaApi());
-
-    auto path (QString::fromUtf8(api->getNodePath(node.get())));
-
-    if (!path.isEmpty())
-    {
-        // Gather all synced or backed-up dirs
-        const auto remoteFolders = SyncModel::instance()->getMegaFolders(mega::MegaSync::TYPE_TWOWAY);
-
-        // Check if the path is already synced or part of a sync
-        auto existingPathIt (remoteFolders.cbegin());
-        while (message.isEmpty() && existingPathIt != remoteFolders.cend())
-        {
-            if (path == *existingPathIt)
-            {
-                message = tr("The selected MEGA folder is already synced");
-            }
-            else if (path.startsWith(*existingPathIt)
-                     && path[existingPathIt->size() - existingPathIt->endsWith(pathSep)] == pathSep)
-            {
-                message = tr("Folder contents already synced");
-            }
-            else if (existingPathIt->startsWith(path)
-                     && (*existingPathIt)[path.size() - path.endsWith(pathSep)] == pathSep)
-            {
-                message = tr("Folder already synced");
-            }
-            existingPathIt++;
-        }
-    }
-    else
-    {
-        message = tr("Invalid remote path");
-    }
-    return message;
-}
-
-// This method only considers two-way syncs.
-SyncController::Syncability SyncController::isRemoteFolderAlreadySynced(std::shared_ptr<mega::MegaNode> node, QString& message)
-{
-    message = getIsRemoteFolderAlreadySyncedMsg(node);
-    return (message.isEmpty() ? Syncability::CAN_SYNC : Syncability::CANT_SYNC);
-}
-
-// This method only considers two-way syncs.
-QString SyncController::getIsRemoteFolderAllowedForSyncMsg(std::shared_ptr<mega::MegaNode> node)
-{
-    QString message;
-    auto api (MegaSyncApp->getMegaApi());
-
-    if (!(node && node->isFolder()
-                && !api->isInRubbish(node.get())
-                && !api->isInVault(node.get())))
-    {
-        message = tr("Invalid remote path");
-    }
-
-    return message;
-}
-
-// This method only considers two-way syncs.
-SyncController::Syncability SyncController::isRemoteFolderAllowedForSync(std::shared_ptr<mega::MegaNode> node, QString& message)
-{
-    message = getIsRemoteFolderAllowedForSyncMsg(node);
-    return (message.isEmpty() ? Syncability::CAN_SYNC : Syncability::CANT_SYNC);
-}
-
-// This method only considers two-way syncs.
-QString SyncController::getAreRemoteFolderAccessRightsOkMsg(std::shared_ptr<mega::MegaNode> node)
-{
-    QString message;
-    auto api (MegaSyncApp->getMegaApi());
-
-    if (node)
-    {
-        if (api->isInShare(node.get())
-                && (api->getAccess(node.get()) < mega::MegaShare::ACCESS_FULL))
-        {
-            message = tr("You don't have enough permissions for this remote folder");
-        }
-    }
-    else
-    {
-        message = tr("Invalid remote path");
-    }
-    return message;
-}
-
-// This method only considers two-way syncs.
-SyncController::Syncability SyncController::areRemoteFolderAccessRightsOk(std::shared_ptr<mega::MegaNode> node, QString& message)
-{
-    message = getAreRemoteFolderAccessRightsOkMsg(node);
-    return (message.isEmpty() ? Syncability::CAN_SYNC : Syncability::CANT_SYNC);
-}
-
-// Returns wether the path is syncable.
+// Returns wether the remote path is syncable.
 // The message to display to the user is stored in <message>.
-// The first error encountered is returned.
-// Errors trump warnings
-// In case of several warnings, only the last one is returned.
-// This method only considers two-way syncs.
 SyncController::Syncability SyncController::isRemoteFolderSyncable(std::shared_ptr<mega::MegaNode> node, QString& message)
 {
-    Syncability syncability (Syncability::CAN_SYNC);
-
-    // First check if the path is allowed
-    syncability = isRemoteFolderAllowedForSync(node, message);
-
-    // The check if it is not synced already
-    if (syncability != Syncability::CANT_SYNC)
+    //TODO: Add exact match check with message: tr("The selected MEGA folder is already synced");
+    //It is suppossed that the SDK team will add a new syncError to reflect that error
+    Syncability syncability (Syncability::CANT_SYNC);
+    std::unique_ptr<MegaError> err (MegaSyncApp->getMegaApi()->isNodeSyncableWithError(node.get()));
+    switch (err->getErrorCode())
     {
-        syncability = std::max(isRemoteFolderAlreadySynced(node, message), syncability);
-    }
-
-    // Then check that we have rw rights for this path
-    if (syncability != Syncability::CANT_SYNC)
+    case MegaError::API_OK:
     {
-        syncability = std::max(areRemoteFolderAccessRightsOk(node, message), syncability);
+        syncability = Syncability::CAN_SYNC;
+        break;
     }
-
+    case MegaError::API_EACCESS:
+    {
+        switch (err->getSyncError())
+        {
+        case SyncError::SHARE_NON_FULL_ACCESS:
+        {
+            message = tr("You don't have enough permissions for this remote folder");
+            break;
+        }
+        case SyncError::REMOTE_NODE_INSIDE_RUBBISH:
+        case SyncError::INVALID_REMOTE_TYPE:
+        {
+            message = tr("Invalid remote path");
+            break;
+        }
+        }
+        break;
+    }
+    case MegaError::API_EEXIST:
+    {
+        switch (err->getSyncError())
+        {
+        case SyncError::ACTIVE_SYNC_BELOW_PATH:
+        {
+            message = tr("Folder contents already synced");
+            break;
+        }
+        case SyncError::ACTIVE_SYNC_ABOVE_PATH:
+        {
+            message = tr("Folder already synced");
+            break;
+        }
+        }
+        break;
+    }
+    case MegaError::API_ENOENT:
+    case MegaError::API_EARGS:
+    default:
+    {
+        message = tr("Invalid remote path");
+        break;
+    }
+    }
     return (syncability);
 }
 

@@ -19,6 +19,7 @@
 #include "UserAttributesRequests/Avatar.h"
 #include "SyncsMenu.h"
 #include "TextDecorator.h"
+#include "UserAttributesRequests/DeviceName.h"
 
 #include <QTranslator>
 #include <QClipboard>
@@ -1289,6 +1290,7 @@ void MegaApplication::loggedIn(bool fromWizard)
         crashReportFilePath.clear();
     }
 
+    UserAttributes::DeviceName::requestDeviceName();
     mSyncController.reset(new SyncController());
     connect(mSyncController.get(), &SyncController::syncAddStatus, this, [](const int errorCode, const QString errorMsg, QString name)
     {
