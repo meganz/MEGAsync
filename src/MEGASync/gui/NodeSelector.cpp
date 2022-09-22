@@ -31,9 +31,34 @@ NodeSelector::NodeSelector(int selectMode, QWidget *parent) :
     mModel(nullptr),
     mManuallyResizedColumn(false)
 {
-    if(auto vaultNode = MegaSyncApp->getVaultNode())
+
+    if(showBackups())
     {
-        mNavVault.expandedHandles.append(vaultNode->getHandle());
+        QPointer<SyncController> syncController = new SyncController(this);
+        connect(syncController, &SyncController::myBackupsHandle, this, [this, syncController](mega::MegaHandle h)
+        {
+            if(h!=INVALID_HANDLE)
+            {
+                mNavVault.expandedHandles.append(h);
+#ifdef Q_OS_MAC
+                ui->tabBar->addTab(tr(BACKUPS));
+#endif
+                shortCutConnects(VAULT);
+            }
+            else
+            {
+#ifndef Q_OS_MAC
+                ui->bShowBackups->hide();
+#endif
+                shortCutConnects(SHARES);
+            }
+            syncController->deleteLater();
+        });
+        syncController->getMyBackupsHandle();
+    }
+    else
+    {
+        shortCutConnects(SHARES);
     }
 
     if(auto rootNode = std::unique_ptr<MegaNode>(mMegaApi->getRootNode()))
@@ -58,8 +83,6 @@ NodeSelector::NodeSelector(int selectMode, QWidget *parent) :
     ui->tabBar->addTab(tr(CLD_DRIVE));
     ui->tabBar->addTab(tr(IN_SHARES));
 
-    if(showBackups())
-        ui->tabBar->addTab(tr(BACKUPS));
     connect(ui->tabBar, &QTabBar::currentChanged, this, &NodeSelector::onTabSelected);
 #endif
 
@@ -76,7 +99,6 @@ NodeSelector::NodeSelector(int selectMode, QWidget *parent) :
     ui->tMegaFolders->setItemDelegate(new  NodeRowDelegate(ui->tMegaFolders));
     ui->tMegaFolders->setItemDelegateForColumn(MegaItemModel::STATUS, new IconDelegate(ui->tMegaFolders));
     ui->tMegaFolders->setItemDelegateForColumn(MegaItemModel::USER, new IconDelegate(ui->tMegaFolders));
-    ui->tMegaFolders->setExpanded(mProxyModel->getIndexFromHandle(MegaSyncApp->getRootNode()->getHandle()),true);
     ui->tMegaFolders->setTextElideMode(Qt::ElideMiddle);
     ui->tMegaFolders->sortByColumn(MegaItemModel::NODE, Qt::AscendingOrder);
     ui->bOk->setEnabled(false);
@@ -95,19 +117,6 @@ NodeSelector::NodeSelector(int selectMode, QWidget *parent) :
     connect(ui->bNewFolder, &QPushButton::clicked, this, &NodeSelector::onbNewFolderClicked);
     connect(ui->bOk, &QPushButton::clicked, this, &NodeSelector::onbOkClicked);
     connect(ui->bCancel, &QPushButton::clicked, this, &QDialog::reject);
-
-    // Provide quick access shortcuts for the two panes via Ctrl+1,2
-    // Ctrl is auto-magically translated to CMD key by Qt on macOS
-
-    int loopCount = SHARES;
-    if(showBackups())
-        loopCount = VAULT;
-
-    for (int i = 0; i <= loopCount; ++i)
-    {
-        QShortcut *shortcut = new QShortcut(QKeySequence(QString::fromLatin1("Ctrl+%1").arg(i+1)), this);
-        QObject::connect(shortcut, &QShortcut::activated, this, [=](){ onTabSelected(i); });
-    }
 }
 
 NodeSelector::~NodeSelector()
@@ -820,6 +829,17 @@ void NodeSelector::navigateForwardOperation(Navigation &nav)
     setRootIndex(indexToGo);
     checkBackForwardButtons();
     checkNewFolderButtonVisibility();
+}
+
+void NodeSelector::shortCutConnects(int loopCount)
+{
+    // Provide quick access shortcuts for the two panes via Ctrl+1,2
+    // Ctrl is auto-magically translated to CMD key by Qt on macOS
+    for (int i = 0; i <= loopCount; ++i)
+    {
+        QShortcut *shortcut = new QShortcut(QKeySequence(QString::fromLatin1("Ctrl+%1").arg(i+1)), this);
+        QObject::connect(shortcut, &QShortcut::activated, this, [=](){ onTabSelected(i); });
+    }
 }
 
 NodeSelector::TabItem NodeSelector::getSelectedTab()

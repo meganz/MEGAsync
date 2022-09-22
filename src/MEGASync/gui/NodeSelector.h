@@ -104,6 +104,7 @@ private:
     void navigateIntoOperation(Navigation& nav, const QModelIndex& idx);
     void navigateBackwardOperation(Navigation& nav);
     void navigateForwardOperation(Navigation& nav);
+    void shortCutConnects(int loopCount);
     TabItem getSelectedTab();
     bool showBackups();
     void setRootIndex(const QModelIndex& proxy_idx);

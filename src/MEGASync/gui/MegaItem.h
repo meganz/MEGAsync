@@ -52,6 +52,7 @@ public:
     void displayFiles(bool enable);
     void setCameraFolder();
     void setChatFilesFolder();
+    void setAsVaultNode();
     int row();
 
     ~MegaItem();
@@ -66,6 +67,7 @@ protected:
     bool mCameraFolder;
     bool mChatFilesFolder;
     bool mChildrenSet;
+    bool mIsVault;
 
     std::shared_ptr<mega::MegaNode> mNode;
     QList<MegaItem*> mChildItems;
