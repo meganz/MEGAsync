@@ -20,10 +20,11 @@ const int Preferences::BUILD_ID = 4;
 const QString Preferences::VERSION_STRING = QString::fromAscii("4.7.0-backups-preview-13");
 QString Preferences::SDK_ID = QString::fromAscii("1c5e526");
 const QString Preferences::CHANGELOG = QString::fromUtf8(QT_TR_NOOP(
-"- Updated strings\n"
-"- Fixed syncs/backups enable when business account expires\n"
-"- Fixed setup wizard: local path not updated \n"
-"- Fixed sync/backup remote node check\n"));
+"Import changes from Desktop app develop (including v4.7.0) and SDK v4.4.0\n"
+"[BAC-51] - Dapp: Backup display path adjustment\n"
+"[BAC-122] - Backup choose folder and sync choose folder opens the same location\n"
+"[BAC-164] - Use new isNodeSyncableWithErrors() sdk interface to check node syncability\n"
+));
 
 const QString Preferences::TRANSLATION_FOLDER = QString::fromAscii("://translations/");
 const QString Preferences::TRANSLATION_PREFIX = QString::fromAscii("MEGASyncStrings_");

@@ -403,17 +403,17 @@
     </message>
     <message>
         <source>[WEEKDAY] [MONTHDAY] [MONTH] [TIME]</source>
-	<translatorcomment>String used to display date and time in notifications when date is in the same week as today. [WEEKDAY], [MONTHDAY], [MONTH] and [TIME] will be replaced by their respective localized values.</translatorcomment>
+        <translatorcomment>String used to display date and time in notifications when date is in the same week as today. [WEEKDAY], [MONTHDAY], [MONTH] and [TIME] will be replaced by their respective localized values.</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>[MONTHDAY] [MONTH] [TIME]</source>
-	<translatorcomment>String used to display date and time in notifications when date is in the same year as today, but not the same week. [MONTHDAY], [MONTH] and [TIME] will be replaced by their respective localized values.</translatorcomment>
+        <translatorcomment>String used to display date and time in notifications when date is in the same year as today, but not the same week. [MONTHDAY], [MONTH] and [TIME] will be replaced by their respective localized values.</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>[MONTHDAY] [MONTH] [YEAR] [TIME]</source>
-	<translatorcomment>String used to display date and time in notifications when date is in a different year as today.  [MONTHDAY], [MONTH], [YEAR] and [TIME] will be replaced by their respective localized values.</translatorcomment>
+        <translatorcomment>String used to display date and time in notifications when date is in a different year as today.  [MONTHDAY], [MONTH], [YEAR] and [TIME] will be replaced by their respective localized values.</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4151,7 +4151,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Open preferences</source>
         <translatorcomment>Open preferences button on warning message when syncs/backups are disabled (macOS)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Open preferences</translation>
     </message>
     <message>
         <source>Go to preferences to enable them again.</source>
@@ -4199,21 +4199,12 @@ Please delete the folder sync from preferences to cancel them.</translation>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- There is now a new transfer manager.
-- Transfer management was enhanced and reliability of downloads and uploads improved. 
-- Detected crashes on Windows, Linux, and macOS fixed.
-- Translation issues fixed.
-- Performance improved.
-- UI fixed and adjusted.
+        <source>Import changes from DEsktop app v4.7.0 and SDK v4.4.0
+[BAC-51] - Dapp: Backup display path adjustment
+[BAC-122] - Backup choose folder and sync choose folder opens the same location
+[BAC-164] - Use new isNodeSyncableWithErrors() sdk interface to check node syncability
 </source>
-        <translatorcomment>Changelog for version v4.7.0</translatorcomment>
-        <translation>- There is now a new transfer manager.
-- Transfer management was enhanced and reliability of downloads and uploads improved. 
-- Detected crashes on Windows, Linux, and macOS fixed.
-- Translation issues fixed.
-- Performance improved.
-- UI fixed and adjusted.
-</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5795,11 +5786,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>Skip</translation>
     </message>
     <message>
-        <source>Creating folder...</source>
-        <translatorcomment>Label shown when an user is creating a remote folder.</translatorcomment>
-        <translation>Creating folder…</translation>
-    </message>
-    <message>
         <source>Logging out...</source>
         <translatorcomment>Label shown when an user is logging out from his account.</translatorcomment>
         <translation>Logging out…</translation>
@@ -5921,6 +5907,10 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>We are all done</source>
         <translatorcomment>Label shown when the user completes the initial setup wizard</translatorcomment>
         <translation>We are all done</translation>
+    </message>
+    <message>
+        <source>Creating folder…</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -6213,11 +6203,6 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Your computer</source>
-        <translatorcomment>Text shown when the user computer doesn´t have a name available.</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>You can&apos;t backup this folder as it&apos;s already synced.</source>
         <translatorcomment>Warning message indicating that a folder can´t be backed up as it is synced.</translatorcomment>
         <translation type="unfinished"></translation>
@@ -6261,6 +6246,22 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <source>You can&apos;t sync folders that contain backed up folders.</source>
         <translatorcomment>Warning message indicating that a folder can´t be synced as it contains backed up folders.</translatorcomment>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You don&apos;t have enough permissions for this remote folder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Invalid remote path</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Folder contents already synced</source>
+        <translation type="unfinished">Folder contents already synced</translation>
+    </message>
+    <message>
+        <source>Folder already synced</source>
+        <translation type="unfinished">Folder already synced</translation>
     </message>
 </context>
 <context>
@@ -7036,6 +7037,13 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
         <source>Choose</source>
         <translatorcomment>Button label to select the upload folder (String as short as possible)</translatorcomment>
         <translation>Choose</translation>
+    </message>
+</context>
+<context>
+    <name>UserAttributes::DeviceName</name>
+    <message>
+        <source>Your computer</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
