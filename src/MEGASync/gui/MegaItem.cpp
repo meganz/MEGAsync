@@ -24,7 +24,8 @@ MegaItem::MegaItem(std::unique_ptr<MegaNode> node, MegaItem *parentItem, bool sh
     mChildrenSet(false),
     mNode(std::move(node)),
     mOwner(nullptr),
-    mMegaApi(MegaSyncApp->getMegaApi())
+    mMegaApi(MegaSyncApp->getMegaApi()),
+    mIsVault(false)
 { 
     if(mNode->isFile() || mNode->isInShare())
     {
@@ -350,6 +351,11 @@ void MegaItem::setChatFilesFolder()
     mChatFilesFolder = true;
 }
 
+void MegaItem::setAsVaultNode()
+{
+    mIsVault = true;
+}
+
 int MegaItem::row()
 {
     if (MegaItem* parent = getParent())
@@ -410,8 +416,5 @@ bool MegaItem::isRoot()
 
 bool MegaItem::isVault()
 {
-    if(auto restNode = MegaSyncApp->getVaultNode())
-        return getNode()->getHandle() == restNode->getHandle();
-
-    return false;
+    return mIsVault;
 }

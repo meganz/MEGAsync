@@ -80,8 +80,6 @@ protected:
     int mRequiredRights;
     bool mDisplayFiles;
     bool mSyncSetupMode;
-    QPointer<SyncController> mSyncController;
-    mega::MegaHandle mMyBackupsHandle;
 
 private:
     int insertPosition(const std::unique_ptr<mega::MegaNode>& node);

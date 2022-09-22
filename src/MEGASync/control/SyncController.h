@@ -86,5 +86,5 @@ private:
     mega::MegaApi* mApi;
     mega::QTMegaRequestListener* mDelegateListener;
     SyncModel* mSyncModel;
-    mega::MegaHandle mMyBackupsHandle;
+    static mega::MegaHandle mMyBackupsHandle;
 };
