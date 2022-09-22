@@ -10,13 +10,13 @@
 using namespace mega;
 
 const char* SyncController::DEFAULT_BACKUPS_ROOT_DIRNAME = "Backups";
-mega::MegaHandle SyncController::mMyBackupsHandle = INVALID_HANDLE;
 
 SyncController::SyncController(QObject* parent)
     : QObject(parent),
       mApi(MegaSyncApp->getMegaApi()),
       mDelegateListener (new QTMegaRequestListener(mApi, this)),
-      mSyncModel(SyncModel::instance())
+      mSyncModel(SyncModel::instance()),
+      mMyBackupsHandle(INVALID_HANDLE)
 {
     // The controller shouldn't ever be instantiated before we have an API and a SyncModel available
     assert(mApi);
