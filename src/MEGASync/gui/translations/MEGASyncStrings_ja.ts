@@ -11,7 +11,7 @@
     <message>
         <source>Inbox</source>
         <translatorcomment>Label for Inbox space used. Maintain capital letters in each word.(Max 18 characters)</translatorcomment>
-        <translation>受信トレイ</translation>
+        <translation type="vanished">受信トレイ</translation>
     </message>
     <message>
         <source>Loading...</source>
@@ -47,6 +47,45 @@
         <source>Available storage</source>
         <translatorcomment>Label for Available storage space used. Maintain capital letter in first word.(Max 18 characters)</translatorcomment>
         <translation>利用可能なストレージ</translation>
+    </message>
+    <message>
+        <source>Backups</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>AddBackupDialog</name>
+    <message>
+        <source>Add backup folder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Backup folder:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Choose folder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Choose</source>
+        <translation type="unfinished">選択</translation>
+    </message>
+    <message>
+        <source>Backup to:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add</source>
+        <translation type="unfinished">追加</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">キャンセル</translation>
+    </message>
+    <message>
+        <source>Do you want to continue?</source>
+        <translation type="unfinished">続行しますか？</translation>
     </message>
 </context>
 <context>
@@ -340,17 +379,225 @@
     <message numerus="yes">
         <source>[A] added %n item</source>
         <translatorcomment>Label to indicate that [A] has added %n items to a shared folder. Placeholder [A] will be replaced by email of the user that made the additions and %n with the number of added items.</translatorcomment>
-        <translation><numerusform>[A]さんは%n個の項目を追加しました</numerusform></translation>
+        <translation>
+            <numerusform>[A]さんは%n個の項目を追加しました</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>[A] removed %n item</source>
         <translatorcomment>Label to indicate that [A] has removed %n items from a shared folder. Placeholder [A] will be replaced by email of the user that made the deletion and %n with the number of removed items.</translatorcomment>
-        <translation><numerusform>[A]さんは%n個の項目を削除しました</numerusform></translation>
+        <translation>
+            <numerusform>[A]さんは%n個の項目を削除しました</numerusform>
+        </translation>
     </message>
     <message>
         <source>New shared folder from [A]</source>
         <translatorcomment>Label to indicate that [A] shared a folder with current user. Placeholder will be replaced by email of sharer user.</translatorcomment>
         <translation>[A]による新規共有フォルダ</translation>
+    </message>
+    <message>
+        <source>[WEEKDAY] [MONTHDAY] [MONTH] [TIME]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>[MONTHDAY] [MONTH] [TIME]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>[MONTHDAY] [MONTH] [YEAR] [TIME]</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>BackupItemModel</name>
+    <message>
+        <source>Sort by state</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Local Folder</source>
+        <translation type="unfinished">ローカルフォルダ</translation>
+    </message>
+    <message>
+        <source>Sort by name</source>
+        <translation type="unfinished">名前で並び替え</translation>
+    </message>
+    <message>
+        <source>Backup is enabled</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Backup is disabled</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Click menu for more Backup actions</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>BackupTableView</name>
+    <message>
+        <source>Open in MEGA</source>
+        <translation type="unfinished">MEGAで開く</translation>
+    </message>
+    <message>
+        <source>Remove backup</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>BackupsWizard</name>
+    <message>
+        <source>Setup backups</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You can back up folders from your computer to MEGA. Files will automatically back up when the desktop app is running.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No folders available</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>More folders</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>All folders have been synced or backed up.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Selected backup folders</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Backup to</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Folders will be stored in backups and you can check the status of your backups in backup centre.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show more…</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished">戻る</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">キャンセル</translation>
+    </message>
+    <message>
+        <source>Next</source>
+        <translation type="unfinished">次へ</translation>
+    </message>
+    <message>
+        <source>Try again</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dismiss</source>
+        <translation type="unfinished">却下</translation>
+    </message>
+    <message>
+        <source>View in Backup Centre</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Lato&apos;; font-size:13pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; line-height:200%;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>1. [B]Select[/B] folders to backup</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>2. [B]Confirm[/B] backup settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Setup</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Collapse</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add folders</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message numerus="yes">
+        <source>%n folder</source>
+        <translation type="unfinished">
+            <numerusform>%n個のフォルダ</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>Problem backing up folder</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>This folder wasn&apos;t backed up. Try again.</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>Folder is already selected. Select a different folder.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You can&apos;t backup this folder as it&apos;s already inside a backed up folder.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You can&apos;t backup this folder as it contains backed up folders.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Do you want to continue?</source>
+        <translation type="unfinished">続行しますか？</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to cancel? All changes will be lost.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Choose directory</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message numerus="yes">
+        <source>Backup created</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>We&apos;re backing up your folder. The time this takes depends on the files in this folder.</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>Creating or setting folder &quot;%1&quot; as backups root failed.
+Reason: %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error: %1</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -388,7 +635,7 @@
     <message>
         <source>(Max. 90% of available bandwidth)</source>
         <translatorcomment>Label to indicate that auto rate option will take a maximum of 90% of the available bandwidth.</translatorcomment>
-        <translation>（利用可能な帯域幅の最大90 %）</translation>
+        <translation>（利用可能な帯域幅の最大90&#xa0;%）</translation>
     </message>
     <message>
         <source>Download rate limit</source>
@@ -461,17 +708,17 @@
     <message>
         <source>The selected local folder is already synced</source>
         <translatorcomment>Message displayed when an user is adding a local folder wich is already synced.</translatorcomment>
-        <translation>選択されたローカルフォルダはすでに同期済みです</translation>
+        <translation type="vanished">選択されたローカルフォルダはすでに同期済みです</translation>
     </message>
     <message>
         <source>A synced folder cannot be inside another synced folder</source>
         <translatorcomment>Message displayed when an user is adding nested local folders for synchronization.</translatorcomment>
-        <translation>同期フォルダを別の同期フォルダ内に配置することはできません</translation>
+        <translation type="vanished">同期フォルダを別の同期フォルダ内に配置することはできません</translation>
     </message>
     <message>
         <source>The selected MEGA folder is already synced</source>
         <translatorcomment>Message displayed when an user is adding an already synchronized remote folder.</translatorcomment>
-        <translation>選択されたMEGAフォルダはすでに同期されています</translation>
+        <translation type="vanished">選択されたMEGAフォルダはすでに同期されています</translation>
     </message>
     <message>
         <source>Sync name</source>
@@ -492,7 +739,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Error</source>
         <translatorcomment>Label for status of an error performing an operation.</translatorcomment>
-        <translation>エラー</translation>
+        <translation type="vanished">エラー</translation>
     </message>
     <message>
         <source>Add folder</source>
@@ -513,6 +760,10 @@ Please enter a different name to identify this synced folder:</source>
         <source>Add synchronised folder:</source>
         <translatorcomment>Label to indicate the user to add synchronised folder (macOS)</translatorcomment>
         <translation>同期フォルダの追加：</translation>
+    </message>
+    <message>
+        <source>Do you want to continue?</source>
+        <translation type="unfinished">続行しますか？</translation>
     </message>
 </context>
 <context>
@@ -728,7 +979,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>[A]%</source>
         <translatorcomment>Percent sign style. Form and spacing between digit and sign is different in each language.</translatorcomment>
-        <translation>[A] %</translation>
+        <translation>[A]&#xa0;%</translation>
     </message>
 </context>
 <context>
@@ -736,7 +987,9 @@ Please enter a different name to identify this synced folder:</source>
     <message numerus="yes">
         <source>Your Pro membership plan will expire in %n day</source>
         <translatorcomment>Label to indicate that the PRO membership will expire in %n days. Placeholder will be replaced by the remaining days until plan will expire.</translatorcomment>
-        <translation><numerusform>お客様のProメンバーシッププランは%n日後に失効いたします</numerusform></translation>
+        <translation>
+            <numerusform>お客様のProメンバーシッププランは%n日後に失効いたします</numerusform>
+        </translation>
     </message>
     <message>
         <source>Pro membership plan expiring soon</source>
@@ -746,7 +999,9 @@ Please enter a different name to identify this synced folder:</source>
     <message numerus="yes">
         <source>Your Pro membership plan expired %n day ago</source>
         <translatorcomment>Label to indicate that the PRO membership expired %n days ago. Placeholder will be replaced by the days from the expiration of the PRO membership.</translatorcomment>
-        <translation><numerusform>お客様のProメンバーシッププランは%n日前に失効いたしました</numerusform></translation>
+        <translation>
+            <numerusform>お客様のProメンバーシッププランは%n日前に失効いたしました</numerusform>
+        </translation>
     </message>
 </context>
 <context>
@@ -987,12 +1242,16 @@ Please enter a different name to identify this synced folder:</source>
     <message numerus="yes">
         <source>[A] added %n item</source>
         <translatorcomment>Label to indicate that [A] has added %n items to a shared folder. Placeholder [A] will be replaced by email of the user that made the additions and %n with the number of added items.</translatorcomment>
-        <translation><numerusform>[A]さんは%n個の項目を追加しました</numerusform></translation>
+        <translation>
+            <numerusform>[A]さんは%n個の項目を追加しました</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>You have %n day left to save your data</source>
         <translatorcomment>Notification content to inform the days the user have to save the date before possible deletion. %n will be replaced with remaining days amount.</translatorcomment>
-        <translation><numerusform>あなたのデータを保存できる残りの日数は%n日です</numerusform></translation>
+        <translation>
+            <numerusform>あなたのデータを保存できる残りの日数は%n日です</numerusform>
+        </translation>
     </message>
     <message>
         <source>Upgrade now to a Pro account.</source>
@@ -1113,7 +1372,9 @@ Please enter a different name to identify this synced folder:</source>
     <message numerus="yes">
         <source>Apply to all %1 duplicates</source>
         <translatorcomment>Checkbox text to apply the action to all the following conflicts. %1 is the number of conflicts</translatorcomment>
-        <translation><numerusform>%1個の重複すべてに適用する</numerusform></translation>
+        <translation>
+            <numerusform>%1個の重複すべてに適用する</numerusform>
+        </translation>
     </message>
     <message>
         <source>The file at this destination will be updated with a new version.</source>
@@ -1226,12 +1487,16 @@ Please enter a different name to identify this synced folder:</source>
     <message numerus="yes">
         <source>%n file</source>
         <translatorcomment>Context menu option label to indicate the user has selected %n number of files</translatorcomment>
-        <translation><numerusform>%n個のファイル</numerusform></translation>
+        <translation>
+            <numerusform>%n個のファイル</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%n folder</source>
         <translatorcomment>Context menu option label to indicate the user has selected %n number of folders</translatorcomment>
-        <translation><numerusform>%n個のフォルダ</numerusform></translation>
+        <translation>
+            <numerusform>%n個のフォルダ</numerusform>
+        </translation>
     </message>
 </context>
 <context>
@@ -1259,29 +1524,29 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Warning</source>
         <translatorcomment>Label to indicate a waring during the process of stablish a synchronization.</translatorcomment>
-        <translation>警告</translation>
+        <translation type="vanished">警告</translation>
     </message>
     <message>
         <source>MEGAsync won&apos;t be able to download anything here.</source>
         <translatorcomment>Label to indicate that MEGAsync won&apos;t be able to download anything due to the user doesn&apos;t have writhe permissions on the local selected folder.</translatorcomment>
-        <translation>MEGAsyncは、ここで何かをダウンロードすることはできません。</translation>
+        <translation type="vanished">MEGAsyncは、ここで何かをダウンロードすることはできません。</translation>
     </message>
     <message>
         <source>Do you want to continue?</source>
         <translatorcomment>Label to indicate if the user wants to continue in spite of the problem occured.</translatorcomment>
-        <translation>続行しますか？</translation>
+        <translation type="vanished">続行しますか？</translation>
     </message>
     <message>
         <source>You don&apos;t have write permissions in this local folder.</source>
         <translatorcomment>Label to indicate that a user don&apos;t have write permissions in the selected local folder for a synchronization.</translatorcomment>
-        <translation>このローカルフォルダに書き込み権限がありません。</translation>
+        <translation type="vanished">このローカルフォルダに書き込み権限がありません。</translation>
     </message>
     <message>
         <source>You are trying to sync an extremely large folder.
 To prevent the syncing of entire boot volumes, which is inefficient and dangerous,
 we ask you to start with a smaller folder and add more data while MEGAsync is running.</source>
         <translatorcomment>Label to inform a user about the fact of syncing a extremely large folder and the possible drawbacks that could arise.</translatorcomment>
-        <translation>非常に大きなフォルダを同期しようとしています。ブートボリューム全体を同期させないようにするには（非効率的で危険です）、MEGAsyncの実行中に小さなフォルダから始めてデータを追加してください。</translation>
+        <translation type="vanished">非常に大きなフォルダを同期しようとしています。ブートボリューム全体を同期させないようにするには（非効率的で危険です）、MEGAsyncの実行中に小さなフォルダから始めてデータを追加してください。</translation>
     </message>
     <message>
         <source>Error</source>
@@ -1544,7 +1809,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Syncs</source>
         <translatorcomment>Button label to show all synchronizations that the user has stablish (String as short as possible).</translatorcomment>
-        <translation>同期</translation>
+        <translation type="vanished">同期</translation>
     </message>
     <message>
         <source>Add Sync</source>
@@ -1628,7 +1893,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Download</source>
         <translatorcomment>Label to indicate a download.</translatorcomment>
-        <translation>ダウンロード</translation>
+        <translation type="vanished">ダウンロード</translation>
     </message>
     <message>
         <source>Transfers</source>
@@ -1758,17 +2023,23 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message numerus="yes">
         <source>We have contacted you by email to [A] on [B] but you still have %n file taking up [D] in your MEGA account, which requires you to have [E].</source>
         <translatorcomment>Informative label about account status regarding over quota storage. Placeholders will be replaced: [A] - user email, [B] - localized date list of emails sent to inform the user about the situation,  %n - amount of files in the current account, [D] - amount of storage used and [E] - min PRO plan needed to fix the situation.</translatorcomment>
-        <translation><numerusform>[B]に[A]にメールでご連絡いたしましたが、あなたのMEGAアカウントで%n個のファイルが[D]を占有しているため、[E]がご必要です。</numerusform></translation>
+        <translation>
+            <numerusform>[B]に[A]にメールでご連絡いたしましたが、あなたのMEGAアカウントで%n個のファイルが[D]を占有しているため、[E]がご必要です。</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>You have [A]%n day[/A] left to upgrade. After that, your data is subject to deletion.</source>
         <translatorcomment>Label to inform about the deadline time to upgrade. Otherwise, data is subject to deletion. Placeholder info: [A][/A] - needed to format and apply text style, %n- number of days left to upgrade.</translatorcomment>
-        <translation><numerusform>[A]%n日[/A]以内にアップグレードされない場合、あなたのデータは削除対象となります。</numerusform></translation>
+        <translation>
+            <numerusform>[A]%n日[/A]以内にアップグレードされない場合、あなたのデータは削除対象となります。</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>You have [A]%n hour[/A] left to upgrade. After that, your data is subject to deletion.</source>
         <translatorcomment>Label to inform about the deadline time to upgrade. Otherwise, data is subject to deletion. Placeholder info: [A][/A] - needed to format and apply text style, %n- number of hours left to upgrade.</translatorcomment>
-        <translation><numerusform>[A]%n時間[/A]以内にアップグレードされない場合、あなたのデータは削除対象となります。</numerusform></translation>
+        <translation>
+            <numerusform>[A]%n時間[/A]以内にアップグレードされない場合、あなたのデータは削除対象となります。</numerusform>
+        </translation>
     </message>
     <message>
         <source>Error</source>
@@ -1779,6 +2050,30 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <source>Folder can&apos;t be opened. Check that the folder in your local drive hasn&apos;t been deleted or moved.</source>
         <translatorcomment>Warning message text to let the user know that the local folder could not be opened</translatorcomment>
         <translation>フォルダを開けません。ローカルドライブのフォルダが削除または移動されていないことを確認してください。</translation>
+    </message>
+    <message>
+        <source>Add Backups</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Some syncs and backups have been disabled</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Something went wrong while trying to backup and sync your folders.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>One or more backups have been disabled</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Something went wrong while trying to backup your folders.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error adding %1:</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2280,12 +2575,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Add Sync</source>
         <translatorcomment>Menu item to add a new synchronization</translatorcomment>
-        <translation>同期を追加</translation>
+        <translation type="vanished">同期を追加</translation>
     </message>
     <message>
         <source>Syncs</source>
         <translatorcomment>Menu item to show current synchronizations</translatorcomment>
-        <translation>同期</translation>
+        <translation type="vanished">同期</translation>
     </message>
     <message>
         <source>Cloud drive</source>
@@ -2425,32 +2720,44 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message numerus="yes">
         <source>%n file</source>
         <translatorcomment>File count, where %n is the number of files. Used to build the &quot;Files and folders successfully uploaded/downloaded&quot; string.</translatorcomment>
-        <translation><numerusform>%n個のファイル</numerusform></translation>
+        <translation>
+            <numerusform>%n個のファイル</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%n folder</source>
         <translatorcomment>Folder count, where %n is the number of folders. Used to build the &quot;Files and folders successfully uploaded/downloaded&quot; string.</translatorcomment>
-        <translation><numerusform>%n個のフォルダ</numerusform></translation>
+        <translation>
+            <numerusform>%n個のフォルダ</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%n file was successfully uploaded</source>
         <translatorcomment>System notification to inform the user that %1 files were successfully uploaded</translatorcomment>
-        <translation><numerusform>%n個のファイルが正常にアップロードされました</numerusform></translation>
+        <translation>
+            <numerusform>%n個のファイルが正常にアップロードされました</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%n file was successfully downloaded</source>
         <translatorcomment>System notification to inform the user that %1 files were successfully downloaded</translatorcomment>
-        <translation><numerusform>%n個のファイルが正常にダウンロードされました</numerusform></translation>
+        <translation>
+            <numerusform>%n個のファイルが正常にダウンロードされました</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%n folder was successfully uploaded</source>
         <translatorcomment>System notification to inform the user that %n folders were successfully uploaded</translatorcomment>
-        <translation><numerusform>%n個のフォルダが正常にアップロードされました</numerusform></translation>
+        <translation>
+            <numerusform>%n個のフォルダが正常にアップロードされました</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%n folder was successfully downloaded</source>
         <translatorcomment>System notification to inform the user that %n folders were successfully downloaded</translatorcomment>
-        <translation><numerusform>%n個のフォルダが正常にダウンロードされました</numerusform></translation>
+        <translation>
+            <numerusform>%n個のフォルダが正常にダウンロードされました</numerusform>
+        </translation>
     </message>
     <message>
         <source>A new version of MEGAsync is available. Click on this message to install it</source>
@@ -2476,8 +2783,10 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>There is an active transfer. Exit the app?
 Transfer will automatically resume when you re-open the app.</source>
         <translatorcomment>Messagebox text to let the user know that there are active transfers when closing the app. The user will be able to exit and pause them, or stop the exit action.</translatorcomment>
-        <translation><numerusform>アクティブな転送があります。アプリを終了しますか？
-アプリを再度開くと、転送は自動的に再開されます。</numerusform></translation>
+        <translation>
+            <numerusform>アクティブな転送があります。アプリを終了しますか？
+アプリを再度開くと、転送は自動的に再開されます。</numerusform>
+        </translation>
     </message>
     <message>
         <source>Exit app</source>
@@ -2488,6 +2797,74 @@ Transfer will automatically resume when you re-open the app.</source>
         <source>Stay in app</source>
         <translatorcomment>One of the messagebox options: Keep the app open and continue with the active transfers</translatorcomment>
         <translation>アプリにとどまる</translation>
+    </message>
+    <message>
+        <source>Some syncs and backups have been disabled</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>One or more backups have been disabled</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error adding %1:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Some syncs and backups have been disabled.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>One or more backups have been disabled.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>One or more syncs have been disabled.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Your syncs and backups have been disabled</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Your backups have been disabled</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Your backup &quot;%1&quot; has been temporarily disabled</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Your backup &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Your backup &quot;%1&quot; has been disabled because the remote folder doesn&apos;t exist</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Your backup &quot;%1&quot; has been disabled because the synchronization of VirtualBox shared folders is not supported due to deficiencies in that filesystem.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Your backup &quot;%1&quot; has been disabled because the remote folder is in the rubbish bin</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Your backup &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&apos;t have full access</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Your backup &quot;%1&quot; has been disabled because the local folder has changed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Your backup &quot;%1&quot; has been disabled because the remote folder has changed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Your backup &quot;%1&quot; has been disabled. Reason: %2</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2614,11 +2991,11 @@ Transfer will automatically resume when you re-open the app.</source>
     </message>
     <message>
         <source>Your account has been suspended due to multiple breaches of MEGA’s Terms of Service. Please check your email inbox.</source>
-        <translation>あなたのアカウントは、MEGAのご利用規約に複数違反したため、凍結されました。メールの受信トレイを確認してください。</translation>
+        <translation type="vanished">あなたのアカウントは、MEGAのご利用規約に複数違反したため、凍結されました。メールの受信トレイを確認してください。</translation>
     </message>
     <message>
         <source>Your account was terminated due to breach of Mega’s Terms of Service, such as abuse of rights of others; sharing and/or importing illegal data; or system abuse.</source>
-        <translation>あなたのアカウントは、他人の権利の乱用、違法データの共有やインポート、システムの乱用など、MEGAのご利用規約に違反したために終了しました。</translation>
+        <translation type="vanished">あなたのアカウントは、他人の権利の乱用、違法データの共有やインポート、システムの乱用など、MEGAのご利用規約に違反したために終了しました。</translation>
     </message>
     <message>
         <source>SSL verification failed</source>
@@ -2654,6 +3031,14 @@ Transfer will automatically resume when you re-open the app.</source>
         <source>Decryption error</source>
         <translatorcomment>String shown when a file/folder name can not be decrypted.</translatorcomment>
         <translation>復号化エラー</translation>
+    </message>
+    <message>
+        <source>Your account has been suspended due to copyright violations. Please check your email inbox.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Your account was terminated due to a breach of MEGA&apos;s Terms of Service, such as abuse of rights of others; sharing and/or importing illegal data; or system abuse.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2761,6 +3146,10 @@ Transfer will automatically resume when you re-open the app.</source>
         <source>Cloud Drive</source>
         <translatorcomment>Title of the Cloud Drive section</translatorcomment>
         <translation>クラウドドライブ</translation>
+    </message>
+    <message>
+        <source>Backups</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2989,22 +3378,30 @@ Transfer will automatically resume when you re-open the app.</source>
     <message numerus="yes">
         <source>Pause transfer</source>
         <translatorcomment>Context menu action to pause transfer</translatorcomment>
-        <translation><numerusform>転送を一時停止</numerusform></translation>
+        <translation>
+            <numerusform>転送を一時停止</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>Resume transfer</source>
         <translatorcomment>Context menu action to resume transfer</translatorcomment>
-        <translation><numerusform>転送を再開</numerusform></translation>
+        <translation>
+            <numerusform>転送を再開</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>Cancel transfer</source>
         <translatorcomment>Context menu action to cancel transfer</translatorcomment>
-        <translation><numerusform>転送をキャンセル</numerusform></translation>
+        <translation>
+            <numerusform>転送をキャンセル</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>Clear transfer</source>
         <translatorcomment>Tooltip for the clear button in a transfer row</translatorcomment>
-        <translation><numerusform>転送をクリア</numerusform></translation>
+        <translation>
+            <numerusform>転送をクリア</numerusform>
+        </translation>
     </message>
     <message>
         <source>Cancel transfers?
@@ -3036,7 +3433,7 @@ Your incomplete sync transfers won&apos;t be cancelled.</source>
     </message>
     <message>
         <source>Cancel transfers?
-Your incomplete sync transfers won't be cancelled
+Your incomplete sync transfers won&apos;t be cancelled
 All the other transfers will be cancelled and cleared.</source>
         <translatorcomment>Messagebox text to confirm if the user wants to cancel and clear all the transfers in a category other than all transfers category but there are sync transfers(they cannot be cancelled)</translatorcomment>
         <translation>転送をキャンセルしますか？
@@ -3073,7 +3470,7 @@ All your selected transfers will be cancelled and cleared.</source>
     </message>
     <message>
         <source>Cancel transfers?
-Your selected incomplete sync transfers won't be cancelled
+Your selected incomplete sync transfers won&apos;t be cancelled
 All the other selected transfers will be cancelled and cleared.</source>
         <translatorcomment>Messagebox text to confirm if the user wants to cancel and clear all the selected transfers but there are sync transfers in the selection (they cannot be cancelled)</translatorcomment>
         <translation>転送をキャンセルしますか？
@@ -3107,7 +3504,9 @@ Your selected incomplete sync transfers won&apos;t be cancelled.</source>
     <message numerus="yes">
         <source>Cancel and clear transfer</source>
         <translatorcomment>Context menu action to resume cancel the active transfers and clear the completed transfers (multiple transfers selected)</translatorcomment>
-        <translation><numerusform>転送のキャンセルとクリア</numerusform></translation>
+        <translation>
+            <numerusform>転送のキャンセルとクリア</numerusform>
+        </translation>
     </message>
     <message>
         <source>Yes, cancel</source>
@@ -3138,17 +3537,17 @@ Your selected incomplete sync transfers won&apos;t be cancelled.</source>
     <message>
         <source>MEGAsync</source>
         <translatorcomment>Label used for title of a system message box.</translatorcomment>
-        <translation>MEGAsync</translation>
+        <translation type="vanished">MEGAsync</translation>
     </message>
     <message>
         <source>You are syncing a local folder formatted with a FAT filesystem. That filesystem has deficiencies managing big files and modification times that can cause synchronization problems (e.g. when daylight saving changes), so it&apos;s strongly recommended that you only sync folders formatted with more reliable filesystems like NTFS (more information [A]here[/A]).</source>
         <translatorcomment>Informative message shown when a user is trying to sync using a FAT filesystem.</translatorcomment>
-        <translation>FATファイルシステムでフォーマットされたローカルフォルダを同期しています。そのファイルシステムには、大きなファイルや修正時間の管理に問題があり、同期の問題を引き起こす可能性があるため（夏時間の変更など）、NTFSなどの信頼性の高いファイルシステムでフォーマットされたフォルダのみを同期することを強くお勧めいたします（詳細は[A]こちら[/A] ）。</translation>
+        <translation type="vanished">FATファイルシステムでフォーマットされたローカルフォルダを同期しています。そのファイルシステムには、大きなファイルや修正時間の管理に問題があり、同期の問題を引き起こす可能性があるため（夏時間の変更など）、NTFSなどの信頼性の高いファイルシステムでフォーマットされたフォルダのみを同期することを強くお勧めいたします（詳細は[A]こちら[/A] ）。</translation>
     </message>
     <message>
         <source>You are syncing a local folder shared with VMWare. Those folders do not support filesystem notifications so MEGAsync will have to be continuously scanning to detect changes in your files and folders. Please use a different folder if possible to reduce the CPU usage.</source>
         <translatorcomment>Informative message shown when a user is trying to sync using a local folder shared with VMWare third party app.</translatorcomment>
-        <translation>VMWareと共有するローカルフォルダを同期しています。これらのフォルダはファイルシステムの通知をサポートしていないため、あなたのファイルやフォルダの変更を検出するためにMEGAsyncは継続的にスキャンする必要があります。可能であれば、別のフォルダを使用してCPU使用量を減らしてください。</translation>
+        <translation type="vanished">VMWareと共有するローカルフォルダを同期しています。これらのフォルダはファイルシステムの通知をサポートしていないため、あなたのファイルやフォルダの変更を検出するためにMEGAsyncは継続的にスキャンする必要があります。可能であれば、別のフォルダを使用してCPU使用量を減らしてください。</translation>
     </message>
 </context>
 <context>
@@ -3252,7 +3651,9 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message numerus="yes">
         <source>You no longer have access to this item. Ask the owner to share again.</source>
         <translatorcomment>Error message shown when the user is trying to download an file or folder from an incoming share and the owner stops sharing/removes all items</translatorcomment>
-        <translation><numerusform>この項目にアクセスできなくなりました。所有者にもう一度共有するように依頼してください。</numerusform></translation>
+        <translation>
+            <numerusform>この項目にアクセスできなくなりました。所有者にもう一度共有するように依頼してください。</numerusform>
+        </translation>
     </message>
     <message>
         <source>Cloud drive</source>
@@ -3266,24 +3667,34 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
     <message>
         <source>Error:</source>
-        <translation>エラー：</translation>
+        <translation type="vanished">エラー：</translation>
     </message>
     <message numerus="yes">
         <source>The item you selected has been removed. To reselect, close this window and try again.</source>
         <translatorcomment>Error message shown while the user is trying to download an file or folder but all selected nodes were removed</translatorcomment>
-        <translation><numerusform>選択した項目は削除されました。再選択する場合は、このウィンドウを閉じてから、もう一度やり直してください。</numerusform></translation>
+        <translation>
+            <numerusform>選択した項目は削除されました。再選択する場合は、このウィンドウを閉じてから、もう一度やり直してください。</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%1 item selected</source>
         <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
                            First part of string for multi plural support. Full string looks like: 5 items selected. 2 have been removed. To reselect, close this window and try again. </translatorcomment>
-        <translation><numerusform>%1項目が選択されました</numerusform></translation>
+        <translation>
+            <numerusform>%1項目が選択されました</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%1. %2 has been removed. To reselect, close this window and try again.</source>
         <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
                            Second and last part of string for multi plural support. Full string looks like: 5 items selected. 2 have been removed. To reselect, close this window and try again. </translatorcomment>
-        <translation><numerusform>%1、%2は削除されました。再選択する場合は、このウィンドウを閉じてから、もう一度やり直してください。</numerusform></translation>
+        <translation>
+            <numerusform>%1、%2は削除されました。再選択する場合は、このウィンドウを閉じてから、もう一度やり直してください。</numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>Backups</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3377,7 +3788,9 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message numerus="yes">
         <source>[A] removed %n item</source>
         <translatorcomment>Label to indicate that [A] has removed %n items from a shared folder. Placeholder [A] will be replaced by email of the user that made the deletion and %n with the number of removed items.</translatorcomment>
-        <translation><numerusform>[A]さんは%n個の項目を削除しました</numerusform></translation>
+        <translation>
+            <numerusform>[A]さんは%n個の項目を削除しました</numerusform>
+        </translation>
     </message>
 </context>
 <context>
@@ -3665,7 +4078,9 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message numerus="yes">
         <source>minimum %n user</source>
         <translatorcomment>Label to inform about the minimum number of users for a business plan. %1 will be replaced with the minimum number of users.</translatorcomment>
-        <translation><numerusform>最小%n人のユーザー様</numerusform></translation>
+        <translation>
+            <numerusform>最小%n人のユーザー様</numerusform>
+        </translation>
     </message>
 </context>
 <context>
@@ -3704,6 +4119,22 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <source>Show in Finder</source>
         <translatorcomment>Label to indicate the &quot;Show in Finder&quot; option to open local folder of a sync (macOS). Keep Finder name as it is the app name of file explorer on macOS.</translatorcomment>
         <translation>ファインダーで表示</translation>
+    </message>
+    <message>
+        <source>Open settings</source>
+        <translation type="unfinished">設定を開く</translation>
+    </message>
+    <message>
+        <source>Go to settings to enable them again.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open preferences</source>
+        <translation type="unfinished">環境設定を開く</translation>
+    </message>
+    <message>
+        <source>Go to preferences to enable them again.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3752,13 +4183,21 @@ Please delete the folder sync from preferences to cancel them.</source>
 - UI fixed and adjusted.
 </source>
         <translatorcomment>Changelog for version v4.7.0</translatorcomment>
-        <translation>－ 新しい転送マネージャーが追加されました。
+        <translation type="vanished">－ 新しい転送マネージャーが追加されました。
 －転送管理が強化され、ダウンロードとアップロードの信頼性が向上しました。
 －Windows、Linux、および macOSで検出されたクラッシュが修正されました。
 －翻訳の問題が修正されました。
 －パフォーマンスが向上しました。
 －UIを修正・調整しました。
 </translation>
+    </message>
+    <message>
+        <source>Import changes from Desktop app develop (including v4.7.0) and SDK v4.4.0
+[BAC-51] - Dapp: Backup display path adjustment
+[BAC-122] - Backup choose folder and sync choose folder opens the same location
+[BAC-164] - Use new isNodeSyncableWithErrors() sdk interface to check node syncability
+</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4172,27 +4611,27 @@ Do you want to delete it anyway?</source>
     <message>
         <source>%1 TB</source>
         <translatorcomment>File size measured in terabytes</translatorcomment>
-        <translation>%1 TB</translation>
+        <translation>%1&#xa0;TB</translation>
     </message>
     <message>
         <source>%1 GB</source>
         <translatorcomment>File size measured in gigabytes</translatorcomment>
-        <translation>%1 GB</translation>
+        <translation>%1&#xa0;GB</translation>
     </message>
     <message>
         <source>%1 MB</source>
         <translatorcomment>File size measured in megabytes</translatorcomment>
-        <translation>%1 MB</translation>
+        <translation>%1&#xa0;MB</translation>
     </message>
     <message>
         <source>%1 KB</source>
         <translatorcomment>File size measured in kilobytes</translatorcomment>
-        <translation>%1 KB</translation>
+        <translation>%1&#xa0;KB</translation>
     </message>
     <message>
         <source>%1 bytes</source>
         <translatorcomment>File size measured in bytes</translatorcomment>
-        <translation>%1 バイト</translation>
+        <translation>%1&#xa0;バイト</translation>
     </message>
     <message>
         <source>Invalid filename</source>
@@ -4257,6 +4696,61 @@ Do you want to delete it anyway?</source>
     <message>
         <source>Cancel</source>
         <translation>キャンセル</translation>
+    </message>
+</context>
+<context>
+    <name>RemoveBackupDialog</name>
+    <message>
+        <source>Remove backup</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Stop backing up folder?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>To stop backing up this folder, you need to either move it or delete it.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Move folder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Move this folder from backups to another location in your cloud drive to get full access to your data. This folder will stop being backed up.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Move to:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Change</source>
+        <translation type="unfinished">変更</translation>
+    </message>
+    <message>
+        <source>Delete folder permanently</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Folder will be deleted from MEGA. It won&apos;t be deleted from your computer. This action cannot be undone.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Confirm</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">キャンセル</translation>
+    </message>
+    <message>
+        <source>Stop backup</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Move this folder from backups to another location in your Cloud Drive to get full access to your data. This folder will stop being backed up.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4373,12 +4867,12 @@ Do you want to delete it anyway?</source>
     <message>
         <source>Local Folder</source>
         <translatorcomment>Label to indicate the local folder column for sync table. String as short as possible.</translatorcomment>
-        <translation>ローカルフォルダ</translation>
+        <translation type="vanished">ローカルフォルダ</translation>
     </message>
     <message>
         <source>MEGA folder</source>
         <translatorcomment>Label to indicate the MEGA folder column for sync table. String as short as possible.</translatorcomment>
-        <translation>MEGAフォルダ</translation>
+        <translation type="vanished">MEGAフォルダ</translation>
     </message>
     <message>
         <source>Auto</source>
@@ -4393,7 +4887,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>%1 (%2%) of %3 used</source>
         <translatorcomment>Label to indicate the amount and percentage of used and total space available. Keep %1 (%2%) and %3 substitution placeholders because they will be filled with the required amounts of storage space dynamically.</translatorcomment>
-        <translation>%1 (%2 %) / %3 使用済み</translation>
+        <translation>%1 (%2&#xa0;%) / %3 使用済み</translation>
     </message>
     <message>
         <source>Warning</source>
@@ -4420,7 +4914,7 @@ Do you want to delete it anyway?</source>
 
 Do you want to restart MEGAsync now?</source>
         <translatorcomment>Message displayed asking for confirmation to the user to restart the application for a Full scan operation.</translatorcomment>
-        <translation>MEGAsyncは、起動時に同期フォルダのフルスキャンを実行します。今すぐMEGAsyncを再起動しますか？　</translation>
+        <translation>MEGAsyncは、起動時に同期フォルダのフルスキャンを実行します。今すぐMEGAsyncを再起動しますか？&#x3000;</translation>
     </message>
     <message>
         <source>Choose</source>
@@ -4445,7 +4939,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Enable / disable</source>
         <translatorcomment>Tooltip for checkbox to let the user enable/disable a specific synchronization.</translatorcomment>
-        <translation>有効にする/無効にする</translation>
+        <translation type="vanished">有効にする/無効にする</translation>
     </message>
     <message>
         <source>You don&apos;t have write permissions in this local folder.</source>
@@ -4560,7 +5054,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Unexpected error disabling sync %1</source>
         <translatorcomment>Error message shown when an error occurs while trying to disable a sync named %1.</translatorcomment>
-        <translation>同期%1を無効にする際に予期しないエラーが発生しました</translation>
+        <translation type="vanished">同期%1を無効にする際に予期しないエラーが発生しました</translation>
     </message>
     <message>
         <source>Error enabling sync</source>
@@ -4860,22 +5354,22 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Synchronization will stop working. Are you sure?</source>
         <translatorcomment>Message label indicating that the synchronizations will stop if the user logs out. Ask for confirmation.</translatorcomment>
-        <translation>同期が停止します。よろしいですか？</translation>
+        <translation type="vanished">同期が停止します。よろしいですか？</translation>
     </message>
     <message>
         <source>Open in MEGA</source>
         <translatorcomment>Text label for action menu item to open the selected Sync folder in MEGA web app File Manager. Keep string as short as possible, as this shows up in menu similar to a context menu.</translatorcomment>
-        <translation>MEGAで開く</translation>
+        <translation type="vanished">MEGAで開く</translation>
     </message>
     <message>
         <source>Remove synced folder</source>
         <translatorcomment>Text label for action menu item to remove the synchronization for the selected folder. Keep string as short as possible, as this shows up in menu similar to a context menu.</translatorcomment>
-        <translation>同期済みフォルダを削除</translation>
+        <translation type="vanished">同期済みフォルダを削除</translation>
     </message>
     <message>
         <source>Saving Sync settings</source>
         <translatorcomment>Not used currently. Might get removed in a future refactoring.</translatorcomment>
-        <translation>同期設定を保存しています</translation>
+        <translation type="vanished">同期設定を保存しています</translation>
     </message>
     <message>
         <source>Restart MEGAsync</source>
@@ -4915,7 +5409,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>MEGA Folder</source>
         <translatorcomment>Label to indicate the MEGA folder column for sync table. String as short as possible.</translatorcomment>
-        <translation>MEGAフォルダ</translation>
+        <translation type="vanished">MEGAフォルダ</translation>
     </message>
     <message>
         <source>Choose which files or folders you want to exclude from synchronisation.</source>
@@ -4960,12 +5454,116 @@ Do you want to restart MEGAsync now?</source>
     <message numerus="yes">
         <source>Used quota for the last %n hour:</source>
         <translatorcomment>Informative text shown in Account pane for Free account type. Indicates the used quota in the last %n specified number of hours. Keep the %n subsitution argument.</translatorcomment>
-        <translation><numerusform>直近%n時間で使用された容量：</numerusform></translation>
+        <translation>
+            <numerusform>直近%n時間で使用された容量：</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>day</source>
         <translatorcomment>Suffix text label for number of days to keep files in local cache.</translatorcomment>
-        <translation><numerusform>日</numerusform></translation>
+        <translation>
+            <numerusform>日</numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>Backup</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Backups</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Backup Folder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>View in MEGA</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Saving backups…</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Some folders have not backed up. For more information please hover over the yellow warning icon.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>To Backup Center</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Backup folder:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Synchronizations and backups will stop working.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Backups will stop working.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Synchronizations will stop working.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Are you sure?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error adding sync</source>
+        <translation type="unfinished">同期の追加中にエラーが発生しました</translation>
+    </message>
+    <message>
+        <source>Error removing sync</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Your sync &quot;%1&quot; can&apos;t be removed. Reason: %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error disabling sync</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Your sync &quot;%1&quot; can&apos;t be disabled. Reason: %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Backup Error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error creating Backups root folder: %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error adding backup %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error removing backup</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Your backup &quot;%1&quot; can&apos;t be removed. Reason: %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error enabling backup</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Your backup &quot;%1&quot; can&apos;t be enabled. Reason: %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error disabling backup</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5145,7 +5743,7 @@ Do you want to restart MEGAsync now?</source>
 To prevent the syncing of entire boot volumes, which is inefficient and dangerous,
 we ask you to start with a smaller folder and add more data while MEGAsync is running.</source>
         <translatorcomment>Message displayed to advise the user that is trying to sync an extremely large folder.</translatorcomment>
-        <translation>非常に大きなフォルダを同期しようとしています。ブートボリューム全体を同期させないようにするには（非効率的で危険です）、MEGAsyncの実行中に小さなフォルダから始めてデータを追加してください。</translation>
+        <translation type="vanished">非常に大きなフォルダを同期しようとしています。ブートボリューム全体を同期させないようにするには（非効率的で危険です）、MEGAsyncの実行中に小さなフォルダから始めてデータを追加してください。</translation>
     </message>
     <message>
         <source>Unable to get the filesystem.
@@ -5171,12 +5769,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>You don&apos;t have write permissions in this local folder.</source>
         <translatorcomment>Message displayed when a user is trying to synchronized a local folder in wich the user has no write permissions.</translatorcomment>
-        <translation>このローカルフォルダに書き込み権限がありません。</translation>
+        <translation type="vanished">このローカルフォルダに書き込み権限がありません。</translation>
     </message>
     <message>
         <source>MEGAsync won&apos;t be able to download anything here.</source>
         <translatorcomment>Message displayed when a user is trying to synchronized a local folder in wich the user has no write permissions.</translatorcomment>
-        <translation>MEGAsyncは、こちらで何かをダウンロードすることはできません。</translation>
+        <translation type="vanished">MEGAsyncは、こちらで何かをダウンロードすることはできません。</translation>
     </message>
     <message>
         <source>Do you want to continue?</source>
@@ -5205,7 +5803,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Creating folder...</source>
         <translatorcomment>Label shown when an user is creating a remote folder.</translatorcomment>
-        <translation>フォルダを作成中…</translation>
+        <translation type="vanished">フォルダを作成中…</translation>
     </message>
     <message>
         <source>Logging out...</source>
@@ -5330,6 +5928,10 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translatorcomment>Label shown when the user completes the initial setup wizard</translatorcomment>
         <translation>すべて完了しました</translation>
     </message>
+    <message>
+        <source>Creating folder…</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ShellExtension</name>
@@ -5381,12 +5983,16 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message numerus="yes">
         <source>%n file</source>
         <translatorcomment>Label to indicate file count. Keep %n code because it will be filled with the number of files at runtime.</translatorcomment>
-        <translation><numerusform>%n個のファイル</numerusform></translation>
+        <translation>
+            <numerusform>%n個のファイル</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%n folder</source>
         <translatorcomment>Label to indicate folder count. Keep %n code because it will be filled with the number of folders at runtime.</translatorcomment>
-        <translation><numerusform>%n個のフォルダ</numerusform></translation>
+        <translation>
+            <numerusform>%n個のフォルダ</numerusform>
+        </translation>
     </message>
 </context>
 <context>
@@ -5551,6 +6157,189 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Off</source>
         <translatorcomment>Unchecked state of a swith button</translatorcomment>
         <translation>オフ</translation>
+    </message>
+</context>
+<context>
+    <name>SyncController</name>
+    <message>
+        <source>You can&apos;t backup this folder as it&apos;s already synced.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Folder is already backed up. Select a different one.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You can&apos;t sync this folder as it&apos;s already synced.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You can&apos;t sync this folder as it&apos;s already backed up.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You can&apos;t backup this folder as it&apos;s already inside a synced folder.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You can&apos;t backup this folder as it&apos;s already inside a backed up folder.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You can&apos;t sync folders that are inside synced folders.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You can&apos;t sync folders that are inside backed up folders.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You can&apos;t backup this folder as it contains synced folders.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You can&apos;t backup this folder as it contains backed up folders.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You can&apos;t sync folders that contain synced folders.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You can&apos;t sync folders that contain backed up folders.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You are trying to backup an extremely large folder.
+To prevent the backup of entire boot volumes, which is inefficient and dangerous,
+we ask you to start with a smaller folder and add more data while MEGAsync is running.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You are trying to sync an extremely large folder.
+To prevent the syncing of entire boot volumes, which is inefficient and dangerous,
+we ask you to start with a smaller folder and add more data while MEGAsync is running.</source>
+        <translation type="unfinished">非常に大きなフォルダを同期しようとしています。ブートボリューム全体を同期させないようにするには（非効率的で危険です）、MEGAsyncの実行中に小さなフォルダから始めてデータを追加してください。</translation>
+    </message>
+    <message>
+        <source>You don&apos;t have write permissions in this local folder.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>MEGAsync won&apos;t be able to download anything here.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You don&apos;t have enough permissions for this remote folder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Invalid remote path</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Folder contents already synced</source>
+        <translation type="unfinished">フォルダの内容はすでに同期されています</translation>
+    </message>
+    <message>
+        <source>Folder already synced</source>
+        <translation type="unfinished">フォルダはすでに同期されています</translation>
+    </message>
+    <message>
+        <source>Unable to create backup as selected folder is not valid. Try again.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unable to create backup. Try again and if issue continues, contact [A]Support[/A].</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unable to create backup as the device you&apos;re backing up from doesn&apos;t have a name. Give your device a name and then try again. If issue continues, contact [A]Support[/A].</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unable to create backup. For further information, contact [A]Support[/A].</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>SyncItemModel</name>
+    <message>
+        <source>Sort by state</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Local Folder</source>
+        <translation type="unfinished">ローカルフォルダ</translation>
+    </message>
+    <message>
+        <source>Sort by folder name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>MEGA Folder</source>
+        <translation type="unfinished">MEGAフォルダ</translation>
+    </message>
+    <message>
+        <source>Sort by MEGA folder name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sync is enabled</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sync is disabled</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Click menu for more Sync actions</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>SyncModel</name>
+    <message>
+        <source>MEGAsync</source>
+        <translation type="unfinished">MEGAsync</translation>
+    </message>
+    <message>
+        <source>You are syncing a local folder formatted with a FAT filesystem. That filesystem has deficiencies managing big files and modification times that can cause synchronization problems (e.g. when daylight saving changes), so it&apos;s strongly recommended that you only sync folders formatted with more reliable filesystems like NTFS (more information [A]here[/A]).</source>
+        <translation type="unfinished">FATファイルシステムでフォーマットされたローカルフォルダを同期しています。そのファイルシステムには、大きなファイルや修正時間の管理に問題があり、同期の問題を引き起こす可能性があるため（夏時間の変更など）、NTFSなどの信頼性の高いファイルシステムでフォーマットされたフォルダのみを同期することを強くお勧めいたします（詳細は[A]こちら[/A] ）。</translation>
+    </message>
+    <message>
+        <source>You are syncing a local folder shared with VMWare. Those folders do not support filesystem notifications so MEGAsync will have to be continuously scanning to detect changes in your files and folders. Please use a different folder if possible to reduce the CPU usage.</source>
+        <translation type="unfinished">VMWareと共有するローカルフォルダを同期しています。これらのフォルダはファイルシステムの通知をサポートしていないため、あなたのファイルやフォルダの変更を検出するためにMEGAsyncは継続的にスキャンする必要があります。可能であれば、別のフォルダを使用してCPU使用量を減らしてください。</translation>
+    </message>
+</context>
+<context>
+    <name>SyncTableView</name>
+    <message>
+        <source>Open in MEGA</source>
+        <translation type="unfinished">MEGAで開く</translation>
+    </message>
+    <message>
+        <source>Remove synced folder</source>
+        <translation type="unfinished">同期済みフォルダを削除</translation>
+    </message>
+</context>
+<context>
+    <name>SyncsMenu</name>
+    <message>
+        <source>Add Sync</source>
+        <translation type="unfinished">同期を追加</translation>
+    </message>
+    <message>
+        <source>Syncs</source>
+        <translation type="unfinished">同期</translation>
+    </message>
+    <message>
+        <source>Add Backups</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Backups</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5789,7 +6578,9 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message numerus="yes">
         <source>%1 result found</source>
         <translatorcomment>Message shown with search results,when there are only uploads or downloads, but not both at the same time</translatorcomment>
-        <translation><numerusform>%1件の結果が見つかりました</numerusform></translation>
+        <translation>
+            <numerusform>%1件の結果が見つかりました</numerusform>
+        </translation>
     </message>
     <message>
         <source>Upgrade now</source>
@@ -5821,7 +6612,9 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
     <message numerus="yes">
         <source>Issue found</source>
         <translatorcomment>Message shown when there are some failed transfers/syncs/backups</translatorcomment>
-        <translation><numerusform>問題が見つかりました</numerusform></translation>
+        <translation>
+            <numerusform>問題が見つかりました</numerusform>
+        </translation>
     </message>
 </context>
 <context>
@@ -6179,7 +6972,7 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
     <message>
         <source>100% of the %1 available used on your account.</source>
         <translatorcomment>Informative message for the user when it is in over storage situation, letting know about the %1 space used and reaching the 100% limit of his current storage amount.</translatorcomment>
-        <translation>お客様のアカウントでご使用可能な%1中100 %を使用しました。</translation>
+        <translation>お客様のアカウントでご使用可能な%1中100&#xa0;%を使用しました。</translation>
     </message>
     <message>
         <source>Choose annual billing and get 12 months for the price of 10</source>
@@ -6223,6 +7016,13 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
         <source>Choose</source>
         <translatorcomment>Button label to select the upload folder (String as short as possible)</translatorcomment>
         <translation>選択</translation>
+    </message>
+</context>
+<context>
+    <name>UserAttributes::DeviceName</name>
+    <message>
+        <source>Your computer</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -6280,32 +7080,44 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
     <message numerus="yes">
         <source>%n second ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n seconds ago</translatorcomment>
-        <translation><numerusform>%n秒前</numerusform></translation>
+        <translation>
+            <numerusform>%n秒前</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%n minute ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n minutes ago</translatorcomment>
-        <translation><numerusform>%n分前</numerusform></translation>
+        <translation>
+            <numerusform>%n分前</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%n hour ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n hours ago</translatorcomment>
-        <translation><numerusform>%n時間前</numerusform></translation>
+        <translation>
+            <numerusform>%n時間前</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%n day ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n days ago</translatorcomment>
-        <translation><numerusform>%n日前</numerusform></translation>
+        <translation>
+            <numerusform>%n日前</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%n month ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n months ago</translatorcomment>
-        <translation><numerusform>%nか月前</numerusform></translation>
+        <translation>
+            <numerusform>%nか月前</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%n year ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n years ago</translatorcomment>
-        <translation><numerusform>%n年前</numerusform></translation>
+        <translation>
+            <numerusform>%n年前</numerusform>
+        </translation>
     </message>
 </context>
 <context>

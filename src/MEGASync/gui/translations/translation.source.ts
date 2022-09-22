@@ -4199,7 +4199,7 @@ Please delete the folder sync from preferences to cancel them.</translation>
 <context>
     <name>Preferences</name>
     <message>
-        <source>Import changes from DEsktop app v4.7.0 and SDK v4.4.0
+        <source>Import changes from Desktop app develop (including v4.7.0) and SDK v4.4.0
 [BAC-51] - Dapp: Backup display path adjustment
 [BAC-122] - Backup choose folder and sync choose folder opens the same location
 [BAC-164] - Use new isNodeSyncableWithErrors() sdk interface to check node syncability
