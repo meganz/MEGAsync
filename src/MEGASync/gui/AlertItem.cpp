@@ -438,26 +438,16 @@ void AlertItem::setAlertTimeStamp(int64_t ts)
 {
     if (ts != -1)
     {
-        QString dateTimeFormat;
+
         const QDateTime dateTime{QDateTime::fromMSecsSinceEpoch(ts * 1000)};
         const bool sameYear(dateTime.date().year() == QDateTime::currentDateTime().date().year());
         const bool sameWeek{QDateTime::currentDateTime().date().weekNumber() == dateTime.date().weekNumber()};
 
-        if(sameWeek && sameYear)
-        {
-            dateTimeFormat.append(QStringLiteral("dddd, "));
-        }
-        dateTimeFormat.append(QStringLiteral("d MMMM "));
-
-        if(!sameYear)
-        {
-            dateTimeFormat.append(QStringLiteral("yyyy "));
-        }
-
         const QString language{static_cast<MegaApplication*>(qApp)->getCurrentLanguageCode()};
-        dateTimeFormat.append(QLocale(language).timeFormat(QLocale::ShortFormat));
-        const QString dateTimeTranslated{QLocale(language).toString(dateTime, dateTimeFormat)};
-        ui->lTimeStamp->setText(dateTimeTranslated);
+        QLocale locale(language);
+        QString dateTimeFormat = generateDateTimeFormat(sameWeek, sameYear, locale);
+
+        ui->lTimeStamp->setText(locale.toString(dateTime, dateTimeFormat));
     }
     else
     {
@@ -507,4 +497,26 @@ QString AlertItem::getUserFullName(MegaUserAlert *alert)
         return mFullNameAttributes->getRichFullName();
     }
     return QString::fromUtf8(alert->getEmail());
+}
+
+QString AlertItem::generateDateTimeFormat(bool sameWeek, bool sameYear, QLocale locale)
+{
+    QString formatString;
+    if (sameYear)
+    {
+        if (sameWeek)
+        {
+            formatString = tr("[WEEKDAY] [MONTHDAY] [MONTH] [TIME]");
+        }
+        formatString = tr("[MONTHDAY] [MONTH] [TIME]");
+    }
+    formatString = tr("[MONTHDAY] [MONTH] [YEAR] [TIME]");
+
+    formatString.replace(QLatin1String("[WEEKDAY]"), QString::fromLatin1("dddd"))
+            .replace(QLatin1String("[MONTHDAY]"), QString::fromLatin1("d"))
+            .replace(QLatin1String("[MONTH]"), QString::fromLatin1("MMMM"))
+            .replace(QLatin1String("[YEAR]"), QString::fromLatin1("yyyy"))
+            .replace(QLatin1String("[TIME]"), locale.timeFormat(QLocale::ShortFormat));
+
+    return formatString;
 }

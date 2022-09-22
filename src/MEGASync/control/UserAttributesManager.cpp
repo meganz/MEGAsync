@@ -1,5 +1,8 @@
 #include "UserAttributesManager.h"
 
+#include "MegaApplication.h"
+#include "Utilities.h"
+
 #include "megaapi.h"
 #include "mega/types.h"
 
@@ -9,6 +12,11 @@ UserAttributesManager::UserAttributesManager() :
     mDelegateListener(new mega::QTMegaListener(MegaSyncApp->getMegaApi(), this))
 {
     MegaSyncApp->getMegaApi()->addListener(mDelegateListener.get());
+}
+
+void UserAttributesManager::reset()
+{
+    mRequests.clear();
 }
 
 void UserAttributesManager::onRequestFinish(mega::MegaApi *api, mega::MegaRequest *incoming_request, mega::MegaError *e)

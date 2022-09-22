@@ -58,6 +58,11 @@ void TransfersManagerSortFilterProxyModel::sort(int sortCriterion, Qt::SortOrder
     invalidateModel();
 }
 
+int TransfersManagerSortFilterProxyModel::getSortCriterion() const
+{
+    return static_cast<int>(mSortCriterion);
+}
+
 void TransfersManagerSortFilterProxyModel::setSourceModel(QAbstractItemModel *sourceModel)
 {
     connect(sourceModel, &QAbstractItemModel::rowsAboutToBeRemoved,
@@ -241,22 +246,30 @@ bool TransfersManagerSortFilterProxyModel::filterAcceptsRow(int sourceRow, const
             }
         }
 
+        bool isActive(false);
 
         //Not needed to add the logic when the d is a sync transfer, as the sync state is permanent
-        if(accept && !d->isSyncTransfer() && !mNoSyncTransfers.contains(d->mTag))
+        if(accept && (!d->isCompleted() && !d->isCompleting()))
         {
-            mNoSyncTransfers.insert(d->mTag);
-        }
-
-        //As the active state can change in time, add both logics to add or remove
-        if(accept && (d->isActiveOrPending() && !d->isCompleting()))
-        {
-            if(!mActiveTransfers.contains(d->mTag))
+            //As the active state can change in time, add both logics to add or remove
+            if(d->isActiveOrPending())
             {
-                mActiveTransfers.insert(d->mTag);
+                if(!mActiveTransfers.contains(d->mTag))
+                {
+                    mActiveTransfers.insert(d->mTag);
+                }
+
+                isActive = true;
+            }
+
+            //As the No sync does not change in time, the remove logic is not added
+            if(!d->isSyncTransfer() && !mNoSyncTransfers.contains(d->mTag))
+            {
+                mNoSyncTransfers.insert(d->mTag);
             }
         }
-        else
+
+        if(!isActive)
         {
             removeActiveTransferFromCounter(d->mTag);
         }
@@ -473,10 +486,53 @@ QMimeData *TransfersManagerSortFilterProxyModel::mimeData(const QModelIndexList 
     //sorted in inverse order to guarantee that the original order is preserved
     auto sortedIndexes(indexes);
     std::sort(sortedIndexes.begin(), sortedIndexes.end(),[](const QModelIndex& index1, const QModelIndex& index2){
-        return index1.row() > index2.row();
+        return index1.row() < index2.row();
     });
 
     return TransfersSortFilterProxyBaseModel::mimeData(sortedIndexes);
+}
+
+bool TransfersManagerSortFilterProxyModel::dropMimeData(const QMimeData *data, Qt::DropAction action, int destRow, int column, const QModelIndex &parent)
+{
+    if (destRow >= 0 && destRow <= rowCount() && action == Qt::MoveAction)
+    {
+        auto sourceM = dynamic_cast<TransfersModel*>(sourceModel());
+        auto rows = sourceM->getDragAndDropRows(data, destRow);
+
+        if(destRow == rowCount())
+        {
+            //Move the rows to the second to last, and then move the last to the first tag moved (there is not a method for that on the SDK)
+            destRow--;
+            QModelIndex proxyIndex = index(destRow, column,parent);
+            auto sourceIndex = mapToSource(proxyIndex);
+
+            sourceM->moveRows(parent,rows,parent, sourceIndex.row());
+
+            sourceM->ignoreMoveRowsSignal(true);
+            sourceM->moveRows(parent, QList<int>() << sourceIndex.row(), parent, rows.first());
+            sourceM->ignoreMoveRowsSignal(false);
+        }
+        else if(destRow == 0)
+        {
+            QModelIndex proxyIndex = index(destRow, column,parent);
+            auto sourceIndex = mapToSource(proxyIndex);
+            sourceM->moveRows(parent, rows , parent, sourceIndex.row());
+        }
+        else
+        {
+            QModelIndex proxyIndex = index(destRow, column,parent);
+            auto sourceIndex = mapToSource(proxyIndex);
+            sourceM->moveRows(parent, rows , parent, sourceIndex.row());
+
+            sourceM->ignoreMoveRowsSignal(true);
+            auto previousProxyIndex = index(destRow -1, column, parent);
+            auto previousSourceIndex = mapToSource(previousProxyIndex);
+            sourceM->moveRows(parent, QList<int>() << previousSourceIndex.row() , parent, rows.first());
+            sourceM->ignoreMoveRowsSignal(false);
+        }
+    }
+
+    return false;
 }
 
 int TransfersManagerSortFilterProxyModel::getPausedTransfers() const
@@ -491,7 +547,7 @@ bool TransfersManagerSortFilterProxyModel::areAllPaused() const
 
 bool TransfersManagerSortFilterProxyModel::isAnyCancellable() const
 {
-    return (!mActiveTransfers.isEmpty() || !mFailedTransfers.isEmpty());
+    return !areAllSync() && !areAllCompleted() && (isAnyActive() || isAnyFailed());
 }
 
 bool TransfersManagerSortFilterProxyModel::areAllCancellable() const
@@ -502,6 +558,11 @@ bool TransfersManagerSortFilterProxyModel::areAllCancellable() const
 bool TransfersManagerSortFilterProxyModel::areAllSync() const
 {
     return !isEmpty() && mNoSyncTransfers.isEmpty();
+}
+
+bool TransfersManagerSortFilterProxyModel::isAnySync() const
+{
+    return mNoSyncTransfers.size() != transfersCount();
 }
 
 bool TransfersManagerSortFilterProxyModel::areAllCompleted() const
@@ -517,6 +578,11 @@ bool TransfersManagerSortFilterProxyModel::isAnyCompleted() const
 bool TransfersManagerSortFilterProxyModel::isAnyActive() const
 {
     return !mActiveTransfers.isEmpty();
+}
+
+bool TransfersManagerSortFilterProxyModel::isAnyFailed() const
+{
+    return !mFailedTransfers.isEmpty();
 }
 
 bool TransfersManagerSortFilterProxyModel::isEmpty() const
@@ -546,7 +612,8 @@ bool TransfersManagerSortFilterProxyModel::moveRows(const QModelIndex &proxyPare
     int row(proxyRow);
     auto totalRows(rowCount());
 
-    auto sourceTotalRows(sourceModel()->rowCount());
+    auto sourceM = dynamic_cast<TransfersModel*>(sourceModel());
+    auto sourceTotalRows(sourceM->rowCount());
 
     while (moveOk && row < (proxyRow+count))
     {
@@ -560,7 +627,8 @@ bool TransfersManagerSortFilterProxyModel::moveRows(const QModelIndex &proxyPare
         {
             destRow = mapToSource(index(destinationChild, 0, destinationParent)).row();
         }
-        moveOk = sourceModel()->moveRows(sourceIndex.parent(), sourceIndex.row(), 1,
+
+        moveOk = sourceM->moveRows(sourceIndex.parent(), QList<int>() << sourceIndex.row(),
                                          sourceIndex.parent(), destRow);
         row++;
     }
@@ -571,9 +639,9 @@ bool TransfersManagerSortFilterProxyModel::moveRows(const QModelIndex &proxyPare
 void TransfersManagerSortFilterProxyModel::onCancelClearTransfer()
 {
     auto delegateWidget = dynamic_cast<TransferManagerDelegateWidget*>(sender());
-    auto sourModel = dynamic_cast<TransfersModel*>(sourceModel());
+    auto sourceM = dynamic_cast<TransfersModel*>(sourceModel());
 
-    if(delegateWidget && sourModel)
+    if(delegateWidget && sourceM)
     {
         emit transferCancelClear();
     }
@@ -582,9 +650,9 @@ void TransfersManagerSortFilterProxyModel::onCancelClearTransfer()
 void TransfersManagerSortFilterProxyModel::onPauseResumeTransfer()
 {
     auto delegateWidget = dynamic_cast<TransferManagerDelegateWidget*>(sender());
-    auto sourModel = dynamic_cast<TransfersModel*>(sourceModel());
+    auto sourceM = dynamic_cast<TransfersModel*>(sourceModel());
 
-    if(delegateWidget && sourModel)
+    if(delegateWidget && sourceM)
     {
         auto pause = delegateWidget->getData()->getState() != TransferData::TransferState::TRANSFER_PAUSED;
         emit pauseResumeTransfer(pause);
@@ -594,9 +662,9 @@ void TransfersManagerSortFilterProxyModel::onPauseResumeTransfer()
 void TransfersManagerSortFilterProxyModel::onRetryTransfer()
 {
     auto delegateWidget = dynamic_cast<TransferManagerDelegateWidget*>(sender());
-    auto sourModel = dynamic_cast<TransfersModel*>(sourceModel());
+    auto sourceM = dynamic_cast<TransfersModel*>(sourceModel());
 
-    if(delegateWidget && sourModel)
+    if(delegateWidget && sourceM)
     {
         emit transferRetry();
     }
@@ -605,9 +673,9 @@ void TransfersManagerSortFilterProxyModel::onRetryTransfer()
 void TransfersManagerSortFilterProxyModel::onOpenTransfer()
 {
     auto delegateWidget = dynamic_cast<TransferManagerDelegateWidget*>(sender());
-    auto sourModel = dynamic_cast<TransfersModel*>(sourceModel());
+    auto sourceM = dynamic_cast<TransfersModel*>(sourceModel());
 
-    if(delegateWidget && sourModel)
+    if(delegateWidget && sourceM)
     {
         auto data = delegateWidget->getData();
         if(data)
@@ -618,7 +686,7 @@ void TransfersManagerSortFilterProxyModel::onOpenTransfer()
             if(data->mType & TransferData::TRANSFER_UPLOAD
                     || data->getState() & TransferData::FINISHED_STATES_MASK)
             {
-                sourModel->openFolderByTag(tag);
+                sourceM->openFolderByTag(tag);
             }
         }
     }

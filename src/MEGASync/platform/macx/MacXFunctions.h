@@ -28,6 +28,7 @@ bool runHttpsServer();
 bool userActive();
 double uptime();
 QString appBundlePath();
+QString fromNSString(const NSString *str);
 
 
 //You take the ownership of the returned value

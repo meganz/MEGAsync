@@ -13,6 +13,10 @@
 #include "ConnectivityChecker.h"
 #include "TransferMetadata.h"
 #include "DuplicatedNodeDialogs/DuplicatedNodeDialog.h"
+#include "PlatformStrings.h"
+#include "UserAttributesManager.h"
+#include "UserAttributesRequests/FullName.h"
+#include "UserAttributesRequests/Avatar.h"
 
 #include <QTranslator>
 #include <QClipboard>
@@ -85,7 +89,8 @@ void MegaApplication::loadDataPath()
 
 MegaApplication::MegaApplication(int &argc, char **argv) :
     QApplication(argc, argv),
-    scanStageController(this)
+    scanStageController(this),
+    mDisableGfx (false)
 {
 
 #if defined Q_OS_MACX && !defined QT_DEBUG
@@ -107,22 +112,24 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
 #if defined(LOG_TO_STDOUT)
     logToStdout = true;
 #endif
+    // Collect program arguments
+    QStringList args;
+    for (int i=0; i < argc; ++i)
+    {
+        args += QString::fromUtf8(argv[i]);
+    }
 
 #ifdef Q_OS_LINUX
-    if (argc == 2)
-    {
-         if (!strcmp("--debug", argv[1]))
-         {
-             logToStdout = true;
-         }
-         else if (!strcmp("--version", argv[1]))
-         {
-            QTextStream(stdout) << "MEGAsync" << " v" << Preferences::VERSION_STRING << " (" << Preferences::SDK_ID << ")" << endl;
-            ::exit(0);
-         }
-    }
-#endif
 
+    if (args.contains(QLatin1String("--version")))
+    {
+        QTextStream(stdout) << "MEGAsync" << " v" << Preferences::VERSION_STRING << " (" << Preferences::SDK_ID << ")" << endl;
+        ::exit(0);
+    }
+
+    logToStdout |= args.contains(QLatin1String("--debug"));
+
+#endif
 
     connect(this, SIGNAL(blocked()), this, SLOT(onBlocked()));
     connect(this, SIGNAL(unblocked()), this, SLOT(onUnblocked()));
@@ -294,7 +301,6 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     updateThread = NULL;
     updateTask = NULL;
     multiUploadFileDialog = NULL;
-    exitDialog = NULL;
     downloadNodeSelector = NULL;
     mPricing.reset();
     mCurrency.reset();
@@ -329,6 +335,8 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
 #ifdef __APPLE__
     scanningTimer = NULL;
 #endif
+
+    mDisableGfx = args.contains(QLatin1String("--nogfx")) || args.contains(QLatin1String("/nogfx"));
 
     connect(&scanStageController, &ScanStageController::enableTransferActions,
             this, &MegaApplication::enableTransferActions);
@@ -453,8 +461,15 @@ void MegaApplication::initialize()
 
     QString basePath = QDir::toNativeSeparators(dataPath + QString::fromUtf8("/"));
     megaApi = new MegaApi(Preferences::CLIENT_KEY, basePath.toUtf8().constData(), Preferences::USER_AGENT);
+    megaApi->disableGfxFeatures(mDisableGfx);
 
     megaApiFolders = new MegaApi(Preferences::CLIENT_KEY, basePath.toUtf8().constData(), Preferences::USER_AGENT);
+    megaApiFolders->disableGfxFeatures(mDisableGfx);
+
+    MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromLatin1("Graphics processing %1")
+                 .arg(mDisableGfx ? QLatin1String("disabled")
+                                  : QLatin1String("enabled"))
+                 .toUtf8().constData());
 
     // Set maximum log line size to 10k (same as SDK default)
     // Otherwise network logging can cause large glitches when logging hundreds of MB
@@ -549,6 +564,7 @@ void MegaApplication::initialize()
 
     if (preferences->isCrashed())
     {
+        MegaApi::log(MegaApi::LOG_LEVEL_WARNING, QString::fromUtf8("Force reloading (isCrashed true)").toUtf8().constData());
         preferences->setCrashed(false);
         QDirIterator di(dataPath, QDir::Files | QDir::NoDotAndDotDot);
         while (di.hasNext())
@@ -561,6 +577,7 @@ void MegaApplication::initialize()
                     || fi.fileName().endsWith(QString::fromUtf8(".db-wal"))
                     || fi.fileName().endsWith(QString::fromUtf8(".db-shm"))))
             {
+                MegaApi::log(MegaApi::LOG_LEVEL_WARNING, QString::fromUtf8("Deleting local cache: %1").arg(di.filePath()).toUtf8().constData());
                 QFile::remove(di.filePath());
             }
         }
@@ -669,7 +686,7 @@ void MegaApplication::initialize()
 
     mTransfersModel = new TransfersModel(nullptr);
 
-    connect(mTransfersModel, &TransfersModel::transfersCountUpdated, this, &MegaApplication::onTransfersModelUpdate);
+    connect(mTransfersModel.data(), &TransfersModel::transfersCountUpdated, this, &MegaApplication::onTransfersModelUpdate);
 }
 
 QString MegaApplication::applicationFilePath()
@@ -858,9 +875,11 @@ void MegaApplication::updateTrayIcon()
     }
     else if (paused)
     {
-        if(mTransfersModel && mTransfersModel->hasFailedTransfers())
+        long long transfersFailed(mTransfersModel ? mTransfersModel->failedTransfers() : 0);
+
+        if(transfersFailed > 0)
         {
-            tooltipState = QCoreApplication::translate("TransferManager","Some issues occurred");
+            tooltipState = QCoreApplication::translate("TransferManager","Issue found", "", transfersFailed);
             icon = icons["someissues"];
         }
         else
@@ -907,9 +926,11 @@ void MegaApplication::updateTrayIcon()
     }
     else
     {
-        if(mTransfersModel && mTransfersModel->hasFailedTransfers())
+        long long transfersFailed(mTransfersModel ? mTransfersModel->failedTransfers() : 0);
+
+        if(transfersFailed > 0)
         {
-            tooltipState = QCoreApplication::translate("TransferManager","Some issues occurred");
+            tooltipState = QCoreApplication::translate("TransferManager","Issue found", "", transfersFailed);
             icon = icons["someissues"];
         }
         else
@@ -1156,24 +1177,21 @@ void MegaApplication::requestUserData()
     }
 
     megaApi->getPricing();
-    megaApi->getUserAttribute(MegaApi::USER_ATTR_FIRSTNAME);
-    megaApi->getUserAttribute(MegaApi::USER_ATTR_LASTNAME);
     megaApi->getFileVersionsOption();
     megaApi->getPSA();
 
     mThreadPool->push([=]()
     {//thread pool function
-        const char *email = megaApi->getMyEmail();
+        std::shared_ptr<char> email(megaApi->getMyEmail(), std::default_delete<char[]>());
 
         Utilities::queueFunctionInAppThread([=]()
         {//queued function
             if (email)
             {
-                megaApi->getUserAvatar(Utilities::getAvatarPath(QString::fromUtf8(email)).toUtf8().constData());
-                delete [] email;
+                UserAttributes::FullName::requestFullName(email.get());
+                UserAttributes::Avatar::requestAvatar(email.get());
             }
         });//end of queued function
-
     });// end of thread pool function
 }
 
@@ -1318,21 +1336,16 @@ if (!preferences->lastExecutionTime())
         }
     }
     infoDialog->setUsage();
+    infoDialog->setAvatar();
     infoDialog->setAccountType(preferences->accountType());
 
 
     if (preferences->getNotifyDisabledSyncsOnLogin())
     {
+        QMessageBox msg(QMessageBox::Warning, QCoreApplication::applicationName(),
+                       PlatformStrings::syncsDisableWarning());
 
-#ifdef __APPLE__
-        QMessageBox msg(QMessageBox::Warning, QCoreApplication::applicationName(),
-                        tr("One or more syncs have been disabled. Go to preferences to enable them again."));
-        QPushButton *openPreferences = msg.addButton(tr("Open Preferences"), QMessageBox::YesRole);
-#else
-        QMessageBox msg(QMessageBox::Warning, QCoreApplication::applicationName(),
-                        tr("One or more syncs have been disabled. Go to settings to enable them again."));
-        QPushButton *openPreferences = msg.addButton(tr("Open Settings"), QMessageBox::YesRole);
-#endif
+        auto openPreferences = msg.addButton(PlatformStrings::openSettings(), QMessageBox::YesRole);
         msg.addButton(tr("Dismiss"), QMessageBox::NoRole);
         msg.setDefaultButton(openPreferences);
         msg.exec();
@@ -1419,6 +1432,8 @@ if (!preferences->lastExecutionTime())
 
         whyAmIBlocked();// lets query again, to trigger transition and restoreSyncs
     }
+
+    preferences->monitorUserAttributes();
 }
 
 void MegaApplication::startSyncs(QList<PreConfiguredSync> syncs)
@@ -1715,10 +1730,10 @@ void MegaApplication::createTransferManagerDialog()
 
         // Signal/slot to notify the tracking of unseen completed transfers of Transfer Manager. If Completed tab is
         // active, tracking is disabled
-        connect(mTransferManager, &TransferManager::userActivity, this, &MegaApplication::registerUserActivity);
+        connect(mTransferManager.data() , &TransferManager::userActivity, this, &MegaApplication::registerUserActivity);
         connect(transferQuota.get(), &TransferQuota::sendState,
-                mTransferManager, &TransferManager::onTransferQuotaStateChanged);
-        connect(mTransferManager, SIGNAL(cancelScanning()), this, SLOT(cancelScanningStage()));
+                mTransferManager.data(), &TransferManager::onTransferQuotaStateChanged);
+        connect(mTransferManager.data(), SIGNAL(cancelScanning()), this, SLOT(cancelScanningStage()));
         if (scanStageController.isInScanningState())
         {
             mTransferManager->enterBlockingState();
@@ -1765,22 +1780,25 @@ void MegaApplication::tryExitApplication(bool force)
     {
         exitApplication();
     }
-    else if (!exitDialog)
+    else
     {
-        exitDialog = new QMessageBox(QMessageBox::Question, tr("MEGAsync"),
-                                     tr("There is an active transfer. Want to exit?", "", mTransfersModel->hasActiveTransfers()),
-                                     QMessageBox::Yes|QMessageBox::No);
+        QString exitMessage = tr("There is an active transfer. Exit the app?\n"
+                                 "Transfer will automatically resume when you re-open the app.",
+                                 "",
+                                 mTransfersModel->hasActiveTransfers());
+        auto exitDialog = new QMessageBox(QMessageBox::Question, tr("MEGAsync"), exitMessage, QMessageBox::Yes|QMessageBox::No);
+        exitDialog->setAttribute(Qt::WA_DeleteOnClose);
         exitDialog->button(QMessageBox::Yes)->setText(tr("Exit app"));
         exitDialog->button(QMessageBox::No)->setText(tr("Stay in app"));
         HighDpiResize hDpiResizer(exitDialog);
         int button = exitDialog->exec();
-        if (!exitDialog)
+
+        QPointer<MegaApplication> currentMegaApp(this);
+        if (!currentMegaApp)
         {
             return;
         }
 
-        exitDialog->deleteLater();
-        exitDialog = NULL;
         if (button == QMessageBox::Yes)
         {
             exitApplication();
@@ -1789,11 +1807,6 @@ void MegaApplication::tryExitApplication(bool force)
         {
             *testCrashPtr = 0;
         }
-    }
-    else
-    {
-        exitDialog->activateWindow();
-        exitDialog->raise();
     }
 }
 
@@ -2180,6 +2193,8 @@ void MegaApplication::cleanAll()
         auto syncSetting = model->getSyncSetting(i);
         notifyItemChange(syncSetting->getLocalFolder(), MegaApi::STATE_NONE);
     }
+
+    UserAttributes::UserAttributesManager::instance().reset();
 
     closeDialogs();
     removeAllFinishedTransfers();
@@ -3355,7 +3370,6 @@ void MegaApplication::enableTransferActions(bool enable)
     downloadAction->setEnabled(enable);
     streamAction->setEnabled(enable);
     settingsAction->setEnabled(enable);
-    myCloudAction->setEnabled(enable);
 
     if (syncsMenu)
     {
@@ -4090,6 +4104,8 @@ void MegaApplication::clearUserAttributes()
     {
         QFile::remove(pathToAvatar);
     }
+
+    UserAttributes::UserAttributesManager::instance().reset();
 }
 
 void MegaApplication::clearViewedTransfers()
@@ -5121,7 +5137,7 @@ void MegaApplication::transferManagerActionClicked(int tab)
     }
 
     createTransferManagerDialog();
-    mTransferManager->setActiveTab(tab);
+    mTransferManager->toggleTab(tab);
 
     mTransferManagerGeometryRetainer.showDialog(mTransferManager);
 }
@@ -7146,39 +7162,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
             break;
         }
 
-        if (request->getParamType() == MegaApi::USER_ATTR_FIRSTNAME)
-        {
-            QString firstname(QString::fromUtf8(""));
-            if (e->getErrorCode() == MegaError::API_OK && request->getText())
-            {
-                firstname = QString::fromUtf8(request->getText());
-            }
-            preferences->setFirstName(firstname);
-        }
-        else if (request->getParamType() == MegaApi::USER_ATTR_LASTNAME)
-        {
-            QString lastName(QString::fromUtf8(""));
-            if (e->getErrorCode() == MegaError::API_OK && request->getText())
-            {
-                lastName = QString::fromUtf8(request->getText());
-            }
-            preferences->setLastName(lastName);
-        }
-        else if (request->getParamType() == MegaApi::USER_ATTR_AVATAR)
-        {
-            if (e->getErrorCode() == MegaError::API_ENOENT)
-            {
-
-                const char *email = megaApi->getMyEmail();
-                if (email)
-                {
-                    QFile::remove(Utilities::getAvatarPath(QString::fromUtf8(email)));
-                    delete [] email;
-                }
-            }
-            emit avatarReady();
-        }
-        else if (request->getParamType() == MegaApi::USER_ATTR_DISABLE_VERSIONS)
+        if (request->getParamType() == MegaApi::USER_ATTR_DISABLE_VERSIONS)
         {
             if (e->getErrorCode() == MegaError::API_OK
                     || e->getErrorCode() == MegaError::API_ENOENT)
@@ -7284,7 +7268,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
                 QMegaMessageBox::information(nullptr, QString::fromUtf8("MEGAsync"), tr("You have been logged out because of this error: %1")
                                          .arg(QCoreApplication::translate("MegaError", e->getErrorString())));
             }
-            unlink();            
+            unlink();
         }
 
         //Check for any sync disabled by logout to warn user on next login with user&password
@@ -7407,6 +7391,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
                                                        "please contact bug@mega.co.nz"), QMessageBox::Ok);
 
                 setupWizardFinished(QDialog::Rejected);
+                MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, "Setting isCrashed true: !mRootNode (fetch node callback)");
                 preferences->setCrashed(true);
                 rebootApplication(false);
                 break;
@@ -7487,6 +7472,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
         if (!root || !inbox || !rubbish)
         {
             preferences->setCrashed(true);
+            MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, "Setting isCrashed true: !root || !inbox || !rubbish (account details callback)");
             break;
         }
 
@@ -7499,6 +7485,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
 
         if (!inShares)
         {
+            MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, "Setting isCrashed true: !inShares (account details callback)");
             preferences->setCrashed(true);
             return;
         }
@@ -8238,26 +8225,6 @@ void MegaApplication::onUsersUpdate(MegaApi *, MegaUserList *userList)
         MegaUser *user = userList->get(i);
         if (!user->isOwnChange() && user->getHandle() == myHandle)
         {
-            if (user->hasChanged(MegaUser::CHANGE_TYPE_FIRSTNAME))
-            {
-                megaApi->getUserAttribute(MegaApi::USER_ATTR_FIRSTNAME);
-            }
-
-            if (user->hasChanged(MegaUser::CHANGE_TYPE_LASTNAME))
-            {
-                megaApi->getUserAttribute(MegaApi::USER_ATTR_LASTNAME);
-            }
-
-            if (user->hasChanged(MegaUser::CHANGE_TYPE_AVATAR))
-            {
-                const char* email = megaApi->getMyEmail();
-                if (email)
-                {
-                    megaApi->getUserAvatar(Utilities::getAvatarPath(QString::fromUtf8(email)).toUtf8().constData());
-                    delete [] email;
-                }
-            }
-
             if (user->hasChanged(MegaUser::CHANGE_TYPE_DISABLE_VERSIONS))
             {
                 megaApi->getFileVersionsOption();
@@ -8306,6 +8273,7 @@ void MegaApplication::onReloadNeeded(MegaApi*)
     //Don't reload the filesystem here because it's unsafe
     //and the most probable cause for this callback is a false positive.
     //Simply set the crashed flag to force a filesystem reload in the next execution.
+    MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, "Setting isCrashed true: onReloadNeeded");
     preferences->setCrashed(true);
 }
 

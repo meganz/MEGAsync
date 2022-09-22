@@ -19,6 +19,18 @@ using namespace mega;
 const int TransferManager::SPEED_REFRESH_PERIOD_MS;
 const int TransferManager::STATS_REFRESH_PERIOD_MS;
 
+const char* ALL_TRANSFERS_TITLE = "All transfers";
+const char* UPLOADS_TITLE = "Uploads";
+const char* DOWNLOADS_TITLE = "Downloads";
+const char* COMPLETED_TITLE = "Completed";
+const char* FAILED_TITLE = "Failed";
+const char* DOCUMENTS_TITLE = "Documents";
+const char* VIDEOS_TITLE = "Videos";
+const char* AUDIOS_TITLE = "Audio";
+const char* OTHERS_TITLE = "Other";
+const char* ARCHIVES_TITLE = "Archives";
+const char* IMAGES_TITLE = "Images";
+
 const char* LABEL_NUMBER = "NUMBER";
 const char* ITS_ON = "itsOn";
 const char* SEARCH_TEXT = "searchText";
@@ -219,7 +231,6 @@ TransferManager::TransferManager(MegaApi *megaApi) :
     setAcceptDrops(true);
 
     // Init state
-    onUpdatePauseState(mPreferences->getGlobalPaused());
 
     auto storageState = MegaSyncApp->getAppliedStorageState();
     auto transferQuotaState = MegaSyncApp->getTransferQuotaState();
@@ -230,7 +241,10 @@ TransferManager::TransferManager(MegaApi *megaApi) :
     QString moreAboutLink(QLatin1String("<a href=\"https://help.mega.io/plans-storage/space-storage/transfer-quota\"><font color=#333333>%1</font></a>"));
     mUi->lTransferOverQuotaMoreAbout->setText(moreAboutLink.arg(TRANSFER_QUOTA_MORE_ABOUT));
 
-    setActiveTab(TransfersWidget::ALL_TRANSFERS_TAB);
+    onUpdatePauseState(mPreferences->getGlobalPaused());
+
+    on_tAllTransfers_clicked();
+
     //Update stats
     onTransfersDataUpdated();
 
@@ -252,6 +266,8 @@ TransferManager::TransferManager(MegaApi *megaApi) :
     mUi->wAllResults->installEventFilter(this);
     mUi->wDlResults->installEventFilter(this);
     mUi->wUlResults->installEventFilter(this);
+
+    mUi->lTransfers->installEventFilter(this);
 }
 
 void TransferManager::pauseModel(bool value)
@@ -290,31 +306,67 @@ void TransferManager::onPauseStateChangedByTransferResume()
     onUpdatePauseState(false);
 }
 
-void TransferManager::setActiveTab(int t)
+void TransferManager::updateCurrentSearchText()
 {
-    switch (t)
+    auto text = mUi->bSearchString->property(SEARCH_TEXT).toString();
+    mUi->bSearchString->setText(mUi->bSearchString->fontMetrics()
+                                .elidedText(text,
+                                            Qt::ElideMiddle,
+                                            mUi->bSearchString->width()));
+    mUi->lTextSearch->setText(mUi->lTextSearch->fontMetrics()
+                              .elidedText(text,
+                                          Qt::ElideMiddle,
+                                          mUi->lTextSearch->width()));
+}
+
+void TransferManager::updateCurrentCategoryTitle()
+{
+    switch (mUi->wTransfers->getCurrentTab())
     {
-        case TransfersWidget::DOWNLOADS_TAB:
-            on_tDownloads_clicked();
-            break;
         case TransfersWidget::UPLOADS_TAB:
-            on_tUploads_clicked();
-            break;
+             mUi->lCurrentContent->setText(tr(UPLOADS_TITLE));
+            return;
+        case TransfersWidget::DOWNLOADS_TAB:
+             mUi->lCurrentContent->setText(tr(DOWNLOADS_TITLE));
+            return;
         case TransfersWidget::COMPLETED_TAB:
-            on_tCompleted_clicked();
-            break;
+            mUi->lCurrentContent->setText(tr(COMPLETED_TITLE));
+            return;
+        case TransfersWidget::FAILED_TAB:
+             mUi->lCurrentContent->setText(tr(FAILED_TITLE));
+            return;
+        case TransfersWidget::TYPE_DOCUMENT_TAB:
+             mUi->lCurrentContent->setText(tr(DOCUMENTS_TITLE));
+            return;
+        case TransfersWidget::TYPE_VIDEO_TAB:
+             mUi->lCurrentContent->setText(tr(VIDEOS_TITLE));
+            return;
+        case TransfersWidget::TYPE_AUDIO_TAB:
+             mUi->lCurrentContent->setText(tr(AUDIOS_TITLE));
+            return;
+        case TransfersWidget::TYPE_OTHER_TAB:
+             mUi->lCurrentContent->setText(tr(OTHERS_TITLE));
+            return;
+        case TransfersWidget::TYPE_ARCHIVE_TAB:
+             mUi->lCurrentContent->setText(tr(ARCHIVES_TITLE));
+            return;
+        case TransfersWidget::TYPE_IMAGE_TAB:
+             mUi->lCurrentContent->setText(tr(IMAGES_TITLE));
+             return;
         case TransfersWidget::SEARCH_TAB:
-            on_tSearchIcon_clicked();
-            break;
+             mUi->lCurrentContent->setText(tr(IMAGES_TITLE));
+             return;
         case TransfersWidget::ALL_TRANSFERS_TAB:
         default:
-            on_tAllTransfers_clicked();
-            break;
+             mUi->lCurrentContent->setText(tr(ALL_TRANSFERS_TITLE));
     }
 }
 
 TransferManager::~TransferManager()
 {
+    disconnect(findChild<MegaTransferView*>(), &MegaTransferView::verticalScrollBarVisibilityChanged,
+            this, &TransferManager::onVerticalScrollBarVisibilityChanged);
+
     delete mUi;
     delete mTransferScanCancelUi;
 }
@@ -325,7 +377,6 @@ void TransferManager::on_tCompleted_clicked()
     {
         emit userActivity();
         mUi->wTransfers->filtersChanged({}, TransferData::TRANSFER_COMPLETED, {});
-        mUi->lCurrentContent->setText(tr("Completed"));
         toggleTab(TransfersWidget::COMPLETED_TAB);
     }
 }
@@ -338,7 +389,6 @@ void TransferManager::on_tDownloads_clicked()
         mUi->wTransfers->filtersChanged((TransferData::TRANSFER_DOWNLOAD
                                          | TransferData::TRANSFER_LTCPDOWNLOAD),
                                         TransferData::PENDING_STATES_MASK, {});
-        mUi->lCurrentContent->setText(tr("Downloads"));
         toggleTab(TransfersWidget::DOWNLOADS_TAB);
     }
 }
@@ -349,7 +399,6 @@ void TransferManager::on_tUploads_clicked()
     {
         emit userActivity();
         mUi->wTransfers->filtersChanged(TransferData::TRANSFER_UPLOAD, TransferData::PENDING_STATES_MASK, {});
-        mUi->lCurrentContent->setText(tr("Uploads"));
         toggleTab(TransfersWidget::UPLOADS_TAB);
     }
 }
@@ -360,8 +409,6 @@ void TransferManager::on_tAllTransfers_clicked()
     {
         emit userActivity();
         mUi->wTransfers->filtersChanged({}, TransferData::PENDING_STATES_MASK, {});
-        mUi->lCurrentContent->setText(tr("All transfers"));
-
         toggleTab(TransfersWidget::ALL_TRANSFERS_TAB);
     }
 }
@@ -372,8 +419,6 @@ void TransferManager::on_tFailed_clicked()
     {
         emit userActivity();
         mUi->wTransfers->filtersChanged({}, TransferData::TRANSFER_FAILED, {});
-        mUi->lCurrentContent->setText(tr("Failed"));
-
         toggleTab(TransfersWidget::FAILED_TAB);
     }
 }
@@ -403,7 +448,7 @@ void TransferManager::onUpdatePauseState(bool isPaused)
         }
     }
 
-    mUi->lPaused->setVisible(isPaused && !mUi->lStorageOverQuota->isVisible() && !mUi->pTransferOverQuota->isVisible());
+    checkPauseButtonVisibilityIfPossible();
 }
 
 void TransferManager::onPauseResumeVisibleRows(bool isPaused)
@@ -433,9 +478,7 @@ void TransferManager::onPauseResumeVisibleRows(bool isPaused)
 
 void TransferManager::showQuotaStorageDialogs(bool isPaused)
 {
-    if(!isPaused && (mTransferQuotaState == QuotaState::FULL || mTransferQuotaState == QuotaState::OVERQUOTA
-            || (mStorageQuotaState == MegaApi::STORAGE_STATE_PAYWALL
-            || mStorageQuotaState == MegaApi::STORAGE_STATE_RED)))
+    if(!isPaused && hasOverQuotaErrors())
     {
         if(mStorageQuotaState == MegaApi::STORAGE_STATE_PAYWALL
           || mStorageQuotaState == MegaApi::STORAGE_STATE_RED)
@@ -534,6 +577,7 @@ void TransferManager::refreshStateStats()
         else if(failedNumber != 0)
         {
             leftFooterWidget = mUi->pSomeIssues;
+            mUi->bSomeIssues->setText(tr("Issue found", "", failedNumber));
         }
         else if(processedNumber != 0)
         {
@@ -712,9 +756,7 @@ void TransferManager::onTransferQuotaStateChanged(QuotaState transferQuotaState)
         case QuotaState::WARNING:
         default:
         {
-            mUi->pTransferOverQuota->hide();
-            showTransferQuotaBanner(mStorageQuotaState == MegaApi::STORAGE_STATE_PAYWALL
-                                       || mStorageQuotaState == MegaApi::STORAGE_STATE_RED);
+            showTransferQuotaBanner(false);
             break;
         }
     }
@@ -724,7 +766,7 @@ void TransferManager::onTransferQuotaStateChanged(QuotaState transferQuotaState)
 
 void TransferManager::checkPauseButtonVisibilityIfPossible()
 {
-    mUi->lPaused->setVisible(mModel->areAllPaused() && !mUi->lStorageOverQuota->isVisible() && !mUi->pTransferOverQuota->isVisible());
+    mUi->lPaused->setVisible(mModel->areAllPaused() && !hasOverQuotaErrors());
 }
 
 void TransferManager::showTransferQuotaBanner(bool state)
@@ -990,42 +1032,41 @@ void TransferManager::showUploadResults()
 
 void TransferManager::on_bArchives_clicked()
 {
-    onFileTypeButtonClicked(TransfersWidget::TYPE_ARCHIVE_TAB, Utilities::FileType::TYPE_ARCHIVE, tr("Archives"));
+    onFileTypeButtonClicked(TransfersWidget::TYPE_ARCHIVE_TAB, Utilities::FileType::TYPE_ARCHIVE);
 }
 
 void TransferManager::on_bDocuments_clicked()
 {
-    onFileTypeButtonClicked(TransfersWidget::TYPE_DOCUMENT_TAB, Utilities::FileType::TYPE_DOCUMENT, tr("Documents"));
+    onFileTypeButtonClicked(TransfersWidget::TYPE_DOCUMENT_TAB, Utilities::FileType::TYPE_DOCUMENT);
 }
 
 void TransferManager::on_bImages_clicked()
 {
-    onFileTypeButtonClicked(TransfersWidget::TYPE_IMAGE_TAB, Utilities::FileType::TYPE_IMAGE, tr("Images"));
+    onFileTypeButtonClicked(TransfersWidget::TYPE_IMAGE_TAB, Utilities::FileType::TYPE_IMAGE);
 }
 
 void TransferManager::on_bAudio_clicked()
 {
-    onFileTypeButtonClicked(TransfersWidget::TYPE_AUDIO_TAB, Utilities::FileType::TYPE_AUDIO, tr("Audio"));
+    onFileTypeButtonClicked(TransfersWidget::TYPE_AUDIO_TAB, Utilities::FileType::TYPE_AUDIO);
 }
 
 void TransferManager::on_bVideos_clicked()
 {
-    onFileTypeButtonClicked(TransfersWidget::TYPE_VIDEO_TAB, Utilities::FileType::TYPE_VIDEO, tr("Videos"));
+    onFileTypeButtonClicked(TransfersWidget::TYPE_VIDEO_TAB, Utilities::FileType::TYPE_VIDEO);
 }
 
 void TransferManager::on_bOther_clicked()
 {
-    onFileTypeButtonClicked(TransfersWidget::TYPE_OTHER_TAB, Utilities::FileType::TYPE_OTHER, tr("Other"));
+    onFileTypeButtonClicked(TransfersWidget::TYPE_OTHER_TAB, Utilities::FileType::TYPE_OTHER);
 }
 
-void TransferManager::onFileTypeButtonClicked(TransfersWidget::TM_TAB tab, Utilities::FileType fileType, const QString& tabLabel)
+void TransferManager::onFileTypeButtonClicked(TransfersWidget::TM_TAB tab, Utilities::FileType fileType)
 {
-  if (mUi->wTransfers->getCurrentTab() != tab)
-  {
+    if (mUi->wTransfers->getCurrentTab() != tab)
+    {
         mUi->wTransfers->filtersChanged({}, {}, {fileType});
-        mUi->lCurrentContent->setText(tabLabel);
         toggleTab(tab);
-  }
+    }
 }
 
 void TransferManager::on_bOpenLinks_clicked()
@@ -1051,6 +1092,11 @@ void TransferManager::on_bUpload_clicked()
 void TransferManager::on_leSearchField_returnPressed()
 {
     emit mUi->tSearchIcon->clicked();
+}
+
+void TransferManager::toggleTab(int newTab)
+{
+    toggleTab(static_cast<TransfersWidget::TM_TAB>(newTab));
 }
 
 void TransferManager::toggleTab(TransfersWidget::TM_TAB newTab)
@@ -1112,6 +1158,7 @@ void TransferManager::toggleTab(TransfersWidget::TM_TAB newTab)
             }
         }
 
+        mUi->wTransfers->setCurrentTab(newTab);
 
         // Set current header widget: search or not
         if (newTab == TransfersWidget::SEARCH_TAB)
@@ -1123,10 +1170,9 @@ void TransferManager::toggleTab(TransfersWidget::TM_TAB newTab)
         {
             mUi->sCurrentContent->setCurrentWidget(mUi->pStatusHeader);
             mUi->sCurrentContentInfo->setCurrentWidget(mUi->pStatusHeaderInfo);
+            updateCurrentCategoryTitle();
             mUi->wTransfers->textFilterChanged(QString());
         }
-
-        mUi->wTransfers->setCurrentTab(newTab);
 
         refreshView();
 
@@ -1198,6 +1244,13 @@ bool TransferManager::eventFilter(QObject *obj, QEvent *event)
                                   .elidedText(mUi->leSearchField->text(),
                                               Qt::ElideMiddle,
                                               newWidth - 24));
+    }
+    else if(obj == mUi->lTransfers && event->type() == QEvent::Resize)
+    {
+        mUi->lTransfers->setText(mUi->lTransfers->fontMetrics()
+                                    .elidedText(mUi->lTransfers->text(),
+                                                Qt::ElideMiddle,
+                                                mUi->lTransfers->width()));
     }
     else if(obj == mUi->leSearchField && event->type() == QEvent::KeyPress)
     {
@@ -1293,7 +1346,8 @@ void TransferManager::changeEvent(QEvent *event)
     if (event->type() == QEvent::LanguageChange)
     {
         mUi->retranslateUi(this);
-        setActiveTab(mUi->wTransfers->getCurrentTab());
+        updateCurrentCategoryTitle();
+        updateCurrentSearchText();
         onUpdatePauseState(mUi->wTransfers->getProxyModel()->getPausedTransfers());
     }
     QDialog::changeEvent(event);
@@ -1304,6 +1358,13 @@ void TransferManager::mouseReleaseEvent(QMouseEvent *event)
     mUi->wTransfers->mouseRelease(event->globalPos());
 
     QDialog::mouseReleaseEvent(event);
+}
+
+bool TransferManager::hasOverQuotaErrors()
+{
+    return (mTransferQuotaState == QuotaState::FULL || mTransferQuotaState == QuotaState::OVERQUOTA
+            || (mStorageQuotaState == MegaApi::STORAGE_STATE_PAYWALL
+            || mStorageQuotaState == MegaApi::STORAGE_STATE_RED));
 }
 
 void TransferManager::setTransferState(const StatusInfo::TRANSFERS_STATES &transferState)
@@ -1378,6 +1439,12 @@ void TransferManager::updateTransferWidget(QWidget* widgetToShow)
         if (mUi->sTransfers->currentWidget() != widgetToShow)
         {
             mUi->sTransfers->setCurrentWidget(widgetToShow);
+
+            //Update the headers and the pause/resume and cancel/clear buttons
+            if(widgetToShow == mUi->wTransfers)
+            {
+                mUi->wTransfers->updateHeaders();
+            }
         }
     }
 }

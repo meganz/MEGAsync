@@ -59,22 +59,23 @@ void DuplicatedUploadFile::fillUi(DuplicatedNodeDialog *dialog, std::shared_ptr<
 
     if(!conflict->haveDifferentType())
     {
+        DuplicatedLocalItem* uploadItem = new DuplicatedLocalItem(dialog);
+
         if(fileVersioningDisabled)
         {
-            DuplicatedLocalItem* uploadAndReplacetem = new DuplicatedLocalItem(dialog);
-            uploadAndReplacetem->setInfo(conflict, NodeItemType::FILE_UPLOAD_AND_REPLACE);
-            uploadAndReplacetem->setDescription(DuplicatedNodeDialog::tr("The file at this destination will be replaced with the new file."));
-            connect(uploadAndReplacetem, &DuplicatedNodeItem::actionClicked, this, &DuplicatedUploadFile::onNodeItemSelected);
-            dialog->addNodeItem(uploadAndReplacetem);
+            uploadItem->setInfo(conflict, NodeItemType::FILE_UPLOAD_AND_REPLACE);
+            QString description = DuplicatedNodeDialog::tr("The file at this destination will be replaced with the new file.");
+            uploadItem->setDescription(description);
         }
         else
         {
-            DuplicatedLocalItem* uploadAndUpdatetem = new DuplicatedLocalItem(dialog);
-            uploadAndUpdatetem->setInfo(conflict, NodeItemType::FILE_UPLOAD_AND_UPDATE);
-            uploadAndUpdatetem->setDescription(DuplicatedNodeDialog::tr("The file will be updated with version history:"));
-            connect(uploadAndUpdatetem, &DuplicatedNodeItem::actionClicked, this, &DuplicatedUploadFile::onNodeItemSelected);
-            dialog->addNodeItem(uploadAndUpdatetem);
+            uploadItem->setInfo(conflict, NodeItemType::FILE_UPLOAD_AND_UPDATE);
+            uploadItem->setDescription(DuplicatedNodeDialog::tr("The file at this destination will be updated with a new version."));
+            uploadItem->showLearnMore(QLatin1String("https://help.mega.io/files-folders/restore-delete/file-version-history"));
         }
+
+        connect(uploadItem, &DuplicatedNodeItem::actionClicked, this, &DuplicatedUploadFile::onNodeItemSelected);
+        dialog->addNodeItem(uploadItem);
     }
 
     //Upload and merge item
@@ -107,13 +108,6 @@ void DuplicatedUploadFolder::fillUi(DuplicatedNodeDialog* dialog, std::shared_pt
         connect(uploadAndMergeItem, &DuplicatedNodeItem::actionClicked, this, &DuplicatedUploadFolder::onNodeItemSelected);
         dialog->addNodeItem(uploadAndMergeItem);
     }
-
-    //Upload and merge item
-    DuplicatedRenameItem* uploadAndRename = new DuplicatedRenameItem(dialog);
-    uploadAndRename->setInfo(conflict);
-    uploadAndRename->setDescription(DuplicatedNodeDialog::tr("The folder will be renamed as:"));
-    connect(uploadAndRename, &DuplicatedNodeItem::actionClicked, this, &DuplicatedUploadFolder::onNodeItemSelected);
-    dialog->addNodeItem(uploadAndRename);
 
     DuplicatedRemoteItem* dontUploadItem = new DuplicatedRemoteItem(dialog);
     dontUploadItem->setInfo(conflict, NodeItemType::DONT_UPLOAD);

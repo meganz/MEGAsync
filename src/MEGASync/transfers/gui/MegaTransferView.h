@@ -8,6 +8,7 @@
 #include <QMenu>
 #include <QMouseEvent>
 #include <QFutureWatcher>
+#include <QMessageBox>
 
 class MegaTransferView : public QTreeView
 {
@@ -19,6 +20,7 @@ class MegaTransferView : public QTreeView
         bool isAnyCancellable;
         bool areAllCancellable;
         bool areAllSync;
+        QMap<QMessageBox::StandardButton, QString> buttonsText;
 
         SelectedIndexesInfo():isAnyCancellable(false), areAllCancellable(true),areAllSync(true){}
     };
@@ -43,14 +45,31 @@ public:
     SelectedIndexesInfo getSelectedCancelOrClearInfo();
 
     //Static messages for messageboxes
-    static QString retryAskActionText(int count);
-    static QString cancelAskActionText(int count);
-    static QString clearAskActionText(int count);
-    static QString clearAndCancelAskActionText(int count);
+    static QString cancelAllAskActionText();
+    static QString cancelAndClearAskActionText();
+    static QString cancelAskActionText();
+    static QString cancelWithSyncAskActionText();
+    static QString cancelAndClearWithSyncAskActionText();
+    static QString clearAllCompletedAskActionText();
+    static QString clearCompletedAskActionText();
+
+    static QString cancelSelectedAskActionText();
+    static QString cancelAndClearSelectedAskActionText();
+    static QString cancelSelectedWithSyncAskActionText();
+    static QString cancelAndClearSelectedWithSyncAskActionText();
+    static QString clearSelectedCompletedAskActionText();
+
     static QString pauseActionText(int count);
     static QString resumeActionText(int count);
     static QString cancelActionText(int count);
     static QString clearActionText(int count);
+    static QString cancelAndClearActionText(int count);
+
+    static QString cancelSingleActionText();
+    static QString clearSingleActionText();
+
+    static QMap<QMessageBox::StandardButton, QString> getCancelDialogButtons();
+    static QMap<QMessageBox::StandardButton, QString> getClearDialogButtons();
 
 public slots:
     void onPauseResumeSelection(bool pauseState);
@@ -98,26 +117,11 @@ private:
     bool mKeyNavigation;
 
     TransfersWidget* mParentTransferWidget;
-
-    QMenu* mContextMenu;
-    QAction* mPauseAction;
-    QAction* mResumeAction;
-    QAction* mMoveToTopAction;
-    QAction* mMoveUpAction;
-    QAction* mMoveDownAction;
-    QAction* mMoveToBottomAction;
-    QAction* mCancelAction;
-    QAction* mOpenInMEGAAction;
-    QAction* mGetLinkAction;
-    QAction* mOpenItemAction;
-    QAction* mShowInFolderAction;
-    QAction* mClearAction;
-
     QFutureWatcher<bool> mOpenUrlWatcher;
 
-    void createContextMenu();
-    void updateContextMenu(bool enablePause, bool enableResume, bool enableMove, bool enableClear,
-                           bool enableCancel, bool isTopIndex, bool isBottomIndex);
+    QMenu *createContextMenu();
+    void addSeparatorToContextMenu(bool& addSeparator, QMenu* contextMenu);
+
     void clearAllTransfers();
     void cancelAllTransfers();
 

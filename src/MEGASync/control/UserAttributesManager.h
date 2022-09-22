@@ -2,9 +2,11 @@
 #define USERATTRIBUTESMANAGER_H
 
 #include <QObject>
+#include <QMultiMap>
 
 #include <QTMegaListener.h>
-#include <MegaApplication.h>
+
+#include <memory>
 
 namespace UserAttributes
 {
@@ -34,6 +36,8 @@ public:
         static UserAttributesManager    instance;
         return instance;
     }
+
+    void reset();
 
     template <typename AttributeClass>
     std::shared_ptr<AttributeClass> requestAttribute(const char* user_email)

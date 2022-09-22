@@ -230,7 +230,6 @@ signals:
     void nodeAttributesChanged(mega::MegaHandle handle);
     void blocked();
     void storageStateChanged(int);
-    void avatarReady();
     void pauseStateChanged();
 
 public slots:
@@ -491,7 +490,6 @@ protected:
     PasteMegaLinksDialog *pasteMegaLinksDialog;
     ChangeLogDialog *changeLogDialog;
     ImportMegaLinksDialog *importDialog;
-    QMessageBox *exitDialog;
     NodeSelector *downloadNodeSelector;
     QString lastTrayMessage;
     QStringList extraLinks;
@@ -555,6 +553,8 @@ protected:
 
     ScanStageController scanStageController;
     DialogGeometryRetainer<TransferManager> mTransferManagerGeometryRetainer;
+
+    bool mDisableGfx;
 
 private:
 #ifdef _WIN32

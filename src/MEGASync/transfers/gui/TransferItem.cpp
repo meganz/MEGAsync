@@ -355,6 +355,11 @@ bool TransferData::isFailed() const
     return mState & TRANSFER_FAILED;
 }
 
+bool TransferData::isCancelled() const
+{
+    return mState & TRANSFER_CANCELLED;
+}
+
 bool TransferData::isFinished() const
 {
     return mState & FINISHED_STATES_MASK;

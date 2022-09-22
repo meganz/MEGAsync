@@ -1,6 +1,7 @@
 #include "model/Model.h"
 #include "Preferences.h"
 #include "platform/Platform.h"
+#include "UserAttributesRequests/FullName.h"
 
 #include <QDesktopServices>
 #include <assert.h>
@@ -12,17 +13,19 @@ extern Q_CORE_EXPORT int qt_ntfs_permission_lookup;
 #endif
 
 const char Preferences::CLIENT_KEY[] = "FhMgXbqb";
-const char Preferences::USER_AGENT[] = "MEGAsync/4.6.8.0";
-const int Preferences::VERSION_CODE = 4608;
-const int Preferences::BUILD_ID = 2;
+const char Preferences::USER_AGENT[] = "MEGAsync/4.7.0.0";
+const int Preferences::VERSION_CODE = 4700;
+const int Preferences::BUILD_ID = 4;
 // Do not change the location of VERSION_STRING, create_tarball.sh parses this file
-const QString Preferences::VERSION_STRING = QString::fromAscii("4.6.8");
-QString Preferences::SDK_ID = QString::fromAscii("1ef93bb");
+const QString Preferences::VERSION_STRING = QString::fromAscii("4.7.0");
+QString Preferences::SDK_ID = QString::fromAscii("063fd87");
 const QString Preferences::CHANGELOG = QString::fromUtf8(QT_TR_NOOP(
-"- Full redesign of remote file picker.\n"
-"- Fixed translation issues.\n"
-"- Other minor UI fixes and adjustments.\n"
-"- Fixed detected crashes on Windows, Linux and macOS.\n"));
+"- There is now a new transfer manager.\n"
+"- Transfer management was enhanced and reliability of downloads and uploads improved. \n"
+"- Detected crashes on Windows, Linux, and macOS fixed.\n"
+"- Translation issues fixed.\n"
+"- Performance improved.\n"
+"- UI fixed and adjusted.\n"));
 
 const QString Preferences::TRANSLATION_FOLDER = QString::fromAscii("://translations/");
 const QString Preferences::TRANSLATION_PREFIX = QString::fromAscii("MEGASyncStrings_");
@@ -228,7 +231,7 @@ bool Preferences::HTTPS_ORIGIN_CHECK_ENABLED = true;
     #if defined(__arm64__)
         const QString Preferences::UPDATE_CHECK_URL                 = QString::fromUtf8("http://g.static.mega.co.nz/upd/msyncarm64/v.txt");
     #else
-        const QString Preferences::UPDATE_CHECK_URL                 = QString::fromUtf8("http://g.static.mega.co.nz/upd/msync/v.txt");
+        const QString Preferences::UPDATE_CHECK_URL                 = QString::fromUtf8("http://g.static.mega.co.nz/upd/msyncv2/v.txt"); //Using msyncv2 to serve new updates and avoid keeping loader leftovers
     #endif
 #endif
 
@@ -2792,6 +2795,13 @@ void Preferences::setEmailAndGeneralSettings(const QString &email)
     this->setProxyPassword(proxyPassword);
 }
 
+void Preferences::monitorUserAttributes()
+{
+    assert(logged());
+    // Setup FIRST_NAME and LAST_NAME monitoring
+    updateFullName();
+}
+
 void Preferences::login(QString account)
 {
     mutex.lock();
@@ -3221,4 +3231,26 @@ void Preferences::overridePreferences(const QSettings &settings)
     overridePreference(settings, QString::fromUtf8("MUTEX_STEALER_MS"), Preferences::MUTEX_STEALER_MS);
     overridePreference(settings, QString::fromUtf8("MUTEX_STEALER_PERIOD_MS"), Preferences::MUTEX_STEALER_PERIOD_MS);
     overridePreference(settings, QString::fromUtf8("MUTEX_STEALER_PERIOD_ONLY_ONCE"), Preferences::MUTEX_STEALER_PERIOD_ONLY_ONCE);
+}
+
+void Preferences::updateFullName(QString)
+{
+    auto fullNameRequest (UserAttributes::UserAttributesManager::instance()
+                      .requestAttribute<UserAttributes::FullName>(email().toUtf8().constData()));
+    connect(fullNameRequest.get(), &UserAttributes::FullName::attributeReady,
+            this, &Preferences::updateFullName, Qt::UniqueConnection);
+
+    if (fullNameRequest->isAttributeReady())
+    {
+        auto newFirstName (fullNameRequest->getFirstName());
+        auto newLastName (fullNameRequest->getLastName());
+        if (newFirstName != firstName())
+        {
+            setFirstName(newFirstName);
+        }
+        if (newLastName != lastName())
+        {
+            setLastName(newLastName);
+        }
+    }
 }

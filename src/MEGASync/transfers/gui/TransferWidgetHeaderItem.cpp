@@ -14,6 +14,8 @@ TransferWidgetHeaderItem::TransferWidgetHeaderItem(QWidget *parent) :
     lineSizePolicy.setRetainSizeWhenHidden(true);
     ui->line->setSizePolicy(lineSizePolicy);
     ui->line->hide();
+
+    ui->cTitle->installEventFilter(this);
 }
 
 TransferWidgetHeaderItem::~TransferWidgetHeaderItem()
@@ -29,7 +31,7 @@ QString TransferWidgetHeaderItem::title() const
 void TransferWidgetHeaderItem::setTitle(const QString &title)
 {
     mTitle = title;
-    ui->columnTitle->setText(title);
+    updateElidedText();
 }
 
 int TransferWidgetHeaderItem::sortCriterion() const
@@ -53,6 +55,12 @@ void TransferWidgetHeaderItem::turnOffSorting()
 {
     mCurrentSortOrder = Qt::DescendingOrder;
     ui->chevron->setVisible(false);
+}
+
+void TransferWidgetHeaderItem::forceClick()
+{
+    auto releaseEvent = new QMouseEvent(QEvent::MouseButtonRelease,QPointF(), Qt::LeftButton, Qt::NoButton, Qt::KeyboardModifier::NoModifier);
+    QApplication::postEvent(this, releaseEvent);
 }
 
 void TransferWidgetHeaderItem::mouseReleaseEvent(QMouseEvent *event)
@@ -89,6 +97,16 @@ void TransferWidgetHeaderItem::leaveEvent(QEvent *event)
     QWidget::leaveEvent(event);
 }
 
+bool TransferWidgetHeaderItem::eventFilter(QObject *watched, QEvent *event)
+{
+    if(watched == ui->cTitle && event->type() == QEvent::Resize)
+    {
+        updateElidedText();
+    }
+
+    return QWidget::eventFilter(watched, event);
+}
+
 void TransferWidgetHeaderItem::updateChevronIcon()
 {
    QIcon icon = mCurrentSortOrder == Qt::DescendingOrder ? Utilities::getCachedPixmap(QString::fromLatin1(":/images/chevron-down-ico.png"))
@@ -113,4 +131,9 @@ void TransferWidgetHeaderItem::turnOffSiblings()
 bool TransferWidgetHeaderItem::isTurnedOff()
 {
     return !ui->chevron->isVisible();
+}
+
+void TransferWidgetHeaderItem::updateElidedText()
+{
+    ui->columnTitle->setText(ui->columnTitle->fontMetrics().elidedText(mTitle, Qt::ElideMiddle,ui->cTitle->width()));
 }

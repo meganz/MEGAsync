@@ -9,6 +9,7 @@
 #include "QMegaMessageBox.h"
 
 #include <QMouseEvent>
+#include <QPainterPath>
 
 constexpr uint PB_PRECISION = 1000;
 const QColor HOVER_COLOR = QColor("#FAFAFA");
@@ -22,7 +23,18 @@ TransferManagerDelegateWidget::TransferManagerDelegateWidget(QWidget *parent) :
 {
     mUi->setupUi(this);
     mUi->pbTransfer->setMaximum(PB_PRECISION);
+
+    //For elided texts
+
     mUi->lTransferName->installEventFilter(this);
+    mUi->lItemPaused->installEventFilter(this);
+    mUi->lItemPausedQueued_1->installEventFilter(this);
+    mUi->lRetryMsg->installEventFilter(this);
+    mUi->lItemFailed->installEventFilter(this);
+    mUi->tItemRetry->installEventFilter(this);
+    mUi->lItemStatus->installEventFilter(this);
+    mUi->lDone->installEventFilter(this);
+    mUi->lTotal->installEventFilter(this);
 }
 
 TransferManagerDelegateWidget::~TransferManagerDelegateWidget()
@@ -50,7 +62,7 @@ void TransferManagerDelegateWidget::updateTransferState()
         {
             if (getData()->mTransferredBytes == 0)
             {
-                statusString = STATE_STARTING;
+                statusString = getState(TRANSFER_STATES::STATE_STARTING);
             }
             else
             {
@@ -59,17 +71,17 @@ void TransferManagerDelegateWidget::updateTransferState()
                     case TransferData::TRANSFER_DOWNLOAD:
                     case TransferData::TRANSFER_LTCPDOWNLOAD:
                     {
-                        statusString = STATE_DOWNLOADING;
+                        statusString = getState(TRANSFER_STATES::STATE_DOWNLOADING);
                         break;
                     }
                     case TransferData::TRANSFER_UPLOAD:
                     {
-                        statusString = STATE_UPLOADING;
+                        statusString = getState(TRANSFER_STATES::STATE_UPLOADING);
                         break;
                     }
                     default:
                     {
-                        statusString = STATE_SYNCING;
+                        statusString = getState(TRANSFER_STATES::STATE_SYNCING);
                         break;
                     }
                 }
@@ -111,13 +123,16 @@ void TransferManagerDelegateWidget::updateTransferState()
 
                 if(getData()->mTransferredBytes != 0)
                 {
-                    mUi->lItemPaused->setText(STATE_PAUSED);
+                    mUi->lItemPaused->setText(getState(TRANSFER_STATES::STATE_PAUSED));
+                    mUi->lItemPaused->setToolTip(getState(TRANSFER_STATES::STATE_PAUSED));
                     mUi->sStatus->setCurrentWidget(mUi->pPaused);
                 }
                 else
                 {
-                    mUi->lItemPausedQueued_1->setText(STATE_PAUSED);
-                    mUi->lItemPausedQueued_2->setText(STATE_INQUEUE_PARENTHESIS);
+                    mUi->lItemPausedQueued_1->setText(getState(TRANSFER_STATES::STATE_PAUSED));
+                    mUi->lItemPausedQueued_2->setText(getState(TRANSFER_STATES::STATE_INQUEUE_PARENTHESIS));
+                    mUi->lItemPausedQueued_1->setToolTip(getState(TRANSFER_STATES::STATE_PAUSED));
+                    mUi->lItemPausedQueued_2->setToolTip(getState(TRANSFER_STATES::STATE_INQUEUE_PARENTHESIS));
                     mUi->sStatus->setCurrentWidget(mUi->pPausedQueued);
                 }
             }
@@ -138,15 +153,18 @@ void TransferManagerDelegateWidget::updateTransferState()
 
                 if(getData()->mErrorCode == MegaError::API_EOVERQUOTA)
                 {
-                    QString retryMsg (getData()->mErrorValue ? STATE_OUT_OF_TRANSFER_QUOTA
-                                                        : STATE_OUT_OF_STORAGE_SPACE);
+                    QString retryMsg (getData()->mErrorValue ? getState(TRANSFER_STATES::STATE_OUT_OF_TRANSFER_QUOTA)
+                                                        : getState(TRANSFER_STATES::STATE_OUT_OF_STORAGE_SPACE));
                     mUi->lRetryMsg->setText(retryMsg);
+                    mUi->lRetryMsg->setToolTip(retryMsg);
                     mUi->sStatus->setCurrentWidget(mUi->pRetry);
                 }
                 else
                 {
-                    mUi->lItemQueued->setText(STATE_INQUEUE);
-                    mUi->lRetryMsg->setText(STATE_RETRY);
+                    mUi->lItemQueued->setText(getState(TRANSFER_STATES::STATE_INQUEUE));
+                    mUi->lItemQueued->setToolTip(getState(TRANSFER_STATES::STATE_INQUEUE));
+                    mUi->lRetryMsg->setText(getState(TRANSFER_STATES::STATE_RETRY));
+                    mUi->lRetryMsg->setToolTip(getState(TRANSFER_STATES::STATE_RETRY));
                 }
             }
 
@@ -159,7 +177,7 @@ void TransferManagerDelegateWidget::updateTransferState()
         }
         case TransferData::TRANSFER_COMPLETING:
         {
-            statusString = STATE_COMPLETING;
+            statusString = getState(TRANSFER_STATES::STATE_COMPLETING);
 
             if(stateHasChanged())
             {
@@ -181,10 +199,11 @@ void TransferManagerDelegateWidget::updateTransferState()
                 mPauseResumeTransferDefaultIconName.clear();
                 mUi->sStatus->setCurrentWidget(mUi->pFailed);
                 mUi->tItemRetry->setVisible(!getData()->mTemporaryError);
-                mUi->tItemRetry->setText(STATE_RETRY);
+                mUi->tItemRetry->setText(getState(TRANSFER_STATES::STATE_RETRY));
+                mUi->tItemRetry->setToolTip(getState(TRANSFER_STATES::STATE_RETRY));
                 mUi->wProgressBar->setVisible(false);
                 cancelClearTooltip = MegaTransferView::cancelActionText(1); //Use singular form
-                mUi->lItemFailed->setText(STATE_FAILED);
+                mUi->lItemFailed->setText(getState(TRANSFER_STATES::STATE_FAILED));
                 mUi->lItemFailed->setToolTip(tr(MegaError::getErrorString(getData()->mErrorCode)));
                 showTPauseResume = false;
             }
@@ -196,7 +215,7 @@ void TransferManagerDelegateWidget::updateTransferState()
         }
         case TransferData::TRANSFER_RETRYING:
         {
-            statusString = STATE_RETRYING;
+            statusString = getState(TRANSFER_STATES::STATE_RETRYING);
 
             if(stateHasChanged())
             {
@@ -209,16 +228,17 @@ void TransferManagerDelegateWidget::updateTransferState()
 
             if(getData()->mErrorCode == MegaError::API_EOVERQUOTA)
             {
-                QString retryMsg (getData()->mErrorValue ? STATE_OUT_OF_TRANSFER_QUOTA
-                                                    : STATE_OUT_OF_STORAGE_SPACE);
+                QString retryMsg (getData()->mErrorValue ? getState(TRANSFER_STATES::STATE_OUT_OF_TRANSFER_QUOTA)
+                                                    : getState(TRANSFER_STATES::STATE_OUT_OF_STORAGE_SPACE));
                 mUi->lRetryMsg->setText(retryMsg);
+                mUi->lRetryMsg->setToolTip(retryMsg);
                 mUi->sStatus->setCurrentWidget(mUi->pRetry);
             }
             break;
         }
         case TransferData::TRANSFER_COMPLETED:
         {
-            statusString = STATE_COMPLETED;
+            statusString = getState(TRANSFER_STATES::STATE_COMPLETED);
 
             if(stateHasChanged())
             {
@@ -310,7 +330,6 @@ void TransferManagerDelegateWidget::setFileNameAndType()
     mUi->tFileType->setIcon(icon);
 
     // File name
-    QString localPath = getData()->path();
     mUi->lTransferName->setToolTip(getData()->mFilename);
     mUi->lTransferName->setText(getData()->mFilename);
 }
@@ -471,11 +490,24 @@ void TransferManagerDelegateWidget::mouseDoubleClickEvent(QMouseEvent *event)
 
 bool TransferManagerDelegateWidget::eventFilter(QObject *watched, QEvent *event)
 {
-    if(watched == mUi->lTransferName && event->type() == QEvent::Resize)
+    if(event->type() == QEvent::Resize)
     {
-        mUi->lTransferName->setText(mUi->lTransferName->fontMetrics()
-                                    .elidedText(getData()->mFilename, Qt::ElideMiddle,
-                                                mUi->lTransferName->contentsRect().width()));
+        if(auto label = dynamic_cast<QWidget*>(watched))
+        {
+            QString text;
+            if(watched == mUi->lTransferName)
+            {
+                text = getData()->mFilename;
+            }
+            else
+            {
+                text = label->property("text").toString();
+            }
+
+            label->setProperty("text", label->fontMetrics()
+                               .elidedText(text, Qt::ElideMiddle,
+                                           label->contentsRect().width()));
+        }
     }
 
     return TransferBaseDelegateWidget::eventFilter(watched, event);

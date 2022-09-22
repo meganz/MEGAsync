@@ -33,6 +33,7 @@ public:
     void setType(NodeItemType type);
 
     void setDescription(const QString& description);
+    void showLearnMore(const QString& url);
 
 signals:
     void actionClicked();
@@ -91,7 +92,6 @@ protected:
     void onRequestFinish(mega::MegaApi *api, mega::MegaRequest *request, mega::MegaError *e) override;
 
 private:
-    qint64 getFolderSize(mega::MegaNode *node, qint64 size);
     mega::QTMegaRequestListener* mListener;
 };
 
