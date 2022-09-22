@@ -191,7 +191,7 @@ public:
 
     void ignoreMoveRowsSignal(bool state);
     void inverseMoveRowsSignal(bool state);
-    bool moveRows(const QModelIndex& sourceParent, const QList<int>& rows,
+    bool moveTransferPriority(const QModelIndex& sourceParent, const QList<int>& rows,
                   const QModelIndex& destinationParent, int destinationChild);
 
     void resetModel();

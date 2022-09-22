@@ -2031,7 +2031,7 @@ void TransfersModel::inverseMoveRowsSignal(bool state)
     mInverseMoveSignal = state;
 }
 
-bool TransfersModel::moveRows(const QModelIndex &sourceParent, const QList<int>& rows,
+bool TransfersModel::moveTransferPriority(const QModelIndex &sourceParent, const QList<int>& rows,
                               const QModelIndex &destinationParent, int destinationChild)
 {
     bool result(false);
@@ -2193,7 +2193,7 @@ bool TransfersModel::dropMimeData(const QMimeData* data, Qt::DropAction action, 
     {
         QList<int> rows = getDragAndDropRows(data, destRow);
 
-        moveRows(parent, rows, parent, destRow);
+        moveTransferPriority(parent, rows, parent, destRow);
     }
 
     // Return false to avoid row deletion...dirty!
