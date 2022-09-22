@@ -32,7 +32,7 @@
    <string notr="true"/>
   </property>
   <property name="styleSheet">
-   <string notr="true">*{
+   <string notr="true">#DuplicatedNodeDialog{
 background-color: white;
 }
 
@@ -78,6 +78,9 @@ background-color: white;
   <layout class="QVBoxLayout" name="verticalLayout">
    <property name="spacing">
     <number>0</number>
+   </property>
+   <property name="sizeConstraint">
+    <enum>QLayout::SetFixedSize</enum>
    </property>
    <property name="leftMargin">
     <number>0</number>
@@ -149,6 +152,18 @@ background-color: white;
    </item>
    <item>
     <widget class="QWidget" name="nodeItemsContainer" native="true">
+     <property name="minimumSize">
+      <size>
+       <width>450</width>
+       <height>0</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>450</width>
+       <height>16777215</height>
+      </size>
+     </property>
      <layout class="QVBoxLayout" name="nodeItemsLayout">
       <property name="spacing">
        <number>11</number>
@@ -222,6 +237,9 @@ background-color: white;
         </property>
         <property name="text">
          <string/>
+        </property>
+        <property name="checked">
+         <bool>true</bool>
         </property>
        </widget>
       </item>

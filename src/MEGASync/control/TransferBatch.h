@@ -3,6 +3,7 @@
 
 
 #include <QString>
+#include <QStringList>
 #include <QVector>
 #include "megaapi.h"
 #include <memory>

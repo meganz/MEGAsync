@@ -337,6 +337,7 @@ set (MOC_INPUT
     ${MEGAsyncDir}/gui/CancelConfirmWidget.h	
 
     ${MEGAsyncDir}/platform/notificator.h
+    ${MEGAsyncDir}/platform/PlatformStrings.h
     
     ${MEGAsyncDir}/mega/bindings/qt/QTMegaGlobalListener.h
     ${MEGAsyncDir}/mega/bindings/qt/QTMegaListener.h
@@ -632,7 +633,7 @@ if (CMAKE_HOST_WIN32)
         ${MEGAsyncDir}/platform/win/WinShellDispatcherTask.cpp
         ${MEGAsyncDir}/platform/win/WinTrayReceiver.cpp
         ${MEGAsyncDir}/platform/win/wintoastlib.cpp
-
+        ${MEGAsyncDir}/platform/win/PlatformStrings.cpp
         ${MEGAsyncDir}/icon.rc
         )
 elseif (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
@@ -666,6 +667,7 @@ elseif (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
         ${MEGAsyncDir}/platform/linux/LinuxPlatform.cpp
         ${MEGAsyncDir}/platform/linux/ExtServer.cpp
         ${MEGAsyncDir}/platform/linux/NotifyServer.cpp
+        ${MEGAsyncDir}/platform/linux/PlatformStrings.cpp
         )
 else()
     set (SRCS ${SRCS}
@@ -722,6 +724,7 @@ else()
         ${MEGAsyncDir}/platform/macx/QCustomMacToolbar.h
 
         ${MEGAsyncDir}/platform/macx/MacXPlatform.cpp
+        ${MEGAsyncDir}/platform/macx/PlatformStrings.cpp
         ${MEGAsyncDir}/platform/macx/MacXFunctions.mm
         ${MEGAsyncDir}/platform/macx/macnotificationhandler.mm
         ${MEGAsyncDir}/platform/macx/NotificationDelegate.mm

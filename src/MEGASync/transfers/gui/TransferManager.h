@@ -35,7 +35,6 @@ class TransferManager : public QDialog
 
 public:
     explicit TransferManager(mega::MegaApi *megaApi);
-    void setActiveTab(int t);
     ~TransferManager();
 
     void pauseModel(bool state);
@@ -44,6 +43,9 @@ public:
     void disableCancelling();
 
     void setTransferState(const StatusInfo::TRANSFERS_STATES &transferState);
+
+    void toggleTab(TransfersWidget::TM_TAB newTab);
+    void toggleTab(int newTab);
 
 public slots:
     void onTransferQuotaStateChanged(QuotaState transferQuotaState);
@@ -101,24 +103,27 @@ private:
 
     int mStorageQuotaState;
     QuotaState mTransferQuotaState;
+    bool hasOverQuotaErrors();
 
     bool mFoundStalledIssues;
     ButtonIconManager mButtonIconManager;
 
-    void toggleTab(TransfersWidget::TM_TAB newTab);
     void refreshStateStats();
     void refreshTypeStats();
     void refreshFileTypesStats();
     void applyTextSearch(const QString& text);
     void enableUserActions(bool enabled);
     void checkActionAndMediaVisibility();
-    void onFileTypeButtonClicked(TransfersWidget::TM_TAB tab, Utilities::FileType fileType, const QString& tabLabel);
+    void onFileTypeButtonClicked(TransfersWidget::TM_TAB tab, Utilities::FileType fileType);
     void checkPauseButtonVisibilityIfPossible();
     void showTransferQuotaBanner(bool state);
 
     void showAllResults();
     void showDownloadResults();
     void showUploadResults();
+
+    void updateCurrentSearchText();
+    void updateCurrentCategoryTitle();
 
 private slots:
     void on_tCompleted_clicked();

@@ -30,13 +30,17 @@ QString CommonMessages::createShellExtensionActionLabel(const QString &action, c
     {
         label = QCoreApplication::translate("ShellExtension", "%1 (%2, %3)").arg(action, sNumFiles, sNumFolders);
     }
-    else if (fileCount && !folderCount)
+    else if (fileCount)
     {
         label = QCoreApplication::translate("ShellExtension", "%1 (%2)").arg(action, sNumFiles);
     }
-    else if (!fileCount && folderCount)
+    else if (folderCount)
     {
         label = QCoreApplication::translate("ShellExtension", "%1 (%2)").arg(action, sNumFolders);
+    }
+    else
+    {
+        label = QCoreApplication::translate("ShellExtension", action.toUtf8().constData());
     }
     return label;
 }

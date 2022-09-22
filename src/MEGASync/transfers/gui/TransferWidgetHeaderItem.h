@@ -27,6 +27,8 @@ public:
     void setSortOrder(Qt::SortOrder order);
     void turnOffSorting();
 
+    void forceClick();
+
 signals:
     void toggled(int, Qt::SortOrder);
 
@@ -34,6 +36,7 @@ protected:
     void mouseReleaseEvent(QMouseEvent *event) override;
     void enterEvent(QEvent *event) override;
     void leaveEvent(QEvent *event) override;
+    bool eventFilter(QObject *watched, QEvent *event) override;
 
 private:
     Ui::TransferWidgetHeaderItem *ui;
@@ -44,6 +47,7 @@ private:
     void updateChevronIcon();
     void turnOffSiblings();
     bool isTurnedOff();
+    void updateElidedText();
 };
 
 #endif // TRANSFERWIDGETHEADERITEM_H

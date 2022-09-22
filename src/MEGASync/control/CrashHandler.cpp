@@ -418,6 +418,7 @@ CrashHandler* CrashHandler::instance()
 void CrashHandler::tryReboot()
 {
     auto preferences = Preferences::instance();
+    MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, "Setting isCrashed true: tryReboot (CrashHandler)");
     preferences->setCrashed(true);
 
     if ((QDateTime::currentMSecsSinceEpoch()-preferences->getLastReboot()) > Preferences::MIN_REBOOT_INTERVAL_MS)

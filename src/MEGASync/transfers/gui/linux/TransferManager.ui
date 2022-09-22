@@ -480,6 +480,9 @@ QToolButton
           </property>
           <item>
            <widget class="QLabel" name="lTransfers">
+            <property name="toolTip">
+             <string>Transfers</string>
+            </property>
             <property name="text">
              <string>Transfers</string>
             </property>
@@ -619,7 +622,7 @@ QToolButton
              </sizepolicy>
             </property>
             <property name="text">
-             <string/>
+             <string notr="true"/>
             </property>
             <property name="frame">
              <bool>false</bool>
@@ -2032,7 +2035,7 @@ QToolButton
              </size>
             </property>
             <property name="text">
-             <string>Some issues occurred</string>
+             <string/>
             </property>
             <property name="icon">
              <iconset resource="../../../gui/Resources_linux.qrc">
@@ -2224,7 +2227,7 @@ QToolButton
                   </size>
                  </property>
                  <property name="text">
-                  <string/>
+                  <string notr="true"/>
                  </property>
                 </widget>
                </item>
@@ -2746,7 +2749,7 @@ QToolButton
                    <item alignment="Qt::AlignRight">
                     <widget class="QLabel" name="lAllResultsCounter">
                      <property name="text">
-                      <string/>
+                      <string notr="true"/>
                      </property>
                     </widget>
                    </item>
@@ -2799,7 +2802,7 @@ QToolButton
                    <item alignment="Qt::AlignRight">
                     <widget class="QLabel" name="lDlResultsCounter">
                      <property name="text">
-                      <string/>
+                      <string notr="true"/>
                      </property>
                     </widget>
                    </item>
@@ -2852,7 +2855,7 @@ QToolButton
                    <item alignment="Qt::AlignRight">
                     <widget class="QLabel" name="lUlResultsCounter">
                      <property name="text">
-                      <string/>
+                      <string notr="true"/>
                      </property>
                     </widget>
                    </item>

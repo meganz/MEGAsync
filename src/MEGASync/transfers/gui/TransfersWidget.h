@@ -98,6 +98,7 @@ private slots:
     void onUiUnblockedAndFilter();
     void onModelChanged();
     void onModelAboutToBeChanged();
+    void onRowsAboutToBeMoved(int scrollTo);
     void onPauseResumeTransfer(bool pause);
     void onCancelClearButtonPressedOnDelegate();
     void onRetryButtonPressedOnDelegate();
@@ -119,6 +120,7 @@ private:
     MegaApplication *app;
     TM_TAB mCurrentTab;
     bool mScanningIsActive;
+    QList<int> mScrollToAfterMovingRow;
 
     HeaderInfo mHeaderInfo;
     CancelClearButtonInfo mCancelClearInfo;
@@ -128,6 +130,7 @@ private:
     void configureTransferView();
     void clearOrCancel(const QList<QExplicitlySharedDataPointer<TransferData>>& pool, int state, int firstRow);
     void updateHeaderItems();
+    void selectAndScrollToMovedTransfer(QAbstractItemView::ScrollHint scrollHint = QAbstractItemView::PositionAtCenter);
 
     QString getClearTooltip(TM_TAB tab);
     QString getCancelTooltip(TM_TAB tab);

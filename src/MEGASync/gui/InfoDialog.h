@@ -61,6 +61,7 @@ public:
 
     PSA_info* getPSAdata();
     void setUsage();
+    void setAvatar();
     void setIndexing(bool indexing);
     void setWaiting(bool waiting);
     void setSyncing(bool value);
@@ -159,8 +160,6 @@ private slots:
 
     void on_bDismissSyncSettings_clicked();
     void on_bOpenSyncSettings_clicked();
-
-    void setAvatar();
 
     void updateTransfersCount();
 
