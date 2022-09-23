@@ -70,16 +70,34 @@ std::shared_ptr<mega::MegaNode> MegaItem::getNode()
     return mNode;
 }
 
-void MegaItem::setChildren(std::shared_ptr<MegaNodeList> children)
+void MegaItem::fetchChildren()
 {
-    mChildrenSet = true;
+    if(!mChildrenSet)
+    {
+        mChildrenSet = true;
+        MegaApi* megaApi = MegaSyncApp->getMegaApi();
+        mChildNodes = std::unique_ptr<MegaNodeList>(megaApi->getChildren(mNode.get()));
+    }
+}
+
+void MegaItem::createChildItems(int first, int last)
+{
+    for(;first < last; ++first)
+    {
+        auto node = std::unique_ptr<MegaNode>(mChildNodes->get(first)->copy());
+        mChildItems.append(new MegaItem(move(node), this, mShowFiles));
+    }
+}
+
+void MegaItem::addChildren(std::shared_ptr<mega::MegaNodeList> children)
+{
     for (int i = 0; i < children->size(); i++)
     {
         auto node = std::unique_ptr<MegaNode>(children->get(i)->copy());
-        if (!mShowFiles && node->getType() == MegaNode::TYPE_FILE)
-        {
-            break;
-        }
+//        if (!mShowFiles && node->getType() == MegaNode::TYPE_FILE)
+//        {
+//            break;
+//        }
         mChildItems.append(new MegaItem(move(node), this, mShowFiles));
     }
 }

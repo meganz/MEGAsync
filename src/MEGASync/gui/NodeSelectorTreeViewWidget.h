@@ -71,6 +71,7 @@ private slots:
     void onGoBackClicked();
     void onSectionResized();
     void onSearchBoxEdited(const QString& text);
+    virtual void onModelReset(){};
 
 
 private:
@@ -118,6 +119,9 @@ private:
     QString getRootText() override;
     std::unique_ptr<MegaItemModel> getModel() override;
     void setRootIndex_Reimplementation(const QModelIndex& source_idx) override;
+
+private slots:
+    void onModelReset() override;
 };
 
 class NodeSelectorTreeViewWidgetIncomingShares : public NodeSelectorTreeViewWidget

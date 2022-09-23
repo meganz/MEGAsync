@@ -54,6 +54,8 @@ public:
 
     QVariant headerData(int section, Qt::Orientation orientation,
                                     int role = Qt::DisplayRole) const override;
+    void fetchMore(const QModelIndex &parent) override;
+    bool canFetchMore(const QModelIndex &parent) const override;
 
     void setDisableFolders(bool option);
     void setSyncSetupMode(bool value);
@@ -75,7 +77,8 @@ protected:
 
 private:
     int insertPosition(const std::unique_ptr<mega::MegaNode>& node);
-    virtual QList<MegaItem*> getRootItems() const = 0;
+    virtual QList<MegaItem*> getRootItems(int first, int last) const = 0;
+    virtual int rootItemsCount() const = 0;
     //virtual void fillRootItems(QList<MegaItem*> &toFill) const = 0;
     QList<MegaItem*> mRootItems;
 
@@ -90,7 +93,8 @@ public:
     virtual ~MegaItemModelCloudDrive();
 
     void onRequestFinish(mega::MegaApi* api, mega::MegaRequest *request, mega::MegaError* e) override;
-    QList<MegaItem*> getRootItems() const override;
+    QList<MegaItem*> getRootItems(int first, int last) const override;
+    int rootItemsCount() const override;
 
 private:
     std::unique_ptr<mega::QTMegaRequestListener> mDelegateListener;
@@ -104,13 +108,14 @@ public:
     explicit MegaItemModelIncomingShares(QObject *parent = 0);
     virtual ~MegaItemModelIncomingShares();
 
-    QList<MegaItem*> getRootItems() const override;
+    QList<MegaItem*> getRootItems(int first, int last) const override;
+    int rootItemsCount() const override;
 
 private slots:
     void onItemInfoUpdated(int role);
 
 private:
-
+    std::unique_ptr<mega::MegaNodeList> mSharedNodeList;
 };
 
 #endif // MEGAITEMMODEL_H

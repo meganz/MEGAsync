@@ -124,12 +124,12 @@ QModelIndex MegaItemModel::index(int row, int column, const QModelIndex &parent)
     if (parent.isValid())
     {
         MegaItem* item = static_cast<MegaItem*>(parent.internalPointer());
-        if (!item->areChildrenSet())
-        {
-            MegaApi* megaApi = MegaSyncApp->getMegaApi();
-            auto children = std::shared_ptr<MegaNodeList>(megaApi->getChildren(item->getNode().get()));
-            item->setChildren(children);
-        }
+//        if (!item->areChildrenSet())
+//        {
+//            MegaApi* megaApi = MegaSyncApp->getMegaApi();
+//            auto children = std::shared_ptr<MegaNodeList>(megaApi->getChildren(item->getNode().get()));
+//            item->setChildren(children);
+//        }
         return createIndex(row, column, item->getChild(row));
     }
     else
@@ -162,12 +162,6 @@ int MegaItemModel::rowCount(const QModelIndex &parent) const
     if (parent.isValid())
     {
         MegaItem *item = static_cast<MegaItem*>(parent.internalPointer());
-        if (!item->areChildrenSet())
-        {
-            MegaApi* megaApi = MegaSyncApp->getMegaApi();
-            auto children = std::shared_ptr<MegaNodeList>(megaApi->getChildren(item->getNode().get()));
-            item->setChildren(children);
-        }
         int childrenNum = item->getNumChildren();
         return childrenNum;
     }
@@ -189,6 +183,12 @@ bool MegaItemModel::hasChildren(const QModelIndex &parent) const
     if(parent.isValid() && parent.column() != NODE)
     {
         return false;
+    }
+    MegaItem *item = static_cast<MegaItem*>(parent.internalPointer());
+    if(item)
+    {
+        MegaApi* megaApi = MegaSyncApp->getMegaApi();
+        return megaApi->hasChildren(item->getNode().get());
     }
     return QAbstractItemModel::hasChildren(parent);
 }
@@ -251,6 +251,47 @@ QVariant MegaItemModel::headerData(int section, Qt::Orientation orientation, int
         }
     }
     return QAbstractItemModel::headerData(section, orientation, role);
+}
+
+void MegaItemModel::fetchMore(const QModelIndex &parent)
+{
+    if (parent.isValid())
+    {
+        MegaItem *item = static_cast<MegaItem*>(parent.internalPointer());
+        item->fetchChildren();
+        MegaApi* megaApi = MegaSyncApp->getMegaApi();
+        int remainingChildren = megaApi->getNumChildren(item->getNode().get()) - item->getNumChildren();
+        int childrenNumToFetch = qMin(30, remainingChildren);
+        beginInsertRows(parent, item->getNumChildren(), childrenNumToFetch + item->getNumChildren() - 1);
+        item->createChildItems(item->getNumChildren(), childrenNumToFetch + item->getNumChildren() /*- 1*/);
+        endInsertRows();
+    }
+    else
+    {
+        int remainingChildren = rootItemsCount() - mRootItems.size();
+        int childrenNumToFetch = qMin(30, remainingChildren);
+        beginResetModel();
+        mRootItems.append(getRootItems(mRootItems.size(), mRootItems.size() + childrenNumToFetch));
+        endResetModel();
+    }
+}
+
+bool MegaItemModel::canFetchMore(const QModelIndex &parent) const
+{
+    if (parent.isValid())
+    {
+        MegaItem *item = static_cast<MegaItem*>(parent.internalPointer());
+        MegaApi* megaApi = MegaSyncApp->getMegaApi();
+        if(item->getNumChildren() < megaApi->getNumChildren(item->getNode().get()))
+        {
+            return true;
+        }
+        return false;
+    }
+    else
+    {
+        return mRootItems.size() < rootItemsCount();
+    }
 }
 
 void MegaItemModel::setSyncSetupMode(bool value)
@@ -411,9 +452,9 @@ QVariant MegaItemModel::getText(const QModelIndex &index, MegaItem *item) const
 
 void MegaItemModel::fillRootItems()
 {
-    beginResetModel();
-    mRootItems = getRootItems();
-    endResetModel();
+//    beginResetModel();
+//    mRootItems = getRootItems();
+//    endResetModel();
 }
 
 MegaItemModel::~MegaItemModel()
@@ -496,19 +537,20 @@ void MegaItemModelCloudDrive::onRequestFinish(mega::MegaApi *api, mega::MegaRequ
         case mega::MegaApi::USER_ATTR_CAMERA_UPLOADS_FOLDER:
         case mega::MegaApi::USER_ATTR_MY_CHAT_FILES_FOLDER:
         {
-            QModelIndex idx = findItemByNodeHandle(request->getNodeHandle(), index(0, 0));
-            if(idx.isValid())
-            {
-                if(MegaItem* item = static_cast<MegaItem*>(idx.internalPointer()))
-                {
-                    request->getParamType() == mega::MegaApi::USER_ATTR_CAMERA_UPLOADS_FOLDER
-                            ? item->setCameraFolder() : item->setChatFilesFolder();
-                }
-            }
+            //TODO EKA: DO IT BY ANOTHER WAY AS THIS LOADS ALL THE TREE
+//            QModelIndex idx = findItemByNodeHandle(request->getNodeHandle(), index(0, 0));
+//            if(idx.isValid())
+//            {
+//                if(MegaItem* item = static_cast<MegaItem*>(idx.internalPointer()))
+//                {
+//                    request->getParamType() == mega::MegaApi::USER_ATTR_CAMERA_UPLOADS_FOLDER
+//                            ? item->setCameraFolder() : item->setChatFilesFolder();
+//                }
+//            }
 
             QVector<int> roles;
             roles.append(Qt::DecorationRole);
-            emit dataChanged(idx, idx, roles);
+           // emit dataChanged(idx, idx, roles);
             return;
         }
         default:
@@ -517,8 +559,11 @@ void MegaItemModelCloudDrive::onRequestFinish(mega::MegaApi *api, mega::MegaRequ
     }
 }
 
-QList<MegaItem *> MegaItemModelCloudDrive::getRootItems() const
+QList<MegaItem *> MegaItemModelCloudDrive::getRootItems(int first, int last) const
 {
+    Q_UNUSED(first);
+    Q_UNUSED(last);
+
     MegaApi* megaApi = MegaSyncApp->getMegaApi();
     auto root = std::unique_ptr<MegaNode>(megaApi->getRootNode());
     QList<MegaItem*> rootItems;
@@ -526,9 +571,16 @@ QList<MegaItem *> MegaItemModelCloudDrive::getRootItems() const
     return rootItems;
 }
 
+int MegaItemModelCloudDrive::rootItemsCount() const
+{
+    return 1; //In cloud drive there is only one root, the cloud drive folder itself
+}
+
 MegaItemModelIncomingShares::MegaItemModelIncomingShares(QObject *parent)
     : MegaItemModel(parent)
 {
+    MegaApi* megaApi = MegaSyncApp->getMegaApi();
+    mSharedNodeList = std::unique_ptr<MegaNodeList>(megaApi->getInShares());
 }
 
 void MegaItemModelIncomingShares::onItemInfoUpdated(int role)
@@ -559,22 +611,40 @@ MegaItemModelIncomingShares::~MegaItemModelIncomingShares()
 {
 }
 
-QList<MegaItem *> MegaItemModelIncomingShares::getRootItems() const
+QList<MegaItem *> MegaItemModelIncomingShares::getRootItems(int first, int last) const
 {
+    QList<MegaItem *> ret;
     MegaApi* megaApi = MegaSyncApp->getMegaApi();
 
-    auto folders = std::unique_ptr<MegaNodeList>(megaApi->getInShares());
-
-    //incoming shares
-    QList<MegaItem*> rootItems;
-    for (int j = 0; j < folders->size(); j++)
+    for(; first<last; first++)
     {
-        auto folder = std::unique_ptr<MegaNode>(folders->get(j)->copy());
-        auto user = std::unique_ptr<MegaUser>(megaApi->getUserFromInShare(folder.get()));
-        MegaItem* item = new MegaItem(move(folder));
+        auto node = mSharedNodeList->get(first)->copy();
+        auto user = std::unique_ptr<MegaUser>(megaApi->getUserFromInShare(node));
+        MegaItem* item = new MegaItem(std::unique_ptr<MegaNode>(node));
         item->setOwner(move(user));
         connect(item, &MegaItem::infoUpdated, this, &MegaItemModelIncomingShares::onItemInfoUpdated);
-        rootItems.append(item);
+        ret.append(item);
     }
-    return rootItems;
+    return ret;
+//    MegaApi* megaApi = MegaSyncApp->getMegaApi();
+
+//    auto folders = std::unique_ptr<MegaNodeList>(megaApi->getInShares());
+
+//    //incoming shares
+//    QList<MegaItem*> rootItems;
+//    for (int j = 0; j < folders->size(); j++)
+//    {
+//        auto folder = std::unique_ptr<MegaNode>(folders->get(j)->copy());
+//        auto user = std::unique_ptr<MegaUser>(megaApi->getUserFromInShare(folder.get()));
+//        MegaItem* item = new MegaItem(move(folder));
+//        item->setOwner(move(user));
+//        connect(item, &MegaItem::infoUpdated, this, &MegaItemModelIncomingShares::onItemInfoUpdated);
+//        rootItems.append(item);
+//    }
+//    return rootItems;
+}
+
+int MegaItemModelIncomingShares::rootItemsCount() const
+{
+    return mSharedNodeList->size();
 }

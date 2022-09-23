@@ -34,6 +34,11 @@ NodeSelectorTreeViewWidget::NodeSelectorTreeViewWidget(QWidget *parent) :
     connect(ui->tMegaFolders->header(), &QHeaderView::sectionResized, this, &NodeSelectorTreeViewWidget::onSectionResized);
     connect(ui->leSearch, &QLineEdit::textEdited, this, &NodeSelectorTreeViewWidget::onSearchBoxEdited);
 
+    if(auto rootNode = std::unique_ptr<MegaNode>(mMegaApi->getRootNode()))
+    {
+        mNavigationInfo.expandedHandles.append(rootNode->getHandle());
+    }
+
     checkBackForwardButtons();
     installEventFilter(this);
 }
@@ -90,6 +95,7 @@ bool NodeSelectorTreeViewWidget::eventFilter(QObject *o, QEvent *e)
         }
         ui->tMegaFolders->setModel(mProxyModel.get());
         ui->tMegaFolders->setExpanded(mProxyModel->getIndexFromHandle(MegaSyncApp->getRootNode()->getHandle()), true);
+        connect(mModel.get(), &MegaItemModel::modelReset, this, &NodeSelectorTreeViewWidget::onModelReset);
 
         ui->tMegaFolders->setContextMenuPolicy(Qt::DefaultContextMenu);
         ui->tMegaFolders->setExpandsOnDoubleClick(false);
@@ -589,6 +595,11 @@ NodeSelectorTreeViewWidgetCloudDrive::NodeSelectorTreeViewWidgetCloudDrive(QWidg
 QString NodeSelectorTreeViewWidgetCloudDrive::getRootText()
 {
     return tr(CLD_DRIVE);
+}
+
+void NodeSelectorTreeViewWidgetCloudDrive::onModelReset()
+{
+    ui->tMegaFolders->setExpanded(mProxyModel->index(0,0,QModelIndex()),true);
 }
 
 std::unique_ptr<MegaItemModel> NodeSelectorTreeViewWidgetCloudDrive::getModel()

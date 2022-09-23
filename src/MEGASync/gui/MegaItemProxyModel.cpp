@@ -172,7 +172,8 @@ bool MegaItemProxyModel::filterAcceptsRow(int sourceRow, const QModelIndex &sour
                QModelIndex parentIndex = index.parent();
                if(parentIndex.isValid() && mFilter.textFilter.isEmpty())
                {
-                  return filterAcceptsRow(index.row(), index);
+                   //TODO EKA: Is this necessary? it triggers full ree load
+                 // return filterAcceptsRow(index.row(), index);
                }
                mega::MegaApi* megaApi = MegaSyncApp->getMegaApi();
                int accs = megaApi->getAccess(node.get());

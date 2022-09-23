@@ -30,8 +30,9 @@ public:
     explicit MegaItem(std::unique_ptr<mega::MegaNode> node, MegaItem *parentItem = 0, bool showFiles = false);
 
     std::shared_ptr<mega::MegaNode> getNode();
-    void setChildren(std::shared_ptr<mega::MegaNodeList> children);
-
+    void fetchChildren();
+    void createChildItems(int first, int last);
+    void addChildren(std::shared_ptr<mega::MegaNodeList> children);
     bool areChildrenSet();
     MegaItem *getParent();
     MegaItem *getChild(int i);
@@ -68,6 +69,7 @@ protected:
 
     std::shared_ptr<mega::MegaNode> mNode;
     QList<MegaItem*> mChildItems;
+    std::unique_ptr<mega::MegaNodeList> mChildNodes;
     std::unique_ptr<mega::MegaUser> mOwner;
 
 private slots:
