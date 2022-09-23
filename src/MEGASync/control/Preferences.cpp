@@ -18,9 +18,9 @@ const int Preferences::VERSION_CODE = 4700;
 const int Preferences::BUILD_ID = 4;
 // Do not change the location of VERSION_STRING, create_tarball.sh parses this file
 const QString Preferences::VERSION_STRING = QString::fromAscii("4.7.0-backups-preview-13");
-QString Preferences::SDK_ID = QString::fromAscii("1c5e526");
+QString Preferences::SDK_ID = QString::fromAscii("76698b7");
 const QString Preferences::CHANGELOG = QString::fromUtf8(QT_TR_NOOP(
-"Import changes from Desktop app develop (including v4.7.0) and SDK v4.4.0\n"
+"Import changes from Desktop app develop (including v4.7.0) and SDK v4.4.1\n"
 "[BAC-51] - Dapp: Backup display path adjustment\n"
 "[BAC-122] - Backup choose folder and sync choose folder opens the same location\n"
 "[BAC-164] - Use new isNodeSyncableWithErrors() sdk interface to check node syncability\n"
