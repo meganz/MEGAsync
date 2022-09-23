@@ -259,8 +259,6 @@ SyncController::Syncability SyncController::isLocalFolderSyncable(const QString&
 // The message to display to the user is stored in <message>.
 SyncController::Syncability SyncController::isRemoteFolderSyncable(std::shared_ptr<mega::MegaNode> node, QString& message)
 {
-    //TODO: Add exact match check with message: tr("The selected MEGA folder is already synced");
-    //It is suppossed that the SDK team will add a new syncError to reflect that error
     Syncability syncability (Syncability::CANT_SYNC);
     std::unique_ptr<MegaError> err (MegaSyncApp->getMegaApi()->isNodeSyncableWithError(node.get()));
     switch (err->getErrorCode())
@@ -292,6 +290,11 @@ SyncController::Syncability SyncController::isRemoteFolderSyncable(std::shared_p
     {
         switch (err->getSyncError())
         {
+        case SyncError::ACTIVE_SYNC_SAME_PATH:
+        {
+            message = tr("The selected MEGA folder is already synced");
+            break;
+        }
         case SyncError::ACTIVE_SYNC_BELOW_PATH:
         {
             message = tr("Folder contents already synced");
