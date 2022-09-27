@@ -6,7 +6,7 @@ vcpkg-cmake/7375bb408f2278d2f1875c259beef93332697ba7
 c-ares/c303dd024e2dc03a0665ddffbb12a1077933e649
 cryptopp/c303dd024e2dc03a0665ddffbb12a1077933e649
 curl/7375bb408f2278d2f1875c259beef93332697ba7
-libsodium/c303dd024e2dc03a0665ddffbb12a1077933e649
+libsodium/92adeffbce95847e141411177248ed04ac49ea9b
 openssl/c303dd024e2dc03a0665ddffbb12a1077933e649 osx:off
 openssl-unix/c303dd024e2dc03a0665ddffbb12a1077933e649 all:off linux:on
 openssl-windows/c303dd024e2dc03a0665ddffbb12a1077933e649 all:off windows:on
@@ -48,7 +48,8 @@ pdfium/5247
 pdfium-freetype/2-12-1
 
 # dependencies of pdfium
-icu/cb91b416cb8f85f0a55853baad23fb18d306148a
+icu/979a5197b3389cfdf91d0ac5d98b6066ce73fd7a all:off osx:on
+icu/cb91b416cb8f85f0a55853baad23fb18d306148a all:on osx:off
 lcms/c303dd024e2dc03a0665ddffbb12a1077933e649
 libjpeg-turbo/7375bb408f2278d2f1875c259beef93332697ba7
 openjpeg/7375bb408f2278d2f1875c259beef93332697ba7
