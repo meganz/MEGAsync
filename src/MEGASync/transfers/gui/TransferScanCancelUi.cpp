@@ -17,11 +17,11 @@ TransferScanCancelUi::TransferScanCancelUi(QStackedWidget* _container, QWidget *
     mConfirmWidget->setStyleSheet(styles);
 }
 
-void TransferScanCancelUi::show()
+void TransferScanCancelUi::show(bool canBeCancelled)
 {
     mLastSelectedWidget = mContainer->currentWidget();
     mContainer->setCurrentWidget(mBlockingWidget);
-    mBlockingWidget->show();
+    mBlockingWidget->show(canBeCancelled);
 }
 
 void TransferScanCancelUi::hide(bool fromCancellation)
@@ -63,7 +63,9 @@ void TransferScanCancelUi::onCancelClicked()
 void TransferScanCancelUi::onCancelDismissed()
 {
     mContainer->setCurrentWidget(mBlockingWidget);
-    mBlockingWidget->show();
+
+    //If the dismiss button has been pressed it´s because the cancel button was visible, so it should be again visible
+    mBlockingWidget->show(true);
 }
 
 const char* TransferScanCancelUi::getControlStyles()

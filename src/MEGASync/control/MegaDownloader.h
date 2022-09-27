@@ -35,7 +35,7 @@ protected:
 
 signals:
     void finishedTransfers(unsigned long long appDataId);
-    void startingTransfers();
+    void startingTransfers(bool canBeCancelled);
 
 private:
     void startDownload(WrappedNode* parent, const QString &appData,

@@ -275,11 +275,11 @@ void TransferManager::pauseModel(bool value)
     mModel->pauseModelProcessing(value);
 }
 
-void TransferManager::enterBlockingState()
+void TransferManager::enterBlockingState(bool canBeCancelled)
 {
     mUi->wTransfers->setScanningWidgetVisible(true);
     enableUserActions(false);
-    mTransferScanCancelUi->show();
+    mTransferScanCancelUi->show(canBeCancelled);
 
     mScanningTimer.start();
 }

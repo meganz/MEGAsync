@@ -339,8 +339,10 @@ private slots:
     void onUnblocked();
     void onTransfersModelUpdate();
 
-    void startingUpload();
+    void startingUpload(bool canBeCancelled);
     void cancelScanningStage();
+
+    void onUploadRecursivelyIntoASyncedLocationFinished(const QString& filePath);
 
 protected:
     void createTrayIcon();

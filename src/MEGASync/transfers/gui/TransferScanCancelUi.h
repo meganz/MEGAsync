@@ -15,7 +15,7 @@ public:
                          QWidget* _finishedWidget);
     ~TransferScanCancelUi() = default;
 
-    void show();
+    void show(bool canBeCancelled);
     void hide(bool fromCancellation);
     void disableCancelling();
     void update();

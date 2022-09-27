@@ -117,7 +117,7 @@ bool MegaDownloader::download(WrappedNode* parent, QFileInfo info, QString appDa
         MegaCancelToken* tokenToUse = (isTransferFromApp) ? cancelToken : nullptr;
         if (mNoTransferStarted && isTransferFromApp)
         {
-            emit startingTransfers();
+            emit startingTransfers(true);
             mNoTransferStarted = false;
         }
         startDownload(parent, appData, currentPathWithSep, tokenToUse);

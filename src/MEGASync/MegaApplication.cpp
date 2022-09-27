@@ -509,6 +509,10 @@ void MegaApplication::initialize()
     delegateListener = new MEGASyncDelegateListener(megaApi, this, this);
     megaApi->addListener(delegateListener);
     uploader = new MegaUploader(megaApi);
+    connect(uploader, &MegaUploader::uploadRecursivelyIntoASyncedLocationFinished,
+            this, &MegaApplication::onUploadRecursivelyIntoASyncedLocationFinished);
+    connect(uploader, &MegaUploader::startingTransfers,
+            this, &MegaApplication::startingUpload);
     downloader = new MegaDownloader(megaApi);
     connect(downloader, &MegaDownloader::finishedTransfers, this, &MegaApplication::showNotificationFinishedTransfers, Qt::QueuedConnection);
     connect(downloader, &MegaDownloader::startingTransfers,
@@ -1593,13 +1597,7 @@ void MegaApplication::processUploadQueue(MegaHandle nodeHandle)
 
         updateMetadata(data, filePath);
 
-        bool startedTransfer = uploader->upload(filePath, uploadInfo->getNewName(), node.get(), transferId, batch->getCancelTokenPtr());
-        if (startedTransfer)
-        {
-            batch->add(filePath);
-            startingUpload();
-        }
-
+        uploader->upload(filePath, uploadInfo->getNewName(), node.get(), transferId, batch);
         updater.update(counter);
 
         counter++;
@@ -1616,6 +1614,11 @@ void MegaApplication::processUploadQueue(MegaHandle nodeHandle)
     }
 
     mProcessingUploadQueue = false;
+}
+
+void MegaApplication::onUploadRecursivelyIntoASyncedLocationFinished(const QString& filePath)
+{
+    updateFileTransferBatchesAndUi(filePath, mBlockingBatch);
 }
 
 void MegaApplication::processDownloadQueue(QString path)
@@ -1719,10 +1722,6 @@ void MegaApplication::createTransferManagerDialog()
         connect(transferQuota.get(), &TransferQuota::sendState,
                 mTransferManager.data(), &TransferManager::onTransferQuotaStateChanged);
         connect(mTransferManager.data(), SIGNAL(cancelScanning()), this, SLOT(cancelScanningStage()));
-        if (scanStageController.isInScanningState())
-        {
-            mTransferManager->enterBlockingState();
-        }
         scanStageController.updateReference(mTransferManager);
     }
 }
@@ -3377,12 +3376,12 @@ void MegaApplication::updateFreedCancelToken(MegaTransfer* transfer)
     }
 }
 
-void MegaApplication::startingUpload()
+void MegaApplication::startingUpload(bool canBeCancelled)
 {
     if (noUploadedStarted && mBlockingBatch.hasNodes())
     {
         noUploadedStarted = false;
-        scanStageController.startDelayedScanStage();
+        scanStageController.startDelayedScanStage(canBeCancelled);
     }
 }
 

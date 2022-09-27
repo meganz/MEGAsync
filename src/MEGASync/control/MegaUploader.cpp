@@ -19,6 +19,8 @@
 using namespace mega;
 using namespace std;
 
+const char* FILE_PATH = "FILE_PATH";
+
 MegaUploader::MegaUploader(MegaApi *megaApi)
 {
     this->megaApi = megaApi;
@@ -28,9 +30,9 @@ MegaUploader::~MegaUploader()
 {
 }
 
-bool MegaUploader::upload(QString path, const QString& nodeName, MegaNode *parent, unsigned long long appDataID, MegaCancelToken *cancelToken)
+void MegaUploader::upload(QString path, const QString& nodeName, MegaNode *parent, unsigned long long appDataID, const std::shared_ptr<TransferBatch>& transferBatch)
 {
-    return upload(QFileInfo(path), nodeName, parent, appDataID, cancelToken);
+    upload(QFileInfo(path), nodeName, parent, appDataID, transferBatch);
 }
 
 bool MegaUploader::filesdiffer(QFileInfo &source, QFileInfo &destination)
@@ -72,13 +74,12 @@ bool MegaUploader::filesdiffer(QFileInfo &source, QFileInfo &destination)
  * @param appDataID
  * @return false if something failed
  */
-bool MegaUploader::uploadRecursivelyIntoASyncedLocation(QFileInfo srcFileInfo, QString destPath, MegaNode *parent, unsigned long long appDataID, MegaCancelToken* cancelToken)
+void MegaUploader::uploadRecursivelyIntoASyncedLocation(QFileInfo srcFileInfo, QString destPath, MegaNode *parent, unsigned long long appDataID)
 {
-    bool toret = true;
     if (!srcFileInfo.exists())
     {
         MegaApi::log(MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Recursive upload failed: source file non existing: %1").arg(srcFileInfo.absoluteFilePath()).toUtf8().constData());
-        return false;
+        return;
     }
 
     QString srcPath = QDir::toNativeSeparators(srcFileInfo.absoluteFilePath());
@@ -86,21 +87,21 @@ bool MegaUploader::uploadRecursivelyIntoASyncedLocation(QFileInfo srcFileInfo, Q
     if (!srcPath.size() || !destPath.size())
     {
         MegaApi::log(MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Recursive upload failed: invalid parameters: %1 , %2").arg(srcPath).arg(destPath).toUtf8().constData());
-        return false;
+        return;
     }
 
     if (srcFileInfo.isSymLink() || (!srcFileInfo.isFile() && !srcFileInfo.isDir()) ) //review if ever symlinks are supported
     {
         MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Recursive upload skipping non file/folder: %1").arg(srcPath).toUtf8().constData());
-        return true;
+        return;
     }
 
     if (!megaApi->isSyncable(destPath.toUtf8().constData(), srcFileInfo.size())) //if not syncable, do not copy locally, but simply upload: we don't want to create it localle nor override current files/folders
     {
         //start upload to parent
         MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Recursive upload uploading non syncable path: %1").arg(srcPath).toUtf8().constData());
-        startUpload(srcPath, QString(), appDataID, parent, cancelToken);
-        return true;
+        startUpload(srcPath, QString(), appDataID, parent, nullptr);
+        return;
     }
 
     QFileInfo dstfileinfo(destPath);
@@ -143,14 +144,14 @@ bool MegaUploader::uploadRecursivelyIntoASyncedLocation(QFileInfo srcFileInfo, Q
             else
             {
                 MegaApi::log(MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Failed to create folder recursive upload: %1").arg(srcFileInfo.fileName()).toUtf8().constData());
-                return false;
+                return;
             }
         }
 
         if (!newParent) //just in case getNodeByHandle for just created folder
         {
             MegaApi::log(MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Failed to obtain newfolder at recursive upload: %1").arg(srcFileInfo.fileName()).toUtf8().constData());
-            return false;
+            return;
         }
 
         //create local folder if non existent. Note this should happen after creating remote folder, otherwise sync algorithm may produce duplicates
@@ -166,22 +167,20 @@ bool MegaUploader::uploadRecursivelyIntoASyncedLocation(QFileInfo srcFileInfo, Q
             {
                 if (newParent)
                 {
-                    bool r = uploadRecursivelyIntoASyncedLocation(di.fileInfo(), QDir::toNativeSeparators(destPath + QDir::separator() + di.fileName()), newParent.get(), appDataID, cancelToken);
-                    toret = r && toret;
+                    uploadRecursivelyIntoASyncedLocation(di.fileInfo(), QDir::toNativeSeparators(destPath + QDir::separator() + di.fileName()), newParent.get(), appDataID);
                 }
             }
         }
     }
-    return  toret;
 }
 
-bool MegaUploader::upload(QFileInfo info, const QString &nodeName, MegaNode *parent, unsigned long long appDataID, MegaCancelToken* cancelToken)
+void MegaUploader::upload(QFileInfo info, const QString &nodeName, MegaNode *parent, unsigned long long appDataID, const std::shared_ptr<TransferBatch>& transferBatch)
 {
     QPointer<MegaUploader> safePointer = this;
 
     if (!safePointer)
     {
-        return false;
+        return;
     }
 
     QString fileName = info.fileName();
@@ -214,7 +213,17 @@ bool MegaUploader::upload(QFileInfo info, const QString &nodeName, MegaNode *par
     {
         if (!destPath.startsWith(QFileInfo(currentPath).canonicalFilePath()))//to avoid recurses //note: destPath should have been cannonicalized already
         {
-            QtConcurrent::run(this, &MegaUploader::uploadRecursivelyIntoASyncedLocation, QFileInfo(currentPath), destPath, parent->copy(), appDataID, cancelToken);
+            std::shared_ptr<QFutureWatcher<void>> futureWatcher = std::make_shared<QFutureWatcher<void>>();
+            futureWatcher->setProperty(FILE_PATH, info.absoluteFilePath());
+
+            connect(futureWatcher.get(), &QFutureWatcher<void>::finished,
+                    this, &MegaUploader::onUploadRecursivelyIntoASyncedLocationFinished);
+
+            transferBatch->add(info.absoluteFilePath());
+            futureWatcher->setFuture(QtConcurrent::run(this, &MegaUploader::uploadRecursivelyIntoASyncedLocation, QFileInfo(currentPath), destPath, parent->copy(), appDataID));
+            mUploadRecursivelyIntoASyncedLocationFuture.insert(info.absoluteFilePath(), futureWatcher);
+
+            emit startingTransfers(false);
         }
         else
         {
@@ -227,10 +236,23 @@ bool MegaUploader::upload(QFileInfo info, const QString &nodeName, MegaNode *par
     {
         QString msg = QString::fromLatin1("Starting upload : '%1' - '%2' - '%3'").arg(info.fileName(), currentPath).arg(appDataID);
         megaApi->log(MegaApi::LOG_LEVEL_DEBUG, msg.toUtf8().constData());
-        startUpload(currentPath, nodeName, appDataID, parent, cancelToken);
-        return true;
+        transferBatch->add(info.absoluteFilePath());
+        startUpload(currentPath, nodeName, appDataID, parent, transferBatch->getCancelTokenPtr());
+
+        emit startingTransfers(true);
     }
-    return false;
+}
+
+void MegaUploader::onUploadRecursivelyIntoASyncedLocationFinished()
+{
+    auto futureWatcher = dynamic_cast<QFutureWatcher<void>*>(sender());
+    if(futureWatcher)
+    {
+        auto filePath = futureWatcher->property(FILE_PATH).toString();
+        emit uploadRecursivelyIntoASyncedLocationFinished(filePath);
+
+        mUploadRecursivelyIntoASyncedLocationFuture.remove(filePath);
+    }
 }
 
 void MegaUploader::startUpload(const QString& localPath, const QString &nodeName, unsigned long long appDataID, MegaNode* parent, MegaCancelToken* cancelToken)

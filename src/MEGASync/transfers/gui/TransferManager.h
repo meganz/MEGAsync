@@ -42,7 +42,7 @@ public:
     ~TransferManager();
 
     void pauseModel(bool state);
-    void enterBlockingState();
+    void enterBlockingState(bool canBeCancelled);
     void leaveBlockingState(bool fromCancellation);
     void disableCancelling();
 

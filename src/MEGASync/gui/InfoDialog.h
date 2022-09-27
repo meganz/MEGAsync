@@ -67,7 +67,7 @@ public:
 
     void reset();
 
-    void enterBlockingState();
+    void enterBlockingState(bool canBeCancelled);
     void leaveBlockingState(bool fromCancellation);
     void disableCancelling();
 
