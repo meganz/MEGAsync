@@ -10,13 +10,13 @@
 using namespace mega;
 
 const char* SyncController::DEFAULT_BACKUPS_ROOT_DIRNAME = "Backups";
-mega::MegaHandle SyncController::mMyBackupsHandle = INVALID_HANDLE;
 
 SyncController::SyncController(QObject* parent)
     : QObject(parent),
       mApi(MegaSyncApp->getMegaApi()),
       mDelegateListener (new QTMegaRequestListener(mApi, this)),
-      mSyncModel(SyncModel::instance())
+      mSyncModel(SyncModel::instance()),
+      mMyBackupsHandle(INVALID_HANDLE)
 {
     // The controller shouldn't ever be instantiated before we have an API and a SyncModel available
     assert(mApi);
@@ -259,8 +259,6 @@ SyncController::Syncability SyncController::isLocalFolderSyncable(const QString&
 // The message to display to the user is stored in <message>.
 SyncController::Syncability SyncController::isRemoteFolderSyncable(std::shared_ptr<mega::MegaNode> node, QString& message)
 {
-    //TODO: Add exact match check with message: tr("The selected MEGA folder is already synced");
-    //It is suppossed that the SDK team will add a new syncError to reflect that error
     Syncability syncability (Syncability::CANT_SYNC);
     std::unique_ptr<MegaError> err (MegaSyncApp->getMegaApi()->isNodeSyncableWithError(node.get()));
     switch (err->getErrorCode())
@@ -292,6 +290,11 @@ SyncController::Syncability SyncController::isRemoteFolderSyncable(std::shared_p
     {
         switch (err->getSyncError())
         {
+        case SyncError::ACTIVE_SYNC_SAME_PATH:
+        {
+            message = tr("The selected MEGA folder is already synced");
+            break;
+        }
         case SyncError::ACTIVE_SYNC_BELOW_PATH:
         {
             message = tr("Folder contents already synced");

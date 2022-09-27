@@ -101,7 +101,7 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOUIC_SEARCH_PATHS "${MEGAsyncDir}/gui/${UiDir}"
                                "${MEGAsyncDir}/transfers/gui/${UiDir}"
-							   "${MEGAsyncDir}/transfers/gui/DuplicatedNodeDialogs/${UiDir}")
+                               "${MEGAsyncDir}/transfers/gui/DuplicatedNodeDialogs/${UiDir}")
 
 #AUTOMOC
 set(CMAKE_AUTOMOC ON)
@@ -178,7 +178,6 @@ set (FORMS
     ${MEGAsyncDir}/gui/${UiDir}/AddExclusionDialog.ui
     ${MEGAsyncDir}/gui/${UiDir}/StatusInfo.ui
     ${MEGAsyncDir}/gui/${UiDir}/PSAwidget.ui
-    ${MEGAsyncDir}/gui/${UiDir}/QSyncItemWidget.ui
     ${MEGAsyncDir}/gui/${UiDir}/UpgradeOverStorage.ui
     ${MEGAsyncDir}/gui/${UiDir}/ChangePassword.ui
     ${MEGAsyncDir}/gui/${UiDir}/Login2FA.ui
@@ -289,7 +288,6 @@ set (MOC_INPUT
     ${MEGAsyncDir}/gui/PSAwidget.h
     ${MEGAsyncDir}/gui/QAlertsModel.h
     ${MEGAsyncDir}/gui/MegaItemModel.h
-    ${MEGAsyncDir}/gui/QSyncItemWidget.h
     ${MEGAsyncDir}/gui/SettingsDialog.h
     ${MEGAsyncDir}/gui/SetupWizard.h
     ${MEGAsyncDir}/gui/NotificationsSettings.h
@@ -327,13 +325,13 @@ set (MOC_INPUT
     ${MEGAsyncDir}/gui/BlurredShadowEffect.h
     ${MEGAsyncDir}/gui/ButtonIconManager.h
     ${MEGAsyncDir}/gui/DialogGeometryRetainer.h
-    ${MEGAsyncDir}/gui/NodeNameSetterDialog/NodeNameSetterDialog.cpp
-    ${MEGAsyncDir}/gui/NodeNameSetterDialog/NewFolderDialog.cpp
-    ${MEGAsyncDir}/gui/NodeNameSetterDialog/RenameNodeDialog.cpp
+    ${MEGAsyncDir}/gui/NodeNameSetterDialog/NodeNameSetterDialog.h
+    ${MEGAsyncDir}/gui/NodeNameSetterDialog/NewFolderDialog.h
+    ${MEGAsyncDir}/gui/NodeNameSetterDialog/RenameNodeDialog.h
     ${MEGAsyncDir}/gui/CancelConfirmWidget.h	
 
     ${MEGAsyncDir}/platform/notificator.h
-	${MEGAsyncDir}/platform/PlatformStrings.h
+    ${MEGAsyncDir}/platform/PlatformStrings.h
     
     ${MEGAsyncDir}/mega/bindings/qt/QTMegaGlobalListener.h
     ${MEGAsyncDir}/mega/bindings/qt/QTMegaListener.h
@@ -342,3 +340,577 @@ set (MOC_INPUT
     
     ${MEGAsyncDir}/control/TransferBatch.h    
     
+    ${MEGAsyncDir}/transfers/model/TransfersManagerSortFilterProxyModel.h
+    ${MEGAsyncDir}/transfers/model/TransfersSortFilterProxyBaseModel.h
+    ${MEGAsyncDir}/transfers/model/TransfersModel.h
+    ${MEGAsyncDir}/transfers/model/InfoDialogTransfersProxyModel.h
+    ${MEGAsyncDir}/transfers/gui/TransferItem.h
+    ${MEGAsyncDir}/transfers/gui/TransferManager.h
+    ${MEGAsyncDir}/transfers/gui/TransfersWidget.h
+    ${MEGAsyncDir}/transfers/gui/TransfersStatusWidget.h
+    ${MEGAsyncDir}/transfers/gui/TransfersSummaryWidget.h
+    ${MEGAsyncDir}/transfers/gui/InfoDialogTransfersWidget.h
+    ${MEGAsyncDir}/transfers/gui/MegaTransferDelegate.h
+    ${MEGAsyncDir}/transfers/gui/MegaTransferView.h
+    ${MEGAsyncDir}/transfers/gui/TransferWidgetHeaderItem.h
+    ${MEGAsyncDir}/transfers/gui/TransferScanCancelUi.h
+    ${MEGAsyncDir}/transfers/gui/DuplicatedNodeDialogs/DuplicatedNodeDialog.h
+    ${MEGAsyncDir}/transfers/gui/DuplicatedNodeDialogs/DuplicatedNodeInfo.h
+    ${MEGAsyncDir}/transfers/gui/DuplicatedNodeDialogs/DuplicatedNodeItem.h
+    ${MEGAsyncDir}/transfers/gui/DuplicatedNodeDialogs/DuplicatedUploadChecker.h
+)
+
+if (NOT CMAKE_HOST_APPLE)
+    set (MOC_INPUT ${MOC_INPUT}
+        ${MEGAsyncDir}/gui/LockedPopOver.h
+        ${MEGAsyncDir}/gui/SwitchButton.h
+        )
+endif (NOT CMAKE_HOST_APPLE)
+
+if (CMAKE_HOST_WIN32)
+    set (MOC_INPUT ${MOC_INPUT}
+        ${MEGAsyncDir}/platform/win/WinShellDispatcherTask.h
+        )
+elseif (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
+    set (MOC_INPUT ${MOC_INPUT}
+        ${MEGAsyncDir}/gui/PermissionsDialog.h
+        ${MEGAsyncDir}/gui/PermissionsWidget.h
+
+
+        ${MEGAsyncDir}/platform/linux/LinuxPlatform.h
+        ${MEGAsyncDir}/platform/linux/ExtServer.h
+        ${MEGAsyncDir}/platform/linux/NotifyServer.h
+        )
+else()
+    set (MOC_INPUT ${MOC_INPUT}
+
+        ${MEGAsyncDir}/gui/CocoaHelpButton.h
+        ${MEGAsyncDir}/gui/CocoaSwitchButton.h
+        ${MEGAsyncDir}/gui/MegaSystemTrayIcon.h
+
+        ${MEGAsyncDir}/gui/PermissionsDialog.h
+        ${MEGAsyncDir}/gui/PermissionsWidget.h
+
+        ${MEGAsyncDir}/gui/QMacSpinningProgressIndicator.h
+        ${MEGAsyncDir}/gui/QSegmentedControl.h
+
+        ${MEGAsyncDir}/platform/macx/MacXPlatform.h
+        ${MEGAsyncDir}/platform/macx/MacXFunctions.h
+        ${MEGAsyncDir}/platform/macx/macnotificationhandler.h
+        ${MEGAsyncDir}/platform/macx/NotificationDelegate.h
+        ${MEGAsyncDir}/platform/macx/MacXSystemServiceTask.h
+        ${MEGAsyncDir}/platform/macx/MEGAService.h
+        ${MEGAsyncDir}/platform/macx/ClientSide.h
+        ${MEGAsyncDir}/platform/macx/ServerSide.h
+        ${MEGAsyncDir}/platform/macx/MacXExtServer.h
+        ${MEGAsyncDir}/platform/macx/MacXExtServerService.h
+        ${MEGAsyncDir}/platform/macx/MacXLocalServer.h
+        ${MEGAsyncDir}/platform/macx/MacXLocalServerPrivate.h
+        ${MEGAsyncDir}/platform/macx/MacXLocalSocket.h
+        ${MEGAsyncDir}/platform/macx/MacXLocalSocketPrivate.h
+        ${MEGAsyncDir}/platform/macx/LockedPopOver.h
+        ${MEGAsyncDir}/platform/macx/Protocol.h
+        )
+endif()
+
+set (SRCS
+    ${MEGAsyncDir}/MegaApplication.cpp
+    ${MEGAsyncDir}/DesktopNotifications.cpp
+    ${MEGAsyncDir}/TransferQuota.cpp
+    ${MEGAsyncDir}/RemovedSharesNotificator.cpp
+    ${MEGAsyncDir}/UserAlertTimedClustering.cpp
+    ${MEGAsyncDir}/ScaleFactorManager.cpp
+    ${MEGAsyncDir}/CommonMessages.cpp
+    ${MEGAsyncDir}/ScanStageController.cpp
+    ${MEGAsyncDir}/EventUpdater.cpp
+
+    ${FORMS}
+    ${MOC_INPUT}
+    ${MEGAsyncDir}/gui/Resources_${UiDir}.qrc
+
+    ${MEGAsyncDir}/gui/AlertItem.cpp
+    ${MEGAsyncDir}/gui/AlertFilterType.cpp
+    ${MEGAsyncDir}/gui/BugReportDialog.cpp
+    ${MEGAsyncDir}/gui/CircularUsageProgressBar.cpp
+    ${MEGAsyncDir}/gui/FilterAlertWidget.cpp
+    ${MEGAsyncDir}/gui/MegaAlertDelegate.cpp
+    ${MEGAsyncDir}/gui/NotificationsSettings.cpp
+    ${MEGAsyncDir}/gui/QAlertsModel.cpp
+    ${MEGAsyncDir}/gui/QFilterAlertsModel.cpp
+    ${MEGAsyncDir}/gui/SettingsDialog.cpp
+    ${MEGAsyncDir}/gui/BalloonToolTip.cpp
+    ${MEGAsyncDir}/gui/InfoDialog.cpp
+    ${MEGAsyncDir}/gui/QtPositioningBugFixer.cpp
+    ${MEGAsyncDir}/gui/SetupWizard.cpp
+    ${MEGAsyncDir}/gui/NodeSelector.cpp
+    ${MEGAsyncDir}/gui/FolderBinder.cpp
+    ${MEGAsyncDir}/gui/BindFolderDialog.cpp
+    ${MEGAsyncDir}/gui/UploadToMegaDialog.cpp
+    ${MEGAsyncDir}/gui/PasteMegaLinksDialog.cpp
+    ${MEGAsyncDir}/gui/ImportMegaLinksDialog.cpp
+    ${MEGAsyncDir}/gui/ImportListWidgetItem.cpp
+    ${MEGAsyncDir}/gui/CrashReportDialog.cpp
+    ${MEGAsyncDir}/gui/MultiQFileDialog.cpp
+    ${MEGAsyncDir}/gui/MegaProxyStyle.cpp
+    ${MEGAsyncDir}/gui/AccountDetailsDialog.cpp
+    ${MEGAsyncDir}/gui/DownloadFromMegaDialog.cpp
+    ${MEGAsyncDir}/gui/MegaItemModel.cpp
+    ${MEGAsyncDir}/gui/MegaItem.cpp
+    ${MEGAsyncDir}/gui/ChangeLogDialog.cpp
+    ${MEGAsyncDir}/gui/GuestWidget.cpp
+    ${MEGAsyncDir}/gui/HighDpiResize.cpp
+    ${MEGAsyncDir}/gui/StreamingFromMegaDialog.cpp
+    ${MEGAsyncDir}/gui/MegaProgressCustomDialog.cpp
+    ${MEGAsyncDir}/gui/UpgradeDialog.cpp
+    ${MEGAsyncDir}/gui/PlanWidget.cpp
+    ${MEGAsyncDir}/gui/InfoWizard.cpp
+    ${MEGAsyncDir}/gui/QMegaMessageBox.cpp
+    ${MEGAsyncDir}/gui/AvatarWidget.cpp
+    ${MEGAsyncDir}/gui/MenuItemAction.cpp
+    ${MEGAsyncDir}/gui/AddExclusionDialog.cpp
+    ${MEGAsyncDir}/gui/StatusInfo.cpp
+    ${MEGAsyncDir}/gui/ChangePassword.cpp
+    ${MEGAsyncDir}/gui/PasswordLineEdit.cpp
+    ${MEGAsyncDir}/gui/PSAwidget.cpp
+    ${MEGAsyncDir}/gui/ElidedLabel.cpp
+    ${MEGAsyncDir}/gui/UpgradeOverStorage.cpp
+    ${MEGAsyncDir}/gui/Login2FA.cpp
+    ${MEGAsyncDir}/gui/VerifyLockMessage.cpp
+    ${MEGAsyncDir}/gui/MegaInfoMessage.cpp
+    ${MEGAsyncDir}/gui/WaitingSpinnerWidget.cpp
+    ${MEGAsyncDir}/gui/OverQuotaDialog.cpp
+    ${MEGAsyncDir}/gui/ProxySettings.cpp
+    ${MEGAsyncDir}/gui/BandwidthSettings.cpp
+    ${MEGAsyncDir}/gui/BackupsWizard.cpp
+    ${MEGAsyncDir}/gui/SyncsMenu.cpp
+    ${MEGAsyncDir}/gui/AddBackupDialog.cpp
+    ${MEGAsyncDir}/gui/RemoveBackupDialog.cpp
+    ${MEGAsyncDir}/gui/SwitchButton.cpp
+    ${MEGAsyncDir}/gui/MegaItemDelegates.cpp
+    ${MEGAsyncDir}/gui/MegaItemProxyModel.cpp
+    ${MEGAsyncDir}/gui/MegaItemTreeView.cpp
+    ${MEGAsyncDir}/gui/GuiUtilities.cpp
+    ${MEGAsyncDir}/gui/UserAttributesRequests/DeviceName.cpp
+    ${MEGAsyncDir}/gui/UserAttributesRequests/FullName.cpp
+    ${MEGAsyncDir}/gui/UserAttributesRequests/Avatar.cpp
+    ${MEGAsyncDir}/gui/ButtonIconManager.cpp
+    ${MEGAsyncDir}/gui/EventHelper.cpp
+    ${MEGAsyncDir}/gui/GuiUtilities.cpp
+    ${MEGAsyncDir}/gui/ScanningWidget.cpp
+    ${MEGAsyncDir}/gui/BlurredShadowEffect.cpp
+    ${MEGAsyncDir}/gui/CancelConfirmWidget.cpp
+    ${MEGAsyncDir}/gui/MegaDelegateHoverManager.cpp
+    ${MEGAsyncDir}/gui/NodeNameSetterDialog/NodeNameSetterDialog.cpp 
+    ${MEGAsyncDir}/gui/NodeNameSetterDialog/NewFolderDialog.cpp 
+    ${MEGAsyncDir}/gui/NodeNameSetterDialog/RenameNodeDialog.cpp
+
+    ${MEGAsyncDir}/transfers/gui/TransfersStatusWidget.cpp
+    ${MEGAsyncDir}/transfers/gui/TransferItem.cpp
+    ${MEGAsyncDir}/transfers/gui/InfoDialogTransfersWidget.cpp
+    ${MEGAsyncDir}/transfers/gui/TransferManager.cpp
+    ${MEGAsyncDir}/transfers/gui/TransfersWidget.cpp
+    ${MEGAsyncDir}/transfers/gui/MegaTransferDelegate.cpp
+    ${MEGAsyncDir}/transfers/gui/MegaTransferView.cpp
+    ${MEGAsyncDir}/transfers/gui/TransfersStatusWidget.cpp
+    ${MEGAsyncDir}/transfers/gui/TransfersSummaryWidget.cpp
+    ${MEGAsyncDir}/transfers/gui/TransferWidgetHeaderItem.cpp
+    ${MEGAsyncDir}/transfers/gui/TransferScanCancelUi.cpp
+    ${MEGAsyncDir}/transfers/gui/TransferManagerLoadingItem.cpp
+    ${MEGAsyncDir}/transfers/model/TransfersManagerSortFilterProxyModel.cpp
+    ${MEGAsyncDir}/transfers/model/TransfersModel.cpp
+    ${MEGAsyncDir}/transfers/model/InfoDialogTransfersProxyModel.cpp
+    ${MEGAsyncDir}/transfers/gui/TransferBaseDelegateWidget.cpp
+    ${MEGAsyncDir}/transfers/gui/InfoDialogTransferDelegateWidget.cpp
+    ${MEGAsyncDir}/transfers/gui/TransferManagerDelegateWidget.cpp
+    ${MEGAsyncDir}/transfers/gui/DuplicatedNodeDialogs/DuplicatedNodeDialog.cpp
+    ${MEGAsyncDir}/transfers/gui/DuplicatedNodeDialogs/DuplicatedNodeInfo.cpp
+    ${MEGAsyncDir}/transfers/gui/DuplicatedNodeDialogs/DuplicatedNodeItem.cpp
+    ${MEGAsyncDir}/transfers/gui/DuplicatedNodeDialogs/DuplicatedUploadChecker.cpp
+
+    ${MEGAsyncDir}/mega/bindings/qt/QTMegaRequestListener.cpp
+    ${MEGAsyncDir}/mega/bindings/qt/QTMegaTransferListener.cpp
+    ${MEGAsyncDir}/mega/bindings/qt/QTMegaGlobalListener.cpp
+    ${MEGAsyncDir}/mega/bindings/qt/QTMegaListener.cpp
+    ${MEGAsyncDir}/mega/bindings/qt/QTMegaEvent.cpp
+
+    ${MEGAsyncDir}/control/HTTPServer.cpp
+    ${MEGAsyncDir}/control/Preferences.cpp
+    ${MEGAsyncDir}/control/LinkProcessor.cpp
+    ${MEGAsyncDir}/control/MegaUploader.cpp
+    ${MEGAsyncDir}/control/UpdateTask.cpp
+    ${MEGAsyncDir}/control/ThreadPool.cpp
+    ${MEGAsyncDir}/control/EncryptedSettings.cpp
+    ${MEGAsyncDir}/control/CrashHandler.cpp
+    ${MEGAsyncDir}/control/ExportProcessor.cpp
+    ${MEGAsyncDir}/control/Utilities.cpp
+    ${MEGAsyncDir}/control/MegaDownloader.cpp
+    ${MEGAsyncDir}/control/MegaSyncLogger.cpp
+    ${MEGAsyncDir}/control/ConnectivityChecker.cpp
+    ${MEGAsyncDir}/control/TransferRemainingTime.cpp
+    ${MEGAsyncDir}/control/SyncController.cpp
+    ${MEGAsyncDir}/control/TransferBatch.cpp    
+    ${MEGAsyncDir}/control/UserAttributesManager.cpp
+    ${MEGAsyncDir}/control/TextDecorator.cpp
+
+    ${MEGAsyncDir}/model/SyncSettings.cpp
+    ${MEGAsyncDir}/model/SyncModel.cpp
+    ${MEGAsyncDir}/gui/BackupItemModel.cpp
+    ${MEGAsyncDir}/gui/SyncItemModel.cpp
+    ${MEGAsyncDir}/gui/SyncTableView.cpp
+    ${MEGAsyncDir}/gui/BackupTableView.cpp
+    ${MEGAsyncDir}/gui/BackupsWizard.cpp
+    ${MEGAsyncDir}/gui/AddBackupDialog.cpp
+    ${MEGAsyncDir}/gui/RemoveBackupDialog.cpp
+    ${MEGAsyncDir}/platform/notificator.cpp
+
+    ${MEGAsyncDir}/qtlockedfile/qtlockedfile.cpp
+)
+
+
+if (NOT CMAKE_HOST_APPLE)
+   set (SRCS ${SRCS}
+        ${MEGAsyncDir}/gui/LockedPopOver.cpp
+       )
+endif (NOT CMAKE_HOST_APPLE)
+
+if (CMAKE_HOST_WIN32)
+    set (SRCS ${SRCS}
+
+        ${MEGAsyncDir}/qtlockedfile/qtlockedfile_win.cpp
+
+
+        ${MEGAsyncDir}/google_breakpad/client/windows/handler/exception_handler.cc
+        ${MEGAsyncDir}/google_breakpad/common/windows/string_utils.cc
+        ${MEGAsyncDir}/google_breakpad/common/windows/guid_string.cc
+        ${MEGAsyncDir}/google_breakpad/client/windows/crash_generation/crash_generation_client.cc
+
+
+
+        ${MEGAsyncDir}/platform/win/WindowsPlatform.cpp
+        ${MEGAsyncDir}/platform/win/WinShellDispatcherTask.cpp
+        ${MEGAsyncDir}/platform/win/WinTrayReceiver.cpp
+        ${MEGAsyncDir}/platform/win/wintoastlib.cpp
+        ${MEGAsyncDir}/platform/win/PlatformStrings.cpp
+
+        ${MEGAsyncDir}/icon.rc
+        )
+elseif (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
+    set (SRCS ${SRCS}
+
+        ${MEGAsyncDir}/gui/PermissionsDialog.cpp
+        ${MEGAsyncDir}/gui/PermissionsWidget.cpp
+
+        ${MEGAsyncDir}/qtlockedfile/qtlockedfile_unix.cpp
+
+
+        ${MEGAsyncDir}/google_breakpad/client/linux/crash_generation/crash_generation_client.cc
+        ${MEGAsyncDir}/google_breakpad/client/linux/handler/exception_handler.cc
+        ${MEGAsyncDir}/google_breakpad/client/linux/handler/minidump_descriptor.cc
+        ${MEGAsyncDir}/google_breakpad/client/linux/minidump_writer/minidump_writer.cc
+        ${MEGAsyncDir}/google_breakpad/client/linux/minidump_writer/linux_dumper.cc
+        ${MEGAsyncDir}/google_breakpad/client/linux/minidump_writer/linux_ptrace_dumper.cc
+        ${MEGAsyncDir}/google_breakpad/client/linux/log/log.cc
+        ${MEGAsyncDir}/google_breakpad/client/minidump_file_writer.cc
+        ${MEGAsyncDir}/google_breakpad/common/linux/linux_libc_support.cc
+        ${MEGAsyncDir}/google_breakpad/common/linux/file_id.cc
+        ${MEGAsyncDir}/google_breakpad/common/linux/memory_mapped_file.cc
+        ${MEGAsyncDir}/google_breakpad/common/linux/safe_readlink.cc
+        ${MEGAsyncDir}/google_breakpad/common/linux/guid_creator.cc
+        ${MEGAsyncDir}/google_breakpad/common/linux/elfutils.cc
+        ${MEGAsyncDir}/google_breakpad/common/string_conversion.cc
+        ${MEGAsyncDir}/google_breakpad/common/convert_UTF.c
+
+        ${MEGAsyncDir}/platform/linux/LinuxPlatform.cpp
+        ${MEGAsyncDir}/platform/linux/ExtServer.cpp
+        ${MEGAsyncDir}/platform/linux/NotifyServer.cpp
+        ${MEGAsyncDir}/platform/linux/PlatformStrings.cpp
+        )
+else()
+    set (SRCS ${SRCS}
+
+        ${MEGAsyncDir}/gui/PermissionsDialog.cpp
+        ${MEGAsyncDir}/gui/PermissionsWidget.cpp
+
+        ${MEGAsyncDir}/gui/CocoaHelpButton.mm
+        ${MEGAsyncDir}/gui/CocoaSwitchButton.mm
+        ${MEGAsyncDir}/gui/MegaSystemTrayIcon.mm
+
+        ${MEGAsyncDir}/gui/QMacSpinningProgressIndicator.mm
+        ${MEGAsyncDir}/gui/QSegmentedControl.mm
+
+        ${MEGAsyncDir}/qtlockedfile/qtlockedfile_unix.cpp
+
+        ${MEGAsyncDir}/google_breakpad/client/mac/handler/exception_handler.cc
+        ${MEGAsyncDir}/google_breakpad/client/mac/crash_generation/crash_generation_client.cc
+        ${MEGAsyncDir}/google_breakpad/client/mac/crash_generation/crash_generation_server.cc
+        ${MEGAsyncDir}/google_breakpad/client/mac/handler/minidump_generator.cc
+        ${MEGAsyncDir}/google_breakpad/client/mac/handler/dynamic_images.cc
+        ${MEGAsyncDir}/google_breakpad/client/mac/handler/breakpad_nlist_64.cc
+        ${MEGAsyncDir}/google_breakpad/client/minidump_file_writer.cc
+        ${MEGAsyncDir}/google_breakpad/common/mac/macho_id.cc
+        ${MEGAsyncDir}/google_breakpad/common/mac/macho_walker.cc
+        ${MEGAsyncDir}/google_breakpad/common/mac/macho_utilities.cc
+        ${MEGAsyncDir}/google_breakpad/common/mac/string_utilities.cc
+        ${MEGAsyncDir}/google_breakpad/common/mac/file_id.cc
+        ${MEGAsyncDir}/google_breakpad/common/mac/bootstrap_compat.cc
+        ${MEGAsyncDir}/google_breakpad/common/md5.cc
+        ${MEGAsyncDir}/google_breakpad/common/string_conversion.cc
+        ${MEGAsyncDir}/google_breakpad/common/linux/linux_libc_support.cc
+        ${MEGAsyncDir}/google_breakpad/common/convert_UTF.c
+
+        ${MEGAsyncDir}/google_breakpad/common/mac/MachIPC.mm
+
+
+        ${MEGAsyncDir}/platform/macx/MacXFunctions.h
+        ${MEGAsyncDir}/platform/macx/macnotificationhandler.h
+        ${MEGAsyncDir}/platform/macx/NotificationDelegate.h
+        ${MEGAsyncDir}/platform/macx/MacXSystemServiceTask.h
+        ${MEGAsyncDir}/platform/macx/MEGAService.h
+        ${MEGAsyncDir}/platform/macx/ClientSide.h
+        ${MEGAsyncDir}/platform/macx/ServerSide.h
+        ${MEGAsyncDir}/platform/macx/MacXExtServer.h
+        ${MEGAsyncDir}/platform/macx/MacXExtServerService.h
+        ${MEGAsyncDir}/platform/macx/MacXLocalServer.h
+        ${MEGAsyncDir}/platform/macx/MacXLocalServerPrivate.h
+        ${MEGAsyncDir}/platform/macx/MacXLocalSocket.h
+        ${MEGAsyncDir}/platform/macx/MacXLocalSocketPrivate.h
+        ${MEGAsyncDir}/platform/macx/LockedPopOver.h
+        ${MEGAsyncDir}/platform/macx/Protocol.h
+        ${MEGAsyncDir}/platform/macx/QCustomMacToolbar.h
+
+        ${MEGAsyncDir}/platform/macx/MacXPlatform.cpp
+        ${MEGAsyncDir}/platform/macx/MacXFunctions.mm
+        ${MEGAsyncDir}/platform/macx/macnotificationhandler.mm
+        ${MEGAsyncDir}/platform/macx/NotificationDelegate.mm
+        ${MEGAsyncDir}/platform/macx/MacXSystemServiceTask.mm
+        ${MEGAsyncDir}/platform/macx/MEGAService.mm
+        ${MEGAsyncDir}/platform/macx/ClientSide.mm
+        ${MEGAsyncDir}/platform/macx/ServerSide.mm
+        ${MEGAsyncDir}/platform/macx/MacXExtServer.mm
+        ${MEGAsyncDir}/platform/macx/MacXExtServerService.cpp
+        ${MEGAsyncDir}/platform/macx/MacXLocalServer.mm
+        ${MEGAsyncDir}/platform/macx/MacXLocalServerPrivate.mm
+        ${MEGAsyncDir}/platform/macx/MacXLocalSocket.mm
+        ${MEGAsyncDir}/platform/macx/MacXLocalSocketPrivate.mm
+        ${MEGAsyncDir}/platform/macx/LockedPopOver.mm
+        ${MEGAsyncDir}/platform/macx/QCustomMacToolbar.mm
+        ${MEGAsyncDir}/platform/macx/PlatformStrings.cpp
+
+        )
+endif()
+
+
+add_definitions( -DQT_DISABLE_DEPRECATED_BEFORE=0x000000 -DQT_NO_CAST_FROM_ASCII -DQT_NO_CAST_TO_ASCII -DUNICODE -DQT_WIDGETS_LIB )
+add_definitions( -DSHOW_LOGS -D_CRT_SECURE_NO_WARNINGS -DMEGA_QT_LOGGING -DQT_NO_CAST_FROM_ASCII -DPSAPI_VERSION=1 -DQT_WINEXTRAS_LIB -DQT_GUI_LIB -DQT_NETWORK_LIB -DQT_CORE_LIB )
+ #TODO: remove UNICODE (in config.h) and use the WIN32 definition accordingly only for Windows
+
+if (ENABLE_LOG_PERFORMANCE)
+    add_definitions(-DENABLE_LOG_PERFORMANCE)
+endif()
+
+if(WIN32)
+    add_definitions( -DUNICODE -D_UNICODE )  # needed for visual studio projects to use the unicode runtime libraries
+
+    #supported windows version: 7 and beyond
+    add_definitions( -DNTDDI_VERSION=NTDDI_WIN7 )
+    add_definitions( -D_WIN32_WINNT=0x0601 ) # 0601: windows 7
+endif()
+
+
+set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DCREATE_COMPATIBLE_MINIDUMPS -DLOG_TO_STDOUT -DLOG_TO_LOGGER")
+
+if(CMAKE_HOST_APPLE)
+    set(MAC_RESOURCES "${MEGAsyncDir}/app.icns" "${MEGAsyncDir}/folder.icns" "${MEGAsyncDir}/folder_yosemite.icns" "${MEGAsyncDir}/appicon32.tiff")
+
+    set_source_files_properties(${MAC_RESOURCES} PROPERTIES MACOSX_PACKAGE_LOCATION "Resources")
+    add_executable(MEGAsync MACOSX_BUNDLE ${MAC_RESOURCES} ${MEGAsyncDir}/main.cpp ${SRCS} ${QM_FILES})
+    set_target_properties(MEGAsync PROPERTIES
+                                   MACOSX_BUNDLE_INFO_PLIST "${MEGAsyncDir}/Info_MEGA.plist"
+                                   MACOSX_BUNDLE_SHORT_VERSION "${MEGASYNC_VERSION}")
+elseif(CMAKE_HOST_WIN32)
+    add_executable(MEGAsync WIN32 ${MEGAsyncDir}/main.cpp ${SRCS} ${QM_FILES})
+    set_property(TARGET MEGAsync PROPERTY MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>DLL")
+    set_target_properties(MEGAsync PROPERTIES VS_DEBUGGER_ENVIRONMENT "${3RDPARTY_RUNTIME_PATH}")
+else()
+    add_executable(MEGAsync ${MEGAsyncDir}/main.cpp ${SRCS} ${QM_FILES})
+endif()
+
+
+target_include_directories(MEGAsync PRIVATE
+                                    ${MEGAsyncDir}
+                                    ${MEGAsyncDir}/transfers
+                                    ${MEGAsyncDir}/transfers/gui
+                                    ${MEGAsyncDir}/transfers/model
+                                    ${MEGAsyncDir}/google_breakpad
+                                    )
+
+if (CMAKE_HOST_WIN32)
+    set(TARGET_LINK_LIBRARIES_PLATFORM ${TARGET_LINK_LIBRARIES_PLATFORM} ole32 Shell32 crypt32 taskschd Kernel32.lib Iphlpapi.lib Userenv.lib Psapi.lib )
+    set_target_properties(MEGAsync  PROPERTIES LINK_FLAGS_DEBUG "/SUBSYSTEM:WINDOWS /ENTRY:mainCRTStartup /LARGEADDRESSAWARE /SAFESEH:NO /DEBUG " )
+    set_target_properties(MEGAsync  PROPERTIES LINK_FLAGS_RELEASE "/SUBSYSTEM:WINDOWS /ENTRY:mainCRTStartup /LARGEADDRESSAWARE /SAFESEH:NO /DEBUG " )
+else()
+
+if (CMAKE_HOST_APPLE)
+    set_source_files_properties(app.icns folder.icns folder_yosemite.icns appicon32.tiff PROPERTIES MACOSX_PACKAGE_LOCATION "Resources")
+    endif()
+
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC")
+endif()
+
+target_link_libraries(MEGAsync Mega Qt5::Core Qt5::Widgets Qt5::Gui Qt5::Network ${TARGET_LINK_LIBRARIES_PLATFORM})
+
+# Amend manifest to tell Windows that the application is DPI aware (needed for Windows 8.1 and up)
+IF (MSVC)
+    ADD_CUSTOM_COMMAND(
+        TARGET MEGAsync
+        POST_BUILD
+        COMMAND "mt.exe" -manifest \"${CMAKE_CURRENT_SOURCE_DIR}\\MEGAsync.exe.manifest\" -inputresource:\"$<TARGET_FILE:MEGAsync>\"\;\#1 -outputresource:\"$<TARGET_FILE:MEGAsync>\"\;\#1
+        COMMENT "Adding display aware manifest..."
+    )
+ENDIF(MSVC)
+
+if (CMAKE_HOST_WIN32)
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /wd4127")  # 4127: conditional expression is constant  (occurs in QT headers)
+endif()
+
+# Place empty.lproj and PkgInfo files, needed to translate strings in native dialogs according system locale and identify the bundle as an application within Finder.
+if (CMAKE_HOST_APPLE)
+    add_custom_command(
+            TARGET MEGAsync
+            POST_BUILD
+            COMMAND xcrun actool --compile "$<TARGET_FILE_DIR:MEGAsync>/../Resources" --platform macosx --minimum-deployment-target ${CMAKE_OSX_DEPLOYMENT_TARGET} "${MEGAsyncDir}/gui/images/Images.xcassets" > /dev/null 2>&1
+            COMMENT "Building Assets.car in Resources..."
+            VERBATIM
+            )
+    add_custom_command(
+            TARGET MEGAsync
+            POST_BUILD
+            COMMAND touch \"$<TARGET_FILE_DIR:MEGAsync>/../Resources/empty.lproj\"
+            COMMENT "Adding empty.lproj file to Resources..."
+            )
+    add_custom_command(
+            TARGET MEGAsync
+            POST_BUILD
+            COMMAND echo "APPL????" > \"$<TARGET_FILE_DIR:MEGAsync>/../PkgInfo\"
+            COMMENT "Adding PkgInfo file to app bundle..."
+            )
+
+    execute_process(
+        COMMAND bash "-c" "grep \"const QString Preferences::VERSION_STRING\" ${MEGAsyncDir}/control/Preferences.cpp | awk -F '\"' '{print $2}'"
+        OUTPUT_VARIABLE MEGASYNC_VERSION
+        OUTPUT_STRIP_TRAILING_WHITESPACE)
+
+    message("MEGAsync version = ${MEGASYNC_VERSION}")
+endif()
+
+set(FULLREQUIREMENTS TRUE CACHE BOOL "Verbose output")
+
+if(FULLREQUIREMENTS)
+    if (USE_FFMPEG AND HAVE_FFMPEG)
+        add_definitions(-DREQUIRE_HAVE_FFMPEG)
+    endif()
+
+    add_definitions(
+        -DREQUIRE_HAVE_LIBUV
+        -DREQUIRE_HAVE_LIBRAW
+        -DREQUIRE_USE_MEDIAINFO
+
+        #-DREQUIRE_ENABLE_CHAT
+        #-DREQUIRE_ENABLE_BACKUPS
+        #-DREQUIRE_ENABLE_WEBRTC
+        #-DREQUIRE_ENABLE_EVT_TLS
+        #-DREQUIRE_USE_PCRE
+        )
+
+    if (CMAKE_HOST_WIN32 OR CMAKE_HOST_APPLE OR build_64_bit)
+        if (USE_PDFIUM)
+            add_definitions(-DREQUIRE_HAVE_PDFIUM)
+        endif()
+    endif()
+
+endif(FULLREQUIREMENTS)
+
+
+#-------------- MEGA updater --------------------
+
+set (UPDATER_FILES
+    ${MEGAupdaterDir}/MegaUpdater.cpp
+    ${MEGAupdaterDir}/UpdateTask.cpp
+)
+
+ImportStdVcpkgLibrary(cryptopp-staticcrt        cryptopp-staticcrt cryptopp-staticcrt libcryptopp libcryptopp)
+
+if(CMAKE_HOST_APPLE)
+    set (UPDATER_FILES
+        ${UPDATER_FILES}
+        ${MEGAupdaterDir}/MacUtils.mm
+    )
+    add_executable(MEGAupdater MACOSX_BUNDLE ${MAC_RESOURCES} ${UPDATER_FILES} )
+    target_link_libraries(MEGAupdater cryptopp-staticcrt "-framework Cocoa -framework SystemConfiguration -framework CoreFoundation -framework Foundation -framework Security")
+    set_property(TARGET MEGAupdater PROPERTY AUTOMOC OFF)
+elseif(CMAKE_HOST_WIN32)
+    add_executable(MEGAupdater WIN32 ${UPDATER_FILES} )
+    #add_executable(MEGAupdater ${UPDATER_FILES} )
+    target_link_libraries(MEGAupdater cryptopp-staticcrt Urlmon.lib Shlwapi.lib)
+    set_property(TARGET MEGAupdater PROPERTY AUTOMOC OFF)
+    set_property(TARGET MEGAupdater PROPERTY MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
+    set_target_properties(MEGAupdater  PROPERTIES LINK_FLAGS_RELEASE " /DEBUG " )
+    #set_target_properties(MEGAupdater  PROPERTIES LINK_FLAGS "/SUBSYSTEM:CONSOLE  /ENTRY:WinMain ") #/LARGEADDRESSAWARE /SAFESEH:NO /DEBUG " )
+endif()
+
+#-------------- MEGA Shell Extension  --------------------
+
+set (SHELLEXT_FILES
+    ${MEGAShellExtDir}/ShellExt.cpp
+    ${MEGAShellExtDir}/RegUtils.cpp
+    ${MEGAShellExtDir}/dllmain.cpp
+    ${MEGAShellExtDir}/ContextMenuExt.cpp
+    ${MEGAShellExtDir}/ClassFactoryShellExtSyncing.cpp
+    ${MEGAShellExtDir}/ClassFactoryShellExtSynced.cpp
+    ${MEGAShellExtDir}/ClassFactoryShellExtPending.cpp
+    ${MEGAShellExtDir}/ClassFactoryContextMenuExt.cpp
+    ${MEGAShellExtDir}/ClassFactory.cpp
+    ${MEGAShellExtDir}/MegaInterface.cpp
+    ${MEGAShellExtDir}/MEGAShellExt.rc
+    ${MEGAShellExtDir}/GlobalExportFunctions.def
+)
+
+if(CMAKE_HOST_WIN32)
+    add_library(MEGAShellExt SHARED  ${SHELLEXT_FILES} )
+    target_link_libraries(MEGAShellExt user32.lib ole32.lib oleaut32.lib gdi32.lib uuid.lib Advapi32.lib Shell32.lib)
+    set_property(TARGET MEGAShellExt PROPERTY AUTOMOC OFF)
+    set_property(TARGET MEGAShellExt PROPERTY MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
+    set_target_properties(MEGAShellExt  PROPERTIES LINK_FLAGS_RELEASE " /DEBUG " )
+endif()
+
+#-------------- MEGA Sync unit tests --------------------
+add_library(catch INTERFACE)
+target_include_directories(catch INTERFACE "${RepoDir}/tests/3rdparty/catch")
+add_library(trompeloeil INTERFACE)
+target_include_directories(catch INTERFACE "${RepoDir}/tests/3rdparty/trompeloeil")
+
+set(MEGASyncUnitTestsDir "${RepoDir}/tests/MEGASyncUnitTests")
+set(UNIT_TEST_FILES
+    ${MEGASyncUnitTestsDir}/GuestWidgetTest.cpp
+    ${MEGASyncUnitTestsDir}/control/TransferRemainingTime.Test.cpp
+    ${MEGASyncUnitTestsDir}/Utilities.test.cpp
+    ${MEGASyncUnitTestsDir}/ScaleFactorManager.Test.cpp
+    ${MEGASyncUnitTestsDir}/main.cpp
+    )
+add_executable(MEGASync_unit_tests ${UNIT_TEST_FILES} ${SRCS} ${QM_FILES})
+
+target_link_libraries(MEGASync_unit_tests
+    catch
+    trompeloeil
+    Mega
+    ${MEGA_QT_LINK_LIBRARIES}
+    ${TARGET_LINK_LIBRARIES_PLATFORM}
+    )
+
+target_compile_features(MEGASync_unit_tests PRIVATE cxx_std_14)
+
+target_include_directories(MEGASync_unit_tests PRIVATE ${MEGAsyncDir}
+                                                       ${MEGAsyncDir}/transfers
+                                                       ${MEGAsyncDir}/transfers/gui
+                                                       ${MEGAsyncDir}/transfers/model
+                                                       ${MEGAsyncDir}/google_breakpad )

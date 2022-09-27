@@ -11,7 +11,7 @@
     <message>
         <source>Inbox</source>
         <translatorcomment>Label for Inbox space used. Maintain capital letters in each word.(Max 18 characters)</translatorcomment>
-        <translation>Входящие</translation>
+        <translation type="vanished">Входящие</translation>
     </message>
     <message>
         <source>Loading...</source>
@@ -47,6 +47,45 @@
         <source>Available storage</source>
         <translatorcomment>Label for Available storage space used. Maintain capital letter in first word.(Max 18 characters)</translatorcomment>
         <translation>Свободное место</translation>
+    </message>
+    <message>
+        <source>Backups</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>AddBackupDialog</name>
+    <message>
+        <source>Add backup folder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Backup folder:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Choose folder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Choose</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Backup to:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add</source>
+        <translation type="unfinished">Добавить</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Отмена</translation>
+    </message>
+    <message>
+        <source>Do you want to continue?</source>
+        <translation type="unfinished">Продолжить?</translation>
     </message>
 </context>
 <context>
@@ -340,17 +379,239 @@
     <message numerus="yes">
         <source>[A] added %n item</source>
         <translatorcomment>Label to indicate that [A] has added %n items to a shared folder. Placeholder [A] will be replaced by email of the user that made the additions and %n with the number of added items.</translatorcomment>
-        <translation><numerusform>[A] добавил %n элемент</numerusform><numerusform>[A] добавил %n элемента</numerusform><numerusform>[A] добавил %n элементов</numerusform><numerusform>[A] добавил %n элемента</numerusform></translation>
+        <translation>
+            <numerusform>[A] добавил %n элемент</numerusform>
+            <numerusform>[A] добавил %n элемента</numerusform>
+            <numerusform>[A] добавил %n элементов</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>[A] removed %n item</source>
         <translatorcomment>Label to indicate that [A] has removed %n items from a shared folder. Placeholder [A] will be replaced by email of the user that made the deletion and %n with the number of removed items.</translatorcomment>
-        <translation><numerusform>[A] удалил %n элемент</numerusform><numerusform>[A] удалил %n элемента</numerusform><numerusform>[A] удалил %n элементов</numerusform><numerusform>[A] удалил %n элемента</numerusform></translation>
+        <translation>
+            <numerusform>[A] удалил %n элемент</numerusform>
+            <numerusform>[A] удалил %n элемента</numerusform>
+            <numerusform>[A] удалил %n элементов</numerusform>
+        </translation>
     </message>
     <message>
         <source>New shared folder from [A]</source>
         <translatorcomment>Label to indicate that [A] shared a folder with current user. Placeholder will be replaced by email of sharer user.</translatorcomment>
         <translation>Новая входящая общая папка от [A]</translation>
+    </message>
+    <message>
+        <source>[WEEKDAY] [MONTHDAY] [MONTH] [TIME]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>[MONTHDAY] [MONTH] [TIME]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>[MONTHDAY] [MONTH] [YEAR] [TIME]</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>BackupItemModel</name>
+    <message>
+        <source>Sort by state</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Local Folder</source>
+        <translation type="unfinished">Локальная папка</translation>
+    </message>
+    <message>
+        <source>Sort by name</source>
+        <translation type="unfinished">Сортировать по названию</translation>
+    </message>
+    <message>
+        <source>Backup is enabled</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Backup is disabled</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Click menu for more Backup actions</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>BackupTableView</name>
+    <message>
+        <source>Open in MEGA</source>
+        <translation type="unfinished">Открыть в MEGA</translation>
+    </message>
+    <message>
+        <source>Remove backup</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>BackupsWizard</name>
+    <message>
+        <source>Setup backups</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You can back up folders from your computer to MEGA. Files will automatically back up when the desktop app is running.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No folders available</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>More folders</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>All folders have been synced or backed up.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Selected backup folders</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Backup to</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Folders will be stored in backups and you can check the status of your backups in backup centre.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show more…</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished">Назад</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Отмена</translation>
+    </message>
+    <message>
+        <source>Next</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Try again</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dismiss</source>
+        <translation type="unfinished">Отклонить</translation>
+    </message>
+    <message>
+        <source>View in Backup Centre</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Lato&apos;; font-size:13pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; line-height:200%;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>1. [B]Select[/B] folders to backup</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>2. [B]Confirm[/B] backup settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Setup</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Collapse</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add folders</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message numerus="yes">
+        <source>%n folder</source>
+        <translation type="unfinished">
+            <numerusform>%n папка</numerusform>
+            <numerusform>%n папки</numerusform>
+            <numerusform>%n папок</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>Problem backing up folder</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>This folder wasn&apos;t backed up. Try again.</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>Folder is already selected. Select a different folder.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You can&apos;t backup this folder as it&apos;s already inside a backed up folder.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You can&apos;t backup this folder as it contains backed up folders.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Do you want to continue?</source>
+        <translation type="unfinished">Продолжить?</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to cancel? All changes will be lost.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Choose directory</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message numerus="yes">
+        <source>Backup created</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>We&apos;re backing up your folder. The time this takes depends on the files in this folder.</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>Creating or setting folder &quot;%1&quot; as backups root failed.
+Reason: %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error: %1</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -461,17 +722,17 @@
     <message>
         <source>The selected local folder is already synced</source>
         <translatorcomment>Message displayed when an user is adding a local folder wich is already synced.</translatorcomment>
-        <translation>Выбранная локальная папка уже синхронизирована</translation>
+        <translation type="vanished">Выбранная локальная папка уже синхронизирована</translation>
     </message>
     <message>
         <source>A synced folder cannot be inside another synced folder</source>
         <translatorcomment>Message displayed when an user is adding nested local folders for synchronization.</translatorcomment>
-        <translation>Синхронизируемая папка не может находиться внутри другой синхронизируемой папки</translation>
+        <translation type="vanished">Синхронизируемая папка не может находиться внутри другой синхронизируемой папки</translation>
     </message>
     <message>
         <source>The selected MEGA folder is already synced</source>
         <translatorcomment>Message displayed when an user is adding an already synchronized remote folder.</translatorcomment>
-        <translation>Выбранная MEGA-папка уже синхронизирована</translation>
+        <translation type="vanished">Выбранная MEGA-папка уже синхронизирована</translation>
     </message>
     <message>
         <source>Sync name</source>
@@ -492,7 +753,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Error</source>
         <translatorcomment>Label for status of an error performing an operation.</translatorcomment>
-        <translation>Ошибка</translation>
+        <translation type="vanished">Ошибка</translation>
     </message>
     <message>
         <source>Add folder</source>
@@ -513,6 +774,10 @@ Please enter a different name to identify this synced folder:</source>
         <source>Add synchronised folder:</source>
         <translatorcomment>Label to indicate the user to add synchronised folder (macOS)</translatorcomment>
         <translation>Добавьте синхронизируемую папку:</translation>
+    </message>
+    <message>
+        <source>Do you want to continue?</source>
+        <translation type="unfinished">Продолжить?</translation>
     </message>
 </context>
 <context>
@@ -736,7 +1001,11 @@ Please enter a different name to identify this synced folder:</source>
     <message numerus="yes">
         <source>Your Pro membership plan will expire in %n day</source>
         <translatorcomment>Label to indicate that the PRO membership will expire in %n days. Placeholder will be replaced by the remaining days until plan will expire.</translatorcomment>
-        <translation><numerusform>Ваша Pro-подписка истекает через %n день</numerusform><numerusform>Ваша Pro-подписка истекает через %n дня</numerusform><numerusform>Ваша Pro-подписка истекает через %n дней</numerusform><numerusform>Ваша Pro-подписка истекает через %n дня</numerusform></translation>
+        <translation>
+            <numerusform>Ваша Pro-подписка истекает через %n день</numerusform>
+            <numerusform>Ваша Pro-подписка истекает через %n дня</numerusform>
+            <numerusform>Ваша Pro-подписка истекает через %n дней</numerusform>
+        </translation>
     </message>
     <message>
         <source>Pro membership plan expiring soon</source>
@@ -746,7 +1015,11 @@ Please enter a different name to identify this synced folder:</source>
     <message numerus="yes">
         <source>Your Pro membership plan expired %n day ago</source>
         <translatorcomment>Label to indicate that the PRO membership expired %n days ago. Placeholder will be replaced by the days from the expiration of the PRO membership.</translatorcomment>
-        <translation><numerusform>Ваша Pro-подписка истекла %n день назад</numerusform><numerusform>Ваша Pro-подписка истекла %n дня назад</numerusform><numerusform>Ваша Pro-подписка истекла %n дней назад</numerusform><numerusform>Ваша Pro-подписка истекла %n дня назад</numerusform></translation>
+        <translation>
+            <numerusform>Ваша Pro-подписка истекла %n день назад</numerusform>
+            <numerusform>Ваша Pro-подписка истекла %n дня назад</numerusform>
+            <numerusform>Ваша Pro-подписка истекла %n дней назад</numerusform>
+        </translation>
     </message>
 </context>
 <context>
@@ -988,12 +1261,20 @@ Please enter a different name to identify this synced folder:</source>
     <message numerus="yes">
         <source>[A] added %n item</source>
         <translatorcomment>Label to indicate that [A] has added %n items to a shared folder. Placeholder [A] will be replaced by email of the user that made the additions and %n with the number of added items.</translatorcomment>
-        <translation><numerusform>[A] добавил %n элемент</numerusform><numerusform>[A] добавил %n элемента</numerusform><numerusform>[A] добавил %n элементов</numerusform><numerusform>[A] добавил %n элемента</numerusform></translation>
+        <translation>
+            <numerusform>[A] добавил %n элемент</numerusform>
+            <numerusform>[A] добавил %n элемента</numerusform>
+            <numerusform>[A] добавил %n элементов</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>You have %n day left to save your data</source>
         <translatorcomment>Notification content to inform the days the user have to save the date before possible deletion. %n will be replaced with remaining days amount.</translatorcomment>
-        <translation><numerusform>У вас есть %n день, чтобы спасти данные</numerusform><numerusform>У вас есть %n дня, чтобы спасти данные</numerusform><numerusform>У вас есть %n дней, чтобы спасти данные</numerusform><numerusform>У вас есть %n дня, чтобы спасти данные</numerusform></translation>
+        <translation>
+            <numerusform>У вас есть %n день, чтобы спасти данные</numerusform>
+            <numerusform>У вас есть %n дня, чтобы спасти данные</numerusform>
+            <numerusform>У вас есть %n дней, чтобы спасти данные</numerusform>
+        </translation>
     </message>
     <message>
         <source>Upgrade now to a Pro account.</source>
@@ -1114,7 +1395,11 @@ Please enter a different name to identify this synced folder:</source>
     <message numerus="yes">
         <source>Apply to all %1 duplicates</source>
         <translatorcomment>Checkbox text to apply the action to all the following conflicts. %1 is the number of conflicts</translatorcomment>
-        <translation><numerusform>Применить к одному дубликату</numerusform><numerusform>Применить ко всем %1 дубликатам</numerusform><numerusform>Применить ко всем %1 дубликатам</numerusform><numerusform>Применить ко всем %1 дубликатам</numerusform></translation>
+        <translation>
+            <numerusform>Применить к одному дубликату</numerusform>
+            <numerusform>Применить ко всем %1 дубликатам</numerusform>
+            <numerusform>Применить ко всем %1 дубликатам</numerusform>
+        </translation>
     </message>
     <message>
         <source>The file at this destination will be updated with a new version.</source>
@@ -1227,12 +1512,20 @@ Please enter a different name to identify this synced folder:</source>
     <message numerus="yes">
         <source>%n file</source>
         <translatorcomment>Context menu option label to indicate the user has selected %n number of files</translatorcomment>
-        <translation><numerusform>%n файл</numerusform><numerusform>%n файла</numerusform><numerusform>%n файлов</numerusform><numerusform>%n файла</numerusform></translation>
+        <translation>
+            <numerusform>%n файл</numerusform>
+            <numerusform>%n файла</numerusform>
+            <numerusform>%n файлов</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%n folder</source>
         <translatorcomment>Context menu option label to indicate the user has selected %n number of folders</translatorcomment>
-        <translation><numerusform>%n папка</numerusform><numerusform>%n папки</numerusform><numerusform>%n папок</numerusform><numerusform>%n папки</numerusform></translation>
+        <translation>
+            <numerusform>%n папка</numerusform>
+            <numerusform>%n папки</numerusform>
+            <numerusform>%n папок</numerusform>
+        </translation>
     </message>
 </context>
 <context>
@@ -1260,29 +1553,29 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Warning</source>
         <translatorcomment>Label to indicate a waring during the process of stablish a synchronization.</translatorcomment>
-        <translation>Предупреждение</translation>
+        <translation type="vanished">Предупреждение</translation>
     </message>
     <message>
         <source>MEGAsync won&apos;t be able to download anything here.</source>
         <translatorcomment>Label to indicate that MEGAsync won&apos;t be able to download anything due to the user doesn&apos;t have writhe permissions on the local selected folder.</translatorcomment>
-        <translation>MEGAsync не сможет что-либо скачать сюда.</translation>
+        <translation type="vanished">MEGAsync не сможет что-либо скачать сюда.</translation>
     </message>
     <message>
         <source>Do you want to continue?</source>
         <translatorcomment>Label to indicate if the user wants to continue in spite of the problem occured.</translatorcomment>
-        <translation>Продолжить?</translation>
+        <translation type="vanished">Продолжить?</translation>
     </message>
     <message>
         <source>You don&apos;t have write permissions in this local folder.</source>
         <translatorcomment>Label to indicate that a user don&apos;t have write permissions in the selected local folder for a synchronization.</translatorcomment>
-        <translation>У вас нет прав записи в эту локальную папку.</translation>
+        <translation type="vanished">У вас нет прав записи в эту локальную папку.</translation>
     </message>
     <message>
         <source>You are trying to sync an extremely large folder.
 To prevent the syncing of entire boot volumes, which is inefficient and dangerous,
 we ask you to start with a smaller folder and add more data while MEGAsync is running.</source>
         <translatorcomment>Label to inform a user about the fact of syncing a extremely large folder and the possible drawbacks that could arise.</translatorcomment>
-        <translation>Вы пытаетесь синхронизировать чрезвычайно большую папку. Чтобы предотвратить синхронизацию всех загрузочных томов, что неэффективно и опасно, мы просим вас начать с небольшой папки и добавлять больше данных, пока работает MEGAsync.</translation>
+        <translation type="vanished">Вы пытаетесь синхронизировать чрезвычайно большую папку. Чтобы предотвратить синхронизацию всех загрузочных томов, что неэффективно и опасно, мы просим вас начать с небольшой папки и добавлять больше данных, пока работает MEGAsync.</translation>
     </message>
     <message>
         <source>Error</source>
@@ -1545,7 +1838,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Syncs</source>
         <translatorcomment>Button label to show all synchronizations that the user has stablish (String as short as possible).</translatorcomment>
-        <translation>Синхронизации</translation>
+        <translation type="vanished">Синхронизации</translation>
     </message>
     <message>
         <source>Add Sync</source>
@@ -1629,7 +1922,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Download</source>
         <translatorcomment>Label to indicate a download.</translatorcomment>
-        <translation>Скачать</translation>
+        <translation type="vanished">Скачать</translation>
     </message>
     <message>
         <source>Transfers</source>
@@ -1759,17 +2052,29 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message numerus="yes">
         <source>We have contacted you by email to [A] on [B] but you still have %n file taking up [D] in your MEGA account, which requires you to have [E].</source>
         <translatorcomment>Informative label about account status regarding over quota storage. Placeholders will be replaced: [A] - user email, [B] - localized date list of emails sent to inform the user about the situation,  %n - amount of files in the current account, [D] - amount of storage used and [E] - min PRO plan needed to fix the situation.</translatorcomment>
-        <translation><numerusform>Мы писали вам по электронной почте [A] [B], но у вас всё ещё %n файл, занимающий [D] в вашем MEGA-аккаунте, для чего требуется план [E].</numerusform><numerusform>Мы писали вам по электронной почте [A] [B], но у вас всё ещё %n файла, занимающих [D] в вашем MEGA-аккаунте, для чего требуется план [E].</numerusform><numerusform>Мы писали вам по электронной почте [A] [B], но у вас всё ещё %n файлов, занимающих [D] в вашем MEGA-аккаунте, для чего требуется план [E].</numerusform><numerusform>Мы писали вам по электронной почте [A] [B], но у вас всё ещё %n файла, занимающих [D] в вашем MEGA-аккаунте, для чего требуется план [E].</numerusform></translation>
+        <translation>
+            <numerusform>Мы писали вам по электронной почте [A] [B], но у вас всё ещё %n файл, занимающий [D] в вашем MEGA-аккаунте, для чего требуется план [E].</numerusform>
+            <numerusform>Мы писали вам по электронной почте [A] [B], но у вас всё ещё %n файла, занимающих [D] в вашем MEGA-аккаунте, для чего требуется план [E].</numerusform>
+            <numerusform>Мы писали вам по электронной почте [A] [B], но у вас всё ещё %n файлов, занимающих [D] в вашем MEGA-аккаунте, для чего требуется план [E].</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>You have [A]%n day[/A] left to upgrade. After that, your data is subject to deletion.</source>
         <translatorcomment>Label to inform about the deadline time to upgrade. Otherwise, data is subject to deletion. Placeholder info: [A][/A] - needed to format and apply text style, %n- number of days left to upgrade.</translatorcomment>
-        <translation><numerusform>У вас остаётся [A]%n день[/A], чтобы улучшить аккаунт. После этого ваши данные подлежат удалению.</numerusform><numerusform>У вас остаётся [A]%n дня[/A], чтобы улучшить аккаунт. После этого ваши данные подлежат удалению.</numerusform><numerusform>У вас остаётся [A]%n дней[/A], чтобы улучшить аккаунт. После этого ваши данные подлежат удалению.</numerusform><numerusform>У вас остаётся [A]%n дня[/A], чтобы улучшить аккаунт. После этого ваши данные подлежат удалению.</numerusform></translation>
+        <translation>
+            <numerusform>У вас остаётся [A]%n день[/A], чтобы улучшить аккаунт. После этого ваши данные подлежат удалению.</numerusform>
+            <numerusform>У вас остаётся [A]%n дня[/A], чтобы улучшить аккаунт. После этого ваши данные подлежат удалению.</numerusform>
+            <numerusform>У вас остаётся [A]%n дней[/A], чтобы улучшить аккаунт. После этого ваши данные подлежат удалению.</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>You have [A]%n hour[/A] left to upgrade. After that, your data is subject to deletion.</source>
         <translatorcomment>Label to inform about the deadline time to upgrade. Otherwise, data is subject to deletion. Placeholder info: [A][/A] - needed to format and apply text style, %n- number of hours left to upgrade.</translatorcomment>
-        <translation><numerusform>У вас остаётся [A]%n час[/A], чтобы улучшить аккаунт. После этого ваши данные подлежат удалению.</numerusform><numerusform>У вас остаётся [A]%n часа[/A], чтобы улучшить аккаунт. После этого ваши данные подлежат удалению.</numerusform><numerusform>У вас остаётся [A]%n часов[/A], чтобы улучшить аккаунт. После этого ваши данные подлежат удалению.</numerusform><numerusform>У вас остаётся [A]%n часа[/A], чтобы улучшить аккаунт. После этого ваши данные подлежат удалению.</numerusform></translation>
+        <translation>
+            <numerusform>У вас остаётся [A]%n час[/A], чтобы улучшить аккаунт. После этого ваши данные подлежат удалению.</numerusform>
+            <numerusform>У вас остаётся [A]%n часа[/A], чтобы улучшить аккаунт. После этого ваши данные подлежат удалению.</numerusform>
+            <numerusform>У вас остаётся [A]%n часов[/A], чтобы улучшить аккаунт. После этого ваши данные подлежат удалению.</numerusform>
+        </translation>
     </message>
     <message>
         <source>Error</source>
@@ -1780,6 +2085,30 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <source>Folder can&apos;t be opened. Check that the folder in your local drive hasn&apos;t been deleted or moved.</source>
         <translatorcomment>Warning message text to let the user know that the local folder could not be opened</translatorcomment>
         <translation>Папка не открывается. Убедитесь, что папка на вашем локальном диске не была удалена или перемещена.</translation>
+    </message>
+    <message>
+        <source>Add Backups</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Some syncs and backups have been disabled</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Something went wrong while trying to backup and sync your folders.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>One or more backups have been disabled</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Something went wrong while trying to backup your folders.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error adding %1:</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2281,12 +2610,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Add Sync</source>
         <translatorcomment>Menu item to add a new synchronization</translatorcomment>
-        <translation>Добавить синхронизацию</translation>
+        <translation type="vanished">Добавить синхронизацию</translation>
     </message>
     <message>
         <source>Syncs</source>
         <translatorcomment>Menu item to show current synchronizations</translatorcomment>
-        <translation>Синхронизации</translation>
+        <translation type="vanished">Синхронизации</translation>
     </message>
     <message>
         <source>Cloud drive</source>
@@ -2426,32 +2755,56 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message numerus="yes">
         <source>%n file</source>
         <translatorcomment>File count, where %n is the number of files. Used to build the &quot;Files and folders successfully uploaded/downloaded&quot; string.</translatorcomment>
-        <translation><numerusform>%n файл</numerusform><numerusform>%n файла</numerusform><numerusform>%n файлов</numerusform><numerusform>%n файла</numerusform></translation>
+        <translation>
+            <numerusform>%n файл</numerusform>
+            <numerusform>%n файла</numerusform>
+            <numerusform>%n файлов</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%n folder</source>
         <translatorcomment>Folder count, where %n is the number of folders. Used to build the &quot;Files and folders successfully uploaded/downloaded&quot; string.</translatorcomment>
-        <translation><numerusform>%n папка</numerusform><numerusform>%n папки</numerusform><numerusform>%n папок</numerusform><numerusform>%n папки</numerusform></translation>
+        <translation>
+            <numerusform>%n папка</numerusform>
+            <numerusform>%n папки</numerusform>
+            <numerusform>%n папок</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%n file was successfully uploaded</source>
         <translatorcomment>System notification to inform the user that %1 files were successfully uploaded</translatorcomment>
-        <translation><numerusform>%n файл успешно загружен</numerusform><numerusform>%n файла успешно загружено</numerusform><numerusform>%n файлов успешно загружено</numerusform><numerusform>%n файла успешно загружено</numerusform></translation>
+        <translation>
+            <numerusform>%n файл успешно загружен</numerusform>
+            <numerusform>%n файла успешно загружено</numerusform>
+            <numerusform>%n файлов успешно загружено</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%n file was successfully downloaded</source>
         <translatorcomment>System notification to inform the user that %1 files were successfully downloaded</translatorcomment>
-        <translation><numerusform>%n файл успешно скачан</numerusform><numerusform>%n файла успешно скачано</numerusform><numerusform>%n файлов успешно скачано</numerusform><numerusform>%n файла успешно скачано</numerusform></translation>
+        <translation>
+            <numerusform>%n файл успешно скачан</numerusform>
+            <numerusform>%n файла успешно скачано</numerusform>
+            <numerusform>%n файлов успешно скачано</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%n folder was successfully uploaded</source>
         <translatorcomment>System notification to inform the user that %n folders were successfully uploaded</translatorcomment>
-        <translation><numerusform>%n папка успешно загружена</numerusform><numerusform>%n папки успешно загружено</numerusform><numerusform>%n папкок успешно загружено</numerusform><numerusform>%n папки успешно загружено</numerusform></translation>
+        <translation>
+            <numerusform>%n папка успешно загружена</numerusform>
+            <numerusform>%n папки успешно загружено</numerusform>
+            <numerusform>%n папкок успешно загружено</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%n folder was successfully downloaded</source>
         <translatorcomment>System notification to inform the user that %n folders were successfully downloaded</translatorcomment>
-        <translation><numerusform>%n папка успешно скачана</numerusform><numerusform>%n папки успешно скачано</numerusform><numerusform>%n папок успешно скачано</numerusform><numerusform>%n папки успешно скачано</numerusform></translation>
+        <translation>
+            <numerusform>%n папка успешно скачана</numerusform>
+            <numerusform>%n папки успешно скачано</numerusform>
+            <numerusform>%n папок успешно скачано</numerusform>
+        </translation>
     </message>
     <message>
         <source>A new version of MEGAsync is available. Click on this message to install it</source>
@@ -2477,11 +2830,14 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>There is an active transfer. Exit the app?
 Transfer will automatically resume when you re-open the app.</source>
         <translatorcomment>Messagebox text to let the user know that there are active transfers when closing the app. The user will be able to exit and pause them, or stop the exit action.</translatorcomment>
-        <translation><numerusform>Есть активная передача. Выйти из приложения?
-Передача автоматически возобновится, когда вы снова откроете приложение.</numerusform><numerusform>Есть активные передачи. Выйти из приложения?
-Передачи автоматически возобновятся, когда вы снова откроете приложение.</numerusform><numerusform>Есть активные передачи. Выйти из приложения?
-Передачи автоматически возобновятся, когда вы снова откроете приложение.</numerusform><numerusform>Есть активные передачи. Выйти из приложения?
-Передачи автоматически возобновятся, когда вы снова откроете приложение.</numerusform></translation>
+        <translation>
+            <numerusform>Есть активная передача. Выйти из приложения?
+Передача автоматически возобновится, когда вы снова откроете приложение.</numerusform>
+            <numerusform>Есть активные передачи. Выйти из приложения?
+Передачи автоматически возобновятся, когда вы снова откроете приложение.</numerusform>
+            <numerusform>Есть активные передачи. Выйти из приложения?
+Передачи автоматически возобновятся, когда вы снова откроете приложение.</numerusform>
+        </translation>
     </message>
     <message>
         <source>Exit app</source>
@@ -2492,6 +2848,74 @@ Transfer will automatically resume when you re-open the app.</source>
         <source>Stay in app</source>
         <translatorcomment>One of the messagebox options: Keep the app open and continue with the active transfers</translatorcomment>
         <translation>Остаться</translation>
+    </message>
+    <message>
+        <source>Some syncs and backups have been disabled</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>One or more backups have been disabled</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error adding %1:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Some syncs and backups have been disabled.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>One or more backups have been disabled.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>One or more syncs have been disabled.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Your syncs and backups have been disabled</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Your backups have been disabled</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Your backup &quot;%1&quot; has been temporarily disabled</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Your backup &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Your backup &quot;%1&quot; has been disabled because the remote folder doesn&apos;t exist</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Your backup &quot;%1&quot; has been disabled because the synchronization of VirtualBox shared folders is not supported due to deficiencies in that filesystem.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Your backup &quot;%1&quot; has been disabled because the remote folder is in the rubbish bin</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Your backup &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&apos;t have full access</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Your backup &quot;%1&quot; has been disabled because the local folder has changed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Your backup &quot;%1&quot; has been disabled because the remote folder has changed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Your backup &quot;%1&quot; has been disabled. Reason: %2</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2618,11 +3042,11 @@ Transfer will automatically resume when you re-open the app.</source>
     </message>
     <message>
         <source>Your account has been suspended due to multiple breaches of MEGA’s Terms of Service. Please check your email inbox.</source>
-        <translation>Ваш аккаунт был заблокирован из-за многочисленных нарушений Условий использования MEGA. Пожалуйста, проверьте свой почтовый ящик.</translation>
+        <translation type="vanished">Ваш аккаунт был заблокирован из-за многочисленных нарушений Условий использования MEGA. Пожалуйста, проверьте свой почтовый ящик.</translation>
     </message>
     <message>
         <source>Your account was terminated due to breach of Mega’s Terms of Service, such as abuse of rights of others; sharing and/or importing illegal data; or system abuse.</source>
-        <translation>Ваш аккаунт был заблокирован из-за нарушения условий использования MEGA, таких как злоупотребление правами других лиц; обмен и/или импорт незаконных данных; или злоупотребление системой.</translation>
+        <translation type="vanished">Ваш аккаунт был заблокирован из-за нарушения условий использования MEGA, таких как злоупотребление правами других лиц; обмен и/или импорт незаконных данных; или злоупотребление системой.</translation>
     </message>
     <message>
         <source>SSL verification failed</source>
@@ -2658,6 +3082,14 @@ Transfer will automatically resume when you re-open the app.</source>
         <source>Decryption error</source>
         <translatorcomment>String shown when a file/folder name can not be decrypted.</translatorcomment>
         <translation>Ошибка дешифрования</translation>
+    </message>
+    <message>
+        <source>Your account has been suspended due to copyright violations. Please check your email inbox.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Your account was terminated due to a breach of MEGA&apos;s Terms of Service, such as abuse of rights of others; sharing and/or importing illegal data; or system abuse.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2765,6 +3197,10 @@ Transfer will automatically resume when you re-open the app.</source>
         <source>Cloud Drive</source>
         <translatorcomment>Title of the Cloud Drive section</translatorcomment>
         <translation>Облачный диск</translation>
+    </message>
+    <message>
+        <source>Backups</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2993,22 +3429,38 @@ Transfer will automatically resume when you re-open the app.</source>
     <message numerus="yes">
         <source>Pause transfer</source>
         <translatorcomment>Context menu action to pause transfer</translatorcomment>
-        <translation><numerusform>Приостановить передачу</numerusform><numerusform>Приостановить передачи</numerusform><numerusform>Приостановить передачи</numerusform><numerusform>Приостановить передачи</numerusform></translation>
+        <translation>
+            <numerusform>Приостановить передачу</numerusform>
+            <numerusform>Приостановить передачи</numerusform>
+            <numerusform>Приостановить передачи</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>Resume transfer</source>
         <translatorcomment>Context menu action to resume transfer</translatorcomment>
-        <translation><numerusform>Возобновить передачу</numerusform><numerusform>Возобновить передачи</numerusform><numerusform>Возобновить передачи</numerusform><numerusform>Возобновить передачи</numerusform></translation>
+        <translation>
+            <numerusform>Возобновить передачу</numerusform>
+            <numerusform>Возобновить передачи</numerusform>
+            <numerusform>Возобновить передачи</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>Cancel transfer</source>
         <translatorcomment>Context menu action to cancel transfer</translatorcomment>
-        <translation><numerusform>Отменить передачу</numerusform><numerusform>Отменить передачи</numerusform><numerusform>Отменить передачи</numerusform><numerusform>Отменить передачи</numerusform></translation>
+        <translation>
+            <numerusform>Отменить передачу</numerusform>
+            <numerusform>Отменить передачи</numerusform>
+            <numerusform>Отменить передачи</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>Clear transfer</source>
         <translatorcomment>Tooltip for the clear button in a transfer row</translatorcomment>
-        <translation><numerusform>Удалить передачу</numerusform><numerusform>Удалить передачи</numerusform><numerusform>Удалить передачи</numerusform><numerusform>Удалить передачи</numerusform></translation>
+        <translation>
+            <numerusform>Удалить передачу</numerusform>
+            <numerusform>Удалить передачи</numerusform>
+            <numerusform>Удалить передачи</numerusform>
+        </translation>
     </message>
     <message>
         <source>Cancel transfers?
@@ -3040,7 +3492,7 @@ Your incomplete sync transfers won&apos;t be cancelled.</source>
     </message>
     <message>
         <source>Cancel transfers?
-Your incomplete sync transfers won't be cancelled
+Your incomplete sync transfers won&apos;t be cancelled
 All the other transfers will be cancelled and cleared.</source>
         <translatorcomment>Messagebox text to confirm if the user wants to cancel and clear all the transfers in a category other than all transfers category but there are sync transfers(they cannot be cancelled)</translatorcomment>
         <translation>Отменить передачи?
@@ -3077,7 +3529,7 @@ All your selected transfers will be cancelled and cleared.</source>
     </message>
     <message>
         <source>Cancel transfers?
-Your selected incomplete sync transfers won't be cancelled
+Your selected incomplete sync transfers won&apos;t be cancelled
 All the other selected transfers will be cancelled and cleared.</source>
         <translatorcomment>Messagebox text to confirm if the user wants to cancel and clear all the selected transfers but there are sync transfers in the selection (they cannot be cancelled)</translatorcomment>
         <translation>Отменить передачи?
@@ -3111,7 +3563,11 @@ Your selected incomplete sync transfers won&apos;t be cancelled.</source>
     <message numerus="yes">
         <source>Cancel and clear transfer</source>
         <translatorcomment>Context menu action to resume cancel the active transfers and clear the completed transfers (multiple transfers selected)</translatorcomment>
-        <translation><numerusform>Отменить и удалить передачу</numerusform><numerusform>Отменить и удалить передачи</numerusform><numerusform>Отменить и удалить передачи</numerusform><numerusform>Отменить и удалить передачи</numerusform></translation>
+        <translation>
+            <numerusform>Отменить и удалить передачу</numerusform>
+            <numerusform>Отменить и удалить передачи</numerusform>
+            <numerusform>Отменить и удалить передачи</numerusform>
+        </translation>
     </message>
     <message>
         <source>Yes, cancel</source>
@@ -3142,17 +3598,17 @@ Your selected incomplete sync transfers won&apos;t be cancelled.</source>
     <message>
         <source>MEGAsync</source>
         <translatorcomment>Label used for title of a system message box.</translatorcomment>
-        <translation>MEGAsync</translation>
+        <translation type="vanished">MEGAsync</translation>
     </message>
     <message>
         <source>You are syncing a local folder formatted with a FAT filesystem. That filesystem has deficiencies managing big files and modification times that can cause synchronization problems (e.g. when daylight saving changes), so it&apos;s strongly recommended that you only sync folders formatted with more reliable filesystems like NTFS (more information [A]here[/A]).</source>
         <translatorcomment>Informative message shown when a user is trying to sync using a FAT filesystem.</translatorcomment>
-        <translation>Синхронизируемая локальная папка использует файловую систему FAT. Эта файловая система не поддерживает большие файлы и запись времени изменения, что может нарушить синхронизацию (например, при переходе на летнее время), поэтому рекомендуется синхронизировать папки с более надёжными файловыми системами, такими как NTFS (подробнее [A]здесь[/A]).</translation>
+        <translation type="vanished">Синхронизируемая локальная папка использует файловую систему FAT. Эта файловая система не поддерживает большие файлы и запись времени изменения, что может нарушить синхронизацию (например, при переходе на летнее время), поэтому рекомендуется синхронизировать папки с более надёжными файловыми системами, такими как NTFS (подробнее [A]здесь[/A]).</translation>
     </message>
     <message>
         <source>You are syncing a local folder shared with VMWare. Those folders do not support filesystem notifications so MEGAsync will have to be continuously scanning to detect changes in your files and folders. Please use a different folder if possible to reduce the CPU usage.</source>
         <translatorcomment>Informative message shown when a user is trying to sync using a local folder shared with VMWare third party app.</translatorcomment>
-        <translation>Вы синхронизируете локальную папку, используемую совместно с VMWare. Эти папки не поддерживают уведомления файловой системы, поэтому MEGAsync должен будет постоянно сканировать их, чтобы обнаружить изменения в файлах и папках. Пожалуйста, используйте другую папку, если это возможно, чтобы уменьшить нагрузку на процессор.</translation>
+        <translation type="vanished">Вы синхронизируете локальную папку, используемую совместно с VMWare. Эти папки не поддерживают уведомления файловой системы, поэтому MEGAsync должен будет постоянно сканировать их, чтобы обнаружить изменения в файлах и папках. Пожалуйста, используйте другую папку, если это возможно, чтобы уменьшить нагрузку на процессор.</translation>
     </message>
 </context>
 <context>
@@ -3257,7 +3713,11 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message numerus="yes">
         <source>You no longer have access to this item. Ask the owner to share again.</source>
         <translatorcomment>Error message shown when the user is trying to download an file or folder from an incoming share and the owner stops sharing/removes all items</translatorcomment>
-        <translation><numerusform>У вас больше нет доступа к этому элементу. Попросите владельца поделиться ещё раз.</numerusform><numerusform>У вас больше нет доступа к этим элементам. Попросите владельца поделиться ещё раз.</numerusform><numerusform>У вас больше нет доступа к этим элементам. Попросите владельца поделиться ещё раз.</numerusform><numerusform>У вас больше нет доступа к этим элементам. Попросите владельца поделиться ещё раз.</numerusform></translation>
+        <translation>
+            <numerusform>У вас больше нет доступа к этому элементу. Попросите владельца поделиться ещё раз.</numerusform>
+            <numerusform>У вас больше нет доступа к этим элементам. Попросите владельца поделиться ещё раз.</numerusform>
+            <numerusform>У вас больше нет доступа к этим элементам. Попросите владельца поделиться ещё раз.</numerusform>
+        </translation>
     </message>
     <message>
         <source>Cloud drive</source>
@@ -3271,24 +3731,40 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
     <message>
         <source>Error:</source>
-        <translation>Ошибка:</translation>
+        <translation type="vanished">Ошибка:</translation>
     </message>
     <message numerus="yes">
         <source>The item you selected has been removed. To reselect, close this window and try again.</source>
         <translatorcomment>Error message shown while the user is trying to download an file or folder but all selected nodes were removed</translatorcomment>
-        <translation><numerusform>Выбранный элемент был удалён. Для повторного выбора закройте это окно и повторите попытку.</numerusform><numerusform>Выбранные элементы были удалены. Для повторного выбора закройте это окно и повторите попытку.</numerusform><numerusform>Выбранные элементы были удалены. Для повторного выбора закройте это окно и повторите попытку.</numerusform><numerusform>Выбранные элементы были удалены. Для повторного выбора закройте это окно и повторите попытку.</numerusform></translation>
+        <translation>
+            <numerusform>Выбранный элемент был удалён. Для повторного выбора закройте это окно и повторите попытку.</numerusform>
+            <numerusform>Выбранные элементы были удалены. Для повторного выбора закройте это окно и повторите попытку.</numerusform>
+            <numerusform>Выбранные элементы были удалены. Для повторного выбора закройте это окно и повторите попытку.</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%1 item selected</source>
         <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
                            First part of string for multi plural support. Full string looks like: 5 items selected. 2 have been removed. To reselect, close this window and try again. </translatorcomment>
-        <translation><numerusform>%1 элемент выбран</numerusform><numerusform>%1 элемента выбрано</numerusform><numerusform>%1 элементов выбрано</numerusform><numerusform>%1 элемента выбрано</numerusform></translation>
+        <translation>
+            <numerusform>%1 элемент выбран</numerusform>
+            <numerusform>%1 элемента выбрано</numerusform>
+            <numerusform>%1 элементов выбрано</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%1. %2 has been removed. To reselect, close this window and try again.</source>
         <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
                            Second and last part of string for multi plural support. Full string looks like: 5 items selected. 2 have been removed. To reselect, close this window and try again. </translatorcomment>
-        <translation><numerusform>%1. %2 был удалён. Для повторного выбора закройте это окно и повторите попытку.</numerusform><numerusform>%1. %2 было удалено. Для повторного выбора закройте это окно и повторите попытку.</numerusform><numerusform>%1. %2 было удалено. Для повторного выбора закройте это окно и повторите попытку.</numerusform><numerusform>%1. %2 было удалено. Для повторного выбора закройте это окно и повторите попытку.</numerusform></translation>
+        <translation>
+            <numerusform>%1. %2 был удалён. Для повторного выбора закройте это окно и повторите попытку.</numerusform>
+            <numerusform>%1. %2 было удалено. Для повторного выбора закройте это окно и повторите попытку.</numerusform>
+            <numerusform>%1. %2 было удалено. Для повторного выбора закройте это окно и повторите попытку.</numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>Backups</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3382,7 +3858,11 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message numerus="yes">
         <source>[A] removed %n item</source>
         <translatorcomment>Label to indicate that [A] has removed %n items from a shared folder. Placeholder [A] will be replaced by email of the user that made the deletion and %n with the number of removed items.</translatorcomment>
-        <translation><numerusform>[A] удалил %n элемент</numerusform><numerusform>[A] удалил %n элемента</numerusform><numerusform>[A] удалил %n элементов</numerusform><numerusform>[A] удалил %n элемента</numerusform></translation>
+        <translation>
+            <numerusform>[A] удалил %n элемент</numerusform>
+            <numerusform>[A] удалил %n элемента</numerusform>
+            <numerusform>[A] удалил %n элементов</numerusform>
+        </translation>
     </message>
 </context>
 <context>
@@ -3670,7 +4150,11 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message numerus="yes">
         <source>minimum %n user</source>
         <translatorcomment>Label to inform about the minimum number of users for a business plan. %1 will be replaced with the minimum number of users.</translatorcomment>
-        <translation><numerusform>минимум %n пользователь</numerusform><numerusform>минимум %n пользователя</numerusform><numerusform>минимум %n пользователей</numerusform><numerusform>минимум %n пользователя</numerusform></translation>
+        <translation>
+            <numerusform>минимум %n пользователь</numerusform>
+            <numerusform>минимум %n пользователя</numerusform>
+            <numerusform>минимум %n пользователей</numerusform>
+        </translation>
     </message>
 </context>
 <context>
@@ -3709,6 +4193,22 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <source>Show in Finder</source>
         <translatorcomment>Label to indicate the &quot;Show in Finder&quot; option to open local folder of a sync (macOS). Keep Finder name as it is the app name of file explorer on macOS.</translatorcomment>
         <translation>Показать в Finder</translation>
+    </message>
+    <message>
+        <source>Open settings</source>
+        <translation type="unfinished">Открыть «Hастройки»</translation>
+    </message>
+    <message>
+        <source>Go to settings to enable them again.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open preferences</source>
+        <translation type="unfinished">Открыть «Hастройки»</translation>
+    </message>
+    <message>
+        <source>Go to preferences to enable them again.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3757,13 +4257,21 @@ Please delete the folder sync from preferences to cancel them.</source>
 - UI fixed and adjusted.
 </source>
         <translatorcomment>Changelog for version v4.7.0</translatorcomment>
-        <translation>- Новый менеджер передач.
+        <translation type="vanished">- Новый менеджер передач.
 - Улучшено управление передачами и повышена надёжность загрузки и скачивания. 
 - Исправлены обнаруженные сбои в Windows, Linux и macOS.
 - Исправлены ошибки перевода.
 - Улучшена производительность.
 - Исправлен пользовательский интерфейс.
 </translation>
+    </message>
+    <message>
+        <source>Import changes from Desktop app develop (including v4.7.0) and SDK v4.4.0
+[BAC-51] - Dapp: Backup display path adjustment
+[BAC-122] - Backup choose folder and sync choose folder opens the same location
+[BAC-164] - Use new isNodeSyncableWithErrors() sdk interface to check node syncability
+</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4177,27 +4685,27 @@ Do you want to delete it anyway?</source>
     <message>
         <source>%1 TB</source>
         <translatorcomment>File size measured in terabytes</translatorcomment>
-        <translation>%1 ТБ</translation>
+        <translation>%1&#xa0;ТБ</translation>
     </message>
     <message>
         <source>%1 GB</source>
         <translatorcomment>File size measured in gigabytes</translatorcomment>
-        <translation>%1 ГБ</translation>
+        <translation>%1&#xa0;ГБ</translation>
     </message>
     <message>
         <source>%1 MB</source>
         <translatorcomment>File size measured in megabytes</translatorcomment>
-        <translation>%1 МБ</translation>
+        <translation>%1&#xa0;МБ</translation>
     </message>
     <message>
         <source>%1 KB</source>
         <translatorcomment>File size measured in kilobytes</translatorcomment>
-        <translation>%1 КБ</translation>
+        <translation>%1&#xa0;КБ</translation>
     </message>
     <message>
         <source>%1 bytes</source>
         <translatorcomment>File size measured in bytes</translatorcomment>
-        <translation>%1 Б</translation>
+        <translation>%1&#xa0;Б</translation>
     </message>
     <message>
         <source>Invalid filename</source>
@@ -4262,6 +4770,61 @@ Do you want to delete it anyway?</source>
     <message>
         <source>Cancel</source>
         <translation>Отмена</translation>
+    </message>
+</context>
+<context>
+    <name>RemoveBackupDialog</name>
+    <message>
+        <source>Remove backup</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Stop backing up folder?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>To stop backing up this folder, you need to either move it or delete it.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Move folder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Move this folder from backups to another location in your cloud drive to get full access to your data. This folder will stop being backed up.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Move to:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Change</source>
+        <translation type="unfinished">Изменить</translation>
+    </message>
+    <message>
+        <source>Delete folder permanently</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Folder will be deleted from MEGA. It won&apos;t be deleted from your computer. This action cannot be undone.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Confirm</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Отмена</translation>
+    </message>
+    <message>
+        <source>Stop backup</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Move this folder from backups to another location in your Cloud Drive to get full access to your data. This folder will stop being backed up.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4378,12 +4941,12 @@ Do you want to delete it anyway?</source>
     <message>
         <source>Local Folder</source>
         <translatorcomment>Label to indicate the local folder column for sync table. String as short as possible.</translatorcomment>
-        <translation>Локальная папка</translation>
+        <translation type="vanished">Локальная папка</translation>
     </message>
     <message>
         <source>MEGA folder</source>
         <translatorcomment>Label to indicate the MEGA folder column for sync table. String as short as possible.</translatorcomment>
-        <translation>MEGA-папка</translation>
+        <translation type="vanished">MEGA-папка</translation>
     </message>
     <message>
         <source>Auto</source>
@@ -4450,7 +5013,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Enable / disable</source>
         <translatorcomment>Tooltip for checkbox to let the user enable/disable a specific synchronization.</translatorcomment>
-        <translation>Включить / отключить</translation>
+        <translation type="vanished">Включить / отключить</translation>
     </message>
     <message>
         <source>You don&apos;t have write permissions in this local folder.</source>
@@ -4565,7 +5128,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Unexpected error disabling sync %1</source>
         <translatorcomment>Error message shown when an error occurs while trying to disable a sync named %1.</translatorcomment>
-        <translation>Неожиданная ошибка при отключении синхронизации %1</translation>
+        <translation type="vanished">Неожиданная ошибка при отключении синхронизации %1</translation>
     </message>
     <message>
         <source>Error enabling sync</source>
@@ -4865,22 +5428,22 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Synchronization will stop working. Are you sure?</source>
         <translatorcomment>Message label indicating that the synchronizations will stop if the user logs out. Ask for confirmation.</translatorcomment>
-        <translation>Синхронизация будет остановлена. Вы уверены?</translation>
+        <translation type="vanished">Синхронизация будет остановлена. Вы уверены?</translation>
     </message>
     <message>
         <source>Open in MEGA</source>
         <translatorcomment>Text label for action menu item to open the selected Sync folder in MEGA web app File Manager. Keep string as short as possible, as this shows up in menu similar to a context menu.</translatorcomment>
-        <translation>Открыть в MEGA</translation>
+        <translation type="vanished">Открыть в MEGA</translation>
     </message>
     <message>
         <source>Remove synced folder</source>
         <translatorcomment>Text label for action menu item to remove the synchronization for the selected folder. Keep string as short as possible, as this shows up in menu similar to a context menu.</translatorcomment>
-        <translation>Удалить синхронизируемую папку</translation>
+        <translation type="vanished">Удалить синхронизируемую папку</translation>
     </message>
     <message>
         <source>Saving Sync settings</source>
         <translatorcomment>Not used currently. Might get removed in a future refactoring.</translatorcomment>
-        <translation>Сохранение настроек синхронизации</translation>
+        <translation type="vanished">Сохранение настроек синхронизации</translation>
     </message>
     <message>
         <source>Restart MEGAsync</source>
@@ -4920,7 +5483,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>MEGA Folder</source>
         <translatorcomment>Label to indicate the MEGA folder column for sync table. String as short as possible.</translatorcomment>
-        <translation>MEGA-папка</translation>
+        <translation type="vanished">MEGA-папка</translation>
     </message>
     <message>
         <source>Choose which files or folders you want to exclude from synchronisation.</source>
@@ -4965,12 +5528,120 @@ Do you want to restart MEGAsync now?</source>
     <message numerus="yes">
         <source>Used quota for the last %n hour:</source>
         <translatorcomment>Informative text shown in Account pane for Free account type. Indicates the used quota in the last %n specified number of hours. Keep the %n subsitution argument.</translatorcomment>
-        <translation><numerusform>Использовано за последний час:</numerusform><numerusform>Использовано за последние %n часа:</numerusform><numerusform>Использовано за последние %n часов:</numerusform><numerusform>Использовано за последние %n часа:</numerusform></translation>
+        <translation>
+            <numerusform>Использовано за последний час:</numerusform>
+            <numerusform>Использовано за последние %n часа:</numerusform>
+            <numerusform>Использовано за последние %n часов:</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>day</source>
         <translatorcomment>Suffix text label for number of days to keep files in local cache.</translatorcomment>
-        <translation><numerusform>день</numerusform><numerusform>дня</numerusform><numerusform>дней</numerusform><numerusform>дня</numerusform></translation>
+        <translation>
+            <numerusform>день</numerusform>
+            <numerusform>дня</numerusform>
+            <numerusform>дней</numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>Backup</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Backups</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Backup Folder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>View in MEGA</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Saving backups…</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Some folders have not backed up. For more information please hover over the yellow warning icon.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>To Backup Center</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Backup folder:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Synchronizations and backups will stop working.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Backups will stop working.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Synchronizations will stop working.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Are you sure?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error adding sync</source>
+        <translation type="unfinished">Ошибка при добавлении синхронизации</translation>
+    </message>
+    <message>
+        <source>Error removing sync</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Your sync &quot;%1&quot; can&apos;t be removed. Reason: %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error disabling sync</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Your sync &quot;%1&quot; can&apos;t be disabled. Reason: %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Backup Error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error creating Backups root folder: %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error adding backup %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error removing backup</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Your backup &quot;%1&quot; can&apos;t be removed. Reason: %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error enabling backup</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Your backup &quot;%1&quot; can&apos;t be enabled. Reason: %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error disabling backup</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5150,7 +5821,7 @@ Do you want to restart MEGAsync now?</source>
 To prevent the syncing of entire boot volumes, which is inefficient and dangerous,
 we ask you to start with a smaller folder and add more data while MEGAsync is running.</source>
         <translatorcomment>Message displayed to advise the user that is trying to sync an extremely large folder.</translatorcomment>
-        <translation>Вы пытаетесь синхронизировать чрезвычайно большую папку. Чтобы предотвратить синхронизацию всех загрузочных томов, что неэффективно и опасно, мы просим вас начать с небольшой папки и добавлять больше данных, пока работает MEGAsync.</translation>
+        <translation type="vanished">Вы пытаетесь синхронизировать чрезвычайно большую папку. Чтобы предотвратить синхронизацию всех загрузочных томов, что неэффективно и опасно, мы просим вас начать с небольшой папки и добавлять больше данных, пока работает MEGAsync.</translation>
     </message>
     <message>
         <source>Unable to get the filesystem.
@@ -5176,12 +5847,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>You don&apos;t have write permissions in this local folder.</source>
         <translatorcomment>Message displayed when a user is trying to synchronized a local folder in wich the user has no write permissions.</translatorcomment>
-        <translation>У вас нет прав записи в эту локальную папку.</translation>
+        <translation type="vanished">У вас нет прав записи в эту локальную папку.</translation>
     </message>
     <message>
         <source>MEGAsync won&apos;t be able to download anything here.</source>
         <translatorcomment>Message displayed when a user is trying to synchronized a local folder in wich the user has no write permissions.</translatorcomment>
-        <translation>MEGAsync не сможет что-либо скачать сюда.</translation>
+        <translation type="vanished">MEGAsync не сможет что-либо скачать сюда.</translation>
     </message>
     <message>
         <source>Do you want to continue?</source>
@@ -5210,7 +5881,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Creating folder...</source>
         <translatorcomment>Label shown when an user is creating a remote folder.</translatorcomment>
-        <translation>Создание папки…</translation>
+        <translation type="vanished">Создание папки…</translation>
     </message>
     <message>
         <source>Logging out...</source>
@@ -5335,6 +6006,10 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translatorcomment>Label shown when the user completes the initial setup wizard</translatorcomment>
         <translation>Всё готово</translation>
     </message>
+    <message>
+        <source>Creating folder…</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ShellExtension</name>
@@ -5386,12 +6061,20 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message numerus="yes">
         <source>%n file</source>
         <translatorcomment>Label to indicate file count. Keep %n code because it will be filled with the number of files at runtime.</translatorcomment>
-        <translation><numerusform>%n файл</numerusform><numerusform>%n файла</numerusform><numerusform>%n файлов</numerusform><numerusform>%n файла</numerusform></translation>
+        <translation>
+            <numerusform>%n файл</numerusform>
+            <numerusform>%n файла</numerusform>
+            <numerusform>%n файлов</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%n folder</source>
         <translatorcomment>Label to indicate folder count. Keep %n code because it will be filled with the number of folders at runtime.</translatorcomment>
-        <translation><numerusform>%n папка</numerusform><numerusform>%n папки</numerusform><numerusform>%n папок</numerusform><numerusform>%n папки</numerusform></translation>
+        <translation>
+            <numerusform>%n папка</numerusform>
+            <numerusform>%n папки</numerusform>
+            <numerusform>%n папок</numerusform>
+        </translation>
     </message>
 </context>
 <context>
@@ -5556,6 +6239,189 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Off</source>
         <translatorcomment>Unchecked state of a swith button</translatorcomment>
         <translation>Выкл</translation>
+    </message>
+</context>
+<context>
+    <name>SyncController</name>
+    <message>
+        <source>You can&apos;t backup this folder as it&apos;s already synced.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Folder is already backed up. Select a different one.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You can&apos;t sync this folder as it&apos;s already synced.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You can&apos;t sync this folder as it&apos;s already backed up.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You can&apos;t backup this folder as it&apos;s already inside a synced folder.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You can&apos;t backup this folder as it&apos;s already inside a backed up folder.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You can&apos;t sync folders that are inside synced folders.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You can&apos;t sync folders that are inside backed up folders.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You can&apos;t backup this folder as it contains synced folders.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You can&apos;t backup this folder as it contains backed up folders.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You can&apos;t sync folders that contain synced folders.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You can&apos;t sync folders that contain backed up folders.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You are trying to backup an extremely large folder.
+To prevent the backup of entire boot volumes, which is inefficient and dangerous,
+we ask you to start with a smaller folder and add more data while MEGAsync is running.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You are trying to sync an extremely large folder.
+To prevent the syncing of entire boot volumes, which is inefficient and dangerous,
+we ask you to start with a smaller folder and add more data while MEGAsync is running.</source>
+        <translation type="unfinished">Вы пытаетесь синхронизировать чрезвычайно большую папку. Чтобы предотвратить синхронизацию всех загрузочных томов, что неэффективно и опасно, мы просим вас начать с небольшой папки и добавлять больше данных, пока работает MEGAsync.</translation>
+    </message>
+    <message>
+        <source>You don&apos;t have write permissions in this local folder.</source>
+        <translation type="unfinished">У вас нет прав записи в эту локальную папку.</translation>
+    </message>
+    <message>
+        <source>MEGAsync won&apos;t be able to download anything here.</source>
+        <translation type="unfinished">MEGAsync не сможет что-либо скачать сюда.</translation>
+    </message>
+    <message>
+        <source>You don&apos;t have enough permissions for this remote folder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Invalid remote path</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Folder contents already synced</source>
+        <translation type="unfinished">Содержимое папки уже синхронизировано</translation>
+    </message>
+    <message>
+        <source>Folder already synced</source>
+        <translation type="unfinished">Папка уже синхронизирована</translation>
+    </message>
+    <message>
+        <source>Unable to create backup as selected folder is not valid. Try again.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unable to create backup. Try again and if issue continues, contact [A]Support[/A].</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unable to create backup as the device you&apos;re backing up from doesn&apos;t have a name. Give your device a name and then try again. If issue continues, contact [A]Support[/A].</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unable to create backup. For further information, contact [A]Support[/A].</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>SyncItemModel</name>
+    <message>
+        <source>Sort by state</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Local Folder</source>
+        <translation type="unfinished">Локальная папка</translation>
+    </message>
+    <message>
+        <source>Sort by folder name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>MEGA Folder</source>
+        <translation type="unfinished">MEGA-папка</translation>
+    </message>
+    <message>
+        <source>Sort by MEGA folder name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sync is enabled</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sync is disabled</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Click menu for more Sync actions</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>SyncModel</name>
+    <message>
+        <source>MEGAsync</source>
+        <translation type="unfinished">MEGAsync</translation>
+    </message>
+    <message>
+        <source>You are syncing a local folder formatted with a FAT filesystem. That filesystem has deficiencies managing big files and modification times that can cause synchronization problems (e.g. when daylight saving changes), so it&apos;s strongly recommended that you only sync folders formatted with more reliable filesystems like NTFS (more information [A]here[/A]).</source>
+        <translation type="unfinished">Синхронизируемая локальная папка использует файловую систему FAT. Эта файловая система не поддерживает большие файлы и запись времени изменения, что может нарушить синхронизацию (например, при переходе на летнее время), поэтому рекомендуется синхронизировать папки с более надёжными файловыми системами, такими как NTFS (подробнее [A]здесь[/A]).</translation>
+    </message>
+    <message>
+        <source>You are syncing a local folder shared with VMWare. Those folders do not support filesystem notifications so MEGAsync will have to be continuously scanning to detect changes in your files and folders. Please use a different folder if possible to reduce the CPU usage.</source>
+        <translation type="unfinished">Вы синхронизируете локальную папку, используемую совместно с VMWare. Эти папки не поддерживают уведомления файловой системы, поэтому MEGAsync должен будет постоянно сканировать их, чтобы обнаружить изменения в файлах и папках. Пожалуйста, используйте другую папку, если это возможно, чтобы уменьшить нагрузку на процессор.</translation>
+    </message>
+</context>
+<context>
+    <name>SyncTableView</name>
+    <message>
+        <source>Open in MEGA</source>
+        <translation type="unfinished">Открыть в MEGA</translation>
+    </message>
+    <message>
+        <source>Remove synced folder</source>
+        <translation type="unfinished">Удалить синхронизируемую папку</translation>
+    </message>
+</context>
+<context>
+    <name>SyncsMenu</name>
+    <message>
+        <source>Add Sync</source>
+        <translation type="unfinished">Добавить синхронизацию</translation>
+    </message>
+    <message>
+        <source>Syncs</source>
+        <translation type="unfinished">Синхронизации</translation>
+    </message>
+    <message>
+        <source>Add Backups</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Backups</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5794,7 +6660,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message numerus="yes">
         <source>%1 result found</source>
         <translatorcomment>Message shown with search results,when there are only uploads or downloads, but not both at the same time</translatorcomment>
-        <translation><numerusform>Найден %1 результат</numerusform><numerusform>Найдено %1 результата</numerusform><numerusform>Найдено %1 результатов</numerusform><numerusform>Найдено %1 результата</numerusform></translation>
+        <translation>
+            <numerusform>Найден %1 результат</numerusform>
+            <numerusform>Найдено %1 результата</numerusform>
+            <numerusform>Найдено %1 результатов</numerusform>
+        </translation>
     </message>
     <message>
         <source>Upgrade now</source>
@@ -5826,7 +6696,11 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
     <message numerus="yes">
         <source>Issue found</source>
         <translatorcomment>Message shown when there are some failed transfers/syncs/backups</translatorcomment>
-        <translation><numerusform>Обнаружены ошибки</numerusform><numerusform>Обнаружены ошибки</numerusform><numerusform>Обнаружены ошибки</numerusform><numerusform>Обнаружены ошибки</numerusform></translation>
+        <translation>
+            <numerusform>Обнаружены ошибки</numerusform>
+            <numerusform>Обнаружены ошибки</numerusform>
+            <numerusform>Обнаружены ошибки</numerusform>
+        </translation>
     </message>
 </context>
 <context>
@@ -6231,6 +7105,13 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
     </message>
 </context>
 <context>
+    <name>UserAttributes::DeviceName</name>
+    <message>
+        <source>Your computer</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>Utilities</name>
     <message>
         <source>just now</source>
@@ -6285,32 +7166,56 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
     <message numerus="yes">
         <source>%n second ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n seconds ago</translatorcomment>
-        <translation><numerusform>%n секунду назад</numerusform><numerusform>%n секунды назад</numerusform><numerusform>%n секунд назад</numerusform><numerusform>%n секунды назад</numerusform></translation>
+        <translation>
+            <numerusform>%n секунду назад</numerusform>
+            <numerusform>%n секунды назад</numerusform>
+            <numerusform>%n секунд назад</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%n minute ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n minutes ago</translatorcomment>
-        <translation><numerusform>%n минуту назад</numerusform><numerusform>%n минуты назад</numerusform><numerusform>%n минут назад</numerusform><numerusform>%n минуты назад</numerusform></translation>
+        <translation>
+            <numerusform>%n минуту назад</numerusform>
+            <numerusform>%n минуты назад</numerusform>
+            <numerusform>%n минут назад</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%n hour ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n hours ago</translatorcomment>
-        <translation><numerusform>%n час назад</numerusform><numerusform>%n часа назад</numerusform><numerusform>%n часов назад</numerusform><numerusform>%n часа назад</numerusform></translation>
+        <translation>
+            <numerusform>%n час назад</numerusform>
+            <numerusform>%n часа назад</numerusform>
+            <numerusform>%n часов назад</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%n day ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n days ago</translatorcomment>
-        <translation><numerusform>%n день назад</numerusform><numerusform>%n дня назад</numerusform><numerusform>%n дней назад</numerusform><numerusform>%n дня назад</numerusform></translation>
+        <translation>
+            <numerusform>%n день назад</numerusform>
+            <numerusform>%n дня назад</numerusform>
+            <numerusform>%n дней назад</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%n month ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n months ago</translatorcomment>
-        <translation><numerusform>%n месяц назад</numerusform><numerusform>%n месяца назад</numerusform><numerusform>%n месяцев назад</numerusform><numerusform>%n месяца назад</numerusform></translation>
+        <translation>
+            <numerusform>%n месяц назад</numerusform>
+            <numerusform>%n месяца назад</numerusform>
+            <numerusform>%n месяцев назад</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%n year ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n years ago</translatorcomment>
-        <translation><numerusform>%n год назад</numerusform><numerusform>%n года назад</numerusform><numerusform>%n лет назад</numerusform><numerusform>%n года назад</numerusform></translation>
+        <translation>
+            <numerusform>%n год назад</numerusform>
+            <numerusform>%n года назад</numerusform>
+            <numerusform>%n лет назад</numerusform>
+        </translation>
     </message>
 </context>
 <context>
