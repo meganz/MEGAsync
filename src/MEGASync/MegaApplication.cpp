@@ -5855,7 +5855,7 @@ void MegaApplication::externalFolderSync(qlonglong targetFolder)
 
 void MegaApplication::externalOpenTransferManager(int tab)
 {
-    if (appfinished)
+    if (appfinished || !infoDialog)
     {
         return;
     }
