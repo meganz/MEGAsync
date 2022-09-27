@@ -492,7 +492,7 @@ QString AlertItem::formatRichString(QString str)
 
 QString AlertItem::getUserFullName(MegaUserAlert *alert)
 {
-    if(mFullNameAttributes && mFullNameAttributes->isAttributeReady())
+    if(mFullNameAttributes)
     {
         return mFullNameAttributes->getRichFullName();
     }
