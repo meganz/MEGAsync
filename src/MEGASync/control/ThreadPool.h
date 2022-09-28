@@ -27,7 +27,7 @@ private:
 
     void shutdown();
 
-    std::atomic<bool> mDone = false;
+    std::atomic<bool> mDone {false} ;
     static thread_local std::atomic<bool>* mLocalToThreadDone;
 
     std::vector<std::thread> mThreads;
