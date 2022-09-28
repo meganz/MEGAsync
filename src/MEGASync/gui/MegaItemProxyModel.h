@@ -19,16 +19,18 @@ public:
         bool showReadOnly = true;
         bool showReadWriteFolders = true;
         bool showOwnerColumn = true;
-        QString textFilter;
+        bool showFiles = true;
         Filter() : showReadOnly(true),
-                    showReadWriteFolders(true){};
+                    showReadWriteFolders(true),
+                    showOwnerColumn(true),
+                    showFiles(true){};
     };
 
     explicit MegaItemProxyModel(QObject* parent = nullptr);
     void showReadOnlyFolders(bool value);
     void showReadWriteFolders(bool value);
     void showOwnerColumn(bool value);
-    void setTextFilter(const QString& textFilter);
+    void showFiles(bool value);
 
     mega::MegaHandle getHandle(const QModelIndex &index);
     std::shared_ptr<mega::MegaNode> getNode(const QModelIndex& index);
@@ -36,7 +38,7 @@ public:
     QModelIndex getIndexFromSource(const QModelIndex& index);
     QModelIndex getIndexFromHandle(const mega::MegaHandle& handle);
     QModelIndex getIndexFromNode(const std::shared_ptr<mega::MegaNode> node);
-    QVector<QModelIndex> getRelatedModelIndexes(const std::shared_ptr<mega::MegaNode> node/*, bool isInShare*/);
+    QVector<QModelIndex> getRelatedModelIndexes(const std::shared_ptr<mega::MegaNode> node);
     void removeNode(const QModelIndex &item);
     bool lessThan(const QModelIndex &left, const QModelIndex &right) const override;
 

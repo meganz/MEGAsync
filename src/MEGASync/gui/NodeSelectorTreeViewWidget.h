@@ -39,22 +39,24 @@ public:
     mega::MegaHandle getSelectedNodeHandle();
     QList<mega::MegaHandle> getMultiSelectionNodeHandle();
     void setSelectedNodeHandle(const mega::MegaHandle &selectedHandle);
-    void newFolderClicked();
+    void setSelectionMode(int selectionMode);
 
 public slots:
     void onRequestFinish(mega::MegaApi* api, mega::MegaRequest *request, mega::MegaError* e) override;
 
+private slots:
+    void onbNewFolderClicked();
+
+
 signals:
-    void EnableOK(bool value);
-    void EnableNewFolder(bool value);
-    void SetVisibleNewFolderBtn(bool value);
+    void okBtnClicked();
+    void cancelBtnClicked();
 
 protected:
     void showEvent(QShowEvent* ) override;
     void resizeEvent(QResizeEvent* ) override;
     void mousePressEvent(QMouseEvent* event) override;
     void changeEvent(QEvent* event) override;
-    bool eventFilter(QObject *o, QEvent *e) override;
     void setTitle(const QString& title);
     QModelIndex getParentIncomingShareByIndex(QModelIndex idx);
 
@@ -70,7 +72,6 @@ private slots:
     void onGoForwardClicked();
     void onGoBackClicked();
     void onSectionResized();
-    void onSearchBoxEdited(const QString& text);
     virtual void onModelReset(){};
 
 

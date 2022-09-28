@@ -10,7 +10,7 @@ MegaItemProxyModel::MegaItemProxyModel(QObject* parent) :
     mCollator.setCaseSensitivity(Qt::CaseInsensitive);
     mCollator.setNumericMode(true);
     mCollator.setIgnorePunctuation(false);
-    setRecursiveFilteringEnabled(true);
+    //setRecursiveFilteringEnabled(true);
 }
 
 void MegaItemProxyModel::showReadOnlyFolders(bool value)
@@ -25,6 +25,12 @@ void MegaItemProxyModel::showReadWriteFolders(bool value)
     invalidateFilter();
 }
 
+void MegaItemProxyModel::showFiles(bool value)
+{
+    mFilter.showFiles = value;
+    invalidateFilter();
+}
+
 void MegaItemProxyModel::showOwnerColumn(bool value)
 {
     if(mFilter.showOwnerColumn != value)
@@ -32,12 +38,6 @@ void MegaItemProxyModel::showOwnerColumn(bool value)
         mFilter.showOwnerColumn = value;
         invalidateFilter();
     }
-}
-
-void MegaItemProxyModel::setTextFilter(const QString &textFilter)
-{
-    mFilter.textFilter = textFilter;
-    invalidateFilter();
 }
 
 mega::MegaHandle MegaItemProxyModel::getHandle(const QModelIndex &index)
@@ -64,7 +64,7 @@ QModelIndex MegaItemProxyModel::getIndexFromHandle(const mega::MegaHandle& handl
     return ret;
 }
 
-QVector<QModelIndex> MegaItemProxyModel::getRelatedModelIndexes(const std::shared_ptr<mega::MegaNode> node/*, bool isInShare*/)
+QVector<QModelIndex> MegaItemProxyModel::getRelatedModelIndexes(const std::shared_ptr<mega::MegaNode> node)
 {
     QVector<QModelIndex> ret;
 
@@ -75,13 +75,12 @@ QVector<QModelIndex> MegaItemProxyModel::getRelatedModelIndexes(const std::share
     auto parentNodeList = std::shared_ptr<mega::MegaNodeList>(mega::MegaNodeList::createInstance());
     parentNodeList->addNode(node.get());
     mega::MegaApi* megaApi = MegaSyncApp->getMegaApi();
-    auto  rootNodeHandle = MegaSyncApp->getRootNode()->getHandle();
 
     std::shared_ptr<mega::MegaNode> this_node = node;
     while(this_node)
     {
         this_node.reset(megaApi->getParentNode(this_node.get()));
-        if(this_node && (/*!isInShare ||*/ this_node->getHandle() != rootNodeHandle))
+        if(this_node)
         {
             parentNodeList->addNode(this_node.get());
         }
@@ -169,12 +168,6 @@ bool MegaItemProxyModel::filterAcceptsRow(int sourceRow, const QModelIndex &sour
         {
             if(std::shared_ptr<mega::MegaNode> node = megaItem->getNode())
             {
-               QModelIndex parentIndex = index.parent();
-               if(parentIndex.isValid() && mFilter.textFilter.isEmpty())
-               {
-                   //TODO EKA: Is this necessary? it triggers full ree load
-                 // return filterAcceptsRow(index.row(), index);
-               }
                mega::MegaApi* megaApi = MegaSyncApp->getMegaApi();
                int accs = megaApi->getAccess(node.get());
                if(node->isInShare())
@@ -185,15 +178,11 @@ bool MegaItemProxyModel::filterAcceptsRow(int sourceRow, const QModelIndex &sour
                         return false;
                     }
                }
-
-               bool accept = true;
-
-               if(accept && !mFilter.textFilter.isEmpty())
+               if(node->isFile() && !mFilter.showFiles)
                {
-                  accept = QString::fromUtf8(node->getName()).contains(mFilter.textFilter, Qt::CaseInsensitive);
+                   return false;
                }
-
-               return accept;
+               return true;
             }
         }
     }

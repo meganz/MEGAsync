@@ -14,9 +14,8 @@ const int MegaItem::ICON_SIZE = 17;
 
 using namespace mega;
 
-MegaItem::MegaItem(std::unique_ptr<MegaNode> node, MegaItem *parentItem, bool showFiles) :
+MegaItem::MegaItem(std::unique_ptr<MegaNode> node, MegaItem *parentItem) :
     QObject(parentItem),
-    mShowFiles(showFiles),
     mOwnerEmail(QString()),
     mStatus(STATUS::NONE),
     mCameraFolder(false),
@@ -85,26 +84,8 @@ void MegaItem::createChildItems(int first, int last)
     for(;first < last; ++first)
     {
         auto node = std::unique_ptr<MegaNode>(mChildNodes->get(first)->copy());
-        mChildItems.append(new MegaItem(move(node), this, mShowFiles));
+        mChildItems.append(new MegaItem(move(node), this));
     }
-}
-
-void MegaItem::addChildren(std::shared_ptr<mega::MegaNodeList> children)
-{
-    for (int i = 0; i < children->size(); i++)
-    {
-        auto node = std::unique_ptr<MegaNode>(children->get(i)->copy());
-//        if (!mShowFiles && node->getType() == MegaNode::TYPE_FILE)
-//        {
-//            break;
-//        }
-        mChildItems.append(new MegaItem(move(node), this, mShowFiles));
-    }
-}
-
-bool MegaItem::areChildrenSet()
-{
-    return mChildrenSet;
 }
 
 MegaItem *MegaItem::getParent()
@@ -289,7 +270,7 @@ bool MegaItem::isSyncable()
 
 void MegaItem::addNode(std::unique_ptr<MegaNode>node)
 {
-    mChildItems.append(new MegaItem(move(node), this, mShowFiles));
+    mChildItems.append(new MegaItem(move(node), this));
 }
 
 void MegaItem::removeNode(std::shared_ptr<MegaNode> node)
@@ -308,11 +289,6 @@ void MegaItem::removeNode(std::shared_ptr<MegaNode> node)
             return;
         }
     }
-}
-
-void MegaItem::displayFiles(bool enable)
-{
-    mShowFiles = enable;
 }
 
 void MegaItem::setCameraFolder()

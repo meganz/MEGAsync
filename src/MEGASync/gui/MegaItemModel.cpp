@@ -11,6 +11,7 @@
 using namespace mega;
 
 const int MegaItemModel::ROW_HEIGHT = 20;
+const int MegaItemModel::FETCH_STEP = 30;
 
 MegaItemModel::MegaItemModel(QObject *parent) :
     QAbstractItemModel(parent),
@@ -124,12 +125,6 @@ QModelIndex MegaItemModel::index(int row, int column, const QModelIndex &parent)
     if (parent.isValid())
     {
         MegaItem* item = static_cast<MegaItem*>(parent.internalPointer());
-//        if (!item->areChildrenSet())
-//        {
-//            MegaApi* megaApi = MegaSyncApp->getMegaApi();
-//            auto children = std::shared_ptr<MegaNodeList>(megaApi->getChildren(item->getNode().get()));
-//            item->setChildren(children);
-//        }
         return createIndex(row, column, item->getChild(row));
     }
     else
@@ -261,15 +256,15 @@ void MegaItemModel::fetchMore(const QModelIndex &parent)
         item->fetchChildren();
         MegaApi* megaApi = MegaSyncApp->getMegaApi();
         int remainingChildren = megaApi->getNumChildren(item->getNode().get()) - item->getNumChildren();
-        int childrenNumToFetch = qMin(30, remainingChildren);
+        int childrenNumToFetch = qMin(FETCH_STEP, remainingChildren);
         beginInsertRows(parent, item->getNumChildren(), childrenNumToFetch + item->getNumChildren() - 1);
-        item->createChildItems(item->getNumChildren(), childrenNumToFetch + item->getNumChildren() /*- 1*/);
+        item->createChildItems(item->getNumChildren(), childrenNumToFetch + item->getNumChildren());
         endInsertRows();
     }
     else
     {
         int remainingChildren = rootItemsCount() - mRootItems.size();
-        int childrenNumToFetch = qMin(30, remainingChildren);
+        int childrenNumToFetch = qMin(FETCH_STEP, remainingChildren);
         beginResetModel();
         mRootItems.append(getRootItems(mRootItems.size(), mRootItems.size() + childrenNumToFetch));
         endResetModel();
@@ -297,21 +292,6 @@ bool MegaItemModel::canFetchMore(const QModelIndex &parent) const
 void MegaItemModel::setSyncSetupMode(bool value)
 {
     mSyncSetupMode = value;
-}
-
-void MegaItemModel::showFiles(bool show)
-{
-    mDisplayFiles = show;
-    for(QList<MegaItem*>::iterator it = mRootItems.begin(); it != mRootItems.end();)
-    {
-        if((*it)->getNode()->isFile() && !show)
-        {
-            mRootItems.removeOne(*it);
-            continue;
-        }
-        (*it)->displayFiles(show);
-        ++it;
-    }
 }
 
 void MegaItemModel::addNode(std::unique_ptr<MegaNode> node, const QModelIndex &parent)

@@ -34,6 +34,7 @@ class MegaItemModel : public QAbstractItemModel
 public:
 
     static const int ROW_HEIGHT;
+    static const int FETCH_STEP;
 
     enum COLUMN{
       NODE = 0,
@@ -59,7 +60,6 @@ public:
 
     void setDisableFolders(bool option);
     void setSyncSetupMode(bool value);
-    void showFiles(bool show);
     void addNode(std::unique_ptr<mega::MegaNode> node, const QModelIndex &parent);
     void removeNode(const QModelIndex &item);
 

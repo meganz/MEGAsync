@@ -32,8 +32,13 @@ NodeSelector::NodeSelector(int selectMode, QWidget *parent) :
     setWindowModality(Qt::WindowModal);
     ui->setupUi(this);
 
-    ui->cbAlwaysUploadToLocation->hide();
-    ui->bOk->setDefault(true);
+    ui->CloudDrive->setSelectionMode(mSelectMode);
+    ui->IncomingShares->setSelectionMode(mSelectMode);
+
+    connect(ui->CloudDrive, &NodeSelectorTreeViewWidget::okBtnClicked, this, &NodeSelector::onbOkClicked);
+    connect(ui->IncomingShares, &NodeSelectorTreeViewWidget::okBtnClicked, this, &NodeSelector::onbOkClicked);
+    connect(ui->CloudDrive, &NodeSelectorTreeViewWidget::cancelBtnClicked, this, &NodeSelector::reject);
+    connect(ui->IncomingShares, &NodeSelectorTreeViewWidget::cancelBtnClicked, this, &NodeSelector::reject);
 
 #ifndef Q_OS_MAC
     ui->bShowCloudDrive->setChecked(true);
@@ -45,12 +50,6 @@ NodeSelector::NodeSelector(int selectMode, QWidget *parent) :
     connect(ui->tabBar, &QTabBar::currentChanged, this, &NodeSelector::onTabSelected);
 #endif
 
-    nodesReady();
-    ui->bOk->setEnabled(false);
-    connect(ui->bNewFolder, &QPushButton::clicked, this, &NodeSelector::onbNewFolderClicked);
-    connect(ui->bOk, &QPushButton::clicked, this, &NodeSelector::onbOkClicked);
-    connect(ui->bCancel, &QPushButton::clicked, this, &QDialog::reject);
-
     // Provide quick access shortcuts for the two panes via Ctrl+1,2
     // Ctrl is auto-magically translated to CMD key by Qt on macOS
     for (int i = 0; i < 2; ++i)
@@ -59,6 +58,10 @@ NodeSelector::NodeSelector(int selectMode, QWidget *parent) :
         QObject::connect(shortcut, &QShortcut::activated, this, [=](){ onTabSelected(i); });
     }
     onbShowCloudDriveClicked();
+
+    //TODO EKA: WE need to do this at this lvl? only for stream_select mode, switch removed
+    //setWindowTitle(tr("Select items"));
+
 }
 
 NodeSelector::~NodeSelector()
@@ -66,51 +69,16 @@ NodeSelector::~NodeSelector()
     delete ui;
 }
 
-void NodeSelector::nodesReady()
-{
-    if (!mMegaApi->isFilesystemAvailable())
-    {
-        ui->bOk->setEnabled(false);
-        ui->bNewFolder->setEnabled(false);
-        return;
-    }
-
-    switch(mSelectMode)
-    {
-    case NodeSelector::SYNC_SELECT:
-        // fall through
-    case NodeSelector::UPLOAD_SELECT:
-        ui->bNewFolder->show();
-        break;
-    case NodeSelector::DOWNLOAD_SELECT:
-        ui->bNewFolder->hide();
-        break;
-    case NodeSelector::STREAM_SELECT:
-        ui->bNewFolder->hide();
-        setWindowTitle(tr("Select items"));
-        break;
-    }
-
-//Disable animation for OS X due to problems showing the tree icons
-#ifdef __APPLE__
-    ui->tMegaFolders->setAnimated(false);
-#endif
-}
-
-void NodeSelector::onbNewFolderClicked()
-{
-    auto tree_view_widget = static_cast<NodeSelectorTreeViewWidget*>(ui->stackedWidget->currentWidget());
-    tree_view_widget->newFolderClicked();
-}
-
 void NodeSelector::showDefaultUploadOption(bool show)
 {
-    ui->cbAlwaysUploadToLocation->setVisible(show);
+    //TODO EKA: SET VISIBLE THIS CHECKBOX IF NECESSARY
+    //ui->cbAlwaysUploadToLocation->setVisible(show);
 }
 
 void NodeSelector::setDefaultUploadOption(bool value)
 {
-    ui->cbAlwaysUploadToLocation->setChecked(value);
+    //TODO EKA: SET VALUE TO THIS CHECKBOX IF NECESSARY
+   // ui->cbAlwaysUploadToLocation->setChecked(value);
 }
 
 void NodeSelector::changeEvent(QEvent *event)
@@ -143,15 +111,14 @@ void NodeSelector::onbOkClicked()
         if(wrongNodes == nodes.size())
         {
             correctNodeSelected = false;
-            //TODO EKA: fix this message as isclouddrive is not available anymore
-//            if(isCloudDrive())
-//            {
-//                QMegaMessageBox::warning(nullptr, tr("Error"), tr("The item you selected has been removed. To reselect, close this window and try again.", "", wrongNodes), QMessageBox::Ok);
-//            }
-//            else
-//            {
-//                QMegaMessageBox::warning(nullptr, tr("Error"), tr("You no longer have access to this item. Ask the owner to share again.", "", wrongNodes), QMessageBox::Ok);
-//            }
+            if(ui->stackedWidget->currentIndex() == CLOUD_DRIVE)
+            {
+                QMegaMessageBox::warning(nullptr, tr("Error"), tr("The item you selected has been removed. To reselect, close this window and try again.", "", wrongNodes), QMessageBox::Ok);
+            }
+            else
+            {
+                QMegaMessageBox::warning(nullptr, tr("Error"), tr("You no longer have access to this item. Ask the owner to share again.", "", wrongNodes), QMessageBox::Ok);
+            }
         }
         else if(wrongNodes > 0)
         {
@@ -204,7 +171,6 @@ void NodeSelector::onbOkClicked()
             }
         }
     }
-
     correctNodeSelected ? accept() : reject();
 }
 
@@ -245,7 +211,9 @@ void NodeSelector::onTabSelected(int index)
 
 bool NodeSelector::getDefaultUploadOption()
 {
-    return ui->cbAlwaysUploadToLocation->isChecked();
+    //TODO FIX THIS as checkbox has been moved to stack page
+    //return ui->cbAlwaysUploadToLocation->isChecked();
+    return false;
 }
 
 MegaHandle NodeSelector::getSelectedNodeHandle()
@@ -272,15 +240,14 @@ void NodeSelector::setSelectedNodeHandle(const mega::MegaHandle &handle)
     {
         return;
     }
-    //TODO EKA:
     if(parent_node->isInShare())
     {
-        //openInshare
+        onTabSelected(SHARES);
     }
     else
     {
-        //open cloud drive
+        onTabSelected(CLOUD_DRIVE);
     }
-    auto tree_view_widget = static_cast<NodeSelectorTreeViewWidget*>(ui->stackedWidget->widget(0));
+    auto tree_view_widget = static_cast<NodeSelectorTreeViewWidget*>(ui->stackedWidget->currentWidget());
     tree_view_widget->setSelectedNodeHandle(handle);
 }

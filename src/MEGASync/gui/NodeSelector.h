@@ -51,10 +51,8 @@ public:
 
 protected:
     void changeEvent(QEvent * event) override;
-    void nodesReady();
 
 private slots:
-    void onbNewFolderClicked();
     void onbOkClicked();
     void onbShowIncomingSharesClicked();
     void onbShowCloudDriveClicked();
