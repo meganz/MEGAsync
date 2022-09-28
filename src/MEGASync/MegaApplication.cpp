@@ -1597,7 +1597,7 @@ void MegaApplication::processUploadQueue(MegaHandle nodeHandle)
 
         updateMetadata(data, filePath);
 
-        uploader->upload(filePath, uploadInfo->getNewName(), node.get(), transferId, batch);
+        uploader->upload(filePath, uploadInfo->getNewName(), node, transferId, batch);
         updater.update(counter);
 
         counter++;
