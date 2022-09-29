@@ -14,7 +14,7 @@ public:
     InfoDialogTransfersProxyModel(QObject* parent);
     ~InfoDialogTransfersProxyModel();
 
-    TransferBaseDelegateWidget* createTransferManagerItem(QWidget *parent) override;
+    TransferBaseDelegateWidget* createTransferManagerItem(QWidget *) override;
 
     void setSourceModel(QAbstractItemModel* sourceModel) override;
 

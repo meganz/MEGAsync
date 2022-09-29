@@ -270,6 +270,18 @@ TransferManager::TransferManager(MegaApi *megaApi) :
     mUi->lTransfers->installEventFilter(this);
 }
 
+
+TransferManager::~TransferManager()
+{
+    disconnect(findChild<MegaTransferView*>(), &MegaTransferView::verticalScrollBarVisibilityChanged,
+            this, &TransferManager::onVerticalScrollBarVisibilityChanged);
+
+    mShadowTab->deleteLater();
+    delete mUi;
+    delete mTransferScanCancelUi;
+}
+
+
 void TransferManager::pauseModel(bool value)
 {
     mModel->pauseModelProcessing(value);
@@ -360,15 +372,6 @@ void TransferManager::updateCurrentCategoryTitle()
         default:
              mUi->lCurrentContent->setText(tr(ALL_TRANSFERS_TITLE));
     }
-}
-
-TransferManager::~TransferManager()
-{
-    disconnect(findChild<MegaTransferView*>(), &MegaTransferView::verticalScrollBarVisibilityChanged,
-            this, &TransferManager::onVerticalScrollBarVisibilityChanged);
-
-    delete mUi;
-    delete mTransferScanCancelUi;
 }
 
 void TransferManager::on_tCompleted_clicked()

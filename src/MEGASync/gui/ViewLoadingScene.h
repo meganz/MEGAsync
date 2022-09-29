@@ -182,6 +182,7 @@ public:
     {
         mLoadingDelegate->setLoading(false);
         mLoadingDelegate->deleteLater();
+        mLoadingModel->clear();
         mLoadingModel->deleteLater();
     }
 

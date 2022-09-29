@@ -920,7 +920,7 @@ void MegaTransferView::moveToTopClicked()
             auto index = indexes.at(item);
             auto sourceIndex = proxy->mapToSource(index);
 
-            sourceModel->moveRows(QModelIndex(), QList<int>() << sourceIndex.row(), QModelIndex(), -1);
+            sourceModel->moveTransferPriority(QModelIndex(), QList<int>() << sourceIndex.row(), QModelIndex(), -1);
         }
     }
 
@@ -968,7 +968,7 @@ void MegaTransferView::moveUpClicked()
                 }
             }
 
-            sourceModel->moveRows(QModelIndex(), QList<int>() << sourceIndex.row(), QModelIndex(), rowTarget);
+            sourceModel->moveTransferPriority(QModelIndex(), QList<int>() << sourceIndex.row(), QModelIndex(), rowTarget);
         }
     }
     clearSelection();
@@ -1016,7 +1016,7 @@ void MegaTransferView::moveDownClicked()
                     rowTarget = sourceTargetIndex.row();
                 }
             }
-            sourceModel->moveRows(QModelIndex(), QList<int>() << rowTarget, QModelIndex(), sourceIndex.row());
+            sourceModel->moveTransferPriority(QModelIndex(), QList<int>() << rowTarget, QModelIndex(), sourceIndex.row());
         }
 
         sourceModel->inverseMoveRowsSignal(false);
@@ -1050,7 +1050,7 @@ void MegaTransferView::moveToBottomClicked()
             auto index = indexes.at(item);
             auto sourceIndex = proxy->mapToSource(index);
 
-            sourceModel->moveRows(QModelIndex(), QList<int>() << sourceIndex.row(), QModelIndex(), -2);
+            sourceModel->moveTransferPriority(QModelIndex(), QList<int>() << sourceIndex.row(), QModelIndex(), -2);
         }
     }
 
