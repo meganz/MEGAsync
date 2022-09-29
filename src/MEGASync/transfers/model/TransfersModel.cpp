@@ -2031,7 +2031,7 @@ void TransfersModel::inverseMoveRowsSignal(bool state)
     mInverseMoveSignal = state;
 }
 
-bool TransfersModel::moveRows(const QModelIndex &sourceParent, const QList<int>& rows,
+bool TransfersModel::moveTransferPriority(const QModelIndex &sourceParent, const QList<int>& rows,
                               const QModelIndex &destinationParent, int destinationChild)
 {
     bool result(false);
@@ -2191,16 +2191,16 @@ bool TransfersModel::dropMimeData(const QMimeData* data, Qt::DropAction action, 
 
     if (destRow >= 0 && destRow <= rowCount(DEFAULT_IDX) && action == Qt::MoveAction)
     {
-        QList<int> rows = getDragAndDropRows(data, destRow);
+        QList<int> rows = getDragAndDropRows(data);
 
-        moveRows(parent, rows, parent, destRow);
+        moveTransferPriority(parent, rows, parent, destRow);
     }
 
     // Return false to avoid row deletion...dirty!
     return false;
 }
 
-QList<int> TransfersModel::getDragAndDropRows(const QMimeData *data, int destRow)
+QList<int> TransfersModel::getDragAndDropRows(const QMimeData *data)
 {
     QByteArray byteArray (data->data(QString::fromUtf8("application/x-qabstractitemmodeldatalist")));
     QDataStream stream (&byteArray, QIODevice::ReadOnly);

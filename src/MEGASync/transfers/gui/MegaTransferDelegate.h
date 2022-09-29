@@ -16,6 +16,8 @@ class MegaTransferDelegate : public QStyledItemDelegate
 
 public:
     MegaTransferDelegate(TransfersSortFilterProxyBaseModel* model,  QAbstractItemView* view);
+    ~MegaTransferDelegate();
+
     QSize sizeHint(const QStyleOptionViewItem&, const QModelIndex&) const;
 
 protected:

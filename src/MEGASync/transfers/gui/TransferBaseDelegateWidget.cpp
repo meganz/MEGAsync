@@ -18,10 +18,15 @@ void TransferBaseDelegateWidget::updateUi(const QExplicitlySharedDataPointer<Tra
         mPreviousState = TransferData::TransferState::TRANSFER_NONE;
     }
 
+    bool sameTag(mData && mData->mTag == transferData->mTag ? true : false);
+
     mData = transferData;
 
-    setType();
-    setFileNameAndType();
+    if(!sameTag)
+    {
+        setType();
+        setFileNameAndType();
+    }
     updateTransferState();
 
     mPreviousState = mData->getState();

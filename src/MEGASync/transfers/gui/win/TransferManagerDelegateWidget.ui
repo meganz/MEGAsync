@@ -456,7 +456,7 @@ QProgressBar::chunk
                </property>
                <property name="sizeHint" stdset="0">
                 <size>
-                 <width>103</width>
+                 <width>38</width>
                  <height>0</height>
                 </size>
                </property>

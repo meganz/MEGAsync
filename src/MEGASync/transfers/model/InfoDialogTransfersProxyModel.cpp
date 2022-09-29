@@ -16,9 +16,9 @@ InfoDialogTransfersProxyModel::~InfoDialogTransfersProxyModel()
 {
 }
 
-TransferBaseDelegateWidget* InfoDialogTransfersProxyModel::createTransferManagerItem(QWidget *parent)
+TransferBaseDelegateWidget* InfoDialogTransfersProxyModel::createTransferManagerItem(QWidget*)
 {
-    auto item = new InfoDialogTransferDelegateWidget(parent);
+    auto item = new InfoDialogTransferDelegateWidget(nullptr);
 
     connect(item, &InfoDialogTransferDelegateWidget::copyTransferLink,
             this, &InfoDialogTransfersProxyModel::onCopyTransferLinkRequested);
