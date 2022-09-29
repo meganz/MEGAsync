@@ -509,8 +509,6 @@ void MegaApplication::initialize()
     delegateListener = new MEGASyncDelegateListener(megaApi, this, this);
     megaApi->addListener(delegateListener);
     uploader = new MegaUploader(megaApi);
-    connect(uploader, &MegaUploader::uploadRecursivelyIntoASyncedLocationFinished,
-            this, &MegaApplication::onUploadRecursivelyIntoASyncedLocationFinished);
     connect(uploader, &MegaUploader::startingTransfers,
             this, &MegaApplication::startingUpload);
     downloader = new MegaDownloader(megaApi);
@@ -1587,7 +1585,7 @@ void MegaApplication::processUploadQueue(MegaHandle nodeHandle)
     auto batch = std::shared_ptr<TransferBatch>(new TransferBatch());
     mBlockingBatch.add(batch);
 
-    EventUpdater updater(uploads.size());
+    EventUpdater updater(uploads.size(),20);
     mProcessingUploadQueue = true;
 
     auto counter(0);
@@ -4243,24 +4241,16 @@ void MegaApplication::showNotificationFinishedTransfers(unsigned long long appDa
     }
 
     TransferMetaData *data = it.value();
-    if (!preferences->isNotificationEnabled(Preferences::NotificationsTypes::INFO_MESSAGES))
-    {
-        if (data->pendingTransfers == 0)
-        {
-            transferAppData.erase(it);
-            delete data;
-        }
-
-        return;
-    }
-
     if (data->pendingTransfers == 0)
     {
-        std::pair<QString,QString> titleAndMessage = buildFinishedTransferTitleAndMessage(data);
-        if (mOsNotifications && !titleAndMessage.second.isEmpty())
+        if (preferences->isNotificationEnabled(Preferences::NotificationsTypes::INFO_MESSAGES))
         {
-            preferences->setLastTransferNotificationTimestamp();
-            mOsNotifications->sendFinishedTransferNotification(titleAndMessage.first, titleAndMessage.second, data->localPath);
+            std::pair<QString,QString> titleAndMessage = buildFinishedTransferTitleAndMessage(data);
+            if (mOsNotifications && !titleAndMessage.second.isEmpty())
+            {
+                preferences->setLastTransferNotificationTimestamp();
+                mOsNotifications->sendFinishedTransferNotification(titleAndMessage.first, titleAndMessage.second, data->localPath);
+            }
         }
 
         transferAppData.erase(it);
