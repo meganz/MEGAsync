@@ -3069,41 +3069,46 @@ Semua transfer yang anda pilih akan dibatalkan.</translation>
         <source>Cancel transfers?
 All your selected transfers will be cancelled and cleared.</source>
         <translatorcomment>Messagebox text to confirm if the user wants to cancel and clear all the selected transfers</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Batalkan transfer?
+Semua transfer yang anda pilih akan dibatalkan dan dihapus.</translation>
     </message>
     <message>
         <source>Cancel transfers?
 Your selected incomplete sync transfers won't be cancelled
 All the other selected transfers will be cancelled and cleared.</source>
         <translatorcomment>Messagebox text to confirm if the user wants to cancel and clear all the selected transfers but there are sync transfers in the selection (they cannot be cancelled)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Batalkan transfer?
+Transfer sinkronisasi yang tidak lengkap yang anda pilih tidak akan dibatalkan
+Semua transfer terpilih lainnya akan dibatalkan dan dihapus.</translation>
     </message>
     <message>
         <source>Cancel transfer?</source>
         <translatorcomment>Messagebox text to confirm if the user wants to cancel a single transfer</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Batalkan transfer?</translation>
     </message>
     <message>
         <source>Clear transfers?
 All the selected completed transfers in this category will be cleared.</source>
         <translatorcomment>Messagebox text to confirm if the user wants to clear the selected completed transfer</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Hapus transfer?
+Semua transfer selesai yang dipilih dalam kategori ini akan dihapus.</translation>
     </message>
     <message>
         <source>Cancel transfers?
 Your selected incomplete sync transfers won&apos;t be cancelled.</source>
         <translatorcomment>Messagebox text to confirm if the user wants to cancel all the selected transfers but there are sync transfers in the selection (they cannot be cancelled)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Batalkan transfer?
+Transfer sinkronisasi yang tidak lengkap yang anda pilih tidak akan dibatalkan.</translation>
     </message>
     <message>
         <source>Clear transfer?</source>
         <translatorcomment>Messagebox text to confirm if the user wants to clear a single selected completed transfer</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Hapus transfer?</translation>
     </message>
     <message numerus="yes">
         <source>Cancel and clear transfer</source>
         <translatorcomment>Context menu action to resume cancel the active transfers and clear the completed transfers (multiple transfers selected)</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>Batalkan dan hapus transfer</numerusform></translation>
     </message>
     <message>
         <source>Yes, cancel</source>
@@ -3118,7 +3123,7 @@ Your selected incomplete sync transfers won&apos;t be cancelled.</source>
     <message>
         <source>Yes, clear</source>
         <translatorcomment>Dialog button to do the proposed actions (clear the transfers)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Ya, hapus</translation>
     </message>
 </context>
 <context>
@@ -3152,7 +3157,7 @@ Your selected incomplete sync transfers won&apos;t be cancelled.</source>
     <message>
         <source>Enter the new folder name</source>
         <translatorcomment>Dialog text to ask the user to enter a new name for the folder</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Masukkan nama folder baru</translation>
     </message>
     <message>
         <source>New folder</source>
@@ -3708,7 +3713,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Open settings</source>
         <translatorcomment>Button label to open MEGAsync preferences dialog (Linux and Windows).</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Buka pengaturan</translation>
     </message>
     <message>
         <source>One or more syncs have been disabled. Go to settings to enable them again.</source>
@@ -3718,7 +3723,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Open preferences</source>
         <translatorcomment>Button label to open MEGAsync preferences dialog (MacOS).</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Buka preferensi</translation>
     </message>
     <message>
         <source>One or more syncs have been disabled. Go to preferences to enable them again.</source>
