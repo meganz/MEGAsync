@@ -222,7 +222,7 @@ QVector<QModelIndex> MegaItemProxyModel::forEach(std::shared_ptr<mega::MegaNodeL
                     ret.append(mapFromSource(index));
 
                     auto interList = std::shared_ptr<mega::MegaNodeList>(mega::MegaNodeList::createInstance());
-                    for(int k = 0; k < parentNodeList->size() - 1; ++k)
+                    for(int k = 0; k < parentNodeList->size(); ++k)
                     {
                         interList->addNode(parentNodeList->get(k));
                     }

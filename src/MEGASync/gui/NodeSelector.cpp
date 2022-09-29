@@ -3,10 +3,7 @@
 #include "MegaApplication.h"
 #include "QMegaMessageBox.h"
 #include "control/Utilities.h"
-#include "MegaItemProxyModel.h"
-#include "MegaItemModel.h"
 #include "megaapi.h"
-#include "MegaItemDelegates.h"
 #include "mega/utils.h"
 
 #include <QMessageBox>
@@ -61,6 +58,10 @@ NodeSelector::NodeSelector(int selectMode, QWidget *parent) :
 
     //TODO EKA: WE need to do this at this lvl? only for stream_select mode, switch removed
     //setWindowTitle(tr("Select items"));
+    if(mSelectMode == STREAM_SELECT)
+    {
+        setWindowTitle(tr("Select items"));
+    }
 
 }
 
@@ -71,14 +72,14 @@ NodeSelector::~NodeSelector()
 
 void NodeSelector::showDefaultUploadOption(bool show)
 {
-    //TODO EKA: SET VISIBLE THIS CHECKBOX IF NECESSARY
-    //ui->cbAlwaysUploadToLocation->setVisible(show);
+    ui->CloudDrive->showDefaultUploadOption(show);
+    ui->IncomingShares->showDefaultUploadOption(show);
 }
 
 void NodeSelector::setDefaultUploadOption(bool value)
 {
-    //TODO EKA: SET VALUE TO THIS CHECKBOX IF NECESSARY
-   // ui->cbAlwaysUploadToLocation->setChecked(value);
+    ui->CloudDrive->setDefaultUploadOption(value);
+    ui->IncomingShares->setDefaultUploadOption(value);
 }
 
 void NodeSelector::changeEvent(QEvent *event)
@@ -88,6 +89,11 @@ void NodeSelector::changeEvent(QEvent *event)
         ui->retranslateUi(this);
     }
     QDialog::changeEvent(event);
+}
+
+void NodeSelector::showEvent(QShowEvent *event)
+{
+    QDialog::showEvent(event);
 }
 
 void NodeSelector::onbOkClicked()
@@ -249,5 +255,6 @@ void NodeSelector::setSelectedNodeHandle(const mega::MegaHandle &handle)
         onTabSelected(CLOUD_DRIVE);
     }
     auto tree_view_widget = static_cast<NodeSelectorTreeViewWidget*>(ui->stackedWidget->currentWidget());
-    tree_view_widget->setSelectedNodeHandle(handle);
+    tree_view_widget->setFutureSelectedNodeHandle(handle);
+    //tree_view_widget->setSelectedNodeHandle(handle);
 }

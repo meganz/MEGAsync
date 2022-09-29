@@ -11,7 +11,7 @@
 using namespace mega;
 
 const int MegaItemModel::ROW_HEIGHT = 20;
-const int MegaItemModel::FETCH_STEP = 30;
+const int MegaItemModel::FETCH_STEP = 300;
 
 MegaItemModel::MegaItemModel(QObject *parent) :
     QAbstractItemModel(parent),
@@ -127,10 +127,11 @@ QModelIndex MegaItemModel::index(int row, int column, const QModelIndex &parent)
         MegaItem* item = static_cast<MegaItem*>(parent.internalPointer());
         return createIndex(row, column, item->getChild(row));
     }
-    else
+    else if(mRootItems.size() > row)
     {
         return createIndex(row, column, mRootItems.at(row));
     }
+    return QModelIndex();
 }
 
 QModelIndex MegaItemModel::parent(const QModelIndex &index) const
@@ -157,8 +158,13 @@ int MegaItemModel::rowCount(const QModelIndex &parent) const
     if (parent.isValid())
     {
         MegaItem *item = static_cast<MegaItem*>(parent.internalPointer());
-        int childrenNum = item->getNumChildren();
-        return childrenNum;
+        if(!item)
+        {
+            return 0;
+        }
+        QString name = QString::fromUtf8(item->getNode()->getName());
+
+        return item->getNumChildren();
     }
     return mRootItems.size();
 }
@@ -183,6 +189,7 @@ bool MegaItemModel::hasChildren(const QModelIndex &parent) const
     if(item)
     {
         MegaApi* megaApi = MegaSyncApp->getMegaApi();
+        //return item->getNumChildren()>0;
         return megaApi->hasChildren(item->getNode().get());
     }
     return QAbstractItemModel::hasChildren(parent);
@@ -253,12 +260,14 @@ void MegaItemModel::fetchMore(const QModelIndex &parent)
     if (parent.isValid())
     {
         MegaItem *item = static_cast<MegaItem*>(parent.internalPointer());
+        QString nodename = QString::fromUtf8(item->getNode()->getName());
         item->fetchChildren();
         MegaApi* megaApi = MegaSyncApp->getMegaApi();
         int remainingChildren = megaApi->getNumChildren(item->getNode().get()) - item->getNumChildren();
         int childrenNumToFetch = qMin(FETCH_STEP, remainingChildren);
-        beginInsertRows(parent, item->getNumChildren(), childrenNumToFetch + item->getNumChildren() - 1);
-        item->createChildItems(item->getNumChildren(), childrenNumToFetch + item->getNumChildren());
+        int itemNumChildren = item->getNumChildren();
+        beginInsertRows(parent, itemNumChildren, childrenNumToFetch + itemNumChildren - 1);
+        item->createChildItems(itemNumChildren, childrenNumToFetch + itemNumChildren - 1);
         endInsertRows();
     }
     else
@@ -276,6 +285,7 @@ bool MegaItemModel::canFetchMore(const QModelIndex &parent) const
     if (parent.isValid())
     {
         MegaItem *item = static_cast<MegaItem*>(parent.internalPointer());
+        QString nodename = QString::fromUtf8(item->getNode()->getName());
         MegaApi* megaApi = MegaSyncApp->getMegaApi();
         if(item->getNumChildren() < megaApi->getNumChildren(item->getNode().get()))
         {
@@ -433,7 +443,7 @@ QVariant MegaItemModel::getText(const QModelIndex &index, MegaItem *item) const
 void MegaItemModel::fillRootItems()
 {
 //    beginResetModel();
-//    mRootItems = getRootItems();
+//    mRootItems = getRootItems(0,5);
 //    endResetModel();
 }
 
@@ -606,22 +616,6 @@ QList<MegaItem *> MegaItemModelIncomingShares::getRootItems(int first, int last)
         ret.append(item);
     }
     return ret;
-//    MegaApi* megaApi = MegaSyncApp->getMegaApi();
-
-//    auto folders = std::unique_ptr<MegaNodeList>(megaApi->getInShares());
-
-//    //incoming shares
-//    QList<MegaItem*> rootItems;
-//    for (int j = 0; j < folders->size(); j++)
-//    {
-//        auto folder = std::unique_ptr<MegaNode>(folders->get(j)->copy());
-//        auto user = std::unique_ptr<MegaUser>(megaApi->getUserFromInShare(folder.get()));
-//        MegaItem* item = new MegaItem(move(folder));
-//        item->setOwner(move(user));
-//        connect(item, &MegaItem::infoUpdated, this, &MegaItemModelIncomingShares::onItemInfoUpdated);
-//        rootItems.append(item);
-//    }
-//    return rootItems;
 }
 
 int MegaItemModelIncomingShares::rootItemsCount() const

@@ -22,7 +22,9 @@ NodeSelectorTreeViewWidget::NodeSelectorTreeViewWidget(QWidget *parent) :
     mMegaApi(MegaSyncApp->getMegaApi()),
     mManuallyResizedColumn(false),
     mDelegateListener(mega::make_unique<QTMegaRequestListener>(mMegaApi, this)),
-    mModel(nullptr)
+    mModel(nullptr),
+    first(true),
+    mNodeHandleToSelect(INVALID_HANDLE)
 {
     ui->setupUi(this);
 
@@ -33,6 +35,7 @@ NodeSelectorTreeViewWidget::NodeSelectorTreeViewWidget(QWidget *parent) :
     connect(ui->bNewFolder, &QPushButton::clicked, this, &NodeSelectorTreeViewWidget::onbNewFolderClicked);
     connect(ui->bOk, &QPushButton::clicked, this, &NodeSelectorTreeViewWidget::okBtnClicked);
     connect(ui->bCancel, &QPushButton::clicked, this, &NodeSelectorTreeViewWidget::cancelBtnClicked);
+    connect(ui->cbAlwaysUploadToLocation, &QCheckBox::stateChanged, this, &NodeSelectorTreeViewWidget::oncbAlwaysUploadToLocationChanged);
 
     if(auto rootNode = std::unique_ptr<MegaNode>(mMegaApi->getRootNode()))
     {
@@ -96,7 +99,7 @@ ui->tMegaFolders->setAnimated(false);
 #endif
 
     ui->tMegaFolders->setModel(mProxyModel.get());
-    ui->tMegaFolders->setExpanded(mProxyModel->getIndexFromHandle(MegaSyncApp->getRootNode()->getHandle()), true);
+    //ui->tMegaFolders->setExpanded(mProxyModel->getIndexFromHandle(MegaSyncApp->getRootNode()->getHandle()), true);
 
     //those connects needs to be done after the model is set, do not move them
     connect(mModel.get(), &MegaItemModel::modelReset, this, &NodeSelectorTreeViewWidget::onModelReset);
@@ -107,6 +110,7 @@ ui->tMegaFolders->setAnimated(false);
     connect(ui->bForward, &QPushButton::clicked, this, &NodeSelectorTreeViewWidget::onGoForwardClicked);
     connect(ui->bBack, &QPushButton::clicked, this, &NodeSelectorTreeViewWidget::onGoBackClicked);
     connect(ui->tMegaFolders->header(), &QHeaderView::sectionResized, this, &NodeSelectorTreeViewWidget::onSectionResized);
+    connect(mModel.get(), &QAbstractItemModel::rowsInserted, this, &NodeSelectorTreeViewWidget::onRowsInserted);
 
     ui->tMegaFolders->setContextMenuPolicy(Qt::DefaultContextMenu);
     ui->tMegaFolders->setExpandsOnDoubleClick(false);
@@ -122,6 +126,16 @@ ui->tMegaFolders->setAnimated(false);
     ui->tMegaFolders->setTextElideMode(Qt::ElideMiddle);
     ui->tMegaFolders->sortByColumn(MegaItemModel::NODE, Qt::AscendingOrder);
     setRootIndex(QModelIndex());
+    checkNewFolderButtonVisibility();
+}
+
+void NodeSelectorTreeViewWidget::showDefaultUploadOption(bool show)
+{
+    ui->cbAlwaysUploadToLocation->setVisible(show);
+}
+void NodeSelectorTreeViewWidget::setDefaultUploadOption(bool value)
+{
+    ui->cbAlwaysUploadToLocation->setChecked(value);
 }
 
 void NodeSelectorTreeViewWidget::setTitle(const QString &title)
@@ -160,6 +174,15 @@ void NodeSelectorTreeViewWidget::onSectionResized()
             && ui->tMegaFolders->header()->rect().contains(ui->tMegaFolders->mapFromGlobal(QCursor::pos())))
     {
         mManuallyResizedColumn = true;
+    }
+}
+
+void NodeSelectorTreeViewWidget::onRowsInserted()
+{
+    if(first)
+    {
+        first = false;
+        setSelectedNodeHandle(mNodeHandleToSelect);
     }
 }
 
@@ -229,6 +252,20 @@ void NodeSelectorTreeViewWidget::onbNewFolderClicked()
     }
 }
 
+void NodeSelectorTreeViewWidget::oncbAlwaysUploadToLocationChanged(bool value)
+{
+    foreach(auto& child, parent()->children())
+    {
+        if(auto tvw = qobject_cast<NodeSelectorTreeViewWidget*>(child))
+        {
+            if(tvw != sender())
+            {
+                tvw->setDefaultUploadOption(value);
+            }
+        }
+    }
+}
+
 bool NodeSelectorTreeViewWidget::isAllowedToEnterInIndex(const QModelIndex &idx)
 {
     auto source_idx = mProxyModel->getIndexFromSource(idx);
@@ -263,7 +300,7 @@ void NodeSelectorTreeViewWidget::checkNewFolderButtonVisibility()
     if(mSelectMode == SYNC_SELECT || mSelectMode == UPLOAD_SELECT)
     {
         auto sourceIndex = mProxyModel->getIndexFromSource(ui->tMegaFolders->rootIndex());
-        ui->bNewFolder->setVisible(sourceIndex.isValid());
+        ui->bNewFolder->setVisible(sourceIndex.isValid() || newFolderBtnVisibleInRoot());
     }
 }
 
@@ -368,11 +405,16 @@ void NodeSelectorTreeViewWidget::onRequestFinish(MegaApi *, MegaRequest *request
 
 void NodeSelectorTreeViewWidget::setSelectedNodeHandle(const MegaHandle& selectedHandle)
 {
+    if(selectedHandle == INVALID_HANDLE)
+    {
+        return;
+    }
+    //iterar los nodos recogiendo todos los padres y luego para bajo cogiendo los qmodelindex
     auto node = std::shared_ptr<MegaNode>(mMegaApi->getNodeByHandle(selectedHandle));
     if (!node)
         return;
 
-    QVector<QModelIndex> modelIndexList = mProxyModel->getRelatedModelIndexes(node/*, isInShare*/);
+    QVector<QModelIndex> modelIndexList = mProxyModel->getRelatedModelIndexes(node);
 
     if(modelIndexList.size() > 1)
     {
@@ -387,6 +429,11 @@ void NodeSelectorTreeViewWidget::setSelectedNodeHandle(const MegaHandle& selecte
         ui->tMegaFolders->selectionModel()->setCurrentIndex(modelIndexList.last(), QItemSelectionModel::ClearAndSelect | QItemSelectionModel::Rows);
         ui->tMegaFolders->selectionModel()->select(modelIndexList.last(), QItemSelectionModel::ClearAndSelect | QItemSelectionModel::Rows);
     }
+}
+
+void NodeSelectorTreeViewWidget::setFutureSelectedNodeHandle(const mega::MegaHandle &selectedHandle)
+{
+    mNodeHandleToSelect = selectedHandle;
 }
 
 MegaHandle NodeSelectorTreeViewWidget::getSelectedNodeHandle()

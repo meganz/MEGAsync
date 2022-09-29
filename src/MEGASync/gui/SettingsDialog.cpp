@@ -2229,9 +2229,8 @@ void SettingsDialog::on_bUploadFolder_clicked()
                                                     .toUtf8().constData());
     if (defaultNode)
     {
-        //TODO EKA: FIX THIS
-        //nodeSelector->setSelectedNodeHandle(defaultNode->getHandle());
-        delete defaultNode;
+            nodeSelector->setSelectedNodeHandle(defaultNode->getHandle());
+            delete defaultNode;
     }
 
     nodeSelector->setDefaultUploadOption(mHasDefaultUploadOption);
@@ -2244,7 +2243,7 @@ void SettingsDialog::on_bUploadFolder_clicked()
     }
 
     //TODO EKA: FIX THIS
-    MegaHandle selectedMegaFolderHandle;// = nodeSelector->getSelectedNodeHandle();
+    MegaHandle selectedMegaFolderHandle = nodeSelector->getSelectedNodeHandle();
     MegaNode* node = mMegaApi->getNodeByHandle(selectedMegaFolderHandle);
     if (!node)
     {

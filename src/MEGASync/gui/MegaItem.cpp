@@ -81,7 +81,7 @@ void MegaItem::fetchChildren()
 
 void MegaItem::createChildItems(int first, int last)
 {
-    for(;first < last; ++first)
+    for(;first <= last; ++first)
     {
         auto node = std::unique_ptr<MegaNode>(mChildNodes->get(first)->copy());
         mChildItems.append(new MegaItem(move(node), this));
@@ -95,6 +95,11 @@ MegaItem *MegaItem::getParent()
 
 MegaItem *MegaItem::getChild(int i)
 {
+    if(mChildItems.size() <= i)
+    {
+        return nullptr;
+    }
+
     return mChildItems.at(i);
 }
 

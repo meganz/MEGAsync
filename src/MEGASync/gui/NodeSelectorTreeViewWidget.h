@@ -39,14 +39,17 @@ public:
     mega::MegaHandle getSelectedNodeHandle();
     QList<mega::MegaHandle> getMultiSelectionNodeHandle();
     void setSelectedNodeHandle(const mega::MegaHandle &selectedHandle);
+    void setFutureSelectedNodeHandle(const mega::MegaHandle &selectedHandle);
     void setSelectionMode(int selectionMode);
+    void setDefaultUploadOption(bool value);
+    void showDefaultUploadOption(bool show);
 
 public slots:
     void onRequestFinish(mega::MegaApi* api, mega::MegaRequest *request, mega::MegaError* e) override;
 
 private slots:
     void onbNewFolderClicked();
-
+    void oncbAlwaysUploadToLocationChanged(bool value);
 
 signals:
     void okBtnClicked();
@@ -72,6 +75,7 @@ private slots:
     void onGoForwardClicked();
     void onGoBackClicked();
     void onSectionResized();
+    void onRowsInserted();
     virtual void onModelReset(){};
 
 
@@ -107,6 +111,9 @@ private:
     void checkNewFolderButtonVisibility();
     virtual QString getRootText() = 0;
     virtual std::unique_ptr<MegaItemModel> getModel() = 0;
+    virtual bool newFolderBtnVisibleInRoot(){return true;}
+    bool first;
+    mega::MegaHandle mNodeHandleToSelect;
 };
 
 class NodeSelectorTreeViewWidgetCloudDrive : public NodeSelectorTreeViewWidget
@@ -136,6 +143,7 @@ private:
     QString getRootText() override;
     std::unique_ptr<MegaItemModel> getModel() override;
     void setRootIndex_Reimplementation(const QModelIndex& source_idx) override;
+    bool newFolderBtnVisibleInRoot() override {return false;}
 };
 #endif // NODESELECTORTREEVIEWWIDGET_H
 

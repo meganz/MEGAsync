@@ -79,7 +79,6 @@ private:
     int insertPosition(const std::unique_ptr<mega::MegaNode>& node);
     virtual QList<MegaItem*> getRootItems(int first, int last) const = 0;
     virtual int rootItemsCount() const = 0;
-    //virtual void fillRootItems(QList<MegaItem*> &toFill) const = 0;
     QList<MegaItem*> mRootItems;
 
 };
