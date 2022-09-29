@@ -509,6 +509,8 @@ void MegaApplication::initialize()
     delegateListener = new MEGASyncDelegateListener(megaApi, this, this);
     megaApi->addListener(delegateListener);
     uploader = new MegaUploader(megaApi);
+    connect(uploader, &MegaUploader::startingTransfers,
+            this, &MegaApplication::startingUpload);
     downloader = new MegaDownloader(megaApi);
     connect(downloader, &MegaDownloader::finishedTransfers, this, &MegaApplication::showNotificationFinishedTransfers, Qt::QueuedConnection);
     connect(downloader, &MegaDownloader::startingTransfers,
@@ -1583,7 +1585,7 @@ void MegaApplication::processUploadQueue(MegaHandle nodeHandle)
     auto batch = std::shared_ptr<TransferBatch>(new TransferBatch());
     mBlockingBatch.add(batch);
 
-    EventUpdater updater(uploads.size());
+    EventUpdater updater(uploads.size(),20);
     mProcessingUploadQueue = true;
 
     auto counter(0);
@@ -1593,13 +1595,7 @@ void MegaApplication::processUploadQueue(MegaHandle nodeHandle)
 
         updateMetadata(data, filePath);
 
-        bool startedTransfer = uploader->upload(filePath, uploadInfo->getNewName(), node.get(), transferId, batch->getCancelTokenPtr());
-        if (startedTransfer)
-        {
-            batch->add(filePath);
-            startingUpload();
-        }
-
+        uploader->upload(filePath, uploadInfo->getNewName(), node, transferId, batch);
         updater.update(counter);
 
         counter++;
@@ -1719,10 +1715,6 @@ void MegaApplication::createTransferManagerDialog()
         connect(transferQuota.get(), &TransferQuota::sendState,
                 mTransferManager.data(), &TransferManager::onTransferQuotaStateChanged);
         connect(mTransferManager.data(), SIGNAL(cancelScanning()), this, SLOT(cancelScanningStage()));
-        if (scanStageController.isInScanningState())
-        {
-            mTransferManager->enterBlockingState();
-        }
         scanStageController.updateReference(mTransferManager);
     }
 }
@@ -4244,24 +4236,16 @@ void MegaApplication::showNotificationFinishedTransfers(unsigned long long appDa
     }
 
     TransferMetaData *data = it.value();
-    if (!preferences->isNotificationEnabled(Preferences::NotificationsTypes::INFO_MESSAGES))
-    {
-        if (data->pendingTransfers == 0)
-        {
-            transferAppData.erase(it);
-            delete data;
-        }
-
-        return;
-    }
-
     if (data->pendingTransfers == 0)
     {
-        std::pair<QString,QString> titleAndMessage = buildFinishedTransferTitleAndMessage(data);
-        if (mOsNotifications && !titleAndMessage.second.isEmpty())
+        if (preferences->isNotificationEnabled(Preferences::NotificationsTypes::INFO_MESSAGES))
         {
-            preferences->setLastTransferNotificationTimestamp();
-            mOsNotifications->sendFinishedTransferNotification(titleAndMessage.first, titleAndMessage.second, data->localPath);
+            std::pair<QString,QString> titleAndMessage = buildFinishedTransferTitleAndMessage(data);
+            if (mOsNotifications && !titleAndMessage.second.isEmpty())
+            {
+                preferences->setLastTransferNotificationTimestamp();
+                mOsNotifications->sendFinishedTransferNotification(titleAndMessage.first, titleAndMessage.second, data->localPath);
+            }
         }
 
         transferAppData.erase(it);
@@ -5855,7 +5839,7 @@ void MegaApplication::externalFolderSync(qlonglong targetFolder)
 
 void MegaApplication::externalOpenTransferManager(int tab)
 {
-    if (appfinished)
+    if (appfinished || !infoDialog)
     {
         return;
     }
