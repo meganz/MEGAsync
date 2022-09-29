@@ -3200,14 +3200,6 @@ Your selected incomplete sync transfers won&apos;t be cancelled.</translation>
     </message>
 </context>
 <context>
-    <name>MegaUploader</name>
-    <message>
-        <source>Upload failed</source>
-        <translatorcomment>Informative message shown to the user when an upload has failed</translatorcomment>
-        <translation>Upload failed</translation>
-    </message>
-</context>
-<context>
     <name>Model</name>
     <message>
         <source>MEGAsync</source>
