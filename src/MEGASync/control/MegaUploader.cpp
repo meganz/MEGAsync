@@ -24,12 +24,10 @@ using namespace std;
 MegaUploader::MegaUploader(MegaApi *megaApi)
 {
     this->megaApi = megaApi;
-    mThreadPool = new ThreadPool(3);
 }
 
 MegaUploader::~MegaUploader()
 {
-    delete mThreadPool;
 }
 
 void MegaUploader::upload(QString path, const QString& nodeName, std::shared_ptr<MegaNode> parent, unsigned long long appDataID, const std::shared_ptr<TransferBatch>& transferBatch)

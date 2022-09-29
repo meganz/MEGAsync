@@ -29,7 +29,6 @@ private:
     void startUpload(const QString& localPath, const QString& nodeName, unsigned long long appDataID, mega::MegaNode* parent, mega::MegaCancelToken *cancelToken);
 
     mega::MegaApi *megaApi;
-    ThreadPool* mThreadPool;
 };
 
 #endif // MEGAUPLOADER_H
