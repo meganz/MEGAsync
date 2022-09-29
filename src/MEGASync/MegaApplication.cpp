@@ -7467,7 +7467,8 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
         if (transfer) inflightUserStats[1] = false;
         if (pro)      inflightUserStats[2] = false;
 
-        if (!preferences->logged())
+        // We need to be both looged AND have fetched the nodes to continue
+        if (mFetchingNodes || !preferences->logged())
         {
             break;
         }
