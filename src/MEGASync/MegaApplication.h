@@ -342,8 +342,6 @@ private slots:
     void startingUpload();
     void cancelScanningStage();
 
-    void onUploadRecursivelyIntoASyncedLocationFinished(const QString& filePath);
-
 protected:
     void createTrayIcon();
     void createGuestMenu();

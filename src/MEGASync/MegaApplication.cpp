@@ -1614,11 +1614,6 @@ void MegaApplication::processUploadQueue(MegaHandle nodeHandle)
     mProcessingUploadQueue = false;
 }
 
-void MegaApplication::onUploadRecursivelyIntoASyncedLocationFinished(const QString& filePath)
-{
-    updateFileTransferBatchesAndUi(filePath, mBlockingBatch);
-}
-
 void MegaApplication::processDownloadQueue(QString path)
 {
     if (appfinished || downloadQueue.isEmpty())
