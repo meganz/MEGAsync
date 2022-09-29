@@ -20,15 +20,19 @@ public:
     bool isAttributeReady() const override;
 
     QString getDeviceName();
+    QString getDefaultDeviceName();
 
 signals:
     void attributeReady(const QString&);
 
 private:
     void requestDeviceNameAttribute(bool forceRefresh);
+    void setDeviceNameAttribute();
+
     bool mIsDeviceNameSetOnRemote;
     bool mIsRequestFinished;
     QString mDeviceName;
+    int  mNameSuffix;
 };
 }
 
