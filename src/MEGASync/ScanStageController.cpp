@@ -23,14 +23,12 @@ void ScanStageController::updateReference(TransferManager *_transferManager)
 
     if (isInScanningState())
     {
-        mTransferManager->enterBlockingState(mCanBeCancelled);
+        mTransferManager->enterBlockingState();
     }
 }
 
-void ScanStageController::startDelayedScanStage(bool canBeCancelled)
+void ScanStageController::startDelayedScanStage()
 {
-    mCanBeCancelled = canBeCancelled;
-
     if (!mScanStageTimer.isActive())
     {
         mScanStageTimer.start(mDelayToShowDialogInMs);
@@ -74,12 +72,12 @@ void ScanStageController::setUiInScanStage()
 
     if (mTransferManager)
     {
-        mTransferManager->enterBlockingState(mCanBeCancelled);
+        mTransferManager->enterBlockingState();
     }
 
     if (mInfoDialog)
     {
-        mInfoDialog->enterBlockingState(mCanBeCancelled);
+        mInfoDialog->enterBlockingState();
     }
 }
 

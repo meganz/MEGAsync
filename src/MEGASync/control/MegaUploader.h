@@ -23,7 +23,7 @@ public:
     void upload(QString path, const QString &nodeName, std::shared_ptr<mega::MegaNode> parent, unsigned long long appDataID, const std::shared_ptr<TransferBatch> &transferBatch);
 
 signals:
-    void startingTransfers(bool canBeCancelled);
+    void startingTransfers();
 
 private:
     void startUpload(const QString& localPath, const QString& nodeName, unsigned long long appDataID, mega::MegaNode* parent, mega::MegaCancelToken *cancelToken);

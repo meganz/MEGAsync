@@ -15,7 +15,7 @@ public:
     explicit ScanningWidget(QWidget *parent = nullptr);
     ~ScanningWidget();
 
-    void show(bool canBeCancelled);
+    void show();
     void hide();
     void disableCancelButton();
     void updateAnimation();

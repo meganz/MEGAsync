@@ -32,18 +32,12 @@ ScanningWidget::~ScanningWidget()
     delete mMovie;
 }
 
-void ScanningWidget::show(bool canBeCancelled)
+void ScanningWidget::show()
 {
     startAnimation();
-    if(canBeCancelled)
-    {
-        mUi->pBlockingStageCancel->show();
-        mUi->pBlockingStageCancel->setEnabled(true);
-    }
-    else
-    {
-        mUi->pBlockingStageCancel->hide();
-    }
+
+    mUi->pBlockingStageCancel->show();
+    mUi->pBlockingStageCancel->setEnabled(true);
 }
 
 void ScanningWidget::hide()

@@ -44,7 +44,7 @@ void MegaUploader::upload(QString path, const QString& nodeName, std::shared_ptr
         transferBatch->add(info.absoluteFilePath());
         startUpload(currentPath, nodeName, appDataID, parent.get(), transferBatch->getCancelTokenPtr());
 
-        emit startingTransfers(true);
+        emit startingTransfers();
     }
 }
 

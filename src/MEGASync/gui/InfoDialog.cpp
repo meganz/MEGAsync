@@ -1329,12 +1329,12 @@ void InfoDialog::setPSAannouncement(int id, QString title, QString text, QString
     ui->wPSA->setAnnounce(id, title, text, urlImage, textButton, linkButton);
 }
 
-void InfoDialog::enterBlockingState(bool canBeCancelled)
+void InfoDialog::enterBlockingState()
 {
     enableUserActions(false);
     ui->bTransferManager->setPauseEnabled(false);
     ui->wTabOptions->setVisible(false);
-    mTransferScanCancelUi->show(canBeCancelled);
+    mTransferScanCancelUi->show();
 }
 
 void InfoDialog::leaveBlockingState(bool fromCancellation)

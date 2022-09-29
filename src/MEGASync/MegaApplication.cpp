@@ -3374,12 +3374,12 @@ void MegaApplication::updateFreedCancelToken(MegaTransfer* transfer)
     }
 }
 
-void MegaApplication::startingUpload(bool canBeCancelled)
+void MegaApplication::startingUpload()
 {
     if (noUploadedStarted && mBlockingBatch.hasNodes())
     {
         noUploadedStarted = false;
-        scanStageController.startDelayedScanStage(canBeCancelled);
+        scanStageController.startDelayedScanStage();
     }
 }
 

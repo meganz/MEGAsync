@@ -17,7 +17,7 @@ public:
     void updateReference(InfoDialog* _infoDialog);
     void updateReference(TransferManager* _transferManager);
 
-    void startDelayedScanStage(bool canBeCancelled);
+    void startDelayedScanStage();
     void stopDelayedScanStage(bool fromCancellation);
 
     bool isInScanningState() const;
@@ -40,7 +40,6 @@ private:
     bool mIsInScanningState = false;
     bool mIsInScanningStateInMinimumTime = false;
     bool mLastScanCancelled = false;
-    bool mCanBeCancelled = true;
     const int mDelayToShowDialogInMs = 800;
     const int mMinimumDialogDisplayTimeInMs = 1200;
 };
