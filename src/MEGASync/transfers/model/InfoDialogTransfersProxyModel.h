@@ -28,10 +28,13 @@ protected:
     bool filterAcceptsRow(int sourceRow, const QModelIndex& sourceParent) const override;
 
 private slots:
-    void onUpdateMostPriorityTransfer(int tag);
+    void onUpdateMostPriorityTransfer(int uploadTag, int downloadTag);
 
 private:
-    mutable int mNextTransferSourceRow;
+    void updateMostPriortyTransfer(int &tagToUpdate, TransferTag tag, QModelIndex &indexToUpdate);
+
+    mutable int mNextUploadSourceRow;
+    mutable int mNextDownloadSourceRow;
 
 };
 

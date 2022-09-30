@@ -269,7 +269,7 @@ signals:
     void transferFinished(const QModelIndex& index);
     void internalMoveStarted() const;
     void internalMoveFinished() const;
-    void mostPriorityTransferUpdate(int tag);
+    void mostPriorityTransferUpdate(int uploadTag, int downloadTag);
     void transfersProcessChanged();
     void showInFolderFinished(bool);
     void rowsAboutToBeMoved(TransferTag firstRowTag);
