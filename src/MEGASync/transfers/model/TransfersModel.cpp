@@ -1784,7 +1784,7 @@ void TransfersModel::removeRows(QModelIndexList& indexesToRemove)
 
 QExplicitlySharedDataPointer<TransferData> TransfersModel::getTransfer(int row) const
 {
-    if(mTransfers.size() > row)
+    if(row >= 0 && mTransfers.size() > row)
     {
         auto transfer = mTransfers.at(row);
         return transfer;
@@ -1981,22 +1981,13 @@ void TransfersModel::askForMostPriorityTransfer()
 {
     QtConcurrent::run([this]()
     {
-        MegaTransfer *nextUTransfer = MegaSyncApp->getMegaApi()->getFirstTransfer(MegaTransfer::TYPE_UPLOAD);
-        MegaTransfer *nextDTransfer = MegaSyncApp->getMegaApi()->getFirstTransfer(MegaTransfer::TYPE_DOWNLOAD);
+        std::unique_ptr<MegaTransfer> nextUTransfer(MegaSyncApp->getMegaApi()->getFirstTransfer(MegaTransfer::TYPE_UPLOAD));
+        auto UTag = nextUTransfer ? nextUTransfer->getTag() : -1;
+        std::unique_ptr<MegaTransfer> nextDTransfer(MegaSyncApp->getMegaApi()->getFirstTransfer(MegaTransfer::TYPE_DOWNLOAD));
+        auto DTag = nextDTransfer ? nextDTransfer->getTag() : -1;
 
-        if(nextUTransfer && nextDTransfer)
-        {
-            auto tag = nextUTransfer->getPriority() < nextDTransfer->getPriority() ? nextUTransfer->getTag() : nextDTransfer->getTag();
-            emit mostPriorityTransferUpdate(tag);
-        }
-        else if(nextUTransfer)
-        {
-            emit mostPriorityTransferUpdate(nextUTransfer->getTag());
-        }
-        else if(nextDTransfer)
-        {
-            emit mostPriorityTransferUpdate(nextDTransfer->getTag());
-        }
+        emit mostPriorityTransferUpdate(UTag, DTag);
+
     });
 }
 
