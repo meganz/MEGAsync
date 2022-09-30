@@ -45,7 +45,6 @@ private slots:
 private:
     QString formatRichString(QString str);
     QString getUserFullName(mega::MegaUserAlert *alert);
-    static QString generateDateTimeFormat(bool sameWeek, bool sameYear, QLocale locale);
 
 private:
     Ui::AlertItem *ui;
