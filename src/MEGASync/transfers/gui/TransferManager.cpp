@@ -365,12 +365,53 @@ void TransferManager::updateCurrentCategoryTitle()
         case TransfersWidget::TYPE_IMAGE_TAB:
              mUi->lCurrentContent->setText(tr(IMAGES_TITLE));
              return;
-        case TransfersWidget::SEARCH_TAB:
-             mUi->lCurrentContent->setText(tr(IMAGES_TITLE));
-             return;
         case TransfersWidget::ALL_TRANSFERS_TAB:
         default:
              mUi->lCurrentContent->setText(tr(ALL_TRANSFERS_TITLE));
+    }
+}
+
+void TransferManager::filterByTab(TransfersWidget::TM_TAB tab)
+{
+    switch(tab)
+    {
+        case TransfersWidget::UPLOADS_TAB:
+             mUi->wTransfers->filtersChanged(TransferData::TRANSFER_UPLOAD, TransferData::PENDING_STATES_MASK, {});
+             return;
+        case TransfersWidget::DOWNLOADS_TAB:
+             mUi->wTransfers->filtersChanged((TransferData::TRANSFER_DOWNLOAD
+                                         | TransferData::TRANSFER_LTCPDOWNLOAD),
+                                        TransferData::PENDING_STATES_MASK, {});
+             return;
+        case TransfersWidget::COMPLETED_TAB:
+             mUi->wTransfers->filtersChanged({}, TransferData::TRANSFER_COMPLETED, {});
+             return;
+        case TransfersWidget::FAILED_TAB:
+             mUi->wTransfers->filtersChanged({}, TransferData::TRANSFER_FAILED, {});
+            return;
+        case TransfersWidget::TYPE_DOCUMENT_TAB:
+             mUi->wTransfers->filtersChanged({}, {}, {Utilities::FileType::TYPE_DOCUMENT});
+            return;
+        case TransfersWidget::TYPE_VIDEO_TAB:
+             mUi->wTransfers->filtersChanged({}, {}, {Utilities::FileType::TYPE_VIDEO});
+            return;
+        case TransfersWidget::TYPE_AUDIO_TAB:
+             mUi->wTransfers->filtersChanged({}, {}, {Utilities::FileType::TYPE_AUDIO});
+            return;
+        case TransfersWidget::TYPE_OTHER_TAB:
+             mUi->wTransfers->filtersChanged({}, {}, {Utilities::FileType::TYPE_OTHER});
+            return;
+        case TransfersWidget::TYPE_ARCHIVE_TAB:
+             mUi->wTransfers->filtersChanged({}, {}, {Utilities::FileType::TYPE_ARCHIVE});
+            return;
+        case TransfersWidget::TYPE_IMAGE_TAB:
+             mUi->wTransfers->filtersChanged({}, {}, {Utilities::FileType::TYPE_IMAGE});
+             return;
+        case TransfersWidget::SEARCH_TAB:
+             return;
+        case TransfersWidget::ALL_TRANSFERS_TAB:
+        default:
+             mUi->wTransfers->filtersChanged({}, TransferData::PENDING_STATES_MASK, {});
     }
 }
 
@@ -379,7 +420,6 @@ void TransferManager::on_tCompleted_clicked()
     if (mUi->wTransfers->getCurrentTab() != TransfersWidget::COMPLETED_TAB)
     {
         emit userActivity();
-        mUi->wTransfers->filtersChanged({}, TransferData::TRANSFER_COMPLETED, {});
         toggleTab(TransfersWidget::COMPLETED_TAB);
     }
 }
@@ -389,9 +429,6 @@ void TransferManager::on_tDownloads_clicked()
     if (mUi->wTransfers->getCurrentTab() != TransfersWidget::DOWNLOADS_TAB)
     {
         emit userActivity();
-        mUi->wTransfers->filtersChanged((TransferData::TRANSFER_DOWNLOAD
-                                         | TransferData::TRANSFER_LTCPDOWNLOAD),
-                                        TransferData::PENDING_STATES_MASK, {});
         toggleTab(TransfersWidget::DOWNLOADS_TAB);
     }
 }
@@ -401,7 +438,6 @@ void TransferManager::on_tUploads_clicked()
     if (mUi->wTransfers->getCurrentTab() != TransfersWidget::UPLOADS_TAB)
     {
         emit userActivity();
-        mUi->wTransfers->filtersChanged(TransferData::TRANSFER_UPLOAD, TransferData::PENDING_STATES_MASK, {});
         toggleTab(TransfersWidget::UPLOADS_TAB);
     }
 }
@@ -411,7 +447,6 @@ void TransferManager::on_tAllTransfers_clicked()
     if (mUi->wTransfers->getCurrentTab() != TransfersWidget::ALL_TRANSFERS_TAB)
     {
         emit userActivity();
-        mUi->wTransfers->filtersChanged({}, TransferData::PENDING_STATES_MASK, {});
         toggleTab(TransfersWidget::ALL_TRANSFERS_TAB);
     }
 }
@@ -421,7 +456,6 @@ void TransferManager::on_tFailed_clicked()
     if (mUi->wTransfers->getCurrentTab() != TransfersWidget::FAILED_TAB)
     {
         emit userActivity();
-        mUi->wTransfers->filtersChanged({}, TransferData::TRANSFER_FAILED, {});
         toggleTab(TransfersWidget::FAILED_TAB);
     }
 }
@@ -966,7 +1000,6 @@ void TransferManager::applyTextSearch(const QString& text)
     //It is important to call it after resetting the filter, as the reset removes the text
     //search
     mUi->wTransfers->textFilterChanged(text);
-
     toggleTab(TransfersWidget::SEARCH_TAB);
 }
 
@@ -984,7 +1017,7 @@ void TransferManager::on_bSearchString_clicked()
 void TransferManager::on_tSearchCancel_clicked()
 {
     mUi->wTitleAndSearch->setCurrentWidget(mUi->pTransfers);
-    mUi->leSearchField->setText(tr("Search"));
+    mUi->leSearchField->setPlaceholderText(tr("Search"));
 }
 
 void TransferManager::on_tClearSearchResult_clicked()
@@ -1106,6 +1139,8 @@ void TransferManager::toggleTab(TransfersWidget::TM_TAB newTab)
 {
     if (mUi->wTransfers->getCurrentTab() != newTab)
     {
+        filterByTab(newTab);
+
         //First, update the data
         onTransfersDataUpdated();
 
@@ -1261,7 +1296,7 @@ bool TransferManager::eventFilter(QObject *obj, QEvent *event)
         if(keyEvent && keyEvent->key() == Qt::Key_Escape)
         {
             event->accept();
-            on_leSearchField_editingFinished();
+            on_tSearchCancel_clicked();
             focusNextChild();
             return true;
         }
