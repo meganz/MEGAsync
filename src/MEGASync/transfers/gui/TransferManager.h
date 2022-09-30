@@ -128,6 +128,8 @@ private:
     void updateCurrentSearchText();
     void updateCurrentCategoryTitle();
 
+    void filterByTab(TransfersWidget::TM_TAB tab);
+
 private slots:
     void on_tCompleted_clicked();
     void on_tDownloads_clicked();
