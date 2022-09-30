@@ -11,13 +11,13 @@
 using namespace mega;
 
 const int MegaItemModel::ROW_HEIGHT = 20;
-const int MegaItemModel::FETCH_STEP = 300;
 
 MegaItemModel::MegaItemModel(QObject *parent) :
     QAbstractItemModel(parent),
     mRequiredRights(MegaShare::ACCESS_READ),
     mDisplayFiles(false),
-    mSyncSetupMode(false)
+    mSyncSetupMode(false),
+    mFetchStep(500000)
 {
 
 }
@@ -164,7 +164,7 @@ int MegaItemModel::rowCount(const QModelIndex &parent) const
         }
         QString name = QString::fromUtf8(item->getNode()->getName());
 
-        return item->getNumChildren();
+        return item->getNumItemChildren();
     }
     return mRootItems.size();
 }
@@ -188,9 +188,10 @@ bool MegaItemModel::hasChildren(const QModelIndex &parent) const
     MegaItem *item = static_cast<MegaItem*>(parent.internalPointer());
     if(item)
     {
-        MegaApi* megaApi = MegaSyncApp->getMegaApi();
-        //return item->getNumChildren()>0;
-        return megaApi->hasChildren(item->getNode().get());
+        item->fetchChildren();
+        //MegaApi* megaApi = MegaSyncApp->getMegaApi();
+        return item->getNumChildren() > 0;
+        //return megaApi->hasChildren(item->getNode().get());
     }
     return QAbstractItemModel::hasChildren(parent);
 }
@@ -261,11 +262,9 @@ void MegaItemModel::fetchMore(const QModelIndex &parent)
     {
         MegaItem *item = static_cast<MegaItem*>(parent.internalPointer());
         QString nodename = QString::fromUtf8(item->getNode()->getName());
-        item->fetchChildren();
-        MegaApi* megaApi = MegaSyncApp->getMegaApi();
-        int remainingChildren = megaApi->getNumChildren(item->getNode().get()) - item->getNumChildren();
-        int childrenNumToFetch = qMin(FETCH_STEP, remainingChildren);
-        int itemNumChildren = item->getNumChildren();
+        int remainingChildren = item->getNumChildren() - item->getNumItemChildren();
+        int childrenNumToFetch = qMin(mFetchStep, remainingChildren);
+        int itemNumChildren = item->getNumItemChildren();
         beginInsertRows(parent, itemNumChildren, childrenNumToFetch + itemNumChildren - 1);
         item->createChildItems(itemNumChildren, childrenNumToFetch + itemNumChildren - 1);
         endInsertRows();
@@ -273,7 +272,7 @@ void MegaItemModel::fetchMore(const QModelIndex &parent)
     else
     {
         int remainingChildren = rootItemsCount() - mRootItems.size();
-        int childrenNumToFetch = qMin(FETCH_STEP, remainingChildren);
+        int childrenNumToFetch = qMin(mFetchStep, remainingChildren);
         beginResetModel();
         mRootItems.append(getRootItems(mRootItems.size(), mRootItems.size() + childrenNumToFetch));
         endResetModel();
@@ -285,9 +284,9 @@ bool MegaItemModel::canFetchMore(const QModelIndex &parent) const
     if (parent.isValid())
     {
         MegaItem *item = static_cast<MegaItem*>(parent.internalPointer());
+        item->fetchChildren();
         QString nodename = QString::fromUtf8(item->getNode()->getName());
-        MegaApi* megaApi = MegaSyncApp->getMegaApi();
-        if(item->getNumChildren() < megaApi->getNumChildren(item->getNode().get()))
+        if(item->getNumItemChildren() < item->getNumChildren())
         {
             return true;
         }

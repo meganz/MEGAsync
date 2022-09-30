@@ -34,6 +34,7 @@ public:
     void createChildItems(int first, int last);
     MegaItem *getParent();
     MegaItem *getChild(int i);
+    int getNumItemChildren();
     int getNumChildren();
     int indexOf(MegaItem *item);
     QString getOwnerName();

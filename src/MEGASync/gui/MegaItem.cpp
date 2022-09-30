@@ -105,6 +105,11 @@ MegaItem *MegaItem::getChild(int i)
 
 int MegaItem::getNumChildren()
 {
+ return mChildNodes->size();
+}
+
+int MegaItem::getNumItemChildren()
+{
     return mChildItems.size();
 }
 

@@ -34,7 +34,6 @@ class MegaItemModel : public QAbstractItemModel
 public:
 
     static const int ROW_HEIGHT;
-    static const int FETCH_STEP;
 
     enum COLUMN{
       NODE = 0,
@@ -67,6 +66,7 @@ public:
     QVariant getIcon(const QModelIndex &index, MegaItem* item) const;
     QVariant getText(const QModelIndex &index, MegaItem* item) const;
     void fillRootItems();
+    void setFetchStep(int step);
     virtual ~MegaItemModel();
 
 protected:
@@ -80,6 +80,7 @@ private:
     virtual QList<MegaItem*> getRootItems(int first, int last) const = 0;
     virtual int rootItemsCount() const = 0;
     QList<MegaItem*> mRootItems;
+    int mFetchStep;
 
 };
 

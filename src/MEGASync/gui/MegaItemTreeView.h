@@ -29,6 +29,8 @@ protected:
 
     void contextMenuEvent(QContextMenuEvent *event) override;
 
+    void verticalScrollbarValueChanged(int value) override;
+
 signals:
     void removeNodeClicked();
     void getMegaLinkClicked();

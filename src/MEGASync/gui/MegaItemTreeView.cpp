@@ -38,6 +38,16 @@ MegaHandle MegaItemTreeView::getSelectedNodeHandle()
     return ret;
 }
 
+void MegaItemTreeView::verticalScrollbarValueChanged(int value)
+{
+//    if (verticalScrollBar()->maximum() / 2 < value)
+//    {
+//        value = verticalScrollBar()->maximum();
+//        QTreeView::verticalScrollbarValueChanged(value);
+//    }
+    QTreeView::verticalScrollbarValueChanged(value);
+}
+
 void MegaItemTreeView::drawBranches(QPainter *painter, const QRect &rect, const QModelIndex &index) const
 {
     QModelIndex idx = getIndexFromSourceModel(index);
