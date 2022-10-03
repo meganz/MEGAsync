@@ -424,7 +424,7 @@ protected:
     int scanningAnimationIndex;
     SetupWizard *setupWizard;
     SettingsDialog *settingsDialog;
-    InfoDialog *infoDialog;
+    QPointer<InfoDialog> infoDialog;
     std::shared_ptr<Preferences> preferences;
     Model *model;
     Controller *controller;

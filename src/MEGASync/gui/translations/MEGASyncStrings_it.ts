@@ -2706,7 +2706,7 @@ I trasferimenti riprenderanno automaticamente quando riaprirai l&apos;app.</nume
     <message>
         <source>Sort by status</source>
         <translatorcomment>First column title tooltip(this column title doesn´t contains text, it shows an icon). Sorts the order of the column by node status, for example synced folders first or last.</translatorcomment>
-        <translation>Elenca per status</translation>
+        <translation>Elenca per stato</translation>
     </message>
     <message>
         <source>Sort by owner name</source>

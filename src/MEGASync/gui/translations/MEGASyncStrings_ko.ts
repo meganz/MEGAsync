@@ -59,7 +59,7 @@
     <message>
         <source>Enter a name, an absolute path (wildcards * and ? are allowed) or choose which file or folder you want to exclude from the synchronization</source>
         <translatorcomment>Label to describe the different options that the user have to set a exclusion for all synchronizations.</translatorcomment>
-        <translation>이름을 입력하거나, 절대 경로(와일드카드 *와 ?가 허용됩니다) 또는 동기화에서 제외할 파일 또는 폴더를 선택하세요.</translation>
+        <translation>이름을 입력하거나, 절대 경로(와일드카드 *와 ?가 허용됩니다)또는 동기화에서 제외할 파일 또는 폴더를 선택하세요.</translation>
     </message>
     <message>
         <source>Choose File</source>
@@ -2172,7 +2172,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>DEBUG mode enabled. A log is being created in your desktop (MEGAsync.log)</source>
         <translatorcomment>Notification message shown when the DEBUG mode is enabled.</translatorcomment>
-        <translation>디버그 모드가 활성화되었습니다. 바탕 화면에 기록이 생성되고 있습니다 (MEGAsync.log).</translation>
+        <translation>디버그 모드가 활성화되었습니다. 바탕 화면에 기록이 생성되고 있습니다(MEGAsync.log).</translation>
     </message>
     <message>
         <source>Error: Invalid destination folder. The download has been cancelled</source>
@@ -3147,7 +3147,7 @@ Your selected incomplete sync transfers won&apos;t be cancelled.</source>
     <message>
         <source>You are syncing a local folder formatted with a FAT filesystem. That filesystem has deficiencies managing big files and modification times that can cause synchronization problems (e.g. when daylight saving changes), so it&apos;s strongly recommended that you only sync folders formatted with more reliable filesystems like NTFS (more information [A]here[/A]).</source>
         <translatorcomment>Informative message shown when a user is trying to sync using a FAT filesystem.</translatorcomment>
-        <translation>FAT 파일 시스템으로 포맷된 로컬 폴더를 동기화하고 있습니다. 해당 파일 시스템은 동기화 오류를 유발할 수 있는 시간 수정과 큰 파일 관리에 결함이 있습니다 (예를 들어 일광 시간 절약 적용시), 그러므로 NTFS처럼 믿을만한 파일 시스템으로 포맷된 폴더만 동기화할 것을 강력히 추천합니다 (자세한 정보는 [A]여기에[/A]).</translation>
+        <translation>FAT 파일 시스템으로 포맷된 로컬 폴더를 동기화하고 있습니다. 해당 파일 시스템은 동기화 오류를 유발할 수 있는 시간 수정과 큰 파일 관리에 결함이 있습니다(예를 들어 일광 시간 절약 적용시), 그러므로 NTFS처럼 믿을만한 파일 시스템으로 포맷된 폴더만 동기화할 것을 강력히 추천합니다(자세한 정보는 [A]여기에[/A]).</translation>
     </message>
     <message>
         <source>You are syncing a local folder shared with VMWare. Those folders do not support filesystem notifications so MEGAsync will have to be continuously scanning to detect changes in your files and folders. Please use a different folder if possible to reduce the CPU usage.</source>
@@ -4007,7 +4007,7 @@ Please delete the folder sync from preferences to cancel them.</source>
     <message>
         <source>All Files (*)</source>
         <translatorcomment>File of type option for not filtering files by extension</translatorcomment>
-        <translation>모든 파일 (*)</translation>
+        <translation>모든 파일(*)</translation>
     </message>
     <message>
         <source>Show </source>
@@ -4017,7 +4017,7 @@ Please delete the folder sync from preferences to cancel them.</source>
     <message>
         <source>All files (*)</source>
         <translatorcomment>File of type option for not filtering files by extension</translatorcomment>
-        <translation>모든 파일 (*)</translation>
+        <translation>모든 파일(*)</translation>
     </message>
     <message>
         <source>Directories</source>
@@ -4197,7 +4197,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>%1 bytes</source>
         <translatorcomment>File size measured in bytes</translatorcomment>
-        <translation>%1 바이트</translation>
+        <translation>%1 바이트</translation>
     </message>
     <message>
         <source>Invalid filename</source>
@@ -4398,7 +4398,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>%1 (%2%) of %3 used</source>
         <translatorcomment>Label to indicate the amount and percentage of used and total space available. Keep %1 (%2%) and %3 substitution placeholders because they will be filled with the required amounts of storage space dynamically.</translatorcomment>
-        <translation>%3 중 %1 (%2%) 사용됨</translation>
+        <translation>%3 중 %1(%2%)사용됨</translation>
     </message>
     <message>
         <source>Warning</source>
@@ -4475,7 +4475,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Always keep physical control of your master key (e.g. on a client device, external storage, or print).</source>
         <translatorcomment>Label to inform the user to keep physical control of the master key.</translatorcomment>
-        <translation>항상 당신의 복구 키에 대해 물리적 분리 보관을유지하세요 (예를 들어 클라이언트 장치, 외부 저장소, 또는 인쇄 등).</translation>
+        <translation>항상 당신의 복구 키에 대해 물리적 분리 보관을유지하세요(예를 들어 클라이언트 장치, 외부 저장소, 또는 인쇄 등).</translation>
     </message>
     <message>
         <source>Exclude by size</source>
@@ -4615,7 +4615,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>%1 (local cache)</source>
         <translatorcomment>Section label name for local cache summary and actions. Keep %1 placeholder, which is used to fill in the platform specific name for local sync cache (debris).</translatorcomment>
-        <translation>%1 (로컬 캐시)</translation>
+        <translation>%1(로컬 캐시)</translation>
     </message>
     <message>
         <source>Space used:</source>
@@ -4630,7 +4630,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>SyncDebris (remote cache)</source>
         <translatorcomment>Section label name for remote cache summary and clear action.</translatorcomment>
-        <translation>SyncDebris (원격 캐시)</translation>
+        <translation>SyncDebris(원격 캐시)</translation>
     </message>
     <message>
         <source>Enable file versioning</source>
@@ -4755,12 +4755,12 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>%1 (local cache):</source>
         <translatorcomment>Section label name for local cache summary and actions. Keep %1 placeholder, which is used to fill in the platform specific name for local sync cache (debris) (macOS)</translatorcomment>
-        <translation>%1 (로컬 캐시):</translation>
+        <translation>%1(로컬 캐시):</translation>
     </message>
     <message>
         <source>SyncDebris (remote cache):</source>
         <translatorcomment>Section label name for remote cache summary and clear action.(macOS)</translatorcomment>
-        <translation>SyncDebris (원격 캐시):</translation>
+        <translation>SyncDebris(원격 캐시):</translation>
     </message>
     <message>
         <source>File versions:</source>
@@ -5362,12 +5362,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>%1 (%2, %3)</source>
         <translatorcomment>Keep %1 (%2, %3) code because it will be filled with the number of folders at runtime. It will generate strings like: Upload to MEGA (5 files, 3 folders)</translatorcomment>
-        <translation>%1 (%2, %3)</translation>
+        <translation>%1(%2, %3)</translation>
     </message>
     <message>
         <source>%1 (%2)</source>
         <translatorcomment>Keep %1 (%2) code because it will be filled with the number of folders at runtime. It will generate strings like: Upload to MEGA (5 files)</translatorcomment>
-        <translation>%1 (%2)</translation>
+        <translation>%1(%2)</translation>
     </message>
     <message>
         <source>Remove from left pane</source>
@@ -6165,7 +6165,7 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
     <message>
         <source>Please upgrade to PRO to enjoy more storage space (your uploads will automatically resume).</source>
         <translatorcomment>Label to encourage the user to upgrade his account</translatorcomment>
-        <translation>더 많은 저장 공간을 즐기려면 계정을 업그레이드 하세요 (업로드는 자동으로 재개됩니다).</translation>
+        <translation>더 많은 저장 공간을 즐기려면 계정을 업그레이드 하세요(업로드는 자동으로 재개됩니다).</translation>
     </message>
     <message>
         <source>Your MEGA account is full</source>
@@ -6381,7 +6381,7 @@ Do you want to create one?</source>
     <message>
         <source>Yes (recommended)</source>
         <translatorcomment>Button text for to confirm the creation of link at Start Menu (Windows only)</translatorcomment>
-        <translation>예 (권장)</translation>
+        <translation>예(권장)</translation>
     </message>
     <message>
         <source>No</source>
@@ -6391,7 +6391,7 @@ Do you want to create one?</source>
     <message>
         <source>No (never ask again)</source>
         <translatorcomment>Button text to discard the option and never ask again if the problem is detected in the future.</translatorcomment>
-        <translation>아니오 (다시 묻지 않기)</translation>
+        <translation>아니오(다시 묻지 않기)</translation>
     </message>
 </context>
 <context>
