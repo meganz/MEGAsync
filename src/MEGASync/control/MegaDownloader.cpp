@@ -69,8 +69,7 @@ bool MegaDownloader::processDownloadQueue(QQueue<WrappedNode*>* downloadQueue, B
         bool transferStarted = download(wNode, currentPath, appData, batch->getCancelTokenPtr());
         if (transferStarted && wNode->getTransferOrigin() == WrappedNode::FROM_APP)
         {
-            QString nodePath = currentPath + QString::fromLatin1("/") + QString::fromUtf8(node->getName());
-            batch->add(nodePath);
+            batch->add(currentPath, QString::fromUtf8(node->getName()));
         }
         delete wNode;
 
