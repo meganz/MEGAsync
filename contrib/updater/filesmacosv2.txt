@@ -1,5 +1,5 @@
 #version=4701
-#baseurl=http://g.static.mega.co.nz/upd/msync/MEGAsync.app/
+#baseurl=http://g.static.mega.co.nz/upd/msyncv2/MEGAsync.app/
 #Hash: note this is the hash of the public key assuming an "\n" at the end
 #pubkeysha256sum=381fac98f5c3329ef5c0d9b6768d9f8d0bbc77bfa38256ac6f3da7452e0dc241
 Contents/Frameworks/libavcodec.58.dylib;Contents/Frameworks/libavcodec.58.dylib;54e1da98c1300b63cf19fb188d9550d4a96d42bed93bb736127f190af1571ede
