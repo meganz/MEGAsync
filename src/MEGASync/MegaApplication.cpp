@@ -1611,7 +1611,7 @@ void MegaApplication::processUploadQueue(MegaHandle nodeHandle)
         bool startedTransfer = uploader->upload(filePath, uploadInfo->getNewName(), node.get(), transferId, batch->getCancelTokenPtr());
         if (startedTransfer)
         {
-            batch->add(filePath);
+            batch->add(filePath, QString());
             startingUpload();
         }
 
