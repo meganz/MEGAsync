@@ -188,7 +188,7 @@ if [ ${build} -eq 1 -o ${build_cmake} -eq 1 ]; then
 
     mv ${MUPDATER_PREFIX}MEGAupdater.app/Contents/MacOS/MEGAupdater ${MSYNC_PREFIX}MEGAsync.app/Contents/MacOS/MEGAupdater
 
-    echo "" > ${MSYNC_PREFIX}MEGAsync.app/Contents/MacOS/MEGAclient
+    touch ${MSYNC_PREFIX}MEGAsync.app/Contents/MacOS/MEGAclient
 
     if [ ${build_cmake} -ne 1 ]; then
         [ ! -f MEGASync/MEGAsync.app/Contents/Frameworks/$AVCODEC_VERSION ] && cp -L $AVCODEC_PATH MEGASync/MEGAsync.app/Contents/Frameworks/
