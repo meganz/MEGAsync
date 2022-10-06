@@ -2664,13 +2664,13 @@ bool MegaApplication::eventFilter(QObject *obj, QEvent *e)
 void MegaApplication::createInfoDialog()
 {
     infoDialog = new InfoDialog(this);
-    connect(infoDialog, &InfoDialog::dismissStorageOverquota, this, &MegaApplication::onDismissStorageOverquota);
-    connect(infoDialog, &InfoDialog::transferOverquotaMsgVisibilityChange, transferQuota.get(), &TransferQuota::onTransferOverquotaVisibilityChange);
-    connect(infoDialog, &InfoDialog::almostTransferOverquotaMsgVisibilityChange, transferQuota.get(), &TransferQuota::onAlmostTransferOverquotaVisibilityChange);
-    connect(infoDialog, &InfoDialog::userActivity, this, &MegaApplication::registerUserActivity);
-    connect(transferQuota.get(), &TransferQuota::sendState, infoDialog, &InfoDialog::setBandwidthOverquotaState);
-    connect(transferQuota.get(), &TransferQuota::overQuotaMessageNeedsToBeShown, infoDialog, &InfoDialog::enableTransferOverquotaAlert);
-    connect(transferQuota.get(), &TransferQuota::almostOverQuotaMessageNeedsToBeShown, infoDialog, &InfoDialog::enableTransferAlmostOverquotaAlert);
+    connect(infoDialog.data(),  &InfoDialog::dismissStorageOverquota, this, &MegaApplication::onDismissStorageOverquota);
+    connect(infoDialog.data(), &InfoDialog::transferOverquotaMsgVisibilityChange, transferQuota.get(), &TransferQuota::onTransferOverquotaVisibilityChange);
+    connect(infoDialog.data(), &InfoDialog::almostTransferOverquotaMsgVisibilityChange, transferQuota.get(), &TransferQuota::onAlmostTransferOverquotaVisibilityChange);
+    connect(infoDialog.data(), &InfoDialog::userActivity, this, &MegaApplication::registerUserActivity);
+    connect(transferQuota.get(), &TransferQuota::sendState, infoDialog.data(), &InfoDialog::setBandwidthOverquotaState);
+    connect(transferQuota.get(), &TransferQuota::overQuotaMessageNeedsToBeShown, infoDialog.data(), &InfoDialog::enableTransferOverquotaAlert);
+    connect(transferQuota.get(), &TransferQuota::almostOverQuotaMessageNeedsToBeShown, infoDialog.data(), &InfoDialog::enableTransferAlmostOverquotaAlert);
     connect(infoDialog, SIGNAL(cancelScanning()), this, SLOT(cancelScanningStage()));
     scanStageController.updateReference(infoDialog);
 }
@@ -6512,7 +6512,7 @@ void MegaApplication::createInfoDialogMenus()
         addSyncAction->setEnabled(previousEnabledState);
 
 #if QT_VERSION > QT_VERSION_CHECK(5, 7, 0)
-        connect(addSyncAction, &MenuItemAction::triggered, infoDialog,
+        connect(addSyncAction, &MenuItemAction::triggered, infoDialog.data(),
                 QOverload<>::of(&InfoDialog::addSync), Qt::QueuedConnection);
 #else
         connect(addSyncAction, SIGNAL(triggered()), infoDialog, SLOT(addSync()), Qt::QueuedConnection);
@@ -6586,7 +6586,7 @@ void MegaApplication::createInfoDialogMenus()
         {
             addSyncAction->setLabelText(tr("Add Sync"));
 #if QT_VERSION > QT_VERSION_CHECK(5, 7, 0)
-            connect(addSyncAction, &MenuItemAction::triggered, infoDialog,
+            connect(addSyncAction, &MenuItemAction::triggered, infoDialog.data(),
                     QOverload<>::of(&InfoDialog::addSync), Qt::QueuedConnection);
 #else
             connect(addSyncAction, SIGNAL(triggered()), infoDialog, SLOT(addSync()), Qt::QueuedConnection);
@@ -6602,7 +6602,7 @@ void MegaApplication::createInfoDialogMenus()
                 {
                     MenuItemAction *addAction = new MenuItemAction(tr("Add Sync"), QIcon(QString::fromUtf8("://images/ico_drop_add_sync.png")), true);
 #if QT_VERSION > QT_VERSION_CHECK(5, 7, 0)
-                    connect(addAction, &MenuItemAction::triggered, infoDialog,
+                    connect(addAction, &MenuItemAction::triggered, infoDialog.data(),
                             QOverload<>::of(&InfoDialog::addSync), Qt::QueuedConnection);
 #else
                     connect(addAction, &MenuItemAction::triggered, infoDialog,
