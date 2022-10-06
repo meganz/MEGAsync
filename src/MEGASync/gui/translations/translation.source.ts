@@ -4450,6 +4450,7 @@ Do you want to delete it anyway?</translation>
     </message>
     <message>
         <source>found %1, %2</source>
+        <translatorcomment>Label used to display current status of scanning step. %1 is the string with number of folders found so far, %2 is the string with number of files found so far.</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
 </context>
