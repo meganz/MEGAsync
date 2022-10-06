@@ -1513,7 +1513,7 @@ margin-right: 32px;</string>
                </size>
               </property>
               <property name="text">
-               <string>Sleep settings:</string>
+               <string>Sleep mode:</string>
               </property>
               <property name="alignment">
                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
