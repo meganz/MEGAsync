@@ -272,6 +272,7 @@ signals:
     void mostPriorityTransferUpdate(int uploadTag, int downloadTag);
     void transfersProcessChanged();
     void showInFolderFinished(bool);
+    void activeTransfersChanged();
     void rowsAboutToBeMoved(TransferTag firstRowTag);
 
 public slots:
@@ -288,6 +289,7 @@ private slots:
     void onProcessTransfers();
     void updateTransfersCount();
     void onClearTransfersFinished();
+    void onKeepPCAwake();
 
 private:
     void removeRows(QModelIndexList &indexesToRemove);
@@ -317,7 +319,7 @@ private:
     QThread* mTransferEventThread;
     TransferThread* mTransferEventWorker;
     mega::QTMegaTransferListener *mDelegateListener;
-    QTimer mTimer;
+    QTimer mProcessTransfersTimer;
     TransfersCount mTransfersCount;
     LastTransfersCount mLastTransfersCount;
 

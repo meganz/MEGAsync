@@ -390,6 +390,10 @@ const QString Preferences::notifyDisabledSyncsKey = QString::fromAscii("notifyDi
 const QString Preferences::importMegaLinksEnabledKey = QString::fromAscii("importMegaLinksEnabled");
 const QString Preferences::downloadMegaLinksEnabledKey = QString::fromAscii("downloadMegaLinksEnabled");
 
+//Sleep settings
+const QString Preferences::awakeIfActiveKey = QString::fromAscii("sleepIfInactiveEnabledKey");
+const bool Preferences::defaultAwakeIfActive = false;
+
 const bool Preferences::defaultStartOnStartup       = true;
 const bool Preferences::defaultUpdateAutomatically  = true;
 const bool Preferences::defaultUpperSizeLimit       = false;
@@ -2674,6 +2678,20 @@ long long Preferences::lastStatsRequest()
 void Preferences::setLastStatsRequest(long long value)
 {
     setValueAndSyncConcurrent(lastStatsRequestKey, value);
+}
+
+bool Preferences::awakeIfActiveEnabled()
+{
+    mutex.lock();
+    assert(logged());
+    bool result = getValue(awakeIfActiveKey, defaultAwakeIfActive);
+    mutex.unlock();
+    return result;
+}
+
+void Preferences::setAwakeIfActive(bool value)
+{
+    setValueAndSyncConcurrent(awakeIfActiveKey, value);
 }
 
 bool Preferences::fileVersioningDisabled()

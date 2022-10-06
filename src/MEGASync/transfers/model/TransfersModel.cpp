@@ -6,6 +6,7 @@
 #include "QMegaMessageBox.h"
 #include "EventUpdater.h"
 #include "SettingsDialog.h"
+#include "platform/PowerOptions.h"
 #include "PlatformStrings.h"
 
 #include <QSharedData>
@@ -442,24 +443,26 @@ int TransfersModel::hasActiveTransfers() const
 
 void TransfersModel::setActiveTransfer(TransferTag tag)
 {
+    auto isEmpty = mActiveTransfers.isEmpty();
     mActiveTransfers.insert(tag);
+    if(isEmpty)
+    {
+        emit activeTransfersChanged();
+    }
 }
 
 void TransfersModel::unsetActiveTransfer(TransferTag tag)
 {
-    mActiveTransfers.remove(tag);
+    auto removed = mActiveTransfers.remove(tag);
+    if(removed && mActiveTransfers.isEmpty())
+    {
+        emit activeTransfersChanged();
+    }
 }
 
 void TransfersModel::checkActiveTransfer(TransferTag tag, bool isActive)
 {
-    if(isActive)
-    {
-        setActiveTransfer(tag);
-    }
-    else
-    {
-        unsetActiveTransfer(tag);
-    }
+   isActive ? setActiveTransfer(tag) : unsetActiveTransfer(tag);
 }
 
 void TransfersModel::uiUnblocked()
@@ -585,9 +588,9 @@ TransfersModel::TransfersModel(QObject *parent) :
     //Update transfers state for the first time
     updateTransfersCount();
 
-    mTimer.setInterval(PROCESS_TIMER);
-    QObject::connect(&mTimer, &QTimer::timeout, this, &TransfersModel::onProcessTransfers);
-    mTimer.start();
+    mProcessTransfersTimer.setInterval(PROCESS_TIMER);
+    QObject::connect(&mProcessTransfersTimer, &QTimer::timeout, this, &TransfersModel::onProcessTransfers);
+    mProcessTransfersTimer.start();
 
     mTransferEventThread->start();
 
@@ -597,10 +600,15 @@ TransfersModel::TransfersModel(QObject *parent) :
 
     connect(&mUpdateTransferWatcher, &QFutureWatcher<void>::finished, this, &TransfersModel::updateTransfersCount);
     connect(&mClearTransferWatcher, &QFutureWatcher<void>::finished, this, &TransfersModel::onClearTransfersFinished);
+
+    connect(this, &TransfersModel::activeTransfersChanged, this, &TransfersModel::onKeepPCAwake);
 }
 
 TransfersModel::~TransfersModel()
 {
+    mActiveTransfers.clear();
+    onKeepPCAwake();
+
     // Cleanup
     mTransfers.clear();
 
@@ -616,11 +624,11 @@ void TransfersModel::pauseModelProcessing(bool value)
 
     if(value)
     {
-        mTimer.stop();
+        mProcessTransfersTimer.stop();
     }
     else
     {
-        mTimer.start(PROCESS_TIMER);
+        mProcessTransfersTimer.start(PROCESS_TIMER);
     }
 }
 
@@ -1489,6 +1497,12 @@ void TransfersModel::onClearTransfersFinished()
     //The clear transfer is the only action which does not receive a SDK request
     emit transfersProcessChanged();
     emit unblockUiAndFilter();
+}
+
+void TransfersModel::onKeepPCAwake()
+{
+    PowerOptions options;
+    options.keepAwake(hasActiveTransfers());
 }
 
 void TransfersModel::performClearTransfers(const QMap<QModelIndex, QExplicitlySharedDataPointer<TransferData> > uploads,
