@@ -4414,6 +4414,7 @@ Do you want to delete it anyway?</translation>
     </message>
     <message>
         <source>Don&apos;t close the app. If you close, transfers not yet queued will be lost.</source>
+        <translatorcomment>Message displayed in scanning widget to warn the user of consequences of closing the app.</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4428,6 +4429,7 @@ Do you want to delete it anyway?</translation>
     </message>
     <message>
         <source>%1/%2</source>
+        <translatorcomment>Label showing the quantity of folders created (%1) with the quantity of folders to create in total (%2)</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message numerus="yes">
