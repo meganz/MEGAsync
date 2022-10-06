@@ -1595,10 +1595,15 @@ void MegaApplication::processUploadQueue(MegaHandle nodeHandle)
     DuplicatedNodeDialog checkDialog;
     HighDpiResize hDpiResizer(&checkDialog);
 
+    auto counter(0);
+    EventUpdater checkUpdater(uploadQueue.size());
     while (!uploadQueue.isEmpty())
     {
         QString nodePath = uploadQueue.dequeue();
         checkDialog.checkUpload(nodePath, node);
+
+        checkUpdater.update(counter);
+        counter++;
     }
 
     QList<std::shared_ptr<DuplicatedNodeInfo>> uploads = checkDialog.show();
@@ -1606,10 +1611,10 @@ void MegaApplication::processUploadQueue(MegaHandle nodeHandle)
     auto batch = std::shared_ptr<TransferBatch>(new TransferBatch());
     mBlockingBatch.add(batch);
 
-    EventUpdater updater(uploads.size());
+    EventUpdater updater(uploads.size(),20);
     mProcessingUploadQueue = true;
 
-    auto counter(0);
+    counter = 0;
     foreach(auto uploadInfo, uploads)
     {
         QString filePath = uploadInfo->getLocalPath();

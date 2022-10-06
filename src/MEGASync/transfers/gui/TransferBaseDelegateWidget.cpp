@@ -3,6 +3,7 @@
 #include <MegaTransferView.h>
 
 #include <QPointer>
+#include <QLayout>
 
 TransferBaseDelegateWidget::TransferBaseDelegateWidget(QWidget *parent)
     : QWidget(parent),
@@ -157,6 +158,11 @@ QString TransferBaseDelegateWidget::getState(TRANSFER_STATES state)
             return QString();
         }
     }
+}
+
+int TransferBaseDelegateWidget::getNameAvailableSize(QWidget *nameContainer, QWidget *syncLabel, QSpacerItem *spacer)
+{
+    return nameContainer->contentsRect().width() - syncLabel->contentsRect().width() - nameContainer->layout()->spacing()*2 - spacer->sizeHint().width();
 }
 
 void TransferBaseDelegateWidget::changeEvent(QEvent* event)

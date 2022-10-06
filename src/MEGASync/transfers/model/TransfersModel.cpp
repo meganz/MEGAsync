@@ -600,6 +600,7 @@ TransfersModel::TransfersModel(QObject *parent) :
 
     connect(&mUpdateTransferWatcher, &QFutureWatcher<void>::finished, this, &TransfersModel::updateTransfersCount);
     connect(&mClearTransferWatcher, &QFutureWatcher<void>::finished, this, &TransfersModel::onClearTransfersFinished);
+    connect(&mAskForMostPriorityTransfersWatcher, &QFutureWatcher<QPair<int,int>>::finished, this, &TransfersModel::onAskForMostPriorityTransfersFinished);
 
     connect(this, &TransfersModel::activeTransfersChanged, this, &TransfersModel::onKeepPCAwake);
 }
@@ -738,7 +739,6 @@ void TransfersModel::onProcessTransfers()
 
                         mModelMutex.unlock();
                     }
-
                 });
                 mUpdateTransferWatcher.setFuture(future);
             }
@@ -1469,10 +1469,11 @@ void TransfersModel::clearTransfers(const QMap<QModelIndex, QExplicitlySharedDat
         auto totalTransfersToClear(uploads.size() + downloads.size());
         if(totalTransfersToClear > CLEAR_THRESHOLD_THREAD)
         {
+            setUiBlockedMode(true);
+            pauseModelProcessing(true);
+
             auto future = QtConcurrent::run([this, uploads, downloads]()
             {
-                emit blockUi();
-
                 blockModelSignals(true);
                 performClearTransfers(uploads, downloads);
                 blockModelSignals(false);
@@ -1493,6 +1494,7 @@ void TransfersModel::clearTransfers(const QMap<QModelIndex, QExplicitlySharedDat
 void TransfersModel::onClearTransfersFinished()
 {
     updateTransfersCount();
+    pauseModelProcessing(false);
 
     //The clear transfer is the only action which does not receive a SDK request
     emit transfersProcessChanged();
@@ -1993,16 +1995,23 @@ void TransfersModel::mostPriorityTransferMayChanged(bool state)
 
 void TransfersModel::askForMostPriorityTransfer()
 {
-    QtConcurrent::run([this]()
+    auto task = QtConcurrent::run([this]()
     {
         std::unique_ptr<MegaTransfer> nextUTransfer(MegaSyncApp->getMegaApi()->getFirstTransfer(MegaTransfer::TYPE_UPLOAD));
         auto UTag = nextUTransfer ? nextUTransfer->getTag() : -1;
         std::unique_ptr<MegaTransfer> nextDTransfer(MegaSyncApp->getMegaApi()->getFirstTransfer(MegaTransfer::TYPE_DOWNLOAD));
         auto DTag = nextDTransfer ? nextDTransfer->getTag() : -1;
 
-        emit mostPriorityTransferUpdate(UTag, DTag);
-
+        return qMakePair(UTag, DTag);
     });
+
+    mAskForMostPriorityTransfersWatcher.setFuture(task);
+}
+
+void TransfersModel::onAskForMostPriorityTransfersFinished()
+{
+    auto tags = mAskForMostPriorityTransfersWatcher.result();
+    emit mostPriorityTransferUpdate(tags.first, tags.second);
 }
 
 bool TransfersModel::removeRows(int row, int count, const QModelIndex& parent)

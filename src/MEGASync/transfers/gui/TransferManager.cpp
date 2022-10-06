@@ -248,17 +248,6 @@ TransferManager::TransferManager(MegaApi *megaApi) :
     //Update stats
     onTransfersDataUpdated();
 
-    // Refresh Style, QSS is glitchy on first start???
-    auto tabFrame (mTabFramesToggleGroup[mUi->wTransfers->getCurrentTab()]);
-    tabFrame->style()->unpolish(tabFrame);
-    tabFrame->style()->polish(tabFrame);
-    const auto children (tabFrame->findChildren<QWidget*>());
-    for (auto w : children)
-    {
-        w->style()->unpolish(w);
-        w->style()->polish(w);
-    }
-
     mTransferScanCancelUi = new TransferScanCancelUi(mUi->sTransfers, mTabNoItem[TransfersWidget::ALL_TRANSFERS_TAB]);
     connect(mTransferScanCancelUi, &TransferScanCancelUi::cancelTransfers,
             this, &TransferManager::cancelScanning);
@@ -266,8 +255,8 @@ TransferManager::TransferManager(MegaApi *megaApi) :
     mUi->wAllResults->installEventFilter(this);
     mUi->wDlResults->installEventFilter(this);
     mUi->wUlResults->installEventFilter(this);
-
     mUi->lTransfers->installEventFilter(this);
+    mUi->wLeftPane->installEventFilter(this);
 }
 
 
@@ -1179,6 +1168,9 @@ void TransferManager::toggleTab(TransfersWidget::TM_TAB newTab)
         mTabFramesToggleGroup[newTab]->setProperty(ITS_ON, true);
         mTabFramesToggleGroup[newTab]->setGraphicsEffect(mShadowTab);
 
+        // Reload QSS because it is glitchy
+        mUi->wLeftPane->setStyleSheet(mUi->wLeftPane->styleSheet());
+
         auto pushButton = mTabFramesToggleGroup[newTab]->findChild<QPushButton*>();
         if(pushButton)
         {
@@ -1233,9 +1225,6 @@ void TransferManager::toggleTab(TransfersWidget::TM_TAB newTab)
         }
 
         refreshView();
-
-        // Reload QSS because it is glitchy
-        mUi->wLeftPane->setStyleSheet(mUi->wLeftPane->styleSheet());
     }
 }
 
@@ -1376,6 +1365,11 @@ bool TransferManager::eventFilter(QObject *obj, QEvent *event)
                 }
             }
         }
+    }
+    else if(obj == mUi->wLeftPane && event->type() == QEvent::Polish)
+    {
+        //Set the style for the first time as you need to update it as it depends on properties
+        mUi->wLeftPane->setStyleSheet(mUi->wLeftPane->styleSheet());
     }
 
     return QDialog::eventFilter(obj, event);

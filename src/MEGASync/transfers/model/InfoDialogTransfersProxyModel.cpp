@@ -47,39 +47,39 @@ void InfoDialogTransfersProxyModel::setSourceModel(QAbstractItemModel *sourceMod
 void InfoDialogTransfersProxyModel::onCopyTransferLinkRequested()
 {
     auto delegateWidget = dynamic_cast<InfoDialogTransferDelegateWidget*>(sender());
-    auto sourModel = dynamic_cast<TransfersModel*>(sourceModel());
+    auto sourceM = dynamic_cast<TransfersModel*>(sourceModel());
 
-    if(delegateWidget && sourModel)
+    if(delegateWidget && sourceM)
     {
         QList<int> rows;
         auto index = delegateWidget->getCurrentIndex();
         index = mapToSource(index);
         rows.append(index.row());
-        sourModel->getLinks(rows);
+        sourceM->getLinks(rows);
     }
 }
 
 void InfoDialogTransfersProxyModel::onOpenTransferFolderRequested()
 {
     auto delegateWidget = dynamic_cast<InfoDialogTransferDelegateWidget*>(sender());
-    auto sourModel = dynamic_cast<TransfersModel*>(sourceModel());
+    auto sourceM = dynamic_cast<TransfersModel*>(sourceModel());
 
-    if(delegateWidget && sourModel)
+    if(delegateWidget && sourceM)
     {
         auto index = delegateWidget->getCurrentIndex();
         index = mapToSource(index);
-        sourModel->openFolderByIndex(index);
+        sourceM->openFolderByIndex(index);
     }
 }
 
 void InfoDialogTransfersProxyModel::onRetryTransferRequested()
 {
     auto delegateWidget = dynamic_cast<InfoDialogTransferDelegateWidget*>(sender());
-    auto sourModel = dynamic_cast<TransfersModel*>(sourceModel());
+    auto sourceM = dynamic_cast<TransfersModel*>(sourceModel());
 
-    if(delegateWidget && sourModel)
+    if(delegateWidget && sourceM)
     {
-        sourModel->retryTransferByIndex(mapToSource(delegateWidget->getCurrentIndex()));
+        sourceM->retryTransferByIndex(mapToSource(delegateWidget->getCurrentIndex()));
     }
 }
 

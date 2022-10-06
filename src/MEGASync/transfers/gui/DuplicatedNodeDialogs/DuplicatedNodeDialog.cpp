@@ -3,6 +3,7 @@
 
 #include "DuplicatedNodeItem.h"
 #include "Utilities.h"
+#include "EventUpdater.h"
 
 #include <QFileInfo>
 
@@ -90,7 +91,11 @@ void DuplicatedNodeDialog::setHeader(const QString& baseText, const QString& nod
 void DuplicatedNodeDialog::fillDialog(const QList<std::shared_ptr<DuplicatedNodeInfo> > &conflicts, DuplicatedUploadBase *checker)
 {
     auto conflictNumber(conflicts.size()-1);
+    auto processesConflicts(0);
+
     setConflictItems(conflictNumber);
+
+    EventUpdater guiUpdater(conflicts.size(),20);
 
     for(auto conflictIt = conflicts.begin(); conflictIt != conflicts.end(); ++conflictIt)
     {
@@ -128,6 +133,9 @@ void DuplicatedNodeDialog::fillDialog(const QList<std::shared_ptr<DuplicatedNode
 
         cleanUi();
         setConflictItems(conflictNumber);
+
+        guiUpdater.update(processesConflicts);
+        processesConflicts++;
     }
 }
 

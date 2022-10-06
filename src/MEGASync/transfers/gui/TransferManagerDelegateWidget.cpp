@@ -504,9 +504,10 @@ bool TransferManagerDelegateWidget::eventFilter(QObject *watched, QEvent *event)
                 text = label->property("text").toString();
             }
 
+            auto availableSize = getNameAvailableSize(mUi->wTransferName, mUi->lSyncIcon, mUi->nameSpacer);
             label->setProperty("text", label->fontMetrics()
                                .elidedText(text, Qt::ElideMiddle,
-                                           label->contentsRect().width()));
+                                          availableSize));
         }
     }
 

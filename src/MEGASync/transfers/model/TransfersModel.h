@@ -291,6 +291,7 @@ private slots:
     void onProcessTransfers();
     void updateTransfersCount();
     void onClearTransfersFinished();
+    void onAskForMostPriorityTransfersFinished();
     void onKeepPCAwake();
 
 private:
@@ -330,6 +331,7 @@ private:
     TransferThread::TransfersToProcess mTransfersToProcess;
     QFutureWatcher<void> mUpdateTransferWatcher;
     QFutureWatcher<void> mClearTransferWatcher;
+    QFutureWatcher<QPair<int, int>> mAskForMostPriorityTransfersWatcher;
 
     uint8_t mTransfersProcessChanged;
     uint8_t mUpdateMostPriorityTransfer;

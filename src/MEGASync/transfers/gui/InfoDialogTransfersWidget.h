@@ -6,6 +6,8 @@
 
 #include "MegaTransferDelegate.h"
 #include "MegaDelegateHoverManager.h"
+#include <ViewLoadingScene.h>
+#include <InfoDialogTransferLoadingItem.h>
 
 namespace Ui {
 class InfoDialogTransfersWidget;
@@ -27,10 +29,15 @@ public:
 protected:
     void showEvent(QShowEvent *) override;
 
+private slots:
+    void onUiBlocked();
+    void onUiUnblocked();
+
 private:
     Ui::InfoDialogTransfersWidget *mUi;
     InfoDialogTransfersProxyModel *mProxyModel;
     MegaDelegateHoverManager mViewHoverManager;
+    ViewLoadingScene<InfoDialogTransferLoadingItem> mLoadingScene;
 
 private:
     void configureTransferView();
