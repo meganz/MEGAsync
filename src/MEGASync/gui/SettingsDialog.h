@@ -113,6 +113,7 @@ private slots:
     void on_cStartOnStartup_toggled(bool checked);
     void on_cLanguage_currentIndexChanged(int index);
     void on_cFileVersioning_toggled(bool checked);
+    void on_cbSleepMode_toggled(bool checked);
     void on_cOverlayIcons_toggled(bool checked);
 #ifdef Q_OS_WINDOWS
     void on_cFinderIcons_toggled(bool checked);
