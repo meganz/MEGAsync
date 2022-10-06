@@ -230,6 +230,8 @@ set (MOC_INPUT
     ${MEGAsyncDir}/CommonMessages.h
     ${MEGAsyncDir}/ScanStageController.h
     ${MEGAsyncDir}/EventUpdater.h
+    ${MEGAsyncDir}/FolderTransferListener.h
+    ${MEGAsyncDir}/BlockingStageProgressController.h
     ${MEGAsyncDir}/control/ConnectivityChecker.h
     ${MEGAsyncDir}/control/CrashHandler.h
     ${MEGAsyncDir}/control/EncryptedSettings.h
@@ -412,6 +414,8 @@ set (SRCS
     ${MEGAsyncDir}/CommonMessages.cpp
     ${MEGAsyncDir}/ScanStageController.cpp
     ${MEGAsyncDir}/EventUpdater.cpp
+    ${MEGAsyncDir}/FolderTransferListener.cpp
+    ${MEGAsyncDir}/BlockingStageProgressController.cpp
 
     ${FORMS}
     ${MOC_INPUT}

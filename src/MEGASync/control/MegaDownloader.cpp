@@ -12,8 +12,8 @@
 
 using namespace mega;
 
-MegaDownloader::MegaDownloader(MegaApi* _megaApi)
-    : QObject(), megaApi(_megaApi)
+MegaDownloader::MegaDownloader(MegaApi* _megaApi, std::shared_ptr<FolderTransferListener> _listener)
+    : QObject(), megaApi(_megaApi), listener(_listener)
 {
 }
 
@@ -135,8 +135,7 @@ void MegaDownloader::startDownload(WrappedNode *parent, const QString& appData,
     bool startFirst = hasTransferPriority(parent->getTransferOrigin());
     QByteArray localPath = currentPathWithSep.toUtf8();
     const char* name = parent->getMegaNode()->getName();
-    MegaTransferListener* listener = nullptr;
-    megaApi->startDownload(parent->getMegaNode(), localPath.constData(), name, appData.toUtf8().constData(), startFirst, cancelToken, listener);
+    megaApi->startDownload(parent->getMegaNode(), localPath.constData(), name, appData.toUtf8().constData(), startFirst, cancelToken, listener.get());
 }
 
 void MegaDownloader::downloadForeignDir(MegaNode *node, const QString& appData, const QString& currentPathWithSep)

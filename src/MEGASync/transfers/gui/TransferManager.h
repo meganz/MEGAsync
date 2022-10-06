@@ -45,6 +45,8 @@ public:
     void enterBlockingState();
     void leaveBlockingState(bool fromCancellation);
     void disableCancelling();
+    void setUiInCancellingStage();
+    void onFolderTransferUpdate(const FolderTransferUpdateEvent& event);
 
     void setTransferState(const StatusInfo::TRANSFERS_STATES &transferState);
 

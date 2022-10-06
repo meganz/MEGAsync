@@ -10,16 +10,24 @@ ScanStageController::ScanStageController(QObject *parent)
     mScanStageTimer.setSingleShot(true);
     connect(&mScanStageTimer, &QTimer::timeout,
             this, &ScanStageController::startScanStage);
+
+    mCancelStageTimer.setSingleShot(true);
+    connect(&mCancelStageTimer, &QTimer::timeout,
+            this, &ScanStageController::setUiInCancellingStage);
 }
 
 void ScanStageController::updateReference(InfoDialog *_infoDialog)
 {
     mInfoDialog = _infoDialog;
+    connect(mInfoDialog, &InfoDialog::cancelScanning,
+            this, &ScanStageController::setDelayedCancellingStage);
 }
 
 void ScanStageController::updateReference(TransferManager *_transferManager)
 {
     mTransferManager = _transferManager;
+    connect(mTransferManager, &TransferManager::cancelScanning,
+            this, &ScanStageController::setDelayedCancellingStage);
 }
 
 void ScanStageController::startDelayedScanStage()
@@ -39,15 +47,20 @@ void ScanStageController::stopDelayedScanStage(bool fromCancellation)
     }
     else
     {
-        mIsInScanningState = false;
-        if (mIsInScanningStateInMinimumTime)
-        {
-            setUiInDisabledScanStage();
-        }
-        else
-        {
-            setUiInNormalStage();
-        }
+        stopScanStage();
+    }
+}
+
+void ScanStageController::onFolderTransferUpdate(const FolderTransferUpdateEvent& event)
+{
+    if (mTransferManager)
+    {
+        mTransferManager->onFolderTransferUpdate(event);
+    }
+
+    if (mInfoDialog)
+    {
+        mInfoDialog->updateUiOnFolderTransferUpdate(event);
     }
 }
 
@@ -59,6 +72,19 @@ void ScanStageController::startScanStage()
                        &ScanStageController::onMinimumDisplayTimeElapsed);
 
     setUiInScanStage();
+}
+
+void ScanStageController::stopScanStage()
+{
+    mIsInScanningState = false;
+    if (mIsInScanningStateInMinimumTime)
+    {
+        setUiInDisabledScanStage();
+    }
+    else
+    {
+        setUiInNormalStage();
+    }
 }
 
 void ScanStageController::setUiInScanStage()
@@ -79,6 +105,11 @@ void ScanStageController::setUiInScanStage()
 void ScanStageController::setUiInNormalStage()
 {
     emit enableTransferActions(true);
+
+    if (mCancelStageTimer.isActive())
+    {
+        mCancelStageTimer.stop();
+    }
 
     if (mTransferManager)
     {
@@ -101,6 +132,24 @@ void ScanStageController::setUiInDisabledScanStage()
     if (mInfoDialog)
     {
         mInfoDialog->disableCancelling();
+    }
+}
+
+void ScanStageController::setDelayedCancellingStage()
+{
+    mCancelStageTimer.start();
+}
+
+void ScanStageController::setUiInCancellingStage()
+{
+    if (mTransferManager)
+    {
+        mTransferManager->setUiInCancellingStage();
+    }
+
+    if (mInfoDialog)
+    {
+        mInfoDialog->setUiInCancellingStage();
     }
 }
 
