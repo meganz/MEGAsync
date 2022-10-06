@@ -188,6 +188,8 @@ public:
     QModelIndex parent(const QModelIndex& index) const;
     QModelIndex index(int row, int column, const QModelIndex& parent = QModelIndex()) const;
     bool removeRows(int row, int count, const QModelIndex& parent = QModelIndex());
+    bool moveRows(const QModelIndex &sourceParent, int sourceRow, int count,
+                  const QModelIndex &destinationParent, int destinationChild) override;
 
     void ignoreMoveRowsSignal(bool state);
     void inverseMoveRowsSignal(bool state);

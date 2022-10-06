@@ -292,6 +292,7 @@ void TransferManager::enterBlockingState()
     mUi->wTransfers->setScanningWidgetVisible(true);
     enableUserActions(false);
     mTransferScanCancelUi->show();
+    refreshStateStats();
 
     mScanningTimer.start();
 }
@@ -301,6 +302,7 @@ void TransferManager::leaveBlockingState(bool fromCancellation)
     enableUserActions(true);
     mUi->wTransfers->setScanningWidgetVisible(false);
     mTransferScanCancelUi->hide(fromCancellation);
+    refreshStateStats();
 
     mScanningTimer.stop();
     mScanningAnimationIndex = 1;
@@ -311,6 +313,16 @@ void TransferManager::leaveBlockingState(bool fromCancellation)
 void TransferManager::disableCancelling()
 {
     mTransferScanCancelUi->disableCancelling();
+}
+
+void TransferManager::setUiInCancellingStage()
+{
+    mTransferScanCancelUi->setInCancellingStage();
+}
+
+void TransferManager::onFolderTransferUpdate(const FolderTransferUpdateEvent &event)
+{
+    mTransferScanCancelUi->onFolderTransferUpdate(event);
 }
 
 void TransferManager::onPauseStateChangedByTransferResume()
@@ -591,7 +603,15 @@ void TransferManager::refreshStateStats()
     // and if current tab is ALL TRANSFERS, show empty.
     if (processedNumber == 0 && failedNumber == 0)
     {
-        leftFooterWidget = mUi->pUpToDate;
+        if(mTransferScanCancelUi && mTransferScanCancelUi->isActive())
+        {
+            leftFooterWidget = mUi->pScanning;
+        }
+        else
+        {
+            leftFooterWidget = mUi->pUpToDate;
+        }
+
         mSpeedRefreshTimer->stop();
         countLabel->hide();
         countLabel->clear();

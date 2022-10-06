@@ -337,9 +337,16 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
 #endif
 
     mDisableGfx = args.contains(QLatin1String("--nogfx")) || args.contains(QLatin1String("/nogfx"));
+    folderTransferListener = std::make_shared<FolderTransferListener>(nullptr);
+
+    connect(folderTransferListener.get(), &FolderTransferListener::folderTransferUpdated,
+            this, &MegaApplication::onFolderTransferUpdate);
 
     connect(&scanStageController, &ScanStageController::enableTransferActions,
             this, &MegaApplication::enableTransferActions);
+
+    connect(&transferProgressController, &BlockingStageProgressController::updateUi,
+            &scanStageController, &ScanStageController::onFolderTransferUpdate);
 }
 
 MegaApplication::~MegaApplication()
@@ -523,11 +530,12 @@ void MegaApplication::initialize()
 
     delegateListener = new MEGASyncDelegateListener(megaApi, this, this);
     megaApi->addListener(delegateListener);
-    uploader = new MegaUploader(megaApi);
-    downloader = new MegaDownloader(megaApi);
+    uploader = new MegaUploader(megaApi, folderTransferListener);
+    downloader = new MegaDownloader(megaApi, folderTransferListener);
     connect(downloader, &MegaDownloader::finishedTransfers, this, &MegaApplication::showNotificationFinishedTransfers, Qt::QueuedConnection);
     connect(downloader, &MegaDownloader::startingTransfers,
             &scanStageController, &ScanStageController::startDelayedScanStage);
+    connect(downloader, &MegaDownloader::folderTransferUpdated, this, &MegaApplication::onFolderTransferUpdate);
 
     connectivityTimer = new QTimer(this);
     connectivityTimer->setSingleShot(true);
@@ -3292,6 +3300,7 @@ void MegaApplication::startUpload(const QString& rawLocalPath, MegaNode* target,
 void MegaApplication::cancelScanningStage()
 {
     mBlockingBatch.cancelTransfer();
+    transferProgressController.stopUiUpdating();
 }
 
 void MegaApplication::updateFileTransferBatchesAndUi(const QString& nodePath, BlockingBatch &batch)
@@ -3557,13 +3566,15 @@ bool MegaApplication::isQueueProcessingOngoing()
     return mProcessingUploadQueue || downloader->isQueueProcessingOngoing();
 }
 
-QString MegaApplication::getNodePath(MegaTransfer* transfer)
+void MegaApplication::onFolderTransferUpdate(FolderTransferUpdateEvent event)
 {
-    if (transfer->getPath() != nullptr)
+    transferProgressController.update(event);
+    if (event.stage >= MegaTransfer::STAGE_TRANSFERRING_FILES)
     {
-        return QString::fromUtf8(transfer->getPath());
+        transferProgressController.stopUiUpdating();
+        updateFolderTransferBatchesAndUi(event.transferName, mBlockingBatch, false);
+        logBatchStatus("onTransferUpdate");
     }
-    return QString::fromUtf8(transfer->getParentPath()) + QString::fromUtf8(transfer->getFileName());
 }
 
 void MegaApplication::setupWizardFinished(int result)
@@ -7818,7 +7829,7 @@ void MegaApplication::onTransferStart(MegaApi *api, MegaTransfer *transfer)
 
     if(!transfer->isSyncTransfer() && !transfer->isBackupTransfer())
     {
-        updateFileTransferBatchesAndUi(getNodePath(transfer), mBlockingBatch);
+        updateFileTransferBatchesAndUi(Utilities::getNodePath(transfer), mBlockingBatch);
         logBatchStatus("onTransferStart");
     }
 
@@ -7859,7 +7870,7 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
         {
             if(mBlockingBatch.isValid())
             {
-                mBlockingBatch.onTransferFinished(getNodePath(transfer));
+                mBlockingBatch.onTransferFinished(Utilities::getNodePath(transfer));
                 updateIfBlockingStageFinished(mBlockingBatch, mBlockingBatch.hasCancelToken());
                 updateFreedCancelToken(transfer);
             }
@@ -8020,15 +8031,6 @@ void MegaApplication::onTransferUpdate(MegaApi*, MegaTransfer* transfer)
     if (appfinished)
     {
         return;
-    }
-
-    if(!transfer->isSyncTransfer() && !transfer->isBackupTransfer())
-    {
-        if (transfer->getStage() >= MegaTransfer::STAGE_TRANSFERRING_FILES)
-        {
-            updateFolderTransferBatchesAndUi(getNodePath(transfer), mBlockingBatch, false);
-            logBatchStatus("onTransferUpdate");
-        }
     }
 
     if (transfer->isStreamingTransfer() || transfer->isFolderTransfer())

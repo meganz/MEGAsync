@@ -2026,6 +2026,11 @@ bool TransfersModel::removeRows(int row, int count, const QModelIndex& parent)
     }
 }
 
+bool TransfersModel::moveRows(const QModelIndex &sourceParent, int sourceRow, int count, const QModelIndex &destinationParent, int destinationChild)
+{
+    return QAbstractItemModel::moveRows(sourceParent, sourceRow, count, destinationParent, destinationChild);
+}
+
 void TransfersModel::ignoreMoveRowsSignal(bool state)
 {
     mIgnoreMoveSignal = state;

@@ -10,7 +10,7 @@ TEST_CASE("Calculate transfer remaining time")
     constexpr auto remainingBytes{100};
 
     // return zero transfer remaining time for the first values until the buffer is filled
-    constexpr auto bufferSize{10};
+    constexpr auto bufferSize{9};
     for(int i=0; i < bufferSize-1; i++)
     {
         REQUIRE(transferRemainingTime.calculateRemainingTimeSeconds(speedBytesSecond, remainingBytes) == 0s);
@@ -20,14 +20,14 @@ TEST_CASE("Calculate transfer remaining time")
     REQUIRE(transferRemainingTime.calculateRemainingTimeSeconds(speedBytesSecond, remainingBytes) == 10s);
 
     // return last value calculated until the buffer is filled again
-    const std::vector<long long>speeds{20, 100, 20, 1, 100, 20, 2, 2, 100};
+    const std::vector<long long>speeds{20, 100, 20, 1, 100, 20, 2, 2};
     for(const auto speed : speeds)
     {
         REQUIRE(transferRemainingTime.calculateRemainingTimeSeconds(speed, remainingBytes) == 10s);
     }
 
     // return median of the values from the buffer when is filled
-    REQUIRE(transferRemainingTime.calculateRemainingTimeSeconds(speedBytesSecond, remainingBytes) == 5s);
+    REQUIRE(transferRemainingTime.calculateRemainingTimeSeconds(100, remainingBytes) == 5s);
 }
 
 TEST_CASE("Calculate transfer remaining time when the buffer is filled with some zero values")
@@ -37,8 +37,8 @@ TEST_CASE("Calculate transfer remaining time when the buffer is filled with some
     constexpr auto remainingBytes{100};
 
     // instant remaining time in seconds will be zero when speedBytesSecond is greater than remainingBytes
-    constexpr auto bufferSize{10};
-    for(int i=0; i < bufferSize; i++)
+    constexpr auto bufferSize{9};
+    for(int i=0; i < bufferSize-1; i++)
     {
         REQUIRE(transferRemainingTime.calculateRemainingTimeSeconds(speedBytesSecond, remainingBytes) == 0s);
     }
@@ -51,7 +51,7 @@ TEST_CASE("Calculate transfer remaining time when after some speed zero values")
     constexpr auto remainingBytes{100};
 
     // instant remaining time in seconds will be zero when speedBytesSecond is greater than remainingBytes
-    constexpr auto bufferSize{10};
+    constexpr auto bufferSize{9};
     for(int i=0; i < bufferSize-1; i++)
     {
         REQUIRE(transferRemainingTime.calculateRemainingTimeSeconds(speedBytesSecond, remainingBytes) == 0s);
