@@ -40,12 +40,6 @@ void TransfersManagerSortFilterProxyModel::initProxyModel(SortCriterion sortCrit
 
 void TransfersManagerSortFilterProxyModel::sort(int sortCriterion, Qt::SortOrder order)
 {
-    auto sourceM = qobject_cast<TransfersModel*>(sourceModel());
-    if(sourceM)
-    {
-        sourceM->pauseModelProcessing(true);
-    }
-
     emit modelAboutToBeChanged();
     if (sortCriterion != static_cast<int>(mSortCriterion))
     {
@@ -101,6 +95,12 @@ void TransfersManagerSortFilterProxyModel::invalidateModel()
     if(!dynamicSortFilter())
     {
         setDynamicSortFilter(true);
+    }
+
+    auto sourceM = qobject_cast<TransfersModel*>(sourceModel());
+    if(sourceM)
+    {
+        sourceM->pauseModelProcessing(true);
     }
 
     QFuture<void> filtered = QtConcurrent::run([this](){

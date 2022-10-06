@@ -447,7 +447,7 @@ QProgressBar::chunk
               </widget>
              </item>
              <item>
-              <spacer name="horizontalSpacer_5">
+              <spacer name="nameSpacer">
                <property name="orientation">
                 <enum>Qt::Horizontal</enum>
                </property>
