@@ -349,16 +349,14 @@ void AlertItem::setAlertContent(MegaUserAlert *alert)
             {
                 int64_t updatedItems = alert->getNumber(1) + alert->getNumber(0);
                 notificationContent = tr("[A] added %n item", "", static_cast<int>(updatedItems))
-                        .replace(QString::fromUtf8("[A]"), formatRichString(getUserFullName(alert)))
-                        .replace(QString::fromUtf8("[B]"), QString::number(updatedItems));
+                        .replace(QString::fromUtf8("[A]"), formatRichString(getUserFullName(alert)));
                 break;
             }
             case MegaUserAlert::TYPE_REMOVEDSHAREDNODES:
             {
                 int64_t updatedItems = alert->getNumber(0);
                 notificationContent = tr("[A] removed %n item", "", static_cast<int>(updatedItems))
-                        .replace(QString::fromUtf8("[A]"), formatRichString(getUserFullName(alert)))
-                        .replace(QString::fromUtf8("[B]"), QString::number(updatedItems));
+                        .replace(QString::fromUtf8("[A]"), formatRichString(getUserFullName(alert)));
                 break;
             }
             // Payment notifications
@@ -502,7 +500,7 @@ QString AlertItem::formatRichString(QString str)
 
 QString AlertItem::getUserFullName(MegaUserAlert *alert)
 {
-    if(mFullNameAttributes && mFullNameAttributes->isAttributeReady())
+    if(mFullNameAttributes)
     {
         return mFullNameAttributes->getRichFullName();
     }

@@ -52,6 +52,7 @@ public:
 
     PSA_info* getPSAdata();
     void setUsage();
+    void setAvatar();
     void setIndexing(bool indexing);
     void setWaiting(bool waiting);
     void setSyncing(bool value);
@@ -70,6 +71,8 @@ public:
     void enterBlockingState();
     void leaveBlockingState(bool fromCancellation);
     void disableCancelling();
+    void setUiInCancellingStage();
+    void updateUiOnFolderTransferUpdate(const FolderTransferUpdateEvent& event);
 
 #ifdef __APPLE__
     void moveArrow(QPoint p);
@@ -150,8 +153,6 @@ private slots:
 
     void on_bDismissSyncSettings_clicked();
     void on_bOpenSyncSettings_clicked();
-
-    void setAvatar();
 
     void updateTransfersCount();
 
@@ -256,6 +257,8 @@ protected:
  private:
     static double computeRatio(long long completed, long long remaining);
     void enableUserActions(bool value);
+    void changeStatusState(StatusInfo::TRANSFERS_STATES newState,
+                           bool animate = true);
 
     TransferScanCancelUi* mTransferScanCancelUi = nullptr;
     QtPositioningBugFixer qtBugFixer;

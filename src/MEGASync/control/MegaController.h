@@ -37,6 +37,7 @@ public:
 
     static Controller *instance();
     void setApi(mega::MegaApi *value);
+    static QString getSyncNameFromPath(const QString& path);
 
 private:
 
@@ -172,6 +173,7 @@ class ActionProgress : public ProgressHelper
 
 private:
     QString mError;
+
 public:
     ActionProgress(bool deleteOnCompletion = false, const QString description = QString());
 

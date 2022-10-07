@@ -404,10 +404,12 @@ QVariant MegaItemModel::getText(const QModelIndex &index, MegaItem *item) const
             QLatin1String dateFormat ("dd MMM yyyy");
             QString timeFormat = locale.timeFormat(QLocale::ShortFormat);
 
+            int hours = dateTime.time().hour();
+
             if(currentDate.toString(dateFormat)
                     == dateTime.toString(dateFormat))
             {
-                return tr("Today at %1").arg(locale.toString(dateTime, timeFormat));
+                return tr("Today at %1", "", hours).arg(locale.toString(dateTime, timeFormat));
             }
 
             currentDate = currentDate.addDays(-1); //for checking if it was yesterday
@@ -415,11 +417,11 @@ QVariant MegaItemModel::getText(const QModelIndex &index, MegaItem *item) const
             if(currentDate.toString(dateFormat)
                     == dateTime.toString(dateFormat))
             {
-                return tr("Yesterday at %1").arg(locale.toString(dateTime, timeFormat));
+                return tr("Yesterday at %1", "", hours).arg(locale.toString(dateTime, timeFormat));
             }
             //First: day Second: hour. This is done for allow translators to change the order
             //in case there are any language that needs to put in another order.
-            return tr("%1 at %2").arg(locale.toString(dateTime, dateFormat), locale.toString(dateTime, timeFormat));
+            return tr("%1 at %2", "", hours).arg(locale.toString(dateTime, dateFormat), locale.toString(dateTime, timeFormat));
         }
         default:
             break;

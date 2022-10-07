@@ -405,9 +405,19 @@ bool InfoDialogTransferDelegateWidget::eventFilter(QObject *watched, QEvent *eve
         auto nameLabel = dynamic_cast<QLabel*>(watched);
         if(nameLabel)
         {
+            auto availableSize(0);
+            if(watched == mUi->lFileName)
+            {
+                availableSize = getNameAvailableSize(mUi->wFileName, mUi->lSyncIcon, mUi->fileNameSpacer);
+            }
+            else
+            {
+                availableSize = getNameAvailableSize(mUi->wFileNameCompleted, mUi->lSyncIcon, mUi->fileNameCompletedSpacer);
+            }
+
             nameLabel->setText(nameLabel->fontMetrics()
                                              .elidedText(getData()->mFilename, Qt::ElideMiddle,
-                                                         nameLabel->contentsRect().width()));
+                                                         availableSize));
         }
     }
 

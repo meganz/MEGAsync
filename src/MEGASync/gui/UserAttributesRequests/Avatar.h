@@ -3,6 +3,8 @@
 
 #include <control/UserAttributesManager.h>
 
+#include <QColor>
+#include <QPixmap>
 
 namespace UserAttributes
 {
@@ -18,11 +20,10 @@ public:
     Avatar(const QString& userEmail);
 
     static std::shared_ptr<const Avatar> requestAvatar(const char* user_email);
-    std::shared_ptr<FullName> getFullName();
 
     void onRequestFinish(mega::MegaApi *, mega::MegaRequest *incoming_request, mega::MegaError *e) override;
     void requestAttribute() override;
-    void updateAttributes(mega::MegaUser* user) override;
+    RequestInfo fillRequestInfo() override;
 
     const QPixmap& getPixmap(const int& size) const;
 
@@ -37,14 +38,18 @@ private slots:
 private:
     struct LetterInfo
     {
-        QChar letter;
-        QColor color;
+        QString symbol;
+        QColor primaryColor;
+        QColor secondaryColor;
+        bool colorNeedsRefresh;
 
-        bool isEmpty() const {return letter.isNull();}
+        bool isEmpty() const {return symbol.isNull();}
         void clear()
         {
-            letter = QChar();
-            color = QColor();
+            symbol.clear();
+            primaryColor = QColor();
+            secondaryColor = QColor();
+            colorNeedsRefresh = true;
         }
     };
 
@@ -54,7 +59,8 @@ private:
     mutable QMap<int,QPixmap> mIcon;
     QString mIconPath;
     LetterInfo mLetterAvatarInfo;
-    std::shared_ptr<FullName> mFullName;
+    std::shared_ptr<const FullName> mFullName;
+    bool mUseImgFile;
 };
 }
 

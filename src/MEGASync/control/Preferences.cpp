@@ -1,6 +1,7 @@
 #include "model/Model.h"
 #include "Preferences.h"
 #include "platform/Platform.h"
+#include "UserAttributesRequests/FullName.h"
 
 #include <QDesktopServices>
 #include <assert.h>
@@ -388,6 +389,10 @@ const QString Preferences::neverCreateLinkKey       = QString::fromUtf8("neverCr
 const QString Preferences::notifyDisabledSyncsKey = QString::fromAscii("notifyDisabledSyncs");
 const QString Preferences::importMegaLinksEnabledKey = QString::fromAscii("importMegaLinksEnabled");
 const QString Preferences::downloadMegaLinksEnabledKey = QString::fromAscii("downloadMegaLinksEnabled");
+
+//Sleep settings
+const QString Preferences::awakeIfActiveKey = QString::fromAscii("sleepIfInactiveEnabledKey");
+const bool Preferences::defaultAwakeIfActive = false;
 
 const bool Preferences::defaultStartOnStartup       = true;
 const bool Preferences::defaultUpdateAutomatically  = true;
@@ -2675,6 +2680,20 @@ void Preferences::setLastStatsRequest(long long value)
     setValueAndSyncConcurrent(lastStatsRequestKey, value);
 }
 
+bool Preferences::awakeIfActiveEnabled()
+{
+    mutex.lock();
+    assert(logged());
+    bool result = getValue(awakeIfActiveKey, defaultAwakeIfActive);
+    mutex.unlock();
+    return result;
+}
+
+void Preferences::setAwakeIfActive(bool value)
+{
+    setValueAndSyncConcurrent(awakeIfActiveKey, value);
+}
+
 bool Preferences::fileVersioningDisabled()
 {
     mutex.lock();
@@ -2792,6 +2811,13 @@ void Preferences::setEmailAndGeneralSettings(const QString &email)
     this->setProxyRequiresAuth(proxyAuth);
     this->setProxyUsername(proxyUsername);
     this->setProxyPassword(proxyPassword);
+}
+
+void Preferences::monitorUserAttributes()
+{
+    assert(logged());
+    // Setup FIRST_NAME and LAST_NAME monitoring
+    updateFullName();
 }
 
 void Preferences::login(QString account)
@@ -3223,4 +3249,26 @@ void Preferences::overridePreferences(const QSettings &settings)
     overridePreference(settings, QString::fromUtf8("MUTEX_STEALER_MS"), Preferences::MUTEX_STEALER_MS);
     overridePreference(settings, QString::fromUtf8("MUTEX_STEALER_PERIOD_MS"), Preferences::MUTEX_STEALER_PERIOD_MS);
     overridePreference(settings, QString::fromUtf8("MUTEX_STEALER_PERIOD_ONLY_ONCE"), Preferences::MUTEX_STEALER_PERIOD_ONLY_ONCE);
+}
+
+void Preferences::updateFullName(QString)
+{
+    auto fullNameRequest (UserAttributes::UserAttributesManager::instance()
+                      .requestAttribute<UserAttributes::FullName>(email().toUtf8().constData()));
+    connect(fullNameRequest.get(), &UserAttributes::FullName::attributeReady,
+            this, &Preferences::updateFullName, Qt::UniqueConnection);
+
+    if (fullNameRequest->isAttributeReady())
+    {
+        auto newFirstName (fullNameRequest->getFirstName());
+        auto newLastName (fullNameRequest->getLastName());
+        if (newFirstName != firstName())
+        {
+            setFirstName(newFirstName);
+        }
+        if (newLastName != lastName())
+        {
+            setLastName(newLastName);
+        }
+    }
 }

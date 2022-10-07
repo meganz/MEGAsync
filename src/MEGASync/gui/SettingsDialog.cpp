@@ -11,6 +11,7 @@
 #include "gui/ProxySettings.h"
 #include "gui/BandwidthSettings.h"
 #include "UserAttributesRequests/FullName.h"
+#include "PowerOptions.h"
 
 #include <QApplication>
 #include <QDesktopServices>
@@ -40,7 +41,7 @@ using namespace mega;
 #ifdef Q_OS_MACOS
 //Const values used for macOS Settings dialog resize animation
 constexpr auto SETTING_ANIMATION_PAGE_TIMEOUT{150};//ms
-constexpr auto SETTING_ANIMATION_GENERAL_TAB_HEIGHT{555};
+constexpr auto SETTING_ANIMATION_GENERAL_TAB_HEIGHT{657};
 constexpr auto SETTING_ANIMATION_ACCOUNT_TAB_HEIGHT{295};//px height
 constexpr auto SETTING_ANIMATION_SYNCS_TAB_HEIGHT{529};
 constexpr auto SETTING_ANIMATION_FOLDERS_TAB_HEIGHT{525};
@@ -211,7 +212,6 @@ SettingsDialog::SettingsDialog(MegaApplication* app, bool proxyOnly, QWidget* pa
     mApp->attachBandwidthObserver(*this);
     mApp->attachAccountObserver(*this);
 
-    connect(mApp, &MegaApplication::avatarReady, this, &SettingsDialog::setAvatar);
     setAvatar();
 
     connect(mApp, &MegaApplication::storageStateChanged, this, &SettingsDialog::storageStateChanged);
@@ -465,6 +465,7 @@ void SettingsDialog::loadSettings()
 
     //General
     mUi->cFileVersioning->setChecked(!mPreferences->fileVersioningDisabled());
+    mUi->cbSleepMode->setChecked(mPreferences->awakeIfActiveEnabled());
     mUi->cOverlayIcons->setChecked(!mPreferences->overlayIconsDisabled());
     mUi->cCacheSchedulerEnabled->setChecked(mPreferences->cleanerDaysLimit());
     mUi->sCacheSchedulerDays->setEnabled(mPreferences->cleanerDaysLimit());
@@ -1026,6 +1027,31 @@ void SettingsDialog::on_cFileVersioning_toggled(bool checked)
     mMegaApi->setFileVersionsOption(!checked);
 }
 
+void SettingsDialog::on_cbSleepMode_toggled(bool checked)
+{
+    if (mLoadingSettings) return;
+
+    // This is actually saved to Preferences before calling the keepAwake, as this method uses the setting state;
+    mPreferences->setAwakeIfActive(checked);
+
+    PowerOptions options;
+    auto result = options.keepAwake(MegaSyncApp->getTransfersModel()->hasActiveTransfers() > 0);
+
+    if (checked && !result)
+    {
+        QMegaMessageBox::critical(nullptr, tr("Sleep mode can't be setup"),
+                                               tr("Your operating system doesn't allow its sleep setting to be overwritten."),
+                                               QMessageBox::Ok, QMessageBox::Ok);
+
+        mUi->cbSleepMode->blockSignals(true);
+        mUi->cbSleepMode->setChecked(!checked);
+        mPreferences->setAwakeIfActive(!checked);
+        mUi->cbSleepMode->blockSignals(false);
+        return;
+    }
+
+}
+
 void SettingsDialog::on_cOverlayIcons_toggled(bool checked)
 {
     if (mLoadingSettings) return;
@@ -1342,12 +1368,7 @@ void SettingsDialog::on_bLogout_clicked()
 
 void SettingsDialog::setAvatar()
 {
-    const char* email = mMegaApi->getMyEmail();
-    if (email)
-    {
-        mUi->wAvatar->setUserEmail(email);
-        delete [] email;
-    }
+    mUi->wAvatar->setUserEmail(mPreferences->email().toUtf8().constData());
 }
 
 // Syncs -------------------------------------------------------------------------------------------

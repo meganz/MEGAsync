@@ -270,7 +270,7 @@ ln -sfn libfreeimage.so.3 $PWD/MEGASync/mega/bindings/qt/3rdparty/libs/libfreeim
     %endif
 %endif
 
-make
+make %{?_smp_mflags}
 
 
 %install

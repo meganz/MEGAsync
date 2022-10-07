@@ -601,7 +601,6 @@ void SetupWizard::on_bCancel_clicked()
     if (ui->sPages->currentWidget() == ui->pWelcome)
     {
         setupPreferences();
-        QString syncName;
         auto rootNode = ((MegaApplication*)qApp)->getRootNode();
 
         if (!rootNode)
@@ -618,7 +617,7 @@ void SetupWizard::on_bCancel_clicked()
             return;
         }
 
-        mPreconfiguredSyncs.append(PreConfiguredSync(ui->eLocalFolder->text(), selectedMegaFolderHandle, syncName));
+        mPreconfiguredSyncs.append(PreConfiguredSync(ui->eLocalFolder->text(), selectedMegaFolderHandle));
         done(QDialog::Accepted);
     }
     else
@@ -1182,7 +1181,7 @@ void SetupWizard::on_lTermsLink_linkActivated(const QString& /*link*/)
 
 void SetupWizard::on_bLearMore_clicked()
 {
-    QString helpUrl = Preferences::BASE_URL + QString::fromAscii("/help/client/megasync/syncing/how-to-setup-sync-client-can-i-specify-which-folder-s-to-sync-576c80e2886688e6028b4591\\");
+    QString helpUrl = QString::fromAscii("https://help.mega.io/installs-apps/desktop-syncing");
     QtConcurrent::run(QDesktopServices::openUrl, QUrl(helpUrl));
 }
 
@@ -1229,8 +1228,8 @@ void SetupWizard::onPasswordTextChanged(QString text)
     text.isEmpty() ? setLevelStrength(-1) : setLevelStrength(strength);
 }
 
-PreConfiguredSync::PreConfiguredSync(QString localFolder, MegaHandle megaFolderHandle, QString syncName):
-    mMegaFolderHandle(megaFolderHandle), mLocalFolder(localFolder), mSyncName(syncName)
+PreConfiguredSync::PreConfiguredSync(QString localFolder, MegaHandle megaFolderHandle):
+    mMegaFolderHandle(megaFolderHandle), mLocalFolder(localFolder)
 {
 
 }
@@ -1242,7 +1241,7 @@ QString PreConfiguredSync::localFolder() const
 
 QString PreConfiguredSync::syncName() const
 {
-    return mSyncName;
+    return Controller::getSyncNameFromPath(mLocalFolder);
 }
 
 mega::MegaHandle PreConfiguredSync::megaFolderHandle() const

@@ -38,6 +38,7 @@ public:
     Preferences& operator=(const Preferences&) = delete;
     void initialize(QString dataPath);
     void setEmailAndGeneralSettings(const QString &email);
+    void monitorUserAttributes();
 
     //Thread safe functions
     virtual bool logged(); //true if a full login+fetchnodes has completed (now or in previous executions)
@@ -363,6 +364,9 @@ public:
 
     long long lastStatsRequest();
     void setLastStatsRequest(long long value);
+
+    bool awakeIfActiveEnabled();
+    void setAwakeIfActive(bool value);
 
     bool fileVersioningDisabled();
     void disableFileVersioning(bool value);
@@ -701,6 +705,10 @@ protected:
     static const QString importMegaLinksEnabledKey;
     static const QString downloadMegaLinksEnabledKey;
 
+    //Sleep mode
+    static const QString awakeIfActiveKey;
+    static const bool defaultAwakeIfActive;
+
     //Notifications Default value
     static const bool defaultShowNotifications;
 
@@ -746,6 +754,10 @@ protected:
     static const bool defaultNeverCreateLink;
     static const bool defaultImportMegaLinksEnabled;
     static const bool defaultDownloadMegaLinksEnabled;
+
+private slots:
+    void updateFullName(QString fullName = QString());
+
 };
 
 #endif // PREFERENCES_H
