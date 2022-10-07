@@ -109,7 +109,11 @@ void TransfersManagerSortFilterProxyModel::invalidateModel()
         sourceM->blockModelSignals(true);
         blockSignals(true);
         mIsFiltering = true;
+#if QT_VERSION < QT_VERSION_CHECK(5, 15, 0)
         invalidate();
+#else
+        invalidateFilter();
+#endif
         QSortFilterProxyModel::sort(0, mSortOrder);
         mIsFiltering = false;
         sourceM->lockModelMutex(false);
