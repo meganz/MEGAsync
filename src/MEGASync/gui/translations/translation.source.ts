@@ -629,7 +629,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Cancel transfers?</source>
         <translatorcomment>Dialog main text</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Cancel transfers?</translation>
     </message>
     <message>
         <source>No, continue</source>
@@ -1320,14 +1320,14 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation>Error</translation>
     </message>
     <message>
+        <source>You can not sync a shared folder without Full Access permissions</source>
+        <translatorcomment>Label to inform a user about the incompatibility of sync a shared folder without Full Access permissions</translatorcomment>
+        <translation>You can not sync a shared folder without Full Access permissions</translation>
+    </message>
+    <message>
         <source>Select</source>
         <translatorcomment>Button label to select the folders (local and remote) for a synchronization (String as short as possible) (Win and Linux)</translatorcomment>
         <translation>Select</translation>
-    </message>
-    <message>
-        <source>You can not sync a shared folder without Full Access permissions</source>
-        <translatorcomment>Label to inform a user about the incompatibility of sync a shared folder without Full Access permissions</translatorcomment>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2691,6 +2691,11 @@ Transfers will automatically resume when you re-open the app.</numerusform>
         <translation>Terms of Service breached</translation>
     </message>
     <message>
+        <source>Not accessible due to ToS/AUP violation</source>
+        <translatorcomment>Error shown when import a link that has violated ToS/AUP.</translatorcomment>
+        <translation>Not accessible due to ToS/AUP violation</translation>
+    </message>
+    <message>
         <source>Upload produces recursivity</source>
         <translatorcomment>Error label to indicate a situation of recursivity during uploads</translatorcomment>
         <translation>Transfer failed due to a recursive directory structure</translation>
@@ -2699,11 +2704,6 @@ Transfers will automatically resume when you re-open the app.</numerusform>
         <source>Storage Quota Exceeded. Upgrade now</source>
         <translatorcomment>Error label to indicate a situation of storage quota exceeded and the user needs to upgrade now in order to continue working with the account.</translatorcomment>
         <translation>Storage Quota Exceeded. Please upgrade now</translation>
-    </message>
-    <message>
-        <source>Not accessible due to ToS/AUP violation</source>
-        <translatorcomment>Error shown when import a link that has violated ToS/AUP.</translatorcomment>
-        <translation>Not accessible due to ToS/AUP violation</translation>
     </message>
     <message>
         <source>Decryption error</source>
@@ -3230,14 +3230,14 @@ Your selected incomplete sync transfers won&apos;t be cancelled.</translation>
         <translation>MEGAsync</translation>
     </message>
     <message>
+        <source>You are syncing a local folder formatted with a FAT filesystem. That filesystem has deficiencies managing big files and modification times that can cause synchronization problems (e.g. when daylight saving changes), so it&apos;s strongly recommended that you only sync folders formatted with more reliable filesystems like NTFS (more information [A]here[/A]).</source>
+        <translatorcomment>Informative message shown when a user is trying to sync using a FAT filesystem.</translatorcomment>
+        <translation>You are syncing a local folder formatted with a FAT filesystem. That filesystem has deficiencies managing big files and modification times that can cause synchronization problems (e.g. when daylight saving changes), so it’s strongly recommended that you only sync folders formatted with more reliable filesystems like NTFS (more information [A]here[/A]).</translation>
+    </message>
+    <message>
         <source>You are syncing a local folder shared with VMWare. Those folders do not support filesystem notifications so MEGAsync will have to be continuously scanning to detect changes in your files and folders. Please use a different folder if possible to reduce the CPU usage.</source>
         <translatorcomment>Informative message shown when a user is trying to sync using a local folder shared with VMWare third party app.</translatorcomment>
         <translation>You are syncing a local folder shared with VMWare. Those folders do not support filesystem notifications so MEGAsync will have to be continuously scanning to detect changes in your files and folders. Please use a different folder if possible to reduce the CPU usage.</translation>
-    </message>
-    <message>
-        <source>You are syncing a local folder formatted with a FAT filesystem. That filesystem has deficiencies managing big files and modification times that can cause synchronization problems (e.g. when daylight saving changes), so it&apos;s strongly recommended that you only sync folders formatted with more reliable filesystems like NTFS (more information [A]here[/A]).</source>
-        <translatorcomment>Informative message shown when a user is trying to sync using a FAT filesystem.</translatorcomment>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3822,9 +3822,19 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translation>Open settings</translation>
     </message>
     <message>
+        <source>One or more syncs have been disabled. Go to settings to enable them again.</source>
+        <translatorcomment>Warning message shown when logging into MEGAsync to inform the user that some syncs have been disabled and need to go to settings to enable them again (Windows and Linux)</translatorcomment>
+        <translation>One or more syncs have been disabled. Go to settings to enable them again.</translation>
+    </message>
+    <message>
         <source>Open preferences</source>
         <translatorcomment>Button label to open MEGAsync preferences dialog (MacOS).</translatorcomment>
         <translation>Open preferences</translation>
+    </message>
+    <message>
+        <source>One or more syncs have been disabled. Go to preferences to enable them again.</source>
+        <translatorcomment>Warning message shown when logging into MEGAsync to inform the user that some syncs have been disabled and need to go to settings to enable them again (macOS)</translatorcomment>
+        <translation>One or more syncs have been disabled. Go to preferences to enable them again.</translation>
     </message>
     <message>
         <source>Sync transfers cannot be cancelled individually.
@@ -3839,16 +3849,6 @@ Please delete the folder sync from preferences to cancel them.</source>
         <translatorcomment>Explains that the sync transfers cannot be cancelled individually. (for macOS)</translatorcomment>
         <translation>Sync transfers cannot be cancelled individually.
 Please delete the folder sync from preferences to cancel them.</translation>
-    </message>
-    <message>
-        <source>One or more syncs have been disabled. Go to settings to enable them again.</source>
-        <translatorcomment>Warning message shown when logging into MEGAsync to inform the user that some syncs have been disabled and need to go to settings to enable them again (Windows and Linux)</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>One or more syncs have been disabled. Go to preferences to enable them again.</source>
-        <translatorcomment>Warning message shown when logging into MEGAsync to inform the user that some syncs have been disabled and need to go to settings to enable them again (macOS)</translatorcomment>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4413,6 +4413,11 @@ Do you want to delete it anyway?</translation>
         <translation type="unfinished">Cancel</translation>
     </message>
     <message>
+        <source>Don&apos;t close the app. If you close, transfers not yet queued will be lost.</source>
+        <translatorcomment>Message displayed in scanning widget to warn the user of consequences of closing the app.</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Scanning</source>
         <translatorcomment>Label used to display when the scanning widget is on the &quot;Scanning&quot; step</translatorcomment>
         <translation type="unfinished">Scanning</translation>
@@ -4424,17 +4429,7 @@ Do you want to delete it anyway?</translation>
     </message>
     <message>
         <source>%1/%2</source>
-        <translatorcomment>Label displaying the current progress of folders being created on &quot;Create&quot; step. %1 is the number of folders created so far, %2 is the total number of folders that will be created.</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>found %1, %2</source>
-        <translatorcomment>Label used to display current status of scanning step. %1 is the string with number of folders found so far, %2 is the string with number of files found so far.</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Don&apos;t close the app. If you close, transfers not yet queued will be lost.</source>
-        <translatorcomment>Label used a warning about cancelling a transfer while it is on scanning stage.</translatorcomment>
+        <translatorcomment>Label showing the quantity of folders created (%1) with the quantity of folders to create in total (%2)</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message numerus="yes">
@@ -4452,6 +4447,11 @@ Do you want to delete it anyway?</translation>
             <numerusform>%1 file</numerusform>
             <numerusform>%1 files</numerusform>
         </translation>
+    </message>
+    <message>
+        <source>found %1, %2</source>
+        <translatorcomment>Label used to display current status of scanning step. %1 is the string with number of folders found so far, %2 is the string with number of files found so far.</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5131,8 +5131,8 @@ Computer will enter sleep mode once these are complete.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Your operating system doesn&apos;t allow its sleep setting to be overwritten.</source>
-        <translatorcomment>Sleep/Active mode: Error messagebox text when the pc awake mode could not be activated after activating the feature using the checkbox.</translatorcomment>
+        <source>Sleep mode:</source>
+        <translatorcomment>Sleep/Active mode: Settings dialog groupbox title for keeping the pc awake when there are active transfers (macOS)</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -5141,8 +5141,8 @@ Computer will enter sleep mode once these are complete.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Sleep mode:</source>
-		<translatorcomment>Sleep/Active mode: Settings dialog groupbox title for keeping the pc awake when there are active transfers (macOS)</translatorcomment>
+        <source>Your operating system doesn&apos;t allow its sleep setting to be overwritten.</source>
+        <translatorcomment>Sleep/Active mode: Error messagebox text when the pc awake mode could not be activated after activating the feature using the checkbox.</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
 </context>
