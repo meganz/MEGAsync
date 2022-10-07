@@ -4424,26 +4424,26 @@ Do you want to delete it anyway?</translation>
         <translatorcomment>Label showing the quantity of folders created (%1) with the quantity of folders to create in total (%2)</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
-    <message numerus="yes">
-        <source>%1 folder</source>
-        <translatorcomment>Part of the string used to display number of folders in scanning step. %1 is the number of folders found so far.</translatorcomment>
-        <translation type="unfinished">
-            <numerusform>%1 folder</numerusform>
-            <numerusform>%1 folders</numerusform>
-        </translation>
-    </message>
-    <message numerus="yes">
-        <source>%1 file</source>
-        <translatorcomment>Part of the string used to display number of files in scanning step. %1 is the number of files found so far.</translatorcomment>
-        <translation type="unfinished">
-            <numerusform>%1 file</numerusform>
-            <numerusform>%1 files</numerusform>
-        </translation>
-    </message>
     <message>
         <source>found %1, %2</source>
         <translatorcomment>Label used to display current status of scanning step. %1 is the string with number of folders found so far, %2 is the string with number of files found so far.</translatorcomment>
         <translation type="unfinished"></translation>
+    </message>
+    <message numerus="yes">
+        <source>%n folder</source>
+        <translatorcomment>Part of the string used to display number of folders in scanning step. %1 is the number of folders found so far.</translatorcomment>
+        <translation type="unfinished">
+            <numerusform>%n folder</numerusform>
+            <numerusform>%n folders</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>%n file</source>
+        <translatorcomment>Part of the string used to display number of files in scanning step. %1 is the number of files found so far.</translatorcomment>
+        <translation type="unfinished">
+            <numerusform>%n file</numerusform>
+            <numerusform>%n files</numerusform>
+        </translation>
     </message>
 </context>
 <context>

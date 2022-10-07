@@ -110,8 +110,8 @@ void ScanningWidget::startAnimation()
 
 QString ScanningWidget::buildScanDescription(const uint32_t folderCount, const uint32_t fileCount)
 {
-    QString folderStr = tr("%1 folder", "", folderCount).arg(folderCount);
-    QString fileStr = tr("%1 file", "", fileCount).arg(fileCount);
+    QString folderStr = tr("%n folder", "", folderCount);
+    QString fileStr = tr("%n file", "", fileCount);
     return tr("found %1, %2").arg(folderStr, fileStr);
 }
 
