@@ -3,6 +3,7 @@
 #include "megaapi.h"
 #include "MegaItemModel.h"
 #include "MegaApplication.h"
+#include "QThread"
 
 MegaItemProxyModel::MegaItemProxyModel(QObject* parent) :
     QSortFilterProxyModel(parent)
@@ -25,19 +26,27 @@ void MegaItemProxyModel::showReadWriteFolders(bool value)
     invalidateFilter();
 }
 
-void MegaItemProxyModel::showFiles(bool value)
-{
-    mFilter.showFiles = value;
-    invalidateFilter();
-}
-
 void MegaItemProxyModel::showOwnerColumn(bool value)
 {
     if(mFilter.showOwnerColumn != value)
     {
         mFilter.showOwnerColumn = value;
-        invalidateFilter();
+        //invalidateFilter();
     }
+}
+
+void MegaItemProxyModel::sort(int column, Qt::SortOrder order)
+{
+    mOrder = order;
+    mSortColumn = column;
+    qDebug()<<"sort call thread:"<<QThread::currentThreadId();
+    QFuture<void> filtered = QtConcurrent::run([this, column, order](){
+
+        invalidate();
+        QSortFilterProxyModel::sort(column, order);
+        qDebug()<<"concurrent thread:"<<QThread::currentThreadId();
+        emit layoutChanged();
+    });
 }
 
 mega::MegaHandle MegaItemProxyModel::getHandle(const QModelIndex &index)
@@ -127,6 +136,8 @@ void MegaItemProxyModel::removeNode(const QModelIndex& item)
 
 bool MegaItemProxyModel::lessThan(const QModelIndex &left, const QModelIndex &right) const
 {
+    qDebug()<<"lessthan:"<<QThread::currentThreadId();
+
     bool lIsFile = left.data(toInt(MegaItemModelRoles::IS_FILE_ROLE)).toBool();
     bool rIsFile = right.data(toInt(MegaItemModelRoles::IS_FILE_ROLE)).toBool();
 
@@ -157,6 +168,16 @@ bool MegaItemProxyModel::lessThan(const QModelIndex &left, const QModelIndex &ri
                              right.data(Qt::DisplayRole).toString())<0;
 }
 
+void MegaItemProxyModel::setSourceModel(QAbstractItemModel *sourceModel)
+{
+    QSortFilterProxyModel::setSourceModel(sourceModel);
+
+    if(auto transferModel = dynamic_cast<MegaItemModel*>(sourceModel))
+    {
+        connect(transferModel, &MegaItemModel::rowsAdded, this, &MegaItemProxyModel::invalidateModel);
+    }
+}
+
 
 bool MegaItemProxyModel::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const
 {
@@ -168,19 +189,15 @@ bool MegaItemProxyModel::filterAcceptsRow(int sourceRow, const QModelIndex &sour
         {
             if(std::shared_ptr<mega::MegaNode> node = megaItem->getNode())
             {
-               mega::MegaApi* megaApi = MegaSyncApp->getMegaApi();
-               int accs = megaApi->getAccess(node.get());
                if(node->isInShare())
                {
+                   mega::MegaApi* megaApi = MegaSyncApp->getMegaApi();
+                   int accs = megaApi->getAccess(node.get());
                     if((accs == mega::MegaShare::ACCESS_READ && !mFilter.showReadOnly)
                        || (accs == mega::MegaShare::ACCESS_READWRITE && !mFilter.showReadWriteFolders))
                     {
                         return false;
                     }
-               }
-               if(node->isFile() && !mFilter.showFiles)
-               {
-                   return false;
                }
                return true;
             }
@@ -263,4 +280,10 @@ QModelIndex MegaItemProxyModel::getIndexFromNode(const std::shared_ptr<mega::Meg
 MegaItemModel *MegaItemProxyModel::getMegaModel()
 {
     return dynamic_cast<MegaItemModel*>(sourceModel());
+}
+
+void MegaItemProxyModel::invalidateModel()
+{
+    setDynamicSortFilter(true);
+    sort(mSortColumn, mOrder);
 }

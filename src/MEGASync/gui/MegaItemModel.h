@@ -51,7 +51,6 @@ public:
     QModelIndex parent(const QModelIndex & index) const override;
     int rowCount(const QModelIndex & parent = QModelIndex()) const override;
     bool hasChildren(const QModelIndex &parent = QModelIndex()) const override;
-
     QVariant headerData(int section, Qt::Orientation orientation,
                                     int role = Qt::DisplayRole) const override;
     void fetchMore(const QModelIndex &parent) override;
@@ -61,27 +60,29 @@ public:
     void setSyncSetupMode(bool value);
     void addNode(std::unique_ptr<mega::MegaNode> node, const QModelIndex &parent);
     void removeNode(const QModelIndex &item);
+    void showFiles(bool show);
 
     std::shared_ptr<mega::MegaNode> getNode(const QModelIndex &index) const;
     QVariant getIcon(const QModelIndex &index, MegaItem* item) const;
     QVariant getText(const QModelIndex &index, MegaItem* item) const;
-    void fillRootItems();
     void setFetchStep(int step);
     virtual ~MegaItemModel();
+
+signals:
+    void rowsAdded();
 
 protected:
     QModelIndex findItemByNodeHandle(const mega::MegaHandle &handle, const QModelIndex& parent);
     int mRequiredRights;
     bool mDisplayFiles;
     bool mSyncSetupMode;
+    bool mShowFiles;
 
 private:
     int insertPosition(const std::unique_ptr<mega::MegaNode>& node);
-    virtual QList<MegaItem*> getRootItems(int first, int last) const = 0;
+    virtual QList<MegaItem*> getRootItems() const = 0;
     virtual int rootItemsCount() const = 0;
     QList<MegaItem*> mRootItems;
-    int mFetchStep;
-
 };
 
 class MegaItemModelCloudDrive : public MegaItemModel , public mega::MegaRequestListener
@@ -93,7 +94,7 @@ public:
     virtual ~MegaItemModelCloudDrive();
 
     void onRequestFinish(mega::MegaApi* api, mega::MegaRequest *request, mega::MegaError* e) override;
-    QList<MegaItem*> getRootItems(int first, int last) const override;
+    QList<MegaItem*> getRootItems() const override;
     int rootItemsCount() const override;
 
 private:
@@ -108,7 +109,7 @@ public:
     explicit MegaItemModelIncomingShares(QObject *parent = 0);
     virtual ~MegaItemModelIncomingShares();
 
-    QList<MegaItem*> getRootItems(int first, int last) const override;
+    QList<MegaItem*> getRootItems() const override;
     int rootItemsCount() const override;
 
 private slots:

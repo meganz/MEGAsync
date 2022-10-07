@@ -19,18 +19,16 @@ public:
         bool showReadOnly = true;
         bool showReadWriteFolders = true;
         bool showOwnerColumn = true;
-        bool showFiles = true;
         Filter() : showReadOnly(true),
                     showReadWriteFolders(true),
-                    showOwnerColumn(true),
-                    showFiles(true){};
+                    showOwnerColumn(true){};
     };
 
     explicit MegaItemProxyModel(QObject* parent = nullptr);
     void showReadOnlyFolders(bool value);
     void showReadWriteFolders(bool value);
     void showOwnerColumn(bool value);
-    void showFiles(bool value);
+    void sort(int column, Qt::SortOrder order = Qt::AscendingOrder) override;
 
     mega::MegaHandle getHandle(const QModelIndex &index);
     std::shared_ptr<mega::MegaNode> getNode(const QModelIndex& index);
@@ -41,6 +39,7 @@ public:
     QVector<QModelIndex> getRelatedModelIndexes(const std::shared_ptr<mega::MegaNode> node);
     void removeNode(const QModelIndex &item);
     bool lessThan(const QModelIndex &left, const QModelIndex &right) const override;
+    void setSourceModel(QAbstractItemModel *sourceModel) override;
 
 
 protected:
@@ -52,6 +51,11 @@ private:
     MegaItemModel* getMegaModel();
     Filter mFilter;
     QCollator mCollator;
+    int mSortColumn;
+    Qt::SortOrder mOrder;
+
+private slots:
+    void invalidateModel();
 };
 
 #endif // MEGAITEMPROXYMODEL_H

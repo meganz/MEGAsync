@@ -14,7 +14,7 @@ const int MegaItem::ICON_SIZE = 17;
 
 using namespace mega;
 
-MegaItem::MegaItem(std::unique_ptr<MegaNode> node, MegaItem *parentItem) :
+MegaItem::MegaItem(std::unique_ptr<MegaNode> node, bool showFiles, MegaItem *parentItem) :
     QObject(parentItem),
     mOwnerEmail(QString()),
     mStatus(STATUS::NONE),
@@ -22,7 +22,8 @@ MegaItem::MegaItem(std::unique_ptr<MegaNode> node, MegaItem *parentItem) :
     mChatFilesFolder(false),
     mChildrenSet(false),
     mNode(std::move(node)),
-    mOwner(nullptr)
+    mOwner(nullptr),
+    mShowFiles(showFiles)
 { 
     if(mNode->isFile() || mNode->isInShare())
     {
@@ -71,20 +72,41 @@ std::shared_ptr<mega::MegaNode> MegaItem::getNode()
 
 void MegaItem::fetchChildren()
 {
+    if(mNode->isFile())
+    {
+        return;
+    }
+
     if(!mChildrenSet)
     {
         mChildrenSet = true;
         MegaApi* megaApi = MegaSyncApp->getMegaApi();
-        mChildNodes = std::unique_ptr<MegaNodeList>(megaApi->getChildren(mNode.get()));
+        auto childNodes = std::unique_ptr<MegaNodeList>(megaApi->getChildren(mNode.get()));
+
+        mChildNodes = std::unique_ptr<MegaNodeList>(MegaNodeList::createInstance());
+        for(int i = 0; i < childNodes->size();++i)
+        {
+            auto childNode = childNodes->get(i);
+            if(childNode->isFile() && !mShowFiles)
+            {
+                break;
+            }
+            mChildNodes->addNode(childNodes->get(i));
+        }
     }
 }
 
-void MegaItem::createChildItems(int first, int last)
+void MegaItem::createChildItems()
 {
-    for(;first <= last; ++first)
+    if(mNode->isFile())
     {
-        auto node = std::unique_ptr<MegaNode>(mChildNodes->get(first)->copy());
-        mChildItems.append(new MegaItem(move(node), this));
+        return;
+    }
+
+    for(int i = 0; i < mChildNodes->size(); i++)
+    {
+        auto node = std::unique_ptr<MegaNode>(mChildNodes->get(i)->copy());
+        mChildItems.append(new MegaItem(move(node), mShowFiles, this));
     }
 }
 
@@ -105,11 +127,19 @@ MegaItem *MegaItem::getChild(int i)
 
 int MegaItem::getNumChildren()
 {
- return mChildNodes->size();
+    if(mNode->isFile())
+    {
+        return 0;
+    }
+    return mChildNodes->size();
 }
 
 int MegaItem::getNumItemChildren()
 {
+    if(mNode->isFile())
+    {
+        return 0;
+    }
     return mChildItems.size();
 }
 
@@ -280,7 +310,7 @@ bool MegaItem::isSyncable()
 
 void MegaItem::addNode(std::unique_ptr<MegaNode>node)
 {
-    mChildItems.append(new MegaItem(move(node), this));
+    mChildItems.append(new MegaItem(move(node), mShowFiles, this));
 }
 
 void MegaItem::removeNode(std::shared_ptr<MegaNode> node)

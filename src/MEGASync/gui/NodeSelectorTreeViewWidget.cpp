@@ -68,6 +68,7 @@ void NodeSelectorTreeViewWidget::setSelectionMode(int selectMode)
     mSelectMode = selectMode;
 
     mProxyModel = std::unique_ptr<MegaItemProxyModel>(new MegaItemProxyModel(this));
+    mModel = getModel();
 
     switch(mSelectMode)
     {
@@ -77,7 +78,7 @@ void NodeSelectorTreeViewWidget::setSelectionMode(int selectMode)
         case NodeSelector::UPLOAD_SELECT:
             ui->bNewFolder->show();
             mProxyModel->showReadOnlyFolders(false);
-            mProxyModel->showFiles(false);
+            mModel->showFiles(false);
             break;
         case NodeSelector::DOWNLOAD_SELECT:
             ui->bNewFolder->hide();
@@ -85,13 +86,11 @@ void NodeSelectorTreeViewWidget::setSelectionMode(int selectMode)
             break;
         case NodeSelector::STREAM_SELECT:
             ui->bNewFolder->hide();
-            mProxyModel->showFiles(true);
+            mModel->showFiles(true);
             setWindowTitle(tr("Select items"));
             break;
     }
 
-    mModel = getModel();
-    mModel->fillRootItems();
     mProxyModel->setSourceModel(mModel.get());
 
 #ifdef __APPLE__

@@ -27,11 +27,11 @@ public:
         NONE,
     };
 
-    explicit MegaItem(std::unique_ptr<mega::MegaNode> node, MegaItem *parentItem = 0);
+    explicit MegaItem(std::unique_ptr<mega::MegaNode> node, bool showFiles, MegaItem *parentItem = 0);
 
     std::shared_ptr<mega::MegaNode> getNode();
     void fetchChildren();
-    void createChildItems(int first, int last);
+    void createChildItems();
     MegaItem *getParent();
     MegaItem *getChild(int i);
     int getNumItemChildren();
@@ -79,6 +79,7 @@ private:
     std::unique_ptr<mega::QTMegaRequestListener> mDelegateListener;
     std::shared_ptr<const UserAttributes::FullName> mFullNameAttribute;
     std::shared_ptr<const UserAttributes::Avatar> mAvatarAttribute;
+    bool mShowFiles;
 
 };
 
