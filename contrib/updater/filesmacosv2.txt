@@ -1,5 +1,5 @@
 #version=4701
-#baseurl=http://g.static.mega.co.nz/upd/msync/MEGAsync.app/
+#baseurl=http://g.static.mega.co.nz/upd/msyncv2/MEGAsync.app/
 #Hash: note this is the hash of the public key assuming an "\n" at the end
 #pubkeysha256sum=381fac98f5c3329ef5c0d9b6768d9f8d0bbc77bfa38256ac6f3da7452e0dc241
 Contents/Frameworks/libavcodec.58.dylib;Contents/Frameworks/libavcodec.58.dylib;54e1da98c1300b63cf19fb188d9550d4a96d42bed93bb736127f190af1571ede
@@ -35,9 +35,9 @@ Contents/Frameworks/QtWidgets.framework/Versions/5/Resources/Info.plist;Contents
 Contents/Frameworks/QtWidgets.framework/Versions/5/_CodeSignature/CodeResources;Contents/Frameworks/QtWidgets.framework/Versions/5/_CodeSignature/CodeResources;d3574893d4963a8eb106e7f71e7d844395d045c9980e434fb24fbd4a6200954b
 Contents/Info.plist;Contents/Info.plist;ee38260f59796d924cfaf85b61e46230a8311e24143fc37543faae76c40739a7
 Contents/MacOS/MEGAclient;Contents/MacOS/MEGAclient;71c03d425280da67d9006c83e92707a7cf5b587fcce9a6ec8ec9988eae6cae54
+Contents/MacOS/MEGAsync;Contents/MacOS/MEGAsync;a37e5ebf5552b495604d17313e41543095cb7a37c6dc770a3459854456467cb3
 Contents/MacOS/MEGAupdater;Contents/MacOS/MEGAupdater;c258cf6212d6d736e2ce68fffb0bc884b815a7498db36cf3c9c5296703af2a52
 Contents/PkgInfo;Contents/PkgInfo;7e50a30efad50208a173203ced60818d693bb61266b75aa10927d1a2adce80cb
-Contents/PlugIns/bearer/libqcorewlanbearer.dylib;Contents/PlugIns/bearer/libqcorewlanbearer.dylib;01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b
 Contents/PlugIns/bearer/libqgenericbearer.dylib;Contents/PlugIns/bearer/libqgenericbearer.dylib;93108e606af1b9b8b9f7628f08e7f3c766975db16c9c895a778fc39485ae3c3c
 Contents/PlugIns/iconengines/libqsvgicon.dylib;Contents/PlugIns/iconengines/libqsvgicon.dylib;462879cb862d1f85038dc7a05189d750362aad9ee59054e2e19ae960948ad3d2
 Contents/PlugIns/imageformats/libqgif.dylib;Contents/PlugIns/imageformats/libqgif.dylib;8c6bf57b54dd6b1a5371fbb300da4eeb12ceb6716c0438bdf6188847009eec9d

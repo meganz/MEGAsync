@@ -1729,7 +1729,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Your queued transfers exceed the current quota available for your IP address and can therefore be interrupted.</source>
         <translatorcomment>Informative label to indicate that your queued transfers may be interrupted because the current account is above 90 percent of the transfer quota of the current account.</translatorcomment>
-        <translation>您的排程傳輸已超出您IP位址目前可用的配額，因此可能會被中斷。</translation>
+        <translation>您佇列的傳輸已超出您IP位址目前可用的配額，因此可能會被中斷。</translation>
     </message>
     <message>
         <source>One or more syncs have been disabled</source>

@@ -532,6 +532,7 @@ void MegaApplication::initialize()
     megaApi->addListener(delegateListener);
     uploader = new MegaUploader(megaApi, folderTransferListener);
     downloader = new MegaDownloader(megaApi, folderTransferListener);
+    connect(uploader, &MegaUploader::startingTransfers, this, &MegaApplication::startingUpload);
     connect(downloader, &MegaDownloader::finishedTransfers, this, &MegaApplication::showNotificationFinishedTransfers, Qt::QueuedConnection);
     connect(downloader, &MegaDownloader::startingTransfers,
             &scanStageController, &ScanStageController::startDelayedScanStage);
@@ -1621,13 +1622,7 @@ void MegaApplication::processUploadQueue(MegaHandle nodeHandle)
 
         updateMetadata(data, filePath);
 
-        bool startedTransfer = uploader->upload(filePath, uploadInfo->getNewName(), node.get(), transferId, batch->getCancelTokenPtr());
-        if (startedTransfer)
-        {
-            batch->add(filePath, QString());
-            startingUpload();
-        }
-
+        uploader->upload(filePath, uploadInfo->getNewName(), node, transferId, batch);
         updater.update(counter);
 
         counter++;
@@ -1747,10 +1742,6 @@ void MegaApplication::createTransferManagerDialog()
         connect(transferQuota.get(), &TransferQuota::sendState,
                 mTransferManager.data(), &TransferManager::onTransferQuotaStateChanged);
         connect(mTransferManager.data(), SIGNAL(cancelScanning()), this, SLOT(cancelScanningStage()));
-        if (scanStageController.isInScanningState())
-        {
-            mTransferManager->enterBlockingState();
-        }
         scanStageController.updateReference(mTransferManager);
     }
 }
@@ -2702,13 +2693,13 @@ bool MegaApplication::eventFilter(QObject *obj, QEvent *e)
 void MegaApplication::createInfoDialog()
 {
     infoDialog = new InfoDialog(this);
-    connect(infoDialog, &InfoDialog::dismissStorageOverquota, this, &MegaApplication::onDismissStorageOverquota);
-    connect(infoDialog, &InfoDialog::transferOverquotaMsgVisibilityChange, transferQuota.get(), &TransferQuota::onTransferOverquotaVisibilityChange);
-    connect(infoDialog, &InfoDialog::almostTransferOverquotaMsgVisibilityChange, transferQuota.get(), &TransferQuota::onAlmostTransferOverquotaVisibilityChange);
-    connect(infoDialog, &InfoDialog::userActivity, this, &MegaApplication::registerUserActivity);
-    connect(transferQuota.get(), &TransferQuota::sendState, infoDialog, &InfoDialog::setBandwidthOverquotaState);
-    connect(transferQuota.get(), &TransferQuota::overQuotaMessageNeedsToBeShown, infoDialog, &InfoDialog::enableTransferOverquotaAlert);
-    connect(transferQuota.get(), &TransferQuota::almostOverQuotaMessageNeedsToBeShown, infoDialog, &InfoDialog::enableTransferAlmostOverquotaAlert);
+    connect(infoDialog.data(),  &InfoDialog::dismissStorageOverquota, this, &MegaApplication::onDismissStorageOverquota);
+    connect(infoDialog.data(), &InfoDialog::transferOverquotaMsgVisibilityChange, transferQuota.get(), &TransferQuota::onTransferOverquotaVisibilityChange);
+    connect(infoDialog.data(), &InfoDialog::almostTransferOverquotaMsgVisibilityChange, transferQuota.get(), &TransferQuota::onAlmostTransferOverquotaVisibilityChange);
+    connect(infoDialog.data(), &InfoDialog::userActivity, this, &MegaApplication::registerUserActivity);
+    connect(transferQuota.get(), &TransferQuota::sendState, infoDialog.data(), &InfoDialog::setBandwidthOverquotaState);
+    connect(transferQuota.get(), &TransferQuota::overQuotaMessageNeedsToBeShown, infoDialog.data(), &InfoDialog::enableTransferOverquotaAlert);
+    connect(transferQuota.get(), &TransferQuota::almostOverQuotaMessageNeedsToBeShown, infoDialog.data(), &InfoDialog::enableTransferAlmostOverquotaAlert);
     connect(infoDialog, SIGNAL(cancelScanning()), this, SLOT(cancelScanningStage()));
     scanStageController.updateReference(infoDialog);
 }
@@ -4279,24 +4270,16 @@ void MegaApplication::showNotificationFinishedTransfers(unsigned long long appDa
     }
 
     TransferMetaData *data = it.value();
-    if (!preferences->isNotificationEnabled(Preferences::NotificationsTypes::INFO_MESSAGES))
-    {
-        if (data->pendingTransfers == 0)
-        {
-            transferAppData.erase(it);
-            delete data;
-        }
-
-        return;
-    }
-
     if (data->pendingTransfers == 0)
     {
-        std::pair<QString,QString> titleAndMessage = buildFinishedTransferTitleAndMessage(data);
-        if (mOsNotifications && !titleAndMessage.second.isEmpty())
+        if (preferences->isNotificationEnabled(Preferences::NotificationsTypes::INFO_MESSAGES))
         {
-            preferences->setLastTransferNotificationTimestamp();
-            mOsNotifications->sendFinishedTransferNotification(titleAndMessage.first, titleAndMessage.second, data->localPath);
+            std::pair<QString,QString> titleAndMessage = buildFinishedTransferTitleAndMessage(data);
+            if (mOsNotifications && !titleAndMessage.second.isEmpty())
+            {
+                preferences->setLastTransferNotificationTimestamp();
+                mOsNotifications->sendFinishedTransferNotification(titleAndMessage.first, titleAndMessage.second, data->localPath);
+            }
         }
 
         transferAppData.erase(it);
@@ -5890,7 +5873,7 @@ void MegaApplication::externalFolderSync(qlonglong targetFolder)
 
 void MegaApplication::externalOpenTransferManager(int tab)
 {
-    if (appfinished)
+    if (appfinished || !infoDialog)
     {
         return;
     }
@@ -6563,7 +6546,7 @@ void MegaApplication::createInfoDialogMenus()
         addSyncAction->setEnabled(previousEnabledState);
 
 #if QT_VERSION > QT_VERSION_CHECK(5, 7, 0)
-        connect(addSyncAction, &MenuItemAction::triggered, infoDialog,
+        connect(addSyncAction, &MenuItemAction::triggered, infoDialog.data(),
                 QOverload<>::of(&InfoDialog::addSync), Qt::QueuedConnection);
 #else
         connect(addSyncAction, SIGNAL(triggered()), infoDialog, SLOT(addSync()), Qt::QueuedConnection);
@@ -6637,7 +6620,7 @@ void MegaApplication::createInfoDialogMenus()
         {
             addSyncAction->setLabelText(tr("Add Sync"));
 #if QT_VERSION > QT_VERSION_CHECK(5, 7, 0)
-            connect(addSyncAction, &MenuItemAction::triggered, infoDialog,
+            connect(addSyncAction, &MenuItemAction::triggered, infoDialog.data(),
                     QOverload<>::of(&InfoDialog::addSync), Qt::QueuedConnection);
 #else
             connect(addSyncAction, SIGNAL(triggered()), infoDialog, SLOT(addSync()), Qt::QueuedConnection);
@@ -6653,7 +6636,7 @@ void MegaApplication::createInfoDialogMenus()
                 {
                     MenuItemAction *addAction = new MenuItemAction(tr("Add Sync"), QIcon(QString::fromUtf8("://images/ico_drop_add_sync.png")), true);
 #if QT_VERSION > QT_VERSION_CHECK(5, 7, 0)
-                    connect(addAction, &MenuItemAction::triggered, infoDialog,
+                    connect(addAction, &MenuItemAction::triggered, infoDialog.data(),
                             QOverload<>::of(&InfoDialog::addSync), Qt::QueuedConnection);
 #else
                     connect(addAction, &MenuItemAction::triggered, infoDialog,
@@ -7470,7 +7453,8 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
         if (transfer) inflightUserStats[1] = false;
         if (pro)      inflightUserStats[2] = false;
 
-        if (!preferences->logged())
+        // We need to be both looged AND have fetched the nodes to continue
+        if (mFetchingNodes || !preferences->logged())
         {
             break;
         }

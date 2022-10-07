@@ -80,6 +80,8 @@ void TransferScanCancelUi::onCancelClicked()
 void TransferScanCancelUi::onCancelDismissed()
 {
     mContainer->setCurrentWidget(mBlockingWidget);
+
+    //If the dismiss button has been pressed it´s because the cancel button was visible, so it should be again visible
     mBlockingWidget->show();
 }
 

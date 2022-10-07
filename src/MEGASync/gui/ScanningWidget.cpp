@@ -37,6 +37,8 @@ ScanningWidget::~ScanningWidget()
 void ScanningWidget::show()
 {
     startAnimation();
+
+    mUi->pBlockingStageCancel->show();
     mUi->pBlockingStageCancel->setEnabled(true);
     mUi->lStepTitle->setText(tr("Scanning"));
     mUi->lStepDescription->setText(QString());

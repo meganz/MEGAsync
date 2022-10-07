@@ -1,3 +1,13 @@
+Wed Oct 5 17:02:10 CEST 2022 - linux@mega.co.nz
+- Update to version 4.7.1:
+  * There is now a new transfer manager.
+  * Transfer management was enhanced and reliability of downloads and uploads improved.
+  * Detected crashes on Windows, Linux, and macOS fixed.
+  * Translation issues fixed.
+  * Performance improved.
+  * UI fixed and adjusted.
+
+-------------------------------------------------------------------
 Wed Jul 20 18:40:09 CEST 2022 - linux@mega.co.nz
 - Update to version 4.6.8:
   * Full redesign of remote file picker.

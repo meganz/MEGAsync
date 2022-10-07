@@ -943,7 +943,7 @@ Trong một số trường hợp, log có thể chứa thông tin chi tiết v�
     <message>
         <source>Your data is at risk</source>
         <translatorcomment>System notification title to indicate that your data is at risk due to the current account is in over quota storage state for long time without fixing the situation.</translatorcomment>
-        <translation>Dữ liệu đang gặp rủi ro</translation>
+        <translation>Dữ liệu của bạn có nguy cơ bị xóa</translation>
     </message>
     <message>
         <source>Show in folder</source>
@@ -1754,7 +1754,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Your data is at risk</source>
         <translatorcomment>Label to indicate that your data is at risk due to the current account is in over quota storage state for long time without fixing the situation.</translatorcomment>
-        <translation>Dữ liệu đang gặp rủi ro</translation>
+        <translation>Dữ liệu của bạn có nguy cơ bị xóa</translation>
     </message>
     <message numerus="yes">
         <source>We have contacted you by email to [A] on [B] but you still have %n file taking up [D] in your MEGA account, which requires you to have [E].</source>

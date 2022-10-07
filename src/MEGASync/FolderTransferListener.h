@@ -12,7 +12,7 @@ Q_OBJECT
 public:
     FolderTransferListener(QObject* parent);
 
-    void onFolderTransferUpdate(mega::MegaApi *api, mega::MegaTransfer *transfer, int stage, uint32_t foldercount, uint32_t createdfoldercount, uint32_t filecount, const char* currentFolder, const char* currentFileLeafname) override;
+    void onFolderTransferUpdate(mega::MegaApi *api, mega::MegaTransfer *transfer, int stage, uint32_t foldercount, uint32_t createdfoldercount, uint32_t filecount, const char* currentFolder, const char* currentFileLeafname);
 
 signals:
     void folderTransferUpdated(FolderTransferUpdateEvent);

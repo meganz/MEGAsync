@@ -26,6 +26,11 @@ void ScanStageController::updateReference(InfoDialog *_infoDialog)
 void ScanStageController::updateReference(TransferManager *_transferManager)
 {
     mTransferManager = _transferManager;
+
+    if (isInScanningState())
+    {
+        mTransferManager->enterBlockingState();
+    }
     connect(mTransferManager, &TransferManager::cancelScanning,
             this, &ScanStageController::setDelayedCancellingStage);
 }
