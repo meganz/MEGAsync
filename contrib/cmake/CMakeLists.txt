@@ -324,6 +324,7 @@ set (MOC_INPUT
 
     ${MEGAsyncDir}/platform/notificator.h
 	${MEGAsyncDir}/platform/PlatformStrings.h
+	${MEGAsyncDir}/platform/PowerOptions.h
     
     ${MEGAsyncDir}/mega/bindings/qt/QTMegaGlobalListener.h
     ${MEGAsyncDir}/mega/bindings/qt/QTMegaListener.h
@@ -584,6 +585,7 @@ if (CMAKE_HOST_WIN32)
         ${MEGAsyncDir}/platform/win/WinTrayReceiver.cpp
         ${MEGAsyncDir}/platform/win/wintoastlib.cpp
         ${MEGAsyncDir}/platform/win/PlatformStrings.cpp
+        ${MEGAsyncDir}/platform/win/PowerOptions.cpp
 
         ${MEGAsyncDir}/icon.rc
         )
@@ -617,6 +619,7 @@ elseif (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
         ${MEGAsyncDir}/platform/linux/ExtServer.cpp
         ${MEGAsyncDir}/platform/linux/NotifyServer.cpp
         ${MEGAsyncDir}/platform/linux/PlatformStrings.cpp
+        ${MEGAsyncDir}/platform/linux/PowerOptions.cpp
         )
 else()
     set (SRCS ${SRCS}
@@ -673,6 +676,7 @@ else()
 
         ${MEGAsyncDir}/platform/macx/MacXPlatform.cpp
         ${MEGAsyncDir}/platform/macx/PlatformStrings.cpp
+        ${MEGAsyncDir}/platform/macx/PowerOptions.cpp
         ${MEGAsyncDir}/platform/macx/MacXFunctions.mm
         ${MEGAsyncDir}/platform/macx/macnotificationhandler.mm
         ${MEGAsyncDir}/platform/macx/NotificationDelegate.mm
@@ -738,7 +742,7 @@ target_include_directories(MEGAsync PRIVATE
                                     )
 
 if (CMAKE_HOST_WIN32)
-    set(TARGET_LINK_LIBRARIES_PLATFORM ${TARGET_LINK_LIBRARIES_PLATFORM} ole32 Shell32 crypt32 taskschd Kernel32.lib Iphlpapi.lib Userenv.lib Psapi.lib )
+    set(TARGET_LINK_LIBRARIES_PLATFORM ${TARGET_LINK_LIBRARIES_PLATFORM} ole32 Shell32 crypt32 taskschd Powrprof Kernel32.lib Iphlpapi.lib Userenv.lib Psapi.lib )
     set_target_properties(MEGAsync  PROPERTIES LINK_FLAGS_DEBUG "/SUBSYSTEM:WINDOWS /ENTRY:mainCRTStartup /LARGEADDRESSAWARE /SAFESEH:NO /DEBUG " )
     set_target_properties(MEGAsync  PROPERTIES LINK_FLAGS_RELEASE "/SUBSYSTEM:WINDOWS /ENTRY:mainCRTStartup /LARGEADDRESSAWARE /SAFESEH:NO /DEBUG " )
 else()
