@@ -12,11 +12,20 @@ HEADERS += MEGAShellExt.h \
     mega_ext_client.h \
     mega_notify_client.h
 
+NAUTILUS_EXT = $$system(pkg-config --list-all | grep libnautilus-extension | cut -f1 -d\" \")
+NAUTILUS_EXT_API_VERSION = $$system(pkg-config $${NAUTILUS_EXT} --variable=extensions_api_version)
+
+isEmpty( NAUTILUS_EXT_API_VERSION ) {
+NAUTILUS_EXT_API_VERSION += 1
+}
+
+DEFINES += NAUTILUS_EXT_API_VERSION=$${NAUTILUS_EXT_API_VERSION}
+
 CONFIG += link_pkgconfig
-PKGCONFIG += libnautilus-extension
+PKGCONFIG += $${NAUTILUS_EXT}
 
 # library
-target.path = $$system(pkg-config libnautilus-extension --variable=extensiondir)
+target.path = $$system(pkg-config $${NAUTILUS_EXT} --variable=extensiondir)
 INSTALLS += target
 
 QMAKE_CLEAN += $(TARGET) lib$${TARGET}.so lib$${TARGET}.so.1 lib$${TARGET}.so.1.0
