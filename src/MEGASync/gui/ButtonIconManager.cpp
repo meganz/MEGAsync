@@ -8,6 +8,9 @@ const char* ButtonIconManager::ICON_PREFIX = "default_icon";
 const char* ButtonIconManager::HOVER_SELECTED_FLAG = "hover_selected";
 const char* ButtonIconManager::CHECK_STATE = "check_state";
 const char* ButtonIconManager::IGNORE_BUTTON = "ignore_button_manager";
+
+const char* ButtonIconManager::BUTTON_FULL_TEXT = "button_full_text";
+
 const QString QRC_PREFIX = QLatin1Literal("qrc");
 
 const char* ButtonIconManager::DISABLE_UNCHECK_ON_CLICK = "disable_uncheck_on_click";
@@ -70,6 +73,28 @@ bool ButtonIconManager::eventFilter(QObject * watched, QEvent * event)
                     return true;
                 }
             }
+        }
+    }
+
+    if(event->type() == QEvent::LanguageChange)
+    {
+        if(!button->text().isEmpty())
+        {
+            button->setProperty(BUTTON_FULL_TEXT, button->text());
+            elideButtonText(button, button->text());
+        }
+    }
+
+    if(event->type() == QEvent::Resize)
+    {
+        if(!button->text().isEmpty())
+        {
+            if(!button->property(BUTTON_FULL_TEXT).isValid())
+            {
+                button->setProperty(BUTTON_FULL_TEXT, button->text());
+            }
+
+            elideButtonText(button, button->property(BUTTON_FULL_TEXT).toString());
         }
     }
 
@@ -170,6 +195,18 @@ void ButtonIconManager::setSelectedIcon(QAbstractButton *button)
 
         button->setIcon(newIcon);
     }
+}
+
+void ButtonIconManager::elideButtonText(QAbstractButton* button, const QString& text)
+{
+    auto availableSpace = button->width() - (button->contentsMargins().left() + button->contentsMargins().right());
+    if(!button->icon().isNull())
+    {
+       availableSpace = availableSpace - (button->iconSize().width() + 5);
+    }
+
+    auto elideText = button->fontMetrics().elidedText(text, Qt::ElideMiddle, availableSpace);
+    button->setText(elideText);
 }
 
 void ButtonIconManager::changeButtonTextColor(QAbstractButton* button, double alphaValue)
