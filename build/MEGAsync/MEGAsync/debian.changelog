@@ -1,3 +1,14 @@
+megasync (4.7.1) stable; urgency=low
+
+  * There is now a new transfer manager.
+  * Transfer management was enhanced and reliability of downloads and uploads improved.
+  * Detected crashes on Windows, Linux, and macOS fixed.
+  * Translation issues fixed.
+  * Performance improved.
+  * UI fixed and adjusted.
+
+ -- MEGA Team <linux@mega.co.nz>  Wed, 05 Oct 2022 17:02:10 +0200
+
 megasync (4.6.8) stable; urgency=low
 
   * Full redesign of remote file picker.
