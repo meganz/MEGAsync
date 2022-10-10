@@ -8,8 +8,11 @@
 
 MegaItemTreeView::MegaItemTreeView(QWidget* parent) :
     QTreeView(parent),
-    mMegaApi(MegaSyncApp->getMegaApi())
+    mMegaApi(MegaSyncApp->getMegaApi()),
+    mIndexToExpand(QModelIndex()),
+    point(QPoint())
 {
+    installEventFilter(this);
 }
 
 QModelIndex MegaItemTreeView::getIndexFromSourceModel(const QModelIndex& index) const
@@ -38,6 +41,15 @@ MegaHandle MegaItemTreeView::getSelectedNodeHandle()
     return ret;
 }
 
+void MegaItemTreeView::expandIfNeeded()
+{
+    if(point != QPoint())
+    {
+        expand(indexAt(point));
+    }
+    point = QPoint();
+}
+
 void MegaItemTreeView::verticalScrollbarValueChanged(int value)
 {
 //    if (verticalScrollBar()->maximum() / 2 < value)
@@ -46,6 +58,21 @@ void MegaItemTreeView::verticalScrollbarValueChanged(int value)
 //        QTreeView::verticalScrollbarValueChanged(value);
 //    }
     QTreeView::verticalScrollbarValueChanged(value);
+}
+
+bool MegaItemTreeView::eventFilter(QObject *obj, QEvent *evnt)
+{
+   // qDebug()<<evnt->type();
+    return QTreeView::eventFilter(obj, evnt);
+}
+
+bool MegaItemTreeView::viewportEvent(QEvent *event)
+{
+    if(signalsBlocked())
+    {
+        return true;
+    }
+    return QTreeView::viewportEvent(event);
 }
 
 void MegaItemTreeView::drawBranches(QPainter *painter, const QRect &rect, const QModelIndex &index) const
@@ -77,7 +104,20 @@ void MegaItemTreeView::mousePressEvent(QMouseEvent *event)
     }
     else
     {
-        QTreeView::mousePressEvent(event);
+        auto parent = indexAt(pos);
+        if (model()->hasChildren(parent))
+        {
+            if (model()->canFetchMore(parent))
+            {
+                model()->fetchMore(parent);
+                point = pos;
+            }
+        }
+    if(point == QPoint())
+    {
+    QTreeView::mousePressEvent(event);
+    }
+        //mIndexToExpand = parent;
     }
 }
 

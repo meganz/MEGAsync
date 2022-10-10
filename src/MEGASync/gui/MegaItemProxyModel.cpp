@@ -6,12 +6,17 @@
 #include "QThread"
 
 MegaItemProxyModel::MegaItemProxyModel(QObject* parent) :
-    QSortFilterProxyModel(parent)
+    QSortFilterProxyModel(parent),
+    mSortColumn(1),
+    mOrder(Qt::AscendingOrder)
 {
     mCollator.setCaseSensitivity(Qt::CaseInsensitive);
     mCollator.setNumericMode(true);
     mCollator.setIgnorePunctuation(false);
     //setRecursiveFilteringEnabled(true);
+
+    connect(&mFilterWatcher, &QFutureWatcher<void>::finished,
+            this, &MegaItemProxyModel::onModelSortedFiltered);
 }
 
 void MegaItemProxyModel::showReadOnlyFolders(bool value)
@@ -37,16 +42,26 @@ void MegaItemProxyModel::showOwnerColumn(bool value)
 
 void MegaItemProxyModel::sort(int column, Qt::SortOrder order)
 {
+    static int count = 0;
     mOrder = order;
     mSortColumn = column;
     qDebug()<<"sort call thread:"<<QThread::currentThreadId();
+    emit modelAboutToBeChanged();
     QFuture<void> filtered = QtConcurrent::run([this, column, order](){
-
-        invalidate();
+        emit layoutAboutToBeChanged();
+        blockSignals(true);
+       // if(count <= 1)
+        {
+            invalidate();
+        }
+        count++;
         QSortFilterProxyModel::sort(column, order);
         qDebug()<<"concurrent thread:"<<QThread::currentThreadId();
+        blockSignals(false);
         emit layoutChanged();
     });
+   // filtered.waitForFinished();
+    mFilterWatcher.setFuture(filtered);
 }
 
 mega::MegaHandle MegaItemProxyModel::getHandle(const QModelIndex &index)
@@ -181,6 +196,12 @@ void MegaItemProxyModel::setSourceModel(QAbstractItemModel *sourceModel)
 
 bool MegaItemProxyModel::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const
 {
+    qDebug()<<"Filter accepts Row:"<<QThread::currentThreadId();
+
+//    if(qApp->thread() == QThread::currentThread())
+//    {
+//        return false;
+//    }
     QModelIndex index = sourceModel()->index(sourceRow, 0, sourceParent);
 
     if(index.isValid())
@@ -284,6 +305,11 @@ MegaItemModel *MegaItemProxyModel::getMegaModel()
 
 void MegaItemProxyModel::invalidateModel()
 {
-    setDynamicSortFilter(true);
+    //setDynamicSortFilter(true);
     sort(mSortColumn, mOrder);
+}
+
+void MegaItemProxyModel::onModelSortedFiltered()
+{
+    emit modelChanged();
 }

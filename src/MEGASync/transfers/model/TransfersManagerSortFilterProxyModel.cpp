@@ -102,8 +102,12 @@ void TransfersManagerSortFilterProxyModel::invalidateModel()
     {
         setDynamicSortFilter(true);
     }
+    qDebug()<<"invalidateModel:"<<QThread::currentThreadId();
 
     QFuture<void> filtered = QtConcurrent::run([this](){
+        qDebug()<<"concurrent:"<<QThread::currentThreadId();
+        QElapsedTimer timer;
+        timer.start();
         auto sourceM = qobject_cast<TransfersModel*>(sourceModel());
         sourceM->lockModelMutex(true);
         sourceM->blockModelSignals(true);
@@ -116,6 +120,7 @@ void TransfersManagerSortFilterProxyModel::invalidateModel()
         sourceM->blockModelSignals(false);
         blockSignals(false);
         emit layoutChanged();
+        qDebug()<<"SORT ELAPSED"<<timer.elapsed();
     });
     mFilterWatcher.setFuture(filtered);
 }
@@ -217,6 +222,8 @@ void TransfersManagerSortFilterProxyModel::updateFilters()
 
 bool TransfersManagerSortFilterProxyModel::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const
 {
+    qDebug()<<"filterAcceptsRow:"<<QThread::currentThreadId();
+
     bool accept(false);
 
     QModelIndex index = sourceModel()->index(sourceRow, 0, sourceParent);

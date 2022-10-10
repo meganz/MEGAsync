@@ -17,6 +17,7 @@ class MegaItemTreeView : public QTreeView
 public:
     explicit MegaItemTreeView(QWidget *parent = nullptr);
     MegaHandle getSelectedNodeHandle();
+    void expandIfNeeded();
 
 protected:
     void drawBranches(QPainter *painter,
@@ -30,6 +31,8 @@ protected:
     void contextMenuEvent(QContextMenuEvent *event) override;
 
     void verticalScrollbarValueChanged(int value) override;
+    bool eventFilter(QObject* obj, QEvent* evnt) override;
+    bool viewportEvent(QEvent *event) override;
 
 signals:
     void removeNodeClicked();
@@ -43,6 +46,8 @@ private:
 
     QModelIndex getIndexFromSourceModel(const QModelIndex& index) const;
     MegaItemProxyModel* proxyModel() const;
+    QModelIndex mIndexToExpand;
+    QPoint point;
 
     MegaApi* mMegaApi;
 

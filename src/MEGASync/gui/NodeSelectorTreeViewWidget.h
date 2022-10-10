@@ -60,6 +60,7 @@ protected:
     void resizeEvent(QResizeEvent* ) override;
     void mousePressEvent(QMouseEvent* event) override;
     void changeEvent(QEvent* event) override;
+    bool eventFilter(QObject *obj, QEvent *e) override;
     void setTitle(const QString& title);
     QModelIndex getParentIncomingShareByIndex(QModelIndex idx);
 
@@ -77,6 +78,8 @@ private slots:
     void onSectionResized();
     void onRowsInserted();
     virtual void onModelReset(){};
+    void onModelToBeChanged();
+    void onModelAboutToBeChanged();
 
 
 private:

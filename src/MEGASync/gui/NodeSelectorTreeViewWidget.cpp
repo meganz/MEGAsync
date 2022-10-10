@@ -43,6 +43,7 @@ NodeSelectorTreeViewWidget::NodeSelectorTreeViewWidget(QWidget *parent) :
     }
 
     checkBackForwardButtons();
+    ui->tMegaFolders->installEventFilter(this);
 }
 
 void NodeSelectorTreeViewWidget::changeEvent(QEvent *event)
@@ -56,6 +57,15 @@ void NodeSelectorTreeViewWidget::changeEvent(QEvent *event)
         }
     }
     QWidget::changeEvent(event);
+}
+
+bool NodeSelectorTreeViewWidget::eventFilter(QObject *obj, QEvent *e)
+{
+    if(obj == ui->tMegaFolders)
+    {
+       // qDebug()<<e->type();
+    }
+    return QWidget::eventFilter(obj, e);
 }
 
 void NodeSelectorTreeViewWidget::setSelectionMode(int selectMode)
@@ -102,6 +112,9 @@ ui->tMegaFolders->setAnimated(false);
 
     //those connects needs to be done after the model is set, do not move them
     connect(mModel.get(), &MegaItemModel::modelReset, this, &NodeSelectorTreeViewWidget::onModelReset);
+    connect(mProxyModel.get(), &MegaItemProxyModel::modelAboutToBeChanged, this, &NodeSelectorTreeViewWidget::onModelAboutToBeChanged);
+    connect(mProxyModel.get(), &MegaItemProxyModel::modelChanged, this, &NodeSelectorTreeViewWidget::onModelToBeChanged);
+
     connect(ui->tMegaFolders->selectionModel(), &QItemSelectionModel::selectionChanged, this, &NodeSelectorTreeViewWidget::onSelectionChanged);
     connect(ui->tMegaFolders, &MegaItemTreeView::removeNodeClicked, this, &NodeSelectorTreeViewWidget::onDeleteClicked);
     connect(ui->tMegaFolders, &MegaItemTreeView::getMegaLinkClicked, this, &NodeSelectorTreeViewWidget::onGenMEGALinkClicked);
@@ -183,6 +196,19 @@ void NodeSelectorTreeViewWidget::onRowsInserted()
         first = false;
         setSelectedNodeHandle(mNodeHandleToSelect);
     }
+}
+
+void NodeSelectorTreeViewWidget::onModelToBeChanged()
+{
+    //ui->tMegaFolders->setModel(mProxyModel.get());
+    ui->tMegaFolders->expandIfNeeded();
+    ui->tMegaFolders->blockSignals(false);
+}
+
+void NodeSelectorTreeViewWidget::onModelAboutToBeChanged()
+{
+    ui->tMegaFolders->blockSignals(true);
+   //ui->tMegaFolders->setModel(nullptr);
 }
 
 void NodeSelectorTreeViewWidget::onGoBackClicked()

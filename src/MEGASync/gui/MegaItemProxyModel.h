@@ -4,6 +4,7 @@
 
 #include <QSortFilterProxyModel>
 #include <QCollator>
+#include <QFutureWatcher>
 
 
 namespace mega{
@@ -13,6 +14,7 @@ class MegaItemModel;
 
 class MegaItemProxyModel : public QSortFilterProxyModel
 {
+    Q_OBJECT
 
 public:
     struct Filter{
@@ -41,6 +43,9 @@ public:
     bool lessThan(const QModelIndex &left, const QModelIndex &right) const override;
     void setSourceModel(QAbstractItemModel *sourceModel) override;
 
+signals:
+    void modelChanged();
+    void modelAboutToBeChanged();
 
 protected:
     bool filterAcceptsRow(int sourceRow, const QModelIndex& sourceParent) const override;
@@ -53,9 +58,12 @@ private:
     QCollator mCollator;
     int mSortColumn;
     Qt::SortOrder mOrder;
+    QFutureWatcher<void> mFilterWatcher;
+
 
 private slots:
     void invalidateModel();
+    void onModelSortedFiltered();
 };
 
 #endif // MEGAITEMPROXYMODEL_H
