@@ -13,15 +13,17 @@ extern Q_CORE_EXPORT int qt_ntfs_permission_lookup;
 #endif
 
 const char Preferences::CLIENT_KEY[] = "FhMgXbqb";
-const char Preferences::USER_AGENT[] = "MEGAsync/4.7.1.0";
-const int Preferences::VERSION_CODE = 4701;
+const char Preferences::USER_AGENT[] = "MEGAsync/4.7.2.0";
+const int Preferences::VERSION_CODE = 4702;
 const int Preferences::BUILD_ID = 0;
 // Do not change the location of VERSION_STRING, create_tarball.sh parses this file
-const QString Preferences::VERSION_STRING = QString::fromAscii("4.7.1");
-QString Preferences::SDK_ID = QString::fromAscii("44c0918");
+const QString Preferences::VERSION_STRING = QString::fromAscii("4.7.2");
+QString Preferences::SDK_ID = QString::fromAscii("d96a911");
 const QString Preferences::CHANGELOG = QString::fromUtf8(QT_TR_NOOP(
-"- There is now a new transfer manager.\n"
-"- Transfer management was enhanced and reliability of downloads and uploads improved. \n"
+"- New Apple Silicon native support added.\n"
+"- New feature to avoid entering on sleep mode if there are active transfers.\n"
+"- Updated 3rdparty libs.\n"
+"- Improvements on folders transfer.\n"
 "- Detected crashes on Windows, Linux, and macOS fixed.\n"
 "- Translation issues fixed.\n"
 "- Performance improved.\n"
