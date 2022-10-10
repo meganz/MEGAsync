@@ -3846,21 +3846,17 @@ Please delete the folder sync from preferences to cancel them.</translation>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- There is now a new transfer manager.
-- Transfer management was enhanced and reliability of downloads and uploads improved. 
+        <source>- New Apple Silicon native support added.
+- New feature to avoid entering on sleep mode if there are active transfers.
+- Updated 3rdparty libs.
+- Improvements on folders transfer.
 - Detected crashes on Windows, Linux, and macOS fixed.
 - Translation issues fixed.
 - Performance improved.
 - UI fixed and adjusted.
 </source>
-        <translatorcomment>Changelog for version v4.7.0</translatorcomment>
-        <translation>- There is now a new transfer manager.
-- Transfer management was enhanced and reliability of downloads and uploads improved. 
-- Detected crashes on Windows, Linux, and macOS fixed.
-- Translation issues fixed.
-- Performance improved.
-- UI fixed and adjusted.
-</translation>
+        <translatorcomment>Changelog for v4.7.2</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
