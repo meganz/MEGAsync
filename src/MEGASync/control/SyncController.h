@@ -40,7 +40,7 @@ public:
     void disableSync(std::shared_ptr<SyncSetting> syncSetting);
 
     void setMyBackupsDirName();
-    void getMyBackupsHandle();
+    mega::MegaHandle getMyBackupsHandle();
     QString getMyBackupsLocalizedPath();
 
     // Local folder checks

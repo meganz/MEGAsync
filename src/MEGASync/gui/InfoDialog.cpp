@@ -83,7 +83,8 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
     mAddBackupDialog (nullptr),
     mAddSyncDialog (nullptr),
     mSyncController (nullptr),
-    qtBugFixer(this)
+    qtBugFixer(this),
+    mMyBackupsHandle (mega::INVALID_HANDLE)
 {
     ui->setupUi(this);
 
@@ -1147,15 +1148,17 @@ void InfoDialog::addBackup()
             mAddBackupDialog->setAttribute(Qt::WA_DeleteOnClose);
             mAddBackupDialog->setWindowModality(Qt::ApplicationModal);
 
+            mAddBackupDialog->show();
+
             connect(mAddBackupDialog, &AddBackupDialog::accepted, this, [this]()
             {
                 if(mAddBackupDialog)
                 {
                     QString dirToBackup (mAddBackupDialog->getSelectedFolder());
-                    mSyncController->addBackup(dirToBackup);
+                    QString backupName (mAddBackupDialog->getBackupName());
+                    mSyncController->addBackup(dirToBackup, backupName);
                 }
             });
-            mAddBackupDialog->show();
         }
     }
     else
@@ -1936,7 +1939,9 @@ void InfoDialog::setupSyncController()
             if (mAddBackupDialog)
             {
                 mAddBackupDialog->setMyBackupsFolder(mSyncController->getMyBackupsLocalizedPath() + QLatin1Char('/'));
+                mAddBackupDialog->setMyBackupsFolderHandle(h);
             }
+            mMyBackupsHandle = h;
         });
         connect(mSyncController.get(), &SyncController::syncAddStatus, this, [](const int errorCode, const QString errorMsg, QString name)
         {

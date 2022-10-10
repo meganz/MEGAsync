@@ -119,7 +119,7 @@ public slots:
     void addSync();
     void onAddSync(mega::MegaSync::SyncType type = mega::MegaSync::TYPE_TWOWAY);
     void onAddBackup();
-   void updateDialogState();
+    void updateDialogState();
 
    void enableTransferOverquotaAlert();
    void enableTransferAlmostOverquotaAlert();
@@ -238,6 +238,7 @@ private:
     void hideBlockedError(bool animated = false);
     void showBlockedError();
     QHash<QPushButton*, SyncsMenu*> mSyncsMenus;
+    mega::MegaHandle mMyBackupsHandle;
 
 protected:
     void setBlockedStateLabel(QString state);

@@ -250,6 +250,6 @@ private:
     QPointer<ProxySettings> mProxySettingsDialog;
     mega::MegaHandle mBackupRootHandle;
     bool mCreateBackupRootDir;
-    QString mPendingBackup;
+    QPair<QString, QString> mPendingBackup; //<backup path, backup name>
 };
 #endif // SETTINGSDIALOG_H

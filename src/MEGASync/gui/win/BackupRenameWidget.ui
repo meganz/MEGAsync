@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>BackupRenameWidget</class>
+ <widget class="QFrame" name="BackupRenameWidget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>635</width>
+    <height>113</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="toolTipDuration">
+   <number>-2</number>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">QLabel
+{
+font-family: 'SF Pro';
+}</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <property name="leftMargin">
+    <number>57</number>
+   </property>
+   <property name="topMargin">
+    <number>5</number>
+   </property>
+   <property name="rightMargin">
+    <number>25</number>
+   </property>
+   <property name="bottomMargin">
+    <number>5</number>
+   </property>
+   <property name="horizontalSpacing">
+    <number>12</number>
+   </property>
+   <property name="verticalSpacing">
+    <number>5</number>
+   </property>
+   <item row="3" column="1" alignment="Qt::AlignVCenter">
+    <widget class="QLabel" name="lError">
+     <property name="enabled">
+      <bool>true</bool>
+     </property>
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>40</height>
+      </size>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QLabel
+{
+color: #DD1405; 
+background-color: rgba(242, 24, 91,0.1); 
+font-family: Inter; 
+font-size: 12px; 
+border-radius: 8px; 
+border: none; 
+padding-top: 3px; 
+padding-bottom: 3px; 
+padding-left: 4px;
+padding-right:4px;
+}</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+     <property name="wordWrap">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="0" alignment="Qt::AlignRight|Qt::AlignVCenter">
+    <widget class="QLabel" name="lLocalFolder">
+     <property name="styleSheet">
+      <string notr="true">QLabel
+{
+font-size:14px;
+color:#111111;
+}</string>
+     </property>
+     <property name="text">
+      <string>Local folder %1:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="1" alignment="Qt::AlignVCenter">
+    <widget class="QLineEdit" name="leNewName">
+     <property name="styleSheet">
+      <string notr="true">QLineEdit
+{
+font-family: 'SF Pro Text';
+font-size:12px;
+color: #04101E;
+}</string>
+     </property>
+     <property name="placeholderText">
+      <string>Rename backup folder </string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="0" alignment="Qt::AlignRight|Qt::AlignVCenter">
+    <widget class="QLabel" name="lBackupFolder">
+     <property name="styleSheet">
+      <string notr="true">QLabel
+{
+font-size:14px;
+color:#111111;
+}</string>
+     </property>
+     <property name="text">
+      <string>Backup folder:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="1" alignment="Qt::AlignVCenter">
+    <widget class="QLabel" name="lLocalFolderPath">
+     <property name="styleSheet">
+      <string notr="true">QLabel
+{
+font-size:13px;
+color:#15191F;
+}</string>
+     </property>
+     <property name="text">
+      <string notr="true">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;%1&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#15191f;&quot;&gt;%1&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+     <property name="textInteractionFlags">
+      <set>Qt::LinksAccessibleByKeyboard|Qt::LinksAccessibleByMouse|Qt::TextBrowserInteraction|Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse</set>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="1">
+    <spacer name="verticalSpacer">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeType">
+      <enum>QSizePolicy::Fixed</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>5</width>
+       <height>10</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="3" column="0">
+    <spacer name="verticalSpacer_2">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeType">
+      <enum>QSizePolicy::Fixed</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>30</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

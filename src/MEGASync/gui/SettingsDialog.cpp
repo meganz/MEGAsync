@@ -104,7 +104,7 @@ SettingsDialog::SettingsDialog(MegaApplication* app, bool proxyOnly, QWidget* pa
     mDebugCounter (0),
     mBackupRootHandle(mega::INVALID_HANDLE),
     mCreateBackupRootDir (true),
-    mPendingBackup()
+    mPendingBackup(QPair<QString, QString>())
 {
     mUi->setupUi(this);
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
@@ -1750,11 +1750,11 @@ void SettingsDialog::loadBackupSettings()
 
 void SettingsDialog::processPendingBackup()
 {
-    if (!mPendingBackup.isEmpty() && mBackupRootHandle != mega::INVALID_HANDLE)
+    if (!mPendingBackup.first.isEmpty() && mBackupRootHandle != mega::INVALID_HANDLE)
     {
         syncsStateInformation(SyncStateInformation::SAVING_BACKUPS);
-        mBackupController.addBackup(mPendingBackup);
-        mPendingBackup.clear();
+        mBackupController.addBackup(mPendingBackup.first, mPendingBackup.second);
+        mPendingBackup = QPair<QString, QString>();
     }
 }
 
@@ -1781,11 +1781,13 @@ void SettingsDialog::on_bAddBackup_clicked()
     addBackup->setAttribute(Qt::WA_DeleteOnClose);
     addBackup->setWindowModality(Qt::WindowModal);
     addBackup->setMyBackupsFolder(mUi->lBackupFolder->text() + QLatin1Char('/'));
+    addBackup->setMyBackupsFolderHandle(mBackupRootHandle);
     addBackup->open();
 
     connect(addBackup, &AddBackupDialog::accepted, this, [this, addBackup]()
     {
-        mPendingBackup = addBackup->getSelectedFolder();
+        mPendingBackup.first = addBackup->getSelectedFolder();
+        mPendingBackup.second = addBackup->getBackupName();
 
         if (mCreateBackupRootDir)
         {

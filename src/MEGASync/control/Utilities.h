@@ -362,6 +362,17 @@ public:
 
     // Compute the part per <ref> of <part> from <total>. Defaults to %
     static int partPer(unsigned long long part, unsigned long long total, uint ref = 100);
+
+    // Human-friendly list of forbidden chars for New Remote Folder
+    static const QLatin1String FORBIDDEN_CHARS;
+    // Forbidden chars PCRE using a capture list: [\\/:"\*<>?|]
+    static const QRegularExpression FORBIDDEN_CHARS_RX;
+    // Time to show the new remote folder input error in milliseconds
+    static constexpr int ERROR_DISPLAY_TIME_MS = 10000; //10s in milliseconds
+
+    static bool isNodeNameValid(const QString& name);
+
+    static QSet<QString> getBackupsNames(mega::MegaHandle myBackupsHandle);
 };
 
 Q_DECLARE_METATYPE(Utilities::FileType)

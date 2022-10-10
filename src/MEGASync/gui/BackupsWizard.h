@@ -6,6 +6,7 @@
 #include "megaapi.h"
 #include "control/Utilities.h"
 #include "HighDpiResize.h"
+#include "Backups/BackupNameConflictDialog.h"
 
 #include <QDialog>
 #include <QList>
@@ -50,6 +51,7 @@ class BackupsWizard : public QDialog
             STEP_1,
             STEP_2_INIT,
             STEP_2,
+            HANDLE_NAME_CONFLICTS,
             FINALIZE,
             SETUP_MYBACKUPS_DIR,
             SETUP_BACKUPS,
@@ -83,6 +85,7 @@ class BackupsWizard : public QDialog
         void setupStep1();
         void setupStep2();
         void setupError();
+        void handleNameConflicts();
         void setupFinalize();
         void setupMyBackupsDir();
         void setupBackups();
@@ -99,7 +102,7 @@ class BackupsWizard : public QDialog
         std::shared_ptr<UserAttributes::DeviceName> mDeviceNameRequest;
         SyncController mSyncController;
         bool mCreateBackupsDir;
-        bool mHaveBackupsDir;
+        mega::MegaHandle mMyBackupsHandle;
         bool mError;
         bool mUserCancelled;
         QStandardItemModel* mFoldersModel;
@@ -124,6 +127,7 @@ class BackupsWizard : public QDialog
         void onBackupsDirSet(mega::MegaHandle backupsDirHandle);
         void onSetMyBackupsDirRequestStatus(int errorCode, const QString& errorMsg);
         void onSyncAddRequestStatus(int errorCode, const QString &errorMsg, const QString &name);
+        void onConflictResolved();
 };
 
 class WizardDelegate : public QStyledItemDelegate
