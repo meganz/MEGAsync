@@ -6,6 +6,7 @@
 #include "EventHelper.h"
 #include "TextDecorator.h"
 #include "UserAttributesRequests/DeviceName.h"
+#include "Backups/BackupNameConflictDialog.h"
 
 #include <QStandardPaths>
 #include <QStyleOption>
@@ -36,7 +37,7 @@ BackupsWizard::BackupsWizard(QWidget* parent) :
     mDeviceNameRequest (UserAttributes::DeviceName::requestDeviceName()),
     mSyncController(),
     mCreateBackupsDir (false),
-    mHaveBackupsDir (false),
+    mMyBackupsHandle (mega::INVALID_HANDLE),
     mError (false),
     mUserCancelled (false),
     mFoldersModel (new QStandardItemModel(this)),
@@ -137,7 +138,7 @@ void BackupsWizard::changeEvent(QEvent* event)
         }
 
         // If the backups root dir has not been created yet, localize the name
-        if (mHaveBackupsDir && mCreateBackupsDir)
+        if (mCreateBackupsDir && mMyBackupsHandle != mega::INVALID_HANDLE)
         {
             mUi->leBackupTo->setText(mSyncController.getMyBackupsLocalizedPath()
                                      + QLatin1Char('/') + mUi->lDeviceNameStep1->text());
@@ -207,7 +208,7 @@ void BackupsWizard::onItemChanged(QStandardItem *item)
         case STEP_2_INIT:
         case STEP_2:
         {
-            enable = mHaveBackupsDir;
+            enable = mMyBackupsHandle != mega::INVALID_HANDLE;
             break;
         }
         default:
@@ -307,7 +308,7 @@ void BackupsWizard::setupStep2()
     mUi->bBack->show();
 
     // Request MyBackups root folder
-    mHaveBackupsDir = false;
+    mMyBackupsHandle = mega::INVALID_HANDLE;
     mSyncController.getMyBackupsHandle();
 
     // Get number of items
@@ -341,6 +342,56 @@ void BackupsWizard::setupError()
 
     mUi->sButtons->setCurrentWidget(mUi->pErrorButtons);
     showLess();
+}
+
+void BackupsWizard::handleNameConflicts()
+{
+    // Get candidates list
+    QStringList candidatePaths;
+    for (int i = 0; i < mFoldersProxyModel->rowCount(); ++i)
+    {
+        QString path (mFoldersProxyModel->index(i, 0).data(Qt::UserRole).toString());
+        candidatePaths.append(path);
+    }
+
+    if(!BackupNameConflictDialog::backupNamesValid(candidatePaths, mMyBackupsHandle))
+    {
+        BackupNameConflictDialog* conflictDialog = new BackupNameConflictDialog(candidatePaths, mMyBackupsHandle, this);
+        connect(conflictDialog, &BackupNameConflictDialog::accepted,
+                this, &BackupsWizard::onConflictResolved);
+    }
+    else
+    {
+        nextStep(FINALIZE);
+    }
+}
+
+void BackupsWizard::onConflictResolved()
+{
+    auto conflictDialog = qobject_cast<BackupNameConflictDialog*>(sender());
+    const auto changes (conflictDialog->getChanges());
+    auto changeIt (changes.cbegin());
+    while (changeIt != changes.cend())
+    {
+        int nbBackups (mFoldersModel->rowCount());
+        int row (0);
+        bool found (false);
+        while (!found && row < nbBackups)
+        {
+            auto item (mFoldersModel->item(row));
+            if (item && item->data(Qt::UserRole).toString() == changeIt.key())
+            {
+                item->setData(changeIt.value(), Qt::DisplayRole);
+                found = true;
+            }
+            else
+            {
+                row++;
+            }
+        }
+        changeIt++;
+    }
+    nextStep(FINALIZE);
 }
 
 void BackupsWizard::setupFinalize()
@@ -508,6 +559,11 @@ void BackupsWizard::nextStep(const Step &step)
             // Wait for user interaction
             break;
         }
+        case Step::HANDLE_NAME_CONFLICTS:
+        {
+            handleNameConflicts();
+            break;
+        }
         case Step::FINALIZE:
         {
             setupFinalize();
@@ -600,7 +656,7 @@ void BackupsWizard::on_bNext_clicked()
     }
     else
     {
-        nextStep(FINALIZE);
+        nextStep(HANDLE_NAME_CONFLICTS);
     }
 }
 
@@ -639,7 +695,7 @@ void BackupsWizard::on_bMoreFolders_clicked()
     {
         QStandardItem* existingBackup (nullptr);
 
-        // Check for path and name collision.
+        // Check for path collision.
         int nbBackups (mFoldersModel->rowCount());
         int row (0);
 
@@ -761,7 +817,7 @@ void BackupsWizard::onDeviceNameSet(QString deviceName)
 
 void BackupsWizard::onBackupsDirSet(mega::MegaHandle backupsDirHandle)
 {
-    mHaveBackupsDir = true;
+    mMyBackupsHandle = backupsDirHandle;
 
     QString backupsDirPath = mSyncController.getMyBackupsLocalizedPath();
 

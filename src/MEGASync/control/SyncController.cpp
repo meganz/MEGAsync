@@ -415,12 +415,14 @@ void SyncController::setMyBackupsDirName()
     mApi->setMyBackupsFolder(name.toUtf8().constData(), mDelegateListener);
 }
 
-void SyncController::getMyBackupsHandle()
+mega::MegaHandle SyncController::getMyBackupsHandle()
 {
     if(mMyBackupsHandle == INVALID_HANDLE)
         mApi->getUserAttribute(MegaApi::USER_ATTR_MY_BACKUPS_FOLDER, mDelegateListener);
     else
         emit myBackupsHandle(mMyBackupsHandle);
+
+    return mMyBackupsHandle;
 }
 
 void SyncController::setMyBackupsHandle(MegaHandle handle)

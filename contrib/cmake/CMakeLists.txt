@@ -1,4 +1,3 @@
-
 cmake_minimum_required(VERSION 3.15)
 cmake_policy(SET CMP0091 NEW)
 
@@ -193,6 +192,8 @@ set (FORMS
     ${MEGAsyncDir}/gui/${UiDir}/BackupsWizard.ui
     ${MEGAsyncDir}/gui/${UiDir}/AddBackupDialog.ui
     ${MEGAsyncDir}/gui/${UiDir}/RemoveBackupDialog.ui
+    ${MEGAsyncDir}/gui/${UiDir}/BackupRenameWidget.ui
+    ${MEGAsyncDir}/gui/${UiDir}/BackupNameConflictDialog.ui
     ${MEGAsyncDir}/transfers/gui/${UiDir}/InfoDialogTransfersWidget.ui
     ${MEGAsyncDir}/transfers/gui/${UiDir}/InfoDialogTransferDelegateWidget.ui
     ${MEGAsyncDir}/transfers/gui/${UiDir}/TransferWidgetHeaderItem.ui
@@ -329,6 +330,8 @@ set (MOC_INPUT
     ${MEGAsyncDir}/gui/NodeNameSetterDialog/NewFolderDialog.h
     ${MEGAsyncDir}/gui/NodeNameSetterDialog/RenameNodeDialog.h
     ${MEGAsyncDir}/gui/CancelConfirmWidget.h	
+    ${MEGAsyncDir}/gui/Backups/BackupRenameWidget.h	
+    ${MEGAsyncDir}/gui/Backups/BackupNameConflictDialog.h	
 
     ${MEGAsyncDir}/platform/notificator.h
     ${MEGAsyncDir}/platform/PlatformStrings.h
@@ -561,6 +564,9 @@ set (SRCS
     ${MEGAsyncDir}/gui/BackupsWizard.cpp
     ${MEGAsyncDir}/gui/AddBackupDialog.cpp
     ${MEGAsyncDir}/gui/RemoveBackupDialog.cpp
+    ${MEGAsyncDir}/gui/Backups/BackupRenameWidget.cpp
+    ${MEGAsyncDir}/gui/Backups/BackupNameConflictDialog.cpp	
+	
     ${MEGAsyncDir}/platform/notificator.cpp
 
     ${MEGAsyncDir}/qtlockedfile/qtlockedfile.cpp

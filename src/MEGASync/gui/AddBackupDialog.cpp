@@ -25,7 +25,7 @@ AddBackupDialog::AddBackupDialog(QWidget *parent) :
     mUi->embeddedTitleLabel->setVisible(this->parent() != nullptr);
 #endif
 
-    connect(mUi->addButton, &QPushButton::clicked, this, &QDialog::accept);
+    connect(mUi->addButton, &QPushButton::clicked, this, &AddBackupDialog::checkNameConflict);
     connect(mUi->cancelButton, &QPushButton::clicked, this, &QDialog::reject);
 }
 
@@ -40,9 +40,19 @@ void AddBackupDialog::setMyBackupsFolder(const QString& folder)
     mUi->backupToLabel->setText(mMyBackupsFolder + mDeviceNameRequest->getDeviceName());
 }
 
+void AddBackupDialog::setMyBackupsFolderHandle(const mega::MegaHandle& handle)
+{
+    mMyBackupsHandle = handle;
+}
+
 QString AddBackupDialog::getSelectedFolder()
 {
     return mSelectedFolder;
+}
+
+QString AddBackupDialog::getBackupName()
+{
+    return mBackupName;
 }
 
 void AddBackupDialog::on_changeButton_clicked()
@@ -78,4 +88,31 @@ void AddBackupDialog::on_changeButton_clicked()
 void AddBackupDialog::onDeviceNameSet(const QString &devName)
 {
     mUi->backupToLabel->setText(mMyBackupsFolder + devName);
+}
+
+void AddBackupDialog::checkNameConflict()
+{
+    QStringList pathList;
+    pathList.append(mSelectedFolder);
+    if(!BackupNameConflictDialog::backupNamesValid(pathList, mMyBackupsHandle))
+    {
+        BackupNameConflictDialog* conflictDialog = new BackupNameConflictDialog(pathList, mMyBackupsHandle, this);
+        connect(conflictDialog, &BackupNameConflictDialog::accepted,
+                this, &AddBackupDialog::onConflictSolved);
+    }
+    else
+    {
+        accept();
+    }
+}
+
+void AddBackupDialog::onConflictSolved()
+{
+    auto conflictDialog = qobject_cast<BackupNameConflictDialog*>(sender());
+    QMap<QString, QString> changes = conflictDialog->getChanges();
+    for(auto it = changes.cbegin(); it!=changes.cend(); ++it)
+    {
+        mBackupName = it.value();
+    }
+    accept();
 }

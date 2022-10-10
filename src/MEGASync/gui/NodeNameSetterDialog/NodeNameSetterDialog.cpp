@@ -3,17 +3,10 @@
 
 #include <Utilities.h>
 #include <MegaApplication.h>
+#include <CommonMessages.h>
 #include <mega/types.h>
 
 #include <memory>
-
-// Human-friendly list of forbidden chars for New Remote Folder
-static const QString FORBIDDEN(QLatin1String("\\ / : \" * < > \? |"));
-// Forbidden chars PCRE using a capture list: [\\/:"\*<>?|]
-static const QRegularExpression FORBIDDEN_RX(QLatin1String("[\\\\/:\"*<>\?|]"));
-// Time to show the new remote folder input error
-static int NEW_FOLDER_ERROR_DISPLAY_TIME = 10000; //10s in milliseconds
-
 
 NodeNameSetterDialog::NodeNameSetterDialog(QWidget *parent)
     : QDialog(parent),
@@ -75,7 +68,7 @@ void NodeNameSetterDialog::showError(const QString &errorText)
     mUi->textLabel->hide();
     mUi->errorLabel->show();
     Utilities::animateFadein(mUi->errorLabel);
-    mNewFolderErrorTimer.start(NEW_FOLDER_ERROR_DISPLAY_TIME); //(re)start timer
+    mNewFolderErrorTimer.start(Utilities::ERROR_DISPLAY_TIME_MS); //(re)start timer
     mUi->lineEdit->setFocus();
 }
 
@@ -100,9 +93,9 @@ void NodeNameSetterDialog::dialogAccepted()
     //        }
     //        else
     {
-        if(mUi->lineEdit->text().trimmed().contains(FORBIDDEN_RX))
+        if(Utilities::isNodeNameValid(mUi->lineEdit->text()))
         {
-            showError(tr("The following characters are not allowed:\n%1").arg(FORBIDDEN));
+            showError(CommonMessages::errorInvalidChars());
         }
         else
         {

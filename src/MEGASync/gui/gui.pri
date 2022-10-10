@@ -4,6 +4,8 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/AddBackupDialog.cpp \
     $$PWD/BackupItemModel.cpp \
     $$PWD/BackupTableView.cpp \
+    $$PWD/Backups/BackupNameConflictDialog.cpp \
+    $$PWD/Backups/BackupRenameWidget.cpp \
     $$PWD/BackupsWizard.cpp \
     $$PWD/BalloonToolTip.cpp \
     $$PWD/BlurredShadowEffect.cpp \
@@ -85,6 +87,8 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/AddBackupDialog.h \
     $$PWD/BackupItemModel.h \
     $$PWD/BackupTableView.h \
+    $$PWD/Backups/BackupNameConflictDialog.h \
+    $$PWD/Backups/BackupRenameWidget.h \
     $$PWD/BackupsWizard.h \
     $$PWD/AutoResizeStackedWidget.h \
     $$PWD/BalloonToolTip.h \
@@ -216,7 +220,9 @@ win32 {
                 $$PWD/win/ScanningWidget.ui \
                 $$PWD/win/CancelConfirmWidget.ui \
                 $$PWD/win/NodeNameSetterDialog.ui \
-                $$PWD/win/NotificationsSettings.ui
+                $$PWD/win/NotificationsSettings.ui \
+                $$PWD/win/BackupNameConflictDialog.ui \
+                $$PWD/win/BackupRenameWidget.ui
 }
 
 macx {
@@ -266,7 +272,9 @@ macx {
                 $$PWD/macx/ScanningWidget.ui \
                 $$PWD/macx/CancelConfirmWidget.ui \
                 $$PWD/macx/NodeNameSetterDialog.ui \
-                $$PWD/macx/NotificationsSettings.ui
+                $$PWD/macx/NotificationsSettings.ui \
+                $$PWD/macx/BackupNameConflictDialog.ui \
+                $$PWD/macx/BackupRenameWidget.ui
 
     #Asset catalog need to load SF symbol images of toolbar items for custom NSToolbar
     QMAKE_ASSET_CATALOGS += $$PWD/images/Images.xcassets
@@ -339,7 +347,9 @@ unix:!macx {
                 $$PWD/linux/CancelConfirmWidget.ui \
                 $$PWD/linux/ScanningWidget.ui \
                 $$PWD/linux/NodeNameSetterDialog.ui \
-                $$PWD/linux/NotificationsSettings.ui
+                $$PWD/linux/NotificationsSettings.ui \
+                $$PWD/linux/BackupNameConflictDialog.ui \
+                $$PWD/linux/BackupRenameWidget.ui
 
     HEADERS += $$PWD/PermissionsDialog.h \
                $$PWD/PermissionsWidget.h

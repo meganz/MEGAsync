@@ -35,6 +35,11 @@ const unsigned long long MB = 1024 * KB;
 const unsigned long long GB = 1024 * MB;
 const unsigned long long TB = 1024 * GB;
 
+// Human-friendly list of forbidden chars for New Remote Folder
+const QLatin1String Utilities::FORBIDDEN_CHARS("\\ / : \" * < > \? |");
+// Forbidden chars PCRE using a capture list: [\\/:"\*<>?|]
+const QRegularExpression Utilities::FORBIDDEN_CHARS_RX(QLatin1String("[\\\\/:\"*<>\?|]"));
+
 void Utilities::initializeExtensions()
 {
     extensionIcons[QString::fromAscii("3ds")] = extensionIcons[QString::fromAscii("3dm")]  = extensionIcons[QString::fromAscii("max")] =
@@ -1165,6 +1170,48 @@ int Utilities::partPer(unsigned long long  part, unsigned long long total, uint 
 
     // We can safely cast because the result should reasonably fit in an int.
     return (static_cast<int>((partd * refd) / totald));
+}
+
+bool Utilities::isNodeNameValid(const QString& name)
+{
+    QString trimmedName (name.trimmed());
+    return !trimmedName.isEmpty() && !trimmedName.contains(FORBIDDEN_CHARS_RX);
+}
+
+QSet<QString> Utilities::getBackupsNames(MegaHandle myBackupsHandle)
+{
+    QSet<QString> backupsNames;
+
+    if (myBackupsHandle != INVALID_HANDLE)
+    {
+        auto api (MegaSyncApp->getMegaApi());
+        std::unique_ptr<MegaNode> myBackupsNode (api->getNodeByHandle(myBackupsHandle));
+        std::unique_ptr<const char[]> deviceIdRaw (api->getDeviceId());
+        QString deviceId (QString::fromLatin1(deviceIdRaw.get()));
+
+        std::unique_ptr<MegaNodeList> devices (api->getChildren(myBackupsNode.get()));
+        int i = 0;
+        MegaNode* deviceNode (nullptr);
+
+        while (!deviceNode && devices && i < devices->size())
+        {
+            if (QString::fromLatin1(devices->get(i)->getDeviceId()) == deviceId)
+            {
+                deviceNode = devices->get(i);
+            }
+            i++;
+        }
+
+        if (deviceNode)
+        {
+            std::unique_ptr<MegaNodeList> folders (api->getChildren(deviceNode));
+            for (int j = 0; folders && j < folders->size(); j++)
+            {
+                backupsNames.insert(QString::fromUtf8(folders->get(j)->getName()));
+            }
+        }
+    }
+    return backupsNames;
 }
 
 void MegaListenerFuncExecuter::setExecuteInAppThread(bool executeInAppThread)
