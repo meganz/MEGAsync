@@ -265,7 +265,7 @@ void MegaItemModel::fetchMore(const QModelIndex &parent)
         item->createChildItems();
         endInsertRows();
         blockSignals(false);
-        emit rowsAdded();
+        emit rowsAdded(parent);
     }
     else
     {

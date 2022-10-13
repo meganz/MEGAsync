@@ -216,7 +216,7 @@ void NodeSelectorTreeViewWidget::onModelAboutToBeChanged()
     ui->tMegaFolders->blockSignals(true);
     ui->tMegaFolders->header()->blockSignals(true);
     ui->tMegaFolders->hide();
-   mProxyModel->blockSignals(true);
+    mProxyModel->blockSignals(true);
    //ui->tMegaFolders->setModel(nullptr);
 
 }

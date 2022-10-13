@@ -69,7 +69,7 @@ public:
     virtual ~MegaItemModel();
 
 signals:
-    void rowsAdded();
+    void rowsAdded(const QModelIndex& parent = QModelIndex());
 
 protected:
     QModelIndex findItemByNodeHandle(const mega::MegaHandle &handle, const QModelIndex& parent);
