@@ -75,6 +75,8 @@ public:
     void enterBlockingState();
     void leaveBlockingState(bool fromCancellation);
     void disableCancelling();
+    void setUiInCancellingStage();
+    void updateUiOnFolderTransferUpdate(const FolderTransferUpdateEvent& event);
 
 #ifdef __APPLE__
     void moveArrow(QPoint p);
@@ -266,6 +268,8 @@ protected:
  private:
     static double computeRatio(long long completed, long long remaining);
     void enableUserActions(bool value);
+    void changeStatusState(StatusInfo::TRANSFERS_STATES newState,
+                           bool animate = true);
     void setupSyncController();
 
     TransferScanCancelUi* mTransferScanCancelUi = nullptr;

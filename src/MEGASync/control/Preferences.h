@@ -365,6 +365,9 @@ public:
     long long lastStatsRequest();
     void setLastStatsRequest(long long value);
 
+    bool awakeIfActiveEnabled();
+    void setAwakeIfActive(bool value);
+
     bool fileVersioningDisabled();
     void disableFileVersioning(bool value);
     bool overlayIconsDisabled();
@@ -701,6 +704,10 @@ protected:
     static const QString notifyDisabledSyncsKey;
     static const QString importMegaLinksEnabledKey;
     static const QString downloadMegaLinksEnabledKey;
+
+    //Sleep mode
+    static const QString awakeIfActiveKey;
+    static const bool defaultAwakeIfActive;
 
     //Notifications Default value
     static const bool defaultShowNotifications;

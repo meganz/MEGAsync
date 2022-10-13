@@ -11,7 +11,7 @@
     <message>
         <source>Inbox</source>
         <translatorcomment>Label for Inbox space used. Maintain capital letters in each word.(Max 18 characters)</translatorcomment>
-        <translation type="vanished">수신함</translation>
+        <translation>수신함</translation>
     </message>
     <message>
         <source>Loading...</source>
@@ -98,7 +98,7 @@
     <message>
         <source>Enter a name, an absolute path (wildcards * and ? are allowed) or choose which file or folder you want to exclude from the synchronization</source>
         <translatorcomment>Label to describe the different options that the user have to set a exclusion for all synchronizations.</translatorcomment>
-        <translation>이름을 입력하거나, 절대 경로(와일드카드 *와 ?가 허용됩니다) 또는 동기화에서 제외할 파일 또는 폴더를 선택하세요.</translation>
+        <translation>이름을 입력하거나, 절대 경로(와일드카드 *와 ?가 허용됩니다)또는 동기화에서 제외할 파일 또는 폴더를 선택하세요.</translation>
     </message>
     <message>
         <source>Choose File</source>
@@ -379,16 +379,12 @@
     <message numerus="yes">
         <source>[A] added %n item</source>
         <translatorcomment>Label to indicate that [A] has added %n items to a shared folder. Placeholder [A] will be replaced by email of the user that made the additions and %n with the number of added items.</translatorcomment>
-        <translation>
-            <numerusform>[A]님이 %n개 항목 추가</numerusform>
-        </translation>
+        <translation><numerusform>[A]님이 %n개 항목 추가</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>[A] removed %n item</source>
         <translatorcomment>Label to indicate that [A] has removed %n items from a shared folder. Placeholder [A] will be replaced by email of the user that made the deletion and %n with the number of removed items.</translatorcomment>
-        <translation>
-            <numerusform>[A]님이 %n개 항목 삭제</numerusform>
-        </translation>
+        <translation><numerusform>[A]님이 %n개 항목 삭제</numerusform></translation>
     </message>
     <message>
         <source>New shared folder from [A]</source>
@@ -708,17 +704,17 @@ Reason: %2</source>
     <message>
         <source>The selected local folder is already synced</source>
         <translatorcomment>Message displayed when an user is adding a local folder wich is already synced.</translatorcomment>
-        <translation type="vanished">선택한 로컬 폴더는 이미 동기화되었습니다</translation>
+        <translation>선택한 로컬 폴더는 이미 동기화되었습니다</translation>
     </message>
     <message>
         <source>A synced folder cannot be inside another synced folder</source>
         <translatorcomment>Message displayed when an user is adding nested local folders for synchronization.</translatorcomment>
-        <translation type="vanished">동기화된 폴더는 다른 동기화된 폴더 안에 위치할 수 없습니다</translation>
+        <translation>동기화된 폴더는 다른 동기화된 폴더 안에 위치할 수 없습니다</translation>
     </message>
     <message>
         <source>The selected MEGA folder is already synced</source>
         <translatorcomment>Message displayed when an user is adding an already synchronized remote folder.</translatorcomment>
-        <translation type="vanished">선택한 MEGA 폴더는 이미 동기화되었습니다</translation>
+        <translation>선택한 MEGA 폴더는 이미 동기화되었습니다</translation>
     </message>
     <message>
         <source>Sync name</source>
@@ -739,7 +735,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Error</source>
         <translatorcomment>Label for status of an error performing an operation.</translatorcomment>
-        <translation type="vanished">오류</translation>
+        <translation>오류</translation>
     </message>
     <message>
         <source>Add folder</source>
@@ -987,9 +983,7 @@ Please enter a different name to identify this synced folder:</source>
     <message numerus="yes">
         <source>Your Pro membership plan will expire in %n day</source>
         <translatorcomment>Label to indicate that the PRO membership will expire in %n days. Placeholder will be replaced by the remaining days until plan will expire.</translatorcomment>
-        <translation>
-            <numerusform>당신의 Pro 회원권 요금제가 %n일 이내에 만료됩니다.</numerusform>
-        </translation>
+        <translation><numerusform>당신의 Pro 회원권 요금제가 %n일 이내에 만료됩니다.</numerusform></translation>
     </message>
     <message>
         <source>Pro membership plan expiring soon</source>
@@ -999,9 +993,7 @@ Please enter a different name to identify this synced folder:</source>
     <message numerus="yes">
         <source>Your Pro membership plan expired %n day ago</source>
         <translatorcomment>Label to indicate that the PRO membership expired %n days ago. Placeholder will be replaced by the days from the expiration of the PRO membership.</translatorcomment>
-        <translation>
-            <numerusform>당신의 Pro 회원권 요금제가 %n일 전에 만료되었습니다</numerusform>
-        </translation>
+        <translation><numerusform>당신의 Pro 회원권 요금제가 %n일 전에 만료되었습니다</numerusform></translation>
     </message>
 </context>
 <context>
@@ -1243,16 +1235,12 @@ Please enter a different name to identify this synced folder:</source>
     <message numerus="yes">
         <source>[A] added %n item</source>
         <translatorcomment>Label to indicate that [A] has added %n items to a shared folder. Placeholder [A] will be replaced by email of the user that made the additions and %n with the number of added items.</translatorcomment>
-        <translation>
-            <numerusform>[A]님이 %n개 항목 추가</numerusform>
-        </translation>
+        <translation><numerusform>[A]님이 %n개 항목 추가</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>You have %n day left to save your data</source>
         <translatorcomment>Notification content to inform the days the user have to save the date before possible deletion. %n will be replaced with remaining days amount.</translatorcomment>
-        <translation>
-            <numerusform>데이터를 지킬 수 있는 날이 %n일 남았습니다</numerusform>
-        </translation>
+        <translation><numerusform>데이터를 지킬 수 있는 날이 %n일 남았습니다</numerusform></translation>
     </message>
     <message>
         <source>Upgrade now to a Pro account.</source>
@@ -1373,9 +1361,7 @@ Please enter a different name to identify this synced folder:</source>
     <message numerus="yes">
         <source>Apply to all %1 duplicates</source>
         <translatorcomment>Checkbox text to apply the action to all the following conflicts. %1 is the number of conflicts</translatorcomment>
-        <translation>
-            <numerusform>모든 %1개의 중복에 적용</numerusform>
-        </translation>
+        <translation><numerusform>모든 %1개의 중복에 적용</numerusform></translation>
     </message>
     <message>
         <source>The file at this destination will be updated with a new version.</source>
@@ -1488,16 +1474,12 @@ Please enter a different name to identify this synced folder:</source>
     <message numerus="yes">
         <source>%n file</source>
         <translatorcomment>Context menu option label to indicate the user has selected %n number of files</translatorcomment>
-        <translation>
-            <numerusform>파일 %n개</numerusform>
-        </translation>
+        <translation><numerusform>파일 %n개</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n folder</source>
         <translatorcomment>Context menu option label to indicate the user has selected %n number of folders</translatorcomment>
-        <translation>
-            <numerusform>폴더 %n개</numerusform>
-        </translation>
+        <translation><numerusform>폴더 %n개</numerusform></translation>
     </message>
 </context>
 <context>
@@ -1525,29 +1507,29 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Warning</source>
         <translatorcomment>Label to indicate a waring during the process of stablish a synchronization.</translatorcomment>
-        <translation type="vanished">경고</translation>
+        <translation>경고</translation>
     </message>
     <message>
         <source>MEGAsync won&apos;t be able to download anything here.</source>
         <translatorcomment>Label to indicate that MEGAsync won&apos;t be able to download anything due to the user doesn&apos;t have writhe permissions on the local selected folder.</translatorcomment>
-        <translation type="vanished">MEGAsync가 이 곳에 아무 것도 다운로드 할 수 없을 것입니다.</translation>
+        <translation>MEGAsync가 이 곳에 아무 것도 다운로드 할 수 없을 것입니다.</translation>
     </message>
     <message>
         <source>Do you want to continue?</source>
         <translatorcomment>Label to indicate if the user wants to continue in spite of the problem occured.</translatorcomment>
-        <translation type="vanished">계속하시겠습니까?</translation>
+        <translation>계속하시겠습니까?</translation>
     </message>
     <message>
         <source>You don&apos;t have write permissions in this local folder.</source>
         <translatorcomment>Label to indicate that a user don&apos;t have write permissions in the selected local folder for a synchronization.</translatorcomment>
-        <translation type="vanished">당신은 이 로컬 폴더에 쓰기 권한을 가지고 있지 않습니다.</translation>
+        <translation>당신은 이 로컬 폴더에 쓰기 권한을 가지고 있지 않습니다.</translation>
     </message>
     <message>
         <source>You are trying to sync an extremely large folder.
 To prevent the syncing of entire boot volumes, which is inefficient and dangerous,
 we ask you to start with a smaller folder and add more data while MEGAsync is running.</source>
         <translatorcomment>Label to inform a user about the fact of syncing a extremely large folder and the possible drawbacks that could arise.</translatorcomment>
-        <translation type="vanished">동기화하려는 폴더가 너무 큽니다. 비효율적이고 위험한 전체 부트 볼륨의 동기화를 방지하려면, 작은 폴더로 시작하여 MEGAsync가 작동중일 때 데이터를 추가할 것을 요청합니다.</translation>
+        <translation>동기화하려는 폴더가 너무 큽니다. 비효율적이고 위험한 전체 부트 볼륨의 동기화를 방지하려면, 작은 폴더로 시작하여 MEGAsync가 작동중일 때 데이터를 추가할 것을 요청합니다.</translation>
     </message>
     <message>
         <source>Error</source>
@@ -1811,7 +1793,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Syncs</source>
         <translatorcomment>Button label to show all synchronizations that the user has stablish (String as short as possible).</translatorcomment>
-        <translation type="vanished">동기화</translation>
+        <translation>동기화</translation>
     </message>
     <message>
         <source>Add Sync</source>
@@ -1895,7 +1877,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Download</source>
         <translatorcomment>Label to indicate a download.</translatorcomment>
-        <translation type="vanished">다운로드</translation>
+        <translation>다운로드</translation>
     </message>
     <message>
         <source>Transfers</source>
@@ -2025,23 +2007,17 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message numerus="yes">
         <source>We have contacted you by email to [A] on [B] but you still have %n file taking up [D] in your MEGA account, which requires you to have [E].</source>
         <translatorcomment>Informative label about account status regarding over quota storage. Placeholders will be replaced: [A] - user email, [B] - localized date list of emails sent to inform the user about the situation,  %n - amount of files in the current account, [D] - amount of storage used and [E] - min PRO plan needed to fix the situation.</translatorcomment>
-        <translation>
-            <numerusform>우리는 [B]에 [A]로 이메일을 발송하여 연락을 하였지만, 여전히 당신의 MEGA 계정에 [D]를 차지하는 %n개의 파일이 존재하며, 이는 [E]가 필요합니다.</numerusform>
-        </translation>
+        <translation><numerusform>우리는 [B]에 [A]로 이메일을 발송하여 연락을 하였지만, 여전히 당신의 MEGA 계정에 [D]를 차지하는 %n개의 파일이 존재하며, 이는 [E]가 필요합니다.</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>You have [A]%n day[/A] left to upgrade. After that, your data is subject to deletion.</source>
         <translatorcomment>Label to inform about the deadline time to upgrade. Otherwise, data is subject to deletion. Placeholder info: [A][/A] - needed to format and apply text style, %n- number of days left to upgrade.</translatorcomment>
-        <translation>
-            <numerusform>업그레이드까지 [A]%n일[/A] 남았습니다. 그 후, 당신의 데이터는 삭제 대상이 됩니다.</numerusform>
-        </translation>
+        <translation><numerusform>업그레이드까지 [A]%n일[/A] 남았습니다. 그 후, 당신의 데이터는 삭제 대상이 됩니다.</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>You have [A]%n hour[/A] left to upgrade. After that, your data is subject to deletion.</source>
         <translatorcomment>Label to inform about the deadline time to upgrade. Otherwise, data is subject to deletion. Placeholder info: [A][/A] - needed to format and apply text style, %n- number of hours left to upgrade.</translatorcomment>
-        <translation>
-            <numerusform>업그레이드까지 [A]%n시간[/A] 남았습니다. 그 후, 당신의 데이터는 삭제 대상이 됩니다.</numerusform>
-        </translation>
+        <translation><numerusform>업그레이드까지 [A]%n시간[/A] 남았습니다. 그 후, 당신의 데이터는 삭제 대상이 됩니다.</numerusform></translation>
     </message>
     <message>
         <source>Error</source>
@@ -2467,7 +2443,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>DEBUG mode enabled. A log is being created in your desktop (MEGAsync.log)</source>
         <translatorcomment>Notification message shown when the DEBUG mode is enabled.</translatorcomment>
-        <translation>디버그 모드가 활성화되었습니다. 바탕 화면에 기록이 생성되고 있습니다 (MEGAsync.log).</translation>
+        <translation>디버그 모드가 활성화되었습니다. 바탕 화면에 기록이 생성되고 있습니다(MEGAsync.log).</translation>
     </message>
     <message>
         <source>Error: Invalid destination folder. The download has been cancelled</source>
@@ -2577,12 +2553,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Add Sync</source>
         <translatorcomment>Menu item to add a new synchronization</translatorcomment>
-        <translation type="vanished">동기화 추가</translation>
+        <translation>동기화 추가</translation>
     </message>
     <message>
         <source>Syncs</source>
         <translatorcomment>Menu item to show current synchronizations</translatorcomment>
-        <translation type="vanished">동기화</translation>
+        <translation>동기화</translation>
     </message>
     <message>
         <source>Cloud drive</source>
@@ -2722,44 +2698,32 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message numerus="yes">
         <source>%n file</source>
         <translatorcomment>File count, where %n is the number of files. Used to build the &quot;Files and folders successfully uploaded/downloaded&quot; string.</translatorcomment>
-        <translation>
-            <numerusform>파일 %n개</numerusform>
-        </translation>
+        <translation><numerusform>파일 %n개</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n folder</source>
         <translatorcomment>Folder count, where %n is the number of folders. Used to build the &quot;Files and folders successfully uploaded/downloaded&quot; string.</translatorcomment>
-        <translation>
-            <numerusform>폴더 %n개</numerusform>
-        </translation>
+        <translation><numerusform>폴더 %n개</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n file was successfully uploaded</source>
         <translatorcomment>System notification to inform the user that %1 files were successfully uploaded</translatorcomment>
-        <translation>
-            <numerusform>파일 %n개가 성공적으로 업로드 되었습니다</numerusform>
-        </translation>
+        <translation><numerusform>파일 %n개가 성공적으로 업로드 되었습니다</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n file was successfully downloaded</source>
         <translatorcomment>System notification to inform the user that %1 files were successfully downloaded</translatorcomment>
-        <translation>
-            <numerusform>파일 %n개가 성공적으로 다운로드 되었습니다</numerusform>
-        </translation>
+        <translation><numerusform>파일 %n개가 성공적으로 다운로드 되었습니다</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n folder was successfully uploaded</source>
         <translatorcomment>System notification to inform the user that %n folders were successfully uploaded</translatorcomment>
-        <translation>
-            <numerusform>폴더 %n개가 성공적으로 업로드 되었습니다</numerusform>
-        </translation>
+        <translation><numerusform>폴더 %n개가 성공적으로 업로드 되었습니다</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n folder was successfully downloaded</source>
         <translatorcomment>System notification to inform the user that %n folders were successfully downloaded</translatorcomment>
-        <translation>
-            <numerusform>폴더 %n개가 성공적으로 다운로드 되었습니다</numerusform>
-        </translation>
+        <translation><numerusform>폴더 %n개가 성공적으로 다운로드 되었습니다</numerusform></translation>
     </message>
     <message>
         <source>A new version of MEGAsync is available. Click on this message to install it</source>
@@ -2785,10 +2749,8 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>There is an active transfer. Exit the app?
 Transfer will automatically resume when you re-open the app.</source>
         <translatorcomment>Messagebox text to let the user know that there are active transfers when closing the app. The user will be able to exit and pause them, or stop the exit action.</translatorcomment>
-        <translation>
-            <numerusform>활성 상태의 전송이 있습니다. 앱을 나갈까요?
-앱을 다시 열면 전송이 자동으로 재개됩니다.</numerusform>
-        </translation>
+        <translation><numerusform>활성 상태의 전송이 있습니다. 앱을 나갈까요?
+앱을 다시 열면 전송이 자동으로 재개됩니다.</numerusform></translation>
     </message>
     <message>
         <source>Exit app</source>
@@ -2993,11 +2955,11 @@ Transfer will automatically resume when you re-open the app.</source>
     </message>
     <message>
         <source>Your account has been suspended due to multiple breaches of MEGA’s Terms of Service. Please check your email inbox.</source>
-        <translation type="vanished">당신의 계정은 MEGA 이용 약관을 다수 위반하여 정지되었습니다. 이메일 수신함을 확인하세요.</translation>
+        <translation>당신의 계정은 MEGA 이용 약관을 다수 위반하여 정지되었습니다. 이메일 수신함을 확인하세요.</translation>
     </message>
     <message>
         <source>Your account was terminated due to breach of Mega’s Terms of Service, such as abuse of rights of others; sharing and/or importing illegal data; or system abuse.</source>
-        <translation type="vanished">당신의 계정이 타인의 권리를 침해; 불법 데이터의 공유 또는 들여오기; 시스템 오남용 등, MEGA의 이용 약관을 위반하여 제거되었습니다.</translation>
+        <translation>당신의 계정이 타인의 권리를 침해; 불법 데이터의 공유 또는 들여오기; 시스템 오남용 등, MEGA의 이용 약관을 위반하여 제거되었습니다.</translation>
     </message>
     <message>
         <source>SSL verification failed</source>
@@ -3380,30 +3342,22 @@ Transfer will automatically resume when you re-open the app.</source>
     <message numerus="yes">
         <source>Pause transfer</source>
         <translatorcomment>Context menu action to pause transfer</translatorcomment>
-        <translation>
-            <numerusform>전송 일시정지</numerusform>
-        </translation>
+        <translation><numerusform>전송 일시정지</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Resume transfer</source>
         <translatorcomment>Context menu action to resume transfer</translatorcomment>
-        <translation>
-            <numerusform>전송 재개</numerusform>
-        </translation>
+        <translation><numerusform>전송 재개</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Cancel transfer</source>
         <translatorcomment>Context menu action to cancel transfer</translatorcomment>
-        <translation>
-            <numerusform>전송 취소</numerusform>
-        </translation>
+        <translation><numerusform>전송 취소</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Clear transfer</source>
         <translatorcomment>Tooltip for the clear button in a transfer row</translatorcomment>
-        <translation>
-            <numerusform>전송 초기화</numerusform>
-        </translation>
+        <translation><numerusform>전송 초기화</numerusform></translation>
     </message>
     <message>
         <source>Cancel transfers?
@@ -3436,7 +3390,7 @@ Your incomplete sync transfers won&apos;t be cancelled.</source>
     </message>
     <message>
         <source>Cancel transfers?
-Your incomplete sync transfers won&apos;t be cancelled
+Your incomplete sync transfers won't be cancelled
 All the other transfers will be cancelled and cleared.</source>
         <translatorcomment>Messagebox text to confirm if the user wants to cancel and clear all the transfers in a category other than all transfers category but there are sync transfers(they cannot be cancelled)</translatorcomment>
         <translation>전송을 취소할까요?
@@ -3473,7 +3427,7 @@ All your selected transfers will be cancelled and cleared.</source>
     </message>
     <message>
         <source>Cancel transfers?
-Your selected incomplete sync transfers won&apos;t be cancelled
+Your selected incomplete sync transfers won't be cancelled
 All the other selected transfers will be cancelled and cleared.</source>
         <translatorcomment>Messagebox text to confirm if the user wants to cancel and clear all the selected transfers but there are sync transfers in the selection (they cannot be cancelled)</translatorcomment>
         <translation>전송을 취소할까요?
@@ -3508,9 +3462,7 @@ Your selected incomplete sync transfers won&apos;t be cancelled.</source>
     <message numerus="yes">
         <source>Cancel and clear transfer</source>
         <translatorcomment>Context menu action to resume cancel the active transfers and clear the completed transfers (multiple transfers selected)</translatorcomment>
-        <translation>
-            <numerusform>전송 취소하고 지우기</numerusform>
-        </translation>
+        <translation><numerusform>전송 취소하고 지우기</numerusform></translation>
     </message>
     <message>
         <source>Yes, cancel</source>
@@ -3541,17 +3493,17 @@ Your selected incomplete sync transfers won&apos;t be cancelled.</source>
     <message>
         <source>MEGAsync</source>
         <translatorcomment>Label used for title of a system message box.</translatorcomment>
-        <translation type="vanished">MEGAsync</translation>
+        <translation>MEGAsync</translation>
     </message>
     <message>
         <source>You are syncing a local folder formatted with a FAT filesystem. That filesystem has deficiencies managing big files and modification times that can cause synchronization problems (e.g. when daylight saving changes), so it&apos;s strongly recommended that you only sync folders formatted with more reliable filesystems like NTFS (more information [A]here[/A]).</source>
         <translatorcomment>Informative message shown when a user is trying to sync using a FAT filesystem.</translatorcomment>
-        <translation type="vanished">FAT 파일 시스템으로 포맷된 로컬 폴더를 동기화하고 있습니다. 해당 파일 시스템은 동기화 오류를 유발할 수 있는 시간 수정과 큰 파일 관리에 결함이 있습니다 (예를 들어 일광 시간 절약 적용시), 그러므로 NTFS처럼 믿을만한 파일 시스템으로 포맷된 폴더만 동기화할 것을 강력히 추천합니다 (자세한 정보는 [A]여기에[/A]).</translation>
+        <translation>FAT 파일 시스템으로 포맷된 로컬 폴더를 동기화하고 있습니다. 해당 파일 시스템은 동기화 오류를 유발할 수 있는 시간 수정과 큰 파일 관리에 결함이 있습니다(예를 들어 일광 시간 절약 적용시), 그러므로 NTFS처럼 믿을만한 파일 시스템으로 포맷된 폴더만 동기화할 것을 강력히 추천합니다(자세한 정보는 [A]여기에[/A]).</translation>
     </message>
     <message>
         <source>You are syncing a local folder shared with VMWare. Those folders do not support filesystem notifications so MEGAsync will have to be continuously scanning to detect changes in your files and folders. Please use a different folder if possible to reduce the CPU usage.</source>
         <translatorcomment>Informative message shown when a user is trying to sync using a local folder shared with VMWare third party app.</translatorcomment>
-        <translation type="vanished">당신은 VMWare와 공유된 로컬 폴더를 동기화하려고 합니다. 이러한 폴더들은 파일시스템 알림을 지원하지 않아서 MEGAsync가 지속적으로 파일과 폴더의 변화를 탐지하기 위해 스캔을 할 것입니다. CPU 사용량을 줄이려면 다른 폴더를 이용하세요.</translation>
+        <translation>당신은 VMWare와 공유된 로컬 폴더를 동기화하려고 합니다. 이러한 폴더들은 파일시스템 알림을 지원하지 않아서 MEGAsync가 지속적으로 파일과 폴더의 변화를 탐지하기 위해 스캔을 할 것입니다. CPU 사용량을 줄이려면 다른 폴더를 이용하세요.</translation>
     </message>
 </context>
 <context>
@@ -3656,9 +3608,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message numerus="yes">
         <source>You no longer have access to this item. Ask the owner to share again.</source>
         <translatorcomment>Error message shown when the user is trying to download an file or folder from an incoming share and the owner stops sharing/removes all items</translatorcomment>
-        <translation>
-            <numerusform>이 항목에 더 이상 접근할 수 없습니다. 소유자에게 다시 공유를 요청하세요.</numerusform>
-        </translation>
+        <translation><numerusform>이 항목에 더 이상 접근할 수 없습니다. 소유자에게 다시 공유를 요청하세요.</numerusform></translation>
     </message>
     <message>
         <source>Cloud drive</source>
@@ -3672,34 +3622,24 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
     <message>
         <source>Error:</source>
-        <translation type="vanished">오류: </translation>
+        <translation>오류: </translation>
     </message>
     <message numerus="yes">
         <source>The item you selected has been removed. To reselect, close this window and try again.</source>
         <translatorcomment>Error message shown while the user is trying to download an file or folder but all selected nodes were removed</translatorcomment>
-        <translation>
-            <numerusform>선택한 항목이 제거되었습니다. 다시 선택하려면, 이 창을 닫고 다시 시도하세요.</numerusform>
-        </translation>
+        <translation><numerusform>선택한 항목이 제거되었습니다. 다시 선택하려면, 이 창을 닫고 다시 시도하세요.</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%1 item selected</source>
         <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
                            First part of string for multi plural support. Full string looks like: 5 items selected. 2 have been removed. To reselect, close this window and try again. </translatorcomment>
-        <translation>
-            <numerusform>%1개 항목이 선택되었습니다</numerusform>
-        </translation>
+        <translation><numerusform>%1개 항목이 선택되었습니다</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%1. %2 has been removed. To reselect, close this window and try again.</source>
         <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
                            Second and last part of string for multi plural support. Full string looks like: 5 items selected. 2 have been removed. To reselect, close this window and try again. </translatorcomment>
-        <translation>
-            <numerusform>%1. %2 제거되었습니다. 다시 선택하려면, 이 창을 닫고 다시 시도하세요.</numerusform>
-        </translation>
-    </message>
-    <message>
-        <source>Backups</source>
-        <translation type="unfinished"></translation>
+        <translation><numerusform>%1. %2 제거되었습니다. 다시 선택하려면, 이 창을 닫고 다시 시도하세요.</numerusform></translation>
     </message>
 </context>
 <context>
@@ -3793,9 +3733,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message numerus="yes">
         <source>[A] removed %n item</source>
         <translatorcomment>Label to indicate that [A] has removed %n items from a shared folder. Placeholder [A] will be replaced by email of the user that made the deletion and %n with the number of removed items.</translatorcomment>
-        <translation>
-            <numerusform>[A]님이 %n개 항목 삭제</numerusform>
-        </translation>
+        <translation><numerusform>[A]님이 %n개 항목 삭제</numerusform></translation>
     </message>
 </context>
 <context>
@@ -4083,9 +4021,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message numerus="yes">
         <source>minimum %n user</source>
         <translatorcomment>Label to inform about the minimum number of users for a business plan. %1 will be replaced with the minimum number of users.</translatorcomment>
-        <translation>
-            <numerusform>최소 이용자 %n명</numerusform>
-        </translation>
+        <translation><numerusform>최소 이용자 %n명</numerusform></translation>
     </message>
 </context>
 <context>
@@ -4188,7 +4124,7 @@ Please delete the folder sync from preferences to cancel them.</source>
 - UI fixed and adjusted.
 </source>
         <translatorcomment>Changelog for version v4.7.0</translatorcomment>
-        <translation type="vanished">- 새 전송 관리자가 있습니다.
+        <translation>- 새 전송 관리자가 있습니다.
 - 전송 관리가 향상되었으며 다운로드와 업로드의 안정성이 향상되었습니다.
 - 감지된 Windows, Linux 그리고 macOS의 충돌이 해결되었습니다.
 - 번역 문제를 해결하였습니다.
@@ -4446,7 +4382,7 @@ Please delete the folder sync from preferences to cancel them.</source>
     <message>
         <source>All Files (*)</source>
         <translatorcomment>File of type option for not filtering files by extension</translatorcomment>
-        <translation>모든 파일 (*)</translation>
+        <translation>모든 파일(*)</translation>
     </message>
     <message>
         <source>Show </source>
@@ -4456,7 +4392,7 @@ Please delete the folder sync from preferences to cancel them.</source>
     <message>
         <source>All files (*)</source>
         <translatorcomment>File of type option for not filtering files by extension</translatorcomment>
-        <translation>모든 파일 (*)</translation>
+        <translation>모든 파일(*)</translation>
     </message>
     <message>
         <source>Directories</source>
@@ -4636,7 +4572,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>%1 bytes</source>
         <translatorcomment>File size measured in bytes</translatorcomment>
-        <translation>%1&#xa0;바이트</translation>
+        <translation>%1 바이트</translation>
     </message>
     <message>
         <source>Invalid filename</source>
@@ -4872,12 +4808,12 @@ Do you want to delete it anyway?</source>
     <message>
         <source>Local Folder</source>
         <translatorcomment>Label to indicate the local folder column for sync table. String as short as possible.</translatorcomment>
-        <translation type="vanished">로컬 폴더</translation>
+        <translation>로컬 폴더</translation>
     </message>
     <message>
         <source>MEGA folder</source>
         <translatorcomment>Label to indicate the MEGA folder column for sync table. String as short as possible.</translatorcomment>
-        <translation type="vanished">MEGA 폴더</translation>
+        <translation>MEGA 폴더</translation>
     </message>
     <message>
         <source>Auto</source>
@@ -4892,7 +4828,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>%1 (%2%) of %3 used</source>
         <translatorcomment>Label to indicate the amount and percentage of used and total space available. Keep %1 (%2%) and %3 substitution placeholders because they will be filled with the required amounts of storage space dynamically.</translatorcomment>
-        <translation>%3 중 %1 (%2%) 사용됨</translation>
+        <translation>%3 중 %1(%2%)사용됨</translation>
     </message>
     <message>
         <source>Warning</source>
@@ -4944,7 +4880,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Enable / disable</source>
         <translatorcomment>Tooltip for checkbox to let the user enable/disable a specific synchronization.</translatorcomment>
-        <translation type="vanished">활성화 / 비활성화</translation>
+        <translation>활성화 / 비활성화</translation>
     </message>
     <message>
         <source>You don&apos;t have write permissions in this local folder.</source>
@@ -4969,7 +4905,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Always keep physical control of your master key (e.g. on a client device, external storage, or print).</source>
         <translatorcomment>Label to inform the user to keep physical control of the master key.</translatorcomment>
-        <translation>항상 당신의 복구 키에 대해 물리적 분리 보관을유지하세요 (예를 들어 클라이언트 장치, 외부 저장소, 또는 인쇄 등).</translation>
+        <translation>항상 당신의 복구 키에 대해 물리적 분리 보관을유지하세요(예를 들어 클라이언트 장치, 외부 저장소, 또는 인쇄 등).</translation>
     </message>
     <message>
         <source>Exclude by size</source>
@@ -5059,7 +4995,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Unexpected error disabling sync %1</source>
         <translatorcomment>Error message shown when an error occurs while trying to disable a sync named %1.</translatorcomment>
-        <translation type="vanished">동기화 %1를 해제하던 중 예상치 못한 오류</translation>
+        <translation>동기화 %1를 해제하던 중 예상치 못한 오류</translation>
     </message>
     <message>
         <source>Error enabling sync</source>
@@ -5109,7 +5045,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>%1 (local cache)</source>
         <translatorcomment>Section label name for local cache summary and actions. Keep %1 placeholder, which is used to fill in the platform specific name for local sync cache (debris).</translatorcomment>
-        <translation>%1 (로컬 캐시)</translation>
+        <translation>%1(로컬 캐시)</translation>
     </message>
     <message>
         <source>Space used:</source>
@@ -5124,7 +5060,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>SyncDebris (remote cache)</source>
         <translatorcomment>Section label name for remote cache summary and clear action.</translatorcomment>
-        <translation>SyncDebris (원격 캐시)</translation>
+        <translation>SyncDebris(원격 캐시)</translation>
     </message>
     <message>
         <source>Enable file versioning</source>
@@ -5249,12 +5185,12 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>%1 (local cache):</source>
         <translatorcomment>Section label name for local cache summary and actions. Keep %1 placeholder, which is used to fill in the platform specific name for local sync cache (debris) (macOS)</translatorcomment>
-        <translation>%1 (로컬 캐시):</translation>
+        <translation>%1(로컬 캐시):</translation>
     </message>
     <message>
         <source>SyncDebris (remote cache):</source>
         <translatorcomment>Section label name for remote cache summary and clear action.(macOS)</translatorcomment>
-        <translation>SyncDebris (원격 캐시):</translation>
+        <translation>SyncDebris(원격 캐시):</translation>
     </message>
     <message>
         <source>File versions:</source>
@@ -5359,17 +5295,22 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Synchronization will stop working. Are you sure?</source>
         <translatorcomment>Message label indicating that the synchronizations will stop if the user logs out. Ask for confirmation.</translatorcomment>
-        <translation type="vanished">동기화가 작동을 멈출 것입니다. 확실합니까?</translation>
+        <translation>동기화가 작동을 멈출 것입니다. 확실합니까?</translation>
     </message>
     <message>
         <source>Open in MEGA</source>
         <translatorcomment>Text label for action menu item to open the selected Sync folder in MEGA web app File Manager. Keep string as short as possible, as this shows up in menu similar to a context menu.</translatorcomment>
-        <translation type="vanished">MEGA에서 열기</translation>
+        <translation>MEGA에서 열기</translation>
     </message>
     <message>
         <source>Remove synced folder</source>
         <translatorcomment>Text label for action menu item to remove the synchronization for the selected folder. Keep string as short as possible, as this shows up in menu similar to a context menu.</translatorcomment>
-        <translation type="vanished">동기화 폴더 삭제</translation>
+        <translation>동기화 폴더 삭제</translation>
+    </message>
+    <message>
+        <source>Saving Sync settings</source>
+        <translatorcomment>Not used currently. Might get removed in a future refactoring.</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Restart MEGAsync</source>
@@ -5409,7 +5350,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>MEGA Folder</source>
         <translatorcomment>Label to indicate the MEGA folder column for sync table. String as short as possible.</translatorcomment>
-        <translation type="vanished">MEGA 폴더</translation>
+        <translation>MEGA 폴더</translation>
     </message>
     <message>
         <source>Choose which files or folders you want to exclude from synchronisation.</source>
@@ -5454,116 +5395,12 @@ Do you want to restart MEGAsync now?</source>
     <message numerus="yes">
         <source>Used quota for the last %n hour:</source>
         <translatorcomment>Informative text shown in Account pane for Free account type. Indicates the used quota in the last %n specified number of hours. Keep the %n subsitution argument.</translatorcomment>
-        <translation>
-            <numerusform>지난 %n 시간 동안 사용한 할당량:</numerusform>
-        </translation>
+        <translation><numerusform>지난 %n 시간 동안 사용한 할당량:</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>day</source>
         <translatorcomment>Suffix text label for number of days to keep files in local cache.</translatorcomment>
-        <translation>
-            <numerusform>일</numerusform>
-        </translation>
-    </message>
-    <message>
-        <source>Backup</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Backups</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Backup Folder</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>View in MEGA</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Saving backups…</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Some folders have not backed up. For more information please hover over the yellow warning icon.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>To Backup Center</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Backup folder:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Synchronizations and backups will stop working.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Backups will stop working.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Synchronizations will stop working.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Are you sure?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Error adding sync</source>
-        <translation type="unfinished">동기화 추가 오류</translation>
-    </message>
-    <message>
-        <source>Error removing sync</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Your sync &quot;%1&quot; can&apos;t be removed. Reason: %2</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Error disabling sync</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Your sync &quot;%1&quot; can&apos;t be disabled. Reason: %2</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Backup Error</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Error creating Backups root folder: %2</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Error adding backup %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Error removing backup</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Your backup &quot;%1&quot; can&apos;t be removed. Reason: %2</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Error enabling backup</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Your backup &quot;%1&quot; can&apos;t be enabled. Reason: %2</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Error disabling backup</source>
-        <translation type="unfinished"></translation>
+        <translation><numerusform>일</numerusform></translation>
     </message>
 </context>
 <context>
@@ -5743,7 +5580,7 @@ Do you want to restart MEGAsync now?</source>
 To prevent the syncing of entire boot volumes, which is inefficient and dangerous,
 we ask you to start with a smaller folder and add more data while MEGAsync is running.</source>
         <translatorcomment>Message displayed to advise the user that is trying to sync an extremely large folder.</translatorcomment>
-        <translation type="vanished">동기화하려는 폴더가 너무 큽니다. 비효율적이고 위험한 전체 부트 볼륨의 동기화를 방지하려면, 작은 폴더로 시작하여 MEGAsync가 작동중일 때 데이터를 추가할 것을 요청합니다.</translation>
+        <translation>동기화하려는 폴더가 너무 큽니다. 비효율적이고 위험한 전체 부트 볼륨의 동기화를 방지하려면, 작은 폴더로 시작하여 MEGAsync가 작동중일 때 데이터를 추가할 것을 요청합니다.</translation>
     </message>
     <message>
         <source>Unable to get the filesystem.
@@ -5769,12 +5606,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>You don&apos;t have write permissions in this local folder.</source>
         <translatorcomment>Message displayed when a user is trying to synchronized a local folder in wich the user has no write permissions.</translatorcomment>
-        <translation type="vanished">당신은 이 로컬 폴더에 쓰기 권한을 가지고 있지 않습니다.</translation>
+        <translation>당신은 이 로컬 폴더에 쓰기 권한을 가지고 있지 않습니다.</translation>
     </message>
     <message>
         <source>MEGAsync won&apos;t be able to download anything here.</source>
         <translatorcomment>Message displayed when a user is trying to synchronized a local folder in wich the user has no write permissions.</translatorcomment>
-        <translation type="vanished">MEGAsync가 이 곳에 아무 것도 다운로드 할 수 없을 것입니다.</translation>
+        <translation>MEGAsync가 이 곳에 아무 것도 다운로드 할 수 없을 것입니다.</translation>
     </message>
     <message>
         <source>Do you want to continue?</source>
@@ -5803,7 +5640,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Creating folder...</source>
         <translatorcomment>Label shown when an user is creating a remote folder.</translatorcomment>
-        <translation type="vanished">폴더 생성중…</translation>
+        <translation>폴더 생성중…</translation>
     </message>
     <message>
         <source>Logging out...</source>
@@ -5959,12 +5796,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>%1 (%2, %3)</source>
         <translatorcomment>Keep %1 (%2, %3) code because it will be filled with the number of folders at runtime. It will generate strings like: Upload to MEGA (5 files, 3 folders)</translatorcomment>
-        <translation>%1 (%2, %3)</translation>
+        <translation>%1(%2, %3)</translation>
     </message>
     <message>
         <source>%1 (%2)</source>
         <translatorcomment>Keep %1 (%2) code because it will be filled with the number of folders at runtime. It will generate strings like: Upload to MEGA (5 files)</translatorcomment>
-        <translation>%1 (%2)</translation>
+        <translation>%1(%2)</translation>
     </message>
     <message>
         <source>Remove from left pane</source>
@@ -5984,16 +5821,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message numerus="yes">
         <source>%n file</source>
         <translatorcomment>Label to indicate file count. Keep %n code because it will be filled with the number of files at runtime.</translatorcomment>
-        <translation>
-            <numerusform>파일 %n개</numerusform>
-        </translation>
+        <translation><numerusform>파일 %n개</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n folder</source>
         <translatorcomment>Label to indicate folder count. Keep %n code because it will be filled with the number of folders at runtime.</translatorcomment>
-        <translation>
-            <numerusform>폴더 %n개</numerusform>
-        </translation>
+        <translation><numerusform>폴더 %n개</numerusform></translation>
     </message>
 </context>
 <context>
@@ -6579,9 +6412,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message numerus="yes">
         <source>%1 result found</source>
         <translatorcomment>Message shown with search results,when there are only uploads or downloads, but not both at the same time</translatorcomment>
-        <translation>
-            <numerusform>%1개의 결과 찾음</numerusform>
-        </translation>
+        <translation><numerusform>%1개의 결과 찾음</numerusform></translation>
     </message>
     <message>
         <source>Upgrade now</source>
@@ -6613,9 +6444,7 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
     <message numerus="yes">
         <source>Issue found</source>
         <translatorcomment>Message shown when there are some failed transfers/syncs/backups</translatorcomment>
-        <translation>
-            <numerusform>문제 발견</numerusform>
-        </translation>
+        <translation><numerusform>문제 발견</numerusform></translation>
     </message>
 </context>
 <context>
@@ -6953,7 +6782,7 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
     <message>
         <source>Please upgrade to PRO to enjoy more storage space (your uploads will automatically resume).</source>
         <translatorcomment>Label to encourage the user to upgrade his account</translatorcomment>
-        <translation>더 많은 저장 공간을 즐기려면 계정을 업그레이드 하세요 (업로드는 자동으로 재개됩니다).</translation>
+        <translation>더 많은 저장 공간을 즐기려면 계정을 업그레이드 하세요(업로드는 자동으로 재개됩니다).</translation>
     </message>
     <message>
         <source>Your MEGA account is full</source>
@@ -7081,44 +6910,32 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
     <message numerus="yes">
         <source>%n second ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n seconds ago</translatorcomment>
-        <translation>
-            <numerusform>%n초 전</numerusform>
-        </translation>
+        <translation><numerusform>%n초 전</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n minute ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n minutes ago</translatorcomment>
-        <translation>
-            <numerusform>%n분 전</numerusform>
-        </translation>
+        <translation><numerusform>%n분 전</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n hour ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n hours ago</translatorcomment>
-        <translation>
-            <numerusform>%n시간 전</numerusform>
-        </translation>
+        <translation><numerusform>%n시간 전</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n day ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n days ago</translatorcomment>
-        <translation>
-            <numerusform>%n일 전</numerusform>
-        </translation>
+        <translation><numerusform>%n일 전</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n month ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n months ago</translatorcomment>
-        <translation>
-            <numerusform>%n개월 전</numerusform>
-        </translation>
+        <translation><numerusform>%n개월 전</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n year ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n years ago</translatorcomment>
-        <translation>
-            <numerusform>%n년 전</numerusform>
-        </translation>
+        <translation><numerusform>%n년 전</numerusform></translation>
     </message>
 </context>
 <context>
@@ -7188,7 +7005,7 @@ Do you want to create one?</source>
     <message>
         <source>Yes (recommended)</source>
         <translatorcomment>Button text for to confirm the creation of link at Start Menu (Windows only)</translatorcomment>
-        <translation>예 (권장)</translation>
+        <translation>예(권장)</translation>
     </message>
     <message>
         <source>No</source>
@@ -7198,7 +7015,7 @@ Do you want to create one?</source>
     <message>
         <source>No (never ask again)</source>
         <translatorcomment>Button text to discard the option and never ask again if the problem is detected in the future.</translatorcomment>
-        <translation>아니오 (다시 묻지 않기)</translation>
+        <translation>아니오(다시 묻지 않기)</translation>
     </message>
 </context>
 <context>

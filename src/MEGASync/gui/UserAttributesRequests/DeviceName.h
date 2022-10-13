@@ -16,7 +16,8 @@ public:
 
     void onRequestFinish(mega::MegaApi *, mega::MegaRequest *incoming_request, mega::MegaError *e) override;
     void requestAttribute() override;
-    void updateAttributes(mega::MegaUser* user) override;
+    RequestInfo fillRequestInfo() override;
+
     bool isAttributeReady() const override;
 
     QString getDeviceName();
@@ -26,7 +27,6 @@ signals:
     void attributeReady(const QString&);
 
 private:
-    void requestDeviceNameAttribute(bool forceRefresh);
     void setDeviceNameAttribute();
 
     bool mIsDeviceNameSetOnRemote;

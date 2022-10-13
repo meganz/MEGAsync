@@ -982,5 +982,8 @@
         <file>images/transfer_manager/transfers_actions/lists_minus_ico_hover.png</file>
         <file>images/transfer_manager/transfers_actions/lists_minus_ico_hover@2x.png</file>
         <file>images/transfer_manager/transfers_actions/lists_minus_ico_hover@3x.png</file>
+        <file>animations/cancelling.gif</file>
+        <file>animations/cancelling@2x.gif</file>
+        <file>animations/cancelling@3x.gif</file>
     </qresource>
 </RCC>

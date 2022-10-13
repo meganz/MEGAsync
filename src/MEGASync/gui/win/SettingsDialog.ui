@@ -140,6 +140,19 @@ background-color: rgba(0,120,215,0.8);
 #lUploadRateLimit, #lDownloadRateLimit, #lProxySettings
 {
 font-weight: bold;
+}
+
+#cbSleepMode 
+{
+margin-top: 4px;
+}
+
+#lSleepModeWarning
+{
+font-size: 10px;
+line-height: 16px;
+font-weight: 400;
+color: #505862;
 }</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_15">
@@ -1026,6 +1039,70 @@ font-weight: bold;
              </size>
             </property>
            </spacer>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QGroupBox" name="gSleepMode">
+         <property name="title">
+          <string>Sleep settings</string>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_2">
+          <property name="leftMargin">
+           <number>10</number>
+          </property>
+          <property name="topMargin">
+           <number>10</number>
+          </property>
+          <property name="rightMargin">
+           <number>10</number>
+          </property>
+          <property name="bottomMargin">
+           <number>10</number>
+          </property>
+          <item row="0" column="1">
+           <widget class="QLabel" name="lSleepMode">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="text">
+             <string>Prevent the computer from going to sleep when transfers or syncs are in progress.
+Computer will enter sleep mode once these are complete.</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0" alignment="Qt::AlignTop">
+           <widget class="QCheckBox" name="cbSleepMode">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QLabel" name="lSleepModeWarning">
+            <property name="text">
+             <string>Note: Some operating systems won't allow this.</string>
+            </property>
+            <property name="wordWrap">
+             <bool>true</bool>
+            </property>
+           </widget>
           </item>
          </layout>
         </widget>

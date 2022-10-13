@@ -9,6 +9,7 @@
 #include <QDateTime>
 #include <QQueue>
 #include <QFutureWatcher>
+#include <QPointer>
 
 #include <megaapi.h>
 
@@ -110,7 +111,7 @@ class HTTPServer: public QTcpServer
         void readClient();
         void discardClient();
         void rejectRequest(QAbstractSocket *socket, QString response = QString::fromUtf8("403 Forbidden"));
-        void processRequest(QAbstractSocket *socket, HTTPRequest request);
+        void processRequest(QPointer<QAbstractSocket> socket, HTTPRequest request);
         void error(QAbstractSocket::SocketError);
         void sslErrors(const QList<QSslError> & errors);
         void peerVerifyError(const QSslError & error);
@@ -128,12 +129,12 @@ class HTTPServer: public QTcpServer
 
         struct VersionCommandAnswer
         {
-            QAbstractSocket* socket;
+            QPointer<QAbstractSocket> socket;
             HTTPRequest request;
             QString response;
         };
 
-        void versionCommand(const HTTPRequest &request, QAbstractSocket* socket);
+        void versionCommand(const HTTPRequest &request, QPointer<QAbstractSocket> socket);
         void openLinkRequest(QString& response, const HTTPRequest& request);
         void externalDownloadRequest(QString& response, const HTTPRequest& request, QAbstractSocket* socket);
         void externalFileUploadRequest(QString& response, const HTTPRequest& request);
@@ -146,7 +147,7 @@ class HTTPServer: public QTcpServer
         void externalShowInFolder(QString& response, const HTTPRequest& request);
         void externalAddBackup(QString& response, const HTTPRequest& request);
 
-        void endProcessRequest(QAbstractSocket *socket, const HTTPRequest &request, QString response);
+        void endProcessRequest(QPointer<QAbstractSocket> socket, const HTTPRequest &request, QString response);
 
         RequestType GetRequestType(const HTTPRequest& request);
         bool disabled;

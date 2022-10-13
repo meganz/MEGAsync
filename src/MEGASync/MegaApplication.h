@@ -46,6 +46,7 @@
 #include "ScanStageController.h"
 #include "TransferQuota.h"
 #include "DialogGeometryRetainer.h"
+#include "BlockingStageProgressController.h"
 
 class TransfersModel;
 
@@ -422,7 +423,7 @@ protected:
     int scanningAnimationIndex;
     SetupWizard *setupWizard;
     SettingsDialog *settingsDialog;
-    InfoDialog *infoDialog;
+    QPointer<InfoDialog> infoDialog;
     std::shared_ptr<Preferences> preferences;
     SyncModel *model;
     mega::MegaApi *megaApi;
@@ -553,6 +554,7 @@ protected:
 
     ScanStageController scanStageController;
     DialogGeometryRetainer<TransferManager> mTransferManagerGeometryRetainer;
+    std::shared_ptr<FolderTransferListener> folderTransferListener;
 
     bool mDisableGfx;
 
@@ -620,6 +622,8 @@ private:
         int folders;
     };
 
+    BlockingStageProgressController transferProgressController;
+
     static NodeCount countFilesAndFolders(const QStringList& paths);
 
     void processUploads(const QStringList& uploads);
@@ -627,8 +631,6 @@ private:
     void updateMetadata(TransferMetaData* data, const QString& filePath);
 
     bool isQueueProcessingOngoing();
-
-    static QString getNodePath(mega::MegaTransfer* transfer);
 
     template <class Func>
     void recreateMenuAction(MenuItemAction** action, const QString& actionName,
@@ -662,6 +664,9 @@ private:
         connect(*action, &QAction::triggered, this, slotFunc);
         (*action)->setEnabled(previousEnabledState);
     }
+
+private slots:
+    void onFolderTransferUpdate(FolderTransferUpdateEvent event);
 };
 
 class DeferPreferencesSyncForScope

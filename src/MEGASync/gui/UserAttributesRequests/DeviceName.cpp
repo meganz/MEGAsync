@@ -7,7 +7,7 @@
 
 namespace UserAttributes
 {
-//DEVICE NAME REQUEST
+// DEVICE NAME REQUEST
 //
 //
 DeviceName::DeviceName(const QString& userEmail) : AttributeRequest(userEmail),
@@ -82,34 +82,33 @@ void DeviceName::onRequestFinish(mega::MegaApi*, mega::MegaRequest* incoming_req
     }
 }
 
+AttributeRequest::RequestInfo DeviceName::fillRequestInfo()
+{
+    std::function<void()> requestFunc = [this]()
+    {
+        if (mIsRequestFinished && !mIsDeviceNameSetOnRemote)
+        {
+            mIsRequestFinished = false;
+            QString logMsg (QLatin1String("Requesting device name"));
+//            if (forceRefresh)
+//            {
+//                logMsg += QLatin1String(" (forced)");
+//            }
+            mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_DEBUG, logMsg.toUtf8().constData());
+            MegaSyncApp->getMegaApi()->getDeviceName();
+        }
+    };
+    QSharedPointer<ParamInfo> paramInfo(new ParamInfo(requestFunc, QList<int>()
+                                                      << mega::MegaError::API_OK));
+    ParamInfoMap paramInfoMap({{mega::MegaApi::USER_ATTR_DEVICE_NAMES, paramInfo}});
+    RequestInfo ret(paramInfoMap, QMap<int, int>({{mega::MegaUser::CHANGE_TYPE_DEVICE_NAMES,
+                                                mega::MegaApi::USER_ATTR_DEVICE_NAMES}}));
+    return ret;
+}
+
 void DeviceName::requestAttribute()
 {
-    requestDeviceNameAttribute(false);
-}
-
-void DeviceName::updateAttributes(mega::MegaUser *user)
-{
-    bool hasDeviceNameChanged = user->hasChanged(mega::MegaUser::CHANGE_TYPE_DEVICE_NAMES);
-
-    if (hasDeviceNameChanged)
-    {
-        requestDeviceNameAttribute(true);
-    }
-}
-
-void DeviceName::requestDeviceNameAttribute(bool forceRefresh)
-{
-    if ((mIsRequestFinished && !mIsDeviceNameSetOnRemote) || forceRefresh)
-    {
-        mIsRequestFinished = false;
-        QString logMsg (QLatin1String("Requesting device name"));
-        if (forceRefresh)
-        {
-            logMsg += QLatin1String(" (forced)");
-        }
-        mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_DEBUG, logMsg.toUtf8().constData());
-        MegaSyncApp->getMegaApi()->getDeviceName();
-    }
+    requestUserAttribute(mega::MegaApi::USER_ATTR_DEVICE_NAMES);
 }
 
 void DeviceName::setDeviceNameAttribute()
@@ -122,7 +121,7 @@ void DeviceName::setDeviceNameAttribute()
 
 QString DeviceName::getDeviceName()
 {
-    requestDeviceNameAttribute(false);
+//    requestDeviceNameAttribute(false);
     return mDeviceName;
 }
 

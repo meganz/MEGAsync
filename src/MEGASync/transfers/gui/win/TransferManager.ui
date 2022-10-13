@@ -109,6 +109,7 @@ QGroupBox::title
     color: #15191F;
     border: none;
     text-align: left;
+    padding-right: 0px;
     padding-left: 0px;
     qProperty-iconSize: 24px;
 }
@@ -704,7 +705,7 @@ QGroupBox::title
           <widget class="QFrame" name="fAllTransfers">
            <layout class="QHBoxLayout" name="horizontalLayout_10">
             <property name="spacing">
-             <number>0</number>
+             <number>3</number>
             </property>
             <property name="leftMargin">
              <number>0</number>
@@ -805,7 +806,7 @@ QGroupBox::title
           <widget class="QFrame" name="fDownloads">
            <layout class="QHBoxLayout" name="horizontalLayout_11">
             <property name="spacing">
-             <number>0</number>
+             <number>3</number>
             </property>
             <property name="leftMargin">
              <number>0</number>
@@ -890,7 +891,7 @@ QGroupBox::title
           <widget class="QFrame" name="fUploads">
            <layout class="QHBoxLayout" name="horizontalLayout_12">
             <property name="spacing">
-             <number>0</number>
+             <number>3</number>
             </property>
             <property name="leftMargin">
              <number>0</number>
@@ -975,7 +976,7 @@ QGroupBox::title
           <widget class="QFrame" name="fCompleted">
            <layout class="QHBoxLayout" name="horizontalLayout_13">
             <property name="spacing">
-             <number>0</number>
+             <number>3</number>
             </property>
             <property name="leftMargin">
              <number>0</number>
@@ -1063,7 +1064,7 @@ QGroupBox::title
           <widget class="QFrame" name="fFailed">
            <layout class="QHBoxLayout" name="horizontalLayout_failed">
             <property name="spacing">
-             <number>0</number>
+             <number>3</number>
             </property>
             <property name="leftMargin">
              <number>0</number>
@@ -1181,7 +1182,7 @@ QGroupBox::title
            </property>
            <layout class="QHBoxLayout" name="horizontalLayout_3">
             <property name="spacing">
-             <number>0</number>
+             <number>3</number>
             </property>
             <property name="leftMargin">
              <number>0</number>
@@ -1265,7 +1266,7 @@ QGroupBox::title
            </property>
            <layout class="QHBoxLayout" name="horizontalLayout_7">
             <property name="spacing">
-             <number>0</number>
+             <number>3</number>
             </property>
             <property name="leftMargin">
              <number>0</number>
@@ -1346,7 +1347,7 @@ QGroupBox::title
            </property>
            <layout class="QHBoxLayout" name="horizontalLayout_8">
             <property name="spacing">
-             <number>0</number>
+             <number>3</number>
             </property>
             <property name="leftMargin">
              <number>0</number>
@@ -1427,7 +1428,7 @@ QGroupBox::title
            </property>
            <layout class="QHBoxLayout" name="horizontalLayout_9">
             <property name="spacing">
-             <number>0</number>
+             <number>3</number>
             </property>
             <property name="leftMargin">
              <number>0</number>
@@ -1508,7 +1509,7 @@ QGroupBox::title
            </property>
            <layout class="QHBoxLayout" name="horizontalLayout_6">
             <property name="spacing">
-             <number>0</number>
+             <number>3</number>
             </property>
             <property name="leftMargin">
              <number>0</number>
@@ -1589,7 +1590,7 @@ QGroupBox::title
            </property>
            <layout class="QHBoxLayout" name="horizontalLayout_4">
             <property name="spacing">
-             <number>0</number>
+             <number>3</number>
             </property>
             <property name="leftMargin">
              <number>0</number>
@@ -1713,6 +1714,12 @@ QGroupBox::title
             </property>
             <item>
              <widget class="QPushButton" name="bSearchString">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
               <property name="cursor">
                <cursorShape>PointingHandCursor</cursorShape>
               </property>

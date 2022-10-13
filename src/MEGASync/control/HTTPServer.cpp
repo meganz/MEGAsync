@@ -301,7 +301,7 @@ void HTTPServer::rejectRequest(QAbstractSocket *socket, QString response)
     }
 }
 
-void HTTPServer::processRequest(QAbstractSocket *socket, HTTPRequest request)
+void HTTPServer::processRequest(QPointer<QAbstractSocket> socket, HTTPRequest request)
 {
     QString response;
 
@@ -354,33 +354,35 @@ void HTTPServer::processRequest(QAbstractSocket *socket, HTTPRequest request)
     endProcessRequest(socket,request, response);
 }
 
-void HTTPServer::endProcessRequest(QAbstractSocket* socket,const HTTPRequest& request, QString response)
+void HTTPServer::endProcessRequest(QPointer<QAbstractSocket> socket,const HTTPRequest& request, QString response)
 {
-    QPointer<QAbstractSocket> safeSocket = socket;
-    QPointer<HTTPServer> safeServer = this;
+    if(socket)
+    {
+        QPointer<HTTPServer> safeServer = this;
 
-    if (!response.size())
-    {
-        MegaApi::log(MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Invalid webclient request: %1").arg(request.data).toUtf8().constData());
-        response = QString::number(MegaError::API_EARGS);
-    }
-    else
-    {
-        MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Response to HTTP request: %1").arg(response).toUtf8().constData());
-    }
+        if (!response.size())
+        {
+            MegaApi::log(MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Invalid webclient request: %1").arg(request.data).toUtf8().constData());
+            response = QString::number(MegaError::API_EARGS);
+        }
+        else
+        {
+            MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Response to HTTP request: %1").arg(response).toUtf8().constData());
+        }
 
-    QString fullResponse = QString::fromUtf8("HTTP/1.0 200 Ok\r\n"
-                                             "Access-Control-Allow-Origin: %1\r\n"
-                                             "Content-Type: text/html; charset=\"utf-8\"\r\n"
-                                             "Content-Length: %2\r\n"
-                                             "\r\n"
-                                             "%3").arg(request.origin).arg(response.size()).arg(response);
-    if (safeServer && safeSocket)
-    {
-        safeSocket->write(fullResponse.toUtf8());
-        safeSocket->flush();
-        safeSocket->disconnectFromHost();
-        safeSocket->deleteLater();
+        QString fullResponse = QString::fromUtf8("HTTP/1.0 200 Ok\r\n"
+                                                 "Access-Control-Allow-Origin: %1\r\n"
+                                                 "Content-Type: text/html; charset=\"utf-8\"\r\n"
+                                                 "Content-Length: %2\r\n"
+                                                 "\r\n"
+                                                 "%3").arg(request.origin).arg(response.size()).arg(response);
+        if (safeServer && socket)
+        {
+            socket->write(fullResponse.toUtf8());
+            socket->flush();
+            socket->disconnectFromHost();
+            socket->deleteLater();
+        }
     }
 }
 
@@ -406,7 +408,7 @@ void HTTPServer::peerVerifyError(const QSslError &)
 {
 }
 
-void HTTPServer::versionCommand(const HTTPRequest& request, QAbstractSocket *socket)
+void HTTPServer::versionCommand(const HTTPRequest& request, QPointer<QAbstractSocket> socket)
 {
     auto future = QtConcurrent::run([this, socket, request]() -> VersionCommandAnswer
     {

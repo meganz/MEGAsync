@@ -3,18 +3,17 @@
 #include "MegaApplication.h"
 #include "UserAttributesRequests/Avatar.h"
 
-#include <math.h>
-
 #include <QLinearGradient>
 #include <QPainter>
 #include <QWindow>
 #include <QMouseEvent>
 
+#include <math.h>
+
 static const int AVATAR_DIAMETER (60);
 static const int AVATAR_RADIUS (AVATAR_DIAMETER / 2);
 static const int AVATAR_LETTER_SIZE_PT_FULL (60);
 static const int LETTER_PIXMAP_SIZE (150);
-static const int LATO_FONT_ADJUST_SHADOW (6);
 static const int LATO_FONT_ADJUST (-4);
 
 
@@ -55,27 +54,19 @@ void AvatarWidget::paintEvent(QPaintEvent *event)
 {
     Q_UNUSED(event)
 
-    if (!mAvatarRequest)
+    if (mAvatarRequest && mAvatarRequest->isAttributeReady())
     {
-        return;
+        QPainter painter(this);
+        painter.setRenderHints(QPainter::Antialiasing | QPainter::SmoothPixmapTransform);
+        painter.drawPixmap(rect(), mAvatarRequest->getPixmap(width()));
     }
-
-    QPainter painter(this);
-
-    painter.setRenderHints(QPainter::Antialiasing | QPainter::SmoothPixmapTransform);
-
-    auto width (this->width());
-    painter.translate(width / 2, height() / 2);
-    QRect rect (-width / 2, -width / 2, width, width);
-
-    painter.drawPixmap(rect, mAvatarRequest->getPixmap(width));
 }
 
 void AvatarWidget::mousePressEvent(QMouseEvent *event)
 {
     if (event->button() == Qt::LeftButton)
     {
-        ((MegaApplication *)qApp)->openSettings(SettingsDialog::ACCOUNT_TAB);
+        MegaSyncApp->openSettings(SettingsDialog::ACCOUNT_TAB);
     }
 }
 
@@ -130,17 +121,15 @@ QPixmap AvatarPixmap::maskFromImagePath(const QString &pathToFile, int size)
     return pm;
 }
 
-QPixmap AvatarPixmap::createFromLetter(const QString& letter, const QColor& color, int size)
+QPixmap AvatarPixmap::createFromLetter(const QString& letter, const QColor& primaryColor, const QColor& secondaryColor, int size)
 {
     QPixmap pm(QSize(LETTER_PIXMAP_SIZE, LETTER_PIXMAP_SIZE));
     QRect rect = pm.rect();
 
-    // Setup background gradient: dark to light, bottom left to top right
-    QLinearGradient gradient(size, size, size, size);
-    gradient.setColorAt(1.0, color.lighter(111));
-    gradient.setColorAt(0.0, color);
-    gradient.setStart(-size / 2.0, size / 2.0);
-    gradient.setFinalStop(size / 2.0, -size / 2.0);
+    // Setup background gradient: primaryColor to secondaryColor, bottom left to top right
+    QLinearGradient gradient(rect.bottomLeft(), rect.topRight());
+    gradient.setColorAt(1.0, primaryColor);
+    gradient.setColorAt(0.0, secondaryColor);
 
     // Draw background
     pm.fill(Qt::transparent);
@@ -155,8 +144,6 @@ QPixmap AvatarPixmap::createFromLetter(const QString& letter, const QColor& colo
     font.setPointSize(AVATAR_LETTER_SIZE_PT_FULL);
     font.setFamily(QLatin1String("Lato Semibold"));
     painter.setFont(font);
-    painter.setPen(color.darker(110));
-    painter.drawText(rect.adjusted(0, LATO_FONT_ADJUST_SHADOW, 10, 0), letter, QTextOption(Qt::AlignCenter));
     painter.setPen(Qt::white);
     painter.drawText(rect.adjusted(0, LATO_FONT_ADJUST, 0, 0), letter, QTextOption(Qt::AlignCenter));
 

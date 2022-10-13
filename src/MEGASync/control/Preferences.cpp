@@ -13,18 +13,19 @@ extern Q_CORE_EXPORT int qt_ntfs_permission_lookup;
 #endif
 
 const char Preferences::CLIENT_KEY[] = "FhMgXbqb";
-const char Preferences::USER_AGENT[] = "MEGAsync/4.7.0.0";
-const int Preferences::VERSION_CODE = 4700;
-const int Preferences::BUILD_ID = 4;
+const char Preferences::USER_AGENT[] = "MEGAsync/4.7.1.0";
+const int Preferences::VERSION_CODE = 4701;
+const int Preferences::BUILD_ID = 0;
 // Do not change the location of VERSION_STRING, create_tarball.sh parses this file
-const QString Preferences::VERSION_STRING = QString::fromAscii("4.7.0-backups-preview-13");
-QString Preferences::SDK_ID = QString::fromAscii("76698b7");
+const QString Preferences::VERSION_STRING = QString::fromAscii("4.7.1");
+QString Preferences::SDK_ID = QString::fromAscii("44c0918");
 const QString Preferences::CHANGELOG = QString::fromUtf8(QT_TR_NOOP(
-"Import changes from Desktop app develop (including v4.7.0) and SDK v4.4.1\n"
-"[BAC-51] - Dapp: Backup display path adjustment\n"
-"[BAC-122] - Backup choose folder and sync choose folder opens the same location\n"
-"[BAC-164] - Use new isNodeSyncableWithErrors() sdk interface to check node syncability\n"
-));
+"- There is now a new transfer manager.\n"
+"- Transfer management was enhanced and reliability of downloads and uploads improved. \n"
+"- Detected crashes on Windows, Linux, and macOS fixed.\n"
+"- Translation issues fixed.\n"
+"- Performance improved.\n"
+"- UI fixed and adjusted.\n"));
 
 const QString Preferences::TRANSLATION_FOLDER = QString::fromAscii("://translations/");
 const QString Preferences::TRANSLATION_PREFIX = QString::fromAscii("MEGASyncStrings_");
@@ -388,6 +389,10 @@ const QString Preferences::neverCreateLinkKey       = QString::fromUtf8("neverCr
 const QString Preferences::notifyDisabledSyncsKey = QString::fromAscii("notifyDisabledSyncs");
 const QString Preferences::importMegaLinksEnabledKey = QString::fromAscii("importMegaLinksEnabled");
 const QString Preferences::downloadMegaLinksEnabledKey = QString::fromAscii("downloadMegaLinksEnabled");
+
+//Sleep settings
+const QString Preferences::awakeIfActiveKey = QString::fromAscii("sleepIfInactiveEnabledKey");
+const bool Preferences::defaultAwakeIfActive = false;
 
 const bool Preferences::defaultStartOnStartup       = true;
 const bool Preferences::defaultUpdateAutomatically  = true;
@@ -2673,6 +2678,20 @@ long long Preferences::lastStatsRequest()
 void Preferences::setLastStatsRequest(long long value)
 {
     setValueAndSyncConcurrent(lastStatsRequestKey, value);
+}
+
+bool Preferences::awakeIfActiveEnabled()
+{
+    mutex.lock();
+    assert(logged());
+    bool result = getValue(awakeIfActiveKey, defaultAwakeIfActive);
+    mutex.unlock();
+    return result;
+}
+
+void Preferences::setAwakeIfActive(bool value)
+{
+    setValueAndSyncConcurrent(awakeIfActiveKey, value);
 }
 
 bool Preferences::fileVersioningDisabled()

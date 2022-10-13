@@ -40,12 +40,6 @@ void TransfersManagerSortFilterProxyModel::initProxyModel(SortCriterion sortCrit
 
 void TransfersManagerSortFilterProxyModel::sort(int sortCriterion, Qt::SortOrder order)
 {
-    auto sourceM = qobject_cast<TransfersModel*>(sourceModel());
-    if(sourceM)
-    {
-        sourceM->pauseModelProcessing(true);
-    }
-
     emit modelAboutToBeChanged();
     if (sortCriterion != static_cast<int>(mSortCriterion))
     {
@@ -103,13 +97,23 @@ void TransfersManagerSortFilterProxyModel::invalidateModel()
         setDynamicSortFilter(true);
     }
 
+    auto sourceM = qobject_cast<TransfersModel*>(sourceModel());
+    if(sourceM)
+    {
+        sourceM->pauseModelProcessing(true);
+    }
+
     QFuture<void> filtered = QtConcurrent::run([this](){
         auto sourceM = qobject_cast<TransfersModel*>(sourceModel());
         sourceM->lockModelMutex(true);
         sourceM->blockModelSignals(true);
         blockSignals(true);
         mIsFiltering = true;
+#if QT_VERSION < QT_VERSION_CHECK(5, 15, 0)
         invalidate();
+#else
+        invalidateFilter();
+#endif
         QSortFilterProxyModel::sort(0, mSortOrder);
         mIsFiltering = false;
         sourceM->lockModelMutex(false);
@@ -497,7 +501,7 @@ bool TransfersManagerSortFilterProxyModel::dropMimeData(const QMimeData *data, Q
     if (destRow >= 0 && destRow <= rowCount() && action == Qt::MoveAction)
     {
         auto sourceM = dynamic_cast<TransfersModel*>(sourceModel());
-        auto rows = sourceM->getDragAndDropRows(data, destRow);
+        auto rows = sourceM->getDragAndDropRows(data);
 
         if(destRow == rowCount())
         {
@@ -506,29 +510,32 @@ bool TransfersManagerSortFilterProxyModel::dropMimeData(const QMimeData *data, Q
             QModelIndex proxyIndex = index(destRow, column,parent);
             auto sourceIndex = mapToSource(proxyIndex);
 
-            sourceM->moveRows(parent,rows,parent, sourceIndex.row());
+            sourceM->moveTransferPriority(parent,rows,parent, sourceIndex.row());
 
             sourceM->ignoreMoveRowsSignal(true);
-            sourceM->moveRows(parent, QList<int>() << sourceIndex.row(), parent, rows.first());
+            sourceM->moveTransferPriority(parent, QList<int>() << sourceIndex.row(), parent, rows.first());
             sourceM->ignoreMoveRowsSignal(false);
         }
         else if(destRow == 0)
         {
             QModelIndex proxyIndex = index(destRow, column,parent);
             auto sourceIndex = mapToSource(proxyIndex);
-            sourceM->moveRows(parent, rows , parent, sourceIndex.row());
+            sourceM->moveTransferPriority(parent, rows , parent, sourceIndex.row());
         }
         else
         {
             QModelIndex proxyIndex = index(destRow, column,parent);
             auto sourceIndex = mapToSource(proxyIndex);
-            sourceM->moveRows(parent, rows , parent, sourceIndex.row());
+            sourceM->moveTransferPriority(parent, rows , parent, sourceIndex.row());
 
-            sourceM->ignoreMoveRowsSignal(true);
-            auto previousProxyIndex = index(destRow -1, column, parent);
-            auto previousSourceIndex = mapToSource(previousProxyIndex);
-            sourceM->moveRows(parent, QList<int>() << previousSourceIndex.row() , parent, rows.first());
-            sourceM->ignoreMoveRowsSignal(false);
+            if(mSortCriterion != SortCriterion::PRIORITY)
+            {
+                sourceM->ignoreMoveRowsSignal(true);
+                auto previousProxyIndex = index(destRow -1, column, parent);
+                auto previousSourceIndex = mapToSource(previousProxyIndex);
+                sourceM->moveTransferPriority(parent, QList<int>() << previousSourceIndex.row() , parent, rows.first());
+                sourceM->ignoreMoveRowsSignal(false);
+            }
         }
     }
 
@@ -628,7 +635,7 @@ bool TransfersManagerSortFilterProxyModel::moveRows(const QModelIndex &proxyPare
             destRow = mapToSource(index(destinationChild, 0, destinationParent)).row();
         }
 
-        moveOk = sourceM->moveRows(sourceIndex.parent(), QList<int>() << sourceIndex.row(),
+        moveOk = sourceM->moveTransferPriority(sourceIndex.parent(), QList<int>() << sourceIndex.row(),
                                          sourceIndex.parent(), destRow);
         row++;
     }

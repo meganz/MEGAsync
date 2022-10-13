@@ -127,7 +127,6 @@ void QAlertsModel::insertAlerts(MegaUserAlertList *alerts, bool copy)
                 }
                 else
                 {
-
                     alertOrder.push_front(alert->getId());
                     alertsMap.insert(alert->getId(), alert);
                     if (!alert->getSeen())
