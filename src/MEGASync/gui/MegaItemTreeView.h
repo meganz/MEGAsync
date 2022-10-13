@@ -17,7 +17,6 @@ class MegaItemTreeView : public QTreeView
 public:
     explicit MegaItemTreeView(QWidget *parent = nullptr);
     MegaHandle getSelectedNodeHandle();
-    void expandIfNeeded();
 
 protected:
     void drawBranches(QPainter *painter,
@@ -46,8 +45,6 @@ private:
 
     QModelIndex getIndexFromSourceModel(const QModelIndex& index) const;
     MegaItemProxyModel* proxyModel() const;
-    QModelIndex mIndexToExpand;
-    QPoint point;
 
     MegaApi* mMegaApi;
 

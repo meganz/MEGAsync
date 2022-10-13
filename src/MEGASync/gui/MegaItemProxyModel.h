@@ -5,6 +5,7 @@
 #include <QSortFilterProxyModel>
 #include <QCollator>
 #include <QFutureWatcher>
+#include <QEventLoop>
 
 
 namespace mega{
@@ -59,6 +60,8 @@ private:
     int mSortColumn;
     Qt::SortOrder mOrder;
     QFutureWatcher<void> mFilterWatcher;
+    QEventLoop loop;
+
 
 
 private slots:

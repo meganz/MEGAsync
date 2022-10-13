@@ -200,15 +200,25 @@ void NodeSelectorTreeViewWidget::onRowsInserted()
 
 void NodeSelectorTreeViewWidget::onModelToBeChanged()
 {
+    ui->tMegaFolders->show();
     //ui->tMegaFolders->setModel(mProxyModel.get());
-    ui->tMegaFolders->expandIfNeeded();
+    mProxyModel->blockSignals(false);
+
     ui->tMegaFolders->blockSignals(false);
+    ui->tMegaFolders->header()->blockSignals(false);
+
+
 }
 
 void NodeSelectorTreeViewWidget::onModelAboutToBeChanged()
 {
+    mProxyModel->blockSignals(true);
     ui->tMegaFolders->blockSignals(true);
+    ui->tMegaFolders->header()->blockSignals(true);
+    ui->tMegaFolders->hide();
+   mProxyModel->blockSignals(true);
    //ui->tMegaFolders->setModel(nullptr);
+
 }
 
 void NodeSelectorTreeViewWidget::onGoBackClicked()

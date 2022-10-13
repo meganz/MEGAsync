@@ -48,20 +48,38 @@ void MegaItemProxyModel::sort(int column, Qt::SortOrder order)
     qDebug()<<"sort call thread:"<<QThread::currentThreadId();
     emit modelAboutToBeChanged();
     QFuture<void> filtered = QtConcurrent::run([this, column, order](){
-        emit layoutAboutToBeChanged();
+        //emit layoutAboutToBeChanged();
         blockSignals(true);
+        sourceModel()->blockSignals(true);
        // if(count <= 1)
         {
-            invalidate();
+            //invalidate();
+            invalidateFilter();
+            //reset();
         }
         count++;
+//        if(mOrder == Qt::AscendingOrder)
+//        {
+//            mOrder = Qt::DescendingOrder;
+//        }
+//        else
+//        {
+//            mOrder = Qt::AscendingOrder;
+//        }
+
         QSortFilterProxyModel::sort(column, order);
         qDebug()<<"concurrent thread:"<<QThread::currentThreadId();
         blockSignals(false);
-        emit layoutChanged();
+        sourceModel()->blockSignals(false);
+        //emit layoutChanged();
     });
-   // filtered.waitForFinished();
     mFilterWatcher.setFuture(filtered);
+    if(!loop.isRunning())
+    {
+        loop.exec();
+    }
+    //qDebug()<<"exec lop";
+   // filtered.waitForFinished();
 }
 
 mega::MegaHandle MegaItemProxyModel::getHandle(const QModelIndex &index)
@@ -152,6 +170,11 @@ void MegaItemProxyModel::removeNode(const QModelIndex& item)
 bool MegaItemProxyModel::lessThan(const QModelIndex &left, const QModelIndex &right) const
 {
     qDebug()<<"lessthan:"<<QThread::currentThreadId();
+        if(qApp->thread() == QThread::currentThread())
+        {
+            qDebug()<<"test"<<
+                      left<<right;
+        }
 
     bool lIsFile = left.data(toInt(MegaItemModelRoles::IS_FILE_ROLE)).toBool();
     bool rIsFile = right.data(toInt(MegaItemModelRoles::IS_FILE_ROLE)).toBool();
@@ -190,40 +213,45 @@ void MegaItemProxyModel::setSourceModel(QAbstractItemModel *sourceModel)
     if(auto transferModel = dynamic_cast<MegaItemModel*>(sourceModel))
     {
         connect(transferModel, &MegaItemModel::rowsAdded, this, &MegaItemProxyModel::invalidateModel);
+        if(sourceModel->canFetchMore(QModelIndex()))
+        {
+            sourceModel->fetchMore(QModelIndex());
+        }
     }
 }
 
 
 bool MegaItemProxyModel::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const
 {
-    qDebug()<<"Filter accepts Row:"<<QThread::currentThreadId();
+    qDebug()<<"SOURCE INDEX:"<<sourceParent<<"SOURCE ROW:"<<sourceRow;
+//    qDebug()<<"Filter accepts Row:"<<QThread::currentThreadId();
 
 //    if(qApp->thread() == QThread::currentThread())
 //    {
-//        return false;
+//        qDebug()<<"test";
 //    }
-    QModelIndex index = sourceModel()->index(sourceRow, 0, sourceParent);
+//    QModelIndex index = sourceModel()->index(sourceRow, 0, sourceParent);
 
-    if(index.isValid())
-    {
-        if(MegaItem* megaItem = static_cast<MegaItem*>(index.internalPointer()))
-        {
-            if(std::shared_ptr<mega::MegaNode> node = megaItem->getNode())
-            {
-               if(node->isInShare())
-               {
-                   mega::MegaApi* megaApi = MegaSyncApp->getMegaApi();
-                   int accs = megaApi->getAccess(node.get());
-                    if((accs == mega::MegaShare::ACCESS_READ && !mFilter.showReadOnly)
-                       || (accs == mega::MegaShare::ACCESS_READWRITE && !mFilter.showReadWriteFolders))
-                    {
-                        return false;
-                    }
-               }
-               return true;
-            }
-        }
-    }
+//    if(index.isValid())
+//    {
+//        if(MegaItem* megaItem = static_cast<MegaItem*>(index.internalPointer()))
+//        {
+//            if(std::shared_ptr<mega::MegaNode> node = megaItem->getNode())
+//            {
+//               if(node->isInShare())
+//               {
+//                   mega::MegaApi* megaApi = MegaSyncApp->getMegaApi();
+//                   int accs = megaApi->getAccess(node.get());
+//                    if((accs == mega::MegaShare::ACCESS_READ && !mFilter.showReadOnly)
+//                       || (accs == mega::MegaShare::ACCESS_READWRITE && !mFilter.showReadWriteFolders))
+//                    {
+//                        return false;
+//                    }
+//               }
+//               return true;
+//            }
+//        }
+//    }
     return QSortFilterProxyModel::filterAcceptsRow(sourceRow, sourceParent);
 }
 
@@ -311,5 +339,6 @@ void MegaItemProxyModel::invalidateModel()
 
 void MegaItemProxyModel::onModelSortedFiltered()
 {
+    loop.quit();
     emit modelChanged();
 }

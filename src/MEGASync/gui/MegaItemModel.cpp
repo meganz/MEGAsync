@@ -567,26 +567,26 @@ MegaItemModelIncomingShares::MegaItemModelIncomingShares(QObject *parent)
 
 void MegaItemModelIncomingShares::onItemInfoUpdated(int role)
 {
-    if(MegaItem* item = static_cast<MegaItem*>(sender()))
-    {
-        for(int i = 0; i < rowCount(); ++i)
-        {
-            QModelIndex idx = index(i, COLUMN::USER); //we only update this column because we retrieve the data in async mode
-            if(idx.isValid())                         //so it is possible that we doesn´t have the information from the start
-            {
-                if(MegaItem* chkItem = static_cast<MegaItem*>(idx.internalPointer()))
-                {
-                    if(chkItem == item)
-                    {
-                        QVector<int> roles;
-                        roles.append(role);
-                        emit dataChanged(idx, idx, roles);
-                        return;
-                    }
-                }
-            }
-        }
-    }
+//    if(MegaItem* item = static_cast<MegaItem*>(sender()))
+//    {
+//        for(int i = 0; i < rowCount(); ++i)
+//        {
+//            QModelIndex idx = index(i, COLUMN::USER); //we only update this column because we retrieve the data in async mode
+//            if(idx.isValid())                         //so it is possible that we doesn´t have the information from the start
+//            {
+//                if(MegaItem* chkItem = static_cast<MegaItem*>(idx.internalPointer()))
+//                {
+//                    if(chkItem == item)
+//                    {
+//                        QVector<int> roles;
+//                        roles.append(role);
+//                        emit dataChanged(idx, idx, roles);
+//                        return;
+//                    }
+//                }
+//            }
+//        }
+//    }
 }
 
 MegaItemModelIncomingShares::~MegaItemModelIncomingShares()

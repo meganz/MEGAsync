@@ -8,9 +8,7 @@
 
 MegaItemTreeView::MegaItemTreeView(QWidget* parent) :
     QTreeView(parent),
-    mMegaApi(MegaSyncApp->getMegaApi()),
-    mIndexToExpand(QModelIndex()),
-    point(QPoint())
+    mMegaApi(MegaSyncApp->getMegaApi())
 {
     installEventFilter(this);
 }
@@ -39,15 +37,6 @@ MegaHandle MegaItemTreeView::getSelectedNodeHandle()
             ret = node->getHandle();
     }
     return ret;
-}
-
-void MegaItemTreeView::expandIfNeeded()
-{
-    if(point != QPoint())
-    {
-        expand(indexAt(point));
-    }
-    point = QPoint();
 }
 
 void MegaItemTreeView::verticalScrollbarValueChanged(int value)
@@ -104,20 +93,15 @@ void MegaItemTreeView::mousePressEvent(QMouseEvent *event)
     }
     else
     {
-        auto parent = indexAt(pos);
-        if (model()->hasChildren(parent))
-        {
-            if (model()->canFetchMore(parent))
-            {
-                model()->fetchMore(parent);
-                point = pos;
-            }
-        }
-    if(point == QPoint())
-    {
-    QTreeView::mousePressEvent(event);
-    }
-        //mIndexToExpand = parent;
+//        auto index = indexAt(pos);
+//        if (model()->hasChildren(index))
+//        {
+//            if (model()->canFetchMore(index))
+//            {
+//                model()->fetchMore(index);
+//            }
+//        }
+        QTreeView::mousePressEvent(event);
     }
 }
 
