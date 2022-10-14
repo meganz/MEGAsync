@@ -4,7 +4,8 @@
 
 #include "QTMegaRequestListener.h"
 #include <megaapi.h>
-
+#include <NodeSelectorLoadingDelegate.h>
+#include <ViewLoadingScene.h>
 
 #include <QWidget>
 #include <QItemSelectionModel>
@@ -31,6 +32,7 @@ public:
     };
 
     static const int LABEL_ELIDE_MARGIN;
+    static const int LOADING_VIEW_THRESSHOLD;
     static const char* CLD_DRIVE;
     static const char* IN_SHARES;
 
@@ -77,10 +79,8 @@ private slots:
     void onGoBackClicked();
     void onSectionResized();
     void onRowsInserted();
-    virtual void onModelReset(){};
-    void onModelToBeChanged();
+    void onModelChanged();
     void onModelAboutToBeChanged();
-
 
 private:
 
@@ -109,6 +109,7 @@ private:
     void checkBackForwardButtons();
     void setRootIndex(const QModelIndex& proxy_idx);
     virtual void setRootIndex_Reimplementation(const QModelIndex& source_idx){Q_UNUSED(source_idx)};
+    virtual void modelSet(){};
     mega::MegaHandle getHandleByIndex(const QModelIndex& idx);
     QModelIndex getIndexFromHandle(const mega::MegaHandle &handle);
     void checkNewFolderButtonVisibility();
@@ -117,6 +118,7 @@ private:
     virtual bool newFolderBtnVisibleInRoot(){return true;}
     bool first;
     mega::MegaHandle mNodeHandleToSelect;
+    ViewLoadingScene<NodeSelectorLoadingDelegate> mLoadingScene;
 };
 
 class NodeSelectorTreeViewWidgetCloudDrive : public NodeSelectorTreeViewWidget
@@ -130,9 +132,7 @@ private:
     QString getRootText() override;
     std::unique_ptr<MegaItemModel> getModel() override;
     void setRootIndex_Reimplementation(const QModelIndex& source_idx) override;
-
-private slots:
-    void onModelReset() override;
+    void modelSet() override;
 };
 
 class NodeSelectorTreeViewWidgetIncomingShares : public NodeSelectorTreeViewWidget

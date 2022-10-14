@@ -147,7 +147,8 @@ SOURCES += $$PWD/MegaApplication.cpp \
     $$PWD/ScaleFactorManager.cpp \
     $$PWD/CommonMessages.cpp \
     $$PWD/ScanStageController.cpp \
-    $$PWD/EventUpdater.cpp
+    $$PWD/EventUpdater.cpp \
+    NodeSelectorLoadingDelegate.cpp
 
 HEADERS += $$PWD/MegaApplication.h \
     $$PWD/DesktopNotifications.h \
@@ -157,7 +158,8 @@ HEADERS += $$PWD/MegaApplication.h \
     $$PWD/ScaleFactorManager.h \
     $$PWD/CommonMessages.h \
     $$PWD/ScanStageController.h \
-    $$PWD/EventUpdater.h
+    $$PWD/EventUpdater.h \
+    NodeSelectorLoadingDelegate.h
 
 TRANSLATIONS = \
     gui/translations/MEGASyncStrings_ar.ts \
@@ -251,3 +253,6 @@ CONFIG(release) {
 win32 {
     QMAKE_POST_LINK = $$quote(mt.exe -nologo -manifest $$shell_path($$PWD/../../contrib/cmake/MEGAsync.exe.manifest) -outputresource:$$shell_path($${OUTPATH}/$${TARGET}.exe);1$$escape_expand(\n\t))
 }
+
+FORMS += \
+    NodeSelectorLoadingDelegate.ui

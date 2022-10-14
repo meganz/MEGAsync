@@ -64,7 +64,6 @@ private:
     QModelIndex parentChildrensToMap;
 
 
-
 private slots:
     void invalidateModel(const QModelIndex& parent);
     void onModelSortedFiltered();

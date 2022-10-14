@@ -169,6 +169,18 @@ int MegaItemModel::rowCount(const QModelIndex &parent) const
     return mRootItems.size();
 }
 
+int MegaItemModel::countTotalRows(const QModelIndex& idx)
+{
+    int count = 0;
+    int rowCounter = rowCount(idx);
+    count += rowCounter;
+    for( int r = 0; r < rowCounter; ++r )
+    {
+        count += countTotalRows(index(r,0,idx));
+    }
+    return count;
+}
+
 bool MegaItemModel::hasChildren(const QModelIndex &parent) const
 {
     /////FROM MODEL TESTER:
@@ -265,7 +277,7 @@ void MegaItemModel::fetchMore(const QModelIndex &parent)
         item->createChildItems();
         endInsertRows();
         blockSignals(false);
-        emit rowsAdded(parent);
+        emit rowsAdded(parent, itemNumChildren);
     }
     else
     {
@@ -274,7 +286,7 @@ void MegaItemModel::fetchMore(const QModelIndex &parent)
         blockSignals(true);
         endResetModel();
         blockSignals(false);
-        emit rowsAdded();
+        emit rowsAdded(QModelIndex(), rootItemsCount());
     }
 }
 

@@ -61,6 +61,7 @@ public:
     void addNode(std::unique_ptr<mega::MegaNode> node, const QModelIndex &parent);
     void removeNode(const QModelIndex &item);
     void showFiles(bool show);
+    int countTotalRows(const QModelIndex &index = QModelIndex());
 
     std::shared_ptr<mega::MegaNode> getNode(const QModelIndex &index) const;
     QVariant getIcon(const QModelIndex &index, MegaItem* item) const;
@@ -69,7 +70,7 @@ public:
     virtual ~MegaItemModel();
 
 signals:
-    void rowsAdded(const QModelIndex& parent = QModelIndex());
+    void rowsAdded(const QModelIndex& parent, int addedRowsCount);
 
 protected:
     QModelIndex findItemByNodeHandle(const mega::MegaHandle &handle, const QModelIndex& parent);

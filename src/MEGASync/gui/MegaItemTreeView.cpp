@@ -93,14 +93,6 @@ void MegaItemTreeView::mousePressEvent(QMouseEvent *event)
     }
     else
     {
-//        auto index = indexAt(pos);
-//        if (model()->hasChildren(index))
-//        {
-//            if (model()->canFetchMore(index))
-//            {
-//                model()->fetchMore(index);
-//            }
-//        }
         QTreeView::mousePressEvent(event);
     }
 }

@@ -12,6 +12,7 @@ const char* NodeSelectorTreeViewWidget::IN_SHARES = "Incoming shares";
 const char* NodeSelectorTreeViewWidget::CLD_DRIVE = "Cloud drive";
 
 const int NodeSelectorTreeViewWidget::LABEL_ELIDE_MARGIN = 100;
+const int NodeSelectorTreeViewWidget::LOADING_VIEW_THRESSHOLD = 500;
 
 
 NodeSelectorTreeViewWidget::NodeSelectorTreeViewWidget(QWidget *parent) :
@@ -36,14 +37,9 @@ NodeSelectorTreeViewWidget::NodeSelectorTreeViewWidget(QWidget *parent) :
     connect(ui->bOk, &QPushButton::clicked, this, &NodeSelectorTreeViewWidget::okBtnClicked);
     connect(ui->bCancel, &QPushButton::clicked, this, &NodeSelectorTreeViewWidget::cancelBtnClicked);
     connect(ui->cbAlwaysUploadToLocation, &QCheckBox::stateChanged, this, &NodeSelectorTreeViewWidget::oncbAlwaysUploadToLocationChanged);
-
-    if(auto rootNode = std::unique_ptr<MegaNode>(mMegaApi->getRootNode()))
-    {
-        mNavigationInfo.expandedHandles.append(rootNode->getHandle());
-    }
-
     checkBackForwardButtons();
     ui->tMegaFolders->installEventFilter(this);
+    mLoadingScene.setView(ui->tMegaFolders);
 }
 
 void NodeSelectorTreeViewWidget::changeEvent(QEvent *event)
@@ -70,6 +66,7 @@ bool NodeSelectorTreeViewWidget::eventFilter(QObject *obj, QEvent *e)
 
 void NodeSelectorTreeViewWidget::setSelectionMode(int selectMode)
 {
+    mLoadingScene.setLoadingScene(true);
     if(mSelectMode != -1)
     {
         return;
@@ -108,12 +105,14 @@ ui->tMegaFolders->setAnimated(false);
 #endif
 
     ui->tMegaFolders->setModel(mProxyModel.get());
-    //ui->tMegaFolders->setExpanded(mProxyModel->getIndexFromHandle(MegaSyncApp->getRootNode()->getHandle()), true);
+
+    ui->tMegaFolders->setExpanded(mProxyModel->getIndexFromHandle(MegaSyncApp->getRootNode()->getHandle()), true);
 
     //those connects needs to be done after the model is set, do not move them
-    connect(mModel.get(), &MegaItemModel::modelReset, this, &NodeSelectorTreeViewWidget::onModelReset);
+   // connect(mModel.get(), &MegaItemModel::rowsAdded, this, &NodeSelectorTreeViewWidget::onRowsAdded);
+    modelSet();
     connect(mProxyModel.get(), &MegaItemProxyModel::modelAboutToBeChanged, this, &NodeSelectorTreeViewWidget::onModelAboutToBeChanged);
-    connect(mProxyModel.get(), &MegaItemProxyModel::modelChanged, this, &NodeSelectorTreeViewWidget::onModelToBeChanged);
+    connect(mProxyModel.get(), &MegaItemProxyModel::modelChanged, this, &NodeSelectorTreeViewWidget::onModelChanged);
 
     connect(ui->tMegaFolders->selectionModel(), &QItemSelectionModel::selectionChanged, this, &NodeSelectorTreeViewWidget::onSelectionChanged);
     connect(ui->tMegaFolders, &MegaItemTreeView::removeNodeClicked, this, &NodeSelectorTreeViewWidget::onDeleteClicked);
@@ -126,7 +125,6 @@ ui->tMegaFolders->setAnimated(false);
 
     ui->tMegaFolders->setContextMenuPolicy(Qt::DefaultContextMenu);
     ui->tMegaFolders->setExpandsOnDoubleClick(false);
-    ui->tMegaFolders->setSortingEnabled(true);
     ui->tMegaFolders->setHeader(new MegaItemHeaderView(Qt::Horizontal));
     ui->tMegaFolders->header()->setFixedHeight(MegaItemModel::ROW_HEIGHT);
     ui->tMegaFolders->header()->moveSection(MegaItemModel::STATUS, MegaItemModel::NODE);
@@ -136,9 +134,12 @@ ui->tMegaFolders->setAnimated(false);
     ui->tMegaFolders->setItemDelegateForColumn(MegaItemModel::STATUS, new IconDelegate(ui->tMegaFolders));
     ui->tMegaFolders->setItemDelegateForColumn(MegaItemModel::USER, new IconDelegate(ui->tMegaFolders));
     ui->tMegaFolders->setTextElideMode(Qt::ElideMiddle);
+    ui->tMegaFolders->setSortingEnabled(true);
     ui->tMegaFolders->sortByColumn(MegaItemModel::NODE, Qt::AscendingOrder);
+
     setRootIndex(QModelIndex());
     checkNewFolderButtonVisibility();
+    mLoadingScene.setLoadingScene(false);
 }
 
 void NodeSelectorTreeViewWidget::showDefaultUploadOption(bool show)
@@ -198,16 +199,12 @@ void NodeSelectorTreeViewWidget::onRowsInserted()
     }
 }
 
-void NodeSelectorTreeViewWidget::onModelToBeChanged()
+void NodeSelectorTreeViewWidget::onModelChanged()
 {
-    ui->tMegaFolders->show();
-    //ui->tMegaFolders->setModel(mProxyModel.get());
+    mLoadingScene.setLoadingScene(false);
     mProxyModel->blockSignals(false);
-
     ui->tMegaFolders->blockSignals(false);
     ui->tMegaFolders->header()->blockSignals(false);
-
-
 }
 
 void NodeSelectorTreeViewWidget::onModelAboutToBeChanged()
@@ -215,10 +212,11 @@ void NodeSelectorTreeViewWidget::onModelAboutToBeChanged()
     mProxyModel->blockSignals(true);
     ui->tMegaFolders->blockSignals(true);
     ui->tMegaFolders->header()->blockSignals(true);
-    ui->tMegaFolders->hide();
+    if(mModel->countTotalRows() > LOADING_VIEW_THRESSHOLD)
+    {
+        mLoadingScene.setLoadingScene(true);
+    }
     mProxyModel->blockSignals(true);
-   //ui->tMegaFolders->setModel(nullptr);
-
 }
 
 void NodeSelectorTreeViewWidget::onGoBackClicked()
@@ -610,6 +608,7 @@ void NodeSelectorTreeViewWidget::onGenMEGALinkClicked()
 
 NodeSelectorTreeViewWidget::~NodeSelectorTreeViewWidget()
 {
+    mLoadingScene.setLoadingScene(false);
     delete ui;
 }
 
@@ -683,11 +682,6 @@ QString NodeSelectorTreeViewWidgetCloudDrive::getRootText()
     return tr(CLD_DRIVE);
 }
 
-void NodeSelectorTreeViewWidgetCloudDrive::onModelReset()
-{
-    ui->tMegaFolders->setExpanded(mProxyModel->index(0,0,QModelIndex()),true);
-}
-
 std::unique_ptr<MegaItemModel> NodeSelectorTreeViewWidgetCloudDrive::getModel()
 {
     return std::unique_ptr<MegaItemModelCloudDrive>(new MegaItemModelCloudDrive);
@@ -697,6 +691,11 @@ void NodeSelectorTreeViewWidgetCloudDrive::setRootIndex_Reimplementation(const Q
 {
     Q_UNUSED(source_idx)
     mProxyModel->showOwnerColumn(false);
+}
+
+void NodeSelectorTreeViewWidgetCloudDrive::modelSet()
+{
+    ui->tMegaFolders->setExpanded(mProxyModel->getIndexFromHandle(MegaSyncApp->getRootNode()->getHandle()), true);
 }
 
 NodeSelectorTreeViewWidgetIncomingShares::NodeSelectorTreeViewWidgetIncomingShares(QWidget *parent)

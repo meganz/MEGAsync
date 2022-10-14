@@ -2,14 +2,17 @@
 #define VIEWLOADINGSCENE_H
 
 #include <QWidget>
-#include <QAbstractItemView>
+#include <QTreeView>
 #include <QStandardItemModel>
 #include <QStyledItemDelegate>
 #include <QTimer>
 #include <QPainter>
 #include <QSortFilterProxyModel>
 #include <QPointer>
+#include <QLayout>
+#include <QHeaderView>
 #include <QScrollBar>
+#include <QDateTime>
 
 class LoadingSceneDelegateBase : public QStyledItemDelegate
 {
@@ -33,7 +36,6 @@ public:
     {
         updateTimer(state);
         mOpacity = MAX_OPACITY;
-
         mView->update();
     }
 
@@ -164,18 +166,21 @@ private:
 };
 
 template <class DelegateWidget>
-class ViewLoadingScene
+class ViewLoadingScene : public QObject
 {
+
     const uint8_t MAX_LOADING_ROWS = 20;
 
 public:
     ViewLoadingScene() :
-        mLoadingModel(nullptr),
-        mLoadingDelegate(nullptr),
         mViewDelegate(nullptr),
         mView(nullptr),
         mViewModel(nullptr),
-        mPotentialSourceModel(nullptr)
+        mPotentialSourceModel(nullptr),
+        mLoadingView(nullptr),
+        mLoadingModel(nullptr),
+        mLoadingDelegate(nullptr),
+        mViewLayout(nullptr)
     {}
 
     ~ViewLoadingScene()
@@ -187,7 +192,7 @@ public:
 
     bool isLoadingViewSet() const
     {
-        return mView->model() == mLoadingModel;
+        return mLoadingModel && mLoadingModel->rowCount() != 0;
     }
 
     inline void setView(QAbstractItemView* view)
@@ -195,6 +200,12 @@ public:
         mView = view;
         mViewDelegate = view->itemDelegate();
         mViewModel = view->model();
+
+        auto parentWidget = mView->parentWidget();
+        if(parentWidget && parentWidget->layout())
+        {
+            mViewLayout = parentWidget->layout();
+        }
     }
 
     inline void setLoadingScene(bool state)
@@ -215,8 +226,23 @@ public:
 
         if(!mLoadingModel)
         {
-            mLoadingModel = new QStandardItemModel(mView);
-            mLoadingDelegate = new LoadingSceneDelegate<DelegateWidget>(mView);
+            mLoadingView = new QTreeView();
+            mLoadingView->setObjectName(QString::fromStdString("Loading View"));
+            mLoadingView->setContentsMargins(mView->contentsMargins());
+            mLoadingView->setStyleSheet(mView->styleSheet());
+            mLoadingView->header()->setStretchLastSection(true);
+            mLoadingView->header()->hide();
+            mLoadingView->setSizePolicy(mView->sizePolicy());
+            mLoadingView->setFrameStyle(QFrame::NoFrame);
+            mLoadingView->setIndentation(0);
+
+            mLoadingModel = new QStandardItemModel(mLoadingView);
+            mLoadingDelegate = new LoadingSceneDelegate<DelegateWidget>(mLoadingView);
+            mLoadingView->setModel(mLoadingModel);
+            mLoadingView->setItemDelegate(mLoadingDelegate);
+
+            mLoadingView->hide();
+            mViewLayout->addWidget(mLoadingView);
         }
 
         if(state)
@@ -251,27 +277,49 @@ public:
                 mLoadingModel->appendRow(new QStandardItem());
             }
 
-            mView->setModel(mLoadingModel);
-            mView->setItemDelegate(mLoadingDelegate);
+            mView->hide();
+            mLoadingView->show();
+            mViewLayout->replaceWidget(mView, mLoadingView);
+            mStartTime = QDateTime::currentMSecsSinceEpoch();
+            mLoadingDelegate->setLoading(state);
         }
         else
         {
-            mLoadingModel->setRowCount(0);
-            mView->setModel(mViewModel);
-            mView->setItemDelegate(mViewDelegate);
+            //int val = 350ll;
+            auto delay = std::max(0ll, 350ll - (QDateTime::currentMSecsSinceEpoch()
+                                                     - mStartTime));
+            QTimer::singleShot(delay, this, [this, state] () {
+                mLoadingModel->setRowCount(0);
+                mLoadingView->hide();
+                mView->show();
+                mViewLayout->replaceWidget(mLoadingView, mView);
+                mLoadingDelegate->setLoading(state);
+            });
         }
-
-        mLoadingDelegate->setLoading(state);
-        mView->update();
     }
 
 private:
-    QStandardItemModel* mLoadingModel;
-    LoadingSceneDelegate<DelegateWidget>* mLoadingDelegate;
     QAbstractItemDelegate* mViewDelegate;
     QAbstractItemView* mView;
-    QAbstractItemModel* mViewModel;
+    QPointer<QAbstractItemModel> mViewModel;
     QAbstractItemModel* mPotentialSourceModel;
+    QPointer<QTreeView> mLoadingView;
+    QPointer<QStandardItemModel> mLoadingModel;
+    QPointer<LoadingSceneDelegate<DelegateWidget>> mLoadingDelegate;
+    QLayout* mViewLayout;
+    qint64 mStartTime;
+
+    int rowCount() const
+    {
+        if(auto proxyModel = dynamic_cast<QSortFilterProxyModel*>(mViewModel))
+        {
+            return proxyModel->sourceModel()->rowCount();
+        }
+        else
+        {
+            return mViewModel->rowCount();
+        }
+    }
 };
 
 #endif // VIEWLOADINGSCENE_H
