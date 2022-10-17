@@ -8,6 +8,7 @@
 #include <QAbstractItemModel>
 #include <QList>
 #include <QIcon>
+#include <QEventLoop>
 
 #include <memory>
 
@@ -25,6 +26,31 @@ enum class NodeRowDelegateRoles
     ENABLED_ROLE = toInt(MegaItemModelRoles::last),  //ALWAYS use last enum value from previous enum class for new enums
     INDENT_ROLE,
     last
+};
+
+class NodeRequester : public QObject
+{
+    Q_OBJECT
+
+    struct NodeInfo
+    {
+        MegaItem* parent;
+        int nodeTypeToRequest;
+    };
+
+public:
+    NodeRequester() = default;
+
+public slots:
+    void requestNodes(MegaItem* item, int nodeType = -1);
+
+signals:
+     void nodesReady(MegaItem* parent, mega::MegaNodeList* nodes);
+
+private:
+     void processRequest();
+
+     QList<NodeInfo> mNodesToRequest;
 };
 
 class MegaItemModel : public QAbstractItemModel
@@ -71,6 +97,7 @@ public:
 
 signals:
     void rowsAdded(const QModelIndex& parent, int addedRowsCount);
+    void requestChildNodes(MegaItem* parent, int nodeType) const;
 
 protected:
     QModelIndex findItemByNodeHandle(const mega::MegaHandle &handle, const QModelIndex& parent);
@@ -79,11 +106,20 @@ protected:
     bool mSyncSetupMode;
     bool mShowFiles;
 
+private slots:
+    void onChildNodesReady(MegaItem *parent, mega::MegaNodeList* nodes);
+
 private:
     int insertPosition(const std::unique_ptr<mega::MegaNode>& node);
     virtual QList<MegaItem*> getRootItems() const = 0;
     virtual int rootItemsCount() const = 0;
+    bool fetchItemChildren(MegaItem* item, const QModelIndex& parent) const;
+
     QList<MegaItem*> mRootItems;
+    mutable QEventLoop mChildNodesLoop;
+
+    QThread* mNodeRequesterThread;
+    NodeRequester* mNodeRequesterWorker;
 };
 
 class MegaItemModelCloudDrive : public MegaItemModel , public mega::MegaRequestListener

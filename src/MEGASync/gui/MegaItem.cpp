@@ -23,7 +23,8 @@ MegaItem::MegaItem(std::unique_ptr<MegaNode> node, bool showFiles, MegaItem *par
     mChildrenSet(false),
     mNode(std::move(node)),
     mOwner(nullptr),
-    mShowFiles(showFiles)
+    mShowFiles(showFiles),
+    mRequestingChildren(false)
 { 
     if(mNode->isFile() || mNode->isInShare())
     {
@@ -65,13 +66,21 @@ MegaItem::MegaItem(std::unique_ptr<MegaNode> node, bool showFiles, MegaItem *par
 }
 
 
-std::shared_ptr<mega::MegaNode> MegaItem::getNode()
+std::shared_ptr<mega::MegaNode> MegaItem::getNode() const
 {
     return mNode;
 }
 
+void MegaItem::setChildren(mega::MegaNodeList *nodes)
+{
+    mChildNodes.reset(nodes);
+    mRequestingChildren = false;
+}
+
 void MegaItem::fetchChildren()
 {
+    return;
+
     if(mNode->isFile())
     {
         return;
@@ -115,6 +124,21 @@ void MegaItem::createChildItems()
         auto node = std::unique_ptr<MegaNode>(mChildNodes->get(i)->copy());
         mChildItems.append(new MegaItem(move(node), mShowFiles, this));
     }
+}
+
+bool MegaItem::childrenAreInit()
+{
+    return mChildNodes != nullptr;
+}
+
+bool MegaItem::requestingChildren() const
+{
+    return mRequestingChildren;
+}
+
+void MegaItem::setRequestingChildren(bool newRequestingChildren)
+{
+    mRequestingChildren = newRequestingChildren;
 }
 
 MegaItem *MegaItem::getParent()
@@ -360,6 +384,7 @@ int MegaItem::row()
 MegaItem::~MegaItem()
 {
     qDeleteAll(mChildItems);
+
     mChildItems.clear();
 }
 

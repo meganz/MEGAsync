@@ -10,6 +10,50 @@
 
 using namespace mega;
 
+void NodeRequester::requestNodes(MegaItem* node, int nodeType)
+{
+    NodeInfo info;
+    info.parent = node;
+    info.nodeTypeToRequest = nodeType;
+    mNodesToRequest.append(info);
+
+    processRequest();
+}
+
+void NodeRequester::processRequest()
+{
+    if(!mNodesToRequest.isEmpty())
+    {
+        auto info = mNodesToRequest.takeFirst();
+        if(!info.parent->requestingChildren() && !info.parent->childrenAreInit())
+        {
+            info.parent->setRequestingChildren(true);
+
+            MegaApi* megaApi = MegaSyncApp->getMegaApi();
+
+            auto childNodes = std::unique_ptr<MegaNodeList>(megaApi->getChildren(info.parent->getNode().get()));
+            auto childNodesFiltered = MegaNodeList::createInstance();
+
+            for(int i = 0; i < childNodes->size();++i)
+            {
+                auto childNode = childNodes->get(i);
+//                if(childNode->isFile() && info.nodeTypeToRequest != MegaNode::TYPE_FILE
+//                        || childNode->isFolder() && info.nodeTypeToRequest != MegaNode::TYPE_FOLDER)
+//                {
+//                    break;
+//                }
+
+                childNodesFiltered->addNode(childNodes->get(i));
+            }
+
+            qDebug() << "NODES READY" << QString::fromUtf8(info.parent->getNode()->getName());
+            //Here we could add the child directly to the MetaItem...but first we should protect the list
+            emit nodesReady(info.parent, childNodesFiltered);
+        }
+    }
+}
+
+
 const int MegaItemModel::ROW_HEIGHT = 20;
 
 MegaItemModel::MegaItemModel(QObject *parent) :
@@ -19,7 +63,13 @@ MegaItemModel::MegaItemModel(QObject *parent) :
     mSyncSetupMode(false),
     mShowFiles(true)
 {
+    mNodeRequesterThread = new QThread();
+    mNodeRequesterWorker = new NodeRequester();
+    mNodeRequesterWorker->moveToThread(mNodeRequesterThread);
+    mNodeRequesterThread->start();
 
+    connect(this, &MegaItemModel::requestChildNodes, mNodeRequesterWorker, &NodeRequester::requestNodes);
+    connect(mNodeRequesterWorker, &NodeRequester::nodesReady, this, &MegaItemModel::onChildNodesReady);
 }
 
 int MegaItemModel::columnCount(const QModelIndex &) const
@@ -200,8 +250,10 @@ bool MegaItemModel::hasChildren(const QModelIndex &parent) const
     MegaItem *item = static_cast<MegaItem*>(parent.internalPointer());
     if(item)
     {
-        item->fetchChildren();
-        return item->getNumChildren() > 0;
+        if(fetchItemChildren(item, parent))
+        {
+            return item->getNumChildren() > 0;
+        }
     }
     return QAbstractItemModel::hasChildren(parent);
 }
@@ -295,11 +347,8 @@ bool MegaItemModel::canFetchMore(const QModelIndex &parent) const
     if (parent.isValid())
     {
         MegaItem *item = static_cast<MegaItem*>(parent.internalPointer());
-        item->fetchChildren();
-        if(item->getNumItemChildren() < item->getNumChildren())
-        {
-            return true;
-        }
+        return fetchItemChildren(item, parent);
+
         return false;
     }
     else
@@ -472,6 +521,31 @@ int MegaItemModel::insertPosition(const std::unique_ptr<MegaNode>& node)
         }
     }
     return i;
+}
+
+bool MegaItemModel::fetchItemChildren(MegaItem *item, const QModelIndex& parent) const
+{
+    if(!item->childrenAreInit())
+    {
+        emit requestChildNodes(item, mShowFiles);
+        item->setProperty("INDEX", parent);
+    }
+
+    return false;
+}
+
+void MegaItemModel::onChildNodesReady(MegaItem* parent, mega::MegaNodeList *nodes)
+{
+    if(nodes->size() > 0)
+    {
+        parent->setChildren(nodes);
+        auto index = parent->property("INDEX").value<QModelIndex>();
+        fetchMore(index);
+    }
+    else
+    {
+        delete nodes;
+    }
 }
 
 QModelIndex MegaItemModel::findItemByNodeHandle(const mega::MegaHandle& handle, const QModelIndex &parent)
