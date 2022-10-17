@@ -26,6 +26,10 @@ void UserAttributesManager::onRequestFinish(mega::MegaApi *api, mega::MegaReques
     if(incoming_request->getType() == mega::MegaRequest::TYPE_GET_ATTR_USER)
     {
         auto userEmail = QString::fromUtf8(incoming_request->getEmail());
+        if(userEmail.isEmpty())
+        {
+            userEmail = QString::fromUtf8(api->getMyEmail());
+        }
         foreach(auto request, mRequests.values(userEmail))
         {
             if(request->getRequestInfo().mParamInfo.contains(incoming_request->getParamType()))

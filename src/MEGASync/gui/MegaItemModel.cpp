@@ -3,7 +3,10 @@
 #include "control/Utilities.h"
 #include "Preferences.h"
 #include "model/Model.h"
+#include "UserAttributesRequests/CameraUploadFolder.h"
 #include "mega/types.h"
+#include "UserAttributesRequests/MyChatFilesFolder.h"
+#include "UserAttributesRequests/CameraUploadFolder.h"
 
 #include <QApplication>
 #include <QToolTip>
@@ -16,9 +19,11 @@ MegaItemModel::MegaItemModel(QObject *parent) :
     QAbstractItemModel(parent),
     mRequiredRights(MegaShare::ACCESS_READ),
     mDisplayFiles(false),
-    mSyncSetupMode(false),
-    mDelegateListener(mega::make_unique<QTMegaRequestListener>(MegaSyncApp->getMegaApi(), this))
+    mSyncSetupMode(false)
 {
+   mCameraFolderAttribute = UserAttributes::CameraUploadFolder::requestCameraUploadFolder();
+   mMyChatFilesFolderAttribute = UserAttributes::MyChatFilesFolder::requestMyChatFilesFolder();
+
    MegaApi* megaApi = MegaSyncApp->getMegaApi();
    auto root = std::unique_ptr<MegaNode>(megaApi->getRootNode());
    mRootItems.append(new MegaItem(move(root)));
@@ -34,10 +39,6 @@ MegaItemModel::MegaItemModel(QObject *parent) :
        connect(item, &MegaItem::infoUpdated, this, &MegaItemModel::onItemInfoUpdated);
        mRootItems.append(item);
    }
-
-   megaApi->getCameraUploadsFolder(mDelegateListener.get());
-   megaApi->getCameraUploadsFolderSecondary(mDelegateListener.get());
-   megaApi->getMyChatFilesFolder(mDelegateListener.get());
 }
 
 int MegaItemModel::columnCount(const QModelIndex &) const
@@ -349,7 +350,7 @@ QVariant MegaItemModel::getIcon(const QModelIndex &index, MegaItem* item) const
     {
     case COLUMN::NODE:
     {
-        return QVariant::fromValue<QIcon>(item->getFolderIcon());
+        return QVariant::fromValue<QIcon>(getFolderIcon(item));
     }
     case COLUMN::DATE:
     {
@@ -429,41 +430,6 @@ QVariant MegaItemModel::getText(const QModelIndex &index, MegaItem *item) const
     return QVariant(QLatin1String(""));
 }
 
-void MegaItemModel::onRequestFinish(mega::MegaApi *api, mega::MegaRequest *request, mega::MegaError *e)
-{
-    Q_UNUSED(api);
-    if (e->getErrorCode() != MegaError::API_OK)
-    {
-        return;
-    }
-    if(request->getType() == mega::MegaRequest::TYPE_GET_ATTR_USER)
-    {
-        switch(request->getParamType())
-        {
-        case mega::MegaApi::USER_ATTR_CAMERA_UPLOADS_FOLDER:
-        case mega::MegaApi::USER_ATTR_MY_CHAT_FILES_FOLDER:
-        {
-            QModelIndex idx = findItemByNodeHandle(request->getNodeHandle(), index(0, 0));
-            if(idx.isValid())
-            {
-                if(MegaItem* item = static_cast<MegaItem*>(idx.internalPointer()))
-                {
-                    request->getParamType() == mega::MegaApi::USER_ATTR_CAMERA_UPLOADS_FOLDER
-                            ? item->setCameraFolder() : item->setChatFilesFolder();
-                }
-            }
-
-            QVector<int> roles;
-            roles.append(Qt::DecorationRole);
-            emit dataChanged(idx, idx, roles);
-            return;
-        }
-        default:
-            break;
-        }
-    }
-}
-
 MegaItemModel::~MegaItemModel()
 {
     qDeleteAll(mRootItems);
@@ -540,4 +506,67 @@ QModelIndex MegaItemModel::findItemByNodeHandle(const mega::MegaHandle& handle, 
         }
     }
     return QModelIndex();
+}
+
+QIcon MegaItemModel::getFolderIcon(MegaItem *item) const
+{
+    if(!item)
+    {
+        return QIcon();
+    }
+    auto node = item->getNode();
+
+    if(!node)
+    {
+        return QIcon();
+    }
+    if (node->getType() >= MegaNode::TYPE_FOLDER)
+    {
+        if(node->getHandle() == mCameraFolderAttribute->getCameraUploadFolderHandle()
+           || node->getHandle() == mCameraFolderAttribute->getCameraUploadFolderSecondaryHandle())
+        {
+            QIcon icon;
+            icon.addFile(QLatin1String("://images/node_selector/small-camera-sync.png"), QSize(), QIcon::Normal);
+            icon.addFile(QLatin1String("://images/node_selector/small-folder-camera-sync-disabled.png"), QSize(), QIcon::Disabled);
+            return icon;;
+        }
+        else if(node->getHandle() == mMyChatFilesFolderAttribute->getMyChatFilesFolderHandle())
+        {
+            QIcon icon;
+            icon.addFile(QLatin1String("://images/node_selector/small-chat-files.png"), QSize(), QIcon::Normal);
+            icon.addFile(QLatin1String("://images/node_selector/small-chat-files-disabled.png"), QSize(), QIcon::Disabled);
+            return icon;
+        }
+        else if (node->isInShare())
+        {
+            QIcon icon;
+            icon.addFile(QLatin1String("://images/node_selector/small-folder-incoming.png"), QSize(), QIcon::Normal);
+            icon.addFile(QLatin1String("://images/node_selector/small-folder-incoming-disabled.png"), QSize(), QIcon::Disabled);
+            return icon;
+        }
+        else if (node->isOutShare())
+        {
+            QIcon icon;
+            icon.addFile(QLatin1String("://images/node_selector/small-folder-outgoing.png"), QSize(), QIcon::Normal);
+            icon.addFile(QLatin1String("://images/node_selector/small-folder-outgoing_disabled.png"), QSize(), QIcon::Disabled);
+            return icon;
+        }
+        else if(node->getHandle() == MegaSyncApp->getRootNode()->getHandle())
+        {
+            QIcon icon;
+            icon.addFile(QLatin1String("://images/ico-cloud-drive.png"));
+            return icon;
+        }
+        else
+        {
+            QIcon icon;
+            icon.addFile(QLatin1String("://images/small_folder.png"), QSize(), QIcon::Normal);
+            icon.addFile(QLatin1String("://images/node_selector/small-folder-disabled.png"), QSize(), QIcon::Disabled);
+            return icon;
+        }
+    }
+    else
+    {
+        return Utilities::getExtensionPixmapSmall(QString::fromUtf8(node->getName()));
+    }
 }
