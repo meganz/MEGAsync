@@ -309,6 +309,8 @@ set (MOC_INPUT
     ${MEGAsyncDir}/gui/AutoResizeStackedWidget.h
     ${MEGAsyncDir}/gui/UserAttributesRequests/FullName.h
     ${MEGAsyncDir}/gui/UserAttributesRequests/Avatar.h
+    ${MEGAsyncDir}/gui/UserAttributesRequests/MyChatFilesFolder.h
+    ${MEGAsyncDir}/gui/UserAttributesRequests/CameraUploadFolder.h
     ${MEGAsyncDir}/gui/ViewLoadingScene.h
     ${MEGAsyncDir}/gui/ScanningWidget.h
     ${MEGAsyncDir}/gui/BlurredShadowEffect.h
@@ -478,6 +480,8 @@ set (SRCS
     ${MEGAsyncDir}/gui/GuiUtilities.cpp
     ${MEGAsyncDir}/gui/UserAttributesRequests/FullName.cpp
     ${MEGAsyncDir}/gui/UserAttributesRequests/Avatar.cpp
+    ${MEGAsyncDir}/gui/UserAttributesRequests/MyChatFilesFolder.cpp
+    ${MEGAsyncDir}/gui/UserAttributesRequests/CameraUploadFolder.cpp
     ${MEGAsyncDir}/gui/ButtonIconManager.cpp
     ${MEGAsyncDir}/gui/EventHelper.cpp
     ${MEGAsyncDir}/gui/GuiUtilities.cpp

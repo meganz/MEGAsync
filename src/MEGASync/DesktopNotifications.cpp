@@ -158,7 +158,6 @@ void DesktopNotifications::addUserAlertList(mega::MegaUserAlertList *alertList)
             if(!userEmail.isEmpty())
             {
                 auto fullNameUserAttributes = UserAttributes::FullName::requestFullName(userEmail.toUtf8().constData());
-
                 if(fullNameUserAttributes && !mUserAttributes.contains(userEmail))
                 {
                     mUserAttributes.insert(userEmail, fullNameUserAttributes);
