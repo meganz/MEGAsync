@@ -869,7 +869,7 @@ void MegaApplication::updateTrayIcon()
     #endif
         }
     }
-    else if (!getRootNode() || !nodescurrent)
+    else if (!nodescurrent || !getRootNode())
     {
         tooltipState = tr("Fetching file list...");
         icon = icons["synching"];
@@ -1455,7 +1455,8 @@ void MegaApplication::startSyncs(QList<PreConfiguredSync> syncs)
     // Load default exclusion rules before adding the new syncs from setup wizard.
     // We could not load them before fetch nodes, because default exclusion rules
     // are only created once the local preferences are logged.
-    loadSyncExclusionRules(QString::fromUtf8(megaApi->getMyEmail()));
+    std::unique_ptr<char[]> email(megaApi->getMyEmail());
+    loadSyncExclusionRules(QString::fromUtf8(email.get()));
 
     // add syncs from setupWizard
     for (auto & ps : syncs)
