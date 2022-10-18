@@ -10,11 +10,11 @@
 
 using namespace mega;
 
-void NodeRequester::requestNodes(MegaItem* node, int nodeType)
+void NodeRequester::requestNodes(MegaItem* node, bool showFiles)
 {
     NodeInfo info;
     info.parent = node;
-    info.nodeTypeToRequest = nodeType;
+    info.showFiles = showFiles ;
     mNodesToRequest.append(info);
 
     processRequest();
@@ -37,16 +37,15 @@ void NodeRequester::processRequest()
             for(int i = 0; i < childNodes->size();++i)
             {
                 auto childNode = childNodes->get(i);
-//                if(childNode->isFile() && info.nodeTypeToRequest != MegaNode::TYPE_FILE
-//                        || childNode->isFolder() && info.nodeTypeToRequest != MegaNode::TYPE_FOLDER)
-//                {
-//                    break;
-//                }
+                if(childNode->isFile() && !info.showFiles)
+                {
+                    break;
+                }
 
                 childNodesFiltered->addNode(childNodes->get(i));
             }
 
-            qDebug() << "NODES READY" << QString::fromUtf8(info.parent->getNode()->getName());
+            //qDebug() << "NODES READY" << QString::fromUtf8(info.parent->getNode()->getName());
             //Here we could add the child directly to the MetaItem...but first we should protect the list
             emit nodesReady(info.parent, childNodesFiltered);
         }
@@ -212,7 +211,6 @@ int MegaItemModel::rowCount(const QModelIndex &parent) const
         {
             return 0;
         }
-        QString name = QString::fromUtf8(item->getNode()->getName());
 
         return item->getNumItemChildren();
     }
@@ -247,14 +245,13 @@ bool MegaItemModel::hasChildren(const QModelIndex &parent) const
     {
         return false;
     }
+
     MegaItem *item = static_cast<MegaItem*>(parent.internalPointer());
-    if(item)
+    if(item && item->getNode())
     {
-        if(fetchItemChildren(item, parent))
-        {
-            return item->getNumChildren() > 0;
-        }
+        return MegaSyncApp->getMegaApi()->getNumChildren(item->getNode().get()) > 0;
     }
+
     return QAbstractItemModel::hasChildren(parent);
 }
 
@@ -323,33 +320,46 @@ void MegaItemModel::fetchMore(const QModelIndex &parent)
     if (parent.isValid())
     {
         MegaItem *item = static_cast<MegaItem*>(parent.internalPointer());
+
         int itemNumChildren = item->getNumChildren();
-        blockSignals(true);
+
+        //blockSignals(true);
+        lockMutex(true);
         beginInsertRows(parent, 0, itemNumChildren - 1);
         item->createChildItems();
         endInsertRows();
-        blockSignals(false);
-        emit rowsAdded(parent, itemNumChildren);
+        lockMutex(false);
+
+        //blockSignals(false);
+        //emit rowsAdded(parent, itemNumChildren);
     }
     else
     {
+        //blockSignals(true);
+        lockMutex(true);
         beginResetModel();
         mRootItems.append(getRootItems());
-        blockSignals(true);
         endResetModel();
-        blockSignals(false);
-        emit rowsAdded(QModelIndex(), rootItemsCount());
+        lockMutex(false);
+        //blockSignals(false);
+        //emit rowsAdded(QModelIndex(), rootItemsCount());
     }
 }
 
 bool MegaItemModel::canFetchMore(const QModelIndex &parent) const
 {
-    if (parent.isValid())
+    MegaItem *item = static_cast<MegaItem*>(parent.internalPointer());
+    if(item)
     {
-        MegaItem *item = static_cast<MegaItem*>(parent.internalPointer());
-        return fetchItemChildren(item, parent);
+        fetchItemChildren(item, parent);
+        if(!item->childrenAreInit() && item->requestingChildren())
+        {
+            return false;
+        }
 
-        return false;
+        auto result = item->getNumChildren() != item->getNumItemChildren();
+        qDebug() << "FETCH MORE" << result << item->childrenAreInit() << item->getNumChildren() << item->getNumItemChildren() << QString::fromUtf8(item->getNode()->getName());
+        return result;
     }
     else
     {
@@ -507,6 +517,16 @@ MegaItemModel::~MegaItemModel()
 {
 }
 
+void MegaItemModel::lockMutex(bool state)
+{
+    state ? mLoadingMutex.lock() : mLoadingMutex.unlock();
+}
+
+bool MegaItemModel::tryLock()
+{
+    return mLoadingMutex.tryLock();
+}
+
 int MegaItemModel::insertPosition(const std::unique_ptr<MegaNode>& node)
 {
     int type = node->getType();
@@ -525,13 +545,14 @@ int MegaItemModel::insertPosition(const std::unique_ptr<MegaNode>& node)
 
 bool MegaItemModel::fetchItemChildren(MegaItem *item, const QModelIndex& parent) const
 {
-    if(!item->childrenAreInit())
+    qDebug() << item->childrenAreInit() << item->getNumChildren() << item->getNumItemChildren() << QString::fromUtf8(item->getNode()->getName());
+
+    if(!item->childrenAreInit() && !item->requestingChildren())
     {
         emit requestChildNodes(item, mShowFiles);
         item->setProperty("INDEX", parent);
     }
-
-    return false;
+    return true;
 }
 
 void MegaItemModel::onChildNodesReady(MegaItem* parent, mega::MegaNodeList *nodes)
@@ -540,7 +561,10 @@ void MegaItemModel::onChildNodesReady(MegaItem* parent, mega::MegaNodeList *node
     {
         parent->setChildren(nodes);
         auto index = parent->property("INDEX").value<QModelIndex>();
-        fetchMore(index);
+
+        qDebug() << "DATA CHANGED" << index;
+
+        emit dataChanged(index, index);
     }
     else
     {

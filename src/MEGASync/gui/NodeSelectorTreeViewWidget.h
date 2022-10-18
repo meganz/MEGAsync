@@ -116,6 +116,8 @@ private:
     virtual QString getRootText() = 0;
     virtual std::unique_ptr<MegaItemModel> getModel() = 0;
     virtual bool newFolderBtnVisibleInRoot(){return true;}
+    void setLoadingSceneVisible(bool visible);
+
     bool first;
     mega::MegaHandle mNodeHandleToSelect;
     ViewLoadingScene<NodeSelectorLoadingDelegate> mLoadingScene;

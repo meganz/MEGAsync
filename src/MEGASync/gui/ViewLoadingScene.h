@@ -180,7 +180,8 @@ public:
         mLoadingView(nullptr),
         mLoadingModel(nullptr),
         mLoadingDelegate(nullptr),
-        mViewLayout(nullptr)
+        mViewLayout(nullptr),
+        mShowLoadingViewThreshold(-1)
     {}
 
     ~ViewLoadingScene()
@@ -245,7 +246,7 @@ public:
             mViewLayout->addWidget(mLoadingView);
         }
 
-        if(state)
+        if(state /*&& mViewModel->rowCount() > mShowLoadingViewThreshold*/)
         {
             int visibleRows(0);
 
@@ -298,6 +299,11 @@ public:
         }
     }
 
+    void setShowLoadingViewThreshold(int newShowLoadingViewThreshold)
+    {
+        mShowLoadingViewThreshold = newShowLoadingViewThreshold;
+    }
+
 private:
     QAbstractItemDelegate* mViewDelegate;
     QAbstractItemView* mView;
@@ -308,6 +314,7 @@ private:
     QPointer<LoadingSceneDelegate<DelegateWidget>> mLoadingDelegate;
     QLayout* mViewLayout;
     qint64 mStartTime;
+    int mShowLoadingViewThreshold;
 
     int rowCount() const
     {

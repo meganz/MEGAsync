@@ -158,10 +158,11 @@ MegaItem *MegaItem::getChild(int i)
 
 int MegaItem::getNumChildren()
 {
-    if(mNode->isFile())
+    if(mNode->isFile() || !mChildNodes)
     {
         return 0;
     }
+    qDebug() << mChildNodes->size();
     return mChildNodes->size();
 }
 

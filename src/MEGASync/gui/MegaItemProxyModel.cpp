@@ -39,7 +39,7 @@ void MegaItemProxyModel::showOwnerColumn(bool value)
     if(mFilter.showOwnerColumn != value)
     {
         mFilter.showOwnerColumn = value;
-        //invalidateFilter();
+        invalidateFilter();
     }
 }
 
@@ -48,22 +48,35 @@ void MegaItemProxyModel::sort(int column, Qt::SortOrder order)
     mOrder = order;
     mSortColumn = column;
     emit modelAboutToBeChanged();
-    QFuture<void> filtered = QtConcurrent::run([this, column, order](){
-        emit layoutAboutToBeChanged();
-        blockSignals(true);
-        sourceModel()->blockSignals(true);
-        invalidateFilter();
-        QSortFilterProxyModel::sort(column, order);
-        hasChildren(parentChildrensToMap);
-        blockSignals(false);
-        sourceModel()->blockSignals(false);
-        emit layoutChanged();
-    });
-    mFilterWatcher.setFuture(filtered);
-    if(!loop.isRunning())
-    {
-        loop.exec();
-    }
+
+    //QFuture<void> filtered = QtConcurrent::run([this, column, order](){
+        auto itemModel = dynamic_cast<MegaItemModel*>(sourceModel());
+        if(itemModel)
+        {
+            itemModel->lockMutex(true);
+
+            emit layoutAboutToBeChanged();
+            blockSignals(true);
+            sourceModel()->blockSignals(true);
+
+            invalidateFilter();
+            QSortFilterProxyModel::sort(column, order);
+
+            itemModel->lockMutex(false);
+
+            hasChildren(parentChildrensToMap);
+            blockSignals(false);
+            sourceModel()->blockSignals(false);
+            emit layoutChanged();
+
+        }
+    //});
+    //mFilterWatcher.setFuture(filtered);
+        emit modelChanged();
+//    if(!loop.isRunning())
+//    {
+//        loop.exec();
+//    }
 }
 
 mega::MegaHandle MegaItemProxyModel::getHandle(const QModelIndex &index)
@@ -212,14 +225,15 @@ void MegaItemProxyModel::setSourceModel(QAbstractItemModel *sourceModel)
 
 bool MegaItemProxyModel::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const
 {
-//    if(qApp->thread() == QThread::currentThread())
-//    {
-//        qDebug()<<"MAIN THREAD:FILTER";
-//    }
-//    else
-//    {
-//        qDebug()<<"MY THREAD:FILTER";
-//    }
+    if(qApp->thread() == QThread::currentThread())
+    {
+        qDebug()<<"MAIN THREAD:FILTER";
+    }
+    else
+    {
+        qDebug()<<"MY THREAD:FILTER";
+    }
+
     QModelIndex index = sourceModel()->index(sourceRow, 0, sourceParent);
 
     if(index.isValid())

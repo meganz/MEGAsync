@@ -39,7 +39,9 @@ NodeSelectorTreeViewWidget::NodeSelectorTreeViewWidget(QWidget *parent) :
     connect(ui->cbAlwaysUploadToLocation, &QCheckBox::stateChanged, this, &NodeSelectorTreeViewWidget::oncbAlwaysUploadToLocationChanged);
     checkBackForwardButtons();
     ui->tMegaFolders->installEventFilter(this);
+
     mLoadingScene.setView(ui->tMegaFolders);
+    mLoadingScene.setShowLoadingViewThreshold(LOADING_VIEW_THRESSHOLD);
 }
 
 void NodeSelectorTreeViewWidget::changeEvent(QEvent *event)
@@ -66,7 +68,7 @@ bool NodeSelectorTreeViewWidget::eventFilter(QObject *obj, QEvent *e)
 
 void NodeSelectorTreeViewWidget::setSelectionMode(int selectMode)
 {
-    mLoadingScene.setLoadingScene(true);
+    setLoadingSceneVisible(true);
     if(mSelectMode != -1)
     {
         return;
@@ -139,7 +141,7 @@ ui->tMegaFolders->setAnimated(false);
 
     setRootIndex(QModelIndex());
     checkNewFolderButtonVisibility();
-    mLoadingScene.setLoadingScene(false);
+    setLoadingSceneVisible(false);
 }
 
 void NodeSelectorTreeViewWidget::showDefaultUploadOption(bool show)
@@ -199,25 +201,23 @@ void NodeSelectorTreeViewWidget::onRowsInserted()
     }
 }
 
-void NodeSelectorTreeViewWidget::onModelChanged()
-{
-    mLoadingScene.setLoadingScene(false);
-    mProxyModel->blockSignals(false);
-    ui->tMegaFolders->blockSignals(false);
-    ui->tMegaFolders->header()->blockSignals(false);
-}
-
 void NodeSelectorTreeViewWidget::onModelAboutToBeChanged()
 {
     mProxyModel->blockSignals(true);
     ui->tMegaFolders->blockSignals(true);
     ui->tMegaFolders->header()->blockSignals(true);
-    if(mModel->countTotalRows() > LOADING_VIEW_THRESSHOLD)
-    {
-        mLoadingScene.setLoadingScene(true);
-    }
+    setLoadingSceneVisible(true);
     mProxyModel->blockSignals(true);
 }
+
+void NodeSelectorTreeViewWidget::onModelChanged()
+{
+    setLoadingSceneVisible(false);
+    mProxyModel->blockSignals(false);
+    ui->tMegaFolders->blockSignals(false);
+    ui->tMegaFolders->header()->blockSignals(false);
+}
+
 
 void NodeSelectorTreeViewWidget::onGoBackClicked()
 {
@@ -335,6 +335,11 @@ void NodeSelectorTreeViewWidget::checkNewFolderButtonVisibility()
         auto sourceIndex = mProxyModel->getIndexFromSource(ui->tMegaFolders->rootIndex());
         ui->bNewFolder->setVisible(sourceIndex.isValid() || newFolderBtnVisibleInRoot());
     }
+}
+
+void NodeSelectorTreeViewWidget::setLoadingSceneVisible(bool visible)
+{
+    mLoadingScene.setLoadingScene(visible);
 }
 
 void NodeSelectorTreeViewWidget::onSelectionChanged(const QItemSelection& selected, const QItemSelection& deselected)
@@ -608,7 +613,7 @@ void NodeSelectorTreeViewWidget::onGenMEGALinkClicked()
 
 NodeSelectorTreeViewWidget::~NodeSelectorTreeViewWidget()
 {
-    mLoadingScene.setLoadingScene(false);
+    setLoadingSceneVisible(false);
     delete ui;
 }
 
@@ -695,6 +700,7 @@ void NodeSelectorTreeViewWidgetCloudDrive::setRootIndex_Reimplementation(const Q
 
 void NodeSelectorTreeViewWidgetCloudDrive::modelSet()
 {
+    qDebug() << mProxyModel->getIndexFromHandle(MegaSyncApp->getRootNode()->getHandle());
     ui->tMegaFolders->setExpanded(mProxyModel->getIndexFromHandle(MegaSyncApp->getRootNode()->getHandle()), true);
 }
 

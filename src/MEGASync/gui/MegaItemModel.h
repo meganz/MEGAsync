@@ -35,14 +35,14 @@ class NodeRequester : public QObject
     struct NodeInfo
     {
         MegaItem* parent;
-        int nodeTypeToRequest;
+        bool showFiles;
     };
 
 public:
     NodeRequester() = default;
 
 public slots:
-    void requestNodes(MegaItem* item, int nodeType = -1);
+    void requestNodes(MegaItem* item, bool showFiles = true);
 
 signals:
      void nodesReady(MegaItem* parent, mega::MegaNodeList* nodes);
@@ -95,6 +95,9 @@ public:
     void setFetchStep(int step);
     virtual ~MegaItemModel();
 
+    void lockMutex(bool state);
+    bool tryLock();
+
 signals:
     void rowsAdded(const QModelIndex& parent, int addedRowsCount);
     void requestChildNodes(MegaItem* parent, int nodeType) const;
@@ -116,10 +119,10 @@ private:
     bool fetchItemChildren(MegaItem* item, const QModelIndex& parent) const;
 
     QList<MegaItem*> mRootItems;
-    mutable QEventLoop mChildNodesLoop;
 
     QThread* mNodeRequesterThread;
     NodeRequester* mNodeRequesterWorker;
+    QMutex mLoadingMutex;
 };
 
 class MegaItemModelCloudDrive : public MegaItemModel , public mega::MegaRequestListener
