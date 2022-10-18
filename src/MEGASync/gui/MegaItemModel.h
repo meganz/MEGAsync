@@ -116,7 +116,8 @@ private:
     int insertPosition(const std::unique_ptr<mega::MegaNode>& node);
     virtual QList<MegaItem*> getRootItems() const = 0;
     virtual int rootItemsCount() const = 0;
-    bool fetchItemChildren(MegaItem* item, const QModelIndex& parent) const;
+    bool fetchItemChildren(const QModelIndex& parent) const;
+    void createChildItems(const QModelIndex& index, MegaItem* parent);
 
     QList<MegaItem*> mRootItems;
 

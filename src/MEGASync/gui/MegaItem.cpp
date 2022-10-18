@@ -21,10 +21,10 @@ MegaItem::MegaItem(std::unique_ptr<MegaNode> node, bool showFiles, MegaItem *par
     mCameraFolder(false),
     mChatFilesFolder(false),
     mChildrenSet(false),
+    mRequestingChildren(false),
     mNode(std::move(node)),
     mOwner(nullptr),
-    mShowFiles(showFiles),
-    mRequestingChildren(false)
+    mShowFiles(showFiles)
 { 
     if(mNode->isFile() || mNode->isInShare())
     {
@@ -162,7 +162,7 @@ int MegaItem::getNumChildren()
     {
         return 0;
     }
-    qDebug() << mChildNodes->size();
+    //qDebug() << mChildNodes->size();
     return mChildNodes->size();
 }
 
