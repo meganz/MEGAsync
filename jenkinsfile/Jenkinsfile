@@ -1,0 +1,94 @@
+pipeline {
+    agent { label 'linux' }
+    
+    parameters {
+        booleanParam(name: 'BUILD_FFMPEG', defaultValue: false, description: 'Should we build ffmpeg before building MEGAsync?')
+        booleanParam(name: 'BUILD_PDFIUM', defaultValue: false, description: 'Should we build pdfium before building MEGAsync?')
+        booleanParam(name: 'BUILD_LINUX', defaultValue: true, description: 'Should we build MEGAsync for Linux?')
+        booleanParam(name: 'BUILD_MAC', defaultValue: true, description: 'Should we build MEGAsync for MAC?')
+    }
+
+    options { 
+        disableConcurrentBuilds()
+        skipStagesAfterUnstable()
+        gitLabConnection('GitLabConnectionJenkins')
+    }
+
+    stages {
+        stage('Build ffmpeg') {
+            when {
+                allOf {
+                    expression { params.BUILD_FFMPEG == true }
+                    expression { params.BUILD_LINUX == true }
+                }
+            }
+            steps {
+                gitlabCommitStatus(name: 'Ffmpeg build') {
+                    script {
+                        echo "Triggering ffmpeg job."
+                        build job: 'megasync-package-ffpmeg', wait: true, propagate: true
+                    }
+                }
+            }
+        }
+
+        stage('Build pdfium') {
+            when {
+                allOf {
+                    expression { params.BUILD_PDFIUM == true }
+                    expression { params.BUILD_LINUX == true }
+                }
+            }
+            steps {
+                gitlabCommitStatus(name: 'Pdfium build') {
+                    script {
+                        echo "Triggering pdfium job."
+                        build job: 'megasync-package-pdfium', wait: true, propagate: true
+                    }
+                }
+                
+            }
+        }
+        
+        stage('Build MEGAsync'){
+            parallel {
+                stage('Build MAC') {
+                    when {
+                        expression { params.BUILD_MAC == true }
+                    }
+                    steps {
+                        gitlabCommitStatus(name: 'Mac build') {
+                            script {
+                                echo "Triggering MEGAsync job."
+                                build job: '../MEGAsync/main', wait: true, propagate: true, parameters: [
+                                    string(name: 'MEGASYNC_BRANCH', value: "${env.BRANCH_NAME}"),
+                                    booleanParam(name: 'BUILD_LINUX', value: false),
+                                    booleanParam(name: 'BUILD_MAC', value: true)
+                                    ]
+                                    //Could be done in the same job as the next one, but this will be shown in a better way in the pipeline
+                            }
+                        }
+                    }
+                }
+
+                stage('Build Linux') {
+                    when {
+                        expression { params.BUILD_LINUX == true }
+                    }
+                    steps {
+                        gitlabCommitStatus(name: 'Linux build') {
+                            script {
+                                echo "Triggering MEGAsync job."
+                                build job: '../MEGAsync/main', wait: true, propagate: true, parameters: [
+                                    string(name: 'MEGASYNC_BRANCH', value: "${env.BRANCH_NAME}"),
+                                    booleanParam(name: 'BUILD_LINUX', value: true),
+                                    booleanParam(name: 'BUILD_MAC', value: false)
+                                    ]
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
