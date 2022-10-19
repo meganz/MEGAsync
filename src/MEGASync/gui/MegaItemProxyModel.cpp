@@ -49,7 +49,7 @@ void MegaItemProxyModel::sort(int column, Qt::SortOrder order)
     mSortColumn = column;
     emit modelAboutToBeChanged();
 
-    //QFuture<void> filtered = QtConcurrent::run([this, column, order](){
+    QFuture<void> filtered = QtConcurrent::run([this, column, order](){
         auto itemModel = dynamic_cast<MegaItemModel*>(sourceModel());
         if(itemModel)
         {
@@ -59,24 +59,23 @@ void MegaItemProxyModel::sort(int column, Qt::SortOrder order)
             blockSignals(true);
             sourceModel()->blockSignals(true);
 
-            invalidateFilter();
+            //reset();
+            invalidate();
             QSortFilterProxyModel::sort(column, order);
-
+            //QSortFilterProxyModel::rowCount(parentChildrensToMap);
+            qDebug() << parentChildrensToMap;
             itemModel->lockMutex(false);
-
-            hasChildren(parentChildrensToMap);
             blockSignals(false);
             sourceModel()->blockSignals(false);
             emit layoutChanged();
 
         }
-    //});
-    //mFilterWatcher.setFuture(filtered);
-        emit modelChanged();
-//    if(!loop.isRunning())
-//    {
-//        loop.exec();
-//    }
+    });
+    mFilterWatcher.setFuture(filtered);
+    if(!loop.isRunning())
+    {
+        loop.exec();
+    }
 }
 
 mega::MegaHandle MegaItemProxyModel::getHandle(const QModelIndex &index)
@@ -225,14 +224,14 @@ void MegaItemProxyModel::setSourceModel(QAbstractItemModel *sourceModel)
 
 bool MegaItemProxyModel::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const
 {
-//    if(qApp->thread() == QThread::currentThread())
-//    {
-//        qDebug()<<"MAIN THREAD:FILTER";
-//    }
-//    else
-//    {
-//        qDebug()<<"MY THREAD:FILTER";
-//    }
+    if(qApp->thread() == QThread::currentThread())
+    {
+        qDebug()<<"MAIN THREAD:FILTER";
+    }
+    else
+    {
+        qDebug()<<"MY THREAD:FILTER" << sourceParent << sourceRow;
+    }
 
     QModelIndex index = sourceModel()->index(sourceRow, 0, sourceParent);
 

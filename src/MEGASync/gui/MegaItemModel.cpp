@@ -329,14 +329,14 @@ void MegaItemModel::fetchMore(const QModelIndex &parent)
     }
     else
     {
-        //blockSignals(true);
+        blockSignals(true);
         lockMutex(true);
         beginResetModel();
         mRootItems.append(getRootItems());
         endResetModel();
         lockMutex(false);
-        //blockSignals(false);
-        //emit rowsAdded(QModelIndex(), rootItemsCount());
+        blockSignals(false);
+        emit rowsAdded(QModelIndex(), rootItemsCount());
     }
 }
 
@@ -351,16 +351,11 @@ bool MegaItemModel::canFetchMore(const QModelIndex &parent) const
             {
                 return MegaSyncApp->getMegaApi()->getNumChildFolders(item->getNode().get()) > 0;
             }
+
             return MegaSyncApp->getMegaApi()->hasChildren(item->getNode().get());
         }
-        auto result = item->getNumChildren() != item->getNumItemChildren();
 
-//        if(QString::fromUtf8(item->getNode()->getName()) == QString::fromUtf8("Cloud Drive"))
-//        {
-           // qDebug() << "FETCH MORE" << result << item->childrenAreInit() << item->getNumChildren() << item->getNumItemChildren() << QString::fromUtf8(item->getNode()->getName());
-     //   }
-
-        return result;
+        return item->getNumChildren() != item->getNumItemChildren();
     }
     else
     {
@@ -544,7 +539,7 @@ int MegaItemModel::insertPosition(const std::unique_ptr<MegaNode>& node)
     return i;
 }
 
-bool MegaItemModel::fetchItemChildren(const QModelIndex& parent) const
+void MegaItemModel::fetchItemChildren(const QModelIndex& parent) const
 {
     //qDebug() << item->childrenAreInit() << item->getNumChildren() << item->getNumItemChildren() << QString::fromUtf8(item->getNode()->getName());
     MegaItem *item = static_cast<MegaItem*>(parent.internalPointer());
@@ -554,22 +549,20 @@ bool MegaItemModel::fetchItemChildren(const QModelIndex& parent) const
         emit requestChildNodes(item, mShowFiles);
         item->setProperty("INDEX", parent);
     }
-    return true;
 }
 
 void MegaItemModel::createChildItems(const QModelIndex &index, MegaItem *parent)
 {
     int itemNumChildren = parent->getNumChildren();
 
-    //blockSignals(true);
+    blockSignals(true);
     lockMutex(true);
     beginInsertRows(index, 0, itemNumChildren - 1);
     parent->createChildItems();
     endInsertRows();
     lockMutex(false);
-
-    //blockSignals(false);
-    //emit rowsAdded(index, itemNumChildren);
+    blockSignals(false);
+    emit rowsAdded(index, itemNumChildren);
     //emit layoutChanged();
 }
 
@@ -578,11 +571,9 @@ void MegaItemModel::onChildNodesReady(MegaItem* parent, mega::MegaNodeList *node
     if(nodes->size() > 0)
     {
         parent->setChildren(nodes);
+
         auto index = parent->property("INDEX").value<QModelIndex>();
 
-        //qDebug() << "DATA CHANGED" << index;
-
-        emit dataChanged(index, index);
         if(parent->isRoot())
         {
             fetchMore(index);
