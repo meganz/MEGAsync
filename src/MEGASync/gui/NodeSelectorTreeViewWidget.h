@@ -44,6 +44,7 @@ public:
     void setFutureSelectedNodeHandle(const mega::MegaHandle &selectedHandle);
     void setSelectionMode(int selectionMode);
     void setDefaultUploadOption(bool value);
+    bool getDefaultUploadOption();
     void showDefaultUploadOption(bool show);
 
 public slots:

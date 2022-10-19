@@ -150,6 +150,11 @@ void NodeSelectorTreeViewWidget::setDefaultUploadOption(bool value)
     ui->cbAlwaysUploadToLocation->setChecked(value);
 }
 
+
+bool NodeSelectorTreeViewWidget::getDefaultUploadOption()
+{
+    return ui->cbAlwaysUploadToLocation->isChecked();
+}
 void NodeSelectorTreeViewWidget::setTitle(const QString &title)
 {
     ui->lFolderName->setText(title);

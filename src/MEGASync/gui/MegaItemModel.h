@@ -130,6 +130,9 @@ private:
     virtual QList<MegaItem*> getRootItems() const = 0;
     virtual int rootItemsCount() const = 0;
     void createChildItems(const QModelIndex& index, MegaItem* parent);
+    QIcon getFolderIcon(MegaItem* item) const;
+    std::shared_ptr<const UserAttributes::CameraUploadFolder> mCameraFolderAttribute;
+    std::shared_ptr<const UserAttributes::MyChatFilesFolder> mMyChatFilesFolderAttribute;
 
     QThread* mNodeRequesterThread;
     NodeRequester* mNodeRequesterWorker;
@@ -172,11 +175,6 @@ private slots:
 
 private:
     std::unique_ptr<mega::MegaNodeList> mSharedNodeList;
-    QModelIndex findItemByNodeHandle(const mega::MegaHandle &handle, const QModelIndex& parent);
-    std::shared_ptr<const UserAttributes::CameraUploadFolder> mCameraUploadFolderReq;
-    QIcon getFolderIcon(MegaItem* item) const;
-    std::shared_ptr<const UserAttributes::CameraUploadFolder> mCameraFolderAttribute;
-    std::shared_ptr<const UserAttributes::MyChatFilesFolder> mMyChatFilesFolderAttribute;
 };
 
 #endif // MEGAITEMMODEL_H

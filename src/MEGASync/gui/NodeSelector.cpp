@@ -5,6 +5,7 @@
 #include "control/Utilities.h"
 #include "megaapi.h"
 #include "mega/utils.h"
+#include <NodeSelectorTreeViewWidget.h>>
 
 #include <QMessageBox>
 #include <QPointer>
@@ -31,11 +32,6 @@ NodeSelector::NodeSelector(int selectMode, QWidget *parent) :
 
     ui->CloudDrive->setSelectionMode(mSelectMode);
     ui->IncomingShares->setSelectionMode(mSelectMode);
-
-    connect(ui->CloudDrive, &NodeSelectorTreeViewWidget::okBtnClicked, this, &NodeSelector::onbOkClicked);
-    connect(ui->IncomingShares, &NodeSelectorTreeViewWidget::okBtnClicked, this, &NodeSelector::onbOkClicked);
-    connect(ui->CloudDrive, &NodeSelectorTreeViewWidget::cancelBtnClicked, this, &NodeSelector::reject);
-    connect(ui->IncomingShares, &NodeSelectorTreeViewWidget::cancelBtnClicked, this, &NodeSelector::reject);
 
 #ifndef Q_OS_MAC
     ui->bShowCloudDrive->setChecked(true);
@@ -82,6 +78,11 @@ void NodeSelector::setDefaultUploadOption(bool value)
     ui->IncomingShares->setDefaultUploadOption(value);
 }
 
+bool NodeSelector::getDefaultUploadOption()
+{
+    return ui->CloudDrive->getDefaultUploadOption();
+}
+
 void NodeSelector::changeEvent(QEvent *event)
 {
     if (event->type() == QEvent::LanguageChange)
@@ -103,7 +104,7 @@ void NodeSelector::onbOkClicked()
     if(mSelectMode == NodeSelector::DOWNLOAD_SELECT)
     {
         auto treeViewWidget = static_cast<NodeSelectorTreeViewWidget*>(ui->stackedWidget->currentWidget());
-        auto nodes = treeViewWidget->getMultiSelectionNodeHandle();
+        QList<MegaHandle> nodes = treeViewWidget->getMultiSelectionNodeHandle();
         int wrongNodes(0);
         foreach(auto& nodeHandle, nodes)
         {
