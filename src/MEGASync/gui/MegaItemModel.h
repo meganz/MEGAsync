@@ -108,7 +108,6 @@ public:
 signals:
     void rowsAdded(const QModelIndex& parent, int addedRowsCount);
     void requestChildNodes(MegaItem* parent, int nodeType) const;
-    virtual ~MegaItemModel();
 
     void blockUi(bool state) const;
 

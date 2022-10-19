@@ -90,6 +90,8 @@ MegaItemModel::~MegaItemModel()
     mNodeRequesterThread->quit();
     mNodeRequesterThread->deleteLater();
     mNodeRequesterWorker->deleteLater();
+    qDeleteAll(mRootItems);
+    mRootItems.clear();
 }
 
 int MegaItemModel::columnCount(const QModelIndex &) const
@@ -529,12 +531,7 @@ QVariant MegaItemModel::getText(const QModelIndex &index, MegaItem *item) const
 void MegaItemModel::lockMutex(bool state)
 {
     state ? mLoadingMutex.lock() : mLoadingMutex.unlock();
-}
-MegaItemModel::~MegaItemModel()
-{
-    qDeleteAll(mRootItems);
-    mRootItems.clear();
-}
+}  
 
 bool MegaItemModel::tryLock()
 {

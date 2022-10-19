@@ -148,7 +148,7 @@ SOURCES += $$PWD/MegaApplication.cpp \
     $$PWD/CommonMessages.cpp \
     $$PWD/ScanStageController.cpp \
     $$PWD/EventUpdater.cpp \
-    NodeSelectorLoadingDelegate.cpp
+    $$PWD/NodeSelectorLoadingDelegate.cpp \
     $$PWD/FolderTransferListener.cpp \
     $$PWD/BlockingStageProgressController.cpp
 
@@ -161,7 +161,7 @@ HEADERS += $$PWD/MegaApplication.h \
     $$PWD/CommonMessages.h \
     $$PWD/ScanStageController.h \
     $$PWD/EventUpdater.h \
-    NodeSelectorLoadingDelegate.h
+    $$PWD/NodeSelectorLoadingDelegate.h \
     $$PWD/FolderTransferListener.h \
     $$PWD/BlockingStageProgressController.h \
     $$PWD/FolderTransferEvents.h
