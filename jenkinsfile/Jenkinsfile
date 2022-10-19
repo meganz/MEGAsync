@@ -52,20 +52,19 @@ pipeline {
         
         stage('Build MEGAsync'){
             parallel {
-                stage('Build MAC') {
+                stage('Build macOS') {
                     when {
                         expression { params.BUILD_MAC == true }
                     }
                     steps {
-                        gitlabCommitStatus(name: 'Mac build') {
+                        gitlabCommitStatus(name: 'MacOS build') {
                             script {
-                                echo "Triggering MEGAsync job."
+                                echo "Triggering MEGAsync job for macOS."
                                 build job: '../MEGAsync/main', wait: true, propagate: true, parameters: [
                                     string(name: 'MEGASYNC_BRANCH', value: "${env.BRANCH_NAME}"),
                                     booleanParam(name: 'BUILD_LINUX', value: false),
                                     booleanParam(name: 'BUILD_MAC', value: true)
                                     ]
-                                    //Could be done in the same job as the next one, but this will be shown in a better way in the pipeline
                             }
                         }
                     }
@@ -78,7 +77,7 @@ pipeline {
                     steps {
                         gitlabCommitStatus(name: 'Linux build') {
                             script {
-                                echo "Triggering MEGAsync job."
+                                echo "Triggering MEGAsync job for Linux."
                                 build job: '../MEGAsync/main', wait: true, propagate: true, parameters: [
                                     string(name: 'MEGASYNC_BRANCH', value: "${env.BRANCH_NAME}"),
                                     booleanParam(name: 'BUILD_LINUX', value: true),
