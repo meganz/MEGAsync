@@ -2,8 +2,10 @@ DEPENDPATH += $$PWD
 INCLUDEPATH += $$PWD
 
 SOURCES += $$PWD/notificator.cpp
+
 HEADERS +=  $$PWD/Platform.h \
             $$PWD/notificator.h \
+            $$PWD/PowerOptions.h \
             $$PWD/PlatformStrings.h
 
 win32 {
@@ -11,6 +13,7 @@ win32 {
 		$$PWD/win/WinShellDispatcherTask.cpp \
                 $$PWD/win/WinTrayReceiver.cpp \
                 $$PWD/win/wintoastlib.cpp \
+                $$PWD/win/PowerOptions.cpp \
                 $$PWD/win/PlatformStrings.cpp
 
     HEADERS  += $$PWD/win/WindowsPlatform.h \
@@ -19,7 +22,7 @@ win32 {
                 $$PWD/win/wintoastlib.h \
                 $$PWD/win/WintoastCompat.h
 
-    LIBS += -lole32 -lShell32 -lcrypt32 -ltaskschd
+    LIBS += -lole32 -lShell32 -lcrypt32 -ltaskschd -lPowrprof
     DEFINES += UNICODE _UNICODE NTDDI_VERSION=0x06010000 _WIN32_WINNT=0x0601
 }
 
@@ -42,10 +45,10 @@ unix:!macx {
 
 	INSTALLS += distro version
 
-    QT += dbus
     SOURCES += $$PWD/linux/LinuxPlatform.cpp \
         $$PWD/linux/ExtServer.cpp \
         $$PWD/linux/NotifyServer.cpp \
+        $$PWD/linux/PowerOptions.cpp \
         $$PWD/linux/PlatformStrings.cpp
     HEADERS += $$PWD/linux/LinuxPlatform.h \
         $$PWD/linux/ExtServer.h \
@@ -53,6 +56,10 @@ unix:!macx {
 
     LIBS += -lssl -lcrypto -ldl -lxcb
     DEFINES += USE_DBUS
+    contains(DEFINES, USE_DBUS)
+    {
+        QT += dbus
+    }
 
     # do not install desktop files if no_desktop is defined,
     # make build tool take care of these files
@@ -183,7 +190,8 @@ macx {
             $$PWD/macx/MacXLocalSocketPrivate.mm \
             $$PWD/macx/NSPopover+MISSINGBackgroundView.mm \
             $$PWD/macx/LockedPopOver.mm \
-            $$PWD/macx/QCustomMacToolbar.mm
+            $$PWD/macx/QCustomMacToolbar.mm \
+            $$PWD/macx/PowerOptions.mm
 
     LIBS += -framework Cocoa
     LIBS += -framework Security

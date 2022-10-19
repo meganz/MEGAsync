@@ -12,6 +12,11 @@
 
 #include <memory>
 
+namespace UserAttributes{
+class CameraUploadFolder;
+}
+
+
 
 enum class MegaItemModelRoles
 {
@@ -103,6 +108,7 @@ public:
 signals:
     void rowsAdded(const QModelIndex& parent, int addedRowsCount);
     void requestChildNodes(MegaItem* parent, int nodeType) const;
+    virtual ~MegaItemModel();
 
     void blockUi(bool state) const;
 
@@ -167,6 +173,11 @@ private slots:
 
 private:
     std::unique_ptr<mega::MegaNodeList> mSharedNodeList;
+    QModelIndex findItemByNodeHandle(const mega::MegaHandle &handle, const QModelIndex& parent);
+    std::shared_ptr<const UserAttributes::CameraUploadFolder> mCameraUploadFolderReq;
+    QIcon getFolderIcon(MegaItem* item) const;
+    std::shared_ptr<const UserAttributes::CameraUploadFolder> mCameraFolderAttribute;
+    std::shared_ptr<const UserAttributes::MyChatFilesFolder> mMyChatFilesFolderAttribute;
 };
 
 #endif // MEGAITEMMODEL_H

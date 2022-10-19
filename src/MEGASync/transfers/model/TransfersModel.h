@@ -188,10 +188,12 @@ public:
     QModelIndex parent(const QModelIndex& index) const;
     QModelIndex index(int row, int column, const QModelIndex& parent = QModelIndex()) const;
     bool removeRows(int row, int count, const QModelIndex& parent = QModelIndex());
+    bool moveRows(const QModelIndex &sourceParent, int sourceRow, int count,
+                  const QModelIndex &destinationParent, int destinationChild) override;
 
     void ignoreMoveRowsSignal(bool state);
     void inverseMoveRowsSignal(bool state);
-    bool moveRows(const QModelIndex& sourceParent, const QList<int>& rows,
+    bool moveTransferPriority(const QModelIndex& sourceParent, const QList<int>& rows,
                   const QModelIndex& destinationParent, int destinationChild);
 
     void resetModel();
@@ -254,7 +256,7 @@ public:
     void resetSyncInRowsToCancel();
     void showSyncCancelledWarning();
 
-    QList<int> getDragAndDropRows(const QMimeData* data, int destRows);
+    QList<int> getDragAndDropRows(const QMimeData* data);
 
 signals:
     void pauseStateChanged(bool pauseState);
@@ -269,9 +271,10 @@ signals:
     void transferFinished(const QModelIndex& index);
     void internalMoveStarted() const;
     void internalMoveFinished() const;
-    void mostPriorityTransferUpdate(int tag);
+    void mostPriorityTransferUpdate(int uploadTag, int downloadTag);
     void transfersProcessChanged();
     void showInFolderFinished(bool);
+    void activeTransfersChanged();
     void rowsAboutToBeMoved(TransferTag firstRowTag);
 
 public slots:
@@ -288,6 +291,8 @@ private slots:
     void onProcessTransfers();
     void updateTransfersCount();
     void onClearTransfersFinished();
+    void onAskForMostPriorityTransfersFinished();
+    void onKeepPCAwake();
 
 private:
     void removeRows(QModelIndexList &indexesToRemove);
@@ -317,7 +322,7 @@ private:
     QThread* mTransferEventThread;
     TransferThread* mTransferEventWorker;
     mega::QTMegaTransferListener *mDelegateListener;
-    QTimer mTimer;
+    QTimer mProcessTransfersTimer;
     TransfersCount mTransfersCount;
     LastTransfersCount mLastTransfersCount;
 
@@ -326,6 +331,7 @@ private:
     TransferThread::TransfersToProcess mTransfersToProcess;
     QFutureWatcher<void> mUpdateTransferWatcher;
     QFutureWatcher<void> mClearTransferWatcher;
+    QFutureWatcher<QPair<int, int>> mAskForMostPriorityTransfersWatcher;
 
     uint8_t mTransfersProcessChanged;
     uint8_t mUpdateMostPriorityTransfer;

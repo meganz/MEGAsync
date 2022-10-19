@@ -11,6 +11,8 @@
 namespace UserAttributes{
 class FullName;
 class Avatar;
+class CameraUploadFolder;
+class MyChatFilesFolder;
 }
 
 class MegaItem : public QObject
@@ -46,14 +48,12 @@ public:
     void setOwner(std::unique_ptr<mega::MegaUser> user);
     QPixmap getOwnerIcon();
     QIcon getStatusIcons();
-    QIcon getFolderIcon();
     int getStatus();
     bool isSyncable();
     bool isRoot();
     void addNode(std::unique_ptr<mega::MegaNode> node);
     void removeNode(std::shared_ptr<mega::MegaNode> node);
     void displayFiles(bool enable);
-    void setCameraFolder();
     void setChatFilesFolder();
     int row();
 
@@ -68,8 +68,6 @@ signals:
 protected:
     QString mOwnerEmail;
     int mStatus;
-    bool mCameraFolder;
-    bool mChatFilesFolder;
     bool mChildrenSet;
     bool mRequestingChildren;
 

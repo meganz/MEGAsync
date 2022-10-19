@@ -61,6 +61,8 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/BugReportDialog.cpp \
     $$PWD/UserAttributesRequests/FullName.cpp \
     $$PWD/UserAttributesRequests/Avatar.cpp \
+    $$PWD/UserAttributesRequests/CameraUploadFolder.cpp \
+    $$PWD/UserAttributesRequests/MyChatFilesFolder.cpp \
     $$PWD/VerifyLockMessage.cpp \
     $$PWD/MegaInfoMessage.cpp \
     $$PWD/WaitingSpinnerWidget.cpp \
@@ -136,6 +138,8 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/BugReportDialog.h \
     $$PWD/UserAttributesRequests/FullName.h \
     $$PWD/UserAttributesRequests/Avatar.h \
+    $$PWD/UserAttributesRequests/CameraUploadFolder.h \
+    $$PWD/UserAttributesRequests/MyChatFilesFolder.h \
     $$PWD/VerifyLockMessage.h \
     $$PWD/ViewLoadingScene.h \
     $$PWD/MegaInfoMessage.h \

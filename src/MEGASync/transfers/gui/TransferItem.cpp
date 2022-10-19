@@ -5,7 +5,8 @@
 
 using namespace mega;
 
-const unsigned long long ACTIVE_PRIORITY_OFFSET = 100000000000000;
+const unsigned long long ACTIVE_PRIORITY_OFFSET = 90000000000000;
+const unsigned long long COMPLETING_PRIORITY_OFFSET = 100000000000000;
 const unsigned long long COMPLETED_PRIORITY_OFFSET = 200000000000000;
 
 const TransferData::TransferStates TransferData::STATE_MASK = TransferData::TransferStates (
@@ -204,6 +205,10 @@ void TransferData::setState(const TransferState &state)
         else if(isPaused() && wasProcessing)
         {
             mPriority += ACTIVE_PRIORITY_OFFSET;
+        }
+        else if(isCompleting())
+        {
+            mPriority -= COMPLETING_PRIORITY_OFFSET;
         }
         else if(isProcessing())
         {

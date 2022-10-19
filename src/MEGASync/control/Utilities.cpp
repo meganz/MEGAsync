@@ -1210,6 +1210,15 @@ QPair<QString, QString> Utilities::getFilenameBasenameAndSuffix(const QString& f
     return result;
 }
 
+QString Utilities::getNodePath(MegaTransfer* transfer)
+{
+    if (transfer->getPath() != nullptr)
+    {
+        return QString::fromUtf8(transfer->getPath());
+    }
+    return QString::fromUtf8(transfer->getParentPath()) + QString::fromUtf8(transfer->getFileName());
+}
+
 long long Utilities::getSystemsAvailableMemory()
 {
     long long availMemory = 0;

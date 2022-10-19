@@ -18,9 +18,20 @@ bool TransferBatch::isEmpty()
     return mPendingNodes.isEmpty();
 }
 
-void TransferBatch::add(const QString &nodePath)
+void TransferBatch::add(const QString &nodePath, const QString& nodeName)
 {
-    mPendingNodes.push_back(QDir::toNativeSeparators(nodePath));
+    auto nodePathWithNativeSeparators = QDir::toNativeSeparators(nodePath);
+    if(!nodeName.isEmpty())
+    {
+        if(!nodePathWithNativeSeparators.endsWith(QDir::separator()))
+        {
+            nodePathWithNativeSeparators = nodePathWithNativeSeparators + QDir::separator();
+        }
+
+        nodePathWithNativeSeparators = nodePathWithNativeSeparators + nodeName;
+    }
+
+    mPendingNodes.push_back(nodePathWithNativeSeparators);
 }
 
 void TransferBatch::cancel()

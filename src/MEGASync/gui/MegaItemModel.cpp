@@ -3,7 +3,10 @@
 #include "control/Utilities.h"
 #include "Preferences.h"
 #include "model/Model.h"
+#include "UserAttributesRequests/CameraUploadFolder.h"
 #include "mega/types.h"
+#include "UserAttributesRequests/MyChatFilesFolder.h"
+#include "UserAttributesRequests/CameraUploadFolder.h"
 
 #include <QApplication>
 #include <QToolTip>
@@ -70,6 +73,9 @@ MegaItemModel::MegaItemModel(QObject *parent) :
     mSyncSetupMode(false),
     mShowFiles(true)
 {
+    mCameraFolderAttribute = UserAttributes::CameraUploadFolder::requestCameraUploadFolder();
+    mMyChatFilesFolderAttribute = UserAttributes::MyChatFilesFolder::requestMyChatFilesFolder();
+
     mNodeRequesterThread = new QThread();
     mNodeRequesterWorker = new NodeRequester();
     mNodeRequesterWorker->moveToThread(mNodeRequesterThread);
@@ -440,7 +446,7 @@ QVariant MegaItemModel::getIcon(const QModelIndex &index, MegaItem* item) const
     {
     case COLUMN::NODE:
     {
-        return QVariant::fromValue<QIcon>(item->getFolderIcon());
+        return QVariant::fromValue<QIcon>(getFolderIcon(item));
     }
     case COLUMN::DATE:
     {
@@ -495,10 +501,12 @@ QVariant MegaItemModel::getText(const QModelIndex &index, MegaItem *item) const
             QLatin1String dateFormat ("dd MMM yyyy");
             QString timeFormat = locale.timeFormat(QLocale::ShortFormat);
 
+            int hours = dateTime.time().hour();
+
             if(currentDate.toString(dateFormat)
                     == dateTime.toString(dateFormat))
             {
-                return tr("Today at %1").arg(locale.toString(dateTime, timeFormat));
+                return tr("Today at %1", "", hours).arg(locale.toString(dateTime, timeFormat));
             }
 
             currentDate = currentDate.addDays(-1); //for checking if it was yesterday
@@ -506,11 +514,11 @@ QVariant MegaItemModel::getText(const QModelIndex &index, MegaItem *item) const
             if(currentDate.toString(dateFormat)
                     == dateTime.toString(dateFormat))
             {
-                return tr("Yesterday at %1").arg(locale.toString(dateTime, timeFormat));
+                return tr("Yesterday at %1", "", hours).arg(locale.toString(dateTime, timeFormat));
             }
             //First: day Second: hour. This is done for allow translators to change the order
             //in case there are any language that needs to put in another order.
-            return tr("%1 at %2").arg(locale.toString(dateTime, dateFormat), locale.toString(dateTime, timeFormat));
+            return tr("%1 at %2", "", hours).arg(locale.toString(dateTime, dateFormat), locale.toString(dateTime, timeFormat));
         }
         default:
             break;
@@ -521,6 +529,11 @@ QVariant MegaItemModel::getText(const QModelIndex &index, MegaItem *item) const
 void MegaItemModel::lockMutex(bool state)
 {
     state ? mLoadingMutex.lock() : mLoadingMutex.unlock();
+}
+MegaItemModel::~MegaItemModel()
+{
+    qDeleteAll(mRootItems);
+    mRootItems.clear();
 }
 
 bool MegaItemModel::tryLock()
@@ -767,5 +780,68 @@ void MegaItemModelIncomingShares::fetchMore(const QModelIndex &parent)
     {
         addRootItems();
         emit rowsAdded(QModelIndex(), rootItemsCount());
+    }
+}
+
+QIcon MegaItemModel::getFolderIcon(MegaItem *item) const
+{
+    if(!item)
+    {
+        return QIcon();
+    }
+    auto node = item->getNode();
+
+    if(!node)
+    {
+        return QIcon();
+    }
+    if (node->getType() >= MegaNode::TYPE_FOLDER)
+    {
+        if(node->getHandle() == mCameraFolderAttribute->getCameraUploadFolderHandle()
+           || node->getHandle() == mCameraFolderAttribute->getCameraUploadFolderSecondaryHandle())
+        {
+            QIcon icon;
+            icon.addFile(QLatin1String("://images/node_selector/small-camera-sync.png"), QSize(), QIcon::Normal);
+            icon.addFile(QLatin1String("://images/node_selector/small-folder-camera-sync-disabled.png"), QSize(), QIcon::Disabled);
+            return icon;;
+        }
+        else if(node->getHandle() == mMyChatFilesFolderAttribute->getMyChatFilesFolderHandle())
+        {
+            QIcon icon;
+            icon.addFile(QLatin1String("://images/node_selector/small-chat-files.png"), QSize(), QIcon::Normal);
+            icon.addFile(QLatin1String("://images/node_selector/small-chat-files-disabled.png"), QSize(), QIcon::Disabled);
+            return icon;
+        }
+        else if (node->isInShare())
+        {
+            QIcon icon;
+            icon.addFile(QLatin1String("://images/node_selector/small-folder-incoming.png"), QSize(), QIcon::Normal);
+            icon.addFile(QLatin1String("://images/node_selector/small-folder-incoming-disabled.png"), QSize(), QIcon::Disabled);
+            return icon;
+        }
+        else if (node->isOutShare())
+        {
+            QIcon icon;
+            icon.addFile(QLatin1String("://images/node_selector/small-folder-outgoing.png"), QSize(), QIcon::Normal);
+            icon.addFile(QLatin1String("://images/node_selector/small-folder-outgoing_disabled.png"), QSize(), QIcon::Disabled);
+            return icon;
+        }
+        else if(node->getHandle() == MegaSyncApp->getRootNode()->getHandle())
+        {
+            QIcon icon;
+            icon.addFile(QLatin1String("://images/ico-cloud-drive.png"));
+            return icon;
+        }
+        else
+        {
+            QIcon icon;
+            icon.addFile(QLatin1String("://images/small_folder.png"), QSize(), QIcon::Normal);
+            icon.addFile(QLatin1String("://images/node_selector/small-folder-disabled.png"), QSize(), QIcon::Disabled);
+            return icon;
+        }
+    }
+    else
+    {
+        return Utilities::getExtensionPixmapSmall(QString::fromUtf8(node->getName()));
     }
 }

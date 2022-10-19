@@ -157,7 +157,7 @@ void DesktopNotifications::addUserAlertList(mega::MegaUserAlertList *alertList)
 
             if(!userEmail.isEmpty())
             {
-                auto fullNameUserAttributes = UserAttributes::FullName::requestFullName(alert->getEmail());
+                auto fullNameUserAttributes = UserAttributes::FullName::requestFullName(userEmail.toUtf8().constData());
                 if(fullNameUserAttributes && !mUserAttributes.contains(userEmail))
                 {
                     mUserAttributes.insert(userEmail, fullNameUserAttributes);
@@ -165,7 +165,7 @@ void DesktopNotifications::addUserAlertList(mega::MegaUserAlertList *alertList)
                             this, &DesktopNotifications::OnUserAttributesReady, Qt::UniqueConnection);
                 }
 
-                if(fullNameUserAttributes && !fullNameUserAttributes->isAttributeReady())
+                if(fullNameUserAttributes && fullNameUserAttributes->isRequestPending())
                 {
                     mPendingUserAlerts.insert(userEmail, alert->copy());
                 }
@@ -184,8 +184,8 @@ void DesktopNotifications::addUserAlertList(mega::MegaUserAlertList *alertList)
 
 void DesktopNotifications::processAlert(mega::MegaUserAlert* alert)
 {
-    QString fullName;
     QString email = QString::fromUtf8(alert->getEmail());
+    QString fullName = email;
     if (!email.isEmpty())
     {
         auto FullNameRequest = mUserAttributes.value(email);
@@ -744,15 +744,18 @@ void DesktopNotifications::OnUserAttributesReady()
     if(UserAttribute)
     {
         auto pendingAlerts = mPendingUserAlerts.values(UserAttribute->getEmail());
-        foreach(auto alert, pendingAlerts)
+        if(!pendingAlerts.isEmpty())
         {
-            processAlert(alert);
-            delete alert;
+            foreach(auto alert, pendingAlerts)
+            {
+                processAlert(alert);
+                delete alert;
+            }
+            mPendingUserAlerts.remove(UserAttribute->getEmail());
+            mUserAttributes.remove(UserAttribute->getEmail());
         }
-        mPendingUserAlerts.remove(UserAttribute->getEmail());
-        mUserAttributes.remove(UserAttribute->getEmail());
 
-        //After processing the alerts, disconnect the full name attribute request as it still lives
+        //Disconnect the full name attribute request as it still lives
         //in attributes manager
         disconnect(UserAttribute, &UserAttributes::FullName::attributeReady,
                 this, &DesktopNotifications::OnUserAttributesReady);

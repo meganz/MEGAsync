@@ -332,6 +332,9 @@ public:
 
     static QPair<QString, QString> getFilenameBasenameAndSuffix(const QString& fileName);
 
+    //get mega transfer nodepath
+    static QString getNodePath(mega::MegaTransfer* transfer);
+
 private:
     Utilities() {}
     static QHash<QString, QString> extensionIcons;

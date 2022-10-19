@@ -13,12 +13,12 @@ extern Q_CORE_EXPORT int qt_ntfs_permission_lookup;
 #endif
 
 const char Preferences::CLIENT_KEY[] = "FhMgXbqb";
-const char Preferences::USER_AGENT[] = "MEGAsync/4.7.0.0";
-const int Preferences::VERSION_CODE = 4700;
-const int Preferences::BUILD_ID = 4;
+const char Preferences::USER_AGENT[] = "MEGAsync/4.7.1.0";
+const int Preferences::VERSION_CODE = 4701;
+const int Preferences::BUILD_ID = 0;
 // Do not change the location of VERSION_STRING, create_tarball.sh parses this file
-const QString Preferences::VERSION_STRING = QString::fromAscii("4.7.0");
-QString Preferences::SDK_ID = QString::fromAscii("063fd87");
+const QString Preferences::VERSION_STRING = QString::fromAscii("4.7.1");
+QString Preferences::SDK_ID = QString::fromAscii("44c0918");
 const QString Preferences::CHANGELOG = QString::fromUtf8(QT_TR_NOOP(
 "- There is now a new transfer manager.\n"
 "- Transfer management was enhanced and reliability of downloads and uploads improved. \n"
@@ -389,6 +389,10 @@ const QString Preferences::neverCreateLinkKey       = QString::fromUtf8("neverCr
 const QString Preferences::notifyDisabledSyncsKey = QString::fromAscii("notifyDisabledSyncs");
 const QString Preferences::importMegaLinksEnabledKey = QString::fromAscii("importMegaLinksEnabled");
 const QString Preferences::downloadMegaLinksEnabledKey = QString::fromAscii("downloadMegaLinksEnabled");
+
+//Sleep settings
+const QString Preferences::awakeIfActiveKey = QString::fromAscii("sleepIfInactiveEnabledKey");
+const bool Preferences::defaultAwakeIfActive = false;
 
 const bool Preferences::defaultStartOnStartup       = true;
 const bool Preferences::defaultUpdateAutomatically  = true;
@@ -2674,6 +2678,20 @@ long long Preferences::lastStatsRequest()
 void Preferences::setLastStatsRequest(long long value)
 {
     setValueAndSyncConcurrent(lastStatsRequestKey, value);
+}
+
+bool Preferences::awakeIfActiveEnabled()
+{
+    mutex.lock();
+    assert(logged());
+    bool result = getValue(awakeIfActiveKey, defaultAwakeIfActive);
+    mutex.unlock();
+    return result;
+}
+
+void Preferences::setAwakeIfActive(bool value)
+{
+    setValueAndSyncConcurrent(awakeIfActiveKey, value);
 }
 
 bool Preferences::fileVersioningDisabled()

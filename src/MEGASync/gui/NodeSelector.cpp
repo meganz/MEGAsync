@@ -215,7 +215,96 @@ void NodeSelector::onTabSelected(int index)
     }
 }
 
-bool NodeSelector::getDefaultUploadOption()
+void NodeSelector::onSelectionChanged(const QItemSelection& selected, const QItemSelection& deselected)
+{
+    Q_UNUSED(deselected)
+    if(mSelectMode == UPLOAD_SELECT || mSelectMode == DOWNLOAD_SELECT)
+    {
+        ui->bOk->setEnabled(!selected.indexes().isEmpty());
+        return;
+    }
+
+    ui->bOk->setEnabled(false);
+    foreach(auto& index, selected.indexes())
+    {
+        if(index.column() != MegaItemModel::COLUMN::NODE)
+        {
+            continue;
+        }
+
+        auto source_idx = mProxyModel->getIndexFromSource(index);
+        MegaItem *item = static_cast<MegaItem*>(source_idx.internalPointer());
+        if(item)
+        {
+            if(mSelectMode == NodeSelector::STREAM_SELECT)
+            {
+                ui->bOk->setEnabled(item->getNode()->isFile());
+            }
+            else if(mSelectMode == NodeSelector::SYNC_SELECT)
+            {
+                ui->bOk->setEnabled(item->isSyncable());
+            }
+        }
+    }
+}
+
+void NodeSelector::onSectionResized()
+{
+    if(!mManuallyResizedColumn
+            && ui->tMegaFolders->header()->rect().contains(ui->tMegaFolders->mapFromGlobal(QCursor::pos())))
+    {
+        mManuallyResizedColumn = true;
+    }
+}
+
+void NodeSelector::saveExpandedItems()
+{
+    auto node = mProxyModel->getNode(ui->tMegaFolders->rootIndex());
+
+    if(isCloudDrive())
+    {
+        mNavCloudDrive.rootHandle = node? node->getHandle() : INVALID_HANDLE;
+        iterateForSaveExpanded(mNavCloudDrive.expandedHandles);
+    }
+    else
+    {
+        mNavInShares.rootHandle  = node? node->getHandle() : INVALID_HANDLE;
+        iterateForSaveExpanded(mNavInShares.expandedHandles);
+    }
+}
+
+void NodeSelector::iterateForSaveExpanded(QList<MegaHandle> &saveList, const QModelIndex& parent)
+{
+    for(int i=0; i < mProxyModel->rowCount(parent); ++i)
+    {
+        auto idx = mProxyModel->index(i, 0, parent);
+        if(idx.isValid() && ui->tMegaFolders->isExpanded(idx))
+        {
+            saveList.append(mProxyModel->getNode(idx)->getHandle());
+            iterateForSaveExpanded(saveList, idx);
+        }
+    }
+}
+
+void NodeSelector::restoreExpandedItems()
+{
+    if(isCloudDrive())
+    {
+        auto idx = mProxyModel->getIndexFromHandle(mNavCloudDrive.rootHandle);
+        setRootIndex(idx);
+        iterateForRestore(mNavCloudDrive.expandedHandles);
+        mNavCloudDrive.expandedHandles.clear();
+    }
+    else
+    {
+        auto idx = mProxyModel->getIndexFromHandle(mNavInShares.rootHandle);
+        setRootIndex(idx);
+        iterateForRestore(mNavInShares.expandedHandles);
+        mNavInShares.expandedHandles.clear();
+    }
+}
+
+void NodeSelector::iterateForRestore(const QList<MegaHandle> &list, const QModelIndex &parent)
 {
     //TODO FIX THIS as checkbox has been moved to stack page
     //return ui->cbAlwaysUploadToLocation->isChecked();

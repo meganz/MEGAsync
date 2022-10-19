@@ -2,8 +2,6 @@
 #define AVATARWIDGET_H
 
 #include <QWidget>
-#include <QLabel>
-#include <QGraphicsDropShadowEffect>
 
 #include <memory>
 
@@ -40,7 +38,7 @@ class AvatarPixmap
 {
 public:
     static QPixmap maskFromImagePath(const QString& pathToFile, int size);
-    static QPixmap createFromLetter(const QString& letter, const QColor& color, int size);
+    static QPixmap createFromLetter(const QString& letter, const QColor& primaryColor, const QColor& secondaryColor, int size);
 };
 
 #endif // AVATARWIDGET_H

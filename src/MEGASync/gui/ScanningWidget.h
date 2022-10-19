@@ -1,6 +1,7 @@
 #ifndef SCANNINGWIDGET_H
 #define SCANNINGWIDGET_H
 
+#include "FolderTransferEvents.h"
 #include <QWidget>
 
 namespace Ui {
@@ -23,12 +24,25 @@ public:
 signals:
     void cancel();
 
+public slots:
+    void onReceiveStatusUpdate(const FolderTransferUpdateEvent& event);
+
 private slots:
     void onCancelClicked();
+
+protected:
+    void changeEvent(QEvent* event) override;
 
 private:
     void startAnimation();
 
+    static QString buildScanDescription(const uint32_t folderCount, const uint32_t fileCount);
+
+    static void setRole(QObject* object, const char* name);
+
+    static QString formattedNode(const QString& name);
+
+    int mPreviousStage;
     Ui::ScanningWidget *mUi;
     QMovie *mMovie = nullptr;
 };

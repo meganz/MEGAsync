@@ -164,22 +164,26 @@ void MegaTransferView::setup(TransfersWidget* tw)
 QModelIndexList MegaTransferView::getTransfers(bool onlyVisible, TransferData::TransferStates state)
 {
     QModelIndexList indexes;
+
     auto proxy(qobject_cast<QSortFilterProxyModel*>(model()));
-    auto sourceModel(qobject_cast<TransfersModel*>(proxy->sourceModel()));
-
-    auto rowCount = onlyVisible ? proxy->rowCount(QModelIndex()) : sourceModel->rowCount(QModelIndex());
-
-    for (auto row (0); row < rowCount; ++row)
+    if(proxy)
     {
-        auto index (model()->index(row, 0, QModelIndex()));
-        auto d (qvariant_cast<TransferItem>(index.data()).getTransferData());
-        if(state == TransferData::TRANSFER_NONE || (d && d->getState() & state))
+        auto sourceModel = MegaSyncApp->getTransfersModel();
+
+        auto rowCount = onlyVisible ? proxy->rowCount(QModelIndex()) : sourceModel->rowCount(QModelIndex());
+
+        for (auto row (0); row < rowCount; ++row)
         {
-            if (proxy)
+            auto index (model()->index(row, 0, QModelIndex()));
+            auto d (qvariant_cast<TransferItem>(index.data()).getTransferData());
+            if(state == TransferData::TRANSFER_NONE || (d && d->getState() & state))
             {
-                index = proxy->mapToSource(index);
+                if (proxy)
+                {
+                    index = proxy->mapToSource(index);
+                }
+                indexes.push_back(index);
             }
-            indexes.push_back(index);
         }
     }
 
@@ -188,12 +192,12 @@ QModelIndexList MegaTransferView::getTransfers(bool onlyVisible, TransferData::T
 
 QModelIndexList MegaTransferView::getSelectedTransfers()
 {
-    auto proxy(qobject_cast<QSortFilterProxyModel*>(model()));
     auto selection = selectionModel()->selection();
     QModelIndexList indexes;
 
     if (selection.size() > 0)
     {
+        auto proxy(qobject_cast<QSortFilterProxyModel*>(model()));
         if (proxy)
         {
             selection = proxy->mapSelectionToSource(selection);
@@ -206,47 +210,50 @@ QModelIndexList MegaTransferView::getSelectedTransfers()
 
 MegaTransferView::SelectedIndexesInfo MegaTransferView::getVisibleCancelOrClearInfo()
 {
-    auto proxy (qobject_cast<TransfersManagerSortFilterProxyModel*>(model()));
-
     SelectedIndexesInfo info;
 
-    info.isAnyCancellable = proxy->isAnyCancellable();
-    info.areAllCancellable = proxy->areAllCancellable();
-    info.areAllSync = proxy->areAllSync();
-    auto isAnySync = proxy->isAnySync();
-    auto isAnyCompleted = proxy->isAnyCompleted();
+    auto proxy (qobject_cast<TransfersManagerSortFilterProxyModel*>(model()));
 
-    if(info.isAnyCancellable)
+    if(proxy)
     {
-        info.buttonsText = getCancelDialogButtons();
+        info.isAnyCancellable = proxy->isAnyCancellable();
+        info.areAllCancellable = proxy->areAllCancellable();
+        info.areAllSync = proxy->areAllSync();
+        auto isAnySync = proxy->isAnySync();
+        auto isAnyCompleted = proxy->isAnyCompleted();
 
-        if(!isAnySync)
+        if(info.isAnyCancellable)
         {
-            if(info.areAllCancellable || !isAnyCompleted)
+            info.buttonsText = getCancelDialogButtons();
+
+            if(!isAnySync)
             {
-                info.actionText = cancelAskActionText();
+                if(info.areAllCancellable || !isAnyCompleted)
+                {
+                    info.actionText = cancelAskActionText();
+                }
+                else
+                {
+                    info.actionText = cancelAndClearAskActionText();
+                }
             }
             else
             {
-                info.actionText = cancelAndClearAskActionText();
+                if(isAnyCompleted)
+                {
+                    info.actionText = cancelAndClearWithSyncAskActionText();
+                }
+                else
+                {
+                    info.actionText = cancelWithSyncAskActionText();
+                }
             }
         }
         else
         {
-            if(isAnyCompleted)
-            {
-                info.actionText = cancelAndClearWithSyncAskActionText();
-            }
-            else
-            {
-                info.actionText = cancelWithSyncAskActionText();
-            }
+            info.actionText = clearCompletedAskActionText();
+            info.buttonsText = getClearDialogButtons();
         }
-    }
-    else
-    {
-        info.actionText = clearCompletedAskActionText();
-        info.buttonsText = getClearDialogButtons();
     }
 
     return info;
@@ -347,8 +354,7 @@ void MegaTransferView::onPauseResumeVisibleRows(bool pauseState)
 {
     QModelIndexList indexes = getTransfers(true);
 
-    auto proxy (qobject_cast<QSortFilterProxyModel*>(model()));
-    auto sourceModel(qobject_cast<TransfersModel*>(proxy->sourceModel()));
+    auto sourceModel = MegaSyncApp->getTransfersModel();
     sourceModel->pauseTransfers(indexes, pauseState);
 
     //Use to repaint and update the transfers state
@@ -358,8 +364,7 @@ void MegaTransferView::onPauseResumeVisibleRows(bool pauseState)
 void MegaTransferView::onPauseResumeSelection(bool pauseState)
 {
     QModelIndexList indexes = getSelectedTransfers();
-    auto proxy (qobject_cast<QSortFilterProxyModel*>(model()));
-    auto sourceModel(qobject_cast<TransfersModel*>(proxy->sourceModel()));
+    auto sourceModel = MegaSyncApp->getTransfersModel();
 
     sourceModel->pauseTransfers(indexes, pauseState);
 
@@ -383,8 +388,7 @@ void MegaTransferView::onCancelVisibleTransfers()
         {
             auto indexes = getTransfers(true);
 
-            auto proxy (qobject_cast<TransfersManagerSortFilterProxyModel*>(model()));
-            auto sourceModel(qobject_cast<TransfersModel*>(proxy->sourceModel()));
+            auto sourceModel = MegaSyncApp->getTransfersModel();
             sourceModel->cancelAndClearTransfers(indexes, this);
         }
     }
@@ -406,8 +410,7 @@ void MegaTransferView::onCancelSelectedTransfers()
         {
             QModelIndexList indexes = getSelectedTransfers();
 
-            auto proxy (qobject_cast<QSortFilterProxyModel*>(model()));
-            auto sourceModel(qobject_cast<TransfersModel*>(proxy->sourceModel()));
+            auto sourceModel = MegaSyncApp->getTransfersModel();
             sourceModel->cancelAndClearTransfers(indexes, this);
         }
     }
@@ -420,7 +423,7 @@ bool MegaTransferView::onCancelAllTransfers()
 
     QPointer<MegaTransferView> dialog = QPointer<MegaTransferView>(this);
 
-    if (QMegaMessageBox::warning(this, QString::fromUtf8("MEGAsync"),
+    if (proxy && QMegaMessageBox::warning(this, QString::fromUtf8("MEGAsync"),
                              proxy->isAnySync() ?  cancelWithSyncAskActionText() : cancelAllAskActionText(),
                              QMessageBox::Yes | QMessageBox::No, QMessageBox::No, getCancelDialogButtons())
             == QMessageBox::Yes
@@ -459,8 +462,7 @@ void MegaTransferView::onCancelAndClearVisibleTransfers()
             == QMessageBox::Yes
             && dialog)
     {
-        auto proxy (qobject_cast<QSortFilterProxyModel*>(model()));
-        auto sourceModel(qobject_cast<TransfersModel*>(proxy->sourceModel()));
+        auto sourceModel = MegaSyncApp->getTransfersModel();
 
         auto indexes = getTransfers(true, TransferData::FINISHED_STATES_MASK);
         sourceModel->clearTransfers(indexes);
@@ -481,8 +483,7 @@ void MegaTransferView::onClearVisibleTransfers()
             == QMessageBox::Yes
             && dialog)
     {
-        auto proxy (qobject_cast<QSortFilterProxyModel*>(model()));
-        auto sourceModel(qobject_cast<TransfersModel*>(proxy->sourceModel()));
+        auto sourceModel = MegaSyncApp->getTransfersModel();
 
         auto indexes = getTransfers(true, TransferData::FINISHED_STATES_MASK);
         sourceModel->clearTransfers(indexes);
@@ -491,8 +492,7 @@ void MegaTransferView::onClearVisibleTransfers()
 
 void MegaTransferView::clearAllTransfers()
 {    
-    auto proxy(qobject_cast<QSortFilterProxyModel*>(model()));
-    auto sourceModel(qobject_cast<TransfersModel*>(proxy->sourceModel()));
+    auto sourceModel = MegaSyncApp->getTransfersModel();
 
     sourceModel->pauseModelProcessing(true);
     sourceModel->clearAllTransfers();
@@ -501,8 +501,7 @@ void MegaTransferView::clearAllTransfers()
 
 void MegaTransferView::cancelAllTransfers()
 {
-    auto proxy(qobject_cast<QSortFilterProxyModel*>(model()));
-    auto sourceModel(qobject_cast<TransfersModel*>(proxy->sourceModel()));
+    auto sourceModel = MegaSyncApp->getTransfersModel();
 
     sourceModel->pauseModelProcessing(true);
     sourceModel->cancelAllTransfers(this);
@@ -518,16 +517,15 @@ void MegaTransferView::onRetryVisibleTransfers()
 {
     QModelIndexList indexes = getTransfers(true, TransferData::TRANSFER_FAILED);
 
-    auto proxy (qobject_cast<QSortFilterProxyModel*>(model()));
-    auto sourceModel(qobject_cast<TransfersModel*>(proxy->sourceModel()));
+    auto sourceModel = MegaSyncApp->getTransfersModel();
     sourceModel->retryTransfers(indexes);
 }
 
 void MegaTransferView::onCancelClearSelection(bool isClear)
 {
     QModelIndexList indexes = getSelectedTransfers();
-    auto proxy (qobject_cast<QSortFilterProxyModel*>(model()));
-    auto sourceModel(qobject_cast<TransfersModel*>(proxy->sourceModel()));
+
+    auto sourceModel = MegaSyncApp->getTransfersModel();
     isClear ? sourceModel->clearTransfers(indexes) : sourceModel->cancelAndClearTransfers(indexes, this);
 }
 
@@ -538,10 +536,25 @@ void MegaTransferView::enableContextMenu()
             this, &MegaTransferView::onCustomContextMenu);
 }
 
+void MegaTransferView::onCustomContextMenu(const QPoint& point)
+{
+    auto contextMenu = createContextMenu();
+
+    if(!contextMenu->actions().isEmpty())
+    {
+        contextMenu->exec(mapToGlobal(point));
+    }
+    contextMenu->deleteLater();
+}
+
 QMenu* MegaTransferView::createContextMenu()
 {
     auto contextMenu = new QMenu(this);
-    contextMenu->setWindowFlags(contextMenu->windowFlags() | Qt::NoDropShadowWindowHint);
+
+    contextMenu->setAttribute(Qt::WA_TranslucentBackground);
+#if defined(Q_OS_WINDOWS)
+    contextMenu->setWindowFlags(contextMenu->windowFlags() | Qt::FramelessWindowHint | Qt::NoDropShadowWindowHint);
+#endif
 
     bool enablePause = false;
     bool enableResume = false;
@@ -649,8 +662,7 @@ QMenu* MegaTransferView::createContextMenu()
 
     if(enablePause)
     {
-        auto pauseAction = new QAction(QIcon(QLatin1String(":/images/transfer_manager/context_menu/pause_ico.png")),
-                                   pauseActionText(indexes.size()), this);
+        auto pauseAction = new MenuItemAction(pauseActionText(indexes.size()),QIcon(QLatin1String(":/images/transfer_manager/context_menu/pause_ico.png")));
         connect(pauseAction, &QAction::triggered,
                 this, &MegaTransferView::pauseSelectedClicked);
 
@@ -661,8 +673,7 @@ QMenu* MegaTransferView::createContextMenu()
 
     if(enableResume)
     {
-        auto resumeAction = new QAction(QIcon(QLatin1String(":/images/transfer_manager/context_menu/resume_ico.png")),
-                                    resumeActionText(indexes.size()), this);
+        auto resumeAction = new MenuItemAction(resumeActionText(indexes.size()), QIcon(QLatin1String(":/images/transfer_manager/context_menu/resume_ico.png")));
         connect(resumeAction, &QAction::triggered,
                 this, &MegaTransferView::resumeSelectedClicked);
 
@@ -675,8 +686,7 @@ QMenu* MegaTransferView::createContextMenu()
 
     if(showOpen)
     {
-        auto openItemAction = new QAction(QIcon(QLatin1String(":/images/transfer_manager/context_menu/open_file_ico.png")),
-                                      tr("Open"), this);
+        auto openItemAction = new MenuItemAction(tr("Open"), QIcon(QLatin1String(":/images/transfer_manager/context_menu/open_file_ico.png")));
         connect(openItemAction, &QAction::triggered, this, &MegaTransferView::openItemClicked);
 
         contextMenu->addAction(openItemAction);
@@ -686,8 +696,8 @@ QMenu* MegaTransferView::createContextMenu()
     if(showShowInFolder)
     {
         //Ico not included in transfer manager folder as it is also used by settingsDialog
-        auto showInFolderAction = new QAction(QIcon(QLatin1String(":/images/show_in_folder_ico.png")),
-                                          tr("Show in folder"), this);
+        auto showInFolderAction = new MenuItemAction(tr("Show in folder"), QIcon(QLatin1String(":/images/show_in_folder_ico.png")),
+                                           contextMenu);
         connect(showInFolderAction, &QAction::triggered, this, &MegaTransferView::showInFolderClicked);
 
         contextMenu->addAction(showInFolderAction);
@@ -697,8 +707,7 @@ QMenu* MegaTransferView::createContextMenu()
     if(showLink)
     {
         //Ico not included in transfer manager folder as it is also used by settingsDialog
-        auto openInMEGAAction = new QAction(QIcon(QLatin1String(":/images/ico_open_MEGA.png")),
-                                        tr("Open in MEGA"), this);
+        auto openInMEGAAction = new MenuItemAction(tr("Open in MEGA"), QIcon(QLatin1String(":/images/ico_open_MEGA.png")));
         connect(openInMEGAAction, &QAction::triggered, this, &MegaTransferView::openInMEGAClicked);
 
         contextMenu->addAction(openInMEGAAction);
@@ -709,8 +718,7 @@ QMenu* MegaTransferView::createContextMenu()
 
     if(showLink)
     {
-        auto getLinkAction = new QAction(QIcon(QLatin1String(":/images/transfer_manager/context_menu/get_link_ico.png")),
-                                         tr("Get link"), this);
+        auto getLinkAction = new MenuItemAction(tr("Get link"), QIcon(QLatin1String(":/images/transfer_manager/context_menu/get_link_ico.png")));
         connect(getLinkAction, &QAction::triggered, this, &MegaTransferView::getLinkClicked);
 
         contextMenu->addAction(getLinkAction);
@@ -723,12 +731,10 @@ QMenu* MegaTransferView::createContextMenu()
     {
         if(!isTopIndex)
         {
-            auto moveToTopAction = new QAction(QIcon(QLatin1String(":/images/transfer_manager/context_menu/move_top_ico.png")),
-                                               tr("Move to top"), this);
+            auto moveToTopAction = new MenuItemAction(tr("Move to top"), QIcon(QLatin1String(":/images/transfer_manager/context_menu/move_top_ico.png")));
             connect(moveToTopAction, &QAction::triggered, this, &MegaTransferView::moveToTopClicked);
 
-            auto moveUpAction = new QAction(QIcon(QLatin1String(":/images/transfer_manager/context_menu/move_up_ico.png")),
-                                            tr("Move up"), this);
+            auto moveUpAction = new MenuItemAction(tr("Move up"), QIcon(QLatin1String(":/images/transfer_manager/context_menu/move_up_ico.png")));
             connect(moveUpAction, &QAction::triggered, this, &MegaTransferView::moveUpClicked);
 
             contextMenu->addAction(moveToTopAction);
@@ -739,12 +745,10 @@ QMenu* MegaTransferView::createContextMenu()
 
         if(!isBottomIndex)
         {
-            auto moveDownAction = new QAction(QIcon(QLatin1String(":/images/transfer_manager/context_menu/move_down_ico.png")),
-                                              tr("Move down"), this);
+            auto moveDownAction = new MenuItemAction(tr("Move down"), QIcon(QLatin1String(":/images/transfer_manager/context_menu/move_down_ico.png")));
             connect(moveDownAction, &QAction::triggered, this, &MegaTransferView::moveDownClicked);
 
-            auto moveToBottomAction = new QAction(QIcon(QLatin1String(":/images/transfer_manager/context_menu/move_bottom_ico.png")),
-                                                  tr("Move to bottom"), this);
+            auto moveToBottomAction = new MenuItemAction(tr("Move to bottom"), QIcon(QLatin1String(":/images/transfer_manager/context_menu/move_bottom_ico.png")));
             connect(moveToBottomAction, &QAction::triggered, this, &MegaTransferView::moveToBottomClicked);
 
             contextMenu->addAction(moveDownAction);
@@ -758,8 +762,8 @@ QMenu* MegaTransferView::createContextMenu()
 
     if(enableCancel)
     {
-        auto cancelAction = new QAction(QIcon(QLatin1String(":/images/transfer_manager/context_menu/cancel_transfer_ico.png")),
-                                         enableClear ? cancelAndClearActionText(indexes.size()) : cancelActionText(indexes.size()), this);
+        auto cancelAction = new MenuItemAction(enableClear ? cancelAndClearActionText(indexes.size()) : cancelActionText(indexes.size()),
+                                               QIcon(QLatin1String(":/images/transfer_manager/context_menu/cancel_transfer_ico.png")));
         connect(cancelAction, &QAction::triggered,
                 this, &MegaTransferView::cancelSelectedClicked);
 
@@ -770,8 +774,7 @@ QMenu* MegaTransferView::createContextMenu()
     }
     else if(enableClear)
     {
-        auto clearAction = new QAction(QIcon(QLatin1String(":/images/transfer_manager/context_menu/ico_clear.png")),
-                                   tr("Clear"), this);
+        auto clearAction = new MenuItemAction(tr("Clear"), QIcon(QLatin1String(":/images/transfer_manager/context_menu/ico_clear.png")));
         connect(clearAction, &QAction::triggered,
                 this, &MegaTransferView::clearSelectedClicked);
 
@@ -884,43 +887,35 @@ bool MegaTransferView::eventFilter(QObject *object, QEvent *event)
     return QTreeView::eventFilter(object, event);
 }
 
-void MegaTransferView::onCustomContextMenu(const QPoint& point)
-{
-    auto contextMenu = createContextMenu();
-
-    if(!contextMenu->actions().isEmpty())
-    {
-        contextMenu->exec(mapToGlobal(point));
-    }
-    contextMenu->deleteLater();
-}
-
 void MegaTransferView::moveToTopClicked()
 {
-    auto indexes = selectionModel()->selectedRows();
-    if(!indexes.isEmpty())
+    auto proxy(qobject_cast<QSortFilterProxyModel*>(model()));
+    if(proxy)
     {
-        auto proxy(qobject_cast<QSortFilterProxyModel*>(model()));
-        auto sourceModel(qobject_cast<TransfersModel*>(proxy->sourceModel()));
-
-        // Sort to keep items in the same order
-        std::sort(indexes.begin(), indexes.end(),[](QModelIndex check1, QModelIndex check2){
-           return check1.row() > check2.row();
-        });
-
-        auto firstToMove = indexes.first();
-
-        if(firstToMove.row() == 0)
+        auto indexes = selectionModel()->selectedRows();
+        if(!indexes.isEmpty())
         {
-            return;
-        }
+            auto sourceModel = MegaSyncApp->getTransfersModel();
 
-        for (int item = 0; item < indexes.size(); ++item)
-        {
-            auto index = indexes.at(item);
-            auto sourceIndex = proxy->mapToSource(index);
+            // Sort to keep items in the same order
+            std::sort(indexes.begin(), indexes.end(),[](QModelIndex check1, QModelIndex check2){
+                return check1.row() > check2.row();
+            });
 
-            sourceModel->moveRows(QModelIndex(), QList<int>() << sourceIndex.row(), QModelIndex(), -1);
+            auto firstToMove = indexes.first();
+
+            if(firstToMove.row() == 0)
+            {
+                return;
+            }
+
+            for (int item = 0; item < indexes.size(); ++item)
+            {
+                auto index = indexes.at(item);
+                auto sourceIndex = proxy->mapToSource(index);
+
+                sourceModel->moveTransferPriority(QModelIndex(), QList<int>() << sourceIndex.row(), QModelIndex(), -1);
+            }
         }
     }
 
@@ -933,42 +928,45 @@ void MegaTransferView::moveUpClicked()
     if(!indexes.isEmpty())
     {
         auto proxy(qobject_cast<QSortFilterProxyModel*>(model()));
-        auto sourceModel(qobject_cast<TransfersModel*>(proxy->sourceModel()));
-
-        // Sort to keep items in the same order
-        std::sort(indexes.begin(), indexes.end(),[](QModelIndex check1, QModelIndex check2){
-           return check1.row() < check2.row();
-        });
-
-        auto firstToMove = indexes.first();
-
-        if(firstToMove.row() == 0)
+        if(proxy)
         {
-            return;
-        }
+            auto sourceModel = MegaSyncApp->getTransfersModel();
 
-        auto proxyTargetIndex = proxy->index(indexes.first().row() - 1,0);
-        auto sourceTargetIndex = proxy->mapToSource(proxyTargetIndex);
-        auto rowTarget = sourceTargetIndex.row();
+            // Sort to keep items in the same order
+            std::sort(indexes.begin(), indexes.end(),[](QModelIndex check1, QModelIndex check2){
+                return check1.row() < check2.row();
+            });
 
-        for (int item = 0; item < indexes.size(); ++item)
-        {
-            auto index = indexes.at(item);
-            auto sourceIndex = proxy->mapToSource(index);
+            auto firstToMove = indexes.first();
 
-            if(item != 0)
+            if(firstToMove.row() == 0)
             {
-                auto previousIndex = indexes.at(item-1);
-
-                if(index.row() - previousIndex.row() != 1)
-                {
-                    proxyTargetIndex = proxy->index(index.row()-1,0);
-                    sourceTargetIndex = proxy->mapToSource(proxyTargetIndex);
-                    rowTarget = sourceTargetIndex.row();
-                }
+                return;
             }
 
-            sourceModel->moveRows(QModelIndex(), QList<int>() << sourceIndex.row(), QModelIndex(), rowTarget);
+            auto proxyTargetIndex = proxy->index(indexes.first().row() - 1,0);
+            auto sourceTargetIndex = proxy->mapToSource(proxyTargetIndex);
+            auto rowTarget = sourceTargetIndex.row();
+
+            for (int item = 0; item < indexes.size(); ++item)
+            {
+                auto index = indexes.at(item);
+                auto sourceIndex = proxy->mapToSource(index);
+
+                if(item != 0)
+                {
+                    auto previousIndex = indexes.at(item-1);
+
+                    if(index.row() - previousIndex.row() != 1)
+                    {
+                        proxyTargetIndex = proxy->index(index.row()-1,0);
+                        sourceTargetIndex = proxy->mapToSource(proxyTargetIndex);
+                        rowTarget = sourceTargetIndex.row();
+                    }
+                }
+
+                sourceModel->moveTransferPriority(QModelIndex(), QList<int>() << sourceIndex.row(), QModelIndex(), rowTarget);
+            }
         }
     }
     clearSelection();
@@ -980,46 +978,49 @@ void MegaTransferView::moveDownClicked()
     if(!indexes.isEmpty())
     {
         auto proxy(qobject_cast<QSortFilterProxyModel*>(model()));
-        auto sourceModel(qobject_cast<TransfersModel*>(proxy->sourceModel()));
-
-        // Sort to keep items in the same order
-        std::sort(indexes.begin(), indexes.end(),[](QModelIndex check1, QModelIndex check2){
-           return check1.row() > check2.row();
-        });
-
-        auto firstToMove = indexes.first();
-
-        if(firstToMove.row() == model()->rowCount())
+        if(proxy)
         {
-            return;
-        }
+            auto sourceModel = MegaSyncApp->getTransfersModel();
 
-        auto proxyTargetIndex = proxy->index(indexes.first().row() + 1,0);
-        auto sourceTargetIndex = proxy->mapToSource(proxyTargetIndex);
-        auto rowTarget = sourceTargetIndex.row();
+            // Sort to keep items in the same order
+            std::sort(indexes.begin(), indexes.end(),[](QModelIndex check1, QModelIndex check2){
+                return check1.row() > check2.row();
+            });
 
-        sourceModel->inverseMoveRowsSignal(true);
+            auto firstToMove = indexes.first();
 
-        for (int item = 0; item < indexes.size(); ++item)
-        {
-            auto index = indexes.at(item);
-            auto sourceIndex = proxy->mapToSource(index);
-
-            if(item != 0)
+            if(firstToMove.row() == model()->rowCount())
             {
-                auto previousIndex = indexes.at(item-1);
-
-                if(previousIndex.row() - index.row() != 1)
-                {
-                    proxyTargetIndex = proxy->index(index.row() + 1,0);
-                    sourceTargetIndex = proxy->mapToSource(proxyTargetIndex);
-                    rowTarget = sourceTargetIndex.row();
-                }
+                return;
             }
-            sourceModel->moveRows(QModelIndex(), QList<int>() << rowTarget, QModelIndex(), sourceIndex.row());
-        }
 
-        sourceModel->inverseMoveRowsSignal(false);
+            auto proxyTargetIndex = proxy->index(indexes.first().row() + 1,0);
+            auto sourceTargetIndex = proxy->mapToSource(proxyTargetIndex);
+            auto rowTarget = sourceTargetIndex.row();
+
+            sourceModel->inverseMoveRowsSignal(true);
+
+            for (int item = 0; item < indexes.size(); ++item)
+            {
+                auto index = indexes.at(item);
+                auto sourceIndex = proxy->mapToSource(index);
+
+                if(item != 0)
+                {
+                    auto previousIndex = indexes.at(item-1);
+
+                    if(previousIndex.row() - index.row() != 1)
+                    {
+                        proxyTargetIndex = proxy->index(index.row() + 1,0);
+                        sourceTargetIndex = proxy->mapToSource(proxyTargetIndex);
+                        rowTarget = sourceTargetIndex.row();
+                    }
+                }
+                sourceModel->moveTransferPriority(QModelIndex(), QList<int>() << rowTarget, QModelIndex(), sourceIndex.row());
+            }
+
+            sourceModel->inverseMoveRowsSignal(false);
+        }
     }
 
     clearSelection();
@@ -1031,26 +1032,29 @@ void MegaTransferView::moveToBottomClicked()
     if(!indexes.isEmpty())
     {
         auto proxy(qobject_cast<QSortFilterProxyModel*>(model()));
-        auto sourceModel(qobject_cast<TransfersModel*>(proxy->sourceModel()));
-
-        // Sort to keep items in the same order
-        std::sort(indexes.begin(), indexes.end(),[](QModelIndex check1, QModelIndex check2){
-           return check1.row() < check2.row();
-        });
-
-        auto firstToMove = indexes.last();
-
-        if(firstToMove.row() == model()->rowCount())
+        if(proxy)
         {
-            return;
-        }
+            auto sourceModel = MegaSyncApp->getTransfersModel();
 
-        for (int item = 0; item < indexes.size(); ++item)
-        {
-            auto index = indexes.at(item);
-            auto sourceIndex = proxy->mapToSource(index);
+            // Sort to keep items in the same order
+            std::sort(indexes.begin(), indexes.end(),[](QModelIndex check1, QModelIndex check2){
+                return check1.row() < check2.row();
+            });
 
-            sourceModel->moveRows(QModelIndex(), QList<int>() << sourceIndex.row(), QModelIndex(), -2);
+            auto firstToMove = indexes.last();
+
+            if(firstToMove.row() == model()->rowCount())
+            {
+                return;
+            }
+
+            for (int item = 0; item < indexes.size(); ++item)
+            {
+                auto index = indexes.at(item);
+                auto sourceIndex = proxy->mapToSource(index);
+
+                sourceModel->moveTransferPriority(QModelIndex(), QList<int>() << sourceIndex.row(), QModelIndex(), -2);
+            }
         }
     }
 
@@ -1213,4 +1217,3 @@ void MegaTransferView::showOpeningFileError()
 {
     QMegaMessageBox::warning(nullptr, tr("Error"), tr("Error opening file"), QMessageBox::Ok);
 }
-
