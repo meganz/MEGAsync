@@ -295,15 +295,15 @@ public:
         else
         {
             //int val = 350ll;
-//            auto delay = std::max(0ll, 350ll - (QDateTime::currentMSecsSinceEpoch()
-//                                                     - mStartTime));
-            //QTimer::singleShot(delay, this, [this, state] () {
+            auto delay = std::max(0ll, 350ll - (QDateTime::currentMSecsSinceEpoch()
+                                                     - mStartTime));
+            QTimer::singleShot(delay, this, [this, state] () {
                 mLoadingModel->setRowCount(0);
                 mLoadingView->hide();
                 mView->show();
                 mViewLayout->replaceWidget(mLoadingView, mView);
                 mLoadingDelegate->setLoading(state);
-            //});
+            });
         }
     }
 

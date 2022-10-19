@@ -200,11 +200,11 @@ void NodeSelectorTreeViewWidget::onRowsInserted()
 
 void NodeSelectorTreeViewWidget::onModelAboutToBeChanged()
 {
-//    mProxyModel->blockSignals(true);
-//    ui->tMegaFolders->blockSignals(true);
-//    ui->tMegaFolders->header()->blockSignals(true);
-//    //setLoadingSceneVisible(true);
-//    mProxyModel->blockSignals(true);
+    mProxyModel->blockSignals(true);
+    ui->tMegaFolders->blockSignals(true);
+    ui->tMegaFolders->header()->blockSignals(true);
+    //setLoadingSceneVisible(true);
+    //mProxyModel->blockSignals(true);
 }
 
 void NodeSelectorTreeViewWidget::onModelChanged(const QModelIndex &index)
@@ -213,11 +213,6 @@ void NodeSelectorTreeViewWidget::onModelChanged(const QModelIndex &index)
     {
         ui->tMegaFolders->setExpanded(mProxyModel->getIndexFromHandle(MegaSyncApp->getRootNode()->getHandle()), true);
     }
-
-    setLoadingSceneVisible(false);
-//    mProxyModel->blockSignals(false);
-//    ui->tMegaFolders->blockSignals(false);
-//    ui->tMegaFolders->header()->blockSignals(false);
 }
 
 
@@ -325,6 +320,11 @@ void NodeSelectorTreeViewWidget::onItemDoubleClick(const QModelIndex &index)
     mNavigationInfo.appendToBackward(getHandleByIndex(ui->tMegaFolders->rootIndex()));
     mNavigationInfo.removeFromForward(mProxyModel->getHandle(index));
 
+//    if(mModel->canFetchMore(index))
+//    {
+//        mModel->canFetchMore(index);
+//    }
+
     setRootIndex(index);
     checkBackForwardButtons();
     checkNewFolderButtonVisibility();
@@ -339,9 +339,22 @@ void NodeSelectorTreeViewWidget::checkNewFolderButtonVisibility()
     }
 }
 
-void NodeSelectorTreeViewWidget::setLoadingSceneVisible(bool visible)
+void NodeSelectorTreeViewWidget::setLoadingSceneVisible(bool blockUi)
 {
-    mLoadingScene.changeLoadingSceneStatus(visible);
+    if(blockUi)
+    {
+        //mProxyModel->blockSignals(true);
+        ui->tMegaFolders->blockSignals(true);
+        ui->tMegaFolders->header()->blockSignals(true);
+    }
+    else
+    {
+        //mProxyModel->blockSignals(false);
+        ui->tMegaFolders->blockSignals(false);
+        ui->tMegaFolders->header()->blockSignals(false);
+    }
+
+    mLoadingScene.changeLoadingSceneStatus(blockUi);
 }
 
 void NodeSelectorTreeViewWidget::onSelectionChanged(const QItemSelection& selected, const QItemSelection& deselected)

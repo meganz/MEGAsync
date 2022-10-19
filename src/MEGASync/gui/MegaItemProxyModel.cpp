@@ -214,14 +214,14 @@ void MegaItemProxyModel::setSourceModel(QAbstractItemModel *sourceModel)
 
 bool MegaItemProxyModel::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const
 {
-    if(qApp->thread() == QThread::currentThread())
-    {
-        qDebug()<<"MAIN THREAD:FILTER:" << sourceParent << sourceRow;;
-    }
-    else
-    {
-        qDebug()<<"MY THREAD:FILTER:" << sourceParent << sourceRow;
-    }
+//    if(qApp->thread() == QThread::currentThread())
+//    {
+//        qDebug()<<"MAIN THREAD:FILTER:" << sourceParent << sourceRow;;
+//    }
+//    else
+//    {
+//        qDebug()<<"MY THREAD:FILTER:" << sourceParent << sourceRow;
+//    }
 
     QModelIndex index = sourceModel()->index(sourceRow, 0, sourceParent);
 

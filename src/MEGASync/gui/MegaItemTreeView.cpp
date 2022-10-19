@@ -9,6 +9,7 @@
 MegaItemTreeView::MegaItemTreeView(QWidget* parent) :
     QTreeView(parent),
     mIndexToExpand(QModelIndex()),
+    mIndexToEnter(QModelIndex()),
     mMegaApi(MegaSyncApp->getMegaApi())
 {
     installEventFilter(this);
@@ -129,6 +130,17 @@ void MegaItemTreeView::mouseDoubleClickEvent(QMouseEvent *event)
 {
     if(event->button() != Qt::RightButton)
     {
+        QModelIndex clickedIndex = indexAt(event->pos());
+        if(clickedIndex.isValid())
+        {
+            mIndexToEnter = clickedIndex;
+            auto sourceIndexToEnter = proxyModel()->mapToSource(mIndexToEnter);
+            if(proxyModel()->sourceModel()->canFetchMore(sourceIndexToEnter))
+            {
+                proxyModel()->sourceModel()->fetchMore(sourceIndexToEnter);
+                return;
+            }
+        }
         QTreeView::mouseDoubleClickEvent(event);
     }
 }
@@ -198,6 +210,13 @@ void MegaItemTreeView::onExpand()
     {
         expand(mIndexToExpand);
         mIndexToExpand = QModelIndex();
+    }
+    if(mIndexToEnter.isValid())
+    {
+        QPoint point = visualRect(mIndexToEnter).center();
+        QMouseEvent mouseEvent(QEvent::MouseButtonDblClick, point, Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);
+        mouseDoubleClickEvent(&mouseEvent);
+        mIndexToEnter = QModelIndex();
     }
 }
 
