@@ -108,11 +108,7 @@ ui->tMegaFolders->setAnimated(false);
 
     ui->tMegaFolders->setModel(mProxyModel.get());
 
-    ui->tMegaFolders->setExpanded(mProxyModel->getIndexFromHandle(MegaSyncApp->getRootNode()->getHandle()), true);
-
     //those connects needs to be done after the model is set, do not move them
-   // connect(mModel.get(), &MegaItemModel::rowsAdded, this, &NodeSelectorTreeViewWidget::onRowsAdded);
-    modelSet();
     connect(mProxyModel.get(), &MegaItemProxyModel::modelAboutToBeChanged, this, &NodeSelectorTreeViewWidget::onModelAboutToBeChanged);
     connect(mProxyModel.get(), &MegaItemProxyModel::modelChanged, this, &NodeSelectorTreeViewWidget::onModelChanged);
 
@@ -210,8 +206,13 @@ void NodeSelectorTreeViewWidget::onModelAboutToBeChanged()
     mProxyModel->blockSignals(true);
 }
 
-void NodeSelectorTreeViewWidget::onModelChanged()
+void NodeSelectorTreeViewWidget::onModelChanged(const QModelIndex &index)
 {
+    if(index.row() == 0)
+    {
+        qDebug()<<mProxyModel->getIndexFromHandle(MegaSyncApp->getRootNode()->getHandle());
+        ui->tMegaFolders->setExpanded(mProxyModel->getIndexFromHandle(MegaSyncApp->getRootNode()->getHandle()), true);
+    }
     setLoadingSceneVisible(false);
     mProxyModel->blockSignals(false);
     ui->tMegaFolders->blockSignals(false);
@@ -696,12 +697,6 @@ void NodeSelectorTreeViewWidgetCloudDrive::setRootIndex_Reimplementation(const Q
 {
     Q_UNUSED(source_idx)
     mProxyModel->showOwnerColumn(false);
-}
-
-void NodeSelectorTreeViewWidgetCloudDrive::modelSet()
-{
-    qDebug() << mProxyModel->getIndexFromHandle(MegaSyncApp->getRootNode()->getHandle());
-    ui->tMegaFolders->setExpanded(mProxyModel->getIndexFromHandle(MegaSyncApp->getRootNode()->getHandle()), true);
 }
 
 NodeSelectorTreeViewWidgetIncomingShares::NodeSelectorTreeViewWidgetIncomingShares(QWidget *parent)

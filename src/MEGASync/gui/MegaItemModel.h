@@ -94,6 +94,8 @@ public:
     QVariant getText(const QModelIndex &index, MegaItem* item) const;
     void setFetchStep(int step);
     virtual ~MegaItemModel();
+    void endInsertingRows(){endInsertRows();}
+    void beginInsertingRows(const QModelIndex& index, int rowCount){beginInsertRows(index, 0 , rowCount-1);}
 
     void lockMutex(bool state);
     bool tryLock();

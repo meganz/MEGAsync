@@ -8,6 +8,7 @@
 
 MegaItemTreeView::MegaItemTreeView(QWidget* parent) :
     QTreeView(parent),
+    mIndexToExpand(QModelIndex()),
     mMegaApi(MegaSyncApp->getMegaApi())
 {
     installEventFilter(this);
@@ -39,6 +40,12 @@ MegaHandle MegaItemTreeView::getSelectedNodeHandle()
     return ret;
 }
 
+void MegaItemTreeView::setModel(QAbstractItemModel *model)
+{
+    QTreeView::setModel(model);
+    connect(proxyModel(), &MegaItemProxyModel::modelChanged, this, &MegaItemTreeView::onExpand);
+}
+
 void MegaItemTreeView::verticalScrollbarValueChanged(int value)
 {
 //    if (verticalScrollBar()->maximum() / 2 < value)
@@ -66,19 +73,19 @@ bool MegaItemTreeView::viewportEvent(QEvent *event)
 
 void MegaItemTreeView::drawBranches(QPainter *painter, const QRect &rect, const QModelIndex &index) const
 {
-    QModelIndex idx = getIndexFromSourceModel(index);
-    MegaItem *item = static_cast<MegaItem*>(idx.internalPointer());
-    if(item && item->isRoot())
-    {
-        QStyleOptionViewItem opt = viewOptions();
-        opt.rect = rect;
-        if(selectionModel()->isSelected(index))
-        {
-            opt.state |= QStyle::State_Selected;
-        }
-        style()->drawPrimitive(QStyle::PE_IndicatorBranch, &opt, painter, this);
-        return;
-    }
+//    QModelIndex idx = getIndexFromSourceModel(index);
+//    MegaItem *item = static_cast<MegaItem*>(idx.internalPointer());
+//    if(item && item->isRoot())
+//    {
+//        QStyleOptionViewItem opt = viewOptions();
+//        opt.rect = rect;
+//        if(selectionModel()->isSelected(index))
+//        {
+//            opt.state |= QStyle::State_Selected;
+//        }
+//        style()->drawPrimitive(QStyle::PE_IndicatorBranch, &opt, painter, this);
+//        return;
+//    }
     QTreeView::drawBranches(painter, rect, index);
 }
 
@@ -93,6 +100,28 @@ void MegaItemTreeView::mousePressEvent(QMouseEvent *event)
     }
     else
     {
+        QModelIndex clickedIndex = indexAt(event->pos());
+        if(clickedIndex.isValid())
+        {
+            QRect vrect = visualRect(clickedIndex);
+            int itemIdentation = vrect.x() - visualRect(rootIndex()).x();
+            if(event->pos().x() < itemIdentation)
+            {
+                if(!isExpanded(clickedIndex))
+                {
+                    mIndexToExpand = clickedIndex;
+                    auto sourceIndexToExpand = proxyModel()->mapToSource(mIndexToExpand);
+                    if(proxyModel()->sourceModel()->canFetchMore(sourceIndexToExpand))
+                    {
+                        proxyModel()->sourceModel()->fetchMore(sourceIndexToExpand);
+                    }
+                    QAbstractItemView::mousePressEvent(event);
+                    return;
+                 qDebug()<<"Trying to expand"<<clickedIndex;
+                }
+            }
+        }
+
         QTreeView::mousePressEvent(event);
     }
 }
@@ -162,6 +191,15 @@ void MegaItemTreeView::removeNode()
 void MegaItemTreeView::getMegaLink()
 {
     emit getMegaLinkClicked();
+}
+
+void MegaItemTreeView::onExpand()
+{
+    if(mIndexToExpand.isValid())
+    {
+        expand(mIndexToExpand);
+        mIndexToExpand = QModelIndex();
+    }
 }
 
 MegaItemHeaderView::MegaItemHeaderView(Qt::Orientation orientation, QWidget *parent) :

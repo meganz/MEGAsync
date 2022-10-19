@@ -68,8 +68,8 @@ MegaItemModel::MegaItemModel(QObject *parent) :
     mNodeRequesterWorker->moveToThread(mNodeRequesterThread);
     mNodeRequesterThread->start();
 
-    connect(this, &MegaItemModel::requestChildNodes, mNodeRequesterWorker, &NodeRequester::requestNodes);
-    connect(mNodeRequesterWorker, &NodeRequester::nodesReady, this, &MegaItemModel::onChildNodesReady);
+    connect(this, &MegaItemModel::requestChildNodes, mNodeRequesterWorker, &NodeRequester::requestNodes, Qt::QueuedConnection);
+    connect(mNodeRequesterWorker, &NodeRequester::nodesReady, this, &MegaItemModel::onChildNodesReady, Qt::QueuedConnection);
 }
 
 int MegaItemModel::columnCount(const QModelIndex &) const
@@ -212,8 +212,13 @@ int MegaItemModel::rowCount(const QModelIndex &parent) const
         {
             return 0;
         }
-
+        //qDebug()<<"ROWCOUNT"<<item->getNode()->getName()<<item->getNumItemChildren();
         return item->getNumItemChildren();
+//        if(!mShowFiles)
+//        {
+//            return MegaSyncApp->getMegaApi()->getNumChildFolders(item->getNode().get());
+//        }
+//        return MegaSyncApp->getMegaApi()->getNumChildren(item->getNode().get());
     }
     return mRootItems.size();
 }
@@ -329,6 +334,7 @@ void MegaItemModel::fetchMore(const QModelIndex &parent)
     }
     else
     {
+        qDebug()<<"start creating root items";
         blockSignals(true);
         lockMutex(true);
         beginResetModel();
@@ -336,6 +342,7 @@ void MegaItemModel::fetchMore(const QModelIndex &parent)
         endResetModel();
         lockMutex(false);
         blockSignals(false);
+        qDebug()<<"finish creating root items";
         emit rowsAdded(QModelIndex(), rootItemsCount());
     }
 }
@@ -553,16 +560,21 @@ void MegaItemModel::fetchItemChildren(const QModelIndex& parent) const
 
 void MegaItemModel::createChildItems(const QModelIndex &index, MegaItem *parent)
 {
+    qDebug()<<"start creating CHILD items";
+
     int itemNumChildren = parent->getNumChildren();
 
     blockSignals(true);
     lockMutex(true);
-    beginInsertRows(index, 0, itemNumChildren - 1);
+    beginInsertRows(index, 0, itemNumChildren-1);
     parent->createChildItems();
     endInsertRows();
     lockMutex(false);
     blockSignals(false);
+    qDebug()<<"finish creating CHILD items";
+
     emit rowsAdded(index, itemNumChildren);
+
     //emit layoutChanged();
 }
 

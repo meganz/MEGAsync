@@ -9,7 +9,8 @@ MegaItemProxyModel::MegaItemProxyModel(QObject* parent) :
     QSortFilterProxyModel(parent),
     mSortColumn(1),
     mOrder(Qt::AscendingOrder),
-    parentChildrensToMap(QModelIndex())
+    parentChildrensToMap(QModelIndex()),
+    rowsAdded(0)
 {
     mCollator.setCaseSensitivity(Qt::CaseInsensitive);
     mCollator.setNumericMode(true);
@@ -48,7 +49,7 @@ void MegaItemProxyModel::sort(int column, Qt::SortOrder order)
     mOrder = order;
     mSortColumn = column;
     emit modelAboutToBeChanged();
-
+    mFilterWatcher.waitForFinished();
     QFuture<void> filtered = QtConcurrent::run([this, column, order](){
         auto itemModel = dynamic_cast<MegaItemModel*>(sourceModel());
         if(itemModel)
@@ -60,15 +61,17 @@ void MegaItemProxyModel::sort(int column, Qt::SortOrder order)
             sourceModel()->blockSignals(true);
 
             //reset();
-            invalidate();
+            //invalidateFilter();
+            //itemModel->beginInsertingRows(parentChildrensToMap, rowsAdded);
+            //itemModel->endInsertingRows();
+            invalidateFilter();
             QSortFilterProxyModel::sort(column, order);
-            //QSortFilterProxyModel::rowCount(parentChildrensToMap);
+            hasChildren(parentChildrensToMap);
             qDebug() << parentChildrensToMap;
             itemModel->lockMutex(false);
             blockSignals(false);
             sourceModel()->blockSignals(false);
             emit layoutChanged();
-
         }
     });
     mFilterWatcher.setFuture(filtered);
@@ -226,11 +229,11 @@ bool MegaItemProxyModel::filterAcceptsRow(int sourceRow, const QModelIndex &sour
 {
     if(qApp->thread() == QThread::currentThread())
     {
-        qDebug()<<"MAIN THREAD:FILTER";
+        qDebug()<<"MAIN THREAD:FILTER:" << sourceParent << sourceRow;;
     }
     else
     {
-        qDebug()<<"MY THREAD:FILTER" << sourceParent << sourceRow;
+        qDebug()<<"MY THREAD:FILTER:" << sourceParent << sourceRow;
     }
 
     QModelIndex index = sourceModel()->index(sourceRow, 0, sourceParent);
@@ -334,14 +337,15 @@ MegaItemModel *MegaItemProxyModel::getMegaModel()
     return dynamic_cast<MegaItemModel*>(sourceModel());
 }
 
-void MegaItemProxyModel::invalidateModel(const QModelIndex &parent)
+void MegaItemProxyModel::invalidateModel(const QModelIndex &parent, int rowsAdded)
 {
     parentChildrensToMap = mapFromSource(parent);
+    this->rowsAdded = rowsAdded;
     sort(mSortColumn, mOrder);
 }
 
 void MegaItemProxyModel::onModelSortedFiltered()
 {
     loop.quit();
-    emit modelChanged();
+    emit modelChanged(parentChildrensToMap);
 }

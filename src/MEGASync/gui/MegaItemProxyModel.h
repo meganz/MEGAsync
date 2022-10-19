@@ -45,7 +45,7 @@ public:
     void setSourceModel(QAbstractItemModel *sourceModel) override;
 
 signals:
-    void modelChanged();
+    void modelChanged(const QModelIndex& index);
     void modelAboutToBeChanged();
 
 protected:
@@ -62,10 +62,11 @@ private:
     QFutureWatcher<void> mFilterWatcher;
     QEventLoop loop;
     QModelIndex parentChildrensToMap;
+    int rowsAdded;
 
 
 private slots:
-    void invalidateModel(const QModelIndex& parent);
+    void invalidateModel(const QModelIndex& parent, int rowsAdded);
     void onModelSortedFiltered();
 };
 

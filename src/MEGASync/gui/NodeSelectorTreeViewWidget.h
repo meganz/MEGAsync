@@ -79,7 +79,7 @@ private slots:
     void onGoBackClicked();
     void onSectionResized();
     void onRowsInserted();
-    void onModelChanged();
+    void onModelChanged(const QModelIndex& index);
     void onModelAboutToBeChanged();
 
 private:
@@ -109,7 +109,6 @@ private:
     void checkBackForwardButtons();
     void setRootIndex(const QModelIndex& proxy_idx);
     virtual void setRootIndex_Reimplementation(const QModelIndex& source_idx){Q_UNUSED(source_idx)};
-    virtual void modelSet(){};
     mega::MegaHandle getHandleByIndex(const QModelIndex& idx);
     QModelIndex getIndexFromHandle(const mega::MegaHandle &handle);
     void checkNewFolderButtonVisibility();
@@ -134,7 +133,6 @@ private:
     QString getRootText() override;
     std::unique_ptr<MegaItemModel> getModel() override;
     void setRootIndex_Reimplementation(const QModelIndex& source_idx) override;
-    void modelSet() override;
 };
 
 class NodeSelectorTreeViewWidgetIncomingShares : public NodeSelectorTreeViewWidget
