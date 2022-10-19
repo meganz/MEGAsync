@@ -217,8 +217,6 @@ void TransfersManagerSortFilterProxyModel::updateFilters()
 
 bool TransfersManagerSortFilterProxyModel::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const
 {
-    qDebug()<<"filterAcceptsRow:"<<QThread::currentThreadId();
-
     bool accept(false);
 
     QModelIndex index = sourceModel()->index(sourceRow, 0, sourceParent);

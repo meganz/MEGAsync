@@ -15,7 +15,6 @@ MegaItemProxyModel::MegaItemProxyModel(QObject* parent) :
     mCollator.setCaseSensitivity(Qt::CaseInsensitive);
     mCollator.setNumericMode(true);
     mCollator.setIgnorePunctuation(false);
-    //setRecursiveFilteringEnabled(true);
 
     connect(&mFilterWatcher, &QFutureWatcher<void>::finished,
             this, &MegaItemProxyModel::onModelSortedFiltered);
@@ -58,15 +57,9 @@ void MegaItemProxyModel::sort(int column, Qt::SortOrder order)
             emit layoutAboutToBeChanged();
             blockSignals(true);
             sourceModel()->blockSignals(true);
-
-            //reset();
-            //invalidateFilter();
-            //itemModel->beginInsertingRows(parentChildrensToMap, rowsAdded);
-            //itemModel->endInsertingRows();
             invalidateFilter();
             QSortFilterProxyModel::sort(column, order);
             hasChildren(parentChildrensToMap);
-            qDebug() << parentChildrensToMap;
             itemModel->lockMutex(false);
             blockSignals(false);
             sourceModel()->blockSignals(false);
@@ -340,5 +333,6 @@ void MegaItemProxyModel::invalidateModel(const QModelIndex &parent, int rowsAdde
 
 void MegaItemProxyModel::onModelSortedFiltered()
 {
+    emit getMegaModel()->blockUi(false);
     emit modelChanged(parentChildrensToMap);
 }

@@ -77,41 +77,6 @@ void MegaItem::setChildren(mega::MegaNodeList *nodes)
     mRequestingChildren = false;
 }
 
-void MegaItem::fetchChildren()
-{
-    return;
-
-    if(mNode->isFile())
-    {
-        return;
-    }
-
-    if(!mChildrenSet)
-    {
-        mChildrenSet = true;
-        MegaApi* megaApi = MegaSyncApp->getMegaApi();
-
-        if(!mShowFiles)
-        {
-            auto childNodes = std::unique_ptr<MegaNodeList>(megaApi->getChildren(mNode.get()));
-            mChildNodes = std::unique_ptr<MegaNodeList>(MegaNodeList::createInstance());
-            for(int i = 0; i < childNodes->size();++i)
-            {
-                auto childNode = childNodes->get(i);
-                if(childNode->isFile() && !mShowFiles)
-                {
-                    break;
-                }
-                mChildNodes->addNode(childNodes->get(i));
-            }
-        }
-        else
-        {
-            mChildNodes = std::unique_ptr<MegaNodeList>(megaApi->getChildren(mNode.get()));
-        }
-    }
-}
-
 void MegaItem::createChildItems()
 {
     if(mNode->isFile())

@@ -165,10 +165,40 @@ private:
     mutable QVector<DelegateWidget*> mLoadingItems;
 };
 
-template <class DelegateWidget>
-class ViewLoadingScene : public QObject
+class ViewLoadingSceneBase : public QObject
 {
+    Q_OBJECT
 
+ public:
+    ViewLoadingSceneBase() :
+        mDelayTimeToShowInMs(0)
+    {
+        mDelayTimerToShow.setSingleShot(true);
+        connect(&mDelayTimerToShow, &QTimer::timeout, this, &ViewLoadingSceneBase::onDelayTimerTimeout);
+    }
+
+    inline void setDelayTimeToShowInMs(int newDelayTimeToShowInMs)
+    {
+        mDelayTimeToShowInMs = newDelayTimeToShowInMs;
+    }
+
+protected:
+    QTimer mDelayTimerToShow;
+    int mDelayTimeToShowInMs;
+
+private slots:
+    void onDelayTimerTimeout()
+    {
+        setLoadingSceneVisible();
+    }
+
+private:
+    virtual void setLoadingSceneVisible() = 0;
+};
+
+template <class DelegateWidget>
+class ViewLoadingScene : public ViewLoadingSceneBase
+{
     const uint8_t MAX_LOADING_ROWS = 20;
 
 public:
@@ -181,12 +211,13 @@ public:
         mLoadingModel(nullptr),
         mLoadingDelegate(nullptr),
         mViewLayout(nullptr),
-        mShowLoadingViewThreshold(-1)
-    {}
+        ViewLoadingSceneBase()
+    {
+    }
 
     ~ViewLoadingScene()
     {
-        mLoadingDelegate->setLoading(false);
+        //mLoadingDelegate->setLoading(false);
         mLoadingDelegate->deleteLater();
         mLoadingModel->deleteLater();
     }
@@ -209,7 +240,7 @@ public:
         }
     }
 
-    inline void setLoadingScene(bool state)
+    inline void changeLoadingSceneStatus(bool state)
     {
         if(!mView)
         {
@@ -222,6 +253,10 @@ public:
         }
         else if(!state && !isLoadingViewSet())
         {
+            if(mDelayTimerToShow.isActive())
+            {
+                mDelayTimerToShow.stop();
+            }
             return;
         }
 
@@ -246,75 +281,71 @@ public:
             mViewLayout->addWidget(mLoadingView);
         }
 
-        if(state /*&& mViewModel->rowCount() > mShowLoadingViewThreshold*/)
+        if(state)
         {
-            int visibleRows(0);
-
-            if(mView->isVisible())
+            if(mDelayTimeToShowInMs > 0)
             {
-                int delegateHeight(mLoadingDelegate->sizeHint(QStyleOptionViewItem(), QModelIndex()).height());
-
-                mView->updateGeometry();
-                visibleRows = mView->size().height()/delegateHeight;
-
-                //If the vertical header is visible, add one row to the loading model to show the vertical scroll
-                if(mViewModel && mView->verticalScrollBar()->isVisible())
-                {
-                    visibleRows++;
-                }
-
-                if(visibleRows > MAX_LOADING_ROWS)
-                {
-                    visibleRows = MAX_LOADING_ROWS;
-                }
+                mDelayTimerToShow.start(mDelayTimeToShowInMs);
             }
             else
             {
-                visibleRows = MAX_LOADING_ROWS;
+                setLoadingSceneVisible();
             }
-
-            for(int row = 0; row < visibleRows; ++row)
-            {
-                mLoadingModel->appendRow(new QStandardItem());
-            }
-
-            mView->hide();
-            mLoadingView->show();
-            mViewLayout->replaceWidget(mView, mLoadingView);
-            mStartTime = QDateTime::currentMSecsSinceEpoch();
-            mLoadingDelegate->setLoading(state);
         }
         else
         {
             //int val = 350ll;
-            auto delay = std::max(0ll, 350ll - (QDateTime::currentMSecsSinceEpoch()
-                                                     - mStartTime));
-            QTimer::singleShot(delay, this, [this, state] () {
+//            auto delay = std::max(0ll, 350ll - (QDateTime::currentMSecsSinceEpoch()
+//                                                     - mStartTime));
+            //QTimer::singleShot(delay, this, [this, state] () {
                 mLoadingModel->setRowCount(0);
                 mLoadingView->hide();
                 mView->show();
                 mViewLayout->replaceWidget(mLoadingView, mView);
                 mLoadingDelegate->setLoading(state);
-            });
+            //});
         }
     }
 
-    void setShowLoadingViewThreshold(int newShowLoadingViewThreshold)
-    {
-        mShowLoadingViewThreshold = newShowLoadingViewThreshold;
-    }
-
 private:
-    QAbstractItemDelegate* mViewDelegate;
-    QAbstractItemView* mView;
-    QPointer<QAbstractItemModel> mViewModel;
-    QAbstractItemModel* mPotentialSourceModel;
-    QPointer<QTreeView> mLoadingView;
-    QPointer<QStandardItemModel> mLoadingModel;
-    QPointer<LoadingSceneDelegate<DelegateWidget>> mLoadingDelegate;
-    QLayout* mViewLayout;
-    qint64 mStartTime;
-    int mShowLoadingViewThreshold;
+    inline void setLoadingSceneVisible() override
+    {
+        int visibleRows(0);
+
+        if(mView->isVisible())
+        {
+            int delegateHeight(mLoadingDelegate->sizeHint(QStyleOptionViewItem(), QModelIndex()).height());
+
+            mView->updateGeometry();
+            visibleRows = mView->size().height()/delegateHeight;
+
+            //If the vertical header is visible, add one row to the loading model to show the vertical scroll
+            if(mViewModel && mView->verticalScrollBar()->isVisible())
+            {
+                visibleRows++;
+            }
+
+            if(visibleRows > MAX_LOADING_ROWS)
+            {
+                visibleRows = MAX_LOADING_ROWS;
+            }
+        }
+        else
+        {
+            visibleRows = MAX_LOADING_ROWS;
+        }
+
+        for(int row = 0; row < visibleRows; ++row)
+        {
+            mLoadingModel->appendRow(new QStandardItem());
+        }
+
+        mView->hide();
+        mLoadingView->show();
+        mViewLayout->replaceWidget(mView, mLoadingView);
+        mStartTime = QDateTime::currentMSecsSinceEpoch();
+        mLoadingDelegate->setLoading(true);
+    }
 
     int rowCount() const
     {
@@ -327,6 +358,17 @@ private:
             return mViewModel->rowCount();
         }
     }
+
+    QAbstractItemDelegate* mViewDelegate;
+    QAbstractItemView* mView;
+    QPointer<QAbstractItemModel> mViewModel;
+    QAbstractItemModel* mPotentialSourceModel;
+    QPointer<QTreeView> mLoadingView;
+    QPointer<QStandardItemModel> mLoadingModel;
+    QPointer<LoadingSceneDelegate<DelegateWidget>> mLoadingDelegate;
+    QLayout* mViewLayout;
+    qint64 mStartTime;
+
 };
 
 #endif // VIEWLOADINGSCENE_H

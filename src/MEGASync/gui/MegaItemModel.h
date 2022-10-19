@@ -80,7 +80,6 @@ public:
     bool hasChildren(const QModelIndex &parent = QModelIndex()) const override;
     QVariant headerData(int section, Qt::Orientation orientation,
                                     int role = Qt::DisplayRole) const override;
-    void fetchMore(const QModelIndex &parent) override;
     bool canFetchMore(const QModelIndex &parent) const override;
 
     void setDisableFolders(bool option);
@@ -105,8 +104,13 @@ signals:
     void rowsAdded(const QModelIndex& parent, int addedRowsCount);
     void requestChildNodes(MegaItem* parent, int nodeType) const;
 
+    void blockUi(bool state) const;
+
 protected:
     QModelIndex findItemByNodeHandle(const mega::MegaHandle &handle, const QModelIndex& parent);
+    void fetchItemChildren(const QModelIndex& parent) const;
+    void addRootItems();
+
     int mRequiredRights;
     bool mDisplayFiles;
     bool mSyncSetupMode;
@@ -120,9 +124,7 @@ private:
     int insertPosition(const std::unique_ptr<mega::MegaNode>& node);
     virtual QList<MegaItem*> getRootItems() const = 0;
     virtual int rootItemsCount() const = 0;
-    void fetchItemChildren(const QModelIndex& parent) const;
     void createChildItems(const QModelIndex& index, MegaItem* parent);
-
 
     QThread* mNodeRequesterThread;
     NodeRequester* mNodeRequesterWorker;
@@ -157,6 +159,8 @@ public:
 
     QList<MegaItem*> getRootItems() const override;
     int rootItemsCount() const override;
+
+    void fetchMore(const QModelIndex &parent) override;
 
 private slots:
     void onItemInfoUpdated(int role);

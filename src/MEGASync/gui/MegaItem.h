@@ -32,7 +32,6 @@ public:
     std::shared_ptr<mega::MegaNode> getNode() const;
 
     void setChildren(mega::MegaNodeList* nodes);
-    void fetchChildren();
     void createChildItems();
     bool childrenAreInit();
 

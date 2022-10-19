@@ -865,7 +865,6 @@ void TransfersModel::processStartTransfers(QList<QExplicitlySharedDataPointer<Tr
             }
 
             endInsertRows();
-            qDebug()<<"processStartTransfers:"<<QThread::currentThreadId();
         }
     }
 }

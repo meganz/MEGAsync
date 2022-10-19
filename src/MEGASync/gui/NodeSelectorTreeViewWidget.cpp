@@ -41,7 +41,7 @@ NodeSelectorTreeViewWidget::NodeSelectorTreeViewWidget(QWidget *parent) :
     ui->tMegaFolders->installEventFilter(this);
 
     mLoadingScene.setView(ui->tMegaFolders);
-    mLoadingScene.setShowLoadingViewThreshold(LOADING_VIEW_THRESSHOLD);
+    mLoadingScene.setDelayTimeToShowInMs(100);
 }
 
 void NodeSelectorTreeViewWidget::changeEvent(QEvent *event)
@@ -68,7 +68,7 @@ bool NodeSelectorTreeViewWidget::eventFilter(QObject *obj, QEvent *e)
 
 void NodeSelectorTreeViewWidget::setSelectionMode(int selectMode)
 {
-    setLoadingSceneVisible(true);
+    //setLoadingSceneVisible(true);
     if(mSelectMode != -1)
     {
         return;
@@ -120,6 +120,7 @@ ui->tMegaFolders->setAnimated(false);
     connect(ui->bBack, &QPushButton::clicked, this, &NodeSelectorTreeViewWidget::onGoBackClicked);
     connect(ui->tMegaFolders->header(), &QHeaderView::sectionResized, this, &NodeSelectorTreeViewWidget::onSectionResized);
     connect(mModel.get(), &QAbstractItemModel::rowsInserted, this, &NodeSelectorTreeViewWidget::onRowsInserted);
+    connect(mModel.get(), &MegaItemModel::blockUi, this, &NodeSelectorTreeViewWidget::setLoadingSceneVisible);
 
     ui->tMegaFolders->setContextMenuPolicy(Qt::DefaultContextMenu);
     ui->tMegaFolders->setExpandsOnDoubleClick(false);
@@ -137,7 +138,7 @@ ui->tMegaFolders->setAnimated(false);
 
     setRootIndex(QModelIndex());
     checkNewFolderButtonVisibility();
-    setLoadingSceneVisible(false);
+    //setLoadingSceneVisible(false);
 }
 
 void NodeSelectorTreeViewWidget::showDefaultUploadOption(bool show)
@@ -199,24 +200,24 @@ void NodeSelectorTreeViewWidget::onRowsInserted()
 
 void NodeSelectorTreeViewWidget::onModelAboutToBeChanged()
 {
-    mProxyModel->blockSignals(true);
-    ui->tMegaFolders->blockSignals(true);
-    ui->tMegaFolders->header()->blockSignals(true);
-    setLoadingSceneVisible(true);
-    mProxyModel->blockSignals(true);
+//    mProxyModel->blockSignals(true);
+//    ui->tMegaFolders->blockSignals(true);
+//    ui->tMegaFolders->header()->blockSignals(true);
+//    //setLoadingSceneVisible(true);
+//    mProxyModel->blockSignals(true);
 }
 
 void NodeSelectorTreeViewWidget::onModelChanged(const QModelIndex &index)
 {
     if(index.row() == 0)
     {
-        qDebug()<<mProxyModel->getIndexFromHandle(MegaSyncApp->getRootNode()->getHandle());
         ui->tMegaFolders->setExpanded(mProxyModel->getIndexFromHandle(MegaSyncApp->getRootNode()->getHandle()), true);
     }
+
     setLoadingSceneVisible(false);
-    mProxyModel->blockSignals(false);
-    ui->tMegaFolders->blockSignals(false);
-    ui->tMegaFolders->header()->blockSignals(false);
+//    mProxyModel->blockSignals(false);
+//    ui->tMegaFolders->blockSignals(false);
+//    ui->tMegaFolders->header()->blockSignals(false);
 }
 
 
@@ -340,7 +341,7 @@ void NodeSelectorTreeViewWidget::checkNewFolderButtonVisibility()
 
 void NodeSelectorTreeViewWidget::setLoadingSceneVisible(bool visible)
 {
-    mLoadingScene.setLoadingScene(visible);
+    mLoadingScene.changeLoadingSceneStatus(visible);
 }
 
 void NodeSelectorTreeViewWidget::onSelectionChanged(const QItemSelection& selected, const QItemSelection& deselected)

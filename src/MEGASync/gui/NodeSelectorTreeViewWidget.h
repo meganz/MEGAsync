@@ -81,9 +81,9 @@ private slots:
     void onRowsInserted();
     void onModelChanged(const QModelIndex& index);
     void onModelAboutToBeChanged();
+    void setLoadingSceneVisible(bool visible);
 
 private:
-
     struct Navigation{
       QList<mega::MegaHandle> expandedHandles = QList<mega::MegaHandle>();
       mega::MegaHandle rootHandle = mega::INVALID_HANDLE;
@@ -115,7 +115,6 @@ private:
     virtual QString getRootText() = 0;
     virtual std::unique_ptr<MegaItemModel> getModel() = 0;
     virtual bool newFolderBtnVisibleInRoot(){return true;}
-    void setLoadingSceneVisible(bool visible);
 
     bool first;
     mega::MegaHandle mNodeHandleToSelect;

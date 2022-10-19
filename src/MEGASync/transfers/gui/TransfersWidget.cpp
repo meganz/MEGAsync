@@ -64,7 +64,7 @@ void TransfersWidget::setupTransfers()
 
 TransfersWidget::~TransfersWidget()
 {
-    mLoadingScene.setLoadingScene(false);
+    mLoadingScene.changeLoadingSceneStatus(false);
     delete ui;
     if (tDelegate) delete tDelegate;
     if (mProxyModel) delete mProxyModel;
@@ -415,7 +415,7 @@ void TransfersWidget::setScanningWidgetVisible(bool state)
 
 void TransfersWidget::onUiBlocked()
 {
-    mLoadingScene.setLoadingScene(true);
+    mLoadingScene.changeLoadingSceneStatus(true);
 
     if(!mScanningIsActive)
     {
@@ -425,7 +425,7 @@ void TransfersWidget::onUiBlocked()
 
 void TransfersWidget::onUiUnblocked()
 {
-    mLoadingScene.setLoadingScene(false);
+    mLoadingScene.changeLoadingSceneStatus(false);
     emit disableTransferManager(false);
 
     mModel->uiUnblocked();
@@ -538,19 +538,22 @@ void TransfersWidget::on_tPauseResumeVisible_toggled(bool state)
 
 void TransfersWidget::onVerticalScrollBarVisibilityChanged(bool state)
 {
-    if(state)
+    if(ui->tvTransfers->isVisible())
     {
-        int sliderWidth = ui->tvTransfers->verticalScrollBar()->width();
-        ui->rightMargin->changeSize(sliderWidth,0,QSizePolicy::Fixed, QSizePolicy::Preferred);
-    }
-    else
-    {
-        ui->rightMargin->changeSize(0,0,QSizePolicy::Fixed, QSizePolicy::Preferred);
-    }
+        if(state)
+        {
+            int sliderWidth = ui->tvTransfers->verticalScrollBar()->width();
+            ui->rightMargin->changeSize(sliderWidth,0,QSizePolicy::Fixed, QSizePolicy::Preferred);
+        }
+        else
+        {
+            ui->rightMargin->changeSize(0,0,QSizePolicy::Fixed, QSizePolicy::Preferred);
+        }
 
-    if(ui->wTableHeaderLayout)
-    {
-        ui->wTableHeaderLayout->invalidate();
+        if(ui->wTableHeaderLayout)
+        {
+            ui->wTableHeaderLayout->invalidate();
+        }
     }
 }
 
