@@ -25,6 +25,7 @@ enum class NodeRowDelegateRoles
 {
     ENABLED_ROLE = toInt(MegaItemModelRoles::last),  //ALWAYS use last enum value from previous enum class for new enums
     INDENT_ROLE,
+    INIT_ROLE,
     last
 };
 
@@ -110,6 +111,7 @@ protected:
     bool mDisplayFiles;
     bool mSyncSetupMode;
     bool mShowFiles;
+    QList<MegaItem*> mRootItems;
 
 private slots:
     void onChildNodesReady(MegaItem *parent, mega::MegaNodeList* nodes);
@@ -121,7 +123,6 @@ private:
     void fetchItemChildren(const QModelIndex& parent) const;
     void createChildItems(const QModelIndex& index, MegaItem* parent);
 
-    QList<MegaItem*> mRootItems;
 
     QThread* mNodeRequesterThread;
     NodeRequester* mNodeRequesterWorker;
@@ -139,6 +140,8 @@ public:
     void onRequestFinish(mega::MegaApi* api, mega::MegaRequest *request, mega::MegaError* e) override;
     QList<MegaItem*> getRootItems() const override;
     int rootItemsCount() const override;
+
+    void fetchMore(const QModelIndex &parent) override;
 
 private:
     std::unique_ptr<mega::QTMegaRequestListener> mDelegateListener;

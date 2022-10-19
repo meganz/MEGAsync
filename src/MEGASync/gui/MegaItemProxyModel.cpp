@@ -49,7 +49,6 @@ void MegaItemProxyModel::sort(int column, Qt::SortOrder order)
     mOrder = order;
     mSortColumn = column;
     emit modelAboutToBeChanged();
-    mFilterWatcher.waitForFinished();
     QFuture<void> filtered = QtConcurrent::run([this, column, order](){
         auto itemModel = dynamic_cast<MegaItemModel*>(sourceModel());
         if(itemModel)
@@ -75,10 +74,6 @@ void MegaItemProxyModel::sort(int column, Qt::SortOrder order)
         }
     });
     mFilterWatcher.setFuture(filtered);
-    if(!loop.isRunning())
-    {
-        loop.exec();
-    }
 }
 
 mega::MegaHandle MegaItemProxyModel::getHandle(const QModelIndex &index)
@@ -224,7 +219,6 @@ void MegaItemProxyModel::setSourceModel(QAbstractItemModel *sourceModel)
     }
 }
 
-
 bool MegaItemProxyModel::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const
 {
     if(qApp->thread() == QThread::currentThread())
@@ -346,6 +340,5 @@ void MegaItemProxyModel::invalidateModel(const QModelIndex &parent, int rowsAdde
 
 void MegaItemProxyModel::onModelSortedFiltered()
 {
-    loop.quit();
     emit modelChanged(parentChildrensToMap);
 }

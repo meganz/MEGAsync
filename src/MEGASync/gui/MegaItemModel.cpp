@@ -157,6 +157,10 @@ QVariant MegaItemModel::data(const QModelIndex &index, int role) const
         {
             return item->isRoot()? -10 : 0;
         }
+        case toInt(NodeRowDelegateRoles::INIT_ROLE):
+        {
+            return item->childrenAreInit();
+        }
         default:
         {
             break;
@@ -586,11 +590,6 @@ void MegaItemModel::onChildNodesReady(MegaItem* parent, mega::MegaNodeList *node
 
         auto index = parent->property("INDEX").value<QModelIndex>();
 
-        if(parent->isRoot())
-        {
-            fetchMore(index);
-        }
-
         createChildItems(index, parent);
     }
     else
@@ -693,6 +692,32 @@ QList<MegaItem *> MegaItemModelCloudDrive::getRootItems() const
 int MegaItemModelCloudDrive::rootItemsCount() const
 {
     return 1;
+}
+
+void MegaItemModelCloudDrive::fetchMore(const QModelIndex &parent)
+{
+    //MegaItemModel::fetchMore(parent);
+    if(!parent.isValid())
+    {
+        qDebug()<<"start creating root items";
+        blockSignals(true);
+        lockMutex(true);
+        beginResetModel();
+        mRootItems.append(getRootItems());
+        endResetModel();
+        lockMutex(false);
+        blockSignals(false);
+        qDebug()<<"finish creating root items";
+
+        if(canFetchMore(index(0,0)))
+        {
+            MegaItemModel::fetchMore(index(0,0));
+        }
+    }
+    else
+    {
+        MegaItemModel::fetchMore(parent);
+    }
 }
 
 MegaItemModelIncomingShares::MegaItemModelIncomingShares(QObject *parent)

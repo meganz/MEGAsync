@@ -73,19 +73,19 @@ bool MegaItemTreeView::viewportEvent(QEvent *event)
 
 void MegaItemTreeView::drawBranches(QPainter *painter, const QRect &rect, const QModelIndex &index) const
 {
-//    QModelIndex idx = getIndexFromSourceModel(index);
-//    MegaItem *item = static_cast<MegaItem*>(idx.internalPointer());
-//    if(item && item->isRoot())
-//    {
-//        QStyleOptionViewItem opt = viewOptions();
-//        opt.rect = rect;
-//        if(selectionModel()->isSelected(index))
-//        {
-//            opt.state |= QStyle::State_Selected;
-//        }
-//        style()->drawPrimitive(QStyle::PE_IndicatorBranch, &opt, painter, this);
-//        return;
-//    }
+    QModelIndex idx = getIndexFromSourceModel(index);
+    MegaItem *item = static_cast<MegaItem*>(idx.internalPointer());
+    if(item && item->isRoot())
+    {
+        QStyleOptionViewItem opt = viewOptions();
+        opt.rect = rect;
+        if(selectionModel()->isSelected(index))
+        {
+            opt.state |= QStyle::State_Selected;
+        }
+        style()->drawPrimitive(QStyle::PE_IndicatorBranch, &opt, painter, this);
+        return;
+    }
     QTreeView::drawBranches(painter, rect, index);
 }
 
@@ -101,7 +101,7 @@ void MegaItemTreeView::mousePressEvent(QMouseEvent *event)
     else
     {
         QModelIndex clickedIndex = indexAt(event->pos());
-        if(clickedIndex.isValid())
+        if(clickedIndex.isValid() && !clickedIndex.data(toInt(NodeRowDelegateRoles::INIT_ROLE)).toBool())
         {
             QRect vrect = visualRect(clickedIndex);
             int itemIdentation = vrect.x() - visualRect(rootIndex()).x();
@@ -117,7 +117,6 @@ void MegaItemTreeView::mousePressEvent(QMouseEvent *event)
                     }
                     QAbstractItemView::mousePressEvent(event);
                     return;
-                 qDebug()<<"Trying to expand"<<clickedIndex;
                 }
             }
         }
