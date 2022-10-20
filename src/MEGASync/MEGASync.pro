@@ -147,7 +147,9 @@ SOURCES += $$PWD/MegaApplication.cpp \
     $$PWD/ScaleFactorManager.cpp \
     $$PWD/CommonMessages.cpp \
     $$PWD/ScanStageController.cpp \
-    $$PWD/EventUpdater.cpp
+    $$PWD/EventUpdater.cpp \
+    $$PWD/FolderTransferListener.cpp \
+    $$PWD/BlockingStageProgressController.cpp
 
 HEADERS += $$PWD/MegaApplication.h \
     $$PWD/DesktopNotifications.h \
@@ -157,7 +159,10 @@ HEADERS += $$PWD/MegaApplication.h \
     $$PWD/ScaleFactorManager.h \
     $$PWD/CommonMessages.h \
     $$PWD/ScanStageController.h \
-    $$PWD/EventUpdater.h
+    $$PWD/EventUpdater.h \
+    $$PWD/FolderTransferListener.h \
+    $$PWD/BlockingStageProgressController.h \
+    $$PWD/FolderTransferEvents.h
 
 TRANSLATIONS = \
     gui/translations/MEGASyncStrings_ar.ts \

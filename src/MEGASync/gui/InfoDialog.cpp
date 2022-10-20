@@ -748,7 +748,11 @@ void InfoDialog::updateState()
         return;
     }
 
-    if (preferences->getGlobalPaused())
+    if (mTransferScanCancelUi && mTransferScanCancelUi->isActive())
+    {
+        changeStatusState(StatusInfo::TRANSFERS_STATES::STATE_INDEXING);
+    }
+    else if (preferences->getGlobalPaused())
     {
         if(!checkFailedState())
         {
@@ -760,48 +764,27 @@ void InfoDialog::updateState()
     {
         if (indexing)
         {
-            if (mState != StatusInfo::TRANSFERS_STATES::STATE_INDEXING)
-            {
-                mState = StatusInfo::TRANSFERS_STATES::STATE_INDEXING;
-                animateStates(true);
-            }
+            changeStatusState(StatusInfo::TRANSFERS_STATES::STATE_INDEXING);
         }
         else if (syncing)
         {
-            if (mState != StatusInfo::TRANSFERS_STATES::STATE_SYNCING)
-            {
-                mState = StatusInfo::TRANSFERS_STATES::STATE_SYNCING;
-                animateStates(true);
-            }
+            changeStatusState(StatusInfo::TRANSFERS_STATES::STATE_SYNCING);
         }
         else if (waiting)
         {
-            if (mState != StatusInfo::TRANSFERS_STATES::STATE_WAITING)
-            {
-                mState = StatusInfo::TRANSFERS_STATES::STATE_WAITING;
-                animateStates(true);
-            }
+            changeStatusState(StatusInfo::TRANSFERS_STATES::STATE_WAITING);
         }
         else if (transferring)
         {
-            if (mState != StatusInfo::TRANSFERS_STATES::STATE_TRANSFERRING)
-            {
-                mState = StatusInfo::TRANSFERS_STATES::STATE_TRANSFERRING;
-                animateStates(true);
-            }
+            changeStatusState(StatusInfo::TRANSFERS_STATES::STATE_TRANSFERRING);
         }
         else
         {
             if(!checkFailedState())
             {
-                if(mState != StatusInfo::TRANSFERS_STATES::STATE_UPDATED)
-                {
-                    mState = StatusInfo::TRANSFERS_STATES::STATE_UPDATED;
-                    animateStates(false);
-                }
+                changeStatusState(StatusInfo::TRANSFERS_STATES::STATE_UPDATED, false);
             }
         }
-
     }
 
     if(ui->wStatus->getState() != mState)
@@ -1321,6 +1304,7 @@ void InfoDialog::enterBlockingState()
     ui->bTransferManager->setPauseEnabled(false);
     ui->wTabOptions->setVisible(false);
     mTransferScanCancelUi->show();
+    updateState();
 }
 
 void InfoDialog::leaveBlockingState(bool fromCancellation)
@@ -1329,6 +1313,7 @@ void InfoDialog::leaveBlockingState(bool fromCancellation)
     ui->bTransferManager->setPauseEnabled(true);
     ui->wTabOptions->setVisible(true);
     mTransferScanCancelUi->hide(fromCancellation);
+    updateState();
 }
 
 void InfoDialog::disableCancelling()
@@ -1339,6 +1324,16 @@ void InfoDialog::disableCancelling()
 void InfoDialog::checkAndCloseOpenDialogs()
 {
     MegaSyncApp->removeDialog(mAddSyncDialog);
+}
+
+void InfoDialog::setUiInCancellingStage()
+{
+    mTransferScanCancelUi->setInCancellingStage();
+}
+
+void InfoDialog::updateUiOnFolderTransferUpdate(const FolderTransferUpdateEvent &event)
+{
+    mTransferScanCancelUi->onFolderTransferUpdate(event);
 }
 
 void InfoDialog::changeEvent(QEvent *event)
@@ -1942,6 +1937,16 @@ void InfoDialog::enableUserActions(bool value)
     ui->bAddSync->setEnabled(value);
     ui->bUpload->setEnabled(value);
     ui->bDownload->setEnabled(value);
+}
+
+void InfoDialog::changeStatusState(StatusInfo::TRANSFERS_STATES newState,
+                                   bool animate)
+{
+    if (mState != newState)
+    {
+        mState = newState;
+        animateStates(animate);
+    }
 }
 
 void InfoDialog::setTransferManager(TransferManager *transferManager)

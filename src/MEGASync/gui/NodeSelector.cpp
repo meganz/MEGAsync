@@ -593,6 +593,11 @@ void NodeSelector::onSelectionChanged(const QItemSelection& selected, const QIte
     ui->bOk->setEnabled(false);
     foreach(auto& index, selected.indexes())
     {
+        if(index.column() != MegaItemModel::COLUMN::NODE)
+        {
+            continue;
+        }
+
         auto source_idx = mProxyModel->getIndexFromSource(index);
         MegaItem *item = static_cast<MegaItem*>(source_idx.internalPointer());
         if(item)

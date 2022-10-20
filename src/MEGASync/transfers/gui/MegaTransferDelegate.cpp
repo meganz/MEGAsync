@@ -30,6 +30,11 @@ MegaTransferDelegate::MegaTransferDelegate(TransfersSortFilterProxyBaseModel* mo
 {
 }
 
+MegaTransferDelegate::~MegaTransferDelegate()
+{
+    qDeleteAll(mTransferItems);
+}
+
 void MegaTransferDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {   
     auto row (index.row());

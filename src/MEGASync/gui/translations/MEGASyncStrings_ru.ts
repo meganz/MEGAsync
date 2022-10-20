@@ -26,7 +26,7 @@
     <message>
         <source>Transfer</source>
         <translatorcomment>Label to indicate the section of transfer used of the current account.</translatorcomment>
-        <translation>Передача</translation>
+        <translation>Передача данных</translation>
     </message>
     <message>
         <source>Of that, size taken up by file versions:</source>

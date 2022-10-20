@@ -8,7 +8,8 @@
 //SORT FILTER PROXY MODEL
 InfoDialogTransfersProxyModel::InfoDialogTransfersProxyModel(QObject *parent) :
     TransfersSortFilterProxyBaseModel(parent),
-    mNextTransferSourceRow(-1)
+    mNextUploadSourceRow(-1),
+    mNextDownloadSourceRow(-1)
 {
 }
 
@@ -16,9 +17,9 @@ InfoDialogTransfersProxyModel::~InfoDialogTransfersProxyModel()
 {
 }
 
-TransferBaseDelegateWidget* InfoDialogTransfersProxyModel::createTransferManagerItem(QWidget *parent)
+TransferBaseDelegateWidget* InfoDialogTransfersProxyModel::createTransferManagerItem(QWidget*)
 {
-    auto item = new InfoDialogTransferDelegateWidget(parent);
+    auto item = new InfoDialogTransferDelegateWidget(nullptr);
 
     connect(item, &InfoDialogTransferDelegateWidget::copyTransferLink,
             this, &InfoDialogTransfersProxyModel::onCopyTransferLinkRequested);
@@ -46,39 +47,39 @@ void InfoDialogTransfersProxyModel::setSourceModel(QAbstractItemModel *sourceMod
 void InfoDialogTransfersProxyModel::onCopyTransferLinkRequested()
 {
     auto delegateWidget = dynamic_cast<InfoDialogTransferDelegateWidget*>(sender());
-    auto sourModel = dynamic_cast<TransfersModel*>(sourceModel());
+    auto sourceM = dynamic_cast<TransfersModel*>(sourceModel());
 
-    if(delegateWidget && sourModel)
+    if(delegateWidget && sourceM)
     {
         QList<int> rows;
         auto index = delegateWidget->getCurrentIndex();
         index = mapToSource(index);
         rows.append(index.row());
-        sourModel->getLinks(rows);
+        sourceM->getLinks(rows);
     }
 }
 
 void InfoDialogTransfersProxyModel::onOpenTransferFolderRequested()
 {
     auto delegateWidget = dynamic_cast<InfoDialogTransferDelegateWidget*>(sender());
-    auto sourModel = dynamic_cast<TransfersModel*>(sourceModel());
+    auto sourceM = dynamic_cast<TransfersModel*>(sourceModel());
 
-    if(delegateWidget && sourModel)
+    if(delegateWidget && sourceM)
     {
         auto index = delegateWidget->getCurrentIndex();
         index = mapToSource(index);
-        sourModel->openFolderByIndex(index);
+        sourceM->openFolderByIndex(index);
     }
 }
 
 void InfoDialogTransfersProxyModel::onRetryTransferRequested()
 {
     auto delegateWidget = dynamic_cast<InfoDialogTransferDelegateWidget*>(sender());
-    auto sourModel = dynamic_cast<TransfersModel*>(sourceModel());
+    auto sourceM = dynamic_cast<TransfersModel*>(sourceModel());
 
-    if(delegateWidget && sourModel)
+    if(delegateWidget && sourceM)
     {
-        sourModel->retryTransferByIndex(mapToSource(delegateWidget->getCurrentIndex()));
+        sourceM->retryTransferByIndex(mapToSource(delegateWidget->getCurrentIndex()));
     }
 }
 
@@ -99,7 +100,8 @@ bool InfoDialogTransfersProxyModel::lessThan(const QModelIndex &left, const QMod
         }
         else if(leftItem->isActiveOrPending() && rightItem->isActiveOrPending())
         {
-            return leftItem->mPriority < rightItem->mPriority;
+            //Uploads before downloads
+            return leftItem->mType > rightItem->mType;
         }
         else
         {
@@ -128,7 +130,7 @@ bool InfoDialogTransfersProxyModel::filterAcceptsRow(int sourceRow, const QModel
                      || d->getState() & TransferData::TransferState::TRANSFER_ACTIVE
                      || d->getState() & TransferData::TransferState::TRANSFER_FAILED);
 
-           if(!accept && d->mTag == mNextTransferSourceRow)
+           if(!accept && (d->mTag == mNextUploadSourceRow || d->mTag == mNextDownloadSourceRow))
            {
                accept = true;
            }
@@ -138,30 +140,43 @@ bool InfoDialogTransfersProxyModel::filterAcceptsRow(int sourceRow, const QModel
     return accept;
 }
 
-void InfoDialogTransfersProxyModel::onUpdateMostPriorityTransfer(int tag)
+void InfoDialogTransfersProxyModel::onUpdateMostPriorityTransfer(int uploadTag, int downloadTag)
 {
-    mNextTransferSourceRow = tag;
-    auto transferModel = dynamic_cast<TransfersModel*>(sourceModel());
+    QModelIndex indexToUpdate(index(0,0));
+    //Uploads before downloads. If you want to change it, change also the if condition in the lessThan method
+    updateMostPriortyTransfer(mNextUploadSourceRow, uploadTag, indexToUpdate);
+    updateMostPriortyTransfer(mNextDownloadSourceRow, downloadTag, indexToUpdate);
+}
 
-    auto firstIndex = index(0,0);
-    if(firstIndex.isValid())
+void InfoDialogTransfersProxyModel::updateMostPriortyTransfer(int& tagToUpdate, TransferTag tag, QModelIndex &indexToUpdate)
+{
+    if(tag != tagToUpdate)
     {
-        const auto d (qvariant_cast<TransferItem>(firstIndex.data()).getTransferData());
-        if(d)
+        auto transferModel = dynamic_cast<TransfersModel*>(sourceModel());
+        tagToUpdate = tag;
+
+        if(indexToUpdate.isValid())
+        {
+            const auto d (qvariant_cast<TransferItem>(indexToUpdate.data()).getTransferData());
+            if(d)
+            {
+                if(tag >= 0)
+                {
+                    transferModel->sendDataChangedByTag(tag);
+                }
+                transferModel->sendDataChangedByTag(d->mTag);
+            }
+        }
+        else if(tag >= 0 && transferModel->getTransferByTag(tag))
         {
             transferModel->sendDataChangedByTag(tag);
-            transferModel->sendDataChangedByTag(d->mTag);
         }
     }
-    else
+
+    //Move the index to update to the next row, as the current one is used
+    if(tag >= 0)
     {
-        if(!transferModel->getTransferByTag(tag))
-        {
-            invalidate();
-        }
-        else
-        {
-            transferModel->sendDataChangedByTag(tag);
-        }
+        indexToUpdate = index(indexToUpdate.row() + 1,0);
     }
+
 }

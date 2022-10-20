@@ -26,7 +26,8 @@ TransferManagerDelegateWidget::TransferManagerDelegateWidget(QWidget *parent) :
 
     //For elided texts
 
-    mUi->lTransferName->installEventFilter(this);
+    mUi->wTransferName->installEventFilter(this);
+
     mUi->lItemPaused->installEventFilter(this);
     mUi->lItemPausedQueued_1->installEventFilter(this);
     mUi->lRetryMsg->installEventFilter(this);
@@ -492,21 +493,21 @@ bool TransferManagerDelegateWidget::eventFilter(QObject *watched, QEvent *event)
 {
     if(event->type() == QEvent::Resize)
     {
-        if(auto label = dynamic_cast<QWidget*>(watched))
+        if(watched == mUi->wTransferName)
         {
-            QString text;
-            if(watched == mUi->lTransferName)
-            {
-                text = getData()->mFilename;
-            }
-            else
-            {
-                text = label->property("text").toString();
-            }
+            auto text = getData()->mFilename;
+            auto availableSize = getNameAvailableSize(mUi->wTransferName, mUi->lSyncIcon, mUi->nameSpacer);
+            mUi->lTransferName->setText(mUi->lTransferName->fontMetrics()
+                               .elidedText(text, Qt::ElideMiddle,
+                                          availableSize));
+        }
+        else if(auto label = dynamic_cast<QWidget*>(watched))
+        {
+            QString text = label->property("text").toString();
 
             label->setProperty("text", label->fontMetrics()
                                .elidedText(text, Qt::ElideMiddle,
-                                           label->contentsRect().width()));
+                                          label->contentsRect().width()));
         }
     }
 

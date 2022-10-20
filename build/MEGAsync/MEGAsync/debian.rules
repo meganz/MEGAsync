@@ -1,4 +1,5 @@
 #!/usr/bin/make -f
+NJOBS := $(shell echo ${DEB_BUILD_OPTIONS} | sed -rn 's/.*parallel=([0-9]*).*/\1/p')
 FMEDIAINFO := $(shell dpkg -l | grep mediainfo >/dev/null && echo "-i" || echo " ")
 FCRYPTOPP := $(shell cat /etc/issue | grep "Ubuntu 1[4-8]\|Ubuntu 19.04\|Debian.* [89]" >/dev/null && echo "" || echo "-q")
 DPKGXZ := $(shell cat /etc/issue | grep "Ubuntu 22\|Jammy Jellyfish\|Ubuntu 21.10" >/dev/null && echo "-- -Zxz" || echo "")
@@ -32,7 +33,7 @@ build-stamp:
 
 	qmake-qt5 $(FULLREQS) $(EXTRAQMAKE) $(EXTRAQMAKEFREEIMAGE) || qmake $(FULLREQS) $(EXTRAQMAKE) $(EXTRAQMAKEFREEIMAGE) || /usr/lib/*/qt5/bin/qmake $(FULLREQS) $(EXTRAQMAKE) $(EXTRAQMAKEFREEIMAGE)
 	lrelease-qt5 MEGASync/MEGASync.pro || lrelease MEGASync/MEGASync.pro || /usr/lib/*/qt5/bin/lrelease MEGASync/MEGASync.pro || /usr/lib/*/qt4/bin/lrelease MEGASync/MEGASync.pro
-	make
+	make -j$(NJOBS)
 	echo "fs.inotify.max_user_watches = 524288" > 99-megasync-inotify-limit.conf
 	echo "SUBSYSTEM==\"block\", ATTRS{idDevtype}==\"partition\"" > 99-megasync-udev.rules
 	if [ -n "$(DEB_TESTING)" ]; then echo $(DEB_TESTING) > version; fi

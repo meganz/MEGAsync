@@ -1119,7 +1119,7 @@ Dans certains cas, ils pourraient comprendre des détails sur vos données, tels
     <message>
         <source>The file at this destination will be updated with a new version.</source>
         <translatorcomment>Text explaining the result of the file upload and update action</translatorcomment>
-        <translation>Le fichier dans cette destination sera remplacé par un nouvelle version.</translation>
+        <translation>Le fichier dans cette destination sera remplacé par une nouvelle version.</translation>
     </message>
 </context>
 <context>
@@ -3159,7 +3159,7 @@ Tous les autres transferts sélectionnés seront annulés.</translation>
     <message>
         <source>Enter the new folder name</source>
         <translatorcomment>Dialog text to ask the user to enter a new name for the folder</translatorcomment>
-        <translation>Saisir le nouveau nom de dossier</translation>
+        <translation>Saisir le nom du nouveau dossier</translation>
     </message>
     <message>
         <source>New folder</source>

@@ -71,6 +71,8 @@ public:
     void enterBlockingState();
     void leaveBlockingState(bool fromCancellation);
     void disableCancelling();
+    void setUiInCancellingStage();
+    void updateUiOnFolderTransferUpdate(const FolderTransferUpdateEvent& event);
 
     void checkAndCloseOpenDialogs();
 
@@ -257,6 +259,8 @@ protected:
  private:
     static double computeRatio(long long completed, long long remaining);
     void enableUserActions(bool value);
+    void changeStatusState(StatusInfo::TRANSFERS_STATES newState,
+                           bool animate = true);
 
     QPointer<BindFolderDialog> mAddSyncDialog;
 

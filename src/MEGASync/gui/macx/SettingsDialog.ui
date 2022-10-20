@@ -65,7 +65,7 @@ height: 16px;
    border: none;
 }
 
-#wSeparatorAccountInfo, #wSeparatorAccountLanguage, #wSeparatorAccountOptions, #wSeparatorAccountSpace, #wSeparatorBottom, #wSeparatorNetwork
+#wSeparatorAccountInfo, #wSeparatorAccountLanguage, #wSeparatorAccountOptions, #wSeparatorAccountSpace, #wSeparatorBottom, #wSeparatorNetwork, #wSeparatorGeneralSleepMpde
 {
 background-color: rgba(0,0,0,0.1);
 }
@@ -81,7 +81,7 @@ background-color: rgba(0,0,0,0.1);
   background-color: rgba(0,0,0,0.1);
 }
 
-#lLanguage, #lLocalDebris, #lRemoteSyncDebris, #lFileVersions, #lBugReport
+#lLanguage, #lLocalDebris, #lRemoteSyncDebris, #lFileVersions, #lBugReport, #lSleepMode
 {
   color: #242424;
   font-family: &quot;SF Pro Text&quot;;
@@ -239,6 +239,19 @@ margin-right: 5px;
   color: #242424;
   font-family: &quot;SF Pro Text&quot;;
   font-size: 13px;
+}
+
+#cbSleepMode
+{
+margin-top: 2px;
+}
+
+#lSleepModeWarning
+{
+font-size: 10px;
+line-height: 16px;
+font-weight: 400;
+color: #505862;
 }
 
 </string>
@@ -1433,6 +1446,135 @@ margin-right: 32px;</string>
                </item>
               </layout>
              </widget>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QWidget" name="wSeparatorGeneralSleepMpde" native="true">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>1</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>1</height>
+          </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">margin-left: 32px;
+margin-right: 32px;</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QWidget" name="gSleepMode" native="true">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>0</height>
+          </size>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_42">
+          <property name="spacing">
+           <number>0</number>
+          </property>
+          <property name="leftMargin">
+           <number>25</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>25</number>
+          </property>
+          <property name="bottomMargin">
+           <number>7</number>
+          </property>
+          <item>
+           <layout class="QGridLayout" name="gridLayout_16">
+            <item row="0" column="0" alignment="Qt::AlignTop">
+             <widget class="QLabel" name="lSleepMode">
+              <property name="minimumSize">
+               <size>
+                <width>200</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>200</width>
+                <height>16777215</height>
+               </size>
+              </property>
+              <property name="text">
+               <string>Sleep mode:</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="1">
+             <layout class="QGridLayout" name="gridLayout_17">
+              <property name="horizontalSpacing">
+               <number>10</number>
+              </property>
+              <property name="verticalSpacing">
+               <number>7</number>
+              </property>
+              <item row="1" column="1">
+               <widget class="QLabel" name="lSleepModeWarning">
+                <property name="text">
+                 <string>Note: Some operating systems won't allow this.</string>
+                </property>
+                <property name="wordWrap">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="0" alignment="Qt::AlignTop">
+               <widget class="QCheckBox" name="cbSleepMode">
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>16777215</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="1">
+               <widget class="QLabel" name="lSleepModeDescription">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="text">
+                 <string>Prevent the computer from going to sleep when transfers or syncs are in progress.
+Computer will enter sleep mode once these are complete.</string>
+                </property>
+                <property name="wordWrap">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+             </layout>
             </item>
            </layout>
           </item>

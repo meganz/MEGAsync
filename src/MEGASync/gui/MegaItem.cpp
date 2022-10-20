@@ -9,7 +9,6 @@
 
 #include <QByteArray>
 
-
 const int MegaItem::ICON_SIZE = 17;
 
 using namespace mega;
@@ -19,8 +18,6 @@ MegaItem::MegaItem(std::unique_ptr<MegaNode> node, MegaItem *parentItem, bool sh
     mShowFiles(showFiles),
     mOwnerEmail(QString()),
     mStatus(STATUS::NONE),
-    mCameraFolder(false),
-    mChatFilesFolder(false),
     mChildrenSet(false),
     mNode(std::move(node)),
     mOwner(nullptr)
@@ -186,13 +183,13 @@ QIcon MegaItem::getStatusIcons()
     {
     case STATUS::SYNC:
     {
-        statusIcons.addFile(QLatin1String("://images/Item-sync-press.png"), QSize(), QIcon::Selected); //normal style icon
+        statusIcons.addFile(QLatin1String("://images/Item-sync-press.png"), QSize(), QIcon::Selected); //selected style icon
         statusIcons.addFile(QLatin1String("://images/Item-sync-rest.png"), QSize(), QIcon::Normal); //normal style icon
         break;
     }
     case STATUS::SYNC_PARENT:
     {
-        statusIcons.addFile(QLatin1String("://images/Item-sync-press.png"), QSize(), QIcon::Selected); //normal style icon
+        statusIcons.addFile(QLatin1String("://images/Item-sync-press.png"), QSize(), QIcon::Selected); //selected style icon
         statusIcons.addFile(QLatin1String("://images/node_selector/icon-small-sync-disabled.png"), QSize(), QIcon::Normal); //normal style icon
         break;
     }
@@ -203,58 +200,6 @@ QIcon MegaItem::getStatusIcons()
     }
 
     return statusIcons;
-}
-
-QIcon MegaItem::getFolderIcon()
-{
-    if (getNode()->getType() >= MegaNode::TYPE_FOLDER)
-    {
-        if(mCameraFolder)
-        {
-            QIcon icon;
-            icon.addFile(QLatin1String("://images/node_selector/small-camera-sync.png"), QSize(), QIcon::Normal);
-            icon.addFile(QLatin1String("://images/node_selector/small-folder-camera-sync-disabled.png"), QSize(), QIcon::Disabled);
-            return icon;
-        }
-        else if(mChatFilesFolder)
-        {
-            QIcon icon;
-            icon.addFile(QLatin1String("://images/node_selector/small-chat-files.png"), QSize(), QIcon::Normal);
-            icon.addFile(QLatin1String("://images/node_selector/small-chat-files-disabled.png"), QSize(), QIcon::Disabled);
-            return icon;
-        }
-        else if (getNode()->isInShare())
-        {
-            QIcon icon;
-            icon.addFile(QLatin1String("://images/node_selector/small-folder-incoming.png"), QSize(), QIcon::Normal);
-            icon.addFile(QLatin1String("://images/node_selector/small-folder-incoming-disabled.png"), QSize(), QIcon::Disabled);
-            return icon;
-        }
-        else if (getNode()->isOutShare())
-        {
-            QIcon icon;
-            icon.addFile(QLatin1String("://images/node_selector/small-folder-outgoing.png"), QSize(), QIcon::Normal);
-            icon.addFile(QLatin1String("://images/node_selector/small-folder-outgoing_disabled.png"), QSize(), QIcon::Disabled);
-            return icon;
-        }
-        else if(isRoot())
-        {
-            QIcon icon;
-            icon.addFile(QLatin1String("://images/ico-cloud-drive.png"));
-            return icon;
-        }
-        else
-        {
-            QIcon icon;
-            icon.addFile(QLatin1String("://images/small_folder.png"), QSize(), QIcon::Normal);
-            icon.addFile(QLatin1String("://images/node_selector/small-folder-disabled.png"), QSize(), QIcon::Disabled);
-            return icon;
-        }
-    }
-    else
-    {
-        return Utilities::getExtensionPixmapSmall(QString::fromUtf8(getNode()->getName()));
-    }
 }
 
 int MegaItem::getStatus()
@@ -295,16 +240,6 @@ void MegaItem::removeNode(std::shared_ptr<MegaNode> node)
 void MegaItem::displayFiles(bool enable)
 {
     mShowFiles = enable;
-}
-
-void MegaItem::setCameraFolder()
-{
-    mCameraFolder = true;
-}
-
-void MegaItem::setChatFilesFolder()
-{
-    mChatFilesFolder = true;
 }
 
 int MegaItem::row()

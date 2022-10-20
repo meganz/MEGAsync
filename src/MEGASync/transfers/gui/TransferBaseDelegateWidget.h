@@ -9,6 +9,7 @@
 #include <QWidget>
 #include <QToolButton>
 #include <QStyleOptionViewItem>
+#include <QSpacerItem>
 
 enum class TRANSFER_STATES
 {
@@ -70,6 +71,8 @@ protected:
     void changeEvent(QEvent *) override;
 
     QString getState(TRANSFER_STATES state);
+
+    int getNameAvailableSize(QWidget* nameContainer, QWidget* syncLabel, QSpacerItem* spacer);
 
 private:
     Preferences* mPreferences;
