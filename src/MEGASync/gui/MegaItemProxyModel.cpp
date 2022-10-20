@@ -1,4 +1,4 @@
-#include "MegaItemProxyModel.h"
+﻿#include "MegaItemProxyModel.h"
 #include "MegaItem.h"
 #include "megaapi.h"
 #include "MegaItemModel.h"
@@ -9,7 +9,7 @@ MegaItemProxyModel::MegaItemProxyModel(QObject* parent) :
     QSortFilterProxyModel(parent),
     mSortColumn(1),
     mOrder(Qt::AscendingOrder),
-    rowsAdded(0)
+    mExpandMapped(true)
 {
     mCollator.setCaseSensitivity(Qt::CaseInsensitive);
     mCollator.setNumericMode(true);
@@ -62,7 +62,6 @@ void MegaItemProxyModel::sort(int column, Qt::SortOrder order)
             {
                 hasChildren((*it));
             }
-            itemsToMap.clear();
             itemModel->lockMutex(false);
             blockSignals(false);
             sourceModel()->blockSignals(false);
@@ -324,18 +323,29 @@ MegaItemModel *MegaItemProxyModel::getMegaModel()
     return dynamic_cast<MegaItemModel*>(sourceModel());
 }
 
-void MegaItemProxyModel::invalidateModel(const QModelIndexList& parents, int rowsAdded)
+void MegaItemProxyModel::invalidateModel(const QModelIndexList& parents)
 {
     foreach(auto parent, parents)
     {
         itemsToMap.append(mapFromSource(parent));
     }
-    this->rowsAdded = rowsAdded;
     sort(mSortColumn, mOrder);
 }
 
 void MegaItemProxyModel::onModelSortedFiltered()
 {
     emit getMegaModel()->blockUi(false);
-    emit modelChanged(itemsToMap.isEmpty() ? QModelIndex() : itemsToMap.first());
+    if(mExpandMapped)
+    {
+        emit expandReady();
+    }
+    else
+    {
+        emit navigateReady(itemsToMap.isEmpty() ? QModelIndex() : itemsToMap.first());
+        if(auto megaItemModel = dynamic_cast<MegaItemModel*>(sourceModel()))
+        {
+            megaItemModel->clearIndexesToMap();
+        }
+    }
+    itemsToMap.clear();
 }

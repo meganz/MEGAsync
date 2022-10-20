@@ -111,9 +111,10 @@ public:
     bool tryLock();
 
     QPair<QModelIndexList, bool> needsToBeExpandedAndSelected();
+    void clearIndexesToMap();
 
 signals:
-    void levelsAdded(const QModelIndexList& parent, int addedRowsCount);
+    void levelsAdded(const QModelIndexList& parent);
     void requestChildNodes(MegaItem* parent, int nodeType) const;
 
     void blockUi(bool state) const;
@@ -128,7 +129,7 @@ protected:
     bool mSyncSetupMode;
     bool mShowFiles;
     QList<MegaItem*> mRootItems;
-    mutable QModelIndexList mIndexesToExpand;
+    mutable QModelIndexList mIndexesToMap;
     bool mNeedsToBeSelected;
 
 private slots:

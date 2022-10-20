@@ -110,7 +110,7 @@ ui->tMegaFolders->setAnimated(false);
 
     //those connects needs to be done after the model is set, do not move them
     connect(mProxyModel.get(), &MegaItemProxyModel::modelAboutToBeChanged, this, &NodeSelectorTreeViewWidget::onModelAboutToBeChanged);
-    connect(mProxyModel.get(), &MegaItemProxyModel::modelChanged, this, &NodeSelectorTreeViewWidget::onModelChanged);
+    connect(mProxyModel.get(), &MegaItemProxyModel::expandReady, this, &NodeSelectorTreeViewWidget::onExpandReady);
 
     connect(ui->tMegaFolders->selectionModel(), &QItemSelectionModel::selectionChanged, this, &NodeSelectorTreeViewWidget::onSelectionChanged);
     connect(ui->tMegaFolders, &MegaItemTreeView::removeNodeClicked, this, &NodeSelectorTreeViewWidget::onDeleteClicked);
@@ -212,7 +212,7 @@ void NodeSelectorTreeViewWidget::onModelAboutToBeChanged()
     //mProxyModel->blockSignals(true);
 }
 
-void NodeSelectorTreeViewWidget::onModelChanged(const QModelIndex &index)
+void NodeSelectorTreeViewWidget::onExpandReady()
 {
     auto indexesAndSelected = mModel->needsToBeExpandedAndSelected();
     if(!indexesAndSelected.first.isEmpty())

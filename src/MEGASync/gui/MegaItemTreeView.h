@@ -42,13 +42,13 @@ signals:
 private slots:
     void removeNode();
     void getMegaLink();
-    void onExpand();
+    void onNavigateReady(const QModelIndex& index);
 
 private:
 
     QModelIndex getIndexFromSourceModel(const QModelIndex& index) const;
     MegaItemProxyModel* proxyModel() const;
-    QModelIndex mIndexToEnter;
+    //QModelIndex mIndexToEnter;
     MegaApi* mMegaApi;
 
 };

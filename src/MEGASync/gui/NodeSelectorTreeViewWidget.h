@@ -80,7 +80,7 @@ private slots:
     void onGoBackClicked();
     void onSectionResized();
     void onRowsInserted();
-    void onModelChanged(const QModelIndex& index);
+    void onExpandReady();
     void onModelAboutToBeChanged();
     void setLoadingSceneVisible(bool visible);
 

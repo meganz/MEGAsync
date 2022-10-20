@@ -8,7 +8,7 @@
 
 MegaItemTreeView::MegaItemTreeView(QWidget* parent) :
     QTreeView(parent),
-    mIndexToEnter(QModelIndex()),
+    //mIndexToEnter(QModelIndex()),
     mMegaApi(MegaSyncApp->getMegaApi())
 {
     installEventFilter(this);
@@ -43,7 +43,7 @@ MegaHandle MegaItemTreeView::getSelectedNodeHandle()
 void MegaItemTreeView::setModel(QAbstractItemModel *model)
 {
     QTreeView::setModel(model);
-    connect(proxyModel(), &MegaItemProxyModel::modelChanged, this, &MegaItemTreeView::onExpand);
+    connect(proxyModel(), &MegaItemProxyModel::navigateReady, this, &MegaItemTreeView::onNavigateReady);
 }
 
 void MegaItemTreeView::verticalScrollbarValueChanged(int value)
@@ -107,16 +107,14 @@ void MegaItemTreeView::mousePressEvent(QMouseEvent *event)
             int height = rowHeight(clickedIndex);
             int level = 0;
             QModelIndex idx = clickedIndex;
-            while(idx.isValid())
+            idx = idx.parent();
+            while(rootIndex() != idx)
             {
+                level++;
                 idx = idx.parent();
-                if(idx.isValid())
-                {
-                    level++;
-                }
             }
             int identation = indentation() * level;
-            QRect rect(position + identation, event->pos().y(),indentation(), height);
+            QRect rect(position + identation, event->pos().y(), indentation(), height);
 
             if(rect.contains(event->pos()))
             {
@@ -125,6 +123,7 @@ void MegaItemTreeView::mousePressEvent(QMouseEvent *event)
                     auto sourceIndexToExpand = proxyModel()->mapToSource(clickedIndex);
                     if(proxyModel()->sourceModel()->canFetchMore(sourceIndexToExpand))
                     {
+                        proxyModel()->setExpandMapped(true);
                         proxyModel()->sourceModel()->fetchMore(sourceIndexToExpand);
                     }
                     QAbstractItemView::mousePressEvent(event);
@@ -145,10 +144,11 @@ void MegaItemTreeView::mouseDoubleClickEvent(QMouseEvent *event)
         QModelIndex clickedIndex = indexAt(event->pos());
         if(clickedIndex.isValid())
         {
-            mIndexToEnter = clickedIndex;
-            auto sourceIndexToEnter = proxyModel()->mapToSource(mIndexToEnter);
+//            mIndexToEnter = clickedIndex;
+            auto sourceIndexToEnter = proxyModel()->mapToSource(clickedIndex);
             if(proxyModel()->sourceModel()->canFetchMore(sourceIndexToEnter))
             {
+                proxyModel()->setExpandMapped(false);
                 proxyModel()->sourceModel()->fetchMore(sourceIndexToEnter);
                 return;
             }
@@ -216,15 +216,14 @@ void MegaItemTreeView::getMegaLink()
     emit getMegaLinkClicked();
 }
 
-void MegaItemTreeView::onExpand()
+void MegaItemTreeView::onNavigateReady(const QModelIndex &index)
 {
-
-    if(mIndexToEnter.isValid())
+    if(index.isValid())
     {
-        QPoint point = visualRect(mIndexToEnter).center();
+        QPoint point = visualRect(index).center();
         QMouseEvent mouseEvent(QEvent::MouseButtonDblClick, point, Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);
         mouseDoubleClickEvent(&mouseEvent);
-        mIndexToEnter = QModelIndex();
+//        mIndexToEnter = QModelIndex();
     }
 }
 

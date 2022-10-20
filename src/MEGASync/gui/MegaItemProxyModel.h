@@ -43,9 +43,11 @@ public:
     void removeNode(const QModelIndex &item);
     bool lessThan(const QModelIndex &left, const QModelIndex &right) const override;
     void setSourceModel(QAbstractItemModel *sourceModel) override;
+    void setExpandMapped(bool value){mExpandMapped = value;};
 
 signals:
-    void modelChanged(const QModelIndex& index);
+    void expandReady();
+    void navigateReady(const QModelIndex& index);
     void modelAboutToBeChanged();
 
 protected:
@@ -62,11 +64,11 @@ private:
     QFutureWatcher<void> mFilterWatcher;
     QEventLoop loop;
     QModelIndexList itemsToMap;
-    int rowsAdded;
+    bool mExpandMapped;
 
 
 private slots:
-    void invalidateModel(const QModelIndexList &parents, int rowsAdded);
+    void invalidateModel(const QModelIndexList &parents);
     void onModelSortedFiltered();
 };
 

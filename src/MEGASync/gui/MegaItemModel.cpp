@@ -506,17 +506,22 @@ bool MegaItemModel::tryLock()
 
 QPair<QModelIndexList, bool> MegaItemModel::needsToBeExpandedAndSelected()
 {
-    if(mNodesToLoad.isEmpty() && !mIndexesToExpand.isEmpty())
+    if(mNodesToLoad.isEmpty() && !mIndexesToMap.isEmpty())
     {
-        auto indexesToExpand = mIndexesToExpand;
+        auto indexesToExpand = mIndexesToMap;
         auto needsToBeSelected = mNeedsToBeSelected;
-        mIndexesToExpand.clear();
-        mNeedsToBeSelected = false;
+        clearIndexesToMap();
 
         return qMakePair(indexesToExpand, needsToBeSelected);
     }
 
     return qMakePair(QModelIndexList(), false);
+}
+
+void MegaItemModel::clearIndexesToMap()
+{
+    mIndexesToMap.clear();
+    mNeedsToBeSelected = false;
 }
 
 int MegaItemModel::insertPosition(const std::unique_ptr<MegaNode>& node)
@@ -543,7 +548,7 @@ void MegaItemModel::loadTreeFromNode(const std::shared_ptr<mega::MegaNode> node)
     mNeedsToBeSelected = true;
 
     mNodesToLoad.clear();
-    mIndexesToExpand.clear();
+    mIndexesToMap.clear();
 
     mNodesToLoad.append(node);
     auto p_node = std::shared_ptr<mega::MegaNode>(MegaSyncApp->getMegaApi()->getParentNode(node.get()));
@@ -557,7 +562,7 @@ void MegaItemModel::loadTreeFromNode(const std::shared_ptr<mega::MegaNode> node)
     {
         emit blockUi(false);
         mNodesToLoad.clear();
-        mIndexesToExpand.clear();
+        mIndexesToMap.clear();
         mNeedsToBeSelected = false;
     }
 
@@ -580,7 +585,7 @@ bool MegaItemModel::fetchMoreRecursively(const QModelIndex& parentIndex)
             }
             else
             {
-                mIndexesToExpand.append(indexToCheck);
+                mIndexesToMap.append(indexToCheck);
             }
         }
     }
@@ -676,7 +681,7 @@ void MegaItemModel::onChildNodesReady(MegaItem* parent, mega::MegaNodeList *node
 
     if(nodes->size() > 0)
     {
-        mIndexesToExpand.append(index);
+        mIndexesToMap.append(index);
 
         parent->setChildren(nodes);
         createChildItems(index, parent);
@@ -695,7 +700,7 @@ void MegaItemModel::onChildNodesReady(MegaItem* parent, mega::MegaNodeList *node
 
         if(mNodesToLoad.isEmpty())
         {
-            emit levelsAdded(mIndexesToExpand, 0);
+            emit levelsAdded(mIndexesToMap);
         }
     }
     else
@@ -893,7 +898,7 @@ void MegaItemModelIncomingShares::fetchMore(const QModelIndex &parent)
 void MegaItemModelIncomingShares::firstLoad()
 {
     addRootItems();
-    emit levelsAdded(QModelIndexList(), rootItemsCount());
+    emit levelsAdded(QModelIndexList());
 }
 
 QIcon MegaItemModel::getFolderIcon(MegaItem *item) const
