@@ -290,7 +290,6 @@ int MegaItem::row()
 MegaItem::~MegaItem()
 {
     qDeleteAll(mChildItems);
-
     mChildItems.clear();
 }
 

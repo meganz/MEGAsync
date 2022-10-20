@@ -133,11 +133,14 @@ ui->tMegaFolders->setAnimated(false);
     ui->tMegaFolders->setItemDelegateForColumn(MegaItemModel::STATUS, new IconDelegate(ui->tMegaFolders));
     ui->tMegaFolders->setItemDelegateForColumn(MegaItemModel::USER, new IconDelegate(ui->tMegaFolders));
     ui->tMegaFolders->setTextElideMode(Qt::ElideMiddle);
-    ui->tMegaFolders->setSortingEnabled(true);
     ui->tMegaFolders->sortByColumn(MegaItemModel::NODE, Qt::AscendingOrder);
+    ui->tMegaFolders->setSortingEnabled(true);
 
     setRootIndex(QModelIndex());
     checkNewFolderButtonVisibility();
+
+    mModel->firstLoad();
+
     //setLoadingSceneVisible(false);
 }
 

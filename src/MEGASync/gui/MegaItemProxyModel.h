@@ -28,6 +28,7 @@ public:
     };
 
     explicit MegaItemProxyModel(QObject* parent = nullptr);
+
     void showReadOnlyFolders(bool value);
     void showReadWriteFolders(bool value);
     void showOwnerColumn(bool value);

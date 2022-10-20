@@ -7,7 +7,7 @@
 
 MegaItemProxyModel::MegaItemProxyModel(QObject* parent) :
     QSortFilterProxyModel(parent),
-    mSortColumn(1),
+    mSortColumn(MegaItemModel::NODE),
     mOrder(Qt::AscendingOrder),
     mExpandMapped(true)
 {
@@ -207,7 +207,6 @@ void MegaItemProxyModel::setSourceModel(QAbstractItemModel *sourceModel)
     if(auto megaItemModel = dynamic_cast<MegaItemModel*>(sourceModel))
     {
         connect(megaItemModel, &MegaItemModel::levelsAdded, this, &MegaItemProxyModel::invalidateModel);
-        megaItemModel->firstLoad();
     }
 }
 
