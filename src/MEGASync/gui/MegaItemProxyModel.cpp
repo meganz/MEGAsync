@@ -9,7 +9,6 @@ MegaItemProxyModel::MegaItemProxyModel(QObject* parent) :
     QSortFilterProxyModel(parent),
     mSortColumn(1),
     mOrder(Qt::AscendingOrder),
-    parentChildrensToMap(QModelIndex()),
     rowsAdded(0)
 {
     mCollator.setCaseSensitivity(Qt::CaseInsensitive);
@@ -58,8 +57,12 @@ void MegaItemProxyModel::sort(int column, Qt::SortOrder order)
             blockSignals(true);
             sourceModel()->blockSignals(true);
             invalidateFilter();
-            QSortFilterProxyModel::sort(column, order);
-            hasChildren(parentChildrensToMap);
+            QSortFilterProxyModel::sort(column, order);           
+            for (auto it = itemsToMap.rbegin(); it != itemsToMap.rend(); ++it)
+            {
+                hasChildren((*it));
+            }
+            itemsToMap.clear();
             itemModel->lockMutex(false);
             blockSignals(false);
             sourceModel()->blockSignals(false);
@@ -204,11 +207,8 @@ void MegaItemProxyModel::setSourceModel(QAbstractItemModel *sourceModel)
 
     if(auto megaItemModel = dynamic_cast<MegaItemModel*>(sourceModel))
     {
-        connect(megaItemModel, &MegaItemModel::rowsAdded, this, &MegaItemProxyModel::invalidateModel);
-        if(sourceModel->canFetchMore(QModelIndex()))
-        {
-            sourceModel->fetchMore(QModelIndex());
-        }
+        connect(megaItemModel, &MegaItemModel::levelsAdded, this, &MegaItemProxyModel::invalidateModel);
+        megaItemModel->firstLoad();
     }
 }
 
@@ -324,9 +324,12 @@ MegaItemModel *MegaItemProxyModel::getMegaModel()
     return dynamic_cast<MegaItemModel*>(sourceModel());
 }
 
-void MegaItemProxyModel::invalidateModel(const QModelIndex &parent, int rowsAdded)
+void MegaItemProxyModel::invalidateModel(const QModelIndexList& parents, int rowsAdded)
 {
-    parentChildrensToMap = mapFromSource(parent);
+    foreach(auto parent, parents)
+    {
+        itemsToMap.append(mapFromSource(parent));
+    }
     this->rowsAdded = rowsAdded;
     sort(mSortColumn, mOrder);
 }
@@ -334,5 +337,5 @@ void MegaItemProxyModel::invalidateModel(const QModelIndex &parent, int rowsAdde
 void MegaItemProxyModel::onModelSortedFiltered()
 {
     emit getMegaModel()->blockUi(false);
-    emit modelChanged(parentChildrensToMap);
+    emit modelChanged(itemsToMap.isEmpty() ? QModelIndex() : itemsToMap.first());
 }

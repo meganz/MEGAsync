@@ -61,12 +61,12 @@ private:
     Qt::SortOrder mOrder;
     QFutureWatcher<void> mFilterWatcher;
     QEventLoop loop;
-    QModelIndex parentChildrensToMap;
+    QModelIndexList itemsToMap;
     int rowsAdded;
 
 
 private slots:
-    void invalidateModel(const QModelIndex& parent, int rowsAdded);
+    void invalidateModel(const QModelIndexList &parents, int rowsAdded);
     void onModelSortedFiltered();
 };
 

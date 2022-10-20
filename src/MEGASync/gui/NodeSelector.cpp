@@ -33,6 +33,11 @@ NodeSelector::NodeSelector(int selectMode, QWidget *parent) :
     ui->CloudDrive->setSelectionMode(mSelectMode);
     ui->IncomingShares->setSelectionMode(mSelectMode);
 
+    connect(ui->CloudDrive, &NodeSelectorTreeViewWidget::okBtnClicked, this, &NodeSelector::onbOkClicked);
+    connect(ui->IncomingShares, &NodeSelectorTreeViewWidget::okBtnClicked, this, &NodeSelector::onbOkClicked);
+    connect(ui->CloudDrive, &NodeSelectorTreeViewWidget::cancelBtnClicked, this, &NodeSelector::reject);
+    connect(ui->IncomingShares, &NodeSelectorTreeViewWidget::cancelBtnClicked, this, &NodeSelector::reject);
+
 #ifndef Q_OS_MAC
     ui->bShowCloudDrive->setChecked(true);
     connect(ui->bShowIncomingShares, &QPushButton::clicked, this, &NodeSelector::onbShowIncomingSharesClicked);
@@ -249,6 +254,5 @@ void NodeSelector::setSelectedNodeHandle(const mega::MegaHandle &handle)
         onTabSelected(CLOUD_DRIVE);
     }
     auto tree_view_widget = static_cast<NodeSelectorTreeViewWidget*>(ui->stackedWidget->currentWidget());
-    tree_view_widget->setFutureSelectedNodeHandle(handle);
-    //tree_view_widget->setSelectedNodeHandle(handle);
+    tree_view_widget->setSelectedNodeHandle(handle);
 }

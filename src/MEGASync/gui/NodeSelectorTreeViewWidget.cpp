@@ -214,9 +214,20 @@ void NodeSelectorTreeViewWidget::onModelAboutToBeChanged()
 
 void NodeSelectorTreeViewWidget::onModelChanged(const QModelIndex &index)
 {
-    if(index.row() == 0)
+    auto indexesAndSelected = mModel->needsToBeExpandedAndSelected();
+    if(!indexesAndSelected.first.isEmpty())
     {
-        ui->tMegaFolders->setExpanded(mProxyModel->getIndexFromHandle(MegaSyncApp->getRootNode()->getHandle()), true);
+        for (auto it = indexesAndSelected.first.begin(); it != indexesAndSelected.first.end(); ++it)
+        {
+             auto proxyIndex(mProxyModel->mapFromSource((*it)));
+             ui->tMegaFolders->setExpanded(proxyIndex, true);
+
+             if(indexesAndSelected.second && (*it) == indexesAndSelected.first.last())
+             {
+                 ui->tMegaFolders->selectionModel()->setCurrentIndex(proxyIndex, QItemSelectionModel::ClearAndSelect | QItemSelectionModel::Rows);
+                 ui->tMegaFolders->selectionModel()->select(proxyIndex, QItemSelectionModel::ClearAndSelect | QItemSelectionModel::Rows);
+             }
+        }   
     }
 }
 
@@ -472,21 +483,7 @@ void NodeSelectorTreeViewWidget::setSelectedNodeHandle(const MegaHandle& selecte
     if (!node)
         return;
 
-    QVector<QModelIndex> modelIndexList = mProxyModel->getRelatedModelIndexes(node);
-
-    if(modelIndexList.size() > 1)
-    {
-        foreach(QModelIndex idx, modelIndexList)
-        {
-            ui->tMegaFolders->expand(idx);
-        }
-    }
-
-    if(modelIndexList.size() > 0)
-    {
-        ui->tMegaFolders->selectionModel()->setCurrentIndex(modelIndexList.last(), QItemSelectionModel::ClearAndSelect | QItemSelectionModel::Rows);
-        ui->tMegaFolders->selectionModel()->select(modelIndexList.last(), QItemSelectionModel::ClearAndSelect | QItemSelectionModel::Rows);
-    }
+    mModel->loadTreeFromNode(node);
 }
 
 void NodeSelectorTreeViewWidget::setFutureSelectedNodeHandle(const mega::MegaHandle &selectedHandle)

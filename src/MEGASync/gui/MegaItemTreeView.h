@@ -48,7 +48,6 @@ private:
 
     QModelIndex getIndexFromSourceModel(const QModelIndex& index) const;
     MegaItemProxyModel* proxyModel() const;
-    QModelIndex mIndexToExpand;
     QModelIndex mIndexToEnter;
     MegaApi* mMegaApi;
 

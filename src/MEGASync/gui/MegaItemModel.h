@@ -102,11 +102,18 @@ public:
     void endInsertingRows(){endInsertRows();}
     void beginInsertingRows(const QModelIndex& index, int rowCount){beginInsertRows(index, 0 , rowCount-1);}
 
+    void loadTreeFromNode(const std::shared_ptr<mega::MegaNode> node);
+    QModelIndex getIndexFromNode(const std::shared_ptr<mega::MegaNode> node, const QModelIndex& parent);
+
+    virtual void firstLoad() = 0;
+
     void lockMutex(bool state);
     bool tryLock();
 
+    QPair<QModelIndexList, bool> needsToBeExpandedAndSelected();
+
 signals:
-    void rowsAdded(const QModelIndex& parent, int addedRowsCount);
+    void levelsAdded(const QModelIndexList& parent, int addedRowsCount);
     void requestChildNodes(MegaItem* parent, int nodeType) const;
 
     void blockUi(bool state) const;
@@ -121,6 +128,8 @@ protected:
     bool mSyncSetupMode;
     bool mShowFiles;
     QList<MegaItem*> mRootItems;
+    mutable QModelIndexList mIndexesToExpand;
+    bool mNeedsToBeSelected;
 
 private slots:
     void onChildNodesReady(MegaItem *parent, mega::MegaNodeList* nodes);
@@ -131,12 +140,15 @@ private:
     virtual int rootItemsCount() const = 0;
     void createChildItems(const QModelIndex& index, MegaItem* parent);
     QIcon getFolderIcon(MegaItem* item) const;
+    bool fetchMoreRecursively(const QModelIndex& parentIndex);
+
     std::shared_ptr<const UserAttributes::CameraUploadFolder> mCameraFolderAttribute;
     std::shared_ptr<const UserAttributes::MyChatFilesFolder> mMyChatFilesFolderAttribute;
 
     QThread* mNodeRequesterThread;
     NodeRequester* mNodeRequesterWorker;
     QMutex mLoadingMutex;
+    QList<std::shared_ptr<mega::MegaNode>> mNodesToLoad;
 };
 
 class MegaItemModelCloudDrive : public MegaItemModel , public mega::MegaRequestListener
@@ -152,6 +164,7 @@ public:
     int rootItemsCount() const override;
 
     void fetchMore(const QModelIndex &parent) override;
+    void firstLoad() override;
 
 private:
     std::unique_ptr<mega::QTMegaRequestListener> mDelegateListener;
@@ -169,6 +182,7 @@ public:
     int rootItemsCount() const override;
 
     void fetchMore(const QModelIndex &parent) override;
+    void firstLoad() override;
 
 private slots:
     void onItemInfoUpdated(int role);

@@ -8,7 +8,6 @@
 
 MegaItemTreeView::MegaItemTreeView(QWidget* parent) :
     QTreeView(parent),
-    mIndexToExpand(QModelIndex()),
     mIndexToEnter(QModelIndex()),
     mMegaApi(MegaSyncApp->getMegaApi())
 {
@@ -110,8 +109,7 @@ void MegaItemTreeView::mousePressEvent(QMouseEvent *event)
             {
                 if(!isExpanded(clickedIndex))
                 {
-                    mIndexToExpand = clickedIndex;
-                    auto sourceIndexToExpand = proxyModel()->mapToSource(mIndexToExpand);
+                    auto sourceIndexToExpand = proxyModel()->mapToSource(clickedIndex);
                     if(proxyModel()->sourceModel()->canFetchMore(sourceIndexToExpand))
                     {
                         proxyModel()->sourceModel()->fetchMore(sourceIndexToExpand);
@@ -206,11 +204,7 @@ void MegaItemTreeView::getMegaLink()
 
 void MegaItemTreeView::onExpand()
 {
-    if(mIndexToExpand.isValid())
-    {
-        expand(mIndexToExpand);
-        mIndexToExpand = QModelIndex();
-    }
+
     if(mIndexToEnter.isValid())
     {
         QPoint point = visualRect(mIndexToEnter).center();
