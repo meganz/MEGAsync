@@ -42,6 +42,8 @@ private:
     void refresh();
     void highLightMenuEntry(QAction *action);
 
+    QString createSyncTooltipText(std::shared_ptr<SyncSetting> syncSetting) const;
+
     std::shared_ptr<UserAttributes::DeviceName> mDeviceNameRequest;
     mega::MegaSync::SyncType mType;
     std::shared_ptr<QMenu> mMenu;

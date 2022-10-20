@@ -7,6 +7,7 @@
 #include "TextDecorator.h"
 #include "UserAttributesRequests/DeviceName.h"
 #include "Backups/BackupNameConflictDialog.h"
+#include "SyncTooltipCreator.h"
 
 #include <QStandardPaths>
 #include <QStyleOption>
@@ -270,7 +271,7 @@ void BackupsWizard::setupStep1()
             {
                 QStandardItem* item (new QStandardItem(SyncController::getSyncNameFromPath(path)));
                 item->setFlags(item->flags() | Qt::ItemIsUserCheckable);
-                item->setData(path, Qt::ToolTipRole);
+                item->setData(SyncTooltipCreator::createForLocal(path), Qt::ToolTipRole);
                 item->setData(path, Qt::UserRole);
                 item->setData(folderIcon, Qt::DecorationRole);
                 item->setData(Qt::Unchecked, Qt::CheckStateRole);
@@ -721,7 +722,7 @@ void BackupsWizard::on_bMoreFolders_clicked()
             QIcon icon (QIcon(QLatin1String("://images/icons/folder/folder-mono_24.png")));
             item = new QStandardItem(SyncController::getSyncNameFromPath(path));
             item->setFlags(item->flags() | Qt::ItemIsUserCheckable);
-            item->setData(path, Qt::ToolTipRole);
+            item->setData(SyncTooltipCreator::createForLocal(path), Qt::ToolTipRole);
             item->setData(path, Qt::UserRole);
             item->setData(icon, Qt::DecorationRole);
             mFoldersModel->insertRow(0, item);
@@ -907,7 +908,7 @@ void BackupsWizard::onSyncAddRequestStatus(int errorCode, const QString& errorMs
 
                     mErrList.append(it.value().syncName);
                     QIcon   warnIcon (QIcon(QLatin1String("://images/icons/folder/folder-mono-with-warning_24.png")));
-                    QString tooltipMsg (item->data(Qt::UserRole).toString() + QLatin1Char('\n')
+                    QString tooltipMsg (SyncTooltipCreator::createForLocal(item->data(Qt::UserRole).toString()) + QChar::LineSeparator
                                         + tr("Error: %1").arg(msg));
                     item->setData(warnIcon, Qt::DecorationRole);
                     item->setData(tooltipMsg, Qt::ToolTipRole);
@@ -915,7 +916,7 @@ void BackupsWizard::onSyncAddRequestStatus(int errorCode, const QString& errorMs
                 else if (it.value().status == OK)
                 {
                     QIcon folderIcon (QIcon(QLatin1String("://images/icons/folder/folder-mono_24.png")));
-                    QString tooltipMsg (item->data(Qt::UserRole).toString());
+                    QString tooltipMsg (SyncTooltipCreator::createForLocal(item->data(Qt::UserRole).toString()));
                     item->setData(folderIcon, Qt::DecorationRole);
                     item->setData(tooltipMsg, Qt::ToolTipRole);
                     mFoldersModel->removeRow(index.row());

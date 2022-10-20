@@ -81,7 +81,8 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/CancelConfirmWidget.cpp \
     $$PWD/NodeNameSetterDialog/NodeNameSetterDialog.cpp \
     $$PWD/NodeNameSetterDialog/NewFolderDialog.cpp \
-    $$PWD/NodeNameSetterDialog/RenameNodeDialog.cpp
+    $$PWD/NodeNameSetterDialog/RenameNodeDialog.cpp \
+    $$PWD/SyncTooltipCreator.cpp
 
 HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/AddBackupDialog.h \
@@ -167,7 +168,8 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/CancelConfirmWidget.h \
     $$PWD/NodeNameSetterDialog/NodeNameSetterDialog.h \
     $$PWD/NodeNameSetterDialog/NewFolderDialog.h \
-    $$PWD/NodeNameSetterDialog/RenameNodeDialog.h
+    $$PWD/NodeNameSetterDialog/RenameNodeDialog.h \
+    $$PWD/SyncTooltipCreator.h
 
 INCLUDEPATH += $$PWD
 
