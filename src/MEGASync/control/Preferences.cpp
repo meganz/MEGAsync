@@ -20,14 +20,14 @@ const int Preferences::BUILD_ID = 0;
 const QString Preferences::VERSION_STRING = QString::fromAscii("4.7.2");
 QString Preferences::SDK_ID = QString::fromAscii("d96a911");
 const QString Preferences::CHANGELOG = QString::fromUtf8(QT_TR_NOOP(
-"- New Apple Silicon native support added.\n"
-"- New feature to avoid entering on sleep mode if there are active transfers.\n"
-"- Updated 3rdparty libs.\n"
-"- Improvements on folders transfer.\n"
-"- Detected crashes on Windows, Linux, and macOS fixed.\n"
-"- Translation issues fixed.\n"
-"- Performance improved.\n"
-"- UI fixed and adjusted.\n"));
+"- Added new Apple Silicon native support.\n"
+"- Added a new feature to stop sleep mode if there are active transfers.\n"
+"- Updated third-party libs.\n"
+"- Improved folders transfers.\n"
+"- Fixed detected crashes on Windows, Linux, and macOS.\n"
+"- Fixed translation issues.\n"
+"- Improved performance.\n"
+"- Fixed and adjusted UI.\n"));
 
 const QString Preferences::TRANSLATION_FOLDER = QString::fromAscii("://translations/");
 const QString Preferences::TRANSLATION_PREFIX = QString::fromAscii("MEGASyncStrings_");
