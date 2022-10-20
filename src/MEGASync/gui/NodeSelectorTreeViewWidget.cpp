@@ -138,9 +138,6 @@ ui->tMegaFolders->setAnimated(false);
 
     setRootIndex(QModelIndex());
     checkNewFolderButtonVisibility();
-
-    mModel->firstLoad();
-
     //setLoadingSceneVisible(false);
 }
 
@@ -296,7 +293,7 @@ void NodeSelectorTreeViewWidget::onbNewFolderClicked()
             }
             mProxyModel->addNode(std::move(newNode), idx);
         }
-
+       // selectNodeHandle(handle);
         setSelectedNodeHandle(handle);
     }
 }

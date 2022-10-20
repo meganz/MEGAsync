@@ -17,7 +17,6 @@ MegaItemProxyModel::MegaItemProxyModel(QObject* parent) :
 
     connect(&mFilterWatcher, &QFutureWatcher<void>::finished,
             this, &MegaItemProxyModel::onModelSortedFiltered);
-    setDynamicSortFilter(false);
 
 }
 
@@ -207,6 +206,7 @@ void MegaItemProxyModel::setSourceModel(QAbstractItemModel *sourceModel)
     if(auto megaItemModel = dynamic_cast<MegaItemModel*>(sourceModel))
     {
         connect(megaItemModel, &MegaItemModel::levelsAdded, this, &MegaItemProxyModel::invalidateModel);
+        megaItemModel->firstLoad();
     }
 }
 

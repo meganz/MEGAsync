@@ -353,11 +353,19 @@ void MegaItemModel::setSyncSetupMode(bool value)
 
 void MegaItemModel::addNode(std::unique_ptr<MegaNode> node, const QModelIndex &parent)
 {
+    mIndexesToMap.clear();
+    mIndexesToMap.append(parent);
     MegaItem *parentItem = static_cast<MegaItem*>(parent.internalPointer());
     int numchildren = parentItem->getNumChildren();
+
+//    blockSignals(true);
+//    lockMutex(true);
     beginInsertRows(parent, numchildren, numchildren);
     parentItem->addNode(move(node));
     endInsertRows();
+//    blockSignals(false);
+//    lockMutex(false);
+//    emit levelsAdded(mIndexesToMap);
 }
 
 void MegaItemModel::removeNode(const QModelIndex &item)
@@ -562,8 +570,8 @@ void MegaItemModel::loadTreeFromNode(const std::shared_ptr<mega::MegaNode> node)
     {
         emit blockUi(false);
         mNodesToLoad.clear();
-        mIndexesToMap.clear();
-        mNeedsToBeSelected = false;
+        //mIndexesToMap.clear();
+        //mNeedsToBeSelected = false;
     }
 
 }
@@ -641,7 +649,7 @@ bool MegaItemModel::canFetchMore(const QModelIndex &parent) const
 
             return MegaSyncApp->getMegaApi()->hasChildren(item->getNode().get());
         }
-
+        qDebug()<<item->getNumChildren()<<item->getNumItemChildren();
         return item->getNumChildren() != item->getNumItemChildren();
     }
     else

@@ -252,6 +252,7 @@ bool MegaItem::isSyncable()
 
 void MegaItem::addNode(std::unique_ptr<MegaNode>node)
 {
+    mChildNodes->addNode(node.get()->copy());
     mChildItems.append(new MegaItem(move(node), mShowFiles, this));
 }
 
