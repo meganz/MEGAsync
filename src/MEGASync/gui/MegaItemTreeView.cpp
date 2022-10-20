@@ -103,9 +103,22 @@ void MegaItemTreeView::mousePressEvent(QMouseEvent *event)
         QModelIndex clickedIndex = indexAt(event->pos());
         if(clickedIndex.isValid() && !clickedIndex.data(toInt(NodeRowDelegateRoles::INIT_ROLE)).toBool())
         {
-            QRect vrect = visualRect(clickedIndex);
-            int itemIdentation = vrect.x() - visualRect(rootIndex()).x();
-            if(event->pos().x() < itemIdentation)
+            int position = columnViewportPosition(0);
+            int height = rowHeight(clickedIndex);
+            int level = 0;
+            QModelIndex idx = clickedIndex;
+            while(idx.isValid())
+            {
+                idx = idx.parent();
+                if(idx.isValid())
+                {
+                    level++;
+                }
+            }
+            int identation = indentation() * level;
+            QRect rect(position + identation, event->pos().y(),indentation(), height);
+
+            if(rect.contains(event->pos()))
             {
                 if(!isExpanded(clickedIndex))
                 {
@@ -118,6 +131,7 @@ void MegaItemTreeView::mousePressEvent(QMouseEvent *event)
                     return;
                 }
             }
+
         }
 
         QTreeView::mousePressEvent(event);
