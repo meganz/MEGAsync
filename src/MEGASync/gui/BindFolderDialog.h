@@ -18,8 +18,7 @@ class BindFolderDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit BindFolderDialog(MegaApplication *app, QWidget *parent = 0);
-
+    explicit BindFolderDialog(MegaApplication* _app, QWidget* parent = nullptr);
     ~BindFolderDialog();
 
     mega::MegaHandle getMegaFolder();
@@ -37,7 +36,7 @@ protected:
 
 private:
     Ui::BindFolderDialog *ui;
-    MegaApplication *app;
+    MegaApplication *mApp;
     QString mSyncName;
     QString mMegaPath;
     HighDpiResize mHighDpiResize;

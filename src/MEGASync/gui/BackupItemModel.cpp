@@ -1,4 +1,6 @@
 #include "BackupItemModel.h"
+#include "Utilities.h"
+#include "SyncTooltipCreator.h"
 
 #include <QCoreApplication>
 #include <QIcon>
@@ -8,6 +10,7 @@
 BackupItemModel::BackupItemModel(QObject *parent)
     : SyncItemModel(parent)
 {
+    mDeviceNameRequest = UserAttributes::DeviceName::requestDeviceName();
 }
 
 QVariant BackupItemModel::headerData(int section, Qt::Orientation orientation, int role) const
@@ -89,10 +92,21 @@ QVariant BackupItemModel::data(const QModelIndex &index, int role) const
         }
         else if(role == Qt::ToolTipRole)
         {
+            QString toolTip;
             if(sync->getError())
-                return QCoreApplication::translate("MegaSyncError", mega::MegaSync::getMegaSyncErrorCode(sync->getError()));
-            else
-                return sync->getLocalFolder();
+            {
+                toolTip += QCoreApplication::translate("MegaSyncError", mega::MegaSync::getMegaSyncErrorCode(sync->getError()));
+                toolTip += QChar::LineSeparator;
+            }
+            toolTip += SyncTooltipCreator::createForLocal(sync->getLocalFolder());
+            toolTip += QChar::LineSeparator;
+            // TODO: improve path building
+            toolTip += SyncTooltipCreator::createForRemote(SyncController::getMyBackupsLocalizedPath()
+                                                           + QLatin1Char('/')
+                                                           + mDeviceNameRequest->getDeviceName()
+                                                           + QLatin1Char('/')
+                                                           + sync->name());
+            return toolTip;
         }
         break;
     case Column::MENU:

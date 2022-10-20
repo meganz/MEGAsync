@@ -1,4 +1,5 @@
 #include "SyncItemModel.h"
+#include "SyncTooltipCreator.h"
 
 #include <QCoreApplication>
 #include <QIcon>
@@ -127,10 +128,14 @@ QVariant SyncItemModel::data(const QModelIndex &index, int role) const
         }
         else if(role == Qt::ToolTipRole)
         {
+            QString toolTip;
             if(sync->getError())
-                return QCoreApplication::translate("MegaSyncError", mega::MegaSync::getMegaSyncErrorCode(sync->getError()));
-            else
-                return sync->getLocalFolder();
+            {
+                toolTip += QCoreApplication::translate("MegaSyncError", mega::MegaSync::getMegaSyncErrorCode(sync->getError()));
+                toolTip += QChar::LineSeparator;
+            }
+            toolTip += SyncTooltipCreator::createForLocal(sync->getLocalFolder());
+            return toolTip;
         }
         break;
     case Column::RNAME:
@@ -140,7 +145,7 @@ QVariant SyncItemModel::data(const QModelIndex &index, int role) const
             return megaFolder.size() == 1 ? megaFolder : QFileInfo(megaFolder).fileName();
         }
         else if(role == Qt::ToolTipRole)
-            return sync->getMegaFolder();
+            return SyncTooltipCreator::createForRemote(sync->getMegaFolder());
         break;
     case Column::MENU:
 

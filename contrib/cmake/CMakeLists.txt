@@ -332,9 +332,10 @@ set (MOC_INPUT
     ${MEGAsyncDir}/gui/NodeNameSetterDialog/NodeNameSetterDialog.h
     ${MEGAsyncDir}/gui/NodeNameSetterDialog/NewFolderDialog.h
     ${MEGAsyncDir}/gui/NodeNameSetterDialog/RenameNodeDialog.h
-    ${MEGAsyncDir}/gui/CancelConfirmWidget.h	
+    ${MEGAsyncDir}/gui/CancelConfirmWidget.h
     ${MEGAsyncDir}/gui/Backups/BackupRenameWidget.h	
-    ${MEGAsyncDir}/gui/Backups/BackupNameConflictDialog.h	
+    ${MEGAsyncDir}/gui/Backups/BackupNameConflictDialog.h
+    ${MEGAsyncDir}/gui/SyncTooltipCreator.h
 
     ${MEGAsyncDir}/platform/notificator.h
     ${MEGAsyncDir}/platform/PlatformStrings.h
@@ -357,9 +358,9 @@ set (MOC_INPUT
     ${MEGAsyncDir}/transfers/gui/InfoDialogTransfersWidget.h
     ${MEGAsyncDir}/transfers/gui/TransferManager.h
     ${MEGAsyncDir}/transfers/gui/TransfersWidget.h
-    ${MEGAsyncDir}/transfers/gui/MegaTransferView.h
-    ${MEGAsyncDir}/transfers/gui/MegaTransferDelegate.h
     ${MEGAsyncDir}/transfers/gui/TransfersSummaryWidget.h
+    ${MEGAsyncDir}/transfers/gui/MegaTransferDelegate.h
+    ${MEGAsyncDir}/transfers/gui/MegaTransferView.h
     ${MEGAsyncDir}/transfers/gui/TransferWidgetHeaderItem.h
     ${MEGAsyncDir}/transfers/gui/TransferScanCancelUi.h
     ${MEGAsyncDir}/transfers/gui/TransferManagerLoadingItem.h
@@ -515,6 +516,7 @@ set (SRCS
     ${MEGAsyncDir}/gui/ScanningWidget.cpp
     ${MEGAsyncDir}/gui/BlurredShadowEffect.cpp
     ${MEGAsyncDir}/gui/CancelConfirmWidget.cpp
+    ${MEGAsyncDir}/gui/SyncTooltipCreator.cpp
     ${MEGAsyncDir}/gui/MegaDelegateHoverManager.cpp
     ${MEGAsyncDir}/gui/NodeNameSetterDialog/NodeNameSetterDialog.cpp 
     ${MEGAsyncDir}/gui/NodeNameSetterDialog/NewFolderDialog.cpp 
@@ -585,7 +587,6 @@ set (SRCS
     ${MEGAsyncDir}/platform/notificator.cpp
 
     ${MEGAsyncDir}/qtlockedfile/qtlockedfile.cpp
-
 )
 
 

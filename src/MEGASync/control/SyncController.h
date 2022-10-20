@@ -41,7 +41,7 @@ public:
 
     void setMyBackupsDirName();
     mega::MegaHandle getMyBackupsHandle();
-    QString getMyBackupsLocalizedPath();
+    static QString getMyBackupsLocalizedPath();
 
     // Local folder checks
     static QString getIsLocalFolderAlreadySyncedMsg(const QString& path, const mega::MegaSync::SyncType& syncType);

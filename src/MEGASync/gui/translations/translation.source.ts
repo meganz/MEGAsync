@@ -803,10 +803,19 @@ p, li { white-space: pre-wrap; }
         <translation>Sync name</translation>
     </message>
     <message>
-        <source>The name &quot;%1&quot; is already in use for another sync
-Please enter a different name to identify this synced folder:</source>
-        <translatorcomment>Detailed message displayed when a user is using a name for a local folder that is already used. Preserve &quot;%1&quot; code because is used to indicate the local folder at runtime.</translatorcomment>
-        <translation>The name “%1” is already in use for another sync. Please enter a different name to identify this synced folder:</translation>
+        <source>The selected local folder is already synced</source>
+        <translatorcomment>Message displayed when an user is adding a local folder wich is already synced.</translatorcomment>
+        <translation>The selected local folder is already synced</translation>
+    </message>
+    <message>
+        <source>A synced folder cannot be inside another synced folder</source>
+        <translatorcomment>Message displayed when an user is adding nested local folders for synchronization.</translatorcomment>
+        <translation>A synced folder cannot be inside another synced folder</translation>
+    </message>
+    <message>
+        <source>The selected MEGA folder is already synced</source>
+        <translatorcomment>Message displayed when an user is adding an already synchronized remote folder.</translatorcomment>
+        <translation>The selected MEGA folder is already synced</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -6481,6 +6490,24 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <source>Backups</source>
         <translatorcomment>Menu option that shows backups menu</translatorcomment>
         <translation type="unfinished">Backups</translation>
+    </message>
+</context>
+<context>
+    <name>SyncTooltipCreator</name>
+    <message>
+        <source>Local path:</source>
+        <translatorcomment>Label used in tooltips when the local path of a sync is displayed.</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>MEGA path:</source>
+        <translatorcomment>Label used in tooltips when the remote path of a sync is displayed.</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 %2</source>
+        <translatorcomment>String used to build the tooltip of syncs when they are hovered. %1 is the label (local or remote) and %2 is the path.</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

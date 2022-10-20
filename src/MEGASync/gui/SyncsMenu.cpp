@@ -5,6 +5,7 @@
 #include "model/SyncModel.h"
 #include "Platform.h"
 #include "UserAttributesRequests/DeviceName.h"
+#include "SyncTooltipCreator.h"
 
 #include <QtConcurrent/QtConcurrent>
 
@@ -120,6 +121,7 @@ void SyncsMenu::refresh()
                         new MenuItemAction(backupSetting->name(),
                                            QIcon(QLatin1String("://images/icons/folder/folder-mono_24.png")),
                                            true, itemIndent);
+                action->setToolTip(createSyncTooltipText(backupSetting));
                 connect(action, &MenuItemAction::triggered,
                         this, [backupSetting](){
                     QtConcurrent::run(QDesktopServices::openUrl,
@@ -268,4 +270,29 @@ void SyncsMenu::highLightMenuEntry(QAction* action)
         pAction->setHighlight(true);
         mLastHovered = pAction;
     }
+}
+
+QString SyncsMenu::createSyncTooltipText(std::shared_ptr<SyncSetting> syncSetting) const
+{
+    QString toolTip (SyncTooltipCreator::createForLocal(syncSetting->getLocalFolder()));
+    toolTip += QChar::LineSeparator;
+    switch (mType)
+    {
+    case mega::MegaSync::TYPE_TWOWAY:
+    {
+        toolTip += SyncTooltipCreator::createForRemote(syncSetting->getMegaFolder());
+        break;
+    }
+    case mega::MegaSync::TYPE_BACKUP:
+    {
+        // TODO: improve path building
+        toolTip += SyncTooltipCreator::createForRemote(SyncController::getMyBackupsLocalizedPath()
+                                                       + QLatin1Char('/')
+                                                       + mDeviceNameRequest->getDeviceName()
+                                                       + QLatin1Char('/')
+                                                       + syncSetting->name());
+        break;
+    }
+    }
+    return toolTip;
 }

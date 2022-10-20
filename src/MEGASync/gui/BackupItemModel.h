@@ -3,6 +3,7 @@
 
 #include "SyncItemModel.h"
 #include "../model/SyncModel.h"
+#include "UserAttributesRequests/DeviceName.h"
 
 
 class BackupItemModel : public SyncItemModel
@@ -28,6 +29,8 @@ public:
     void fillData() override;
 
 private:
+    std::shared_ptr<UserAttributes::DeviceName> mDeviceNameRequest;
+
     void sendDataChanged(int pos) override;
 
 };

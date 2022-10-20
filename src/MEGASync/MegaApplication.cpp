@@ -175,7 +175,7 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     "QListView::indicator:unchecked:disabled {image: url(:/images/cb_unchecked_disabled.svg);}"
     "QMessageBox QLabel {font-size: 13px;}"
     "QMenu {font-size: 13px;}"
-    "QToolTip {font-size: 13px; color: #FAFAFA; background-color: #333333; border: 0px; margin-bottom: 2px; min-height: 22px;}"
+    "QToolTip {color: #FAFAFA; background-color: #333333; border: 0px; margin-bottom: 2px;}"
     "QPushButton {font-size: 12px; padding-right: 12px; padding-left: 12px; min-height: 22px;}"
     "QFileDialog QWidget {font-size: 13px;}"
     "QRadioButton::indicator {width: 13px; height: 13px;}"
@@ -189,9 +189,11 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     "QRadioButton::indicator:checked:disabled {image: url(:/images/rb_checked_disabled.svg);}"));
 #endif
 
+    // For some reason this doesn't work on Windows (done in stylesheet above)
+    // TODO: re-try with Qt > 5.12.12
     QPalette palette = QToolTip::palette();
-    palette.setColor(QPalette::ToolTipBase,QColor("#333333"));
-    palette.setColor(QPalette::ToolTipText,QColor("#FAFAFA"));
+    palette.setColor(QPalette::ToolTipBase, QColor("#333333"));
+    palette.setColor(QPalette::ToolTipText, QColor("#FAFAFA"));
     QToolTip::setPalette(palette);
 
     appPath = QDir::toNativeSeparators(QCoreApplication::applicationFilePath());

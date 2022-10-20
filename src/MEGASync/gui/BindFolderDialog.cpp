@@ -7,13 +7,14 @@
 
 using namespace mega;
 
-BindFolderDialog::BindFolderDialog(MegaApplication *app, QWidget *parent) :
+BindFolderDialog::BindFolderDialog(MegaApplication* _app, QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::BindFolderDialog)
+    ui(new Ui::BindFolderDialog),
+    mApp(_app)
 {
     ui->setupUi(this);
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
-    this->app = app;
+
     ui->bOK->setDefault(true);
     mHighDpiResize.init(this);
 }
@@ -46,7 +47,7 @@ QString BindFolderDialog::getSyncName()
 void BindFolderDialog::on_bOK_clicked()
 {
     QString localFolderPath = ui->wBinder->selectedLocalFolder();
-    MegaApi *megaApi = app->getMegaApi();
+    MegaApi *megaApi = mApp->getMegaApi();
     MegaHandle handle = ui->wBinder->selectedMegaFolder();
 
     std::shared_ptr<MegaNode> node {megaApi->getNodeByHandle(handle)};
@@ -92,36 +93,7 @@ void BindFolderDialog::on_bOK_clicked()
         return;
     }
 
-    // Set the sync name
     mSyncName = SyncController::getSyncNameFromPath(localFolderPath);
-
-    // We want the syncname to be unique, so prompt the user while it is not
-    const auto syncNames (SyncModel::instance()->getSyncNames(MegaSync::TYPE_TWOWAY));
-    while (syncNames.contains(mSyncName))
-    {
-        QPointer<QInputDialog> id = new QInputDialog(this);
-        id->setWindowFlags(id->windowFlags() & ~Qt::WindowContextHelpButtonHint);
-        id->setWindowTitle(tr("Sync name"));
-        id->setLabelText(tr("The name \"%1\" is already in use for another sync\n"
-                            "Please enter a different name to identify this synced folder:").arg(mSyncName));
-        id->setTextValue(mSyncName);
-        int result = id->exec();
-
-        if (!id || !result)
-        {
-            delete id;
-            return;
-        }
-
-        QString text = id->textValue().trimmed();
-        delete id;
-
-        if (text.isEmpty())
-        {
-            return;
-        }
-        mSyncName = text;
-    }
 
     accept();
 }
