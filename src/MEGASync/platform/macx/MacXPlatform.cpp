@@ -1,5 +1,6 @@
 #include "MacXPlatform.h"
 #include <unistd.h>
+#include <pwd.h>
 
 using namespace std;
 
@@ -293,19 +294,20 @@ void MacXPlatform::disableSignalHandler()
 QString MacXPlatform::getDeviceName()
 {
     // First, try to read maker and model
-    QString vendor;
-    QString model;
-
     QString deviceName;
-    // If failure or empty strings, give hostname
-    if (vendor.isEmpty() && model.isEmpty())
+    QProcess proc;
+
+    proc.start(QLatin1String("/bin/sh"), QStringList()<<QLatin1String("-c")
+                                                       <<QLatin1String("system_profiler SPHardwareDataType | "
+                                                                       "grep \"Model Name\" | awk -F \"Model "
+                                                                       "Name: \" '{print $2}' | tr -d '\n'"));
+    proc.waitForFinished();
+    deviceName = QString::fromStdString(proc.readAll().toStdString());
+
+    if (deviceName.isEmpty())
     {
         deviceName = QSysInfo::machineHostName();
         deviceName.remove(QLatin1Literal(".local"));
-    }
-    else
-    {
-        deviceName = vendor + QLatin1Literal(" ") + model;
     }
 
     return deviceName;

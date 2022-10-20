@@ -131,7 +131,7 @@ QString DeviceName::getDefaultDeviceName()
     if (deviceName.isEmpty())
     {
         // If empty, use generic one.
-        deviceName = tr("Your computer");
+        deviceName = tr("My computer");
     }
     return deviceName;
 }
