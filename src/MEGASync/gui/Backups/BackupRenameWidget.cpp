@@ -27,11 +27,7 @@ QString BackupRenameWidget::getNewName(QStringList brotherWdgNames)
     auto newName = getNewNameRaw();
     QString errText;
 
-    if (!Utilities::isNodeNameValid(newName))
-    {
-        errText = tr("The following characters are not allowed:\n") + Utilities::FORBIDDEN_CHARS;
-    }
-    else
+    if (Utilities::isNodeNameValid(newName))
     {
         brotherWdgNames.removeOne(newName);
         if (brotherWdgNames.contains(newName))
@@ -39,6 +35,10 @@ QString BackupRenameWidget::getNewName(QStringList brotherWdgNames)
             errText = tr("A folder named \"%1\" already exists in your Backups. Rename "
                          "the new folder to continue with the backup.").arg(newName);
         }
+    }
+    else
+    {
+        errText = tr("The following characters are not allowed:\n") + Utilities::FORBIDDEN_CHARS;
     }
 
     if (!errText.isEmpty())

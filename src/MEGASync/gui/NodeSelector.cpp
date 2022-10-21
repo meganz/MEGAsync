@@ -667,10 +667,12 @@ void NodeSelector::onMyBackupsFolderHandleSet(mega::MegaHandle h)
 {
     if (h != INVALID_HANDLE)
     {
-        ui->bShowBackups->show();
         mNavVault.expandedHandles.append(h);
+
 #ifdef Q_OS_MAC
         ui->tabBar->addTab(tr(BACKUPS));
+#else
+        ui->bShowBackups->show();
 #endif
         shortCutConnects(VAULT);
     }

@@ -117,7 +117,7 @@ void SyncTableView::showContextMenu(const QPoint &pos, const QModelIndex index)
     connect(showLocalAction, &MenuItemAction::triggered, this, [index]()
     {
         auto sync = index.data(Qt::UserRole).value<std::shared_ptr<SyncSetting>>();
-        QtConcurrent::run(QDesktopServices::openUrl, QUrl::fromLocalFile(sync->getLocalFolder()));
+        Utilities::openUrl(QUrl::fromLocalFile(sync->getLocalFolder()));
     });
 
     // Show in Mega web action
@@ -126,8 +126,7 @@ void SyncTableView::showContextMenu(const QPoint &pos, const QModelIndex index)
     connect(showRemoteAction, &MenuItemAction::triggered, this, [index]()
     {
         auto sync = index.data(Qt::UserRole).value<std::shared_ptr<SyncSetting>>();
-        QString url = QString::fromUtf8("mega://#fm/") + sync->getMegaFolder();
-        QtConcurrent::run(QDesktopServices::openUrl, QUrl(url));
+        Utilities::openInMega(sync->getMegaHandle());
     });
 
     // Remove Sync action
@@ -155,12 +154,10 @@ void SyncTableView::showContextMenu(const QPoint &pos, const QModelIndex index)
 
 MenuItemDelegate::MenuItemDelegate(QObject *parent) : QStyledItemDelegate(parent)
 {
-
 }
 
 MenuItemDelegate::~MenuItemDelegate()
 {
-
 }
 
 void MenuItemDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
@@ -183,7 +180,6 @@ IconMiddleDelegate::IconMiddleDelegate(QObject* parent) :
 IconMiddleDelegate::~IconMiddleDelegate()
 {
 }
-
 
 void IconMiddleDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {

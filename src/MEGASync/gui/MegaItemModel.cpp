@@ -600,29 +600,22 @@ QIcon MegaItemModel::getFolderIcon(MegaItem *item) const
                         if (nodeDeviceId == QString::fromUtf8(mMegaApi->getDeviceId()))
                         {
                             #ifdef Q_OS_WINDOWS
-                            static const QIcon thisDeviceIcon (QLatin1String("://images/icons/pc/pc-win_24.png"));
+                            const QIcon thisDeviceIcon (QLatin1String("://images/icons/pc/pc-win_24.png"));
                             #elif defined(Q_OS_MACOS)
-                            static const QIcon thisDeviceIcon (QLatin1String("://images/icons/pc/pc-mac_24.png"));
+                            const QIcon thisDeviceIcon (QLatin1String("://images/icons/pc/pc-mac_24.png"));
                             #elif defined(Q_OS_LINUX)
-                            static const QIcon thisDeviceIcon (QLatin1String("://images/icons/pc/pc-linux_24.png"));
+                            const QIcon thisDeviceIcon (QLatin1String("://images/icons/pc/pc-linux_24.png"));
                             #endif
                             return thisDeviceIcon;
                         }
-                        else
-                        {
-                            static const QIcon genericIcon (QLatin1String("://images/icons/pc/pc_24.png"));
-                            return genericIcon;
-                        }
+                        return QIcon(QLatin1String("://images/icons/pc/pc_24.png"));
                     }
                 }
             }
-            else
-            {
-                QIcon icon;
-                icon.addFile(QLatin1String("://images/small_folder.png"), QSize(), QIcon::Normal);
-                icon.addFile(QLatin1String("://images/node_selector/small-folder-disabled.png"), QSize(), QIcon::Disabled);
-                return icon;
-            }
+            QIcon icon;
+            icon.addFile(QLatin1String("://images/small_folder.png"), QSize(), QIcon::Normal);
+            icon.addFile(QLatin1String("://images/node_selector/small-folder-disabled.png"), QSize(), QIcon::Disabled);
+            return icon;
         }
     }
     else

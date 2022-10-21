@@ -6,18 +6,7 @@
 
 namespace UserAttributes
 {
-
-class CreateMyBackupsListener : public mega::MegaRequestListener
-{
-public:
-    CreateMyBackupsListener();
-    void onRequestFinish(mega::MegaApi *, mega::MegaRequest *incoming_request, mega::MegaError *error) override;
-    virtual ~CreateMyBackupsListener();
-
-private:
-
-    mega::QTMegaRequestListener *mDelegateListener;
-};
+class CreateMyBackupsListener;
 
 class MyBackupsHandle : public AttributeRequest
 {
@@ -49,6 +38,18 @@ private:
     mega::MegaHandle mMyBackupsFolderHandle;
     bool mCreationRequested;
     std::unique_ptr<CreateMyBackupsListener> mCreateBackupsListener;
+};
+
+class CreateMyBackupsListener : public mega::MegaRequestListener
+{
+public:
+    CreateMyBackupsListener();
+    void onRequestFinish(mega::MegaApi *, mega::MegaRequest *incoming_request, mega::MegaError *error) override;
+    virtual ~CreateMyBackupsListener();
+
+private:
+
+    mega::QTMegaRequestListener *mDelegateListener;
 };
 }
 

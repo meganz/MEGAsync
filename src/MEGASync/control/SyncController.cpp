@@ -79,7 +79,6 @@ void SyncController::removeSync(std::shared_ptr<SyncSetting> syncSetting, const 
                  .arg(getSyncTypeString(syncSetting->getType()), syncSetting->name()).toUtf8().constData());
 
     mApi->removeSync(syncSetting->backupId(), remoteHandle, mDelegateListener);
-    // FIXME: There is a bug in SyncModel class handling that persists the saved Backup entry after SDK delete
 }
 
 void SyncController::enableSync(std::shared_ptr<SyncSetting> syncSetting)
@@ -553,7 +552,6 @@ void SyncController::onRequestFinish(MegaApi *api, MegaRequest *req, MegaError *
             MegaApi::log(MegaApi::LOG_LEVEL_ERROR, logMsg.toUtf8().constData());
         }
 
-        // TODO: Evaluate if I'm needed
         if (!req->getNumDetails() && sync)
         {
             mSyncModel->removeUnattendedDisabledSync(sync->backupId(), sync->getType());

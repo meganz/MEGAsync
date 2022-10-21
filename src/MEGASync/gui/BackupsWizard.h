@@ -3,49 +3,40 @@
 
 #include "model/SyncModel.h"
 #include "control/SyncController.h"
-#include "megaapi.h"
-#include "control/Utilities.h"
 #include "HighDpiResize.h"
-#include "Backups/BackupNameConflictDialog.h"
+
+#include "megaapi.h"
 
 #include <QDialog>
-#include <QList>
-#include <QListWidgetItem>
-#include <QSemaphore>
+#include <QStringList>
+#include <QMap>
 #include <QStandardItemModel>
 #include <QSortFilterProxyModel>
 #include <QStyledItemDelegate>
 
-namespace Ui {
-class BackupsWizard;
+namespace Ui
+{
+    class BackupsWizard;
 }
-
 namespace UserAttributes
 {
     class DeviceName;
     class MyBackupsHandle;
 }
-
-class ProxyModel : public QSortFilterProxyModel
-{
-public:
-    explicit ProxyModel(QObject *parent = nullptr);
-    void showOnlyChecked(bool val);
-    bool filterAcceptsRow(int source_row, const QModelIndex &source_parent) const override;
-    QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
-    Qt::ItemFlags flags(const QModelIndex &index) const override;
-
-    QModelIndex getIndexByPath(const QString& path);
-
-private:
-    bool mShowOnlyChecked;
-};
+class ProxyModel;
 
 class BackupsWizard : public QDialog
 {
         Q_OBJECT
 
     public:
+        explicit BackupsWizard(QWidget* parent = nullptr);
+        ~BackupsWizard();
+
+    protected:
+        void changeEvent(QEvent* event) override;
+
+    private:
         enum Step
         {
             STEP_1_INIT = 0,
@@ -73,26 +64,21 @@ class BackupsWizard : public QDialog
             QString syncName;
         };
 
-        explicit BackupsWizard(QWidget* parent = nullptr);
-        ~BackupsWizard();
-
-    protected:
-        void changeEvent(QEvent* event) override;
-
-    private:
-        void showLess();
-        void showMore();
+        void nextStep(const Step& step);
         void setupStep1();
         void setupStep2();
-        void setupError();
         void handleNameConflicts();
         void setupFinalize();
         void setupBackups();
-        void setupComplete();
-        bool atLeastOneFolderChecked();
         void processNextBackupSetup();
-        bool isFolderSyncable(const QString& path, bool displayWarning = false, bool fromCheckAction = false);
-        void nextStep(const Step& step);
+        void setupComplete();
+        void setupError();
+
+        bool atLeastOneFolderChecked() const;
+        bool isFolderSyncable(const QString& path, bool displayWarning = false, bool fromCheckAction = false) const;
+
+        void showLess();
+        void showMore();
         void setCurrentWidgetsSteps(QWidget* widget);
         void updateSize();
 
@@ -127,12 +113,29 @@ class BackupsWizard : public QDialog
         void onConflictResolved();
 };
 
+class ProxyModel : public QSortFilterProxyModel
+{
+    public:
+        explicit ProxyModel(QObject *parent = nullptr) : QSortFilterProxyModel(parent), mShowOnlyChecked(false){}
+
+        bool filterAcceptsRow(int source_row, const QModelIndex &source_parent) const override;
+        QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
+        Qt::ItemFlags flags(const QModelIndex &index) const override;
+
+        void showOnlyChecked(bool val);
+        QModelIndex getIndexByPath(const QString& path) const;
+
+    private:
+        bool mShowOnlyChecked;
+};
+
 class WizardDelegate : public QStyledItemDelegate
 {
-public:
-    explicit WizardDelegate(QObject *parent = nullptr);
-    void paint(QPainter* painter, const QStyleOptionViewItem& option,
-               const QModelIndex& index) const override;
+    public:
+        explicit WizardDelegate(QObject *parent = nullptr) : QStyledItemDelegate(parent){}
+
+        void paint(QPainter* painter, const QStyleOptionViewItem& option,
+                   const QModelIndex& index) const override;
 };
 
 #endif // BACKUPSWIZARD_H

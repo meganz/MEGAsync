@@ -20,17 +20,18 @@ public:
 
     bool isAttributeReady() const override;
 
-    QString getDeviceName();
+    QString getDeviceName() const;
     QString getDefaultDeviceName();
 
 signals:
     void attributeReady(const QString&);
 
 private:
+    void processGetDeviceNameCallback(mega::MegaRequest *incoming_request, mega::MegaError *e);
+    void processSetDeviceNameCallback(mega::MegaError *e);
+
     void setDeviceNameAttribute();
 
-    bool mIsDeviceNameSetOnRemote;
-    bool mIsRequestFinished;
     QString mDeviceName;
     int  mNameSuffix;
 };
