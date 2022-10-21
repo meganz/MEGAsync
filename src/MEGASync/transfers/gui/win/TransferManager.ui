@@ -121,6 +121,7 @@ QGroupBox::title
     border: none;
     text-align: left;
     padding-left: -1px;
+    padding-right: 0px;
     qProperty-iconSize: 24px;
 }
 
