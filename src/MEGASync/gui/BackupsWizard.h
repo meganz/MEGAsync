@@ -23,6 +23,7 @@ class BackupsWizard;
 namespace UserAttributes
 {
     class DeviceName;
+    class MyBackupsHandle;
 }
 
 class ProxyModel : public QSortFilterProxyModel
@@ -53,7 +54,6 @@ class BackupsWizard : public QDialog
             STEP_2,
             HANDLE_NAME_CONFLICTS,
             FINALIZE,
-            SETUP_MYBACKUPS_DIR,
             SETUP_BACKUPS,
             DONE,
             ERROR_FOUND,
@@ -87,7 +87,6 @@ class BackupsWizard : public QDialog
         void setupError();
         void handleNameConflicts();
         void setupFinalize();
-        void setupMyBackupsDir();
         void setupBackups();
         void setupComplete();
         bool atLeastOneFolderChecked();
@@ -100,9 +99,8 @@ class BackupsWizard : public QDialog
         Ui::BackupsWizard* mUi;
         HighDpiResize mHighDpiResize;
         std::shared_ptr<UserAttributes::DeviceName> mDeviceNameRequest;
+        std::shared_ptr<UserAttributes::MyBackupsHandle> mMyBackupsHandleRequest;
         SyncController mSyncController;
-        bool mCreateBackupsDir;
-        mega::MegaHandle mMyBackupsHandle;
         bool mError;
         bool mUserCancelled;
         QStandardItemModel* mFoldersModel;
@@ -124,8 +122,7 @@ class BackupsWizard : public QDialog
         void on_bShowMore_clicked();
         void onItemChanged(QStandardItem *item = nullptr);
         void onDeviceNameSet(QString deviceName);
-        void onBackupsDirSet(mega::MegaHandle backupsDirHandle);
-        void onSetMyBackupsDirRequestStatus(int errorCode, const QString& errorMsg);
+        void onMyBackupsFolderHandleSet(mega::MegaHandle h = mega::INVALID_HANDLE);
         void onSyncAddRequestStatus(int errorCode, const QString &errorMsg, const QString &name);
         void onConflictResolved();
 };

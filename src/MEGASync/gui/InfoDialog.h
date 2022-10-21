@@ -240,7 +240,6 @@ private:
     void hideBlockedError(bool animated = false);
     void showBlockedError();
     QHash<QPushButton*, SyncsMenu*> mSyncsMenus;
-    mega::MegaHandle mMyBackupsHandle;
 
 protected:
     void setBlockedStateLabel(QString state);

@@ -39,10 +39,6 @@ public:
     void enableSync(std::shared_ptr<SyncSetting> syncSetting);
     void disableSync(std::shared_ptr<SyncSetting> syncSetting);
 
-    void setMyBackupsDirName();
-    mega::MegaHandle getMyBackupsHandle();
-    static QString getMyBackupsLocalizedPath();
-
     // Local folder checks
     static QString getIsLocalFolderAlreadySyncedMsg(const QString& path, const mega::MegaSync::SyncType& syncType);
     static Syncability isLocalFolderAlreadySynced(const QString& path, const mega::MegaSync::SyncType& syncType, QString& message);
@@ -57,28 +53,23 @@ public:
 
     static QString getSyncNameFromPath(const QString& path);
 
-    static const char* DEFAULT_BACKUPS_ROOT_DIRNAME;
-
 signals:
     void syncAddStatus(int errorCode, QString errorMsg, QString name);
     void syncRemoveError(std::shared_ptr<SyncSetting> sync);
     void syncEnableError(std::shared_ptr<SyncSetting> sync);
     void syncDisableError(std::shared_ptr<SyncSetting> sync);
 
-    void setMyBackupsStatus(int errorCode, QString errorMsg);
-    void myBackupsHandle(mega::MegaHandle handle);
-
 protected:
     // override from MegaRequestListener
     void onRequestFinish(mega::MegaApi* api, mega::MegaRequest* req, mega::MegaError* e) override;
 
 private:
-    void setMyBackupsHandle(mega::MegaHandle handle);
+    void createPendingBackups();
     QString getSyncAPIErrorMsg(int megaError);
     QString getSyncTypeString(const mega::MegaSync::SyncType& syncType);
+    QMap<QString, QString> mPendingBackups;
 
     mega::MegaApi* mApi;
     mega::QTMegaRequestListener* mDelegateListener;
     SyncModel* mSyncModel;
-    mega::MegaHandle mMyBackupsHandle;
 };

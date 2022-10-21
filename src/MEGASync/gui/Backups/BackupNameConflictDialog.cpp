@@ -10,10 +10,9 @@
 #include <QDesktopServices>
 #include <QSet>
 
-BackupNameConflictDialog::BackupNameConflictDialog(const QStringList& candidatePaths, const mega::MegaHandle& myBackupsDirHandle, QWidget *parent):
+BackupNameConflictDialog::BackupNameConflictDialog(const QStringList& candidatePaths, QWidget *parent):
     QDialog(parent),
-    ui(new Ui::BackupNameConflictDialog),
-    mMyBackupsHandle(myBackupsDirHandle)
+    ui(new Ui::BackupNameConflictDialog)
 {
     foreach(auto& path, candidatePaths)
     {
@@ -56,7 +55,7 @@ QMap<QString, QString> BackupNameConflictDialog::getChanges()
     return mBackupNames; //KEY:path VALUE:backup name
 }
 
-bool BackupNameConflictDialog::backupNamesValid(QStringList candidatePaths, mega::MegaHandle myBackupsHandle)
+bool BackupNameConflictDialog::backupNamesValid(QStringList candidatePaths)
 {
     QSet<QString> candidatesNames;
     bool areValid (true);
@@ -73,7 +72,7 @@ bool BackupNameConflictDialog::backupNamesValid(QStringList candidatePaths, mega
     }
 
     return areValid && candidatePaths.size() == candidatesNames.size()
-            && !candidatesNames.intersects(Utilities::getBackupsNames(myBackupsHandle));;
+            && !candidatesNames.intersects(Utilities::getBackupsNames());;
 }
 
 void BackupNameConflictDialog::checkChangedNames()
@@ -90,7 +89,7 @@ void BackupNameConflictDialog::checkChangedNames()
     }
 
     // Add the remote names
-    chosenNames << Utilities::getBackupsNames(mMyBackupsHandle).toList();
+    chosenNames << Utilities::getBackupsNames().toList();
 
     // Second pass to check if we still have conflicts
     foreach (auto conflict, conflicts)
@@ -127,7 +126,7 @@ void BackupNameConflictDialog::createWidgets()
     int nbConflict (0);
 
     // Check conflicts and add widgets
-    const auto currentNames = Utilities::getBackupsNames(mMyBackupsHandle);
+    const auto currentNames = Utilities::getBackupsNames();
     for (auto it = mBackupNames.cbegin(); it != mBackupNames.cend(); it++)
     {
         if (currentNames.contains(it.value()))

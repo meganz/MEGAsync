@@ -5,10 +5,10 @@
 #include "model/SyncModel.h"
 #include "Platform.h"
 #include "UserAttributesRequests/DeviceName.h"
+#include "UserAttributesRequests/MyBackupsHandle.h"
 #include "SyncTooltipCreator.h"
 
 #include <QtConcurrent/QtConcurrent>
-
 
 #ifdef Q_OS_WINDOWS
 const QLatin1String DEVICE_ICON ("://images/icons/pc/pc-win_24.png");
@@ -286,7 +286,7 @@ QString SyncsMenu::createSyncTooltipText(std::shared_ptr<SyncSetting> syncSettin
     case mega::MegaSync::TYPE_BACKUP:
     {
         // TODO: improve path building
-        toolTip += SyncTooltipCreator::createForRemote(SyncController::getMyBackupsLocalizedPath()
+        toolTip += SyncTooltipCreator::createForRemote(UserAttributes::MyBackupsHandle::getMyBackupsLocalizedPath()
                                                        + QLatin1Char('/')
                                                        + mDeviceNameRequest->getDeviceName()
                                                        + QLatin1Char('/')

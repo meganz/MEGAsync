@@ -2,6 +2,7 @@
 #include "ui_AddBackupDialog.h"
 #include "QMegaMessageBox.h"
 #include "UserAttributesRequests/DeviceName.h"
+#include "UserAttributesRequests/MyBackupsHandle.h"
 #include "Utilities.h"
 
 #include <QFileDialog>
@@ -18,7 +19,7 @@ AddBackupDialog::AddBackupDialog(QWidget *parent) :
 
     connect(mDeviceNameRequest.get(), &UserAttributes::DeviceName::attributeReady,
             this, &AddBackupDialog::onDeviceNameSet);
-    onDeviceNameSet(mDeviceNameRequest->getDeviceName());
+    onDeviceNameSet(mDeviceNameRequest->getDeviceName());    
 
 #ifdef Q_OS_MACOS
     // Display our modal dialog embedded title label when parent is set
@@ -32,17 +33,6 @@ AddBackupDialog::AddBackupDialog(QWidget *parent) :
 AddBackupDialog::~AddBackupDialog()
 {
     delete mUi;
-}
-
-void AddBackupDialog::setMyBackupsFolder(const QString& folder)
-{
-    mMyBackupsFolder = folder;
-    mUi->backupToLabel->setText(mMyBackupsFolder + mDeviceNameRequest->getDeviceName());
-}
-
-void AddBackupDialog::setMyBackupsFolderHandle(const mega::MegaHandle& handle)
-{
-    mMyBackupsHandle = handle;
 }
 
 QString AddBackupDialog::getSelectedFolder()
@@ -87,16 +77,19 @@ void AddBackupDialog::on_changeButton_clicked()
 
 void AddBackupDialog::onDeviceNameSet(const QString &devName)
 {
-    mUi->backupToLabel->setText(mMyBackupsFolder + devName);
+    mUi->backupToLabel->setText(UserAttributes::MyBackupsHandle::getMyBackupsLocalizedPath()
+                                + QLatin1Char('/')
+                                + devName);
 }
 
 void AddBackupDialog::checkNameConflict()
 {
     QStringList pathList;
     pathList.append(mSelectedFolder);
-    if(!BackupNameConflictDialog::backupNamesValid(pathList, mMyBackupsHandle))
+
+    if(!BackupNameConflictDialog::backupNamesValid(pathList))
     {
-        BackupNameConflictDialog* conflictDialog = new BackupNameConflictDialog(pathList, mMyBackupsHandle, this);
+        BackupNameConflictDialog* conflictDialog = new BackupNameConflictDialog(pathList, this);
         connect(conflictDialog, &BackupNameConflictDialog::accepted,
                 this, &AddBackupDialog::onConflictSolved);
     }

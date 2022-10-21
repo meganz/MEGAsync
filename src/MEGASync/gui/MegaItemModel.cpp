@@ -3,6 +3,8 @@
 #include "control/Utilities.h"
 #include "Preferences.h"
 #include "model/SyncModel.h"
+#include "UserAttributesRequests/MyBackupsHandle.h"
+
 #include "mega/types.h"
 
 #include <QApplication>
@@ -38,22 +40,10 @@ MegaItemModel::MegaItemModel(QObject *parent) :
    }
 
    // Get "My Backups" handle to localize the name
-   QPointer<SyncController> syncController = new SyncController(this);
-       // Connect to sync controller backup handle signal
-   connect(syncController, &SyncController::myBackupsHandle, this, [this, syncController](mega::MegaHandle h)
-   {
-       if(h != INVALID_HANDLE)
-       {
-        auto node = mMegaApi->getNodeByHandle(h);
-        auto megaItem = new MegaItem(std::unique_ptr<MegaNode>(node));
-        megaItem->setAsVaultNode();
-        beginInsertRows(QModelIndex(), rowCount(), rowCount());
-        mRootItems.append(move(megaItem));
-        endInsertRows();
-       }
-       syncController->deleteLater();
-   });
-   syncController->getMyBackupsHandle();
+   auto myBackupsHandle = UserAttributes::MyBackupsHandle::requestMyBackupsHandle();
+   connect(myBackupsHandle.get(), &UserAttributes::MyBackupsHandle::attributeReady,
+           this, &MegaItemModel::onMyBackupsFolderHandleSet);
+   onMyBackupsFolderHandleSet(myBackupsHandle->getMyBackupsHandle());
 
    mMegaApi->getCameraUploadsFolder(mDelegateListener.get());
    mMegaApi->getCameraUploadsFolderSecondary(mDelegateListener.get());
@@ -509,6 +499,19 @@ void MegaItemModel::onItemInfoUpdated(int role)
                 }
             }
         }
+    }
+}
+
+void MegaItemModel::onMyBackupsFolderHandleSet(mega::MegaHandle h)
+{
+    if (h != INVALID_HANDLE)
+    {
+     auto node = mMegaApi->getNodeByHandle(h);
+     auto megaItem = new MegaItem(std::unique_ptr<MegaNode>(node));
+     megaItem->setAsVaultNode();
+     beginInsertRows(QModelIndex(), rowCount(), rowCount());
+     mRootItems.append(move(megaItem));
+     endInsertRows();
     }
 }
 

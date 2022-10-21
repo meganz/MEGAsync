@@ -7,6 +7,8 @@
 #include "MegaItemModel.h"
 #include "megaapi.h"
 #include "MegaItemDelegates.h"
+#include "UserAttributesRequests/MyBackupsHandle.h"
+
 #include "mega/utils.h"
 
 #include <QMessageBox>
@@ -31,30 +33,17 @@ NodeSelector::NodeSelector(int selectMode, QWidget *parent) :
     mModel(nullptr),
     mManuallyResizedColumn(false)
 {
+    setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
+
+    setWindowModality(Qt::WindowModal);
+    ui->setupUi(this);
 
     if(showBackups())
     {
-        QPointer<SyncController> syncController = new SyncController(this);
-        connect(syncController, &SyncController::myBackupsHandle, this, [this, syncController](mega::MegaHandle h)
-        {
-            if(h!=INVALID_HANDLE)
-            {
-                mNavVault.expandedHandles.append(h);
-#ifdef Q_OS_MAC
-                ui->tabBar->addTab(tr(BACKUPS));
-#endif
-                shortCutConnects(VAULT);
-            }
-            else
-            {
-#ifndef Q_OS_MAC
-                ui->bShowBackups->hide();
-#endif
-                shortCutConnects(SHARES);
-            }
-            syncController->deleteLater();
-        });
-        syncController->getMyBackupsHandle();
+        auto myBackupsHandle = UserAttributes::MyBackupsHandle::requestMyBackupsHandle();
+        connect(myBackupsHandle.get(), &UserAttributes::MyBackupsHandle::attributeReady,
+                this, &NodeSelector::onMyBackupsFolderHandleSet);
+        onMyBackupsFolderHandleSet(myBackupsHandle->getMyBackupsHandle());
     }
     else
     {
@@ -66,10 +55,6 @@ NodeSelector::NodeSelector(int selectMode, QWidget *parent) :
         mNavCloudDrive.expandedHandles.append(rootNode->getHandle());
     }
 
-    setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
-
-    setWindowModality(Qt::WindowModal);
-    ui->setupUi(this);
 
     ui->cbAlwaysUploadToLocation->hide();
     ui->bOk->setDefault(true);
@@ -670,6 +655,26 @@ void NodeSelector::onSectionResized()
             && ui->tMegaFolders->header()->rect().contains(ui->tMegaFolders->mapFromGlobal(QCursor::pos())))
     {
         mManuallyResizedColumn = true;
+    }
+}
+
+void NodeSelector::onMyBackupsFolderHandleSet(mega::MegaHandle h)
+{
+    if (h != INVALID_HANDLE)
+    {
+        ui->bShowBackups->show();
+        mNavVault.expandedHandles.append(h);
+#ifdef Q_OS_MAC
+        ui->tabBar->addTab(tr(BACKUPS));
+#endif
+        shortCutConnects(VAULT);
+    }
+    else
+    {
+#ifndef Q_OS_MAC
+        ui->bShowBackups->hide();
+#endif
+        shortCutConnects(SHARES);
     }
 }
 
