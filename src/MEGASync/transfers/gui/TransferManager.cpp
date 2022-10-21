@@ -322,14 +322,11 @@ void TransferManager::onPauseStateChangedByTransferResume()
 void TransferManager::updateCurrentSearchText()
 {
     auto text = mUi->bSearchString->property(SEARCH_TEXT).toString();
-    mUi->bSearchString->setText(mUi->bSearchString->fontMetrics()
-                                .elidedText(text,
-                                            Qt::ElideMiddle,
-                                            mUi->bSearchString->width()));
+    mUi->bSearchString->setText(text);
     mUi->lTextSearch->setText(mUi->lTextSearch->fontMetrics()
                               .elidedText(text,
                                           Qt::ElideMiddle,
-                                          mUi->lTextSearch->width()));
+                                          mUi->lTextSearch->width()-1));
 }
 
 void TransferManager::updateCurrentCategoryTitle()
@@ -975,14 +972,10 @@ void TransferManager::on_tSearchIcon_clicked()
     }
     else
     {
-        mUi->bSearchString->setText(mUi->bSearchString->fontMetrics()
-                                    .elidedText(pattern,
-                                                Qt::ElideMiddle,
-                                                mUi->bSearchString->width()));
+        mUi->bSearchString->setText(pattern);
         mUi->bSearchString->setProperty(SEARCH_TEXT, pattern);
         applyTextSearch(pattern);
     }
-
 }
 
 void TransferManager::applyTextSearch(const QString& text)

@@ -14,6 +14,7 @@ class ButtonIconManager : public QObject
     static const char*   IGNORE_BUTTON;
 
     static const char*   BUTTON_FULL_TEXT;
+    static const char*   BUTTON_ELIDE_TEXT;
 
     struct IconInfo
     {
