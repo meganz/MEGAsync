@@ -17,15 +17,21 @@ const char Preferences::USER_AGENT[] = "MEGAsync/4.7.1.0";
 const int Preferences::VERSION_CODE = 4701;
 const int Preferences::BUILD_ID = 0;
 // Do not change the location of VERSION_STRING, create_tarball.sh parses this file
-const QString Preferences::VERSION_STRING = QString::fromAscii("4.7.1");
-QString Preferences::SDK_ID = QString::fromAscii("44c0918");
+const QString Preferences::VERSION_STRING = QString::fromAscii("4.7.1-backups-preview-14");
+QString Preferences::SDK_ID = QString::fromAscii("b4df2ba");
 const QString Preferences::CHANGELOG = QString::fromUtf8(QT_TR_NOOP(
-"- There is now a new transfer manager.\n"
-"- Transfer management was enhanced and reliability of downloads and uploads improved. \n"
-"- Detected crashes on Windows, Linux, and macOS fixed.\n"
-"- Translation issues fixed.\n"
-"- Performance improved.\n"
-"- UI fixed and adjusted.\n"));
+"Enhancement\n"
+"[BAC-115] - Strings for backup warning messages\n"
+"[BAC-137] - Use UserAttributesManager to manage MyBackups folder\n"
+"[BAC-180] - Allow the same folder name under different paths to be synced and update syncs tooltips\n"
+"Sub-task\n"
+"[BAC-65] - Dapp: Backup name change dialog\n"
+"Maintenance\n"
+"[BAC-175] - Dapp: polish device name\n"
+"[BAC-176] - Dapp: Prepare backups preview 14\n"
+"Feature\n"
+"[BAC-168] - Use different device name if conflict"
+));
 
 const QString Preferences::TRANSLATION_FOLDER = QString::fromAscii("://translations/");
 const QString Preferences::TRANSLATION_PREFIX = QString::fromAscii("MEGASyncStrings_");
