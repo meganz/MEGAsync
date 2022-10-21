@@ -1624,9 +1624,15 @@ void MegaApplication::processUploadQueue(MegaHandle nodeHandle)
         updateMetadata(data, filePath);
 
         uploader->upload(filePath, uploadInfo->getNewName(), node, transferId, batch);
-        updater.update(counter);
 
-        counter++;
+        //Do not update the last items, leave Qt to do it in its natural way
+        //If you update them, the flag mProcessingUploadQueue will be false and the scanning widget
+        //will be stuck forever
+        if(uploadInfo != uploads.last())
+        {
+            updater.update(counter);
+            counter++;
+        }
     }
 
     if (!batch->isEmpty())
