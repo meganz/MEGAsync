@@ -100,7 +100,7 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOUIC_SEARCH_PATHS "${MEGAsyncDir}/gui/${UiDir}"
                                "${MEGAsyncDir}/transfers/gui/${UiDir}"
-                               "${MEGAsyncDir}/transfers/gui/DuplicatedNodeDialogs/${UiDir}")
+							   "${MEGAsyncDir}/transfers/gui/DuplicatedNodeDialogs/${UiDir}")
 
 #AUTOMOC
 set(CMAKE_AUTOMOC ON)
@@ -177,6 +177,7 @@ set (FORMS
     ${MEGAsyncDir}/gui/${UiDir}/AddExclusionDialog.ui
     ${MEGAsyncDir}/gui/${UiDir}/StatusInfo.ui
     ${MEGAsyncDir}/gui/${UiDir}/PSAwidget.ui
+    ${MEGAsyncDir}/gui/${UiDir}/QSyncItemWidget.ui
     ${MEGAsyncDir}/gui/${UiDir}/UpgradeOverStorage.ui
     ${MEGAsyncDir}/gui/${UiDir}/ChangePassword.ui
     ${MEGAsyncDir}/gui/${UiDir}/Login2FA.ui
@@ -292,6 +293,7 @@ set (MOC_INPUT
     ${MEGAsyncDir}/gui/PSAwidget.h
     ${MEGAsyncDir}/gui/QAlertsModel.h
     ${MEGAsyncDir}/gui/MegaItemModel.h
+    ${MEGAsyncDir}/gui/QSyncItemWidget.h
     ${MEGAsyncDir}/gui/SettingsDialog.h
     ${MEGAsyncDir}/gui/SetupWizard.h
     ${MEGAsyncDir}/gui/NotificationsSettings.h
@@ -319,11 +321,14 @@ set (MOC_INPUT
     ${MEGAsyncDir}/gui/AutoResizeStackedWidget.h
     ${MEGAsyncDir}/gui/UserAttributesRequests/FullName.h
     ${MEGAsyncDir}/gui/UserAttributesRequests/DeviceName.h
+    ${MEGAsyncDir}/gui/UserAttributesRequests/MyBackupsHandle.h
     ${MEGAsyncDir}/gui/UserAttributesRequests/Avatar.h
+    ${MEGAsyncDir}/gui/UserAttributesRequests/MyChatFilesFolder.h
+    ${MEGAsyncDir}/gui/UserAttributesRequests/CameraUploadFolder.h
     ${MEGAsyncDir}/gui/BackupItemModel.h
     ${MEGAsyncDir}/gui/SyncItemModel.h
     ${MEGAsyncDir}/gui/SyncTableView.h
-    ${MEGAsyncDir}/gui/BackupTableView.h
+    ${MEGAsyncDir}/gui/BackupTableView.h    
     ${MEGAsyncDir}/gui/ViewLoadingScene.h
     ${MEGAsyncDir}/gui/ScanningWidget.h
     ${MEGAsyncDir}/gui/BlurredShadowEffect.h
@@ -358,9 +363,9 @@ set (MOC_INPUT
     ${MEGAsyncDir}/transfers/gui/InfoDialogTransfersWidget.h
     ${MEGAsyncDir}/transfers/gui/TransferManager.h
     ${MEGAsyncDir}/transfers/gui/TransfersWidget.h
-    ${MEGAsyncDir}/transfers/gui/TransfersSummaryWidget.h
-    ${MEGAsyncDir}/transfers/gui/MegaTransferDelegate.h
     ${MEGAsyncDir}/transfers/gui/MegaTransferView.h
+    ${MEGAsyncDir}/transfers/gui/MegaTransferDelegate.h
+    ${MEGAsyncDir}/transfers/gui/TransfersSummaryWidget.h
     ${MEGAsyncDir}/transfers/gui/TransferWidgetHeaderItem.h
     ${MEGAsyncDir}/transfers/gui/TransferScanCancelUi.h
     ${MEGAsyncDir}/transfers/gui/TransferManagerLoadingItem.h
@@ -481,6 +486,7 @@ set (SRCS
     ${MEGAsyncDir}/gui/UpgradeDialog.cpp
     ${MEGAsyncDir}/gui/PlanWidget.cpp
     ${MEGAsyncDir}/gui/InfoWizard.cpp
+    ${MEGAsyncDir}/gui/QSyncItemWidget.cpp
     ${MEGAsyncDir}/gui/QMegaMessageBox.cpp
     ${MEGAsyncDir}/gui/AvatarWidget.cpp
     ${MEGAsyncDir}/gui/MenuItemAction.cpp
@@ -508,8 +514,11 @@ set (SRCS
     ${MEGAsyncDir}/gui/MegaItemTreeView.cpp
     ${MEGAsyncDir}/gui/GuiUtilities.cpp
     ${MEGAsyncDir}/gui/UserAttributesRequests/DeviceName.cpp
+    ${MEGAsyncDir}/gui/UserAttributesRequests/MyBackupsHandle.cpp
     ${MEGAsyncDir}/gui/UserAttributesRequests/FullName.cpp
     ${MEGAsyncDir}/gui/UserAttributesRequests/Avatar.cpp
+    ${MEGAsyncDir}/gui/UserAttributesRequests/MyChatFilesFolder.cpp
+    ${MEGAsyncDir}/gui/UserAttributesRequests/CameraUploadFolder.cpp
     ${MEGAsyncDir}/gui/ButtonIconManager.cpp
     ${MEGAsyncDir}/gui/EventHelper.cpp
     ${MEGAsyncDir}/gui/GuiUtilities.cpp

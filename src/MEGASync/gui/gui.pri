@@ -68,9 +68,11 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/AlertFilterType.cpp \
     $$PWD/BugReportDialog.cpp \
     $$PWD/UserAttributesRequests/DeviceName.cpp \
+    $$PWD/UserAttributesRequests/MyBackupsHandle.cpp \
     $$PWD/UserAttributesRequests/FullName.cpp \
     $$PWD/UserAttributesRequests/Avatar.cpp \
-    $$PWD/UserAttributesRequests/MyBackupsHandle.cpp \
+    $$PWD/UserAttributesRequests/CameraUploadFolder.cpp \
+    $$PWD/UserAttributesRequests/MyChatFilesFolder.cpp \
     $$PWD/VerifyLockMessage.cpp \
     $$PWD/MegaInfoMessage.cpp \
     $$PWD/WaitingSpinnerWidget.cpp \
@@ -155,9 +157,11 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/AlertFilterType.h \
     $$PWD/BugReportDialog.h \
     $$PWD/UserAttributesRequests/DeviceName.h \
+    $$PWD/UserAttributesRequests/MyBackupsHandle.h \
     $$PWD/UserAttributesRequests/FullName.h \
     $$PWD/UserAttributesRequests/Avatar.h \
-    $$PWD/UserAttributesRequests/MyBackupsHandle.h \
+    $$PWD/UserAttributesRequests/CameraUploadFolder.h \
+    $$PWD/UserAttributesRequests/MyChatFilesFolder.h \
     $$PWD/VerifyLockMessage.h \
     $$PWD/ViewLoadingScene.h \
     $$PWD/MegaInfoMessage.h \
