@@ -4326,17 +4326,17 @@ Voulez-vous le supprimer quand même ?</translation>
     <message>
         <source>found %1, %2</source>
         <translatorcomment>Label used to display current status of scanning step. %1 is the string with number of folders found so far, %2 is the string with number of files found so far.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>%1 et %2 ont été trouvés</translation>
     </message>
     <message numerus="yes">
         <source>%n folder</source>
         <translatorcomment>Part of the string used to display number of folders in scanning step. %1 is the number of folders found so far.</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%n dossier</numerusform><numerusform>%n dossiers</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n file</source>
         <translatorcomment>Part of the string used to display number of files in scanning step. %1 is the number of files found so far.</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%n fichier</numerusform><numerusform>%n fichiers</numerusform></translation>
     </message>
 </context>
 <context>
@@ -4996,33 +4996,34 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Sleep settings</source>
         <translatorcomment>Sleep/Active mode: Settings dialog groupbox title for keeping the pc awake when there are active transfers (WIndows and Linux)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Paramètres de mise en veille</translation>
     </message>
     <message>
         <source>Prevent the computer from going to sleep when transfers or syncs are in progress.
 Computer will enter sleep mode once these are complete.</source>
         <translatorcomment>Sleep/Active mode: Feature description label for keeping the pc awake when there are active transfers</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Empêcher la mise en veille de l’ordinateur tant que les transferts ou synchronisations sont en cours.
+L’ordinateur se mettra en veille une fois qu’ils seront terminés.</translation>
     </message>
     <message>
         <source>Note: Some operating systems won&apos;t allow this.</source>
         <translatorcomment>Sleep/Active mode: Warning message below the description label, as not all the computers can activate the feature to keep it awake if there are transfers active </translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Note : Certains systèmes d’exploitation ne le permettent pas.</translation>
     </message>
     <message>
         <source>Sleep mode:</source>
         <translatorcomment>Sleep/Active mode: Settings dialog groupbox title for keeping the pc awake when there are active transfers (macOS)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Mise en veille :</translation>
     </message>
     <message>
         <source>Sleep mode can&apos;t be setup</source>
         <translatorcomment>Sleep/Active mode: Error messagebox title when the pc awake mode could not be activated after activating the feature using the checkbox.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Impossible de configurer la mise en veille</translation>
     </message>
     <message>
         <source>Your operating system doesn&apos;t allow its sleep setting to be overwritten.</source>
         <translatorcomment>Sleep/Active mode: Error messagebox text when the pc awake mode could not be activated after activating the feature using the checkbox.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Votre système d’exploitation ne permet pas la modification de ses paramètres de mise en veille.</translation>
     </message>
 </context>
 <context>
@@ -5771,7 +5772,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Audio</source>
         <translatorcomment>Categories for audio type transfers</translatorcomment>
-        <translation>Sons</translation>
+        <translation>Audio</translation>
     </message>
     <message>
         <source>Other</source>
@@ -5965,12 +5966,12 @@ Pour en obtenir davantage, passez à un compte Pro ou attendez [A] pour qu’un 
     <message>
         <source>Clear all audios</source>
         <translatorcomment>Tooltip for clear button when the user is in the audios category</translatorcomment>
-        <translation>Effacer tous les transferts dans Sons</translation>
+        <translation>Effacer tous les fichiers audio</translation>
     </message>
     <message>
         <source>Clear all videos</source>
         <translatorcomment>Tooltip for clear button when the user is in the videos category</translatorcomment>
-        <translation>Effacer tous les transferts dans Vidéos</translation>
+        <translation>Effacer tous les fichiers vidéo</translation>
     </message>
     <message>
         <source>Clear all archives</source>
@@ -6015,12 +6016,12 @@ Pour en obtenir davantage, passez à un compte Pro ou attendez [A] pour qu’un 
     <message>
         <source>Cancel all audios</source>
         <translatorcomment>Tooltip for cancel button when the user is in the audios category</translatorcomment>
-        <translation>Annuler tous les transferts dans Sons</translation>
+        <translation>Annuler tous les fichiers audio</translation>
     </message>
     <message>
         <source>Cancel all videos</source>
         <translatorcomment>Tooltip for cancel button when the user is in the videos category</translatorcomment>
-        <translation>Annuler tous les transferts dans Vidéos</translation>
+        <translation>Annuler tous les fichiers vidéo</translation>
     </message>
     <message>
         <source>Cancel all archives</source>
@@ -6050,12 +6051,12 @@ Pour en obtenir davantage, passez à un compte Pro ou attendez [A] pour qu’un 
     <message>
         <source>Cancel and clear all audios</source>
         <translatorcomment>Tooltip for cancel button when the user is in the audios category and there are completed transfers</translatorcomment>
-        <translation>Annuler effacer tous les sons</translation>
+        <translation>Annuler et effacer tous les fichiers audio</translation>
     </message>
     <message>
         <source>Cancel and clear all videos</source>
         <translatorcomment>Tooltip for cancel button when the user is in the videos category and there are completed transfers</translatorcomment>
-        <translation>Annuler et effacer toutes les vidéos</translation>
+        <translation>Annuler et effacer tous les fichiers vidéo</translation>
     </message>
     <message>
         <source>Cancel and clear all archives</source>
@@ -6095,12 +6096,12 @@ Pour en obtenir davantage, passez à un compte Pro ou attendez [A] pour qu’un 
     <message>
         <source>Resume all audios</source>
         <translatorcomment>Tooltip for Resume button when the user is in the audios category</translatorcomment>
-        <translation>Reprendre tous les sons</translation>
+        <translation>Reprendre tous les fichiers audio</translation>
     </message>
     <message>
         <source>Resume all videos</source>
         <translatorcomment>Tooltip for Resume button when the user is in the videos category</translatorcomment>
-        <translation>Reprendre toutes les vidéos</translation>
+        <translation>Reprendre tous les fichiers vidéo</translation>
     </message>
     <message>
         <source>Resume all archives</source>
@@ -6140,12 +6141,12 @@ Pour en obtenir davantage, passez à un compte Pro ou attendez [A] pour qu’un 
     <message>
         <source>Pause all audios</source>
         <translatorcomment>Tooltip for Pause button when the user is in the audios category</translatorcomment>
-        <translation>Mettre tous les sons en pause</translation>
+        <translation>Mettre tous les fichiers audio en pause</translation>
     </message>
     <message>
         <source>Pause all videos</source>
         <translatorcomment>Tooltip for Pause button when the user is in the videos category</translatorcomment>
-        <translation>Mettre toutes les vidéos en pause</translation>
+        <translation>Mettre tous les fichiers vidéo en pause</translation>
     </message>
     <message>
         <source>Pause all archives</source>
