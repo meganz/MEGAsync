@@ -289,6 +289,7 @@ public:
     };
     Q_DECLARE_FLAGS(FileTypes, FileType)
     static const QString SUPPORT_URL;
+    static const QString BACKUP_CENTER_URL;
 
     static QString getSizeString(unsigned long long bytes);
     static QString getSizeString(long long bytes);
@@ -329,6 +330,10 @@ public:
 
     //get mega transfer nodepath
     static QString getNodePath(mega::MegaTransfer* transfer);
+
+    static void openUrl(QUrl url);
+    static void openInMega(mega::MegaHandle handle);
+    static void openBackupCenter();
 
 private:
     Utilities() {}

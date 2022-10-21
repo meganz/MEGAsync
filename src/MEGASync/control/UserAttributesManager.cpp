@@ -75,7 +75,7 @@ void UserAttributesManager::onUsersUpdate(mega::MegaApi*, mega::MegaUserList *us
 
 void AttributeRequest::RequestInfo::ParamInfo::setNeedsRetry(int errCode)
 {
-   mNeedsRetry = !mNoRetryErrCodes.contains(errCode);
+    mNeedsRetry = !mNoRetryErrCodes.contains(errCode);
 }
 
 void AttributeRequest::RequestInfo::ParamInfo::setPending(bool isPending)

@@ -95,12 +95,12 @@ void NodeNameSetterDialog::dialogAccepted()
     {
         if(Utilities::isNodeNameValid(mUi->lineEdit->text()))
         {
-            showError(CommonMessages::errorInvalidChars());
+            //dialog accepted, execute New Folder operation
+            onDialogAccepted();
         }
         else
         {
-            //dialog accepted, execute New Folder operation
-            onDialogAccepted();
+            showError(CommonMessages::errorInvalidChars());
         }
     }
 }

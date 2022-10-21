@@ -132,7 +132,6 @@ private slots:
     void on_bMyAccount_clicked();
     void on_bStorageDetails_clicked();
     void on_bLogout_clicked();
-    void setAvatar();
 
     // Syncs
 
@@ -143,7 +142,6 @@ private slots:
     void on_bPermissions_clicked();
 #endif
 
-    // FIXME: Re-evaluate the Saving Syncs progress code
     void onSavingSyncsCompleted(SyncStateInformation value);
 
     // Backup
@@ -153,7 +151,7 @@ private slots:
     void removeBackup(std::shared_ptr<SyncSetting> backup);
     void removeSync(std::shared_ptr<SyncSetting> sync);
     void on_bOpenBackupFolder_clicked();
-    void openMEGAHandleInExplorer(mega::MegaHandle handle);
+    void openHandleInMega(mega::MegaHandle handle);
     void on_bBackupCenter_clicked();
     void onMyBackupsFolderHandleSet(mega::MegaHandle h);
 
@@ -206,7 +204,6 @@ private:
     void setShortCutsForToolBarItems();
     void updateCacheSchedulerDaysLabel();
 
-    // FIXME: Re-evaluate the Saving Syncs progress code
     void syncsStateInformation(SyncStateInformation state);
 
 #ifdef Q_OS_MACOS

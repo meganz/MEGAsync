@@ -219,8 +219,6 @@ SettingsDialog::SettingsDialog(MegaApplication* app, bool proxyOnly, QWidget* pa
     mApp->attachBandwidthObserver(*this);
     mApp->attachAccountObserver(*this);
 
-    setAvatar();
-
     connect(mApp, &MegaApplication::storageStateChanged, this, &SettingsDialog::storageStateChanged);
     storageStateChanged(app->getAppliedStorageState());
 
@@ -578,6 +576,9 @@ void SettingsDialog::loadSettings()
     connect(FullNameRequest.get(), &UserAttributes::FullName::attributeReady, this, [this](const QString& fullName){
         mUi->lName->setText(fullName);
     });
+
+    // Avatar
+    mUi->wAvatar->setUserEmail(userEmail.toUtf8().constData());
 
     // account type and details
     updateAccountElements();
@@ -1303,7 +1304,6 @@ void SettingsDialog::updateAccountElements()
             mUi->pTransferQuota->hide();
             break;
         default:
-        // FIXME: is this correct?
             icon = Utilities::getCachedPixmap(QString::fromUtf8(":/images/Small_Pro_I.png"));
             mUi->lAccountType->setText(QString());
             mUi->bUpgrade->hide();
@@ -1423,13 +1423,7 @@ void SettingsDialog::on_bLogout_clicked()
     }
 }
 
-void SettingsDialog::setAvatar()
-{
-    mUi->wAvatar->setUserEmail(mPreferences->email().toUtf8().constData());
-}
-
 // Syncs -------------------------------------------------------------------------------------------
-
 void SettingsDialog::connectSyncHandlers()
 {
     connect(mUi->syncTableView, &BackupTableView::removeSync, this, &SettingsDialog::removeSync);
@@ -1675,7 +1669,7 @@ void SettingsDialog::syncsStateInformation(SyncStateInformation state)
 void SettingsDialog::connectBackupHandlers()
 {
     connect(mUi->backupTableView, &BackupTableView::removeBackup, this, &SettingsDialog::removeBackup);
-    connect(mUi->backupTableView, &BackupTableView::openInMEGA, this, &SettingsDialog::openMEGAHandleInExplorer);
+    connect(mUi->backupTableView, &BackupTableView::openInMEGA, this, &SettingsDialog::openHandleInMega);
 
     auto myBackupsHandle = UserAttributes::MyBackupsHandle::requestMyBackupsHandle();
     connect(myBackupsHandle.get(), &UserAttributes::MyBackupsHandle::attributeReady,
@@ -1818,33 +1812,18 @@ void SettingsDialog::removeSync(std::shared_ptr<SyncSetting> sync)
 
 void SettingsDialog::on_bOpenBackupFolder_clicked()
 {
-    //TODO: mybackupshandle
-    //openMEGAHandleInExplorer(mBackupRootHandle);
+    auto myBackupsHandle = UserAttributes::MyBackupsHandle::requestMyBackupsHandle();
+    Utilities::openInMega(myBackupsHandle->getMyBackupsHandle());
 }
 
-void SettingsDialog::openMEGAHandleInExplorer(MegaHandle handle)
+void SettingsDialog::openHandleInMega(MegaHandle handle)
 {
-    MegaNode* node = mMegaApi->getNodeByHandle(handle);
-    if (node)
-    {
-        const char *h = node->getBase64Handle();
-        if(h)
-        {
-            // FIXME: Revert to live url when feature is merged
-            // QString url = QString::fromUtf8("mega://#fm/") + QString::fromUtf8(handle);
-            QString url = QString::fromUtf8("https://13755-backup-center.developers.mega.co.nz/#fm/") + QString::fromUtf8(h);
-            QtConcurrent::run(QDesktopServices::openUrl, QUrl(url));
-            delete [] h;
-        }
-        delete node;
-    }
+    Utilities::openInMega(handle);
 }
 
 void SettingsDialog::on_bBackupCenter_clicked()
 {
-// FIXME: Revert to live url when feature is merged
-//  QtConcurrent::run(QDesktopServices::openUrl, QUrl(QString::fromUtf8("mega://#fm/backups")));
-    QtConcurrent::run(QDesktopServices::openUrl, QUrl(QString::fromUtf8("https://13755-backup-center.developers.mega.co.nz/fm/backups")));
+    Utilities::openBackupCenter();
 }
 
 void SettingsDialog::onMyBackupsFolderHandleSet(mega::MegaHandle h)
