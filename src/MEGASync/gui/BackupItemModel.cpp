@@ -1,6 +1,7 @@
 #include "BackupItemModel.h"
 #include "Utilities.h"
 #include "SyncTooltipCreator.h"
+#include "UserAttributesRequests/MyBackupsHandle.h"
 
 #include <QCoreApplication>
 #include <QIcon>
@@ -101,7 +102,7 @@ QVariant BackupItemModel::data(const QModelIndex &index, int role) const
             toolTip += SyncTooltipCreator::createForLocal(sync->getLocalFolder());
             toolTip += QChar::LineSeparator;
             // TODO: improve path building
-            toolTip += SyncTooltipCreator::createForRemote(SyncController::getMyBackupsLocalizedPath()
+            toolTip += SyncTooltipCreator::createForRemote(UserAttributes::MyBackupsHandle::getMyBackupsLocalizedPath()
                                                            + QLatin1Char('/')
                                                            + mDeviceNameRequest->getDeviceName()
                                                            + QLatin1Char('/')

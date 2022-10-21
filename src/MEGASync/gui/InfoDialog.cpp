@@ -22,6 +22,7 @@
 #include "BackupsWizard.h"
 #include "QMegaMessageBox.h"
 #include "TextDecorator.h"
+//#include "UserAttributesRequests/MyBackupsHandle.h"
 
 #ifdef _WIN32    
 #include <chrono>
@@ -83,8 +84,7 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
     mAddBackupDialog (nullptr),
     mAddSyncDialog (nullptr),
     mSyncController (nullptr),
-    qtBugFixer(this),
-    mMyBackupsHandle (mega::INVALID_HANDLE)
+    qtBugFixer(this)
 {
     ui->setupUi(this);
 
@@ -1127,7 +1127,19 @@ void InfoDialog::addBackup()
             setupSyncController();
 
             mAddBackupDialog = new AddBackupDialog();
-            mSyncController->getMyBackupsHandle();
+
+//            auto myBackupsHandle = UserAttributes::MyBackupsHandle::requestMyBackupsHandle();
+//            connect(request.get(), &UserAttributes::MyBackupsHandle::attributeReady, this, [request, this]()
+//            {
+//                emit myBackupsHandle(request->getMyBackupsHandle());
+//            });
+
+//            if(request->isAttributeReady())
+//            {
+//                emit myBackupsHandle(request->getMyBackupsHandle());
+//            }
+
+//            mSyncController->getMyBackupsHandle();
 
             mAddBackupDialog->setAttribute(Qt::WA_DeleteOnClose);
             mAddBackupDialog->setWindowModality(Qt::ApplicationModal);
@@ -1937,18 +1949,6 @@ void InfoDialog::setupSyncController()
         mSyncController.reset(new SyncController());
 
         // Connect sync controller signals
-        connect(mSyncController.get(), &SyncController::myBackupsHandle, this, [this](mega::MegaHandle h)
-        {
-            if (h == mega::INVALID_HANDLE)
-                return;
-
-            if (mAddBackupDialog)
-            {
-                mAddBackupDialog->setMyBackupsFolder(mSyncController->getMyBackupsLocalizedPath() + QLatin1Char('/'));
-                mAddBackupDialog->setMyBackupsFolderHandle(h);
-            }
-            mMyBackupsHandle = h;
-        });
         connect(mSyncController.get(), &SyncController::syncAddStatus, this, [](const int errorCode, const QString errorMsg, QString name)
         {
             if (errorCode != MegaError::API_OK)

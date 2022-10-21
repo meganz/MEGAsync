@@ -18,6 +18,7 @@
 #include "UserAttributesRequests/FullName.h"
 #include "UserAttributesRequests/Avatar.h"
 #include "UserAttributesRequests/DeviceName.h"
+#include "UserAttributesRequests/MyBackupsHandle.h"
 #include "SyncsMenu.h"
 #include "TextDecorator.h"
 
@@ -1212,6 +1213,8 @@ void MegaApplication::requestUserData()
     {
         return;
     }
+    UserAttributes::DeviceName::requestDeviceName();
+    UserAttributes::MyBackupsHandle::requestMyBackupsHandle();
 
     megaApi->getPricing();
     megaApi->getFileVersionsOption();
@@ -1301,7 +1304,6 @@ void MegaApplication::loggedIn(bool fromWizard)
         crashReportFilePath.clear();
     }
 
-    UserAttributes::DeviceName::requestDeviceName();
     mSyncController.reset(new SyncController());
     connect(mSyncController.get(), &SyncController::syncAddStatus, this, [](const int errorCode, const QString errorMsg, QString name)
     {
@@ -3027,7 +3029,6 @@ void MegaApplication::loadSyncExclusionRules(QString email)
     {
         preferences->leaveUser();
     }
-
 }
 
 std::pair<QString,QString> MegaApplication::buildFinishedTransferTitleAndMessage(const TransferMetaData *data)

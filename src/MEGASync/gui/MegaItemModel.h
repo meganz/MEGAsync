@@ -74,6 +74,7 @@ public:
 
 private slots:
     void onItemInfoUpdated(int role);
+    void onMyBackupsFolderHandleSet(mega::MegaHandle h);
 
 protected:
     QList<MegaItem *> mRootItems;

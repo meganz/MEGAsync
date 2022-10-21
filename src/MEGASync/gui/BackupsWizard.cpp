@@ -6,6 +6,7 @@
 #include "EventHelper.h"
 #include "TextDecorator.h"
 #include "UserAttributesRequests/DeviceName.h"
+#include "UserAttributesRequests/MyBackupsHandle.h"
 #include "Backups/BackupNameConflictDialog.h"
 #include "SyncTooltipCreator.h"
 
@@ -36,9 +37,8 @@ BackupsWizard::BackupsWizard(QWidget* parent) :
     QDialog(parent),
     mUi (new Ui::BackupsWizard),
     mDeviceNameRequest (UserAttributes::DeviceName::requestDeviceName()),
+    mMyBackupsHandleRequest (UserAttributes::MyBackupsHandle::requestMyBackupsHandle()),
     mSyncController(),
-    mCreateBackupsDir (false),
-    mMyBackupsHandle (mega::INVALID_HANDLE),
     mError (false),
     mUserCancelled (false),
     mFoldersModel (new QStandardItemModel(this)),
@@ -57,11 +57,8 @@ BackupsWizard::BackupsWizard(QWidget* parent) :
     connect(mDeviceNameRequest.get(), &UserAttributes::DeviceName::attributeReady,
             this, &BackupsWizard::onDeviceNameSet);
 
-    connect(&mSyncController, &SyncController::myBackupsHandle,
-            this, &BackupsWizard::onBackupsDirSet);
-
-    connect(&mSyncController, &SyncController::setMyBackupsStatus,
-            this, &BackupsWizard::onSetMyBackupsDirRequestStatus);
+    connect(mMyBackupsHandleRequest.get(), &UserAttributes::MyBackupsHandle::attributeReady,
+            this, &BackupsWizard::onMyBackupsFolderHandleSet);
 
     connect(&mSyncController, &SyncController::syncAddStatus,
             this, &BackupsWizard::onSyncAddRequestStatus);
@@ -139,11 +136,9 @@ void BackupsWizard::changeEvent(QEvent* event)
         }
 
         // If the backups root dir has not been created yet, localize the name
-        if (mCreateBackupsDir && mMyBackupsHandle != mega::INVALID_HANDLE)
-        {
-            mUi->leBackupTo->setText(mSyncController.getMyBackupsLocalizedPath()
-                                     + QLatin1Char('/') + mUi->lDeviceNameStep1->text());
-        }
+        mUi->leBackupTo->setText(UserAttributes::MyBackupsHandle::getMyBackupsLocalizedPath()
+                                 + QLatin1Char('/')
+                                 + mDeviceNameRequest->getDeviceName());
     }
     QDialog::changeEvent(event);
 }
@@ -203,13 +198,13 @@ void BackupsWizard::onItemChanged(QStandardItem *item)
         case STEP_1_INIT:
         case STEP_1:
         {
-            enable = atLeastOneFolderChecked() && !mUi->lDeviceNameStep1->text().isEmpty();
+            enable = atLeastOneFolderChecked() && mDeviceNameRequest->isAttributeReady();
             break;
         }
         case STEP_2_INIT:
         case STEP_2:
         {
-            enable = mMyBackupsHandle != mega::INVALID_HANDLE;
+            enable = true;
             break;
         }
         default:
@@ -308,9 +303,8 @@ void BackupsWizard::setupStep2()
     mUi->bNext->setText(tr("Setup"));
     mUi->bBack->show();
 
-    // Request MyBackups root folder
-    mMyBackupsHandle = mega::INVALID_HANDLE;
-    mSyncController.getMyBackupsHandle();
+    // Set MyBackups root folder
+    onMyBackupsFolderHandleSet(mMyBackupsHandleRequest->getMyBackupsHandle());
 
     // Get number of items
     int nbSelectedFolders = mFoldersProxyModel->rowCount();
@@ -355,9 +349,9 @@ void BackupsWizard::handleNameConflicts()
         candidatePaths.append(path);
     }
 
-    if(!BackupNameConflictDialog::backupNamesValid(candidatePaths, mMyBackupsHandle))
+    if(!BackupNameConflictDialog::backupNamesValid(candidatePaths))
     {
-        BackupNameConflictDialog* conflictDialog = new BackupNameConflictDialog(candidatePaths, mMyBackupsHandle, this);
+        BackupNameConflictDialog* conflictDialog = new BackupNameConflictDialog(candidatePaths, this);
         connect(conflictDialog, &BackupNameConflictDialog::accepted,
                 this, &BackupsWizard::onConflictResolved);
     }
@@ -404,23 +398,7 @@ void BackupsWizard::setupFinalize()
 
     mError = false;
 
-    nextStep(SETUP_MYBACKUPS_DIR);
-}
-
-void BackupsWizard::setupMyBackupsDir()
-{
-    qDebug("Backups Wizard: setup Backups root dir");
-
-    // Create MyBackups folder if necessary
-    if (mCreateBackupsDir)
-    {
-        mSyncController.setMyBackupsDirName();
-    }
-    else
-    {
-        // If not, proceed to setting-up backups
-        nextStep(SETUP_BACKUPS);
-    }
+    nextStep(SETUP_BACKUPS);
 }
 
 void BackupsWizard::setupBackups()
@@ -568,11 +546,6 @@ void BackupsWizard::nextStep(const Step &step)
         case Step::FINALIZE:
         {
             setupFinalize();
-            break;
-        }
-        case Step::SETUP_MYBACKUPS_DIR:
-        {
-            setupMyBackupsDir();
             break;
         }
         case Step::SETUP_BACKUPS:
@@ -813,36 +786,16 @@ void BackupsWizard::onDeviceNameSet(QString deviceName)
 {
     mUi->lDeviceNameStep1->setText(deviceName);
     mUi->lDeviceNameStep2->setText(deviceName);
+    onMyBackupsFolderHandleSet();
     onItemChanged();
 }
 
-void BackupsWizard::onBackupsDirSet(mega::MegaHandle backupsDirHandle)
+void BackupsWizard::onMyBackupsFolderHandleSet(mega::MegaHandle)
 {
-    mMyBackupsHandle = backupsDirHandle;
-
-    QString backupsDirPath = mSyncController.getMyBackupsLocalizedPath();
-
-    // If the handle is invalid, program the folder to be created
-    mCreateBackupsDir = (backupsDirHandle == mega::INVALID_HANDLE);
-
     // Update path display
-    mUi->leBackupTo->setText(backupsDirPath + QLatin1Char('/') + mUi->lDeviceNameStep1->text());
-    onItemChanged();
-}
-
-void BackupsWizard::onSetMyBackupsDirRequestStatus(int errorCode, const QString& errorMsg)
-{
-    if (errorCode == mega::MegaError::API_OK)
-    {
-        mCreateBackupsDir = false;
-        setupMyBackupsDir();
-    }
-    else
-    {
-        QMegaMessageBox::critical(nullptr, QString(),
-                                  tr("Creating or setting folder \"%1\" as backups root failed.\nReason: %2")
-                                  .arg(mSyncController.getMyBackupsLocalizedPath(), errorMsg));
-    }
+    mUi->leBackupTo->setText(UserAttributes::MyBackupsHandle::getMyBackupsLocalizedPath()
+                             + QLatin1Char('/')
+                             + mDeviceNameRequest->getDeviceName());
 }
 
 void BackupsWizard::onSyncAddRequestStatus(int errorCode, const QString& errorMsg, const QString& name)

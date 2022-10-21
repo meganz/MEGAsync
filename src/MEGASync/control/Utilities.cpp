@@ -12,6 +12,7 @@
 #include "MegaApplication.h"
 #include "control/gzjoin.h"
 #include "platform/Platform.h"
+#include "UserAttributesRequests/MyBackupsHandle.h"
 
 #ifndef WIN32
 #include "megaapi.h"
@@ -1187,14 +1188,15 @@ bool Utilities::isNodeNameValid(const QString& name)
     return !trimmedName.isEmpty() && !trimmedName.contains(FORBIDDEN_CHARS_RX);
 }
 
-QSet<QString> Utilities::getBackupsNames(MegaHandle myBackupsHandle)
+QSet<QString> Utilities::getBackupsNames()
 {
+    auto myBackupsHandle = UserAttributes::MyBackupsHandle::requestMyBackupsHandle();
     QSet<QString> backupsNames;
 
-    if (myBackupsHandle != INVALID_HANDLE)
+    if (myBackupsHandle->getMyBackupsHandle() != INVALID_HANDLE)
     {
         auto api (MegaSyncApp->getMegaApi());
-        std::unique_ptr<MegaNode> myBackupsNode (api->getNodeByHandle(myBackupsHandle));
+        std::unique_ptr<MegaNode> myBackupsNode (api->getNodeByHandle(myBackupsHandle->getMyBackupsHandle()));
         std::unique_ptr<const char[]> deviceIdRaw (api->getDeviceId());
         QString deviceId (QString::fromLatin1(deviceIdRaw.get()));
 

@@ -375,7 +375,7 @@ public:
 
     static bool isNodeNameValid(const QString& name);
 
-    static QSet<QString> getBackupsNames(mega::MegaHandle myBackupsHandle);
+    static QSet<QString> getBackupsNames();
 };
 
 Q_DECLARE_METATYPE(Utilities::FileType)

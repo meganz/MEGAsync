@@ -74,6 +74,7 @@ private slots:
     void onTabSelected(int index);
     void onSelectionChanged(const QItemSelection& selected, const QItemSelection& deselected);
     void onSectionResized();
+    void onMyBackupsFolderHandleSet(mega::MegaHandle h);
 
 private:
 

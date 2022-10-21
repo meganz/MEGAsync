@@ -24,9 +24,6 @@ public:
     explicit AddBackupDialog(QWidget *parent = nullptr);
     ~AddBackupDialog();
 
-    void setMyBackupsFolder(const QString& folder);
-    void setMyBackupsFolderHandle(const mega::MegaHandle& handle);
-
     QString getSelectedFolder();
     QString getBackupName();
 
@@ -42,7 +39,6 @@ private:
     QString mBackupName;
     QString mMyBackupsFolder;
     std::shared_ptr<UserAttributes::DeviceName> mDeviceNameRequest;
-    mega::MegaHandle mMyBackupsHandle;
 };
 
 #endif // ADDBACKUPDIALOG_H

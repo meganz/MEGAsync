@@ -70,6 +70,7 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/UserAttributesRequests/DeviceName.cpp \
     $$PWD/UserAttributesRequests/FullName.cpp \
     $$PWD/UserAttributesRequests/Avatar.cpp \
+    $$PWD/UserAttributesRequests/MyBackupsHandle.cpp \
     $$PWD/VerifyLockMessage.cpp \
     $$PWD/MegaInfoMessage.cpp \
     $$PWD/WaitingSpinnerWidget.cpp \
@@ -156,6 +157,7 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/UserAttributesRequests/DeviceName.h \
     $$PWD/UserAttributesRequests/FullName.h \
     $$PWD/UserAttributesRequests/Avatar.h \
+    $$PWD/UserAttributesRequests/MyBackupsHandle.h \
     $$PWD/VerifyLockMessage.h \
     $$PWD/ViewLoadingScene.h \
     $$PWD/MegaInfoMessage.h \

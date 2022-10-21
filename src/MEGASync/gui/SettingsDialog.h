@@ -155,6 +155,7 @@ private slots:
     void on_bOpenBackupFolder_clicked();
     void openMEGAHandleInExplorer(mega::MegaHandle handle);
     void on_bBackupCenter_clicked();
+    void onMyBackupsFolderHandleSet(mega::MegaHandle h);
 
     // Security
     void on_bSecurity_clicked();
@@ -197,7 +198,6 @@ private:
     void loadSyncSettings();
     void connectBackupHandlers();
     void loadBackupSettings();
-    void processPendingBackup();
 
     void loadSettings();
     void onCacheSizeAvailable();
@@ -249,8 +249,5 @@ private:
     bool mHasDefaultUploadOption;
     bool mHasDefaultDownloadOption;
     QPointer<ProxySettings> mProxySettingsDialog;
-    mega::MegaHandle mBackupRootHandle;
-    bool mCreateBackupRootDir;
-    QPair<QString, QString> mPendingBackup; //<backup path, backup name>
 };
 #endif // SETTINGSDIALOG_H
