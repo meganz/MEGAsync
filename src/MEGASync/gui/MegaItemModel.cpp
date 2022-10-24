@@ -49,7 +49,7 @@ void NodeRequester::requestNodeAndCreateChildren(MegaItem* item, const QModelInd
                 childNodesFiltered = megaApi->getChildren(node.get(), MegaApi::ORDER_NONE);
             }
 
-            if(!mAborted)
+            //if(!mAborted)
             {
                 lockMutex(true);
                 item->createChildItems(std::unique_ptr<mega::MegaNodeList>(childNodesFiltered));
@@ -70,7 +70,7 @@ void NodeRequester::createCloudDriveRootItem()
     auto root = std::unique_ptr<MegaNode>(megaApi->getRootNode());
     auto item = new MegaItem(std::move(root), mShowFiles);
 
-    if(!mAborted)
+    if(/*!mAborted*/true)
     {
         mRootItems.append(item);
         emit megaCloudDriveRootItemCreated(item);
@@ -95,7 +95,7 @@ void NodeRequester::createIncomingSharesRootItems(std::shared_ptr<mega::MegaNode
         MegaItem* item = new MegaItem(std::unique_ptr<MegaNode>(node), mShowFiles);
         items.append(item);
 
-        if(!mAborted)
+        if(true/*!mAborted*/)
         {
             auto incomingSharesModel = dynamic_cast<MegaItemModelIncomingShares*>(mModel);
             if(incomingSharesModel)
@@ -111,7 +111,7 @@ void NodeRequester::createIncomingSharesRootItems(std::shared_ptr<mega::MegaNode
         }
     }
 
-    if(!mAborted)
+    if(true/*!mAborted*/)
     {
         mRootItems.append(items);
         emit megaIncomingSharesRootItemsCreated(items);
@@ -135,7 +135,7 @@ void NodeRequester::onAddNodeRequested(std::shared_ptr<MegaNode> newNode, MegaIt
     lockMutex(false);
     childItem->setProperty("INDEX", mModel->index(parentItem->getNumChildren() -1 ,0, parentIndex));
 
-    if(!mAborted)
+    if(true/*!mAborted*/)
     {
         emit nodeAdded(childItem);
     }
@@ -189,16 +189,16 @@ void NodeRequester::finishWorker()
 
 const std::atomic<bool> &NodeRequester::isWorking() const
 {
-    return mWorking;
+    return true/*mWorking*/;
 }
 
 void NodeRequester::setWorking(bool newWorking)
 {
-    mWorking = newWorking;
-    if(mAborted)
-    {
-        finishWorker();
-    }
+//    mWorking = newWorking;
+//    if(mAborted)
+//    {
+//        finishWorker();
+//    }
 }
 
 void NodeRequester::setShowFiles(bool newShowFiles)
@@ -208,7 +208,7 @@ void NodeRequester::setShowFiles(bool newShowFiles)
 
 void NodeRequester::abort()
 {
-    mAborted = true;
+    //mAborted = true;
     if(!isWorking())
     {
         finishWorker();

@@ -76,8 +76,8 @@ private:
      void finishWorker();
 
      bool mShowFiles = true;
-     std::atomic<bool> mAborted = false;
-     std::atomic<bool> mWorking = false;
+//     std::atomic<bool> mAborted = false;
+//     std::atomic<bool> mWorking = false;
      MegaItemModel* mModel;
      QList<MegaItem*> mRootItems;
      mutable QMutex mMutex;
