@@ -44,7 +44,8 @@ public:
     void removeNode(const QModelIndex &item);
     bool lessThan(const QModelIndex &left, const QModelIndex &right) const override;
     void setSourceModel(QAbstractItemModel *sourceModel) override;
-    void setExpandMapped(bool value){mExpandMapped = value;};
+    void setExpandMapped(bool value){mExpandMapped = value;}
+    MegaItemModel* getMegaModel();
 
 signals:
     void expandReady();
@@ -57,7 +58,6 @@ protected:
 
 private:
     QVector<QModelIndex> forEach(std::shared_ptr<mega::MegaNodeList> parentNodeList, QModelIndex parent = QModelIndex());
-    MegaItemModel* getMegaModel();
     Filter mFilter;
     QCollator mCollator;
     int mSortColumn;

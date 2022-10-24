@@ -15,5 +15,5 @@ NodeSelectorLoadingDelegate::~NodeSelectorLoadingDelegate()
 
 QSize NodeSelectorLoadingDelegate::widgetSize()
 {
-    return QSize(100, 20);
+    return QSize(100, 30);
 }

@@ -144,7 +144,6 @@ void MegaItemTreeView::mouseDoubleClickEvent(QMouseEvent *event)
         QModelIndex clickedIndex = indexAt(event->pos());
         if(clickedIndex.isValid())
         {
-//            mIndexToEnter = clickedIndex;
             auto sourceIndexToEnter = proxyModel()->mapToSource(clickedIndex);
             if(proxyModel()->sourceModel()->canFetchMore(sourceIndexToEnter))
             {
@@ -161,9 +160,7 @@ void MegaItemTreeView::keyPressEvent(QKeyEvent *event)
 {
     QModelIndexList selectedRows = selectionModel()->selectedRows();
 
-    auto proxyModel = dynamic_cast<MegaItemProxyModel*>(model());
-
-    static QModelIndex rootIndex = proxyModel->getIndexFromNode(MegaSyncApp->getRootNode());
+    static QModelIndex rootIndex = proxyModel()->getIndexFromNode(MegaSyncApp->getRootNode());
     static QList<int> bannedFromRootKeyList = QList<int>() << Qt::Key_Left << Qt::Key_Right
                                                      << Qt::Key_Plus << Qt::Key_Minus;
 
@@ -220,6 +217,9 @@ void MegaItemTreeView::onNavigateReady(const QModelIndex &index)
 {
     if(index.isValid())
     {
+        //Loading finished
+        emit proxyModel()->getMegaModel()->blockUi(false);
+
         QPoint point = visualRect(index).center();
         QMouseEvent mouseEvent(QEvent::MouseButtonDblClick, point, Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);
         mouseDoubleClickEvent(&mouseEvent);

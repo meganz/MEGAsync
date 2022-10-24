@@ -3254,6 +3254,18 @@ Your selected incomplete sync transfers won&apos;t be cancelled.</translation>
         <translation>The following characters are not allowed:
 %1</translation>
     </message>
+    <message>
+        <source>A file with this name already exists in this location.
+Enter a different name.</source>
+		<translatorcomment>Message shown when the user has entered a name which already exists on the folder</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A folder with this name already exists in this location.
+Enter a different name</source>
+		<translatorcomment>Message shown when the user has entered a name which already exists on the folder</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>NodeSelector</name>
@@ -3314,10 +3326,6 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translation>You need Full access rights to be able to sync the selected folder.</translation>
     </message>
     <message>
-        <source>Are you sure that you want to delete &quot;%1&quot;?</source>
-        <translation>Are you sure that you want to delete “%1”?</translation>
-    </message>
-    <message>
         <source>Only files can be used for streaming.</source>
         <translatorcomment>Warning message when users try to select a folder for streaming</translatorcomment>
         <translation>Only files can be used for streaming.</translation>
@@ -3349,10 +3357,6 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translatorcomment>Node selector button Text. Switch the view to show only the incoming shares nodes (files and folders)</translatorcomment>
         <translation>Incoming shares</translation>
     </message>
-    <message>
-        <source>Error:</source>
-        <translation>Error:</translation>
-    </message>
     <message numerus="yes">
         <source>The item you selected has been removed. To reselect, close this window and try again.</source>
         <translatorcomment>Error message shown while the user is trying to download an file or folder but all selected nodes were removed</translatorcomment>
@@ -3378,6 +3382,59 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
             <numerusform>%1. %2 has been removed. To reselect, close this window and try again.</numerusform>
             <numerusform>%1. %2 have been removed. To reselect, close this window and try again.</numerusform>
         </translation>
+    </message>
+</context>
+<context>
+    <name>NodeSelectorTreeViewWidget</name>
+    <message>
+        <source>Form</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Always upload to this destination</source>
+        <translation type="unfinished">Always upload to this destination</translation>
+    </message>
+    <message>
+        <source>New folder</source>
+        <translation type="unfinished">New folder</translation>
+    </message>
+    <message>
+        <source>OK</source>
+        <translation type="unfinished">OK</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Cancel</translation>
+    </message>
+    <message>
+        <source>CLD_DRIVE</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select items</source>
+        <translation type="unfinished">Select items</translation>
+    </message>
+    <message>
+        <source>Are you sure that you want to delete &quot;%1&quot;?</source>
+        <translation type="unfinished">Are you sure that you want to delete “%1”?</translation>
+    </message>
+    <message>
+        <source>Error:</source>
+        <translation type="unfinished">Error:</translation>
+    </message>
+</context>
+<context>
+    <name>NodeSelectorTreeViewWidgetCloudDrive</name>
+    <message>
+        <source>Cloud drive</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>NodeSelectorTreeViewWidgetIncomingShares</name>
+    <message>
+        <source>Incoming shares</source>
+        <translation type="unfinished">Incoming shares</translation>
     </message>
 </context>
 <context>

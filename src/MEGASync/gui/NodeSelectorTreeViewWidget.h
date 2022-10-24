@@ -83,6 +83,7 @@ private slots:
     void onExpandReady();
     void onModelAboutToBeChanged();
     void setLoadingSceneVisible(bool visible);
+    void onUiBlocked(bool state);
 
 private:
     struct Navigation{
@@ -116,8 +117,10 @@ private:
     virtual QString getRootText() = 0;
     virtual std::unique_ptr<MegaItemModel> getModel() = 0;
     virtual bool newFolderBtnVisibleInRoot(){return true;}
+    void checkOkButton(const QModelIndexList& selected);
 
     bool first;
+    bool mUiBlocked;
     mega::MegaHandle mNodeHandleToSelect;
     ViewLoadingScene<NodeSelectorLoadingDelegate> mLoadingScene;
 };

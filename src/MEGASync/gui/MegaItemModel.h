@@ -34,29 +34,53 @@ enum class NodeRowDelegateRoles
     last
 };
 
+class MegaItemModel;
+
 class NodeRequester : public QObject
 {
     Q_OBJECT
 
-    struct NodeInfo
-    {
-        MegaItem* parent;
-        bool showFiles;
-    };
 
 public:
-    NodeRequester() = default;
+    NodeRequester(MegaItemModel* model);
+
+    void setShowFiles(bool newShowFiles);
+
+    void lockMutex(bool state) const;
+
+    const std::atomic<bool>& isWorking() const;
 
 public slots:
-    void requestNodes(MegaItem* item, bool showFiles = true);
+    void requestNodeAndCreateChildren(MegaItem* item, const QModelIndex& parentIndex, bool showFiles = true);
+
+    void createCloudDriveRootItem();
+    void createIncomingSharesRootItems(std::shared_ptr<mega::MegaNodeList> nodeList);
+    void onAddNodeRequested(std::shared_ptr<mega::MegaNode> newNode, MegaItem* parentItem);
+    void removeItem(MegaItem *item);
+    void removeRootItem(MegaItem* item);
+
+    int rootIndexSize() const;
+    int rootIndexOf(MegaItem *item);
+    MegaItem* getRootItem(int index) const;
+
+    void abort();
 
 signals:
-     void nodesReady(MegaItem* parent, mega::MegaNodeList* nodes);
+     void nodesReady(MegaItem* parent);
+     void megaCloudDriveRootItemCreated(MegaItem* item);
+     void megaIncomingSharesRootItemsCreated(QList<MegaItem*> item);
+     void nodeAdded(MegaItem* item);
 
 private:
-     void processRequest();
+     void setWorking(bool newWorking);
+     void finishWorker();
 
-     QList<NodeInfo> mNodesToRequest;
+     bool mShowFiles = true;
+     std::atomic<bool> mAborted = false;
+     std::atomic<bool> mWorking = false;
+     MegaItemModel* mModel;
+     QList<MegaItem*> mRootItems;
+     mutable QMutex mMutex;
 };
 
 class MegaItemModel : public QAbstractItemModel
@@ -89,7 +113,7 @@ public:
 
     void setDisableFolders(bool option);
     void setSyncSetupMode(bool value);
-    void addNode(std::unique_ptr<mega::MegaNode> node, const QModelIndex &parent);
+    void addNode(std::shared_ptr<mega::MegaNode> node, const QModelIndex &parent);
     void removeNode(const QModelIndex &item);
     void showFiles(bool show);
     int countTotalRows(const QModelIndex &index = QModelIndex());
@@ -106,40 +130,47 @@ public:
     QModelIndex getIndexFromNode(const std::shared_ptr<mega::MegaNode> node, const QModelIndex& parent);
 
     virtual void firstLoad() = 0;
-
-    void lockMutex(bool state);
-    bool tryLock();
+    void rootItemsLoaded();
 
     QPair<QModelIndexList, bool> needsToBeExpandedAndSelected();
     void clearIndexesToMap();
 
 signals:
     void levelsAdded(const QModelIndexList& parent);
-    void requestChildNodes(MegaItem* parent, int nodeType) const;
+    void requestChildNodes(MegaItem* parent, const QModelIndex& parentIndex, int nodeType) const;
+    void firstLoadFinished(const QModelIndex& parent);
+    void requestAddNode(std::shared_ptr<mega::MegaNode> newNode, MegaItem* parent);
+    void removeItem(MegaItem* items);
+    void removeRootItem(MegaItem* items);
+    void deleteWorker();
 
     void blockUi(bool state) const;
 
 protected:
     QModelIndex findItemByNodeHandle(const mega::MegaHandle &handle, const QModelIndex& parent);
-    void fetchItemChildren(const QModelIndex& parent) const;
+    void fetchItemChildren(const QModelIndex& parent);
     void addRootItems();
+    virtual void loadLevelFinished();
+    void continueWithNextItemToLoad(const QModelIndex &parentIndex);
 
     int mRequiredRights;
     bool mDisplayFiles;
     bool mSyncSetupMode;
     bool mShowFiles;
-    QList<MegaItem*> mRootItems;
     mutable QModelIndexList mIndexesToMap;
     bool mNeedsToBeSelected;
+    NodeRequester* mNodeRequesterWorker;
+    QList<std::shared_ptr<mega::MegaNode>> mNodesToLoad;
 
 private slots:
-    void onChildNodesReady(MegaItem *parent, mega::MegaNodeList* nodes);
+    void onChildNodesReady(MegaItem *parent);
+    void onNodeAdded(MegaItem* childItem);
 
 private:
     int insertPosition(const std::unique_ptr<mega::MegaNode>& node);
-    virtual QList<MegaItem*> getRootItems() const = 0;
+    virtual void createRootNodes() = 0;
     virtual int rootItemsCount() const = 0;
-    void createChildItems(const QModelIndex& index, MegaItem* parent);
+    void createChildItems(std::shared_ptr<mega::MegaNodeList> childNodes, const QModelIndex& index, MegaItem* parent);
     QIcon getFolderIcon(MegaItem* item) const;
     bool fetchMoreRecursively(const QModelIndex& parentIndex);
 
@@ -147,9 +178,6 @@ private:
     std::shared_ptr<const UserAttributes::MyChatFilesFolder> mMyChatFilesFolderAttribute;
 
     QThread* mNodeRequesterThread;
-    NodeRequester* mNodeRequesterWorker;
-    QMutex mLoadingMutex;
-    QList<std::shared_ptr<mega::MegaNode>> mNodesToLoad;
 };
 
 class MegaItemModelCloudDrive : public MegaItemModel , public mega::MegaRequestListener
@@ -161,14 +189,21 @@ public:
     virtual ~MegaItemModelCloudDrive();
 
     void onRequestFinish(mega::MegaApi* api, mega::MegaRequest *request, mega::MegaError* e) override;
-    QList<MegaItem*> getRootItems() const override;
+    void createRootNodes() override;
     int rootItemsCount() const override;
 
     void fetchMore(const QModelIndex &parent) override;
     void firstLoad() override;
 
+signals:
+    void requestCloudDriveRootCreation();
+
+private slots:
+    void onRootItemCreated(MegaItem*item);
+
 private:
     std::unique_ptr<mega::QTMegaRequestListener> mDelegateListener;
+    bool mLoadingRoot;
 };
 
 class MegaItemModelIncomingShares : public MegaItemModel
@@ -179,17 +214,23 @@ public:
     explicit MegaItemModelIncomingShares(QObject *parent = 0);
     virtual ~MegaItemModelIncomingShares();
 
-    QList<MegaItem*> getRootItems() const override;
+    void createRootNodes() override;
     int rootItemsCount() const override;
 
     void fetchMore(const QModelIndex &parent) override;
     void firstLoad() override;
 
-private slots:
+public slots:
     void onItemInfoUpdated(int role);
 
+signals:
+    void requestIncomingSharesRootCreation(std::shared_ptr<mega::MegaNodeList> nodes, MegaItemModelIncomingShares* model);
+
+private slots:
+    void onRootItemsCreated(QList<MegaItem *> item);
+
 private:
-    std::unique_ptr<mega::MegaNodeList> mSharedNodeList;
+    std::shared_ptr<mega::MegaNodeList> mSharedNodeList;
 };
 
 #endif // MEGAITEMMODEL_H

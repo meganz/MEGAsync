@@ -299,7 +299,10 @@ public:
         {
             if(mDelayTimeToShowInMs > 0)
             {
-                mDelayTimerToShow.start(mDelayTimeToShowInMs);
+                if(!mDelayTimerToShow.isActive())
+                {
+                    mDelayTimerToShow.start(mDelayTimeToShowInMs);
+                }
             }
             else
             {

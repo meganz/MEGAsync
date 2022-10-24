@@ -30,13 +30,14 @@ public:
     };
 
     explicit MegaItem(std::unique_ptr<mega::MegaNode> node, bool showFiles, MegaItem *parentItem = 0);
+    ~MegaItem();
 
     std::shared_ptr<mega::MegaNode> getNode() const;
 
-    void setChildren(mega::MegaNodeList* nodes);
-    void createChildItems();
+    void createChildItems(std::unique_ptr<mega::MegaNodeList> nodeList);
     bool childrenAreInit();
 
+    bool canFetchMore();
 
     MegaItem *getParent();
     MegaItem *getChild(int i);
@@ -51,13 +52,10 @@ public:
     int getStatus();
     bool isSyncable();
     bool isRoot();
-    void addNode(std::unique_ptr<mega::MegaNode> node);
-    void removeNode(std::shared_ptr<mega::MegaNode> node);
-    void displayFiles(bool enable);
+    MegaItem* addNode(std::shared_ptr<mega::MegaNode> node);
+    MegaItem* removeNode(std::shared_ptr<mega::MegaNode> node);
     void setChatFilesFolder();
     int row();
-
-    ~MegaItem();
 
     bool requestingChildren() const;
     void setRequestingChildren(bool newRequestingChildren);
@@ -70,10 +68,12 @@ protected:
     int mStatus;
     bool mChildrenSet;
     bool mRequestingChildren;
+    long long mChildrenCounter;
+    bool mShowFiles;
+    bool mChildrenAreInit;
 
     std::shared_ptr<mega::MegaNode> mNode;
     QList<MegaItem*> mChildItems;
-    std::unique_ptr<mega::MegaNodeList> mChildNodes;
     std::unique_ptr<mega::MegaUser> mOwner;
 
 private slots:
@@ -85,8 +85,6 @@ private:
     std::unique_ptr<mega::QTMegaRequestListener> mDelegateListener;
     std::shared_ptr<const UserAttributes::FullName> mFullNameAttribute;
     std::shared_ptr<const UserAttributes::Avatar> mAvatarAttribute;
-    bool mShowFiles;
-
 };
 
 #endif // MEGAITEM_H

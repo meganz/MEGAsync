@@ -15,17 +15,10 @@ void NewFolderDialog::onDialogAccepted()
 {
     QString newFolderName = getName();
 
-    auto node = std::unique_ptr<mega::MegaNode>(MegaSyncApp->getMegaApi()->getNodeByPath(newFolderName.toUtf8().constData(), mParentNode.get()));
-    if (!node || node->isFile())
+    if(!checkAlreadyExistingNode(newFolderName, mParentNode))
     {
         setEnabled(false);
         MegaSyncApp->getMegaApi()->createFolder(newFolderName.toUtf8().constData(), mParentNode.get(), mDelegateListener.get());
-    }
-    //Folder already exists
-    else
-    {
-        mNewNode = std::move(node);
-        done(QDialog::Rejected);
     }
 }
 

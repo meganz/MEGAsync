@@ -69,7 +69,11 @@ void RenameRemoteNodeDialog::onDialogAccepted()
 {
     if (mNodeToRename)
     {
-        MegaSyncApp->getMegaApi()->renameNode(mNodeToRename.get(), getName().toStdString().c_str(), mDelegateListener.get());
+        std::shared_ptr<mega::MegaNode> parentNode(MegaSyncApp->getMegaApi()->getParentNode(mNodeToRename.get()));
+        if(!checkAlreadyExistingNode(mNodeName, parentNode))
+        {
+            MegaSyncApp->getMegaApi()->renameNode(mNodeToRename.get(), getName().toStdString().c_str(), mDelegateListener.get());
+        }
     }
     //Folder already exists
     else

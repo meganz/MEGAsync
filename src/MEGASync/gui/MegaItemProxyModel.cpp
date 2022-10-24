@@ -37,7 +37,6 @@ void MegaItemProxyModel::showOwnerColumn(bool value)
     if(mFilter.showOwnerColumn != value)
     {
         mFilter.showOwnerColumn = value;
-        invalidateFilter();
     }
 }
 
@@ -45,29 +44,32 @@ void MegaItemProxyModel::sort(int column, Qt::SortOrder order)
 {
     mOrder = order;
     mSortColumn = column;
-    emit modelAboutToBeChanged();
-    QFuture<void> filtered = QtConcurrent::run([this, column, order](){
-        auto itemModel = dynamic_cast<MegaItemModel*>(sourceModel());
-        if(itemModel)
-        {
-            itemModel->lockMutex(true);
 
-            emit layoutAboutToBeChanged();
-            blockSignals(true);
-            sourceModel()->blockSignals(true);
-            invalidateFilter();
-            QSortFilterProxyModel::sort(column, order);           
-            for (auto it = itemsToMap.rbegin(); it != itemsToMap.rend(); ++it)
+    //If it is already blocked, it is ignored.
+    emit getMegaModel()->blockUi(true);
+    if(mFilterWatcher.isFinished())
+    {
+        QFuture<void> filtered = QtConcurrent::run([this, column, order](){
+            auto itemModel = dynamic_cast<MegaItemModel*>(sourceModel());
+            if(itemModel)
             {
-                hasChildren((*it));
+                emit layoutAboutToBeChanged();
+                blockSignals(true);
+                sourceModel()->blockSignals(true);
+                invalidateFilter();
+                QSortFilterProxyModel::sort(column, order);
+                for (auto it = itemsToMap.rbegin(); it != itemsToMap.rend(); ++it)
+                {
+                    auto proxyIndex = mapFromSource((*it));
+                    hasChildren(proxyIndex);
+                }
+                blockSignals(false);
+                sourceModel()->blockSignals(false);
+                emit layoutChanged();
             }
-            itemModel->lockMutex(false);
-            blockSignals(false);
-            sourceModel()->blockSignals(false);
-            emit layoutChanged();
-        }
-    });
-    mFilterWatcher.setFuture(filtered);
+        });
+        mFilterWatcher.setFuture(filtered);
+    }
 }
 
 mega::MegaHandle MegaItemProxyModel::getHandle(const QModelIndex &index)
@@ -158,11 +160,11 @@ void MegaItemProxyModel::removeNode(const QModelIndex& item)
 bool MegaItemProxyModel::lessThan(const QModelIndex &left, const QModelIndex &right) const
 {
     //qDebug()<<"lessthan:"<<QThread::currentThreadId();
-//        if(qApp->thread() == QThread::currentThread())
-//        {
-//            qDebug()<<"MAIN THREAD:"<<
-//                      left<<right;
-//        }
+        if(qApp->thread() == QThread::currentThread())
+        {
+            qDebug()<<"MAIN THREAD:"<<
+                      left<<right;
+        }
 //        else
 //        {
 //            qDebug()<<"MY THREAD:"<<
@@ -212,10 +214,10 @@ void MegaItemProxyModel::setSourceModel(QAbstractItemModel *sourceModel)
 
 bool MegaItemProxyModel::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const
 {
-//    if(qApp->thread() == QThread::currentThread())
-//    {
-//        qDebug()<<"MAIN THREAD:FILTER:" << sourceParent << sourceRow;;
-//    }
+    if(qApp->thread() == QThread::currentThread())
+    {
+        qDebug()<<"MAIN THREAD:FILTER:" << sourceParent << sourceRow;;
+    }
 //    else
 //    {
 //        qDebug()<<"MY THREAD:FILTER:" << sourceParent << sourceRow;
@@ -324,27 +326,25 @@ MegaItemModel *MegaItemProxyModel::getMegaModel()
 
 void MegaItemProxyModel::invalidateModel(const QModelIndexList& parents)
 {
-    foreach(auto parent, parents)
-    {
-        itemsToMap.append(mapFromSource(parent));
-    }
+    itemsToMap = parents;
     sort(mSortColumn, mOrder);
 }
 
 void MegaItemProxyModel::onModelSortedFiltered()
 {
-    emit getMegaModel()->blockUi(false);
     if(mExpandMapped)
     {
         emit expandReady();
     }
     else
     {
-        emit navigateReady(itemsToMap.isEmpty() ? QModelIndex() : itemsToMap.first());
+        emit navigateReady(itemsToMap.isEmpty() ? QModelIndex() : mapFromSource(itemsToMap.first()));
         if(auto megaItemModel = dynamic_cast<MegaItemModel*>(sourceModel()))
         {
             megaItemModel->clearIndexesToMap();
         }
     }
+
+    emit getMegaModel()->blockUi(false);
     itemsToMap.clear();
 }

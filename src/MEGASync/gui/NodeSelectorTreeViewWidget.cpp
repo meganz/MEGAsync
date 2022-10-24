@@ -25,6 +25,7 @@ NodeSelectorTreeViewWidget::NodeSelectorTreeViewWidget(QWidget *parent) :
     mDelegateListener(mega::make_unique<QTMegaRequestListener>(mMegaApi, this)),
     mModel(nullptr),
     first(true),
+    mUiBlocked(false),
     mNodeHandleToSelect(INVALID_HANDLE)
 {
     ui->setupUi(this);
@@ -100,45 +101,17 @@ void NodeSelectorTreeViewWidget::setSelectionMode(int selectMode)
             break;
     }
 
+    connect(mProxyModel.get(), &MegaItemProxyModel::expandReady, this, &NodeSelectorTreeViewWidget::onExpandReady);
+    connect(mModel.get(), &MegaItemModel::blockUi, this, &NodeSelectorTreeViewWidget::onUiBlocked);
+
+    setLoadingSceneVisible(true);
+    mProxyModel->showOwnerColumn(false);
+    ui->tMegaFolders->setSortingEnabled(true);
     mProxyModel->setSourceModel(mModel.get());
 
 #ifdef __APPLE__
 ui->tMegaFolders->setAnimated(false);
 #endif
-
-    ui->tMegaFolders->setModel(mProxyModel.get());
-
-    //those connects needs to be done after the model is set, do not move them
-    connect(mProxyModel.get(), &MegaItemProxyModel::modelAboutToBeChanged, this, &NodeSelectorTreeViewWidget::onModelAboutToBeChanged);
-    connect(mProxyModel.get(), &MegaItemProxyModel::expandReady, this, &NodeSelectorTreeViewWidget::onExpandReady);
-
-    connect(ui->tMegaFolders->selectionModel(), &QItemSelectionModel::selectionChanged, this, &NodeSelectorTreeViewWidget::onSelectionChanged);
-    connect(ui->tMegaFolders, &MegaItemTreeView::removeNodeClicked, this, &NodeSelectorTreeViewWidget::onDeleteClicked);
-    connect(ui->tMegaFolders, &MegaItemTreeView::getMegaLinkClicked, this, &NodeSelectorTreeViewWidget::onGenMEGALinkClicked);
-    connect(ui->tMegaFolders, &QTreeView::doubleClicked, this, &NodeSelectorTreeViewWidget::onItemDoubleClick);
-    connect(ui->bForward, &QPushButton::clicked, this, &NodeSelectorTreeViewWidget::onGoForwardClicked);
-    connect(ui->bBack, &QPushButton::clicked, this, &NodeSelectorTreeViewWidget::onGoBackClicked);
-    connect(ui->tMegaFolders->header(), &QHeaderView::sectionResized, this, &NodeSelectorTreeViewWidget::onSectionResized);
-    connect(mModel.get(), &QAbstractItemModel::rowsInserted, this, &NodeSelectorTreeViewWidget::onRowsInserted);
-    connect(mModel.get(), &MegaItemModel::blockUi, this, &NodeSelectorTreeViewWidget::setLoadingSceneVisible);
-
-    ui->tMegaFolders->setContextMenuPolicy(Qt::DefaultContextMenu);
-    ui->tMegaFolders->setExpandsOnDoubleClick(false);
-    ui->tMegaFolders->setHeader(new MegaItemHeaderView(Qt::Horizontal));
-    ui->tMegaFolders->header()->setFixedHeight(MegaItemModel::ROW_HEIGHT);
-    ui->tMegaFolders->header()->moveSection(MegaItemModel::STATUS, MegaItemModel::NODE);
-    ui->tMegaFolders->header()->setProperty("HeaderIconCenter", true);
-    ui->tMegaFolders->setColumnWidth(MegaItemModel::COLUMN::STATUS, MegaItemModel::ROW_HEIGHT * 2);
-    ui->tMegaFolders->setItemDelegate(new NodeRowDelegate(ui->tMegaFolders));
-    ui->tMegaFolders->setItemDelegateForColumn(MegaItemModel::STATUS, new IconDelegate(ui->tMegaFolders));
-    ui->tMegaFolders->setItemDelegateForColumn(MegaItemModel::USER, new IconDelegate(ui->tMegaFolders));
-    ui->tMegaFolders->setTextElideMode(Qt::ElideMiddle);
-    ui->tMegaFolders->sortByColumn(MegaItemModel::NODE, Qt::AscendingOrder);
-    ui->tMegaFolders->setSortingEnabled(true);
-
-    setRootIndex(QModelIndex());
-    checkNewFolderButtonVisibility();
-    //setLoadingSceneVisible(false);
 }
 
 void NodeSelectorTreeViewWidget::showDefaultUploadOption(bool show)
@@ -205,15 +178,55 @@ void NodeSelectorTreeViewWidget::onRowsInserted()
 
 void NodeSelectorTreeViewWidget::onModelAboutToBeChanged()
 {
-    mProxyModel->blockSignals(true);
-    ui->tMegaFolders->blockSignals(true);
-    ui->tMegaFolders->header()->blockSignals(true);
+    //mProxyModel->blockSignals(true);
+    //ui->tMegaFolders->blockSignals(true);
+    //ui->tMegaFolders->header()->blockSignals(true);
     //setLoadingSceneVisible(true);
     //mProxyModel->blockSignals(true);
 }
 
 void NodeSelectorTreeViewWidget::onExpandReady()
 {
+    if(ui->tMegaFolders->model() == nullptr)
+    {
+        ui->tMegaFolders->setContextMenuPolicy(Qt::DefaultContextMenu);
+        ui->tMegaFolders->setExpandsOnDoubleClick(false);
+        ui->tMegaFolders->setHeader(new MegaItemHeaderView(Qt::Horizontal));
+        //ui->tMegaFolders->header()->
+        ui->tMegaFolders->setItemDelegate(new NodeRowDelegate(ui->tMegaFolders));
+        ui->tMegaFolders->setItemDelegateForColumn(MegaItemModel::STATUS, new IconDelegate(ui->tMegaFolders));
+        ui->tMegaFolders->setItemDelegateForColumn(MegaItemModel::USER, new IconDelegate(ui->tMegaFolders));
+        ui->tMegaFolders->setTextElideMode(Qt::ElideMiddle);
+
+        setLoadingSceneVisible(true);
+
+        ui->tMegaFolders->sortByColumn(MegaItemModel::NODE, Qt::AscendingOrder);
+        ui->tMegaFolders->setModel(mProxyModel.get());
+
+        ui->tMegaFolders->header()->show();
+        ui->tMegaFolders->header()->setFixedHeight(MegaItemModel::ROW_HEIGHT);
+        ui->tMegaFolders->header()->moveSection(MegaItemModel::STATUS, MegaItemModel::NODE);
+        ui->tMegaFolders->setColumnWidth(MegaItemModel::COLUMN::STATUS, MegaItemModel::ROW_HEIGHT * 2);
+        ui->tMegaFolders->header()->setProperty("HeaderIconCenter", true);
+        showEvent(nullptr);
+
+        //those connects needs to be done after the model is set, do not move them
+
+        connect(ui->tMegaFolders->selectionModel(), &QItemSelectionModel::selectionChanged, this, &NodeSelectorTreeViewWidget::onSelectionChanged);
+        connect(ui->tMegaFolders, &MegaItemTreeView::removeNodeClicked, this, &NodeSelectorTreeViewWidget::onDeleteClicked);
+        connect(ui->tMegaFolders, &MegaItemTreeView::getMegaLinkClicked, this, &NodeSelectorTreeViewWidget::onGenMEGALinkClicked);
+        connect(ui->tMegaFolders, &QTreeView::doubleClicked, this, &NodeSelectorTreeViewWidget::onItemDoubleClick);
+        connect(ui->bForward, &QPushButton::clicked, this, &NodeSelectorTreeViewWidget::onGoForwardClicked);
+        connect(ui->bBack, &QPushButton::clicked, this, &NodeSelectorTreeViewWidget::onGoBackClicked);
+        connect(ui->tMegaFolders->header(), &QHeaderView::sectionResized, this, &NodeSelectorTreeViewWidget::onSectionResized);
+        connect(mModel.get(), &QAbstractItemModel::rowsInserted, this, &NodeSelectorTreeViewWidget::onRowsInserted);
+
+        connect(mModel.get(), &MegaItemModel::blockUi, this, &NodeSelectorTreeViewWidget::setLoadingSceneVisible);
+
+        setRootIndex(QModelIndex());
+        checkNewFolderButtonVisibility();
+    }
+
     auto indexesAndSelected = mModel->needsToBeExpandedAndSelected();
     if(!indexesAndSelected.first.isEmpty())
     {
@@ -227,10 +240,11 @@ void NodeSelectorTreeViewWidget::onExpandReady()
                  ui->tMegaFolders->selectionModel()->setCurrentIndex(proxyIndex, QItemSelectionModel::ClearAndSelect | QItemSelectionModel::Rows);
                  ui->tMegaFolders->selectionModel()->select(proxyIndex, QItemSelectionModel::ClearAndSelect | QItemSelectionModel::Rows);
              }
-        }   
+        }
     }
-}
 
+    setLoadingSceneVisible(false);
+}
 
 void NodeSelectorTreeViewWidget::onGoBackClicked()
 {
@@ -291,10 +305,9 @@ void NodeSelectorTreeViewWidget::onbNewFolderClicked()
             {
                 idx = mProxyModel->getIndexFromNode(MegaSyncApp->getRootNode());
             }
+            mProxyModel->setExpandMapped(true);
             mProxyModel->addNode(std::move(newNode), idx);
         }
-       // selectNodeHandle(handle);
-        setSelectedNodeHandle(handle);
     }
 }
 
@@ -336,11 +349,6 @@ void NodeSelectorTreeViewWidget::onItemDoubleClick(const QModelIndex &index)
     mNavigationInfo.appendToBackward(getHandleByIndex(ui->tMegaFolders->rootIndex()));
     mNavigationInfo.removeFromForward(mProxyModel->getHandle(index));
 
-//    if(mModel->canFetchMore(index))
-//    {
-//        mModel->canFetchMore(index);
-//    }
-
     setRootIndex(index);
     checkBackForwardButtons();
     checkNewFolderButtonVisibility();
@@ -359,13 +367,11 @@ void NodeSelectorTreeViewWidget::setLoadingSceneVisible(bool blockUi)
 {
     if(blockUi)
     {
-        //mProxyModel->blockSignals(true);
         ui->tMegaFolders->blockSignals(true);
         ui->tMegaFolders->header()->blockSignals(true);
     }
     else
     {
-        //mProxyModel->blockSignals(false);
         ui->tMegaFolders->blockSignals(false);
         ui->tMegaFolders->header()->blockSignals(false);
     }
@@ -373,31 +379,77 @@ void NodeSelectorTreeViewWidget::setLoadingSceneVisible(bool blockUi)
     mLoadingScene.changeLoadingSceneStatus(blockUi);
 }
 
-void NodeSelectorTreeViewWidget::onSelectionChanged(const QItemSelection& selected, const QItemSelection& deselected)
+void NodeSelectorTreeViewWidget::onUiBlocked(bool state)
 {
-    Q_UNUSED(deselected)
-    if(mSelectMode == UPLOAD_SELECT || mSelectMode == DOWNLOAD_SELECT)
+    if(mUiBlocked != state)
     {
-        ui->bOk->setEnabled(true);
-        return;
-    }
-    foreach(auto& index, selected.indexes())
-    {
-        auto source_idx = mProxyModel->getIndexFromSource(index);
-        MegaItem *item = static_cast<MegaItem*>(source_idx.internalPointer());
-        if(item)
+        mUiBlocked = state;
+
+        ui->bBack->setDisabled(state);
+        ui->bForward->setDisabled(state);
+        ui->bNewFolder->setDisabled(state);
+        ui->bCancel->setDisabled(state);
+
+        if(!state)
         {
-            if(mSelectMode == NodeSelector::STREAM_SELECT)
-            {
-                ui->bOk->setEnabled(item->getNode()->isFile());
-            }
-            else if(mSelectMode == NodeSelector::SYNC_SELECT)
-            {
-                ui->bOk->setEnabled(item->getNode()->isFolder());
-            }
+            auto selection = ui->tMegaFolders->selectionModel()->selectedIndexes();
+            checkOkButton(selection);
+        }
+        else
+        {
+            ui->bOk->setDisabled(true);
         }
     }
 }
+
+void NodeSelectorTreeViewWidget::onSelectionChanged(const QItemSelection& selected, const QItemSelection& deselected)
+{
+    Q_UNUSED(deselected)
+
+    if(!mUiBlocked)
+    {
+        checkOkButton(selected.indexes());
+    }
+}
+
+void NodeSelectorTreeViewWidget::checkOkButton(const QModelIndexList &selected)
+{
+    auto result(false);
+
+    if(!selected.isEmpty())
+    {
+        if(mSelectMode == UPLOAD_SELECT || mSelectMode == DOWNLOAD_SELECT)
+        {
+            result = true;
+        }
+        else
+        {
+            int correctSelected(0);
+
+            foreach(auto& index, selected)
+            {
+                auto source_idx = mProxyModel->getIndexFromSource(index);
+                MegaItem *item = static_cast<MegaItem*>(source_idx.internalPointer());
+                if(item)
+                {
+                    if(mSelectMode == NodeSelector::STREAM_SELECT)
+                    {
+                        item->getNode()->isFile() ? correctSelected++ : correctSelected;
+                    }
+                    else if(mSelectMode == NodeSelector::SYNC_SELECT)
+                    {
+                        item->getNode()->isFolder() ? correctSelected++ : correctSelected;
+                    }
+                }
+            }
+
+            result = correctSelected == selected.size() ? true : false;
+        }
+    }
+
+    ui->bOk->setEnabled(result);
+}
+
 
 void NodeSelectorTreeViewWidget::onDeleteClicked()
 {
@@ -735,7 +787,6 @@ void NodeSelectorTreeViewWidgetIncomingShares::setRootIndex_Reimplementation(con
 {
     if(source_idx.isValid())
     {
-        mProxyModel->showOwnerColumn(false);
         QModelIndex in_share_idx = getParentIncomingShareByIndex(source_idx);
         in_share_idx = in_share_idx.sibling(in_share_idx.row(), MegaItemModel::COLUMN::USER);
         QPixmap pm = qvariant_cast<QPixmap>(in_share_idx.data(Qt::DecorationRole));

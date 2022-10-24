@@ -19,10 +19,22 @@ MegaItem::MegaItem(std::unique_ptr<MegaNode> node, bool showFiles, MegaItem *par
     mStatus(STATUS::NONE),
     mChildrenSet(false),
     mRequestingChildren(false),
+    mShowFiles(showFiles),
     mNode(std::move(node)),
-    mOwner(nullptr),
-    mShowFiles(showFiles)
+    mOwner(nullptr)
 { 
+    if(mShowFiles)
+    {
+        mChildrenCounter = MegaSyncApp->getMegaApi()->getNumChildren(mNode.get());
+    }
+    else
+    {
+        mChildrenCounter = MegaSyncApp->getMegaApi()->getNumChildFolders(mNode.get());
+    }
+
+    //If it has no children, the item does not need to be init
+    mChildrenAreInit = mChildrenCounter > 0 ? false : true;
+
     if(mNode->isFile() || mNode->isInShare())
     {
         mStatus = STATUS::NONE;
@@ -62,35 +74,56 @@ MegaItem::MegaItem(std::unique_ptr<MegaNode> node, bool showFiles, MegaItem *par
     }
 }
 
+MegaItem::~MegaItem()
+{
+    qDeleteAll(mChildItems);
+    mChildItems.clear();
+}
 
 std::shared_ptr<mega::MegaNode> MegaItem::getNode() const
 {
     return mNode;
 }
 
-void MegaItem::setChildren(mega::MegaNodeList *nodes)
-{
-    mChildNodes.reset(nodes);
-    mRequestingChildren = false;
-}
-
-void MegaItem::createChildItems()
+void MegaItem::createChildItems(std::unique_ptr<mega::MegaNodeList> nodeList)
 {
     if(mNode->isFile())
     {
         return;
     }
 
-    for(int i = 0; i < mChildNodes->size(); i++)
+    for(int i = 0; i < nodeList->size(); i++)
     {
-        auto node = std::unique_ptr<MegaNode>(mChildNodes->get(i)->copy());
-        mChildItems.append(new MegaItem(move(node), mShowFiles, this));
+        auto node = std::unique_ptr<MegaNode>(nodeList->get(i)->copy());
+        mChildItems.append(new MegaItem(move(node),mShowFiles, this));
     }
+
+    mRequestingChildren = false;
+    mChildrenAreInit = true;
 }
 
 bool MegaItem::childrenAreInit()
 {
-    return mChildNodes != nullptr;
+    return mChildrenAreInit;
+}
+
+bool MegaItem::canFetchMore()
+{
+    if(!mChildrenAreInit)
+    {
+        return true;
+    }
+    else
+    {
+        if(mChildrenCounter == 0)
+        {
+            return false;
+        }
+        else
+        {
+            return mChildItems.isEmpty();
+        }
+    }
 }
 
 bool MegaItem::requestingChildren() const
@@ -120,12 +153,19 @@ MegaItem *MegaItem::getChild(int i)
 
 int MegaItem::getNumChildren()
 {
-    if(mNode->isFile() || !mChildNodes)
+    if(mNode->isFile())
     {
         return 0;
     }
-    //qDebug() << mChildNodes->size();
-    return mChildNodes->size();
+    else if(!childrenAreInit())
+    {
+        return mChildrenCounter;
+    }
+    else
+    {
+        return mChildItems.size();
+    }
+    //return mChildNodes->size();
 }
 
 int MegaItem::getNumItemChildren()
@@ -250,17 +290,19 @@ bool MegaItem::isSyncable()
             && mStatus != SYNC_CHILD;
 }
 
-void MegaItem::addNode(std::unique_ptr<MegaNode>node)
+MegaItem* MegaItem::addNode(std::shared_ptr<MegaNode>node)
 {
-    mChildNodes->addNode(node.get()->copy());
-    mChildItems.append(new MegaItem(move(node), mShowFiles, this));
+    auto nodeCopy(node.get()->copy());
+    auto item = new MegaItem(std::unique_ptr<MegaNode>(nodeCopy),mShowFiles, this);
+    mChildItems.append(item);
+    return item;
 }
 
-void MegaItem::removeNode(std::shared_ptr<MegaNode> node)
+MegaItem* MegaItem::removeNode(std::shared_ptr<MegaNode> node)
 {
     if (!node)
     {
-        return;
+        return nullptr;
     }
 
     for (int i = 0; i < mChildItems.size(); i++)
@@ -268,15 +310,9 @@ void MegaItem::removeNode(std::shared_ptr<MegaNode> node)
         if (mChildItems[i]->getNode()->getHandle() == node->getHandle())
         {
             MegaItem* item = mChildItems.takeAt(i);
-            delete item;
-            return;
+            return item;
         }
     }
-}
-
-void MegaItem::displayFiles(bool enable)
-{
-    mShowFiles = enable;
 }
 
 int MegaItem::row()
@@ -286,12 +322,6 @@ int MegaItem::row()
         return parent->mChildItems.indexOf(const_cast<MegaItem*>(this));
     }
     return 0;
-}
-
-MegaItem::~MegaItem()
-{
-    qDeleteAll(mChildItems);
-    mChildItems.clear();
 }
 
 void MegaItem::calculateSyncStatus(const QStringList &folders)
