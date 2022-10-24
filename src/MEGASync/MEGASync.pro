@@ -148,7 +148,6 @@ SOURCES += $$PWD/MegaApplication.cpp \
     $$PWD/CommonMessages.cpp \
     $$PWD/ScanStageController.cpp \
     $$PWD/EventUpdater.cpp \
-    $$PWD/NodeSelectorLoadingDelegate.cpp \
     $$PWD/FolderTransferListener.cpp \
     $$PWD/BlockingStageProgressController.cpp
 
@@ -161,7 +160,6 @@ HEADERS += $$PWD/MegaApplication.h \
     $$PWD/CommonMessages.h \
     $$PWD/ScanStageController.h \
     $$PWD/EventUpdater.h \
-    $$PWD/NodeSelectorLoadingDelegate.h \
     $$PWD/FolderTransferListener.h \
     $$PWD/BlockingStageProgressController.h \
     $$PWD/FolderTransferEvents.h
@@ -258,6 +256,3 @@ CONFIG(release) {
 win32 {
     QMAKE_POST_LINK = $$quote(mt.exe -nologo -manifest $$shell_path($$PWD/../../contrib/cmake/MEGAsync.exe.manifest) -outputresource:$$shell_path($${OUTPATH}/$${TARGET}.exe);1$$escape_expand(\n\t))
 }
-
-FORMS += \
-    NodeSelectorLoadingDelegate.ui

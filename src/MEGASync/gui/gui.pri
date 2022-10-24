@@ -73,7 +73,9 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/CancelConfirmWidget.cpp \
     $$PWD/NodeNameSetterDialog/NodeNameSetterDialog.cpp \
     $$PWD/NodeNameSetterDialog/NewFolderDialog.cpp \
-    $$PWD/NodeNameSetterDialog/RenameNodeDialog.cpp
+    $$PWD/NodeNameSetterDialog/RenameNodeDialog.cpp \
+    $$PWD/NodeSelectorLoadingDelegate.cpp
+
 
 HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/AutoResizeStackedWidget.h \
@@ -151,7 +153,8 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/CancelConfirmWidget.h \
     $$PWD/NodeNameSetterDialog/NodeNameSetterDialog.h \
     $$PWD/NodeNameSetterDialog/NewFolderDialog.h \
-    $$PWD/NodeNameSetterDialog/RenameNodeDialog.h
+    $$PWD/NodeNameSetterDialog/RenameNodeDialog.h \
+    $$PWD/NodeSelectorLoadingDelegate.h
 
 INCLUDEPATH += $$PWD
 
@@ -202,7 +205,9 @@ win32 {
                 $$PWD/win/ScanningWidget.ui \
                 $$PWD/win/CancelConfirmWidget.ui \
                 $$PWD/win/NodeNameSetterDialog.ui \
-                $$PWD/win/NotificationsSettings.ui
+                $$PWD/win/NotificationsSettings.ui \
+                $$PWD/win/NodeSelectorTreeViewWidget.ui \
+                $$PWD/win/NodeSelectorLoadingDelegate.ui
 }
 
 macx {
@@ -250,7 +255,10 @@ macx {
                 $$PWD/macx/ScanningWidget.ui \
                 $$PWD/macx/CancelConfirmWidget.ui \
                 $$PWD/macx/NodeNameSetterDialog.ui \
-                $$PWD/macx/NotificationsSettings.ui
+                $$PWD/macx/NotificationsSettings.ui \
+                $$PWD/macx/NodeSelectorTreeViewWidget.ui \
+                $$PWD/macx/NodeSelectorLoadingDelegate.ui
+
 
     #Asset catalog need to load SF symbol images of toolbar items for custom NSToolbar
     QMAKE_ASSET_CATALOGS += $$PWD/images/Images.xcassets
@@ -321,13 +329,13 @@ unix:!macx {
                 $$PWD/linux/CancelConfirmWidget.ui \
                 $$PWD/linux/ScanningWidget.ui \
                 $$PWD/linux/NodeNameSetterDialog.ui \
-                $$PWD/linux/NotificationsSettings.ui
+                $$PWD/linux/NotificationsSettings.ui \
+                $$PWD/linux/NodeSelectorTreeViewWidget.ui \
+                $$PWD/linux/NodeSelectorLoadingDelegate.ui
+
 
     HEADERS += $$PWD/PermissionsDialog.h \
                $$PWD/PermissionsWidget.h
     SOURCES += $$PWD/PermissionsDialog.cpp \
                $$PWD/PermissionsWidget.cpp
 }
-
-FORMS += \
-    $$PWD/NodeSelectorTreeViewWidget.ui
