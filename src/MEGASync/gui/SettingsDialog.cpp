@@ -1172,7 +1172,8 @@ void SettingsDialog::updateStorageElements()
     {
         mUi->bStorageDetails->setEnabled(true);
 
-        if (accountType == Preferences::ACCOUNT_TYPE_BUSINESS)
+        if (accountType == Preferences::ACCOUNT_TYPE_BUSINESS
+                || accountType == Preferences::ACCOUNT_TYPE_PRO_FLEXI)
         {
             mUi->lStorage->setText(tr("%1 used").arg(Utilities::getSizeString(usedStorage)));
         }
@@ -1201,7 +1202,8 @@ void SettingsDialog::updateBandwidthElements()
         mUi->lBandwidthFree->show();
         mUi->lBandwidthFree->setText(Utilities::getSizeString(usedBandwidth));
     }
-    else if (accountType == Preferences::ACCOUNT_TYPE_BUSINESS)
+    else if (accountType == Preferences::ACCOUNT_TYPE_BUSINESS
+             || accountType == Preferences::ACCOUNT_TYPE_PRO_FLEXI)
     {
         mUi->lBandwidth->setText(tr("%1 used").arg(Utilities::getSizeString(usedBandwidth)));
     }
@@ -1267,6 +1269,13 @@ void SettingsDialog::updateAccountElements()
         case Preferences::ACCOUNT_TYPE_BUSINESS:
             icon = Utilities::getCachedPixmap(QString::fromUtf8(":/images/Small_Business.png"));
             mUi->lAccountType->setText(tr("Business"));
+            mUi->bUpgrade->hide();
+            mUi->pStorageQuota->hide();
+            mUi->pTransferQuota->hide();
+            break;
+        case Preferences::ACCOUNT_TYPE_PRO_FLEXI:
+            icon = Utilities::getCachedPixmap(QString::fromUtf8(":/images/Small_Pro_Flexi.png"));
+            mUi->lAccountType->setText(tr("Pro Flexi"));
             mUi->bUpgrade->hide();
             mUi->pStorageQuota->hide();
             mUi->pTransferQuota->hide();
