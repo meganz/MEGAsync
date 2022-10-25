@@ -6,40 +6,79 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>440</width>
+    <width>405</width>
     <height>433</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">QScrollBar:horizontal {
+height: 16px;
+}
+
+#cbAlwaysUploadToLocation
+{
+    spacing: 10px;
+}
+
+#lFolderName
+{
+  color: #242424;
+  font-family: SF Pro Text;
+  font-size: 13px;
+}</string>
+  </property>
   <layout class="QVBoxLayout" name="verticalLayout">
+   <property name="leftMargin">
+    <number>31</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>31</number>
+   </property>
+   <property name="bottomMargin">
+    <number>0</number>
+   </property>
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout_3">
      <property name="spacing">
       <number>0</number>
      </property>
      <property name="topMargin">
-      <number>5</number>
+      <number>0</number>
      </property>
      <property name="bottomMargin">
-      <number>12</number>
+      <number>0</number>
      </property>
      <item alignment="Qt::AlignVCenter">
       <widget class="QPushButton" name="bBack">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>0</height>
+        </size>
+       </property>
        <property name="maximumSize">
         <size>
-         <width>30</width>
+         <width>40</width>
          <height>16777215</height>
         </size>
        </property>
+       <property name="focusPolicy">
+        <enum>Qt::NoFocus</enum>
+       </property>
        <property name="styleSheet">
-        <string notr="true">QPushButton {
-    border: none;
-    background-color: transparent;
-    padding: 0px;
-}
-</string>
+        <string notr="true"/>
        </property>
        <property name="text">
         <string/>
@@ -55,22 +94,42 @@
          <height>16</height>
         </size>
        </property>
+       <property name="autoDefault">
+        <bool>false</bool>
+       </property>
       </widget>
      </item>
      <item alignment="Qt::AlignVCenter">
       <widget class="QPushButton" name="bForward">
+       <property name="enabled">
+        <bool>true</bool>
+       </property>
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>0</height>
+        </size>
+       </property>
        <property name="maximumSize">
         <size>
-         <width>30</width>
+         <width>40</width>
          <height>16777215</height>
         </size>
        </property>
+       <property name="focusPolicy">
+        <enum>Qt::NoFocus</enum>
+       </property>
+       <property name="toolTipDuration">
+        <number>-2</number>
+       </property>
        <property name="styleSheet">
-        <string notr="true">QPushButton {
-    border: none;
-    background-color: transparent;
-    padding: 0px;
-}</string>
+        <string notr="true"/>
        </property>
        <property name="text">
         <string/>
@@ -85,6 +144,9 @@
          <width>16</width>
          <height>16</height>
         </size>
+       </property>
+       <property name="autoDefault">
+        <bool>false</bool>
        </property>
       </widget>
      </item>
@@ -108,6 +170,7 @@
       <widget class="QLabel" name="lFolderName">
        <property name="font">
         <font>
+         <family>SF Pro 58</family>
          <pointsize>-1</pointsize>
          <bold>false</bold>
          <strikeout>false</strikeout>
@@ -233,97 +296,30 @@ font-size:17px;
      </property>
      <property name="styleSheet">
       <string notr="true">QTreeView {
-    show-decoration-selected: 1;
-	selection-background-color: #3393df;
-	 font-size: 12px;
- 	qproperty-indentation: 18; 
-	outline:0;
-}
-
-QTreeView::item:disabled
-{
-	background-color:transparent;
-}
-
-QTreeView::item:hover {
-   background-color:transparent;
-}
-
-QTreeView::branch:hover {
-background-color:transparent;
-}
-
-QTreeView::branch:selected {
-background-color: #3393df;
-}
-
-QTreeView::item:selected {
-    border: transparent;
-	 color: white;
-    background-color: #3393df;
+show-decoration-selected: 1;
+selection-background-color: #3393DF;
+selection-color:white;
+font-size: 14px;
+qproperty-indentation: 18;
+outline:none;
 }
 
 QTreeView::branch:selected:closed:has-children:adjoins-item {
-    border-image: none;
-	image:url(://images/node_selector/Icon-Small-Arrow-Left-hover.png) ;
+border-image: none;
+image:url(://images/node_selector/Icon-Small-Arrow-Left-hover.png) ;
 }
-
 QTreeView::branch:selected:open:has-children:adjoins-item {
-    border-image: none;
-    image: url(://images/node_selector/Icon-Small-Arrow-Down-hover.png) ;
+border-image: none;
+image: url(://images/node_selector/Icon-Small-Arrow-Down-hover.png) ;
 }
-
 QTreeView::branch:!selected:closed:has-children:adjoins-item {
-    border-image: none;
-    image: url(://images/node_selector/Icon-Small-Arrow-Left.png) ;
+border-image: none;
+image: url(://images/node_selector/Icon-Small-Arrow-Left.png) ;
 }
-
 QTreeView::branch:!selected:open:has-children:adjoins-item {
-    border-image: none;
-    image: url(://images/node_selector/Icon-Small-Arrow-Down.png) ;
+border-image: none;
+image: url(://images/node_selector/Icon-Small-Arrow-Down.png) ;
 }
-
-QHeaderView
-{
-background: #FFFFFF;
-font-size: 12px;
-color:#576879;
-padding-top: 2px;
-}
-
-QHeaderView::section {
-background: #FFFFFF;
-border-left:1px solid #dadada;			
-border-top:0 px;
-border-bottom:0px;					 					 				 					 	
-border-right:0px;
-padding-left:3px;
-}
-
-
-QHeaderView::section::first
-{
-padding-left: 0px;
-border-left:0px;		
-}
-
-QHeaderView::down-arrow { 
-width: 4px; height:6px;
-subcontrol-position: right;
-top:-2px;
-left:0px;
-padding-right:10px;
-} 
-
-QHeaderView::up-arrow {
-width: 4px; height:6px;
-subcontrol-position: right;
-top:-2px;
-left:0px;
-padding-right:10px;
-} 
-
-
 
 
 </string>
@@ -335,7 +331,7 @@ padding-right:10px;
       <enum>QFrame::Plain</enum>
      </property>
      <property name="alternatingRowColors">
-      <bool>false</bool>
+      <bool>true</bool>
      </property>
      <property name="selectionMode">
       <enum>QAbstractItemView::SingleSelection</enum>
@@ -371,6 +367,12 @@ padding-right:10px;
    </item>
    <item>
     <widget class="QCheckBox" name="cbAlwaysUploadToLocation">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
      <property name="text">
       <string>Always upload to this destination</string>
      </property>
@@ -385,6 +387,9 @@ padding-right:10px;
       </size>
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout">
+      <property name="spacing">
+       <number>-1</number>
+      </property>
       <property name="leftMargin">
        <number>0</number>
       </property>
@@ -444,6 +449,7 @@ padding-right:10px;
   </customwidget>
  </customwidgets>
  <resources>
+  <include location="../Resources_macx.qrc"/>
   <include location="../Resources_macx.qrc"/>
  </resources>
  <connections/>
