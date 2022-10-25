@@ -2903,11 +2903,6 @@ Transfers will automatically resume when you re-open the app.</numerusform>
         <translation>Storage quota exceeded</translation>
     </message>
     <message>
-        <source>Business account expired</source>
-        <translatorcomment>Label to show that the current business account is expired during a SDK operation.</translatorcomment>
-        <translation>Your business account has expired</translation>
-    </message>
-    <message>
         <source>Foreign target storage quota reached</source>
         <translatorcomment>Label to show that foreign target account has exceeded its storage quota during a SDK operation.</translatorcomment>
         <translation>The sync folder owner’s account has exceeded their storage quota.</translation>
@@ -3001,6 +2996,11 @@ Transfers will automatically resume when you re-open the app.</numerusform>
         <source>You can&apos;t run MEGA Desktop App from this location. Move it into the Applications folder then run it.</source>
         <translatorcomment>Error message shown when the user is trying to run MEGA Desktop App from a path different than Applications. Only affects to macOS.</translatorcomment>
         <translation>You can&apos;t run MEGA Desktop App from this location. Move it into the Applications folder then run it.</translation>
+    </message>
+    <message>
+        <source>Account expired (business or Pro Flexi)</source>
+        <translatorcomment>Label to show that the current account (either business or Pro Flexi) is expired during a SDK operation.</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5135,6 +5135,11 @@ Computer will enter sleep mode once these are complete.</source>
     <message>
         <source>Your operating system doesn&apos;t allow its sleep setting to be overwritten.</source>
         <translatorcomment>Sleep/Active mode: Error messagebox text when the pc awake mode could not be activated after activating the feature using the checkbox.</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pro Flexi</source>
+        <translatorcomment>Text label indicating the Pro Flexi tier of account type in Account pane, next to the shield icon indicating also the type of account.</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
 </context>
