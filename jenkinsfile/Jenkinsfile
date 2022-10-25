@@ -6,6 +6,8 @@ pipeline {
         booleanParam(name: 'BUILD_PDFIUM', defaultValue: false, description: 'Should we build pdfium before building MEGAsync?')
         booleanParam(name: 'BUILD_LINUX', defaultValue: true, description: 'Should we build MEGAsync for Linux?')
         booleanParam(name: 'BUILD_MAC', defaultValue: true, description: 'Should we build MEGAsync for MAC?')
+        booleanParam(name: 'IS_RELEASE', defaultValue: false, description: 'Is this a release?')
+        string(name: 'RELEASE_CANDIDATE', defaultValue: '', description: 'Which Release Candidate is it? i.e: RC1, RC2, etc')
     }
 
     options { 
@@ -63,7 +65,9 @@ pipeline {
                                 build job: '../MEGAsync/main', wait: true, propagate: true, parameters: [
                                     string(name: 'MEGASYNC_BRANCH', value: "${env.BRANCH_NAME}"),
                                     booleanParam(name: 'BUILD_LINUX', value: false),
-                                    booleanParam(name: 'BUILD_MAC', value: true)
+                                    booleanParam(name: 'BUILD_MAC', value: true),
+                                    booleanParam(name: 'IS_RELEASE', value: "${IS_RELEASE}"),
+                                    string(name: 'RELEASE_CANDIDATE', value: "${RELEASE_CANDIDATE}")
                                     ]
                             }
                         }
@@ -81,7 +85,9 @@ pipeline {
                                 build job: '../MEGAsync/main', wait: true, propagate: true, parameters: [
                                     string(name: 'MEGASYNC_BRANCH', value: "${env.BRANCH_NAME}"),
                                     booleanParam(name: 'BUILD_LINUX', value: true),
-                                    booleanParam(name: 'BUILD_MAC', value: false)
+                                    booleanParam(name: 'BUILD_MAC', value: false),
+                                    booleanParam(name: 'IS_RELEASE', value: "${IS_RELEASE}"),
+                                    string(name: 'RELEASE_CANDIDATE', value: "${RELEASE_CANDIDATE}")
                                     ]
                             }
                         }
