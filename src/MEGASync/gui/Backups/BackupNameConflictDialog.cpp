@@ -123,7 +123,6 @@ void BackupNameConflictDialog::openLink(QString link)
 void BackupNameConflictDialog::createWidgets()
 {
     QString conflictText;
-    int nbConflict (0);
 
     // Check conflicts and add widgets
     const auto currentNames = Utilities::getBackupsNames();
@@ -132,7 +131,7 @@ void BackupNameConflictDialog::createWidgets()
         if (currentNames.contains(it.value()))
         {
             // Remote conflict
-            addRenameWidget(it.key(), ++nbConflict);
+            addRenameWidget(it.key());
             continue;
         }
 
@@ -141,14 +140,14 @@ void BackupNameConflictDialog::createWidgets()
             if (itIn != it && itIn.value() == it.value())
             {
                 // Local conflict
-                addRenameWidget(it.key(), ++nbConflict);
+                addRenameWidget(it.key());
             }
         }
     }
 
     // Update texts
     auto conflicts = ui->wConflictZone->findChildren<BackupRenameWidget*>();
-    nbConflict = conflicts.size();
+    int nbConflict = conflicts.size();
     if (nbConflict == 1)
     {
         QString name (mBackupNames[conflicts.first()->getPath()]);
@@ -189,8 +188,18 @@ void BackupNameConflictDialog::insertHLine()
     ui->wConflictZone->layout()->addWidget(hLine);
 }
 
-void BackupNameConflictDialog::addRenameWidget(const QString& path, int conflictNumber)
+void BackupNameConflictDialog::addRenameWidget(const QString& path)
 {
+    auto conflicts = ui->wConflictZone->findChildren<BackupRenameWidget*>();
+    int conflictNumber = conflicts.size() + 1;
+    foreach(auto& conflict, conflicts)
+    {
+        if(conflict->getPath() == path)
+        {
+            return;
+        }
+    }
+
     // Insert line if needed (after the first conflict)
     if (conflictNumber > 1)
     {

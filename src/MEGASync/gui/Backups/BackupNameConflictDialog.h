@@ -34,7 +34,7 @@ private:
 
     void createWidgets();
     void insertHLine();
-    void addRenameWidget(const QString& path, int conflictNumber);
+    void addRenameWidget(const QString& path);
     bool checkBackupNames();
 };
 
