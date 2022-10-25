@@ -2846,6 +2846,9 @@ border-right:0px;
               </size>
              </property>
              <layout class="QHBoxLayout" name="horizontalLayout_42">
+              <property name="spacing">
+               <number>-1</number>
+              </property>
               <property name="leftMargin">
                <number>0</number>
               </property>
@@ -3150,7 +3153,7 @@ color:white;
                </property>
                <property name="minimumSize">
                 <size>
-                 <width>576</width>
+                 <width>0</width>
                  <height>20</height>
                 </size>
                </property>
@@ -3226,12 +3229,12 @@ color:white;
           </sizepolicy>
          </property>
          <property name="currentIndex">
-          <number>1</number>
+          <number>0</number>
          </property>
          <widget class="QWidget" name="pSavingBackups">
           <layout class="QHBoxLayout" name="horizontalLayout_35">
            <property name="spacing">
-            <number>4</number>
+            <number>-1</number>
            </property>
            <property name="leftMargin">
             <number>0</number>
@@ -3258,8 +3261,8 @@ color:white;
              </property>
             </spacer>
            </item>
-           <item>
-            <widget class="WaitingSpinnerWidget" name="wSpinningIndicatorBackups" native="true">
+           <item alignment="Qt::AlignHCenter">
+            <widget class="QWidget" name="wContainerSpinningBackups" native="true">
              <property name="minimumSize">
               <size>
                <width>16</width>
@@ -3272,6 +3275,28 @@ color:white;
                <height>16</height>
               </size>
              </property>
+             <widget class="QMacSpinningProgressIndicator" name="wSpinningIndicatorBackups" native="true">
+              <property name="geometry">
+               <rect>
+                <x>0</x>
+                <y>0</y>
+                <width>16</width>
+                <height>16</height>
+               </rect>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>16</width>
+                <height>16</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>16</width>
+                <height>16</height>
+               </size>
+              </property>
+             </widget>
             </widget>
            </item>
            <item>
@@ -5058,7 +5083,19 @@ margin-right: 32px;</string>
   <customwidget>
    <class>NotificationsSettings</class>
    <extends>QWidget</extends>
-   <header>notificationssettings.h</header>
+   <header location="global">NotificationsSettings.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>QMacSpinningProgressIndicator</class>
+   <extends>QWidget</extends>
+   <header location="global">QMacSpinningProgressIndicator.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>QSegmentedControl</class>
+   <extends>QWidget</extends>
+   <header location="global">QSegmentedControl.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
@@ -5072,23 +5109,6 @@ margin-right: 32px;</string>
    <extends>QTableView</extends>
    <header>BackupTableView.h</header>
    <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>WaitingSpinnerWidget</class>
-   <extends>QWidget</extends>
-   <header location="global">WaitingSpinnerWidget.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>QMacSpinningProgressIndicator</class>
-   <extends>QWidget</extends>
-   <header location="global">QMacSpinningProgressIndicator.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>QSegmentedControl</class>
-   <extends>QWidget</extends>
-   <header>qsegmentedcontrol.h</header>
   </customwidget>
  </customwidgets>
  <tabstops>
