@@ -29,7 +29,6 @@ UploadToMegaDialog::UploadToMegaDialog(MegaApi *megaApi, QWidget *parent) :
     ui->bChange->setEnabled(true);
     ui->bOK->setEnabled(true);
     ui->bOK->setDefault(true);
-    highDpiResize.init(this);
 }
 
 UploadToMegaDialog::~UploadToMegaDialog()
@@ -83,27 +82,29 @@ void UploadToMegaDialog::onRequestFinish(MegaApi *, MegaRequest *request, MegaEr
 
 void UploadToMegaDialog::on_bChange_clicked()
 {
-    std::unique_ptr<NodeSelector> nodeSelector(new NodeSelector(NodeSelector::UPLOAD_SELECT, this));
+    QPointer<NodeSelector> nodeSelector(new NodeSelector(NodeSelector::UPLOAD_SELECT, this));
     std::unique_ptr<MegaNode> defaultNode (megaApi->getNodeByPath(ui->eFolderPath->property(NODE_PATH_PROPERTY).toString().toUtf8().constData()));
     if (defaultNode)
     {
         nodeSelector->setSelectedNodeHandle(defaultNode->getHandle());
     }
 
-    int result = nodeSelector->exec();
-    if (nodeSelector && result == QDialog::Accepted)
+    Utilities::showDialog<NodeSelector>(nodeSelector, [nodeSelector, this]()
     {
-        MegaHandle selectedMegaFolderHandle = nodeSelector->getSelectedNodeHandle();
-        std::unique_ptr<const char[]> pathStr(megaApi->getNodePathByNodeHandle(selectedMegaFolderHandle));
-        if (pathStr)
+        if (nodeSelector->result() == QDialog::Accepted)
         {
-            QString path = QString::fromUtf8(pathStr.get());
-            ui->eFolderPath->setProperty(NODE_PATH_PROPERTY, path);
-            path.replace(QLatin1String("NO_KEY"), QCoreApplication::translate("MegaError", "Decryption error"));
-            path.replace(QLatin1String("CRYPTO_ERROR"), QCoreApplication::translate("MegaError", "Decryption error"));
-            ui->eFolderPath->setText(path);
+            MegaHandle selectedMegaFolderHandle = nodeSelector->getSelectedNodeHandle();
+            std::unique_ptr<const char[]> pathStr(megaApi->getNodePathByNodeHandle(selectedMegaFolderHandle));
+            if (pathStr)
+            {
+                QString path = QString::fromUtf8(pathStr.get());
+                ui->eFolderPath->setProperty(NODE_PATH_PROPERTY, path);
+                path.replace(QLatin1String("NO_KEY"), QCoreApplication::translate("MegaError", "Decryption error"));
+                path.replace(QLatin1String("CRYPTO_ERROR"), QCoreApplication::translate("MegaError", "Decryption error"));
+                ui->eFolderPath->setText(path);
+            }
         }
-    }
+    });
 }
 
 void UploadToMegaDialog::changeEvent(QEvent *event)

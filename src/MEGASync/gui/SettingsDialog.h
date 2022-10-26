@@ -9,7 +9,6 @@
 #include "MegaController.h"
 #include "../model/Model.h"
 #include "megaapi.h"
-#include "HighDpiResize.h"
 #include "control/Utilities.h"
 
 #include <QDialog>
@@ -63,6 +62,7 @@ public:
     enum SyncStateInformation {NO_SAVING_SYNCS = 0, SAVING_SYNCS = 1};
     void loadSyncSettings();
     void addSyncFolder(mega::MegaHandle megaFolderHandle);
+    void addSyncFolderAfterOverQuotaCheck(mega::MegaHandle megaFolderHandle);
 
     // Folders
     void updateUploadFolder();
@@ -232,14 +232,13 @@ private:
     Controller* mController;
     Model* mModel;
     mega::MegaApi* mMegaApi;
-    HighDpiResize mHighDpiResize;
     bool mProxyOnly;
     int mLoadingSettings;
     ThreadPool* mThreadPool;
     QStringList mLanguageCodes;
     QFutureWatcher<long long> mCacheSizeWatcher;
     QFutureWatcher<long long> mRemoteCacheSizeWatcher;
-    AccountDetailsDialog* mAccountDetailsDialog;
+    QPointer<AccountDetailsDialog> mAccountDetailsDialog;
     long long mCacheSize;
     long long mRemoteCacheSize;
     int mDebugCounter; // Easter Egg

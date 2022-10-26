@@ -38,26 +38,7 @@ void ChangePassword::onRequestFinish(mega::MegaApi* api, mega::MegaRequest* req,
             {
                 if (req->getFlag()) //2FA enabled
                 {
-                    QPointer<ChangePassword> dialog = this;
-                    QPointer<Login2FA> verification = new Login2FA(this);
-                    int result = verification->exec();
-                    if (!dialog || !verification || result != QDialog::Accepted)
-                    {
-                        if (dialog)
-                        {
-                            mUi->bOk->setEnabled(true);
-                        }
-                        delete verification;
-                        return;
-                    }
-
-                    QString pin = verification->pinCode();
-                    delete verification;
-
-                    mMegaApi->multiFactorAuthChangePassword(nullptr,
-                                                            newPassword().toUtf8().constData(),
-                                                            pin.toUtf8().constData(),
-                                                            mDelegateListener);
+                    show2FA(false);
                 }
                 else
                 {
@@ -84,27 +65,7 @@ void ChangePassword::onRequestFinish(mega::MegaApi* api, mega::MegaRequest* req,
             else if (e->getErrorCode() == MegaError::API_EFAILED
                      || e->getErrorCode() == MegaError::API_EEXPIRED)
             {
-                QPointer<ChangePassword> dialog = this;
-                QPointer<Login2FA> verification = new Login2FA(this);
-                verification->invalidCode(true);
-                int result = verification->exec();
-                if (!dialog || !verification || result != QDialog::Accepted)
-                {
-                    if (dialog)
-                    {
-                        mUi->bOk->setEnabled(true);
-                    }
-                    delete verification;
-                    return;
-                }
-
-                QString pin = verification->pinCode();
-                delete verification;
-
-                mMegaApi->multiFactorAuthChangePassword(nullptr,
-                                                        newPassword().toUtf8().constData(),
-                                                        pin.toUtf8().constData(),
-                                                        mDelegateListener);
+                show2FA(true);
             }
             else if (e->getErrorCode() == MegaError::API_ETOOMANY)
             {
@@ -121,6 +82,32 @@ void ChangePassword::onRequestFinish(mega::MegaApi* api, mega::MegaRequest* req,
             }
             break;
         }
+    }
+}
+
+void ChangePassword::show2FA(bool invalidCode)
+{
+    QPointer<ChangePassword> stillExists = this;
+    if(stillExists)
+    {
+        QPointer<Login2FA> verification = new Login2FA(this);
+        verification->invalidCode(invalidCode);
+        Utilities::showDialog<Login2FA>(verification, [verification, this]()
+        {
+            if (verification->result() == QDialog::Accepted)
+            {
+                QString pin = verification->pinCode();
+
+                mMegaApi->multiFactorAuthChangePassword(nullptr,
+                                                        newPassword().toUtf8().constData(),
+                                                        pin.toUtf8().constData(),
+                                                        mDelegateListener);
+            }
+            else
+            {
+                mUi->bOk->setEnabled(true);
+            }
+        });
     }
 }
 

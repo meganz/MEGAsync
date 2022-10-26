@@ -211,8 +211,6 @@ private:
     bool isShown = false;
     long long unseenNotifications = 0;
 
-    AccountDetailsDialog* accountDetailsDialog;
-
     QPointer<TransferManager> mTransferManager;
 
 #ifdef Q_OS_LINUX
@@ -257,6 +255,7 @@ protected:
     mega::MegaTransfer *activeUpload;
 
  private:
+    void onAddSyncDialogFinished(QPointer<BindFolderDialog> dialog);
     static double computeRatio(long long completed, long long remaining);
     void enableUserActions(bool value);
     void changeStatusState(StatusInfo::TRANSFERS_STATES newState,

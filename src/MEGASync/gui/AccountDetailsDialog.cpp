@@ -35,9 +35,6 @@ AccountDetailsDialog::AccountDetailsDialog(QWidget *parent) :
     // Get fresh data
     refresh();
 
-    // Init HiDPI
-    mHighDpiResize.init(this);
-
     // Subscribe to data updates (but detach after 1 callback)
     MegaSyncApp->attachStorageObserver(*this);
 }

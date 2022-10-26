@@ -78,8 +78,6 @@ private slots:
 
     void onPasswordTextChanged(QString text);
 
-private:
-    QPropertyAnimation *m_animation;
 
 signals:
     void pageChanged(int page);
@@ -112,6 +110,12 @@ protected:
     QTimer *animationTimer;
 
     QList<PreConfiguredSync> mPreconfiguredSyncs;
+
+private:
+    void onLocalFolderSet(const QString& path);
+    void show2FA(mega::MegaRequest *request, bool invalidCode);
+
+    QPropertyAnimation *m_animation;
 
 };
 

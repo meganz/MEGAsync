@@ -63,6 +63,8 @@ class Notificator;
 class MEGASyncDelegateListener;
 class ShellNotifier;
 class TransferMetadata;
+class DuplicatedNodeDialog;
+class LinkProcessor;
 
 enum GetUserStatsReason {
     USERSTATS_LOGGEDIN,
@@ -140,6 +142,7 @@ public:
     void migrateSyncConfToSdk(QString email = QString());
 
     mega::MegaApi *getMegaApi() { return megaApi; }
+    mega::MegaApi *getMegaApiFolders() { return megaApiFolders; }
     std::unique_ptr<mega::MegaApiLock> megaApiLock;
 
     void cleanLocalCaches(bool all = false);
@@ -187,7 +190,7 @@ public:
 
     MegaSyncLogger& getLogger() const;
     void pushToThreadPool(std::function<void()> functor);
-    SetupWizard *getSetupWizard() const;
+    QPointer<SetupWizard> getSetupWizard() const;
 
     TransfersModel* getTransfersModel(){return mTransfersModel;}
 
@@ -198,7 +201,7 @@ public:
      */
     void fetchNodes(QString email = QString());
     void whyAmIBlocked(bool periodicCall = false);
-    bool showSyncOverquotaDialog();
+    QPointer<OverQuotaDialog> showSyncOverquotaDialog();
     bool finished() const;
     bool isInfoDialogVisible() const;
 
@@ -218,15 +221,6 @@ public:
     void raiseInfoDialog();
 
     void checkAndCloseOpenDialogs();
-    template <class DialogType>
-    void removeDialog(DialogType& dialog)
-    {
-        if(dialog)
-        {
-            delete dialog;
-            dialog = nullptr;
-        }
-    }
 
 signals:
     void startUpdaterThread();
@@ -235,7 +229,6 @@ signals:
     void clearAllFinishedTransfers();
     void clearFinishedTransfer(int transferTag);
     void fetchNodesAfterBlock();
-    void closeSetupWizard();
     void setupWizardCreated();
     void unblocked();
     void nodeMoved(mega::MegaHandle handle);
@@ -260,6 +253,7 @@ public slots:
     void showChangeLog();
     void uploadActionClicked();
     void uploadActionClickedFromWindow(QWidget *openFrom);
+    void uploadActionClickedFromWindowAfterOverQuotaCheck(QWidget *openFrom);
     void loginActionClicked();
     void copyFileLink(mega::MegaHandle fileHandle, QString nodeKey = QString());
     void downloadActionClicked();
@@ -304,9 +298,10 @@ public slots:
     void showInfoDialogNotifications();
     void triggerInstallUpdate();
     void scanningAnimationStep();
-    void setupWizardFinished(int result);
-    void storageOverquotaDialogFinished(int result);
-    void infoWizardDialogFinished(int result);
+    void setupWizardFinished(QPointer<SetupWizard>);
+    void clearDownloadAndPendingLinks(QDialog *dialog);
+    void infoWizardDialogFinished(QPointer<InfoWizard>);
+    void closeInfoWizard();
     void runConnectivityCheck();
     void onConnectivityCheckSuccess();
     void onConnectivityCheckError();
@@ -352,6 +347,12 @@ private slots:
 
     void startingUpload();
     void cancelScanningStage();
+
+protected slots:
+    void onUploadsCheckedAndReady(QPointer<DuplicatedNodeDialog> checkDialog);
+    void onPasteMegaLinksDialogFinish(QPointer<PasteMegaLinksDialog>);
+    void onImportDialogFinish(QPointer<ImportMegaLinksDialog>);
+    void onDownloadFromMegaFinished(QPointer<DownloadFromMegaDialog>);
 
 protected:
     void createTrayIcon();
@@ -399,7 +400,7 @@ protected:
     QAction *windowsSettingsAction;
 #endif
 
-    std::unique_ptr<VerifyLockMessage> verifyEmail;
+    QPointer<VerifyLockMessage> mVerifyEmail;
     QPointer<QMenu> infoDialogMenu;
     QPointer<QMenu> guestMenu;
     QMenu emptyMenu;
@@ -433,8 +434,8 @@ protected:
     std::unique_ptr<QTimer> onDeferredPreferencesSyncTimer;
     QTimer proExpirityTimer;
     int scanningAnimationIndex;
-    SetupWizard *setupWizard;
-    SettingsDialog *settingsDialog;
+    QPointer<SetupWizard> mSetupWizard;
+    QPointer<SettingsDialog> mSettingsDialog;
     QPointer<InfoDialog> infoDialog;
     std::shared_ptr<Preferences> preferences;
     Model *model;
@@ -457,7 +458,7 @@ protected:
     mega::MegaHandle folderUploadTarget;
     QPointer<QFileDialog> folderUploadSelector;
     QPointer<StreamingFromMegaDialog> streamSelector;
-    QPointer<MultiQFileDialog> multiUploadFileDialog;
+    QPointer<MultiQFileDialog> mMultiUploadFileDialog;
 
     QQueue<QString> uploadQueue;
     QQueue<WrappedNode *> downloadQueue;
@@ -487,8 +488,8 @@ protected:
     int syncState;
     std::shared_ptr<mega::MegaPricing> mPricing;
     std::shared_ptr<mega::MegaCurrency> mCurrency;
-    UpgradeOverStorage *storageOverquotaDialog;
-    InfoWizard *infoWizard;
+    QPointer<UpgradeOverStorage> mStorageOverquotaDialog;
+    QPointer<InfoWizard> mInfoWizard;
     mega::QTMegaListener *delegateListener;
     MegaUploader *uploader;
     MegaDownloader *downloader;
@@ -499,11 +500,11 @@ protected:
     std::unique_ptr<std::thread> mMutexStealerThread;
 
     QTranslator translator;
-    PasteMegaLinksDialog *pasteMegaLinksDialog;
-    ChangeLogDialog *changeLogDialog;
-    ImportMegaLinksDialog *importDialog;
-    QMessageBox *exitDialog;
-    QPointer<NodeSelector> downloadNodeSelector;
+    QPointer<PasteMegaLinksDialog> mPasteMegaLinksDialog;
+    std::shared_ptr<LinkProcessor> mLinkProcessor;
+    QPointer<ChangeLogDialog> mChangeLogDialog;
+    QPointer<ImportMegaLinksDialog> mImportDialog;
+    QPointer<NodeSelector> mDownloadNodeSelector;
     QString lastTrayMessage;
     QStringList extraLinks;
     QString currentLanguageCode;
@@ -556,7 +557,7 @@ protected:
     bool blockStateSet = false;
     bool whyamiblockedPeriodicPetition = false;
     friend class DeferPreferencesSyncForScope;
-    std::shared_ptr<TransferQuota> transferQuota;
+    std::shared_ptr<TransferQuota> mTransferQuota;
     bool transferOverQuotaWaitTimeExpiredReceived;
     std::shared_ptr<DesktopNotifications> mOsNotifications;
     QMutex mMutexOpenUrls;

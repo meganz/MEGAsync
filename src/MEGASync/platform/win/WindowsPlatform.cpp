@@ -1426,21 +1426,6 @@ bool WindowsPlatform::isUserActive()
     return true;
 }
 
-void WindowsPlatform::showBackgroundWindow(QDialog *window)
-{
-    Q_ASSERT(!window->parent());
-    //Recreate the minimized state in case the dialog is lost behind desktop windows
-    window->showMinimized();
-    window->showNormal();
-}
-
-void WindowsPlatform::execBackgroundWindow(QDialog *window)
-{
-    showBackgroundWindow(window);
-    window->activateWindow();
-    window->exec();
-}
-
 ShellNotifier::~ShellNotifier()
 {
     if (!mThread.joinable()) // thread wasn't started

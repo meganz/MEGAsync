@@ -4,7 +4,6 @@
 #include <QDialog>
 
 #include "FolderBinder.h"
-#include "HighDpiResize.h"
 
 class MegaApplication;
 
@@ -46,8 +45,6 @@ private:
     QStringList syncNames;
     QStringList localFolders;
     QStringList megaFolderPaths;
-
-    HighDpiResize highDpiResize;
 };
 
 #endif // BINDFOLDERDIALOG_H

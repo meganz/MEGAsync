@@ -3,7 +3,6 @@
 
 #include "Utilities.h"
 #include "control/Preferences.h"
-#include "HighDpiResize.h"
 
 #include <QDialog>
 
@@ -23,7 +22,6 @@ public:
 
 private:
     Ui::AccountDetailsDialog* mUi;
-    HighDpiResize mHighDpiResize;
 };
 
 #endif // ACCOUNTDETAILSDIALOG_H

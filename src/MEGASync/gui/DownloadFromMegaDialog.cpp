@@ -32,7 +32,6 @@ DownloadFromMegaDialog::DownloadFromMegaDialog(QString defaultPath, QWidget *par
     ui->bChange->setEnabled(true);
     ui->bOK->setEnabled(true);
     ui->bOK->setDefault(true);
-    highDpiResize.init(this);
 }
 
 DownloadFromMegaDialog::~DownloadFromMegaDialog()
@@ -57,37 +56,38 @@ QString DownloadFromMegaDialog::getPath()
 
 void DownloadFromMegaDialog::on_bChange_clicked()
 {
-    QPointer<DownloadFromMegaDialog> currentDialog = this;
-
 #ifndef _WIN32
-    QPointer<MultiQFileDialog> dialog = new MultiQFileDialog(0,  tr("Select local folder"), ui->eFolderPath->text(), false);
-    dialog->setOptions(QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
-    dialog->setFileMode(QFileDialog::DirectoryOnly);
-    int result = dialog->exec();
-    if (!dialog || result != QDialog::Accepted || dialog->selectedFiles().isEmpty())
-    {
-        delete dialog;
-        return;
-    }
-    QString fPath = dialog->selectedFiles().value(0);
-    delete dialog;
+    QPointer<MultiQFileDialog> fileDialog = new MultiQFileDialog(0,  tr("Select local folder"), ui->eFolderPath->text(), false);
+    fileDialog->setOptions(QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
+    fileDialog->setFileMode(QFileDialog::DirectoryOnly);
+    Utilities::showDialog<MultiQFileDialog>(fileDialog, [fileDialog, this](){
+        if (fileDialog->result() == QDialog::Accepted && !fileDialog->selectedFiles().isEmpty())
+        {
+            QString fPath = fileDialog->selectedFiles().value(0);
+            onPathChanged(fPath);
+        }
+    });
 #else
     QString fPath = QFileDialog::getExistingDirectory(0,  tr("Select local folder"), ui->eFolderPath->text());
+    onPathChanged(fPath);
 #endif
+}
 
-    if (!currentDialog || !fPath.size())
+void DownloadFromMegaDialog::onPathChanged(const QString& path)
+{
+    if (!path.size())
     {
         return;
     }
 
-    QTemporaryFile test(fPath + QDir::separator());
+    QTemporaryFile test(path + QDir::separator());
     if (!test.open())
     {
         QMegaMessageBox::critical(nullptr, tr("Error"), tr("You don't have write permissions in this local folder."));
         return;
     }
 
-    ui->eFolderPath->setText(fPath);
+    ui->eFolderPath->setText(path);
 }
 
 void DownloadFromMegaDialog::changeEvent(QEvent *event)

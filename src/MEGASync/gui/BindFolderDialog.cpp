@@ -22,7 +22,6 @@ BindFolderDialog::BindFolderDialog(MegaApplication *app, QWidget *parent) :
     localFolders = model->getLocalFolders(); //notice: this also takes into account !active ones
     megaFolderPaths = model->getMegaFolders();
     ui->bOK->setDefault(true);
-    highDpiResize.init(this);
 }
 
 BindFolderDialog::BindFolderDialog(MegaApplication *app, QStringList syncNames,
@@ -40,7 +39,6 @@ BindFolderDialog::BindFolderDialog(MegaApplication *app, QStringList syncNames,
     this->localFolders = localFolders;
     this->megaFolderPaths = megaFolderPaths;
     ui->bOK->setDefault(true);
-    highDpiResize.init(this);
 }
 
 BindFolderDialog::~BindFolderDialog()

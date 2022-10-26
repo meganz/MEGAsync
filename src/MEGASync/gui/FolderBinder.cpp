@@ -83,38 +83,42 @@ void FolderBinder::on_bLocalFolder_clicked()
         defaultPath = QString::fromUtf8("/");
     }
 
-    QPointer<MultiQFileDialog> dialog = new MultiQFileDialog(0,  tr("Select local folder"), defaultPath, false);
-    dialog->setOptions(QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
-    dialog->setFileMode(QFileDialog::DirectoryOnly);
-    int result = dialog->exec();
-    if (!dialog || result != QDialog::Accepted || dialog->selectedFiles().isEmpty())
+    QPointer<MultiQFileDialog> fileDialog = new MultiQFileDialog(0,  tr("Select local folder"), defaultPath, false);
+    fileDialog->setOptions(QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
+    fileDialog->setFileMode(QFileDialog::DirectoryOnly);
+    Utilities::showDialog<MultiQFileDialog>(fileDialog, [fileDialog, this]()
     {
-        delete dialog;
-        return;
-    }
-    QString path = dialog->selectedFiles().value(0);
-    delete dialog;
+        if (fileDialog->result() == QDialog::Accepted && !fileDialog->selectedFiles().isEmpty())
+        {
+            QString path = fileDialog->selectedFiles().value(0);
+            onLocalFolderSet(path);
+        }
+    });
 #else
     QString path = QFileDialog::getExistingDirectory(0,  tr("Select local folder"), defaultPath);
+    onLocalFolderSet(path);
 #endif
+}
 
+void FolderBinder::onLocalFolderSet(const QString& path)
+{
     MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Folder selector closed. Result: %1").arg(path).toUtf8().constData());
     if (path.length())
-    {        
+    {
         QDir dir(path);
         if (!dir.exists() && !dir.mkpath(QString::fromAscii(".")))
         {
             return;
         }
 
-        path = QDir::toNativeSeparators(path);
-        if (!Utilities::verifySyncedFolderLimits(path))
+        auto nativePath = QDir::toNativeSeparators(path);
+        if (!Utilities::verifySyncedFolderLimits(nativePath))
         {
             QMegaMessageBox::warning(nullptr, tr("Warning"), tr("You are trying to sync an extremely large folder.\nTo prevent the syncing of entire boot volumes, which is inefficient and dangerous,\nwe ask you to start with a smaller folder and add more data while MEGAsync is running."), QMessageBox::Ok);
             return;
         }
 
-        QTemporaryFile test(path + QDir::separator());
+        QTemporaryFile test(nativePath + QDir::separator());
         if (test.open()|| QMegaMessageBox::warning(nullptr,
                                         tr("Warning"),
                                         tr("You don't have write permissions in this local folder.")
@@ -122,7 +126,7 @@ void FolderBinder::on_bLocalFolder_clicked()
                                         + QString::fromUtf8("\n") + tr("Do you want to continue?"),
                                         QMessageBox::Yes | QMessageBox::No, QMessageBox::No) == QMessageBox::Yes)
         {
-            ui->eLocalFolder->setText(path);
+            ui->eLocalFolder->setText(nativePath);
         }
     }
 }
@@ -137,16 +141,14 @@ void FolderBinder::on_bMegaFolder_clicked()
         delete defaultNode;
     }
 
-    int result = nodeSelector->exec();
-    if (!nodeSelector || result != QDialog::Accepted)
+    Utilities::showDialog<NodeSelector>(nodeSelector, [nodeSelector, this]()
     {
-        delete nodeSelector;
-        return;
-    }
-
-    MegaHandle selectedFolder = nodeSelector->getSelectedNodeHandle();
-    setSelectedMegaFolder(selectedFolder);
-    delete nodeSelector;
+        if (nodeSelector->result() == QDialog::Accepted)
+        {
+            MegaHandle selectedFolder = nodeSelector->getSelectedNodeHandle();
+            setSelectedMegaFolder(selectedFolder);
+        }
+    });
 }
 
 void FolderBinder::changeEvent(QEvent *event)

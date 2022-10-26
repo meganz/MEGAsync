@@ -165,7 +165,6 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
     gWidget = NULL;
     opacityEffect = NULL;
     animation = NULL;
-    accountDetailsDialog = NULL;
     syncsMenu = NULL;
     addSyncAction = NULL;
     lastHovered = NULL;
@@ -316,7 +315,7 @@ InfoDialog::~InfoDialog()
         syncsMenu.release();
     }
 
-    MegaSyncApp->removeDialog(mAddSyncDialog);
+    Utilities::removeDialog(mAddSyncDialog);
 }
 
 PSA_info *InfoDialog::getPSAdata()
@@ -819,11 +818,23 @@ bool InfoDialog::checkFailedState()
 
 void InfoDialog::addSync()
 {
-    const bool upgradingDissmised{app->showSyncOverquotaDialog()};
-    if(upgradingDissmised)
+    auto overQuotaDialog = app->showSyncOverquotaDialog();
+
+    auto addSyncLambda = [overQuotaDialog, this](){
+        if(!overQuotaDialog || overQuotaDialog->result() == QDialog::Rejected)
+        {
+            addSync(INVALID_HANDLE);
+            app->createAppMenus();
+        }
+    };
+
+    if(overQuotaDialog)
     {
-        addSync(INVALID_HANDLE);
-        app->createAppMenus();
+        Utilities::showDialog(overQuotaDialog,addSyncLambda);
+    }
+    else
+    {
+        addSyncLambda();
     }
 }
 
@@ -1027,64 +1038,59 @@ void InfoDialog::openFolder(QString path)
 void InfoDialog::addSync(MegaHandle h)
 {
     MegaSyncApp->checkAndCloseOpenDialogs();
-    checkAndCloseOpenDialogs();
 
+    checkAndCloseOpenDialogs();
     mAddSyncDialog = new BindFolderDialog(app);
     if (h != mega::INVALID_HANDLE)
     {
         mAddSyncDialog->setMegaFolder(h);
     }
 
-    Platform::execBackgroundWindow(mAddSyncDialog);
-    if (!mAddSyncDialog)
+    Utilities::showDialog(mAddSyncDialog, this, &InfoDialog::onAddSyncDialogFinished);
+}
+
+void InfoDialog::onAddSyncDialogFinished(QPointer<BindFolderDialog> dialog)
+{
+    if (dialog->result() != QDialog::Accepted)
     {
         return;
     }
 
-    if (mAddSyncDialog->result() != QDialog::Accepted)
+    QString localFolderPath = QDir::toNativeSeparators(QDir(dialog->getLocalFolder()).canonicalPath());
+    MegaHandle handle = dialog->getMegaFolder();
+    QString syncName = dialog->getSyncName();
+
+    MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromAscii("Adding sync %1 from addSync: ").arg(localFolderPath).toUtf8().constData());
+
+    ActionProgress *addSyncStep = new ActionProgress(true, QString::fromUtf8("Adding sync: %1")
+                                                     .arg(localFolderPath));
+
+    //Connect failing signals
+    connect(addSyncStep, &ActionProgress::failed, this, [localFolderPath](int errorCode)
     {
-        MegaSyncApp->removeDialog(mAddSyncDialog);
-        return;
-    }
+        static_cast<MegaApplication *>(qApp)->showAddSyncError(errorCode, localFolderPath);
+    }, Qt::QueuedConnection);
+    connect(addSyncStep, &ActionProgress::failedRequest, this, [this, localFolderPath](MegaRequest *request, MegaError *error)
+    {
+        if (error->getErrorCode())
+        {
+            auto reqCopy = request->copy();
+            auto errCopy = error->copy();
 
-    QString localFolderPath = QDir::toNativeSeparators(QDir(mAddSyncDialog->getLocalFolder()).canonicalPath());
-    MegaHandle handle = mAddSyncDialog->getMegaFolder();
-    QString syncName = mAddSyncDialog->getSyncName();
+            QObject temporary;
+            QObject::connect(&temporary, &QObject::destroyed, this, [reqCopy, errCopy, localFolderPath](){
 
-    MegaSyncApp->removeDialog(mAddSyncDialog);
+                // we might want to handle this separately (i.e: indicate errors in SyncSettings engine)
+                static_cast<MegaApplication *>(qApp)->showAddSyncError(reqCopy, errCopy, localFolderPath);
 
+                delete reqCopy;
+                delete errCopy;
+                //(syncSettings might have some old values), that's why we don't use syncSetting->getError.
+            }, Qt::QueuedConnection);
+        }
+    }, Qt::DirectConnection); //Note, we need direct connection to use request & error
 
-   MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromAscii("Adding sync %1 from addSync: ").arg(localFolderPath).toUtf8().constData());
-
-   ActionProgress *addSyncStep = new ActionProgress(true, QString::fromUtf8("Adding sync: %1")
-                                                    .arg(localFolderPath));
-
-   //Connect failing signals
-   connect(addSyncStep, &ActionProgress::failed, this, [localFolderPath](int errorCode)
-   {
-       static_cast<MegaApplication *>(qApp)->showAddSyncError(errorCode, localFolderPath);
-   }, Qt::QueuedConnection);
-   connect(addSyncStep, &ActionProgress::failedRequest, this, [this, localFolderPath](MegaRequest *request, MegaError *error)
-   {
-       if (error->getErrorCode())
-       {
-           auto reqCopy = request->copy();
-           auto errCopy = error->copy();
-
-           QObject temporary;
-           QObject::connect(&temporary, &QObject::destroyed, this, [reqCopy, errCopy, localFolderPath](){
-
-               // we might want to handle this separately (i.e: indicate errors in SyncSettings engine)
-               static_cast<MegaApplication *>(qApp)->showAddSyncError(reqCopy, errCopy, localFolderPath);
-
-               delete reqCopy;
-               delete errCopy;
-               //(syncSettings might have some old values), that's why we don't use syncSetting->getError.
-           }, Qt::QueuedConnection);
-       }
-   }, Qt::DirectConnection); //Note, we need direct connection to use request & error
-
-   controller->addSync(localFolderPath, handle, syncName, addSyncStep);
+    controller->addSync(localFolderPath, handle, syncName, addSyncStep);
 }
 
 #ifdef __APPLE__
@@ -1129,6 +1135,7 @@ void InfoDialog::on_bAddSync_clicked()
     else
     {
         addSyncAction = new MenuItemAction(tr("Syncs"), QIcon(QString::fromAscii("://images/ico_add_sync_folder.png")), true);
+
         if (syncsMenu)
         {
             for (QAction *a: syncsMenu->actions())
@@ -1323,7 +1330,7 @@ void InfoDialog::disableCancelling()
 
 void InfoDialog::checkAndCloseOpenDialogs()
 {
-    MegaSyncApp->removeDialog(mAddSyncDialog);
+    Utilities::removeDialog(mAddSyncDialog);
 }
 
 void InfoDialog::setUiInCancellingStage()
@@ -1431,23 +1438,9 @@ bool InfoDialog::eventFilter(QObject *obj, QEvent *e)
 
 void InfoDialog::on_bStorageDetails_clicked()
 {
-    if (accountDetailsDialog)
-    {
-        accountDetailsDialog->raise();
-        return;
-    }
-
-    accountDetailsDialog = new AccountDetailsDialog(this);
+    QPointer<AccountDetailsDialog> accountDetailsDialog = new AccountDetailsDialog(this);
     app->updateUserStats(true, true, true, true, USERSTATS_STORAGECLICKED);
-    QPointer<AccountDetailsDialog> dialog = accountDetailsDialog;
-    dialog->exec();
-    if (!dialog)
-    {
-        return;
-    }
-
-    delete accountDetailsDialog;
-    accountDetailsDialog = NULL;
+    Utilities::showDialog(accountDetailsDialog);
 }
 
 void InfoDialog::regenerateLayout(int blockState, InfoDialog* olddialog)

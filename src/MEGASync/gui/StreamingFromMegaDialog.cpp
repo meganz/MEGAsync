@@ -6,7 +6,6 @@
 #include "QMegaMessageBox.h"
 #include "platform/Platform.h"
 #include "control/Utilities.h"
-#include "HighDpiResize.h"
 
 #include <QCloseEvent>
 #include <QInputDialog>
@@ -50,7 +49,6 @@ StreamingFromMegaDialog::StreamingFromMegaDialog(mega::MegaApi *megaApi, mega::M
     ui->sFileInfo->setCurrentWidget(ui->pNothingSelected);
     delegateTransferListener = ::mega::make_unique<QTMegaTransferListener>(this->megaApi, this);
     megaApi->addTransferListener(delegateTransferListener.get());
-    highDpiResize.init(this);
     hideStreamingError();
 }
 
@@ -77,16 +75,8 @@ void StreamingFromMegaDialog::closeEvent(QCloseEvent *event)
         return;
     }
 
-    const unique_ptr<QMessageBox> messageBox{::mega::make_unique<QMessageBox>(this)};
-    messageBox->setIcon(QMessageBox::Question);
-    messageBox->setWindowTitle(tr("Stream from MEGA"));
-    messageBox->setText(tr("Are you sure that you want to stop the streaming?"));
-    messageBox->addButton(QMessageBox::Yes);
-    messageBox->addButton(QMessageBox::No);
-    messageBox->setDefaultButton(QMessageBox::No);
-    int button = messageBox->exec();
-
-    if (button == QMessageBox::Yes)
+    if (QMegaMessageBox::question(this, tr("Stream from MEGA"), tr("Are you sure that you want to stop the streaming?"),QMessageBox::Yes|QMessageBox::No, QMessageBox::No)
+            == QMessageBox::Yes)
     {
         event->accept();
     }
@@ -98,35 +88,37 @@ void StreamingFromMegaDialog::closeEvent(QCloseEvent *event)
 
 void StreamingFromMegaDialog::on_bFromCloud_clicked()
 {
-    const unique_ptr<NodeSelector> nodeSelector{::mega::make_unique<NodeSelector>(NodeSelector::STREAM_SELECT, this->parentWidget())};
+    QPointer<NodeSelector> nodeSelector(new NodeSelector(NodeSelector::STREAM_SELECT, this));
     if (mSelectedMegaNode)
     {
         nodeSelector->setSelectedNodeHandle(mSelectedMegaNode->getHandle());
     }
-    int result = nodeSelector->exec();
-    if (!nodeSelector || result != QDialog::Accepted)
+    Utilities::showDialog<NodeSelector>(nodeSelector, [nodeSelector, this]()
     {
-        return;
-    }
-    MegaNode *node = megaApi->getNodeByHandle(nodeSelector->getSelectedNodeHandle());
-    updateFileInfoFromNode(node);
+        if (nodeSelector->result() == QDialog::Accepted)
+        {
+            MegaNode *node = megaApi->getNodeByHandle(nodeSelector->getSelectedNodeHandle());
+            updateFileInfoFromNode(node);
+        }
+    });
 }
 
 void StreamingFromMegaDialog::on_bFromPublicLink_clicked()
 {
-    const unique_ptr<QInputDialog> inputDialog{::mega::make_unique<QInputDialog>(this)};
+    QPointer<QInputDialog> inputDialog(new QInputDialog(this));
     inputDialog->setWindowFlags(inputDialog->windowFlags() & ~Qt::WindowContextHelpButtonHint);
     inputDialog->setWindowTitle(tr("Open link"));
     inputDialog->setLabelText(tr("Enter a MEGA file link:"));
     inputDialog->resize(470, inputDialog->height());
-    int result = inputDialog->exec();
-    if (!inputDialog || !result)
-    {
-        return;
-    }
-    mPublicLink = inputDialog->textValue();
 
-    requestNodeToLinkProcessor();
+    Utilities::showDialog<QInputDialog>(inputDialog, [inputDialog, this]()
+    {
+        if (inputDialog->result() == QDialog::Accepted)
+        {
+            mPublicLink = inputDialog->textValue();
+            requestNodeToLinkProcessor();
+        }
+    });
 }
 
 void StreamingFromMegaDialog::requestNodeToLinkProcessor()

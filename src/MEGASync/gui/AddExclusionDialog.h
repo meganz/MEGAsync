@@ -2,7 +2,6 @@
 #define ADDEXCLUSIONDIALOG_H
 
 #include <QDialog>
-#include "HighDpiResize.h"
 
 namespace Ui {
 class AddExclusionDialog;
@@ -29,8 +28,9 @@ protected:
     void changeEvent(QEvent * event);
 
 private:
+    void setTextToExclusionItem(const QString& path);
+
     Ui::AddExclusionDialog *ui;
-    HighDpiResize highDpiResize;
 };
 
 #endif // ADDEXCLUSIONDIALOG_H

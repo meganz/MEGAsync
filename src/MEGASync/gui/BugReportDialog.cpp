@@ -32,7 +32,6 @@ BugReportDialog::BugReportDialog(QWidget *parent, MegaSyncLogger& logger) :
     megaApi = ((MegaApplication *)qApp)->getMegaApi();
     delegateTransferListener = new QTMegaTransferListener(megaApi, this);
     delegateRequestListener = new QTMegaRequestListener(megaApi, this);
-    highDpiResize.init(this);
 }
 
 BugReportDialog::~BugReportDialog()
@@ -51,27 +50,27 @@ void BugReportDialog::onTransferStart(MegaApi*, MegaTransfer* transfer)
 
     totalBytes = transfer->getTotalBytes();
 
-    sendProgress.reset(new QProgressDialog(this));
-    sendProgress->setWindowFlags(sendProgress->windowFlags() & ~Qt::WindowContextHelpButtonHint);
+    mSendProgress = new QProgressDialog(this);
+    mSendProgress->setWindowFlags(mSendProgress->windowFlags() & ~Qt::WindowContextHelpButtonHint);
 
-    connect(sendProgress.get(), SIGNAL(canceled()), this, SLOT(cancelSendReport()));
+    connect(mSendProgress.data(), &QProgressDialog::canceled, this, &BugReportDialog::cancelSendReport);
 
-    sendProgress->setWindowModality(Qt::WindowModal);
-    sendProgress->setMinimumDuration(0);
-    sendProgress->setMinimum(0);
-    sendProgress->setMaximum(1010);
-    sendProgress->setValue(0);
-    sendProgress->setAutoClose(false);
-    sendProgress->setAutoReset(false);
+    mSendProgress->setWindowModality(Qt::WindowModal);
+    mSendProgress->setMinimumDuration(0);
+    mSendProgress->setMinimum(0);
+    mSendProgress->setMaximum(1010);
+    mSendProgress->setValue(0);
+    mSendProgress->setAutoClose(false);
+    mSendProgress->setAutoReset(false);
     lastpermil = 0;
 
     auto labelWidget = new QLabel(tr("Bug report is uploading, it may take a few minutes"));
     labelWidget->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Maximum);
     labelWidget->setWordWrap(true);
     labelWidget->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
-    sendProgress->setLabel(labelWidget);
+    mSendProgress->setLabel(labelWidget);
 
-    sendProgress->show();
+    Utilities::showDialog(mSendProgress);
 }
 
 void BugReportDialog::onTransferUpdate(MegaApi*, MegaTransfer* transfer)
@@ -82,7 +81,7 @@ void BugReportDialog::onTransferUpdate(MegaApi*, MegaTransfer* transfer)
     {
         if (permil != lastpermil)
         {
-            sendProgress->setValue(permil);
+            mSendProgress->setValue(permil);
             lastpermil = permil;
         }
     }
@@ -90,7 +89,7 @@ void BugReportDialog::onTransferUpdate(MegaApi*, MegaTransfer* transfer)
 
 void BugReportDialog::onTransferFinish(MegaApi*, MegaTransfer*, MegaError* error)
 {
-    sendProgress->reset();
+    mSendProgress->reset();
     totalBytes = 0;
     transferredBytes = 0;
     currentTransfer = 0;
@@ -102,13 +101,14 @@ void BugReportDialog::onTransferFinish(MegaApi*, MegaTransfer*, MegaError* error
 
     if (error->getErrorCode() == MegaError::API_OK)
     {
-        sendProgress->setValue(sendProgress->maximum());
+        mSendProgress->setValue(mSendProgress->maximum());
 
         createSupportTicket();
     }
     else
     {
-        sendProgress->hide();
+        mSendProgress->close();
+
         if (error->getErrorCode() == MegaError::API_EEXIST)
         {
             msgBox.setIcon(QMessageBox::Information);
@@ -141,9 +141,9 @@ void BugReportDialog::onRequestFinish(MegaApi*, MegaRequest* request, MegaError*
     {
         case MegaRequest::TYPE_SUPPORT_TICKET:
         {
-            if (sendProgress)
+            if (mSendProgress)
             {
-                sendProgress->hide();
+                mSendProgress->close();
             }
 
             if (e->getErrorCode() == MegaError::API_OK)
@@ -292,9 +292,9 @@ void BugReportDialog::cancelSendReport()
     }
     else if (ret == QMessageBox::AcceptRole)
     {
-        if (currentTransfer && sendProgress)
+        if (currentTransfer && mSendProgress)
         {
-            sendProgress->setValue(lastpermil);
+            mSendProgress->setValue(lastpermil);
         }
     }
 }

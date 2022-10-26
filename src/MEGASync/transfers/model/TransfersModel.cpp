@@ -1337,15 +1337,12 @@ void TransfersModel::showSyncCancelledWarning()
 {
     if(syncsInRowsToCancel())
     {
-        QPointer<QMessageBox> removeSync = new QMessageBox(QMessageBox::Warning, QLatin1Literal("MEGAsync"),
-                                                          PlatformStrings::cancelSyncsWarning(),
-                                                           QMessageBox::No | QMessageBox::Yes, mCancelledFrom);
-        removeSync->setButtonText(QMessageBox::No, tr("Dismiss"));
-        removeSync->setButtonText(QMessageBox::Yes, PlatformStrings::openSettings());
+        QMap<QMessageBox::StandardButton, QString> buttonsText;
+        buttonsText.insert(QMessageBox::No, tr("Dismiss"));
+        buttonsText.insert(QMessageBox::Yes,  PlatformStrings::openSettings());
 
-        auto result = removeSync->exec();
-
-        if(result == QMessageBox::Yes)
+        auto button = QMegaMessageBox::warning(mCancelledFrom, QLatin1Literal("MEGAsync"), PlatformStrings::cancelSyncsWarning(), QMessageBox::No | QMessageBox::Yes, QMessageBox::Yes, buttonsText);
+        if(button == QMessageBox::Yes)
         {
             MegaSyncApp->openSettings(SettingsDialog::SYNCS_TAB);
         }

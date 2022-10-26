@@ -1,16 +1,18 @@
 #ifndef UTILITIES_H
 #define UTILITIES_H
 
+#include <gui/HighDpiResize.h>
+#include <control/MegaController.h>
+
 #include <QString>
 #include <QHash>
 #include <QPixmap>
 #include <QProgressDialog>
-#include <control/MegaController.h>
-
 #include <QDir>
 #include <QIcon>
 #include <functional>
 #include <QLabel>
+
 #include <QEasingCurve>
 #include "megaapi.h"
 #include "ThreadPool.h"
@@ -334,6 +336,57 @@ public:
 
     //get mega transfer nodepath
     static QString getNodePath(mega::MegaTransfer* transfer);
+
+    template <class DialogType>
+    static void showDialog(QPointer<DialogType> dialog, std::function<void()> func)
+    {
+        if(dialog)
+        {
+            dialog->connect(dialog.data(), &QDialog::finished, [func, dialog](){
+                func();
+            });
+            showDialog(dialog);
+        }
+    }
+
+    template <class DialogType, class CallbackClass>
+    static void showDialog(QPointer<DialogType> dialog, CallbackClass* caller, void(CallbackClass::*func)(QPointer<DialogType>))
+    {
+        if(dialog)
+        {
+            dialog->connect(dialog.data(), &QDialog::finished, [dialog, caller, func](){
+                (caller->*func)(dialog);
+            });
+
+            showDialog(dialog);
+        }
+    }
+
+    template <class DialogType>
+    static void showDialog(QPointer<DialogType> dialog)
+    {
+        if(dialog)
+        {
+            HighDpiResize hDpiResizer(dialog);
+            dialog->setAttribute(Qt::WA_DeleteOnClose);
+            dialog->open();
+            dialog->raise();
+            dialog->activateWindow();
+        }
+    }
+
+    template <class DialogType>
+    static void removeDialog(QPointer<DialogType> dialog)
+    {
+        if(dialog)
+        {
+            dialog->close();
+            if(!dialog->testAttribute(Qt::WA_DeleteOnClose))
+            {
+                dialog->deleteLater();
+            }
+        }
+    }
 
 private:
     Utilities() {}

@@ -1,13 +1,15 @@
 #ifndef GUESTWIDGET_H
 #define GUESTWIDGET_H
 
-#include <QWidget>
-#include <QMenu>
-#include <QPushButton>
 #include "megaapi.h"
 #include "QTMegaRequestListener.h"
 #include "Preferences.h"
 #include "gui/MegaInfoMessage.h"
+
+#include <QPointer>
+#include <QWidget>
+#include <QMenu>
+#include <QPushButton>
 
 #include <memory>
 
@@ -98,7 +100,7 @@ protected:
     bool closing;
     bool loggingStarted;
 
-    std::unique_ptr<MegaInfoMessage> whyAmISeeingThisDialog;
+    QPointer<MegaInfoMessage> mWhyAmISeeingThisDialog;
 
     void page_login();
     void page_fetchnodes();

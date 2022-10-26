@@ -119,9 +119,7 @@ void TransferQuota::checkExecuteDialog()
         if (!mUpgradeDialog)
         {
             mUpgradeDialog = new UpgradeDialog(mMegaApi, mPricing, mCurrency);
-            QObject::connect(mUpgradeDialog, &UpgradeDialog::finished, this, &TransferQuota::upgradeDialogFinished);
-            mUpgradeDialog->activateWindow();
-            mUpgradeDialog->show();
+            Utilities::showDialog(mUpgradeDialog);
         }
         else if (!mUpgradeDialog->isVisible())
         {
@@ -215,13 +213,6 @@ void TransferQuota::checkExecuteAlerts()
     }
 }
 
-void TransferQuota::refreshOverQuotaDialogDetails()
-{
-    if(mUpgradeDialog)
-    {
-    }
-}
-
 void TransferQuota::setOverQuotaDialogPricing(std::shared_ptr<mega::MegaPricing> pricing, std::shared_ptr<mega::MegaCurrency> currency)
 {
     mPricing = pricing;
@@ -233,13 +224,9 @@ void TransferQuota::setOverQuotaDialogPricing(std::shared_ptr<mega::MegaPricing>
     }
 }
 
-void TransferQuota::closeDialogs()
+void TransferQuota::closeDialog()
 {
-    if(mUpgradeDialog)
-    {
-        delete mUpgradeDialog;
-        mUpgradeDialog = nullptr;
-    }
+    Utilities::removeDialog(mUpgradeDialog);
 }
 
 void TransferQuota::checkQuotaAndAlerts()
@@ -248,34 +235,38 @@ void TransferQuota::checkQuotaAndAlerts()
     checkExecuteAlerts();
 }
 
-bool TransferQuota::checkImportLinksAlertDismissed()
+void TransferQuota::checkImportLinksAlertDismissed(std::function<void(int)> func)
 {
-    bool dismissed(true);
-    if(isOverQuota())
-    {
-        dismissed = OverQuotaDialog::showDialog(OverQuotaDialogType::BANDWIDTH_IMPORT_LINK);
-    }
-    return dismissed;
+    checkAlertDismissed(OverQuotaDialogType::BANDWIDTH_IMPORT_LINK, func);
 }
 
-bool TransferQuota::checkDownloadAlertDismissed()
+void TransferQuota::checkDownloadAlertDismissed(std::function<void(int)> func)
 {
-    bool dismissed(true);
-    if(isOverQuota())
-    {
-        dismissed = OverQuotaDialog::showDialog(OverQuotaDialogType::BANDWIDTH_DOWNLOAD);
-    }
-    return dismissed;
+    checkAlertDismissed(OverQuotaDialogType::BANDWIDTH_DOWNLOAD, func);
 }
 
-bool TransferQuota::checkStreamingAlertDismissed()
+void TransferQuota::checkStreamingAlertDismissed(std::function<void(int)> func)
 {
-    bool dismissed(true);
+    checkAlertDismissed(OverQuotaDialogType::BANDWIDTH_STREAM, func);
+}
+
+void TransferQuota::checkAlertDismissed(OverQuotaDialogType type, std::function<void(int)> func)
+{
     if(isOverQuota())
     {
-        dismissed = OverQuotaDialog::showDialog(OverQuotaDialogType::BANDWIDTH_STREAM);
+        auto dialog = OverQuotaDialog::showDialog(type);
+        if(dialog)
+        {
+            Utilities::showDialog(dialog, [dialog, func, this]()
+            {
+               func(dialog->result());
+            });
+
+            return;
+        }
     }
-    return dismissed;
+
+    func(QDialog::Rejected);
 }
 
 QTime TransferQuota::getTransferQuotaDeadline()
@@ -305,15 +296,6 @@ void TransferQuota::sendOverQuotaOsNotification()
 {
     const QString title{tr("Depleted transfer quota.")};
     mOsNotifications->sendOverTransferNotification(title);
-}
-
-void TransferQuota::upgradeDialogFinished(int)
-{
-    if (!static_cast<MegaApplication*>(qApp)->finished() && mUpgradeDialog)
-    {
-        mUpgradeDialog->deleteLater();
-        mUpgradeDialog = nullptr;
-    }
 }
 
 void TransferQuota::onTransferOverquotaVisibilityChange(bool messageShown)

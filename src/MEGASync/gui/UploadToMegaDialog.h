@@ -4,7 +4,6 @@
 #include <QDialog>
 #include "megaapi.h"
 #include "QTMegaRequestListener.h"
-#include "HighDpiResize.h"
 
 namespace Ui {
 class UploadToMegaDialog;
@@ -39,7 +38,6 @@ private:
     mega::MegaApi *megaApi;
     mega::MegaHandle selectedHandle;
     mega::QTMegaRequestListener *delegateListener;
-    HighDpiResize highDpiResize;
 };
 
 #endif // UPLOADTOMEGADIALOG_H

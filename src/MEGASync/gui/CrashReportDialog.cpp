@@ -11,7 +11,6 @@ CrashReportDialog::CrashReportDialog(QString crash, QWidget *parent) :
     ui->cLogs->setText(ui->cLogs->text().replace(QString::fromUtf8("[Br]"), QString::fromUtf8("\n")));
     ui->tCrash->setText(crash);
     ui->bOK->setDefault(true);
-    highDpiResize.init(this);
 }
 
 QString CrashReportDialog::getUserMessage()
