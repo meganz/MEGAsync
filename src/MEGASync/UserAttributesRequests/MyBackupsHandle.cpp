@@ -13,6 +13,7 @@ QT_TRANSLATE_NOOP("MegaNodeNames", "Backups");
 MyBackupsHandle::MyBackupsHandle(const QString &userEmail)
  : AttributeRequest(userEmail),
    mMyBackupsFolderHandle(mega::INVALID_HANDLE),
+   mMyBackupsFolderPath(QString()),
    mCreationRequested(false),
    mCreateBackupsListener(nullptr)
 {
@@ -46,6 +47,7 @@ void MyBackupsHandle::onRequestFinish(mega::MegaApi*, mega::MegaRequest* incomin
                      QString::fromUtf8("Error getting MyBackups folder: \"%1\"")
                      .arg(QString::fromUtf8(error->getErrorString()))
                      .toUtf8().constData());
+        mMyBackupsFolderPath.clear();
     }
 
     onMyBackupsFolderReady(newValue);
@@ -57,6 +59,8 @@ void MyBackupsHandle::onMyBackupsFolderReady(mega::MegaHandle h)
     if (h != mMyBackupsFolderHandle)
     {
         mMyBackupsFolderHandle = h;
+        std::unique_ptr<char[]> path (MegaSyncApp->getMegaApi()->getNodePathByNodeHandle(h));
+        mMyBackupsFolderPath = QString::fromUtf8(path.get());
         emit attributeReady(mMyBackupsFolderHandle);
     }
 }
@@ -97,6 +101,17 @@ bool MyBackupsHandle::isAttributeReady() const
 QString MyBackupsHandle::getMyBackupsLocalizedPath()
 {
     return QLatin1Char('/') + QApplication::translate("MegaNodeNames", MyBackupsHandle::DEFAULT_BACKUPS_ROOT_DIRNAME);
+}
+
+QString MyBackupsHandle::getNodeLocalizedPath(QString path) const
+{
+    QString localizedPath (path);
+    if (mMyBackupsFolderHandle != mega::INVALID_HANDLE)
+    {
+        localizedPath = getMyBackupsLocalizedPath()
+                + QStringRef(&path, mMyBackupsFolderPath.size(), path.size() - mMyBackupsFolderPath.size()) ;
+    }
+    return localizedPath;
 }
 
 void MyBackupsHandle::createMyBackupsFolderIfNeeded()

@@ -13,7 +13,8 @@
 
 namespace UserAttributes
 {
-    class DeviceName;
+class DeviceName;
+class MyBackupsHandle;
 }
 
 class SyncsMenu : public QObject
@@ -45,6 +46,7 @@ private:
     QString createSyncTooltipText(std::shared_ptr<SyncSettings> syncSetting) const;
 
     std::shared_ptr<UserAttributes::DeviceName> mDeviceNameRequest;
+    std::shared_ptr<UserAttributes::MyBackupsHandle> mMyBackupsHandleRequest;
     mega::MegaSync::SyncType mType;
     std::shared_ptr<QMenu> mMenu;
     std::shared_ptr<MenuItemAction> mAddAction;

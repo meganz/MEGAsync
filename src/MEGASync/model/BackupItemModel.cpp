@@ -10,9 +10,10 @@
 
 
 BackupItemModel::BackupItemModel(QObject *parent)
-    : SyncItemModel(parent)
+    : SyncItemModel(parent),
+      mDeviceNameRequest (UserAttributes::DeviceName::requestDeviceName()),
+      mMyBackupsHandleRequest (UserAttributes::MyBackupsHandle::requestMyBackupsHandle())
 {
-    mDeviceNameRequest = UserAttributes::DeviceName::requestDeviceName();
 }
 
 QVariant BackupItemModel::headerData(int section, Qt::Orientation orientation, int role) const
@@ -102,12 +103,8 @@ QVariant BackupItemModel::data(const QModelIndex &index, int role) const
             }
             toolTip += SyncTooltipCreator::createForLocal(sync->getLocalFolder());
             toolTip += QChar::LineSeparator;
-            // TODO: improve path building
-            toolTip += SyncTooltipCreator::createForRemote(UserAttributes::MyBackupsHandle::getMyBackupsLocalizedPath()
-                                                           + QLatin1Char('/')
-                                                           + mDeviceNameRequest->getDeviceName()
-                                                           + QLatin1Char('/')
-                                                           + sync->name());
+            toolTip += SyncTooltipCreator::createForRemote(
+                        mMyBackupsHandleRequest->getNodeLocalizedPath(sync->getMegaFolder()));
             return toolTip;
         }
         break;

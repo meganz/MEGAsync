@@ -25,6 +25,7 @@ public:
 
     mega::MegaHandle getMyBackupsHandle() const;
     static QString getMyBackupsLocalizedPath();
+    QString getNodeLocalizedPath(QString path) const;
 
     void createMyBackupsFolderIfNeeded();
 
@@ -38,6 +39,7 @@ private slots:
 
 private:
     mega::MegaHandle mMyBackupsFolderHandle;
+    QString mMyBackupsFolderPath;
     bool mCreationRequested;
     std::unique_ptr<CreateMyBackupsListener> mCreateBackupsListener;
 };

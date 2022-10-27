@@ -33,6 +33,7 @@ public:
 
 private:
     std::shared_ptr<UserAttributes::DeviceName> mDeviceNameRequest;
+    std::shared_ptr<UserAttributes::MyBackupsHandle> mMyBackupsHandleRequest;
 
     void sendDataChanged(int pos) override;
 

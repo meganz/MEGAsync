@@ -20,6 +20,7 @@ const QLatin1String DEVICE_ICON ("://images/icons/pc/pc-linux_24.png");
 
 SyncsMenu::SyncsMenu(mega::MegaSync::SyncType type, QObject *parent) : QObject(parent),
     mDeviceNameRequest (nullptr),
+    mMyBackupsHandleRequest (nullptr),
     mType (type),
     mMenu (new QMenu()),
     mAddAction (new MenuItemAction(QString(), QIcon(), true)),
@@ -46,6 +47,7 @@ SyncsMenu::SyncsMenu(mega::MegaSync::SyncType type, QObject *parent) : QObject(p
             textMenu = tr("Backups");
             iconMenu = QIcon(QLatin1String("://images/icons/ico_backup.png"));
             mDeviceNameRequest = UserAttributes::DeviceName::requestDeviceName();
+            mMyBackupsHandleRequest = UserAttributes::MyBackupsHandle::requestMyBackupsHandle();
             connect(mDeviceNameRequest.get(), &UserAttributes::DeviceName::attributeReady,
                     this, &SyncsMenu::onDeviceNameSet);
             break;
@@ -285,12 +287,8 @@ QString SyncsMenu::createSyncTooltipText(std::shared_ptr<SyncSettings> syncSetti
     }
     case mega::MegaSync::TYPE_BACKUP:
     {
-        // TODO: improve path building
-        toolTip += SyncTooltipCreator::createForRemote(UserAttributes::MyBackupsHandle::getMyBackupsLocalizedPath()
-                                                       + QLatin1Char('/')
-                                                       + mDeviceNameRequest->getDeviceName()
-                                                       + QLatin1Char('/')
-                                                       + syncSetting->name());
+        toolTip += SyncTooltipCreator::createForRemote(
+                    mMyBackupsHandleRequest->getNodeLocalizedPath(syncSetting->getMegaFolder()));
         break;
     }
     }
