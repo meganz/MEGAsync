@@ -90,7 +90,19 @@ void MegaItemTreeView::drawBranches(QPainter *painter, const QRect &rect, const 
 
 void MegaItemTreeView::mousePressEvent(QMouseEvent *event)
 {
+#ifndef __APPLE__
+    mousePressorReleaseEvent(event);
+#endif
     QTreeView::mousePressEvent(event);
+}
+
+
+void MegaItemTreeView::mouseReleaseEvent(QMouseEvent *event)
+{
+#ifdef __APPLE__
+    mousePressorReleaseEvent(event);
+#endif
+    QTreeView::mouseReleaseEvent(event);
 }
 
 void MegaItemTreeView::mouseDoubleClickEvent(QMouseEvent *event)
@@ -109,53 +121,6 @@ void MegaItemTreeView::mouseDoubleClickEvent(QMouseEvent *event)
             }
         }
         QTreeView::mouseDoubleClickEvent(event);
-    }
-}
-
-void MegaItemTreeView::mouseReleaseEvent(QMouseEvent *event)
-{
-    QPoint pos = event->pos();
-    QModelIndex index = getIndexFromSourceModel(indexAt(pos));
-    MegaItem *item = static_cast<MegaItem*>(index.internalPointer());
-    if(item && item->isRoot())
-    {   //this line avoid to cloud drive being collapsed and at same time it allows to select it.
-        QAbstractItemView::mouseReleaseEvent(event);
-    }
-    else
-    {
-        QModelIndex clickedIndex = indexAt(event->pos());
-        if(clickedIndex.isValid() && !clickedIndex.data(toInt(NodeRowDelegateRoles::INIT_ROLE)).toBool())
-        {
-            int position = columnViewportPosition(0);
-            int height = rowHeight(clickedIndex);
-            int level = 0;
-            QModelIndex idx = clickedIndex;
-            idx = idx.parent();
-            while(rootIndex() != idx)
-            {
-                level++;
-                idx = idx.parent();
-            }
-            int identation = indentation() * level;
-            QRect rect(position + identation, event->pos().y(), indentation(), height);
-
-            if(rect.contains(event->pos()))
-            {
-                if(!isExpanded(clickedIndex))
-                {
-                    auto sourceIndexToExpand = proxyModel()->mapToSource(clickedIndex);
-                    if(proxyModel()->sourceModel()->canFetchMore(sourceIndexToExpand))
-                    {
-                        proxyModel()->setExpandMapped(true);
-                        proxyModel()->sourceModel()->fetchMore(sourceIndexToExpand);
-                    }
-                    QAbstractItemView::mouseReleaseEvent(event);
-                    return;
-                }
-            }
-
-        }
-        QTreeView::mouseReleaseEvent(event);
     }
 }
 
@@ -227,6 +192,67 @@ void MegaItemTreeView::onNavigateReady(const QModelIndex &index)
         QMouseEvent mouseEvent(QEvent::MouseButtonDblClick, point, Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);
         mouseDoubleClickEvent(&mouseEvent);
 //        mIndexToEnter = QModelIndex();
+    }
+}
+
+void MegaItemTreeView::mousePressorReleaseEvent(QMouseEvent *event)
+{
+    QPoint pos = event->pos();
+    QModelIndex index = getIndexFromSourceModel(indexAt(pos));
+    MegaItem *item = static_cast<MegaItem*>(index.internalPointer());
+    if(item && item->isRoot())
+    {   //this line avoid to cloud drive being collapsed and at same time it allows to select it.
+        if(event->type() == QMouseEvent::MouseButtonPress)
+        {
+            QAbstractItemView::mousePressEvent(event);
+        }
+        else if(event->type() == QMouseEvent::MouseButtonRelease)
+        {
+            QAbstractItemView::mouseReleaseEvent(event);
+        }
+        return;
+    }
+    else
+    {
+        QModelIndex clickedIndex = indexAt(event->pos());
+        if(clickedIndex.isValid() && !clickedIndex.data(toInt(NodeRowDelegateRoles::INIT_ROLE)).toBool())
+        {
+            int position = columnViewportPosition(0);
+            int height = rowHeight(clickedIndex);
+            int level = 0;
+            QModelIndex idx = clickedIndex;
+            idx = idx.parent();
+            while(rootIndex() != idx)
+            {
+                level++;
+                idx = idx.parent();
+            }
+            int identation = indentation() * level;
+            QRect rect(position + identation, event->pos().y(), indentation(), height);
+
+            if(rect.contains(event->pos()))
+            {
+                if(!isExpanded(clickedIndex))
+                {
+                    auto sourceIndexToExpand = proxyModel()->mapToSource(clickedIndex);
+                    if(proxyModel()->sourceModel()->canFetchMore(sourceIndexToExpand))
+                    {
+                        proxyModel()->setExpandMapped(true);
+                        proxyModel()->sourceModel()->fetchMore(sourceIndexToExpand);
+                    }
+                    if(event->type() == QMouseEvent::MouseButtonPress)
+                    {
+                        QAbstractItemView::mousePressEvent(event);
+                    }
+                    else if(event->type() == QMouseEvent::MouseButtonRelease)
+                    {
+                        QAbstractItemView::mouseReleaseEvent(event);
+                    }
+                    return;
+                }
+            }
+
+        }
     }
 }
 
