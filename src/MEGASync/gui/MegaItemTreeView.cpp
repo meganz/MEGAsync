@@ -58,7 +58,6 @@ void MegaItemTreeView::verticalScrollbarValueChanged(int value)
 
 bool MegaItemTreeView::eventFilter(QObject *obj, QEvent *evnt)
 {
-   // qDebug()<<evnt->type();
     return QTreeView::eventFilter(obj, evnt);
 }
 
@@ -91,12 +90,36 @@ void MegaItemTreeView::drawBranches(QPainter *painter, const QRect &rect, const 
 
 void MegaItemTreeView::mousePressEvent(QMouseEvent *event)
 {
+    QTreeView::mousePressEvent(event);
+}
+
+void MegaItemTreeView::mouseDoubleClickEvent(QMouseEvent *event)
+{
+    if(event->button() != Qt::RightButton)
+    {
+        QModelIndex clickedIndex = indexAt(event->pos());
+        if(clickedIndex.isValid())
+        {
+            auto sourceIndexToEnter = proxyModel()->mapToSource(clickedIndex);
+            if(proxyModel()->sourceModel()->canFetchMore(sourceIndexToEnter))
+            {
+                proxyModel()->setExpandMapped(false);
+                proxyModel()->sourceModel()->fetchMore(sourceIndexToEnter);
+                return;
+            }
+        }
+        QTreeView::mouseDoubleClickEvent(event);
+    }
+}
+
+void MegaItemTreeView::mouseReleaseEvent(QMouseEvent *event)
+{
     QPoint pos = event->pos();
     QModelIndex index = getIndexFromSourceModel(indexAt(pos));
     MegaItem *item = static_cast<MegaItem*>(index.internalPointer());
     if(item && item->isRoot())
     {   //this line avoid to cloud drive being collapsed and at same time it allows to select it.
-        QAbstractItemView::mousePressEvent(event);
+        QAbstractItemView::mouseReleaseEvent(event);
     }
     else
     {
@@ -126,33 +149,13 @@ void MegaItemTreeView::mousePressEvent(QMouseEvent *event)
                         proxyModel()->setExpandMapped(true);
                         proxyModel()->sourceModel()->fetchMore(sourceIndexToExpand);
                     }
-                    QAbstractItemView::mousePressEvent(event);
+                    QAbstractItemView::mouseReleaseEvent(event);
                     return;
                 }
             }
 
         }
-
-        QTreeView::mousePressEvent(event);
-    }
-}
-
-void MegaItemTreeView::mouseDoubleClickEvent(QMouseEvent *event)
-{
-    if(event->button() != Qt::RightButton)
-    {
-        QModelIndex clickedIndex = indexAt(event->pos());
-        if(clickedIndex.isValid())
-        {
-            auto sourceIndexToEnter = proxyModel()->mapToSource(clickedIndex);
-            if(proxyModel()->sourceModel()->canFetchMore(sourceIndexToEnter))
-            {
-                proxyModel()->setExpandMapped(false);
-                proxyModel()->sourceModel()->fetchMore(sourceIndexToEnter);
-                return;
-            }
-        }
-        QTreeView::mouseDoubleClickEvent(event);
+        QTreeView::mouseReleaseEvent(event);
     }
 }
 
