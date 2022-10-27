@@ -6,6 +6,9 @@ namespace UserAttributes
 {
 
 const char* MyBackupsHandle::DEFAULT_BACKUPS_ROOT_DIRNAME = "Backups";
+#if 0
+QT_TRANSLATE_NOOP("MegaNodeNames", "Backups");
+#endif
 
 MyBackupsHandle::MyBackupsHandle(const QString &userEmail)
  : AttributeRequest(userEmail),

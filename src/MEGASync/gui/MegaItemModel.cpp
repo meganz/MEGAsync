@@ -382,10 +382,10 @@ QVariant MegaItemModel::getText(const QModelIndex &index, MegaItem *item) const
     {
         case COLUMN::NODE:
         {
-            //To remove when SDK returns correct names for this nodes
             if(item->isVault())
-                return QCoreApplication::translate("MegaNodeNames", "Backups");
-
+            {
+                return QCoreApplication::translate("MegaNodeNames", UserAttributes::MyBackupsHandle::DEFAULT_BACKUPS_ROOT_DIRNAME);
+            }
             if(item->isRoot())
             {
                 return QApplication::translate("MegaNodeNames", item->getNode()->getName());

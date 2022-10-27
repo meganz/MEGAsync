@@ -706,8 +706,6 @@ int main(int argc, char *argv[])
     QT_TRANSLATE_NOOP("FinderExtensionApp", "%n folder", "", n);
     QT_TRANSLATE_NOOP("FinderExtensionApp", "View previous versions");
     QT_TRANSLATE_NOOP("MegaNodeNames", "Cloud Drive");
-    QT_TRANSLATE_NOOP("MegaNodeNames", "Backups");
-    QT_TRANSLATE_NOOP("MegaNodeNames", SyncController::DEFAULT_BACKUPS_ROOT_DIRNAME);
     QT_TRANSLATE_NOOP("MegaSyncError", "No error");
     QT_TRANSLATE_NOOP("MegaSyncError", "Unknown error");
     QT_TRANSLATE_NOOP("MegaSyncError", "File system not supported");
