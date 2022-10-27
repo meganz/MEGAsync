@@ -446,10 +446,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If you don&apos;t want to rename the new folders, stop the backup in the &lt;a href=&quot;https://13755-backup-center.developers.mega.co.nz/fm/backups&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#aa1a00;&quot;&gt;Backup centre&lt;/span&gt;&lt;/a&gt; for the existing folders. Then setup the backup for the new folders again. &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Rename and backup</source>
         <translation type="unfinished"></translation>
     </message>
@@ -458,7 +454,11 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>You can&apos;t back up folders with the same name. Rename them to continue with the backup. Folder name will not change on your computer.</source>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If you don&apos;t want to rename the new folder, stop the backup in the &lt;a href=&quot;https://13755-backup-center.developers.mega.co.nz/fm/backups&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#aa1a00;&quot;&gt;Backup centre&lt;/span&gt;&lt;/a&gt; for the existing folder. Then setup the backup for the new folder again. &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You can&apos;t back up folders with the same name. Rename them to continue with the backup. Folder names won&apos;t change on your computer.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -466,23 +466,28 @@
     <name>BackupRenameWidget</name>
     <message>
         <source>Local folder %1:</source>
+        <translatorcomment>Backup rename widget dialog label. Placeholder will display the conflict count. In the right of the label the local folder path will be displayed</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Rename backup folder </source>
+        <translatorcomment>Placeholder for the backup rename widget line edit.</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Backup folder:</source>
+        <translatorcomment>In the right of this label the line edit will be displayed. This line edit will be used by the user to change the backup name.</translatorcomment>
         <translation type="unfinished">Backup folder:</translation>
     </message>
     <message>
         <source>The following characters are not allowed:
 </source>
+        <translatorcomment>Error message in case the user enters any invalid character. After the two dots, a list of unallowed characters will be displayed</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>A folder named &quot;%1&quot; already exists in your Backups. Rename the new folder to continue with the backup.</source>
+        <translatorcomment>Error message displayed in the top of the rename backup dialog. It indicates that a backup with that name already exists.</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -659,13 +664,6 @@
         </translation>
     </message>
     <message>
-        <source>Creating or setting folder &quot;%1&quot; as backups root failed.
-Reason: %2</source>
-        <translatorcomment>Error message that indicates that an error happened creating My Backups folder. First placeholder is the failed path. Second placeholder is the error description.</translatorcomment>
-        <translation>Creating or setting folder &quot;%1&quot; as backups root failed.
-        Reason: %2</translation>
-    </message>
-    <message>
         <source>Choose directory</source>
         <translatorcomment>Folder selector window title text</translatorcomment>
         <translation>Choose directory</translation>
@@ -796,26 +794,6 @@ p, li { white-space: pre-wrap; }
         <source>Please select a local folder and a MEGA folder</source>
         <translatorcomment>Message displayed when an user is adding a synchronized folder an either local or remote folder are empty.</translatorcomment>
         <translation>Please select a local folder and a MEGA folder</translation>
-    </message>
-    <message>
-        <source>Sync name</source>
-        <translatorcomment>Title of the dialog displayed when a user is using a name for a local folder that is already used.</translatorcomment>
-        <translation>Sync name</translation>
-    </message>
-    <message>
-        <source>The selected local folder is already synced</source>
-        <translatorcomment>Message displayed when an user is adding a local folder wich is already synced.</translatorcomment>
-        <translation>The selected local folder is already synced</translation>
-    </message>
-    <message>
-        <source>A synced folder cannot be inside another synced folder</source>
-        <translatorcomment>Message displayed when an user is adding nested local folders for synchronization.</translatorcomment>
-        <translation>A synced folder cannot be inside another synced folder</translation>
-    </message>
-    <message>
-        <source>The selected MEGA folder is already synced</source>
-        <translatorcomment>Message displayed when an user is adding an already synchronized remote folder.</translatorcomment>
-        <translation>The selected MEGA folder is already synced</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -3190,7 +3168,7 @@ Transfers will automatically resume when you re-open the app.</numerusform>
     <message numerus="yes">
         <source>Today at %1</source>
         <translatorcomment>Text that appears on &quot;Recently Used&quot; column if the last change was happened today. %1 represents the hour. Plural form is based on the hours, counted from 0 to 23.</translatorcomment>
-        <translation type="unfinished">
+        <translation>
             <numerusform>Today at %1</numerusform>
             <numerusform>Today at %1</numerusform>
         </translation>
@@ -3198,7 +3176,7 @@ Transfers will automatically resume when you re-open the app.</numerusform>
     <message numerus="yes">
         <source>Yesterday at %1</source>
         <translatorcomment>Text that appears on &quot;Recently Used&quot; column if the last change was happened yesterday. %1 represents the hour. Plural form is based on the hours, counted from 0 to 23.</translatorcomment>
-        <translation type="unfinished">
+        <translation>
             <numerusform>Yesterday at %1</numerusform>
             <numerusform>Yesterday at %1</numerusform>
         </translation>
@@ -3206,7 +3184,7 @@ Transfers will automatically resume when you re-open the app.</numerusform>
     <message numerus="yes">
         <source>%1 at %2</source>
         <translatorcomment>Text that appears on &quot;Recently Used&quot; column if the last change was previously to yesterday. %1 represents the date (day month and year), while %2 represents the hour). Plural form is based on the hours, counted from 0 to 23.</translatorcomment>
-        <translation type="unfinished">
+        <translation>
             <numerusform>%1 at %2</numerusform>
             <numerusform>%1 at %2</numerusform>
         </translation>
@@ -4255,21 +4233,18 @@ Please delete the folder sync from preferences to cancel them.</translation>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- There is now a new transfer manager.
-- Transfer management was enhanced and reliability of downloads and uploads improved. 
-- Detected crashes on Windows, Linux, and macOS fixed.
-- Translation issues fixed.
-- Performance improved.
-- UI fixed and adjusted.
-</source>
-        <translatorcomment>Changelog for version v4.7.0</translatorcomment>
-        <translation>- There is now a new transfer manager.
-- Transfer management was enhanced and reliability of downloads and uploads improved. 
-- Detected crashes on Windows, Linux, and macOS fixed.
-- Translation issues fixed.
-- Performance improved.
-- UI fixed and adjusted.
-</translation>
+        <source>Enhancement
+[BAC-115] - Strings for backup warning messages
+[BAC-137] - Use UserAttributesManager to manage MyBackups folder
+[BAC-180] - Allow the same folder name under different paths to be synced and update syncs tooltips
+Sub-task
+[BAC-65] - Dapp: Backup name change dialog
+Maintenance
+[BAC-175] - Dapp: polish device name
+[BAC-176] - Dapp: Prepare backups preview 14
+Feature
+[BAC-168] - Use different device name if conflict</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4772,11 +4747,6 @@ Do you want to delete it anyway?</translation>
 </context>
 <context>
     <name>RemoveBackupDialog</name>
-    <message>
-        <source>Remove backup</source>
-        <translatorcomment>Backup removal dialog window title (Linux and windows)</translatorcomment>
-        <translation type="unfinished">Remove backup</translation>
-    </message>
     <message>
         <source>Stop backing up folder?</source>
         <translatorcomment>Backup removal dialog title</translatorcomment>
@@ -5655,16 +5625,6 @@ Computer will enter sleep mode once these are complete.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Backup Error</source>
-        <translatorcomment>Error message dialog title.</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Error creating Backups root folder: %2</source>
-        <translatorcomment>Error message dialog text. Placeholder shows the reason</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Error adding backup %1</source>
         <translatorcomment>Error message dialog title. Placeholder shows the backup name</translatorcomment>
         <translation type="unfinished"></translation>
@@ -6376,23 +6336,28 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>You don&apos;t have enough permissions for this remote folder</source>
+        <translatorcomment>Warning message indicating that a folder can´t be synced as it the remote folder is an incoming share and the current user doesn´t have enought permisions</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Invalid remote path</source>
+        <translatorcomment>The selected remote path for the sync creation is invalid</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Folder contents already synced</source>
+        <translatorcomment>Warning message indicating that the selected folder have got an active sync bellow the selected path.</translatorcomment>
         <translation type="unfinished">Folder contents already synced</translation>
     </message>
     <message>
         <source>Folder already synced</source>
+        <translatorcomment>Warning message indicating that the selected folder have got a parent that is already synced.</translatorcomment>
         <translation type="unfinished">Folder already synced</translation>
     </message>
     <message>
         <source>The selected MEGA folder is already synced</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Warning message indicating that the selected folder is already a synced folder.</translatorcomment>
+        <translation type="unfinished">The selected MEGA folder is already synced</translation>
     </message>
 </context>
 <context>
@@ -6470,6 +6435,19 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
 </context>
 <context>
+    <name>SyncTooltip</name>
+    <message>
+        <source>Local path:</source>
+        <translatorcomment>Part of the tooltip text. It indicates that it will be followed by the local path of the sync.</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>MEGA path:</source>
+        <translatorcomment>Part of the tooltip text. It indicates that it will be followed by the remote path of the sync.</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>SyncsMenu</name>
     <message>
         <source>Add Sync</source>
@@ -6490,24 +6468,6 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <source>Backups</source>
         <translatorcomment>Menu option that shows backups menu</translatorcomment>
         <translation type="unfinished">Backups</translation>
-    </message>
-</context>
-<context>
-    <name>SyncTooltipCreator</name>
-    <message>
-        <source>Local path:</source>
-        <translatorcomment>Label used in tooltips when the local path of a sync is displayed.</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>MEGA path:</source>
-        <translatorcomment>Label used in tooltips when the remote path of a sync is displayed.</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>%1 %2</source>
-        <translatorcomment>String used to build the tooltip of syncs when they are hovered. %1 is the label (local or remote) and %2 is the path.</translatorcomment>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -7191,7 +7151,8 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
 <context>
     <name>UserAttributes::DeviceName</name>
     <message>
-        <source>Your computer</source>
+        <source>My computer</source>
+        <translatorcomment>Text that will be used as the folder name of the backup in case the device name couldn´t be fetched correctly.</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
 </context>
