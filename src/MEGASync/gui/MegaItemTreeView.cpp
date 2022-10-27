@@ -90,19 +90,27 @@ void MegaItemTreeView::drawBranches(QPainter *painter, const QRect &rect, const 
 
 void MegaItemTreeView::mousePressEvent(QMouseEvent *event)
 {
+    bool accept = true;
 #ifndef __APPLE__
-    mousePressorReleaseEvent(event);
+    accept = mousePressorReleaseEvent(event);
 #endif
-    QTreeView::mousePressEvent(event);
+    if(accept)
+    {
+        QTreeView::mousePressEvent(event);
+    }
 }
 
 
 void MegaItemTreeView::mouseReleaseEvent(QMouseEvent *event)
 {
+    bool accept = true;
 #ifdef __APPLE__
-    mousePressorReleaseEvent(event);
+    accept = mousePressorReleaseEvent(event);
 #endif
-    QTreeView::mouseReleaseEvent(event);
+    if(accept)
+    {
+        QTreeView::mouseReleaseEvent(event);
+    }
 }
 
 void MegaItemTreeView::mouseDoubleClickEvent(QMouseEvent *event)
@@ -195,7 +203,7 @@ void MegaItemTreeView::onNavigateReady(const QModelIndex &index)
     }
 }
 
-void MegaItemTreeView::mousePressorReleaseEvent(QMouseEvent *event)
+bool MegaItemTreeView::mousePressorReleaseEvent(QMouseEvent *event)
 {
     QPoint pos = event->pos();
     QModelIndex index = getIndexFromSourceModel(indexAt(pos));
@@ -210,7 +218,7 @@ void MegaItemTreeView::mousePressorReleaseEvent(QMouseEvent *event)
         {
             QAbstractItemView::mouseReleaseEvent(event);
         }
-        return;
+        return false;
     }
     else
     {
@@ -248,12 +256,13 @@ void MegaItemTreeView::mousePressorReleaseEvent(QMouseEvent *event)
                     {
                         QAbstractItemView::mouseReleaseEvent(event);
                     }
-                    return;
+                    return false;
                 }
             }
 
         }
     }
+    return true;
 }
 
 MegaItemHeaderView::MegaItemHeaderView(Qt::Orientation orientation, QWidget *parent) :

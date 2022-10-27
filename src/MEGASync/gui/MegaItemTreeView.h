@@ -47,7 +47,7 @@ private slots:
     void onNavigateReady(const QModelIndex& index);
 
 private:
-    void mousePressorReleaseEvent(QMouseEvent* event);
+    bool mousePressorReleaseEvent(QMouseEvent* event);
     QModelIndex getIndexFromSourceModel(const QModelIndex& index) const;
     MegaItemProxyModel* proxyModel() const;
     //QModelIndex mIndexToEnter;
