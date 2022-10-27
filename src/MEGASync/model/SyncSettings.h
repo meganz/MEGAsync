@@ -1,11 +1,11 @@
 #pragma once
 
-#include <memory>
-
 #include <QString>
 #include <QDataStream>
 
 #include "megaapi.h"
+
+#include <memory>
 
 struct SyncData
 {
@@ -22,7 +22,7 @@ struct SyncData
     QString mSyncID;
 };
 
-class SyncSetting
+class SyncSettings
 {
 private:
     std::unique_ptr<mega::MegaSync> mSync; //shall not need to be persisted
@@ -37,16 +37,16 @@ private:
     static constexpr int CACHE_VERSION = 1;
 public:
 
-    SyncSetting();
-    SyncSetting(const SyncData &osd, bool loadedFromPreviousSessions);
-    SyncSetting(QString initializer);
-    ~SyncSetting();
-    SyncSetting(const SyncSetting& a);
-    SyncSetting(SyncSetting&& a) = default;
-    SyncSetting& operator=(const SyncSetting& a);
-    SyncSetting& operator=(SyncSetting&& a) = default;
+    SyncSettings();
+    SyncSettings(const SyncData &osd, bool loadedFromPreviousSessions);
+    SyncSettings(QString initializer);
+    ~SyncSettings();
+    SyncSettings(const SyncSettings& a);
+    SyncSettings(SyncSettings&& a) = default;
+    SyncSettings& operator=(const SyncSettings& a);
+    SyncSettings& operator=(SyncSettings&& a) = default;
 
-    SyncSetting(mega::MegaSync *sync);
+    SyncSettings(mega::MegaSync *sync);
     mega::MegaHandle backupId() const;
     void setBackupId(mega::MegaHandle backupId);
     // returns sync name verbatim or removing problematic chars (if removeUnsupportedChars = true)
@@ -76,6 +76,6 @@ public:
     mega::MegaSync::SyncType getType();
 };
 
-Q_DECLARE_METATYPE(SyncSetting);
+Q_DECLARE_METATYPE(SyncSettings);
 Q_DECLARE_SMART_POINTER_METATYPE(std::shared_ptr)
-Q_DECLARE_METATYPE(std::shared_ptr<SyncSetting>)
+Q_DECLARE_METATYPE(std::shared_ptr<SyncSettings>)

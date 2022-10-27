@@ -332,10 +332,10 @@ private slots:
     void openFolderPath(QString path);
     void registerUserActivity();
     void PSAseen(int id);
-    void onSyncStateChanged(std::shared_ptr<SyncSetting> syncSettings);
-    void onSyncDeleted(std::shared_ptr<SyncSetting> syncSettings);
-    void onSyncDisabled(std::shared_ptr<SyncSetting> syncSetting);
-    void onSyncEnabled(std::shared_ptr<SyncSetting> syncSetting);
+    void onSyncStateChanged(std::shared_ptr<SyncSettings> syncSettings);
+    void onSyncDeleted(std::shared_ptr<SyncSettings> syncSettings);
+    void onSyncDisabled(std::shared_ptr<SyncSettings> syncSetting);
+    void onSyncEnabled(std::shared_ptr<SyncSettings> syncSetting);
     void onBlocked();
     void onUnblocked();
     void onTransfersModelUpdate();

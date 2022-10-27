@@ -101,7 +101,7 @@ void SyncModel::removeAllFolders()
     unattendedDisabledSyncs.clear();
 }
 
-void SyncModel::activateSync(std::shared_ptr<SyncSetting> syncSetting)
+void SyncModel::activateSync(std::shared_ptr<SyncSettings> syncSetting)
 {
 #ifndef NDEBUG
     {
@@ -150,13 +150,13 @@ void SyncModel::activateSync(std::shared_ptr<SyncSetting> syncSetting)
     Platform::syncFolderAdded(syncSetting->getLocalFolder(), syncSetting->name(true), syncSetting->getSyncID());
 }
 
-void SyncModel::deactivateSync(std::shared_ptr<SyncSetting> syncSetting)
+void SyncModel::deactivateSync(std::shared_ptr<SyncSettings> syncSetting)
 {
     Platform::syncFolderRemoved(syncSetting->getLocalFolder(), syncSetting->name(true), syncSetting->getSyncID());
     MegaSyncApp->notifyItemChange(syncSetting->getLocalFolder(), MegaApi::STATE_NONE);
 }
 
-void SyncModel::updateMegaFolder(QString newRemotePath, std::shared_ptr<SyncSetting> cs)
+void SyncModel::updateMegaFolder(QString newRemotePath, std::shared_ptr<SyncSettings> cs)
 {
     QMutexLocker qm(&syncMutex);
     auto oldMegaFolder = cs->getMegaFolder();
@@ -170,7 +170,7 @@ void SyncModel::updateMegaFolder(QString newRemotePath, std::shared_ptr<SyncSett
     }
 }
 
-std::shared_ptr<SyncSetting> SyncModel::updateSyncSettings(MegaSync *sync, int addingState)
+std::shared_ptr<SyncSettings> SyncModel::updateSyncSettings(MegaSync *sync, int addingState)
 {
     if (!sync)
     {
@@ -179,7 +179,7 @@ std::shared_ptr<SyncSetting> SyncModel::updateSyncSettings(MegaSync *sync, int a
 
     QMutexLocker qm(&syncMutex);
 
-    std::shared_ptr<SyncSetting> cs;
+    std::shared_ptr<SyncSettings> cs;
     bool wasActive = false;
     bool wasInactive = false;
 
@@ -215,12 +215,12 @@ std::shared_ptr<SyncSetting> SyncModel::updateSyncSettings(MegaSync *sync, int a
         auto loaded = preferences->getLoadedSyncsMap();
         if (loaded.contains(sync->getBackupId())) //existing configuration from previous executions (we get the data that the sdk might not be providing from our cache)
         {
-            cs = configuredSyncsMap[sync->getBackupId()] = std::make_shared<SyncSetting>(*loaded[sync->getBackupId()].get());
+            cs = configuredSyncsMap[sync->getBackupId()] = std::make_shared<SyncSettings>(*loaded[sync->getBackupId()].get());
             cs->setSync(sync);
         }
         else // new addition (no reference in the cache)
         {
-            cs = configuredSyncsMap[sync->getBackupId()] = std::make_shared<SyncSetting>(sync);
+            cs = configuredSyncsMap[sync->getBackupId()] = std::make_shared<SyncSettings>(sync);
         }
 
         configuredSyncs[static_cast<SyncType>(sync->getType())].append(sync->getBackupId());
@@ -293,11 +293,11 @@ void SyncModel::pickInfoFromOldSync(const SyncData &osd, MegaHandle backupId, bo
 {
     QMutexLocker qm(&syncMutex);
     assert(preferences->logged() || loadedFromPreviousSessions);
-    std::shared_ptr<SyncSetting> cs;
+    std::shared_ptr<SyncSettings> cs;
 
     assert (!configuredSyncsMap.contains(backupId) && "picking already configured sync!"); //this should always be the case
 
-    cs = syncsSettingPickedFromOldConfig[backupId] = std::make_shared<SyncSetting>(osd, loadedFromPreviousSessions);
+    cs = syncsSettingPickedFromOldConfig[backupId] = std::make_shared<SyncSettings>(osd, loadedFromPreviousSessions);
 
     cs->setBackupId(backupId); //assign the new tag given by the sdk
 
@@ -460,16 +460,16 @@ QList<MegaHandle> SyncModel::getMegaFolderHandles(const QVector<SyncType>& types
     return value;
 }
 
-std::shared_ptr<SyncSetting> SyncModel::getSyncSetting(int num, mega::MegaSync::SyncType type)
+std::shared_ptr<SyncSettings> SyncModel::getSyncSetting(int num, mega::MegaSync::SyncType type)
 {
     QMutexLocker qm(&syncMutex);
     return configuredSyncsMap[configuredSyncs[type].at(num)];
 }
 
-QList<std::shared_ptr<SyncSetting>> SyncModel::getSyncSettingsByType(const QVector<SyncType>& types)
+QList<std::shared_ptr<SyncSettings>> SyncModel::getSyncSettingsByType(const QVector<SyncType>& types)
 {
     QMutexLocker qm(&syncMutex);
-    QList<std::shared_ptr<SyncSetting>> syncs;
+    QList<std::shared_ptr<SyncSettings>> syncs;
     for (auto type : types)
     {
         for (auto &cs : configuredSyncs[type])
@@ -480,7 +480,7 @@ QList<std::shared_ptr<SyncSetting>> SyncModel::getSyncSettingsByType(const QVect
     return syncs;
 }
 
-std::shared_ptr<SyncSetting> SyncModel::getSyncSettingByTag(MegaHandle tag)
+std::shared_ptr<SyncSettings> SyncModel::getSyncSettingByTag(MegaHandle tag)
 {
     QMutexLocker qm(&syncMutex);
     if (configuredSyncsMap.contains(tag))

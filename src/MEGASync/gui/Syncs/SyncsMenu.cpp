@@ -272,7 +272,7 @@ void SyncsMenu::highLightMenuEntry(QAction* action)
     }
 }
 
-QString SyncsMenu::createSyncTooltipText(std::shared_ptr<SyncSetting> syncSetting) const
+QString SyncsMenu::createSyncTooltipText(std::shared_ptr<SyncSettings> syncSetting) const
 {
     QString toolTip (SyncTooltipCreator::createForLocal(syncSetting->getLocalFolder()));
     toolTip += QChar::LineSeparator;

@@ -1441,7 +1441,7 @@ void SettingsDialog::connectSyncHandlers()
         }
     }, Qt::QueuedConnection);
 
-    connect(&mSyncController, &SyncController::syncRemoveError, this, [this](std::shared_ptr<SyncSetting> sync)
+    connect(&mSyncController, &SyncController::syncRemoveError, this, [this](std::shared_ptr<SyncSettings> sync)
     {
         onSavingSyncsCompleted(SAVING_SYNCS_FINISHED);
         QMegaMessageBox::critical(nullptr, tr("Error removing sync"),
@@ -1451,7 +1451,7 @@ void SettingsDialog::connectSyncHandlers()
 
     }, Qt::QueuedConnection);
 
-    connect(&mSyncController, &SyncController::syncEnableError, this, [this](std::shared_ptr<SyncSetting> sync)
+    connect(&mSyncController, &SyncController::syncEnableError, this, [this](std::shared_ptr<SyncSettings> sync)
     {
         onSavingSyncsCompleted(SAVING_SYNCS_FINISHED);
         QMegaMessageBox::critical(nullptr, tr("Error enabling sync"),
@@ -1461,7 +1461,7 @@ void SettingsDialog::connectSyncHandlers()
 
     }, Qt::QueuedConnection);
 
-    connect(&mSyncController, &SyncController::syncDisableError, this, [this](std::shared_ptr<SyncSetting> sync)
+    connect(&mSyncController, &SyncController::syncDisableError, this, [this](std::shared_ptr<SyncSettings> sync)
     {
         onSavingSyncsCompleted(SAVING_SYNCS_FINISHED);
         QMegaMessageBox::critical(nullptr, tr("Error disabling sync"),
@@ -1476,17 +1476,17 @@ void SettingsDialog::loadSyncSettings()
 {
     SyncItemModel *model(new SyncItemModel(mUi->syncTableView));
     model->fillData();
-    connect(model, &SyncItemModel::enableSync, this, [this](std::shared_ptr<SyncSetting> sync)
+    connect(model, &SyncItemModel::enableSync, this, [this](std::shared_ptr<SyncSettings> sync)
     {
         syncsStateInformation(SyncStateInformation::SAVING_SYNCS);
         mSyncController.enableSync(sync);
     });
-    connect(model, &SyncItemModel::disableSync, this, [this](std::shared_ptr<SyncSetting> sync)
+    connect(model, &SyncItemModel::disableSync, this, [this](std::shared_ptr<SyncSettings> sync)
     {
         syncsStateInformation(SyncStateInformation::SAVING_SYNCS);
         mSyncController.disableSync(sync);
     });
-    connect(model, &SyncItemModel::syncUpdateFinished, this, [this](std::shared_ptr<SyncSetting> syncSetting)
+    connect(model, &SyncItemModel::syncUpdateFinished, this, [this](std::shared_ptr<SyncSettings> syncSetting)
     {
         if(syncSetting->getType() == mega::MegaSync::SyncType::TYPE_TWOWAY)
         {
@@ -1591,7 +1591,7 @@ void SettingsDialog::on_bDeleteSync_clicked()
     if(mUi->syncTableView->selectionModel()->hasSelection())
     {
         QModelIndex index = mUi->syncTableView->selectionModel()->selectedRows().first();
-        removeSync(index.data(Qt::UserRole).value<std::shared_ptr<SyncSetting>>());
+        removeSync(index.data(Qt::UserRole).value<std::shared_ptr<SyncSettings>>());
     }
 }
 
@@ -1690,7 +1690,7 @@ void SettingsDialog::connectBackupHandlers()
         }
     });
 
-    connect(&mBackupController, &SyncController::syncRemoveError, this, [this](std::shared_ptr<SyncSetting> sync)
+    connect(&mBackupController, &SyncController::syncRemoveError, this, [this](std::shared_ptr<SyncSettings> sync)
     {
         onSavingSyncsCompleted(SyncStateInformation::SAVING_BACKUPS_FINISHED);
         QMegaMessageBox::warning(nullptr, tr("Error removing backup"),
@@ -1700,7 +1700,7 @@ void SettingsDialog::connectBackupHandlers()
 
     }, Qt::QueuedConnection);
 
-    connect(&mBackupController, &SyncController::syncEnableError, this, [this](std::shared_ptr<SyncSetting> sync)
+    connect(&mBackupController, &SyncController::syncEnableError, this, [this](std::shared_ptr<SyncSettings> sync)
     {
         onSavingSyncsCompleted(SyncStateInformation::SAVING_BACKUPS_FINISHED);
         QMegaMessageBox::warning(nullptr, tr("Error enabling backup"),
@@ -1710,7 +1710,7 @@ void SettingsDialog::connectBackupHandlers()
 
     }, Qt::QueuedConnection);
 
-    connect(&mBackupController, &SyncController::syncDisableError, this, [this](std::shared_ptr<SyncSetting> sync)
+    connect(&mBackupController, &SyncController::syncDisableError, this, [this](std::shared_ptr<SyncSettings> sync)
     {
         onSavingSyncsCompleted(SyncStateInformation::SAVING_BACKUPS_FINISHED);
         QMegaMessageBox::warning(nullptr, tr("Error disabling backup"),
@@ -1725,17 +1725,17 @@ void SettingsDialog::loadBackupSettings()
 {
     BackupItemModel *model(new BackupItemModel(mUi->backupTableView));
     model->fillData();
-    connect(model, &BackupItemModel::enableSync, this, [this](std::shared_ptr<SyncSetting> sync)
+    connect(model, &BackupItemModel::enableSync, this, [this](std::shared_ptr<SyncSettings> sync)
     {
         syncsStateInformation(SyncStateInformation::SAVING_BACKUPS);
         mBackupController.enableSync(sync);
     });
-    connect(model, &BackupItemModel::disableSync, this, [this](std::shared_ptr<SyncSetting> sync)
+    connect(model, &BackupItemModel::disableSync, this, [this](std::shared_ptr<SyncSettings> sync)
     {
         syncsStateInformation(SyncStateInformation::SAVING_BACKUPS);
         mBackupController.disableSync(sync);
     });
-    connect(model, &BackupItemModel::syncUpdateFinished, this, [this](std::shared_ptr<SyncSetting> syncSetting)
+    connect(model, &BackupItemModel::syncUpdateFinished, this, [this](std::shared_ptr<SyncSettings> syncSetting)
     {
         if(syncSetting->getType() == mega::MegaSync::SyncType::TYPE_BACKUP)
         {
@@ -1784,7 +1784,7 @@ void SettingsDialog::on_bDeleteBackup_clicked()
         return;
 
     QModelIndex index = mUi->backupTableView->selectionModel()->selectedRows().first();
-    std::shared_ptr<SyncSetting> backup = index.data(Qt::UserRole).value<std::shared_ptr<SyncSetting>>();
+    std::shared_ptr<SyncSettings> backup = index.data(Qt::UserRole).value<std::shared_ptr<SyncSettings>>();
 
     if(backup == nullptr)
         return;
@@ -1792,7 +1792,7 @@ void SettingsDialog::on_bDeleteBackup_clicked()
     removeBackup(backup);
 }
 
-void SettingsDialog::removeBackup(std::shared_ptr<SyncSetting> backup)
+void SettingsDialog::removeBackup(std::shared_ptr<SyncSettings> backup)
 {
     RemoveBackupDialog *dialog = new RemoveBackupDialog(backup, this);
     dialog->setAttribute(Qt::WA_DeleteOnClose);
@@ -1805,7 +1805,7 @@ void SettingsDialog::removeBackup(std::shared_ptr<SyncSetting> backup)
     });
 }
 
-void SettingsDialog::removeSync(std::shared_ptr<SyncSetting> sync)
+void SettingsDialog::removeSync(std::shared_ptr<SyncSettings> sync)
 {
     syncsStateInformation(SyncStateInformation::SAVING_SYNCS);
     mSyncController.removeSync(sync);

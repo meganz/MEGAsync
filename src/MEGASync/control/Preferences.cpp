@@ -2948,7 +2948,7 @@ void Preferences::loadExcludedSyncNames()
 }
 
 
-QMap<mega::MegaHandle, std::shared_ptr<SyncSetting> > Preferences::getLoadedSyncsMap() const
+QMap<mega::MegaHandle, std::shared_ptr<SyncSettings> > Preferences::getLoadedSyncsMap() const
 {
     return loadedSyncsMap;
 }
@@ -2966,7 +2966,7 @@ void Preferences::readFolders()
     {
         mSettings->beginGroup(i);
 
-        auto sc = std::make_shared<SyncSetting>(mSettings->value(configuredSyncsKey).value<QString>());
+        auto sc = std::make_shared<SyncSettings>(mSettings->value(configuredSyncsKey).value<QString>());
         if (sc->backupId())
         {
             loadedSyncsMap[sc->backupId()] = sc;
@@ -3144,7 +3144,7 @@ void Preferences::removeAllSyncSettings()
 }
 
 
-void Preferences::removeSyncSetting(std::shared_ptr<SyncSetting> syncSettings)
+void Preferences::removeSyncSetting(std::shared_ptr<SyncSettings> syncSettings)
 {
     QMutexLocker qm(&mutex);
     assert(logged() && syncSettings);
@@ -3166,7 +3166,7 @@ void Preferences::removeSyncSetting(std::shared_ptr<SyncSetting> syncSettings)
     mSettings->sync();
 }
 
-void Preferences::writeSyncSetting(std::shared_ptr<SyncSetting> syncSettings)
+void Preferences::writeSyncSetting(std::shared_ptr<SyncSettings> syncSettings)
 {
     if (logged())
     {

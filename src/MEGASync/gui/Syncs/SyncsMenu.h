@@ -2,7 +2,7 @@
 #define SYNCSMENU_H
 
 #include "MenuItemAction.h"
-#include "SyncController.h"
+#include "model/SyncSettings.h"
 
 #include "megaapi.h"
 
@@ -42,7 +42,7 @@ private:
     void refresh();
     void highLightMenuEntry(QAction *action);
 
-    QString createSyncTooltipText(std::shared_ptr<SyncSetting> syncSetting) const;
+    QString createSyncTooltipText(std::shared_ptr<SyncSettings> syncSetting) const;
 
     std::shared_ptr<UserAttributes::DeviceName> mDeviceNameRequest;
     mega::MegaSync::SyncType mType;

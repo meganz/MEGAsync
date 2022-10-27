@@ -1,7 +1,7 @@
 #ifndef REMOVEBACKUPDIALOG_H
 #define REMOVEBACKUPDIALOG_H
 
-#include "model/SyncSetting.h"
+#include "model/SyncSettings.h"
 #include "NodeSelector.h"
 
 #include <QDialog>
@@ -16,10 +16,10 @@ class RemoveBackupDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit RemoveBackupDialog(std::shared_ptr<SyncSetting> backup, QWidget *parent = nullptr);
+    explicit RemoveBackupDialog(std::shared_ptr<SyncSettings> backup, QWidget *parent = nullptr);
     ~RemoveBackupDialog();
 
-    std::shared_ptr<SyncSetting> backupToRemove();
+    std::shared_ptr<SyncSettings> backupToRemove();
     mega::MegaHandle targetFolder();
 
 private slots:
@@ -30,7 +30,7 @@ private slots:
 private:
     mega::MegaApi* mMegaApi;
     Ui::RemoveBackupDialog *mUi;
-    std::shared_ptr<SyncSetting> mBackup;
+    std::shared_ptr<SyncSettings> mBackup;
     mega::MegaHandle mTargetFolder;
     QPointer<NodeSelector> mNodeSelector;
 };

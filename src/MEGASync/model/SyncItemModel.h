@@ -1,15 +1,13 @@
 #ifndef SYNCITEMMODEL_H
 #define SYNCITEMMODEL_H
 
-
-#include "../model/SyncModel.h"
+#include "SyncModel.h"
 #include "SyncController.h"
 
 #include <QSortFilterProxyModel>
 #include <QAbstractItemModel>
 
 #include <QCollator>
-
 
 class SyncItemModel : public QAbstractItemModel
 {
@@ -46,24 +44,24 @@ public:
     virtual void fillData();
 
 protected:
-    QList<std::shared_ptr<SyncSetting>> getList() const;
-    void setList(QList<std::shared_ptr<SyncSetting>> list);
+    QList<std::shared_ptr<SyncSettings>> getList() const;
+    void setList(QList<std::shared_ptr<SyncSettings>> list);
     mega::MegaSync::SyncType getMode();
     void setMode(mega::MegaSync::SyncType syncType);
 
 signals:
-    void enableSync(std::shared_ptr<SyncSetting> syncSetting);
-    void disableSync(std::shared_ptr<SyncSetting> syncSetting);
-    void syncUpdateFinished(std::shared_ptr<SyncSetting> syncSetting);
+    void enableSync(std::shared_ptr<SyncSettings> syncSetting);
+    void disableSync(std::shared_ptr<SyncSettings> syncSetting);
+    void syncUpdateFinished(std::shared_ptr<SyncSettings> syncSetting);
 
 private slots:
     //void resetModel();
-    void insertSync(std::shared_ptr<SyncSetting> sync);
-    void removeSync(std::shared_ptr<SyncSetting> sync);
+    void insertSync(std::shared_ptr<SyncSettings> sync);
+    void removeSync(std::shared_ptr<SyncSettings> sync);
 
 private:
     SyncModel* mSyncModel;
-    QList<std::shared_ptr<SyncSetting>> mList;
+    QList<std::shared_ptr<SyncSettings>> mList;
     mega::MegaSync::SyncType mSyncType;
 
     virtual void sendDataChanged(int row);

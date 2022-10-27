@@ -16,7 +16,7 @@
 
 Q_DECLARE_METATYPE(QList<long long>)
 
-class SyncSetting;
+class SyncSettings;
 struct SyncData;
 class Preferences : public QObject
 {
@@ -289,10 +289,10 @@ public:
     void setNeverCreateLink(bool value);
 
     // sync related
-    void writeSyncSetting(std::shared_ptr<SyncSetting> syncSettings); //write sync into cache
+    void writeSyncSetting(std::shared_ptr<SyncSettings> syncSettings); //write sync into cache
     void removeAllSyncSettings(); //remove all sync from cache
-    void removeSyncSetting(std::shared_ptr<SyncSetting> syncSettings); //remove one sync from cache
-    QMap<mega::MegaHandle, std::shared_ptr<SyncSetting> > getLoadedSyncsMap() const; //return loaded syncs when loggedin/entered user
+    void removeSyncSetting(std::shared_ptr<SyncSettings> syncSettings); //remove one sync from cache
+    QMap<mega::MegaHandle, std::shared_ptr<SyncSettings> > getLoadedSyncsMap() const; //return loaded syncs when loggedin/entered user
     void removeAllFolders(); //remove all syncs from cache
     // old cache transition related:
     void removeOldCachedSync(int position, QString email = QString());
@@ -546,7 +546,7 @@ protected:
     // loaded syncs when loggedin/entered user. This is intended to be used to load values that are not stored in the sdk (like sync name/last known remote path)
     // the actual SyncSettings model is stored in Model::configuredSyncsMap. That one is the one that will be updated and persistent accordingly
     // These are only used for retrieving values or removing at uninstall
-    QMap<mega::MegaHandle, std::shared_ptr<SyncSetting>> loadedSyncsMap;
+    QMap<mega::MegaHandle, std::shared_ptr<SyncSettings>> loadedSyncsMap;
 
     QStringList excludedSyncNames;
     QStringList excludedSyncPaths;

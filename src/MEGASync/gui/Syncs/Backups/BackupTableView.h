@@ -1,7 +1,7 @@
 #ifndef BACKUPTABLEVIEW_H
 #define BACKUPTABLEVIEW_H
 
-#include "model/SyncSetting.h"
+#include "model/SyncSettings.h"
 #include "Syncs/Twoways/SyncTableView.h"
 #include <QObject>
 #include <QTableView>
@@ -16,7 +16,7 @@ public:
     void customize();
 
 signals:
-    void removeBackup(std::shared_ptr<SyncSetting> backup);
+    void removeBackup(std::shared_ptr<SyncSettings> backup);
     void openInMEGA(mega::MegaHandle handle);
 
 protected:

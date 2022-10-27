@@ -2,9 +2,12 @@
 #define BACKUPITEMMODEL_H
 
 #include "SyncItemModel.h"
-#include "../model/SyncModel.h"
-#include "UserAttributesRequests/DeviceName.h"
+#include "SyncModel.h"
 
+namespace UserAttributes{
+class DeviceName;
+class MyBackupsHandle;
+}
 
 class BackupItemModel : public SyncItemModel
 {

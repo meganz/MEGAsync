@@ -1,5 +1,6 @@
 #ifndef TEXTDECORATOR_H
 #define TEXTDECORATOR_H
+
 #include "QObject"
 
 namespace Text

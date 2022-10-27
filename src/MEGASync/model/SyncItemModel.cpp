@@ -194,7 +194,7 @@ void SyncItemModel::fillData()
     setMode(mega::MegaSync::SyncType::TYPE_TWOWAY);
 }
 
-void SyncItemModel::insertSync(std::shared_ptr<SyncSetting> sync)
+void SyncItemModel::insertSync(std::shared_ptr<SyncSettings> sync)
 {
     if(mList.contains(sync))
     {
@@ -220,7 +220,7 @@ void SyncItemModel::insertSync(std::shared_ptr<SyncSetting> sync)
     emit syncUpdateFinished(sync);
 }
 
-void SyncItemModel::removeSync(std::shared_ptr<SyncSetting> sync)
+void SyncItemModel::removeSync(std::shared_ptr<SyncSettings> sync)
 {
     if(mList.contains(sync))
     {
@@ -247,12 +247,12 @@ void SyncItemModel::sendDataChanged(int row)
 }
 
 
-QList<std::shared_ptr<SyncSetting> > SyncItemModel::getList() const
+QList<std::shared_ptr<SyncSettings> > SyncItemModel::getList() const
 {
     return mList;
 }
 
-void SyncItemModel::setList(QList<std::shared_ptr<SyncSetting> > list)
+void SyncItemModel::setList(QList<std::shared_ptr<SyncSettings> > list)
 {
     mList = list;
 }

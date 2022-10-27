@@ -4,7 +4,7 @@
 #include "NodeSelector.h"
 #include <QButtonGroup>
 
-RemoveBackupDialog::RemoveBackupDialog(std::shared_ptr<SyncSetting> backup, QWidget *parent) :
+RemoveBackupDialog::RemoveBackupDialog(std::shared_ptr<SyncSettings> backup, QWidget *parent) :
     QDialog(parent),
     mMegaApi(MegaSyncApp->getMegaApi()),
     mUi(new Ui::RemoveBackupDialog),
@@ -38,7 +38,7 @@ RemoveBackupDialog::~RemoveBackupDialog()
     delete mUi;
 }
 
-std::shared_ptr<SyncSetting> RemoveBackupDialog::backupToRemove()
+std::shared_ptr<SyncSettings> RemoveBackupDialog::backupToRemove()
 {
     return mBackup;
 }

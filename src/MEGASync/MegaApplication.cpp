@@ -4361,12 +4361,12 @@ void MegaApplication::PSAseen(int id)
     }
 }
 
-void MegaApplication::onSyncStateChanged(std::shared_ptr<SyncSetting>)
+void MegaApplication::onSyncStateChanged(std::shared_ptr<SyncSettings>)
 {
     createAppMenus();
 }
 
-void MegaApplication::onSyncDeleted(std::shared_ptr<SyncSetting>)
+void MegaApplication::onSyncDeleted(std::shared_ptr<SyncSettings>)
 {
     createAppMenus();
 }
@@ -6235,7 +6235,7 @@ void MegaApplication::trayIconActivated(QSystemTrayIcon::ActivationReason reason
         // open local folder for the first active setting
         const auto syncSettings (model->getAllSyncSettings());
         auto firstActiveSyncSetting (std::find_if(syncSettings.cbegin(), syncSettings.cend(),
-                                                  [](std::shared_ptr<SyncSetting> s)
+                                                  [](std::shared_ptr<SyncSettings> s)
                                      {return s->isActive();}));
         if (firstActiveSyncSetting != syncSettings.cend())
         {
@@ -7161,7 +7161,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
 
         //Check for any sync disabled by logout to warn user on next login with user&password
         const auto syncSettings (model->getAllSyncSettings());
-        auto isErrorLoggedOut = [](std::shared_ptr<SyncSetting> s) {return s->getError() == MegaSync::LOGGED_OUT;};
+        auto isErrorLoggedOut = [](std::shared_ptr<SyncSettings> s) {return s->getError() == MegaSync::LOGGED_OUT;};
         if (std::any_of(syncSettings.cbegin(), syncSettings.cend(), isErrorLoggedOut))
         {
             preferences->setNotifyDisabledSyncsOnLogin(true);
@@ -8269,7 +8269,7 @@ void MegaApplication::onSyncFileStateChanged(MegaApi *, MegaSync *, string *loca
 #endif
 }
 
-void MegaApplication::onSyncDisabled(std::shared_ptr<SyncSetting> syncSetting)
+void MegaApplication::onSyncDisabled(std::shared_ptr<SyncSettings> syncSetting)
 {
     if (!syncSetting)
     {
@@ -8453,7 +8453,7 @@ void MegaApplication::onSyncDisabled(MegaApi*, MegaSync* sync)
     onSyncDisabled(model->getSyncSettingByTag(sync->getBackupId()));
 }
 
-void MegaApplication::onSyncEnabled(std::shared_ptr<SyncSetting> syncSetting)
+void MegaApplication::onSyncEnabled(std::shared_ptr<SyncSettings> syncSetting)
 {
     if (!syncSetting)
     {

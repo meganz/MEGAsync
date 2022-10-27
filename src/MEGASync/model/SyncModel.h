@@ -1,6 +1,9 @@
 #pragma once
 
-#include <memory>
+#include "control/Preferences.h"
+#include "model/SyncSettings.h"
+
+#include "megaapi.h"
 
 #include <QString>
 #include <QStringList>
@@ -8,10 +11,7 @@
 #include <QMutex>
 #include <QVector>
 
-#include "control/Preferences.h"
-#include "model/SyncSetting.h"
-
-#include "megaapi.h"
+#include <memory>
 
 class Preferences;
 
@@ -36,8 +36,8 @@ class SyncModel : public QObject
     using SyncType = mega::MegaSync::SyncType;
 
 signals:
-    void syncStateChanged(std::shared_ptr<SyncSetting> syncSettings);
-    void syncRemoved(std::shared_ptr<SyncSetting> syncSettings);
+    void syncStateChanged(std::shared_ptr<SyncSettings> syncSettings);
+    void syncRemoved(std::shared_ptr<SyncSettings> syncSettings);
     void syncDisabledListUpdated();
 
 private:
@@ -53,8 +53,8 @@ protected:
     QMutex syncMutex;
 
     QMap<SyncType, QList<mega::MegaHandle>> configuredSyncs; //Tags of configured syncs
-    QMap<mega::MegaHandle, std::shared_ptr<SyncSetting>> configuredSyncsMap;
-    QMap<mega::MegaHandle, std::shared_ptr<SyncSetting>> syncsSettingPickedFromOldConfig;
+    QMap<mega::MegaHandle, std::shared_ptr<SyncSettings>> configuredSyncsMap;
+    QMap<mega::MegaHandle, std::shared_ptr<SyncSettings>> syncsSettingPickedFromOldConfig;
     QMap<SyncType, QSet<mega::MegaHandle>> unattendedDisabledSyncs; //Tags of syncs disabled due to errors since last dismissed
 
 public:
@@ -69,12 +69,12 @@ public:
      * @param addingState to distinguish adding cases (from onSyncAdded)
      * @return
      */
-    std::shared_ptr<SyncSetting> updateSyncSettings(mega::MegaSync *sync, int addingState = 0);
+    std::shared_ptr<SyncSettings> updateSyncSettings(mega::MegaSync *sync, int addingState = 0);
 
     // transition sync to active: will trigger platform dependent behaviour
-    void activateSync(std::shared_ptr<SyncSetting> cs);
+    void activateSync(std::shared_ptr<SyncSettings> cs);
     // transition sync to inactive: will trigger platform dependent behaviour
-    void deactivateSync(std::shared_ptr<SyncSetting> cs);
+    void deactivateSync(std::shared_ptr<SyncSettings> cs);
 
     // store all megasync specific info of syncsettings into megasync cache
     void rewriteSyncSettings();
@@ -87,12 +87,12 @@ public:
     void removeAllFolders();
 
     // Getters
-    std::shared_ptr<SyncSetting> getSyncSetting(int num, SyncType type);
-    std::shared_ptr<SyncSetting> getSyncSettingByTag(mega::MegaHandle tag);
-    QList<std::shared_ptr<SyncSetting>> getSyncSettingsByType(const QVector<SyncType>& types);
-    QList<std::shared_ptr<SyncSetting>> getSyncSettingsByType(SyncType type)
+    std::shared_ptr<SyncSettings> getSyncSetting(int num, SyncType type);
+    std::shared_ptr<SyncSettings> getSyncSettingByTag(mega::MegaHandle tag);
+    QList<std::shared_ptr<SyncSettings>> getSyncSettingsByType(const QVector<SyncType>& types);
+    QList<std::shared_ptr<SyncSettings>> getSyncSettingsByType(SyncType type)
         {return getSyncSettingsByType(QVector<SyncType>({type}));}
-    QList<std::shared_ptr<SyncSetting>> getAllSyncSettings()
+    QList<std::shared_ptr<SyncSettings>> getAllSyncSettings()
         {return getSyncSettingsByType(AllHandledSyncTypes);}
 
     int getNumSyncedFolders(const QVector<mega::MegaSync::SyncType>& types);
@@ -131,5 +131,5 @@ public:
     //cloudDrive = true: only cloud drive mega folders. If false will return only inshare syncs.
     QStringList getCloudDriveSyncMegaFolders(bool cloudDrive = true);
 
-    void updateMegaFolder(QString newRemotePath, std::shared_ptr<SyncSetting> cs);
+    void updateMegaFolder(QString newRemotePath, std::shared_ptr<SyncSettings> cs);
 };

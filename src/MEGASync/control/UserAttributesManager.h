@@ -1,10 +1,10 @@
 #ifndef USERATTRIBUTESMANAGER_H
 #define USERATTRIBUTESMANAGER_H
 
+#include <QTMegaListener.h>
+
 #include <QObject>
 #include <QMultiMap>
-
-#include <QTMegaListener.h>
 #include <QSharedPointer>
 
 #include <memory>

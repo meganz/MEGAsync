@@ -256,7 +256,7 @@ set (MOC_INPUT
     ${MEGAsyncDir}/control/UserAttributesManager.h
     ${MEGAsyncDir}/control/TextDecorator.h
 	
-    ${MEGAsyncDir}/model/SyncSetting.h
+    ${MEGAsyncDir}/model/SyncSettings.h
     ${MEGAsyncDir}/model/SyncModel.h
 	${MEGAsyncDir}/model/BackupItemModel.h
     ${MEGAsyncDir}/model/SyncItemModel.h
@@ -572,7 +572,7 @@ set (SRCS
     ${MEGAsyncDir}/control/UserAttributesManager.cpp
     ${MEGAsyncDir}/control/TextDecorator.cpp
 
-    ${MEGAsyncDir}/model/SyncSetting.cpp
+    ${MEGAsyncDir}/model/SyncSettings.cpp
     ${MEGAsyncDir}/model/SyncModel.cpp
 	${MEGAsyncDir}/model/BackupItemModel.cpp
     ${MEGAsyncDir}/model/SyncItemModel.cpp

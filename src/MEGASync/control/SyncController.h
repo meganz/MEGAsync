@@ -1,9 +1,9 @@
 #pragma once
 
-#include "model/SyncSetting.h"
+#include "model/SyncSettings.h"
 #include "model/SyncModel.h"
-#include "QTMegaRequestListener.h"
 
+#include "QTMegaRequestListener.h"
 #include "megaapi.h"
 
 #include <QString>
@@ -35,9 +35,9 @@ public:
     void addBackup(const QString& localFolder, const QString& syncName = QString());
     void addSync(const QString &localFolder, const mega::MegaHandle &remoteHandle,
                  const QString& syncName = QString(), mega::MegaSync::SyncType type = mega::MegaSync::TYPE_TWOWAY);
-    void removeSync(std::shared_ptr<SyncSetting> syncSetting, const mega::MegaHandle& remoteHandle = mega::INVALID_HANDLE);
-    void enableSync(std::shared_ptr<SyncSetting> syncSetting);
-    void disableSync(std::shared_ptr<SyncSetting> syncSetting);
+    void removeSync(std::shared_ptr<SyncSettings> syncSetting, const mega::MegaHandle& remoteHandle = mega::INVALID_HANDLE);
+    void enableSync(std::shared_ptr<SyncSettings> syncSetting);
+    void disableSync(std::shared_ptr<SyncSettings> syncSetting);
 
     // Local folder checks
     static QString getIsLocalFolderAlreadySyncedMsg(const QString& path, const mega::MegaSync::SyncType& syncType);
@@ -55,9 +55,9 @@ public:
 
 signals:
     void syncAddStatus(int errorCode, QString errorMsg, QString name);
-    void syncRemoveError(std::shared_ptr<SyncSetting> sync);
-    void syncEnableError(std::shared_ptr<SyncSetting> sync);
-    void syncDisableError(std::shared_ptr<SyncSetting> sync);
+    void syncRemoveError(std::shared_ptr<SyncSettings> sync);
+    void syncEnableError(std::shared_ptr<SyncSettings> sync);
+    void syncDisableError(std::shared_ptr<SyncSettings> sync);
 
 protected:
     // override from MegaRequestListener

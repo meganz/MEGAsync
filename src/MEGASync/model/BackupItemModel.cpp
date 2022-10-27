@@ -1,6 +1,7 @@
 #include "BackupItemModel.h"
 #include "Utilities.h"
 #include "Syncs/SyncTooltipCreator.h"
+#include "UserAttributesRequests/DeviceName.h"
 #include "UserAttributesRequests/MyBackupsHandle.h"
 
 #include <QCoreApplication>
@@ -59,7 +60,7 @@ QVariant BackupItemModel::data(const QModelIndex &index, int role) const
     if (!index.isValid())
         return QVariant();
 
-    std::shared_ptr<SyncSetting> sync = getList().at(index.row());
+    std::shared_ptr<SyncSettings> sync = getList().at(index.row());
 
     if(role == Qt::UserRole)
         return QVariant::fromValue(sync);

@@ -56,7 +56,7 @@ void BackupTableView::onCellClicked(const QModelIndex &index)
 
 void BackupTableView::showContextMenu(const QPoint &pos, const QModelIndex index)
 {
-    auto sync = index.data(Qt::UserRole).value<std::shared_ptr<SyncSetting>>();
+    auto sync = index.data(Qt::UserRole).value<std::shared_ptr<SyncSettings>>();
 
     QMenu *menu(new QMenu(this));
     Platform::initMenu(menu);

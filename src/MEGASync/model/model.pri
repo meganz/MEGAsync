@@ -5,10 +5,10 @@ SOURCES += \
            $$PWD/BackupItemModel.cpp \
            $$PWD/SyncItemModel.cpp \
            $$PWD/SyncModel.cpp \
-           $$PWD/SyncSetting.cpp
+           $$PWD/SyncSettings.cpp
 
 HEADERS  +=  \
            $$PWD/BackupItemModel.h \
            $$PWD/SyncItemModel.h \
            $$PWD/SyncModel.h \
-           $$PWD/SyncSetting.h
+           $$PWD/SyncSettings.h

@@ -116,7 +116,7 @@ void SyncTableView::showContextMenu(const QPoint &pos, const QModelIndex index)
                                              QIcon(QString::fromUtf8("://images/show_in_folder_ico.png"))));
     connect(showLocalAction, &MenuItemAction::triggered, this, [index]()
     {
-        auto sync = index.data(Qt::UserRole).value<std::shared_ptr<SyncSetting>>();
+        auto sync = index.data(Qt::UserRole).value<std::shared_ptr<SyncSettings>>();
         Utilities::openUrl(QUrl::fromLocalFile(sync->getLocalFolder()));
     });
 
@@ -125,7 +125,7 @@ void SyncTableView::showContextMenu(const QPoint &pos, const QModelIndex index)
                                               QIcon(QString::fromUtf8("://images/ico_open_MEGA.png"))));
     connect(showRemoteAction, &MenuItemAction::triggered, this, [index]()
     {
-        auto sync = index.data(Qt::UserRole).value<std::shared_ptr<SyncSetting>>();
+        auto sync = index.data(Qt::UserRole).value<std::shared_ptr<SyncSettings>>();
         Utilities::openInMega(sync->getMegaHandle());
     });
 
@@ -135,7 +135,7 @@ void SyncTableView::showContextMenu(const QPoint &pos, const QModelIndex index)
     delAction->setAccent(true);
     connect(delAction, &MenuItemAction::triggered, this, [this, index]()
     {
-        auto sync = index.data(Qt::UserRole).value<std::shared_ptr<SyncSetting>>();
+        auto sync = index.data(Qt::UserRole).value<std::shared_ptr<SyncSettings>>();
         emit removeSync(sync);
     });
 

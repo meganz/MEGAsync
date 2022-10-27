@@ -1,5 +1,5 @@
 
-#include "SyncSetting.h"
+#include "SyncSettings.h"
 #include "platform/Platform.h"
 
 #include <assert.h>
@@ -11,18 +11,18 @@ extern Q_CORE_EXPORT int qt_ntfs_permission_lookup;
 #endif
 
 
-SyncSetting::~SyncSetting()
+SyncSettings::~SyncSettings()
 {
 }
 
-SyncSetting::SyncSetting(const SyncSetting& a) :
+SyncSettings::SyncSettings(const SyncSettings& a) :
     mSync(a.getSync()->copy()), mBackupId(a.backupId()),
     mSyncID(a.getSyncID()), mEnabled(a.isEnabled()),
     mActive(a.isActive()), mMegaFolder(a.mMegaFolder)
 {
 }
 
-SyncSetting& SyncSetting::operator=(const SyncSetting& a)
+SyncSettings& SyncSettings::operator=(const SyncSettings& a)
 {
     mSync.reset(a.getSync()->copy());
     mBackupId = a.backupId();
@@ -33,49 +33,49 @@ SyncSetting& SyncSetting::operator=(const SyncSetting& a)
     return *this;
 }
 
-QString SyncSetting::getSyncID() const
+QString SyncSettings::getSyncID() const
 {
     return mSyncID;
 }
 
-void SyncSetting::setSyncID(const QString &syncID)
+void SyncSettings::setSyncID(const QString &syncID)
 {
     mSyncID = syncID;
 }
 
-void SyncSetting::setMegaFolder(const QString &megaFolder)
+void SyncSettings::setMegaFolder(const QString &megaFolder)
 {
     mMegaFolder = megaFolder;
 }
 
-SyncSetting::SyncSetting()
+SyncSettings::SyncSettings()
 {
     mSync.reset(new MegaSync()); // MegaSync getters return fair enough defaults
 }
 
-SyncSetting::SyncSetting(MegaSync *sync)
+SyncSettings::SyncSettings(MegaSync *sync)
 {
     setSync(sync);
 }
 
-QString SyncSetting::name(bool removeUnsupportedChars) const
+QString SyncSettings::name(bool removeUnsupportedChars) const
 {
     //Provide name removing ':' to avoid possible issues during communications with shell extension
     return removeUnsupportedChars ? QString::fromUtf8(mSync->getName()).remove(QChar::fromAscii(':'))
                                   : QString::fromUtf8(mSync->getName());
 }
 
-void SyncSetting::setEnabled(bool value)
+void SyncSettings::setEnabled(bool value)
 {
     mEnabled = value;
 }
 
-MegaSync * SyncSetting::getSync() const
+MegaSync * SyncSettings::getSync() const
 {
     return mSync.get();
 }
 
-SyncSetting::SyncSetting(QString initializer)
+SyncSettings::SyncSettings(QString initializer)
 {
     if (!initializer.isEmpty())
     {
@@ -103,7 +103,7 @@ SyncSetting::SyncSetting(QString initializer)
     mSync.reset(new MegaSync()); // MegaSync getters return fair enough defaults
 }
 
-SyncSetting::SyncSetting(const SyncData &osd, bool/* loadedFromPreviousSessions*/)
+SyncSettings::SyncSettings(const SyncData &osd, bool/* loadedFromPreviousSessions*/)
 {
     mSyncID = osd.mSyncID;
     mEnabled = osd.mEnabled;
@@ -115,7 +115,7 @@ SyncSetting::SyncSetting(const SyncData &osd, bool/* loadedFromPreviousSessions*
 
 }
 
-QString SyncSetting::toString()
+QString SyncSettings::toString()
 {
     QStringList toret;
     toret.append(QString::number(CACHE_VERSION));
@@ -125,7 +125,7 @@ QString SyncSetting::toString()
     return toret.join(QString::fromUtf8("0x1E"));
 }
 
-void SyncSetting::setSync(MegaSync *sync)
+void SyncSettings::setSync(MegaSync *sync)
 {
     if (sync)
     {
@@ -144,7 +144,7 @@ void SyncSetting::setSync(MegaSync *sync)
     }
 }
 
-QString SyncSetting::getLocalFolder() const
+QString SyncSettings::getLocalFolder() const
 {
     auto toret = QString::fromUtf8(mSync->getLocalFolder());
 #ifdef WIN32
@@ -156,12 +156,12 @@ QString SyncSetting::getLocalFolder() const
     return toret;
 }
 
-long long SyncSetting::getLocalFingerprint()  const
+long long SyncSettings::getLocalFingerprint()  const
 {
     return mSync->getLocalFingerprint();
 }
 
-QString SyncSetting::getMegaFolder()  const
+QString SyncSettings::getMegaFolder()  const
 {
     if (mMegaFolder.isEmpty())
     {
@@ -172,42 +172,42 @@ QString SyncSetting::getMegaFolder()  const
     return mMegaFolder;
 }
 
-MegaHandle SyncSetting::getMegaHandle()  const
+MegaHandle SyncSettings::getMegaHandle()  const
 {
     return mSync->getMegaHandle();
 }
 
-bool SyncSetting::isEnabled()  const
+bool SyncSettings::isEnabled()  const
 {
     return mEnabled;
 }
 
-bool SyncSetting::isActive()  const
+bool SyncSettings::isActive()  const
 {
     return mActive;
 }
 
-bool SyncSetting::isTemporaryDisabled()  const
+bool SyncSettings::isTemporaryDisabled()  const
 {
     return mSync->isTemporaryDisabled();
 }
 
-int SyncSetting::getError() const
+int SyncSettings::getError() const
 {
     return mSync->getError();
 }
 
-MegaHandle SyncSetting::backupId() const
+MegaHandle SyncSettings::backupId() const
 {
     return mBackupId;
 }
 
-void SyncSetting::setBackupId(MegaHandle backupId)
+void SyncSettings::setBackupId(MegaHandle backupId)
 {
     mBackupId = backupId;
 }
 
-MegaSync::SyncType SyncSetting::getType()
+MegaSync::SyncType SyncSettings::getType()
 {
     return static_cast<MegaSync::SyncType>(mSync->getType());
 }
