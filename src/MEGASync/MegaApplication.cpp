@@ -1,8 +1,7 @@
-#include "mega/types.h"
 #include "MegaApplication.h"
-#include "gui/CrashReportDialog.h"
-#include "gui/MegaProxyStyle.h"
-#include "gui/QMegaMessageBox.h"
+#include "CrashReportDialog.h"
+#include "MegaProxyStyle.h"
+#include "QMegaMessageBox.h"
 #include "control/AppStatsEvents.h"
 #include "control/Utilities.h"
 #include "control/CrashHandler.h"
@@ -19,8 +18,10 @@
 #include "UserAttributesRequests/Avatar.h"
 #include "UserAttributesRequests/DeviceName.h"
 #include "UserAttributesRequests/MyBackupsHandle.h"
-#include "SyncsMenu.h"
+#include "Syncs/SyncsMenu.h"
 #include "TextDecorator.h"
+
+#include "mega/types.h"
 
 #include <QTranslator>
 #include <QClipboard>
@@ -148,38 +149,8 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     setQuitOnLastWindowClosed(false);
 
 #ifdef _WIN32
-    setStyleSheet(QString::fromUtf8("QCheckBox::indicator {width: 13px;height: 13px;}"
-    "QCheckBox::indicator:checked {image: url(:/images/cb_checked.svg);}"
-    "QCheckBox::indicator:checked:hover {image: url(:/images/cb_checked_hover.svg);}"
-    "QCheckBox::indicator:checked:pressed {image: url(:/images/cb_checked_pressed.svg);}"
-    "QCheckBox::indicator:checked:disabled {image: url(:/images/cb_checked_disabled.svg);}"
-    "QCheckBox::indicator:unchecked {image: url(:/images/cb_unchecked.svg);}"
-    "QCheckBox::indicator:unchecked:hover {image: url(:/images/cb_unchecked_hover.svg);}"
-    "QCheckBox::indicator:unchecked:pressed {image: url(:/images/cb_unchecked_pressed.svg);}"
-    "QCheckBox::indicator:unchecked:disabled {image: url(:/images/cb_unchecked_disabled.svg);}"
-    "QTableView::indicator:checked {image: url(:/images/cb_checked.svg);}"
-    "QTableView::indicator:checked:hover {image: url(:/images/cb_checked_hover.svg);}"
-    "QTableView::indicator:checked:pressed {image: url(:/images/cb_checked_pressed.svg);}"
-    "QTableView::indicator:checked:disabled {image: url(:/images/cb_checked_disabled.svg);}"
-    "QTableView::indicator:unchecked {image: url(:/images/cb_unchecked.svg);}"
-    "QTableView::indicator:unchecked:hover {image: url(:/images/cb_unchecked_hover.svg);}"
-    "QTableView::indicator:unchecked:pressed {image: url(:/images/cb_unchecked_pressed.svg);}"
-    "QTableView::indicator:unchecked:disabled {image: url(:/images/cb_unchecked_disabled.svg);}"
-    "QTableView::indicator {width: 13px;height: 13px;}"
-    "QListView::indicator:checked {image: url(:/images/cb_checked.svg);}"
-    "QListView::indicator:checked:hover {image: url(:/images/cb_checked_hover.svg);}"
-    "QListView::indicator:checked:pressed {image: url(:/images/cb_checked_pressed.svg);}"
-    "QListView::indicator:checked:disabled {image: url(:/images/cb_checked_disabled.svg);}"
-    "QListView::indicator:unchecked {image: url(:/images/cb_unchecked.svg);}"
-    "QListView::indicator:unchecked:hover {image: url(:/images/cb_unchecked_hover.svg);}"
-    "QListView::indicator:unchecked:pressed {image: url(:/images/cb_unchecked_pressed.svg);}"
-    "QListView::indicator:unchecked:disabled {image: url(:/images/cb_unchecked_disabled.svg);}"
-    "QMessageBox QLabel {font-size: 13px;}"
-    "QMenu {font-size: 13px;}"
-    "QToolTip {color: #FAFAFA; background-color: #333333; border: 0px; margin-bottom: 2px;}"
-    "QPushButton {font-size: 12px; padding-right: 12px; padding-left: 12px; min-height: 22px;}"
-    "QFileDialog QWidget {font-size: 13px;}"
-    "QRadioButton::indicator {width: 13px; height: 13px;}"
+    setStyleSheet(QString::fromUtf8(
+    "QRadioButton::indicator, QCheckBox::indicator, QAbstractItemView::indicator {width: 12px; height: 12px;}"
     "QRadioButton::indicator:unchecked {image: url(:/images/rb_unchecked.svg);}"
     "QRadioButton::indicator:unchecked:hover {image: url(:/images/rb_unchecked_hover.svg);}"
     "QRadioButton::indicator:unchecked:pressed {image: url(:/images/rb_unchecked_pressed.svg);}"
@@ -187,7 +158,21 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     "QRadioButton::indicator:checked {image: url(:/images/rb_checked.svg);}"
     "QRadioButton::indicator:checked:hover {image: url(:/images/rb_checked_hover.svg);}"
     "QRadioButton::indicator:checked:pressed {image: url(:/images/rb_checked_pressed.svg);}"
-    "QRadioButton::indicator:checked:disabled {image: url(:/images/rb_checked_disabled.svg);}"));
+    "QRadioButton::indicator:checked:disabled {image: url(:/images/rb_checked_disabled.svg);}"
+    "QCheckBox::indicator:checked, QAbstractItemView::indicator:checked {image: url(:/images/cb_checked.svg);}"
+    "QCheckBox::indicator:checked:hover, QAbstractItemView::indicator:checked:hover {image: url(:/images/cb_checked_hover.svg);}"
+    "QCheckBox::indicator:checked:pressed, QAbstractItemView::indicator:checked:pressed {image: url(:/images/cb_checked_pressed.svg);}"
+    "QCheckBox::indicator:checked:disabled, QAbstractItemView::indicator:checked:disabled {image: url(:/images/cb_checked_disabled.svg);}"
+    "QCheckBox::indicator:unchecked, QAbstractItemView::indicator:unchecked {image: url(:/images/cb_unchecked.svg);}"
+    "QCheckBox::indicator:unchecked:hover, QAbstractItemView::indicator:unchecked:hover {image: url(:/images/cb_unchecked_hover.svg);}"
+    "QCheckBox::indicator:unchecked:pressed, QAbstractItemView::indicator:unchecked:pressed {image: url(:/images/cb_unchecked_pressed.svg);}"
+    "QCheckBox::indicator::unchecked:disabled, QAbstractItemView:indicator:unchecked:disabled {image: url(:/images/cb_unchecked_disabled.svg);}"
+    "QMessageBox QLabel {font-size: 13px;}"
+    "QMenu {font-size: 13px;}"
+    "QToolTip {color: #FAFAFA; background-color: #333333; border: 0px; margin-bottom: 2px;}"
+    "QPushButton {font-size: 12px; padding-right: 12px; padding-left: 12px; min-height: 22px;}"
+    "QFileDialog QWidget {font-size: 13px;}"
+                      ));
 #endif
 
     // For some reason this doesn't work on Windows (done in stylesheet above)
@@ -3643,13 +3628,12 @@ void MegaApplication::setupWizardFinished(int result)
     {
         if (!infoWizard && (downloadQueue.size() || pendingLinks.size()))
         {
-            QQueue<WrappedNode *>::iterator it;
-            for (it = downloadQueue.begin(); it != downloadQueue.end(); ++it)
+            for (auto it = downloadQueue.begin(); it != downloadQueue.end(); ++it)
             {
                 HTTPServer::onTransferDataUpdate((*it)->getMegaNode()->getHandle(), MegaTransfer::STATE_CANCELLED, 0, 0, 0, QString());
             }
 
-            for (QMap<QString, QString>::iterator it = pendingLinks.begin(); it != pendingLinks.end(); it++)
+            for (auto it = pendingLinks.begin(); it != pendingLinks.end(); it++)
             {
                 QString link = it.key();
                 QString handle = link.mid(18, 8);
@@ -3705,13 +3689,12 @@ void MegaApplication::infoWizardDialogFinished(int result)
     {
         if (!setupWizard && (downloadQueue.size() || pendingLinks.size()))
         {
-            QQueue<WrappedNode *>::iterator it;
-            for (it = downloadQueue.begin(); it != downloadQueue.end(); ++it)
+            for (auto it = downloadQueue.begin(); it != downloadQueue.end(); ++it)
             {
                 HTTPServer::onTransferDataUpdate((*it)->getMegaNode()->getHandle(), MegaTransfer::STATE_CANCELLED, 0, 0, 0, QString());
             }
 
-            for (QMap<QString, QString>::iterator it = pendingLinks.begin(); it != pendingLinks.end(); it++)
+            for (auto it = pendingLinks.begin(); it != pendingLinks.end(); it++)
             {
                 QString link = it.key();
                 QString handle = link.mid(18, 8);

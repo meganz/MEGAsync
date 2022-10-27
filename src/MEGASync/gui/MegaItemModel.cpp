@@ -548,29 +548,29 @@ QIcon MegaItemModel::getFolderIcon(MegaItem *item) const
            || node->getHandle() == mCameraFolderAttribute->getCameraUploadFolderSecondaryHandle())
         {
             QIcon icon;
-            icon.addFile(QLatin1String("://images/node_selector/small-camera-sync.png"), QSize(), QIcon::Normal);
-            icon.addFile(QLatin1String("://images/node_selector/small-folder-camera-sync-disabled.png"), QSize(), QIcon::Disabled);
+            icon.addFile(QLatin1String("://images/icons/folder/small-camera-sync.png"), QSize(), QIcon::Normal);
+            icon.addFile(QLatin1String("://images/icons/folder/small-folder-camera-sync-disabled.png"), QSize(), QIcon::Disabled);
             return icon;;
         }
         else if(node->getHandle() == mMyChatFilesFolderAttribute->getMyChatFilesFolderHandle())
         {
             QIcon icon;
-            icon.addFile(QLatin1String("://images/node_selector/small-chat-files.png"), QSize(), QIcon::Normal);
-            icon.addFile(QLatin1String("://images/node_selector/small-chat-files-disabled.png"), QSize(), QIcon::Disabled);
+            icon.addFile(QLatin1String("://images/icons/folder/small-chat-files.png"), QSize(), QIcon::Normal);
+            icon.addFile(QLatin1String("://images/icons/folder/small-chat-files-disabled.png"), QSize(), QIcon::Disabled);
             return icon;
         }
         else if (node->isInShare())
         {
             QIcon icon;
-            icon.addFile(QLatin1String("://images/node_selector/small-folder-incoming.png"), QSize(), QIcon::Normal);
-            icon.addFile(QLatin1String("://images/node_selector/small-folder-incoming-disabled.png"), QSize(), QIcon::Disabled);
+            icon.addFile(QLatin1String("://images/icons/folder/small-folder-incoming.png"), QSize(), QIcon::Normal);
+            icon.addFile(QLatin1String("://images/icons/folder/small-folder-incoming-disabled.png"), QSize(), QIcon::Disabled);
             return icon;
         }
         else if (node->isOutShare())
         {
             QIcon icon;
-            icon.addFile(QLatin1String("://images/node_selector/small-folder-outgoing.png"), QSize(), QIcon::Normal);
-            icon.addFile(QLatin1String("://images/node_selector/small-folder-outgoing_disabled.png"), QSize(), QIcon::Disabled);
+            icon.addFile(QLatin1String("://images/icons/folder/small-folder-outgoing.png"), QSize(), QIcon::Normal);
+            icon.addFile(QLatin1String("://images/icons/folder/small-folder-outgoing_disabled.png"), QSize(), QIcon::Disabled);
             return icon;
         }
         else if(node->getHandle() == MegaSyncApp->getRootNode()->getHandle())
@@ -613,8 +613,8 @@ QIcon MegaItemModel::getFolderIcon(MegaItem *item) const
                 }
             }
             QIcon icon;
-            icon.addFile(QLatin1String("://images/small_folder.png"), QSize(), QIcon::Normal);
-            icon.addFile(QLatin1String("://images/node_selector/small-folder-disabled.png"), QSize(), QIcon::Disabled);
+            icon.addFile(QLatin1String("://images/icons/folder/small-folder.png"), QSize(), QIcon::Normal);
+            icon.addFile(QLatin1String("://images/icons/folder/small-folder-disabled.png"), QSize(), QIcon::Disabled);
             return icon;
         }
     }

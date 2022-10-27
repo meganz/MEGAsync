@@ -19,19 +19,16 @@
 #include "MenuItemAction.h"
 #include "platform/Platform.h"
 #include "assert.h"
-#include "BackupsWizard.h"
+#include "Syncs/Backups/BackupsWizard.h"
 #include "QMegaMessageBox.h"
 #include "TextDecorator.h"
-//#include "UserAttributesRequests/MyBackupsHandle.h"
 
 #ifdef _WIN32    
 #include <chrono>
 using namespace std::chrono;
 #endif
 
-#if QT_VERSION >= 0x050000
 #include <QtConcurrent/QtConcurrent>
-#endif
 
 using namespace mega;
 
@@ -79,10 +76,16 @@ void InfoDialog::upAreaHovered(QMouseEvent *event)
 InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddialog) :
     QDialog(parent),
     ui(new Ui::InfoDialog),
+    mIndexing (false),
+    mWaiting (false),
+    mSyncing (false),
+    mTransferring (false),
     mTransferManager(nullptr),
     mBackupsWizard (nullptr),
     mAddBackupDialog (nullptr),
     mAddSyncDialog (nullptr),
+    mPreferences (Preferences::instance()),
+    mSyncModel (SyncModel::instance()),
     mSyncController (nullptr),
     qtBugFixer(this)
 {
@@ -164,10 +167,6 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
 
     circlesShowAllActiveTransfersProgress = true;
 
-    indexing = false;
-    waiting = false;
-    syncing = false;
-    transferring = false;
     cloudItem = NULL;
     sharesItem = NULL;
     rubbishItem = NULL;
@@ -221,12 +220,10 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
     ui->wStatus->setState(mState);
 
     megaApi = app->getMegaApi();
-    preferences = Preferences::instance();
-    model = SyncModel::instance();
 
     actualAccountType = -1;
 
-    connect(model, SIGNAL(syncDisabledListUpdated()), this, SLOT(updateDialogState()));
+    connect(mSyncModel, SIGNAL(syncDisabledListUpdated()), this, SLOT(updateDialogState()));
 
     connect(ui->wPSA, SIGNAL(PSAseen(int)), app, SLOT(PSAseen(int)), Qt::QueuedConnection);
 
@@ -260,7 +257,7 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
     connect(overlay, SIGNAL(clicked()), this, SLOT(onOverlayClicked()));
     connect(this, SIGNAL(openTransferManager(int)), app, SLOT(externalOpenTransferManager(int)));
 
-    if (preferences->logged())
+    if (mPreferences->logged())
     {
         setAvatar();
         setUsage();
@@ -401,18 +398,18 @@ void InfoDialog::hideEvent(QHideEvent *event)
 
 void InfoDialog::setAvatar()
 {
-    ui->bAvatar->setUserEmail(preferences->email().toUtf8().constData());
+    ui->bAvatar->setUserEmail(mPreferences->email().toUtf8().constData());
 }
 
 void InfoDialog::setUsage()
 {
-    auto accType = preferences->accountType();
+    auto accType = mPreferences->accountType();
 
     // ---------- Process storage usage
     QString usedStorageString;
 
-    auto totalStorage(preferences->totalStorage());
-    auto usedStorage(preferences->usedStorage());
+    auto totalStorage(mPreferences->totalStorage());
+    auto usedStorage(mPreferences->usedStorage());
 
     if (accType == Preferences::ACCOUNT_TYPE_BUSINESS)
     {
@@ -420,7 +417,7 @@ void InfoDialog::setUsage()
         ui->wCircularStorage->setValue(0);
         usedStorageString = QString::fromUtf8("<span style='color: #333333; font-size:20px;"
                                               "font-family: Lato; text-decoration:none;'>%1</span>")
-                                     .arg(Utilities::getSizeString(preferences->usedStorage()));
+                                     .arg(Utilities::getSizeString(mPreferences->usedStorage()));
     }
     else
     {
@@ -433,7 +430,7 @@ void InfoDialog::setUsage()
         else
         {
             QString usageColorS;
-            switch (preferences->getStorageState())
+            switch (mPreferences->getStorageState())
                 {
                     case MegaApi::STORAGE_STATE_GREEN:
                     {
@@ -477,7 +474,7 @@ void InfoDialog::setUsage()
     // ---------- Process transfer usage
     QString usedTransferString;
 
-    auto usedTransfer(preferences->usedBandwidth());
+    auto usedTransfer(mPreferences->usedBandwidth());
 
     if (accType == Preferences::ACCOUNT_TYPE_BUSINESS)
     {
@@ -531,7 +528,7 @@ void InfoDialog::setUsage()
         }
         else
         {
-            auto totalTransfer (preferences->totalBandwidth());
+            auto totalTransfer (mPreferences->totalBandwidth());
             if (totalTransfer == 0)
             {
                 ui->wCircularQuota->setTotalValueUnknown();
@@ -614,22 +611,22 @@ void InfoDialog::onResetTransfersSummaryWidget()
 
 void InfoDialog::setIndexing(bool indexing)
 {
-    this->indexing = indexing;
+    mIndexing = indexing;
 }
 
 void InfoDialog::setWaiting(bool waiting)
 {
-    this->waiting = waiting;
+    mWaiting = waiting;
 }
 
-void InfoDialog::setSyncing(bool value)
+void InfoDialog::setSyncing(bool syncing)
 {
-    this->syncing = value;
+    mSyncing = syncing;
 }
 
-void InfoDialog::setTransferring(bool value)
+void InfoDialog::setTransferring(bool transferring)
 {
-    this->transferring = value;
+    mTransferring = transferring;
 }
 
 void InfoDialog::setOverQuotaMode(bool state)
@@ -663,12 +660,12 @@ void InfoDialog::setAccountType(int accType)
 
 void InfoDialog::updateBlockedState()
 {
-    if (!preferences->logged())
+    if (!mPreferences->logged())
     {
         return;
     }
 
-    if (!waiting)
+    if (!mWaiting)
     {
         if (ui->wBlocked->isVisible())
         {
@@ -729,7 +726,7 @@ void InfoDialog::updateBlockedState()
 
 void InfoDialog::updateState()
 {
-    if (!preferences->logged())
+    if (!mPreferences->logged())
     {
         if (gWidget)
         {
@@ -737,7 +734,7 @@ void InfoDialog::updateState()
         }
     }
 
-    if (!preferences->logged())
+    if (!mPreferences->logged())
     {
         return;
     }
@@ -746,29 +743,29 @@ void InfoDialog::updateState()
     {
         changeStatusState(StatusInfo::TRANSFERS_STATES::STATE_INDEXING);
     }
-    else if (preferences->getGlobalPaused())
+    else if (mPreferences->getGlobalPaused())
     {
         if(!checkFailedState())
         {
             mState = StatusInfo::TRANSFERS_STATES::STATE_PAUSED;
-            animateStates(waiting || indexing || syncing);
+            animateStates(mWaiting || mIndexing || mSyncing);
         }
     }
     else
     {
-        if (indexing)
+        if (mIndexing)
         {
             changeStatusState(StatusInfo::TRANSFERS_STATES::STATE_INDEXING);
         }
-        else if (syncing)
+        else if (mSyncing)
         {
             changeStatusState(StatusInfo::TRANSFERS_STATES::STATE_SYNCING);
         }
-        else if (waiting)
+        else if (mWaiting)
         {
             changeStatusState(StatusInfo::TRANSFERS_STATES::STATE_WAITING);
         }
-        else if (transferring)
+        else if (mTransferring)
         {
             changeStatusState(StatusInfo::TRANSFERS_STATES::STATE_TRANSFERRING);
         }
@@ -784,7 +781,7 @@ void InfoDialog::updateState()
     if(ui->wStatus->getState() != mState)
     {
         ui->wStatus->setState(mState);
-        ui->bTransferManager->setPaused(preferences->getGlobalPaused());
+        ui->bTransferManager->setPaused(mPreferences->getGlobalPaused());
         if(mTransferManager)
         {
             mTransferManager->setTransferState(mState);
@@ -868,13 +865,13 @@ void InfoDialog::updateDialogState()
         MegaIntegerList* tsWarnings = megaApi->getOverquotaWarningsTs();
         const char *email = megaApi->getMyEmail();
 
-        long long numFiles{preferences->cloudDriveFiles() + preferences->vaultFiles() + preferences->rubbishFiles()};
+        long long numFiles{mPreferences->cloudDriveFiles() + mPreferences->vaultFiles() + mPreferences->rubbishFiles()};
         QString contactMessage = tr("We have contacted you by email to [A] on [B] but you still have %n file taking up [D] in your MEGA account, which requires you to have [E].", "", static_cast<int>(numFiles));
         QString overDiskText = QString::fromUtf8("<p style='line-height: 20px;'>") + contactMessage
                 .replace(QString::fromUtf8("[A]"), QString::fromUtf8(email))
                 .replace(QString::fromUtf8("[B]"), Utilities::getReadableStringFromTs(tsWarnings))
-                .replace(QString::fromUtf8("[D]"), Utilities::getSizeString(preferences->usedStorage()))
-                .replace(QString::fromUtf8("[E]"), Utilities::minProPlanNeeded(MegaSyncApp->getPricing(), preferences->usedStorage()))
+                .replace(QString::fromUtf8("[D]"), Utilities::getSizeString(mPreferences->usedStorage()))
+                .replace(QString::fromUtf8("[E]"), Utilities::minProPlanNeeded(MegaSyncApp->getPricing(), mPreferences->usedStorage()))
                 + QString::fromUtf8("</p>");
         ui->lOverDiskQuotaLabel->setText(overDiskText);
 
@@ -913,7 +910,7 @@ void InfoDialog::updateDialogState()
     else if(storageState == Preferences::STATE_OVER_STORAGE)
     {
         const bool transferIsOverQuota{transferQuotaState == QuotaState::FULL};
-        const bool userIsFree{preferences->accountType() == Preferences::Preferences::ACCOUNT_TYPE_FREE};
+        const bool userIsFree{mPreferences->accountType() == Preferences::Preferences::ACCOUNT_TYPE_FREE};
         if(transferIsOverQuota && userIsFree)
         {
             ui->bOQIcon->setIcon(QIcon(QString::fromAscii("://images/storage_transfer_full_FREE.png")));
@@ -975,14 +972,14 @@ void InfoDialog::updateDialogState()
         overlay->setVisible(false);
         ui->wPSA->hidePSA();
     }
-    else if (model->hasUnattendedDisabledSyncs({mega::MegaSync::TYPE_TWOWAY, mega::MegaSync::TYPE_BACKUP}))
+    else if (mSyncModel->hasUnattendedDisabledSyncs({mega::MegaSync::TYPE_TWOWAY, mega::MegaSync::TYPE_BACKUP}))
     {
-        if (model->hasUnattendedDisabledSyncs(mega::MegaSync::TYPE_TWOWAY)
-            && model->hasUnattendedDisabledSyncs(mega::MegaSync::TYPE_BACKUP))
+        if (mSyncModel->hasUnattendedDisabledSyncs(mega::MegaSync::TYPE_TWOWAY)
+            && mSyncModel->hasUnattendedDisabledSyncs(mega::MegaSync::TYPE_BACKUP))
         {
             ui->sActiveTransfers->setCurrentWidget(ui->pAllSyncsDisabled);
         }
-        else if (model->hasUnattendedDisabledSyncs(mega::MegaSync::TYPE_BACKUP))
+        else if (mSyncModel->hasUnattendedDisabledSyncs(mega::MegaSync::TYPE_BACKUP))
         {
             ui->sActiveTransfers->setCurrentWidget(ui->pBackupsDisabled);
         }
@@ -1010,7 +1007,7 @@ void InfoDialog::updateDialogState()
             {
                 ui->wPSA->hidePSA();
                 ui->sActiveTransfers->setCurrentWidget(ui->pUpdated);
-                if (!waiting && !indexing)
+                if (!mWaiting && !mIndexing)
                 {
                     overlay->setVisible(true);
                 }
@@ -1206,7 +1203,7 @@ void InfoDialog::on_bAddBackup_clicked()
 
 void InfoDialog::showSyncsMenu(QPushButton* b, mega::MegaSync::SyncType type)
 {
-    if (preferences->logged())
+    if (mPreferences->logged())
     {
         auto menu (mSyncsMenus[b]);
         if (!menu)
@@ -1323,7 +1320,7 @@ void InfoDialog::changeEvent(QEvent *event)
     {
         ui->retranslateUi(this);
 
-        if (preferences->logged())
+        if (mPreferences->logged())
         {
             setUsage();
             mState = StatusInfo::TRANSFERS_STATES::STATE_STARTING;
@@ -1423,7 +1420,7 @@ void InfoDialog::regenerateLayout(int blockState, InfoDialog* olddialog)
     int actualAccountState;
 
     blockState ? actualAccountState = blockState
-                  : preferences->logged() ? actualAccountState = STATE_LOGGEDIN
+                  : mPreferences->logged() ? actualAccountState = STATE_LOGGEDIN
                                           : actualAccountState = STATE_LOGOUT;
 
     if (actualAccountState == loggedInMode)
@@ -1804,35 +1801,35 @@ void InfoDialog::onAnimationFinishedBlockedError()
 
 void InfoDialog::on_bDismissSyncSettings_clicked()
 {
-    model->dismissUnattendedDisabledSyncs(mega::MegaSync::TYPE_TWOWAY);
+    mSyncModel->dismissUnattendedDisabledSyncs(mega::MegaSync::TYPE_TWOWAY);
 }
 
 void InfoDialog::on_bOpenSyncSettings_clicked()
 {
     MegaSyncApp->openSettings(SettingsDialog::SYNCS_TAB);
-    model->dismissUnattendedDisabledSyncs(mega::MegaSync::TYPE_TWOWAY);
+    mSyncModel->dismissUnattendedDisabledSyncs(mega::MegaSync::TYPE_TWOWAY);
 }
 
 void InfoDialog::on_bDismissBackupsSettings_clicked()
 {
-    model->dismissUnattendedDisabledSyncs(mega::MegaSync::TYPE_BACKUP);
+    mSyncModel->dismissUnattendedDisabledSyncs(mega::MegaSync::TYPE_BACKUP);
 }
 
 void InfoDialog::on_bOpenBackupsSettings_clicked()
 {
     MegaSyncApp->openSettings(SettingsDialog::BACKUP_TAB);
-    model->dismissUnattendedDisabledSyncs(mega::MegaSync::TYPE_BACKUP);
+    mSyncModel->dismissUnattendedDisabledSyncs(mega::MegaSync::TYPE_BACKUP);
 }
 
 void InfoDialog::on_bDismissAllSyncsSettings_clicked()
 {
-    model->dismissUnattendedDisabledSyncs(SyncModel::AllHandledSyncTypes);
+    mSyncModel->dismissUnattendedDisabledSyncs(SyncModel::AllHandledSyncTypes);
 }
 
 void InfoDialog::on_bOpenAllSyncsSettings_clicked()
 {
     MegaSyncApp->openSettings(SettingsDialog::SYNCS_TAB);
-    model->dismissUnattendedDisabledSyncs(SyncModel::AllHandledSyncTypes);
+    mSyncModel->dismissUnattendedDisabledSyncs(SyncModel::AllHandledSyncTypes);
 }
 
 int InfoDialog::getLoggedInMode() const

@@ -50,9 +50,6 @@
         <file>images/cloud_upload_item_ico.png</file>
         <file>images/cloud_upload_item_ico@2x.png</file>
         <file>images/cloud_upload_item_ico@3x.png</file>
-        <file>images/color_folder.png</file>
-        <file>images/color_folder@2x.png</file>
-        <file>images/color_folder@3x.png</file>
         <file>images/completed_item_ico.png</file>
         <file>images/completed_item_ico@2x.png</file>
         <file>images/completed_item_ico@3x.png</file>
@@ -191,9 +188,6 @@
         <file>images/full_sync_ico.png</file>
         <file>images/full_sync_ico@2x.png</file>
         <file>images/full_sync_ico@3x.png</file>
-        <file>images/grey_folder.png</file>
-        <file>images/grey_folder@2x.png</file>
-        <file>images/grey_folder@3x.png</file>
         <file>images/help_ico.png</file>
         <file>images/help_ico@2x.png</file>
         <file>images/help_ico@3x.png</file>
@@ -778,12 +772,6 @@
         <file>images/icons/pc/pc_24.png</file>
         <file>images/icons/pc/pc_24@2x.png</file>
         <file>images/icons/pc/pc_24@3x.png</file>
-        <file>images/illustration/rewind.png</file>
-        <file>images/illustration/rewind@2x.png</file>
-        <file>images/illustration/rewind@3x.png</file>
-        <file>images/backup_mono.png</file>
-        <file>images/backup_mono@2x.png</file>
-        <file>images/backup_mono@3x.png</file>
         <file>images/icons/infodialog/warning-disabled-backups.png</file>
         <file>images/icons/infodialog/warning-disabled-backups@2x.png</file>
         <file>images/icons/infodialog/warning-disabled-backups@3x.png</file>
@@ -854,27 +842,30 @@
         <file>images/node_selector/icon-small-sync-disabled.png</file>
         <file>images/node_selector/icon-small-sync-disabled@2x.png</file>
         <file>images/node_selector/icon-small-sync-disabled@3x.png</file>
-        <file>images/node_selector/small-camera-sync.png</file>
-        <file>images/node_selector/small-camera-sync@2x.png</file>
-        <file>images/node_selector/small-camera-sync@3x.png</file>
-        <file>images/node_selector/small-chat-files.png</file>
-        <file>images/node_selector/small-chat-files@2x.png</file>
-        <file>images/node_selector/small-chat-files@3x.png</file>
-        <file>images/node_selector/small-chat-files-disabled.png</file>
-        <file>images/node_selector/small-chat-files-disabled@2x.png</file>
-        <file>images/node_selector/small-chat-files-disabled@3x.png</file>
-        <file>images/node_selector/small-folder-camera-sync-disabled.png</file>
-        <file>images/node_selector/small-folder-camera-sync-disabled@2x.png</file>
-        <file>images/node_selector/small-folder-camera-sync-disabled@3x.png</file>
-        <file>images/node_selector/small-folder-incoming.png</file>
-        <file>images/node_selector/small-folder-incoming@2x.png</file>
-        <file>images/node_selector/small-folder-incoming@3x.png</file>
-        <file>images/node_selector/small-folder-incoming-disabled.png</file>
-        <file>images/node_selector/small-folder-incoming-disabled@2x.png</file>
-        <file>images/node_selector/small-folder-incoming-disabled@3x.png</file>
-        <file>images/node_selector/small-folder-outgoing.png</file>
-        <file>images/node_selector/small-folder-outgoing@2x.png</file>
-        <file>images/node_selector/small-folder-outgoing@3x.png</file>
+        <file>images/icons/folder/small-camera-sync.png</file>
+        <file>images/icons/folder/small-camera-sync@2x.png</file>
+        <file>images/icons/folder/small-camera-sync@3x.png</file>
+        <file>images/icons/folder/small-chat-files.png</file>
+        <file>images/icons/folder/small-chat-files@2x.png</file>
+        <file>images/icons/folder/small-chat-files@3x.png</file>
+        <file>images/icons/folder/small-chat-files-disabled.png</file>
+        <file>images/icons/folder/small-chat-files-disabled@2x.png</file>
+        <file>images/icons/folder/small-chat-files-disabled@3x.png</file>
+        <file>images/icons/folder/small-folder-camera-sync-disabled.png</file>
+        <file>images/icons/folder/small-folder-camera-sync-disabled@2x.png</file>
+        <file>images/icons/folder/small-folder-camera-sync-disabled@3x.png</file>
+        <file>images/icons/folder/small-folder-incoming.png</file>
+        <file>images/icons/folder/small-folder-incoming@2x.png</file>
+        <file>images/icons/folder/small-folder-incoming@3x.png</file>
+        <file>images/icons/folder/small-folder-incoming-disabled.png</file>
+        <file>images/icons/folder/small-folder-incoming-disabled@2x.png</file>
+        <file>images/icons/folder/small-folder-incoming-disabled@3x.png</file>
+        <file>images/icons/folder/small-folder-outgoing.png</file>
+        <file>images/icons/folder/small-folder-outgoing@2x.png</file>
+        <file>images/icons/folder/small-folder-outgoing@3x.png</file>
+        <file>images/icons/folder/small-folder-disabled.png</file>
+        <file>images/icons/folder/small-folder-disabled@2x.png</file>
+        <file>images/icons/folder/small-folder-disabled@3x.png</file>
         <file>images/ico-cloud-drive.png</file>
         <file>images/ico-cloud-drive@2x.png</file>
         <file>images/ico-cloud-drive@3x.png</file>
@@ -1198,9 +1189,15 @@
         <file>images/node_selector/cloud@3x.png</file>
         <file>images/node_selector/Backups_small_ico.png</file>
         <file>images/node_selector/Backups_small_ico@2x.png</file>
-        <file>images/small_folder@2x.png</file>
-        <file>images/small_folder@3x.png</file>
-        <file>images/small_folder.png</file>
+        <file>images/icons/folder/small-folder.png</file>
+        <file>images/icons/folder/small-folder@2x.png</file>
+        <file>images/icons/folder/small-folder@3x.png</file>
+        <file>images/icons/folder/small-folder-disabled.png</file>
+        <file>images/icons/folder/small-folder-disabled@2x.png</file>
+        <file>images/icons/folder/small-folder-disabled@3x.png</file>
+        <file>images/icons/folder/medium-folder.png</file>
+        <file>images/icons/folder/medium-folder@2x.png</file>
+        <file>images/icons/folder/medium-folder@3x.png</file>
         <file>images/node_selector/icon_small_user.png</file>
         <file>images/node_selector/icon_small_user@2x.png</file>
         <file>images/node_selector/icon_small_user@3x.png</file>

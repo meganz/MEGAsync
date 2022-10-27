@@ -9,7 +9,7 @@
 #include <QVector>
 
 #include "control/Preferences.h"
-#include "model/SyncSettings.h"
+#include "model/SyncSetting.h"
 
 #include "megaapi.h"
 

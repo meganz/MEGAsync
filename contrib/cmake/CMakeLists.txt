@@ -1,3 +1,4 @@
+
 cmake_minimum_required(VERSION 3.15)
 cmake_policy(SET CMP0091 NEW)
 
@@ -123,6 +124,7 @@ include_directories( "${MEGAsyncDir}/transfers/gui" )
 include_directories( "${MEGAsyncDir}/transfers/gui/${UiDir}" )
 include_directories( "${MEGAsyncDir}/transfers/gui/DuplicatedNodeDialogs" )
 include_directories( "${MEGAsyncDir}/transfers/gui/DuplicatedNodeDialogs/${UiDir}" )
+include_directories( "${MEGAsyncDir}/UserAttributesRequests" )
 
 
 set (TS_FILES
@@ -236,6 +238,7 @@ set (MOC_INPUT
     ${MEGAsyncDir}/EventUpdater.h
     ${MEGAsyncDir}/FolderTransferListener.h
     ${MEGAsyncDir}/BlockingStageProgressController.h
+	
     ${MEGAsyncDir}/control/ConnectivityChecker.h
     ${MEGAsyncDir}/control/CrashHandler.h
     ${MEGAsyncDir}/control/EncryptedSettings.h
@@ -252,8 +255,12 @@ set (MOC_INPUT
     ${MEGAsyncDir}/control/SyncController.h
     ${MEGAsyncDir}/control/UserAttributesManager.h
     ${MEGAsyncDir}/control/TextDecorator.h
-    ${MEGAsyncDir}/model/SyncSettings.h
+	
+    ${MEGAsyncDir}/model/SyncSetting.h
     ${MEGAsyncDir}/model/SyncModel.h
+	${MEGAsyncDir}/model/BackupItemModel.h
+    ${MEGAsyncDir}/model/SyncItemModel.h
+	
     ${MEGAsyncDir}/gui/AlertItem.h
     ${MEGAsyncDir}/gui/AlertFilterType.h
     ${MEGAsyncDir}/gui/BugReportDialog.h
@@ -265,7 +272,6 @@ set (MOC_INPUT
     ${MEGAsyncDir}/gui/AccountDetailsDialog.h
     ${MEGAsyncDir}/gui/AddExclusionDialog.h
     ${MEGAsyncDir}/gui/AvatarWidget.h
-    ${MEGAsyncDir}/gui/BindFolderDialog.h
     ${MEGAsyncDir}/gui/ChangeLogDialog.h
     ${MEGAsyncDir}/gui/ChangePassword.h
     ${MEGAsyncDir}/gui/PasswordLineEdit.h
@@ -273,7 +279,6 @@ set (MOC_INPUT
     ${MEGAsyncDir}/gui/CrashReportDialog.h
     ${MEGAsyncDir}/gui/DownloadFromMegaDialog.h
     ${MEGAsyncDir}/gui/ElidedLabel.h
-    ${MEGAsyncDir}/gui/FolderBinder.h
     ${MEGAsyncDir}/gui/GuestWidget.h
     ${MEGAsyncDir}/gui/HighDpiResize.h
     ${MEGAsyncDir}/gui/ImportListWidgetItem.h
@@ -310,23 +315,9 @@ set (MOC_INPUT
     ${MEGAsyncDir}/gui/SwitchButton.h
     ${MEGAsyncDir}/gui/BandwidthSettings.h
     ${MEGAsyncDir}/gui/MegaItemDelegates.h
-    ${MEGAsyncDir}/gui/BackupsWizard.h
-    ${MEGAsyncDir}/gui/SyncsMenu.h
-    ${MEGAsyncDir}/gui/AddBackupDialog.h
-    ${MEGAsyncDir}/gui/RemoveBackupDialog.h
     ${MEGAsyncDir}/gui/GuiUtilities.h
     ${MEGAsyncDir}/gui/EventHelper.h
-    ${MEGAsyncDir}/gui/AutoResizeStackedWidget.h
-    ${MEGAsyncDir}/gui/UserAttributesRequests/FullName.h
-    ${MEGAsyncDir}/gui/UserAttributesRequests/DeviceName.h
-    ${MEGAsyncDir}/gui/UserAttributesRequests/MyBackupsHandle.h
-    ${MEGAsyncDir}/gui/UserAttributesRequests/Avatar.h
-    ${MEGAsyncDir}/gui/UserAttributesRequests/MyChatFilesFolder.h
-    ${MEGAsyncDir}/gui/UserAttributesRequests/CameraUploadFolder.h
-    ${MEGAsyncDir}/gui/BackupItemModel.h
-    ${MEGAsyncDir}/gui/SyncItemModel.h
-    ${MEGAsyncDir}/gui/SyncTableView.h
-    ${MEGAsyncDir}/gui/BackupTableView.h    
+    ${MEGAsyncDir}/gui/AutoResizeStackedWidget.h  
     ${MEGAsyncDir}/gui/ViewLoadingScene.h
     ${MEGAsyncDir}/gui/ScanningWidget.h
     ${MEGAsyncDir}/gui/BlurredShadowEffect.h
@@ -336,9 +327,18 @@ set (MOC_INPUT
     ${MEGAsyncDir}/gui/NodeNameSetterDialog/NewFolderDialog.h
     ${MEGAsyncDir}/gui/NodeNameSetterDialog/RenameNodeDialog.h
     ${MEGAsyncDir}/gui/CancelConfirmWidget.h
-    ${MEGAsyncDir}/gui/Backups/BackupRenameWidget.h	
-    ${MEGAsyncDir}/gui/Backups/BackupNameConflictDialog.h
-    ${MEGAsyncDir}/gui/SyncTooltipCreator.h
+
+    ${MEGAsyncDir}/gui/Syncs/SyncTooltipCreator.h
+	${MEGAsyncDir}/gui/Syncs/SyncsMenu.h
+	${MEGAsyncDir}/gui/Syncs/Twoways/SyncTableView.h
+	${MEGAsyncDir}/gui/Syncs/Twoways/BindFolderDialog.h
+    ${MEGAsyncDir}/gui/Syncs/Twoways/FolderBinder.h
+	${MEGAsyncDir}/gui/Syncs/Backups/BackupTableView.h
+    ${MEGAsyncDir}/gui/Syncs/Backups/AddBackupDialog.h
+    ${MEGAsyncDir}/gui/Syncs/Backups/RemoveBackupDialog.h
+	${MEGAsyncDir}/gui/Syncs/Backups/BackupsWizard.h
+	${MEGAsyncDir}/gui/Syncs/Backups/BackupRenameWidget.h	
+    ${MEGAsyncDir}/gui/Syncs/Backups/BackupNameConflictDialog.h
 
     ${MEGAsyncDir}/platform/notificator.h
     ${MEGAsyncDir}/platform/PlatformStrings.h
@@ -376,6 +376,13 @@ set (MOC_INPUT
     ${MEGAsyncDir}/transfers/gui/DuplicatedNodeDialogs/DuplicatedNodeInfo.h
     ${MEGAsyncDir}/transfers/gui/DuplicatedNodeDialogs/DuplicatedNodeItem.h
     ${MEGAsyncDir}/transfers/gui/DuplicatedNodeDialogs/DuplicatedUploadChecker.h
+	
+	${MEGAsyncDir}/UserAttributesRequests/FullName.h
+    ${MEGAsyncDir}/UserAttributesRequests/DeviceName.h
+    ${MEGAsyncDir}/UserAttributesRequests/MyBackupsHandle.h
+    ${MEGAsyncDir}/UserAttributesRequests/Avatar.h
+    ${MEGAsyncDir}/UserAttributesRequests/MyChatFilesFolder.h
+    ${MEGAsyncDir}/UserAttributesRequests/CameraUploadFolder.h
 )
 
 if (NOT CMAKE_HOST_APPLE)
@@ -463,8 +470,6 @@ set (SRCS
     ${MEGAsyncDir}/gui/QtPositioningBugFixer.cpp
     ${MEGAsyncDir}/gui/SetupWizard.cpp
     ${MEGAsyncDir}/gui/NodeSelector.cpp
-    ${MEGAsyncDir}/gui/FolderBinder.cpp
-    ${MEGAsyncDir}/gui/BindFolderDialog.cpp
     ${MEGAsyncDir}/gui/UploadToMegaDialog.cpp
     ${MEGAsyncDir}/gui/PasteMegaLinksDialog.cpp
     ${MEGAsyncDir}/gui/ImportMegaLinksDialog.cpp
@@ -501,28 +506,17 @@ set (SRCS
     ${MEGAsyncDir}/gui/OverQuotaDialog.cpp
     ${MEGAsyncDir}/gui/ProxySettings.cpp
     ${MEGAsyncDir}/gui/BandwidthSettings.cpp
-    ${MEGAsyncDir}/gui/BackupsWizard.cpp
-    ${MEGAsyncDir}/gui/SyncsMenu.cpp
-    ${MEGAsyncDir}/gui/AddBackupDialog.cpp
-    ${MEGAsyncDir}/gui/RemoveBackupDialog.cpp
     ${MEGAsyncDir}/gui/SwitchButton.cpp
     ${MEGAsyncDir}/gui/MegaItemDelegates.cpp
     ${MEGAsyncDir}/gui/MegaItemProxyModel.cpp
     ${MEGAsyncDir}/gui/MegaItemTreeView.cpp
     ${MEGAsyncDir}/gui/GuiUtilities.cpp
-    ${MEGAsyncDir}/gui/UserAttributesRequests/DeviceName.cpp
-    ${MEGAsyncDir}/gui/UserAttributesRequests/MyBackupsHandle.cpp
-    ${MEGAsyncDir}/gui/UserAttributesRequests/FullName.cpp
-    ${MEGAsyncDir}/gui/UserAttributesRequests/Avatar.cpp
-    ${MEGAsyncDir}/gui/UserAttributesRequests/MyChatFilesFolder.cpp
-    ${MEGAsyncDir}/gui/UserAttributesRequests/CameraUploadFolder.cpp
     ${MEGAsyncDir}/gui/ButtonIconManager.cpp
     ${MEGAsyncDir}/gui/EventHelper.cpp
     ${MEGAsyncDir}/gui/GuiUtilities.cpp
     ${MEGAsyncDir}/gui/ScanningWidget.cpp
     ${MEGAsyncDir}/gui/BlurredShadowEffect.cpp
     ${MEGAsyncDir}/gui/CancelConfirmWidget.cpp
-    ${MEGAsyncDir}/gui/SyncTooltipCreator.cpp
     ${MEGAsyncDir}/gui/MegaDelegateHoverManager.cpp
     ${MEGAsyncDir}/gui/NodeNameSetterDialog/NodeNameSetterDialog.cpp 
     ${MEGAsyncDir}/gui/NodeNameSetterDialog/NewFolderDialog.cpp 
@@ -578,17 +572,29 @@ set (SRCS
     ${MEGAsyncDir}/control/UserAttributesManager.cpp
     ${MEGAsyncDir}/control/TextDecorator.cpp
 
-    ${MEGAsyncDir}/model/SyncSettings.cpp
+    ${MEGAsyncDir}/model/SyncSetting.cpp
     ${MEGAsyncDir}/model/SyncModel.cpp
-    ${MEGAsyncDir}/gui/BackupItemModel.cpp
-    ${MEGAsyncDir}/gui/SyncItemModel.cpp
-    ${MEGAsyncDir}/gui/SyncTableView.cpp
-    ${MEGAsyncDir}/gui/BackupTableView.cpp
-    ${MEGAsyncDir}/gui/BackupsWizard.cpp
-    ${MEGAsyncDir}/gui/AddBackupDialog.cpp
-    ${MEGAsyncDir}/gui/RemoveBackupDialog.cpp
-    ${MEGAsyncDir}/gui/Backups/BackupRenameWidget.cpp
-    ${MEGAsyncDir}/gui/Backups/BackupNameConflictDialog.cpp	
+	${MEGAsyncDir}/model/BackupItemModel.cpp
+    ${MEGAsyncDir}/model/SyncItemModel.cpp
+	
+	${MEGAsyncDir}/UserAttributesRequests/DeviceName.cpp
+    ${MEGAsyncDir}/UserAttributesRequests/MyBackupsHandle.cpp
+    ${MEGAsyncDir}/UserAttributesRequests/FullName.cpp
+    ${MEGAsyncDir}/UserAttributesRequests/Avatar.cpp
+    ${MEGAsyncDir}/UserAttributesRequests/MyChatFilesFolder.cpp
+    ${MEGAsyncDir}/UserAttributesRequests/CameraUploadFolder.cpp
+	
+	${MEGAsyncDir}/gui/Syncs/SyncTooltipCreator.cpp
+	${MEGAsyncDir}/gui/Syncs/SyncsMenu.cpp
+	${MEGAsyncDir}/gui/Syncs/Twoways/SyncTableView.cpp
+	${MEGAsyncDir}/gui/Syncs/Twoways/BindFolderDialog.cpp
+    ${MEGAsyncDir}/gui/Syncs/Twoways/FolderBinder.cpp
+	${MEGAsyncDir}/gui/Syncs/Backups/BackupTableView.cpp
+    ${MEGAsyncDir}/gui/Syncs/Backups/AddBackupDialog.cpp
+    ${MEGAsyncDir}/gui/Syncs/Backups/RemoveBackupDialog.cpp
+	${MEGAsyncDir}/gui/Syncs/Backups/BackupsWizard.cpp
+	${MEGAsyncDir}/gui/Syncs/Backups/BackupRenameWidget.cpp	
+    ${MEGAsyncDir}/gui/Syncs/Backups/BackupNameConflictDialog.cpp
 	
     ${MEGAsyncDir}/platform/notificator.cpp
 

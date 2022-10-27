@@ -266,7 +266,7 @@ margin: 4px;
       </sizepolicy>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="pStep1">
       <property name="sizePolicy">
@@ -417,9 +417,6 @@ margin: 4px;
                </property>
                <property name="text">
                 <string notr="true"/>
-               </property>
-               <property name="scaledContents">
-                <bool>false</bool>
                </property>
               </widget>
              </item>

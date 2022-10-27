@@ -450,7 +450,7 @@ std::shared_ptr<Preferences> Preferences::instance()
 
 void Preferences::initialize(QString dataPath)
 {
-    this->dataPath = dataPath;
+    mDataPath = dataPath;
 #if QT_VERSION >= 0x050000
     QString lockSettingsFile = QDir::toNativeSeparators(dataPath + QString::fromAscii("/MEGAsync.cfg.lock"));
     QFile::remove(lockSettingsFile);
@@ -2748,7 +2748,7 @@ bool Preferences::error()
 QString Preferences::getDataPath()
 {
     mutex.lock();
-    QString ret = dataPath;
+    QString ret = mDataPath;
     mutex.unlock();
     return ret;
 }

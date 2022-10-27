@@ -19,10 +19,10 @@
 #include "QtPositioningBugFixer.h"
 #include "TransferQuota.h"
 #include "StatusInfo.h"
-#include "SyncsMenu.h"
+#include "Syncs/SyncsMenu.h"
 #include "control/SyncController.h"
-#include "AddBackupDialog.h"
-#include "BackupsWizard.h"
+#include "Syncs/Backups/AddBackupDialog.h"
+#include "Syncs/Backups/BackupsWizard.h"
 
 #include <memory>
 #ifdef _WIN32
@@ -58,8 +58,8 @@ public:
     void setAvatar();
     void setIndexing(bool indexing);
     void setWaiting(bool waiting);
-    void setSyncing(bool value);
-    void setTransferring(bool value);
+    void setSyncing(bool syncing);
+    void setTransferring(bool transferring);
     void setOverQuotaMode(bool state);
     void setAccountType(int accType);
     void setDisabledSyncTags(QSet<int> tags);
@@ -201,10 +201,10 @@ private:
     SyncsMenu* createSyncMenu(mega::MegaSync::SyncType type, bool isEnabled);
 
 
-    bool indexing; //scanning
-    bool waiting;
-    bool syncing; //if any sync is in syncing state
-    bool transferring; // if there are ongoing regular transfers
+    bool mIndexing; //scanning
+    bool mWaiting;
+    bool mSyncing; //if any sync is in syncing state
+    bool mTransferring; // if there are ongoing regular transfers
     GuestWidget *gWidget;
     StatusInfo::TRANSFERS_STATES mState;
     bool overQuotaState;
@@ -257,8 +257,8 @@ protected:
     QTimer transfersFinishedTimer;
     QTimer mResetTransferSummaryWidget;
     MegaApplication *app;
-    std::shared_ptr<Preferences> preferences;
-    SyncModel *model;
+    std::shared_ptr<Preferences> mPreferences;
+    SyncModel *mSyncModel;
     mega::MegaApi *megaApi;
     mega::MegaTransfer *activeDownload;
     mega::MegaTransfer *activeUpload;
