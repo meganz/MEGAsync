@@ -2,7 +2,7 @@
 #define SETTINGSDIALOG_H
 
 #include "AccountDetailsDialog.h"
-#include "BindFolderDialog.h"
+#include "Syncs/Twoways/BindFolderDialog.h"
 #include "DownloadFromMegaDialog.h"
 #include "ChangePassword.h"
 #include "Preferences.h"

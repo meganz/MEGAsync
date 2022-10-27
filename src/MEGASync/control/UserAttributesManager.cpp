@@ -128,10 +128,8 @@ void AttributeRequest::requestUserAttribute(int attribute)
 
 QString UserAttributesManager::getKey(const QString& userEmail) const
 {
-    static QString loggedUserKey(QLatin1Char('u'));
-
-    QString key = loggedUserKey;
     // If the email is not empty, use key 'u' for current user.
+    QString key (QLatin1Char('u'));
     if (!userEmail.isEmpty())
     {
         std::unique_ptr<char[]> currentUserEmail (MegaSyncApp->getMegaApi()->getMyEmail());

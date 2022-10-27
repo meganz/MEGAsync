@@ -554,7 +554,7 @@ protected:
     long long tempBandwidth;
     int tempBandwidthInterval;
     bool isTempBandwidthValid;
-    QString dataPath;
+    QString mDataPath;
     long long diffTimeWithSDK;
     std::chrono::system_clock::time_point transferOverQuotaDialogDisabledUntil;
     std::chrono::system_clock::time_point transferOverQuotaOsNotificationDisabledUntil;

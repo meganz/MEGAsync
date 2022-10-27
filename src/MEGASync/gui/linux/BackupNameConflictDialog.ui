@@ -134,7 +134,7 @@ font-family: 'Inter';
 }</string>
        </property>
        <property name="text">
-        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If you don't want to rename the new folders, stop the backup in the &lt;a href=&quot;https://13755-backup-center.developers.mega.co.nz/fm/backups&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#aa1a00;&quot;&gt;Backup centre&lt;/span&gt;&lt;/a&gt; for the existing folders. Then setup the backup for the new folders again. &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If you don't want to rename the new folder, stop the backup in the &lt;a href=&quot;https://13755-backup-center.developers.mega.co.nz/fm/backups&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#aa1a00;&quot;&gt;Backup centre&lt;/span&gt;&lt;/a&gt; for the existing folder. Then setup the backup for the new folder again. &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
        </property>
        <property name="textFormat">
         <enum>Qt::RichText</enum>
@@ -150,7 +150,7 @@ font-family: 'Inter';
      <item row="0" column="0" rowspan="2" alignment="Qt::AlignTop">
       <widget class="QLabel" name="lWarningIcon">
        <property name="pixmap">
-        <pixmap resource="../Resources_win.qrc">:/images/icon_warning.png</pixmap>
+        <pixmap resource="../Resources_linux.qrc">:/images/icon_warning.png</pixmap>
        </property>
       </widget>
      </item>
@@ -182,7 +182,7 @@ background-color: #ECECEC;
         <x>0</x>
         <y>0</y>
         <width>560</width>
-        <height>137</height>
+        <height>152</height>
        </rect>
       </property>
      </widget>
@@ -223,8 +223,7 @@ background-color: #ECECEC;
   </layout>
  </widget>
  <resources>
-  <include location="../Resources_win.qrc"/>
-  <include location="../Resources_win.qrc"/>
+  <include location="../Resources_linux.qrc"/>
  </resources>
  <connections>
   <connection>

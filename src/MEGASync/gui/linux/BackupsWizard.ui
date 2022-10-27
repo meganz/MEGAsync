@@ -409,9 +409,6 @@ margin: 4px;
                <property name="text">
                 <string notr="true"/>
                </property>
-               <property name="scaledContents">
-                <bool>false</bool>
-               </property>
               </widget>
              </item>
              <item alignment="Qt::AlignVCenter">

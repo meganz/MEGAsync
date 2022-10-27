@@ -125,7 +125,7 @@ font-family: 'Inter';
 }</string>
        </property>
        <property name="text">
-        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If you don't want to rename the new folders, stop the backup in the &lt;a href=&quot;https://13755-backup-center.developers.mega.co.nz/fm/backups&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#aa1a00;&quot;&gt;Backup centre&lt;/span&gt;&lt;/a&gt; for the existing folders. Then setup the backup for the new folders again. &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If you don't want to rename the new folder, stop the backup in the &lt;a href=&quot;https://13755-backup-center.developers.mega.co.nz/fm/backups&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#aa1a00;&quot;&gt;Backup centre&lt;/span&gt;&lt;/a&gt; for the existing folder. Then setup the backup for the new folder again. &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
        </property>
        <property name="textFormat">
         <enum>Qt::RichText</enum>

@@ -31,8 +31,8 @@ QHash<QString, QString> Utilities::languageNames;
 std::unique_ptr<ThreadPool> ThreadPoolSingleton::instance = nullptr;
 
 const QString Utilities::SUPPORT_URL = QString::fromUtf8("https://mega.nz/contact");
-// TODO: change to production URL
-const QString Utilities::BACKUP_CENTER_URL = QString::fromLatin1("https://13755-backup-center.developers.mega.co.nz/dont-deploy/sandbox3.html?apipath=staging&jj=2");
+const QString Utilities::BACKUP_CENTER_URL = QString::fromLatin1("mega://#fm/devices");
+
 const unsigned long long KB = 1024;
 const unsigned long long MB = 1024 * KB;
 const unsigned long long GB = 1024 * MB;

@@ -178,9 +178,9 @@ void PlanWidget::updatePlanInfo()
     style()->polish(this);
 }
 
-void PlanWidget::setPlanInfo(const PlanInfo& data)
+void PlanWidget::setPlanInfo(const PlanInfo& planData)
 {
-    mDetails = data;
+    mDetails = planData;
     updatePlanInfo();
 }
 

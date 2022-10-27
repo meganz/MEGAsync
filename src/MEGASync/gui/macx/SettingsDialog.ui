@@ -5101,13 +5101,13 @@ margin-right: 32px;</string>
   <customwidget>
    <class>SyncTableView</class>
    <extends>QTableView</extends>
-   <header>SyncTableView.h</header>
+   <header>Syncs/Twoways/SyncTableView.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
    <class>BackupTableView</class>
    <extends>QTableView</extends>
-   <header>BackupTableView.h</header>
+   <header>Syncs/Backups/BackupTableView.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

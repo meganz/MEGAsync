@@ -1,12 +1,6 @@
 QT       += network
 
 SOURCES += $$PWD/SettingsDialog.cpp \
-    $$PWD/AddBackupDialog.cpp \
-    $$PWD/BackupItemModel.cpp \
-    $$PWD/BackupTableView.cpp \
-    $$PWD/Backups/BackupNameConflictDialog.cpp \
-    $$PWD/Backups/BackupRenameWidget.cpp \
-    $$PWD/BackupsWizard.cpp \
     $$PWD/BalloonToolTip.cpp \
     $$PWD/BlurredShadowEffect.cpp \
     $$PWD/ButtonIconManager.cpp \
@@ -23,12 +17,17 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/PasswordLineEdit.cpp \
     $$PWD/SetupWizard.cpp \
     $$PWD/NodeSelector.cpp \
-    $$PWD/FolderBinder.cpp \
-    $$PWD/BindFolderDialog.cpp \
-    $$PWD/SyncItemModel.cpp \
-    $$PWD/SyncTableView.cpp \
-    $$PWD/SyncTreeWidget.cpp \
-    $$PWD/SyncsMenu.cpp \
+    $$PWD/Syncs/Backups/AddBackupDialog.cpp \
+    $$PWD/Syncs/Backups/BackupNameConflictDialog.cpp \
+    $$PWD/Syncs/Backups/BackupRenameWidget.cpp \
+    $$PWD/Syncs/Backups/BackupTableView.cpp \
+    $$PWD/Syncs/Backups/BackupsWizard.cpp \
+    $$PWD/Syncs/Backups/RemoveBackupDialog.cpp \
+    $$PWD/Syncs/SyncTooltipCreator.cpp \
+    $$PWD/Syncs/SyncsMenu.cpp \
+    $$PWD/Syncs/Twoways/BindFolderDialog.cpp \
+    $$PWD/Syncs/Twoways/FolderBinder.cpp \
+    $$PWD/Syncs/Twoways/SyncTableView.cpp \
     $$PWD/UploadToMegaDialog.cpp \
     $$PWD/PasteMegaLinksDialog.cpp \
     $$PWD/ImportMegaLinksDialog.cpp \
@@ -67,33 +66,19 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/FilterAlertWidget.cpp \
     $$PWD/AlertFilterType.cpp \
     $$PWD/BugReportDialog.cpp \
-    $$PWD/UserAttributesRequests/DeviceName.cpp \
-    $$PWD/UserAttributesRequests/MyBackupsHandle.cpp \
-    $$PWD/UserAttributesRequests/FullName.cpp \
-    $$PWD/UserAttributesRequests/Avatar.cpp \
-    $$PWD/UserAttributesRequests/CameraUploadFolder.cpp \
-    $$PWD/UserAttributesRequests/MyChatFilesFolder.cpp \
     $$PWD/VerifyLockMessage.cpp \
     $$PWD/MegaInfoMessage.cpp \
     $$PWD/WaitingSpinnerWidget.cpp \
     $$PWD/ProxySettings.cpp \
     $$PWD/BandwidthSettings.cpp \
-    $$PWD/RemoveBackupDialog.cpp \
     $$PWD/SwitchButton.cpp \
     $$PWD/GuiUtilities.cpp \
     $$PWD/CancelConfirmWidget.cpp \
     $$PWD/NodeNameSetterDialog/NodeNameSetterDialog.cpp \
     $$PWD/NodeNameSetterDialog/NewFolderDialog.cpp \
-    $$PWD/NodeNameSetterDialog/RenameNodeDialog.cpp \
-    $$PWD/SyncTooltipCreator.cpp
+    $$PWD/NodeNameSetterDialog/RenameNodeDialog.cpp
 
 HEADERS  += $$PWD/SettingsDialog.h \
-    $$PWD/AddBackupDialog.h \
-    $$PWD/BackupItemModel.h \
-    $$PWD/BackupTableView.h \
-    $$PWD/Backups/BackupNameConflictDialog.h \
-    $$PWD/Backups/BackupRenameWidget.h \
-    $$PWD/BackupsWizard.h \
     $$PWD/AutoResizeStackedWidget.h \
     $$PWD/BalloonToolTip.h \
     $$PWD/BlurredShadowEffect.h \
@@ -112,12 +97,17 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/PasswordLineEdit.h \
     $$PWD/SetupWizard.h \
     $$PWD/NodeSelector.h \
-    $$PWD/FolderBinder.h \
-    $$PWD/BindFolderDialog.h \
-    $$PWD/SyncItemModel.h \
-    $$PWD/SyncTableView.h \
-    $$PWD/SyncTreeWidget.h \
-    $$PWD/SyncsMenu.h \
+    $$PWD/Syncs/Backups/AddBackupDialog.h \
+    $$PWD/Syncs/Backups/BackupNameConflictDialog.h \
+    $$PWD/Syncs/Backups/BackupRenameWidget.h \
+    $$PWD/Syncs/Backups/BackupTableView.h \
+    $$PWD/Syncs/Backups/BackupsWizard.h \
+    $$PWD/Syncs/Backups/RemoveBackupDialog.h \
+    $$PWD/Syncs/SyncTooltipCreator.h \
+    $$PWD/Syncs/SyncsMenu.h \
+    $$PWD/Syncs/Twoways/BindFolderDialog.h \
+    $$PWD/Syncs/Twoways/FolderBinder.h \
+    $$PWD/Syncs/Twoways/SyncTableView.h \
     $$PWD/UploadToMegaDialog.h \
     $$PWD/PasteMegaLinksDialog.h \
     $$PWD/ImportMegaLinksDialog.h \
@@ -156,26 +146,18 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/FilterAlertWidget.h \
     $$PWD/AlertFilterType.h \
     $$PWD/BugReportDialog.h \
-    $$PWD/UserAttributesRequests/DeviceName.h \
-    $$PWD/UserAttributesRequests/MyBackupsHandle.h \
-    $$PWD/UserAttributesRequests/FullName.h \
-    $$PWD/UserAttributesRequests/Avatar.h \
-    $$PWD/UserAttributesRequests/CameraUploadFolder.h \
-    $$PWD/UserAttributesRequests/MyChatFilesFolder.h \
     $$PWD/VerifyLockMessage.h \
     $$PWD/ViewLoadingScene.h \
     $$PWD/MegaInfoMessage.h \
     $$PWD/WaitingSpinnerWidget.h \
     $$PWD/ProxySettings.h \
     $$PWD/BandwidthSettings.h \
-    $$PWD/RemoveBackupDialog.h \
     $$PWD/SwitchButton.h \
     $$PWD/GuiUtilities.h \
     $$PWD/CancelConfirmWidget.h \
     $$PWD/NodeNameSetterDialog/NodeNameSetterDialog.h \
     $$PWD/NodeNameSetterDialog/NewFolderDialog.h \
-    $$PWD/NodeNameSetterDialog/RenameNodeDialog.h \
-    $$PWD/SyncTooltipCreator.h
+    $$PWD/NodeNameSetterDialog/RenameNodeDialog.h
 
 INCLUDEPATH += $$PWD
 

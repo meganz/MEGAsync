@@ -139,7 +139,7 @@ min-height: 48px;
   <customwidget>
    <class>FolderBinder</class>
    <extends>QWidget</extends>
-   <header>FolderBinder.h</header>
+   <header>Syncs/Twoways/FolderBinder.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

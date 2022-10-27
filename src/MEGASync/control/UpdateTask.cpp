@@ -306,8 +306,8 @@ bool UpdateTask::processUpdateFile(QNetworkReply *reply)
         if (f.open(QFile::ReadOnly | QFile::Text))
         {
             QTextStream in(&f);
-            QString version = in.readAll();
-            intVersion = version.toInt();
+            QString versionIn = in.readAll();
+            intVersion = versionIn.toInt();
             if (intVersion > Preferences::VERSION_CODE)
             {
                 MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, "External update detected");

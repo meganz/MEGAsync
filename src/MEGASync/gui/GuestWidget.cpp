@@ -440,22 +440,22 @@ void GuestWidget::setBlockState(int lockType)
 
 void GuestWidget::on_bLogin_clicked()
 {
-    email = ui->lEmail->text().toLower().trimmed();
-    password = ui->lPassword->text();
+    mEmail = ui->lEmail->text().toLower().trimmed();
+    mPassword = ui->lPassword->text();
 
-    if (!email.length())
+    if (!mEmail.length())
     {
         showLoginError(tr("Please, enter your e-mail address"));
         return;
     }
 
-    if (!email.contains(QChar::fromAscii('@')) || !email.contains(QChar::fromAscii('.')))
+    if (!mEmail.contains(QChar::fromAscii('@')) || !mEmail.contains(QChar::fromAscii('.')))
     {
         showLoginError(tr("Please, enter a valid e-mail address"));
         return;
     }
 
-    if (!password.length())
+    if (!mPassword.length())
     {
         showLoginError(tr("Please, enter your password"));
         ui->lPassword->setFocus();
@@ -463,7 +463,7 @@ void GuestWidget::on_bLogin_clicked()
     }
 
     app->infoWizardDialogFinished(QDialog::Accepted);
-    megaApi->login(email.toUtf8().constData(), password.toUtf8().constData());
+    megaApi->login(mEmail.toUtf8().constData(), mPassword.toUtf8().constData());
     loggingStarted = true;
 }
 
@@ -748,7 +748,7 @@ void GuestWidget::on_bLogin2FaNext_clicked()
     }
     else
     {
-        megaApi->multiFactorAuthLogin(email.toUtf8(), password.toUtf8().constData(), pin.toUtf8().constData());
+        megaApi->multiFactorAuthLogin(mEmail.toUtf8(), mPassword.toUtf8().constData(), pin.toUtf8().constData());
     }
 }
 

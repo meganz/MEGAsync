@@ -1,6 +1,6 @@
 #pragma once
 
-#include "model/SyncSettings.h"
+#include "model/SyncSetting.h"
 #include "model/SyncModel.h"
 #include "QTMegaRequestListener.h"
 
