@@ -2,12 +2,10 @@
 #include "QMegaMessageBox.h"
 #include "MegaApplication.h"
 #include "model/SyncModel.h"
-#include "MegaApplication.h"
-#include "mega/utils.h"
 #include "UserAttributesRequests/FullName.h"
 #include "UserAttributesRequests/Avatar.h"
 
-#include <QByteArray>
+#include "mega/utils.h"
 
 const int MegaItem::ICON_SIZE = 17;
 

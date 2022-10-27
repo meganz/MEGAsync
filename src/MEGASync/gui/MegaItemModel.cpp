@@ -1,10 +1,10 @@
 #include "MegaItemModel.h"
 #include "MegaApplication.h"
-#include "control/Utilities.h"
+#include "Utilities.h"
 #include "Preferences.h"
 #include "model/SyncModel.h"
-#include "UserAttributesRequests/MyChatFilesFolder.h"
 #include "UserAttributesRequests/CameraUploadFolder.h"
+#include "UserAttributesRequests/MyChatFilesFolder.h"
 #include "UserAttributesRequests/MyBackupsHandle.h"
 
 #include "mega/types.h"

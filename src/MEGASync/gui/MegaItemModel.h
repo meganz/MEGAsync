@@ -1,11 +1,10 @@
 #ifndef MEGAITEMMODEL_H
 #define MEGAITEMMODEL_H
 
-#include <megaapi.h>
-
 #include "MegaItem.h"
 #include "Utilities.h"
-#include "SyncController.h"
+
+#include <megaapi.h>
 
 #include <QAbstractItemModel>
 #include <QList>
@@ -16,9 +15,8 @@
 
 namespace UserAttributes{
 class CameraUploadFolder;
+class MyChatFilesFolder;
 }
-
-
 
 enum class MegaItemModelRoles
 {
