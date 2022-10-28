@@ -38,7 +38,7 @@ bool MegaDownloader::processDownloadQueue(QQueue<WrappedNode*>* downloadQueue, B
 
     downloadBatches.add(batch);
 
-    EventUpdater updater(downloadQueue->size());
+    EventUpdater updater(downloadQueue->size(), 20);
     mProcessingTransferQueue = true;
 
     // Process all nodes in the download queue
@@ -73,7 +73,10 @@ bool MegaDownloader::processDownloadQueue(QQueue<WrappedNode*>* downloadQueue, B
         }
         delete wNode;
 
-        updater.update(downloadQueue->size());
+        if(!downloadQueue->isEmpty())
+        {
+            updater.update(downloadQueue->size());
+        }
     }
 
     if (batch->isEmpty())
