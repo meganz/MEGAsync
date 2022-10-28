@@ -170,8 +170,8 @@ win32 {
     INCLUDEPATH += $$PWD/win
     FORMS    += $$PWD/win/InfoDialog.ui \
                 $$PWD/win/NodeSelector.ui \
-                $$PWD/win/FolderBinder.ui \
-                $$PWD/win/BindFolderDialog.ui \
+                $$PWD/Syncs/Twoways/win/FolderBinder.ui \
+                $$PWD/Syncs/Twoways/win/BindFolderDialog.ui \
                 $$PWD/win/UploadToMegaDialog.ui \
                 $$PWD/win/PasteMegaLinksDialog.ui \
                 $$PWD/win/ImportMegaLinksDialog.ui \
@@ -204,15 +204,15 @@ win32 {
                 $$PWD/win/OverQuotaDialog.ui \
                 $$PWD/win/ProxySettings.ui \
                 $$PWD/win/BandwidthSettings.ui \
-                $$PWD/win/BackupsWizard.ui \
-                $$PWD/win/AddBackupDialog.ui \
-                $$PWD/win/RemoveBackupDialog.ui \
+                $$PWD/Syncs/Backups/win/BackupsWizard.ui \
+                $$PWD/Syncs/Backups/win/AddBackupDialog.ui \
+                $$PWD/Syncs/Backups/win/RemoveBackupDialog.ui \
                 $$PWD/win/ScanningWidget.ui \
                 $$PWD/win/CancelConfirmWidget.ui \
                 $$PWD/win/NodeNameSetterDialog.ui \
                 $$PWD/win/NotificationsSettings.ui \
-                $$PWD/win/BackupNameConflictDialog.ui \
-                $$PWD/win/BackupRenameWidget.ui
+                $$PWD/Syncs/Backups/win/BackupNameConflictDialog.ui \
+                $$PWD/Syncs/Backups/win/BackupRenameWidget.ui
 }
 
 macx {
@@ -220,8 +220,8 @@ macx {
     INCLUDEPATH += $$PWD/macx
     FORMS    += $$PWD/macx/InfoDialog.ui \
                 $$PWD/macx/NodeSelector.ui \
-                $$PWD/macx/FolderBinder.ui \
-                $$PWD/macx/BindFolderDialog.ui \
+                $$PWD/Syncs/Twoways/macx/FolderBinder.ui \
+                $$PWD/Syncs/Twoways/macx/BindFolderDialog.ui \
                 $$PWD/macx/UploadToMegaDialog.ui \
                 $$PWD/macx/PasteMegaLinksDialog.ui \
                 $$PWD/macx/ImportMegaLinksDialog.ui \
@@ -256,15 +256,15 @@ macx {
                 $$PWD/macx/OverQuotaDialog.ui \
                 $$PWD/macx/ProxySettings.ui \
                 $$PWD/macx/BandwidthSettings.ui \
-                $$PWD/macx/BackupsWizard.ui \
-                $$PWD/macx/AddBackupDialog.ui \
-                $$PWD/macx/RemoveBackupDialog.ui \
+                $$PWD/Syncs/Backups/macx/BackupsWizard.ui \
+                $$PWD/Syncs/Backups/macx/AddBackupDialog.ui \
+                $$PWD/Syncs/Backups/macx/RemoveBackupDialog.ui \
                 $$PWD/macx/ScanningWidget.ui \
                 $$PWD/macx/CancelConfirmWidget.ui \
                 $$PWD/macx/NodeNameSetterDialog.ui \
                 $$PWD/macx/NotificationsSettings.ui \
-                $$PWD/macx/BackupNameConflictDialog.ui \
-                $$PWD/macx/BackupRenameWidget.ui
+                $$PWD/Syncs/Backups/macx/BackupNameConflictDialog.ui \
+                $$PWD/Syncs/Backups/macx/BackupRenameWidget.ui
 
     #Asset catalog need to load SF symbol images of toolbar items for custom NSToolbar
     QMAKE_ASSET_CATALOGS += $$PWD/images/Images.xcassets
@@ -295,8 +295,8 @@ unix:!macx {
     INCLUDEPATH += $$PWD/linux
     FORMS    += $$PWD/linux/InfoDialog.ui \
                 $$PWD/linux/NodeSelector.ui \
-                $$PWD/linux/FolderBinder.ui \
-                $$PWD/linux/BindFolderDialog.ui \
+                $$PWD/Syncs/Twoways/linux/FolderBinder.ui \
+                $$PWD/Syncs/Twoways/linux/BindFolderDialog.ui \
                 $$PWD/linux/UploadToMegaDialog.ui \
                 $$PWD/linux/PasteMegaLinksDialog.ui \
                 $$PWD/linux/ImportMegaLinksDialog.ui \
@@ -331,15 +331,15 @@ unix:!macx {
                 $$PWD/linux/OverQuotaDialog.ui \
                 $$PWD/linux/ProxySettings.ui \
                 $$PWD/linux/BandwidthSettings.ui \
-                $$PWD/linux/BackupsWizard.ui \
-                $$PWD/linux/AddBackupDialog.ui \
-                $$PWD/linux/RemoveBackupDialog.ui \
+                $$PWD/Syncs/Backups/linux/BackupsWizard.ui \
+                $$PWD/Syncs/Backups/linux/AddBackupDialog.ui \
+                $$PWD/Syncs/Backups/linux/RemoveBackupDialog.ui \
                 $$PWD/linux/CancelConfirmWidget.ui \
                 $$PWD/linux/ScanningWidget.ui \
                 $$PWD/linux/NodeNameSetterDialog.ui \
                 $$PWD/linux/NotificationsSettings.ui \
-                $$PWD/linux/BackupNameConflictDialog.ui \
-                $$PWD/linux/BackupRenameWidget.ui
+                $$PWD/Syncs/Backups/linux/BackupNameConflictDialog.ui \
+                $$PWD/Syncs/Backups/linux/BackupRenameWidget.ui
 
     HEADERS += $$PWD/PermissionsDialog.h \
                $$PWD/PermissionsWidget.h
