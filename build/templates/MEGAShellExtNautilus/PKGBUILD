@@ -30,14 +30,14 @@ url=""
 license=() #TODO
 groups=()
 depends=('ca-certificates' 'megasync>=3.5' 'nautilus')
-makedepends=( 'ca-certificates' 'qt4' 'nautilus' 'libnautilus-extension')
+makedepends=( 'ca-certificates' 'qt5-base' 'nautilus' 'libnautilus-extension')
 checkdepends=()
 optdepends=()
 provides=("nautilus-megasync=${pkgver}")
 conflicts=()
 replaces=()
 backup=()
-options=()
+options=(debug strip)
 install=megasync.install
 changelog= #TODO
 source=("./${pkgname}_$pkgver.tar.gz"
@@ -61,18 +61,15 @@ build() {
 	 echo "OLDER NAUTILUS DOES NOT REQUIRE SMALLER OVERLAY ICONS"
 	 rm data/emblems/64x64/*smaller.png
 	fi    
-	qmake || qmake-qt4 #qmake would fail when qt4 installed (due to some path missconfigurations)	
+	qmake-qt5 || qmake
 	make
 }
 
 check() {
 	cd "$pkgname-$pkgver"
-#	make -k check  DESTDIR=$_bindir THE_RPM_BUILD_ROOT=$pkgdir
 }
 
 package() {
 	cd "$pkgname-$pkgver"
-#	make install
-	#sed -i "s#gtk-update-icon-cache -f -t /#gtk-update-icon-cache -f -t \$(INSTALL_ROOT)/#g" Makefile
 	make install INSTALL_ROOT=$pkgdir
 }

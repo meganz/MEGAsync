@@ -1,3 +1,9 @@
+nautilus-megasync (5.1.0) stable; urgency=low
+
+  * Support new nautilus extension API v4
+
+ -- MEGA Team <linux@mega.co.nz>  Tue, 25 Oct 2022 13:01:15 +0200
+
 nautilus-megasync (5.0.0) stable; urgency=low
 
   * Change in version numbering

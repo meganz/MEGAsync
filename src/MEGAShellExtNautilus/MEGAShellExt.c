@@ -293,7 +293,11 @@ static void mega_ext_on_open_previous_selected(NautilusMenuItem *item, gpointer 
 // Check the state of the selected files
 // to show the menu item "Upload to MEGA", "Get MEGA link" or both
 // Return: list of NautilusMenuItem
-static GList *mega_ext_get_file_items(NautilusMenuProvider *provider, G_GNUC_UNUSED GtkWidget *window, GList *files)
+static GList *mega_ext_get_file_items(NautilusMenuProvider *provider,
+                                      #if (NAUTILUS_EXT_API_VERSION < 4)
+                                      G_GNUC_UNUSED GtkWidget *window,
+                                      #endif
+                                      GList *files)
 {
     MEGAExt *mega_ext = MEGA_EXT(provider);
     GList *l, *l_out = NULL;
@@ -527,12 +531,24 @@ static NautilusOperationResult mega_ext_update_file_info(NautilusInfoProvider *p
     return NAUTILUS_OPERATION_COMPLETE;
 }
 
-static void mega_ext_menu_provider_iface_init(NautilusMenuProviderIface *iface, G_GNUC_UNUSED gpointer iface_data)
+static void mega_ext_menu_provider_iface_init(
+        #if (NAUTILUS_EXT_API_VERSION < 4)
+        NautilusMenuProviderIface *iface,
+        #else
+        NautilusMenuProviderInterface *iface,
+        #endif
+        G_GNUC_UNUSED gpointer iface_data)
 {
     iface->get_file_items = mega_ext_get_file_items;
 }
 
-static void mega_ext_info_provider_iface_init(NautilusInfoProviderIface *iface, G_GNUC_UNUSED gpointer iface_data)
+static void mega_ext_info_provider_iface_init(
+        #if (NAUTILUS_EXT_API_VERSION < 4)
+        NautilusInfoProviderIface *iface,
+        #else
+        NautilusInfoProviderInterface *iface,
+        #endif
+        G_GNUC_UNUSED gpointer iface_data)
 {
     iface->update_file_info = mega_ext_update_file_info;
 }
