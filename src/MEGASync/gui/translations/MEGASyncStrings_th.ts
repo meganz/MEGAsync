@@ -972,12 +972,12 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Your Business account is expired</source>
         <translatorcomment>Notification title to indicate that current business account is expired</translatorcomment>
-        <translation>บัญชีธุรกิจของคุณหมดอายุแล้ว</translation>
+        <translation>บัญชีถูกปิดใช้งาน</translation>
     </message>
     <message>
         <source>Your account is suspended as read only until you proceed with the needed payments.</source>
         <translatorcomment>Notification message to indicate that current business account is suspended until needed payments are made</translatorcomment>
-        <translation>บัญชีของคุณหมดอายุ และจะอ่านได้อย่างเดียวจนกว่าคุณจะดำเนินการชำระเงินให้เรียบร้อย</translation>
+        <translation>บัญชีของคุณถูกปิดใช้งานและมีสถานะเป็นแบบอ่านอย่างเดียวจนกว่าคุณจะชำระเงินตามที่กำหนด</translation>
     </message>
     <message>
         <source>Account Suspended</source>
@@ -2310,7 +2310,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your Business account is expired</source>
         <translatorcomment>Notification title to indicate that current business account is expired</translatorcomment>
-        <translation>บัญชีธุรกิจของคุณหมดอายุแล้ว</translation>
+        <translation>บัญชีถูกปิดใช้งาน</translation>
     </message>
     <message>
         <source>Dismiss</source>
@@ -2320,7 +2320,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>It seems the payment for your business account has failed. Your account is suspended as read only until you proceed with the needed payments.</source>
         <translatorcomment>Notification message shown to admin business account when a payment has failed. </translatorcomment>
-        <translation>ดูเหมือนว่าการชำระเงินสำหรับบัญชีธุรกิจของคุณล้มเหลว บัญชีของคุณหมดอายุแล้ว และได้รับสิทธิ์การเข้าถึงแบบอ่านอย่างเดียวจนกว่าคุณจะดำเนินการชำระเงินให้เรียบร้อย</translation>
+        <translation>บัญชีธุรกิจของคุณถูกปิดใช้งานเนื่องจากการชำระเงินไม่สำเร็จ คุณจะไม่สามารถเข้าถึงข้อมูลของคุณได้จนกว่าคุณจะชำระเงินและเปิดใช้การสมัครใช้งานของคุณอีกครั้ง</translation>
     </message>
     <message>
         <source>[A]Important:[/A] Contact your business account administrator to resolve the issue and activate your account.</source>
@@ -2335,7 +2335,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>This month&apos;s payment has failed. Please resolve your payment issue as soon as possible to avoid any suspension of your business account.</source>
         <translatorcomment>Informative message shown to the user when a payment has failed for a business account.</translatorcomment>
-        <translation>การชำระเงินเดือนนี้ล้มเหลว กรุณาแก้ไขปัญหาการชำระเงินโดยเร็วที่สุด เพื่อหลีกเลี่ยงการถูกระงับบัญชีธุรกิจของคุณ</translation>
+        <translation>การชำระเงินเดือนนี้ไม่สำเร็จ กรุณาแก้ไขปัญหาการชำระเงินของคุณโดยเร็วที่สุด เพื่อหลีกเลี่ยงไม่ให้บัญชีของคุณถูกปิดใช้งาน</translation>
     </message>
     <message>
         <source>Account Suspended</source>
@@ -2345,7 +2345,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your account is currently [A]suspended[/A]. You can only browse your data.</source>
         <translatorcomment>Informative message shown when a business account is expired and the user can only browse data and none operation (upload, download, creation..) is allowed.</translatorcomment>
-        <translation>บัญชีของคุณ[A]หมดอายุแล้ว[/A] คุณสามารถเรียกดูได้เฉพาะข้อมูลเท่านั้น</translation>
+        <translation>บัญชีของคุณ[A]ถูกปิดใช้งาน[/A] คุณจะสามารถเรียกดูได้แค่ข้อมูลอย่างเดียวเท่านั้น</translation>
     </message>
     <message>
         <source>Your upload(s) cannot proceed because %1&apos;s account is full</source>
@@ -2838,7 +2838,7 @@ Transfer will automatically resume when you re-open the app.</source>
     <message>
         <source>Business account expired</source>
         <translatorcomment>Label to show that the current business account is expired during a SDK operation.</translatorcomment>
-        <translation>บัญชีธุรกิจของคุณหมดอายุแล้ว</translation>
+        <translation>บัญชีธุรกิจของคุณถูกปิดใช้งาน</translation>
     </message>
     <message>
         <source>Foreign target storage quota reached</source>
@@ -3744,21 +3744,24 @@ Please delete the folder sync from preferences to cancel them.</source>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- There is now a new transfer manager.
-- Transfer management was enhanced and reliability of downloads and uploads improved. 
-- Detected crashes on Windows, Linux, and macOS fixed.
-- Translation issues fixed.
-- Performance improved.
-- UI fixed and adjusted.
+        <source>- Added new Apple Silicon native support.
+- Added a new feature to stop sleep mode if there are active transfers.
+- Updated third-party libs.
+- Improved folders transfers.
+- Fixed detected crashes on Windows, Linux, and macOS.
+- Fixed translation issues.
+- Improved performance.
+- Fixed and adjusted UI.
 </source>
-        <translatorcomment>Changelog for version v4.7.0</translatorcomment>
-        <translation>- ตอนนี้มีตัวจัดการการถ่ายโอนใหม่แล้ว
-- ตัวจัดการการถ่ายโอนได้รับการเพิ่มประสิทธิภาพและความน่าเชื่อถือการดาวน์โหลดและอัปโหลดได้รับการปรับปรุงเช่นเดียวกัน 
-- ตรวจพบและแก้ไขข้อขัดข้องใน Windows, Linux และ macOS แล้ว
-- ปรับปรุงการแปลภาษาแล้ว
+        <translatorcomment>Changelog for version v4.7.2</translatorcomment>
+        <translation>- เพิ่มการสนับสนุนการทำงานกับ Apple silicon ใหม่
+- เพิ่มฟีเจอร์ใหม่หากยังมีการถ่ายโอนข้อมูลอยู่จะไม่เข้าสู่โหมดสลีป
+- อัปเดตไลบรารีจากบริษัทอื่น
+- ปรับปรุงการถ่ายโอนโฟลเดอร์
+- แก้ไขการหยุดทำงานที่ตรวจพบบน Windows, Linux และ macOS
+- แก้ไขปัญหาการแปลภาษาไม่ถูกต้อง
 - ปรับปรุงประสิทธิภาพการทำงานทั่วไป
-- แก้ไขและปรับปรุง UI แล้ว
-</translation>
+- แก้ไขและปรับแต่ง UI ให้สมบูรณ์</translation>
     </message>
 </context>
 <context>

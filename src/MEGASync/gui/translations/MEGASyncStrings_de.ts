@@ -745,7 +745,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Pro membership plan expiring soon</source>
         <translatorcomment>Label to indicate that the PRO membership will expire soon.</translatorcomment>
-        <translation>Ihr Pro-Status endet bald</translation>
+        <translation>Ihr Pro-Abonnement läuft bald ab</translation>
     </message>
     <message numerus="yes">
         <source>Your Pro membership plan expired %n day ago</source>
@@ -972,12 +972,12 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Your Business account is expired</source>
         <translatorcomment>Notification title to indicate that current business account is expired</translatorcomment>
-        <translation>Ihr Business-Account ist abgelaufen</translation>
+        <translation>Account deaktiviert</translation>
     </message>
     <message>
         <source>Your account is suspended as read only until you proceed with the needed payments.</source>
         <translatorcomment>Notification message to indicate that current business account is suspended until needed payments are made</translatorcomment>
-        <translation>Ihr Account ist schreibgeschützt, bis Sie die erforderlichen Zahlungen vornehmen.</translation>
+        <translation>Ihr Account ist deaktiviert und schreibgeschützt, bis Sie die erforderlichen Zahlungen vornehmen.</translation>
     </message>
     <message>
         <source>Account Suspended</source>
@@ -2310,7 +2310,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your Business account is expired</source>
         <translatorcomment>Notification title to indicate that current business account is expired</translatorcomment>
-        <translation>Ihr Business-Account ist abgelaufen</translation>
+        <translation>Account deaktiviert</translation>
     </message>
     <message>
         <source>Dismiss</source>
@@ -2320,7 +2320,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>It seems the payment for your business account has failed. Your account is suspended as read only until you proceed with the needed payments.</source>
         <translatorcomment>Notification message shown to admin business account when a payment has failed. </translatorcomment>
-        <translation>Anscheinend ist die Zahlung für Ihren Business-Account fehlgeschlagen. Ihr Account ist abgelaufen und schreibgeschützt, bis Sie die erforderliche Zahlung vornehmen.</translation>
+        <translation>Ihr Business-Account wurde aufgrund einer fehlenden Zahlung deaktiviert. Sie können auf die Daten in Ihrem Account erst wieder zugreifen, nachdem Sie eine Zahlung getätigt und Ihr Abonnement erneut aktiviert haben.</translation>
     </message>
     <message>
         <source>[A]Important:[/A] Contact your business account administrator to resolve the issue and activate your account.</source>
@@ -2335,7 +2335,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>This month&apos;s payment has failed. Please resolve your payment issue as soon as possible to avoid any suspension of your business account.</source>
         <translatorcomment>Informative message shown to the user when a payment has failed for a business account.</translatorcomment>
-        <translation>Wir konnten für diesen Monat keinen Zahlungseingang verbuchen. Bitte prüfen Sie Ihre Zahlungsdetails, um eine Sperrung Ihres Accounts zu vermeiden.</translation>
+        <translation>Wir haben für diesen Monat keine Zahlung erhalten. Bitte lösen Sie Ihr Zahlungsproblem baldmöglichst, um eine Sperrung Ihres Business-Accounts zu vermeiden.</translation>
     </message>
     <message>
         <source>Account Suspended</source>
@@ -2345,7 +2345,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your account is currently [A]suspended[/A]. You can only browse your data.</source>
         <translatorcomment>Informative message shown when a business account is expired and the user can only browse data and none operation (upload, download, creation..) is allowed.</translatorcomment>
-        <translation>Ihr Account ist [A]abgelaufen[/A]. Sie können ihre Daten nur lesen.</translation>
+        <translation>Ihr Account ist [A]deaktiviert[/A]. Sie können Ihre Daten nur lesen.</translation>
     </message>
     <message>
         <source>Your upload(s) cannot proceed because %1&apos;s account is full</source>
@@ -2370,7 +2370,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your account has been disabled by your administrator. Please contact your business account administrator for further details.</source>
         <translatorcomment>Warning shown to the user when the administrator of a business account disables him.</translatorcomment>
-        <translation>Ihr Account wurde von Ihrem Administrator gesperrt. Bitte setzen Sie sich für weitere Informationen direkt mit ihm in Verbindung.</translation>
+        <translation>Ihr Account wurde von Ihrem Administrator deaktiviert. Bitte setzen Sie sich für weitere Informationen direkt mit ihm in Verbindung.</translation>
     </message>
     <message>
         <source>MEGAsync will continue to work, however, updates will no longer be supported for Windows Vista and older operating systems soon.</source>
@@ -2839,7 +2839,7 @@ Die Übertragung wird automatisch fortgesetzt, wenn Sie die App erneut öffnen.<
     <message>
         <source>Business account expired</source>
         <translatorcomment>Label to show that the current business account is expired during a SDK operation.</translatorcomment>
-        <translation>Ihr Business-Account ist abgelaufen</translation>
+        <translation>Ihr Business-Account ist deaktiviert</translation>
     </message>
     <message>
         <source>Foreign target storage quota reached</source>
@@ -3745,20 +3745,24 @@ Please delete the folder sync from preferences to cancel them.</source>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- There is now a new transfer manager.
-- Transfer management was enhanced and reliability of downloads and uploads improved. 
-- Detected crashes on Windows, Linux, and macOS fixed.
-- Translation issues fixed.
-- Performance improved.
-- UI fixed and adjusted.
+        <source>- Added new Apple Silicon native support.
+- Added a new feature to stop sleep mode if there are active transfers.
+- Updated third-party libs.
+- Improved folders transfers.
+- Fixed detected crashes on Windows, Linux, and macOS.
+- Fixed translation issues.
+- Improved performance.
+- Fixed and adjusted UI.
 </source>
-        <translatorcomment>Changelog for version v4.7.0</translatorcomment>
-        <translation>- Es gibt einen neuen Transfer-Manager.
-- Das Transfermanagement wurde verbessert und die Zuverlässigkeit von Downloads und Uploads erhöht. 
+        <translatorcomment>Changelog for version v4.7.2</translatorcomment>
+        <translation>- Native Unterstützung für Apple-Chips hinzugefügt.
+- Neue Funktion hinzugefügt, um bei aktiven Übertragungen den Wechsel in den Ruhezustand zu vermeiden.
+- Drittanbieter-Bibliotheken aktualisiert.
+- Übertragung von Ordnern verbessert.
 - Erkannte Abstürze unter Windows, Linux und macOS behoben.
 - Übersetzungsprobleme behoben.
 - Leistung verbessert.
-- Bedienoberfläche korrigiert und angepasst.
+- Bedienoberfläche korrigiert und überarbeitet.
 </translation>
     </message>
 </context>
@@ -4326,17 +4330,17 @@ Trotzdem löschen?</translation>
     <message>
         <source>found %1, %2</source>
         <translatorcomment>Label used to display current status of scanning step. %1 is the string with number of folders found so far, %2 is the string with number of files found so far.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>%1 und %2 gefunden</translation>
     </message>
     <message numerus="yes">
         <source>%n folder</source>
         <translatorcomment>Part of the string used to display number of folders in scanning step. %1 is the number of folders found so far.</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%n Ordner</numerusform><numerusform>%n Ordner</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n file</source>
         <translatorcomment>Part of the string used to display number of files in scanning step. %1 is the number of files found so far.</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%n Datei</numerusform><numerusform>%n Dateien</numerusform></translation>
     </message>
 </context>
 <context>
@@ -4996,33 +5000,34 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Sleep settings</source>
         <translatorcomment>Sleep/Active mode: Settings dialog groupbox title for keeping the pc awake when there are active transfers (WIndows and Linux)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Ruhezustand</translation>
     </message>
     <message>
         <source>Prevent the computer from going to sleep when transfers or syncs are in progress.
 Computer will enter sleep mode once these are complete.</source>
         <translatorcomment>Sleep/Active mode: Feature description label for keeping the pc awake when there are active transfers</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Ruhezustand des Computers bei laufenden Übertragungen oder Synchronisierungen verhindern.
+Der Computer wechselt in den Ruhezustand, sobald die Übertragungen abgeschlossen sind.</translation>
     </message>
     <message>
         <source>Note: Some operating systems won&apos;t allow this.</source>
         <translatorcomment>Sleep/Active mode: Warning message below the description label, as not all the computers can activate the feature to keep it awake if there are transfers active </translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Hinweis: Einige Betriebssysteme lassen dies nicht zu.</translation>
     </message>
     <message>
         <source>Sleep mode:</source>
         <translatorcomment>Sleep/Active mode: Settings dialog groupbox title for keeping the pc awake when there are active transfers (macOS)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Ruhezustand:</translation>
     </message>
     <message>
         <source>Sleep mode can&apos;t be setup</source>
         <translatorcomment>Sleep/Active mode: Error messagebox title when the pc awake mode could not be activated after activating the feature using the checkbox.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Der Ruhezustand kann nicht eingerichtet werden</translation>
     </message>
     <message>
         <source>Your operating system doesn&apos;t allow its sleep setting to be overwritten.</source>
         <translatorcomment>Sleep/Active mode: Error messagebox text when the pc awake mode could not be activated after activating the feature using the checkbox.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Ihr Betriebssystem lässt das Ändern der Ruhezustand-Einstellungen nicht zu.</translation>
     </message>
 </context>
 <context>

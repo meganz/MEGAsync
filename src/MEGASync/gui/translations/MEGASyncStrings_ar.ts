@@ -972,12 +972,12 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Your Business account is expired</source>
         <translatorcomment>Notification title to indicate that current business account is expired</translatorcomment>
-        <translation>انتهت صلاحية حساب الأعمال الخاص بك</translation>
+        <translation>انتهت صلاحية حساب الأعمال Business الخاص بك</translation>
     </message>
     <message>
         <source>Your account is suspended as read only until you proceed with the needed payments.</source>
         <translatorcomment>Notification message to indicate that current business account is suspended until needed payments are made</translatorcomment>
-        <translation>انتهت صلاحية حسابك للقراءة فقط حتى يتم تنفيذ الدفعات المطلوبة.</translation>
+        <translation>انتهت صلاحية للقراءة فقط لحسابك حتى تقوم بمتابعة الدفعات المطلوبة.</translation>
     </message>
     <message>
         <source>Account Suspended</source>
@@ -2310,7 +2310,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your Business account is expired</source>
         <translatorcomment>Notification title to indicate that current business account is expired</translatorcomment>
-        <translation>انتهت صلاحية حساب الأعمال الخاص بك</translation>
+        <translation>انتهت صلاحية حساب الأعمال Business الخاص بك</translation>
     </message>
     <message>
         <source>Dismiss</source>
@@ -2320,7 +2320,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>It seems the payment for your business account has failed. Your account is suspended as read only until you proceed with the needed payments.</source>
         <translatorcomment>Notification message shown to admin business account when a payment has failed. </translatorcomment>
-        <translation>يبدو أن الدفع لحساب الأعمال الخاص بك قد فشل. انتهت صلاحية حسابك وتم منحه أذونات وصول للقراءة فقط حتى تتابع الدفع المطلوب.</translation>
+        <translation>يبدو أن دفعة حساب الأعمال Business الخاص بك قد فشل. انتهت صلاحية حسابك وتم منحه أذونات وصول للقراءة فقط حتى تقوم بمتابعة الدفعات المطلوبة.</translation>
     </message>
     <message>
         <source>[A]Important:[/A] Contact your business account administrator to resolve the issue and activate your account.</source>
@@ -2335,7 +2335,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>This month&apos;s payment has failed. Please resolve your payment issue as soon as possible to avoid any suspension of your business account.</source>
         <translatorcomment>Informative message shown to the user when a payment has failed for a business account.</translatorcomment>
-        <translation>فشل الدفع لهذا الشهر. يرجى حل مشكلة الدفع الخاصة بك في أقرب وقت ممكن لتجنب أي تعليق لحساب الأعمال الخاص بك.</translation>
+        <translation>فشل الدفع لهذا الشهر. الرجاء حل مشكلة الدفع الخاصة بك في أقرب وقت ممكن لتجنب أي تعليق حساب الأعمال business الخاص بك.</translation>
     </message>
     <message>
         <source>Account Suspended</source>
@@ -2345,7 +2345,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your account is currently [A]suspended[/A]. You can only browse your data.</source>
         <translatorcomment>Informative message shown when a business account is expired and the user can only browse data and none operation (upload, download, creation..) is allowed.</translatorcomment>
-        <translation>حسابك [A]منتهي الصلاحية[/A]. يمكنك فقط تصفح البيانات الخاصة بك.</translation>
+        <translation>انتهت [A]صلاحية[/A] حسابك. يمكنك فقط تصفح البيانات الخاصة بك.</translation>
     </message>
     <message>
         <source>Your upload(s) cannot proceed because %1&apos;s account is full</source>
@@ -3751,20 +3751,24 @@ Please delete the folder sync from preferences to cancel them.</source>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- There is now a new transfer manager.
-- Transfer management was enhanced and reliability of downloads and uploads improved. 
-- Detected crashes on Windows, Linux, and macOS fixed.
-- Translation issues fixed.
-- Performance improved.
-- UI fixed and adjusted.
+        <source>- Added new Apple Silicon native support.
+- Added a new feature to stop sleep mode if there are active transfers.
+- Updated third-party libs.
+- Improved folders transfers.
+- Fixed detected crashes on Windows, Linux, and macOS.
+- Fixed translation issues.
+- Improved performance.
+- Fixed and adjusted UI.
 </source>
-        <translatorcomment>Changelog for version v4.7.0</translatorcomment>
-        <translation>- يوجد الآن مدير جديد لعمليات تراسل المعطيات.
-- تم تحسين إدارة عمليات تراسل المعطيات وتحسين موثوقية عمليات التنزيل والترفيع.
-- تم إصلاح الأعطال المكتشفة على أنظمة التشغيل ويندوز Windows  و لينيكس Linux و ماك او اس macOS.
+        <translatorcomment>Changelog for version v4.7.2</translatorcomment>
+        <translation>- تمت إضافة دعم Apple silicon الأصلي الجديد.
+- تمت إضافة ميزة جديدة لإيقاف وضع السكون إذا كانت هناك عمليات تراسل نشطة.
+- تحديث libs الطرف الثالث.
+- تحسين عمليات تراسل المجلدات.
+- إصلاح الأعطال المكتشفة على أنظمة التشغيل ويندوز Windows و لينيكس Linux و ماك macOS.
 - إصلاح مشاكل الترجمة.
-- تحسن الأداء.
-- إصلاح وتعديل واجهة المستخدم.
+- تحسين الأداء.
+- إصلاح و تعديل واجهة المستخدم.
 </translation>
     </message>
 </context>
@@ -4332,17 +4336,17 @@ Do you want to delete it anyway?</source>
     <message>
         <source>found %1, %2</source>
         <translatorcomment>Label used to display current status of scanning step. %1 is the string with number of folders found so far, %2 is the string with number of files found so far.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>تم إيجاد%1،%2</translation>
     </message>
     <message numerus="yes">
         <source>%n folder</source>
         <translatorcomment>Part of the string used to display number of folders in scanning step. %1 is the number of folders found so far.</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%n مجلد</numerusform><numerusform>%n مجلد</numerusform><numerusform>%n مجلدان</numerusform><numerusform>%n مجلدات</numerusform><numerusform>%n مجلداً</numerusform><numerusform>%n مجلد</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n file</source>
         <translatorcomment>Part of the string used to display number of files in scanning step. %1 is the number of files found so far.</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%n ملف</numerusform><numerusform>%n ملف</numerusform><numerusform>%n ملفان</numerusform><numerusform>%n ملفات</numerusform><numerusform>%n ملفاً</numerusform><numerusform>%n ملف</numerusform></translation>
     </message>
 </context>
 <context>
@@ -5002,33 +5006,34 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Sleep settings</source>
         <translatorcomment>Sleep/Active mode: Settings dialog groupbox title for keeping the pc awake when there are active transfers (WIndows and Linux)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>إعدادات وضع السكون</translation>
     </message>
     <message>
         <source>Prevent the computer from going to sleep when transfers or syncs are in progress.
 Computer will enter sleep mode once these are complete.</source>
         <translatorcomment>Sleep/Active mode: Feature description label for keeping the pc awake when there are active transfers</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>منع الكمبيوتر من السكون عندما تكون عمليات التراسل أو المزامنة قيد الإنجاز.
+سيدخل الكمبيوتر في وضع السكون بمجرد اكتمالها.</translation>
     </message>
     <message>
         <source>Note: Some operating systems won&apos;t allow this.</source>
         <translatorcomment>Sleep/Active mode: Warning message below the description label, as not all the computers can activate the feature to keep it awake if there are transfers active </translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ملاحظة: بعض أنظمة التشغيل لا تسمح بذلك.</translation>
     </message>
     <message>
         <source>Sleep mode:</source>
         <translatorcomment>Sleep/Active mode: Settings dialog groupbox title for keeping the pc awake when there are active transfers (macOS)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>وضع السكون</translation>
     </message>
     <message>
         <source>Sleep mode can&apos;t be setup</source>
         <translatorcomment>Sleep/Active mode: Error messagebox title when the pc awake mode could not be activated after activating the feature using the checkbox.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>لا يمكن إعداد وضع السكون</translation>
     </message>
     <message>
         <source>Your operating system doesn&apos;t allow its sleep setting to be overwritten.</source>
         <translatorcomment>Sleep/Active mode: Error messagebox text when the pc awake mode could not be activated after activating the feature using the checkbox.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>لا يسمح نظام التشغيل الخاص بك بتعديل إعداد السكون الخاص به.</translation>
     </message>
 </context>
 <context>

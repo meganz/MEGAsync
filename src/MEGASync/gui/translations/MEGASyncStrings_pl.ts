@@ -972,12 +972,12 @@ W niektórych przypadkach mogą one zawierać szczegóły dotyczące Twoich dany
     <message>
         <source>Your Business account is expired</source>
         <translatorcomment>Notification title to indicate that current business account is expired</translatorcomment>
-        <translation>Konto biznesowe wygasło</translation>
+        <translation>Twoje konto biznesowe wygasło</translation>
     </message>
     <message>
         <source>Your account is suspended as read only until you proceed with the needed payments.</source>
         <translatorcomment>Notification message to indicate that current business account is suspended until needed payments are made</translatorcomment>
-        <translation>Twoje konto jest zawieszone i tylko do odczytu, dopóki nie dokonasz niezbędnych płatności.</translation>
+        <translation>Twoje konto jest wygaszone jako tylko do odczytu, dopóki nie dokonasz potrzebnych płatności.</translation>
     </message>
     <message>
         <source>Account Suspended</source>
@@ -2310,7 +2310,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your Business account is expired</source>
         <translatorcomment>Notification title to indicate that current business account is expired</translatorcomment>
-        <translation>Konto biznesowe wygasło</translation>
+        <translation>Twoje konto biznesowe wygasło</translation>
     </message>
     <message>
         <source>Dismiss</source>
@@ -2320,7 +2320,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>It seems the payment for your business account has failed. Your account is suspended as read only until you proceed with the needed payments.</source>
         <translatorcomment>Notification message shown to admin business account when a payment has failed. </translatorcomment>
-        <translation>Wygląda na to, że płatność za Twoje konto biznesowe nie powiodła się. Twoje konto wygasło i zostało mu przyznane uprawnienia dostępu tylko do odczytu, dopóki nie wykonasz wymaganej płatności.</translation>
+        <translation>Wygląda na to, że płatność za Twoje konto biznesowe nie powiodła się. Twoje konto wygasło i otrzymało uprawnienia dostępu tylko do odczytu, dopóki nie dokonasz wymaganej płatności.</translation>
     </message>
     <message>
         <source>[A]Important:[/A] Contact your business account administrator to resolve the issue and activate your account.</source>
@@ -2335,7 +2335,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>This month&apos;s payment has failed. Please resolve your payment issue as soon as possible to avoid any suspension of your business account.</source>
         <translatorcomment>Informative message shown to the user when a payment has failed for a business account.</translatorcomment>
-        <translation>Płatność w tym miesiącu nie powiodła się. Rozwiąż problem z płatnością tak szybko, jak to możliwe, aby uniknąć zawieszenia konta firmowego.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Account Suspended</source>
@@ -2345,7 +2345,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your account is currently [A]suspended[/A]. You can only browse your data.</source>
         <translatorcomment>Informative message shown when a business account is expired and the user can only browse data and none operation (upload, download, creation..) is allowed.</translatorcomment>
-        <translation>Twoje konto [A]wygasło[/A]. Możesz tylko przeglądać swoje dane.</translation>
+        <translation>Twoje konto [A]wygasło[/A]. Możesz jedynie przeglądać swoje dane.</translation>
     </message>
     <message>
         <source>Your upload(s) cannot proceed because %1&apos;s account is full</source>
@@ -2841,7 +2841,7 @@ Transfery zostaną automatycznie wznowione po ponownym otwarciu aplikacji.</nume
     <message>
         <source>Business account expired</source>
         <translatorcomment>Label to show that the current business account is expired during a SDK operation.</translatorcomment>
-        <translation>Twoje konto firmowe wygasło</translation>
+        <translation>Twoje konto biznesowe wygasło</translation>
     </message>
     <message>
         <source>Foreign target storage quota reached</source>
@@ -3747,18 +3747,22 @@ Please delete the folder sync from preferences to cancel them.</source>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- There is now a new transfer manager.
-- Transfer management was enhanced and reliability of downloads and uploads improved. 
-- Detected crashes on Windows, Linux, and macOS fixed.
-- Translation issues fixed.
-- Performance improved.
-- UI fixed and adjusted.
+        <source>- Added new Apple Silicon native support.
+- Added a new feature to stop sleep mode if there are active transfers.
+- Updated third-party libs.
+- Improved folders transfers.
+- Fixed detected crashes on Windows, Linux, and macOS.
+- Fixed translation issues.
+- Improved performance.
+- Fixed and adjusted UI.
 </source>
-        <translatorcomment>Changelog for version v4.7.0</translatorcomment>
-        <translation>- Jest teraz nowy menedżer transferu.
-- Ulepszono zarządzanie transferem oraz poprawiono niezawodność pobierania i wysyłania plików. 
-- Naprawiono wykryte awarie w systemach Windows, Linux i macOS.
-- Poprawiono problemy z tłumaczeniem.
+        <translatorcomment>Changelog for version v4.7.2</translatorcomment>
+        <translation>- Dodano nowe natywne wsparcie Apple silicon.
+- Dodano nową funkcję zatrzymującą tryb uśpienia, jeśli są aktywne transfery.
+- Zaktualizowano biblioteki innych firm.
+- Poprawiono przesyłanie folderów.
+- Poprawiono wykryte awarie w systemach Windows, Linux i macOS.
+- Poprawiono problemy z tłumaczeniami.
 - Poprawiono wydajność.
 - Poprawiono i dostosowano UI.
 </translation>

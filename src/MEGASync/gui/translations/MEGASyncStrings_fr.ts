@@ -972,12 +972,12 @@ Dans certains cas, ils pourraient comprendre des détails sur vos données, tels
     <message>
         <source>Your Business account is expired</source>
         <translatorcomment>Notification title to indicate that current business account is expired</translatorcomment>
-        <translation>Votre compte d’entreprise est expiré</translation>
+        <translation>Le compte est désactivé</translation>
     </message>
     <message>
         <source>Your account is suspended as read only until you proceed with the needed payments.</source>
         <translatorcomment>Notification message to indicate that current business account is suspended until needed payments are made</translatorcomment>
-        <translation>Votre compte est expiré, en lecture seule, jusqu’à ce que vous versiez les paiements requis.</translation>
+        <translation>Votre compte a été désactivé, en lecture seule, jusqu’à ce que vous versiez les paiements requis.</translation>
     </message>
     <message>
         <source>Account Suspended</source>
@@ -2310,7 +2310,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your Business account is expired</source>
         <translatorcomment>Notification title to indicate that current business account is expired</translatorcomment>
-        <translation>Votre compte d’entreprise est expiré</translation>
+        <translation>Le compte est désactivé</translation>
     </message>
     <message>
         <source>Dismiss</source>
@@ -2320,7 +2320,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>It seems the payment for your business account has failed. Your account is suspended as read only until you proceed with the needed payments.</source>
         <translatorcomment>Notification message shown to admin business account when a payment has failed. </translatorcomment>
-        <translation>Il semble que le paiement de votre compte d’entreprise a échoué. Votre compte est expiré. Des droits d’accès en lecture seule lui ont été accordés jusqu’à ce que vous effectuiez le paiement exigé.</translation>
+        <translation>Votre compte d’entreprise a été désactivé pour défaut de paiement. Vous ne pourrez plus accéder aux données stockées dans votre compte tant que vous n’aurez pas effectué de paiement et réactivé votre abonnement. </translation>
     </message>
     <message>
         <source>[A]Important:[/A] Contact your business account administrator to resolve the issue and activate your account.</source>
@@ -2335,7 +2335,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>This month&apos;s payment has failed. Please resolve your payment issue as soon as possible to avoid any suspension of your business account.</source>
         <translatorcomment>Informative message shown to the user when a payment has failed for a business account.</translatorcomment>
-        <translation>Le paiement de ce mois a échoué. Veuillez résoudre votre problème de paiement dès que possible afin d’éviter toute désactivation de votre compte d’entreprise.</translation>
+        <translation>Le paiement de ce mois a échoué. Veuillez résoudre votre problème de paiement dès que possible afin d’éviter toute désactivation de votre compte.</translation>
     </message>
     <message>
         <source>Account Suspended</source>
@@ -2345,7 +2345,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your account is currently [A]suspended[/A]. You can only browse your data.</source>
         <translatorcomment>Informative message shown when a business account is expired and the user can only browse data and none operation (upload, download, creation..) is allowed.</translatorcomment>
-        <translation>Votre compte est [A]expiré[/A]. Vous ne pouvez que parcourir vos données.</translation>
+        <translation>Votre compte est [A]a été désactivé[/A]. Vous ne pouvez que parcourir vos données.</translation>
     </message>
     <message>
         <source>Your upload(s) cannot proceed because %1&apos;s account is full</source>
@@ -2839,7 +2839,7 @@ Les transferts reprendront automatiquement quand vous rouvrirez l’appli.</nume
     <message>
         <source>Business account expired</source>
         <translatorcomment>Label to show that the current business account is expired during a SDK operation.</translatorcomment>
-        <translation>Votre compte d’entreprise est expiré</translation>
+        <translation>Votre compte d’entreprise a été désactivé</translation>
     </message>
     <message>
         <source>Foreign target storage quota reached</source>
@@ -3746,20 +3746,24 @@ Please delete the folder sync from preferences to cancel them.</source>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- There is now a new transfer manager.
-- Transfer management was enhanced and reliability of downloads and uploads improved. 
-- Detected crashes on Windows, Linux, and macOS fixed.
-- Translation issues fixed.
-- Performance improved.
-- UI fixed and adjusted.
+        <source>- Added new Apple Silicon native support.
+- Added a new feature to stop sleep mode if there are active transfers.
+- Updated third-party libs.
+- Improved folders transfers.
+- Fixed detected crashes on Windows, Linux, and macOS.
+- Fixed translation issues.
+- Improved performance.
+- Fixed and adjusted UI.
 </source>
-        <translatorcomment>Changelog for version v4.7.0</translatorcomment>
-        <translation>– Un nouveau gestionnaire de transferts est à l’œuvre.
-– La gestion des transferts a été améliorée pour une meilleure fiabilité des téléchargements et téléversements.
-– Les plantages détectés sous Windows, Linux et macOS ont été corrigés.
-– Des problèmes de traduction ont été corrigés.
+        <translatorcomment>Changelog for version v4.7.2</translatorcomment>
+        <translation>– Prise en charge native du nouveau Apple silicon.
+– Ajout d’une nouvelle fonction pour désactiver la mise en veille si des transferts sont actifs.
+– Mise à jour de bibliothèques tierces.
+– Amélioration des transferts de dossiers.
+– Correctif des plantages détectés sous Windows, Linux et macOS.
+– Correctif de problèmes de traduction.
 – Amélioration des performances.
-– Peaufinage de l’interface utilisateur.</translation>
+– Correctif et peaufinage de l’IU.</translation>
     </message>
 </context>
 <context>

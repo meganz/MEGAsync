@@ -972,7 +972,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Your Business account is expired</source>
         <translatorcomment>Notification title to indicate that current business account is expired</translatorcomment>
-        <translation>Срок действия вашего бизнес-аккаунта истёк</translation>
+        <translation>Аккаунт деактивирован</translation>
     </message>
     <message>
         <source>Your account is suspended as read only until you proceed with the needed payments.</source>
@@ -2320,7 +2320,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>It seems the payment for your business account has failed. Your account is suspended as read only until you proceed with the needed payments.</source>
         <translatorcomment>Notification message shown to admin business account when a payment has failed. </translatorcomment>
-        <translation>Похоже, оплата вашего бизнес-аккаунта не прошла. Срок действия вашего аккаунта истёк, и ему предоставлены права только для чтения до тех пор, пока вы не произведёте требуемый платёж.</translation>
+        <translation>Ваш бизнес-аккаунт деактивирован из-за сбоя при оплате. Вы не сможете получить доступ к данным аккаунта, пока оплатите подписку и не активируете её повторно.</translation>
     </message>
     <message>
         <source>[A]Important:[/A] Contact your business account administrator to resolve the issue and activate your account.</source>
@@ -2335,7 +2335,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>This month&apos;s payment has failed. Please resolve your payment issue as soon as possible to avoid any suspension of your business account.</source>
         <translatorcomment>Informative message shown to the user when a payment has failed for a business account.</translatorcomment>
-        <translation>Не прошла оплата в этом месяце. Пожалуйста, решите проблему с оплатой как можно скорее, чтобы избежать приостановки вашего бизнес-аккаунта.</translation>
+        <translation>В этом месяце платёж не прошёл. Пожалуйста, решите проблему с платежом как можно скорее, чтобы избежать заморозки вашего бизнес-аккаунта.</translation>
     </message>
     <message>
         <source>Account Suspended</source>
@@ -2345,7 +2345,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your account is currently [A]suspended[/A]. You can only browse your data.</source>
         <translatorcomment>Informative message shown when a business account is expired and the user can only browse data and none operation (upload, download, creation..) is allowed.</translatorcomment>
-        <translation>Срок действия вашего аккаунта [A]истёк[/A]. Вы можете только просматривать свои данные.</translation>
+        <translation>Срок действия вашего аккаунта [A]истёк[/A]. Вы можете только просматривать данные.</translation>
     </message>
     <message>
         <source>Your upload(s) cannot proceed because %1&apos;s account is full</source>
@@ -3747,20 +3747,24 @@ Please delete the folder sync from preferences to cancel them.</source>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- There is now a new transfer manager.
-- Transfer management was enhanced and reliability of downloads and uploads improved. 
-- Detected crashes on Windows, Linux, and macOS fixed.
-- Translation issues fixed.
-- Performance improved.
-- UI fixed and adjusted.
+        <source>- Added new Apple Silicon native support.
+- Added a new feature to stop sleep mode if there are active transfers.
+- Updated third-party libs.
+- Improved folders transfers.
+- Fixed detected crashes on Windows, Linux, and macOS.
+- Fixed translation issues.
+- Improved performance.
+- Fixed and adjusted UI.
 </source>
-        <translatorcomment>Changelog for version v4.7.0</translatorcomment>
-        <translation>- Новый менеджер передач.
-- Улучшено управление передачами и повышена надёжность загрузки и скачивания. 
-- Исправлены обнаруженные сбои в Windows, Linux и macOS.
+        <translatorcomment>Changelog for version v4.7.2</translatorcomment>
+        <translation>- Нативная поддержка Apple silicon.
+- Новая функция остановки спящего режима, если есть активные передачи.
+- Обновлены сторонние библиотеки.
+- Улучшена передача папок.
+- Исправлены обнаруженные сбои в Windows, Linux, и macOS.
 - Исправлены ошибки перевода.
 - Улучшена производительность.
-- Исправлен пользовательский интерфейс.
+- Исправлен и скорректирован пользовательский интерфейс.
 </translation>
     </message>
 </context>

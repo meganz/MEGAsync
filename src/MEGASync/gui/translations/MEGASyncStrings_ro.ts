@@ -972,12 +972,12 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Your Business account is expired</source>
         <translatorcomment>Notification title to indicate that current business account is expired</translatorcomment>
-        <translation>Contul tău business a expirat</translation>
+        <translation>Cont dezactivat</translation>
     </message>
     <message>
         <source>Your account is suspended as read only until you proceed with the needed payments.</source>
         <translatorcomment>Notification message to indicate that current business account is suspended until needed payments are made</translatorcomment>
-        <translation>Contul tău este expirat în modul citire până când vei efectua plățile necesare.</translation>
+        <translation>Contul tău a fost dezactivat în modul numai citire până când vei efectua plățile necesare.</translation>
     </message>
     <message>
         <source>Account Suspended</source>
@@ -2310,7 +2310,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your Business account is expired</source>
         <translatorcomment>Notification title to indicate that current business account is expired</translatorcomment>
-        <translation>Contul tău business a expirat</translation>
+        <translation>Cont dezactivat</translation>
     </message>
     <message>
         <source>Dismiss</source>
@@ -2320,7 +2320,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>It seems the payment for your business account has failed. Your account is suspended as read only until you proceed with the needed payments.</source>
         <translatorcomment>Notification message shown to admin business account when a payment has failed. </translatorcomment>
-        <translation>Se pare că plata pentru contul business a eșuat. Contul tău a expirat și i s-au acordat permisiuni de acces numai în citire până când vei efectua plata necesară.</translation>
+        <translation>Contul tău business a fost dezactivat din cauza nerealizării plății. Nu vei putea accesa datele stocate în contul tău până când nu vei efectua o plată și nu îți vei reactiva abonamentul.</translation>
     </message>
     <message>
         <source>[A]Important:[/A] Contact your business account administrator to resolve the issue and activate your account.</source>
@@ -2335,7 +2335,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>This month&apos;s payment has failed. Please resolve your payment issue as soon as possible to avoid any suspension of your business account.</source>
         <translatorcomment>Informative message shown to the user when a payment has failed for a business account.</translatorcomment>
-        <translation>Plata din această lună a eșuat. Te rugăm să îți rezolvi problema legată de plată cât mai curând posibil pentru a evita suspendarea contului business.</translation>
+        <translation>Plata din această lună a eșuat. Te rugăm să îți rezolvi problema legată de plată cât mai curând posibil pentru a evita dezactivarea contului tău.</translation>
     </message>
     <message>
         <source>Account Suspended</source>
@@ -2345,7 +2345,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your account is currently [A]suspended[/A]. You can only browse your data.</source>
         <translatorcomment>Informative message shown when a business account is expired and the user can only browse data and none operation (upload, download, creation..) is allowed.</translatorcomment>
-        <translation>Contul tău a [A]expirat[/A]. Poți răsfoi numai prin datele tale.</translation>
+        <translation>Contul tău a [A]fost dezactivat[/A]. Poți doar să răsfoiești prin datele tale.</translation>
     </message>
     <message>
         <source>Your upload(s) cannot proceed because %1&apos;s account is full</source>
@@ -2840,7 +2840,7 @@ Transferurile se vor relua automat atunci când redeschizi aplicația.</numerusf
     <message>
         <source>Business account expired</source>
         <translatorcomment>Label to show that the current business account is expired during a SDK operation.</translatorcomment>
-        <translation>Contul tău business a expirat</translation>
+        <translation>Contul tău business a fost dezactivat</translation>
     </message>
     <message>
         <source>Foreign target storage quota reached</source>
@@ -3746,20 +3746,25 @@ Please delete the folder sync from preferences to cancel them.</source>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- There is now a new transfer manager.
-- Transfer management was enhanced and reliability of downloads and uploads improved. 
-- Detected crashes on Windows, Linux, and macOS fixed.
-- Translation issues fixed.
-- Performance improved.
-- UI fixed and adjusted.
+        <source>- Added new Apple Silicon native support.
+- Added a new feature to stop sleep mode if there are active transfers.
+- Updated third-party libs.
+- Improved folders transfers.
+- Fixed detected crashes on Windows, Linux, and macOS.
+- Fixed translation issues.
+- Improved performance.
+- Fixed and adjusted UI.
 </source>
-        <translatorcomment>Changelog for version v4.7.0</translatorcomment>
-        <translation>- Există acum un nou manager de transferuri.
-- Gestionarea transferurilor a fost îmbunătățită, iar fiabilitatea descărcărilor și încărcărilor a fost îmbunătățită.
-- Au fost rezolvate defecțiunile detectate pe Windows, Linux și macOS.
-- Probleme de traducere rezolvate.
-- Performanță îmbunătățită.
-- Interfața utilizatorului remediată și ajustată.</translation>
+        <translatorcomment>Changelog for version v4.7.2</translatorcomment>
+        <translation>- A fost adăugat suport nou nativ pentru Apple Silicon.
+- A fost adăugată o nouă funcție de oprire a modului de repaus dacă există transferuri active.
+- Au fost actualizate librăriile de la terți.
+- Au fost îmbunătățite transferurile de foldere.
+- Au fost remediate defecțiunile detectate pe Windows, Linux și macOS.
+- Au fost remediate probleme de traducere.
+- A fost îmbunătățită performanța.
+- A fost remediată și ajustată interfața utilizatorului.
+</translation>
     </message>
 </context>
 <context>
@@ -4326,17 +4331,17 @@ Vrei să îl ștergi oricum?</translation>
     <message>
         <source>found %1, %2</source>
         <translatorcomment>Label used to display current status of scanning step. %1 is the string with number of folders found so far, %2 is the string with number of files found so far.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>%1 și %2 au fost găsite</translation>
     </message>
     <message numerus="yes">
         <source>%n folder</source>
         <translatorcomment>Part of the string used to display number of folders in scanning step. %1 is the number of folders found so far.</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%n folder</numerusform><numerusform>%n foldere</numerusform><numerusform>%n de foldere</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n file</source>
         <translatorcomment>Part of the string used to display number of files in scanning step. %1 is the number of files found so far.</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%n fișier</numerusform><numerusform>%n fișiere</numerusform><numerusform>%n de fișiere</numerusform></translation>
     </message>
 </context>
 <context>

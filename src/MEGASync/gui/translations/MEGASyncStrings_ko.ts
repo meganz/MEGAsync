@@ -972,12 +972,12 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Your Business account is expired</source>
         <translatorcomment>Notification title to indicate that current business account is expired</translatorcomment>
-        <translation>당신의 비즈니스 계정이 만료되었습니다</translation>
+        <translation>계정 비활성화됨</translation>
     </message>
     <message>
         <source>Your account is suspended as read only until you proceed with the needed payments.</source>
         <translatorcomment>Notification message to indicate that current business account is suspended until needed payments are made</translatorcomment>
-        <translation>필요한 결제를 진행할 때까지 계정이 읽기 전용 상태로 유지됩니다.</translation>
+        <translation>당신의 계정은 필요한 결제가 이루어질 때까지 읽기 전용입니다.</translation>
     </message>
     <message>
         <source>Account Suspended</source>
@@ -2311,7 +2311,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your Business account is expired</source>
         <translatorcomment>Notification title to indicate that current business account is expired</translatorcomment>
-        <translation>당신의 비즈니스 계정이 만료되었습니다</translation>
+        <translation>비즈니스 계정 만료</translation>
     </message>
     <message>
         <source>Dismiss</source>
@@ -2321,7 +2321,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>It seems the payment for your business account has failed. Your account is suspended as read only until you proceed with the needed payments.</source>
         <translatorcomment>Notification message shown to admin business account when a payment has failed. </translatorcomment>
-        <translation>당신의 비즈니스 계정에 대한 결제가 실패한 것으로 보입니다. 당신의 계정은 필요한 결제가 이루어질 때까지 읽기 전용 권한만 부여됩니다.</translation>
+        <translation>결제 실패로 인하여 비즈니스 계정이 비활성화 되었습니다. 결제를 하고 구독을 재활성화할 때까지 데이터에 접근할 수 없습니다.</translation>
     </message>
     <message>
         <source>[A]Important:[/A] Contact your business account administrator to resolve the issue and activate your account.</source>
@@ -2336,7 +2336,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>This month&apos;s payment has failed. Please resolve your payment issue as soon as possible to avoid any suspension of your business account.</source>
         <translatorcomment>Informative message shown to the user when a payment has failed for a business account.</translatorcomment>
-        <translation>이번 달 결제가 실패하였습니다. 비즈니스 계정의 보류를 막으려면 결제 문제를 최대한 빨리 해결하세요.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Account Suspended</source>
@@ -2346,7 +2346,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your account is currently [A]suspended[/A]. You can only browse your data.</source>
         <translatorcomment>Informative message shown when a business account is expired and the user can only browse data and none operation (upload, download, creation..) is allowed.</translatorcomment>
-        <translation>당신의 계정은 [A]만료[/A]되었습니다. 데이터 탐색만 할 수 있습니다.</translation>
+        <translation>당신의 계정은 현재 [B]정지[/B]되었습니다. 데이터 탐색만 할 수 있습니다.</translation>
     </message>
     <message>
         <source>Your upload(s) cannot proceed because %1&apos;s account is full</source>
@@ -2839,7 +2839,7 @@ Transfer will automatically resume when you re-open the app.</source>
     <message>
         <source>Business account expired</source>
         <translatorcomment>Label to show that the current business account is expired during a SDK operation.</translatorcomment>
-        <translation>당신의 비즈니스 계정이 만료되었습니다</translation>
+        <translation>비즈니스 계정 만료</translation>
     </message>
     <message>
         <source>Foreign target storage quota reached</source>
@@ -3747,20 +3747,24 @@ Please delete the folder sync from preferences to cancel them.</source>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- There is now a new transfer manager.
-- Transfer management was enhanced and reliability of downloads and uploads improved. 
-- Detected crashes on Windows, Linux, and macOS fixed.
-- Translation issues fixed.
-- Performance improved.
-- UI fixed and adjusted.
+        <source>- Added new Apple Silicon native support.
+- Added a new feature to stop sleep mode if there are active transfers.
+- Updated third-party libs.
+- Improved folders transfers.
+- Fixed detected crashes on Windows, Linux, and macOS.
+- Fixed translation issues.
+- Improved performance.
+- Fixed and adjusted UI.
 </source>
-        <translatorcomment>Changelog for version v4.7.0</translatorcomment>
-        <translation>- 새 전송 관리자가 있습니다.
-- 전송 관리가 향상되었으며 다운로드와 업로드의 안정성이 향상되었습니다.
-- 감지된 Windows, Linux 그리고 macOS의 충돌이 해결되었습니다.
-- 번역 문제를 해결하였습니다.
-- 성능이 향상되었습니다.
-- UI가 수정되고 조정되었습니다.
+        <translatorcomment>Changelog for version v4.7.2</translatorcomment>
+        <translation>- Apple silicon 네이티브 지원 추가.
+- 활성 상태의 전송이 있을 때 절전 모드 방지 기능 추가.
+- 제3자 라이브러리 업데이트.
+- 폴더 전송 향상.
+- Windows, Linux, 그리고 macOS에서 확인된 충돌 수정.
+- 번역 문제 수정.
+- 성능 향상.
+- UI 수정 및 조정.
 </translation>
     </message>
 </context>
@@ -4313,7 +4317,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>Scanning</source>
         <translatorcomment>Label used to display when the scanning widget is on the &quot;Scanning&quot; step</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>탐색 중</translation>
     </message>
     <message>
         <source>Creating folders</source>
@@ -4328,17 +4332,17 @@ Do you want to delete it anyway?</source>
     <message>
         <source>found %1, %2</source>
         <translatorcomment>Label used to display current status of scanning step. %1 is the string with number of folders found so far, %2 is the string with number of files found so far.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>%1, %2 찾음</translation>
     </message>
     <message numerus="yes">
         <source>%n folder</source>
         <translatorcomment>Part of the string used to display number of folders in scanning step. %1 is the number of folders found so far.</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>폴더 %n개</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n file</source>
         <translatorcomment>Part of the string used to display number of files in scanning step. %1 is the number of files found so far.</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>파일 %n개</numerusform></translation>
     </message>
 </context>
 <context>
@@ -4998,33 +5002,34 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Sleep settings</source>
         <translatorcomment>Sleep/Active mode: Settings dialog groupbox title for keeping the pc awake when there are active transfers (WIndows and Linux)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>절전 설정</translation>
     </message>
     <message>
         <source>Prevent the computer from going to sleep when transfers or syncs are in progress.
 Computer will enter sleep mode once these are complete.</source>
         <translatorcomment>Sleep/Active mode: Feature description label for keeping the pc awake when there are active transfers</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>전송 또는 동기화가 진행 중일 때 컴퓨터가 절전 모드에 들어가는 것을 방지합니다.
+이러한 것들이 완료되면 컴퓨터는 절전 모드에 들어갈 수 있습니다.</translation>
     </message>
     <message>
         <source>Note: Some operating systems won&apos;t allow this.</source>
         <translatorcomment>Sleep/Active mode: Warning message below the description label, as not all the computers can activate the feature to keep it awake if there are transfers active </translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>참고: 몇몇 운영 체제는 이것을 허용하지 않습니다.</translation>
     </message>
     <message>
         <source>Sleep mode:</source>
         <translatorcomment>Sleep/Active mode: Settings dialog groupbox title for keeping the pc awake when there are active transfers (macOS)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>절전 모드:</translation>
     </message>
     <message>
         <source>Sleep mode can&apos;t be setup</source>
         <translatorcomment>Sleep/Active mode: Error messagebox title when the pc awake mode could not be activated after activating the feature using the checkbox.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>절전 모드를 설정할 수 없습니다</translation>
     </message>
     <message>
         <source>Your operating system doesn&apos;t allow its sleep setting to be overwritten.</source>
         <translatorcomment>Sleep/Active mode: Error messagebox text when the pc awake mode could not be activated after activating the feature using the checkbox.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>당신의 운영체제가 절전 설정을 덮어씌우는 것을 허용하지 않습니다.</translation>
     </message>
 </context>
 <context>

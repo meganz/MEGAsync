@@ -3856,7 +3856,15 @@ Please delete the folder sync from preferences to cancel them.</translation>
 - Fixed and adjusted UI.
 </source>
         <translatorcomment>Changelog for version v4.7.2</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>- Added new Apple Silicon native support.
+- Added a new feature to stop sleep mode if there are active transfers.
+- Updated third-party libs.
+- Improved folders transfers.
+- Fixed detected crashes on Windows, Linux, and macOS.
+- Fixed translation issues.
+- Improved performance.
+- Fixed and adjusted UI.
+</translation>
     </message>
 </context>
 <context>

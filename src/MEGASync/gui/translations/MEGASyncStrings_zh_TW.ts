@@ -972,12 +972,12 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Your Business account is expired</source>
         <translatorcomment>Notification title to indicate that current business account is expired</translatorcomment>
-        <translation>您的商業帳戶已經過期</translation>
+        <translation>帳戶已停用</translation>
     </message>
     <message>
         <source>Your account is suspended as read only until you proceed with the needed payments.</source>
         <translatorcomment>Notification message to indicate that current business account is suspended until needed payments are made</translatorcomment>
-        <translation>直到您處理所需的付款為止，在這之前您的帳戶為過期狀態並只有讀取權限。</translation>
+        <translation>在您處理所需要的付款前，您的帳戶已被停用並且只有唯讀功能。</translation>
     </message>
     <message>
         <source>Account Suspended</source>
@@ -2310,7 +2310,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your Business account is expired</source>
         <translatorcomment>Notification title to indicate that current business account is expired</translatorcomment>
-        <translation>您的商業帳戶已經過期</translation>
+        <translation>帳戶已停用</translation>
     </message>
     <message>
         <source>Dismiss</source>
@@ -2320,7 +2320,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>It seems the payment for your business account has failed. Your account is suspended as read only until you proceed with the needed payments.</source>
         <translatorcomment>Notification message shown to admin business account when a payment has failed. </translatorcomment>
-        <translation>您的商業版帳戶付款似乎已失效。在處理所需要的付款之前，您的帳戶已經到期並且只有唯讀的存取權限。</translation>
+        <translation>由於付款失敗，您的商業帳戶已被停用。在您付款並且重新啟用您的訂閱之前，您將無法存取儲存在您帳戶中的資料。</translation>
     </message>
     <message>
         <source>[A]Important:[/A] Contact your business account administrator to resolve the issue and activate your account.</source>
@@ -2335,7 +2335,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>This month&apos;s payment has failed. Please resolve your payment issue as soon as possible to avoid any suspension of your business account.</source>
         <translatorcomment>Informative message shown to the user when a payment has failed for a business account.</translatorcomment>
-        <translation>本月的付款失敗。請儘快解決您的付款問題以避免您的商業帳戶被暫時停用。</translation>
+        <translation>本月付款失敗。請盡快解決您的付款問題以免您的帳戶被停用。</translation>
     </message>
     <message>
         <source>Account Suspended</source>
@@ -2345,7 +2345,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your account is currently [A]suspended[/A]. You can only browse your data.</source>
         <translatorcomment>Informative message shown when a business account is expired and the user can only browse data and none operation (upload, download, creation..) is allowed.</translatorcomment>
-        <translation>您的帳戶已經[A]到期[/A]。您只能瀏覽您的資料。</translation>
+        <translation>您的帳戶已被[A]停用[/A]。您現在只能瀏覽您的資料。</translation>
     </message>
     <message>
         <source>Your upload(s) cannot proceed because %1&apos;s account is full</source>
@@ -2540,7 +2540,7 @@ Transfer will automatically resume when you re-open the app.</source>
     <message>
         <source>Expired</source>
         <translatorcomment>Label to show that an error related with expiration occurs during a SDK operation.</translatorcomment>
-        <translation>過期</translation>
+        <translation>已過期</translation>
     </message>
     <message>
         <source>Not found</source>
@@ -2838,7 +2838,7 @@ Transfer will automatically resume when you re-open the app.</source>
     <message>
         <source>Business account expired</source>
         <translatorcomment>Label to show that the current business account is expired during a SDK operation.</translatorcomment>
-        <translation>您的商業版帳戶已經到期</translation>
+        <translation>您的商業帳戶已被停用</translation>
     </message>
     <message>
         <source>Foreign target storage quota reached</source>
@@ -3744,20 +3744,24 @@ Please delete the folder sync from preferences to cancel them.</source>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- There is now a new transfer manager.
-- Transfer management was enhanced and reliability of downloads and uploads improved. 
-- Detected crashes on Windows, Linux, and macOS fixed.
-- Translation issues fixed.
-- Performance improved.
-- UI fixed and adjusted.
+        <source>- Added new Apple Silicon native support.
+- Added a new feature to stop sleep mode if there are active transfers.
+- Updated third-party libs.
+- Improved folders transfers.
+- Fixed detected crashes on Windows, Linux, and macOS.
+- Fixed translation issues.
+- Improved performance.
+- Fixed and adjusted UI.
 </source>
-        <translatorcomment>Changelog for version v4.7.0</translatorcomment>
-        <translation>- 現在有新的傳輸管理員。
-- 加強傳輸管理，改善下載和上傳的可靠性。
+        <translatorcomment>Changelog for version v4.7.2</translatorcomment>
+        <translation>- 加入新Apple silicon的原生支援。
+- 新增當有傳輸正在進行時停止睡眠模式的新功能。
+- 更新第三方程式庫。
+- 改善資料夾傳輸。
 - 修復在Windows、Linux和macOS上偵測到的崩潰問題。
-- 修正翻譯問題。
-- 性能改善。
-- 介面修復和調整。
+- 修復翻譯問題。
+- 改進性能。
+- 修正和調整用戶介面。
 </translation>
     </message>
 </context>
@@ -4325,17 +4329,17 @@ Do you want to delete it anyway?</source>
     <message>
         <source>found %1, %2</source>
         <translatorcomment>Label used to display current status of scanning step. %1 is the string with number of folders found so far, %2 is the string with number of files found so far.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>找到%1，%2</translation>
     </message>
     <message numerus="yes">
         <source>%n folder</source>
         <translatorcomment>Part of the string used to display number of folders in scanning step. %1 is the number of folders found so far.</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>%n個資料夾</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n file</source>
         <translatorcomment>Part of the string used to display number of files in scanning step. %1 is the number of files found so far.</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>%n個檔案</numerusform></translation>
     </message>
 </context>
 <context>

@@ -972,12 +972,12 @@ Estes arquivos podem conter detalhes sobre os seus dados, como nomes de arquivos
     <message>
         <source>Your Business account is expired</source>
         <translatorcomment>Notification title to indicate that current business account is expired</translatorcomment>
-        <translation>A sua conta Business expirou</translation>
+        <translation>Conta desativada</translation>
     </message>
     <message>
         <source>Your account is suspended as read only until you proceed with the needed payments.</source>
         <translatorcomment>Notification message to indicate that current business account is suspended until needed payments are made</translatorcomment>
-        <translation>O acesso à sua conta será somente leitura até que os pagamentos necessários sejam feitos.</translation>
+        <translation>A sua conta foi desativada e você terá a permissão de somente leitura até fazer os pagamentos necessários.</translation>
     </message>
     <message>
         <source>Account Suspended</source>
@@ -2310,7 +2310,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your Business account is expired</source>
         <translatorcomment>Notification title to indicate that current business account is expired</translatorcomment>
-        <translation>A sua conta Business expirou</translation>
+        <translation>Conta desativada</translation>
     </message>
     <message>
         <source>Dismiss</source>
@@ -2320,7 +2320,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>It seems the payment for your business account has failed. Your account is suspended as read only until you proceed with the needed payments.</source>
         <translatorcomment>Notification message shown to admin business account when a payment has failed. </translatorcomment>
-        <translation>Não foi possível fazer o pagamento da sua conta Business. A sua conta expirou e o seu acesso será somente leitura até que os pagamentos necessários sejam feitos.</translation>
+        <translation>A sua conta Business foi desativada porque o pagamento falhou. Você não poderá acessar os dados armazenados na sua conta até fazer o pagamento e reativar a sua assinatura.</translation>
     </message>
     <message>
         <source>[A]Important:[/A] Contact your business account administrator to resolve the issue and activate your account.</source>
@@ -2335,7 +2335,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>This month&apos;s payment has failed. Please resolve your payment issue as soon as possible to avoid any suspension of your business account.</source>
         <translatorcomment>Informative message shown to the user when a payment has failed for a business account.</translatorcomment>
-        <translation>Não foi possível fazer o pagamento deste mês. Por favor, solucione o problema de pagamento o mais breve possível para evitar que a sua conta Business expire.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Account Suspended</source>
@@ -2345,7 +2345,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your account is currently [A]suspended[/A]. You can only browse your data.</source>
         <translatorcomment>Informative message shown when a business account is expired and the user can only browse data and none operation (upload, download, creation..) is allowed.</translatorcomment>
-        <translation>A sua conta [A]expirou[/A]: somente será possível visualizar os seus dados.</translation>
+        <translation>A sua conta foi [A]desativada[/A]. Você só pode navegar pelos seus dados.</translation>
     </message>
     <message>
         <source>Your upload(s) cannot proceed because %1&apos;s account is full</source>
@@ -2839,7 +2839,7 @@ As transferências serão retomadas automaticamente quando você abrir o aplicat
     <message>
         <source>Business account expired</source>
         <translatorcomment>Label to show that the current business account is expired during a SDK operation.</translatorcomment>
-        <translation>A sua conta Business expirou</translation>
+        <translation>A sua conta Business foi desativada</translation>
     </message>
     <message>
         <source>Foreign target storage quota reached</source>
@@ -3745,20 +3745,24 @@ Please delete the folder sync from preferences to cancel them.</source>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- There is now a new transfer manager.
-- Transfer management was enhanced and reliability of downloads and uploads improved. 
-- Detected crashes on Windows, Linux, and macOS fixed.
-- Translation issues fixed.
-- Performance improved.
-- UI fixed and adjusted.
+        <source>- Added new Apple Silicon native support.
+- Added a new feature to stop sleep mode if there are active transfers.
+- Updated third-party libs.
+- Improved folders transfers.
+- Fixed detected crashes on Windows, Linux, and macOS.
+- Fixed translation issues.
+- Improved performance.
+- Fixed and adjusted UI.
 </source>
-        <translatorcomment>Changelog for version v4.7.0</translatorcomment>
-        <translation>- Novo gestor de transferências.
-- Aprimoramento no gerenciamento de transferências e a na confiabilidade de downloads e uploads.
-- Resolução de falhas detectadas em Windows, Linux e macOS.
-- Retificação de problemas de tradução.
-- Melhoria no desempenho.
-- Correção e ajuste da UI.
+        <translatorcomment>Changelog for version v4.7.2</translatorcomment>
+        <translation>- Novo suporte nativo para Apple silicon.
+- Novo recurso para interromper o modo de suspensão se houver transferências ativas.
+- Atualização das bibliotecas de terceiros.
+- Aprimoramento da transferências de pastas.
+- Correção de crashes detectados em Windows, Linux e macOS.
+- Revisão de problemas de tradução.
+- Melhoria na performance.
+- Aperfeiçoamento e ajustes na interface do usuário.
 </translation>
     </message>
 </context>

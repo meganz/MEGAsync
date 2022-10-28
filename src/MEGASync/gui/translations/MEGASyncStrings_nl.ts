@@ -977,7 +977,7 @@ In sommige gevallen kunnen ze details over uw gegevens bevatten, zoals bestands-
     <message>
         <source>Your account is suspended as read only until you proceed with the needed payments.</source>
         <translatorcomment>Notification message to indicate that current business account is suspended until needed payments are made</translatorcomment>
-        <translation>Uw account is verlopen als alleen-lezen totdat u doorgaat met de benodigde betalingen.</translation>
+        <translation>Uw account is verlopen naar alleen-lezen totdat u weer doorgaat met de benodigde betalingen.</translation>
     </message>
     <message>
         <source>Account Suspended</source>
@@ -2320,7 +2320,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>It seems the payment for your business account has failed. Your account is suspended as read only until you proceed with the needed payments.</source>
         <translatorcomment>Notification message shown to admin business account when a payment has failed. </translatorcomment>
-        <translation>Het lijkt erop dat de betaling voor uw zakelijke account is mislukt. Uw account is verlopen en heeft alleen-lezen toegangsrechten gekregen totdat u doorgaat met de vereiste betaling.</translation>
+        <translation>Het lijkt dat de betalingen voor uw Zakelijke account zijn mislukt. Uw account is verlopen en heeft alleen-lezen toegang toestemmingen totdat u doorgaat met de betaling die nodig is.</translation>
     </message>
     <message>
         <source>[A]Important:[/A] Contact your business account administrator to resolve the issue and activate your account.</source>
@@ -2335,7 +2335,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>This month&apos;s payment has failed. Please resolve your payment issue as soon as possible to avoid any suspension of your business account.</source>
         <translatorcomment>Informative message shown to the user when a payment has failed for a business account.</translatorcomment>
-        <translation>Deze maandelijkse betaling is mislukt. Herstel uw betalingsprobleem zo snel mogelijk om schorsing van uw zakelijke account te vermijden.</translation>
+        <translation>Deze maand betaling is mislukt. Herstel uw betalingsprobleem zo snel mogelijk om verdere oponthoud van uw zakelijke account te voorkomen.</translation>
     </message>
     <message>
         <source>Account Suspended</source>
@@ -2345,7 +2345,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your account is currently [A]suspended[/A]. You can only browse your data.</source>
         <translatorcomment>Informative message shown when a business account is expired and the user can only browse data and none operation (upload, download, creation..) is allowed.</translatorcomment>
-        <translation>Uw account is [A]verlopen[/A]. U kunt alleen door uw gegevens bladeren.</translation>
+        <translation>Uw account is [A]verlopen[/A]. U kunt alleen uw gegevens bladeren.</translation>
     </message>
     <message>
         <source>Your upload(s) cannot proceed because %1&apos;s account is full</source>
@@ -2839,7 +2839,7 @@ Overdrachten worden automatisch hervat wanneer u de applicatie heropend.</numeru
     <message>
         <source>Business account expired</source>
         <translatorcomment>Label to show that the current business account is expired during a SDK operation.</translatorcomment>
-        <translation>Uw zakelijke account is verlopen</translation>
+        <translation>Uw Zakelijke account is verlopen</translation>
     </message>
     <message>
         <source>Foreign target storage quota reached</source>
@@ -3747,20 +3747,24 @@ Verwijder de mapsynchronisatie vanuit Voorkeuren om ze te annuleren.</translatio
 <context>
     <name>Preferences</name>
     <message>
-        <source>- There is now a new transfer manager.
-- Transfer management was enhanced and reliability of downloads and uploads improved. 
-- Detected crashes on Windows, Linux, and macOS fixed.
-- Translation issues fixed.
-- Performance improved.
-- UI fixed and adjusted.
+        <source>- Added new Apple Silicon native support.
+- Added a new feature to stop sleep mode if there are active transfers.
+- Updated third-party libs.
+- Improved folders transfers.
+- Fixed detected crashes on Windows, Linux, and macOS.
+- Fixed translation issues.
+- Improved performance.
+- Fixed and adjusted UI.
 </source>
-        <translatorcomment>Changelog for version v4.7.0</translatorcomment>
-        <translation>- Er is nu een nieuwe transfermanager.
-- Het overdrachtsbeheer is verbeterd en de betrouwbaarheid van downloads en uploads is verbeterd.
+        <translatorcomment>Changelog for version v4.7.2</translatorcomment>
+        <translation>- Nieuwe Apple silicon oorspronkelijke ondersteuning toegevoegd.
+- Een nieuwe functie toegevoegd om de slaapmodus te stoppen als er actieve overdrachten zijn.
+- Bijgewerkte bibliotheken van derden.
+- Verbeterde mapoverdrachten
 - Gedetecteerde crashes op Windows, Linux en macOS opgelost.
-- Vertaalproblemen opgelost.
-- Prestaties verbeterd.
-- UI vast en aangepast.
+- Vertalingsproblemen opgelost.
+- Verbeterde prestatie.
+-  Aangepaste en herstelde gebruikersinterface.
 </translation>
     </message>
 </context>

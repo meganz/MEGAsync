@@ -977,7 +977,7 @@ Dalam beberapa kasus, mereka mungkin berisi detail tentang data anda, seperti na
     <message>
         <source>Your account is suspended as read only until you proceed with the needed payments.</source>
         <translatorcomment>Notification message to indicate that current business account is suspended until needed payments are made</translatorcomment>
-        <translation>Akun anda kedaluwarsa sebagai hanya baca sampai anda melanjutkan pembayaran yang diperlukan.</translation>
+        <translation>Akun anda kedaluwarsa sebagai hanya baca sampai anda melanjutkan dengan pembayaran yang diperlukan.</translation>
     </message>
     <message>
         <source>Account Suspended</source>
@@ -2320,7 +2320,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>It seems the payment for your business account has failed. Your account is suspended as read only until you proceed with the needed payments.</source>
         <translatorcomment>Notification message shown to admin business account when a payment has failed. </translatorcomment>
-        <translation>Tampaknya pembayaran untuk akun Bisnis Anda gagal. Akun anda telah kedaluwarsa dan diberikan izin akses hanya-baca sampai anda melanjutkan dengan pembayaran yang diperlukan.</translation>
+        <translation>Tampaknya pembayaran untuk akun Bisnis anda gagal. Akun anda telah kedaluwarsa dan telah diberikan izin akses hanya baca hingga anda melanjutkan pembayaran yang diperlukan.</translation>
     </message>
     <message>
         <source>[A]Important:[/A] Contact your business account administrator to resolve the issue and activate your account.</source>
@@ -2335,7 +2335,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>This month&apos;s payment has failed. Please resolve your payment issue as soon as possible to avoid any suspension of your business account.</source>
         <translatorcomment>Informative message shown to the user when a payment has failed for a business account.</translatorcomment>
-        <translation>Pembayaran bulan ini gagal. Harap selesaikan masalah pembayaran anda sesegera mungkin untuk menghindari penangguhan akun bisnis anda.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Account Suspended</source>
@@ -2345,7 +2345,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your account is currently [A]suspended[/A]. You can only browse your data.</source>
         <translatorcomment>Informative message shown when a business account is expired and the user can only browse data and none operation (upload, download, creation..) is allowed.</translatorcomment>
-        <translation>Akun Anda [A]kedaluwarsa[/A]. Anda hanya dapat menelusuri data anda.</translation>
+        <translation>Akun anda telah [A]kedaluwarsa[/A]. Anda hanya dapat menelusuri data anda.</translation>
     </message>
     <message>
         <source>Your upload(s) cannot proceed because %1&apos;s account is full</source>
@@ -3746,20 +3746,24 @@ Harap hapus sinkronisasi folder dari preferensi untuk membatalkannya.</translati
 <context>
     <name>Preferences</name>
     <message>
-        <source>- There is now a new transfer manager.
-- Transfer management was enhanced and reliability of downloads and uploads improved. 
-- Detected crashes on Windows, Linux, and macOS fixed.
-- Translation issues fixed.
-- Performance improved.
-- UI fixed and adjusted.
+        <source>- Added new Apple Silicon native support.
+- Added a new feature to stop sleep mode if there are active transfers.
+- Updated third-party libs.
+- Improved folders transfers.
+- Fixed detected crashes on Windows, Linux, and macOS.
+- Fixed translation issues.
+- Improved performance.
+- Fixed and adjusted UI.
 </source>
-        <translatorcomment>Changelog for version v4.7.0</translatorcomment>
-        <translation>- Sekarang ada manajer transfer baru.
-- Manajemen transfer ditingkatkan dan keandalan unduhan dan unggahan ditingkatkan. 
-- Kerusakan yang terdeteksi pada Windows, Linux, dan macOS diperbaiki.
-- Masalah terjemahan diperbaiki.
-- Performa ditingkatkan.
-- UI diperbaiki dan disesuaikan.
+        <translatorcomment>Changelog for version v4.7.2</translatorcomment>
+        <translation>- Menambahkan dukungan asli Apple silicon baru.
+- Menambahkan fitur baru untuk menghentikan mode tidur jika ada transfer aktif.
+- Library pihak ketiga yang diperbarui.
+- Transfer folder yang ditingkatkan.
+- Memperbaiki kerusakan yang terdeteksi di Windows, Linux, dan macOS.
+- Memperbaiki masalah terjemahan.
+- Peningkatan kinerja.
+- Memperbaiki dan menyesuaikan UI.
 </translation>
     </message>
 </context>
@@ -4327,17 +4331,17 @@ Apakah anda tetap ingin menghapusnya?</translation>
     <message>
         <source>found %1, %2</source>
         <translatorcomment>Label used to display current status of scanning step. %1 is the string with number of folders found so far, %2 is the string with number of files found so far.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>menemukan %1, %2</translation>
     </message>
     <message numerus="yes">
         <source>%n folder</source>
         <translatorcomment>Part of the string used to display number of folders in scanning step. %1 is the number of folders found so far.</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>%n folder</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n file</source>
         <translatorcomment>Part of the string used to display number of files in scanning step. %1 is the number of files found so far.</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>%n file</numerusform></translation>
     </message>
 </context>
 <context>
@@ -6117,7 +6121,7 @@ Untuk mendapatkan lebih banyak kuota, tingkatkan ke akun Pro atau tunggu [A] sam
     <message>
         <source>Resume all images</source>
         <translatorcomment>Tooltip for Resume button when the user is in the images category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Lanjutkan semua gambar</translation>
     </message>
     <message>
         <source>Resume all transfers</source>
@@ -6127,42 +6131,42 @@ Untuk mendapatkan lebih banyak kuota, tingkatkan ke akun Pro atau tunggu [A] sam
     <message>
         <source>Pause all downloads</source>
         <translatorcomment>Tooltip for Pause button when the user is in the downloads category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Jeda semua unduhan</translation>
     </message>
     <message>
         <source>Pause all uploads</source>
         <translatorcomment>Tooltip for Pause button when the user is in the uploads category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Jeda semua unggahan</translation>
     </message>
     <message>
         <source>Pause all search results</source>
         <translatorcomment>Tooltip for Pause button when the user is in the search category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Jeda semua hasil pencarian</translation>
     </message>
     <message>
         <source>Pause all audios</source>
         <translatorcomment>Tooltip for Pause button when the user is in the audios category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Jeda semua audio</translation>
     </message>
     <message>
         <source>Pause all videos</source>
         <translatorcomment>Tooltip for Pause button when the user is in the videos category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Jeda semua video</translation>
     </message>
     <message>
         <source>Pause all archives</source>
         <translatorcomment>Tooltip for Pause button when the user is in the archives category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Jeda semua arsip</translation>
     </message>
     <message>
         <source>Pause all documents</source>
         <translatorcomment>Tooltip for Pause button when the user is in the documents category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Jeda semua dokumen</translation>
     </message>
     <message>
         <source>Pause all images</source>
         <translatorcomment>Tooltip for Pause button when the user is in the images category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Jeda semua gambar</translation>
     </message>
     <message>
         <source>Pause all transfers</source>
