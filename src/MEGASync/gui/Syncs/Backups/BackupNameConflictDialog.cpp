@@ -172,17 +172,6 @@ void BackupNameConflictDialog::createWidgets()
     ui->lTitle->setText(tr("Rename folder", "", nbConflict));
 }
 
-void BackupNameConflictDialog::insertHLine()
-{
-    auto hLine = new QFrame;
-    hLine->setFrameShape(QFrame::HLine);
-    hLine->setStyleSheet(QLatin1String("margin-right:25px; margin-left:25px;"
-                                       "border: none;"
-                                       "background: solid rgba(0, 0, 0, 0.0803);"
-                                       "max-height: 1px;"));
-    ui->wConflictZone->layout()->addWidget(hLine);
-}
-
 void BackupNameConflictDialog::addRenameWidget(const QString& path)
 {
     auto conflicts = ui->wConflictZone->findChildren<BackupRenameWidget*>();
@@ -195,11 +184,6 @@ void BackupNameConflictDialog::addRenameWidget(const QString& path)
         }
     }
 
-    // Insert line if needed (after the first conflict)
-    if (conflictNumber > 1)
-    {
-        insertHLine();
-    }
     // Insert rename widget
     ui->wConflictZone->layout()->addWidget(new BackupRenameWidget(path, conflictNumber));
 }

@@ -33,7 +33,6 @@ private:
     QMap<QString, QString> mBackupNames;
 
     void createWidgets();
-    void insertHLine();
     void addRenameWidget(const QString& path);
     bool checkBackupNames();
 };

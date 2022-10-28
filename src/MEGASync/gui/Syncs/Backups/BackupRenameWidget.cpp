@@ -11,6 +11,7 @@ BackupRenameWidget::BackupRenameWidget(const QString& path, int number, QWidget 
     mPath(path)
 {
     ui->setupUi(this);
+    ui->hLine->setVisible(number > 1);
     ui->lError->hide();
     ui->lLocalFolder->setText(ui->lLocalFolder->text().arg(number));
     ui->lLocalFolderPath->setText(ui->lLocalFolderPath->text().arg(path));
