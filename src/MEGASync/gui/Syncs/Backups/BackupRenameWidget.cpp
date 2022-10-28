@@ -3,6 +3,7 @@
 
 #include "Utilities.h"
 #include "Platform.h"
+#include "CommonMessages.h"
 
 BackupRenameWidget::BackupRenameWidget(const QString& path, int number, QWidget *parent) :
     QFrame(parent),
@@ -38,7 +39,7 @@ QString BackupRenameWidget::getNewName(QStringList brotherWdgNames)
     }
     else
     {
-        errText = tr("The following characters are not allowed:\n") + Utilities::FORBIDDEN_CHARS;
+        errText = CommonMessages::errorInvalidChars();
     }
 
     if (!errText.isEmpty())

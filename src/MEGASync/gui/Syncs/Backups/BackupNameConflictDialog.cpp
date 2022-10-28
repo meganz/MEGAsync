@@ -26,16 +26,12 @@ BackupNameConflictDialog::BackupNameConflictDialog(const QStringList& candidateP
     ui->lToBackupCenterText->setVisible(false);
 
     // Rename "Apply" button to "Rename and backup"
-    auto buttonBox (findChild<QDialogButtonBox*>(QLatin1String("buttonBox")));
-    if (buttonBox)
+    auto bApply (ui->buttonBox->button(QDialogButtonBox::Apply));
+    if (bApply)
     {
-        auto bApply (buttonBox->button(QDialogButtonBox::Apply));
-        if (bApply)
-        {
-            bApply->setText(tr("Rename and backup"));
-            connect(bApply, &QPushButton::clicked,
-                    this, &BackupNameConflictDialog::checkChangedNames);
-        }
+        bApply->setText(tr("Rename and backup"));
+        connect(bApply, &QPushButton::clicked,
+                this, &BackupNameConflictDialog::checkChangedNames);
     }
 
     // Populate
@@ -72,7 +68,7 @@ bool BackupNameConflictDialog::backupNamesValid(QStringList candidatePaths)
     }
 
     return areValid && candidatePaths.size() == candidatesNames.size()
-            && !candidatesNames.intersects(Utilities::getBackupsNames());;
+            && !candidatesNames.intersects(Utilities::getBackupsNames());
 }
 
 void BackupNameConflictDialog::checkChangedNames()
@@ -129,18 +125,18 @@ void BackupNameConflictDialog::createWidgets()
     for (auto it = mBackupNames.cbegin(); it != mBackupNames.cend(); it++)
     {
         if (currentNames.contains(it.value()))
-        {
-            // Remote conflict
+        {   // Remote conflict
             addRenameWidget(it.key());
-            continue;
         }
-
-        for (auto itIn = mBackupNames.cbegin(); itIn != mBackupNames.cend(); itIn++)
+        else
         {
-            if (itIn != it && itIn.value() == it.value())
+            for (auto itIn = mBackupNames.cbegin(); itIn != mBackupNames.cend(); itIn++)
             {
-                // Local conflict
-                addRenameWidget(it.key());
+                if (itIn != it && itIn.value() == it.value())
+                {
+                    // Local conflict
+                    addRenameWidget(it.key());
+                }
             }
         }
     }

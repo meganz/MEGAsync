@@ -30,7 +30,9 @@ void BackupTableView::initTable()
     connect(horizontalHeader(), &QHeaderView::sortIndicatorChanged, this, [this](int index, Qt::SortOrder order)
     {
         if (index == BackupItemModel::Column::MENU)
+        {
             horizontalHeader()->setSortIndicator(-1, order);
+        }
     });
 
     // Sort by sync name by default
@@ -42,16 +44,23 @@ void BackupTableView::initTable()
 void BackupTableView::onCustomContextMenuRequested(const QPoint &pos)
 {
     QModelIndex index = indexAt(pos);
-    if(index.isValid() && (index.column() > BackupItemModel::Column::ENABLED))
+    if (index.isValid() && (index.column() > BackupItemModel::Column::ENABLED))
+    {
         showContextMenu(viewport()->mapToGlobal(pos), index);
+    }
 }
 
 void BackupTableView::onCellClicked(const QModelIndex &index)
 {
-    if(index.isValid() && (index.column() != BackupItemModel::Column::ENABLED))
+    if (index.isValid() && (index.column() != BackupItemModel::Column::ENABLED))
+    {
        selectionModel()->setCurrentIndex(model()->index(index.row(), BackupItemModel::Column::ENABLED), QItemSelectionModel::NoUpdate);
-    if(index.isValid() && (index.column() == BackupItemModel::Column::MENU))
+    }
+
+    if (index.isValid() && (index.column() == BackupItemModel::Column::MENU))
+    {
         showContextMenu(QCursor().pos(), index);
+    }
 }
 
 void BackupTableView::showContextMenu(const QPoint &pos, const QModelIndex index)

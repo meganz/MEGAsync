@@ -14,7 +14,6 @@
 
 #include <QStandardPaths>
 #include <QtConcurrent/QtConcurrent>
-#include <QDebug>
 
 // Consts used to implement the resizing of the window
 // in function of the number of lines in the tables
@@ -110,7 +109,6 @@ void BackupsWizard::changeEvent(QEvent* event)
 // State machine orchestrator
 void BackupsWizard::nextStep(const Step &step)
 {
-    qDebug(QString::fromLatin1("Backups Wizard: next step: Step %1").arg(static_cast<int>(step)).toLatin1().constData());
     mCurrentStep = step;
 
     switch (step)
@@ -157,7 +155,6 @@ void BackupsWizard::nextStep(const Step &step)
         }
         case Step::EXIT:
         {
-            qDebug("Backups Wizard: exit");
             mUserCancelled ? reject() : accept();
             break;
         }
@@ -176,7 +173,6 @@ void BackupsWizard::setupStep1()
     mBackupsStatus.clear();
     mFoldersProxyModel->showOnlyChecked(false);
 
-    qDebug("Backups Wizard: step 1 Init");
     onItemChanged();
     mUi->lAllFoldersSynced->hide();
     setCurrentWidgetsSteps(mUi->pStep1);
@@ -252,7 +248,6 @@ void BackupsWizard::setupStep1()
 void BackupsWizard::setupStep2()
 {
     mFoldersProxyModel->showOnlyChecked(true);
-    qDebug("Backups Wizard: step 2 Init");
     onItemChanged();
     setCurrentWidgetsSteps(mUi->pStep2);
     mUi->bNext->setText(tr("Setup"));
@@ -295,7 +290,6 @@ void BackupsWizard::handleNameConflicts()
 
 void BackupsWizard::setupFinalize()
 {
-    qDebug("Backups Wizard: finalize");
     onItemChanged();
     mUi->bCancel->setEnabled(false);
     mUi->bBack->hide();
@@ -339,7 +333,6 @@ void BackupsWizard::setupComplete()
 {
     if (!mError)
     {
-        qDebug("Backups Wizard: setup completed successfully");
         // We are now done, exit
         // No error: show success message!
         mUi->lTitle->setText(tr("Backup created","", mBackupsStatus.size()));
@@ -354,7 +347,6 @@ void BackupsWizard::setupComplete()
     }
     else
     {
-        qDebug("Backups Wizard: setup completed with error, go back to step 1");
         // Error: go back to Step 1 :(
         nextStep(STEP_1_INIT);
     }
@@ -601,7 +593,6 @@ void BackupsWizard::updateSize()
 
 void BackupsWizard::on_bNext_clicked()
 {
-    qDebug("Backups Wizard: next clicked");
     if (mCurrentStep == STEP_1)
     {
         nextStep(STEP_2_INIT);
@@ -627,7 +618,6 @@ void BackupsWizard::on_bCancel_clicked()
 
     if (userWantsToCancel == QMessageBox::Yes)
     {
-        qDebug("Backups Wizard: user cancel");
         mUserCancelled = true;
         nextStep(EXIT);
     }
@@ -687,14 +677,12 @@ void BackupsWizard::on_bMoreFolders_clicked()
         mUi->wDeviceNameStep1->setStyleSheet(QLatin1String("border-bottom-right-radius: 0px;"
                                                            "border-bottom-left-radius: 0px;"));
         onItemChanged();
-        qDebug() << QString::fromUtf8("Backups Wizard: add folder \"%1\"").arg(path);
         updateSize();
     }
 }
 
 void BackupsWizard::on_bBack_clicked()
 {    
-    qDebug("Backups Wizard: back");
     // The "Back" button only appears at STEP_2. Go back to STEP_1_INIT.
     nextStep(STEP_1_INIT);
 }
