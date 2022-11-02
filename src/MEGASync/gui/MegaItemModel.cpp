@@ -2,7 +2,7 @@
 #include "MegaApplication.h"
 #include "Utilities.h"
 #include "Preferences.h"
-#include "model/SyncModel.h"
+#include "syncs/control/SyncInfo.h"
 #include "UserAttributesRequests/CameraUploadFolder.h"
 #include "UserAttributesRequests/MyChatFilesFolder.h"
 #include "UserAttributesRequests/MyBackupsHandle.h"

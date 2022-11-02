@@ -1,6 +1,6 @@
-#include "BackupItemModel.h"
 #include "Utilities.h"
-#include "Syncs/SyncTooltipCreator.h"
+#include "syncs/model/BackupItemModel.h"
+#include "syncs/gui/SyncTooltipCreator.h"
 #include "UserAttributesRequests/DeviceName.h"
 #include "UserAttributesRequests/MyBackupsHandle.h"
 

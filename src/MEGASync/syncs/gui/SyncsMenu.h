@@ -2,7 +2,7 @@
 #define SYNCSMENU_H
 
 #include "MenuItemAction.h"
-#include "model/SyncSettings.h"
+#include "syncs/control/SyncSettings.h"
 
 #include "megaapi.h"
 

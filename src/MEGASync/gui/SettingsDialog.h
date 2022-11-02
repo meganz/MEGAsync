@@ -2,17 +2,17 @@
 #define SETTINGSDIALOG_H
 
 #include "AccountDetailsDialog.h"
-#include "Syncs/Twoways/BindFolderDialog.h"
+#include "syncs/gui/Twoways/BindFolderDialog.h"
 #include "DownloadFromMegaDialog.h"
 #include "ChangePassword.h"
 #include "Preferences.h"
 #include "HighDpiResize.h"
 #include "control/Utilities.h"
-#include "SyncItemModel.h"
-#include "BackupItemModel.h"
+#include "syncs/model/SyncItemModel.h"
+#include "syncs/model/BackupItemModel.h"
 
-#include "SyncController.h"
-#include "model/SyncModel.h"
+#include "syncs/control/SyncController.h"
+#include "syncs/control/SyncInfo.h"
 #include "megaapi.h"
 
 #include <QDialog>
@@ -229,7 +229,7 @@ private:
     std::shared_ptr<Preferences> mPreferences;
     SyncController mSyncController;
     SyncController mBackupController;
-    SyncModel* mModel;
+    SyncInfo* mModel;
     mega::MegaApi* mMegaApi;
     HighDpiResize mHighDpiResize;
     bool mProxyOnly;

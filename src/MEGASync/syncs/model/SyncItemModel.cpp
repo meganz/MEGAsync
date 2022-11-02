@@ -1,5 +1,6 @@
-#include "SyncItemModel.h"
-#include "Syncs/SyncTooltipCreator.h"
+#include "syncs/model/SyncItemModel.h"
+#include "syncs/gui/SyncTooltipCreator.h"
+#include "syncs/control/SyncInfo.h"
 
 #include <QCoreApplication>
 #include <QIcon>
@@ -12,10 +13,10 @@ const int SyncItemModel::WARNING_ICON_SIZE = 18;
 
 SyncItemModel::SyncItemModel(QObject *parent)
     : QAbstractItemModel(parent),
-    mSyncModel (SyncModel::instance())
+    mSyncInfo (SyncInfo::instance())
 {
-    connect(mSyncModel, &SyncModel::syncStateChanged, this, &SyncItemModel::insertSync);
-    connect(mSyncModel, &SyncModel::syncRemoved, this, &SyncItemModel::removeSync);
+    connect(mSyncInfo, &SyncInfo::syncStateChanged, this, &SyncItemModel::insertSync);
+    connect(mSyncInfo, &SyncInfo::syncRemoved, this, &SyncItemModel::removeSync);
 }
 
 QVariant SyncItemModel::headerData(int section, Qt::Orientation orientation, int role) const
@@ -260,7 +261,7 @@ void SyncItemModel::setList(QList<std::shared_ptr<SyncSettings> > list)
 void SyncItemModel::setMode(mega::MegaSync::SyncType syncType)
 {
     mSyncType = syncType;
-    setList(mSyncModel->getSyncSettingsByType(mSyncType));
+    setList(mSyncInfo->getSyncSettingsByType(mSyncType));
 }
 
 mega::MegaSync::SyncType SyncItemModel::getMode()

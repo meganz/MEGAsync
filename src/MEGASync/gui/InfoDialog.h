@@ -10,7 +10,7 @@
 #include "SettingsDialog.h"
 #include "MenuItemAction.h"
 #include "control/Preferences.h"
-#include "model/SyncModel.h"
+#include "syncs/control/SyncInfo.h"
 #include <QGraphicsOpacityEffect>
 #include "TransferScanCancelUi.h"
 #include "HighDpiResize.h"
@@ -19,10 +19,10 @@
 #include "QtPositioningBugFixer.h"
 #include "TransferQuota.h"
 #include "StatusInfo.h"
-#include "Syncs/SyncsMenu.h"
-#include "control/SyncController.h"
-#include "Syncs/Backups/AddBackupDialog.h"
-#include "Syncs/Backups/BackupsWizard.h"
+#include "syncs/gui/SyncsMenu.h"
+#include "syncs/control/SyncController.h"
+#include "syncs/gui/Backups/AddBackupDialog.h"
+#include "syncs/gui/Backups/BackupsWizard.h"
 
 #include <memory>
 #ifdef _WIN32
@@ -258,7 +258,7 @@ protected:
     QTimer mResetTransferSummaryWidget;
     MegaApplication *app;
     std::shared_ptr<Preferences> mPreferences;
-    SyncModel *mSyncModel;
+    SyncInfo *mSyncInfo;
     mega::MegaApi *megaApi;
     mega::MegaTransfer *activeDownload;
     mega::MegaTransfer *activeUpload;

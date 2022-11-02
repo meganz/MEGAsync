@@ -1,7 +1,7 @@
 #ifndef REMOVEBACKUPDIALOG_H
 #define REMOVEBACKUPDIALOG_H
 
-#include "model/SyncSettings.h"
+#include "syncs/control/SyncSettings.h"
 #include "NodeSelector.h"
 
 #include <QDialog>

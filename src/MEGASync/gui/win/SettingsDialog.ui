@@ -3407,12 +3407,12 @@ color: grey;
   <customwidget>
    <class>SyncTableView</class>
    <extends>QTableView</extends>
-   <header>Syncs/Twoways/SyncTableView.h</header>
+   <header>syncs/gui/Twoways/SyncTableView.h</header>
   </customwidget>
   <customwidget>
    <class>BackupTableView</class>
    <extends>QTableView</extends>
-   <header>Syncs/Backups/BackupTableView.h</header>
+   <header>syncs/gui/Backups/BackupTableView.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

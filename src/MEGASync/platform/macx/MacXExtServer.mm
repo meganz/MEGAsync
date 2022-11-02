@@ -54,7 +54,7 @@ void MacXExtServer::acceptConnection()
         m_clients.append(client);
 
         // send the list of current synced folders to the new client
-        SyncModel *model = SyncModel::instance();
+        SyncInfo *model = SyncInfo::instance();
         for (auto syncSetting : model->getAllSyncSettings())
         {
             QString syncPath = QDir::toNativeSeparators(QDir(syncSetting->getLocalFolder()).canonicalPath());
@@ -363,7 +363,7 @@ void MacXExtServer::notifyAllClients(int op)
     // send the list of current synced folders to all connected clients
     // This is needed once MEGAsync switches from non-logged to logged state and vice-versa
 
-    SyncModel *model = SyncModel::instance();
+    SyncInfo *model = SyncInfo::instance();
     QString command;
     if (op == NOTIFY_ADD_SYNCS)
     {

@@ -18,7 +18,7 @@
 #include "UserAttributesRequests/Avatar.h"
 #include "UserAttributesRequests/DeviceName.h"
 #include "UserAttributesRequests/MyBackupsHandle.h"
-#include "Syncs/SyncsMenu.h"
+#include "syncs/gui/SyncsMenu.h"
 #include "TextDecorator.h"
 
 #include "mega/types.h"
@@ -441,7 +441,7 @@ void MegaApplication::initialize()
     connect(preferences.get(), SIGNAL(updated(int)), this, SLOT(showUpdatedMessage(int)));
     preferences->initialize(dataPath);
 
-    model = SyncModel::instance();
+    model = SyncInfo::instance();
 
     connect(model, SIGNAL(syncStateChanged(std::shared_ptr<SyncSetting>)),
             this, SLOT(onSyncStateChanged(std::shared_ptr<SyncSetting>)));
@@ -2237,7 +2237,7 @@ void MegaApplication::cleanAll()
     stopUpdateTask();
     Platform::stopShellDispatcher();
 
-    for (auto localFolder : model->getLocalFolders(SyncModel::AllHandledSyncTypes))
+    for (auto localFolder : model->getLocalFolders(SyncInfo::AllHandledSyncTypes))
     {
         notifyItemChange(localFolder, MegaApi::STATE_NONE);
     }
@@ -3754,7 +3754,7 @@ void MegaApplication::cleanLocalCaches(bool all)
     if (all || preferences->cleanerDaysLimit())
     {
         int timeLimitDays = preferences->cleanerDaysLimitValue();
-        for (auto syncPath : model->getLocalFolders(SyncModel::AllHandledSyncTypes))
+        for (auto syncPath : model->getLocalFolders(SyncInfo::AllHandledSyncTypes))
         {
             if (!syncPath.isEmpty())
             {
@@ -6815,7 +6815,7 @@ void MegaApplication::onEvent(MegaApi*, MegaEvent* event)
     }
     else if (event->getType() == MegaEvent::EVENT_SYNCS_RESTORED)
     {
-        if (SyncModel::instance()->getNumSyncedFolders(SyncModel::AllHandledSyncTypes) > 0)
+        if (SyncInfo::instance()->getNumSyncedFolders(SyncInfo::AllHandledSyncTypes) > 0)
         {
             Platform::notifyAllSyncFoldersAdded();
         }

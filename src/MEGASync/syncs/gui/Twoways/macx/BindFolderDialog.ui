@@ -224,7 +224,7 @@ margin-right: 32px;</string>
   <customwidget>
    <class>FolderBinder</class>
    <extends>QWidget</extends>
-   <header>Syncs/Twoways/FolderBinder.h</header>
+   <header>syncs/gui/Twoways/FolderBinder.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

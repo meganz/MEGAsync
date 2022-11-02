@@ -1,14 +1,13 @@
 #ifndef SYNCITEMMODEL_H
 #define SYNCITEMMODEL_H
 
-#include "SyncModel.h"
-#include "SyncController.h"
+#include "syncs/control/SyncController.h"
 
 #include <QSortFilterProxyModel>
 #include <QAbstractItemModel>
-
 #include <QCollator>
 
+class SyncInfo;
 class SyncItemModel : public QAbstractItemModel
 {
     Q_OBJECT
@@ -60,7 +59,7 @@ private slots:
     void removeSync(std::shared_ptr<SyncSettings> sync);
 
 private:
-    SyncModel* mSyncModel;
+    SyncInfo* mSyncInfo;
     QList<std::shared_ptr<SyncSettings>> mList;
     mega::MegaSync::SyncType mSyncType;
 

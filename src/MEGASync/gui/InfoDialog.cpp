@@ -19,7 +19,7 @@
 #include "MenuItemAction.h"
 #include "platform/Platform.h"
 #include "assert.h"
-#include "Syncs/Backups/BackupsWizard.h"
+#include "syncs/gui/Backups/BackupsWizard.h"
 #include "QMegaMessageBox.h"
 #include "TextDecorator.h"
 
@@ -85,7 +85,7 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
     mAddBackupDialog (nullptr),
     mAddSyncDialog (nullptr),
     mPreferences (Preferences::instance()),
-    mSyncModel (SyncModel::instance()),
+    mSyncInfo (SyncInfo::instance()),
     mSyncController (nullptr),
     qtBugFixer(this)
 {
@@ -223,7 +223,7 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
 
     actualAccountType = -1;
 
-    connect(mSyncModel, SIGNAL(syncDisabledListUpdated()), this, SLOT(updateDialogState()));
+    connect(mSyncInfo, SIGNAL(syncDisabledListUpdated()), this, SLOT(updateDialogState()));
 
     connect(ui->wPSA, SIGNAL(PSAseen(int)), app, SLOT(PSAseen(int)), Qt::QueuedConnection);
 
@@ -972,14 +972,14 @@ void InfoDialog::updateDialogState()
         overlay->setVisible(false);
         ui->wPSA->hidePSA();
     }
-    else if (mSyncModel->hasUnattendedDisabledSyncs({mega::MegaSync::TYPE_TWOWAY, mega::MegaSync::TYPE_BACKUP}))
+    else if (mSyncInfo->hasUnattendedDisabledSyncs({mega::MegaSync::TYPE_TWOWAY, mega::MegaSync::TYPE_BACKUP}))
     {
-        if (mSyncModel->hasUnattendedDisabledSyncs(mega::MegaSync::TYPE_TWOWAY)
-            && mSyncModel->hasUnattendedDisabledSyncs(mega::MegaSync::TYPE_BACKUP))
+        if (mSyncInfo->hasUnattendedDisabledSyncs(mega::MegaSync::TYPE_TWOWAY)
+            && mSyncInfo->hasUnattendedDisabledSyncs(mega::MegaSync::TYPE_BACKUP))
         {
             ui->sActiveTransfers->setCurrentWidget(ui->pAllSyncsDisabled);
         }
-        else if (mSyncModel->hasUnattendedDisabledSyncs(mega::MegaSync::TYPE_BACKUP))
+        else if (mSyncInfo->hasUnattendedDisabledSyncs(mega::MegaSync::TYPE_BACKUP))
         {
             ui->sActiveTransfers->setCurrentWidget(ui->pBackupsDisabled);
         }
@@ -1109,7 +1109,7 @@ void InfoDialog::addSync(MegaHandle h)
 void InfoDialog::addBackup()
 {
     // If no backups configured: show wizard, else show "add single backup" dialog
-    int nbBackups(SyncModel::instance()->getNumSyncedFolders(mega::MegaSync::TYPE_BACKUP));
+    int nbBackups(SyncInfo::instance()->getNumSyncedFolders(mega::MegaSync::TYPE_BACKUP));
 
     if (nbBackups > 0)
     {
@@ -1801,35 +1801,35 @@ void InfoDialog::onAnimationFinishedBlockedError()
 
 void InfoDialog::on_bDismissSyncSettings_clicked()
 {
-    mSyncModel->dismissUnattendedDisabledSyncs(mega::MegaSync::TYPE_TWOWAY);
+    mSyncInfo->dismissUnattendedDisabledSyncs(mega::MegaSync::TYPE_TWOWAY);
 }
 
 void InfoDialog::on_bOpenSyncSettings_clicked()
 {
     MegaSyncApp->openSettings(SettingsDialog::SYNCS_TAB);
-    mSyncModel->dismissUnattendedDisabledSyncs(mega::MegaSync::TYPE_TWOWAY);
+    mSyncInfo->dismissUnattendedDisabledSyncs(mega::MegaSync::TYPE_TWOWAY);
 }
 
 void InfoDialog::on_bDismissBackupsSettings_clicked()
 {
-    mSyncModel->dismissUnattendedDisabledSyncs(mega::MegaSync::TYPE_BACKUP);
+    mSyncInfo->dismissUnattendedDisabledSyncs(mega::MegaSync::TYPE_BACKUP);
 }
 
 void InfoDialog::on_bOpenBackupsSettings_clicked()
 {
     MegaSyncApp->openSettings(SettingsDialog::BACKUP_TAB);
-    mSyncModel->dismissUnattendedDisabledSyncs(mega::MegaSync::TYPE_BACKUP);
+    mSyncInfo->dismissUnattendedDisabledSyncs(mega::MegaSync::TYPE_BACKUP);
 }
 
 void InfoDialog::on_bDismissAllSyncsSettings_clicked()
 {
-    mSyncModel->dismissUnattendedDisabledSyncs(SyncModel::AllHandledSyncTypes);
+    mSyncInfo->dismissUnattendedDisabledSyncs(SyncInfo::AllHandledSyncTypes);
 }
 
 void InfoDialog::on_bOpenAllSyncsSettings_clicked()
 {
     MegaSyncApp->openSettings(SettingsDialog::SYNCS_TAB);
-    mSyncModel->dismissUnattendedDisabledSyncs(SyncModel::AllHandledSyncTypes);
+    mSyncInfo->dismissUnattendedDisabledSyncs(SyncInfo::AllHandledSyncTypes);
 }
 
 int InfoDialog::getLoggedInMode() const

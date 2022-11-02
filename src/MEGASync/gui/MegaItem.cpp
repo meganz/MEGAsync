@@ -1,7 +1,7 @@
 #include "MegaItem.h"
 #include "QMegaMessageBox.h"
 #include "MegaApplication.h"
-#include "model/SyncModel.h"
+#include "syncs/control/SyncInfo.h"
 #include "UserAttributesRequests/FullName.h"
 #include "UserAttributesRequests/Avatar.h"
 
@@ -44,7 +44,7 @@ MegaItem::MegaItem(std::unique_ptr<MegaNode> node, MegaItem *parentItem, bool sh
     }
     if(parent_item && parent_item->getNode()->isInShare())
     {
-        foreach(const QString& folder, SyncModel::instance()->getCloudDriveSyncMegaFolders(false))
+        foreach(const QString& folder, SyncInfo::instance()->getCloudDriveSyncMegaFolders(false))
         {
             if(folder.startsWith(parent_item->getOwnerEmail()))
             {
@@ -56,7 +56,7 @@ MegaItem::MegaItem(std::unique_ptr<MegaNode> node, MegaItem *parentItem, bool sh
     ////////////
     else
     {
-        QStringList syncList = SyncModel::instance()->getCloudDriveSyncMegaFolders(true);
+        QStringList syncList = SyncInfo::instance()->getCloudDriveSyncMegaFolders(true);
         if(isRoot() && !syncList.isEmpty())
         {
             mStatus = STATUS::SYNC_PARENT;
@@ -151,7 +151,7 @@ void MegaItem::setOwner(std::unique_ptr<mega::MegaUser> user)
 
     QStringList folderList;
     //Calculating if we have a synced childs.
-    foreach(const QString& folder, SyncModel::instance()->getMegaFolders(SyncModel::AllHandledSyncTypes))
+    foreach(const QString& folder, SyncInfo::instance()->getMegaFolders(SyncInfo::AllHandledSyncTypes))
     {
         if(folder.startsWith(mOwnerEmail))
         {
@@ -270,7 +270,7 @@ MegaItem::~MegaItem()
 
 void MegaItem::calculateSyncStatus(const QStringList &folders)
 {
-    auto syncedFolders = SyncModel::instance()->getMegaFolderHandles(SyncModel::AllHandledSyncTypes);
+    auto syncedFolders = SyncInfo::instance()->getMegaFolderHandles(SyncInfo::AllHandledSyncTypes);
     if(syncedFolders.contains(mNode->getHandle()))
     {
         mStatus = STATUS::SYNC;

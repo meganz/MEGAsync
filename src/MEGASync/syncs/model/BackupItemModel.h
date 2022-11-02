@@ -1,8 +1,7 @@
 #ifndef BACKUPITEMMODEL_H
 #define BACKUPITEMMODEL_H
 
-#include "SyncItemModel.h"
-#include "SyncModel.h"
+#include "syncs/model/SyncItemModel.h"
 
 namespace UserAttributes{
 class DeviceName;

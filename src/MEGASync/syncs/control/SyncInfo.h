@@ -1,7 +1,7 @@
 #pragma once
 
 #include "control/Preferences.h"
-#include "model/SyncSettings.h"
+#include "syncs/control/SyncSettings.h"
 
 #include "megaapi.h"
 
@@ -21,7 +21,7 @@ class Preferences;
  * The idea of this class is to hold any state variable data and proceed to persist that
  * data when required. It is intended to alleviate Preferences from that burden.
  *
- * The SyncModel covers the functionality related with updating the data it manages
+ * The SyncInfo covers the functionality related with updating the data it manages
  * (e.g: when a SyncConfiguration is updated, it will call platform specific callbacks that
  *  deal with that)
  *
@@ -30,7 +30,7 @@ class Preferences;
  *
  */
 
-class SyncModel : public QObject
+class SyncInfo : public QObject
 {
     Q_OBJECT
     using SyncType = mega::MegaSync::SyncType;
@@ -41,8 +41,8 @@ signals:
     void syncDisabledListUpdated();
 
 private:
-    static std::unique_ptr<SyncModel> model;
-    SyncModel();
+    static std::unique_ptr<SyncInfo> model;
+    SyncInfo();
 
     std::shared_ptr<Preferences> preferences;
     bool isFirstSyncDone = false;
@@ -61,7 +61,7 @@ public:
     static const QVector<SyncType> AllHandledSyncTypes;
 
     void reset();
-    static SyncModel *instance();
+    static SyncInfo *instance();
 
     /**
      * @brief Updates sync model

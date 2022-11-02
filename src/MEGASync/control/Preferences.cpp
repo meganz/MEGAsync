@@ -1,4 +1,4 @@
-#include "model/SyncModel.h"
+#include "syncs/control/SyncInfo.h"
 #include "Preferences.h"
 #include "platform/Platform.h"
 #include "UserAttributesRequests/FullName.h"
