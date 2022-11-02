@@ -80,8 +80,7 @@ void AccountDetailsDialog::refresh()
         auto totalStorage(preferences->totalStorage());
         auto usedStorage(preferences->usedStorage());
 
-        if (accType == Preferences::ACCOUNT_TYPE_BUSINESS
-                || accType == Preferences::ACCOUNT_TYPE_PRO_FLEXI)
+        if (Utilities::isBusinessAccount())
         {
             // Set unused fields to 0
             mUi->wCircularStorage->setValue(0);

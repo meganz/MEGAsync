@@ -1219,6 +1219,13 @@ QString Utilities::getNodePath(MegaTransfer* transfer)
     return QString::fromUtf8(transfer->getParentPath()) + QString::fromUtf8(transfer->getFileName());
 }
 
+bool Utilities::isBusinessAccount()
+{
+    int accountType = Preferences::instance()->accountType();
+    return accountType == Preferences::ACCOUNT_TYPE_BUSINESS
+            || accountType == Preferences::ACCOUNT_TYPE_PRO_FLEXI;
+}
+
 long long Utilities::getSystemsAvailableMemory()
 {
     long long availMemory = 0;

@@ -335,6 +335,9 @@ public:
     //get mega transfer nodepath
     static QString getNodePath(mega::MegaTransfer* transfer);
 
+    //Check is current account is business (either business or flexi pro)
+    static bool isBusinessAccount();
+
 private:
     Utilities() {}
     static QHash<QString, QString> extensionIcons;
