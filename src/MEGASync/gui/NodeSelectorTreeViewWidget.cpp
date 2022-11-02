@@ -392,13 +392,13 @@ void NodeSelectorTreeViewWidget::onUiBlocked(bool state)
         {
             auto selection = ui->tMegaFolders->selectionModel()->selectedIndexes();
             checkOkButton(selection);
-            ui->bBack->setEnabled(false);
-            ui->bForward->setEnabled(false);
+            checkBackForwardButtons();
         }
         else
         {
+            ui->bBack->setEnabled(false);
+            ui->bForward->setEnabled(false);
             ui->bOk->setDisabled(true);
-            checkBackForwardButtons();
         }
     }
 }
