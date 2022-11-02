@@ -419,13 +419,13 @@ bool BackupsWizard::isFolderSyncable(const QString& path, bool displayWarning, b
                 else if (inputPath.startsWith(existingPath)
                          && inputPath[existingPath.size()] == QDir::separator())
                 {
-                    message = tr("You can't backup this folder as it's already inside a backed up folder.");
+                    message = SyncController::getErrStrCurrentBackupInsideExistingBackup();
                     syncability = SyncController::CANT_SYNC;
                 }
                 else if (existingPath.startsWith(inputPath)
                          && existingPath[inputPath.size()] == QDir::separator())
                 {
-                    message = tr("You can't backup this folder as it contains backed up folders.");
+                    message = SyncController::getErrStrCurrentBackupOverExistingBackup();
                     syncability = SyncController::CANT_SYNC;
                 }
             }
@@ -481,6 +481,7 @@ void BackupsWizard::setupHeaders()
 
 void BackupsWizard::setupLoadingWindow()
 {
+    //TODO: move this to separate UI to suit better with darkmode(future develop)
     mLoadingWindow  = new QWidget(this);
     mLoadingWindow->hide();
     mLoadingWindow->setAutoFillBackground(true);

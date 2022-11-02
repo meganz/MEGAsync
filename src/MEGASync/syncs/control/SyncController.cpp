@@ -146,7 +146,7 @@ QString SyncController::getIsLocalFolderAlreadySyncedMsg(const QString& path, co
             {
                 message = localFolders.value(existingPath) == MegaSync::SyncType::TYPE_TWOWAY ?
                             tr("You can't backup this folder as it's already inside a synced folder.")
-                          : tr("You can't backup this folder as it's already inside a backed up folder.");
+                          : getErrStrCurrentBackupInsideExistingBackup();
             }
             else
             {
@@ -162,7 +162,7 @@ QString SyncController::getIsLocalFolderAlreadySyncedMsg(const QString& path, co
             {
                 message = localFolders.value(existingPath) == MegaSync::SyncType::TYPE_TWOWAY ?
                             tr("You can't backup this folder as it contains synced folders.")
-                          : tr("You can't backup this folder as it contains backed up folders.");
+                          : getErrStrCurrentBackupOverExistingBackup();
             }
             else
             {
@@ -367,6 +367,16 @@ QString SyncController::getSyncNameFromPath(const QString& path)
     }
 
     return syncName;
+}
+
+QString SyncController::getErrStrCurrentBackupOverExistingBackup()
+{
+    return tr("You can't backup this folder as it contains backed up folders.");
+}
+
+QString SyncController::getErrStrCurrentBackupInsideExistingBackup()
+{
+    return tr("You can't backup this folder as it's already inside a backed up folder.");
 }
 
 QString SyncController::getSyncAPIErrorMsg(int megaError)

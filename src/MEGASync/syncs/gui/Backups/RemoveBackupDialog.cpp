@@ -26,11 +26,6 @@ RemoveBackupDialog::RemoveBackupDialog(std::shared_ptr<SyncSettings> backup, QWi
     mUi->lTarget->setText(QCoreApplication::translate("MegaNodeNames",
                                                       MegaSyncApp->getRootNode()->getName())
                           .append(QLatin1Char('/')));
-
-    QButtonGroup *group = new QButtonGroup(this);
-    group->setExclusive(true);
-    group->addButton(mUi->rDeleteFolder);
-    group->addButton(mUi->rMoveFolder);
 }
 
 RemoveBackupDialog::~RemoveBackupDialog()

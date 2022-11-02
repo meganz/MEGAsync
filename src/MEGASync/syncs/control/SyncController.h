@@ -53,6 +53,10 @@ public:
 
     static QString getSyncNameFromPath(const QString& path);
 
+    //Error strings
+    static QString getErrStrCurrentBackupOverExistingBackup();
+    static QString getErrStrCurrentBackupInsideExistingBackup();
+
 signals:
     void syncAddStatus(int errorCode, QString errorMsg, QString name);
     void syncRemoveError(std::shared_ptr<SyncSettings> sync);
