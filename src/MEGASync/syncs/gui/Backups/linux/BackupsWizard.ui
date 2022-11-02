@@ -10,7 +10,7 @@
     <x>0</x>
     <y>0</y>
     <width>600</width>
-    <height>367</height>
+    <height>470</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -35,7 +35,7 @@
    <string>Setup backups</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="../Resources_linux.qrc">
+   <iconset resource="../../../../gui/Resources_linux.qrc">
     <normaloff>:/images/icons/ico_backup.png</normaloff>:/images/icons/ico_backup.png</iconset>
   </property>
   <property name="styleSheet">
@@ -369,6 +369,19 @@ margin: 4px;
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">*[EMPTY=false]
+{
+border-bottom-right-radius: 0px;
+border-bottom-left-radius: 0px;
+}
+
+*[EMPTY=true]
+{
+border-bottom-right-radius: 6px;
+border-bottom-left-radius: 6px;
+}</string>
             </property>
             <layout class="QHBoxLayout" name="horizontalLayout">
              <property name="spacing">
@@ -819,7 +832,7 @@ margin: 4px;
           <string notr="true"/>
          </property>
          <property name="pixmap">
-          <pixmap resource="../Resources_linux.qrc">:/images/bug_report_success.png</pixmap>
+          <pixmap resource="../../../../gui/Resources_linux.qrc">:/images/bug_report_success.png</pixmap>
          </property>
         </widget>
        </item>
@@ -911,7 +924,7 @@ color: #666666;
           <string notr="true"/>
          </property>
          <property name="pixmap">
-          <pixmap resource="../Resources_linux.qrc">:/images/icon_error.png</pixmap>
+          <pixmap resource="../../../../gui/Resources_linux.qrc">:/images/icon_error.png</pixmap>
          </property>
         </widget>
        </item>
@@ -1253,7 +1266,7 @@ color:#666666;
   </layout>
  </widget>
  <resources>
-  <include location="../Resources_linux.qrc"/>
+  <include location="../../../../gui/Resources_linux.qrc"/>
  </resources>
  <connections/>
 </ui>

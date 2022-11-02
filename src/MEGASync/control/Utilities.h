@@ -5,6 +5,8 @@
 #include <QHash>
 #include <QPixmap>
 #include <QProgressDialog>
+#include <QDesktopServices>
+#include <QFuture>
 
 #include <QDir>
 #include <QIcon>
@@ -331,7 +333,7 @@ public:
     //get mega transfer nodepath
     static QString getNodePath(mega::MegaTransfer* transfer);
 
-    static void openUrl(QUrl url);
+    static QFuture<bool> openUrl(QUrl url);
     static void openInMega(mega::MegaHandle handle);
     static void openBackupCenter();
 

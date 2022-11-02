@@ -4118,7 +4118,7 @@ void MegaApplication::handleLocalPath(const QUrl &url)
     if (path.endsWith(QDir::separator()))
     {
         path.truncate(path.size() - 1);
-        QtConcurrent::run(QDesktopServices::openUrl, QUrl::fromLocalFile(path));
+        Utilities::openUrl(QUrl::fromLocalFile(path));
     }
     else
     {
@@ -4844,7 +4844,7 @@ void MegaApplication::pauseTransfers()
 void MegaApplication::officialWeb()
 {
     QString webUrl = Preferences::BASE_URL;
-    QtConcurrent::run(QDesktopServices::openUrl, QUrl(webUrl));
+    Utilities::openUrl(QUrl(webUrl));
 }
 
 void MegaApplication::goToMyCloud()
@@ -6244,7 +6244,7 @@ void MegaApplication::trayIconActivated(QSystemTrayIcon::ActivationReason reason
             QString localFolderPath = (*firstActiveSyncSetting)->getLocalFolder();
             if (!localFolderPath.isEmpty())
             {
-                QtConcurrent::run(QDesktopServices::openUrl, QUrl::fromLocalFile(localFolderPath));
+                Utilities::openUrl(QUrl::fromLocalFile(localFolderPath));
             }
         }
     }
@@ -6724,7 +6724,7 @@ void MegaApplication::manageBusinessStatus(int64_t event)
                 {
                     QString url = QString::fromUtf8("mega://#repay");
                     Utilities::getPROurlWithParameters(url);
-                    QtConcurrent::run(QDesktopServices::openUrl, QUrl(url));
+                    Utilities::openUrl(QUrl(url));
                 }
             }
 
@@ -6759,7 +6759,7 @@ void MegaApplication::manageBusinessStatus(int64_t event)
                 {
                     QString url = QString::fromUtf8("mega://#repay");
                     Utilities::getPROurlWithParameters(url);
-                    QtConcurrent::run(QDesktopServices::openUrl, QUrl(url));
+                    Utilities::openUrl(QUrl(url));
                 }
             }
             else
@@ -7558,7 +7558,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
             megaApi->sendEvent(AppStatsEvents::EVENT_PRO_REDIRECT, "Redirection to PRO");
         }
 
-        QtConcurrent::run(QDesktopServices::openUrl, QUrl(QString::fromUtf8(request->getLink())));
+        Utilities::openUrl(QUrl(QString::fromUtf8(request->getLink())));
         break;
     }
     case MegaRequest::TYPE_GET_PUBLIC_NODE:

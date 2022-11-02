@@ -37,6 +37,7 @@ HEADERS += $$PWD/gui/Backups/AddBackupDialog.h \
 
 win32 {
     INCLUDEPATH += $$PWD/win
+    RESOURCES += $$PWD/../gui/Resources_win.qrc
     FORMS    += $$PWD/gui/Twoways/win/FolderBinder.ui \
                 $$PWD/gui/Twoways/win/BindFolderDialog.ui \
                 $$PWD/gui/Backups/win/BackupsWizard.ui \
@@ -48,6 +49,7 @@ win32 {
 
 macx {
     INCLUDEPATH += $$PWD/macx
+    RESOURCES += $$PWD/../gui/Resources_macx.qrc
     FORMS    += $$PWD/gui/Twoways/macx/FolderBinder.ui \
                 $$PWD/gui/Twoways/macx/BindFolderDialog.ui \
                 $$PWD/gui/Backups/macx/BackupsWizard.ui \
@@ -59,6 +61,7 @@ macx {
 
 unix:!macx {
     INCLUDEPATH += $$PWD/linux
+    RESOURCES += $$PWD/../gui/Resources_linux.qrc
     FORMS    += $$PWD/gui/Twoways/linux/FolderBinder.ui \
                 $$PWD/gui/Twoways/linux/BindFolderDialog.ui \
                 $$PWD/gui/Backups/linux/BackupsWizard.ui \

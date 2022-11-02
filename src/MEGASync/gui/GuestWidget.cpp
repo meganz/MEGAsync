@@ -498,7 +498,7 @@ void GuestWidget::on_bSettings_clicked()
 
 void GuestWidget::on_bForgotPassword_clicked()
 {
-    QtConcurrent::run(QDesktopServices::openUrl, QUrl(QString::fromUtf8("mega://#recovery")));
+    Utilities::openUrl(QUrl(QString::fromUtf8("mega://#recovery")));
 }
 
 void GuestWidget::on_bCancel_clicked()
@@ -762,5 +762,5 @@ void GuestWidget::on_bLoging2FaCancel_clicked()
 void GuestWidget::on_bLogin2FaHelp_clicked()
 {
     QString helpUrl = Preferences::BASE_URL + QString::fromAscii("/recovery");
-    QtConcurrent::run(QDesktopServices::openUrl, QUrl(helpUrl));
+    Utilities::openUrl(QUrl(helpUrl));
 }

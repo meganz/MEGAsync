@@ -1050,7 +1050,7 @@ void InfoDialog::on_bUpgrade_clicked()
 {
     QString url = QString::fromUtf8("mega://#pro");
     Utilities::getPROurlWithParameters(url);
-    QtConcurrent::run(QDesktopServices::openUrl, QUrl(url));
+    Utilities::openUrl(QUrl(url));
 }
 
 void InfoDialog::on_bUpgradeOverDiskQuota_clicked()
@@ -1060,7 +1060,7 @@ void InfoDialog::on_bUpgradeOverDiskQuota_clicked()
 
 void InfoDialog::openFolder(QString path)
 {
-    QtConcurrent::run(QDesktopServices::openUrl, QUrl::fromLocalFile(path));
+    Utilities::openUrl(QUrl::fromLocalFile(path));
 }
 
 void InfoDialog::addSync(MegaHandle h)
@@ -1686,7 +1686,7 @@ void InfoDialog::applyFilterOption(int opt)
 
 void InfoDialog::on_bNotificationsSettings_clicked()
 {
-    QtConcurrent::run(QDesktopServices::openUrl, QUrl(QString::fromUtf8("mega://#fm/account/notifications")));
+    Utilities::openUrl(QUrl(QString::fromUtf8("mega://#fm/account/notifications")));
 }
 
 void InfoDialog::on_bDiscard_clicked()

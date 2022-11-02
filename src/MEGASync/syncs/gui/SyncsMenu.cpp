@@ -126,7 +126,7 @@ void SyncsMenu::refresh()
                 action->setToolTip(createSyncTooltipText(backupSetting));
                 connect(action, &MenuItemAction::triggered,
                         this, [backupSetting](){
-                    QtConcurrent::run(QDesktopServices::openUrl,
+                    Utilities::openUrl(
                                       QUrl::fromLocalFile(backupSetting->getLocalFolder()));
                 }, Qt::QueuedConnection);
 

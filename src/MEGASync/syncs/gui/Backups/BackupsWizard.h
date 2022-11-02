@@ -29,9 +29,11 @@ class BackupsWizard : public QDialog
 {
         Q_OBJECT
 
-    public:
+    public:    
         explicit BackupsWizard(QWidget* parent = nullptr);
         ~BackupsWizard();
+
+        static const char* EMPTY_PROPERTY;
 
     protected:
         void changeEvent(QEvent* event) override;

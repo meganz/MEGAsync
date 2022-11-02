@@ -140,7 +140,7 @@ bool MegaAlertDelegate::editorEvent(QEvent *event, QAbstractItemModel *model, co
                             if (!strcmp(alert->getEmail(), email))
                             {
                                 found = true;
-                                QtConcurrent::run(QDesktopServices::openUrl, QUrl(QString::fromUtf8("mega://#fm/ipc")));
+                                Utilities::openUrl(QUrl(QString::fromUtf8("mega://#fm/ipc")));
                                 break;
                             }
                         }
@@ -148,7 +148,7 @@ bool MegaAlertDelegate::editorEvent(QEvent *event, QAbstractItemModel *model, co
 
                     if (!found)
                     {
-                        QtConcurrent::run(QDesktopServices::openUrl, QUrl(QString::fromUtf8("mega://#fm/contacts")));
+                        Utilities::openUrl(QUrl(QString::fromUtf8("mega://#fm/contacts")));
                     }
 
                     break;
@@ -162,13 +162,13 @@ bool MegaAlertDelegate::editorEvent(QEvent *event, QAbstractItemModel *model, co
                     MegaUser *user = api->getContact(alert->getEmail());
                     if (user && user->getVisibility() == MegaUser::VISIBILITY_VISIBLE)
                     {
-                        QtConcurrent::run(QDesktopServices::openUrl,
+                        Utilities::openUrl(
                                           QUrl(QString::fromUtf8("mega://#fm/%1").arg(QString::fromUtf8(api->userHandleToBase64(user->getHandle())))));
                         delete user;
                     }
                     else
                     {
-                        QtConcurrent::run(QDesktopServices::openUrl, QUrl(QString::fromUtf8("mega://#fm/contacts")));
+                        Utilities::openUrl(QUrl(QString::fromUtf8("mega://#fm/contacts")));
                     }
 
                     break;
@@ -183,7 +183,7 @@ bool MegaAlertDelegate::editorEvent(QEvent *event, QAbstractItemModel *model, co
                     MegaNode *node = api->getNodeByHandle(alert->getNodeHandle());
                     if (node)
                     {
-                        QtConcurrent::run(QDesktopServices::openUrl,
+                        Utilities::openUrl(
                                           QUrl(QString::fromUtf8("mega://#fm/%1").arg(QString::fromUtf8(node->getBase64Handle()))));
                         delete node;
                     }
@@ -195,7 +195,7 @@ bool MegaAlertDelegate::editorEvent(QEvent *event, QAbstractItemModel *model, co
             case MegaUserAlert::TYPE_PAYMENT_FAILED:
             case MegaUserAlert::TYPE_PAYMENTREMINDER:
                 {
-                    QtConcurrent::run(QDesktopServices::openUrl, QUrl(QString::fromUtf8("mega://#fm/account/plan")));
+                    Utilities::openUrl(QUrl(QString::fromUtf8("mega://#fm/account/plan")));
                     break;
                 }
 

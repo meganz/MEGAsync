@@ -76,7 +76,7 @@ void BackupTableView::showContextMenu(const QPoint &pos, const QModelIndex index
                                              QIcon(QString::fromUtf8("://images/show_in_folder_ico.png"))));
     connect(openLocalAction, &MenuItemAction::triggered, this, [sync]()
     {
-        QtConcurrent::run(QDesktopServices::openUrl, QUrl::fromLocalFile(sync->getLocalFolder()));
+        Utilities::openUrl(QUrl::fromLocalFile(sync->getLocalFolder()));
     });
 
     // Show in MEGA Web App action

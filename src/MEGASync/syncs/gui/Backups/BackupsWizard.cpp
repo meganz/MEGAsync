@@ -32,6 +32,8 @@ const int ICON_POSITION_STEP_2 (3);
 
 const int TEXT_MARGIN (12);
 
+const char* BackupsWizard::EMPTY_PROPERTY = "EMPTY";
+
 // BackupsWizard class ------------------------------------------------------
 
 BackupsWizard::BackupsWizard(QWidget* parent) :
@@ -233,8 +235,8 @@ void BackupsWizard::setupStep1()
     if(mFoldersModel->rowCount() == 0)
     {
         mUi->bMoreFolders->setText(tr("Add folders"));
-        mUi->wDeviceNameStep1->setStyleSheet(QLatin1String("border-bottom-right-radius: 6px;"
-                                                           "border-bottom-left-radius: 6px;"));
+        mUi->wDeviceNameStep1->setProperty(EMPTY_PROPERTY, true);
+        mUi->wDeviceNameStep1->setStyleSheet(mUi->wDeviceNameStep1->styleSheet());
     }
     else
     {
@@ -674,8 +676,9 @@ void BackupsWizard::on_bMoreFolders_clicked()
         auto idx = mFoldersModel->indexFromItem(item);
         mUi->lvFoldersStep1->scrollTo(idx, QAbstractItemView::PositionAtCenter);
         mUi->bMoreFolders->setText(tr("More folders"));
-        mUi->wDeviceNameStep1->setStyleSheet(QLatin1String("border-bottom-right-radius: 0px;"
-                                                           "border-bottom-left-radius: 0px;"));
+        mUi->wDeviceNameStep1->setProperty(EMPTY_PROPERTY, false);
+        mUi->wDeviceNameStep1->setStyleSheet(mUi->wDeviceNameStep1->styleSheet());
+
         onItemChanged();
         updateSize();
     }

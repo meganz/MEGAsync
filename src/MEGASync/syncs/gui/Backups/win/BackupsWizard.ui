@@ -35,7 +35,7 @@
    <string>Setup backups</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="../Resources_win.qrc">
+   <iconset resource="../../../../gui/Resources_win.qrc">
     <normaloff>:/images/icons/ico_backup.png</normaloff>:/images/icons/ico_backup.png</iconset>
   </property>
   <property name="styleSheet">
@@ -266,7 +266,7 @@ margin: 4px;
       </sizepolicy>
      </property>
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="pStep1">
       <property name="sizePolicy">
@@ -378,6 +378,20 @@ margin: 4px;
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">
+*[EMPTY=false]
+{
+border-bottom-right-radius: 0px;
+border-bottom-left-radius: 0px;
+}
+
+*[EMPTY=true]
+{
+border-bottom-right-radius: 6px;
+border-bottom-left-radius: 6px;
+}</string>
             </property>
             <layout class="QHBoxLayout" name="horizontalLayout">
              <property name="spacing">
@@ -828,7 +842,7 @@ margin: 4px;
           <string notr="true"/>
          </property>
          <property name="pixmap">
-          <pixmap resource="../Resources_win.qrc">:/images/bug_report_success.png</pixmap>
+          <pixmap resource="../../../../gui/Resources_win.qrc">:/images/bug_report_success.png</pixmap>
          </property>
         </widget>
        </item>
@@ -920,7 +934,7 @@ color: #666666;
           <string notr="true"/>
          </property>
          <property name="pixmap">
-          <pixmap resource="../Resources_win.qrc">:/images/icon_error.png</pixmap>
+          <pixmap resource="../../../../gui/Resources_win.qrc">:/images/icon_error.png</pixmap>
          </property>
         </widget>
        </item>
@@ -1262,7 +1276,7 @@ color:#666666;
   </layout>
  </widget>
  <resources>
-  <include location="../Resources_win.qrc"/>
+  <include location="../../../../gui/Resources_win.qrc"/>
  </resources>
  <connections/>
 </ui>

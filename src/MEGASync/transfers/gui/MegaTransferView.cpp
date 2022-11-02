@@ -1126,7 +1126,7 @@ void MegaTransferView::openItemClicked()
                 QFileInfo info(path);
                 if(info.exists())
                 {
-                    auto openUrlTask = QtConcurrent::run(QDesktopServices::openUrl, QUrl::fromLocalFile(path));
+                    auto openUrlTask = Utilities::openUrl(QUrl::fromLocalFile(path));
                     mOpenUrlWatcher.setFuture(openUrlTask);
                 }
                 else

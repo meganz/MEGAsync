@@ -4,7 +4,6 @@
 #include <QApplication>
 #include <QImageReader>
 #include <QDirIterator>
-#include <QDesktopServices>
 #include <QTextStream>
 #include <QDateTime>
 #include <iostream>
@@ -1130,9 +1129,9 @@ QString Utilities::getNodePath(MegaTransfer* transfer)
     return QString::fromUtf8(transfer->getParentPath()) + QString::fromUtf8(transfer->getFileName());
 }
 
-void Utilities::openUrl(QUrl url)
+QFuture<bool> Utilities::openUrl(QUrl url)
 {
-    QtConcurrent::run(QDesktopServices::openUrl, url);
+    return QtConcurrent::run(QDesktopServices::openUrl, url);
 }
 
 void Utilities::openInMega(MegaHandle handle)

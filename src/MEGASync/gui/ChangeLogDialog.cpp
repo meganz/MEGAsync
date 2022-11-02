@@ -87,19 +87,19 @@ void ChangeLogDialog::setChangeLogNotes(QString notes)
 void ChangeLogDialog::on_bTerms_clicked()
 {
     QString temsUrl = Preferences::BASE_URL + QString::fromAscii("/terms");
-    QtConcurrent::run(QDesktopServices::openUrl, QUrl(temsUrl));
+    Utilities::openUrl(QUrl(temsUrl));
 }
 
 void ChangeLogDialog::on_bPolicy_clicked()
 {
     QString policyUrl = Preferences::BASE_URL + QString::fromAscii("/privacy");
-    QtConcurrent::run(QDesktopServices::openUrl, QUrl(policyUrl));
+    Utilities::openUrl(QUrl(policyUrl));
 }
 
 void ChangeLogDialog::on_bAck_clicked()
 {
     QString ackUrl = QString::fromAscii("https://github.com/meganz/MEGAsync/blob/master/CREDITS.md");
-    QtConcurrent::run(QDesktopServices::openUrl, QUrl(ackUrl));
+    Utilities::openUrl(QUrl(ackUrl));
 }
 
 void ChangeLogDialog::changeEvent(QEvent *event)

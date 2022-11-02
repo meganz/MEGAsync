@@ -725,7 +725,7 @@ void SettingsDialog::onSavingSyncsCompleted(SyncStateInformation value)
 void SettingsDialog::on_bHelp_clicked()
 {
     QString helpUrl = Preferences::BASE_URL + QString::fromUtf8("/help/client/megasync");
-    QtConcurrent::run(QDesktopServices::openUrl, QUrl(helpUrl));
+    Utilities::openUrl(QUrl(helpUrl));
 }
 
 #ifdef Q_OS_MACOS
@@ -1354,7 +1354,7 @@ void SettingsDialog::on_bUpgrade_clicked()
 {
     QString url = QString::fromUtf8("mega://#pro");
     Utilities::getPROurlWithParameters(url);
-    QtConcurrent::run(QDesktopServices::openUrl, QUrl(url));
+    Utilities::openUrl(QUrl(url));
 }
 
 void SettingsDialog::on_bBuyMoreSpace_clicked()
@@ -1364,7 +1364,7 @@ void SettingsDialog::on_bBuyMoreSpace_clicked()
 
 void SettingsDialog::on_bMyAccount_clicked()
 {
-    QtConcurrent::run(QDesktopServices::openUrl, QUrl(QString::fromUtf8("mega://#fm/account")));
+    Utilities::openUrl(QUrl(QString::fromUtf8("mega://#fm/account")));
 }
 
 void SettingsDialog::on_bStorageDetails_clicked()
@@ -1919,7 +1919,7 @@ void SettingsDialog::on_bChangePassword_clicked()
 
 void SettingsDialog::on_bSessionHistory_clicked()
 {
-    QtConcurrent::run(QDesktopServices::openUrl,
+    Utilities::openUrl(
                       QUrl(QString::fromUtf8("mega://#fm/account/history")));
 }
 

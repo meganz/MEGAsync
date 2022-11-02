@@ -1188,13 +1188,13 @@ void SetupWizard::lTermsLink_clicked()
 
 void SetupWizard::on_lTermsLink_linkActivated(const QString& /*link*/)
 {
-    QtConcurrent::run(QDesktopServices::openUrl, QUrl(Preferences::BASE_URL + QString::fromUtf8("/terms")));
+    Utilities::openUrl(QUrl(Preferences::BASE_URL + QString::fromUtf8("/terms")));
 }
 
 void SetupWizard::on_bLearMore_clicked()
 {
     QString helpUrl = QString::fromAscii("https://help.mega.io/installs-apps/desktop-syncing");
-    QtConcurrent::run(QDesktopServices::openUrl, QUrl(helpUrl));
+    Utilities::openUrl(QUrl(helpUrl));
 }
 
 void SetupWizard::on_bFinish_clicked()

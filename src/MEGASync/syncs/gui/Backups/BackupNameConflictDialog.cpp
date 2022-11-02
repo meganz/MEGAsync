@@ -113,7 +113,7 @@ void BackupNameConflictDialog::checkChangedNames()
 
 void BackupNameConflictDialog::openLink(QString link)
 {
-    QtConcurrent::run(QDesktopServices::openUrl, QUrl(link));
+    Utilities::openUrl(QUrl(link));
 }
 
 void BackupNameConflictDialog::createWidgets()
