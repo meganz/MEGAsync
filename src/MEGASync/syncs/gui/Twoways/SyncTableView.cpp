@@ -1,8 +1,6 @@
-#include "SyncTableView.h"
-
+#include "syncs/gui/Twoways/SyncTableView.h"
 #include "platform/Platform.h"
 #include "MenuItemAction.h"
-#include "SyncController.h"
 
 #include <QHeaderView>
 #include <QMenu>

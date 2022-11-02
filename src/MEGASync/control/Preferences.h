@@ -8,7 +8,7 @@
 #include <QDataStream>
 
 #include "control/EncryptedSettings.h"
-#include "model/SyncModel.h"
+#include "syncs/control/SyncInfo.h"
 #include <assert.h>
 #include "megaapi.h"
 #include <chrono>

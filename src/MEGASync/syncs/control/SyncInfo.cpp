@@ -1,5 +1,5 @@
 
-#include "SyncModel.h"
+#include "SyncInfo.h"
 #include "platform/Platform.h"
 #include "control/AppStatsEvents.h"
 #include "QMegaMessageBox.h"
@@ -12,35 +12,35 @@ using namespace mega;
 extern Q_CORE_EXPORT int qt_ntfs_permission_lookup;
 #endif
 
-const QVector<SyncModel::SyncType> SyncModel::AllHandledSyncTypes =
+const QVector<SyncInfo::SyncType> SyncInfo::AllHandledSyncTypes =
 {
-    SyncModel::SyncType::TYPE_TWOWAY,
-    SyncModel::SyncType::TYPE_BACKUP,
+    SyncInfo::SyncType::TYPE_TWOWAY,
+    SyncInfo::SyncType::TYPE_BACKUP,
 };
 
-std::unique_ptr<SyncModel> SyncModel::model;
+std::unique_ptr<SyncInfo> SyncInfo::model;
 
-SyncModel *SyncModel::instance()
+SyncInfo *SyncInfo::instance()
 {
     if (!model)
     {
-        model.reset(new SyncModel());
+        model.reset(new SyncInfo());
     }
-    return SyncModel::model.get();
+    return SyncInfo::model.get();
 }
 
-SyncModel::SyncModel() : QObject(),
+SyncInfo::SyncInfo() : QObject(),
     preferences (Preferences::instance()),
     syncMutex (QMutex::Recursive)
 {
 }
 
-bool SyncModel::hasUnattendedDisabledSyncs(const QVector<SyncType>& types) const
+bool SyncInfo::hasUnattendedDisabledSyncs(const QVector<SyncType>& types) const
 {    
     return std::any_of(types.cbegin(), types.cend(), [this](SyncType t){return !unattendedDisabledSyncs[t].isEmpty();});
 }
 
-void SyncModel::removeSyncedFolderByBackupId(MegaHandle backupId)
+void SyncInfo::removeSyncedFolderByBackupId(MegaHandle backupId)
 {
     QMutexLocker qm(&syncMutex);
 
@@ -80,7 +80,7 @@ void SyncModel::removeSyncedFolderByBackupId(MegaHandle backupId)
     emit syncRemoved(cs);
 }
 
-void SyncModel::removeAllFolders()
+void SyncInfo::removeAllFolders()
 {
     QMutexLocker qm(&syncMutex);
     assert(preferences->logged());
@@ -101,7 +101,7 @@ void SyncModel::removeAllFolders()
     unattendedDisabledSyncs.clear();
 }
 
-void SyncModel::activateSync(std::shared_ptr<SyncSettings> syncSetting)
+void SyncInfo::activateSync(std::shared_ptr<SyncSettings> syncSetting)
 {
 #ifndef NDEBUG
     {
@@ -150,13 +150,13 @@ void SyncModel::activateSync(std::shared_ptr<SyncSettings> syncSetting)
     Platform::syncFolderAdded(syncSetting->getLocalFolder(), syncSetting->name(true), syncSetting->getSyncID());
 }
 
-void SyncModel::deactivateSync(std::shared_ptr<SyncSettings> syncSetting)
+void SyncInfo::deactivateSync(std::shared_ptr<SyncSettings> syncSetting)
 {
     Platform::syncFolderRemoved(syncSetting->getLocalFolder(), syncSetting->name(true), syncSetting->getSyncID());
     MegaSyncApp->notifyItemChange(syncSetting->getLocalFolder(), MegaApi::STATE_NONE);
 }
 
-void SyncModel::updateMegaFolder(QString newRemotePath, std::shared_ptr<SyncSettings> cs)
+void SyncInfo::updateMegaFolder(QString newRemotePath, std::shared_ptr<SyncSettings> cs)
 {
     QMutexLocker qm(&syncMutex);
     auto oldMegaFolder = cs->getMegaFolder();
@@ -170,7 +170,7 @@ void SyncModel::updateMegaFolder(QString newRemotePath, std::shared_ptr<SyncSett
     }
 }
 
-std::shared_ptr<SyncSettings> SyncModel::updateSyncSettings(MegaSync *sync, int addingState)
+std::shared_ptr<SyncSettings> SyncInfo::updateSyncSettings(MegaSync *sync, int addingState)
 {
     if (!sync)
     {
@@ -273,7 +273,7 @@ std::shared_ptr<SyncSettings> SyncModel::updateSyncSettings(MegaSync *sync, int 
     return cs;
 }
 
-void SyncModel::rewriteSyncSettings()
+void SyncInfo::rewriteSyncSettings()
 {
     preferences->removeAllSyncSettings();
     QMutexLocker qm(&syncMutex);
@@ -289,7 +289,7 @@ void SyncModel::rewriteSyncSettings()
     }
 }
 
-void SyncModel::pickInfoFromOldSync(const SyncData &osd, MegaHandle backupId, bool loadedFromPreviousSessions)
+void SyncInfo::pickInfoFromOldSync(const SyncData &osd, MegaHandle backupId, bool loadedFromPreviousSessions)
 {
     QMutexLocker qm(&syncMutex);
     assert(preferences->logged() || loadedFromPreviousSessions);
@@ -304,7 +304,7 @@ void SyncModel::pickInfoFromOldSync(const SyncData &osd, MegaHandle backupId, bo
     preferences->writeSyncSetting(cs);
 }
 
-void SyncModel::reset()
+void SyncInfo::reset()
 {
     QMutexLocker qm(&syncMutex);
     configuredSyncs.clear();
@@ -314,7 +314,7 @@ void SyncModel::reset()
     isFirstSyncDone = false;
 }
 
-int SyncModel::getNumSyncedFolders(const QVector<SyncType>& types)
+int SyncInfo::getNumSyncedFolders(const QVector<SyncType>& types)
 {
     QMutexLocker qm(&syncMutex);
     int value (0);
@@ -325,7 +325,7 @@ int SyncModel::getNumSyncedFolders(const QVector<SyncType>& types)
     return value;
 }
 
-bool SyncModel::syncWithErrorExist(const QVector<SyncType> &types)
+bool SyncInfo::syncWithErrorExist(const QVector<SyncType> &types)
 {
     QMutexLocker qm(&syncMutex);
     for(auto type : types)
@@ -341,7 +341,7 @@ bool SyncModel::syncWithErrorExist(const QVector<SyncType> &types)
     return false;
 }
 
-QStringList SyncModel::getSyncNames(const QVector<SyncType>& types)
+QStringList SyncInfo::getSyncNames(const QVector<SyncType>& types)
 {
     QMutexLocker qm(&syncMutex);
     QStringList value;
@@ -355,7 +355,7 @@ QStringList SyncModel::getSyncNames(const QVector<SyncType>& types)
     return value;
 }
 
-QStringList SyncModel::getSyncIDs(const QVector<SyncType>& types)
+QStringList SyncInfo::getSyncIDs(const QVector<SyncType>& types)
 {
     QMutexLocker qm(&syncMutex);
     QStringList value;
@@ -369,7 +369,7 @@ QStringList SyncModel::getSyncIDs(const QVector<SyncType>& types)
     return value;
 }
 
-QStringList SyncModel::getCloudDriveSyncMegaFolders(bool cloudDrive)
+QStringList SyncInfo::getCloudDriveSyncMegaFolders(bool cloudDrive)
 {
     QMutexLocker qm(&syncMutex);
     QStringList value;
@@ -402,7 +402,7 @@ QStringList SyncModel::getCloudDriveSyncMegaFolders(bool cloudDrive)
     return value;
 }
 
-QStringList SyncModel::getMegaFolders(const QVector<SyncType>& types)
+QStringList SyncInfo::getMegaFolders(const QVector<SyncType>& types)
 {
     QMutexLocker qm(&syncMutex);
     QStringList value;
@@ -416,7 +416,7 @@ QStringList SyncModel::getMegaFolders(const QVector<SyncType>& types)
     return value;
 }
 
-QStringList SyncModel::getLocalFolders(const QVector<SyncType>& types)
+QStringList SyncInfo::getLocalFolders(const QVector<SyncType>& types)
 {
     QMutexLocker qm(&syncMutex);
     QStringList value;
@@ -431,12 +431,12 @@ QStringList SyncModel::getLocalFolders(const QVector<SyncType>& types)
     return value;
 }
 
-QMap<QString, SyncModel::SyncType> SyncModel::getLocalFoldersAndTypeMap()
+QMap<QString, SyncInfo::SyncType> SyncInfo::getLocalFoldersAndTypeMap()
 {
     QMutexLocker qm(&syncMutex);
     QMap<QString, SyncType> ret;
 
-    for (auto type : SyncModel::AllHandledSyncTypes)
+    for (auto type : SyncInfo::AllHandledSyncTypes)
     {
         for (auto &cs : configuredSyncs[type])
         {
@@ -446,7 +446,7 @@ QMap<QString, SyncModel::SyncType> SyncModel::getLocalFoldersAndTypeMap()
     return ret;
 }
 
-QList<MegaHandle> SyncModel::getMegaFolderHandles(const QVector<SyncType>& types)
+QList<MegaHandle> SyncInfo::getMegaFolderHandles(const QVector<SyncType>& types)
 {
     QMutexLocker qm(&syncMutex);
     QList<MegaHandle> value;
@@ -460,13 +460,13 @@ QList<MegaHandle> SyncModel::getMegaFolderHandles(const QVector<SyncType>& types
     return value;
 }
 
-std::shared_ptr<SyncSettings> SyncModel::getSyncSetting(int num, mega::MegaSync::SyncType type)
+std::shared_ptr<SyncSettings> SyncInfo::getSyncSetting(int num, mega::MegaSync::SyncType type)
 {
     QMutexLocker qm(&syncMutex);
     return configuredSyncsMap[configuredSyncs[type].at(num)];
 }
 
-QList<std::shared_ptr<SyncSettings>> SyncModel::getSyncSettingsByType(const QVector<SyncType>& types)
+QList<std::shared_ptr<SyncSettings>> SyncInfo::getSyncSettingsByType(const QVector<SyncType>& types)
 {
     QMutexLocker qm(&syncMutex);
     QList<std::shared_ptr<SyncSettings>> syncs;
@@ -480,7 +480,7 @@ QList<std::shared_ptr<SyncSettings>> SyncModel::getSyncSettingsByType(const QVec
     return syncs;
 }
 
-std::shared_ptr<SyncSettings> SyncModel::getSyncSettingByTag(MegaHandle tag)
+std::shared_ptr<SyncSettings> SyncInfo::getSyncSettingByTag(MegaHandle tag)
 {
     QMutexLocker qm(&syncMutex);
     if (configuredSyncsMap.contains(tag))
@@ -490,7 +490,7 @@ std::shared_ptr<SyncSettings> SyncModel::getSyncSettingByTag(MegaHandle tag)
     return nullptr;
 }
 
-void SyncModel::saveUnattendedDisabledSyncs()
+void SyncInfo::saveUnattendedDisabledSyncs()
 {
     if (preferences->logged())
     {
@@ -502,21 +502,21 @@ void SyncModel::saveUnattendedDisabledSyncs()
     }
 }
 
-void SyncModel::addUnattendedDisabledSync(MegaHandle tag, mega::MegaSync::SyncType type)
+void SyncInfo::addUnattendedDisabledSync(MegaHandle tag, mega::MegaSync::SyncType type)
 {
     unattendedDisabledSyncs[type].insert(tag);
     saveUnattendedDisabledSyncs();
     emit syncDisabledListUpdated();
 }
 
-void SyncModel::removeUnattendedDisabledSync(MegaHandle tag, mega::MegaSync::SyncType type)
+void SyncInfo::removeUnattendedDisabledSync(MegaHandle tag, mega::MegaSync::SyncType type)
 {
     unattendedDisabledSyncs[type].remove(tag);
     saveUnattendedDisabledSyncs();
     emit syncDisabledListUpdated();
 }
 
-void SyncModel::setUnattendedDisabledSyncs(const QSet<MegaHandle>& tags)
+void SyncInfo::setUnattendedDisabledSyncs(const QSet<MegaHandle>& tags)
 {
     for (auto tag : tags)
     {
@@ -530,7 +530,7 @@ void SyncModel::setUnattendedDisabledSyncs(const QSet<MegaHandle>& tags)
     emit syncDisabledListUpdated();
 }
 
-void SyncModel::dismissUnattendedDisabledSyncs(const QVector<SyncType>& types)
+void SyncInfo::dismissUnattendedDisabledSyncs(const QVector<SyncType>& types)
 {
     for (auto type : types)
     {

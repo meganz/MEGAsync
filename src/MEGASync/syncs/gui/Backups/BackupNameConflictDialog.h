@@ -1,7 +1,7 @@
 #ifndef BACKUPNAMECONFLICTDIALOG_H
 #define BACKUPNAMECONFLICTDIALOG_H
 
-#include "Syncs/Backups/BackupRenameWidget.h"
+#include "syncs/gui/Backups/BackupRenameWidget.h"
 
 #include "megaapi.h"
 

@@ -1,8 +1,8 @@
 #ifndef ADDBACKUPDIALOG_H
 #define ADDBACKUPDIALOG_H
 
-#include "control/SyncController.h"
-#include "Syncs/Backups/BackupNameConflictDialog.h"
+#include "syncs/control/SyncController.h"
+#include "syncs/gui/Backups/BackupNameConflictDialog.h"
 
 #include <QDialog>
 #include <QDir>

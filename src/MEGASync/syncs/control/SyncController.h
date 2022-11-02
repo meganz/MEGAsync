@@ -1,7 +1,7 @@
 #pragma once
 
-#include "model/SyncSettings.h"
-#include "model/SyncModel.h"
+#include "syncs/control/SyncSettings.h"
+#include "syncs/control/SyncInfo.h"
 
 #include "QTMegaRequestListener.h"
 #include "megaapi.h"
@@ -13,7 +13,7 @@
  * @brief Sync Controller class
  *
  * Interface object used to control Syncs and report back on results using Qt Signals.
- * Uses SyncModel.h class as the data model.
+ * Uses SyncInfo.h class as the data model.
  *
  */
 class SyncController: public QObject, public mega::MegaRequestListener
@@ -71,5 +71,5 @@ private:
 
     mega::MegaApi* mApi;
     mega::QTMegaRequestListener* mDelegateListener;
-    SyncModel* mSyncModel;
+    SyncInfo* mSyncInfo;
 };

@@ -1,8 +1,8 @@
 #include "BackupNameConflictDialog.h"
 #include "ui_BackupNameConflictDialog.h"
-#include "Syncs/Backups/BackupRenameWidget.h"
+#include "syncs/gui/Backups/BackupRenameWidget.h"
 #include "Utilities.h"
-#include "SyncController.h"
+#include "syncs/control/SyncController.h"
 #include "EventHelper.h"
 
 #include <QPushButton>

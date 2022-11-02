@@ -7,8 +7,8 @@
 #include "TextDecorator.h"
 #include "UserAttributesRequests/DeviceName.h"
 #include "UserAttributesRequests/MyBackupsHandle.h"
-#include "Syncs/Backups/BackupNameConflictDialog.h"
-#include "Syncs/SyncTooltipCreator.h"
+#include "syncs/gui/Backups/BackupNameConflictDialog.h"
+#include "syncs/gui/SyncTooltipCreator.h"
 
 #include "megaapi.h"
 

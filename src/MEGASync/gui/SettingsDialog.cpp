@@ -11,10 +11,10 @@
 #include "UserAttributesRequests/FullName.h"
 #include "UserAttributesRequests/MyBackupsHandle.h"
 #include "PowerOptions.h"
-#include "Syncs/SyncTooltipCreator.h"
-#include "Syncs/Backups/BackupsWizard.h"
-#include "Syncs/Backups/AddBackupDialog.h"
-#include "Syncs/Backups/RemoveBackupDialog.h"
+#include "syncs/gui/SyncTooltipCreator.h"
+#include "syncs/gui/Backups/BackupsWizard.h"
+#include "syncs/gui/Backups/AddBackupDialog.h"
+#include "syncs/gui/Backups/RemoveBackupDialog.h"
 #include "TextDecorator.h"
 
 #include "mega/types.h"
@@ -66,8 +66,8 @@ static constexpr int NETWORK_LIMITS_MAX {9999};
 long long calculateCacheSize()
 {
     long long cacheSize = 0;
-    auto model (SyncModel::instance());
-    for (auto syncType : SyncModel::AllHandledSyncTypes)
+    auto model (SyncInfo::instance());
+    for (auto syncType : SyncInfo::AllHandledSyncTypes)
     {
         for (int i = 0; i < model->getNumSyncedFolders(syncType); i++)
         {
@@ -98,7 +98,7 @@ SettingsDialog::SettingsDialog(MegaApplication* app, bool proxyOnly, QWidget* pa
     mPreferences (Preferences::instance()),
     mSyncController (),
     mBackupController (),
-    mModel (SyncModel::instance()),
+    mModel (SyncInfo::instance()),
     mMegaApi (app->getMegaApi()),
     mLoadingSettings (0),
     mThreadPool (ThreadPoolSingleton::getInstance()),
@@ -1094,7 +1094,7 @@ void SettingsDialog::on_cOverlayIcons_toggled(bool checked)
 #ifdef Q_OS_MACOS
     Platform::notifyRestartSyncFolders();
 #else
-    for (auto localFolder : mModel->getLocalFolders(SyncModel::AllHandledSyncTypes))
+    for (auto localFolder : mModel->getLocalFolders(SyncInfo::AllHandledSyncTypes))
     {
             mApp->notifyItemChange(localFolder, MegaApi::STATE_NONE);
     }

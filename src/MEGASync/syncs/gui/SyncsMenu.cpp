@@ -2,7 +2,7 @@
 #include "Utilities.h"
 #include "InfoDialog.h"
 #include "Preferences.h"
-#include "model/SyncModel.h"
+#include "syncs/control/SyncInfo.h"
 #include "Platform.h"
 #include "UserAttributesRequests/DeviceName.h"
 #include "UserAttributesRequests/MyBackupsHandle.h"
@@ -77,7 +77,7 @@ SyncsMenu::SyncsMenu(mega::MegaSync::SyncType type, QObject *parent) : QObject(p
 
 void SyncsMenu::refresh()
 {
-    SyncModel* model (SyncModel::instance());
+    SyncInfo* model (SyncInfo::instance());
     MenuItemAction* firstBackup (nullptr);
 
     // Actions will be deleted, so reset the last hovered pointer

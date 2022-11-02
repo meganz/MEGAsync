@@ -55,7 +55,7 @@ void NotifyServer::acceptConnection()
 
         // send the list of current synced folders to the new client
         int localFolders = 0;
-        SyncModel *model = SyncModel::instance();
+        SyncInfo *model = SyncInfo::instance();
         for (auto syncSetting : model->getAllSyncSettings())
         {
             QString c = QDir::toNativeSeparators(QDir(syncSetting->getLocalFolder()).canonicalPath());

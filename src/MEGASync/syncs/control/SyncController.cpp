@@ -15,11 +15,11 @@ SyncController::SyncController(QObject* parent)
       mPendingBackups(QMap<QString, QString>()),
       mApi(MegaSyncApp->getMegaApi()),
       mDelegateListener (new QTMegaRequestListener(mApi, this)),
-      mSyncModel(SyncModel::instance())
+      mSyncInfo(SyncInfo::instance())
 {
-    // The controller shouldn't ever be instantiated before we have an API and a SyncModel available
+    // The controller shouldn't ever be instantiated before we have an API and a SyncInfo available
     assert(mApi);
-    assert(mSyncModel);
+    assert(mSyncInfo);
 }
 
 SyncController::~SyncController()
@@ -119,7 +119,7 @@ QString SyncController::getIsLocalFolderAlreadySyncedMsg(const QString& path, co
     QString message;
 
     // Gather all synced or backed-up dirs
-    QMap<QString, MegaSync::SyncType> localFolders = SyncModel::instance()->getLocalFoldersAndTypeMap();
+    QMap<QString, MegaSync::SyncType> localFolders = SyncInfo::instance()->getLocalFoldersAndTypeMap();
 
     // Check if the path is already synced or part of a sync
     foreach (auto& existingPath, localFolders.keys())
@@ -477,7 +477,7 @@ void SyncController::onRequestFinish(MegaApi *api, MegaRequest *req, MegaError *
             if(errorMsg.isEmpty())
                 errorMsg = QCoreApplication::translate("MegaError", e->getErrorString());
 
-            std::shared_ptr<SyncSettings> sync = mSyncModel->getSyncSettingByTag(req->getParentHandle());
+            std::shared_ptr<SyncSettings> sync = mSyncInfo->getSyncSettingByTag(req->getParentHandle());
             QString logMsg = QString::fromUtf8("Error removing sync (%1) (request error): %2").arg(
                                  getSyncTypeString(sync ? sync->getType() : MegaSync::SyncType::TYPE_UNKNOWN),
                                  errorMsg);
@@ -493,7 +493,7 @@ void SyncController::onRequestFinish(MegaApi *api, MegaRequest *req, MegaError *
             break;
 
         int syncErrorCode (req->getNumDetails());
-        std::shared_ptr<SyncSettings> sync = mSyncModel->getSyncSettingByTag(req->getParentHandle());
+        std::shared_ptr<SyncSettings> sync = mSyncInfo->getSyncSettingByTag(req->getParentHandle());
 
         if (sync && (syncErrorCode != MegaSync::NO_SYNC_ERROR))
         {
@@ -526,7 +526,7 @@ void SyncController::onRequestFinish(MegaApi *api, MegaRequest *req, MegaError *
             break;
 
         int syncErrorCode (req->getNumDetails());
-        std::shared_ptr<SyncSettings> sync = mSyncModel->getSyncSettingByTag(req->getParentHandle());
+        std::shared_ptr<SyncSettings> sync = mSyncInfo->getSyncSettingByTag(req->getParentHandle());
 
         if (sync && (syncErrorCode != MegaSync::NO_SYNC_ERROR))
         {
@@ -554,7 +554,7 @@ void SyncController::onRequestFinish(MegaApi *api, MegaRequest *req, MegaError *
 
         if (!req->getNumDetails() && sync)
         {
-            mSyncModel->removeUnattendedDisabledSync(sync->backupId(), sync->getType());
+            mSyncInfo->removeUnattendedDisabledSync(sync->backupId(), sync->getType());
         }
         break;
     }
