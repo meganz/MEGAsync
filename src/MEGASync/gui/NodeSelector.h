@@ -62,7 +62,7 @@ private slots:
     void onTabSelected(int index);
 
 private:
-    bool processCloseEvent(MegaItemProxyModel *proxy, QCloseEvent* event);
+    void processCloseEvent(MegaItemProxyModel *proxy, QCloseEvent* event);
     QModelIndex getParentIncomingShareByIndex(QModelIndex idx);
 
     Ui::NodeSelector *ui;

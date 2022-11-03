@@ -244,8 +244,7 @@ void NodeSelector::closeEvent(QCloseEvent* event)
     QDialog::closeEvent(event);
 }
 
-
-bool NodeSelector::processCloseEvent(MegaItemProxyModel *proxy, QCloseEvent *event)
+void NodeSelector::processCloseEvent(MegaItemProxyModel *proxy, QCloseEvent *event)
 {
     if(proxy->isModelProcessing())
     {
@@ -258,7 +257,6 @@ bool NodeSelector::processCloseEvent(MegaItemProxyModel *proxy, QCloseEvent *eve
         event->ignore();
     }
 }
-
 
 void NodeSelector::setSelectedNodeHandle(const mega::MegaHandle &handle)
 {
