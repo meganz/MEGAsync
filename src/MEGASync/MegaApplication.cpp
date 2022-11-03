@@ -1200,24 +1200,12 @@ void MegaApplication::requestUserData()
     }
     UserAttributes::DeviceName::requestDeviceName();
     UserAttributes::MyBackupsHandle::requestMyBackupsHandle();
+    UserAttributes::FullName::requestFullName();
+    UserAttributes::Avatar::requestAvatar();
 
     megaApi->getPricing();
     megaApi->getFileVersionsOption();
     megaApi->getPSA();
-
-    mThreadPool->push([=]()
-    {//thread pool function
-        std::shared_ptr<char> email(megaApi->getMyEmail(), std::default_delete<char[]>());
-
-        Utilities::queueFunctionInAppThread([=]()
-        {//queued function
-            if (email)
-            {
-                UserAttributes::FullName::requestFullName(email.get());
-                UserAttributes::Avatar::requestAvatar(email.get());
-            }
-        });//end of queued function
-    });// end of thread pool function
 }
 
 void MegaApplication::populateUserAlerts(MegaUserAlertList *theList, bool copyRequired)

@@ -51,7 +51,7 @@ const mega::MegaHandle &MyChatFilesFolder::getMyChatFilesFolderHandle() const
 
 std::shared_ptr<const MyChatFilesFolder> MyChatFilesFolder::requestMyChatFilesFolder()
 {
-    return UserAttributesManager::instance().requestAttribute<MyChatFilesFolder>(MegaSyncApp->getMegaApi()->getMyEmail());
+    return UserAttributesManager::instance().requestAttribute<MyChatFilesFolder>();
 }
 
 }//end namespace UserAttributes

@@ -12,7 +12,7 @@ class FullName : public AttributeRequest
 public:
     FullName(const QString& userEmail) : AttributeRequest(userEmail){}
 
-    static std::shared_ptr<const FullName> requestFullName(const char* user_email);
+    static std::shared_ptr<const FullName> requestFullName(const char* user_email = nullptr);
 
     void onRequestFinish(mega::MegaApi *, mega::MegaRequest *incoming_request, mega::MegaError *e) override;
     void requestAttribute() override;
