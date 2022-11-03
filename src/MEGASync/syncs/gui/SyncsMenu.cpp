@@ -60,7 +60,7 @@ SyncsMenu::SyncsMenu(mega::MegaSync::SyncType type, QObject *parent) : QObject(p
     mAddAction->setLabelText(textAdd);
     mAddAction->setParent(this);
     connect(mAddAction.get(), &MenuItemAction::triggered,
-            this, &SyncsMenu::onAddSync, Qt::QueuedConnection);
+            this, &SyncsMenu::onAddSync);
 
     mMenuAction->setLabelText(textMenu);
     mMenuAction->setIcon(iconMenu);
@@ -71,7 +71,7 @@ SyncsMenu::SyncsMenu(mega::MegaSync::SyncType type, QObject *parent) : QObject(p
 
     //Highlight menu entry on mouse over
     connect(mMenu.get(), &QMenu::hovered,
-            this, &SyncsMenu::highLightMenuEntry, Qt::QueuedConnection);
+            this, &SyncsMenu::highLightMenuEntry);
     mMenu->installEventFilter(this);
 }
 
@@ -128,7 +128,7 @@ void SyncsMenu::refresh()
                         this, [backupSetting](){
                     Utilities::openUrl(
                                       QUrl::fromLocalFile(backupSetting->getLocalFolder()));
-                }, Qt::QueuedConnection);
+                });
 
                 mMenu->addAction(action);
                 if (!firstBackup)
