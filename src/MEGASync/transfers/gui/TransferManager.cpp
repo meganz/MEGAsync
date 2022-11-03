@@ -1386,7 +1386,6 @@ void TransferManager::closeEvent(QCloseEvent *event)
         });
         event->ignore();
     }
-    QDialog::closeEvent(event);
 }
 
 void TransferManager::changeEvent(QEvent *event)

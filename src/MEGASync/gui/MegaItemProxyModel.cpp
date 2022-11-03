@@ -57,6 +57,7 @@ void MegaItemProxyModel::sort(int column, Qt::SortOrder order)
                 blockSignals(true);
                 sourceModel()->blockSignals(true);
                 invalidateFilter();
+                qDebug()<<"CLOSE NOW";
                 QSortFilterProxyModel::sort(column, order);
                 for (auto it = itemsToMap.rbegin(); it != itemsToMap.rend(); ++it)
                 {

@@ -241,7 +241,6 @@ void NodeSelector::closeEvent(QCloseEvent* event)
     ui->IncomingShares->abort();
     processCloseEvent(ui->CloudDrive->getProxyModel(), event);
     processCloseEvent(ui->IncomingShares->getProxyModel(), event);
-    QDialog::closeEvent(event);
 }
 
 void NodeSelector::processCloseEvent(MegaItemProxyModel *proxy, QCloseEvent *event)
