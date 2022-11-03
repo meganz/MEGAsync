@@ -43,26 +43,21 @@ class NodeRequester : public QObject
 
 public:
     NodeRequester(MegaItemModel* model);
-
     void setShowFiles(bool newShowFiles);
-
     void lockMutex(bool state) const;
-
     const std::atomic<bool>& isWorking() const;
+    int rootIndexSize() const;
+    int rootIndexOf(MegaItem *item);
+    MegaItem* getRootItem(int index) const;
 
 public slots:
-    void requestNodeAndCreateChildren(MegaItem* item, const QModelIndex& parentIndex, bool showFiles = true);
+    void requestNodeAndCreateChildren(MegaItem* item, const QModelIndex& parentIndex, bool showFiles, std::shared_ptr<mega::MegaCancelToken> calcelToken);
 
     void createCloudDriveRootItem();
     void createIncomingSharesRootItems(std::shared_ptr<mega::MegaNodeList> nodeList);
     void onAddNodeRequested(std::shared_ptr<mega::MegaNode> newNode, MegaItem* parentItem);
     void removeItem(MegaItem *item);
     void removeRootItem(MegaItem* item);
-
-    int rootIndexSize() const;
-    int rootIndexOf(MegaItem *item);
-    MegaItem* getRootItem(int index) const;
-
     void abort();
 
 signals:
@@ -72,12 +67,10 @@ signals:
      void nodeAdded(MegaItem* item);
 
 private:
-     void setWorking(bool newWorking);
      void finishWorker();
 
      bool mShowFiles = true;
-//     std::atomic<bool> mAborted = false;
-//     std::atomic<bool> mWorking = false;
+     std::atomic<bool> mAborted{false};
      MegaItemModel* mModel;
      QList<MegaItem*> mRootItems;
      mutable QMutex mMutex;
@@ -134,10 +127,12 @@ public:
 
     QPair<QModelIndexList, bool> needsToBeExpandedAndSelected();
     void clearIndexesToMap();
+    void abort();
 
 signals:
     void levelsAdded(const QModelIndexList& parent);
-    void requestChildNodes(MegaItem* parent, const QModelIndex& parentIndex, int nodeType) const;
+    void requestChildNodes(MegaItem* parent, const QModelIndex& parentIndex,
+                           int nodeType, std::shared_ptr<mega::MegaCancelToken> cancelToken) const;
     void firstLoadFinished(const QModelIndex& parent);
     void requestAddNode(std::shared_ptr<mega::MegaNode> newNode, MegaItem* parent);
     void removeItem(MegaItem* items);
@@ -173,6 +168,7 @@ private:
     void createChildItems(std::shared_ptr<mega::MegaNodeList> childNodes, const QModelIndex& index, MegaItem* parent);
     QIcon getFolderIcon(MegaItem* item) const;
     bool fetchMoreRecursively(const QModelIndex& parentIndex);
+    std::shared_ptr<mega::MegaCancelToken> mCancelToken;
 
     std::shared_ptr<const UserAttributes::CameraUploadFolder> mCameraFolderAttribute;
     std::shared_ptr<const UserAttributes::MyChatFilesFolder> mMyChatFilesFolderAttribute;

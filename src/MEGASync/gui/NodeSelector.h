@@ -48,6 +48,8 @@ public:
     mega::MegaHandle getSelectedNodeHandle();
     QList<mega::MegaHandle> getMultiSelectionNodeHandle();
     int getSelectMode(){ return mSelectMode;}
+    void closeEvent(QCloseEvent *) override;
+
 
 protected:
     void changeEvent(QEvent * event) override;

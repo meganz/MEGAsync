@@ -46,6 +46,7 @@ public:
     void setDefaultUploadOption(bool value);
     bool getDefaultUploadOption();
     void showDefaultUploadOption(bool show);
+    void abort();
 
 public slots:
     void onRequestFinish(mega::MegaApi* api, mega::MegaRequest *request, mega::MegaError* e) override;
@@ -63,7 +64,6 @@ protected:
     void resizeEvent(QResizeEvent* ) override;
     void mousePressEvent(QMouseEvent* event) override;
     void changeEvent(QEvent* event) override;
-    bool eventFilter(QObject *obj, QEvent *e) override;
     void setTitle(const QString& title);
     QModelIndex getParentIncomingShareByIndex(QModelIndex idx);
 
@@ -134,8 +134,8 @@ public:
 
 private:
     QString getRootText() override;
-    std::unique_ptr<MegaItemModel> getModel() override;
     void setRootIndex_Reimplementation(const QModelIndex& source_idx) override;
+    std::unique_ptr<MegaItemModel> getModel() override;
 };
 
 class NodeSelectorTreeViewWidgetIncomingShares : public NodeSelectorTreeViewWidget

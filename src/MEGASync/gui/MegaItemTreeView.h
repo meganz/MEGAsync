@@ -19,7 +19,6 @@ public:
     MegaHandle getSelectedNodeHandle();
     void setModel(QAbstractItemModel *model) override;
 
-
 protected:
     void drawBranches(QPainter *painter,
                               const QRect &rect,

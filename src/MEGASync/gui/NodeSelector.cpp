@@ -233,6 +233,12 @@ QList<MegaHandle> NodeSelector::getMultiSelectionNodeHandle()
     return tree_view->getMultiSelectionNodeHandle();
 }
 
+void NodeSelector::closeEvent(QCloseEvent *)
+{
+    ui->CloudDrive->abort();
+    ui->IncomingShares->abort();
+}
+
 void NodeSelector::setSelectedNodeHandle(const mega::MegaHandle &handle)
 {
     auto parent_node = std::unique_ptr<MegaNode>(mMegaApi->getNodeByHandle(handle));

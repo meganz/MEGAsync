@@ -39,7 +39,6 @@ NodeSelectorTreeViewWidget::NodeSelectorTreeViewWidget(QWidget *parent) :
     connect(ui->bCancel, &QPushButton::clicked, this, &NodeSelectorTreeViewWidget::cancelBtnClicked);
     connect(ui->cbAlwaysUploadToLocation, &QCheckBox::stateChanged, this, &NodeSelectorTreeViewWidget::oncbAlwaysUploadToLocationChanged);
     checkBackForwardButtons();
-    ui->tMegaFolders->installEventFilter(this);
 
     mLoadingScene.setView(ui->tMegaFolders);
     mLoadingScene.setDelayTimeToShowInMs(100);
@@ -56,15 +55,6 @@ void NodeSelectorTreeViewWidget::changeEvent(QEvent *event)
         }
     }
     QWidget::changeEvent(event);
-}
-
-bool NodeSelectorTreeViewWidget::eventFilter(QObject *obj, QEvent *e)
-{
-    if(obj == ui->tMegaFolders)
-    {
-       // qDebug()<<e->type();
-    }
-    return QWidget::eventFilter(obj, e);
 }
 
 void NodeSelectorTreeViewWidget::setSelectionMode(int selectMode)
@@ -118,6 +108,12 @@ void NodeSelectorTreeViewWidget::showDefaultUploadOption(bool show)
 {
     ui->cbAlwaysUploadToLocation->setVisible(show);
 }
+
+void NodeSelectorTreeViewWidget::abort()
+{
+    mModel->abort();
+}
+
 void NodeSelectorTreeViewWidget::setDefaultUploadOption(bool value)
 {
     ui->cbAlwaysUploadToLocation->setChecked(value);

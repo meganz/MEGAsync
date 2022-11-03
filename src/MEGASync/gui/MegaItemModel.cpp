@@ -24,32 +24,32 @@ void NodeRequester::lockMutex(bool state) const
     state ? mMutex.lock() : mMutex.unlock();
 }
 
-void NodeRequester::requestNodeAndCreateChildren(MegaItem* item, const QModelIndex& parentIndex, bool showFiles)
+void NodeRequester::requestNodeAndCreateChildren(MegaItem* item, const QModelIndex& parentIndex, bool showFiles, std::shared_ptr<MegaCancelToken> cancelToken)
 {
     if(item)
     {
-        setWorking(true);
-
         auto node = item->getNode();
         item->setProperty("INDEX", parentIndex);
 
         if(!item->requestingChildren() && !item->childrenAreInit())
         {
             item->setRequestingChildren(true);
-
             MegaApi* megaApi = MegaSyncApp->getMegaApi();
+
+            qDebug()<<"START GETTING NODES:"<<QThread::currentThread()<<qApp->thread();
 
             auto childNodesFiltered = MegaNodeList::createInstance();
             if(!showFiles)
             {
-                childNodesFiltered = megaApi->getChildrenFromType(item->getNode().get(), MegaNode::TYPE_FOLDER, MegaApi::ORDER_NONE);
+                childNodesFiltered = megaApi->getChildrenFromType(item->getNode().get(), MegaNode::TYPE_FOLDER, MegaApi::ORDER_NONE, cancelToken.get());
             }
             else
             {
-                childNodesFiltered = megaApi->getChildren(node.get(), MegaApi::ORDER_NONE);
+                childNodesFiltered = megaApi->getChildren(node.get(), MegaApi::ORDER_NONE, cancelToken.get());
+                qDebug()<<"LLEGUÉ!"<<childNodesFiltered->size();
             }
 
-            //if(!mAborted)
+            if(!mAborted)
             {
                 lockMutex(true);
                 item->createChildItems(std::unique_ptr<mega::MegaNodeList>(childNodesFiltered));
@@ -57,20 +57,16 @@ void NodeRequester::requestNodeAndCreateChildren(MegaItem* item, const QModelInd
                 emit nodesReady(item);
             }
         }
-
-        setWorking(false);
     }
 }
 
 void NodeRequester::createCloudDriveRootItem()
 {
-    setWorking(true);
-
     MegaApi* megaApi = MegaSyncApp->getMegaApi();
     auto root = std::unique_ptr<MegaNode>(megaApi->getRootNode());
     auto item = new MegaItem(std::move(root), mShowFiles);
 
-    if(/*!mAborted*/true)
+    if(!mAborted)
     {
         mRootItems.append(item);
         emit megaCloudDriveRootItemCreated(item);
@@ -79,14 +75,10 @@ void NodeRequester::createCloudDriveRootItem()
     {
         removeItem(item);
     }
-
-    setWorking(false);
 }
 
 void NodeRequester::createIncomingSharesRootItems(std::shared_ptr<mega::MegaNodeList> nodeList)
 {
-    setWorking(true);
-
     QList<MegaItem*> items;
     for(int i = 0; i < nodeList->size(); i++)
     {
@@ -95,7 +87,7 @@ void NodeRequester::createIncomingSharesRootItems(std::shared_ptr<mega::MegaNode
         MegaItem* item = new MegaItem(std::unique_ptr<MegaNode>(node), mShowFiles);
         items.append(item);
 
-        if(true/*!mAborted*/)
+        if(!mAborted)
         {
             auto incomingSharesModel = dynamic_cast<MegaItemModelIncomingShares*>(mModel);
             if(incomingSharesModel)
@@ -111,7 +103,7 @@ void NodeRequester::createIncomingSharesRootItems(std::shared_ptr<mega::MegaNode
         }
     }
 
-    if(true/*!mAborted*/)
+    if(!mAborted)
     {
         mRootItems.append(items);
         emit megaIncomingSharesRootItemsCreated(items);
@@ -120,14 +112,10 @@ void NodeRequester::createIncomingSharesRootItems(std::shared_ptr<mega::MegaNode
     {
         qDeleteAll(items);
     }
-
-    setWorking(false);
 }
 
 void NodeRequester::onAddNodeRequested(std::shared_ptr<MegaNode> newNode, MegaItem *parentItem)
 {
-    setWorking(true);
-
     //Too fast to protect it agains crashes?
     auto parentIndex = parentItem->property("INDEX").toModelIndex();
     lockMutex(true);
@@ -135,7 +123,7 @@ void NodeRequester::onAddNodeRequested(std::shared_ptr<MegaNode> newNode, MegaIt
     lockMutex(false);
     childItem->setProperty("INDEX", mModel->index(parentItem->getNumChildren() -1 ,0, parentIndex));
 
-    if(true/*!mAborted*/)
+    if(!mAborted)
     {
         emit nodeAdded(childItem);
     }
@@ -143,8 +131,6 @@ void NodeRequester::onAddNodeRequested(std::shared_ptr<MegaNode> newNode, MegaIt
     {
         removeItem(childItem);
     }
-
-    setWorking(false);
 }
 
 void NodeRequester::removeItem(MegaItem* item)
@@ -187,20 +173,6 @@ void NodeRequester::finishWorker()
     thread()->quit();
 }
 
-const std::atomic<bool> &NodeRequester::isWorking() const
-{
-    return true/*mWorking*/;
-}
-
-void NodeRequester::setWorking(bool newWorking)
-{
-//    mWorking = newWorking;
-//    if(mAborted)
-//    {
-//        finishWorker();
-//    }
-}
-
 void NodeRequester::setShowFiles(bool newShowFiles)
 {
     mShowFiles = newShowFiles;
@@ -208,11 +180,8 @@ void NodeRequester::setShowFiles(bool newShowFiles)
 
 void NodeRequester::abort()
 {
-    //mAborted = true;
-    if(!isWorking())
-    {
-        finishWorker();
-    }
+    mAborted = true;
+    finishWorker();
 }
 
 const int MegaItemModel::ROW_HEIGHT = 20;
@@ -223,8 +192,11 @@ MegaItemModel::MegaItemModel(QObject *parent) :
     mDisplayFiles(false),
     mSyncSetupMode(false),
     mShowFiles(true),
-    mNeedsToBeSelected(false)
+    mNeedsToBeSelected(false),
+    mCancelToken(MegaCancelToken::createInstance())
 {
+    qDebug()<<"MAIN THREAD:"<<QThread::currentThread();
+
     mCameraFolderAttribute = UserAttributes::CameraUploadFolder::requestCameraUploadFolder();
     mMyChatFilesFolderAttribute = UserAttributes::MyChatFilesFolder::requestMyChatFilesFolder();
 
@@ -245,10 +217,12 @@ MegaItemModel::MegaItemModel(QObject *parent) :
 
     qRegisterMetaType<std::shared_ptr<mega::MegaNodeList>>("std::shared_ptr<mega::MegaNodeList>");
     qRegisterMetaType<std::shared_ptr<mega::MegaNode>>("std::shared_ptr<mega::MegaNode>");
+    qRegisterMetaType<std::shared_ptr<mega::MegaNodeList>>("std::shared_ptr<mega::MegaCancelToken>");
 }
 
 MegaItemModel::~MegaItemModel()
 {
+    qDebug()<<this<<"deleting megaitemmodel;";
     emit deleteWorker();
 }
 
@@ -686,6 +660,14 @@ void MegaItemModel::clearIndexesToMap()
     mNeedsToBeSelected = false;
 }
 
+void MegaItemModel::abort()
+{
+    if(mCancelToken)
+    {
+        mCancelToken->cancel();
+    }
+}
+
 int MegaItemModel::insertPosition(const std::unique_ptr<MegaNode>& node)
 {
     int type = node->getType();
@@ -824,7 +806,7 @@ void MegaItemModel::fetchItemChildren(const QModelIndex& parent)
         blockSignals(true);
         beginInsertRows(parent, 0, itemNumChildren-1);
         blockSignals(false);
-        emit requestChildNodes(item, parent, mShowFiles);
+        emit requestChildNodes(item, parent, mShowFiles, mCancelToken);
     }
     else
     {
@@ -901,6 +883,7 @@ MegaItemModelCloudDrive::MegaItemModelCloudDrive(QObject *parent)
     megaApi->getCameraUploadsFolder(mDelegateListener.get());
     megaApi->getCameraUploadsFolderSecondary(mDelegateListener.get());
     megaApi->getMyChatFilesFolder(mDelegateListener.get());
+    qDebug()<<"CLOUD DRIVE MODEL"<<this;
 }
 
 MegaItemModelCloudDrive::~MegaItemModelCloudDrive()
