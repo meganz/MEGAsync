@@ -36,8 +36,6 @@ void NodeRequester::requestNodeAndCreateChildren(MegaItem* item, const QModelInd
             item->setRequestingChildren(true);
             MegaApi* megaApi = MegaSyncApp->getMegaApi();
 
-            qDebug()<<"START GETTING NODES:"<<QThread::currentThread()<<qApp->thread();
-
             auto childNodesFiltered = MegaNodeList::createInstance();
             if(!showFiles)
             {
@@ -46,7 +44,6 @@ void NodeRequester::requestNodeAndCreateChildren(MegaItem* item, const QModelInd
             else
             {
                 childNodesFiltered = megaApi->getChildren(node.get(), MegaApi::ORDER_NONE, cancelToken.get());
-                qDebug()<<"LLEGUÉ!"<<childNodesFiltered->size();
             }
 
             if(!mAborted)
@@ -195,8 +192,6 @@ MegaItemModel::MegaItemModel(QObject *parent) :
     mNeedsToBeSelected(false),
     mCancelToken(MegaCancelToken::createInstance())
 {
-    qDebug()<<"MAIN THREAD:"<<QThread::currentThread();
-
     mCameraFolderAttribute = UserAttributes::CameraUploadFolder::requestCameraUploadFolder();
     mMyChatFilesFolderAttribute = UserAttributes::MyChatFilesFolder::requestMyChatFilesFolder();
 
@@ -222,8 +217,6 @@ MegaItemModel::MegaItemModel(QObject *parent) :
 
 MegaItemModel::~MegaItemModel()
 {
-    qDebug()<<this<<"deleting megaitemmodel;";
-    emit deleteWorker();
 }
 
 int MegaItemModel::columnCount(const QModelIndex &) const
@@ -666,6 +659,7 @@ void MegaItemModel::abort()
     {
         mCancelToken->cancel();
     }
+    emit deleteWorker();
 }
 
 int MegaItemModel::insertPosition(const std::unique_ptr<MegaNode>& node)
