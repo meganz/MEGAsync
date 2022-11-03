@@ -8385,8 +8385,8 @@ void MegaApplication::onSyncDisabled(std::shared_ptr<SyncSettings> syncSetting)
                 }
                 case MegaSync::Error::REMOTE_NODE_NOT_FOUND:
                 {
-                    showErrorMessage(tr("Your backup \"%1\" has been disabled because the remote folder doesn't exist")
-                                     .arg(syncName));
+                    // We don't want to show a notification here because the removal of the remote
+                    // folder means that the backup has been deleted from the Backups Center
                     break;
                 }
                 case MegaSync::Error::VBOXSHAREDFOLDER_UNSUPPORTED:
