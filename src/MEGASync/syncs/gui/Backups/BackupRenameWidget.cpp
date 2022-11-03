@@ -24,15 +24,15 @@ BackupRenameWidget::~BackupRenameWidget()
     delete ui;
 }
 
-QString BackupRenameWidget::getNewName(QStringList brotherWdgNames)
+bool BackupRenameWidget::isNewNameValid(QStringList& backupNames)
 {
     auto newName = getNewNameRaw();
     QString errText;
 
     if (Utilities::isNodeNameValid(newName))
     {
-        brotherWdgNames.removeOne(newName);
-        if (brotherWdgNames.contains(newName))
+        backupNames.removeOne(newName);
+        if (backupNames.contains(newName))
         {
             errText = tr("A folder named \"%1\" already exists in your Backups. Rename "
                          "the new folder to continue with the backup.").arg(newName);
@@ -43,14 +43,12 @@ QString BackupRenameWidget::getNewName(QStringList brotherWdgNames)
         errText = CommonMessages::errorInvalidChars();
     }
 
-    if (!errText.isEmpty())
-    {
-        ui->lError->setText(errText);
-        newName.clear();
-    }
-    ui->lError->setVisible(!errText.isEmpty());
+    bool error (!errText.isEmpty());
 
-    return newName;
+    ui->lError->setText(errText);
+    ui->lError->setVisible(error);
+
+    return !error;
 }
 
 QString BackupRenameWidget::getNewNameRaw()

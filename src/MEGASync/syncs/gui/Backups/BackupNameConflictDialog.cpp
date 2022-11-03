@@ -77,26 +77,23 @@ void BackupNameConflictDialog::checkChangedNames()
     unsigned int failCount (0);
     const auto conflicts = ui->wConflictZone->findChildren<BackupRenameWidget*>();
 
-    QStringList chosenNames;
+    // Get the remote names
+    QStringList chosenNames (Utilities::getBackupsNames().toList());
 
-    // First pass to get all the new names
+    // First pass to get all the new names:
+    //   - First replace in candidate nams all the changed names
     foreach (auto conflict, conflicts)
     {
-        chosenNames << conflict->getNewNameRaw();
+        mBackupNames.insert(conflict->getPath(),
+                            conflict->getNewNameRaw());
     }
-
-    // Add the remote names
-    chosenNames << Utilities::getBackupsNames().toList();
+    //   - Then gather the updated backups names
+    chosenNames << mBackupNames.values();
 
     // Second pass to check if we still have conflicts
     foreach (auto conflict, conflicts)
     {
-        auto newName (conflict->getNewName(chosenNames));
-        if(!newName.isEmpty())
-        {
-            mBackupNames.insert(conflict->getPath(), newName);
-        }
-        else
+        if(!conflict->isNewNameValid(chosenNames))
         {
             ++failCount;
         }

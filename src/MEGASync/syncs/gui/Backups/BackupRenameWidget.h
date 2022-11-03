@@ -15,7 +15,7 @@ public:
     explicit BackupRenameWidget(const QString& path, int number, QWidget *parent = nullptr);
     ~BackupRenameWidget();
 
-    QString getNewName(QStringList brotherWdgNames);
+    bool isNewNameValid(QStringList &backupNames);
     QString getNewNameRaw();
 
     QString getPath();
