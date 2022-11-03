@@ -30,6 +30,7 @@ BackupNameConflictDialog::BackupNameConflictDialog(const QStringList& candidateP
     if (bApply)
     {
         bApply->setText(tr("Rename and backup"));
+        bApply->setDefault(true);
         connect(bApply, &QPushButton::clicked,
                 this, &BackupNameConflictDialog::checkChangedNames);
     }

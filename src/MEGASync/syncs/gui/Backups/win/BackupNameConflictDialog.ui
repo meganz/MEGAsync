@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>560</width>
-    <height>291</height>
+    <height>341</height>
    </rect>
   </property>
   <property name="styleSheet">
@@ -141,7 +141,7 @@ font-family: 'Inter';
      <item row="0" column="0" rowspan="2" alignment="Qt::AlignTop">
       <widget class="QLabel" name="lWarningIcon">
        <property name="pixmap">
-        <pixmap resource="../Resources_linux.qrc">:/images/icon_warning.png</pixmap>
+        <pixmap resource="../../../../gui/Resources_win.qrc">:/images/icon_warning.png</pixmap>
        </property>
       </widget>
      </item>
@@ -173,7 +173,7 @@ background-color: #ECECEC;
         <x>0</x>
         <y>0</y>
         <width>560</width>
-        <height>61</height>
+        <height>85</height>
        </rect>
       </property>
      </widget>
@@ -214,8 +214,8 @@ background-color: #ECECEC;
   </layout>
  </widget>
  <resources>
-  <include location="../Resources_linux.qrc"/>
-  <include location="../Resources_linux.qrc"/>
+  <include location="../../../../gui/Resources_win.qrc"/>
+  <include location="../Resources_win.qrc"/>
  </resources>
  <connections>
   <connection>
