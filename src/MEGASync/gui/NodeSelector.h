@@ -48,7 +48,7 @@ public:
     mega::MegaHandle getSelectedNodeHandle();
     QList<mega::MegaHandle> getMultiSelectionNodeHandle();
     int getSelectMode(){ return mSelectMode;}
-    void closeEvent(QCloseEvent *) override;
+    void closeEvent(QCloseEvent* event) override;
 
 
 protected:
@@ -62,6 +62,7 @@ private slots:
     void onTabSelected(int index);
 
 private:
+    bool processCloseEvent(MegaItemProxyModel *proxy, QCloseEvent* event);
     QModelIndex getParentIncomingShareByIndex(QModelIndex idx);
 
     Ui::NodeSelector *ui;

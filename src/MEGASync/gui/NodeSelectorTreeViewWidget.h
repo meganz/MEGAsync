@@ -47,6 +47,7 @@ public:
     bool getDefaultUploadOption();
     void showDefaultUploadOption(bool show);
     void abort();
+    MegaItemProxyModel* getProxyModel();
 
 public slots:
     void onRequestFinish(mega::MegaApi* api, mega::MegaRequest *request, mega::MegaError* e) override;

@@ -114,6 +114,11 @@ void NodeSelectorTreeViewWidget::abort()
     mModel->abort();
 }
 
+MegaItemProxyModel* NodeSelectorTreeViewWidget::getProxyModel()
+{
+    return mProxyModel.get();
+}
+
 void NodeSelectorTreeViewWidget::setDefaultUploadOption(bool value)
 {
     ui->cbAlwaysUploadToLocation->setChecked(value);

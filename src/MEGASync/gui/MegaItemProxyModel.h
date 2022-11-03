@@ -46,6 +46,7 @@ public:
     void setSourceModel(QAbstractItemModel *sourceModel) override;
     void setExpandMapped(bool value){mExpandMapped = value;}
     MegaItemModel* getMegaModel();
+    bool isModelProcessing() const;
 
 signals:
     void expandReady();

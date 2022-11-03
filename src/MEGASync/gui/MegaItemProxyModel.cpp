@@ -324,6 +324,11 @@ MegaItemModel *MegaItemProxyModel::getMegaModel()
     return dynamic_cast<MegaItemModel*>(sourceModel());
 }
 
+bool MegaItemProxyModel::isModelProcessing() const
+{
+    return mFilterWatcher.isRunning();
+}
+
 void MegaItemProxyModel::invalidateModel(const QModelIndexList& parents)
 {
     itemsToMap = parents;

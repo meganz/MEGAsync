@@ -5,7 +5,9 @@
 #include "control/Utilities.h"
 #include "megaapi.h"
 #include "mega/utils.h"
-#include <NodeSelectorTreeViewWidget.h>>
+#include "MegaItemProxyModel.h"
+#include "MegaItemModel.h"
+#include <NodeSelectorTreeViewWidget.h>
 
 #include <QMessageBox>
 #include <QPointer>
@@ -233,11 +235,30 @@ QList<MegaHandle> NodeSelector::getMultiSelectionNodeHandle()
     return tree_view->getMultiSelectionNodeHandle();
 }
 
-void NodeSelector::closeEvent(QCloseEvent *)
+void NodeSelector::closeEvent(QCloseEvent* event)
 {
     ui->CloudDrive->abort();
     ui->IncomingShares->abort();
+    processCloseEvent(ui->CloudDrive->getProxyModel(), event);
+    processCloseEvent(ui->IncomingShares->getProxyModel(), event);
+    QDialog::closeEvent(event);
 }
+
+
+bool NodeSelector::processCloseEvent(MegaItemProxyModel *proxy, QCloseEvent *event)
+{
+    if(proxy->isModelProcessing())
+    {
+        connect(proxy->getMegaModel(), &MegaItemModel::blockUi, this, [this](bool blocked){
+            if(!blocked)
+            {
+                close();
+            }
+        });
+        event->ignore();
+    }
+}
+
 
 void NodeSelector::setSelectedNodeHandle(const mega::MegaHandle &handle)
 {

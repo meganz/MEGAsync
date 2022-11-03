@@ -1386,11 +1386,7 @@ void TransferManager::closeEvent(QCloseEvent *event)
         });
         event->ignore();
     }
-    else
-    {
-        emit aboutToClose();
-        QDialog::closeEvent(event);
-    }
+    QDialog::closeEvent(event);
 }
 
 void TransferManager::changeEvent(QEvent *event)
