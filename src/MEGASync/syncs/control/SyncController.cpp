@@ -78,7 +78,43 @@ void SyncController::removeSync(std::shared_ptr<SyncSettings> syncSetting, const
     MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("Removing sync (%1) \"%2\"")
                  .arg(getSyncTypeString(syncSetting->getType()), syncSetting->name()).toUtf8().constData());
 
-    mApi->removeSync(syncSetting->backupId(), remoteHandle, mDelegateListener);
+    bool isBackup = syncSetting->getType() == MegaSync::TYPE_BACKUP;
+    MegaHandle backupRoot = syncSetting->getMegaHandle();
+    MegaHandle backupId = syncSetting->backupId();
+
+    mApi->removeSync(backupId, new OnFinishOneShot(mApi, [=](const MegaError& e){
+        if (e.getErrorCode() != MegaError::API_OK)
+        {
+            QString errorMsg = QString::fromUtf8(e.getErrorString());
+            std::shared_ptr<SyncSettings> sync = mSyncInfo->getSyncSettingByTag(backupId);
+            QString logMsg = QString::fromUtf8("Error removing sync (%1) (request error): %2 (sync id): %3").arg(
+                                 getSyncTypeString(sync ? sync->getType() : MegaSync::SyncType::TYPE_UNKNOWN),
+                                 errorMsg, QString::number(backupId));
+            MegaApi::log(MegaApi::LOG_LEVEL_ERROR, logMsg.toUtf8().constData());
+            emit syncRemoveError(std::shared_ptr<MegaError>(e.copy()));
+        }
+        else if (isBackup)
+        {
+            // We now have to delete or remove the remote folder
+            mApi->moveOrRemoveDeconfiguredBackupNodes(backupRoot, remoteHandle,
+                                                      new OnFinishOneShot(mApi, [=](const MegaError& e){
+                if (e.getErrorCode() != MegaError::API_OK)
+                {
+                    QString errorMsg = QString::fromUtf8(e.getErrorString());
+                    QString logMsg = QString::fromUtf8("Error moving or deleting remote backup folder (request error): %1 (sync id): %2 (Folder handle):%3").arg(
+                                         errorMsg, QString::number(backupId), QString::number(backupRoot));
+                    MegaApi::log(MegaApi::LOG_LEVEL_ERROR, logMsg.toUtf8().constData());
+                    emit backupMoveOrRemoveRemoteFolderError(std::shared_ptr<MegaError>(e.copy()));
+                }
+                else
+                {
+                    QString logMsg = QString::fromUtf8("Remote backup folder correctly moved or removed. (Backup id): %1 (Folder handle): %2").arg(
+                                        QString::number(backupId), QString::number(backupRoot));
+                    MegaApi::log(MegaApi::LOG_LEVEL_INFO, logMsg.toUtf8().constData());
+                }
+            }));
+        }
+    }));
 }
 
 void SyncController::enableSync(std::shared_ptr<SyncSettings> syncSetting)
@@ -479,24 +515,6 @@ void SyncController::onRequestFinish(MegaApi *api, MegaRequest *req, MegaError *
         emit syncAddStatus(errorCode, errorMsg, QString::fromUtf8(req->getFile()));
         break;
     }
-    case MegaRequest::TYPE_REMOVE_SYNC:
-    {
-        if (errorCode != MegaError::API_OK)
-        {
-            QString errorMsg = getSyncAPIErrorMsg(errorCode);
-            if(errorMsg.isEmpty())
-                errorMsg = QCoreApplication::translate("MegaError", e->getErrorString());
-
-            std::shared_ptr<SyncSettings> sync = mSyncInfo->getSyncSettingByTag(req->getParentHandle());
-            QString logMsg = QString::fromUtf8("Error removing sync (%1) (request error): %2").arg(
-                                 getSyncTypeString(sync ? sync->getType() : MegaSync::SyncType::TYPE_UNKNOWN),
-                                 errorMsg);
-            MegaApi::log(MegaApi::LOG_LEVEL_ERROR, logMsg.toUtf8().constData());
-            if(sync)
-                emit syncRemoveError(sync);
-        }
-        break;
-    }
     case MegaRequest::TYPE_DISABLE_SYNC:
     {
         if (errorCode == MegaError::API_OK)
@@ -565,18 +583,6 @@ void SyncController::onRequestFinish(MegaApi *api, MegaRequest *req, MegaError *
         if (!req->getNumDetails() && sync)
         {
             mSyncInfo->removeUnattendedDisabledSync(sync->backupId(), sync->getType());
-        }
-        break;
-    }
-    case MegaRequest::TYPE_MOVE:
-    {
-        if (e->getErrorCode() != MegaError::API_OK)
-        {
-            QString errorMsg = getSyncAPIErrorMsg(errorCode);
-            if(errorMsg.isEmpty())
-                errorMsg = QCoreApplication::translate("MegaError", e->getErrorString());
-            MegaApi::log(MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Error trashing MEGA folder (request error): %1")
-                         .arg(errorMsg).toUtf8().constData());
         }
         break;
     }

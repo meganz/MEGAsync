@@ -59,9 +59,10 @@ public:
 
 signals:
     void syncAddStatus(int errorCode, QString errorMsg, QString name);
-    void syncRemoveError(std::shared_ptr<SyncSettings> sync);
+    void syncRemoveError(std::shared_ptr<mega::MegaError> err);
     void syncEnableError(std::shared_ptr<SyncSettings> sync);
     void syncDisableError(std::shared_ptr<SyncSettings> sync);
+    void backupMoveOrRemoveRemoteFolderError(std::shared_ptr<mega::MegaError> err);
 
 protected:
     // override from MegaRequestListener
@@ -77,3 +78,5 @@ private:
     mega::QTMegaRequestListener* mDelegateListener;
     SyncInfo* mSyncInfo;
 };
+
+Q_DECLARE_METATYPE(std::shared_ptr<mega::MegaError>)
