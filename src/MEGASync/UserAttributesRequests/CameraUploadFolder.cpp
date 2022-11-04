@@ -78,7 +78,7 @@ const mega::MegaHandle &CameraUploadFolder::getCameraUploadFolderSecondaryHandle
 
 std::shared_ptr<const CameraUploadFolder> CameraUploadFolder::requestCameraUploadFolder()
 {
-    return UserAttributesManager::instance().requestAttribute<CameraUploadFolder>(MegaSyncApp->getMegaApi()->getMyEmail());
+    return UserAttributesManager::instance().requestAttribute<CameraUploadFolder>();
 }
 
 }//end namespace UserAttributes

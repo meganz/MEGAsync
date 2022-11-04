@@ -130,6 +130,7 @@ public:
         {return getMegaFolderHandles(QVector<SyncType>({type}));}
     //cloudDrive = true: only cloud drive mega folders. If false will return only inshare syncs.
     QStringList getCloudDriveSyncMegaFolders(bool cloudDrive = true);
+    static QSet<QString> getRemoteBackupFolderNames();
 
     void updateMegaFolder(QString newRemotePath, std::shared_ptr<SyncSettings> cs);
 };

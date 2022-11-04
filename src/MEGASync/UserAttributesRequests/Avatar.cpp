@@ -4,6 +4,7 @@
 #include "mega/types.h"
 #include "AvatarWidget.h"
 #include "MegaApplication.h"
+#include "Preferences.h"
 
 namespace UserAttributes
 {
@@ -90,8 +91,11 @@ AttributeRequest::RequestInfo Avatar::fillRequestInfo()
     {
         mUseImgFile = false;
         mLetterAvatarInfo.symbol.clear();
-        MegaSyncApp->getMegaApi()->getUserAvatar(getEmail().toUtf8().constData(),
-                                                 Utilities::getAvatarPath(getEmail()).toUtf8().constData());
+
+        QString email (getEmail());
+        QString avatarPath (Utilities::getAvatarPath(email.isEmpty() ? Preferences::instance()->email() : email));
+        MegaSyncApp->getMegaApi()->getUserAvatar(email.isEmpty() ? nullptr : email.toUtf8().constData(),
+                                                 avatarPath.toUtf8().constData());
     };
     QSharedPointer<ParamInfo> avatarParamInfo(new ParamInfo(avatarRequestFunc, QList<int>()
                                                             << mega::MegaError::API_OK
@@ -144,11 +148,10 @@ void Avatar::getLetterColor()
     {
         auto api = MegaSyncApp->getMegaApi();
         auto avatarEmail (getEmail());
-        std::unique_ptr<char[]> loggedUserEmailStr (api->getMyEmail());
-        auto loggedUserEmail (QString::fromUtf8(loggedUserEmailStr.get()));
+
         mega::MegaHandle userHandle (mega::INVALID_HANDLE);
 
-        if (avatarEmail == loggedUserEmail)
+        if (avatarEmail.isEmpty() || avatarEmail == Preferences::instance()->email())
         {
             userHandle = api->getMyUserHandleBinary();
         }
@@ -158,7 +161,7 @@ void Avatar::getLetterColor()
             if (user)
             {
                 userHandle = user->getHandle();
-            }
+            }            
         }
         std::unique_ptr<char[]> userHandleStr (api->userHandleToBase64(userHandle));
         std::unique_ptr<char[]> primaryColor (api->getUserAvatarColor(userHandleStr.get()));

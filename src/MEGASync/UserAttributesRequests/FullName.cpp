@@ -56,12 +56,14 @@ AttributeRequest::RequestInfo FullName::fillRequestInfo()
     std::function<void()> firstNameRequest = [this]()
     {
         mFirstName.clear();
-        MegaSyncApp->getMegaApi()->getUserAttribute(getEmail().toUtf8().constData(), mega::MegaApi::USER_ATTR_FIRSTNAME);
+        MegaSyncApp->getMegaApi()->getUserAttribute(getEmail().isEmpty() ? nullptr : getEmail().toUtf8().constData(),
+                                                    mega::MegaApi::USER_ATTR_FIRSTNAME);
     };
     std::function<void()> lastNameRequest = [this]()
     {
         mLastName.clear();
-        MegaSyncApp->getMegaApi()->getUserAttribute(getEmail().toUtf8().constData(), mega::MegaApi::USER_ATTR_LASTNAME);
+        MegaSyncApp->getMegaApi()->getUserAttribute(getEmail().isEmpty() ? nullptr : getEmail().toUtf8().constData(),
+                                                    mega::MegaApi::USER_ATTR_LASTNAME);
     };
 
     auto dontRetryOnErr = QList<int>() << mega::MegaError::API_OK << mega::MegaError::API_EACCESS;
@@ -114,14 +116,7 @@ const QString &FullName::getLastName() const
 
 std::shared_ptr<const FullName> FullName::requestFullName(const char *user_email)
 {
-    if(user_email)
-    {
-        return UserAttributesManager::instance().requestAttribute<FullName>(user_email);
-    }
-    else
-    {
-        return nullptr;
-    }
+    return UserAttributesManager::instance().requestAttribute<FullName>(user_email);
 }
 
 }//end namespace UserAttributes

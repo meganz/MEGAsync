@@ -2,6 +2,7 @@
 #include "ui_BackupNameConflictDialog.h"
 #include "syncs/gui/Backups/BackupRenameWidget.h"
 #include "Utilities.h"
+#include "syncs/control/SyncInfo.h"
 #include "syncs/control/SyncController.h"
 #include "EventHelper.h"
 
@@ -30,6 +31,7 @@ BackupNameConflictDialog::BackupNameConflictDialog(const QStringList& candidateP
     if (bApply)
     {
         bApply->setText(tr("Rename and backup"));
+        bApply->setDefault(true);
         connect(bApply, &QPushButton::clicked,
                 this, &BackupNameConflictDialog::checkChangedNames);
     }
@@ -68,7 +70,7 @@ bool BackupNameConflictDialog::backupNamesValid(QStringList candidatePaths)
     }
 
     return areValid && candidatePaths.size() == candidatesNames.size()
-            && !candidatesNames.intersects(Utilities::getBackupsNames());
+            && !candidatesNames.intersects(SyncInfo::getRemoteBackupFolderNames());
 }
 
 void BackupNameConflictDialog::checkChangedNames()
@@ -76,26 +78,23 @@ void BackupNameConflictDialog::checkChangedNames()
     unsigned int failCount (0);
     const auto conflicts = ui->wConflictZone->findChildren<BackupRenameWidget*>();
 
-    QStringList chosenNames;
+    // Get the remote names
+    QStringList chosenNames (SyncInfo::getRemoteBackupFolderNames().toList());
 
-    // First pass to get all the new names
+    // First pass to get all the new names:
+    //   - First replace in candidate nams all the changed names
     foreach (auto conflict, conflicts)
     {
-        chosenNames << conflict->getNewNameRaw();
+        mBackupNames.insert(conflict->getPath(),
+                            conflict->getNewNameRaw());
     }
-
-    // Add the remote names
-    chosenNames << Utilities::getBackupsNames().toList();
+    //   - Then gather the updated backups names
+    chosenNames << mBackupNames.values();
 
     // Second pass to check if we still have conflicts
     foreach (auto conflict, conflicts)
     {
-        auto newName (conflict->getNewName(chosenNames));
-        if(!newName.isEmpty())
-        {
-            mBackupNames.insert(conflict->getPath(), newName);
-        }
-        else
+        if(!conflict->isNewNameValid(chosenNames))
         {
             ++failCount;
         }
@@ -121,7 +120,7 @@ void BackupNameConflictDialog::createWidgets()
     QString conflictText;
 
     // Check conflicts and add widgets
-    const auto currentNames = Utilities::getBackupsNames();
+    const auto currentNames = SyncInfo::getRemoteBackupFolderNames();
     for (auto it = mBackupNames.cbegin(); it != mBackupNames.cend(); it++)
     {
         if (currentNames.contains(it.value()))

@@ -3,6 +3,7 @@
 #include "platform/Platform.h"
 #include "control/AppStatsEvents.h"
 #include "QMegaMessageBox.h"
+#include "UserAttributesRequests/MyBackupsHandle.h"
 
 #include <assert.h>
 
@@ -400,6 +401,43 @@ QStringList SyncInfo::getCloudDriveSyncMegaFolders(bool cloudDrive)
         }
     }
     return value;
+}
+
+QSet<QString> SyncInfo::getRemoteBackupFolderNames()
+{
+    auto myBackupsHandle = UserAttributes::MyBackupsHandle::requestMyBackupsHandle();
+    QSet<QString> backupsNames;
+
+    if (myBackupsHandle->getMyBackupsHandle() != INVALID_HANDLE)
+    {
+        auto api (MegaSyncApp->getMegaApi());
+        std::unique_ptr<MegaNode> myBackupsNode (api->getNodeByHandle(myBackupsHandle->getMyBackupsHandle()));
+        std::unique_ptr<const char[]> deviceIdRaw (api->getDeviceId());
+        QString deviceId (QString::fromLatin1(deviceIdRaw.get()));
+
+        std::unique_ptr<MegaNodeList> devices (api->getChildren(myBackupsNode.get()));
+        int i = 0;
+        MegaNode* deviceNode (nullptr);
+
+        while (!deviceNode && devices && i < devices->size())
+        {
+            if (QString::fromLatin1(devices->get(i)->getDeviceId()) == deviceId)
+            {
+                deviceNode = devices->get(i);
+            }
+            i++;
+        }
+
+        if (deviceNode)
+        {
+            std::unique_ptr<MegaNodeList> folders (api->getChildren(deviceNode));
+            for (int j = 0; folders && j < folders->size(); j++)
+            {
+                backupsNames.insert(QString::fromUtf8(folders->get(j)->getName()));
+            }
+        }
+    }
+    return backupsNames;
 }
 
 QStringList SyncInfo::getMegaFolders(const QVector<SyncType>& types)
